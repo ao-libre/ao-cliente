@@ -574,6 +574,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -646,22 +647,18 @@ Begin VB.Form frmMain
       Begin VB.Menu mnuUsar 
          Caption         =   "Usar"
       End
-      Begin VB.Menu mnuDescripcion 
-         Caption         =   "Descripcion"
+      Begin VB.Menu mnuEquipar 
+         Caption         =   "Equipar"
       End
    End
    Begin VB.Menu mnuNpc 
       Caption         =   "NPC"
       Visible         =   0   'False
       Begin VB.Menu mnuNpcDesc 
-         Caption         =   "(Desc)"
+         Caption         =   "Descripcion"
       End
-      Begin VB.Menu sep1 
-         Caption         =   "-"
-      End
-      Begin VB.Menu mnuNpcElem 
-         Caption         =   "jj"
-         Index           =   0
+      Begin VB.Menu mnuNpcComerciar 
+         Caption         =   "Comerciar"
          Visible         =   0   'False
       End
    End
@@ -758,29 +755,6 @@ Private Sub CreateEvent()
      endEvent = DirectX.CreateEvent(Me)
 End Sub
 
-
-Private Function LoadSoundBufferFromFile(sFile As String) As Integer
-    On Error GoTo err_out
-        With gD
-            .lFlags = DSBCAPS_CTRLVOLUME Or DSBCAPS_CTRLPAN Or DSBCAPS_CTRLFREQUENCY Or DSBCAPS_CTRLPOSITIONNOTIFY
-            .lReserved = 0
-        End With
-        Set gDSB = DirectSound.CreateSoundBufferFromFile(DirSound & sFile, gD, gW)
-        With Pos(0)
-            .hEventNotify = endEvent
-            .lOffset = -1
-        End With
-        DirectX.SetEvent endEvent
-        'gDSB.SetNotificationPositions 1, POS()
-    Exit Function
-
-err_out:
-    MsgBox "Error creating sound buffer", vbApplicationModal
-    LoadSoundBufferFromFile = 1
-
-
-End Function
-
 Public Sub ActivarMacroHechizos()
     If Not hlst.Visible Then
         Call AddtoRichTextBox(frmMain.RecTxt, "Debes tener seleccionado el hechizo para activar el auto-lanzar", 0, 200, 200, False, True, False)
@@ -817,23 +791,9 @@ End Sub
 Public Sub DibujarSatelite()
 PicAU.Visible = True
 End Sub
+
 Public Sub DesDibujarSatelite()
 PicAU.Visible = False
-End Sub
-
-
-
-
-Public Sub Play(ByVal Nombre As String, Optional ByVal LoopSound As Boolean = False)
-    If Fx = 1 Then Exit Sub
-    Call LoadSoundBufferFromFile(Nombre)
-
-    If LoopSound Then
-        gDSB.Play DSBPLAY_LOOPING
-    Else
-        gDSB.Play DSBPLAY_DEFAULT
-    End If
-
 End Sub
 
 Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
@@ -856,14 +816,6 @@ Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
     End If
 End Sub
 
-Public Sub StopSound()
-    On Local Error Resume Next
-    If Not gDSB Is Nothing Then
-            gDSB.Stop
-            gDSB.SetCurrentPosition 0
-    End If
-End Sub
-
 Private Sub FPS_Timer()
 
 If logged And Not frmMain.Visible Then
@@ -876,6 +828,27 @@ End Sub
 
 Private Sub Macro_Timer()
     PuedeMacrear = True
+End Sub
+
+Private Sub mnuEquipar_Click()
+    Call EquiparItem
+End Sub
+
+Private Sub mnuNPCComerciar_Click()
+    SendData "LC" & tX & "," & tY
+    SendData "/COMERCIAR"
+End Sub
+
+Private Sub mnuNpcDesc_Click()
+    SendData "LC" & tX & "," & tY
+End Sub
+
+Private Sub mnuTirar_Click()
+    Call TirarItem
+End Sub
+
+Private Sub mnuUsar_Click()
+    Call UsarItem
 End Sub
 
 Private Sub PicAU_Click()
@@ -1253,10 +1226,10 @@ Private Sub Image3_Click(Index As Integer)
 End Sub
 
 Private Sub Label1_Click()
-    Dim i As Integer
-    For i = 1 To NUMSKILLS
-        frmSkills3.Text1(i).Caption = UserSkills(i)
-    Next i
+    Dim I As Integer
+    For I = 1 To NUMSKILLS
+        frmSkills3.Text1(I).Caption = UserSkills(I)
+    Next I
     Alocados = SkillPoints
     frmSkills3.Puntos.Caption = "Puntos:" & SkillPoints
     frmSkills3.Show , frmMain
@@ -1354,9 +1327,9 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
     If KeyCode = vbKeyReturn Then
         If Left$(stxtbuffer, 1) = "/" Then
             If UCase(Left$(stxtbuffer, 8)) = "/PASSWD " Then
-                    Dim J$
-                    J$ = MD5String(Right$(stxtbuffer, Len(stxtbuffer) - 8))
-                    stxtbuffer = "/PASSWD " & J$
+                    Dim j$
+                    j$ = MD5String(Right$(stxtbuffer, Len(stxtbuffer) - 8))
+                    stxtbuffer = "/PASSWD " & j$
             ElseIf UCase$(stxtbuffer) = "/FUNDARCLAN" Then
                 frmEligeAlineacion.Show vbModeless, Me
                 stxtbuffer = ""
@@ -1473,7 +1446,7 @@ Private Sub Socket1_Connect()
 End Sub
 
 Private Sub Socket1_Disconnect()
-    Dim i As Long
+    Dim I As Long
     
     LastSecond = 0
     Second.Enabled = False
@@ -1489,11 +1462,11 @@ Private Sub Socket1_Disconnect()
     frmConnect.Visible = True
     
     On Local Error Resume Next
-    For i = 0 To Forms.Count - 1
-        If Forms(i).Name <> Me.Name And Forms(i).Name <> frmConnect.Name Then
-            Unload Forms(i)
+    For I = 0 To Forms.Count - 1
+        If Forms(I).Name <> Me.Name And Forms(I).Name <> frmConnect.Name Then
+            Unload Forms(I)
         End If
-    Next i
+    Next I
     On Local Error GoTo 0
     
     frmMain.Visible = False
@@ -1515,13 +1488,13 @@ Private Sub Socket1_Disconnect()
     UserEmail = ""
     bO = 100
     
-    For i = 1 To NUMSKILLS
-        UserSkills(i) = 0
-    Next i
+    For I = 1 To NUMSKILLS
+        UserSkills(I) = 0
+    Next I
 
-    For i = 1 To NUMATRIBUTOS
-        UserAtributos(i) = 0
-    Next i
+    For I = 1 To NUMATRIBUTOS
+        UserAtributos(I) = 0
+    Next I
 
     SkillPoints = 0
     Alocados = 0
@@ -1620,7 +1593,7 @@ If tX >= MinXBorder And tY >= MinYBorder And _
     If MapData(tX, tY).CharIndex > 0 Then
         If charlist(MapData(tX, tY).CharIndex).invisible = False Then
         
-            Dim i As Long
+            Dim I As Long
             Dim m As New frmMenuseFashion
             
             Load m
@@ -1684,7 +1657,7 @@ End Sub
 #If UsarWrench <> 1 Then
 
 Private Sub Winsock1_Close()
-    Dim i As Long
+    Dim I As Long
     
     Debug.Print "WInsock Close"
     
@@ -1704,11 +1677,11 @@ Private Sub Winsock1_Close()
     frmConnect.Visible = True
     
     On Local Error Resume Next
-    For i = 0 To Forms.Count - 1
-        If Forms(i).Name <> Me.Name And Forms(i).Name <> frmConnect.Name Then
-            Unload Forms(i)
+    For I = 0 To Forms.Count - 1
+        If Forms(I).Name <> Me.Name And Forms(I).Name <> frmConnect.Name Then
+            Unload Forms(I)
         End If
-    Next i
+    Next I
     On Local Error GoTo 0
     
     frmMain.Visible = False
@@ -1722,13 +1695,13 @@ Private Sub Winsock1_Close()
     UserEmail = ""
     bO = 100
     
-    For i = 1 To NUMSKILLS
-        UserSkills(i) = 0
-    Next i
+    For I = 1 To NUMSKILLS
+        UserSkills(I) = 0
+    Next I
 
-    For i = 1 To NUMATRIBUTOS
-        UserAtributos(i) = 0
-    Next i
+    For I = 1 To NUMATRIBUTOS
+        UserAtributos(I) = 0
+    Next I
 
     SkillPoints = 0
     Alocados = 0

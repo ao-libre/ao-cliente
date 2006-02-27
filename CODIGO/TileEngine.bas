@@ -363,7 +363,7 @@ End Enum
 
 Sub CargarCabezas()
 On Error Resume Next
-Dim N As Integer, i As Integer, Numheads As Integer, Index As Integer
+Dim N As Integer, I As Integer, Numheads As Integer, Index As Integer
 
 Dim Miscabezas() As tIndiceCabeza
 
@@ -380,13 +380,13 @@ Get #N, , Numheads
 ReDim HeadData(0 To Numheads + 1) As HeadData
 ReDim Miscabezas(0 To Numheads + 1) As tIndiceCabeza
 
-For i = 1 To Numheads
-    Get #N, , Miscabezas(i)
-    InitGrh HeadData(i).Head(1), Miscabezas(i).Head(1), 0
-    InitGrh HeadData(i).Head(2), Miscabezas(i).Head(2), 0
-    InitGrh HeadData(i).Head(3), Miscabezas(i).Head(3), 0
-    InitGrh HeadData(i).Head(4), Miscabezas(i).Head(4), 0
-Next i
+For I = 1 To Numheads
+    Get #N, , Miscabezas(I)
+    InitGrh HeadData(I).Head(1), Miscabezas(I).Head(1), 0
+    InitGrh HeadData(I).Head(2), Miscabezas(I).Head(2), 0
+    InitGrh HeadData(I).Head(3), Miscabezas(I).Head(3), 0
+    InitGrh HeadData(I).Head(4), Miscabezas(I).Head(4), 0
+Next I
 
 Close #N
 
@@ -394,7 +394,7 @@ End Sub
 
 Sub CargarCascos()
 On Error Resume Next
-Dim N As Integer, i As Integer, NumCascos As Integer, Index As Integer
+Dim N As Integer, I As Integer, NumCascos As Integer, Index As Integer
 
 Dim Miscabezas() As tIndiceCabeza
 
@@ -411,13 +411,13 @@ Get #N, , NumCascos
 ReDim CascoAnimData(0 To NumCascos + 1) As HeadData
 ReDim Miscabezas(0 To NumCascos + 1) As tIndiceCabeza
 
-For i = 1 To NumCascos
-    Get #N, , Miscabezas(i)
-    InitGrh CascoAnimData(i).Head(1), Miscabezas(i).Head(1), 0
-    InitGrh CascoAnimData(i).Head(2), Miscabezas(i).Head(2), 0
-    InitGrh CascoAnimData(i).Head(3), Miscabezas(i).Head(3), 0
-    InitGrh CascoAnimData(i).Head(4), Miscabezas(i).Head(4), 0
-Next i
+For I = 1 To NumCascos
+    Get #N, , Miscabezas(I)
+    InitGrh CascoAnimData(I).Head(1), Miscabezas(I).Head(1), 0
+    InitGrh CascoAnimData(I).Head(2), Miscabezas(I).Head(2), 0
+    InitGrh CascoAnimData(I).Head(3), Miscabezas(I).Head(3), 0
+    InitGrh CascoAnimData(I).Head(4), Miscabezas(I).Head(4), 0
+Next I
 
 Close #N
 
@@ -425,7 +425,7 @@ End Sub
 
 Sub CargarCuerpos()
 On Error Resume Next
-Dim N As Integer, i As Integer
+Dim N As Integer, I As Integer
 Dim NumCuerpos As Integer
 Dim MisCuerpos() As tIndiceCuerpo
 
@@ -442,22 +442,22 @@ Get #N, , NumCuerpos
 ReDim BodyData(0 To NumCuerpos + 1) As BodyData
 ReDim MisCuerpos(0 To NumCuerpos + 1) As tIndiceCuerpo
 
-For i = 1 To NumCuerpos
-    Get #N, , MisCuerpos(i)
-    InitGrh BodyData(i).Walk(1), MisCuerpos(i).Body(1), 0
-    InitGrh BodyData(i).Walk(2), MisCuerpos(i).Body(2), 0
-    InitGrh BodyData(i).Walk(3), MisCuerpos(i).Body(3), 0
-    InitGrh BodyData(i).Walk(4), MisCuerpos(i).Body(4), 0
-    BodyData(i).HeadOffset.X = MisCuerpos(i).HeadOffsetX
-    BodyData(i).HeadOffset.Y = MisCuerpos(i).HeadOffsetY
-Next i
+For I = 1 To NumCuerpos
+    Get #N, , MisCuerpos(I)
+    InitGrh BodyData(I).Walk(1), MisCuerpos(I).Body(1), 0
+    InitGrh BodyData(I).Walk(2), MisCuerpos(I).Body(2), 0
+    InitGrh BodyData(I).Walk(3), MisCuerpos(I).Body(3), 0
+    InitGrh BodyData(I).Walk(4), MisCuerpos(I).Body(4), 0
+    BodyData(I).HeadOffset.X = MisCuerpos(I).HeadOffsetX
+    BodyData(I).HeadOffset.Y = MisCuerpos(I).HeadOffsetY
+Next I
 
 Close #N
 
 End Sub
 Sub CargarFxs()
 On Error Resume Next
-Dim N As Integer, i As Integer
+Dim N As Integer, I As Integer
 Dim NumFxs As Integer
 Dim MisFxs() As tIndiceFx
 
@@ -474,12 +474,12 @@ Get #N, , NumFxs
 ReDim FxData(0 To NumFxs + 1) As FxData
 ReDim MisFxs(0 To NumFxs + 1) As tIndiceFx
 
-For i = 1 To NumFxs
-    Get #N, , MisFxs(i)
-    Call InitGrh(FxData(i).Fx, MisFxs(i).Animacion, 1)
-    FxData(i).OffsetX = MisFxs(i).OffsetX
-    FxData(i).OffsetY = MisFxs(i).OffsetY
-Next i
+For I = 1 To NumFxs
+    Get #N, , MisFxs(I)
+    Call InitGrh(FxData(I).Fx, MisFxs(I).Animacion, 1)
+    FxData(I).OffsetX = MisFxs(I).OffsetX
+    FxData(I).OffsetY = MisFxs(I).OffsetY
+Next I
 
 Close #N
 
@@ -487,7 +487,7 @@ End Sub
 
 Sub CargarTips()
 On Error Resume Next
-Dim N As Integer, i As Integer
+Dim N As Integer, I As Integer
 Dim NumTips As Integer
 
 N = FreeFile
@@ -502,9 +502,9 @@ Get #N, , NumTips
 'Resize array
 ReDim Tips(1 To NumTips) As String * 255
 
-For i = 1 To NumTips
-    Get #N, , Tips(i)
-Next i
+For I = 1 To NumTips
+    Get #N, , Tips(I)
+Next I
 
 Close #N
 
@@ -512,7 +512,7 @@ End Sub
 
 Sub CargarArrayLluvia()
 On Error Resume Next
-Dim N As Integer, i As Integer
+Dim N As Integer, I As Integer
 Dim Nu As Integer
 
 N = FreeFile
@@ -527,9 +527,9 @@ Get #N, , Nu
 'Resize array
 ReDim bLluvia(1 To Nu) As Byte
 
-For i = 1 To Nu
-    Get #N, , bLluvia(i)
-Next i
+For I = 1 To Nu
+    Get #N, , bLluvia(I)
+Next I
 
 Close #N
 
@@ -766,10 +766,10 @@ Public Sub DoFogataFx()
 If Fx = 0 Then
     If bFogata Then
         bFogata = HayFogata()
-        If Not bFogata Then frmMain.StopSound
+        If Not bFogata Then Audio.StopWave
     Else
         bFogata = HayFogata()
-        If bFogata Then frmMain.Play "fuego.wav", True
+        If bFogata Then Call Audio.PlayWave("fuego.wav", True)
     End If
 End If
 End Sub
@@ -927,17 +927,17 @@ End Sub
 
 
 Function HayFogata() As Boolean
-Dim J As Integer, k As Integer
-For J = UserPos.X - 8 To UserPos.X + 8
+Dim j As Integer, k As Integer
+For j = UserPos.X - 8 To UserPos.X + 8
     For k = UserPos.Y - 6 To UserPos.Y + 6
-        If InMapBounds(J, k) Then
-            If MapData(J, k).ObjGrh.GrhIndex = GrhFogata Then
+        If InMapBounds(j, k) Then
+            If MapData(j, k).ObjGrh.GrhIndex = GrhFogata Then
                     HayFogata = True
                     Exit Function
             End If
         End If
     Next k
-Next J
+Next j
 End Function
 
 Function NextOpenChar() As Integer
@@ -1893,16 +1893,14 @@ Public Function RenderSounds()
         If bRain Then
             If bTecho Then
                 If frmMain.IsPlaying <> plLluviain Then
-                    Call frmMain.StopSound
-                    Call frmMain.Play("lluviain.wav", True)
+                    Call Audio.PlayWave("lluviain.wav", True)
                     frmMain.IsPlaying = plLluviain
                 End If
                 'Call StopSound("lluviaout.MP3")
                 'Call PlaySound("lluviain.MP3", True)
             Else
                 If frmMain.IsPlaying <> plLluviaout Then
-                    Call frmMain.StopSound
-                    Call frmMain.Play("lluviaout.wav", True)
+                    Call Audio.PlayWave("lluviaout.wav", True)
                     frmMain.IsPlaying = plLluviaout
                 End If
                 'Call StopSound("lluviain.MP3")
@@ -2024,10 +2022,6 @@ ReDim MapData(XMinMapSize To XMaxMapSize, YMinMapSize To YMaxMapSize) As MapBloc
 
 
 DirectDraw.SetCooperativeLevel DisplayFormhWnd, DDSCL_NORMAL
-
-If Musica = 0 Or Fx = 0 Then
-    DirectSound.SetCooperativeLevel DisplayFormhWnd, DSSCL_PRIORITY
-End If
 
 'Primary Surface
 ' Fill the surface description structure
