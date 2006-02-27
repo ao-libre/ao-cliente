@@ -310,6 +310,11 @@ Sub HandleData(ByVal Rdata As String)
 #If SeguridadAlkon Then
             'obtengo todo
             Call CheatingDeath.MoveCharDecrypt(Rdata, CharIndex, X, Y)
+#Else
+            Rdata = Right$(Rdata, Len(Rdata) - 1)
+            CharIndex = Val(ReadField(1, Rdata, Asc(",")))
+            X = Val(ReadField(2, Rdata, Asc(",")))
+            Y = Val(ReadField(3, Rdata, Asc(",")))
 #End If
 
             'antigua codificacion del mensaje (decodificada x un chitero)
@@ -340,7 +345,12 @@ Sub HandleData(ByVal Rdata As String)
             
 #If SeguridadAlkon Then
             'obtengo todo
-            Call CheatingDeath.MoveNPCDecrypt(Right$(Rdata, Len(Rdata) - 1), CharIndex, X, Y, Left(sData, 1) <> "*")
+            Call CheatingDeath.MoveNPCDecrypt(Right$(Rdata, Len(Rdata) - 1), CharIndex, X, Y, Left$(sData, 1) <> "*")
+#Else
+            Rdata = Right$(Rdata, Len(Rdata) - 1)
+            CharIndex = Val(ReadField(1, Rdata, Asc(",")))
+            X = Val(ReadField(2, Rdata, Asc(",")))
+            Y = Val(ReadField(3, Rdata, Asc(",")))
 #End If
             
             'antigua codificacion del mensaje (decodificada x un chitero)
@@ -386,7 +396,7 @@ Sub HandleData(ByVal Rdata As String)
                 Case "E": UserExp = Val(Right$(sData, Len(sData) - 3))
             End Select
             
-            frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+            frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
             frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
             frmMain.Hpshp.Width = (((UserMinHP / 100) / (UserMaxHP / 100)) * 94)
             
@@ -801,7 +811,7 @@ Sub HandleData(ByVal Rdata As String)
             UserLvl = Val(ReadField(8, Rdata, 44))
             UserPasarNivel = Val(ReadField(9, Rdata, 44))
             UserExp = Val(ReadField(10, Rdata, 44))
-            frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+            frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
             frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
             frmMain.Hpshp.Width = (((UserMinHP / 100) / (UserMaxHP / 100)) * 94)
             
