@@ -1,3 +1,5 @@
+Client: Concurrent Versions System (CVSNT) 2.5.02 (Servalan) Build 2064 (client/server)
+Server: Concurrent Versions System (CVS) 1.11.20 (client/server)
 Attribute VB_Name = "Mod_Declaraciones"
 'Argentum Online 0.9.0.9
 '
@@ -327,8 +329,8 @@ Public DownloadingMap As Boolean 'Currently downloading a map from server
 Public UserMap As Integer
 
 'String contants
-Public ENDC As String 'Endline character for talking with server
-Public ENDL As String 'Holds the Endline character for textboxes
+Public Const ENDC As String * 1 = vbNullString 'Endline character for talking with server
+Public Const ENDL As String * 2 = vbCrLf      'Holds the Endline character for textboxes
 
 'Control
 Public prgRun As Boolean 'When true the program ends

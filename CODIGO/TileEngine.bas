@@ -2085,20 +2085,7 @@ InitTileEngine = True
 
 End Function
 
-
-
-
-'Sub ShowNextFrame(DisplayFormTop As Integer, DisplayFormLeft As Integer)
 Sub ShowNextFrame()
-
-'[CODE]:MatuX'
-'
-'  ESTA FUNCIÓN FUE MOVIDA AL LOOP PRINCIPAL EN Mod_General
-'  PARA QUE SEA INLINE. EN OTRAS PALABRAS, LO QUE ESTÁ ACÁ
-'  YA NO ES LLAMADO POR NINGUNA RUTINA.
-'
-'[END]'
-
 '***********************************************
 'Updates and draws next frame to screen
 '***********************************************
@@ -2106,49 +2093,38 @@ Sub ShowNextFrame()
     Static OffsetCounterY As Integer
 
     If EngineRun Then
-        '  '****** Move screen Left and Right if needed ******
-            If AddtoUserPos.X <> 0 Then
-                OffsetCounterX = (OffsetCounterX - (8 * Sgn(AddtoUserPos.X)))
-                If Abs(OffsetCounterX) >= Abs(TilePixelWidth * AddtoUserPos.X) Then
-                    OffsetCounterX = 0
-                    AddtoUserPos.X = 0
-                    UserMoving = 0
-                End If
-            'End If
-
-            '****** Move screen Up and Down if needed ******
-            'If AddtoUserPos.Y <> 0 Then
-            ElseIf AddtoUserPos.Y <> 0 Then
-                OffsetCounterY = OffsetCounterY - (8 * Sgn(AddtoUserPos.Y))
-                If Abs(OffsetCounterY) >= Abs(TilePixelHeight * AddtoUserPos.Y) Then
-                    OffsetCounterY = 0
-                    AddtoUserPos.Y = 0
-                    UserMoving = 0
-                End If
+        '****** Move screen Left and Right if needed ******
+        If AddtoUserPos.X <> 0 Then
+            OffsetCounterX = (OffsetCounterX - (8 * Sgn(AddtoUserPos.X)))
+            If Abs(OffsetCounterX) >= Abs(TilePixelWidth * AddtoUserPos.X) Then
+                OffsetCounterX = 0
+                AddtoUserPos.X = 0
+                UserMoving = 0
             End If
+        '****** Move screen Up and Down if needed ******
+        ElseIf AddtoUserPos.Y <> 0 Then
+            OffsetCounterY = OffsetCounterY - (8 * Sgn(AddtoUserPos.Y))
+            If Abs(OffsetCounterY) >= Abs(TilePixelHeight * AddtoUserPos.Y) Then
+                OffsetCounterY = 0
+                AddtoUserPos.Y = 0
+                UserMoving = 0
+            End If
+        End If
 
-            '****** Update screen ******
-            Call RenderScreen(UserPos.X - AddtoUserPos.X, UserPos.Y - AddtoUserPos.Y, OffsetCounterX, OffsetCounterY)
-            'Call DoNightFX
-            'Call DoLightFogata(UserPos.x - AddtoUserPos.x, UserPos.y - AddtoUserPos.y, OffsetCounterX, OffsetCounterY)
-            Call MostrarFlags
-            Call Dialogos.MostrarTexto
-            Call DibujarCartel
-            
-            Call DrawBackBufferSurface
-            
-            'Call DibujarInv(frmMain.picInv.hWnd, 0)
-            FramesPerSecCounter = FramesPerSecCounter + 1
+        '****** Update screen ******
+        Call RenderScreen(UserPos.X - AddtoUserPos.X, UserPos.Y - AddtoUserPos.Y, OffsetCounterX, OffsetCounterY)
+
+        If IScombate Then Call Dialogos.DrawText(260, 260, "MODO COMBATE", vbRed)
+        
+        Call Dialogos.MostrarTexto
+        Call DibujarCartel
+        
+        Call DrawBackBufferSurface
+        
+        FramesPerSecCounter = FramesPerSecCounter + 1
     End If
 End Sub
-'[CODE 000]:MatuX
-' La hice inline
-Sub MostrarFlags()
-If IScombate Then
-    Call Dialogos.DrawText(260, 260, "MODO COMBATE", vbRed)
-End If
-'[END]'
-End Sub
+
 Sub CrearGrh(GrhIndex As Integer, Index As Integer)
 ReDim Preserve Grh(1 To Index) As Grh
 Grh(Index).FrameCounter = 1
