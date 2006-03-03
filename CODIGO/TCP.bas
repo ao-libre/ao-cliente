@@ -789,7 +789,7 @@ Sub HandleData(ByVal Rdata As String)
             Rdata = Right$(Rdata, Len(Rdata) - 3)
             CharIndex = Val(ReadField(1, Rdata, 44))
             charlist(CharIndex).Fx = Val(ReadField(2, Rdata, 44))
-            charlist(CharIndex).FxLoopTimes = 1 'Val(ReadField(3, Rdata, 44))
+            charlist(CharIndex).FxLoopTimes = Val(ReadField(3, Rdata, 44))
             Exit Sub
         Case "AYM"                  ' >>>>> Pone Mensaje en Cola GM :: AYM
             Dim N As String, n2 As String
