@@ -915,11 +915,6 @@ If UserClase = "" Then
     Exit Function
 End If
 
-If UserClase = "" Then
-    MsgBox "Seleccione la clase del personaje."
-    Exit Function
-End If
-
 If UserHogar = "" Then
     MsgBox "Seleccione el hogar del personaje."
     Exit Function
@@ -960,8 +955,8 @@ Select Case Index
         
         UserName = txtNombre.Text
         
-        If Right(UserName, 1) = " " Then
-                UserName = RTrim(UserName)
+        If Right$(UserName, 1) = " " Then
+                UserName = RTrim$(UserName)
                 MsgBox "Nombre invalido, se han removido los espacios al final del nombre"
         End If
         
