@@ -395,7 +395,7 @@ End Sub
 Private Sub Rechazar_Click()
 Load frmCommet
 frmCommet.T = RECHAZOPJ
-frmCommet.Nombre = Right(Nombre, Len(Nombre) - 7)
+frmCommet.Nombre = Right$(Nombre, Len(Nombre) - 7)
 frmCommet.Caption = "Ingrese motivo para rechazo"
 frmCommet.Show vbModeless, frmCharInfo
 

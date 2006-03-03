@@ -134,6 +134,15 @@ ElseIf T = ALIANZA Then
     Call SendData("ALLIEOFF" & Nombre & "," & Replace(Text1, vbCrLf, "º"))
 ElseIf T = RECHAZOPJ Then
     Call SendData("RECHAZAR" & Nombre & "," & Replace(Replace(Text1.Text, ",", " "), vbCrLf, " "))
+    'Sacamos el char de la lista de aspirantes
+    Dim i As Long
+    For i = 0 To frmGuildLeader.solicitudes.ListCount - 1
+        If frmGuildLeader.solicitudes.List(i) = Nombre Then
+            frmGuildLeader.solicitudes.RemoveItem i
+            Exit For
+        End If
+    Next i
+    
     Me.Hide
     Unload frmCharInfo
     'Call SendData("GLINFO")
