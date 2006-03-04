@@ -755,9 +755,9 @@ charlist(CharIndex).heading = nHeading
 If UserEstado <> 1 Then Call DoPasosFx(CharIndex)
 
 'areas viejos
-'If (Y < MinLimiteY) Or (Y > MaxLimiteY) Or (X < MinLimiteX) Or (X > MaxLimiteX) Then
-'    Call EraseChar(CharIndex)
-'End If
+If (nY < MinLimiteY) Or (nY > MaxLimiteY) Or (nX < MinLimiteX) Or (nX > MaxLimiteX) Then
+    Call EraseChar(CharIndex)
+End If
 
 End Sub
 
@@ -871,9 +871,9 @@ End If
 
 If Not EstaPCarea(CharIndex) Then Dialogos.QuitarDialogo (CharIndex)
 
-'If (Y < MinLimiteY) Or (Y > MaxLimiteY) Or (X < MinLimiteX) Or (X > MaxLimiteX) Then
-'    Call EraseChar(CharIndex)
-'End If
+If (nY < MinLimiteY) Or (nY > MaxLimiteY) Or (nX < MinLimiteX) Or (nX > MaxLimiteX) Then
+    Call EraseChar(CharIndex)
+End If
 
 End Sub
 
@@ -967,7 +967,7 @@ On Error GoTo ErrorHandler
 
 Dim Grh As Integer
 Dim Frame As Integer
-Dim TempInt As Integer
+Dim tempint As Integer
 
 
 
@@ -980,11 +980,11 @@ Open IniPath & "Graficos.ind" For Binary Access Read As #1
 Seek #1, 1
 
 Get #1, , MiCabecera
-Get #1, , TempInt
-Get #1, , TempInt
-Get #1, , TempInt
-Get #1, , TempInt
-Get #1, , TempInt
+Get #1, , tempint
+Get #1, , tempint
+Get #1, , tempint
+Get #1, , tempint
+Get #1, , tempint
 
 'Fill Grh List
 
@@ -1957,7 +1957,7 @@ Sub LoadGraphics()
                 SurfaceDB.CargarGrafico loopc
                 
                 If loopc > (iLoopUpdate + (Config_Inicio.NumeroDeBMPs / 80)) Then
-                    AddtoRichTextBox frmCargando.status, ".", , , , , , True
+                    AddtoRichTextBox frmCargando.Status, ".", , , , , , True
                     iLoopUpdate = loopc
                 End If
             Next loopc
@@ -1975,7 +1975,7 @@ Sub LoadGraphics()
         RLluvia(4).Left = 0:     RLluvia(5).Left = 128:   RLluvia(6).Left = 256:   RLluvia(7).Left = 384
         RLluvia(4).Right = 128:  RLluvia(5).Right = 256:  RLluvia(6).Right = 384:  RLluvia(7).Right = 512
         RLluvia(4).Bottom = 256: RLluvia(5).Bottom = 256: RLluvia(6).Bottom = 256: RLluvia(7).Bottom = 256
-        AddtoRichTextBox frmCargando.status, "Hecho.", , , , 1, , False
+        AddtoRichTextBox frmCargando.Status, "Hecho.", , , , 1, , False
 End Sub
 
 
@@ -2078,7 +2078,7 @@ LTLluvia(2) = 480
 LTLluvia(3) = 608
 LTLluvia(4) = 736
 
-AddtoRichTextBox frmCargando.status, "Cargando Gráficos....", 0, 0, 0, , , True
+AddtoRichTextBox frmCargando.Status, "Cargando Gráficos....", 0, 0, 0, , , True
 Call LoadGraphics
 
 InitTileEngine = True

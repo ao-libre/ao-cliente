@@ -65,7 +65,7 @@ Sub HandleData(ByVal Rdata As String)
     Dim X As Integer
     Dim Y As Integer
     Dim CharIndex As Integer
-    Dim TempInt As Integer
+    Dim tempint As Integer
     Dim tempstr As String
     Dim slot As Integer
     Dim MapNumber As String
@@ -430,7 +430,7 @@ Sub HandleData(ByVal Rdata As String)
             If FileExist(DirMapas & "Mapa" & UserMap & ".map", vbNormal) Then
                 Open DirMapas & "Mapa" & UserMap & ".map" For Binary As #1
                 Seek #1, 1
-                Get #1, , TempInt
+                Get #1, , tempint
                 Close #1
 '                If tempint = Val(ReadField(2, Rdata, 44)) Then
                     'Si es la vers correcta cambiamos el mapa
@@ -649,12 +649,12 @@ Sub HandleData(ByVal Rdata As String)
             charlist(CharIndex).heading = Val(ReadField(4, Rdata, 44))
             charlist(CharIndex).Fx = Val(ReadField(7, Rdata, 44))
             charlist(CharIndex).FxLoopTimes = Val(ReadField(8, Rdata, 44))
-            TempInt = Val(ReadField(5, Rdata, 44))
-            If TempInt <> 0 Then charlist(CharIndex).Arma = WeaponAnimData(TempInt)
-            TempInt = Val(ReadField(6, Rdata, 44))
-            If TempInt <> 0 Then charlist(CharIndex).Escudo = ShieldAnimData(TempInt)
-            TempInt = Val(ReadField(9, Rdata, 44))
-            If TempInt <> 0 Then charlist(CharIndex).Casco = CascoAnimData(TempInt)
+            tempint = Val(ReadField(5, Rdata, 44))
+            If tempint <> 0 Then charlist(CharIndex).Arma = WeaponAnimData(tempint)
+            tempint = Val(ReadField(6, Rdata, 44))
+            If tempint <> 0 Then charlist(CharIndex).Escudo = ShieldAnimData(tempint)
+            tempint = Val(ReadField(9, Rdata, 44))
+            If tempint <> 0 Then charlist(CharIndex).Casco = CascoAnimData(tempint)
 
             Call RefreshAllChars
             Exit Sub
@@ -708,9 +708,9 @@ Sub HandleData(ByVal Rdata As String)
                 End If
             '[END]'
             Exit Sub
-        'Case "CA"
-        '    CambioDeArea Asc(Mid(sData, 3, 1)), Asc(Mid(sData, 4, 1))
-        '    Exit Sub
+        Case "CA"
+            CambioDeArea Asc(Mid(sData, 3, 1)), Asc(Mid(sData, 4, 1))
+            Exit Sub
     End Select
 
     Select Case Left$(sData, 3)
