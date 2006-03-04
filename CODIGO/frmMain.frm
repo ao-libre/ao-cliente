@@ -217,10 +217,10 @@ Begin VB.Form frmMain
          Left            =   555
          ScaleHeight     =   160
          ScaleMode       =   3  'Pixel
-         ScaleWidth      =   161
+         ScaleWidth      =   160
          TabIndex        =   8
          Top             =   2400
-         Width           =   2415
+         Width           =   2400
       End
       Begin VB.ListBox hlst 
          BackColor       =   &H00000000&
@@ -574,7 +574,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
