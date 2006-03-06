@@ -157,15 +157,22 @@ Private Sub Form_Deactivate()
 End Sub
 
 Private Sub text1_Change()
-
-If Val(Text1.Text) < 0 Then
-    Text1.Text = MAX_INVENTORY_OBJS
-End If
-
-If Val(Text1.Text) > MAX_INVENTORY_OBJS And Inventario.SelectedItem <> FLAGORO Then
-    Text1.Text = 1
-End If
-
+On Error GoTo errHandler
+    If Val(Text1.Text) < 0 Then
+        Text1.Text = MAX_INVENTORY_OBJS
+    End If
+    
+    If Val(Text1.Text) > MAX_INVENTORY_OBJS Then
+        If Inventario.SelectedItem <> FLAGORO Or Val(Text1.Text) > UserGLD Then
+            Text1.Text = "1"
+        End If
+    End If
+    
+    Exit Sub
+    
+errHandler:
+    'If we got here the user may have pasted (Shift + Insert) a REALLY large number, causing an overflow, so we set amount back to 1
+    Text1.Text = "1"
 End Sub
 
 
