@@ -63,6 +63,7 @@ Form=CODIGO\frmEligeAlineacion.frm
 Class=clsAudio; CODIGO\clsAudio.cls
 Class=clsGrapchicalInventory; CODIGO\clsGrapchicalInventory.cls
 Class=clsGuildDlg; CODIGO\clsGuildDlg.cls
+Module=ModAreas; CODIGO\ModAreas.bas
 IconForm="frmMain"
 Startup="Sub Main"
 HelpFile=""
