@@ -155,7 +155,7 @@ End Type
 'Apariencia del personaje
 Public Type Char
     Active As Byte
-    heading As Byte
+    Heading As Byte ' As E_Heading ?
     Pos As Position
     
     iHead As Integer
@@ -583,7 +583,7 @@ End Sub
 
 
 
-Sub MakeChar(ByVal CharIndex As Integer, ByVal Body As Integer, ByVal Head As Integer, ByVal heading As Byte, ByVal X As Integer, ByVal Y As Integer, ByVal Arma As Integer, ByVal Escudo As Integer, ByVal Casco As Integer)
+Sub MakeChar(ByVal CharIndex As Integer, ByVal Body As Integer, ByVal Head As Integer, ByVal Heading As Byte, ByVal X As Integer, ByVal Y As Integer, ByVal Arma As Integer, ByVal Escudo As Integer, ByVal Casco As Integer)
 
 On Error Resume Next
 
@@ -607,7 +607,7 @@ charlist(CharIndex).Arma.WeaponAttack = 0
 charlist(CharIndex).Escudo = ShieldAnimData(Escudo)
 charlist(CharIndex).Casco = CascoAnimData(Casco)
 
-charlist(CharIndex).heading = heading
+charlist(CharIndex).Heading = Heading
 
 'Reset moving stats
 charlist(CharIndex).Moving = 0
@@ -707,7 +707,7 @@ If Grh.GrhIndex <> 0 Then Grh.SpeedCounter = GrhData(Grh.GrhIndex).Speed
 
 End Sub
 
-Sub MoveCharbyHead(CharIndex As Integer, nHeading As Byte)
+Sub MoveCharbyHead(ByVal CharIndex As Integer, ByVal nHeading As E_Heading)
 '*****************************************************************
 'Starts the movement of a character in nHeading direction
 '*****************************************************************
@@ -724,16 +724,16 @@ Y = charlist(CharIndex).Pos.Y
 'Figure out which way to move
 Select Case nHeading
 
-    Case NORTH
+    Case E_Heading.NORTH
         addY = -1
 
-    Case EAST
+    Case E_Heading.EAST
         addX = 1
 
-    Case SOUTH
+    Case E_Heading.SOUTH
         addY = 1
     
-    Case WEST
+    Case E_Heading.WEST
         addX = -1
         
 End Select
@@ -750,7 +750,7 @@ charlist(CharIndex).MoveOffset.X = -1 * (TilePixelWidth * addX)
 charlist(CharIndex).MoveOffset.Y = -1 * (TilePixelHeight * addY)
 
 charlist(CharIndex).Moving = 1
-charlist(CharIndex).heading = nHeading
+charlist(CharIndex).Heading = nHeading
 
 If UserEstado <> 1 Then Call DoPasosFx(CharIndex)
 
@@ -813,7 +813,7 @@ End If
 End Sub
 
 
-Sub MoveCharbyPos(CharIndex As Integer, nX As Integer, nY As Integer)
+Sub MoveCharbyPos(ByVal CharIndex As Integer, ByVal nX As Integer, ByVal nY As Integer)
 
 On Error Resume Next
 
@@ -821,7 +821,7 @@ Dim X As Integer
 Dim Y As Integer
 Dim addX As Integer
 Dim addY As Integer
-Dim nHeading As Byte
+Dim nHeading As E_Heading
 
 
 
@@ -834,19 +834,19 @@ addX = nX - X
 addY = nY - Y
 
 If Sgn(addX) = 1 Then
-    nHeading = EAST
+    nHeading = E_Heading.EAST
 End If
 
 If Sgn(addX) = -1 Then
-    nHeading = WEST
+    nHeading = E_Heading.WEST
 End If
 
 If Sgn(addY) = -1 Then
-    nHeading = NORTH
+    nHeading = E_Heading.NORTH
 End If
 
 If Sgn(addY) = 1 Then
-    nHeading = SOUTH
+    nHeading = E_Heading.SOUTH
 End If
 
 MapData(nX, nY).CharIndex = CharIndex
@@ -859,12 +859,12 @@ charlist(CharIndex).MoveOffset.X = -1 * (TilePixelWidth * addX)
 charlist(CharIndex).MoveOffset.Y = -1 * (TilePixelHeight * addY)
 
 charlist(CharIndex).Moving = 1
-charlist(CharIndex).heading = nHeading
+charlist(CharIndex).Heading = nHeading
 
 'parche para que no medite cuando camina
 Dim fxCh As Integer
 fxCh = charlist(CharIndex).Fx
-If fxCh = FXMEDITARCHICO Or fxCh = FXMEDITARGRANDE Or fxCh = FXMEDITARMEDIANO Or fxCh = FXMEDITARXGRANDE Then
+If fxCh = FxMeditar.CHICO Or fxCh = FxMeditar.GRANDE Or fxCh = FxMeditar.MEDIANO Or fxCh = FxMeditar.XGRANDE Then
     charlist(CharIndex).Fx = 0
     charlist(CharIndex).FxLoopTimes = 0
 End If
@@ -877,7 +877,7 @@ End If
 
 End Sub
 
-Sub MoveScreen(heading As Byte)
+Sub MoveScreen(ByVal nHeading As E_Heading)
 '******************************************
 'Starts the screen moving in a direction
 '******************************************
@@ -887,18 +887,18 @@ Dim tX As Integer
 Dim tY As Integer
 
 'Figure out which way to move
-Select Case heading
+Select Case nHeading
 
-    Case NORTH
+    Case E_Heading.NORTH
         Y = -1
 
-    Case EAST
+    Case E_Heading.EAST
         X = 1
 
-    Case SOUTH
+    Case E_Heading.SOUTH
         Y = 1
     
-    Case WEST
+    Case E_Heading.WEST
         X = -1
         
 End Select
@@ -1067,7 +1067,7 @@ MsgBox "Error while loading the Grh.dat! Stopped at GRH number: " & Grh
 
 End Sub
 
-Function LegalPos(X As Integer, Y As Integer) As Boolean
+Function LegalPos(ByVal X As Integer, ByVal Y As Integer) As Boolean
 '*****************************************************************
 'Checks to see if a tile position is legal
 '*****************************************************************
@@ -1109,7 +1109,7 @@ End Function
 
 
 
-Function InMapLegalBounds(X As Integer, Y As Integer) As Boolean
+Function InMapLegalBounds(ByVal X As Integer, ByVal Y As Integer) As Boolean
 '*****************************************************************
 'Checks to see if a tile position is in the maps
 'LEGAL/Walkable bounds
@@ -1124,7 +1124,7 @@ InMapLegalBounds = True
 
 End Function
 
-Function InMapBounds(X As Integer, Y As Integer) As Boolean
+Function InMapBounds(ByVal X As Integer, ByVal Y As Integer) As Boolean
 '*****************************************************************
 'Checks to see if a tile position is in the maps bounds
 '*****************************************************************
@@ -1589,18 +1589,18 @@ For Y = (minY + 8) + RenderMod.iImageSize To (maxY - 1) - RenderMod.iImageSize
             Moved = 0
             'If needed, move left and right
             If TempChar.MoveOffset.X <> 0 Then
-                TempChar.Body.Walk(TempChar.heading).Started = 1
-                TempChar.Arma.WeaponWalk(TempChar.heading).Started = 1
-                TempChar.Escudo.ShieldWalk(TempChar.heading).Started = 1
+                TempChar.Body.Walk(TempChar.Heading).Started = 1
+                TempChar.Arma.WeaponWalk(TempChar.Heading).Started = 1
+                TempChar.Escudo.ShieldWalk(TempChar.Heading).Started = 1
                 PixelOffsetXTemp = PixelOffsetXTemp + TempChar.MoveOffset.X
                 TempChar.MoveOffset.X = TempChar.MoveOffset.X - (8 * Sgn(TempChar.MoveOffset.X))
                 Moved = 1
             End If
             'If needed, move up and down
             If TempChar.MoveOffset.Y <> 0 Then
-                TempChar.Body.Walk(TempChar.heading).Started = 1
-                TempChar.Arma.WeaponWalk(TempChar.heading).Started = 1
-                TempChar.Escudo.ShieldWalk(TempChar.heading).Started = 1
+                TempChar.Body.Walk(TempChar.Heading).Started = 1
+                TempChar.Arma.WeaponWalk(TempChar.Heading).Started = 1
+                TempChar.Escudo.ShieldWalk(TempChar.Heading).Started = 1
                 PixelOffsetYTemp = PixelOffsetYTemp + TempChar.MoveOffset.Y
                 TempChar.MoveOffset.Y = TempChar.MoveOffset.Y - (8 * Sgn(TempChar.MoveOffset.Y))
                 Moved = 1
@@ -1608,19 +1608,19 @@ For Y = (minY + 8) + RenderMod.iImageSize To (maxY - 1) - RenderMod.iImageSize
             'If done moving stop animation
             If Moved = 0 And TempChar.Moving = 1 Then
                 TempChar.Moving = 0
-                TempChar.Body.Walk(TempChar.heading).FrameCounter = 1
-                TempChar.Body.Walk(TempChar.heading).Started = 0
-                TempChar.Arma.WeaponWalk(TempChar.heading).FrameCounter = 1
-                TempChar.Arma.WeaponWalk(TempChar.heading).Started = 0
-                TempChar.Escudo.ShieldWalk(TempChar.heading).FrameCounter = 1
-                TempChar.Escudo.ShieldWalk(TempChar.heading).Started = 0
+                TempChar.Body.Walk(TempChar.Heading).FrameCounter = 1
+                TempChar.Body.Walk(TempChar.Heading).Started = 0
+                TempChar.Arma.WeaponWalk(TempChar.Heading).FrameCounter = 1
+                TempChar.Arma.WeaponWalk(TempChar.Heading).Started = 0
+                TempChar.Escudo.ShieldWalk(TempChar.Heading).FrameCounter = 1
+                TempChar.Escudo.ShieldWalk(TempChar.Heading).Started = 0
             End If
             
             '[ANIM ATAK]
             If TempChar.Arma.WeaponAttack > 0 Then
                 TempChar.Arma.WeaponAttack = TempChar.Arma.WeaponAttack - 1
                 If TempChar.Arma.WeaponAttack = 0 Then
-                    TempChar.Arma.WeaponWalk(TempChar.heading).Started = 0
+                    TempChar.Arma.WeaponWalk(TempChar.Heading).Started = 0
                 End If
             End If
             '[/ANIM ATAK]
@@ -1628,44 +1628,44 @@ For Y = (minY + 8) + RenderMod.iImageSize To (maxY - 1) - RenderMod.iImageSize
             'Dibuja solamente players
             iPPx = ((32 * ScreenX) - 32) + PixelOffsetXTemp
             iPPy = ((32 * ScreenY) - 32) + PixelOffsetYTemp
-            If TempChar.Head.Head(TempChar.heading).GrhIndex <> 0 Then
+            If TempChar.Head.Head(TempChar.Heading).GrhIndex <> 0 Then
                 If Not charlist(MapData(X, Y).CharIndex).invisible Then
 #If SeguridadAlkon Then
                     If Not MI(CualMI).IsInvisible(MapData(X, Y).CharIndex) Then
 #End If
                         '[CUERPO]'
-                            Call DDrawTransGrhtoSurface(BackBufferSurface, TempChar.Body.Walk(TempChar.heading), _
+                            Call DDrawTransGrhtoSurface(BackBufferSurface, TempChar.Body.Walk(TempChar.Heading), _
                                     (((32 * ScreenX) - 32) + PixelOffsetXTemp), _
                                     (((32 * ScreenY) - 32) + PixelOffsetYTemp), _
                                     1, 1)
                         '[CABEZA]'
                             Call DDrawTransGrhtoSurface( _
                                     BackBufferSurface, _
-                                    TempChar.Head.Head(TempChar.heading), _
+                                    TempChar.Head.Head(TempChar.Heading), _
                                     iPPx + TempChar.Body.HeadOffset.X, _
                                     iPPy + TempChar.Body.HeadOffset.Y, _
                                     1, 0)
                         '[Casco]'
-                            If TempChar.Casco.Head(TempChar.heading).GrhIndex <> 0 Then
+                            If TempChar.Casco.Head(TempChar.Heading).GrhIndex <> 0 Then
                                 Call DDrawTransGrhtoSurface( _
                                         BackBufferSurface, _
-                                        TempChar.Casco.Head(TempChar.heading), _
+                                        TempChar.Casco.Head(TempChar.Heading), _
                                         iPPx + TempChar.Body.HeadOffset.X, _
                                         iPPy + TempChar.Body.HeadOffset.Y, _
                                         1, 0)
                             End If
                         '[ARMA]'
-                            If TempChar.Arma.WeaponWalk(TempChar.heading).GrhIndex <> 0 Then
+                            If TempChar.Arma.WeaponWalk(TempChar.Heading).GrhIndex <> 0 Then
                                 Call DDrawTransGrhtoSurface( _
                                         BackBufferSurface, _
-                                        TempChar.Arma.WeaponWalk(TempChar.heading), _
+                                        TempChar.Arma.WeaponWalk(TempChar.Heading), _
                                         iPPx, iPPy, 1, 1)
                             End If
                         '[Escudo]'
-                            If TempChar.Escudo.ShieldWalk(TempChar.heading).GrhIndex <> 0 Then
+                            If TempChar.Escudo.ShieldWalk(TempChar.Heading).GrhIndex <> 0 Then
                                 Call DDrawTransGrhtoSurface( _
                                         BackBufferSurface, _
-                                        TempChar.Escudo.ShieldWalk(TempChar.heading), _
+                                        TempChar.Escudo.ShieldWalk(TempChar.Heading), _
                                         iPPx, iPPy, 1, 1)
                             End If
                     
@@ -1753,7 +1753,7 @@ For Y = (minY + 8) + RenderMod.iImageSize To (maxY - 1) - RenderMod.iImageSize
     
                     Call DDrawTransGrhtoSurface( _
                             BackBufferSurface, _
-                            TempChar.Body.Walk(TempChar.heading), _
+                            TempChar.Body.Walk(TempChar.Heading), _
                             iPPx, iPPy, 1, 1)
                 End If
             End If '<-> If TempChar.Head.Head(TempChar.Heading).GrhIndex <> 0 Then
@@ -1957,7 +1957,7 @@ Sub LoadGraphics()
                 SurfaceDB.CargarGrafico loopc
                 
                 If loopc > (iLoopUpdate + (Config_Inicio.NumeroDeBMPs / 80)) Then
-                    AddtoRichTextBox frmCargando.Status, ".", , , , , , True
+                    AddtoRichTextBox frmCargando.status, ".", , , , , , True
                     iLoopUpdate = loopc
                 End If
             Next loopc
@@ -1975,7 +1975,7 @@ Sub LoadGraphics()
         RLluvia(4).Left = 0:     RLluvia(5).Left = 128:   RLluvia(6).Left = 256:   RLluvia(7).Left = 384
         RLluvia(4).Right = 128:  RLluvia(5).Right = 256:  RLluvia(6).Right = 384:  RLluvia(7).Right = 512
         RLluvia(4).Bottom = 256: RLluvia(5).Bottom = 256: RLluvia(6).Bottom = 256: RLluvia(7).Bottom = 256
-        AddtoRichTextBox frmCargando.Status, "Hecho.", , , , 1, , False
+        AddtoRichTextBox frmCargando.status, "Hecho.", , , , 1, , False
 End Sub
 
 
@@ -2078,7 +2078,7 @@ LTLluvia(2) = 480
 LTLluvia(3) = 608
 LTLluvia(4) = 736
 
-AddtoRichTextBox frmCargando.Status, "Cargando Gráficos....", 0, 0, 0, , , True
+AddtoRichTextBox frmCargando.status, "Cargando Gráficos....", 0, 0, 0, , , True
 Call LoadGraphics
 
 InitTileEngine = True

@@ -499,7 +499,7 @@ Sub HandleData(ByVal Rdata As String)
             Exit Sub
         Case "U2" ' <<--- El user ataco un npc e impacato
             Rdata = Right$(Rdata, Len(Rdata) - 2)
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_GOLPE_CRIATURA_1 & Rdata & MENSAJE_GOLPE_2, 255, 0, 0, True, False, False)
+            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_GOLPE_CRIATURA_1 & Rdata & MENSAJE_2, 255, 0, 0, True, False, False)
             Exit Sub
         Case "U3" ' <<--- El user ataco un user y falla
             Rdata = Right$(Rdata, Len(Rdata) - 2)
@@ -654,7 +654,7 @@ Sub HandleData(ByVal Rdata As String)
             charlist(CharIndex).muerto = Val(ReadField(3, Rdata, 44)) = 500
             charlist(CharIndex).Body = BodyData(Val(ReadField(2, Rdata, 44)))
             charlist(CharIndex).Head = HeadData(Val(ReadField(3, Rdata, 44)))
-            charlist(CharIndex).heading = Val(ReadField(4, Rdata, 44))
+            charlist(CharIndex).Heading = Val(ReadField(4, Rdata, 44))
             charlist(CharIndex).Fx = Val(ReadField(7, Rdata, 44))
             charlist(CharIndex).FxLoopTimes = Val(ReadField(8, Rdata, 44))
             tempint = Val(ReadField(5, Rdata, 44))

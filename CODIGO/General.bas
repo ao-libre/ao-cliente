@@ -393,93 +393,126 @@ Sub CargarTip()
 End Sub
 
 'TODO : Hay formas más limpias, mantenibles y eficientes....
-Sub MoveNorth()
+'Sub MoveNorth()
+'    If Cartel Then Cartel = False
+'
+'    If LegalPos(UserPos.X, UserPos.Y - 1) Then
+'        Call SendData("M" & E_Heading.NORTH)
+'        If Not UserDescansar And Not UserMeditar And Not UserParalizado Then
+'            Call MoveCharbyHead(UserCharIndex, E_Heading.NORTH)
+'            Call MoveScreen(E_Heading.NORTH)
+'            DoFogataFx
+'        End If
+'    Else
+'        If charlist(UserCharIndex).Heading <> E_Heading.NORTH Then
+'            Call SendData("CHEA" & E_Heading.NORTH)
+'        End If
+'    End If
+'End Sub
+'
+''TODO : Hay formas más limpias, mantenibles y eficientes....
+'Sub MoveEast()
+'    If Cartel Then Cartel = False
+'
+'    If LegalPos(UserPos.X + 1, UserPos.Y) Then
+'        Call SendData("M" & E_Heading.EAST)
+'        If Not UserDescansar And Not UserMeditar And Not UserParalizado Then
+'            Call MoveCharbyHead(UserCharIndex, E_Heading.EAST)
+'            Call MoveScreen(E_Heading.EAST)
+'            Call DoFogataFx
+'        End If
+'    Else
+'        If charlist(UserCharIndex).Heading <> E_Heading.EAST Then
+'            Call SendData("CHEA" & E_Heading.EAST)
+'        End If
+'    End If
+'End Sub
+'
+''TODO : Hay formas más limpias, mantenibles y eficientes....
+'Sub MoveSouth()
+'    If Cartel Then Cartel = False
+'
+'    If LegalPos(UserPos.X, UserPos.Y + 1) Then
+'        Call SendData("M" & E_Heading.SOUTH)
+'        If Not UserDescansar And Not UserMeditar And Not UserParalizado Then
+'            MoveCharbyHead UserCharIndex, E_Heading.SOUTH
+'            MoveScreen E_Heading.SOUTH
+'            DoFogataFx
+'        End If
+'    Else
+'        If charlist(UserCharIndex).Heading <> E_Heading.SOUTH Then
+'            Call SendData("CHEA" & E_Heading.SOUTH)
+'        End If
+'    End If
+'End Sub
+'
+''TODO : Hay formas más limpias, mantenibles y eficientes....
+'Sub MoveWest()
+'    If Cartel Then Cartel = False
+'
+'    If LegalPos(UserPos.X - 1, UserPos.Y) Then
+'        Call SendData("M" & E_Heading.WEST)
+'        If Not UserDescansar And Not UserMeditar And Not UserParalizado Then
+'            MoveCharbyHead UserCharIndex, E_Heading.WEST
+'            MoveScreen E_Heading.WEST
+'            DoFogataFx
+'        End If
+'    Else
+'        If charlist(UserCharIndex).Heading <> E_Heading.WEST Then
+'            Call SendData("CHEA" & E_Heading.WEST)
+'        End If
+'    End If
+'End Sub
+
+Sub MoveTo(ByVal Direccion As E_Heading)
+    Dim LegalOk As Boolean
+    
     If Cartel Then Cartel = False
     
-    If LegalPos(UserPos.X, UserPos.Y - 1) Then
-        Call SendData("M" & NORTH)
+    Select Case Direccion
+    Case E_Heading.NORTH
+        LegalOk = LegalPos(UserPos.X, UserPos.Y - 1)
+    Case E_Heading.EAST
+        LegalOk = LegalPos(UserPos.X + 1, UserPos.Y)
+    Case E_Heading.SOUTH
+        LegalOk = LegalPos(UserPos.X, UserPos.Y + 1)
+    Case E_Heading.WEST
+        LegalOk = LegalPos(UserPos.X - 1, UserPos.Y)
+    End Select
+    
+    If LegalOk Then
+        Call SendData("M" & Direccion)
         If Not UserDescansar And Not UserMeditar And Not UserParalizado Then
-            Call MoveCharbyHead(UserCharIndex, NORTH)
-            Call MoveScreen(NORTH)
+            MoveCharbyHead UserCharIndex, Direccion
+            MoveScreen Direccion
             DoFogataFx
         End If
     Else
-        If charlist(UserCharIndex).heading <> NORTH Then
-            Call SendData("CHEA" & NORTH)
-        End If
-    End If
-End Sub
-
-'TODO : Hay formas más limpias, mantenibles y eficientes....
-Sub MoveEast()
-    If Cartel Then Cartel = False
-    
-    If LegalPos(UserPos.X + 1, UserPos.Y) Then
-        Call SendData("M" & EAST)
-        If Not UserDescansar And Not UserMeditar And Not UserParalizado Then
-            Call MoveCharbyHead(UserCharIndex, EAST)
-            Call MoveScreen(EAST)
-            Call DoFogataFx
-        End If
-    Else
-        If charlist(UserCharIndex).heading <> EAST Then
-            Call SendData("CHEA" & EAST)
-        End If
-    End If
-End Sub
-
-'TODO : Hay formas más limpias, mantenibles y eficientes....
-Sub MoveSouth()
-    If Cartel Then Cartel = False
-    
-    If LegalPos(UserPos.X, UserPos.Y + 1) Then
-        Call SendData("M" & SOUTH)
-        If Not UserDescansar And Not UserMeditar And Not UserParalizado Then
-            MoveCharbyHead UserCharIndex, SOUTH
-            MoveScreen SOUTH
-            DoFogataFx
-        End If
-    Else
-        If charlist(UserCharIndex).heading <> SOUTH Then
-            Call SendData("CHEA" & SOUTH)
-        End If
-    End If
-End Sub
-
-'TODO : Hay formas más limpias, mantenibles y eficientes....
-Sub MoveWest()
-    If Cartel Then Cartel = False
-    
-    If LegalPos(UserPos.X - 1, UserPos.Y) Then
-        Call SendData("M" & WEST)
-        If Not UserDescansar And Not UserMeditar And Not UserParalizado Then
-            MoveCharbyHead UserCharIndex, WEST
-            MoveScreen WEST
-            DoFogataFx
-        End If
-    Else
-        If charlist(UserCharIndex).heading <> WEST Then
-            Call SendData("CHEA" & WEST)
+        If charlist(UserCharIndex).Heading <> Direccion Then
+            Call SendData("CHEA" & Direccion)
         End If
     End If
 End Sub
 
 'TODO : Hay formas más limpias, mantenibles y eficientes....
 Sub RandomMove()
-    Dim j As Integer
+'    Dim j As Integer
+'
+'    j = RandomNumber(1, 4)
+'
+'    Select Case j
+'        Case 1
+'            Call MoveEast
+'        Case 2
+'            Call MoveNorth
+'        Case 3
+'            Call MoveWest
+'        Case 4
+'            Call MoveSouth
+'    End Select
+
+    MoveTo RandomNumber(1, 4)
     
-    j = RandomNumber(1, 4)
-    
-    Select Case j
-        Case 1
-            Call MoveEast
-        Case 2
-            Call MoveNorth
-        Case 3
-            Call MoveWest
-        Case 4
-            Call MoveSouth
-    End Select
 End Sub
 
 Sub CheckKeys()
@@ -493,7 +526,7 @@ On Error Resume Next
             'Move Up
             If GetKeyState(vbKeyUp) < 0 Then
                 If frmMain.TrainingMacro.Enabled Then frmMain.DesactivarMacroHechizos
-                Call MoveNorth
+                Call MoveTo(NORTH)
                 frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.X & "," & UserPos.Y & ")"
                 Exit Sub
             End If
@@ -501,7 +534,7 @@ On Error Resume Next
             'Move Right
             If GetKeyState(vbKeyRight) < 0 Then
                 If frmMain.TrainingMacro.Enabled Then frmMain.DesactivarMacroHechizos
-                Call MoveEast
+                Call MoveTo(EAST)
                 frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.X & "," & UserPos.Y & ")"
                 Exit Sub
             End If
@@ -509,7 +542,7 @@ On Error Resume Next
             'Move down
             If GetKeyState(vbKeyDown) < 0 Then
                 If frmMain.TrainingMacro.Enabled Then frmMain.DesactivarMacroHechizos
-                Call MoveSouth
+                Call MoveTo(SOUTH)
                 frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.X & "," & UserPos.Y & ")"
                 Exit Sub
             End If
@@ -517,7 +550,7 @@ On Error Resume Next
             'Move left
             If GetKeyState(vbKeyLeft) < 0 Then
                 If frmMain.TrainingMacro.Enabled Then frmMain.DesactivarMacroHechizos
-                Call MoveWest
+                Call MoveTo(WEST)
                 frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.X & "," & UserPos.Y & ")"
                 Exit Sub
             End If
@@ -535,7 +568,7 @@ On Error Resume Next
 End Sub
 
 'TODO : esto no es del tileengine??
-Sub MoveScreen(ByVal heading As Byte)
+Sub MoveScreen(ByVal nHeading As E_Heading)
 '******************************************
 'Starts the screen moving in a direction
 '******************************************
@@ -545,17 +578,17 @@ Sub MoveScreen(ByVal heading As Byte)
     Dim tY As Integer
     
     'Figure out which way to move
-    Select Case heading
-        Case NORTH
+    Select Case nHeading
+        Case E_Heading.NORTH
             Y = -1
     
-        Case EAST
+        Case E_Heading.EAST
             X = 1
     
-        Case SOUTH
+        Case E_Heading.SOUTH
             Y = 1
         
-        Case WEST
+        Case E_Heading.WEST
             X = -1
             
     End Select
@@ -602,7 +635,7 @@ Sub SwitchMap(ByVal Map As Integer)
     Dim loopc As Long
     Dim Y As Long
     Dim X As Long
-    Dim TempInt As Integer
+    Dim tempint As Integer
     Dim ByFlags As Byte
     
     Open DirMapas & "Mapa" & Map & ".map" For Binary As #1
@@ -611,10 +644,10 @@ Sub SwitchMap(ByVal Map As Integer)
     'map Header
     Get #1, , MapInfo.MapVersion
     Get #1, , MiCabecera
-    Get #1, , TempInt
-    Get #1, , TempInt
-    Get #1, , TempInt
-    Get #1, , TempInt
+    Get #1, , tempint
+    Get #1, , tempint
+    Get #1, , tempint
+    Get #1, , tempint
     
     'Load arrays
     For Y = YMinMapSize To YMaxMapSize
@@ -861,8 +894,8 @@ If FileExist(App.Path & "\init\ao.dat", vbArchive) Then
     frmCargando.Show
     frmCargando.Refresh
     
-    frmConnect.Version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
-    AddtoRichTextBox frmCargando.Status, "Buscando servidores....", 0, 0, 0, 0, 0, 1
+    frmConnect.version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
+    AddtoRichTextBox frmCargando.status, "Buscando servidores....", 0, 0, 0, 0, 0, 1
 
 #If UsarWrench = 1 Then
     frmMain.Socket1.Startup
@@ -872,20 +905,20 @@ If FileExist(App.Path & "\init\ao.dat", vbArchive) Then
     'TODO : esto de ServerRecibidos no se podría sacar???
     ServersRecibidos = True
     
-    AddtoRichTextBox frmCargando.Status, "Encontrado", , , , 1
-    AddtoRichTextBox frmCargando.Status, "Iniciando constantes...", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.status, "Encontrado", , , , 1
+    AddtoRichTextBox frmCargando.status, "Iniciando constantes...", 0, 0, 0, 0, 0, 1
     
     Call InicializarNombres
     
     frmOldPersonaje.NameTxt.Text = Config_Inicio.Name
     frmOldPersonaje.PasswordTxt.Text = ""
     
-    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
+    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
     
     IniciarObjetosDirectX
     
-    AddtoRichTextBox frmCargando.Status, "Cargando Sonidos....", 0, 0, 0, 0, 0, 1
-    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
+    AddtoRichTextBox frmCargando.status, "Cargando Sonidos....", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
 
 Dim loopc As Integer
 
@@ -893,7 +926,7 @@ LastTime = GetTickCount
 
 Call InitTileEngine(frmMain.hWnd, 152, 7, 32, 32, 13, 17, 9)
     
-    Call AddtoRichTextBox(frmCargando.Status, "Creando animaciones extra....")
+    Call AddtoRichTextBox(frmCargando.status, "Creando animaciones extra....")
     
     Call CargarAnimsExtra
     Call CargarTips
@@ -911,14 +944,14 @@ UserMap = 1
     Call InitMI
 #End If
 
-    AddtoRichTextBox frmCargando.Status, "                    ¡Bienvenido a Argentum Online!", , , , 1
+    AddtoRichTextBox frmCargando.status, "                    ¡Bienvenido a Argentum Online!", , , , 1
     
     Unload frmCargando
     
     'Inicializamos el sonido
-    Call AddtoRichTextBox(frmCargando.Status, "Iniciando DirectSound....", 0, 0, 0, 0, 0, True)
+    Call AddtoRichTextBox(frmCargando.status, "Iniciando DirectSound....", 0, 0, 0, 0, 0, True)
     Call Audio.Initialize(DirectX, frmMain.hWnd, App.Path & "\" & Config_Inicio.DirSonidos & "\", App.Path & "\" & Config_Inicio.DirMusica & "\")
-    Call AddtoRichTextBox(frmCargando.Status, "Hecho", , , , 1, , False)
+    Call AddtoRichTextBox(frmCargando.status, "Hecho", , , , 1, , False)
     
     'Inicializamos el inventario gráfico
     Call Inventario.Initialize(DirectDraw, frmMain.picInv)
@@ -1004,7 +1037,7 @@ UserMap = 1
 
     EngineRun = False
     frmCargando.Show
-    AddtoRichTextBox frmCargando.Status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
     LiberarObjetosDX
 
 'TODO : Esto debería ir en otro lado como al cambair a esta res
@@ -1205,27 +1238,27 @@ Private Sub InicializarNombres()
     ListaClases(15) = "Carpintero"
     ListaClases(16) = "Pirata"
 
-    SkillsNames(1) = "Suerte"
-    SkillsNames(2) = "Magia"
-    SkillsNames(3) = "Robar"
-    SkillsNames(4) = "Tacticas de combate"
-    SkillsNames(5) = "Combate con armas"
-    SkillsNames(6) = "Meditar"
-    SkillsNames(7) = "Apuñalar"
-    SkillsNames(8) = "Ocultarse"
-    SkillsNames(9) = "Supervivencia"
-    SkillsNames(10) = "Talar árboles"
-    SkillsNames(11) = "Comercio"
-    SkillsNames(12) = "Defensa con escudos"
-    SkillsNames(13) = "Pesca"
-    SkillsNames(14) = "Mineria"
-    SkillsNames(15) = "Carpinteria"
-    SkillsNames(16) = "Herreria"
-    SkillsNames(17) = "Liderazgo"
-    SkillsNames(18) = "Domar animales"
-    SkillsNames(19) = "Armas de proyectiles"
-    SkillsNames(20) = "Wresterling"
-    SkillsNames(21) = "Navegacion"
+    SkillsNames(Skills.Suerte) = "Suerte"
+    SkillsNames(Skills.Magia) = "Magia"
+    SkillsNames(Skills.Robar) = "Robar"
+    SkillsNames(Skills.Tacticas) = "Tacticas de combate"
+    SkillsNames(Skills.Armas) = "Combate con armas"
+    SkillsNames(Skills.Meditar) = "Meditar"
+    SkillsNames(Skills.Apuñalar) = "Apuñalar"
+    SkillsNames(Skills.Ocultarse) = "Ocultarse"
+    SkillsNames(Skills.Supervivencia) = "Supervivencia"
+    SkillsNames(Skills.Talar) = "Talar árboles"
+    SkillsNames(Skills.Comerciar) = "Comercio"
+    SkillsNames(Skills.Defensa) = "Defensa con escudos"
+    SkillsNames(Skills.Pesca) = "Pesca"
+    SkillsNames(Skills.Mineria) = "Mineria"
+    SkillsNames(Skills.Carpinteria) = "Carpinteria"
+    SkillsNames(Skills.Herreria) = "Herreria"
+    SkillsNames(Skills.Liderazgo) = "Liderazgo"
+    SkillsNames(Skills.Domar) = "Domar animales"
+    SkillsNames(Skills.Proyectiles) = "Armas de proyectiles"
+    SkillsNames(Skills.Wresterling) = "Wresterling"
+    SkillsNames(Skills.Navegacion) = "Navegacion"
 
     AtributosNames(1) = "Fuerza"
     AtributosNames(2) = "Agilidad"
