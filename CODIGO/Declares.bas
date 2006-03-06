@@ -173,6 +173,65 @@ Public Const Navegacion = 21
 
 Public Const FundirMetal = 88
 
+'
+' Mensajes
+'
+' MENSAJE_*  --> Mensajes de texto que se muestran en el cuadro de texto
+'
+
+Public Const MENSAJE_CRIATURA_FALLA_GOLPE = "La criatura fallo el golpe!!!"
+Public Const MENSAJE_CRIATURA_MATADO = "La criatura te ha matado!!!"
+Public Const MENSAJE_RECHAZO_ATAQUE_ESCUDO = "Has rechazado el ataque con el escudo!!!"
+Public Const MENSAJE_USUARIO_RECHAZO_ATAQUE_ESCUDO = "El usuario rechazo el ataque con su escudo!!!"
+Public Const MENSAJE_FALLADO_GOLPE = "Has fallado el golpe!!!"
+Public Const MENSAJE_SEGURO_ACTIVADO = ">>SEGURO ACTIVADO<<"
+Public Const MENSAJE_SEGURO_DESACTIVADO = ">>SEGURO DESACTIVADO<<"
+Public Const MENSAJE_PIERDE_NOBLEZA = "¡¡Has perdido puntaje de nobleza y ganado puntaje de criminalidad!! Si sigues ayudando a criminales te convertirás en uno de ellos y serás perseguido por las tropas de las ciudades."
+Public Const MENSAJE_USAR_MEDITANDO = "¡Estás meditando! Debes dejar de meditar para usar objetos."
+
+Public Const MENSAJE_GOLPE_CABEZA = "¡¡La criatura te ha pegado en la cabeza por "
+Public Const MENSAJE_GOLPE_BRAZO_IZQ = "¡¡La criatura te ha pegado el brazo izquierdo por "
+Public Const MENSAJE_GOLPE_BRAZO_DER = "¡¡La criatura te ha pegado el brazo derecho por "
+Public Const MENSAJE_GOLPE_PIERNA_IZQ = "¡¡La criatura te ha pegado la pierna izquierda por "
+Public Const MENSAJE_GOLPE_PIERNA_DER = "¡¡La criatura te ha pegado la pierna derecha por "
+Public Const MENSAJE_GOLPE_TORSO = "¡¡La criatura te ha pegado en el torso por "
+
+' MENSAJE_[12]: Aparece despues del valor de los mensajes anteriores (MENSAJE_GOLPE_*)
+Public Const MENSAJE_1 = "¡¡"
+Public Const MENSAJE_2 = "!!"
+
+Public Const MENSAJE_GOLPE_CRIATURA_1 = "¡¡Le has pegado a la criatura por "
+
+Public Const MENSAJE_ATAQUE_FALLO = " te ataco y fallo!!"
+
+Public Const MENSAJE_RECIVE_IMPACTO_CABEZA = " te ha pegado en la cabeza por "
+Public Const MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ = " te ha pegado el brazo izquierdo por "
+Public Const MENSAJE_RECIVE_IMPACTO_BRAZO_DER = " te ha pegado el brazo derecho por "
+Public Const MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ = " te ha pegado la pierna izquierda por "
+Public Const MENSAJE_RECIVE_IMPACTO_PIERNA_DER = " te ha pegado la pierna derecha por "
+Public Const MENSAJE_RECIVE_IMPACTO_TORSO = " te ha pegado en el torso por "
+
+Public Const MENSAJE_PRODUCE_IMPACTO_1 = "¡¡Le has pegado a "
+Public Const MENSAJE_PRODUCE_IMPACTO_CABEZA = " en la cabeza por "
+Public Const MENSAJE_PRODUCE_IMPACTO_BRAZO_IZQ = " en el brazo izquierdo por "
+Public Const MENSAJE_PRODUCE_IMPACTO_BRAZO_DER = " en el brazo derecho por "
+Public Const MENSAJE_PRODUCE_IMPACTO_PIERNA_IZQ = " en la pierna izquierda por "
+Public Const MENSAJE_PRODUCE_IMPACTO_PIERNA_DER = " en la pierna derecha por "
+Public Const MENSAJE_PRODUCE_IMPACTO_TORSO = " en el torso por "
+
+Public Const MENSAJE_TRABAJO_MAGIA = "Haz click sobre el objetivo..."
+Public Const MENSAJE_TRABAJO_PESCA = "Haz click sobre el sitio donde quieres pescar..."
+Public Const MENSAJE_TRABAJO_ROBAR = "Haz click sobre la victima..."
+Public Const MENSAJE_TRABAJO_TALAR = "Haz click sobre el árbol..."
+Public Const MENSAJE_TRABAJO_MINERIA = "Haz click sobre el yacimiento..."
+Public Const MENSAJE_TRABAJO_FUNDIRMETAL = "Haz click sobre la fragua..."
+Public Const MENSAJE_TRABAJO_PROYECTILES = "Haz click sobre la victima..."
+
+Public Const MENSAJE_ENTRAR_PARTY_1 = "Si deseas entrar en una party con "
+Public Const MENSAJE_ENTRAR_PARTY_2 = ", escribe /entrarparty"
+
+Public Const MENSAJE_NENE = "Cantidad de NPCs: "
+
 'Inventario
 Type Inventory
     OBJIndex As Integer

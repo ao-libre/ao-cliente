@@ -270,36 +270,36 @@ Sub HandleData(ByVal Rdata As String)
             frmCarp.Show , frmMain
             Exit Sub
         Case "N1" ' <--- Npc ataco y fallo
-            Call AddtoRichTextBox(frmMain.RecTxt, "La criatura fallo el golpe!!!", 255, 0, 0, True, False, False)
+            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_CRIATURA_FALLA_GOLPE, 255, 0, 0, True, False, False)
             Exit Sub
         Case "6" ' <--- Npc mata al usuario
-            Call AddtoRichTextBox(frmMain.RecTxt, "La criatura te ha matado!!!", 255, 0, 0, True, False, False)
+            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_CRIATURA_MATADO, 255, 0, 0, True, False, False)
             Exit Sub
         Case "7" ' <--- Ataque rechazado con el escudo
-            Call AddtoRichTextBox(frmMain.RecTxt, "Has rechazado el ataque con el escudo!!!", 255, 0, 0, True, False, False)
+            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_RECHAZO_ATAQUE_ESCUDO, 255, 0, 0, True, False, False)
             Exit Sub
         Case "8" ' <--- Ataque rechazado con el escudo
-            Call AddtoRichTextBox(frmMain.RecTxt, "El usuario rechazo el ataque con su escudo!!!", 255, 0, 0, True, False, False)
+            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_USUARIO_RECHAZO_ATAQUE_ESCUDO, 255, 0, 0, True, False, False)
             Exit Sub
         Case "U1" ' <--- User ataco y fallo el golpe
-            Call AddtoRichTextBox(frmMain.RecTxt, "Has fallado el golpe!!!", 255, 0, 0, True, False, False)
+            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_FALLADO_GOLPE, 255, 0, 0, True, False, False)
             Exit Sub
         Case "REAU" '<--- Requiere AutoUpdate
             Call frmMain.DibujarSatelite
             Exit Sub
         Case "SEGON" '  <--- Activa el seguro
             Call frmMain.DibujarSeguro
-            Call AddtoRichTextBox(frmMain.RecTxt, ">>SEGURO ACTIVADO<<", 0, 255, 0, True, False, False)
+            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_SEGURO_ACTIVADO, 0, 255, 0, True, False, False)
             Exit Sub
         Case "SEGOFF" ' <--- Desactiva el seguro
             Call frmMain.DesDibujarSeguro
-            Call AddtoRichTextBox(frmMain.RecTxt, ">>SEGURO DESACTIVADO<<", 255, 0, 0, True, False, False)
+            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_SEGURO_DESACTIVADO, 255, 0, 0, True, False, False)
             Exit Sub
         Case "PN"     ' <--- Pierde Nobleza
-            Call AddtoRichTextBox(frmMain.RecTxt, "¡¡Has perdido puntaje de nobleza y ganado puntaje de criminalidad!! Si sigues ayudando a criminales te convertirás en uno de ellos y serás perseguido por las tropas de las ciudades.", 255, 0, 0, False, False, False)
+            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_PIERDE_NOBLEZA, 255, 0, 0, False, False, False)
             Exit Sub
         Case "M!"     ' <--- Usa meditando
-            Call AddtoRichTextBox(frmMain.RecTxt, "¡Estás meditando! Debes dejar de meditar para usar objetos.", 255, 0, 0, False, False, False)
+            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_USAR_MEDITANDO, 255, 0, 0, False, False, False)
             Exit Sub
     End Select
 
@@ -320,11 +320,15 @@ Sub HandleData(ByVal Rdata As String)
             'antigua codificacion del mensaje (decodificada x un chitero)
             'CharIndex = Asc(Mid$(Rdata, 1, 1)) * 64 + (Asc(Mid$(Rdata, 2, 1)) And &HFC&) / 4
 
+            ' CONSTANTES TODO: De donde sale el 40-49 ?
+            
             If charlist(CharIndex).Fx >= 40 And charlist(CharIndex).Fx <= 49 Then   'si esta meditando
                 charlist(CharIndex).Fx = 0
                 charlist(CharIndex).FxLoopTimes = 0
             End If
-
+            
+            ' CONSTANTES TODO: Que es .priv ?
+            
             If Fx = 0 Then
                 'If Not UserNavegando And Val(ReadField(4, Rdata, 44)) <> 0 Then
                         If charlist(CharIndex).priv <> 1 And charlist(CharIndex).priv <> 2 And charlist(CharIndex).priv <> 3 Then
@@ -360,10 +364,14 @@ Sub HandleData(ByVal Rdata As String)
 '                Debug.Print "hola"
 '            End If
             
+            ' CONSTANTES TODO: De donde sale el 40-49 ?
+            
             If charlist(CharIndex).Fx >= 40 And charlist(CharIndex).Fx <= 49 Then   'si esta meditando
                 charlist(CharIndex).Fx = 0
                 charlist(CharIndex).FxLoopTimes = 0
             End If
+            
+            ' CONSTANTES TODO: Que es .priv ?
             
             If Fx = 0 Then
                 'If Not UserNavegando And Val(ReadField(4, Rdata, 44)) <> 0 Then
@@ -396,7 +404,7 @@ Sub HandleData(ByVal Rdata As String)
                 Case "E": UserExp = Val(Right$(sData, Len(sData) - 3))
             End Select
             
-            frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+            frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
             frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
             frmMain.Hpshp.Width = (((UserMinHP / 100) / (UserMaxHP / 100)) * 94)
             
@@ -476,43 +484,43 @@ Sub HandleData(ByVal Rdata As String)
             I = Val(ReadField(1, Rdata, 44))
             Select Case I
                 Case bCabeza
-                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡La criatura te ha pegado en la cabeza por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_GOLPE_CABEZA & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bBrazoIzquierdo
-                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡La criatura te ha pegado el brazo izquierdo por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_GOLPE_BRAZO_IZQ & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bBrazoDerecho
-                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡La criatura te ha pegado el brazo derecho por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_GOLPE_BRAZO_DER & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bPiernaIzquierda
-                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡La criatura te ha pegado la pierna izquierda por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_GOLPE_PIERNA_IZQ & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bPiernaDerecha
-                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡La criatura te ha pegado la pierna derecha por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_GOLPE_PIERNA_DER & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bTorso
-                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡La criatura te ha pegado en el torso por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_GOLPE_TORSO & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
             End Select
             Exit Sub
         Case "U2" ' <<--- El user ataco un npc e impacato
             Rdata = Right$(Rdata, Len(Rdata) - 2)
-            Call AddtoRichTextBox(frmMain.RecTxt, "¡¡Le has pegado a la criatura por " & Rdata & "!!", 255, 0, 0, True, False, False)
+            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_GOLPE_CRIATURA_1 & Rdata & MENSAJE_GOLPE_2, 255, 0, 0, True, False, False)
             Exit Sub
         Case "U3" ' <<--- El user ataco un user y falla
             Rdata = Right$(Rdata, Len(Rdata) - 2)
-            Call AddtoRichTextBox(frmMain.RecTxt, "¡¡" & Rdata & " te ataco y fallo!!", 255, 0, 0, True, False, False)
+            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & Rdata & MENSAJE_ATAQUE_FALLO, 255, 0, 0, True, False, False)
             Exit Sub
         Case "N4" ' <<--- user nos impacto
             Rdata = Right$(Rdata, Len(Rdata) - 2)
             I = Val(ReadField(1, Rdata, 44))
             Select Case I
                 Case bCabeza
-                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡" & ReadField(3, Rdata, 44) & " te ha pegado en la cabeza por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & ReadField(3, Rdata, 44) & MENSAJE_RECIVE_IMPACTO_CABEZA & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bBrazoIzquierdo
-                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡" & ReadField(3, Rdata, 44) & " te ha pegado el brazo izquierdo por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & ReadField(3, Rdata, 44) & MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bBrazoDerecho
-                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡" & ReadField(3, Rdata, 44) & " te ha pegado el brazo derecho por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & ReadField(3, Rdata, 44) & MENSAJE_RECIVE_IMPACTO_BRAZO_DER & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bPiernaIzquierda
-                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡" & ReadField(3, Rdata, 44) & " te ha pegado la pierna izquierda por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & ReadField(3, Rdata, 44) & MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bPiernaDerecha
-                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡" & ReadField(3, Rdata, 44) & " te ha pegado la pierna derecha por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & ReadField(3, Rdata, 44) & MENSAJE_RECIVE_IMPACTO_PIERNA_DER & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bTorso
-                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡" & ReadField(3, Rdata, 44) & " te ha pegado en el torso por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & ReadField(3, Rdata, 44) & MENSAJE_RECIVE_IMPACTO_TORSO & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
             End Select
             Exit Sub
         Case "N5" ' <<--- impactamos un user
@@ -520,17 +528,17 @@ Sub HandleData(ByVal Rdata As String)
             I = Val(ReadField(1, Rdata, 44))
             Select Case I
                 Case bCabeza
-                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡Le has pegado a " & ReadField(3, Rdata, 44) & " en la cabeza por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_PRODUCE_IMPACTO_1 & ReadField(3, Rdata, 44) & MENSAJE_PRODUCE_IMPACTO_CABEZA & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bBrazoIzquierdo
-                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡Le has pegado a " & ReadField(3, Rdata, 44) & " en el brazo izquierdo por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_PRODUCE_IMPACTO_1 & ReadField(3, Rdata, 44) & MENSAJE_PRODUCE_IMPACTO_BRAZO_IZQ & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bBrazoDerecho
-                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡Le has pegado a " & ReadField(3, Rdata, 44) & " en el brazo derecho por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_PRODUCE_IMPACTO_1 & ReadField(3, Rdata, 44) & MENSAJE_PRODUCE_IMPACTO_BRAZO_DER & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bPiernaIzquierda
-                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡Le has pegado a " & ReadField(3, Rdata, 44) & " en la pierna izquierda por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_PRODUCE_IMPACTO_1 & ReadField(3, Rdata, 44) & MENSAJE_PRODUCE_IMPACTO_PIERNA_IZQ & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bPiernaDerecha
-                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡Le has pegado a " & ReadField(3, Rdata, 44) & " en la pierna derecha por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_PRODUCE_IMPACTO_1 & ReadField(3, Rdata, 44) & MENSAJE_PRODUCE_IMPACTO_PIERNA_DER & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bTorso
-                    Call AddtoRichTextBox(frmMain.RecTxt, "¡¡Le has pegado a " & ReadField(3, Rdata, 44) & " en el torso por " & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
+                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_PRODUCE_IMPACTO_1 & ReadField(3, Rdata, 44) & MENSAJE_PRODUCE_IMPACTO_TORSO & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
             End Select
             Exit Sub
         Case "||"                 ' >>>>> Dialogo de Usuarios y NPCs :: ||
@@ -811,7 +819,7 @@ Sub HandleData(ByVal Rdata As String)
             UserLvl = Val(ReadField(8, Rdata, 44))
             UserPasarNivel = Val(ReadField(9, Rdata, 44))
             UserExp = Val(ReadField(10, Rdata, 44))
-            frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+            frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
             frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
             frmMain.Hpshp.Width = (((UserMinHP / 100) / (UserMaxHP / 100)) * 94)
             
@@ -839,19 +847,19 @@ Sub HandleData(ByVal Rdata As String)
             frmMain.MousePointer = 2
             Select Case UsingSkill
                 Case Magia
-                    Call AddtoRichTextBox(frmMain.RecTxt, "Haz click sobre el objetivo...", 100, 100, 120, 0, 0)
+                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_TRABAJO_MAGIA, 100, 100, 120, 0, 0)
                 Case Pesca
-                    Call AddtoRichTextBox(frmMain.RecTxt, "Haz click sobre el sitio donde quieres pescar...", 100, 100, 120, 0, 0)
+                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_TRABAJO_PESCA, 100, 100, 120, 0, 0)
                 Case Robar
-                    Call AddtoRichTextBox(frmMain.RecTxt, "Haz click sobre la victima...", 100, 100, 120, 0, 0)
+                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_TRABAJO_ROBAR, 100, 100, 120, 0, 0)
                 Case Talar
-                    Call AddtoRichTextBox(frmMain.RecTxt, "Haz click sobre el árbol...", 100, 100, 120, 0, 0)
+                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_TRABAJO_TALAR, 100, 100, 120, 0, 0)
                 Case Mineria
-                    Call AddtoRichTextBox(frmMain.RecTxt, "Haz click sobre el yacimiento...", 100, 100, 120, 0, 0)
+                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_TRABAJO_MINERIA, 100, 100, 120, 0, 0)
                 Case FundirMetal
-                    Call AddtoRichTextBox(frmMain.RecTxt, "Haz click sobre la fragua...", 100, 100, 120, 0, 0)
+                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_TRABAJO_FUNDIRMETAL, 100, 100, 120, 0, 0)
                 Case Proyectiles
-                    Call AddtoRichTextBox(frmMain.RecTxt, "Haz click sobre la victima...", 100, 100, 120, 0, 0)
+                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_TRABAJO_PROYECTILES, 100, 100, 120, 0, 0)
             End Select
             Exit Sub
         Case "CSI"                 ' >>>>> Actualiza Slot Inventario :: CSI
@@ -982,7 +990,7 @@ Sub HandleData(ByVal Rdata As String)
     
     Select Case Left$(sData, 4)
         Case "PART"
-            Call AddtoRichTextBox(frmMain.RecTxt, "Si deseas entrar en una party con " & ReadField(1, Rdata, 44) & ", escribe /entrarparty", 0, 255, 0, False, False, False)
+            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_ENTRAR_PARTY_1 & ReadField(1, Rdata, 44) & MENSAJE_ENTRAR_PARTY_2, 0, 255, 0, False, False, False)
             Exit Sub
         Case "CEGU"
             UserCiego = True
@@ -1069,7 +1077,7 @@ Sub HandleData(ByVal Rdata As String)
             Exit Sub
         Case "NENE"             ' >>>>> Nro de Personajes :: NENE
             Rdata = Right$(Rdata, Len(Rdata) - 4)
-            AddtoRichTextBox frmMain.RecTxt, "Hay " & Rdata & " npcs.", 255, 255, 255, 0, 0
+            AddtoRichTextBox frmMain.RecTxt, MENSAJE_NENE & Rdata, 255, 255, 255, 0, 0
             Exit Sub
         Case "RSOS"             ' >>>>> Mensaje :: RSOS
             Rdata = Right$(Rdata, Len(Rdata) - 4)
