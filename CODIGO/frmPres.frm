@@ -60,16 +60,17 @@ Attribute VB_Exposed = False
 'Pablo Ignacio Márquez
 
 Option Explicit
+
 Dim puedo As Boolean
 
 Private Sub Form_KeyPress(KeyAscii As Integer)
-If KeyAscii = 27 Then If puedo Then finpres = True
+    If KeyAscii = 27 Then If puedo Then Unload Me
 End Sub
 
 Private Sub Form_Load()
-Me.Width = 800 * Screen.TwipsPerPixelX
-Me.Height = 600 * Screen.TwipsPerPixelY
-puedo = False
+    Me.width = 800 * Screen.TwipsPerPixelX
+    Me.height = 600 * Screen.TwipsPerPixelY
+    puedo = False
 End Sub
 
 Private Sub Timer1_Timer()
@@ -80,12 +81,10 @@ ticks = ticks + 1
 If ticks = 1 Then
     Me.Picture = LoadPicture(App.Path & "\Graficos\alkonao2.jpg")
     puedo = True
-'ElseIf ticks = 2 Then
-    'Me.Picture = LoadPicture(App.Path & "\Graficos\datafull.jpg")
 ElseIf ticks = 2 Then
     Me.Picture = LoadPicture(App.Path & "\Graficos\newfinal.jpg")
 Else
- finpres = True
+    unlaod Me
 End If
 
 End Sub

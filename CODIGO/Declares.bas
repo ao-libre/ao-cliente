@@ -408,7 +408,6 @@ Public Const ENDL As String * 2 = vbCrLf        'Holds the Endline character for
 
 'Control
 Public prgRun As Boolean 'When true the program ends
-Public finpres As Boolean
 
 Public IPdelServidor As String
 Public PuertoDelServidor As String
