@@ -84,7 +84,7 @@ If ticks = 1 Then
 ElseIf ticks = 2 Then
     Me.Picture = LoadPicture(App.Path & "\Graficos\newfinal.jpg")
 Else
-    unlaod Me
+    Unload Me
 End If
 
 End Sub
