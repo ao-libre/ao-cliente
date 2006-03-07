@@ -884,7 +884,7 @@ Dim timers(1 To 2) As Integer
     End If
 
 
-If FileExist(App.Path & "\init\ao.dat", vbArchive) Then
+    If FileExist(App.Path & "\init\ao.dat", vbArchive) Then
         Call LoadRenderMode
     End If
     
@@ -902,7 +902,7 @@ If FileExist(App.Path & "\init\ao.dat", vbArchive) Then
 #End If
 
     Call CargarServidores
-    'TODO : esto de ServerRecibidos no se podría sacar???
+'TODO : esto de ServerRecibidos no se podría sacar???
     ServersRecibidos = True
     
     AddtoRichTextBox frmCargando.status, "Encontrado", , , , 1
@@ -924,7 +924,7 @@ Dim loopc As Integer
 
 LastTime = GetTickCount
 
-Call InitTileEngine(frmMain.hWnd, 152, 7, 32, 32, 13, 17, 9)
+    Call InitTileEngine(frmMain.hWnd, 152, 7, 32, 32, 13, 17, 9)
     
     Call AddtoRichTextBox(frmCargando.status, "Creando animaciones extra....")
     
@@ -954,7 +954,7 @@ UserMap = 1
     Call AddtoRichTextBox(frmCargando.status, "Hecho", , , , 1, , False)
     
     'Inicializamos el inventario gráfico
-    Call Inventario.Initialize(DirectDraw, frmMain.picInv)
+    Call Inventario.Initialize(directDraw, frmMain.picInv)
     
     If Musica = 0 Then
         Call Audio.PlayMIDI(MIdi_Inicio & ".mid")
@@ -1069,7 +1069,7 @@ End
 
 ManejadorErrores:
     MsgBox "Ha ocurrido un error irreparable, el cliente se cerrará."
-    LogError "Contexto:" & Err.HelpContext & " Desc:" & Err.Description & " Fuente:" & Err.Source
+    LogError "Contexto:" & Err.HelpContext & " Desc:" & Err.Description & " Fuente:" & Err.source
     End
 End Sub
 Sub WriteVar(ByVal file As String, ByVal Main As String, ByVal Var As String, ByVal value As String)

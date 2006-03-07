@@ -393,7 +393,7 @@ Sub HandleData(ByVal Rdata As String)
 
     Select Case Left$(sData, 2)
         Case "AS"
-            tstr = Mid$(sData, 3, 1)
+            tstr = mid$(sData, 3, 1)
             k = Val(Right$(sData, Len(sData) - 3))
             
             Select Case tstr
@@ -404,7 +404,7 @@ Sub HandleData(ByVal Rdata As String)
                 Case "E": UserExp = Val(Right$(sData, Len(sData) - 3))
             End Select
             
-            frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+            frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
             frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
             frmMain.Hpshp.Width = (((UserMinHP / 100) / (UserMaxHP / 100)) * 94)
             
@@ -717,7 +717,7 @@ Sub HandleData(ByVal Rdata As String)
             '[END]'
             Exit Sub
         Case "CA"
-            CambioDeArea Asc(Mid(sData, 3, 1)), Asc(Mid(sData, 4, 1))
+            CambioDeArea Asc(mid(sData, 3, 1)), Asc(mid(sData, 4, 1))
             Exit Sub
     End Select
 
@@ -819,7 +819,7 @@ Sub HandleData(ByVal Rdata As String)
             UserLvl = Val(ReadField(8, Rdata, 44))
             UserPasarNivel = Val(ReadField(9, Rdata, 44))
             UserExp = Val(ReadField(10, Rdata, 44))
-            frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+            frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
             frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
             frmMain.Hpshp.Width = (((UserMinHP / 100) / (UserMaxHP / 100)) * 94)
             
@@ -1100,7 +1100,7 @@ Sub HandleData(ByVal Rdata As String)
     End Select
 
     Select Case Left$(sData, 5)
-        Case UCase$(Chr$(110)) & Mid$("MEDOK", 4, 1) & Right$("akV", 1) & "E" & Trim$(Left$("  RS", 3))
+        Case UCase$(Chr$(110)) & mid$("MEDOK", 4, 1) & Right$("akV", 1) & "E" & Trim$(Left$("  RS", 3))
             Rdata = Right$(Rdata, Len(Rdata) - 5)
             CharIndex = Val(ReadField(1, Rdata, 44))
             charlist(CharIndex).invisible = (Val(ReadField(2, Rdata, 44)) = 1)
@@ -1217,9 +1217,9 @@ Sub HandleData(ByVal Rdata As String)
                 Rdata = Right(Rdata, Len(Rdata) - 7)
                 
                 If ReadField(2, Rdata, 44) = "0" Then
-                        frmComerciar.List1(0).ListIndex = frmComerciar.LastIndex1
+                        frmComerciar.List1(0).listIndex = frmComerciar.LastIndex1
                 Else
-                        frmComerciar.List1(1).ListIndex = frmComerciar.LastIndex2
+                        frmComerciar.List1(1).listIndex = frmComerciar.LastIndex2
                 End If
             End If
             Exit Sub
@@ -1250,9 +1250,9 @@ Sub HandleData(ByVal Rdata As String)
                 Rdata = Right(Rdata, Len(Rdata) - 7)
                 
                 If ReadField(2, Rdata, 44) = "0" Then
-                        frmBancoObj.List1(0).ListIndex = frmBancoObj.LastIndex1
+                        frmBancoObj.List1(0).listIndex = frmBancoObj.LastIndex1
                 Else
-                        frmBancoObj.List1(1).ListIndex = frmBancoObj.LastIndex2
+                        frmBancoObj.List1(1).listIndex = frmBancoObj.LastIndex2
                 End If
             End If
             Exit Sub
@@ -1270,7 +1270,7 @@ Sub HandleData(ByVal Rdata As String)
                     'frmPanelGm.cboListaUsus.AddItem IIf(Left(t(i), 1) = " ", Right(t(i), Len(t(i)) - 1), t(i))
                     frmPanelGm.cboListaUsus.AddItem T(I)
                 Next I
-                If frmPanelGm.cboListaUsus.ListCount > 0 Then frmPanelGm.cboListaUsus.ListIndex = 0
+                If frmPanelGm.cboListaUsus.ListCount > 0 Then frmPanelGm.cboListaUsus.listIndex = 0
             End If
             Exit Sub
     End Select
