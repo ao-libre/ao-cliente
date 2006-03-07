@@ -361,6 +361,15 @@ End Enum
 '       [END]
 '¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?
 
+#If ConAlfaB Then
+
+Private Declare Function BltAlphaFast Lib "vbabdx" (ByRef lpDDSDest As Any, ByRef lpDDSSource As Any, ByVal iWidth As Long, ByVal iHeight As Long, _
+        ByVal pitchSrc As Long, ByVal pitchDst As Long, ByVal dwMode As Long) As Long
+Private Declare Function BltEfectoNoche Lib "vbabdx" (ByRef lpDDSDest As Any, ByVal iWidth As Long, ByVal iHeight As Long, _
+        ByVal pitchDst As Long, ByVal dwMode As Long) As Long
+
+#End If
+
 Sub CargarCabezas()
 On Error Resume Next
 Dim N As Integer, I As Integer, Numheads As Integer, Index As Integer
@@ -1679,7 +1688,7 @@ For Y = (minY + 8) + RenderMod.iImageSize To (maxY - 1) - RenderMod.iImageSize
                                         If InStr(TempChar.Nombre, "<") > 0 And InStr(TempChar.Nombre, ">") > 0 Then
                                             lCenter = (frmMain.TextWidth(Left(TempChar.Nombre, InStr(TempChar.Nombre, "<") - 1)) / 2) - 16
                                             Dim sClan As String
-                                            sClan = Mid(TempChar.Nombre, InStr(TempChar.Nombre, "<"))
+                                            sClan = mid(TempChar.Nombre, InStr(TempChar.Nombre, "<"))
                                             
                                             Select Case TempChar.priv
                                             Case 0
@@ -1957,7 +1966,7 @@ Sub LoadGraphics()
                 SurfaceDB.CargarGrafico loopc
                 
                 If loopc > (iLoopUpdate + (Config_Inicio.NumeroDeBMPs / 80)) Then
-                    AddtoRichTextBox frmCargando.status, ".", , , , , , True
+                    AddtoRichTextBox frmCargando.Status, ".", , , , , , True
                     iLoopUpdate = loopc
                 End If
             Next loopc
@@ -1975,7 +1984,7 @@ Sub LoadGraphics()
         RLluvia(4).Left = 0:     RLluvia(5).Left = 128:   RLluvia(6).Left = 256:   RLluvia(7).Left = 384
         RLluvia(4).Right = 128:  RLluvia(5).Right = 256:  RLluvia(6).Right = 384:  RLluvia(7).Right = 512
         RLluvia(4).Bottom = 256: RLluvia(5).Bottom = 256: RLluvia(6).Bottom = 256: RLluvia(7).Bottom = 256
-        AddtoRichTextBox frmCargando.status, "Hecho.", , , , 1, , False
+        AddtoRichTextBox frmCargando.Status, "Hecho.", , , , 1, , False
 End Sub
 
 
@@ -2078,7 +2087,7 @@ LTLluvia(2) = 480
 LTLluvia(3) = 608
 LTLluvia(4) = 736
 
-AddtoRichTextBox frmCargando.status, "Cargando Gráficos....", 0, 0, 0, , , True
+AddtoRichTextBox frmCargando.Status, "Cargando Gráficos....", 0, 0, 0, , , True
 Call LoadGraphics
 
 InitTileEngine = True
