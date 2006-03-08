@@ -1747,24 +1747,17 @@ For Y = (minY + 8) + RenderMod.iImageSize To (maxY - 1) - RenderMod.iImageSize
                 
                 
             Else '<-> If TempChar.Head.Head(TempChar.Heading).GrhIndex <> 0 Then
-            
-#If SeguridadAlkon Then
-                If TempChar.invisible = False And Not MI(CualMI).IsInvisible(MapData(X, Y).CharIndex) Then
-#Else
-                If TempChar.invisible = False Then
-#End If
-                    If Dialogos.CantidadDialogos > 0 Then
-                        Call Dialogos.Update_Dialog_Pos( _
-                                (iPPx + TempChar.Body.HeadOffset.X), _
-                                (iPPy + TempChar.Body.HeadOffset.Y), _
-                                MapData(X, Y).CharIndex)
-                    End If
-    
-                    Call DDrawTransGrhtoSurface( _
-                            BackBufferSurface, _
-                            TempChar.Body.Walk(TempChar.Heading), _
-                            iPPx, iPPy, 1, 1)
+                If Dialogos.CantidadDialogos > 0 Then
+                    Call Dialogos.Update_Dialog_Pos( _
+                            (iPPx + TempChar.Body.HeadOffset.X), _
+                            (iPPy + TempChar.Body.HeadOffset.Y), _
+                            MapData(X, Y).CharIndex)
                 End If
+
+                Call DDrawTransGrhtoSurface( _
+                        BackBufferSurface, _
+                        TempChar.Body.Walk(TempChar.Heading), _
+                        iPPx, iPPy, 1, 1)
             End If '<-> If TempChar.Head.Head(TempChar.Heading).GrhIndex <> 0 Then
 
 
