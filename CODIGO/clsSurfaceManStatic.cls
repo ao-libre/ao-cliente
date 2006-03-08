@@ -148,7 +148,7 @@ On Error Resume Next
     fileName = Dir$(grhpath & "*.bmp", vbArchive)
     
     While fileName <> ""
-        'Get the surface index (numeric part of the number) - NEVER use Val() here or the error won't be raised!!!
+        'Get the surface index (numeric part of the number) - NEVER use Val() here or the error won't be raised!!! - Don't use IsNumeric or hexa strings will be accepted
         surfaceIndex = CLng(Left$(fileName, Len(fileName) - 4))
         
         If Err.Number = 13 Then
