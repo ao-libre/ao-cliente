@@ -165,13 +165,13 @@ Sub CargarColores()
         Exit Sub
     End If
     
-    Dim I As Long
+    Dim i As Long
     
-    For I = 0 To 48 '49 y 50 reservados para ciudadano y criminal
-        ColoresPJ(I).r = Val(GetVar(archivoC, Str(I), "R"))
-        ColoresPJ(I).G = Val(GetVar(archivoC, Str(I), "G"))
-        ColoresPJ(I).B = Val(GetVar(archivoC, Str(I), "B"))
-    Next I
+    For i = 0 To 48 '49 y 50 reservados para ciudadano y criminal
+        ColoresPJ(i).r = Val(GetVar(archivoC, Str(i), "R"))
+        ColoresPJ(i).G = Val(GetVar(archivoC, Str(i), "G"))
+        ColoresPJ(i).B = Val(GetVar(archivoC, Str(i), "B"))
+    Next i
         
     ColoresPJ(50).r = Val(GetVar(archivoC, "CR", "R"))
     ColoresPJ(50).G = Val(GetVar(archivoC, "CR", "G"))
@@ -271,17 +271,17 @@ End Sub
 
 Function AsciiValidos(ByVal cad As String) As Boolean
     Dim car As Byte
-    Dim I As Long
+    Dim i As Long
     
     cad = LCase$(cad)
     
-    For I = 1 To Len(cad)
-        car = Asc(Mid$(cad, I, 1))
+    For i = 1 To Len(cad)
+        car = Asc(Mid$(cad, i, 1))
         
         If ((car < 97 Or car > 122) Or car = Asc("º")) And (car <> 255) And (car <> 32) Then
             Exit Function
         End If
-    Next I
+    Next i
     
     AsciiValidos = True
 End Function
@@ -465,6 +465,12 @@ End Sub
 'End Sub
 
 Sub MoveTo(ByVal Direccion As E_Heading)
+'***************************************************
+'Author: Alejandro Santos (AlejoLp)
+'Last Modify Date: 06/03/2006
+' 06/03/2006: AlejoLp - Elimine las funciones Move[NSWE] y las converti a esta
+'***************************************************
+    
     Dim LegalOk As Boolean
     
     If Cartel Then Cartel = False
@@ -492,24 +498,15 @@ Sub MoveTo(ByVal Direccion As E_Heading)
             Call SendData("CHEA" & Direccion)
         End If
     End If
+    
 End Sub
 
-'TODO : Hay formas más limpias, mantenibles y eficientes....
 Sub RandomMove()
-'    Dim j As Integer
-'
-'    j = RandomNumber(1, 4)
-'
-'    Select Case j
-'        Case 1
-'            Call MoveEast
-'        Case 2
-'            Call MoveNorth
-'        Case 3
-'            Call MoveWest
-'        Case 4
-'            Call MoveSouth
-'    End Select
+'***************************************************
+'Author: Alejandro Santos (AlejoLp)
+'Last Modify Date: 06/03/2006
+' 06/03/2006: AlejoLp - Ahora utiliza la funcion MoveTo
+'***************************************************
 
     MoveTo RandomNumber(1, 4)
     
@@ -713,7 +710,7 @@ Public Function ReadField(ByVal Pos As Integer, ByVal Text As String, ByVal SepA
 '*****************************************************************
 'Gets a field from a string
 '*****************************************************************
-    Dim I As Integer
+    Dim i As Integer
     Dim LastPos As Integer
     Dim CurChar As String * 1
     Dim FieldNum As Integer
@@ -723,17 +720,17 @@ Public Function ReadField(ByVal Pos As Integer, ByVal Text As String, ByVal SepA
     LastPos = 0
     FieldNum = 0
     
-    For I = 1 To Len(Text)
-        CurChar = Mid$(Text, I, 1)
+    For i = 1 To Len(Text)
+        CurChar = Mid$(Text, i, 1)
         If CurChar = Seperator Then
             FieldNum = FieldNum + 1
             If FieldNum = Pos Then
                 ReadField = Mid$(Text, LastPos + 1, (InStr(LastPos + 1, Text, Seperator, vbTextCompare) - 1) - (LastPos))
                 Exit Function
             End If
-            LastPos = I
+            LastPos = i
         End If
-    Next I
+    Next i
     FieldNum = FieldNum + 1
     
     If FieldNum = Pos Then
@@ -762,32 +759,32 @@ Sub WriteClientVer()
 End Sub
 
 Public Function IsIp(ByVal Ip As String) As Boolean
-    Dim I As Long
+    Dim i As Long
     
-    For I = 1 To UBound(ServersLst)
-        If ServersLst(I).Ip = Ip Then
+    For i = 1 To UBound(ServersLst)
+        If ServersLst(i).Ip = Ip Then
             IsIp = True
             Exit Function
         End If
-    Next I
+    Next i
 End Function
 
 Public Sub CargarServidores()
 On Error GoTo errorH
     Dim f As String
     Dim C As Integer
-    Dim I As Long
+    Dim i As Long
     
     f = App.Path & "\init\sinfo.dat"
     C = Val(GetVar(f, "INIT", "Cant"))
     
     ReDim ServersLst(1 To C) As tServerInfo
-    For I = 1 To C
-        ServersLst(I).desc = GetVar(f, "S" & I, "Desc")
-        ServersLst(I).Ip = Trim$(GetVar(f, "S" & I, "Ip"))
-        ServersLst(I).PassRecPort = CInt(GetVar(f, "S" & I, "P2"))
-        ServersLst(I).Puerto = CInt(GetVar(f, "S" & I, "PJ"))
-    Next I
+    For i = 1 To C
+        ServersLst(i).desc = GetVar(f, "S" & i, "Desc")
+        ServersLst(i).Ip = Trim$(GetVar(f, "S" & i, "Ip"))
+        ServersLst(i).PassRecPort = CInt(GetVar(f, "S" & i, "P2"))
+        ServersLst(i).Puerto = CInt(GetVar(f, "S" & i, "PJ"))
+    Next i
     CurServer = 1
 Exit Sub
 
@@ -799,26 +796,26 @@ End Sub
 Public Sub InitServersList(ByVal Lst As String)
 On Error Resume Next
     Dim NumServers As Integer
-    Dim I As Integer
+    Dim i As Integer
     Dim Cont As Integer
     
-    I = 1
+    i = 1
     
-    Do While (ReadField(I, RawServersList, Asc(";")) <> "")
-        I = I + 1
+    Do While (ReadField(i, RawServersList, Asc(";")) <> "")
+        i = i + 1
         Cont = Cont + 1
     Loop
     
     ReDim ServersLst(1 To Cont) As tServerInfo
     
-    For I = 1 To Cont
+    For i = 1 To Cont
         Dim cur$
-        cur$ = ReadField(I, RawServersList, Asc(";"))
-        ServersLst(I).Ip = ReadField(1, cur$, Asc(":"))
-        ServersLst(I).Puerto = ReadField(2, cur$, Asc(":"))
-        ServersLst(I).desc = ReadField(4, cur$, Asc(":"))
-        ServersLst(I).PassRecPort = ReadField(3, cur$, Asc(":"))
-    Next I
+        cur$ = ReadField(i, RawServersList, Asc(";"))
+        ServersLst(i).Ip = ReadField(1, cur$, Asc(":"))
+        ServersLst(i).Puerto = ReadField(2, cur$, Asc(":"))
+        ServersLst(i).desc = ReadField(4, cur$, Asc(":"))
+        ServersLst(i).PassRecPort = ReadField(3, cur$, Asc(":"))
+    Next i
     
     CurServer = 1
 End Sub
@@ -894,8 +891,8 @@ Dim timers(1 To 2) As Integer
     frmCargando.Show
     frmCargando.Refresh
     
-    frmConnect.version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
-    AddtoRichTextBox frmCargando.status, "Buscando servidores....", 0, 0, 0, 0, 0, 1
+    frmConnect.Version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
+    AddtoRichTextBox frmCargando.Status, "Buscando servidores....", 0, 0, 0, 0, 0, 1
 
 #If UsarWrench = 1 Then
     frmMain.Socket1.Startup
@@ -905,20 +902,20 @@ Dim timers(1 To 2) As Integer
 'TODO : esto de ServerRecibidos no se podría sacar???
     ServersRecibidos = True
     
-    AddtoRichTextBox frmCargando.status, "Encontrado", , , , 1
-    AddtoRichTextBox frmCargando.status, "Iniciando constantes...", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.Status, "Encontrado", , , , 1
+    AddtoRichTextBox frmCargando.Status, "Iniciando constantes...", 0, 0, 0, 0, 0, 1
     
     Call InicializarNombres
     
     frmOldPersonaje.NameTxt.Text = Config_Inicio.Name
     frmOldPersonaje.PasswordTxt.Text = ""
     
-    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
+    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
     
     IniciarObjetosDirectX
     
-    AddtoRichTextBox frmCargando.status, "Cargando Sonidos....", 0, 0, 0, 0, 0, 1
-    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
+    AddtoRichTextBox frmCargando.Status, "Cargando Sonidos....", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
 
 Dim loopc As Integer
 
@@ -926,7 +923,7 @@ LastTime = GetTickCount
 
     Call InitTileEngine(frmMain.hWnd, 152, 7, 32, 32, 13, 17, 9)
     
-    Call AddtoRichTextBox(frmCargando.status, "Creando animaciones extra....")
+    Call AddtoRichTextBox(frmCargando.Status, "Creando animaciones extra....")
     
     Call CargarAnimsExtra
     Call CargarTips
@@ -944,17 +941,17 @@ UserMap = 1
     Call InitMI
 #End If
 
-    AddtoRichTextBox frmCargando.status, "                    ¡Bienvenido a Argentum Online!", , , , 1
+    AddtoRichTextBox frmCargando.Status, "                    ¡Bienvenido a Argentum Online!", , , , 1
     
     Unload frmCargando
     
     'Inicializamos el sonido
-    Call AddtoRichTextBox(frmCargando.status, "Iniciando DirectSound....", 0, 0, 0, 0, 0, True)
+    Call AddtoRichTextBox(frmCargando.Status, "Iniciando DirectSound....", 0, 0, 0, 0, 0, True)
     Call Audio.Initialize(DirectX, frmMain.hWnd, App.Path & "\" & Config_Inicio.DirSonidos & "\", App.Path & "\" & Config_Inicio.DirMusica & "\")
-    Call AddtoRichTextBox(frmCargando.status, "Hecho", , , , 1, , False)
+    Call AddtoRichTextBox(frmCargando.Status, "Hecho", , , , 1, , False)
     
     'Inicializamos el inventario gráfico
-    Call Inventario.Initialize(directDraw, frmMain.picInv)
+    Call Inventario.Initialize(DirectDraw, frmMain.picInv)
     
     If Musica = 0 Then
         Call Audio.PlayMIDI(MIdi_Inicio & ".mid")
@@ -1037,7 +1034,7 @@ UserMap = 1
 
     EngineRun = False
     frmCargando.Show
-    AddtoRichTextBox frmCargando.status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.Status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
     LiberarObjetosDX
 
 'TODO : Esto debería ir en otro lado como al cambair a esta res
@@ -1069,7 +1066,7 @@ End
 
 ManejadorErrores:
     MsgBox "Ha ocurrido un error irreparable, el cliente se cerrará."
-    LogError "Contexto:" & Err.HelpContext & " Desc:" & Err.Description & " Fuente:" & Err.source
+    LogError "Contexto:" & Err.HelpContext & " Desc:" & Err.Description & " Fuente:" & Err.Source
     End
 End Sub
 Sub WriteVar(ByVal file As String, ByVal Main As String, ByVal Var As String, ByVal value As String)
@@ -1158,17 +1155,17 @@ End Sub
     
 Public Sub LeerLineaComandos()
     Dim T() As String
-    Dim I As Long
+    Dim i As Long
     
     'Parseo los comandos
     T = Split(Command, " ")
     
-    For I = LBound(T) To UBound(T)
-        Select Case UCase$(T(I))
+    For i = LBound(T) To UBound(T)
+        Select Case UCase$(T(i))
             Case "/NORES" 'no cambiar la resolucion
                 NoRes = True
         End Select
-    Next I
+    Next i
 End Sub
 
 Private Sub LoadRenderMode()
