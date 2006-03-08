@@ -6,16 +6,15 @@ BEGIN
   DataSourceBehavior  = 0  'vbNone
   MTSTransactionMode  = 0  'NotAnMTSObject
 END
-Attribute VB_Name = "clsSurfaceManDyn"
+Attribute VB_Name = "clsSurfaceManStatic"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = True
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 '**************************************************************
-' clsSurfaceManDyn.cls - Inherits from clsSurfaceManager. Is designed to load
-'surfaces dynamically without using more than an arbitrary amount of Mb.
-'For removale it uses LRU, attempting to just keep in memory those surfaces
-'that are actually usefull.
+' clsSurfaceManStatic.cls - Inherits from clsSurfaceManager. Is designed to load
+' surfaces at startup, and never deallocating them.
+' This grants high performance can use a lot of RAM.
 '
 ' Developed by Maraxus (Juan Martín Sotuyo Dodero - juansotuyo@hotmail.com)
 ' Last Modify Date: 3/06/2006
@@ -46,29 +45,23 @@ Option Explicit
 'Inherit from the surface manager
 Implements clsSurfaceManager
 
-Private Const BYTES_PER_MB As Long = 1048576                        '1Mb = 1024 Kb = 1024 * 1024 bytes = 1048576 bytes
-Private Const MIN_MEMORY_TO_USE As Long = 4 * BYTES_PER_MB          '4 Mb
-Private Const DEFAULT_MEMORY_TO_USE As Long = 16 * BYTES_PER_MB     '16 Mb
+'Size to which we resize the list when we start loading textures to prevent ReDim Preserve on each add
+'Once done the list is trimmed to the proper size if it's larger than needed.
+'A ReDim Preserve is executed for each surface after DEFAULT_LIST_SIZE + 1
+Private Const DEFAULT_LIST_SIZE As Integer = 1500
 
-Private Type SURFACE_ENTRY_DYN
+Private Type SURFACE_ENTRY_STATIC
     fileIndex As Long
-    lastAccess As Long
     surface As DirectDrawSurface7
 End Type
 
-Private surfaceList() As SURFACE_ENTRY_DYN
+Private surfaceList() As SURFACE_ENTRY_STATIC
 Private surfaceCount As Long
 
 Private DirectDraw As DirectDraw7
 
-Private maxBytesToUse As Long
-Private usedBytes As Long
-
 Private useVideoMemory As Boolean
 
-Private grhPath As String
-
-Private Declare Function GetTickCount Lib "kernel32" () As Long
 Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" (ByRef dest As Any, ByRef source As Any, ByVal byteCount As Long)
 
 Private Sub Class_Initialize()
@@ -77,10 +70,8 @@ Private Sub Class_Initialize()
 'Last Modify Date: 3/06/2006
 '
 '**************************************************************
-    usedBytes = 0
     surfaceCount = 0
-    ReDim surfaceList(0) As SURFACE_ENTRY_DYN
-    maxBytesToUse = MIN_MEMORY_TO_USE
+    ReDim surfaceList(0) As SURFACE_ENTRY_STATIC
 End Sub
 
 Private Sub Class_Terminate()
@@ -100,25 +91,17 @@ Private Sub Class_Terminate()
     Erase surfaceList
 End Sub
 
-Private Sub clsSurfaceManager_Initialize(ByRef DD As DirectDraw7, ByVal videoMemory As Boolean, ByVal graphicPath As String, Optional ByVal maxMemoryUsageInMb As Long = -1)
+Private Sub clsSurfaceManager_Initialize(ByRef DD As DirectDraw7, ByVal videoMemory As Boolean, ByVal graphicPath As String, Optional ByVal maxMemoryUsageInMb As Long = -1&)
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
 'Last Modify Date: 3/06/2006
-'Initializes the manager
+'
 '**************************************************************
     Set DirectDraw = DD
     
     useVideoMemory = videoMemory
     
-    grhPath = graphicPath
-    
-    If maxMemoryUsageInMb = -1 Then
-        maxBytesToUse = DEFAULT_MEMORY_TO_USE   ' 16 Mb by default
-    ElseIf maxMemoryUsageInMb * BYTES_PER_MB < MIN_MEMORY_TO_USE Then
-        maxBytesToUse = MIN_MEMORY_TO_USE       ' 4 Mb is the minimum allowed
-    Else
-        maxBytesToUse = maxMemoryUsageInMb * BYTES_PER_MB
-    End If
+    Call LoadSurfaces(graphicPath)
 End Sub
 
 Private Property Get clsSurfaceManager_Texture(ByVal fileIndex As Long) As DirectDrawSurface7
@@ -127,24 +110,72 @@ Private Property Get clsSurfaceManager_Texture(ByVal fileIndex As Long) As Direc
 'Last Modify Date: 3/06/2006
 'Retrieves the requested texture
 '**************************************************************
+On Error GoTo ErrHandler:
     Dim Index As Long
     
     ' Search the index on the list
     Index = BinarySearch(fileIndex)
     
+    'Return it
+    Set clsSurfaceManager_Texture = surfaceList(Index).surface
+Exit Property
+
+ErrHandler:
     If Index < 0 Then
-        'Not found, we have to load the file and add it in the position given by the negation of the index
-        Index = Not Index
-        
-        Call LoadSurface(fileIndex, Index)
+        MsgBox "No se encuentra el archivo " & CStr(fileIndex) & ".bmp. Reinstale el juego, " _
+                & "y si el problema persiste contactese con los adminsitradores", vbOKOnly Or vbCritical Or vbExclamation, "Error"
+    Else
+        MsgBox "Un error inesperado ocurrió a intentar cargar el archivo " & CStr(fileIndex) & ".bmp. & vbcrlf" _
+                & "Error: " & CStr(Err.Number), vbOKOnly Or vbCritical Or vbExclamation, "Error"
     End If
     
-    'Return it
-    With surfaceList(Index)
-        .lastAccess = GetTickCount
-        Set clsSurfaceManager_Texture = .surface
-    End With
+    End
 End Property
+
+Private Sub LoadSurfaces(ByVal grhpath As String)
+'**************************************************************
+'Author: Juan Martín Sotuyo Dodero
+'Last Modify Date: 3/06/2006
+'Loads all surfaces in random order and then sorts them
+'**************************************************************
+On Error Resume Next
+    Dim fileName As String
+    Dim surfaceIndex As Long
+    
+    'Set up the list at a standard value big enough to prevent using ReDim Preserve constantly (which is slow)
+    ReDim surfaceList(DEFAULT_LIST_SIZE) As SURFACE_ENTRY_STATIC
+    
+    fileName = Dir$(grhpath & "*.bmp", vbArchive)
+    
+    While fileName <> ""
+        'Get the surface index (numeric part of the number) - NEVER use Val() here or the error won't be raised!!!
+        surfaceIndex = CLng(Left$(fileName, Len(fileName) - 4))
+        
+        If Err.Number = 13 Then
+            'Type mysmatch - the name of the file isn't numneric, therefore it isn't a surface
+            Err.Clear
+        Else
+            'Increase surface count and resize list if needed
+            surfaceCount = surfaceCount + 1
+            If surfaceCount > DEFAULT_LIST_SIZE + 1 Then
+                ReDim Preserve surfaceList(surfaceCount - 1) As SURFACE_ENTRY_STATIC
+            End If
+            
+            Call LoadSurface(grhpath, surfaceIndex, surfaceCount - 1)
+        End If
+        
+        'Get next .bmp file
+        fileName = Dir$()
+    Wend
+    
+    'Trim the list if needed
+    If surfaceCount <> UBound(surfaceList) + 1 Then
+        ReDim Preserve surfaceList(surfaceCount - 1) As SURFACE_ENTRY_STATIC
+    End If
+    
+    'Sort the list
+    Call SortSurfaces(0, surfaceCount - 1)
+End Sub
 
 Private Function BinarySearch(ByVal fileIndex As Long) As Long
 '**************************************************************
@@ -179,7 +210,7 @@ Private Function BinarySearch(ByVal fileIndex As Long) As Long
     BinarySearch = Not mid
 End Function
 
-Private Sub LoadSurface(ByVal fileIndex As Long, ByVal listIndex As Long)
+Private Sub LoadSurface(ByVal grhpath As String, ByVal fileIndex As Long, ByVal listIndex As Long)
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
 'Last Modify Date: 3/06/2006
@@ -188,13 +219,13 @@ Private Sub LoadSurface(ByVal fileIndex As Long, ByVal listIndex As Long)
 '**************************************************************
 On Error GoTo ErrHandler
 
-    Dim newSurface As SURFACE_ENTRY_DYN
+    Dim newSurface As SURFACE_ENTRY_STATIC
     Dim ddsd As DDSURFACEDESC2
     Dim ddck As DDCOLORKEY
     Dim filePath As String
     
     'Store complete file path
-    filePath = grhPath & CStr(fileIndex) & ".bmp"
+    filePath = grhpath & CStr(fileIndex) & ".bmp"
     
     'Set up the surface desc
     ddsd.lFlags = DDSD_CAPS Or DDSD_HEIGHT Or DDSD_WIDTH
@@ -217,39 +248,17 @@ On Error GoTo ErrHandler
         ddck.high = 0
         ddck.low = 0
         Call .surface.SetColorKey(DDCKEY_SRCBLT, ddck)
-        
-        'Retrieve the updated surface desc
-        Call .surface.GetSurfaceDesc(ddsd)
     End With
     
-    'Insert surface to the list at the given pos
-    Call InsertSurface(newSurface, listIndex)
-    
-    'Update used bytes
-    usedBytes = usedBytes + ddsd.lHeight * ddsd.lPitch
-    
-    'Check if we have exceeded our allowed share of memory usage
-    While usedBytes < maxBytesToUse And surfaceCount > 0
-        Call RemoveLRU
-    Wend
+    'Store the surface in the given index (it MUST be empty or data will be lost)
+    surfaceList(listIndex) = newSurface
 Exit Sub
 
 ErrHandler:
-    If Err.Number = DDERR_OUTOFMEMORY Or Err.Number = DDERR_OUTOFVIDEOMEMORY Then
-        If surfaceCount Then
-            'Remove a surface and try again
-            Call RemoveLRU
-            Resume Next
-        Else
-            MsgBox "No hay memoria disponible! El programa abortará. Cierra algunos programas e intenta de nuevo"
-            End
-        End If
-    Else
-        MsgBox "Un error inesperado ocurrió al intentar cargar el gráfico " & filePath & ". " & vbCrLf & _
-                "El código de error es " & CStr(Err.Number) & vbCrLf & "Copia este mensaje y notifica a los administradores.", _
-                vbOKOnly Or vbCritical Or vbExclamation, "Error"
+    MsgBox "Un error inesperado ocurrió al intentar cargar el gráfico " & filePath & ". " & vbCrLf & _
+            "El código de error es " & CStr(Err.Number) & vbCrLf & "Copia este mensaje y notifica a los administradores.", _
+            vbOKOnly Or vbCritical Or vbExclamation, "Error"
         End
-    End If
 End Sub
 
 Private Sub GetBMPDimensions(ByVal Archivo As String, ByRef height As Long, ByRef width As Long)
@@ -272,66 +281,38 @@ Private Sub GetBMPDimensions(ByVal Archivo As String, ByRef height As Long, ByRe
     width = bmpInfoHead.biWidth
 End Sub
 
-Private Sub InsertSurface(ByRef surface As SURFACE_ENTRY_DYN, ByVal listIndex As Long)
+Private Sub SortSurfaces(ByVal first As Integer, ByVal last As Integer)
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
-'Last Modify Date: 3/06/2006
-'Inserts the given surface in the requested position of the surface list
+'Last Modify Date: 5/04/2005
+'Sorts the list using quicksort, this allows the use of BinarySearch for faster searches
 '**************************************************************
-    Dim tempList() As SURFACE_ENTRY_DYN
+    Dim min As Integer      'First item in the list
+    Dim max As Integer      'Last item in the list
+    Dim comp As Long        'Item used to compare
+    Dim temp As SURFACE_ENTRY_STATIC
     
-    'Move back the list. We do this and not a For going from back to the front
-    'since this proved to be almost 6 times as fast in our tests
-    ReDim tempList(surfaceCount - listIndex - 1) As SURFACE_ENTRY_DYN
-    CopyMemory tempList(0), surfaceList(listIndex), (surfaceCount - listIndex) * LenB(surface)
+    min = first
+    max = last
     
-    ReDim Preserve surfaceList(surfaceCount + 1) As SURFACE_ENTRY_DYN
-    CopyMemory surfaceList(listIndex + 1), tempList(0), (surfaceCount - listIndex) * LenB(surface)
+    comp = surfaceList((min + max) \ 2).fileIndex
     
-    'Insert the new surface
-    surfaceList(listIndex) = surface
-    
-    'Increase surface count
-    surfaceCount = surfaceCount + 1
-End Sub
-
-Private Sub RemoveLRU()
-'**************************************************************
-'Author: Juan Martín Sotuyo Dodero
-'Last Modify Date: 3/06/2006
-'Removes the Least Recently Used surface to make some room for new ones
-'**************************************************************
-    Dim LRU As Long
-    Dim I As Long
-    Dim ddsd As DDSURFACEDESC2
-    
-    'Should never happen, but just in case....
-    If surfaceCount = 0 Then Exit Sub
-    
-    'Initialize with the first element of the list
-    LRU = 0
-    
-    'Check out through the whole list for the least recently used
-    For I = 0 To surfaceCount - 1
-        If surfaceList(LRU).lastAccess > surfaceList(I).lastAccess Then
-            LRU = I
+    Do While min <= max
+        Do While surfaceList(min).fileIndex < comp And min < last
+            min = min + 1
+        Loop
+        Do While surfaceList(max).fileIndex > comp And max > first
+            max = max - 1
+        Loop
+        If min <= max Then
+            temp = surfaceList(min)
+            surfaceList(min) = surfaceList(max)
+            surfaceList(max) = temp
+            min = min + 1
+            max = max - 1
         End If
-    Next I
+    Loop
     
-    'Retrieve the surface desc
-    Call surfaceList(LRU).surface.GetSurfaceDesc(ddsd)
-    
-    'Remove it
-    Set surfaceList(LRU).surface = Nothing
-    
-    'Move back the list (if necessary)
-    If LRU < surfaceCount - 1 Then
-        CopyMemory surfaceList(LRU), surfaceList(LRU + 1), (surfaceCount - LRU - 1) * LenB(surfaceList(LRU))
-    End If
-    
-    'Decrease surface count
-    surfaceCount = surfaceCount - 1
-    
-    'Update the used bytes
-    usedBytes = usedBytes - ddsd.lHeight * ddsd.lPitch
+    If first < max Then SortSurfaces first, max
+    If min < last Then SortSurfaces min, last
 End Sub

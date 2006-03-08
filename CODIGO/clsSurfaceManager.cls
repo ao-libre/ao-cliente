@@ -53,7 +53,7 @@ Public Property Get Texture(ByVal fileIndex As Long) As DirectDrawSurface7
 '**************************************************************
 End Property
 
-Public Sub Initialize(ByRef DD As DirectDraw7, ByVal videoMemory As Boolean, Optional ByVal maxMemoryUsageInMb As Long = -1)
+Public Sub Initialize(ByRef DD As DirectDraw7, ByVal videoMemory As Boolean, ByVal graphicPath As String, Optional ByVal maxMemoryUsageInMb As Long = -1)
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
 'Last Modify Date: 3/06/2006

@@ -66,6 +66,7 @@ Class=clsGuildDlg; CODIGO\clsGuildDlg.cls
 Module=ModAreas; CODIGO\ModAreas.bas
 Class=clsSurfaceManDyn; CODIGO\clsSurfaceManDyn.cls
 Class=clsSurfaceManager; CODIGO\clsSurfaceManager.cls
+Class=clsSurfaceManStatic; CODIGO\clsSurfaceManStatic.cls
 IconForm="frmMain"
 Startup="Sub Main"
 HelpFile=""
