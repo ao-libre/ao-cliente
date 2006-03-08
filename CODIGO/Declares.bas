@@ -124,8 +124,6 @@ Public UserBancoInventory(1 To MAX_BANCOINVENTORY_SLOTS) As Inventory
 Public Tips() As String * 255
 Public Const LoopAdEternum = 999
 
-Public Const NUMCIUDADES = 3
-
 'Direcciones
 Public Enum E_Heading
     NORTH = 1
@@ -139,11 +137,6 @@ Public Const MAX_INVENTORY_OBJS = 10000
 Public Const MAX_INVENTORY_SLOTS = 20
 Public Const MAX_NPC_INVENTORY_SLOTS = 50
 Public Const MAXHECHI = 35
-
-Public Const NUMSKILLS = 21
-Public Const NUMATRIBUTOS = 5
-Public Const NUMCLASES = 16
-Public Const NUMRAZAS = 5
 
 Public Const MAXSKILLPOINTS = 100
 
@@ -292,9 +285,6 @@ Type tEstadisticasUsu
     PenaCarcel As Long
 End Type
 
-Public ListaRazas() As String
-Public ListaClases() As String
-
 Public Nombres As Boolean
 
 Public MixedKey As Long
@@ -344,14 +334,23 @@ Public UserSexo As String
 Public UserRaza As String
 Public UserEmail As String
 
-Public UserSkills() As Integer
-Public SkillsNames() As String
+Public Const NUMCIUDADES As Byte = 3
+Public Const NUMSKILLS As Byte = 21
+Public Const NUMATRIBUTOS As Byte = 5
+Public Const NUMCLASES As Byte = 16
+Public Const NUMRAZAS As Byte = 5
 
-Public UserAtributos() As Integer
-Public AtributosNames() As String
+Public UserSkills(1 To NUMSKILLS) As Integer
+Public SkillsNames(1 To NUMSKILLS) As String
 
-Public Ciudades() As String
-Public CityDesc() As String
+Public UserAtributos(1 To NUMATRIBUTOS) As Integer
+Public AtributosNames(1 To NUMATRIBUTOS) As String
+
+Public Ciudades(1 To NUMCIUDADES) As String
+Public CityDesc(1 To NUMCIUDADES) As String
+
+Public ListaRazas(1 To NUMRAZAS) As String
+Public ListaClases(1 To NUMCLASES) As String
 
 Public Musica As Byte
 Public Fx As Byte
