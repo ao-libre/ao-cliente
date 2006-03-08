@@ -246,6 +246,7 @@ Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, ByVal Text As String, Opt
 End Sub
 
 'TODO : Never was sure this is really necessary....
+'TODO : 08/03/2006 - (AlejoLp) Esto hay que volarlo...
 Public Sub RefreshAllChars()
 '*****************************************************************
 'Goes through the charlist and replots all the characters on the map
