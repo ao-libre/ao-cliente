@@ -574,6 +574,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -726,22 +727,22 @@ Dim PuedeMacrear As Boolean
 Implements DirectXEvent
 
 Private Sub cmdMoverHechi_Click(Index As Integer)
-If hlst.ListIndex = -1 Then Exit Sub
+If hlst.listIndex = -1 Then Exit Sub
 
 Select Case Index
 Case 0 'subir
-    If hlst.ListIndex = 0 Then Exit Sub
+    If hlst.listIndex = 0 Then Exit Sub
 Case 1 'bajar
-    If hlst.ListIndex = hlst.ListCount - 1 Then Exit Sub
+    If hlst.listIndex = hlst.ListCount - 1 Then Exit Sub
 End Select
 
-Call SendData("DESPHE" & Index + 1 & "," & hlst.ListIndex + 1)
+Call SendData("DESPHE" & Index + 1 & "," & hlst.listIndex + 1)
 
 Select Case Index
 Case 0 'subir
-    hlst.ListIndex = hlst.ListIndex - 1
+    hlst.listIndex = hlst.listIndex - 1
 Case 1 'bajar
-    hlst.ListIndex = hlst.ListIndex + 1
+    hlst.listIndex = hlst.listIndex + 1
 End Select
 
 End Sub
@@ -886,7 +887,7 @@ If IPdelServidor <> ((IPMMSB - 15) & "." & (IPMSB - 15) & "." & (IPLSB - 15) _
 End Sub
 
 Private Sub Second_Timer()
-    ActualSecond = Mid(Time, 7, 2)
+    ActualSecond = mid(Time, 7, 2)
     ActualSecond = ActualSecond + 1
     If ActualSecond = LastSecond Then End
     LastSecond = ActualSecond
@@ -949,8 +950,8 @@ Private Sub TrainingMacro_Timer()
     If Comerciando Then Exit Sub
     Select Case SecuenciaMacroHechizos
         Case 0
-            If hlst.List(hlst.ListIndex) <> "(None)" And UserCanAttack = 1 Then
-                Call SendData("LH" & hlst.ListIndex + 1)
+            If hlst.List(hlst.listIndex) <> "(None)" And UserCanAttack = 1 Then
+                Call SendData("LH" & hlst.listIndex + 1)
                 Call SendData("UK" & Magia)
                 'UserCanAttack = 0
             End If
@@ -970,8 +971,8 @@ End Sub
 
 
 Private Sub cmdLanzar_Click()
-    If hlst.List(hlst.ListIndex) <> "(None)" And UserCanAttack = 1 Then
-        Call SendData("LH" & hlst.ListIndex + 1)
+    If hlst.List(hlst.listIndex) <> "(None)" And UserCanAttack = 1 Then
+        Call SendData("LH" & hlst.listIndex + 1)
         Call SendData("UK" & Magia)
         UsaMacro = True
         'UserCanAttack = 0
@@ -985,7 +986,7 @@ End Sub
 
 
 Private Sub CmdInfo_Click()
-    Call SendData("INFS" & hlst.ListIndex + 1)
+    Call SendData("INFS" & hlst.listIndex + 1)
 End Sub
 
 ''''''''''''''''''''''''''''''''''''''
@@ -1225,10 +1226,10 @@ Private Sub Image3_Click(Index As Integer)
 End Sub
 
 Private Sub Label1_Click()
-    Dim I As Integer
-    For I = 1 To NUMSKILLS
-        frmSkills3.Text1(I).Caption = UserSkills(I)
-    Next I
+    Dim i As Integer
+    For i = 1 To NUMSKILLS
+        frmSkills3.Text1(i).Caption = UserSkills(i)
+    Next i
     Alocados = SkillPoints
     frmSkills3.Puntos.Caption = "Puntos:" & SkillPoints
     frmSkills3.Show , frmMain
@@ -1306,13 +1307,34 @@ Private Sub RecTxt_KeyDown(KeyCode As Integer, Shift As Integer)
 End Sub
 
 Private Sub SendTxt_Change()
+'**************************************************************
+'Author: Unknown
+'Last Modify Date: 3/06/2006
+'3/06/2006: Maraxus - impedí se inserten caractéres no imprimibles
+'**************************************************************
     If Len(SendTxt.Text) > 160 Then
         stxtbuffer = "Soy un cheater, avisenle a un gm"
     Else
+        'Make sure only valid chars are inserted (with Shift + Insert they can paste illegal chars)
+        Dim i As Long
+        Dim tempStr As String
+        Dim charASCII As Integer
+        
+        For i = 1 To Len(SendTxt.Text)
+            charASCII = Asc(mid$(SendTxt.Text, i, 1))
+            If charASCII >= vbKeySpace And charASCII <= 250 Then
+                tempStr = tempStr & Chr$(charASCII)
+            End If
+        Next i
+        
+        If tempStr <> SendTxt.Text Then
+            'We only set it if it's different, otherwise the event will be raised
+            'constantly and the client will crush
+            SendTxt.Text = tempStr
+        End If
+        
         stxtbuffer = SendTxt.Text
     End If
-    
-    
 End Sub
 
 Private Sub SendTxt_KeyPress(KeyAscii As Integer)
@@ -1326,9 +1348,9 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
     If KeyCode = vbKeyReturn Then
         If Left$(stxtbuffer, 1) = "/" Then
             If UCase(Left$(stxtbuffer, 8)) = "/PASSWD " Then
-                    Dim j$
-                    j$ = MD5String(Right$(stxtbuffer, Len(stxtbuffer) - 8))
-                    stxtbuffer = "/PASSWD " & j$
+                    Dim j As String
+                    j = MD5String(Right$(stxtbuffer, Len(stxtbuffer) - 8))
+                    stxtbuffer = "/PASSWD " & j
             ElseIf UCase$(stxtbuffer) = "/FUNDARCLAN" Then
                 frmEligeAlineacion.Show vbModeless, Me
                 stxtbuffer = ""
@@ -1407,14 +1429,14 @@ Private Sub Socket1_Connect()
     
     ServerIp = Socket1.PeerAddress
     Temporal = InStr(1, ServerIp, ".")
-    Temporal1 = ((Mid(ServerIp, 1, Temporal - 1) Xor &H65) And &H7F) * 16777216
-    ServerIp = Mid(ServerIp, Temporal + 1, Len(ServerIp))
+    Temporal1 = ((mid(ServerIp, 1, Temporal - 1) Xor &H65) And &H7F) * 16777216
+    ServerIp = mid(ServerIp, Temporal + 1, Len(ServerIp))
     Temporal = InStr(1, ServerIp, ".")
-    Temporal1 = Temporal1 + (Mid(ServerIp, 1, Temporal - 1) Xor &HF6) * 65536
-    ServerIp = Mid(ServerIp, Temporal + 1, Len(ServerIp))
+    Temporal1 = Temporal1 + (mid(ServerIp, 1, Temporal - 1) Xor &HF6) * 65536
+    ServerIp = mid(ServerIp, Temporal + 1, Len(ServerIp))
     Temporal = InStr(1, ServerIp, ".")
-    Temporal1 = Temporal1 + (Mid(ServerIp, 1, Temporal - 1) Xor &H4B) * 256
-    ServerIp = Mid(ServerIp, Temporal + 1, Len(ServerIp)) Xor &H42
+    Temporal1 = Temporal1 + (mid(ServerIp, 1, Temporal - 1) Xor &H4B) * 256
+    ServerIp = mid(ServerIp, Temporal + 1, Len(ServerIp)) Xor &H42
     MixedKey = (Temporal1 + ServerIp)
     
     Second.Enabled = True
@@ -1445,7 +1467,7 @@ Private Sub Socket1_Connect()
 End Sub
 
 Private Sub Socket1_Disconnect()
-    Dim I As Long
+    Dim i As Long
     
     LastSecond = 0
     Second.Enabled = False
@@ -1461,11 +1483,11 @@ Private Sub Socket1_Disconnect()
     frmConnect.Visible = True
     
     On Local Error Resume Next
-    For I = 0 To Forms.Count - 1
-        If Forms(I).Name <> Me.Name And Forms(I).Name <> frmConnect.Name Then
-            Unload Forms(I)
+    For i = 0 To Forms.Count - 1
+        If Forms(i).Name <> Me.Name And Forms(i).Name <> frmConnect.Name Then
+            Unload Forms(i)
         End If
-    Next I
+    Next i
     On Local Error GoTo 0
     
     frmMain.Visible = False
@@ -1487,13 +1509,13 @@ Private Sub Socket1_Disconnect()
     UserEmail = ""
     bO = 100
     
-    For I = 1 To NUMSKILLS
-        UserSkills(I) = 0
-    Next I
+    For i = 1 To NUMSKILLS
+        UserSkills(i) = 0
+    Next i
 
-    For I = 1 To NUMATRIBUTOS
-        UserAtributos(I) = 0
-    Next I
+    For i = 1 To NUMATRIBUTOS
+        UserAtributos(i) = 0
+    Next i
 
     SkillPoints = 0
     Alocados = 0
@@ -1558,12 +1580,12 @@ Private Sub Socket1_Read(DataLength As Integer, IsUrgent As Integer)
     sChar = 1
     For loopc = 1 To Len(RD)
 
-        tChar = Mid$(RD, loopc, 1)
+        tChar = mid$(RD, loopc, 1)
 
         If tChar = ENDC Then
             CR = CR + 1
             Echar = loopc - sChar
-            rBuffer(CR) = Mid$(RD, sChar, Echar)
+            rBuffer(CR) = mid$(RD, sChar, Echar)
             sChar = loopc + 1
         End If
 
@@ -1571,7 +1593,7 @@ Private Sub Socket1_Read(DataLength As Integer, IsUrgent As Integer)
 
     'Check for broken line and save for next time
     If Len(RD) - (sChar - 1) <> 0 Then
-        TempString = Mid$(RD, sChar, Len(RD))
+        TempString = mid$(RD, sChar, Len(RD))
     End If
 
     'Send buffer to Handle data
@@ -1592,7 +1614,7 @@ If tX >= MinXBorder And tY >= MinYBorder And _
     If MapData(tX, tY).CharIndex > 0 Then
         If charlist(MapData(tX, tY).CharIndex).invisible = False Then
         
-            Dim I As Long
+            Dim i As Long
             Dim m As New frmMenuseFashion
             
             Load m
@@ -1656,7 +1678,7 @@ End Sub
 #If UsarWrench <> 1 Then
 
 Private Sub Winsock1_Close()
-    Dim I As Long
+    Dim i As Long
     
     Debug.Print "WInsock Close"
     
@@ -1676,11 +1698,11 @@ Private Sub Winsock1_Close()
     frmConnect.Visible = True
     
     On Local Error Resume Next
-    For I = 0 To Forms.Count - 1
-        If Forms(I).Name <> Me.Name And Forms(I).Name <> frmConnect.Name Then
-            Unload Forms(I)
+    For i = 0 To Forms.Count - 1
+        If Forms(i).Name <> Me.Name And Forms(i).Name <> frmConnect.Name Then
+            Unload Forms(i)
         End If
-    Next I
+    Next i
     On Local Error GoTo 0
     
     frmMain.Visible = False
@@ -1694,13 +1716,13 @@ Private Sub Winsock1_Close()
     UserEmail = ""
     bO = 100
     
-    For I = 1 To NUMSKILLS
-        UserSkills(I) = 0
-    Next I
+    For i = 1 To NUMSKILLS
+        UserSkills(i) = 0
+    Next i
 
-    For I = 1 To NUMATRIBUTOS
-        UserAtributos(I) = 0
-    Next I
+    For i = 1 To NUMATRIBUTOS
+        UserAtributos(i) = 0
+    Next i
 
     SkillPoints = 0
     Alocados = 0
@@ -1718,14 +1740,14 @@ Private Sub Winsock1_Connect()
     
     ServerIp = Winsock1.RemoteHostIP
     Temporal = InStr(1, ServerIp, ".")
-    Temporal1 = ((Mid(ServerIp, 1, Temporal - 1) Xor &H65) And &H7F) * 16777216
-    ServerIp = Mid(ServerIp, Temporal + 1, Len(ServerIp))
+    Temporal1 = ((mid(ServerIp, 1, Temporal - 1) Xor &H65) And &H7F) * 16777216
+    ServerIp = mid(ServerIp, Temporal + 1, Len(ServerIp))
     Temporal = InStr(1, ServerIp, ".")
-    Temporal1 = Temporal1 + (Mid(ServerIp, 1, Temporal - 1) Xor &HF6) * 65536
-    ServerIp = Mid(ServerIp, Temporal + 1, Len(ServerIp))
+    Temporal1 = Temporal1 + (mid(ServerIp, 1, Temporal - 1) Xor &HF6) * 65536
+    ServerIp = mid(ServerIp, Temporal + 1, Len(ServerIp))
     Temporal = InStr(1, ServerIp, ".")
-    Temporal1 = Temporal1 + (Mid(ServerIp, 1, Temporal - 1) Xor &H4B) * 256
-    ServerIp = Mid(ServerIp, Temporal + 1, Len(ServerIp)) Xor &H42
+    Temporal1 = Temporal1 + (mid(ServerIp, 1, Temporal - 1) Xor &H4B) * 256
+    ServerIp = mid(ServerIp, Temporal + 1, Len(ServerIp)) Xor &H42
     MixedKey = (Temporal1 + ServerIp)
     
     Second.Enabled = True
@@ -1776,12 +1798,12 @@ Private Sub Winsock1_DataArrival(ByVal bytesTotal As Long)
     sChar = 1
     For loopc = 1 To Len(RD)
 
-        tChar = Mid$(RD, loopc, 1)
+        tChar = mid$(RD, loopc, 1)
 
         If tChar = ENDC Then
             CR = CR + 1
             Echar = loopc - sChar
-            rBuffer(CR) = Mid$(RD, sChar, Echar)
+            rBuffer(CR) = mid$(RD, sChar, Echar)
             sChar = loopc + 1
         End If
 
@@ -1789,7 +1811,7 @@ Private Sub Winsock1_DataArrival(ByVal bytesTotal As Long)
 
     'Check for broken line and save for next time
     If Len(RD) - (sChar - 1) <> 0 Then
-        TempString = Mid$(RD, sChar, Len(RD))
+        TempString = mid$(RD, sChar, Len(RD))
     End If
 
     'Send buffer to Handle data
