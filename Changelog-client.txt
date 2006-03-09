@@ -11,4 +11,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 06/03/2006: Elimine las funciones Move[NSWE] y las converti a MoveTo(E_Heading) (AlejoLp)
  * 06/03/2006: Incorporación de los nuevos managers de surfaces y su interfaz. La implementación queda pendientes hasta estar lsito el nuevo AOSetup (Maraxus)
  * 06/03/2006: Corrección de todos los bugs reportados y cerrados en el bug tracker de SF (Maraxus).
- * 06/03/2206: Incorporación del formulario para cambios del MOTD de Rubén Díaz (Legendario AO) con algunso agregados míos (Maraxus).
+ * 06/03/2206: Incorporación del formulario para cambios del MOTD (OuTIme) con algunos agregados míos (Maraxus).
