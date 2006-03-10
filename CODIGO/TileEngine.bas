@@ -1959,7 +1959,7 @@ Sub LoadGraphics()
                 SurfaceDB.CargarGrafico loopc
                 
                 If loopc > (iLoopUpdate + (Config_Inicio.NumeroDeBMPs / 80)) Then
-                    AddtoRichTextBox frmCargando.Status, ".", , , , , , True
+                    AddtoRichTextBox frmCargando.status, ".", , , , , , True
                     iLoopUpdate = loopc
                 End If
             Next loopc
@@ -1977,7 +1977,7 @@ Sub LoadGraphics()
         RLluvia(4).Left = 0:     RLluvia(5).Left = 128:   RLluvia(6).Left = 256:   RLluvia(7).Left = 384
         RLluvia(4).Right = 128:  RLluvia(5).Right = 256:  RLluvia(6).Right = 384:  RLluvia(7).Right = 512
         RLluvia(4).Bottom = 256: RLluvia(5).Bottom = 256: RLluvia(6).Bottom = 256: RLluvia(7).Bottom = 256
-        AddtoRichTextBox frmCargando.Status, "Hecho.", , , , 1, , False
+        AddtoRichTextBox frmCargando.status, "Hecho.", , , , 1, , False
 End Sub
 
 
@@ -2080,7 +2080,7 @@ LTLluvia(2) = 480
 LTLluvia(3) = 608
 LTLluvia(4) = 736
 
-AddtoRichTextBox frmCargando.Status, "Cargando Gráficos....", 0, 0, 0, , , True
+AddtoRichTextBox frmCargando.status, "Cargando Gráficos....", 0, 0, 0, , , True
 Call LoadGraphics
 
 InitTileEngine = True
@@ -2143,3 +2143,51 @@ End Sub
 Function ControlVelocidad(ByVal LastTime As Long) As Boolean
 ControlVelocidad = (GetTickCount - LastTime > 20)
 End Function
+
+
+#If ConAlfaB Then
+
+Public Sub EfectoNoche(ByRef surface As DirectDrawSurface7)
+    Dim dArray() As Byte, sArray() As Byte
+    Dim ddsdDest As DDSURFACEDESC2
+    Dim Modo As Long
+    Dim rRect As RECT
+    
+    surface.GetSurfaceDesc ddsdDest
+    
+    With rRect
+        .Left = 0
+        .Top = 0
+        .Right = ddsdDest.lWidth
+        .Bottom = ddsdDest.lHeight
+    End With
+    
+    If ddsdDest.ddpfPixelFormat.lGBitMask = &H3E0 Then
+        Modo = 0
+    ElseIf ddsdDest.ddpfPixelFormat.lGBitMask = &H7E0 Then
+        Modo = 1
+    Else
+        Modo = 2
+    End If
+    
+    Dim DstLock As Boolean
+    DstLock = False
+    
+    On Local Error GoTo HayErrorAlpha
+    
+    surface.Lock rRect, ddsdDest, DDLOCK_WAIT, 0
+    DstLock = True
+    
+    surface.GetLockedArray dArray()
+    Call BltEfectoNoche(ByVal VarPtr(dArray(0, 0)), _
+        ddsdDest.lWidth, ddsdDest.lHeight, ddsdDest.lPitch, _
+        Modo)
+    
+HayErrorAlpha:
+    If DstLock = True Then
+        surface.Unlock rRect
+        DstLock = False
+    End If
+End Sub
+
+#End If

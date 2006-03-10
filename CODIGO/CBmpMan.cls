@@ -182,10 +182,10 @@ End Function
 
 Public Function BorrarTodo() As Long
 'Vacia la lista de graficos
-Dim i As Integer
-For i = 1 To mMaxEntries
-    If mBMPDB(i).FileName > 0 Then
-        Call Borrar(mBMPDB(i).FileName, mBMPDB(i).Efecto)
+Dim I As Integer
+For I = 1 To mMaxEntries
+    If mBMPDB(I).FileName > 0 Then
+        Call Borrar(mBMPDB(I).FileName, mBMPDB(I).Efecto)
     End If
 Next
 BorrarTodo = 1
@@ -248,10 +248,10 @@ End Sub
 
 Private Function BuscaVacio() As Integer
 'Si esta todo lleno devuelve -1 (llamar BorraMenosUsado)
-Dim i As Integer
-For i = 1 To mMaxEntries
-    If (mSurfaceDB(i) Is Nothing) Then
-        BuscaVacio = i
+Dim I As Integer
+For I = 1 To mMaxEntries
+    If (mSurfaceDB(I) Is Nothing) Then
+        BuscaVacio = I
         Exit Function
     End If
 Next
@@ -271,13 +271,13 @@ Dim lCont As Long
 lValor = mBMPDB(1).Accesos
 lCont = mBMPDB(1).Cont
 
-Dim i As Integer
+Dim I As Integer
 
-For i = 1 To mMaxEntries
-    If mBMPDB(i).Accesos < lValor And mBMPDB(i).Cont < lCont Then
-        lValor = mBMPDB(i).Accesos
-        lCont = mBMPDB(i).Cont
-        BorraMenosUsado = i
+For I = 1 To mMaxEntries
+    If mBMPDB(I).Accesos < lValor And mBMPDB(I).Cont < lCont Then
+        lValor = mBMPDB(I).Accesos
+        lCont = mBMPDB(I).Cont
+        BorraMenosUsado = I
     End If
 Next
 mCantidadGraficos = mCantidadGraficos - 1
@@ -292,10 +292,10 @@ Private Sub Class_Terminate()
 On Error Resume Next 'no me importa, estoy cerrando
 
 'Erase mBMPDB()
-Dim i As Integer
+Dim I As Integer
 
-For i = 1 To mMaxEntries
-    Set mSurfaceDB(i) = Nothing
+For I = 1 To mMaxEntries
+    Set mSurfaceDB(I) = Nothing
 Next
 
 End Sub

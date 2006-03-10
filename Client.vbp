@@ -84,7 +84,7 @@ ServerSupportFiles=0
 VersionCompanyName="Argentum Online"
 VersionLegalCopyright="Copyright 2003 - Pablo Ignacio Marquez"
 VersionProductName="Argentum Online"
-CondComp="UsarDinamico = 1 : UsarWrench = 1 : ConMenuseConextuales = 0 : ConAlfaB = 0"
+CondComp="UsarDinamico = 1 : UsarWrench = 1 : ConMenuseConextuales = 0 : ConAlfaB = 1"
 CompilationType=0
 OptimizationType=0
 FavorPentiumPro(tm)=0
