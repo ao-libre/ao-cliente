@@ -52,7 +52,7 @@ Private Const DEFAULT_LIST_SIZE As Integer = 1500
 
 Private Type SURFACE_ENTRY_STATIC
     fileIndex As Long
-    surface As DirectDrawSurface7
+    Surface As DirectDrawSurface7
 End Type
 
 Private surfaceList() As SURFACE_ENTRY_STATIC
@@ -84,7 +84,7 @@ Private Sub Class_Terminate()
     
     'Destroy every surface in memory
     For I = 0 To surfaceCount - 1
-        Set surfaceList(I).surface = Nothing
+        Set surfaceList(I).Surface = Nothing
     Next I
     
     'Destroy the array
@@ -104,7 +104,7 @@ Private Sub clsSurfaceManager_Initialize(ByRef DD As DirectDraw7, ByVal videoMem
     Call LoadSurfaces(graphicPath)
 End Sub
 
-Private Property Get clsSurfaceManager_Texture(ByVal fileIndex As Long) As DirectDrawSurface7
+Private Property Get clsSurfaceManager_Surface(ByVal fileIndex As Long) As DirectDrawSurface7
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
 'Last Modify Date: 3/06/2006
@@ -117,7 +117,7 @@ On Error GoTo ErrHandler:
     Index = BinarySearch(fileIndex)
     
     'Return it
-    Set clsSurfaceManager_Texture = surfaceList(Index).surface
+    Set clsSurfaceManager_Surface = surfaceList(Index).Surface
 Exit Property
 
 ErrHandler:
@@ -132,24 +132,24 @@ ErrHandler:
     End
 End Property
 
-Private Sub LoadSurfaces(ByVal grhpath As String)
+Private Sub LoadSurfaces(ByVal GrhPath As String)
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
 'Last Modify Date: 3/06/2006
 'Loads all surfaces in random order and then sorts them
 '**************************************************************
 On Error Resume Next
-    Dim fileName As String
+    Dim FileName As String
     Dim surfaceIndex As Long
     
     'Set up the list at a standard value big enough to prevent using ReDim Preserve constantly (which is slow)
     ReDim surfaceList(DEFAULT_LIST_SIZE) As SURFACE_ENTRY_STATIC
     
-    fileName = Dir$(grhpath & "*.bmp", vbArchive)
+    FileName = Dir$(GrhPath & "*.bmp", vbArchive)
     
-    While fileName <> ""
+    While FileName <> ""
         'Get the surface index (numeric part of the number) - NEVER use Val() here or the error won't be raised!!! - Don't use IsNumeric or hexa strings will be accepted
-        surfaceIndex = CLng(Left$(fileName, Len(fileName) - 4))
+        surfaceIndex = CLng(Left$(FileName, Len(FileName) - 4))
         
         If Err.Number = 13 Then
             'Type mysmatch - the name of the file isn't numneric, therefore it isn't a surface
@@ -161,11 +161,11 @@ On Error Resume Next
                 ReDim Preserve surfaceList(surfaceCount - 1) As SURFACE_ENTRY_STATIC
             End If
             
-            Call LoadSurface(grhpath, surfaceIndex, surfaceCount - 1)
+            Call LoadSurface(GrhPath, surfaceIndex, surfaceCount - 1)
         End If
         
         'Get next .bmp file
-        fileName = Dir$()
+        FileName = Dir$()
     Wend
     
     'Trim the list if needed
@@ -210,7 +210,7 @@ Private Function BinarySearch(ByVal fileIndex As Long) As Long
     BinarySearch = Not mid
 End Function
 
-Private Sub LoadSurface(ByVal grhpath As String, ByVal fileIndex As Long, ByVal listIndex As Long)
+Private Sub LoadSurface(ByVal GrhPath As String, ByVal fileIndex As Long, ByVal listIndex As Long)
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
 'Last Modify Date: 3/06/2006
@@ -225,7 +225,7 @@ On Error GoTo ErrHandler
     Dim filePath As String
     
     'Store complete file path
-    filePath = grhpath & CStr(fileIndex) & ".bmp"
+    filePath = GrhPath & CStr(fileIndex) & ".bmp"
     
     'Set up the surface desc
     ddsd.lFlags = DDSD_CAPS Or DDSD_HEIGHT Or DDSD_WIDTH
@@ -236,18 +236,18 @@ On Error GoTo ErrHandler
         ddsd.ddsCaps.lCaps = DDSCAPS_OFFSCREENPLAIN Or DDSCAPS_SYSTEMMEMORY
     End If
     
-    Call GetBMPDimensions(filePath, ddsd.lHeight, ddsd.lWidth)
+    Call surfaceDimensions(filePath, ddsd.lHeight, ddsd.lWidth)
     
     With newSurface
         .fileIndex = fileIndex
         
         'Load surface
-        Set .surface = DirectDraw.CreateSurfaceFromFile(filePath, ddsd)
+        Set .Surface = DirectDraw.CreateSurfaceFromFile(filePath, ddsd)
         
         'Set colorkey
         ddck.high = 0
         ddck.low = 0
-        Call .surface.SetColorKey(DDCKEY_SRCBLT, ddck)
+        Call .Surface.SetColorKey(DDCKEY_SRCBLT, ddck)
     End With
     
     'Store the surface in the given index (it MUST be empty or data will be lost)
@@ -261,7 +261,7 @@ ErrHandler:
         End
 End Sub
 
-Private Sub GetBMPDimensions(ByVal Archivo As String, ByRef height As Long, ByRef width As Long)
+Private Sub surfaceDimensions(ByVal Archivo As String, ByRef Height As Long, ByRef Width As Long)
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
 'Last Modify Date: 3/06/2006
@@ -277,8 +277,8 @@ Private Sub GetBMPDimensions(ByVal Archivo As String, ByRef height As Long, ByRe
         Get handle, , bmpInfoHead
     Close handle
     
-    height = bmpInfoHead.biHeight
-    width = bmpInfoHead.biWidth
+    Height = bmpInfoHead.biHeight
+    Width = bmpInfoHead.biWidth
 End Sub
 
 Private Sub SortSurfaces(ByVal first As Integer, ByVal last As Integer)

@@ -361,7 +361,7 @@ Call Audio.PlayWave(SND_CLICK)
 Select Case Index
     Case 0
         
-        If Musica = 0 Then
+        If Musica Then
             Call Audio.PlayMIDI("7.mid")
         End If
         
@@ -428,7 +428,7 @@ End Sub
 
 Private Sub lst_servers_Click()
 If ServersRecibidos Then
-    CurServer = lst_servers.ListIndex + 1
+    CurServer = lst_servers.listIndex + 1
     IPTxt = ServersLst(CurServer).Ip
     PortTxt = ServersLst(CurServer).Puerto
 End If

@@ -40,6 +40,7 @@ Public DialogosClanes As New clsGuildDlg
 Public Dialogos As New cDialogos
 Public Audio As New clsAudio
 Public Inventario As New clsGrapchicalInventory
+Public SurfaceDB As clsSurfaceManager   'No va new porque es unainterfaz, el new se pone al decidir que clase de objeto es
 
 'Sonidos
 Public Const SND_CLICK As String = "click.Wav"
@@ -352,8 +353,8 @@ Public CityDesc(1 To NUMCIUDADES) As String
 Public ListaRazas(1 To NUMRAZAS) As String
 Public ListaClases(1 To NUMCLASES) As String
 
-Public Musica As Byte
-Public Fx As Byte
+Public Musica As Boolean
+Public Sound As Boolean
 
 Public SkillPoints As Integer
 Public Alocados As Integer

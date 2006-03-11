@@ -960,9 +960,9 @@ Select Case Index
                 MsgBox "Nombre invalido, se han removido los espacios al final del nombre"
         End If
         
-        UserRaza = lstRaza.List(lstRaza.ListIndex)
-        UserSexo = lstGenero.List(lstGenero.ListIndex)
-        UserClase = lstProfesion.List(lstProfesion.ListIndex)
+        UserRaza = lstRaza.List(lstRaza.listIndex)
+        UserSexo = lstGenero.List(lstGenero.listIndex)
+        UserClase = lstProfesion.List(lstProfesion.listIndex)
         
         UserAtributos(1) = Val(lbFuerza.Caption)
         UserAtributos(2) = Val(lbInteligencia.Caption)
@@ -970,7 +970,7 @@ Select Case Index
         UserAtributos(4) = Val(lbCarisma.Caption)
         UserAtributos(5) = Val(lbConstitucion.Caption)
         
-        UserHogar = lstHogar.List(lstHogar.ListIndex)
+        UserHogar = lstHogar.List(lstHogar.listIndex)
         
         'Barrin 3/10/03
         If CheckData() Then
@@ -978,7 +978,7 @@ Select Case Index
         End If
         
     Case 1
-        If Musica = 0 Then
+        If Musica Then
             Call Audio.PlayMIDI("2.mid")
         End If
         
@@ -1059,7 +1059,7 @@ For I = LBound(ListaClases) To UBound(ListaClases)
     lstProfesion.AddItem ListaClases(I)
 Next I
 
-lstProfesion.ListIndex = 1
+lstProfesion.listIndex = 1
 
 Image1.Picture = LoadPicture(App.Path & "\graficos\" & lstProfesion.Text & ".jpg")
 Call TirarDados

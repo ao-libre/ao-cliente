@@ -44,15 +44,6 @@ Public PrimaryClipper As DirectDrawClipper
 Public SecundaryClipper As DirectDrawClipper
 Public BackBufferSurface As DirectDrawSurface7
 
-'Public SurfaceDB() As DirectDrawSurface7
-
-'### 08/04/03 ###
-#If (UsarDinamico = 1) Then
-    Public SurfaceDB As New CBmpMan
-#Else
-    Public SurfaceDB As New CBmpManNoDyn
-#End If
-
 Public oldResHeight As Long, oldResWidth As Long
 Public bNoResChange As Boolean
 
@@ -143,8 +134,6 @@ Dim loopc As Integer
 Set PrimarySurface = Nothing
 Set PrimaryClipper = Nothing
 Set BackBufferSurface = Nothing
-
-Call SurfaceDB.BorrarTodo
 
 Set DirectDraw = Nothing
 

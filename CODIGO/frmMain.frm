@@ -574,7 +574,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1062,10 +1061,10 @@ On Error Resume Next
             Select Case KeyCode
                 Case vbKeyM:
                     If Not Audio.PlayingMusic Then
-                        Musica = 0
+                        Musica = True
                         Audio.PlayMIDI
                     Else
-                        Musica = 1
+                        Musica = False
                         Audio.StopMidi
                     End If
                 Case vbKeyA:
@@ -1226,10 +1225,10 @@ Private Sub Image3_Click(Index As Integer)
 End Sub
 
 Private Sub Label1_Click()
-    Dim i As Integer
-    For i = 1 To NUMSKILLS
-        frmSkills3.Text1(i).Caption = UserSkills(i)
-    Next i
+    Dim I As Integer
+    For I = 1 To NUMSKILLS
+        frmSkills3.Text1(I).Caption = UserSkills(I)
+    Next I
     Alocados = SkillPoints
     frmSkills3.Puntos.Caption = "Puntos:" & SkillPoints
     frmSkills3.Show , frmMain
@@ -1316,21 +1315,21 @@ Private Sub SendTxt_Change()
         stxtbuffer = "Soy un cheater, avisenle a un gm"
     Else
         'Make sure only valid chars are inserted (with Shift + Insert they can paste illegal chars)
-        Dim i As Long
-        Dim tempStr As String
-        Dim charASCII As Integer
+        Dim I As Long
+        Dim tempstr As String
+        Dim CharAscii As Integer
         
-        For i = 1 To Len(SendTxt.Text)
-            charASCII = Asc(mid$(SendTxt.Text, i, 1))
-            If charASCII >= vbKeySpace And charASCII <= 250 Then
-                tempStr = tempStr & Chr$(charASCII)
+        For I = 1 To Len(SendTxt.Text)
+            CharAscii = Asc(mid$(SendTxt.Text, I, 1))
+            If CharAscii >= vbKeySpace And CharAscii <= 250 Then
+                tempstr = tempstr & Chr$(CharAscii)
             End If
-        Next i
+        Next I
         
-        If tempStr <> SendTxt.Text Then
+        If tempstr <> SendTxt.Text Then
             'We only set it if it's different, otherwise the event will be raised
             'constantly and the client will crush
-            SendTxt.Text = tempStr
+            SendTxt.Text = tempstr
         End If
         
         stxtbuffer = SendTxt.Text
@@ -1467,7 +1466,7 @@ Private Sub Socket1_Connect()
 End Sub
 
 Private Sub Socket1_Disconnect()
-    Dim i As Long
+    Dim I As Long
     
     LastSecond = 0
     Second.Enabled = False
@@ -1483,11 +1482,11 @@ Private Sub Socket1_Disconnect()
     frmConnect.Visible = True
     
     On Local Error Resume Next
-    For i = 0 To Forms.Count - 1
-        If Forms(i).Name <> Me.Name And Forms(i).Name <> frmConnect.Name Then
-            Unload Forms(i)
+    For I = 0 To Forms.Count - 1
+        If Forms(I).Name <> Me.Name And Forms(I).Name <> frmConnect.Name Then
+            Unload Forms(I)
         End If
-    Next i
+    Next I
     On Local Error GoTo 0
     
     frmMain.Visible = False
@@ -1509,13 +1508,13 @@ Private Sub Socket1_Disconnect()
     UserEmail = ""
     bO = 100
     
-    For i = 1 To NUMSKILLS
-        UserSkills(i) = 0
-    Next i
+    For I = 1 To NUMSKILLS
+        UserSkills(I) = 0
+    Next I
 
-    For i = 1 To NUMATRIBUTOS
-        UserAtributos(i) = 0
-    Next i
+    For I = 1 To NUMATRIBUTOS
+        UserAtributos(I) = 0
+    Next I
 
     SkillPoints = 0
     Alocados = 0
@@ -1614,7 +1613,7 @@ If tX >= MinXBorder And tY >= MinYBorder And _
     If MapData(tX, tY).CharIndex > 0 Then
         If charlist(MapData(tX, tY).CharIndex).invisible = False Then
         
-            Dim i As Long
+            Dim I As Long
             Dim m As New frmMenuseFashion
             
             Load m
@@ -1678,7 +1677,7 @@ End Sub
 #If UsarWrench <> 1 Then
 
 Private Sub Winsock1_Close()
-    Dim i As Long
+    Dim I As Long
     
     Debug.Print "WInsock Close"
     
@@ -1698,11 +1697,11 @@ Private Sub Winsock1_Close()
     frmConnect.Visible = True
     
     On Local Error Resume Next
-    For i = 0 To Forms.Count - 1
-        If Forms(i).Name <> Me.Name And Forms(i).Name <> frmConnect.Name Then
-            Unload Forms(i)
+    For I = 0 To Forms.Count - 1
+        If Forms(I).Name <> Me.Name And Forms(I).Name <> frmConnect.Name Then
+            Unload Forms(I)
         End If
-    Next i
+    Next I
     On Local Error GoTo 0
     
     frmMain.Visible = False
@@ -1716,13 +1715,13 @@ Private Sub Winsock1_Close()
     UserEmail = ""
     bO = 100
     
-    For i = 1 To NUMSKILLS
-        UserSkills(i) = 0
-    Next i
+    For I = 1 To NUMSKILLS
+        UserSkills(I) = 0
+    Next I
 
-    For i = 1 To NUMATRIBUTOS
-        UserAtributos(i) = 0
-    Next i
+    For I = 1 To NUMATRIBUTOS
+        UserAtributos(I) = 0
+    Next I
 
     SkillPoints = 0
     Alocados = 0
@@ -1820,7 +1819,7 @@ Private Sub Winsock1_DataArrival(ByVal bytesTotal As Long)
     Next loopc
 End Sub
 
-Private Sub Winsock1_Error(ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
+Private Sub Winsock1_Error(ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
     '*********************************************
     'Handle socket errors
     '*********************************************

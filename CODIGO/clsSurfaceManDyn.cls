@@ -53,7 +53,7 @@ Private Const DEFAULT_MEMORY_TO_USE As Long = 16 * BYTES_PER_MB     '16 Mb
 Private Type SURFACE_ENTRY_DYN
     fileIndex As Long
     lastAccess As Long
-    surface As DirectDrawSurface7
+    Surface As DirectDrawSurface7
 End Type
 
 Private surfaceList() As SURFACE_ENTRY_DYN
@@ -66,7 +66,7 @@ Private usedBytes As Long
 
 Private useVideoMemory As Boolean
 
-Private grhPath As String
+Private GrhPath As String
 
 Private Declare Function GetTickCount Lib "kernel32" () As Long
 Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" (ByRef dest As Any, ByRef source As Any, ByVal byteCount As Long)
@@ -93,7 +93,7 @@ Private Sub Class_Terminate()
     
     'Destroy every surface in memory
     For I = 0 To surfaceCount - 1
-        Set surfaceList(I).surface = Nothing
+        Set surfaceList(I).Surface = Nothing
     Next I
     
     'Destroy the array
@@ -110,7 +110,7 @@ Private Sub clsSurfaceManager_Initialize(ByRef DD As DirectDraw7, ByVal videoMem
     
     useVideoMemory = videoMemory
     
-    grhPath = graphicPath
+    GrhPath = graphicPath
     
     If maxMemoryUsageInMb = -1 Then
         maxBytesToUse = DEFAULT_MEMORY_TO_USE   ' 16 Mb by default
@@ -121,7 +121,7 @@ Private Sub clsSurfaceManager_Initialize(ByRef DD As DirectDraw7, ByVal videoMem
     End If
 End Sub
 
-Private Property Get clsSurfaceManager_Texture(ByVal fileIndex As Long) As DirectDrawSurface7
+Private Property Get clsSurfaceManager_Surface(ByVal fileIndex As Long) As DirectDrawSurface7
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
 'Last Modify Date: 3/06/2006
@@ -142,7 +142,7 @@ Private Property Get clsSurfaceManager_Texture(ByVal fileIndex As Long) As Direc
     'Return it
     With surfaceList(Index)
         .lastAccess = GetTickCount
-        Set clsSurfaceManager_Texture = .surface
+        Set clsSurfaceManager_Surface = .Surface
     End With
 End Property
 
@@ -194,7 +194,7 @@ On Error GoTo ErrHandler
     Dim filePath As String
     
     'Store complete file path
-    filePath = grhPath & CStr(fileIndex) & ".bmp"
+    filePath = GrhPath & CStr(fileIndex) & ".bmp"
     
     'Set up the surface desc
     ddsd.lFlags = DDSD_CAPS Or DDSD_HEIGHT Or DDSD_WIDTH
@@ -205,21 +205,21 @@ On Error GoTo ErrHandler
         ddsd.ddsCaps.lCaps = DDSCAPS_OFFSCREENPLAIN Or DDSCAPS_SYSTEMMEMORY
     End If
     
-    Call GetBMPDimensions(filePath, ddsd.lHeight, ddsd.lWidth)
+    Call surfaceDimensions(filePath, ddsd.lHeight, ddsd.lWidth)
     
     With newSurface
         .fileIndex = fileIndex
         
         'Load surface
-        Set .surface = DirectDraw.CreateSurfaceFromFile(filePath, ddsd)
+        Set .Surface = DirectDraw.CreateSurfaceFromFile(filePath, ddsd)
         
         'Set colorkey
         ddck.high = 0
         ddck.low = 0
-        Call .surface.SetColorKey(DDCKEY_SRCBLT, ddck)
+        Call .Surface.SetColorKey(DDCKEY_SRCBLT, ddck)
         
         'Retrieve the updated surface desc
-        Call .surface.GetSurfaceDesc(ddsd)
+        Call .Surface.GetSurfaceDesc(ddsd)
     End With
     
     'Insert surface to the list at the given pos
@@ -252,7 +252,7 @@ ErrHandler:
     End If
 End Sub
 
-Private Sub GetBMPDimensions(ByVal Archivo As String, ByRef height As Long, ByRef width As Long)
+Private Sub surfaceDimensions(ByVal Archivo As String, ByRef Height As Long, ByRef Width As Long)
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
 'Last Modify Date: 3/06/2006
@@ -268,11 +268,11 @@ Private Sub GetBMPDimensions(ByVal Archivo As String, ByRef height As Long, ByRe
         Get handle, , bmpInfoHead
     Close handle
     
-    height = bmpInfoHead.biHeight
-    width = bmpInfoHead.biWidth
+    Height = bmpInfoHead.biHeight
+    Width = bmpInfoHead.biWidth
 End Sub
 
-Private Sub InsertSurface(ByRef surface As SURFACE_ENTRY_DYN, ByVal listIndex As Long)
+Private Sub InsertSurface(ByRef Surface As SURFACE_ENTRY_DYN, ByVal listIndex As Long)
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
 'Last Modify Date: 3/06/2006
@@ -283,13 +283,13 @@ Private Sub InsertSurface(ByRef surface As SURFACE_ENTRY_DYN, ByVal listIndex As
     'Move back the list. We do this and not a For going from back to the front
     'since this proved to be almost 6 times as fast in our tests
     ReDim tempList(surfaceCount - listIndex - 1) As SURFACE_ENTRY_DYN
-    CopyMemory tempList(0), surfaceList(listIndex), (surfaceCount - listIndex) * LenB(surface)
+    CopyMemory tempList(0), surfaceList(listIndex), (surfaceCount - listIndex) * LenB(Surface)
     
     ReDim Preserve surfaceList(surfaceCount + 1) As SURFACE_ENTRY_DYN
-    CopyMemory surfaceList(listIndex + 1), tempList(0), (surfaceCount - listIndex) * LenB(surface)
+    CopyMemory surfaceList(listIndex + 1), tempList(0), (surfaceCount - listIndex) * LenB(Surface)
     
     'Insert the new surface
-    surfaceList(listIndex) = surface
+    surfaceList(listIndex) = Surface
     
     'Increase surface count
     surfaceCount = surfaceCount + 1
@@ -319,10 +319,10 @@ Private Sub RemoveLRU()
     Next I
     
     'Retrieve the surface desc
-    Call surfaceList(LRU).surface.GetSurfaceDesc(ddsd)
+    Call surfaceList(LRU).Surface.GetSurfaceDesc(ddsd)
     
     'Remove it
-    Set surfaceList(LRU).surface = Nothing
+    Set surfaceList(LRU).Surface = Nothing
     
     'Move back the list (if necessary)
     If LRU < surfaceCount - 1 Then

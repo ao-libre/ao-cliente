@@ -279,7 +279,7 @@ Private Sub DrawInventory()
             
             'Render the item grh and the amount
             InvSurface.SetForeColor vbWhite
-            InvSurface.BltFast 0, 0, SurfaceDB.GetBMP(GrhData(UserInventory(loopc).GrhIndex).FileNum), SrcRect, DDBLTFAST_WAIT Or DDBLTFAST_NOCOLORKEY
+            InvSurface.BltFast 0, 0, SurfaceDB.Surface(GrhData(UserInventory(loopc).GrhIndex).FileNum), SrcRect, DDBLTFAST_WAIT Or DDBLTFAST_NOCOLORKEY
             InvSurface.DrawText 0, 0, UserInventory(loopc).Amount, False
             
             'If equipped we render "E"

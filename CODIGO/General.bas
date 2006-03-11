@@ -165,13 +165,13 @@ Sub CargarColores()
         Exit Sub
     End If
     
-    Dim i As Long
+    Dim I As Long
     
-    For i = 0 To 48 '49 y 50 reservados para ciudadano y criminal
-        ColoresPJ(i).r = Val(GetVar(archivoC, Str(i), "R"))
-        ColoresPJ(i).G = Val(GetVar(archivoC, Str(i), "G"))
-        ColoresPJ(i).B = Val(GetVar(archivoC, Str(i), "B"))
-    Next i
+    For I = 0 To 48 '49 y 50 reservados para ciudadano y criminal
+        ColoresPJ(I).r = Val(GetVar(archivoC, Str(I), "R"))
+        ColoresPJ(I).G = Val(GetVar(archivoC, Str(I), "G"))
+        ColoresPJ(I).B = Val(GetVar(archivoC, Str(I), "B"))
+    Next I
         
     ColoresPJ(50).r = Val(GetVar(archivoC, "CR", "R"))
     ColoresPJ(50).G = Val(GetVar(archivoC, "CR", "G"))
@@ -272,17 +272,17 @@ End Sub
 
 Function AsciiValidos(ByVal cad As String) As Boolean
     Dim car As Byte
-    Dim i As Long
+    Dim I As Long
     
     cad = LCase$(cad)
     
-    For i = 1 To Len(cad)
-        car = Asc(Mid$(cad, i, 1))
+    For I = 1 To Len(cad)
+        car = Asc(mid$(cad, I, 1))
         
         If ((car < 97 Or car > 122) Or car = Asc("º")) And (car <> 255) And (car <> 32) Then
             Exit Function
         End If
-    Next i
+    Next I
     
     AsciiValidos = True
 End Function
@@ -303,7 +303,7 @@ Function CheckUserData(ByVal checkemail As Boolean) As Boolean
     End If
     
     For loopc = 1 To Len(UserPassword)
-        CharAscii = Asc(Mid$(UserPassword, loopc, 1))
+        CharAscii = Asc(mid$(UserPassword, loopc, 1))
         If Not LegalCharacter(CharAscii) Then
             MsgBox ("Password inválido. El caractér " & Chr$(CharAscii) & " no está permitido.")
             Exit Function
@@ -321,7 +321,7 @@ Function CheckUserData(ByVal checkemail As Boolean) As Boolean
     End If
     
     For loopc = 1 To Len(UserName)
-        CharAscii = Asc(Mid$(UserName, loopc, 1))
+        CharAscii = Asc(mid$(UserName, loopc, 1))
         If Not LegalCharacter(CharAscii) Then
             MsgBox ("Nombre inválido. El caractér " & Chr$(CharAscii) & " no está permitido.")
             Exit Function
@@ -711,7 +711,7 @@ Public Function ReadField(ByVal Pos As Integer, ByVal Text As String, ByVal SepA
 '*****************************************************************
 'Gets a field from a string
 '*****************************************************************
-    Dim i As Integer
+    Dim I As Integer
     Dim LastPos As Integer
     Dim CurChar As String * 1
     Dim FieldNum As Integer
@@ -721,21 +721,21 @@ Public Function ReadField(ByVal Pos As Integer, ByVal Text As String, ByVal SepA
     LastPos = 0
     FieldNum = 0
     
-    For i = 1 To Len(Text)
-        CurChar = Mid$(Text, i, 1)
+    For I = 1 To Len(Text)
+        CurChar = mid$(Text, I, 1)
         If CurChar = Seperator Then
             FieldNum = FieldNum + 1
             If FieldNum = Pos Then
-                ReadField = Mid$(Text, LastPos + 1, (InStr(LastPos + 1, Text, Seperator, vbTextCompare) - 1) - (LastPos))
+                ReadField = mid$(Text, LastPos + 1, (InStr(LastPos + 1, Text, Seperator, vbTextCompare) - 1) - (LastPos))
                 Exit Function
             End If
-            LastPos = i
+            LastPos = I
         End If
-    Next i
+    Next I
     FieldNum = FieldNum + 1
     
     If FieldNum = Pos Then
-        ReadField = Mid$(Text, LastPos + 1)
+        ReadField = mid$(Text, LastPos + 1)
     End If
 End Function
 
@@ -760,32 +760,32 @@ Sub WriteClientVer()
 End Sub
 
 Public Function IsIp(ByVal Ip As String) As Boolean
-    Dim i As Long
+    Dim I As Long
     
-    For i = 1 To UBound(ServersLst)
-        If ServersLst(i).Ip = Ip Then
+    For I = 1 To UBound(ServersLst)
+        If ServersLst(I).Ip = Ip Then
             IsIp = True
             Exit Function
         End If
-    Next i
+    Next I
 End Function
 
 Public Sub CargarServidores()
 On Error GoTo errorH
     Dim f As String
     Dim C As Integer
-    Dim i As Long
+    Dim I As Long
     
     f = App.Path & "\init\sinfo.dat"
     C = Val(GetVar(f, "INIT", "Cant"))
     
     ReDim ServersLst(1 To C) As tServerInfo
-    For i = 1 To C
-        ServersLst(i).desc = GetVar(f, "S" & i, "Desc")
-        ServersLst(i).Ip = Trim$(GetVar(f, "S" & i, "Ip"))
-        ServersLst(i).PassRecPort = CInt(GetVar(f, "S" & i, "P2"))
-        ServersLst(i).Puerto = CInt(GetVar(f, "S" & i, "PJ"))
-    Next i
+    For I = 1 To C
+        ServersLst(I).desc = GetVar(f, "S" & I, "Desc")
+        ServersLst(I).Ip = Trim$(GetVar(f, "S" & I, "Ip"))
+        ServersLst(I).PassRecPort = CInt(GetVar(f, "S" & I, "P2"))
+        ServersLst(I).Puerto = CInt(GetVar(f, "S" & I, "PJ"))
+    Next I
     CurServer = 1
 Exit Sub
 
@@ -797,26 +797,26 @@ End Sub
 Public Sub InitServersList(ByVal Lst As String)
 On Error Resume Next
     Dim NumServers As Integer
-    Dim i As Integer
+    Dim I As Integer
     Dim Cont As Integer
     
-    i = 1
+    I = 1
     
-    Do While (ReadField(i, RawServersList, Asc(";")) <> "")
-        i = i + 1
+    Do While (ReadField(I, RawServersList, Asc(";")) <> "")
+        I = I + 1
         Cont = Cont + 1
     Loop
     
     ReDim ServersLst(1 To Cont) As tServerInfo
     
-    For i = 1 To Cont
+    For I = 1 To Cont
         Dim cur$
-        cur$ = ReadField(i, RawServersList, Asc(";"))
-        ServersLst(i).Ip = ReadField(1, cur$, Asc(":"))
-        ServersLst(i).Puerto = ReadField(2, cur$, Asc(":"))
-        ServersLst(i).desc = ReadField(4, cur$, Asc(":"))
-        ServersLst(i).PassRecPort = ReadField(3, cur$, Asc(":"))
-    Next i
+        cur$ = ReadField(I, RawServersList, Asc(";"))
+        ServersLst(I).Ip = ReadField(1, cur$, Asc(":"))
+        ServersLst(I).Puerto = ReadField(2, cur$, Asc(":"))
+        ServersLst(I).desc = ReadField(4, cur$, Asc(":"))
+        ServersLst(I).PassRecPort = ReadField(3, cur$, Asc(":"))
+    Next I
     
     CurServer = 1
 End Sub
@@ -883,7 +883,16 @@ Dim timers(1 To 2) As Integer
 
 
     If FileExist(App.Path & "\init\ao.dat", vbArchive) Then
-        Call LoadRenderMode
+        Call LoadClientSetup
+        
+        If ClientSetup.bDinamic Then
+            Set SurfaceDB = New clsSurfaceManDyn
+        Else
+            Set SurfaceDB = New clsSurfaceManStatic
+        End If
+    Else
+        'Por default usamos el dinámico
+        Set SurfaceDB = New clsSurfaceManDyn
     End If
     
     
@@ -892,8 +901,8 @@ Dim timers(1 To 2) As Integer
     frmCargando.Show
     frmCargando.Refresh
     
-    frmConnect.Version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
-    AddtoRichTextBox frmCargando.Status, "Buscando servidores....", 0, 0, 0, 0, 0, 1
+    frmConnect.version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
+    AddtoRichTextBox frmCargando.status, "Buscando servidores....", 0, 0, 0, 0, 0, 1
 
 #If UsarWrench = 1 Then
     frmMain.Socket1.Startup
@@ -903,20 +912,20 @@ Dim timers(1 To 2) As Integer
 'TODO : esto de ServerRecibidos no se podría sacar???
     ServersRecibidos = True
     
-    AddtoRichTextBox frmCargando.Status, "Encontrado", , , , 1
-    AddtoRichTextBox frmCargando.Status, "Iniciando constantes...", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.status, "Encontrado", , , , 1
+    AddtoRichTextBox frmCargando.status, "Iniciando constantes...", 0, 0, 0, 0, 0, 1
     
     Call InicializarNombres
     
     frmOldPersonaje.NameTxt.Text = Config_Inicio.Name
     frmOldPersonaje.PasswordTxt.Text = ""
     
-    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
+    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
     
     IniciarObjetosDirectX
     
-    AddtoRichTextBox frmCargando.Status, "Cargando Sonidos....", 0, 0, 0, 0, 0, 1
-    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
+    AddtoRichTextBox frmCargando.status, "Cargando Sonidos....", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
 
 Dim loopc As Integer
 
@@ -924,7 +933,7 @@ LastTime = GetTickCount
 
     Call InitTileEngine(frmMain.hWnd, 152, 7, 32, 32, 13, 17, 9)
     
-    Call AddtoRichTextBox(frmCargando.Status, "Creando animaciones extra....")
+    Call AddtoRichTextBox(frmCargando.status, "Creando animaciones extra....")
     
     Call CargarAnimsExtra
     Call CargarTips
@@ -942,19 +951,19 @@ UserMap = 1
     Call InitMI
 #End If
 
-    AddtoRichTextBox frmCargando.Status, "                    ¡Bienvenido a Argentum Online!", , , , 1
+    AddtoRichTextBox frmCargando.status, "                    ¡Bienvenido a Argentum Online!", , , , 1
     
     Unload frmCargando
     
     'Inicializamos el sonido
-    Call AddtoRichTextBox(frmCargando.Status, "Iniciando DirectSound....", 0, 0, 0, 0, 0, True)
+    Call AddtoRichTextBox(frmCargando.status, "Iniciando DirectSound....", 0, 0, 0, 0, 0, True)
     Call Audio.Initialize(DirectX, frmMain.hWnd, App.Path & "\" & Config_Inicio.DirSonidos & "\", App.Path & "\" & Config_Inicio.DirMusica & "\")
-    Call AddtoRichTextBox(frmCargando.Status, "Hecho", , , , 1, , False)
+    Call AddtoRichTextBox(frmCargando.status, "Hecho", , , , 1, , False)
     
     'Inicializamos el inventario gráfico
     Call Inventario.Initialize(DirectDraw, frmMain.picInv)
     
-    If Musica = 0 Then
+    If Musica Then
         Call Audio.PlayMIDI(MIdi_Inicio & ".mid")
     End If
 
@@ -962,17 +971,12 @@ UserMap = 1
     frmPres.Show vbModal    'Es modal, así que se detiene la ejecución de Main hasta que se desaparece
     
     frmConnect.Visible = True
-
-    MainViewRect.Left = MainViewLeft + 32 * RenderMod.iImageSize
-    MainViewRect.Top = MainViewTop + 32 * RenderMod.iImageSize
-    MainViewRect.Right = (MainViewRect.Left + MainViewWidth) - 32 * (RenderMod.iImageSize * 2)
-    MainViewRect.Bottom = (MainViewRect.Top + MainViewHeight) - 32 * (RenderMod.iImageSize * 2)
     
 'TODO : Esto va en Engine Initialization
-    MainDestRect.Left = ((TilePixelWidth * TileBufferSize) - TilePixelWidth) + 32 * RenderMod.iImageSize
-    MainDestRect.Top = ((TilePixelHeight * TileBufferSize) - TilePixelHeight) + 32 * RenderMod.iImageSize
-    MainDestRect.Right = (MainDestRect.Left + MainViewWidth) - 32 * (RenderMod.iImageSize * 2)
-    MainDestRect.Bottom = (MainDestRect.Top + MainViewHeight) - 32 * (RenderMod.iImageSize * 2)
+    MainDestRect.Left = TilePixelWidth * TileBufferSize - TilePixelWidth
+    MainDestRect.Top = TilePixelHeight * TileBufferSize - TilePixelHeight
+    MainDestRect.Right = MainDestRect.Left + MainViewWidth
+    MainDestRect.Bottom = MainDestRect.Top + MainViewHeight
     
     'Inicialización de variables globales
     PrimeraVez = True
@@ -1035,7 +1039,7 @@ UserMap = 1
 
     EngineRun = False
     frmCargando.Show
-    AddtoRichTextBox frmCargando.Status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
     LiberarObjetosDX
 
 'TODO : Esto debería ir en otro lado como al cambair a esta res
@@ -1053,6 +1057,7 @@ UserMap = 1
     End If
 
     'Destruimos los objetos públicos creados
+    Set SurfaceDB = Nothing
     Set Dialogos = Nothing
     Set DialogosClanes = Nothing
     Set Audio = Nothing
@@ -1067,9 +1072,10 @@ End
 
 ManejadorErrores:
     MsgBox "Ha ocurrido un error irreparable, el cliente se cerrará."
-    LogError "Contexto:" & Err.HelpContext & " Desc:" & Err.Description & " Fuente:" & Err.Source
+    LogError "Contexto:" & Err.HelpContext & " Desc:" & Err.Description & " Fuente:" & Err.source
     End
 End Sub
+
 Sub WriteVar(ByVal file As String, ByVal Main As String, ByVal Var As String, ByVal value As String)
 '*****************************************************************
 'Writes a var to a text file
@@ -1112,7 +1118,7 @@ On Error GoTo errHnd
         '3er test: Recorre todos los caracteres y los valída
         For lX = 0 To Len(sString) - 1
             If Not (lX = (lPos - 1)) Then   'No chequeamos la '@'
-                iAsc = Asc(Mid$(sString, (lX + 1), 1))
+                iAsc = Asc(mid$(sString, (lX + 1), 1))
                 If Not CMSValidateChar_(iAsc) Then _
                     Exit Function
             End If
@@ -1156,20 +1162,20 @@ End Sub
     
 Public Sub LeerLineaComandos()
     Dim T() As String
-    Dim i As Long
+    Dim I As Long
     
     'Parseo los comandos
     T = Split(Command, " ")
     
-    For i = LBound(T) To UBound(T)
-        Select Case UCase$(T(i))
+    For I = LBound(T) To UBound(T)
+        Select Case UCase$(T(I))
             Case "/NORES" 'no cambiar la resolucion
                 NoRes = True
         End Select
-    Next i
+    Next I
 End Sub
 
-Private Sub LoadRenderMode()
+Private Sub LoadClientSetup()
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modify Date: 11/27/2005
@@ -1179,24 +1185,11 @@ Private Sub LoadRenderMode()
     
     fHandle = FreeFile
     Open App.Path & "\init\ao.dat" For Binary Access Read Lock Write As fHandle
-        Get fHandle, , RenderMod
+        Get fHandle, , ClientSetup
     Close fHandle
     
-    Musica = RenderMod.bNoMusic
-    Fx = RenderMod.bNoSound
-    
-    Select Case RenderMod.iImageSize
-        Case 4
-            RenderMod.iImageSize = 0
-        Case 3
-            RenderMod.iImageSize = 1
-        Case 2
-            RenderMod.iImageSize = 2
-        Case 1
-            RenderMod.iImageSize = 3
-        Case 0
-            RenderMod.iImageSize = 4
-    End Select
+    Musica = Not ClientSetup.bNoMusic
+    Sound = Not ClientSetup.bNoSound
 End Sub
 
 Private Sub InicializarNombres()

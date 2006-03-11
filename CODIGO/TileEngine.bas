@@ -326,7 +326,6 @@ Public bRain        As Boolean 'está raineando?
 Public bRainST      As Boolean
 Public bTecho       As Boolean 'hay techo?
 Public brstTick     As Long
-Public bNoche       As Boolean 'es de noche?
 
 Private RLluvia(7)  As RECT  'RECT de la lluvia
 Private iFrameIndex As Byte  'Frame actual de la LL
@@ -772,7 +771,7 @@ End Sub
 
 
 Public Sub DoFogataFx()
-If Fx = 0 Then
+If Sound Then
     If bFogata Then
         bFogata = HayFogata()
         If Not bFogata Then Audio.StopWave
@@ -1147,7 +1146,7 @@ InMapBounds = True
 
 End Function
 
-Sub DDrawGrhtoSurface(surface As DirectDrawSurface7, Grh As Grh, ByVal X As Integer, ByVal Y As Integer, center As Byte, Animate As Byte)
+Sub DDrawGrhtoSurface(Surface As DirectDrawSurface7, Grh As Grh, ByVal X As Integer, ByVal Y As Integer, center As Byte, Animate As Byte)
 
 Dim CurrentGrh As Grh
 Dim destRect As RECT
@@ -1185,10 +1184,10 @@ With SourceRect
         .Right = .Left + GrhData(CurrentGrh.GrhIndex).pixelWidth
         .Bottom = .Top + GrhData(CurrentGrh.GrhIndex).pixelHeight
 End With
-surface.BltFast X, Y, SurfaceDB(GrhData(CurrentGrh.GrhIndex).FileNum), SourceRect, DDBLTFAST_WAIT
+Surface.BltFast X, Y, SurfaceDB(GrhData(CurrentGrh.GrhIndex).FileNum), SourceRect, DDBLTFAST_WAIT
 End Sub
 
-Sub DDrawTransGrhIndextoSurface(surface As DirectDrawSurface7, Grh As Integer, ByVal X As Integer, ByVal Y As Integer, center As Byte, Animate As Byte)
+Sub DDrawTransGrhIndextoSurface(Surface As DirectDrawSurface7, Grh As Integer, ByVal X As Integer, ByVal Y As Integer, center As Byte, Animate As Byte)
 Dim CurrentGrh As Grh
 Dim destRect As RECT
 Dim SourceRect As RECT
@@ -1201,7 +1200,7 @@ With destRect
     .Bottom = .Top + GrhData(Grh).pixelHeight
 End With
 
-surface.GetSurfaceDesc SurfaceDesc
+Surface.GetSurfaceDesc SurfaceDesc
 
 'Draw
 If destRect.Left >= 0 And destRect.Top >= 0 And destRect.Right <= SurfaceDesc.lWidth And destRect.Bottom <= SurfaceDesc.lHeight Then
@@ -1212,14 +1211,14 @@ If destRect.Left >= 0 And destRect.Top >= 0 And destRect.Right <= SurfaceDesc.lW
         .Bottom = .Top + GrhData(Grh).pixelHeight
     End With
     
-    surface.BltFast destRect.Left, destRect.Top, SurfaceDB.GetBMP(GrhData(Grh).FileNum), SourceRect, DDBLTFAST_SRCCOLORKEY Or DDBLTFAST_WAIT
+    Surface.BltFast destRect.Left, destRect.Top, SurfaceDB.Surface(GrhData(Grh).FileNum), SourceRect, DDBLTFAST_SRCCOLORKEY Or DDBLTFAST_WAIT
 End If
 
 End Sub
 
 'Sub DDrawTransGrhtoSurface(surface As DirectDrawSurface7, Grh As Grh, X As Integer, Y As Integer, Center As Byte, Animate As Byte, Optional ByVal KillAnim As Integer = 0)
 '[CODE 000]:MatuX
-    Sub DDrawTransGrhtoSurface(surface As DirectDrawSurface7, Grh As Grh, ByVal X As Integer, ByVal Y As Integer, center As Byte, Animate As Byte, Optional ByVal KillAnim As Integer = 0)
+    Sub DDrawTransGrhtoSurface(Surface As DirectDrawSurface7, Grh As Grh, ByVal X As Integer, ByVal Y As Integer, center As Byte, Animate As Byte, Optional ByVal KillAnim As Integer = 0)
 '[END]'
 '*****************************************************************
 'Draws a GRH transparently to a X and Y position
@@ -1287,12 +1286,12 @@ With SourceRect
 End With
 
 
-surface.BltFast X, Y, SurfaceDB.GetBMP(GrhData(iGrhIndex).FileNum), SourceRect, DDBLTFAST_SRCCOLORKEY Or DDBLTFAST_WAIT
+Surface.BltFast X, Y, SurfaceDB.Surface(GrhData(iGrhIndex).FileNum), SourceRect, DDBLTFAST_SRCCOLORKEY Or DDBLTFAST_WAIT
 
 End Sub
 
 #If ConAlfaB = 1 Then
-    Sub DDrawTransGrhtoSurfaceAlpha(surface As DirectDrawSurface7, Grh As Grh, ByVal X As Integer, ByVal Y As Integer, center As Byte, Animate As Byte, Optional ByVal KillAnim As Integer = 0)
+    Sub DDrawTransGrhtoSurfaceAlpha(Surface As DirectDrawSurface7, Grh As Grh, ByVal X As Integer, ByVal Y As Integer, center As Byte, Animate As Byte, Optional ByVal KillAnim As Integer = 0)
 '[END]'
 '*****************************************************************
 'Draws a GRH transparently to a X and Y position
@@ -1359,7 +1358,7 @@ With SourceRect
     .Bottom = .Top + GrhData(iGrhIndex).pixelHeight
 End With
 
-'surface.BltFast X, Y, SurfaceDB.GetBMP(GrhData(iGrhIndex).FileNum), SourceRect, DDBLTFAST_SRCCOLORKEY Or DDBLTFAST_WAIT
+'surface.BltFast X, Y, SurfaceDB.surface(GrhData(iGrhIndex).FileNum), SourceRect, DDBLTFAST_SRCCOLORKEY Or DDBLTFAST_WAIT
 
 Dim Src As DirectDrawSurface7
 Dim rDest As RECT
@@ -1367,10 +1366,10 @@ Dim dArray() As Byte, sArray() As Byte
 Dim ddsdSrc As DDSURFACEDESC2, ddsdDest As DDSURFACEDESC2
 Dim Modo As Long
 
-Set Src = SurfaceDB.GetBMP(GrhData(iGrhIndex).FileNum, 0)
+Set Src = SurfaceDB.Surface(GrhData(iGrhIndex).FileNum)
 
 Src.GetSurfaceDesc ddsdSrc
-surface.GetSurfaceDesc ddsdDest
+Surface.GetSurfaceDesc ddsdDest
 
 With rDest
     .Left = X
@@ -1402,7 +1401,7 @@ ElseIf ddsdDest.ddpfPixelFormat.lGBitMask = 65280 And ddsdSrc.ddpfPixelFormat.lG
     Modo = 4
 Else
     'Modo = 2 '16 bits raro ?
-    surface.BltFast X, Y, Src, SourceRect, DDBLTFAST_SRCCOLORKEY Or DDBLTFAST_WAIT
+    Surface.BltFast X, Y, Src, SourceRect, DDBLTFAST_SRCCOLORKEY Or DDBLTFAST_WAIT
     Exit Sub
 End If
 
@@ -1413,15 +1412,15 @@ On Local Error GoTo HayErrorAlpha
 
 Src.Lock SourceRect, ddsdSrc, DDLOCK_WAIT, 0
 SrcLock = True
-surface.Lock rDest, ddsdDest, DDLOCK_WAIT, 0
+Surface.Lock rDest, ddsdDest, DDLOCK_WAIT, 0
 DstLock = True
 
-surface.GetLockedArray dArray()
+Surface.GetLockedArray dArray()
 Src.GetLockedArray sArray()
 
 Call BltAlphaFast(ByVal VarPtr(dArray(X + X, Y)), ByVal VarPtr(sArray(SourceRect.Left * 2, SourceRect.Top)), rDest.Right - rDest.Left, rDest.Bottom - rDest.Top, ddsdSrc.lPitch, ddsdDest.lPitch, Modo)
 
-surface.Unlock rDest
+Surface.Unlock rDest
 DstLock = False
 Src.Unlock SourceRect
 SrcLock = False
@@ -1431,7 +1430,7 @@ Exit Sub
 
 HayErrorAlpha:
 If SrcLock Then Src.Unlock SourceRect
-If DstLock Then surface.Unlock rDest
+If DstLock Then Surface.Unlock rDest
 
 End Sub
 #End If 'ConAlfaB = 1
@@ -1457,18 +1456,14 @@ bmWidth = BINFOHeader.biWidth
 bmHeight = BINFOHeader.biHeight
 End Function
 
-
-
 Sub DrawGrhtoHdc(hWnd As Long, Hdc As Long, Grh As Integer, SourceRect As RECT, destRect As RECT)
-If Grh <= 0 Then Exit Sub
-
-SecundaryClipper.SetHWnd hWnd
-SurfaceDB.GetBMP(GrhData(Grh).FileNum).BltToDC Hdc, SourceRect, destRect
+    If Grh <= 0 Then Exit Sub
+    
+    SecundaryClipper.SetHWnd hWnd
+    SurfaceDB.Surface(GrhData(Grh).FileNum).BltToDC Hdc, SourceRect, destRect
 End Sub
 
 Sub RenderScreen(tilex As Integer, tiley As Integer, PixelOffsetX As Integer, PixelOffsetY As Integer)
-
-
 On Error Resume Next
 
 
@@ -1505,10 +1500,10 @@ maxX = (tilex + 17)
 
 
 'Draw floor layer
-ScreenY = 8 + RenderMod.iImageSize
-For Y = (minY + 8) + RenderMod.iImageSize To (maxY - 8) - RenderMod.iImageSize
-    ScreenX = 8 + RenderMod.iImageSize
-    For X = (minX + 8) + RenderMod.iImageSize To (maxX - 8) - RenderMod.iImageSize
+ScreenY = 8
+For Y = (minY + 8) To maxY - 8
+    ScreenX = 8
+    For X = minX + 8 To maxX - 8
         If X > 100 Or Y < 1 Then Exit For
         'Layer 1 **********************************
         With MapData(X, Y).Graphic(1)
@@ -1537,23 +1532,21 @@ For Y = (minY + 8) + RenderMod.iImageSize To (maxY - 8) - RenderMod.iImageSize
         Call BackBufferSurface.BltFast( _
                 ((32 * ScreenX) - 32) + PixelOffsetX, _
                 ((32 * ScreenY) - 32) + PixelOffsetY, _
-                SurfaceDB.GetBMP(GrhData(iGrhIndex).FileNum), _
+                SurfaceDB.Surface(GrhData(iGrhIndex).FileNum), _
                 rSourceRect, _
                 DDBLTFAST_WAIT)
         '******************************************
-        If Not RenderMod.bNoCostas Then
-            'Layer 2 **********************************
-            If MapData(X, Y).Graphic(2).GrhIndex <> 0 Then
-                Call DDrawTransGrhtoSurface( _
-                        BackBufferSurface, _
-                        MapData(X, Y).Graphic(2), _
-                        ((32 * ScreenX) - 32) + PixelOffsetX, _
-                        ((32 * ScreenY) - 32) + PixelOffsetY, _
-                        1, _
-                        1)
-            End If
-            '******************************************
+        'Layer 2 **********************************
+        If MapData(X, Y).Graphic(2).GrhIndex <> 0 Then
+            Call DDrawTransGrhtoSurface( _
+                    BackBufferSurface, _
+                    MapData(X, Y).Graphic(2), _
+                    ((32 * ScreenX) - 32) + PixelOffsetX, _
+                    ((32 * ScreenY) - 32) + PixelOffsetY, _
+                    1, _
+                    1)
         End If
+        '******************************************
         ScreenX = ScreenX + 1
     Next X
     ScreenY = ScreenY + 1
@@ -1566,13 +1559,13 @@ Call ConvertCPtoTP(frmMain.MainViewShp.Left, frmMain.MainViewShp.Top, frmMain.Mo
 
 
 'Draw Transparent Layers  (Layer 2, 3)
-ScreenY = 8 + RenderMod.iImageSize
-For Y = (minY + 8) + RenderMod.iImageSize To (maxY - 1) - RenderMod.iImageSize
-    ScreenX = 5 + RenderMod.iImageSize
-    For X = (minX + 5) + RenderMod.iImageSize To (maxX - 5) - RenderMod.iImageSize
+ScreenY = 8
+For Y = minY + 8 To maxY - 1
+    ScreenX = 5
+    For X = minX + 5 To maxX - 5
         If X > 100 Or X < -3 Then Exit For
-        iPPx = ((32 * ScreenX) - 32) + PixelOffsetX
-        iPPy = ((32 * ScreenY) - 32) + PixelOffsetY
+        iPPx = 32 * ScreenX - 32 + PixelOffsetX
+        iPPy = 32 * ScreenY - 32 + PixelOffsetY
 
         'Object Layer **********************************
         If MapData(X, Y).ObjGrh.GrhIndex <> 0 Then
@@ -1767,23 +1760,19 @@ For Y = (minY + 8) + RenderMod.iImageSize To (maxY - 1) - RenderMod.iImageSize
             'BlitFX (TM)
             If charlist(MapData(X, Y).CharIndex).Fx <> 0 Then
 #If (ConAlfaB = 1) Then
-                If RenderMod.bNoAlpha Then
-#End If
-                    Call DDrawTransGrhtoSurface( _
-                            BackBufferSurface, _
-                            FxData(TempChar.Fx).Fx, _
-                            iPPx + FxData(TempChar.Fx).OffsetX, _
-                            iPPy + FxData(TempChar.Fx).OffsetY, _
-                            1, 1, MapData(X, Y).CharIndex)
-#If (ConAlfaB = 1) Then
-                Else
-                    Call DDrawTransGrhtoSurfaceAlpha( _
-                            BackBufferSurface, _
-                            FxData(TempChar.Fx).Fx, _
-                            iPPx + FxData(TempChar.Fx).OffsetX, _
-                            iPPy + FxData(TempChar.Fx).OffsetY, _
-                            1, 1, MapData(X, Y).CharIndex)
-                End If
+                Call DDrawTransGrhtoSurfaceAlpha( _
+                        BackBufferSurface, _
+                        FxData(TempChar.Fx).Fx, _
+                        iPPx + FxData(TempChar.Fx).OffsetX, _
+                        iPPy + FxData(TempChar.Fx).OffsetY, _
+                        1, 1, MapData(X, Y).CharIndex)
+#Else
+                Call DDrawTransGrhtoSurface( _
+                        BackBufferSurface, _
+                        FxData(TempChar.Fx).Fx, _
+                        iPPx + FxData(TempChar.Fx).OffsetX, _
+                        iPPy + FxData(TempChar.Fx).OffsetY, _
+                        1, 1, MapData(X, Y).CharIndex)
 #End If
             End If
         End If '<-> If MapData(X, Y).CharIndex <> 0 Then
@@ -1807,21 +1796,21 @@ Next Y
 
 If Not bTecho Then
     'Draw blocked tiles and grid
-    ScreenY = 5 + RenderMod.iImageSize
-    For Y = (minY + 5) + RenderMod.iImageSize To (maxY - 1) - RenderMod.iImageSize
-        ScreenX = 5 + RenderMod.iImageSize
-        For X = (minX + 5) + RenderMod.iImageSize To (maxX - 0) - RenderMod.iImageSize
+    ScreenY = 5
+    For Y = minY + 5 To maxY - 1
+        ScreenX = 5
+        For X = minX + 5 To maxX
             'Check to see if in bounds
             If X < 101 And X > 0 And Y < 101 And Y > 0 Then
-            If MapData(X, Y).Graphic(4).GrhIndex <> 0 Then
-                'Draw
-                Call DDrawTransGrhtoSurface( _
-                    BackBufferSurface, _
-                    MapData(X, Y).Graphic(4), _
-                    ((32 * ScreenX) - 32) + PixelOffsetX, _
-                    ((32 * ScreenY) - 32) + PixelOffsetY, _
-                    1, 1)
-            End If
+                If MapData(X, Y).Graphic(4).GrhIndex <> 0 Then
+                    'Draw
+                    Call DDrawTransGrhtoSurface( _
+                        BackBufferSurface, _
+                        MapData(X, Y).Graphic(4), _
+                        ((32 * ScreenX) - 32) + PixelOffsetX, _
+                        ((32 * ScreenY) - 32) + PixelOffsetY, _
+                        1, 1)
+                End If
             End If
             ScreenX = ScreenX + 1
         Next X
@@ -1840,7 +1829,7 @@ If bLluvia(UserMap) = 1 Then
     
                 For Y = 0 To 4
                     For X = 0 To 4
-                        Call BackBufferSurface.BltFast(LTLluvia(Y), LTLluvia(X), SurfaceDB.GetBMP(5556), RLluvia(iFrameIndex), DDBLTFAST_SRCCOLORKEY + DDBLTFAST_WAIT)
+                        Call BackBufferSurface.BltFast(LTLluvia(Y), LTLluvia(X), SurfaceDB.Surface(5556), RLluvia(iFrameIndex), DDBLTFAST_SRCCOLORKEY + DDBLTFAST_WAIT)
                     Next X
                 Next Y
     End If
@@ -1856,7 +1845,7 @@ PP.Top = 0
 PP.Right = WindowTileWidth * TilePixelWidth
 PP.Bottom = WindowTileHeight * TilePixelHeight
 
-'Call BackBufferSurface.BltFast(LTLluvia(0) + TilePixelWidth, LTLluvia(0) + TilePixelHeight, SurfaceDB.GetBMP(10000), PP, DDBLTFAST_SRCCOLORKEY + DDBLTFAST_WAIT)
+'Call BackBufferSurface.BltFast(LTLluvia(0) + TilePixelWidth, LTLluvia(0) + TilePixelHeight, SurfaceDB.surface(10000), PP, DDBLTFAST_SRCCOLORKEY + DDBLTFAST_WAIT)
 
 'EfectoNoche BackBufferSurface
 
@@ -1925,69 +1914,44 @@ If GrhIndex > 0 Then
         And charlist(UserCharIndex).Pos.Y <= Y
         
 End If
-
 End Function
 
-
-
-Function PixelPos(X As Integer) As Integer
+Function PixelPos(ByVal X As Integer) As Integer
 '*****************************************************************
 'Converts a tile position to a screen position
 '*****************************************************************
-
-PixelPos = (TilePixelWidth * X) - TilePixelWidth
-
+    PixelPos = (TilePixelWidth * X) - TilePixelWidth
 End Function
 
-
 Sub LoadGraphics()
-        Dim loopc As Integer
-        Dim SurfaceDesc As DDSURFACEDESC2
-        Dim ddck As DDCOLORKEY
-        Dim ddsd As DDSURFACEDESC2
-        Dim iLoopUpdate As Integer
+'**************************************************************
+'Author: Juan Martín Sotuyo Dodero - complete rewrite
+'Last Modify Date: 11/03/2006
+'Initializes the SurfaceDB and sets up the rain rects
+'**************************************************************
+    'New surface manager :D
+    Call SurfaceDB.Initialize(DirectDraw, ClientSetup.bUseVideo, DirGraficos, ClientSetup.byMemory)
+          
+    'Set up te rain rects
+    RLluvia(0).Top = 0:      RLluvia(1).Top = 0:      RLluvia(2).Top = 0:      RLluvia(3).Top = 0
+    RLluvia(0).Left = 0:     RLluvia(1).Left = 128:   RLluvia(2).Left = 256:   RLluvia(3).Left = 384
+    RLluvia(0).Right = 128:  RLluvia(1).Right = 256:  RLluvia(2).Right = 384:  RLluvia(3).Right = 512
+    RLluvia(0).Bottom = 128: RLluvia(1).Bottom = 128: RLluvia(2).Bottom = 128: RLluvia(3).Bottom = 128
 
-        SurfaceDB.TotalGraficos = Config_Inicio.NumeroDeBMPs + 1
-        SurfaceDB.MaxEntries = 150
-        SurfaceDB.lpDirectDraw7 = DirectDraw
-        SurfaceDB.Path = DirGraficos
-        Call SurfaceDB.Init(IIf(RenderMod.bUseVideo, True, False))
-        
-        If Not SurfaceDB.EsDinamico Then
-            iLoopUpdate = 1
-            For loopc = 1 To Config_Inicio.NumeroDeBMPs + 1
-                SurfaceDB.CargarGrafico loopc
-                
-                If loopc > (iLoopUpdate + (Config_Inicio.NumeroDeBMPs / 80)) Then
-                    AddtoRichTextBox frmCargando.status, ".", , , , , , True
-                    iLoopUpdate = loopc
-                End If
-            Next loopc
-        End If
-        
-        'Bmp de la lluvia
-        Call GetBitmapDimensions(DirGraficos & "5556.bmp", ddsd.lWidth, ddsd.lHeight)
-              
-        RLluvia(0).Top = 0:      RLluvia(1).Top = 0:      RLluvia(2).Top = 0:      RLluvia(3).Top = 0
-        RLluvia(0).Left = 0:     RLluvia(1).Left = 128:   RLluvia(2).Left = 256:   RLluvia(3).Left = 384
-        RLluvia(0).Right = 128:  RLluvia(1).Right = 256:  RLluvia(2).Right = 384:  RLluvia(3).Right = 512
-        RLluvia(0).Bottom = 128: RLluvia(1).Bottom = 128: RLluvia(2).Bottom = 128: RLluvia(3).Bottom = 128
+    RLluvia(4).Top = 128:    RLluvia(5).Top = 128:    RLluvia(6).Top = 128:    RLluvia(7).Top = 128
+    RLluvia(4).Left = 0:     RLluvia(5).Left = 128:   RLluvia(6).Left = 256:   RLluvia(7).Left = 384
+    RLluvia(4).Right = 128:  RLluvia(5).Right = 256:  RLluvia(6).Right = 384:  RLluvia(7).Right = 512
+    RLluvia(4).Bottom = 256: RLluvia(5).Bottom = 256: RLluvia(6).Bottom = 256: RLluvia(7).Bottom = 256
     
-        RLluvia(4).Top = 128:    RLluvia(5).Top = 128:    RLluvia(6).Top = 128:    RLluvia(7).Top = 128
-        RLluvia(4).Left = 0:     RLluvia(5).Left = 128:   RLluvia(6).Left = 256:   RLluvia(7).Left = 384
-        RLluvia(4).Right = 128:  RLluvia(5).Right = 256:  RLluvia(6).Right = 384:  RLluvia(7).Right = 512
-        RLluvia(4).Bottom = 256: RLluvia(5).Bottom = 256: RLluvia(6).Bottom = 256: RLluvia(7).Bottom = 256
-        AddtoRichTextBox frmCargando.status, "Hecho.", , , , 1, , False
+    'We are done!
+    AddtoRichTextBox frmCargando.status, "Hecho.", , , , 1, , False
 End Sub
-
 
 '[END]'
 Function InitTileEngine(ByRef setDisplayFormhWnd As Long, setMainViewTop As Integer, setMainViewLeft As Integer, setTilePixelHeight As Integer, setTilePixelWidth As Integer, setWindowTileHeight As Integer, setWindowTileWidth As Integer, setTileBufferSize As Integer) As Boolean
 '*****************************************************************
 'InitEngine
 '*****************************************************************
-
-
 Dim SurfaceDesc As DDSURFACEDESC2
 Dim ddck As DDCOLORKEY
 
@@ -2043,14 +2007,15 @@ PrimarySurface.SetClipper PrimaryClipper
 Set SecundaryClipper = DirectDraw.CreateClipper(0)
 
 With BackBufferRect
-    .Left = 0 + 32 * RenderMod.iImageSize
-    .Top = 0 + 32 * RenderMod.iImageSize
-    .Right = (TilePixelWidth * (WindowTileWidth + (2 * TileBufferSize))) - 32 * RenderMod.iImageSize
-    .Bottom = (TilePixelHeight * (WindowTileHeight + (2 * TileBufferSize))) - 32 * RenderMod.iImageSize
+    .Left = 0
+    .Top = 0
+    .Right = TilePixelWidth * (WindowTileWidth + 2 * TileBufferSize)
+    .Bottom = TilePixelHeight * (WindowTileHeight + 2 * TileBufferSize)
 End With
+
 With SurfaceDesc
     .lFlags = DDSD_CAPS Or DDSD_HEIGHT Or DDSD_WIDTH
-    If RenderMod.bUseVideo Then
+    If ClientSetup.bUseVideo Then
         .ddsCaps.lCaps = DDSCAPS_OFFSCREENPLAIN
     Else
         .ddsCaps.lCaps = DDSCAPS_OFFSCREENPLAIN Or DDSCAPS_SYSTEMMEMORY
@@ -2147,13 +2112,13 @@ End Function
 
 #If ConAlfaB Then
 
-Public Sub EfectoNoche(ByRef surface As DirectDrawSurface7)
+Public Sub EfectoNoche(ByRef Surface As DirectDrawSurface7)
     Dim dArray() As Byte, sArray() As Byte
     Dim ddsdDest As DDSURFACEDESC2
     Dim Modo As Long
     Dim rRect As RECT
     
-    surface.GetSurfaceDesc ddsdDest
+    Surface.GetSurfaceDesc ddsdDest
     
     With rRect
         .Left = 0
@@ -2175,17 +2140,17 @@ Public Sub EfectoNoche(ByRef surface As DirectDrawSurface7)
     
     On Local Error GoTo HayErrorAlpha
     
-    surface.Lock rRect, ddsdDest, DDLOCK_WAIT, 0
+    Surface.Lock rRect, ddsdDest, DDLOCK_WAIT, 0
     DstLock = True
     
-    surface.GetLockedArray dArray()
+    Surface.GetLockedArray dArray()
     Call BltEfectoNoche(ByVal VarPtr(dArray(0, 0)), _
         ddsdDest.lWidth, ddsdDest.lHeight, ddsdDest.lPitch, _
         Modo)
     
 HayErrorAlpha:
     If DstLock = True Then
-        surface.Unlock rRect
+        Surface.Unlock rRect
         DstLock = False
     End If
 End Sub

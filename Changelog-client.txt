@@ -12,3 +12,6 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 06/03/2006: Incorporación de los nuevos managers de surfaces y su interfaz. La implementación queda pendientes hasta estar lsito el nuevo AOSetup (Maraxus)
  * 06/03/2006: Corrección de todos los bugs reportados y cerrados en el bug tracker de SF (Maraxus).
  * 06/03/2206: Incorporación del formulario para cambios del MOTD (OuTIme) con algunos agregados míos (Maraxus).
+ * 11/03/2206: Implementación definitiva de los nuevos managers de texturas. (Maraxus).
+ * 11/03/2206: Implementación del ClientSetup en vez del viejo y obsoleto RenderMod. (Maraxus).
+ * 11/03/2206: Se eliminaron variables viejas o mal tipadas. (Maraxus).

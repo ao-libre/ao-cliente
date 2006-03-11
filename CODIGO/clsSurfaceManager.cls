@@ -45,7 +45,7 @@ Option Explicit
 
 'ONLY PUBLIC METHODS ARE INCLUDED SINCE VB WON'T INHERIT PRIVATE ONES
 
-Public Property Get Texture(ByVal fileIndex As Long) As DirectDrawSurface7
+Public Property Get Surface(ByVal fileIndex As Long) As DirectDrawSurface7
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
 'Last Modify Date: 3/06/2006

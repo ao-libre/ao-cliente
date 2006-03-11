@@ -30,7 +30,7 @@ Begin VB.Form frmOpciones
       ForeColor       =   &H00FFFFFF&
       Height          =   750
       Left            =   255
-      TabIndex        =   5
+      TabIndex        =   4
       Top             =   1665
       Width           =   4230
       Begin VB.TextBox txtCantMensajes 
@@ -38,7 +38,7 @@ Begin VB.Form frmOpciones
          Height          =   285
          Left            =   2925
          MaxLength       =   1
-         TabIndex        =   8
+         TabIndex        =   7
          Text            =   "5"
          Top             =   315
          Width           =   450
@@ -49,7 +49,7 @@ Begin VB.Form frmOpciones
          ForeColor       =   &H00FFFFFF&
          Height          =   270
          Left            =   1770
-         TabIndex        =   7
+         TabIndex        =   6
          Top             =   315
          Value           =   -1  'True
          Width           =   1560
@@ -60,7 +60,7 @@ Begin VB.Form frmOpciones
          ForeColor       =   &H00FFFFFF&
          Height          =   270
          Left            =   105
-         TabIndex        =   6
+         TabIndex        =   5
          Top             =   315
          Width           =   1560
       End
@@ -70,19 +70,10 @@ Begin VB.Form frmOpciones
          ForeColor       =   &H00FFFFFF&
          Height          =   240
          Left            =   3480
-         TabIndex        =   9
+         TabIndex        =   8
          Top             =   345
          Width           =   750
       End
-   End
-   Begin VB.CommandButton Command3 
-      Caption         =   "a"
-      Height          =   375
-      Left            =   120
-      TabIndex        =   4
-      Top             =   120
-      Visible         =   0   'False
-      Width           =   375
    End
    Begin VB.CommandButton Command2 
       Caption         =   "Cerrar"
@@ -95,7 +86,7 @@ Begin VB.Form frmOpciones
       Width           =   2790
    End
    Begin VB.CommandButton Command1 
-      Caption         =   "FX Activados"
+      Caption         =   "Sonidos Activados"
       Height          =   345
       Index           =   1
       Left            =   960
@@ -184,24 +175,24 @@ Call Audio.PlayWave(SND_CLICK)
 
 Select Case Index
     Case 0
-        If Musica = 0 Then
-            Musica = 1
+        If Musica Then
+            Musica = False
             Command1(0).Caption = "Musica Desactivada"
             Audio.StopMidi
         Else
-            Musica = 0
+            Musica = True
             Command1(0).Caption = "Musica Activada"
             Call Audio.PlayMIDI("2.mid")
         End If
     Case 1
     
-        If Fx = 0 Then
-            Fx = 1
-            Command1(1).Caption = "FX Desactivados"
+        If Sound Then
+            Sound = False
+            Command1(1).Caption = "Sonidos Desactivados"
             
         Else
-            Fx = 0
-            Command1(1).Caption = "FX Activados"
+            Sound = True
+            Command1(1).Caption = "Sonidos Activados"
         End If
 End Select
 End Sub
@@ -210,33 +201,18 @@ Private Sub Command2_Click()
 Me.Visible = False
 End Sub
 
-Private Sub Command3_Click()
-#If ConAlfaB = 1 Then
-
-bNoche = Not bNoche
-SurfaceDB.EfectoPred = IIf(bNoche, 1, 0)
-SurfaceDB.BorrarTodo
-
-#Else
-
-MsgBox "Que hacés ?"
-
-#End If
-End Sub
-
 Private Sub Form_Load()
-If Musica = 0 Then
-    Command1(0).Caption = "Musica Activada"
-Else
-    Command1(0).Caption = "Musica Desactivada"
-End If
-
-If Fx = 0 Then
-    Command1(1).Caption = "FX Activados"
-Else
-    Command1(1).Caption = "FX Desactivados"
-End If
-
+    If Musica Then
+        Command1(0).Caption = "Musica Activada"
+    Else
+        Command1(0).Caption = "Musica Desactivada"
+    End If
+    
+    If Sound Then
+        Command1(1).Caption = "Sonidos Activados"
+    Else
+        Command1(1).Caption = "Sonidos Desactivados"
+    End If
 End Sub
 
 

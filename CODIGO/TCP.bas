@@ -131,7 +131,6 @@ Sub HandleData(ByVal Rdata As String)
             Call Audio.StopWave
             frmMain.IsPlaying = plNone
             bRain = False
-            bNoche = False
             bFogata = False
             SkillPoints = 0
             frmMain.Label1.Visible = False
@@ -329,7 +328,7 @@ Sub HandleData(ByVal Rdata As String)
             
             ' CONSTANTES TODO: Que es .priv ?
             
-            If Fx = 0 Then
+            If Sound Then
                 'If Not UserNavegando And Val(ReadField(4, Rdata, 44)) <> 0 Then
                         If charlist(CharIndex).priv <> 1 And charlist(CharIndex).priv <> 2 And charlist(CharIndex).priv <> 3 Then
                             Call DoPasosFx(CharIndex)
@@ -373,7 +372,7 @@ Sub HandleData(ByVal Rdata As String)
             
             ' CONSTANTES TODO: Que es .priv ?
             
-            If Fx = 0 Then
+            If Sound Then
                 'If Not UserNavegando And Val(ReadField(4, Rdata, 44)) <> 0 Then
                         If charlist(CharIndex).priv <> 1 And charlist(CharIndex).priv <> 2 And charlist(CharIndex).priv <> 3 Then
                             Call DoPasosFx(CharIndex)
@@ -404,7 +403,7 @@ Sub HandleData(ByVal Rdata As String)
                 Case "E": UserExp = Val(Right$(sData, Len(sData) - 3))
             End Select
             
-            frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+            frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
             frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
             frmMain.Hpshp.Width = (((UserMinHP / 100) / (UserMaxHP / 100)) * 94)
             
@@ -633,7 +632,7 @@ Sub HandleData(ByVal Rdata As String)
                 charlist(CharIndex).FxLoopTimes = 0
             End If
             
-            If Fx = 0 Then
+            If Sound Then
                 'If Not UserNavegando And Val(ReadField(4, Rdata, 44)) <> 0 Then
                         If charlist(CharIndex).priv <> 1 And charlist(CharIndex).priv <> 2 And charlist(CharIndex).priv <> 3 Then
                             Call DoPasosFx(CharIndex)
@@ -686,18 +685,16 @@ Sub HandleData(ByVal Rdata As String)
             MapData(Val(ReadField(1, Rdata, 44)), Val(ReadField(2, Rdata, 44))).Blocked = Val(ReadField(3, Rdata, 44))
             Exit Sub
         Case "TM"           ' >>>>> Play un MIDI :: TM
-            If Musica = 0 Then
+            If Musica Then
                 Rdata = Right$(Rdata, Len(Rdata) - 2)
                 If Val(ReadField(1, Rdata, 45)) <> 0 Then
                     'Stop_Midi
-                    If Musica = 0 Then
-                        Call Audio.PlayMIDI(Val(ReadField(1, Rdata, 45)) & ".mid", Val(ReadField(2, Rdata, 45)))
-                    End If
+                    Call Audio.PlayMIDI(Val(ReadField(1, Rdata, 45)) & ".mid", Val(ReadField(2, Rdata, 45)))
                 End If
             End If
             Exit Sub
         Case "TW"          ' >>>>> Play un WAV :: TW
-            If Fx = 0 Then
+            If Sound Then
                 Rdata = Right$(Rdata, Len(Rdata) - 2)
                  Call Audio.PlayWave(Rdata & ".wav")
             End If
@@ -781,14 +778,6 @@ Sub HandleData(ByVal Rdata As String)
             End If
                         
             Exit Sub
-        Case "NOC" 'nocheeeee
-'            Debug.Print Rdata
-            Rdata = Right$(Rdata, Len(Rdata) - 3)
-            bNoche = IIf(Rdata = "1", True, False)
-            SurfaceDB.EfectoPred = IIf(bNoche, 1, 0)
-            
-            Call SurfaceDB.BorrarTodo
-            Exit Sub
         Case "QDL"                  ' >>>>> Quitar Dialogo :: QDL
             Rdata = Right$(Rdata, Len(Rdata) - 3)
             Call Dialogos.QuitarDialogo(Val(Rdata))
@@ -819,7 +808,7 @@ Sub HandleData(ByVal Rdata As String)
             UserLvl = Val(ReadField(8, Rdata, 44))
             UserPasarNivel = Val(ReadField(9, Rdata, 44))
             UserExp = Val(ReadField(10, Rdata, 44))
-            frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+            frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
             frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
             frmMain.Hpshp.Width = (((UserMinHP / 100) / (UserMaxHP / 100)) * 94)
             
