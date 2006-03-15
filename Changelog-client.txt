@@ -15,3 +15,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 11/03/2206: Implementación definitiva de los nuevos managers de texturas. (Maraxus).
  * 11/03/2206: Implementación del ClientSetup en vez del viejo y obsoleto RenderMod. (Maraxus).
  * 11/03/2206: Se eliminaron variables viejas o mal tipadas. (Maraxus).
+ * 15/03/2206: Se mejoró el sistema anticheats. (Maraxus).

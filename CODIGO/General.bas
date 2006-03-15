@@ -850,8 +850,12 @@ Sub Main()
 'TODO : Cambiar esto cuando se corrija el bug de los timers
 'On Error GoTo ManejadorErrores
 On Error Resume Next
+
+#If SeguridadAlkon Then
+    InitSecurity
+#End If
+
     Call WriteClientVer
-    
     Call LeerLineaComandos
 
     If App.PrevInstance Then
@@ -1068,6 +1072,10 @@ UserMap = 1
     'Actualizar tip
     Config_Inicio.tip = tipf
     Call EscribirGameIni(Config_Inicio)
+    
+#If SeguridadAlkon Then
+        DeinitSecurity
+#End If
 End
 
 ManejadorErrores:
