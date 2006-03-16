@@ -572,8 +572,9 @@ Begin VB.Form frmMain
       Width           =   8175
       _ExtentX        =   14420
       _ExtentY        =   2646
-      _Version        =   393217
+      _Version        =   327681
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1506,7 +1507,6 @@ Private Sub Socket1_Disconnect()
     UserSexo = ""
     UserRaza = ""
     UserEmail = ""
-    bO = 100
     
     For I = 1 To NUMSKILLS
         UserSkills(I) = 0
@@ -1713,7 +1713,6 @@ Private Sub Winsock1_Close()
     UserSexo = ""
     UserRaza = ""
     UserEmail = ""
-    bO = 100
     
     For I = 1 To NUMSKILLS
         UserSkills(I) = 0

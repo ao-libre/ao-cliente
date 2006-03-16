@@ -143,7 +143,6 @@ Sub HandleData(ByVal Rdata As String)
             Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
 #End If
             
-            bO = 0
             bK = 0
             Exit Sub
         Case "FINCOMOK"          ' >>>>> Finaliza Comerciar :: FINCOMOK
@@ -724,7 +723,6 @@ Sub HandleData(ByVal Rdata As String)
             Rdata = Right$(Rdata, Len(Rdata) - 3)
             'If frmBorrar.Visible Then
             bK = CLng(ReadField(1, Rdata, Asc(",")))
-            bO = 100 'CInt(ReadField(1, Rdata, Asc(",")))
             bRK = ReadField(2, Rdata, Asc(","))
             ValString = ReadField(3, Rdata, Asc(","))
             'MsgBox ("LOGIN STRING: " & Rdata)
@@ -1307,10 +1305,7 @@ Sub SendData(ByVal sdData As String)
     'Debug.Print ">> " & sdData
 
 #If SeguridadAlkon Then
-    bK = GenCrC(bK, sdData)
-    
-    bO = bO + 1
-    If bO > 10000 Then bO = 100
+    bK = CheckSum(bK, sdData)
 
 
     'Agregamos el fin de linea

@@ -35,7 +35,6 @@ Attribute VB_Name = "Mod_General"
 
 Option Explicit
 
-Public bO As Integer
 Public bK As Long
 Public bRK As Long
 
