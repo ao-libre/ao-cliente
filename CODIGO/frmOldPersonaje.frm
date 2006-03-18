@@ -190,14 +190,14 @@ End If
 
 End Sub
 
-Private Sub Image1_Click(Index As Integer)
+Private Sub Image1_Click(index As Integer)
 On Error Resume Next
 
 Call Audio.PlayWave(SND_CLICK)
 
 
 
-Select Case Index
+Select Case index
     Case 0
        
 #If UsarWrench = 1 Then
@@ -215,7 +215,11 @@ Select Case Index
         UserName = NameTxt.Text
         Dim aux As String
         aux = PasswordTxt.Text
-        UserPassword = MD5String(aux)
+#If SeguridadAlkon Then
+        UserPassword = MD5.GetMD5String(aux)
+#Else
+        UserPassword = aux
+#End If
         If CheckUserData(False) = True Then
             'SendNewChar = False
             EstadoLogin = Normal
@@ -242,8 +246,8 @@ Select Case Index
 End Select
 End Sub
 
-Private Sub Image1_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
-Select Case Index
+Private Sub Image1_MouseMove(index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Select Case index
     Case 0
         If Image1(0).Tag = "0" Then
             Me.lblInfo.Visible = True

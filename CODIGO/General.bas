@@ -164,20 +164,20 @@ Sub CargarColores()
         Exit Sub
     End If
     
-    Dim I As Long
+    Dim i As Long
     
-    For I = 0 To 48 '49 y 50 reservados para ciudadano y criminal
-        ColoresPJ(I).r = Val(GetVar(archivoC, Str(I), "R"))
-        ColoresPJ(I).G = Val(GetVar(archivoC, Str(I), "G"))
-        ColoresPJ(I).B = Val(GetVar(archivoC, Str(I), "B"))
-    Next I
+    For i = 0 To 48 '49 y 50 reservados para ciudadano y criminal
+        ColoresPJ(i).r = Val(GetVar(archivoC, str(i), "R"))
+        ColoresPJ(i).G = Val(GetVar(archivoC, str(i), "G"))
+        ColoresPJ(i).b = Val(GetVar(archivoC, str(i), "B"))
+    Next i
         
     ColoresPJ(50).r = Val(GetVar(archivoC, "CR", "R"))
     ColoresPJ(50).G = Val(GetVar(archivoC, "CR", "G"))
-    ColoresPJ(50).B = Val(GetVar(archivoC, "CR", "B"))
+    ColoresPJ(50).b = Val(GetVar(archivoC, "CR", "B"))
     ColoresPJ(49).r = Val(GetVar(archivoC, "CI", "R"))
     ColoresPJ(49).G = Val(GetVar(archivoC, "CI", "G"))
-    ColoresPJ(49).B = Val(GetVar(archivoC, "CI", "B"))
+    ColoresPJ(49).b = Val(GetVar(archivoC, "CI", "B"))
 End Sub
 
 #If SeguridadAlkon Then
@@ -271,17 +271,17 @@ End Sub
 
 Function AsciiValidos(ByVal cad As String) As Boolean
     Dim car As Byte
-    Dim I As Long
+    Dim i As Long
     
     cad = LCase$(cad)
     
-    For I = 1 To Len(cad)
-        car = Asc(mid$(cad, I, 1))
+    For i = 1 To Len(cad)
+        car = Asc(mid$(cad, i, 1))
         
         If ((car < 97 Or car > 122) Or car = Asc("º")) And (car <> 255) And (car <> 32) Then
             Exit Function
         End If
-    Next I
+    Next i
     
     AsciiValidos = True
 End Function
@@ -710,7 +710,7 @@ Public Function ReadField(ByVal Pos As Integer, ByVal Text As String, ByVal SepA
 '*****************************************************************
 'Gets a field from a string
 '*****************************************************************
-    Dim I As Integer
+    Dim i As Integer
     Dim LastPos As Integer
     Dim CurChar As String * 1
     Dim FieldNum As Integer
@@ -720,17 +720,17 @@ Public Function ReadField(ByVal Pos As Integer, ByVal Text As String, ByVal SepA
     LastPos = 0
     FieldNum = 0
     
-    For I = 1 To Len(Text)
-        CurChar = mid$(Text, I, 1)
+    For i = 1 To Len(Text)
+        CurChar = mid$(Text, i, 1)
         If CurChar = Seperator Then
             FieldNum = FieldNum + 1
             If FieldNum = Pos Then
                 ReadField = mid$(Text, LastPos + 1, (InStr(LastPos + 1, Text, Seperator, vbTextCompare) - 1) - (LastPos))
                 Exit Function
             End If
-            LastPos = I
+            LastPos = i
         End If
-    Next I
+    Next i
     FieldNum = FieldNum + 1
     
     If FieldNum = Pos Then
@@ -759,32 +759,32 @@ Sub WriteClientVer()
 End Sub
 
 Public Function IsIp(ByVal Ip As String) As Boolean
-    Dim I As Long
+    Dim i As Long
     
-    For I = 1 To UBound(ServersLst)
-        If ServersLst(I).Ip = Ip Then
+    For i = 1 To UBound(ServersLst)
+        If ServersLst(i).Ip = Ip Then
             IsIp = True
             Exit Function
         End If
-    Next I
+    Next i
 End Function
 
 Public Sub CargarServidores()
 On Error GoTo errorH
     Dim f As String
-    Dim C As Integer
-    Dim I As Long
+    Dim c As Integer
+    Dim i As Long
     
     f = App.Path & "\init\sinfo.dat"
-    C = Val(GetVar(f, "INIT", "Cant"))
+    c = Val(GetVar(f, "INIT", "Cant"))
     
-    ReDim ServersLst(1 To C) As tServerInfo
-    For I = 1 To C
-        ServersLst(I).desc = GetVar(f, "S" & I, "Desc")
-        ServersLst(I).Ip = Trim$(GetVar(f, "S" & I, "Ip"))
-        ServersLst(I).PassRecPort = CInt(GetVar(f, "S" & I, "P2"))
-        ServersLst(I).Puerto = CInt(GetVar(f, "S" & I, "PJ"))
-    Next I
+    ReDim ServersLst(1 To c) As tServerInfo
+    For i = 1 To c
+        ServersLst(i).desc = GetVar(f, "S" & i, "Desc")
+        ServersLst(i).Ip = Trim$(GetVar(f, "S" & i, "Ip"))
+        ServersLst(i).PassRecPort = CInt(GetVar(f, "S" & i, "P2"))
+        ServersLst(i).Puerto = CInt(GetVar(f, "S" & i, "PJ"))
+    Next i
     CurServer = 1
 Exit Sub
 
@@ -796,26 +796,26 @@ End Sub
 Public Sub InitServersList(ByVal Lst As String)
 On Error Resume Next
     Dim NumServers As Integer
-    Dim I As Integer
+    Dim i As Integer
     Dim Cont As Integer
     
-    I = 1
+    i = 1
     
-    Do While (ReadField(I, RawServersList, Asc(";")) <> "")
-        I = I + 1
+    Do While (ReadField(i, RawServersList, Asc(";")) <> "")
+        i = i + 1
         Cont = Cont + 1
     Loop
     
     ReDim ServersLst(1 To Cont) As tServerInfo
     
-    For I = 1 To Cont
+    For i = 1 To Cont
         Dim cur$
-        cur$ = ReadField(I, RawServersList, Asc(";"))
-        ServersLst(I).Ip = ReadField(1, cur$, Asc(":"))
-        ServersLst(I).Puerto = ReadField(2, cur$, Asc(":"))
-        ServersLst(I).desc = ReadField(4, cur$, Asc(":"))
-        ServersLst(I).PassRecPort = ReadField(3, cur$, Asc(":"))
-    Next I
+        cur$ = ReadField(i, RawServersList, Asc(";"))
+        ServersLst(i).Ip = ReadField(1, cur$, Asc(":"))
+        ServersLst(i).Puerto = ReadField(2, cur$, Asc(":"))
+        ServersLst(i).desc = ReadField(4, cur$, Asc(":"))
+        ServersLst(i).PassRecPort = ReadField(3, cur$, Asc(":"))
+    Next i
     
     CurServer = 1
 End Sub
@@ -872,12 +872,13 @@ Dim timers(1 To 2) As Integer
     ChDrive App.Path
     ChDir App.Path
 
-'Obtengo mi MD5 hash
+#If SeguridadAlkon Then
     'Obtener el HushMD5
     Dim fMD5HushYo As String * 32
-    fMD5HushYo = MD5File(App.Path & "\" & App.EXEName & ".exe")
+    fMD5HushYo = MD5.GetMD5File(App.Path & "\" & App.EXEName & ".exe")
+    Call MD5.MD5Reset
     MD5HushYo = txtOffset(hexMd52Asc(fMD5HushYo), 53)
-    
+#End If
     
     'Cargamos el archivo de configuracion inicial
     If FileExist(App.Path & "\init\Inicio.con", vbNormal) Then
@@ -1169,17 +1170,17 @@ End Sub
     
 Public Sub LeerLineaComandos()
     Dim T() As String
-    Dim I As Long
+    Dim i As Long
     
     'Parseo los comandos
     T = Split(Command, " ")
     
-    For I = LBound(T) To UBound(T)
-        Select Case UCase$(T(I))
+    For i = LBound(T) To UBound(T)
+        Select Case UCase$(T(i))
             Case "/NORES" 'no cambiar la resolucion
                 NoRes = True
         End Select
-    Next I
+    Next i
 End Sub
 
 Private Sub LoadClientSetup()

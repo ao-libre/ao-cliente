@@ -42,6 +42,10 @@ Public Audio As New clsAudio
 Public Inventario As New clsGrapchicalInventory
 Public SurfaceDB As clsSurfaceManager   'No va new porque es unainterfaz, el new se pone al decidir que clase de objeto es
 
+#If SeguridadAlkon Then
+Public MD5 As New clsMD5
+#End If
+
 'Sonidos
 Public Const SND_CLICK As String = "click.Wav"
 Public Const SND_PASOS1 As String = "23.Wav"
@@ -60,7 +64,7 @@ Public RawServersList As String
 Public Type tColor
     r As Byte
     G As Byte
-    B As Byte
+    b As Byte
 End Type
 
 Public ColoresPJ(0 To 50) As tColor

@@ -215,7 +215,11 @@ End Function
 Private Sub Command1_Click()
 
 If CheckDatos() Then
-    UserPassword = MD5String(txtPasswd.Text)
+#If SeguridadAlkon Then
+    UserPassword = MD5.GetMD5String(txtPasswd.Text)
+#Else
+    UserPassword = txtPasswd.Text
+#End If
     UserEmail = txtCorreo.Text
     
     If Not CheckMailString(UserEmail) Then
