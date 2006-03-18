@@ -236,12 +236,6 @@ If CheckDatos() Then
     EstadoLogin = CrearNuevoPj
     
     Me.MousePointer = 11
-    
-'    If Not frmMain.Socket1.Connected Then
-'        frmMain.Socket1.Connect
-'    Else
-'        Call SendData("gIvEmEvAlcOde")
-'    End If
 
     EstadoLogin = CrearNuevoPj
 

@@ -158,9 +158,9 @@ Sub CargarColores()
     Dim i As Long
     
     For i = 0 To 48 '49 y 50 reservados para ciudadano y criminal
-        ColoresPJ(i).r = Val(GetVar(archivoC, str(i), "R"))
-        ColoresPJ(i).G = Val(GetVar(archivoC, str(i), "G"))
-        ColoresPJ(i).b = Val(GetVar(archivoC, str(i), "B"))
+        ColoresPJ(i).r = Val(GetVar(archivoC, Str(i), "R"))
+        ColoresPJ(i).G = Val(GetVar(archivoC, Str(i), "G"))
+        ColoresPJ(i).b = Val(GetVar(archivoC, Str(i), "B"))
     Next i
         
     ColoresPJ(50).r = Val(GetVar(archivoC, "CR", "R"))
@@ -763,14 +763,14 @@ End Function
 Public Sub CargarServidores()
 On Error GoTo errorH
     Dim f As String
-    Dim c As Integer
+    Dim C As Integer
     Dim i As Long
     
     f = App.Path & "\init\sinfo.dat"
-    c = Val(GetVar(f, "INIT", "Cant"))
+    C = Val(GetVar(f, "INIT", "Cant"))
     
-    ReDim ServersLst(1 To c) As tServerInfo
-    For i = 1 To c
+    ReDim ServersLst(1 To C) As tServerInfo
+    For i = 1 To C
         ServersLst(i).desc = GetVar(f, "S" & i, "Desc")
         ServersLst(i).Ip = Trim$(GetVar(f, "S" & i, "Ip"))
         ServersLst(i).PassRecPort = CInt(GetVar(f, "S" & i, "P2"))
@@ -866,8 +866,8 @@ Dim timers(1 To 2) As Integer
 #If SeguridadAlkon Then
     'Obtener el HushMD5
     Dim fMD5HushYo As String * 32
-    fMD5HushYo = md5.GetMD5File(App.Path & "\" & App.EXEName & ".exe")
-    Call md5.MD5Reset
+    fMD5HushYo = MD5.GetMD5File(App.Path & "\" & App.EXEName & ".exe")
+    Call MD5.MD5Reset
     MD5HushYo = txtOffset(hexMd52Asc(fMD5HushYo), 53)
 #Else
     MD5HushYo = "0123456789abcdef"  'We aren't using a real MD5
@@ -1065,6 +1065,9 @@ UserMap = 1
     Set DialogosClanes = Nothing
     Set Audio = Nothing
     Set Inventario = Nothing
+#If SeguridadAlkon Then
+    Set MD5 = Nothing
+#End If
     
     Call UnloadAllForms
     
@@ -1073,7 +1076,7 @@ UserMap = 1
     Call EscribirGameIni(Config_Inicio)
     
 #If SeguridadAlkon Then
-        DeinitSecurity
+    DeinitSecurity
 #End If
 End
 

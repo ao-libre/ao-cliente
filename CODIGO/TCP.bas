@@ -545,22 +545,12 @@ Sub HandleData(ByVal Rdata As String)
             iuser = Val(ReadField(3, Rdata, 176))
             
             If iuser > 0 Then
-                'If Val(ReadField(1, Rdata, 176)) = vbYellow Then
-                '    DialogosClanes.PushBackText Left$(charlist(iuser).Nombre, InStr(1, charlist(iuser).Nombre, "<") - 1) & ":" & Replace(Replace(ReadField(2, Rdata, 176), ">", ""), "<", "")
-                'End If
                 Dialogos.CrearDialogo ReadField(2, Rdata, 176), iuser, Val(ReadField(1, Rdata, 176))
-                'i = 1
-                'Do While i <= iuser
-                '    Dialogos.CrearDialogo ReadField(2, Rdata, 176), i, Val(ReadField(1, Rdata, 176))
-                '    i = i + 1
-                'Loop
             Else
                 If PuedoQuitarFoco Then
                     AddtoRichTextBox frmMain.RecTxt, ReadField(1, Rdata, 126), Val(ReadField(2, Rdata, 126)), Val(ReadField(3, Rdata, 126)), Val(ReadField(4, Rdata, 126)), Val(ReadField(5, Rdata, 126)), Val(ReadField(6, Rdata, 126))
                 End If
             End If
-
-            'If DialogosClanes.Activo Then DialogosClanes.PushBackText ReadField(1, Rdata, 126)
 
             Exit Sub
         Case "|+"                 ' >>>>> Consola de clan y NPCs :: |+
@@ -1326,33 +1316,26 @@ Sub SendData(ByVal sdData As String)
 End Sub
 
 Sub Login(ByVal valcode As Integer)
-
-'Personaje grabado
-'If SendNewChar = False Then
-
-
-
-If EstadoLogin = Normal Then
-    SendData ("OLOGIN" & UserName & "," & UserPassword & "," & App.Major & "." & App.Minor & "." & App.Revision & "," & valcode & MD5HushYo & "," & Versiones(1) & "," & Versiones(2) & "," & Versiones(3) & "," & Versiones(4) & "," & Versiones(5) & "," & Versiones(6) & "," & Versiones(7))
-
-ElseIf EstadoLogin = CrearNuevoPj Then
-    SendData ("NLOGIN" & UserName & "," & UserPassword _
-    & "," & 0 & "," & 0 & "," _
-    & App.Major & "." & App.Minor & "." & App.Revision & _
-    "," & UserRaza & "," & UserSexo & "," & UserClase & "," & _
-    UserAtributos(1) & "," & UserAtributos(2) & "," & UserAtributos(3) _
-    & "," & UserAtributos(4) & "," & UserAtributos(5) _
-     & "," & UserSkills(1) & "," & UserSkills(2) _
-     & "," & UserSkills(3) & "," & UserSkills(4) _
-     & "," & UserSkills(5) & "," & UserSkills(6) _
-     & "," & UserSkills(7) & "," & UserSkills(8) _
-     & "," & UserSkills(9) & "," & UserSkills(10) _
-     & "," & UserSkills(11) & "," & UserSkills(12) _
-     & "," & UserSkills(13) & "," & UserSkills(14) _
-     & "," & UserSkills(15) & "," & UserSkills(16) _
-     & "," & UserSkills(17) & "," & UserSkills(18) _
-     & "," & UserSkills(19) & "," & UserSkills(20) _
-     & "," & UserSkills(21) & "," & UserEmail & "," _
-     & UserHogar & "," & Versiones(1) & "," & Versiones(2) & "," & Versiones(3) & "," & Versiones(4) & "," & Versiones(5) & "," & Versiones(6) & "," & Versiones(7) & "," & valcode & MD5HushYo)
-End If
+    If EstadoLogin = Normal Then
+        SendData ("OLOGIN" & UserName & "," & UserPassword & "," & App.Major & "." & App.Minor & "." & App.Revision & "," & valcode & MD5HushYo & "," & Versiones(1) & "," & Versiones(2) & "," & Versiones(3) & "," & Versiones(4) & "," & Versiones(5) & "," & Versiones(6) & "," & Versiones(7))
+    ElseIf EstadoLogin = CrearNuevoPj Then
+        SendData ("NLOGIN" & UserName & "," & UserPassword _
+        & "," & 0 & "," & 0 & "," _
+        & App.Major & "." & App.Minor & "." & App.Revision & _
+        "," & UserRaza & "," & UserSexo & "," & UserClase & "," & _
+        UserAtributos(1) & "," & UserAtributos(2) & "," & UserAtributos(3) _
+        & "," & UserAtributos(4) & "," & UserAtributos(5) _
+         & "," & UserSkills(1) & "," & UserSkills(2) _
+         & "," & UserSkills(3) & "," & UserSkills(4) _
+         & "," & UserSkills(5) & "," & UserSkills(6) _
+         & "," & UserSkills(7) & "," & UserSkills(8) _
+         & "," & UserSkills(9) & "," & UserSkills(10) _
+         & "," & UserSkills(11) & "," & UserSkills(12) _
+         & "," & UserSkills(13) & "," & UserSkills(14) _
+         & "," & UserSkills(15) & "," & UserSkills(16) _
+         & "," & UserSkills(17) & "," & UserSkills(18) _
+         & "," & UserSkills(19) & "," & UserSkills(20) _
+         & "," & UserSkills(21) & "," & UserEmail & "," _
+         & UserHogar & "," & Versiones(1) & "," & Versiones(2) & "," & Versiones(3) & "," & Versiones(4) & "," & Versiones(5) & "," & Versiones(6) & "," & Versiones(7) & "," & valcode & MD5HushYo)
+    End If
 End Sub
