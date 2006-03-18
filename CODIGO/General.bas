@@ -68,28 +68,19 @@ Public Function DirMapas() As String
 End Function
 
 Public Function SumaDigitos(ByVal numero As Integer) As Integer
-'Suma digitos
-    Dim suma As Integer
-    
-    While (numero <> 0)
-        suma = suma + (numero Mod 10)
+    'Suma digitos
+    Do
+        SumaDigitos = SumaDigitos + (numero Mod 10)
         numero = numero \ 10
-    Wend
-    
-    SumaDigitos = suma
+    Loop While (numero > 0)
 End Function
 
 Public Function SumaDigitosMenos(ByVal numero As Integer) As Integer
     'Suma digitos, y resta el total de dígitos
-    Dim suma As Integer
-    
-    Do While (numero <> 0)
-        suma = suma + (numero Mod 10) - 1
-        
+    Do
+        SumaDigitosMenos = SumaDigitosMenos + (numero Mod 10) - 1
         numero = numero \ 10
-    Loop
-    
-    SumaDigitosMenos = suma
+    Loop While (numero > 0)
 End Function
 
 Public Function Complex(ByVal numero As Integer) As Integer
@@ -875,9 +866,11 @@ Dim timers(1 To 2) As Integer
 #If SeguridadAlkon Then
     'Obtener el HushMD5
     Dim fMD5HushYo As String * 32
-    fMD5HushYo = MD5.GetMD5File(App.Path & "\" & App.EXEName & ".exe")
-    Call MD5.MD5Reset
+    fMD5HushYo = md5.GetMD5File(App.Path & "\" & App.EXEName & ".exe")
+    Call md5.MD5Reset
     MD5HushYo = txtOffset(hexMd52Asc(fMD5HushYo), 53)
+#Else
+    MD5HushYo = "0123456789abcdef"  'We aren't using a real MD5
 #End If
     
     'Cargamos el archivo de configuracion inicial
@@ -975,6 +968,12 @@ UserMap = 1
     frmPres.Show vbModal    'Es modal, así que se detiene la ejecución de Main hasta que se desaparece
     
     frmConnect.Visible = True
+
+'TODO : Esto va en Engine Initialization
+    MainViewRect.Left = MainViewLeft
+    MainViewRect.Top = MainViewTop
+    MainViewRect.Right = MainViewRect.Left + MainViewWidth
+    MainViewRect.Bottom = MainViewRect.Top + MainViewHeight
     
 'TODO : Esto va en Engine Initialization
     MainDestRect.Left = TilePixelWidth * TileBufferSize - TilePixelWidth

@@ -69,8 +69,8 @@ Sub HandleData(ByVal Rdata As String)
     Dim tempstr As String
     Dim slot As Integer
     Dim MapNumber As String
-    Dim I As Integer, k As Integer
-    Dim cad$, Index As Integer, m As Integer
+    Dim i As Integer, k As Integer
+    Dim cad$, index As Integer, m As Integer
     Dim T() As String
     
     Dim tstr As String
@@ -135,9 +135,9 @@ Sub HandleData(ByVal Rdata As String)
             SkillPoints = 0
             frmMain.Label1.Visible = False
             Call Dialogos.BorrarDialogos
-            For I = 1 To LastChar
-                charlist(I).invisible = False
-            Next I
+            For i = 1 To LastChar
+                charlist(i).invisible = False
+            Next i
             
 #If SeguridadAlkon Then
             Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
@@ -164,14 +164,14 @@ Sub HandleData(ByVal Rdata As String)
         '[/KEVIN]***********************************************************************
         '------------------------------------------------------------------------------
         Case "INITCOM"           ' >>>>> Inicia Comerciar :: INITCOM
-            I = 1
-            Do While I <= MAX_INVENTORY_SLOTS
-                If Inventario.OBJIndex(I) <> 0 Then
-                        frmComerciar.List1(1).AddItem Inventario.ItemName(I)
+            i = 1
+            Do While i <= MAX_INVENTORY_SLOTS
+                If Inventario.OBJIndex(i) <> 0 Then
+                        frmComerciar.List1(1).AddItem Inventario.ItemName(i)
                 Else
                         frmComerciar.List1(1).AddItem "Nada"
                 End If
-                I = I + 1
+                i = i + 1
             Loop
             Comerciando = True
             frmComerciar.Show , frmMain
@@ -179,26 +179,26 @@ Sub HandleData(ByVal Rdata As String)
         '[KEVIN]-----------------------------------------------
         '**************************************************************
         Case "INITBANCO"           ' >>>>> Inicia Comerciar :: INITBANCO
-            Dim ii As Integer
-            ii = 1
-            Do While ii <= MAX_INVENTORY_SLOTS
-                If Inventario.OBJIndex(ii) <> 0 Then
-                        frmBancoObj.List1(1).AddItem Inventario.ItemName(ii)
+            Dim II As Integer
+            II = 1
+            Do While II <= MAX_INVENTORY_SLOTS
+                If Inventario.OBJIndex(II) <> 0 Then
+                        frmBancoObj.List1(1).AddItem Inventario.ItemName(II)
                 Else
                         frmBancoObj.List1(1).AddItem "Nada"
                 End If
-                ii = ii + 1
+                II = II + 1
             Loop
             
             
-            I = 1
-            Do While I <= UBound(UserBancoInventory)
-                If UserBancoInventory(I).OBJIndex <> 0 Then
-                        frmBancoObj.List1(0).AddItem UserBancoInventory(I).Name
+            i = 1
+            Do While i <= UBound(UserBancoInventory)
+                If UserBancoInventory(i).OBJIndex <> 0 Then
+                        frmBancoObj.List1(0).AddItem UserBancoInventory(i).Name
                 Else
                         frmBancoObj.List1(0).AddItem "Nada"
                 End If
-                I = I + 1
+                i = i + 1
             Loop
             Comerciando = True
             frmBancoObj.Show , frmMain
@@ -210,15 +210,15 @@ Sub HandleData(ByVal Rdata As String)
             If frmComerciarUsu.List1.ListCount > 0 Then frmComerciarUsu.List1.Clear
             If frmComerciarUsu.List2.ListCount > 0 Then frmComerciarUsu.List2.Clear
             
-            For I = 1 To MAX_INVENTORY_SLOTS
-                If Inventario.OBJIndex(I) <> 0 Then
-                        frmComerciarUsu.List1.AddItem Inventario.ItemName(I)
-                        frmComerciarUsu.List1.ItemData(frmComerciarUsu.List1.NewIndex) = Inventario.Amount(I)
+            For i = 1 To MAX_INVENTORY_SLOTS
+                If Inventario.OBJIndex(i) <> 0 Then
+                        frmComerciarUsu.List1.AddItem Inventario.ItemName(i)
+                        frmComerciarUsu.List1.ItemData(frmComerciarUsu.List1.NewIndex) = Inventario.Amount(i)
                 Else
                         frmComerciarUsu.List1.AddItem "Nada"
                         frmComerciarUsu.List1.ItemData(frmComerciarUsu.List1.NewIndex) = 0
                 End If
-            Next I
+            Next i
             Comerciando = True
             frmComerciarUsu.Show , frmMain
         Case "FINCOMUSUOK"
@@ -479,8 +479,8 @@ Sub HandleData(ByVal Rdata As String)
         
         Case "N2" ' <<--- Npc nos impacto (Ahorramos ancho de banda)
             Rdata = Right$(Rdata, Len(Rdata) - 2)
-            I = Val(ReadField(1, Rdata, 44))
-            Select Case I
+            i = Val(ReadField(1, Rdata, 44))
+            Select Case i
                 Case bCabeza
                     Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_GOLPE_CABEZA & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bBrazoIzquierdo
@@ -505,8 +505,8 @@ Sub HandleData(ByVal Rdata As String)
             Exit Sub
         Case "N4" ' <<--- user nos impacto
             Rdata = Right$(Rdata, Len(Rdata) - 2)
-            I = Val(ReadField(1, Rdata, 44))
-            Select Case I
+            i = Val(ReadField(1, Rdata, 44))
+            Select Case i
                 Case bCabeza
                     Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & ReadField(3, Rdata, 44) & MENSAJE_RECIVE_IMPACTO_CABEZA & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bBrazoIzquierdo
@@ -523,8 +523,8 @@ Sub HandleData(ByVal Rdata As String)
             Exit Sub
         Case "N5" ' <<--- impactamos un user
             Rdata = Right$(Rdata, Len(Rdata) - 2)
-            I = Val(ReadField(1, Rdata, 44))
-            Select Case I
+            i = Val(ReadField(1, Rdata, 44))
+            Select Case i
                 Case bCabeza
                     Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_PRODUCE_IMPACTO_1 & ReadField(3, Rdata, 44) & MENSAJE_PRODUCE_IMPACTO_CABEZA & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
                 Case bBrazoIzquierdo
@@ -679,7 +679,7 @@ Sub HandleData(ByVal Rdata As String)
             MapData(X, Y).ObjGrh.GrhIndex = 0
             Exit Sub
         Case "BQ"           ' >>>>> Bloquear Posición
-            Dim B As Byte
+            Dim b As Byte
             Rdata = Right$(Rdata, Len(Rdata) - 2)
             MapData(Val(ReadField(1, Rdata, 44)), Val(ReadField(2, Rdata, 44))).Blocked = Val(ReadField(3, Rdata, 44))
             Exit Sub
@@ -721,17 +721,13 @@ Sub HandleData(ByVal Rdata As String)
         Case "VAL"                  ' >>>>> Validar Cliente :: VAL
             Dim ValString As String
             Rdata = Right$(Rdata, Len(Rdata) - 3)
-            'If frmBorrar.Visible Then
             bK = CLng(ReadField(1, Rdata, Asc(",")))
             bRK = ReadField(2, Rdata, Asc(","))
             ValString = ReadField(3, Rdata, Asc(","))
-            'MsgBox ("LOGIN STRING: " & Rdata)
             CargarCabezas
             
 #If SeguridadAlkon Then
             CheatingDeath.InputK
-            
-            Debug.Print "key: " & CheatingDeath.bKD
             
             If Not CheatingDeath.ValidarArchivosCriticos(ValString) Then End
 #End If
@@ -893,9 +889,9 @@ Sub HandleData(ByVal Rdata As String)
             Exit Sub
         Case "ATR"               ' >>>>> Recibir Atributos del Personaje :: ATR
             Rdata = Right$(Rdata, Len(Rdata) - 3)
-            For I = 1 To NUMATRIBUTOS
-                UserAtributos(I) = Val(ReadField(I, Rdata, 44))
-            Next I
+            For i = 1 To NUMATRIBUTOS
+                UserAtributos(i) = Val(ReadField(i, Rdata, 44))
+            Next i
             LlegaronAtrib = True
             Exit Sub
         Case "LAH"
@@ -904,13 +900,13 @@ Sub HandleData(ByVal Rdata As String)
             For m = 0 To UBound(ArmasHerrero)
                 ArmasHerrero(m) = 0
             Next m
-            I = 1
+            i = 1
             m = 0
             Do
-                cad$ = ReadField(I, Rdata, 44)
-                ArmasHerrero(m) = Val(ReadField(I + 1, Rdata, 44))
+                cad$ = ReadField(i, Rdata, 44)
+                ArmasHerrero(m) = Val(ReadField(i + 1, Rdata, 44))
                 If cad$ <> "" Then frmHerrero.lstArmas.AddItem cad$
-                I = I + 2
+                i = i + 2
                 m = m + 1
             Loop While cad$ <> ""
             Exit Sub
@@ -920,13 +916,13 @@ Sub HandleData(ByVal Rdata As String)
             For m = 0 To UBound(ArmadurasHerrero)
                 ArmadurasHerrero(m) = 0
             Next m
-            I = 1
+            i = 1
             m = 0
             Do
-                cad$ = ReadField(I, Rdata, 44)
-                ArmadurasHerrero(m) = Val(ReadField(I + 1, Rdata, 44))
+                cad$ = ReadField(i, Rdata, 44)
+                ArmadurasHerrero(m) = Val(ReadField(i + 1, Rdata, 44))
                 If cad$ <> "" Then frmHerrero.lstArmaduras.AddItem cad$
-                I = I + 2
+                i = i + 2
                 m = m + 1
             Loop While cad$ <> ""
             Exit Sub
@@ -937,13 +933,13 @@ Sub HandleData(ByVal Rdata As String)
             For m = 0 To UBound(ObjCarpintero)
                 ObjCarpintero(m) = 0
             Next m
-            I = 1
+            i = 1
             m = 0
             Do
-                cad$ = ReadField(I, Rdata, 44)
-                ObjCarpintero(m) = Val(ReadField(I + 1, Rdata, 44))
+                cad$ = ReadField(i, Rdata, 44)
+                ObjCarpintero(m) = Val(ReadField(i + 1, Rdata, 44))
                 If cad$ <> "" Then frmCarp.lstArmas.AddItem cad$
-                I = I + 2
+                i = i + 2
                 m = m + 1
             Loop While cad$ <> ""
             Exit Sub
@@ -953,9 +949,9 @@ Sub HandleData(ByVal Rdata As String)
             Exit Sub
         Case "SPL"
             Rdata = Right(Rdata, Len(Rdata) - 3)
-            For I = 1 To Val(ReadField(1, Rdata, 44))
-                frmSpawnList.lstCriaturas.AddItem ReadField(I + 1, Rdata, 44)
-            Next I
+            For i = 1 To Val(ReadField(1, Rdata, 44))
+                frmSpawnList.lstCriaturas.AddItem ReadField(i + 1, Rdata, 44)
+            Next i
             frmSpawnList.Show , frmMain
             Exit Sub
         Case "ERR"
@@ -1132,16 +1128,16 @@ Sub HandleData(ByVal Rdata As String)
             Exit Sub
         Case "SKILLS"           ' >>>>> Recibe Skills del Personaje :: SKILLS
             Rdata = Right$(Rdata, Len(Rdata) - 6)
-            For I = 1 To NUMSKILLS
-                UserSkills(I) = Val(ReadField(I, Rdata, 44))
-            Next I
+            For i = 1 To NUMSKILLS
+                UserSkills(i) = Val(ReadField(i, Rdata, 44))
+            Next i
             LlegaronSkills = True
             Exit Sub
         Case "LSTCRI"
             Rdata = Right(Rdata, Len(Rdata) - 6)
-            For I = 1 To Val(ReadField(1, Rdata, 44))
-                frmEntrenador.lstCriaturas.AddItem ReadField(I + 1, Rdata, 44)
-            Next I
+            For i = 1 To Val(ReadField(1, Rdata, 44))
+                frmEntrenador.lstCriaturas.AddItem ReadField(i + 1, Rdata, 44)
+            Next i
             frmEntrenador.Show , frmMain
             Exit Sub
     End Select
@@ -1192,14 +1188,14 @@ Sub HandleData(ByVal Rdata As String)
             Exit Sub
         Case "TRANSOK"           ' Transacción OK :: TRANSOK
             If frmComerciar.Visible Then
-                I = 1
-                Do While I <= MAX_INVENTORY_SLOTS
-                    If Inventario.OBJIndex(I) <> 0 Then
-                            frmComerciar.List1(1).AddItem Inventario.ItemName(I)
+                i = 1
+                Do While i <= MAX_INVENTORY_SLOTS
+                    If Inventario.OBJIndex(i) <> 0 Then
+                            frmComerciar.List1(1).AddItem Inventario.ItemName(i)
                     Else
                             frmComerciar.List1(1).AddItem "Nada"
                     End If
-                    I = I + 1
+                    i = i + 1
                 Loop
                 Rdata = Right(Rdata, Len(Rdata) - 7)
                 
@@ -1214,24 +1210,24 @@ Sub HandleData(ByVal Rdata As String)
         '*********************************************************************************
         Case "BANCOOK"           ' Banco OK :: BANCOOK
             If frmBancoObj.Visible Then
-                I = 1
-                Do While I <= MAX_INVENTORY_SLOTS
-                    If Inventario.OBJIndex(I) <> 0 Then
-                            frmBancoObj.List1(1).AddItem Inventario.ItemName(I)
+                i = 1
+                Do While i <= MAX_INVENTORY_SLOTS
+                    If Inventario.OBJIndex(i) <> 0 Then
+                            frmBancoObj.List1(1).AddItem Inventario.ItemName(i)
                     Else
                             frmBancoObj.List1(1).AddItem "Nada"
                     End If
-                    I = I + 1
+                    i = i + 1
                 Loop
                 
-                ii = 1
-                Do While ii <= MAX_BANCOINVENTORY_SLOTS
-                    If UserBancoInventory(ii).OBJIndex <> 0 Then
-                            frmBancoObj.List1(0).AddItem UserBancoInventory(ii).Name
+                II = 1
+                Do While II <= MAX_BANCOINVENTORY_SLOTS
+                    If UserBancoInventory(II).OBJIndex <> 0 Then
+                            frmBancoObj.List1(0).AddItem UserBancoInventory(II).Name
                     Else
                             frmBancoObj.List1(0).AddItem "Nada"
                     End If
-                    ii = ii + 1
+                    II = II + 1
                 Loop
                 
                 Rdata = Right(Rdata, Len(Rdata) - 7)
@@ -1253,10 +1249,10 @@ Sub HandleData(ByVal Rdata As String)
             T = Split(Rdata, ",")
             If frmPanelGm.Visible Then
                 frmPanelGm.cboListaUsus.Clear
-                For I = LBound(T) To UBound(T)
+                For i = LBound(T) To UBound(T)
                     'frmPanelGm.cboListaUsus.AddItem IIf(Left(t(i), 1) = " ", Right(t(i), Len(t(i)) - 1), t(i))
-                    frmPanelGm.cboListaUsus.AddItem T(I)
-                Next I
+                    frmPanelGm.cboListaUsus.AddItem T(i)
+                Next i
                 If frmPanelGm.cboListaUsus.ListCount > 0 Then frmPanelGm.cboListaUsus.listIndex = 0
             End If
             Exit Sub

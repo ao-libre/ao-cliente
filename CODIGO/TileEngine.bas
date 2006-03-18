@@ -371,7 +371,7 @@ Private Declare Function BltEfectoNoche Lib "vbabdx" (ByRef lpDDSDest As Any, By
 
 Sub CargarCabezas()
 On Error Resume Next
-Dim N As Integer, I As Integer, Numheads As Integer, Index As Integer
+Dim N As Integer, i As Integer, Numheads As Integer, index As Integer
 
 Dim Miscabezas() As tIndiceCabeza
 
@@ -388,13 +388,13 @@ Get #N, , Numheads
 ReDim HeadData(0 To Numheads + 1) As HeadData
 ReDim Miscabezas(0 To Numheads + 1) As tIndiceCabeza
 
-For I = 1 To Numheads
-    Get #N, , Miscabezas(I)
-    InitGrh HeadData(I).Head(1), Miscabezas(I).Head(1), 0
-    InitGrh HeadData(I).Head(2), Miscabezas(I).Head(2), 0
-    InitGrh HeadData(I).Head(3), Miscabezas(I).Head(3), 0
-    InitGrh HeadData(I).Head(4), Miscabezas(I).Head(4), 0
-Next I
+For i = 1 To Numheads
+    Get #N, , Miscabezas(i)
+    InitGrh HeadData(i).Head(1), Miscabezas(i).Head(1), 0
+    InitGrh HeadData(i).Head(2), Miscabezas(i).Head(2), 0
+    InitGrh HeadData(i).Head(3), Miscabezas(i).Head(3), 0
+    InitGrh HeadData(i).Head(4), Miscabezas(i).Head(4), 0
+Next i
 
 Close #N
 
@@ -402,7 +402,7 @@ End Sub
 
 Sub CargarCascos()
 On Error Resume Next
-Dim N As Integer, I As Integer, NumCascos As Integer, Index As Integer
+Dim N As Integer, i As Integer, NumCascos As Integer, index As Integer
 
 Dim Miscabezas() As tIndiceCabeza
 
@@ -419,13 +419,13 @@ Get #N, , NumCascos
 ReDim CascoAnimData(0 To NumCascos + 1) As HeadData
 ReDim Miscabezas(0 To NumCascos + 1) As tIndiceCabeza
 
-For I = 1 To NumCascos
-    Get #N, , Miscabezas(I)
-    InitGrh CascoAnimData(I).Head(1), Miscabezas(I).Head(1), 0
-    InitGrh CascoAnimData(I).Head(2), Miscabezas(I).Head(2), 0
-    InitGrh CascoAnimData(I).Head(3), Miscabezas(I).Head(3), 0
-    InitGrh CascoAnimData(I).Head(4), Miscabezas(I).Head(4), 0
-Next I
+For i = 1 To NumCascos
+    Get #N, , Miscabezas(i)
+    InitGrh CascoAnimData(i).Head(1), Miscabezas(i).Head(1), 0
+    InitGrh CascoAnimData(i).Head(2), Miscabezas(i).Head(2), 0
+    InitGrh CascoAnimData(i).Head(3), Miscabezas(i).Head(3), 0
+    InitGrh CascoAnimData(i).Head(4), Miscabezas(i).Head(4), 0
+Next i
 
 Close #N
 
@@ -433,7 +433,7 @@ End Sub
 
 Sub CargarCuerpos()
 On Error Resume Next
-Dim N As Integer, I As Integer
+Dim N As Integer, i As Integer
 Dim NumCuerpos As Integer
 Dim MisCuerpos() As tIndiceCuerpo
 
@@ -450,22 +450,22 @@ Get #N, , NumCuerpos
 ReDim BodyData(0 To NumCuerpos + 1) As BodyData
 ReDim MisCuerpos(0 To NumCuerpos + 1) As tIndiceCuerpo
 
-For I = 1 To NumCuerpos
-    Get #N, , MisCuerpos(I)
-    InitGrh BodyData(I).Walk(1), MisCuerpos(I).Body(1), 0
-    InitGrh BodyData(I).Walk(2), MisCuerpos(I).Body(2), 0
-    InitGrh BodyData(I).Walk(3), MisCuerpos(I).Body(3), 0
-    InitGrh BodyData(I).Walk(4), MisCuerpos(I).Body(4), 0
-    BodyData(I).HeadOffset.X = MisCuerpos(I).HeadOffsetX
-    BodyData(I).HeadOffset.Y = MisCuerpos(I).HeadOffsetY
-Next I
+For i = 1 To NumCuerpos
+    Get #N, , MisCuerpos(i)
+    InitGrh BodyData(i).Walk(1), MisCuerpos(i).Body(1), 0
+    InitGrh BodyData(i).Walk(2), MisCuerpos(i).Body(2), 0
+    InitGrh BodyData(i).Walk(3), MisCuerpos(i).Body(3), 0
+    InitGrh BodyData(i).Walk(4), MisCuerpos(i).Body(4), 0
+    BodyData(i).HeadOffset.X = MisCuerpos(i).HeadOffsetX
+    BodyData(i).HeadOffset.Y = MisCuerpos(i).HeadOffsetY
+Next i
 
 Close #N
 
 End Sub
 Sub CargarFxs()
 On Error Resume Next
-Dim N As Integer, I As Integer
+Dim N As Integer, i As Integer
 Dim NumFxs As Integer
 Dim MisFxs() As tIndiceFx
 
@@ -482,12 +482,12 @@ Get #N, , NumFxs
 ReDim FxData(0 To NumFxs + 1) As FxData
 ReDim MisFxs(0 To NumFxs + 1) As tIndiceFx
 
-For I = 1 To NumFxs
-    Get #N, , MisFxs(I)
-    Call InitGrh(FxData(I).Fx, MisFxs(I).Animacion, 1)
-    FxData(I).OffsetX = MisFxs(I).OffsetX
-    FxData(I).OffsetY = MisFxs(I).OffsetY
-Next I
+For i = 1 To NumFxs
+    Get #N, , MisFxs(i)
+    Call InitGrh(FxData(i).Fx, MisFxs(i).Animacion, 1)
+    FxData(i).OffsetX = MisFxs(i).OffsetX
+    FxData(i).OffsetY = MisFxs(i).OffsetY
+Next i
 
 Close #N
 
@@ -495,7 +495,7 @@ End Sub
 
 Sub CargarTips()
 On Error Resume Next
-Dim N As Integer, I As Integer
+Dim N As Integer, i As Integer
 Dim NumTips As Integer
 
 N = FreeFile
@@ -510,9 +510,9 @@ Get #N, , NumTips
 'Resize array
 ReDim Tips(1 To NumTips) As String * 255
 
-For I = 1 To NumTips
-    Get #N, , Tips(I)
-Next I
+For i = 1 To NumTips
+    Get #N, , Tips(i)
+Next i
 
 Close #N
 
@@ -520,7 +520,7 @@ End Sub
 
 Sub CargarArrayLluvia()
 On Error Resume Next
-Dim N As Integer, I As Integer
+Dim N As Integer, i As Integer
 Dim Nu As Integer
 
 N = FreeFile
@@ -535,9 +535,9 @@ Get #N, , Nu
 'Resize array
 ReDim bLluvia(1 To Nu) As Byte
 
-For I = 1 To Nu
-    Get #N, , bLluvia(I)
-Next I
+For i = 1 To Nu
+    Get #N, , bLluvia(i)
+Next i
 
 Close #N
 
@@ -1436,9 +1436,7 @@ End Sub
 #End If 'ConAlfaB = 1
 
 Sub DrawBackBufferSurface()
-
-PrimarySurface.Blt MainViewRect, BackBufferSurface, MainDestRect, DDBLT_WAIT
-
+    PrimarySurface.Blt MainViewRect, BackBufferSurface, MainDestRect, DDBLT_WAIT
 End Sub
 
 Function GetBitmapDimensions(BmpFile As String, ByRef bmWidth As Long, ByRef bmHeight As Long)
@@ -1686,36 +1684,36 @@ For Y = minY + 8 To maxY - 1
                                             Select Case TempChar.priv
                                             Case 0
                                                 If TempChar.Criminal Then
-                                                    Call Dialogos.DrawText(iPPx - lCenter, iPPy + 30, Left(TempChar.Nombre, InStr(TempChar.Nombre, "<") - 1), RGB(ColoresPJ(50).r, ColoresPJ(50).G, ColoresPJ(50).B))
+                                                    Call Dialogos.DrawText(iPPx - lCenter, iPPy + 30, Left(TempChar.Nombre, InStr(TempChar.Nombre, "<") - 1), RGB(ColoresPJ(50).r, ColoresPJ(50).G, ColoresPJ(50).b))
                                                     lCenter = (frmMain.TextWidth(sClan) / 2) - 16
-                                                    Call Dialogos.DrawText(iPPx - lCenter, iPPy + 45, sClan, RGB(ColoresPJ(50).r, ColoresPJ(50).G, ColoresPJ(50).B))
+                                                    Call Dialogos.DrawText(iPPx - lCenter, iPPy + 45, sClan, RGB(ColoresPJ(50).r, ColoresPJ(50).G, ColoresPJ(50).b))
                                                 Else
-                                                    Call Dialogos.DrawText(iPPx - lCenter, iPPy + 30, Left(TempChar.Nombre, InStr(TempChar.Nombre, "<") - 1), RGB(ColoresPJ(49).r, ColoresPJ(49).G, ColoresPJ(49).B))
+                                                    Call Dialogos.DrawText(iPPx - lCenter, iPPy + 30, Left(TempChar.Nombre, InStr(TempChar.Nombre, "<") - 1), RGB(ColoresPJ(49).r, ColoresPJ(49).G, ColoresPJ(49).b))
                                                     lCenter = (frmMain.TextWidth(sClan) / 2) - 16
-                                                    Call Dialogos.DrawText(iPPx - lCenter, iPPy + 45, sClan, RGB(ColoresPJ(49).r, ColoresPJ(49).G, ColoresPJ(49).B))
+                                                    Call Dialogos.DrawText(iPPx - lCenter, iPPy + 45, sClan, RGB(ColoresPJ(49).r, ColoresPJ(49).G, ColoresPJ(49).b))
                                                 End If
                                             Case 25  'admin
-                                                Call Dialogos.DrawTextBig(iPPx - lCenter, iPPy + 30, Left(TempChar.Nombre, InStr(TempChar.Nombre, "<") - 1), RGB(ColoresPJ(TempChar.priv).r, ColoresPJ(TempChar.priv).G, ColoresPJ(TempChar.priv).B))
+                                                Call Dialogos.DrawTextBig(iPPx - lCenter, iPPy + 30, Left(TempChar.Nombre, InStr(TempChar.Nombre, "<") - 1), RGB(ColoresPJ(TempChar.priv).r, ColoresPJ(TempChar.priv).G, ColoresPJ(TempChar.priv).b))
                                                 lCenter = (frmMain.TextWidth(sClan) / 2) - 16
-                                                Call Dialogos.DrawTextBig(iPPx - lCenter, iPPy + 45, sClan, RGB(ColoresPJ(TempChar.priv).r, ColoresPJ(TempChar.priv).G, ColoresPJ(TempChar.priv).B))
+                                                Call Dialogos.DrawTextBig(iPPx - lCenter, iPPy + 45, sClan, RGB(ColoresPJ(TempChar.priv).r, ColoresPJ(TempChar.priv).G, ColoresPJ(TempChar.priv).b))
                                             Case Else 'el resto
-                                                Call Dialogos.DrawText(iPPx - lCenter, iPPy + 30, Left(TempChar.Nombre, InStr(TempChar.Nombre, "<") - 1), RGB(ColoresPJ(TempChar.priv).r, ColoresPJ(TempChar.priv).G, ColoresPJ(TempChar.priv).B))
+                                                Call Dialogos.DrawText(iPPx - lCenter, iPPy + 30, Left(TempChar.Nombre, InStr(TempChar.Nombre, "<") - 1), RGB(ColoresPJ(TempChar.priv).r, ColoresPJ(TempChar.priv).G, ColoresPJ(TempChar.priv).b))
                                                 lCenter = (frmMain.TextWidth(sClan) / 2) - 16
-                                                Call Dialogos.DrawText(iPPx - lCenter, iPPy + 45, sClan, RGB(ColoresPJ(TempChar.priv).r, ColoresPJ(TempChar.priv).G, ColoresPJ(TempChar.priv).B))
+                                                Call Dialogos.DrawText(iPPx - lCenter, iPPy + 45, sClan, RGB(ColoresPJ(TempChar.priv).r, ColoresPJ(TempChar.priv).G, ColoresPJ(TempChar.priv).b))
                                             End Select
                                         Else
                                             lCenter = (frmMain.TextWidth(TempChar.Nombre) / 2) - 16
                                             Select Case TempChar.priv
                                             Case 0
                                                 If TempChar.Criminal Then
-                                                    Call Dialogos.DrawText(iPPx - lCenter, iPPy + 30, TempChar.Nombre, RGB(ColoresPJ(50).r, ColoresPJ(50).G, ColoresPJ(50).B))
+                                                    Call Dialogos.DrawText(iPPx - lCenter, iPPy + 30, TempChar.Nombre, RGB(ColoresPJ(50).r, ColoresPJ(50).G, ColoresPJ(50).b))
                                                 Else
-                                                    Call Dialogos.DrawText(iPPx - lCenter, iPPy + 30, TempChar.Nombre, RGB(ColoresPJ(49).r, ColoresPJ(49).G, ColoresPJ(49).B))
+                                                    Call Dialogos.DrawText(iPPx - lCenter, iPPy + 30, TempChar.Nombre, RGB(ColoresPJ(49).r, ColoresPJ(49).G, ColoresPJ(49).b))
                                                 End If
                                             Case 7
-                                                Call Dialogos.DrawTextBig(iPPx - lCenter, iPPy + 30, TempChar.Nombre, RGB(ColoresPJ(TempChar.priv).r, ColoresPJ(TempChar.priv).G, ColoresPJ(TempChar.priv).B))
+                                                Call Dialogos.DrawTextBig(iPPx - lCenter, iPPy + 30, TempChar.Nombre, RGB(ColoresPJ(TempChar.priv).r, ColoresPJ(TempChar.priv).G, ColoresPJ(TempChar.priv).b))
                                             Case Else
-                                                Call Dialogos.DrawText(iPPx - lCenter, iPPy + 30, TempChar.Nombre, RGB(ColoresPJ(TempChar.priv).r, ColoresPJ(TempChar.priv).G, ColoresPJ(TempChar.priv).B))
+                                                Call Dialogos.DrawText(iPPx - lCenter, iPPy + 30, TempChar.Nombre, RGB(ColoresPJ(TempChar.priv).r, ColoresPJ(TempChar.priv).G, ColoresPJ(TempChar.priv).b))
                                             End Select
                                         End If
                                     End If
@@ -2092,12 +2090,12 @@ Sub ShowNextFrame()
     End If
 End Sub
 
-Sub CrearGrh(GrhIndex As Integer, Index As Integer)
-ReDim Preserve Grh(1 To Index) As Grh
-Grh(Index).FrameCounter = 1
-Grh(Index).GrhIndex = GrhIndex
-Grh(Index).SpeedCounter = GrhData(GrhIndex).Speed
-Grh(Index).Started = 1
+Sub CrearGrh(GrhIndex As Integer, index As Integer)
+ReDim Preserve Grh(1 To index) As Grh
+Grh(index).FrameCounter = 1
+Grh(index).GrhIndex = GrhIndex
+Grh(index).SpeedCounter = GrhData(GrhIndex).Speed
+Grh(index).Started = 1
 End Sub
 
 Sub CargarAnimsExtra()

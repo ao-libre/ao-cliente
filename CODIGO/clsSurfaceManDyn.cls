@@ -89,12 +89,12 @@ Private Sub Class_Terminate()
 'Last Modify Date: 3/06/2006
 'Clean up
 '**************************************************************
-    Dim I  As Long
+    Dim i  As Long
     
     'Destroy every surface in memory
-    For I = 0 To surfaceCount - 1
-        Set surfaceList(I).Surface = Nothing
-    Next I
+    For i = 0 To surfaceCount - 1
+        Set surfaceList(i).Surface = Nothing
+    Next i
     
     'Destroy the array
     Erase surfaceList
@@ -127,20 +127,20 @@ Private Property Get clsSurfaceManager_Surface(ByVal fileIndex As Long) As Direc
 'Last Modify Date: 3/06/2006
 'Retrieves the requested texture
 '**************************************************************
-    Dim Index As Long
+    Dim index As Long
     
     ' Search the index on the list
-    Index = BinarySearch(fileIndex)
+    index = BinarySearch(fileIndex)
     
-    If Index < 0 Then
+    If index < 0 Then
         'Not found, we have to load the file and add it in the position given by the negation of the index
-        Index = Not Index
+        index = Not index
         
-        Call LoadSurface(fileIndex, Index)
+        Call LoadSurface(fileIndex, index)
     End If
     
     'Return it
-    With surfaceList(Index)
+    With surfaceList(index)
         .lastAccess = GetTickCount
         Set clsSurfaceManager_Surface = .Surface
     End With
@@ -158,7 +158,7 @@ Private Function BinarySearch(ByVal fileIndex As Long) As Long
     Dim mid As Long
     
     min = 0
-    max = surfaceCount
+    max = surfaceCount - 1
     
     Do While min <= max
         mid = (min + max) \ 2
@@ -229,7 +229,7 @@ On Error GoTo ErrHandler
     usedBytes = usedBytes + ddsd.lHeight * ddsd.lPitch
     
     'Check if we have exceeded our allowed share of memory usage
-    While usedBytes < maxBytesToUse And surfaceCount > 0
+    While usedBytes > maxBytesToUse And surfaceCount > 0
         Call RemoveLRU
     Wend
 Exit Sub
@@ -278,15 +278,15 @@ Private Sub InsertSurface(ByRef Surface As SURFACE_ENTRY_DYN, ByVal listIndex As
 'Last Modify Date: 3/06/2006
 'Inserts the given surface in the requested position of the surface list
 '**************************************************************
-    Dim tempList() As SURFACE_ENTRY_DYN
+    Dim i As Long
     
-    'Move back the list. We do this and not a For going from back to the front
-    'since this proved to be almost 6 times as fast in our tests
-    ReDim tempList(surfaceCount - listIndex - 1) As SURFACE_ENTRY_DYN
-    CopyMemory tempList(0), surfaceList(listIndex), (surfaceCount - listIndex) * LenB(Surface)
+    'Enlarge the list
+    ReDim Preserve surfaceList(surfaceCount) As SURFACE_ENTRY_DYN
     
-    ReDim Preserve surfaceList(surfaceCount + 1) As SURFACE_ENTRY_DYN
-    CopyMemory surfaceList(listIndex + 1), tempList(0), (surfaceCount - listIndex) * LenB(Surface)
+    'Move back the list
+    For i = surfaceCount - 1 To listIndex Step -1
+        surfaceList(i + 1) = surfaceList(i)
+    Next i
     
     'Insert the new surface
     surfaceList(listIndex) = Surface
@@ -302,7 +302,7 @@ Private Sub RemoveLRU()
 'Removes the Least Recently Used surface to make some room for new ones
 '**************************************************************
     Dim LRU As Long
-    Dim I As Long
+    Dim i As Long
     Dim ddsd As DDSURFACEDESC2
     
     'Should never happen, but just in case....
@@ -312,11 +312,11 @@ Private Sub RemoveLRU()
     LRU = 0
     
     'Check out through the whole list for the least recently used
-    For I = 0 To surfaceCount - 1
-        If surfaceList(LRU).lastAccess > surfaceList(I).lastAccess Then
-            LRU = I
+    For i = 0 To surfaceCount - 1
+        If surfaceList(LRU).lastAccess > surfaceList(i).lastAccess Then
+            LRU = i
         End If
-    Next I
+    Next i
     
     'Retrieve the surface desc
     Call surfaceList(LRU).Surface.GetSurfaceDesc(ddsd)

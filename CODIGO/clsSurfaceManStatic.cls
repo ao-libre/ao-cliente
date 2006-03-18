@@ -80,12 +80,12 @@ Private Sub Class_Terminate()
 'Last Modify Date: 3/06/2006
 'Clean up
 '**************************************************************
-    Dim I  As Long
+    Dim i  As Long
     
     'Destroy every surface in memory
-    For I = 0 To surfaceCount - 1
-        Set surfaceList(I).Surface = Nothing
-    Next I
+    For i = 0 To surfaceCount - 1
+        Set surfaceList(i).Surface = Nothing
+    Next i
     
     'Destroy the array
     Erase surfaceList
@@ -111,17 +111,17 @@ Private Property Get clsSurfaceManager_Surface(ByVal fileIndex As Long) As Direc
 'Retrieves the requested texture
 '**************************************************************
 On Error GoTo ErrHandler:
-    Dim Index As Long
+    Dim index As Long
     
     ' Search the index on the list
-    Index = BinarySearch(fileIndex)
+    index = BinarySearch(fileIndex)
     
     'Return it
-    Set clsSurfaceManager_Surface = surfaceList(Index).Surface
+    Set clsSurfaceManager_Surface = surfaceList(index).Surface
 Exit Property
 
 ErrHandler:
-    If Index < 0 Then
+    If index < 0 Then
         MsgBox "No se encuentra el archivo " & CStr(fileIndex) & ".bmp. Reinstale el juego, " _
                 & "y si el problema persiste contactese con los adminsitradores", vbOKOnly Or vbCritical Or vbExclamation, "Error"
     Else
@@ -189,7 +189,7 @@ Private Function BinarySearch(ByVal fileIndex As Long) As Long
     Dim mid As Long
     
     min = 0
-    max = surfaceCount
+    max = surfaceCount - 1
     
     Do While min <= max
         mid = (min + max) \ 2

@@ -574,7 +574,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   327681
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1350,7 +1349,7 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
             If UCase(Left$(stxtbuffer, 8)) = "/PASSWD " Then
                     Dim j As String
 #If SeguridadAlkon Then
-                    j = MD5.GetMD5String(Right$(stxtbuffer, Len(stxtbuffer) - 8))
+                    j = md5.GetMD5String(Right$(stxtbuffer, Len(stxtbuffer) - 8))
 #Else
                     j = Right$(stxtbuffer, Len(stxtbuffer) - 8)
 #End If
@@ -1433,14 +1432,14 @@ Private Sub Socket1_Connect()
     
     ServerIp = Socket1.PeerAddress
     Temporal = InStr(1, ServerIp, ".")
-    Temporal1 = ((mid(ServerIp, 1, Temporal - 1) Xor &H65) And &H7F) * 16777216
-    ServerIp = mid(ServerIp, Temporal + 1, Len(ServerIp))
+    Temporal1 = ((mid$(ServerIp, 1, Temporal - 1) Xor &H65) And &H7F) * 16777216
+    ServerIp = mid$(ServerIp, Temporal + 1, Len(ServerIp))
     Temporal = InStr(1, ServerIp, ".")
-    Temporal1 = Temporal1 + (mid(ServerIp, 1, Temporal - 1) Xor &HF6) * 65536
-    ServerIp = mid(ServerIp, Temporal + 1, Len(ServerIp))
+    Temporal1 = Temporal1 + (mid$(ServerIp, 1, Temporal - 1) Xor &HF6) * 65536
+    ServerIp = mid$(ServerIp, Temporal + 1, Len(ServerIp))
     Temporal = InStr(1, ServerIp, ".")
-    Temporal1 = Temporal1 + (mid(ServerIp, 1, Temporal - 1) Xor &H4B) * 256
-    ServerIp = mid(ServerIp, Temporal + 1, Len(ServerIp)) Xor &H42
+    Temporal1 = Temporal1 + (mid$(ServerIp, 1, Temporal - 1) Xor &H4B) * 256
+    ServerIp = mid$(ServerIp, Temporal + 1, Len(ServerIp)) Xor &H42
     MixedKey = (Temporal1 + ServerIp)
     
     Second.Enabled = True
