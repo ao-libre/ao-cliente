@@ -64,7 +64,6 @@ Module=ModAreas; CODIGO\ModAreas.bas
 Class=clsSurfaceManDyn; CODIGO\clsSurfaceManDyn.cls
 Class=clsSurfaceManager; CODIGO\clsSurfaceManager.cls
 Class=clsSurfaceManStatic; CODIGO\clsSurfaceManStatic.cls
-Class=clsMD5; CODIGO\Crítico\clsMD5.cls
 IconForm="frmMain"
 Startup="Sub Main"
 HelpFile=""
