@@ -1246,17 +1246,17 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private Sub Command1_Click(Index As Integer)
+Private Sub Command1_Click(index As Integer)
 
 Call Audio.PlayWave(SND_CLICK)
 
 Dim indice
-If Index Mod 2 = 0 Then
+If index Mod 2 = 0 Then
     If Alocados > 0 Then
-        indice = Index \ 2 + 1
+        indice = index \ 2 + 1
         If indice > NUMSKILLS Then indice = NUMSKILLS
-        If UserSkills(indice) < MAXSKILLPOINTS Then
-            Text1(indice).Caption = Val(Text1(indice).Caption) + 1
+        If Val(text1(indice).Caption) < MAXSKILLPOINTS Then
+            text1(indice).Caption = Val(text1(indice).Caption) + 1
             flags(indice) = flags(indice) + 1
             Alocados = Alocados - 1
         End If
@@ -1265,16 +1265,16 @@ If Index Mod 2 = 0 Then
 Else
     If Alocados < SkillPoints Then
         
-        indice = Index \ 2 + 1
-        If Val(Text1(indice).Caption) > 0 And flags(indice) > 0 Then
-            Text1(indice).Caption = Val(Text1(indice).Caption) - 1
+        indice = index \ 2 + 1
+        If Val(text1(indice).Caption) > 0 And flags(indice) > 0 Then
+            text1(indice).Caption = Val(text1(indice).Caption) - 1
             flags(indice) = flags(indice) - 1
             Alocados = Alocados + 1
         End If
     End If
 End If
 
-Puntos.Caption = "Puntos:" & Alocados
+puntos.Caption = "Puntos:" & Alocados
 End Sub
 
 Private Sub Form_Deactivate()
@@ -1289,25 +1289,25 @@ Image1.Picture = LoadPicture(App.Path & "\Graficos\Botónok.jpg")
 'Nombres de los skills
 
 Dim l
-Dim I As Integer
-I = 1
+Dim i As Integer
+i = 1
 For Each l In Label2
-    l.Caption = SkillsNames(I)
+    l.Caption = SkillsNames(i)
     l.AutoSize = True
-    I = I + 1
+    i = i + 1
 Next
-I = 0
+i = 0
 
 'Flags para saber que skills se modificaron
 ReDim flags(1 To NUMSKILLS)
 
 
 'Cargamos el jpg correspondiente
-For I = 0 To NUMSKILLS * 2 - 1
-    If I Mod 2 = 0 Then
-        Command1(I).Picture = LoadPicture(App.Path & "\Graficos\BotónMás.jpg")
+For i = 0 To NUMSKILLS * 2 - 1
+    If i Mod 2 = 0 Then
+        command1(i).Picture = LoadPicture(App.Path & "\Graficos\BotónMás.jpg")
     Else
-        Command1(I).Picture = LoadPicture(App.Path & "\Graficos\BotónMenos.jpg")
+        command1(i).Picture = LoadPicture(App.Path & "\Graficos\BotónMenos.jpg")
     End If
 Next
 
@@ -1315,15 +1315,18 @@ Next
 End Sub
 
 Private Sub Image1_Click()
-
-Dim I As Integer
-Dim cad As String
-For I = 1 To NUMSKILLS
-    cad = cad & flags(I) & ","
-Next
-SendData "SKSE" & cad
-If Alocados = 0 Then frmMain.Label1.Visible = False
-SkillPoints = Alocados
-Unload Me
+    Dim i As Integer
+    Dim cad As String
+    
+    For i = 1 To NUMSKILLS
+        cad = cad & flags(i) & ","
+        'Actualizamos nuestros datos locales
+        UserSkills(i) = Val(text1(i).Caption)
+    Next i
+    
+    SendData "SKSE" & cad
+    If Alocados = 0 Then frmMain.Label1.Visible = False
+    SkillPoints = Alocados
+    Unload Me
 End Sub
 

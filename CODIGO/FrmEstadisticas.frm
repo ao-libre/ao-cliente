@@ -933,22 +933,10 @@ Attribute VB_Exposed = False
 'Código Postal 1900
 'Pablo Ignacio Márquez
 
-
 Option Explicit
 
 Private Sub Command1_Click()
 Unload Me
-End Sub
-
-Private Sub Form_Deactivate()
-'Me.Visible = False
-End Sub
-
-Private Sub Form_Load()
-'Dim i As Integer
-'For i = 1 To NUMATRIBUTOS
-'    Atri(i).Caption = AtributosNames(i - 1)
-'Next
 End Sub
 
 Public Sub Iniciar_Labels()

@@ -16,4 +16,6 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 11/03/2206: Implementación del ClientSetup en vez del viejo y obsoleto RenderMod. (Maraxus).
  * 11/03/2206: Se eliminaron variables viejas o mal tipadas. (Maraxus).
  * 15/03/2206: Se mejoró el sistema anticheats. (Maraxus).
- * 17/03/2206: Corregí varios bugs que impedían que uno se loguease. (Maraxus).
+ * 18/03/2206: Corregí varios bugs que impedían que uno se loguease. (Maraxus).
+ * 18/03/2206: Corregí un bug que te hacía perder puntos de skills al no actualizar los valores al asignar. (Maraxus).
+ * 18/03/2206: Corregí un bug que te permitía asignar un skill por encima de 100. (Maraxus).
