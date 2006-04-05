@@ -349,12 +349,12 @@ Public Enum TextureStatus
 End Enum
 
 '[CODE 001]:MatuX
-    Public Enum PlayLoop
-        plNone = 0
-        plLluviain = 1
-        plLluviaout = 2
-        plFogata = 3
-    End Enum
+Public Enum PlayLoop
+    plNone = 0
+    plLluviain = 1
+    plLluviaout = 2
+    plFogata = 3
+End Enum
 '[END]'
 '
 '       [END]
@@ -368,6 +368,8 @@ Private Declare Function BltEfectoNoche Lib "vbabdx" (ByRef lpDDSDest As Any, By
         ByVal pitchDst As Long, ByVal dwMode As Long) As Long
 
 #End If
+
+Private Declare Function GetWindowRect Lib "user32" (ByVal hWnd As Long, lpRect As RECT) As Long
 
 Sub CargarCabezas()
 On Error Resume Next
@@ -764,11 +766,11 @@ If UserEstado <> 1 Then Call DoPasosFx(CharIndex)
 
 'areas viejos
 If (nY < MinLimiteY) Or (nY > MaxLimiteY) Or (nX < MinLimiteX) Or (nX > MaxLimiteX) Then
+    Debug.Print UserCharIndex
     Call EraseChar(CharIndex)
 End If
 
 End Sub
-
 
 Public Sub DoFogataFx()
 If Sound Then
@@ -2056,7 +2058,17 @@ Sub ShowNextFrame()
 '***********************************************
     Static OffsetCounterX As Integer
     Static OffsetCounterY As Integer
-
+    
+    '****** Set main view rectangle ******
+    GetWindowRect DisplayFormhWnd, MainViewRect
+    
+    With MainViewRect
+        .Left = .Left + MainViewLeft
+        .Top = .Top + MainViewTop
+        .Right = .Left + MainViewWidth
+        .Bottom = .Top + MainViewHeight
+    End With
+    
     If EngineRun Then
         '****** Move screen Left and Right if needed ******
         If AddtoUserPos.X <> 0 Then

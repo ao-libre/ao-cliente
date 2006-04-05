@@ -162,7 +162,7 @@ Private Function BinarySearch(ByVal fileIndex As Long) As Long
     
     Do While min <= max
         mid = (min + max) \ 2
-        
+    
         If surfaceList(mid).fileIndex < fileIndex Then
             min = mid + 1
         ElseIf surfaceList(mid).fileIndex > fileIndex Then

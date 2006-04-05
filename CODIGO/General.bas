@@ -158,9 +158,9 @@ Sub CargarColores()
     Dim i As Long
     
     For i = 0 To 48 '49 y 50 reservados para ciudadano y criminal
-        ColoresPJ(i).r = Val(GetVar(archivoC, Str(i), "R"))
-        ColoresPJ(i).G = Val(GetVar(archivoC, Str(i), "G"))
-        ColoresPJ(i).b = Val(GetVar(archivoC, Str(i), "B"))
+        ColoresPJ(i).r = Val(GetVar(archivoC, str(i), "R"))
+        ColoresPJ(i).G = Val(GetVar(archivoC, str(i), "G"))
+        ColoresPJ(i).b = Val(GetVar(archivoC, str(i), "B"))
     Next i
         
     ColoresPJ(50).r = Val(GetVar(archivoC, "CR", "R"))
@@ -383,98 +383,25 @@ Sub CargarTip()
     frmtip.tip.Caption = Tips(N)
 End Sub
 
-'TODO : Hay formas más limpias, mantenibles y eficientes....
-'Sub MoveNorth()
-'    If Cartel Then Cartel = False
-'
-'    If LegalPos(UserPos.X, UserPos.Y - 1) Then
-'        Call SendData("M" & E_Heading.NORTH)
-'        If Not UserDescansar And Not UserMeditar And Not UserParalizado Then
-'            Call MoveCharbyHead(UserCharIndex, E_Heading.NORTH)
-'            Call MoveScreen(E_Heading.NORTH)
-'            DoFogataFx
-'        End If
-'    Else
-'        If charlist(UserCharIndex).Heading <> E_Heading.NORTH Then
-'            Call SendData("CHEA" & E_Heading.NORTH)
-'        End If
-'    End If
-'End Sub
-'
-''TODO : Hay formas más limpias, mantenibles y eficientes....
-'Sub MoveEast()
-'    If Cartel Then Cartel = False
-'
-'    If LegalPos(UserPos.X + 1, UserPos.Y) Then
-'        Call SendData("M" & E_Heading.EAST)
-'        If Not UserDescansar And Not UserMeditar And Not UserParalizado Then
-'            Call MoveCharbyHead(UserCharIndex, E_Heading.EAST)
-'            Call MoveScreen(E_Heading.EAST)
-'            Call DoFogataFx
-'        End If
-'    Else
-'        If charlist(UserCharIndex).Heading <> E_Heading.EAST Then
-'            Call SendData("CHEA" & E_Heading.EAST)
-'        End If
-'    End If
-'End Sub
-'
-''TODO : Hay formas más limpias, mantenibles y eficientes....
-'Sub MoveSouth()
-'    If Cartel Then Cartel = False
-'
-'    If LegalPos(UserPos.X, UserPos.Y + 1) Then
-'        Call SendData("M" & E_Heading.SOUTH)
-'        If Not UserDescansar And Not UserMeditar And Not UserParalizado Then
-'            MoveCharbyHead UserCharIndex, E_Heading.SOUTH
-'            MoveScreen E_Heading.SOUTH
-'            DoFogataFx
-'        End If
-'    Else
-'        If charlist(UserCharIndex).Heading <> E_Heading.SOUTH Then
-'            Call SendData("CHEA" & E_Heading.SOUTH)
-'        End If
-'    End If
-'End Sub
-'
-''TODO : Hay formas más limpias, mantenibles y eficientes....
-'Sub MoveWest()
-'    If Cartel Then Cartel = False
-'
-'    If LegalPos(UserPos.X - 1, UserPos.Y) Then
-'        Call SendData("M" & E_Heading.WEST)
-'        If Not UserDescansar And Not UserMeditar And Not UserParalizado Then
-'            MoveCharbyHead UserCharIndex, E_Heading.WEST
-'            MoveScreen E_Heading.WEST
-'            DoFogataFx
-'        End If
-'    Else
-'        If charlist(UserCharIndex).Heading <> E_Heading.WEST Then
-'            Call SendData("CHEA" & E_Heading.WEST)
-'        End If
-'    End If
-'End Sub
-
 Sub MoveTo(ByVal Direccion As E_Heading)
 '***************************************************
 'Author: Alejandro Santos (AlejoLp)
 'Last Modify Date: 06/03/2006
 ' 06/03/2006: AlejoLp - Elimine las funciones Move[NSWE] y las converti a esta
 '***************************************************
-    
     Dim LegalOk As Boolean
     
     If Cartel Then Cartel = False
     
     Select Case Direccion
-    Case E_Heading.NORTH
-        LegalOk = LegalPos(UserPos.X, UserPos.Y - 1)
-    Case E_Heading.EAST
-        LegalOk = LegalPos(UserPos.X + 1, UserPos.Y)
-    Case E_Heading.SOUTH
-        LegalOk = LegalPos(UserPos.X, UserPos.Y + 1)
-    Case E_Heading.WEST
-        LegalOk = LegalPos(UserPos.X - 1, UserPos.Y)
+        Case E_Heading.NORTH
+            LegalOk = LegalPos(UserPos.X, UserPos.Y - 1)
+        Case E_Heading.EAST
+            LegalOk = LegalPos(UserPos.X + 1, UserPos.Y)
+        Case E_Heading.SOUTH
+            LegalOk = LegalPos(UserPos.X, UserPos.Y + 1)
+        Case E_Heading.WEST
+            LegalOk = LegalPos(UserPos.X - 1, UserPos.Y)
     End Select
     
     If LegalOk Then
@@ -866,8 +793,8 @@ Dim timers(1 To 2) As Integer
 #If SeguridadAlkon Then
     'Obtener el HushMD5
     Dim fMD5HushYo As String * 32
-    fMD5HushYo = MD5.GetMD5File(App.Path & "\" & App.EXEName & ".exe")
-    Call MD5.MD5Reset
+    fMD5HushYo = md5.GetMD5File(App.Path & "\" & App.EXEName & ".exe")
+    Call md5.MD5Reset
     MD5HushYo = txtOffset(hexMd52Asc(fMD5HushYo), 53)
 #Else
     MD5HushYo = "0123456789abcdef"  'We aren't using a real MD5
@@ -877,8 +804,8 @@ Dim timers(1 To 2) As Integer
     If FileExist(App.Path & "\init\Inicio.con", vbNormal) Then
         Config_Inicio = LeerGameIni()
     End If
-
-
+    
+    
     If FileExist(App.Path & "\init\ao.dat", vbArchive) Then
         Call LoadClientSetup
         
@@ -1066,7 +993,7 @@ UserMap = 1
     Set Audio = Nothing
     Set Inventario = Nothing
 #If SeguridadAlkon Then
-    Set MD5 = Nothing
+    Set md5 = Nothing
 #End If
     
     Call UnloadAllForms

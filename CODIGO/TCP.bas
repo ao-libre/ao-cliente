@@ -129,7 +129,7 @@ Sub HandleData(ByVal Rdata As String)
             UserNavegando = False
             frmConnect.Visible = True
             Call Audio.StopWave
-            frmMain.IsPlaying = plNone
+            frmMain.IsPlaying = PlayLoop.plNone
             bRain = False
             bFogata = False
             SkillPoints = 0
@@ -338,7 +338,6 @@ Sub HandleData(ByVal Rdata As String)
             End If
 
             Call MoveCharbyPos(CharIndex, X, Y)
-            'Call MoveCharbyPos(CharIndex, Asc(Mid$(Rdata, 3, 1)), Asc(Mid$(Rdata, 4, 1)))
             
             Call RefreshAllChars
             Exit Sub
@@ -447,7 +446,7 @@ Sub HandleData(ByVal Rdata As String)
                             'Call StopSound("lluviaout.MP3")
                             '[CODE 001]:MatuX'
                                 Audio.StopWave
-                                frmMain.IsPlaying = plNone
+                                frmMain.IsPlaying = PlayLoop.plNone
                             '[END]'
                         End If
                     End If
@@ -703,7 +702,7 @@ Sub HandleData(ByVal Rdata As String)
             '[END]'
             Exit Sub
         Case "CA"
-            CambioDeArea Asc(mid(sData, 3, 1)), Asc(mid(sData, 4, 1))
+            CambioDeArea Asc(mid$(sData, 3, 1)), Asc(mid$(sData, 4, 1))
             Exit Sub
     End Select
 
@@ -747,14 +746,14 @@ Sub HandleData(ByVal Rdata As String)
                         'Call PlaySound("lluviainend.MP3")
                         '[CODE 001]:MatuX'
                         Call Audio.PlayWave("lluviainend.wav", False)
-                        frmMain.IsPlaying = plNone
+                        frmMain.IsPlaying = PlayLoop.plNone
                         '[END]'
                    Else
                         'Call StopSound("lluviaout.MP3")
                         'Call PlaySound("lluviaoutend.MP3")
                         '[CODE 001]:MatuX'
                         Call Audio.PlayWave("lluviaoutend.wav", False)
-                        frmMain.IsPlaying = plNone
+                        frmMain.IsPlaying = PlayLoop.plNone
                         '[END]'
                     End If
                End If
@@ -1317,25 +1316,22 @@ End Sub
 
 Sub Login(ByVal valcode As Integer)
     If EstadoLogin = Normal Then
-        SendData ("OLOGIN" & UserName & "," & UserPassword & "," & App.Major & "." & App.Minor & "." & App.Revision & "," & valcode & MD5HushYo & "," & Versiones(1) & "," & Versiones(2) & "," & Versiones(3) & "," & Versiones(4) & "," & Versiones(5) & "," & Versiones(6) & "," & Versiones(7))
+        SendData ("OLOGIN" & UserName & "," & UserPassword & "," & App.Major & "." & App.Minor & "." & App.Revision & "," & Versiones(1) & "," & Versiones(2) & "," & Versiones(3) & "," & Versiones(4) & "," & Versiones(5) & "," & Versiones(6) & "," & Versiones(7) & "," & valcode & MD5HushYo)
     ElseIf EstadoLogin = CrearNuevoPj Then
         SendData ("NLOGIN" & UserName & "," & UserPassword _
-        & "," & 0 & "," & 0 & "," _
-        & App.Major & "." & App.Minor & "." & App.Revision & _
-        "," & UserRaza & "," & UserSexo & "," & UserClase & "," & _
-        UserAtributos(1) & "," & UserAtributos(2) & "," & UserAtributos(3) _
-        & "," & UserAtributos(4) & "," & UserAtributos(5) _
-         & "," & UserSkills(1) & "," & UserSkills(2) _
-         & "," & UserSkills(3) & "," & UserSkills(4) _
-         & "," & UserSkills(5) & "," & UserSkills(6) _
-         & "," & UserSkills(7) & "," & UserSkills(8) _
-         & "," & UserSkills(9) & "," & UserSkills(10) _
-         & "," & UserSkills(11) & "," & UserSkills(12) _
-         & "," & UserSkills(13) & "," & UserSkills(14) _
-         & "," & UserSkills(15) & "," & UserSkills(16) _
-         & "," & UserSkills(17) & "," & UserSkills(18) _
-         & "," & UserSkills(19) & "," & UserSkills(20) _
-         & "," & UserSkills(21) & "," & UserEmail & "," _
-         & UserHogar & "," & Versiones(1) & "," & Versiones(2) & "," & Versiones(3) & "," & Versiones(4) & "," & Versiones(5) & "," & Versiones(6) & "," & Versiones(7) & "," & valcode & MD5HushYo)
+                & "," & App.Major & "." & App.Minor & "." & App.Revision _
+                & "," & UserRaza & "," & UserSexo & "," & UserClase _
+                & "," & UserSkills(1) & "," & UserSkills(2) _
+                & "," & UserSkills(3) & "," & UserSkills(4) _
+                & "," & UserSkills(5) & "," & UserSkills(6) _
+                & "," & UserSkills(7) & "," & UserSkills(8) _
+                & "," & UserSkills(9) & "," & UserSkills(10) _
+                & "," & UserSkills(11) & "," & UserSkills(12) _
+                & "," & UserSkills(13) & "," & UserSkills(14) _
+                & "," & UserSkills(15) & "," & UserSkills(16) _
+                & "," & UserSkills(17) & "," & UserSkills(18) _
+                & "," & UserSkills(19) & "," & UserSkills(20) _
+                & "," & UserSkills(21) & "," & UserEmail _
+                & "," & UserHogar & "," & Versiones(1) & "," & Versiones(2) & "," & Versiones(3) & "," & Versiones(4) & "," & Versiones(5) & "," & Versiones(6) & "," & Versiones(7) & "," & valcode & MD5HushYo)
     End If
 End Sub

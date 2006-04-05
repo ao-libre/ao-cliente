@@ -201,19 +201,19 @@ Option Explicit
 
 Public Sub CargarLst()
 
-Dim I As Integer
+Dim i As Integer
 
 lst_servers.Clear
 
 If ServersRecibidos Then
     Call WriteVar(App.Path & "\init\sinfo.dat", "INIT", "Cant", UBound(ServersLst))
-    For I = 1 To UBound(ServersLst)
-        Call WriteVar(App.Path & "\init\sinfo.dat", "S" & I, "Desc", ServersLst(I).desc)
-        Call WriteVar(App.Path & "\init\sinfo.dat", "S" & I, "IP", ServersLst(I).Ip)
-        Call WriteVar(App.Path & "\init\sinfo.dat", "S" & I, "PJ", Str(ServersLst(I).Puerto))
-        Call WriteVar(App.Path & "\init\sinfo.dat", "S" & I, "P2", Str(ServersLst(I).PassRecPort))
-        lst_servers.AddItem ServersLst(I).Ip & ":" & ServersLst(I).Puerto & " - Desc:" & ServersLst(I).desc
-    Next I
+    For i = 1 To UBound(ServersLst)
+        Call WriteVar(App.Path & "\init\sinfo.dat", "S" & i, "Desc", ServersLst(i).desc)
+        Call WriteVar(App.Path & "\init\sinfo.dat", "S" & i, "IP", ServersLst(i).Ip)
+        Call WriteVar(App.Path & "\init\sinfo.dat", "S" & i, "PJ", str(ServersLst(i).Puerto))
+        Call WriteVar(App.Path & "\init\sinfo.dat", "S" & i, "P2", str(ServersLst(i).PassRecPort))
+        lst_servers.AddItem ServersLst(i).Ip & ":" & ServersLst(i).Puerto & " - Desc:" & ServersLst(i).desc
+    Next i
 End If
 
 End Sub
@@ -334,7 +334,7 @@ End Sub
 
 
 
-Private Sub Image1_Click(Index As Integer)
+Private Sub Image1_Click(index As Integer)
 
 
 If ServersRecibidos Then
@@ -358,7 +358,7 @@ PuertoDelServidor = PortTxt
 
 Call Audio.PlayWave(SND_CLICK)
 
-Select Case Index
+Select Case index
     Case 0
         
         If Musica Then

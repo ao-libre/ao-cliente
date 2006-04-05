@@ -191,7 +191,6 @@ End If
 End Sub
 
 Private Sub Image1_Click(index As Integer)
-On Error Resume Next
 
 Call Audio.PlayWave(SND_CLICK)
 
@@ -216,7 +215,8 @@ Select Case index
         Dim aux As String
         aux = PasswordTxt.Text
 #If SeguridadAlkon Then
-        UserPassword = MD5.GetMD5String(aux)
+        UserPassword = md5.GetMD5String(aux)
+        Call md5.MD5Reset
 #Else
         UserPassword = aux
 #End If
@@ -225,7 +225,7 @@ Select Case index
             EstadoLogin = Normal
             Me.MousePointer = 11
 #If UsarWrench = 1 Then
-            frmMain.Socket1.HostName = CurServerIp
+            frmMain.Socket1.HostAddress = CurServerIp
             frmMain.Socket1.RemotePort = CurServerPort
             frmMain.Socket1.Connect
 #Else

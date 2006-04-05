@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "richtx32.ocx"
 Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.OCX"
 Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.OCX"
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
@@ -572,7 +572,7 @@ Begin VB.Form frmMain
       Width           =   8175
       _ExtentX        =   14420
       _ExtentY        =   2646
-      _Version        =   327681
+      _Version        =   393217
       BackColor       =   0
       ReadOnly        =   -1  'True
       ScrollBars      =   2
@@ -1350,6 +1350,7 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
                     Dim j As String
 #If SeguridadAlkon Then
                     j = md5.GetMD5String(Right$(stxtbuffer, Len(stxtbuffer) - 8))
+                    Call md5.MD5Reset
 #Else
                     j = Right$(stxtbuffer, Len(stxtbuffer) - 8)
 #End If
@@ -1694,7 +1695,6 @@ Private Sub Winsock1_Close()
     
     frmConnect.MousePointer = vbNormal
     
-    If frmPasswd.Visible = True Then frmPasswd.Visible = False
     If frmPasswdSinPadrinos.Visible = True Then frmPasswdSinPadrinos.Visible = False
     frmCrearPersonaje.Visible = False
     frmConnect.Visible = True
