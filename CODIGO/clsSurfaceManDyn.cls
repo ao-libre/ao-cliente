@@ -278,6 +278,7 @@ Private Sub InsertSurface(ByRef Surface As SURFACE_ENTRY_DYN, ByVal listIndex As
 'Last Modify Date: 3/06/2006
 'Inserts the given surface in the requested position of the surface list
 '**************************************************************
+On Error GoTo ErrHandler
     Dim i As Long
     
     'Enlarge the list
@@ -293,6 +294,13 @@ Private Sub InsertSurface(ByRef Surface As SURFACE_ENTRY_DYN, ByVal listIndex As
     
     'Increase surface count
     surfaceCount = surfaceCount + 1
+Exit Sub
+
+ErrHandler:
+    MsgBox "Un error irreparable ocurrió al insertar un nuevo gráfico en la lista." & vbCrLf _
+            & "El cliente se cerrará" & vbCrLf _
+            & "Intente usar el cliente no dinámico"
+    End
 End Sub
 
 Private Sub RemoveLRU()

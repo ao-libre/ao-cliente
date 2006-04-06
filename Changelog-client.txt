@@ -24,3 +24,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 1/04/2006: Corregí el bug que no actualizaba la posición del rect donde debía renderizar. (Maraxus).
  * 1/04/2006: El ValCode y MD5 se llevaron al final de OLOGIN para evitar problemas si el MD5 tenía comas. (Maraxus).
  * 1/04/2006: Eliminé el head y body del mensaje NLOGIN (eran ceros). (Maraxus).
+ * 6/04/2006: Agregué un erro manager al insertar elementos a la lista de surfaces dinámica (a algunos OS no le gusta y deben usar el estático). (Maraxus).
