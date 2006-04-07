@@ -220,7 +220,7 @@ Public Sub SetItem(ByVal slot As Byte, ByVal eOBJIndex As Integer, ByVal eAmount
     Call DrawInventory
 End Sub
 
-Public Function ClickItem(ByVal X As Long, ByVal Y As Long) As Long
+Private Function ClickItem(ByVal X As Long, ByVal Y As Long) As Long
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04
@@ -240,6 +240,8 @@ Public Function ClickItem(ByVal X As Long, ByVal Y As Long) As Long
         'Make sure slot isn't empty
         If UserInventory(TempItem).GrhIndex Then
             ClickItem = TempItem
+        Else
+            ClickItem = 0
         End If
     End If
 End Function
@@ -254,8 +256,6 @@ Private Sub DrawInventory()
     Dim SrcRect As RECT
     Dim TempRect As RECT
     Dim destRect As RECT
-    
-    If InvSelectedItem = 0 Then InvSelectedItem = ClickItem(1, 1)
     
     With TempRect
         .Bottom = TilePixelHeight
@@ -366,6 +366,8 @@ End Sub
     
     InvSurface.SetFont Ifnt
 '\TODO
+    
+    InvSelectedItem = ClickItem(1, 1)   'If there is anything there we select the top left item
     
 #If ConMenuesConextuales = 1 Then
     Set ItemMenu = PopUpMenu

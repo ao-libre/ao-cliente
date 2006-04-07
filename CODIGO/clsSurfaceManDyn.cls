@@ -59,6 +59,9 @@ End Type
 Private surfaceList() As SURFACE_ENTRY_DYN
 Private surfaceCount As Long
 
+Private surfaceIndexes() As Long
+Private surfaceIndexCount As Long
+
 Private DirectDraw As DirectDraw7
 
 Private maxBytesToUse As Long
@@ -80,6 +83,7 @@ Private Sub Class_Initialize()
     usedBytes = 0
     surfaceCount = 0
     ReDim surfaceList(0) As SURFACE_ENTRY_DYN
+    ReDim surfaceIndexes(0) As Long
     maxBytesToUse = MIN_MEMORY_TO_USE
 End Sub
 
@@ -96,8 +100,9 @@ Private Sub Class_Terminate()
         Set surfaceList(i).Surface = Nothing
     Next i
     
-    'Destroy the array
+    'Destroy the arrays
     Erase surfaceList
+    Erase surfaceIndexes
 End Sub
 
 Private Sub clsSurfaceManager_Initialize(ByRef DD As DirectDraw7, ByVal videoMemory As Boolean, ByVal graphicPath As String, Optional ByVal maxMemoryUsageInMb As Long = -1)
@@ -140,7 +145,7 @@ Private Property Get clsSurfaceManager_Surface(ByVal fileIndex As Long) As Direc
     End If
     
     'Return it
-    With surfaceList(index)
+    With surfaceList(surfaceIndexes(index))
         .lastAccess = GetTickCount
         Set clsSurfaceManager_Surface = .Surface
     End With
@@ -158,14 +163,14 @@ Private Function BinarySearch(ByVal fileIndex As Long) As Long
     Dim mid As Long
     
     min = 0
-    max = surfaceCount - 1
+    max = surfaceIndexCount - 1
     
     Do While min <= max
         mid = (min + max) \ 2
     
-        If surfaceList(mid).fileIndex < fileIndex Then
+        If surfaceList(surfaceIndexes(mid)).fileIndex < fileIndex Then
             min = mid + 1
-        ElseIf surfaceList(mid).fileIndex > fileIndex Then
+        ElseIf surfaceList(surfaceIndexes(mid)).fileIndex > fileIndex Then
             max = mid - 1
         Else
             'We found it
@@ -281,19 +286,39 @@ Private Sub InsertSurface(ByRef Surface As SURFACE_ENTRY_DYN, ByVal listIndex As
 On Error GoTo ErrHandler
     Dim i As Long
     
-    'Enlarge the list
-    ReDim Preserve surfaceList(surfaceCount) As SURFACE_ENTRY_DYN
-    
-    'Move back the list
-    For i = surfaceCount - 1 To listIndex Step -1
-        surfaceList(i + 1) = surfaceList(i)
+    'Search for an empty spot in the list
+    For i = 0 To surfaceCount - 1
+        If surfaceList(i).Surface Is Nothing Then Exit For
     Next i
     
-    'Insert the new surface
-    surfaceList(listIndex) = Surface
+    'Enlarge the list if no empty spot was found
+    If i >= surfaceCount Then
+        ReDim Preserve surfaceList(surfaceCount) As SURFACE_ENTRY_DYN
+        
+        'Increase surface count
+        surfaceCount = surfaceCount + 1
+    End If
     
-    'Increase surface count
-    surfaceCount = surfaceCount + 1
+    'Insert the new surface
+    surfaceList(i) = Surface
+    
+    'Resize the list
+    ReDim Preserve surfaceIndexes(surfaceIndexCount) As Long
+    
+    'Update the index list
+    If surfaceIndexCount > listIndex Then
+        'Move back the list - Copying this way is up to 6 times faster than a For
+        Dim tempList() As Long
+        ReDim tempList(surfaceIndexCount - listIndex) As Long
+        
+        CopyMemory tempList(0), surfaceIndexes(listIndex), (surfaceIndexCount - listIndex) * 4
+        surfaceIndexes(listIndex) = i
+        CopyMemory surfaceIndexes(listIndex + 1), tempList(0), (surfaceIndexCount - listIndex) * 4
+    Else
+        surfaceIndexes(listIndex) = i
+    End If
+    
+    surfaceIndexCount = surfaceIndexCount + 1
 Exit Sub
 
 ErrHandler:
@@ -320,25 +345,31 @@ Private Sub RemoveLRU()
     LRU = 0
     
     'Check out through the whole list for the least recently used
-    For i = 0 To surfaceCount - 1
-        If surfaceList(LRU).lastAccess > surfaceList(i).lastAccess Then
+    For i = 0 To surfaceIndexCount - 1
+        If surfaceList(surfaceIndexes(LRU)).lastAccess > surfaceList(surfaceIndexes(i)).lastAccess Then
             LRU = i
         End If
     Next i
     
     'Retrieve the surface desc
-    Call surfaceList(LRU).Surface.GetSurfaceDesc(ddsd)
+    Call surfaceList(surfaceIndexes(LRU)).Surface.GetSurfaceDesc(ddsd)
     
     'Remove it
-    Set surfaceList(LRU).Surface = Nothing
+    Set surfaceList(surfaceIndexes(LRU)).Surface = Nothing
     
     'Move back the list (if necessary)
-    If LRU < surfaceCount - 1 Then
-        CopyMemory surfaceList(LRU), surfaceList(LRU + 1), (surfaceCount - LRU - 1) * LenB(surfaceList(LRU))
+    If LRU < surfaceIndexCount - 1 Then
+        CopyMemory surfaceIndexes(LRU), surfaceIndexes(LRU + 1), (surfaceIndexCount - LRU - 1) * 4
     End If
     
     'Decrease surface count
     surfaceCount = surfaceCount - 1
+    
+    'Resize the list
+    ReDim Preserve surfaceIndexes(surfaceIndexCount - 1) As Long
+    
+    'Decrease index count
+    surfaceIndexCount = surfaceIndexCount - 1
     
     'Update the used bytes
     usedBytes = usedBytes - ddsd.lHeight * ddsd.lPitch
