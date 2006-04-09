@@ -215,6 +215,9 @@ On Error GoTo ErrHandler
     With newSurface
         .fileIndex = fileIndex
         
+        'Set last access time (if we didn't we would reckon this texture as the one lru)
+        .lastAccess = GetTickCount
+        
         'Load surface
         Set .Surface = DirectDraw.CreateSurfaceFromFile(filePath, ddsd)
         

@@ -27,3 +27,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 6/04/2006: Agregué un erro manager al insertar elementos a la lista de surfaces dinámica (a algunos OS no le gusta y deben usar el estático). (Maraxus).
  * 6/04/2006: Corregí un bug que permitía utilizar el item de arriba a la izquierda al hacer doble click en un slot vacío. (Maraxus).
  * 6/04/2006: Corregí los accesos inválidos con el AO Dinámico en OS como XP. (Maraxus).
+ * 6/04/2006: Corregí un bug en el AO dinámico que producía una pérdida de performance al llenarse la memoria. (Maraxus).
