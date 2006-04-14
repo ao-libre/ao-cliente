@@ -918,6 +918,9 @@ UserMap = 1
         'Sólo dibujamos si la ventana no está minimizada
         If frmMain.WindowState <> 1 Then
             Call ShowNextFrame
+            
+            'Play ambient sounds
+            Call RenderSounds
         End If
     
 'TODO : Porque el pausado de 20 ms???
@@ -937,10 +940,10 @@ UserMap = 1
             FramesPerSecCounter = 0
             lFrameTimer = GetTickCount
         End If
-        ''Limitamos las FPS a 20 (con el nuevo engine 60 es un número mucho mejor)
-        If 50 - GetTickCount + lFrameLimiter > 0 Then
-            Sleep 50 - GetTickCount + lFrameLimiter
-        End If
+        'Limitamos las FPS a 18 (con el nuevo engine 60 es un número mucho mejor)
+        While 55 + lFrameLimiter - GetTickCount > 0
+            Sleep 5
+        Wend
         
         'Esto nos permite calcular cuanto tarda en dibujar un cuadro
         lFrameLimiter = GetTickCount

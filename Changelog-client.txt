@@ -28,3 +28,9 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 6/04/2006: Corregí un bug que permitía utilizar el item de arriba a la izquierda al hacer doble click en un slot vacío. (Maraxus).
  * 6/04/2006: Corregí los accesos inválidos con el AO Dinámico en OS como XP. (Maraxus).
  * 6/04/2006: Corregí un bug en el AO dinámico que producía una pérdida de performance al llenarse la memoria. (Maraxus).
+ * 12/04/2006: Corregí numerosos bugs con elengine de sonido, y un problema de performance con el inventario gráfico. (Maraxus).
+ * 12/04/2006: Corregí bugs varios a lo largo del código. (Maraxus).
+ * 14/04/2006: Los RMs no se escuchan al caminar. (Maraxus).
+ * 14/04/2006: Corregí bugs varios. (Maraxus).
+ * 14/04/2006: Mejoré el engine de sonido. (Maraxus).
+ * 14/04/2006: Al activar la música reproduce el midi correcto para el mapa y no el 2 que estaba por default. (Maraxus).

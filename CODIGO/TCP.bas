@@ -328,13 +328,9 @@ Sub HandleData(ByVal Rdata As String)
             ' CONSTANTES TODO: Que es .priv ?
             
             If Sound Then
-                'If Not UserNavegando And Val(ReadField(4, Rdata, 44)) <> 0 Then
-                        If charlist(CharIndex).priv <> 1 And charlist(CharIndex).priv <> 2 And charlist(CharIndex).priv <> 3 Then
-                            Call DoPasosFx(CharIndex)
-                        End If
-                'Else
-                        'FX navegando
-                'End If
+                If charlist(CharIndex).priv = 0 Then
+                    Call DoPasosFx(CharIndex)
+                End If
             End If
 
             Call MoveCharbyPos(CharIndex, X, Y)
@@ -371,13 +367,9 @@ Sub HandleData(ByVal Rdata As String)
             ' CONSTANTES TODO: Que es .priv ?
             
             If Sound Then
-                'If Not UserNavegando And Val(ReadField(4, Rdata, 44)) <> 0 Then
-                        If charlist(CharIndex).priv <> 1 And charlist(CharIndex).priv <> 2 And charlist(CharIndex).priv <> 3 Then
-                            Call DoPasosFx(CharIndex)
-                        End If
-                'Else
-                        'FX navegando
-                'End If
+                If charlist(CharIndex).priv = 0 Then
+                    Call DoPasosFx(CharIndex)
+                End If
             End If
             
             Call MoveCharbyPos(CharIndex, X, Y)
@@ -442,12 +434,9 @@ Sub HandleData(ByVal Rdata As String)
                     Call SwitchMap(UserMap)
                     If bLluvia(UserMap) = 0 Then
                         If bRain Then
-                            'Call StopSound("lluviain.MP3")
-                            'Call StopSound("lluviaout.MP3")
-                            '[CODE 001]:MatuX'
-                                Audio.StopWave
-                                frmMain.IsPlaying = PlayLoop.plNone
-                            '[END]'
+                            Call Audio.StopWave(RainBufferIndex)
+                            RainBufferIndex = 0
+                            frmMain.IsPlaying = PlayLoop.plNone
                         End If
                     End If
 '                Else
@@ -621,13 +610,9 @@ Sub HandleData(ByVal Rdata As String)
             End If
             
             If Sound Then
-                'If Not UserNavegando And Val(ReadField(4, Rdata, 44)) <> 0 Then
-                        If charlist(CharIndex).priv <> 1 And charlist(CharIndex).priv <> 2 And charlist(CharIndex).priv <> 3 Then
-                            Call DoPasosFx(CharIndex)
-                        End If
-                'Else
-                        'FX navegando
-                'End If
+                If charlist(CharIndex).priv = 0 Then
+                    Call DoPasosFx(CharIndex)
+                End If
             End If
             
             Call MoveCharbyPos(CharIndex, ReadField(2, Rdata, 44), ReadField(3, Rdata, 44))
@@ -673,11 +658,17 @@ Sub HandleData(ByVal Rdata As String)
             MapData(Val(ReadField(1, Rdata, 44)), Val(ReadField(2, Rdata, 44))).Blocked = Val(ReadField(3, Rdata, 44))
             Exit Sub
         Case "TM"           ' >>>>> Play un MIDI :: TM
+            Rdata = Right$(Rdata, Len(Rdata) - 2)
+            currentMidi = Val(ReadField(1, Rdata, 45))
+            
             If Musica Then
-                Rdata = Right$(Rdata, Len(Rdata) - 2)
-                If Val(ReadField(1, Rdata, 45)) <> 0 Then
-                    'Stop_Midi
-                    Call Audio.PlayMIDI(Val(ReadField(1, Rdata, 45)) & ".mid", Val(ReadField(2, Rdata, 45)))
+                If currentMidi <> 0 Then
+                    Rdata = Right$(Rdata, Len(Rdata) - Len(ReadField(1, Rdata, 45)))
+                    If Len(Rdata) > 0 Then
+                        Call Audio.PlayMIDI(CStr(currentMidi) & ".mid", Val(Right$(Rdata, Len(Rdata) - 1)))
+                    Else
+                        Call Audio.PlayMIDI(CStr(currentMidi) & ".mid")
+                    End If
                 End If
             End If
             Exit Sub
@@ -696,7 +687,7 @@ Sub HandleData(ByVal Rdata As String)
             '[CODE 001]:MatuX
                 If frmMain.IsPlaying <> plFogata Then
                     Audio.StopWave
-                    Call Audio.PlayWave("fuego.wav", True)
+                    Call Audio.PlayWave("fuego.wav", LoopStyle.Enabled)
                     frmMain.IsPlaying = plFogata
                 End If
             '[END]'
@@ -740,26 +731,20 @@ Sub HandleData(ByVal Rdata As String)
             If Not bRain Then
                 bRain = True
             Else
-               If bLluvia(UserMap) <> 0 Then
+                If bLluvia(UserMap) <> 0 Then
+                    'Stop playing the rain sound
+                    Call Audio.StopWave(RainBufferIndex)
+                    RainBufferIndex = 0
                     If bTecho Then
-                        'Call StopSound("lluviain.MP3")
-                        'Call PlaySound("lluviainend.MP3")
-                        '[CODE 001]:MatuX'
-                        Call Audio.PlayWave("lluviainend.wav", False)
-                        frmMain.IsPlaying = PlayLoop.plNone
-                        '[END]'
-                   Else
-                        'Call StopSound("lluviaout.MP3")
-                        'Call PlaySound("lluviaoutend.MP3")
-                        '[CODE 001]:MatuX'
-                        Call Audio.PlayWave("lluviaoutend.wav", False)
-                        frmMain.IsPlaying = PlayLoop.plNone
-                        '[END]'
+                        Call Audio.PlayWave("lluviainend.wav", LoopStyle.Disabled)
+                    Else
+                        Call Audio.PlayWave("lluviaoutend.wav", LoopStyle.Disabled)
                     End If
-               End If
-               bRain = False
+                    frmMain.IsPlaying = PlayLoop.plNone
+                End If
+                bRain = False
             End If
-                        
+            
             Exit Sub
         Case "QDL"                  ' >>>>> Quitar Dialogo :: QDL
             Rdata = Right$(Rdata, Len(Rdata) - 3)

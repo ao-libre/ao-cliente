@@ -323,7 +323,6 @@ Public Declare Function BitBlt Lib "gdi32" (ByVal hDestDC As Long, ByVal X As Lo
 '       [CODE 000]: MatuX
 '
 Public bRain        As Boolean 'está raineando?
-Public bRainST      As Boolean
 Public bTecho       As Boolean 'hay techo?
 Public brstTick     As Long
 
@@ -779,7 +778,7 @@ If Sound Then
         If Not bFogata Then Audio.StopWave
     Else
         bFogata = HayFogata()
-        If bFogata Then Call Audio.PlayWave("fuego.wav", True)
+        If bFogata Then Call Audio.PlayWave("fuego.wav", LoopStyle.Enabled)
     End If
 End If
 End Sub
@@ -808,16 +807,16 @@ Sub DoPasosFx(ByVal CharIndex As Integer)
 Static pie As Boolean
 
 If Not UserNavegando Then
-        If Not charlist(CharIndex).muerto And EstaPCarea(CharIndex) Then
-            charlist(CharIndex).pie = Not charlist(CharIndex).pie
-            If charlist(CharIndex).pie Then
-                Call Audio.PlayWave(SND_PASOS1)
-            Else
-                Call Audio.PlayWave(SND_PASOS2)
-            End If
+    If Not charlist(CharIndex).muerto And EstaPCarea(CharIndex) Then
+        charlist(CharIndex).pie = Not charlist(CharIndex).pie
+        If charlist(CharIndex).pie Then
+            Call Audio.PlayWave(SND_PASOS1)
+        Else
+            Call Audio.PlayWave(SND_PASOS2)
         End If
+    End If
 Else
-        Call Audio.PlayWave(SND_NAVEGANDO)
+    Call Audio.PlayWave(SND_NAVEGANDO)
 End If
 
 End Sub
@@ -1819,7 +1818,7 @@ If Not bTecho Then
 End If
 
 If bLluvia(UserMap) = 1 Then
-    If bRain Or bRainST Then
+    If bRain Then
                 'Figure out what frame to draw
                 If llTick < DirectX.TickCount - 50 Then
                     iFrameIndex = iFrameIndex + 1
@@ -1883,19 +1882,19 @@ Public Function RenderSounds()
     If bLluvia(UserMap) = 1 Then
         If bRain Then
             If bTecho Then
-                If frmMain.IsPlaying <> plLluviain Then
-                    Call Audio.PlayWave("lluviain.wav", True)
-                    frmMain.IsPlaying = plLluviain
+                If frmMain.IsPlaying <> PlayLoop.plLluviain Then
+                    If RainBufferIndex Then _
+                        Call Audio.StopWave(RainBufferIndex)
+                    RainBufferIndex = Audio.PlayWave("lluviain.wav", LoopStyle.Enabled)
+                    frmMain.IsPlaying = PlayLoop.plLluviain
                 End If
-                'Call StopSound("lluviaout.MP3")
-                'Call PlaySound("lluviain.MP3", True)
             Else
-                If frmMain.IsPlaying <> plLluviaout Then
-                    Call Audio.PlayWave("lluviaout.wav", True)
-                    frmMain.IsPlaying = plLluviaout
+                If frmMain.IsPlaying <> PlayLoop.plLluviaout Then
+                    If RainBufferIndex Then _
+                        Call Audio.StopWave(RainBufferIndex)
+                    RainBufferIndex = Audio.PlayWave("lluviaout.wav", LoopStyle.Enabled)
+                    frmMain.IsPlaying = PlayLoop.plLluviaout
                 End If
-                'Call StopSound("lluviain.MP3")
-                'Call PlaySound("lluviaout.MP3", True)
             End If
         End If
     End If

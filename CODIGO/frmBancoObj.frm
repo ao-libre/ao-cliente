@@ -290,24 +290,24 @@ If Image1(1).Tag = 0 Then
 End If
 End Sub
 
-Private Sub Image1_Click(Index As Integer)
+Private Sub Image1_Click(index As Integer)
 
 Call Audio.PlayWave(SND_CLICK)
 
-If List1(Index).List(List1(Index).ListIndex) = "Nada" Or _
-   List1(Index).ListIndex < 0 Then Exit Sub
+If List1(index).List(List1(index).listIndex) = "Nada" Or _
+   List1(index).listIndex < 0 Then Exit Sub
 
-Select Case Index
+Select Case index
     Case 0
         frmBancoObj.List1(0).SetFocus
-        LastIndex1 = List1(0).ListIndex
+        LastIndex1 = List1(0).listIndex
         
-        SendData ("RETI" & "," & List1(0).ListIndex + 1 & "," & cantidad.Text)
-                
+        SendData ("RETI" & "," & List1(0).listIndex + 1 & "," & cantidad.Text)
+        
    Case 1
-        LastIndex2 = List1(1).ListIndex
-        If Not Inventario.Equipped(List1(1).ListIndex + 1) = 0 Then
-            SendData ("DEPO" & "," & List1(1).ListIndex + 1 & "," & cantidad.Text)
+        LastIndex2 = List1(1).listIndex
+        If Not Inventario.Equipped(List1(1).listIndex + 1) Then
+            SendData ("DEPO" & "," & List1(1).listIndex + 1 & "," & cantidad.Text)
         Else
             AddtoRichTextBox frmMain.RecTxt, "No podes depositar el item porque lo estas usando.", 2, 51, 223, 1, 1
             Exit Sub
@@ -321,8 +321,8 @@ List1(1).Clear
 NPCInvDim = 0
 End Sub
 
-Private Sub Image1_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
-Select Case Index
+Private Sub Image1_MouseMove(index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Select Case index
     Case 0
         If Image1(0).Tag = 1 Then
                 Image1(0).Picture = LoadPicture(App.Path & "\Graficos\BotónComprarApretado.jpg")
@@ -342,7 +342,7 @@ Select Case Index
 End Select
 End Sub
 
-Private Sub list1_Click(Index As Integer)
+Private Sub list1_Click(index As Integer)
 Dim SR As RECT, DR As RECT
 
 SR.Left = 0
@@ -355,37 +355,37 @@ DR.Top = 0
 DR.Right = 32
 DR.Bottom = 32
 
-Select Case Index
+Select Case index
     Case 0
-        Label1(0).Caption = UserBancoInventory(List1(0).ListIndex + 1).Name
-        Label1(2).Caption = UserBancoInventory(List1(0).ListIndex + 1).Amount
-        Select Case UserBancoInventory(List1(0).ListIndex + 1).OBJType
+        Label1(0).Caption = UserBancoInventory(List1(0).listIndex + 1).Name
+        Label1(2).Caption = UserBancoInventory(List1(0).listIndex + 1).Amount
+        Select Case UserBancoInventory(List1(0).listIndex + 1).OBJType
             Case 2
-                Label1(3).Caption = "Max Golpe:" & UserBancoInventory(List1(0).ListIndex + 1).MaxHit
-                Label1(4).Caption = "Min Golpe:" & UserBancoInventory(List1(0).ListIndex + 1).MinHit
+                Label1(3).Caption = "Max Golpe:" & UserBancoInventory(List1(0).listIndex + 1).MaxHit
+                Label1(4).Caption = "Min Golpe:" & UserBancoInventory(List1(0).listIndex + 1).MinHit
                 Label1(3).Visible = True
                 Label1(4).Visible = True
             Case 3
                 Label1(3).Visible = False
-                Label1(4).Caption = "Defensa:" & UserBancoInventory(List1(0).ListIndex + 1).Def
+                Label1(4).Caption = "Defensa:" & UserBancoInventory(List1(0).listIndex + 1).Def
                 Label1(4).Visible = True
         End Select
-        Call DrawGrhtoHdc(Picture1.hWnd, Picture1.Hdc, UserBancoInventory(List1(0).ListIndex + 1).GrhIndex, SR, DR)
+        Call DrawGrhtoHdc(Picture1.hWnd, Picture1.Hdc, UserBancoInventory(List1(0).listIndex + 1).GrhIndex, SR, DR)
     Case 1
-        Label1(0).Caption = Inventario.ItemName(List1(1).ListIndex + 1)
-        Label1(2).Caption = Inventario.Amount(List1(1).ListIndex + 1)
-        Select Case Inventario.OBJType(List1(1).ListIndex + 1)
+        Label1(0).Caption = Inventario.ItemName(List1(1).listIndex + 1)
+        Label1(2).Caption = Inventario.Amount(List1(1).listIndex + 1)
+        Select Case Inventario.OBJType(List1(1).listIndex + 1)
             Case 2
-                Label1(3).Caption = "Max Golpe:" & Inventario.MaxHit(List1(1).ListIndex + 1)
-                Label1(4).Caption = "Min Golpe:" & Inventario.MinHit(List1(1).ListIndex + 1)
+                Label1(3).Caption = "Max Golpe:" & Inventario.MaxHit(List1(1).listIndex + 1)
+                Label1(4).Caption = "Min Golpe:" & Inventario.MinHit(List1(1).listIndex + 1)
                 Label1(3).Visible = True
                 Label1(4).Visible = True
             Case 3
                 Label1(3).Visible = False
-                Label1(4).Caption = "Defensa:" & Inventario.Def(List1(1).ListIndex + 1)
+                Label1(4).Caption = "Defensa:" & Inventario.Def(List1(1).listIndex + 1)
                 Label1(4).Visible = True
         End Select
-        Call DrawGrhtoHdc(Picture1.hWnd, Picture1.Hdc, Inventario.GrhIndex(List1(1).ListIndex + 1), SR, DR)
+        Call DrawGrhtoHdc(Picture1.hWnd, Picture1.Hdc, Inventario.GrhIndex(List1(1).listIndex + 1), SR, DR)
 End Select
 Picture1.Refresh
 
@@ -393,7 +393,7 @@ End Sub
 '<-------------------------NUEVO-------------------------->
 '<-------------------------NUEVO-------------------------->
 '<-------------------------NUEVO-------------------------->
-Private Sub List1_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub List1_MouseMove(index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
 If Image1(0).Tag = 0 Then
     Image1(0).Picture = LoadPicture(App.Path & "\Graficos\BotónComprar.jpg")
     Image1(0).Tag = 1

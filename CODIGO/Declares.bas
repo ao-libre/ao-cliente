@@ -43,7 +43,7 @@ Public Inventario As New clsGrapchicalInventory
 Public SurfaceDB As clsSurfaceManager   'No va new porque es unainterfaz, el new se pone al decidir que clase de objeto es
 
 #If SeguridadAlkon Then
-Public MD5 As New clsMD5
+Public md5 As New clsMD5
 #End If
 
 'Sonidos
@@ -77,6 +77,8 @@ Public Type tServerInfo
     PassRecPort As Integer
 End Type
 
+Public currentMidi As Long
+
 Public ServersLst() As tServerInfo
 Public ServersRecibidos As Boolean
 
@@ -91,6 +93,7 @@ Public UserEstupido As Boolean
 
 Public NoRes As Boolean 'no cambiar la resolucion
 
+Public RainBufferIndex As Long
 
 Public Const bCabeza = 1
 Public Const bPiernaIzquierda = 2

@@ -169,11 +169,11 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private Sub Command1_Click(Index As Integer)
+Private Sub Command1_Click(index As Integer)
 
 Call Audio.PlayWave(SND_CLICK)
 
-Select Case Index
+Select Case index
     Case 0
         If Musica Then
             Musica = False
@@ -182,7 +182,7 @@ Select Case Index
         Else
             Musica = True
             Command1(0).Caption = "Musica Activada"
-            Call Audio.PlayMIDI("2.mid")
+            Call Audio.PlayMIDI(CStr(currentMidi) & ".mid")
         End If
     Case 1
     
@@ -214,16 +214,6 @@ Private Sub Form_Load()
         Command1(1).Caption = "Sonidos Desactivados"
     End If
 End Sub
-
-
-Function RandomNumber(ByVal LowerBound As Variant, ByVal UpperBound As Variant) As Single
-
-Randomize Timer
-
-RandomNumber = (UpperBound - LowerBound + 1) * Rnd + LowerBound
-
-End Function
-
 
 Private Sub optConsola_Click()
     DialogosClanes.Activo = False

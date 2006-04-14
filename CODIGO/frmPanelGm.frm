@@ -266,13 +266,13 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Private Sub cmdAccion_Click(Index As Integer)
+Private Sub cmdAccion_Click(index As Integer)
 Dim Ok As Boolean, Tmp As String, Tmp2 As String
 Dim Nick As String
 
 Nick = cboListaUsus.Text
 
-Select Case Index
+Select Case index
 Case 0 '/ECHAR nick
     Call SendData("/ECHAR " & Nick)
 Case 1 '/ban motivo@nick
@@ -317,8 +317,10 @@ Case 14 '/ip2nick ip
 Case 15 '/penas
     Call SendData("/PENAS " & cboListaUsus.Text)
 Case 16 'Ban X ip
+    Tmp = InputBox("Ingrese el motivo del ban", "Ban X IP")
     If MsgBox("Esta seguro que desea banear el (ip o personaje) " & Nick & "Por IP?", vbYesNo) = vbYes Then
-    Call SendData("/BANIP " & Nick)
+        Nick = Replace(Nick, " ", "+")
+        Call SendData("/BANIP " & Nick & Tmp)
     End If
 Case 17 ' MUESTA BOBEDA
     Call SendData("/BOV " & Nick)

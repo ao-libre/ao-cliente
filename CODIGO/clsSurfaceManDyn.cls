@@ -82,6 +82,7 @@ Private Sub Class_Initialize()
 '**************************************************************
     usedBytes = 0
     surfaceCount = 0
+    surfaceIndexCount = 0
     ReDim surfaceList(0) As SURFACE_ENTRY_DYN
     ReDim surfaceIndexes(0) As Long
     maxBytesToUse = MIN_MEMORY_TO_USE
@@ -295,7 +296,7 @@ On Error GoTo ErrHandler
     Next i
     
     'Enlarge the list if no empty spot was found
-    If i >= surfaceCount Then
+    If i = surfaceCount Then
         ReDim Preserve surfaceList(surfaceCount) As SURFACE_ENTRY_DYN
         
         'Increase surface count
@@ -318,6 +319,7 @@ On Error GoTo ErrHandler
         surfaceIndexes(listIndex) = i
         CopyMemory surfaceIndexes(listIndex + 1), tempList(0), (surfaceIndexCount - listIndex) * 4
     Else
+        'We are inserting at the bottom of the list
         surfaceIndexes(listIndex) = i
     End If
     
@@ -364,9 +366,6 @@ Private Sub RemoveLRU()
     If LRU < surfaceIndexCount - 1 Then
         CopyMemory surfaceIndexes(LRU), surfaceIndexes(LRU + 1), (surfaceIndexCount - LRU - 1) * 4
     End If
-    
-    'Decrease surface count
-    surfaceCount = surfaceCount - 1
     
     'Resize the list
     ReDim Preserve surfaceIndexes(surfaceIndexCount - 1) As Long

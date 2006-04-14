@@ -20,16 +20,27 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private Const NumSoundBuffers As Byte = 7
+Private Const NumSoundBuffers As Byte = 20
 
 'WAVE Sounds
-Dim DirectSound As DirectSound
-Dim DSBuffers(1 To NumSoundBuffers) As DirectSoundBuffer
-Dim LastSoundBufferUsed As Integer
+Private Type SoundBuffer
+    FileName As String
+    looping As Boolean
+    Buffer As DirectSoundBuffer
+End Type
 
-Dim SoundPlaying As Boolean
+Public Enum LoopStyle
+    Default = 0     'If wave is in memory use it's looping setting, otherwise false
+    Disabled = 1    'Never loop
+    Enabled = 2     'Loop
+End Enum
+
+Dim DirectSound As DirectSound
+Dim DSBuffers(1 To NumSoundBuffers) As SoundBuffer
 
 Dim SoundPath As String
+
+Dim SndVolume As Long   'Sound volume
 
 'Music
 Dim Performance As DirectMusicPerformance
@@ -47,8 +58,6 @@ Private Sub Class_Initialize()
 'Last Modification: 16/03/04
 '
 '***************************************************
-
-
 End Sub
 
 Private Sub Class_Terminate()
@@ -62,8 +71,8 @@ On Local Error Resume Next
     
     'Stop every channel being used and destroy the buffer
     For loopc = 1 To NumSoundBuffers
-        Call DSBuffers(loopc).Stop
-        Set DSBuffers(loopc) = Nothing
+        Call DSBuffers(loopc).Buffer.Stop
+        Set DSBuffers(loopc).Buffer = Nothing
     Next loopc
     
     'Stop music
@@ -90,11 +99,13 @@ On Error GoTo ErrHandler
     'Initialize DirectSound
     Set DirectSound = DX.DirectSoundCreate("")
     
-    DirectSound.SetCooperativeLevel hWnd, DSSCL_PRIORITY
-    LastSoundBufferUsed = 0
+    DirectSound.SetCooperativeLevel DisplayFormhWnd, DSSCL_PRIORITY
     
     'Set sound path
     SoundPath = sound_path
+    
+    'Set default volume
+    SndVolume = 0
     
     'Initialize DirectMusic
     Music = InitializedirectMusic(DX, hWnd)
@@ -130,50 +141,102 @@ Exit Function
 ErrHandler:
 End Function
 
-Public Function PlayWave(Optional ByVal FileName As String = "", Optional ByVal LoopSound As Boolean = False) As Boolean
+Public Function PlayWave(ByVal FileName As String, Optional ByVal LoopSound As LoopStyle = LoopStyle.Default) As Long
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 16/03/04
-'Loads a new wave to memory and starts playing it
+'Last Modification: 10/04/06
+'Loads a new wave to memory (if it isn't already loaded) and starts playing it
+'Returns the index in which the sound is playing
 '***************************************************
 On Error GoTo ErrHandler
-    If FileName <> "" Then
-        If Not LoadWave(FileName) Then Exit Function
-    Else
-        If DSBuffers(LastSoundBufferUsed) Is Nothing Then Exit Function
-    End If
+    Dim bufferIndex As Long
     
-    If LoopSound Then
-        DSBuffers(LastSoundBufferUsed).Play DSBPLAY_LOOPING
-    Else
-        DSBuffers(LastSoundBufferUsed).Play DSBPLAY_DEFAULT
-    End If
-    SoundPlaying = True
+    'Get the buffer index were wave was loaded
+    bufferIndex = LoadWave(FileName, LoopSound)
+    If bufferIndex = 0 Then Exit Function   'If an error ocurred abort
     
-    PlayWave = True
+    With DSBuffers(bufferIndex)
+        If .looping Then
+            .Buffer.Play DSBPLAY_LOOPING
+        Else
+            .Buffer.Play DSBPLAY_DEFAULT
+        End If
+        
+        'Apply volume
+        Call .Buffer.SetVolume(SndVolume)
+    End With
+    
+    PlayWave = bufferIndex
 Exit Function
 
 ErrHandler:
 End Function
 
-Private Function LoadWave(ByVal FileName As String) As Boolean
+Private Function LoadWave(ByVal FileName As String, ByVal looping As LoopStyle) As Long
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 16/03/04
-'loads a new wave into memory
+'Last Modification: 10/04/06
+'Loads a new wave into memory (if it's not already loaded) and returns
+'the buffer index
 '***************************************************
 On Error GoTo ErrHandler
     Dim bufferDesc As DSBUFFERDESC
     Dim waveFormat As WAVEFORMATEX
+    Dim i As Long
+    
+    FileName = UCase$(FileName)
     
     If Not FileExist(SoundPath & FileName, vbArchive) Then _
         Exit Function
     
-    LastSoundBufferUsed = LastSoundBufferUsed + 1
-    If LastSoundBufferUsed > NumSoundBuffers Then
-        LastSoundBufferUsed = 1
+    'Check if the buffer is in memory and not playing
+    For i = 1 To NumSoundBuffers
+        If DSBuffers(i).FileName = FileName Then
+            If DSBuffers(i).Buffer.GetStatus = 0 Or DSBuffers(i).Buffer.GetStatus = DSBSTATUS_BUFFERLOST Then
+                'Found it!!! We just play this one :)
+                LoadWave = i
+                
+                'Set looping if needed
+                If looping <> LoopStyle.Default Then DSBuffers(i).looping = (looping = LoopStyle.Enabled)
+                
+                Exit Function
+            End If
+        End If
+    Next i
+    
+    'Not in memory, search for an empty buffer
+    For i = 1 To NumSoundBuffers
+        If DSBuffers(i).Buffer Is Nothing Then
+            Exit For
+        End If
+    Next i
+    
+    'No empty buffers?? Search for one not being played and use that slot
+    If i > NumSoundBuffers Then
+        For i = 1 To NumSoundBuffers
+            If DSBuffers(i).Buffer.GetStatus = DSBSTATUS_BUFFERLOST Or DSBuffers(i).Buffer.GetStatus = 0 Then
+                
+                Exit For
+            End If
+        Next i
     End If
     
+    'Still no free buffers?? Get the first non-looping sound
+    If i > NumSoundBuffers Then
+        For i = 1 To NumSoundBuffers
+            If Not DSBuffers(i).Buffer.GetStatus And DSBSTATUS_LOOPING Then
+                Exit For
+            End If
+        Next i
+    End If
+    
+    'If every sound is looping, just ignore new sound unless it's looping too (in which case we set it at the first slot by default)
+    If i > NumSoundBuffers Then
+        If Not looping Then Exit Function
+        i = 1
+    End If
+    
+    'Create new sound
     bufferDesc.lFlags = DSBCAPS_CTRLFREQUENCY Or DSBCAPS_CTRLPAN Or DSBCAPS_CTRLVOLUME Or DSBCAPS_STATIC
     
     waveFormat.nFormatTag = WAVE_FORMAT_PCM
@@ -183,30 +246,56 @@ On Error GoTo ErrHandler
     waveFormat.nBlockAlign = waveFormat.nBitsPerSample / 8 * waveFormat.nChannels
     waveFormat.lAvgBytesPerSec = waveFormat.lSamplesPerSec * waveFormat.nBlockAlign
     
-    Set DSBuffers(LastSoundBufferUsed) = DirectSound.CreateSoundBufferFromFile(SoundPath & FileName, bufferDesc, waveFormat)
+    With DSBuffers(i)
+        Set .Buffer = Nothing   'Get rid of any previous data
+        
+        .FileName = FileName
+        .looping = (looping = LoopStyle.Enabled)
+        
+        Set .Buffer = DirectSound.CreateSoundBufferFromFile(SoundPath & FileName, bufferDesc, waveFormat)
+    End With
     
-    LoadWave = True
+    LoadWave = i
 Exit Function
 
 ErrHandler:
 End Function
 
-Public Sub StopWave()
+Public Sub StopWave(Optional ByVal bufferIndex As Long = 0)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 16/03/04
-'Stops the current sound
+'Stops the sound in the given buffer index, or every sound if
+'index is invalid
 '***************************************************
-    If SoundPlaying Then DSBuffers(LastSoundBufferUsed).Stop
+    If bufferIndex > 0 And bufferIndex <= NumSoundBuffers Then
+        If DSBuffers(bufferIndex).Buffer.GetStatus And DSBSTATUS_PLAYING Then
+            Call DSBuffers(bufferIndex).Buffer.Stop
+        End If
+    Else
+        Dim i As Long
+        For i = 1 To NumSoundBuffers
+            If DSBuffers(bufferIndex).Buffer.GetStatus <> 0 And DSBuffers(bufferIndex).Buffer.GetStatus <> DSBSTATUS_BUFFERLOST Then
+                Call DSBuffers(i).Buffer.Stop
+            End If
+        Next i
+    End If
 End Sub
 
 Public Property Get PlayingSound() As Boolean
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 16/03/04
-'
+'Returns true if there is at least one sound playing
 '***************************************************
-    PlayingSound = SoundPlaying
+    Dim i As Long
+    
+    For i = 1 To NumSoundBuffers
+        If DSBuffers(i).Buffer.GetStatus And DSBSTATUS_PLAYING Then
+            PlayingSound = True
+            Exit Property
+        End If
+    Next i
 End Property
 
 Public Property Let SoundVolume(ByVal Volume As Long)
@@ -215,7 +304,15 @@ Public Property Let SoundVolume(ByVal Volume As Long)
 'Last Modification: 16/03/04
 'Sets the sound's volume
 '***************************************************
-    If SoundPlaying Then DSBuffers(LastSoundBufferUsed).SetVolume Volume
+    Dim i As Long
+    
+    For i = 1 To NumSoundBuffers
+        If DSBuffers(i).Buffer.GetStatus And DSBSTATUS_PLAYING Then
+            Call DSBuffers(i).Buffer.SetVolume(Volume)
+        End If
+    Next i
+    
+    SndVolume = Volume
 End Property
 
 Public Property Get SoundVolume() As Long
@@ -224,7 +321,7 @@ Public Property Get SoundVolume() As Long
 'Last Modification: 16/03/04
 'Sets the music's volume
 '***************************************************
-    If SoundPlaying Then SoundVolume = DSBuffers(LastSoundBufferUsed).GetVolume()
+    SoundVolume = SndVolume
 End Property
 
 Public Function PlayMIDI(Optional ByVal file As String = "", Optional ByVal Loops As Long = -1) As Boolean
