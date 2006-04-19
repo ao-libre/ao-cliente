@@ -47,7 +47,6 @@ Public bFogata As Boolean
 Public bLluvia() As Byte ' Array para determinar si
 'debemos mostrar la animacion de la lluvia
 
-Private lFrameLimiter As Long
 Public lFrameTimer As Long
 Public sHKeys() As String
 
@@ -799,7 +798,7 @@ Dim timers(1 To 2) As Integer
 #Else
     MD5HushYo = "0123456789abcdef"  'We aren't using a real MD5
 #End If
-    
+    Debug.Print fMD5HushYo
     'Cargamos el archivo de configuracion inicial
     If FileExist(App.Path & "\init\Inicio.con", vbNormal) Then
         Config_Inicio = LeerGameIni()
@@ -912,17 +911,16 @@ UserMap = 1
     PrimeraVez = True
     prgRun = True
     pausa = False
-    lFrameLimiter = GetTickCount
     
     Do While prgRun
         'Sólo dibujamos si la ventana no está minimizada
-        If frmMain.WindowState <> 1 Then
+        If frmMain.WindowState <> 1 And frmMain.Visible Then
             Call ShowNextFrame
             
             'Play ambient sounds
             Call RenderSounds
         End If
-    
+        
 'TODO : Porque el pausado de 20 ms???
         If GetTickCount - LastTime > 20 Then
             If Not pausa And frmMain.Visible And Not frmForo.Visible And Not frmComerciar.Visible And Not frmComerciarUsu.Visible And Not frmBancoObj.Visible Then
@@ -930,7 +928,12 @@ UserMap = 1
                 LastTime = GetTickCount
             End If
         End If
-
+        
+        'Limitamos los FPS a 18 (con el nuevo engine 60 es un número mucho mejor)
+        While (GetTickCount - lFrameTimer) \ 56 < FramesPerSecCounter
+            Sleep 5
+        Wend
+        
         'FPS Counter - mostramos las FPS
         If GetTickCount - lFrameTimer >= 1000 Then
             FramesPerSec = FramesPerSecCounter
@@ -940,13 +943,6 @@ UserMap = 1
             FramesPerSecCounter = 0
             lFrameTimer = GetTickCount
         End If
-        'Limitamos las FPS a 18 (con el nuevo engine 60 es un número mucho mejor)
-        While 55 + lFrameLimiter - GetTickCount > 0
-            Sleep 5
-        Wend
-        
-        'Esto nos permite calcular cuanto tarda en dibujar un cuadro
-        lFrameLimiter = GetTickCount
         
 'TODO : Sería mejor comparar el tiempo desde la última vez que se hizo hasta el actual SOLO cuando se precisa. Además evitás el corte de intervalos con 2 golpes seguidos.
         'Sistema de timers renovado:
@@ -966,6 +962,10 @@ UserMap = 1
             End If
         Next loopc
         ulttick = GetTickCount
+        
+#If SeguridadAlkon Then
+        Call CheckSecurity
+#End If
         
         DoEvents
     Loop

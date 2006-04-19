@@ -268,6 +268,9 @@ Private Sub DrawInventory()
     InventoryWindow.Cls
     
     For loopc = InventoryOffset * (InventoryWindow.ScaleWidth \ TilePixelWidth) + 1 To UBound(UserInventory)
+        'Clear the slot area
+        Call InvSurface.BltColorFill(TempRect, InventoryWindow.BackColor)
+        
         If UserInventory(loopc).GrhIndex Then
             'Get source rect
             With SrcRect
@@ -294,10 +297,10 @@ Private Sub DrawInventory()
                 InvSurface.setDrawStyle DrawStyleConstants.vbDot
                 InvSurface.DrawBox 0, 0, TilePixelWidth, TilePixelHeight
             End If
-            
-            'Render the item to the Inventory Window
-            InvSurface.BltToDC InventoryWindow.Hdc, TempRect, destRect
         End If
+        
+        'Render the item to the Inventory Window
+        Call InvSurface.BltToDC(InventoryWindow.Hdc, TempRect, destRect)
         
         With destRect
             'Check if we have reached the right end of the inventory picturebox
@@ -345,6 +348,9 @@ Private Sub DrawInventorySlot(ByVal slot As Integer)
         .Right = .Left + TilePixelWidth
     End With
     
+    'Clear the slot area
+    Call InvSurface.BltColorFill(TempRect, InventoryWindow.BackColor)
+    
     If UserInventory(slot).GrhIndex Then
         'Get source rect
         With SrcRect
@@ -371,9 +377,6 @@ Private Sub DrawInventorySlot(ByVal slot As Integer)
             InvSurface.setDrawStyle DrawStyleConstants.vbDot
             InvSurface.DrawBox 0, 0, TilePixelWidth, TilePixelHeight
         End If
-    Else
-        'Clear the slot area
-        Call InvSurface.BltColorFill(TempRect, InventoryWindow.BackColor)
     End If
     
     'Render the item to the Inventory Window
@@ -469,18 +472,19 @@ Private Sub InventoryWindow_MouseUp(Button As Integer, Shift As Integer, X As Si
 'Implements the mouse up event of the inventory picture box
 'Check outs which item was clicked
 '***************************************************
-#If ConMenuesConextuales = 1 Then
     'Store previously selected item
     Dim prevSelItem As Long
     
     prevSelItem = InvSelectedItem
-#End If
 
     'Get the currently clickced item
     InvSelectedItem = ClickItem(CInt(X), CInt(Y))
     
-    'Update inventory
-    DrawInventory
+    'Update needed inventory slots
+    If prevSelItem <> InvSelectedItem Then
+        If prevSelItem <> 0 And prevSelItem <> FLAGORO Then Call DrawInventorySlot(prevSelItem)
+        If InvSelectedItem Then Call DrawInventorySlot(InvSelectedItem)
+    End If
     
 #If ConMenuesConextuales = 1 Then
     'If it was a right click on the same item we had selected before, show popup menu

@@ -20,7 +20,7 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private Const NumSoundBuffers As Byte = 20
+Private Const NumSoundBuffers As Byte = 30
 
 'WAVE Sounds
 Private Type SoundBuffer
@@ -275,8 +275,10 @@ Public Sub StopWave(Optional ByVal bufferIndex As Long = 0)
     Else
         Dim i As Long
         For i = 1 To NumSoundBuffers
-            If DSBuffers(bufferIndex).Buffer.GetStatus <> 0 And DSBuffers(bufferIndex).Buffer.GetStatus <> DSBSTATUS_BUFFERLOST Then
-                Call DSBuffers(i).Buffer.Stop
+            If Not DSBuffers(i).Buffer Is Nothing Then
+                If DSBuffers(i).Buffer.GetStatus <> 0 And DSBuffers(i).Buffer.GetStatus <> DSBSTATUS_BUFFERLOST Then
+                    Call DSBuffers(i).Buffer.Stop
+                End If
             End If
         Next i
     End If

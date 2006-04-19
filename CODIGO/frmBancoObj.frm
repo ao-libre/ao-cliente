@@ -365,10 +365,13 @@ Select Case index
                 Label1(4).Caption = "Min Golpe:" & UserBancoInventory(List1(0).listIndex + 1).MinHit
                 Label1(3).Visible = True
                 Label1(4).Visible = True
-            Case 3
+            Case 3, 17
                 Label1(3).Visible = False
                 Label1(4).Caption = "Defensa:" & UserBancoInventory(List1(0).listIndex + 1).Def
                 Label1(4).Visible = True
+            Case Else
+                Label1(3).Visible = False
+                Label1(4).Visible = False
         End Select
         Call DrawGrhtoHdc(Picture1.hWnd, Picture1.Hdc, UserBancoInventory(List1(0).listIndex + 1).GrhIndex, SR, DR)
     Case 1
@@ -380,10 +383,13 @@ Select Case index
                 Label1(4).Caption = "Min Golpe:" & Inventario.MinHit(List1(1).listIndex + 1)
                 Label1(3).Visible = True
                 Label1(4).Visible = True
-            Case 3
+            Case 3, 17
                 Label1(3).Visible = False
                 Label1(4).Caption = "Defensa:" & Inventario.Def(List1(1).listIndex + 1)
                 Label1(4).Visible = True
+            Case Else
+                Label1(3).Visible = False
+                Label1(4).Visible = False
         End Select
         Call DrawGrhtoHdc(Picture1.hWnd, Picture1.Hdc, Inventario.GrhIndex(List1(1).listIndex + 1), SR, DR)
 End Select

@@ -593,7 +593,7 @@ Begin VB.Form frmMain
       BorderStyle     =   1  'Fixed Single
       Height          =   510
       Left            =   9300
-      Picture         =   "frmMain.frx":120D
+      Picture         =   "frmMain.frx":120E
       Stretch         =   -1  'True
       Top             =   8100
       Visible         =   0   'False
@@ -603,7 +603,7 @@ Begin VB.Form frmMain
       BorderStyle     =   1  'Fixed Single
       Height          =   510
       Left            =   8790
-      Picture         =   "frmMain.frx":247F
+      Picture         =   "frmMain.frx":2480
       Stretch         =   -1  'True
       Top             =   8100
       Visible         =   0   'False
@@ -626,7 +626,7 @@ Begin VB.Form frmMain
       BorderStyle     =   1  'Fixed Single
       Height          =   510
       Left            =   8280
-      Picture         =   "frmMain.frx":3291
+      Picture         =   "frmMain.frx":3292
       Stretch         =   -1  'True
       Top             =   8100
       Width           =   510
@@ -1271,7 +1271,9 @@ End Sub
 Private Sub picInv_DblClick()
     If frmCarp.Visible Or frmHerrero.Visible Then Exit Sub
     
-    If Inventario.SelectedItem <> 0 Then SendData "USA" & Inventario.SelectedItem
+    If Inventario.SelectedItem <> 0 Then
+        Call SendData("USA" & Inventario.SelectedItem)
+    End If
 End Sub
 
 Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
@@ -1447,24 +1449,24 @@ Private Sub Socket1_Connect()
     Second.Enabled = True
     
     'If frmCrearPersonaje.Visible Then
-    If EstadoLogin = CrearNuevoPj Then
+    If EstadoLogin = E_MODO.CrearNuevoPj Then
         Call SendData("gIvEmEvAlcOde")
 #If SegudidadAlkon Then
         Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
 #End If
     'ElseIf Not frmRecuperar.Visible Then
-    ElseIf EstadoLogin = Normal Then
+    ElseIf EstadoLogin = E_MODO.Normal Then
         Call SendData("gIvEmEvAlcOde")
 #If SegudidadAlkon Then
         Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
 #End If
-    ElseIf EstadoLogin = Dados Then
+    ElseIf EstadoLogin = E_MODO.Dados Then
         Call SendData("gIvEmEvAlcOde")
 #If SegudidadAlkon Then
         Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
 #End If
     'Else
-    ElseIf EstadoLogin = RecuperarPass Then
+    ElseIf EstadoLogin = E_MODO.RecuperarPass Then
         Dim cmd As String
         cmd = "PASSRECO" & frmRecuperar.txtNombre.Text & "~" & frmRecuperar.txtCorreo
         frmMain.Socket1.Write cmd, Len(cmd)
@@ -1742,30 +1744,30 @@ Private Sub Winsock1_Connect()
     
     ServerIp = Winsock1.RemoteHostIP
     Temporal = InStr(1, ServerIp, ".")
-    Temporal1 = ((mid(ServerIp, 1, Temporal - 1) Xor &H65) And &H7F) * 16777216
-    ServerIp = mid(ServerIp, Temporal + 1, Len(ServerIp))
+    Temporal1 = ((mid$(ServerIp, 1, Temporal - 1) Xor &H65) And &H7F) * 16777216
+    ServerIp = mid$(ServerIp, Temporal + 1, Len(ServerIp))
     Temporal = InStr(1, ServerIp, ".")
-    Temporal1 = Temporal1 + (mid(ServerIp, 1, Temporal - 1) Xor &HF6) * 65536
-    ServerIp = mid(ServerIp, Temporal + 1, Len(ServerIp))
+    Temporal1 = Temporal1 + (mid$(ServerIp, 1, Temporal - 1) Xor &HF6) * 65536
+    ServerIp = mid$(ServerIp, Temporal + 1, Len(ServerIp))
     Temporal = InStr(1, ServerIp, ".")
-    Temporal1 = Temporal1 + (mid(ServerIp, 1, Temporal - 1) Xor &H4B) * 256
-    ServerIp = mid(ServerIp, Temporal + 1, Len(ServerIp)) Xor &H42
+    Temporal1 = Temporal1 + (mid$(ServerIp, 1, Temporal - 1) Xor &H4B) * 256
+    ServerIp = mid$(ServerIp, Temporal + 1, Len(ServerIp)) Xor &H42
     MixedKey = (Temporal1 + ServerIp)
     
     Second.Enabled = True
     
     'If frmCrearPersonaje.Visible Then
-    If EstadoLogin = CrearNuevoPj Then
+    If EstadoLogin = E_MODO.CrearNuevoPj Then
         Call SendData("gIvEmEvAlcOde")
     'ElseIf Not frmRecuperar.Visible Then
-    ElseIf EstadoLogin = Normal Then
+    ElseIf EstadoLogin = E_MODO.Normal Then
         Call SendData("gIvEmEvAlcOde")
-    ElseIf EstadoLogin = Dados Then
+    ElseIf EstadoLogin = E_MODO.Dados Then
         Call SendData("gIvEmEvAlcOde")
     'Else
-    ElseIf EstadoLogin = RecuperarPass Then
-        Dim cmd$
-        cmd$ = "PASSRECO" & frmRecuperar.txtNombre.Text & "~" & frmRecuperar.txtCorreo
+    ElseIf EstadoLogin = E_MODO.RecuperarPass Then
+        Dim cmd As String
+        cmd = "PASSRECO" & frmRecuperar.txtNombre.Text & "~" & frmRecuperar.txtCorreo
         'frmMain.Socket1.Write cmd$, Len(cmd$)
         'Call SendData(cmd$)
     End If

@@ -89,10 +89,10 @@ Sub HandleData(ByVal Rdata As String)
             UserDescansar = False
             Nombres = True
             If frmCrearPersonaje.Visible Then
-                   Unload frmPasswdSinPadrinos
-                   Unload frmCrearPersonaje
-                   Unload frmConnect
-                   frmMain.Show
+                Unload frmPasswdSinPadrinos
+                Unload frmCrearPersonaje
+                Unload frmConnect
+                frmMain.Show
             End If
             Call SetConnected
             'Mostramos el Tip
@@ -1265,10 +1265,15 @@ Sub HandleData(ByVal Rdata As String)
     
 End Sub
 
-
-
-
 Sub SendData(ByVal sdData As String)
+
+    'No enviamos nada si no estamos conectados
+#If UsarWrench = 1 Then
+    If Not frmMain.Socket1.Connected Then Exit Sub
+#Else
+    If frmMain.Winsock1.State <> sckConnected Then Exit Sub
+#End If
+
     Dim AuxCmd As String
     AuxCmd = UCase$(Left$(sdData, 5))
     
