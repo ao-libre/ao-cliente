@@ -463,6 +463,7 @@ Sub HandleData(ByVal Rdata As String)
             UserPos.Y = CInt(ReadField(2, Rdata, 44))
             MapData(UserPos.X, UserPos.Y).CharIndex = UserCharIndex
             charlist(UserCharIndex).Pos = UserPos
+            frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.X & "," & UserPos.Y & ")"
             Exit Sub
         
         Case "N2" ' <<--- Npc nos impacto (Ahorramos ancho de banda)
@@ -571,6 +572,7 @@ Sub HandleData(ByVal Rdata As String)
             Rdata = Right$(Rdata, Len(Rdata) - 2)
             UserCharIndex = Val(Rdata)
             UserPos = charlist(UserCharIndex).Pos
+            frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.X & "," & UserPos.Y & ")"
             Exit Sub
         Case "CC"              ' >>>>> Crear un Personaje :: CC
             Rdata = Right$(Rdata, Len(Rdata) - 2)

@@ -36,3 +36,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 14/04/2006: Al activar la música reproduce el midi correcto para el mapa y no el 2 que estaba por default. (Maraxus).
  * 19/04/2006: La bóveda ahora muestra los datos correctamente. (Maraxus).
  * 19/04/2006: Se corrigió un rt 9 en el inventario gráfico al tener el oro como item elegido. (Maraxus).
+ * 19/04/2006: Las coords del char se muestran corerctametne al loguear y al apretar la L. (Maraxus).
