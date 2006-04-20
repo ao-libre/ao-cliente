@@ -327,10 +327,8 @@ Sub HandleData(ByVal Rdata As String)
             
             ' CONSTANTES TODO: Que es .priv ?
             
-            If Sound Then
-                If charlist(CharIndex).priv = 0 Then
-                    Call DoPasosFx(CharIndex)
-                End If
+            If charlist(CharIndex).priv = 0 Then
+                Call DoPasosFx(CharIndex)
             End If
 
             Call MoveCharbyPos(CharIndex, X, Y)
@@ -366,10 +364,8 @@ Sub HandleData(ByVal Rdata As String)
             
             ' CONSTANTES TODO: Que es .priv ?
             
-            If Sound Then
-                If charlist(CharIndex).priv = 0 Then
-                    Call DoPasosFx(CharIndex)
-                End If
+            If charlist(CharIndex).priv = 0 Then
+                Call DoPasosFx(CharIndex)
             End If
             
             Call MoveCharbyPos(CharIndex, X, Y)
@@ -611,10 +607,8 @@ Sub HandleData(ByVal Rdata As String)
                 charlist(CharIndex).FxLoopTimes = 0
             End If
             
-            If Sound Then
-                If charlist(CharIndex).priv = 0 Then
-                    Call DoPasosFx(CharIndex)
-                End If
+            If charlist(CharIndex).priv = 0 Then
+                Call DoPasosFx(CharIndex)
             End If
             
             Call MoveCharbyPos(CharIndex, ReadField(2, Rdata, 44), ReadField(3, Rdata, 44))
@@ -733,7 +727,7 @@ Sub HandleData(ByVal Rdata As String)
             If Not bRain Then
                 bRain = True
             Else
-                If bLluvia(UserMap) <> 0 Then
+                If bLluvia(UserMap) <> 0 And Sound Then
                     'Stop playing the rain sound
                     Call Audio.StopWave(RainBufferIndex)
                     RainBufferIndex = 0

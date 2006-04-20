@@ -795,10 +795,12 @@ Dim timers(1 To 2) As Integer
     fMD5HushYo = md5.GetMD5File(App.Path & "\" & App.EXEName & ".exe")
     Call md5.MD5Reset
     MD5HushYo = txtOffset(hexMd52Asc(fMD5HushYo), 53)
+    
+    Debug.Print fMD5HushYo
 #Else
     MD5HushYo = "0123456789abcdef"  'We aren't using a real MD5
 #End If
-    Debug.Print fMD5HushYo
+    
     'Cargamos el archivo de configuracion inicial
     If FileExist(App.Path & "\init\Inicio.con", vbNormal) Then
         Config_Inicio = LeerGameIni()

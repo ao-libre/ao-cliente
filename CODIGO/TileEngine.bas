@@ -806,6 +806,8 @@ End Function
 Sub DoPasosFx(ByVal CharIndex As Integer)
 Static pie As Boolean
 
+If Not Sound Then Exit Sub
+
 If Not UserNavegando Then
     If Not charlist(CharIndex).muerto And EstaPCarea(CharIndex) Then
         charlist(CharIndex).pie = Not charlist(CharIndex).pie
@@ -1879,7 +1881,7 @@ PP.Bottom = WindowTileHeight * TilePixelHeight
 End Sub
 Public Function RenderSounds()
 '[CODE 001]:MatuX'
-    If bLluvia(UserMap) = 1 Then
+    If bLluvia(UserMap) = 1 And Sound Then
         If bRain Then
             If bTecho Then
                 If frmMain.IsPlaying <> PlayLoop.plLluviain Then

@@ -189,7 +189,9 @@ Select Case index
         If Sound Then
             Sound = False
             Command1(1).Caption = "Sonidos Desactivados"
-            
+            Call Audio.StopWave
+            RainBufferIndex = 0
+            frmMain.IsPlaying = PlayLoop.plNone
         Else
             Sound = True
             Command1(1).Caption = "Sonidos Activados"
