@@ -1212,7 +1212,7 @@ Sub HandleData(ByVal Rdata As String)
         '[/KEVIN]************************************************************************
         '----------------------------------------------------------------------------------
         Case "ABPANEL"
-            frmPanelGm.Show , frmMain
+            frmPanelGm.Show vbModal, frmMain
             Exit Sub
         Case "LISTUSU"
             Rdata = Right$(Rdata, Len(Rdata) - 7)

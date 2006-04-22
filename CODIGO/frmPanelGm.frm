@@ -343,9 +343,7 @@ Unload Me
 End Sub
 
 Private Sub Form_Load()
-Me.Show
-Call cmdActualiza_Click
-
+    Call cmdActualiza_Click
 End Sub
 
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)

@@ -563,6 +563,7 @@ Begin VB.Form frmMain
       Width           =   8160
    End
    Begin RichTextLib.RichTextBox RecTxt 
+      CausesValidation=   0   'False
       Height          =   1500
       Left            =   45
       TabIndex        =   1
@@ -1271,9 +1272,7 @@ End Sub
 Private Sub picInv_DblClick()
     If frmCarp.Visible Or frmHerrero.Visible Then Exit Sub
     
-    If Inventario.SelectedItem <> 0 Then
-        Call SendData("USA" & Inventario.SelectedItem)
-    End If
+    Call UsarItem
 End Sub
 
 Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)

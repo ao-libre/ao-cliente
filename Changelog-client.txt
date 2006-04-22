@@ -38,3 +38,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 19/04/2006: Se corrigió un rt 9 en el inventario gráfico al tener el oro como item elegido. (Maraxus).
  * 19/04/2006: Las coords del char se muestran corerctametne al loguear y al apretar la L. (Maraxus).
  * 20/04/2006: corregí un bug que no desactivaba los sonidos de pasos propios y lluvia al desactivar los sonidos. (Maraxus).
+ * 21/04/2006: El panelGM y la lista de guilds no se esconden al agregarse texto a la consola. (Maraxus).

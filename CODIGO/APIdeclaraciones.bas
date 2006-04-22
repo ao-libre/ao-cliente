@@ -36,7 +36,7 @@ Attribute VB_Name = "Api"
 
 Option Explicit
 
-    Public Declare Function FindWindow Lib "user32" Alias "FindWindowA" (ByVal lpClassName As String, ByVal lpWindowName As String) As Long
+    Public Declare Function FindWindow Lib "User32" Alias "FindWindowA" (ByVal lpClassName As String, ByVal lpWindowName As String) As Long
     
     Public Const WM_SETTEXT = &HC
     Public Const WM_GETTEXT = &HD
@@ -44,13 +44,8 @@ Option Explicit
     Public Const EM_SETREADONLY = &HCF
     
 
-Public Declare Function EnumDisplaySettings Lib "user32" Alias "EnumDisplaySettingsA" (ByVal lpszDeviceName As Long, ByVal iModeNum As Long, lptypDevMode As Any) As Boolean
-Public Declare Function ChangeDisplaySettings Lib "user32" Alias "ChangeDisplaySettingsA" (lptypDevMode As Any, ByVal dwFlags As Long) As Long
-
-'[MatuX] : 24 de Marzo del 2002
-    Declare Function SetWindowPos& Lib "user32" (ByVal hWnd As Long, ByVal hWndInsertAfter As Long, ByVal X As Long, ByVal Y As Long, ByVal CX As Long, ByVal CY As Long, ByVal wFlags As Long)
-'[END]
-
+Public Declare Function EnumDisplaySettings Lib "User32" Alias "EnumDisplaySettingsA" (ByVal lpszDeviceName As Long, ByVal iModeNum As Long, lptypDevMode As Any) As Boolean
+Public Declare Function ChangeDisplaySettings Lib "User32" Alias "ChangeDisplaySettingsA" (lptypDevMode As Any, ByVal dwFlags As Long) As Long
 
 Public Const CCDEVICENAME = 32
 Public Const CCFORMNAME = 32

@@ -11,6 +11,12 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = True
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
+'*****************************************************
+'Graphical inventory for ORE 0.4.1
+'Designed and implemented by Juan Martín Sotuyo Dodero (Maraxus)
+'juansotuyo@hotmail.com
+'*****************************************************
+
 '**************************************************************************
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -26,12 +32,6 @@ Attribute VB_Exposed = False
 'along with this program; if not, write to the Free Software
 'Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '**************************************************************************
-
-'*****************************************************
-'Graphical inventory for ORE 0.4.1
-'Designed and implemented by Juan Martín Sotuyo Dodero (Maraxus)
-'juansotuyo@hotmail.com
-'*****************************************************
 
 Option Explicit
 

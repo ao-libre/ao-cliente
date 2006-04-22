@@ -125,7 +125,7 @@ Option Explicit
 Private Sub Command1_Click()
 
 'If GuildsList.ListIndex = 0 Then Exit Sub
-Call SendData("CLANDETAILS" & guildslist.List(guildslist.ListIndex))
+Call SendData("CLANDETAILS" & GuildsList.List(GuildsList.listIndex))
 
 End Sub
 
@@ -137,16 +137,15 @@ End Sub
 Public Sub ParseGuildList(ByVal Rdata As String)
 
 Dim j As Integer, k As Integer
-For j = 0 To guildslist.ListCount - 1
-    Me.guildslist.RemoveItem 0
+For j = 0 To GuildsList.ListCount - 1
+    Me.GuildsList.RemoveItem 0
 Next j
 k = CInt(ReadField(1, Rdata, 44))
 
 For j = 1 To k
-    guildslist.AddItem ReadField(1 + j, Rdata, 44)
+    GuildsList.AddItem ReadField(1 + j, Rdata, 44)
 Next j
 
-Me.Show
+Me.Show vbModal, frmMain
 
 End Sub
-
