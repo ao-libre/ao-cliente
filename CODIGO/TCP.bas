@@ -104,7 +104,6 @@ Sub HandleData(ByVal Rdata As String)
             bTecho = IIf(MapData(UserPos.X, UserPos.Y).Trigger = 1 Or _
             MapData(UserPos.X, UserPos.Y).Trigger = 2 Or _
             MapData(UserPos.X, UserPos.Y).Trigger = 4, True, False)
-            Call DoFogataFx
             Exit Sub
         Case "QTDL"              ' >>>>> Quitar Dialogos :: QTDL
             Call Dialogos.BorrarDialogos
@@ -680,13 +679,9 @@ Sub HandleData(ByVal Rdata As String)
             Exit Sub
         Case "FO"          ' >>>>> Play un WAV :: TW
             bFogata = True
-            '[CODE 001]:MatuX
-                If frmMain.IsPlaying <> plFogata Then
-                    Audio.StopWave
-                    Call Audio.PlayWave("fuego.wav", LoopStyle.Enabled)
-                    frmMain.IsPlaying = plFogata
-                End If
-            '[END]'
+            If FogataBufferIndex = 0 Then
+                FogataBufferIndex = Audio.PlayWave("fuego.wav", LoopStyle.Enabled)
+            End If
             Exit Sub
         Case "CA"
             CambioDeArea Asc(mid$(sData, 3, 1)), Asc(mid$(sData, 4, 1))

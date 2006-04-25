@@ -408,7 +408,6 @@ Sub MoveTo(ByVal Direccion As E_Heading)
         If Not UserDescansar And Not UserMeditar And Not UserParalizado Then
             MoveCharbyHead UserCharIndex, Direccion
             MoveScreen Direccion
-            DoFogataFx
         End If
     Else
         If charlist(UserCharIndex).Heading <> Direccion Then

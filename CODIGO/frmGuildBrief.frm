@@ -366,7 +366,7 @@ Dim des As String
 des = ReadField(20, Buffer, Asc("¬"))
 desc.Text = Replace(des, "º", vbCrLf)
 
-Me.Show vbModeless, frmMain
+Me.Show vbModal, frmMain
 
 End Sub
 
@@ -374,7 +374,7 @@ Private Sub aliado_Click()
 frmCommet.Nombre = Right(Nombre.Caption, Len(Nombre.Caption) - 7)
 frmCommet.T = ALIANZA
 frmCommet.Caption = "Ingrese propuesta de alianza"
-Call frmCommet.Show(vbModeless, frmGuildBrief)
+Call frmCommet.Show(vbModal, frmGuildBrief)
 
 'Call SendData("OFRECALI" & Right(Nombre, Len(Nombre) - 7))
 'Unload Me
@@ -387,7 +387,7 @@ End Sub
 Private Sub Command2_Click()
 
 Call frmGuildSol.RecieveSolicitud(Right$(Nombre, Len(Nombre) - 7))
-Call frmGuildSol.Show(vbModeless, frmGuildBrief)
+Call frmGuildSol.Show(vbModal, frmGuildBrief)
 'Unload Me
 
 End Sub
@@ -396,7 +396,7 @@ Private Sub Command3_Click()
 frmCommet.Nombre = Right(Nombre.Caption, Len(Nombre.Caption) - 7)
 frmCommet.T = PAZ
 frmCommet.Caption = "Ingrese propuesta de paz"
-Call frmCommet.Show(vbModeless, frmGuildBrief)
+Call frmCommet.Show(vbModal, frmGuildBrief)
 'Unload Me
 End Sub
 

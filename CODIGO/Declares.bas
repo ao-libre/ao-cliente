@@ -94,6 +94,7 @@ Public UserEstupido As Boolean
 Public NoRes As Boolean 'no cambiar la resolucion
 
 Public RainBufferIndex As Long
+Public FogataBufferIndex As Long
 
 Public Const bCabeza = 1
 Public Const bPiernaIzquierda = 2
@@ -430,8 +431,8 @@ Public Declare Function writeprivateprofilestring Lib "kernel32" Alias "WritePri
 Public Declare Function getprivateprofilestring Lib "kernel32" Alias "GetPrivateProfileStringA" (ByVal lpApplicationname As String, ByVal lpKeyname As Any, ByVal lpdefault As String, ByVal lpreturnedstring As String, ByVal nsize As Long, ByVal lpfilename As String) As Long
 
 'Teclado
-Public Declare Function GetKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
-Public Declare Function GetAsyncKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
+Public Declare Function GetKeyState Lib "User32" (ByVal nVirtKey As Long) As Integer
+Public Declare Function GetAsyncKeyState Lib "User32" (ByVal nVirtKey As Long) As Integer
 
 Public Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
 

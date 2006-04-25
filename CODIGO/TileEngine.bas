@@ -352,7 +352,6 @@ Public Enum PlayLoop
     plNone = 0
     plLluviain = 1
     plLluviaout = 2
-    plFogata = 3
 End Enum
 '[END]'
 '
@@ -368,7 +367,7 @@ Private Declare Function BltEfectoNoche Lib "vbabdx" (ByRef lpDDSDest As Any, By
 
 #End If
 
-Private Declare Function GetWindowRect Lib "user32" (ByVal hWnd As Long, lpRect As RECT) As Long
+Private Declare Function GetWindowRect Lib "User32" (ByVal hWnd As Long, lpRect As RECT) As Long
 
 Sub CargarCabezas()
 On Error Resume Next
@@ -775,10 +774,13 @@ Public Sub DoFogataFx()
 If Sound Then
     If bFogata Then
         bFogata = HayFogata()
-        If Not bFogata Then Audio.StopWave
+        If Not bFogata Then
+            Call Audio.StopWave(FogataBufferIndex)
+            FogataBufferIndex = 0
+        End If
     Else
         bFogata = HayFogata()
-        If bFogata Then Call Audio.PlayWave("fuego.wav", LoopStyle.Enabled)
+        If bFogata And FogataBufferIndex = 0 Then FogataBufferIndex = Audio.PlayWave("fuego.wav", LoopStyle.Enabled)
     End If
 End If
 End Sub
@@ -1880,7 +1882,11 @@ PP.Bottom = WindowTileHeight * TilePixelHeight
 '[END]'
 End Sub
 Public Function RenderSounds()
-'[CODE 001]:MatuX'
+'**************************************************************
+'Author: Juan Martín Sotuyo Dodero
+'Last Modify Date: 4/22/2006
+'Actualiza todos los sonidos del mapa.
+'**************************************************************
     If bLluvia(UserMap) = 1 And Sound Then
         If bRain Then
             If bTecho Then
@@ -1900,7 +1906,8 @@ Public Function RenderSounds()
             End If
         End If
     End If
-'[END]'
+    
+    DoFogataFx
 End Function
 
 
@@ -1945,7 +1952,7 @@ Sub LoadGraphics()
     RLluvia(4).Bottom = 256: RLluvia(5).Bottom = 256: RLluvia(6).Bottom = 256: RLluvia(7).Bottom = 256
     
     'We are done!
-    AddtoRichTextBox frmCargando.status, "Hecho.", , , , 1, , False
+    AddtoRichTextBox frmCargando.Status, "Hecho.", , , , 1, , False
 End Sub
 
 '[END]'
@@ -2046,7 +2053,7 @@ LTLluvia(2) = 480
 LTLluvia(3) = 608
 LTLluvia(4) = 736
 
-AddtoRichTextBox frmCargando.status, "Cargando Gráficos....", 0, 0, 0, , , True
+AddtoRichTextBox frmCargando.Status, "Cargando Gráficos....", 0, 0, 0, , , True
 Call LoadGraphics
 
 InitTileEngine = True

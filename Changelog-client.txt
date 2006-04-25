@@ -24,11 +24,11 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 1/04/2006: Corregí el bug que no actualizaba la posición del rect donde debía renderizar. (Maraxus).
  * 1/04/2006: El ValCode y MD5 se llevaron al final de OLOGIN para evitar problemas si el MD5 tenía comas. (Maraxus).
  * 1/04/2006: Eliminé el head y body del mensaje NLOGIN (eran ceros). (Maraxus).
- * 6/04/2006: Agregué un erro manager al insertar elementos a la lista de surfaces dinámica (a algunos OS no le gusta y deben usar el estático). (Maraxus).
+ * 6/04/2006: Agregué un error manager al insertar elementos a la lista de surfaces dinámica (a algunos OS no le gusta y deben usar el estático). (Maraxus).
  * 6/04/2006: Corregí un bug que permitía utilizar el item de arriba a la izquierda al hacer doble click en un slot vacío. (Maraxus).
  * 6/04/2006: Corregí los accesos inválidos con el AO Dinámico en OS como XP. (Maraxus).
  * 6/04/2006: Corregí un bug en el AO dinámico que producía una pérdida de performance al llenarse la memoria. (Maraxus).
- * 12/04/2006: Corregí numerosos bugs con elengine de sonido, y un problema de performance con el inventario gráfico. (Maraxus).
+ * 12/04/2006: Corregí numerosos bugs con el engine de sonido, y un problema de performance con el inventario gráfico. (Maraxus).
  * 12/04/2006: Corregí bugs varios a lo largo del código. (Maraxus).
  * 14/04/2006: Los RMs no se escuchan al caminar. (Maraxus).
  * 14/04/2006: Corregí bugs varios. (Maraxus).
@@ -36,6 +36,6 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 14/04/2006: Al activar la música reproduce el midi correcto para el mapa y no el 2 que estaba por default. (Maraxus).
  * 19/04/2006: La bóveda ahora muestra los datos correctamente. (Maraxus).
  * 19/04/2006: Se corrigió un rt 9 en el inventario gráfico al tener el oro como item elegido. (Maraxus).
- * 19/04/2006: Las coords del char se muestran corerctametne al loguear y al apretar la L. (Maraxus).
+ * 19/04/2006: Las coords del char se muestran corerctamente al loguear y al apretar la L. (Maraxus).
  * 20/04/2006: corregí un bug que no desactivaba los sonidos de pasos propios y lluvia al desactivar los sonidos. (Maraxus).
  * 21/04/2006: El panelGM y la lista de guilds no se esconden al agregarse texto a la consola. (Maraxus).
