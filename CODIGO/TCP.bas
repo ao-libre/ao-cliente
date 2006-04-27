@@ -388,7 +388,7 @@ Sub HandleData(ByVal Rdata As String)
                 Case "E": UserExp = Val(Right$(sData, Len(sData) - 3))
             End Select
             
-            frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+            frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
             frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
             frmMain.Hpshp.Width = (((UserMinHP / 100) / (UserMaxHP / 100)) * 94)
             
@@ -767,7 +767,7 @@ Sub HandleData(ByVal Rdata As String)
             UserLvl = Val(ReadField(8, Rdata, 44))
             UserPasarNivel = Val(ReadField(9, Rdata, 44))
             UserExp = Val(ReadField(10, Rdata, 44))
-            frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+            frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
             frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
             frmMain.Hpshp.Width = (((UserMinHP / 100) / (UserMaxHP / 100)) * 94)
             
@@ -1156,18 +1156,18 @@ Sub HandleData(ByVal Rdata As String)
                 i = 1
                 Do While i <= MAX_INVENTORY_SLOTS
                     If Inventario.OBJIndex(i) <> 0 Then
-                            frmComerciar.List1(1).AddItem Inventario.ItemName(i)
+                        frmComerciar.List1(1).AddItem Inventario.ItemName(i)
                     Else
-                            frmComerciar.List1(1).AddItem "Nada"
+                        frmComerciar.List1(1).AddItem "Nada"
                     End If
                     i = i + 1
                 Loop
                 Rdata = Right(Rdata, Len(Rdata) - 7)
                 
                 If ReadField(2, Rdata, 44) = "0" Then
-                        frmComerciar.List1(0).listIndex = frmComerciar.LastIndex1
+                    frmComerciar.List1(0).listIndex = frmComerciar.LastIndex1
                 Else
-                        frmComerciar.List1(1).listIndex = frmComerciar.LastIndex2
+                    frmComerciar.List1(1).listIndex = frmComerciar.LastIndex2
                 End If
             End If
             Exit Sub
