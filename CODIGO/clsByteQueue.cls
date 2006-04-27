@@ -487,10 +487,10 @@ End Function
 ''
 ' Reads a fixed length unicode string from the begining of the queue and removes it
 '
-' @param length The length of the string to be read
-' @return   The read string
+' @param length The length of the string to be read.
+' @return   The read string if enough data is available, an empty string otherwise.
 ' @remarks  Read methods removes the data from the queue.
-' Data removed can't be recovered by the queue in any way
+' Data removed can't be recovered by the queue in any way.
 ' If there is not enough data to read the complete string then nothing is removed and an empty string is returned
 ' @see PeekUnicodeStringFixed
 ' @see WriteUnicodeStringFixed
@@ -556,7 +556,7 @@ End Function
 ''
 ' Reads a variable length unicode string from the begining of the queue and removes it
 '
-' @return   The read string
+' @return   The read string if enough data is available, an empty string otherwise.
 ' @remarks  Read methods removes the data from the queue.
 ' Data removed can't be recovered by the queue in any way
 ' If there is not enough data to read the complete string then nothing is removed and an empty string is returned
@@ -688,7 +688,7 @@ End Function
 ' Reads a fixed length ASCII string from the begining of the queue but DOES NOT remove it.
 '
 ' @param length The length of the string to be read
-' @return   The read string.
+' @return   The read string if enough data is available, an empty string otherwise.
 ' @remarks  Peek methods, unlike Read methods, don't remove the data from the queue.
 ' If there is not enough data to read the complete string then an empty string is returned
 ' @see ReadASCIIStringFixed
@@ -715,7 +715,7 @@ End Function
 ' Reads a fixed length unicode string from the begining of the queue but DOES NOT remove it.
 '
 ' @param length The length of the string to be read
-' @return   The read string.
+' @return   The read string if enough data is available, an empty string otherwise.
 ' @remarks  Peek methods, unlike Read methods, don't remove the data from the queue.
 ' If there is not enough data to read the complete string then an empty string is returned
 ' @see ReadUnicodeStringFixed
@@ -741,7 +741,7 @@ End Function
 ''
 ' Reads a variable length ASCII string from the begining of the queue but DOES NOT remove it.
 '
-' @return   The read string.
+' @return   The read string if enough data is available, an empty string otherwise.
 ' @remarks  Peek methods, unlike Read methods, don't remove the data from the queue.
 ' If there is not enough data to read the complete string then an empty string is returned
 ' @see ReadASCIIString
@@ -783,7 +783,7 @@ End Function
 ''
 ' Reads a variable length unicode string from the begining of the queue but DOES NOT remove it.
 '
-' @return   The read string.
+' @return   The read string if enough data is available, an empty string otherwise.
 ' @remarks  Peek methods, unlike Read methods, don't remove the data from the queue.
 ' If there is not enough data to read the complete string then an empty string is returned
 ' @see ReadUnicodeString
