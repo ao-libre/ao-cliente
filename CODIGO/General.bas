@@ -157,9 +157,9 @@ Sub CargarColores()
     Dim i As Long
     
     For i = 0 To 48 '49 y 50 reservados para ciudadano y criminal
-        ColoresPJ(i).r = Val(GetVar(archivoC, str(i), "R"))
-        ColoresPJ(i).G = Val(GetVar(archivoC, str(i), "G"))
-        ColoresPJ(i).b = Val(GetVar(archivoC, str(i), "B"))
+        ColoresPJ(i).r = Val(GetVar(archivoC, Str(i), "R"))
+        ColoresPJ(i).G = Val(GetVar(archivoC, Str(i), "G"))
+        ColoresPJ(i).b = Val(GetVar(archivoC, Str(i), "B"))
     Next i
         
     ColoresPJ(50).r = Val(GetVar(archivoC, "CR", "R"))
@@ -778,9 +778,6 @@ On Error Resume Next
         End
     End If
 
-Dim f As Boolean
-Dim ulttick As Long, esttick As Long
-Dim timers(1 To 2) As Integer
 
     'usaremos esto para ayudar en los parches
     Call SaveSetting("ArgentumOnlineCliente", "Init", "Path", App.Path & "\")
@@ -825,8 +822,8 @@ Dim timers(1 To 2) As Integer
     frmCargando.Show
     frmCargando.Refresh
     
-    frmConnect.version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
-    AddtoRichTextBox frmCargando.status, "Buscando servidores....", 0, 0, 0, 0, 0, 1
+    frmConnect.Version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
+    AddtoRichTextBox frmCargando.Status, "Buscando servidores....", 0, 0, 0, 0, 0, 1
 
 #If UsarWrench = 1 Then
     frmMain.Socket1.Startup
@@ -836,20 +833,20 @@ Dim timers(1 To 2) As Integer
 'TODO : esto de ServerRecibidos no se podría sacar???
     ServersRecibidos = True
     
-    AddtoRichTextBox frmCargando.status, "Encontrado", , , , 1
-    AddtoRichTextBox frmCargando.status, "Iniciando constantes...", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.Status, "Encontrado", , , , 1
+    AddtoRichTextBox frmCargando.Status, "Iniciando constantes...", 0, 0, 0, 0, 0, 1
     
     Call InicializarNombres
     
     frmOldPersonaje.NameTxt.Text = Config_Inicio.Name
     frmOldPersonaje.PasswordTxt.Text = ""
     
-    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
+    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
     
     IniciarObjetosDirectX
     
-    AddtoRichTextBox frmCargando.status, "Cargando Sonidos....", 0, 0, 0, 0, 0, 1
-    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
+    AddtoRichTextBox frmCargando.Status, "Cargando Sonidos....", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
 
 Dim loopc As Integer
 
@@ -857,7 +854,7 @@ LastTime = GetTickCount
 
     Call InitTileEngine(frmMain.hWnd, 152, 7, 32, 32, 13, 17, 9)
     
-    Call AddtoRichTextBox(frmCargando.status, "Creando animaciones extra....")
+    Call AddtoRichTextBox(frmCargando.Status, "Creando animaciones extra....")
     
     Call CargarAnimsExtra
     Call CargarTips
@@ -875,14 +872,14 @@ UserMap = 1
     Call InitMI
 #End If
 
-    AddtoRichTextBox frmCargando.status, "                    ¡Bienvenido a Argentum Online!", , , , 1
+    AddtoRichTextBox frmCargando.Status, "                    ¡Bienvenido a Argentum Online!", , , , 1
     
     Unload frmCargando
     
     'Inicializamos el sonido
-    Call AddtoRichTextBox(frmCargando.status, "Iniciando DirectSound....", 0, 0, 0, 0, 0, True)
+    Call AddtoRichTextBox(frmCargando.Status, "Iniciando DirectSound....", 0, 0, 0, 0, 0, True)
     Call Audio.Initialize(DirectX, frmMain.hWnd, App.Path & "\" & Config_Inicio.DirSonidos & "\", App.Path & "\" & Config_Inicio.DirMusica & "\")
-    Call AddtoRichTextBox(frmCargando.status, "Hecho", , , , 1, , False)
+    Call AddtoRichTextBox(frmCargando.Status, "Hecho", , , , 1, , False)
     
     'Inicializamos el inventario gráfico
     Call Inventario.Initialize(DirectDraw, frmMain.picInv)
@@ -912,6 +909,20 @@ UserMap = 1
     PrimeraVez = True
     prgRun = True
     pausa = False
+    
+    'Creamos a todos los Timers
+    MainTimer.CreateAll CANTIDADTIMERS
+
+
+    'Seteamos los itervalos
+    MainTimer.SetInterval Ataque, 2000
+    
+    MainTimer.SetInterval Trabajo, 600
+    
+    'Iniciamos los
+    MainTimer.Start Ataque
+    
+    MainTimer.Start Trabajo
     
     Do While prgRun
         'Sólo dibujamos si la ventana no está minimizada
@@ -945,24 +956,17 @@ UserMap = 1
             lFrameTimer = GetTickCount
         End If
         
-'TODO : Sería mejor comparar el tiempo desde la última vez que se hizo hasta el actual SOLO cuando se precisa. Además evitás el corte de intervalos con 2 golpes seguidos.
-        'Sistema de timers renovado:
-        esttick = GetTickCount
-        For loopc = 1 To UBound(timers)
-            timers(loopc) = timers(loopc) + (esttick - ulttick)
-            'Timer de trabajo
-            If timers(1) >= tUs Then
-                timers(1) = 0
-                NoPuedeUsar = False
-            End If
-            'timer de attaque (77)
-            If timers(2) >= tAt Then
-                timers(2) = 0
-                UserCanAttack = 1
-                UserPuedeRefrescar = True
-            End If
-        Next loopc
-        ulttick = GetTickCount
+        'Nuevo sistema de Timers by Integer
+        'Elimina la posibilidad de cortar intervalos.
+        If MainTimer.Check(Ataque) = True Then
+            UserCanAttack = 1
+            UserPuedeRefrescar = True
+        End If
+        If MainTimer.Check(Trabajo) = True Then
+            UserCanAttack = 1
+            UserPuedeRefrescar = True
+        End If
+
         
 #If SeguridadAlkon Then
         Call CheckSecurity
@@ -973,7 +977,7 @@ UserMap = 1
 
     EngineRun = False
     frmCargando.Show
-    AddtoRichTextBox frmCargando.status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.Status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
     LiberarObjetosDX
 
 'TODO : Esto debería ir en otro lado como al cambair a esta res
@@ -996,6 +1000,7 @@ UserMap = 1
     Set DialogosClanes = Nothing
     Set Audio = Nothing
     Set Inventario = Nothing
+    Set MainTimer = Nothing
 #If SeguridadAlkon Then
     Set md5 = Nothing
 #End If

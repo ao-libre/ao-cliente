@@ -41,6 +41,31 @@ Public Dialogos As New cDialogos
 Public Audio As New clsAudio
 Public Inventario As New clsGrapchicalInventory
 Public SurfaceDB As clsSurfaceManager   'No va new porque es unainterfaz, el new se pone al decidir que clase de objeto es
+'' The main timer of the game.
+Public MainTimer As New clsTimer 'El MainTimer que contiene cada uno de los Timers
+
+
+''
+' How many timers we are going to use-
+'
+' @see See MainTimer.CreateAll
+Public Const CANTIDADTIMERS = 2
+''
+' A Timer.
+'
+' @param Interval How long, in miliseconds, a cicle lasts.
+' @param CurrentTick Current Tick in which the Timer is.
+' @param StartTick Tick in which current cicle has started.
+' @param Run Has the timer been stoped?
+' @param Speed Speed in which we want the timer runs.
+Type Timer
+    Interval As Long
+    CurrentTick As Long
+    StartTick As Long
+    Run As Boolean
+    Speed As Integer
+End Type
+
 
 #If SeguridadAlkon Then
 Public md5 As New clsMD5
