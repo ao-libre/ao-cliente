@@ -268,8 +268,8 @@ End Sub
 Private Sub cmdOfrecer_Click()
 
 If optQue(0).value = True Then
-    If List1.ListIndex < 0 Then Exit Sub
-    If List1.ItemData(List1.ListIndex) <= 0 Then Exit Sub
+    If List1.listIndex < 0 Then Exit Sub
+    If List1.ItemData(List1.listIndex) <= 0 Then Exit Sub
     
 '    If Val(txtCant.Text) > List1.ItemData(List1.ListIndex) Or _
 '        Val(txtCant.Text) <= 0 Then Exit Sub
@@ -280,7 +280,7 @@ ElseIf optQue(1).value = True Then
 End If
 
 If optQue(0).value = True Then
-    Call SendData("OFRECER" & List1.ListIndex + 1 & "," & Trim(Val(txtCant.Text)))
+    Call SendData("OFRECER" & List1.listIndex + 1 & "," & Trim(Val(txtCant.Text)))
 ElseIf optQue(1).value = True Then
     Call SendData("OFRECER" & FLAGORO & "," & Trim(Val(txtCant.Text)))
 Else
@@ -320,7 +320,7 @@ Picture1.SetFocus
 End Sub
 
 Private Sub list1_Click()
-DibujaGrh Inventario.GrhIndex(List1.ListIndex + 1)
+DibujaGrh Inventario.GrhIndex(List1.listIndex + 1)
 
 End Sub
 
@@ -342,9 +342,9 @@ Call DrawGrhtoHdc(Picture1.hWnd, Picture1.Hdc, Grh, SR, DR)
 End Sub
 
 Private Sub List2_Click()
-If List2.ListIndex >= 0 Then
-    DibujaGrh OtroInventario(List2.ListIndex + 1).GrhIndex
-    Label3.Caption = "Cantidad: " & List2.ItemData(List2.ListIndex)
+If List2.listIndex >= 0 Then
+    DibujaGrh OtroInventario(List2.listIndex + 1).GrhIndex
+    Label3.Caption = "Cantidad: " & List2.ItemData(List2.listIndex)
     cmdAceptar.Enabled = True
     cmdRechazar.Enabled = True
 Else
@@ -354,14 +354,18 @@ End If
 
 End Sub
 
-Private Sub optQue_Click(Index As Integer)
-Select Case Index
+Private Sub optQue_Click(index As Integer)
+Select Case index
 Case 0
     List1.Enabled = True
 Case 1
     List1.Enabled = False
 End Select
 
+End Sub
+
+Private Sub txtCant_Change()
+    If Val(txtCant.Text) < 1 Then txtCant.Text = "1"
 End Sub
 
 Private Sub txtCant_KeyDown(KeyCode As Integer, Shift As Integer)

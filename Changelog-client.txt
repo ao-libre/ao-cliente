@@ -43,3 +43,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
 - 0.11.6
 
  * 27/04/2006: Se agregó la clase clsByteQueue utilizada por el nuevo protocolo. (Maraxus).
+ * 27/04/2006: Evita que se introduzcan valores menores a 1 al comerciar. (Maraxus).
