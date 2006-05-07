@@ -94,6 +94,8 @@ On Local Error Resume Next
     'Stop music
     Call Performance.Stop(Segment, SegState, 0, 0)
     
+    Call Performance.CloseDown
+    
     Set DirectSound = Nothing
     
     Set Segment = Nothing
@@ -148,7 +150,7 @@ On Error GoTo ErrHandler
     Performance.Init DirectSound, hWnd
     Performance.SetMasterAutoDownload True     'Enable auto doanload of instruments
     
-    'Set port to default, 1 channel group is enough for MIDIs
+    'Set to port default, 1 channel group is enough for MIDIs
     Performance.SetPort -1, 1
     
     InitializedirectMusic = True
@@ -231,7 +233,6 @@ On Error GoTo ErrHandler
     If i > NumSoundBuffers Then
         For i = 1 To NumSoundBuffers
             If DSBuffers(i).Buffer.GetStatus = DSBSTATUS_BUFFERLOST Or DSBuffers(i).Buffer.GetStatus = 0 Then
-                
                 Exit For
             End If
         Next i
@@ -240,7 +241,7 @@ On Error GoTo ErrHandler
     'Still no free buffers?? Get the first non-looping sound
     If i > NumSoundBuffers Then
         For i = 1 To NumSoundBuffers
-            If Not DSBuffers(i).Buffer.GetStatus And DSBSTATUS_LOOPING Then
+            If Not (DSBuffers(i).Buffer.GetStatus And DSBSTATUS_LOOPING) Then
                 Exit For
             End If
         Next i
@@ -384,7 +385,10 @@ Private Function LoadMidi(ByVal file As String) As Boolean
 On Error GoTo ErrHandler
     If Not FileExist(MusicPath & file, vbArchive) Then Exit Function
     
-    If PlayingMusic Then StopMidi
+    Call StopMidi
+    
+    'Destroy old object
+    Set Segment = Nothing
     
     Set Segment = Loader.LoadSegment(MusicPath & file)
     

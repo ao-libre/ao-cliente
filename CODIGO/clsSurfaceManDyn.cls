@@ -140,9 +140,8 @@ Private Property Get clsSurfaceManager_Surface(ByVal fileIndex As Long) As Direc
     
     If index < 0 Then
         'Not found, we have to load the file and add it in the position given by the negation of the index
-        index = Not index
-        
-        Call LoadSurface(fileIndex, index)
+        '(it may be changed by the removal of indexes though, so we let the LoadSurface method notify us)
+        index = LoadSurface(fileIndex, Not index)
     End If
     
     'Return it
@@ -159,18 +158,18 @@ Private Function BinarySearch(ByVal fileIndex As Long) As Long
 'Returns the index of the surface in the list, or the negation
 'of the position were it should be if not found (for binary insertion)
 '**************************************************************
-    Dim min As Long
+    Dim Min As Long
     Dim max As Long
     Dim mid As Long
     
-    min = 0
+    Min = 0
     max = surfaceIndexCount - 1
     
-    Do While min <= max
-        mid = (min + max) \ 2
-    
+    Do While Min <= max
+        mid = (Min + max) \ 2
+        
         If surfaceList(surfaceIndexes(mid)).fileIndex < fileIndex Then
-            min = mid + 1
+            Min = mid + 1
         ElseIf surfaceList(surfaceIndexes(mid)).fileIndex > fileIndex Then
             max = mid - 1
         Else
@@ -185,14 +184,14 @@ Private Function BinarySearch(ByVal fileIndex As Long) As Long
     BinarySearch = Not mid
 End Function
 
-Private Sub LoadSurface(ByVal fileIndex As Long, ByVal listIndex As Long)
+Private Function LoadSurface(ByVal fileIndex As Long, ByVal listIndex As Long) As Long
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
 'Last Modify Date: 3/06/2006
 'Loads the surface named fileIndex + ".bmp" and inserts it to the
 'surface list in the listIndex position
 '**************************************************************
-On Error GoTo ErrHandler
+On Error GoTo errHandler
 
     Dim newSurface As SURFACE_ENTRY_DYN
     Dim ddsd As DDSURFACEDESC2
@@ -237,13 +236,25 @@ On Error GoTo ErrHandler
     'Update used bytes
     usedBytes = usedBytes + ddsd.lHeight * ddsd.lPitch
     
+    Dim removedFile As Integer
     'Check if we have exceeded our allowed share of memory usage
-    While usedBytes > maxBytesToUse And surfaceCount > 0
-        Call RemoveLRU
-    Wend
-Exit Sub
+    Do While usedBytes > maxBytesToUse And surfaceCount > 1
+        'Remove a file
+        removedFile = RemoveLRU
+        
+        'If no file could be removed we continue, if the file was previous to our surface we update the index
+        If removedFile = 0 Then
+            Exit Do
+        ElseIf removedFile < listIndex Then
+            listIndex = listIndex - 1
+        End If
+    Loop
+    
+    'Return the real index in wich it ended after removing any necessary files
+    LoadSurface = listIndex
+Exit Function
 
-ErrHandler:
+errHandler:
     If Err.Number = DDERR_OUTOFMEMORY Or Err.Number = DDERR_OUTOFVIDEOMEMORY Then
         If surfaceCount Then
             'Remove a surface and try again
@@ -259,7 +270,7 @@ ErrHandler:
                 vbOKOnly Or vbCritical Or vbExclamation, "Error"
         End
     End If
-End Sub
+End Function
 
 Private Sub surfaceDimensions(ByVal Archivo As String, ByRef Height As Long, ByRef Width As Long)
 '**************************************************************
@@ -287,7 +298,7 @@ Private Sub InsertSurface(ByRef Surface As SURFACE_ENTRY_DYN, ByVal listIndex As
 'Last Modify Date: 3/06/2006
 'Inserts the given surface in the requested position of the surface list
 '**************************************************************
-On Error GoTo ErrHandler
+On Error GoTo errHandler
     Dim i As Long
     
     'Search for an empty spot in the list
@@ -326,14 +337,14 @@ On Error GoTo ErrHandler
     surfaceIndexCount = surfaceIndexCount + 1
 Exit Sub
 
-ErrHandler:
+errHandler:
     MsgBox "Un error irreparable ocurrió al insertar un nuevo gráfico en la lista." & vbCrLf _
             & "El cliente se cerrará" & vbCrLf _
             & "Intente usar el cliente no dinámico"
     End
 End Sub
 
-Private Sub RemoveLRU()
+Private Function RemoveLRU() As Integer
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
 'Last Modify Date: 3/06/2006
@@ -344,23 +355,27 @@ Private Sub RemoveLRU()
     Dim ddsd As DDSURFACEDESC2
     
     'Should never happen, but just in case....
-    If surfaceCount = 0 Then Exit Sub
+    If surfaceCount = 0 Then Exit Function
     
     'Initialize with the first element of the list
     LRU = 0
     
     'Check out through the whole list for the least recently used
-    For i = 0 To surfaceIndexCount - 1
+    For i = 1 To surfaceIndexCount - 1
         If surfaceList(surfaceIndexes(LRU)).lastAccess > surfaceList(surfaceIndexes(i)).lastAccess Then
             LRU = i
         End If
     Next i
+    
+    'Store the index of the surface removed
+    RemoveLRU = LRU
     
     'Retrieve the surface desc
     Call surfaceList(surfaceIndexes(LRU)).Surface.GetSurfaceDesc(ddsd)
     
     'Remove it
     Set surfaceList(surfaceIndexes(LRU)).Surface = Nothing
+    surfaceList(surfaceIndexes(LRU)).fileIndex = 0
     
     'Move back the list (if necessary)
     If LRU < surfaceIndexCount - 1 Then
@@ -375,4 +390,4 @@ Private Sub RemoveLRU()
     
     'Update the used bytes
     usedBytes = usedBytes - ddsd.lHeight * ddsd.lPitch
-End Sub
+End Function

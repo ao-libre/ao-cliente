@@ -63,7 +63,6 @@ Private Sub Class_Terminate()
 'Last Modify Date: 27/07/04
 '
 '***************************************************
-    Set InvSurface = Nothing
 End Sub
 
 Public Sub ScrollInventory(ByVal up As Boolean)
@@ -89,9 +88,20 @@ Public Sub SelectGold()
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04
-'Retrieves the selected item index
+'Sets the gold as the currently selected item
 '***************************************************
+    Dim prevSelectedItem As Long
+    
+    'Store preivously selected item
+    prevSelectedItem = InvSelectedItem
+    
+    'Select the gold
     InvSelectedItem = FLAGORO
+    
+    'Redraw old item to deselect it
+    If prevSelectedItem <> FLAGORO Then
+        Call DrawInventorySlot(prevSelectedItem)
+    End If
 End Sub
 
 Public Property Get SelectedItem() As Long
@@ -276,8 +286,8 @@ Private Sub DrawInventory()
             With SrcRect
                 .Left = GrhData(UserInventory(loopc).GrhIndex).sX
                 .Top = GrhData(UserInventory(loopc).GrhIndex).sY
-                .Right = .Left + GrhData(UserInventory(loopc).GrhIndex).pixelWidth
-                .Bottom = .Top + GrhData(UserInventory(loopc).GrhIndex).pixelHeight
+                .Right = .Left + TilePixelWidth
+                .Bottom = .Top + TilePixelHeight
             End With
             
             'Render the item grh and the amount
@@ -302,6 +312,8 @@ Private Sub DrawInventory()
         'Render the item to the Inventory Window
         Call InvSurface.BltToDC(InventoryWindow.Hdc, TempRect, destRect)
         
+        Call InventoryWindow.Refresh
+        
         With destRect
             'Check if we have reached the right end of the inventory picturebox
             If .Left = (InventoryWindow.ScaleWidth - (InventoryWindow.ScaleWidth Mod TilePixelWidth) - TilePixelWidth) Then
@@ -315,8 +327,6 @@ Private Sub DrawInventory()
             End If
         End With
     Next loopc
-    
-    Call InventoryWindow.Refresh
 End Sub
 
 Private Sub DrawInventorySlot(ByVal slot As Integer)
@@ -356,13 +366,13 @@ Private Sub DrawInventorySlot(ByVal slot As Integer)
         With SrcRect
             .Left = GrhData(UserInventory(slot).GrhIndex).sX
             .Top = GrhData(UserInventory(slot).GrhIndex).sY
-            .Right = .Left + GrhData(UserInventory(slot).GrhIndex).pixelWidth
-            .Bottom = .Top + GrhData(UserInventory(slot).GrhIndex).pixelHeight
+            .Right = .Left + TilePixelWidth
+            .Bottom = .Top + TilePixelHeight
         End With
         
         'Render the item grh and the amount
         InvSurface.SetForeColor vbWhite
-        InvSurface.BltFast 0, 0, SurfaceDB.Surface(GrhData(UserInventory(slot).GrhIndex).FileNum), SrcRect, DDBLTFAST_WAIT Or DDBLTFAST_NOCOLORKEY
+        InvSurface.BltFast 0, 0, SurfaceDB.Surface(CLng(GrhData(UserInventory(slot).GrhIndex).FileNum)), SrcRect, DDBLTFAST_WAIT Or DDBLTFAST_NOCOLORKEY
         InvSurface.DrawText 0, 0, UserInventory(slot).Amount, False
         
         'If equipped we render "E"
@@ -461,8 +471,9 @@ Private Sub InventoryWindow_MouseMove(Button As Integer, Shift As Integer, X As 
     
     TempItem = temp_x + (temp_y + InventoryOffset) * (InventoryWindow.ScaleWidth \ TilePixelWidth) + 1
     
-    If TempItem <= MAX_INVENTORY_SLOTS Then _
+    If TempItem <= MAX_INVENTORY_SLOTS Then
         InventoryWindow.ToolTipText = UserInventory(TempItem).Name
+    End If
 End Sub
 
 Private Sub InventoryWindow_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)

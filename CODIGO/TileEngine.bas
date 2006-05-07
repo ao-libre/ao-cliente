@@ -1952,7 +1952,7 @@ Sub LoadGraphics()
     RLluvia(4).Bottom = 256: RLluvia(5).Bottom = 256: RLluvia(6).Bottom = 256: RLluvia(7).Bottom = 256
     
     'We are done!
-    AddtoRichTextBox frmCargando.Status, "Hecho.", , , , 1, , False
+    AddtoRichTextBox frmCargando.status, "Hecho.", , , , 1, , False
 End Sub
 
 '[END]'
@@ -2053,7 +2053,7 @@ LTLluvia(2) = 480
 LTLluvia(3) = 608
 LTLluvia(4) = 736
 
-AddtoRichTextBox frmCargando.Status, "Cargando Gráficos....", 0, 0, 0, , , True
+AddtoRichTextBox frmCargando.status, "Cargando Gráficos....", 0, 0, 0, , , True
 Call LoadGraphics
 
 InitTileEngine = True
@@ -2103,6 +2103,8 @@ Sub ShowNextFrame()
         
         Call Dialogos.MostrarTexto
         Call DibujarCartel
+        
+        Call DialogosClanes.Draw(Dialogos)
         
         Call DrawBackBufferSurface
         

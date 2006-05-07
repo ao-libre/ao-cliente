@@ -157,17 +157,17 @@ Sub CargarColores()
     Dim i As Long
     
     For i = 0 To 48 '49 y 50 reservados para ciudadano y criminal
-        ColoresPJ(i).r = Val(GetVar(archivoC, Str(i), "R"))
-        ColoresPJ(i).G = Val(GetVar(archivoC, Str(i), "G"))
-        ColoresPJ(i).b = Val(GetVar(archivoC, Str(i), "B"))
+        ColoresPJ(i).r = CByte(GetVar(archivoC, CStr(i), "R"))
+        ColoresPJ(i).G = CByte(GetVar(archivoC, CStr(i), "G"))
+        ColoresPJ(i).b = CByte(GetVar(archivoC, CStr(i), "B"))
     Next i
-        
-    ColoresPJ(50).r = Val(GetVar(archivoC, "CR", "R"))
-    ColoresPJ(50).G = Val(GetVar(archivoC, "CR", "G"))
-    ColoresPJ(50).b = Val(GetVar(archivoC, "CR", "B"))
-    ColoresPJ(49).r = Val(GetVar(archivoC, "CI", "R"))
-    ColoresPJ(49).G = Val(GetVar(archivoC, "CI", "G"))
-    ColoresPJ(49).b = Val(GetVar(archivoC, "CI", "B"))
+    
+    ColoresPJ(50).r = CByte(GetVar(archivoC, "CR", "R"))
+    ColoresPJ(50).G = CByte(GetVar(archivoC, "CR", "G"))
+    ColoresPJ(50).b = CByte(GetVar(archivoC, "CR", "B"))
+    ColoresPJ(49).r = CByte(GetVar(archivoC, "CI", "R"))
+    ColoresPJ(49).G = CByte(GetVar(archivoC, "CI", "G"))
+    ColoresPJ(49).b = CByte(GetVar(archivoC, "CI", "B"))
 End Sub
 
 #If SeguridadAlkon Then
@@ -790,7 +790,7 @@ On Error Resume Next
     Dim fMD5HushYo As String * 32
     fMD5HushYo = md5.GetMD5File(App.Path & "\" & App.EXEName & ".exe")
     Call md5.MD5Reset
-    MD5HushYo = txtOffset(hexMd52Asc(fMD5HushYo), 53)
+    MD5HushYo = txtOffset(hexMd52Asc(fMD5HushYo), 55)
     
     Debug.Print fMD5HushYo
 #Else

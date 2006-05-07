@@ -75,15 +75,15 @@ Public CantidadDialogos As Integer
 
 Private Function PrimerIndiceVacio() As Integer
 On Error Resume Next
-Dim i As Integer, J As Integer
+Dim i As Integer, j As Integer
 Dim flag As Boolean
 
 i = 1
-J = 1
+j = 1
 
 Do While i <= MAX_DIALOGOS And Not flag
-     If (Dialogos(i).Vida < Dialogos(J).Vida) Then
-         J = i
+     If (Dialogos(i).Vida < Dialogos(j).Vida) Then
+         j = i
      End If
     flag = (Dialogos(i).Vida = 0)
     If Not flag Then i = i + 1
@@ -92,7 +92,7 @@ Loop
 If flag Then
     PrimerIndiceVacio = i
 Else
-    PrimerIndiceVacio = J
+    PrimerIndiceVacio = j
 End If
 
 End Function
@@ -104,8 +104,8 @@ End Function
 Private Function DarFormato(s As String, i As Integer, k As Integer, anti As Integer, Dialgi As Integer)
 On Error Resume Next
 If anti + i <= Len(s) + 1 Then
-    If ((i >= MAXLONG) And Mid$(s, anti + i, 1) = " ") Or (anti + i = Len(s)) Then
-        Dialogos(Dialgi).Formato(k) = Mid(s, anti, i + 1)
+    If ((i >= MAXLONG) And mid$(s, anti + i, 1) = " ") Or (anti + i = Len(s)) Then
+        Dialogos(Dialgi).Formato(k) = mid(s, anti, i + 1)
         k = k + 1
         anti = anti + i + 1
         i = 0
@@ -130,7 +130,7 @@ Private Sub DarleFormatoTXT(Dialgi As Integer)
 On Error Resume Next
  'Le damos formato al txt
   If (Len(Dialogos(Dialgi).Texto) > MAXLONG) And HayEspacio(Dialogos(Dialgi).Texto) Then
-                Dim J As Integer
+                Dim j As Integer
                 ReDim Dialogos(Dialgi).Formato(0 To (Len(Dialogos(Dialgi).Texto) \ (MAXLONG \ 2)))
                 Dim i As Integer, k As Integer, anti As Integer
                 anti = 1
@@ -198,10 +198,10 @@ End If
 
 End Function
 
-Public Sub Update_Dialog_Pos(X As Integer, Y As Integer, Index As Integer)
+Public Sub Update_Dialog_Pos(X As Integer, Y As Integer, index As Integer)
 On Error Resume Next
 Dim MiUserIndex As Integer
-If BuscarUserIndex(Index, MiUserIndex) Then
+If BuscarUserIndex(index, MiUserIndex) Then
   If Dialogos(MiUserIndex).Vida > 0 Then
         If Dialogos(MiUserIndex).Formateado Then
             Dialogos(MiUserIndex).X = X - (MAXLONG \ 2) * 3
@@ -232,6 +232,7 @@ If BuscarUserIndex(Index, MiUserIndex) Then
   End If
 End If
 End Sub
+
 Public Sub DrawText(lngXPos As Integer, lngYPos As Integer, strText As String, lngColor As Long)
 On Error Resume Next
 
@@ -239,14 +240,14 @@ On Error Resume Next
         
         BackBufferSurface.SetFontTransparency True
         BackBufferSurface.SetForeColor vbBlack
-        BackBufferSurface.SetFont frmMain.Font
+        BackBufferSurface.SetFont frmMain.font
         
         BackBufferSurface.DrawText lngXPos - 2, lngYPos - 1, strText, False
         
         BackBufferSurface.SetFontTransparency True
         BackBufferSurface.SetForeColor lngColor
         
-        BackBufferSurface.SetFont frmMain.Font
+        BackBufferSurface.SetFont frmMain.font
         
         
         BackBufferSurface.DrawText lngXPos, lngYPos, strText, False
@@ -261,12 +262,12 @@ On Error Resume Next
    If strText <> "" Then
         BackBufferSurface.SetFontTransparency True
         BackBufferSurface.SetForeColor vbBlack
-        BackBufferSurface.SetFont frmMain.Font
+        BackBufferSurface.SetFont frmMain.font
         BackBufferSurface.DrawText lngXPos - 2, lngYPos - 1, strText, False
         
         BackBufferSurface.SetFontTransparency True
         BackBufferSurface.SetForeColor lngColor
-        BackBufferSurface.SetFont frmMSG.Font
+        BackBufferSurface.SetFont frmMSG.font
         BackBufferSurface.DrawText lngXPos, lngYPos, strText, False
    End If
    
@@ -280,11 +281,11 @@ i = 1
 Do While i <= CantidadDialogos And i <= MAX_DIALOGOS
     If Dialogos(i).Vida > 0 Then
         If Dialogos(i).Formateado Then
-            Dim J As Integer, desp As Integer
-            desp = (-frmMain.Font.Size) * UBound(Dialogos(i).Formato) - 5
-            For J = 0 To UBound(Dialogos(i).Formato)
-             DrawText Dialogos(i).X, Dialogos(i).Y + desp, Dialogos(i).Formato(J), Dialogos(i).Color
-             desp = desp + (frmMain.Font.Size) + 5
+            Dim j As Integer, desp As Integer
+            desp = (-frmMain.font.Size) * UBound(Dialogos(i).Formato) - 5
+            For j = 0 To UBound(Dialogos(i).Formato)
+             DrawText Dialogos(i).X, Dialogos(i).Y + desp, Dialogos(i).Formato(j), Dialogos(i).Color
+             desp = desp + (frmMain.font.Size) + 5
             Next
          Else
             DrawText Dialogos(i).X, Dialogos(i).Y, Dialogos(i).Texto, Dialogos(i).Color

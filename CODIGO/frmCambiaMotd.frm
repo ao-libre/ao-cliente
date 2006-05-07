@@ -140,28 +140,28 @@ Option Explicit
 
 Private Sub cmdOk_Click()
     Dim T() As String
-    Dim I As Long, N As Long, Pos As Long
+    Dim i As Long, N As Long, Pos As Long
     
     If Len(txtMotd.Text) >= 2 Then
-        If Right(txtMotd.Text, 2) = vbCrLf Then txtMotd.Text = Left(txtMotd.Text, Len(txtMotd.Text) - 2)
+        If Right$(txtMotd.Text, 2) = vbCrLf Then txtMotd.Text = Left$(txtMotd.Text, Len(txtMotd.Text) - 2)
     End If
     
     T = Split(txtMotd.Text, vbCrLf)
     
     'hola~1~1~1~1~1
     
-    For I = LBound(T) To UBound(T)
+    For i = LBound(T) To UBound(T)
         N = 0
-        Pos = InStr(1, T(I), "~")
-        Do While Pos > 0 And Pos < Len(T(I))
+        Pos = InStr(1, T(i), "~")
+        Do While Pos > 0 And Pos < Len(T(i))
             N = N + 1
-            Pos = InStr(Pos + 1, T(I), "~")
+            Pos = InStr(Pos + 1, T(i), "~")
         Loop
         If N <> 5 Then
-            MsgBox "Error en el formato de la linea " & I + 1 & "."
+            MsgBox "Error en el formato de la linea " & i + 1 & "."
             Exit Sub
         End If
-    Next I
+    Next i
     
     Call SendData("ZMOTD" & txtMotd.Text)
     Unload Me
