@@ -43,13 +43,35 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
+''
+' How many timers we are going to use-
+'
+' @see See MainTimer.CreateAll
+Private Const CANTIDADTIMERS As Byte = 2
+
+''
+' A Timer data structure.
+'
+' @param Interval How long, in miliseconds, a cicle lasts.
+' @param CurrentTick Current Tick in which the Timer is.
+' @param StartTick Tick in which current cicle has started.
+' @param Run True if the timer is active.
+
+Private Type Timer
+    Interval As Long
+    CurrentTick As Long
+    StartTick As Long
+    Run As Boolean
+End Type
+
 'Timers
-Dim Timer() As Timer
+Dim Timer(1 To CANTIDADTIMERS) As Timer
 
 ''
 ' Timer´s Index.
 '
 ' @param Ataque Controls the Combat system.
+' @param trabajo Controls the Work system.
 Public Enum TimersIndex
     Ataque = 1
     Trabajo = 2
@@ -61,31 +83,8 @@ End Enum
 ' A milisecond pricision counter.
 '
 ' @return   Miliseconds since midnight.
+
 Private Declare Function GetTickCount Lib "kernel32" () As Long
-
-
-''
-' Creates all the Timers.
-'
-' @param Timers How many timers should be created.
-' @remarks  Must be done before using Timers
-
-Public Sub CreateAll(ByVal Timers As Integer)
-'*************************************************
-'Author: Nacho (Integer)
-'Last modified:
-'Desc: Creates all the timers.
-'*************************************************
-
-'Re-Dimension them
-ReDim Timer(1 To Timers)
-
-'We set speed for all timers 1.
-Dim Index As Integer
-For Index = 1 To UBound(Timer)
-    Timer(Index).Speed = 1
-Next Index
-End Sub
 
 ''
 ' Sets a new intrval for a timer.
@@ -93,71 +92,81 @@ End Sub
 ' @param TimerIndex Timer´s Index
 ' @param Interval New lenght for the Timer´s cicle in miliseconds.
 ' @remarks  Must be donde after creating the timer and before using it, otherwise, Interval will be 0
-Public Function SetInterval(ByVal TimerIndex As TimersIndex, ByVal Interval As Long)
+
+Public Sub SetInterval(ByVal TimerIndex As TimersIndex, ByVal Interval As Long)
 '*************************************************
 'Author: Nacho (Integer)
 'Last modified:
 'Desc: Sets a new interval for a timer.
 '*************************************************
-Timer(TimerIndex).Interval = Interval
-End Function
+    If TimerIndex < 1 Or TimerIndex > CANTIDADTIMERS Then Exit Sub
+    
+    Timer(TimerIndex).Interval = Interval
+End Sub
 
 ''
 ' Starts the timer.
 '
 ' @param TimerIndex Timer´s Index
 ' @remarks  Do this for starting the timer.
-Public Function Start(ByVal TimerIndex As TimersIndex)
+
+Public Sub Start(ByVal TimerIndex As TimersIndex)
 '*************************************************
 'Author: Nacho (Integer)
 'Last modified:
 'Desc: Starts running the Timer.
 '*************************************************
-Timer(TimerIndex).Run = True 'We allow the Timer to run.
-
-End Function
+    If TimerIndex < 1 Or TimerIndex > CANTIDADTIMERS Then Exit Sub
+    
+    Timer(TimerIndex).Run = True 'We allow the Timer to run.
+End Sub
 
 ''
 ' Resume the timer form where we had stoped.
 '
 ' @param TimerIndex Timer´s Index
 ' @remarks  Makes the Timer continue from where it had stoped.
-Public Function Continue(ByVal TimerIndex As TimersIndex)
+
+Public Sub Continue(ByVal TimerIndex As TimersIndex)
 '*************************************************
 'Author: Nacho (Integer)
 'Last modified:
-'Desc: Continue our timer from where we had
-'stopped it.
+'Desc: Continue our timer from where we had stopped it.
 '*************************************************
-Timer(TimerIndex).Run = True 'We allow the Timer to run.
-
-'We´ll set the StartTick again
-Timer(TimerIndex).StartTick = Timer(TimerIndex).StartTick + Timer(TimerIndex).CurrentTick
-End Function
+    If TimerIndex < 1 Or TimerIndex > CANTIDADTIMERS Then Exit Sub
+    
+    Timer(TimerIndex).Run = True 'We allow the Timer to run.
+    
+    'We´ll set the StartTick again
+    Timer(TimerIndex).StartTick = Timer(TimerIndex).StartTick + Timer(TimerIndex).CurrentTick
+End Sub
 
 ''
 ' Pauses the Timer
 '
 ' @param TimerIndex Timer´s Index
 ' @remarks  Can be resumed with Continue()
-Public Function Pause(ByVal TimerIndex As TimersIndex)
+
+Public Sub Pause(ByVal TimerIndex As TimersIndex)
 '*************************************************
 'Author: Nacho (Integer)
 'Last modified:
 'Desc: Pauses the timer.
 '*************************************************
-Timer(TimerIndex).Run = False 'Don´t allow the timer to run.
-
-Timer(TimerIndex).CurrentTick = GetTickCount - Timer(TimerIndex).StartTick 'Calculates acutual tick
-
-End Function
-
+    If TimerIndex < 1 Or TimerIndex > CANTIDADTIMERS Then Exit Sub
+    
+    Timer(TimerIndex).Run = False 'Don´t allow the timer to run.
+    
+    Timer(TimerIndex).CurrentTick = GetTickCount - Timer(TimerIndex).StartTick 'Calculates acutual tick
+End Sub
 
 ''
 ' Check if the timer has already completed it´s cicle.
 '
 ' @param TimerIndex Timer´s Index
+' @return True if the interval has already been elapsed
 ' @remarks  Can´t be done if the timer is stoped or if it had never been started.
+
 Public Function Check(ByVal TimerIndex As TimersIndex) As Boolean
 '*************************************************
 'Author: Nacho Agustin (Integer)
@@ -165,45 +174,30 @@ Public Function Check(ByVal TimerIndex As TimersIndex) As Boolean
 'Desc: Checks if the Timer has alredy "ticked"
 'Returns: True if it has ticked, False if not.
 '*************************************************
-
-If Not Timer(TimerIndex).Run Then Exit Function 'If we weren´t allowed to run, exit function
-
-Timer(TimerIndex).CurrentTick = GetTickCount - Timer(TimerIndex).StartTick 'Calcutates CurrentTick
-
-'If CurrentTick (* Speed) is > than Interval  then,,,
-If Timer(TimerIndex).CurrentTick * Timer(TimerIndex).Speed >= Timer(TimerIndex).Interval Then
-
-    Check = True 'We have Ticked!
-    Restart (TimerIndex) 'Restart Timer
-End If
-
+    If TimerIndex < 1 Or TimerIndex > CANTIDADTIMERS Then Exit Function
+    
+    If Not Timer(TimerIndex).Run Then Exit Function 'If we weren´t allowed to run, exit function
+    
+    Timer(TimerIndex).CurrentTick = GetTickCount - Timer(TimerIndex).StartTick 'Calcutates CurrentTick
+    
+    If Timer(TimerIndex).CurrentTick >= Timer(TimerIndex).Interval Then
+        Check = True 'We have Ticked!
+        Call Restart(TimerIndex)  'Restart Timer
+    End If
 End Function
 
 ''
 ' Restarts timer.
 '
 ' @param TimerIndex Timer´s Index
-Public Function Restart(ByVal TimerIndex As TimersIndex)
+
+Public Sub Restart(ByVal TimerIndex As TimersIndex)
 '*************************************************
 'Author: Nacho Agustin (Integer)
 'Last modified:
 'Desc: Restarts timer
 '*************************************************
-Timer(TimerIndex).StartTick = GetTickCount
-End Function
-
-''
-' Sets speed for the timer.
-'
-' @param TimerIndex Timer´s Index
-' @param Wished speed for the Timer.
-' @remarks  Speed is, by default, 1
-Public Function SetSpeed(ByVal TimerIndex As TimersIndex, ByVal Speed As Integer)
-'*************************************************
-'Author: Nacho (Integer)
-'Last modified:
-'Desc: Set Timer's speed
-'*************************************************
-Timer(TimerIndex).Speed = Speed
-End Function
-
+    If TimerIndex < 1 Or TimerIndex > CANTIDADTIMERS Then Exit Sub
+    
+    Timer(TimerIndex).StartTick = GetTickCount
+End Sub

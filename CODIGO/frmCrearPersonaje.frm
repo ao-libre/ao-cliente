@@ -925,13 +925,13 @@ If SkillPoints > 0 Then
     Exit Function
 End If
 
-Dim I As Integer
-For I = 1 To NUMATRIBUTOS
-    If UserAtributos(I) = 0 Then
+Dim i As Integer
+For i = 1 To NUMATRIBUTOS
+    If UserAtributos(i) = 0 Then
         MsgBox "Los atributos del personaje son invalidos."
         Exit Function
     End If
-Next I
+Next i
 
 CheckData = True
 
@@ -945,12 +945,12 @@ Call Audio.PlayWave(SND_CLICK)
 Select Case Index
     Case 0
         
-        Dim I As Integer
+        Dim i As Integer
         Dim k As Object
-        I = 1
+        i = 1
         For Each k In Skill
-            UserSkills(I) = k.Caption
-            I = I + 1
+            UserSkills(i) = k.Caption
+            i = i + 1
         Next
         
         UserName = txtNombre.Text
@@ -1044,27 +1044,26 @@ Else
     End If
 End If
 
-Puntos.Caption = SkillPoints
+puntos.Caption = SkillPoints
 End Sub
 
 Private Sub Form_Load()
 SkillPoints = 10
-Puntos.Caption = SkillPoints
+puntos.Caption = SkillPoints
 Me.Picture = LoadPicture(App.Path & "\graficos\CP-Interface.jpg")
 imgHogar.Picture = LoadPicture(App.Path & "\graficos\CP-Ullathorpe.jpg")
 
-Dim I As Integer
+Dim i As Integer
 lstProfesion.Clear
-For I = LBound(ListaClases) To UBound(ListaClases)
-    lstProfesion.AddItem ListaClases(I)
-Next I
+For i = LBound(ListaClases) To UBound(ListaClases)
+    lstProfesion.AddItem ListaClases(i)
+Next i
 
 lstProfesion.listIndex = 1
 
 Image1.Picture = LoadPicture(App.Path & "\graficos\" & lstProfesion.Text & ".jpg")
 Call TirarDados
 End Sub
-
 
 Private Sub lstProfesion_Click()
 On Error Resume Next

@@ -575,7 +575,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -727,19 +726,19 @@ Dim PuedeMacrear As Boolean
 
 Implements DirectXEvent
 
-Private Sub cmdMoverHechi_Click(index As Integer)
+Private Sub cmdMoverHechi_Click(Index As Integer)
 If hlst.listIndex = -1 Then Exit Sub
 
-Select Case index
+Select Case Index
 Case 0 'subir
     If hlst.listIndex = 0 Then Exit Sub
 Case 1 'bajar
     If hlst.listIndex = hlst.ListCount - 1 Then Exit Sub
 End Select
 
-Call SendData("DESPHE" & index + 1 & "," & hlst.listIndex + 1)
+Call SendData("DESPHE" & Index + 1 & "," & hlst.listIndex + 1)
 
-Select Case index
+Select Case Index
 Case 0 'subir
     hlst.listIndex = hlst.listIndex - 1
 Case 1 'bajar
@@ -825,7 +824,6 @@ If logged And Not frmMain.Visible Then
 End If
     
 End Sub
-
 
 Private Sub Macro_Timer()
     PuedeMacrear = True
@@ -990,12 +988,8 @@ Private Sub CmdInfo_Click()
     Call SendData("INFS" & hlst.listIndex + 1)
 End Sub
 
-''''''''''''''''''''''''''''''''''''''
-'     OTROS                          '
-''''''''''''''''''''''''''''''''''''''
-
-Private Sub DespInv_Click(index As Integer)
-    Inventario.ScrollInventory (index = 0)
+Private Sub DespInv_Click(Index As Integer)
+    Inventario.ScrollInventory (Index = 0)
 End Sub
 
 Private Sub Form_Click()
@@ -1186,10 +1180,10 @@ Private Sub hlst_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
 End Sub
 
-Private Sub Image1_Click(index As Integer)
+Private Sub Image1_Click(Index As Integer)
     Call Audio.PlayWave(SND_CLICK)
 
-    Select Case index
+    Select Case Index
         Case 0
             '[MatuX] : 01 de Abril del 2002
                 Call frmOpciones.Show(vbModeless, frmMain)
@@ -1216,8 +1210,8 @@ Private Sub Image1_Click(index As Integer)
     End Select
 End Sub
 
-Private Sub Image3_Click(index As Integer)
-    Select Case index
+Private Sub Image3_Click(Index As Integer)
+    Select Case Index
         Case 0
             Inventario.SelectGold
             If UserGLD > 0 Then
@@ -1232,7 +1226,7 @@ Private Sub Label1_Click()
         frmSkills3.Text1(i).Caption = UserSkills(i)
     Next i
     Alocados = SkillPoints
-    frmSkills3.Puntos.Caption = "Puntos:" & SkillPoints
+    frmSkills3.puntos.Caption = "Puntos:" & SkillPoints
     frmSkills3.Show , frmMain
 End Sub
 
@@ -1559,7 +1553,7 @@ Private Sub Socket1_LastError(ErrorCode As Integer, ErrorString As String, Respo
     End If
 End Sub
 
-Private Sub Socket1_Read(DataLength As Integer, IsUrgent As Integer)
+Private Sub Socket1_Read(dataLength As Integer, IsUrgent As Integer)
     Dim loopc As Integer
 
     Dim RD As String
@@ -1573,7 +1567,7 @@ Private Sub Socket1_Read(DataLength As Integer, IsUrgent As Integer)
     Dim aux$
     Dim nfile As Integer
     
-    Socket1.Read RD, DataLength
+    Socket1.Read RD, dataLength
     
     'Check for previous broken data and add to current data
     If TempString <> "" Then

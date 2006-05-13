@@ -70,7 +70,7 @@ Sub HandleData(ByVal Rdata As String)
     Dim slot As Integer
     Dim MapNumber As String
     Dim i As Integer, k As Integer
-    Dim cad$, index As Integer, m As Integer
+    Dim cad$, Index As Integer, m As Integer
     Dim T() As String
     
     Dim tstr As String
@@ -308,7 +308,6 @@ Sub HandleData(ByVal Rdata As String)
             'obtengo todo
             Call CheatingDeath.MoveCharDecrypt(Rdata, CharIndex, X, Y)
 #Else
-            Rdata = Right$(Rdata, Len(Rdata) - 1)
             CharIndex = Val(ReadField(1, Rdata, Asc(",")))
             X = Val(ReadField(2, Rdata, Asc(",")))
             Y = Val(ReadField(3, Rdata, Asc(",")))
@@ -335,13 +334,12 @@ Sub HandleData(ByVal Rdata As String)
             Call RefreshAllChars
             Exit Sub
         Case "*", "_"             ' >>>>> Mover NPC >>> *
-            'Rdata = Right$(Rdata, Len(Rdata) - 1)
+            Rdata = Right$(Rdata, Len(Rdata) - 1)
             
 #If SeguridadAlkon Then
             'obtengo todo
-            Call CheatingDeath.MoveNPCDecrypt(Right$(Rdata, Len(Rdata) - 1), CharIndex, X, Y, Left$(sData, 1) <> "*")
+            Call CheatingDeath.MoveNPCDecrypt(Rdata, CharIndex, X, Y, Left$(sData, 1) <> "*")
 #Else
-            Rdata = Right$(Rdata, Len(Rdata) - 1)
             CharIndex = Val(ReadField(1, Rdata, Asc(",")))
             X = Val(ReadField(2, Rdata, Asc(",")))
             Y = Val(ReadField(3, Rdata, Asc(",")))
@@ -388,7 +386,7 @@ Sub HandleData(ByVal Rdata As String)
                 Case "E": UserExp = Val(Right$(sData, Len(sData) - 3))
             End Select
             
-            frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+            frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
             frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
             frmMain.Hpshp.Width = (((UserMinHP / 100) / (UserMaxHP / 100)) * 94)
             
@@ -767,7 +765,7 @@ Sub HandleData(ByVal Rdata As String)
             UserLvl = Val(ReadField(8, Rdata, 44))
             UserPasarNivel = Val(ReadField(9, Rdata, 44))
             UserExp = Val(ReadField(10, Rdata, 44))
-            frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+            frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
             frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
             frmMain.Hpshp.Width = (((UserMinHP / 100) / (UserMaxHP / 100)) * 94)
             
@@ -961,6 +959,7 @@ Sub HandleData(ByVal Rdata As String)
             frmCrearPersonaje.lbAgilidad.Caption = UserAtributos(3)
             frmCrearPersonaje.lbCarisma.Caption = UserAtributos(4)
             frmCrearPersonaje.lbConstitucion.Caption = UserAtributos(5)
+            
             Exit Sub
         Case "MCAR"              ' >>>>> Mostrar Cartel :: MCAR
             Rdata = Right$(Rdata, Len(Rdata) - 4)
@@ -1078,6 +1077,7 @@ Sub HandleData(ByVal Rdata As String)
                     .lbConstitucion.Caption = ReadField(5, Rdata, 44)
                 End If
             End With
+            
             Exit Sub
         Case "MEDOK"            ' >>>>> Meditar OK :: MEDOK
             UserMeditar = Not UserMeditar
