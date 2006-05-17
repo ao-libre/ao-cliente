@@ -45,4 +45,5 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 27/04/2006: Se agregó la clase clsByteQueue utilizada por el nuevo protocolo. (Maraxus).
  * 27/04/2006: Evita que se introduzcan valores menores a 1 al comerciar. (Maraxus).
  * 28/04/2006: Agregué la clase Timer, reemplazando a los antiguos Timers que permitían en corte de intervalos. (Integer)
- * 13/04/2006: Modifiqué algunas cositas de la clase MainTimer para qu sea más segura y abtraiga sus datos. (Integer)
+ * 13/04/2006: Modifiqué algunas cositas de la clase MainTimer para qu sea más segura y abstraiga sus datos. (Maraxus)
+ * 17/04/2006: Eliminé código que no se usaba y renombré el frmPasswdSinPadrinos por frmPasswd. (Maraxus)

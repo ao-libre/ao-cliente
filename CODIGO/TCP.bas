@@ -70,12 +70,13 @@ Sub HandleData(ByVal Rdata As String)
     Dim slot As Integer
     Dim MapNumber As String
     Dim i As Integer, k As Integer
-    Dim cad$, Index As Integer, m As Integer
+    Dim cad As String
+    Dim index As Integer
+    Dim m As Integer
     Dim T() As String
     
     Dim tstr As String
     Dim tstr2 As String
-    
     
     Dim sData As String
     sData = UCase$(Rdata)
@@ -89,7 +90,7 @@ Sub HandleData(ByVal Rdata As String)
             UserDescansar = False
             Nombres = True
             If frmCrearPersonaje.Visible Then
-                Unload frmPasswdSinPadrinos
+                Unload frmPasswd
                 Unload frmCrearPersonaje
                 Unload frmConnect
                 frmMain.Show
@@ -227,39 +228,6 @@ Sub HandleData(ByVal Rdata As String)
             Unload frmComerciarUsu
             Comerciando = False
             '[/Alejo]
-        Case "RECPASSOK"
-            Call MsgBox("¡¡¡El password fue enviado con éxito!!!", vbApplicationModal + vbDefaultButton1 + vbInformation + vbOKOnly, "Envio de password")
-            frmRecuperar.MousePointer = 0
-#If UsarWrench = 1 Then
-            frmMain.Socket1.Disconnect
-#Else
-            If frmMain.Winsock1.State <> sckClosed Then _
-                frmMain.Winsock1.Close
-#End If
-            Unload frmRecuperar
-            Exit Sub
-        Case "RECPASSER"
-            Call MsgBox("¡¡¡No coinciden los datos con los del personaje en el servidor, el password no ha sido enviado.!!!", vbApplicationModal + vbDefaultButton1 + vbInformation + vbOKOnly, "Envio de password")
-            frmRecuperar.MousePointer = 0
-#If UsarWrench = 1 Then
-            frmMain.Socket1.Disconnect
-#Else
-            If frmMain.Winsock1.State <> sckClosed Then _
-                frmMain.Winsock1.Close
-#End If
-            Unload frmRecuperar
-            Exit Sub
-        Case "BORROK"
-            Call MsgBox("El personaje ha sido borrado.", vbApplicationModal + vbDefaultButton1 + vbInformation + vbOKOnly, "Borrado de personaje")
-            frmBorrar.MousePointer = 0
-#If UsarWrench = 1 Then
-            frmMain.Socket1.Disconnect
-#Else
-            If frmMain.Winsock1.State <> sckClosed Then _
-                frmMain.Winsock1.Close
-#End If
-            Unload frmBorrar
-            Exit Sub
         Case "SFH"
             frmHerrero.Show , frmMain
             Exit Sub
@@ -295,7 +263,7 @@ Sub HandleData(ByVal Rdata As String)
         Case "PN"     ' <--- Pierde Nobleza
             Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_PIERDE_NOBLEZA, 255, 0, 0, False, False, False)
             Exit Sub
-        Case "M!"     ' <--- Usa meditando
+        Case "M!"     ' <--- User meditando
             Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_USAR_MEDITANDO, 255, 0, 0, False, False, False)
             Exit Sub
     End Select
@@ -312,9 +280,6 @@ Sub HandleData(ByVal Rdata As String)
             X = Val(ReadField(2, Rdata, Asc(",")))
             Y = Val(ReadField(3, Rdata, Asc(",")))
 #End If
-
-            'antigua codificacion del mensaje (decodificada x un chitero)
-            'CharIndex = Asc(Mid$(Rdata, 1, 1)) * 64 + (Asc(Mid$(Rdata, 2, 1)) And &HFC&) / 4
 
             ' CONSTANTES TODO: De donde sale el 40-49 ?
             
@@ -344,13 +309,6 @@ Sub HandleData(ByVal Rdata As String)
             X = Val(ReadField(2, Rdata, Asc(",")))
             Y = Val(ReadField(3, Rdata, Asc(",")))
 #End If
-            
-            'antigua codificacion del mensaje (decodificada x un chitero)
-            'CharIndex = Asc(Mid$(Rdata, 1, 1)) * 64 + (Asc(Mid$(Rdata, 2, 1)) And &HFC&) / 4
-            
-'            If charlist(CharIndex).Body.Walk(1).GrhIndex = 4747 Then
-'                Debug.Print "hola"
-'            End If
             
             ' CONSTANTES TODO: De donde sale el 40-49 ?
             
@@ -477,7 +435,7 @@ Sub HandleData(ByVal Rdata As String)
                     Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_GOLPE_TORSO & Val(ReadField(2, Rdata, 44)), 255, 0, 0, True, False, False)
             End Select
             Exit Sub
-        Case "U2" ' <<--- El user ataco un npc e impacato
+        Case "U2" ' <<--- El user ataco un npc e impacto
             Rdata = Right$(Rdata, Len(Rdata) - 2)
             Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_GOLPE_CRIATURA_1 & Rdata & MENSAJE_2, 255, 0, 0, True, False, False)
             Exit Sub
@@ -572,11 +530,6 @@ Sub HandleData(ByVal Rdata As String)
             CharIndex = ReadField(4, Rdata, 44)
             X = ReadField(5, Rdata, 44)
             Y = ReadField(6, Rdata, 44)
-            'Debug.Print "CC"
-            'If charlist(CharIndex).Pos.X Or charlist(CharIndex).Pos.Y Then
-            '    Debug.Print "CHAR DUPLICADO: " & CharIndex
-            '    Call EraseChar(CharIndex)
-           ' End If
             
             charlist(CharIndex).Fx = Val(ReadField(9, Rdata, 44))
             charlist(CharIndex).FxLoopTimes = Val(ReadField(10, Rdata, 44))
@@ -701,9 +654,7 @@ Sub HandleData(ByVal Rdata As String)
             If Not CheatingDeath.ValidarArchivosCriticos(ValString) Then End
 #End If
 
-            If EstadoLogin = BorrarPj Then
-                Call SendData("BORR" & frmBorrar.txtNombre.Text & "," & frmBorrar.txtPasswd.Text & "," & ValidarLoginMSG(CInt(Rdata)))
-            ElseIf EstadoLogin = Normal Or EstadoLogin = CrearNuevoPj Then
+            If EstadoLogin = Normal Or EstadoLogin = CrearNuevoPj Then
                 Call Login(ValidarLoginMSG(CInt(bRK)))
             ElseIf EstadoLogin = Dados Then
                 frmCrearPersonaje.Show vbModal
@@ -744,14 +695,6 @@ Sub HandleData(ByVal Rdata As String)
             CharIndex = Val(ReadField(1, Rdata, 44))
             charlist(CharIndex).Fx = Val(ReadField(2, Rdata, 44))
             charlist(CharIndex).FxLoopTimes = Val(ReadField(3, Rdata, 44))
-            Exit Sub
-        Case "AYM"                  ' >>>>> Pone Mensaje en Cola GM :: AYM
-            Dim N As String, n2 As String
-            Rdata = Right$(Rdata, Len(Rdata) - 3)
-            N = ReadField(2, Rdata, 176)
-            n2 = ReadField(1, Rdata, 176)
-            frmMSG.CrearGMmSg N, n2
-            frmMSG.Show , frmMain
             Exit Sub
         Case "EST"                  ' >>>>> Actualiza Estadisticas de Usuario :: EST
             Rdata = Right$(Rdata, Len(Rdata) - 3)
@@ -920,7 +863,7 @@ Sub HandleData(ByVal Rdata As String)
         Case "ERR"
             Rdata = Right$(Rdata, Len(Rdata) - 3)
             frmOldPersonaje.MousePointer = 1
-            frmPasswdSinPadrinos.MousePointer = 1
+            frmPasswd.MousePointer = 1
             If Not frmCrearPersonaje.Visible Then
 #If UsarWrench = 1 Then
                 frmMain.Socket1.Disconnect
@@ -945,21 +888,6 @@ Sub HandleData(ByVal Rdata As String)
             Exit Sub
         Case "DUMB"
             UserEstupido = True
-            Exit Sub
-        Case "NATR" ' >>>>> Recibe atributos para el nuevo personaje
-            Rdata = Right$(Rdata, Len(Rdata) - 4)
-            UserAtributos(1) = ReadField(1, Rdata, 44)
-            UserAtributos(2) = ReadField(2, Rdata, 44)
-            UserAtributos(3) = ReadField(3, Rdata, 44)
-            UserAtributos(4) = ReadField(4, Rdata, 44)
-            UserAtributos(5) = ReadField(5, Rdata, 44)
-            
-            frmCrearPersonaje.lbFuerza.Caption = UserAtributos(1)
-            frmCrearPersonaje.lbInteligencia.Caption = UserAtributos(2)
-            frmCrearPersonaje.lbAgilidad.Caption = UserAtributos(3)
-            frmCrearPersonaje.lbCarisma.Caption = UserAtributos(4)
-            frmCrearPersonaje.lbConstitucion.Caption = UserAtributos(5)
-            
             Exit Sub
         Case "MCAR"              ' >>>>> Mostrar Cartel :: MCAR
             Rdata = Right$(Rdata, Len(Rdata) - 4)
@@ -1109,34 +1037,34 @@ Sub HandleData(ByVal Rdata As String)
     
     Select Case Left$(sData, 7)
         Case "GUILDNE"
-            Rdata = Right(Rdata, Len(Rdata) - 7)
+            Rdata = Right$(Rdata, Len(Rdata) - 7)
             Call frmGuildNews.ParseGuildNews(Rdata)
             Exit Sub
         Case "PEACEDE"  'detalles de paz
-            Rdata = Right(Rdata, Len(Rdata) - 7)
+            Rdata = Right$(Rdata, Len(Rdata) - 7)
             Call frmUserRequest.recievePeticion(Rdata)
             Exit Sub
         Case "ALLIEDE"  'detalles de paz
-            Rdata = Right(Rdata, Len(Rdata) - 7)
+            Rdata = Right$(Rdata, Len(Rdata) - 7)
             Call frmUserRequest.recievePeticion(Rdata)
             Exit Sub
         Case "ALLIEPR"  'lista de prop de alianzas
-            Rdata = Right(Rdata, Len(Rdata) - 7)
+            Rdata = Right$(Rdata, Len(Rdata) - 7)
             Call frmPeaceProp.ParseAllieOffers(Rdata)
         Case "PEACEPR"  'lista de prop de paz
-            Rdata = Right(Rdata, Len(Rdata) - 7)
+            Rdata = Right$(Rdata, Len(Rdata) - 7)
             Call frmPeaceProp.ParsePeaceOffers(Rdata)
             Exit Sub
         Case "CHRINFO"
-            Rdata = Right(Rdata, Len(Rdata) - 7)
+            Rdata = Right$(Rdata, Len(Rdata) - 7)
             Call frmCharInfo.parseCharInfo(Rdata)
             Exit Sub
         Case "LEADERI"
-            Rdata = Right(Rdata, Len(Rdata) - 7)
+            Rdata = Right$(Rdata, Len(Rdata) - 7)
             Call frmGuildLeader.ParseLeaderInfo(Rdata)
             Exit Sub
         Case "CLANDET"
-            Rdata = Right(Rdata, Len(Rdata) - 7)
+            Rdata = Right$(Rdata, Len(Rdata) - 7)
             Call frmGuildBrief.ParseGuildInfo(Rdata)
             Exit Sub
         Case "SHOWFUN"
@@ -1147,7 +1075,7 @@ Sub HandleData(ByVal Rdata As String)
             UserParalizado = Not UserParalizado
             Exit Sub
         Case "PETICIO"         ' >>>>> Paralizar OK :: PARADOK
-            Rdata = Right(Rdata, Len(Rdata) - 7)
+            Rdata = Right$(Rdata, Len(Rdata) - 7)
             Call frmUserRequest.recievePeticion(Rdata)
             Call frmUserRequest.Show(vbModeless, frmMain)
             Exit Sub
@@ -1162,7 +1090,7 @@ Sub HandleData(ByVal Rdata As String)
                     End If
                     i = i + 1
                 Loop
-                Rdata = Right(Rdata, Len(Rdata) - 7)
+                Rdata = Right$(Rdata, Len(Rdata) - 7)
                 
                 If ReadField(2, Rdata, 44) = "0" Then
                     frmComerciar.List1(0).listIndex = frmComerciar.LastIndex1

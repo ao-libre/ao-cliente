@@ -384,19 +384,13 @@ Public MD5HushYo As String * 16
 
 Public Enum E_MODO
     Normal = 1
-    BorrarPj = 2
-    CrearNuevoPj = 3
-    Dados = 4
-    RecuperarPass = 5
+    CrearNuevoPj = 2
+    Dados = 3
 End Enum
 
 Public EstadoLogin As E_MODO
    
 Public Enum FxMeditar
-'    FXMEDITARCHICO = 4
-'    FXMEDITARMEDIANO = 5
-'    FXMEDITARGRANDE = 6
-'    FXMEDITARXGRANDE = 16
     CHICO = 4
     MEDIANO = 5
     GRANDE = 6

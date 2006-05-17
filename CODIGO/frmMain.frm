@@ -726,19 +726,19 @@ Dim PuedeMacrear As Boolean
 
 Implements DirectXEvent
 
-Private Sub cmdMoverHechi_Click(Index As Integer)
+Private Sub cmdMoverHechi_Click(index As Integer)
 If hlst.listIndex = -1 Then Exit Sub
 
-Select Case Index
+Select Case index
 Case 0 'subir
     If hlst.listIndex = 0 Then Exit Sub
 Case 1 'bajar
     If hlst.listIndex = hlst.ListCount - 1 Then Exit Sub
 End Select
 
-Call SendData("DESPHE" & Index + 1 & "," & hlst.listIndex + 1)
+Call SendData("DESPHE" & index + 1 & "," & hlst.listIndex + 1)
 
-Select Case Index
+Select Case index
 Case 0 'subir
     hlst.listIndex = hlst.listIndex - 1
 Case 1 'bajar
@@ -988,8 +988,8 @@ Private Sub CmdInfo_Click()
     Call SendData("INFS" & hlst.listIndex + 1)
 End Sub
 
-Private Sub DespInv_Click(Index As Integer)
-    Inventario.ScrollInventory (Index = 0)
+Private Sub DespInv_Click(index As Integer)
+    Inventario.ScrollInventory (index = 0)
 End Sub
 
 Private Sub Form_Click()
@@ -1180,10 +1180,10 @@ Private Sub hlst_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
 End Sub
 
-Private Sub Image1_Click(Index As Integer)
+Private Sub Image1_Click(index As Integer)
     Call Audio.PlayWave(SND_CLICK)
 
-    Select Case Index
+    Select Case index
         Case 0
             '[MatuX] : 01 de Abril del 2002
                 Call frmOpciones.Show(vbModeless, frmMain)
@@ -1210,8 +1210,8 @@ Private Sub Image1_Click(Index As Integer)
     End Select
 End Sub
 
-Private Sub Image3_Click(Index As Integer)
-    Select Case Index
+Private Sub Image3_Click(index As Integer)
+    Select Case index
         Case 0
             Inventario.SelectGold
             If UserGLD > 0 Then
@@ -1226,7 +1226,7 @@ Private Sub Label1_Click()
         frmSkills3.Text1(i).Caption = UserSkills(i)
     Next i
     Alocados = SkillPoints
-    frmSkills3.puntos.Caption = "Puntos:" & SkillPoints
+    frmSkills3.Puntos.Caption = "Puntos:" & SkillPoints
     frmSkills3.Show , frmMain
 End Sub
 
@@ -1441,13 +1441,11 @@ Private Sub Socket1_Connect()
     
     Second.Enabled = True
     
-    'If frmCrearPersonaje.Visible Then
     If EstadoLogin = E_MODO.CrearNuevoPj Then
         Call SendData("gIvEmEvAlcOde")
 #If SegudidadAlkon Then
         Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
 #End If
-    'ElseIf Not frmRecuperar.Visible Then
     ElseIf EstadoLogin = E_MODO.Normal Then
         Call SendData("gIvEmEvAlcOde")
 #If SegudidadAlkon Then
@@ -1458,11 +1456,6 @@ Private Sub Socket1_Connect()
 #If SegudidadAlkon Then
         Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
 #End If
-    'Else
-    ElseIf EstadoLogin = E_MODO.RecuperarPass Then
-        Dim cmd As String
-        cmd = "PASSRECO" & frmRecuperar.txtNombre.Text & "~" & frmRecuperar.txtCorreo
-        frmMain.Socket1.Write cmd, Len(cmd)
     End If
 End Sub
 
@@ -1478,7 +1471,7 @@ Private Sub Socket1_Disconnect()
     
     frmConnect.MousePointer = vbNormal
     
-    If frmPasswdSinPadrinos.Visible = True Then frmPasswdSinPadrinos.Visible = False
+    If frmPasswd.Visible = True Then frmPasswd.Visible = False
     frmCrearPersonaje.Visible = False
     frmConnect.Visible = True
     
@@ -1545,7 +1538,7 @@ Private Sub Socket1_LastError(ErrorCode As Integer, ErrorString As String, Respo
     End If
 
     If Not frmCrearPersonaje.Visible Then
-        If Not frmBorrar.Visible And Not frmRecuperar.Visible Then
+        If Not frmBorrar.Visible Then
             frmConnect.Show
         End If
     Else
@@ -1691,7 +1684,7 @@ Private Sub Winsock1_Close()
     
     frmConnect.MousePointer = vbNormal
     
-    If frmPasswdSinPadrinos.Visible = True Then frmPasswdSinPadrinos.Visible = False
+    If frmPasswd.Visible = True Then frmPasswd.Visible = False
     frmCrearPersonaje.Visible = False
     frmConnect.Visible = True
     
@@ -1749,20 +1742,12 @@ Private Sub Winsock1_Connect()
     
     Second.Enabled = True
     
-    'If frmCrearPersonaje.Visible Then
     If EstadoLogin = E_MODO.CrearNuevoPj Then
         Call SendData("gIvEmEvAlcOde")
-    'ElseIf Not frmRecuperar.Visible Then
     ElseIf EstadoLogin = E_MODO.Normal Then
         Call SendData("gIvEmEvAlcOde")
     ElseIf EstadoLogin = E_MODO.Dados Then
         Call SendData("gIvEmEvAlcOde")
-    'Else
-    ElseIf EstadoLogin = E_MODO.RecuperarPass Then
-        Dim cmd As String
-        cmd = "PASSRECO" & frmRecuperar.txtNombre.Text & "~" & frmRecuperar.txtCorreo
-        'frmMain.Socket1.Write cmd$, Len(cmd$)
-        'Call SendData(cmd$)
     End If
 End Sub
 
@@ -1835,7 +1820,7 @@ Private Sub Winsock1_Error(ByVal Number As Integer, Description As String, ByVal
     End If
 
     If Not frmCrearPersonaje.Visible Then
-        If Not frmBorrar.Visible And Not frmRecuperar.Visible Then
+        If Not frmBorrar.Visible Then
             frmConnect.Show
         End If
     Else

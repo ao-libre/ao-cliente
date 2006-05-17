@@ -270,18 +270,18 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
 If KeyCode = 27 Then
         frmCargando.Show
         frmCargando.Refresh
-        AddtoRichTextBox frmCargando.status, "Cerrando Argentum Online.", 0, 0, 0, 1, 0, 1
+        AddtoRichTextBox frmCargando.Status, "Cerrando Argentum Online.", 0, 0, 0, 1, 0, 1
         
         Call SaveGameini
         frmConnect.MousePointer = 1
         frmMain.MousePointer = 1
         prgRun = False
         
-        AddtoRichTextBox frmCargando.status, "Liberando recursos..."
+        AddtoRichTextBox frmCargando.Status, "Liberando recursos..."
         frmCargando.Refresh
         LiberarObjetosDX
-        AddtoRichTextBox frmCargando.status, "Hecho", 0, 0, 0, 1, 0, 1
-        AddtoRichTextBox frmCargando.status, "¡¡Gracias por jugar Argentum Online!!", 0, 0, 0, 1, 0, 1
+        AddtoRichTextBox frmCargando.Status, "Hecho", 0, 0, 0, 1, 0, 1
+        AddtoRichTextBox frmCargando.Status, "¡¡Gracias por jugar Argentum Online!!", 0, 0, 0, 1, 0, 1
         frmCargando.Refresh
         Call UnloadAllForms
 End If
@@ -406,7 +406,6 @@ On Error GoTo errH
 
     Call Audio.PlayWave(SND_CLICK)
     Call Shell(App.Path & "\RECUPERAR.EXE", vbNormalFocus)
-    'Call frmRecuperar.Show(vbModal, frmConnect)
     Exit Sub
 errH:
     Call MsgBox("No se encuentra el programa recuperar.exe", vbCritical, "Argentum Online")

@@ -1,5 +1,5 @@
 VERSION 5.00
-Begin VB.Form frmPasswdSinPadrinos 
+Begin VB.Form frmPasswd 
    BorderStyle     =   3  'Fixed Dialog
    ClientHeight    =   4050
    ClientLeft      =   45
@@ -123,7 +123,7 @@ Begin VB.Form frmPasswdSinPadrinos
    End
    Begin VB.Label Label2 
       Alignment       =   2  'Center
-      Caption         =   $"frmPasswdSinPadrinos.frx":0000
+      Caption         =   $"frmPasswd.frx":0000
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   8.25
@@ -160,7 +160,7 @@ Begin VB.Form frmPasswdSinPadrinos
       Width           =   1035
    End
 End
-Attribute VB_Name = "frmPasswdSinPadrinos"
+Attribute VB_Name = "frmPasswd"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True

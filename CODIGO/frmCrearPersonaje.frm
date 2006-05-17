@@ -938,11 +938,11 @@ CheckData = True
 
 End Function
 
-Private Sub boton_Click(Index As Integer)
+Private Sub boton_Click(index As Integer)
 
 Call Audio.PlayWave(SND_CLICK)
 
-Select Case Index
+Select Case index
     Case 0
         
         Dim i As Integer
@@ -974,7 +974,7 @@ Select Case Index
         
         'Barrin 3/10/03
         If CheckData() Then
-            frmPasswdSinPadrinos.Show vbModal, Me
+            frmPasswd.Show vbModal, Me
         End If
         
     Case 1
@@ -1023,20 +1023,20 @@ Private Sub TirarDados()
 
 End Sub
 
-Private Sub Command1_Click(Index As Integer)
+Private Sub Command1_Click(index As Integer)
 Call Audio.PlayWave(SND_CLICK)
 
 Dim indice
-If Index Mod 2 = 0 Then
+If index Mod 2 = 0 Then
     If SkillPoints > 0 Then
-        indice = Index \ 2
+        indice = index \ 2
         Skill(indice).Caption = Val(Skill(indice).Caption) + 1
         SkillPoints = SkillPoints - 1
     End If
 Else
     If SkillPoints < 10 Then
         
-        indice = Index \ 2
+        indice = index \ 2
         If Val(Skill(indice).Caption) > 0 Then
             Skill(indice).Caption = Val(Skill(indice).Caption) - 1
             SkillPoints = SkillPoints + 1
@@ -1044,12 +1044,12 @@ Else
     End If
 End If
 
-puntos.Caption = SkillPoints
+Puntos.Caption = SkillPoints
 End Sub
 
 Private Sub Form_Load()
 SkillPoints = 10
-puntos.Caption = SkillPoints
+Puntos.Caption = SkillPoints
 Me.Picture = LoadPicture(App.Path & "\graficos\CP-Interface.jpg")
 imgHogar.Picture = LoadPicture(App.Path & "\graficos\CP-Ullathorpe.jpg")
 
