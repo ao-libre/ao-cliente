@@ -59,6 +59,9 @@ Public Const SND_DICE As String = "cupdice.Wav"
 Public Const SND_LLUVIAINEND As String = "lluviainend.wav"
 Public Const SND_LLUVIAOUTEND As String = "lluviaoutend.wav"
 
+' Head index of the casper. Used to know if a char is killed
+Public Const CASPER_HEAD As Integer = 500
+
 'Musica
 Public Const MIdi_Inicio As Byte = 6
 

@@ -47,3 +47,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 28/04/2006: Agregué la clase Timer, reemplazando a los antiguos Timers que permitían en corte de intervalos. (Integer)
  * 13/04/2006: Modifiqué algunas cositas de la clase MainTimer para qu sea más segura y abstraiga sus datos. (Maraxus)
  * 17/04/2006: Eliminé código que no se usaba y renombré el frmPasswdSinPadrinos por frmPasswd. (Maraxus)
+ * 18/04/2006: Corregí el .vbp que no se adaptaba al cambio de nombres de ayer, eliminé el formulario de recuperar Passwords y el de borrar PJs. (Maraxus)

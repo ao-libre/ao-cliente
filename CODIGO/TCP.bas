@@ -112,7 +112,7 @@ Sub HandleData(ByVal Rdata As String)
         Case "NAVEG"
             UserNavegando = Not UserNavegando
             Exit Sub
-        Case "FINOK" ' Graceful exit ;))
+        Case "FINOK" ' Graceful exit ;)
 #If UsarWrench = 1 Then
             frmMain.Socket1.Disconnect
 #Else
@@ -569,7 +569,7 @@ Sub HandleData(ByVal Rdata As String)
             Rdata = Right$(Rdata, Len(Rdata) - 2)
             
             CharIndex = Val(ReadField(1, Rdata, 44))
-            charlist(CharIndex).muerto = Val(ReadField(3, Rdata, 44)) = 500
+            charlist(CharIndex).muerto = Val(ReadField(3, Rdata, 44)) = CASPER_HEAD
             charlist(CharIndex).Body = BodyData(Val(ReadField(2, Rdata, 44)))
             charlist(CharIndex).Head = HeadData(Val(ReadField(3, Rdata, 44)))
             charlist(CharIndex).Heading = Val(ReadField(4, Rdata, 44))

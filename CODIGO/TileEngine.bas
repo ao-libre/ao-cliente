@@ -1881,6 +1881,7 @@ PP.Bottom = WindowTileHeight * TilePixelHeight
 '            End If
 '[END]'
 End Sub
+
 Public Function RenderSounds()
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
@@ -1952,7 +1953,7 @@ Sub LoadGraphics()
     RLluvia(4).Bottom = 256: RLluvia(5).Bottom = 256: RLluvia(6).Bottom = 256: RLluvia(7).Bottom = 256
     
     'We are done!
-    AddtoRichTextBox frmCargando.status, "Hecho.", , , , 1, , False
+    AddtoRichTextBox frmCargando.Status, "Hecho.", , , , 1, , False
 End Sub
 
 '[END]'
@@ -2053,7 +2054,7 @@ LTLluvia(2) = 480
 LTLluvia(3) = 608
 LTLluvia(4) = 736
 
-AddtoRichTextBox frmCargando.status, "Cargando Gráficos....", 0, 0, 0, , , True
+AddtoRichTextBox frmCargando.Status, "Cargando Gráficos....", 0, 0, 0, , , True
 Call LoadGraphics
 
 InitTileEngine = True

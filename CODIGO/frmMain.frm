@@ -575,6 +575,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1538,9 +1539,7 @@ Private Sub Socket1_LastError(ErrorCode As Integer, ErrorString As String, Respo
     End If
 
     If Not frmCrearPersonaje.Visible Then
-        If Not frmBorrar.Visible Then
-            frmConnect.Show
-        End If
+        frmConnect.Show
     Else
         frmCrearPersonaje.MousePointer = 0
     End If
@@ -1820,9 +1819,7 @@ Private Sub Winsock1_Error(ByVal Number As Integer, Description As String, ByVal
     End If
 
     If Not frmCrearPersonaje.Visible Then
-        If Not frmBorrar.Visible Then
-            frmConnect.Show
-        End If
+        frmConnect.Show
     Else
         frmCrearPersonaje.MousePointer = 0
     End If

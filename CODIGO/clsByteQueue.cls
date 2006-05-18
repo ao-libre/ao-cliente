@@ -266,6 +266,27 @@ Public Function WriteLong(ByVal value As Long) As Long
 End Function
 
 ''
+' Writes a boolean value at the end of the queue
+'
+' @param value The value to be written
+' @return   The number of bytes written
+' @see PeekBoolean
+' @see ReadBoolean
+
+Public Function WriteBoolean(ByVal value As Boolean) As Long
+'***************************************************
+'Autor: Juan Martín Sotuyo Dodero (Maraxus)
+'Last Modification: 04/27/06
+'Writes a byte to the queue
+'***************************************************
+    Dim buf(0) As Byte
+    
+    If value Then buf(0) = 1
+    
+    WriteBoolean = WriteData(buf, 1)
+End Function
+
+''
 ' Writes a fixed length ASCII string at the end of the queue
 '
 ' @param value The string to be written
@@ -454,6 +475,29 @@ Public Function ReadLong() As Long
     
     'Copy data to temp buffer
     Call CopyMemory(ReadLong, buf(0), 4)
+End Function
+
+''
+' Reads a Boolean from the begining of the queue and removes it
+'
+' @return   The read value
+' @remarks  Read methods removes the data from the queue.
+' Data removed can't be recovered by the queue in any way
+' @see PeekBoolean
+' @see WriteBoolean
+
+Public Function ReadBoolean() As Boolean
+'***************************************************
+'Autor: Juan Martín Sotuyo Dodero (Maraxus)
+'Last Modification: 04/27/06
+'Reads a Boolean from the queue and removes it
+'***************************************************
+    Dim buf(0) As Byte
+    
+    'Read the data and remove it
+    Call RemoveData(ReadData(buf, 1))
+    
+    If buf(0) = 1 Then ReadBoolean = True
 End Function
 
 ''
@@ -682,6 +726,28 @@ Public Function PeekLong() As Long
     
     'Copy data to temp buffer
     Call CopyMemory(PeekLong, buf(0), 4)
+End Function
+
+''
+' Reads a Bollean from the begining of the queue but DOES NOT remove it.
+'
+' @return   The read value.
+' @remarks  Peek methods, unlike Read methods, don't remove the data from the queue.
+' @see ReadBoolean
+' @see WriteBoolean
+
+Public Function PeekBoolean() As Boolean
+'***************************************************
+'Autor: Juan Martín Sotuyo Dodero (Maraxus)
+'Last Modification: 04/27/06
+'Reads a Boolean from the queue but doesn't removes it
+'***************************************************
+    Dim buf(0) As Byte
+    
+    'Read the data and remove it
+    Call ReadData(buf, 1)
+    
+    If buf(0) = 1 Then PeekBoolean = True
 End Function
 
 ''
