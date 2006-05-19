@@ -1,11 +1,12 @@
 VERSION 5.00
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmOpciones 
    BackColor       =   &H00000000&
    BorderStyle     =   3  'Fixed Dialog
    ClientHeight    =   3195
    ClientLeft      =   45
    ClientTop       =   45
-   ClientWidth     =   4680
+   ClientWidth     =   4740
    ControlBox      =   0   'False
    BeginProperty Font 
       Name            =   "Tahoma"
@@ -21,16 +22,76 @@ Begin VB.Form frmOpciones
    MaxButton       =   0   'False
    MinButton       =   0   'False
    ScaleHeight     =   3195
-   ScaleWidth      =   4680
+   ScaleWidth      =   4740
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
+   Begin VB.Frame Frame2 
+      BackColor       =   &H00000000&
+      Caption         =   "Audio"
+      ForeColor       =   &H00FFFFFF&
+      Height          =   975
+      Left            =   240
+      TabIndex        =   7
+      Top             =   600
+      Width           =   4215
+      Begin MSComctlLib.Slider Slider1 
+         Height          =   255
+         Index           =   0
+         Left            =   1080
+         TabIndex        =   10
+         Top             =   240
+         Width           =   3015
+         _ExtentX        =   5318
+         _ExtentY        =   450
+         _Version        =   393216
+         BorderStyle     =   1
+         Min             =   -51
+         Max             =   49
+      End
+      Begin VB.CheckBox Check1 
+         BackColor       =   &H00000000&
+         Caption         =   "Sonidos"
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Index           =   1
+         Left            =   120
+         TabIndex        =   9
+         Top             =   600
+         Width           =   855
+      End
+      Begin VB.CheckBox Check1 
+         BackColor       =   &H00000000&
+         Caption         =   "Musica"
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Index           =   0
+         Left            =   120
+         TabIndex        =   8
+         Top             =   240
+         Width           =   855
+      End
+      Begin MSComctlLib.Slider Slider1 
+         Height          =   255
+         Index           =   1
+         Left            =   1080
+         TabIndex        =   11
+         Top             =   600
+         Width           =   3015
+         _ExtentX        =   5318
+         _ExtentY        =   450
+         _Version        =   393216
+         BorderStyle     =   1
+         Min             =   -51
+         Max             =   49
+      End
+   End
    Begin VB.Frame Frame1 
       BackColor       =   &H00000000&
       Caption         =   "Diálogos de clan"
       ForeColor       =   &H00FFFFFF&
       Height          =   750
       Left            =   255
-      TabIndex        =   4
+      TabIndex        =   2
       Top             =   1665
       Width           =   4230
       Begin VB.TextBox txtCantMensajes 
@@ -38,7 +99,7 @@ Begin VB.Form frmOpciones
          Height          =   285
          Left            =   2925
          MaxLength       =   1
-         TabIndex        =   7
+         TabIndex        =   5
          Text            =   "5"
          Top             =   315
          Width           =   450
@@ -49,7 +110,7 @@ Begin VB.Form frmOpciones
          ForeColor       =   &H00FFFFFF&
          Height          =   270
          Left            =   1770
-         TabIndex        =   6
+         TabIndex        =   4
          Top             =   315
          Value           =   -1  'True
          Width           =   1560
@@ -60,7 +121,7 @@ Begin VB.Form frmOpciones
          ForeColor       =   &H00FFFFFF&
          Height          =   270
          Left            =   105
-         TabIndex        =   5
+         TabIndex        =   3
          Top             =   315
          Width           =   1560
       End
@@ -70,7 +131,7 @@ Begin VB.Form frmOpciones
          ForeColor       =   &H00FFFFFF&
          Height          =   240
          Left            =   3480
-         TabIndex        =   8
+         TabIndex        =   6
          Top             =   345
          Width           =   750
       End
@@ -81,30 +142,8 @@ Begin VB.Form frmOpciones
       Left            =   960
       MouseIcon       =   "frmOpciones.frx":0152
       MousePointer    =   99  'Custom
-      TabIndex        =   2
-      Top             =   2700
-      Width           =   2790
-   End
-   Begin VB.CommandButton Command1 
-      Caption         =   "Sonidos Activados"
-      Height          =   345
-      Index           =   1
-      Left            =   960
-      MouseIcon       =   "frmOpciones.frx":02A4
-      MousePointer    =   99  'Custom
-      TabIndex        =   1
-      Top             =   1200
-      Width           =   2790
-   End
-   Begin VB.CommandButton Command1 
-      Caption         =   "Musica Activada"
-      Height          =   345
-      Index           =   0
-      Left            =   960
-      MouseIcon       =   "frmOpciones.frx":03F6
-      MousePointer    =   99  'Custom
       TabIndex        =   0
-      Top             =   780
+      Top             =   2700
       Width           =   2790
    End
    Begin VB.Label Label1 
@@ -123,7 +162,7 @@ Begin VB.Form frmOpciones
       ForeColor       =   &H00FFFFFF&
       Height          =   375
       Left            =   960
-      TabIndex        =   3
+      TabIndex        =   1
       Top             =   180
       Width           =   2775
    End
@@ -169,35 +208,36 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private Sub Command1_Click(index As Integer)
-
+Private Sub Check1_Click(Index As Integer)
 Call Audio.PlayWave(SND_CLICK)
-
-Select Case index
+Select Case Index
     Case 0
-        If Musica Then
+        If Check1(0).value = vbUnchecked Then
             Musica = False
-            Command1(0).Caption = "Musica Desactivada"
             Audio.StopMidi
+            Slider1(0).Enabled = False
         Else
             Musica = True
-            Command1(0).Caption = "Musica Activada"
             Call Audio.PlayMIDI(CStr(currentMidi) & ".mid")
+            Slider1(0).Enabled = True
+            Slider1(0).value = Audio.MusicVolume / 200
         End If
     Case 1
-    
-        If Sound Then
+        If Check1(1).value = vbUnchecked Then
             Sound = False
-            Command1(1).Caption = "Sonidos Desactivados"
             Call Audio.StopWave
             RainBufferIndex = 0
             frmMain.IsPlaying = PlayLoop.plNone
+            Slider1(1).Enabled = False
         Else
             Sound = True
-            Command1(1).Caption = "Sonidos Activados"
+            Slider1(1).Enabled = True
+            Slider1(1).value = Audio.SoundVolume / 200
         End If
 End Select
 End Sub
+
+
 
 Private Sub Command2_Click()
 Me.Visible = False
@@ -205,16 +245,24 @@ End Sub
 
 Private Sub Form_Load()
     If Musica Then
-        Command1(0).Caption = "Musica Activada"
+        Check1(0).value = vbChecked
+        Slider1(0).Enabled = True
     Else
-        Command1(0).Caption = "Musica Desactivada"
+        Check1(0).value = vbUnchecked
+        Slider1(0).Enabled = False
     End If
     
     If Sound Then
-        Command1(1).Caption = "Sonidos Activados"
+        Check1(1).value = vbChecked
+        Slider1(1).Enabled = True
     Else
-        Command1(1).Caption = "Sonidos Desactivados"
+        Check1(1).value = vbUnchecked
+        Slider1(1).Enabled = False
     End If
+    
+    Slider1(0).value = Audio.MusicVolume / 200
+    Slider1(1).value = Audio.SoundVolume / 200
+End Select
 End Sub
 
 Private Sub optConsola_Click()
@@ -223,6 +271,15 @@ End Sub
 
 Private Sub optPantalla_Click()
     DialogosClanes.Activo = True
+End Sub
+
+Private Sub Slider1_Click(Index As Integer)
+    Select Case Index
+        Case 0
+            Audio.MusicVolume = Slider1(0).value * 200 + 200
+        Case 1
+            Audio.SoundVolume = Slider1(1).value * 200 + 200
+    End Select
 End Sub
 
 Private Sub txtCantMensajes_LostFocus()
