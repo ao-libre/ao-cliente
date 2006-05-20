@@ -658,6 +658,9 @@ Sub HandleData(ByVal Rdata As String)
                 Call Login(ValidarLoginMSG(CInt(bRK)))
             ElseIf EstadoLogin = Dados Then
                 frmCrearPersonaje.Show vbModal
+#If SeguridadAlkon Then
+                Call ProtectForm(frmCrearPersonaje)
+#End If
             End If
             Exit Sub
         Case "BKW"                  ' >>>>> Pausa :: BKW

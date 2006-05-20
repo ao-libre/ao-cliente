@@ -323,6 +323,10 @@ End Function
 Sub UnloadAllForms()
 On Error Resume Next
 
+#If SeguridadAlkon Then
+    Call UnprotectForm
+#End If
+
     Dim mifrm As Form
     
     For Each mifrm In Forms
@@ -373,6 +377,12 @@ Sub SetConnected()
     frmMain.Label8.Caption = UserName
     'Load main form
     frmMain.Visible = True
+#If SeguridadAlkon Then
+    'Unprotect character creation and protect the main form
+    Call UnprotectForm
+    Call ProtectForm(frmMain)
+#End If
+
 End Sub
 
 Sub CargarTip()
@@ -789,6 +799,7 @@ On Error Resume Next
     'Obtener el HushMD5
     Dim fMD5HushYo As String * 32
     fMD5HushYo = md5.GetMD5File(App.Path & "\" & App.EXEName & ".exe")
+    'fMD5HushYo = md5.GetMD5File(App.Path & "\Argentum.exe")
     Call md5.MD5Reset
     MD5HushYo = txtOffset(hexMd52Asc(fMD5HushYo), 55)
     
@@ -912,12 +923,10 @@ UserMap = 1
 
     'Seteamos los itervalos de los timers
     Call MainTimer.SetInterval(TimersIndex.Ataque, 2000)
-    
     Call MainTimer.SetInterval(TimersIndex.Trabajo, 600)
     
-    'Iniciamos los
+    'Iniciamos los timers
     Call MainTimer.Start(TimersIndex.Ataque)
-    
     Call MainTimer.Start(TimersIndex.Trabajo)
     
     Do While prgRun
@@ -954,11 +963,11 @@ UserMap = 1
         
         'Nuevo sistema de Timers by Integer
         'Elimina la posibilidad de cortar intervalos.
-        If MainTimer.Check(Ataque) = True Then
+        If MainTimer.Check(Ataque) Then
             UserCanAttack = 1
             UserPuedeRefrescar = True
         End If
-        If MainTimer.Check(Trabajo) = True Then
+        If MainTimer.Check(Trabajo) Then
             UserCanAttack = 1
             UserPuedeRefrescar = True
         End If

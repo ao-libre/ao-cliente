@@ -822,6 +822,13 @@ Private Sub FPS_Timer()
 If logged And Not frmMain.Visible Then
     Unload frmConnect
     frmMain.Show
+    
+#If SeguridadAlkon Then
+    'Unprotect character creation and protect the main form
+    Call UnprotectForm
+    Call ProtectForm(frmMain)
+#End If
+
 End If
     
 End Sub

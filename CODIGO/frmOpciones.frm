@@ -47,6 +47,7 @@ Begin VB.Form frmOpciones
          BorderStyle     =   1
          Min             =   -51
          Max             =   49
+         TickStyle       =   3
       End
       Begin VB.CheckBox Check1 
          BackColor       =   &H00000000&
@@ -83,6 +84,7 @@ Begin VB.Form frmOpciones
          BorderStyle     =   1
          Min             =   -51
          Max             =   49
+         TickStyle       =   3
       End
    End
    Begin VB.Frame Frame1 
@@ -208,9 +210,9 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private Sub Check1_Click(Index As Integer)
+Private Sub Check1_Click(index As Integer)
 Call Audio.PlayWave(SND_CLICK)
-Select Case Index
+Select Case index
     Case 0
         If Check1(0).value = vbUnchecked Then
             Musica = False
@@ -247,6 +249,7 @@ Private Sub Form_Load()
     If Musica Then
         Check1(0).value = vbChecked
         Slider1(0).Enabled = True
+        Slider1(0).value = Audio.MusicVolume / 200
     Else
         Check1(0).value = vbUnchecked
         Slider1(0).Enabled = False
@@ -255,14 +258,11 @@ Private Sub Form_Load()
     If Sound Then
         Check1(1).value = vbChecked
         Slider1(1).Enabled = True
+        Slider1(1).value = Audio.SoundVolume / 200
     Else
         Check1(1).value = vbUnchecked
         Slider1(1).Enabled = False
     End If
-    
-    Slider1(0).value = Audio.MusicVolume / 200
-    Slider1(1).value = Audio.SoundVolume / 200
-End Select
 End Sub
 
 Private Sub optConsola_Click()
@@ -273,8 +273,8 @@ Private Sub optPantalla_Click()
     DialogosClanes.Activo = True
 End Sub
 
-Private Sub Slider1_Click(Index As Integer)
-    Select Case Index
+Private Sub Slider1_Click(index As Integer)
+    Select Case index
         Case 0
             Audio.MusicVolume = Slider1(0).value * 200 + 200
         Case 1

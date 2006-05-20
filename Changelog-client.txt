@@ -49,3 +49,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 17/04/2006: Eliminé código que no se usaba y renombré el frmPasswdSinPadrinos por frmPasswd. (Maraxus)
  * 18/04/2006: Corregí el .vbp que no se adaptaba al cambio de nombres de ayer, eliminé el formulario de recuperar Passwords y el de borrar PJs. (Maraxus)
  * 19/05/2006: Agregué sliders para el volumen del audio en el frmOpciones y le arregle un poc su interfaz. (Integer)
+ * 20/05/2006: Corregí un rt5 con los sliders al estar desactivada la música. (Integer)
