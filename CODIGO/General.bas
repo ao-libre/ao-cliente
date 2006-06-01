@@ -921,13 +921,17 @@ UserMap = 1
     prgRun = True
     pausa = False
 
-    'Seteamos los itervalos de los timers
-    Call MainTimer.SetInterval(TimersIndex.Ataque, 2000)
-    Call MainTimer.SetInterval(TimersIndex.Trabajo, 600)
+    'Set the intervals of timers
+    Call MainTimer.SetInterval(TimersIndex.Attack, 2000)
+    Call MainTimer.SetInterval(TimersIndex.Work, 400)
+    Call MainTimer.SetInterval(TimersIndex.UseItem, 100)
+    Call MainTimer.SetInterval(TimersIndex.SendRPU, 2000)
     
-    'Iniciamos los timers
-    Call MainTimer.Start(TimersIndex.Ataque)
-    Call MainTimer.Start(TimersIndex.Trabajo)
+    'Init timers
+    Call MainTimer.Start(TimersIndex.Attack)
+    Call MainTimer.Start(TimersIndex.Work)
+    Call MainTimer.Start(TimersIndex.UseItem)
+    Call MainTimer.Start(TimersIndex.SendRPU)
     
     Do While prgRun
         'Sólo dibujamos si la ventana no está minimizada
@@ -959,17 +963,6 @@ UserMap = 1
             
             FramesPerSecCounter = 0
             lFrameTimer = GetTickCount
-        End If
-        
-        'Nuevo sistema de Timers by Integer
-        'Elimina la posibilidad de cortar intervalos.
-        If MainTimer.Check(Ataque) Then
-            UserCanAttack = 1
-            UserPuedeRefrescar = True
-        End If
-        If MainTimer.Check(Trabajo) Then
-            UserCanAttack = 1
-            UserPuedeRefrescar = True
         End If
 
         

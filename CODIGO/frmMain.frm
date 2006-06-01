@@ -115,11 +115,6 @@ Begin VB.Form frmMain
       Left            =   3120
       Top             =   2520
    End
-   Begin VB.Timer Trabajo 
-      Enabled         =   0   'False
-      Left            =   4080
-      Top             =   2520
-   End
    Begin VB.Timer FPS 
       Interval        =   1000
       Left            =   5040
@@ -534,11 +529,6 @@ Begin VB.Form frmMain
          Width           =   465
       End
    End
-   Begin VB.Timer Attack 
-      Enabled         =   0   'False
-      Left            =   4560
-      Top             =   2520
-   End
    Begin VB.TextBox SendTxt 
       BackColor       =   &H00000000&
       BeginProperty Font 
@@ -575,7 +565,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -904,18 +893,6 @@ End Sub
 '[END]'
 
 ''''''''''''''''''''''''''''''''''''''
-'     TIMERS                         '
-''''''''''''''''''''''''''''''''''''''
-
-Private Sub Trabajo_Timer()
-    'NoPuedeUsar = False
-End Sub
-
-Private Sub Attack_Timer()
-    'UserCanAttack = 1
-End Sub
-
-''''''''''''''''''''''''''''''''''''''
 '     ITEM CONTROL                   '
 ''''''''''''''''''''''''''''''''''''''
 
@@ -957,7 +934,7 @@ Private Sub TrainingMacro_Timer()
     If Comerciando Then Exit Sub
     Select Case SecuenciaMacroHechizos
         Case 0
-            If hlst.List(hlst.listIndex) <> "(None)" And UserCanAttack = 1 Then
+            If hlst.List(hlst.listIndex) <> "(None)" And MainTimer.Check(TimersIndex.Attack) Then
                 Call SendData("LH" & hlst.listIndex + 1)
                 Call SendData("UK" & Magia)
                 'UserCanAttack = 0
@@ -965,24 +942,20 @@ Private Sub TrainingMacro_Timer()
             SecuenciaMacroHechizos = 1
         Case 1
             Call ConvertCPtoTP(MainViewShp.Left, MainViewShp.Top, MouseX, MouseY, tX, tY)
-            If (UsingSkill = Magia Or UsingSkill = Proyectiles) And UserCanAttack = 0 Then Exit Sub
+            If (UsingSkill = Magia Or UsingSkill = Proyectiles) And Not MainTimer.Check(TimersIndex.Attack) Then Exit Sub
             SendData "WLC" & tX & "," & tY & "," & UsingSkill
-            If UsingSkill = Magia Or UsingSkill = Proyectiles Then UserCanAttack = 0
             UsingSkill = 0
             SecuenciaMacroHechizos = 0
         Case Else
             DesactivarMacroHechizos
     End Select
-    
 End Sub
 
-
 Private Sub cmdLanzar_Click()
-    If hlst.List(hlst.listIndex) <> "(None)" And UserCanAttack = 1 Then
+    If hlst.List(hlst.listIndex) <> "(None)" And MainTimer.Check(TimersIndex.Attack) Then
         Call SendData("LH" & hlst.listIndex + 1)
         Call SendData("UK" & Magia)
         UsaMacro = True
-        'UserCanAttack = 0
     End If
 End Sub
 
@@ -1027,10 +1000,9 @@ Private Sub Form_Click()
                     SendData "LC" & tX & "," & tY
                 Else
                     frmMain.MousePointer = vbDefault
-                    If (UsingSkill = Magia Or UsingSkill = Proyectiles) And UserCanAttack = 0 Then Exit Sub
+                    If (UsingSkill = Magia Or UsingSkill = Proyectiles) And Not MainTimer.Check(TimersIndex.Attack) Then Exit Sub
                     If TrainingMacro.Enabled Then DesactivarMacroHechizos
                     SendData "WLC" & tX & "," & tY & "," & UsingSkill
-                    If UsingSkill = Magia Or UsingSkill = Proyectiles Then UserCanAttack = 0
                     UsingSkill = 0
                 End If
             Else
@@ -1057,7 +1029,7 @@ On Error Resume Next
 #If SeguridadAlkon Then
     If LOGGING Then Call CheatingDeath.StoreKey(KeyCode, False)
 #End If
-        
+    
     If (Not SendTxt.Visible) And (Not SendCMSTXT.Visible) And _
        ((KeyCode >= 65 And KeyCode <= 90) Or _
        (KeyCode >= 48 And KeyCode <= 57)) Then
@@ -1091,14 +1063,11 @@ On Error Resume Next
                 Case vbKeyT:
                     Call TirarItem
                 Case vbKeyU:
-                    If Not NoPuedeUsar Then
-                        NoPuedeUsar = True
+                    If MainTimer.Check(TimersIndex.UseItem) Then _
                         Call UsarItem
-                    End If
                 Case vbKeyL:
-                    If UserPuedeRefrescar Then
+                    If MainTimer.Check(TimersIndex.SendRPU) Then
                         Call SendData("RPU")
-                        UserPuedeRefrescar = False
                         Beep
                     End If
             End Select
@@ -1122,16 +1091,10 @@ On Error Resume Next
                 If Not FPSFLAG Then _
                     frmMain.Caption = "Argentum Online" & " v " & App.Major & "." & App.Minor & "." & App.Revision
             Case vbKeyControl:
-                If (UserCanAttack = 1) And _
+                If MainTimer.Check(TimersIndex.Attack) And _
                    (Not UserDescansar) And _
                    (Not UserMeditar) Then
                         SendData "AT"
-                        UserCanAttack = 0
-                        
-                        '[ANIM ATAK]
-'                        CharList(UserCharIndex).Arma.WeaponWalk(CharList(UserCharIndex).Heading).Started = 1
-'                        CharList(UserCharIndex).Arma.WeaponAttack = GrhData(CharList(UserCharIndex).Arma.WeaponWalk(CharList(UserCharIndex).Heading).GrhIndex).NumFrames + 1
-                        
                 End If
             Case vbKeyF5:
                 Call frmOpciones.Show(vbModeless, frmMain)
@@ -1647,8 +1610,7 @@ Case 0 'Inventario
     Case 2 'Tirar
         Call TirarItem
     Case 3 'Usar
-        If Not NoPuedeUsar Then
-            NoPuedeUsar = True
+        If MainTimer.Check(TimersIndex.UseItem) Then
             Call UsarItem
         End If
     Case 3 'equipar

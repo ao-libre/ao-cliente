@@ -47,7 +47,7 @@ Option Explicit
 ' How many timers we are going to use-
 '
 ' @see See MainTimer.CreateAll
-Private Const CANTIDADTIMERS As Byte = 2
+Private Const CANTIDADTIMERS As Byte = 4
 
 ''
 ' A Timer data structure.
@@ -70,11 +70,15 @@ Dim Timer(1 To CANTIDADTIMERS) As Timer
 ''
 ' Timer´s Index.
 '
-' @param Ataque Controls the Combat system.
-' @param trabajo Controls the Work system.
+' @param Attack     Controls the Combat system.
+' @param Work       Controls the Work system.
+' @param UseItem    Controls the usage of items.
+' @param SendRPU    Controls the use of the "L" to request a pos update.
 Public Enum TimersIndex
-    Ataque = 1
-    Trabajo = 2
+    Attack = 1
+    Work = 2
+    UseItem = 3
+    SendRPU = 4
 End Enum
 
 

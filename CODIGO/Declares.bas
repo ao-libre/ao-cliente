@@ -324,7 +324,6 @@ Public UserGLD As Long
 Public UserLvl As Integer
 Public UserPort As Integer
 Public UserServerIP As String
-Public UserCanAttack As Integer
 Public UserEstado As Byte '0 = Vivo & 1 = Muerto
 Public UserPasarNivel As Long
 Public UserExp As Long
@@ -375,13 +374,8 @@ Public Alocados As Integer
 Public flags() As Integer
 Public Oscuridad As Integer
 Public logged As Boolean
-Public NoPuedeUsar As Boolean
-
-'Barrin 30/9/03
-Public UserPuedeRefrescar As Boolean
 
 Public UsingSkill As Integer
-
 
 Public MD5HushYo As String * 16
 
@@ -431,8 +425,8 @@ Public Declare Function writeprivateprofilestring Lib "kernel32" Alias "WritePri
 Public Declare Function getprivateprofilestring Lib "kernel32" Alias "GetPrivateProfileStringA" (ByVal lpApplicationname As String, ByVal lpKeyname As Any, ByVal lpdefault As String, ByVal lpreturnedstring As String, ByVal nsize As Long, ByVal lpfilename As String) As Long
 
 'Teclado
-Public Declare Function GetKeyState Lib "User32" (ByVal nVirtKey As Long) As Integer
-Public Declare Function GetAsyncKeyState Lib "User32" (ByVal nVirtKey As Long) As Integer
+Public Declare Function GetKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
+Public Declare Function GetAsyncKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
 
 Public Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
 

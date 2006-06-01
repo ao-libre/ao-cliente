@@ -21,13 +21,13 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 18/03/2006: Corregí un bug que te permitía asignar un skill por encima de 100. (Maraxus).
  * 30/03/2006: Corregí bugs que evitaban la conexión del cliente con seguridad de Alkon. (Maraxus).
  * 31/03/2006: El NLOGIN no envía losa tributos, ya que estos no son usados por el servidor. (Maraxus).
- * 1/04/2006: Corregí el bug que no actualizaba la posición del rect donde debía renderizar. (Maraxus).
- * 1/04/2006: El ValCode y MD5 se llevaron al final de OLOGIN para evitar problemas si el MD5 tenía comas. (Maraxus).
- * 1/04/2006: Eliminé el head y body del mensaje NLOGIN (eran ceros). (Maraxus).
- * 6/04/2006: Agregué un error manager al insertar elementos a la lista de surfaces dinámica (a algunos OS no le gusta y deben usar el estático). (Maraxus).
- * 6/04/2006: Corregí un bug que permitía utilizar el item de arriba a la izquierda al hacer doble click en un slot vacío. (Maraxus).
- * 6/04/2006: Corregí los accesos inválidos con el AO Dinámico en OS como XP. (Maraxus).
- * 6/04/2006: Corregí un bug en el AO dinámico que producía una pérdida de performance al llenarse la memoria. (Maraxus).
+ * 01/04/2006: Corregí el bug que no actualizaba la posición del rect donde debía renderizar. (Maraxus).
+ * 01/04/2006: El ValCode y MD5 se llevaron al final de OLOGIN para evitar problemas si el MD5 tenía comas. (Maraxus).
+ * 01/04/2006: Eliminé el head y body del mensaje NLOGIN (eran ceros). (Maraxus).
+ * 06/04/2006: Agregué un error manager al insertar elementos a la lista de surfaces dinámica (a algunos OS no le gusta y deben usar el estático). (Maraxus).
+ * 06/04/2006: Corregí un bug que permitía utilizar el item de arriba a la izquierda al hacer doble click en un slot vacío. (Maraxus).
+ * 06/04/2006: Corregí los accesos inválidos con el AO Dinámico en OS como XP. (Maraxus).
+ * 06/04/2006: Corregí un bug en el AO dinámico que producía una pérdida de performance al llenarse la memoria. (Maraxus).
  * 12/04/2006: Corregí numerosos bugs con el engine de sonido, y un problema de performance con el inventario gráfico. (Maraxus).
  * 12/04/2006: Corregí bugs varios a lo largo del código. (Maraxus).
  * 14/04/2006: Los RMs no se escuchan al caminar. (Maraxus).
@@ -48,5 +48,6 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 13/04/2006: Modifiqué algunas cositas de la clase MainTimer para qu sea más segura y abstraiga sus datos. (Maraxus)
  * 17/04/2006: Eliminé código que no se usaba y renombré el frmPasswdSinPadrinos por frmPasswd. (Maraxus)
  * 18/04/2006: Corregí el .vbp que no se adaptaba al cambio de nombres de ayer, eliminé el formulario de recuperar Passwords y el de borrar PJs. (Maraxus)
- * 19/05/2006: Agregué sliders para el volumen del audio en el frmOpciones y le arregle un poc su interfaz. (Integer)
- * 20/05/2006: Corregí un rt5 con los sliders al estar desactivada la música. (Integer)
+ * 19/05/2006: Agregué sliders para el volumen del audio en el frmOpciones y le arreglé un poco su interfaz. (Integer)
+ * 20/05/2006: Corregí un rt5 con los sliders al estar desactivada la música. (Maraxus)
+ * 01/06/2006: Terminé de implementar la clase MainTimer y puse nuevos timers. (Maraxus)
