@@ -52,3 +52,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 20/05/2006: Corregí un rt5 con los sliders al estar desactivada la música. (Maraxus)
  * 01/06/2006: Terminé de implementar la clase MainTimer y puse nuevos timers. (Maraxus)
  * 09/06/2006: Ahora el macro de hechizos funciona correctamente. (Integer)
+ * 11/06/2006: Se corrigió un bug que permitía desplazar hechizos desde el inventario. (Integer)
