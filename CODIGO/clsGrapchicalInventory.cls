@@ -466,6 +466,10 @@ Private Sub InventoryWindow_MouseMove(Button As Integer, Shift As Integer, X As 
     Dim temp_y As Integer
     Dim TempItem As Integer
     
+    'Exit if it got outside the control's area
+    If X < 0 Or Y < 0 Or X > InventoryWindow.Width Or Y > InventoryWindow.Height Then _
+        Exit Sub
+    
     temp_x = X \ TilePixelWidth
     temp_y = Y \ TilePixelHeight
     
@@ -485,6 +489,10 @@ Private Sub InventoryWindow_MouseUp(Button As Integer, Shift As Integer, X As Si
 '***************************************************
     'Store previously selected item
     Dim prevSelItem As Long
+    
+    'Exit if it got outside the control's area
+    If X < 0 Or Y < 0 Or X > InventoryWindow.Width Or Y > InventoryWindow.Height Then _
+        Exit Sub
     
     prevSelItem = InvSelectedItem
 
