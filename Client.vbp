@@ -17,7 +17,6 @@ Module=Mod_Declaraciones; CODIGO\Declares.bas
 Module=Mod_DX; CODIGO\DX_InIt.bas
 Module=Mod_General; CODIGO\General.bas
 Module=Mod_ErrorLOG; CODIGO\Mod_ErrorLOG.bas
-Module=Mod_MODOS_DE_VIDEO; CODIGO\MODOS_DE_VIDEO.bas
 Module=Mod_TCP; CODIGO\TCP.bas
 Module=Mod_TileEngine; CODIGO\TileEngine.bas
 Form=CODIGO\frmMSG.frm
