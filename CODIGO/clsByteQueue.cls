@@ -53,6 +53,12 @@ Option Base 0       'It's the default, but we make it explicit just in case...
 Private Const DATA_BUFFER As Long = 8192
 
 ''
+' The error number thrown when there is not enough data in
+' the buffer to be read or not enough space to write.
+' It's 9 (subscript out of range) + 40000
+Private Const NOT_ENOUGH_DATA As Long = 40009
+
+''
 ' The byte data
 Dim data() As Byte
 
@@ -102,6 +108,34 @@ Private Sub Class_Terminate()
 End Sub
 
 ''
+' Copies another ByteQueue's data into this object.
+'
+' @param source The ByteQueue whose buffer will eb copied.
+' @remarks  This method will resize the ByteQueue's buffer to match
+'           the source. All previous data on this object will be lost.
+
+Public Sub CopyBuffer(ByRef source As clsByteQueue)
+'***************************************************
+'Autor: Juan Martín Sotuyo Dodero (Maraxus)
+'Last Modification: 04/27/06
+'A Visual Basic equivalent of a Copy Contructor
+'***************************************************
+    ' Set capacity and resize array - make sure all data is lost
+    queueCapacity = source.Capacity
+    
+    ReDim data(queueCapacity - 1) As Byte
+    
+    ' Read buffer
+    Dim buf() As Byte
+    ReDim buf(source.length - 1) As Byte
+    
+    Call source.PeekBlock(buf, source.length)
+    
+    ' Write buffer
+    Call WriteBlock(buf, source.length)
+End Sub
+
+''
 ' Returns the smaller of val1 and val2
 '
 ' @param val1 First value to compare
@@ -109,22 +143,22 @@ End Sub
 ' @return   The smaller of val1 and val2
 ' @remarks  This method is faster than Iif() and cleaner, therefore it's used instead of it
 
-Private Function Min(ByVal val1 As Long, ByVal val2 As Long) As Long
+Private Function min(ByVal val1 As Long, ByVal val2 As Long) As Long
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 04/27/06
 'It's faster than iif and I like it better
 '***************************************************
     If val1 < val2 Then
-        Min = val1
+        min = val1
     Else
-        Min = val2
+        min = val2
     End If
 End Function
 
 ''
 ' Writes a byte array at the end of the byte queue if there is enough space.
-' Otherwise it truncates the byte array to copy as many bytes as possible
+' Otherwise it throws NOT_ENOUGH_DATA.
 '
 ' @param buf Byte array containing the data to be copied. MUST have 0 as the first index.
 ' @param datalength Total number of elements in the array
@@ -132,26 +166,31 @@ End Function
 ' @remarks  buf MUST be Base 0
 ' @see RemoveData
 ' @see ReadData
+' @see NOT_ENOUGH_DATA
 
 Private Function WriteData(ByRef buf() As Byte, ByVal dataLength As Long) As Long
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 04/27/06
-'If the queueCapacity allows it copyes a byte buffer to the queue, if not it truncates
+'If the queueCapacity allows it copyes a byte buffer to the queue, if not it throws NOT_ENOUGH_DATA
 '***************************************************
-    'Figure out how many bytes we can write
-    WriteData = Min(dataLength, queueCapacity - queueLength)
+    'Check if there is enough free space
+    If queueCapacity - queueLength - dataLength < 0 Then
+        Err.raise NOT_ENOUGH_DATA
+        Exit Function
+    End If
     
     'Copy data from buffer
-    Call CopyMemory(data(queueLength), buf(0), WriteData)
+    Call CopyMemory(data(queueLength), buf(0), dataLength)
     
     'Update length of data
-    queueLength = queueLength + WriteData
+    queueLength = queueLength + dataLength
+    WriteData = dataLength
 End Function
 
 ''
 ' Reads a byte array from the beginning of the byte queue if there is enough data available.
-' Otherwise it reads all available data and leaves the remaining array positions untouched.
+' Otherwise it throws NOT_ENOUGH_DATA.
 '
 ' @param buf Byte array where to copy the data. MUST have 0 as the first index and already be sized properly.
 ' @param datalength Total number of elements in the array
@@ -161,18 +200,23 @@ End Function
 ' If there is not enough data available it will read all available data.
 ' @see WriteData
 ' @see RemoveData
+' @see NOT_ENOUGH_DATA
 
 Private Function ReadData(ByRef buf() As Byte, ByVal dataLength As Long) As Long
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 04/27/06
-'Copies the first dataLength bytes if any from the queue to the passed array
+'If enough memory is available, it copies the requested number of bytes to the buffer
 '***************************************************
-    'Figure out how many bytes we can write
-    ReadData = Min(dataLength, queueLength)
+    'Check if we can read the number of bytes requested
+    If dataLength > queueLength Then
+        Err.raise NOT_ENOUGH_DATA
+        Exit Function
+    End If
     
     'Copy data to buffer
-    Call CopyMemory(buf(0), data(0), ReadData)
+    Call CopyMemory(buf(0), data(0), dataLength)
+    ReadData = dataLength
 End Function
 
 ''
@@ -191,7 +235,7 @@ Private Function RemoveData(ByVal dataLength As Long) As Long
 'Moves forward the queue overwriting the first dataLength bytes
 '***************************************************
     'Figure out how many bytes we can remove
-    RemoveData = Min(dataLength, queueLength)
+    RemoveData = min(dataLength, queueLength)
     
     'Remove data
     Call CopyMemory(data(0), data(RemoveData), queueLength - RemoveData)
