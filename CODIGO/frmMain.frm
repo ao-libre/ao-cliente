@@ -1,8 +1,8 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "richtx32.ocx"
 Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.OCX"
-Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.OCX"
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
+Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "msinet.ocx"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "mswinsck.ocx"
 Begin VB.Form frmMain 
    BackColor       =   &H00000000&
    BorderStyle     =   1  'Fixed Single
@@ -113,11 +113,6 @@ Begin VB.Form frmMain
       Enabled         =   0   'False
       Interval        =   60000
       Left            =   3120
-      Top             =   2520
-   End
-   Begin VB.Timer FPS 
-      Interval        =   1000
-      Left            =   5040
       Top             =   2520
    End
    Begin InetCtlsObjects.Inet Inet1 
@@ -565,6 +560,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -694,8 +690,6 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Public ActualSecond As Long
-Public LastSecond As Long
 Public tX As Integer
 Public tY As Integer
 Public MouseX As Long
@@ -805,21 +799,7 @@ Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
     End If
 End Sub
 
-Private Sub FPS_Timer()
 
-If logged And Not frmMain.Visible Then
-    Unload frmConnect
-    frmMain.Show
-    
-#If SeguridadAlkon Then
-    'Unprotect character creation and protect the main form
-    Call UnprotectForm
-    Call ProtectForm(frmMain)
-#End If
-
-End If
-    
-End Sub
 
 Private Sub Macro_Timer()
     PuedeMacrear = True
@@ -882,10 +862,6 @@ If IPdelServidor <> ((IPMMSB - 15) & "." & (IPMSB - 15) & "." & (IPLSB - 15) _
 End Sub
 
 Private Sub Second_Timer()
-    ActualSecond = mid(Time, 7, 2)
-    ActualSecond = ActualSecond + 1
-    If ActualSecond = LastSecond Then End
-    LastSecond = ActualSecond
     If Not DialogosClanes Is Nothing Then DialogosClanes.PassTimer
 End Sub
 

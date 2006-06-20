@@ -55,3 +55,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 11/06/2006: Se corrigió un bug que permitía desplazar hechizos desde el inventario. (Maraxus)
  * 13/06/2006: Se corrigió un bug tiraba rt9 al arrastrar items del inventario en en área de juego. (Maraxus)
  * 15/06/2006: Se modificó ligeramente clsByteQueue para que trabaje tirando códigos de error al intentarse pasar los límites del buffer para lecutra y/o escritura (Maraxus).
+ * 16/06/2006: Quité el Timer FPS y limpie el Timer Second (Integer).
