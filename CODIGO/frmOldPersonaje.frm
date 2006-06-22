@@ -225,7 +225,7 @@ Select Case index
             EstadoLogin = Normal
             Me.MousePointer = 11
 #If UsarWrench = 1 Then
-            frmMain.Socket1.HostAddress = CurServerIp
+            frmMain.Socket1.HostName = CurServerIp
             frmMain.Socket1.RemotePort = CurServerPort
             frmMain.Socket1.Connect
 #Else
