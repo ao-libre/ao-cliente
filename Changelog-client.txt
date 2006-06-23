@@ -57,3 +57,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 15/06/2006: Se modificó ligeramente clsByteQueue para que trabaje tirando códigos de error al intentarse pasar los límites del buffer para lecutra y/o escritura (Maraxus).
  * 16/06/2006: Quité el Timer FPS y limpie el Timer Second (Integer).
  * 22/06/2006: Hice que se acepte "localhost" como IP del servidor, ya que antes fallaba si no se ingresaba como "127.0.0.1" (Maraxus).
+ * 23/06/2006: Eliminé el manejo del paquete "PART" que nunca se enviaba desde el server. (Maraxus).
