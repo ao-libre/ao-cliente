@@ -1122,7 +1122,7 @@ End Sub
 Private Sub LoadClientSetup()
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modify Date: 11/27/2005
+'Last Modify Date: 24/06/2006
 '
 '**************************************************************
     Dim fHandle As Integer
@@ -1132,6 +1132,7 @@ Private Sub LoadClientSetup()
         Get fHandle, , ClientSetup
     Close fHandle
     
+    NoRes = ClientSetup.bNoRes  ' 24/06/2006 - ^[GS]^
     Musica = Not ClientSetup.bNoMusic
     Sound = Not ClientSetup.bNoSound
 End Sub

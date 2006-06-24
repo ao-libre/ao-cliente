@@ -64,6 +64,7 @@ Public Type tSetupMods
     bUseVideo   As Boolean
     bNoMusic    As Boolean
     bNoSound    As Boolean
+    bNoRes      As Boolean ' 24/06/2006 - ^[GS]^
 End Type
 
 Public ClientSetup As tSetupMods
