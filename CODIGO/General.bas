@@ -783,6 +783,14 @@ On Error Resume Next
 #End If
 
     Call WriteClientVer
+    
+    'Load config file
+    If FileExist(App.Path & "\init\Inicio.con", vbNormal) Then
+        Config_Inicio = LeerGameIni()
+    End If
+    
+    'Read command line. Do it AFTER config file is loaded to prevent this from
+    'canceling the effects of "/nores" option.
     Call LeerLineaComandos
 
     If App.PrevInstance Then
@@ -810,12 +818,6 @@ On Error Resume Next
     MD5HushYo = "0123456789abcdef"  'We aren't using a real MD5
 #End If
     
-    'Cargamos el archivo de configuracion inicial
-    If FileExist(App.Path & "\init\Inicio.con", vbNormal) Then
-        Config_Inicio = LeerGameIni()
-    End If
-    
-    
     If FileExist(App.Path & "\init\ao.dat", vbArchive) Then
         Call LoadClientSetup
         
@@ -835,8 +837,8 @@ On Error Resume Next
     frmCargando.Show
     frmCargando.Refresh
     
-    frmConnect.version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
-    AddtoRichTextBox frmCargando.status, "Buscando servidores....", 0, 0, 0, 0, 0, 1
+    frmConnect.Version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
+    AddtoRichTextBox frmCargando.Status, "Buscando servidores....", 0, 0, 0, 0, 0, 1
 
 #If UsarWrench = 1 Then
     frmMain.Socket1.Startup
@@ -846,20 +848,20 @@ On Error Resume Next
 'TODO : esto de ServerRecibidos no se podría sacar???
     ServersRecibidos = True
     
-    AddtoRichTextBox frmCargando.status, "Encontrado", , , , 1
-    AddtoRichTextBox frmCargando.status, "Iniciando constantes...", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.Status, "Encontrado", , , , 1
+    AddtoRichTextBox frmCargando.Status, "Iniciando constantes...", 0, 0, 0, 0, 0, 1
     
     Call InicializarNombres
     
     frmOldPersonaje.NameTxt.Text = Config_Inicio.Name
     frmOldPersonaje.PasswordTxt.Text = ""
     
-    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
+    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
     
     IniciarObjetosDirectX
     
-    AddtoRichTextBox frmCargando.status, "Cargando Sonidos....", 0, 0, 0, 0, 0, 1
-    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
+    AddtoRichTextBox frmCargando.Status, "Cargando Sonidos....", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
 
 Dim loopc As Integer
 
@@ -867,7 +869,7 @@ LastTime = GetTickCount
 
     Call InitTileEngine(frmMain.hWnd, 152, 7, 32, 32, 13, 17, 9)
     
-    Call AddtoRichTextBox(frmCargando.status, "Creando animaciones extra....")
+    Call AddtoRichTextBox(frmCargando.Status, "Creando animaciones extra....")
     
     Call CargarAnimsExtra
     Call CargarTips
@@ -885,14 +887,14 @@ UserMap = 1
     Call InitMI
 #End If
 
-    AddtoRichTextBox frmCargando.status, "                    ¡Bienvenido a Argentum Online!", , , , 1
+    AddtoRichTextBox frmCargando.Status, "                    ¡Bienvenido a Argentum Online!", , , , 1
     
     Unload frmCargando
     
     'Inicializamos el sonido
-    Call AddtoRichTextBox(frmCargando.status, "Iniciando DirectSound....", 0, 0, 0, 0, 0, True)
+    Call AddtoRichTextBox(frmCargando.Status, "Iniciando DirectSound....", 0, 0, 0, 0, 0, True)
     Call Audio.Initialize(DirectX, frmMain.hWnd, App.Path & "\" & Config_Inicio.DirSonidos & "\", App.Path & "\" & Config_Inicio.DirMusica & "\")
-    Call AddtoRichTextBox(frmCargando.status, "Hecho", , , , 1, , False)
+    Call AddtoRichTextBox(frmCargando.Status, "Hecho", , , , 1, , False)
     
     'Inicializamos el inventario gráfico
     Call Inventario.Initialize(DirectDraw, frmMain.picInv)
@@ -930,10 +932,10 @@ UserMap = 1
     Call MainTimer.SetInterval(TimersIndex.SendRPU, 2000)
     
     'Init timers
-    Call MainTimer.Start(TimersIndex.Attack)
-    Call MainTimer.Start(TimersIndex.Work)
-    Call MainTimer.Start(TimersIndex.UseItem)
-    Call MainTimer.Start(TimersIndex.SendRPU)
+    Call MainTimer.start(TimersIndex.Attack)
+    Call MainTimer.start(TimersIndex.Work)
+    Call MainTimer.start(TimersIndex.UseItem)
+    Call MainTimer.start(TimersIndex.SendRPU)
     
     Do While prgRun
         'Sólo dibujamos si la ventana no está minimizada
@@ -977,7 +979,7 @@ UserMap = 1
 
     EngineRun = False
     frmCargando.Show
-    AddtoRichTextBox frmCargando.status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.Status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
     LiberarObjetosDX
 
 'TODO : Esto debería ir en otro lado como al cambair a esta res

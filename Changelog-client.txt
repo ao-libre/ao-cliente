@@ -60,3 +60,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 23/06/2006: Eliminé el manejo del paquete "PART" que nunca se enviaba desde el server. (Maraxus).
  * 24/06/2006: El nores se setea ahora desde el AOSetup. (^[GS]^).
  * 24/06/2006: Limpié un poco de código. (Maraxus).
+ * 24/06/2006: Hice el AO.dat se lea antes que la línea de comandos para evitar que se pise la opción "/nores". (Maraxus).
