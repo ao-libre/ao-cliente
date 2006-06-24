@@ -42,6 +42,9 @@ Public Audio As New clsAudio
 Public Inventario As New clsGrapchicalInventory
 Public SurfaceDB As clsSurfaceManager   'No va new porque es unainterfaz, el new se pone al decidir que clase de objeto es
 
+Public incommingData As New clsByteQueue
+Public outgoingData As New clsByteQueue
+
 '' The main timer of the game.
 Public MainTimer As New clsTimer
 
@@ -131,13 +134,13 @@ Public CnTd As Byte
 
 
 '[KEVIN]
-Public Const MAX_BANCOINVENTORY_SLOTS = 40
+Public Const MAX_BANCOINVENTORY_SLOTS As Byte = 40
 Public UserBancoInventory(1 To MAX_BANCOINVENTORY_SLOTS) As Inventory
 '[/KEVIN]
 
 
 Public Tips() As String * 255
-Public Const LoopAdEternum = 999
+Public Const LoopAdEternum As Integer = 999
 
 'Direcciones
 Public Enum E_Heading
@@ -148,16 +151,16 @@ Public Enum E_Heading
 End Enum
 
 'Objetos
-Public Const MAX_INVENTORY_OBJS = 10000
-Public Const MAX_INVENTORY_SLOTS = 20
-Public Const MAX_NPC_INVENTORY_SLOTS = 50
-Public Const MAXHECHI = 35
+Public Const MAX_INVENTORY_OBJS As Integer = 10000
+Public Const MAX_INVENTORY_SLOTS As Byte = 20
+Public Const MAX_NPC_INVENTORY_SLOTS As Byte = 50
+Public Const MAXHECHI As Byte = 35
 
-Public Const MAXSKILLPOINTS = 100
+Public Const MAXSKILLPOINTS As Byte = 100
 
-Public Const FLAGORO = 777
+Public Const FLAGORO As Integer = -1
 
-Public Const FOgata = 1521
+Public Const FOgata As Integer = 1521
 
 Public Enum Skills
      Suerte = 1
@@ -176,7 +179,7 @@ Public Enum Skills
      Mineria = 14
      Carpinteria = 15
      Herreria = 16
-     Liderazgo = 17 ' NOTA: Solia decir "Curacion"
+     Liderazgo = 17
      Domar = 18
      Proyectiles = 19
      Wresterling = 20

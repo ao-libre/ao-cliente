@@ -65,7 +65,7 @@ Sub HandleData(ByVal Rdata As String)
     Dim X As Integer
     Dim Y As Integer
     Dim CharIndex As Integer
-    Dim tempint As Integer
+    Dim tempInt As Integer
     Dim tempstr As String
     Dim slot As Integer
     Dim MapNumber As String
@@ -164,42 +164,35 @@ Sub HandleData(ByVal Rdata As String)
         '[/KEVIN]***********************************************************************
         '------------------------------------------------------------------------------
         Case "INITCOM"           ' >>>>> Inicia Comerciar :: INITCOM
-            i = 1
-            Do While i <= MAX_INVENTORY_SLOTS
+            For i = 1 To MAX_INVENTORY_SLOTS
                 If Inventario.OBJIndex(i) <> 0 Then
-                        frmComerciar.List1(1).AddItem Inventario.ItemName(i)
+                    frmComerciar.List1(1).AddItem Inventario.ItemName(i)
                 Else
-                        frmComerciar.List1(1).AddItem "Nada"
+                    frmComerciar.List1(1).AddItem "Nada"
                 End If
-                i = i + 1
-            Loop
+            Next i
             Comerciando = True
             frmComerciar.Show , frmMain
             Exit Sub
         '[KEVIN]-----------------------------------------------
         '**************************************************************
         Case "INITBANCO"           ' >>>>> Inicia Comerciar :: INITBANCO
-            Dim II As Integer
-            II = 1
-            Do While II <= MAX_INVENTORY_SLOTS
+            For i = 1 To MAX_INVENTORY_SLOTS
                 If Inventario.OBJIndex(II) <> 0 Then
-                        frmBancoObj.List1(1).AddItem Inventario.ItemName(II)
+                    frmBancoObj.List1(1).AddItem Inventario.ItemName(II)
                 Else
-                        frmBancoObj.List1(1).AddItem "Nada"
+                    frmBancoObj.List1(1).AddItem "Nada"
                 End If
-                II = II + 1
-            Loop
+            Next i
             
-            
-            i = 1
-            Do While i <= UBound(UserBancoInventory)
+            For i = 1 To MAX_BANCOINVENTORY_SLOTS
                 If UserBancoInventory(i).OBJIndex <> 0 Then
-                        frmBancoObj.List1(0).AddItem UserBancoInventory(i).Name
+                    frmBancoObj.List1(0).AddItem UserBancoInventory(i).Name
                 Else
-                        frmBancoObj.List1(0).AddItem "Nada"
+                    frmBancoObj.List1(0).AddItem "Nada"
                 End If
-                i = i + 1
-            Loop
+            Next i
+            
             Comerciando = True
             frmBancoObj.Show , frmMain
             Exit Sub
@@ -344,7 +337,7 @@ Sub HandleData(ByVal Rdata As String)
                 Case "E": UserExp = Val(Right$(sData, Len(sData) - 3))
             End Select
             
-            frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+            frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
             frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
             frmMain.Hpshp.Width = (((UserMinHP / 100) / (UserMaxHP / 100)) * 94)
             
@@ -357,7 +350,6 @@ Sub HandleData(ByVal Rdata As String)
             frmMain.STAShp.Width = (((UserMinSTA / 100) / (UserMaxSTA / 100)) * 94)
         
             frmMain.GldLbl.Caption = UserGLD
-            frmMain.LvlLbl.Caption = UserLvl
             
             If UserMinHP = 0 Then
                 UserEstado = 1
@@ -369,7 +361,6 @@ Sub HandleData(ByVal Rdata As String)
         Case "CM"              ' >>>>> Cargar Mapa :: CM
             Rdata = Right$(Rdata, Len(Rdata) - 2)
             UserMap = ReadField(1, Rdata, 44)
-            'Obtiene la version del mapa
 
 #If SeguridadAlkon Then
             Call InitMI
@@ -378,25 +369,16 @@ Sub HandleData(ByVal Rdata As String)
             If FileExist(DirMapas & "Mapa" & UserMap & ".map", vbNormal) Then
                 Open DirMapas & "Mapa" & UserMap & ".map" For Binary As #1
                 Seek #1, 1
-                Get #1, , tempint
+                Get #1, , tempInt
                 Close #1
-'                If tempint = Val(ReadField(2, Rdata, 44)) Then
-                    'Si es la vers correcta cambiamos el mapa
-                    Call SwitchMap(UserMap)
-                    If bLluvia(UserMap) = 0 Then
-                        If bRain Then
-                            Call Audio.StopWave(RainBufferIndex)
-                            RainBufferIndex = 0
-                            frmMain.IsPlaying = PlayLoop.plNone
-                        End If
+                Call SwitchMap(UserMap)
+                If bLluvia(UserMap) = 0 Then
+                    If bRain Then
+                        Call Audio.StopWave(RainBufferIndex)
+                        RainBufferIndex = 0
+                        frmMain.IsPlaying = PlayLoop.plNone
                     End If
-'                Else
-'                    'vers incorrecta
-'                    MsgBox "Error en los mapas, algun archivo ha sido modificado o esta dañado."
-'                    Call LiberarObjetosDX
-'                    Call UnloadAllForms
-'                    End
-'                End If
+                End If
             Else
                 'no encontramos el mapa en el hd
                 MsgBox "Error en los mapas, algun archivo ha sido modificado o esta dañado."
@@ -575,12 +557,12 @@ Sub HandleData(ByVal Rdata As String)
             charlist(CharIndex).Heading = Val(ReadField(4, Rdata, 44))
             charlist(CharIndex).Fx = Val(ReadField(7, Rdata, 44))
             charlist(CharIndex).FxLoopTimes = Val(ReadField(8, Rdata, 44))
-            tempint = Val(ReadField(5, Rdata, 44))
-            If tempint <> 0 Then charlist(CharIndex).Arma = WeaponAnimData(tempint)
-            tempint = Val(ReadField(6, Rdata, 44))
-            If tempint <> 0 Then charlist(CharIndex).Escudo = ShieldAnimData(tempint)
-            tempint = Val(ReadField(9, Rdata, 44))
-            If tempint <> 0 Then charlist(CharIndex).Casco = CascoAnimData(tempint)
+            tempInt = Val(ReadField(5, Rdata, 44))
+            If tempInt <> 0 Then charlist(CharIndex).Arma = WeaponAnimData(tempInt)
+            tempInt = Val(ReadField(6, Rdata, 44))
+            If tempInt <> 0 Then charlist(CharIndex).Escudo = ShieldAnimData(tempInt)
+            tempInt = Val(ReadField(9, Rdata, 44))
+            If tempInt <> 0 Then charlist(CharIndex).Casco = CascoAnimData(tempInt)
 
             Call RefreshAllChars
             Exit Sub
@@ -711,7 +693,7 @@ Sub HandleData(ByVal Rdata As String)
             UserLvl = Val(ReadField(8, Rdata, 44))
             UserPasarNivel = Val(ReadField(9, Rdata, 44))
             UserExp = Val(ReadField(10, Rdata, 44))
-            frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+            frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
             frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
             frmMain.Hpshp.Width = (((UserMinHP / 100) / (UserMaxHP / 100)) * 94)
             
@@ -1090,46 +1072,33 @@ Sub HandleData(ByVal Rdata As String)
                     End If
                     i = i + 1
                 Loop
-                Rdata = Right$(Rdata, Len(Rdata) - 7)
                 
-                If ReadField(2, Rdata, 44) = "0" Then
-                    frmComerciar.List1(0).listIndex = frmComerciar.LastIndex1
-                Else
-                    frmComerciar.List1(1).listIndex = frmComerciar.LastIndex2
-                End If
+                frmComerciar.List1(0).listIndex = frmComerciar.LastIndex1
+                frmComerciar.List1(1).listIndex = frmComerciar.LastIndex2
             End If
             Exit Sub
         '[KEVIN]------------------------------------------------------------------
         '*********************************************************************************
         Case "BANCOOK"           ' Banco OK :: BANCOOK
             If frmBancoObj.Visible Then
-                i = 1
-                Do While i <= MAX_INVENTORY_SLOTS
+                For i = 1 To MAX_INVENTORY_SLOTS
                     If Inventario.OBJIndex(i) <> 0 Then
-                            frmBancoObj.List1(1).AddItem Inventario.ItemName(i)
+                        frmBancoObj.List1(1).AddItem Inventario.ItemName(i)
                     Else
-                            frmBancoObj.List1(1).AddItem "Nada"
+                        frmBancoObj.List1(1).AddItem "Nada"
                     End If
-                    i = i + 1
-                Loop
+                Next i
                 
-                II = 1
-                Do While II <= MAX_BANCOINVENTORY_SLOTS
-                    If UserBancoInventory(II).OBJIndex <> 0 Then
-                            frmBancoObj.List1(0).AddItem UserBancoInventory(II).Name
+                For i = 1 To MAX_BANCOINVENTORY_SLOTS
+                    If UserBancoInventory(i).OBJIndex <> 0 Then
+                        frmBancoObj.List1(0).AddItem UserBancoInventory(i).Name
                     Else
-                            frmBancoObj.List1(0).AddItem "Nada"
+                        frmBancoObj.List1(0).AddItem "Nada"
                     End If
-                    II = II + 1
-                Loop
+                Next i
                 
-                Rdata = Right(Rdata, Len(Rdata) - 7)
-                
-                If ReadField(2, Rdata, 44) = "0" Then
-                        frmBancoObj.List1(0).listIndex = frmBancoObj.LastIndex1
-                Else
-                        frmBancoObj.List1(1).listIndex = frmBancoObj.LastIndex2
-                End If
+                frmBancoObj.List1(0).listIndex = frmBancoObj.LastIndex1
+                frmBancoObj.List1(1).listIndex = frmBancoObj.LastIndex2
             End If
             Exit Sub
         '[/KEVIN]************************************************************************
@@ -1155,16 +1124,15 @@ Sub HandleData(ByVal Rdata As String)
     Select Case UCase$(Left$(Rdata, 9))
         Case "COMUSUINV"
             Rdata = Right$(Rdata, Len(Rdata) - 9)
-            OtroInventario(1).OBJIndex = ReadField(2, Rdata, 44)
-            OtroInventario(1).Name = ReadField(3, Rdata, 44)
-            OtroInventario(1).Amount = ReadField(4, Rdata, 44)
-            OtroInventario(1).Equipped = ReadField(5, Rdata, 44)
-            OtroInventario(1).GrhIndex = Val(ReadField(6, Rdata, 44))
-            OtroInventario(1).OBJType = Val(ReadField(7, Rdata, 44))
-            OtroInventario(1).MaxHit = Val(ReadField(8, Rdata, 44))
-            OtroInventario(1).MinHit = Val(ReadField(9, Rdata, 44))
-            OtroInventario(1).Def = Val(ReadField(10, Rdata, 44))
-            OtroInventario(1).Valor = Val(ReadField(11, Rdata, 44))
+            OtroInventario(1).OBJIndex = ReadField(1, Rdata, 44)
+            OtroInventario(1).Name = ReadField(2, Rdata, 44)
+            OtroInventario(1).Amount = ReadField(3, Rdata, 44)
+            OtroInventario(1).GrhIndex = Val(ReadField(4, Rdata, 44))
+            OtroInventario(1).OBJType = Val(ReadField(5, Rdata, 44))
+            OtroInventario(1).MaxHit = Val(ReadField(6, Rdata, 44))
+            OtroInventario(1).MinHit = Val(ReadField(7, Rdata, 44))
+            OtroInventario(1).Def = Val(ReadField(8, Rdata, 44))
+            OtroInventario(1).Valor = Val(ReadField(9, Rdata, 44))
             
             frmComerciarUsu.List2.Clear
             
