@@ -61,3 +61,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 24/06/2006: El nores se setea ahora desde el AOSetup. (^[GS]^).
  * 24/06/2006: Limpié un poco de código. (Maraxus).
  * 24/06/2006: Hice el AO.dat se lea antes que la línea de comandos para evitar que se pise la opción "/nores". (Maraxus).
+ * 29/06/2006: AltGr no funciona igual que Ctrl. (Integer)

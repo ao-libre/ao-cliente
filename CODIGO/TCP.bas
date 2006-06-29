@@ -65,7 +65,7 @@ Sub HandleData(ByVal Rdata As String)
     Dim X As Integer
     Dim Y As Integer
     Dim CharIndex As Integer
-    Dim tempInt As Integer
+    Dim tempint As Integer
     Dim tempstr As String
     Dim slot As Integer
     Dim MapNumber As String
@@ -178,8 +178,8 @@ Sub HandleData(ByVal Rdata As String)
         '**************************************************************
         Case "INITBANCO"           ' >>>>> Inicia Comerciar :: INITBANCO
             For i = 1 To MAX_INVENTORY_SLOTS
-                If Inventario.OBJIndex(II) <> 0 Then
-                    frmBancoObj.List1(1).AddItem Inventario.ItemName(II)
+                If Inventario.OBJIndex(i) <> 0 Then
+                    frmBancoObj.List1(1).AddItem Inventario.ItemName(i)
                 Else
                     frmBancoObj.List1(1).AddItem "Nada"
                 End If
@@ -369,7 +369,7 @@ Sub HandleData(ByVal Rdata As String)
             If FileExist(DirMapas & "Mapa" & UserMap & ".map", vbNormal) Then
                 Open DirMapas & "Mapa" & UserMap & ".map" For Binary As #1
                 Seek #1, 1
-                Get #1, , tempInt
+                Get #1, , tempint
                 Close #1
                 Call SwitchMap(UserMap)
                 If bLluvia(UserMap) = 0 Then
@@ -557,12 +557,12 @@ Sub HandleData(ByVal Rdata As String)
             charlist(CharIndex).Heading = Val(ReadField(4, Rdata, 44))
             charlist(CharIndex).Fx = Val(ReadField(7, Rdata, 44))
             charlist(CharIndex).FxLoopTimes = Val(ReadField(8, Rdata, 44))
-            tempInt = Val(ReadField(5, Rdata, 44))
-            If tempInt <> 0 Then charlist(CharIndex).Arma = WeaponAnimData(tempInt)
-            tempInt = Val(ReadField(6, Rdata, 44))
-            If tempInt <> 0 Then charlist(CharIndex).Escudo = ShieldAnimData(tempInt)
-            tempInt = Val(ReadField(9, Rdata, 44))
-            If tempInt <> 0 Then charlist(CharIndex).Casco = CascoAnimData(tempInt)
+            tempint = Val(ReadField(5, Rdata, 44))
+            If tempint <> 0 Then charlist(CharIndex).Arma = WeaponAnimData(tempint)
+            tempint = Val(ReadField(6, Rdata, 44))
+            If tempint <> 0 Then charlist(CharIndex).Escudo = ShieldAnimData(tempint)
+            tempint = Val(ReadField(9, Rdata, 44))
+            If tempint <> 0 Then charlist(CharIndex).Casco = CascoAnimData(tempint)
 
             Call RefreshAllChars
             Exit Sub
