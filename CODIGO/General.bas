@@ -774,9 +774,7 @@ End Function
 
 
 Sub Main()
-'TODO : Cambiar esto cuando se corrija el bug de los timers
-'On Error GoTo ManejadorErrores
-On Error Resume Next
+On Error GoTo ManejadorErrores
 
 #If SeguridadAlkon Then
     InitSecurity
@@ -932,10 +930,10 @@ UserMap = 1
     Call MainTimer.SetInterval(TimersIndex.SendRPU, 2000)
     
     'Init timers
-    Call MainTimer.start(TimersIndex.Attack)
-    Call MainTimer.start(TimersIndex.Work)
-    Call MainTimer.start(TimersIndex.UseItem)
-    Call MainTimer.start(TimersIndex.SendRPU)
+    Call MainTimer.Start(TimersIndex.Attack)
+    Call MainTimer.Start(TimersIndex.Work)
+    Call MainTimer.Start(TimersIndex.UseItem)
+    Call MainTimer.Start(TimersIndex.SendRPU)
     
     Do While prgRun
         'Sólo dibujamos si la ventana no está minimizada
