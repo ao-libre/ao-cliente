@@ -43,7 +43,6 @@ Public MaxLimiteY As Integer
 
 Public Sub CambioDeArea(ByVal X As Byte, ByVal Y As Byte)
     Dim loopX As Long, loopY As Long
-    Dim tempint As Integer
     
     MinLimiteX = (X \ 9 - 1) * 9
     MaxLimiteX = MinLimiteX + 26
@@ -59,9 +58,7 @@ Public Sub CambioDeArea(ByVal X As Byte, ByVal Y As Byte)
                 
                 If MapData(loopX, loopY).CharIndex > 0 Then
                     If MapData(loopX, loopY).CharIndex <> UserCharIndex Then
-                        tempint = MapData(loopX, loopY).CharIndex
                         Call EraseChar(MapData(loopX, loopY).CharIndex)
-                        charlist(tempint).Nombre = loopX & "-" & loopY
                     End If
                 End If
                 
