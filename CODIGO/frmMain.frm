@@ -560,7 +560,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -923,7 +922,7 @@ Private Sub TrainingMacro_Timer()
 End Sub
 
 Private Sub cmdLanzar_Click()
-    If hlst.List(hlst.listIndex) <> "(None)" And MainTimer.Check(TimersIndex.Attack) Then
+    If hlst.List(hlst.listIndex) <> "(None)" And MainTimer.Check(TimersIndex.Attack, False) Then
         Call SendData("LH" & hlst.listIndex + 1)
         Call SendData("UK" & Magia)
         UsaMacro = True
