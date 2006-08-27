@@ -393,7 +393,15 @@ Select Case index
         End Select
         Call DrawGrhtoHdc(Picture1.hWnd, Picture1.Hdc, Inventario.GrhIndex(List1(1).listIndex + 1), SR, DR)
 End Select
-Picture1.Refresh
+
+If Label1(2).Caption = 0 Then ' 27/08/2006 - GS > No mostrar imagen ni nada, cuando no ahi nada que mostrar.
+    Label1(3).Visible = False
+    Label1(4).Visible = False
+    Picture1.Visible = False
+Else
+    Picture1.Visible = True
+    Picture1.Refresh
+End If
 
 End Sub
 '<-------------------------NUEVO-------------------------->
