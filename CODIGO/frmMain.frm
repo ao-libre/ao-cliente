@@ -825,10 +825,6 @@ Private Sub mnuUsar_Click()
     Call UsarItem
 End Sub
 
-Private Sub PanelDer_Click()
-
-End Sub
-
 Private Sub PicAU_Click()
     AddtoRichTextBox frmMain.RecTxt, "Hay actualizaciones pendientes. Cierra el juego y ejecuta el autoupdate. (el mismo debe descargarse del sitio oficial http://ao.alkon.com.ar, y deberás conectarte al puerto 7667 con la IP tradicional del juego)", 255, 255, 255, False, False, False
 End Sub
@@ -910,7 +906,7 @@ Private Sub TrainingMacro_Timer()
         Exit Sub
     End If
     If Comerciando Then Exit Sub
-    If hlst.List(hlst.listIndex) <> "(None)" And MainTimer.Check(TimersIndex.Attack) Then
+    If hlst.List(hlst.listIndex) <> "(None)" And MainTimer.Check(TimersIndex.Attack, False) Then
         Call SendData("LH" & hlst.listIndex + 1)
         Call SendData("UK" & Magia)
         'UserCanAttack = 0
