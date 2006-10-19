@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
 Begin VB.Form frmOpciones 
    BackColor       =   &H00000000&
    BorderStyle     =   3  'Fixed Dialog
@@ -45,9 +45,10 @@ Begin VB.Form frmOpciones
          _ExtentY        =   450
          _Version        =   393216
          BorderStyle     =   1
-         Min             =   -51
-         Max             =   49
+         Min             =   -10000
+         Max             =   0
          TickStyle       =   3
+         Value           =   -5000
       End
       Begin VB.CheckBox Check1 
          BackColor       =   &H00000000&
@@ -82,9 +83,11 @@ Begin VB.Form frmOpciones
          _ExtentY        =   450
          _Version        =   393216
          BorderStyle     =   1
-         Min             =   -51
-         Max             =   49
+         Min             =   -10000
+         Max             =   0
+         SelStart        =   -5000
          TickStyle       =   3
+         Value           =   -5000
       End
    End
    Begin VB.Frame Frame1 
@@ -276,9 +279,9 @@ End Sub
 Private Sub Slider1_Click(index As Integer)
     Select Case index
         Case 0
-            Audio.MusicVolume = Slider1(0).value * 200 + 200
+            Audio.MusicVolume = Slider1(0).value
         Case 1
-            Audio.SoundVolume = Slider1(1).value * 200 + 200
+            Audio.SoundVolume = Slider1(1).value
     End Select
 End Sub
 
