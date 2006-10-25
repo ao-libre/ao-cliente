@@ -1223,7 +1223,7 @@ End Sub
 
 'Sub DDrawTransGrhtoSurface(surface As DirectDrawSurface7, Grh As Grh, X As Integer, Y As Integer, Center As Byte, Animate As Byte, Optional ByVal KillAnim As Integer = 0)
 '[CODE 000]:MatuX
-    Sub DDrawTransGrhtoSurface(Surface As DirectDrawSurface7, Grh As Grh, ByVal X As Integer, ByVal Y As Integer, center As Byte, Animate As Byte, Optional ByVal KillAnim As Integer = 0)
+    Sub DDrawTransGrhtoSurface(Surface As DirectDrawSurface7, Grh As Grh, ByVal X As Integer, ByVal Y As Integer, center As Byte, Animate As Byte, Optional ByVal KillAnim As Integer = 0, Optional Capa2 As Boolean = False)
 '[END]'
 '*****************************************************************
 'Draws a GRH transparently to a X and Y position
@@ -1276,7 +1276,11 @@ iGrhIndex = GrhData(Grh.GrhIndex).Frames(Grh.FrameCounter)
 'Center Grh over X,Y pos
 If center Then
     If GrhData(iGrhIndex).TileWidth <> 1 Then
-        X = X - Int(GrhData(iGrhIndex).TileWidth * 16) + 16 'hard coded for speed
+        If Capa2 = True Then ' [GS] 24/10/2006 - Correccion en la capa 2
+            X = X - Int(GrhData(iGrhIndex).TileWidth * 32) + 32 'hard coded for speed
+        Else
+            X = X - Int(GrhData(iGrhIndex).TileWidth * 16) + 16 'hard coded for speed
+        End If
     End If
     If GrhData(iGrhIndex).TileHeight <> 1 Then
         Y = Y - Int(GrhData(iGrhIndex).TileHeight * 32) + 32 'hard coded for speed
@@ -1547,7 +1551,7 @@ For Y = (minY + 8) To maxY - 8
                     ((32 * ScreenX) - 32) + PixelOffsetX, _
                     ((32 * ScreenY) - 32) + PixelOffsetY, _
                     1, _
-                    1)
+                    1, 0, True)
         End If
         '******************************************
         ScreenX = ScreenX + 1
