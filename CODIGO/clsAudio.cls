@@ -326,8 +326,10 @@ Public Property Let SoundVolume(ByVal Volume As Long)
     Dim i As Long
     
     For i = 1 To NumSoundBuffers
-        If DSBuffers(i).Buffer.GetStatus And DSBSTATUS_PLAYING Then
-            Call DSBuffers(i).Buffer.SetVolume(Volume)
+        If Not DSBuffers(i).Buffer Is Nothing Then
+            If DSBuffers(i).Buffer.GetStatus And DSBSTATUS_PLAYING Then
+                Call DSBuffers(i).Buffer.SetVolume(Volume)
+            End If
         End If
     Next i
     

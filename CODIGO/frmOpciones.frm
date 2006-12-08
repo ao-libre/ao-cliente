@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmOpciones 
    BackColor       =   &H00000000&
    BorderStyle     =   3  'Fixed Dialog
@@ -213,9 +213,9 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private Sub Check1_Click(index As Integer)
+Private Sub Check1_Click(Index As Integer)
 Call Audio.PlayWave(SND_CLICK)
-Select Case index
+Select Case Index
     Case 0
         If Check1(0).value = vbUnchecked Then
             Musica = False
@@ -276,14 +276,16 @@ Private Sub optPantalla_Click()
     DialogosClanes.Activo = True
 End Sub
 
-Private Sub Slider1_Click(index As Integer)
-    Select Case index
+
+Private Sub Slider1_Change(Index As Integer)
+    Select Case Index
         Case 0
             Audio.MusicVolume = Slider1(0).value
         Case 1
             Audio.SoundVolume = Slider1(1).value
     End Select
 End Sub
+
 
 Private Sub txtCantMensajes_LostFocus()
     txtCantMensajes.Text = Trim$(txtCantMensajes.Text)
