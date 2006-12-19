@@ -238,8 +238,6 @@ If CheckDatos() Then
     
     Me.MousePointer = 11
 
-    EstadoLogin = CrearNuevoPj
-
 #If UsarWrench = 1 Then
     If Not frmMain.Socket1.Connected Then
 #Else
@@ -249,13 +247,14 @@ If CheckDatos() Then
         Unload Me
         
     Else
-        Call Login(ValidarLoginMSG(CInt(bRK)))
+        Call Login(ValidarLoginMSG(bRK))
     End If
 End If
 
 End Sub
 
 Private Sub Command2_Click()
-Unload Me
+    EstadoLogin = E_MODO.Dados
+    Unload Me
 End Sub
 

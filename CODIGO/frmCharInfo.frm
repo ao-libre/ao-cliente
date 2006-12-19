@@ -312,73 +312,6 @@ Private Sub Command1_Click()
 Unload Me
 End Sub
 
-
-Public Sub parseCharInfo(ByVal Rdata As String)
-
-If frmmiembros Then
-    Rechazar.Visible = False
-    Aceptar.Visible = False
-    Echar.Visible = True
-    desc.Visible = False
-Else
-    Rechazar.Visible = True
-    Aceptar.Visible = True
-    Echar.Visible = False
-    desc.Visible = True
-End If
-
-'    tstr = Personaje & "¬"1
-'    tstr = tstr & GetVar(UserFile, "INIT", "Raza") & "¬"2
-'    tstr = tstr & GetVar(UserFile, "INIT", "Clase") & "¬"3
-'    tstr = tstr & GetVar(UserFile, "INIT", "Genero") & "¬"4
-'    tstr = tstr & GetVar(UserFile, "STATS", "ELV") & "¬"5
-'    tstr = tstr & GetVar(UserFile, "STATS", "GLD") & "¬"6
-'    tstr = tstr & GetVar(UserFile, "STATS", "Banco") & "¬"7
-'    tstr = tstr & GetVar(UserFile, "REP", "Promedio") & "¬"8
-
-
-Nombre.Caption = "Nombre: " & ReadField(1, Rdata, Asc("¬"))
-Raza.Caption = "Raza: " & ReadField(2, Rdata, Asc("¬"))
-Clase.Caption = "Clase: " & ReadField(3, Rdata, Asc("¬"))
-Genero.Caption = "Genero: " & ReadField(4, Rdata, Asc("¬"))
-Nivel.Caption = "Nivel: " & ReadField(5, Rdata, Asc("¬"))
-Oro.Caption = "Oro: " & ReadField(6, Rdata, Asc("¬"))
-Banco.Caption = "Banco: " & ReadField(7, Rdata, Asc("¬"))
-Me.reputacion.Caption = "Reputación: " & ReadField(8, Rdata, Asc("¬"))
-
-
-'    Peticiones = GetVar(UserFile, "GUILDS", "Pedidos")9
-'    tstr = tstr & IIf(Len(Peticiones > 400), ".." & Right$(Peticiones, 400), Peticiones) & "¬"
-    
-'    Miembro = GetVar(UserFile, "GUILDS", "Miembro")10
-'    tstr = tstr & IIf(Len(Miembro) > 400, ".." & Right$(Miembro, 400), Miembro) & "¬"
-
-Me.txtPeticiones.Text = ReadField(9, Rdata, Asc("¬"))
-Me.txtMiembro.Text = ReadField(10, Rdata, Asc("¬"))
-
-
-'GuildActual = val(GetVar(UserFile, "GUILD", "GuildIndex"))11
-Me.guildactual.Caption = "Clan: " & ReadField(11, Rdata, Asc("¬"))
-
-
-'    tstr = tstr & GetVar(UserFile, "FACCIONES", "EjercitoReal") & "¬"12
-'    tstr = tstr & GetVar(UserFile, "FACCIONES", "EjercitoCaos") & "¬"13
-'    tstr = tstr & GetVar(UserFile, "FACCIONES", "CiudMatados") & "¬"14
-'    tstr = tstr & GetVar(UserFile, "FACCIONES", "CrimMatados") & "¬"15
-
-Me.ejercito.Caption = "Ejército: " & IIf(Val(ReadField(12, Rdata, Asc("¬"))) <> 0, "Armada Real", IIf(Val(ReadField(13, Rdata, Asc("¬"))) <> 0, "Legión Oscura", "-"))
-
-Ciudadanos.Caption = "Ciudadanos asesinados: " & ReadField(14, Rdata, Asc("¬"))
-criminales.Caption = "Criminales asesinados: " & ReadField(15, Rdata, Asc("¬"))
-
-
-status.Caption = IIf(Val(ReadField(8, Rdata, Asc("¬"))) > 0, " (Ciudadano)", " (Criminal)")
-status.ForeColor = IIf(Val(ReadField(8, Rdata, Asc("¬"))) > 0, vbBlue, vbRed)
-Me.Show vbModeless, frmMain
-
-
-End Sub
-
 Private Sub desc_Click()
 Call SendData("ENVCOMEN" & Right(Nombre, Len(Nombre) - 7))
 End Sub
@@ -390,6 +323,10 @@ frmsolicitudes = False
 Unload frmGuildLeader
 Call SendData("GLINFO")
 Unload Me
+End Sub
+
+Private Sub Form_Load()
+
 End Sub
 
 Private Sub Rechazar_Click()

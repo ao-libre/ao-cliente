@@ -21,18 +21,6 @@ Begin VB.Form frmConnect
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
-   Begin VB.ListBox lst_servers 
-      BackColor       =   &H00000000&
-      ForeColor       =   &H0000FF00&
-      Height          =   5130
-      ItemData        =   "frmConnect.frx":000C
-      Left            =   -1755
-      List            =   "frmConnect.frx":0013
-      TabIndex        =   3
-      Top             =   2790
-      Visible         =   0   'False
-      Width           =   5415
-   End
    Begin VB.TextBox PortTxt 
       Alignment       =   2  'Center
       Appearance      =   0  'Flat
@@ -76,14 +64,6 @@ Begin VB.Form frmConnect
       Text            =   "localhost"
       Top             =   2460
       Width           =   3375
-   End
-   Begin VB.Image imgServEspana 
-      Height          =   435
-      Left            =   225
-      MousePointer    =   99  'Custom
-      Top             =   6495
-      Visible         =   0   'False
-      Width           =   2475
    End
    Begin VB.Image imgServArgentina 
       Height          =   795
@@ -199,25 +179,6 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Public Sub CargarLst()
-
-Dim i As Integer
-
-lst_servers.Clear
-
-If ServersRecibidos Then
-    Call WriteVar(App.Path & "\init\sinfo.dat", "INIT", "Cant", UBound(ServersLst))
-    For i = 1 To UBound(ServersLst)
-        Call WriteVar(App.Path & "\init\sinfo.dat", "S" & i, "Desc", ServersLst(i).desc)
-        Call WriteVar(App.Path & "\init\sinfo.dat", "S" & i, "IP", ServersLst(i).Ip)
-        Call WriteVar(App.Path & "\init\sinfo.dat", "S" & i, "PJ", str(ServersLst(i).Puerto))
-        Call WriteVar(App.Path & "\init\sinfo.dat", "S" & i, "P2", str(ServersLst(i).PassRecPort))
-        lst_servers.AddItem ServersLst(i).Ip & ":" & ServersLst(i).Puerto & " - Desc:" & ServersLst(i).desc
-    Next i
-End If
-
-End Sub
-
 Private Sub Command1_Click()
 CurServer = 0
 IPdelServidor = IPTxt
@@ -241,10 +202,9 @@ Else
 End If
 
 Call InitServersList(RawServersList)
-Call CargarLst
+
 
 End Sub
-
 
 Private Sub Form_Activate()
 'On Error Resume Next
@@ -257,31 +217,26 @@ If ServersRecibidos Then
         IPTxt = IPdelServidor
         PortTxt = PuertoDelServidor
     End If
-    
-    Call CargarLst
-Else
-    lst_servers.Clear
 End If
 
 End Sub
-
 
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
 If KeyCode = 27 Then
         frmCargando.Show
         frmCargando.Refresh
-        AddtoRichTextBox frmCargando.Status, "Cerrando Argentum Online.", 0, 0, 0, 1, 0, 1
+        AddtoRichTextBox frmCargando.status, "Cerrando Argentum Online.", 0, 0, 0, 1, 0, 1
         
         Call SaveGameini
         frmConnect.MousePointer = 1
         frmMain.MousePointer = 1
         prgRun = False
         
-        AddtoRichTextBox frmCargando.Status, "Liberando recursos..."
+        AddtoRichTextBox frmCargando.status, "Liberando recursos..."
         frmCargando.Refresh
         LiberarObjetosDX
-        AddtoRichTextBox frmCargando.Status, "Hecho", 0, 0, 0, 1, 0, 1
-        AddtoRichTextBox frmCargando.Status, "¡¡Gracias por jugar Argentum Online!!", 0, 0, 0, 1, 0, 1
+        AddtoRichTextBox frmCargando.status, "Hecho", 0, 0, 0, 1, 0, 1
+        AddtoRichTextBox frmCargando.status, "¡¡Gracias por jugar Argentum Online!!", 0, 0, 0, 1, 0, 1
         frmCargando.Refresh
         Call UnloadAllForms
 End If
@@ -415,22 +370,5 @@ Private Sub imgServArgentina_Click()
     Call Audio.PlayWave(SND_CLICK)
     IPTxt.Text = IPdelServidor
     PortTxt.Text = PuertoDelServidor
-End Sub
-
-Private Sub imgServEspana_Click()
-    Call Audio.PlayWave(SND_CLICK)
-    IPTxt.Text = "62.42.193.233"
-    PortTxt.Text = "7666"
-End Sub
-
-
-
-Private Sub lst_servers_Click()
-If ServersRecibidos Then
-    CurServer = lst_servers.listIndex + 1
-    IPTxt = ServersLst(CurServer).Ip
-    PortTxt = ServersLst(CurServer).Puerto
-End If
-
 End Sub
 

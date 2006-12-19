@@ -133,19 +133,3 @@ End Sub
 Private Sub Command3_Click()
 Unload Me
 End Sub
-
-Public Sub ParseGuildList(ByVal Rdata As String)
-
-Dim j As Integer, k As Integer
-For j = 0 To GuildsList.ListCount - 1
-    Me.GuildsList.RemoveItem 0
-Next j
-k = CInt(ReadField(1, Rdata, 44))
-
-For j = 1 To k
-    GuildsList.AddItem ReadField(1 + j, Rdata, 44)
-Next j
-
-Me.Show vbModal, frmMain
-
-End Sub

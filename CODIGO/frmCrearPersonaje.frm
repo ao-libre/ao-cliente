@@ -953,10 +953,10 @@ Select Case index
             i = i + 1
         Next
         
-        UserName = txtNombre.Text
+        username = txtNombre.Text
         
-        If Right$(UserName, 1) = " " Then
-                UserName = RTrim$(UserName)
+        If Right$(username, 1) = " " Then
+                username = RTrim$(username)
                 MsgBox "Nombre invalido, se han removido los espacios al final del nombre"
         End If
         

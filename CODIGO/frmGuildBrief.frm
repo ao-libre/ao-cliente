@@ -329,50 +329,9 @@ Option Explicit
 
 Public EsLeader As Boolean
 
-
-Public Sub ParseGuildInfo(ByVal Buffer As String)
-
-If Not EsLeader Then
-    guerra.Visible = False
-    aliado.Visible = False
-    Command3.Visible = False
-Else
-    guerra.Visible = True
-    aliado.Visible = True
-    Command3.Visible = True
-End If
-
-Nombre.Caption = "Nombre:" & ReadField(1, Buffer, Asc("¬"))
-fundador.Caption = "Fundador:" & ReadField(2, Buffer, Asc("¬"))
-creacion.Caption = "Fecha de creacion:" & ReadField(3, Buffer, Asc("¬"))
-lider.Caption = "Lider:" & ReadField(4, Buffer, Asc("¬"))
-web.Caption = "Web site:" & ReadField(5, Buffer, Asc("¬"))
-Miembros.Caption = "Miembros:" & ReadField(6, Buffer, Asc("¬"))
-eleccion.Caption = "Dias para proxima eleccion de lider:" & ReadField(7, Buffer, Asc("¬"))
-'Oro.Caption = "Oro:" & ReadField(8, Buffer, Asc("¬"))
-lblAlineacion.Caption = "Alineación: " & ReadField(8, Buffer, Asc("¬"))
-Enemigos.Caption = "Clanes enemigos:" & ReadField(9, Buffer, Asc("¬"))
-aliados.Caption = "Clanes aliados:" & ReadField(10, Buffer, Asc("¬"))
-antifaccion.Caption = "Puntos Antifaccion: " & ReadField(11, Buffer, Asc("¬"))
-
-Dim T As Long
-
-For T = 1 To 8
-    Codex(T - 1).Caption = ReadField(11 + T, Buffer, Asc("¬"))
-Next T
-
-Dim des As String
-
-des = ReadField(20, Buffer, Asc("¬"))
-desc.Text = Replace(des, "º", vbCrLf)
-
-Me.Show vbModal, frmMain
-
-End Sub
-
 Private Sub aliado_Click()
 frmCommet.Nombre = Right(Nombre.Caption, Len(Nombre.Caption) - 7)
-frmCommet.T = ALIANZA
+frmCommet.T = TIPO.ALIANZA
 frmCommet.Caption = "Ingrese propuesta de alianza"
 Call frmCommet.Show(vbModal, frmGuildBrief)
 
@@ -394,12 +353,11 @@ End Sub
 
 Private Sub Command3_Click()
 frmCommet.Nombre = Right(Nombre.Caption, Len(Nombre.Caption) - 7)
-frmCommet.T = PAZ
+frmCommet.T = TIPO.PAZ
 frmCommet.Caption = "Ingrese propuesta de paz"
 Call frmCommet.Show(vbModal, frmGuildBrief)
 'Unload Me
 End Sub
-
 
 Private Sub Guerra_Click()
 Call SendData("DECGUERR" & Right(Nombre.Caption, Len(Nombre.Caption) - 7))

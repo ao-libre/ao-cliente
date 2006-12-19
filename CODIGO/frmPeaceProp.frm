@@ -133,64 +133,35 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private tipoprop As TIPO_PROPUESTA
-Private Enum TIPO_PROPUESTA
+
+Public Enum TIPO_PROPUESTA
     ALIANZA = 1
     PAZ = 2
 End Enum
 
-
+Public Property Let ProposalType(ByVal nValue As TIPO_PROPUESTA)
+    tipoprop = nValue
+End Property
 
 Private Sub Command1_Click()
-Unload Me
-End Sub
-
-Public Sub ParsePeaceOffers(ByVal s As String)
-
-Dim T%, r%
-
-T% = Val(ReadField(1, s, 44))
-
-For r% = 1 To T%
-    Call lista.AddItem(ReadField(r% + 1, s, 44))
-Next r%
-
-
-tipoprop = PAZ
-
-Me.Show vbModeless, frmMain
-
-End Sub
-
-Public Sub ParseAllieOffers(ByVal s As String)
-
-Dim T%, r%
-
-T% = Val(ReadField(1, s, 44))
-
-For r% = 1 To T%
-    Call lista.AddItem(ReadField(r% + 1, s, 44))
-Next r%
-
-tipoprop = ALIANZA
-Me.Show vbModeless, frmMain
-
+    Unload Me
 End Sub
 
 Private Sub Command2_Click()
 'Me.Visible = False
 If tipoprop = PAZ Then
-    Call SendData("PEACEDET" & lista.List(lista.ListIndex))
+    Call SendData("PEACEDET" & lista.List(lista.listIndex))
 Else
-    Call SendData("ALLIEDET" & lista.List(lista.ListIndex))
+    Call SendData("ALLIEDET" & lista.List(lista.listIndex))
 End If
 End Sub
 
 Private Sub Command3_Click()
 'Me.Visible = False
 If tipoprop = PAZ Then
-    Call SendData("ACEPPEAT" & lista.List(lista.ListIndex))
+    Call SendData("ACEPPEAT" & lista.List(lista.listIndex))
 Else
-    Call SendData("ACEPALIA" & lista.List(lista.ListIndex))
+    Call SendData("ACEPALIA" & lista.List(lista.listIndex))
 End If
 Me.Hide
 Unload Me
@@ -198,9 +169,9 @@ End Sub
 
 Private Sub Command4_Click()
 If tipoprop = PAZ Then
-    Call SendData("RECPPEAT" & lista.List(lista.ListIndex))
+    Call SendData("RECPPEAT" & lista.List(lista.listIndex))
 Else
-    Call SendData("RECPALIA" & lista.List(lista.ListIndex))
+    Call SendData("RECPALIA" & lista.List(lista.listIndex))
 End If
 Me.Hide
 Unload Me

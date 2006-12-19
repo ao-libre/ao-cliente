@@ -235,10 +235,10 @@ Public UserPos As Position 'Posicion
 Public AddtoUserPos As Position 'Si se mueve
 Public UserCharIndex As Integer
 
-Public UserMaxAGU As Integer
-Public UserMinAGU As Integer
-Public UserMaxHAM As Integer
-Public UserMinHAM As Integer
+Public UserMaxAGU As Byte
+Public UserMinAGU As Byte
+Public UserMaxHAM As Byte
+Public UserMinHAM As Byte
 
 Public EngineRun As Boolean
 Public FramesPerSec As Integer
@@ -367,7 +367,7 @@ Private Declare Function BltEfectoNoche Lib "vbabdx" (ByRef lpDDSDest As Any, By
 
 #End If
 
-Private Declare Function GetWindowRect Lib "User32" (ByVal hWnd As Long, lpRect As RECT) As Long
+Private Declare Function GetWindowRect Lib "user32" (ByVal hWnd As Long, lpRect As RECT) As Long
 
 Sub CargarCabezas()
 On Error Resume Next

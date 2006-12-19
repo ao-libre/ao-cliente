@@ -284,7 +284,7 @@ End Sub
 Private Sub Command1_Click()
 
 frmCharInfo.frmsolicitudes = True
-Call SendData("1HRINFO<" & solicitudes.List(solicitudes.ListIndex))
+Call SendData("1HRINFO<" & solicitudes.list(solicitudes.listIndex))
 
 'Unload Me
 
@@ -293,7 +293,7 @@ End Sub
 Private Sub Command2_Click()
 
 frmCharInfo.frmmiembros = True
-Call SendData("1HRINFO<" & members.List(members.ListIndex))
+Call SendData("1HRINFO<" & members.list(members.listIndex))
 
 'Unload Me
 
@@ -312,7 +312,7 @@ End Sub
 Private Sub Command4_Click()
 
 frmGuildBrief.EsLeader = True
-Call SendData("CLANDETAILS" & guildslist.List(guildslist.ListIndex))
+Call SendData("CLANDETAILS" & guildslist.list(guildslist.listIndex))
 
 'Unload Me
 
@@ -338,49 +338,7 @@ Private Sub Command9_Click()
 Call SendData("ENVALPRO")
 End Sub
 
-
 Private Sub Command8_Click()
 Unload Me
 frmMain.SetFocus
-End Sub
-
-
-Public Sub ParseLeaderInfo(ByVal Data As String)
-
-If Me.Visible Then Exit Sub
-
-Dim r%, T%
-
-r% = Val(ReadField(1, Data, Asc("¬")))
-
-For T% = 1 To r%
-    guildslist.AddItem ReadField(1 + T%, Data, Asc("¬"))
-Next T%
-
-r% = Val(ReadField(T% + 1, Data, Asc("¬")))
-Miembros.Caption = "El clan cuenta con " & r% & " miembros."
-
-Dim k%
-
-For k% = 1 To r%
-    members.AddItem ReadField(T% + 1 + k%, Data, Asc("¬"))
-Next k%
-
-txtguildnews = Replace(ReadField(T% + k% + 1, Data, Asc("¬")), "º", vbCrLf)
-
-T% = T% + k% + 2
-
-r% = Val(ReadField(T%, Data, Asc("¬")))
-
-For k% = 1 To r%
-    solicitudes.AddItem ReadField(T% + k%, Data, Asc("¬"))
-Next k%
-
-Me.Show , frmMain
-
-End Sub
-
-
-Private Sub Form_Deactivate()
-'Me.SetFocus
 End Sub

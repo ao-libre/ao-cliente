@@ -42,7 +42,7 @@ Public Audio As New clsAudio
 Public Inventario As New clsGrapchicalInventory
 Public SurfaceDB As clsSurfaceManager   'No va new porque es unainterfaz, el new se pone al decidir que clase de objeto es
 
-Public incommingData As New clsByteQueue
+Public incomingData As New clsByteQueue
 Public outgoingData As New clsByteQueue
 
 '' The main timer of the game.
@@ -65,6 +65,8 @@ Public Const SND_LLUVIAOUTEND As String = "lluviaoutend.wav"
 ' Head index of the casper. Used to know if a char is killed
 Public Const CASPER_HEAD As Integer = 500
 
+Public Const NUMATRIBUTES As Byte = 5
+
 'Musica
 Public Const MIdi_Inicio As Byte = 6
 
@@ -72,7 +74,7 @@ Public RawServersList As String
 
 Public Type tColor
     r As Byte
-    G As Byte
+    g As Byte
     b As Byte
 End Type
 
@@ -253,7 +255,7 @@ Type Inventory
     Name As String
     GrhIndex As Integer
     '[Alejo]: tipo de datos ahora es Long
-    Amount As Long
+    amount As Long
     '[/Alejo]
     Equipped As Byte
     Valor As Long
@@ -267,7 +269,7 @@ Type NpCinV
     OBJIndex As Integer
     Name As String
     GrhIndex As Integer
-    Amount As Integer
+    amount As Integer
     Valor As Long
     OBJType As Integer
     Def As Integer
@@ -315,7 +317,7 @@ Public UserHechizos(1 To MAXHECHI) As Integer
 Public NPCInventory(1 To MAX_NPC_INVENTORY_SLOTS) As NpCinV
 Public NPCInvDim As Integer
 Public UserMeditar As Boolean
-Public UserName As String
+Public username As String
 Public UserPassword As String
 Public UserMaxHP As Integer
 Public UserMinHP As Integer
@@ -397,6 +399,48 @@ Public Enum FxMeditar
     XGRANDE = 16
 End Enum
 
+Public Enum eClanType
+    ct_RoyalArmy
+    ct_Evil
+    ct_Neutral
+    ct_GM
+    ct_Legal
+    ct_Criminal
+End Enum
+
+Public Enum eEditOptions
+    eo_Gold
+    eo_Experience
+    eo_Body
+    eo_Head
+    eo_CiticensKilled
+    eo_CriminalsKilled
+    eo_Level
+    eo_Class
+    eo_Skills
+    eo_SkillPointsLeft
+End Enum
+
+''
+' TRIGGERS
+'
+' @param NADA nada
+' @param BAJOTECHO bajo techo
+' @param trigger_2 ???
+' @param POSINVALIDA los npcs no pueden pisar tiles con este trigger
+' @param ZONASEGURA no se puede robar o pelear desde este trigger
+' @param ANTIPIQUETE
+' @param ZONAPELEA al pelear en este trigger no se caen las cosas y no cambia el estado de ciuda o crimi
+'
+Public Enum eTrigger
+    NADA = 0
+    BAJOTECHO = 1
+    trigger_2 = 2
+    POSINVALIDA = 3
+    ZONASEGURA = 4
+    ANTIPIQUETE = 5
+    ZONAPELEA = 6
+End Enum
 
 'Server stuff
 Public RequestPosTimer As Integer 'Used in main loop
@@ -428,8 +472,8 @@ Public Declare Function writeprivateprofilestring Lib "kernel32" Alias "WritePri
 Public Declare Function getprivateprofilestring Lib "kernel32" Alias "GetPrivateProfileStringA" (ByVal lpApplicationname As String, ByVal lpKeyname As Any, ByVal lpdefault As String, ByVal lpreturnedstring As String, ByVal nsize As Long, ByVal lpfilename As String) As Long
 
 'Teclado
-Public Declare Function GetKeyState Lib "User32" (ByVal nVirtKey As Long) As Integer
-Public Declare Function GetAsyncKeyState Lib "User32" (ByVal nVirtKey As Long) As Integer
+Public Declare Function GetKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
+Public Declare Function GetAsyncKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
 
 Public Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
 
@@ -449,4 +493,3 @@ Public Type tIndiceFx
     OffsetX As Integer
     OffsetY As Integer
 End Type
-

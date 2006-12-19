@@ -62,8 +62,10 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 24/06/2006: Limpié un poco de código. (Maraxus).
  * 24/06/2006: Hice el AO.dat se lea antes que la línea de comandos para evitar que se pise la opción "/nores". (Maraxus).
  * 29/06/2006: AltGr no funciona igual que Ctrl. (Integer)
+ * 27/07/2006: Elimine lst_servers, imgServEspana_Click, La Desc y PassRecPort Ya Que No Se Utilizaban. (Shura)
  * 06/08/2006: Puse un Error Handler en Sub Main. (Integer)
  * 13/08/2006: Solucioné un bug en las CambioDeArea. (Integer)
  * 26/08/2006: Modifiqué la clase Timer. Gracias a NIGO por la sugerencia. (Integer)
  * 27/08/2006: En la Ventana de Comercio/Boveda, no dejar imagen e informacion cuando seleccionamos un elemento con -nada-. (^[GS]^)
  * 24/10/2006: Correccion de centrado de la superficie en la capa 2 del mapa. (^[GS]^)
+ * 18/12/2006: Nuevo protocolo completo. Queda pendiente escribir el parser y reemplazar las viejas llamadas a SendData. (Maraxus)

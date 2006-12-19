@@ -83,7 +83,6 @@ Sub HandleData(ByVal Rdata As String)
     
     Select Case sData
         Case "LOGGED"            ' >>>>> LOGIN :: LOGGED
-            logged = True
             UserCiego = False
             EngineRun = True
             IScombate = False
@@ -120,7 +119,6 @@ Sub HandleData(ByVal Rdata As String)
                 frmMain.Winsock1.Close
 #End If
             frmMain.Visible = False
-            logged = False
             UserParalizado = False
             IScombate = False
             pausa = False
@@ -608,7 +606,8 @@ Sub HandleData(ByVal Rdata As String)
             Exit Sub
         Case "GL" 'Lista de guilds
             Rdata = Right$(Rdata, Len(Rdata) - 2)
-            Call frmGuildAdm.ParseGuildList(Rdata)
+            'Con el protocolo nuevo esto desaparece
+            'Call frmGuildAdm.ParseGuildList(Rdata)
             Exit Sub
         Case "FO"          ' >>>>> Play un WAV :: TW
             bFogata = True
@@ -637,7 +636,7 @@ Sub HandleData(ByVal Rdata As String)
 #End If
 
             If EstadoLogin = Normal Or EstadoLogin = CrearNuevoPj Then
-                Call Login(ValidarLoginMSG(CInt(bRK)))
+                Call Login(ValidarLoginMSG(bRK))
             ElseIf EstadoLogin = Dados Then
                 frmCrearPersonaje.Show vbModal
 #If SeguridadAlkon Then
@@ -756,14 +755,6 @@ Sub HandleData(ByVal Rdata As String)
             UserBancoInventory(slot).MaxHit = Val(ReadField(7, Rdata, 44))
             UserBancoInventory(slot).MinHit = Val(ReadField(8, Rdata, 44))
             UserBancoInventory(slot).Def = Val(ReadField(9, Rdata, 44))
-        
-            tempstr = ""
-            
-            If UserBancoInventory(slot).Amount > 0 Then
-                tempstr = tempstr & "(" & UserBancoInventory(slot).Amount & ") " & UserBancoInventory(slot).Name
-            Else
-                tempstr = tempstr & UserBancoInventory(slot).Name
-            End If
             
             Exit Sub
         '************************************************************************
@@ -887,13 +878,7 @@ Sub HandleData(ByVal Rdata As String)
             NPCInventory(NPCInvDim).MaxHit = ReadField(7, Rdata, 44)
             NPCInventory(NPCInvDim).MinHit = ReadField(8, Rdata, 44)
             NPCInventory(NPCInvDim).Def = ReadField(9, Rdata, 44)
-            NPCInventory(NPCInvDim).C1 = ReadField(10, Rdata, 44)
-            NPCInventory(NPCInvDim).C2 = ReadField(11, Rdata, 44)
-            NPCInventory(NPCInvDim).C3 = ReadField(12, Rdata, 44)
-            NPCInventory(NPCInvDim).C4 = ReadField(13, Rdata, 44)
-            NPCInventory(NPCInvDim).C5 = ReadField(14, Rdata, 44)
-            NPCInventory(NPCInvDim).C6 = ReadField(15, Rdata, 44)
-            NPCInventory(NPCInvDim).C7 = ReadField(16, Rdata, 44)
+            
             frmComerciar.List1(0).AddItem NPCInventory(NPCInvDim).Name
             Exit Sub
         Case "EHYS"              ' Actualiza Hambre y Sed :: EHYS
@@ -1020,7 +1005,8 @@ Sub HandleData(ByVal Rdata As String)
     Select Case Left$(sData, 7)
         Case "GUILDNE"
             Rdata = Right$(Rdata, Len(Rdata) - 7)
-            Call frmGuildNews.ParseGuildNews(Rdata)
+            'Con el protocolo nuevo esto desaparece
+            'Call frmGuildNews.ParseGuildNews(Rdata)
             Exit Sub
         Case "PEACEDE"  'detalles de paz
             Rdata = Right$(Rdata, Len(Rdata) - 7)
@@ -1032,22 +1018,27 @@ Sub HandleData(ByVal Rdata As String)
             Exit Sub
         Case "ALLIEPR"  'lista de prop de alianzas
             Rdata = Right$(Rdata, Len(Rdata) - 7)
-            Call frmPeaceProp.ParseAllieOffers(Rdata)
+            'Con el protocolo nuevo esto desaparece
+            'Call frmPeaceProp.ParseAllieOffers(Rdata)
         Case "PEACEPR"  'lista de prop de paz
             Rdata = Right$(Rdata, Len(Rdata) - 7)
-            Call frmPeaceProp.ParsePeaceOffers(Rdata)
+            'Con el protocolo nuevo esto desaparece
+            'Call frmPeaceProp.ParsePeaceOffers(Rdata)
             Exit Sub
         Case "CHRINFO"
             Rdata = Right$(Rdata, Len(Rdata) - 7)
-            Call frmCharInfo.parseCharInfo(Rdata)
+            'Con el protocolo nuevo esto desaparece
+            'Call frmCharInfo.parseCharInfo(Rdata)
             Exit Sub
         Case "LEADERI"
             Rdata = Right$(Rdata, Len(Rdata) - 7)
-            Call frmGuildLeader.ParseLeaderInfo(Rdata)
+            'Con el protocolo nuevo esto desaparece
+            'Call frmGuildLeader.ParseLeaderInfo(Rdata)
             Exit Sub
         Case "CLANDET"
             Rdata = Right$(Rdata, Len(Rdata) - 7)
-            Call frmGuildBrief.ParseGuildInfo(Rdata)
+            'Con el protocolo nuevo esto desaparece
+            'Call frmGuildBrief.ParseGuildInfo(Rdata)
             Exit Sub
         Case "SHOWFUN"
             CreandoClan = True
@@ -1063,15 +1054,13 @@ Sub HandleData(ByVal Rdata As String)
             Exit Sub
         Case "TRANSOK"           ' Transacción OK :: TRANSOK
             If frmComerciar.Visible Then
-                i = 1
-                Do While i <= MAX_INVENTORY_SLOTS
+                For i = 1 To MAX_INVENTORY_SLOTS
                     If Inventario.OBJIndex(i) <> 0 Then
                         frmComerciar.List1(1).AddItem Inventario.ItemName(i)
                     Else
                         frmComerciar.List1(1).AddItem "Nada"
                     End If
-                    i = i + 1
-                Loop
+                Next i
                 
                 frmComerciar.List1(0).listIndex = frmComerciar.LastIndex1
                 frmComerciar.List1(1).listIndex = frmComerciar.LastIndex2

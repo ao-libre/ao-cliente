@@ -159,15 +159,15 @@ On Error Resume Next
     
     For i = 0 To 48 '49 y 50 reservados para ciudadano y criminal
         ColoresPJ(i).r = CByte(GetVar(archivoC, CStr(i), "R"))
-        ColoresPJ(i).G = CByte(GetVar(archivoC, CStr(i), "G"))
+        ColoresPJ(i).g = CByte(GetVar(archivoC, CStr(i), "G"))
         ColoresPJ(i).b = CByte(GetVar(archivoC, CStr(i), "B"))
     Next i
     
     ColoresPJ(50).r = CByte(GetVar(archivoC, "CR", "R"))
-    ColoresPJ(50).G = CByte(GetVar(archivoC, "CR", "G"))
+    ColoresPJ(50).g = CByte(GetVar(archivoC, "CR", "G"))
     ColoresPJ(50).b = CByte(GetVar(archivoC, "CR", "B"))
     ColoresPJ(49).r = CByte(GetVar(archivoC, "CI", "R"))
-    ColoresPJ(49).G = CByte(GetVar(archivoC, "CI", "G"))
+    ColoresPJ(49).g = CByte(GetVar(archivoC, "CI", "G"))
     ColoresPJ(49).b = CByte(GetVar(archivoC, "CI", "B"))
 End Sub
 
@@ -211,7 +211,7 @@ On Error Resume Next
     Next loopc
 End Sub
 
-Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, ByVal Text As String, Optional ByVal Red As Integer = -1, Optional ByVal Green As Integer, Optional ByVal Blue As Integer, Optional ByVal Bold As Boolean = False, Optional ByVal Italic As Boolean = False, Optional ByVal bCrLf As Boolean = False)
+Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, ByVal Text As String, Optional ByVal red As Integer = -1, Optional ByVal green As Integer, Optional ByVal blue As Integer, Optional ByVal bold As Boolean = False, Optional ByVal italic As Boolean = False, Optional ByVal bCrLf As Boolean = False)
 '******************************************
 'Adds text to a Richtext box at the bottom.
 'Automatically scrolls to new text.
@@ -224,10 +224,10 @@ Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, ByVal Text As String, Opt
         .SelStart = Len(RichTextBox.Text)
         .SelLength = 0
         
-        .SelBold = Bold
-        .SelItalic = Italic
+        .SelBold = bold
+        .SelItalic = italic
         
-        If Not Red = -1 Then .SelColor = RGB(Red, Green, Blue)
+        If Not red = -1 Then .SelColor = RGB(red, green, blue)
         
         .SelText = IIf(bCrLf, Text, Text & vbCrLf)
         
@@ -300,18 +300,18 @@ Function CheckUserData(ByVal checkemail As Boolean) As Boolean
         End If
     Next loopc
     
-    If UserName = "" Then
+    If username = "" Then
         MsgBox ("Ingrese un nombre de personaje.")
         Exit Function
     End If
     
-    If Len(UserName) > 30 Then
+    If Len(username) > 30 Then
         MsgBox ("El nombre debe tener menos de 30 letras.")
         Exit Function
     End If
     
-    For loopc = 1 To Len(UserName)
-        CharAscii = Asc(mid$(UserName, loopc, 1))
+    For loopc = 1 To Len(username)
+        CharAscii = Asc(mid$(username, loopc, 1))
         If Not LegalCharacter(CharAscii) Then
             MsgBox ("Nombre inválido. El caractér " & Chr$(CharAscii) & " no está permitido.")
             Exit Function
@@ -377,7 +377,7 @@ Sub SetConnected()
     Unload frmPasswd
     Unload frmCrearPersonaje
     
-    frmMain.Label8.Caption = UserName
+    frmMain.Label8.Caption = username
     'Load main form
     frmMain.Visible = True
 #If SeguridadAlkon Then
@@ -530,9 +530,9 @@ Sub MoveScreen(ByVal nHeading As E_Heading)
         UserPos.Y = tY
         UserMoving = 1
         
-        bTecho = IIf(MapData(UserPos.X, UserPos.Y).Trigger = 1 Or _
-                MapData(UserPos.X, UserPos.Y).Trigger = 2 Or _
-                MapData(UserPos.X, UserPos.Y).Trigger = 4, True, False)
+        bTecho = IIf(MapData(UserPos.X, UserPos.Y).trigger = 1 Or _
+                MapData(UserPos.X, UserPos.Y).trigger = 2 Or _
+                MapData(UserPos.X, UserPos.Y).trigger = 4, True, False)
         Exit Sub
     End If
 End Sub
@@ -553,7 +553,7 @@ Function NextOpenChar()
 End Function
 
 'TODO : Si bien nunca estuvo allí, el mapa es algo independiente o a lo sumo dependiente del engine, no va acá!!!
-Sub SwitchMap(ByVal Map As Integer)
+Sub SwitchMap(ByVal map As Integer)
 '**************************************************************
 'Formato de mapas optimizado para reducir el espacio que ocupan.
 'Diseñado y creado por Juan Martín Sotuyo Dodero (Maraxus) (juansotuyo@hotmail.com)
@@ -564,7 +564,7 @@ Sub SwitchMap(ByVal Map As Integer)
     Dim tempint As Integer
     Dim ByFlags As Byte
     
-    Open DirMapas & "Mapa" & Map & ".map" For Binary As #1
+    Open DirMapas & "Mapa" & map & ".map" For Binary As #1
     Seek #1, 1
             
     'map Header
@@ -611,9 +611,9 @@ Sub SwitchMap(ByVal Map As Integer)
             
             'Trigger used?
             If ByFlags And 16 Then
-                Get #1, , MapData(X, Y).Trigger
+                Get #1, , MapData(X, Y).trigger
             Else
-                MapData(X, Y).Trigger = 0
+                MapData(X, Y).trigger = 0
             End If
             
             'Erase NPCs
@@ -631,7 +631,7 @@ Sub SwitchMap(ByVal Map As Integer)
     MapInfo.Name = ""
     MapInfo.Music = ""
     
-    CurMap = Map
+    CurMap = map
 End Sub
 
 'TODO : Reemplazar por la nueva versión, esta apesta!!!
@@ -1002,7 +1002,7 @@ UserMap = 1
     Set Audio = Nothing
     Set Inventario = Nothing
     Set MainTimer = Nothing
-    Set incommingData = Nothing
+    Set incomingData = Nothing
     Set outgoingData = Nothing
     
 #If SeguridadAlkon Then

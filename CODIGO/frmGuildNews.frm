@@ -121,32 +121,3 @@ On Error Resume Next
 Unload Me
 frmMain.SetFocus
 End Sub
-
-Public Sub ParseGuildNews(ByVal s As String)
-
-news = Replace(ReadField(1, s, Asc("¬")), "º", vbCrLf)
-
-Dim h%, j%
-
-h% = Val(ReadField(2, s, Asc("¬")))
-
-For j% = 1 To h%
-    
-    guerra.AddItem ReadField(j% + 2, s, Asc("¬"))
-    
-Next j%
-
-j% = j% + 2
-
-h% = Val(ReadField(j%, s, Asc("¬")))
-
-For j% = j% + 1 To j% + h%
-    
-    aliados.AddItem ReadField(j%, s, Asc("¬"))
-    
-Next j%
-
-Me.Show , frmMain
-
-End Sub
-

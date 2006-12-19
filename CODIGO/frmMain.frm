@@ -1355,6 +1355,24 @@ Private Sub SendCMSTXT_Change()
     If Len(SendCMSTXT.Text) > 160 Then
         stxtbuffercmsg = "Soy un cheater, avisenle a un GM"
     Else
+        'Make sure only valid chars are inserted (with Shift + Insert they can paste illegal chars)
+        Dim i As Long
+        Dim tempstr As String
+        Dim CharAscii As Integer
+        
+        For i = 1 To Len(SendCMSTXT.Text)
+            CharAscii = Asc(mid$(SendCMSTXT.Text, i, 1))
+            If CharAscii >= vbKeySpace And CharAscii <= 250 Then
+                tempstr = tempstr & Chr$(CharAscii)
+            End If
+        Next i
+        
+        If tempstr <> SendCMSTXT.Text Then
+            'We only set it if it's different, otherwise the event will be raised
+            'constantly and the client will crush
+            SendCMSTXT.Text = tempstr
+        End If
+        
         stxtbuffercmsg = SendCMSTXT.Text
     End If
 End Sub
@@ -1407,7 +1425,6 @@ Private Sub Socket1_Disconnect()
     Dim i As Long
     
     Second.Enabled = False
-    logged = False
     Connected = False
     
     Socket1.Cleanup
@@ -1614,7 +1631,6 @@ Private Sub Winsock1_Close()
     Debug.Print "WInsock Close"
     
     Second.Enabled = False
-    logged = False
     Connected = False
     
     If Winsock1.State <> sckClosed Then _
