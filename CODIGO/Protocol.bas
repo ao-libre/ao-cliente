@@ -1,4 +1,38 @@
 Attribute VB_Name = "Protocol"
+'**************************************************************
+' Protocol.bas - Handles all incoming / outgoing messages for client-server communications.
+' Uses a binary protocol designed by myself.
+'
+' Designed and implemented by Juan Martín Sotuyo Dodero (Maraxus)
+' (juansotuyo@gmail.com)
+'**************************************************************
+
+'**************************************************************************
+'This program is free software; you can redistribute it and/or modify
+'it under the terms of the GNU General Public License as published by
+'the Free Software Foundation; either version 2 of the License, or
+'(at your option) any later version.
+'
+'This program is distributed in the hope that it will be useful,
+'but WITHOUT ANY WARRANTY; without even the implied warranty of
+'MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+'GNU General Public License for more details.
+'
+'You should have received a copy of the GNU General Public License
+'along with this program; if not, write to the Free Software
+'Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+'**************************************************************************
+
+''
+'Handles all incoming / outgoing packets for client - server communications
+'The binary prtocol here used was designed by Juan Martín Sotuyo Dodero.
+'This is the first time it's used in Alkon, though the second time it's coded.
+'This implementation has several enhacements from the first design.
+'
+' @author Juan Martín Sotuyo Dodero (Maraxus) juansotuyo@gmail.com
+' @version 1.0.0
+' @date 20060517
+
 Option Explicit
 
 ''
