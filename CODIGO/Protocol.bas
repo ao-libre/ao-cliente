@@ -3014,13 +3014,13 @@ On Error GoTo errHandler
     Call Buffer.ReadByte
     
     Dim title As String
-    Dim Message As String
+    Dim message As String
     
     title = Buffer.ReadASCIIString()
-    Message = Buffer.ReadASCIIString()
+    message = Buffer.ReadASCIIString()
     
     Call frmForo.List.AddItem(title)
-    frmForo.Text(frmForo.List.ListCount - 1).Text = Message
+    frmForo.Text(frmForo.List.ListCount - 1).Text = message
     Call Load(frmForo.Text(frmForo.List.ListCount))
     
     'If we got here then packet is compelte, copy data back to original queue
@@ -4693,7 +4693,7 @@ End Sub
 ' @param    message The body of the message.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteForumPost(ByVal title As String, ByVal Message As String)
+Public Sub WriteForumPost(ByVal title As String, ByVal message As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -4703,7 +4703,7 @@ Public Sub WriteForumPost(ByVal title As String, ByVal Message As String)
         Call .WriteByte(ClientPacketID.ForumPost)
         
         Call .WriteASCIIString(title)
-        Call .WriteASCIIString(Message)
+        Call .WriteASCIIString(message)
     End With
 End Sub
 
@@ -5515,7 +5515,7 @@ End Sub
 ' @param    message The message to send to the guild.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteGuildMessage(ByVal Message As String)
+Public Sub WriteGuildMessage(ByVal message As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5524,7 +5524,7 @@ Public Sub WriteGuildMessage(ByVal Message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.GuildMessage)
         
-        Call .WriteASCIIString(Message)
+        Call .WriteASCIIString(message)
     End With
 End Sub
 
@@ -5534,7 +5534,7 @@ End Sub
 ' @param    message The message to send to the party.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WritePartyMessage(ByVal Message As String)
+Public Sub WritePartyMessage(ByVal message As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5543,7 +5543,7 @@ Public Sub WritePartyMessage(ByVal Message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.PartyMessage)
         
-        Call .WriteASCIIString(Message)
+        Call .WriteASCIIString(message)
     End With
 End Sub
 
@@ -5600,7 +5600,7 @@ End Sub
 ' @param    message The message to send to the other council members.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCouncilMessage(ByVal Message As String)
+Public Sub WriteCouncilMessage(ByVal message As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5609,7 +5609,7 @@ Public Sub WriteCouncilMessage(ByVal Message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.CouncilMessage)
         
-        Call .WriteASCIIString(Message)
+        Call .WriteASCIIString(message)
     End With
 End Sub
 
@@ -5619,7 +5619,7 @@ End Sub
 ' @param    message The message to send to the role masters.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteRoleMasterRequest(ByVal Message As String)
+Public Sub WriteRoleMasterRequest(ByVal message As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5628,7 +5628,7 @@ Public Sub WriteRoleMasterRequest(ByVal Message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.RoleMasterRequest)
         
-        Call .WriteASCIIString(Message)
+        Call .WriteASCIIString(message)
     End With
 End Sub
 
@@ -5652,7 +5652,7 @@ End Sub
 ' @param    message The message explaining the reported bug.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteBugReport(ByVal Message As String)
+Public Sub WriteBugReport(ByVal message As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5661,7 +5661,7 @@ Public Sub WriteBugReport(ByVal Message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.BugReport)
         
-        Call .WriteASCIIString(Message)
+        Call .WriteASCIIString(message)
     End With
 End Sub
 
@@ -5836,9 +5836,28 @@ Public Sub WriteBankDepositGold(ByVal Amount As Long)
 End Sub
 
 ''
-' Writes the "GuildFundate" message to the outgoing data buffer.
+' Writes the "Denounce" message to the outgoing data buffer.
 '
 ' @param    message The message to send with the denounce.
+' @remarks  The data is not actually sent until the buffer is properly flushed.
+
+Public Sub WriteDenounce(ByVal message As String)
+'***************************************************
+'Autor: Juan Martín Sotuyo Dodero (Maraxus)
+'Last Modification: 05/17/06
+'Writes the "Denounce" message to the outgoing data buffer
+'***************************************************
+    With outgoingData
+        Call .WriteByte(ClientPacketID.Denounce)
+        
+        Call .WriteASCIIString(message)
+    End With
+End Sub
+
+''
+' Writes the "GuildFundate" message to the outgoing data buffer.
+'
+' @param    clanType The alignment of the clan to be founded.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteGuildFundate(ByVal clanType As eClanType)
@@ -5936,7 +5955,7 @@ End Sub
 ' @param    message The message to be sent to the other GMs online.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteGMMessage(ByVal Message As String)
+Public Sub WriteGMMessage(ByVal message As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5945,7 +5964,7 @@ Public Sub WriteGMMessage(ByVal Message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.GMMessage)
         
-        Call .WriteASCIIString(Message)
+        Call .WriteASCIIString(message)
     End With
 End Sub
 
@@ -6016,7 +6035,7 @@ End Sub
 ' @param    message The message to leave in the log as a comment.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteComment(ByVal Message As String)
+Public Sub WriteComment(ByVal message As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6025,7 +6044,7 @@ Public Sub WriteComment(ByVal Message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.Comment)
         
-        Call .WriteASCIIString(Message)
+        Call .WriteASCIIString(message)
     End With
 End Sub
 
@@ -6703,7 +6722,7 @@ End Sub
 ' @param    message The message to be sent to players.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteServerMessage(ByVal Message As String)
+Public Sub WriteServerMessage(ByVal message As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6712,7 +6731,7 @@ Public Sub WriteServerMessage(ByVal Message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.ServerMessage)
         
-        Call .WriteASCIIString(Message)
+        Call .WriteASCIIString(message)
     End With
 End Sub
 
@@ -6901,7 +6920,7 @@ End Sub
 ' @param    message The message to send to the royal army members.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteRoyalArmyMessage(ByVal Message As String)
+Public Sub WriteRoyalArmyMessage(ByVal message As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6910,7 +6929,7 @@ Public Sub WriteRoyalArmyMessage(ByVal Message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.RoyalArmyMessage)
         
-        Call .WriteASCIIString(Message)
+        Call .WriteASCIIString(message)
     End With
 End Sub
 
@@ -6920,7 +6939,7 @@ End Sub
 ' @param    message The message to send to the chaos legion member.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteChaosLegionMessage(ByVal Message As String)
+Public Sub WriteChaosLegionMessage(ByVal message As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6929,7 +6948,7 @@ Public Sub WriteChaosLegionMessage(ByVal Message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.ChaosLegionMessage)
         
-        Call .WriteASCIIString(Message)
+        Call .WriteASCIIString(message)
     End With
 End Sub
 
@@ -6939,7 +6958,7 @@ End Sub
 ' @param    message The message to send to citizens.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCitizenMessage(ByVal Message As String)
+Public Sub WriteCitizenMessage(ByVal message As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6948,7 +6967,7 @@ Public Sub WriteCitizenMessage(ByVal Message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.CitizenMessage)
         
-        Call .WriteASCIIString(Message)
+        Call .WriteASCIIString(message)
     End With
 End Sub
 
@@ -6958,7 +6977,7 @@ End Sub
 ' @param    message The message to send to criminals.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCriminalMessage(ByVal Message As String)
+Public Sub WriteCriminalMessage(ByVal message As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6967,7 +6986,7 @@ Public Sub WriteCriminalMessage(ByVal Message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.CriminalMessage)
         
-        Call .WriteASCIIString(Message)
+        Call .WriteASCIIString(message)
     End With
 End Sub
 
@@ -6977,7 +6996,7 @@ End Sub
 ' @param    message The message to send to the royal army members.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteTalkAsNPC(ByVal Message As String)
+Public Sub WriteTalkAsNPC(ByVal message As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6986,7 +7005,7 @@ Public Sub WriteTalkAsNPC(ByVal Message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.TalkAsNPC)
         
-        Call .WriteASCIIString(Message)
+        Call .WriteASCIIString(message)
     End With
 End Sub
 
@@ -7462,7 +7481,7 @@ End Sub
 ' @param    message The message to be set as the new MOTD.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteSetMOTD(ByVal Message As String)
+Public Sub WriteSetMOTD(ByVal message As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7471,7 +7490,7 @@ Public Sub WriteSetMOTD(ByVal Message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.SetMOTD)
         
-        Call .WriteASCIIString(Message)
+        Call .WriteASCIIString(message)
     End With
 End Sub
 
@@ -7481,7 +7500,7 @@ End Sub
 ' @param    message The message to be sent to all players.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteSystemMessage(ByVal Message As String)
+Public Sub WriteSystemMessage(ByVal message As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7490,7 +7509,7 @@ Public Sub WriteSystemMessage(ByVal Message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.SystemMessage)
         
-        Call .WriteASCIIString(Message)
+        Call .WriteASCIIString(message)
     End With
 End Sub
 
