@@ -49,7 +49,9 @@ Dim Argumentos3() As String
 Dim Argumentos4() As String
 Dim CantidadArgumentos As Long
 
-' TmpArgos: Un array de a lo sumo dos elementos,
+Dim TmpArr() As String
+
+' TmpArgs: Un array de a lo sumo dos elementos,
 ' el primero es el comando (hasta el primer espacio)
 ' y el segundo elemento es el resto. Si no hay argumentos
 ' devuelve un array de un solo elemento
@@ -289,7 +291,11 @@ If Left$(Comando, 1) = "/" Then
             End If
             
         Case "/DENUNCIAR"
-            Call WriteDenounce ' TODO: No existe la funcion
+            If CantidadArgumentos > 0 Then
+                Call WriteDenounce(ArgumentosRaw)
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
             
         Case "/FUNDARCLAN"
             frmEligeAlineacion.Show vbModeless, Me
@@ -607,63 +613,213 @@ If Left$(Comando, 1) = "/" Then
             End If
             
         Case "/FORCEMIDIMAP"
-    
+            If CantidadArgumentos >= 2 Then
+                If IsNumeric(ArgumentosAll(0)) And IsNumeric(ArgumentosAll(1)) Then
+                    Call WriteForceMIDIToMap(ArgumentosAll(0), ArgumentosAll(1))
+                Else
+                    ' TODO: No es numerico
+                End If
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
+            
         Case "/FORCEWAVMAP"
-    
+            If CantidadArgumentos >= 2 Then
+                If IsNumeric(ArgumentosAll(0)) And IsNumeric(ArgumentosAll(1)) And IsNumeric(ArgumentosAll(2)) And IsNumeric(ArgumentosAll(3)) Then
+                    Call WriteForceWAVEToMap(ArgumentosAll(0), ArgumentosAll(1), ArgumentosAll(2), ArgumentosAll(3))
+                Else
+                    ' TODO: No es numerico
+                End If
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
+            
         Case "/REALMSG"
-    
+            If CantidadArgumentos > 0 Then
+                Case WriteRoyalArmyMessage(ArgumentosRaw)
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
+             
         Case "/CAOSMSG"
-    
+            If CantidadArgumentos > 0 Then
+                Case WriteChaosLegionMessage(ArgumentosRaw)
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
+            
         Case "/CIUMSG"
-    
+            If CantidadArgumentos > 0 Then
+                Case WriteCitizenMessage(ArgumentosRaw)
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
+            
         Case "/TALKAS"
+            If CantidadArgumentos > 0 Then
+                Case WriteTalkAsNPC(ArgumentosRaw)
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
     
         Case "/MASSDEST"
-    
+            Case WriteDestroyAllItemsInArea
+
         Case "/ACEPTCONSE"
-    
+            If CantidadArgumentos > 0 Then
+                Call WriteAcceptRoyalCouncilMember(ArgumentosRaw)
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
+            
         Case "/ACEPTCONSECAOS"
-    
+            If CantidadArgumentos > 0 Then
+                Call WriteAcceptChaosCouncilMember(ArgumentosRaw)
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
+            
         Case "/PISO"
-    
+            Call WriteItemsInTheFloor
+            
         Case "/ESTUPIDO"
-    
+            If CantidadArgumentos > 0 Then
+                Call WriteMakeDumb(ArgumentosRaw)
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
+            
         Case "/NOESTUPIDO"
-    
+            If CantidadArgumentos > 0 Then
+                Call WriteMakeDumbNoMore(ArgumentosRaw)
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
+            
         Case "/DUMPSECURITY"
-    
+            Call WriteDumpIPTables
+            
         Case "/KICKCONSE"
-    
+            If CantidadArgumentos > 0 Then
+                Call WriteCouncilKick(ArgumentosRaw)
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
+            
         Case "/TRIGGER"
-    
+            If CantidadArgumentos >= 1 Then
+                Call WriteSetTrigger(ArgumentosRaw)
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
+            
         Case "/BANIPLIST"
-    
+            Call WriteBannedIPList
+            
         Case "/BANIPRELOAD"
-    
+            Call WriteBannedIPReload
+            
         Case "/MIEMBROSCLAN"
-    
+            If CantidadArgumentos > 0 Then
+                Call WriteGuildCompleteMemberList(ArgumentosRaw)
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
+            
         Case "/BANCLAN"
-    
+            If CantidadArgumentos > 0 Then
+                Call WriteGuildBan(ArgumentosRaw)
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
+            
         Case "/BANIP"
-    
+            If CantidadArgumentos > 0 Then
+                If validipv4str(ArgumentosRaw) Then
+                    Call WriteBanIP(str2ipv4l(ArgumentosRaw))
+                Else
+                    ' TODO: No es una IP
+                End If
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
+            
         Case "/UNBANIP"
-    
+            If CantidadArgumentos > 0 Then
+                If validipv4str(ArgumentosRaw) Then
+                    Call WriteUnbanIP(str2ipv4l(ArgumentosRaw))
+                Else
+                    ' TODO: No es una IP
+                End If
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
+            
         Case "/CI"
-    
+            If CantidadArgumentos > 0 Then
+                If IsNumeric(ArgumentosAll(0)) Then
+                    Call WriteCreateItem(ArgumentosAll(0))
+                Else
+                    ' TODO: No es numerico
+                End If
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
+            
         Case "/DEST"
-    
+            Call WriteDestroyItems
+            
         Case "/NOCAOS"
-    
+            If CantidadArgumentos > 0 Then
+                Call WriteChaosLegionKick(ArgumentosRaw)
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
+
         Case "/NOREAL"
-    
+            If CantidadArgumentos > 0 Then
+                Call WriteRoyalArmyKick(ArgumentosRaw)
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
+
         Case "/FORCEMIDI"
-    
+            If CantidadArgumentos > 0 Then
+                If IsNumeric(ArgumentosAll(0)) Then
+                    Call WriteForceMIDIAll(ArgumentosAll(0))
+                Else
+                    ' TODO: No es numerico
+                End If
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
+
         Case "/FORCEWAV"
-    
+            If CantidadArgumentos > 0 Then
+                If IsNumeric(ArgumentosAll(0)) Then
+                    Call WriteForceWAVEAll(ArgumentosAll(0))
+                Else
+                    ' TODO: No es numerico
+                End If
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
+            
         Case "/BORRARPENA"
-    
+            If CantidadArgumentos > 0 Then
+                TmpArr = Split(ArgumentosRaw, "@", 2)
+                If UBound(TmpArr) = 1 Then
+                    Call WriteRemovePunishment(TmpArr(0), TmpArr(1))
+                Else
+                    ' TODO: Faltan los parametros con el formato propio
+                End If
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
+            
         Case "/BLOQ"
-    
+            Case WriteTileBlockedToggle
+            
         Case "/MATA"
     
         Case "/MASSKILL"
