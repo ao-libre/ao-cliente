@@ -65,6 +65,7 @@ Class=clsTimer; CODIGO\MainTimer.cls
 Form=CODIGO\frmPasswd.frm
 Object={831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0; MsComCtl.ocx
 Module=Protocol; CODIGO\Protocol.bas
+Module=ProtocolCmdParse; CODIGO\ProtocolCmdParse.bas
 IconForm="frmMain"
 Startup="Sub Main"
 HelpFile=""

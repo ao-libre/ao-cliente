@@ -1,5 +1,4 @@
 Attribute VB_Name = "ProtocolCmdParse"
-
 'Argentum Online
 '
 'Copyright (C) 2006 Juan Martín Sotuyo Dodero (Maraxus)
@@ -50,7 +49,7 @@ Dim Argumentos3() As String
 Dim Argumentos4() As String
 Dim CantidadArgumentos As Long
 
-' TmpArgs: Un array de a lo sumo dos elementos,
+' TmpArgos: Un array de a lo sumo dos elementos,
 ' el primero es el comando (hasta el primer espacio)
 ' y el segundo elemento es el resto. Si no hay argumentos
 ' devuelve un array de un solo elemento
@@ -290,7 +289,7 @@ If Left$(Comando, 1) = "/" Then
             End If
             
         Case "/DENUNCIAR"
-            Call writedenounce ' TODO: No existe la funcion
+            Call WriteDenounce ' TODO: No existe la funcion
             
         Case "/FUNDARCLAN"
             frmEligeAlineacion.Show vbModeless, Me
