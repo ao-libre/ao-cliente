@@ -419,9 +419,10 @@ Private Enum FontTypeNames
     FONTTYPE_CONSEJOVesA
     FONTTYPE_CONSEJOCAOSVesA
     FONTTYPE_CENTINELA
+    FONTTYPE_GMMSG
 End Enum
 
-Private FontTypes(15) As tFont
+Private FontTypes(16) As tFont
 
 ''
 ' Initializes the fonts array
@@ -522,6 +523,13 @@ Public Sub InitFonts()
     With FontTypes(FontTypeNames.FONTTYPE_CENTINELA)
         .green = 255
         .bold = 1
+    End With
+    
+    With FontTypes(FontTypeNames.FONTTYPE_GMMSG)
+        .red = 255
+        .green = 255
+        .blue = 255
+        .italic = 1
     End With
 End Sub
 
@@ -1462,7 +1470,7 @@ Private Sub HandleUpdateExp()
     
     'Get data and update form
     UserExp = incomingData.ReadLong()
-    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
 End Sub
 
@@ -1686,7 +1694,7 @@ Private Sub HandleChatOverHead()
 'Last Modification: 05/17/06
 '
 '***************************************************
-On Error GoTo errHandler
+On Error GoTo ErrHandler
     If incomingData.length < 8 Then Exit Sub
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
@@ -1714,7 +1722,7 @@ On Error GoTo errHandler
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errHandler:
+ErrHandler:
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 End Sub
@@ -1728,7 +1736,7 @@ Private Sub HandleConsoleMessage()
 'Last Modification: 05/17/06
 '
 '***************************************************
-On Error GoTo errHandler
+On Error GoTo ErrHandler
     If incomingData.length < 4 Then Exit Sub
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
@@ -1751,7 +1759,7 @@ On Error GoTo errHandler
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errHandler:
+ErrHandler:
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 End Sub
@@ -1765,7 +1773,7 @@ Private Sub HandleGuildChat()
 'Last Modification: 05/17/06
 '
 '***************************************************
-On Error GoTo errHandler
+On Error GoTo ErrHandler
     If incomingData.length < 3 Then Exit Sub
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
@@ -1790,7 +1798,7 @@ On Error GoTo errHandler
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errHandler:
+ErrHandler:
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 End Sub
@@ -1804,7 +1812,7 @@ Private Sub HandleShowMessageBox()
 'Last Modification: 05/17/06
 '
 '***************************************************
-On Error GoTo errHandler
+On Error GoTo ErrHandler
     If incomingData.length < 3 Then Exit Sub
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
@@ -1820,7 +1828,7 @@ On Error GoTo errHandler
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errHandler:
+ErrHandler:
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 End Sub
@@ -1870,7 +1878,7 @@ Private Sub HandleCharacterCreate()
 'Last Modification: 05/17/06
 '
 '***************************************************
-On Error GoTo errHandler
+On Error GoTo ErrHandler
     If incomingData.length < 24 Then Exit Sub
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
@@ -1915,7 +1923,7 @@ On Error GoTo errHandler
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errHandler:
+ErrHandler:
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 End Sub
@@ -2147,7 +2155,7 @@ Private Sub HandleGuildList()
 'Last Modification: 05/17/06
 '
 '***************************************************
-On Error GoTo errHandler
+On Error GoTo ErrHandler
     If incomingData.length < 3 Then Exit Sub
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
@@ -2173,7 +2181,7 @@ On Error GoTo errHandler
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errHandler:
+ErrHandler:
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 End Sub
@@ -2362,7 +2370,7 @@ Private Sub HandleUpdateUserStats()
     UserPasarNivel = incomingData.ReadLong()
     UserExp = incomingData.ReadLong()
     
-    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
     frmMain.Hpshp.Width = (((UserMinHP / 100) / (UserMaxHP / 100)) * 94)
     
@@ -2429,7 +2437,7 @@ Private Sub HandleChangeInventorySlot()
 'Last Modification: 05/17/06
 '
 '***************************************************
-On Error GoTo errHandler
+On Error GoTo ErrHandler
     If incomingData.length < 22 Then Exit Sub
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
@@ -2468,7 +2476,7 @@ On Error GoTo errHandler
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errHandler:
+ErrHandler:
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 End Sub
@@ -2482,7 +2490,7 @@ Private Sub HandleChangeBankSlot()
 'Last Modification: 05/17/06
 '
 '***************************************************
-On Error GoTo errHandler
+On Error GoTo ErrHandler
     If incomingData.length < 22 Then Exit Sub
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
@@ -2511,7 +2519,7 @@ On Error GoTo errHandler
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errHandler:
+ErrHandler:
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 End Sub
@@ -2525,7 +2533,7 @@ Private Sub HandleChangeSpellSlot()
 'Last Modification: 05/17/06
 '
 '***************************************************
-On Error GoTo errHandler
+On Error GoTo ErrHandler
     If incomingData.length < 22 Then Exit Sub
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
@@ -2545,7 +2553,7 @@ On Error GoTo errHandler
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errHandler:
+ErrHandler:
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 End Sub
@@ -2593,7 +2601,7 @@ Private Sub HandleBlacksmithWeapons()
 'Last Modification: 05/17/06
 '
 '***************************************************
-On Error GoTo errHandler
+On Error GoTo ErrHandler
     If incomingData.length < 3 Then Exit Sub
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
@@ -2626,7 +2634,7 @@ On Error GoTo errHandler
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errHandler:
+ErrHandler:
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 End Sub
@@ -2640,7 +2648,7 @@ Private Sub HandleBlacksmithArmors()
 'Last Modification: 05/17/06
 '
 '***************************************************
-On Error GoTo errHandler
+On Error GoTo ErrHandler
     If incomingData.length < 3 Then Exit Sub
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
@@ -2673,7 +2681,7 @@ On Error GoTo errHandler
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errHandler:
+ErrHandler:
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 End Sub
@@ -2687,7 +2695,7 @@ Private Sub HandleCarpenterObjects()
 'Last Modification: 05/17/06
 '
 '***************************************************
-On Error GoTo errHandler
+On Error GoTo ErrHandler
     If incomingData.length < 3 Then Exit Sub
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
@@ -2718,7 +2726,7 @@ On Error GoTo errHandler
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errHandler:
+ErrHandler:
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 End Sub
@@ -2749,7 +2757,7 @@ Private Sub HandleErrorMessage()
 'Last Modification: 05/17/06
 '
 '***************************************************
-On Error GoTo errHandler
+On Error GoTo ErrHandler
     If incomingData.length < 3 Then Exit Sub
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
@@ -2775,7 +2783,7 @@ On Error GoTo errHandler
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errHandler:
+ErrHandler:
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 End Sub
@@ -2825,7 +2833,7 @@ Private Sub HandleShowSignal()
 'Last Modification: 05/17/06
 '
 '***************************************************
-On Error GoTo errHandler
+On Error GoTo ErrHandler
     If incomingData.length < 5 Then Exit Sub
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
@@ -2843,7 +2851,7 @@ On Error GoTo errHandler
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errHandler:
+ErrHandler:
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 End Sub
@@ -2857,7 +2865,7 @@ Private Sub HandleChangeNPCInventorySlot()
 'Last Modification: 05/17/06
 '
 '***************************************************
-On Error GoTo errHandler
+On Error GoTo ErrHandler
     If incomingData.length < 18 Then Exit Sub
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
@@ -2886,7 +2894,7 @@ On Error GoTo errHandler
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errHandler:
+ErrHandler:
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 End Sub
@@ -2949,7 +2957,7 @@ Private Sub HandleMiniStats()
 'Last Modification: 05/17/06
 '
 '***************************************************
-On Error GoTo errHandler
+On Error GoTo ErrHandler
     If incomingData.length < 21 Then Exit Sub
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
@@ -2971,7 +2979,7 @@ On Error GoTo errHandler
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errHandler:
+ErrHandler:
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 End Sub
@@ -3003,7 +3011,7 @@ Private Sub HandleAddForumMessage()
 'Last Modification: 05/17/06
 '
 '***************************************************
-On Error GoTo errHandler
+On Error GoTo ErrHandler
     If incomingData.length < 5 Then Exit Sub
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
@@ -3014,19 +3022,19 @@ On Error GoTo errHandler
     Call Buffer.ReadByte
     
     Dim title As String
-    Dim message As String
+    Dim Message As String
     
     title = Buffer.ReadASCIIString()
-    message = Buffer.ReadASCIIString()
+    Message = Buffer.ReadASCIIString()
     
     Call frmForo.List.AddItem(title)
-    frmForo.Text(frmForo.List.ListCount - 1).Text = message
+    frmForo.Text(frmForo.List.ListCount - 1).Text = Message
     Call Load(frmForo.Text(frmForo.List.ListCount))
     
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errHandler:
+ErrHandler:
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 End Sub
@@ -3161,7 +3169,7 @@ Private Sub HandleTrainerCreatureList()
 'Last Modification: 05/17/06
 '
 '***************************************************
-On Error GoTo errHandler
+On Error GoTo ErrHandler
     If incomingData.length < 3 Then Exit Sub
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
@@ -3184,7 +3192,7 @@ On Error GoTo errHandler
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errHandler:
+ErrHandler:
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 End Sub
@@ -3198,7 +3206,7 @@ Private Sub HandleGuildNews()
 'Last Modification: 05/17/06
 '
 '***************************************************
-On Error GoTo errHandler
+On Error GoTo ErrHandler
     If incomingData.length < 7 Then Exit Sub
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
@@ -3231,7 +3239,7 @@ On Error GoTo errHandler
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errHandler:
+ErrHandler:
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 End Sub
@@ -3245,7 +3253,7 @@ Private Sub HandleOfferDetails()
 'Last Modification: 05/17/06
 '
 '***************************************************
-On Error GoTo errHandler
+On Error GoTo ErrHandler
     If incomingData.length < 3 Then Exit Sub
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
@@ -3260,7 +3268,7 @@ On Error GoTo errHandler
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errHandler:
+ErrHandler:
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 End Sub
@@ -3274,7 +3282,7 @@ Private Sub HandleAlianceProposalsList()
 'Last Modification: 05/17/06
 '
 '***************************************************
-On Error GoTo errHandler
+On Error GoTo ErrHandler
     If incomingData.length < 3 Then Exit Sub
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
@@ -3299,7 +3307,7 @@ On Error GoTo errHandler
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errHandler:
+ErrHandler:
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 End Sub
@@ -3313,7 +3321,7 @@ Private Sub HandlePeaceProposalsList()
 'Last Modification: 05/17/06
 '
 '***************************************************
-On Error GoTo errHandler
+On Error GoTo ErrHandler
     If incomingData.length < 3 Then Exit Sub
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
@@ -3338,7 +3346,7 @@ On Error GoTo errHandler
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errHandler:
+ErrHandler:
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 End Sub
@@ -3352,7 +3360,7 @@ Private Sub HandleCharacterInfo()
 'Last Modification: 05/17/06
 '
 '***************************************************
-On Error GoTo errHandler
+On Error GoTo ErrHandler
     If incomingData.length < 38 Then Exit Sub
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
@@ -3402,11 +3410,11 @@ On Error GoTo errHandler
         .criminales.Caption = "Criminales asesinados: " & CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .status.Caption = " (Ciudadano)"
-            .status.ForeColor = vbBlue
+            .Status.Caption = " (Ciudadano)"
+            .Status.ForeColor = vbBlue
         Else
-            .status.Caption = " (Criminal)"
-            .status.ForeColor = vbRed
+            .Status.Caption = " (Criminal)"
+            .Status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)
@@ -3415,7 +3423,7 @@ On Error GoTo errHandler
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errHandler:
+ErrHandler:
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 End Sub
@@ -3429,7 +3437,7 @@ Private Sub HandleGuildLeaderInfo()
 'Last Modification: 05/17/06
 '
 '***************************************************
-On Error GoTo errHandler
+On Error GoTo ErrHandler
     If incomingData.length < 9 Then Exit Sub
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
@@ -3473,7 +3481,7 @@ On Error GoTo errHandler
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errHandler:
+ErrHandler:
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 End Sub
@@ -3487,7 +3495,7 @@ Private Sub HandleGuildDetails()
 'Last Modification: 05/17/06
 '
 '***************************************************
-On Error GoTo errHandler
+On Error GoTo ErrHandler
     If incomingData.length < 26 Then Exit Sub
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
@@ -3543,7 +3551,7 @@ On Error GoTo errHandler
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errHandler:
+ErrHandler:
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 End Sub
@@ -3592,7 +3600,7 @@ Private Sub HandleShowUserRequest()
 'Last Modification: 05/17/06
 '
 '***************************************************
-On Error GoTo errHandler
+On Error GoTo ErrHandler
     If incomingData.length < 3 Then Exit Sub
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
@@ -3608,7 +3616,7 @@ On Error GoTo errHandler
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errHandler:
+ErrHandler:
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 End Sub
@@ -3690,7 +3698,7 @@ Private Sub HandleChangeUserTradeSlot()
 'Last Modification: 05/17/06
 '
 '***************************************************
-On Error GoTo errHandler
+On Error GoTo ErrHandler
     If incomingData.length < 3 Then Exit Sub
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
@@ -3722,7 +3730,7 @@ On Error GoTo errHandler
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errHandler:
+ErrHandler:
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 End Sub
@@ -3736,7 +3744,7 @@ Private Sub HandleSpawnList()
 'Last Modification: 05/17/06
 '
 '***************************************************
-On Error GoTo errHandler
+On Error GoTo ErrHandler
     If incomingData.length < 3 Then Exit Sub
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
@@ -3759,7 +3767,7 @@ On Error GoTo errHandler
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errHandler:
+ErrHandler:
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 End Sub
@@ -3773,7 +3781,7 @@ Private Sub HandleShowSOSForm()
 'Last Modification: 05/17/06
 '
 '***************************************************
-On Error GoTo errHandler
+On Error GoTo ErrHandler
     If incomingData.length < 3 Then Exit Sub
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
@@ -3797,7 +3805,7 @@ On Error GoTo errHandler
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errHandler:
+ErrHandler:
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 End Sub
@@ -3811,7 +3819,7 @@ Private Sub HandleShowMOTDEditionForm()
 'Last Modification: 05/17/06
 '
 '***************************************************
-On Error GoTo errHandler
+On Error GoTo ErrHandler
     If incomingData.length < 3 Then Exit Sub
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
@@ -3827,7 +3835,7 @@ On Error GoTo errHandler
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errHandler:
+ErrHandler:
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 End Sub
@@ -3858,7 +3866,7 @@ Private Sub HandleUserNameList()
 'Last Modification: 05/17/06
 '
 '***************************************************
-On Error GoTo errHandler
+On Error GoTo ErrHandler
     If incomingData.length < 3 Then Exit Sub
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
@@ -3884,7 +3892,7 @@ On Error GoTo errHandler
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errHandler:
+ErrHandler:
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 End Sub
@@ -4693,7 +4701,7 @@ End Sub
 ' @param    message The body of the message.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteForumPost(ByVal title As String, ByVal message As String)
+Public Sub WriteForumPost(ByVal title As String, ByVal Message As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -4703,7 +4711,7 @@ Public Sub WriteForumPost(ByVal title As String, ByVal message As String)
         Call .WriteByte(ClientPacketID.ForumPost)
         
         Call .WriteASCIIString(title)
-        Call .WriteASCIIString(message)
+        Call .WriteASCIIString(Message)
     End With
 End Sub
 
@@ -5515,7 +5523,7 @@ End Sub
 ' @param    message The message to send to the guild.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteGuildMessage(ByVal message As String)
+Public Sub WriteGuildMessage(ByVal Message As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5524,7 +5532,7 @@ Public Sub WriteGuildMessage(ByVal message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.GuildMessage)
         
-        Call .WriteASCIIString(message)
+        Call .WriteASCIIString(Message)
     End With
 End Sub
 
@@ -5534,7 +5542,7 @@ End Sub
 ' @param    message The message to send to the party.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WritePartyMessage(ByVal message As String)
+Public Sub WritePartyMessage(ByVal Message As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5543,7 +5551,7 @@ Public Sub WritePartyMessage(ByVal message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.PartyMessage)
         
-        Call .WriteASCIIString(message)
+        Call .WriteASCIIString(Message)
     End With
 End Sub
 
@@ -5600,7 +5608,7 @@ End Sub
 ' @param    message The message to send to the other council members.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCouncilMessage(ByVal message As String)
+Public Sub WriteCouncilMessage(ByVal Message As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5609,7 +5617,7 @@ Public Sub WriteCouncilMessage(ByVal message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.CouncilMessage)
         
-        Call .WriteASCIIString(message)
+        Call .WriteASCIIString(Message)
     End With
 End Sub
 
@@ -5619,7 +5627,7 @@ End Sub
 ' @param    message The message to send to the role masters.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteRoleMasterRequest(ByVal message As String)
+Public Sub WriteRoleMasterRequest(ByVal Message As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5628,7 +5636,7 @@ Public Sub WriteRoleMasterRequest(ByVal message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.RoleMasterRequest)
         
-        Call .WriteASCIIString(message)
+        Call .WriteASCIIString(Message)
     End With
 End Sub
 
@@ -5652,7 +5660,7 @@ End Sub
 ' @param    message The message explaining the reported bug.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteBugReport(ByVal message As String)
+Public Sub WriteBugReport(ByVal Message As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5661,7 +5669,7 @@ Public Sub WriteBugReport(ByVal message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.BugReport)
         
-        Call .WriteASCIIString(message)
+        Call .WriteASCIIString(Message)
     End With
 End Sub
 
@@ -5841,7 +5849,7 @@ End Sub
 ' @param    message The message to send with the denounce.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteDenounce(ByVal message As String)
+Public Sub WriteDenounce(ByVal Message As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5850,7 +5858,7 @@ Public Sub WriteDenounce(ByVal message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.Denounce)
         
-        Call .WriteASCIIString(message)
+        Call .WriteASCIIString(Message)
     End With
 End Sub
 
@@ -5887,7 +5895,7 @@ Public Sub WritePartyKick(ByVal username As String)
 '***************************************************
     With outgoingData
         Call .WriteByte(ClientPacketID.PartyKick)
-        
+            
         Call .WriteASCIIString(username)
     End With
 End Sub
@@ -5955,7 +5963,7 @@ End Sub
 ' @param    message The message to be sent to the other GMs online.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteGMMessage(ByVal message As String)
+Public Sub WriteGMMessage(ByVal Message As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5964,7 +5972,7 @@ Public Sub WriteGMMessage(ByVal message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.GMMessage)
         
-        Call .WriteASCIIString(message)
+        Call .WriteASCIIString(Message)
     End With
 End Sub
 
@@ -6035,7 +6043,7 @@ End Sub
 ' @param    message The message to leave in the log as a comment.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteComment(ByVal message As String)
+Public Sub WriteComment(ByVal Message As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6044,7 +6052,7 @@ Public Sub WriteComment(ByVal message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.Comment)
         
-        Call .WriteASCIIString(message)
+        Call .WriteASCIIString(Message)
     End With
 End Sub
 
@@ -6722,7 +6730,7 @@ End Sub
 ' @param    message The message to be sent to players.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteServerMessage(ByVal message As String)
+Public Sub WriteServerMessage(ByVal Message As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6731,7 +6739,7 @@ Public Sub WriteServerMessage(ByVal message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.ServerMessage)
         
-        Call .WriteASCIIString(message)
+        Call .WriteASCIIString(Message)
     End With
 End Sub
 
@@ -6760,21 +6768,21 @@ End Sub
 ' @param    IP The IP for which to search for players. Must be an array of 4 elements with the 4 components of the IP.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteIPToNick(ByRef IP() As Byte)
+Public Sub WriteIPToNick(ByRef Ip() As Byte)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
 'Writes the "IPToNick" message to the outgoing data buffer
 '***************************************************
-    If UBound(IP()) - LBound(IP()) + 1 <> 4 Then Exit Sub   'Invalid IP
+    If UBound(Ip()) - LBound(Ip()) + 1 <> 4 Then Exit Sub   'Invalid IP
     
     Dim i As Long
     
     With outgoingData
         Call .WriteByte(ClientPacketID.IPToNick)
         
-        For i = LBound(IP()) To UBound(IP())
-            Call .WriteByte(IP(i))
+        For i = LBound(Ip()) To UBound(Ip())
+            Call .WriteByte(Ip(i))
         Next i
     End With
 End Sub
@@ -6926,7 +6934,7 @@ End Sub
 ' @param    message The message to send to the royal army members.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteRoyalArmyMessage(ByVal message As String)
+Public Sub WriteRoyalArmyMessage(ByVal Message As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6935,7 +6943,7 @@ Public Sub WriteRoyalArmyMessage(ByVal message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.RoyalArmyMessage)
         
-        Call .WriteASCIIString(message)
+        Call .WriteASCIIString(Message)
     End With
 End Sub
 
@@ -6945,7 +6953,7 @@ End Sub
 ' @param    message The message to send to the chaos legion member.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteChaosLegionMessage(ByVal message As String)
+Public Sub WriteChaosLegionMessage(ByVal Message As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6954,7 +6962,7 @@ Public Sub WriteChaosLegionMessage(ByVal message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.ChaosLegionMessage)
         
-        Call .WriteASCIIString(message)
+        Call .WriteASCIIString(Message)
     End With
 End Sub
 
@@ -6964,7 +6972,7 @@ End Sub
 ' @param    message The message to send to citizens.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCitizenMessage(ByVal message As String)
+Public Sub WriteCitizenMessage(ByVal Message As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6973,7 +6981,7 @@ Public Sub WriteCitizenMessage(ByVal message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.CitizenMessage)
         
-        Call .WriteASCIIString(message)
+        Call .WriteASCIIString(Message)
     End With
 End Sub
 
@@ -6983,7 +6991,7 @@ End Sub
 ' @param    message The message to send to criminals.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCriminalMessage(ByVal message As String)
+Public Sub WriteCriminalMessage(ByVal Message As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6992,7 +7000,7 @@ Public Sub WriteCriminalMessage(ByVal message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.CriminalMessage)
         
-        Call .WriteASCIIString(message)
+        Call .WriteASCIIString(Message)
     End With
 End Sub
 
@@ -7002,7 +7010,7 @@ End Sub
 ' @param    message The message to send to the royal army members.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteTalkAsNPC(ByVal message As String)
+Public Sub WriteTalkAsNPC(ByVal Message As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7011,7 +7019,7 @@ Public Sub WriteTalkAsNPC(ByVal message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.TalkAsNPC)
         
-        Call .WriteASCIIString(message)
+        Call .WriteASCIIString(Message)
     End With
 End Sub
 
@@ -7243,7 +7251,7 @@ End Sub
 ' @param    IP The IP to be banned.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteBanIP(ByVal IP As Long)
+Public Sub WriteBanIP(ByVal Ip As Long)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7252,7 +7260,7 @@ Public Sub WriteBanIP(ByVal IP As Long)
     With outgoingData
         Call .WriteByte(ClientPacketID.BanIP)
         
-        Call .WriteLong(IP)
+        Call .WriteLong(Ip)
     End With
 End Sub
 
@@ -7262,7 +7270,7 @@ End Sub
 ' @param    IP The IP to be unbanned.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteUnbanIP(ByVal IP As Long)
+Public Sub WriteUnbanIP(ByVal Ip As Long)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7271,7 +7279,7 @@ Public Sub WriteUnbanIP(ByVal IP As Long)
     With outgoingData
         Call .WriteByte(ClientPacketID.UnbanIP)
         
-        Call .WriteLong(IP)
+        Call .WriteLong(Ip)
     End With
 End Sub
 
@@ -7454,7 +7462,7 @@ End Sub
 ' @param    username The user whose last IPs are requested.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteLastIP(ByVal username As String, ByVal punishment As Byte)
+Public Sub WriteLastIP(ByVal username As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7487,7 +7495,7 @@ End Sub
 ' @param    message The message to be set as the new MOTD.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteSetMOTD(ByVal message As String)
+Public Sub WriteSetMOTD(ByVal Message As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7496,7 +7504,7 @@ Public Sub WriteSetMOTD(ByVal message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.SetMOTD)
         
-        Call .WriteASCIIString(message)
+        Call .WriteASCIIString(Message)
     End With
 End Sub
 
@@ -7506,7 +7514,7 @@ End Sub
 ' @param    message The message to be sent to all players.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteSystemMessage(ByVal message As String)
+Public Sub WriteSystemMessage(ByVal Message As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7515,7 +7523,7 @@ Public Sub WriteSystemMessage(ByVal message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.SystemMessage)
         
-        Call .WriteASCIIString(message)
+        Call .WriteASCIIString(Message)
     End With
 End Sub
 

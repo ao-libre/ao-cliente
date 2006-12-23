@@ -84,7 +84,7 @@ End If
 
 If Comando = "" Then _
     Exit Sub
-    
+
 If Left$(Comando, 1) = "/" Then
     ' Comando normal
     
