@@ -388,7 +388,7 @@ Private Enum ClientPacketID
     ChangeMapInfoBackup     '/MODMAPINFO BACKUP
     SaveChars               '/GRABAR
     CleanSOS                '/BORRAR SOS
-    ShowSeverForm           '/SHOW INT
+    ShowServerForm          '/SHOW INT
     Night                   '/NOCHE
     KickAllChars            '/ECHARTODOSPJS
     RequestTCPStats         '/TCPESSTATS
@@ -7918,17 +7918,17 @@ Public Sub WriteCleanSOS()
 End Sub
 
 ''
-' Writes the "ShowSeverForm" message to the outgoing data buffer.
+' Writes the "ShowServerForm" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteShowSeverForm()
+Public Sub WriteShowServerForm()
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
-'Writes the "ShowSeverForm" message to the outgoing data buffer
+'Writes the "ShowServerForm" message to the outgoing data buffer
 '***************************************************
-    Call outgoingData.WriteByte(ClientPacketID.ShowSeverForm)
+    Call outgoingData.WriteByte(ClientPacketID.ShowServerForm)
 End Sub
 
 ''

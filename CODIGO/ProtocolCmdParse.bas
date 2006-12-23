@@ -407,7 +407,7 @@ If Left$(Comando, 1) = "/" Then
                         Call WriteSOSShowList
                         
                     Case "INT"
-                        Call WriteShowSeverForm
+                        Call WriteShowServerForm
                         
                 End Select
             End If
