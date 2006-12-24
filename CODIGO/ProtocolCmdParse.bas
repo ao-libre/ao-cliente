@@ -26,6 +26,25 @@ Attribute VB_Name = "ProtocolCmdParse"
 
 Option Explicit
 
+Public Sub AuxWriteWhisper(ByVal UserName As String, ByVal Mensaje As String)
+    Dim I As Long
+    
+    I = 1
+    Do While I <= LastChar
+        If charlist(I).Nombre = UserName Then
+            Exit Do
+        Else
+            I = I + 1
+        End If
+    Loop
+    
+    If I <= LastChar Then
+        Call WriteWhisper(I, Mensaje)
+    End If
+    
+End Sub
+
+
 ''
 ' Interpreta, valida y ejecuta el comando ingresado .
 '
@@ -821,96 +840,238 @@ If Left$(Comando, 1) = "/" Then
             Case WriteTileBlockedToggle
             
         Case "/MATA"
+            Case WriteKillNPCNoRespawn
     
         Case "/MASSKILL"
-    
+            Call WriteKillAllNearbyNPCs
+            
         Case "/LASTIP"
-    
+            If CantidadArgumentos > 0 Then
+                Call WriteLastIP(ArgumentosRaw)
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
+
         Case "/MOTDCAMBIA"
-    
+            Call WriteChangeMOTD
+            
         Case "/SMSG"
-    
+            If CantidadArgumentos > 0 Then
+                Call WriteSystemMessage(ArgumentosRaw)
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
+            
         Case "/ACC"
-    
+            If CantidadArgumentos > 0 Then
+                If IsNumeric(ArgumentosAll(0)) Then
+                    Call WriteCreateNPC(ArgumentosAll(0))
+                Else
+                    ' TODO: No es numerico
+                End If
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
+            
         Case "/RACC"
+            If CantidadArgumentos > 0 Then
+                Call WriteCreateNPCWithRespawn(ArgumentosAll(0))
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
     
         Case "/AI" ' 1 - 4
-    
+            If CantidadArgumentos >= 2 Then
+                If IsNumeric(ArgumentosAll(0), ArgumentosAll(1)) Then
+                    Call WriteImperialArmour(ArgumentosAll(0), ArgumentosAll(1))
+                Else
+                    ' TODO: No es numerico
+                End If
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
+            
         Case "/AC" ' 1 - 4
-    
+            If CantidadArgumentos >= 2 Then
+                If IsNumeric(ArgumentosAll(0), ArgumentosAll(1)) Then
+                    Call WriteChaosArmour(ArgumentosAll(0), ArgumentosAll(1))
+                Else
+                    ' TODO: No es numerico
+                End If
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
+            
         Case "/NAVE"
+            Call WriteNavigateToggle
     
         Case "/HABILITAR"
-    
+            Call WriteServerOpenToUsersToggle
+            
         Case "/APAGAR"
-    
+            Call WriteTurnOffServer
+            
         Case "/CONDEN"
-    
+            If CantidadArgumentos > 0 Then
+                Call WriteTurnCriminal(ArgumentosRaw)
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
+            
         Case "/RAJAR"
-    
+            If CantidadArgumentos > 0 Then
+                Call WriteResetFactions(ArgumentosRaw)
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
+            
         Case "/RAJARCLAN"
-    
+            If CantidadArgumentos > 0 Then
+                Call WriteRemoveCharFromGuild(ArgumentosRaw)
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
+            
         Case "/LASTEMAIL"
-    
+            If CantidadArgumentos > 0 Then
+                Call WriteRequestCharMail(ArgumentosRaw)
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
+            
         Case "/APASS"
-    
+            If CantidadArgumentos > 0 Then
+                TmpArr = Split(ArgumentosRaw, "@", 2)
+                If UBound(TmpArr) = 1 Then
+                    Call WriteAlterPassword(TmpArr(0), TmpArr(1))
+                Else
+                    ' TODO: Faltan los parametros con el formato propio
+                End If
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
+            
         Case "/AEMAIL"
-    
+            If CantidadArgumentos > 0 Then
+                TmpArr = Split(ArgumentosRaw, "-", 2)
+                If UBound(TmpArr) = 1 Then
+                    Call WriteAlterMail(TmpArr(0), TmpArr(1))
+                Else
+                    ' TODO: Faltan los parametros con el formato propio
+                End If
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
+            
         Case "/ANAME"
-    
+            If CantidadArgumentos > 0 Then
+                TmpArr = Split(ArgumentosRaw, "@", 2)
+                If UBound(TmpArr) = 1 Then
+                    Call WriteAlterName(TmpArr(0), TmpArr(1))
+                Else
+                    ' TODO: Faltan los parametros con el formato propio
+                End If
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
+            
         Case "/CENTINELAACTIVADO"
-    
+            Call WriteToggleCentinelActivated
+            
         Case "/DOBACKUP"
-    
+            Call WriteDoBackup
+            
         Case "/SHOWCMSG"
-    
+            If CantidadArgumentos > 0 Then
+                Call WriteShowGuildMessages(ArgumentosRaw)
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
+            
         Case "/GUARDAMAPA"
-    
+            Call WriteSaveMap
+            
         Case "/MODMAPINFO" ' PK, BACKUP
-    
+            If CantidadArgumentos > 1 Then
+                Select Case ArgumentosAll(0)
+                    Case "PK" ' "/MODMAPINFO PK"
+                        Call WriteChangeMapInfoPK(ArgumentosAll(1) = 1)
+                        
+                    Case "BACKUP" ' "/MODMAPINFO BACKUP"
+                        Call WriteChangeMapInfoBackup(ArgumentosAll(1) = 1)
+                        
+                End Select
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
+            
         Case "/GRABAR"
-    
+            Call WriteSaveChars
+            
         Case "/BORRAR"
         
             If CantidadArgumentos > 0 Then
                 Select Case ArgumentosAll(0)
                     Case "SOS" ' "/BORRAR SOS"
+                        Call WriteCleanSOS
                         
                 End Select
             End If
             
         Case "/NOCHE"
-    
+            Call WriteNight
+            
         Case "/ECHARTODOSPJS"
-    
+            Call WriteKickAllChars
+            
         Case "/TCPESSTATS"
-    
+            Call WriteRequestTCPStats
+            
         Case "/RELOADNPCS"
-    
+            Call WriteReloadNPCs
+            
         Case "/RELOADSINI"
-    
+            Call WriteReloadServerIni
+            
         Case "/RELOADHECHIZOS"
-    
+            Call WriteReloadSpells
+            
         Case "/RELOADOBJ"
-    
+            Call WriteReloadObjects
+             
         Case "/REINICIAR"
-        
+            Call WriteRestart
+            
         Case "/AUTOUPDATE"
-        
+            Call WriteResetAutoUpdate
+            
         Case "/CHATCOLOR"
-        
+            If CantidadArgumentos >= 3 Then
+                If IsNumeric(ArgumentosAll(0)) And IsNumeric(ArgumentosAll(1)) And IsNumeric(ArgumentosAll(2)) Then
+                    Call WriteChatColor(ArgumentosAll(0), ArgumentosAll(1), ArgumentosAll(2))
+                Else
+                    ' TODO: No es numerico
+                End If
+            Else
+                ' TODO: Avisar que falta el parametro
+            End If
+            
         Case "/IGNORADO"
-        
+            Call WriteIgnored
+            
     End Select
     
 ElseIf Left$(Comando, 1) = "\" Then
     ' Mensaje Privado
+    Call AuxWriteWhisper(mid$(Comando, 2), ArgumentosRaw)
     
 ElseIf Left$(Comando, 1) = "-" Then
     ' Gritar
+    Call WriteYell(mid$(RawCommand, 2))
     
 Else
     ' Hablar
+    Call WriteTalk(RawCommand)
     
 End If
 
