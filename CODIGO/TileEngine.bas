@@ -1580,7 +1580,6 @@ For Y = minY + 8 To maxY - 1
         ScreenX = 5
         For X = minX + 5 To maxX - 5
             If X > 0 And X < 101 Then 'In map bounds
-                If X > 100 Or X < -3 Then Exit For
                 iPPx = 32 * ScreenX - 32 + PixelOffsetX
                 iPPy = 32 * ScreenY - 32 + PixelOffsetY
 
