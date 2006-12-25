@@ -153,7 +153,6 @@ Private Enum ServerPacketID
     
     'GM messages
     SpawnList               ' SPL
-    AddSOSMsg               ' RSOS
     ShowSOSForm             ' MSOS
     ShowMOTDEditionForm     ' ZMOTD
     ShowGMPanelForm         ' ABPANEL
@@ -284,7 +283,7 @@ Private Enum ClientPacketID
     OnlineChaosLegion       '/ONLINECAOS
     GoNearby                '/IRCERCA
     Comment                 '/REM
-    time                    '/HORA
+    ServerTime              '/HORA
     Where                   '/DONDE
     CreaturesInMap          '/NENE
     WarpMeToTarget          '/TELEPLOC
@@ -6057,17 +6056,17 @@ Public Sub WriteComment(ByVal Message As String)
 End Sub
 
 ''
-' Writes the "Time" message to the outgoing data buffer.
+' Writes the "ServerTime" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteTime()
+Public Sub WriteServerTime()
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
-'Writes the "Time" message to the outgoing data buffer
+'Writes the "ServerTime" message to the outgoing data buffer
 '***************************************************
-    Call outgoingData.WriteByte(ClientPacketID.time)
+    Call outgoingData.WriteByte(ClientPacketID.ServerTime)
 End Sub
 
 ''
