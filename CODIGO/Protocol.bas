@@ -1469,7 +1469,7 @@ Private Sub HandleUpdateExp()
     
     'Get data and update form
     UserExp = incomingData.ReadLong()
-    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
 End Sub
 
@@ -2369,7 +2369,7 @@ Private Sub HandleUpdateUserStats()
     UserPasarNivel = incomingData.ReadLong()
     UserExp = incomingData.ReadLong()
     
-    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
     frmMain.Hpshp.Width = (((UserMinHP / 100) / (UserMaxHP / 100)) * 94)
     
@@ -3409,11 +3409,11 @@ On Error GoTo errHandler
         .criminales.Caption = "Criminales asesinados: " & CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .status.Caption = " (Ciudadano)"
-            .status.ForeColor = vbBlue
+            .Status.Caption = " (Ciudadano)"
+            .Status.ForeColor = vbBlue
         Else
-            .status.Caption = " (Criminal)"
-            .status.ForeColor = vbRed
+            .Status.Caption = " (Criminal)"
+            .Status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)
@@ -6863,11 +6863,10 @@ End Sub
 ''
 ' Writes the "SetCharDescription" message to the outgoing data buffer.
 '
-' @param    username The user whose descrption will be changed.
 ' @param    desc The description to set to players.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteSetCharDescription(ByVal UserName As String, ByVal desc As String)
+Public Sub WriteSetCharDescription(ByVal desc As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6876,7 +6875,6 @@ Public Sub WriteSetCharDescription(ByVal UserName As String, ByVal desc As Strin
     With outgoingData
         Call .WriteByte(ClientPacketID.SetCharDescription)
         
-        Call .WriteASCIIString(UserName)
         Call .WriteASCIIString(desc)
     End With
 End Sub
@@ -7250,38 +7248,50 @@ End Sub
 ''
 ' Writes the "BanIP" message to the outgoing data buffer.
 '
-' @param    IP The IP to be banned.
+' @param    IP The IP for which to search for players. Must be an array of 4 elements with the 4 components of the IP.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteBanIP(ByVal Ip As Long)
+Public Sub WriteBanIP(ByRef Ip() As Byte)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
 'Writes the "BanIP" message to the outgoing data buffer
 '***************************************************
+    If UBound(Ip()) - LBound(Ip()) + 1 <> 4 Then Exit Sub   'Invalid IP
+    
+    Dim I As Long
+    
     With outgoingData
         Call .WriteByte(ClientPacketID.BanIP)
         
-        Call .WriteLong(Ip)
+        For I = LBound(Ip()) To UBound(Ip())
+            Call .WriteByte(Ip(I))
+        Next I
     End With
 End Sub
 
 ''
 ' Writes the "UnbanIP" message to the outgoing data buffer.
 '
-' @param    IP The IP to be unbanned.
+' @param    IP The IP for which to search for players. Must be an array of 4 elements with the 4 components of the IP.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteUnbanIP(ByVal Ip As Long)
+Public Sub WriteUnbanIP(ByRef Ip() As Byte)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
 'Writes the "UnbanIP" message to the outgoing data buffer
 '***************************************************
+    If UBound(Ip()) - LBound(Ip()) + 1 <> 4 Then Exit Sub   'Invalid IP
+    
+    Dim I As Long
+    
     With outgoingData
         Call .WriteByte(ClientPacketID.UnbanIP)
         
-        Call .WriteLong(Ip)
+        For I = LBound(Ip()) To UBound(Ip())
+            Call .WriteByte(Ip(I))
+        Next I
     End With
 End Sub
 
