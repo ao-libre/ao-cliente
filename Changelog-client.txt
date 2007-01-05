@@ -70,3 +70,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 24/10/2006: Correccion de centrado de la superficie en la capa 2 del mapa. (^[GS]^)
  * 18/12/2006: Nuevo protocolo completo. Queda pendiente escribir el parser y reemplazar las viejas llamadas a SendData. (Maraxus)
  * 24/12/2006: Corregi la baja de fps al acercarnos a los bordes de los mapas. (NIGO)
+ * 04/01/2007: Agregué uso de named mutex para evitar clientes multiples. (Liquid)
