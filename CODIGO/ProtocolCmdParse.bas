@@ -26,6 +26,13 @@ Attribute VB_Name = "ProtocolCmdParse"
 
 Option Explicit
 
+Private Enum eNumber_Types
+    ent_Byte
+    ent_Integer
+    ent_Long
+    ent_Trigger
+End Enum
+
 Public Sub AuxWriteWhisper(ByVal UserName As String, ByVal Mensaje As String)
     Dim I As Long
     
@@ -67,8 +74,10 @@ Dim Argumentos2() As String
 Dim Argumentos3() As String
 Dim Argumentos4() As String
 Dim CantidadArgumentos As Long
+Dim notNullArguments As Boolean
 
-Dim TmpArr() As String
+Dim tmpArr() As String
+Dim tmpInt As Integer
 
 ' TmpArgs: Un array de a lo sumo dos elementos,
 ' el primero es el comando (hasta el primer espacio)
@@ -81,6 +90,9 @@ Comando = Trim$(UCase$(TmpArgos(0)))
 If UBound(TmpArgos) > 0 Then
     ' El string en crudo que este despues del primer espacio
     ArgumentosRaw = TmpArgos(1)
+    
+    'veo que los argumentos no sean nulos
+    notNullArguments = LenB(Trim$(ArgumentosRaw))
     
     ' Un array separado por blancos, con tantos elementos como
     ' se pueda
@@ -159,13 +171,13 @@ If Left$(Comando, 1) = "/" Then
         Case "/ENLISTAR"
             Call WriteEnlist
                 
-        Case "/INFORMACION"
+        Case "/INFORMACION" '*Nigo: este es un comando de GMs...
             Call WriteInformation
             
         Case "/RECOMPENSA"
             Call WriteReward
             
-        Case "/MOTD"
+        Case "/MOTD" '*Nigo: este es un comando de GMs...
             Call WriteRequestMOTD
             
         Case "/UPTIME"
@@ -181,46 +193,48 @@ If Left$(Comando, 1) = "/" Then
             Call WritePartyJoin
             
         Case "/ENCUESTA"
-
             If CantidadArgumentos = 0 Then
                 ' Version sin argumentos: Inquiry
                 Call WriteInquiry
             Else
                 ' Version con argumentos: InquiryVote
-                If IsNumeric(ArgumentosRaw) Then
+                If ValidNumber(ArgumentosRaw, eNumber_Types.ent_Byte) Then
                     Call WriteInquiryVote(ArgumentosRaw)
                 Else
-                    ' TODO: No es numerico
+                    'No es numerico
+                    Call ShowConsoleMsg("Para votar una opcion, escribe /encuesta NUMERODEOPCION, por ejemplo para votar la opcion 1, escribe /encuesta 1.")
                 End If
             End If
     
         Case "/CMSG"
+            '*Nigo: Ojo, no usar notNullArguments porque se usa el string vacio para borrar cartel.
             If CantidadArgumentos > 0 Then
-                If IsNumeric(ArgumentosRaw) Then
-                    Call WriteGuildMessage(ArgumentosRaw)
-                Else
-                    ' TODO: No es numerico
-                End If
+                Call WriteGuildMessage(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Escriba un mensaje.")
             End If
     
         Case "/PMSG"
+            '*Nigo: Ojo, no usar notNullArguments porque se usa el string vacio para borrar cartel.
             If CantidadArgumentos > 0 Then
                 Call WritePartyMessage(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Escriba un mensaje.")
             End If
     
         Case "/CENTINELA"
-            If CantidadArgumentos > 0 Then
-                If IsNumeric(ArgumentosRaw) Then
+            If notNullArguments Then
+                If ValidNumber(ArgumentosRaw, eNumber_Types.ent_Integer) Then
                     Call WriteCentinelReport(ArgumentosRaw)
                 Else
-                    ' TODO: No es numerico
+                    'No es numerico
+                    Call ShowConsoleMsg("El código de verificación debe ser numerico. Utilice /centinela X, siendo X el código de verificación.")
                 End If
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /centinela X, siendo X el código de verificación.")
             End If
     
         Case "/ONLINECLAN"
@@ -230,59 +244,67 @@ If Left$(Comando, 1) = "/" Then
             Call WritePartyOnline
             
         Case "/BMSG"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteCouncilMessage(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Escriba un mensaje.")
             End If
             
         Case "/ROL"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteRoleMasterRequest(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Escriba una pregunta.")
             End If
             
         Case "/GM"
             Call WriteGMRequest
             
-        Case "/_BUG"
-            If CantidadArgumentos > 0 Then
+        Case "/_BUG" '*Nigo: este es un comando de GMs...
+            If notNullArguments Then
                 Call WriteBugReport(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Escriba una descripción del bug.")
             End If
             
         Case "/VOTO"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteGuildVote(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /voto NICKNAME.")
             End If
            
         Case "/PENAS"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WritePunishments(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /penas NICKNAME.")
             End If
             
         Case "/PASSWD"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteChangePassword(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Password nulo. Utilice /passwd PASSWORD, siendo el PASSWORD de su elección.")
             End If
             
         Case "/APOSTAR"
-            If CantidadArgumentos > 0 Then
-                If IsNumeric(ArgumentosRaw) Then
+            If notNullArguments Then
+                If ValidNumber(ArgumentosRaw, eNumber_Types.ent_Integer) Then
                     Call WriteGamble(ArgumentosRaw)
                 Else
-                    ' TODO: No es numerico
+                    'No es numerico
+                    Call ShowConsoleMsg("Cantidad incorrecta. Utilice /apostar CANTIDAD.")
                 End If
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /apostar CANTIDAD.")
             End If
             
         Case "/RETIRAR"
@@ -291,60 +313,68 @@ If Left$(Comando, 1) = "/" Then
                 Call WriteLeaveFaction
             Else
                 ' Version con argumentos: BankExtractGold
-                If IsNumeric(ArgumentosRaw) Then
+                If ValidNumber(ArgumentosRaw, eNumber_Types.ent_Long) Then
                     Call WriteBankExtractGold(ArgumentosRaw)
                 Else
-                    ' TODO: No es numerico
+                    'No es numerico
+                    Call ShowConsoleMsg("Cantidad incorrecta. Utilice /retirar CANTIDAD.")
                 End If
             End If
 
         Case "/DEPOSITAR"
-            If CantidadArgumentos > 0 Then
-                If IsNumeric(ArgumentosRaw) Then
+            If notNullArguments Then
+                If ValidNumber(ArgumentosRaw, eNumber_Types.ent_Long) Then
                     Call WriteBankDepositGold(ArgumentosRaw)
                 Else
-                    ' TODO: No es numerico
+                    'No es numerico
+                    Call ShowConsoleMsg("Cantidad incorecta. Utilice /depositar CANTIDAD.")
                 End If
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan paramtetros. Utilice /depositar CANTIDAD.")
             End If
             
         Case "/DENUNCIAR"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteDenounce(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Formule su denuncia.")
             End If
             
         Case "/FUNDARCLAN"
             frmEligeAlineacion.Show vbModeless, Me
             
         Case "/ECHARPARTY"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WritePartyKick(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /echarparty NICKNAME.")
             End If
             
         Case "/PARTYLIDER"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WritePartySetLeader(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /partylider NICKNAME.")
             End If
             
         Case "/ACCEPTPARTY"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WritePartyAcceptMember(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /acceptparty NICKNAME.")
             End If
     
-        Case "/MIEMBROSCLAN"
-            If CantidadArgumentos > 0 Then
+        Case "/MIEMBROSCLAN" '*Nigo: este es un comando de GMs...
+            If notNullArguments Then
                 Call WriteGuildMemeberList(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /miembrosclan GUILDNAME.")
             End If
     
         '
@@ -352,10 +382,11 @@ If Left$(Comando, 1) = "/" Then
         '
         
         Case "/GMSG"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteGMMessage(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Escriba un mensaje.")
             End If
             
         Case "/SHOWNAME"
@@ -368,59 +399,71 @@ If Left$(Comando, 1) = "/" Then
             Call WriteOnlineChaosLegion
             
         Case "/IRCERCA"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteGoNearby(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /ircerca NICKNAME.")
             End If
             
         Case "/REM"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteComment(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Escriba un comentario.")
             End If
     
         Case "/HORA"
             Call WriteTime
             
         Case "/DONDE"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteWhere(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /donde NICKNAME.")
             End If
             
         Case "/NENE"
-            If CantidadArgumentos > 0 Then
-                Call WriteCreaturesInMap(ArgumentosRaw)
+            If notNullArguments Then
+                If ValidNumber(ArgumentosRaw, eNumber_Types.ent_Integer) Then
+                    Call WriteCreaturesInMap(ArgumentosRaw)
+                Else
+                    'No es numerico
+                    Call ShowConsoleMsg("Mapa incorrecto. Utilice /nene MAPA.")
+                End If
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /nene MAPA.")
             End If
             
         Case "/TELEPLOC"
             Call WriteWarpMeToTarget
             
         Case "/TELEP"
-            If CantidadArgumentos >= 4 Then
-                If IsNumeric(ArgumentosAll(1)) And IsNumeric(ArgumentosAll(2)) And IsNumeric(ArgumentosAll(3)) Then
+            If notNullArguments And CantidadArgumentos >= 4 Then
+                If ValidNumber(ArgumentosAll(1), eNumber_Types.ent_Integer) And ValidNumber(ArgumentosAll(2), eNumber_Types.ent_Byte) And ValidNumber(ArgumentosAll(3), eNumber_Types.ent_Byte) Then
                     Call WriteWarpChar(ArgumentosAll(0), ArgumentosAll(1), ArgumentosAll(2), ArgumentosAll(3))
                 Else
-                    ' TODO: No es numerico
+                    'No es numerico
+                    Call ShowConsoleMsg("Valor incorrecto. Utilice /telep NICKNAME MAPA X Y.")
                 End If
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /telep NICKNAME MAPA X Y.")
             End If
             
         Case "/SILENCIAR"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteSilence(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /silenciar NICKNAME.")
             End If
             
         Case "/SHOW"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Select Case ArgumentosAll(0)
                     Case "SOS"
                         Call WriteSOSShowList
@@ -432,10 +475,11 @@ If Left$(Comando, 1) = "/" Then
             End If
             
         Case "/IRA"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteGoToChar(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /ira NICKNAME.")
             End If
     
         Case "/INVISIBLE"
@@ -451,80 +495,143 @@ If Left$(Comando, 1) = "/" Then
             Call WriteHiding
             
         Case "/CARCEL"
-            If CantidadArgumentos >= 3 Then
-                If IsNumeric(ArgumentosAll(2)) Then
-                    Call WriteJail(ArgumentosAll(0), ArgumentosAll(1), ArgumentosAll(2))
+            If notNullArguments Then
+                tmpArr = Split(ArgumentosRaw, "@")
+                If UBound(tmpArr) = 2 Then
+                    If ValidNumber(tmpArr(2), eNumber_Types.ent_Byte) Then
+                        Call WriteJail(tmpArr(0), tmpArr(1), tmpArr(2))
+                    Else
+                        'No es numerico
+                        Call ShowConsoleMsg("Tiempo incorrecto. Utilice /carcel NICKNAME@MOTIVO@TIEMPO.")
+                    End If
                 Else
-                    ' TODO: No es numerico
+                    'Faltan los parametros con el formato propio
+                    Call ShowConsoleMsg("Formato incorrecto. Utilice /carcel NICKNAME@MOTIVO@TIEMPO.")
                 End If
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /carcel NICKNAME@MOTIVO@TIEMPO.")
             End If
             
         Case "/RMATA"
             Call WriteKillNPC
             
         Case "/ADVERTENCIA"
-            If CantidadArgumentos >= 3 Then
-                Call WriteWarnUser(ArgumentosAll(0), ArgumentosAll(2))
+            If notNullArguments Then
+                tmpArr = Split(ArgumentosRaw, "@", 2)
+                If UBound(tmpArr) = 1 Then
+                    Call WriteWarnUser(tmpArr(0), tmpArr(1))
+                Else
+                    'Faltan los parametros con el formato propio
+                    Call ShowConsoleMsg("Formato incorrecto. Utilice /advertencia NICKNAME@MOTIVO.")
+                End If
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /advertencia NICKNAME@MOTIVO.")
             End If
             
         Case "/MOD"
-            If CantidadArgumentos >= 4 Then
-                Call WriteEditChar(ArgumentosAll(0), , ArgumentosAll(2), ArgumentosAll(3))
+            If notNullArguments And CantidadArgumentos >= 3 Then
+                Select Case UCase$(ArgumentosAll(1))
+                    Case "BODY"
+                        tmpInt = eEditOptions.eo_Body
+                    
+                    Case "HEAD"
+                        tmpInt = eEditOptions.eo_Head
+                    
+                    Case "ORO"
+                        tmpInt = eEditOptions.eo_Gold
+                    
+                    Case "LEVEL"
+                        tmpInt = eEditOptions.eo_Level
+                    
+                    Case "SKILLS"
+                        tmpInt = eEditOptions.eo_Skills
+                    
+                    Case "SKILLSLIBRES"
+                        tmpInt = eEditOptions.eo_SkillPointsLeft
+                    
+                    Case "CLASE"
+                        tmpInt = eEditOptions.eo_Class
+                    
+                    Case "EXP"
+                        tmpInt = eEditOptions.eo_Experience
+                    
+                    Case "CRI"
+                        tmpInt = eEditOptions.eo_CriminalsKilled
+                    
+                    Case "CIU"
+                        tmpInt = eEditOptions.eo_CiticensKilled
+                    
+                    Else
+                        tmpInt = -1
+                End Select
+                
+                If tmpInt > 0 Then
+                    Call WriteEditChar(ArgumentosAll(0), tmpInt, ArgumentosAll(2), IIf(CantidadArgumentos = 3, "", ArgumentosAll(3)))
+                Else
+                    'Avisar que no exite el comando
+                    Call ShowConsoleMsg("Comando incorrecto.")
+                End If
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros.")
             End If
             
         Case "/INFO"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteRequestCharInfo(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /info NICKNAME.")
             End If
             
         Case "/STAT"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteRequestCharStats(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /stat NICKNAME.")
             End If
             
         Case "/BAL"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteRequestCharGold(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /bal NICKNAME.")
             End If
             
         Case "/INV"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteRequestCharInventory(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /inv NICKNAME.")
             End If
             
         Case "/BOV"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteRequestCharBank(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /bov NICKNAME.")
             End If
             
         Case "/SKILLS"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteRequestCharSkills(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /skills NICKNAME.")
             End If
             
         Case "/REVIVIR"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteReviveChar(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /revivir NICKNAME.")
             End If
             
         Case "/ONLINEGM"
@@ -534,48 +641,60 @@ If Left$(Comando, 1) = "/" Then
             Call WriteOnlineMap
             
         Case "/PERDON"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteForgive(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /perdon NICKNAME.")
             End If
             
         Case "/ECHAR"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteKick(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /echar NICKNAME.")
             End If
             
         Case "/EJECUTAR"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteExecute(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /ejecutar NICKNAME.")
             End If
             
         Case "/BAN"
-            If CantidadArgumentos > 0 Then
-                Call WriteBanChar(ArgumentosRaw)
+            If notNullArguments Then
+                tmpArr = Split(ArgumentosRaw, "@", 2)
+                If UBound(tmpArr) = 1 Then
+                    Call WriteBanChar(tmpArr(0), tmpArr(1))
+                Else
+                    'Faltan los parametros con el formato propio
+                    Call ShowConsoleMsg("Formato incorrecto. Utilice /ban NICKNAME@MOTIVO.")
+                End If
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /ban NICKNAME@MOTIVO.")
             End If
             
         Case "/UNBAN"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteUnbanChar(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /unban NICKNAME.")
             End If
             
         Case "/SEGUIR"
             Call WriteNPCFollow
             
         Case "/SUM"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteSummonChar(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /sum NICKNAME.")
             End If
             
         Case "/CC"
@@ -588,34 +707,48 @@ If Left$(Comando, 1) = "/" Then
             Call WriteCleanWorld
             
         Case "/RMSG"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteServerMessage(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Escriba un mensaje.")
             End If
             
         Case "/NICK2IP"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteNickToIP(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /nick2ip NICKNAME.")
             End If
             
         Case "/IP2NICK"
-            If CantidadArgumentos > 0 Then
-                Call WriteIPToNick(ArgumentosRaw)
+            If notNullArguments Then
+                If validipv4str(ArgumentosRaw) Then
+                    Call WriteIPToNick(str2ipv4l(ArgumentosRaw))
+                Else
+                    'No es una IP
+                    Call ShowConsoleMsg("IP incorrecta. Utilice /ip2nick IP.")
+                End If
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /ip2nick IP.")
             End If
             
         Case "/ONCLAN"
             Call WriteGuildOnline
             
         Case "/CT"
-            If CantidadArgumentos >= 3 Then
-                Call WriteTeleportCreate(ArgumentosRaw)
+            If notNullArguments And CantidadArgumentos >= 3 Then
+                If ValidNumber(ArgumentosAll(0), eNumber_Types.ent_Integer) And ValidNumber(ArgumentosAll(1), eNumber_Types.ent_Byte) And ValidNumber(ArgumentosAll(2), eNumber_Types.ent_Byte) Then
+                    Call WriteTeleportCreate(ArgumentosAll(0), ArgumentosAll(1), ArgumentosAll(2))
+                Else
+                    'No es numerico
+                    Call ShowConsoleMsg("Valor incorrecto. Utilice /ct MAPA X Y.")
+                End If
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /ct MAPA X Y.")
             End If
             
         Case "/DT"
@@ -625,111 +758,154 @@ If Left$(Comando, 1) = "/" Then
             Call WriteRainToggle
             
         Case "/SETDESC"
-            If CantidadArgumentos >= 2 Then
-                Call WriteSetCharDescription(ArgumentosAll(0), ArgumentosAll(1))
+            '*Nigo: Ojo, no usar notNullArguments porque se usa para resetear la desc.
+            If CantidadArgumentos > 0 Then
+                Call WriteSetCharDescription(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Escriba una DESC.")
             End If
             
         Case "/FORCEMIDIMAP"
-            If CantidadArgumentos >= 2 Then
-                If IsNumeric(ArgumentosAll(0)) And IsNumeric(ArgumentosAll(1)) Then
-                    Call WriteForceMIDIToMap(ArgumentosAll(0), ArgumentosAll(1))
+            If notNullArguments Then
+                'elegir el mapa es opcional
+                If CantidadArgumentos = 1 Then
+                    If ValidNumber(ArgumentosAll(0), eNumber_Types.ent_Byte) Then
+                        'eviamos un mapa nulo para que tome el del usuario.
+                        Call WriteForceMIDIToMap(ArgumentosAll(0), 0)
+                    Else
+                        'No es numerico
+                        Call ShowConsoleMsg("Midi incorrecto. Utilice /forcemidimap MIDI MAPA, siendo el mapa opcional.")
+                    End If
                 Else
-                    ' TODO: No es numerico
+                    If ValidNumber(ArgumentosAll(0), eNumber_Types.ent_Byte) And ValidNumber(ArgumentosAll(1), eNumber_Types.ent_Integer) Then
+                        Call WriteForceMIDIToMap(ArgumentosAll(0), ArgumentosAll(1))
+                    Else
+                        'No es numerico
+                        Call ShowConsoleMsg("Valor incorrecto. Utilice /forcemidimap MIDI MAPA, siendo el mapa opcional.")
+                    End If
                 End If
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Utilice /forcemidimap MIDI MAPA, siendo el mapa opcional.")
             End If
             
         Case "/FORCEWAVMAP"
-            If CantidadArgumentos >= 2 Then
-                If IsNumeric(ArgumentosAll(0)) And IsNumeric(ArgumentosAll(1)) And IsNumeric(ArgumentosAll(2)) And IsNumeric(ArgumentosAll(3)) Then
-                    Call WriteForceWAVEToMap(ArgumentosAll(0), ArgumentosAll(1), ArgumentosAll(2), ArgumentosAll(3))
+            If notNullArguments Then
+                'elegir la posicion es opcional
+                If CantidadArgumentos = 1 Then
+                    If ValidNumber(ArgumentosAll(0), eNumber_Types.ent_Byte) Then
+                        'eviamos una posicion nula para que tome la del usuario.
+                        Call WriteForceWAVEToMap(ArgumentosAll(0), 0, 0, 0)
+                    Else
+                        'No es numerico
+                        Call ShowConsoleMsg("Wav incorrecto. Utilice /forcewavmap WAV MAP X Y, siendo la posición opcional.")
+                    End If
                 Else
-                    ' TODO: No es numerico
+                    If ValidNumber(ArgumentosAll(0), eNumber_Types.ent_Byte) And ValidNumber(ArgumentosAll(1), eNumber_Types.ent_Integer) And ValidNumber(ArgumentosAll(2), eNumber_Types.ent_Byte) And ValidNumber(ArgumentosAll(3), eNumber_Types.ent_Byte) Then
+                        Call WriteForceWAVEToMap(ArgumentosAll(0), ArgumentosAll(1), ArgumentosAll(2), ArgumentosAll(3))
+                    Else
+                        'No es numerico
+                        Call ShowConsoleMsg("Utilice /forcewavmap WAV MAP X Y, siendo la posición opcional.")
+                    End If
                 End If
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Utilice /forcewavmap WAV MAP X Y, siendo la posición opcional.")
             End If
             
         Case "/REALMSG"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Case WriteRoyalArmyMessage(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Escriba un mensaje.")
             End If
              
         Case "/CAOSMSG"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Case WriteChaosLegionMessage(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Escriba un mensaje.")
             End If
             
         Case "/CIUMSG"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Case WriteCitizenMessage(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Escriba un mensaje.")
             End If
             
         Case "/TALKAS"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Case WriteTalkAsNPC(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Escriba un mensaje.")
             End If
     
         Case "/MASSDEST"
             Case WriteDestroyAllItemsInArea
 
         Case "/ACEPTCONSE"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteAcceptRoyalCouncilMember(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /aceptconse NICKNAME.")
             End If
             
         Case "/ACEPTCONSECAOS"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteAcceptChaosCouncilMember(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /aceptconsecaos NICKNAME.")
             End If
             
         Case "/PISO"
             Call WriteItemsInTheFloor
             
         Case "/ESTUPIDO"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteMakeDumb(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /estupido NICKNAME.")
             End If
             
         Case "/NOESTUPIDO"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteMakeDumbNoMore(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /noestupido NICKNAME.")
             End If
             
         Case "/DUMPSECURITY"
             Call WriteDumpIPTables
             
         Case "/KICKCONSE"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteCouncilKick(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /kickconse NICKNAME.")
             End If
             
         Case "/TRIGGER"
-            If CantidadArgumentos >= 1 Then
-                Call WriteSetTrigger(ArgumentosRaw)
+            If notNullArguments Then
+                If ValidNumber(ArgumentosRaw, eNumber_Types.ent_Trigger) Then
+                    Call WriteSetTrigger(ArgumentosRaw)
+                Else
+                    'No es numerico
+                    Call ShowConsoleMsg("Numero incorrecto. Utilice /trigger NUMERO.")
+                End If
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /trigger NUMERO.")
             End If
             
         Case "/BANIPLIST"
@@ -739,101 +915,117 @@ If Left$(Comando, 1) = "/" Then
             Call WriteBannedIPReload
             
         Case "/MIEMBROSCLAN"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteGuildCompleteMemberList(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /miembrosclan GUILDNAME.")
             End If
             
         Case "/BANCLAN"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteGuildBan(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /banclan GUILDNAME.")
             End If
             
         Case "/BANIP"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 If validipv4str(ArgumentosRaw) Then
                     Call WriteBanIP(str2ipv4l(ArgumentosRaw))
                 Else
-                    ' TODO: No es una IP
+                    'No es una IP
+                    Call ShowConsoleMsg("IP incorrecta. Utilice /banip IP.")
                 End If
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /banip IP.")
             End If
             
         Case "/UNBANIP"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 If validipv4str(ArgumentosRaw) Then
                     Call WriteUnbanIP(str2ipv4l(ArgumentosRaw))
                 Else
-                    ' TODO: No es una IP
+                    'No es una IP
+                    Call ShowConsoleMsg("IP incorrecta. Utilice /unbanip IP.")
                 End If
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /unbanip IP.")
             End If
             
         Case "/CI"
-            If CantidadArgumentos > 0 Then
-                If IsNumeric(ArgumentosAll(0)) Then
+            If notNullArguments Then
+                If ValidNumber(ArgumentosAll(0), eNumber_Types.ent_Long) Then
                     Call WriteCreateItem(ArgumentosAll(0))
                 Else
-                    ' TODO: No es numerico
+                    'No es numerico
+                    Call ShowConsoleMsg("Objeto incorrecto. Utilice /ci OBJETO.")
                 End If
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /ci OBJETO.")
             End If
             
         Case "/DEST"
             Call WriteDestroyItems
             
         Case "/NOCAOS"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteChaosLegionKick(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /nocaos NICKNAME.")
             End If
 
         Case "/NOREAL"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteRoyalArmyKick(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /noreal NICKNAME.")
             End If
 
         Case "/FORCEMIDI"
-            If CantidadArgumentos > 0 Then
-                If IsNumeric(ArgumentosAll(0)) Then
+            If notNullArguments Then
+                If ValidNumber(ArgumentosAll(0), eNumber_Types.ent_Byte) Then
                     Call WriteForceMIDIAll(ArgumentosAll(0))
                 Else
-                    ' TODO: No es numerico
+                    'No es numerico
+                    Call ShowConsoleMsg("Midi incorrecto. Utilice /forcemidi MIDI.")
                 End If
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /forcemidi MIDI.")
             End If
 
         Case "/FORCEWAV"
-            If CantidadArgumentos > 0 Then
-                If IsNumeric(ArgumentosAll(0)) Then
+            If notNullArguments Then
+                If ValidNumber(ArgumentosAll(0), eNumber_Types.ent_Byte) Then
                     Call WriteForceWAVEAll(ArgumentosAll(0))
                 Else
-                    ' TODO: No es numerico
+                    'No es numerico
+                    Call ShowConsoleMsg("Wav incorrecto. Utilice /forcewav WAV.")
                 End If
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /forcewav WAV.")
             End If
             
         Case "/BORRARPENA"
-            If CantidadArgumentos > 0 Then
-                TmpArr = Split(ArgumentosRaw, "@", 2)
-                If UBound(TmpArr) = 1 Then
-                    Call WriteRemovePunishment(TmpArr(0), TmpArr(1))
+            If notNullArguments Then
+                tmpArr = Split(ArgumentosRaw, "@", 2)
+                If UBound(tmpArr) = 1 Then
+                    Call WriteRemovePunishment(tmpArr(0), tmpArr(1))
                 Else
-                    ' TODO: Faltan los parametros con el formato propio
+                    'Faltan los parametros con el formato propio
+                    Call ShowConsoleMsg("Formato incorrecto. Utilice /borrarpena NICKNAME@PENA.")
                 End If
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /borrarpena NICKNAME@PENA.")
             End If
             
         Case "/BLOQ"
@@ -846,60 +1038,74 @@ If Left$(Comando, 1) = "/" Then
             Call WriteKillAllNearbyNPCs
             
         Case "/LASTIP"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteLastIP(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /lastip NICKNAME.")
             End If
 
         Case "/MOTDCAMBIA"
             Call WriteChangeMOTD
             
         Case "/SMSG"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteSystemMessage(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Escriba un mensaje.")
             End If
             
         Case "/ACC"
-            If CantidadArgumentos > 0 Then
-                If IsNumeric(ArgumentosAll(0)) Then
+            If notNullArguments Then
+                If ValidNumber(ArgumentosAll(0), eNumber_Types.ent_Integer) Then
                     Call WriteCreateNPC(ArgumentosAll(0))
                 Else
-                    ' TODO: No es numerico
+                    'No es numerico
+                    Call ShowConsoleMsg("Npc incorrecto. Utilice /acc NPC.")
                 End If
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /acc NPC.")
             End If
             
         Case "/RACC"
-            If CantidadArgumentos > 0 Then
-                Call WriteCreateNPCWithRespawn(ArgumentosAll(0))
+            If notNullArguments Then
+                If ValidNumber(ArgumentosAll(0), eNumber_Types.ent_Integer) Then
+                    Call WriteCreateNPCWithRespawn(ArgumentosAll(0))
+                Else
+                    'No es numerico
+                    Call ShowConsoleMsg("Npc incorrecto. Utilice /racc NPC.")
+                End If
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /racc NPC.")
             End If
     
         Case "/AI" ' 1 - 4
-            If CantidadArgumentos >= 2 Then
-                If IsNumeric(ArgumentosAll(0), ArgumentosAll(1)) Then
+            If notNullArguments And CantidadArgumentos >= 2 Then
+                If ValidNumber(ArgumentosAll(0), eNumber_Types.ent_Byte) And ValidNumber(ArgumentosAll(1), eNumber_Types.ent_Integer) Then
                     Call WriteImperialArmour(ArgumentosAll(0), ArgumentosAll(1))
                 Else
-                    ' TODO: No es numerico
+                    'No es numerico
+                    Call ShowConsoleMsg("Valor incorrecto. Utilice /ai ARMADURA OBJETO.")
                 End If
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /ai ARMADURA OBJETO.")
             End If
             
         Case "/AC" ' 1 - 4
-            If CantidadArgumentos >= 2 Then
-                If IsNumeric(ArgumentosAll(0), ArgumentosAll(1)) Then
+            If notNullArguments And CantidadArgumentos >= 2 Then
+                If ValidNumber(ArgumentosAll(0), eNumber_Types.ent_Byte) And ValidNumber(ArgumentosAll(1), eNumber_Types.ent_Integer) Then
                     Call WriteChaosArmour(ArgumentosAll(0), ArgumentosAll(1))
                 Else
-                    ' TODO: No es numerico
+                    'No es numerico
+                    Call ShowConsoleMsg("Valor incorrecto. Utilice /ac ARMADURA OBJETO.")
                 End If
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /ac ARMADURA OBJETO.")
             End If
             
         Case "/NAVE"
@@ -912,67 +1118,77 @@ If Left$(Comando, 1) = "/" Then
             Call WriteTurnOffServer
             
         Case "/CONDEN"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteTurnCriminal(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /conden NICKNAME.")
             End If
             
         Case "/RAJAR"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteResetFactions(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /rejar NICKNAME.")
             End If
             
         Case "/RAJARCLAN"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteRemoveCharFromGuild(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /rajarclan NICKNAME.")
             End If
             
         Case "/LASTEMAIL"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteRequestCharMail(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /lastemail NICKNAME.")
             End If
             
         Case "/APASS"
-            If CantidadArgumentos > 0 Then
-                TmpArr = Split(ArgumentosRaw, "@", 2)
-                If UBound(TmpArr) = 1 Then
-                    Call WriteAlterPassword(TmpArr(0), TmpArr(1))
+            If notNullArguments Then
+                tmpArr = Split(ArgumentosRaw, "@", 2)
+                If UBound(tmpArr) = 1 Then
+                    Call WriteAlterPassword(tmpArr(0), tmpArr(1))
                 Else
-                    ' TODO: Faltan los parametros con el formato propio
+                    'Faltan los parametros con el formato propio
+                    Call ShowConsoleMsg("Formato incorrecto. Utilice /apass PJSINPASS@PJCONPASS.")
                 End If
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /apass PJSINPASS@PJCONPASS.")
             End If
             
         Case "/AEMAIL"
-            If CantidadArgumentos > 0 Then
-                TmpArr = Split(ArgumentosRaw, "-", 2)
-                If UBound(TmpArr) = 1 Then
-                    Call WriteAlterMail(TmpArr(0), TmpArr(1))
+            If notNullArguments Then
+                tmpArr = Split(ArgumentosRaw, "-", 2)
+                If UBound(tmpArr) = 1 Then
+                    Call WriteAlterMail(tmpArr(0), tmpArr(1))
                 Else
-                    ' TODO: Faltan los parametros con el formato propio
+                    'Faltan los parametros con el formato propio
+                    Call ShowConsoleMsg("Formato incorrecto. Utilice /aemail NICKNAME-NUEVOMAIL.")
                 End If
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /aemail NICKNAME-NUEVOMAIL.")
             End If
             
         Case "/ANAME"
-            If CantidadArgumentos > 0 Then
-                TmpArr = Split(ArgumentosRaw, "@", 2)
-                If UBound(TmpArr) = 1 Then
-                    Call WriteAlterName(TmpArr(0), TmpArr(1))
+            If notNullArguments Then
+                tmpArr = Split(ArgumentosRaw, "@", 2)
+                If UBound(tmpArr) = 1 Then
+                    Call WriteAlterName(tmpArr(0), tmpArr(1))
                 Else
-                    ' TODO: Faltan los parametros con el formato propio
+                    'Faltan los parametros con el formato propio
+                    Call ShowConsoleMsg("Formato incorrecto. Utilice /aname ORIGEN@DESTINO.")
                 End If
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /aname ORIGEN@DESTINO.")
             End If
             
         Case "/CENTINELAACTIVADO"
@@ -982,17 +1198,18 @@ If Left$(Comando, 1) = "/" Then
             Call WriteDoBackup
             
         Case "/SHOWCMSG"
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Call WriteShowGuildMessages(ArgumentosRaw)
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /showcmsg GUILDNAME.")
             End If
             
         Case "/GUARDAMAPA"
             Call WriteSaveMap
             
         Case "/MODMAPINFO" ' PK, BACKUP
-            If CantidadArgumentos > 1 Then
+            If notNullArguments And CantidadArgumentos > 1 Then
                 Select Case ArgumentosAll(0)
                     Case "PK" ' "/MODMAPINFO PK"
                         Call WriteChangeMapInfoPK(ArgumentosAll(1) = 1)
@@ -1002,15 +1219,15 @@ If Left$(Comando, 1) = "/" Then
                         
                 End Select
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parametros.")
             End If
             
         Case "/GRABAR"
             Call WriteSaveChars
             
         Case "/BORRAR"
-        
-            If CantidadArgumentos > 0 Then
+            If notNullArguments Then
                 Select Case ArgumentosAll(0)
                     Case "SOS" ' "/BORRAR SOS"
                         Call WriteCleanSOS
@@ -1046,14 +1263,16 @@ If Left$(Comando, 1) = "/" Then
             Call WriteResetAutoUpdate
             
         Case "/CHATCOLOR"
-            If CantidadArgumentos >= 3 Then
-                If IsNumeric(ArgumentosAll(0)) And IsNumeric(ArgumentosAll(1)) And IsNumeric(ArgumentosAll(2)) Then
+            If notNullArguments And CantidadArgumentos >= 3 Then
+                If ValidNumber(ArgumentosAll(0), eNumber_Types.ent_Byte) And ValidNumber(ArgumentosAll(1), eNumber_Types.ent_Byte) And ValidNumber(ArgumentosAll(2), eNumber_Types.ent_Byte) Then
                     Call WriteChatColor(ArgumentosAll(0), ArgumentosAll(1), ArgumentosAll(2))
                 Else
-                    ' TODO: No es numerico
+                    'No es numerico
+                    Call ShowConsoleMsg("Valor incorrecto. Utilice /chatcolor R G B.")
                 End If
             Else
-                ' TODO: Avisar que falta el parametro
+                'Avisar que falta el parametro
+                Call ShowConsoleMsg("Faltan parámetros. Utilice /chatcolor R G B.")
             End If
             
         Case "/IGNORADO"
@@ -1076,3 +1295,117 @@ Else
 End If
 
 End Sub
+
+''
+' Show a console message.
+'
+' @param    Message The message to be written.
+' @param    red Sets the font red color.
+' @param    green Sets the font green color.
+' @param    blue Sets the font blue color.
+' @param    bold Sets the font bold style.
+' @param    italic Sets the font italic style.
+
+Private Sub ShowConsoleMsg(ByVal Message As Integer, Optional ByVal red As Integer = 255, Optional ByVal green As Integer = 255, Optional ByVal blue As Integer = 255, Optional ByVal bold As Boolean = False, Optional ByVal italic As Boolean = False)
+'***************************************************
+'Author: Nicolas Matias Gonzalez (NIGO)
+'Last Modification: 01/03/07
+'
+'***************************************************
+    Call AddtoRichTextBox(frmMain.RecTxt, Message, red, green, blue, bold, italic)
+End Sub
+
+''
+' Returns whether the number is correct.
+'
+' @param    Numero The number to be checked.
+' @param    Tipo The acceptable type of number.
+
+Private Function ValidNumber(ByVal Numero As String, ByVal Tipo As eNumber_Types) As Boolean
+'***************************************************
+'Author: Nicolas Matias Gonzalez (NIGO)
+'Last Modification: 01/06/07
+'
+'***************************************************
+    Dim Minimo As Long
+    Dim Maximo As Long
+    
+    ValidNumber = False
+    
+    If Not IsNumeric(Numero) Then _
+        Exit Function
+    
+    Select Case Tipo
+        Case eNumber_Types.ent_Byte
+            Minimo = 0
+            Maximo = 255
+
+        Case eNumber_Types.ent_Integer
+            Minimo = -32768
+            Maximo = 32767
+
+        Case eNumber_Types.ent_Long
+            Minimo = -2147483648#
+            Maximo = 2147483647
+        
+        Case eNumber_Types.ent_Trigger
+            Minimo = 0
+            Maximo = 6
+    End Select
+    
+    If Val(Numero) >= Minimo And Val(Numero) <= Maximo Then _
+        ValidNumber = True
+End Function
+
+''
+' Returns whether the ip format is correct.
+'
+' @param    IP The ip to be checked.
+
+Private Function validipv4str(ByVal IP As String) As Boolean
+'***************************************************
+'Author: Nicolas Matias Gonzalez (NIGO)
+'Last Modification: 01/06/07
+'
+'***************************************************
+    Dim tmpArr As String
+    
+    validipv4str = False
+    
+    tmpArr = Split(IP, ".")
+    
+    If UBound(tmpArr) <> 4 Then _
+        Exit Function
+
+    If Not ValidNumber(tmpArr(0), eNumber_Types.ent_Byte) Or _
+      Not ValidNumber(tmpArr(1), eNumber_Types.ent_Byte) Or _
+      Not ValidNumber(tmpArr(2), eNumber_Types.ent_Byte) Or _
+      Not ValidNumber(tmpArr(3), eNumber_Types.ent_Byte) Then
+        Exit Function
+    
+    validipv4str = True
+End Function
+
+''
+' Converts a string into the correct ip format.
+'
+' @param    IP The ip to be converted.
+
+Private Function str2ipv4l(ByVal IP As String) 'No return type allows to return arrays :D
+'***************************************************
+'Author: Nicolas Matias Gonzalez (NIGO)
+'Last Modification: 01/06/07
+'
+'***************************************************
+    Dim tmpArr() As String
+    Dim bArr(3) As Byte
+
+    tmpArr = Split(IP, ".")
+
+    bArr(0) = CByte(tmpArr(0))
+    bArr(1) = CByte(tmpArr(1))
+    bArr(2) = CByte(tmpArr(2))
+    bArr(3) = CByte(tmpArr(3))
+    
+    str2ipv4l = bArr
+End Function

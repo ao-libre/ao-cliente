@@ -325,10 +325,6 @@ Call SendData("GLINFO")
 Unload Me
 End Sub
 
-Private Sub Form_Load()
-
-End Sub
-
 Private Sub Rechazar_Click()
 Load frmCommet
 frmCommet.T = RECHAZOPJ
