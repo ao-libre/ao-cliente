@@ -33,20 +33,20 @@ Private Enum eNumber_Types
     ent_Trigger
 End Enum
 
-Public Sub AuxWriteWhisper(ByVal UserName As String, ByVal Mensaje As String)
-    Dim I As Long
+Public Sub AuxWriteWhisper(ByVal username As String, ByVal Mensaje As String)
+    Dim i As Long
     
-    I = 1
-    Do While I <= LastChar
-        If charlist(I).Nombre = UserName Then
+    i = 1
+    Do While i <= LastChar
+        If charlist(i).Nombre = username Then
             Exit Do
         Else
-            I = I + 1
+            i = i + 1
         End If
     Loop
     
-    If I <= LastChar Then
-        Call WriteWhisper(I, Mensaje)
+    If i <= LastChar Then
+        Call WriteWhisper(i, Mensaje)
     End If
     
 End Sub
@@ -1317,7 +1317,7 @@ End Sub
 ' @param    Numero The number to be checked.
 ' @param    Tipo The acceptable type of number.
 
-Private Function ValidNumber(ByVal Numero As String, ByVal Tipo As eNumber_Types) As Boolean
+Private Function ValidNumber(ByVal Numero As String, ByVal TIPO As eNumber_Types) As Boolean
 '***************************************************
 'Author: Nicolas Matias Gonzalez (NIGO)
 'Last Modification: 01/06/07
@@ -1326,12 +1326,10 @@ Private Function ValidNumber(ByVal Numero As String, ByVal Tipo As eNumber_Types
     Dim Minimo As Long
     Dim Maximo As Long
     
-    ValidNumber = False
-    
     If Not IsNumeric(Numero) Then _
         Exit Function
     
-    Select Case Tipo
+    Select Case TIPO
         Case eNumber_Types.ent_Byte
             Minimo = 0
             Maximo = 255
@@ -1358,7 +1356,7 @@ End Function
 '
 ' @param    IP The ip to be checked.
 
-Private Function validipv4str(ByVal IP As String) As Boolean
+Private Function validipv4str(ByVal Ip As String) As Boolean
 '***************************************************
 'Author: Nicolas Matias Gonzalez (NIGO)
 'Last Modification: 01/06/07
@@ -1366,11 +1364,9 @@ Private Function validipv4str(ByVal IP As String) As Boolean
 '***************************************************
     Dim tmpArr As String
     
-    validipv4str = False
+    tmpArr = Split(Ip, ".")
     
-    tmpArr = Split(IP, ".")
-    
-    If UBound(tmpArr) <> 4 Then _
+    If UBound(tmpArr) <> 3 Then _
         Exit Function
 
     If Not ValidNumber(tmpArr(0), eNumber_Types.ent_Byte) Or _
@@ -1387,7 +1383,7 @@ End Function
 '
 ' @param    IP The ip to be converted.
 
-Private Function str2ipv4l(ByVal IP As String) 'No return type allows to return arrays :D
+Private Function str2ipv4l(ByVal Ip As String) 'No return type allows to return arrays :D
 '***************************************************
 'Author: Nicolas Matias Gonzalez (NIGO)
 'Last Modification: 01/06/07
@@ -1396,7 +1392,7 @@ Private Function str2ipv4l(ByVal IP As String) 'No return type allows to return 
     Dim tmpArr() As String
     Dim bArr(3) As Byte
 
-    tmpArr = Split(IP, ".")
+    tmpArr = Split(Ip, ".")
 
     bArr(0) = CByte(tmpArr(0))
     bArr(1) = CByte(tmpArr(1))
