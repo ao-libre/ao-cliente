@@ -1362,7 +1362,7 @@ Private Function validipv4str(ByVal Ip As String) As Boolean
 'Last Modification: 01/06/07
 '
 '***************************************************
-    Dim tmpArr As String
+    Dim tmpArr() As String
     
     tmpArr = Split(Ip, ".")
     
