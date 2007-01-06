@@ -341,7 +341,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 End If
                 
             Case "/FUNDARCLAN"
-                frmEligeAlineacion.Show vbModeless, Me
+                frmEligeAlineacion.Show vbModeless, frmMain
                 
             Case "/ECHARPARTY"
                 If notNullArguments Then
@@ -561,7 +561,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         Case "CIU"
                             tmpInt = eEditOptions.eo_CiticensKilled
                         
-                        Else
+                        Case Else
                             tmpInt = -1
                     End Select
                     
@@ -814,7 +814,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 
             Case "/REALMSG"
                 If notNullArguments Then
-                    Case WriteRoyalArmyMessage(ArgumentosRaw)
+                    Call WriteRoyalArmyMessage(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
                     Call ShowConsoleMsg("Escriba un mensaje.")
@@ -822,7 +822,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                  
             Case "/CAOSMSG"
                 If notNullArguments Then
-                    Case WriteChaosLegionMessage(ArgumentosRaw)
+                    Call WriteChaosLegionMessage(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
                     Call ShowConsoleMsg("Escriba un mensaje.")
@@ -830,7 +830,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 
             Case "/CIUMSG"
                 If notNullArguments Then
-                    Case WriteCitizenMessage(ArgumentosRaw)
+                    Call WriteCitizenMessage(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
                     Call ShowConsoleMsg("Escriba un mensaje.")
@@ -838,14 +838,14 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 
             Case "/TALKAS"
                 If notNullArguments Then
-                    Case WriteTalkAsNPC(ArgumentosRaw)
+                    Call WriteTalkAsNPC(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
                     Call ShowConsoleMsg("Escriba un mensaje.")
                 End If
         
             Case "/MASSDEST"
-                Case WriteDestroyAllItemsInArea
+                Call WriteDestroyAllItemsInArea
     
             Case "/ACEPTCONSE"
                 If notNullArguments Then
@@ -1027,10 +1027,10 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 End If
                 
             Case "/BLOQ"
-                Case WriteTileBlockedToggle
+                Call WriteTileBlockedToggle
                 
             Case "/MATA"
-                Case WriteKillNPCNoRespawn
+                Call WriteKillNPCNoRespawn
         
             Case "/MASSKILL"
                 Call WriteKillAllNearbyNPCs
@@ -1372,7 +1372,7 @@ Private Function validipv4str(ByVal Ip As String) As Boolean
     If Not ValidNumber(tmpArr(0), eNumber_Types.ent_Byte) Or _
       Not ValidNumber(tmpArr(1), eNumber_Types.ent_Byte) Or _
       Not ValidNumber(tmpArr(2), eNumber_Types.ent_Byte) Or _
-      Not ValidNumber(tmpArr(3), eNumber_Types.ent_Byte) Then
+      Not ValidNumber(tmpArr(3), eNumber_Types.ent_Byte) Then _
         Exit Function
     
     validipv4str = True
