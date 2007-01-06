@@ -24,7 +24,7 @@ Attribute VB_Name = "PrevInstance"
 Option Explicit
 
 'Declaration of the Win32 API function for creating a Mutex, and some types and constants.
-Private Declare Function CreateMutex Lib "kernel32" Alias "CreateMutexA" (lpMutexAttributes As SECURITY_ATTRIBUTES, ByVal bInitialOwner As Long, ByVal lpName As String) As Long
+Private Declare Function CreateMutex Lib "kernel32" Alias "CreateMutexA" (ByRef lpMutexAttributes As SECURITY_ATTRIBUTES, ByVal bInitialOwner As Long, ByVal lpName As String) As Long
 
 Private Type SECURITY_ATTRIBUTES
     nLength As Long
@@ -39,13 +39,12 @@ Private Const ERROR_ALREADY_EXISTS = 183&
 '
 ' @param mutexName The name of the mutex, should be universally unique for the mutex to be created.
 
-Private Function CreateNamedMutex(mutexName As String) As Boolean
+Private Function CreateNamedMutex(ByRef mutexName As String) As Boolean
 '***************************************************
 'Autor: Fredy Horacio Treboux (liquid)
 'Last Modification: 01/04/07
 '
 '***************************************************
-
     Dim sa As SECURITY_ATTRIBUTES
     
     With sa
@@ -53,32 +52,27 @@ Private Function CreateNamedMutex(mutexName As String) As Boolean
         .lpSecurityDescriptor = 0
         .nLength = Len(sa)
     End With
-
-    Call CreateMutex(sa, True, "Global\" & mutexName) 'we actually ignore the return value
-
-    CreateNamedMutex = Not (Err.LastDllError = ERROR_ALREADY_EXISTS) 'check if the mutex already existed
     
+    Call CreateMutex(sa, True, "Global\" & mutexName) 'we actually ignore the return value
+    
+    CreateNamedMutex = Not (Err.LastDllError = ERROR_ALREADY_EXISTS) 'check if the mutex already existed
 End Function
 
 ''
 ' Checks if there's another instance of the app running, returns True if there is or False otherwise.
-'
 
-Public Function findPreviousInstance()
+Public Function FindPreviousInstance() As Boolean
 '***************************************************
 'Autor: Fredy Horacio Treboux (liquid)
 'Last Modification: 01/04/07
 '
 '***************************************************
-
-'We try to create a mutex, the name could be anything, but must contain no backslashes.
-If CreateNamedMutex("UniqueNameThatActuallyCouldBeAnything") Then
-    'There's no other instance running
-    findPreviousInstance = False
-    Exit Function
-Else
-    'There's another instance running
-    findPreviousInstance = True
-    Exit Function
-End If
+    'We try to create a mutex, the name could be anything, but must contain no backslashes.
+    If CreateNamedMutex("UniqueNameThatActuallyCouldBeAnything") Then
+        'There's no other instance running
+        FindPreviousInstance = False
+    Else
+        'There's another instance running
+        FindPreviousInstance = True
+    End If
 End Function
