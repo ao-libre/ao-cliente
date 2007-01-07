@@ -411,10 +411,10 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     'Avisar que falta el parametro
                     Call ShowConsoleMsg("Escriba un comentario.")
                 End If
-        
+            
             Case "/HORA"
-                Call WriteTime
-                
+                Call Protocol.WriteServerTime
+            
             Case "/DONDE"
                 If notNullArguments Then
                     Call WriteWhere(ArgumentosRaw)

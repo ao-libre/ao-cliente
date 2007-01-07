@@ -66,36 +66,36 @@ Public Function DirMapas() As String
     DirMapas = App.Path & "\" & Config_Inicio.DirMapas & "\"
 End Function
 
-Public Function SumaDigitos(ByVal numero As Integer) As Integer
+Public Function SumaDigitos(ByVal Numero As Integer) As Integer
     'Suma digitos
     Do
-        SumaDigitos = SumaDigitos + (numero Mod 10)
-        numero = numero \ 10
-    Loop While (numero > 0)
+        SumaDigitos = SumaDigitos + (Numero Mod 10)
+        Numero = Numero \ 10
+    Loop While (Numero > 0)
 End Function
 
-Public Function SumaDigitosMenos(ByVal numero As Integer) As Integer
+Public Function SumaDigitosMenos(ByVal Numero As Integer) As Integer
     'Suma digitos, y resta el total de dígitos
     Do
-        SumaDigitosMenos = SumaDigitosMenos + (numero Mod 10) - 1
-        numero = numero \ 10
-    Loop While (numero > 0)
+        SumaDigitosMenos = SumaDigitosMenos + (Numero Mod 10) - 1
+        Numero = Numero \ 10
+    Loop While (Numero > 0)
 End Function
 
-Public Function Complex(ByVal numero As Integer) As Integer
-    If numero Mod 2 <> 0 Then
-        Complex = numero * SumaDigitos(numero)
+Public Function Complex(ByVal Numero As Integer) As Integer
+    If Numero Mod 2 <> 0 Then
+        Complex = Numero * SumaDigitos(Numero)
     Else
-        Complex = numero * SumaDigitosMenos(numero)
+        Complex = Numero * SumaDigitosMenos(Numero)
     End If
 End Function
 
-Public Function ValidarLoginMSG(ByVal numero As Integer) As Integer
+Public Function ValidarLoginMSG(ByVal Numero As Integer) As Integer
     Dim AuxInteger As Integer
     Dim AuxInteger2 As Integer
     
-    AuxInteger = SumaDigitos(numero)
-    AuxInteger2 = SumaDigitosMenos(numero)
+    AuxInteger = SumaDigitos(Numero)
+    AuxInteger2 = SumaDigitosMenos(Numero)
     ValidarLoginMSG = Complex(AuxInteger + AuxInteger2)
 End Function
 
@@ -155,13 +155,13 @@ On Error Resume Next
         Exit Sub
     End If
     
-    Dim I As Long
+    Dim i As Long
     
-    For I = 0 To 48 '49 y 50 reservados para ciudadano y criminal
-        ColoresPJ(I).r = CByte(GetVar(archivoC, CStr(I), "R"))
-        ColoresPJ(I).g = CByte(GetVar(archivoC, CStr(I), "G"))
-        ColoresPJ(I).b = CByte(GetVar(archivoC, CStr(I), "B"))
-    Next I
+    For i = 0 To 48 '49 y 50 reservados para ciudadano y criminal
+        ColoresPJ(i).r = CByte(GetVar(archivoC, CStr(i), "R"))
+        ColoresPJ(i).g = CByte(GetVar(archivoC, CStr(i), "G"))
+        ColoresPJ(i).b = CByte(GetVar(archivoC, CStr(i), "B"))
+    Next i
     
     ColoresPJ(50).r = CByte(GetVar(archivoC, "CR", "R"))
     ColoresPJ(50).g = CByte(GetVar(archivoC, "CR", "G"))
@@ -262,17 +262,17 @@ End Sub
 
 Function AsciiValidos(ByVal cad As String) As Boolean
     Dim car As Byte
-    Dim I As Long
+    Dim i As Long
     
     cad = LCase$(cad)
     
-    For I = 1 To Len(cad)
-        car = Asc(mid$(cad, I, 1))
+    For i = 1 To Len(cad)
+        car = Asc(mid$(cad, i, 1))
         
         If ((car < 97 Or car > 122) Or car = Asc("º")) And (car <> 255) And (car <> 32) Then
             Exit Function
         End If
-    Next I
+    Next i
     
     AsciiValidos = True
 End Function
@@ -300,18 +300,18 @@ Function CheckUserData(ByVal checkemail As Boolean) As Boolean
         End If
     Next loopc
     
-    If UserName = "" Then
+    If username = "" Then
         MsgBox ("Ingrese un nombre de personaje.")
         Exit Function
     End If
     
-    If Len(UserName) > 30 Then
+    If Len(username) > 30 Then
         MsgBox ("El nombre debe tener menos de 30 letras.")
         Exit Function
     End If
     
-    For loopc = 1 To Len(UserName)
-        CharAscii = Asc(mid$(UserName, loopc, 1))
+    For loopc = 1 To Len(username)
+        CharAscii = Asc(mid$(username, loopc, 1))
         If Not LegalCharacter(CharAscii) Then
             MsgBox ("Nombre inválido. El caractér " & Chr$(CharAscii) & " no está permitido.")
             Exit Function
@@ -377,7 +377,7 @@ Sub SetConnected()
     Unload frmPasswd
     Unload frmCrearPersonaje
     
-    frmMain.Label8.Caption = UserName
+    frmMain.Label8.Caption = username
     'Load main form
     frmMain.Visible = True
 #If SeguridadAlkon Then
@@ -639,7 +639,7 @@ Public Function ReadField(ByVal Pos As Integer, ByVal Text As String, ByVal SepA
 '*****************************************************************
 'Gets a field from a string
 '*****************************************************************
-    Dim I As Integer
+    Dim i As Integer
     Dim LastPos As Integer
     Dim CurChar As String * 1
     Dim FieldNum As Integer
@@ -649,17 +649,17 @@ Public Function ReadField(ByVal Pos As Integer, ByVal Text As String, ByVal SepA
     LastPos = 0
     FieldNum = 0
     
-    For I = 1 To Len(Text)
-        CurChar = mid$(Text, I, 1)
+    For i = 1 To Len(Text)
+        CurChar = mid$(Text, i, 1)
         If CurChar = Seperator Then
             FieldNum = FieldNum + 1
             If FieldNum = Pos Then
                 ReadField = mid$(Text, LastPos + 1, (InStr(LastPos + 1, Text, Seperator, vbTextCompare) - 1) - (LastPos))
                 Exit Function
             End If
-            LastPos = I
+            LastPos = i
         End If
-    Next I
+    Next i
     FieldNum = FieldNum + 1
     
     If FieldNum = Pos Then
@@ -688,32 +688,32 @@ Sub WriteClientVer()
 End Sub
 
 Public Function IsIp(ByVal Ip As String) As Boolean
-    Dim I As Long
+    Dim i As Long
     
-    For I = 1 To UBound(ServersLst)
-        If ServersLst(I).Ip = Ip Then
+    For i = 1 To UBound(ServersLst)
+        If ServersLst(i).Ip = Ip Then
             IsIp = True
             Exit Function
         End If
-    Next I
+    Next i
 End Function
 
 Public Sub CargarServidores()
 On Error GoTo errorH
     Dim f As String
     Dim C As Integer
-    Dim I As Long
+    Dim i As Long
     
     f = App.Path & "\init\sinfo.dat"
     C = Val(GetVar(f, "INIT", "Cant"))
     
     ReDim ServersLst(1 To C) As tServerInfo
-    For I = 1 To C
-        ServersLst(I).desc = GetVar(f, "S" & I, "Desc")
-        ServersLst(I).Ip = Trim$(GetVar(f, "S" & I, "Ip"))
-        ServersLst(I).PassRecPort = CInt(GetVar(f, "S" & I, "P2"))
-        ServersLst(I).Puerto = CInt(GetVar(f, "S" & I, "PJ"))
-    Next I
+    For i = 1 To C
+        ServersLst(i).desc = GetVar(f, "S" & i, "Desc")
+        ServersLst(i).Ip = Trim$(GetVar(f, "S" & i, "Ip"))
+        ServersLst(i).PassRecPort = CInt(GetVar(f, "S" & i, "P2"))
+        ServersLst(i).Puerto = CInt(GetVar(f, "S" & i, "PJ"))
+    Next i
     CurServer = 1
 Exit Sub
 
@@ -725,26 +725,26 @@ End Sub
 Public Sub InitServersList(ByVal Lst As String)
 On Error Resume Next
     Dim NumServers As Integer
-    Dim I As Integer
+    Dim i As Integer
     Dim Cont As Integer
     
-    I = 1
+    i = 1
     
-    Do While (ReadField(I, RawServersList, Asc(";")) <> "")
-        I = I + 1
+    Do While (ReadField(i, RawServersList, Asc(";")) <> "")
+        i = i + 1
         Cont = Cont + 1
     Loop
     
     ReDim ServersLst(1 To Cont) As tServerInfo
     
-    For I = 1 To Cont
+    For i = 1 To Cont
         Dim cur$
-        cur$ = ReadField(I, RawServersList, Asc(";"))
-        ServersLst(I).Ip = ReadField(1, cur$, Asc(":"))
-        ServersLst(I).Puerto = ReadField(2, cur$, Asc(":"))
-        ServersLst(I).desc = ReadField(4, cur$, Asc(":"))
-        ServersLst(I).PassRecPort = ReadField(3, cur$, Asc(":"))
-    Next I
+        cur$ = ReadField(i, RawServersList, Asc(";"))
+        ServersLst(i).Ip = ReadField(1, cur$, Asc(":"))
+        ServersLst(i).Puerto = ReadField(2, cur$, Asc(":"))
+        ServersLst(i).desc = ReadField(4, cur$, Asc(":"))
+        ServersLst(i).PassRecPort = ReadField(3, cur$, Asc(":"))
+    Next i
     
     CurServer = 1
 End Sub
@@ -1112,17 +1112,17 @@ End Sub
     
 Public Sub LeerLineaComandos()
     Dim T() As String
-    Dim I As Long
+    Dim i As Long
     
     'Parseo los comandos
     T = Split(Command, " ")
     
-    For I = LBound(T) To UBound(T)
-        Select Case UCase$(T(I))
+    For i = LBound(T) To UBound(T)
+        Select Case UCase$(T(i))
             Case "/NORES" 'no cambiar la resolucion
                 NoRes = True
         End Select
-    Next I
+    Next i
 End Sub
 
 Private Sub LoadClientSetup()

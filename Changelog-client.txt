@@ -73,3 +73,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 04/01/2007: Agregué uso de named mutex para evitar clientes multiples. (liquid)
  * 06/01/2007: ProtocolCmdParse listo. (NIGO)
  * 06/01/2007: NIGO, te corregi un par de bugs.. eran boludeces, pero son faciles de encontrar si chequeas que el cliente compila (ctr+f5) :). (liquid)
+ * 07/01/2007: Corregí el único bug que no permitía compilar (WriteTime fue cambiado por WriteServerTime). (Maraxus)
