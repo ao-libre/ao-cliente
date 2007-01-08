@@ -34,19 +34,19 @@ Private Enum eNumber_Types
 End Enum
 
 Public Sub AuxWriteWhisper(ByVal UserName As String, ByVal Mensaje As String)
-    Dim I As Long
+    Dim i As Long
     
-    I = 1
-    Do While I <= LastChar
-        If charlist(I).Nombre = UserName Then
+    i = 1
+    Do While i <= LastChar
+        If charlist(i).Nombre = UserName Then
             Exit Do
         Else
-            I = I + 1
+            i = i + 1
         End If
     Loop
     
-    If I <= LastChar Then
-        Call WriteWhisper(I, Mensaje)
+    If i <= LastChar Then
+        Call WriteWhisper(i, Mensaje)
     End If
     
 End Sub
@@ -126,7 +126,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 
             Case "/SALIR"
                 If UserParalizado Then 'Inmo
-                    With FontTypeNames.FONTTYPE_WARNING
+                    With FontTypes(FontTypeNames.FONTTYPE_WARNING)
                         Call ShowConsoleMsg("No puedes salir estando paralizado.", .red, .green, .blue, .bold, .italic)
                     End With
                     Exit Sub
@@ -138,7 +138,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 
             Case "/BALANCE"
                 If UserEstado = 1 Then 'Muerto
-                    With FontTypeNames.FONTTYPE_INFO
+                    With FontTypes(FontTypeNames.FONTTYPE_INFO)
                         Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
                     End With
                     Exit Sub
@@ -147,7 +147,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 
             Case "/QUIETO"
                 If UserEstado = 1 Then 'Muerto
-                    With FontTypeNames.FONTTYPE_INFO
+                    With FontTypes(FontTypeNames.FONTTYPE_INFO)
                         Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
                     End With
                     Exit Sub
@@ -156,7 +156,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 
             Case "/ACOMPAÑAR"
                 If UserEstado = 1 Then 'Muerto
-                    With FontTypeNames.FONTTYPE_INFO
+                    With FontTypes(FontTypeNames.FONTTYPE_INFO)
                         Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
                     End With
                     Exit Sub
@@ -165,7 +165,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 
             Case "/ENTRENAR"
                 If UserEstado = 1 Then 'Muerto
-                    With FontTypeNames.FONTTYPE_INFO
+                    With FontTypes(FontTypeNames.FONTTYPE_INFO)
                         Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
                     End With
                     Exit Sub
@@ -174,7 +174,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 
             Case "/DESCANSAR"
                 If UserEstado = 1 Then 'Muerto
-                    With FontTypeNames.FONTTYPE_INFO
+                    With FontTypes(FontTypeNames.FONTTYPE_INFO)
                         Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
                     End With
                     Exit Sub
@@ -183,7 +183,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 
             Case "/MEDITAR"
                 If UserEstado = 1 Then 'Muerto
-                    With FontTypeNames.FONTTYPE_INFO
+                    With FontTypes(FontTypeNames.FONTTYPE_INFO)
                         Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
                     End With
                     Exit Sub
@@ -204,13 +204,13 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 
             Case "/COMERCIAR"
                 If UserEstado = 1 Then 'Muerto
-                    With FontTypeNames.FONTTYPE_INFO
+                    With FontTypes(FontTypeNames.FONTTYPE_INFO)
                         Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
                     End With
                     Exit Sub
                 
                 ElseIf Comerciando Then 'Comerciando
-                    With FontTypeNames.FONTTYPE_INFO
+                    With FontTypes(FontTypeNames.FONTTYPE_INFO)
                         Call ShowConsoleMsg("Ya estás comerciando", .red, .green, .blue, .bold, .italic)
                     End With
                     Exit Sub
@@ -219,7 +219,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 
             Case "/BOVEDA"
                 If UserEstado = 1 Then 'Muerto
-                    With FontTypeNames.FONTTYPE_INFO
+                    With FontTypes(FontTypeNames.FONTTYPE_INFO)
                         Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
                     End With
                     Exit Sub
@@ -246,7 +246,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 
             Case "/CREARPARTY"
                 If UserEstado = 1 Then 'Muerto
-                    With FontTypeNames.FONTTYPE_INFO
+                    With FontTypes(FontTypeNames.FONTTYPE_INFO)
                         Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
                     End With
                     Exit Sub
@@ -255,7 +255,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 
             Case "/PARTY"
                 If UserEstado = 1 Then 'Muerto
-                    With FontTypeNames.FONTTYPE_INFO
+                    With FontTypes(FontTypeNames.FONTTYPE_INFO)
                         Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
                     End With
                     Exit Sub
@@ -342,7 +342,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             
             Case "/DESC"
                 If UserEstado = 1 Then 'Muerto
-                    With FontTypeNames.FONTTYPE_INFO
+                    With FontTypes(FontTypeNames.FONTTYPE_INFO)
                         Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
                     End With
                     Exit Sub
@@ -380,7 +380,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 
             Case "/APOSTAR"
                 If UserEstado = 1 Then 'Muerto
-                    With FontTypeNames.FONTTYPE_INFO
+                    With FontTypes(FontTypeNames.FONTTYPE_INFO)
                         Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
                     End With
                     Exit Sub
@@ -399,7 +399,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 
             Case "/RETIRAR"
                 If UserEstado = 1 Then 'Muerto
-                    With FontTypeNames.FONTTYPE_INFO
+                    With FontTypes(FontTypeNames.FONTTYPE_INFO)
                         Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
                     End With
                     Exit Sub
@@ -419,7 +419,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
     
             Case "/DEPOSITAR"
                 If UserEstado = 1 Then 'Muerto
-                    With FontTypeNames.FONTTYPE_INFO
+                    With FontTypes(FontTypeNames.FONTTYPE_INFO)
                         Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
                     End With
                     Exit Sub
@@ -1384,7 +1384,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
         
     ElseIf Left$(Comando, 1) = "\" Then
         If UserEstado = 1 Then 'Muerto
-            With FontTypeNames.FONTTYPE_INFO
+            With FontTypes(FontTypeNames.FONTTYPE_INFO)
                 Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
             End With
             Exit Sub
@@ -1394,7 +1394,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
         
     ElseIf Left$(Comando, 1) = "-" Then
         If UserEstado = 1 Then 'Muerto
-            With FontTypeNames.FONTTYPE_INFO
+            With FontTypes(FontTypeNames.FONTTYPE_INFO)
                 Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
             End With
             Exit Sub
