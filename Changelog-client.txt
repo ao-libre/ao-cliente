@@ -74,3 +74,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 06/01/2007: ProtocolCmdParse listo. (NIGO)
  * 06/01/2007: NIGO, te corregi un par de bugs.. eran boludeces, pero son faciles de encontrar si chequeas que el cliente compila (ctr+f5) :). (liquid)
  * 07/01/2007: Corregí el único bug que no permitía compilar (WriteTime fue cambiado por WriteServerTime). (Maraxus)
+ * 08/01/2007: El parser chequea que el estado del usuario sea valido al usar comandos. (NIGO)

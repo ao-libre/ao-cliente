@@ -33,20 +33,20 @@ Private Enum eNumber_Types
     ent_Trigger
 End Enum
 
-Public Sub AuxWriteWhisper(ByVal username As String, ByVal Mensaje As String)
-    Dim i As Long
+Public Sub AuxWriteWhisper(ByVal UserName As String, ByVal Mensaje As String)
+    Dim I As Long
     
-    i = 1
-    Do While i <= LastChar
-        If charlist(i).Nombre = username Then
+    I = 1
+    Do While I <= LastChar
+        If charlist(I).Nombre = UserName Then
             Exit Do
         Else
-            i = i + 1
+            I = I + 1
         End If
     Loop
     
-    If i <= LastChar Then
-        Call WriteWhisper(i, Mensaje)
+    If I <= LastChar Then
+        Call WriteWhisper(I, Mensaje)
     End If
     
 End Sub
@@ -125,27 +125,69 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 Call WriteOnline
                 
             Case "/SALIR"
+                If UserParalizado Then 'Inmo
+                    With FontTypeNames.FONTTYPE_WARNING
+                        Call ShowConsoleMsg("No puedes salir estando paralizado.", .red, .green, .blue, .bold, .italic)
+                    End With
+                    Exit Sub
+                End If
                 Call WriteQuit
                 
             Case "/SALIRCLAN"
                 Call WriteGuildLeave
                 
             Case "/BALANCE"
+                If UserEstado = 1 Then 'Muerto
+                    With FontTypeNames.FONTTYPE_INFO
+                        Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+                    End With
+                    Exit Sub
+                End If
                 Call WriteRequestAccountState
                 
             Case "/QUIETO"
+                If UserEstado = 1 Then 'Muerto
+                    With FontTypeNames.FONTTYPE_INFO
+                        Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+                    End With
+                    Exit Sub
+                End If
                 Call WritePetStand
                 
             Case "/ACOMPAÑAR"
+                If UserEstado = 1 Then 'Muerto
+                    With FontTypeNames.FONTTYPE_INFO
+                        Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+                    End With
+                    Exit Sub
+                End If
                 Call WritePetFollow
                 
             Case "/ENTRENAR"
+                If UserEstado = 1 Then 'Muerto
+                    With FontTypeNames.FONTTYPE_INFO
+                        Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+                    End With
+                    Exit Sub
+                End If
                 Call WriteTrainList
                 
             Case "/DESCANSAR"
+                If UserEstado = 1 Then 'Muerto
+                    With FontTypeNames.FONTTYPE_INFO
+                        Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+                    End With
+                    Exit Sub
+                End If
                 Call WriteRest
                 
             Case "/MEDITAR"
+                If UserEstado = 1 Then 'Muerto
+                    With FontTypeNames.FONTTYPE_INFO
+                        Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+                    End With
+                    Exit Sub
+                End If
                 Call WriteMeditate
         
             Case "/RESUCITAR"
@@ -153,29 +195,47 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 
             Case "/CURAR"
                 Call WriteHeal
-                
+                              
+            Case "/EST"
+                Call WriteRequestStats
+            
             Case "/AYUDA"
                 Call WriteHelp
                 
-            Case "/EST"
-                Call WriteRequestStats
-                
             Case "/COMERCIAR"
+                If UserEstado = 1 Then 'Muerto
+                    With FontTypeNames.FONTTYPE_INFO
+                        Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+                    End With
+                    Exit Sub
+                
+                ElseIf Comerciando Then 'Comerciando
+                    With FontTypeNames.FONTTYPE_INFO
+                        Call ShowConsoleMsg("Ya estás comerciando", .red, .green, .blue, .bold, .italic)
+                    End With
+                    Exit Sub
+                End If
                 Call WriteCommerceStart
                 
             Case "/BOVEDA"
+                If UserEstado = 1 Then 'Muerto
+                    With FontTypeNames.FONTTYPE_INFO
+                        Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+                    End With
+                    Exit Sub
+                End If
                 Call WriteBankStart
                 
             Case "/ENLISTAR"
                 Call WriteEnlist
                     
-            Case "/INFORMACION" '*Nigo: este es un comando de GMs...
+            Case "/INFORMACION"
                 Call WriteInformation
                 
             Case "/RECOMPENSA"
                 Call WriteReward
                 
-            Case "/MOTD" '*Nigo: este es un comando de GMs...
+            Case "/MOTD"
                 Call WriteRequestMOTD
                 
             Case "/UPTIME"
@@ -185,9 +245,21 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 Call WritePartyLeave
                 
             Case "/CREARPARTY"
+                If UserEstado = 1 Then 'Muerto
+                    With FontTypeNames.FONTTYPE_INFO
+                        Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+                    End With
+                    Exit Sub
+                End If
                 Call WritePartyCreate
                 
             Case "/PARTY"
+                If UserEstado = 1 Then 'Muerto
+                    With FontTypeNames.FONTTYPE_INFO
+                        Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+                    End With
+                    Exit Sub
+                End If
                 Call WritePartyJoin
                 
             Case "/ENCUESTA"
@@ -205,7 +277,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 End If
         
             Case "/CMSG"
-                '*Nigo: Ojo, no usar notNullArguments porque se usa el string vacio para borrar cartel.
+                'Ojo, no usar notNullArguments porque se usa el string vacio para borrar cartel.
                 If CantidadArgumentos > 0 Then
                     Call WriteGuildMessage(ArgumentosRaw)
                 Else
@@ -214,7 +286,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 End If
         
             Case "/PMSG"
-                '*Nigo: Ojo, no usar notNullArguments porque se usa el string vacio para borrar cartel.
+                'Ojo, no usar notNullArguments porque se usa el string vacio para borrar cartel.
                 If CantidadArgumentos > 0 Then
                     Call WritePartyMessage(ArgumentosRaw)
                 Else
@@ -267,7 +339,21 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     'Avisar que falta el parametro
                     Call ShowConsoleMsg("Escriba una descripción del bug.")
                 End If
-                
+            
+            Case "/DESC"
+                If UserEstado = 1 Then 'Muerto
+                    With FontTypeNames.FONTTYPE_INFO
+                        Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+                    End With
+                    Exit Sub
+                End If
+                If notNullArguments Then
+                    Call WriteChangeDescription(ArgumentosRaw)
+                Else
+                    'Avisar que falta el parametro
+                    Call ShowConsoleMsg("Escriba una descripción.")
+                End If
+            
             Case "/VOTO"
                 If notNullArguments Then
                     Call WriteGuildVote(ArgumentosRaw)
@@ -293,6 +379,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 End If
                 
             Case "/APOSTAR"
+                If UserEstado = 1 Then 'Muerto
+                    With FontTypeNames.FONTTYPE_INFO
+                        Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+                    End With
+                    Exit Sub
+                End If
                 If notNullArguments Then
                     If ValidNumber(ArgumentosRaw, eNumber_Types.ent_Integer) Then
                         Call WriteGamble(ArgumentosRaw)
@@ -306,6 +398,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 End If
                 
             Case "/RETIRAR"
+                If UserEstado = 1 Then 'Muerto
+                    With FontTypeNames.FONTTYPE_INFO
+                        Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+                    End With
+                    Exit Sub
+                End If
                 If CantidadArgumentos = 0 Then
                     ' Version sin argumentos: LeaveFaction
                     Call WriteLeaveFaction
@@ -320,6 +418,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 End If
     
             Case "/DEPOSITAR"
+                If UserEstado = 1 Then 'Muerto
+                    With FontTypeNames.FONTTYPE_INFO
+                        Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+                    End With
+                    Exit Sub
+                End If
                 If notNullArguments Then
                     If ValidNumber(ArgumentosRaw, eNumber_Types.ent_Long) Then
                         Call WriteBankDepositGold(ArgumentosRaw)
@@ -756,7 +860,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 Call WriteRainToggle
                 
             Case "/SETDESC"
-                '*Nigo: Ojo, no usar notNullArguments porque se usa para resetear la desc.
+                'Ojo, no usar notNullArguments porque se usa para resetear la desc.
                 If CantidadArgumentos > 0 Then
                     Call WriteSetCharDescription(ArgumentosRaw)
                 Else
@@ -1279,10 +1383,22 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
         End Select
         
     ElseIf Left$(Comando, 1) = "\" Then
+        If UserEstado = 1 Then 'Muerto
+            With FontTypeNames.FONTTYPE_INFO
+                Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+            End With
+            Exit Sub
+        End If
         ' Mensaje Privado
         Call AuxWriteWhisper(mid$(Comando, 2), ArgumentosRaw)
         
     ElseIf Left$(Comando, 1) = "-" Then
+        If UserEstado = 1 Then 'Muerto
+            With FontTypeNames.FONTTYPE_INFO
+                Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+            End With
+            Exit Sub
+        End If
         ' Gritar
         Call WriteYell(mid$(RawCommand, 2))
         
