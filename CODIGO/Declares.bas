@@ -164,28 +164,72 @@ Public Const FLAGORO As Integer = -1
 
 Public Const FOgata As Integer = 1521
 
-Public Enum Skills
-     Suerte = 1
-     Magia = 2
-     Robar = 3
-     Tacticas = 4
-     Armas = 5
-     Meditar = 6
-     Apuñalar = 7
-     Ocultarse = 8
-     Supervivencia = 9
-     Talar = 10
-     Comerciar = 11
-     Defensa = 12
-     Pesca = 13
-     Mineria = 14
-     Carpinteria = 15
-     Herreria = 16
-     Liderazgo = 17
-     Domar = 18
-     Proyectiles = 19
-     Wresterling = 20
-     Navegacion = 21
+
+'CHECK Enums
+Public Enum eClass
+    Mage = 1    'Mago
+    Cleric      'Clérigo
+    Warrior     'Guerrero
+    Assasin     'Asesino
+    Thief       'Ladrón
+    Bard        'Bardo
+    Druid       'Druida
+    Bandit      'Bandido
+    Paladin     'Paladín
+    Hunter      'Cazador
+    Fisher      'Pescador
+    Blacksmith  'Herrero
+    Lumberjack  'Leñador
+    Miner       'Minero
+    Carpenter   'Carpintero
+    Pirat       'Pirata
+End Enum
+
+Enum eCiudad
+    cUllathorpe = 1
+    cNix
+    cBanderbill
+    cLindos
+End Enum
+
+Enum eRaza
+    Humano = 1
+    Elfo
+    ElfoOscuro
+    Gnomo
+    Enano
+End Enum
+
+Public Enum eSkill
+    Suerte = 1
+    Magia = 2
+    Robar = 3
+    Tacticas = 4
+    Armas = 5
+    Meditar = 6
+    Apuñalar = 7
+    Ocultarse = 8
+    Supervivencia = 9
+    Talar = 10
+    Comerciar = 11
+    Defensa = 12
+    Pesca = 13
+    Mineria = 14
+    Carpinteria = 15
+    Herreria = 16
+    Liderazgo = 17
+    Domar = 18
+    Proyectiles = 19
+    Wresterling = 20
+    Navegacion = 21
+End Enum
+
+Public Enum eAtributos
+    Fuerza = 1
+    Agilidad = 2
+    Inteligencia = 3
+    Carisma = 4
+    Constitucion = 5
 End Enum
 
 Public Const FundirMetal As Integer = 88
@@ -255,7 +299,7 @@ Type Inventory
     Name As String
     GrhIndex As Integer
     '[Alejo]: tipo de datos ahora es Long
-    amount As Long
+    Amount As Long
     '[/Alejo]
     Equipped As Byte
     Valor As Long
@@ -269,7 +313,7 @@ Type NpCinV
     OBJIndex As Integer
     Name As String
     GrhIndex As Integer
-    amount As Integer
+    Amount As Integer
     Valor As Long
     OBJType As Integer
     Def As Integer
@@ -317,7 +361,7 @@ Public UserHechizos(1 To MAXHECHI) As Integer
 Public NPCInventory(1 To MAX_NPC_INVENTORY_SLOTS) As NpCinV
 Public NPCInvDim As Integer
 Public UserMeditar As Boolean
-Public username As String
+Public UserName As String
 Public UserPassword As String
 Public UserMaxHP As Integer
 Public UserMinHP As Integer
@@ -472,8 +516,8 @@ Public Declare Function writeprivateprofilestring Lib "kernel32" Alias "WritePri
 Public Declare Function getprivateprofilestring Lib "kernel32" Alias "GetPrivateProfileStringA" (ByVal lpApplicationname As String, ByVal lpKeyname As Any, ByVal lpdefault As String, ByVal lpreturnedstring As String, ByVal nsize As Long, ByVal lpfilename As String) As Long
 
 'Teclado
-Public Declare Function GetKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
-Public Declare Function GetAsyncKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
+Public Declare Function GetKeyState Lib "User32" (ByVal nVirtKey As Long) As Integer
+Public Declare Function GetAsyncKeyState Lib "User32" (ByVal nVirtKey As Long) As Integer
 
 Public Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
 
