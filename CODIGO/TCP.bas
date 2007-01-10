@@ -71,7 +71,7 @@ Sub HandleData(ByVal Rdata As String)
     Dim MapNumber As String
     Dim i As Integer, k As Integer
     Dim cad As String
-    Dim Index As Integer
+    Dim index As Integer
     Dim m As Integer
     Dim T() As String
     
@@ -1182,22 +1182,8 @@ End Sub
 
 Sub Login(ByVal valcode As Integer)
     If EstadoLogin = Normal Then
-        SendData ("OLOGIN" & UserName & "," & UserPassword & "," & App.Major & "." & App.Minor & "." & App.Revision & "," & Versiones(1) & "," & Versiones(2) & "," & Versiones(3) & "," & Versiones(4) & "," & Versiones(5) & "," & Versiones(6) & "," & Versiones(7) & "," & valcode & MD5HushYo)
+        Call WriteLoginExistingChar(valcode)
     ElseIf EstadoLogin = CrearNuevoPj Then
-        SendData ("NLOGIN" & UserName & "," & UserPassword _
-                & "," & App.Major & "." & App.Minor & "." & App.Revision _
-                & "," & UserRaza & "," & UserSexo & "," & UserClase _
-                & "," & UserSkills(1) & "," & UserSkills(2) _
-                & "," & UserSkills(3) & "," & UserSkills(4) _
-                & "," & UserSkills(5) & "," & UserSkills(6) _
-                & "," & UserSkills(7) & "," & UserSkills(8) _
-                & "," & UserSkills(9) & "," & UserSkills(10) _
-                & "," & UserSkills(11) & "," & UserSkills(12) _
-                & "," & UserSkills(13) & "," & UserSkills(14) _
-                & "," & UserSkills(15) & "," & UserSkills(16) _
-                & "," & UserSkills(17) & "," & UserSkills(18) _
-                & "," & UserSkills(19) & "," & UserSkills(20) _
-                & "," & UserSkills(21) & "," & UserEmail _
-                & "," & UserHogar & "," & Versiones(1) & "," & Versiones(2) & "," & Versiones(3) & "," & Versiones(4) & "," & Versiones(5) & "," & Versiones(6) & "," & Versiones(7) & "," & valcode & MD5HushYo)
+        Call WriteLoginNewChar(valcode)
     End If
 End Sub
