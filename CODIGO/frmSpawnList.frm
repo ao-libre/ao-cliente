@@ -120,14 +120,14 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Command1_Click()
-Call WriteSpawnCreature(lstCriaturas.listIndex + 1)
+    Call WriteSpawnCreature(lstCriaturas.listIndex + 1)
 End Sub
 
 Private Sub Command2_Click()
-Unload Me
+    Unload Me
 End Sub
 
 Private Sub Form_Deactivate()
-'Me.SetFocus
+    'Me.SetFocus
 End Sub
 

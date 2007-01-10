@@ -213,61 +213,52 @@ Attribute VB_Exposed = False
 Option Explicit
 
 
-Private Sub Command1_Click(Index As Integer)
-Select Case Index
+Private Sub Command1_Click(index As Integer)
+    Select Case index
+        Case 0
+            Unload Me
+        
+        Case 1
+            Dim fdesc As String
+            Dim codex() As String
+            Dim k As Byte
+            Dim Cont As Byte
+    
+            fdesc = Replace(txtDesc, vbCrLf, "º", , , vbBinaryCompare)
+    
+            '    If Not AsciiValidos(fdesc) Then
+            '        MsgBox "La descripcion contiene caracteres invalidos"
+            '        Exit Sub
+            '    End If
 
-Case 0
-    Unload Me
-Case 1
-    Dim fdesc$
-    fdesc$ = Replace(txtDesc, vbCrLf, "º", , , vbBinaryCompare)
+            Cont = 0
+            For k = 0 To txtCodex1.ubound
+            '    If Not AsciiValidos(txtCodex1(k)) Then
+            '        MsgBox "El codex tiene invalidos"
+            '        Exit Sub
+            '    End If
+                If LenB(txtCodex1(k).Text) <> 0 Then Cont = Cont + 1
+            Next k
+            If Cont < 4 Then
+                MsgBox "Debes definir al menos cuatro mandamientos."
+                Exit Sub
+            End If
+                        
+            ReDim codex(txtCodex1.ubound) As String
+            For k = 0 To txtCodex1.ubound
+                codex(k) = txtCodex1(k)
+            Next k
     
-'    If Not AsciiValidos(fdesc$) Then
-'        MsgBox "La descripcion contiene caracteres invalidos"
-'        Exit Sub
-'    End If
-    
-    Dim k As Integer
-    Dim Cont As Integer
-    Cont = 0
-    For k = 0 To txtCodex1.UBound
-'        If Not AsciiValidos(txtCodex1(k)) Then
-'            MsgBox "El codex tiene invalidos"
-'            Exit Sub
-'        End If
-        If Len(txtCodex1(k).Text) > 0 Then Cont = Cont + 1
-    Next k
-    If Cont < 4 Then
-            MsgBox "Debes definir al menos cuatro mandamientos."
-            Exit Sub
-    End If
-    
-    Dim chunk$
-    
-    If CreandoClan Then
-        chunk$ = "CIG" & fdesc$
-        chunk$ = chunk$ & "¬" & ClanName & "¬" & Site & "¬" & Cont
-    Else
-        chunk$ = "DESCOD" & fdesc$ & "¬" & Cont
-    End If
-    
-    
-    
-    For k = 0 To txtCodex1.UBound
-        chunk$ = chunk$ & "¬" & txtCodex1(k)
-    Next k
-    
-    
-    Call SendData(chunk$)
-    
-    CreandoClan = False
-    
-    Unload Me
-    
-End Select
+            If CreandoClan Then
+                Call WriteCreateNewGuild(fdesc, ClanName, Site, codex)
+            Else
+                Call WriteClanCodexUpdate(fdesc, codex)
+            End If
 
-
-
+            CreandoClan = False
+            Unload Me
+            
+    End Select
 End Sub
 
 Private Sub Form_Deactivate()

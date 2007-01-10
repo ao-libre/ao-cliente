@@ -427,7 +427,6 @@ Sub MoveTo(ByVal Direccion As E_Heading)
             Call WriteChangeHeading(Direccion)
         End If
     End If
-    
 End Sub
 
 Sub RandomMove()

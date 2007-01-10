@@ -91,8 +91,9 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Command1_Click()
-If Text1 <> "" Then _
-    Call SendData("NEWWEBSI" & Text1)
-Unload Me
+    If text1 <> "" Then _
+        Call WriteGuildNewWebsite(text1)
+    
+    Unload Me
 End Sub
 

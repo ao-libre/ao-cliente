@@ -221,11 +221,11 @@ If Not MiMensaje(0).Visible Then
     MiMensaje(0).Visible = True
     MiMensaje(1).Visible = True
     MiMensaje(0).SetFocus
-    Command1.Enabled = False
+    command1.Enabled = False
     Label1.Visible = True
     Label2.Visible = True
 Else
-    Call SendData("DEMSG" & MiMensaje(0).Text & Chr(176) & Left(MiMensaje(1).Text, 450))
+    Call WriteForumPost(MiMensaje(0).Text, Left(MiMensaje(1).Text, 450))
     List.AddItem MiMensaje(0).Text
     Load Text(List.ListCount)
     Text(List.ListCount - 1).Text = MiMensaje(1).Text
@@ -233,7 +233,7 @@ Else
     
     MiMensaje(0).Visible = False
     MiMensaje(1).Visible = False
-    Command1.Enabled = True
+    command1.Enabled = True
     Label1.Visible = False
     Label2.Visible = False
 End If
@@ -247,7 +247,7 @@ Private Sub Command3_Click()
 
 MiMensaje(0).Visible = False
 MiMensaje(1).Visible = False
-Command1.Enabled = True
+command1.Enabled = True
 Label1.Visible = False
 Label2.Visible = False
 Dim i
@@ -264,13 +264,13 @@ End Sub
 
 Private Sub List_Click()
 List.Visible = False
-Text(List.ListIndex).Visible = True
+Text(List.listIndex).Visible = True
 
 End Sub
 
 Private Sub MiMensaje_Change(Index As Integer)
 If Len(MiMensaje(0).Text) <> 0 And Len(MiMensaje(1).Text) <> 0 Then
-Command1.Enabled = True
+command1.Enabled = True
 End If
 
 End Sub

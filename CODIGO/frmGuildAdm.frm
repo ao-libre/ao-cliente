@@ -123,10 +123,8 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Command1_Click()
-
-'If GuildsList.ListIndex = 0 Then Exit Sub
-Call SendData("CLANDETAILS" & GuildsList.List(GuildsList.listIndex))
-
+    'If GuildsList.ListIndex = 0 Then Exit Sub
+    Call WriteGuildRequestDetails(guildslist.List(guildslist.listIndex))
 End Sub
 
 

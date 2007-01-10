@@ -1,7 +1,7 @@
 VERSION 5.00
 Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
 Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.OCX"
-Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.OCX"
+Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "msinet.ocx"
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.Form frmMain 
    BackColor       =   &H00000000&
@@ -236,7 +236,7 @@ Begin VB.Form frmMain
       End
       Begin VB.Image cmdMoverHechi 
          Height          =   375
-         Index           =   0
+         Index           =   1
          Left            =   2940
          MouseIcon       =   "frmMain.frx":05AE
          MousePointer    =   99  'Custom
@@ -246,7 +246,7 @@ Begin VB.Form frmMain
       End
       Begin VB.Image cmdMoverHechi 
          Height          =   375
-         Index           =   1
+         Index           =   0
          Left            =   2940
          MouseIcon       =   "frmMain.frx":0700
          MousePointer    =   99  'Custom
@@ -560,6 +560,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -710,24 +711,23 @@ Dim PuedeMacrear As Boolean
 Implements DirectXEvent
 
 Private Sub cmdMoverHechi_Click(index As Integer)
-If hlst.listIndex = -1 Then Exit Sub
+    If hlst.listIndex = -1 Then Exit Sub
 
-Select Case index
-Case 0 'subir
-    If hlst.listIndex = 0 Then Exit Sub
-Case 1 'bajar
-    If hlst.listIndex = hlst.ListCount - 1 Then Exit Sub
-End Select
+    Select Case index
+        Case 1 'subir
+            If hlst.listIndex = 0 Then Exit Sub
+        Case 0 'bajar
+            If hlst.listIndex = hlst.ListCount - 1 Then Exit Sub
+    End Select
 
-Call SendData("DESPHE" & index + 1 & "," & hlst.listIndex + 1)
+    Call WriteMoveSpell(index, hlst.listIndex + 1)
 
-Select Case index
-Case 0 'subir
-    hlst.listIndex = hlst.listIndex - 1
-Case 1 'bajar
-    hlst.listIndex = hlst.listIndex + 1
-End Select
-
+    Select Case index
+        Case 1 'subir
+            hlst.listIndex = hlst.listIndex - 1
+        Case 0 'bajar
+            hlst.listIndex = hlst.listIndex + 1
+    End Select
 End Sub
 
 Private Sub DirectXEvent_DXCallback(ByVal eventid As Long)
@@ -809,12 +809,12 @@ Private Sub mnuEquipar_Click()
 End Sub
 
 Private Sub mnuNPCComerciar_Click()
-    SendData "LC" & tX & "," & tY
-    SendData "/COMERCIAR"
+    Call WriteLeftClick(tX, tY)
+    Call WriteCommerceStart
 End Sub
 
 Private Sub mnuNpcDesc_Click()
-    SendData "LC" & tX & "," & tY
+    Call WriteLeftClick(tX, tY)
 End Sub
 
 Private Sub mnuTirar_Click()
@@ -873,27 +873,29 @@ End Sub
 Private Sub TirarItem()
     If (Inventario.SelectedItem > 0 And Inventario.SelectedItem < MAX_INVENTORY_SLOTS + 1) Or (Inventario.SelectedItem = FLAGORO) Then
         If Inventario.Amount(Inventario.SelectedItem) = 1 Then
-            SendData "TI" & Inventario.SelectedItem & "," & 1
+            Call WriteDrop(Inventario.SelectedItem, 1)
         Else
            If Inventario.Amount(Inventario.SelectedItem) > 1 Then
-            frmCantidad.Show , frmMain
+                frmCantidad.Show , frmMain
            End If
         End If
     End If
 End Sub
 
 Private Sub AgarrarItem()
-    SendData "AG"
+    Call WritePickUp
 End Sub
 
 Private Sub UsarItem()
     If TrainingMacro.Enabled Then DesactivarMacroHechizos
-    If (Inventario.SelectedItem > 0) And (Inventario.SelectedItem < MAX_INVENTORY_SLOTS + 1) Then SendData "USA" & Inventario.SelectedItem
+    
+    If (Inventario.SelectedItem > 0) And (Inventario.SelectedItem < MAX_INVENTORY_SLOTS + 1) Then _
+        Call WriteUseItem(Inventario.SelectedItem)
 End Sub
 
 Private Sub EquiparItem()
     If (Inventario.SelectedItem > 0) And (Inventario.SelectedItem < MAX_INVENTORY_SLOTS + 1) Then _
-        SendData "EQUI" & Inventario.SelectedItem
+        Call WriteEquipItem(Inventario.SelectedItem)
 End Sub
 
 ''''''''''''''''''''''''''''''''''''''
@@ -907,20 +909,20 @@ Private Sub TrainingMacro_Timer()
     End If
     If Comerciando Then Exit Sub
     If hlst.List(hlst.listIndex) <> "(None)" And MainTimer.Check(TimersIndex.Attack, False) Then
-        Call SendData("LH" & hlst.listIndex + 1)
-        Call SendData("UK" & Magia)
+        Call WriteCastSpell(hlst.listIndex + 1)
+        Call WriteWork(Skills.Magia)
         'UserCanAttack = 0
     End If
     Call ConvertCPtoTP(MainViewShp.Left, MainViewShp.Top, MouseX, MouseY, tX, tY)
     If (UsingSkill = Magia Or UsingSkill = Proyectiles) And Not MainTimer.Check(TimersIndex.Attack) Then Exit Sub
-    SendData "WLC" & tX & "," & tY & "," & UsingSkill
+    Call WriteWorkLeftClick(tX, tY, UsingSkill)
     UsingSkill = 0
 End Sub
 
 Private Sub cmdLanzar_Click()
     If hlst.List(hlst.listIndex) <> "(None)" And MainTimer.Check(TimersIndex.Attack, False) Then
-        Call SendData("LH" & hlst.listIndex + 1)
-        Call SendData("UK" & Magia)
+        Call WriteCastSpell(hlst.listIndex + 1)
+        Call WriteWork(Skills.Magia)
         UsaMacro = True
     End If
 End Sub
@@ -932,7 +934,7 @@ End Sub
 
 
 Private Sub CmdInfo_Click()
-    Call SendData("INFS" & hlst.listIndex + 1)
+    Call WriteSpellInfo(hlst.listIndex + 1)
 End Sub
 
 Private Sub DespInv_Click(index As Integer)
@@ -956,19 +958,19 @@ Private Sub Form_Click()
                 If UsaMacro Then
                     CnTd = CnTd + 1
                         If CnTd = 3 Then
-                            SendData "UMH"
+                            Call WriteUseSpellMacro
                             CnTd = 0
                         End If
                     UsaMacro = False
                 End If
                 '[/ybarra]
                 If UsingSkill = 0 Then
-                    SendData "LC" & tX & "," & tY
+                    Call WriteLeftClick(tX, tY)
                 Else
                     frmMain.MousePointer = vbDefault
                     If (UsingSkill = Magia Or UsingSkill = Proyectiles) And Not MainTimer.Check(TimersIndex.Attack) Then Exit Sub
                     If TrainingMacro.Enabled Then DesactivarMacroHechizos
-                    SendData "WLC" & tX & "," & tY & "," & UsingSkill
+                    Call WriteWorkLeftClick(tX, tY, UsingSkill)
                     UsingSkill = 0
                 End If
             Else
@@ -976,7 +978,7 @@ Private Sub Form_Click()
             End If
         ElseIf (MouseShift And 1) = 1 Then
             If MouseShift = vbLeftButton Then
-                Call SendData("/TELEP YO " & UserMap & " " & tX & " " & tY)
+                Call WriteWarpChar("YO", UserMap, tX, tY)
             End If
         End If
     End If
@@ -985,7 +987,7 @@ End Sub
 
 Private Sub Form_DblClick()
     If Not frmForo.Visible Then
-        SendData "RC" & tX & "," & tY
+        Call WriteDoubleClick(tX, tY)
     End If
 End Sub
 
@@ -1012,20 +1014,20 @@ On Error Resume Next
                 Case vbKeyA:
                     Call AgarrarItem
                 Case vbKeyC:
-                    Call SendData("TAB")
+                    Call WriteCombatModeToggle
                     IScombate = Not IScombate
                 Case vbKeyE:
                     Call EquiparItem
                 Case vbKeyN:
                     Nombres = Not Nombres
                 Case vbKeyD
-                    Call SendData("UK" & Domar)
+                    Call WriteWork(Skills.Domar)
                 Case vbKeyR:
-                    Call SendData("UK" & Robar)
+                    Call WriteWork(Skills.Robar)
                 Case vbKeyS:
                     AddtoRichTextBox frmMain.RecTxt, "Para activar o desactivar el seguro utiliza la tecla '*' (asterisco)", 255, 255, 255, False, False, False
                 Case vbKeyO:
-                    Call SendData("UK" & Ocultarse)
+                    Call WriteWork(Skills.Ocultarse)
                 Case vbKeyT:
                     Call TirarItem
                 Case vbKeyU:
@@ -1033,7 +1035,7 @@ On Error Resume Next
                         Call UsarItem
                 Case vbKeyL:
                     If MainTimer.Check(TimersIndex.SendRPU) Then
-                        Call SendData("RPU")
+                        Call WriteRequestPositionUpdate
                         Beep
                     End If
             End Select
@@ -1061,7 +1063,7 @@ On Error Resume Next
                 If MainTimer.Check(TimersIndex.Attack) And _
                    (Not UserDescansar) And _
                    (Not UserMeditar) Then
-                        SendData "AT"
+                        Call WriteAttack
                 End If
             Case vbKeyF5:
                 Call frmOpciones.Show(vbModeless, frmMain)
@@ -1069,9 +1071,7 @@ On Error Resume Next
                 If Not PuedeMacrear Then
                     AddtoRichTextBox frmMain.RecTxt, "No tan rápido..!", 255, 255, 255, False, False, False
                 Else
-                    Dim k As String
-                    k = "DIT"
-                    Call SendData("/ME" & k & "AR")
+                    Call WriteMeditate
                     PuedeMacrear = False
                 End If
             Case vbKeyF7:
@@ -1081,8 +1081,11 @@ On Error Resume Next
                     ActivarMacroHechizos
                 End If
             Case vbKeyMultiply:
-                Call SendData("SEG")
-                
+                If frmMain.PicSeg.Visible Then
+                    AddtoRichTextBox frmMain.RecTxt, "Escribe /SEG para quitar el seguro", 255, 255, 255, False, False, False
+                Else
+                    Call WriteSafeToggle
+                End If
         End Select
         
 End Sub
@@ -1130,10 +1133,11 @@ Private Sub Image1_Click(index As Integer)
             LlegaronAtrib = False
             LlegaronSkills = False
             LlegoFama = False
-            SendData "ATRI"
-            SendData "ESKI"
-            SendData "FEST"
-            SendData "FAMA"
+            Call WriteRequestAtributes
+            Call WriteRequestSkills
+            Call WriteRequestMiniStats
+            Call WriteRequestFame
+            
             Do While Not LlegaronSkills Or Not LlegaronAtrib Or Not LlegoFama
                 DoEvents 'esperamos a que lleguen y mantenemos la interfaz viva
             Loop
@@ -1144,7 +1148,7 @@ Private Sub Image1_Click(index As Integer)
             LlegoFama = False
         Case 2
             If Not frmGuildLeader.Visible Then _
-                Call SendData("GLINFO")
+                Call WriteRequestGuildLeaderInfo
     End Select
 End Sub
 
@@ -1161,10 +1165,10 @@ End Sub
 Private Sub Label1_Click()
     Dim i As Integer
     For i = 1 To NUMSKILLS
-        frmSkills3.Text1(i).Caption = UserSkills(i)
+        frmSkills3.text1(i).Caption = UserSkills(i)
     Next i
     Alocados = SkillPoints
-    frmSkills3.Puntos.Caption = "Puntos:" & SkillPoints
+    frmSkills3.puntos.Caption = "Puntos:" & SkillPoints
     frmSkills3.Show , frmMain
 End Sub
 
@@ -1285,40 +1289,7 @@ End Sub
 Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
     'Send text
     If KeyCode = vbKeyReturn Then
-        If Left$(stxtbuffer, 1) = "/" Then
-            If UCase(Left$(stxtbuffer, 8)) = "/PASSWD " Then
-                    Dim j As String
-#If SeguridadAlkon Then
-                    j = md5.GetMD5String(Right$(stxtbuffer, Len(stxtbuffer) - 8))
-                    Call md5.MD5Reset
-#Else
-                    j = Right$(stxtbuffer, Len(stxtbuffer) - 8)
-#End If
-                    stxtbuffer = "/PASSWD " & j
-            ElseIf UCase$(stxtbuffer) = "/FUNDARCLAN" Then
-                frmEligeAlineacion.Show vbModeless, Me
-                stxtbuffer = ""
-                SendTxt.Text = ""
-                KeyCode = 0
-                SendTxt.Visible = False
-                
-                Exit Sub
-            End If
-            Call SendData(stxtbuffer)
-    
-       'Shout
-        ElseIf Left$(stxtbuffer, 1) = "-" Then
-            Call SendData("-" & Right$(stxtbuffer, Len(stxtbuffer) - 1))
-
-        'Whisper
-        ElseIf Left$(stxtbuffer, 1) = "\" Then
-            Call SendData("\" & Right$(stxtbuffer, Len(stxtbuffer) - 1))
-
-        'Say
-        ElseIf stxtbuffer <> "" Then
-            Call SendData(";" & stxtbuffer)
-
-        End If
+        Call ParseUserCommand(stxtbuffer)
 
         stxtbuffer = ""
         SendTxt.Text = ""
@@ -1327,13 +1298,12 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
     End If
 End Sub
 
-
 Private Sub SendCMSTXT_KeyUp(KeyCode As Integer, Shift As Integer)
     'Send text
     If KeyCode = vbKeyReturn Then
         'Say
         If stxtbuffercmsg <> "" Then
-            Call SendData("/CMSG " & stxtbuffercmsg)
+            Call ParseUserCommand("/CMSG " & stxtbuffercmsg)
         End If
 
         stxtbuffercmsg = ""
@@ -1608,10 +1578,11 @@ Case 0 'Inventario
 Case 1 'Menu del ViewPort del engine
     Select Case Sel
     Case 0 'Nombre
-        SendData "LC" & tX & "," & tY
+        Call WriteLeftClick(tX, tY)
+        
     Case 1 'Comerciar
-        Call SendData("LC" & tX & "," & tY)
-        Call SendData("/COMERCIAR")
+        Call WriteLeftClick(tX, tY)
+        Call WriteCommerceStart
     End Select
 End Select
 End Sub

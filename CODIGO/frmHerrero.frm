@@ -156,17 +156,15 @@ lstArmas.Visible = False
 End Sub
 
 Private Sub Command3_Click()
-
 On Error Resume Next
 
-If lstArmas.Visible Then
- Call SendData("CNS" & ArmasHerrero(lstArmas.ListIndex))
-Else
- Call SendData("CNS" & ArmadurasHerrero(lstArmaduras.ListIndex))
-End If
+    If lstArmas.Visible Then
+        Call WriteCraftBlacksmith(ArmasHerrero(lstArmas.listIndex))
+    Else
+        Call WriteCraftBlacksmith(ArmadurasHerrero(lstArmaduras.listIndex))
+    End If
 
-Unload Me
-
+    Unload Me
 End Sub
 
 Private Sub Command4_Click()

@@ -160,7 +160,7 @@ End Sub
 
 Private Sub list1_Click()
 Dim ind As Integer
-ind = Val(ReadField(2, List1.List(List1.ListIndex), Asc("-")))
+ind = Val(ReadField(2, List1.List(List1.listIndex), Asc("-")))
 End Sub
 
 Private Sub List1_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
@@ -171,17 +171,16 @@ End If
 End Sub
 
 Private Sub mnuBorrar_Click()
-If List1.ListIndex < 0 Then Exit Sub
-SendData ("SOSDONE" & List1.List(List1.ListIndex))
-
-List1.RemoveItem List1.ListIndex
-
+    If List1.listIndex < 0 Then Exit Sub
+    Call WriteSOSRemove(List1.List(List1.listIndex))
+    
+    List1.RemoveItem List1.listIndex
 End Sub
 
 Private Sub mnuIR_Click()
-SendData ("/IRA " & ReadField(1, List1.List(List1.ListIndex), Asc("-")))
+    Call WriteGoToChar(ReadField(1, List1.List(List1.listIndex), Asc("-")))
 End Sub
 
 Private Sub mnutraer_Click()
-SendData ("/SUM " & ReadField(1, List1.List(List1.ListIndex), Asc("-")))
+    Call WriteSummonChar(ReadField(1, List1.List(List1.listIndex), Asc("-")))
 End Sub

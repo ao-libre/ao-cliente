@@ -938,11 +938,11 @@ CheckData = True
 
 End Function
 
-Private Sub boton_Click(index As Integer)
+Private Sub boton_Click(Index As Integer)
 
 Call Audio.PlayWave(SND_CLICK)
 
-Select Case index
+Select Case Index
     Case 0
         
         Dim i As Integer
@@ -953,10 +953,10 @@ Select Case index
             i = i + 1
         Next
         
-        username = txtNombre.Text
+        UserName = txtNombre.Text
         
-        If Right$(username, 1) = " " Then
-                username = RTrim$(username)
+        If Right$(UserName, 1) = " " Then
+                UserName = RTrim$(UserName)
                 MsgBox "Nombre invalido, se han removido los espacios al final del nombre"
         End If
         
@@ -1018,25 +1018,25 @@ Private Sub TirarDados()
 #Else
     If frmMain.Winsock1.State = sckConnected Then
 #End If
-        Call SendData("TIRDAD")
+        Call WriteThrowDices
     End If
 
 End Sub
 
-Private Sub Command1_Click(index As Integer)
+Private Sub Command1_Click(Index As Integer)
 Call Audio.PlayWave(SND_CLICK)
 
 Dim indice
-If index Mod 2 = 0 Then
+If Index Mod 2 = 0 Then
     If SkillPoints > 0 Then
-        indice = index \ 2
+        indice = Index \ 2
         Skill(indice).Caption = Val(Skill(indice).Caption) + 1
         SkillPoints = SkillPoints - 1
     End If
 Else
     If SkillPoints < 10 Then
         
-        indice = index \ 2
+        indice = Index \ 2
         If Val(Skill(indice).Caption) > 0 Then
             Skill(indice).Caption = Val(Skill(indice).Caption) - 1
             SkillPoints = SkillPoints + 1
@@ -1044,12 +1044,12 @@ Else
     End If
 End If
 
-Puntos.Caption = SkillPoints
+puntos.Caption = SkillPoints
 End Sub
 
 Private Sub Form_Load()
 SkillPoints = 10
-Puntos.Caption = SkillPoints
+puntos.Caption = SkillPoints
 Me.Picture = LoadPicture(App.Path & "\graficos\CP-Interface.jpg")
 imgHogar.Picture = LoadPicture(App.Path & "\graficos\CP-Ullathorpe.jpg")
 

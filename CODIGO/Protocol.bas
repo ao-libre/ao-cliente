@@ -275,7 +275,7 @@ Private Enum ClientPacketID
     PartyKick               '/ECHARPARTY
     PartySetLeader          '/PARTYLIDER
     PartyAcceptMember       '/ACCEPTPARTY
-    GuildMemeberList        '/MIEMBROSCLAN
+    GuildMemberList        '/MIEMBROSCLAN
     
     'GM messages
     GMMessage               '/GMSG
@@ -348,7 +348,6 @@ Private Enum ClientPacketID
     SetTrigger              '/TRIGGER
     BannedIPList            '/BANIPLIST
     BannedIPReload          '/BANIPRELOAD
-    GuildCompleteMemberList '/MIEMBROSCLAN
     GuildBan                '/BANCLAN
     BanIP                   '/BANIP
     UnbanIP                 '/UNBANIP
@@ -3543,7 +3542,7 @@ On Error GoTo ErrHandler
         codexStr = Split(Buffer.ReadASCIIString(), SEPARATOR)
         
         For i = 0 To 7
-            .Codex(i).Caption = codexStr(i)
+            .codex(i).Caption = codexStr(i)
         Next i
         
         .desc.Text = Buffer.ReadASCIIString()
@@ -4506,7 +4505,7 @@ End Sub
 ' @param    skill The skill which the user attempts to use.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCreateNewGuild(ByVal desc As String, ByVal Name As String, ByVal Site As String, ByRef Codex() As String)
+Public Sub WriteCreateNewGuild(ByVal desc As String, ByVal Name As String, ByVal Site As String, ByRef codex() As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -4522,8 +4521,8 @@ Public Sub WriteCreateNewGuild(ByVal desc As String, ByVal Name As String, ByVal
         Call .WriteASCIIString(Name)
         Call .WriteASCIIString(Site)
         
-        For i = LBound(Codex()) To UBound(Codex())
-            temp = temp & Codex(i) & SEPARATOR
+        For i = LBound(codex()) To UBound(codex())
+            temp = temp & codex(i) & SEPARATOR
         Next i
         
         If Len(temp) Then _
@@ -4765,7 +4764,7 @@ End Sub
 ' @param    codex New codex of the clan.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteClanCodexUpdate(ByVal desc As String, ByRef Codex() As String)
+Public Sub WriteClanCodexUpdate(ByVal desc As String, ByRef codex() As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -4779,8 +4778,8 @@ Public Sub WriteClanCodexUpdate(ByVal desc As String, ByRef Codex() As String)
         
         Call .WriteASCIIString(desc)
         
-        For i = LBound(Codex()) To UBound(Codex())
-            temp = temp & Codex(i) & SEPARATOR
+        For i = LBound(codex()) To UBound(codex())
+            temp = temp & codex(i) & SEPARATOR
         Next i
         
         If Len(temp) Then _
@@ -5961,19 +5960,19 @@ Public Sub WritePartyAcceptMember(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "GuildMemeberList" message to the outgoing data buffer.
+' Writes the "GuildMemberList" message to the outgoing data buffer.
 '
 ' @param    guild The guild whose member list is requested.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteGuildMemeberList(ByVal guild As String)
+Public Sub WriteGuildMemberList(ByVal guild As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
-'Writes the "GuildMemeberList" message to the outgoing data buffer
+'Writes the "GuildMemberList" message to the outgoing data buffer
 '***************************************************
     With outgoingData
-        Call .WriteByte(ClientPacketID.GuildMemeberList)
+        Call .WriteByte(ClientPacketID.GuildMemberList)
         
         Call .WriteASCIIString(guild)
     End With
@@ -5989,7 +5988,7 @@ Public Sub WriteGMMessage(ByVal Message As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
-'Writes the "GuildMemeberList" message to the outgoing data buffer
+'Writes the "GMMessage" message to the outgoing data buffer
 '***************************************************
     With outgoingData
         Call .WriteByte(ClientPacketID.GMMessage)
@@ -7228,25 +7227,6 @@ Public Sub WriteBannedIPReload()
 'Writes the "BannedIPReload" message to the outgoing data buffer
 '***************************************************
     Call outgoingData.WriteByte(ClientPacketID.BannedIPReload)
-End Sub
-
-''
-' Writes the "GuildCompleteMemberList" message to the outgoing data buffer.
-'
-' @param    guild The guild whose member list is requested.
-' @remarks  The data is not actually sent until the buffer is properly flushed.
-
-Public Sub WriteGuildCompleteMemberList(ByVal guild As String)
-'***************************************************
-'Autor: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'Writes the "GuildCompleteMemberList" message to the outgoing data buffer
-'***************************************************
-    With outgoingData
-        Call .WriteByte(ClientPacketID.GuildCompleteMemberList)
-        
-        Call .WriteASCIIString(guild)
-    End With
 End Sub
 
 ''

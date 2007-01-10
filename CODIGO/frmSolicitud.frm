@@ -106,24 +106,18 @@ Option Explicit
 Dim CName As String
 
 Private Sub Command1_Click()
-Dim f$
+    Call WriteGuildRequestMembership(CName, Replace(Replace(text1.Text, ",", ";"), vbCrLf, "º"))
 
-f$ = "SOLICITUD" & CName
-f$ = f$ & "," & Replace(Replace(Text1.Text, ",", ";"), vbCrLf, "º")
-
-Call SendData(f$)
-
-Unload Me
-
+    Unload Me
 End Sub
 
 Private Sub Command2_Click()
-Unload Me
+    Unload Me
 End Sub
 
 Public Sub RecieveSolicitud(ByVal GuildName As String)
 
-CName = GuildName
+    CName = GuildName
 
 End Sub
 

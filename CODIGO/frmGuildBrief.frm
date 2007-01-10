@@ -360,6 +360,6 @@ Call frmCommet.Show(vbModal, frmGuildBrief)
 End Sub
 
 Private Sub Guerra_Click()
-Call SendData("DECGUERR" & Right(Nombre.Caption, Len(Nombre.Caption) - 7))
-Unload Me
+    Call WriteGuildDeclareWar(Right(Nombre.Caption, Len(Nombre.Caption) - 7))
+    Unload Me
 End Sub

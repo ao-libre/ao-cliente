@@ -277,45 +277,37 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub cmdElecciones_Click()
-    Call SendData("ABREELEC")
+    Call WriteGuildOpenElections
     Unload Me
 End Sub
 
 Private Sub Command1_Click()
+    frmCharInfo.frmsolicitudes = True
+    Call WriteGuildMemberInfo(solicitudes.List(solicitudes.listIndex))
 
-frmCharInfo.frmsolicitudes = True
-Call SendData("1HRINFO<" & solicitudes.list(solicitudes.listIndex))
-
-'Unload Me
-
+    'Unload Me
 End Sub
 
 Private Sub Command2_Click()
+    frmCharInfo.frmmiembros = True
+    Call WriteGuildMemberInfo(members.List(members.listIndex))
 
-frmCharInfo.frmmiembros = True
-Call SendData("1HRINFO<" & members.list(members.listIndex))
-
-'Unload Me
-
+    'Unload Me
 End Sub
 
 Private Sub Command3_Click()
+    Dim k$
 
-Dim k$
-
-k$ = Replace(txtguildnews, vbCrLf, "º")
-
-Call SendData("ACTGNEWS" & k$)
-
+    k$ = Replace(txtguildnews, vbCrLf, "º")
+    
+    Call WriteGuildUpdateNews(k$)
 End Sub
 
 Private Sub Command4_Click()
+    frmGuildBrief.EsLeader = True
+    Call WriteGuildRequestDetails(guildslist.List(guildslist.listIndex))
 
-frmGuildBrief.EsLeader = True
-Call SendData("CLANDETAILS" & guildslist.list(guildslist.listIndex))
-
-'Unload Me
-
+    'Unload Me
 End Sub
 
 Private Sub Command5_Click()
@@ -332,13 +324,13 @@ Call frmGuildURL.Show(vbModeless, frmGuildLeader)
 End Sub
 
 Private Sub Command7_Click()
-Call SendData("ENVPROPP")
+    Call WriteGuildPeacePropList
 End Sub
 Private Sub Command9_Click()
-Call SendData("ENVALPRO")
+    Call WriteGuildAlliancePropList
 End Sub
 
 Private Sub Command8_Click()
-Unload Me
-frmMain.SetFocus
+    Unload Me
+    frmMain.SetFocus
 End Sub

@@ -66,6 +66,7 @@ Begin VB.Form frmCantidad
       EndProperty
       Height          =   375
       Left            =   330
+      MaxLength       =   5
       TabIndex        =   1
       Top             =   525
       Width           =   2625
@@ -132,24 +133,22 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Command1_Click()
-frmCantidad.Visible = False
-Call WriteDrop(Inventario.SelectedItem, frmCantidad.Text1.Text)
-frmCantidad.Text1.Text = "0"
+    frmCantidad.Visible = False
+    Call WriteDrop(Inventario.SelectedItem, frmCantidad.Text1.Text)
+    frmCantidad.Text1.Text = ""
 End Sub
 
 
 Private Sub Command2_Click()
+    frmCantidad.Visible = False
 
+    If Inventario.SelectedItem <> FLAGORO Then
+        Call WriteDrop(Inventario.SelectedItem, Inventario.Amount(Inventario.SelectedItem))
+    Else
+        Call WriteDrop(Inventario.SelectedItem, UserGLD)
+    End If
 
-frmCantidad.Visible = False
-If Inventario.SelectedItem <> FLAGORO Then
-    Call WriteDrop(Inventario.SelectedItem, Inventario.Amount(Inventario.SelectedItem))
-Else
-    Call WriteDrop(Inventario.SelectedItem, UserGLD)
-End If
-
-frmCantidad.Text1.Text = "0"
-
+    frmCantidad.Text1.Text = ""
 End Sub
 
 Private Sub Form_Deactivate()
@@ -174,7 +173,6 @@ ErrHandler:
     'If we got here the user may have pasted (Shift + Insert) a REALLY large number, causing an overflow, so we set amount back to 1
     Text1.Text = "1"
 End Sub
-
 
 Private Sub Text1_KeyPress(KeyAscii As Integer)
 If (KeyAscii <> 8) Then

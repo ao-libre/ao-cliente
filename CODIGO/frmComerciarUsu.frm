@@ -262,7 +262,8 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub cmdAceptar_Click()
-Call SendData("COMUSUOK")
+    '*Nigo: te olvidaste de esto juanma xD
+    Call writeusercommerceok
 End Sub
 
 Private Sub cmdOfrecer_Click()
@@ -280,24 +281,22 @@ ElseIf optQue(1).value = True Then
 End If
 
 If optQue(0).value = True Then
-    Call SendData("OFRECER" & List1.listIndex + 1 & "," & Trim(Val(txtCant.Text)))
+    Call WriteUserCommerceOffer(List1.listIndex + 1, Val(txtCant.Text))
 ElseIf optQue(1).value = True Then
-    Call SendData("OFRECER" & FLAGORO & "," & Trim(Val(txtCant.Text)))
+    Call WriteUserCommerceOffer(FLAGORO, Val(txtCant.Text))
 Else
     Exit Sub
 End If
 
 lblEstadoResp.Visible = True
-
 End Sub
 
 Private Sub cmdRechazar_Click()
-Call SendData("COMUSUNO")
+    Call WriteUserCommerceReject
 End Sub
 
 Private Sub Command2_Click()
-Call SendData("FINCOMUSU")
-
+    Call WriteUserCommerceEnd
 End Sub
 
 Private Sub Form_Deactivate()
@@ -354,8 +353,8 @@ End If
 
 End Sub
 
-Private Sub optQue_Click(index As Integer)
-Select Case index
+Private Sub optQue_Click(Index As Integer)
+Select Case Index
 Case 0
     List1.Enabled = True
 Case 1

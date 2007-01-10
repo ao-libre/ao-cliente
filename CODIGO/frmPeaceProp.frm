@@ -150,29 +150,29 @@ End Sub
 Private Sub Command2_Click()
 'Me.Visible = False
 If tipoprop = PAZ Then
-    Call SendData("PEACEDET" & lista.List(lista.listIndex))
+    Call WriteGuildPeaceDetails(lista.List(lista.listIndex))
 Else
-    Call SendData("ALLIEDET" & lista.List(lista.listIndex))
+    Call WriteGuildAllianceDetails(lista.List(lista.listIndex))
 End If
 End Sub
 
 Private Sub Command3_Click()
-'Me.Visible = False
-If tipoprop = PAZ Then
-    Call SendData("ACEPPEAT" & lista.List(lista.listIndex))
-Else
-    Call SendData("ACEPALIA" & lista.List(lista.listIndex))
-End If
-Me.Hide
-Unload Me
+    'Me.Visible = False
+    If tipoprop = PAZ Then
+        Call WriteGuildAcceptPeace(lista.List(lista.listIndex))
+    Else
+        Call WriteGuildAcceptAlliance(lista.List(lista.listIndex))
+    End If
+    Me.Hide
+    Unload Me
 End Sub
 
 Private Sub Command4_Click()
-If tipoprop = PAZ Then
-    Call SendData("RECPPEAT" & lista.List(lista.listIndex))
-Else
-    Call SendData("RECPALIA" & lista.List(lista.listIndex))
-End If
-Me.Hide
-Unload Me
+    If tipoprop = PAZ Then
+        Call WriteGuildRejectPeace(lista.List(lista.listIndex))
+    Else
+        Call WriteGuildRejectAlliance(lista.List(lista.listIndex))
+    End If
+    Me.Hide
+    Unload Me
 End Sub

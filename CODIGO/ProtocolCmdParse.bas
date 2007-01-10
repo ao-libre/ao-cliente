@@ -332,7 +332,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             Case "/GM"
                 Call WriteGMRequest
                 
-            Case "/_BUG" '*Nigo: este es un comando de GMs...
+            Case "/_BUG"
                 If notNullArguments Then
                     Call WriteBugReport(ArgumentosRaw)
                 Else
@@ -470,15 +470,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     'Avisar que falta el parametro
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /acceptparty NICKNAME.")
                 End If
-        
-            Case "/MIEMBROSCLAN" '*Nigo: este es un comando de GMs...
-                If notNullArguments Then
-                    Call WriteGuildMemeberList(ArgumentosRaw)
-                Else
-                    'Avisar que falta el parametro
-                    Call ShowConsoleMsg("Faltan parámetros. Utilice /miembrosclan GUILDNAME.")
-                End If
-        
+
             '
             ' BEGIN GM COMMANDS
             '
@@ -1018,7 +1010,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 
             Case "/MIEMBROSCLAN"
                 If notNullArguments Then
-                    Call WriteGuildCompleteMemberList(ArgumentosRaw)
+                    Call WriteGuildMemberList(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /miembrosclan GUILDNAME.")

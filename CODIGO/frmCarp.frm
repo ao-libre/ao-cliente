@@ -98,18 +98,17 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Command3_Click()
-On Error Resume Next
+    On Error Resume Next
 
-Call WriteCraftCarpenter(ObjCarpintero(lstArmas.listIndex))
-
-Unload Me
+    Call WriteCraftCarpenter(ObjCarpintero(lstArmas.listIndex))
+    Unload Me
 End Sub
 
 Private Sub Command4_Click()
-Unload Me
+    Unload Me
 End Sub
 
 Private Sub Form_Deactivate()
-'Me.SetFocus
+    'Me.SetFocus
 End Sub
 

@@ -71,7 +71,7 @@ Sub HandleData(ByVal Rdata As String)
     Dim MapNumber As String
     Dim i As Integer, k As Integer
     Dim cad As String
-    Dim index As Integer
+    Dim Index As Integer
     Dim m As Integer
     Dim T() As String
     
