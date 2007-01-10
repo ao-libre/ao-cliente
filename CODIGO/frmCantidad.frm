@@ -133,7 +133,7 @@ Option Explicit
 
 Private Sub Command1_Click()
 frmCantidad.Visible = False
-SendData "TI" & Inventario.SelectedItem & "," & frmCantidad.Text1.Text
+Call WriteDrop(Inventario.SelectedItem, frmCantidad.Text1.Text)
 frmCantidad.Text1.Text = "0"
 End Sub
 
@@ -143,9 +143,9 @@ Private Sub Command2_Click()
 
 frmCantidad.Visible = False
 If Inventario.SelectedItem <> FLAGORO Then
-    SendData "TI" & Inventario.SelectedItem & "," & Inventario.Amount(Inventario.SelectedItem)
+    Call WriteDrop(Inventario.SelectedItem, Inventario.Amount(Inventario.SelectedItem))
 Else
-    SendData "TI" & Inventario.SelectedItem & "," & UserGLD
+    Call WriteDrop(Inventario.SelectedItem, UserGLD)
 End If
 
 frmCantidad.Text1.Text = "0"
@@ -157,7 +157,7 @@ Private Sub Form_Deactivate()
 End Sub
 
 Private Sub text1_Change()
-On Error GoTo errHandler
+On Error GoTo ErrHandler
     If Val(Text1.Text) < 0 Then
         Text1.Text = MAX_INVENTORY_OBJS
     End If
@@ -170,7 +170,7 @@ On Error GoTo errHandler
     
     Exit Sub
     
-errHandler:
+ErrHandler:
     'If we got here the user may have pasted (Shift + Insert) a REALLY large number, causing an overflow, so we set amount back to 1
     Text1.Text = "1"
 End Sub

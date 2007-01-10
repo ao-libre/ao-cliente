@@ -1316,15 +1316,15 @@ End Sub
 
 Private Sub Image1_Click()
     Dim i As Integer
-    Dim cad As String
+    Dim cad(1 To NUMSKILLS) As Byte
     
     For i = 1 To NUMSKILLS
-        cad = cad & flags(i) & ","
+        cad(i) = flags(i)
         'Actualizamos nuestros datos locales
         UserSkills(i) = Val(text1(i).Caption)
     Next i
     
-    SendData "SKSE" & cad
+    Call WriteModifySkills(cad)
     If Alocados = 0 Then frmMain.Label1.Visible = False
     SkillPoints = Alocados
     Unload Me

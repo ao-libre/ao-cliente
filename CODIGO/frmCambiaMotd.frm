@@ -163,7 +163,7 @@ Private Sub cmdOk_Click()
         End If
     Next i
     
-    Call SendData("ZMOTD" & txtMotd.Text)
+    Call WriteSetMOTD(txtMotd.Text)
     Unload Me
 End Sub
 

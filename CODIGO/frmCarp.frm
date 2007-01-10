@@ -100,7 +100,7 @@ Option Explicit
 Private Sub Command3_Click()
 On Error Resume Next
 
-Call SendData("CNC" & ObjCarpintero(lstArmas.ListIndex))
+Call WriteCraftCarpenter(ObjCarpintero(lstArmas.listIndex))
 
 Unload Me
 End Sub

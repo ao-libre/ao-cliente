@@ -270,7 +270,7 @@ End If
 End Sub
 
 Private Sub Command2_Click()
-SendData ("FINCOM")
+Call WriteCommerceEnd
 End Sub
 
 
@@ -312,8 +312,7 @@ Select Case index
         frmComerciar.List1(0).SetFocus
         LastIndex1 = List1(0).listIndex
         If UserGLD >= NPCInventory(List1(0).listIndex + 1).Valor * Val(cantidad) Then
-                SendData ("COMP" & "," & List1(0).listIndex + 1 & "," & cantidad.Text)
-                
+                Call WriteCommerceBuy(List1(0).listIndex + 1, cantidad.Text)
         Else
             AddtoRichTextBox frmMain.RecTxt, "No tenés suficiente oro.", 2, 51, 223, 1, 1
             Exit Sub
@@ -321,7 +320,7 @@ Select Case index
    Case 1
         LastIndex2 = List1(1).listIndex
         If Not Inventario.Equipped(List1(1).listIndex + 1) Then
-            SendData ("VEND" & "," & List1(1).listIndex + 1 & "," & cantidad.Text)
+            Call WriteCommerceSell(List1(1).listIndex + 1, cantidad.Text)
         Else
             AddtoRichTextBox frmMain.RecTxt, "No podes vender el item porque lo estas usando.", 2, 51, 223, 1, 1
             Exit Sub

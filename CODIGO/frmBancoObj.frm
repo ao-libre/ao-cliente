@@ -260,7 +260,7 @@ End If
 End Sub
 
 Private Sub Command2_Click()
-SendData ("FINBAN")
+Call WriteBankEnd
 End Sub
 
 
@@ -302,12 +302,12 @@ Select Case index
         frmBancoObj.List1(0).SetFocus
         LastIndex1 = List1(0).listIndex
         
-        SendData ("RETI" & "," & List1(0).listIndex + 1 & "," & cantidad.Text)
+        Call WriteBankExtractItem(List1(0).listIndex + 1, cantidad.Text)
         
    Case 1
         LastIndex2 = List1(1).listIndex
         If Not Inventario.Equipped(List1(1).listIndex + 1) Then
-            SendData ("DEPO" & "," & List1(1).listIndex + 1 & "," & cantidad.Text)
+            Call WriteBankDeposit(List1(1).listIndex + 1, cantidad.Text)
         Else
             AddtoRichTextBox frmMain.RecTxt, "No podes depositar el item porque lo estas usando.", 2, 51, 223, 1, 1
             Exit Sub

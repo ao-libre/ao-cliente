@@ -302,9 +302,9 @@ Public frmsolicitudes As Boolean
 Private Sub Aceptar_Click()
 frmmiembros = False
 frmsolicitudes = False
-Call SendData("ACEPTARI" & Trim$(Right(Nombre, Len(Nombre) - 8)))
+Call WriteGuildAcceptNewMember(Trim$(Right(Nombre, Len(Nombre) - 8)))
 Unload frmGuildLeader
-Call SendData("GLINFO")
+Call WriteRequestGuildLeaderInfo
 Unload Me
 End Sub
 
@@ -313,15 +313,16 @@ Unload Me
 End Sub
 
 Private Sub desc_Click()
-Call SendData("ENVCOMEN" & Right(Nombre, Len(Nombre) - 7))
+Call WriteGuildRequestJoinerInfo(Right(Nombre, Len(Nombre) - 7))
 End Sub
 
 Private Sub Echar_Click()
-Call SendData("ECHARCLA" & Right(Nombre, Len(Nombre) - 7))
+Call WriteGuildKickMember(Right(Nombre, Len(Nombre) - 7))
 frmmiembros = False
 frmsolicitudes = False
 Unload frmGuildLeader
 Call SendData("GLINFO")
+Call WriteRequestGuildLeaderInfo
 Unload Me
 End Sub
 

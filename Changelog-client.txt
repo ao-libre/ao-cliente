@@ -76,3 +76,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 07/01/2007: Corregí el único bug que no permitía compilar (WriteTime fue cambiado por WriteServerTime). (Maraxus)
  * 08/01/2007: El parser chequea que el estado del usuario sea valido al usar comandos. (NIGO)
  * 10/01/2007: BUG #1629687 reparado. (Tavo)
+ * 10/01/2007: Cambie algunos senddata por writes, faltan varios!, y llamar al Parser.. (liquid)
