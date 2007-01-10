@@ -1,7 +1,7 @@
 VERSION 5.00
 Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
 Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.OCX"
-Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "msinet.ocx"
+Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.OCX"
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.Form frmMain 
    BackColor       =   &H00000000&
@@ -560,7 +560,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -710,19 +709,19 @@ Dim PuedeMacrear As Boolean
 
 Implements DirectXEvent
 
-Private Sub cmdMoverHechi_Click(index As Integer)
+Private Sub cmdMoverHechi_Click(Index As Integer)
     If hlst.listIndex = -1 Then Exit Sub
 
-    Select Case index
+    Select Case Index
         Case 1 'subir
             If hlst.listIndex = 0 Then Exit Sub
         Case 0 'bajar
             If hlst.listIndex = hlst.ListCount - 1 Then Exit Sub
     End Select
 
-    Call WriteMoveSpell(index, hlst.listIndex + 1)
+    Call WriteMoveSpell(Index, hlst.listIndex + 1)
 
-    Select Case index
+    Select Case Index
         Case 1 'subir
             hlst.listIndex = hlst.listIndex - 1
         Case 0 'bajar
@@ -910,7 +909,7 @@ Private Sub TrainingMacro_Timer()
     If Comerciando Then Exit Sub
     If hlst.List(hlst.listIndex) <> "(None)" And MainTimer.Check(TimersIndex.Attack, False) Then
         Call WriteCastSpell(hlst.listIndex + 1)
-        Call WriteWork(Skills.Magia)
+        Call WriteWork(eSkill.Magia)
         'UserCanAttack = 0
     End If
     Call ConvertCPtoTP(MainViewShp.Left, MainViewShp.Top, MouseX, MouseY, tX, tY)
@@ -922,7 +921,7 @@ End Sub
 Private Sub cmdLanzar_Click()
     If hlst.List(hlst.listIndex) <> "(None)" And MainTimer.Check(TimersIndex.Attack, False) Then
         Call WriteCastSpell(hlst.listIndex + 1)
-        Call WriteWork(Skills.Magia)
+        Call WriteWork(eSkill.Magia)
         UsaMacro = True
     End If
 End Sub
@@ -937,8 +936,8 @@ Private Sub CmdInfo_Click()
     Call WriteSpellInfo(hlst.listIndex + 1)
 End Sub
 
-Private Sub DespInv_Click(index As Integer)
-    Inventario.ScrollInventory (index = 0)
+Private Sub DespInv_Click(Index As Integer)
+    Inventario.ScrollInventory (Index = 0)
 End Sub
 
 Private Sub Form_Click()
@@ -1021,13 +1020,13 @@ On Error Resume Next
                 Case vbKeyN:
                     Nombres = Not Nombres
                 Case vbKeyD
-                    Call WriteWork(Skills.Domar)
+                    Call WriteWork(eSkill.Domar)
                 Case vbKeyR:
-                    Call WriteWork(Skills.Robar)
+                    Call WriteWork(eSkill.Robar)
                 Case vbKeyS:
                     AddtoRichTextBox frmMain.RecTxt, "Para activar o desactivar el seguro utiliza la tecla '*' (asterisco)", 255, 255, 255, False, False, False
                 Case vbKeyO:
-                    Call WriteWork(Skills.Ocultarse)
+                    Call WriteWork(eSkill.Ocultarse)
                 Case vbKeyT:
                     Call TirarItem
                 Case vbKeyU:
@@ -1121,10 +1120,10 @@ Private Sub hlst_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
 End Sub
 
-Private Sub Image1_Click(index As Integer)
+Private Sub Image1_Click(Index As Integer)
     Call Audio.PlayWave(SND_CLICK)
 
-    Select Case index
+    Select Case Index
         Case 0
             '[MatuX] : 01 de Abril del 2002
                 Call frmOpciones.Show(vbModeless, frmMain)
@@ -1152,8 +1151,8 @@ Private Sub Image1_Click(index As Integer)
     End Select
 End Sub
 
-Private Sub Image3_Click(index As Integer)
-    Select Case index
+Private Sub Image3_Click(Index As Integer)
+    Select Case Index
         Case 0
             Inventario.SelectGold
             If UserGLD > 0 Then
@@ -1163,12 +1162,12 @@ Private Sub Image3_Click(index As Integer)
 End Sub
 
 Private Sub Label1_Click()
-    Dim i As Integer
-    For i = 1 To NUMSKILLS
-        frmSkills3.text1(i).Caption = UserSkills(i)
-    Next i
+    Dim I As Integer
+    For I = 1 To NUMSKILLS
+        frmSkills3.Text1(I).Caption = UserSkills(I)
+    Next I
     Alocados = SkillPoints
-    frmSkills3.puntos.Caption = "Puntos:" & SkillPoints
+    frmSkills3.Puntos.Caption = "Puntos:" & SkillPoints
     frmSkills3.Show , frmMain
 End Sub
 
@@ -1259,16 +1258,16 @@ Private Sub SendTxt_Change()
         stxtbuffer = "Soy un cheater, avisenle a un gm"
     Else
         'Make sure only valid chars are inserted (with Shift + Insert they can paste illegal chars)
-        Dim i As Long
+        Dim I As Long
         Dim tempstr As String
         Dim CharAscii As Integer
         
-        For i = 1 To Len(SendTxt.Text)
-            CharAscii = Asc(mid$(SendTxt.Text, i, 1))
+        For I = 1 To Len(SendTxt.Text)
+            CharAscii = Asc(mid$(SendTxt.Text, I, 1))
             If CharAscii >= vbKeySpace And CharAscii <= 250 Then
                 tempstr = tempstr & Chr$(CharAscii)
             End If
-        Next i
+        Next I
         
         If tempstr <> SendTxt.Text Then
             'We only set it if it's different, otherwise the event will be raised
@@ -1326,16 +1325,16 @@ Private Sub SendCMSTXT_Change()
         stxtbuffercmsg = "Soy un cheater, avisenle a un GM"
     Else
         'Make sure only valid chars are inserted (with Shift + Insert they can paste illegal chars)
-        Dim i As Long
+        Dim I As Long
         Dim tempstr As String
         Dim CharAscii As Integer
         
-        For i = 1 To Len(SendCMSTXT.Text)
-            CharAscii = Asc(mid$(SendCMSTXT.Text, i, 1))
+        For I = 1 To Len(SendCMSTXT.Text)
+            CharAscii = Asc(mid$(SendCMSTXT.Text, I, 1))
             If CharAscii >= vbKeySpace And CharAscii <= 250 Then
                 tempstr = tempstr & Chr$(CharAscii)
             End If
-        Next i
+        Next I
         
         If tempstr <> SendCMSTXT.Text Then
             'We only set it if it's different, otherwise the event will be raised
@@ -1392,7 +1391,7 @@ Private Sub Socket1_Connect()
 End Sub
 
 Private Sub Socket1_Disconnect()
-    Dim i As Long
+    Dim I As Long
     
     Second.Enabled = False
     Connected = False
@@ -1406,11 +1405,11 @@ Private Sub Socket1_Disconnect()
     frmConnect.Visible = True
     
     On Local Error Resume Next
-    For i = 0 To Forms.Count - 1
-        If Forms(i).Name <> Me.Name And Forms(i).Name <> frmConnect.Name Then
-            Unload Forms(i)
+    For I = 0 To Forms.Count - 1
+        If Forms(I).Name <> Me.Name And Forms(I).Name <> frmConnect.Name Then
+            Unload Forms(I)
         End If
-    Next i
+    Next I
     On Local Error GoTo 0
     
     frmMain.Visible = False
@@ -1431,13 +1430,13 @@ Private Sub Socket1_Disconnect()
     UserRaza = ""
     UserEmail = ""
     
-    For i = 1 To NUMSKILLS
-        UserSkills(i) = 0
-    Next i
+    For I = 1 To NUMSKILLS
+        UserSkills(I) = 0
+    Next I
 
-    For i = 1 To NUMATRIBUTOS
-        UserAtributos(i) = 0
-    Next i
+    For I = 1 To NUMATRIBUTOS
+        UserAtributos(I) = 0
+    Next I
 
     SkillPoints = 0
     Alocados = 0
@@ -1533,7 +1532,7 @@ If tX >= MinXBorder And tY >= MinYBorder And _
     If MapData(tX, tY).CharIndex > 0 Then
         If charlist(MapData(tX, tY).CharIndex).invisible = False Then
         
-            Dim i As Long
+            Dim I As Long
             Dim m As New frmMenuseFashion
             
             Load m
@@ -1597,7 +1596,7 @@ End Sub
 #If UsarWrench <> 1 Then
 
 Private Sub Winsock1_Close()
-    Dim i As Long
+    Dim I As Long
     
     Debug.Print "WInsock Close"
     
@@ -1614,11 +1613,11 @@ Private Sub Winsock1_Close()
     frmConnect.Visible = True
     
     On Local Error Resume Next
-    For i = 0 To Forms.Count - 1
-        If Forms(i).Name <> Me.Name And Forms(i).Name <> frmConnect.Name Then
-            Unload Forms(i)
+    For I = 0 To Forms.Count - 1
+        If Forms(I).Name <> Me.Name And Forms(I).Name <> frmConnect.Name Then
+            Unload Forms(I)
         End If
-    Next i
+    Next I
     On Local Error GoTo 0
     
     frmMain.Visible = False
@@ -1631,13 +1630,13 @@ Private Sub Winsock1_Close()
     UserRaza = ""
     UserEmail = ""
     
-    For i = 1 To NUMSKILLS
-        UserSkills(i) = 0
-    Next i
+    For I = 1 To NUMSKILLS
+        UserSkills(I) = 0
+    Next I
 
-    For i = 1 To NUMATRIBUTOS
-        UserAtributos(i) = 0
-    Next i
+    For I = 1 To NUMATRIBUTOS
+        UserAtributos(I) = 0
+    Next I
 
     SkillPoints = 0
     Alocados = 0

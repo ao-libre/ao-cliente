@@ -217,7 +217,7 @@ End Sub
 
 Private Sub lblDescripcion_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
     
-    If lastcoulored <> Index Then
+    If LastColoured <> Index Then
         lblDescripcion(LastColoured).BorderStyle = 0
         lblDescripcion(LastColoured).BackStyle = 0
     End If
