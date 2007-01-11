@@ -114,7 +114,7 @@ Begin VB.Form frmPanelGm
    Begin VB.Frame Frame 
       BorderStyle     =   0  'None
       Height          =   2055
-      Index           =   5
+      Index           =   4
       Left            =   120
       TabIndex        =   22
       Top             =   360
@@ -186,7 +186,7 @@ Begin VB.Form frmPanelGm
    Begin VB.Frame Frame 
       BorderStyle     =   0  'None
       Height          =   2535
-      Index           =   4
+      Index           =   5
       Left            =   120
       TabIndex        =   55
       Top             =   360
@@ -809,11 +809,11 @@ Begin VB.Form frmPanelGm
             ImageVarType    =   2
          EndProperty
          BeginProperty Tab4 {1EFB659A-857C-11D1-B16A-00C0F0283628} 
-            Caption         =   "World"
+            Caption         =   "Me"
             ImageVarType    =   2
          EndProperty
          BeginProperty Tab5 {1EFB659A-857C-11D1-B16A-00C0F0283628} 
-            Caption         =   "Me"
+            Caption         =   "World"
             ImageVarType    =   2
          EndProperty
          BeginProperty Tab6 {1EFB659A-857C-11D1-B16A-00C0F0283628} 
