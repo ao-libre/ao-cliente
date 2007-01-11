@@ -77,3 +77,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 08/01/2007: El parser chequea que el estado del usuario sea valido al usar comandos. (NIGO)
  * 10/01/2007: BUG #1629687 reparado. (Tavo)
  * 10/01/2007: Cambie algunos senddata por writes, faltan varios!, y llamar al Parser.. (liquid)
+ * 11/01/2007: Rehice el panelgm (NIGO)
