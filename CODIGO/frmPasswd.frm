@@ -228,8 +228,8 @@ If CheckDatos() Then
     UserEmail = txtCorreo.Text
     
     If Not CheckMailString(UserEmail) Then
-            MsgBox "Direccion de mail invalida."
-            Exit Sub
+        MsgBox "Direccion de mail invalida."
+        Exit Sub
     End If
     
 #If UsarWrench = 1 Then
@@ -252,6 +252,8 @@ If CheckDatos() Then
         
     Else
         Call Login(ValidarLoginMSG(bRK))
+        
+        Call FlushBuffer
     End If
 End If
 

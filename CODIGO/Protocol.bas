@@ -4028,6 +4028,10 @@ Public Sub WriteLoginNewChar(ByVal valcode As Integer)
         Call .WriteASCIIString(UserPassword)
 #End If
         
+        Call .WriteByte(App.Major)
+        Call .WriteByte(App.Minor)
+        Call .WriteByte(App.Revision)
+        
         For i = 1 To 7
             Call .WriteInteger(Versiones(i))
         Next i
@@ -4037,10 +4041,6 @@ Public Sub WriteLoginNewChar(ByVal valcode As Integer)
 #If SeguridadAlkon Then
         Call .WriteASCIIStringFixed(MD5HushYo)
 #End If
-        
-        Call .WriteByte(App.Major)
-        Call .WriteByte(App.Minor)
-        Call .WriteByte(App.Revision)
         
         Call .WriteByte(UserRaza)
         Call .WriteByte(UserSexo)
