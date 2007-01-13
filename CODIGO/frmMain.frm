@@ -560,6 +560,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1167,7 +1168,7 @@ Private Sub Label1_Click()
         frmSkills3.Text1(i).Caption = UserSkills(i)
     Next i
     Alocados = SkillPoints
-    frmSkills3.puntos.Caption = "Puntos:" & SkillPoints
+    frmSkills3.Puntos.Caption = "Puntos:" & SkillPoints
     frmSkills3.Show , frmMain
 End Sub
 
@@ -1485,52 +1486,15 @@ Private Sub Socket1_LastError(ErrorCode As Integer, ErrorString As String, Respo
 End Sub
 
 Private Sub Socket1_Read(dataLength As Integer, IsUrgent As Integer)
-    Dim loopc As Integer
-
     Dim RD As String
-    Dim rBuffer(1 To 500) As String
-    Static TempString As String
-
-    Dim CR As Integer
-    Dim tChar As String
-    Dim sChar As Integer
-    Dim Echar As Integer
-    Dim aux$
-    Dim nfile As Integer
     
     Socket1.Read RD, dataLength
     
-    'Check for previous broken data and add to current data
-    If TempString <> "" Then
-        RD = TempString & RD
-        TempString = ""
-    End If
-
-    'Check for more than one line
-    sChar = 1
-    For loopc = 1 To Len(RD)
-
-        tChar = mid$(RD, loopc, 1)
-
-        If tChar = ENDC Then
-            CR = CR + 1
-            Echar = loopc - sChar
-            rBuffer(CR) = mid$(RD, sChar, Echar)
-            sChar = loopc + 1
-        End If
-
-    Next loopc
-
-    'Check for broken line and save for next time
-    If Len(RD) - (sChar - 1) <> 0 Then
-        TempString = mid$(RD, sChar, Len(RD))
-    End If
-
+    'Put data in the buffer
+    Call incomingData.WriteASCIIStringFixed(RD)
+    
     'Send buffer to Handle data
-    For loopc = 1 To CR
-        'Call LogCustom("HandleData: " & rBuffer(loopc))
-        Call HandleData(rBuffer(loopc))
-    Next loopc
+    Call HandleIncomingData
 End Sub
 
 
@@ -1552,8 +1516,8 @@ If tX >= MinXBorder And tY >= MinYBorder And _
             m.SetMenuId 1
             m.ListaInit 2, False
             
-            If charlist(MapData(tX, tY).CharIndex).nombre <> "" Then
-                m.ListaSetItem 0, charlist(MapData(tX, tY).CharIndex).nombre, True
+            If charlist(MapData(tX, tY).CharIndex).Nombre <> "" Then
+                m.ListaSetItem 0, charlist(MapData(tX, tY).CharIndex).Nombre, True
             Else
                 m.ListaSetItem 0, "<NPC>", True
             End If
@@ -1709,54 +1673,16 @@ Private Sub Winsock1_Connect()
 End Sub
 
 Private Sub Winsock1_DataArrival(ByVal bytesTotal As Long)
-    Dim loopc As Integer
-
     Dim RD As String
-    Dim rBuffer(1 To 500) As String
-    Static TempString As String
-
-    Dim CR As Integer
-    Dim tChar As String
-    Dim sChar As Integer
-    Dim Echar As Integer
-    Dim aux$
-    Dim nfile As Integer
-
-    Debug.Print "Winsock DataArrival"
     
     'Socket1.Read RD, DataLength
     Winsock1.GetData RD
-
-    'Check for previous broken data and add to current data
-    If TempString <> "" Then
-        RD = TempString & RD
-        TempString = ""
-    End If
-
-    'Check for more than one line
-    sChar = 1
-    For loopc = 1 To Len(RD)
-
-        tChar = mid$(RD, loopc, 1)
-
-        If tChar = ENDC Then
-            CR = CR + 1
-            Echar = loopc - sChar
-            rBuffer(CR) = mid$(RD, sChar, Echar)
-            sChar = loopc + 1
-        End If
-
-    Next loopc
-
-    'Check for broken line and save for next time
-    If Len(RD) - (sChar - 1) <> 0 Then
-        TempString = mid$(RD, sChar, Len(RD))
-    End If
-
+    
+    'Set data in the buffer
+    Call incomingData.WriteASCIIStringFixed(RD)
+    
     'Send buffer to Handle data
-    For loopc = 1 To CR
-        Call HandleData(rBuffer(loopc))
-    Next loopc
+    Call HandleIncomingData
 End Sub
 
 Private Sub Winsock1_Error(ByVal Number As Integer, Description As String, ByVal Scode As Long, ByVal source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
