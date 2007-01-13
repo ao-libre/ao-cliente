@@ -262,8 +262,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub cmdAceptar_Click()
-    '*Nigo: te olvidaste de esto juanma xD
-    Call writeusercommerceok
+    Call WriteUserCommerceOk
 End Sub
 
 Private Sub cmdOfrecer_Click()
@@ -353,8 +352,8 @@ End If
 
 End Sub
 
-Private Sub optQue_Click(Index As Integer)
-Select Case Index
+Private Sub optQue_Click(index As Integer)
+Select Case index
 Case 0
     List1.Enabled = True
 Case 1

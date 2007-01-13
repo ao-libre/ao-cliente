@@ -560,7 +560,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -933,7 +932,7 @@ Private Sub CmdLanzar_MouseMove(Button As Integer, Shift As Integer, X As Single
 End Sub
 
 
-Private Sub CmdInfo_Click()
+Private Sub cmdINFO_Click()
     Call WriteSpellInfo(hlst.listIndex + 1)
 End Sub
 
@@ -1168,7 +1167,7 @@ Private Sub Label1_Click()
         frmSkills3.Text1(i).Caption = UserSkills(i)
     Next i
     Alocados = SkillPoints
-    frmSkills3.Puntos.Caption = "Puntos:" & SkillPoints
+    frmSkills3.puntos.Caption = "Puntos:" & SkillPoints
     frmSkills3.Show , frmMain
 End Sub
 
@@ -1372,23 +1371,35 @@ Private Sub Socket1_Connect()
     MixedKey = (Temporal1 + ServerIp)
     
     Second.Enabled = True
+
+    Select Case EstadoLogin
+        Case E_MODO.CrearNuevoPj
+#If SegudidadAlkon Then
+            Call SendData("gIvEmEvAlcOde")
+            Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
+#Else
+            'conectamos sin seguridad
+            Call Login(0)
+#End If
+
+        Case E_MODO.Normal
+#If SegudidadAlkon Then
+            Call SendData("gIvEmEvAlcOde")
+            Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
+#Else
+            'conectamos sin seguridad
+            Call Login(0)
+#End If
+
+        Case E_MODO.Dados
+#If SegudidadAlkon Then
+            Call SendData("gIvEmEvAlcOde")
+            Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
+#Else
+            frmCrearPersonaje.Show vbModal
+#End If
     
-    If EstadoLogin = E_MODO.CrearNuevoPj Then
-#If SegudidadAlkon Then
-        Call SendData("gIvEmEvAlcOde")
-        Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
-#End If
-    ElseIf EstadoLogin = E_MODO.Normal Then
-        Call SendData("gIvEmEvAlcOde")
-#If SegudidadAlkon Then
-        Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
-#End If
-    ElseIf EstadoLogin = E_MODO.Dados Then
-        Call SendData("gIvEmEvAlcOde")
-#If SegudidadAlkon Then
-        Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
-#End If
-    End If
+    End Select
 End Sub
 
 Private Sub Socket1_Disconnect()
@@ -1541,8 +1552,8 @@ If tX >= MinXBorder And tY >= MinYBorder And _
             m.SetMenuId 1
             m.ListaInit 2, False
             
-            If charlist(MapData(tX, tY).CharIndex).Nombre <> "" Then
-                m.ListaSetItem 0, charlist(MapData(tX, tY).CharIndex).Nombre, True
+            If charlist(MapData(tX, tY).CharIndex).nombre <> "" Then
+                m.ListaSetItem 0, charlist(MapData(tX, tY).CharIndex).nombre, True
             Else
                 m.ListaSetItem 0, "<NPC>", True
             End If
@@ -1667,13 +1678,34 @@ Private Sub Winsock1_Connect()
     
     Second.Enabled = True
     
-    If EstadoLogin = E_MODO.CrearNuevoPj Then
-        Call SendData("gIvEmEvAlcOde")
-    ElseIf EstadoLogin = E_MODO.Normal Then
-        Call SendData("gIvEmEvAlcOde")
-    ElseIf EstadoLogin = E_MODO.Dados Then
-        Call SendData("gIvEmEvAlcOde")
-    End If
+    Select Case EstadoLogin
+        Case E_MODO.CrearNuevoPj
+#If SegudidadAlkon Then
+            Call SendData("gIvEmEvAlcOde")
+            Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
+#Else
+            'conectamos sin seguridad
+            Call Login(0)
+#End If
+
+        Case E_MODO.Normal
+#If SegudidadAlkon Then
+            Call SendData("gIvEmEvAlcOde")
+            Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
+#Else
+            'conectamos sin seguridad
+            Call Login(0)
+#End If
+
+        Case E_MODO.Dados
+#If SegudidadAlkon Then
+            Call SendData("gIvEmEvAlcOde")
+            Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
+#Else
+            frmCrearPersonaje.Show vbModal
+#End If
+    
+    End Select
 End Sub
 
 Private Sub Winsock1_DataArrival(ByVal bytesTotal As Long)
