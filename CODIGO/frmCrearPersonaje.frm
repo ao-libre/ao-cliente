@@ -817,7 +817,7 @@ Begin VB.Form frmCrearPersonaje
       Caption         =   "0"
       ForeColor       =   &H00FFFFFF&
       Height          =   195
-      Left            =   5310
+      Left            =   5325
       TabIndex        =   4
       Top             =   3240
       Width           =   210
@@ -938,61 +938,57 @@ CheckData = True
 
 End Function
 
-Private Sub boton_Click(Index As Integer)
-
-Call Audio.PlayWave(SND_CLICK)
-
-Select Case Index
-    Case 0
-        
-        Dim i As Integer
-        Dim k As Object
-        i = 1
-        For Each k In Skill
-            UserSkills(i) = k.Caption
-            i = i + 1
-        Next
-        
-        UserName = txtNombre.Text
-        
-        If Right$(UserName, 1) = " " Then
-                UserName = RTrim$(UserName)
-                MsgBox "Nombre invalido, se han removido los espacios al final del nombre"
-        End If
-        
-        UserRaza = lstRaza.List(lstRaza.listIndex)
-        UserSexo = lstGenero.List(lstGenero.listIndex)
-        UserClase = lstProfesion.List(lstProfesion.listIndex)
-        
-        UserAtributos(1) = Val(lbFuerza.Caption)
-        UserAtributos(2) = Val(lbInteligencia.Caption)
-        UserAtributos(3) = Val(lbAgilidad.Caption)
-        UserAtributos(4) = Val(lbCarisma.Caption)
-        UserAtributos(5) = Val(lbConstitucion.Caption)
-        
-        UserHogar = lstHogar.List(lstHogar.listIndex)
-        
-        'Barrin 3/10/03
-        If CheckData() Then
-            frmPasswd.Show vbModal, Me
-        End If
-        
-    Case 1
-        If Musica Then
-            Call Audio.PlayMIDI("2.mid")
-        End If
-        
-        frmConnect.FONDO.Picture = LoadPicture(App.Path & "\Graficos\conectar.jpg")
-        Me.Visible = False
-        
-        
-    Case 2
-        Call Audio.PlayWave(SND_DICE)
-        Call TirarDados
-      
-End Select
-
-
+Private Sub boton_Click(index As Integer)
+    Call Audio.PlayWave(SND_CLICK)
+    
+    Select Case index
+        Case 0
+            
+            Dim i As Integer
+            Dim k As Object
+            i = 1
+            For Each k In Skill
+                UserSkills(i) = k.Caption
+                i = i + 1
+            Next
+            
+            UserName = txtNombre.Text
+            
+            If Right$(UserName, 1) = " " Then
+                    UserName = RTrim$(UserName)
+                    MsgBox "Nombre invalido, se han removido los espacios al final del nombre"
+            End If
+            
+            UserRaza = lstRaza.List(lstRaza.listIndex)
+            UserSexo = lstGenero.List(lstGenero.listIndex)
+            UserClase = lstProfesion.List(lstProfesion.listIndex)
+            
+            UserAtributos(1) = Val(lbFuerza.Caption)
+            UserAtributos(2) = Val(lbInteligencia.Caption)
+            UserAtributos(3) = Val(lbAgilidad.Caption)
+            UserAtributos(4) = Val(lbCarisma.Caption)
+            UserAtributos(5) = Val(lbConstitucion.Caption)
+            
+            UserHogar = lstHogar.List(lstHogar.listIndex)
+            
+            'Barrin 3/10/03
+            If CheckData() Then
+                frmPasswd.Show vbModal, Me
+            End If
+            
+        Case 1
+            If Musica Then
+                Call Audio.PlayMIDI("2.mid")
+            End If
+            
+            frmConnect.FONDO.Picture = LoadPicture(App.Path & "\Graficos\conectar.jpg")
+            Me.Visible = False
+            
+            
+        Case 2
+            Call Audio.PlayWave(SND_DICE)
+            Call TirarDados
+    End Select
 End Sub
 
 
@@ -1005,38 +1001,25 @@ If RandomNumber > UpperBound Then RandomNumber = UpperBound
 
 End Function
 
-
 Private Sub TirarDados()
-'lbFuerza.Caption = CInt(RandomNumber(1, 6) + RandomNumber(1, 6) + RandomNumber(1, 6))
-'lbInteligencia.Caption = CInt(RandomNumber(1, 6) + RandomNumber(1, 6) + RandomNumber(1, 6))
-'lbAgilidad.Caption = CInt(RandomNumber(1, 6) + RandomNumber(1, 6) + RandomNumber(1, 6))
-'lbCarisma.Caption = CInt(RandomNumber(1, 6) + RandomNumber(1, 6) + RandomNumber(1, 6))
-'lbConstitucion.Caption = CInt(RandomNumber(1, 6) + RandomNumber(1, 6) + RandomNumber(1, 6))
-
-#If UsarWrench = 1 Then
-    If frmMain.Socket1.Connected Then
-#Else
-    If frmMain.Winsock1.State = sckConnected Then
-#End If
-        Call WriteThrowDices
-    End If
-
+    Call WriteThrowDices
+    Call FlushBuffer
 End Sub
 
-Private Sub Command1_Click(Index As Integer)
+Private Sub Command1_Click(index As Integer)
 Call Audio.PlayWave(SND_CLICK)
 
 Dim indice
-If Index Mod 2 = 0 Then
+If index Mod 2 = 0 Then
     If SkillPoints > 0 Then
-        indice = Index \ 2
+        indice = index \ 2
         Skill(indice).Caption = Val(Skill(indice).Caption) + 1
         SkillPoints = SkillPoints - 1
     End If
 Else
     If SkillPoints < 10 Then
         
-        indice = Index \ 2
+        indice = index \ 2
         If Val(Skill(indice).Caption) > 0 Then
             Skill(indice).Caption = Val(Skill(indice).Caption) - 1
             SkillPoints = SkillPoints + 1
@@ -1044,12 +1027,12 @@ Else
     End If
 End If
 
-puntos.Caption = SkillPoints
+Puntos.Caption = SkillPoints
 End Sub
 
 Private Sub Form_Load()
 SkillPoints = 10
-puntos.Caption = SkillPoints
+Puntos.Caption = SkillPoints
 Me.Picture = LoadPicture(App.Path & "\graficos\CP-Interface.jpg")
 imgHogar.Picture = LoadPicture(App.Path & "\graficos\CP-Ullathorpe.jpg")
 

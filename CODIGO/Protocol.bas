@@ -779,6 +779,9 @@ Public Sub HandleIncomingData()
         Case ServerPacketID.SetInvisible            ' NOVER
             Call HandleSetInvisible
         
+        Case ServerPacketID.DiceRoll                ' DADOS
+            Call HandleDiceRoll
+        
         Case ServerPacketID.MeditateToggle          ' MEDOK
             Call HandleMeditateToggle
         
@@ -3087,6 +3090,33 @@ Private Sub HandleSetInvisible()
     End If
 #End If
 
+End Sub
+
+''
+' Handles the DiceRoll message.
+
+Private Sub HandleDiceRoll()
+'***************************************************
+'Autor: Juan Martín Sotuyo Dodero (Maraxus)
+'Last Modification: 05/17/06
+'
+'***************************************************
+    If incomingData.length < 11 Then Exit Sub
+    
+    'Remove packet ID
+    Call incomingData.ReadByte
+    
+    UserAtributos(eAtributos.Fuerza) = incomingData.ReadInteger()
+    UserAtributos(eAtributos.Agilidad) = incomingData.ReadInteger()
+    UserAtributos(eAtributos.Inteligencia) = incomingData.ReadInteger()
+    UserAtributos(eAtributos.Carisma) = incomingData.ReadInteger()
+    UserAtributos(eAtributos.Constitucion) = incomingData.ReadInteger()
+    
+    frmCrearPersonaje.lbFuerza = UserAtributos(eAtributos.Fuerza)
+    frmCrearPersonaje.lbAgilidad = UserAtributos(eAtributos.Agilidad)
+    frmCrearPersonaje.lbInteligencia = UserAtributos(eAtributos.Inteligencia)
+    frmCrearPersonaje.lbCarisma = UserAtributos(eAtributos.Carisma)
+    frmCrearPersonaje.lbConstitucion = UserAtributos(eAtributos.Constitucion)
 End Sub
 
 ''
