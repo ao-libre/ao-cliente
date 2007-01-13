@@ -701,7 +701,8 @@ Public Function ReadBlock(ByRef block() As Byte, ByVal dataLength As Long) As Lo
 'Reads a byte array from the queue and removes it
 '***************************************************
     'Read the data and remove it
-    ReadBlock = RemoveData(ReadData(block(), dataLength))
+    If dataLength > 0 Then _
+        ReadBlock = RemoveData(ReadData(block(), dataLength))
 End Function
 
 ''
@@ -949,7 +950,8 @@ Public Function PeekBlock(ByRef block() As Byte, ByVal dataLength As Long) As Lo
 'Reads a byte array from the queue but doesn't removes it
 '***************************************************
     'Read the data
-    PeekBlock = ReadData(block(), dataLength)
+    If dataLength > 0 Then _
+        PeekBlock = ReadData(block(), dataLength)
 End Function
 
 ''
