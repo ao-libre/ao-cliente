@@ -80,3 +80,5 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 11/01/2007: Rehice el panelgm (NIGO)
  * 13/01/2007: Arreglé el módulo PrevInstance para que desde la IDE se pueda ejecutar multiples veces el cliente y el código sea más limpio (Maraxus)
  * 13/01/2007: Agregué el HandleDiceRoll que había sido omitido (Maraxus)
+ * 13/01/2007: El formulario de password al crear personaje pone los caractéres como asteriscos (Maraxus)
+ * 13/01/2007: Arreglé varios bugs en el manejo de raza, clase, sexo y ciudad (Maraxus)

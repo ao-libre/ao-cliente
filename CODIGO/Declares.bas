@@ -165,7 +165,6 @@ Public Const FLAGORO As Integer = -1
 Public Const FOgata As Integer = 1521
 
 
-'CHECK Enums
 Public Enum eClass
     Mage = 1    'Mago
     Cleric      'Clérigo
@@ -230,6 +229,11 @@ Public Enum eAtributos
     Inteligencia = 3
     Carisma = 4
     Constitucion = 5
+End Enum
+
+Enum eGenero
+    Hombre = 1
+    Mujer
 End Enum
 
 Public Const FundirMetal As Integer = 88
@@ -386,15 +390,15 @@ Public pausa As Boolean
 Public IScombate As Boolean
 Public UserParalizado As Boolean
 Public UserNavegando As Boolean
-Public UserHogar As String
+Public UserHogar As eCiudad
 
 '<-------------------------NUEVO-------------------------->
 Public Comerciando As Boolean
 '<-------------------------NUEVO-------------------------->
 
-Public UserClase As String
-Public UserSexo As String
-Public UserRaza As String
+Public UserClase As eClass
+Public UserSexo As eGenero
+Public UserRaza As eRaza
 Public UserEmail As String
 
 Public Const NUMCIUDADES As Byte = 3

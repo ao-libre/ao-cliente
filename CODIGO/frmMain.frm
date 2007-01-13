@@ -560,7 +560,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1438,9 +1437,10 @@ Private Sub Socket1_Disconnect()
     LastAmount = 0
 #End If
 
-    UserClase = ""
-    UserSexo = ""
-    UserRaza = ""
+    UserClase = 0
+    UserSexo = 0
+    UserRaza = 0
+    UserHogar = 0
     UserEmail = ""
     
     For i = 1 To NUMSKILLS
@@ -1601,9 +1601,10 @@ Private Sub Winsock1_Close()
     pausa = False
     UserMeditar = False
 
-    UserClase = ""
-    UserSexo = ""
-    UserRaza = ""
+    UserClase = 0
+    UserSexo = 0
+    UserRaza = 0
+    UserHogar = 0
     UserEmail = ""
     
     For i = 1 To NUMSKILLS

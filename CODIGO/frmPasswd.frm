@@ -44,7 +44,9 @@ Begin VB.Form frmPasswd
    Begin VB.TextBox txtPasswdCheck 
       BorderStyle     =   0  'None
       Height          =   255
+      IMEMode         =   3  'DISABLE
       Left            =   765
+      PasswordChar    =   "*"
       TabIndex        =   7
       Top             =   2910
       Width           =   3510
@@ -52,7 +54,9 @@ Begin VB.Form frmPasswd
    Begin VB.TextBox txtPasswd 
       BorderStyle     =   0  'None
       Height          =   255
+      IMEMode         =   3  'DISABLE
       Left            =   765
+      PasswordChar    =   "*"
       TabIndex        =   5
       Top             =   2295
       Width           =   3510

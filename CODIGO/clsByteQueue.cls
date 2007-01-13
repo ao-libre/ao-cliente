@@ -561,7 +561,7 @@ Public Function ReadASCIIStringFixed(ByVal length As Long) As String
 'Last Modification: 04/27/06
 'Reads a fixed length ASCII string from the queue and removes it
 '***************************************************
-    If queueLength >= length Then
+    If queueLength >= length And length > 0 Then
         Dim buf() As Byte
         ReDim buf(length - 1) As Byte
         
@@ -589,7 +589,7 @@ Public Function ReadUnicodeStringFixed(ByVal length As Long) As String
 'Last Modification: 04/27/06
 'Reads a fixed length UNICODE string from the queue and removes it
 '***************************************************
-    If queueLength >= length Then
+    If queueLength >= length And length > 0 Then
         Dim buf() As Byte
         ReDim buf(length * 2 - 1) As Byte
         
@@ -810,7 +810,7 @@ Public Function PeekASCIIStringFixed(ByVal length As Long) As String
 'Last Modification: 04/27/06
 'Reads a fixed length ASCII string from the queue but doesn't removes it
 '***************************************************
-    If queueLength >= length Then
+    If queueLength >= length And length > 0 Then
         Dim buf() As Byte
         ReDim buf(length - 1) As Byte
         
@@ -837,7 +837,7 @@ Public Function PeekUnicodeStringFixed(ByVal length As Long) As String
 'Last Modification: 04/27/06
 'Reads a fixed length UNICODE string from the queue but doesn't removes it
 '***************************************************
-    If queueLength >= length Then
+    If queueLength >= length And length > 0 Then
         Dim buf() As Byte
         ReDim buf(length * 2 - 1) As Byte
         

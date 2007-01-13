@@ -900,22 +900,22 @@ Option Explicit
 Public SkillPoints As Byte
 
 Function CheckData() As Boolean
-If UserRaza = "" Then
+If UserRaza = 0 Then
     MsgBox "Seleccione la raza del personaje."
     Exit Function
 End If
 
-If UserSexo = "" Then
+If UserSexo = 0 Then
     MsgBox "Seleccione el sexo del personaje."
     Exit Function
 End If
 
-If UserClase = "" Then
+If UserClase = 0 Then
     MsgBox "Seleccione la clase del personaje."
     Exit Function
 End If
 
-If UserHogar = "" Then
+If UserHogar = 0 Then
     MsgBox "Seleccione el hogar del personaje."
     Exit Function
 End If
@@ -955,13 +955,13 @@ Private Sub boton_Click(index As Integer)
             UserName = txtNombre.Text
             
             If Right$(UserName, 1) = " " Then
-                    UserName = RTrim$(UserName)
-                    MsgBox "Nombre invalido, se han removido los espacios al final del nombre"
+                UserName = RTrim$(UserName)
+                MsgBox "Nombre invalido, se han removido los espacios al final del nombre"
             End If
             
-            UserRaza = lstRaza.List(lstRaza.listIndex)
-            UserSexo = lstGenero.List(lstGenero.listIndex)
-            UserClase = lstProfesion.List(lstProfesion.listIndex)
+            UserRaza = lstRaza.listIndex + 1
+            UserSexo = lstGenero.listIndex + 1
+            UserClase = lstProfesion.listIndex + 1
             
             UserAtributos(1) = Val(lbFuerza.Caption)
             UserAtributos(2) = Val(lbInteligencia.Caption)
@@ -969,7 +969,7 @@ Private Sub boton_Click(index As Integer)
             UserAtributos(4) = Val(lbCarisma.Caption)
             UserAtributos(5) = Val(lbConstitucion.Caption)
             
-            UserHogar = lstHogar.List(lstHogar.listIndex)
+            UserHogar = lstHogar.listIndex + 1
             
             'Barrin 3/10/03
             If CheckData() Then
