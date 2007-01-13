@@ -64,4 +64,6 @@ Sub Login(ByVal valcode As Integer)
     ElseIf EstadoLogin = CrearNuevoPj Then
         Call WriteLoginNewChar(valcode)
     End If
+    
+    Call FlushBuffer
 End Sub

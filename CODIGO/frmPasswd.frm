@@ -252,8 +252,6 @@ If CheckDatos() Then
         
     Else
         Call Login(ValidarLoginMSG(bRK))
-        
-        Call FlushBuffer
     End If
 End If
 

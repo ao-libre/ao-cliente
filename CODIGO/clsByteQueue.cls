@@ -402,8 +402,10 @@ Public Function WriteASCIIString(ByVal value As String) As Long
     'Copy length to temp buffer
     Call CopyMemory(buf(0), CInt(Len(value)), 2)
     
-    'Copy data to temp buffer
-    Call CopyMemory(buf(2), ByVal StrPtr(StrConv(value, vbFromUnicode)), Len(value))
+    If Len(value) > 0 Then
+        'Copy data to temp buffer
+        Call CopyMemory(buf(2), ByVal StrPtr(StrConv(value, vbFromUnicode)), Len(value))
+    End If
     
     WriteASCIIString = WriteData(buf, Len(value) + 2)
 End Function
@@ -423,13 +425,15 @@ Public Function WriteUnicodeString(ByVal value As String) As Long
 'Writes a variable length UNICODE string to the queue
 '***************************************************
     Dim buf() As Byte
-    ReDim buf(LenB(value) + 2) As Byte
+    ReDim buf(LenB(value) + 1) As Byte
     
     'Copy length to temp buffer
     Call CopyMemory(buf(0), CInt(Len(value)), 2)
     
-    'Copy data to temp buffer
-    Call CopyMemory(buf(2), ByVal StrPtr(value), LenB(value))
+    If Len(value) > 0 Then
+        'Copy data to temp buffer
+        Call CopyMemory(buf(2), ByVal StrPtr(value), LenB(value))
+    End If
     
     WriteUnicodeString = WriteData(buf, LenB(value) + 2)
 End Function
@@ -636,13 +640,16 @@ Public Function ReadASCIIString() As String
             'Remove the length
             Call RemoveData(2)
             
-            Dim buf2() As Byte
-            ReDim buf2(length - 1) As Byte
-            
-            'Read the data and remove it
-            Call RemoveData(ReadData(buf2, length))
-            
-            ReadASCIIString = StrConv(buf2, vbUnicode)
+            If length > 0 Then
+                Dim buf2() As Byte
+                ReDim buf2(length - 1) As Byte
+                
+                
+                'Read the data and remove it
+                Call RemoveData(ReadData(buf2, length))
+                
+                ReadASCIIString = StrConv(buf2, vbUnicode)
+            End If
         End If
     End If
 End Function
@@ -887,12 +894,14 @@ Public Function PeekASCIIString() As String
             'Read the data (we have to read the length again)
             Call ReadData(buf2, length + 2)
             
-            'Get rid of the length
-            Dim buf3() As Byte
-            ReDim buf3(length - 1) As Byte
-            Call CopyMemory(buf3(0), buf2(2), length)
-            
-            PeekASCIIString = StrConv(buf3, vbUnicode)
+            If length > 0 Then
+                'Get rid of the length
+                Dim buf3() As Byte
+                ReDim buf3(length - 1) As Byte
+                Call CopyMemory(buf3(0), buf2(2), length)
+                
+                PeekASCIIString = StrConv(buf3, vbUnicode)
+            End If
         End If
     End If
 End Function
