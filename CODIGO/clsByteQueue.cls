@@ -120,7 +120,11 @@ Public Sub CopyBuffer(ByRef source As clsByteQueue)
 'Last Modification: 04/27/06
 'A Visual Basic equivalent of a Copy Contructor
 '***************************************************
-    If source.length = 0 Then Exit Sub
+    If source.length = 0 Then
+        'Clear the list and exit
+        Call RemoveData(length)
+        Exit Sub
+    End If
     
     ' Set capacity and resize array - make sure all data is lost
     queueCapacity = source.Capacity
