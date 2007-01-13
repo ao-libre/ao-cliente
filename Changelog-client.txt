@@ -78,3 +78,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 10/01/2007: BUG #1629687 reparado. (Tavo)
  * 10/01/2007: Cambie algunos senddata por writes, faltan varios!, y llamar al Parser.. (liquid)
  * 11/01/2007: Rehice el panelgm (NIGO)
+ * 13/01/2007: Arreglé el módulo PrevInstance para que desde la IDE se pueda ejecutar multiples veces el cliente y el código sea más limpio (Maraxus)

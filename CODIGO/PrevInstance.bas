@@ -1,12 +1,14 @@
 Attribute VB_Name = "PrevInstance"
-'Argentum Online is Copyright (C) of Márquez Pablo Ignacio
-'
-'Copyright (C) 2006 Fredy Horacio Treboux (liquid)
-'
+'**************************************************************
+' PrevInstance.bas - Checks for previous instances of the client running
+' by using a named mutex.
+'**************************************************************
+
+'**************************************************************************
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
 'the Free Software Foundation; either version 2 of the License, or
-'any later version.
+'(at your option) any later version.
 '
 'This program is distributed in the hope that it will be useful,
 'but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -16,15 +18,22 @@ Attribute VB_Name = "PrevInstance"
 'You should have received a copy of the GNU General Public License
 'along with this program; if not, write to the Free Software
 'Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+'**************************************************************************
+
+''
+'Prevents multiple instances of the game running on the same computer.
+
 '
-'Argentum Online is based on Baronsoft's VB6 Online RPG
-'You can contact the original creator of ORE at aaron@baronsoft.com
-'for more information about ORE please visit http://www.baronsoft.com/
+' @author Fredy Horacio Treboux (liquid) @and Juan Martín Sotuyo Dodero (Maraxus) juansotuyo@gmail.com
+' @version 1.0.0
+' @date 20070104
 
 Option Explicit
 
-'Declaration of the Win32 API function for creating a Mutex, and some types and constants.
+'Declaration of the Win32 API function for creating /destroying a Mutex, and some types and constants.
 Private Declare Function CreateMutex Lib "kernel32" Alias "CreateMutexA" (ByRef lpMutexAttributes As SECURITY_ATTRIBUTES, ByVal bInitialOwner As Long, ByVal lpName As String) As Long
+Private Declare Function ReleaseMutex Lib "kernel32" (ByVal hMutex As Long) As Long
+Private Declare Function CloseHandle Lib "kernel32" (ByVal hObject As Long) As Long
 
 Private Type SECURITY_ATTRIBUTES
     nLength As Long
@@ -33,6 +42,8 @@ Private Type SECURITY_ATTRIBUTES
 End Type
 
 Private Const ERROR_ALREADY_EXISTS = 183&
+
+Private mutexHID As Long
 
 ''
 ' Creates a Named Mutex. Private function, since we will use it just to check if a previous instance of the app is running.
@@ -53,7 +64,7 @@ Private Function CreateNamedMutex(ByRef mutexName As String) As Boolean
         .nLength = Len(sa)
     End With
     
-    Call CreateMutex(sa, True, "Global\" & mutexName) 'we actually ignore the return value
+    mutexHID = CreateMutex(sa, True, "Global\" & mutexName)
     
     CreateNamedMutex = Not (Err.LastDllError = ERROR_ALREADY_EXISTS) 'check if the mutex already existed
 End Function
@@ -76,3 +87,16 @@ Public Function FindPreviousInstance() As Boolean
         FindPreviousInstance = True
     End If
 End Function
+
+''
+' Closes the client, allowing other instances to be open.
+
+Public Sub CloseClient()
+'***************************************************
+'Autor: Juan Martín Sotuyo Dodero (Maraxus)
+'Last Modification: 01/04/07
+'
+'***************************************************
+    Call ReleaseMutex(mutexHID)
+    Call CloseHandle(mutexHID)
+End Sub
