@@ -953,7 +953,7 @@ Private Sub HandleDisconnect()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    Dim I As Long
+    Dim i As Long
     
     'Remove packet ID
     Call incomingData.ReadByte
@@ -991,9 +991,9 @@ Private Sub HandleDisconnect()
     
     'Reset some char variables...
     Call Dialogos.BorrarDialogos
-    For I = 1 To LastChar
-        charlist(I).invisible = False
-    Next I
+    For i = 1 To LastChar
+        charlist(i).invisible = False
+    Next i
     
 #If SeguridadAlkon Then
     Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
@@ -1033,27 +1033,27 @@ Private Sub HandleBankEnd()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    Dim I As Long
+    Dim i As Long
     
     'Remove packet ID
     Call incomingData.ReadByte
     
     If frmBancoObj.Visible Then
-        For I = 1 To MAX_INVENTORY_SLOTS
-            If Inventario.OBJIndex(I) <> 0 Then
-                frmBancoObj.List1(1).AddItem Inventario.ItemName(I)
+        For i = 1 To MAX_INVENTORY_SLOTS
+            If Inventario.OBJIndex(i) <> 0 Then
+                frmBancoObj.List1(1).AddItem Inventario.ItemName(i)
             Else
                 frmBancoObj.List1(1).AddItem "Nada"
             End If
-        Next I
+        Next i
         
-        For I = 1 To MAX_BANCOINVENTORY_SLOTS
-            If UserBancoInventory(I).OBJIndex <> 0 Then
-                frmBancoObj.List1(0).AddItem UserBancoInventory(I).Name
+        For i = 1 To MAX_BANCOINVENTORY_SLOTS
+            If UserBancoInventory(i).OBJIndex <> 0 Then
+                frmBancoObj.List1(0).AddItem UserBancoInventory(i).Name
             Else
                 frmBancoObj.List1(0).AddItem "Nada"
             End If
-        Next I
+        Next i
         
         frmBancoObj.List1(0).listIndex = frmBancoObj.LastIndex1
         frmBancoObj.List1(1).listIndex = frmBancoObj.LastIndex2
@@ -1069,19 +1069,19 @@ Private Sub HandleCommerceInit()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    Dim I As Long
+    Dim i As Long
     
     'Remove packet ID
     Call incomingData.ReadByte
     
     'Fill our inventory list
-    For I = 1 To MAX_INVENTORY_SLOTS
-        If Inventario.OBJIndex(I) <> 0 Then
-            frmComerciar.List1(1).AddItem Inventario.ItemName(I)
+    For i = 1 To MAX_INVENTORY_SLOTS
+        If Inventario.OBJIndex(i) <> 0 Then
+            frmComerciar.List1(1).AddItem Inventario.ItemName(i)
         Else
             frmComerciar.List1(1).AddItem "Nada"
         End If
-    Next I
+    Next i
     
     'Set state and show form
     Comerciando = True
@@ -1097,28 +1097,28 @@ Private Sub HandleBankInit()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    Dim I As Long
+    Dim i As Long
     
     'Remove packet ID
     Call incomingData.ReadByte
     
     'Fill the inventory list
-    For I = 1 To MAX_INVENTORY_SLOTS
-        If Inventario.OBJIndex(I) <> 0 Then
-            frmBancoObj.List1(1).AddItem Inventario.ItemName(I)
+    For i = 1 To MAX_INVENTORY_SLOTS
+        If Inventario.OBJIndex(i) <> 0 Then
+            frmBancoObj.List1(1).AddItem Inventario.ItemName(i)
         Else
             frmBancoObj.List1(1).AddItem "Nada"
         End If
-    Next I
+    Next i
     
     'Fill the bank list
-    For I = 1 To MAX_BANCOINVENTORY_SLOTS
-        If UserBancoInventory(I).OBJIndex <> 0 Then
-            frmBancoObj.List1(0).AddItem UserBancoInventory(I).Name
+    For i = 1 To MAX_BANCOINVENTORY_SLOTS
+        If UserBancoInventory(i).OBJIndex <> 0 Then
+            frmBancoObj.List1(0).AddItem UserBancoInventory(i).Name
         Else
             frmBancoObj.List1(0).AddItem "Nada"
         End If
-    Next I
+    Next i
     
     'Set state and show form
     Comerciando = True
@@ -1134,7 +1134,7 @@ Private Sub HandleUserCommerceInit()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    Dim I As Long
+    Dim i As Long
     
     'Remove packet ID
     Call incomingData.ReadByte
@@ -1144,15 +1144,15 @@ Private Sub HandleUserCommerceInit()
     If frmComerciarUsu.List2.ListCount > 0 Then frmComerciarUsu.List2.Clear
     
     'Fill inventory list
-    For I = 1 To MAX_INVENTORY_SLOTS
-        If Inventario.OBJIndex(I) <> 0 Then
-            frmComerciarUsu.List1.AddItem Inventario.ItemName(I)
-            frmComerciarUsu.List1.ItemData(frmComerciarUsu.List1.NewIndex) = Inventario.Amount(I)
+    For i = 1 To MAX_INVENTORY_SLOTS
+        If Inventario.OBJIndex(i) <> 0 Then
+            frmComerciarUsu.List1.AddItem Inventario.ItemName(i)
+            frmComerciarUsu.List1.ItemData(frmComerciarUsu.List1.NewIndex) = Inventario.Amount(i)
         Else
             frmComerciarUsu.List1.AddItem "Nada"
             frmComerciarUsu.List1.ItemData(frmComerciarUsu.List1.NewIndex) = 0
         End If
-    Next I
+    Next i
     
     'Set state and show form
     Comerciando = True
@@ -2172,10 +2172,10 @@ On Error GoTo ErrHandler
     Dim guilds() As String
     guilds = Split(Buffer.ReadASCIIString(), SEPARATOR)
     
-    Dim I As Long
-    For I = 0 To UBound(guilds())
-        Call frmGuildAdm.guildslist.AddItem(guilds(I))
-    Next I
+    Dim i As Long
+    For i = 0 To UBound(guilds())
+        Call frmGuildAdm.guildslist.AddItem(guilds(i))
+    Next i
     
     frmGuildAdm.Show vbModal, frmMain
     
@@ -2573,11 +2573,11 @@ Private Sub HandleAtributes()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Dim I As Long
+    Dim i As Long
     
-    For I = 1 To NUMATRIBUTES
-        UserAtributos(I) = incomingData.ReadByte()
-    Next I
+    For i = 1 To NUMATRIBUTES
+        UserAtributos(i) = incomingData.ReadByte()
+    Next i
     
     'Show them in character creation
     If EstadoLogin = E_MODO.Dados Then
@@ -2613,24 +2613,24 @@ On Error GoTo ErrHandler
     Call Buffer.ReadByte
     
     Dim Count As Integer
-    Dim I As Long
+    Dim i As Long
     Dim Tmp As String
     
     Count = Buffer.ReadInteger()
     
-    For I = 1 To Count
+    For i = 1 To Count
         Tmp = Buffer.ReadASCIIString() & " ("           'Get the object's name
         Tmp = Tmp & CStr(Buffer.ReadInteger()) & ","    'The iron needed
         Tmp = Tmp & CStr(Buffer.ReadInteger()) & ","    'The silver needed
         Tmp = Tmp & CStr(Buffer.ReadInteger()) & ")"    'The gold needed
         
         Call frmHerrero.lstArmas.AddItem(Tmp)
-        ArmasHerrero(I) = Buffer.ReadInteger()
-    Next I
+        ArmasHerrero(i) = Buffer.ReadInteger()
+    Next i
     
-    For I = I To UBound(ArmasHerrero())
-        ArmasHerrero(I) = 0
-    Next I
+    For i = i To UBound(ArmasHerrero())
+        ArmasHerrero(i) = 0
+    Next i
     
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
@@ -2660,24 +2660,24 @@ On Error GoTo ErrHandler
     Call Buffer.ReadByte
     
     Dim Count As Integer
-    Dim I As Long
+    Dim i As Long
     Dim Tmp As String
     
     Count = Buffer.ReadInteger()
     
-    For I = 1 To Count
+    For i = 1 To Count
         Tmp = Buffer.ReadASCIIString() & " ("           'Get the object's name
         Tmp = Tmp & CStr(Buffer.ReadInteger()) & ","    'The iron needed
         Tmp = Tmp & CStr(Buffer.ReadInteger()) & ","    'The silver needed
         Tmp = Tmp & CStr(Buffer.ReadInteger()) & ")"    'The gold needed
         
         Call frmHerrero.lstArmaduras.AddItem(Tmp)
-        ArmadurasHerrero(I) = Buffer.ReadInteger()
-    Next I
+        ArmadurasHerrero(i) = Buffer.ReadInteger()
+    Next i
     
-    For I = I To UBound(ArmadurasHerrero())
-        ArmadurasHerrero(I) = 0
-    Next I
+    For i = i To UBound(ArmadurasHerrero())
+        ArmadurasHerrero(i) = 0
+    Next i
     
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
@@ -2707,22 +2707,22 @@ On Error GoTo ErrHandler
     Call Buffer.ReadByte
     
     Dim Count As Integer
-    Dim I As Long
+    Dim i As Long
     Dim Tmp As String
     
     Count = Buffer.ReadInteger()
     
-    For I = 1 To Count
+    For i = 1 To Count
         Tmp = Buffer.ReadASCIIString() & " ("          'Get the object's name
         Tmp = Tmp & CStr(Buffer.ReadInteger()) & ")"    'The wood needed
         
         Call frmCarp.lstArmas.AddItem(Tmp)
-        ObjCarpintero(I) = Buffer.ReadInteger()
-    Next I
+        ObjCarpintero(i) = Buffer.ReadInteger()
+    Next i
     
-    For I = I To UBound(ObjCarpintero())
-        ObjCarpintero(I) = 0
-    Next I
+    For i = i To UBound(ObjCarpintero())
+        ObjCarpintero(i) = 0
+    Next i
     
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
@@ -3154,11 +3154,11 @@ Private Sub HandleSendSkills()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Dim I As Long
+    Dim i As Long
     
-    For I = 1 To NUMSKILLS
-        UserSkills(I) = incomingData.ReadByte()
-    Next I
+    For i = 1 To NUMSKILLS
+        UserSkills(i) = incomingData.ReadByte()
+    Next i
     LlegaronSkills = True
 End Sub
 
@@ -3182,13 +3182,13 @@ On Error GoTo ErrHandler
     Call Buffer.ReadByte
     
     Dim creatures() As String
-    Dim I As Long
+    Dim i As Long
     
     creatures = Split(Buffer.ReadASCIIString(), SEPARATOR)
     
-    For I = 0 To UBound(creatures())
-        Call frmEntrenador.lstCriaturas.AddItem(creatures(I))
-    Next I
+    For i = 0 To UBound(creatures())
+        Call frmEntrenador.lstCriaturas.AddItem(creatures(i))
+    Next i
     frmEntrenador.Show , frmMain
     
     'If we got here then packet is compelte, copy data back to original queue
@@ -3219,7 +3219,7 @@ On Error GoTo ErrHandler
     Call Buffer.ReadByte
     
     Dim guildList() As String
-    Dim I As Long
+    Dim i As Long
     
     'Get news' string
     frmGuildNews.news = Buffer.ReadASCIIString()
@@ -3227,16 +3227,16 @@ On Error GoTo ErrHandler
     'Get Enemy guilds list
     guildList = Split(Buffer.ReadASCIIString(), SEPARATOR)
     
-    For I = 0 To UBound(guildList)
-        Call frmGuildNews.guerra.AddItem(guildList(I))
-    Next I
+    For i = 0 To UBound(guildList)
+        Call frmGuildNews.guerra.AddItem(guildList(i))
+    Next i
     
     'Get Allied guilds list
     guildList = Split(Buffer.ReadASCIIString(), SEPARATOR)
     
-    For I = 0 To UBound(guildList)
-        Call frmGuildNews.aliados.AddItem(guildList(I))
-    Next I
+    For i = 0 To UBound(guildList)
+        Call frmGuildNews.aliados.AddItem(guildList(i))
+    Next i
     
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
@@ -3295,13 +3295,13 @@ On Error GoTo ErrHandler
     Call Buffer.ReadByte
     
     Dim guildList() As String
-    Dim I As Long
+    Dim i As Long
     
     guildList = Split(Buffer.ReadASCIIString(), SEPARATOR)
     
-    For I = 0 To UBound(guildList())
-        Call frmPeaceProp.lista.AddItem(guildList(I))
-    Next I
+    For i = 0 To UBound(guildList())
+        Call frmPeaceProp.lista.AddItem(guildList(i))
+    Next i
     
     frmPeaceProp.ProposalType = TIPO_PROPUESTA.ALIANZA
     Call frmPeaceProp.Show(vbModeless, frmMain)
@@ -3334,13 +3334,13 @@ On Error GoTo ErrHandler
     Call Buffer.ReadByte
     
     Dim guildList() As String
-    Dim I As Long
+    Dim i As Long
     
     guildList = Split(Buffer.ReadASCIIString(), SEPARATOR)
     
-    For I = 0 To UBound(guildList())
-        Call frmPeaceProp.lista.AddItem(guildList(I))
-    Next I
+    For i = 0 To UBound(guildList())
+        Call frmPeaceProp.lista.AddItem(guildList(i))
+    Next i
     
     frmPeaceProp.ProposalType = TIPO_PROPUESTA.PAZ
     Call frmPeaceProp.Show(vbModeless, frmMain)
@@ -3450,32 +3450,32 @@ On Error GoTo ErrHandler
     Call Buffer.ReadByte
     
     Dim List() As String
-    Dim I As Long
+    Dim i As Long
     
     With frmGuildLeader
         'Get list of existing guilds
         List = Split(Buffer.ReadASCIIString(), SEPARATOR)
         
-        For I = 0 To UBound(List())
-            Call .guildslist.AddItem(List(I))
-        Next I
+        For i = 0 To UBound(List())
+            Call .guildslist.AddItem(List(i))
+        Next i
         
         'Get list of guild's members
         List = Split(Buffer.ReadASCIIString(), SEPARATOR)
         .Miembros.Caption = "El clan cuenta con " & CStr(UBound(List()) + 1) & " miembros."
         
-        For I = 0 To UBound(List())
-            Call .members.AddItem(List(I))
-        Next I
+        For i = 0 To UBound(List())
+            Call .members.AddItem(List(i))
+        Next i
         
         .txtguildnews = Buffer.ReadASCIIString()
         
         'Get list of join requests
         List = Split(Buffer.ReadASCIIString(), SEPARATOR)
         
-        For I = 0 To UBound(List())
-            Call .solicitudes.AddItem(List(I))
-        Next I
+        For i = 0 To UBound(List())
+            Call .solicitudes.AddItem(List(i))
+        Next i
         
         .Show , frmMain
     End With
@@ -3537,13 +3537,13 @@ On Error GoTo ErrHandler
         .antifaccion.Caption = "Puntos Antifaccion: " & Buffer.ReadASCIIString()
         
         Dim codexStr() As String
-        Dim I As Long
+        Dim i As Long
         
         codexStr = Split(Buffer.ReadASCIIString(), SEPARATOR)
         
-        For I = 0 To 7
-            .Codex(I).Caption = codexStr(I)
-        Next I
+        For i = 0 To 7
+            .Codex(i).Caption = codexStr(i)
+        Next i
         
         .desc.Text = Buffer.ReadASCIIString()
         
@@ -3638,15 +3638,15 @@ Private Sub HandleTradeOK()
     Call incomingData.ReadByte
     
     If frmComerciar.Visible Then
-        Dim I As Long
+        Dim i As Long
         
-        For I = 1 To MAX_INVENTORY_SLOTS
-            If Inventario.OBJIndex(I) <> 0 Then
-                Call frmComerciar.List1(1).AddItem(Inventario.ItemName(I))
+        For i = 1 To MAX_INVENTORY_SLOTS
+            If Inventario.OBJIndex(i) <> 0 Then
+                Call frmComerciar.List1(1).AddItem(Inventario.ItemName(i))
             Else
                 Call frmComerciar.List1(1).AddItem("Nada")
             End If
-        Next I
+        Next i
         
         frmComerciar.List1(0).listIndex = frmComerciar.LastIndex1
         frmComerciar.List1(1).listIndex = frmComerciar.LastIndex2
@@ -3667,24 +3667,24 @@ Private Sub HandleBankOK()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Dim I As Long
+    Dim i As Long
     
     If frmBancoObj.Visible Then
-        For I = 1 To MAX_INVENTORY_SLOTS
-            If Inventario.OBJIndex(I) <> 0 Then
-                Call frmBancoObj.List1(1).AddItem(Inventario.ItemName(I))
+        For i = 1 To MAX_INVENTORY_SLOTS
+            If Inventario.OBJIndex(i) <> 0 Then
+                Call frmBancoObj.List1(1).AddItem(Inventario.ItemName(i))
             Else
                 Call frmBancoObj.List1(1).AddItem("Nada")
             End If
-        Next I
+        Next i
         
-        For I = 1 To MAX_BANCOINVENTORY_SLOTS
-            If UserBancoInventory(I).OBJIndex <> 0 Then
-                Call frmBancoObj.List1(0).AddItem(UserBancoInventory(I).Name)
+        For i = 1 To MAX_BANCOINVENTORY_SLOTS
+            If UserBancoInventory(i).OBJIndex <> 0 Then
+                Call frmBancoObj.List1(0).AddItem(UserBancoInventory(i).Name)
             Else
                 Call frmBancoObj.List1(0).AddItem("Nada")
             End If
-        Next I
+        Next i
         
         frmBancoObj.List1(0).listIndex = frmBancoObj.LastIndex1
         frmBancoObj.List1(1).listIndex = frmBancoObj.LastIndex2
@@ -3776,13 +3776,13 @@ On Error GoTo ErrHandler
     Call Buffer.ReadByte
     
     Dim creatureList() As String
-    Dim I As Long
+    Dim i As Long
     
     creatureList = Split(Buffer.ReadASCIIString(), SEPARATOR)
     
-    For I = 0 To UBound(creatureList())
-        Call frmSpawnList.lstCriaturas.AddItem(creatureList(I))
-    Next I
+    For i = 0 To UBound(creatureList())
+        Call frmSpawnList.lstCriaturas.AddItem(creatureList(i))
+    Next i
     frmSpawnList.Show , frmMain
     
     'If we got here then packet is compelte, copy data back to original queue
@@ -3813,13 +3813,13 @@ On Error GoTo ErrHandler
     Call Buffer.ReadByte
     
     Dim sosList() As String
-    Dim I As Long
+    Dim i As Long
     
     sosList = Split(Buffer.ReadASCIIString(), SEPARATOR)
     
-    For I = 0 To UBound(sosList())
-        Call frmMSG.List1.AddItem(sosList(I))
-    Next I
+    For i = 0 To UBound(sosList())
+        Call frmMSG.List1.AddItem(sosList(i))
+    Next i
     
     frmMSG.Show , frmMain
     
@@ -3898,15 +3898,15 @@ On Error GoTo ErrHandler
     Call Buffer.ReadByte
     
     Dim userList() As String
-    Dim I As Long
+    Dim i As Long
     
     userList = Split(Buffer.ReadASCIIString(), SEPARATOR)
     
     If frmPanelGm.Visible Then
         frmPanelGm.cboListaUsus.Clear
-        For I = 0 To UBound(userList())
-            Call frmPanelGm.cboListaUsus.AddItem(userList(I))
-        Next I
+        For i = 0 To UBound(userList())
+            Call frmPanelGm.cboListaUsus.AddItem(userList(i))
+        Next i
         If frmPanelGm.cboListaUsus.ListCount > 0 Then frmPanelGm.cboListaUsus.listIndex = 0
     End If
     
@@ -3930,7 +3930,7 @@ Public Sub WriteLoginExistingChar(ByVal valcode As Integer)
 'Last Modification: 05/17/06
 'Writes the "LoginExistingChar" message to the outgoing data buffer
 '***************************************************
-    Dim I As Long
+    Dim i As Long
     
     With outgoingData
         Call .WriteByte(ClientPacketID.LoginExistingChar)
@@ -3947,9 +3947,9 @@ Public Sub WriteLoginExistingChar(ByVal valcode As Integer)
         Call .WriteByte(App.Minor)
         Call .WriteByte(App.Revision)
         
-        For I = 1 To 7
-            Call .WriteInteger(Versiones(I))
-        Next I
+        For i = 1 To 7
+            Call .WriteInteger(Versiones(i))
+        Next i
         
         Call .WriteInteger(valcode)
         
@@ -3985,7 +3985,7 @@ Public Sub WriteLoginNewChar(ByVal valcode As Integer)
 'Last Modification: 05/17/06
 'Writes the "LoginNewChar" message to the outgoing data buffer
 '***************************************************
-    Dim I As Long
+    Dim i As Long
     
     With outgoingData
         Call .WriteByte(ClientPacketID.LoginNewChar)
@@ -3998,9 +3998,9 @@ Public Sub WriteLoginNewChar(ByVal valcode As Integer)
         Call .WriteASCIIString(UserPassword)
 #End If
         
-        For I = 1 To 7
-            Call .WriteInteger(Versiones(I))
-        Next I
+        For i = 1 To 7
+            Call .WriteInteger(Versiones(i))
+        Next i
         
         Call .WriteInteger(valcode)
         
@@ -4016,9 +4016,9 @@ Public Sub WriteLoginNewChar(ByVal valcode As Integer)
         Call .WriteByte(UserSexo)
         Call .WriteByte(UserClase)
         
-        For I = 1 To NUMSKILLS
-            Call .WriteByte(UserSkills(I))
-        Next I
+        For i = 1 To NUMSKILLS
+            Call .WriteByte(UserSkills(i))
+        Next i
         
         Call .WriteASCIIString(UserEmail)
         
@@ -4526,7 +4526,7 @@ Public Sub WriteCreateNewGuild(ByVal desc As String, ByVal Name As String, ByVal
 'Writes the "CreateNewGuild" message to the outgoing data buffer
 '***************************************************
     Dim temp As String
-    Dim I As Long
+    Dim i As Long
     
     With outgoingData
         Call .WriteByte(ClientPacketID.CreateNewGuild)
@@ -4535,9 +4535,9 @@ Public Sub WriteCreateNewGuild(ByVal desc As String, ByVal Name As String, ByVal
         Call .WriteASCIIString(Name)
         Call .WriteASCIIString(Site)
         
-        For I = LBound(Codex()) To UBound(Codex())
-            temp = temp & Codex(I) & SEPARATOR
-        Next I
+        For i = LBound(Codex()) To UBound(Codex())
+            temp = temp & Codex(i) & SEPARATOR
+        Next i
         
         If Len(temp) Then _
             temp = Left$(temp, Len(temp) - 1)
@@ -4615,14 +4615,14 @@ Public Sub WriteModifySkills(ByRef skillEdt() As Byte)
 'Last Modification: 05/17/06
 'Writes the "ModifySkills" message to the outgoing data buffer
 '***************************************************
-    Dim I As Long
+    Dim i As Long
     
     With outgoingData
         Call .WriteByte(ClientPacketID.ModifySkills)
         
-        For I = 1 To NUMSKILLS
-            Call .WriteByte(skillEdt(I))
-        Next I
+        For i = 1 To NUMSKILLS
+            Call .WriteByte(skillEdt(i))
+        Next i
     End With
 End Sub
 
@@ -4785,16 +4785,16 @@ Public Sub WriteClanCodexUpdate(ByVal desc As String, ByRef Codex() As String)
 'Writes the "ClanCodexUpdate" message to the outgoing data buffer
 '***************************************************
     Dim temp As String
-    Dim I As Long
+    Dim i As Long
     
     With outgoingData
         Call .WriteByte(ClientPacketID.ClanCodexUpdate)
         
         Call .WriteASCIIString(desc)
         
-        For I = LBound(Codex()) To UBound(Codex())
-            temp = temp & Codex(I) & SEPARATOR
-        Next I
+        For i = LBound(Codex()) To UBound(Codex())
+            temp = temp & Codex(i) & SEPARATOR
+        Next i
         
         If Len(temp) Then _
             temp = Left$(temp, Len(temp) - 1)
@@ -6814,14 +6814,14 @@ Public Sub WriteIPToNick(ByRef Ip() As Byte)
 '***************************************************
     If UBound(Ip()) - LBound(Ip()) + 1 <> 4 Then Exit Sub   'Invalid IP
     
-    Dim I As Long
+    Dim i As Long
     
     With outgoingData
         Call .WriteByte(ClientPacketID.IPToNick)
         
-        For I = LBound(Ip()) To UBound(Ip())
-            Call .WriteByte(Ip(I))
-        Next I
+        For i = LBound(Ip()) To UBound(Ip())
+            Call .WriteByte(Ip(i))
+        Next i
     End With
 End Sub
 
@@ -7276,14 +7276,14 @@ Public Sub WriteBanIP(ByRef Ip() As Byte)
 '***************************************************
     If UBound(Ip()) - LBound(Ip()) + 1 <> 4 Then Exit Sub   'Invalid IP
     
-    Dim I As Long
+    Dim i As Long
     
     With outgoingData
         Call .WriteByte(ClientPacketID.BanIP)
         
-        For I = LBound(Ip()) To UBound(Ip())
-            Call .WriteByte(Ip(I))
-        Next I
+        For i = LBound(Ip()) To UBound(Ip())
+            Call .WriteByte(Ip(i))
+        Next i
     End With
 End Sub
 
@@ -7301,14 +7301,14 @@ Public Sub WriteUnbanIP(ByRef Ip() As Byte)
 '***************************************************
     If UBound(Ip()) - LBound(Ip()) + 1 <> 4 Then Exit Sub   'Invalid IP
     
-    Dim I As Long
+    Dim i As Long
     
     With outgoingData
         Call .WriteByte(ClientPacketID.UnbanIP)
         
-        For I = LBound(Ip()) To UBound(Ip())
-            Call .WriteByte(Ip(I))
-        Next I
+        For i = LBound(Ip()) To UBound(Ip())
+            Call .WriteByte(Ip(i))
+        Next i
     End With
 End Sub
 
@@ -8121,4 +8121,48 @@ Public Sub WriteIgnored()
 'Writes the "Ignored" message to the outgoing data buffer
 '***************************************************
     Call outgoingData.WriteByte(ClientPacketID.Ignored)
+End Sub
+
+''
+' Flushes the outgoing data buffer of the user.
+'
+' @param    UserIndex User whose outgoing data buffer will be flushed.
+
+Public Sub FlushBuffer()
+'***************************************************
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Last Modification: 05/17/06
+'Sends all data existing in the buffer
+'***************************************************
+    Dim sndData As String
+    
+    With outgoingData
+        If .length = 0 Then _
+            Exit Sub
+        
+        sndData = .ReadASCIIStringFixed(.length)
+        
+        Call SendData(sndData)
+    End With
+End Sub
+
+''
+' Sends the data using the socket controls in the MainForm.
+'
+' @param    sdData  The data to be sent to the server.
+
+Private Sub SendData(ByVal sdData As String)
+    'No enviamos nada si no estamos conectados
+#If UsarWrench = 1 Then
+    If Not frmMain.Socket1.Connected Then Exit Sub
+#Else
+    If frmMain.Winsock1.State <> sckConnected Then Exit Sub
+#End If
+    
+#If UsarWrench = 1 Then
+    Call frmMain.Socket1.Write(sdData, Len(sdData))
+#Else
+    Call frmMain.Winsock1.SendData(sdData)
+#End If
+
 End Sub

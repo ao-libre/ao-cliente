@@ -75,7 +75,7 @@ Sub HandleData(ByVal Rdata As String)
     Dim m As Integer
     Dim T() As String
     
-    Dim tstr As String
+    Dim tStr As String
     Dim tstr2 As String
     
     Dim sData As String
@@ -324,10 +324,10 @@ Sub HandleData(ByVal Rdata As String)
 
     Select Case Left$(sData, 2)
         Case "AS"
-            tstr = mid$(sData, 3, 1)
+            tStr = mid$(sData, 3, 1)
             k = Val(Right$(sData, Len(sData) - 3))
             
-            Select Case tstr
+            Select Case tStr
                 Case "M": UserMinMAN = Val(Right$(sData, Len(sData) - 3))
                 Case "H": UserMinHP = Val(Right$(sData, Len(sData) - 3))
                 Case "S": UserMinSTA = Val(Right$(sData, Len(sData) - 3))
@@ -335,7 +335,7 @@ Sub HandleData(ByVal Rdata As String)
                 Case "E": UserExp = Val(Right$(sData, Len(sData) - 3))
             End Select
             
-            frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+            frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
             frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
             frmMain.Hpshp.Width = (((UserMinHP / 100) / (UserMaxHP / 100)) * 94)
             
@@ -692,7 +692,7 @@ Sub HandleData(ByVal Rdata As String)
             UserLvl = Val(ReadField(8, Rdata, 44))
             UserPasarNivel = Val(ReadField(9, Rdata, 44))
             UserExp = Val(ReadField(10, Rdata, 44))
-            frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+            frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
             frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
             frmMain.Hpshp.Width = (((UserMinHP / 100) / (UserMaxHP / 100)) * 94)
             
@@ -1139,45 +1139,6 @@ Sub HandleData(ByVal Rdata As String)
     
     ';Call LogCustom("Unhandled data: " & Rdata)
     
-End Sub
-
-Sub SendData(ByVal sdData As String)
-
-    'No enviamos nada si no estamos conectados
-#If UsarWrench = 1 Then
-    If Not frmMain.Socket1.Connected Then Exit Sub
-#Else
-    If frmMain.Winsock1.State <> sckConnected Then Exit Sub
-#End If
-
-    Dim AuxCmd As String
-    AuxCmd = UCase$(Left$(sdData, 5))
-    
-    'Debug.Print ">> " & sdData
-
-#If SeguridadAlkon Then
-    bK = CheckSum(bK, sdData)
-
-
-    'Agregamos el fin de linea
-    sdData = sdData & "~" & bK & ENDC
-#Else
-    sdData = sdData & ENDC
-#End If
-
-    'Para evitar el spamming
-    If AuxCmd = "DEMSG" And Len(sdData) > 8000 Then
-        Exit Sub
-    ElseIf Len(sdData) > 300 And AuxCmd <> "DEMSG" Then
-        Exit Sub
-    End If
-
-#If UsarWrench = 1 Then
-    Call frmMain.Socket1.Write(sdData, Len(sdData))
-#Else
-    Call frmMain.Winsock1.SendData(sdData)
-#End If
-
 End Sub
 
 Sub Login(ByVal valcode As Integer)
