@@ -137,6 +137,8 @@ Public Sub CopyBuffer(ByRef source As clsByteQueue)
     
     Call source.PeekBlock(buf, source.length)
     
+    length = 0
+    
     ' Write buffer
     Call WriteBlock(buf, source.length)
 End Sub

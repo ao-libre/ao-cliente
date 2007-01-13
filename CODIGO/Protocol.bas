@@ -2538,7 +2538,7 @@ Private Sub HandleChangeSpellSlot()
 '
 '***************************************************
 On Error GoTo ErrHandler
-    If incomingData.length < 22 Then Exit Sub
+    If incomingData.length < 6 Then Exit Sub
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As New clsByteQueue
