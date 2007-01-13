@@ -120,6 +120,8 @@ Public Sub CopyBuffer(ByRef source As clsByteQueue)
 'Last Modification: 04/27/06
 'A Visual Basic equivalent of a Copy Contructor
 '***************************************************
+    If source.length = 0 Then Exit Sub
+    
     ' Set capacity and resize array - make sure all data is lost
     queueCapacity = source.Capacity
     
@@ -176,7 +178,7 @@ Private Function WriteData(ByRef buf() As Byte, ByVal dataLength As Long) As Lon
 '***************************************************
     'Check if there is enough free space
     If queueCapacity - queueLength - dataLength < 0 Then
-        Err.raise NOT_ENOUGH_DATA
+        Err.Raise NOT_ENOUGH_DATA
         Exit Function
     End If
     
@@ -210,7 +212,7 @@ Private Function ReadData(ByRef buf() As Byte, ByVal dataLength As Long) As Long
 '***************************************************
     'Check if we can read the number of bytes requested
     If dataLength > queueLength Then
-        Err.raise NOT_ENOUGH_DATA
+        Err.Raise NOT_ENOUGH_DATA
         Exit Function
     End If
     
