@@ -838,10 +838,6 @@ Sub Main()
     frmConnect.version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
     AddtoRichTextBox frmCargando.status, "Buscando servidores....", 0, 0, 0, 0, 0, 1
 
-#If UsarWrench = 1 Then
-    frmMain.Socket1.Startup
-#End If
-
     Call CargarServidores
 'TODO : esto de ServerRecibidos no se podría sacar???
     ServersRecibidos = True
@@ -850,6 +846,9 @@ Sub Main()
     AddtoRichTextBox frmCargando.status, "Iniciando constantes...", 0, 0, 0, 0, 0, 1
     
     Call InicializarNombres
+    
+    ' Initialize FONTTYPES
+    Call Protocol.InitFonts
     
     frmOldPersonaje.NameTxt.Text = Config_Inicio.Name
     frmOldPersonaje.PasswordTxt.Text = ""
@@ -904,6 +903,10 @@ UserMap = 1
     frmPres.Picture = LoadPicture(App.Path & "\Graficos\bosquefinal.jpg")
     frmPres.Show vbModal    'Es modal, así que se detiene la ejecución de Main hasta que se desaparece
     
+#If UsarWrench = 1 Then
+    frmMain.Socket1.Startup
+#End If
+
     frmConnect.Visible = True
 
 'TODO : Esto va en Engine Initialization

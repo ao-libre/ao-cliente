@@ -188,7 +188,7 @@ End Sub
 
 Private Sub Command2_Click()
 
-frmMain.Inet1.URL = "http://ao.alkon.com.ar/admin/iplist2.txt"
+frmMain.Inet1.url = "http://ao.alkon.com.ar/admin/iplist2.txt"
 RawServersList = frmMain.Inet1.OpenURL
 
 
@@ -320,10 +320,7 @@ Select Case index
             Call Audio.PlayMIDI("7.mid")
         End If
         
-        
-        
-        'frmCrearPersonaje.Show vbModal
-        EstadoLogin = Dados
+        EstadoLogin = E_MODO.Dados
 #If UsarWrench = 1 Then
         If frmMain.Socket1.Connected Then
             frmMain.Socket1.Disconnect

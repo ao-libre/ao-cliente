@@ -43,12 +43,6 @@ Option Explicit
 'having too many string lengths in the queue. Yes, each string is NULL-terminated :P
 Private Const SEPARATOR As String * 1 = vbNullChar
 
-''
-' The error number thrown when there is not enough data in
-' the buffer to be read or not enough space to write.
-' It's 9 (subscript out of range) + 40000
-Public Const NOT_ENOUGH_DATA As Long = 40009
-
 Private Type tFont
     red As Byte
     green As Byte
@@ -547,6 +541,7 @@ Public Sub HandleIncomingData()
 'Last Modification: 05/17/06
 '
 '***************************************************
+On Local Error Resume Next
     Select Case incomingData.PeekByte()
         Case ServerPacketID.logged                  ' LOGGED
             Call HandleLogged
@@ -870,7 +865,7 @@ Public Sub HandleIncomingData()
     End Select
     
     'Done with this packet, move on to next one
-    If incomingData.length > 0 And Not Err.Number = 40009 Then
+    If incomingData.length > 0 And Not Err.Number = incomingData.NotEnoughDataErrCode Then
         Err.Clear
         Call HandleIncomingData
     End If
@@ -937,7 +932,7 @@ Private Sub HandleRemoveCharDialog()
 '***************************************************
     'Check if the packet is complete
     If incomingData.length < 3 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -1391,7 +1386,7 @@ Private Sub HandleUpdateSta()
 '***************************************************
     'Check packet is complete
     If incomingData.length < 3 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -1414,7 +1409,7 @@ Private Sub HandleUpdateMana()
 '***************************************************
     'Check packet is complete
     If incomingData.length < 3 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -1442,7 +1437,7 @@ Private Sub HandleUpdateHP()
 '***************************************************
     'Check packet is complete
     If incomingData.length < 3 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -1472,7 +1467,7 @@ Private Sub HandleUpdateGold()
 '***************************************************
     'Check packet is complete
     If incomingData.length < 5 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -1495,7 +1490,7 @@ Private Sub HandleUpdateExp()
 '***************************************************
     'Check packet is complete
     If incomingData.length < 5 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -1504,7 +1499,7 @@ Private Sub HandleUpdateExp()
     
     'Get data and update form
     UserExp = incomingData.ReadLong()
-    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
 End Sub
 
@@ -1518,7 +1513,7 @@ Private Sub HandleChangeMap()
 '
 '***************************************************
     If incomingData.length < 5 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -1571,7 +1566,7 @@ Private Sub HandlePosUpdate()
 '
 '***************************************************
     If incomingData.length < 3 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -1587,7 +1582,7 @@ Private Sub HandlePosUpdate()
     
     'Set char
     MapData(UserPos.X, UserPos.Y).CharIndex = UserCharIndex
-    charlist(UserCharIndex).pos = UserPos
+    charlist(UserCharIndex).Pos = UserPos
     
     'Update pos label
     frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.X & "," & UserPos.Y & ")"
@@ -1603,7 +1598,7 @@ Private Sub HandleNPCHitUser()
 '
 '***************************************************
     If incomingData.length < 4 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -1636,7 +1631,7 @@ Private Sub HandleUserHitNPC()
 '
 '***************************************************
     If incomingData.length < 3 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -1656,7 +1651,7 @@ Private Sub HandleUserAttackedSwing()
 '
 '***************************************************
     If incomingData.length < 3 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -1676,7 +1671,7 @@ Private Sub HandleUserHittedByUser()
 '
 '***************************************************
     If incomingData.length < 6 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -1713,7 +1708,7 @@ Private Sub HandleUserHittedUser()
 '
 '***************************************************
     If incomingData.length < 6 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -1751,7 +1746,7 @@ Private Sub HandleChatOverHead()
 '***************************************************
 On Error GoTo ErrHandler
     If incomingData.length < 8 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -1796,7 +1791,7 @@ Private Sub HandleConsoleMessage()
 '***************************************************
 On Error GoTo ErrHandler
     If incomingData.length < 4 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -1836,7 +1831,7 @@ Private Sub HandleGuildChat()
 '***************************************************
 On Error GoTo ErrHandler
     If incomingData.length < 3 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -1878,7 +1873,7 @@ Private Sub HandleShowMessageBox()
 '***************************************************
 On Error GoTo ErrHandler
     If incomingData.length < 3 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -1910,7 +1905,7 @@ Private Sub HandleUserIndexInServer()
 '
 '***************************************************
     If incomingData.length < 3 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -1930,7 +1925,7 @@ Private Sub HandleUserCharIndexInServer()
 '
 '***************************************************
     If incomingData.length < 3 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -1938,7 +1933,7 @@ Private Sub HandleUserCharIndexInServer()
     Call incomingData.ReadByte
     
     UserCharIndex = incomingData.ReadInteger()
-    UserPos = charlist(UserCharIndex).pos
+    UserPos = charlist(UserCharIndex).Pos
     frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.X & "," & UserPos.Y & ")"
 End Sub
 
@@ -1953,7 +1948,7 @@ Private Sub HandleCharacterCreate()
 '***************************************************
 On Error GoTo ErrHandler
     If incomingData.length < 24 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -2014,7 +2009,7 @@ Private Sub HandleCharacterRemove()
 '
 '***************************************************
     If incomingData.length < 3 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -2040,7 +2035,7 @@ Private Sub HandleCharacterMove()
 '
 '***************************************************
     If incomingData.length < 5 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -2082,7 +2077,7 @@ Private Sub HandleCharacterChange()
 '
 '***************************************************
     If incomingData.length < 18 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -2131,7 +2126,7 @@ Private Sub HandleObjectCreate()
 '
 '***************************************************
     If incomingData.length < 5 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -2159,7 +2154,7 @@ Private Sub HandleObjectDelete()
 '
 '***************************************************
     If incomingData.length < 3 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -2184,7 +2179,7 @@ Private Sub HandleBlockPosition()
 '
 '***************************************************
     If incomingData.length < 4 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -2210,7 +2205,7 @@ Private Sub HandlePlayMIDI()
 '
 '***************************************************
     If incomingData.length < 4 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -2234,7 +2229,7 @@ Private Sub HandlePlayWave()
 '
 '***************************************************
     If incomingData.length < 2 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -2257,7 +2252,7 @@ Private Sub HandleGuildList()
 '***************************************************
 On Error GoTo ErrHandler
     If incomingData.length < 3 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -2317,7 +2312,7 @@ Private Sub HandleAreaChanged()
 '
 '***************************************************
     If incomingData.length < 3 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -2344,12 +2339,12 @@ Private Sub HandleValidateClient()
 '***************************************************
 #If SeguridadAlkon Then
     If incomingData.length < 43 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
 #Else
     If incomingData.length < 7 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
 #End If
@@ -2443,7 +2438,7 @@ Private Sub HandleCreateFX()
 '
 '***************************************************
     If incomingData.length < 7 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -2467,7 +2462,7 @@ Private Sub HandleUpdateUserStats()
 '
 '***************************************************
     If incomingData.length < 26 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -2485,7 +2480,7 @@ Private Sub HandleUpdateUserStats()
     UserPasarNivel = incomingData.ReadLong()
     UserExp = incomingData.ReadLong()
     
-    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
     frmMain.Hpshp.Width = (((UserMinHP / 100) / (UserMaxHP / 100)) * 94)
     
@@ -2517,7 +2512,7 @@ Private Sub HandleWorkRequestTarget()
 '
 '***************************************************
     If incomingData.length < 2 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -2557,7 +2552,7 @@ Private Sub HandleChangeInventorySlot()
 '***************************************************
 On Error GoTo ErrHandler
     If incomingData.length < 22 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -2613,7 +2608,7 @@ Private Sub HandleChangeBankSlot()
 '***************************************************
 On Error GoTo ErrHandler
     If incomingData.length < 22 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -2659,7 +2654,7 @@ Private Sub HandleChangeSpellSlot()
 '***************************************************
 On Error GoTo ErrHandler
     If incomingData.length < 6 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -2695,7 +2690,7 @@ Private Sub HandleAtributes()
 '
 '***************************************************
     If incomingData.length < 1 + NUMATRIBUTES Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -2733,7 +2728,7 @@ Private Sub HandleBlacksmithWeapons()
 '***************************************************
 On Error GoTo ErrHandler
     If incomingData.length < 3 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -2783,7 +2778,7 @@ Private Sub HandleBlacksmithArmors()
 '***************************************************
 On Error GoTo ErrHandler
     If incomingData.length < 3 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -2833,7 +2828,7 @@ Private Sub HandleCarpenterObjects()
 '***************************************************
 On Error GoTo ErrHandler
     If incomingData.length < 3 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -2897,7 +2892,7 @@ Private Sub HandleErrorMessage()
 '***************************************************
 On Error GoTo ErrHandler
     If incomingData.length < 3 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -2974,7 +2969,7 @@ Private Sub HandleShowSignal()
 '***************************************************
 On Error GoTo ErrHandler
     If incomingData.length < 5 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -3009,7 +3004,7 @@ Private Sub HandleChangeNPCInventorySlot()
 '***************************************************
 On Error GoTo ErrHandler
     If incomingData.length < 20 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -3054,7 +3049,7 @@ Private Sub HandleUpdateHungerAndThirst()
 '
 '***************************************************
     If incomingData.length < 5 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -3079,7 +3074,7 @@ Private Sub HandleFame()
 '
 '***************************************************
     If incomingData.length < 29 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -3110,7 +3105,7 @@ Private Sub HandleMiniStats()
 '***************************************************
 On Error GoTo ErrHandler
     If incomingData.length < 20 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -3149,7 +3144,7 @@ Private Sub HandleLevelUp()
 '
 '***************************************************
     If incomingData.length < 3 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -3171,7 +3166,7 @@ Private Sub HandleAddForumMessage()
 '***************************************************
 On Error GoTo ErrHandler
     If incomingData.length < 5 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -3228,7 +3223,7 @@ Private Sub HandleSetInvisible()
 '
 '***************************************************
     If incomingData.length < 4 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -3260,7 +3255,7 @@ Private Sub HandleDiceRoll()
 '
 '***************************************************
     If incomingData.length < 11 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -3338,7 +3333,7 @@ Private Sub HandleSendSkills()
 '
 '***************************************************
     If incomingData.length < 1 + NUMSKILLS Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -3364,7 +3359,7 @@ Private Sub HandleTrainerCreatureList()
 '***************************************************
 On Error GoTo ErrHandler
     If incomingData.length < 3 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -3404,7 +3399,7 @@ Private Sub HandleGuildNews()
 '***************************************************
 On Error GoTo ErrHandler
     If incomingData.length < 7 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -3454,7 +3449,7 @@ Private Sub HandleOfferDetails()
 '***************************************************
 On Error GoTo ErrHandler
     If incomingData.length < 3 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -3486,7 +3481,7 @@ Private Sub HandleAlianceProposalsList()
 '***************************************************
 On Error GoTo ErrHandler
     If incomingData.length < 3 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -3528,7 +3523,7 @@ Private Sub HandlePeaceProposalsList()
 '***************************************************
 On Error GoTo ErrHandler
     If incomingData.length < 3 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -3570,7 +3565,7 @@ Private Sub HandleCharacterInfo()
 '***************************************************
 On Error GoTo ErrHandler
     If incomingData.length < 36 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -3621,11 +3616,11 @@ On Error GoTo ErrHandler
         .criminales.Caption = "Criminales asesinados: " & CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .Status.Caption = " (Ciudadano)"
-            .Status.ForeColor = vbBlue
+            .status.Caption = " (Ciudadano)"
+            .status.ForeColor = vbBlue
         Else
-            .Status.Caption = " (Criminal)"
-            .Status.ForeColor = vbRed
+            .status.Caption = " (Criminal)"
+            .status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)
@@ -3650,7 +3645,7 @@ Private Sub HandleGuildLeaderInfo()
 '***************************************************
 On Error GoTo ErrHandler
     If incomingData.length < 9 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -3711,7 +3706,7 @@ Private Sub HandleGuildDetails()
 '***************************************************
 On Error GoTo ErrHandler
     If incomingData.length < 25 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -3757,7 +3752,7 @@ On Error GoTo ErrHandler
         codexStr = Split(Buffer.ReadASCIIString(), SEPARATOR)
         
         For i = 0 To 7
-            .codex(i).Caption = codexStr(i)
+            .Codex(i).Caption = codexStr(i)
         Next i
         
         .desc.Text = Buffer.ReadASCIIString()
@@ -3817,7 +3812,7 @@ Private Sub HandleShowUserRequest()
 '***************************************************
 On Error GoTo ErrHandler
     If incomingData.length < 3 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -3916,7 +3911,7 @@ Private Sub HandleChangeUserTradeSlot()
 '***************************************************
 On Error GoTo ErrHandler
     If incomingData.length < 20 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -3964,7 +3959,7 @@ Private Sub HandleSendNight()
 '
 '***************************************************
     If incomingData.length < 2 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -3987,7 +3982,7 @@ Private Sub HandleSpawnList()
 '***************************************************
 On Error GoTo ErrHandler
     If incomingData.length < 3 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -4027,7 +4022,7 @@ Private Sub HandleShowSOSForm()
 '***************************************************
 On Error GoTo ErrHandler
     If incomingData.length < 3 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -4068,7 +4063,7 @@ Private Sub HandleShowMOTDEditionForm()
 '***************************************************
 On Error GoTo ErrHandler
     If incomingData.length < 3 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -4117,7 +4112,7 @@ Private Sub HandleUserNameList()
 '***************************************************
 On Error GoTo ErrHandler
     If incomingData.length < 3 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
@@ -4750,7 +4745,7 @@ End Sub
 ' @param    skill The skill which the user attempts to use.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCreateNewGuild(ByVal desc As String, ByVal Name As String, ByVal Site As String, ByRef codex() As String)
+Public Sub WriteCreateNewGuild(ByVal desc As String, ByVal Name As String, ByVal Site As String, ByRef Codex() As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -4766,8 +4761,8 @@ Public Sub WriteCreateNewGuild(ByVal desc As String, ByVal Name As String, ByVal
         Call .WriteASCIIString(Name)
         Call .WriteASCIIString(Site)
         
-        For i = LBound(codex()) To UBound(codex())
-            temp = temp & codex(i) & SEPARATOR
+        For i = LBound(Codex()) To UBound(Codex())
+            temp = temp & Codex(i) & SEPARATOR
         Next i
         
         If Len(temp) Then _
@@ -5009,7 +5004,7 @@ End Sub
 ' @param    codex New codex of the clan.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteClanCodexUpdate(ByVal desc As String, ByRef codex() As String)
+Public Sub WriteClanCodexUpdate(ByVal desc As String, ByRef Codex() As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5023,8 +5018,8 @@ Public Sub WriteClanCodexUpdate(ByVal desc As String, ByRef codex() As String)
         
         Call .WriteASCIIString(desc)
         
-        For i = LBound(codex()) To UBound(codex())
-            temp = temp & codex(i) & SEPARATOR
+        For i = LBound(Codex()) To UBound(Codex())
+            temp = temp & Codex(i) & SEPARATOR
         Next i
         
         If Len(temp) Then _
