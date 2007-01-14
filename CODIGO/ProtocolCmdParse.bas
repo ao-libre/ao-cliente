@@ -1260,7 +1260,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             Case "/AEMAIL"
                 If notNullArguments Then
                     tmpArr = AEMAILSplit(ArgumentosRaw)
-                    If tmpArr = Null Then
+                    If LenB(tmpArr(0)) = 0 Then
                         'Faltan los parametros con el formato propio
                         Call ShowConsoleMsg("Formato incorrecto. Utilice /aemail NICKNAME-NUEVOMAIL.")
                     Else
@@ -1516,7 +1516,7 @@ End Function
 ' @param text All the comand without the /aemail
 ' @return An bidimensional array with user and mail
 
-Private Function AEMAILSplit(ByRef text As String) 'No return type allows to return arrays :D
+Private Function AEMAILSplit(ByRef Text As String) 'No return type allows to return arrays :D
 '***************************************************
 'Author: Lucas Tavolaro Ortuz (Tavo)
 'Last Modification: 01/13/07
@@ -1525,15 +1525,15 @@ Private Function AEMAILSplit(ByRef text As String) 'No return type allows to ret
 Dim tmpArr(0 To 1) As String
 Dim pos As Byte
 
-pos = CByte(InStrB(0, text, "-"))
+pos = CByte(InStrB(0, Text, "-"))
 
 If pos <> 0 Then
-    tmpArr(0) = mid$(text, 0, pos)
-    tmpArr(1) = mid$(text, pos + 2)
-    
-    AEMAILSplit = tmpArr
+    tmpArr(0) = mid$(Text, 0, pos)
+    tmpArr(1) = mid$(Text, pos + 2)
 Else
-    AEMAILSplit = Null
+    tmpArr(0) = vbNullString
 End If
+
+AEMAILSplit = tmpArr
 
 End Function

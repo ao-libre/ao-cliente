@@ -984,10 +984,17 @@ Private Sub boton_Click(index As Integer)
             frmConnect.FONDO.Picture = LoadPicture(App.Path & "\Graficos\conectar.jpg")
             Me.Visible = False
             
-            
-        Case 2
-            Call Audio.PlayWave(SND_DICE)
-            Call TirarDados
+#If UsarWrench = 1 Then
+                If frmMain.Socket1.Connected Then
+                    frmMain.Socket1.Disconnect
+                    frmMain.Socket1.Cleanup
+                End If
+
+#Else
+                If frmMain.Winsock1.State <> sckClosed Then
+                    frmMain.Winsock1.Close
+            End If
+#End If
     End Select
 End Sub
 

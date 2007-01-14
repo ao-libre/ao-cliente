@@ -83,3 +83,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 13/01/2007: El formulario de password al crear personaje pone los caractéres como asteriscos (Maraxus)
  * 13/01/2007: Arreglé varios bugs en el manejo de raza, clase, sexo y ciudad (Maraxus)
  * 13/01/2007: Corregíel orden de los datos al crearse un nuevo PJ (Maraxus)
+ * 13/01/2007: Corregido los BUGs #1634085 y #1559986. (Tavo)
