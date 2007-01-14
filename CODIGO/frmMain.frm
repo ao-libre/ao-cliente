@@ -560,6 +560,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1379,7 +1380,7 @@ Private Sub Socket1_Connect()
             Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
 #Else
             'conectamos sin seguridad
-            Call Login(0)
+            Call Login(1)
 #End If
 
         Case E_MODO.Normal
@@ -1388,7 +1389,7 @@ Private Sub Socket1_Connect()
             Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
 #Else
             'conectamos sin seguridad
-            Call Login(0)
+            Call Login(1)
 #End If
 
         Case E_MODO.Dados
@@ -1650,7 +1651,7 @@ Private Sub Winsock1_Connect()
             Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
 #Else
             'conectamos sin seguridad
-            Call Login(0)
+            Call Login(1)
 #End If
 
         Case E_MODO.Normal
@@ -1659,7 +1660,7 @@ Private Sub Winsock1_Connect()
             Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
 #Else
             'conectamos sin seguridad
-            Call Login(0)
+            Call Login(1)
 #End If
 
         Case E_MODO.Dados
