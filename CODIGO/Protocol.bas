@@ -43,6 +43,12 @@ Option Explicit
 'having too many string lengths in the queue. Yes, each string is NULL-terminated :P
 Private Const SEPARATOR As String * 1 = vbNullChar
 
+''
+' The error number thrown when there is not enough data in
+' the buffer to be read or not enough space to write.
+' It's 9 (subscript out of range) + 40000
+Public Const NOT_ENOUGH_DATA As Long = 40009
+
 Private Type tFont
     red As Byte
     green As Byte
@@ -1581,7 +1587,7 @@ Private Sub HandlePosUpdate()
     
     'Set char
     MapData(UserPos.X, UserPos.Y).CharIndex = UserCharIndex
-    charlist(UserCharIndex).Pos = UserPos
+    charlist(UserCharIndex).pos = UserPos
     
     'Update pos label
     frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.X & "," & UserPos.Y & ")"
@@ -1932,7 +1938,7 @@ Private Sub HandleUserCharIndexInServer()
     Call incomingData.ReadByte
     
     UserCharIndex = incomingData.ReadInteger()
-    UserPos = charlist(UserCharIndex).Pos
+    UserPos = charlist(UserCharIndex).pos
     frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.X & "," & UserPos.Y & ")"
 End Sub
 
