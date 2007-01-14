@@ -1259,12 +1259,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 
             Case "/AEMAIL"
                 If notNullArguments Then
-                    tmpArr = Split(ArgumentosRaw, "-", 2)
-                    If UBound(tmpArr) = 1 Then
-                        Call WriteAlterMail(tmpArr(0), tmpArr(1))
-                    Else
+                    tmpArr = AEMAILSplit(ArgumentosRaw)
+                    If tmpArr = Null Then
                         'Faltan los parametros con el formato propio
                         Call ShowConsoleMsg("Formato incorrecto. Utilice /aemail NICKNAME-NUEVOMAIL.")
+                    Else
+                        Call WriteAlterMail(tmpArr(0), tmpArr(1))
                     End If
                 Else
                     'Avisar que falta el parametro
@@ -1508,4 +1508,32 @@ Private Function str2ipv4l(ByVal Ip As String) 'No return type allows to return 
     bArr(3) = CByte(tmpArr(3))
     
     str2ipv4l = bArr
+End Function
+
+''
+' Do an Split() in the /AEMAIL in onother way
+'
+' @param text All the comand without the /aemail
+' @return An bidimensional array with user and mail
+
+Private Function AEMAILSplit(ByRef text As String) 'No return type allows to return arrays :D
+'***************************************************
+'Author: Lucas Tavolaro Ortuz (Tavo)
+'Last Modification: 01/13/07
+'Usefull for AEMAIL BUG FIX
+'***************************************************
+Dim tmpArr(0 To 1) As String
+Dim pos As Byte
+
+pos = CByte(InStrB(0, text, "-"))
+
+If pos <> 0 Then
+    tmpArr(0) = mid$(text, 0, pos)
+    tmpArr(1) = mid$(text, pos + 2)
+    
+    AEMAILSplit = tmpArr
+Else
+    AEMAILSplit = Null
+End If
+
 End Function
