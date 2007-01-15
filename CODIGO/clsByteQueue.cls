@@ -151,16 +151,16 @@ End Sub
 ' @return   The smaller of val1 and val2
 ' @remarks  This method is faster than Iif() and cleaner, therefore it's used instead of it
 
-Private Function min(ByVal val1 As Long, ByVal val2 As Long) As Long
+Private Function Min(ByVal val1 As Long, ByVal val2 As Long) As Long
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 04/27/06
 'It's faster than iif and I like it better
 '***************************************************
     If val1 < val2 Then
-        min = val1
+        Min = val1
     Else
-        min = val2
+        Min = val2
     End If
 End Function
 
@@ -243,7 +243,7 @@ Private Function RemoveData(ByVal dataLength As Long) As Long
 'Moves forward the queue overwriting the first dataLength bytes
 '***************************************************
     'Figure out how many bytes we can remove
-    RemoveData = min(dataLength, queueLength)
+    RemoveData = Min(dataLength, queueLength)
     
     'Remove data
     Call CopyMemory(data(0), data(RemoveData), queueLength - RemoveData)
@@ -573,7 +573,9 @@ Public Function ReadASCIIStringFixed(ByVal length As Long) As String
 'Last Modification: 04/27/06
 'Reads a fixed length ASCII string from the queue and removes it
 '***************************************************
-    If queueLength >= length And length > 0 Then
+    If length <= 0 Then Exit Function
+    
+    If queueLength >= length Then
         Dim buf() As Byte
         ReDim buf(length - 1) As Byte
         
@@ -581,6 +583,8 @@ Public Function ReadASCIIStringFixed(ByVal length As Long) As String
         Call RemoveData(ReadData(buf, length))
         
         ReadASCIIStringFixed = StrConv(buf, vbUnicode)
+    Else
+        Err.Raise NOT_ENOUGH_DATA
     End If
 End Function
 
@@ -601,7 +605,9 @@ Public Function ReadUnicodeStringFixed(ByVal length As Long) As String
 'Last Modification: 04/27/06
 'Reads a fixed length UNICODE string from the queue and removes it
 '***************************************************
-    If queueLength >= length And length > 0 Then
+    If length <= 0 Then Exit Function
+    
+    If queueLength >= length Then
         Dim buf() As Byte
         ReDim buf(length * 2 - 1) As Byte
         
@@ -609,6 +615,8 @@ Public Function ReadUnicodeStringFixed(ByVal length As Long) As String
         Call RemoveData(ReadData(buf, length * 2))
         
         ReadUnicodeStringFixed = buf
+    Else
+        Err.Raise NOT_ENOUGH_DATA
     End If
 End Function
 
@@ -826,7 +834,9 @@ Public Function PeekASCIIStringFixed(ByVal length As Long) As String
 'Last Modification: 04/27/06
 'Reads a fixed length ASCII string from the queue but doesn't removes it
 '***************************************************
-    If queueLength >= length And length > 0 Then
+    If length <= 0 Then Exit Function
+    
+    If queueLength >= length Then
         Dim buf() As Byte
         ReDim buf(length - 1) As Byte
         
@@ -834,6 +844,8 @@ Public Function PeekASCIIStringFixed(ByVal length As Long) As String
         Call ReadData(buf, length)
         
         PeekASCIIStringFixed = StrConv(buf, vbUnicode)
+    Else
+        Err.Raise NOT_ENOUGH_DATA
     End If
 End Function
 
@@ -853,7 +865,9 @@ Public Function PeekUnicodeStringFixed(ByVal length As Long) As String
 'Last Modification: 04/27/06
 'Reads a fixed length UNICODE string from the queue but doesn't removes it
 '***************************************************
-    If queueLength >= length And length > 0 Then
+    If length <= 0 Then Exit Function
+    
+    If queueLength >= length Then
         Dim buf() As Byte
         ReDim buf(length * 2 - 1) As Byte
         
@@ -861,6 +875,8 @@ Public Function PeekUnicodeStringFixed(ByVal length As Long) As String
         Call ReadData(buf, length * 2)
         
         PeekUnicodeStringFixed = buf
+    Else
+        Err.Raise NOT_ENOUGH_DATA
     End If
 End Function
 
