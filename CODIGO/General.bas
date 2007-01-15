@@ -1160,11 +1160,8 @@ Private Sub InicializarNombres()
     Ciudades(eCiudad.cUllathorpe) = "Ullathorpe"
     Ciudades(eCiudad.cNix) = "Nix"
     Ciudades(eCiudad.cBanderbill) = "Banderbill"
-
-    CityDesc(1) = "Ullathorpe está establecida en el medio de los grandes bosques de Argentum, es principalmente un pueblo de campesinos y leñadores. Su ubicación hace de Ullathorpe un punto de paso obligado para todos los aventureros ya que se encuentra cerca de los lugares más legendarios de este mundo."
-    CityDesc(2) = "Nix es una gran ciudad. Edificada sobre la costa oeste del principal continente de Argentum."
-    CityDesc(3) = "Banderbill se encuentra al norte de Ullathorpe y Nix, es una de las ciudades más importantes de todo el imperio."
-
+    Ciudades(eCiudad.cLindos) = "Lindos"
+    
     ListaRazas(eRaza.Humano) = "Humano"
     ListaRazas(eRaza.Elfo) = "Elfo"
     ListaRazas(eRaza.ElfoOscuro) = "Elfo Oscuro"

@@ -184,7 +184,7 @@ Public Enum eClass
     Pirat       'Pirata
 End Enum
 
-Enum eCiudad
+Public Enum eCiudad
     cUllathorpe = 1
     cNix
     cBanderbill
@@ -401,7 +401,7 @@ Public UserSexo As eGenero
 Public UserRaza As eRaza
 Public UserEmail As String
 
-Public Const NUMCIUDADES As Byte = 3
+Public Const NUMCIUDADES As Byte = 4
 Public Const NUMSKILLS As Byte = 21
 Public Const NUMATRIBUTOS As Byte = 5
 Public Const NUMCLASES As Byte = 16
@@ -414,7 +414,6 @@ Public UserAtributos(1 To NUMATRIBUTOS) As Integer
 Public AtributosNames(1 To NUMATRIBUTOS) As String
 
 Public Ciudades(1 To NUMCIUDADES) As String
-Public CityDesc(1 To NUMCIUDADES) As String
 
 Public ListaRazas(1 To NUMRAZAS) As String
 Public ListaClases(1 To NUMCLASES) As String
