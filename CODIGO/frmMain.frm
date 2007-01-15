@@ -560,7 +560,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -702,7 +701,7 @@ Dim gD As DSBUFFERDESC
 Dim gW As WAVEFORMATEX
 Dim gFileName As String
 Dim dsE As DirectSoundEnum
-Dim Pos(0) As DSBPOSITIONNOTIFY
+Dim pos(0) As DSBPOSITIONNOTIFY
 Public IsPlaying As Byte
 
 Dim endEvent As Long
@@ -1168,7 +1167,7 @@ Private Sub Label1_Click()
         frmSkills3.text1(i).Caption = UserSkills(i)
     Next i
     Alocados = SkillPoints
-    frmSkills3.Puntos.Caption = "Puntos:" & SkillPoints
+    frmSkills3.puntos.Caption = "Puntos:" & SkillPoints
     frmSkills3.Show , frmMain
 End Sub
 
@@ -1380,7 +1379,7 @@ Private Sub Socket1_Connect()
             Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
 #Else
             'conectamos sin seguridad
-            Call Login(1)
+            Call Login(ValidarLoginMSG(bRK))
 #End If
 
         Case E_MODO.Normal
@@ -1389,7 +1388,7 @@ Private Sub Socket1_Connect()
             Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
 #Else
             'conectamos sin seguridad
-            Call Login(1)
+            Call Login(ValidarLoginMSG(bRK))
 #End If
 
         Case E_MODO.Dados
@@ -1651,7 +1650,7 @@ Private Sub Winsock1_Connect()
             Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
 #Else
             'conectamos sin seguridad
-            Call Login(1)
+            Call Login(ValidarLoginMSG(bRK))
 #End If
 
         Case E_MODO.Normal
@@ -1660,7 +1659,7 @@ Private Sub Winsock1_Connect()
             Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
 #Else
             'conectamos sin seguridad
-            Call Login(1)
+            Call Login(ValidarLoginMSG(bRK))
 #End If
 
         Case E_MODO.Dados
