@@ -1499,7 +1499,7 @@ Private Sub HandleUpdateExp()
     
     'Get data and update form
     UserExp = incomingData.ReadLong()
-    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
 End Sub
 
@@ -1582,7 +1582,7 @@ Private Sub HandlePosUpdate()
     
     'Set char
     MapData(UserPos.X, UserPos.Y).CharIndex = UserCharIndex
-    charlist(UserCharIndex).Pos = UserPos
+    charlist(UserCharIndex).pos = UserPos
     
     'Update pos label
     frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.X & "," & UserPos.Y & ")"
@@ -1774,10 +1774,17 @@ On Error GoTo ErrHandler
     
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
-    
+
 ErrHandler:
+    Dim error As Long
+    error = Err.Number
+On Error GoTo 0
+    
     'Destroy auxiliar buffer
     Set Buffer = Nothing
+
+    If error <> 0 Then _
+        Err.Raise error
 End Sub
 
 ''
@@ -1816,8 +1823,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
+    Dim error As Long
+    error = Err.Number
+On Error GoTo 0
+    
     'Destroy auxiliar buffer
     Set Buffer = Nothing
+
+    If error <> 0 Then _
+        Err.Raise error
 End Sub
 
 ''
@@ -1858,8 +1872,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
+    Dim error As Long
+    error = Err.Number
+On Error GoTo 0
+    
     'Destroy auxiliar buffer
     Set Buffer = Nothing
+
+    If error <> 0 Then _
+        Err.Raise error
 End Sub
 
 ''
@@ -1891,8 +1912,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
+    Dim error As Long
+    error = Err.Number
+On Error GoTo 0
+    
     'Destroy auxiliar buffer
     Set Buffer = Nothing
+
+    If error <> 0 Then _
+        Err.Raise error
 End Sub
 
 ''
@@ -1933,7 +1961,7 @@ Private Sub HandleUserCharIndexInServer()
     Call incomingData.ReadByte
     
     UserCharIndex = incomingData.ReadInteger()
-    UserPos = charlist(UserCharIndex).Pos
+    UserPos = charlist(UserCharIndex).pos
     frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.X & "," & UserPos.Y & ")"
 End Sub
 
@@ -1995,8 +2023,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
+    Dim error As Long
+    error = Err.Number
+On Error GoTo 0
+    
     'Destroy auxiliar buffer
     Set Buffer = Nothing
+
+    If error <> 0 Then _
+        Err.Raise error
 End Sub
 
 ''
@@ -2280,8 +2315,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
+    Dim error As Long
+    error = Err.Number
+On Error GoTo 0
+    
     'Destroy auxiliar buffer
     Set Buffer = Nothing
+
+    If error <> 0 Then _
+        Err.Raise error
 End Sub
 
 ''
@@ -2480,7 +2522,7 @@ Private Sub HandleUpdateUserStats()
     UserPasarNivel = incomingData.ReadLong()
     UserExp = incomingData.ReadLong()
     
-    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
     frmMain.Hpshp.Width = (((UserMinHP / 100) / (UserMaxHP / 100)) * 94)
     
@@ -2593,8 +2635,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
+    Dim error As Long
+    error = Err.Number
+On Error GoTo 0
+    
     'Destroy auxiliar buffer
     Set Buffer = Nothing
+
+    If error <> 0 Then _
+        Err.Raise error
 End Sub
 
 ''
@@ -2639,8 +2688,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
+    Dim error As Long
+    error = Err.Number
+On Error GoTo 0
+    
     'Destroy auxiliar buffer
     Set Buffer = Nothing
+
+    If error <> 0 Then _
+        Err.Raise error
 End Sub
 
 ''
@@ -2676,8 +2732,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
+    Dim error As Long
+    error = Err.Number
+On Error GoTo 0
+    
     'Destroy auxiliar buffer
     Set Buffer = Nothing
+
+    If error <> 0 Then _
+        Err.Raise error
 End Sub
 
 ''
@@ -2763,8 +2826,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
+    Dim error As Long
+    error = Err.Number
+On Error GoTo 0
+    
     'Destroy auxiliar buffer
     Set Buffer = Nothing
+
+    If error <> 0 Then _
+        Err.Raise error
 End Sub
 
 ''
@@ -2813,8 +2883,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
+    Dim error As Long
+    error = Err.Number
+On Error GoTo 0
+    
     'Destroy auxiliar buffer
     Set Buffer = Nothing
+
+    If error <> 0 Then _
+        Err.Raise error
 End Sub
 
 ''
@@ -2861,8 +2938,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
+    Dim error As Long
+    error = Err.Number
+On Error GoTo 0
+    
     'Destroy auxiliar buffer
     Set Buffer = Nothing
+
+    If error <> 0 Then _
+        Err.Raise error
 End Sub
 
 ''
@@ -2920,8 +3004,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
+    Dim error As Long
+    error = Err.Number
+On Error GoTo 0
+    
     'Destroy auxiliar buffer
     Set Buffer = Nothing
+
+    If error <> 0 Then _
+        Err.Raise error
 End Sub
 
 ''
@@ -2989,8 +3080,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
+    Dim error As Long
+    error = Err.Number
+On Error GoTo 0
+    
     'Destroy auxiliar buffer
     Set Buffer = Nothing
+
+    If error <> 0 Then _
+        Err.Raise error
 End Sub
 
 ''
@@ -3035,8 +3133,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
+    Dim error As Long
+    error = Err.Number
+On Error GoTo 0
+    
     'Destroy auxiliar buffer
     Set Buffer = Nothing
+
+    If error <> 0 Then _
+        Err.Raise error
 End Sub
 
 ''
@@ -3130,8 +3235,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
+    Dim error As Long
+    error = Err.Number
+On Error GoTo 0
+    
     'Destroy auxiliar buffer
     Set Buffer = Nothing
+
+    If error <> 0 Then _
+        Err.Raise error
 End Sub
 
 ''
@@ -3191,8 +3303,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
+    Dim error As Long
+    error = Err.Number
+On Error GoTo 0
+    
     'Destroy auxiliar buffer
     Set Buffer = Nothing
+
+    If error <> 0 Then _
+        Err.Raise error
 End Sub
 
 ''
@@ -3380,8 +3499,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
+    Dim error As Long
+    error = Err.Number
+On Error GoTo 0
+    
     'Destroy auxiliar buffer
     Set Buffer = Nothing
+
+    If error <> 0 Then _
+        Err.Raise error
 End Sub
 
 ''
@@ -3430,8 +3556,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
+    Dim error As Long
+    error = Err.Number
+On Error GoTo 0
+    
     'Destroy auxiliar buffer
     Set Buffer = Nothing
+
+    If error <> 0 Then _
+        Err.Raise error
 End Sub
 
 ''
@@ -3462,8 +3595,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
+    Dim error As Long
+    error = Err.Number
+On Error GoTo 0
+    
     'Destroy auxiliar buffer
     Set Buffer = Nothing
+
+    If error <> 0 Then _
+        Err.Raise error
 End Sub
 
 ''
@@ -3504,8 +3644,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
+    Dim error As Long
+    error = Err.Number
+On Error GoTo 0
+    
     'Destroy auxiliar buffer
     Set Buffer = Nothing
+
+    If error <> 0 Then _
+        Err.Raise error
 End Sub
 
 ''
@@ -3546,8 +3693,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
+    Dim error As Long
+    error = Err.Number
+On Error GoTo 0
+    
     'Destroy auxiliar buffer
     Set Buffer = Nothing
+
+    If error <> 0 Then _
+        Err.Raise error
 End Sub
 
 ''
@@ -3612,11 +3766,11 @@ On Error GoTo ErrHandler
         .criminales.Caption = "Criminales asesinados: " & CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .status.Caption = " (Ciudadano)"
-            .status.ForeColor = vbBlue
+            .Status.Caption = " (Ciudadano)"
+            .Status.ForeColor = vbBlue
         Else
-            .status.Caption = " (Criminal)"
-            .status.ForeColor = vbRed
+            .Status.Caption = " (Criminal)"
+            .Status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)
@@ -3626,8 +3780,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
+    Dim error As Long
+    error = Err.Number
+On Error GoTo 0
+    
     'Destroy auxiliar buffer
     Set Buffer = Nothing
+
+    If error <> 0 Then _
+        Err.Raise error
 End Sub
 
 ''
@@ -3687,8 +3848,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
+    Dim error As Long
+    error = Err.Number
+On Error GoTo 0
+    
     'Destroy auxiliar buffer
     Set Buffer = Nothing
+
+    If error <> 0 Then _
+        Err.Raise error
 End Sub
 
 ''
@@ -3760,8 +3928,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
+    Dim error As Long
+    error = Err.Number
+On Error GoTo 0
+    
     'Destroy auxiliar buffer
     Set Buffer = Nothing
+
+    If error <> 0 Then _
+        Err.Raise error
 End Sub
 
 ''
@@ -3824,8 +3999,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
+    Dim error As Long
+    error = Err.Number
+On Error GoTo 0
+    
     'Destroy auxiliar buffer
     Set Buffer = Nothing
+
+    If error <> 0 Then _
+        Err.Raise error
 End Sub
 
 ''
@@ -3937,8 +4119,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
+    Dim error As Long
+    error = Err.Number
+On Error GoTo 0
+    
     'Destroy auxiliar buffer
     Set Buffer = Nothing
+
+    If error <> 0 Then _
+        Err.Raise error
 End Sub
 
 ''
@@ -3999,8 +4188,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
+    Dim error As Long
+    error = Err.Number
+On Error GoTo 0
+    
     'Destroy auxiliar buffer
     Set Buffer = Nothing
+
+    If error <> 0 Then _
+        Err.Raise error
 End Sub
 
 ''
@@ -4040,8 +4236,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
+    Dim error As Long
+    error = Err.Number
+On Error GoTo 0
+    
     'Destroy auxiliar buffer
     Set Buffer = Nothing
+
+    If error <> 0 Then _
+        Err.Raise error
 End Sub
 
 ''
@@ -4073,8 +4276,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
+    Dim error As Long
+    error = Err.Number
+On Error GoTo 0
+    
     'Destroy auxiliar buffer
     Set Buffer = Nothing
+
+    If error <> 0 Then _
+        Err.Raise error
 End Sub
 
 ''
@@ -4132,8 +4342,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
+    Dim error As Long
+    error = Err.Number
+On Error GoTo 0
+    
     'Destroy auxiliar buffer
     Set Buffer = Nothing
+
+    If error <> 0 Then _
+        Err.Raise error
 End Sub
 
 ''
