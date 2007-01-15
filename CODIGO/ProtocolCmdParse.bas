@@ -34,19 +34,19 @@ Private Enum eNumber_Types
 End Enum
 
 Public Sub AuxWriteWhisper(ByVal UserName As String, ByVal Mensaje As String)
-    Dim i As Long
+    Dim I As Long
     
-    i = 1
-    Do While i <= LastChar
-        If charlist(i).Nombre = UserName Then
+    I = 1
+    Do While I <= LastChar
+        If charlist(I).Nombre = UserName Then
             Exit Do
         Else
-            i = i + 1
+            I = I + 1
         End If
     Loop
     
-    If i <= LastChar Then
-        Call WriteWhisper(i, Mensaje)
+    If I <= LastChar Then
+        Call WriteWhisper(I, Mensaje)
     End If
     
 End Sub
@@ -662,7 +662,11 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     End Select
                     
                     If tmpInt > 0 Then
-                        Call WriteEditChar(ArgumentosAll(0), tmpInt, ArgumentosAll(2), IIf(CantidadArgumentos = 3, "", ArgumentosAll(3)))
+                        If CantidadArgumentos = 3 Then
+                            Call WriteEditChar(ArgumentosAll(0), tmpInt, ArgumentosAll(2), "")
+                        Else
+                            Call WriteEditChar(ArgumentosAll(0), tmpInt, ArgumentosAll(2), ArgumentosAll(3))
+                        End If
                     Else
                         'Avisar que no exite el comando
                         Call ShowConsoleMsg("Comando incorrecto.")
@@ -1410,7 +1414,7 @@ End Sub
 ' @param    bold Sets the font bold style.
 ' @param    italic Sets the font italic style.
 
-Private Sub ShowConsoleMsg(ByVal Message As Integer, Optional ByVal red As Integer = 255, Optional ByVal green As Integer = 255, Optional ByVal blue As Integer = 255, Optional ByVal bold As Boolean = False, Optional ByVal italic As Boolean = False)
+Private Sub ShowConsoleMsg(ByVal Message As String, Optional ByVal red As Integer = 255, Optional ByVal green As Integer = 255, Optional ByVal blue As Integer = 255, Optional ByVal bold As Boolean = False, Optional ByVal italic As Boolean = False)
 '***************************************************
 'Author: Nicolas Matias Gonzalez (NIGO)
 'Last Modification: 01/03/07
