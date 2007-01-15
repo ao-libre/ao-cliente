@@ -92,8 +92,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   315
       ItemData        =   "frmCrearPersonaje.frx":012E
       Left            =   9015
-      List            =   "frmCrearPersonaje.frx":013E
-      Sorted          =   -1  'True
+      List            =   "frmCrearPersonaje.frx":0130
       Style           =   2  'Dropdown List
       TabIndex        =   7
       Top             =   3510
@@ -150,7 +149,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   165
       Index           =   3
       Left            =   7770
-      MouseIcon       =   "frmCrearPersonaje.frx":0167
+      MouseIcon       =   "frmCrearPersonaje.frx":0132
       MousePointer    =   99  'Custom
       Top             =   3465
       Width           =   150
@@ -159,7 +158,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   165
       Index           =   5
       Left            =   7785
-      MouseIcon       =   "frmCrearPersonaje.frx":02B9
+      MouseIcon       =   "frmCrearPersonaje.frx":0284
       MousePointer    =   99  'Custom
       Top             =   3675
       Width           =   150
@@ -168,7 +167,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   165
       Index           =   7
       Left            =   7785
-      MouseIcon       =   "frmCrearPersonaje.frx":040B
+      MouseIcon       =   "frmCrearPersonaje.frx":03D6
       MousePointer    =   99  'Custom
       Top             =   3885
       Width           =   150
@@ -177,7 +176,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   165
       Index           =   9
       Left            =   7770
-      MouseIcon       =   "frmCrearPersonaje.frx":055D
+      MouseIcon       =   "frmCrearPersonaje.frx":0528
       MousePointer    =   99  'Custom
       Top             =   4110
       Width           =   150
@@ -186,7 +185,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   165
       Index           =   11
       Left            =   7770
-      MouseIcon       =   "frmCrearPersonaje.frx":06AF
+      MouseIcon       =   "frmCrearPersonaje.frx":067A
       MousePointer    =   99  'Custom
       Top             =   4335
       Width           =   150
@@ -195,7 +194,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   165
       Index           =   13
       Left            =   7755
-      MouseIcon       =   "frmCrearPersonaje.frx":0801
+      MouseIcon       =   "frmCrearPersonaje.frx":07CC
       MousePointer    =   99  'Custom
       Top             =   4545
       Width           =   150
@@ -204,7 +203,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   165
       Index           =   15
       Left            =   7770
-      MouseIcon       =   "frmCrearPersonaje.frx":0953
+      MouseIcon       =   "frmCrearPersonaje.frx":091E
       MousePointer    =   99  'Custom
       Top             =   4785
       Width           =   150
@@ -213,7 +212,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   165
       Index           =   17
       Left            =   7770
-      MouseIcon       =   "frmCrearPersonaje.frx":0AA5
+      MouseIcon       =   "frmCrearPersonaje.frx":0A70
       MousePointer    =   99  'Custom
       Top             =   4965
       Width           =   150
@@ -222,7 +221,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   165
       Index           =   19
       Left            =   7770
-      MouseIcon       =   "frmCrearPersonaje.frx":0BF7
+      MouseIcon       =   "frmCrearPersonaje.frx":0BC2
       MousePointer    =   99  'Custom
       Top             =   5175
       Width           =   150
@@ -231,7 +230,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   165
       Index           =   21
       Left            =   7770
-      MouseIcon       =   "frmCrearPersonaje.frx":0D49
+      MouseIcon       =   "frmCrearPersonaje.frx":0D14
       MousePointer    =   99  'Custom
       Top             =   5385
       Width           =   150
@@ -240,7 +239,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   165
       Index           =   23
       Left            =   7755
-      MouseIcon       =   "frmCrearPersonaje.frx":0E9B
+      MouseIcon       =   "frmCrearPersonaje.frx":0E66
       MousePointer    =   99  'Custom
       Top             =   5610
       Width           =   150
@@ -249,7 +248,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   165
       Index           =   25
       Left            =   7755
-      MouseIcon       =   "frmCrearPersonaje.frx":0FED
+      MouseIcon       =   "frmCrearPersonaje.frx":0FB8
       MousePointer    =   99  'Custom
       Top             =   5820
       Width           =   150
@@ -258,7 +257,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   165
       Index           =   27
       Left            =   7755
-      MouseIcon       =   "frmCrearPersonaje.frx":113F
+      MouseIcon       =   "frmCrearPersonaje.frx":110A
       MousePointer    =   99  'Custom
       Top             =   6015
       Width           =   150
@@ -267,7 +266,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   165
       Index           =   1
       Left            =   7770
-      MouseIcon       =   "frmCrearPersonaje.frx":1291
+      MouseIcon       =   "frmCrearPersonaje.frx":125C
       MousePointer    =   99  'Custom
       Top             =   3240
       Width           =   150
@@ -276,7 +275,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   135
       Index           =   0
       Left            =   8355
-      MouseIcon       =   "frmCrearPersonaje.frx":13E3
+      MouseIcon       =   "frmCrearPersonaje.frx":13AE
       MousePointer    =   99  'Custom
       Top             =   3270
       Width           =   180
@@ -285,7 +284,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   150
       Index           =   2
       Left            =   8355
-      MouseIcon       =   "frmCrearPersonaje.frx":1535
+      MouseIcon       =   "frmCrearPersonaje.frx":1500
       MousePointer    =   99  'Custom
       Top             =   3495
       Width           =   195
@@ -294,7 +293,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   135
       Index           =   4
       Left            =   8370
-      MouseIcon       =   "frmCrearPersonaje.frx":1687
+      MouseIcon       =   "frmCrearPersonaje.frx":1652
       MousePointer    =   99  'Custom
       Top             =   3720
       Width           =   195
@@ -303,7 +302,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   150
       Index           =   6
       Left            =   8370
-      MouseIcon       =   "frmCrearPersonaje.frx":17D9
+      MouseIcon       =   "frmCrearPersonaje.frx":17A4
       MousePointer    =   99  'Custom
       Top             =   3945
       Width           =   180
@@ -312,7 +311,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   150
       Index           =   8
       Left            =   8370
-      MouseIcon       =   "frmCrearPersonaje.frx":192B
+      MouseIcon       =   "frmCrearPersonaje.frx":18F6
       MousePointer    =   99  'Custom
       Top             =   4155
       Width           =   195
@@ -321,7 +320,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   135
       Index           =   10
       Left            =   8370
-      MouseIcon       =   "frmCrearPersonaje.frx":1A7D
+      MouseIcon       =   "frmCrearPersonaje.frx":1A48
       MousePointer    =   99  'Custom
       Top             =   4380
       Width           =   165
@@ -330,7 +329,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   135
       Index           =   12
       Left            =   8355
-      MouseIcon       =   "frmCrearPersonaje.frx":1BCF
+      MouseIcon       =   "frmCrearPersonaje.frx":1B9A
       MousePointer    =   99  'Custom
       Top             =   4605
       Width           =   165
@@ -339,7 +338,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   120
       Index           =   14
       Left            =   8370
-      MouseIcon       =   "frmCrearPersonaje.frx":1D21
+      MouseIcon       =   "frmCrearPersonaje.frx":1CEC
       MousePointer    =   99  'Custom
       Top             =   4800
       Width           =   135
@@ -348,7 +347,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   120
       Index           =   16
       Left            =   8370
-      MouseIcon       =   "frmCrearPersonaje.frx":1E73
+      MouseIcon       =   "frmCrearPersonaje.frx":1E3E
       MousePointer    =   99  'Custom
       Top             =   4995
       Width           =   135
@@ -357,7 +356,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   120
       Index           =   18
       Left            =   8370
-      MouseIcon       =   "frmCrearPersonaje.frx":1FC5
+      MouseIcon       =   "frmCrearPersonaje.frx":1F90
       MousePointer    =   99  'Custom
       Top             =   5220
       Width           =   150
@@ -366,7 +365,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   135
       Index           =   20
       Left            =   8370
-      MouseIcon       =   "frmCrearPersonaje.frx":2117
+      MouseIcon       =   "frmCrearPersonaje.frx":20E2
       MousePointer    =   99  'Custom
       Top             =   5400
       Width           =   165
@@ -375,7 +374,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   135
       Index           =   22
       Left            =   8370
-      MouseIcon       =   "frmCrearPersonaje.frx":2269
+      MouseIcon       =   "frmCrearPersonaje.frx":2234
       MousePointer    =   99  'Custom
       Top             =   5640
       Width           =   165
@@ -384,7 +383,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   135
       Index           =   24
       Left            =   8370
-      MouseIcon       =   "frmCrearPersonaje.frx":23BB
+      MouseIcon       =   "frmCrearPersonaje.frx":2386
       MousePointer    =   99  'Custom
       Top             =   5850
       Width           =   150
@@ -393,7 +392,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   120
       Index           =   26
       Left            =   8370
-      MouseIcon       =   "frmCrearPersonaje.frx":250D
+      MouseIcon       =   "frmCrearPersonaje.frx":24D8
       MousePointer    =   99  'Custom
       Top             =   6075
       Width           =   150
@@ -402,7 +401,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   150
       Index           =   28
       Left            =   8370
-      MouseIcon       =   "frmCrearPersonaje.frx":265F
+      MouseIcon       =   "frmCrearPersonaje.frx":262A
       MousePointer    =   99  'Custom
       Top             =   6285
       Width           =   165
@@ -411,7 +410,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   150
       Index           =   29
       Left            =   7755
-      MouseIcon       =   "frmCrearPersonaje.frx":27B1
+      MouseIcon       =   "frmCrearPersonaje.frx":277C
       MousePointer    =   99  'Custom
       Top             =   6270
       Width           =   165
@@ -420,7 +419,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   135
       Index           =   30
       Left            =   8370
-      MouseIcon       =   "frmCrearPersonaje.frx":2903
+      MouseIcon       =   "frmCrearPersonaje.frx":28CE
       MousePointer    =   99  'Custom
       Top             =   6495
       Width           =   150
@@ -429,7 +428,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   150
       Index           =   31
       Left            =   7770
-      MouseIcon       =   "frmCrearPersonaje.frx":2A55
+      MouseIcon       =   "frmCrearPersonaje.frx":2A20
       MousePointer    =   99  'Custom
       Top             =   6465
       Width           =   150
@@ -438,7 +437,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   135
       Index           =   32
       Left            =   8370
-      MouseIcon       =   "frmCrearPersonaje.frx":2BA7
+      MouseIcon       =   "frmCrearPersonaje.frx":2B72
       MousePointer    =   99  'Custom
       Top             =   6720
       Width           =   180
@@ -447,7 +446,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   135
       Index           =   33
       Left            =   7755
-      MouseIcon       =   "frmCrearPersonaje.frx":2CF9
+      MouseIcon       =   "frmCrearPersonaje.frx":2CC4
       MousePointer    =   99  'Custom
       Top             =   6690
       Width           =   180
@@ -456,7 +455,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   135
       Index           =   34
       Left            =   8370
-      MouseIcon       =   "frmCrearPersonaje.frx":2E4B
+      MouseIcon       =   "frmCrearPersonaje.frx":2E16
       MousePointer    =   99  'Custom
       Top             =   6945
       Width           =   135
@@ -465,7 +464,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   150
       Index           =   35
       Left            =   7755
-      MouseIcon       =   "frmCrearPersonaje.frx":2F9D
+      MouseIcon       =   "frmCrearPersonaje.frx":2F68
       MousePointer    =   99  'Custom
       Top             =   6915
       Width           =   165
@@ -474,7 +473,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   105
       Index           =   36
       Left            =   8370
-      MouseIcon       =   "frmCrearPersonaje.frx":30EF
+      MouseIcon       =   "frmCrearPersonaje.frx":30BA
       MousePointer    =   99  'Custom
       Top             =   7170
       Width           =   150
@@ -483,7 +482,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   180
       Index           =   37
       Left            =   7755
-      MouseIcon       =   "frmCrearPersonaje.frx":3241
+      MouseIcon       =   "frmCrearPersonaje.frx":320C
       MousePointer    =   99  'Custom
       Top             =   7125
       Width           =   195
@@ -492,7 +491,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   120
       Index           =   38
       Left            =   8370
-      MouseIcon       =   "frmCrearPersonaje.frx":3393
+      MouseIcon       =   "frmCrearPersonaje.frx":335E
       MousePointer    =   99  'Custom
       Top             =   7395
       Width           =   135
@@ -501,7 +500,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   165
       Index           =   39
       Left            =   7770
-      MouseIcon       =   "frmCrearPersonaje.frx":34E5
+      MouseIcon       =   "frmCrearPersonaje.frx":34B0
       MousePointer    =   99  'Custom
       Top             =   7335
       Width           =   165
@@ -510,7 +509,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   135
       Index           =   40
       Left            =   8370
-      MouseIcon       =   "frmCrearPersonaje.frx":3637
+      MouseIcon       =   "frmCrearPersonaje.frx":3602
       MousePointer    =   99  'Custom
       Top             =   7590
       Width           =   165
@@ -519,7 +518,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   135
       Index           =   41
       Left            =   7815
-      MouseIcon       =   "frmCrearPersonaje.frx":3789
+      MouseIcon       =   "frmCrearPersonaje.frx":3754
       MousePointer    =   99  'Custom
       Top             =   7560
       Width           =   135
@@ -528,7 +527,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   645
       Index           =   2
       Left            =   315
-      MouseIcon       =   "frmCrearPersonaje.frx":38DB
+      MouseIcon       =   "frmCrearPersonaje.frx":38A6
       MousePointer    =   99  'Custom
       Top             =   3015
       Width           =   660
@@ -537,7 +536,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   255
       Index           =   1
       Left            =   1905
-      MouseIcon       =   "frmCrearPersonaje.frx":3A2D
+      MouseIcon       =   "frmCrearPersonaje.frx":39F8
       MousePointer    =   99  'Custom
       Top             =   8565
       Width           =   765
@@ -546,7 +545,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   210
       Index           =   0
       Left            =   9075
-      MouseIcon       =   "frmCrearPersonaje.frx":3B7F
+      MouseIcon       =   "frmCrearPersonaje.frx":3B4A
       MousePointer    =   99  'Custom
       Top             =   8565
       Width           =   1200
@@ -785,7 +784,7 @@ Begin VB.Form frmCrearPersonaje
    Begin VB.Image imgHogar 
       Height          =   2850
       Left            =   8775
-      Picture         =   "frmCrearPersonaje.frx":3CD1
+      Picture         =   "frmCrearPersonaje.frx":3C9C
       Top             =   3900
       Width           =   2985
    End
@@ -984,17 +983,10 @@ Private Sub boton_Click(index As Integer)
             frmConnect.FONDO.Picture = LoadPicture(App.Path & "\Graficos\conectar.jpg")
             Me.Visible = False
             
-#If UsarWrench = 1 Then
-                If frmMain.Socket1.Connected Then
-                    frmMain.Socket1.Disconnect
-                    frmMain.Socket1.Cleanup
-                End If
-
-#Else
-                If frmMain.Winsock1.State <> sckClosed Then
-                    frmMain.Winsock1.Close
-            End If
-#End If
+            
+        Case 2
+            Call Audio.PlayWave(SND_DICE)
+            Call TirarDados
     End Select
 End Sub
 
@@ -1034,12 +1026,12 @@ Else
     End If
 End If
 
-Puntos.Caption = SkillPoints
+puntos.Caption = SkillPoints
 End Sub
 
 Private Sub Form_Load()
 SkillPoints = 10
-Puntos.Caption = SkillPoints
+puntos.Caption = SkillPoints
 Me.Picture = LoadPicture(App.Path & "\graficos\CP-Interface.jpg")
 imgHogar.Picture = LoadPicture(App.Path & "\graficos\CP-Ullathorpe.jpg")
 
@@ -1050,6 +1042,13 @@ For i = LBound(ListaClases) To UBound(ListaClases)
 Next i
 
 lstProfesion.listIndex = 1
+
+
+lstHogar.Clear
+
+For i = LBound(Ciudades()) To UBound(Ciudades())
+    lstHogar.AddItem Ciudades(i)
+Next i
 
 Image1.Picture = LoadPicture(App.Path & "\graficos\" & lstProfesion.Text & ".jpg")
 Call TirarDados
