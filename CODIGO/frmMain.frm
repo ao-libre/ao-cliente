@@ -560,7 +560,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1168,7 +1167,7 @@ Private Sub Label1_Click()
         frmSkills3.text1(I).Caption = UserSkills(I)
     Next I
     Alocados = SkillPoints
-    frmSkills3.puntos.Caption = "Puntos:" & SkillPoints
+    frmSkills3.Puntos.Caption = "Puntos:" & SkillPoints
     frmSkills3.Show , frmMain
 End Sub
 
@@ -1490,6 +1489,7 @@ Private Sub Socket1_Read(dataLength As Integer, IsUrgent As Integer)
     Dim RD As String
     
     Socket1.Read RD, dataLength
+    'CHECK: ERROR si RD="", Revisar
     
     'Put data in the buffer
     Call incomingData.WriteASCIIStringFixed(RD)
