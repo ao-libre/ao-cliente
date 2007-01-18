@@ -54,17 +54,17 @@ Private Function CreateNamedMutex(ByRef mutexName As String) As Boolean
 '***************************************************
 'Autor: Fredy Horacio Treboux (liquid)
 'Last Modification: 01/04/07
-'
+'Last Modified by: Juan Martín Sotuyo Dodero (Maraxus) - Changed Security Atributes to make it work in all OS
 '***************************************************
     Dim sa As SECURITY_ATTRIBUTES
     
     With sa
-        .bInheritHandle = 1
+        .bInheritHandle = 0
         .lpSecurityDescriptor = 0
-        .nLength = Len(sa)
+        .nLength = LenB(sa)
     End With
     
-    mutexHID = CreateMutex(sa, True, "Global\" & mutexName)
+    mutexHID = CreateMutex(sa, False, "Global\" & mutexName)
     
     CreateNamedMutex = Not (Err.LastDllError = ERROR_ALREADY_EXISTS) 'check if the mutex already existed
 End Function
