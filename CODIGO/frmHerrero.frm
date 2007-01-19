@@ -159,9 +159,9 @@ Private Sub Command3_Click()
 On Error Resume Next
 
     If lstArmas.Visible Then
-        Call WriteCraftBlacksmith(ArmasHerrero(lstArmas.listIndex))
+        Call WriteCraftBlacksmith(ArmasHerrero(lstArmas.listIndex + 1))
     Else
-        Call WriteCraftBlacksmith(ArmadurasHerrero(lstArmaduras.listIndex))
+        Call WriteCraftBlacksmith(ArmadurasHerrero(lstArmaduras.listIndex + 1))
     End If
 
     Unload Me

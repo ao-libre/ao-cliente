@@ -160,7 +160,7 @@ Public Const MAXHECHI As Byte = 35
 
 Public Const MAXSKILLPOINTS As Byte = 100
 
-Public Const FLAGORO As Integer = -1
+Public Const FLAGORO As Integer = MAX_INVENTORY_SLOTS + 1
 
 Public Const FOgata As Integer = 1521
 
