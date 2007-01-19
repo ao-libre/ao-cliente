@@ -660,6 +660,8 @@ Public Function ReadASCIIString() As String
                 
                 ReadASCIIString = StrConv(buf2, vbUnicode)
             End If
+        Else
+            Call Err.Raise(NOT_ENOUGH_DATA)
         End If
     End If
 End Function
@@ -701,6 +703,8 @@ Public Function ReadUnicodeString() As String
             Call RemoveData(ReadData(buf2, length * 2))
             
             ReadUnicodeString = buf2
+        Else
+            Call Err.Raise(NOT_ENOUGH_DATA)
         End If
     End If
 End Function

@@ -88,3 +88,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 14/01/2007: Corregí un bug en el protocolo, entré a Ulla por primera vez en la 0.11.6. (Maraxus)
  * 18/01/2007: Arreglé un problema con WinXP y el PrevInstance. (Maraxus)
  * 18/01/2007: Andan las estadísticas. (Maraxus)
+ * 18/01/2007: Agregué un par de casos donde debía saltar la NOT_ENOUGH_DATA exception. (Maraxus)

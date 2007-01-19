@@ -560,7 +560,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -702,7 +701,7 @@ Dim gD As DSBUFFERDESC
 Dim gW As WAVEFORMATEX
 Dim gFileName As String
 Dim dsE As DirectSoundEnum
-Dim Pos(0) As DSBPOSITIONNOTIFY
+Dim pos(0) As DSBPOSITIONNOTIFY
 Public IsPlaying As Byte
 
 Dim endEvent As Long
@@ -931,7 +930,6 @@ Private Sub CmdLanzar_MouseMove(Button As Integer, Shift As Integer, X As Single
     UsaMacro = False
     CnTd = 0
 End Sub
-
 
 Private Sub cmdINFO_Click()
     Call WriteSpellInfo(hlst.listIndex + 1)
@@ -1164,10 +1162,10 @@ Private Sub Image3_Click(index As Integer)
 End Sub
 
 Private Sub Label1_Click()
-    Dim i As Integer
-    For i = 1 To NUMSKILLS
-        frmSkills3.Text1(i).Caption = UserSkills(i)
-    Next i
+    Dim I As Integer
+    For I = 1 To NUMSKILLS
+        frmSkills3.Text1(I).Caption = UserSkills(I)
+    Next I
     Alocados = SkillPoints
     frmSkills3.Puntos.Caption = "Puntos:" & SkillPoints
     frmSkills3.Show , frmMain
@@ -1260,16 +1258,16 @@ Private Sub SendTxt_Change()
         stxtbuffer = "Soy un cheater, avisenle a un gm"
     Else
         'Make sure only valid chars are inserted (with Shift + Insert they can paste illegal chars)
-        Dim i As Long
+        Dim I As Long
         Dim tempstr As String
         Dim CharAscii As Integer
         
-        For i = 1 To Len(SendTxt.Text)
-            CharAscii = Asc(mid$(SendTxt.Text, i, 1))
+        For I = 1 To Len(SendTxt.Text)
+            CharAscii = Asc(mid$(SendTxt.Text, I, 1))
             If CharAscii >= vbKeySpace And CharAscii <= 250 Then
                 tempstr = tempstr & Chr$(CharAscii)
             End If
-        Next i
+        Next I
         
         If tempstr <> SendTxt.Text Then
             'We only set it if it's different, otherwise the event will be raised
@@ -1327,16 +1325,16 @@ Private Sub SendCMSTXT_Change()
         stxtbuffercmsg = "Soy un cheater, avisenle a un GM"
     Else
         'Make sure only valid chars are inserted (with Shift + Insert they can paste illegal chars)
-        Dim i As Long
+        Dim I As Long
         Dim tempstr As String
         Dim CharAscii As Integer
         
-        For i = 1 To Len(SendCMSTXT.Text)
-            CharAscii = Asc(mid$(SendCMSTXT.Text, i, 1))
+        For I = 1 To Len(SendCMSTXT.Text)
+            CharAscii = Asc(mid$(SendCMSTXT.Text, I, 1))
             If CharAscii >= vbKeySpace And CharAscii <= 250 Then
                 tempstr = tempstr & Chr$(CharAscii)
             End If
-        Next i
+        Next I
         
         If tempstr <> SendCMSTXT.Text Then
             'We only set it if it's different, otherwise the event will be raised
@@ -1405,7 +1403,7 @@ Private Sub Socket1_Connect()
 End Sub
 
 Private Sub Socket1_Disconnect()
-    Dim i As Long
+    Dim I As Long
     
     Second.Enabled = False
     Connected = False
@@ -1419,11 +1417,11 @@ Private Sub Socket1_Disconnect()
     frmConnect.Visible = True
     
     On Local Error Resume Next
-    For i = 0 To Forms.Count - 1
-        If Forms(i).Name <> Me.Name And Forms(i).Name <> frmConnect.Name Then
-            Unload Forms(i)
+    For I = 0 To Forms.Count - 1
+        If Forms(I).Name <> Me.Name And Forms(I).Name <> frmConnect.Name Then
+            Unload Forms(I)
         End If
-    Next i
+    Next I
     On Local Error GoTo 0
     
     frmMain.Visible = False
@@ -1445,13 +1443,13 @@ Private Sub Socket1_Disconnect()
     UserHogar = 0
     UserEmail = ""
     
-    For i = 1 To NUMSKILLS
-        UserSkills(i) = 0
-    Next i
+    For I = 1 To NUMSKILLS
+        UserSkills(I) = 0
+    Next I
 
-    For i = 1 To NUMATRIBUTOS
-        UserAtributos(i) = 0
-    Next i
+    For I = 1 To NUMATRIBUTOS
+        UserAtributos(I) = 0
+    Next I
 
     SkillPoints = 0
     Alocados = 0
@@ -1511,7 +1509,7 @@ If tX >= MinXBorder And tY >= MinYBorder And _
     If MapData(tX, tY).CharIndex > 0 Then
         If charlist(MapData(tX, tY).CharIndex).invisible = False Then
         
-            Dim i As Long
+            Dim I As Long
             Dim m As New frmMenuseFashion
             
             Load m
@@ -1575,7 +1573,7 @@ End Sub
 #If UsarWrench <> 1 Then
 
 Private Sub Winsock1_Close()
-    Dim i As Long
+    Dim I As Long
     
     Debug.Print "WInsock Close"
     
@@ -1592,11 +1590,11 @@ Private Sub Winsock1_Close()
     frmConnect.Visible = True
     
     On Local Error Resume Next
-    For i = 0 To Forms.Count - 1
-        If Forms(i).Name <> Me.Name And Forms(i).Name <> frmConnect.Name Then
-            Unload Forms(i)
+    For I = 0 To Forms.Count - 1
+        If Forms(I).Name <> Me.Name And Forms(I).Name <> frmConnect.Name Then
+            Unload Forms(I)
         End If
-    Next i
+    Next I
     On Local Error GoTo 0
     
     frmMain.Visible = False
@@ -1610,13 +1608,13 @@ Private Sub Winsock1_Close()
     UserHogar = 0
     UserEmail = ""
     
-    For i = 1 To NUMSKILLS
-        UserSkills(i) = 0
-    Next i
+    For I = 1 To NUMSKILLS
+        UserSkills(I) = 0
+    Next I
 
-    For i = 1 To NUMATRIBUTOS
-        UserAtributos(i) = 0
-    Next i
+    For I = 1 To NUMATRIBUTOS
+        UserAtributos(I) = 0
+    Next I
 
     SkillPoints = 0
     Alocados = 0
