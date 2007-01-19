@@ -1444,6 +1444,7 @@ End Sub
 
 Private Sub cmdActualiza_Click()
     Call WriteRequestUserList
+    Call FlushBuffer
 End Sub
 
 Private Sub cmdCerrar_Click()
@@ -1459,11 +1460,11 @@ Private Sub TabStrip_Click()
 End Sub
 
 Private Sub showTab(TabId As Byte)
-    Dim i As Byte
+    Dim I As Byte
     
-    For i = 1 To Frame.UBound
-        Frame(i).Visible = (i = TabId)
-    Next i
+    For I = 1 To Frame.UBound
+        Frame(I).Visible = (I = TabId)
+    Next I
     
     With Frame(TabId)
         frmPanelGm.Height = .Height + 1215

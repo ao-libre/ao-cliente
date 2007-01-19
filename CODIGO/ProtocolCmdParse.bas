@@ -558,7 +558,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 
             Case "/SHOW"
                 If notNullArguments Then
-                    Select Case ArgumentosAll(0)
+                    Select Case UCase$(ArgumentosAll(0))
                         Case "SOS"
                             Call WriteSOSShowList
                             

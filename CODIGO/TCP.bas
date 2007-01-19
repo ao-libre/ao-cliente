@@ -65,5 +65,7 @@ Sub Login(ByVal valcode As Integer)
         Call WriteLoginNewChar(valcode)
     End If
     
+    DoEvents
+    
     Call FlushBuffer
 End Sub
