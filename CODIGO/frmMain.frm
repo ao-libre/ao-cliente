@@ -560,6 +560,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1124,9 +1125,8 @@ Private Sub Image1_Click(index As Integer)
 
     Select Case index
         Case 0
-            '[MatuX] : 01 de Abril del 2002
-                Call frmOpciones.Show(vbModeless, frmMain)
-            '[END]
+            Call frmOpciones.Show(vbModeless, frmMain)
+            
         Case 1
             LlegaronAtrib = False
             LlegaronSkills = False
@@ -1147,7 +1147,8 @@ Private Sub Image1_Click(index As Integer)
             LlegoFama = False
         Case 2
             If frmGuildLeader.Visible Then Unload frmGuildLeader
-                Call WriteRequestGuildLeaderInfo
+            
+            Call WriteRequestGuildLeaderInfo
     End Select
 End Sub
 
@@ -1164,7 +1165,7 @@ End Sub
 Private Sub Label1_Click()
     Dim I As Integer
     For I = 1 To NUMSKILLS
-        frmSkills3.Text1(I).Caption = UserSkills(I)
+        frmSkills3.text1(I).Caption = UserSkills(I)
     Next I
     Alocados = SkillPoints
     frmSkills3.Puntos.Caption = "Puntos:" & SkillPoints
@@ -1181,7 +1182,7 @@ Private Sub Label4_Click()
     picInv.Visible = True
 
     hlst.Visible = False
-    cmdINFO.Visible = False
+    cmdInfo.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = True
@@ -1200,7 +1201,7 @@ Private Sub Label7_Click()
     'DespInv(1).Visible = False
     picInv.Visible = False
     hlst.Visible = True
-    cmdINFO.Visible = True
+    cmdInfo.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True

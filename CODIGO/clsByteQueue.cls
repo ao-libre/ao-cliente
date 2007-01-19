@@ -151,16 +151,16 @@ End Sub
 ' @return   The smaller of val1 and val2
 ' @remarks  This method is faster than Iif() and cleaner, therefore it's used instead of it
 
-Private Function Min(ByVal val1 As Long, ByVal val2 As Long) As Long
+Private Function min(ByVal val1 As Long, ByVal val2 As Long) As Long
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 04/27/06
 'It's faster than iif and I like it better
 '***************************************************
     If val1 < val2 Then
-        Min = val1
+        min = val1
     Else
-        Min = val2
+        min = val2
     End If
 End Function
 
@@ -184,7 +184,7 @@ Private Function WriteData(ByRef buf() As Byte, ByVal dataLength As Long) As Lon
 '***************************************************
     'Check if there is enough free space
     If queueCapacity - queueLength - dataLength < 0 Then
-        Err.Raise NOT_ENOUGH_DATA
+        Call Err.Raise(NOT_ENOUGH_DATA)
         Exit Function
     End If
     
@@ -218,7 +218,7 @@ Private Function ReadData(ByRef buf() As Byte, ByVal dataLength As Long) As Long
 '***************************************************
     'Check if we can read the number of bytes requested
     If dataLength > queueLength Then
-        Err.Raise NOT_ENOUGH_DATA
+        Call Err.Raise(NOT_ENOUGH_DATA)
         Exit Function
     End If
     
@@ -243,7 +243,7 @@ Private Function RemoveData(ByVal dataLength As Long) As Long
 'Moves forward the queue overwriting the first dataLength bytes
 '***************************************************
     'Figure out how many bytes we can remove
-    RemoveData = Min(dataLength, queueLength)
+    RemoveData = min(dataLength, queueLength)
     
     'Remove data
     Call CopyMemory(data(0), data(RemoveData), queueLength - RemoveData)
@@ -584,7 +584,7 @@ Public Function ReadASCIIStringFixed(ByVal length As Long) As String
         
         ReadASCIIStringFixed = StrConv(buf, vbUnicode)
     Else
-        Err.Raise NOT_ENOUGH_DATA
+        Call Err.Raise(NOT_ENOUGH_DATA)
     End If
 End Function
 
@@ -616,7 +616,7 @@ Public Function ReadUnicodeStringFixed(ByVal length As Long) As String
         
         ReadUnicodeStringFixed = buf
     Else
-        Err.Raise NOT_ENOUGH_DATA
+        Call Err.Raise(NOT_ENOUGH_DATA)
     End If
 End Function
 
@@ -663,6 +663,8 @@ Public Function ReadASCIIString() As String
         Else
             Call Err.Raise(NOT_ENOUGH_DATA)
         End If
+    Else
+        Call Err.Raise(NOT_ENOUGH_DATA)
     End If
 End Function
 
@@ -706,6 +708,8 @@ Public Function ReadUnicodeString() As String
         Else
             Call Err.Raise(NOT_ENOUGH_DATA)
         End If
+    Else
+        Call Err.Raise(NOT_ENOUGH_DATA)
     End If
 End Function
 
@@ -849,7 +853,7 @@ Public Function PeekASCIIStringFixed(ByVal length As Long) As String
         
         PeekASCIIStringFixed = StrConv(buf, vbUnicode)
     Else
-        Err.Raise NOT_ENOUGH_DATA
+        Call Err.Raise(NOT_ENOUGH_DATA)
     End If
 End Function
 
@@ -880,7 +884,7 @@ Public Function PeekUnicodeStringFixed(ByVal length As Long) As String
         
         PeekUnicodeStringFixed = buf
     Else
-        Err.Raise NOT_ENOUGH_DATA
+        Call Err.Raise(NOT_ENOUGH_DATA)
     End If
 End Function
 
@@ -924,7 +928,11 @@ Public Function PeekASCIIString() As String
                 
                 PeekASCIIString = StrConv(buf3, vbUnicode)
             End If
+        Else
+            Call Err.Raise(NOT_ENOUGH_DATA)
         End If
+    Else
+        Call Err.Raise(NOT_ENOUGH_DATA)
     End If
 End Function
 
@@ -966,7 +974,11 @@ Public Function PeekUnicodeString() As String
             Call CopyMemory(buf3(0), buf2(2), length * 2)
             
             PeekUnicodeString = buf3
+        Else
+            Call Err.Raise(NOT_ENOUGH_DATA)
         End If
+    Else
+        Call Err.Raise(NOT_ENOUGH_DATA)
     End If
 End Function
 
