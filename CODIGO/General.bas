@@ -38,9 +38,7 @@ Option Explicit
 Public bK As Long
 Public bRK As Long
 
-
 Public iplst As String
-Public banners As String
 
 Public bFogata As Boolean
 
@@ -48,7 +46,6 @@ Public bLluvia() As Byte ' Array para determinar si
 'debemos mostrar la animacion de la lluvia
 
 Public lFrameTimer As Long
-Public sHKeys() As String
 
 Public Function DirGraficos() As String
     DirGraficos = App.Path & "\" & Config_Inicio.DirGraficos & "\"
@@ -217,21 +214,52 @@ Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, ByVal Text As String, Opt
 'Automatically scrolls to new text.
 'Text box MUST be multiline and have a 3D
 'apperance!
+'Pablo (ToxicWaste) 26/01/2007 : Now the list refreshes properly.
 '******************************************
     With RichTextBox
-        If (Len(.Text)) > 10000 Then .Text = ""
+    If (Len(.Text)) > 1000 Then
+        Dim AuxString As String
+        Dim AuxString2 As String
+        Dim AuxCount As Integer
+        AuxString = .Text
+        AuxCount = 1
+        Do
+        AuxString = Right$(AuxString, Len(.Text) - AuxCount)
+        AuxString2 = Left$(AuxString, 2)
+        If AuxString2 = vbCrLf Then Exit Do
+        AuxCount = AuxCount + 1
+        Loop
+        .SelStart = AuxCount + 2
+        .SelLength = Len(.Text)
+        AuxString = .SelRTF
+        .Text = ""
+        .TextRTF = AuxString
+    End If
+    .SelStart = Len(RichTextBox.Text)
+    .SelLength = 0
+    .SelBold = bold
+    .SelItalic = italic
         
-        .SelStart = Len(RichTextBox.Text)
-        .SelLength = 0
+    If Not red = -1 Then .SelColor = RGB(red, green, blue)
         
-        .SelBold = bold
-        .SelItalic = italic
+    .SelText = IIf(bCrLf, Text, Text & vbCrLf)
         
-        If Not red = -1 Then .SelColor = RGB(red, green, blue)
+    RichTextBox.Refresh
+
         
-        .SelText = IIf(bCrLf, Text, Text & vbCrLf)
+        'If (Len(.Text)) > 10000 Then .Text = ""
         
-        RichTextBox.Refresh
+        '.SelStart = Len(RichTextBox.Text)
+        '.SelLength = 0
+        
+        '.SelBold = bold
+        '.SelItalic = italic
+        
+        'If Not red = -1 Then .SelColor = RGB(red, green, blue)
+        
+        '.SelText = IIf(bCrLf, Text, Text & vbCrLf)
+        
+        'RichTextBox.Refresh
     End With
 End Sub
 
@@ -246,7 +274,7 @@ Public Sub RefreshAllChars()
     
     For loopc = 1 To LastChar
         If charlist(loopc).Active = 1 Then
-            MapData(charlist(loopc).Pos.X, charlist(loopc).Pos.Y).CharIndex = loopc
+            MapData(charlist(loopc).Pos.x, charlist(loopc).Pos.y).CharIndex = loopc
         End If
     Next loopc
 End Sub
@@ -407,13 +435,13 @@ Sub MoveTo(ByVal Direccion As E_Heading)
     
     Select Case Direccion
         Case E_Heading.NORTH
-            LegalOk = LegalPos(UserPos.X, UserPos.Y - 1)
+            LegalOk = LegalPos(UserPos.x, UserPos.y - 1)
         Case E_Heading.EAST
-            LegalOk = LegalPos(UserPos.X + 1, UserPos.Y)
+            LegalOk = LegalPos(UserPos.x + 1, UserPos.y)
         Case E_Heading.SOUTH
-            LegalOk = LegalPos(UserPos.X, UserPos.Y + 1)
+            LegalOk = LegalPos(UserPos.x, UserPos.y + 1)
         Case E_Heading.WEST
-            LegalOk = LegalPos(UserPos.X - 1, UserPos.Y)
+            LegalOk = LegalPos(UserPos.x - 1, UserPos.y)
     End Select
     
     If LegalOk Then
@@ -452,7 +480,7 @@ On Error Resume Next
             If GetKeyState(vbKeyUp) < 0 Then
                 If frmMain.TrainingMacro.Enabled Then frmMain.DesactivarMacroHechizos
                 Call MoveTo(NORTH)
-                frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.X & "," & UserPos.Y & ")"
+                frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.x & "," & UserPos.y & ")"
                 Exit Sub
             End If
         
@@ -460,7 +488,7 @@ On Error Resume Next
             If GetKeyState(vbKeyRight) < 0 Then
                 If frmMain.TrainingMacro.Enabled Then frmMain.DesactivarMacroHechizos
                 Call MoveTo(EAST)
-                frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.X & "," & UserPos.Y & ")"
+                frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.x & "," & UserPos.y & ")"
                 Exit Sub
             End If
         
@@ -468,7 +496,7 @@ On Error Resume Next
             If GetKeyState(vbKeyDown) < 0 Then
                 If frmMain.TrainingMacro.Enabled Then frmMain.DesactivarMacroHechizos
                 Call MoveTo(SOUTH)
-                frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.X & "," & UserPos.Y & ")"
+                frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.x & "," & UserPos.y & ")"
                 Exit Sub
             End If
         
@@ -476,7 +504,7 @@ On Error Resume Next
             If GetKeyState(vbKeyLeft) < 0 Then
                 If frmMain.TrainingMacro.Enabled Then frmMain.DesactivarMacroHechizos
                 Call MoveTo(WEST)
-                frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.X & "," & UserPos.Y & ")"
+                frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.x & "," & UserPos.y & ")"
                 Exit Sub
             End If
         Else
@@ -487,7 +515,7 @@ On Error Resume Next
                 GetKeyState(vbKeyLeft) < 0
             If kp Then Call RandomMove
             If frmMain.TrainingMacro.Enabled Then frmMain.DesactivarMacroHechizos
-            frmMain.Coord.Caption = "(" & UserPos.X & "," & UserPos.Y & ")"
+            frmMain.Coord.Caption = "(" & UserPos.x & "," & UserPos.y & ")"
         End If
     End If
 End Sub
@@ -497,41 +525,41 @@ Sub MoveScreen(ByVal nHeading As E_Heading)
 '******************************************
 'Starts the screen moving in a direction
 '******************************************
-    Dim X As Integer
-    Dim Y As Integer
+    Dim x As Integer
+    Dim y As Integer
     Dim tX As Integer
     Dim tY As Integer
     
     'Figure out which way to move
     Select Case nHeading
         Case E_Heading.NORTH
-            Y = -1
+            y = -1
     
         Case E_Heading.EAST
-            X = 1
+            x = 1
     
         Case E_Heading.SOUTH
-            Y = 1
+            y = 1
         
         Case E_Heading.WEST
-            X = -1
+            x = -1
             
     End Select
     
     'Fill temp pos
-    tX = UserPos.X + X
-    tY = UserPos.Y + Y
+    tX = UserPos.x + x
+    tY = UserPos.y + y
 
     If Not (tX < MinXBorder Or tX > MaxXBorder Or tY < MinYBorder Or tY > MaxYBorder) Then
-        AddtoUserPos.X = X
-        UserPos.X = tX
-        AddtoUserPos.Y = Y
-        UserPos.Y = tY
+        AddtoUserPos.x = x
+        UserPos.x = tX
+        AddtoUserPos.y = y
+        UserPos.y = tY
         UserMoving = 1
         
-        bTecho = IIf(MapData(UserPos.X, UserPos.Y).Trigger = 1 Or _
-                MapData(UserPos.X, UserPos.Y).Trigger = 2 Or _
-                MapData(UserPos.X, UserPos.Y).Trigger = 4, True, False)
+        bTecho = IIf(MapData(UserPos.x, UserPos.y).Trigger = 1 Or _
+                MapData(UserPos.x, UserPos.y).Trigger = 2 Or _
+                MapData(UserPos.x, UserPos.y).Trigger = 4, True, False)
         Exit Sub
     End If
 End Sub
@@ -558,8 +586,8 @@ Sub SwitchMap(ByVal Map As Integer)
 'Diseñado y creado por Juan Martín Sotuyo Dodero (Maraxus) (juansotuyo@hotmail.com)
 '**************************************************************
     Dim loopc As Long
-    Dim Y As Long
-    Dim X As Long
+    Dim y As Long
+    Dim x As Long
     Dim tempint As Integer
     Dim ByFlags As Byte
     
@@ -575,55 +603,55 @@ Sub SwitchMap(ByVal Map As Integer)
     Get #1, , tempint
     
     'Load arrays
-    For Y = YMinMapSize To YMaxMapSize
-        For X = XMinMapSize To XMaxMapSize
+    For y = YMinMapSize To YMaxMapSize
+        For x = XMinMapSize To XMaxMapSize
             Get #1, , ByFlags
             
-            MapData(X, Y).Blocked = (ByFlags And 1)
+            MapData(x, y).Blocked = (ByFlags And 1)
             
-            Get #1, , MapData(X, Y).Graphic(1).GrhIndex
-            InitGrh MapData(X, Y).Graphic(1), MapData(X, Y).Graphic(1).GrhIndex
+            Get #1, , MapData(x, y).Graphic(1).GrhIndex
+            InitGrh MapData(x, y).Graphic(1), MapData(x, y).Graphic(1).GrhIndex
             
             'Layer 2 used?
             If ByFlags And 2 Then
-                Get #1, , MapData(X, Y).Graphic(2).GrhIndex
-                InitGrh MapData(X, Y).Graphic(2), MapData(X, Y).Graphic(2).GrhIndex
+                Get #1, , MapData(x, y).Graphic(2).GrhIndex
+                InitGrh MapData(x, y).Graphic(2), MapData(x, y).Graphic(2).GrhIndex
             Else
-                MapData(X, Y).Graphic(2).GrhIndex = 0
+                MapData(x, y).Graphic(2).GrhIndex = 0
             End If
                 
             'Layer 3 used?
             If ByFlags And 4 Then
-                Get #1, , MapData(X, Y).Graphic(3).GrhIndex
-                InitGrh MapData(X, Y).Graphic(3), MapData(X, Y).Graphic(3).GrhIndex
+                Get #1, , MapData(x, y).Graphic(3).GrhIndex
+                InitGrh MapData(x, y).Graphic(3), MapData(x, y).Graphic(3).GrhIndex
             Else
-                MapData(X, Y).Graphic(3).GrhIndex = 0
+                MapData(x, y).Graphic(3).GrhIndex = 0
             End If
                 
             'Layer 4 used?
             If ByFlags And 8 Then
-                Get #1, , MapData(X, Y).Graphic(4).GrhIndex
-                InitGrh MapData(X, Y).Graphic(4), MapData(X, Y).Graphic(4).GrhIndex
+                Get #1, , MapData(x, y).Graphic(4).GrhIndex
+                InitGrh MapData(x, y).Graphic(4), MapData(x, y).Graphic(4).GrhIndex
             Else
-                MapData(X, Y).Graphic(4).GrhIndex = 0
+                MapData(x, y).Graphic(4).GrhIndex = 0
             End If
             
             'Trigger used?
             If ByFlags And 16 Then
-                Get #1, , MapData(X, Y).Trigger
+                Get #1, , MapData(x, y).Trigger
             Else
-                MapData(X, Y).Trigger = 0
+                MapData(x, y).Trigger = 0
             End If
             
             'Erase NPCs
-            If MapData(X, Y).CharIndex > 0 Then
-                Call EraseChar(MapData(X, Y).CharIndex)
+            If MapData(x, y).CharIndex > 0 Then
+                Call EraseChar(MapData(x, y).CharIndex)
             End If
             
             'Erase OBJs
-            MapData(X, Y).ObjGrh.GrhIndex = 0
-        Next X
-    Next Y
+            MapData(x, y).ObjGrh.GrhIndex = 0
+        Next x
+    Next y
     
     Close #1
     
@@ -700,14 +728,14 @@ End Function
 Public Sub CargarServidores()
 On Error GoTo errorH
     Dim f As String
-    Dim C As Integer
+    Dim c As Integer
     Dim i As Long
     
     f = App.Path & "\init\sinfo.dat"
-    C = Val(GetVar(f, "INIT", "Cant"))
+    c = Val(GetVar(f, "INIT", "Cant"))
     
-    ReDim ServersLst(1 To C) As tServerInfo
-    For i = 1 To C
+    ReDim ServersLst(1 To c) As tServerInfo
+    For i = 1 To c
         ServersLst(i).desc = GetVar(f, "S" & i, "Desc")
         ServersLst(i).Ip = Trim$(GetVar(f, "S" & i, "Ip"))
         ServersLst(i).PassRecPort = CInt(GetVar(f, "S" & i, "P2"))
@@ -806,7 +834,7 @@ Sub Main()
 #If SeguridadAlkon Then
     'Obtener el HushMD5
     Dim fMD5HushYo As String * 32
-    'fMD5HushYo = md5.GetMD5File(App.Path & "\" & App.EXEName & ".exe")
+    
     fMD5HushYo = md5.GetMD5File(App.Path & "\Argentum.exe")
     Call md5.MD5Reset
     MD5HushYo = txtOffset(hexMd52Asc(fMD5HushYo), 55)
@@ -1097,11 +1125,11 @@ Private Function CMSValidateChar_(ByVal iAsc As Integer) As Boolean
 End Function
 
 'TODO : como todo lorelativo a mapas, no tiene anda que hacer acá....
-Function HayAgua(ByVal X As Integer, ByVal Y As Integer) As Boolean
+Function HayAgua(ByVal x As Integer, ByVal y As Integer) As Boolean
 
-    HayAgua = MapData(X, Y).Graphic(1).GrhIndex >= 1505 And _
-                MapData(X, Y).Graphic(1).GrhIndex <= 1520 And _
-                MapData(X, Y).Graphic(2).GrhIndex = 0
+    HayAgua = MapData(x, y).Graphic(1).GrhIndex >= 1505 And _
+                MapData(x, y).Graphic(1).GrhIndex <= 1520 And _
+                MapData(x, y).Graphic(2).GrhIndex = 0
 End Function
 
 Public Sub ShowSendTxt()
@@ -1124,7 +1152,7 @@ Public Sub LeerLineaComandos()
     
     'Parseo los comandos
     T = Split(Command, " ")
-    
+    NoRes = True 'Pablo Sacar
     For i = LBound(T) To UBound(T)
         Select Case UCase$(T(i))
             Case "/NORES" 'no cambiar la resolucion
@@ -1146,7 +1174,7 @@ Private Sub LoadClientSetup()
         Get fHandle, , ClientSetup
     Close fHandle
     
-    NoRes = ClientSetup.bNoRes  ' 24/06/2006 - ^[GS]^
+    'NoRes = ClientSetup.bNoRes  ' 24/06/2006 - ^[GS]^ Pablo des"comentar"
     Musica = Not ClientSetup.bNoMusic
     Sound = Not ClientSetup.bNoSound
 End Sub

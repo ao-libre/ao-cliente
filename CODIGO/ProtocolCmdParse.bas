@@ -34,19 +34,19 @@ Private Enum eNumber_Types
 End Enum
 
 Public Sub AuxWriteWhisper(ByVal UserName As String, ByVal Mensaje As String)
-    Dim I As Long
+    Dim i As Long
     
-    I = 1
-    Do While I <= LastChar
-        If charlist(I).Nombre = UserName Then
+    i = 1
+    Do While i <= LastChar
+        If charlist(i).Nombre = UserName Then
             Exit Do
         Else
-            I = I + 1
+            i = i + 1
         End If
     Loop
     
-    If I <= LastChar Then
-        Call WriteWhisper(I, Mensaje)
+    If i <= LastChar Then
+        Call WriteWhisper(i, Mensaje)
     End If
     
 End Sub
@@ -1289,6 +1289,20 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /aname ORIGEN@DESTINO.")
                 End If
                 
+            Case "/SLOT"
+                If notNullArguments Then
+                    tmpArr = Split(ArgumentosRaw, "@", 2)
+                    If UBound(tmpArr) = 1 Then
+                        Call WriteCheckSlot(tmpArr(0), tmpArr(1))
+                    Else
+                        'Faltan los parametros con el formato propio
+                        Call ShowConsoleMsg("Formato incorrecto. Utilice /slot NICK@SLOT.")
+                    End If
+                Else
+                    'Avisar que falta el parametro
+                    Call ShowConsoleMsg("Faltan parámetros. Utilice /slot NICK@SLOT.")
+                End If
+                
             Case "/CENTINELAACTIVADO"
                 Call WriteToggleCentinelActivated
                 
@@ -1315,10 +1329,28 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         Case "BACKUP" ' "/MODMAPINFO BACKUP"
                             Call WriteChangeMapInfoBackup(ArgumentosAll(1) = 1)
                             
+                        Case "RESTRINGIR" '/MODMAPINFO RESTRINGIR
+                            Call WriteChangeMapInfoRestricted(ArgumentosAll(1))
+                            
+                        Case "MAGIASINEFECTO" '/MODMAPINFO MAGIASINEFECTO
+                            Call WriteChangeMapInfoNoMagic(ArgumentosAll(1))
+                            
+                        Case "INVISINEFECTO" '/MODMAPINFO INVISINEFECTO
+                            Call WriteChangeMapInfoNoInvi(ArgumentosAll(1))
+                        
+                        Case "RESUSINEFECTO" '/MODMAPINFO RESUSINEFECTO
+                            Call WriteChangeMapInfoNoResu(ArgumentosAll(1))
+                        
+                        Case "TERRENO" '/MODMAPINFO TERRENO
+                            Call WriteChangeMapInfoLand(ArgumentosAll(1))
+                        
+                        Case "ZONA" '/MODMAPINFO ZONA
+                            Call WriteChangeMapInfoZone(ArgumentosAll(1))
+                            
                     End Select
                 Else
                     'Avisar que falta el parametro
-                    Call ShowConsoleMsg("Faltan parametros.")
+                    Call ShowConsoleMsg("Faltan parametros. Opciones: PK, BACKUP, RESTRINGIR, MAGIASINEFECTO, INVISINEFECTO, RESUSINEFECTO, TERRENO, ZONA")
                 End If
                 
             Case "/GRABAR"
@@ -1527,13 +1559,13 @@ Private Function AEMAILSplit(ByRef Text As String) 'No return type allows to ret
 'Usefull for AEMAIL BUG FIX
 '***************************************************
 Dim tmpArr(0 To 1) As String
-Dim pos As Byte
+Dim Pos As Byte
 
-pos = CByte(InStrB(0, Text, "-"))
+Pos = CByte(InStrB(0, Text, "-"))
 
-If pos <> 0 Then
-    tmpArr(0) = mid$(Text, 0, pos)
-    tmpArr(1) = mid$(Text, pos + 2)
+If Pos <> 0 Then
+    tmpArr(0) = mid$(Text, 0, Pos)
+    tmpArr(1) = mid$(Text, Pos + 2)
 Else
     tmpArr(0) = vbNullString
 End If

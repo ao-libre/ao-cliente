@@ -89,3 +89,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 18/01/2007: Arreglé un problema con WinXP y el PrevInstance. (Maraxus)
  * 18/01/2007: Andan las estadísticas. (Maraxus)
  * 18/01/2007: Agregué un par de casos donde debía saltar la NOT_ENOUGH_DATA exception. (Maraxus)
+ * 08/02/2007: Subo las adiciones de Toxic y Salvito. Destaco el screen shooter con F2. (Maraxus)

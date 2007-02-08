@@ -172,15 +172,31 @@ End Sub
 
 Private Sub mnuBorrar_Click()
     If List1.listIndex < 0 Then Exit Sub
-    Call WriteSOSRemove(List1.List(List1.listIndex))
+    'Pablo (ToxicWaste)
+    Dim Aux As String
+    Aux = mid$(ReadField(1, List1.List(List1.listIndex), Asc("-")), 10, Len(ReadField(1, List1.List(List1.listIndex), Asc("-"))))
+    Call WriteSOSRemove(Aux)
+    '/Pablo (ToxicWaste)
+    'Call WriteSOSRemove(List1.List(List1.listIndex))
     
     List1.RemoveItem List1.listIndex
 End Sub
 
 Private Sub mnuIR_Click()
-    Call WriteGoToChar(ReadField(1, List1.List(List1.listIndex), Asc("-")))
+    'Pablo (ToxicWaste)
+    Dim Aux As String
+    Aux = mid$(ReadField(1, List1.List(List1.listIndex), Asc("-")), 10, Len(ReadField(1, List1.List(List1.listIndex), Asc("-"))))
+    Call WriteGoToChar(Aux)
+    '/Pablo (ToxicWaste)
+    'Call WriteGoToChar(ReadField(1, List1.List(List1.listIndex), Asc("-")))
+    
 End Sub
 
 Private Sub mnutraer_Click()
-    Call WriteSummonChar(ReadField(1, List1.List(List1.listIndex), Asc("-")))
+    'Pablo (ToxicWaste)
+    Dim Aux As String
+    Aux = mid$(ReadField(1, List1.List(List1.listIndex), Asc("-")), 10, Len(ReadField(1, List1.List(List1.listIndex), Asc("-"))))
+    Call WriteSummonChar(Aux)
+    'Pablo (ToxicWaste)
+    'Call WriteSummonChar(ReadField(1, List1.List(List1.listIndex), Asc("-")))
 End Sub

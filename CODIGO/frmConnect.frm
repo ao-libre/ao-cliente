@@ -21,6 +21,16 @@ Begin VB.Form frmConnect
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
+   Begin VB.PictureBox Picture1 
+      Height          =   255
+      Left            =   240
+      ScaleHeight     =   195
+      ScaleWidth      =   195
+      TabIndex        =   3
+      Top             =   8520
+      Visible         =   0   'False
+      Width           =   255
+   End
    Begin VB.TextBox PortTxt 
       Alignment       =   2  'Center
       Appearance      =   0  'Flat

@@ -62,6 +62,16 @@ Begin VB.Form frmMain
       Type            =   1
       Urgent          =   0   'False
    End
+   Begin VB.PictureBox Picture1 
+      Height          =   135
+      Left            =   11760
+      ScaleHeight     =   75
+      ScaleWidth      =   75
+      TabIndex        =   19
+      Top             =   8520
+      Visible         =   0   'False
+      Width           =   135
+   End
    Begin VB.Timer TrainingMacro 
       Enabled         =   0   'False
       Interval        =   3121
@@ -560,7 +570,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -702,13 +711,18 @@ Dim gD As DSBUFFERDESC
 Dim gW As WAVEFORMATEX
 Dim gFileName As String
 Dim dsE As DirectSoundEnum
-Dim pos(0) As DSBPOSITIONNOTIFY
+Dim Pos(0) As DSBPOSITIONNOTIFY
 Public IsPlaying As Byte
 
-Dim endEvent As Long
 Dim PuedeMacrear As Boolean
 
-Implements DirectXEvent
+Private Sub CmdLanzar_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
+    If hlst.List(hlst.listIndex) <> "(None)" And MainTimer.Check(TimersIndex.Attack, False) Then
+        Call WriteCastSpell(hlst.listIndex + 1)
+        Call WriteWork(eSkill.Magia)
+        UsaMacro = True
+    End If
+End Sub
 
 Private Sub cmdMoverHechi_Click(index As Integer)
     If hlst.listIndex = -1 Then Exit Sub
@@ -728,14 +742,6 @@ Private Sub cmdMoverHechi_Click(index As Integer)
         Case 0 'bajar
             hlst.listIndex = hlst.listIndex + 1
     End Select
-End Sub
-
-Private Sub DirectXEvent_DXCallback(ByVal eventid As Long)
-
-End Sub
-
-Private Sub CreateEvent()
-     endEvent = DirectX.CreateEvent(Me)
 End Sub
 
 Public Sub ActivarMacroHechizos()
@@ -778,27 +784,62 @@ Public Sub DesDibujarSatelite()
 PicAU.Visible = False
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
     MouseBoton = Button
     MouseShift = Shift
 End Sub
 
-Private Sub Form_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
     MouseBoton = Button
     MouseShift = Shift
+    
+#If SeguridadAlkon Then
+    If Cartel Then Cartel = False
+
+    If LOGGING Then Call CheatingDeath.StoreKey(MouseBoton, True)
+#End If
+
+    If Not Comerciando Then
+        Call ConvertCPtoTP(MainViewShp.Left, MainViewShp.Top, MouseX, MouseY, tX, tY)
+
+        If MouseShift = 0 Then
+            If MouseBoton <> vbRightButton Then
+                '[ybarra]
+                If UsaMacro Then
+                    CnTd = CnTd + 1
+                        If CnTd = 3 Then
+                            Call WriteUseSpellMacro
+                            CnTd = 0
+                        End If
+                    UsaMacro = False
+                End If
+                '[/ybarra]
+                If UsingSkill = 0 Then
+                    Call WriteLeftClick(tX, tY)
+                Else
+                    frmMain.MousePointer = vbDefault
+                    If (UsingSkill = Magia Or UsingSkill = Proyectiles) And Not MainTimer.Check(TimersIndex.Attack) Then Exit Sub
+                    If TrainingMacro.Enabled Then DesactivarMacroHechizos
+                    Call WriteWorkLeftClick(tX, tY, UsingSkill)
+                    UsingSkill = 0
+                End If
+            Else
+                Call AbrirMenuViewPort
+            End If
+        ElseIf (MouseShift And 1) = 1 Then
+            If MouseShift = vbLeftButton Then
+                Call WriteWarpChar("YO", UserMap, tX, tY)
+            End If
+        End If
+    End If
 End Sub
 
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
-    If endEvent Then
-        DirectX.DestroyEvent endEvent
-    End If
     If prgRun = True Then
         prgRun = False
         Cancel = 1
     End If
 End Sub
-
-
 
 Private Sub Macro_Timer()
     PuedeMacrear = True
@@ -840,8 +881,6 @@ End Sub
 Private Sub Coord_Click()
     AddtoRichTextBox frmMain.RecTxt, "Estas coordenadas son tu ubicación en el mapa. Utiliza la letra L para corregirla si esta no se corresponde con la del servidor por efecto del Lag.", 255, 255, 255, False, False, False
 End Sub
-
-
 
 Private Sub SpoofCheck_Timer()
 
@@ -927,7 +966,7 @@ Private Sub cmdLanzar_Click()
     End If
 End Sub
 
-Private Sub CmdLanzar_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub CmdLanzar_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     UsaMacro = False
     CnTd = 0
 End Sub
@@ -941,7 +980,6 @@ Private Sub DespInv_Click(index As Integer)
 End Sub
 
 Private Sub Form_Click()
-
     If Cartel Then Cartel = False
 
 #If SeguridadAlkon Then
@@ -981,7 +1019,6 @@ Private Sub Form_Click()
             End If
         End If
     End If
-    
 End Sub
 
 Private Sub Form_DblClick()
@@ -997,11 +1034,14 @@ On Error Resume Next
     If LOGGING Then Call CheatingDeath.StoreKey(KeyCode, False)
 #End If
     
+    If KeyCode = vbKeyF2 Then ScreenCapture
+   
     If (Not SendTxt.Visible) And (Not SendCMSTXT.Visible) And _
        ((KeyCode >= 65 And KeyCode <= 90) Or _
        (KeyCode >= 48 And KeyCode <= 57)) Then
         
             Select Case KeyCode
+                
                 Case vbKeyM:
                     If Not Audio.PlayingMusic Then
                         Musica = True
@@ -1104,10 +1144,9 @@ Private Sub Form_Load()
    Me.Top = 0
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    MouseX = X
-    MouseY = Y
-    
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+    MouseX = x
+    MouseY = y
 End Sub
 
 Private Sub hlst_KeyDown(KeyCode As Integer, Shift As Integer)
@@ -1163,10 +1202,10 @@ Private Sub Image3_Click(index As Integer)
 End Sub
 
 Private Sub Label1_Click()
-    Dim I As Integer
-    For I = 1 To NUMSKILLS
-        frmSkills3.text1(I).Caption = UserSkills(I)
-    Next I
+    Dim i As Integer
+    For i = 1 To NUMSKILLS
+        frmSkills3.Text1(i).Caption = UserSkills(i)
+    Next i
     Alocados = SkillPoints
     frmSkills3.Puntos.Caption = "Puntos:" & SkillPoints
     frmSkills3.Show , frmMain
@@ -1182,7 +1221,7 @@ Private Sub Label4_Click()
     picInv.Visible = True
 
     hlst.Visible = False
-    cmdInfo.Visible = False
+    cmdINFO.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = True
@@ -1201,7 +1240,7 @@ Private Sub Label7_Click()
     'DespInv(1).Visible = False
     picInv.Visible = False
     hlst.Visible = True
-    cmdInfo.Visible = True
+    cmdINFO.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True
@@ -1217,7 +1256,7 @@ Private Sub picInv_DblClick()
     Call UsarItem
 End Sub
 
-Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
     Call Audio.PlayWave(SND_CLICK)
 End Sub
 
@@ -1259,16 +1298,16 @@ Private Sub SendTxt_Change()
         stxtbuffer = "Soy un cheater, avisenle a un gm"
     Else
         'Make sure only valid chars are inserted (with Shift + Insert they can paste illegal chars)
-        Dim I As Long
+        Dim i As Long
         Dim tempstr As String
         Dim CharAscii As Integer
         
-        For I = 1 To Len(SendTxt.Text)
-            CharAscii = Asc(mid$(SendTxt.Text, I, 1))
+        For i = 1 To Len(SendTxt.Text)
+            CharAscii = Asc(mid$(SendTxt.Text, i, 1))
             If CharAscii >= vbKeySpace And CharAscii <= 250 Then
                 tempstr = tempstr & Chr$(CharAscii)
             End If
-        Next I
+        Next i
         
         If tempstr <> SendTxt.Text Then
             'We only set it if it's different, otherwise the event will be raised
@@ -1326,16 +1365,16 @@ Private Sub SendCMSTXT_Change()
         stxtbuffercmsg = "Soy un cheater, avisenle a un GM"
     Else
         'Make sure only valid chars are inserted (with Shift + Insert they can paste illegal chars)
-        Dim I As Long
+        Dim i As Long
         Dim tempstr As String
         Dim CharAscii As Integer
         
-        For I = 1 To Len(SendCMSTXT.Text)
-            CharAscii = Asc(mid$(SendCMSTXT.Text, I, 1))
+        For i = 1 To Len(SendCMSTXT.Text)
+            CharAscii = Asc(mid$(SendCMSTXT.Text, i, 1))
             If CharAscii >= vbKeySpace And CharAscii <= 250 Then
                 tempstr = tempstr & Chr$(CharAscii)
             End If
-        Next I
+        Next i
         
         If tempstr <> SendCMSTXT.Text Then
             'We only set it if it's different, otherwise the event will be raised
@@ -1404,7 +1443,7 @@ Private Sub Socket1_Connect()
 End Sub
 
 Private Sub Socket1_Disconnect()
-    Dim I As Long
+    Dim i As Long
     
     Second.Enabled = False
     Connected = False
@@ -1418,11 +1457,11 @@ Private Sub Socket1_Disconnect()
     frmConnect.Visible = True
     
     On Local Error Resume Next
-    For I = 0 To Forms.Count - 1
-        If Forms(I).Name <> Me.Name And Forms(I).Name <> frmConnect.Name Then
-            Unload Forms(I)
+    For i = 0 To Forms.Count - 1
+        If Forms(i).Name <> Me.Name And Forms(i).Name <> frmConnect.Name Then
+            Unload Forms(i)
         End If
-    Next I
+    Next i
     On Local Error GoTo 0
     
     frmMain.Visible = False
@@ -1444,13 +1483,13 @@ Private Sub Socket1_Disconnect()
     UserHogar = 0
     UserEmail = ""
     
-    For I = 1 To NUMSKILLS
-        UserSkills(I) = 0
-    Next I
+    For i = 1 To NUMSKILLS
+        UserSkills(i) = 0
+    Next i
 
-    For I = 1 To NUMATRIBUTOS
-        UserAtributos(I) = 0
-    Next I
+    For i = 1 To NUMATRIBUTOS
+        UserAtributos(i) = 0
+    Next i
 
     SkillPoints = 0
     Alocados = 0
@@ -1510,7 +1549,7 @@ If tX >= MinXBorder And tY >= MinYBorder And _
     If MapData(tX, tY).CharIndex > 0 Then
         If charlist(MapData(tX, tY).CharIndex).invisible = False Then
         
-            Dim I As Long
+            Dim i As Long
             Dim m As New frmMenuseFashion
             
             Load m
@@ -1574,7 +1613,7 @@ End Sub
 #If UsarWrench <> 1 Then
 
 Private Sub Winsock1_Close()
-    Dim I As Long
+    Dim i As Long
     
     Debug.Print "WInsock Close"
     
@@ -1591,11 +1630,11 @@ Private Sub Winsock1_Close()
     frmConnect.Visible = True
     
     On Local Error Resume Next
-    For I = 0 To Forms.Count - 1
-        If Forms(I).Name <> Me.Name And Forms(I).Name <> frmConnect.Name Then
-            Unload Forms(I)
+    For i = 0 To Forms.Count - 1
+        If Forms(i).Name <> Me.Name And Forms(i).Name <> frmConnect.Name Then
+            Unload Forms(i)
         End If
-    Next I
+    Next i
     On Local Error GoTo 0
     
     frmMain.Visible = False
@@ -1609,13 +1648,13 @@ Private Sub Winsock1_Close()
     UserHogar = 0
     UserEmail = ""
     
-    For I = 1 To NUMSKILLS
-        UserSkills(I) = 0
-    Next I
+    For i = 1 To NUMSKILLS
+        UserSkills(i) = 0
+    Next i
 
-    For I = 1 To NUMATRIBUTOS
-        UserAtributos(I) = 0
-    Next I
+    For i = 1 To NUMATRIBUTOS
+        UserAtributos(i) = 0
+    Next i
 
     SkillPoints = 0
     Alocados = 0
