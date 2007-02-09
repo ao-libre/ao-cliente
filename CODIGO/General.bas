@@ -815,6 +815,20 @@ Sub Main()
         Config_Inicio = LeerGameIni()
     End If
     
+    'Load ao.dat config file
+    If FileExist(App.Path & "\init\ao.dat", vbArchive) Then
+        Call LoadClientSetup
+        
+        If ClientSetup.bDinamic Then
+            Set SurfaceDB = New clsSurfaceManDyn
+        Else
+            Set SurfaceDB = New clsSurfaceManStatic
+        End If
+    Else
+        'Use dynamic by default
+        Set SurfaceDB = New clsSurfaceManDyn
+    End If
+    
     'Read command line. Do it AFTER config file is loaded to prevent this from
     'canceling the effects of "/nores" option.
     Call LeerLineaComandos
@@ -844,34 +858,20 @@ Sub Main()
     MD5HushYo = "0123456789abcdef"  'We aren't using a real MD5
 #End If
     
-    If FileExist(App.Path & "\init\ao.dat", vbArchive) Then
-        Call LoadClientSetup
-        
-        If ClientSetup.bDinamic Then
-            Set SurfaceDB = New clsSurfaceManDyn
-        Else
-            Set SurfaceDB = New clsSurfaceManStatic
-        End If
-    Else
-        'Use dynamic by default
-        Set SurfaceDB = New clsSurfaceManDyn
-    End If
-    
-    
     tipf = Config_Inicio.tip
     
     frmCargando.Show
     frmCargando.Refresh
     
-    frmConnect.version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
-    AddtoRichTextBox frmCargando.status, "Buscando servidores....", 0, 0, 0, 0, 0, 1
+    frmConnect.Version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
+    AddtoRichTextBox frmCargando.Status, "Buscando servidores....", 0, 0, 0, 0, 0, 1
 
     Call CargarServidores
 'TODO : esto de ServerRecibidos no se podría sacar???
     ServersRecibidos = True
     
-    AddtoRichTextBox frmCargando.status, "Encontrado", , , , 1
-    AddtoRichTextBox frmCargando.status, "Iniciando constantes...", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.Status, "Encontrado", , , , 1
+    AddtoRichTextBox frmCargando.Status, "Iniciando constantes...", 0, 0, 0, 0, 0, 1
     
     Call InicializarNombres
     
@@ -881,12 +881,12 @@ Sub Main()
     frmOldPersonaje.NameTxt.Text = Config_Inicio.Name
     frmOldPersonaje.PasswordTxt.Text = ""
     
-    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
+    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
     
     IniciarObjetosDirectX
     
-    AddtoRichTextBox frmCargando.status, "Cargando Sonidos....", 0, 0, 0, 0, 0, 1
-    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
+    AddtoRichTextBox frmCargando.Status, "Cargando Sonidos....", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
 
 Dim loopc As Integer
 
@@ -894,7 +894,7 @@ LastTime = GetTickCount
 
     Call InitTileEngine(frmMain.hWnd, 152, 7, 32, 32, 13, 17, 9)
     
-    Call AddtoRichTextBox(frmCargando.status, "Creando animaciones extra....")
+    Call AddtoRichTextBox(frmCargando.Status, "Creando animaciones extra....")
     
     Call CargarAnimsExtra
     Call CargarTips
@@ -912,14 +912,14 @@ UserMap = 1
     Call InitMI
 #End If
 
-    AddtoRichTextBox frmCargando.status, "                    ¡Bienvenido a Argentum Online!", , , , 1
+    AddtoRichTextBox frmCargando.Status, "                    ¡Bienvenido a Argentum Online!", , , , 1
     
     Unload frmCargando
     
     'Inicializamos el sonido
-    Call AddtoRichTextBox(frmCargando.status, "Iniciando DirectSound....", 0, 0, 0, 0, 0, True)
+    Call AddtoRichTextBox(frmCargando.Status, "Iniciando DirectSound....", 0, 0, 0, 0, 0, True)
     Call Audio.Initialize(DirectX, frmMain.hWnd, App.Path & "\" & Config_Inicio.DirSonidos & "\", App.Path & "\" & Config_Inicio.DirMusica & "\")
-    Call AddtoRichTextBox(frmCargando.status, "Hecho", , , , 1, , False)
+    Call AddtoRichTextBox(frmCargando.Status, "Hecho", , , , 1, , False)
     
     'Inicializamos el inventario gráfico
     Call Inventario.Initialize(DirectDraw, frmMain.picInv)
@@ -1014,7 +1014,7 @@ UserMap = 1
     
     EngineRun = False
     frmCargando.Show
-    AddtoRichTextBox frmCargando.status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.Status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
     LiberarObjetosDX
 
 'TODO : Esto debería ir en otro lado como al cambair a esta res
