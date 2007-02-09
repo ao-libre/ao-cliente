@@ -726,6 +726,7 @@ End Sub
 
 Private Sub cmdMoverHechi_Click(index As Integer)
     If hlst.listIndex = -1 Then Exit Sub
+    Dim sTemp As String
 
     Select Case index
         Case 1 'subir
@@ -738,8 +739,14 @@ Private Sub cmdMoverHechi_Click(index As Integer)
 
     Select Case index
         Case 1 'subir
+            sTemp = hlst.List(hlst.listIndex - 1)
+            hlst.List(hlst.listIndex - 1) = hlst.List(hlst.listIndex)
+            hlst.List(hlst.listIndex) = sTemp
             hlst.listIndex = hlst.listIndex - 1
         Case 0 'bajar
+            sTemp = hlst.List(hlst.listIndex + 1)
+            hlst.List(hlst.listIndex + 1) = hlst.List(hlst.listIndex)
+            hlst.List(hlst.listIndex) = sTemp
             hlst.listIndex = hlst.listIndex + 1
     End Select
 End Sub

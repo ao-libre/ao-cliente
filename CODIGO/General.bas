@@ -1152,7 +1152,6 @@ Public Sub LeerLineaComandos()
     
     'Parseo los comandos
     T = Split(Command, " ")
-    NoRes = True 'Pablo Sacar
     For i = LBound(T) To UBound(T)
         Select Case UCase$(T(i))
             Case "/NORES" 'no cambiar la resolucion
@@ -1174,7 +1173,7 @@ Private Sub LoadClientSetup()
         Get fHandle, , ClientSetup
     Close fHandle
     
-    'NoRes = ClientSetup.bNoRes  ' 24/06/2006 - ^[GS]^ Pablo des"comentar"
+    NoRes = ClientSetup.bNoRes
     Musica = Not ClientSetup.bNoMusic
     Sound = Not ClientSetup.bNoSound
 End Sub
