@@ -137,7 +137,7 @@ Private Enum ServerPacketID
     DumbNoMore              ' NESTUP
     SendSkills              ' SKILLS
     TrainerCreatureList     ' LSTCRI
-    GuildNews               ' GUILDNE
+    guildNews               ' GUILDNE
     OfferDetails            ' PEACEDE & ALLIEDE
     AlianceProposalsList    ' ALLIEPR
     PeaceProposalsList      ' PEACEPR
@@ -247,7 +247,7 @@ Private Enum ClientPacketID
     Information             '/INFORMACION
     Reward                  '/RECOMPENSA
     RequestMOTD             '/MOTD
-    UpTime                  '/UPTIME
+    Uptime                  '/UPTIME
     PartyLeave              '/SALIRPARTY
     PartyCreate             '/CREARPARTY
     PartyJoin               '/PARTY
@@ -260,7 +260,7 @@ Private Enum ClientPacketID
     CouncilMessage          '/BMSG
     RoleMasterRequest       '/ROL
     GMRequest               '/GM
-    BugReport               '/_BUG
+    bugReport               '/_BUG
     ChangeDescription       '/DESC
     GuildVote               '/VOTO
     Punishments             '/PENAS
@@ -279,12 +279,12 @@ Private Enum ClientPacketID
     
     'GM messages
     GMMessage               '/GMSG
-    ShowName                '/SHOWNAME
+    showName                '/SHOWNAME
     OnlineRoyalArmy         '/ONLINEREAL
     OnlineChaosLegion       '/ONLINECAOS
     GoNearby                '/IRCERCA
-    Comment                 '/REM
-    ServerTime              '/HORA
+    comment                 '/REM
+    serverTime              '/HORA
     Where                   '/DONDE
     CreaturesInMap          '/NENE
     WarpMeToTarget          '/TELEPLOC
@@ -381,7 +381,7 @@ Private Enum ClientPacketID
     AlterMail               '/AEMAIL
     AlterName               '/ANAME
     ToggleCentinelActivated '/CENTINELAACTIVADO
-    DoBackup                '/DOBACKUP
+    DoBackUp                '/DOBACKUP
     ShowGuildMessages       '/SHOWCMSG
     SaveMap                 '/GUARDAMAPA
     ChangeMapInfoPK         '/MODMAPINFO PK
@@ -395,7 +395,7 @@ Private Enum ClientPacketID
     SaveChars               '/GRABAR
     CleanSOS                '/BORRAR SOS
     ShowServerForm          '/SHOW INT
-    Night                   '/NOCHE
+    night                   '/NOCHE
     KickAllChars            '/ECHARTODOSPJS
     RequestTCPStats         '/TCPESSTATS
     ReloadNPCs              '/RELOADNPCS
@@ -406,7 +406,7 @@ Private Enum ClientPacketID
     ResetAutoUpdate         '/AUTOUPDATE
     ChatColor               '/CHATCOLOR
     Ignored                 '/IGNORADO
-    CheckSlot               '/Slot
+    CheckSlot               '/SLOT
 End Enum
 
 Public Enum FontTypeNames
@@ -818,7 +818,7 @@ On Error Resume Next
         Case ServerPacketID.TrainerCreatureList     ' LSTCRI
             Call HandleTrainerCreatureList
         
-        Case ServerPacketID.GuildNews               ' GUILDNE
+        Case ServerPacketID.guildNews               ' GUILDNE
             Call HandleGuildNews
         
         Case ServerPacketID.OfferDetails            ' PEACEDE and ALLIEDE
@@ -925,9 +925,9 @@ Private Sub HandleLogged()
     End If
     
     'Are we under a roof?
-    bTecho = IIf(MapData(UserPos.X, UserPos.Y).Trigger = 1 Or _
-            MapData(UserPos.X, UserPos.Y).Trigger = 2 Or _
-            MapData(UserPos.X, UserPos.Y).Trigger = 4, True, False)
+    bTecho = IIf(MapData(UserPos.x, UserPos.y).Trigger = 1 Or _
+            MapData(UserPos.x, UserPos.y).Trigger = 2 Or _
+            MapData(UserPos.x, UserPos.y).Trigger = 4, True, False)
 End Sub
 
 ''
@@ -1070,31 +1070,14 @@ Private Sub HandleBankEnd()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    Dim i As Long
-    
     'Remove packet ID
     Call incomingData.ReadByte
     
-    If frmBancoObj.Visible Then
-        For i = 1 To MAX_INVENTORY_SLOTS
-            If Inventario.OBJIndex(i) <> 0 Then
-                frmBancoObj.List1(1).AddItem Inventario.ItemName(i)
-            Else
-                frmBancoObj.List1(1).AddItem "Nada"
-            End If
-        Next i
-        
-        For i = 1 To MAX_BANCOINVENTORY_SLOTS
-            If UserBancoInventory(i).OBJIndex <> 0 Then
-                frmBancoObj.List1(0).AddItem UserBancoInventory(i).Name
-            Else
-                frmBancoObj.List1(0).AddItem "Nada"
-            End If
-        Next i
-        
-        frmBancoObj.List1(0).listIndex = frmBancoObj.LastIndex1
-        frmBancoObj.List1(1).listIndex = frmBancoObj.LastIndex2
-    End If
+    frmBancoObj.List1(0).Clear
+    frmBancoObj.List1(1).Clear
+    NPCInvDim = 0
+    Unload frmBancoObj
+    Comerciando = False
 End Sub
 
 ''
@@ -1598,18 +1581,18 @@ Private Sub HandlePosUpdate()
     Call incomingData.ReadByte
     
     'Remove char from old position
-    MapData(UserPos.X, UserPos.Y).CharIndex = 0
+    MapData(UserPos.x, UserPos.y).CharIndex = 0
     
     'Set new pos
-    UserPos.X = incomingData.ReadByte()
-    UserPos.Y = incomingData.ReadByte()
+    UserPos.x = incomingData.ReadByte()
+    UserPos.y = incomingData.ReadByte()
     
     'Set char
-    MapData(UserPos.X, UserPos.Y).CharIndex = UserCharIndex
+    MapData(UserPos.x, UserPos.y).CharIndex = UserCharIndex
     charlist(UserCharIndex).Pos = UserPos
     
     'Update pos label
-    frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.X & "," & UserPos.Y & ")"
+    frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.x & "," & UserPos.y & ")"
 End Sub
 
 ''
@@ -1986,7 +1969,7 @@ Private Sub HandleUserCharIndexInServer()
     
     UserCharIndex = incomingData.ReadInteger()
     UserPos = charlist(UserCharIndex).Pos
-    frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.X & "," & UserPos.Y & ")"
+    frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.x & "," & UserPos.y & ")"
 End Sub
 
 ''
@@ -2015,8 +1998,8 @@ On Error GoTo ErrHandler
     Dim Body As Integer
     Dim Head As Integer
     Dim Heading As E_Heading
-    Dim X As Byte
-    Dim Y As Byte
+    Dim x As Byte
+    Dim y As Byte
     Dim weapon As Integer
     Dim shield As Integer
     Dim helmet As Integer
@@ -2025,21 +2008,21 @@ On Error GoTo ErrHandler
     Body = Buffer.ReadInteger()
     Head = Buffer.ReadInteger()
     Heading = Buffer.ReadByte()
-    X = Buffer.ReadByte()
-    Y = Buffer.ReadByte()
+    x = Buffer.ReadByte()
+    y = Buffer.ReadByte()
     weapon = Buffer.ReadInteger()
     shield = Buffer.ReadInteger()
     helmet = Buffer.ReadInteger()
     
     With charlist(CharIndex)
-        .Fx = Buffer.ReadInteger()
+        .fX = Buffer.ReadInteger()
         .FxLoopTimes = Buffer.ReadInteger()
         .Nombre = Buffer.ReadASCIIString()
         .Criminal = Buffer.ReadByte()
         .priv = Buffer.ReadByte()
     End With
     
-    Call MakeChar(CharIndex, Body, Head, Heading, X, Y, weapon, shield, helmet)
+    Call MakeChar(CharIndex, Body, Head, Heading, x, y, weapon, shield, helmet)
     
     Call RefreshAllChars
     
@@ -2102,16 +2085,16 @@ Private Sub HandleCharacterMove()
     Call incomingData.ReadByte
     
     Dim CharIndex As Integer
-    Dim X As Byte
-    Dim Y As Byte
+    Dim x As Byte
+    Dim y As Byte
     
     CharIndex = incomingData.ReadInteger()
-    X = incomingData.ReadByte()
-    Y = incomingData.ReadByte()
+    x = incomingData.ReadByte()
+    y = incomingData.ReadByte()
     
     With charlist(CharIndex)
-        If .Fx >= 40 And .Fx <= 49 Then   'If it's meditating, we remove the FX
-            .Fx = 0
+        If .fX >= 40 And .fX <= 49 Then   'If it's meditating, we remove the FX
+            .fX = 0
             .FxLoopTimes = 0
         End If
         
@@ -2121,7 +2104,7 @@ Private Sub HandleCharacterMove()
         End If
     End With
     
-    Call MoveCharbyPos(CharIndex, X, Y)
+    Call MoveCharbyPos(CharIndex, x, y)
     
     Call RefreshAllChars
 End Sub
@@ -2168,7 +2151,7 @@ Private Sub HandleCharacterChange()
         tempint = incomingData.ReadInteger()
         If tempint <> 0 Then .Casco = CascoAnimData(tempint)
         
-        .Fx = incomingData.ReadInteger()
+        .fX = incomingData.ReadInteger()
         .FxLoopTimes = incomingData.ReadInteger()
     End With
     
@@ -2192,15 +2175,15 @@ Private Sub HandleObjectCreate()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Dim X As Byte
-    Dim Y As Byte
+    Dim x As Byte
+    Dim y As Byte
     
-    X = incomingData.ReadByte()
-    Y = incomingData.ReadByte()
+    x = incomingData.ReadByte()
+    y = incomingData.ReadByte()
     
-    MapData(X, Y).ObjGrh.GrhIndex = incomingData.ReadInteger()
+    MapData(x, y).ObjGrh.GrhIndex = incomingData.ReadInteger()
     
-    Call InitGrh(MapData(X, Y).ObjGrh, MapData(X, Y).ObjGrh.GrhIndex)
+    Call InitGrh(MapData(x, y).ObjGrh, MapData(x, y).ObjGrh.GrhIndex)
 End Sub
 
 ''
@@ -2220,12 +2203,12 @@ Private Sub HandleObjectDelete()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Dim X As Byte
-    Dim Y As Byte
+    Dim x As Byte
+    Dim y As Byte
     
-    X = incomingData.ReadByte()
-    Y = incomingData.ReadByte()
-    MapData(X, Y).ObjGrh.GrhIndex = 0
+    x = incomingData.ReadByte()
+    y = incomingData.ReadByte()
+    MapData(x, y).ObjGrh.GrhIndex = 0
 End Sub
 
 ''
@@ -2245,13 +2228,13 @@ Private Sub HandleBlockPosition()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Dim X As Byte
-    Dim Y As Byte
+    Dim x As Byte
+    Dim y As Byte
     
-    X = incomingData.ReadByte()
-    Y = incomingData.ReadByte()
+    x = incomingData.ReadByte()
+    y = incomingData.ReadByte()
     
-    MapData(X, Y).Blocked = incomingData.ReadBoolean()
+    MapData(x, y).Blocked = incomingData.ReadBoolean()
 End Sub
 
 ''
@@ -2391,13 +2374,13 @@ Private Sub HandleAreaChanged()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Dim X As Byte
-    Dim Y As Byte
+    Dim x As Byte
+    Dim y As Byte
     
-    X = incomingData.ReadByte()
-    Y = incomingData.ReadByte()
+    x = incomingData.ReadByte()
+    y = incomingData.ReadByte()
     
-    Call CambioDeArea(X, Y)
+    Call CambioDeArea(x, y)
 End Sub
 
 ''
@@ -2477,11 +2460,11 @@ Private Sub HandleRainToggle()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    If Not InMapBounds(UserPos.X, UserPos.Y) Then Exit Sub
+    If Not InMapBounds(UserPos.x, UserPos.y) Then Exit Sub
     
-    bTecho = (MapData(UserPos.X, UserPos.Y).Trigger = 1 Or _
-            MapData(UserPos.X, UserPos.Y).Trigger = 2 Or _
-            MapData(UserPos.X, UserPos.Y).Trigger = 4)
+    bTecho = (MapData(UserPos.x, UserPos.y).Trigger = 1 Or _
+            MapData(UserPos.x, UserPos.y).Trigger = 2 Or _
+            MapData(UserPos.x, UserPos.y).Trigger = 4)
     If bRain Then
         If bLluvia(UserMap) And Sound Then
             'Stop playing the rain sound
@@ -2519,7 +2502,7 @@ Private Sub HandleCreateFX()
     Dim CharIndex As Integer
     
     CharIndex = incomingData.ReadInteger()
-    charlist(CharIndex).Fx = incomingData.ReadInteger()
+    charlist(CharIndex).fX = incomingData.ReadInteger()
     charlist(CharIndex).FxLoopTimes = incomingData.ReadInteger()
 End Sub
 
@@ -2634,7 +2617,7 @@ On Error GoTo ErrHandler
     'Remove packet ID
     Call Buffer.ReadByte
     
-    Dim Slot As Byte
+    Dim slot As Byte
     Dim OBJIndex As Integer
     Dim Name As String
     Dim Amount As Integer
@@ -2646,7 +2629,7 @@ On Error GoTo ErrHandler
     Dim defense As Integer
     Dim value As Long
     
-    Slot = Buffer.ReadByte()
+    slot = Buffer.ReadByte()
     OBJIndex = Buffer.ReadInteger()
     Name = Buffer.ReadASCIIString()
     Amount = Buffer.ReadInteger()
@@ -2658,7 +2641,7 @@ On Error GoTo ErrHandler
     defense = Buffer.ReadInteger()
     value = Buffer.ReadLong()
     
-    Call Inventario.SetItem(Slot, OBJIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, defense, value, Name)
+    Call Inventario.SetItem(slot, OBJIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, defense, value, Name)
     
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
@@ -2697,10 +2680,10 @@ On Error GoTo ErrHandler
     'Remove packet ID
     Call Buffer.ReadByte
     
-    Dim Slot As Byte
-    Slot = Buffer.ReadByte()
+    Dim slot As Byte
+    slot = Buffer.ReadByte()
     
-    With UserBancoInventory(Slot)
+    With UserBancoInventory(slot)
         .OBJIndex = Buffer.ReadInteger()
         .Name = Buffer.ReadASCIIString()
         .Amount = Buffer.ReadInteger()
@@ -2750,10 +2733,10 @@ On Error GoTo ErrHandler
     'Remove packet ID
     Call Buffer.ReadByte
     
-    Dim Slot As Byte
-    Slot = Buffer.ReadByte()
+    Dim slot As Byte
+    slot = Buffer.ReadByte()
     
-    UserHechizos(Slot) = Buffer.ReadInteger()
+    UserHechizos(slot) = Buffer.ReadInteger()
     
     Call frmMain.hlst.AddItem(Buffer.ReadASCIIString())
     
@@ -4787,7 +4770,7 @@ End Sub
 ' @param    amount Number of items to drop.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteDrop(ByVal Slot As Byte, ByVal Amount As Integer)
+Public Sub WriteDrop(ByVal slot As Byte, ByVal Amount As Integer)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -4796,7 +4779,7 @@ Public Sub WriteDrop(ByVal Slot As Byte, ByVal Amount As Integer)
     With outgoingData
         Call .WriteByte(ClientPacketID.Drop)
         
-        Call .WriteByte(Slot)
+        Call .WriteByte(slot)
         Call .WriteInteger(Amount)
     End With
 End Sub
@@ -4807,7 +4790,7 @@ End Sub
 ' @param    slot Spell List slot where the spell to cast is.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCastSpell(ByVal Slot As Byte)
+Public Sub WriteCastSpell(ByVal slot As Byte)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -4816,7 +4799,7 @@ Public Sub WriteCastSpell(ByVal Slot As Byte)
     With outgoingData
         Call .WriteByte(ClientPacketID.CastSpell)
         
-        Call .WriteByte(Slot)
+        Call .WriteByte(slot)
     End With
 End Sub
 
@@ -4827,7 +4810,7 @@ End Sub
 ' @param    y Tile coord in the y-axis in which the user clicked.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteLeftClick(ByVal X As Byte, ByVal Y As Byte)
+Public Sub WriteLeftClick(ByVal x As Byte, ByVal y As Byte)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -4836,8 +4819,8 @@ Public Sub WriteLeftClick(ByVal X As Byte, ByVal Y As Byte)
     With outgoingData
         Call .WriteByte(ClientPacketID.LeftClick)
         
-        Call .WriteByte(X)
-        Call .WriteByte(Y)
+        Call .WriteByte(x)
+        Call .WriteByte(y)
     End With
 End Sub
 
@@ -4848,7 +4831,7 @@ End Sub
 ' @param    y Tile coord in the y-axis in which the user clicked.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteDoubleClick(ByVal X As Byte, ByVal Y As Byte)
+Public Sub WriteDoubleClick(ByVal x As Byte, ByVal y As Byte)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -4857,8 +4840,8 @@ Public Sub WriteDoubleClick(ByVal X As Byte, ByVal Y As Byte)
     With outgoingData
         Call .WriteByte(ClientPacketID.DoubleClick)
         
-        Call .WriteByte(X)
-        Call .WriteByte(Y)
+        Call .WriteByte(x)
+        Call .WriteByte(y)
     End With
 End Sub
 
@@ -4901,7 +4884,7 @@ End Sub
 ' @param    slot Invetory slot where the item to use is.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteUseItem(ByVal Slot As Byte)
+Public Sub WriteUseItem(ByVal slot As Byte)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -4910,7 +4893,7 @@ Public Sub WriteUseItem(ByVal Slot As Byte)
     With outgoingData
         Call .WriteByte(ClientPacketID.UseItem)
         
-        Call .WriteByte(Slot)
+        Call .WriteByte(slot)
     End With
 End Sub
 
@@ -4960,7 +4943,7 @@ End Sub
 ' @param    skill The skill which the user attempts to use.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteWorkLeftClick(ByVal X As Byte, ByVal Y As Byte, ByVal Skill As eSkill)
+Public Sub WriteWorkLeftClick(ByVal x As Byte, ByVal y As Byte, ByVal Skill As eSkill)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -4969,8 +4952,8 @@ Public Sub WriteWorkLeftClick(ByVal X As Byte, ByVal Y As Byte, ByVal Skill As e
     With outgoingData
         Call .WriteByte(ClientPacketID.WorkLeftClick)
         
-        Call .WriteByte(X)
-        Call .WriteByte(Y)
+        Call .WriteByte(x)
+        Call .WriteByte(y)
         
         Call .WriteByte(Skill)
     End With
@@ -5017,7 +5000,7 @@ End Sub
 ' @param    slot Spell List slot where the spell which's info is requested is.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteSpellInfo(ByVal Slot As Byte)
+Public Sub WriteSpellInfo(ByVal slot As Byte)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5026,7 +5009,7 @@ Public Sub WriteSpellInfo(ByVal Slot As Byte)
     With outgoingData
         Call .WriteByte(ClientPacketID.SpellInfo)
         
-        Call .WriteByte(Slot)
+        Call .WriteByte(slot)
     End With
 End Sub
 
@@ -5036,7 +5019,7 @@ End Sub
 ' @param    slot Invetory slot where the item to equip is.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteEquipItem(ByVal Slot As Byte)
+Public Sub WriteEquipItem(ByVal slot As Byte)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5045,7 +5028,7 @@ Public Sub WriteEquipItem(ByVal Slot As Byte)
     With outgoingData
         Call .WriteByte(ClientPacketID.EquipItem)
         
-        Call .WriteByte(Slot)
+        Call .WriteByte(slot)
     End With
 End Sub
 
@@ -5117,7 +5100,7 @@ End Sub
 ' @param    amount Number of items to buy.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCommerceBuy(ByVal Slot As Byte, ByVal Amount As Integer)
+Public Sub WriteCommerceBuy(ByVal slot As Byte, ByVal Amount As Integer)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5126,7 +5109,7 @@ Public Sub WriteCommerceBuy(ByVal Slot As Byte, ByVal Amount As Integer)
     With outgoingData
         Call .WriteByte(ClientPacketID.CommerceBuy)
         
-        Call .WriteByte(Slot)
+        Call .WriteByte(slot)
         Call .WriteInteger(Amount)
     End With
 End Sub
@@ -5138,7 +5121,7 @@ End Sub
 ' @param    amount Number of items to extract.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteBankExtractItem(ByVal Slot As Byte, ByVal Amount As Integer)
+Public Sub WriteBankExtractItem(ByVal slot As Byte, ByVal Amount As Integer)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5147,7 +5130,7 @@ Public Sub WriteBankExtractItem(ByVal Slot As Byte, ByVal Amount As Integer)
     With outgoingData
         Call .WriteByte(ClientPacketID.BankExtractItem)
         
-        Call .WriteByte(Slot)
+        Call .WriteByte(slot)
         Call .WriteInteger(Amount)
     End With
 End Sub
@@ -5159,7 +5142,7 @@ End Sub
 ' @param    amount Number of items to sell.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCommerceSell(ByVal Slot As Byte, ByVal Amount As Integer)
+Public Sub WriteCommerceSell(ByVal slot As Byte, ByVal Amount As Integer)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5168,7 +5151,7 @@ Public Sub WriteCommerceSell(ByVal Slot As Byte, ByVal Amount As Integer)
     With outgoingData
         Call .WriteByte(ClientPacketID.CommerceSell)
         
-        Call .WriteByte(Slot)
+        Call .WriteByte(slot)
         Call .WriteInteger(Amount)
     End With
 End Sub
@@ -5180,7 +5163,7 @@ End Sub
 ' @param    amount Number of items to deposit.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteBankDeposit(ByVal Slot As Byte, ByVal Amount As Integer)
+Public Sub WriteBankDeposit(ByVal slot As Byte, ByVal Amount As Integer)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5189,7 +5172,7 @@ Public Sub WriteBankDeposit(ByVal Slot As Byte, ByVal Amount As Integer)
     With outgoingData
         Call .WriteByte(ClientPacketID.BankDeposit)
         
-        Call .WriteByte(Slot)
+        Call .WriteByte(slot)
         Call .WriteInteger(Amount)
     End With
 End Sub
@@ -5222,7 +5205,7 @@ End Sub
 ' @param    slot Spell List slot where the spell which's info is requested is.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteMoveSpell(ByVal upwards As Boolean, ByVal Slot As Byte)
+Public Sub WriteMoveSpell(ByVal upwards As Boolean, ByVal slot As Byte)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5232,7 +5215,7 @@ Public Sub WriteMoveSpell(ByVal upwards As Boolean, ByVal Slot As Byte)
         Call .WriteByte(ClientPacketID.MoveSpell)
         
         Call .WriteBoolean(upwards)
-        Call .WriteByte(Slot)
+        Call .WriteByte(slot)
     End With
 End Sub
 
@@ -5275,7 +5258,7 @@ End Sub
 ' @param    amount Number of items to offer.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteUserCommerceOffer(ByVal Slot As Byte, ByVal Amount As Integer)
+Public Sub WriteUserCommerceOffer(ByVal slot As Byte, ByVal Amount As Integer)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5284,7 +5267,7 @@ Public Sub WriteUserCommerceOffer(ByVal Slot As Byte, ByVal Amount As Integer)
     With outgoingData
         Call .WriteByte(ClientPacketID.UserCommerceOffer)
         
-        Call .WriteByte(Slot)
+        Call .WriteByte(slot)
         Call .WriteInteger(Amount)
     End With
 End Sub
@@ -5958,7 +5941,7 @@ Public Sub WriteUpTime()
 'Last Modification: 05/17/06
 'Writes the "UpTime" message to the outgoing data buffer
 '***************************************************
-    Call outgoingData.WriteByte(ClientPacketID.UpTime)
+    Call outgoingData.WriteByte(ClientPacketID.Uptime)
 End Sub
 
 ''
@@ -6167,7 +6150,7 @@ Public Sub WriteBugReport(ByVal Message As String)
 'Writes the "BugReport" message to the outgoing data buffer
 '***************************************************
     With outgoingData
-        Call .WriteByte(ClientPacketID.BugReport)
+        Call .WriteByte(ClientPacketID.bugReport)
         
         Call .WriteASCIIString(Message)
     End With
@@ -6487,7 +6470,7 @@ Public Sub WriteShowName()
 'Last Modification: 05/17/06
 'Writes the "ShowName" message to the outgoing data buffer
 '***************************************************
-    Call outgoingData.WriteByte(ClientPacketID.ShowName)
+    Call outgoingData.WriteByte(ClientPacketID.showName)
 End Sub
 
 ''
@@ -6550,7 +6533,7 @@ Public Sub WriteComment(ByVal Message As String)
 'Writes the "Comment" message to the outgoing data buffer
 '***************************************************
     With outgoingData
-        Call .WriteByte(ClientPacketID.Comment)
+        Call .WriteByte(ClientPacketID.comment)
         
         Call .WriteASCIIString(Message)
     End With
@@ -6567,7 +6550,7 @@ Public Sub WriteServerTime()
 'Last Modification: 05/17/06
 'Writes the "ServerTime" message to the outgoing data buffer
 '***************************************************
-    Call outgoingData.WriteByte(ClientPacketID.ServerTime)
+    Call outgoingData.WriteByte(ClientPacketID.serverTime)
 End Sub
 
 ''
@@ -6631,7 +6614,7 @@ End Sub
 ' @param    y The y position in the map to which to waro the character.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteWarpChar(ByVal UserName As String, ByVal Map As Integer, ByVal X As Byte, ByVal Y As Byte)
+Public Sub WriteWarpChar(ByVal UserName As String, ByVal Map As Integer, ByVal x As Byte, ByVal y As Byte)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6644,8 +6627,8 @@ Public Sub WriteWarpChar(ByVal UserName As String, ByVal Map As Integer, ByVal X
         
         Call .WriteInteger(Map)
         
-        Call .WriteByte(X)
-        Call .WriteByte(Y)
+        Call .WriteByte(x)
+        Call .WriteByte(y)
     End With
 End Sub
 
@@ -7317,7 +7300,7 @@ End Sub
 ' @param    y The position in the y axis to which the teleport will lead.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteTeleportCreate(ByVal Map As Integer, ByVal X As Byte, ByVal Y As Byte)
+Public Sub WriteTeleportCreate(ByVal Map As Integer, ByVal x As Byte, ByVal y As Byte)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7328,8 +7311,8 @@ Public Sub WriteTeleportCreate(ByVal Map As Integer, ByVal X As Byte, ByVal Y As
         
         Call .WriteInteger(Map)
         
-        Call .WriteByte(X)
-        Call .WriteByte(Y)
+        Call .WriteByte(x)
+        Call .WriteByte(y)
     End With
 End Sub
 
@@ -7411,7 +7394,7 @@ End Sub
 ' @param    y The position in the y axis in which to play the given wave.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteForceWAVEToMap(ByVal waveID As Byte, ByVal Map As Integer, ByVal X As Byte, ByVal Y As Byte)
+Public Sub WriteForceWAVEToMap(ByVal waveID As Byte, ByVal Map As Integer, ByVal x As Byte, ByVal y As Byte)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7424,8 +7407,8 @@ Public Sub WriteForceWAVEToMap(ByVal waveID As Byte, ByVal Map As Integer, ByVal
         
         Call .WriteInteger(Map)
         
-        Call .WriteByte(X)
-        Call .WriteByte(Y)
+        Call .WriteByte(x)
+        Call .WriteByte(y)
     End With
 End Sub
 
@@ -8309,7 +8292,7 @@ Public Sub WriteDoBackup()
 'Last Modification: 05/17/06
 'Writes the "DoBackup" message to the outgoing data buffer
 '***************************************************
-    Call outgoingData.WriteByte(ClientPacketID.DoBackup)
+    Call outgoingData.WriteByte(ClientPacketID.DoBackUp)
 End Sub
 
 ''
@@ -8550,7 +8533,7 @@ Public Sub WriteNight()
 'Last Modification: 05/17/06
 'Writes the "Night" message to the outgoing data buffer
 '***************************************************
-    Call outgoingData.WriteByte(ClientPacketID.Night)
+    Call outgoingData.WriteByte(ClientPacketID.night)
 End Sub
 
 ''
@@ -8707,7 +8690,7 @@ End Sub
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCheckSlot(ByVal UserName As String, ByVal Slot As Integer)
+Public Sub WriteCheckSlot(ByVal UserName As String, ByVal slot As Integer)
 '***************************************************
 'Autor: Pablo (ToxicWaste)
 'Last Modification: 26/01/2007
@@ -8716,7 +8699,7 @@ Public Sub WriteCheckSlot(ByVal UserName As String, ByVal Slot As Integer)
 With outgoingData
     Call .WriteByte(ClientPacketID.CheckSlot)
     Call .WriteASCIIString(UserName)
-    Call .WriteInteger(Slot)
+    Call .WriteInteger(slot)
 End With
     
 End Sub
