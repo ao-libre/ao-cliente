@@ -570,6 +570,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1042,7 +1043,7 @@ On Error Resume Next
 #End If
     
     If KeyCode = vbKeyF2 Then ScreenCapture
-   
+    
     If (Not SendTxt.Visible) And (Not SendCMSTXT.Visible) And _
        ((KeyCode >= 65 And KeyCode <= 90) Or _
        (KeyCode >= 48 And KeyCode <= 57)) Then
