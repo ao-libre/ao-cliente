@@ -2687,7 +2687,6 @@ On Error GoTo ErrHandler
         .OBJIndex = Buffer.ReadInteger()
         .Name = Buffer.ReadASCIIString()
         .Amount = Buffer.ReadInteger()
-        .Equipped = Buffer.ReadBoolean()
         .GrhIndex = Buffer.ReadInteger()
         .OBJType = Buffer.ReadByte()
         .MaxHit = Buffer.ReadInteger()
