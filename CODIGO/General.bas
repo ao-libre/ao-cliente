@@ -35,9 +35,6 @@ Attribute VB_Name = "Mod_General"
 
 Option Explicit
 
-Public bK As Long
-Public bRK As Long
-
 Public iplst As String
 
 Public bFogata As Boolean
@@ -45,7 +42,7 @@ Public bFogata As Boolean
 Public bLluvia() As Byte ' Array para determinar si
 'debemos mostrar la animacion de la lluvia
 
-Public lFrameTimer As Long
+Private lFrameTimer As Long
 
 Public Function DirGraficos() As String
     DirGraficos = App.Path & "\" & Config_Inicio.DirGraficos & "\"
@@ -61,39 +58,6 @@ End Function
 
 Public Function DirMapas() As String
     DirMapas = App.Path & "\" & Config_Inicio.DirMapas & "\"
-End Function
-
-Public Function SumaDigitos(ByVal Numero As Integer) As Integer
-    'Suma digitos
-    Do
-        SumaDigitos = SumaDigitos + (Numero Mod 10)
-        Numero = Numero \ 10
-    Loop While (Numero > 0)
-End Function
-
-Public Function SumaDigitosMenos(ByVal Numero As Integer) As Integer
-    'Suma digitos, y resta el total de dígitos
-    Do
-        SumaDigitosMenos = SumaDigitosMenos + (Numero Mod 10) - 1
-        Numero = Numero \ 10
-    Loop While (Numero > 0)
-End Function
-
-Public Function Complex(ByVal Numero As Integer) As Integer
-    If Numero Mod 2 <> 0 Then
-        Complex = Numero * SumaDigitos(Numero)
-    Else
-        Complex = Numero * SumaDigitosMenos(Numero)
-    End If
-End Function
-
-Public Function ValidarLoginMSG(ByVal Numero As Integer) As Integer
-    Dim AuxInteger As Integer
-    Dim AuxInteger2 As Integer
-    
-    AuxInteger = SumaDigitos(Numero)
-    AuxInteger2 = SumaDigitosMenos(Numero)
-    ValidarLoginMSG = Complex(AuxInteger + AuxInteger2)
 End Function
 
 Public Function RandomNumber(ByVal LowerBound As Long, ByVal UpperBound As Long) As Long
@@ -863,15 +827,15 @@ Sub Main()
     frmCargando.Show
     frmCargando.Refresh
     
-    frmConnect.Version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
-    AddtoRichTextBox frmCargando.Status, "Buscando servidores....", 0, 0, 0, 0, 0, 1
+    frmConnect.version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
+    AddtoRichTextBox frmCargando.status, "Buscando servidores....", 0, 0, 0, 0, 0, 1
 
     Call CargarServidores
 'TODO : esto de ServerRecibidos no se podría sacar???
     ServersRecibidos = True
     
-    AddtoRichTextBox frmCargando.Status, "Encontrado", , , , 1
-    AddtoRichTextBox frmCargando.Status, "Iniciando constantes...", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.status, "Encontrado", , , , 1
+    AddtoRichTextBox frmCargando.status, "Iniciando constantes...", 0, 0, 0, 0, 0, 1
     
     Call InicializarNombres
     
@@ -881,12 +845,12 @@ Sub Main()
     frmOldPersonaje.NameTxt.Text = Config_Inicio.Name
     frmOldPersonaje.PasswordTxt.Text = ""
     
-    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
+    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
     
     IniciarObjetosDirectX
     
-    AddtoRichTextBox frmCargando.Status, "Cargando Sonidos....", 0, 0, 0, 0, 0, 1
-    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
+    AddtoRichTextBox frmCargando.status, "Cargando Sonidos....", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
 
 Dim loopc As Integer
 
@@ -894,7 +858,7 @@ LastTime = GetTickCount
 
     Call InitTileEngine(frmMain.hWnd, 152, 7, 32, 32, 13, 17, 9)
     
-    Call AddtoRichTextBox(frmCargando.Status, "Creando animaciones extra....")
+    Call AddtoRichTextBox(frmCargando.status, "Creando animaciones extra....")
     
     Call CargarAnimsExtra
     Call CargarTips
@@ -912,14 +876,14 @@ UserMap = 1
     Call InitMI
 #End If
 
-    AddtoRichTextBox frmCargando.Status, "                    ¡Bienvenido a Argentum Online!", , , , 1
+    AddtoRichTextBox frmCargando.status, "                    ¡Bienvenido a Argentum Online!", , , , 1
     
     Unload frmCargando
     
     'Inicializamos el sonido
-    Call AddtoRichTextBox(frmCargando.Status, "Iniciando DirectSound....", 0, 0, 0, 0, 0, True)
+    Call AddtoRichTextBox(frmCargando.status, "Iniciando DirectSound....", 0, 0, 0, 0, 0, True)
     Call Audio.Initialize(DirectX, frmMain.hWnd, App.Path & "\" & Config_Inicio.DirSonidos & "\", App.Path & "\" & Config_Inicio.DirMusica & "\")
-    Call AddtoRichTextBox(frmCargando.Status, "Hecho", , , , 1, , False)
+    Call AddtoRichTextBox(frmCargando.status, "Hecho", , , , 1, , False)
     
     'Inicializamos el inventario gráfico
     Call Inventario.Initialize(DirectDraw, frmMain.picInv)
@@ -1014,7 +978,7 @@ UserMap = 1
     
     EngineRun = False
     frmCargando.Show
-    AddtoRichTextBox frmCargando.Status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
     LiberarObjetosDX
 
 'TODO : Esto debería ir en otro lado como al cambair a esta res

@@ -251,7 +251,7 @@ If CheckDatos() Then
         Unload Me
         
     Else
-        Call Login(ValidarLoginMSG(bRK))
+        Call Login
     End If
 End If
 

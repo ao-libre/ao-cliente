@@ -105,7 +105,6 @@ Private Enum ServerPacketID
     guildList               ' GL
     PlayFireSound           ' FO
     AreaChanged             ' CA
-    ValidateClient          ' VAL
     PauseToggle             ' BKW
     RainToggle              ' LLU
     CreateFX                ' CFX
@@ -722,9 +721,6 @@ On Error Resume Next
         Case ServerPacketID.AreaChanged             ' CA
             Call HandleAreaChanged
         
-        Case ServerPacketID.ValidateClient          ' VAL
-            Call HandleValidateClient
-        
         Case ServerPacketID.PauseToggle             ' BKW
             Call HandlePauseToggle
         
@@ -925,9 +921,9 @@ Private Sub HandleLogged()
     End If
     
     'Are we under a roof?
-    bTecho = IIf(MapData(UserPos.X, UserPos.Y).Trigger = 1 Or _
-            MapData(UserPos.X, UserPos.Y).Trigger = 2 Or _
-            MapData(UserPos.X, UserPos.Y).Trigger = 4, True, False)
+    bTecho = IIf(MapData(UserPos.x, UserPos.y).Trigger = 1 Or _
+            MapData(UserPos.x, UserPos.y).Trigger = 2 Or _
+            MapData(UserPos.x, UserPos.y).Trigger = 4, True, False)
 End Sub
 
 ''
@@ -1024,7 +1020,6 @@ Private Sub HandleDisconnect()
     bRain = False
     bFogata = False
     SkillPoints = 0
-    bK = 0
     
     'Reset some char variables...
     Call Dialogos.BorrarDialogos
@@ -1581,18 +1576,18 @@ Private Sub HandlePosUpdate()
     Call incomingData.ReadByte
     
     'Remove char from old position
-    MapData(UserPos.X, UserPos.Y).CharIndex = 0
+    MapData(UserPos.x, UserPos.y).CharIndex = 0
     
     'Set new pos
-    UserPos.X = incomingData.ReadByte()
-    UserPos.Y = incomingData.ReadByte()
+    UserPos.x = incomingData.ReadByte()
+    UserPos.y = incomingData.ReadByte()
     
     'Set char
-    MapData(UserPos.X, UserPos.Y).CharIndex = UserCharIndex
+    MapData(UserPos.x, UserPos.y).CharIndex = UserCharIndex
     charlist(UserCharIndex).Pos = UserPos
     
     'Update pos label
-    frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.X & "," & UserPos.Y & ")"
+    frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.x & "," & UserPos.y & ")"
 End Sub
 
 ''
@@ -1969,7 +1964,7 @@ Private Sub HandleUserCharIndexInServer()
     
     UserCharIndex = incomingData.ReadInteger()
     UserPos = charlist(UserCharIndex).Pos
-    frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.X & "," & UserPos.Y & ")"
+    frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.x & "," & UserPos.y & ")"
 End Sub
 
 ''
@@ -1998,8 +1993,8 @@ On Error GoTo ErrHandler
     Dim Body As Integer
     Dim Head As Integer
     Dim Heading As E_Heading
-    Dim X As Byte
-    Dim Y As Byte
+    Dim x As Byte
+    Dim y As Byte
     Dim weapon As Integer
     Dim shield As Integer
     Dim helmet As Integer
@@ -2008,21 +2003,21 @@ On Error GoTo ErrHandler
     Body = Buffer.ReadInteger()
     Head = Buffer.ReadInteger()
     Heading = Buffer.ReadByte()
-    X = Buffer.ReadByte()
-    Y = Buffer.ReadByte()
+    x = Buffer.ReadByte()
+    y = Buffer.ReadByte()
     weapon = Buffer.ReadInteger()
     shield = Buffer.ReadInteger()
     helmet = Buffer.ReadInteger()
     
     With charlist(CharIndex)
-        .Fx = Buffer.ReadInteger()
+        .fX = Buffer.ReadInteger()
         .FxLoopTimes = Buffer.ReadInteger()
         .Nombre = Buffer.ReadASCIIString()
         .Criminal = Buffer.ReadByte()
         .priv = Buffer.ReadByte()
     End With
     
-    Call MakeChar(CharIndex, Body, Head, Heading, X, Y, weapon, shield, helmet)
+    Call MakeChar(CharIndex, Body, Head, Heading, x, y, weapon, shield, helmet)
     
     Call RefreshAllChars
     
@@ -2085,16 +2080,16 @@ Private Sub HandleCharacterMove()
     Call incomingData.ReadByte
     
     Dim CharIndex As Integer
-    Dim X As Byte
-    Dim Y As Byte
+    Dim x As Byte
+    Dim y As Byte
     
     CharIndex = incomingData.ReadInteger()
-    X = incomingData.ReadByte()
-    Y = incomingData.ReadByte()
+    x = incomingData.ReadByte()
+    y = incomingData.ReadByte()
     
     With charlist(CharIndex)
-        If .Fx >= 40 And .Fx <= 49 Then   'If it's meditating, we remove the FX
-            .Fx = 0
+        If .fX >= 40 And .fX <= 49 Then   'If it's meditating, we remove the FX
+            .fX = 0
             .FxLoopTimes = 0
         End If
         
@@ -2104,7 +2099,7 @@ Private Sub HandleCharacterMove()
         End If
     End With
     
-    Call MoveCharbyPos(CharIndex, X, Y)
+    Call MoveCharbyPos(CharIndex, x, y)
     
     Call RefreshAllChars
 End Sub
@@ -2151,7 +2146,7 @@ Private Sub HandleCharacterChange()
         tempint = incomingData.ReadInteger()
         If tempint <> 0 Then .Casco = CascoAnimData(tempint)
         
-        .Fx = incomingData.ReadInteger()
+        .fX = incomingData.ReadInteger()
         .FxLoopTimes = incomingData.ReadInteger()
     End With
     
@@ -2175,15 +2170,15 @@ Private Sub HandleObjectCreate()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Dim X As Byte
-    Dim Y As Byte
+    Dim x As Byte
+    Dim y As Byte
     
-    X = incomingData.ReadByte()
-    Y = incomingData.ReadByte()
+    x = incomingData.ReadByte()
+    y = incomingData.ReadByte()
     
-    MapData(X, Y).ObjGrh.GrhIndex = incomingData.ReadInteger()
+    MapData(x, y).ObjGrh.GrhIndex = incomingData.ReadInteger()
     
-    Call InitGrh(MapData(X, Y).ObjGrh, MapData(X, Y).ObjGrh.GrhIndex)
+    Call InitGrh(MapData(x, y).ObjGrh, MapData(x, y).ObjGrh.GrhIndex)
 End Sub
 
 ''
@@ -2203,12 +2198,12 @@ Private Sub HandleObjectDelete()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Dim X As Byte
-    Dim Y As Byte
+    Dim x As Byte
+    Dim y As Byte
     
-    X = incomingData.ReadByte()
-    Y = incomingData.ReadByte()
-    MapData(X, Y).ObjGrh.GrhIndex = 0
+    x = incomingData.ReadByte()
+    y = incomingData.ReadByte()
+    MapData(x, y).ObjGrh.GrhIndex = 0
 End Sub
 
 ''
@@ -2228,13 +2223,13 @@ Private Sub HandleBlockPosition()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Dim X As Byte
-    Dim Y As Byte
+    Dim x As Byte
+    Dim y As Byte
     
-    X = incomingData.ReadByte()
-    Y = incomingData.ReadByte()
+    x = incomingData.ReadByte()
+    y = incomingData.ReadByte()
     
-    MapData(X, Y).Blocked = incomingData.ReadBoolean()
+    MapData(x, y).Blocked = incomingData.ReadBoolean()
 End Sub
 
 ''
@@ -2374,62 +2369,13 @@ Private Sub HandleAreaChanged()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Dim X As Byte
-    Dim Y As Byte
+    Dim x As Byte
+    Dim y As Byte
     
-    X = incomingData.ReadByte()
-    Y = incomingData.ReadByte()
+    x = incomingData.ReadByte()
+    y = incomingData.ReadByte()
     
-    Call CambioDeArea(X, Y)
-End Sub
-
-''
-' Handles the ValidateClient message.
-
-Private Sub HandleValidateClient()
-'***************************************************
-'Autor: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'
-'***************************************************
-#If SeguridadAlkon Then
-    If incomingData.length < 43 Then
-        Err.Raise incomingData.NotEnoughDataErrCode
-        Exit Sub
-    End If
-#Else
-    If incomingData.length < 7 Then
-        Err.Raise incomingData.NotEnoughDataErrCode
-        Exit Sub
-    End If
-#End If
-    
-    'Remove packet ID
-    Call incomingData.ReadByte
-    
-    Dim ValString As String
-    
-    bK = incomingData.ReadLong()
-    bRK = incomingData.ReadInteger()
-    
-    CargarCabezas
-    
-#If SeguridadAlkon Then
-    ValString = incomingData.ReadASCIIStringFixed(36)
-    
-    CheatingDeath.InputK
-    
-    If Not CheatingDeath.ValidarArchivosCriticos(ValString) Then End
-#End If
-
-    If EstadoLogin = E_MODO.Normal Or EstadoLogin = E_MODO.CrearNuevoPj Then
-        Call Login(ValidarLoginMSG(bRK))
-    ElseIf EstadoLogin = E_MODO.Dados Then
-        frmCrearPersonaje.Show vbModal
-#If SeguridadAlkon Then
-        Call ProtectForm(frmCrearPersonaje)
-#End If
-    End If
+    Call CambioDeArea(x, y)
 End Sub
 
 ''
@@ -2460,11 +2406,11 @@ Private Sub HandleRainToggle()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    If Not InMapBounds(UserPos.X, UserPos.Y) Then Exit Sub
+    If Not InMapBounds(UserPos.x, UserPos.y) Then Exit Sub
     
-    bTecho = (MapData(UserPos.X, UserPos.Y).Trigger = 1 Or _
-            MapData(UserPos.X, UserPos.Y).Trigger = 2 Or _
-            MapData(UserPos.X, UserPos.Y).Trigger = 4)
+    bTecho = (MapData(UserPos.x, UserPos.y).Trigger = 1 Or _
+            MapData(UserPos.x, UserPos.y).Trigger = 2 Or _
+            MapData(UserPos.x, UserPos.y).Trigger = 4)
     If bRain Then
         If bLluvia(UserMap) And Sound Then
             'Stop playing the rain sound
@@ -2502,7 +2448,7 @@ Private Sub HandleCreateFX()
     Dim CharIndex As Integer
     
     CharIndex = incomingData.ReadInteger()
-    charlist(CharIndex).Fx = incomingData.ReadInteger()
+    charlist(CharIndex).fX = incomingData.ReadInteger()
     charlist(CharIndex).FxLoopTimes = incomingData.ReadInteger()
 End Sub
 
@@ -3307,9 +3253,9 @@ On Error GoTo ErrHandler
     title = Buffer.ReadASCIIString()
     Message = Buffer.ReadASCIIString()
     
-    Call frmForo.list.AddItem(title)
-    frmForo.Text(frmForo.list.ListCount - 1).Text = Message
-    Call Load(frmForo.Text(frmForo.list.ListCount))
+    Call frmForo.List.AddItem(title)
+    frmForo.Text(frmForo.List.ListCount - 1).Text = Message
+    Call Load(frmForo.Text(frmForo.List.ListCount))
     
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
@@ -3825,32 +3771,32 @@ On Error GoTo ErrHandler
     'Remove packet ID
     Call Buffer.ReadByte
     
-    Dim list() As String
+    Dim List() As String
     Dim i As Long
     
     With frmGuildLeader
         'Get list of existing guilds
-        list = Split(Buffer.ReadASCIIString(), SEPARATOR)
+        List = Split(Buffer.ReadASCIIString(), SEPARATOR)
         
-        For i = 0 To UBound(list())
-            Call .guildslist.AddItem(list(i))
+        For i = 0 To UBound(List())
+            Call .guildslist.AddItem(List(i))
         Next i
         
         'Get list of guild's members
-        list = Split(Buffer.ReadASCIIString(), SEPARATOR)
-        .Miembros.Caption = "El clan cuenta con " & CStr(UBound(list()) + 1) & " miembros."
+        List = Split(Buffer.ReadASCIIString(), SEPARATOR)
+        .Miembros.Caption = "El clan cuenta con " & CStr(UBound(List()) + 1) & " miembros."
         
-        For i = 0 To UBound(list())
-            Call .members.AddItem(list(i))
+        For i = 0 To UBound(List())
+            Call .members.AddItem(List(i))
         Next i
         
         .txtguildnews = Buffer.ReadASCIIString()
         
         'Get list of join requests
-        list = Split(Buffer.ReadASCIIString(), SEPARATOR)
+        List = Split(Buffer.ReadASCIIString(), SEPARATOR)
         
-        For i = 0 To UBound(list())
-            Call .solicitudes.AddItem(list(i))
+        For i = 0 To UBound(List())
+            Call .solicitudes.AddItem(List(i))
         Next i
         
         .Show , frmMain
@@ -4368,10 +4314,9 @@ End Sub
 ''
 ' Writes the "LoginExistingChar" message to the outgoing data buffer.
 '
-' @param    valcode The validation code previously received from the server.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteLoginExistingChar(ByVal valcode As Integer)
+Public Sub WriteLoginExistingChar()
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -4382,7 +4327,7 @@ Public Sub WriteLoginExistingChar(ByVal valcode As Integer)
     With outgoingData
         Call .WriteByte(ClientPacketID.LoginExistingChar)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
         
 #If SeguridadAlkon Then
         Call .WriteASCIIStringFixed(UserPassword)
@@ -4397,8 +4342,6 @@ Public Sub WriteLoginExistingChar(ByVal valcode As Integer)
         For i = 1 To 7
             Call .WriteInteger(Versiones(i))
         Next i
-        
-        Call .WriteInteger(valcode)
         
 #If SeguridadAlkon Then
         Call .WriteASCIIStringFixed(MD5HushYo)
@@ -4423,10 +4366,9 @@ End Sub
 ''
 ' Writes the "LoginNewChar" message to the outgoing data buffer.
 '
-' @param    valcode The validation code previously received from the server.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteLoginNewChar(ByVal valcode As Integer)
+Public Sub WriteLoginNewChar()
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -4437,7 +4379,7 @@ Public Sub WriteLoginNewChar(ByVal valcode As Integer)
     With outgoingData
         Call .WriteByte(ClientPacketID.LoginNewChar)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
         
 #If SeguridadAlkon Then
         Call .WriteASCIIStringFixed(UserPassword)
@@ -4452,8 +4394,6 @@ Public Sub WriteLoginNewChar(ByVal valcode As Integer)
         For i = 1 To 7
             Call .WriteInteger(Versiones(i))
         Next i
-        
-        Call .WriteInteger(valcode)
         
 #If SeguridadAlkon Then
         Call .WriteASCIIStringFixed(MD5HushYo)
@@ -4809,7 +4749,7 @@ End Sub
 ' @param    y Tile coord in the y-axis in which the user clicked.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteLeftClick(ByVal X As Byte, ByVal Y As Byte)
+Public Sub WriteLeftClick(ByVal x As Byte, ByVal y As Byte)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -4818,8 +4758,8 @@ Public Sub WriteLeftClick(ByVal X As Byte, ByVal Y As Byte)
     With outgoingData
         Call .WriteByte(ClientPacketID.LeftClick)
         
-        Call .WriteByte(X)
-        Call .WriteByte(Y)
+        Call .WriteByte(x)
+        Call .WriteByte(y)
     End With
 End Sub
 
@@ -4830,7 +4770,7 @@ End Sub
 ' @param    y Tile coord in the y-axis in which the user clicked.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteDoubleClick(ByVal X As Byte, ByVal Y As Byte)
+Public Sub WriteDoubleClick(ByVal x As Byte, ByVal y As Byte)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -4839,8 +4779,8 @@ Public Sub WriteDoubleClick(ByVal X As Byte, ByVal Y As Byte)
     With outgoingData
         Call .WriteByte(ClientPacketID.DoubleClick)
         
-        Call .WriteByte(X)
-        Call .WriteByte(Y)
+        Call .WriteByte(x)
+        Call .WriteByte(y)
     End With
 End Sub
 
@@ -4942,7 +4882,7 @@ End Sub
 ' @param    skill The skill which the user attempts to use.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteWorkLeftClick(ByVal X As Byte, ByVal Y As Byte, ByVal Skill As eSkill)
+Public Sub WriteWorkLeftClick(ByVal x As Byte, ByVal y As Byte, ByVal Skill As eSkill)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -4951,8 +4891,8 @@ Public Sub WriteWorkLeftClick(ByVal X As Byte, ByVal Y As Byte, ByVal Skill As e
     With outgoingData
         Call .WriteByte(ClientPacketID.WorkLeftClick)
         
-        Call .WriteByte(X)
-        Call .WriteByte(Y)
+        Call .WriteByte(x)
+        Call .WriteByte(y)
         
         Call .WriteByte(Skill)
     End With
@@ -5433,7 +5373,7 @@ End Sub
 ' @param    username The user who wants to join the guild whose info is requested.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteGuildRequestJoinerInfo(ByVal username As String)
+Public Sub WriteGuildRequestJoinerInfo(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5442,7 +5382,7 @@ Public Sub WriteGuildRequestJoinerInfo(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.GuildRequestJoinerInfo)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -5518,7 +5458,7 @@ End Sub
 ' @param    username The name of the accepted player.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteGuildAcceptNewMember(ByVal username As String)
+Public Sub WriteGuildAcceptNewMember(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5527,7 +5467,7 @@ Public Sub WriteGuildAcceptNewMember(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.GuildAcceptNewMember)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -5538,7 +5478,7 @@ End Sub
 ' @param    reason The reason for which the player was rejected.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteGuildRejectNewMember(ByVal username As String, ByVal reason As String)
+Public Sub WriteGuildRejectNewMember(ByVal UserName As String, ByVal reason As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5547,7 +5487,7 @@ Public Sub WriteGuildRejectNewMember(ByVal username As String, ByVal reason As S
     With outgoingData
         Call .WriteByte(ClientPacketID.GuildRejectNewMember)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
         Call .WriteASCIIString(reason)
     End With
 End Sub
@@ -5558,7 +5498,7 @@ End Sub
 ' @param    username The name of the kicked player.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteGuildKickMember(ByVal username As String)
+Public Sub WriteGuildKickMember(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5567,7 +5507,7 @@ Public Sub WriteGuildKickMember(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.GuildKickMember)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -5596,7 +5536,7 @@ End Sub
 ' @param    username The user whose info is requested.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteGuildMemberInfo(ByVal username As String)
+Public Sub WriteGuildMemberInfo(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5605,7 +5545,7 @@ Public Sub WriteGuildMemberInfo(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.GuildMemberInfo)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -6180,7 +6120,7 @@ End Sub
 ' @param    username The user to vote for clan leader.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteGuildVote(ByVal username As String)
+Public Sub WriteGuildVote(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6189,7 +6129,7 @@ Public Sub WriteGuildVote(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.GuildVote)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -6199,7 +6139,7 @@ End Sub
 ' @param    username The user whose's  punishments are requested.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WritePunishments(ByVal username As String)
+Public Sub WritePunishments(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6208,7 +6148,7 @@ Public Sub WritePunishments(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.Punishments)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -6369,7 +6309,7 @@ End Sub
 ' @param    username The user to kick fro mthe party.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WritePartyKick(ByVal username As String)
+Public Sub WritePartyKick(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6378,7 +6318,7 @@ Public Sub WritePartyKick(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.PartyKick)
             
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -6388,7 +6328,7 @@ End Sub
 ' @param    username The user to set as the party's leader.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WritePartySetLeader(ByVal username As String)
+Public Sub WritePartySetLeader(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6397,7 +6337,7 @@ Public Sub WritePartySetLeader(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.PartySetLeader)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -6407,7 +6347,7 @@ End Sub
 ' @param    username The user to accept into the party.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WritePartyAcceptMember(ByVal username As String)
+Public Sub WritePartyAcceptMember(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6416,7 +6356,7 @@ Public Sub WritePartyAcceptMember(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.PartyAcceptMember)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -6506,7 +6446,7 @@ End Sub
 ' @param    username The suer to approach.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteGoNearby(ByVal username As String)
+Public Sub WriteGoNearby(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6515,7 +6455,7 @@ Public Sub WriteGoNearby(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.GoNearby)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -6558,7 +6498,7 @@ End Sub
 ' @param    username The user whose position is requested.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteWhere(ByVal username As String)
+Public Sub WriteWhere(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6567,7 +6507,7 @@ Public Sub WriteWhere(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.Where)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -6613,7 +6553,7 @@ End Sub
 ' @param    y The y position in the map to which to waro the character.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteWarpChar(ByVal username As String, ByVal Map As Integer, ByVal X As Byte, ByVal Y As Byte)
+Public Sub WriteWarpChar(ByVal UserName As String, ByVal Map As Integer, ByVal x As Byte, ByVal y As Byte)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6622,12 +6562,12 @@ Public Sub WriteWarpChar(ByVal username As String, ByVal Map As Integer, ByVal X
     With outgoingData
         Call .WriteByte(ClientPacketID.WarpChar)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
         
         Call .WriteInteger(Map)
         
-        Call .WriteByte(X)
-        Call .WriteByte(Y)
+        Call .WriteByte(x)
+        Call .WriteByte(y)
     End With
 End Sub
 
@@ -6637,7 +6577,7 @@ End Sub
 ' @param    username The user to silence.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteSilence(ByVal username As String)
+Public Sub WriteSilence(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6646,7 +6586,7 @@ Public Sub WriteSilence(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.Silence)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -6670,7 +6610,7 @@ End Sub
 ' @param    username The user whose SOS call has been already attended.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteSOSRemove(ByVal username As String)
+Public Sub WriteSOSRemove(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6679,7 +6619,7 @@ Public Sub WriteSOSRemove(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.SOSRemove)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -6689,7 +6629,7 @@ End Sub
 ' @param    username The user to be approached.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteGoToChar(ByVal username As String)
+Public Sub WriteGoToChar(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6698,7 +6638,7 @@ Public Sub WriteGoToChar(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.GoToChar)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -6780,7 +6720,7 @@ End Sub
 ' @param    time The time (in minutes) the user will have to spend there.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteJail(ByVal username As String, ByVal reason As String, ByVal time As Byte)
+Public Sub WriteJail(ByVal UserName As String, ByVal reason As String, ByVal time As Byte)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6789,7 +6729,7 @@ Public Sub WriteJail(ByVal username As String, ByVal reason As String, ByVal tim
     With outgoingData
         Call .WriteByte(ClientPacketID.Jail)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
         Call .WriteASCIIString(reason)
         
         Call .WriteByte(time)
@@ -6817,7 +6757,7 @@ End Sub
 ' @param    reason Reason for the warning.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteWarnUser(ByVal username As String, ByVal reason As String)
+Public Sub WriteWarnUser(ByVal UserName As String, ByVal reason As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6826,7 +6766,7 @@ Public Sub WriteWarnUser(ByVal username As String, ByVal reason As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.WarnUser)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
         Call .WriteASCIIString(reason)
     End With
 End Sub
@@ -6838,7 +6778,7 @@ End Sub
 ' @param    reason Reason for the warning.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteEditChar(ByVal username As String, ByVal editOption As eEditOptions, ByVal arg1 As String, ByVal arg2 As String)
+Public Sub WriteEditChar(ByVal UserName As String, ByVal editOption As eEditOptions, ByVal arg1 As String, ByVal arg2 As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6847,7 +6787,7 @@ Public Sub WriteEditChar(ByVal username As String, ByVal editOption As eEditOpti
     With outgoingData
         Call .WriteByte(ClientPacketID.EditChar)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
         
         Call .WriteByte(editOption)
         
@@ -6862,7 +6802,7 @@ End Sub
 ' @param    username The user whose information is requested.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteRequestCharInfo(ByVal username As String)
+Public Sub WriteRequestCharInfo(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6871,7 +6811,7 @@ Public Sub WriteRequestCharInfo(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.RequestCharInfo)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -6881,7 +6821,7 @@ End Sub
 ' @param    username The user whose stats are requested.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteRequestCharStats(ByVal username As String)
+Public Sub WriteRequestCharStats(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6890,7 +6830,7 @@ Public Sub WriteRequestCharStats(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.RequestCharStats)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -6900,7 +6840,7 @@ End Sub
 ' @param    username The user whose gold is requested.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteRequestCharGold(ByVal username As String)
+Public Sub WriteRequestCharGold(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6909,7 +6849,7 @@ Public Sub WriteRequestCharGold(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.RequestCharGold)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
     
@@ -6919,7 +6859,7 @@ End Sub
 ' @param    username The user whose inventory is requested.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteRequestCharInventory(ByVal username As String)
+Public Sub WriteRequestCharInventory(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6928,7 +6868,7 @@ Public Sub WriteRequestCharInventory(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.RequestCharInventory)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -6938,7 +6878,7 @@ End Sub
 ' @param    username The user whose banking information is requested.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteRequestCharBank(ByVal username As String)
+Public Sub WriteRequestCharBank(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6947,7 +6887,7 @@ Public Sub WriteRequestCharBank(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.RequestCharBank)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -6957,7 +6897,7 @@ End Sub
 ' @param    username The user whose skills are requested.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteRequestCharSkills(ByVal username As String)
+Public Sub WriteRequestCharSkills(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6966,7 +6906,7 @@ Public Sub WriteRequestCharSkills(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.RequestCharSkills)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -6976,7 +6916,7 @@ End Sub
 ' @param    username The user to eb revived.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteReviveChar(ByVal username As String)
+Public Sub WriteReviveChar(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6985,7 +6925,7 @@ Public Sub WriteReviveChar(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.ReviveChar)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -7023,7 +6963,7 @@ End Sub
 ' @param    username The user to be forgiven.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteForgive(ByVal username As String)
+Public Sub WriteForgive(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7032,7 +6972,7 @@ Public Sub WriteForgive(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.Forgive)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -7042,7 +6982,7 @@ End Sub
 ' @param    username The user to be kicked.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteKick(ByVal username As String)
+Public Sub WriteKick(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7051,7 +6991,7 @@ Public Sub WriteKick(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.Kick)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -7061,7 +7001,7 @@ End Sub
 ' @param    username The user to be executed.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteExecute(ByVal username As String)
+Public Sub WriteExecute(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7070,7 +7010,7 @@ Public Sub WriteExecute(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.Execute)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -7081,7 +7021,7 @@ End Sub
 ' @param    reason The reson for which the user is to be banned.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteBanChar(ByVal username As String, ByVal reason As String)
+Public Sub WriteBanChar(ByVal UserName As String, ByVal reason As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7090,7 +7030,7 @@ Public Sub WriteBanChar(ByVal username As String, ByVal reason As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.BanChar)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
         
         Call .WriteASCIIString(reason)
     End With
@@ -7102,7 +7042,7 @@ End Sub
 ' @param    username The user to be unbanned.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteUnbanChar(ByVal username As String)
+Public Sub WriteUnbanChar(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7111,7 +7051,7 @@ Public Sub WriteUnbanChar(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.UnbanChar)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -7135,7 +7075,7 @@ End Sub
 ' @param    username The user to be summoned.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteSummonChar(ByVal username As String)
+Public Sub WriteSummonChar(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7144,7 +7084,7 @@ Public Sub WriteSummonChar(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.SummonChar)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -7234,7 +7174,7 @@ End Sub
 ' @param    username The user whose IP is requested.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteNickToIP(ByVal username As String)
+Public Sub WriteNickToIP(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7243,7 +7183,7 @@ Public Sub WriteNickToIP(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.NickToIP)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -7299,7 +7239,7 @@ End Sub
 ' @param    y The position in the y axis to which the teleport will lead.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteTeleportCreate(ByVal Map As Integer, ByVal X As Byte, ByVal Y As Byte)
+Public Sub WriteTeleportCreate(ByVal Map As Integer, ByVal x As Byte, ByVal y As Byte)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7310,8 +7250,8 @@ Public Sub WriteTeleportCreate(ByVal Map As Integer, ByVal X As Byte, ByVal Y As
         
         Call .WriteInteger(Map)
         
-        Call .WriteByte(X)
-        Call .WriteByte(Y)
+        Call .WriteByte(x)
+        Call .WriteByte(y)
     End With
 End Sub
 
@@ -7393,7 +7333,7 @@ End Sub
 ' @param    y The position in the y axis in which to play the given wave.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteForceWAVEToMap(ByVal waveID As Byte, ByVal Map As Integer, ByVal X As Byte, ByVal Y As Byte)
+Public Sub WriteForceWAVEToMap(ByVal waveID As Byte, ByVal Map As Integer, ByVal x As Byte, ByVal y As Byte)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7406,8 +7346,8 @@ Public Sub WriteForceWAVEToMap(ByVal waveID As Byte, ByVal Map As Integer, ByVal
         
         Call .WriteInteger(Map)
         
-        Call .WriteByte(X)
-        Call .WriteByte(Y)
+        Call .WriteByte(x)
+        Call .WriteByte(y)
     End With
 End Sub
 
@@ -7526,7 +7466,7 @@ End Sub
 ' @param    username The name of the user to be accepted into the royal army council.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteAcceptRoyalCouncilMember(ByVal username As String)
+Public Sub WriteAcceptRoyalCouncilMember(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7535,7 +7475,7 @@ Public Sub WriteAcceptRoyalCouncilMember(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.AcceptRoyalCouncilMember)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -7545,7 +7485,7 @@ End Sub
 ' @param    username The name of the user to be accepted as a chaos council member.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteAcceptChaosCouncilMember(ByVal username As String)
+Public Sub WriteAcceptChaosCouncilMember(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7554,7 +7494,7 @@ Public Sub WriteAcceptChaosCouncilMember(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.AcceptChaosCouncilMember)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -7578,7 +7518,7 @@ End Sub
 ' @param    username The name of the user to be made dumb.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteMakeDumb(ByVal username As String)
+Public Sub WriteMakeDumb(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7587,7 +7527,7 @@ Public Sub WriteMakeDumb(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.MakeDumb)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -7597,7 +7537,7 @@ End Sub
 ' @param    username The name of the user who will no longer be dumb.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteMakeDumbNoMore(ByVal username As String)
+Public Sub WriteMakeDumbNoMore(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7606,7 +7546,7 @@ Public Sub WriteMakeDumbNoMore(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.MakeDumbNoMore)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -7630,7 +7570,7 @@ End Sub
 ' @param    username The name of the user to be kicked from the council.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCouncilKick(ByVal username As String)
+Public Sub WriteCouncilKick(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7639,7 +7579,7 @@ Public Sub WriteCouncilKick(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.CouncilKick)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -7798,7 +7738,7 @@ End Sub
 ' @param    username The name of the user to be kicked from the Chaos Legion.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteChaosLegionKick(ByVal username As String)
+Public Sub WriteChaosLegionKick(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7807,7 +7747,7 @@ Public Sub WriteChaosLegionKick(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.ChaosLegionKick)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -7817,7 +7757,7 @@ End Sub
 ' @param    username The name of the user to be kicked from the Royal Army.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteRoyalArmyKick(ByVal username As String)
+Public Sub WriteRoyalArmyKick(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7826,7 +7766,7 @@ Public Sub WriteRoyalArmyKick(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.RoyalArmyKick)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -7875,7 +7815,7 @@ End Sub
 ' @param    punishment The id of the punishment to be removed.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteRemovePunishment(ByVal username As String, ByVal punishment As Byte)
+Public Sub WriteRemovePunishment(ByVal UserName As String, ByVal punishment As Byte)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7884,7 +7824,7 @@ Public Sub WriteRemovePunishment(ByVal username As String, ByVal punishment As B
     With outgoingData
         Call .WriteByte(ClientPacketID.RemovePunishment)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
         
         Call .WriteByte(punishment)
     End With
@@ -7938,7 +7878,7 @@ End Sub
 ' @param    username The user whose last IPs are requested.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteLastIP(ByVal username As String)
+Public Sub WriteLastIP(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7947,7 +7887,7 @@ Public Sub WriteLastIP(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.LastIP)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -8133,7 +8073,7 @@ End Sub
 ' @param    username The name of the user to turn into criminal.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteTurnCriminal(ByVal username As String)
+Public Sub WriteTurnCriminal(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -8142,7 +8082,7 @@ Public Sub WriteTurnCriminal(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.TurnCriminal)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -8152,7 +8092,7 @@ End Sub
 ' @param    username The name of the user who will be removed from any faction.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteResetFactions(ByVal username As String)
+Public Sub WriteResetFactions(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -8161,7 +8101,7 @@ Public Sub WriteResetFactions(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.ResetFactions)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -8171,7 +8111,7 @@ End Sub
 ' @param    username The name of the user who will be removed from any guild.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteRemoveCharFromGuild(ByVal username As String)
+Public Sub WriteRemoveCharFromGuild(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -8180,7 +8120,7 @@ Public Sub WriteRemoveCharFromGuild(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.RemoveCharFromGuild)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -8190,7 +8130,7 @@ End Sub
 ' @param    username The name of the user whose mail is requested.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteRequestCharMail(ByVal username As String)
+Public Sub WriteRequestCharMail(ByVal UserName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -8199,7 +8139,7 @@ Public Sub WriteRequestCharMail(ByVal username As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.RequestCharMail)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
     End With
 End Sub
 
@@ -8210,7 +8150,7 @@ End Sub
 ' @param    copyFrom The name of the user from which to copy the password.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteAlterPassword(ByVal username As String, ByVal CopyFrom As String)
+Public Sub WriteAlterPassword(ByVal UserName As String, ByVal CopyFrom As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -8219,7 +8159,7 @@ Public Sub WriteAlterPassword(ByVal username As String, ByVal CopyFrom As String
     With outgoingData
         Call .WriteByte(ClientPacketID.AlterPassword)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
         Call .WriteASCIIString(CopyFrom)
     End With
 End Sub
@@ -8231,7 +8171,7 @@ End Sub
 ' @param    newMail The new email of the player.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteAlterMail(ByVal username As String, ByVal newMail As String)
+Public Sub WriteAlterMail(ByVal UserName As String, ByVal newMail As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -8240,7 +8180,7 @@ Public Sub WriteAlterMail(ByVal username As String, ByVal newMail As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.AlterMail)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
         Call .WriteASCIIString(newMail)
     End With
 End Sub
@@ -8252,7 +8192,7 @@ End Sub
 ' @param    newName The new user name.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteAlterName(ByVal username As String, ByVal newName As String)
+Public Sub WriteAlterName(ByVal UserName As String, ByVal newName As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -8261,7 +8201,7 @@ Public Sub WriteAlterName(ByVal username As String, ByVal newName As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.AlterName)
         
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
         Call .WriteASCIIString(newName)
     End With
 End Sub
@@ -8689,7 +8629,7 @@ End Sub
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCheckSlot(ByVal username As String, ByVal slot As Integer)
+Public Sub WriteCheckSlot(ByVal UserName As String, ByVal slot As Integer)
 '***************************************************
 'Autor: Pablo (ToxicWaste)
 'Last Modification: 26/01/2007
@@ -8697,7 +8637,7 @@ Public Sub WriteCheckSlot(ByVal username As String, ByVal slot As Integer)
 '***************************************************
     With outgoingData
         Call .WriteByte(ClientPacketID.CheckSlot)
-        Call .WriteASCIIString(username)
+        Call .WriteASCIIString(UserName)
         Call .WriteInteger(slot)
     End With
 End Sub

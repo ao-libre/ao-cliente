@@ -570,7 +570,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1423,20 +1422,18 @@ Private Sub Socket1_Connect()
     Select Case EstadoLogin
         Case E_MODO.CrearNuevoPj
 #If SegudidadAlkon Then
-            Call SendData("gIvEmEvAlcOde")
             Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
 #Else
             'conectamos sin seguridad
-            Call Login(ValidarLoginMSG(bRK))
+            Call Login
 #End If
 
         Case E_MODO.Normal
 #If SegudidadAlkon Then
-            Call SendData("gIvEmEvAlcOde")
             Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
 #Else
             'conectamos sin seguridad
-            Call Login(ValidarLoginMSG(bRK))
+            Call Login
 #End If
 
         Case E_MODO.Dados
@@ -1695,25 +1692,22 @@ Private Sub Winsock1_Connect()
     Select Case EstadoLogin
         Case E_MODO.CrearNuevoPj
 #If SegudidadAlkon Then
-            Call SendData("gIvEmEvAlcOde")
             Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
 #Else
             'conectamos sin seguridad
-            Call Login(ValidarLoginMSG(bRK))
+            Call Login
 #End If
 
         Case E_MODO.Normal
 #If SegudidadAlkon Then
-            Call SendData("gIvEmEvAlcOde")
             Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
 #Else
             'conectamos sin seguridad
-            Call Login(ValidarLoginMSG(bRK))
+            Call Login
 #End If
 
         Case E_MODO.Dados
 #If SegudidadAlkon Then
-            Call SendData("gIvEmEvAlcOde")
             Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
 #Else
             frmCrearPersonaje.Show vbModal

@@ -58,11 +58,11 @@ PuedoQuitarFoco = True
 '
 End Function
 
-Sub Login(ByVal valcode As Integer)
+Sub Login()
     If EstadoLogin = Normal Then
-        Call WriteLoginExistingChar(valcode)
+        Call WriteLoginExistingChar
     ElseIf EstadoLogin = CrearNuevoPj Then
-        Call WriteLoginNewChar(valcode)
+        Call WriteLoginNewChar
     End If
     
     DoEvents
