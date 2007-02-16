@@ -8670,7 +8670,18 @@ End Sub
 '
 ' @param    sdData  The data to be sent to the server.
 
-Private Sub SendData(ByVal sdData As String)
+Private Sub SendData(ByRef sdData As String)
+
+#If SeguridadAlkon Then
+    Dim data() As Byte
+    
+    data = StrConv(sdData, vbFromUnicode)
+    
+    Call DataSent(data)
+    
+    sdData = StrConv(data, vbUnicode)
+#End If
+    
     'No enviamos nada si no estamos conectados
 #If UsarWrench = 1 Then
     If Not frmMain.Socket1.Connected Then Exit Sub
