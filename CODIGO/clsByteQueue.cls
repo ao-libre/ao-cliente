@@ -444,7 +444,7 @@ End Function
 ' Writes a byte array at the end of the queue
 '
 ' @param value The byte array to be written. MUST be Base 0.
-' @param length The number of elements in byte array. If less or equal to zero the whole array is written.
+' @param length The number of elements to copy from the byte array. If less than 0 it will copy the whole array.
 ' @return   The number of bytes written
 ' @remarks  value() MUST be Base 0.
 ' @see PeekBlock
@@ -457,7 +457,7 @@ Public Function WriteBlock(ByRef value() As Byte, Optional ByVal length As Long 
 'Writes a byte array to the queue
 '***************************************************
     'Prevent from copying memory outside the array
-    If length > UBound(value()) + 1 Or length < 1 Then length = UBound(value()) + 1
+    If length > UBound(value()) + 1 Or length < 0 Then length = UBound(value()) + 1
     
     WriteBlock = WriteData(value, length)
 End Function
