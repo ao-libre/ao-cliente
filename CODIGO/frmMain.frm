@@ -570,6 +570,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1228,7 +1229,7 @@ Private Sub Label4_Click()
     picInv.Visible = True
 
     hlst.Visible = False
-    cmdINFO.Visible = False
+    cmdInfo.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = True
@@ -1247,7 +1248,7 @@ Private Sub Label7_Click()
     'DespInv(1).Visible = False
     picInv.Visible = False
     hlst.Visible = True
-    cmdINFO.Visible = True
+    cmdInfo.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True
@@ -1404,6 +1405,9 @@ Private Sub Socket1_Connect()
     Dim Temporal1 As Long
     Dim Temporal As Long
     
+#If SeguridadAlkon Then
+    Call ConnectionStablished
+#End If
     
     ServerIp = Socket1.PeerAddress
     Temporal = InStr(1, ServerIp, ".")
@@ -1532,12 +1536,18 @@ End Sub
 
 Private Sub Socket1_Read(dataLength As Integer, IsUrgent As Integer)
     Dim RD As String
+    Dim data() As Byte
     
     Socket1.Read RD, dataLength
-    'CHECK: ERROR si RD="", Revisar
+    
+    data = StrConv(RD, vbFromUnicode)
+    
+#If SeguridadAlkon Then
+    Call DataReceived(data)
+#End If
     
     'Put data in the buffer
-    Call incomingData.WriteASCIIStringFixed(RD)
+    Call incomingData.WriteBlock(data)
     
     'Send buffer to Handle data
     Call HandleIncomingData
@@ -1675,6 +1685,10 @@ Private Sub Winsock1_Connect()
     
     Debug.Print "Winsock Connect"
     
+#If SeguridadAlkon Then
+    Call ConnectionStablished
+#End If
+    
     ServerIp = Winsock1.RemoteHostIP
     Temporal = InStr(1, ServerIp, ".")
     Temporal1 = ((mid$(ServerIp, 1, Temporal - 1) Xor &H65) And &H7F) * 16777216
@@ -1718,12 +1732,19 @@ End Sub
 
 Private Sub Winsock1_DataArrival(ByVal bytesTotal As Long)
     Dim RD As String
+    Dim data() As Byte
     
     'Socket1.Read RD, DataLength
     Winsock1.GetData RD
     
+    data = StrConv(RD, vbFromUnicode)
+    
+#If SeguridadAlkon Then
+    Call DataReceived(data)
+#End If
+    
     'Set data in the buffer
-    Call incomingData.WriteASCIIStringFixed(RD)
+    Call incomingData.WriteBlock(data)
     
     'Send buffer to Handle data
     Call HandleIncomingData
