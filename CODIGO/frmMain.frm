@@ -570,7 +570,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1212,7 +1211,7 @@ End Sub
 Private Sub Label1_Click()
     Dim i As Integer
     For i = 1 To NUMSKILLS
-        frmSkills3.Text1(i).Caption = UserSkills(i)
+        frmSkills3.text1(i).Caption = UserSkills(i)
     Next i
     Alocados = SkillPoints
     frmSkills3.Puntos.Caption = "Puntos:" & SkillPoints
@@ -1442,7 +1441,6 @@ Private Sub Socket1_Connect()
 
         Case E_MODO.Dados
 #If SegudidadAlkon Then
-            Call SendData("gIvEmEvAlcOde")
             Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
 #Else
             frmCrearPersonaje.Show vbModal
@@ -1541,6 +1539,8 @@ Private Sub Socket1_Read(dataLength As Integer, IsUrgent As Integer)
     Socket1.Read RD, dataLength
     
     data = StrConv(RD, vbFromUnicode)
+    
+    If RD = vbNullString Then Exit Sub
     
 #If SeguridadAlkon Then
     Call DataReceived(data)
