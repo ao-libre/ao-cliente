@@ -570,6 +570,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -796,51 +797,6 @@ Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y A
     MouseShift = Shift
 End Sub
 
-Private Sub Form_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
-    MouseBoton = Button
-    MouseShift = Shift
-    
-#If SeguridadAlkon Then
-    If Cartel Then Cartel = False
-
-    If LOGGING Then Call CheatingDeath.StoreKey(MouseBoton, True)
-#End If
-
-    If Not Comerciando Then
-        Call ConvertCPtoTP(MainViewShp.Left, MainViewShp.Top, MouseX, MouseY, tX, tY)
-
-        If MouseShift = 0 Then
-            If MouseBoton <> vbRightButton Then
-                '[ybarra]
-                If UsaMacro Then
-                    CnTd = CnTd + 1
-                        If CnTd = 3 Then
-                            Call WriteUseSpellMacro
-                            CnTd = 0
-                        End If
-                    UsaMacro = False
-                End If
-                '[/ybarra]
-                If UsingSkill = 0 Then
-                    Call WriteLeftClick(tX, tY)
-                Else
-                    frmMain.MousePointer = vbDefault
-                    If (UsingSkill = Magia Or UsingSkill = Proyectiles) And Not MainTimer.Check(TimersIndex.Attack) Then Exit Sub
-                    If TrainingMacro.Enabled Then DesactivarMacroHechizos
-                    Call WriteWorkLeftClick(tX, tY, UsingSkill)
-                    UsingSkill = 0
-                End If
-            Else
-                Call AbrirMenuViewPort
-            End If
-        ElseIf (MouseShift And 1) = 1 Then
-            If MouseShift = vbLeftButton Then
-                Call WriteWarpChar("YO", UserMap, tX, tY)
-            End If
-        End If
-    End If
-End Sub
-
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
     If prgRun = True Then
         prgRun = False
@@ -1001,10 +957,10 @@ Private Sub Form_Click()
                 '[ybarra]
                 If UsaMacro Then
                     CnTd = CnTd + 1
-                        If CnTd = 3 Then
-                            Call WriteUseSpellMacro
-                            CnTd = 0
-                        End If
+                    If CnTd = 3 Then
+                        Call WriteUseSpellMacro
+                        CnTd = 0
+                    End If
                     UsaMacro = False
                 End If
                 '[/ybarra]
@@ -1211,7 +1167,7 @@ End Sub
 Private Sub Label1_Click()
     Dim i As Integer
     For i = 1 To NUMSKILLS
-        frmSkills3.text1(i).Caption = UserSkills(i)
+        frmSkills3.Text1(i).Caption = UserSkills(i)
     Next i
     Alocados = SkillPoints
     frmSkills3.Puntos.Caption = "Puntos:" & SkillPoints
@@ -1228,7 +1184,7 @@ Private Sub Label4_Click()
     picInv.Visible = True
 
     hlst.Visible = False
-    cmdInfo.Visible = False
+    cmdINFO.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = True
@@ -1247,7 +1203,7 @@ Private Sub Label7_Click()
     'DespInv(1).Visible = False
     picInv.Visible = False
     hlst.Visible = True
-    cmdInfo.Visible = True
+    cmdINFO.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True

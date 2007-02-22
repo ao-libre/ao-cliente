@@ -26,7 +26,7 @@ Attribute VB_Name = "ProtocolCmdParse"
 
 Option Explicit
 
-Private Enum eNumber_Types
+Public Enum eNumber_Types
     ent_Byte
     ent_Integer
     ent_Long
@@ -48,7 +48,6 @@ Public Sub AuxWriteWhisper(ByVal UserName As String, ByVal Mensaje As String)
     If i <= LastChar Then
         Call WriteWhisper(i, Mensaje)
     End If
-    
 End Sub
 
 ''
@@ -1293,9 +1292,14 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 If notNullArguments Then
                     tmpArr = Split(ArgumentosRaw, "@", 2)
                     If UBound(tmpArr) = 1 Then
-                        Call WriteCheckSlot(tmpArr(0), tmpArr(1))
+                        If ValidNumber(tmpArr(1), eNumber_Types.ent_Byte) And ValidNumber(ArgumentosAll(1), eNumber_Types.ent_Integer) Then
+                            Call WriteCheckSlot(tmpArr(0), tmpArr(1))
+                        Else
+                            'Faltan o sobran los parametros con el formato propio
+                        Call ShowConsoleMsg("Formato incorrecto. Utilice /slot NICK@SLOT.")
+                        End If
                     Else
-                        'Faltan los parametros con el formato propio
+                        'Faltan o sobran los parametros con el formato propio
                         Call ShowConsoleMsg("Formato incorrecto. Utilice /slot NICK@SLOT.")
                     End If
                 Else
@@ -1407,7 +1411,11 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 
             Case "/IGNORADO"
                 Call WriteIgnored
-                
+            
+#If SeguridadAlkon Then
+            Case Else
+                Call ParseUserCommandEx(Comando, CantidadArgumentos, ArgumentosAll, ArgumentosRaw)
+#End If
         End Select
         
     ElseIf Left$(Comando, 1) = "\" Then
@@ -1446,7 +1454,7 @@ End Sub
 ' @param    bold Sets the font bold style.
 ' @param    italic Sets the font italic style.
 
-Private Sub ShowConsoleMsg(ByVal Message As String, Optional ByVal red As Integer = 255, Optional ByVal green As Integer = 255, Optional ByVal blue As Integer = 255, Optional ByVal bold As Boolean = False, Optional ByVal italic As Boolean = False)
+Public Sub ShowConsoleMsg(ByVal Message As String, Optional ByVal red As Integer = 255, Optional ByVal green As Integer = 255, Optional ByVal blue As Integer = 255, Optional ByVal bold As Boolean = False, Optional ByVal italic As Boolean = False)
 '***************************************************
 'Author: Nicolas Matias Gonzalez (NIGO)
 'Last Modification: 01/03/07
@@ -1461,7 +1469,7 @@ End Sub
 ' @param    Numero The number to be checked.
 ' @param    Tipo The acceptable type of number.
 
-Private Function ValidNumber(ByVal Numero As String, ByVal TIPO As eNumber_Types) As Boolean
+Public Function ValidNumber(ByVal Numero As String, ByVal TIPO As eNumber_Types) As Boolean
 '***************************************************
 'Author: Nicolas Matias Gonzalez (NIGO)
 'Last Modification: 01/06/07
@@ -1558,18 +1566,17 @@ Private Function AEMAILSplit(ByRef Text As String) 'No return type allows to ret
 'Last Modification: 01/13/07
 'Usefull for AEMAIL BUG FIX
 '***************************************************
-Dim tmpArr(0 To 1) As String
-Dim Pos As Byte
-
-Pos = CByte(InStrB(0, Text, "-"))
-
-If Pos <> 0 Then
-    tmpArr(0) = mid$(Text, 0, Pos)
-    tmpArr(1) = mid$(Text, Pos + 2)
-Else
-    tmpArr(0) = vbNullString
-End If
-
-AEMAILSplit = tmpArr
-
+    Dim tmpArr(0 To 1) As String
+    Dim Pos As Byte
+    
+    Pos = CByte(InStrB(0, Text, "-"))
+    
+    If Pos <> 0 Then
+        tmpArr(0) = mid$(Text, 0, Pos)
+        tmpArr(1) = mid$(Text, Pos + 2)
+    Else
+        tmpArr(0) = vbNullString
+    End If
+    
+    AEMAILSplit = tmpArr
 End Function
