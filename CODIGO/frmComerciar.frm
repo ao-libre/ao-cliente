@@ -200,7 +200,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-'Argentum Online 0.9.0.9
+'Argentum Online 0.11.6
 '
 'Copyright (C) 2002 Márquez Pablo Ignacio
 'Copyright (C) 2002 Otto Perez
@@ -208,18 +208,16 @@ Attribute VB_Exposed = False
 'Copyright (C) 2002 Matías Fernando Pequeño
 '
 'This program is free software; you can redistribute it and/or modify
-'it under the terms of the GNU General Public License as published by
-'the Free Software Foundation; either version 2 of the License, or
-'any later version.
+'it under the terms of the Affero General Public License;
+'either version 1 of the License, or any later version.
 '
 'This program is distributed in the hope that it will be useful,
 'but WITHOUT ANY WARRANTY; without even the implied warranty of
 'MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-'GNU General Public License for more details.
+'Affero General Public License for more details.
 '
-'You should have received a copy of the GNU General Public License
-'along with this program; if not, write to the Free Software
-'Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+'You should have received a copy of the Affero General Public License
+'along with this program; if not, you can find it at http://www.affero.org/oagpl.html
 '
 'Argentum Online is based on Baronsoft's VB6 Online RPG
 'You can contact the original creator of ORE at aaron@baronsoft.com
@@ -287,7 +285,7 @@ Image1(1).Picture = LoadPicture(App.Path & "\Graficos\Botónvender.jpg")
 End Sub
 
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
 If Image1(0).Tag = 0 Then
     Image1(0).Picture = LoadPicture(App.Path & "\Graficos\BotónComprar.jpg")
     Image1(0).Tag = 1
@@ -332,7 +330,7 @@ List1(1).Clear
 NPCInvDim = 0
 End Sub
 
-Private Sub Image1_MouseMove(index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Image1_MouseMove(index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
 Select Case index
     Case 0
         If Image1(0).Tag = 1 Then
@@ -382,7 +380,7 @@ Select Case index
                 Label1(4).Caption = "Defensa:" & NPCInventory(List1(0).listIndex + 1).Def
                 Label1(4).Visible = True
         End Select
-        Call DrawGrhtoHdc(Picture1.hWnd, Picture1.Hdc, NPCInventory(List1(0).listIndex + 1).GrhIndex, SR, DR)
+        Call DrawGrhtoHdc(Picture1.hWnd, Picture1.hdc, NPCInventory(List1(0).listIndex + 1).GrhIndex, SR, DR)
     Case 1
         Label1(0).Caption = Inventario.ItemName(List1(1).listIndex + 1)
         Label1(1).Caption = Inventario.Valor(List1(1).listIndex + 1)
@@ -398,7 +396,7 @@ Select Case index
                 Label1(4).Caption = "Defensa:" & Inventario.Def(List1(1).listIndex + 1)
                 Label1(4).Visible = True
         End Select
-        Call DrawGrhtoHdc(Picture1.hWnd, Picture1.Hdc, Inventario.GrhIndex(List1(1).listIndex + 1), SR, DR)
+        Call DrawGrhtoHdc(Picture1.hWnd, Picture1.hdc, Inventario.GrhIndex(List1(1).listIndex + 1), SR, DR)
 End Select
 
 If Label1(2).Caption = 0 Then ' 27/08/2006 - GS > No mostrar imagen ni nada, cuando no ahi nada que mostrar.
@@ -414,7 +412,7 @@ End Sub
 '<-------------------------NUEVO-------------------------->
 '<-------------------------NUEVO-------------------------->
 '<-------------------------NUEVO-------------------------->
-Private Sub List1_MouseMove(index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub List1_MouseMove(index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
 If Image1(0).Tag = 0 Then
     Image1(0).Picture = LoadPicture(App.Path & "\Graficos\BotónComprar.jpg")
     Image1(0).Tag = 1

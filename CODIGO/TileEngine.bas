@@ -1,5 +1,5 @@
 Attribute VB_Name = "Mod_TileEngine"
-'Argentum Online 0.9.0.9
+'Argentum Online 0.11.6
 '
 'Copyright (C) 2002 Márquez Pablo Ignacio
 'Copyright (C) 2002 Otto Perez
@@ -7,18 +7,16 @@ Attribute VB_Name = "Mod_TileEngine"
 'Copyright (C) 2002 Matías Fernando Pequeño
 '
 'This program is free software; you can redistribute it and/or modify
-'it under the terms of the GNU General Public License as published by
-'the Free Software Foundation; either version 2 of the License, or
-'any later version.
+'it under the terms of the Affero General Public License;
+'either version 1 of the License, or any later version.
 '
 'This program is distributed in the hope that it will be useful,
 'but WITHOUT ANY WARRANTY; without even the implied warranty of
 'MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-'GNU General Public License for more details.
+'Affero General Public License for more details.
 '
-'You should have received a copy of the GNU General Public License
-'along with this program; if not, write to the Free Software
-'Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+'You should have received a copy of the Affero General Public License
+'along with this program; if not, you can find it at http://www.affero.org/oagpl.html
 '
 'Argentum Online is based on Baronsoft's VB6 Online RPG
 'You can contact the original creator of ORE at aaron@baronsoft.com
@@ -86,15 +84,15 @@ End Type
 
 'Posicion en un mapa
 Public Type Position
-    X As Integer
-    Y As Integer
+    x As Integer
+    y As Integer
 End Type
 
 'Posicion en el Mundo
 Public Type WorldPos
     Map As Integer
-    X As Integer
-    Y As Integer
+    x As Integer
+    y As Integer
 End Type
 
 'Contiene info acerca de donde se puede encontrar un grh
@@ -147,7 +145,7 @@ End Type
 
 'Lista de cuerpos
 Public Type FxData
-    Fx As Grh
+    fX As Grh
     OffsetX As Long
     OffsetY As Long
 End Type
@@ -166,7 +164,7 @@ Public Type Char
     Arma As WeaponAnimData
     Escudo As ShieldAnimData
     UsandoArma As Boolean
-    Fx As Integer
+    fX As Integer
     FxLoopTimes As Integer
     Criminal As Byte
     
@@ -315,7 +313,7 @@ Public MapInfo As MapInfo ' Info acerca del mapa en uso
 
 '¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿API?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?
 'Blt
-Public Declare Function BitBlt Lib "gdi32" (ByVal hDestDC As Long, ByVal X As Long, ByVal Y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, ByVal xSrc As Long, ByVal ySrc As Long, ByVal dwRop As Long) As Long
+Public Declare Function BitBlt Lib "gdi32" (ByVal hDestDC As Long, ByVal x As Long, ByVal y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, ByVal xSrc As Long, ByVal ySrc As Long, ByVal dwRop As Long) As Long
 '¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?
 
 
@@ -367,11 +365,11 @@ Private Declare Function BltEfectoNoche Lib "vbabdx" (ByRef lpDDSDest As Any, By
 
 #End If
 
-Private Declare Function GetWindowRect Lib "User32" (ByVal hWnd As Long, lpRect As RECT) As Long
+Private Declare Function GetWindowRect Lib "user32" (ByVal hWnd As Long, lpRect As RECT) As Long
 
 Sub CargarCabezas()
 On Error Resume Next
-Dim N As Integer, I As Integer, Numheads As Integer, index As Integer
+Dim N As Integer, i As Integer, Numheads As Integer, index As Integer
 
 Dim Miscabezas() As tIndiceCabeza
 
@@ -388,13 +386,13 @@ Get #N, , Numheads
 ReDim HeadData(0 To Numheads + 1) As HeadData
 ReDim Miscabezas(0 To Numheads + 1) As tIndiceCabeza
 
-For I = 1 To Numheads
-    Get #N, , Miscabezas(I)
-    InitGrh HeadData(I).Head(1), Miscabezas(I).Head(1), 0
-    InitGrh HeadData(I).Head(2), Miscabezas(I).Head(2), 0
-    InitGrh HeadData(I).Head(3), Miscabezas(I).Head(3), 0
-    InitGrh HeadData(I).Head(4), Miscabezas(I).Head(4), 0
-Next I
+For i = 1 To Numheads
+    Get #N, , Miscabezas(i)
+    InitGrh HeadData(i).Head(1), Miscabezas(i).Head(1), 0
+    InitGrh HeadData(i).Head(2), Miscabezas(i).Head(2), 0
+    InitGrh HeadData(i).Head(3), Miscabezas(i).Head(3), 0
+    InitGrh HeadData(i).Head(4), Miscabezas(i).Head(4), 0
+Next i
 
 Close #N
 
@@ -402,7 +400,7 @@ End Sub
 
 Sub CargarCascos()
 On Error Resume Next
-Dim N As Integer, I As Integer, NumCascos As Integer, index As Integer
+Dim N As Integer, i As Integer, NumCascos As Integer, index As Integer
 
 Dim Miscabezas() As tIndiceCabeza
 
@@ -419,13 +417,13 @@ Get #N, , NumCascos
 ReDim CascoAnimData(0 To NumCascos + 1) As HeadData
 ReDim Miscabezas(0 To NumCascos + 1) As tIndiceCabeza
 
-For I = 1 To NumCascos
-    Get #N, , Miscabezas(I)
-    InitGrh CascoAnimData(I).Head(1), Miscabezas(I).Head(1), 0
-    InitGrh CascoAnimData(I).Head(2), Miscabezas(I).Head(2), 0
-    InitGrh CascoAnimData(I).Head(3), Miscabezas(I).Head(3), 0
-    InitGrh CascoAnimData(I).Head(4), Miscabezas(I).Head(4), 0
-Next I
+For i = 1 To NumCascos
+    Get #N, , Miscabezas(i)
+    InitGrh CascoAnimData(i).Head(1), Miscabezas(i).Head(1), 0
+    InitGrh CascoAnimData(i).Head(2), Miscabezas(i).Head(2), 0
+    InitGrh CascoAnimData(i).Head(3), Miscabezas(i).Head(3), 0
+    InitGrh CascoAnimData(i).Head(4), Miscabezas(i).Head(4), 0
+Next i
 
 Close #N
 
@@ -433,7 +431,7 @@ End Sub
 
 Sub CargarCuerpos()
 On Error Resume Next
-Dim N As Integer, I As Integer
+Dim N As Integer, i As Integer
 Dim NumCuerpos As Integer
 Dim MisCuerpos() As tIndiceCuerpo
 
@@ -450,22 +448,22 @@ Get #N, , NumCuerpos
 ReDim BodyData(0 To NumCuerpos + 1) As BodyData
 ReDim MisCuerpos(0 To NumCuerpos + 1) As tIndiceCuerpo
 
-For I = 1 To NumCuerpos
-    Get #N, , MisCuerpos(I)
-    InitGrh BodyData(I).Walk(1), MisCuerpos(I).Body(1), 0
-    InitGrh BodyData(I).Walk(2), MisCuerpos(I).Body(2), 0
-    InitGrh BodyData(I).Walk(3), MisCuerpos(I).Body(3), 0
-    InitGrh BodyData(I).Walk(4), MisCuerpos(I).Body(4), 0
-    BodyData(I).HeadOffset.X = MisCuerpos(I).HeadOffsetX
-    BodyData(I).HeadOffset.Y = MisCuerpos(I).HeadOffsetY
-Next I
+For i = 1 To NumCuerpos
+    Get #N, , MisCuerpos(i)
+    InitGrh BodyData(i).Walk(1), MisCuerpos(i).Body(1), 0
+    InitGrh BodyData(i).Walk(2), MisCuerpos(i).Body(2), 0
+    InitGrh BodyData(i).Walk(3), MisCuerpos(i).Body(3), 0
+    InitGrh BodyData(i).Walk(4), MisCuerpos(i).Body(4), 0
+    BodyData(i).HeadOffset.x = MisCuerpos(i).HeadOffsetX
+    BodyData(i).HeadOffset.y = MisCuerpos(i).HeadOffsetY
+Next i
 
 Close #N
 
 End Sub
 Sub CargarFxs()
 On Error Resume Next
-Dim N As Integer, I As Integer
+Dim N As Integer, i As Integer
 Dim NumFxs As Integer
 Dim MisFxs() As tIndiceFx
 
@@ -482,12 +480,12 @@ Get #N, , NumFxs
 ReDim FxData(0 To NumFxs + 1) As FxData
 ReDim MisFxs(0 To NumFxs + 1) As tIndiceFx
 
-For I = 1 To NumFxs
-    Get #N, , MisFxs(I)
-    Call InitGrh(FxData(I).Fx, MisFxs(I).Animacion, 1)
-    FxData(I).OffsetX = MisFxs(I).OffsetX
-    FxData(I).OffsetY = MisFxs(I).OffsetY
-Next I
+For i = 1 To NumFxs
+    Get #N, , MisFxs(i)
+    Call InitGrh(FxData(i).fX, MisFxs(i).Animacion, 1)
+    FxData(i).OffsetX = MisFxs(i).OffsetX
+    FxData(i).OffsetY = MisFxs(i).OffsetY
+Next i
 
 Close #N
 
@@ -495,7 +493,7 @@ End Sub
 
 Sub CargarTips()
 On Error Resume Next
-Dim N As Integer, I As Integer
+Dim N As Integer, i As Integer
 Dim NumTips As Integer
 
 N = FreeFile
@@ -510,9 +508,9 @@ Get #N, , NumTips
 'Resize array
 ReDim Tips(1 To NumTips) As String * 255
 
-For I = 1 To NumTips
-    Get #N, , Tips(I)
-Next I
+For i = 1 To NumTips
+    Get #N, , Tips(i)
+Next i
 
 Close #N
 
@@ -520,7 +518,7 @@ End Sub
 
 Sub CargarArrayLluvia()
 On Error Resume Next
-Dim N As Integer, I As Integer
+Dim N As Integer, i As Integer
 Dim Nu As Integer
 
 N = FreeFile
@@ -535,9 +533,9 @@ Get #N, , Nu
 'Resize array
 ReDim bLluvia(1 To Nu) As Byte
 
-For I = 1 To Nu
-    Get #N, , bLluvia(I)
-Next I
+For i = 1 To Nu
+    Get #N, , bLluvia(i)
+Next i
 
 Close #N
 
@@ -581,8 +579,8 @@ Else
     End If
 End If
 
-tX = UserPos.X + CX
-tY = UserPos.Y + CY
+tX = UserPos.x + CX
+tY = UserPos.y + CY
 
 End Sub
 
@@ -591,7 +589,7 @@ End Sub
 
 
 
-Sub MakeChar(ByVal CharIndex As Integer, ByVal Body As Integer, ByVal Head As Integer, ByVal Heading As Byte, ByVal X As Integer, ByVal Y As Integer, ByVal Arma As Integer, ByVal Escudo As Integer, ByVal Casco As Integer)
+Sub MakeChar(ByVal CharIndex As Integer, ByVal Body As Integer, ByVal Head As Integer, ByVal Heading As Byte, ByVal x As Integer, ByVal y As Integer, ByVal Arma As Integer, ByVal Escudo As Integer, ByVal Casco As Integer)
 
 On Error Resume Next
 
@@ -619,18 +617,18 @@ charlist(CharIndex).Heading = Heading
 
 'Reset moving stats
 charlist(CharIndex).Moving = 0
-charlist(CharIndex).MoveOffset.X = 0
-charlist(CharIndex).MoveOffset.Y = 0
+charlist(CharIndex).MoveOffset.x = 0
+charlist(CharIndex).MoveOffset.y = 0
 
 'Update position
-charlist(CharIndex).Pos.X = X
-charlist(CharIndex).Pos.Y = Y
+charlist(CharIndex).Pos.x = x
+charlist(CharIndex).Pos.y = y
 
 'Make active
 charlist(CharIndex).Active = 1
 
 'Plot on map
-MapData(X, Y).CharIndex = CharIndex
+MapData(x, y).CharIndex = CharIndex
 
 End Sub
 
@@ -638,7 +636,7 @@ Sub ResetCharInfo(ByVal CharIndex As Integer)
 
     charlist(CharIndex).Active = 0
     charlist(CharIndex).Criminal = 0
-    charlist(CharIndex).Fx = 0
+    charlist(CharIndex).fX = 0
     charlist(CharIndex).FxLoopTimes = 0
     charlist(CharIndex).invisible = False
 
@@ -650,8 +648,8 @@ Sub ResetCharInfo(ByVal CharIndex As Integer)
     charlist(CharIndex).muerto = False
     charlist(CharIndex).Nombre = ""
     charlist(CharIndex).pie = False
-    charlist(CharIndex).Pos.X = 0
-    charlist(CharIndex).Pos.Y = 0
+    charlist(CharIndex).Pos.x = 0
+    charlist(CharIndex).Pos.y = 0
     charlist(CharIndex).UsandoArma = False
 
 End Sub
@@ -675,7 +673,7 @@ If CharIndex = LastChar Then
 End If
 
 
-MapData(charlist(CharIndex).Pos.X, charlist(CharIndex).Pos.Y).CharIndex = 0
+MapData(charlist(CharIndex).Pos.x, charlist(CharIndex).Pos.y).CharIndex = 0
 
 Call ResetCharInfo(CharIndex)
 
@@ -721,13 +719,13 @@ Sub MoveCharbyHead(ByVal CharIndex As Integer, ByVal nHeading As E_Heading)
 '*****************************************************************
 Dim addX As Integer
 Dim addY As Integer
-Dim X As Integer
-Dim Y As Integer
+Dim x As Integer
+Dim y As Integer
 Dim nX As Integer
 Dim nY As Integer
 
-X = charlist(CharIndex).Pos.X
-Y = charlist(CharIndex).Pos.Y
+x = charlist(CharIndex).Pos.x
+y = charlist(CharIndex).Pos.y
 
 'Figure out which way to move
 Select Case nHeading
@@ -746,16 +744,16 @@ Select Case nHeading
         
 End Select
 
-nX = X + addX
-nY = Y + addY
+nX = x + addX
+nY = y + addY
 
 MapData(nX, nY).CharIndex = CharIndex
-charlist(CharIndex).Pos.X = nX
-charlist(CharIndex).Pos.Y = nY
-MapData(X, Y).CharIndex = 0
+charlist(CharIndex).Pos.x = nX
+charlist(CharIndex).Pos.y = nY
+MapData(x, y).CharIndex = 0
 
-charlist(CharIndex).MoveOffset.X = -1 * (TilePixelWidth * addX)
-charlist(CharIndex).MoveOffset.Y = -1 * (TilePixelHeight * addY)
+charlist(CharIndex).MoveOffset.x = -1 * (TilePixelWidth * addX)
+charlist(CharIndex).MoveOffset.y = -1 * (TilePixelHeight * addY)
 
 charlist(CharIndex).Moving = 1
 charlist(CharIndex).Heading = nHeading
@@ -787,18 +785,18 @@ End Sub
 
 Function EstaPCarea(ByVal Index2 As Integer) As Boolean
 
-Dim X As Integer, Y As Integer
+Dim x As Integer, y As Integer
 
-For Y = UserPos.Y - MinYBorder + 1 To UserPos.Y + MinYBorder - 1
-  For X = UserPos.X - MinXBorder + 1 To UserPos.X + MinXBorder - 1
+For y = UserPos.y - MinYBorder + 1 To UserPos.y + MinYBorder - 1
+  For x = UserPos.x - MinXBorder + 1 To UserPos.x + MinXBorder - 1
             
-            If MapData(X, Y).CharIndex = Index2 Then
+            If MapData(x, y).CharIndex = Index2 Then
                 EstaPCarea = True
                 Exit Function
             End If
         
-  Next X
-Next Y
+  Next x
+Next y
 
 EstaPCarea = False
 
@@ -830,21 +828,21 @@ Sub MoveCharbyPos(ByVal CharIndex As Integer, ByVal nX As Integer, ByVal nY As I
 
 On Error Resume Next
 
-Dim X As Integer
-Dim Y As Integer
+Dim x As Integer
+Dim y As Integer
 Dim addX As Integer
 Dim addY As Integer
 Dim nHeading As E_Heading
 
 
 
-X = charlist(CharIndex).Pos.X
-Y = charlist(CharIndex).Pos.Y
+x = charlist(CharIndex).Pos.x
+y = charlist(CharIndex).Pos.y
 
-MapData(X, Y).CharIndex = 0
+MapData(x, y).CharIndex = 0
 
-addX = nX - X
-addY = nY - Y
+addX = nX - x
+addY = nY - y
 
 If Sgn(addX) = 1 Then
     nHeading = E_Heading.EAST
@@ -865,20 +863,20 @@ End If
 MapData(nX, nY).CharIndex = CharIndex
 
 
-charlist(CharIndex).Pos.X = nX
-charlist(CharIndex).Pos.Y = nY
+charlist(CharIndex).Pos.x = nX
+charlist(CharIndex).Pos.y = nY
 
-charlist(CharIndex).MoveOffset.X = -1 * (TilePixelWidth * addX)
-charlist(CharIndex).MoveOffset.Y = -1 * (TilePixelHeight * addY)
+charlist(CharIndex).MoveOffset.x = -1 * (TilePixelWidth * addX)
+charlist(CharIndex).MoveOffset.y = -1 * (TilePixelHeight * addY)
 
 charlist(CharIndex).Moving = 1
 charlist(CharIndex).Heading = nHeading
 
 'parche para que no medite cuando camina
 Dim fxCh As Integer
-fxCh = charlist(CharIndex).Fx
+fxCh = charlist(CharIndex).fX
 If fxCh = FxMeditar.CHICO Or fxCh = FxMeditar.GRANDE Or fxCh = FxMeditar.MEDIANO Or fxCh = FxMeditar.XGRANDE Then
-    charlist(CharIndex).Fx = 0
+    charlist(CharIndex).fX = 0
     charlist(CharIndex).FxLoopTimes = 0
 End If
 
@@ -894,8 +892,8 @@ Sub MoveScreen(ByVal nHeading As E_Heading)
 '******************************************
 'Starts the screen moving in a direction
 '******************************************
-Dim X As Integer
-Dim Y As Integer
+Dim x As Integer
+Dim y As Integer
 Dim tX As Integer
 Dim tY As Integer
 
@@ -903,32 +901,32 @@ Dim tY As Integer
 Select Case nHeading
 
     Case E_Heading.NORTH
-        Y = -1
+        y = -1
 
     Case E_Heading.EAST
-        X = 1
+        x = 1
 
     Case E_Heading.SOUTH
-        Y = 1
+        y = 1
     
     Case E_Heading.WEST
-        X = -1
+        x = -1
         
 End Select
 
 'Fill temp pos
-tX = UserPos.X + X
-tY = UserPos.Y + Y
+tX = UserPos.x + x
+tY = UserPos.y + y
 
 'Check to see if its out of bounds
 If tX < MinXBorder Or tX > MaxXBorder Or tY < MinYBorder Or tY > MaxYBorder Then
     Exit Sub
 Else
     'Start moving... MainLoop does the rest
-    AddtoUserPos.X = X
-    UserPos.X = tX
-    AddtoUserPos.Y = Y
-    UserPos.Y = tY
+    AddtoUserPos.x = x
+    UserPos.x = tX
+    AddtoUserPos.y = y
+    UserPos.y = tY
     UserMoving = 1
    
 End If
@@ -941,8 +939,8 @@ End Sub
 
 Function HayFogata() As Boolean
 Dim j As Integer, k As Integer
-For j = UserPos.X - 8 To UserPos.X + 8
-    For k = UserPos.Y - 6 To UserPos.Y + 6
+For j = UserPos.x - 8 To UserPos.x + 8
+    For k = UserPos.y - 6 To UserPos.y + 6
         If InMapBounds(j, k) Then
             If MapData(j, k).ObjGrh.GrhIndex = GrhFogata Then
                     HayFogata = True
@@ -1080,36 +1078,36 @@ MsgBox "Error while loading the Grh.dat! Stopped at GRH number: " & Grh
 
 End Sub
 
-Function LegalPos(ByVal X As Integer, ByVal Y As Integer) As Boolean
+Function LegalPos(ByVal x As Integer, ByVal y As Integer) As Boolean
 '*****************************************************************
 'Checks to see if a tile position is legal
 '*****************************************************************
 
 'Limites del mapa
-If X < MinXBorder Or X > MaxXBorder Or Y < MinYBorder Or Y > MaxYBorder Then
+If x < MinXBorder Or x > MaxXBorder Or y < MinYBorder Or y > MaxYBorder Then
     LegalPos = False
     Exit Function
 End If
 
     'Tile Bloqueado?
-    If MapData(X, Y).Blocked = 1 Then
+    If MapData(x, y).Blocked = 1 Then
         LegalPos = False
         Exit Function
     End If
     
     '¿Hay un personaje?
-    If MapData(X, Y).CharIndex > 0 Then
+    If MapData(x, y).CharIndex > 0 Then
         LegalPos = False
         Exit Function
     End If
    
     If Not UserNavegando Then
-        If HayAgua(X, Y) Then
+        If HayAgua(x, y) Then
             LegalPos = False
             Exit Function
         End If
     Else
-        If Not HayAgua(X, Y) Then
+        If Not HayAgua(x, y) Then
             LegalPos = False
             Exit Function
         End If
@@ -1122,13 +1120,13 @@ End Function
 
 
 
-Function InMapLegalBounds(ByVal X As Integer, ByVal Y As Integer) As Boolean
+Function InMapLegalBounds(ByVal x As Integer, ByVal y As Integer) As Boolean
 '*****************************************************************
 'Checks to see if a tile position is in the maps
 'LEGAL/Walkable bounds
 '*****************************************************************
 
-If X < MinXBorder Or X > MaxXBorder Or Y < MinYBorder Or Y > MaxYBorder Then
+If x < MinXBorder Or x > MaxXBorder Or y < MinYBorder Or y > MaxYBorder Then
     InMapLegalBounds = False
     Exit Function
 End If
@@ -1137,12 +1135,12 @@ InMapLegalBounds = True
 
 End Function
 
-Function InMapBounds(ByVal X As Integer, ByVal Y As Integer) As Boolean
+Function InMapBounds(ByVal x As Integer, ByVal y As Integer) As Boolean
 '*****************************************************************
 'Checks to see if a tile position is in the maps bounds
 '*****************************************************************
 
-If X < XMinMapSize Or X > XMaxMapSize Or Y < YMinMapSize Or Y > YMaxMapSize Then
+If x < XMinMapSize Or x > XMaxMapSize Or y < YMinMapSize Or y > YMaxMapSize Then
     InMapBounds = False
     Exit Function
 End If
@@ -1151,7 +1149,7 @@ InMapBounds = True
 
 End Function
 
-Sub DDrawGrhtoSurface(Surface As DirectDrawSurface7, Grh As Grh, ByVal X As Integer, ByVal Y As Integer, center As Byte, Animate As Byte)
+Sub DDrawGrhtoSurface(Surface As DirectDrawSurface7, Grh As Grh, ByVal x As Integer, ByVal y As Integer, center As Byte, Animate As Byte)
 
 Dim CurrentGrh As Grh
 Dim destRect As RECT
@@ -1177,10 +1175,10 @@ CurrentGrh.GrhIndex = GrhData(Grh.GrhIndex).Frames(Grh.FrameCounter)
 'Center Grh over X,Y pos
 If center Then
     If GrhData(CurrentGrh.GrhIndex).TileWidth <> 1 Then
-        X = X - Int(GrhData(CurrentGrh.GrhIndex).TileWidth * 16) + 16 'hard coded for speed
+        x = x - Int(GrhData(CurrentGrh.GrhIndex).TileWidth * 16) + 16 'hard coded for speed
     End If
     If GrhData(CurrentGrh.GrhIndex).TileHeight <> 1 Then
-        Y = Y - Int(GrhData(CurrentGrh.GrhIndex).TileHeight * 32) + 32 'hard coded for speed
+        y = y - Int(GrhData(CurrentGrh.GrhIndex).TileHeight * 32) + 32 'hard coded for speed
     End If
 End If
 With SourceRect
@@ -1189,18 +1187,18 @@ With SourceRect
         .Right = .Left + GrhData(CurrentGrh.GrhIndex).pixelWidth
         .Bottom = .Top + GrhData(CurrentGrh.GrhIndex).pixelHeight
 End With
-Surface.BltFast X, Y, SurfaceDB(GrhData(CurrentGrh.GrhIndex).FileNum), SourceRect, DDBLTFAST_WAIT
+Surface.BltFast x, y, SurfaceDB(GrhData(CurrentGrh.GrhIndex).FileNum), SourceRect, DDBLTFAST_WAIT
 End Sub
 
-Sub DDrawTransGrhIndextoSurface(Surface As DirectDrawSurface7, Grh As Integer, ByVal X As Integer, ByVal Y As Integer, center As Byte, Animate As Byte)
+Sub DDrawTransGrhIndextoSurface(Surface As DirectDrawSurface7, Grh As Integer, ByVal x As Integer, ByVal y As Integer, center As Byte, Animate As Byte)
 Dim CurrentGrh As Grh
 Dim destRect As RECT
 Dim SourceRect As RECT
 Dim SurfaceDesc As DDSURFACEDESC2
 
 With destRect
-    .Left = X
-    .Top = Y
+    .Left = x
+    .Top = y
     .Right = .Left + GrhData(Grh).pixelWidth
     .Bottom = .Top + GrhData(Grh).pixelHeight
 End With
@@ -1223,7 +1221,7 @@ End Sub
 
 'Sub DDrawTransGrhtoSurface(surface As DirectDrawSurface7, Grh As Grh, X As Integer, Y As Integer, Center As Byte, Animate As Byte, Optional ByVal KillAnim As Integer = 0)
 '[CODE 000]:MatuX
-    Sub DDrawTransGrhtoSurface(Surface As DirectDrawSurface7, Grh As Grh, ByVal X As Integer, ByVal Y As Integer, center As Byte, Animate As Byte, Optional ByVal KillAnim As Integer = 0, Optional Capa2 As Boolean = False)
+    Sub DDrawTransGrhtoSurface(Surface As DirectDrawSurface7, Grh As Grh, ByVal x As Integer, ByVal y As Integer, center As Byte, Animate As Byte, Optional ByVal KillAnim As Integer = 0, Optional Capa2 As Boolean = False)
 '[END]'
 '*****************************************************************
 'Draws a GRH transparently to a X and Y position
@@ -1256,7 +1254,7 @@ If Animate Then
                             
                             If charlist(KillAnim).FxLoopTimes > 0 Then charlist(KillAnim).FxLoopTimes = charlist(KillAnim).FxLoopTimes - 1
                             If charlist(KillAnim).FxLoopTimes < 1 Then 'Matamos la anim del fx ;))
-                                charlist(KillAnim).Fx = 0
+                                charlist(KillAnim).fX = 0
                                 Exit Sub
                             End If
                             
@@ -1277,13 +1275,13 @@ iGrhIndex = GrhData(Grh.GrhIndex).Frames(Grh.FrameCounter)
 If center Then
     If GrhData(iGrhIndex).TileWidth <> 1 Then
         If Capa2 = True Then ' [GS] 24/10/2006 - Correccion en la capa 2
-            X = X - Int(GrhData(iGrhIndex).TileWidth * 32) + 32 'hard coded for speed
+            x = x - Int(GrhData(iGrhIndex).TileWidth * 32) + 32 'hard coded for speed
         Else
-            X = X - Int(GrhData(iGrhIndex).TileWidth * 16) + 16 'hard coded for speed
+            x = x - Int(GrhData(iGrhIndex).TileWidth * 16) + 16 'hard coded for speed
         End If
     End If
     If GrhData(iGrhIndex).TileHeight <> 1 Then
-        Y = Y - Int(GrhData(iGrhIndex).TileHeight * 32) + 32 'hard coded for speed
+        y = y - Int(GrhData(iGrhIndex).TileHeight * 32) + 32 'hard coded for speed
     End If
 End If
 
@@ -1295,12 +1293,12 @@ With SourceRect
 End With
 
 
-Surface.BltFast X, Y, SurfaceDB.Surface(GrhData(iGrhIndex).FileNum), SourceRect, DDBLTFAST_SRCCOLORKEY Or DDBLTFAST_WAIT
+Surface.BltFast x, y, SurfaceDB.Surface(GrhData(iGrhIndex).FileNum), SourceRect, DDBLTFAST_SRCCOLORKEY Or DDBLTFAST_WAIT
 
 End Sub
 
 #If ConAlfaB = 1 Then
-    Sub DDrawTransGrhtoSurfaceAlpha(Surface As DirectDrawSurface7, Grh As Grh, ByVal X As Integer, ByVal Y As Integer, center As Byte, Animate As Byte, Optional ByVal KillAnim As Integer = 0)
+    Sub DDrawTransGrhtoSurfaceAlpha(Surface As DirectDrawSurface7, Grh As Grh, ByVal x As Integer, ByVal y As Integer, center As Byte, Animate As Byte, Optional ByVal KillAnim As Integer = 0)
 '[END]'
 '*****************************************************************
 'Draws a GRH transparently to a X and Y position
@@ -1333,7 +1331,7 @@ If Animate Then
 
                             If charlist(KillAnim).FxLoopTimes > 0 Then charlist(KillAnim).FxLoopTimes = charlist(KillAnim).FxLoopTimes - 1
                             If charlist(KillAnim).FxLoopTimes < 1 Then 'Matamos la anim del fx ;))
-                                charlist(KillAnim).Fx = 0
+                                charlist(KillAnim).fX = 0
                                 Exit Sub
                             End If
 
@@ -1353,16 +1351,16 @@ iGrhIndex = GrhData(Grh.GrhIndex).Frames(Grh.FrameCounter)
 'Center Grh over X,Y pos
 If center Then
     If GrhData(iGrhIndex).TileWidth <> 1 Then
-        X = X - Int(GrhData(iGrhIndex).TileWidth * 16) + 16 'hard coded for speed
+        x = x - Int(GrhData(iGrhIndex).TileWidth * 16) + 16 'hard coded for speed
     End If
     If GrhData(iGrhIndex).TileHeight <> 1 Then
-        Y = Y - Int(GrhData(iGrhIndex).TileHeight * 32) + 32 'hard coded for speed
+        y = y - Int(GrhData(iGrhIndex).TileHeight * 32) + 32 'hard coded for speed
     End If
 End If
 
 With SourceRect
-    .Left = GrhData(iGrhIndex).sX + IIf(X < 0, Abs(X), 0)
-    .Top = GrhData(iGrhIndex).sY + IIf(Y < 0, Abs(Y), 0)
+    .Left = GrhData(iGrhIndex).sX + IIf(x < 0, Abs(x), 0)
+    .Top = GrhData(iGrhIndex).sY + IIf(y < 0, Abs(y), 0)
     .Right = .Left + GrhData(iGrhIndex).pixelWidth
     .Bottom = .Top + GrhData(iGrhIndex).pixelHeight
 End With
@@ -1381,10 +1379,10 @@ Src.GetSurfaceDesc ddsdSrc
 Surface.GetSurfaceDesc ddsdDest
 
 With rDest
-    .Left = X
-    .Top = Y
-    .Right = X + GrhData(iGrhIndex).pixelWidth
-    .Bottom = Y + GrhData(iGrhIndex).pixelHeight
+    .Left = x
+    .Top = y
+    .Right = x + GrhData(iGrhIndex).pixelWidth
+    .Bottom = y + GrhData(iGrhIndex).pixelHeight
     
     If .Right > ddsdDest.lWidth Then
         .Right = ddsdDest.lWidth
@@ -1410,7 +1408,7 @@ ElseIf ddsdDest.ddpfPixelFormat.lGBitMask = 65280 And ddsdSrc.ddpfPixelFormat.lG
     Modo = 4
 Else
     'Modo = 2 '16 bits raro ?
-    Surface.BltFast X, Y, Src, SourceRect, DDBLTFAST_SRCCOLORKEY Or DDBLTFAST_WAIT
+    Surface.BltFast x, y, Src, SourceRect, DDBLTFAST_SRCCOLORKEY Or DDBLTFAST_WAIT
     Exit Sub
 End If
 
@@ -1427,7 +1425,7 @@ DstLock = True
 Surface.GetLockedArray dArray()
 Src.GetLockedArray sArray()
 
-Call BltAlphaFast(ByVal VarPtr(dArray(X + X, Y)), ByVal VarPtr(sArray(SourceRect.Left * 2, SourceRect.Top)), rDest.Right - rDest.Left, rDest.Bottom - rDest.Top, ddsdSrc.lPitch, ddsdDest.lPitch, Modo)
+Call BltAlphaFast(ByVal VarPtr(dArray(x + x, y)), ByVal VarPtr(sArray(SourceRect.Left * 2, SourceRect.Top)), rDest.Right - rDest.Left, rDest.Bottom - rDest.Top, ddsdSrc.lPitch, ddsdDest.lPitch, Modo)
 
 Surface.Unlock rDest
 DstLock = False
@@ -1463,11 +1461,11 @@ bmWidth = BINFOHeader.biWidth
 bmHeight = BINFOHeader.biHeight
 End Function
 
-Sub DrawGrhtoHdc(hWnd As Long, Hdc As Long, Grh As Integer, SourceRect As RECT, destRect As RECT)
+Sub DrawGrhtoHdc(hWnd As Long, hdc As Long, Grh As Integer, SourceRect As RECT, destRect As RECT)
     If Grh <= 0 Then Exit Sub
     
     SecundaryClipper.SetHWnd hWnd
-    SurfaceDB.Surface(GrhData(Grh).FileNum).BltToDC Hdc, SourceRect, destRect
+    SurfaceDB.Surface(GrhData(Grh).FileNum).BltToDC hdc, SourceRect, destRect
 End Sub
 
 Sub RenderScreen(tilex As Integer, tiley As Integer, PixelOffsetX As Integer, PixelOffsetY As Integer)
@@ -1482,8 +1480,8 @@ On Error Resume Next
 
 If UserCiego Then Exit Sub
 
-Dim Y        As Integer 'Keeps track of where on map we are
-Dim X        As Integer 'Keeps track of where on map we are
+Dim y        As Integer 'Keeps track of where on map we are
+Dim x        As Integer 'Keeps track of where on map we are
 Dim minY     As Integer 'Start Y pos on current map
 Dim maxY     As Integer 'End Y pos on current map
 Dim minX     As Integer 'Start X pos on current map
@@ -1514,13 +1512,13 @@ maxX = (tilex + 17)
 
 'Draw floor layer
 ScreenY = 8
-For Y = (minY + 8) To maxY - 8
-    If Y > 0 And Y < 101 Then 'In map bounds
+For y = (minY + 8) To maxY - 8
+    If y > 0 And y < 101 Then 'In map bounds
         ScreenX = 8
-        For X = minX + 8 To maxX - 8
-            If X > 0 And X < 101 Then 'In map bounds
+        For x = minX + 8 To maxX - 8
+            If x > 0 And x < 101 Then 'In map bounds
                 'Layer 1 **********************************
-                With MapData(X, Y).Graphic(1)
+                With MapData(x, y).Graphic(1)
                     If (.Started = 1) Then
                         If (.SpeedCounter > 0) Then
                             .SpeedCounter = .SpeedCounter - 1
@@ -1551,10 +1549,10 @@ For Y = (minY + 8) To maxY - 8
                         DDBLTFAST_WAIT)
                 '******************************************
                 'Layer 2 **********************************
-                If MapData(X, Y).Graphic(2).GrhIndex <> 0 Then
+                If MapData(x, y).Graphic(2).GrhIndex <> 0 Then
                     Call DDrawTransGrhtoSurface( _
                             BackBufferSurface, _
-                            MapData(X, Y).Graphic(2), _
+                            MapData(x, y).Graphic(2), _
                             ((32 * ScreenX) - 32) + PixelOffsetX, _
                             ((32 * ScreenY) - 32) + PixelOffsetY, _
                             1, _
@@ -1563,10 +1561,10 @@ For Y = (minY + 8) To maxY - 8
                 '******************************************
             End If
             ScreenX = ScreenX + 1
-        Next X
+        Next x
     End If
     ScreenY = ScreenY + 1
-Next Y
+Next y
 
 
 'busco que nombre dibujar
@@ -1575,16 +1573,16 @@ Call ConvertCPtoTP(frmMain.MainViewShp.Left, frmMain.MainViewShp.Top, frmMain.Mo
 
 'Draw Transparent Layers  (Layer 2, 3)
 ScreenY = 8
-For Y = minY + 8 To maxY - 1
-    If Y > 0 And Y < 101 Then 'In map bounds
+For y = minY + 8 To maxY - 1
+    If y > 0 And y < 101 Then 'In map bounds
         ScreenX = 5
-        For X = minX + 5 To maxX - 5
-            If X > 0 And X < 101 Then 'In map bounds
+        For x = minX + 5 To maxX - 5
+            If x > 0 And x < 101 Then 'In map bounds
                 iPPx = 32 * ScreenX - 32 + PixelOffsetX
                 iPPy = 32 * ScreenY - 32 + PixelOffsetY
 
                 'Object Layer **********************************
-                If MapData(X, Y).ObjGrh.GrhIndex <> 0 Then
+                If MapData(x, y).ObjGrh.GrhIndex <> 0 Then
 '                   If Y > UserPos.Y Then
 '                       Call DDrawTransGrhtoSurfaceAlpha( _
 '                               BackBufferSurface, _
@@ -1593,34 +1591,34 @@ For Y = minY + 8 To maxY - 1
 '                   Else
                         Call DDrawTransGrhtoSurface( _
                                 BackBufferSurface, _
-                                MapData(X, Y).ObjGrh, _
+                                MapData(x, y).ObjGrh, _
                                 iPPx, iPPy, 1, 1)
 '                   End If
                 End If
                 '***********************************************
                 'Char layer ************************************
-                If MapData(X, Y).CharIndex <> 0 Then
-                    TempChar = charlist(MapData(X, Y).CharIndex)
+                If MapData(x, y).CharIndex <> 0 Then
+                    TempChar = charlist(MapData(x, y).CharIndex)
                     PixelOffsetXTemp = PixelOffsetX
                     PixelOffsetYTemp = PixelOffsetY
 
                     Moved = 0
                     'If needed, move left and right
-                    If TempChar.MoveOffset.X <> 0 Then
+                    If TempChar.MoveOffset.x <> 0 Then
                         TempChar.Body.Walk(TempChar.Heading).Started = 1
                         TempChar.Arma.WeaponWalk(TempChar.Heading).Started = 1
                         TempChar.Escudo.ShieldWalk(TempChar.Heading).Started = 1
-                        PixelOffsetXTemp = PixelOffsetXTemp + TempChar.MoveOffset.X
-                        TempChar.MoveOffset.X = TempChar.MoveOffset.X - (8 * Sgn(TempChar.MoveOffset.X))
+                        PixelOffsetXTemp = PixelOffsetXTemp + TempChar.MoveOffset.x
+                        TempChar.MoveOffset.x = TempChar.MoveOffset.x - (8 * Sgn(TempChar.MoveOffset.x))
                         Moved = 1
                     End If
                     'If needed, move up and down
-                    If TempChar.MoveOffset.Y <> 0 Then
+                    If TempChar.MoveOffset.y <> 0 Then
                         TempChar.Body.Walk(TempChar.Heading).Started = 1
                         TempChar.Arma.WeaponWalk(TempChar.Heading).Started = 1
                         TempChar.Escudo.ShieldWalk(TempChar.Heading).Started = 1
-                        PixelOffsetYTemp = PixelOffsetYTemp + TempChar.MoveOffset.Y
-                        TempChar.MoveOffset.Y = TempChar.MoveOffset.Y - (8 * Sgn(TempChar.MoveOffset.Y))
+                        PixelOffsetYTemp = PixelOffsetYTemp + TempChar.MoveOffset.y
+                        TempChar.MoveOffset.y = TempChar.MoveOffset.y - (8 * Sgn(TempChar.MoveOffset.y))
                         Moved = 1
                     End If
                     'If done moving stop animation
@@ -1647,9 +1645,9 @@ For Y = minY + 8 To maxY - 1
                     iPPx = ((32 * ScreenX) - 32) + PixelOffsetXTemp
                     iPPy = ((32 * ScreenY) - 32) + PixelOffsetYTemp
                     If TempChar.Head.Head(TempChar.Heading).GrhIndex <> 0 Then
-                        If Not charlist(MapData(X, Y).CharIndex).invisible Then
+                        If Not charlist(MapData(x, y).CharIndex).invisible Then
 #If SeguridadAlkon Then
-                            If Not MI(CualMI).IsInvisible(MapData(X, Y).CharIndex) Then
+                            If Not MI(CualMI).IsInvisible(MapData(x, y).CharIndex) Then
 #End If
                                 '[CUERPO]'
                                     Call DDrawTransGrhtoSurface(BackBufferSurface, TempChar.Body.Walk(TempChar.Heading), _
@@ -1660,16 +1658,16 @@ For Y = minY + 8 To maxY - 1
                                     Call DDrawTransGrhtoSurface( _
                                             BackBufferSurface, _
                                             TempChar.Head.Head(TempChar.Heading), _
-                                            iPPx + TempChar.Body.HeadOffset.X, _
-                                            iPPy + TempChar.Body.HeadOffset.Y, _
+                                            iPPx + TempChar.Body.HeadOffset.x, _
+                                            iPPy + TempChar.Body.HeadOffset.y, _
                                             1, 0)
                                 '[Casco]'
                                     If TempChar.Casco.Head(TempChar.Heading).GrhIndex <> 0 Then
                                         Call DDrawTransGrhtoSurface( _
                                                 BackBufferSurface, _
                                                 TempChar.Casco.Head(TempChar.Heading), _
-                                                iPPx + TempChar.Body.HeadOffset.X, _
-                                                iPPy + TempChar.Body.HeadOffset.Y, _
+                                                iPPx + TempChar.Body.HeadOffset.x, _
+                                                iPPy + TempChar.Body.HeadOffset.y, _
                                                 1, 0)
                                     End If
                                 '[ARMA]'
@@ -1688,7 +1686,7 @@ For Y = minY + 8 To maxY - 1
                                     End If
                     
                     
-                                    If Nombres And Abs(nX - X) < 2 And (Abs(nY - Y)) < 2 Then
+                                    If Nombres And Abs(nX - x) < 2 And (Abs(nY - y)) < 2 Then
                                         'ya estoy dibujando SOLO si esta visible
                                         'If TempChar.invisible = False And Not MI(CualMI).IsInvisible(MapData(X, Y).CharIndex) Then
                                             If TempChar.Nombre <> "" Then
@@ -1749,18 +1747,18 @@ For Y = minY + 8 To maxY - 1
 
                         If Dialogos.CantidadDialogos > 0 Then
                             Call Dialogos.Update_Dialog_Pos( _
-                                    (iPPx + TempChar.Body.HeadOffset.X), _
-                                    (iPPy + TempChar.Body.HeadOffset.Y), _
-                                    MapData(X, Y).CharIndex)
+                                    (iPPx + TempChar.Body.HeadOffset.x), _
+                                    (iPPy + TempChar.Body.HeadOffset.y), _
+                                    MapData(x, y).CharIndex)
                         End If
                 
                 
                     Else '<-> If TempChar.Head.Head(TempChar.Heading).GrhIndex <> 0 Then
                         If Dialogos.CantidadDialogos > 0 Then
                             Call Dialogos.Update_Dialog_Pos( _
-                                    (iPPx + TempChar.Body.HeadOffset.X), _
-                                    (iPPy + TempChar.Body.HeadOffset.Y), _
-                                    MapData(X, Y).CharIndex)
+                                    (iPPx + TempChar.Body.HeadOffset.x), _
+                                    (iPPy + TempChar.Body.HeadOffset.y), _
+                                    MapData(x, y).CharIndex)
                         End If
 
                         Call DDrawTransGrhtoSurface( _
@@ -1771,34 +1769,34 @@ For Y = minY + 8 To maxY - 1
 
 
                     'Refresh charlist
-                    charlist(MapData(X, Y).CharIndex) = TempChar
+                    charlist(MapData(x, y).CharIndex) = TempChar
 
                     'BlitFX (TM)
-                    If charlist(MapData(X, Y).CharIndex).Fx <> 0 Then
+                    If charlist(MapData(x, y).CharIndex).fX <> 0 Then
 #If (ConAlfaB = 1) Then
                         Call DDrawTransGrhtoSurfaceAlpha( _
                                 BackBufferSurface, _
-                                FxData(TempChar.Fx).Fx, _
-                                iPPx + FxData(TempChar.Fx).OffsetX, _
-                                iPPy + FxData(TempChar.Fx).OffsetY, _
-                                1, 1, MapData(X, Y).CharIndex)
+                                FxData(TempChar.fX).fX, _
+                                iPPx + FxData(TempChar.fX).OffsetX, _
+                                iPPy + FxData(TempChar.fX).OffsetY, _
+                                1, 1, MapData(x, y).CharIndex)
 #Else
                         Call DDrawTransGrhtoSurface( _
                                 BackBufferSurface, _
-                                FxData(TempChar.Fx).Fx, _
-                                iPPx + FxData(TempChar.Fx).OffsetX, _
-                                iPPy + FxData(TempChar.Fx).OffsetY, _
-                                1, 1, MapData(X, Y).CharIndex)
+                                FxData(TempChar.fX).fX, _
+                                iPPx + FxData(TempChar.fX).OffsetX, _
+                                iPPy + FxData(TempChar.fX).OffsetY, _
+                                1, 1, MapData(x, y).CharIndex)
 #End If
                     End If
                 End If '<-> If MapData(X, Y).CharIndex <> 0 Then
                 '*************************************************
                 'Layer 3 *****************************************
-                If MapData(X, Y).Graphic(3).GrhIndex <> 0 Then
+                If MapData(x, y).Graphic(3).GrhIndex <> 0 Then
                     'Draw
                     Call DDrawTransGrhtoSurface( _
                             BackBufferSurface, _
-                            MapData(X, Y).Graphic(3), _
+                            MapData(x, y).Graphic(3), _
                             ((32 * ScreenX) - 32) + PixelOffsetX, _
                             ((32 * ScreenY) - 32) + PixelOffsetY, _
                             1, 1)
@@ -1806,34 +1804,34 @@ For Y = minY + 8 To maxY - 1
                 '************************************************
             End If
             ScreenX = ScreenX + 1
-        Next X
+        Next x
     End If
     ScreenY = ScreenY + 1
-Next Y
+Next y
 
 If Not bTecho Then
     'Draw blocked tiles and grid
     ScreenY = 5
-    For Y = minY + 5 To maxY - 1
-        If Y > 0 And Y < 101 Then 'In map bounds
+    For y = minY + 5 To maxY - 1
+        If y > 0 And y < 101 Then 'In map bounds
             ScreenX = 5
-            For X = minX + 5 To maxX
-                If Y > 0 And Y < 101 Then 'In map bounds
-                    If MapData(X, Y).Graphic(4).GrhIndex <> 0 Then
+            For x = minX + 5 To maxX
+                If y > 0 And y < 101 Then 'In map bounds
+                    If MapData(x, y).Graphic(4).GrhIndex <> 0 Then
                         'Draw
                         Call DDrawTransGrhtoSurface( _
                             BackBufferSurface, _
-                            MapData(X, Y).Graphic(4), _
+                            MapData(x, y).Graphic(4), _
                             ((32 * ScreenX) - 32) + PixelOffsetX, _
                             ((32 * ScreenY) - 32) + PixelOffsetY, _
                             1, 1)
                     End If
                 End If
                 ScreenX = ScreenX + 1
-            Next X
+            Next x
         End If
         ScreenY = ScreenY + 1
-    Next Y
+    Next y
 End If
 
 If bLluvia(UserMap) = 1 Then
@@ -1845,11 +1843,11 @@ If bLluvia(UserMap) = 1 Then
                     llTick = DirectX.TickCount
                 End If
     
-                For Y = 0 To 4
-                    For X = 0 To 4
-                        Call BackBufferSurface.BltFast(LTLluvia(Y), LTLluvia(X), SurfaceDB.Surface(5556), RLluvia(iFrameIndex), DDBLTFAST_SRCCOLORKEY + DDBLTFAST_WAIT)
-                    Next X
-                Next Y
+                For y = 0 To 4
+                    For x = 0 To 4
+                        Call BackBufferSurface.BltFast(LTLluvia(y), LTLluvia(x), SurfaceDB.Surface(5556), RLluvia(iFrameIndex), DDBLTFAST_SRCCOLORKEY + DDBLTFAST_WAIT)
+                    Next x
+                Next y
     End If
 End If
 
@@ -1927,24 +1925,24 @@ Public Function RenderSounds()
 End Function
 
 
-Function HayUserAbajo(ByVal X As Integer, ByVal Y As Integer, ByVal GrhIndex As Integer) As Boolean
+Function HayUserAbajo(ByVal x As Integer, ByVal y As Integer, ByVal GrhIndex As Integer) As Boolean
 
 If GrhIndex > 0 Then
         
         HayUserAbajo = _
-            charlist(UserCharIndex).Pos.X >= X - (GrhData(GrhIndex).TileWidth \ 2) _
-        And charlist(UserCharIndex).Pos.X <= X + (GrhData(GrhIndex).TileWidth \ 2) _
-        And charlist(UserCharIndex).Pos.Y >= Y - (GrhData(GrhIndex).TileHeight - 1) _
-        And charlist(UserCharIndex).Pos.Y <= Y
+            charlist(UserCharIndex).Pos.x >= x - (GrhData(GrhIndex).TileWidth \ 2) _
+        And charlist(UserCharIndex).Pos.x <= x + (GrhData(GrhIndex).TileWidth \ 2) _
+        And charlist(UserCharIndex).Pos.y >= y - (GrhData(GrhIndex).TileHeight - 1) _
+        And charlist(UserCharIndex).Pos.y <= y
         
 End If
 End Function
 
-Function PixelPos(ByVal X As Integer) As Integer
+Function PixelPos(ByVal x As Integer) As Integer
 '*****************************************************************
 'Converts a tile position to a screen position
 '*****************************************************************
-    PixelPos = (TilePixelWidth * X) - TilePixelWidth
+    PixelPos = (TilePixelWidth * x) - TilePixelWidth
 End Function
 
 Sub LoadGraphics()
@@ -1982,8 +1980,8 @@ Dim ddck As DDCOLORKEY
 IniPath = App.Path & "\Init\"
 
 'Set intial user position
-UserPos.X = MinXBorder
-UserPos.Y = MinYBorder
+UserPos.x = MinXBorder
+UserPos.y = MinYBorder
 
 'Fill startup variables
 
@@ -2095,25 +2093,25 @@ Sub ShowNextFrame()
     
     If EngineRun Then
         '****** Move screen Left and Right if needed ******
-        If AddtoUserPos.X <> 0 Then
-            OffsetCounterX = (OffsetCounterX - (8 * Sgn(AddtoUserPos.X)))
-            If Abs(OffsetCounterX) >= Abs(TilePixelWidth * AddtoUserPos.X) Then
+        If AddtoUserPos.x <> 0 Then
+            OffsetCounterX = (OffsetCounterX - (8 * Sgn(AddtoUserPos.x)))
+            If Abs(OffsetCounterX) >= Abs(TilePixelWidth * AddtoUserPos.x) Then
                 OffsetCounterX = 0
-                AddtoUserPos.X = 0
+                AddtoUserPos.x = 0
                 UserMoving = 0
             End If
         '****** Move screen Up and Down if needed ******
-        ElseIf AddtoUserPos.Y <> 0 Then
-            OffsetCounterY = OffsetCounterY - (8 * Sgn(AddtoUserPos.Y))
-            If Abs(OffsetCounterY) >= Abs(TilePixelHeight * AddtoUserPos.Y) Then
+        ElseIf AddtoUserPos.y <> 0 Then
+            OffsetCounterY = OffsetCounterY - (8 * Sgn(AddtoUserPos.y))
+            If Abs(OffsetCounterY) >= Abs(TilePixelHeight * AddtoUserPos.y) Then
                 OffsetCounterY = 0
-                AddtoUserPos.Y = 0
+                AddtoUserPos.y = 0
                 UserMoving = 0
             End If
         End If
 
         '****** Update screen ******
-        Call RenderScreen(UserPos.X - AddtoUserPos.X, UserPos.Y - AddtoUserPos.Y, OffsetCounterX, OffsetCounterY)
+        Call RenderScreen(UserPos.x - AddtoUserPos.x, UserPos.y - AddtoUserPos.y, OffsetCounterX, OffsetCounterY)
 
         If IScombate Then Call Dialogos.DrawText(260, 260, "MODO COMBATE", vbRed)
         

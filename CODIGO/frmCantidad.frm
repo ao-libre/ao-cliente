@@ -96,7 +96,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-'Argentum Online 0.9.0.9
+'Argentum Online 0.11.6
 '
 'Copyright (C) 2002 Márquez Pablo Ignacio
 'Copyright (C) 2002 Otto Perez
@@ -104,18 +104,16 @@ Attribute VB_Exposed = False
 'Copyright (C) 2002 Matías Fernando Pequeño
 '
 'This program is free software; you can redistribute it and/or modify
-'it under the terms of the GNU General Public License as published by
-'the Free Software Foundation; either version 2 of the License, or
-'any later version.
+'it under the terms of the Affero General Public License;
+'either version 1 of the License, or any later version.
 '
 'This program is distributed in the hope that it will be useful,
 'but WITHOUT ANY WARRANTY; without even the implied warranty of
 'MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-'GNU General Public License for more details.
+'Affero General Public License for more details.
 '
-'You should have received a copy of the GNU General Public License
-'along with this program; if not, write to the Free Software
-'Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+'You should have received a copy of the Affero General Public License
+'along with this program; if not, you can find it at http://www.affero.org/oagpl.html
 '
 'Argentum Online is based on Baronsoft's VB6 Online RPG
 'You can contact the original creator of ORE at aaron@baronsoft.com
@@ -134,8 +132,8 @@ Option Explicit
 
 Private Sub Command1_Click()
     frmCantidad.Visible = False
-    Call WriteDrop(Inventario.SelectedItem, frmCantidad.Text1.Text)
-    frmCantidad.Text1.Text = ""
+    Call WriteDrop(Inventario.SelectedItem, frmCantidad.text1.Text)
+    frmCantidad.text1.Text = ""
 End Sub
 
 
@@ -148,7 +146,7 @@ Private Sub Command2_Click()
         Call WriteDrop(Inventario.SelectedItem, UserGLD)
     End If
 
-    frmCantidad.Text1.Text = ""
+    frmCantidad.text1.Text = ""
 End Sub
 
 Private Sub Form_Deactivate()
@@ -157,13 +155,13 @@ End Sub
 
 Private Sub text1_Change()
 On Error GoTo ErrHandler
-    If Val(Text1.Text) < 0 Then
-        Text1.Text = MAX_INVENTORY_OBJS
+    If Val(text1.Text) < 0 Then
+        text1.Text = MAX_INVENTORY_OBJS
     End If
     
-    If Val(Text1.Text) > MAX_INVENTORY_OBJS Then
-        If Inventario.SelectedItem <> FLAGORO Or Val(Text1.Text) > UserGLD Then
-            Text1.Text = "1"
+    If Val(text1.Text) > MAX_INVENTORY_OBJS Then
+        If Inventario.SelectedItem <> FLAGORO Or Val(text1.Text) > UserGLD Then
+            text1.Text = "1"
         End If
     End If
     
@@ -171,7 +169,7 @@ On Error GoTo ErrHandler
     
 ErrHandler:
     'If we got here the user may have pasted (Shift + Insert) a REALLY large number, causing an overflow, so we set amount back to 1
-    Text1.Text = "1"
+    text1.Text = "1"
 End Sub
 
 Private Sub Text1_KeyPress(KeyAscii As Integer)

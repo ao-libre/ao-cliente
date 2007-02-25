@@ -198,49 +198,68 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+'**************************************************************
+' frmEligeAlineacion.frm
+'
+'**************************************************************
+
+'**************************************************************************
+'This program is free software; you can redistribute it and/or modify
+'it under the terms of the Affero General Public License;
+'either version 1 of the License, or any later version.
+'
+'This program is distributed in the hope that it will be useful,
+'but WITHOUT ANY WARRANTY; without even the implied warranty of
+'MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+'Affero General Public License for more details.
+'
+'You should have received a copy of the Affero General Public License
+'along with this program; if not, you can find it at http://www.affero.org/oagpl.html
+'**************************************************************************
+
 Option Explicit
 
 Dim LastColoured As Byte
 
 'odio programar sin tiempo (c) el oso
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     lblDescripcion(LastColoured).BorderStyle = 0
     lblDescripcion(LastColoured).BackStyle = 0
 End Sub
 
-Private Sub lblDescripcion_Click(Index As Integer)
+Private Sub lblDescripcion_Click(index As Integer)
 
-    Call WriteGuildFundate(Index)
+    Call WriteGuildFundate(index)
     Unload Me
 End Sub
 
-Private Sub lblDescripcion_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub lblDescripcion_MouseMove(index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
     
-    If LastColoured <> Index Then
+    If LastColoured <> index Then
         lblDescripcion(LastColoured).BorderStyle = 0
         lblDescripcion(LastColoured).BackStyle = 0
     End If
     
-    lblDescripcion(Index).BorderStyle = 1
-    lblDescripcion(Index).BackStyle = 1
+    lblDescripcion(index).BorderStyle = 1
+    lblDescripcion(index).BackStyle = 1
     
-    Select Case Index
+    Select Case index
         Case 0
-            lblDescripcion(Index).BackColor = &H400000
+            lblDescripcion(index).BackColor = &H400000
         Case 4
-            lblDescripcion(Index).BackColor = &H800000
+            lblDescripcion(index).BackColor = &H800000
         Case 2
-            lblDescripcion(Index).BackColor = 4194368
+            lblDescripcion(index).BackColor = 4194368
         Case 5
-            lblDescripcion(Index).BackColor = &H80&
+            lblDescripcion(index).BackColor = &H80&
         Case 1
-            lblDescripcion(Index).BackColor = &H40&
+            lblDescripcion(index).BackColor = &H40&
     End Select
 End Sub
 
 
-Private Sub lblNombre_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub lblNombre_MouseMove(index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
     lblDescripcion(LastColoured).BorderStyle = 0
     lblDescripcion(LastColoured).BackStyle = 0
 End Sub

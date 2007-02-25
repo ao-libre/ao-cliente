@@ -1210,7 +1210,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-'Argentum Online 0.9.0.9
+'Argentum Online 0.11.6
 '
 'Copyright (C) 2002 Márquez Pablo Ignacio
 'Copyright (C) 2002 Otto Perez
@@ -1218,18 +1218,16 @@ Attribute VB_Exposed = False
 'Copyright (C) 2002 Matías Fernando Pequeño
 '
 'This program is free software; you can redistribute it and/or modify
-'it under the terms of the GNU General Public License as published by
-'the Free Software Foundation; either version 2 of the License, or
-'any later version.
+'it under the terms of the Affero General Public License;
+'either version 1 of the License, or any later version.
 '
 'This program is distributed in the hope that it will be useful,
 'but WITHOUT ANY WARRANTY; without even the implied warranty of
 'MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-'GNU General Public License for more details.
+'Affero General Public License for more details.
 '
-'You should have received a copy of the GNU General Public License
-'along with this program; if not, write to the Free Software
-'Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+'You should have received a copy of the Affero General Public License
+'along with this program; if not, you can find it at http://www.affero.org/oagpl.html
 '
 'Argentum Online is based on Baronsoft's VB6 Online RPG
 'You can contact the original creator of ORE at aaron@baronsoft.com
@@ -1246,14 +1244,14 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private Sub Command1_Click(Index As Integer)
+Private Sub Command1_Click(index As Integer)
 
 Call Audio.PlayWave(SND_CLICK)
 
 Dim indice
-If Index Mod 2 = 0 Then
+If index Mod 2 = 0 Then
     If Alocados > 0 Then
-        indice = Index \ 2 + 1
+        indice = index \ 2 + 1
         If indice > NUMSKILLS Then indice = NUMSKILLS
         If Val(text1(indice).Caption) < MAXSKILLPOINTS Then
             text1(indice).Caption = Val(text1(indice).Caption) + 1
@@ -1265,7 +1263,7 @@ If Index Mod 2 = 0 Then
 Else
     If Alocados < SkillPoints Then
         
-        indice = Index \ 2 + 1
+        indice = index \ 2 + 1
         If Val(text1(indice).Caption) > 0 And flags(indice) > 0 Then
             text1(indice).Caption = Val(text1(indice).Caption) - 1
             flags(indice) = flags(indice) - 1
@@ -1274,7 +1272,7 @@ Else
     End If
 End If
 
-puntos.Caption = "Puntos:" & Alocados
+Puntos.Caption = "Puntos:" & Alocados
 End Sub
 
 Private Sub Form_Deactivate()

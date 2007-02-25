@@ -27,7 +27,7 @@ Attribute VB_Exposed = False
 'This program is distributed in the hope that it will be useful,
 'but WITHOUT ANY WARRANTY; without even the implied warranty of
 'MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-'GNU General Public License for more details.
+'Affero General Public License for more details.
 '
 'You should have received a copy of the GNU General Public License
 'along with this program; if not, write to the Free Software
@@ -103,7 +103,7 @@ On Local Error Resume Next
     Set Loader = Nothing
 End Sub
 
-Public Function Initialize(ByRef DX As DirectX7, ByVal hWnd As Long, ByVal sound_path As String, ByVal music_path As String) As Boolean
+Public Function Initialize(ByRef dX As DirectX7, ByVal hWnd As Long, ByVal sound_path As String, ByVal music_path As String) As Boolean
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 16/03/04
@@ -112,10 +112,10 @@ Public Function Initialize(ByRef DX As DirectX7, ByVal hWnd As Long, ByVal sound
 On Error GoTo ErrHandler
 
     'Validate DX object
-    If DX Is Nothing Then GoTo ErrHandler
+    If dX Is Nothing Then GoTo ErrHandler
     
     'Initialize DirectSound
-    Set DirectSound = DX.DirectSoundCreate("")
+    Set DirectSound = dX.DirectSoundCreate("")
     
     DirectSound.SetCooperativeLevel DisplayFormhWnd, DSSCL_PRIORITY
     
@@ -126,7 +126,7 @@ On Error GoTo ErrHandler
     SndVolume = 0
     
     'Initialize DirectMusic
-    Music = InitializedirectMusic(DX, hWnd)
+    Music = InitializedirectMusic(dX, hWnd)
     
     'Set music path
     MusicPath = music_path
@@ -137,7 +137,7 @@ Exit Function
 ErrHandler:
 End Function
 
-Private Function InitializedirectMusic(ByRef DX As DirectX7, ByVal hWnd As Long) As Boolean
+Private Function InitializedirectMusic(ByRef dX As DirectX7, ByVal hWnd As Long) As Boolean
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 16/03/04
@@ -146,7 +146,7 @@ Private Function InitializedirectMusic(ByRef DX As DirectX7, ByVal hWnd As Long)
 On Error GoTo ErrHandler
     Set Loader = DirectX.DirectMusicLoaderCreate()
     
-    Set Performance = DX.DirectMusicPerformanceCreate()
+    Set Performance = dX.DirectMusicPerformanceCreate()
     Performance.Init DirectSound, hWnd
     Performance.SetMasterAutoDownload True     'Enable auto doanload of instruments
     

@@ -1,5 +1,5 @@
 Attribute VB_Name = "Mod_General"
-'Argentum Online 0.9.0.9
+'Argentum Online 0.11.6
 '
 'Copyright (C) 2002 Márquez Pablo Ignacio
 'Copyright (C) 2002 Otto Perez
@@ -7,18 +7,16 @@ Attribute VB_Name = "Mod_General"
 'Copyright (C) 2002 Matías Fernando Pequeño
 '
 'This program is free software; you can redistribute it and/or modify
-'it under the terms of the GNU General Public License as published by
-'the Free Software Foundation; either version 2 of the License, or
-'any later version.
+'it under the terms of the Affero General Public License;
+'either version 1 of the License, or any later version.
 '
 'This program is distributed in the hope that it will be useful,
 'but WITHOUT ANY WARRANTY; without even the implied warranty of
 'MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-'GNU General Public License for more details.
+'Affero General Public License for more details.
 '
-'You should have received a copy of the GNU General Public License
-'along with this program; if not, write to the Free Software
-'Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+'You should have received a copy of the Affero General Public License
+'along with this program; if not, you can find it at http://www.affero.org/oagpl.html
 '
 'Argentum Online is based on Baronsoft's VB6 Online RPG
 'You can contact the original creator of ORE at aaron@baronsoft.com
@@ -813,7 +811,7 @@ Sub Main()
     'Obtener el HushMD5
     Dim fMD5HushYo As String * 32
     
-    fMD5HushYo = md5.GetMD5File(App.Path & "\Argentum.exe")
+    fMD5HushYo = md5.GetMD5File(App.Path & "\" & App.EXEName & ".exe")
     Call md5.MD5Reset
     MD5HushYo = txtOffset(hexMd52Asc(fMD5HushYo), 55)
     
@@ -827,15 +825,15 @@ Sub Main()
     frmCargando.Show
     frmCargando.Refresh
     
-    frmConnect.version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
-    AddtoRichTextBox frmCargando.status, "Buscando servidores....", 0, 0, 0, 0, 0, 1
+    frmConnect.Version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
+    AddtoRichTextBox frmCargando.Status, "Buscando servidores....", 0, 0, 0, 0, 0, 1
 
     Call CargarServidores
 'TODO : esto de ServerRecibidos no se podría sacar???
     ServersRecibidos = True
     
-    AddtoRichTextBox frmCargando.status, "Encontrado", , , , 1
-    AddtoRichTextBox frmCargando.status, "Iniciando constantes...", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.Status, "Encontrado", , , , 1
+    AddtoRichTextBox frmCargando.Status, "Iniciando constantes...", 0, 0, 0, 0, 0, 1
     
     Call InicializarNombres
     
@@ -845,12 +843,12 @@ Sub Main()
     frmOldPersonaje.NameTxt.Text = Config_Inicio.Name
     frmOldPersonaje.PasswordTxt.Text = ""
     
-    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
+    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
     
     IniciarObjetosDirectX
     
-    AddtoRichTextBox frmCargando.status, "Cargando Sonidos....", 0, 0, 0, 0, 0, 1
-    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
+    AddtoRichTextBox frmCargando.Status, "Cargando Sonidos....", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
 
 Dim loopc As Integer
 
@@ -858,7 +856,7 @@ LastTime = GetTickCount
 
     Call InitTileEngine(frmMain.hWnd, 152, 7, 32, 32, 13, 17, 9)
     
-    Call AddtoRichTextBox(frmCargando.status, "Creando animaciones extra....")
+    Call AddtoRichTextBox(frmCargando.Status, "Creando animaciones extra....")
     
     Call CargarAnimsExtra
     Call CargarTips
@@ -876,14 +874,14 @@ UserMap = 1
     Call InitMI
 #End If
 
-    AddtoRichTextBox frmCargando.status, "                    ¡Bienvenido a Argentum Online!", , , , 1
+    AddtoRichTextBox frmCargando.Status, "                    ¡Bienvenido a Argentum Online!", , , , 1
     
     Unload frmCargando
     
     'Inicializamos el sonido
-    Call AddtoRichTextBox(frmCargando.status, "Iniciando DirectSound....", 0, 0, 0, 0, 0, True)
+    Call AddtoRichTextBox(frmCargando.Status, "Iniciando DirectSound....", 0, 0, 0, 0, 0, True)
     Call Audio.Initialize(DirectX, frmMain.hWnd, App.Path & "\" & Config_Inicio.DirSonidos & "\", App.Path & "\" & Config_Inicio.DirMusica & "\")
-    Call AddtoRichTextBox(frmCargando.status, "Hecho", , , , 1, , False)
+    Call AddtoRichTextBox(frmCargando.Status, "Hecho", , , , 1, , False)
     
     'Inicializamos el inventario gráfico
     Call Inventario.Initialize(DirectDraw, frmMain.picInv)
@@ -978,7 +976,7 @@ UserMap = 1
     
     EngineRun = False
     frmCargando.Show
-    AddtoRichTextBox frmCargando.status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.Status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
     LiberarObjetosDX
 
 'TODO : Esto debería ir en otro lado como al cambair a esta res

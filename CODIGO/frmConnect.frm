@@ -146,7 +146,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-'Argentum Online 0.9.0.9
+'Argentum Online 0.11.6
 '
 'Copyright (C) 2002 Márquez Pablo Ignacio
 'Copyright (C) 2002 Otto Perez
@@ -154,18 +154,16 @@ Attribute VB_Exposed = False
 'Copyright (C) 2002 Matías Fernando Pequeño
 '
 'This program is free software; you can redistribute it and/or modify
-'it under the terms of the GNU General Public License as published by
-'the Free Software Foundation; either version 2 of the License, or
-'any later version.
+'it under the terms of the Affero General Public License;
+'either version 1 of the License, or any later version.
 '
 'This program is distributed in the hope that it will be useful,
 'but WITHOUT ANY WARRANTY; without even the implied warranty of
 'MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-'GNU General Public License for more details.
+'Affero General Public License for more details.
 '
-'You should have received a copy of the GNU General Public License
-'along with this program; if not, write to the Free Software
-'Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+'You should have received a copy of the Affero General Public License
+'along with this program; if not, you can find it at http://www.affero.org/oagpl.html
 '
 'Argentum Online is based on Baronsoft's VB6 Online RPG
 'You can contact the original creator of ORE at aaron@baronsoft.com
@@ -235,18 +233,18 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
 If KeyCode = 27 Then
         frmCargando.Show
         frmCargando.Refresh
-        AddtoRichTextBox frmCargando.status, "Cerrando Argentum Online.", 0, 0, 0, 1, 0, 1
+        AddtoRichTextBox frmCargando.Status, "Cerrando Argentum Online.", 0, 0, 0, 1, 0, 1
         
         Call SaveGameini
         frmConnect.MousePointer = 1
         frmMain.MousePointer = 1
         prgRun = False
         
-        AddtoRichTextBox frmCargando.status, "Liberando recursos..."
+        AddtoRichTextBox frmCargando.Status, "Liberando recursos..."
         frmCargando.Refresh
         LiberarObjetosDX
-        AddtoRichTextBox frmCargando.status, "Hecho", 0, 0, 0, 1, 0, 1
-        AddtoRichTextBox frmCargando.status, "¡¡Gracias por jugar Argentum Online!!", 0, 0, 0, 1, 0, 1
+        AddtoRichTextBox frmCargando.Status, "Hecho", 0, 0, 0, 1, 0, 1
+        AddtoRichTextBox frmCargando.Status, "¡¡Gracias por jugar Argentum Online!!", 0, 0, 0, 1, 0, 1
         frmCargando.Refresh
         Call UnloadAllForms
 End If
@@ -292,7 +290,7 @@ Private Sub Form_Load()
  '  El código para mostrar la versión se genera acá para
  ' evitar que por X razones luego desaparezca, como suele
  ' pasar a veces :)
-    version.Caption = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
+    Version.Caption = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
  '[END]'
 
 End Sub

@@ -11,7 +11,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = True
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
-'Argentum Online 0.9.0.9
+'Argentum Online 0.11.6
 '
 'Copyright (C) 2002 Márquez Pablo Ignacio
 'Copyright (C) 2002 Otto Perez
@@ -26,7 +26,7 @@ Attribute VB_Exposed = False
 'This program is distributed in the hope that it will be useful,
 'but WITHOUT ANY WARRANTY; without even the implied warranty of
 'MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-'GNU General Public License for more details.
+'Affero General Public License for more details.
 '
 'You should have received a copy of the GNU General Public License
 'along with this program; if not, write to the Free Software
@@ -56,8 +56,8 @@ Private Type tDialogo
     Formateado As Boolean
     Texto     As String
     Delay     As Integer
-    X         As Integer
-    Y         As Integer
+    x         As Integer
+    y         As Integer
     Vida      As Integer
     UserIndex As Integer
     Color     As Long
@@ -198,17 +198,17 @@ End If
 
 End Function
 
-Public Sub Update_Dialog_Pos(X As Integer, Y As Integer, index As Integer)
+Public Sub Update_Dialog_Pos(x As Integer, y As Integer, index As Integer)
 On Error Resume Next
 Dim MiUserIndex As Integer
 If BuscarUserIndex(index, MiUserIndex) Then
   If Dialogos(MiUserIndex).Vida > 0 Then
         If Dialogos(MiUserIndex).Formateado Then
-            Dialogos(MiUserIndex).X = X - (MAXLONG \ 2) * 3
-            Dialogos(MiUserIndex).Y = Y - (UBound(Dialogos(MiUserIndex).Formato) * 3)
+            Dialogos(MiUserIndex).x = x - (MAXLONG \ 2) * 3
+            Dialogos(MiUserIndex).y = y - (UBound(Dialogos(MiUserIndex).Formato) * 3)
         Else
-            Dialogos(MiUserIndex).X = X - (Len(Dialogos(MiUserIndex).Texto) \ 2) * 3
-            Dialogos(MiUserIndex).Y = Y
+            Dialogos(MiUserIndex).x = x - (Len(Dialogos(MiUserIndex).Texto) \ 2) * 3
+            Dialogos(MiUserIndex).y = y
         End If
         If Dialogos(MiUserIndex).Vida > 0 Then
            Dialogos(MiUserIndex).Vida = Dialogos(MiUserIndex).Vida - 1
@@ -284,11 +284,11 @@ Do While i <= CantidadDialogos And i <= MAX_DIALOGOS
             Dim j As Integer, desp As Integer
             desp = (-frmMain.font.Size) * UBound(Dialogos(i).Formato) - 5
             For j = 0 To UBound(Dialogos(i).Formato)
-             DrawText Dialogos(i).X, Dialogos(i).Y + desp, Dialogos(i).Formato(j), Dialogos(i).Color
+             DrawText Dialogos(i).x, Dialogos(i).y + desp, Dialogos(i).Formato(j), Dialogos(i).Color
              desp = desp + (frmMain.font.Size) + 5
             Next
          Else
-            DrawText Dialogos(i).X, Dialogos(i).Y, Dialogos(i).Texto, Dialogos(i).Color
+            DrawText Dialogos(i).x, Dialogos(i).y, Dialogos(i).Texto, Dialogos(i).Color
          End If
     Else
       Dialogos(i).Texto = ""

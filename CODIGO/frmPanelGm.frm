@@ -751,6 +751,25 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+'**************************************************************
+' frmPanelGm.frm
+'
+'**************************************************************
+
+'**************************************************************************
+'This program is free software; you can redistribute it and/or modify
+'it under the terms of the Affero General Public License;
+'either version 1 of the License, or any later version.
+'
+'This program is distributed in the hope that it will be useful,
+'but WITHOUT ANY WARRANTY; without even the implied warranty of
+'MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+'Affero General Public License for more details.
+'
+'You should have received a copy of the Affero General Public License
+'along with this program; if not, you can find it at http://www.affero.org/oagpl.html
+'**************************************************************************
+
 Option Explicit
 
 Private Sub cmdACEPTCONSE_Click()
@@ -1460,11 +1479,11 @@ Private Sub TabStrip_Click()
 End Sub
 
 Private Sub showTab(TabId As Byte)
-    Dim I As Byte
+    Dim i As Byte
     
-    For I = 1 To Frame.UBound
-        Frame(I).Visible = (I = TabId)
-    Next I
+    For i = 1 To Frame.UBound
+        Frame(i).Visible = (i = TabId)
+    Next i
     
     With Frame(TabId)
         frmPanelGm.Height = .Height + 1215
