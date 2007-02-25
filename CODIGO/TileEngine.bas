@@ -1708,7 +1708,7 @@ For y = minY + 8 To maxY - 1
                                                             lCenter = (frmMain.TextWidth(sClan) / 2) - 16
                                                             Call Dialogos.DrawText(iPPx - lCenter, iPPy + 45, sClan, RGB(ColoresPJ(49).r, ColoresPJ(49).g, ColoresPJ(49).b))
                                                         End If
-                                                    Case 25  'admin
+                                                    Case 4  'admin
                                                         Call Dialogos.DrawTextBig(iPPx - lCenter, iPPy + 30, Left(TempChar.Nombre, InStr(TempChar.Nombre, "<") - 1), RGB(ColoresPJ(TempChar.priv).r, ColoresPJ(TempChar.priv).g, ColoresPJ(TempChar.priv).b))
                                                         lCenter = (frmMain.TextWidth(sClan) / 2) - 16
                                                         Call Dialogos.DrawTextBig(iPPx - lCenter, iPPy + 45, sClan, RGB(ColoresPJ(TempChar.priv).r, ColoresPJ(TempChar.priv).g, ColoresPJ(TempChar.priv).b))
@@ -1726,7 +1726,7 @@ For y = minY + 8 To maxY - 1
                                                         Else
                                                             Call Dialogos.DrawText(iPPx - lCenter, iPPy + 30, TempChar.Nombre, RGB(ColoresPJ(49).r, ColoresPJ(49).g, ColoresPJ(49).b))
                                                         End If
-                                                    Case 7
+                                                    Case 4  'Admin
                                                         Call Dialogos.DrawTextBig(iPPx - lCenter, iPPy + 30, TempChar.Nombre, RGB(ColoresPJ(TempChar.priv).r, ColoresPJ(TempChar.priv).g, ColoresPJ(TempChar.priv).b))
                                                     Case Else
                                                         Call Dialogos.DrawText(iPPx - lCenter, iPPy + 30, TempChar.Nombre, RGB(ColoresPJ(TempChar.priv).r, ColoresPJ(TempChar.priv).g, ColoresPJ(TempChar.priv).b))
@@ -1966,7 +1966,7 @@ Sub LoadGraphics()
     RLluvia(4).Bottom = 256: RLluvia(5).Bottom = 256: RLluvia(6).Bottom = 256: RLluvia(7).Bottom = 256
     
     'We are done!
-    AddtoRichTextBox frmCargando.Status, "Hecho.", , , , 1, , False
+    AddtoRichTextBox frmCargando.status, "Hecho.", , , , 1, , False
 End Sub
 
 '[END]'
@@ -2067,7 +2067,7 @@ LTLluvia(2) = 480
 LTLluvia(3) = 608
 LTLluvia(4) = 736
 
-AddtoRichTextBox frmCargando.Status, "Cargando Gráficos....", 0, 0, 0, , , True
+AddtoRichTextBox frmCargando.status, "Cargando Gráficos....", 0, 0, 0, , , True
 Call LoadGraphics
 
 InitTileEngine = True
