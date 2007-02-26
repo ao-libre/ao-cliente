@@ -15,6 +15,7 @@ Begin VB.Form frmPanelGm
    StartUpPosition =   1  'CenterOwner
    Begin VB.CommandButton cmdCerrar 
       Caption         =   "Cerrar"
+      CausesValidation=   0   'False
       Height          =   375
       Left            =   0
       TabIndex        =   0
@@ -31,6 +32,7 @@ Begin VB.Form frmPanelGm
       Width           =   3975
       Begin VB.CommandButton cmdGMSG 
          Caption         =   "/GMSG"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   240
          TabIndex        =   11
@@ -39,6 +41,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdHORA 
          Caption         =   "/HORA"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   240
          TabIndex        =   10
@@ -47,6 +50,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdRMSG 
          Caption         =   "/RMSG"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   1440
          TabIndex        =   9
@@ -55,6 +59,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdREALMSG 
          Caption         =   "/REALMSG"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   240
          TabIndex        =   8
@@ -63,6 +68,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdCAOSMSG 
          Caption         =   "/CAOSMSG"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   1440
          TabIndex        =   7
@@ -71,6 +77,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdCIUMSG 
          Caption         =   "/CIUMSG"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   2640
          TabIndex        =   6
@@ -79,6 +86,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdTALKAS 
          Caption         =   "/TALKAS"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   2880
          TabIndex        =   5
@@ -87,6 +95,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdMOTDCAMBIA 
          Caption         =   "/MOTDCAMBIA"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   1320
          TabIndex        =   4
@@ -95,6 +104,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdSMSG 
          Caption         =   "/SMSG"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   2640
          TabIndex        =   3
@@ -112,6 +122,7 @@ Begin VB.Form frmPanelGm
       Width           =   3975
       Begin VB.CommandButton cmdSHOWNAME 
          Caption         =   "/SHOWNAME"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   2280
          TabIndex        =   63
@@ -120,6 +131,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdREM 
          Caption         =   "/REM"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   600
          TabIndex        =   62
@@ -128,6 +140,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdINVISIBLE 
          Caption         =   "/INVISIBLE"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   600
          TabIndex        =   61
@@ -136,6 +149,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdSETDESC 
          Caption         =   "/SETDESC"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   2280
          TabIndex        =   60
@@ -144,6 +158,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdNAVE 
          Caption         =   "/NAVE"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   600
          TabIndex        =   59
@@ -152,6 +167,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdCHATCOLOR 
          Caption         =   "/CHATCOLOR"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   600
          TabIndex        =   58
@@ -160,6 +176,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdIGNORADO 
          Caption         =   "/IGNORADO"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   2280
          TabIndex        =   57
@@ -177,6 +194,7 @@ Begin VB.Form frmPanelGm
       Width           =   3975
       Begin VB.CommandButton cmdCC 
          Caption         =   "/CC"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   720
          TabIndex        =   72
@@ -185,6 +203,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdLIMPIAR 
          Caption         =   "/LIMPIAR"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   2280
          TabIndex        =   71
@@ -193,6 +212,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdCT 
          Caption         =   "/CT"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   720
          TabIndex        =   70
@@ -201,6 +221,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdDT 
          Caption         =   "/DT"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   2280
          TabIndex        =   69
@@ -209,6 +230,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdLLUVIA 
          Caption         =   "/LLUVIA"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   720
          TabIndex        =   68
@@ -217,6 +239,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdMASSDEST 
          Caption         =   "/MASSDEST"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   2280
          TabIndex        =   67
@@ -225,6 +248,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdPISO 
          Caption         =   "/PISO"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   720
          TabIndex        =   66
@@ -233,6 +257,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdCI 
          Caption         =   "/CI"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   720
          TabIndex        =   65
@@ -241,6 +266,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdDEST 
          Caption         =   "/DEST"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   2280
          TabIndex        =   64
@@ -258,6 +284,7 @@ Begin VB.Form frmPanelGm
       Width           =   3975
       Begin VB.CommandButton cmdONLINEREAL 
          Caption         =   "/ONLINEREAL"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   480
          TabIndex        =   21
@@ -266,6 +293,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdONLINECAOS 
          Caption         =   "/ONLINECAOS"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   2160
          TabIndex        =   20
@@ -274,6 +302,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdNENE 
          Caption         =   "/NENE"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   480
          TabIndex        =   19
@@ -282,6 +311,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdSHOW_SOS 
          Caption         =   "/SHOW SOS"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   480
          TabIndex        =   18
@@ -290,6 +320,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdTRABAJANDO 
          Caption         =   "/TRABAJANDO"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   480
          TabIndex        =   17
@@ -298,6 +329,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdOCULTANDO 
          Caption         =   "/OCULTANDO"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   2160
          TabIndex        =   16
@@ -306,6 +338,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdONLINEGM 
          Caption         =   "/ONLINEGM"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   480
          TabIndex        =   15
@@ -314,6 +347,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdONLINEMAP 
          Caption         =   "/ONLINEMAP"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   2160
          TabIndex        =   14
@@ -322,6 +356,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdBORRAR_SOS 
          Caption         =   "/BORRAR SOS"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   2160
          TabIndex        =   13
@@ -339,6 +374,7 @@ Begin VB.Form frmPanelGm
       Width           =   3975
       Begin VB.CommandButton cmdSHOWCMSG 
          Caption         =   "/SHOWCMSG"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   480
          TabIndex        =   80
@@ -347,6 +383,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdBANCLAN 
          Caption         =   "/BANCLAN"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   480
          TabIndex        =   79
@@ -355,6 +392,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdMIEMBROSCLAN 
          Caption         =   "/MIEMBROSCLAN"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   1920
          TabIndex        =   78
@@ -363,6 +401,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdBANIPRELOAD 
          Caption         =   "/BANIPRELOAD"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   1440
          TabIndex        =   77
@@ -371,6 +410,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdBANIPLIST 
          Caption         =   "/BANIPLIST"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   240
          TabIndex        =   76
@@ -379,6 +419,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdIP2NICK 
          Caption         =   "/IP2NICK"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   240
          TabIndex        =   75
@@ -387,6 +428,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdBANIP 
          Caption         =   "/BANIP"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   1440
          TabIndex        =   74
@@ -395,6 +437,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdUNBANIP 
          Caption         =   "/UNBANIP"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   2520
          TabIndex        =   73
@@ -412,6 +455,7 @@ Begin VB.Form frmPanelGm
       Width           =   3975
       Begin VB.CommandButton cmdNOREAL 
          Caption         =   "/NOREAL"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   2040
          TabIndex        =   86
@@ -420,6 +464,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdNOCAOS 
          Caption         =   "/NOCAOS"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   120
          TabIndex        =   85
@@ -428,6 +473,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdKICKCONSE 
          Caption         =   "/KICKCONSE"
+         CausesValidation=   0   'False
          Height          =   675
          Left            =   2520
          TabIndex        =   84
@@ -436,6 +482,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdACEPTCONSECAOS 
          Caption         =   "/ACEPTCONSECAOS"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   120
          TabIndex        =   83
@@ -444,6 +491,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdACEPTCONSE 
          Caption         =   "/ACEPTCONSE"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   120
          TabIndex        =   82
@@ -468,6 +516,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdIRCERCA 
          Caption         =   "/IRCERCA"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   1320
          TabIndex        =   52
@@ -476,6 +525,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdDONDE 
          Caption         =   "/DONDE"
+         CausesValidation=   0   'False
          Height          =   675
          Left            =   120
          TabIndex        =   51
@@ -484,6 +534,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdPENAS 
          Caption         =   "/PENAS"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   120
          Style           =   1  'Graphical
@@ -493,6 +544,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdTELEP 
          Caption         =   "/TELEP"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   2520
          TabIndex        =   49
@@ -501,6 +553,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdSILENCIAR 
          Caption         =   "/SILENCIAR"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   1320
          TabIndex        =   48
@@ -509,6 +562,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdIRA 
          Caption         =   "/IRA"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   2520
          TabIndex        =   47
@@ -517,6 +571,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdCARCEL 
          Caption         =   "/CARCEL"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   1320
          TabIndex        =   46
@@ -525,6 +580,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdADVERTENCIA 
          Caption         =   "/ADVERTENCIA"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   2520
          TabIndex        =   45
@@ -533,6 +589,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdINFO 
          Caption         =   "/INFO"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   120
          TabIndex        =   44
@@ -541,6 +598,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdSTAT 
          Caption         =   "/STAT"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   1320
          TabIndex        =   43
@@ -549,6 +607,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdBAL 
          Caption         =   "/BAL"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   2520
          TabIndex        =   42
@@ -557,6 +616,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdINV 
          Caption         =   "/INV"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   120
          TabIndex        =   41
@@ -565,6 +625,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdBOV 
          Caption         =   "/BOV"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   1320
          TabIndex        =   40
@@ -573,6 +634,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdSKILLS 
          Caption         =   "/SKILLS"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   2520
          TabIndex        =   39
@@ -581,6 +643,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdREVIVIR 
          Caption         =   "/REVIVIR"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   120
          TabIndex        =   38
@@ -589,6 +652,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdPERDON 
          Caption         =   "/PERDON"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   1320
          TabIndex        =   37
@@ -597,6 +661,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdECHAR 
          Caption         =   "/ECHAR"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   120
          TabIndex        =   36
@@ -605,6 +670,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdEJECUTAR 
          Caption         =   "/EJECUTAR"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   1320
          TabIndex        =   35
@@ -613,6 +679,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdBAN 
          Caption         =   "/BAN"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   120
          TabIndex        =   34
@@ -621,6 +688,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdUNBAN 
          Caption         =   "/UNBAN"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   1320
          TabIndex        =   33
@@ -629,6 +697,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdSUM 
          Caption         =   "/SUM"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   1320
          TabIndex        =   32
@@ -637,6 +706,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdNICK2IP 
          Caption         =   "/NICK2IP"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   120
          TabIndex        =   31
@@ -645,6 +715,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdESTUPIDO 
          Caption         =   "/ESTUPIDO"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   120
          TabIndex        =   30
@@ -653,6 +724,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdNOESTUPIDO 
          Caption         =   "/NOESTUPIDO"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   1320
          TabIndex        =   29
@@ -661,6 +733,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdBORRARPENA 
          Caption         =   "/BORRARPENA"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   2520
          TabIndex        =   28
@@ -669,6 +742,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdLASTIP 
          Caption         =   "/LASTIP"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   1320
          TabIndex        =   27
@@ -677,6 +751,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdCONDEN 
          Caption         =   "/CONDEN"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   120
          TabIndex        =   26
@@ -685,6 +760,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdRAJAR 
          Caption         =   "/RAJAR"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   2520
          TabIndex        =   25
@@ -693,6 +769,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdRAJARCLAN 
          Caption         =   "/RAJARCLAN"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   2520
          TabIndex        =   24
@@ -701,6 +778,7 @@ Begin VB.Form frmPanelGm
       End
       Begin VB.CommandButton cmdLASTEMAIL 
          Caption         =   "/LASTEMAIL"
+         CausesValidation=   0   'False
          Height          =   315
          Left            =   2520
          TabIndex        =   23
@@ -709,6 +787,7 @@ Begin VB.Form frmPanelGm
       End
    End
    Begin MSComctlLib.TabStrip TabStrip 
+      CausesValidation=   0   'False
       Height          =   1935
       Left            =   0
       TabIndex        =   81
@@ -771,6 +850,17 @@ Attribute VB_Exposed = False
 '**************************************************************************
 
 Option Explicit
+
+''
+' IMPORTANT!!!
+' To prevent the combo list of usernames from closing when a conole message arrives, the Validate event allways
+' sets the Cancel arg to True. This, combined with setting the CausesValidation of the RichTextBox to True
+' makes the trick. However, in order to be able to use other commands, ALL OTHER controls in this form must have the
+' CuasesValidation parameter set to false (unless you want to code your custom flag system to know when to allow or not the loose of focus).
+
+Private Sub cboListaUsus_Validate(Cancel As Boolean)
+    Cancel = True
+End Sub
 
 Private Sub cmdACEPTCONSE_Click()
     '/ACEPTCONSE

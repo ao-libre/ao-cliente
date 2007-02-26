@@ -558,7 +558,6 @@ Begin VB.Form frmMain
       Width           =   8160
    End
    Begin RichTextLib.RichTextBox RecTxt 
-      CausesValidation=   0   'False
       Height          =   1500
       Left            =   45
       TabIndex        =   1
@@ -734,17 +733,11 @@ Private Sub cmdMoverHechi_Click(index As Integer)
     End Select
 
     Call WriteMoveSpell(index, hlst.listIndex + 1)
-
+    
     Select Case index
         Case 1 'subir
-            sTemp = hlst.List(hlst.listIndex - 1)
-            hlst.List(hlst.listIndex - 1) = hlst.List(hlst.listIndex)
-            hlst.List(hlst.listIndex) = sTemp
             hlst.listIndex = hlst.listIndex - 1
         Case 0 'bajar
-            sTemp = hlst.List(hlst.listIndex + 1)
-            hlst.List(hlst.listIndex + 1) = hlst.List(hlst.listIndex)
-            hlst.List(hlst.listIndex) = sTemp
             hlst.listIndex = hlst.listIndex + 1
     End Select
 End Sub
@@ -1164,7 +1157,7 @@ End Sub
 Private Sub Label1_Click()
     Dim i As Integer
     For i = 1 To NUMSKILLS
-        frmSkills3.text1(i).Caption = UserSkills(i)
+        frmSkills3.Text1(i).Caption = UserSkills(i)
     Next i
     Alocados = SkillPoints
     frmSkills3.Puntos.Caption = "Puntos:" & SkillPoints

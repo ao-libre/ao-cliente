@@ -2017,7 +2017,7 @@ On Error GoTo ErrHandler
         privs = Buffer.ReadByte()
         
         If privs <> 0 Then
-            .priv = Log(privs) / Log(2) 'Log2 of the bit flags sent by the server gives our numbers ^^
+            .priv = log(privs) / log(2) 'Log2 of the bit flags sent by the server gives our numbers ^^
         Else
             .priv = 0
         End If
@@ -2323,10 +2323,10 @@ On Error GoTo ErrHandler
         Call frmGuildAdm.guildslist.AddItem(guilds(i))
     Next i
     
-    frmGuildAdm.Show vbModal, frmMain
-    
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
+    
+    frmGuildAdm.Show vbModeless, frmMain
     
 ErrHandler:
     Dim error As Long
@@ -2688,7 +2688,11 @@ On Error GoTo ErrHandler
     
     UserHechizos(slot) = Buffer.ReadInteger()
     
-    Call frmMain.hlst.AddItem(Buffer.ReadASCIIString())
+    If slot <= frmMain.hlst.ListCount Then
+        frmMain.hlst.List(slot - 1) = Buffer.ReadASCIIString()
+    Else
+        Call frmMain.hlst.AddItem(Buffer.ReadASCIIString())
+    End If
     
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
@@ -3883,12 +3887,12 @@ On Error GoTo ErrHandler
         Next i
         
         .desc.Text = Buffer.ReadASCIIString()
-        
-        .Show vbModal, frmMain
     End With
     
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
+    
+    frmGuildBrief.Show vbModeless, frmMain
     
 ErrHandler:
     Dim error As Long
@@ -4259,11 +4263,10 @@ Private Sub HandleShowGMPanelForm()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    
     'Remove packet ID
     Call incomingData.ReadByte
     
-    frmPanelGm.Show vbModal, frmMain
+    frmPanelGm.Show vbModeless, frmMain
 End Sub
 
 ''
