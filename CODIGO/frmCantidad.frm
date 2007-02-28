@@ -132,8 +132,8 @@ Option Explicit
 
 Private Sub Command1_Click()
     frmCantidad.Visible = False
-    Call WriteDrop(Inventario.SelectedItem, frmCantidad.text1.Text)
-    frmCantidad.text1.Text = ""
+    Call WriteDrop(Inventario.SelectedItem, frmCantidad.Text1.Text)
+    frmCantidad.Text1.Text = ""
 End Sub
 
 
@@ -143,10 +143,14 @@ Private Sub Command2_Click()
     If Inventario.SelectedItem <> FLAGORO Then
         Call WriteDrop(Inventario.SelectedItem, Inventario.Amount(Inventario.SelectedItem))
     Else
-        Call WriteDrop(Inventario.SelectedItem, UserGLD)
+        If UserGLD > 10000 Then
+            MsgBox "No se puede tirar más de 10000 por vez"
+        Else
+            Call WriteDrop(Inventario.SelectedItem, UserGLD)
+        End If
     End If
 
-    frmCantidad.text1.Text = ""
+    frmCantidad.Text1.Text = ""
 End Sub
 
 Private Sub Form_Deactivate()
@@ -155,13 +159,13 @@ End Sub
 
 Private Sub text1_Change()
 On Error GoTo ErrHandler
-    If Val(text1.Text) < 0 Then
-        text1.Text = MAX_INVENTORY_OBJS
+    If Val(Text1.Text) < 0 Then
+        Text1.Text = MAX_INVENTORY_OBJS
     End If
     
-    If Val(text1.Text) > MAX_INVENTORY_OBJS Then
-        If Inventario.SelectedItem <> FLAGORO Or Val(text1.Text) > UserGLD Then
-            text1.Text = "1"
+    If Val(Text1.Text) > MAX_INVENTORY_OBJS Then
+        If Inventario.SelectedItem <> FLAGORO Or Val(Text1.Text) > UserGLD Then
+            Text1.Text = "1"
         End If
     End If
     
@@ -169,7 +173,7 @@ On Error GoTo ErrHandler
     
 ErrHandler:
     'If we got here the user may have pasted (Shift + Insert) a REALLY large number, causing an overflow, so we set amount back to 1
-    text1.Text = "1"
+    Text1.Text = "1"
 End Sub
 
 Private Sub Text1_KeyPress(KeyAscii As Integer)

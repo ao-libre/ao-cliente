@@ -229,7 +229,6 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y A
 End Sub
 
 Private Sub lblDescripcion_Click(index As Integer)
-
     Call WriteGuildFundate(index)
     Unload Me
 End Sub
@@ -256,6 +255,8 @@ Private Sub lblDescripcion_MouseMove(index As Integer, Button As Integer, Shift 
         Case 1
             lblDescripcion(index).BackColor = &H40&
     End Select
+    
+    LastColoured = index
 End Sub
 
 

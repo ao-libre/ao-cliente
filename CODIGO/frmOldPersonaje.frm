@@ -192,13 +192,14 @@ Private Sub Image1_Click(index As Integer)
 
 Call Audio.PlayWave(SND_CLICK)
 
-
-
 Select Case index
     Case 0
        
 #If UsarWrench = 1 Then
-        If frmMain.Socket1.Connected Then frmMain.Socket1.Disconnect
+        If frmMain.Socket1.Connected Then
+            frmMain.Socket1.Disconnect
+            frmMain.Socket1.Cleanup
+        End If
 #Else
         If frmMain.Winsock1.State <> sckClosed Then _
             frmMain.Winsock1.Close
@@ -227,8 +228,6 @@ Select Case index
             frmMain.Socket1.RemotePort = CurServerPort
             frmMain.Socket1.Connect
 #Else
-            If frmMain.Winsock1.State <> sckClosed Then _
-                frmMain.Winsock1.Close
             frmMain.Winsock1.Connect CurServerIp, CurServerPort
 #End If
         End If

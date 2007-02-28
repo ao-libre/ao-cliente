@@ -3519,6 +3519,8 @@ On Error GoTo ErrHandler
         Call frmGuildNews.aliados.AddItem(guildList(i))
     Next i
     
+    frmGuildNews.Show vbModeless, frmMain
+    
     'If we got here then packet is compelte, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
