@@ -569,6 +569,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1282,7 +1283,7 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
     'Send text
     If KeyCode = vbKeyReturn Then
         If LenB(stxtbuffer) <> 0 Then Call ParseUserCommand(stxtbuffer)
-
+        
         stxtbuffer = ""
         SendTxt.Text = ""
         KeyCode = 0

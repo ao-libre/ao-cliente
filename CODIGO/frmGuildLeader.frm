@@ -280,6 +280,8 @@ Private Sub cmdElecciones_Click()
 End Sub
 
 Private Sub Command1_Click()
+    If solicitudes.listIndex = -1 Then Exit Sub
+    
     frmCharInfo.frmsolicitudes = True
     Call WriteGuildMemberInfo(solicitudes.List(solicitudes.listIndex))
 
@@ -287,6 +289,8 @@ Private Sub Command1_Click()
 End Sub
 
 Private Sub Command2_Click()
+    If members.listIndex = -1 Then Exit Sub
+    
     frmCharInfo.frmmiembros = True
     Call WriteGuildMemberInfo(members.List(members.listIndex))
 

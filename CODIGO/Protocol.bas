@@ -1499,7 +1499,7 @@ Private Sub HandleUpdateExp()
     
     'Get data and update form
     UserExp = incomingData.ReadLong()
-    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
 End Sub
 
@@ -1574,7 +1574,9 @@ Private Sub HandlePosUpdate()
     Call incomingData.ReadByte
     
     'Remove char from old position
-    MapData(UserPos.x, UserPos.y).CharIndex = 0
+    If MapData(UserPos.x, UserPos.y).CharIndex = UserCharIndex Then
+        MapData(UserPos.x, UserPos.y).CharIndex = 0
+    End If
     
     'Set new pos
     UserPos.x = incomingData.ReadByte()
@@ -2134,10 +2136,22 @@ Private Sub HandleCharacterChange()
     CharIndex = incomingData.ReadInteger()
     
     With charlist(CharIndex)
-        .Body = BodyData(incomingData.ReadInteger())
+        tempint = incomingData.ReadInteger()
+        
+        If tempint < LBound(BodyData()) Or tempint > UBound(BodyData()) Then
+            .Body = BodyData(0)
+        Else
+            .Body = BodyData(tempint)
+        End If
+        
         
         headIndex = incomingData.ReadInteger()
-        .Head = HeadData(headIndex)
+        
+        If tempint < LBound(HeadData()) Or tempint > UBound(HeadData()) Then
+            .Head = HeadData(0)
+        Else
+            .Head = HeadData(headIndex)
+        End If
         
         .muerto = (headIndex = CASPER_HEAD)
         
@@ -2235,7 +2249,11 @@ Private Sub HandleBlockPosition()
     x = incomingData.ReadByte()
     y = incomingData.ReadByte()
     
-    MapData(x, y).Blocked = incomingData.ReadBoolean()
+    If incomingData.ReadBoolean() Then
+        MapData(x, y).Blocked = 1
+    Else
+        MapData(x, y).Blocked = 0
+    End If
 End Sub
 
 ''
@@ -2485,7 +2503,7 @@ Private Sub HandleUpdateUserStats()
     UserPasarNivel = incomingData.ReadLong()
     UserExp = incomingData.ReadLong()
     
-    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
     frmMain.Hpshp.Width = (((UserMinHP / 100) / (UserMaxHP / 100)) * 94)
     
@@ -3339,7 +3357,7 @@ Private Sub HandleDiceRoll()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.length < 11 Then
+    If incomingData.length < 6 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -3347,11 +3365,11 @@ Private Sub HandleDiceRoll()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    UserAtributos(eAtributos.Fuerza) = incomingData.ReadInteger()
-    UserAtributos(eAtributos.Agilidad) = incomingData.ReadInteger()
-    UserAtributos(eAtributos.Inteligencia) = incomingData.ReadInteger()
-    UserAtributos(eAtributos.Carisma) = incomingData.ReadInteger()
-    UserAtributos(eAtributos.Constitucion) = incomingData.ReadInteger()
+    UserAtributos(eAtributos.Fuerza) = incomingData.ReadByte()
+    UserAtributos(eAtributos.Agilidad) = incomingData.ReadByte()
+    UserAtributos(eAtributos.Inteligencia) = incomingData.ReadByte()
+    UserAtributos(eAtributos.Carisma) = incomingData.ReadByte()
+    UserAtributos(eAtributos.Constitucion) = incomingData.ReadByte()
     
     frmCrearPersonaje.lbFuerza = UserAtributos(eAtributos.Fuerza)
     frmCrearPersonaje.lbAgilidad = UserAtributos(eAtributos.Agilidad)
@@ -3682,7 +3700,7 @@ Private Sub HandleCharacterInfo()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.length < 36 Then
+    If incomingData.length < 35 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -3709,9 +3727,15 @@ On Error GoTo ErrHandler
         End If
         
         .Nombre.Caption = "Nombre: " & Buffer.ReadASCIIString()
-        .Raza.Caption = "Raza: " & Buffer.ReadASCIIString()
-        .Clase.Caption = "Clase: " & Buffer.ReadASCIIString()
-        .Genero.Caption = "Genero: " & Buffer.ReadASCIIString()
+        .Raza.Caption = "Raza: " & ListaRazas(Buffer.ReadByte())
+        .Clase.Caption = "Clase: " & ListaClases(Buffer.ReadByte())
+        
+        If Buffer.ReadByte() = 1 Then
+            .Genero.Caption = "Genero: Hombre"
+        Else
+            .Genero.Caption = "Genero: Mujer"
+        End If
+        
         .Nivel.Caption = "Nivel: " & Buffer.ReadByte()
         .Oro.Caption = "Oro: " & Buffer.ReadLong()
         .Banco.Caption = "Banco: " & Buffer.ReadLong()
@@ -3735,11 +3759,11 @@ On Error GoTo ErrHandler
         .criminales.Caption = "Criminales asesinados: " & CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .status.Caption = " (Ciudadano)"
-            .status.ForeColor = vbBlue
+            .Status.Caption = " (Ciudadano)"
+            .Status.ForeColor = vbBlue
         Else
-            .status.Caption = " (Criminal)"
-            .status.ForeColor = vbRed
+            .Status.Caption = " (Criminal)"
+            .Status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)
@@ -3885,7 +3909,7 @@ On Error GoTo ErrHandler
         codexStr = Split(Buffer.ReadASCIIString(), SEPARATOR)
         
         For i = 0 To 7
-            .Codex(i).Caption = codexStr(i)
+            .codex(i).Caption = codexStr(i)
         Next i
         
         .desc.Text = Buffer.ReadASCIIString()
@@ -4916,7 +4940,7 @@ End Sub
 ' @param    skill The skill which the user attempts to use.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCreateNewGuild(ByVal desc As String, ByVal Name As String, ByVal Site As String, ByRef Codex() As String)
+Public Sub WriteCreateNewGuild(ByVal desc As String, ByVal Name As String, ByVal Site As String, ByRef codex() As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -4932,8 +4956,8 @@ Public Sub WriteCreateNewGuild(ByVal desc As String, ByVal Name As String, ByVal
         Call .WriteASCIIString(Name)
         Call .WriteASCIIString(Site)
         
-        For i = LBound(Codex()) To UBound(Codex())
-            temp = temp & Codex(i) & SEPARATOR
+        For i = LBound(codex()) To UBound(codex())
+            temp = temp & codex(i) & SEPARATOR
         Next i
         
         If Len(temp) Then _
@@ -5175,7 +5199,7 @@ End Sub
 ' @param    codex New codex of the clan.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteClanCodexUpdate(ByVal desc As String, ByRef Codex() As String)
+Public Sub WriteClanCodexUpdate(ByVal desc As String, ByRef codex() As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5189,8 +5213,8 @@ Public Sub WriteClanCodexUpdate(ByVal desc As String, ByRef Codex() As String)
         
         Call .WriteASCIIString(desc)
         
-        For i = LBound(Codex()) To UBound(Codex())
-            temp = temp & Codex(i) & SEPARATOR
+        For i = LBound(codex()) To UBound(codex())
+            temp = temp & codex(i) & SEPARATOR
         Next i
         
         If Len(temp) Then _

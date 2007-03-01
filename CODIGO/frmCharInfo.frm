@@ -300,7 +300,7 @@ Public frmsolicitudes As Boolean
 Private Sub Aceptar_Click()
     frmmiembros = False
     frmsolicitudes = False
-    Call WriteGuildAcceptNewMember(Trim$(Right(Nombre, Len(Nombre) - 8)))
+    Call WriteGuildAcceptNewMember(Trim$(Right$(Nombre, Len(Nombre) - 8)))
     Unload frmGuildLeader
     Call WriteRequestGuildLeaderInfo
     Unload Me
@@ -311,11 +311,11 @@ Private Sub Command1_Click()
 End Sub
 
 Private Sub desc_Click()
-    Call WriteGuildRequestJoinerInfo(Right(Nombre, Len(Nombre) - 7))
+    Call WriteGuildRequestJoinerInfo(Right$(Nombre, Len(Nombre) - 8))
 End Sub
 
 Private Sub Echar_Click()
-    Call WriteGuildKickMember(Right(Nombre, Len(Nombre) - 7))
+    Call WriteGuildKickMember(Right$(Nombre, Len(Nombre) - 8))
     frmmiembros = False
     frmsolicitudes = False
     Unload frmGuildLeader
@@ -326,7 +326,7 @@ End Sub
 Private Sub Rechazar_Click()
     Load frmCommet
     frmCommet.T = RECHAZOPJ
-    frmCommet.Nombre = Right$(Nombre, Len(Nombre) - 7)
+    frmCommet.Nombre = Right$(Nombre, Len(Nombre) - 8)
     frmCommet.Caption = "Ingrese motivo para rechazo"
     frmCommet.Show vbModeless, frmCharInfo
 End Sub

@@ -108,8 +108,8 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
         CantidadArgumentos = 0
     End If
     
-    If Comando = "" Then _
-        Exit Sub
+    ' Sacar cartel APESTA!! (y es ilógico, estás diciendo una pausa/espacio  :rolleyes: )
+    If Comando = "" Then Comando = " "
     
     If Left$(Comando, 1) = "/" Then
         ' Comando normal
@@ -421,6 +421,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     End With
                     Exit Sub
                 End If
+                
                 If notNullArguments Then
                     If ValidNumber(ArgumentosRaw, eNumber_Types.ent_Long) Then
                         Call WriteBankDepositGold(ArgumentosRaw)

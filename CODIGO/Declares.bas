@@ -405,10 +405,10 @@ Public Const NUMATRIBUTOS As Byte = 5
 Public Const NUMCLASES As Byte = 16
 Public Const NUMRAZAS As Byte = 5
 
-Public UserSkills(1 To NUMSKILLS) As Integer
+Public UserSkills(1 To NUMSKILLS) As Byte
 Public SkillsNames(1 To NUMSKILLS) As String
 
-Public UserAtributos(1 To NUMATRIBUTOS) As Integer
+Public UserAtributos(1 To NUMATRIBUTOS) As Byte
 Public AtributosNames(1 To NUMATRIBUTOS) As String
 
 Public Ciudades(1 To NUMCIUDADES) As String

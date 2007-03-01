@@ -14,6 +14,11 @@ Option Explicit
 '  Date: 5 February 2007
 '  Description: Added ScreenCapture Method and removed usless things.
 '
+'  Author: Juan Martín Sotuyo Dodero (Maraxus)
+'  Date: 28 Febraury 2007
+'  Description: Changed ScreenCapture to use the Screenshots directory.
+'               Fixed a bug that caused the DC not to be allways released (added INVALID_HANDLE constant)
+'
 '
 ' Copyright.
 ' IJL.DLL is a copyright © Intel, which is a registered trade mark of the Intel
@@ -215,6 +220,8 @@ Private Const FILE_SHARE_WRITE = &H2
 Private Const CREATE_ALWAYS = 2
 Private Const FILE_BEGIN = 0
 Private Const SECTION_MAP_WRITE = &H2
+
+Private Const INVALID_HANDLE As Long = -1
 
 Public Function LoadJPG( _
       ByRef cDib As cDIBSection, _
@@ -523,33 +530,45 @@ Dim b As Boolean
 
 End Function
 
-
-
-
 Public Sub ScreenCapture()
 'Medio desprolijo donde pongo la pic, pero es lo que hay por ahora
 On Error GoTo Err:
-Dim hWnd As Long
-Dim file As String
-Dim sI As String
-Dim c As New cDIBSection
-Dim i As Long
-Dim hdcc As Long
-
-hdcc = GetDC(frmMain.hWnd)
-frmConnect.Picture1.AutoRedraw = True
-frmConnect.Picture1.Width = 11900
-frmConnect.Picture1.Height = 8650
-BitBlt frmConnect.Picture1.hdc, 0, 0, 794, 580, hdcc, 0, 0, SRCCOPY
-Call ReleaseDC(frmMain.hWnd, hdcc)
-  
-file = App.Path & "\" & Format(Now, "DD-MM-YYYY hh-mm-ss")
-frmConnect.Picture1.Refresh
-frmConnect.Picture1.Picture = frmConnect.Picture1.Image
-c.CreateFromPicture frmConnect.Picture1.Picture
-SaveJPG c, file & ".jpg"
- AddtoRichTextBox frmMain.RecTxt, "Screen Capturada en " & file & "!", 200, 200, 200, False, False, False
+    Dim hWnd As Long
+    Dim file As String
+    Dim sI As String
+    Dim c As New cDIBSection
+    Dim i As Long
+    Dim hdcc As Long
+    
+    hdcc = GetDC(frmMain.hWnd)
+    
+    frmScreenshots.Picture1.AutoRedraw = True
+    frmScreenshots.Picture1.Width = 11900
+    frmScreenshots.Picture1.Height = 8650
+    
+    BitBlt frmScreenshots.Picture1.hdc, 0, 0, 794, 580, hdcc, 0, 0, SRCCOPY
+    
+    Call ReleaseDC(frmMain.hWnd, hdcc)
+    
+    hdcc = INVALID_HANDLE
+    
+    If Not FileExist(App.Path & "\Screenshots", vbDirectory) Then MkDir (App.Path & "\Screenshots")
+    
+    file = App.Path & "\Screenshots\" & Format(Now, "DD-MM-YYYY hh-mm-ss") & ".jpg"
+    
+    frmScreenshots.Picture1.Refresh
+    frmScreenshots.Picture1.Picture = frmScreenshots.Picture1.Image
+    
+    c.CreateFromPicture frmScreenshots.Picture1.Picture
+    
+    SaveJPG c, file
+    
+    AddtoRichTextBox frmMain.RecTxt, "Screen Capturada!", 200, 200, 200, False, False, False
 Exit Sub
+
 Err:
     AddtoRichTextBox frmMain.RecTxt, Err.Number & "-" & Err.Description, 200, 200, 200, False, False, False
+    
+    If hdcc <> INVALID_HANDLE Then _
+        Call ReleaseDC(frmMain.hWnd, hdcc)
 End Sub

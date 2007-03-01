@@ -21,16 +21,6 @@ Begin VB.Form frmConnect
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
-   Begin VB.PictureBox Picture1 
-      Height          =   255
-      Left            =   240
-      ScaleHeight     =   195
-      ScaleWidth      =   195
-      TabIndex        =   3
-      Top             =   8520
-      Visible         =   0   'False
-      Width           =   255
-   End
    Begin VB.TextBox PortTxt 
       Alignment       =   2  'Center
       Appearance      =   0  'Flat
@@ -233,18 +223,18 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
 If KeyCode = 27 Then
         frmCargando.Show
         frmCargando.Refresh
-        AddtoRichTextBox frmCargando.Status, "Cerrando Argentum Online.", 0, 0, 0, 1, 0, 1
+        AddtoRichTextBox frmCargando.status, "Cerrando Argentum Online.", 0, 0, 0, 1, 0, 1
         
         Call SaveGameini
         frmConnect.MousePointer = 1
         frmMain.MousePointer = 1
         prgRun = False
         
-        AddtoRichTextBox frmCargando.Status, "Liberando recursos..."
+        AddtoRichTextBox frmCargando.status, "Liberando recursos..."
         frmCargando.Refresh
         LiberarObjetosDX
-        AddtoRichTextBox frmCargando.Status, "Hecho", 0, 0, 0, 1, 0, 1
-        AddtoRichTextBox frmCargando.Status, "¡¡Gracias por jugar Argentum Online!!", 0, 0, 0, 1, 0, 1
+        AddtoRichTextBox frmCargando.status, "Hecho", 0, 0, 0, 1, 0, 1
+        AddtoRichTextBox frmCargando.status, "¡¡Gracias por jugar Argentum Online!!", 0, 0, 0, 1, 0, 1
         frmCargando.Refresh
         Call UnloadAllForms
 End If
@@ -290,7 +280,7 @@ Private Sub Form_Load()
  '  El código para mostrar la versión se genera acá para
  ' evitar que por X razones luego desaparezca, como suele
  ' pasar a veces :)
-    Version.Caption = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
+    version.Caption = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
  '[END]'
 
 End Sub
