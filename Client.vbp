@@ -69,6 +69,7 @@ Module=ProtocolCmdParse; CODIGO\ProtocolCmdParse.bas
 Module=PrevInstance; CODIGO\PrevInstance.bas
 Module=modScreenCapture; CODIGO\modScreenCapture.bas
 Class=cDIBSection; CODIGO\cDIBSection.cls
+Form=CODIGO\frmScreenshots.frm
 IconForm="frmMain"
 Startup="Sub Main"
 HelpFile=""
