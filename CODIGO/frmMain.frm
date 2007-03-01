@@ -569,7 +569,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -783,6 +782,16 @@ Public Sub DesDibujarSatelite()
 PicAU.Visible = False
 End Sub
 
+Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
+    If KeyCode = vbKeyReturn Then
+        If SendCMSTXT.Visible Then Exit Sub
+        If Not frmCantidad.Visible Then
+            SendTxt.Visible = True
+            SendTxt.SetFocus
+        End If
+    End If
+End Sub
+
 Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
     MouseBoton = Button
     MouseShift = Shift
@@ -834,6 +843,18 @@ End Sub
 
 Private Sub Coord_Click()
     AddtoRichTextBox frmMain.RecTxt, "Estas coordenadas son tu ubicación en el mapa. Utiliza la letra L para corregirla si esta no se corresponde con la del servidor por efecto del Lag.", 255, 255, 255, False, False, False
+End Sub
+
+Private Sub SendTxt_KeyDown(KeyCode As Integer, Shift As Integer)
+    'Send text
+    If KeyCode = vbKeyReturn Then
+        If LenB(stxtbuffer) <> 0 Then Call ParseUserCommand(stxtbuffer)
+        
+        stxtbuffer = ""
+        SendTxt.Text = ""
+        KeyCode = 0
+        SendTxt.Visible = False
+    End If
 End Sub
 
 Private Sub SpoofCheck_Timer()
@@ -1035,12 +1056,6 @@ On Error Resume Next
         End If
         
         Select Case KeyCode
-            Case vbKeyReturn:
-                If SendCMSTXT.Visible Then Exit Sub
-                If Not frmCantidad.Visible Then
-                    SendTxt.Visible = True
-                    SendTxt.SetFocus
-                End If
             Case vbKeyDelete:
                 If SendTxt.Visible Then Exit Sub
                 If Not frmCantidad.Visible Then
@@ -1175,7 +1190,7 @@ Private Sub Label4_Click()
     picInv.Visible = True
 
     hlst.Visible = False
-    cmdINFO.Visible = False
+    cmdInfo.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = True
@@ -1194,7 +1209,7 @@ Private Sub Label7_Click()
     'DespInv(1).Visible = False
     picInv.Visible = False
     hlst.Visible = True
-    cmdINFO.Visible = True
+    cmdInfo.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True
@@ -1279,18 +1294,6 @@ Private Sub SendTxt_KeyPress(KeyAscii As Integer)
         KeyAscii = 0
 End Sub
 
-Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
-    'Send text
-    If KeyCode = vbKeyReturn Then
-        If LenB(stxtbuffer) <> 0 Then Call ParseUserCommand(stxtbuffer)
-        
-        stxtbuffer = ""
-        SendTxt.Text = ""
-        KeyCode = 0
-        SendTxt.Visible = False
-    End If
-End Sub
-
 Private Sub SendCMSTXT_KeyUp(KeyCode As Integer, Shift As Integer)
     'Send text
     If KeyCode = vbKeyReturn Then
@@ -1305,7 +1308,6 @@ Private Sub SendCMSTXT_KeyUp(KeyCode As Integer, Shift As Integer)
         Me.SendCMSTXT.Visible = False
     End If
 End Sub
-
 
 Private Sub SendCMSTXT_KeyPress(KeyAscii As Integer)
     If Not (KeyAscii = vbKeyBack) And _

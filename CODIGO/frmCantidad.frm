@@ -67,7 +67,7 @@ Begin VB.Form frmCantidad
       Height          =   375
       Left            =   330
       MaxLength       =   5
-      TabIndex        =   1
+      TabIndex        =   0
       Top             =   525
       Width           =   2625
    End
@@ -86,7 +86,7 @@ Begin VB.Form frmCantidad
       ForeColor       =   &H000000FF&
       Height          =   375
       Left            =   585
-      TabIndex        =   0
+      TabIndex        =   1
       Top             =   165
       Width           =   2415
    End
@@ -131,30 +131,31 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Command1_Click()
-    frmCantidad.Visible = False
-    Call WriteDrop(Inventario.SelectedItem, frmCantidad.Text1.Text)
-    frmCantidad.Text1.Text = ""
+    If LenB(frmCantidad.Text1.Text) > 0 Then
+        If Not IsNumeric(frmCantidad.Text1.Text) Then Exit Sub  'Should never happen
+        
+        Call WriteDrop(Inventario.SelectedItem, frmCantidad.Text1.Text)
+        frmCantidad.Text1.Text = ""
+    End If
+    
+    Unload Me
 End Sub
 
 
 Private Sub Command2_Click()
-    frmCantidad.Visible = False
-
     If Inventario.SelectedItem <> FLAGORO Then
         Call WriteDrop(Inventario.SelectedItem, Inventario.Amount(Inventario.SelectedItem))
+        Unload Me
     Else
         If UserGLD > 10000 Then
             MsgBox "No se puede tirar más de 10000 por vez"
         Else
             Call WriteDrop(Inventario.SelectedItem, UserGLD)
+            Unload Me
         End If
     End If
 
     frmCantidad.Text1.Text = ""
-End Sub
-
-Private Sub Form_Deactivate()
-'Unload Me
 End Sub
 
 Private Sub text1_Change()
