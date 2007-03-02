@@ -68,24 +68,3 @@ Public Sub CambioDeArea(ByVal x As Byte, ByVal y As Byte)
     
     Call RefreshAllChars
 End Sub
-
-Public Sub ClearMap()
-Dim loopX As Long, loopY As Long
-    
-    For loopX = 1 To 100
-        For loopY = 1 To 100
-            
-            'Erase NPCs
-            If MapData(loopX, loopY).CharIndex > 0 Then
-                If MapData(loopX, loopY).CharIndex <> UserCharIndex Then
-                    Call EraseChar(MapData(loopX, loopY).CharIndex)
-                End If
-            End If
-            
-            'Erase OBJs
-            MapData(loopX, loopY).ObjGrh.GrhIndex = 0
-        Next
-    Next
-    
-    Call RefreshAllChars
-End Sub

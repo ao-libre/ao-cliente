@@ -651,9 +651,7 @@ Sub ResetCharInfo(ByVal CharIndex As Integer)
     charlist(CharIndex).Pos.x = 0
     charlist(CharIndex).Pos.y = 0
     charlist(CharIndex).UsandoArma = False
-
 End Sub
-
 
 Sub EraseChar(ByVal CharIndex As Integer)
 On Error Resume Next
@@ -762,7 +760,6 @@ If UserEstado <> 1 Then Call DoPasosFx(CharIndex)
 
 'areas viejos
 If (nY < MinLimiteY) Or (nY > MaxLimiteY) Or (nX < MinLimiteX) Or (nX > MaxLimiteX) Then
-    Debug.Print UserCharIndex
     Call EraseChar(CharIndex)
 End If
 
@@ -784,22 +781,18 @@ End If
 End Sub
 
 Function EstaPCarea(ByVal Index2 As Integer) As Boolean
-
-Dim x As Integer, y As Integer
-
-For y = UserPos.y - MinYBorder + 1 To UserPos.y + MinYBorder - 1
-  For x = UserPos.x - MinXBorder + 1 To UserPos.x + MinXBorder - 1
-            
+    Dim x As Long, y As Long
+    
+    For y = UserPos.y - MinYBorder + 1 To UserPos.y + MinYBorder - 1
+        For x = UserPos.x - MinXBorder + 1 To UserPos.x + MinXBorder - 1
             If MapData(x, y).CharIndex = Index2 Then
                 EstaPCarea = True
                 Exit Function
             End If
-        
-  Next x
-Next y
-
-EstaPCarea = False
-
+        Next x
+    Next y
+    
+    EstaPCarea = False
 End Function
 
 
@@ -880,7 +873,7 @@ If fxCh = FxMeditar.CHICO Or fxCh = FxMeditar.GRANDE Or fxCh = FxMeditar.MEDIANO
     charlist(CharIndex).FxLoopTimes = 0
 End If
 
-If Not EstaPCarea(CharIndex) Then Dialogos.QuitarDialogo (CharIndex)
+If Not EstaPCarea(CharIndex) Then Call Dialogos.QuitarDialogo(CharIndex)
 
 If (nY < MinLimiteY) Or (nY > MaxLimiteY) Or (nX < MinLimiteX) Or (nX > MaxLimiteX) Then
     Call EraseChar(CharIndex)

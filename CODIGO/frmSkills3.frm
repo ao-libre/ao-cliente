@@ -1275,10 +1275,6 @@ End If
 Puntos.Caption = "Puntos:" & Alocados
 End Sub
 
-Private Sub Form_Deactivate()
-'Me.Visible = False
-End Sub
-
 Private Sub Form_Load()
 
 Image1.Picture = LoadPicture(App.Path & "\Graficos\Botónok.jpg")

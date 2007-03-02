@@ -153,8 +153,3 @@ End Sub
 Private Sub Command2_Click()
     Unload Me
 End Sub
-
-Private Sub Form_Deactivate()
-    'Me.SetFocus
-End Sub
-
