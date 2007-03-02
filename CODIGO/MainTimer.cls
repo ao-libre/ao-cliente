@@ -188,7 +188,7 @@ Public Function Check(ByVal TimerIndex As TimersIndex, Optional Restart As Boole
     
     If Timer(TimerIndex).CurrentTick >= Timer(TimerIndex).Interval Then
         Check = True 'We have Ticked!
-        If Restart Then Timer(TimerIndex).StartTick = GetTickCount 'Restart Timer (Nicier than calling Restart() )
+        If Restart Then Timer(TimerIndex).StartTick = GetTickCount 'Restart Timer (Nicer than calling Restart() )
     End If
 End Function
 
