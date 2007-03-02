@@ -36,7 +36,7 @@ Public Sub AuxWriteWhisper(ByVal UserName As String, ByVal Mensaje As String)
     
     i = 1
     Do While i <= LastChar
-        If charlist(i).Nombre = UserName Then
+        If UCase$(charlist(i).Nombre) = UserName Then
             Exit Do
         Else
             i = i + 1
