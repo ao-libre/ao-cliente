@@ -37,7 +37,7 @@ Public Sub AuxWriteWhisper(ByVal UserName As String, ByVal Mensaje As String)
     Dim i As Long
     
     If (InStrB(UserName, "+") <> 0) Then
-        Name = Replace(UserName, "+", " ")
+        UserName = Replace(UserName, "+", " ")
     End If
             
     i = 1
