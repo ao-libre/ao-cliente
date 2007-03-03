@@ -45,10 +45,8 @@ Begin VB.Form frmOpciones
          _ExtentY        =   450
          _Version        =   393216
          BorderStyle     =   1
-         Min             =   -10000
-         Max             =   0
+         Max             =   100
          TickStyle       =   3
-         Value           =   -5000
       End
       Begin VB.CheckBox Check1 
          BackColor       =   &H00000000&
@@ -222,7 +220,7 @@ Private Sub Check1_Click(index As Integer)
                 Musica = True
                 Call Audio.PlayMIDI(CStr(currentMidi) & ".mid")
                 Slider1(0).Enabled = True
-                Slider1(0).value = Audio.MusicVolume / 200
+                Slider1(0).value = Audio.MusicVolume
             End If
         Case 1
             If Check1(1).value = vbUnchecked Then
@@ -247,7 +245,7 @@ Private Sub Form_Load()
     If Musica Then
         Check1(0).value = vbChecked
         Slider1(0).Enabled = True
-        Slider1(0).value = Audio.MusicVolume / 200
+        Slider1(0).value = Audio.MusicVolume
     Else
         Check1(0).value = vbUnchecked
         Slider1(0).Enabled = False

@@ -437,11 +437,11 @@ Public Property Let MusicVolume(ByVal Volume As Long)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 16/03/04
-'Sets the music's volume
+'Sets the music's volume as a percentage
 '***************************************************
     If Not Music Then Exit Property
     
-    Call Performance.SetMasterVolume(Volume)
+    Call Performance.SetMasterVolume(Volume * 200 - 10000)
 End Property
 
 Public Property Get MusicTempo() As Single
@@ -459,11 +459,11 @@ Public Property Get MusicVolume() As Long
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 16/03/04
-'Returns the music's volume
+'Returns the music's volume as a percentage
 '***************************************************
     If Not Music Then Exit Property
     
-    MusicVolume = Performance.GetMasterVolume()
+    MusicVolume = (Performance.GetMasterVolume() + 10000) / 200
 End Property
 
 Public Property Get PlayingMusic() As Boolean
