@@ -313,10 +313,7 @@ Call Audio.PlayWave(SND_CLICK)
 
 Select Case index
     Case 0
-        
-        If Musica Then
-            Call Audio.PlayMIDI("7.mid")
-        End If
+        Call Audio.PlayMIDI("7.mid")
         
         EstadoLogin = E_MODO.Dados
 #If UsarWrench = 1 Then

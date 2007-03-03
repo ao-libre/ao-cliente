@@ -974,9 +974,7 @@ Private Sub boton_Click(index As Integer)
             End If
             
         Case 1
-            If Musica Then
-                Call Audio.PlayMIDI("2.mid")
-            End If
+            Call Audio.PlayMIDI("2.mid")
             
             frmConnect.FONDO.Picture = LoadPicture(App.Path & "\Graficos\conectar.jpg")
             Me.Visible = False

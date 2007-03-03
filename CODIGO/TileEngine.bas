@@ -766,7 +766,6 @@ End If
 End Sub
 
 Public Sub DoFogataFx()
-If Sound Then
     If bFogata Then
         bFogata = HayFogata()
         If Not bFogata Then
@@ -777,7 +776,6 @@ If Sound Then
         bFogata = HayFogata()
         If bFogata And FogataBufferIndex = 0 Then FogataBufferIndex = Audio.PlayWave("fuego.wav", LoopStyle.Enabled)
     End If
-End If
 End Sub
 
 Function EstaPCarea(ByVal Index2 As Integer) As Boolean
@@ -798,8 +796,6 @@ End Function
 
 Sub DoPasosFx(ByVal CharIndex As Integer)
 Static pie As Boolean
-
-If Not Sound Then Exit Sub
 
 If Not UserNavegando Then
     If Not charlist(CharIndex).muerto And EstaPCarea(CharIndex) Then
@@ -1894,7 +1890,7 @@ Public Function RenderSounds()
 'Last Modify Date: 4/22/2006
 'Actualiza todos los sonidos del mapa.
 '**************************************************************
-    If bLluvia(UserMap) = 1 And Sound Then
+    If bLluvia(UserMap) = 1 Then
         If bRain Then
             If bTecho Then
                 If frmMain.IsPlaying <> PlayLoop.plLluviain Then

@@ -27,9 +27,10 @@ Attribute VB_Name = "Protocol"
 'This is the first time it's used in Alkon, though the second time it's coded.
 'This implementation has several enhacements from the first design.
 '
-' @author Juan Martín Sotuyo Dodero (Maraxus) juansotuyo@gmail.com
-' @version 1.0.0
-' @date 20060517
+' @file     Protocol.bas
+' @author   Juan Martín Sotuyo Dodero (Maraxus) juansotuyo@gmail.com
+' @version  1.0.0
+' @date     20060517
 
 Option Explicit
 
@@ -1499,7 +1500,7 @@ Private Sub HandleUpdateExp()
     
     'Get data and update form
     UserExp = incomingData.ReadLong()
-    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
 End Sub
 
@@ -2270,12 +2271,14 @@ Private Sub HandlePlayMIDI()
         Exit Sub
     End If
     
+    Dim currentMidi As Byte
+    
     'Remove packet ID
     Call incomingData.ReadByte
     
     currentMidi = incomingData.ReadByte()
     
-    If Musica And currentMidi Then
+    If currentMidi Then
         Call Audio.PlayMIDI(CStr(currentMidi) & ".mid", incomingData.ReadInteger())
     Else
         'Remove the bytes to prevent errors
@@ -2300,12 +2303,7 @@ Private Sub HandlePlayWave()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    If Sound Then
-        Call Audio.PlayWave(CStr(incomingData.ReadByte()) & ".wav")
-    Else
-        'Remove the bytes to prevent errors
-        Call incomingData.ReadByte
-    End If
+    Call Audio.PlayWave(CStr(incomingData.ReadByte()) & ".wav")
 End Sub
 
 ''
@@ -2435,7 +2433,7 @@ Private Sub HandleRainToggle()
             MapData(UserPos.x, UserPos.y).Trigger = 2 Or _
             MapData(UserPos.x, UserPos.y).Trigger = 4)
     If bRain Then
-        If bLluvia(UserMap) And Sound Then
+        If bLluvia(UserMap) Then
             'Stop playing the rain sound
             Call Audio.StopWave(RainBufferIndex)
             RainBufferIndex = 0
@@ -2503,7 +2501,7 @@ Private Sub HandleUpdateUserStats()
     UserPasarNivel = incomingData.ReadLong()
     UserExp = incomingData.ReadLong()
     
-    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
     frmMain.Hpshp.Width = (((UserMinHP / 100) / (UserMaxHP / 100)) * 94)
     
@@ -3759,11 +3757,11 @@ On Error GoTo ErrHandler
         .criminales.Caption = "Criminales asesinados: " & CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .status.Caption = " (Ciudadano)"
-            .status.ForeColor = vbBlue
+            .Status.Caption = " (Ciudadano)"
+            .Status.ForeColor = vbBlue
         Else
-            .status.Caption = " (Criminal)"
-            .status.ForeColor = vbRed
+            .Status.Caption = " (Criminal)"
+            .Status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)
@@ -3909,7 +3907,7 @@ On Error GoTo ErrHandler
         codexStr = Split(Buffer.ReadASCIIString(), SEPARATOR)
         
         For i = 0 To 7
-            .Codex(i).Caption = codexStr(i)
+            .codex(i).Caption = codexStr(i)
         Next i
         
         .desc.Text = Buffer.ReadASCIIString()
@@ -4935,12 +4933,13 @@ End Sub
 ''
 ' Writes the "CreateNewGuild" message to the outgoing data buffer.
 '
-' @param    x Tile coord in the x-axis in which the user clicked.
-' @param    y Tile coord in the y-axis in which the user clicked.
-' @param    skill The skill which the user attempts to use.
+' @param    desc    The guild's description
+' @param    name    The guild's name
+' @param    site    The guild's website
+' @param    codex   Array of all rules of the guild.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCreateNewGuild(ByVal desc As String, ByVal Name As String, ByVal Site As String, ByRef Codex() As String)
+Public Sub WriteCreateNewGuild(ByVal desc As String, ByVal Name As String, ByVal Site As String, ByRef codex() As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -4956,8 +4955,8 @@ Public Sub WriteCreateNewGuild(ByVal desc As String, ByVal Name As String, ByVal
         Call .WriteASCIIString(Name)
         Call .WriteASCIIString(Site)
         
-        For i = LBound(Codex()) To UBound(Codex())
-            temp = temp & Codex(i) & SEPARATOR
+        For i = LBound(codex()) To UBound(codex())
+            temp = temp & codex(i) & SEPARATOR
         Next i
         
         If Len(temp) Then _
@@ -5199,7 +5198,7 @@ End Sub
 ' @param    codex New codex of the clan.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteClanCodexUpdate(ByVal desc As String, ByRef Codex() As String)
+Public Sub WriteClanCodexUpdate(ByVal desc As String, ByRef codex() As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5213,8 +5212,8 @@ Public Sub WriteClanCodexUpdate(ByVal desc As String, ByRef Codex() As String)
         
         Call .WriteASCIIString(desc)
         
-        For i = LBound(Codex()) To UBound(Codex())
-            temp = temp & Codex(i) & SEPARATOR
+        For i = LBound(codex()) To UBound(codex())
+            temp = temp & codex(i) & SEPARATOR
         Next i
         
         If Len(temp) Then _
@@ -6808,8 +6807,10 @@ End Sub
 ''
 ' Writes the "EditChar" message to the outgoing data buffer.
 '
-' @param    username The user to be warned.
-' @param    reason Reason for the warning.
+' @param    UserName    The user to be edited.
+' @param    editOption  Indicates what to edit in the char.
+' @param    arg1        Additional argument 1. Contents depend on editoption.
+' @param    arg2        Additional argument 2. Contents depend on editoption.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteEditChar(ByVal UserName As String, ByVal editOption As eEditOptions, ByVal arg1 As String, ByVal arg2 As String)
@@ -7361,10 +7362,10 @@ End Sub
 ''
 ' Writes the "ForceWAVEToMap" message to the outgoing data buffer.
 '
-' @param    midiID The ID of the midi file to play.
-' @param    map The map into which to play the given wave.
-' @param    x The position in the x axis in which to play the given wave.
-' @param    y The position in the y axis in which to play the given wave.
+' @param    waveID  The ID of the wave file to play.
+' @param    Map     The map into which to play the given wave.
+' @param    x       The position in the x axis in which to play the given wave.
+' @param    y       The position in the y axis in which to play the given wave.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteForceWAVEToMap(ByVal waveID As Byte, ByVal Map As Integer, ByVal x As Byte, ByVal y As Byte)

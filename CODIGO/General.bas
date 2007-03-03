@@ -690,14 +690,14 @@ End Function
 Public Sub CargarServidores()
 On Error GoTo errorH
     Dim f As String
-    Dim C As Integer
+    Dim c As Integer
     Dim i As Long
     
     f = App.Path & "\init\sinfo.dat"
-    C = Val(GetVar(f, "INIT", "Cant"))
+    c = Val(GetVar(f, "INIT", "Cant"))
     
-    ReDim ServersLst(1 To C) As tServerInfo
-    For i = 1 To C
+    ReDim ServersLst(1 To c) As tServerInfo
+    For i = 1 To c
         ServersLst(i).desc = GetVar(f, "S" & i, "Desc")
         ServersLst(i).Ip = Trim$(GetVar(f, "S" & i, "Ip"))
         ServersLst(i).PassRecPort = CInt(GetVar(f, "S" & i, "P2"))
@@ -826,14 +826,14 @@ Sub Main()
     frmCargando.Refresh
     
     frmConnect.version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
-    AddtoRichTextBox frmCargando.Status, "Buscando servidores....", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.status, "Buscando servidores....", 0, 0, 0, 0, 0, 1
 
     Call CargarServidores
 'TODO : esto de ServerRecibidos no se podría sacar???
     ServersRecibidos = True
     
-    AddtoRichTextBox frmCargando.Status, "Encontrado", , , , 1
-    AddtoRichTextBox frmCargando.Status, "Iniciando constantes...", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.status, "Encontrado", , , , 1
+    AddtoRichTextBox frmCargando.status, "Iniciando constantes...", 0, 0, 0, 0, 0, 1
     
     Call InicializarNombres
     
@@ -843,12 +843,12 @@ Sub Main()
     frmOldPersonaje.NameTxt.Text = Config_Inicio.Name
     frmOldPersonaje.PasswordTxt.Text = ""
     
-    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
+    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
     
     IniciarObjetosDirectX
     
-    AddtoRichTextBox frmCargando.Status, "Cargando Sonidos....", 0, 0, 0, 0, 0, 1
-    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
+    AddtoRichTextBox frmCargando.status, "Cargando Sonidos....", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
 
 Dim loopc As Integer
 
@@ -856,7 +856,7 @@ LastTime = GetTickCount
 
     Call InitTileEngine(frmMain.hWnd, 152, 7, 32, 32, 13, 17, 9)
     
-    Call AddtoRichTextBox(frmCargando.Status, "Creando animaciones extra....")
+    Call AddtoRichTextBox(frmCargando.status, "Creando animaciones extra....")
     
     Call CargarAnimsExtra
     Call CargarTips
@@ -874,21 +874,19 @@ UserMap = 1
     Call InitMI
 #End If
 
-    AddtoRichTextBox frmCargando.Status, "                    ¡Bienvenido a Argentum Online!", , , , 1
+    AddtoRichTextBox frmCargando.status, "                    ¡Bienvenido a Argentum Online!", , , , 1
     
     Unload frmCargando
     
     'Inicializamos el sonido
-    Call AddtoRichTextBox(frmCargando.Status, "Iniciando DirectSound....", 0, 0, 0, 0, 0, True)
+    Call AddtoRichTextBox(frmCargando.status, "Iniciando DirectSound....", 0, 0, 0, 0, 0, True)
     Call Audio.Initialize(DirectX, frmMain.hWnd, App.Path & "\" & Config_Inicio.DirSonidos & "\", App.Path & "\" & Config_Inicio.DirMusica & "\")
-    Call AddtoRichTextBox(frmCargando.Status, "Hecho", , , , 1, , False)
+    Call AddtoRichTextBox(frmCargando.status, "Hecho", , , , 1, , False)
     
     'Inicializamos el inventario gráfico
     Call Inventario.Initialize(DirectDraw, frmMain.picInv)
     
-    If Musica Then
-        Call Audio.PlayMIDI(MIdi_Inicio & ".mid")
-    End If
+    Call Audio.PlayMIDI(MIdi_Inicio & ".mid")
 
     frmPres.Picture = LoadPicture(App.Path & "\Graficos\bosquefinal.jpg")
     frmPres.Show vbModal    'Es modal, así que se detiene la ejecución de Main hasta que se desaparece
@@ -982,7 +980,7 @@ UserMap = 1
     
     EngineRun = False
     frmCargando.Show
-    AddtoRichTextBox frmCargando.Status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
     LiberarObjetosDX
 
 'TODO : Esto debería ir en otro lado como al cambair a esta res
@@ -1142,8 +1140,8 @@ Private Sub LoadClientSetup()
     Close fHandle
     
     NoRes = ClientSetup.bNoRes
-    Musica = Not ClientSetup.bNoMusic
-    Sound = Not ClientSetup.bNoSound
+    Audio.MusicActivated = Not ClientSetup.bNoMusic
+    Audio.SoundActivated = Not ClientSetup.bNoSound
 End Sub
 
 Private Sub InicializarNombres()

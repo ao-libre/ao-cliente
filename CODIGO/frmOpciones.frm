@@ -213,24 +213,21 @@ Private Sub Check1_Click(index As Integer)
     Select Case index
         Case 0
             If Check1(0).value = vbUnchecked Then
-                Musica = False
-                Audio.StopMidi
+                Audio.MusicActivated = False
                 Slider1(0).Enabled = False
-            Else
-                Musica = True
-                Call Audio.PlayMIDI(CStr(currentMidi) & ".mid")
+            ElseIf Not Audio.MusicActivated Then  'Prevent the music from reloading
                 Slider1(0).Enabled = True
                 Slider1(0).value = Audio.MusicVolume
             End If
+        
         Case 1
             If Check1(1).value = vbUnchecked Then
-                Sound = False
-                Call Audio.StopWave
+                Audio.SoundActivated = False
                 RainBufferIndex = 0
                 frmMain.IsPlaying = PlayLoop.plNone
                 Slider1(1).Enabled = False
             Else
-                Sound = True
+                Audio.SoundActivated = True
                 Slider1(1).Enabled = True
                 Slider1(1).value = Audio.SoundVolume
             End If
@@ -242,7 +239,7 @@ Private Sub Command2_Click()
 End Sub
 
 Private Sub Form_Load()
-    If Musica Then
+    If Audio.MusicActivated Then
         Check1(0).value = vbChecked
         Slider1(0).Enabled = True
         Slider1(0).value = Audio.MusicVolume
@@ -251,7 +248,7 @@ Private Sub Form_Load()
         Slider1(0).Enabled = False
     End If
     
-    If Sound Then
+    If Audio.SoundActivated Then
         Check1(1).value = vbChecked
         Slider1(1).Enabled = True
         Slider1(1).value = Audio.SoundVolume
@@ -277,7 +274,6 @@ Private Sub Slider1_Change(index As Integer)
             Audio.SoundVolume = Slider1(1).value
     End Select
 End Sub
-
 
 Private Sub txtCantMensajes_LostFocus()
     txtCantMensajes.Text = Trim$(txtCantMensajes.Text)

@@ -43,7 +43,8 @@ Public SurfaceDB As clsSurfaceManager   'No va new porque es unainterfaz, el new
 Public incomingData As New clsByteQueue
 Public outgoingData As New clsByteQueue
 
-'' The main timer of the game.
+''
+'The main timer of the game.
 Public MainTimer As New clsTimer
 
 #If SeguridadAlkon Then
@@ -85,8 +86,6 @@ Public Type tServerInfo
     desc As String
     PassRecPort As Integer
 End Type
-
-Public currentMidi As Long
 
 Public ServersLst() As tServerInfo
 Public ServersRecibidos As Boolean
@@ -415,9 +414,6 @@ Public Ciudades(1 To NUMCIUDADES) As String
 
 Public ListaRazas(1 To NUMRAZAS) As String
 Public ListaClases(1 To NUMCLASES) As String
-
-Public Musica As Boolean
-Public Sound As Boolean
 
 Public SkillPoints As Integer
 Public Alocados As Integer
