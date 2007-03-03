@@ -227,9 +227,9 @@ On Error GoTo ErrHandler
     
     CurrentMusicFile = vbNullString
     
-    'Set tempo to 0 and volume to max
+    'Set tempo to 0 and volume of music
     MusicTempo = 0
-    MusicVolume = 200
+    Call Performance.SetMasterVolume(200)
     
     inited = True
     
