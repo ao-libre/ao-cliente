@@ -227,6 +227,10 @@ On Error GoTo ErrHandler
     
     CurrentMusicFile = vbNullString
     
+    'Set tempo to 0 and volume to max
+    MusicTempo = 0
+    MusicVolume = 200
+    
     inited = True
     
     Initialize = True
@@ -527,10 +531,6 @@ On Error GoTo ErrHandler
     Call Segment.SetRepeats(Loops)
     
     Set SegState = Performance.PlaySegment(Segment, 0, 0)
-    
-    'Set tempo to 0 and volume to max
-    MusicTempo = 0
-    MusicVolume = 200
     
     PlayMIDI = True
 Exit Function
