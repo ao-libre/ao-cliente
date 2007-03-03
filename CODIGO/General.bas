@@ -179,49 +179,42 @@ Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, ByVal Text As String, Opt
 'Pablo (ToxicWaste) 26/01/2007 : Now the list refreshes properly.
 '******************************************
     With RichTextBox
-    If (Len(.Text)) > 1000 Then
-        Dim AuxString As String
-        Dim AuxString2 As String
-        Dim AuxCount As Integer
-        AuxString = .Text
-        AuxCount = 1
-        Do
-        AuxString = Right$(AuxString, Len(.Text) - AuxCount)
-        AuxString2 = Left$(AuxString, 2)
-        If AuxString2 = vbCrLf Then Exit Do
-        AuxCount = AuxCount + 1
-        Loop
-        .SelStart = AuxCount + 2
-        .SelLength = Len(.Text)
-        AuxString = .SelRTF
-        .Text = ""
-        .TextRTF = AuxString
-    End If
-    .SelStart = Len(RichTextBox.Text)
-    .SelLength = 0
-    .SelBold = bold
-    .SelItalic = italic
+        If (Len(.Text)) > 1000 Then
+            Dim AuxString As String
+            Dim AuxString2 As String
+            Dim AuxCount As Integer
+            
+            AuxString = .Text
+            AuxCount = 1
+            
+            Do
+                AuxString = Right$(AuxString, Len(.Text) - AuxCount)
+                AuxString2 = Left$(AuxString, 2)
+                
+                If AuxString2 = vbCrLf Then _
+                    Exit Do
+                
+                AuxCount = AuxCount + 1
+            Loop
+            
+            .SelStart = AuxCount + 2
+            .SelLength = Len(.Text)
+            
+            AuxString = .SelRTF
+            .Text = ""
+            .TextRTF = AuxString
+        End If
         
-    If Not red = -1 Then .SelColor = RGB(red, green, blue)
+        .SelStart = Len(RichTextBox.Text)
+        .SelLength = 0
+        .SelBold = bold
+        .SelItalic = italic
         
-    .SelText = IIf(bCrLf, Text, Text & vbCrLf)
+        If Not red = -1 Then .SelColor = RGB(red, green, blue)
         
-    RichTextBox.Refresh
-
+        .SelText = IIf(bCrLf, Text, Text & vbCrLf)
         
-        'If (Len(.Text)) > 10000 Then .Text = ""
-        
-        '.SelStart = Len(RichTextBox.Text)
-        '.SelLength = 0
-        
-        '.SelBold = bold
-        '.SelItalic = italic
-        
-        'If Not red = -1 Then .SelColor = RGB(red, green, blue)
-        
-        '.SelText = IIf(bCrLf, Text, Text & vbCrLf)
-        
-        'RichTextBox.Refresh
+        RichTextBox.Refresh
     End With
 End Sub
 
@@ -425,9 +418,7 @@ Sub RandomMove()
 'Last Modify Date: 06/03/2006
 ' 06/03/2006: AlejoLp - Ahora utiliza la funcion MoveTo
 '***************************************************
-
-    MoveTo RandomNumber(1, 4)
-    
+    MoveTo RandomNumber(NORTH, WEST)
 End Sub
 
 Sub CheckKeys()
@@ -435,6 +426,9 @@ Sub CheckKeys()
 'Checks keys and respond
 '*****************************************************************
 On Error Resume Next
+    'No input allowed while Argentum is not the active window
+    If Not Api.IsAppActive() Then Exit Sub
+    
     'Don't allow any these keys during movement..
     If UserMoving = 0 Then
         If Not UserEstupido Then
@@ -445,7 +439,7 @@ On Error Resume Next
                 frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.x & "," & UserPos.y & ")"
                 Exit Sub
             End If
-        
+            
             'Move Right
             If GetKeyState(vbKeyRight) < 0 Then
                 If frmMain.TrainingMacro.Enabled Then frmMain.DesactivarMacroHechizos
