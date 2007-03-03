@@ -83,11 +83,9 @@ Begin VB.Form frmOpciones
          _ExtentY        =   450
          _Version        =   393216
          BorderStyle     =   1
-         Min             =   -10000
-         Max             =   0
-         SelStart        =   -5000
+         LargeChange     =   10
+         Max             =   100
          TickStyle       =   3
-         Value           =   -5000
       End
    End
    Begin VB.Frame Frame1 
@@ -212,38 +210,37 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Check1_Click(index As Integer)
-Call Audio.PlayWave(SND_CLICK)
-Select Case index
-    Case 0
-        If Check1(0).value = vbUnchecked Then
-            Musica = False
-            Audio.StopMidi
-            Slider1(0).Enabled = False
-        Else
-            Musica = True
-            Call Audio.PlayMIDI(CStr(currentMidi) & ".mid")
-            Slider1(0).Enabled = True
-            Slider1(0).value = Audio.MusicVolume / 200
-        End If
-    Case 1
-        If Check1(1).value = vbUnchecked Then
-            Sound = False
-            Call Audio.StopWave
-            RainBufferIndex = 0
-            frmMain.IsPlaying = PlayLoop.plNone
-            Slider1(1).Enabled = False
-        Else
-            Sound = True
-            Slider1(1).Enabled = True
-            Slider1(1).value = Audio.SoundVolume / 200
-        End If
-End Select
+    Call Audio.PlayWave(SND_CLICK)
+    
+    Select Case index
+        Case 0
+            If Check1(0).value = vbUnchecked Then
+                Musica = False
+                Audio.StopMidi
+                Slider1(0).Enabled = False
+            Else
+                Musica = True
+                Call Audio.PlayMIDI(CStr(currentMidi) & ".mid")
+                Slider1(0).Enabled = True
+                Slider1(0).value = Audio.MusicVolume / 200
+            End If
+        Case 1
+            If Check1(1).value = vbUnchecked Then
+                Sound = False
+                Call Audio.StopWave
+                RainBufferIndex = 0
+                frmMain.IsPlaying = PlayLoop.plNone
+                Slider1(1).Enabled = False
+            Else
+                Sound = True
+                Slider1(1).Enabled = True
+                Slider1(1).value = Audio.SoundVolume
+            End If
+    End Select
 End Sub
 
-
-
 Private Sub Command2_Click()
-Me.Visible = False
+    Me.Visible = False
 End Sub
 
 Private Sub Form_Load()
@@ -259,7 +256,7 @@ Private Sub Form_Load()
     If Sound Then
         Check1(1).value = vbChecked
         Slider1(1).Enabled = True
-        Slider1(1).value = Audio.SoundVolume / 200
+        Slider1(1).value = Audio.SoundVolume
     Else
         Check1(1).value = vbUnchecked
         Slider1(1).Enabled = False
@@ -273,7 +270,6 @@ End Sub
 Private Sub optPantalla_Click()
     DialogosClanes.Activo = True
 End Sub
-
 
 Private Sub Slider1_Change(index As Integer)
     Select Case index

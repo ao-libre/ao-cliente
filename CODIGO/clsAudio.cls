@@ -317,32 +317,33 @@ Public Property Get PlayingSound() As Boolean
     Next i
 End Property
 
-Public Property Let SoundVolume(ByVal Volume As Long)
+Public Property Let SoundVolume(ByVal Volume As Byte)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 16/03/04
-'Sets the sound's volume
+'Sets the sound's volume as a percentage
 '***************************************************
     Dim i As Long
     
+    'Take percentage to actual value
+    SndVolume = Volume * (DSBVOLUME_MAX - DSBVOLUME_MIN) / 100 + DSBVOLUME_MIN
+    
     For i = 1 To NumSoundBuffers
         If Not DSBuffers(i).Buffer Is Nothing Then
-            If DSBuffers(i).Buffer.GetStatus() And DSBSTATUS_PLAYING Then
-                Call DSBuffers(i).Buffer.SetVolume(Volume)
+            If DSBuffers(i).Buffer.GetStatus And DSBSTATUS_PLAYING Then
+                Call DSBuffers(i).Buffer.SetVolume(SndVolume)
             End If
         End If
     Next i
-    
-    SndVolume = Volume
 End Property
 
-Public Property Get SoundVolume() As Long
+Public Property Get SoundVolume() As Byte
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 16/03/04
-'Sets the music's volume
+'Sets the music's volume as a percentage
 '***************************************************
-    SoundVolume = SndVolume
+    SoundVolume = CByte((SndVolume - DSBVOLUME_MIN) * 100 / (DSBVOLUME_MAX - DSBVOLUME_MIN))
 End Property
 
 Public Function PlayMIDI(Optional ByVal file As String = "", Optional ByVal Loops As Long = -1) As Boolean
