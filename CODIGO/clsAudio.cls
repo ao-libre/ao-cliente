@@ -117,7 +117,7 @@ On Error GoTo ErrHandler
     'Initialize DirectSound
     Set DirectSound = dX.DirectSoundCreate("")
     
-    DirectSound.SetCooperativeLevel DisplayFormhWnd, DSSCL_PRIORITY
+    Call DirectSound.SetCooperativeLevel(DisplayFormhWnd, DSSCL_PRIORITY)
     
     'Set sound path
     SoundPath = sound_path
@@ -147,11 +147,11 @@ On Error GoTo ErrHandler
     Set Loader = DirectX.DirectMusicLoaderCreate()
     
     Set Performance = dX.DirectMusicPerformanceCreate()
-    Performance.Init DirectSound, hWnd
-    Performance.SetMasterAutoDownload True     'Enable auto doanload of instruments
+    Call Performance.Init(DirectSound, hWnd)
+    Call Performance.SetMasterAutoDownload(True)        'Enable auto doanload of instruments
     
     'Set to port default, 1 channel group is enough for MIDIs
-    Performance.SetPort -1, 1
+    Call Performance.SetPort(-1, 1)
     
     InitializedirectMusic = True
 Exit Function
@@ -210,7 +210,7 @@ On Error GoTo ErrHandler
     'Check if the buffer is in memory and not playing
     For i = 1 To NumSoundBuffers
         If DSBuffers(i).FileName = FileName Then
-            If DSBuffers(i).Buffer.GetStatus = 0 Or DSBuffers(i).Buffer.GetStatus = DSBSTATUS_BUFFERLOST Then
+            If DSBuffers(i).Buffer.GetStatus = 0 Or DSBuffers(i).Buffer.GetStatus() = DSBSTATUS_BUFFERLOST Then
                 'Found it!!! We just play this one :)
                 LoadWave = i
                 
@@ -232,7 +232,7 @@ On Error GoTo ErrHandler
     'No empty buffers?? Search for one not being played and use that slot
     If i > NumSoundBuffers Then
         For i = 1 To NumSoundBuffers
-            If DSBuffers(i).Buffer.GetStatus = DSBSTATUS_BUFFERLOST Or DSBuffers(i).Buffer.GetStatus = 0 Then
+            If DSBuffers(i).Buffer.GetStatus() = DSBSTATUS_BUFFERLOST Or DSBuffers(i).Buffer.GetStatus() = 0 Then
                 Exit For
             End If
         Next i
@@ -241,7 +241,7 @@ On Error GoTo ErrHandler
     'Still no free buffers?? Get the first non-looping sound
     If i > NumSoundBuffers Then
         For i = 1 To NumSoundBuffers
-            If Not (DSBuffers(i).Buffer.GetStatus And DSBSTATUS_LOOPING) Then
+            If Not (DSBuffers(i).Buffer.GetStatus() And DSBSTATUS_LOOPING) Then
                 Exit For
             End If
         Next i
@@ -286,14 +286,14 @@ Public Sub StopWave(Optional ByVal bufferIndex As Long = 0)
 'index is invalid
 '***************************************************
     If bufferIndex > 0 And bufferIndex <= NumSoundBuffers Then
-        If DSBuffers(bufferIndex).Buffer.GetStatus And DSBSTATUS_PLAYING Then
+        If DSBuffers(bufferIndex).Buffer.GetStatus() And DSBSTATUS_PLAYING Then
             Call DSBuffers(bufferIndex).Buffer.Stop
         End If
     Else
         Dim i As Long
         For i = 1 To NumSoundBuffers
             If Not DSBuffers(i).Buffer Is Nothing Then
-                If DSBuffers(i).Buffer.GetStatus <> 0 And DSBuffers(i).Buffer.GetStatus <> DSBSTATUS_BUFFERLOST Then
+                If DSBuffers(i).Buffer.GetStatus() <> 0 And DSBuffers(i).Buffer.GetStatus() <> DSBSTATUS_BUFFERLOST Then
                     Call DSBuffers(i).Buffer.Stop
                 End If
             End If
@@ -310,7 +310,7 @@ Public Property Get PlayingSound() As Boolean
     Dim i As Long
     
     For i = 1 To NumSoundBuffers
-        If DSBuffers(i).Buffer.GetStatus And DSBSTATUS_PLAYING Then
+        If DSBuffers(i).Buffer.GetStatus() And DSBSTATUS_PLAYING Then
             PlayingSound = True
             Exit Property
         End If
@@ -327,7 +327,7 @@ Public Property Let SoundVolume(ByVal Volume As Long)
     
     For i = 1 To NumSoundBuffers
         If Not DSBuffers(i).Buffer Is Nothing Then
-            If DSBuffers(i).Buffer.GetStatus And DSBSTATUS_PLAYING Then
+            If DSBuffers(i).Buffer.GetStatus() And DSBSTATUS_PLAYING Then
                 Call DSBuffers(i).Buffer.SetVolume(Volume)
             End If
         End If
@@ -364,7 +364,7 @@ On Error GoTo ErrHandler
     End If
     
     'Play it
-    Segment.SetRepeats Loops
+    Call Segment.SetRepeats(Loops)
     
     Set SegState = Performance.PlaySegment(Segment, 0, 0)
     
@@ -398,7 +398,7 @@ On Error GoTo ErrHandler
         Exit Function
     End If
     
-    Segment.SetStandardMidiFile
+    Call Segment.SetStandardMidiFile
     
     LoadMidi = True
 Exit Function
@@ -429,7 +429,7 @@ Public Property Let MusicTempo(ByVal Tempo As Single)
 '***************************************************
     If Not Music Then Exit Property
     
-    Performance.SetMasterTempo Tempo
+    Call Performance.SetMasterTempo(Tempo)
 End Property
 
 Public Property Let MusicVolume(ByVal Volume As Long)
@@ -440,7 +440,7 @@ Public Property Let MusicVolume(ByVal Volume As Long)
 '***************************************************
     If Not Music Then Exit Property
     
-    Performance.SetMasterVolume Volume
+    Call Performance.SetMasterVolume(Volume)
 End Property
 
 Public Property Get MusicTempo() As Single
@@ -451,7 +451,7 @@ Public Property Get MusicTempo() As Single
 '***************************************************
     If Not Music Then Exit Property
     
-    MusicTempo = Performance.GetMasterTempo
+    MusicTempo = Performance.GetMasterTempo()
 End Property
 
 Public Property Get MusicVolume() As Long
@@ -462,7 +462,7 @@ Public Property Get MusicVolume() As Long
 '***************************************************
     If Not Music Then Exit Property
     
-    MusicVolume = Performance.GetMasterVolume
+    MusicVolume = Performance.GetMasterVolume()
 End Property
 
 Public Property Get PlayingMusic() As Boolean
@@ -484,5 +484,5 @@ Public Property Get MusicLenght() As Long
 '***************************************************
     If Not Music Then Exit Property
     
-    MusicLenght = Segment.GetLength
+    MusicLenght = Segment.GetLength()
 End Property
