@@ -32,8 +32,14 @@ Public Enum eNumber_Types
 End Enum
 
 Public Sub AuxWriteWhisper(ByVal UserName As String, ByVal Mensaje As String)
+    If LenB(UserName) = 0 Then Exit Sub
+    
     Dim i As Long
     
+    If (InStrB(UserName, "+") <> 0) Then
+        Name = Replace(UserName, "+", " ")
+    End If
+            
     i = 1
     Do While i <= LastChar
         If UCase$(charlist(i).Nombre) = UserName Then
