@@ -756,7 +756,6 @@ Public Function CurServerPort() As Integer
     End If
 End Function
 
-
 Sub Main()
 'On Error GoTo ManejadorErrores
 #If SeguridadAlkon Then
