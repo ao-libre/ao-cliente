@@ -1151,7 +1151,7 @@ Private Sub cmdINFO_Click()
 End Sub
 
 Private Sub cmdINV_Click()
-    '/INV"
+    '/INV
     Dim Nick As String
 
     Nick = cboListaUsus.Text
