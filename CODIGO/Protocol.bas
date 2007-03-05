@@ -1500,7 +1500,7 @@ Private Sub HandleUpdateExp()
     
     'Get data and update form
     UserExp = incomingData.ReadLong()
-    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
 End Sub
 
@@ -1775,7 +1775,7 @@ On Error GoTo ErrHandler
     
     Call Dialogos.CrearDialogo(chat, CharIndex, RGB(r, g, b))
     
-    'If we got here then packet is compelte, copy data back to original queue
+    'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
 
 ErrHandler:
@@ -1822,7 +1822,7 @@ On Error GoTo ErrHandler
         Call AddtoRichTextBox(frmMain.RecTxt, chat, .red, .green, .blue, .bold, .italic)
     End With
     
-    'If we got here then packet is compelte, copy data back to original queue
+    'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
@@ -1871,7 +1871,7 @@ On Error GoTo ErrHandler
         Call DialogosClanes.PushBackText(chat)
     End If
     
-    'If we got here then packet is compelte, copy data back to original queue
+    'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
@@ -1911,7 +1911,7 @@ On Error GoTo ErrHandler
     frmMensaje.msg.Caption = Buffer.ReadASCIIString()
     frmMensaje.Show
     
-    'If we got here then packet is compelte, copy data back to original queue
+    'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
@@ -2030,7 +2030,7 @@ On Error GoTo ErrHandler
     
     Call RefreshAllChars
     
-    'If we got here then packet is compelte, copy data back to original queue
+    'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
@@ -2339,7 +2339,7 @@ On Error GoTo ErrHandler
         Call frmGuildAdm.guildslist.AddItem(guilds(i))
     Next i
     
-    'If we got here then packet is compelte, copy data back to original queue
+    'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
     frmGuildAdm.Show vbModeless, frmMain
@@ -2501,7 +2501,7 @@ Private Sub HandleUpdateUserStats()
     UserPasarNivel = incomingData.ReadLong()
     UserExp = incomingData.ReadLong()
     
-    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
     frmMain.Hpshp.Width = (((UserMinHP / 100) / (UserMaxHP / 100)) * 94)
     
@@ -2610,7 +2610,7 @@ On Error GoTo ErrHandler
     
     Call Inventario.SetItem(slot, OBJIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, defense, value, Name)
     
-    'If we got here then packet is compelte, copy data back to original queue
+    'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
@@ -2662,7 +2662,7 @@ On Error GoTo ErrHandler
         .Valor = Buffer.ReadLong()
     End With
     
-    'If we got here then packet is compelte, copy data back to original queue
+    'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
@@ -2710,7 +2710,7 @@ On Error GoTo ErrHandler
         Call frmMain.hlst.AddItem(Buffer.ReadASCIIString())
     End If
     
-    'If we got here then packet is compelte, copy data back to original queue
+    'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
@@ -2806,7 +2806,7 @@ On Error GoTo ErrHandler
         ArmasHerrero(i) = 0
     Next i
     
-    'If we got here then packet is compelte, copy data back to original queue
+    'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
@@ -2863,7 +2863,7 @@ On Error GoTo ErrHandler
         ArmadurasHerrero(i) = 0
     Next i
     
-    'If we got here then packet is compelte, copy data back to original queue
+    'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
@@ -2918,7 +2918,7 @@ On Error GoTo ErrHandler
         ObjCarpintero(i) = 0
     Next i
     
-    'If we got here then packet is compelte, copy data back to original queue
+    'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
@@ -2984,7 +2984,7 @@ On Error GoTo ErrHandler
 #End If
     End If
     
-    'If we got here then packet is compelte, copy data back to original queue
+    'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
@@ -3060,7 +3060,7 @@ On Error GoTo ErrHandler
     
     Call InitCartel(Tmp, Buffer.ReadInteger())
     
-    'If we got here then packet is compelte, copy data back to original queue
+    'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
@@ -3113,7 +3113,7 @@ On Error GoTo ErrHandler
     
     Call frmComerciar.List1(0).AddItem(NPCInventory(NPCInvDim).Name)
     
-    'If we got here then packet is compelte, copy data back to original queue
+    'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
@@ -3282,7 +3282,7 @@ On Error GoTo ErrHandler
     frmForo.Text(frmForo.List.ListCount - 1).Text = Message
     Call Load(frmForo.Text(frmForo.List.ListCount))
     
-    'If we got here then packet is compelte, copy data back to original queue
+    'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
@@ -3478,7 +3478,7 @@ On Error GoTo ErrHandler
     Next i
     frmEntrenador.Show , frmMain
     
-    'If we got here then packet is compelte, copy data back to original queue
+    'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
@@ -3537,7 +3537,7 @@ On Error GoTo ErrHandler
     
     frmGuildNews.Show vbModeless, frmMain
     
-    'If we got here then packet is compelte, copy data back to original queue
+    'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
@@ -3576,7 +3576,7 @@ On Error GoTo ErrHandler
     
     Call frmUserRequest.recievePeticion(Buffer.ReadASCIIString())
     
-    'If we got here then packet is compelte, copy data back to original queue
+    'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
@@ -3625,7 +3625,7 @@ On Error GoTo ErrHandler
     frmPeaceProp.ProposalType = TIPO_PROPUESTA.ALIANZA
     Call frmPeaceProp.Show(vbModeless, frmMain)
     
-    'If we got here then packet is compelte, copy data back to original queue
+    'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
@@ -3674,7 +3674,7 @@ On Error GoTo ErrHandler
     frmPeaceProp.ProposalType = TIPO_PROPUESTA.PAZ
     Call frmPeaceProp.Show(vbModeless, frmMain)
     
-    'If we got here then packet is compelte, copy data back to original queue
+    'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
@@ -3757,17 +3757,17 @@ On Error GoTo ErrHandler
         .criminales.Caption = "Criminales asesinados: " & CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .Status.Caption = " (Ciudadano)"
-            .Status.ForeColor = vbBlue
+            .status.Caption = " (Ciudadano)"
+            .status.ForeColor = vbBlue
         Else
-            .Status.Caption = " (Criminal)"
-            .Status.ForeColor = vbRed
+            .status.Caption = " (Criminal)"
+            .status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)
     End With
     
-    'If we got here then packet is compelte, copy data back to original queue
+    'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
@@ -3835,7 +3835,7 @@ On Error GoTo ErrHandler
         .Show , frmMain
     End With
 
-    'If we got here then packet is compelte, copy data back to original queue
+    'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
@@ -3907,13 +3907,13 @@ On Error GoTo ErrHandler
         codexStr = Split(Buffer.ReadASCIIString(), SEPARATOR)
         
         For i = 0 To 7
-            .codex(i).Caption = codexStr(i)
+            .Codex(i).Caption = codexStr(i)
         Next i
         
         .desc.Text = Buffer.ReadASCIIString()
     End With
     
-    'If we got here then packet is compelte, copy data back to original queue
+    'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
     frmGuildBrief.Show vbModeless, frmMain
@@ -3986,7 +3986,7 @@ On Error GoTo ErrHandler
     Call frmUserRequest.recievePeticion(Buffer.ReadASCIIString())
     Call frmUserRequest.Show(vbModeless, frmMain)
     
-    'If we got here then packet is compelte, copy data back to original queue
+    'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
@@ -4106,7 +4106,7 @@ On Error GoTo ErrHandler
         frmComerciarUsu.lblEstadoResp.Visible = False
     End With
     
-    'If we got here then packet is compelte, copy data back to original queue
+    'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
@@ -4175,7 +4175,7 @@ On Error GoTo ErrHandler
     Next i
     frmSpawnList.Show , frmMain
     
-    'If we got here then packet is compelte, copy data back to original queue
+    'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
@@ -4223,7 +4223,7 @@ On Error GoTo ErrHandler
     
     frmMSG.Show , frmMain
     
-    'If we got here then packet is compelte, copy data back to original queue
+    'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
@@ -4263,7 +4263,7 @@ On Error GoTo ErrHandler
     frmCambiaMotd.txtMotd.Text = Buffer.ReadASCIIString()
     frmCambiaMotd.Show , frmMain
     
-    'If we got here then packet is compelte, copy data back to original queue
+    'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
@@ -4328,7 +4328,7 @@ On Error GoTo ErrHandler
         If frmPanelGm.cboListaUsus.ListCount > 0 Then frmPanelGm.cboListaUsus.listIndex = 0
     End If
     
-    'If we got here then packet is compelte, copy data back to original queue
+    'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
@@ -4939,7 +4939,7 @@ End Sub
 ' @param    codex   Array of all rules of the guild.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCreateNewGuild(ByVal desc As String, ByVal Name As String, ByVal Site As String, ByRef codex() As String)
+Public Sub WriteCreateNewGuild(ByVal desc As String, ByVal Name As String, ByVal Site As String, ByRef Codex() As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -4955,8 +4955,8 @@ Public Sub WriteCreateNewGuild(ByVal desc As String, ByVal Name As String, ByVal
         Call .WriteASCIIString(Name)
         Call .WriteASCIIString(Site)
         
-        For i = LBound(codex()) To UBound(codex())
-            temp = temp & codex(i) & SEPARATOR
+        For i = LBound(Codex()) To UBound(Codex())
+            temp = temp & Codex(i) & SEPARATOR
         Next i
         
         If Len(temp) Then _
@@ -5198,7 +5198,7 @@ End Sub
 ' @param    codex New codex of the clan.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteClanCodexUpdate(ByVal desc As String, ByRef codex() As String)
+Public Sub WriteClanCodexUpdate(ByVal desc As String, ByRef Codex() As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5212,8 +5212,8 @@ Public Sub WriteClanCodexUpdate(ByVal desc As String, ByRef codex() As String)
         
         Call .WriteASCIIString(desc)
         
-        For i = LBound(codex()) To UBound(codex())
-            temp = temp & codex(i) & SEPARATOR
+        For i = LBound(Codex()) To UBound(Codex())
+            temp = temp & Codex(i) & SEPARATOR
         Next i
         
         If Len(temp) Then _

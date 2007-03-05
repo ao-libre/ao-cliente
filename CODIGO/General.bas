@@ -759,7 +759,6 @@ End Function
 
 Sub Main()
 'On Error GoTo ManejadorErrores
-
 #If SeguridadAlkon Then
     InitSecurity
 #End If
