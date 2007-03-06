@@ -235,7 +235,7 @@ Private Sub Check1_Click(index As Integer)
 End Sub
 
 Private Sub Command2_Click()
-    Me.Visible = False
+    Unload Me
 End Sub
 
 Private Sub Form_Load()
