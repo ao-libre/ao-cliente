@@ -76,7 +76,6 @@ Public Function FindPreviousInstance() As Boolean
 'Last Modification: 01/04/07
 '
 '***************************************************
-#If Release Then
     'We try to create a mutex, the name could be anything, but must contain no backslashes.
     If CreateNamedMutex("UniqueNameThatActuallyCouldBeAnything") Then
         'There's no other instance running
@@ -85,9 +84,6 @@ Public Function FindPreviousInstance() As Boolean
         'There's another instance running
         FindPreviousInstance = True
     End If
-#Else
-    FindPreviousInstance = False
-#End If
 End Function
 
 ''
@@ -99,8 +95,6 @@ Public Sub CloseClient()
 'Last Modification: 01/04/07
 '
 '***************************************************
-#If Release Then
     Call ReleaseMutex(mutexHID)
     Call CloseHandle(mutexHID)
-#End If
 End Sub
