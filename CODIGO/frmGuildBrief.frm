@@ -328,33 +328,26 @@ Option Explicit
 Public EsLeader As Boolean
 
 Private Sub aliado_Click()
-frmCommet.nombre = Right(nombre.Caption, Len(nombre.Caption) - 7)
-frmCommet.T = TIPO.ALIANZA
-frmCommet.Caption = "Ingrese propuesta de alianza"
-Call frmCommet.Show(vbModal, frmGuildBrief)
-
-'Call SendData("OFRECALI" & Right(Nombre, Len(Nombre) - 7))
-'Unload Me
+    frmCommet.nombre = Right(nombre.Caption, Len(nombre.Caption) - 7)
+    frmCommet.T = TIPO.ALIANZA
+    frmCommet.Caption = "Ingrese propuesta de alianza"
+    Call frmCommet.Show(vbModal, frmGuildBrief)
 End Sub
 
 Private Sub Command1_Click()
-Unload Me
+    Unload Me
 End Sub
 
 Private Sub Command2_Click()
-
-Call frmGuildSol.RecieveSolicitud(Right$(nombre, Len(nombre) - 7))
-Call frmGuildSol.Show(vbModal, frmGuildBrief)
-'Unload Me
-
+    Call frmGuildSol.RecieveSolicitud(Right$(nombre, Len(nombre) - 7))
+    Call frmGuildSol.Show(vbModal, frmGuildBrief)
 End Sub
 
 Private Sub Command3_Click()
-frmCommet.nombre = Right(nombre.Caption, Len(nombre.Caption) - 7)
-frmCommet.T = TIPO.PAZ
-frmCommet.Caption = "Ingrese propuesta de paz"
-Call frmCommet.Show(vbModal, frmGuildBrief)
-'Unload Me
+    frmCommet.nombre = Right(nombre.Caption, Len(nombre.Caption) - 7)
+    frmCommet.T = TIPO.PAZ
+    frmCommet.Caption = "Ingrese propuesta de paz"
+    Call frmCommet.Show(vbModal, frmGuildBrief)
 End Sub
 
 Private Sub Guerra_Click()

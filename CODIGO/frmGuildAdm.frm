@@ -121,11 +121,10 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Command1_Click()
-    'If GuildsList.ListIndex = 0 Then Exit Sub
+    frmGuildBrief.EsLeader = False
     Call WriteGuildRequestDetails(guildslist.List(guildslist.listIndex))
 End Sub
 
-
 Private Sub Command3_Click()
-Unload Me
+    Unload Me
 End Sub

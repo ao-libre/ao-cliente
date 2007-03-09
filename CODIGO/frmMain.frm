@@ -569,6 +569,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1147,6 +1148,7 @@ Private Sub Image1_Click(index As Integer)
             LlegaronAtrib = False
             LlegaronSkills = False
             LlegoFama = False
+        
         Case 2
             If frmGuildLeader.Visible Then Unload frmGuildLeader
             
@@ -1518,8 +1520,8 @@ If tX >= MinXBorder And tY >= MinYBorder And _
             m.SetMenuId 1
             m.ListaInit 2, False
             
-            If charlist(MapData(tX, tY).CharIndex).Nombre <> "" Then
-                m.ListaSetItem 0, charlist(MapData(tX, tY).CharIndex).Nombre, True
+            If charlist(MapData(tX, tY).CharIndex).nombre <> "" Then
+                m.ListaSetItem 0, charlist(MapData(tX, tY).CharIndex).nombre, True
             Else
                 m.ListaSetItem 0, "<NPC>", True
             End If
