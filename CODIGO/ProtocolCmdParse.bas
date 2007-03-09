@@ -1573,17 +1573,19 @@ End Function
 Private Function AEMAILSplit(ByRef Text As String) 'No return type allows to return arrays :D
 '***************************************************
 'Author: Lucas Tavolaro Ortuz (Tavo)
-'Last Modification: 01/13/07
+'Last Modification: 03/09/07
 'Usefull for AEMAIL BUG FIX
+'Las Modified By: Juan Martín Sotuyo Dodero (Maraxus)
+'Fixed several bugs...
 '***************************************************
     Dim tmpArr(0 To 1) As String
     Dim Pos As Byte
     
-    Pos = CByte(InStrB(0, Text, "-"))
+    Pos = InStr(1, Text, "-")
     
     If Pos <> 0 Then
-        tmpArr(0) = mid$(Text, 0, Pos)
-        tmpArr(1) = mid$(Text, Pos + 2)
+        tmpArr(0) = mid$(Text, 1, Pos - 1)
+        tmpArr(1) = mid$(Text, Pos + 1)
     Else
         tmpArr(0) = vbNullString
     End If
