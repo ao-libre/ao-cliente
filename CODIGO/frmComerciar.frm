@@ -369,33 +369,38 @@ Select Case index
         Label1(0).Caption = NPCInventory(List1(0).listIndex + 1).Name
         Label1(1).Caption = NPCInventory(List1(0).listIndex + 1).Valor
         Label1(2).Caption = NPCInventory(List1(0).listIndex + 1).Amount
+        
         Select Case NPCInventory(List1(0).listIndex + 1).OBJType
-            Case 2
+            Case eOBJType.otWeapon
                 Label1(3).Caption = "Max Golpe:" & NPCInventory(List1(0).listIndex + 1).MaxHit
                 Label1(4).Caption = "Min Golpe:" & NPCInventory(List1(0).listIndex + 1).MinHit
                 Label1(3).Visible = True
                 Label1(4).Visible = True
-            Case 3
+            Case eOBJType.otArmadura
                 Label1(3).Visible = False
                 Label1(4).Caption = "Defensa:" & NPCInventory(List1(0).listIndex + 1).Def
                 Label1(4).Visible = True
         End Select
+        
         Call DrawGrhtoHdc(Picture1.hWnd, Picture1.hdc, NPCInventory(List1(0).listIndex + 1).GrhIndex, SR, DR)
+    
     Case 1
         Label1(0).Caption = Inventario.ItemName(List1(1).listIndex + 1)
         Label1(1).Caption = Inventario.Valor(List1(1).listIndex + 1)
         Label1(2).Caption = Inventario.Amount(List1(1).listIndex + 1)
+        
         Select Case Inventario.OBJType(List1(1).listIndex + 1)
-            Case 2
+            Case eOBJType.otWeapon
                 Label1(3).Caption = "Max Golpe:" & Inventario.MaxHit(List1(1).listIndex + 1)
                 Label1(4).Caption = "Min Golpe:" & Inventario.MinHit(List1(1).listIndex + 1)
                 Label1(3).Visible = True
                 Label1(4).Visible = True
-            Case 3
+            Case eOBJType.otArmadura
                 Label1(3).Visible = False
                 Label1(4).Caption = "Defensa:" & Inventario.Def(List1(1).listIndex + 1)
                 Label1(4).Visible = True
         End Select
+        
         Call DrawGrhtoHdc(Picture1.hWnd, Picture1.hdc, Inventario.GrhIndex(List1(1).listIndex + 1), SR, DR)
 End Select
 
