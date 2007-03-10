@@ -1818,9 +1818,13 @@ On Error GoTo ErrHandler
     chat = Buffer.ReadASCIIString()
     fontIndex = Buffer.ReadByte()
     
-    With FontTypes(fontIndex)
-        Call AddtoRichTextBox(frmMain.RecTxt, chat, .red, .green, .blue, .bold, .italic)
-    End With
+    If InStr(1, chat, "~") Then
+        Call AddtoRichTextBox(frmMain.RecTxt, Left$(chat, InStr(1, chat, "~") - 1), Val(ReadField(2, chat, 126)), Val(ReadField(3, chat, 126)), Val(ReadField(4, chat, 126)), Val(ReadField(5, chat, 126)), Val(ReadField(6, chat, 126)))
+    Else
+        With FontTypes(fontIndex)
+            Call AddtoRichTextBox(frmMain.RecTxt, chat, .red, .green, .blue, .bold, .italic)
+        End With
+    End If
     
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
@@ -1864,11 +1868,15 @@ On Error GoTo ErrHandler
     chat = Buffer.ReadASCIIString()
     
     If Not DialogosClanes.Activo Then
-        With FontTypes(FontTypeNames.FONTTYPE_GUILDMSG)
-            Call AddtoRichTextBox(frmMain.RecTxt, chat, .red, .green, .blue, .bold, .italic)
-        End With
+        If InStr(1, chat, "~") Then
+            Call AddtoRichTextBox(frmMain.RecTxt, Left$(chat, InStr(1, chat, "~") - 1), Val(ReadField(2, chat, 126)), Val(ReadField(3, chat, 126)), Val(ReadField(4, chat, 126)), Val(ReadField(5, chat, 126)), Val(ReadField(6, chat, 126)))
+        Else
+            With FontTypes(FontTypeNames.FONTTYPE_GUILDMSG)
+                Call AddtoRichTextBox(frmMain.RecTxt, chat, .red, .green, .blue, .bold, .italic)
+            End With
+        End If
     ElseIf DialogosClanes.Activo Then
-        Call DialogosClanes.PushBackText(chat)
+        Call DialogosClanes.PushBackText(ReadField(1, chat, 126))
     End If
     
     'If we got here then packet is complete, copy data back to original queue

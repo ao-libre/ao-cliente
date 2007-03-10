@@ -298,16 +298,16 @@ Private Sub Command2_Click()
 End Sub
 
 Private Sub Command3_Click()
-    Dim k$
+    Dim k As String
 
-    k$ = Replace(txtguildnews, vbCrLf, "º")
+    k = Replace(txtguildnews, vbCrLf, "º")
     
-    Call WriteGuildUpdateNews(k$)
+    Call WriteGuildUpdateNews(k)
 End Sub
 
 Private Sub Command4_Click()
     frmGuildBrief.EsLeader = True
-    Call WriteGuildRequestDetails(guildslist.List(guildslist.listIndex))
+    Call WriteGuildRequestDetails(GuildsList.List(GuildsList.listIndex))
 
     'Unload Me
 End Sub
