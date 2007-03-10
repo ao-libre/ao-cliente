@@ -223,7 +223,7 @@ If Not MiMensaje(0).Visible Then
     Label1.Visible = True
     Label2.Visible = True
 Else
-    Call WriteForumPost(MiMensaje(0).Text, Left(MiMensaje(1).Text, 450))
+    Call WriteForumPost(MiMensaje(0).Text, Left$(MiMensaje(1).Text, 450))
     List.AddItem MiMensaje(0).Text
     Load Text(List.ListCount)
     Text(List.ListCount - 1).Text = MiMensaje(1).Text

@@ -83,7 +83,7 @@ Public ColoresPJ(0 To 50) As tColor
 Public Type tServerInfo
     Ip As String
     Puerto As Integer
-    Desc As String
+    desc As String
     PassRecPort As Integer
 End Type
 
@@ -233,7 +233,18 @@ Enum eGenero
     Mujer
 End Enum
 
-Public Enum eOBJType
+Public Enum PlayerType
+    User = &H1
+    Consejero = &H2
+    SemiDios = &H4
+    Dios = &H8
+    Admin = &H10
+    RoleMaster = &H20
+    ChaosCouncil = &H40
+    RoyalCouncil = &H80
+End Enum
+
+Public Enum eObjType
     otUseOnce = 1
     otWeapon = 2
     otArmadura = 3

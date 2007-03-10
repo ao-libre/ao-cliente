@@ -1500,7 +1500,7 @@ Private Sub HandleUpdateExp()
     
     'Get data and update form
     UserExp = incomingData.ReadLong()
-    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
 End Sub
 
@@ -2028,7 +2028,22 @@ On Error GoTo ErrHandler
         privs = Buffer.ReadByte()
         
         If privs <> 0 Then
-            .priv = log(privs) / log(2) 'Log2 of the bit flags sent by the server gives our numbers ^^
+            'If the player belongs to a council AND is an admin, only whos as an admin
+            If (privs And PlayerType.ChaosCouncil) <> 0 And (privs Xor PlayerType.ChaosCouncil) <> 0 Then
+                privs = privs Xor PlayerType.ChaosCouncil
+            End If
+            
+            If (privs And PlayerType.RoyalCouncil) <> 0 And (privs Xor PlayerType.RoyalCouncil) <> 0 Then
+                privs = privs Xor PlayerType.RoyalCouncil
+            End If
+            
+            'If the player is a RM, ignore other flags
+            If privs And PlayerType.RoleMaster Then
+                privs = PlayerType.RoleMaster
+            End If
+            
+            'Log2 of the bit flags sent by the server gives our numbers ^^
+            .priv = log(privs) / log(2)
         Else
             .priv = 0
         End If
@@ -2337,14 +2352,14 @@ On Error GoTo ErrHandler
     Call Buffer.ReadByte
     
     'Clear guild's list
-    frmGuildAdm.guildslist.Clear
+    frmGuildAdm.GuildsList.Clear
     
     Dim guilds() As String
     guilds = Split(Buffer.ReadASCIIString(), SEPARATOR)
     
     Dim i As Long
     For i = 0 To UBound(guilds())
-        Call frmGuildAdm.guildslist.AddItem(guilds(i))
+        Call frmGuildAdm.GuildsList.AddItem(guilds(i))
     Next i
     
     'If we got here then packet is complete, copy data back to original queue
@@ -2509,7 +2524,7 @@ Private Sub HandleUpdateUserStats()
     UserPasarNivel = incomingData.ReadLong()
     UserExp = incomingData.ReadLong()
     
-    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
     frmMain.Hpshp.Width = (((UserMinHP / 100) / (UserMaxHP / 100)) * 94)
     
@@ -3765,11 +3780,11 @@ On Error GoTo ErrHandler
         .criminales.Caption = "Criminales asesinados: " & CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .status.Caption = " (Ciudadano)"
-            .status.ForeColor = vbBlue
+            .Status.Caption = " (Ciudadano)"
+            .Status.ForeColor = vbBlue
         Else
-            .status.Caption = " (Criminal)"
-            .status.ForeColor = vbRed
+            .Status.Caption = " (Criminal)"
+            .Status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)
@@ -3820,7 +3835,7 @@ On Error GoTo ErrHandler
         List = Split(Buffer.ReadASCIIString(), SEPARATOR)
         
         For i = 0 To UBound(List())
-            Call .guildslist.AddItem(List(i))
+            Call .GuildsList.AddItem(List(i))
         Next i
         
         'Get list of guild's members
@@ -3915,7 +3930,7 @@ On Error GoTo ErrHandler
         codexStr = Split(Buffer.ReadASCIIString(), SEPARATOR)
         
         For i = 0 To 7
-            .Codex(i).Caption = codexStr(i)
+            .codex(i).Caption = codexStr(i)
         Next i
         
         .desc.Text = Buffer.ReadASCIIString()
@@ -4947,7 +4962,7 @@ End Sub
 ' @param    codex   Array of all rules of the guild.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCreateNewGuild(ByVal desc As String, ByVal Name As String, ByVal Site As String, ByRef Codex() As String)
+Public Sub WriteCreateNewGuild(ByVal desc As String, ByVal Name As String, ByVal Site As String, ByRef codex() As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -4963,8 +4978,8 @@ Public Sub WriteCreateNewGuild(ByVal desc As String, ByVal Name As String, ByVal
         Call .WriteASCIIString(Name)
         Call .WriteASCIIString(Site)
         
-        For i = LBound(Codex()) To UBound(Codex())
-            temp = temp & Codex(i) & SEPARATOR
+        For i = LBound(codex()) To UBound(codex())
+            temp = temp & codex(i) & SEPARATOR
         Next i
         
         If Len(temp) Then _
@@ -5206,7 +5221,7 @@ End Sub
 ' @param    codex New codex of the clan.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteClanCodexUpdate(ByVal desc As String, ByRef Codex() As String)
+Public Sub WriteClanCodexUpdate(ByVal desc As String, ByRef codex() As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5220,8 +5235,8 @@ Public Sub WriteClanCodexUpdate(ByVal desc As String, ByRef Codex() As String)
         
         Call .WriteASCIIString(desc)
         
-        For i = LBound(Codex()) To UBound(Codex())
-            temp = temp & Codex(i) & SEPARATOR
+        For i = LBound(codex()) To UBound(codex())
+            temp = temp & codex(i) & SEPARATOR
         Next i
         
         If Len(temp) Then _

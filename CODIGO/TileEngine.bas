@@ -1689,20 +1689,20 @@ For y = minY + 8 To maxY - 1
                                                     Select Case TempChar.priv
                                                         Case 0
                                                             If TempChar.Criminal Then
-                                                                Call Dialogos.DrawText(iPPx - lCenter, iPPy + 30, Left(TempChar.Nombre, InStr(TempChar.Nombre, "<") - 1), RGB(ColoresPJ(50).r, ColoresPJ(50).g, ColoresPJ(50).b))
+                                                                Call Dialogos.DrawText(iPPx - lCenter, iPPy + 30, Left$(TempChar.Nombre, InStr(TempChar.Nombre, "<") - 1), RGB(ColoresPJ(50).r, ColoresPJ(50).g, ColoresPJ(50).b))
                                                                 lCenter = (frmMain.TextWidth(sClan) / 2) - 16
                                                                 Call Dialogos.DrawText(iPPx - lCenter, iPPy + 45, sClan, RGB(ColoresPJ(50).r, ColoresPJ(50).g, ColoresPJ(50).b))
                                                             Else
-                                                                Call Dialogos.DrawText(iPPx - lCenter, iPPy + 30, Left(TempChar.Nombre, InStr(TempChar.Nombre, "<") - 1), RGB(ColoresPJ(49).r, ColoresPJ(49).g, ColoresPJ(49).b))
+                                                                Call Dialogos.DrawText(iPPx - lCenter, iPPy + 30, Left$(TempChar.Nombre, InStr(TempChar.Nombre, "<") - 1), RGB(ColoresPJ(49).r, ColoresPJ(49).g, ColoresPJ(49).b))
                                                                 lCenter = (frmMain.TextWidth(sClan) / 2) - 16
                                                                 Call Dialogos.DrawText(iPPx - lCenter, iPPy + 45, sClan, RGB(ColoresPJ(49).r, ColoresPJ(49).g, ColoresPJ(49).b))
                                                             End If
                                                         Case 4  'admin
-                                                            Call Dialogos.DrawTextBig(iPPx - lCenter, iPPy + 30, Left(TempChar.Nombre, InStr(TempChar.Nombre, "<") - 1), RGB(ColoresPJ(TempChar.priv).r, ColoresPJ(TempChar.priv).g, ColoresPJ(TempChar.priv).b))
+                                                            Call Dialogos.DrawTextBig(iPPx - lCenter, iPPy + 30, Left$(TempChar.Nombre, InStr(TempChar.Nombre, "<") - 1), RGB(ColoresPJ(TempChar.priv).r, ColoresPJ(TempChar.priv).g, ColoresPJ(TempChar.priv).b))
                                                             lCenter = (frmMain.TextWidth(sClan) / 2) - 16
                                                             Call Dialogos.DrawTextBig(iPPx - lCenter, iPPy + 45, sClan, RGB(ColoresPJ(TempChar.priv).r, ColoresPJ(TempChar.priv).g, ColoresPJ(TempChar.priv).b))
                                                         Case Else 'el resto
-                                                            Call Dialogos.DrawText(iPPx - lCenter, iPPy + 30, Left(TempChar.Nombre, InStr(TempChar.Nombre, "<") - 1), RGB(ColoresPJ(TempChar.priv).r, ColoresPJ(TempChar.priv).g, ColoresPJ(TempChar.priv).b))
+                                                            Call Dialogos.DrawText(iPPx - lCenter, iPPy + 30, Left$(TempChar.Nombre, InStr(TempChar.Nombre, "<") - 1), RGB(ColoresPJ(TempChar.priv).r, ColoresPJ(TempChar.priv).g, ColoresPJ(TempChar.priv).b))
                                                             lCenter = (frmMain.TextWidth(sClan) / 2) - 16
                                                             Call Dialogos.DrawText(iPPx - lCenter, iPPy + 45, sClan, RGB(ColoresPJ(TempChar.priv).r, ColoresPJ(TempChar.priv).g, ColoresPJ(TempChar.priv).b))
                                                     End Select
