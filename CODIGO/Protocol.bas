@@ -273,7 +273,6 @@ Private Enum ClientPacketID
     PartyKick               '/ECHARPARTY
     PartySetLeader          '/PARTYLIDER
     PartyAcceptMember       '/ACCEPTPARTY
-    GuildMemberList        '/MIEMBROSCLAN
     
     'GM messages
     GMMessage               '/GMSG
@@ -346,7 +345,7 @@ Private Enum ClientPacketID
     SetTrigger              '/TRIGGER
     BannedIPList            '/BANIPLIST
     BannedIPReload          '/BANIPRELOAD
-    GuildCompleteMemberList '/MIEMBROSCLAN
+    GuildMemberList         '/MIEMBROSCLAN
     GuildBan                '/BANCLAN
     BanIP                   '/BANIP
     UnbanIP                 '/UNBANIP
