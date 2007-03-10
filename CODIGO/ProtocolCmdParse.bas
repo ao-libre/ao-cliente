@@ -861,14 +861,8 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 Call WriteRainToggle
                 
             Case "/SETDESC"
-                'Ojo, no usar notNullArguments porque se usa para resetear la desc.
-                If CantidadArgumentos > 0 Then
-                    Call WriteSetCharDescription(ArgumentosRaw)
-                Else
-                    'Avisar que falta el parametro
-                    Call ShowConsoleMsg("Escriba una DESC.")
-                End If
-                
+                Call WriteSetCharDescription(ArgumentosRaw)
+            
             Case "/FORCEMIDIMAP"
                 If notNullArguments Then
                     'elegir el mapa es opcional
