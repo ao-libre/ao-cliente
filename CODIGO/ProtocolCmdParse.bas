@@ -350,12 +350,8 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     End With
                     Exit Sub
                 End If
-                If notNullArguments Then
-                    Call WriteChangeDescription(ArgumentosRaw)
-                Else
-                    'Avisar que falta el parametro
-                    Call ShowConsoleMsg("Escriba una descripción.")
-                End If
+                
+                Call WriteChangeDescription(ArgumentosRaw)
             
             Case "/VOTO"
                 If notNullArguments Then
