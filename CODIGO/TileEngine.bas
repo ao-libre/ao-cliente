@@ -798,7 +798,7 @@ Sub DoPasosFx(ByVal CharIndex As Integer)
 Static pie As Boolean
 
 If Not UserNavegando Then
-    If Not charlist(CharIndex).muerto And EstaPCarea(CharIndex) Then
+    If Not charlist(CharIndex).muerto And EstaPCarea(CharIndex) And (charlist(CharIndex).priv = 0 Or charlist(CharIndex).priv > 5) Then
         charlist(CharIndex).pie = Not charlist(CharIndex).pie
         If charlist(CharIndex).pie Then
             Call Audio.PlayWave(SND_PASOS1)
