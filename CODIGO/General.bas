@@ -756,8 +756,10 @@ Public Function CurServerPort() As Integer
     End If
 End Function
 
+
 Sub Main()
 'On Error GoTo ManejadorErrores
+
 #If SeguridadAlkon Then
     InitSecurity
 #End If
@@ -1084,9 +1086,9 @@ End Function
 
 'TODO : como todo lorelativo a mapas, no tiene anda que hacer acá....
 Function HayAgua(ByVal x As Integer, ByVal y As Integer) As Boolean
-
-    HayAgua = MapData(x, y).Graphic(1).GrhIndex >= 1505 And _
-                MapData(x, y).Graphic(1).GrhIndex <= 1520 And _
+    HayAgua = ((MapData(Map, x, y).Graphic(1) >= 1505 And MapData(Map, x, y).Graphic(1) <= 1520) Or _
+            (MapData(Map, x, y).Graphic(1) >= 5665 And MapData(Map, x, y).Graphic(1) <= 5680) Or _
+            (MapData(Map, x, y).Graphic(1) >= 13547 And MapData(Map, x, y).Graphic(1) <= 13562)) And _
                 MapData(x, y).Graphic(2).GrhIndex = 0
 End Function
 
