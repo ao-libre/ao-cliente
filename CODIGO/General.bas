@@ -758,12 +758,6 @@ End Function
 
 
 Sub Main()
-'On Error GoTo ManejadorErrores
-
-#If SeguridadAlkon Then
-    InitSecurity
-#End If
-
     Call WriteClientVer
     
     'Load config file
@@ -911,17 +905,19 @@ UserMap = 1
     'Set the intervals of timers
     Call MainTimer.SetInterval(TimersIndex.Attack, 2000)
     Call MainTimer.SetInterval(TimersIndex.Work, 400)
-    Call MainTimer.SetInterval(TimersIndex.UseItem, 200)
+    Call MainTimer.SetInterval(TimersIndex.UseItemWithU, 500)
+    Call MainTimer.SetInterval(TimersIndex.UseItemWithDblClick, 250)
     Call MainTimer.SetInterval(TimersIndex.SendRPU, 2000)
     
     'Init timers
     Call MainTimer.Start(TimersIndex.Attack)
     Call MainTimer.Start(TimersIndex.Work)
-    Call MainTimer.Start(TimersIndex.UseItem)
+    Call MainTimer.Start(TimersIndex.UseItemWithU)
+    Call MainTimer.Start(TimersIndex.UseItemWithDblClick)
     Call MainTimer.Start(TimersIndex.SendRPU)
     
     ' Load the form for screenshots
-    Load frmScreenshots
+    Call Load(frmScreenshots)
     
     Do While prgRun
         'Sólo dibujamos si la ventana no está minimizada
@@ -1011,14 +1007,6 @@ UserMap = 1
     Config_Inicio.tip = tipf
     Call EscribirGameIni(Config_Inicio)
     
-#If SeguridadAlkon Then
-    DeinitSecurity
-#End If
-End
-
-ManejadorErrores:
-    MsgBox "Ha ocurrido un error irreparable, el cliente se cerrará."
-    LogError "Contexto:" & Err.HelpContext & " Desc:" & Err.Description & " Fuente:" & Err.source
     End
 End Sub
 

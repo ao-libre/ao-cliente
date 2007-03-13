@@ -371,13 +371,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 
             Case "/PASSWD"
                 If notNullArguments Then
-                    #If SeguridadAlkon Then
-                        Call WriteChangePassword(md5.GetMD5String(txtPasswd.Text))
-                        Call md5.MD5Reset
-                    #Else
-                        Call WriteChangePassword(ArgumentosRaw)
-                    #End If
+#If SeguridadAlkon Then
+                    Call WriteChangePassword(md5.GetMD5String(ArgumentosRaw))
+                    Call md5.MD5Reset
+#Else
                     Call WriteChangePassword(ArgumentosRaw)
+#End If
                 Else
                     'Avisar que falta el parametro
                     Call ShowConsoleMsg("Password nulo. Utilice /passwd PASSWORD, siendo el PASSWORD de su elección.")

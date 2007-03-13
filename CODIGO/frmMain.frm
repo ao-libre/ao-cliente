@@ -569,7 +569,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1040,7 +1039,7 @@ On Error Resume Next
                 Case vbKeyT:
                     Call TirarItem
                 Case vbKeyU:
-                    If MainTimer.Check(TimersIndex.UseItem) Then _
+                    If MainTimer.Check(TimersIndex.UseItemWithU) Then _
                         Call UsarItem
                 Case vbKeyL:
                     If MainTimer.Check(TimersIndex.SendRPU) Then
@@ -1218,7 +1217,7 @@ End Sub
 Private Sub picInv_DblClick()
     If frmCarp.Visible Or frmHerrero.Visible Then Exit Sub
     
-    If Not MainTimer.Check(TimersIndex.UseItem) Then Exit Sub
+    If Not MainTimer.Check(TimersIndex.UseItemWithDblClick) Then Exit Sub
     
     Call UsarItem
 End Sub
@@ -1520,8 +1519,8 @@ If tX >= MinXBorder And tY >= MinYBorder And _
             m.SetMenuId 1
             m.ListaInit 2, False
             
-            If charlist(MapData(tX, tY).CharIndex).nombre <> "" Then
-                m.ListaSetItem 0, charlist(MapData(tX, tY).CharIndex).nombre, True
+            If charlist(MapData(tX, tY).CharIndex).Nombre <> "" Then
+                m.ListaSetItem 0, charlist(MapData(tX, tY).CharIndex).Nombre, True
             Else
                 m.ListaSetItem 0, "<NPC>", True
             End If
@@ -1547,7 +1546,7 @@ Case 0 'Inventario
     Case 2 'Tirar
         Call TirarItem
     Case 3 'Usar
-        If MainTimer.Check(TimersIndex.UseItem) Then
+        If MainTimer.Check(TimersIndex.UseItemWithDblClick) Then
             Call UsarItem
         End If
     Case 3 'equipar
