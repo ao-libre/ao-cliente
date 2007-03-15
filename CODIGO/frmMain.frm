@@ -569,6 +569,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -989,7 +990,7 @@ Private Sub Form_Click()
                 Call AbrirMenuViewPort
             End If
         ElseIf (MouseShift And 1) = 1 Then
-            If MouseShift = vbLeftButton Then
+            If MouseBoton = vbLeftButton Then
                 Call WriteWarpChar("YO", UserMap, tX, tY)
             End If
         End If
