@@ -869,6 +869,11 @@ UserMap = 1
     'Inicializamos el sonido
     Call AddtoRichTextBox(frmCargando.status, "Iniciando DirectSound....", 0, 0, 0, 0, 0, True)
     Call Audio.Initialize(DirectX, frmMain.hWnd, App.Path & "\" & Config_Inicio.DirSonidos & "\", App.Path & "\" & Config_Inicio.DirMusica & "\")
+    
+    'Enable / Disable audio
+    Audio.MusicActivated = Not ClientSetup.bNoMusic
+    Audio.SoundActivated = Not ClientSetup.bNoSound
+    
     Call AddtoRichTextBox(frmCargando.status, "Hecho", , , , 1, , False)
     
     'Inicializamos el inventario gráfico
@@ -1123,8 +1128,6 @@ Private Sub LoadClientSetup()
     Close fHandle
     
     NoRes = ClientSetup.bNoRes
-    Audio.MusicActivated = Not ClientSetup.bNoMusic
-    Audio.SoundActivated = Not ClientSetup.bNoSound
 End Sub
 
 Private Sub InicializarNombres()
