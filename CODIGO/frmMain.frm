@@ -569,7 +569,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -713,14 +712,6 @@ Dim Pos(0) As DSBPOSITIONNOTIFY
 Public IsPlaying As Byte
 
 Dim PuedeMacrear As Boolean
-
-Private Sub CmdLanzar_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
-    If hlst.List(hlst.listIndex) <> "(None)" And MainTimer.Check(TimersIndex.Attack, False) Then
-        Call WriteCastSpell(hlst.listIndex + 1)
-        Call WriteWork(eSkill.Magia)
-        UsaMacro = True
-    End If
-End Sub
 
 Private Sub cmdMoverHechi_Click(index As Integer)
     If hlst.listIndex = -1 Then Exit Sub
