@@ -118,7 +118,7 @@ Begin VB.Form frmOpciones
          Caption         =   "En pantalla,"
          ForeColor       =   &H00FFFFFF&
          Height          =   270
-         Left            =   1770
+         Left            =   1800
          TabIndex        =   4
          Top             =   315
          Value           =   -1  'True
@@ -215,15 +215,19 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private Sub Check1_Click(index As Integer)
-    Call Audio.PlayWave(SND_CLICK)
+Private loading As Boolean
+
+Private Sub Check1_Click(Index As Integer)
+    If Not loading Then _
+        Call Audio.PlayWave(SND_CLICK)
     
-    Select Case index
+    Select Case Index
         Case 0
             If Check1(0).value = vbUnchecked Then
                 Audio.MusicActivated = False
                 Slider1(0).Enabled = False
             ElseIf Not Audio.MusicActivated Then  'Prevent the music from reloading
+                Audio.MusicActivated = True
                 Slider1(0).Enabled = True
                 Slider1(0).value = Audio.MusicVolume
             End If
@@ -243,7 +247,7 @@ Private Sub Check1_Click(index As Integer)
 End Sub
 
 Private Sub cmdManual_Click()
-    Call ShellExecute(0, "Open", "www.aoinfo.com.ar/manual", "", App.Path, 0)
+    Call ShellExecute(0, "Open", "http://ao.alkon.com.ar/aomanual/index.htm", "", App.Path, 0)
 End Sub
 
 Private Sub Command2_Click()
@@ -251,6 +255,8 @@ Private Sub Command2_Click()
 End Sub
 
 Private Sub Form_Load()
+    loading = True      'Prevent sounds when setting check's values
+    
     If Audio.MusicActivated Then
         Check1(0).value = vbChecked
         Slider1(0).Enabled = True
@@ -268,6 +274,8 @@ Private Sub Form_Load()
         Check1(1).value = vbUnchecked
         Slider1(1).Enabled = False
     End If
+    
+    loading = False     'Enable sounds when setting check's values
 End Sub
 
 Private Sub optConsola_Click()
@@ -278,8 +286,17 @@ Private Sub optPantalla_Click()
     DialogosClanes.Activo = True
 End Sub
 
-Private Sub Slider1_Change(index As Integer)
-    Select Case index
+Private Sub Slider1_Change(Index As Integer)
+    Select Case Index
+        Case 0
+            Audio.MusicVolume = Slider1(0).value
+        Case 1
+            Audio.SoundVolume = Slider1(1).value
+    End Select
+End Sub
+
+Private Sub Slider1_Scroll(Index As Integer)
+    Select Case Index
         Case 0
             Audio.MusicVolume = Slider1(0).value
         Case 1
