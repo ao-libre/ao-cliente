@@ -3,7 +3,7 @@ Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmOpciones 
    BackColor       =   &H00000000&
    BorderStyle     =   3  'Fixed Dialog
-   ClientHeight    =   3195
+   ClientHeight    =   3615
    ClientLeft      =   45
    ClientTop       =   45
    ClientWidth     =   4740
@@ -21,10 +21,18 @@ Begin VB.Form frmOpciones
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   3195
+   ScaleHeight     =   3615
    ScaleWidth      =   4740
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
+   Begin VB.CommandButton cmdManual 
+      Caption         =   "Manual de Argentum Online"
+      Height          =   375
+      Left            =   960
+      TabIndex        =   12
+      Top             =   2640
+      Width           =   2775
+   End
    Begin VB.Frame Frame2 
       BackColor       =   &H00000000&
       Caption         =   "Audio"
@@ -144,7 +152,7 @@ Begin VB.Form frmOpciones
       MouseIcon       =   "frmOpciones.frx":0152
       MousePointer    =   99  'Custom
       TabIndex        =   0
-      Top             =   2700
+      Top             =   3120
       Width           =   2790
    End
    Begin VB.Label Label1 
@@ -232,6 +240,10 @@ Private Sub Check1_Click(index As Integer)
                 Slider1(1).value = Audio.SoundVolume
             End If
     End Select
+End Sub
+
+Private Sub cmdManual_Click()
+    Call ShellExecute(0, "Open", "www.aoinfo.com.ar/manual", "", App.Path, 0)
 End Sub
 
 Private Sub Command2_Click()
