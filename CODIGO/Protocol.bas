@@ -4089,7 +4089,7 @@ Private Sub HandleChangeUserTradeSlot()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.length < 20 Then
+    If incomingData.length < 22 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -4105,7 +4105,7 @@ On Error GoTo ErrHandler
     With OtroInventario(1)
         .OBJIndex = Buffer.ReadInteger()
         .Name = Buffer.ReadASCIIString()
-        .Amount = Buffer.ReadInteger()
+        .Amount = Buffer.ReadLong()
         .GrhIndex = Buffer.ReadInteger()
         .OBJType = Buffer.ReadByte()
         .MaxHit = Buffer.ReadInteger()
@@ -5245,7 +5245,7 @@ End Sub
 ' @param    amount Number of items to offer.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteUserCommerceOffer(ByVal slot As Byte, ByVal Amount As Integer)
+Public Sub WriteUserCommerceOffer(ByVal slot As Byte, ByVal Amount As Long)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5255,7 +5255,7 @@ Public Sub WriteUserCommerceOffer(ByVal slot As Byte, ByVal Amount As Integer)
         Call .WriteByte(ClientPacketID.UserCommerceOffer)
         
         Call .WriteByte(slot)
-        Call .WriteInteger(Amount)
+        Call .WriteLong(Amount)
     End With
 End Sub
 

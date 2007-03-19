@@ -383,6 +383,8 @@ End Sub
 
 Private Sub txtCant_Change()
     If Val(txtCant.Text) < 1 Then txtCant.Text = "1"
+    
+    If Val(txtCant.Text) > 2147483647 Then txtCant.Text = "2147483647"
 End Sub
 
 Private Sub txtCant_KeyDown(KeyCode As Integer, Shift As Integer)
