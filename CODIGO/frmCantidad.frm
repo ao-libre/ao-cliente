@@ -168,9 +168,7 @@ On Error GoTo ErrHandler
     End If
     
     If Val(Text1.Text) > MAX_INVENTORY_OBJS Then
-        If Inventario.SelectedItem <> FLAGORO Or Val(Text1.Text) > UserGLD Then
-            Text1.Text = "1"
-        End If
+        Text1.Text = "1"
     End If
     
     Exit Sub
@@ -181,9 +179,9 @@ ErrHandler:
 End Sub
 
 Private Sub Text1_KeyPress(KeyAscii As Integer)
-If (KeyAscii <> 8) Then
-    If (KeyAscii < 48 Or KeyAscii > 57) Then
-        KeyAscii = 0
+    If (KeyAscii <> 8) Then
+        If (KeyAscii < 48 Or KeyAscii > 57) Then
+            KeyAscii = 0
+        End If
     End If
-End If
 End Sub
