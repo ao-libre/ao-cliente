@@ -30,11 +30,6 @@ Begin VB.Form frmMain
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   794
    Visible         =   0   'False
-   Begin VB.Timer macrotrabajo 
-      Enabled         =   0   'False
-      Left            =   7080
-      Top             =   2520
-   End
    Begin SocketWrenchCtrl.Socket Socket1 
       Left            =   6750
       Top             =   1920
@@ -66,6 +61,11 @@ Begin VB.Form frmMain
       Timeout         =   999999
       Type            =   1
       Urgent          =   0   'False
+   End
+   Begin VB.Timer macrotrabajo 
+      Enabled         =   0   'False
+      Left            =   7080
+      Top             =   2520
    End
    Begin VB.PictureBox Picture1 
       Height          =   135
@@ -574,7 +574,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -811,7 +810,9 @@ Private Sub macrotrabajo_Timer()
         Call WriteWorkLeftClick(tX, tY, UsingSkill)
         UsingSkill = 0
     End If
-    Call UsarItem
+    
+    If Inventario.OBJType(Inventario.SelectedItem) = eObjType.otWeapon Then _
+        Call UsarItem
 End Sub
 
 Public Sub ActivarMacroTrabajo()
