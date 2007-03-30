@@ -30,6 +30,11 @@ Begin VB.Form frmMain
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   794
    Visible         =   0   'False
+   Begin VB.Timer macrotrabajo 
+      Enabled         =   0   'False
+      Left            =   7080
+      Top             =   2520
+   End
    Begin SocketWrenchCtrl.Socket Socket1 
       Left            =   6750
       Top             =   1920
@@ -75,7 +80,7 @@ Begin VB.Form frmMain
    Begin VB.Timer TrainingMacro 
       Enabled         =   0   'False
       Interval        =   3121
-      Left            =   6480
+      Left            =   6600
       Top             =   2520
    End
    Begin VB.TextBox SendCMSTXT 
@@ -569,6 +574,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -739,7 +745,7 @@ Public Sub ActivarMacroHechizos()
         Call AddtoRichTextBox(frmMain.RecTxt, "Debes tener seleccionado el hechizo para activar el auto-lanzar", 0, 200, 200, False, True, False)
         Exit Sub
     End If
-    TrainingMacro.Interval = 2788
+    TrainingMacro.Interval = INT_MACRO_HECHIS
     TrainingMacro.Enabled = True
     Call AddtoRichTextBox(frmMain.RecTxt, "Auto lanzar hechizos activado", 0, 200, 200, False, True, False)
     PicMH.Visible = True
@@ -799,6 +805,26 @@ End Sub
 Private Sub Macro_Timer()
     PuedeMacrear = True
 End Sub
+
+Private Sub macrotrabajo_Timer()
+    If (UsingSkill = eSkill.Pesca Or UsingSkill = eSkill.Talar Or UsingSkill = eSkill.Mineria) Then
+        Call WriteWorkLeftClick(tX, tY, UsingSkill)
+        UsingSkill = 0
+    End If
+    Call UsarItem
+End Sub
+
+Public Sub ActivarMacroTrabajo()
+    macrotrabajo.Interval = INT_MACRO_TRABAJO
+    macrotrabajo.Enabled = True
+    Call AddtoRichTextBox(frmMain.RecTxt, "Macro Trabajo ACTIVADO", 0, 200, 200, False, True, False)
+End Sub
+
+Public Sub DesactivarMacroTrabajo()
+    macrotrabajo.Enabled = False
+    Call AddtoRichTextBox(frmMain.RecTxt, "Macro Trabajo DESACTIVADO", 0, 200, 200, False, True, False)
+End Sub
+
 
 Private Sub mnuEquipar_Click()
     Call EquiparItem
@@ -974,6 +1000,7 @@ Private Sub Form_Click()
                     frmMain.MousePointer = vbDefault
                     If (UsingSkill = Magia Or UsingSkill = Proyectiles) And Not MainTimer.Check(TimersIndex.Attack) Then Exit Sub
                     If TrainingMacro.Enabled Then DesactivarMacroHechizos
+                    If macrotrabajo.Enabled Then DesactivarMacroTrabajo
                     Call WriteWorkLeftClick(tX, tY, UsingSkill)
                     UsingSkill = 0
                 End If
@@ -1033,6 +1060,8 @@ On Error Resume Next
                 Case vbKeyU:
                     If MainTimer.Check(TimersIndex.UseItemWithU) Then _
                         Call UsarItem
+                    If macrotrabajo.Enabled Then _
+                        DesactivarMacroTrabajo
                 Case vbKeyL:
                     If MainTimer.Check(TimersIndex.SendRPU) Then
                         Call WriteRequestPositionUpdate
@@ -1058,6 +1087,8 @@ On Error Resume Next
                    (Not UserDescansar) And _
                    (Not UserMeditar) Then
                         Call WriteAttack
+                    If macrotrabajo.Enabled Then _
+                        DesactivarMacroTrabajo
                 End If
             Case vbKeyF5:
                 Call frmOpciones.Show(vbModeless, frmMain)
@@ -1073,6 +1104,12 @@ On Error Resume Next
                     DesactivarMacroHechizos
                 Else
                     ActivarMacroHechizos
+                End If
+            Case vbKeyF8:
+                If macrotrabajo.Enabled Then
+                    DesactivarMacroTrabajo
+                Else
+                    ActivarMacroTrabajo
                 End If
             Case vbKeyMultiply:
                 If frmMain.PicSeg.Visible Then
@@ -1210,7 +1247,10 @@ Private Sub picInv_DblClick()
     If frmCarp.Visible Or frmHerrero.Visible Then Exit Sub
     
     If Not MainTimer.Check(TimersIndex.UseItemWithDblClick) Then Exit Sub
-    
+       
+    If macrotrabajo.Enabled Then _
+                     DesactivarMacroTrabajo
+                     
     Call UsarItem
 End Sub
 
@@ -1436,6 +1476,8 @@ Private Sub Socket1_Disconnect()
     For i = 1 To NUMATRIBUTOS
         UserAtributos(i) = 0
     Next i
+    
+    macrotrabajo.Enabled = False
 
     SkillPoints = 0
     Alocados = 0
@@ -1713,3 +1755,4 @@ Private Sub Winsock1_Error(ByVal Number As Integer, Description As String, ByVal
 End Sub
 
 #End If
+

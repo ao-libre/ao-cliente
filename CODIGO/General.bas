@@ -392,6 +392,9 @@ Sub MoveTo(ByVal Direccion As E_Heading)
             Call WriteChangeHeading(Direccion)
         End If
     End If
+    
+    If frmMain.macrotrabajo.Enabled Then frmMain.DesactivarMacroTrabajo
+    
 End Sub
 
 Sub RandomMove()
@@ -890,13 +893,15 @@ UserMap = 1
     pausa = False
     
     'Set the intervals of timers
-    Call MainTimer.SetInterval(TimersIndex.Attack, 2000)
-    Call MainTimer.SetInterval(TimersIndex.Work, 400)
-    Call MainTimer.SetInterval(TimersIndex.UseItemWithU, 450)
-    Call MainTimer.SetInterval(TimersIndex.UseItemWithDblClick, 220)
-    Call MainTimer.SetInterval(TimersIndex.SendRPU, 2000)
+    Call MainTimer.SetInterval(TimersIndex.Attack, INT_ATTACK)
+    Call MainTimer.SetInterval(TimersIndex.Work, INT_WORK)
+    Call MainTimer.SetInterval(TimersIndex.UseItemWithU, INT_USEITEMU)
+    Call MainTimer.SetInterval(TimersIndex.UseItemWithDblClick, INT_USEITEMDCK)
+    Call MainTimer.SetInterval(TimersIndex.SendRPU, INT_SENTRPU)
+    frmMain.macrotrabajo.Interval = INT_MACRO_TRABAJO
+    frmMain.macrotrabajo.Enabled = False
     
-    'Init timers
+   'Init timers
     Call MainTimer.Start(TimersIndex.Attack)
     Call MainTimer.Start(TimersIndex.Work)
     Call MainTimer.Start(TimersIndex.UseItemWithU)

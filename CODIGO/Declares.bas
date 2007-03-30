@@ -62,6 +62,18 @@ Public Const SND_LLUVIAINEND As String = "lluviainend.wav"
 Public Const SND_LLUVIAOUTEND As String = "lluviaoutend.wav"
 
 ' Head index of the casper. Used to know if a char is killed
+
+' Constantes de intervalo
+Public Const INT_MACRO_HECHIS = 2788
+Public Const INT_MACRO_TRABAJO = 900
+
+Public Const INT_ATTACK = 2000
+Public Const INT_WORK = 400
+Public Const INT_USEITEMU = 450
+Public Const INT_USEITEMDCK = 220
+Public Const INT_SENTRPU = 2000
+
+
 Public Const CASPER_HEAD As Integer = 500
 
 Public Const NUMATRIBUTES As Byte = 5
