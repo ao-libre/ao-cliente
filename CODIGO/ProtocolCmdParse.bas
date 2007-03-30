@@ -1297,11 +1297,11 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 If notNullArguments Then
                     tmpArr = Split(ArgumentosRaw, "@", 2)
                     If UBound(tmpArr) = 1 Then
-                        If ValidNumber(tmpArr(1), eNumber_Types.ent_Byte) And ValidNumber(ArgumentosAll(1), eNumber_Types.ent_Integer) Then
+                        If ValidNumber(tmpArr(1), eNumber_Types.ent_Byte) Then
                             Call WriteCheckSlot(tmpArr(0), tmpArr(1))
                         Else
                             'Faltan o sobran los parametros con el formato propio
-                        Call ShowConsoleMsg("Formato incorrecto. Utilice /slot NICK@SLOT.")
+                            Call ShowConsoleMsg("Formato incorrecto. Utilice /slot NICK@SLOT.")
                         End If
                     Else
                         'Faltan o sobran los parametros con el formato propio
@@ -1400,7 +1400,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 
             Case "/AUTOUPDATE"
                 Call WriteResetAutoUpdate
-                
+            
             Case "/CHATCOLOR"
                 If notNullArguments And CantidadArgumentos >= 3 Then
                     If ValidNumber(ArgumentosAll(0), eNumber_Types.ent_Byte) And ValidNumber(ArgumentosAll(1), eNumber_Types.ent_Byte) And ValidNumber(ArgumentosAll(2), eNumber_Types.ent_Byte) Then
@@ -1409,11 +1409,13 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         'No es numerico
                         Call ShowConsoleMsg("Valor incorrecto. Utilice /chatcolor R G B.")
                     End If
+                ElseIf Not notNullArguments Then    'Go back to default!
+                    Call WriteChatColor(0, 255, 0)
                 Else
                     'Avisar que falta el parametro
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /chatcolor R G B.")
                 End If
-                
+            
             Case "/IGNORADO"
                 Call WriteIgnored
             

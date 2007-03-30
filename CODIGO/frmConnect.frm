@@ -331,6 +331,9 @@ Select Case index
         frmMain.Winsock1.Connect CurServerIp, CurServerPort
 #End If
         Me.MousePointer = 11
+        
+        'Clean console
+        frmMain.RecTxt.Text = vbNullString
 
         
     Case 1

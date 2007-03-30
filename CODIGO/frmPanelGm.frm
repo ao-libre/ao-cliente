@@ -1024,9 +1024,9 @@ Private Sub cmdCHATCOLOR_Click()
     '/CHATCOLOR
     Dim tStr As String
     
-    tStr = InputBox("Defina el color (R G B).", "Cambiar color del chat")
-    If LenB(tStr) <> 0 Then _
-        Call ParseUserCommand("/CHATCOLOR " & tStr) 'We use the Parser to control the command format
+    tStr = InputBox("Defina el color (R G B). Deje en blanco para usar el default.", "Cambiar color del chat")
+    
+    Call ParseUserCommand("/CHATCOLOR " & tStr) 'We use the Parser to control the command format
 End Sub
 
 Private Sub cmdCI_Click()

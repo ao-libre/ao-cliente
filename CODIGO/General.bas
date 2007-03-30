@@ -176,33 +176,15 @@ Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, ByVal Text As String, Opt
 'Automatically scrolls to new text.
 'Text box MUST be multiline and have a 3D
 'apperance!
-'Pablo (ToxicWaste) 26/01/2007 : Now the list refreshes properly.
+'Pablo (ToxicWaste) 01/26/2007 : Now the list refreshes properly.
+'Juan Martín Sotuyo Dodero (Maraxus) 03/29/2007 : Replaced ToxicWaste's code for extra performance.
 '******************************************
     With RichTextBox
-        If (Len(.Text)) > 1000 Then
-            Dim AuxString As String
-            Dim AuxString2 As String
-            Dim AuxCount As Integer
-            
-            AuxString = .Text
-            AuxCount = 1
-            
-            Do
-                AuxString = Right$(AuxString, Len(.Text) - AuxCount)
-                AuxString2 = Left$(AuxString, 2)
-                
-                If AuxString2 = vbCrLf Then _
-                    Exit Do
-                
-                AuxCount = AuxCount + 1
-            Loop
-            
-            .SelStart = AuxCount + 2
-            .SelLength = Len(.Text)
-            
-            AuxString = .SelRTF
-            .Text = ""
-            .TextRTF = AuxString
+        If Len(.Text) > 1000 Then
+            'Get rid of first line
+            .SelStart = InStr(1, .Text, vbCrLf) + 1
+            .SelLength = Len(.Text) - .SelStart + 2
+            .TextRTF = .SelRTF
         End If
         
         .SelStart = Len(RichTextBox.Text)

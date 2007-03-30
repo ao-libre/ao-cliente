@@ -230,6 +230,8 @@ Select Case index
 #Else
             frmMain.Winsock1.Connect CurServerIp, CurServerPort
 #End If
+            'Clean console
+            frmMain.RecTxt.Text = vbNullString
         End If
         
     Case 1
