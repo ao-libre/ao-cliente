@@ -1419,6 +1419,9 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             Case "/IGNORADO"
                 Call WriteIgnored
             
+            Case "/PING"
+                Call WritePing
+            
 #If SeguridadAlkon Then
             Case Else
                 Call ParseUserCommandEx(Comando, CantidadArgumentos, ArgumentosAll, ArgumentosRaw)

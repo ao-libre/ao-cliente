@@ -149,6 +149,7 @@ Private Enum ServerPacketID
     BankOK                  ' BANCOOK
     ChangeUserTradeSlot     ' COMUSUINV
     SendNight               ' NOC
+    Pong
     
     'GM messages
     SpawnList               ' SPL
@@ -273,6 +274,7 @@ Private Enum ClientPacketID
     PartyKick               '/ECHARPARTY
     PartySetLeader          '/PARTYLIDER
     PartyAcceptMember       '/ACCEPTPARTY
+    Ping                    '/PING
     
     'GM messages
     GMMessage               '/GMSG
@@ -853,6 +855,9 @@ On Error Resume Next
             
         Case ServerPacketID.SendNight               ' NOC
             Call HandleSendNight
+        
+        Case ServerPacketID.Pong
+            Call HandlePong
         
         '*******************
         'GM messages
@@ -4362,6 +4367,22 @@ On Error GoTo 0
 
     If error <> 0 Then _
         Err.Raise error
+End Sub
+
+''
+' Handles the Pong message.
+
+Private Sub HandlePong()
+'***************************************************
+'Autor: Juan Martín Sotuyo Dodero (Maraxus)
+'Last Modification: 05/17/06
+'
+'***************************************************
+    Call incomingData.ReadByte
+    
+    Call AddtoRichTextBox(frmMain.RecTxt, "El ping es " & (GetTickCount - pingTime) & " ms.", 255, 0, 0, True, False, False)
+    
+    pingTime = 0
 End Sub
 
 ''
@@ -8698,6 +8719,25 @@ Public Sub WriteCheckSlot(ByVal UserName As String, ByVal slot As Byte)
         Call .WriteASCIIString(UserName)
         Call .WriteByte(slot)
     End With
+End Sub
+
+''
+' Writes the "Ping" message to the outgoing data buffer.
+'
+' @remarks  The data is not actually sent until the buffer is properly flushed.
+
+Public Sub WritePing()
+'***************************************************
+'Autor: Juan Martín Sotuyo Dodero (Maraxus)
+'Last Modification: 26/01/2007
+'Writes the "Ping" message to the outgoing data buffer
+'***************************************************
+    'Prevent the timer from being cut
+    If pingTime <> 0 Then Exit Sub
+    
+    Call outgoingData.WriteByte(ClientPacketID.Ping)
+    
+    pingTime = GetTickCount
 End Sub
 
 ''

@@ -574,7 +574,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -787,6 +786,101 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
             SendTxt.Visible = True
             SendTxt.SetFocus
         End If
+    Else
+#If SeguridadAlkon Then
+        If LOGGING Then Call CheatingDeath.StoreKey(KeyCode, False)
+#End If
+    
+        If KeyCode = vbKeyF2 Then ScreenCapture
+        
+        If (Not SendTxt.Visible) And (Not SendCMSTXT.Visible) And _
+           ((KeyCode >= 65 And KeyCode <= 90) Or _
+           (KeyCode >= 48 And KeyCode <= 57)) Then
+        
+            Select Case KeyCode
+                
+                Case vbKeyM:
+                    Audio.MusicActivated = Not Audio.MusicActivated
+                Case vbKeyA:
+                    Call AgarrarItem
+                Case vbKeyC:
+                    Call WriteCombatModeToggle
+                    IScombate = Not IScombate
+                Case vbKeyE:
+                    Call EquiparItem
+                Case vbKeyN:
+                    Nombres = Not Nombres
+                Case vbKeyD
+                    Call WriteWork(eSkill.Domar)
+                Case vbKeyR:
+                    Call WriteWork(eSkill.Robar)
+                Case vbKeyS:
+                    AddtoRichTextBox frmMain.RecTxt, "Para activar o desactivar el seguro utiliza la tecla '*' (asterisco)", 255, 255, 255, False, False, False
+                Case vbKeyO:
+                    Call WriteWork(eSkill.Ocultarse)
+                Case vbKeyT:
+                    Call TirarItem
+                Case vbKeyU:
+                    If MainTimer.Check(TimersIndex.UseItemWithU) Then _
+                        Call UsarItem
+                    If macrotrabajo.Enabled Then _
+                        DesactivarMacroTrabajo
+                Case vbKeyL:
+                    If MainTimer.Check(TimersIndex.SendRPU) Then
+                        Call WriteRequestPositionUpdate
+                        Beep
+                    End If
+            End Select
+        End If
+        
+        Select Case KeyCode
+            Case vbKeyDelete:
+                If SendTxt.Visible Then Exit Sub
+                If Not frmCantidad.Visible Then
+                    SendCMSTXT.Visible = True
+                    SendCMSTXT.SetFocus
+                End If
+            Case vbKeyF4:
+                FPSFLAG = Not FPSFLAG
+                If Not FPSFLAG Then _
+                    frmMain.Caption = "Argentum Online" & " v " & App.Major & "." & App.Minor & "." & App.Revision
+            Case vbKeyControl:
+                If Shift <> 0 Then Exit Sub
+                If MainTimer.Check(TimersIndex.Attack) And _
+                   (Not UserDescansar) And _
+                   (Not UserMeditar) Then
+                        Call WriteAttack
+                    If macrotrabajo.Enabled Then _
+                        DesactivarMacroTrabajo
+                End If
+            Case vbKeyF5:
+                Call frmOpciones.Show(vbModeless, frmMain)
+            Case vbKeyF6:
+                If Not PuedeMacrear Then
+                    AddtoRichTextBox frmMain.RecTxt, "No tan rápido..!", 255, 255, 255, False, False, False
+                Else
+                    Call WriteMeditate
+                    PuedeMacrear = False
+                End If
+            Case vbKeyF7:
+                If TrainingMacro.Enabled Then
+                    DesactivarMacroHechizos
+                Else
+                    ActivarMacroHechizos
+                End If
+            Case vbKeyF8:
+                If macrotrabajo.Enabled Then
+                    DesactivarMacroTrabajo
+                Else
+                    ActivarMacroTrabajo
+                End If
+            Case vbKeyMultiply:
+                If frmMain.PicSeg.Visible Then
+                    AddtoRichTextBox frmMain.RecTxt, "Escribe /SEG para quitar el seguro", 255, 255, 255, False, False, False
+                Else
+                    Call WriteSafeToggle
+                End If
+        End Select
     End If
 End Sub
 
@@ -1028,106 +1122,6 @@ Private Sub Form_DblClick()
     End If
 End Sub
 
-Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
-On Error Resume Next
-
-#If SeguridadAlkon Then
-    If LOGGING Then Call CheatingDeath.StoreKey(KeyCode, False)
-#End If
-    
-    If KeyCode = vbKeyF2 Then ScreenCapture
-    
-    If (Not SendTxt.Visible) And (Not SendCMSTXT.Visible) And _
-       ((KeyCode >= 65 And KeyCode <= 90) Or _
-       (KeyCode >= 48 And KeyCode <= 57)) Then
-        
-            Select Case KeyCode
-                
-                Case vbKeyM:
-                    Audio.MusicActivated = Not Audio.MusicActivated
-                Case vbKeyA:
-                    Call AgarrarItem
-                Case vbKeyC:
-                    Call WriteCombatModeToggle
-                    IScombate = Not IScombate
-                Case vbKeyE:
-                    Call EquiparItem
-                Case vbKeyN:
-                    Nombres = Not Nombres
-                Case vbKeyD
-                    Call WriteWork(eSkill.Domar)
-                Case vbKeyR:
-                    Call WriteWork(eSkill.Robar)
-                Case vbKeyS:
-                    AddtoRichTextBox frmMain.RecTxt, "Para activar o desactivar el seguro utiliza la tecla '*' (asterisco)", 255, 255, 255, False, False, False
-                Case vbKeyO:
-                    Call WriteWork(eSkill.Ocultarse)
-                Case vbKeyT:
-                    Call TirarItem
-                Case vbKeyU:
-                    If MainTimer.Check(TimersIndex.UseItemWithU) Then _
-                        Call UsarItem
-                    If macrotrabajo.Enabled Then _
-                        DesactivarMacroTrabajo
-                Case vbKeyL:
-                    If MainTimer.Check(TimersIndex.SendRPU) Then
-                        Call WriteRequestPositionUpdate
-                        Beep
-                    End If
-            End Select
-        End If
-        
-        Select Case KeyCode
-            Case vbKeyDelete:
-                If SendTxt.Visible Then Exit Sub
-                If Not frmCantidad.Visible Then
-                    SendCMSTXT.Visible = True
-                    SendCMSTXT.SetFocus
-                End If
-            Case vbKeyF4:
-                FPSFLAG = Not FPSFLAG
-                If Not FPSFLAG Then _
-                    frmMain.Caption = "Argentum Online" & " v " & App.Major & "." & App.Minor & "." & App.Revision
-            Case vbKeyControl:
-                If Shift <> 0 Then Exit Sub
-                If MainTimer.Check(TimersIndex.Attack) And _
-                   (Not UserDescansar) And _
-                   (Not UserMeditar) Then
-                        Call WriteAttack
-                    If macrotrabajo.Enabled Then _
-                        DesactivarMacroTrabajo
-                End If
-            Case vbKeyF5:
-                Call frmOpciones.Show(vbModeless, frmMain)
-            Case vbKeyF6:
-                If Not PuedeMacrear Then
-                    AddtoRichTextBox frmMain.RecTxt, "No tan rápido..!", 255, 255, 255, False, False, False
-                Else
-                    Call WriteMeditate
-                    PuedeMacrear = False
-                End If
-            Case vbKeyF7:
-                If TrainingMacro.Enabled Then
-                    DesactivarMacroHechizos
-                Else
-                    ActivarMacroHechizos
-                End If
-            Case vbKeyF8:
-                If macrotrabajo.Enabled Then
-                    DesactivarMacroTrabajo
-                Else
-                    ActivarMacroTrabajo
-                End If
-            Case vbKeyMultiply:
-                If frmMain.PicSeg.Visible Then
-                    AddtoRichTextBox frmMain.RecTxt, "Escribe /SEG para quitar el seguro", 255, 255, 255, False, False, False
-                Else
-                    Call WriteSafeToggle
-                End If
-        End Select
-        
-End Sub
-
 Private Sub Form_Load()
     
     
@@ -1204,7 +1198,7 @@ End Sub
 Private Sub Label1_Click()
     Dim i As Integer
     For i = 1 To NUMSKILLS
-        frmSkills3.Text1(i).Caption = UserSkills(i)
+        frmSkills3.text1(i).Caption = UserSkills(i)
     Next i
     Alocados = SkillPoints
     frmSkills3.Puntos.Caption = "Puntos:" & SkillPoints
@@ -1221,7 +1215,7 @@ Private Sub Label4_Click()
     picInv.Visible = True
 
     hlst.Visible = False
-    cmdINFO.Visible = False
+    cmdInfo.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = True
@@ -1240,7 +1234,7 @@ Private Sub Label7_Click()
     'DespInv(1).Visible = False
     picInv.Visible = False
     hlst.Visible = True
-    cmdINFO.Visible = True
+    cmdInfo.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True

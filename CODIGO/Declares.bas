@@ -481,6 +481,8 @@ Public UsingSkill As Integer
 
 Public MD5HushYo As String * 16
 
+Public pingTime As Long
+
 Public Enum E_MODO
     Normal = 1
     CrearNuevoPj = 2
