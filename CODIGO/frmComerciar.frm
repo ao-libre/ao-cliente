@@ -236,18 +236,9 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-'[CODE]:MatuX
-'
-'    Le puse el iconito de la manito a los botones ^_^ y
-'   le puse borde a la ventana.
-'
-'[END]'
-
-'<-------------------------NUEVO-------------------------->
-'<-------------------------NUEVO-------------------------->
-'<-------------------------NUEVO-------------------------->
 Public LastIndex1 As Integer
 Public LastIndex2 As Integer
+Public LasActionBuy As Boolean
 
 Private Sub cantidad_Change()
     If Val(cantidad.Text) < 1 Then
@@ -271,11 +262,6 @@ Private Sub Command2_Click()
     Call WriteCommerceEnd
 End Sub
 
-Private Sub Form_Deactivate()
-'Me.SetFocus
-End Sub
-
-
 Private Sub Form_Load()
 'Cargamos la interfase
 Me.Picture = LoadPicture(App.Path & "\Graficos\comerciar.jpg")
@@ -283,7 +269,6 @@ Image1(0).Picture = LoadPicture(App.Path & "\Graficos\BotónComprar.jpg")
 Image1(1).Picture = LoadPicture(App.Path & "\Graficos\Botónvender.jpg")
 
 End Sub
-
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
 If Image1(0).Tag = 0 Then
@@ -296,17 +281,18 @@ If Image1(1).Tag = 0 Then
 End If
 End Sub
 
-Private Sub Image1_Click(index As Integer)
+Private Sub Image1_Click(Index As Integer)
 
 Call Audio.PlayWave(SND_CLICK)
 
-If List1(index).List(List1(index).listIndex) = "Nada" Or _
-   List1(index).listIndex < 0 Then Exit Sub
+If List1(Index).List(List1(Index).listIndex) = "Nada" Or _
+   List1(Index).listIndex < 0 Then Exit Sub
 
-Select Case index
+Select Case Index
     Case 0
         frmComerciar.List1(0).SetFocus
         LastIndex1 = List1(0).listIndex
+        LasActionBuy = True
         If UserGLD >= NPCInventory(List1(0).listIndex + 1).Valor * Val(cantidad) Then
             Call WriteCommerceBuy(List1(0).listIndex + 1, cantidad.Text)
         Else
@@ -316,6 +302,7 @@ Select Case index
    
    Case 1
         LastIndex2 = List1(1).listIndex
+        LasActionBuy = False
         If Not Inventario.Equipped(List1(1).listIndex + 1) Then
             Call WriteCommerceSell(List1(1).listIndex + 1, cantidad.Text)
         Else
@@ -330,8 +317,8 @@ List1(1).Clear
 NPCInvDim = 0
 End Sub
 
-Private Sub Image1_MouseMove(index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
-Select Case index
+Private Sub Image1_MouseMove(Index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
+Select Case Index
     Case 0
         If Image1(0).Tag = 1 Then
                 Image1(0).Picture = LoadPicture(App.Path & "\Graficos\BotónComprarApretado.jpg")
@@ -351,7 +338,7 @@ Select Case index
 End Select
 End Sub
 
-Private Sub list1_Click(index As Integer)
+Private Sub list1_Click(Index As Integer)
 Dim SR As RECT, DR As RECT
 
 SR.Left = 0
@@ -364,19 +351,19 @@ DR.Top = 0
 DR.Right = 32
 DR.Bottom = 32
 
-Select Case index
+Select Case Index
     Case 0
         Label1(0).Caption = NPCInventory(List1(0).listIndex + 1).Name
         Label1(1).Caption = NPCInventory(List1(0).listIndex + 1).Valor
         Label1(2).Caption = NPCInventory(List1(0).listIndex + 1).Amount
         
         Select Case NPCInventory(List1(0).listIndex + 1).OBJType
-            Case eOBJType.otWeapon
+            Case eObjType.otWeapon
                 Label1(3).Caption = "Max Golpe:" & NPCInventory(List1(0).listIndex + 1).MaxHit
                 Label1(4).Caption = "Min Golpe:" & NPCInventory(List1(0).listIndex + 1).MinHit
                 Label1(3).Visible = True
                 Label1(4).Visible = True
-            Case eOBJType.otArmadura
+            Case eObjType.otArmadura
                 Label1(3).Visible = False
                 Label1(4).Caption = "Defensa:" & NPCInventory(List1(0).listIndex + 1).Def
                 Label1(4).Visible = True
@@ -390,12 +377,12 @@ Select Case index
         Label1(2).Caption = Inventario.Amount(List1(1).listIndex + 1)
         
         Select Case Inventario.OBJType(List1(1).listIndex + 1)
-            Case eOBJType.otWeapon
+            Case eObjType.otWeapon
                 Label1(3).Caption = "Max Golpe:" & Inventario.MaxHit(List1(1).listIndex + 1)
                 Label1(4).Caption = "Min Golpe:" & Inventario.MinHit(List1(1).listIndex + 1)
                 Label1(3).Visible = True
                 Label1(4).Visible = True
-            Case eOBJType.otArmadura
+            Case eObjType.otArmadura
                 Label1(3).Visible = False
                 Label1(4).Caption = "Defensa:" & Inventario.Def(List1(1).listIndex + 1)
                 Label1(4).Visible = True
@@ -414,10 +401,11 @@ Else
 End If
 
 End Sub
+
 '<-------------------------NUEVO-------------------------->
 '<-------------------------NUEVO-------------------------->
 '<-------------------------NUEVO-------------------------->
-Private Sub List1_MouseMove(index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub List1_MouseMove(Index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
 If Image1(0).Tag = 0 Then
     Image1(0).Picture = LoadPicture(App.Path & "\Graficos\BotónComprar.jpg")
     Image1(0).Tag = 1

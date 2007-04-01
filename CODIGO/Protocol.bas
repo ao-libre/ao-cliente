@@ -4050,8 +4050,14 @@ Private Sub HandleTradeOK()
             End If
         Next i
         
-        frmComerciar.List1(0).listIndex = frmComerciar.LastIndex1
-        frmComerciar.List1(1).listIndex = frmComerciar.LastIndex2
+        'Alter order according to if we bought or sold so the labels and grh remain the same
+        If frmComerciar.LasActionBuy Then
+            frmComerciar.List1(1).listIndex = frmComerciar.LastIndex2
+            frmComerciar.List1(0).listIndex = frmComerciar.LastIndex1
+        Else
+            frmComerciar.List1(0).listIndex = frmComerciar.LastIndex1
+            frmComerciar.List1(1).listIndex = frmComerciar.LastIndex2
+        End If
     End If
 End Sub
 
@@ -4916,7 +4922,7 @@ End Sub
 ' @param    item Index of the item to craft in the list sent by the server.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCraftBlacksmith(ByVal item As Integer)
+Public Sub WriteCraftBlacksmith(ByVal Item As Integer)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -4925,7 +4931,7 @@ Public Sub WriteCraftBlacksmith(ByVal item As Integer)
     With outgoingData
         Call .WriteByte(ClientPacketID.CraftBlacksmith)
         
-        Call .WriteInteger(item)
+        Call .WriteInteger(Item)
     End With
 End Sub
 
@@ -4935,7 +4941,7 @@ End Sub
 ' @param    item Index of the item to craft in the list sent by the server.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCraftCarpenter(ByVal item As Integer)
+Public Sub WriteCraftCarpenter(ByVal Item As Integer)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -4944,7 +4950,7 @@ Public Sub WriteCraftCarpenter(ByVal item As Integer)
     With outgoingData
         Call .WriteByte(ClientPacketID.CraftCarpenter)
         
-        Call .WriteInteger(item)
+        Call .WriteInteger(Item)
     End With
 End Sub
 

@@ -332,8 +332,13 @@ Select Case index
 #End If
         Me.MousePointer = 11
         
-        'Clean console
+        'Clean console and clan dialogs
         frmMain.RecTxt.Text = vbNullString
+        
+        If Not DialogosClanes Is Nothing Then _
+            Set DialogosClanes = Nothing
+        
+        Set DialogosClanes = New clsGuildDlg
 
         
     Case 1

@@ -1334,16 +1334,16 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Select Case UCase$(ArgumentosAll(0))
                         Case "PK" ' "/MODMAPINFO PK"
                             Call WriteChangeMapInfoPK(ArgumentosAll(1) = 1)
-                            
+                        
                         Case "BACKUP" ' "/MODMAPINFO BACKUP"
                             Call WriteChangeMapInfoBackup(ArgumentosAll(1) = 1)
-                            
+                        
                         Case "RESTRINGIR" '/MODMAPINFO RESTRINGIR
                             Call WriteChangeMapInfoRestricted(ArgumentosAll(1))
                         
                         Case "MAGIASINEFECTO" '/MODMAPINFO MAGIASINEFECTO
                             Call WriteChangeMapInfoNoMagic(ArgumentosAll(1))
-                            
+                        
                         Case "INVISINEFECTO" '/MODMAPINFO INVISINEFECTO
                             Call WriteChangeMapInfoNoInvi(ArgumentosAll(1))
                         
@@ -1355,7 +1355,6 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         
                         Case "ZONA" '/MODMAPINFO ZONA
                             Call WriteChangeMapInfoZone(ArgumentosAll(1))
-                            
                     End Select
                 Else
                     'Avisar que falta el parametro

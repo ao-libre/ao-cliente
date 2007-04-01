@@ -192,33 +192,33 @@ End Sub
 
 'A partir de Command2_Click son todos buttons para agregar color al texto
 Private Sub cmdAzul_Click()
-    txtMotd.Text = txtMotd & "50~70~250~" & CStr(chkBold.value) & "~" & CStr(chkItalic.value)
+    txtMotd.Text = txtMotd & "~50~70~250~" & CStr(chkBold.value) & "~" & CStr(chkItalic.value)
 End Sub
 
 Private Sub cmdRojo_Click()
-    txtMotd.Text = txtMotd & "255~0~0~" & CStr(chkBold.value) & "~" & CStr(chkItalic.value)
+    txtMotd.Text = txtMotd & "~255~0~0~" & CStr(chkBold.value) & "~" & CStr(chkItalic.value)
 End Sub
 
 Private Sub cmdBlanco_Click()
-    txtMotd.Text = txtMotd & "255~255~255~" & CStr(chkBold.value) & "~" & CStr(chkItalic.value)
+    txtMotd.Text = txtMotd & "~255~255~255~" & CStr(chkBold.value) & "~" & CStr(chkItalic.value)
 End Sub
 
 Private Sub cmdGris_Click()
-    txtMotd.Text = txtMotd & "157~157~157~" & CStr(chkBold.value) & "~" & CStr(chkItalic.value)
+    txtMotd.Text = txtMotd & "~157~157~157~" & CStr(chkBold.value) & "~" & CStr(chkItalic.value)
 End Sub
 
 Private Sub cmdAmarillo_Click()
-    txtMotd.Text = txtMotd & "244~244~0~" & CStr(chkBold.value) & "~" & CStr(chkItalic.value)
+    txtMotd.Text = txtMotd & "~244~244~0~" & CStr(chkBold.value) & "~" & CStr(chkItalic.value)
 End Sub
 
 Private Sub cmdMorado_Click()
-    txtMotd.Text = txtMotd & "128~0~128~" & CStr(chkBold.value) & "~" & CStr(chkItalic.value)
+    txtMotd.Text = txtMotd & "~128~0~128~" & CStr(chkBold.value) & "~" & CStr(chkItalic.value)
 End Sub
 
 Private Sub cmdVerde_Click()
-  txtMotd.Text = txtMotd & "23~104~26~" & CStr(chkBold.value) & "~" & CStr(chkItalic.value)
+  txtMotd.Text = txtMotd & "~23~104~26~" & CStr(chkBold.value) & "~" & CStr(chkItalic.value)
 End Sub
 
 Private Sub cmdMarron_Click()
-    txtMotd.Text = txtMotd & "97~58~31~" & CStr(chkBold.value) & "~" & CStr(chkItalic.value)
+    txtMotd.Text = txtMotd & "~97~58~31~" & CStr(chkBold.value) & "~" & CStr(chkItalic.value)
 End Sub

@@ -34,7 +34,7 @@ Attribute VB_Name = "Mod_Declaraciones"
 Option Explicit
 
 'Objetos públicos
-Public DialogosClanes As New clsGuildDlg
+Public DialogosClanes As clsGuildDlg
 Public Dialogos As New cDialogos
 Public Audio As New clsAudio
 Public Inventario As New clsGrapchicalInventory

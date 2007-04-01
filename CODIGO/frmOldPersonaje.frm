@@ -230,8 +230,13 @@ Select Case index
 #Else
             frmMain.Winsock1.Connect CurServerIp, CurServerPort
 #End If
-            'Clean console
+            'Clean console and clan dialogs
             frmMain.RecTxt.Text = vbNullString
+            
+            If Not DialogosClanes Is Nothing Then _
+                Set DialogosClanes = Nothing
+            
+            Set DialogosClanes = New clsGuildDlg
         End If
         
     Case 1
