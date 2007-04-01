@@ -574,6 +574,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -844,15 +845,6 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
                 FPSFLAG = Not FPSFLAG
                 If Not FPSFLAG Then _
                     frmMain.Caption = "Argentum Online" & " v " & App.Major & "." & App.Minor & "." & App.Revision
-            Case vbKeyControl:
-                If Shift <> 0 Then Exit Sub
-                If MainTimer.Check(TimersIndex.Attack) And _
-                   (Not UserDescansar) And _
-                   (Not UserMeditar) Then
-                        Call WriteAttack
-                    If macrotrabajo.Enabled Then _
-                        DesactivarMacroTrabajo
-                End If
             Case vbKeyF5:
                 Call frmOpciones.Show(vbModeless, frmMain)
             Case vbKeyF6:
@@ -881,6 +873,20 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
                     Call WriteSafeToggle
                 End If
         End Select
+    End If
+End Sub
+
+Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
+    'for some reason, Shift is allways 2 in KeyDown, this way we can ignore Alt Gr and keep Ctrl.
+    If KeyCode = vbKeyControl Then
+        If Shift <> 0 Then Exit Sub
+        If MainTimer.Check(TimersIndex.Attack) And _
+           (Not UserDescansar) And _
+           (Not UserMeditar) Then
+                Call WriteAttack
+            If macrotrabajo.Enabled Then _
+                DesactivarMacroTrabajo
+        End If
     End If
 End Sub
 
@@ -1198,7 +1204,7 @@ End Sub
 Private Sub Label1_Click()
     Dim i As Integer
     For i = 1 To NUMSKILLS
-        frmSkills3.text1(i).Caption = UserSkills(i)
+        frmSkills3.Text1(i).Caption = UserSkills(i)
     Next i
     Alocados = SkillPoints
     frmSkills3.Puntos.Caption = "Puntos:" & SkillPoints

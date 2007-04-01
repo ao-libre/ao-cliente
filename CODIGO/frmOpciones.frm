@@ -217,11 +217,11 @@ Option Explicit
 
 Private loading As Boolean
 
-Private Sub Check1_Click(Index As Integer)
+Private Sub Check1_Click(index As Integer)
     If Not loading Then _
         Call Audio.PlayWave(SND_CLICK)
     
-    Select Case Index
+    Select Case index
         Case 0
             If Check1(0).value = vbUnchecked Then
                 Audio.MusicActivated = False
@@ -275,6 +275,16 @@ Private Sub Form_Load()
         Slider1(1).Enabled = False
     End If
     
+    txtCantMensajes.Text = CStr(DialogosClanes.CantidadDialogos)
+    
+    If DialogosClanes.Activo Then
+        optConsola.value = True
+        optPantalla.value = False
+    Else
+        optConsola.value = False
+        optPantalla.value = True
+    End If
+    
     loading = False     'Enable sounds when setting check's values
 End Sub
 
@@ -286,8 +296,8 @@ Private Sub optPantalla_Click()
     DialogosClanes.Activo = True
 End Sub
 
-Private Sub Slider1_Change(Index As Integer)
-    Select Case Index
+Private Sub Slider1_Change(index As Integer)
+    Select Case index
         Case 0
             Audio.MusicVolume = Slider1(0).value
         Case 1
@@ -295,8 +305,8 @@ Private Sub Slider1_Change(Index As Integer)
     End Select
 End Sub
 
-Private Sub Slider1_Scroll(Index As Integer)
-    Select Case Index
+Private Sub Slider1_Scroll(index As Integer)
+    Select Case index
         Case 0
             Audio.MusicVolume = Slider1(0).value
         Case 1

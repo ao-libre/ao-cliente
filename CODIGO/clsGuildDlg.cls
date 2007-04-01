@@ -24,9 +24,23 @@ Private p_Activo As Boolean
 
 Public Property Let CantidadDialogos(ByVal v As Byte)
     If v > 0 Then
-    ReDim Preserve p_Dialogos(1 To v) As t_GuildDlg
+        ReDim Preserve p_Dialogos(1 To v) As t_GuildDlg
     End If
     p_CANTIDADDIALOGOS = v
+End Property
+
+''
+' Retrieves the number of dialogs to be displayed on screen.
+'
+' @return   The number of dialogs to be displayed on screen.
+
+Public Property Get CantidadDialogos() As Byte
+'***************************************************
+'Autor: Juan Martín Sotuyo Dodero (Maraxus)
+'Last Modification: 04/01/07
+'Retrieves the number of dialogs to be displayed on screen
+'***************************************************
+    CantidadDialogos = p_CANTIDADDIALOGOS
 End Property
 
 Public Property Let Activo(ByVal v As Boolean)
@@ -43,40 +57,40 @@ Public Sub Class_Initialize()
     p_Activo = True
 End Sub
 
-Public Sub Draw(ByRef C As cDialogos)
-Dim I As Byte
-Dim Y As Long
+Public Sub Draw(ByRef c As cDialogos)
+Dim i As Byte
+Dim y As Long
 
 If Not p_Activo Then Exit Sub
 
-Y = 250
+y = 250
 '500 600 700 800 900
-    For I = 1 To p_CANTIDADDIALOGOS
-        If Trim$(p_Dialogos(I).Texto) <> vbNullString Then
-            If Left$(p_Dialogos(I).Texto, 1) = Chr(3) Then
-                Call C.DrawText(260, Y + (I * 10), Mid(p_Dialogos(I).Texto, 2), vbGreen)
+    For i = 1 To p_CANTIDADDIALOGOS
+        If Trim$(p_Dialogos(i).Texto) <> vbNullString Then
+            If Left$(p_Dialogos(i).Texto, 1) = Chr(3) Then
+                Call c.DrawText(260, y + (i * 10), mid(p_Dialogos(i).Texto, 2), vbGreen)
             Else
-                Call C.DrawText(260, Y + (I * 10), p_Dialogos(I).Texto, vbYellow)
+                Call c.DrawText(260, y + (i * 10), p_Dialogos(i).Texto, vbYellow)
             End If
         End If
-    Next I
+    Next i
 End Sub
 
 Public Sub PassTimer()
-Dim I As Byte
+Dim i As Byte
 
-For I = 1 To p_CANTIDADDIALOGOS
-    If p_Dialogos(I).Segundos > 0 Then
-        p_Dialogos(I).Segundos = p_Dialogos(I).Segundos - 1
+For i = 1 To p_CANTIDADDIALOGOS
+    If p_Dialogos(i).Segundos > 0 Then
+        p_Dialogos(i).Segundos = p_Dialogos(i).Segundos - 1
     Else
-        p_Dialogos(I).Texto = vbNullString
+        p_Dialogos(i).Texto = vbNullString
     End If
-Next I
+Next i
     
 End Sub
 
 Public Sub PushBackText(ByVal s As String)
-Dim I As Byte
+Dim i As Byte
 Dim Vacio As Boolean
 Dim Multiplicador As Integer
 If Left$(s, 1) = Chr(3) Then
@@ -86,24 +100,24 @@ Else
 End If
 
 If p_CANTIDADDIALOGOS > 0 Then
-    I = p_CANTIDADDIALOGOS
+    i = p_CANTIDADDIALOGOS
     Vacio = True
-    While I > 0 And Vacio
-        Vacio = p_Dialogos(I).Texto = vbNullString
-        If Vacio Then I = I - 1
+    While i > 0 And Vacio
+        Vacio = p_Dialogos(i).Texto = vbNullString
+        If Vacio Then i = i - 1
     Wend
-    If I = p_CANTIDADDIALOGOS Then
+    If i = p_CANTIDADDIALOGOS Then
         'hay q scrollear, estamos llenos
-        I = 1
-        While I < p_CANTIDADDIALOGOS
-            p_Dialogos(I) = p_Dialogos(I + 1)
-            I = I + 1
+        i = 1
+        While i < p_CANTIDADDIALOGOS
+            p_Dialogos(i) = p_Dialogos(i + 1)
+            i = i + 1
         Wend
-        p_Dialogos(I).Texto = s
-        p_Dialogos(I).Segundos = p_SEGUNDOS * Multiplicador
+        p_Dialogos(i).Texto = s
+        p_Dialogos(i).Segundos = p_SEGUNDOS * Multiplicador
     Else
-        p_Dialogos(I + 1).Texto = s
-        p_Dialogos(I + 1).Segundos = p_SEGUNDOS * Multiplicador
+        p_Dialogos(i + 1).Texto = s
+        p_Dialogos(i + 1).Segundos = p_SEGUNDOS * Multiplicador
     End If
 End If
 
