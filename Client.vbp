@@ -1,6 +1,6 @@
 Type=Exe
-Reference=*\G{E1211242-8E94-11D1-8808-00C04FC2C602}#1.0#0#..\..\..\..\windows\system32\DX7VB.DLL#DirectX 7 for Visual Basic Type Library
-Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#..\..\..\..\WINDOWS\system32\stdole2.tlb#OLE Automation
+Reference=*\G{E1211242-8E94-11D1-8808-00C04FC2C602}#1.0#0#..\..\..\..\..\WINDOWS\system32\DX7VB.DLL#DirectX 7 for Visual Basic Type Library
+Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#..\..\..\..\..\WINDOWS\system32\stdole2.tlb#OLE Automation
 Object={3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0; RICHTX32.OCX
 Object={33101C00-75C3-11CF-A8A0-444553540000}#1.0#0; CSWSK32.OCX
 Object={48E59290-9880-11CF-9754-00AA00C00908}#1.0#0; MSINET.OCX
