@@ -865,67 +865,141 @@ Attribute VB_Exposed = False
 
 
 
+
+
+
+
+
+
+
+
+
+
 'Argentum Online 0.11.6
 
+
+
 '
+
+
 
 'Copyright (C) 2002 Márquez Pablo Ignacio
 
+
+
 'Copyright (C) 2002 Otto Perez
+
+
 
 'Copyright (C) 2002 Aaron Perkins
 
+
+
 'Copyright (C) 2002 Matías Fernando Pequeño
 
+
+
 '
+
+
 
 'This program is free software; you can redistribute it and/or modify
 
+
+
 'it under the terms of the Affero General Public License;
+
+
 
 'either version 1 of the License, or any later version.
 
+
+
 '
+
+
 
 'This program is distributed in the hope that it will be useful,
 
+
+
 'but WITHOUT ANY WARRANTY; without even the implied warranty of
+
+
 
 'MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 
+
+
 'Affero General Public License for more details.
 
+
+
 '
+
+
 
 'You should have received a copy of the Affero General Public License
 
+
+
 'along with this program; if not, you can find it at http://www.affero.org/oagpl.html
 
+
+
 '
+
+
 
 'Argentum Online is based on Baronsoft's VB6 Online RPG
 
+
+
 'You can contact the original creator of ORE at aaron@baronsoft.com
+
+
 
 'for more information about ORE please visit http://www.baronsoft.com/
 
-'
+
 
 '
+
+
+
+'
+
+
 
 'You can contact me at:
 
+
+
 'morgolock@speedy.com.ar
+
+
 
 'www.geocities.com/gmorgolock
 
+
+
 'Calle 3 número 983 piso 7 dto A
+
+
 
 'La Plata - Pcia, Buenos Aires - Republica Argentina
 
+
+
 'Código Postal 1900
 
+
+
 'Pablo Ignacio Márquez
+
+
+
+
 
 
 
@@ -933,75 +1007,151 @@ Option Explicit
 
 
 
+
+
+
+
 Public SkillPoints As Byte
+
+
+
+
 
 
 
 Function CheckData() As Boolean
 
+
+
 If UserRaza = 0 Then
+
+
 
     MsgBox "Seleccione la raza del personaje."
 
+
+
     Exit Function
 
+
+
 End If
+
+
+
+
 
 
 
 If UserSexo = 0 Then
 
+
+
     MsgBox "Seleccione el sexo del personaje."
+
+
 
     Exit Function
 
+
+
 End If
+
+
+
+
 
 
 
 If UserClase = 0 Then
 
+
+
     MsgBox "Seleccione la clase del personaje."
+
+
 
     Exit Function
 
+
+
 End If
+
+
+
+
 
 
 
 If UserHogar = 0 Then
 
+
+
     MsgBox "Seleccione el hogar del personaje."
+
+
 
     Exit Function
 
+
+
 End If
+
+
+
+
 
 
 
 If SkillPoints > 0 Then
 
+
+
     MsgBox "Asigne los skillpoints del personaje."
 
+
+
     Exit Function
+
+
 
 End If
 
 
 
+
+
+
+
 Dim i As Integer
+
+
 
 For i = 1 To NUMATRIBUTOS
 
+
+
     If UserAtributos(i) = 0 Then
+
+
 
         MsgBox "Los atributos del personaje son invalidos."
 
+
+
         Exit Function
+
+
 
     End If
 
+
+
 Next i
+
+
+
+
 
 
 
@@ -1011,109 +1161,223 @@ CheckData = True
 
 
 
+
+
+
+
+
+
 End Function
+
+
+
+
 
 
 
 Private Sub boton_Click(index As Integer)
 
+
+
     Call Audio.PlayWave(SND_CLICK)
+
+
 
     
 
+
+
     Select Case index
+
+
 
         Case 0
 
+
+
             
+
+
 
             Dim i As Integer
 
+
+
             Dim k As Object
+
+
 
             i = 1
 
+
+
             For Each k In Skill
+
+
 
                 UserSkills(i) = k.Caption
 
+
+
                 i = i + 1
+
+
 
             Next
 
+
+
             
+
+
 
             UserName = txtNombre.Text
 
+
+
             
+
+
 
             If Right$(UserName, 1) = " " Then
 
+
+
                 UserName = RTrim$(UserName)
+
+
 
                 MsgBox "Nombre invalido, se han removido los espacios al final del nombre"
 
+
+
             End If
 
+
+
             
+
+
 
             UserRaza = lstRaza.listIndex + 1
 
+
+
             UserSexo = lstGenero.listIndex + 1
+
+
 
             UserClase = lstProfesion.listIndex + 1
 
+
+
             
+
+
 
             UserAtributos(1) = Val(lbFuerza.Caption)
 
+
+
             UserAtributos(2) = Val(lbInteligencia.Caption)
+
+
 
             UserAtributos(3) = Val(lbAgilidad.Caption)
 
+
+
             UserAtributos(4) = Val(lbCarisma.Caption)
+
+
 
             UserAtributos(5) = Val(lbConstitucion.Caption)
 
+
+
             
+
+
 
             UserHogar = lstHogar.listIndex + 1
 
+
+
             
+
+
 
             'Barrin 3/10/03
 
+
+
             If CheckData() Then
+
+
 
                 frmPasswd.Show vbModal, Me
 
+
+
             End If
 
+
+
             
+
+
 
         Case 1
 
+
+
             Call Audio.PlayMIDI("2.mid")
 
+
+
             
+
+
 
             frmConnect.FONDO.Picture = LoadPicture(App.Path & "\Graficos\conectar.jpg")
 
+
+
             Me.Visible = False
 
-            
+
 
             
+
+
+
+            
+
+
 
         Case 2
 
+
+
             Call Audio.PlayWave(SND_DICE)
+
+
 
             Call TirarDados
 
+
+
     End Select
 
+
+
 End Sub
+
+
+
+
+
+
 
 
 
@@ -1123,13 +1387,27 @@ Function RandomNumber(ByVal LowerBound As Variant, ByVal UpperBound As Variant) 
 
 
 
+
+
+
+
 Randomize Timer
+
+
+
+
 
 
 
 RandomNumber = (UpperBound - LowerBound + 1) * Rnd + LowerBound
 
+
+
 If RandomNumber > UpperBound Then RandomNumber = UpperBound
+
+
+
+
 
 
 
@@ -1137,85 +1415,171 @@ End Function
 
 
 
+
+
+
+
 Private Sub TirarDados()
+
+
 
     Call WriteThrowDices
 
+
+
     Call FlushBuffer
 
+
+
 End Sub
+
+
+
+
 
 
 
 Private Sub Command1_Click(index As Integer)
 
+
+
 Call Audio.PlayWave(SND_CLICK)
+
+
+
+
 
 
 
 Dim indice
 
+
+
 If index Mod 2 = 0 Then
+
+
 
     If SkillPoints > 0 Then
 
+
+
         indice = index \ 2
+
+
 
         Skill(indice).Caption = Val(Skill(indice).Caption) + 1
 
+
+
         SkillPoints = SkillPoints - 1
 
+
+
     End If
+
+
 
 Else
 
+
+
     If SkillPoints < 10 Then
+
+
 
         
 
+
+
         indice = index \ 2
+
+
 
         If Val(Skill(indice).Caption) > 0 Then
 
+
+
             Skill(indice).Caption = Val(Skill(indice).Caption) - 1
+
+
 
             SkillPoints = SkillPoints + 1
 
+
+
         End If
 
+
+
     End If
+
+
 
 End If
 
 
 
+
+
+
+
 Puntos.Caption = SkillPoints
+
+
 
 End Sub
 
 
 
+
+
+
+
 Private Sub Form_Load()
+
+
 
 SkillPoints = 10
 
+
+
 Puntos.Caption = SkillPoints
 
+
+
 Me.Picture = LoadPicture(App.Path & "\graficos\CP-Interface.jpg")
+
+
 
 imgHogar.Picture = LoadPicture(App.Path & "\graficos\CP-Ullathorpe.jpg")
 
 
 
+
+
+
+
 Dim i As Integer
+
+
 
 lstProfesion.Clear
 
+
+
 For i = LBound(ListaClases) To UBound(ListaClases)
+
+
 
     lstProfesion.AddItem ListaClases(i)
 
+
+
 Next i
+
+
+
+
 
 
 
@@ -1223,11 +1587,25 @@ lstHogar.Clear
 
 
 
+
+
+
+
 For i = LBound(Ciudades()) To UBound(Ciudades())
+
+
 
     lstHogar.AddItem Ciudades(i)
 
+
+
 Next i
+
+
+
+
+
+
 
 
 
@@ -1237,11 +1615,25 @@ lstRaza.Clear
 
 
 
+
+
+
+
 For i = LBound(ListaRazas()) To UBound(ListaRazas())
+
+
 
     lstRaza.AddItem ListaRazas(i)
 
+
+
 Next i
+
+
+
+
+
+
 
 
 
@@ -1251,11 +1643,23 @@ lstProfesion.Clear
 
 
 
+
+
+
+
 For i = LBound(ListaClases()) To UBound(ListaClases())
+
+
 
     lstProfesion.AddItem ListaClases(i)
 
+
+
 Next i
+
+
+
+
 
 
 
@@ -1263,57 +1667,113 @@ lstProfesion.listIndex = 1
 
 
 
+
+
+
+
 Image1.Picture = LoadPicture(App.Path & "\graficos\" & lstProfesion.Text & ".jpg")
+
+
 
 Call TirarDados
 
+
+
 End Sub
+
+
+
+
 
 
 
 Private Sub lstProfesion_Click()
 
+
+
 On Error Resume Next
+
+
 
     Image1.Picture = LoadPicture(App.Path & "\graficos\" & lstProfesion.Text & ".jpg")
 
+
+
     
+
+
 
 'TODO : Esto vuela en la 0.12.1!!!
 
+
+
     If lstProfesion.listIndex + 1 = eClass.Druid Then
+
+
 
         Call MsgBox("Esta clase se encuentra deshabilitada hasta el próximo parche, en el que se le realizarán varios cambios importantes." & vbCrLf _
 & "Sepan disculpar las molestias.")
 
+
+
         
+
+
 
         lstProfesion.listIndex = 0
 
+
+
     End If
 
+
+
 End Sub
+
+
+
+
 
 
 
 Private Sub txtNombre_Change()
 
+
+
 txtNombre.Text = LTrim(txtNombre.Text)
 
+
+
 End Sub
+
+
+
+
 
 
 
 Private Sub txtNombre_GotFocus()
 
+
+
 MsgBox "Sea cuidadoso al seleccionar el nombre de su personaje, Argentum es un juego de rol, un mundo magico y fantastico, si selecciona un nombre obsceno o con connotación politica los administradores borrarán su personaje y no habrá ninguna posibilidad de recuperarlo."
+
+
 
 End Sub
 
 
 
+
+
+
+
 Private Sub txtNombre_KeyPress(KeyAscii As Integer)
 
+
+
  KeyAscii = Asc(UCase(Chr(KeyAscii)))
+
+
 
 End Sub
