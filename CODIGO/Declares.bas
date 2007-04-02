@@ -34,11 +34,11 @@ Attribute VB_Name = "Mod_Declaraciones"
 Option Explicit
 
 'Objetos públicos
-Public DialogosClanes As clsGuildDlg
+Public DialogosClanes As New clsGuildDlg
 Public Dialogos As New cDialogos
 Public Audio As New clsAudio
 Public Inventario As New clsGrapchicalInventory
-Public SurfaceDB As clsSurfaceManager   'No va new porque es unainterfaz, el new se pone al decidir que clase de objeto es
+Public SurfaceDB As clsSurfaceManager   'No va new porque es una interfaz, el new se pone al decidir que clase de objeto es
 
 Public incomingData As New clsByteQueue
 Public outgoingData As New clsByteQueue

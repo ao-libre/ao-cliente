@@ -330,17 +330,9 @@ Select Case index
         End If
         frmMain.Winsock1.Connect CurServerIp, CurServerPort
 #End If
-        Me.MousePointer = 11
         
-        'Clean console and clan dialogs
-        frmMain.RecTxt.Text = vbNullString
-        
-        If Not DialogosClanes Is Nothing Then _
-            Set DialogosClanes = Nothing
-        
-        Set DialogosClanes = New clsGuildDlg
+        Call CleanDialogs
 
-        
     Case 1
     
         frmOldPersonaje.Show vbModal

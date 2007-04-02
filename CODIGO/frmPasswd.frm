@@ -234,12 +234,9 @@ If CheckDatos() Then
     frmMain.Socket1.HostName = CurServerIp
     frmMain.Socket1.RemotePort = CurServerPort
 #End If
-
-    'SendNewChar = True
+    
     EstadoLogin = CrearNuevoPj
     
-    Me.MousePointer = 11
-
 #If UsarWrench = 1 Then
     If Not frmMain.Socket1.Connected Then
 #Else

@@ -204,10 +204,6 @@ Select Case index
         If frmMain.Winsock1.State <> sckClosed Then _
             frmMain.Winsock1.Close
 #End If
-        If frmConnect.MousePointer = 11 Then
-            Exit Sub
-        End If
-        
         
         'update user info
         UserName = NameTxt.Text
@@ -220,9 +216,8 @@ Select Case index
         UserPassword = aux
 #End If
         If CheckUserData(False) = True Then
-            'SendNewChar = False
             EstadoLogin = Normal
-            Me.MousePointer = 11
+            
 #If UsarWrench = 1 Then
             frmMain.Socket1.HostName = CurServerIp
             frmMain.Socket1.RemotePort = CurServerPort
@@ -230,13 +225,7 @@ Select Case index
 #Else
             frmMain.Winsock1.Connect CurServerIp, CurServerPort
 #End If
-            'Clean console and clan dialogs
-            frmMain.RecTxt.Text = vbNullString
-            
-            If Not DialogosClanes Is Nothing Then _
-                Set DialogosClanes = Nothing
-            
-            Set DialogosClanes = New clsGuildDlg
+            Call CleanDialogs
         End If
         
     Case 1

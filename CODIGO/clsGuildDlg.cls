@@ -13,12 +13,15 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
 
-Private p_CANTIDADDIALOGOS As Byte
 Private Const p_SEGUNDOS = 7
+
+Private p_CANTIDADDIALOGOS As Byte
+
 Private Type t_GuildDlg
     Texto As String
     Segundos As Byte
 End Type
+
 Private p_Dialogos() As t_GuildDlg
 Private p_Activo As Boolean
 
@@ -28,6 +31,22 @@ Public Property Let CantidadDialogos(ByVal v As Byte)
     End If
     p_CANTIDADDIALOGOS = v
 End Property
+
+''
+' Removes all dialogs from screen.
+
+Public Sub RemoveDialogs()
+'***************************************************
+'Autor: Juan Martín Sotuyo Dodero (Maraxus)
+'Last Modification: 04/02/07
+'Removes all dialogs
+'***************************************************
+    Dim i As Long
+    
+    For i = 1 To p_CANTIDADDIALOGOS
+        p_Dialogos(i).Texto = vbNullString
+    Next i
+End Sub
 
 ''
 ' Retrieves the number of dialogs to be displayed on screen.
@@ -51,7 +70,7 @@ Public Property Get Activo() As Boolean
     Activo = p_Activo
 End Property
 
-Public Sub Class_Initialize()
+Private Sub Class_Initialize()
     p_CANTIDADDIALOGOS = 5
     ReDim p_Dialogos(1 To p_CANTIDADDIALOGOS) As t_GuildDlg
     p_Activo = True

@@ -1179,3 +1179,20 @@ Private Sub InicializarNombres()
     AtributosNames(eAtributos.Carisma) = "Carisma"
     AtributosNames(eAtributos.Constitucion) = "Constitucion"
 End Sub
+
+''
+' Removes all text from the console and dialogs
+
+Public Sub CleanDialogs()
+'**************************************************************
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Last Modify Date: 11/27/2005
+'Removes all text from the console and dialogs
+'**************************************************************
+    'Clean console and dialogs
+    frmMain.RecTxt.Text = vbNullString
+    
+    Call DialogosClanes.RemoveDialogs
+    
+    Call Dialogos.BorrarDialogos
+End Sub
