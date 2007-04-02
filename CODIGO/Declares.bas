@@ -73,6 +73,7 @@ Public Const INT_USEITEMU = 450
 Public Const INT_USEITEMDCK = 220
 Public Const INT_SENTRPU = 2000
 
+Public MacroBltIndex As Integer
 
 Public Const CASPER_HEAD As Integer = 500
 

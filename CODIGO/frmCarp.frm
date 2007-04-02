@@ -99,6 +99,9 @@ Private Sub Command3_Click()
     On Error Resume Next
 
     Call WriteCraftCarpenter(ObjCarpintero(lstArmas.listIndex + 1))
+    If frmMain.macrotrabajo.Enabled Then _
+        MacroBltIndex = ObjCarpintero(lstArmas.listIndex + 1)
+    
     Unload Me
 End Sub
 
