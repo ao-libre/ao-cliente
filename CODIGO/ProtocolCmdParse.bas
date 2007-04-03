@@ -452,6 +452,9 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             Case "/FUNDARCLAN"
                 frmEligeAlineacion.Show vbModeless, frmMain
                 
+            Case "/FUNDARCLANGM"
+                Call WriteGuildFundate(ct_GM)
+                
             Case "/ECHARPARTY"
                 If notNullArguments Then
                     Call WritePartyKick(ArgumentosRaw)
