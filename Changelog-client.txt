@@ -40,7 +40,7 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 20/04/2006: corregí un bug que no desactivaba los sonidos de pasos propios y lluvia al desactivar los sonidos. (Maraxus).
  * 21/04/2006: El panelGM y la lista de guilds no se esconden al agregarse texto a la consola. (Maraxus).
 
-- 0.11.6
+- 0.12.0
 
  * 27/04/2006: Se agregó la clase clsByteQueue utilizada por el nuevo protocolo. (Maraxus).
  * 27/04/2006: Evita que se introduzcan valores menores a 1 al comerciar. (Maraxus).
