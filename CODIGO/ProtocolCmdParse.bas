@@ -451,10 +451,10 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 
             Case "/FUNDARCLAN"
                 frmEligeAlineacion.Show vbModeless, frmMain
-                
+            
             Case "/FUNDARCLANGM"
-                Call WriteGuildFundate(ct_GM)
-                
+                Call WriteGuildFundate(eClanType.ct_GM)
+            
             Case "/ECHARPARTY"
                 If notNullArguments Then
                     Call WritePartyKick(ArgumentosRaw)
@@ -1044,16 +1044,16 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 End If
                 
             Case "/BANIP"
-                If notNullArguments Then
-                    If validipv4str(ArgumentosRaw) Then
-                        Call WriteBanIP(str2ipv4l(ArgumentosRaw))
+                If CantidadArgumentos >= 2 Then
+                    If validipv4str(ArgumentosAll(0)) Then
+                        Call WriteBanIP(True, str2ipv4l(ArgumentosAll(0)), vbNullString, Right$(ArgumentosRaw, Len(ArgumentosRaw) - Len(ArgumentosAll(0)) - 1))
                     Else
-                        'No es una IP
-                        Call ShowConsoleMsg("IP incorrecta. Utilice /banip IP.")
+                        'No es una IP, es un nick
+                        Call WriteBanIP(False, str2ipv4l("0.0.0.0"), ArgumentosAll(0), Right$(ArgumentosRaw, Len(ArgumentosRaw) - Len(ArgumentosAll(0)) - 1))
                     End If
                 Else
                     'Avisar que falta el parametro
-                    Call ShowConsoleMsg("Faltan parámetros. Utilice /banip IP.")
+                    Call ShowConsoleMsg("Faltan parámetros. Utilice /banip IP motivo o /banip nick motivo.")
                 End If
                 
             Case "/UNBANIP"
@@ -1563,9 +1563,9 @@ Private Function str2ipv4l(ByVal Ip As String) 'No return type allows to return 
 '***************************************************
     Dim tmpArr() As String
     Dim bArr(3) As Byte
-
+    
     tmpArr = Split(Ip, ".")
-
+    
     bArr(0) = CByte(tmpArr(0))
     bArr(1) = CByte(tmpArr(1))
     bArr(2) = CByte(tmpArr(2))

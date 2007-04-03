@@ -1509,7 +1509,7 @@ Private Sub HandleUpdateExp()
     
     'Get data and update form
     UserExp = incomingData.ReadLong()
-    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
 End Sub
 
@@ -2526,7 +2526,7 @@ Private Sub HandleUpdateUserStats()
     UserPasarNivel = incomingData.ReadLong()
     UserExp = incomingData.ReadLong()
     
-    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     
     If UserPasarNivel > 0 Then
         frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
@@ -3788,11 +3788,11 @@ On Error GoTo ErrHandler
         .criminales.Caption = "Criminales asesinados: " & CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .Status.Caption = " (Ciudadano)"
-            .Status.ForeColor = vbBlue
+            .status.Caption = " (Ciudadano)"
+            .status.ForeColor = vbBlue
         Else
-            .Status.Caption = " (Criminal)"
-            .Status.ForeColor = vbRed
+            .status.Caption = " (Criminal)"
+            .status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)
@@ -7740,25 +7740,37 @@ End Sub
 ''
 ' Writes the "BanIP" message to the outgoing data buffer.
 '
-' @param    IP The IP for which to search for players. Must be an array of 4 elements with the 4 components of the IP.
+' @param    byIp    If set to true, we are banning by IP, otherwise the ip of a given character.
+' @param    IP      The IP for which to search for players. Must be an array of 4 elements with the 4 components of the IP.
+' @param    nick    The nick of the player whose ip will be banned.
+' @param    reason  The reason for the ban.
+'
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteBanIP(ByRef Ip() As Byte)
+Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal nick As String, ByVal reason As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
 'Writes the "BanIP" message to the outgoing data buffer
 '***************************************************
-    If UBound(Ip()) - LBound(Ip()) + 1 <> 4 Then Exit Sub   'Invalid IP
+    If byIp And UBound(Ip()) - LBound(Ip()) + 1 <> 4 Then Exit Sub   'Invalid IP
     
     Dim i As Long
     
     With outgoingData
         Call .WriteByte(ClientPacketID.BanIP)
         
-        For i = LBound(Ip()) To UBound(Ip())
-            Call .WriteByte(Ip(i))
-        Next i
+        Call .WriteBoolean(byIp)
+        
+        If byIp Then
+            For i = LBound(Ip()) To UBound(Ip())
+                Call .WriteByte(Ip(i))
+            Next i
+        Else
+            Call .WriteASCIIString(nick)
+        End If
+        
+        Call .WriteASCIIString(reason)
     End With
 End Sub
 
