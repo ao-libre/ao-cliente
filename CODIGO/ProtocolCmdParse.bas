@@ -1341,13 +1341,13 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 Call WriteSaveMap
                 
             Case "/MODMAPINFO" ' PK, BACKUP
-                If notNullArguments And CantidadArgumentos > 1 Then
+                If CantidadArgumentos > 1 Then
                     Select Case UCase$(ArgumentosAll(0))
                         Case "PK" ' "/MODMAPINFO PK"
-                            Call WriteChangeMapInfoPK(ArgumentosAll(1) = 1)
+                            Call WriteChangeMapInfoPK(ArgumentosAll(1) = "1")
                         
                         Case "BACKUP" ' "/MODMAPINFO BACKUP"
-                            Call WriteChangeMapInfoBackup(ArgumentosAll(1) = 1)
+                            Call WriteChangeMapInfoBackup(ArgumentosAll(1) = "1")
                         
                         Case "RESTRINGIR" '/MODMAPINFO RESTRINGIR
                             Call WriteChangeMapInfoRestricted(ArgumentosAll(1))
