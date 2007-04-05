@@ -225,7 +225,6 @@ Select Case index
 #Else
             frmMain.Winsock1.Connect CurServerIp, CurServerPort
 #End If
-            Call CleanDialogs
         End If
         
     Case 1

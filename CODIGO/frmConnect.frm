@@ -330,8 +330,6 @@ Select Case index
         End If
         frmMain.Winsock1.Connect CurServerIp, CurServerPort
 #End If
-        
-        Call CleanDialogs
 
     Case 1
     

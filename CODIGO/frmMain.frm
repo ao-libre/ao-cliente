@@ -574,7 +574,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -780,16 +779,6 @@ Public Sub DesDibujarSatelite()
 PicAU.Visible = False
 End Sub
 
-Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
-    If KeyCode = vbKeyReturn Then
-        If SendCMSTXT.Visible Then Exit Sub
-        If Not frmCantidad.Visible Then
-            SendTxt.Visible = True
-            SendTxt.SetFocus
-        End If
-    End If
-End Sub
-
 Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
 #If SeguridadAlkon Then
     If LOGGING Then Call CheatingDeath.StoreKey(KeyCode, False)
@@ -901,6 +890,13 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
                     Call WriteAttack
                 If macrotrabajo.Enabled Then _
                     DesactivarMacroTrabajo
+            End If
+        
+        Case vbKeyReturn
+            If SendCMSTXT.Visible Then Exit Sub
+            If Not frmCantidad.Visible Then
+                SendTxt.Visible = True
+                SendTxt.SetFocus
             End If
     End Select
 End Sub
@@ -1220,7 +1216,7 @@ End Sub
 Private Sub Label1_Click()
     Dim i As Integer
     For i = 1 To NUMSKILLS
-        frmSkills3.text1(i).Caption = UserSkills(i)
+        frmSkills3.Text1(i).Caption = UserSkills(i)
     Next i
     Alocados = SkillPoints
     frmSkills3.Puntos.Caption = "Puntos:" & SkillPoints

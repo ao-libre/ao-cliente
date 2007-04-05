@@ -247,7 +247,7 @@ Private Sub Check1_Click(index As Integer)
 End Sub
 
 Private Sub cmdManual_Click()
-    Call ShellExecute(0, "Open", "http://ao.alkon.com.ar/aomanual/index.htm", "", App.Path, 0)
+    Call ShellExecute(0, "Open", "http://ao.alkon.com.ar/aomanual/", "", App.Path, 0)
 End Sub
 
 Private Sub Command2_Click()

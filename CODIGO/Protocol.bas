@@ -1024,8 +1024,10 @@ Private Sub HandleDisconnect()
     bFogata = False
     SkillPoints = 0
     
+    'Delete all kind of dialogs
+    Call CleanDialogs
+    
     'Reset some char variables...
-    Call Dialogos.BorrarDialogos
     For i = 1 To LastChar
         charlist(i).invisible = False
     Next i
@@ -7747,7 +7749,7 @@ End Sub
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal nick As String, ByVal reason As String)
+Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal Nick As String, ByVal reason As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7767,7 +7769,7 @@ Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal nick As S
                 Call .WriteByte(Ip(i))
             Next i
         Else
-            Call .WriteASCIIString(nick)
+            Call .WriteASCIIString(Nick)
         End If
         
         Call .WriteASCIIString(reason)
