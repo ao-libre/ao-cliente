@@ -1243,7 +1243,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteResetFactions(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
-                    Call ShowConsoleMsg("Faltan parámetros. Utilice /rejar NICKNAME.")
+                    Call ShowConsoleMsg("Faltan parámetros. Utilice /rajar NICKNAME.")
                 End If
                 
             Case "/RAJARCLAN"
