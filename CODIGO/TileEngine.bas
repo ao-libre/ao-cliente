@@ -584,11 +584,6 @@ tY = UserPos.y + CY
 
 End Sub
 
-
-
-
-
-
 Sub MakeChar(ByVal CharIndex As Integer, ByVal Body As Integer, ByVal Head As Integer, ByVal Heading As Byte, ByVal x As Integer, ByVal y As Integer, ByVal Arma As Integer, ByVal Escudo As Integer, ByVal Casco As Integer)
 
 On Error Resume Next
@@ -596,7 +591,9 @@ On Error Resume Next
 'Apuntamos al ultimo Char
 If CharIndex > LastChar Then LastChar = CharIndex
 
-NumChars = NumChars + 1
+'If the char wasn't allready active (we are rewritting it) don't increase char count
+If charlist(CharIndex).Active = 0 Then _
+    NumChars = NumChars + 1
 
 If Arma = 0 Then Arma = 2
 If Escudo = 0 Then Escudo = 2
