@@ -574,6 +574,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -733,8 +734,14 @@ Private Sub cmdMoverHechi_Click(index As Integer)
     
     Select Case index
         Case 1 'subir
+            sTemp = hlst.List(hlst.listIndex - 1)
+            hlst.List(hlst.listIndex - 1) = hlst.List(hlst.listIndex)
+            hlst.List(hlst.listIndex) = sTemp
             hlst.listIndex = hlst.listIndex - 1
         Case 0 'bajar
+            sTemp = hlst.List(hlst.listIndex + 1)
+            hlst.List(hlst.listIndex + 1) = hlst.List(hlst.listIndex)
+            hlst.List(hlst.listIndex) = sTemp
             hlst.listIndex = hlst.listIndex + 1
     End Select
 End Sub
@@ -1216,7 +1223,7 @@ End Sub
 Private Sub Label1_Click()
     Dim i As Integer
     For i = 1 To NUMSKILLS
-        frmSkills3.Text1(i).Caption = UserSkills(i)
+        frmSkills3.text1(i).Caption = UserSkills(i)
     Next i
     Alocados = SkillPoints
     frmSkills3.Puntos.Caption = "Puntos:" & SkillPoints
