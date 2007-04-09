@@ -1583,8 +1583,8 @@ Private Sub HandlePosUpdate()
     Call incomingData.ReadByte
     
     'Remove char from old position
-    If MapData(UserPos.x, UserPos.y).charIndex = UserCharIndex Then
-        MapData(UserPos.x, UserPos.y).charIndex = 0
+    If MapData(UserPos.x, UserPos.y).CharIndex = UserCharIndex Then
+        MapData(UserPos.x, UserPos.y).CharIndex = 0
     End If
     
     'Set new pos
@@ -1592,7 +1592,7 @@ Private Sub HandlePosUpdate()
     UserPos.y = incomingData.ReadByte()
     
     'Set char
-    MapData(UserPos.x, UserPos.y).charIndex = UserCharIndex
+    MapData(UserPos.x, UserPos.y).CharIndex = UserCharIndex
     charlist(UserCharIndex).Pos = UserPos
     
     'Update pos label
@@ -1769,19 +1769,19 @@ On Error GoTo ErrHandler
     Call Buffer.ReadByte
     
     Dim chat As String
-    Dim charIndex As Integer
+    Dim CharIndex As Integer
     Dim r As Byte
     Dim g As Byte
     Dim b As Byte
     
     chat = Buffer.ReadASCIIString()
-    charIndex = Buffer.ReadInteger()
+    CharIndex = Buffer.ReadInteger()
     
     r = Buffer.ReadByte()
     g = Buffer.ReadByte()
     b = Buffer.ReadByte()
     
-    Call Dialogos.CrearDialogo(chat, charIndex, RGB(r, g, b))
+    Call Dialogos.CrearDialogo(chat, CharIndex, RGB(r, g, b))
     
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
@@ -2006,7 +2006,7 @@ On Error GoTo ErrHandler
     'Remove packet ID
     Call Buffer.ReadByte
     
-    Dim charIndex As Integer
+    Dim CharIndex As Integer
     Dim Body As Integer
     Dim Head As Integer
     Dim Heading As E_Heading
@@ -2017,7 +2017,7 @@ On Error GoTo ErrHandler
     Dim helmet As Integer
     Dim privs As Integer
     
-    charIndex = Buffer.ReadInteger()
+    CharIndex = Buffer.ReadInteger()
     Body = Buffer.ReadInteger()
     Head = Buffer.ReadInteger()
     Heading = Buffer.ReadByte()
@@ -2027,11 +2027,11 @@ On Error GoTo ErrHandler
     shield = Buffer.ReadInteger()
     helmet = Buffer.ReadInteger()
     
-    With charlist(charIndex)
+    With charlist(CharIndex)
         .fX = Buffer.ReadInteger()
         .FxLoopTimes = Buffer.ReadInteger()
         .Nombre = Buffer.ReadASCIIString()
-        .criminal = Buffer.ReadByte()
+        .Criminal = Buffer.ReadByte()
         
         privs = Buffer.ReadByte()
         
@@ -2057,7 +2057,7 @@ On Error GoTo ErrHandler
         End If
     End With
     
-    Call MakeChar(charIndex, Body, Head, Heading, x, y, weapon, shield, helmet)
+    Call MakeChar(CharIndex, Body, Head, Heading, x, y, weapon, shield, helmet)
     
     Call RefreshAllChars
     
@@ -2093,12 +2093,12 @@ Private Sub HandleCharacterRemove()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Dim charIndex As Integer
+    Dim CharIndex As Integer
     
-    charIndex = incomingData.ReadInteger()
+    CharIndex = incomingData.ReadInteger()
     
-    Call EraseChar(charIndex)
-    Call Dialogos.QuitarDialogo(charIndex)
+    Call EraseChar(CharIndex)
+    Call Dialogos.QuitarDialogo(CharIndex)
     Call RefreshAllChars
 End Sub
 
@@ -2119,15 +2119,15 @@ Private Sub HandleCharacterMove()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Dim charIndex As Integer
+    Dim CharIndex As Integer
     Dim x As Byte
     Dim y As Byte
     
-    charIndex = incomingData.ReadInteger()
+    CharIndex = incomingData.ReadInteger()
     x = incomingData.ReadByte()
     y = incomingData.ReadByte()
     
-    With charlist(charIndex)
+    With charlist(CharIndex)
         If .fX >= 40 And .fX <= 49 Then   'If it's meditating, we remove the FX
             .fX = 0
             .FxLoopTimes = 0
@@ -2135,11 +2135,11 @@ Private Sub HandleCharacterMove()
         
         ' Play steps sounds if the user is not an admin of any kind
         If .priv <> 1 And .priv <> 2 And .priv <> 3 And .priv <> 5 And .priv <> 25 Then
-            Call DoPasosFx(charIndex)
+            Call DoPasosFx(CharIndex)
         End If
     End With
     
-    Call MoveCharbyPos(charIndex, x, y)
+    Call MoveCharbyPos(CharIndex, x, y)
     
     Call RefreshAllChars
 End Sub
@@ -2161,13 +2161,13 @@ Private Sub HandleCharacterChange()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Dim charIndex As Integer
+    Dim CharIndex As Integer
     Dim tempint As Integer
     Dim headIndex As Integer
     
-    charIndex = incomingData.ReadInteger()
+    CharIndex = incomingData.ReadInteger()
     
-    With charlist(charIndex)
+    With charlist(CharIndex)
         tempint = incomingData.ReadInteger()
         
         If tempint < LBound(BodyData()) Or tempint > UBound(BodyData()) Then
@@ -2497,11 +2497,11 @@ Private Sub HandleCreateFX()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Dim charIndex As Integer
+    Dim CharIndex As Integer
     
-    charIndex = incomingData.ReadInteger()
-    charlist(charIndex).fX = incomingData.ReadInteger()
-    charlist(charIndex).FxLoopTimes = incomingData.ReadInteger()
+    CharIndex = incomingData.ReadInteger()
+    charlist(CharIndex).fX = incomingData.ReadInteger()
+    charlist(CharIndex).FxLoopTimes = incomingData.ReadInteger()
 End Sub
 
 ''
@@ -3368,16 +3368,16 @@ Private Sub HandleSetInvisible()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Dim charIndex As Integer
+    Dim CharIndex As Integer
     
-    charIndex = incomingData.ReadInteger()
-    charlist(charIndex).invisible = incomingData.ReadBoolean()
+    CharIndex = incomingData.ReadInteger()
+    charlist(CharIndex).invisible = incomingData.ReadBoolean()
     
 #If SeguridadAlkon Then
-    If charlist(charIndex).invisible Then
-        Call MI(CualMI).SetInvisible(charIndex)
+    If charlist(CharIndex).invisible Then
+        Call MI(CualMI).SetInvisible(CharIndex)
     Else
-        Call MI(CualMI).ResetInvisible(charIndex)
+        Call MI(CualMI).ResetInvisible(CharIndex)
     End If
 #End If
 
@@ -4424,20 +4424,20 @@ On Error GoTo ErrHandler
     'Remove packet ID
     Call Buffer.ReadByte
     
-    Dim charIndex As Integer
-    Dim criminal As Boolean
+    Dim CharIndex As Integer
+    Dim Criminal As Boolean
     Dim userTag As String
     
-    charIndex = Buffer.ReadInteger()
-    criminal = Buffer.ReadBoolean()
+    CharIndex = Buffer.ReadInteger()
+    Criminal = Buffer.ReadBoolean()
     userTag = Buffer.ReadASCIIString()
     
     'Update char status adn tag!
-    With charlist(charIndex)
-        If criminal Then
-            .criminal = 1
+    With charlist(CharIndex)
+        If Criminal Then
+            .Criminal = 1
         Else
-            .criminal = 0
+            .Criminal = 0
         End If
         
         .Nombre = userTag
@@ -4605,7 +4605,7 @@ End Sub
 ' @param    chat The chat text to be sent to the user.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteWhisper(ByVal charIndex As Integer, ByVal chat As String)
+Public Sub WriteWhisper(ByVal CharIndex As Integer, ByVal chat As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -4614,7 +4614,7 @@ Public Sub WriteWhisper(ByVal charIndex As Integer, ByVal chat As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.Whisper)
         
-        Call .WriteInteger(charIndex)
+        Call .WriteInteger(CharIndex)
         
         Call .WriteASCIIString(chat)
     End With
@@ -8821,6 +8821,10 @@ Public Sub WritePing()
     If pingTime <> 0 Then Exit Sub
     
     Call outgoingData.WriteByte(ClientPacketID.Ping)
+    
+    ' Avoid computing errors due to frame rate
+    Call FlushBuffer
+    DoEvents
     
     pingTime = GetTickCount
 End Sub

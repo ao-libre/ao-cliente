@@ -146,6 +146,8 @@ End Sub
 
 
 Private Sub Command2_Click()
+    If Inventario.SelectedItem = 0 Then Exit Sub
+    
     If Inventario.SelectedItem <> FLAGORO Then
         Call WriteDrop(Inventario.SelectedItem, Inventario.Amount(Inventario.SelectedItem))
         Unload Me
