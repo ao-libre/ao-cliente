@@ -1036,6 +1036,15 @@ Private Sub HandleDisconnect()
         charlist(i).invisible = False
     Next i
     
+    'Unload all forms except frmMain and frmConnect
+    Dim frm As form
+    
+    For Each frm In Forms
+        If frm <> frmMain And frm <> frmConnect Then
+            Unload frm
+        End If
+    Next
+    
 #If SeguridadAlkon Then
     Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
 #End If
