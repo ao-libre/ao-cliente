@@ -1017,8 +1017,8 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         Call ShowConsoleMsg("Numero incorrecto. Utilice /trigger NUMERO.")
                     End If
                 Else
-                    'Avisar que falta el parametro
-                    Call ShowConsoleMsg("Faltan parámetros. Utilice /trigger NUMERO.")
+                    'Version sin parametro
+                    Call WriteAskTrigger
                 End If
                 
             Case "/BANIPLIST"

@@ -346,6 +346,7 @@ Private Enum ClientPacketID
     DumpIPTables            '/DUMPSECURITY"
     CouncilKick             '/KICKCONSE
     SetTrigger              '/TRIGGER
+    AskTrigger              '/TRIGGER
     BannedIPList            '/BANIPLIST
     BannedIPReload          '/BANIPRELOAD
     GuildMemberList         '/MIEMBROSCLAN
@@ -1037,10 +1038,10 @@ Private Sub HandleDisconnect()
     Next i
     
     'Unload all forms except frmMain and frmConnect
-    Dim frm As form
+    Dim frm As Form
     
     For Each frm In Forms
-        If frm <> frmMain And frm <> frmConnect Then
+        If frm.Name <> frmMain.Name And frm.Name <> frmConnect.Name Then
             Unload frm
         End If
     Next
@@ -2060,7 +2061,7 @@ On Error GoTo ErrHandler
             End If
             
             'Log2 of the bit flags sent by the server gives our numbers ^^
-            .priv = log(privs) / log(2)
+            .priv = Log(privs) / Log(2)
         Else
             .priv = 0
         End If
@@ -7762,6 +7763,20 @@ Public Sub WriteSetTrigger(ByVal Trigger As eTrigger)
 End Sub
 
 ''
+' Writes the "AskTrigger" message to the outgoing data buffer.
+'
+' @remarks  The data is not actually sent until the buffer is properly flushed.
+
+Public Sub WriteAskTrigger()
+'***************************************************
+'Autor: Nicolas Matias Gonzalez (NIGO)
+'Last Modification: 04/13/07
+'Writes the "AskTrigger" message to the outgoing data buffer
+'***************************************************
+    Call outgoingData.WriteByte(ClientPacketID.AskTrigger)
+End Sub
+
+''
 ' Writes the "BannedIPList" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -7818,7 +7833,7 @@ End Sub
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal nick As String, ByVal reason As String)
+Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal Nick As String, ByVal reason As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7838,7 +7853,7 @@ Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal nick As S
                 Call .WriteByte(Ip(i))
             Next i
         Else
-            Call .WriteASCIIString(nick)
+            Call .WriteASCIIString(Nick)
         End If
         
         Call .WriteASCIIString(reason)
