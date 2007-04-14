@@ -3025,6 +3025,7 @@ On Error GoTo ErrHandler
     If Not frmCrearPersonaje.Visible Then
 #If UsarWrench = 1 Then
         frmMain.Socket1.Disconnect
+        frmMain.Socket1.Cleanup
 #Else
         If frmMain.Winsock1.State <> sckClosed Then _
             frmMain.Winsock1.Close

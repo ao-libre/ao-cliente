@@ -192,7 +192,6 @@ Public Enum eClass
     Miner       'Minero
     Carpenter   'Carpintero
     Pirat       'Pirata
-    Admin       'ADMIN
 End Enum
 
 Public Enum eCiudad
@@ -459,7 +458,7 @@ Public UserEmail As String
 Public Const NUMCIUDADES As Byte = 4
 Public Const NUMSKILLS As Byte = 21
 Public Const NUMATRIBUTOS As Byte = 5
-Public Const NUMCLASES As Byte = 17
+Public Const NUMCLASES As Byte = 16
 Public Const NUMRAZAS As Byte = 5
 
 Public UserSkills(1 To NUMSKILLS) As Byte

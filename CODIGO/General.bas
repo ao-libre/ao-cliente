@@ -1149,7 +1149,6 @@ Private Sub InicializarNombres()
     ListaClases(eClass.Miner) = "Minero"
     ListaClases(eClass.Carpenter) = "Carpintero"
     ListaClases(eClass.Pirat) = "Pirata"
-    ListaClases(eClass.Admin) = "Admin"
     
     SkillsNames(eSkill.Suerte) = "Suerte"
     SkillsNames(eSkill.Magia) = "Magia"
