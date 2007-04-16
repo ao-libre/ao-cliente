@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RichTx32.ocx"
-Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.OCX"
+Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "cswsk32.ocx"
 Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.OCX"
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.Form frmMain 
@@ -42,7 +42,7 @@ Begin VB.Form frmMain
       Binary          =   -1  'True
       Blocking        =   0   'False
       Broadcast       =   0   'False
-      BufferSize      =   8192
+      BufferSize      =   10240
       HostAddress     =   ""
       HostFile        =   ""
       HostName        =   ""
@@ -574,6 +574,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1428,28 +1429,22 @@ Private Sub Socket1_Connect()
 
     Select Case EstadoLogin
         Case E_MODO.CrearNuevoPj
-#If SegudidadAlkon Then
+#If SeguridadAlkon Then
             Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
-#Else
-            'conectamos sin seguridad
-            Call Login
 #End If
-
+            Call Login
+        
         Case E_MODO.Normal
-#If SegudidadAlkon Then
+#If SeguridadAlkon Then
             Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
-#Else
-            'conectamos sin seguridad
+#End If
             Call Login
-#End If
-
+        
         Case E_MODO.Dados
-#If SegudidadAlkon Then
+#If SeguridadAlkon Then
             Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
-#Else
-            frmCrearPersonaje.Show vbModal
 #End If
-    
+            frmCrearPersonaje.Show vbModal
     End Select
 End Sub
 
@@ -1469,18 +1464,18 @@ Private Sub Socket1_Disconnect()
     
     On Local Error Resume Next
     For i = 0 To Forms.Count - 1
-        If Forms(i).Name <> Me.Name And Forms(i).Name <> frmConnect.Name Then
+        If Forms(i).Name <> Me.Name And Forms(i).Name <> frmConnect.Name And Forms(i).Name <> frmOldPersonaje.Name Then
             Unload Forms(i)
         End If
     Next i
     On Local Error GoTo 0
     
     frmMain.Visible = False
-
+    
     pausa = False
     UserMeditar = False
     
-#If SegudidadAlkon Then
+#If SeguridadAlkon Then
     LOGGING = False
     LOGSTRING = False
     LastPressed = 0
@@ -1530,7 +1525,7 @@ Private Sub Socket1_LastError(ErrorCode As Integer, ErrorString As String, Respo
     If frmOldPersonaje.Visible Then
         frmOldPersonaje.Visible = False
     End If
-
+    
     If Not frmCrearPersonaje.Visible Then
         frmConnect.Show
     Else
@@ -1542,8 +1537,7 @@ Private Sub Socket1_Read(dataLength As Integer, IsUrgent As Integer)
     Dim RD As String
     Dim data() As Byte
     
-    Socket1.Read RD, dataLength
-    
+    Call Socket1.Read(RD, dataLength)
     data = StrConv(RD, vbFromUnicode)
     
     If RD = vbNullString Then Exit Sub
@@ -1652,7 +1646,7 @@ Private Sub Winsock1_Close()
     
     On Local Error Resume Next
     For i = 0 To Forms.Count - 1
-        If Forms(i).Name <> Me.Name And Forms(i).Name <> frmConnect.Name Then
+        If Forms(i).Name <> Me.Name And Forms(i).Name <> frmConnect.Name And Forms(i).Name <> frmOldPersonaje.Name Then
             Unload Forms(i)
         End If
     Next i
@@ -1711,28 +1705,23 @@ Private Sub Winsock1_Connect()
     
     Select Case EstadoLogin
         Case E_MODO.CrearNuevoPj
-#If SegudidadAlkon Then
+#If SeguridadAlkon Then
             Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
-#Else
-            'conectamos sin seguridad
-            Call Login
 #End If
+            Call Login
+
 
         Case E_MODO.Normal
-#If SegudidadAlkon Then
+#If SeguridadAlkon Then
             Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
-#Else
-            'conectamos sin seguridad
-            Call Login
 #End If
+            Call Login
 
         Case E_MODO.Dados
-#If SegudidadAlkon Then
+#If SeguridadAlkon Then
             Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
-#Else
-            frmCrearPersonaje.Show vbModal
 #End If
-    
+            frmCrearPersonaje.Show vbModal
     End Select
 End Sub
 

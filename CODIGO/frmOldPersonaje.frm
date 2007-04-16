@@ -199,10 +199,13 @@ Select Case index
         If frmMain.Socket1.Connected Then
             frmMain.Socket1.Disconnect
             frmMain.Socket1.Cleanup
+            DoEvents
         End If
 #Else
-        If frmMain.Winsock1.State <> sckClosed Then _
+        If frmMain.Winsock1.State <> sckClosed Then
             frmMain.Winsock1.Close
+            DoEvents
+        End If
 #End If
         
         'update user info

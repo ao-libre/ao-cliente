@@ -346,7 +346,7 @@ Private Enum ClientPacketID
     DumpIPTables            '/DUMPSECURITY"
     CouncilKick             '/KICKCONSE
     SetTrigger              '/TRIGGER
-    AskTrigger              '/TRIGGER
+    AskTrigger              '/TRIGGER with no arguments
     BannedIPList            '/BANIPLIST
     BannedIPReload          '/BANIPRELOAD
     GuildMemberList         '/MIEMBROSCLAN
@@ -2061,7 +2061,7 @@ On Error GoTo ErrHandler
             End If
             
             'Log2 of the bit flags sent by the server gives our numbers ^^
-            .priv = Log(privs) / Log(2)
+            .priv = log(privs) / log(2)
         Else
             .priv = 0
         End If
@@ -7834,7 +7834,7 @@ End Sub
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal Nick As String, ByVal reason As String)
+Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal nick As String, ByVal reason As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7854,7 +7854,7 @@ Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal Nick As S
                 Call .WriteByte(Ip(i))
             Next i
         Else
-            Call .WriteASCIIString(Nick)
+            Call .WriteASCIIString(nick)
         End If
         
         Call .WriteASCIIString(reason)
@@ -8896,6 +8896,12 @@ Private Sub SendData(ByRef sdData As String)
     
     'No enviamos nada si no estamos conectados
 #If UsarWrench = 1 Then
+    If Not frmMain.Socket1.IsWritable Then
+        'Put data back in the bytequeue
+        Call outgoingData.WriteASCIIStringFixed(sdData)
+        Exit Sub
+    End If
+    
     If Not frmMain.Socket1.Connected Then Exit Sub
     
     Call frmMain.Socket1.Write(sdData, Len(sdData))

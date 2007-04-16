@@ -320,6 +320,7 @@ Select Case index
         If frmMain.Socket1.Connected Then
             frmMain.Socket1.Disconnect
             frmMain.Socket1.Cleanup
+            DoEvents
         End If
         frmMain.Socket1.HostName = CurServerIp
         frmMain.Socket1.RemotePort = CurServerPort
@@ -327,6 +328,7 @@ Select Case index
 #Else
         If frmMain.Winsock1.State <> sckClosed Then
             frmMain.Winsock1.Close
+            DoEvents
         End If
         frmMain.Winsock1.Connect CurServerIp, CurServerPort
 #End If
