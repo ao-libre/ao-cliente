@@ -574,7 +574,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1240,7 +1239,7 @@ Private Sub Label4_Click()
     picInv.Visible = True
 
     hlst.Visible = False
-    cmdINFO.Visible = False
+    cmdInfo.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = True
@@ -1259,7 +1258,7 @@ Private Sub Label7_Click()
     'DespInv(1).Visible = False
     picInv.Visible = False
     hlst.Visible = True
-    cmdINFO.Visible = True
+    cmdInfo.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True
@@ -1458,13 +1457,13 @@ Private Sub Socket1_Disconnect()
     
     frmConnect.MousePointer = vbNormal
     
-    If frmPasswd.Visible = True Then frmPasswd.Visible = False
-    frmCrearPersonaje.Visible = False
-    frmConnect.Visible = True
+    If Not frmPasswd.Visible And Not frmCrearPersonaje.Visible Then
+        frmConnect.Visible = True
+    End If
     
     On Local Error Resume Next
     For i = 0 To Forms.Count - 1
-        If Forms(i).Name <> Me.Name And Forms(i).Name <> frmConnect.Name And Forms(i).Name <> frmOldPersonaje.Name Then
+        If Forms(i).Name <> Me.Name And Forms(i).Name <> frmConnect.Name And Forms(i).Name <> frmOldPersonaje.Name And Forms(i).Name <> frmCrearPersonaje.Name And Forms(i).Name <> frmPasswd.Name Then
             Unload Forms(i)
         End If
     Next i
@@ -1640,13 +1639,13 @@ Private Sub Winsock1_Close()
     
     frmConnect.MousePointer = vbNormal
     
-    If frmPasswd.Visible = True Then frmPasswd.Visible = False
-    frmCrearPersonaje.Visible = False
-    frmConnect.Visible = True
+    If Not frmPasswd.Visible And Not frmCrearPersonaje.Visible Then
+        frmConnect.Visible = True
+    End If
     
     On Local Error Resume Next
     For i = 0 To Forms.Count - 1
-        If Forms(i).Name <> Me.Name And Forms(i).Name <> frmConnect.Name And Forms(i).Name <> frmOldPersonaje.Name Then
+        If Forms(i).Name <> Me.Name And Forms(i).Name <> frmConnect.Name And Forms(i).Name <> frmOldPersonaje.Name And Forms(i).Name <> frmCrearPersonaje.Name And Forms(i).Name <> frmPasswd.Name Then
             Unload Forms(i)
         End If
     Next i
