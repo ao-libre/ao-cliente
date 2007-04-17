@@ -185,6 +185,8 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 Call WriteRest
                 
             Case "/MEDITAR"
+                If UserMinMAN = UserMaxMAN Then Exit Sub
+                
                 If UserEstado = 1 Then 'Muerto
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
                         Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
