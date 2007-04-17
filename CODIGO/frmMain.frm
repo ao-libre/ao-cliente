@@ -574,6 +574,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -929,6 +930,12 @@ Private Sub macrotrabajo_Timer()
         Exit Sub
     End If
     
+    'Macros are disabled if not using Argentum!
+    If Not Api.IsAppActive() Then
+        DesactivarMacroTrabajo
+        Exit Sub
+    End If
+    
     If (UsingSkill = eSkill.Pesca Or UsingSkill = eSkill.Talar Or UsingSkill = eSkill.Mineria Or UsingSkill = FundirMetal) Then
         Call WriteWorkLeftClick(tX, tY, UsingSkill)
         UsingSkill = 0
@@ -1064,14 +1071,25 @@ Private Sub TrainingMacro_Timer()
         DesactivarMacroHechizos
         Exit Sub
     End If
+    
+    'Macros are disabled if focus is not on Argentum!
+    If Not Api.IsAppActive() Then
+        DesactivarMacroHechizos
+        Exit Sub
+    End If
+    
     If Comerciando Then Exit Sub
+    
     If hlst.List(hlst.listIndex) <> "(None)" And MainTimer.Check(TimersIndex.Attack, False) Then
         Call WriteCastSpell(hlst.listIndex + 1)
         Call WriteWork(eSkill.Magia)
         'UserCanAttack = 0
     End If
+    
     Call ConvertCPtoTP(MainViewShp.Left, MainViewShp.Top, MouseX, MouseY, tX, tY)
+    
     If (UsingSkill = Magia Or UsingSkill = Proyectiles) And Not MainTimer.Check(TimersIndex.Attack) Then Exit Sub
+    
     Call WriteWorkLeftClick(tX, tY, UsingSkill)
     UsingSkill = 0
 End Sub
@@ -1222,7 +1240,7 @@ End Sub
 Private Sub Label1_Click()
     Dim i As Integer
     For i = 1 To NUMSKILLS
-        frmSkills3.Text1(i).Caption = UserSkills(i)
+        frmSkills3.text1(i).Caption = UserSkills(i)
     Next i
     Alocados = SkillPoints
     frmSkills3.Puntos.Caption = "Puntos:" & SkillPoints
