@@ -30,6 +30,29 @@ Begin VB.Form frmMain
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   794
    Visible         =   0   'False
+   Begin VB.TextBox SendTxt 
+      BackColor       =   &H00000000&
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H000000FF&
+      Height          =   315
+      Left            =   45
+      MaxLength       =   160
+      MultiLine       =   -1  'True
+      TabIndex        =   19
+      TabStop         =   0   'False
+      ToolTipText     =   "Chat"
+      Top             =   1575
+      Visible         =   0   'False
+      Width           =   8160
+   End
    Begin SocketWrenchCtrl.Socket Socket1 
       Left            =   6750
       Top             =   1920
@@ -72,7 +95,7 @@ Begin VB.Form frmMain
       Left            =   11760
       ScaleHeight     =   75
       ScaleWidth      =   75
-      TabIndex        =   19
+      TabIndex        =   18
       Top             =   8520
       Visible         =   0   'False
       Width           =   135
@@ -99,7 +122,7 @@ Begin VB.Form frmMain
       Left            =   45
       MaxLength       =   160
       MultiLine       =   -1  'True
-      TabIndex        =   16
+      TabIndex        =   15
       TabStop         =   0   'False
       ToolTipText     =   "Chat"
       Top             =   8280
@@ -156,7 +179,7 @@ Begin VB.Form frmMain
       ScaleHeight     =   543
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   239
-      TabIndex        =   2
+      TabIndex        =   1
       Top             =   -60
       Width           =   3585
       Begin VB.CommandButton DespInv 
@@ -175,7 +198,7 @@ Begin VB.Form frmMain
          Left            =   540
          MouseIcon       =   "frmMain.frx":030A
          MousePointer    =   99  'Custom
-         TabIndex        =   10
+         TabIndex        =   9
          Top             =   4800
          Visible         =   0   'False
          Width           =   2430
@@ -196,7 +219,7 @@ Begin VB.Form frmMain
          Left            =   540
          MouseIcon       =   "frmMain.frx":045C
          MousePointer    =   99  'Custom
-         TabIndex        =   9
+         TabIndex        =   8
          Top             =   2160
          Visible         =   0   'False
          Width           =   2430
@@ -223,7 +246,7 @@ Begin VB.Form frmMain
          ScaleHeight     =   160
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   160
-         TabIndex        =   8
+         TabIndex        =   7
          Top             =   2400
          Width           =   2400
       End
@@ -232,7 +255,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H00FFFFFF&
          Height          =   2790
          Left            =   420
-         TabIndex        =   15
+         TabIndex        =   14
          TabStop         =   0   'False
          Top             =   2040
          Visible         =   0   'False
@@ -245,7 +268,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H00FFFF00&
          Height          =   195
          Left            =   1560
-         TabIndex        =   18
+         TabIndex        =   17
          Top             =   450
          Width           =   660
       End
@@ -303,7 +326,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H00FFFFFF&
          Height          =   195
          Left            =   1185
-         TabIndex        =   14
+         TabIndex        =   13
          Top             =   435
          Visible         =   0   'False
          Width           =   120
@@ -315,7 +338,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H00FFFFFF&
          Height          =   195
          Left            =   285
-         TabIndex        =   13
+         TabIndex        =   12
          Top             =   675
          Width           =   345
       End
@@ -356,7 +379,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H000000FF&
          Height          =   195
          Left            =   2595
-         TabIndex        =   12
+         TabIndex        =   11
          Top             =   5970
          Width           =   105
       End
@@ -450,7 +473,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H000000FF&
          Height          =   195
          Left            =   420
-         TabIndex        =   11
+         TabIndex        =   10
          Top             =   180
          Width           =   2625
       End
@@ -469,7 +492,7 @@ Begin VB.Form frmMain
          Left            =   1800
          MouseIcon       =   "frmMain.frx":0EEC
          MousePointer    =   99  'Custom
-         TabIndex        =   7
+         TabIndex        =   6
          Top             =   1290
          Width           =   1605
       End
@@ -488,7 +511,7 @@ Begin VB.Form frmMain
          Left            =   150
          MouseIcon       =   "frmMain.frx":103E
          MousePointer    =   99  'Custom
-         TabIndex        =   6
+         TabIndex        =   5
          Top             =   1305
          Width           =   1605
       End
@@ -513,7 +536,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H000000FF&
          Height          =   120
          Left            =   555
-         TabIndex        =   5
+         TabIndex        =   4
          Top             =   1965
          Width           =   30
       End
@@ -524,7 +547,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H00FFFFFF&
          Height          =   195
          Left            =   765
-         TabIndex        =   4
+         TabIndex        =   3
          Top             =   450
          Width           =   105
       End
@@ -534,38 +557,15 @@ Begin VB.Form frmMain
          ForeColor       =   &H00FFFFFF&
          Height          =   225
          Left            =   285
-         TabIndex        =   3
+         TabIndex        =   2
          Top             =   450
          Width           =   465
       End
    End
-   Begin VB.TextBox SendTxt 
-      BackColor       =   &H00000000&
-      BeginProperty Font 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H000000FF&
-      Height          =   315
-      Left            =   45
-      MaxLength       =   160
-      MultiLine       =   -1  'True
-      TabIndex        =   0
-      TabStop         =   0   'False
-      ToolTipText     =   "Chat"
-      Top             =   1575
-      Visible         =   0   'False
-      Width           =   8160
-   End
    Begin RichTextLib.RichTextBox RecTxt 
       Height          =   1500
       Left            =   45
-      TabIndex        =   1
+      TabIndex        =   0
       TabStop         =   0   'False
       ToolTipText     =   "Mensajes del servidor"
       Top             =   45
@@ -574,6 +574,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -617,7 +618,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H0000FFFF&
       Height          =   255
       Left            =   10680
-      TabIndex        =   17
+      TabIndex        =   16
       Top             =   8250
       Width           =   1035
    End
@@ -1258,7 +1259,7 @@ Private Sub Label4_Click()
     picInv.Visible = True
 
     hlst.Visible = False
-    cmdINFO.Visible = False
+    cmdInfo.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = True
@@ -1277,7 +1278,7 @@ Private Sub Label7_Click()
     'DespInv(1).Visible = False
     picInv.Visible = False
     hlst.Visible = True
-    cmdINFO.Visible = True
+    cmdInfo.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True
