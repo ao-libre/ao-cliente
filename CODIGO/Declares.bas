@@ -519,6 +519,8 @@ Public Enum eEditOptions
     eo_Class
     eo_Skills
     eo_SkillPointsLeft
+    eo_Nobleza
+    eo_Asesino
 End Enum
 
 ''
