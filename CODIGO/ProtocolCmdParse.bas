@@ -675,6 +675,9 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         
                         Case "SEX"
                             tmpInt = eEditOptions.eo_Sex
+                            
+                        Case "RAZA"
+                            tmpInt = eEditOptions.eo_Raza
                         
                         Case Else
                             tmpInt = -1

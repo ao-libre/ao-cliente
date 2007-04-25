@@ -522,6 +522,7 @@ Public Enum eEditOptions
     eo_Nobleza
     eo_Asesino
     eo_Sex
+    eo_Raza
 End Enum
 
 ''
