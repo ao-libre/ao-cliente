@@ -894,6 +894,7 @@ UserMap = 1
     
     'Set the intervals of timers
     Call MainTimer.SetInterval(TimersIndex.Attack, INT_ATTACK)
+    Call MainTimer.SetInterval(TimersIndex.Magic, INT_MAGIC)
     Call MainTimer.SetInterval(TimersIndex.Work, INT_WORK)
     Call MainTimer.SetInterval(TimersIndex.UseItemWithU, INT_USEITEMU)
     Call MainTimer.SetInterval(TimersIndex.UseItemWithDblClick, INT_USEITEMDCK)
@@ -903,6 +904,7 @@ UserMap = 1
     
    'Init timers
     Call MainTimer.Start(TimersIndex.Attack)
+    Call MainTimer.Start(TimersIndex.Magic)
     Call MainTimer.Start(TimersIndex.Work)
     Call MainTimer.Start(TimersIndex.UseItemWithU)
     Call MainTimer.Start(TimersIndex.UseItemWithDblClick)

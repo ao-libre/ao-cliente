@@ -2061,7 +2061,7 @@ On Error GoTo ErrHandler
             End If
             
             'Log2 of the bit flags sent by the server gives our numbers ^^
-            .priv = log(privs) / log(2)
+            .priv = Log(privs) / Log(2)
         Else
             .priv = 0
         End If
@@ -2587,9 +2587,9 @@ Private Sub HandleWorkRequestTarget()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    frmMain.MousePointer = 2
-    
     UsingSkill = incomingData.ReadByte()
+
+    frmMain.MousePointer = 2
     
     Select Case UsingSkill
         Case Magia
@@ -3805,11 +3805,11 @@ On Error GoTo ErrHandler
         .criminales.Caption = "Criminales asesinados: " & CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .status.Caption = " (Ciudadano)"
-            .status.ForeColor = vbBlue
+            .Status.Caption = " (Ciudadano)"
+            .Status.ForeColor = vbBlue
         Else
-            .status.Caption = " (Criminal)"
-            .status.ForeColor = vbRed
+            .Status.Caption = " (Criminal)"
+            .Status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)

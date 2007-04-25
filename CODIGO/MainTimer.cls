@@ -47,7 +47,7 @@ Option Explicit
 ' How many timers we are going to use-
 '
 ' @see See MainTimer.CreateAll
-Private Const CANTIDADTIMERS As Byte = 5
+Private Const CANTIDADTIMERS As Byte = 6
 
 ''
 ' A Timer data structure.
@@ -81,6 +81,7 @@ Public Enum TimersIndex
     UseItemWithU = 3
     UseItemWithDblClick = 4
     SendRPU = 5
+    Magic = 6
 End Enum
 
 

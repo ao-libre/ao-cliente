@@ -67,7 +67,8 @@ Public Const SND_LLUVIAOUTEND As String = "lluviaoutend.wav"
 Public Const INT_MACRO_HECHIS = 2788
 Public Const INT_MACRO_TRABAJO = 900
 
-Public Const INT_ATTACK = 1100
+Public Const INT_ATTACK = 1700
+Public Const INT_MAGIC = 1400
 Public Const INT_WORK = 700
 Public Const INT_USEITEMU = 450
 Public Const INT_USEITEMDCK = 220
