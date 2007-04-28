@@ -1,8 +1,8 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
-Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.OCX"
-Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.OCX"
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.ocx"
+Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.ocx"
+Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.ocx"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.ocx"
 Begin VB.Form frmMain 
    BackColor       =   &H00000000&
    BorderStyle     =   1  'Fixed Single
@@ -1081,22 +1081,23 @@ Private Sub TrainingMacro_Timer()
     
     If Comerciando Then Exit Sub
     
-    If hlst.List(hlst.listIndex) <> "(None)" And MainTimer.Check(TimersIndex.Magic, False) Then
+    If hlst.List(hlst.listIndex) <> "(None)" And MainTimer.Check(TimersIndex.CastSpell, False) Then
         Call WriteCastSpell(hlst.listIndex + 1)
         Call WriteWork(eSkill.Magia)
-        'UserCanAttack = 0
     End If
     
     Call ConvertCPtoTP(MainViewShp.Left, MainViewShp.Top, MouseX, MouseY, tX, tY)
     
-    If (UsingSkill = Magia Or UsingSkill = Proyectiles) And Not MainTimer.Check(TimersIndex.Magic) Then Exit Sub
+    If UsingSkill = Magia And Not MainTimer.Check(TimersIndex.CastSpell) Then Exit Sub
+    
+    If UsingSkill = Proyectiles And Not MainTimer.Check(TimersIndex.Attack) Then Exit Sub
     
     Call WriteWorkLeftClick(tX, tY, UsingSkill)
     UsingSkill = 0
 End Sub
 
 Private Sub cmdLanzar_Click()
-    If hlst.List(hlst.listIndex) <> "(None)" And MainTimer.Check(TimersIndex.Magic, False) Then
+    If hlst.List(hlst.listIndex) <> "(None)" And MainTimer.Check(TimersIndex.CastSpell, False) Then
         Call WriteCastSpell(hlst.listIndex + 1)
         Call WriteWork(eSkill.Magia)
         UsaMacro = True
@@ -1141,6 +1142,10 @@ Private Sub Form_Click()
                 If UsingSkill = 0 Then
                     Call WriteLeftClick(tX, tY)
                 Else
+                    frmMain.MousePointer = vbDefault
+                    If UsingSkill = Proyectiles And Not MainTimer.Check(TimersIndex.Attack) Then Exit Sub
+                    If UsingSkill = Magia And Not MainTimer.Check(TimersIndex.CastSpell) Then Exit Sub
+                    
                     If TrainingMacro.Enabled Then DesactivarMacroHechizos
                     If macrotrabajo.Enabled Then DesactivarMacroTrabajo
                     If (UsingSkill = Magia Or UsingSkill = Proyectiles) And Not MainTimer.Check(TimersIndex.Attack) Then Exit Sub

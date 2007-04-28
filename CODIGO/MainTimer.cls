@@ -75,13 +75,14 @@ Dim Timer(1 To CANTIDADTIMERS) As Timer
 ' @param UseItemWithU           Controls the usage of items with the "U" key.
 ' @param UseItemWithDblClick    Controls the usage of items with double click.
 ' @param SendRPU                Controls the use of the "L" to request a pos update.
+' @param CastSpell              Controls the casting of spells.
 Public Enum TimersIndex
     Attack = 1
     Work = 2
     UseItemWithU = 3
     UseItemWithDblClick = 4
     SendRPU = 5
-    Magic = 6
+    CastSpell = 6
 End Enum
 
 

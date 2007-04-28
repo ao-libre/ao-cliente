@@ -783,8 +783,7 @@ Sub Main()
     'Obtener el HushMD5
     Dim fMD5HushYo As String * 32
     
-    'fMD5HushYo = md5.GetMD5File(App.Path & "\" & App.EXEName & ".exe")
-    fMD5HushYo = "076FBC97038762ACCCDFE49455520D5B"
+    fMD5HushYo = md5.GetMD5File(App.Path & "\" & App.EXEName & ".exe")
     Call md5.MD5Reset
     MD5HushYo = txtOffset(hexMd52Asc(fMD5HushYo), 55)
     
@@ -798,15 +797,15 @@ Sub Main()
     frmCargando.Show
     frmCargando.Refresh
     
-    frmConnect.Version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
-    AddtoRichTextBox frmCargando.Status, "Buscando servidores....", 0, 0, 0, 0, 0, 1
+    frmConnect.version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
+    AddtoRichTextBox frmCargando.status, "Buscando servidores....", 0, 0, 0, 0, 0, 1
 
     Call CargarServidores
 'TODO : esto de ServerRecibidos no se podría sacar???
     ServersRecibidos = True
     
-    AddtoRichTextBox frmCargando.Status, "Encontrado", , , , 1
-    AddtoRichTextBox frmCargando.Status, "Iniciando constantes...", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.status, "Encontrado", , , , 1
+    AddtoRichTextBox frmCargando.status, "Iniciando constantes...", 0, 0, 0, 0, 0, 1
     
     Call InicializarNombres
     
@@ -816,12 +815,12 @@ Sub Main()
     frmOldPersonaje.NameTxt.Text = Config_Inicio.Name
     frmOldPersonaje.PasswordTxt.Text = ""
     
-    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
+    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
     
     IniciarObjetosDirectX
     
-    AddtoRichTextBox frmCargando.Status, "Cargando Sonidos....", 0, 0, 0, 0, 0, 1
-    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
+    AddtoRichTextBox frmCargando.status, "Cargando Sonidos....", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
 
 Dim loopc As Integer
 
@@ -829,7 +828,7 @@ LastTime = GetTickCount
 
     Call InitTileEngine(frmMain.hWnd, 152, 7, 32, 32, 13, 17, 9)
     
-    Call AddtoRichTextBox(frmCargando.Status, "Creando animaciones extra....")
+    Call AddtoRichTextBox(frmCargando.status, "Creando animaciones extra....")
     
     Call CargarAnimsExtra
     Call CargarTips
@@ -847,19 +846,19 @@ UserMap = 1
     Call InitMI
 #End If
 
-    AddtoRichTextBox frmCargando.Status, "                    ¡Bienvenido a Argentum Online!", , , , 1
+    AddtoRichTextBox frmCargando.status, "                    ¡Bienvenido a Argentum Online!", , , , 1
     
     Unload frmCargando
     
     'Inicializamos el sonido
-    Call AddtoRichTextBox(frmCargando.Status, "Iniciando DirectSound....", 0, 0, 0, 0, 0, True)
+    Call AddtoRichTextBox(frmCargando.status, "Iniciando DirectSound....", 0, 0, 0, 0, 0, True)
     Call Audio.Initialize(DirectX, frmMain.hWnd, App.Path & "\" & Config_Inicio.DirSonidos & "\", App.Path & "\" & Config_Inicio.DirMusica & "\")
     
     'Enable / Disable audio
     Audio.MusicActivated = Not ClientSetup.bNoMusic
     Audio.SoundActivated = Not ClientSetup.bNoSound
     
-    Call AddtoRichTextBox(frmCargando.Status, "Hecho", , , , 1, , False)
+    Call AddtoRichTextBox(frmCargando.status, "Hecho", , , , 1, , False)
     
     'Inicializamos el inventario gráfico
     Call Inventario.Initialize(DirectDraw, frmMain.picInv)
@@ -894,21 +893,22 @@ UserMap = 1
     
     'Set the intervals of timers
     Call MainTimer.SetInterval(TimersIndex.Attack, INT_ATTACK)
-    Call MainTimer.SetInterval(TimersIndex.Magic, INT_MAGIC)
     Call MainTimer.SetInterval(TimersIndex.Work, INT_WORK)
     Call MainTimer.SetInterval(TimersIndex.UseItemWithU, INT_USEITEMU)
     Call MainTimer.SetInterval(TimersIndex.UseItemWithDblClick, INT_USEITEMDCK)
     Call MainTimer.SetInterval(TimersIndex.SendRPU, INT_SENTRPU)
+    Call MainTimer.SetInterval(TimersIndex.CastSpell, INT_CAST_SPELL)
+    
     frmMain.macrotrabajo.Interval = INT_MACRO_TRABAJO
     frmMain.macrotrabajo.Enabled = False
     
    'Init timers
     Call MainTimer.Start(TimersIndex.Attack)
-    Call MainTimer.Start(TimersIndex.Magic)
     Call MainTimer.Start(TimersIndex.Work)
     Call MainTimer.Start(TimersIndex.UseItemWithU)
     Call MainTimer.Start(TimersIndex.UseItemWithDblClick)
     Call MainTimer.Start(TimersIndex.SendRPU)
+    Call MainTimer.Start(TimersIndex.CastSpell)
     
     ' Load the form for screenshots
     Call Load(frmScreenshots)
@@ -964,7 +964,7 @@ UserMap = 1
     
     EngineRun = False
     frmCargando.Show
-    AddtoRichTextBox frmCargando.Status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
     LiberarObjetosDX
 
 'TODO : Esto debería ir en otro lado como al cambair a esta res
