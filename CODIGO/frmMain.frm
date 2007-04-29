@@ -1,8 +1,8 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
-Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.OCX"
-Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.OCX"
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.ocx"
+Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.ocx"
+Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.ocx"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.ocx"
 Begin VB.Form frmMain 
    BackColor       =   &H00000000&
    BorderStyle     =   1  'Fixed Single
@@ -574,7 +574,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -719,20 +718,20 @@ Public IsPlaying As Byte
 
 Dim PuedeMacrear As Boolean
 
-Private Sub cmdMoverHechi_Click(Index As Integer)
+Private Sub cmdMoverHechi_Click(index As Integer)
     If hlst.listIndex = -1 Then Exit Sub
     Dim sTemp As String
 
-    Select Case Index
+    Select Case index
         Case 1 'subir
             If hlst.listIndex = 0 Then Exit Sub
         Case 0 'bajar
             If hlst.listIndex = hlst.ListCount - 1 Then Exit Sub
     End Select
 
-    Call WriteMoveSpell(Index, hlst.listIndex + 1)
+    Call WriteMoveSpell(index, hlst.listIndex + 1)
     
-    Select Case Index
+    Select Case index
         Case 1 'subir
             sTemp = hlst.List(hlst.listIndex - 1)
             hlst.List(hlst.listIndex - 1) = hlst.List(hlst.listIndex)
@@ -893,8 +892,10 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
         
         Case vbKeyControl
             If Shift <> 0 Then Exit Sub
+            
             If Not MainTimer.Check(TimersIndex.Arrows, False) Then Exit Sub 'Check if arrows interval has finished.
             If Not MainTimer.Check(TimersIndex.CastSpell, False) Then Exit Sub 'Check if spells interval has finished.
+            
             If MainTimer.Check(TimersIndex.Attack) And _
                (Not UserDescansar) And _
                (Not UserMeditar) Then
@@ -1116,8 +1117,8 @@ Private Sub cmdINFO_Click()
     Call WriteSpellInfo(hlst.listIndex + 1)
 End Sub
 
-Private Sub DespInv_Click(Index As Integer)
-    Inventario.ScrollInventory (Index = 0)
+Private Sub DespInv_Click(index As Integer)
+    Inventario.ScrollInventory (index = 0)
 End Sub
 
 Private Sub Form_Click()
@@ -1147,12 +1148,31 @@ Private Sub Form_Click()
                 Else
                     If TrainingMacro.Enabled Then DesactivarMacroHechizos
                     If macrotrabajo.Enabled Then DesactivarMacroTrabajo
+                    
                     If Not MainTimer.Check(TimersIndex.Attack, False) Then Exit Sub 'Check if attack interval has finished.
                     If Not MainTimer.Check(TimersIndex.Arrows, False) Then Exit Sub 'Check if arrows interval has finished.
                     If Not MainTimer.Check(TimersIndex.CastSpell, False) Then Exit Sub 'Check if spells interval has finished.
-                    If UsingSkill = Proyectiles And Not MainTimer.Check(TimersIndex.Arrows) Then Exit Sub
-                    If UsingSkill = Magia And Not MainTimer.Check(TimersIndex.CastSpell) Then Exit Sub
-                    If (UsingSkill = Pesca Or UsingSkill = Robar Or UsingSkill = Talar Or UsingSkill = Mineria Or UsingSkill = FundirMetal) And Not MainTimer.Check(TimersIndex.Work) Then Exit Sub
+                    
+                    'Splitted because VB isn't lazy!
+                    If UsingSkill = Proyectiles Then
+                        If Not MainTimer.Check(TimersIndex.Arrows) Then
+                            Exit Sub
+                        End If
+                    End If
+                    
+                    'Splitted because VB isn't lazy!
+                    If UsingSkill = Magia Then
+                        If Not MainTimer.Check(TimersIndex.CastSpell) Then
+                            Exit Sub
+                        End If
+                    End If
+                    
+                    'Splitted because VB isn't lazy!
+                    If (UsingSkill = Pesca Or UsingSkill = Robar Or UsingSkill = Talar Or UsingSkill = Mineria Or UsingSkill = FundirMetal) Then
+                        If Not MainTimer.Check(TimersIndex.Work) Then
+                            Exit Sub
+                        End If
+                    End If
                     
                     frmMain.MousePointer = vbDefault
                     Call WriteWorkLeftClick(tX, tY, UsingSkill)
@@ -1205,10 +1225,10 @@ Private Sub hlst_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
 End Sub
 
-Private Sub Image1_Click(Index As Integer)
+Private Sub Image1_Click(index As Integer)
     Call Audio.PlayWave(SND_CLICK)
 
-    Select Case Index
+    Select Case index
         Case 0
             Call frmOpciones.Show(vbModeless, frmMain)
             
@@ -1238,8 +1258,8 @@ Private Sub Image1_Click(Index As Integer)
     End Select
 End Sub
 
-Private Sub Image3_Click(Index As Integer)
-    Select Case Index
+Private Sub Image3_Click(index As Integer)
+    Select Case index
         Case 0
             Inventario.SelectGold
             If UserGLD > 0 Then
@@ -1251,7 +1271,7 @@ End Sub
 Private Sub Label1_Click()
     Dim i As Integer
     For i = 1 To NUMSKILLS
-        frmSkills3.Text1(i).Caption = UserSkills(i)
+        frmSkills3.text1(i).Caption = UserSkills(i)
     Next i
     Alocados = SkillPoints
     frmSkills3.Puntos.Caption = "Puntos:" & SkillPoints
@@ -1268,7 +1288,7 @@ Private Sub Label4_Click()
     picInv.Visible = True
 
     hlst.Visible = False
-    cmdINFO.Visible = False
+    cmdInfo.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = True
@@ -1287,7 +1307,7 @@ Private Sub Label7_Click()
     'DespInv(1).Visible = False
     picInv.Visible = False
     hlst.Visible = True
-    cmdINFO.Visible = True
+    cmdInfo.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True
@@ -1301,10 +1321,10 @@ Private Sub picInv_DblClick()
     If frmCarp.Visible Or frmHerrero.Visible Then Exit Sub
     
     If Not MainTimer.Check(TimersIndex.UseItemWithDblClick) Then Exit Sub
-       
+    
     If macrotrabajo.Enabled Then _
                      DesactivarMacroTrabajo
-                     
+    
     Call UsarItem
 End Sub
 

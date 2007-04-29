@@ -893,24 +893,24 @@ UserMap = 1
     
     'Set the intervals of timers
     Call MainTimer.SetInterval(TimersIndex.Attack, INT_ATTACK)
-    Call MainTimer.SetInterval(TimersIndex.Arrows, INT_ARROWS)
     Call MainTimer.SetInterval(TimersIndex.Work, INT_WORK)
     Call MainTimer.SetInterval(TimersIndex.UseItemWithU, INT_USEITEMU)
     Call MainTimer.SetInterval(TimersIndex.UseItemWithDblClick, INT_USEITEMDCK)
     Call MainTimer.SetInterval(TimersIndex.SendRPU, INT_SENTRPU)
     Call MainTimer.SetInterval(TimersIndex.CastSpell, INT_CAST_SPELL)
+    Call MainTimer.SetInterval(TimersIndex.Arrows, INT_ARROWS)
     
     frmMain.macrotrabajo.Interval = INT_MACRO_TRABAJO
     frmMain.macrotrabajo.Enabled = False
     
    'Init timers
     Call MainTimer.Start(TimersIndex.Attack)
-    Call MainTimer.Start(TimersIndex.Arrows)
     Call MainTimer.Start(TimersIndex.Work)
     Call MainTimer.Start(TimersIndex.UseItemWithU)
     Call MainTimer.Start(TimersIndex.UseItemWithDblClick)
     Call MainTimer.Start(TimersIndex.SendRPU)
     Call MainTimer.Start(TimersIndex.CastSpell)
+    Call MainTimer.Start(TimersIndex.Arrows)
     
     ' Load the form for screenshots
     Call Load(frmScreenshots)

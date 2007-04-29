@@ -278,11 +278,11 @@ Private Sub Form_Load()
     txtCantMensajes.Text = CStr(DialogosClanes.CantidadDialogos)
     
     If DialogosClanes.Activo Then
-        optConsola.value = True
-        optPantalla.value = False
-    Else
         optConsola.value = False
         optPantalla.value = True
+    Else
+        optConsola.value = True
+        optPantalla.value = False
     End If
     
     loading = False     'Enable sounds when setting check's values

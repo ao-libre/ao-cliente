@@ -76,7 +76,7 @@ Dim Timer(1 To CANTIDADTIMERS) As Timer
 ' @param UseItemWithDblClick    Controls the usage of items with double click.
 ' @param SendRPU                Controls the use of the "L" to request a pos update.
 ' @param CastSpell              Controls the casting of spells.
-' @param Arrows                 Controls the shotting of arrows.
+' @param Arrows                 Controls the shooting of arrows.
 Public Enum TimersIndex
     Attack = 1
     Work = 2
