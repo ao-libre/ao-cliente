@@ -893,6 +893,8 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
         
         Case vbKeyControl
             If Shift <> 0 Then Exit Sub
+            If Not MainTimer.Check(TimersIndex.Arrows, False) Then Exit Sub 'Check if arrows interval has finished.
+            If Not MainTimer.Check(TimersIndex.CastSpell, False) Then Exit Sub 'Check if spells interval has finished.
             If MainTimer.Check(TimersIndex.Attack) And _
                (Not UserDescansar) And _
                (Not UserMeditar) Then
@@ -1145,7 +1147,10 @@ Private Sub Form_Click()
                 Else
                     If TrainingMacro.Enabled Then DesactivarMacroHechizos
                     If macrotrabajo.Enabled Then DesactivarMacroTrabajo
-                    If UsingSkill = Proyectiles And Not MainTimer.Check(TimersIndex.Attack) Then Exit Sub
+                    If Not MainTimer.Check(TimersIndex.Attack, False) Then Exit Sub 'Check if attack interval has finished.
+                    If Not MainTimer.Check(TimersIndex.Arrows, False) Then Exit Sub 'Check if arrows interval has finished.
+                    If Not MainTimer.Check(TimersIndex.CastSpell, False) Then Exit Sub 'Check if spells interval has finished.
+                    If UsingSkill = Proyectiles And Not MainTimer.Check(TimersIndex.Arrows) Then Exit Sub
                     If UsingSkill = Magia And Not MainTimer.Check(TimersIndex.CastSpell) Then Exit Sub
                     If (UsingSkill = Pesca Or UsingSkill = Robar Or UsingSkill = Talar Or UsingSkill = Mineria Or UsingSkill = FundirMetal) And Not MainTimer.Check(TimersIndex.Work) Then Exit Sub
                     
@@ -1263,7 +1268,7 @@ Private Sub Label4_Click()
     picInv.Visible = True
 
     hlst.Visible = False
-    cmdInfo.Visible = False
+    cmdINFO.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = True
@@ -1282,7 +1287,7 @@ Private Sub Label7_Click()
     'DespInv(1).Visible = False
     picInv.Visible = False
     hlst.Visible = True
-    cmdInfo.Visible = True
+    cmdINFO.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True

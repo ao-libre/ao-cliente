@@ -767,10 +767,10 @@ Sub Main()
     'canceling the effects of "/nores" option.
     Call LeerLineaComandos
     
-    If FindPreviousInstance Then
-        Call MsgBox("Argentum Online ya esta corriendo! No es posible correr otra instancia del juego. Haga click en Aceptar para salir.", vbApplicationModal + vbInformation + vbOKOnly, "Error al ejecutar")
-        End
-    End If
+    'If FindPreviousInstance Then
+        'Call MsgBox("Argentum Online ya esta corriendo! No es posible correr otra instancia del juego. Haga click en Aceptar para salir.", vbApplicationModal + vbInformation + vbOKOnly, "Error al ejecutar")
+        'End
+    'End If
     
     
     'usaremos esto para ayudar en los parches
@@ -893,6 +893,7 @@ UserMap = 1
     
     'Set the intervals of timers
     Call MainTimer.SetInterval(TimersIndex.Attack, INT_ATTACK)
+    Call MainTimer.SetInterval(TimersIndex.Arrows, INT_ARROWS)
     Call MainTimer.SetInterval(TimersIndex.Work, INT_WORK)
     Call MainTimer.SetInterval(TimersIndex.UseItemWithU, INT_USEITEMU)
     Call MainTimer.SetInterval(TimersIndex.UseItemWithDblClick, INT_USEITEMDCK)
@@ -904,6 +905,7 @@ UserMap = 1
     
    'Init timers
     Call MainTimer.Start(TimersIndex.Attack)
+    Call MainTimer.Start(TimersIndex.Arrows)
     Call MainTimer.Start(TimersIndex.Work)
     Call MainTimer.Start(TimersIndex.UseItemWithU)
     Call MainTimer.Start(TimersIndex.UseItemWithDblClick)

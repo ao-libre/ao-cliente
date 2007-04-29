@@ -47,7 +47,7 @@ Option Explicit
 ' How many timers we are going to use-
 '
 ' @see See MainTimer.CreateAll
-Private Const CANTIDADTIMERS As Byte = 6
+    Private Const CANTIDADTIMERS As Byte = 7
 
 ''
 ' A Timer data structure.
@@ -76,6 +76,7 @@ Dim Timer(1 To CANTIDADTIMERS) As Timer
 ' @param UseItemWithDblClick    Controls the usage of items with double click.
 ' @param SendRPU                Controls the use of the "L" to request a pos update.
 ' @param CastSpell              Controls the casting of spells.
+' @param Arrows                 Controls the shotting of arrows.
 Public Enum TimersIndex
     Attack = 1
     Work = 2
@@ -83,6 +84,7 @@ Public Enum TimersIndex
     UseItemWithDblClick = 4
     SendRPU = 5
     CastSpell = 6
+    Arrows = 7
 End Enum
 
 
