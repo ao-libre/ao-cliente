@@ -1143,16 +1143,16 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 
             Case "/BORRARPENA"
                 If notNullArguments Then
-                    tmpArr = Split(ArgumentosRaw, "@", 2)
-                    If UBound(tmpArr) = 1 Then
-                        Call WriteRemovePunishment(tmpArr(0), tmpArr(1))
+                    tmpArr = Split(ArgumentosRaw, "@", 3)
+                    If UBound(tmpArr) = 2 Then
+                        Call WriteRemovePunishment(tmpArr(0), tmpArr(1), tmpArr(2))
                     Else
                         'Faltan los parametros con el formato propio
-                        Call ShowConsoleMsg("Formato incorrecto. Utilice /borrarpena NICKNAME@PENA.")
+                        Call ShowConsoleMsg("Formato incorrecto. Utilice /borrarpena NICK@PENA@NuevaPena.")
                     End If
                 Else
                     'Avisar que falta el parametro
-                    Call ShowConsoleMsg("Faltan parámetros. Utilice /borrarpena NICKNAME@PENA.")
+                    Call ShowConsoleMsg("Faltan parámetros. Utilice /borrarpena NICK@PENA@NuevaPena.")
                 End If
                 
             Case "/BLOQ"

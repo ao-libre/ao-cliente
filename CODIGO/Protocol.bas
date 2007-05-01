@@ -8002,7 +8002,7 @@ End Sub
 ' @param    punishment The id of the punishment to be removed.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteRemovePunishment(ByVal UserName As String, ByVal punishment As Byte)
+Public Sub WriteRemovePunishment(ByVal UserName As String, ByVal punishment As Byte, ByVal NewText As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -8012,8 +8012,9 @@ Public Sub WriteRemovePunishment(ByVal UserName As String, ByVal punishment As B
         Call .WriteByte(ClientPacketID.RemovePunishment)
         
         Call .WriteASCIIString(UserName)
-        
         Call .WriteByte(punishment)
+        Call .WriteASCIIString(NewText)
+        
     End With
 End Sub
 
