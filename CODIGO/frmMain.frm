@@ -1,8 +1,8 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.ocx"
-Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.ocx"
-Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.ocx"
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.OCX"
+Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.OCX"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.Form frmMain 
    BackColor       =   &H00000000&
    BorderStyle     =   1  'Fixed Single
@@ -574,6 +574,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -718,20 +719,20 @@ Public IsPlaying As Byte
 
 Dim PuedeMacrear As Boolean
 
-Private Sub cmdMoverHechi_Click(index As Integer)
+Private Sub cmdMoverHechi_Click(Index As Integer)
     If hlst.listIndex = -1 Then Exit Sub
     Dim sTemp As String
 
-    Select Case index
+    Select Case Index
         Case 1 'subir
             If hlst.listIndex = 0 Then Exit Sub
         Case 0 'bajar
             If hlst.listIndex = hlst.ListCount - 1 Then Exit Sub
     End Select
 
-    Call WriteMoveSpell(index, hlst.listIndex + 1)
+    Call WriteMoveSpell(Index, hlst.listIndex + 1)
     
-    Select Case index
+    Select Case Index
         Case 1 'subir
             sTemp = hlst.List(hlst.listIndex - 1)
             hlst.List(hlst.listIndex - 1) = hlst.List(hlst.listIndex)
@@ -827,10 +828,12 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
                 Call TirarItem
             
             Case vbKeyU
-                If MainTimer.Check(TimersIndex.UseItemWithU) Then _
+                If macrotrabajo.Enabled Then DesactivarMacroTrabajo
+                    
+                If MainTimer.Check(TimersIndex.UseItemWithU) Then
                     Call UsarItem
-                If macrotrabajo.Enabled Then _
-                    DesactivarMacroTrabajo
+                End If
+                
             
             Case vbKeyL
                 If MainTimer.Check(TimersIndex.SendRPU) Then
@@ -1101,7 +1104,7 @@ Private Sub TrainingMacro_Timer()
 End Sub
 
 Private Sub cmdLanzar_Click()
-    If hlst.List(hlst.listIndex) <> "(None)" And MainTimer.Check(TimersIndex.CastSpell, False) Then
+    If hlst.List(hlst.listIndex) <> "(None)" And MainTimer.Check(TimersIndex.Work, False) Then
         Call WriteCastSpell(hlst.listIndex + 1)
         Call WriteWork(eSkill.Magia)
         UsaMacro = True
@@ -1117,8 +1120,8 @@ Private Sub cmdINFO_Click()
     Call WriteSpellInfo(hlst.listIndex + 1)
 End Sub
 
-Private Sub DespInv_Click(index As Integer)
-    Inventario.ScrollInventory (index = 0)
+Private Sub DespInv_Click(Index As Integer)
+    Inventario.ScrollInventory (Index = 0)
 End Sub
 
 Private Sub Form_Click()
@@ -1225,10 +1228,10 @@ Private Sub hlst_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
 End Sub
 
-Private Sub Image1_Click(index As Integer)
+Private Sub Image1_Click(Index As Integer)
     Call Audio.PlayWave(SND_CLICK)
 
-    Select Case index
+    Select Case Index
         Case 0
             Call frmOpciones.Show(vbModeless, frmMain)
             
@@ -1258,8 +1261,8 @@ Private Sub Image1_Click(index As Integer)
     End Select
 End Sub
 
-Private Sub Image3_Click(index As Integer)
-    Select Case index
+Private Sub Image3_Click(Index As Integer)
+    Select Case Index
         Case 0
             Inventario.SelectGold
             If UserGLD > 0 Then
@@ -1271,7 +1274,7 @@ End Sub
 Private Sub Label1_Click()
     Dim i As Integer
     For i = 1 To NUMSKILLS
-        frmSkills3.text1(i).Caption = UserSkills(i)
+        frmSkills3.Text1(i).Caption = UserSkills(i)
     Next i
     Alocados = SkillPoints
     frmSkills3.Puntos.Caption = "Puntos:" & SkillPoints
@@ -1288,7 +1291,7 @@ Private Sub Label4_Click()
     picInv.Visible = True
 
     hlst.Visible = False
-    cmdInfo.Visible = False
+    cmdINFO.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = True
@@ -1307,7 +1310,7 @@ Private Sub Label7_Click()
     'DespInv(1).Visible = False
     picInv.Visible = False
     hlst.Visible = True
-    cmdInfo.Visible = True
+    cmdINFO.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True
