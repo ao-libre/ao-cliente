@@ -1113,7 +1113,7 @@ Private Sub HandleCommerceInit()
         If Inventario.OBJIndex(i) <> 0 Then
             frmComerciar.List1(1).AddItem Inventario.ItemName(i)
         Else
-            frmComerciar.List1(1).AddItem "Nada"
+            frmComerciar.List1(1).AddItem " "
         End If
     Next i
     

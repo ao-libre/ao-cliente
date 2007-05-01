@@ -367,6 +367,9 @@ Select Case Index
                 Label1(3).Visible = False
                 Label1(4).Caption = "Defensa:" & NPCInventory(List1(0).listIndex + 1).Def
                 Label1(4).Visible = True
+            Case Else
+                Label1(3).Visible = False
+                Label1(4).Visible = False
         End Select
         
         Call DrawGrhtoHdc(Picture1.hWnd, Picture1.hdc, NPCInventory(List1(0).listIndex + 1).GrhIndex, SR, DR)
@@ -386,6 +389,9 @@ Select Case Index
                 Label1(3).Visible = False
                 Label1(4).Caption = "Defensa:" & Inventario.Def(List1(1).listIndex + 1)
                 Label1(4).Visible = True
+            Case Else
+                Label1(3).Visible = False
+                Label1(4).Visible = False
         End Select
         
         Call DrawGrhtoHdc(Picture1.hWnd, Picture1.hdc, Inventario.GrhIndex(List1(1).listIndex + 1), SR, DR)
