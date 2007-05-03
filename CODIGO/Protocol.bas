@@ -1113,7 +1113,7 @@ Private Sub HandleCommerceInit()
         If Inventario.OBJIndex(i) <> 0 Then
             frmComerciar.List1(1).AddItem Inventario.ItemName(i)
         Else
-            frmComerciar.List1(1).AddItem " "
+            frmComerciar.List1(1).AddItem ""
         End If
     Next i
     
@@ -1141,7 +1141,7 @@ Private Sub HandleBankInit()
         If Inventario.OBJIndex(i) <> 0 Then
             frmBancoObj.List1(1).AddItem Inventario.ItemName(i)
         Else
-            frmBancoObj.List1(1).AddItem "Nada"
+            frmBancoObj.List1(1).AddItem ""
         End If
     Next i
     
@@ -1150,7 +1150,7 @@ Private Sub HandleBankInit()
         If UserBancoInventory(i).OBJIndex <> 0 Then
             frmBancoObj.List1(0).AddItem UserBancoInventory(i).Name
         Else
-            frmBancoObj.List1(0).AddItem "Nada"
+            frmBancoObj.List1(0).AddItem ""
         End If
     Next i
     
@@ -1183,7 +1183,7 @@ Private Sub HandleUserCommerceInit()
             frmComerciarUsu.List1.AddItem Inventario.ItemName(i)
             frmComerciarUsu.List1.ItemData(frmComerciarUsu.List1.NewIndex) = Inventario.Amount(i)
         Else
-            frmComerciarUsu.List1.AddItem "Nada"
+            frmComerciarUsu.List1.AddItem ""
             frmComerciarUsu.List1.ItemData(frmComerciarUsu.List1.NewIndex) = 0
         End If
     Next i
@@ -4068,7 +4068,7 @@ Private Sub HandleTradeOK()
             If Inventario.OBJIndex(i) <> 0 Then
                 Call frmComerciar.List1(1).AddItem(Inventario.ItemName(i))
             Else
-                Call frmComerciar.List1(1).AddItem("Nada")
+                Call frmComerciar.List1(1).AddItem("")
             End If
         Next i
         
@@ -4102,7 +4102,7 @@ Private Sub HandleBankOK()
             If Inventario.OBJIndex(i) <> 0 Then
                 Call frmBancoObj.List1(1).AddItem(Inventario.ItemName(i))
             Else
-                Call frmBancoObj.List1(1).AddItem("Nada")
+                Call frmBancoObj.List1(1).AddItem("")
             End If
         Next i
         
@@ -4110,7 +4110,7 @@ Private Sub HandleBankOK()
             If UserBancoInventory(i).OBJIndex <> 0 Then
                 Call frmBancoObj.List1(0).AddItem(UserBancoInventory(i).Name)
             Else
-                Call frmBancoObj.List1(0).AddItem("Nada")
+                Call frmBancoObj.List1(0).AddItem("")
             End If
         Next i
         
