@@ -201,6 +201,7 @@ Public Enum eCiudad
     cNix
     cBanderbill
     cLindos
+    cArghal
 End Enum
 
 Enum eRaza
@@ -457,7 +458,7 @@ Public UserSexo As eGenero
 Public UserRaza As eRaza
 Public UserEmail As String
 
-Public Const NUMCIUDADES As Byte = 4
+Public Const NUMCIUDADES As Byte = 5
 Public Const NUMSKILLS As Byte = 21
 Public Const NUMATRIBUTOS As Byte = 5
 Public Const NUMCLASES As Byte = 16
