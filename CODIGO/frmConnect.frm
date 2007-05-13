@@ -21,6 +21,14 @@ Begin VB.Form frmConnect
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
+   Begin VB.CommandButton downloadServer 
+      Caption         =   "Descargar código del servidor"
+      Height          =   375
+      Left            =   240
+      TabIndex        =   3
+      Top             =   8280
+      Width           =   2415
+   End
    Begin VB.TextBox PortTxt 
       Alignment       =   2  'Center
       Appearance      =   0  'Flat
@@ -204,6 +212,21 @@ Call InitServersList(RawServersList)
 
 End Sub
 
+Private Sub downloadServer_Click()
+'***********************************
+'IMPORTANTE!
+'
+'No debe eliminarse la posibilidad de bajar el código de sus servidor de esta forma.
+'Caso contrario estarían violando la licencia Affero GPL y con ella derechos de autor,
+'incurriendo de esta forma en un delito punible por ley.
+'
+'Argentum Online es libre, es de todos. Mantengamoslo así. Si tanto te gusta el juego y querés los
+'cambios que hacemos nosotros, compartí los tuyos. Es un cambio justo. Si no estás de acuerdo,
+'no uses nuestro código, pues nadie te obliga o bien utiliza una versión anterior a la 0.12.0.
+'***********************************
+    Call ShellExecute(0, "Open", "https://sourceforge.net/project/downloading.php?group_id=67718&use_mirror=ufpr&filename=AOServer-src.zip&295227", "", App.Path, 0)
+End Sub
+
 Private Sub Form_Activate()
 'On Error Resume Next
 
@@ -283,9 +306,21 @@ Private Sub Form_Load()
     version.Caption = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
  '[END]'
 
+'Recordatorio para cumplir la licencia, por si borrás el botón sin leer el code...
+Dim i As Long
+
+For i = 0 To Me.Controls.Count - 1
+    If Me.Controls(i).Name = "downloadServer" Then
+        Exit For
+    End If
+Next i
+
+If i = Me.Controls.Count Then
+    MsgBox "No debe eliminarse la posibilidad de bajar el código de sus servidor. Caso contrario estarían violando la licencia Affero GPL y con ella derechos de autor, incurriendo de esta forma en un delito punible por ley." & vbCrLf & vbCrLf & vbCrLf & _
+            "Argentum Online es libre, es de todos. Mantengamoslo así. Si tanto te gusta el juego y querés los cambios que hacemos nosotros, compartí los tuyos. Es un cambio justo. Si no estás de acuerdo, no uses nuestro código, pues nadie te obliga o bien utiliza una versión anterior a la 0.12.0.", vbCritical Or vbApplicationModal
+End If
+
 End Sub
-
-
 
 Private Sub Image1_Click(index As Integer)
 
