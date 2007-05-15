@@ -1240,7 +1240,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
         
             Case "/HABILITAR"
                 Call WriteServerOpenToUsersToggle
-                
+            
             Case "/APAGAR"
                 Call WriteTurnOffServer
                 

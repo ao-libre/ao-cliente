@@ -1,8 +1,8 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
-Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.OCX"
-Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.OCX"
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.ocx"
+Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.ocx"
+Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.ocx"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.ocx"
 Begin VB.Form frmMain 
    BackColor       =   &H00000000&
    BorderStyle     =   1  'Fixed Single
@@ -574,7 +574,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -719,20 +718,20 @@ Public IsPlaying As Byte
 
 Dim PuedeMacrear As Boolean
 
-Private Sub cmdMoverHechi_Click(Index As Integer)
+Private Sub cmdMoverHechi_Click(index As Integer)
     If hlst.listIndex = -1 Then Exit Sub
     Dim sTemp As String
 
-    Select Case Index
+    Select Case index
         Case 1 'subir
             If hlst.listIndex = 0 Then Exit Sub
         Case 0 'bajar
             If hlst.listIndex = hlst.ListCount - 1 Then Exit Sub
     End Select
 
-    Call WriteMoveSpell(Index, hlst.listIndex + 1)
+    Call WriteMoveSpell(index, hlst.listIndex + 1)
     
-    Select Case Index
+    Select Case index
         Case 1 'subir
             sTemp = hlst.List(hlst.listIndex - 1)
             hlst.List(hlst.listIndex - 1) = hlst.List(hlst.listIndex)
@@ -1120,8 +1119,8 @@ Private Sub cmdINFO_Click()
     Call WriteSpellInfo(hlst.listIndex + 1)
 End Sub
 
-Private Sub DespInv_Click(Index As Integer)
-    Inventario.ScrollInventory (Index = 0)
+Private Sub DespInv_Click(index As Integer)
+    Inventario.ScrollInventory (index = 0)
 End Sub
 
 Private Sub Form_Click()
@@ -1228,10 +1227,10 @@ Private Sub hlst_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
 End Sub
 
-Private Sub Image1_Click(Index As Integer)
+Private Sub Image1_Click(index As Integer)
     Call Audio.PlayWave(SND_CLICK)
 
-    Select Case Index
+    Select Case index
         Case 0
             Call frmOpciones.Show(vbModeless, frmMain)
             
@@ -1261,8 +1260,8 @@ Private Sub Image1_Click(Index As Integer)
     End Select
 End Sub
 
-Private Sub Image3_Click(Index As Integer)
-    Select Case Index
+Private Sub Image3_Click(index As Integer)
+    Select Case index
         Case 0
             Inventario.SelectGold
             If UserGLD > 0 Then

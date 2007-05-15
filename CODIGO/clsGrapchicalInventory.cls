@@ -164,7 +164,11 @@ Public Property Get Amount(ByVal slot As Byte) As Long
 'Last Modify Date: 27/07/04
 'Retrieves the selected item's amount
 '***************************************************
-    Amount = UserInventory(slot).Amount
+    If slot = FLAGORO Then
+        Amount = UserGLD
+    ElseIf slot >= LBound(UserInventory) And slot <= UBound(UserInventory) Then
+        Amount = UserInventory(slot).Amount
+    End If
 End Property
 
 Public Property Get OBJIndex(ByVal slot As Byte) As Integer
@@ -439,7 +443,7 @@ End Sub
     font.Name = "Verdana"
     font.bold = True
     font.italic = False
-    font.Size = 7
+    font.size = 7
     font.Underline = False
     font.Strikethrough = False
     

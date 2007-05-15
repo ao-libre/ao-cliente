@@ -767,10 +767,10 @@ Sub Main()
     'canceling the effects of "/nores" option.
     Call LeerLineaComandos
     
-    If FindPreviousInstance Then
-        Call MsgBox("Argentum Online ya esta corriendo! No es posible correr otra instancia del juego. Haga click en Aceptar para salir.", vbApplicationModal + vbInformation + vbOKOnly, "Error al ejecutar")
-        End
-    End If
+    'If FindPreviousInstance Then
+    '    Call MsgBox("Argentum Online ya esta corriendo! No es posible correr otra instancia del juego. Haga click en Aceptar para salir.", vbApplicationModal + vbInformation + vbOKOnly, "Error al ejecutar")
+    '    End
+    'End If
     
     
     'usaremos esto para ayudar en los parches
@@ -1175,7 +1175,7 @@ Private Sub InicializarNombres()
     SkillsNames(eSkill.Liderazgo) = "Liderazgo"
     SkillsNames(eSkill.Domar) = "Domar animales"
     SkillsNames(eSkill.Proyectiles) = "Armas de proyectiles"
-    SkillsNames(eSkill.Wresterling) = "Wrestling"
+    SkillsNames(eSkill.Wrestling) = "Wrestling"
     SkillsNames(eSkill.Navegacion) = "Navegacion"
 
     AtributosNames(eAtributos.Fuerza) = "Fuerza"

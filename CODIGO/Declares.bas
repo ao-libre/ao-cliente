@@ -232,7 +232,7 @@ Public Enum eSkill
     Liderazgo = 17
     Domar = 18
     Proyectiles = 19
-    Wresterling = 20
+    Wrestling = 20
     Navegacion = 21
 End Enum
 
