@@ -574,6 +574,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1116,7 +1117,9 @@ Private Sub CmdLanzar_MouseMove(Button As Integer, Shift As Integer, x As Single
 End Sub
 
 Private Sub cmdINFO_Click()
-    Call WriteSpellInfo(hlst.listIndex + 1)
+    If hlst.listIndex <> -1 Then
+        Call WriteSpellInfo(hlst.listIndex + 1)
+    End If
 End Sub
 
 Private Sub DespInv_Click(index As Integer)
