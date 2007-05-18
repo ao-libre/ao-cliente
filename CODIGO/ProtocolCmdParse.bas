@@ -856,7 +856,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 End If
                 
             Case "/ONCLAN"
-                If CantidadArgumentos <> 1 Then
+                If CantidadArgumentos < 1 Then
                     'Avisar sintaxis incorrecta
                     Call ShowConsoleMsg("Utilice /onclan nombre del clan.")
                 Else
@@ -864,7 +864,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 End If
                 
             Case "/CT"
-                If notNullArguments And CantidadArgumentos >= 3 Then
+                If notNullArguments And CantidadArgumentos = 3 Then
                     If ValidNumber(ArgumentosAll(0), eNumber_Types.ent_Integer) And ValidNumber(ArgumentosAll(1), eNumber_Types.ent_Byte) And ValidNumber(ArgumentosAll(2), eNumber_Types.ent_Byte) Then
                         Call WriteTeleportCreate(ArgumentosAll(0), ArgumentosAll(1), ArgumentosAll(2))
                     Else
