@@ -897,15 +897,15 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
             If Shift <> 0 Then Exit Sub
             
             If Not MainTimer.Check(TimersIndex.Arrows, False) Then Exit Sub 'Check if arrows interval has finished.
-            If Not MainTimer.Check(TimersIndex.CastSpell, False) Then Exit Sub 'Check if spells interval has finished.
-            
-            If MainTimer.Check(TimersIndex.Attack) And _
-               (Not UserDescansar) And _
-               (Not UserMeditar) Then
-                    If TrainingMacro.Enabled Then DesactivarMacroHechizos
-                    If macrotrabajo.Enabled Then DesactivarMacroTrabajo
-                    Call WriteAttack
+            If Not MainTimer.Check(TimersIndex.CastSpell, False) Then  'Check if spells interval has finished.
+                If Not MainTimer.Check(TimersIndex.CastAttack) Then Exit Sub 'Corto intervalo Golpe-Hechizo
+            Else
+                If Not MainTimer.Check(TimersIndex.Attack) Or UserDescansar Or UserMeditar Then Exit Sub
             End If
+            
+            If TrainingMacro.Enabled Then DesactivarMacroHechizos
+            If macrotrabajo.Enabled Then DesactivarMacroTrabajo
+            Call WriteAttack
         
         Case vbKeyReturn
             If SendCMSTXT.Visible Then Exit Sub
@@ -1154,9 +1154,9 @@ Private Sub Form_Click()
                     If TrainingMacro.Enabled Then DesactivarMacroHechizos
                     If macrotrabajo.Enabled Then DesactivarMacroTrabajo
                     
-                    If Not MainTimer.Check(TimersIndex.Attack, False) Then Exit Sub 'Check if attack interval has finished.
                     If Not MainTimer.Check(TimersIndex.Arrows, False) Then Exit Sub 'Check if arrows interval has finished.
-                    If Not MainTimer.Check(TimersIndex.CastSpell, False) Then Exit Sub 'Check if spells interval has finished.
+                    'If Not MainTimer.Check(TimersIndex.Attack, False) Then Exit Sub 'Check if attack interval has finished.
+                    'If Not MainTimer.Check(TimersIndex.CastSpell, False) Then Exit Sub 'Check if spells interval has finished.
                     
                     'Splitted because VB isn't lazy!
                     If UsingSkill = Proyectiles Then
@@ -1167,8 +1167,10 @@ Private Sub Form_Click()
                     
                     'Splitted because VB isn't lazy!
                     If UsingSkill = Magia Then
-                        If Not MainTimer.Check(TimersIndex.CastSpell) Then
-                            Exit Sub
+                        If Not MainTimer.Check(TimersIndex.Attack, False) Then 'Check if attack interval has finished.
+                            If Not MainTimer.Check(TimersIndex.CastAttack) Then Exit Sub 'Corto intervalo de Golpe-Magia
+                        Else
+                            If Not MainTimer.Check(TimersIndex.CastSpell) Then Exit Sub 'Check if spells interval has finished.
                         End If
                     End If
                     

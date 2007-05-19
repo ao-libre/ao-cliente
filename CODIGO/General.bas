@@ -899,6 +899,7 @@ UserMap = 1
     Call MainTimer.SetInterval(TimersIndex.SendRPU, INT_SENTRPU)
     Call MainTimer.SetInterval(TimersIndex.CastSpell, INT_CAST_SPELL)
     Call MainTimer.SetInterval(TimersIndex.Arrows, INT_ARROWS)
+    Call MainTimer.SetInterval(TimersIndex.CastAttack, INT_CAST_ATTACK)
     
     frmMain.macrotrabajo.Interval = INT_MACRO_TRABAJO
     frmMain.macrotrabajo.Enabled = False
@@ -911,6 +912,8 @@ UserMap = 1
     Call MainTimer.Start(TimersIndex.SendRPU)
     Call MainTimer.Start(TimersIndex.CastSpell)
     Call MainTimer.Start(TimersIndex.Arrows)
+    Call MainTimer.Start(TimersIndex.CastAttack)
+    
     
     ' Load the form for screenshots
     Call Load(frmScreenshots)
