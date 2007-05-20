@@ -133,10 +133,6 @@ Option Explicit
 Private Sub Command1_Click()
     If LenB(frmCantidad.Text1.Text) > 0 Then
         If Not IsNumeric(frmCantidad.Text1.Text) Then Exit Sub  'Should never happen
-        If frmCantidad.Text1.Text > 10000 Then
-            frmCantidad.Text1.Text = 10000
-            MsgBox "No se puede tirar más de 10000 por vez."
-        End If
         Call WriteDrop(Inventario.SelectedItem, frmCantidad.Text1.Text)
         frmCantidad.Text1.Text = ""
     End If
@@ -153,7 +149,8 @@ Private Sub Command2_Click()
         Unload Me
     Else
         If UserGLD > 10000 Then
-            MsgBox "No se puede tirar más de 10000 por vez."
+            Call WriteDrop(Inventario.SelectedItem, 10000)
+            Unload Me
         Else
             Call WriteDrop(Inventario.SelectedItem, UserGLD)
             Unload Me
@@ -166,11 +163,11 @@ End Sub
 Private Sub text1_Change()
 On Error GoTo ErrHandler
     If Val(Text1.Text) < 0 Then
-        Text1.Text = MAX_INVENTORY_OBJS
+        Text1.Text = "1"
     End If
     
     If Val(Text1.Text) > MAX_INVENTORY_OBJS Then
-        Text1.Text = "1"
+        Text1.Text = "10000"
     End If
     
     Exit Sub
