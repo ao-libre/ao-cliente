@@ -63,8 +63,8 @@ Public Sub CambioDeArea(ByVal x As Byte, ByVal y As Byte)
                 'Erase OBJs
                 MapData(loopX, loopY).ObjGrh.GrhIndex = 0
             End If
-        Next
-    Next
+        Next loopY
+    Next loopX
     
     Call RefreshAllChars
 End Sub

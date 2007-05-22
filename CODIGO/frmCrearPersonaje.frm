@@ -977,7 +977,7 @@ Private Sub boton_Click(index As Integer)
             Call Audio.PlayMIDI("2.mid")
             
             frmConnect.FONDO.Picture = LoadPicture(App.Path & "\Graficos\conectar.jpg")
-            Me.Visible = False
+            Unload Me
             
             
         Case 2
