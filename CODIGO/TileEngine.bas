@@ -1587,6 +1587,8 @@ For y = minY + 8 To maxY - 1
                     TempChar = charlist(MapData(x, y).CharIndex)
                     PixelOffsetXTemp = PixelOffsetX
                     PixelOffsetYTemp = PixelOffsetY
+                    
+                    If (TempChar.Pos.x = x) And (TempChar.Pos.y = y) Then ' Para Sacar Clones, no es la solucion del problema pero lo tapa.
 
                     Moved = 0
                     'If needed, move left and right
@@ -1681,7 +1683,7 @@ For y = minY + 8 To maxY - 1
                                                 If InStr(TempChar.Nombre, "<") > 0 And InStr(TempChar.Nombre, ">") > 0 Then
                                                     lCenter = (frmMain.TextWidth(Left(TempChar.Nombre, InStr(TempChar.Nombre, "<") - 1)) / 2) - 16
                                                     Dim sClan As String
-                                                    sClan = mid(TempChar.Nombre, InStr(TempChar.Nombre, "<"))
+                                                    sClan = Mid(TempChar.Nombre, InStr(TempChar.Nombre, "<"))
                                             
                                                     Select Case TempChar.priv
                                                         Case 0
@@ -1775,6 +1777,12 @@ For y = minY + 8 To maxY - 1
                                 1, 1, MapData(x, y).CharIndex)
 #End If
                     End If
+                    
+                '''''''''
+                Else
+                    MapData(x, y).CharIndex = 0 ' Borra el clon!
+                End If
+                '''''''''
                 End If '<-> If MapData(X, Y).CharIndex <> 0 Then
                 '*************************************************
                 'Layer 3 *****************************************
