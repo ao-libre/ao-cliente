@@ -2037,6 +2037,7 @@ On Error GoTo ErrHandler
     shield = Buffer.ReadInteger()
     helmet = Buffer.ReadInteger()
     
+    
     With charlist(CharIndex)
         .fX = Buffer.ReadInteger()
         .FxLoopTimes = Buffer.ReadInteger()
@@ -2436,7 +2437,7 @@ Private Sub HandleAreaChanged()
     
     x = incomingData.ReadByte()
     y = incomingData.ReadByte()
-    
+        
     Call CambioDeArea(x, y)
 End Sub
 
@@ -3805,11 +3806,11 @@ On Error GoTo ErrHandler
         .criminales.Caption = "Criminales asesinados: " & CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .Status.Caption = " (Ciudadano)"
-            .Status.ForeColor = vbBlue
+            .status.Caption = " (Ciudadano)"
+            .status.ForeColor = vbBlue
         Else
-            .Status.Caption = " (Criminal)"
-            .Status.ForeColor = vbRed
+            .status.Caption = " (Criminal)"
+            .status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)
