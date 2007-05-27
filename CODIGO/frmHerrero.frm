@@ -158,8 +158,14 @@ On Error Resume Next
 
     If lstArmas.Visible Then
         Call WriteCraftBlacksmith(ArmasHerrero(lstArmas.listIndex + 1))
+        
+        If frmMain.macrotrabajo.Enabled Then _
+            MacroBltIndex = ArmasHerrero(lstArmas.listIndex + 1)
     Else
         Call WriteCraftBlacksmith(ArmadurasHerrero(lstArmaduras.listIndex + 1))
+        
+        If frmMain.macrotrabajo.Enabled Then _
+            MacroBltIndex = ArmadurasHerrero(lstArmas.listIndex + 1)
     End If
 
     Unload Me

@@ -927,11 +927,6 @@ Private Sub HandleLogged()
         frmtip.Visible = True
         PrimeraVez = False
     End If
-    
-    'Are we under a roof?
-    bTecho = IIf(MapData(UserPos.x, UserPos.y).Trigger = 1 Or _
-            MapData(UserPos.x, UserPos.y).Trigger = 2 Or _
-            MapData(UserPos.x, UserPos.y).Trigger = 4, True, False)
 End Sub
 
 ''
@@ -1226,7 +1221,11 @@ Private Sub HandleShowBlacksmithForm()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    frmHerrero.Show , frmMain
+    If frmMain.macrotrabajo.Enabled And (MacroBltIndex > 0) Then
+        Call WriteCraftBlacksmith(MacroBltIndex)
+    Else
+        frmHerrero.Show , frmMain
+    End If
 End Sub
 
 ''
@@ -1605,6 +1604,11 @@ Private Sub HandlePosUpdate()
     MapData(UserPos.x, UserPos.y).CharIndex = UserCharIndex
     charlist(UserCharIndex).Pos = UserPos
     
+    'Are we under a roof?
+    bTecho = IIf(MapData(UserPos.x, UserPos.y).Trigger = 1 Or _
+            MapData(UserPos.x, UserPos.y).Trigger = 2 Or _
+            MapData(UserPos.x, UserPos.y).Trigger = 4, True, False)
+                
     'Update pos label
     frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.x & "," & UserPos.y & ")"
 End Sub
@@ -1991,6 +1995,12 @@ Private Sub HandleUserCharIndexInServer()
     
     UserCharIndex = incomingData.ReadInteger()
     UserPos = charlist(UserCharIndex).Pos
+    
+    'Are we under a roof?
+    bTecho = IIf(MapData(UserPos.x, UserPos.y).Trigger = 1 Or _
+            MapData(UserPos.x, UserPos.y).Trigger = 2 Or _
+            MapData(UserPos.x, UserPos.y).Trigger = 4, True, False)
+
     frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.x & "," & UserPos.y & ")"
 End Sub
 
@@ -2062,7 +2072,7 @@ On Error GoTo ErrHandler
             End If
             
             'Log2 of the bit flags sent by the server gives our numbers ^^
-            .priv = log(privs) / log(2)
+            .priv = Log(privs) / Log(2)
         Else
             .priv = 0
         End If
