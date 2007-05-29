@@ -1524,7 +1524,7 @@ Private Sub HandleUpdateExp()
     
     'Get data and update form
     UserExp = incomingData.ReadLong()
-    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
 End Sub
 
@@ -1709,17 +1709,17 @@ Private Sub HandleUserHittedByUser()
     
     Select Case incomingData.ReadByte
         Case bCabeza
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & attacker & MENSAJE_RECIVE_IMPACTO_CABEZA & CStr(incomingData.ReadInteger()), 255, 0, 0, True, False, False)
+            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & attacker & MENSAJE_RECIVE_IMPACTO_CABEZA & CStr(incomingData.ReadInteger() & MENSAJE_2), 255, 0, 0, True, False, False)
         Case bBrazoIzquierdo
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & attacker & MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ & CStr(incomingData.ReadInteger()), 255, 0, 0, True, False, False)
+            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & attacker & MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ & CStr(incomingData.ReadInteger() & MENSAJE_2), 255, 0, 0, True, False, False)
         Case bBrazoDerecho
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & attacker & MENSAJE_RECIVE_IMPACTO_BRAZO_DER & CStr(incomingData.ReadInteger()), 255, 0, 0, True, False, False)
+            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & attacker & MENSAJE_RECIVE_IMPACTO_BRAZO_DER & CStr(incomingData.ReadInteger() & MENSAJE_2), 255, 0, 0, True, False, False)
         Case bPiernaIzquierda
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & attacker & MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ & CStr(incomingData.ReadInteger()), 255, 0, 0, True, False, False)
+            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & attacker & MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ & CStr(incomingData.ReadInteger() & MENSAJE_2), 255, 0, 0, True, False, False)
         Case bPiernaDerecha
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & attacker & MENSAJE_RECIVE_IMPACTO_PIERNA_DER & CStr(incomingData.ReadInteger()), 255, 0, 0, True, False, False)
+            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & attacker & MENSAJE_RECIVE_IMPACTO_PIERNA_DER & CStr(incomingData.ReadInteger() & MENSAJE_2), 255, 0, 0, True, False, False)
         Case bTorso
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & attacker & MENSAJE_RECIVE_IMPACTO_TORSO & CStr(incomingData.ReadInteger()), 255, 0, 0, True, False, False)
+            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & attacker & MENSAJE_RECIVE_IMPACTO_TORSO & CStr(incomingData.ReadInteger() & MENSAJE_2), 255, 0, 0, True, False, False)
     End Select
 End Sub
 
@@ -1746,17 +1746,17 @@ Private Sub HandleUserHittedUser()
     
     Select Case incomingData.ReadByte
         Case bCabeza
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_PRODUCE_IMPACTO_1 & victim & MENSAJE_PRODUCE_IMPACTO_CABEZA & CStr(incomingData.ReadInteger()), 255, 0, 0, True, False, False)
+            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_PRODUCE_IMPACTO_1 & victim & MENSAJE_PRODUCE_IMPACTO_CABEZA & CStr(incomingData.ReadInteger() & MENSAJE_2), 255, 0, 0, True, False, False)
         Case bBrazoIzquierdo
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_PRODUCE_IMPACTO_1 & victim & MENSAJE_PRODUCE_IMPACTO_BRAZO_IZQ & CStr(incomingData.ReadInteger()), 255, 0, 0, True, False, False)
+            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_PRODUCE_IMPACTO_1 & victim & MENSAJE_PRODUCE_IMPACTO_BRAZO_IZQ & CStr(incomingData.ReadInteger() & MENSAJE_2), 255, 0, 0, True, False, False)
         Case bBrazoDerecho
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_PRODUCE_IMPACTO_1 & victim & MENSAJE_PRODUCE_IMPACTO_BRAZO_DER & CStr(incomingData.ReadInteger()), 255, 0, 0, True, False, False)
+            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_PRODUCE_IMPACTO_1 & victim & MENSAJE_PRODUCE_IMPACTO_BRAZO_DER & CStr(incomingData.ReadInteger() & MENSAJE_2), 255, 0, 0, True, False, False)
         Case bPiernaIzquierda
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_PRODUCE_IMPACTO_1 & victim & MENSAJE_PRODUCE_IMPACTO_PIERNA_IZQ & CStr(incomingData.ReadInteger()), 255, 0, 0, True, False, False)
+            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_PRODUCE_IMPACTO_1 & victim & MENSAJE_PRODUCE_IMPACTO_PIERNA_IZQ & CStr(incomingData.ReadInteger() & MENSAJE_2), 255, 0, 0, True, False, False)
         Case bPiernaDerecha
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_PRODUCE_IMPACTO_1 & victim & MENSAJE_PRODUCE_IMPACTO_PIERNA_DER & CStr(incomingData.ReadInteger()), 255, 0, 0, True, False, False)
+            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_PRODUCE_IMPACTO_1 & victim & MENSAJE_PRODUCE_IMPACTO_PIERNA_DER & CStr(incomingData.ReadInteger() & MENSAJE_2), 255, 0, 0, True, False, False)
         Case bTorso
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_PRODUCE_IMPACTO_1 & victim & MENSAJE_PRODUCE_IMPACTO_TORSO & CStr(incomingData.ReadInteger()), 255, 0, 0, True, False, False)
+            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_PRODUCE_IMPACTO_1 & victim & MENSAJE_PRODUCE_IMPACTO_TORSO & CStr(incomingData.ReadInteger() & MENSAJE_2), 255, 0, 0, True, False, False)
     End Select
 End Sub
 
@@ -2553,7 +2553,7 @@ Private Sub HandleUpdateUserStats()
     UserPasarNivel = incomingData.ReadLong()
     UserExp = incomingData.ReadLong()
     
-    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     
     If UserPasarNivel > 0 Then
         frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
@@ -3816,11 +3816,11 @@ On Error GoTo ErrHandler
         .criminales.Caption = "Criminales asesinados: " & CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .status.Caption = " (Ciudadano)"
-            .status.ForeColor = vbBlue
+            .Status.Caption = " (Ciudadano)"
+            .Status.ForeColor = vbBlue
         Else
-            .status.Caption = " (Criminal)"
-            .status.ForeColor = vbRed
+            .Status.Caption = " (Criminal)"
+            .Status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)
