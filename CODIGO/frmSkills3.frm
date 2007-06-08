@@ -1272,7 +1272,7 @@ Else
     End If
 End If
 
-Puntos.Caption = "Puntos:" & Alocados
+puntos.Caption = "Puntos:" & Alocados
 End Sub
 
 Private Sub Form_Load()
@@ -1317,7 +1317,7 @@ Private Sub Image1_Click()
         'Actualizamos nuestros datos locales
         UserSkills(i) = Val(text1(i).Caption)
     Next i
-
+    
     Call WriteModifySkills(skillChanges())
     
     If Alocados = 0 Then frmMain.Label1.Visible = False
