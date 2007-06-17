@@ -289,7 +289,7 @@ Private Sub Image1_Click(index As Integer)
 
 Call Audio.PlayWave(SND_CLICK)
 
-If List1(index).List(List1(index).listIndex) = "Nada" Or _
+If List1(index).List(List1(index).listIndex) = "" Or _
    List1(index).listIndex < 0 Then Exit Sub
 
 Select Case index
