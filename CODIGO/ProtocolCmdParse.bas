@@ -37,9 +37,11 @@ Public Sub AuxWriteWhisper(ByVal UserName As String, ByVal Mensaje As String)
     Dim i As Long
     
     If (InStrB(UserName, "+") <> 0) Then
-        UserName = Replace(UserName, "+", " ")
+        UserName = Replace$(UserName, "+", " ")
     End If
-            
+    
+    UserName = UCase$(UserName)
+    
     i = 1
     Do While i <= LastChar
         If UCase$(charlist(i).Nombre) = UserName Then
