@@ -670,6 +670,9 @@ End If
 
 MapData(charlist(CharIndex).Pos.x, charlist(CharIndex).Pos.y).CharIndex = 0
 
+'Remove char's dialog
+Call Dialogos.QuitarDialogo(CharIndex)
+
 Call ResetCharInfo(CharIndex)
 
 'Update NumChars
@@ -1683,7 +1686,7 @@ For y = minY + 8 To maxY - 1
                                                 If InStr(TempChar.Nombre, "<") > 0 And InStr(TempChar.Nombre, ">") > 0 Then
                                                     lCenter = (frmMain.TextWidth(Left(TempChar.Nombre, InStr(TempChar.Nombre, "<") - 1)) / 2) - 16
                                                     Dim sClan As String
-                                                    sClan = Mid(TempChar.Nombre, InStr(TempChar.Nombre, "<"))
+                                                    sClan = mid(TempChar.Nombre, InStr(TempChar.Nombre, "<"))
                                             
                                                     Select Case TempChar.priv
                                                         Case 0
@@ -1960,7 +1963,7 @@ Sub LoadGraphics()
     RLluvia(4).Bottom = 256: RLluvia(5).Bottom = 256: RLluvia(6).Bottom = 256: RLluvia(7).Bottom = 256
     
     'We are done!
-    AddtoRichTextBox frmCargando.Status, "Hecho.", , , , 1, , False
+    AddtoRichTextBox frmCargando.status, "Hecho.", , , , 1, , False
 End Sub
 
 '[END]'
@@ -2061,7 +2064,7 @@ LTLluvia(2) = 480
 LTLluvia(3) = 608
 LTLluvia(4) = 736
 
-AddtoRichTextBox frmCargando.Status, "Cargando Gráficos....", 0, 0, 0, , , True
+AddtoRichTextBox frmCargando.status, "Cargando Gráficos....", 0, 0, 0, , , True
 Call LoadGraphics
 
 InitTileEngine = True

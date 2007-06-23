@@ -2072,7 +2072,7 @@ On Error GoTo ErrHandler
             End If
             
             'Log2 of the bit flags sent by the server gives our numbers ^^
-            .priv = Log(privs) / Log(2)
+            .priv = log(privs) / log(2)
         Else
             .priv = 0
         End If
@@ -3816,11 +3816,11 @@ On Error GoTo ErrHandler
         .criminales.Caption = "Criminales asesinados: " & CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .Status.Caption = " (Ciudadano)"
-            .Status.ForeColor = vbBlue
+            .status.Caption = " (Ciudadano)"
+            .status.ForeColor = vbBlue
         Else
-            .Status.Caption = " (Criminal)"
-            .Status.ForeColor = vbRed
+            .status.Caption = " (Criminal)"
+            .status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)
@@ -3870,6 +3870,9 @@ On Error GoTo ErrHandler
         'Get list of existing guilds
         List = Split(Buffer.ReadASCIIString(), SEPARATOR)
         
+        'Empty the list
+        Call .guildslist.Clear
+        
         For i = 0 To UBound(List())
             Call .guildslist.AddItem(List(i))
         Next i
@@ -3877,6 +3880,9 @@ On Error GoTo ErrHandler
         'Get list of guild's members
         List = Split(Buffer.ReadASCIIString(), SEPARATOR)
         .Miembros.Caption = "El clan cuenta con " & CStr(UBound(List()) + 1) & " miembros."
+        
+        'Empty the list
+        Call .members.Clear
         
         For i = 0 To UBound(List())
             Call .members.AddItem(List(i))
@@ -3886,6 +3892,9 @@ On Error GoTo ErrHandler
         
         'Get list of join requests
         List = Split(Buffer.ReadASCIIString(), SEPARATOR)
+        
+        'Empty the list
+        Call .solicitudes.Clear
         
         For i = 0 To UBound(List())
             Call .solicitudes.AddItem(List(i))
@@ -3966,7 +3975,7 @@ On Error GoTo ErrHandler
         codexStr = Split(Buffer.ReadASCIIString(), SEPARATOR)
         
         For i = 0 To 7
-            .Codex(i).Caption = codexStr(i)
+            .codex(i).Caption = codexStr(i)
         Next i
         
         .desc.Text = Buffer.ReadASCIIString()
@@ -5076,7 +5085,7 @@ End Sub
 ' @param    codex   Array of all rules of the guild.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCreateNewGuild(ByVal desc As String, ByVal Name As String, ByVal Site As String, ByRef Codex() As String)
+Public Sub WriteCreateNewGuild(ByVal desc As String, ByVal Name As String, ByVal Site As String, ByRef codex() As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5092,8 +5101,8 @@ Public Sub WriteCreateNewGuild(ByVal desc As String, ByVal Name As String, ByVal
         Call .WriteASCIIString(Name)
         Call .WriteASCIIString(Site)
         
-        For i = LBound(Codex()) To UBound(Codex())
-            temp = temp & Codex(i) & SEPARATOR
+        For i = LBound(codex()) To UBound(codex())
+            temp = temp & codex(i) & SEPARATOR
         Next i
         
         If Len(temp) Then _
@@ -5335,7 +5344,7 @@ End Sub
 ' @param    codex New codex of the clan.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteClanCodexUpdate(ByVal desc As String, ByRef Codex() As String)
+Public Sub WriteClanCodexUpdate(ByVal desc As String, ByRef codex() As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5349,8 +5358,8 @@ Public Sub WriteClanCodexUpdate(ByVal desc As String, ByRef Codex() As String)
         
         Call .WriteASCIIString(desc)
         
-        For i = LBound(Codex()) To UBound(Codex())
-            temp = temp & Codex(i) & SEPARATOR
+        For i = LBound(codex()) To UBound(codex())
+            temp = temp & codex(i) & SEPARATOR
         Next i
         
         If Len(temp) Then _
@@ -7845,7 +7854,7 @@ End Sub
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal nick As String, ByVal reason As String)
+Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal Nick As String, ByVal reason As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7865,7 +7874,7 @@ Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal nick As S
                 Call .WriteByte(Ip(i))
             Next i
         Else
-            Call .WriteASCIIString(nick)
+            Call .WriteASCIIString(Nick)
         End If
         
         Call .WriteASCIIString(reason)

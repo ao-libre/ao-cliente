@@ -307,17 +307,15 @@ End Sub
 
 Private Sub Command4_Click()
     frmGuildBrief.EsLeader = True
-    Call WriteGuildRequestDetails(GuildsList.List(GuildsList.listIndex))
+    Call WriteGuildRequestDetails(guildslist.List(guildslist.listIndex))
 
     'Unload Me
 End Sub
 
 Private Sub Command5_Click()
-
-Call frmGuildDetails.Show(vbModal, frmGuildLeader)
-
-'Unload Me
-
+    Call frmGuildDetails.Show(vbModal, frmGuildLeader)
+    
+    'Unload Me
 End Sub
 
 Private Sub Command6_Click()
