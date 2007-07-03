@@ -93,3 +93,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 10/02/2007: Corregí un bug con la bóveda, ahora anda correctamente. (Maraxus)
  * 30/03/2007: Agregado el macro para trabajar (Salvito) 
  * 31/03/2007: Agregué el comando /PING. (Maraxus)
+ * 26/06/2007: Corregí un error en el envío de privados. (Maraxus)
