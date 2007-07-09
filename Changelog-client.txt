@@ -94,3 +94,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 30/03/2007: Agregado el macro para trabajar (Salvito) 
  * 31/03/2007: Agregué el comando /PING. (Maraxus)
  * 26/06/2007: Corregí un error en el envío de privados. (Maraxus)
+ * 09/07/2007: Ya no pueden aparecer chats de NPCs muertos con proyectiles, magias u otras cosas que impliquen clicks. (Maraxus)
