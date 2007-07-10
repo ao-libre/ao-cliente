@@ -574,7 +574,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -593,7 +592,7 @@ Begin VB.Form frmMain
       BorderStyle     =   1  'Fixed Single
       Height          =   510
       Left            =   9300
-      Picture         =   "frmMain.frx":120D
+      Picture         =   "frmMain.frx":120E
       Stretch         =   -1  'True
       Top             =   8100
       Visible         =   0   'False
@@ -603,7 +602,7 @@ Begin VB.Form frmMain
       BorderStyle     =   1  'Fixed Single
       Height          =   510
       Left            =   8790
-      Picture         =   "frmMain.frx":247F
+      Picture         =   "frmMain.frx":2480
       Stretch         =   -1  'True
       Top             =   8100
       Visible         =   0   'False
@@ -626,7 +625,7 @@ Begin VB.Form frmMain
       BorderStyle     =   1  'Fixed Single
       Height          =   510
       Left            =   8280
-      Picture         =   "frmMain.frx":3291
+      Picture         =   "frmMain.frx":3292
       Stretch         =   -1  'True
       Top             =   8100
       Width           =   510
@@ -1301,7 +1300,7 @@ Private Sub Label4_Click()
     picInv.Visible = True
 
     hlst.Visible = False
-    cmdInfo.Visible = False
+    cmdINFO.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = True
@@ -1320,7 +1319,7 @@ Private Sub Label7_Click()
     'DespInv(1).Visible = False
     picInv.Visible = False
     hlst.Visible = True
-    cmdInfo.Visible = True
+    cmdINFO.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True

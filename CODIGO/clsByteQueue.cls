@@ -21,18 +21,16 @@ Attribute VB_Exposed = False
 
 '**************************************************************************
 'This program is free software; you can redistribute it and/or modify
-'it under the terms of the GNU General Public License as published by
-'the Free Software Foundation; either version 2 of the License, or
-'(at your option) any later version.
+'it under the terms of the Affero General Public License;
+'either version 1 of the License, or any later version.
 '
 'This program is distributed in the hope that it will be useful,
 'but WITHOUT ANY WARRANTY; without even the implied warranty of
 'MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 'Affero General Public License for more details.
 '
-'You should have received a copy of the GNU General Public License
-'along with this program; if not, write to the Free Software
-'Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+'You should have received a copy of the Affero General Public License
+'along with this program; if not, you can find it at http://www.affero.org/oagpl.html
 '**************************************************************************
 
 ''
@@ -48,12 +46,18 @@ Option Base 0       'It's the default, but we make it explicit just in case...
 
 ''
 ' The error number thrown when there is not enough data in
-' the buffer to be read or not enough space to write.
+' the buffer to read the specified data type.
 ' It's 9 (subscript out of range) + the object error constant
 Private Const NOT_ENOUGH_DATA As Long = vbObjectError + 9
 
 ''
-' Default size of a data buffer (8 Kbs)
+' The error number thrown when there is not enough space in
+' the buffer to write.
+Private Const NOT_ENOUGH_SPACE As Long = vbObjectError + 10
+
+
+''
+' Default size of a data buffer (10 Kbs)
 '
 ' @see Class_Initialize
 Private Const DATA_BUFFER As Long = 10240
@@ -184,7 +188,7 @@ Private Function WriteData(ByRef buf() As Byte, ByVal dataLength As Long) As Lon
 '***************************************************
     'Check if there is enough free space
     If queueCapacity - queueLength - dataLength < 0 Then
-        Call Err.Raise(NOT_ENOUGH_DATA)
+        Call Err.raise(NOT_ENOUGH_SPACE)
         Exit Function
     End If
     
@@ -218,7 +222,7 @@ Private Function ReadData(ByRef buf() As Byte, ByVal dataLength As Long) As Long
 '***************************************************
     'Check if we can read the number of bytes requested
     If dataLength > queueLength Then
-        Call Err.Raise(NOT_ENOUGH_DATA)
+        Call Err.raise(NOT_ENOUGH_DATA)
         Exit Function
     End If
     
@@ -584,7 +588,7 @@ Public Function ReadASCIIStringFixed(ByVal length As Long) As String
         
         ReadASCIIStringFixed = StrConv(buf, vbUnicode)
     Else
-        Call Err.Raise(NOT_ENOUGH_DATA)
+        Call Err.raise(NOT_ENOUGH_DATA)
     End If
 End Function
 
@@ -607,7 +611,7 @@ Public Function ReadUnicodeStringFixed(ByVal length As Long) As String
 '***************************************************
     If length <= 0 Then Exit Function
     
-    If queueLength >= length Then
+    If queueLength >= length * 2 Then
         Dim buf() As Byte
         ReDim buf(length * 2 - 1) As Byte
         
@@ -616,7 +620,7 @@ Public Function ReadUnicodeStringFixed(ByVal length As Long) As String
         
         ReadUnicodeStringFixed = buf
     Else
-        Call Err.Raise(NOT_ENOUGH_DATA)
+        Call Err.raise(NOT_ENOUGH_DATA)
     End If
 End Function
 
@@ -661,10 +665,10 @@ Public Function ReadASCIIString() As String
                 ReadASCIIString = StrConv(buf2, vbUnicode)
             End If
         Else
-            Call Err.Raise(NOT_ENOUGH_DATA)
+            Call Err.raise(NOT_ENOUGH_DATA)
         End If
     Else
-        Call Err.Raise(NOT_ENOUGH_DATA)
+        Call Err.raise(NOT_ENOUGH_DATA)
     End If
 End Function
 
@@ -694,7 +698,7 @@ Public Function ReadUnicodeString() As String
         Call CopyMemory(length, buf(0), 2)
         
         'Make sure there are enough bytes
-        If queueLength >= length + 2 Then
+        If queueLength >= length * 2 + 2 Then
             'Remove the length
             Call RemoveData(2)
             
@@ -706,10 +710,10 @@ Public Function ReadUnicodeString() As String
             
             ReadUnicodeString = buf2
         Else
-            Call Err.Raise(NOT_ENOUGH_DATA)
+            Call Err.raise(NOT_ENOUGH_DATA)
         End If
     Else
-        Call Err.Raise(NOT_ENOUGH_DATA)
+        Call Err.raise(NOT_ENOUGH_DATA)
     End If
 End Function
 
@@ -853,7 +857,7 @@ Public Function PeekASCIIStringFixed(ByVal length As Long) As String
         
         PeekASCIIStringFixed = StrConv(buf, vbUnicode)
     Else
-        Call Err.Raise(NOT_ENOUGH_DATA)
+        Call Err.raise(NOT_ENOUGH_DATA)
     End If
 End Function
 
@@ -875,7 +879,7 @@ Public Function PeekUnicodeStringFixed(ByVal length As Long) As String
 '***************************************************
     If length <= 0 Then Exit Function
     
-    If queueLength >= length Then
+    If queueLength >= length * 2 Then
         Dim buf() As Byte
         ReDim buf(length * 2 - 1) As Byte
         
@@ -884,7 +888,7 @@ Public Function PeekUnicodeStringFixed(ByVal length As Long) As String
         
         PeekUnicodeStringFixed = buf
     Else
-        Call Err.Raise(NOT_ENOUGH_DATA)
+        Call Err.raise(NOT_ENOUGH_DATA)
     End If
 End Function
 
@@ -929,10 +933,10 @@ Public Function PeekASCIIString() As String
                 PeekASCIIString = StrConv(buf3, vbUnicode)
             End If
         Else
-            Call Err.Raise(NOT_ENOUGH_DATA)
+            Call Err.raise(NOT_ENOUGH_DATA)
         End If
     Else
-        Call Err.Raise(NOT_ENOUGH_DATA)
+        Call Err.raise(NOT_ENOUGH_DATA)
     End If
 End Function
 
@@ -961,7 +965,7 @@ Public Function PeekUnicodeString() As String
         Call CopyMemory(length, buf(0), 2)
         
         'Make sure there are enough bytes
-        If queueLength >= length + 2 Then
+        If queueLength >= length * 2 + 2 Then
             Dim buf2() As Byte
             ReDim buf2(length * 2 + 1) As Byte
             
@@ -975,10 +979,10 @@ Public Function PeekUnicodeString() As String
             
             PeekUnicodeString = buf3
         Else
-            Call Err.Raise(NOT_ENOUGH_DATA)
+            Call Err.raise(NOT_ENOUGH_DATA)
         End If
     Else
-        Call Err.Raise(NOT_ENOUGH_DATA)
+        Call Err.raise(NOT_ENOUGH_DATA)
     End If
 End Function
 
@@ -1068,3 +1072,18 @@ Public Property Get NotEnoughDataErrCode() As Long
 '***************************************************
     NotEnoughDataErrCode = NOT_ENOUGH_DATA
 End Property
+
+''
+' Retrieves the NOT_ENOUGH_SPACE error code.
+'
+' @return   NOT_ENOUGH_SPACE.
+
+Public Property Get NotEnoughSpaceErrCode() As Long
+'***************************************************
+'Autor: Juan Martín Sotuyo Dodero (Maraxus)
+'Last Modification: 04/27/06
+'Retrieves the NOT_ENOUGH_SPACE error code
+'***************************************************
+    NotEnoughSpaceErrCode = NOT_ENOUGH_SPACE
+End Property
+
