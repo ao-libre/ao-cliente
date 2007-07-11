@@ -574,6 +574,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1300,7 +1301,7 @@ Private Sub Label4_Click()
     picInv.Visible = True
 
     hlst.Visible = False
-    cmdINFO.Visible = False
+    cmdInfo.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = True
@@ -1319,7 +1320,7 @@ Private Sub Label7_Click()
     'DespInv(1).Visible = False
     picInv.Visible = False
     hlst.Visible = True
-    cmdINFO.Visible = True
+    cmdInfo.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True
@@ -1505,6 +1506,10 @@ Private Sub Socket1_Connect()
             Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
 #End If
             frmCrearPersonaje.Show vbModal
+            
+#If SeguridadAlkon Then
+            Call ProtectForm(frmCrearPersonaje)
+#End If
     End Select
 End Sub
 
@@ -1782,6 +1787,10 @@ Private Sub Winsock1_Connect()
             Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
 #End If
             frmCrearPersonaje.Show vbModal
+            
+#If SeguridadAlkon Then
+            Call ProtectForm(frmCrearPersonaje)
+#End If
     End Select
 End Sub
 

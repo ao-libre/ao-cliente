@@ -3,23 +3,365 @@ Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmPanelGm 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Panel GM"
-   ClientHeight    =   8415
+   ClientHeight    =   8475
    ClientLeft      =   45
    ClientTop       =   330
    ClientWidth     =   4200
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   8415
+   ScaleHeight     =   8475
    ScaleWidth      =   4200
    StartUpPosition =   1  'CenterOwner
+   Begin VB.Frame Frame 
+      BorderStyle     =   0  'None
+      Height          =   7695
+      Index           =   3
+      Left            =   120
+      TabIndex        =   12
+      Top             =   360
+      Width           =   3975
+      Begin VB.CommandButton cmdNOREAL 
+         Caption         =   "/NOREAL"
+         CausesValidation=   0   'False
+         Height          =   315
+         Left            =   2040
+         TabIndex        =   86
+         Top             =   6480
+         Width           =   1815
+      End
+      Begin VB.CommandButton cmdNOCAOS 
+         Caption         =   "/NOCAOS"
+         CausesValidation=   0   'False
+         Height          =   315
+         Left            =   120
+         TabIndex        =   85
+         Top             =   6480
+         Width           =   1815
+      End
+      Begin VB.CommandButton cmdKICKCONSE 
+         Caption         =   "/KICKCONSE"
+         CausesValidation=   0   'False
+         Height          =   675
+         Left            =   2520
+         TabIndex        =   84
+         Top             =   6960
+         Width           =   1335
+      End
+      Begin VB.CommandButton cmdACEPTCONSECAOS 
+         Caption         =   "/ACEPTCONSECAOS"
+         CausesValidation=   0   'False
+         Height          =   315
+         Left            =   120
+         TabIndex        =   83
+         Top             =   7320
+         Width           =   2295
+      End
+      Begin VB.CommandButton cmdACEPTCONSE 
+         Caption         =   "/ACEPTCONSE"
+         CausesValidation=   0   'False
+         Height          =   315
+         Left            =   120
+         TabIndex        =   82
+         Top             =   6960
+         Width           =   2295
+      End
+      Begin VB.ComboBox cboListaUsus 
+         Height          =   315
+         Left            =   120
+         Sorted          =   -1  'True
+         TabIndex        =   54
+         Top             =   480
+         Width           =   3675
+      End
+      Begin VB.CommandButton cmdActualiza 
+         Caption         =   "Actualizar"
+         CausesValidation=   0   'False
+         Height          =   255
+         Left            =   120
+         TabIndex        =   53
+         Top             =   120
+         Width           =   3675
+      End
+      Begin VB.CommandButton cmdIRCERCA 
+         Caption         =   "/IRCERCA"
+         CausesValidation=   0   'False
+         Height          =   315
+         Left            =   1320
+         TabIndex        =   52
+         Top             =   960
+         Width           =   1095
+      End
+      Begin VB.CommandButton cmdDONDE 
+         Caption         =   "/DONDE"
+         CausesValidation=   0   'False
+         Height          =   675
+         Left            =   120
+         TabIndex        =   51
+         Top             =   960
+         Width           =   1095
+      End
+      Begin VB.CommandButton cmdPENAS 
+         Caption         =   "/PENAS"
+         CausesValidation=   0   'False
+         Height          =   315
+         Left            =   120
+         Style           =   1  'Graphical
+         TabIndex        =   50
+         Top             =   3480
+         Width           =   1095
+      End
+      Begin VB.CommandButton cmdTELEP 
+         Caption         =   "/TELEP"
+         CausesValidation=   0   'False
+         Height          =   315
+         Left            =   2520
+         TabIndex        =   49
+         Top             =   1320
+         Width           =   1095
+      End
+      Begin VB.CommandButton cmdSILENCIAR 
+         Caption         =   "/SILENCIAR"
+         CausesValidation=   0   'False
+         Height          =   315
+         Left            =   1320
+         TabIndex        =   48
+         Top             =   3840
+         Width           =   1095
+      End
+      Begin VB.CommandButton cmdIRA 
+         Caption         =   "/IRA"
+         CausesValidation=   0   'False
+         Height          =   315
+         Left            =   2520
+         TabIndex        =   47
+         Top             =   960
+         Width           =   1095
+      End
+      Begin VB.CommandButton cmdCARCEL 
+         Caption         =   "/CARCEL"
+         CausesValidation=   0   'False
+         Height          =   315
+         Left            =   1320
+         TabIndex        =   46
+         Top             =   3480
+         Width           =   1095
+      End
+      Begin VB.CommandButton cmdADVERTENCIA 
+         Caption         =   "/ADVERTENCIA"
+         CausesValidation=   0   'False
+         Height          =   315
+         Left            =   2520
+         TabIndex        =   45
+         Top             =   3480
+         Width           =   1335
+      End
+      Begin VB.CommandButton cmdINFO 
+         Caption         =   "/INFO"
+         CausesValidation=   0   'False
+         Height          =   315
+         Left            =   120
+         TabIndex        =   44
+         Top             =   1920
+         Width           =   1095
+      End
+      Begin VB.CommandButton cmdSTAT 
+         Caption         =   "/STAT"
+         CausesValidation=   0   'False
+         Height          =   315
+         Left            =   1320
+         TabIndex        =   43
+         Top             =   1920
+         Width           =   1095
+      End
+      Begin VB.CommandButton cmdBAL 
+         Caption         =   "/BAL"
+         CausesValidation=   0   'False
+         Height          =   315
+         Left            =   2520
+         TabIndex        =   42
+         Top             =   1920
+         Width           =   1095
+      End
+      Begin VB.CommandButton cmdINV 
+         Caption         =   "/INV"
+         CausesValidation=   0   'False
+         Height          =   315
+         Left            =   120
+         TabIndex        =   41
+         Top             =   2280
+         Width           =   1095
+      End
+      Begin VB.CommandButton cmdBOV 
+         Caption         =   "/BOV"
+         CausesValidation=   0   'False
+         Height          =   315
+         Left            =   1320
+         TabIndex        =   40
+         Top             =   2280
+         Width           =   1095
+      End
+      Begin VB.CommandButton cmdSKILLS 
+         Caption         =   "/SKILLS"
+         CausesValidation=   0   'False
+         Height          =   315
+         Left            =   2520
+         TabIndex        =   39
+         Top             =   2280
+         Width           =   1095
+      End
+      Begin VB.CommandButton cmdREVIVIR 
+         Caption         =   "/REVIVIR"
+         CausesValidation=   0   'False
+         Height          =   315
+         Left            =   120
+         TabIndex        =   38
+         Top             =   4800
+         Width           =   1095
+      End
+      Begin VB.CommandButton cmdPERDON 
+         Caption         =   "/PERDON"
+         CausesValidation=   0   'False
+         Height          =   315
+         Left            =   1320
+         TabIndex        =   37
+         Top             =   5160
+         Width           =   1095
+      End
+      Begin VB.CommandButton cmdECHAR 
+         Caption         =   "/ECHAR"
+         CausesValidation=   0   'False
+         Height          =   315
+         Left            =   120
+         TabIndex        =   36
+         Top             =   3840
+         Width           =   1095
+      End
+      Begin VB.CommandButton cmdEJECUTAR 
+         Caption         =   "/EJECUTAR"
+         CausesValidation=   0   'False
+         Height          =   315
+         Left            =   1320
+         TabIndex        =   35
+         Top             =   4800
+         Width           =   1095
+      End
+      Begin VB.CommandButton cmdBAN 
+         Caption         =   "/BAN"
+         CausesValidation=   0   'False
+         Height          =   315
+         Left            =   120
+         TabIndex        =   34
+         Top             =   4200
+         Width           =   1095
+      End
+      Begin VB.CommandButton cmdUNBAN 
+         Caption         =   "/UNBAN"
+         CausesValidation=   0   'False
+         Height          =   315
+         Left            =   1320
+         TabIndex        =   33
+         Top             =   4200
+         Width           =   1095
+      End
+      Begin VB.CommandButton cmdSUM 
+         Caption         =   "/SUM"
+         CausesValidation=   0   'False
+         Height          =   315
+         Left            =   1320
+         TabIndex        =   32
+         Top             =   1320
+         Width           =   1095
+      End
+      Begin VB.CommandButton cmdNICK2IP 
+         Caption         =   "/NICK2IP"
+         CausesValidation=   0   'False
+         Height          =   315
+         Left            =   120
+         TabIndex        =   31
+         Top             =   2880
+         Width           =   1095
+      End
+      Begin VB.CommandButton cmdESTUPIDO 
+         Caption         =   "/ESTUPIDO"
+         CausesValidation=   0   'False
+         Height          =   315
+         Left            =   120
+         TabIndex        =   30
+         Top             =   5760
+         Width           =   1095
+      End
+      Begin VB.CommandButton cmdNOESTUPIDO 
+         Caption         =   "/NOESTUPIDO"
+         CausesValidation=   0   'False
+         Height          =   315
+         Left            =   1320
+         TabIndex        =   29
+         Top             =   5760
+         Width           =   1335
+      End
+      Begin VB.CommandButton cmdBORRARPENA 
+         Caption         =   "/BORRARPENA"
+         CausesValidation=   0   'False
+         Height          =   315
+         Left            =   2520
+         TabIndex        =   28
+         Top             =   3840
+         Width           =   1335
+      End
+      Begin VB.CommandButton cmdLASTIP 
+         Caption         =   "/LASTIP"
+         CausesValidation=   0   'False
+         Height          =   315
+         Left            =   1320
+         TabIndex        =   27
+         Top             =   2880
+         Width           =   1095
+      End
+      Begin VB.CommandButton cmdCONDEN 
+         Caption         =   "/CONDEN"
+         CausesValidation=   0   'False
+         Height          =   315
+         Left            =   120
+         TabIndex        =   26
+         Top             =   5160
+         Width           =   1095
+      End
+      Begin VB.CommandButton cmdRAJAR 
+         Caption         =   "/RAJAR"
+         CausesValidation=   0   'False
+         Height          =   315
+         Left            =   2520
+         TabIndex        =   25
+         Top             =   5160
+         Width           =   1095
+      End
+      Begin VB.CommandButton cmdRAJARCLAN 
+         Caption         =   "/RAJARCLAN"
+         CausesValidation=   0   'False
+         Height          =   315
+         Left            =   2520
+         TabIndex        =   24
+         Top             =   4200
+         Width           =   1335
+      End
+      Begin VB.CommandButton cmdLASTEMAIL 
+         Caption         =   "/LASTEMAIL"
+         CausesValidation=   0   'False
+         Height          =   315
+         Left            =   2520
+         TabIndex        =   23
+         Top             =   2880
+         Width           =   1095
+      End
+   End
    Begin VB.CommandButton cmdCerrar 
       Caption         =   "Cerrar"
       CausesValidation=   0   'False
       Height          =   375
       Left            =   0
       TabIndex        =   0
-      Top             =   8040
+      Top             =   8160
       Width           =   4215
    End
    Begin VB.Frame Frame 
@@ -110,78 +452,6 @@ Begin VB.Form frmPanelGm
          TabIndex        =   3
          Top             =   600
          Width           =   1095
-      End
-   End
-   Begin VB.Frame Frame 
-      BorderStyle     =   0  'None
-      Height          =   1935
-      Index           =   4
-      Left            =   120
-      TabIndex        =   22
-      Top             =   360
-      Width           =   3975
-      Begin VB.CommandButton cmdSHOWNAME 
-         Caption         =   "/SHOWNAME"
-         CausesValidation=   0   'False
-         Height          =   315
-         Left            =   2280
-         TabIndex        =   63
-         Top             =   600
-         Width           =   1215
-      End
-      Begin VB.CommandButton cmdREM 
-         Caption         =   "/REM"
-         CausesValidation=   0   'False
-         Height          =   315
-         Left            =   600
-         TabIndex        =   62
-         Top             =   1560
-         Width           =   2895
-      End
-      Begin VB.CommandButton cmdINVISIBLE 
-         Caption         =   "/INVISIBLE"
-         CausesValidation=   0   'False
-         Height          =   315
-         Left            =   600
-         TabIndex        =   61
-         Top             =   120
-         Width           =   1215
-      End
-      Begin VB.CommandButton cmdSETDESC 
-         Caption         =   "/SETDESC"
-         CausesValidation=   0   'False
-         Height          =   315
-         Left            =   2280
-         TabIndex        =   60
-         Top             =   1080
-         Width           =   1215
-      End
-      Begin VB.CommandButton cmdNAVE 
-         Caption         =   "/NAVE"
-         CausesValidation=   0   'False
-         Height          =   315
-         Left            =   600
-         TabIndex        =   59
-         Top             =   600
-         Width           =   1215
-      End
-      Begin VB.CommandButton cmdCHATCOLOR 
-         Caption         =   "/CHATCOLOR"
-         CausesValidation=   0   'False
-         Height          =   315
-         Left            =   600
-         TabIndex        =   58
-         Top             =   1080
-         Width           =   1215
-      End
-      Begin VB.CommandButton cmdIGNORADO 
-         Caption         =   "/IGNORADO"
-         CausesValidation=   0   'False
-         Height          =   315
-         Left            =   2280
-         TabIndex        =   57
-         Top             =   120
-         Width           =   1215
       End
    End
    Begin VB.Frame Frame 
@@ -447,343 +717,74 @@ Begin VB.Form frmPanelGm
    End
    Begin VB.Frame Frame 
       BorderStyle     =   0  'None
-      Height          =   7575
-      Index           =   3
+      Height          =   1935
+      Index           =   4
       Left            =   120
-      TabIndex        =   12
+      TabIndex        =   22
       Top             =   360
       Width           =   3975
-      Begin VB.CommandButton cmdNOREAL 
-         Caption         =   "/NOREAL"
+      Begin VB.CommandButton cmdSHOWNAME 
+         Caption         =   "/SHOWNAME"
          CausesValidation=   0   'False
          Height          =   315
-         Left            =   2040
-         TabIndex        =   86
-         Top             =   6360
-         Width           =   1815
+         Left            =   2280
+         TabIndex        =   63
+         Top             =   600
+         Width           =   1215
       End
-      Begin VB.CommandButton cmdNOCAOS 
-         Caption         =   "/NOCAOS"
+      Begin VB.CommandButton cmdREM 
+         Caption         =   "/REM"
          CausesValidation=   0   'False
          Height          =   315
-         Left            =   120
-         TabIndex        =   85
-         Top             =   6360
-         Width           =   1815
+         Left            =   600
+         TabIndex        =   62
+         Top             =   1560
+         Width           =   2895
       End
-      Begin VB.CommandButton cmdKICKCONSE 
-         Caption         =   "/KICKCONSE"
-         CausesValidation=   0   'False
-         Height          =   675
-         Left            =   2520
-         TabIndex        =   84
-         Top             =   6840
-         Width           =   1335
-      End
-      Begin VB.CommandButton cmdACEPTCONSECAOS 
-         Caption         =   "/ACEPTCONSECAOS"
+      Begin VB.CommandButton cmdINVISIBLE 
+         Caption         =   "/INVISIBLE"
          CausesValidation=   0   'False
          Height          =   315
-         Left            =   120
-         TabIndex        =   83
-         Top             =   7200
-         Width           =   2295
-      End
-      Begin VB.CommandButton cmdACEPTCONSE 
-         Caption         =   "/ACEPTCONSE"
-         CausesValidation=   0   'False
-         Height          =   315
-         Left            =   120
-         TabIndex        =   82
-         Top             =   6840
-         Width           =   2295
-      End
-      Begin VB.ComboBox cboListaUsus 
-         Height          =   315
-         Left            =   120
-         Sorted          =   -1  'True
-         TabIndex        =   54
-         Top             =   360
-         Width           =   3675
-      End
-      Begin VB.CommandButton cmdActualiza 
-         Caption         =   "Actualizar"
-         Height          =   255
-         Left            =   120
-         TabIndex        =   53
+         Left            =   600
+         TabIndex        =   61
          Top             =   120
-         Width           =   3675
+         Width           =   1215
       End
-      Begin VB.CommandButton cmdIRCERCA 
-         Caption         =   "/IRCERCA"
+      Begin VB.CommandButton cmdSETDESC 
+         Caption         =   "/SETDESC"
          CausesValidation=   0   'False
          Height          =   315
-         Left            =   1320
-         TabIndex        =   52
-         Top             =   840
-         Width           =   1095
+         Left            =   2280
+         TabIndex        =   60
+         Top             =   1080
+         Width           =   1215
       End
-      Begin VB.CommandButton cmdDONDE 
-         Caption         =   "/DONDE"
-         CausesValidation=   0   'False
-         Height          =   675
-         Left            =   120
-         TabIndex        =   51
-         Top             =   840
-         Width           =   1095
-      End
-      Begin VB.CommandButton cmdPENAS 
-         Caption         =   "/PENAS"
+      Begin VB.CommandButton cmdNAVE 
+         Caption         =   "/NAVE"
          CausesValidation=   0   'False
          Height          =   315
-         Left            =   120
-         Style           =   1  'Graphical
-         TabIndex        =   50
-         Top             =   3360
-         Width           =   1095
+         Left            =   600
+         TabIndex        =   59
+         Top             =   600
+         Width           =   1215
       End
-      Begin VB.CommandButton cmdTELEP 
-         Caption         =   "/TELEP"
+      Begin VB.CommandButton cmdCHATCOLOR 
+         Caption         =   "/CHATCOLOR"
          CausesValidation=   0   'False
          Height          =   315
-         Left            =   2520
-         TabIndex        =   49
-         Top             =   1200
-         Width           =   1095
+         Left            =   600
+         TabIndex        =   58
+         Top             =   1080
+         Width           =   1215
       End
-      Begin VB.CommandButton cmdSILENCIAR 
-         Caption         =   "/SILENCIAR"
+      Begin VB.CommandButton cmdIGNORADO 
+         Caption         =   "/IGNORADO"
          CausesValidation=   0   'False
          Height          =   315
-         Left            =   1320
-         TabIndex        =   48
-         Top             =   3720
-         Width           =   1095
-      End
-      Begin VB.CommandButton cmdIRA 
-         Caption         =   "/IRA"
-         CausesValidation=   0   'False
-         Height          =   315
-         Left            =   2520
-         TabIndex        =   47
-         Top             =   840
-         Width           =   1095
-      End
-      Begin VB.CommandButton cmdCARCEL 
-         Caption         =   "/CARCEL"
-         CausesValidation=   0   'False
-         Height          =   315
-         Left            =   1320
-         TabIndex        =   46
-         Top             =   3360
-         Width           =   1095
-      End
-      Begin VB.CommandButton cmdADVERTENCIA 
-         Caption         =   "/ADVERTENCIA"
-         CausesValidation=   0   'False
-         Height          =   315
-         Left            =   2520
-         TabIndex        =   45
-         Top             =   3360
-         Width           =   1335
-      End
-      Begin VB.CommandButton cmdINFO 
-         Caption         =   "/INFO"
-         CausesValidation=   0   'False
-         Height          =   315
-         Left            =   120
-         TabIndex        =   44
-         Top             =   1800
-         Width           =   1095
-      End
-      Begin VB.CommandButton cmdSTAT 
-         Caption         =   "/STAT"
-         CausesValidation=   0   'False
-         Height          =   315
-         Left            =   1320
-         TabIndex        =   43
-         Top             =   1800
-         Width           =   1095
-      End
-      Begin VB.CommandButton cmdBAL 
-         Caption         =   "/BAL"
-         CausesValidation=   0   'False
-         Height          =   315
-         Left            =   2520
-         TabIndex        =   42
-         Top             =   1800
-         Width           =   1095
-      End
-      Begin VB.CommandButton cmdINV 
-         Caption         =   "/INV"
-         CausesValidation=   0   'False
-         Height          =   315
-         Left            =   120
-         TabIndex        =   41
-         Top             =   2160
-         Width           =   1095
-      End
-      Begin VB.CommandButton cmdBOV 
-         Caption         =   "/BOV"
-         CausesValidation=   0   'False
-         Height          =   315
-         Left            =   1320
-         TabIndex        =   40
-         Top             =   2160
-         Width           =   1095
-      End
-      Begin VB.CommandButton cmdSKILLS 
-         Caption         =   "/SKILLS"
-         CausesValidation=   0   'False
-         Height          =   315
-         Left            =   2520
-         TabIndex        =   39
-         Top             =   2160
-         Width           =   1095
-      End
-      Begin VB.CommandButton cmdREVIVIR 
-         Caption         =   "/REVIVIR"
-         CausesValidation=   0   'False
-         Height          =   315
-         Left            =   120
-         TabIndex        =   38
-         Top             =   4680
-         Width           =   1095
-      End
-      Begin VB.CommandButton cmdPERDON 
-         Caption         =   "/PERDON"
-         CausesValidation=   0   'False
-         Height          =   315
-         Left            =   1320
-         TabIndex        =   37
-         Top             =   5040
-         Width           =   1095
-      End
-      Begin VB.CommandButton cmdECHAR 
-         Caption         =   "/ECHAR"
-         CausesValidation=   0   'False
-         Height          =   315
-         Left            =   120
-         TabIndex        =   36
-         Top             =   3720
-         Width           =   1095
-      End
-      Begin VB.CommandButton cmdEJECUTAR 
-         Caption         =   "/EJECUTAR"
-         CausesValidation=   0   'False
-         Height          =   315
-         Left            =   1320
-         TabIndex        =   35
-         Top             =   4680
-         Width           =   1095
-      End
-      Begin VB.CommandButton cmdBAN 
-         Caption         =   "/BAN"
-         CausesValidation=   0   'False
-         Height          =   315
-         Left            =   120
-         TabIndex        =   34
-         Top             =   4080
-         Width           =   1095
-      End
-      Begin VB.CommandButton cmdUNBAN 
-         Caption         =   "/UNBAN"
-         CausesValidation=   0   'False
-         Height          =   315
-         Left            =   1320
-         TabIndex        =   33
-         Top             =   4080
-         Width           =   1095
-      End
-      Begin VB.CommandButton cmdSUM 
-         Caption         =   "/SUM"
-         CausesValidation=   0   'False
-         Height          =   315
-         Left            =   1320
-         TabIndex        =   32
-         Top             =   1200
-         Width           =   1095
-      End
-      Begin VB.CommandButton cmdNICK2IP 
-         Caption         =   "/NICK2IP"
-         CausesValidation=   0   'False
-         Height          =   315
-         Left            =   120
-         TabIndex        =   31
-         Top             =   2760
-         Width           =   1095
-      End
-      Begin VB.CommandButton cmdESTUPIDO 
-         Caption         =   "/ESTUPIDO"
-         CausesValidation=   0   'False
-         Height          =   315
-         Left            =   120
-         TabIndex        =   30
-         Top             =   5640
-         Width           =   1095
-      End
-      Begin VB.CommandButton cmdNOESTUPIDO 
-         Caption         =   "/NOESTUPIDO"
-         CausesValidation=   0   'False
-         Height          =   315
-         Left            =   1320
-         TabIndex        =   29
-         Top             =   5640
-         Width           =   1335
-      End
-      Begin VB.CommandButton cmdBORRARPENA 
-         Caption         =   "/BORRARPENA"
-         CausesValidation=   0   'False
-         Height          =   315
-         Left            =   2520
-         TabIndex        =   28
-         Top             =   3720
-         Width           =   1335
-      End
-      Begin VB.CommandButton cmdLASTIP 
-         Caption         =   "/LASTIP"
-         CausesValidation=   0   'False
-         Height          =   315
-         Left            =   1320
-         TabIndex        =   27
-         Top             =   2760
-         Width           =   1095
-      End
-      Begin VB.CommandButton cmdCONDEN 
-         Caption         =   "/CONDEN"
-         CausesValidation=   0   'False
-         Height          =   315
-         Left            =   120
-         TabIndex        =   26
-         Top             =   5040
-         Width           =   1095
-      End
-      Begin VB.CommandButton cmdRAJAR 
-         Caption         =   "/RAJAR"
-         CausesValidation=   0   'False
-         Height          =   315
-         Left            =   2520
-         TabIndex        =   25
-         Top             =   5040
-         Width           =   1095
-      End
-      Begin VB.CommandButton cmdRAJARCLAN 
-         Caption         =   "/RAJARCLAN"
-         CausesValidation=   0   'False
-         Height          =   315
-         Left            =   2520
-         TabIndex        =   24
-         Top             =   4080
-         Width           =   1335
-      End
-      Begin VB.CommandButton cmdLASTEMAIL 
-         Caption         =   "/LASTEMAIL"
-         CausesValidation=   0   'False
-         Height          =   315
-         Left            =   2520
-         TabIndex        =   23
-         Top             =   2760
-         Width           =   1095
+         Left            =   2280
+         TabIndex        =   57
+         Top             =   120
+         Width           =   1215
       End
    End
    Begin MSComctlLib.TabStrip TabStrip 
@@ -1580,7 +1581,7 @@ Private Sub showTab(TabId As Byte)
     Next i
     
     With Frame(TabId)
-        frmPanelGm.Height = .Height + 1215
+        frmPanelGm.Height = .Height + 1280
         TabStrip.Height = .Height + 480
         cmdCerrar.Top = .Height + 465
     End With
