@@ -3034,7 +3034,7 @@ On Error GoTo ErrHandler
     
     frmOldPersonaje.MousePointer = 1
     frmPasswd.MousePointer = 1
-    If Not frmCrearPersonaje.Visible Then
+    If frmOldPersonaje.Visible Then
 #If UsarWrench = 1 Then
         frmMain.Socket1.Disconnect
         frmMain.Socket1.Cleanup
@@ -7861,7 +7861,7 @@ End Sub
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal Nick As String, ByVal reason As String)
+Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal nick As String, ByVal reason As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7881,7 +7881,7 @@ Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal Nick As S
                 Call .WriteByte(Ip(i))
             Next i
         Else
-            Call .WriteASCIIString(Nick)
+            Call .WriteASCIIString(nick)
         End If
         
         Call .WriteASCIIString(reason)
