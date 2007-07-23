@@ -2461,7 +2461,6 @@ Private Sub HandlePauseToggle()
 'Last Modification: 05/17/06
 '
 '***************************************************
-
     'Remove packet ID
     Call incomingData.ReadByte
     
@@ -2693,7 +2692,7 @@ Private Sub HandleChangeBankSlot()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.length < 22 Then
+    If incomingData.length < 21 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -2965,6 +2964,8 @@ On Error GoTo ErrHandler
     
     Count = Buffer.ReadInteger()
     
+    Call frmCarp.lstArmas.Clear
+    
     For i = 1 To Count
         Tmp = Buffer.ReadASCIIString() & " ("          'Get the object's name
         Tmp = Tmp & CStr(Buffer.ReadInteger()) & ")"    'The wood needed
@@ -3001,7 +3002,6 @@ Private Sub HandleRestOK()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    
     'Remove packet ID
     Call incomingData.ReadByte
     
@@ -3068,7 +3068,6 @@ Private Sub HandleBlind()
 'Last Modification: 05/17/06
 '
 '***************************************************
-
     'Remove packet ID
     Call incomingData.ReadByte
     
@@ -3086,7 +3085,6 @@ Private Sub HandleDumb()
 'Last Modification: 05/17/06
 '
 '***************************************************
-
     'Remove packet ID
     Call incomingData.ReadByte
     
@@ -3257,36 +3255,17 @@ Private Sub HandleMiniStats()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
-    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
-    Call Buffer.CopyBuffer(incomingData)
-    
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call incomingData.ReadByte
     
     With UserEstadisticas
-        .CiudadanosMatados = Buffer.ReadLong()
-        .CriminalesMatados = Buffer.ReadLong()
-        .UsuariosMatados = Buffer.ReadLong()
-        .NpcsMatados = Buffer.ReadInteger()
-        .Clase = ListaClases(Buffer.ReadByte())
-        .PenaCarcel = Buffer.ReadLong()
+        .CiudadanosMatados = incomingData.ReadLong()
+        .CriminalesMatados = incomingData.ReadLong()
+        .UsuariosMatados = incomingData.ReadLong()
+        .NpcsMatados = incomingData.ReadInteger()
+        .Clase = ListaClases(incomingData.ReadByte())
+        .PenaCarcel = incomingData.ReadLong()
     End With
-    
-    'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
-    
-ErrHandler:
-    Dim error As Long
-    error = Err.Number
-On Error GoTo 0
-    
-    'Destroy auxiliar buffer
-    Set Buffer = Nothing
-
-    If error <> 0 Then _
-        Err.Raise error
 End Sub
 
 ''
@@ -3934,7 +3913,7 @@ Private Sub HandleGuildDetails()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.length < 25 Then
+    If incomingData.length < 26 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -4221,7 +4200,6 @@ Private Sub HandleSendNight()
     
     Dim tBool As Boolean 'CHECK, este handle no hace nada con lo que recibe.. porque, ehmm.. no hay noche?.. o si?
     tBool = incomingData.ReadBoolean()
-
 End Sub
 
 ''
