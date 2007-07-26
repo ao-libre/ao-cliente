@@ -1249,7 +1249,7 @@ Private Sub Command1_Click(index As Integer)
 Call Audio.PlayWave(SND_CLICK)
 
 Dim indice
-If index Mod 2 = 0 Then
+If index And 1 = 0 Then  'changed for speed - Rapsodius
     If Alocados > 0 Then
         indice = index \ 2 + 1
         If indice > NUMSKILLS Then indice = NUMSKILLS
@@ -1272,7 +1272,7 @@ Else
     End If
 End If
 
-puntos.Caption = "Puntos:" & Alocados
+Puntos.Caption = "Puntos:" & Alocados
 End Sub
 
 Private Sub Form_Load()
@@ -1298,7 +1298,7 @@ ReDim flags(1 To NUMSKILLS)
 
 'Cargamos el jpg correspondiente
 For i = 0 To NUMSKILLS * 2 - 1
-    If i Mod 2 = 0 Then
+    If i And 1 = 0 Then 'changed for speed - Rapsodius
         command1(i).Picture = LoadPicture(App.Path & "\Graficos\BotónMás.jpg")
     Else
         command1(i).Picture = LoadPicture(App.Path & "\Graficos\BotónMenos.jpg")

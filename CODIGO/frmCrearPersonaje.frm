@@ -1005,7 +1005,7 @@ Private Sub Command1_Click(index As Integer)
 Call Audio.PlayWave(SND_CLICK)
 
 Dim indice
-If index Mod 2 = 0 Then
+If index And 1 = 0 Then 'changed for speed - Rapsodius
     If SkillPoints > 0 Then
         indice = index \ 2
         Skill(indice).Caption = Val(Skill(indice).Caption) + 1

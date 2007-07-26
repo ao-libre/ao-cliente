@@ -41,7 +41,7 @@ Public Function hexMd52Asc(ByVal md5 As String) As String
     Dim i As Integer, l As String
     
     md5 = UCase$(md5)
-    If Len(md5) Mod 2 = 1 Then md5 = "0" & md5
+    If Len(md5) And 1 = 1 Then md5 = "0" & md5 'changed for speed - Rapsodius
     
     For i = 1 To Len(md5) \ 2
         l = mid$(md5, (2 * i) - 1, 2)
