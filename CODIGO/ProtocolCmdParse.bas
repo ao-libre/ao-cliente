@@ -1574,11 +1574,14 @@ End Function
 '
 ' @param    IP The ip to be converted.
 
-Private Function str2ipv4l(ByVal Ip As String) 'No return type allows to return arrays :D
+Private Function str2ipv4l(ByVal Ip As String) As Byte()
 '***************************************************
 'Author: Nicolas Matias Gonzalez (NIGO)
-'Last Modification: 01/06/07
-'
+'Last Modification: 07/26/07
+'Last Modified By: Rapsodius
+'Specify Return Type as Array of Bytes
+'Otherwise, the default is a Variant or Array of Variants, that slows down
+'the function
 '***************************************************
     Dim tmpArr() As String
     Dim bArr(3) As Byte
@@ -1589,7 +1592,9 @@ Private Function str2ipv4l(ByVal Ip As String) 'No return type allows to return 
     bArr(1) = CByte(tmpArr(1))
     bArr(2) = CByte(tmpArr(2))
     bArr(3) = CByte(tmpArr(3))
-    
+
+    'Note: There is no need of ReDim! - Rapsodius
+
     str2ipv4l = bArr
 End Function
 
@@ -1599,13 +1604,16 @@ End Function
 ' @param text All the comand without the /aemail
 ' @return An bidimensional array with user and mail
 
-Private Function AEMAILSplit(ByRef Text As String) 'No return type allows to return arrays :D
+Private Function AEMAILSplit(ByRef Text As String) As String()
+'Specify Return Type as Array of Strings - Rapsodius
 '***************************************************
 'Author: Lucas Tavolaro Ortuz (Tavo)
-'Last Modification: 03/09/07
-'Usefull for AEMAIL BUG FIX
-'Las Modified By: Juan Martín Sotuyo Dodero (Maraxus)
-'Fixed several bugs...
+'Useful for AEMAIL BUG FIX
+'Last Modification: 07/26/07
+'Last Modified By: Rapsodius
+'Specify Return Type as Array of Strings
+'Otherwise, the default is a Variant or Array of Variants, that slows down
+'the function
 '***************************************************
     Dim tmpArr(0 To 1) As String
     Dim Pos As Byte
@@ -1618,6 +1626,8 @@ Private Function AEMAILSplit(ByRef Text As String) 'No return type allows to ret
     Else
         tmpArr(0) = vbNullString
     End If
+    
+    'Note: There is no need of ReDim! - Rapsodius
     
     AEMAILSplit = tmpArr
 End Function
