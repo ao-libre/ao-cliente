@@ -1249,7 +1249,7 @@ Private Sub Command1_Click(index As Integer)
 Call Audio.PlayWave(SND_CLICK)
 
 Dim indice
-If index And 1 = 0 Then  'changed for speed - Rapsodius
+If (index And &H1) = 0 Then
     If Alocados > 0 Then
         indice = index \ 2 + 1
         If indice > NUMSKILLS Then indice = NUMSKILLS
@@ -1272,22 +1272,22 @@ Else
     End If
 End If
 
-Puntos.Caption = "Puntos:" & Alocados
+puntos.Caption = "Puntos:" & Alocados
 End Sub
 
 Private Sub Form_Load()
 
-Image1.Picture = LoadPicture(App.Path & "\Graficos\Botónok.jpg")
+Image1.Picture = LoadPicture(App.path & "\Graficos\Botónok.jpg")
 
 
 'Nombres de los skills
 
-Dim l
+Dim L
 Dim i As Integer
 i = 1
-For Each l In Label2
-    l.Caption = SkillsNames(i)
-    l.AutoSize = True
+For Each L In Label2
+    L.Caption = SkillsNames(i)
+    L.AutoSize = True
     i = i + 1
 Next
 i = 0
@@ -1298,10 +1298,10 @@ ReDim flags(1 To NUMSKILLS)
 
 'Cargamos el jpg correspondiente
 For i = 0 To NUMSKILLS * 2 - 1
-    If i And 1 = 0 Then 'changed for speed - Rapsodius
-        command1(i).Picture = LoadPicture(App.Path & "\Graficos\BotónMás.jpg")
+    If (i And &H1) = 0 Then
+        command1(i).Picture = LoadPicture(App.path & "\Graficos\BotónMás.jpg")
     Else
-        command1(i).Picture = LoadPicture(App.Path & "\Graficos\BotónMenos.jpg")
+        command1(i).Picture = LoadPicture(App.path & "\Graficos\BotónMenos.jpg")
     End If
 Next
 

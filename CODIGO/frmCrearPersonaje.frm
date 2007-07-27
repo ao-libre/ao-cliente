@@ -976,7 +976,7 @@ Private Sub boton_Click(index As Integer)
         Case 1
             Call Audio.PlayMIDI("2.mid")
             
-            frmConnect.FONDO.Picture = LoadPicture(App.Path & "\Graficos\conectar.jpg")
+            frmConnect.FONDO.Picture = LoadPicture(App.path & "\Graficos\conectar.jpg")
             Unload Me
             
             
@@ -1005,7 +1005,7 @@ Private Sub Command1_Click(index As Integer)
 Call Audio.PlayWave(SND_CLICK)
 
 Dim indice
-If index And 1 = 0 Then 'changed for speed - Rapsodius
+If (index And &H1) = 0 Then
     If SkillPoints > 0 Then
         indice = index \ 2
         Skill(indice).Caption = Val(Skill(indice).Caption) + 1
@@ -1022,14 +1022,14 @@ Else
     End If
 End If
 
-Puntos.Caption = SkillPoints
+puntos.Caption = SkillPoints
 End Sub
 
 Private Sub Form_Load()
 SkillPoints = 10
-Puntos.Caption = SkillPoints
-Me.Picture = LoadPicture(App.Path & "\graficos\CP-Interface.jpg")
-imgHogar.Picture = LoadPicture(App.Path & "\graficos\CP-Ullathorpe.jpg")
+puntos.Caption = SkillPoints
+Me.Picture = LoadPicture(App.path & "\graficos\CP-Interface.jpg")
+imgHogar.Picture = LoadPicture(App.path & "\graficos\CP-Ullathorpe.jpg")
 
 Dim i As Integer
 lstProfesion.Clear
@@ -1059,13 +1059,13 @@ Next i
 
 lstProfesion.listIndex = 1
 
-Image1.Picture = LoadPicture(App.Path & "\graficos\" & lstProfesion.Text & ".jpg")
+Image1.Picture = LoadPicture(App.path & "\graficos\" & lstProfesion.Text & ".jpg")
 Call TirarDados
 End Sub
 
 Private Sub lstProfesion_Click()
 On Error Resume Next
-    Image1.Picture = LoadPicture(App.Path & "\graficos\" & lstProfesion.Text & ".jpg")
+    Image1.Picture = LoadPicture(App.path & "\graficos\" & lstProfesion.Text & ".jpg")
     
 'TODO : Esto vuela en la 0.12.1!!!
     If lstProfesion.listIndex + 1 = eClass.Druid Then

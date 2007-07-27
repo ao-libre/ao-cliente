@@ -686,9 +686,8 @@ Exit Sub
 
 errorH:
     Call MsgBox("Error cargando los servidores, actualicelos de la web", vbCritical + vbOKOnly, "Argentum Online")
-    'Added by Rapsodius
+    
     Call CloseClient
-    '/Added by Rapsodius
     End
 End Sub
 
@@ -785,8 +784,8 @@ Sub Main()
     'Obtener el HushMD5
     Dim fMD5HushYo As String * 32
     
-    fMD5HushYo = md5.GetMD5File(App.path & "\" & App.EXEName & ".exe")
-    Call md5.MD5Reset
+    fMD5HushYo = MD5.GetMD5File(App.path & "\" & App.EXEName & ".exe")
+    Call MD5.MD5Reset
     MD5HushYo = txtOffset(hexMd52Asc(fMD5HushYo), 55)
     
     Debug.Print fMD5HushYo
@@ -854,7 +853,7 @@ UserMap = 1
     
     'Inicializamos el sonido
     Call AddtoRichTextBox(frmCargando.Status, "Iniciando DirectSound....", 0, 0, 0, 0, 0, True)
-    Call Audio.Initialize(DirectX, frmMain.hWnd, App.Path & "\" & Config_Inicio.DirSonidos & "\", App.Path & "\" & Config_Inicio.DirMusica & "\")
+    Call Audio.Initialize(DirectX, frmMain.hWnd, App.path & "\" & Config_Inicio.DirSonidos & "\", App.path & "\" & Config_Inicio.DirMusica & "\")
     
     'Enable / Disable audio
     Audio.MusicActivated = Not ClientSetup.bNoMusic
@@ -1000,7 +999,7 @@ UserMap = 1
     Set outgoingData = Nothing
     
 #If SeguridadAlkon Then
-    Set md5 = Nothing
+    Set MD5 = Nothing
 #End If
     
     Call UnloadAllForms

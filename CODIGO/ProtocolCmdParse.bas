@@ -376,8 +376,8 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             Case "/PASSWD"
                 If notNullArguments Then
 #If SeguridadAlkon Then
-                    Call WriteChangePassword(md5.GetMD5String(ArgumentosRaw))
-                    Call md5.MD5Reset
+                    Call WriteChangePassword(MD5.GetMD5String(ArgumentosRaw))
+                    Call MD5.MD5Reset
 #Else
                     Call WriteChangePassword(ArgumentosRaw)
 #End If
@@ -1593,8 +1593,6 @@ Private Function str2ipv4l(ByVal Ip As String) As Byte()
     bArr(2) = CByte(tmpArr(2))
     bArr(3) = CByte(tmpArr(3))
 
-    'Note: There is no need of ReDim! - Rapsodius
-
     str2ipv4l = bArr
 End Function
 
@@ -1605,7 +1603,6 @@ End Function
 ' @return An bidimensional array with user and mail
 
 Private Function AEMAILSplit(ByRef Text As String) As String()
-'Specify Return Type as Array of Strings - Rapsodius
 '***************************************************
 'Author: Lucas Tavolaro Ortuz (Tavo)
 'Useful for AEMAIL BUG FIX
@@ -1626,8 +1623,6 @@ Private Function AEMAILSplit(ByRef Text As String) As String()
     Else
         tmpArr(0) = vbNullString
     End If
-    
-    'Note: There is no need of ReDim! - Rapsodius
     
     AEMAILSplit = tmpArr
 End Function

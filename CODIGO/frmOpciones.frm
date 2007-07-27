@@ -263,7 +263,7 @@ Private Sub Command2_Click()
 End Sub
 
 Private Sub customMsgCmd_Click()
-    frmMessageTxt.Show
+    Call frmMessageTxt.Show(vbModeless, frmMain)
 End Sub
 
 Private Sub Form_Load()
