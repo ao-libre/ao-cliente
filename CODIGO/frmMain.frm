@@ -574,7 +574,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -794,7 +793,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
     If (Not SendTxt.Visible) And (Not SendCMSTXT.Visible) And _
        ((KeyCode >= 65 And KeyCode <= 90) Or _
        (KeyCode >= 48 And KeyCode <= 57)) Then
-    
+        
         Select Case KeyCode
             Case vbKeyM
                 Audio.MusicActivated = Not Audio.MusicActivated
@@ -833,12 +832,17 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
                 If MainTimer.Check(TimersIndex.UseItemWithU) Then
                     Call UsarItem
                 End If
-                
             
             Case vbKeyL
                 If MainTimer.Check(TimersIndex.SendRPU) Then
                     Call WriteRequestPositionUpdate
                     Beep
+                End If
+            
+            'Custom messages!
+            Case vbKey0, vbKey1, vbKey2, vbKey3, vbKey4, vbKey5, vbKey6, vbKey7, vbKey8, vbKey9
+                If LenB(CustomMessages.Message((KeyCode - 39) Mod 10)) <> 0 Then
+                    Call WriteTalk(CustomMessages.Message((KeyCode - 39) Mod 10))
                 End If
         End Select
     End If
@@ -1213,10 +1217,10 @@ Private Sub Form_Load()
     
     frmMain.Caption = "Argentum Online" & " V " & App.Major & "." & _
     App.Minor & "." & App.Revision
-    PanelDer.Picture = LoadPicture(App.Path & _
+    PanelDer.Picture = LoadPicture(App.path & _
     "\Graficos\Principalnuevo_sin_energia.jpg")
     
-    InvEqu.Picture = LoadPicture(App.Path & _
+    InvEqu.Picture = LoadPicture(App.path & _
     "\Graficos\Centronuevoinventario.jpg")
     
    Me.Left = 0
@@ -1294,14 +1298,14 @@ End Sub
 Private Sub Label4_Click()
     Call Audio.PlayWave(SND_CLICK)
 
-    InvEqu.Picture = LoadPicture(App.Path & "\Graficos\Centronuevoinventario.jpg")
+    InvEqu.Picture = LoadPicture(App.path & "\Graficos\Centronuevoinventario.jpg")
 
     'DespInv(0).Visible = True
     'DespInv(1).Visible = True
     picInv.Visible = True
 
     hlst.Visible = False
-    cmdInfo.Visible = False
+    cmdINFO.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = True
@@ -1314,13 +1318,13 @@ End Sub
 Private Sub Label7_Click()
     Call Audio.PlayWave(SND_CLICK)
 
-    InvEqu.Picture = LoadPicture(App.Path & "\Graficos\Centronuevohechizos.jpg")
+    InvEqu.Picture = LoadPicture(App.path & "\Graficos\Centronuevohechizos.jpg")
     '%%%%%%OCULTAMOS EL INV&&&&&&&&&&&&
     'DespInv(0).Visible = False
     'DespInv(1).Visible = False
     picInv.Visible = False
     hlst.Visible = True
-    cmdInfo.Visible = True
+    cmdINFO.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True
@@ -1431,7 +1435,6 @@ Private Sub SendCMSTXT_KeyPress(KeyAscii As Integer)
        Not (KeyAscii >= vbKeySpace And KeyAscii <= 250) Then _
         KeyAscii = 0
 End Sub
-
 
 Private Sub SendCMSTXT_Change()
     If Len(SendCMSTXT.Text) > 160 Then

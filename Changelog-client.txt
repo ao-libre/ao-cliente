@@ -99,3 +99,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 11/07/2007: Corregí un bug con el botón actualizar del panelgm. (Maraxus)
  * 10/07/2007: Agregué protección antimacros al form de creación de pjs. (Maraxus)
  * 26/07/2007: Cambié el ReadField del cliente por el mas actualizado, cambié la declaración de las funciones str2ipv4l y AEMAILSplit para que devuelvan arrays de bytes y de strings respectivamente. (Rapsodius)
+ * 26/07/2007: Agregué mensajes customizables con acceso rápido con las teclas 1-0. (Maraxus)

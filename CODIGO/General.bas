@@ -43,19 +43,19 @@ Public bLluvia() As Byte ' Array para determinar si
 Private lFrameTimer As Long
 
 Public Function DirGraficos() As String
-    DirGraficos = App.Path & "\" & Config_Inicio.DirGraficos & "\"
+    DirGraficos = App.path & "\" & Config_Inicio.DirGraficos & "\"
 End Function
 
 Public Function DirSound() As String
-    DirSound = App.Path & "\" & Config_Inicio.DirSonidos & "\"
+    DirSound = App.path & "\" & Config_Inicio.DirSonidos & "\"
 End Function
 
 Public Function DirMidi() As String
-    DirMidi = App.Path & "\" & Config_Inicio.DirMusica & "\"
+    DirMidi = App.path & "\" & Config_Inicio.DirMusica & "\"
 End Function
 
 Public Function DirMapas() As String
-    DirMapas = App.Path & "\" & Config_Inicio.DirMapas & "\"
+    DirMapas = App.path & "\" & Config_Inicio.DirMapas & "\"
 End Function
 
 Public Function RandomNumber(ByVal LowerBound As Long, ByVal UpperBound As Long) As Long
@@ -72,7 +72,7 @@ On Error Resume Next
     Dim loopc As Long
     Dim arch As String
     
-    arch = App.Path & "\init\" & "armas.dat"
+    arch = App.path & "\init\" & "armas.dat"
     
     NumWeaponAnims = Val(GetVar(arch, "INIT", "NumArmas"))
     
@@ -89,13 +89,13 @@ End Sub
 Sub CargarVersiones()
 On Error GoTo errorH:
 
-    Versiones(1) = Val(GetVar(App.Path & "\init\" & "versiones.ini", "Graficos", "Val"))
-    Versiones(2) = Val(GetVar(App.Path & "\init\" & "versiones.ini", "Wavs", "Val"))
-    Versiones(3) = Val(GetVar(App.Path & "\init\" & "versiones.ini", "Midis", "Val"))
-    Versiones(4) = Val(GetVar(App.Path & "\init\" & "versiones.ini", "Init", "Val"))
-    Versiones(5) = Val(GetVar(App.Path & "\init\" & "versiones.ini", "Mapas", "Val"))
-    Versiones(6) = Val(GetVar(App.Path & "\init\" & "versiones.ini", "E", "Val"))
-    Versiones(7) = Val(GetVar(App.Path & "\init\" & "versiones.ini", "O", "Val"))
+    Versiones(1) = Val(GetVar(App.path & "\init\" & "versiones.ini", "Graficos", "Val"))
+    Versiones(2) = Val(GetVar(App.path & "\init\" & "versiones.ini", "Wavs", "Val"))
+    Versiones(3) = Val(GetVar(App.path & "\init\" & "versiones.ini", "Midis", "Val"))
+    Versiones(4) = Val(GetVar(App.path & "\init\" & "versiones.ini", "Init", "Val"))
+    Versiones(5) = Val(GetVar(App.path & "\init\" & "versiones.ini", "Mapas", "Val"))
+    Versiones(6) = Val(GetVar(App.path & "\init\" & "versiones.ini", "E", "Val"))
+    Versiones(7) = Val(GetVar(App.path & "\init\" & "versiones.ini", "O", "Val"))
 Exit Sub
 
 errorH:
@@ -106,7 +106,7 @@ Sub CargarColores()
 On Error Resume Next
     Dim archivoC As String
     
-    archivoC = App.Path & "\init\colores.dat"
+    archivoC = App.path & "\init\colores.dat"
     
     If Not FileExist(archivoC, vbArchive) Then
 'TODO : Si hay que reinstalar, porque no cierra???
@@ -156,7 +156,7 @@ On Error Resume Next
     Dim loopc As Long
     Dim arch As String
     
-    arch = App.Path & "\init\" & "escudos.dat"
+    arch = App.path & "\init\" & "escudos.dat"
     
     NumEscudosAnims = Val(GetVar(arch, "INIT", "NumEscudos"))
     
@@ -636,7 +636,7 @@ Sub WriteClientVer()
     Dim hFile As Integer
         
     hFile = FreeFile()
-    Open App.Path & "\init\Ver.bin" For Binary Access Write Lock Read As #hFile
+    Open App.path & "\init\Ver.bin" For Binary Access Write Lock Read As #hFile
     Put #hFile, , CLng(777)
     Put #hFile, , CLng(777)
     Put #hFile, , CLng(777)
@@ -671,7 +671,7 @@ On Error GoTo errorH
     Dim c As Integer
     Dim i As Long
     
-    f = App.Path & "\init\sinfo.dat"
+    f = App.path & "\init\sinfo.dat"
     c = Val(GetVar(f, "INIT", "Cant"))
     
     ReDim ServersLst(1 To c) As tServerInfo
@@ -747,12 +747,12 @@ Sub Main()
     Call WriteClientVer
     
     'Load config file
-    If FileExist(App.Path & "\init\Inicio.con", vbNormal) Then
+    If FileExist(App.path & "\init\Inicio.con", vbNormal) Then
         Config_Inicio = LeerGameIni()
     End If
     
     'Load ao.dat config file
-    If FileExist(App.Path & "\init\ao.dat", vbArchive) Then
+    If FileExist(App.path & "\init\ao.dat", vbArchive) Then
         Call LoadClientSetup
         
         If ClientSetup.bDinamic Then
@@ -776,16 +776,16 @@ Sub Main()
     
     
     'usaremos esto para ayudar en los parches
-    Call SaveSetting("ArgentumOnlineCliente", "Init", "Path", App.Path & "\")
+    Call SaveSetting("ArgentumOnlineCliente", "Init", "Path", App.path & "\")
     
-    ChDrive App.Path
-    ChDir App.Path
+    ChDrive App.path
+    ChDir App.path
 
 #If SeguridadAlkon Then
     'Obtener el HushMD5
     Dim fMD5HushYo As String * 32
     
-    fMD5HushYo = md5.GetMD5File(App.Path & "\" & App.EXEName & ".exe")
+    fMD5HushYo = md5.GetMD5File(App.path & "\" & App.EXEName & ".exe")
     Call md5.MD5Reset
     MD5HushYo = txtOffset(hexMd52Asc(fMD5HushYo), 55)
     
@@ -867,7 +867,7 @@ UserMap = 1
     
     Call Audio.PlayMIDI(MIdi_Inicio & ".mid")
 
-    frmPres.Picture = LoadPicture(App.Path & "\Graficos\bosquefinal.jpg")
+    frmPres.Picture = LoadPicture(App.path & "\Graficos\bosquefinal.jpg")
     frmPres.Show vbModal    'Es modal, así que se detiene la ejecución de Main hasta que se desaparece
     
 #If UsarWrench = 1 Then
@@ -989,6 +989,7 @@ UserMap = 1
     End If
 
     'Destruimos los objetos públicos creados
+    Set CustomMessages = Nothing
     Set SurfaceDB = Nothing
     Set Dialogos = Nothing
     Set DialogosClanes = Nothing
@@ -1119,7 +1120,7 @@ Private Sub LoadClientSetup()
     Dim fHandle As Integer
     
     fHandle = FreeFile
-    Open App.Path & "\init\ao.dat" For Binary Access Read Lock Write As fHandle
+    Open App.path & "\init\ao.dat" For Binary Access Read Lock Write As fHandle
         Get fHandle, , ClientSetup
     Close fHandle
     

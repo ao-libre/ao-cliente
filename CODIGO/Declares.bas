@@ -39,6 +39,7 @@ Public Dialogos As New cDialogos
 Public Audio As New clsAudio
 Public Inventario As New clsGrapchicalInventory
 Public SurfaceDB As clsSurfaceManager   'No va new porque es una interfaz, el new se pone al decidir que clase de objeto es
+Public CustomMessages As New clsCustomMessages
 
 Public incomingData As New clsByteQueue
 Public outgoingData As New clsByteQueue

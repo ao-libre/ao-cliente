@@ -1087,4 +1087,3 @@ Public Property Get NotEnoughSpaceErrCode() As Long
 '***************************************************
     NotEnoughSpaceErrCode = NOT_ENOUGH_SPACE
 End Property
-

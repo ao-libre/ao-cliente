@@ -3,7 +3,7 @@ Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmOpciones 
    BackColor       =   &H00000000&
    BorderStyle     =   3  'Fixed Dialog
-   ClientHeight    =   3615
+   ClientHeight    =   4245
    ClientLeft      =   45
    ClientTop       =   45
    ClientWidth     =   4740
@@ -21,16 +21,24 @@ Begin VB.Form frmOpciones
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   3615
+   ScaleHeight     =   4245
    ScaleWidth      =   4740
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
+   Begin VB.CommandButton customMsgCmd 
+      Caption         =   "Mensajes Personalizados"
+      Height          =   375
+      Left            =   960
+      TabIndex        =   13
+      Top             =   2640
+      Width           =   2775
+   End
    Begin VB.CommandButton cmdManual 
       Caption         =   "Manual de Argentum Online"
       Height          =   375
       Left            =   960
       TabIndex        =   12
-      Top             =   2640
+      Top             =   3240
       Width           =   2775
    End
    Begin VB.Frame Frame2 
@@ -152,7 +160,7 @@ Begin VB.Form frmOpciones
       MouseIcon       =   "frmOpciones.frx":0152
       MousePointer    =   99  'Custom
       TabIndex        =   0
-      Top             =   3120
+      Top             =   3720
       Width           =   2790
    End
    Begin VB.Label Label1 
@@ -247,11 +255,15 @@ Private Sub Check1_Click(index As Integer)
 End Sub
 
 Private Sub cmdManual_Click()
-    Call ShellExecute(0, "Open", "http://ao.alkon.com.ar/aomanual/", "", App.Path, 0)
+    Call ShellExecute(0, "Open", "http://ao.alkon.com.ar/aomanual/", "", App.path, 0)
 End Sub
 
 Private Sub Command2_Click()
     Unload Me
+End Sub
+
+Private Sub customMsgCmd_Click()
+    frmMessageTxt.Show
 End Sub
 
 Private Sub Form_Load()
