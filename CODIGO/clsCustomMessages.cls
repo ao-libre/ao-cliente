@@ -206,17 +206,8 @@ Private Function MessageIsValid(ByRef msg As String) As Boolean
         Exit Function
     End If
     
-    'Empty messages are discarded
+    'Messages only containning spaces are discarded
     If LenB(Trim$(msg)) = 0 Then Exit Function
-    
-    'No commands may be stored this way
-    If Left$(msg, 1) = "/" Then Exit Function
-    
-    'Private messages are discarded
-    If Left$(msg, 1) = "\" Then Exit Function
-    
-    'Empty shouts are discarded
-    If Left$(msg, 1) = "-" And LenB(Trim$(Right$(msg, Len(msg) - 1))) = 0 Then Exit Function
     
     'Discard extremely long messages
     If Len(msg) > MAX_MESSAGE_LENGTH Then Exit Function
