@@ -860,11 +860,11 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 End If
                 
             Case "/ONCLAN"
-                If CantidadArgumentos < 1 Then
+                If notNullArguments Then
+                    Call WriteGuildOnlineMembers(ArgumentosRaw)
+                Else
                     'Avisar sintaxis incorrecta
                     Call ShowConsoleMsg("Utilice /onclan nombre del clan.")
-                Else
-                    Call WriteGuildOnlineMembers(ArgumentosAll(0))
                 End If
                 
             Case "/CT"

@@ -232,6 +232,8 @@ Option Explicit
 '<-------------------------NUEVO-------------------------->
 '<-------------------------NUEVO-------------------------->
 '<-------------------------NUEVO-------------------------->
+
+Public LasActionBuy As Boolean
 Public LastIndex1 As Integer
 Public LastIndex2 As Integer
 
@@ -268,19 +270,19 @@ End Sub
 
 Private Sub Form_Load()
 'Cargamos la interfase
-Me.Picture = LoadPicture(App.Path & "\Graficos\comerciar.jpg")
-Image1(0).Picture = LoadPicture(App.Path & "\Graficos\BotónComprar.jpg")
-Image1(1).Picture = LoadPicture(App.Path & "\Graficos\Botónvender.jpg")
+Me.Picture = LoadPicture(App.path & "\Graficos\comerciar.jpg")
+Image1(0).Picture = LoadPicture(App.path & "\Graficos\BotónComprar.jpg")
+Image1(1).Picture = LoadPicture(App.path & "\Graficos\Botónvender.jpg")
 
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
 If Image1(0).Tag = 0 Then
-    Image1(0).Picture = LoadPicture(App.Path & "\Graficos\BotónComprar.jpg")
+    Image1(0).Picture = LoadPicture(App.path & "\Graficos\BotónComprar.jpg")
     Image1(0).Tag = 1
 End If
 If Image1(1).Tag = 0 Then
-    Image1(1).Picture = LoadPicture(App.Path & "\Graficos\Botónvender.jpg")
+    Image1(1).Picture = LoadPicture(App.path & "\Graficos\Botónvender.jpg")
     Image1(1).Tag = 1
 End If
 End Sub
@@ -296,11 +298,12 @@ Select Case index
     Case 0
         frmBancoObj.List1(0).SetFocus
         LastIndex1 = List1(0).listIndex
-        
+        LasActionBuy = True
         Call WriteBankExtractItem(List1(0).listIndex + 1, cantidad.Text)
         
    Case 1
         LastIndex2 = List1(1).listIndex
+        LasActionBuy = False
         If Not Inventario.Equipped(List1(1).listIndex + 1) Then
             Call WriteBankDeposit(List1(1).listIndex + 1, cantidad.Text)
         Else
@@ -320,17 +323,17 @@ Private Sub Image1_MouseMove(index As Integer, Button As Integer, Shift As Integ
 Select Case index
     Case 0
         If Image1(0).Tag = 1 Then
-                Image1(0).Picture = LoadPicture(App.Path & "\Graficos\BotónComprarApretado.jpg")
+                Image1(0).Picture = LoadPicture(App.path & "\Graficos\BotónComprarApretado.jpg")
                 Image1(0).Tag = 0
-                Image1(1).Picture = LoadPicture(App.Path & "\Graficos\Botónvender.jpg")
+                Image1(1).Picture = LoadPicture(App.path & "\Graficos\Botónvender.jpg")
                 Image1(1).Tag = 1
         End If
         
     Case 1
         If Image1(1).Tag = 1 Then
-                Image1(1).Picture = LoadPicture(App.Path & "\Graficos\Botónvenderapretado.jpg")
+                Image1(1).Picture = LoadPicture(App.path & "\Graficos\Botónvenderapretado.jpg")
                 Image1(1).Tag = 0
-                Image1(0).Picture = LoadPicture(App.Path & "\Graficos\BotónComprar.jpg")
+                Image1(0).Picture = LoadPicture(App.path & "\Graficos\BotónComprar.jpg")
                 Image1(0).Tag = 1
         End If
         
@@ -404,11 +407,11 @@ End Sub
 '<-------------------------NUEVO-------------------------->
 Private Sub List1_MouseMove(index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
 If Image1(0).Tag = 0 Then
-    Image1(0).Picture = LoadPicture(App.Path & "\Graficos\BotónComprar.jpg")
+    Image1(0).Picture = LoadPicture(App.path & "\Graficos\BotónComprar.jpg")
     Image1(0).Tag = 1
 End If
 If Image1(1).Tag = 0 Then
-    Image1(1).Picture = LoadPicture(App.Path & "\Graficos\Botónvender.jpg")
+    Image1(1).Picture = LoadPicture(App.path & "\Graficos\Botónvender.jpg")
     Image1(1).Tag = 1
 End If
 End Sub

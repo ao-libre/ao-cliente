@@ -2073,7 +2073,7 @@ On Error GoTo ErrHandler
             End If
             
             'Log2 of the bit flags sent by the server gives our numbers ^^
-            .priv = log(privs) / log(2)
+            .priv = Log(privs) / Log(2)
         Else
             .priv = 0
         End If
@@ -4119,8 +4119,14 @@ Private Sub HandleBankOK()
             End If
         Next i
         
-        frmBancoObj.List1(0).listIndex = frmBancoObj.LastIndex1
-        frmBancoObj.List1(1).listIndex = frmBancoObj.LastIndex2
+        'Alter order according to if we bought or sold so the labels and grh remain the same
+        If frmBancoObj.LasActionBuy Then
+            frmBancoObj.List1(1).listIndex = frmBancoObj.LastIndex2
+            frmBancoObj.List1(0).listIndex = frmBancoObj.LastIndex1
+        Else
+            frmBancoObj.List1(0).listIndex = frmBancoObj.LastIndex1
+            frmBancoObj.List1(1).listIndex = frmBancoObj.LastIndex2
+        End If
     End If
 End Sub
 
