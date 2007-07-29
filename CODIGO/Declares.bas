@@ -35,7 +35,7 @@ Option Explicit
 
 'Objetos públicos
 Public DialogosClanes As New clsGuildDlg
-Public Dialogos As New cDialogos
+Public Dialogos As New clsDialogs
 Public Audio As New clsAudio
 Public Inventario As New clsGrapchicalInventory
 Public SurfaceDB As clsSurfaceManager   'No va new porque es una interfaz, el new se pone al decidir que clase de objeto es
@@ -49,7 +49,7 @@ Public outgoingData As New clsByteQueue
 Public MainTimer As New clsTimer
 
 #If SeguridadAlkon Then
-Public md5 As New clsMD5
+Public MD5 As New clsMD5
 #End If
 
 'Sonidos

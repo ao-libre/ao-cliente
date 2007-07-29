@@ -92,8 +92,8 @@ Call DDrawTransGrhIndextoSurface(BackBufferSurface, textura, XPosCartel, YPosCar
 Dim j As Integer, desp As Integer
 
 For j = 0 To UBound(LeyendaFormateada)
-Dialogos.DrawText x, y + desp, LeyendaFormateada(j), vbWhite
-  desp = desp + (frmMain.font.Size) + 5
+    DrawText x, y + desp, LeyendaFormateada(j), vbWhite, frmMain.font
+    desp = desp + (frmMain.font.size) + 5
 Next
 End Sub
 

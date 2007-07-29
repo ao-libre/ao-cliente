@@ -25,6 +25,8 @@ End Type
 Private p_Dialogos() As t_GuildDlg
 Private p_Activo As Boolean
 
+Private usedFont As StdFont
+
 Public Property Let CantidadDialogos(ByVal v As Byte)
     If v > 0 Then
         ReDim Preserve p_Dialogos(1 To v) As t_GuildDlg
@@ -76,7 +78,7 @@ Private Sub Class_Initialize()
     p_Activo = True
 End Sub
 
-Public Sub Draw(ByRef c As cDialogos)
+Public Sub Draw()
 Dim i As Byte
 Dim y As Long
 
@@ -87,9 +89,9 @@ y = 250
     For i = 1 To p_CANTIDADDIALOGOS
         If Trim$(p_Dialogos(i).Texto) <> vbNullString Then
             If Left$(p_Dialogos(i).Texto, 1) = Chr(3) Then
-                Call c.DrawText(260, y + (i * 10), mid(p_Dialogos(i).Texto, 2), vbGreen)
+                Call Mod_TileEngine.DrawText(260, y + (i * 10), mid(p_Dialogos(i).Texto, 2), vbGreen, usedFont)
             Else
-                Call c.DrawText(260, y + (i * 10), p_Dialogos(i).Texto, vbYellow)
+                Call Mod_TileEngine.DrawText(260, y + (i * 10), p_Dialogos(i).Texto, vbYellow, usedFont)
             End If
         End If
     Next i
@@ -142,3 +144,30 @@ End If
 
 End Sub
 
+''
+' Retrieves the font being used to render dialogs.
+'
+' @return   The font being used to render dialogs.
+
+Public Property Get font() As StdFont
+'**************************************************************
+'Author: Juan Martín Sotuyo Dodero
+'Last Modify Date: 04/27/06
+'Retrieves the font being used to render dialogs.
+'**************************************************************
+    font = usedFont
+End Property
+
+''
+' Sets the font being used to render dialogs.
+'
+' @param    nValue  The new font to be used to render dialogs.
+
+Public Property Let font(ByRef nValue As StdFont)
+'**************************************************************
+'Author: Juan Martín Sotuyo Dodero
+'Last Modify Date: 04/27/06
+'Sets the font being used to render dialogs.
+'**************************************************************
+    Set usedFont = nValue
+End Property

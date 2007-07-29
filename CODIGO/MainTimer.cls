@@ -31,7 +31,7 @@ Attribute VB_Exposed = False
 ' The MainTimer of the game.
 ' Controls client´s intervals.
 '
-' @author Nacho (Integer) integer-x@hotmail.co,
+' @author Nacho (Integer) integer-x@hotmail.com
 ' @version 1.0
 ' @date 20060428
 

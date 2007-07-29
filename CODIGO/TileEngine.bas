@@ -190,7 +190,7 @@ End Type
 'Tipo de las celdas del mapa
 Public Type MapBlock
     Graphic(1 To 4) As Grh
-    CharIndex As Integer
+    charIndex As Integer
     ObjGrh As Grh
     
     NPCIndex As Integer
@@ -374,7 +374,7 @@ Dim N As Integer, i As Integer, Numheads As Integer, index As Integer
 Dim Miscabezas() As tIndiceCabeza
 
 N = FreeFile
-Open App.Path & "\init\Cabezas.ind" For Binary Access Read As #N
+Open App.path & "\init\Cabezas.ind" For Binary Access Read As #N
 
 'cabecera
 Get #N, , MiCabecera
@@ -405,7 +405,7 @@ Dim N As Integer, i As Integer, NumCascos As Integer, index As Integer
 Dim Miscabezas() As tIndiceCabeza
 
 N = FreeFile
-Open App.Path & "\init\Cascos.ind" For Binary Access Read As #N
+Open App.path & "\init\Cascos.ind" For Binary Access Read As #N
 
 'cabecera
 Get #N, , MiCabecera
@@ -436,7 +436,7 @@ Dim NumCuerpos As Integer
 Dim MisCuerpos() As tIndiceCuerpo
 
 N = FreeFile
-Open App.Path & "\init\Personajes.ind" For Binary Access Read As #N
+Open App.path & "\init\Personajes.ind" For Binary Access Read As #N
 
 'cabecera
 Get #N, , MiCabecera
@@ -468,7 +468,7 @@ Dim NumFxs As Integer
 Dim MisFxs() As tIndiceFx
 
 N = FreeFile
-Open App.Path & "\init\Fxs.ind" For Binary Access Read As #N
+Open App.path & "\init\Fxs.ind" For Binary Access Read As #N
 
 'cabecera
 Get #N, , MiCabecera
@@ -497,7 +497,7 @@ Dim N As Integer, i As Integer
 Dim NumTips As Integer
 
 N = FreeFile
-Open App.Path & "\init\Tips.ayu" For Binary Access Read As #N
+Open App.path & "\init\Tips.ayu" For Binary Access Read As #N
 
 'cabecera
 Get #N, , MiCabecera
@@ -522,7 +522,7 @@ Dim N As Integer, i As Integer
 Dim Nu As Integer
 
 N = FreeFile
-Open App.Path & "\init\fk.ind" For Binary Access Read As #N
+Open App.path & "\init\fk.ind" For Binary Access Read As #N
 
 'cabecera
 Get #N, , MiCabecera
@@ -584,83 +584,83 @@ tY = UserPos.y + CY
 
 End Sub
 
-Sub MakeChar(ByVal CharIndex As Integer, ByVal Body As Integer, ByVal Head As Integer, ByVal Heading As Byte, ByVal x As Integer, ByVal y As Integer, ByVal Arma As Integer, ByVal Escudo As Integer, ByVal Casco As Integer)
+Sub MakeChar(ByVal charIndex As Integer, ByVal Body As Integer, ByVal Head As Integer, ByVal Heading As Byte, ByVal x As Integer, ByVal y As Integer, ByVal Arma As Integer, ByVal Escudo As Integer, ByVal Casco As Integer)
 
 On Error Resume Next
 
 'Apuntamos al ultimo Char
-If CharIndex > LastChar Then LastChar = CharIndex
+If charIndex > LastChar Then LastChar = charIndex
 
 'If the char wasn't allready active (we are rewritting it) don't increase char count
-If charlist(CharIndex).Active = 0 Then _
+If charlist(charIndex).Active = 0 Then _
     NumChars = NumChars + 1
 
 If Arma = 0 Then Arma = 2
 If Escudo = 0 Then Escudo = 2
 If Casco = 0 Then Casco = 2
 
-charlist(CharIndex).iHead = Head
-charlist(CharIndex).iBody = Body
-charlist(CharIndex).Head = HeadData(Head)
-charlist(CharIndex).Body = BodyData(Body)
-charlist(CharIndex).Arma = WeaponAnimData(Arma)
+charlist(charIndex).iHead = Head
+charlist(charIndex).iBody = Body
+charlist(charIndex).Head = HeadData(Head)
+charlist(charIndex).Body = BodyData(Body)
+charlist(charIndex).Arma = WeaponAnimData(Arma)
 '[ANIM ATAK]
-charlist(CharIndex).Arma.WeaponAttack = 0
+charlist(charIndex).Arma.WeaponAttack = 0
 
-charlist(CharIndex).Escudo = ShieldAnimData(Escudo)
-charlist(CharIndex).Casco = CascoAnimData(Casco)
+charlist(charIndex).Escudo = ShieldAnimData(Escudo)
+charlist(charIndex).Casco = CascoAnimData(Casco)
 
-charlist(CharIndex).Heading = Heading
+charlist(charIndex).Heading = Heading
 
 'Reset moving stats
-charlist(CharIndex).Moving = 0
-charlist(CharIndex).MoveOffset.x = 0
-charlist(CharIndex).MoveOffset.y = 0
+charlist(charIndex).Moving = 0
+charlist(charIndex).MoveOffset.x = 0
+charlist(charIndex).MoveOffset.y = 0
 
 'Update position
-charlist(CharIndex).Pos.x = x
-charlist(CharIndex).Pos.y = y
+charlist(charIndex).Pos.x = x
+charlist(charIndex).Pos.y = y
 
 'Make active
-charlist(CharIndex).Active = 1
+charlist(charIndex).Active = 1
 
 'Plot on map
-MapData(x, y).CharIndex = CharIndex
+MapData(x, y).charIndex = charIndex
 
 End Sub
 
-Sub ResetCharInfo(ByVal CharIndex As Integer)
+Sub ResetCharInfo(ByVal charIndex As Integer)
 
-    charlist(CharIndex).Active = 0
-    charlist(CharIndex).Criminal = 0
-    charlist(CharIndex).fX = 0
-    charlist(CharIndex).FxLoopTimes = 0
-    charlist(CharIndex).invisible = False
+    charlist(charIndex).Active = 0
+    charlist(charIndex).Criminal = 0
+    charlist(charIndex).fX = 0
+    charlist(charIndex).FxLoopTimes = 0
+    charlist(charIndex).invisible = False
 
 #If SeguridadAlkon Then
-    Call MI(CualMI).ResetInvisible(CharIndex)
+    Call MI(CualMI).ResetInvisible(charIndex)
 #End If
 
-    charlist(CharIndex).Moving = 0
-    charlist(CharIndex).muerto = False
-    charlist(CharIndex).Nombre = ""
-    charlist(CharIndex).pie = False
-    charlist(CharIndex).Pos.x = 0
-    charlist(CharIndex).Pos.y = 0
-    charlist(CharIndex).UsandoArma = False
+    charlist(charIndex).Moving = 0
+    charlist(charIndex).muerto = False
+    charlist(charIndex).Nombre = ""
+    charlist(charIndex).pie = False
+    charlist(charIndex).Pos.x = 0
+    charlist(charIndex).Pos.y = 0
+    charlist(charIndex).UsandoArma = False
 End Sub
 
-Sub EraseChar(ByVal CharIndex As Integer)
+Sub EraseChar(ByVal charIndex As Integer)
 On Error Resume Next
 
 '*****************************************************************
 'Erases a character from CharList and map
 '*****************************************************************
 
-charlist(CharIndex).Active = 0
+charlist(charIndex).Active = 0
 
 'Update lastchar
-If CharIndex = LastChar Then
+If charIndex = LastChar Then
     Do Until charlist(LastChar).Active = 1
         LastChar = LastChar - 1
         If LastChar = 0 Then Exit Do
@@ -668,12 +668,12 @@ If CharIndex = LastChar Then
 End If
 
 
-MapData(charlist(CharIndex).Pos.x, charlist(CharIndex).Pos.y).CharIndex = 0
+MapData(charlist(charIndex).Pos.x, charlist(charIndex).Pos.y).charIndex = 0
 
 'Remove char's dialog
-Call Dialogos.QuitarDialogo(CharIndex)
+Call Dialogos.RemoveDialog(charIndex)
 
-Call ResetCharInfo(CharIndex)
+Call ResetCharInfo(charIndex)
 
 'Update NumChars
 NumChars = NumChars - 1
@@ -711,7 +711,7 @@ If Grh.GrhIndex <> 0 Then Grh.SpeedCounter = GrhData(Grh.GrhIndex).Speed
 
 End Sub
 
-Sub MoveCharbyHead(ByVal CharIndex As Integer, ByVal nHeading As E_Heading)
+Sub MoveCharbyHead(ByVal charIndex As Integer, ByVal nHeading As E_Heading)
 '*****************************************************************
 'Starts the movement of a character in nHeading direction
 '*****************************************************************
@@ -722,8 +722,8 @@ Dim y As Integer
 Dim nX As Integer
 Dim nY As Integer
 
-x = charlist(CharIndex).Pos.x
-y = charlist(CharIndex).Pos.y
+x = charlist(charIndex).Pos.x
+y = charlist(charIndex).Pos.y
 
 'Figure out which way to move
 Select Case nHeading
@@ -745,22 +745,22 @@ End Select
 nX = x + addX
 nY = y + addY
 
-MapData(nX, nY).CharIndex = CharIndex
-charlist(CharIndex).Pos.x = nX
-charlist(CharIndex).Pos.y = nY
-MapData(x, y).CharIndex = 0
+MapData(nX, nY).charIndex = charIndex
+charlist(charIndex).Pos.x = nX
+charlist(charIndex).Pos.y = nY
+MapData(x, y).charIndex = 0
 
-charlist(CharIndex).MoveOffset.x = -1 * (TilePixelWidth * addX)
-charlist(CharIndex).MoveOffset.y = -1 * (TilePixelHeight * addY)
+charlist(charIndex).MoveOffset.x = -1 * (TilePixelWidth * addX)
+charlist(charIndex).MoveOffset.y = -1 * (TilePixelHeight * addY)
 
-charlist(CharIndex).Moving = 1
-charlist(CharIndex).Heading = nHeading
+charlist(charIndex).Moving = 1
+charlist(charIndex).Heading = nHeading
 
-If UserEstado <> 1 Then Call DoPasosFx(CharIndex)
+If UserEstado <> 1 Then Call DoPasosFx(charIndex)
 
 'areas viejos
 If (nY < MinLimiteY) Or (nY > MaxLimiteY) Or (nX < MinLimiteX) Or (nX > MaxLimiteX) Then
-    Call EraseChar(CharIndex)
+    Call EraseChar(charIndex)
 End If
 
 End Sub
@@ -783,7 +783,7 @@ Function EstaPCarea(ByVal Index2 As Integer) As Boolean
     
     For y = UserPos.y - MinYBorder + 1 To UserPos.y + MinYBorder - 1
         For x = UserPos.x - MinXBorder + 1 To UserPos.x + MinXBorder - 1
-            If MapData(x, y).CharIndex = Index2 Then
+            If MapData(x, y).charIndex = Index2 Then
                 EstaPCarea = True
                 Exit Function
             End If
@@ -794,13 +794,13 @@ Function EstaPCarea(ByVal Index2 As Integer) As Boolean
 End Function
 
 
-Sub DoPasosFx(ByVal CharIndex As Integer)
+Sub DoPasosFx(ByVal charIndex As Integer)
 Static pie As Boolean
 
 If Not UserNavegando Then
-    If Not charlist(CharIndex).muerto And EstaPCarea(CharIndex) And (charlist(CharIndex).priv = 0 Or charlist(CharIndex).priv > 5) Then
-        charlist(CharIndex).pie = Not charlist(CharIndex).pie
-        If charlist(CharIndex).pie Then
+    If Not charlist(charIndex).muerto And EstaPCarea(charIndex) And (charlist(charIndex).priv = 0 Or charlist(charIndex).priv > 5) Then
+        charlist(charIndex).pie = Not charlist(charIndex).pie
+        If charlist(charIndex).pie Then
             Call Audio.PlayWave(SND_PASOS1)
         Else
             Call Audio.PlayWave(SND_PASOS2)
@@ -813,7 +813,7 @@ End If
 End Sub
 
 
-Sub MoveCharbyPos(ByVal CharIndex As Integer, ByVal nX As Integer, ByVal nY As Integer)
+Sub MoveCharbyPos(ByVal charIndex As Integer, ByVal nX As Integer, ByVal nY As Integer)
 
 On Error Resume Next
 
@@ -825,10 +825,10 @@ Dim nHeading As E_Heading
 
 
 
-x = charlist(CharIndex).Pos.x
-y = charlist(CharIndex).Pos.y
+x = charlist(charIndex).Pos.x
+y = charlist(charIndex).Pos.y
 
-MapData(x, y).CharIndex = 0
+MapData(x, y).charIndex = 0
 
 addX = nX - x
 addY = nY - y
@@ -849,30 +849,30 @@ If Sgn(addY) = 1 Then
     nHeading = E_Heading.SOUTH
 End If
 
-MapData(nX, nY).CharIndex = CharIndex
+MapData(nX, nY).charIndex = charIndex
 
 
-charlist(CharIndex).Pos.x = nX
-charlist(CharIndex).Pos.y = nY
+charlist(charIndex).Pos.x = nX
+charlist(charIndex).Pos.y = nY
 
-charlist(CharIndex).MoveOffset.x = -1 * (TilePixelWidth * addX)
-charlist(CharIndex).MoveOffset.y = -1 * (TilePixelHeight * addY)
+charlist(charIndex).MoveOffset.x = -1 * (TilePixelWidth * addX)
+charlist(charIndex).MoveOffset.y = -1 * (TilePixelHeight * addY)
 
-charlist(CharIndex).Moving = 1
-charlist(CharIndex).Heading = nHeading
+charlist(charIndex).Moving = 1
+charlist(charIndex).Heading = nHeading
 
 'parche para que no medite cuando camina
 Dim fxCh As Integer
-fxCh = charlist(CharIndex).fX
+fxCh = charlist(charIndex).fX
 If fxCh = FxMeditar.CHICO Or fxCh = FxMeditar.GRANDE Or fxCh = FxMeditar.MEDIANO Or fxCh = FxMeditar.XGRANDE Then
-    charlist(CharIndex).fX = 0
-    charlist(CharIndex).FxLoopTimes = 0
+    charlist(charIndex).fX = 0
+    charlist(charIndex).FxLoopTimes = 0
 End If
 
-If Not EstaPCarea(CharIndex) Then Call Dialogos.QuitarDialogo(CharIndex)
+If Not EstaPCarea(charIndex) Then Call Dialogos.RemoveDialog(charIndex)
 
 If (nY < MinLimiteY) Or (nY > MaxLimiteY) Or (nX < MinLimiteX) Or (nX > MaxLimiteX) Then
-    Call EraseChar(CharIndex)
+    Call EraseChar(charIndex)
 End If
 
 End Sub
@@ -1085,7 +1085,7 @@ End If
     End If
     
     '¿Hay un personaje?
-    If MapData(x, y).CharIndex > 0 Then
+    If MapData(x, y).charIndex > 0 Then
         LegalPos = False
         Exit Function
     End If
@@ -1586,12 +1586,10 @@ For y = minY + 8 To maxY - 1
                 End If
                 '***********************************************
                 'Char layer ************************************
-                If MapData(x, y).CharIndex <> 0 Then
-                    TempChar = charlist(MapData(x, y).CharIndex)
+                If MapData(x, y).charIndex <> 0 Then
+                    TempChar = charlist(MapData(x, y).charIndex)
                     PixelOffsetXTemp = PixelOffsetX
                     PixelOffsetYTemp = PixelOffsetY
-                    
-                    If (TempChar.Pos.x = x) And (TempChar.Pos.y = y) Then ' Para Sacar Clones, no es la solucion del problema pero lo tapa.
 
                     Moved = 0
                     'If needed, move left and right
@@ -1636,9 +1634,9 @@ For y = minY + 8 To maxY - 1
                     iPPx = ((32 * ScreenX) - 32) + PixelOffsetXTemp
                     iPPy = ((32 * ScreenY) - 32) + PixelOffsetYTemp
                     If TempChar.Head.Head(TempChar.Heading).GrhIndex <> 0 Then
-                        If Not charlist(MapData(x, y).CharIndex).invisible Then
+                        If Not charlist(MapData(x, y).charIndex).invisible Then
 #If SeguridadAlkon Then
-                            If Not MI(CualMI).IsInvisible(MapData(x, y).CharIndex) Then
+                            If Not MI(CualMI).IsInvisible(MapData(x, y).charIndex) Then
 #End If
                                 '[CUERPO]'
                                     Call DDrawTransGrhtoSurface(BackBufferSurface, TempChar.Body.Walk(TempChar.Heading), _
@@ -1691,36 +1689,36 @@ For y = minY + 8 To maxY - 1
                                                     Select Case TempChar.priv
                                                         Case 0
                                                             If TempChar.Criminal Then
-                                                                Call Dialogos.DrawText(iPPx - lCenter, iPPy + 30, Left$(TempChar.Nombre, InStr(TempChar.Nombre, "<") - 1), RGB(ColoresPJ(50).r, ColoresPJ(50).g, ColoresPJ(50).b))
+                                                                Call DrawText(iPPx - lCenter, iPPy + 30, Left$(TempChar.Nombre, InStr(TempChar.Nombre, "<") - 1), RGB(ColoresPJ(50).r, ColoresPJ(50).g, ColoresPJ(50).b), frmMain.font)
                                                                 lCenter = (frmMain.TextWidth(sClan) / 2) - 16
-                                                                Call Dialogos.DrawText(iPPx - lCenter, iPPy + 45, sClan, RGB(ColoresPJ(50).r, ColoresPJ(50).g, ColoresPJ(50).b))
+                                                                Call DrawText(iPPx - lCenter, iPPy + 45, sClan, RGB(ColoresPJ(50).r, ColoresPJ(50).g, ColoresPJ(50).b), frmMain.font)
                                                             Else
-                                                                Call Dialogos.DrawText(iPPx - lCenter, iPPy + 30, Left$(TempChar.Nombre, InStr(TempChar.Nombre, "<") - 1), RGB(ColoresPJ(49).r, ColoresPJ(49).g, ColoresPJ(49).b))
+                                                                Call DrawText(iPPx - lCenter, iPPy + 30, Left$(TempChar.Nombre, InStr(TempChar.Nombre, "<") - 1), RGB(ColoresPJ(49).r, ColoresPJ(49).g, ColoresPJ(49).b), frmMain.font)
                                                                 lCenter = (frmMain.TextWidth(sClan) / 2) - 16
-                                                                Call Dialogos.DrawText(iPPx - lCenter, iPPy + 45, sClan, RGB(ColoresPJ(49).r, ColoresPJ(49).g, ColoresPJ(49).b))
+                                                                Call DrawText(iPPx - lCenter, iPPy + 45, sClan, RGB(ColoresPJ(49).r, ColoresPJ(49).g, ColoresPJ(49).b), frmMain.font)
                                                             End If
                                                         Case 4  'admin
-                                                            Call Dialogos.DrawTextBig(iPPx - lCenter, iPPy + 30, Left$(TempChar.Nombre, InStr(TempChar.Nombre, "<") - 1), RGB(ColoresPJ(TempChar.priv).r, ColoresPJ(TempChar.priv).g, ColoresPJ(TempChar.priv).b))
+                                                            Call DrawTextBig(iPPx - lCenter, iPPy + 30, Left$(TempChar.Nombre, InStr(TempChar.Nombre, "<") - 1), RGB(ColoresPJ(TempChar.priv).r, ColoresPJ(TempChar.priv).g, ColoresPJ(TempChar.priv).b), frmMSG.font, frmMain.font)
                                                             lCenter = (frmMain.TextWidth(sClan) / 2) - 16
-                                                            Call Dialogos.DrawTextBig(iPPx - lCenter, iPPy + 45, sClan, RGB(ColoresPJ(TempChar.priv).r, ColoresPJ(TempChar.priv).g, ColoresPJ(TempChar.priv).b))
+                                                            Call DrawTextBig(iPPx - lCenter, iPPy + 45, sClan, RGB(ColoresPJ(TempChar.priv).r, ColoresPJ(TempChar.priv).g, ColoresPJ(TempChar.priv).b), frmMSG.font, frmMain.font)
                                                         Case Else 'el resto
-                                                            Call Dialogos.DrawText(iPPx - lCenter, iPPy + 30, Left$(TempChar.Nombre, InStr(TempChar.Nombre, "<") - 1), RGB(ColoresPJ(TempChar.priv).r, ColoresPJ(TempChar.priv).g, ColoresPJ(TempChar.priv).b))
+                                                            Call DrawText(iPPx - lCenter, iPPy + 30, Left$(TempChar.Nombre, InStr(TempChar.Nombre, "<") - 1), RGB(ColoresPJ(TempChar.priv).r, ColoresPJ(TempChar.priv).g, ColoresPJ(TempChar.priv).b), frmMain.font)
                                                             lCenter = (frmMain.TextWidth(sClan) / 2) - 16
-                                                            Call Dialogos.DrawText(iPPx - lCenter, iPPy + 45, sClan, RGB(ColoresPJ(TempChar.priv).r, ColoresPJ(TempChar.priv).g, ColoresPJ(TempChar.priv).b))
+                                                            Call DrawText(iPPx - lCenter, iPPy + 45, sClan, RGB(ColoresPJ(TempChar.priv).r, ColoresPJ(TempChar.priv).g, ColoresPJ(TempChar.priv).b), frmMain.font)
                                                     End Select
                                                 Else
                                                     lCenter = (frmMain.TextWidth(TempChar.Nombre) / 2) - 16
                                                     Select Case TempChar.priv
                                                         Case 0
                                                             If TempChar.Criminal Then
-                                                                Call Dialogos.DrawText(iPPx - lCenter, iPPy + 30, TempChar.Nombre, RGB(ColoresPJ(50).r, ColoresPJ(50).g, ColoresPJ(50).b))
+                                                                Call DrawText(iPPx - lCenter, iPPy + 30, TempChar.Nombre, RGB(ColoresPJ(50).r, ColoresPJ(50).g, ColoresPJ(50).b), frmMain.font)
                                                             Else
-                                                                Call Dialogos.DrawText(iPPx - lCenter, iPPy + 30, TempChar.Nombre, RGB(ColoresPJ(49).r, ColoresPJ(49).g, ColoresPJ(49).b))
+                                                                Call DrawText(iPPx - lCenter, iPPy + 30, TempChar.Nombre, RGB(ColoresPJ(49).r, ColoresPJ(49).g, ColoresPJ(49).b), frmMain.font)
                                                             End If
                                                         Case 4  'Admin
-                                                            Call Dialogos.DrawTextBig(iPPx - lCenter, iPPy + 30, TempChar.Nombre, RGB(ColoresPJ(TempChar.priv).r, ColoresPJ(TempChar.priv).g, ColoresPJ(TempChar.priv).b))
+                                                            Call DrawTextBig(iPPx - lCenter, iPPy + 30, TempChar.Nombre, RGB(ColoresPJ(TempChar.priv).r, ColoresPJ(TempChar.priv).g, ColoresPJ(TempChar.priv).b), frmMSG.font, frmMain.font)
                                                         Case Else
-                                                            Call Dialogos.DrawText(iPPx - lCenter, iPPy + 30, TempChar.Nombre, RGB(ColoresPJ(TempChar.priv).r, ColoresPJ(TempChar.priv).g, ColoresPJ(TempChar.priv).b))
+                                                            Call DrawText(iPPx - lCenter, iPPy + 30, TempChar.Nombre, RGB(ColoresPJ(TempChar.priv).r, ColoresPJ(TempChar.priv).g, ColoresPJ(TempChar.priv).b), frmMain.font)
                                                     End Select
                                                 End If
                                             End If
@@ -1736,21 +1734,17 @@ For y = minY + 8 To maxY - 1
 #End If
                         End If  'end if ~in
 
-                        If Dialogos.CantidadDialogos > 0 Then
-                            Call Dialogos.Update_Dialog_Pos( _
+                        Call Dialogos.UpdateDialogPos( _
                                     (iPPx + TempChar.Body.HeadOffset.x), _
                                     (iPPy + TempChar.Body.HeadOffset.y), _
-                                    MapData(x, y).CharIndex)
-                        End If
+                                    MapData(x, y).charIndex)
                 
                 
                     Else '<-> If TempChar.Head.Head(TempChar.Heading).GrhIndex <> 0 Then
-                        If Dialogos.CantidadDialogos > 0 Then
-                            Call Dialogos.Update_Dialog_Pos( _
+                        Call Dialogos.UpdateDialogPos( _
                                     (iPPx + TempChar.Body.HeadOffset.x), _
                                     (iPPy + TempChar.Body.HeadOffset.y), _
-                                    MapData(x, y).CharIndex)
-                        End If
+                                    MapData(x, y).charIndex)
 
                         Call DDrawTransGrhtoSurface( _
                                 BackBufferSurface, _
@@ -1760,31 +1754,26 @@ For y = minY + 8 To maxY - 1
 
 
                     'Refresh charlist
-                    charlist(MapData(x, y).CharIndex) = TempChar
+                    charlist(MapData(x, y).charIndex) = TempChar
 
                     'BlitFX (TM)
-                    If charlist(MapData(x, y).CharIndex).fX <> 0 Then
+                    If charlist(MapData(x, y).charIndex).fX <> 0 Then
 #If (ConAlfaB = 1) Then
                         Call DDrawTransGrhtoSurfaceAlpha( _
                                 BackBufferSurface, _
                                 FxData(TempChar.fX).fX, _
                                 iPPx + FxData(TempChar.fX).OffsetX, _
                                 iPPy + FxData(TempChar.fX).OffsetY, _
-                                1, 1, MapData(x, y).CharIndex)
+                                1, 1, MapData(x, y).charIndex)
 #Else
                         Call DDrawTransGrhtoSurface( _
                                 BackBufferSurface, _
                                 FxData(TempChar.fX).fX, _
                                 iPPx + FxData(TempChar.fX).OffsetX, _
                                 iPPy + FxData(TempChar.fX).OffsetY, _
-                                1, 1, MapData(x, y).CharIndex)
+                                1, 1, MapData(x, y).charIndex)
 #End If
                     End If
-                    
-                '''''''''
-                Else
-                    MapData(x, y).CharIndex = 0 ' Borra el clon!
-                End If
                 '''''''''
                 End If '<-> If MapData(X, Y).CharIndex <> 0 Then
                 '*************************************************
@@ -1974,7 +1963,7 @@ Function InitTileEngine(ByRef setDisplayFormhWnd As Long, setMainViewTop As Inte
 Dim SurfaceDesc As DDSURFACEDESC2
 Dim ddck As DDCOLORKEY
 
-IniPath = App.Path & "\Init\"
+IniPath = App.path & "\Init\"
 
 'Set intial user position
 UserPos.x = MinXBorder
@@ -2110,12 +2099,12 @@ Sub ShowNextFrame()
         '****** Update screen ******
         Call RenderScreen(UserPos.x - AddtoUserPos.x, UserPos.y - AddtoUserPos.y, OffsetCounterX, OffsetCounterY)
 
-        If IScombate Then Call Dialogos.DrawText(260, 260, "MODO COMBATE", vbRed)
+        If IScombate Then Call DrawText(260, 260, "MODO COMBATE", vbRed, frmMain.font)
         
-        Call Dialogos.MostrarTexto
+        Call Dialogos.Render
         Call DibujarCartel
         
-        Call DialogosClanes.Draw(Dialogos)
+        Call DialogosClanes.Draw
         
         Call DrawBackBufferSurface
         
@@ -2187,3 +2176,34 @@ HayErrorAlpha:
 End Sub
 
 #End If
+
+Public Sub DrawText(ByVal lngXPos As Integer, ByVal lngYPos As Integer, ByRef strText As String, ByVal lngColor As Long, ByRef font As StdFont)
+   If strText <> "" Then
+        Call BackBufferSurface.SetFontTransparency(True)
+        Call BackBufferSurface.SetForeColor(vbBlack)
+        Call BackBufferSurface.SetFont(font)
+        
+        Call BackBufferSurface.DrawText(lngXPos - 2, lngYPos - 1, strText, False)
+        
+        Call BackBufferSurface.SetFontTransparency(True)
+        Call BackBufferSurface.SetForeColor(lngColor)
+        
+        Call BackBufferSurface.SetFont(font)
+        
+        Call BackBufferSurface.DrawText(lngXPos, lngYPos, strText, False)
+   End If
+End Sub
+
+Public Sub DrawTextBig(ByVal lngXPos As Integer, ByVal lngYPos As Integer, ByRef strText As String, ByVal lngColor As Long, ByRef backFont As StdFont, ByRef frontFont As StdFont)
+   If strText <> "" Then
+        Call BackBufferSurface.SetFontTransparency(True)
+        Call BackBufferSurface.SetForeColor(vbBlack)
+        Call BackBufferSurface.SetFont(backFont)
+        Call BackBufferSurface.DrawText(lngXPos - 2, lngYPos - 1, strText, False)
+        
+        Call BackBufferSurface.SetFontTransparency(True)
+        Call BackBufferSurface.SetForeColor(lngColor)
+        Call BackBufferSurface.SetFont(frontFont)
+        Call BackBufferSurface.DrawText(lngXPos, lngYPos, strText, False)
+   End If
+End Sub

@@ -211,7 +211,7 @@ Public Sub RefreshAllChars()
     
     For loopc = 1 To LastChar
         If charlist(loopc).Active = 1 Then
-            MapData(charlist(loopc).Pos.x, charlist(loopc).Pos.y).CharIndex = loopc
+            MapData(charlist(loopc).Pos.x, charlist(loopc).Pos.y).charIndex = loopc
         End If
     Next loopc
 End Sub
@@ -585,8 +585,8 @@ Sub SwitchMap(ByVal Map As Integer)
             End If
             
             'Erase NPCs
-            If MapData(x, y).CharIndex > 0 Then
-                Call EraseChar(MapData(x, y).CharIndex)
+            If MapData(x, y).charIndex > 0 Then
+                Call EraseChar(MapData(x, y).charIndex)
             End If
             
             'Erase OBJs
@@ -604,28 +604,51 @@ End Sub
 
 Function ReadField(ByVal Pos As Integer, ByRef Text As String, ByVal SepASCII As Byte) As String
 '*****************************************************************
-'Gets a field from a string
+'Gets a field from a delimited string
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modify Date: 11/15/2004
-'Gets a field from a delimited string
 '*****************************************************************
     Dim i As Long
-    Dim LastPos As Long
+    Dim lastPos As Long
     Dim CurrentPos As Long
     Dim delimiter As String * 1
     
     delimiter = Chr$(SepASCII)
     
     For i = 1 To Pos
-        LastPos = CurrentPos
-        CurrentPos = InStr(LastPos + 1, Text, delimiter, vbBinaryCompare)
+        lastPos = CurrentPos
+        CurrentPos = InStr(lastPos + 1, Text, delimiter, vbBinaryCompare)
     Next i
     
     If CurrentPos = 0 Then
-        ReadField = mid$(Text, LastPos + 1, Len(Text) - LastPos)
+        ReadField = mid$(Text, lastPos + 1, Len(Text) - lastPos)
     Else
-        ReadField = mid$(Text, LastPos + 1, CurrentPos - LastPos - 1)
+        ReadField = mid$(Text, lastPos + 1, CurrentPos - lastPos - 1)
     End If
+End Function
+
+Function FieldCount(ByRef Text As String, ByVal SepASCII As Byte) As Long
+'*****************************************************************
+'Gets the number of fields in a delimited string
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Last Modify Date: 07/29/2007
+'*****************************************************************
+    Dim Count As Long
+    Dim curPos As Long
+    Dim delimiter As String * 1
+    
+    If LenB(Text) = 0 Then Exit Function
+    
+    delimiter = Chr$(SepASCII)
+    
+    curPos = 0
+    
+    Do
+        curPos = InStr(curPos + 1, Text, delimiter)
+        Count = Count + 1
+    Loop While curPos <> 0
+    
+    FieldCount = Count
 End Function
 
 Function FileExist(ByVal file As String, ByVal FileType As VbFileAttribute) As Boolean
@@ -798,15 +821,15 @@ Sub Main()
     frmCargando.Show
     frmCargando.Refresh
     
-    frmConnect.Version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
-    AddtoRichTextBox frmCargando.Status, "Buscando servidores....", 0, 0, 0, 0, 0, 1
+    frmConnect.version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
+    AddtoRichTextBox frmCargando.status, "Buscando servidores....", 0, 0, 0, 0, 0, 1
 
     Call CargarServidores
 'TODO : esto de ServerRecibidos no se podría sacar???
     ServersRecibidos = True
     
-    AddtoRichTextBox frmCargando.Status, "Encontrado", , , , 1
-    AddtoRichTextBox frmCargando.Status, "Iniciando constantes...", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.status, "Encontrado", , , , 1
+    AddtoRichTextBox frmCargando.status, "Iniciando constantes...", 0, 0, 0, 0, 0, 1
     
     Call InicializarNombres
     
@@ -816,20 +839,20 @@ Sub Main()
     frmOldPersonaje.NameTxt.Text = Config_Inicio.Name
     frmOldPersonaje.PasswordTxt.Text = ""
     
-    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
+    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
     
     IniciarObjetosDirectX
     
-    AddtoRichTextBox frmCargando.Status, "Cargando Sonidos....", 0, 0, 0, 0, 0, 1
-    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
+    AddtoRichTextBox frmCargando.status, "Cargando Sonidos....", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
 
 Dim loopc As Integer
 
 LastTime = GetTickCount
 
-    Call InitTileEngine(frmMain.hWnd, 152, 7, 32, 32, 13, 17, 9)
+    Call InitTileEngine(frmMain.hWnd, 160, 7, 32, 32, 13, 17, 9)
     
-    Call AddtoRichTextBox(frmCargando.Status, "Creando animaciones extra....")
+    Call AddtoRichTextBox(frmCargando.status, "Creando animaciones extra....")
     
     Call CargarAnimsExtra
     Call CargarTips
@@ -847,19 +870,19 @@ UserMap = 1
     Call InitMI
 #End If
 
-    AddtoRichTextBox frmCargando.Status, "                    ¡Bienvenido a Argentum Online!", , , , 1
+    AddtoRichTextBox frmCargando.status, "                    ¡Bienvenido a Argentum Online!", , , , 1
     
     Unload frmCargando
     
     'Inicializamos el sonido
-    Call AddtoRichTextBox(frmCargando.Status, "Iniciando DirectSound....", 0, 0, 0, 0, 0, True)
+    Call AddtoRichTextBox(frmCargando.status, "Iniciando DirectSound....", 0, 0, 0, 0, 0, True)
     Call Audio.Initialize(DirectX, frmMain.hWnd, App.path & "\" & Config_Inicio.DirSonidos & "\", App.path & "\" & Config_Inicio.DirMusica & "\")
     
     'Enable / Disable audio
     Audio.MusicActivated = Not ClientSetup.bNoMusic
     Audio.SoundActivated = Not ClientSetup.bNoSound
     
-    Call AddtoRichTextBox(frmCargando.Status, "Hecho", , , , 1, , False)
+    Call AddtoRichTextBox(frmCargando.status, "Hecho", , , , 1, , False)
     
     'Inicializamos el inventario gráfico
     Call Inventario.Initialize(DirectDraw, frmMain.picInv)
@@ -914,6 +937,10 @@ UserMap = 1
     Call MainTimer.Start(TimersIndex.CastSpell)
     Call MainTimer.Start(TimersIndex.Arrows)
     Call MainTimer.Start(TimersIndex.CastAttack)
+    
+    'Set the dialog's font
+    Dialogos.font = frmMain.font
+    DialogosClanes.font = frmMain.font
     
     
     ' Load the form for screenshots
@@ -970,7 +997,7 @@ UserMap = 1
     
     EngineRun = False
     frmCargando.Show
-    AddtoRichTextBox frmCargando.Status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
     LiberarObjetosDX
 
 'TODO : Esto debería ir en otro lado como al cambair a esta res
@@ -1204,5 +1231,5 @@ Public Sub CleanDialogs()
     
     Call DialogosClanes.RemoveDialogs
     
-    Call Dialogos.BorrarDialogos
+    Call Dialogos.RemoveAllDialogs
 End Sub

@@ -574,6 +574,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -632,10 +633,10 @@ Begin VB.Form frmMain
    End
    Begin VB.Shape MainViewShp 
       BorderColor     =   &H00404040&
-      Height          =   6165
-      Left            =   60
-      Top             =   2040
-      Width           =   8205
+      Height          =   6240
+      Left            =   45
+      Top             =   1965
+      Width           =   8190
    End
    Begin VB.Menu mnuObj 
       Caption         =   "Objeto"
@@ -1569,9 +1570,6 @@ Private Sub Socket1_Disconnect()
 
     SkillPoints = 0
     Alocados = 0
-
-    Dialogos.UltimoDialogo = 0
-    Dialogos.CantidadDialogos = 0
 End Sub
 
 Private Sub Socket1_LastError(ErrorCode As Integer, ErrorString As String, Response As Integer)
@@ -1629,8 +1627,8 @@ Private Sub AbrirMenuViewPort()
 
 If tX >= MinXBorder And tY >= MinYBorder And _
     tY <= MaxYBorder And tX <= MaxXBorder Then
-    If MapData(tX, tY).CharIndex > 0 Then
-        If charlist(MapData(tX, tY).CharIndex).invisible = False Then
+    If MapData(tX, tY).charIndex > 0 Then
+        If charlist(MapData(tX, tY).charIndex).invisible = False Then
         
             Dim i As Long
             Dim m As New frmMenuseFashion
@@ -1640,8 +1638,8 @@ If tX >= MinXBorder And tY >= MinYBorder And _
             m.SetMenuId 1
             m.ListaInit 2, False
             
-            If charlist(MapData(tX, tY).CharIndex).Nombre <> "" Then
-                m.ListaSetItem 0, charlist(MapData(tX, tY).CharIndex).Nombre, True
+            If charlist(MapData(tX, tY).charIndex).Nombre <> "" Then
+                m.ListaSetItem 0, charlist(MapData(tX, tY).charIndex).Nombre, True
             Else
                 m.ListaSetItem 0, "<NPC>", True
             End If
@@ -1742,7 +1740,6 @@ Private Sub Winsock1_Close()
     SkillPoints = 0
     Alocados = 0
 
-    Dialogos.UltimoDialogo = 0
     Dialogos.CantidadDialogos = 0
 End Sub
 

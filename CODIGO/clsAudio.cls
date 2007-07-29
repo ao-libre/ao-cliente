@@ -40,7 +40,7 @@ Attribute VB_Exposed = False
 '03/03/2007 - Juan Martín Sotuyo Dodero (Maraxus) - (juansotuyo@gmail.com)
 '   - Add: Sound and Music activation / deactivation from within the class.
 '   - Add: Documentation
-'   - Change: Volume is no longer de dB amplification / atenuation to be
+'   - Change: Volume is no longer the dB amplification / atenuation to be
 '           applied but a percentage for easier interaction with user.
 
 
@@ -370,6 +370,7 @@ On Error GoTo ErrHandler
     If i > NumSoundBuffers Then
         For i = 1 To NumSoundBuffers
             If Not (DSBuffers(i).Buffer.GetStatus() And DSBSTATUS_LOOPING) Then
+                Call DSBuffers(i).Buffer.Stop
                 Exit For
             End If
         Next i
