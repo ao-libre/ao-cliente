@@ -157,10 +157,10 @@ Next
 
 NameTxt.Text = ""
 PasswordTxt.Text = ""
-Me.Picture = LoadPicture(App.Path & "\Graficos\oldcaracter.jpg")
-Image1(1).Picture = LoadPicture(App.Path & "\Graficos\bvolver.jpg")
-Image1(0).Picture = LoadPicture(App.Path & "\Graficos\bsiguiente.jpg")
-Image1(2).Picture = LoadPicture(App.Path & "\Graficos\bteclas.jpg")
+Me.Picture = LoadPicture(App.path & "\Graficos\oldcaracter.jpg")
+Image1(1).Picture = LoadPicture(App.path & "\Graficos\bvolver.jpg")
+Image1(0).Picture = LoadPicture(App.path & "\Graficos\bsiguiente.jpg")
+Image1(2).Picture = LoadPicture(App.path & "\Graficos\bteclas.jpg")
 
 
 
@@ -171,19 +171,19 @@ If Image1(0).Tag = "1" Then
             Me.lblInfo.Visible = False
             Me.lblInfo.Caption = vbNullString
             Image1(0).Tag = "0"
-            Image1(0).Picture = LoadPicture(App.Path & "\Graficos\bsiguiente.jpg")
+            Image1(0).Picture = LoadPicture(App.path & "\Graficos\bsiguiente.jpg")
 End If
 If Image1(1).Tag = "1" Then
             Me.lblInfo.Visible = False
             Me.lblInfo.Caption = vbNullString
             Image1(1).Tag = "0"
-            Image1(1).Picture = LoadPicture(App.Path & "\Graficos\bvolver.jpg")
+            Image1(1).Picture = LoadPicture(App.path & "\Graficos\bvolver.jpg")
 End If
 If Image1(2).Tag = "1" Then
             Me.lblInfo.Visible = False
             Me.lblInfo.Caption = vbNullString
             Image1(2).Tag = "0"
-            Image1(2).Picture = LoadPicture(App.Path & "\Graficos\bteclas.jpg")
+            Image1(2).Picture = LoadPicture(App.path & "\Graficos\bteclas.jpg")
 End If
 
 End Sub
@@ -213,8 +213,8 @@ Select Case index
         Dim aux As String
         aux = PasswordTxt.Text
 #If SeguridadAlkon Then
-        UserPassword = md5.GetMD5String(aux)
-        Call md5.MD5Reset
+        UserPassword = MD5.GetMD5String(aux)
+        Call MD5.MD5Reset
 #Else
         UserPassword = aux
 #End If
@@ -249,7 +249,7 @@ Select Case index
             Me.lblInfo.Caption = textoSeguir
             Image1(0).Tag = "1"
             Call Audio.PlayWave(SND_OVER)
-            Image1(0).Picture = LoadPicture(App.Path & "\Graficos\bsiguientea.jpg")
+            Image1(0).Picture = LoadPicture(App.path & "\Graficos\bsiguientea.jpg")
         End If
     Case 1
         If Image1(1).Tag = "0" Then
@@ -257,7 +257,7 @@ Select Case index
             Me.lblInfo.Caption = textoSalir
             Image1(1).Tag = "1"
             Call Audio.PlayWave(SND_OVER)
-            Image1(1).Picture = LoadPicture(App.Path & "\Graficos\bvolvera.jpg")
+            Image1(1).Picture = LoadPicture(App.path & "\Graficos\bvolvera.jpg")
         End If
     Case 2
         If Image1(2).Tag = "0" Then
@@ -265,7 +265,7 @@ Select Case index
             Me.lblInfo.Caption = textoKeypad
             Image1(2).Tag = "1"
             Call Audio.PlayWave(SND_OVER)
-            Image1(2).Picture = LoadPicture(App.Path & "\Graficos\bteclasa.jpg")
+            Image1(2).Picture = LoadPicture(App.path & "\Graficos\bteclasa.jpg")
         End If
         
 End Select

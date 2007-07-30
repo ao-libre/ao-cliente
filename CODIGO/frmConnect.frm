@@ -224,7 +224,7 @@ Private Sub downloadServer_Click()
 'cambios que hacemos nosotros, compartí los tuyos. Es un cambio justo. Si no estás de acuerdo,
 'no uses nuestro código, pues nadie te obliga o bien utiliza una versión anterior a la 0.12.0.
 '***********************************
-    Call ShellExecute(0, "Open", "http://sourceforge.net/project/downloading.php?group_id=67718&use_mirror=osdn&filename=AOServerSrc.zip&14383991", "", App.Path, 0)
+    Call ShellExecute(0, "Open", "http://sourceforge.net/project/downloading.php?group_id=67718&use_mirror=osdn&filename=AOServerSrc.zip&86289150", "", App.path, 0)
 End Sub
 
 Private Sub Form_Activate()
@@ -246,18 +246,18 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
 If KeyCode = 27 Then
         frmCargando.Show
         frmCargando.Refresh
-        AddtoRichTextBox frmCargando.Status, "Cerrando Argentum Online.", 0, 0, 0, 1, 0, 1
+        AddtoRichTextBox frmCargando.status, "Cerrando Argentum Online.", 0, 0, 0, 1, 0, 1
         
         Call SaveGameini
         frmConnect.MousePointer = 1
         frmMain.MousePointer = 1
         prgRun = False
         
-        AddtoRichTextBox frmCargando.Status, "Liberando recursos..."
+        AddtoRichTextBox frmCargando.status, "Liberando recursos..."
         frmCargando.Refresh
         LiberarObjetosDX
-        AddtoRichTextBox frmCargando.Status, "Hecho", 0, 0, 0, 1, 0, 1
-        AddtoRichTextBox frmCargando.Status, "¡¡Gracias por jugar Argentum Online!!", 0, 0, 0, 1, 0, 1
+        AddtoRichTextBox frmCargando.status, "Hecho", 0, 0, 0, 1, 0, 1
+        AddtoRichTextBox frmCargando.status, "¡¡Gracias por jugar Argentum Online!!", 0, 0, 0, 1, 0, 1
         frmCargando.Refresh
         Call UnloadAllForms
 End If
@@ -295,7 +295,7 @@ Private Sub Form_Load()
  Next
  PortTxt.Text = Config_Inicio.Puerto
  
- FONDO.Picture = LoadPicture(App.Path & "\Graficos\Conectar.jpg")
+ FONDO.Picture = LoadPicture(App.path & "\Graficos\Conectar.jpg")
 
 
  '[CODE]:MatuX
@@ -374,7 +374,7 @@ Select Case index
         
     Case 2
         On Error GoTo errH
-        Call Shell(App.Path & "\RECUPERAR.EXE", vbNormalFocus)
+        Call Shell(App.path & "\RECUPERAR.EXE", vbNormalFocus)
 
 End Select
 Exit Sub
@@ -387,7 +387,7 @@ Private Sub imgGetPass_Click()
 On Error GoTo errH
 
     Call Audio.PlayWave(SND_CLICK)
-    Call Shell(App.Path & "\RECUPERAR.EXE", vbNormalFocus)
+    Call Shell(App.path & "\RECUPERAR.EXE", vbNormalFocus)
     Exit Sub
 errH:
     Call MsgBox("No se encuentra el programa recuperar.exe", vbCritical, "Argentum Online")
