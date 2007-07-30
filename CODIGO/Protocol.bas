@@ -8893,6 +8893,19 @@ End Sub
 ' @param    sdData  The data to be sent to the server.
 
 Private Sub SendData(ByRef sdData As String)
+    
+    'No enviamos nada si no estamos conectados
+#If UsarWrench = 1 Then
+    If Not frmMain.Socket1.IsWritable Then
+        'Put data back in the bytequeue
+        Call outgoingData.WriteASCIIStringFixed(sdData)
+        Exit Sub
+    End If
+    
+    If Not frmMain.Socket1.Connected Then Exit Sub
+#Else
+    If frmMain.Winsock1.State <> sckConnected Then Exit Sub
+#End If
 
 #If SeguridadAlkon Then
     Dim data() As Byte
@@ -8904,20 +8917,10 @@ Private Sub SendData(ByRef sdData As String)
     sdData = StrConv(data, vbUnicode)
 #End If
     
-    'No enviamos nada si no estamos conectados
+    'Send data!
 #If UsarWrench = 1 Then
-    If Not frmMain.Socket1.IsWritable Then
-        'Put data back in the bytequeue
-        Call outgoingData.WriteASCIIStringFixed(sdData)
-        Exit Sub
-    End If
-    
-    If Not frmMain.Socket1.Connected Then Exit Sub
-    
     Call frmMain.Socket1.Write(sdData, Len(sdData))
 #Else
-    If frmMain.Winsock1.State <> sckConnected Then Exit Sub
-    
     Call frmMain.Winsock1.SendData(sdData)
 #End If
 

@@ -46,7 +46,7 @@ Option Base 0
 
 ''
 ' Maximum number of dialogs that can exist.
-Private Const MAX_DIALOGS As Byte = 50
+Private Const MAX_DIALOGS As Byte = 100
 
 ''
 ' Maximum length of any dialog line without having to split it.
@@ -144,7 +144,7 @@ Private Function BinarySearch(ByVal charIndex As Integer) As Integer
     
     'Not found, return the negation of the position where it should be
     '(all higher values are to the right of the list and lower values are to the left)
-    BinarySearch = Not mid
+    BinarySearch = Not min
 End Function
 
 ''
@@ -317,13 +317,16 @@ Public Sub Render()
                 
                 removedDialogs = removedDialogs + 1
             ElseIf .renderable Then
-                offset = -(usedFont.Size + 2) * UBound(.textLine())
+                offset = -(usedFont.size + 2) * UBound(.textLine())
                 
                 'Render it
                 For j = 0 To UBound(.textLine())
                     Call DrawText(.x, .y + offset, .textLine(j), .color, usedFont)
-                    offset = offset + usedFont.Size + 5
+                    offset = offset + usedFont.size + 5
                 Next j
+                
+                'Won't render it unless it's updated in next frmae
+                .renderable = False
             End If
         End With
     Next i
@@ -371,13 +374,13 @@ End Sub
 '
 ' @return   The font being used to render dialogs.
 
-Public Property Get font() As StdFont
+Public Property Get Font() As StdFont
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
 'Last Modify Date: 07/28/07
 'Retrieves the font being used to render dialogs.
 '**************************************************************
-    font = usedFont
+    Font = usedFont
 End Property
 
 ''
@@ -385,7 +388,7 @@ End Property
 '
 ' @param    nValue  The new font to be used to render dialogs.
 
-Public Property Let font(ByRef nValue As StdFont)
+Public Property Let Font(ByRef nValue As StdFont)
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
 'Last Modify Date: 07/28/07

@@ -181,7 +181,7 @@ Private Function BinarySearch(ByVal fileIndex As Long) As Long
     
     'Not found, return the negation of the position where it should be
     '(all higher values are to the right of the list and lower values are to the left)
-    BinarySearch = Not mid
+    BinarySearch = Not min
 End Function
 
 Private Function LoadSurface(ByVal fileIndex As Long, ByVal listIndex As Long) As Long
