@@ -259,7 +259,7 @@ Private Function FormatChat(ByRef chat As String) As String()
     
     ' If it's only one line, center text
     If curLine = 0 And length < MAX_LENGTH Then
-        chatLines(curLine) = String(MAX_LENGTH - length, " ") & chatLines(curLine)
+        chatLines(curLine) = String((MAX_LENGTH - length) \ 2 + 1, " ") & chatLines(curLine)
     End If
     
     'Resize array to fit
@@ -317,12 +317,12 @@ Public Sub Render()
                 
                 removedDialogs = removedDialogs + 1
             ElseIf .renderable Then
-                offset = -(usedFont.size + 5) * UBound(.textLine())
+                offset = -(usedFont.Size + 2) * UBound(.textLine())
                 
                 'Render it
                 For j = 0 To UBound(.textLine())
                     Call DrawText(.x, .y + offset, .textLine(j), .color, usedFont)
-                    offset = offset + usedFont.size + 5
+                    offset = offset + usedFont.Size + 5
                 Next j
             End If
         End With
