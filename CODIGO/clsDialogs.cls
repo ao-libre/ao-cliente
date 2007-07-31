@@ -90,6 +90,15 @@ Private dialogCount As Byte
 ' the size of the font being used to render
 Private usedFont As StdFont
 
+''
+' CopyMemory is the fastest way to copy memory blocks, so we abuse of it
+'
+' @param destination Where the data will be copied.
+' @param source The data to be copied.
+' @param length Number of bytes to be copied.
+
+Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" (ByRef destination As Any, ByRef source As Any, ByVal length As Long)
+
 
 ''
 ' Initializes the instance of the class.
@@ -374,13 +383,13 @@ End Sub
 '
 ' @return   The font being used to render dialogs.
 
-Public Property Get Font() As StdFont
+Public Property Get font() As StdFont
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
 'Last Modify Date: 07/28/07
 'Retrieves the font being used to render dialogs.
 '**************************************************************
-    Font = usedFont
+    font = usedFont
 End Property
 
 ''
@@ -388,7 +397,7 @@ End Property
 '
 ' @param    nValue  The new font to be used to render dialogs.
 
-Public Property Let Font(ByRef nValue As StdFont)
+Public Property Let font(ByRef nValue As StdFont)
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
 'Last Modify Date: 07/28/07

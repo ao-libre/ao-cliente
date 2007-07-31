@@ -8899,6 +8899,7 @@ Private Sub SendData(ByRef sdData As String)
     If Not frmMain.Socket1.IsWritable Then
         'Put data back in the bytequeue
         Call outgoingData.WriteASCIIStringFixed(sdData)
+        
         Exit Sub
     End If
     

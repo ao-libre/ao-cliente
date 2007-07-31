@@ -43,7 +43,7 @@ Private Const MESSAGE_COUNT As Byte = 10
 
 ''
 ' Defines the maximum length allowed for any custom message.
-Private Const MAX_MESSAGE_LENGTH As Byte = 255
+Private Const MAX_MESSAGE_LENGTH As Byte = 120
 
 ''
 ' The error code thrown when the message being set is invalid.
@@ -200,14 +200,40 @@ Private Function MessageIsValid(ByRef msg As String) As Boolean
 'Last Modification: 07/26/07
 'Checks if the given message is valid or not.
 '***************************************************
+    Dim i As Long
+    Dim char As String * 1
+    Dim ascii As Byte
+    
+    'Get rid of spaces
+    msg = Trim$(msg)
+    
+    msg = StrConv(msg, vbUnicode)
+    
     'Empty messages are valid
     If LenB(msg) = 0 Then
         MessageIsValid = True
         Exit Function
     End If
     
-    'Messages only containning spaces are discarded
-    If LenB(Trim$(msg)) = 0 Then Exit Function
+    For i = 1 To Len(msg)
+        char = mid$(msg, i, 1)
+        ascii = Asc(char)
+        
+        'check for invalid chars...
+        If ascii < 31 Then Exit Function
+        
+        If ascii > 126 And char <> "á" And char <> "Á" And char <> "ä" And char <> "Ä" _
+          And char <> "â" And char <> "Â" And char <> "à" And char <> "À" And char <> "é" _
+          And char <> "É" And char <> "ë" And char <> "Ë" And char <> "ê" And char <> "Ê" _
+          And char <> "è" And char <> "È" And char <> "í" And char <> "Í" And char <> "ï" _
+          And char <> "Ï" And char <> "î" And char <> "Î" And char <> "ì" And char <> "Ì" _
+          And char <> "ó" And char <> "Ó" And char <> "ö" And char <> "Ö" And char <> "ô" _
+          And char <> "Ô" And char <> "ò" And char <> "Ò" And char <> "ú" And char <> "Ú" _
+          And char <> "ü" And char <> "Ü" And char <> "û" And char <> "Û" And char <> "ù" _
+          And char <> "Ù" And char <> "ñ" And char <> "Ñ" Then
+            Exit Function
+        End If
+    Next i
     
     'Discard extremely long messages
     If Len(msg) > MAX_MESSAGE_LENGTH Then Exit Function

@@ -336,7 +336,12 @@ Sub SetConnected()
     Connected = True
     
     Call SaveGameini
-
+    
+#If SeguridadAlkon Then
+    'Unprotect character creation form
+    Call UnprotectForm
+#End If
+    
     'Unload the connect form
     Unload frmConnect
     Unload frmPasswd
@@ -345,9 +350,9 @@ Sub SetConnected()
     frmMain.Label8.Caption = UserName
     'Load main form
     frmMain.Visible = True
+    
 #If SeguridadAlkon Then
-    'Unprotect character creation and protect the main form
-    Call UnprotectForm
+    'Protect the main form
     Call ProtectForm(frmMain)
 #End If
 
@@ -807,8 +812,8 @@ Sub Main()
     'Obtener el HushMD5
     Dim fMD5HushYo As String * 32
     
-    fMD5HushYo = MD5.GetMD5File(App.path & "\" & App.EXEName & ".exe")
-    Call MD5.MD5Reset
+    fMD5HushYo = md5.GetMD5File(App.path & "\" & App.EXEName & ".exe")
+    Call md5.MD5Reset
     MD5HushYo = txtOffset(hexMd52Asc(fMD5HushYo), 55)
     
     Debug.Print fMD5HushYo
@@ -1026,7 +1031,7 @@ UserMap = 1
     Set outgoingData = Nothing
     
 #If SeguridadAlkon Then
-    Set MD5 = Nothing
+    Set md5 = Nothing
 #End If
     
     Call UnloadAllForms

@@ -1022,12 +1022,12 @@ Else
     End If
 End If
 
-puntos.Caption = SkillPoints
+Puntos.Caption = SkillPoints
 End Sub
 
 Private Sub Form_Load()
 SkillPoints = 10
-puntos.Caption = SkillPoints
+Puntos.Caption = SkillPoints
 Me.Picture = LoadPicture(App.path & "\graficos\CP-Interface.jpg")
 imgHogar.Picture = LoadPicture(App.path & "\graficos\CP-Ullathorpe.jpg")
 
@@ -1060,7 +1060,13 @@ Next i
 lstProfesion.listIndex = 1
 
 Image1.Picture = LoadPicture(App.path & "\graficos\" & lstProfesion.Text & ".jpg")
+
 Call TirarDados
+
+#If SeguridadAlkon Then
+    Call ProtectForm(Me)
+#End If
+
 End Sub
 
 Private Sub lstProfesion_Click()

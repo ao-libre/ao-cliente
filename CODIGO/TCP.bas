@@ -57,9 +57,9 @@ PuedoQuitarFoco = True
 End Function
 
 Sub Login()
-    If EstadoLogin = Normal Then
+    If EstadoLogin = E_MODO.Normal Then
         Call WriteLoginExistingChar
-    ElseIf EstadoLogin = CrearNuevoPj Then
+    ElseIf EstadoLogin = E_MODO.CrearNuevoPj Then
         Call WriteLoginNewChar
     End If
     

@@ -214,6 +214,7 @@ End If
 CheckDatos = True
 
 End Function
+
 Private Sub Command1_Click()
 
 If CheckDatos() Then
@@ -235,7 +236,7 @@ If CheckDatos() Then
     frmMain.Socket1.RemotePort = CurServerPort
 #End If
     
-    EstadoLogin = CrearNuevoPj
+    EstadoLogin = E_MODO.CrearNuevoPj
     
 #If UsarWrench = 1 Then
     If Not frmMain.Socket1.Connected Then
