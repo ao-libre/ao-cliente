@@ -49,7 +49,7 @@ Public outgoingData As New clsByteQueue
 Public MainTimer As New clsTimer
 
 #If SeguridadAlkon Then
-Public MD5 As New clsMD5
+Public md5 As New clsMD5
 #End If
 
 'Sonidos
@@ -98,7 +98,7 @@ Public ColoresPJ(0 To 50) As tColor
 
 
 Public Type tServerInfo
-    Ip As String
+    ip As String
     Puerto As Integer
     desc As String
     PassRecPort As Integer
@@ -413,8 +413,6 @@ Type tEstadisticasUsu
 End Type
 
 Public Nombres As Boolean
-
-Public MixedKey As Long
 
 'User status vars
 Global OtroInventario(1 To MAX_INVENTORY_SLOTS) As Inventory
