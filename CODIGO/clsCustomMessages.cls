@@ -201,13 +201,11 @@ Private Function MessageIsValid(ByRef msg As String) As Boolean
 'Checks if the given message is valid or not.
 '***************************************************
     Dim i As Long
-    Dim char As String * 1
+    Dim Char As String * 1
     Dim ascii As Byte
     
     'Get rid of spaces
     msg = Trim$(msg)
-    
-    msg = StrConv(msg, vbUnicode)
     
     'Empty messages are valid
     If LenB(msg) = 0 Then
@@ -216,21 +214,21 @@ Private Function MessageIsValid(ByRef msg As String) As Boolean
     End If
     
     For i = 1 To Len(msg)
-        char = mid$(msg, i, 1)
-        ascii = Asc(char)
+        Char = mid$(msg, i, 1)
+        ascii = Asc(Char)
         
         'check for invalid chars...
         If ascii < 31 Then Exit Function
         
-        If ascii > 126 And char <> "á" And char <> "Á" And char <> "ä" And char <> "Ä" _
-          And char <> "â" And char <> "Â" And char <> "à" And char <> "À" And char <> "é" _
-          And char <> "É" And char <> "ë" And char <> "Ë" And char <> "ê" And char <> "Ê" _
-          And char <> "è" And char <> "È" And char <> "í" And char <> "Í" And char <> "ï" _
-          And char <> "Ï" And char <> "î" And char <> "Î" And char <> "ì" And char <> "Ì" _
-          And char <> "ó" And char <> "Ó" And char <> "ö" And char <> "Ö" And char <> "ô" _
-          And char <> "Ô" And char <> "ò" And char <> "Ò" And char <> "ú" And char <> "Ú" _
-          And char <> "ü" And char <> "Ü" And char <> "û" And char <> "Û" And char <> "ù" _
-          And char <> "Ù" And char <> "ñ" And char <> "Ñ" Then
+        If ascii > 126 And Char <> "á" And Char <> "Á" And Char <> "ä" And Char <> "Ä" _
+          And Char <> "â" And Char <> "Â" And Char <> "à" And Char <> "À" And Char <> "é" _
+          And Char <> "É" And Char <> "ë" And Char <> "Ë" And Char <> "ê" And Char <> "Ê" _
+          And Char <> "è" And Char <> "È" And Char <> "í" And Char <> "Í" And Char <> "ï" _
+          And Char <> "Ï" And Char <> "î" And Char <> "Î" And Char <> "ì" And Char <> "Ì" _
+          And Char <> "ó" And Char <> "Ó" And Char <> "ö" And Char <> "Ö" And Char <> "ô" _
+          And Char <> "Ô" And Char <> "ò" And Char <> "Ò" And Char <> "ú" And Char <> "Ú" _
+          And Char <> "ü" And Char <> "Ü" And Char <> "û" And Char <> "Û" And Char <> "ù" _
+          And Char <> "Ù" And Char <> "ñ" And Char <> "Ñ" Then
             Exit Function
         End If
     Next i
