@@ -969,9 +969,9 @@ UserMap = 1
         End If
         
         'Limitamos los FPS a 18 (con el nuevo engine 60 es un número mucho mejor)
-        While (GetTickCount - lFrameTimer) \ 56 < FramesPerSecCounter
-            Sleep 5
-        Wend
+        'While (GetTickCount - lFrameTimer) \ 56 < FramesPerSecCounter
+        '    Sleep 5
+        'Wend
         
         'FPS Counter - mostramos las FPS
         If GetTickCount - lFrameTimer >= 1000 Then
