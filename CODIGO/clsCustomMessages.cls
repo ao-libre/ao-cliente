@@ -197,8 +197,12 @@ End Property
 Private Function MessageIsValid(ByRef msg As String) As Boolean
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 07/26/07
-'Checks if the given message is valid or not.
+'Last Modification: 08/07/07
+'Last Modified by: Rapsodius
+'
+'Erased line "msg=StrConv(msg,vbUnicode)", because
+'it was causing problems and detected as many messages
+'as wrong with nothing bad on them
 '***************************************************
     Dim i As Long
     Dim Char As String * 1
@@ -206,7 +210,7 @@ Private Function MessageIsValid(ByRef msg As String) As Boolean
     
     'Get rid of spaces
     msg = Trim$(msg)
-    
+        
     'Empty messages are valid
     If LenB(msg) = 0 Then
         MessageIsValid = True

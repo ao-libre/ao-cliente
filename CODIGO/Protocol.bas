@@ -2073,7 +2073,7 @@ On Error GoTo ErrHandler
             End If
             
             'Log2 of the bit flags sent by the server gives our numbers ^^
-            .priv = log(privs) / log(2)
+            .priv = Log(privs) / Log(2)
         Else
             .priv = 0
         End If
@@ -2344,10 +2344,11 @@ End Sub
 Private Sub HandlePlayWave()
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'
+'Last Modification: 08/08/07
+'Last Modified by: Rapsodius
+'Added support for 3D Sounds.
 '***************************************************
-    If incomingData.length < 2 Then
+    If incomingData.length < 6 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -2355,7 +2356,7 @@ Private Sub HandlePlayWave()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Call Audio.PlayWave(CStr(incomingData.ReadByte()) & ".wav")
+    Call Audio.PlayWave(CStr(incomingData.ReadByte()) & ".wav", incomingData.ReadInteger(), incomingData.ReadInteger())
 End Sub
 
 ''
@@ -2417,11 +2418,12 @@ Private Sub HandlePlayFireSound()
 'Last Modification: 05/17/06
 '
 '***************************************************
+    
     'Remove packet ID
     Call incomingData.ReadByte
     
     If FogataBufferIndex = 0 Then
-        FogataBufferIndex = Audio.PlayWave("fuego.wav", LoopStyle.Enabled)
+        FogataBufferIndex = Audio.PlayWave("fuego.wav", -8, -8, LoopStyle.Enabled)
     End If
 End Sub
 
@@ -2489,9 +2491,9 @@ Private Sub HandleRainToggle()
             Call Audio.StopWave(RainBufferIndex)
             RainBufferIndex = 0
             If bTecho Then
-                Call Audio.PlayWave("lluviainend.wav", LoopStyle.Disabled)
+                Call Audio.PlayWave("lluviainend.wav", -8, -8, LoopStyle.Disabled)
             Else
-                Call Audio.PlayWave("lluviaoutend.wav", LoopStyle.Disabled)
+                Call Audio.PlayWave("lluviaoutend.wav", -8, -8, LoopStyle.Disabled)
             End If
             frmMain.IsPlaying = PlayLoop.plNone
         End If

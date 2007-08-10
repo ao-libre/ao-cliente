@@ -29,6 +29,7 @@ Begin VB.Form frmMain
    ScaleHeight     =   575
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   794
+   StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
    Begin SocketWrenchCtrl.Socket Socket1 
       Left            =   6750
@@ -593,7 +594,7 @@ Begin VB.Form frmMain
       BorderStyle     =   1  'Fixed Single
       Height          =   510
       Left            =   9300
-      Picture         =   "frmMain.frx":120E
+      Picture         =   "frmMain.frx":120D
       Stretch         =   -1  'True
       Top             =   8100
       Visible         =   0   'False
@@ -603,7 +604,7 @@ Begin VB.Form frmMain
       BorderStyle     =   1  'Fixed Single
       Height          =   510
       Left            =   8790
-      Picture         =   "frmMain.frx":2480
+      Picture         =   "frmMain.frx":247F
       Stretch         =   -1  'True
       Top             =   8100
       Visible         =   0   'False
@@ -626,7 +627,7 @@ Begin VB.Form frmMain
       BorderStyle     =   1  'Fixed Single
       Height          =   510
       Left            =   8280
-      Picture         =   "frmMain.frx":3292
+      Picture         =   "frmMain.frx":3291
       Stretch         =   -1  'True
       Top             =   8100
       Width           =   510
@@ -792,49 +793,46 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
 #End If
     
     If (Not SendTxt.Visible) And (Not SendCMSTXT.Visible) And _
-       ((KeyCode >= 65 And KeyCode <= 90) Or _
-       (KeyCode >= 48 And KeyCode <= 57)) Then
+       LenB(CustomKeys.ReadableName(KeyCode)) > 0 Then
+       'Checks if the form has the focus and if the key is valid
         
         Select Case KeyCode
-            Case vbKeyM
+            Case CustomKeys.BindedKey(eKeyType.mKeyToggleMusic)
                 Audio.MusicActivated = Not Audio.MusicActivated
             
-            Case vbKeyA
+            Case CustomKeys.BindedKey(eKeyType.mKeyGetObject)
                 Call AgarrarItem
             
-            Case vbKeyC
+            Case CustomKeys.BindedKey(eKeyType.mKeyToggleCombatMode)
                 Call WriteCombatModeToggle
                 IScombate = Not IScombate
             
-            Case vbKeyE
+            Case CustomKeys.BindedKey(eKeyType.mKeyEquipObject)
                 Call EquiparItem
             
-            Case vbKeyN
+            Case CustomKeys.BindedKey(eKeyType.mKeyToggleNames)
                 Nombres = Not Nombres
             
-            Case vbKeyD
+            Case CustomKeys.BindedKey(eKeyType.mKeyTamAnimal)
                 Call WriteWork(eSkill.Domar)
             
-            Case vbKeyR
+            Case CustomKeys.BindedKey(eKeyType.mKeySteal)
                 Call WriteWork(eSkill.Robar)
-            
-            Case vbKeyS
-                AddtoRichTextBox frmMain.RecTxt, "Para activar o desactivar el seguro utiliza la tecla '*' (asterisco)", 255, 255, 255, False, False, False
-            
-            Case vbKeyO
+                        
+            Case CustomKeys.BindedKey(eKeyType.mKeyHide)
                 Call WriteWork(eSkill.Ocultarse)
             
-            Case vbKeyT
+            Case CustomKeys.BindedKey(eKeyType.mKeyDropObject)
                 Call TirarItem
             
-            Case vbKeyU
+            Case CustomKeys.BindedKey(eKeyType.mKeyUseObject)
                 If macrotrabajo.Enabled Then DesactivarMacroTrabajo
                     
                 If MainTimer.Check(TimersIndex.UseItemWithU) Then
                     Call UsarItem
                 End If
             
-            Case vbKeyL
+            Case CustomKeys.BindedKey(eKeyType.mKeyRequestRefresh)
                 If MainTimer.Check(TimersIndex.SendRPU) Then
                     Call WriteRequestPositionUpdate
                     Beep
@@ -849,25 +847,25 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
     End If
     
     Select Case KeyCode
-        Case vbKeyDelete
+        Case CustomKeys.BindedKey(eKeyType.mKeyTalkWithGuild)
             If SendTxt.Visible Then Exit Sub
             If Not frmCantidad.Visible Then
                 SendCMSTXT.Visible = True
                 SendCMSTXT.SetFocus
             End If
         
-        Case vbKeyF2
+        Case CustomKeys.BindedKey(eKeyType.mKeyTakeScreenShot)
             Call ScreenCapture
         
-        Case vbKeyF4
+        Case CustomKeys.BindedKey(eKeyType.mKeyToggleFPS)
             FPSFLAG = Not FPSFLAG
             If Not FPSFLAG Then _
                 frmMain.Caption = "Argentum Online" & " v " & App.Major & "." & App.Minor & "." & App.Revision
         
-        Case vbKeyF5
+        Case CustomKeys.BindedKey(eKeyType.mKeyShowOptions)
             Call frmOpciones.Show(vbModeless, frmMain)
         
-        Case vbKeyF6
+        Case CustomKeys.BindedKey(eKeyType.mKeyMeditate)
             If UserMinMAN = UserMaxMAN Then Exit Sub
             
             If Not PuedeMacrear Then
@@ -877,28 +875,28 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
                 PuedeMacrear = False
             End If
         
-        Case vbKeyF7
+        Case CustomKeys.BindedKey(eKeyType.mKeyCastSpellMacro)
             If TrainingMacro.Enabled Then
                 DesactivarMacroHechizos
             Else
                 ActivarMacroHechizos
             End If
         
-        Case vbKeyF8
+        Case CustomKeys.BindedKey(eKeyType.mKeyWorkMacro)
             If macrotrabajo.Enabled Then
                 DesactivarMacroTrabajo
             Else
                 ActivarMacroTrabajo
             End If
         
-        Case vbKeyMultiply
+        Case CustomKeys.BindedKey(eKeyType.mKeyToggleSafeMode)
             If frmMain.PicSeg.Visible Then
                 AddtoRichTextBox frmMain.RecTxt, "Escribe /SEG para quitar el seguro", 255, 255, 255, False, False, False
             Else
                 Call WriteSafeToggle
             End If
         
-        Case vbKeyControl
+        Case CustomKeys.BindedKey(eKeyType.mKeyAttack)
             If Shift <> 0 Then Exit Sub
             
             If Not MainTimer.Check(TimersIndex.Arrows, False) Then Exit Sub 'Check if arrows interval has finished.
@@ -912,7 +910,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
             If macrotrabajo.Enabled Then DesactivarMacroTrabajo
             Call WriteAttack
         
-        Case vbKeyReturn
+        Case CustomKeys.BindedKey(eKeyType.mKeyTalk)
             If SendCMSTXT.Visible Then Exit Sub
             If Not frmCantidad.Visible Then
                 SendTxt.Visible = True
@@ -1200,8 +1198,10 @@ Private Sub Form_Click()
                 Call AbrirMenuViewPort
             End If
         ElseIf (MouseShift And 1) = 1 Then
-            If MouseBoton = vbLeftButton Then
-                Call WriteWarpChar("YO", UserMap, tX, tY)
+            If Not CustomKeys.KeyAssigned(KeyCodeConstants.vbKeyShift) Then
+                If MouseBoton = vbLeftButton Then
+                    Call WriteWarpChar("YO", UserMap, tX, tY)
+                End If
             End If
         End If
     End If

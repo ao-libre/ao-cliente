@@ -3,7 +3,7 @@ Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmOpciones 
    BackColor       =   &H00000000&
    BorderStyle     =   3  'Fixed Dialog
-   ClientHeight    =   4245
+   ClientHeight    =   4755
    ClientLeft      =   45
    ClientTop       =   45
    ClientWidth     =   4740
@@ -21,10 +21,18 @@ Begin VB.Form frmOpciones
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   4245
+   ScaleHeight     =   4755
    ScaleWidth      =   4740
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
+   Begin VB.CommandButton cmdCustomKeys 
+      Caption         =   "Configurar Teclas"
+      Height          =   375
+      Left            =   960
+      TabIndex        =   14
+      Top             =   3120
+      Width           =   2775
+   End
    Begin VB.CommandButton customMsgCmd 
       Caption         =   "Mensajes Personalizados"
       Height          =   375
@@ -38,7 +46,7 @@ Begin VB.Form frmOpciones
       Height          =   375
       Left            =   960
       TabIndex        =   12
-      Top             =   3240
+      Top             =   3720
       Width           =   2775
    End
    Begin VB.Frame Frame2 
@@ -160,7 +168,7 @@ Begin VB.Form frmOpciones
       MouseIcon       =   "frmOpciones.frx":0152
       MousePointer    =   99  'Custom
       TabIndex        =   0
-      Top             =   3720
+      Top             =   4200
       Width           =   2790
    End
    Begin VB.Label Label1 
@@ -252,6 +260,10 @@ Private Sub Check1_Click(index As Integer)
                 Slider1(1).value = Audio.SoundVolume
             End If
     End Select
+End Sub
+
+Private Sub cmdCustomKeys_Click()
+    Call frmCustomKeys.Show(vbModal, frmMain)
 End Sub
 
 Private Sub cmdManual_Click()

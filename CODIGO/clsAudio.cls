@@ -63,10 +63,14 @@ Private Const NumSoundBuffers As Byte = 30
 '
 ' @param    FileName    The name of the file loaded in this buffer
 ' @param    looping     Set to true if the sound will loop until stopped
+' @param    X           The X position of the sound in map coordinates
+' @param    Y           The Y position of the sound in map coordinates
 ' @param    Buffer      The DirectSoundBuffer object to wich the file is loaded
 Private Type SoundBuffer
     FileName As String
     looping As Boolean
+    X As Integer
+    Y As Integer
     Buffer As DirectSoundBuffer
 End Type
 
@@ -137,6 +141,26 @@ Dim mActivated As Boolean
 ''
 'States wether sound is currently activated or not
 Dim sActivated As Boolean
+
+'%%%%FAKE 3D SOUND CONSTANTS%%%%
+
+''
+'This indicates that the sound is not 3D
+'You can set this to anything you like
+'If you change the constant by a positive number, you can do
+'interesting effects like setting a ratio of 2D sounds around the user
+Private Const NO_3D_SOUND As Integer = (-8)
+
+''
+'Sound Reduction Offset Per Tile
+'NOTE: Leave Constant type as it is to prevent overflows
+Private Const PER_TILE_REDUCTION As Long = 175
+
+''
+'Panning Offset Per Tile
+Private Const PER_TILE_PANNING As Integer = 100
+
+'%%%%FAKE 3D SOUND CONSTANTS%%%%
 
 ''
 'Constructor. Performs no action at all.
@@ -273,16 +297,18 @@ End Function
 ' Plays a new WAVE file.
 '
 ' @param    FileName    The path to the file to be loaded. Must be a relative path from the default path set at initialization.
+' @param    X           The X position of the sound source, in map coordinates.
+' @param    Y           The Y position of the sound source, in map coordinates.
 ' @param    LoopSound   The loop state for the sound.
 '
 ' @return   The buffer index in which the sound is playing, or 0 in case of error.
 
-Public Function PlayWave(ByVal FileName As String, Optional ByVal LoopSound As LoopStyle = LoopStyle.Default) As Long
+Public Function PlayWave(ByVal FileName As String, Optional ByVal X As Integer = NO_3D_SOUND, Optional ByVal Y As Integer = NO_3D_SOUND, Optional ByVal LoopSound As LoopStyle = LoopStyle.Default) As Long
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 10/04/06
-'Loads a new wave to memory (if it isn't already loaded) and starts playing it
-'Returns the index in which the sound is playing
+'Last Modification: 08/08/07
+'Last Modified by: Rapsodius
+'New! Added Fake 3D Sound feature (using panning and volume)
 '***************************************************
 On Error GoTo ErrHandler
     Dim bufferIndex As Long
@@ -293,22 +319,197 @@ On Error GoTo ErrHandler
     bufferIndex = LoadWave(FileName, LoopSound)
     If bufferIndex = 0 Then Exit Function   'If an error ocurred abort
     
-    With DSBuffers(bufferIndex)
-        If .looping Then
-            .Buffer.Play DSBPLAY_LOOPING
-        Else
-            .Buffer.Play DSBPLAY_DEFAULT
-        End If
+    If X = NO_3D_SOUND Then
+        With DSBuffers(bufferIndex)
+            If .looping Then
+                .Buffer.Play DSBPLAY_LOOPING
+            Else
+                .Buffer.Play DSBPLAY_DEFAULT
+            End If
+            
+            'Apply volume
+            Call .Buffer.SetVolume(SndVolume)
+        End With
         
-        'Apply volume
-        Call .Buffer.SetVolume(SndVolume)
-    End With
-    
-    PlayWave = bufferIndex
+        PlayWave = bufferIndex
+    Else
+        If Y > NO_3D_SOUND Then
+            Dim tmpX As Integer, tmpY As Integer
+            Dim calcVol As Long, calcPanX As Long
+            Dim calcPan As Integer
+            
+            DSBuffers(bufferIndex).X = X
+            DSBuffers(bufferIndex).Y = Y
+            
+            tmpX = UserPos.X - X
+            tmpY = UserPos.Y - Y
+            
+            If Abs(tmpX) <= 8 Then
+                If Abs(tmpY) <= 6 Then
+            
+                    With DSBuffers(bufferIndex)
+                        If .looping Then
+                            .Buffer.Play DSBPLAY_LOOPING
+                        Else
+                            .Buffer.Play DSBPLAY_DEFAULT
+                        End If
+                        
+                        calcVol = ((((Abs(tmpX) + Abs(tmpY)) * DSBVOLUME_MIN) + (14 - (Abs(tmpX) + Abs(tmpY)) * SndVolume)) \ 14 - ((Abs(tmpX) + Abs(tmpY)) * PER_TILE_REDUCTION))
+                        
+                        If calcVol < DSBVOLUME_MIN Then
+                            calcVol = DSBVOLUME_MIN
+                        End If
+                        If calcVol > SndVolume Then
+                            calcVol = SndVolume
+                        End If
+                            
+                        If tmpX = 0 Then
+                            calcPanX = DSBPAN_CENTER 'Avoid unnecesary calculation
+                            GoTo AvoidCalcs:
+                        End If
+                        
+                        calcPanX = ((((Abs(tmpX) * DSBPAN_RIGHT) + (8 - Abs(tmpX)) * DSBPAN_CENTER) \ 8) - (Abs(tmpX) * PER_TILE_PANNING))
+                        
+                        If tmpX >= 0 Then
+                            calcPanX = -calcPanX
+                        End If
+AvoidCalcs:
+                        calcPan = calcPanX \ 2
+                        If calcPan < DSBPAN_LEFT Then
+                            calcPan = DSBPAN_LEFT
+                        End If
+                        If calcPan > DSBPAN_RIGHT Then
+                            calcPan = DSBPAN_RIGHT
+                        End If
+                        .Buffer.SetVolume calcVol
+                        .Buffer.SetPan calcPan
+                    End With
+                    
+                    PlayWave = bufferIndex
+                End If
+            End If
+        End If
+    End If
 Exit Function
 
 ErrHandler:
 End Function
+
+''
+'Recalculates fake 3D effect for a specific sound or to all
+'
+' @param    bufferIndex Indicates which sound buffer is to be refreshed
+' @param    RefreshAll  Whether to refresh all sounds or only one, if set to true, ignores the bufferIndex parameter
+
+Public Sub RefreshWave(ByVal bufferIndex As Byte, Optional ByVal RefreshAll As Boolean = False)
+'**************************************************************
+' RefreshWave - Recalcs panning and volume for a specific or to
+' all sounds
+'
+' Creation Date: 08-09-07
+' Created and Implemented by Rapsodius
+'**************************************************************
+On Error Resume Next
+
+If bufferIndex <= 0 Or bufferIndex > NumSoundBuffers Then Exit Sub
+
+Dim tmpX As Integer, tmpY As Integer
+Dim calcVol As Long, calcPanX As Long
+Dim calcPan As Integer
+
+Dim i As Integer
+
+If RefreshAll Then
+    For i = 1 To NumSoundBuffers
+        With DSBuffers(i)
+            If .X > NO_3D_SOUND Then
+                If .Y > NO_3D_SOUND Then
+                    tmpX = UserPos.X - .X
+                    tmpY = UserPos.Y - .Y
+                    
+                    If Abs(tmpX) <= 8 Then
+                        If Abs(tmpY) <= 6 Then
+                            calcVol = ((((Abs(tmpX) + Abs(tmpY)) * DSBVOLUME_MIN) + (14 - (Abs(tmpX) + Abs(tmpY)) * SndVolume)) \ 14 - ((Abs(tmpX) + Abs(tmpY)) * PER_TILE_REDUCTION))
+                            
+                            If calcVol < DSBVOLUME_MIN Then
+                                calcVol = DSBVOLUME_MIN
+                            End If
+                            If calcVol > SndVolume Then
+                                calcVol = SndVolume
+                            End If
+                                
+                            If tmpX = 0 Then
+                                calcPanX = DSBPAN_CENTER 'Avoid unnecesary calculation
+                                GoTo SkipCalcsLoop:
+                            End If
+                            
+                            calcPanX = ((((Abs(tmpX) * DSBPAN_RIGHT) + (8 - Abs(tmpX)) * DSBPAN_CENTER) \ 8) - (Abs(tmpX) * PER_TILE_PANNING))
+                            
+                            If tmpX >= 0 Then
+                                calcPanX = -calcPanX
+                            End If
+SkipCalcsLoop:
+                            calcPan = calcPanX \ 2
+                            If calcPan < DSBPAN_LEFT Then
+                                calcPan = DSBPAN_LEFT
+                            End If
+                            If calcPan > DSBPAN_RIGHT Then
+                                calcPan = DSBPAN_RIGHT
+                            End If
+                            .Buffer.SetVolume calcVol
+                            .Buffer.SetPan calcPan
+                        End If
+                    End If
+                End If
+            End If
+        End With
+    Next i
+Else
+    With DSBuffers(bufferIndex)
+        If .X > NO_3D_SOUND Then
+            If .Y > NO_3D_SOUND Then
+                tmpX = UserPos.X - .X
+                tmpY = UserPos.Y - .Y
+                
+                If Abs(tmpX) <= 8 Then
+                    If Abs(tmpY) <= 6 Then
+                        calcVol = ((((Abs(tmpX) + Abs(tmpY)) * DSBVOLUME_MIN) + (14 - (Abs(tmpX) + Abs(tmpY)) * SndVolume)) \ 14 - ((Abs(tmpX) + Abs(tmpY)) * PER_TILE_REDUCTION))
+                        
+                        If calcVol < DSBVOLUME_MIN Then
+                            calcVol = DSBVOLUME_MIN
+                        End If
+                        If calcVol > SndVolume Then
+                            calcVol = SndVolume
+                        End If
+                            
+                        If tmpX = 0 Then
+                            calcPanX = DSBPAN_CENTER 'Avoid unnecesary calculation
+                            GoTo SkipCalcs:
+                        End If
+                        
+                        calcPanX = ((((Abs(tmpX) * DSBPAN_RIGHT) + (8 - Abs(tmpX)) * DSBPAN_CENTER) \ 8) - (Abs(tmpX) * PER_TILE_PANNING))
+                        
+                        If tmpX >= 0 Then
+                            calcPanX = -calcPanX
+                        End If
+SkipCalcs:
+                        calcPan = calcPanX \ 2
+                        If calcPan < DSBPAN_LEFT Then
+                            calcPan = DSBPAN_LEFT
+                        End If
+                        If calcPan > DSBPAN_RIGHT Then
+                            calcPan = DSBPAN_RIGHT
+                        End If
+                        .Buffer.SetVolume calcVol
+                        .Buffer.SetPan calcPan
+                    End If
+                End If
+            End If
+        End If
+    End With
+End If
+
+End Sub
 
 ''
 ' Loads a new WAVE file.
