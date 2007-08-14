@@ -1246,15 +1246,15 @@ Option Explicit
 
 Private Sub Command1_Click(index As Integer)
 
-Call Audio.PlayWave(SND_CLICK)
+Call Audio.PlayWave(SND_CLICK, Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone)
 
 Dim indice
 If (index And &H1) = 0 Then
     If Alocados > 0 Then
         indice = index \ 2 + 1
         If indice > NUMSKILLS Then indice = NUMSKILLS
-        If Val(text1(indice).Caption) < MAXSKILLPOINTS Then
-            text1(indice).Caption = Val(text1(indice).Caption) + 1
+        If Val(Text1(indice).Caption) < MAXSKILLPOINTS Then
+            Text1(indice).Caption = Val(Text1(indice).Caption) + 1
             flags(indice) = flags(indice) + 1
             Alocados = Alocados - 1
         End If
@@ -1264,15 +1264,15 @@ Else
     If Alocados < SkillPoints Then
         
         indice = index \ 2 + 1
-        If Val(text1(indice).Caption) > 0 And flags(indice) > 0 Then
-            text1(indice).Caption = Val(text1(indice).Caption) - 1
+        If Val(Text1(indice).Caption) > 0 And flags(indice) > 0 Then
+            Text1(indice).Caption = Val(Text1(indice).Caption) - 1
             flags(indice) = flags(indice) - 1
             Alocados = Alocados + 1
         End If
     End If
 End If
 
-puntos.Caption = "Puntos:" & Alocados
+Puntos.Caption = "Puntos:" & Alocados
 End Sub
 
 Private Sub Form_Load()
@@ -1299,9 +1299,9 @@ ReDim flags(1 To NUMSKILLS)
 'Cargamos el jpg correspondiente
 For i = 0 To NUMSKILLS * 2 - 1
     If (i And &H1) = 0 Then
-        command1(i).Picture = LoadPicture(App.path & "\Graficos\BotónMás.jpg")
+        Command1(i).Picture = LoadPicture(App.path & "\Graficos\BotónMás.jpg")
     Else
-        command1(i).Picture = LoadPicture(App.path & "\Graficos\BotónMenos.jpg")
+        Command1(i).Picture = LoadPicture(App.path & "\Graficos\BotónMenos.jpg")
     End If
 Next
 
@@ -1313,9 +1313,9 @@ Private Sub Image1_Click()
     Dim i As Long
 
     For i = 1 To NUMSKILLS
-        skillChanges(i) = CByte(text1(i).Caption) - UserSkills(i)
+        skillChanges(i) = CByte(Text1(i).Caption) - UserSkills(i)
         'Actualizamos nuestros datos locales
-        UserSkills(i) = Val(text1(i).Caption)
+        UserSkills(i) = Val(Text1(i).Caption)
     Next i
     
     Call WriteModifySkills(skillChanges())

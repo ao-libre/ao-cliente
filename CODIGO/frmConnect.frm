@@ -344,7 +344,7 @@ IPdelServidor = IPTxt
 PuertoDelServidor = PortTxt
 
 
-Call Audio.PlayWave(SND_CLICK)
+Call Audio.PlayWave(SND_CLICK, Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone)
 
 Select Case index
     Case 0
@@ -386,7 +386,7 @@ End Sub
 Private Sub imgGetPass_Click()
 On Error GoTo errH
 
-    Call Audio.PlayWave(SND_CLICK)
+    Call Audio.PlayWave(SND_CLICK, Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone)
     Call Shell(App.path & "\RECUPERAR.EXE", vbNormalFocus)
     Exit Sub
 errH:
@@ -394,7 +394,7 @@ errH:
 End Sub
 
 Private Sub imgServArgentina_Click()
-    Call Audio.PlayWave(SND_CLICK)
+    Call Audio.PlayWave(SND_CLICK, Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone)
     IPTxt.Text = IPdelServidor
     PortTxt.Text = PuertoDelServidor
 End Sub

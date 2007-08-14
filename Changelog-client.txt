@@ -105,3 +105,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
 - 0.12.1
 
  * 12/08/2007: Si el usuario esta paralizado no se puede mover. (Tavo)
+ * 14/08/2007: Nueva formula para calcular Panning y volumen, clase clsAudio totalmente modularizada, agregado enum eSoundPos (clsAudio) y Function CalcSoundSrc (General). Rapsodius

@@ -2344,19 +2344,31 @@ End Sub
 Private Sub HandlePlayWave()
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 08/08/07
+'Last Modification: 08/14/07
 'Last Modified by: Rapsodius
 'Added support for 3D Sounds.
 '***************************************************
-    If incomingData.length < 6 Then
+    If incomingData.length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
     'Remove packet ID
     Call incomingData.ReadByte
+        
+    Dim calcX As Byte
+    Dim calcY As Byte
+    Dim wave As Byte
+    Dim tmpX As Byte
+    Dim tmpY As Byte
     
-    Call Audio.PlayWave(CStr(incomingData.ReadByte()) & ".wav", incomingData.ReadInteger(), incomingData.ReadInteger())
+    wave = incomingData.ReadByte()
+    tmpX = incomingData.ReadByte()
+    tmpY = incomingData.ReadByte()
+    calcX = Abs(UserPos.x - tmpX)
+    calcY = Abs(UserPos.y - tmpY)
+    
+    Call Audio.PlayWave(CStr(wave) & ".wav", calcX, calcY, Mod_General.CalcSoundSrc(tmpX, tmpY))
 End Sub
 
 ''
@@ -2423,7 +2435,7 @@ Private Sub HandlePlayFireSound()
     Call incomingData.ReadByte
     
     If FogataBufferIndex = 0 Then
-        FogataBufferIndex = Audio.PlayWave("fuego.wav", -8, -8, LoopStyle.Enabled)
+        FogataBufferIndex = Audio.PlayWave("fuego.wav", Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone, LoopStyle.Enabled)
     End If
 End Sub
 
@@ -2491,9 +2503,9 @@ Private Sub HandleRainToggle()
             Call Audio.StopWave(RainBufferIndex)
             RainBufferIndex = 0
             If bTecho Then
-                Call Audio.PlayWave("lluviainend.wav", -8, -8, LoopStyle.Disabled)
+                Call Audio.PlayWave("lluviainend.wav", Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone, LoopStyle.Disabled)
             Else
-                Call Audio.PlayWave("lluviaoutend.wav", -8, -8, LoopStyle.Disabled)
+                Call Audio.PlayWave("lluviaoutend.wav", Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone, LoopStyle.Disabled)
             End If
             frmMain.IsPlaying = PlayLoop.plNone
         End If
@@ -7846,7 +7858,7 @@ End Sub
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal nick As String, ByVal reason As String)
+Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal Nick As String, ByVal reason As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7866,7 +7878,7 @@ Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal nick As S
                 Call .WriteByte(Ip(i))
             Next i
         Else
-            Call .WriteASCIIString(nick)
+            Call .WriteASCIIString(Nick)
         End If
         
         Call .WriteASCIIString(reason)

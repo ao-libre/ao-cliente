@@ -66,6 +66,58 @@ Public Function RandomNumber(ByVal LowerBound As Long, ByVal UpperBound As Long)
     RandomNumber = (UpperBound - LowerBound) * Rnd + LowerBound
 End Function
 
+''
+'Calculates relative sound source, from the character
+'
+'@param X Relative X coordinates from sound source
+'@param Y Relative Y coordinates from sound source
+'@return Relative direction of the sound
+
+Public Function CalcSoundSrc(ByVal x As Byte, ByVal y As Byte) As eSoundPos
+'**************************************************************
+' CalcSoundSrc - Parses X and Y positions and returns the
+' relative sound source direction to the user
+'
+' Creation Date: 08-13-07
+' Created and Implemented by Rapsodius
+'**************************************************************
+
+    Dim nX As Integer
+    Dim nY As Integer
+    nX = UserPos.x - x
+    nY = UserPos.y - y
+
+    Select Case nX
+        Case Is < 0
+            Select Case nY
+                Case Is < 0
+                    CalcSoundSrc = eSoundPos.spLeftDown
+                Case Is > 0
+                    CalcSoundSrc = eSoundPos.spLeftUp
+                Case Else
+                    CalcSoundSrc = eSoundPos.spLeft
+            End Select
+        Case Is > 0
+            Select Case nY
+                Case Is < 0
+                    CalcSoundSrc = eSoundPos.spRightDown
+                Case Is > 0
+                    CalcSoundSrc = eSoundPos.spRightUp
+                Case Else
+                    CalcSoundSrc = eSoundPos.spRight
+            End Select
+        Case Else
+            Select Case nY
+                Case Is < 0
+                    CalcSoundSrc = eSoundPos.spDown
+                Case Is > 0
+                    CalcSoundSrc = eSoundPos.spUp
+                Case Else
+                    CalcSoundSrc = eSoundPos.spNone
+            End Select
+    End Select
+End Function
+
 Sub CargarAnimArmas()
 On Error Resume Next
 

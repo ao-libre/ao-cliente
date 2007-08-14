@@ -11,6 +11,38 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = True
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
+'Argentum Online 0.11.6
+'
+'Copyright (C) 2002 Márquez Pablo Ignacio
+'Copyright (C) 2002 Otto Perez
+'Copyright (C) 2002 Aaron Perkins
+'Copyright (C) 2002 Matías Fernando Pequeño
+'
+'This program is free software; you can redistribute it and/or modify
+'it under the terms of the Affero General Public License;
+'either version 1 of the License, or any later version.
+'
+'This program is distributed in the hope that it will be useful,
+'but WITHOUT ANY WARRANTY; without even the implied warranty of
+'MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+'Affero General Public License for more details.
+'
+'You should have received a copy of the Affero General Public License
+'along with this program; if not, you can find it at http://www.affero.org/oagpl.html
+'
+'Argentum Online is based on Baronsoft's VB6 Online RPG
+'You can contact the original creator of ORE at aaron@baronsoft.com
+'for more information about ORE please visit http://www.baronsoft.com/
+'
+'
+'You can contact me at:
+'morgolock@speedy.com.ar
+'www.geocities.com/gmorgolock
+'Calle 3 número 983 piso 7 dto A
+'La Plata - Pcia, Buenos Aires - Republica Argentina
+'Código Postal 1900
+'Pablo Ignacio Márquez
+
 '**************************************************************
 ' clsCustomKeys.cls - Allows the User to Customize Keys.
 '
@@ -124,6 +156,7 @@ Public Function ReadableName(ByVal KeyCode As Integer) As String
 ' by final users.
 '
 ' Creation Date: 08-04-07
+' Last Modification: 08-14-07 by Rapsodius
 ' Created and Implemented by Rapsodius
 '**************************************************************
 
@@ -217,9 +250,6 @@ Public Function ReadableName(ByVal KeyCode As Integer) As String
         Case KeyCodeConstants.vbKeyInsert
             ReadableName = "Insertar"
             Exit Function
-        Case 192
-            ReadableName = "Tilde" 'This is the key below the "Esc" key
-            Exit Function
         Case KeyCodeConstants.vbKeyNumlock
             ReadableName = "Blq Num"
             Exit Function
@@ -237,36 +267,6 @@ Public Function ReadableName(ByVal KeyCode As Integer) As String
             Exit Function
         Case KeyCodeConstants.vbKeyDelete
             ReadableName = "Suprimir"
-            Exit Function
-        Case 186
-            ReadableName = ";"
-            Exit Function
-        Case 187
-            ReadableName = "="
-            Exit Function
-        Case 188
-            ReadableName = ","
-            Exit Function
-        Case 189
-            ReadableName = "-"
-            Exit Function
-        Case 190
-            ReadableName = "."
-            Exit Function
-        Case 191
-            ReadableName = "/"
-            Exit Function
-        Case 219
-            ReadableName = "["
-            Exit Function
-        Case 220
-            ReadableName = "\"
-            Exit Function
-        Case 221
-            ReadableName = "]"
-            Exit Function
-        Case 222
-            ReadableName = "'"
             Exit Function
         Case Else
             'In all other cases, key is considered not valid.
@@ -361,6 +361,7 @@ Public Property Let BindedKey(ByVal index As eKeyType, ByVal NewVal As Integer)
 ' BindedKey - Sets the binded key associated with the index
 '
 ' Creation Date: 08-05-07
+' Last Modification: 08-14-07 by Rapsodius
 ' Created and Implemented by Rapsodius
 '**************************************************************
 
@@ -368,6 +369,10 @@ If index < 1 Or index > NUM_CUSTOM_KEYS Then Exit Property
 
 If LenB(ReadableName(NewVal)) = 0 Then 'If key is not valid...
     Exit Property                      'Rejects the new assignment
+End If
+
+If KeyAssigned(NewVal) Then 'Also reject it in case key is already assigned
+    Exit Property
 End If
 
 mappedKeys(index) = NewVal

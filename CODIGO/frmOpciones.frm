@@ -235,7 +235,7 @@ Private loading As Boolean
 
 Private Sub Check1_Click(index As Integer)
     If Not loading Then _
-        Call Audio.PlayWave(SND_CLICK)
+        Call Audio.PlayWave(SND_CLICK, Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone)
     
     Select Case index
         Case 0

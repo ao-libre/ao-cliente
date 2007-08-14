@@ -1,7 +1,7 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.ocx"
-Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
 Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "msinet.ocx"
+Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.OCX"
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.ocx"
 Begin VB.Form frmMain 
    BackColor       =   &H00000000&
@@ -575,7 +575,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1244,7 +1243,7 @@ Private Sub hlst_KeyUp(KeyCode As Integer, Shift As Integer)
 End Sub
 
 Private Sub Image1_Click(index As Integer)
-    Call Audio.PlayWave(SND_CLICK)
+    Call Audio.PlayWave(SND_CLICK, Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone)
 
     Select Case index
         Case 0
@@ -1297,7 +1296,7 @@ Private Sub Label1_Click()
 End Sub
 
 Private Sub Label4_Click()
-    Call Audio.PlayWave(SND_CLICK)
+    Call Audio.PlayWave(SND_CLICK, Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone)
 
     InvEqu.Picture = LoadPicture(App.path & "\Graficos\Centronuevoinventario.jpg")
 
@@ -1317,7 +1316,7 @@ Private Sub Label4_Click()
 End Sub
 
 Private Sub Label7_Click()
-    Call Audio.PlayWave(SND_CLICK)
+    Call Audio.PlayWave(SND_CLICK, Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone)
 
     InvEqu.Picture = LoadPicture(App.path & "\Graficos\Centronuevohechizos.jpg")
     '%%%%%%OCULTAMOS EL INV&&&&&&&&&&&&
@@ -1347,7 +1346,7 @@ Private Sub picInv_DblClick()
 End Sub
 
 Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
-    Call Audio.PlayWave(SND_CLICK)
+    Call Audio.PlayWave(SND_CLICK, Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone)
 End Sub
 
 Private Sub RecTxt_Change()

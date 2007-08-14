@@ -527,6 +527,47 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 
+'Argentum Online 0.11.6
+'
+'Copyright (C) 2002 Márquez Pablo Ignacio
+'Copyright (C) 2002 Otto Perez
+'Copyright (C) 2002 Aaron Perkins
+'Copyright (C) 2002 Matías Fernando Pequeño
+'
+'This program is free software; you can redistribute it and/or modify
+'it under the terms of the Affero General Public License;
+'either version 1 of the License, or any later version.
+'
+'This program is distributed in the hope that it will be useful,
+'but WITHOUT ANY WARRANTY; without even the implied warranty of
+'MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+'Affero General Public License for more details.
+'
+'You should have received a copy of the Affero General Public License
+'along with this program; if not, you can find it at http://www.affero.org/oagpl.html
+'
+'Argentum Online is based on Baronsoft's VB6 Online RPG
+'You can contact the original creator of ORE at aaron@baronsoft.com
+'for more information about ORE please visit http://www.baronsoft.com/
+'
+'
+'You can contact me at:
+'morgolock@speedy.com.ar
+'www.geocities.com/gmorgolock
+'Calle 3 número 983 piso 7 dto A
+'La Plata - Pcia, Buenos Aires - Republica Argentina
+'Código Postal 1900
+'Pablo Ignacio Márquez
+
+''
+'frmCustomKeys - Allows the user to customize keys.
+'Implements class clsCustomKeys
+'
+'@author Rapsodius
+'@date 20070805
+'@version 1.0.0
+'@see clsCustomKeys
+
 Option Explicit
 
 Private Sub Command1_Click()
@@ -567,18 +608,15 @@ If LenB(CustomKeys.ReadableName(KeyCode)) = 0 Then Exit Sub
 Text1(index).Text = CustomKeys.ReadableName(KeyCode)
 Text1(index).SelStart = Len(Text1(index).Text)
 
-Dim i As Long
+If CustomKeys.KeyAssigned(KeyCode) Then
+    Text1(index).Text = "" 'If the key is already assigned, simply reject it
+    Call Beep 'Alert the user
+    KeyCode = 0
+    Exit Sub
+End If
 
-For i = 1 To CustomKeys.Count
-    If i <> index Then
-        If CustomKeys.BindedKey(i) = KeyCode Then
-            Text1(index).Text = "" 'If the key is already assigned, simply reject it
-            Call Beep 'Alert the user
-            KeyCode = 0
-            Exit Sub
-        End If
-    End If
-Next i
+'NOTE: Altough class clsCustomKeys automatically checks if key is not valid
+'and if it's already assigned, I want to manually implement this checks
 
 CustomKeys.BindedKey(index) = KeyCode
 
