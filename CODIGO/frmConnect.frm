@@ -243,24 +243,9 @@ End If
 End Sub
 
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
-If KeyCode = 27 Then
-        frmCargando.Show
-        frmCargando.Refresh
-        AddtoRichTextBox frmCargando.status, "Cerrando Argentum Online.", 0, 0, 0, 1, 0, 1
-        
-        Call SaveGameini
-        frmConnect.MousePointer = 1
-        frmMain.MousePointer = 1
+    If KeyCode = 27 Then
         prgRun = False
-        
-        AddtoRichTextBox frmCargando.status, "Liberando recursos..."
-        frmCargando.Refresh
-        LiberarObjetosDX
-        AddtoRichTextBox frmCargando.status, "Hecho", 0, 0, 0, 1, 0, 1
-        AddtoRichTextBox frmCargando.status, "¡¡Gracias por jugar Argentum Online!!", 0, 0, 0, 1, 0, 1
-        frmCargando.Refresh
-        Call UnloadAllForms
-End If
+    End If
 End Sub
 
 Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)

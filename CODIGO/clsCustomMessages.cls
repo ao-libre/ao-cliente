@@ -64,7 +64,7 @@ Private CustomMessages(MESSAGE_COUNT - 1) As String
 
 Private Sub Class_Initialize()
 '***************************************************
-'Autor: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 07/26/07
 'Initializes the messages by loading them from the config file
 '***************************************************
@@ -98,7 +98,7 @@ End Sub
 
 Private Sub Class_Terminate()
 '***************************************************
-'Autor: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 07/26/07
 'Stores all messages back into config file for later use.
 '***************************************************
@@ -139,7 +139,7 @@ End Sub
 
 Public Property Get Message(ByVal index As Integer) As String
 '***************************************************
-'Autor: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 07/26/07
 'Retrieves the requested message.
 '***************************************************
@@ -158,7 +158,7 @@ End Property
 
 Public Property Let Message(ByVal index As Integer, ByVal nValue As String)
 '***************************************************
-'Autor: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 07/26/07
 'Sets the given message index with the requested message.
 '***************************************************
@@ -181,7 +181,7 @@ End Property
 
 Public Property Get InvalidMessageErrCode() As Long
 '***************************************************
-'Autor: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 07/26/07
 'Retrieves the INVALID_MESSAGE error code.
 '***************************************************
@@ -196,7 +196,7 @@ End Property
 
 Private Function MessageIsValid(ByRef msg As String) As Boolean
 '***************************************************
-'Autor: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 08/07/07
 'Last Modified by: Rapsodius
 '

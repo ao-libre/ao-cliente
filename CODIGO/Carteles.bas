@@ -88,12 +88,12 @@ If Not Cartel Then Exit Sub
 Dim x As Integer, y As Integer
 x = XPosCartel + 20
 y = YPosCartel + 60
-Call DDrawTransGrhIndextoSurface(BackBufferSurface, textura, XPosCartel, YPosCartel, 0, 0)
+Call DDrawTransGrhIndextoSurface(textura, XPosCartel, YPosCartel, 0)
 Dim j As Integer, desp As Integer
 
 For j = 0 To UBound(LeyendaFormateada)
-    DrawText x, y + desp, LeyendaFormateada(j), vbWhite, frmMain.font
-    desp = desp + (frmMain.font.size) + 5
+    RenderText x, y + desp, LeyendaFormateada(j), vbWhite, frmMain.font
+    desp = desp + (frmMain.font.Size) + 5
 Next
 End Sub
 

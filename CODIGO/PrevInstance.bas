@@ -50,7 +50,7 @@ Private mutexHID As Long
 
 Private Function CreateNamedMutex(ByRef mutexName As String) As Boolean
 '***************************************************
-'Autor: Fredy Horacio Treboux (liquid)
+'Author: Fredy Horacio Treboux (liquid)
 'Last Modification: 01/04/07
 'Last Modified by: Juan Martín Sotuyo Dodero (Maraxus) - Changed Security Atributes to make it work in all OS
 '***************************************************
@@ -72,7 +72,7 @@ End Function
 
 Public Function FindPreviousInstance() As Boolean
 '***************************************************
-'Autor: Fredy Horacio Treboux (liquid)
+'Author: Fredy Horacio Treboux (liquid)
 'Last Modification: 01/04/07
 '
 '***************************************************
@@ -89,9 +89,9 @@ End Function
 ''
 ' Closes the client, allowing other instances to be open.
 
-Public Sub CloseClient()
+Public Sub ReleaseInstance()
 '***************************************************
-'Autor: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 01/04/07
 '
 '***************************************************

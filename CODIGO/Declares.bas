@@ -39,7 +39,7 @@ Public Dialogos As New clsDialogs
 Public Audio As New clsAudio
 Public Inventario As New clsGrapchicalInventory
 Public SurfaceDB As clsSurfaceManager   'No va new porque es una interfaz, el new se pone al decidir que clase de objeto es
-Public CustomKeys As clsCustomKeys
+Public CustomKeys As New clsCustomKeys
 Public CustomMessages As New clsCustomMessages
 
 Public incomingData As New clsByteQueue
@@ -99,7 +99,7 @@ Public ColoresPJ(0 To 50) As tColor
 
 
 Public Type tServerInfo
-    ip As String
+    Ip As String
     Puerto As Integer
     desc As String
     PassRecPort As Integer
@@ -431,6 +431,10 @@ Public UserMaxMAN As Integer
 Public UserMinMAN As Integer
 Public UserMaxSTA As Integer
 Public UserMinSTA As Integer
+Public UserMaxAGU As Byte
+Public UserMinAGU As Byte
+Public UserMaxHAM As Byte
+Public UserMinHAM As Byte
 Public UserGLD As Long
 Public UserLvl As Integer
 Public UserPort As Integer

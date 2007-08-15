@@ -66,7 +66,7 @@ End Sub
 
 Public Sub ParseUserCommand(ByVal RawCommand As String)
 '***************************************************
-'Autor: Alejandro Santos (AlejoLp)
+'Author: Alejandro Santos (AlejoLp)
 'Last Modification: 12/20/06
 'Interpreta, valida y ejecuta el comando ingresado
 '***************************************************
@@ -378,8 +378,8 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             Case "/PASSWD"
                 If notNullArguments Then
 #If SeguridadAlkon Then
-                    Call WriteChangePassword(MD5.GetMD5String(ArgumentosRaw))
-                    Call MD5.MD5Reset
+                    Call WriteChangePassword(md5.GetMD5String(ArgumentosRaw))
+                    Call md5.MD5Reset
 #Else
                     Call WriteChangePassword(ArgumentosRaw)
 #End If

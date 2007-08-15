@@ -1,7 +1,7 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.ocx"
 Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "msinet.ocx"
-Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.OCX"
+Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.ocx"
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.ocx"
 Begin VB.Form frmMain 
    BackColor       =   &H00000000&
@@ -702,8 +702,8 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Public tX As Integer
-Public tY As Integer
+Public tX As Byte
+Public tY As Byte
 Public MouseX As Long
 Public MouseY As Long
 Public MouseBoton As Long
@@ -941,7 +941,7 @@ Private Sub macrotrabajo_Timer()
     End If
     
     'Macros are disabled if not using Argentum!
-    If Not Api.IsAppActive() Then
+    If Not Application.IsAppActive() Then
         DesactivarMacroTrabajo
         Exit Sub
     End If
@@ -1083,7 +1083,7 @@ Private Sub TrainingMacro_Timer()
     End If
     
     'Macros are disabled if focus is not on Argentum!
-    If Not Api.IsAppActive() Then
+    If Not Application.IsAppActive() Then
         DesactivarMacroHechizos
         Exit Sub
     End If
@@ -1095,7 +1095,7 @@ Private Sub TrainingMacro_Timer()
         Call WriteWork(eSkill.Magia)
     End If
     
-    Call ConvertCPtoTP(MainViewShp.Left, MainViewShp.Top, MouseX, MouseY, tX, tY)
+    Call ConvertCPtoTP(MouseX, MouseY, tX, tY)
     
     If UsingSkill = Magia And Not MainTimer.Check(TimersIndex.CastSpell) Then Exit Sub
     
@@ -1142,7 +1142,7 @@ Private Sub Form_Click()
 #End If
 
     If Not Comerciando Then
-        Call ConvertCPtoTP(MainViewShp.Left, MainViewShp.Top, MouseX, MouseY, tX, tY)
+        Call ConvertCPtoTP(MouseX, MouseY, tX, tY)
 
         If MouseShift = 0 Then
             If MouseBoton <> vbRightButton Then
@@ -1228,16 +1228,18 @@ Private Sub Form_Load()
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
-    MouseX = x
-    MouseY = y
+    MouseX = x - MainViewShp.Left
+    MouseY = y - MainViewShp.Top
 End Sub
 
 Private Sub hlst_KeyDown(KeyCode As Integer, Shift As Integer)
        KeyCode = 0
 End Sub
+
 Private Sub hlst_KeyPress(KeyAscii As Integer)
        KeyAscii = 0
 End Sub
+
 Private Sub hlst_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
 End Sub
@@ -1351,7 +1353,7 @@ End Sub
 
 Private Sub RecTxt_Change()
 On Error Resume Next  'el .SetFocus causaba errores al salir y volver a entrar
-    If Not Api.IsAppActive() Then Exit Sub
+    If Not Application.IsAppActive() Then Exit Sub
     
     If SendTxt.Visible Then
         SendTxt.SetFocus
@@ -1611,8 +1613,8 @@ Private Sub AbrirMenuViewPort()
 
 If tX >= MinXBorder And tY >= MinYBorder And _
     tY <= MaxYBorder And tX <= MaxXBorder Then
-    If MapData(tX, tY).charIndex > 0 Then
-        If charlist(MapData(tX, tY).charIndex).invisible = False Then
+    If MapData(tX, tY).CharIndex > 0 Then
+        If charlist(MapData(tX, tY).CharIndex).invisible = False Then
         
             Dim i As Long
             Dim m As New frmMenuseFashion
@@ -1622,8 +1624,8 @@ If tX >= MinXBorder And tY >= MinYBorder And _
             m.SetMenuId 1
             m.ListaInit 2, False
             
-            If charlist(MapData(tX, tY).charIndex).Nombre <> "" Then
-                m.ListaSetItem 0, charlist(MapData(tX, tY).charIndex).Nombre, True
+            If charlist(MapData(tX, tY).CharIndex).Nombre <> "" Then
+                m.ListaSetItem 0, charlist(MapData(tX, tY).CharIndex).Nombre, True
             Else
                 m.ListaSetItem 0, "<NPC>", True
             End If

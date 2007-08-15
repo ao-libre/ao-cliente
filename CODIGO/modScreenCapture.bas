@@ -223,6 +223,12 @@ Private Const SECTION_MAP_WRITE = &H2
 
 Private Const INVALID_HANDLE As Long = -1
 
+'bltbit constant
+Private Const SRCCOPY = &HCC0020 ' (DWORD) dest = source
+
+'Good old bitblt
+Private Declare Function BitBlt Lib "gdi32" (ByVal hDestDC As Long, ByVal x As Long, ByVal y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, ByVal xSrc As Long, ByVal ySrc As Long, ByVal dwRop As Long) As Long
+
 Public Function LoadJPG( _
       ByRef cDib As cDIBSection, _
       ByVal sFile As String _
@@ -546,15 +552,15 @@ On Error GoTo Err:
     frmScreenshots.Picture1.Width = 11900
     frmScreenshots.Picture1.Height = 8650
     
-    BitBlt frmScreenshots.Picture1.hdc, 0, 0, 794, 580, hdcc, 0, 0, SRCCOPY
+    Call BitBlt(frmScreenshots.Picture1.hdc, 0, 0, 794, 580, hdcc, 0, 0, SRCCOPY)
     
     Call ReleaseDC(frmMain.hWnd, hdcc)
     
     hdcc = INVALID_HANDLE
     
-    If Not FileExist(App.Path & "\Screenshots", vbDirectory) Then MkDir (App.Path & "\Screenshots")
+    If Not FileExist(App.path & "\Screenshots", vbDirectory) Then MkDir (App.path & "\Screenshots")
     
-    file = App.Path & "\Screenshots\" & Format(Now, "DD-MM-YYYY hh-mm-ss") & ".jpg"
+    file = App.path & "\Screenshots\" & Format(Now, "DD-MM-YYYY hh-mm-ss") & ".jpg"
     
     frmScreenshots.Picture1.Refresh
     frmScreenshots.Picture1.Picture = frmScreenshots.Picture1.Image

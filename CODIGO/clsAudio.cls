@@ -246,7 +246,7 @@ End Sub
 
 Public Function Initialize(ByRef dX As DirectX7, ByVal hWnd As Long, ByVal sound_path As String, ByVal music_path As String) As Boolean
 '***************************************************
-'Autor: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 16/03/04
 'Creates all DS and DM objects
 '***************************************************
@@ -261,7 +261,7 @@ On Error GoTo ErrHandler
     'Initialize DirectSound
     Set DirectSound = dX.DirectSoundCreate("")
     
-    Call DirectSound.SetCooperativeLevel(DisplayFormhWnd, DSSCL_PRIORITY)
+    Call DirectSound.SetCooperativeLevel(hWnd, DSSCL_PRIORITY)
     
     'Set sound path
     SoundPath = sound_path
@@ -302,7 +302,7 @@ End Function
 
 Private Function InitializedirectMusic(ByRef dX As DirectX7, ByVal hWnd As Long) As Boolean
 '***************************************************
-'Autor: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 16/03/04
 'Initialize DM. Returns false if music isn't supported by HW
 '***************************************************
@@ -334,7 +334,7 @@ End Function
 
 Public Function PlayWave(ByVal FileName As String, ByVal x As Byte, ByVal y As Byte, ByVal SoundSrc As eSoundPos, Optional ByVal LoopSound As LoopStyle = LoopStyle.Default) As Long
 '***************************************************
-'Autor: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 08/14/07
 'Last Modified by: Rapsodius
 'New! Added Fake 3D Sound feature (using panning and volume)
@@ -595,7 +595,7 @@ End Sub
 
 Private Function LoadWave(ByVal FileName As String, ByVal looping As LoopStyle) As Long
 '***************************************************
-'Autor: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 10/04/06
 'Loads a new wave into memory (if it's not already loaded) and returns
 'the buffer index
@@ -689,7 +689,7 @@ End Function
 
 Public Sub StopWave(Optional ByVal bufferIndex As Long = 0)
 '***************************************************
-'Autor: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 16/03/04
 'Stops the sound in the given buffer index, or every sound if
 'index is 0
@@ -717,7 +717,7 @@ End Sub
 
 Public Property Get PlayingSound() As Boolean
 '***************************************************
-'Autor: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 16/03/04
 'Returns true if there is at least one sound playing
 '***************************************************
@@ -738,7 +738,7 @@ End Property
 
 Public Property Let SoundVolume(ByVal Volume As Byte)
 '***************************************************
-'Autor: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 16/03/04
 'Sets the sound's volume as a percentage
 '***************************************************
@@ -765,7 +765,7 @@ End Property
 
 Public Property Get SoundVolume() As Byte
 '***************************************************
-'Autor: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 16/03/04
 'Sets the music's volume as a percentage
 '***************************************************
@@ -892,7 +892,7 @@ End Property
 
 Public Property Let MusicVolume(ByVal Volume As Long)
 '***************************************************
-'Autor: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 16/03/04
 'Sets the music's volume as a percentage
 '***************************************************

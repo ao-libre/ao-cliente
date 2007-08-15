@@ -263,7 +263,7 @@ Public Sub RefreshAllChars()
     
     For loopc = 1 To LastChar
         If charlist(loopc).Active = 1 Then
-            MapData(charlist(loopc).Pos.x, charlist(loopc).Pos.y).charIndex = loopc
+            MapData(charlist(loopc).Pos.x, charlist(loopc).Pos.y).CharIndex = loopc
         End If
     Next loopc
 End Sub
@@ -473,7 +473,7 @@ Sub CheckKeys()
 '*****************************************************************
 On Error Resume Next
     'No input allowed while Argentum is not the active window
-    If Not Api.IsAppActive() Then Exit Sub
+    If Not Application.IsAppActive() Then Exit Sub
     
     'Don't allow any these keys during movement..
     If UserMoving = 0 Then
@@ -646,8 +646,8 @@ Sub SwitchMap(ByVal Map As Integer)
             End If
             
             'Erase NPCs
-            If MapData(x, y).charIndex > 0 Then
-                Call EraseChar(MapData(x, y).charIndex)
+            If MapData(x, y).CharIndex > 0 Then
+                Call EraseChar(MapData(x, y).CharIndex)
             End If
             
             'Erase OBJs
@@ -772,7 +772,6 @@ errorH:
     Call MsgBox("Error cargando los servidores, actualicelos de la web", vbCritical + vbOKOnly, "Argentum Online")
     
     Call CloseClient
-    End
 End Sub
 
 Public Sub InitServersList(ByVal Lst As String)
@@ -848,8 +847,6 @@ Sub Main()
         Set SurfaceDB = New clsSurfaceManDyn
     End If
     
-    Set CustomKeys = New clsCustomKeys
-    
     'Read command line. Do it AFTER config file is loaded to prevent this from
     'canceling the effects of "/nores" option.
     Call LeerLineaComandos
@@ -904,24 +901,28 @@ Sub Main()
     
     AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
     
-    IniciarObjetosDirectX
+    AddtoRichTextBox frmCargando.status, "Iniciando motor gráfico...", 0, 0, 0, 0, 0, 1
     
-    AddtoRichTextBox frmCargando.status, "Cargando Sonidos....", 0, 0, 0, 0, 0, 1
+    If Not InitTileEngine(frmMain.hWnd, 160, 7, 32, 32, 13, 17, 9, 8, 8, 0.03) Then
+        Call CloseClient
+    End If
+    
     AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
-
-Dim loopc As Integer
-
-LastTime = GetTickCount
-
-    Call InitTileEngine(frmMain.hWnd, 160, 7, 32, 32, 13, 17, 9)
+    
+    
+    Call AddtoRichTextBox(frmCargando.status, "Configurando resoluci{on....")
+    
+    Call Resolution.SetResolution
+    
+    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
+    
     
     Call AddtoRichTextBox(frmCargando.status, "Creando animaciones extra....")
     
-    Call CargarAnimsExtra
     Call CargarTips
-
+    
 UserMap = 1
-
+    
     Call CargarArrayLluvia
     Call CargarAnimArmas
     Call CargarAnimEscudos
@@ -932,7 +933,7 @@ UserMap = 1
     CualMI = 0
     Call InitMI
 #End If
-
+    
     AddtoRichTextBox frmCargando.status, "                    ¡Bienvenido a Argentum Online!", , , , 1
     
     Unload frmCargando
@@ -960,18 +961,6 @@ UserMap = 1
 #End If
 
     frmConnect.Visible = True
-
-'TODO : Esto va en Engine Initialization
-    MainViewRect.Left = MainViewLeft
-    MainViewRect.Top = MainViewTop
-    MainViewRect.Right = MainViewRect.Left + MainViewWidth
-    MainViewRect.Bottom = MainViewRect.Top + MainViewHeight
-    
-'TODO : Esto va en Engine Initialization
-    MainDestRect.Left = TilePixelWidth * TileBufferSize - TilePixelWidth
-    MainDestRect.Top = TilePixelHeight * TileBufferSize - TilePixelHeight
-    MainDestRect.Right = MainDestRect.Left + MainViewWidth
-    MainDestRect.Bottom = MainDestRect.Top + MainViewHeight
     
     'Inicialización de variables globales
     PrimeraVez = True
@@ -1012,32 +1001,18 @@ UserMap = 1
     Do While prgRun
         'Sólo dibujamos si la ventana no está minimizada
         If frmMain.WindowState <> 1 And frmMain.Visible Then
-            Call ShowNextFrame
+            Call ShowNextFrame(frmMain.Top, frmMain.Left, frmMain.MouseX, frmMain.MouseY)
             
             'Play ambient sounds
             Call RenderSounds
         End If
         
-'TODO : Porque el pausado de 20 ms???
-        If GetTickCount - LastTime > 20 Then
-            If Not pausa And frmMain.Visible And Not frmForo.Visible And Not frmComerciar.Visible And Not frmComerciarUsu.Visible And Not frmBancoObj.Visible Then
-                CheckKeys
-                LastTime = GetTickCount
-            End If
-        End If
-        
-        'Limitamos los FPS a 18 (con el nuevo engine 60 es un número mucho mejor)
-        'While (GetTickCount - lFrameTimer) \ 56 < FramesPerSecCounter
-        '    Sleep 5
-        'Wend
+        Call CheckKeys
         
         'FPS Counter - mostramos las FPS
         If GetTickCount - lFrameTimer >= 1000 Then
-            FramesPerSec = FramesPerSecCounter
+            If FPSFLAG Then frmMain.Caption = Mod_TileEngine.FPS
             
-            If FPSFLAG Then frmMain.Caption = FramesPerSec
-            
-            FramesPerSecCounter = 0
             lFrameTimer = GetTickCount
         End If
 
@@ -1052,54 +1027,7 @@ UserMap = 1
         DoEvents
     Loop
     
-    ' Allow new instances of the client to be opened
-    Call PrevInstance.CloseClient
-    
-    ' Unload the form for screenshots
-    Unload frmScreenshots
-    
-    EngineRun = False
-    frmCargando.Show
-    AddtoRichTextBox frmCargando.status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
-    LiberarObjetosDX
-
-'TODO : Esto debería ir en otro lado como al cambair a esta res
-    If Not bNoResChange Then
-        Dim typDevM As typDevMODE
-        Dim lRes As Long
-        
-        lRes = EnumDisplaySettings(0, 0, typDevM)
-        With typDevM
-            .dmFields = DM_PELSWIDTH Or DM_PELSHEIGHT
-            .dmPelsWidth = oldResWidth
-            .dmPelsHeight = oldResHeight
-        End With
-        lRes = ChangeDisplaySettings(typDevM, CDS_TEST)
-    End If
-
-    'Destruimos los objetos públicos creados
-    Set CustomMessages = Nothing
-    Set CustomKeys = Nothing
-    Set SurfaceDB = Nothing
-    Set Dialogos = Nothing
-    Set DialogosClanes = Nothing
-    Set Audio = Nothing
-    Set Inventario = Nothing
-    Set MainTimer = Nothing
-    Set incomingData = Nothing
-    Set outgoingData = Nothing
-    
-#If SeguridadAlkon Then
-    Set md5 = Nothing
-#End If
-    
-    Call UnloadAllForms
-    
-    'Actualizar tip
-    Config_Inicio.tip = tipf
-    Call EscribirGameIni(Config_Inicio)
-    
-    End
+    Call CloseClient
 End Sub
 
 Sub WriteVar(ByVal file As String, ByVal Main As String, ByVal Var As String, ByVal value As String)
@@ -1296,4 +1224,47 @@ Public Sub CleanDialogs()
     Call DialogosClanes.RemoveDialogs
     
     Call Dialogos.RemoveAllDialogs
+End Sub
+
+Public Sub CloseClient()
+'**************************************************************
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Last Modify Date: 8/14/2007
+'Frees all used resources, cleans up and leaves
+'**************************************************************
+    ' Allow new instances of the client to be opened
+    Call PrevInstance.ReleaseInstance
+    
+    EngineRun = False
+    frmCargando.Show
+    AddtoRichTextBox frmCargando.status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
+    
+    Call Resolution.ResetResolution
+    
+    'Stop tile engine
+    Call DeinitTileEngine
+    
+    'Destruimos los objetos públicos creados
+    Set CustomMessages = Nothing
+    Set CustomKeys = Nothing
+    Set SurfaceDB = Nothing
+    Set Dialogos = Nothing
+    Set DialogosClanes = Nothing
+    Set Audio = Nothing
+    Set Inventario = Nothing
+    Set MainTimer = Nothing
+    Set incomingData = Nothing
+    Set outgoingData = Nothing
+    
+#If SeguridadAlkon Then
+    Set md5 = Nothing
+#End If
+    
+    Call UnloadAllForms
+    
+    'Actualizar tip
+    Config_Inicio.tip = tipf
+    Call EscribirGameIni(Config_Inicio)
+    
+    End
 End Sub

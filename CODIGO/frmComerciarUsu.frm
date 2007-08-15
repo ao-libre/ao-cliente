@@ -354,7 +354,7 @@ DR.Top = 0
 DR.Right = 32
 DR.Bottom = 32
 
-Call DrawGrhtoHdc(Picture1.hWnd, Picture1.hdc, Grh, SR, DR)
+Call DrawGrhtoHdc(Picture1.hDC, Grh, SR, DR)
 
 End Sub
 

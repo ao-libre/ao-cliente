@@ -73,7 +73,7 @@ Private Type dialog
     x           As Integer
     y           As Integer
     startTime   As Long
-    charIndex   As Integer
+    CharIndex   As Integer
     color       As Long
     renderable  As Boolean
 End Type
@@ -105,7 +105,7 @@ Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" (ByRef desti
 
 Private Sub Class_Initialize()
 '***************************************************
-'Autor: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 07/28/07
 'Initializes the dialog instance
 '***************************************************
@@ -117,13 +117,13 @@ End Sub
 
 Private Sub Class_Terminate()
 '***************************************************
-'Autor: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 07/28/07
 'Clean up
 '***************************************************
 End Sub
 
-Private Function BinarySearch(ByVal charIndex As Integer) As Integer
+Private Function BinarySearch(ByVal CharIndex As Integer) As Integer
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
 'Last Modify Date: 07/28/07
@@ -140,9 +140,9 @@ Private Function BinarySearch(ByVal charIndex As Integer) As Integer
     Do While min <= max
         mid = (min + max) \ 2
         
-        If dialogs(mid).charIndex < charIndex Then
+        If dialogs(mid).CharIndex < CharIndex Then
             min = mid + 1
-        ElseIf dialogs(mid).charIndex > charIndex Then
+        ElseIf dialogs(mid).CharIndex > CharIndex Then
             max = mid - 1
         Else
             'We found it
@@ -167,7 +167,7 @@ End Function
 ' @remarks  If there are no more free slots, and the char didn't have a previous dialog,
 '           the chat is ignored.
 
-Public Sub CreateDialog(ByRef chat As String, ByVal charIndex As Integer, ByVal color As Long)
+Public Sub CreateDialog(ByRef chat As String, ByVal CharIndex As Integer, ByVal color As Long)
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
 'Last Modify Date: 07/28/07
@@ -176,7 +176,7 @@ Public Sub CreateDialog(ByRef chat As String, ByVal charIndex As Integer, ByVal 
     Dim slot As Integer
     Dim i As Long
     
-    slot = BinarySearch(charIndex)
+    slot = BinarySearch(CharIndex)
     
     If slot < 0 Then
         If dialogCount = MAX_DIALOGS Then Exit Sub  'Out of space! Should never happen....
@@ -192,7 +192,7 @@ Public Sub CreateDialog(ByRef chat As String, ByVal charIndex As Integer, ByVal 
     End If
     
     With dialogs(slot)
-        .charIndex = charIndex
+        .CharIndex = CharIndex
         .color = color
         .renderable = False
         .startTime = GetTickCount
@@ -284,7 +284,7 @@ End Function
 ' @param    y           The Y coord where to start rendering.
 ' @param    charIndex   The character whose dialog's position is being updated.
 
-Public Sub UpdateDialogPos(ByVal x As Integer, ByVal y As Integer, ByVal charIndex As Integer)
+Public Sub UpdateDialogPos(ByVal x As Integer, ByVal y As Integer, ByVal CharIndex As Integer)
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
 'Last Modify Date: 07/28/07
@@ -292,7 +292,7 @@ Public Sub UpdateDialogPos(ByVal x As Integer, ByVal y As Integer, ByVal charInd
 '**************************************************************
     Dim slot As Integer
     
-    slot = BinarySearch(charIndex)
+    slot = BinarySearch(CharIndex)
     
     If slot >= 0 Then
         With dialogs(slot)
@@ -322,16 +322,16 @@ Public Sub Render()
         'Crappy VB will cache the limit of the For loop, so even if it changed, it won't matter
         With dialogs(i - removedDialogs)
             If .startTime + DIALOG_LIFE < GetTickCount Then
-                Call RemoveDialog(.charIndex)
+                Call RemoveDialog(.CharIndex)
                 
                 removedDialogs = removedDialogs + 1
             ElseIf .renderable Then
-                offset = -(usedFont.size + 2) * UBound(.textLine())
+                offset = -(usedFont.Size + 2) * UBound(.textLine())
                 
                 'Render it
                 For j = 0 To UBound(.textLine())
-                    Call DrawText(.x, .y + offset, .textLine(j), .color, usedFont)
-                    offset = offset + usedFont.size + 5
+                    Call RenderText(.x, .y + offset, .textLine(j), .color, usedFont)
+                    offset = offset + usedFont.Size + 5
                 Next j
                 
                 'Won't render it unless it's updated in next frmae
@@ -346,7 +346,7 @@ End Sub
 '
 ' @param    charIndex   The character whose dialog will be removed.
 
-Public Sub RemoveDialog(ByVal charIndex As Integer)
+Public Sub RemoveDialog(ByVal CharIndex As Integer)
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
 'Last Modify Date: 07/28/07
@@ -355,7 +355,7 @@ Public Sub RemoveDialog(ByVal charIndex As Integer)
     Dim slot As Integer
     Dim i As Long
     
-    slot = BinarySearch(charIndex)
+    slot = BinarySearch(CharIndex)
     
     If slot < 0 Then Exit Sub
     
