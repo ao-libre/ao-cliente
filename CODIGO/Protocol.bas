@@ -1486,8 +1486,9 @@ End Sub
 Private Sub HandleUpdateGold()
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'
+'Last Modification: 08/14/07
+'Last Modified By: Lucas Tavolaro Ortiz (Tavo)
+'- 08/14/07: Added GldLbl color variation depending on User Gold and Level
 '***************************************************
     'Check packet is complete
     If incomingData.length < 5 Then
@@ -1500,6 +1501,15 @@ Private Sub HandleUpdateGold()
     
     'Get data and update form
     UserGLD = incomingData.ReadLong()
+    
+    If UserGLD >= UserLvl * 10000 Then
+        'Changes color
+        frmMain.GldLbl.ForeColor = &HFF& 'Red
+    Else
+        'Changes color
+        frmMain.GldLbl.ForeColor = &HFFFF& 'Yellow
+    End If
+    
     frmMain.GldLbl.Caption = UserGLD
 End Sub
 
@@ -7858,7 +7868,7 @@ End Sub
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal Nick As String, ByVal reason As String)
+Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal nick As String, ByVal reason As String)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7878,7 +7888,7 @@ Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal Nick As S
                 Call .WriteByte(Ip(i))
             Next i
         Else
-            Call .WriteASCIIString(Nick)
+            Call .WriteASCIIString(nick)
         End If
         
         Call .WriteASCIIString(reason)
