@@ -50,7 +50,7 @@ Private Const MAX_DIALOGS As Byte = 100
 
 ''
 ' Maximum length of any dialog line without having to split it.
-Private Const MAX_LENGTH As Byte = 15
+Private Const MAX_LENGTH As Byte = 18
 
 ''
 ' The number of milliseconds the dialog should be rendered.
