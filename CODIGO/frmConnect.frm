@@ -185,33 +185,6 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private Sub Command1_Click()
-CurServer = 0
-IPdelServidor = IPTxt
-PuertoDelServidor = PortTxt
-End Sub
-
-
-Private Sub Command2_Click()
-
-frmMain.Inet1.url = "http://ao.alkon.com.ar/admin/iplist2.txt"
-RawServersList = frmMain.Inet1.OpenURL
-
-
-If RawServersList = "" Then
-    ServersRecibidos = False
-    Call MsgBox("No se pudo cargar la lista de servidores")
-    ReDim ServersLst(1)
-    Exit Sub
-Else
-    ServersRecibidos = True
-End If
-
-Call InitServersList(RawServersList)
-
-
-End Sub
-
 Private Sub downloadServer_Click()
 '***********************************
 'IMPORTANTE!

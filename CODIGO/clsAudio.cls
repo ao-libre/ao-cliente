@@ -335,12 +335,18 @@ End Function
 Public Function PlayWave(ByVal FileName As String, ByVal x As Byte, ByVal y As Byte, ByVal SoundSrc As eSoundPos, Optional ByVal LoopSound As LoopStyle = LoopStyle.Default) As Long
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 08/14/07
+'Last Modification: 08/16/07
 'Last Modified by: Rapsodius
-'New! Added Fake 3D Sound feature (using panning and volume)
+'Changed the panning calculation formula, now
+'uses the Y coordinate.
 '***************************************************
 On Error GoTo ErrHandler
     Dim bufferIndex As Long
+    Dim tmpX As Integer
+    Dim tmpY As Integer
+    Dim calcVol As Long
+    Dim calcPanX As Long
+    Dim calcPan As Integer
     
     If Not SoundActivated Then Exit Function
     
@@ -363,12 +369,6 @@ On Error GoTo ErrHandler
         PlayWave = bufferIndex
     Else
         If y <> NO_3D_SOUND Then
-            Dim tmpX As Integer
-            Dim tmpY As Integer
-            Dim calcVol As Long
-            Dim calcPanX As Long
-            Dim calcPan As Integer
-            
             DSBuffers(bufferIndex).x = x
             DSBuffers(bufferIndex).y = y
              
@@ -388,11 +388,11 @@ On Error GoTo ErrHandler
                 Case eSoundPos.spLeftDown
                     tmpX = -tmpX
             End Select
-            
+                        
             If Abs(tmpX) <= 8 Then
                 If Abs(tmpY) <= 6 Then
-            
                     With DSBuffers(bufferIndex)
+                        .SoundSrc = SoundSrc
                         If .looping Then
                             .Buffer.Play DSBPLAY_LOOPING
                         Else
@@ -407,19 +407,15 @@ On Error GoTo ErrHandler
                         If calcVol > SndVolume Then
                             calcVol = SndVolume
                         End If
-                            
-                        If tmpX = 0 Then
-                            calcPanX = DSBPAN_CENTER 'Avoid unnecesary calculation
-                            GoTo AvoidCalcs:
-                        End If
-                        
+                                                    
                         calcPanX = ((((Abs(tmpX) * DSBPAN_RIGHT) + (8 - Abs(tmpX)) * DSBPAN_CENTER) \ 8) - (Abs(tmpX) * PER_TILE_PANNING))
                         
                         If tmpX >= 0 Then
                             calcPanX = -calcPanX
                         End If
-AvoidCalcs:
-                        calcPan = calcPanX \ (((2 * tmpY) + (6 * (6 - tmpY))) \ 6)
+                        
+                        'NOTE: 6* ..... \6 is not an unnecessary calculation!
+                        calcPan = calcPanX \ (((2 * Abs(tmpY)) + (6 * (6 - Abs(tmpY)))) \ 6)
                         If calcPan < DSBPAN_LEFT Then
                             calcPan = DSBPAN_LEFT
                         End If
@@ -452,9 +448,8 @@ Public Sub RefreshWave(ByVal bufferIndex As Byte, ByVal RefreshAll As Boolean)
 ' all sounds
 '
 ' Creation Date: 08/09/07
-' Last Modification Date: 08/14/07
-' New volume calculation formula, bufferIndex out of range
-' is checked only if RefreshAll is False
+' Last Modification Date: 08/16/07
+' Implemented SoundSrc member of the "SoundBuffer" structure
 '**************************************************************
 On Error Resume Next
     Dim tmpX As Integer
@@ -468,8 +463,8 @@ On Error Resume Next
     If RefreshAll Then
         For i = 1 To NumSoundBuffers
             With DSBuffers(i)
-                If .x > NO_3D_SOUND Then
-                    If .y > NO_3D_SOUND Then
+                If .x <> NO_3D_SOUND Then
+                    If .y <> NO_3D_SOUND Then
                         tmpX = .x
                         tmpY = .y
                          
@@ -497,19 +492,15 @@ On Error Resume Next
                                 If calcVol > SndVolume Then
                                     calcVol = SndVolume
                                 End If
-                                    
-                                If tmpX = 0 Then
-                                    calcPanX = DSBPAN_CENTER 'Avoid unnecesary calculation
-                                    GoTo SkipCalcsLoop:
-                                End If
-                                
+                                                                    
                                 calcPanX = ((((Abs(tmpX) * DSBPAN_RIGHT) + (8 - Abs(tmpX)) * DSBPAN_CENTER) \ 8) - (Abs(tmpX) * PER_TILE_PANNING))
                                 
                                 If tmpX >= 0 Then
                                     calcPanX = -calcPanX
                                 End If
-SkipCalcsLoop:
-                                calcPan = calcPanX \ (((2 * tmpY) + (6 * (6 - tmpY))) \ 6)
+                                
+                                'NOTE: 6* ..... \6 is not an unnecessary calculation!
+                                calcPan = calcPanX \ (((2 * Abs(tmpY)) + (6 * (6 - Abs(tmpY)))) \ 6)
                                 If calcPan < DSBPAN_LEFT Then
                                     calcPan = DSBPAN_LEFT
                                 End If
@@ -527,8 +518,8 @@ SkipCalcsLoop:
     Else
         If bufferIndex <= 0 Or bufferIndex > NumSoundBuffers Then Exit Sub
         With DSBuffers(bufferIndex)
-            If .x > NO_3D_SOUND Then
-                If .y > NO_3D_SOUND Then
+            If .x <> NO_3D_SOUND Then
+                If .y <> NO_3D_SOUND Then
                     tmpX = .x
                     tmpY = .y
                      
@@ -556,19 +547,15 @@ SkipCalcsLoop:
                             If calcVol > SndVolume Then
                                 calcVol = SndVolume
                             End If
-                                
-                            If tmpX = 0 Then
-                                calcPanX = DSBPAN_CENTER 'Avoid unnecesary calculation
-                                GoTo SkipCalcs:
-                            End If
-                            
+                                                            
                             calcPanX = ((((Abs(tmpX) * DSBPAN_RIGHT) + (8 - Abs(tmpX)) * DSBPAN_CENTER) \ 8) - (Abs(tmpX) * PER_TILE_PANNING))
                             
                             If tmpX >= 0 Then
                                 calcPanX = -calcPanX
                             End If
-SkipCalcs:
-                            calcPan = calcPanX \ (((2 * tmpY) + (6 * (6 - tmpY))) \ 6)
+                            
+                            'NOTE: 6* ..... \6 is not an unnecessary calculation!
+                            calcPan = calcPanX \ (((2 * Abs(tmpY)) + (6 * (6 - Abs(tmpY)))) \ 6)
                             If calcPan < DSBPAN_LEFT Then
                                 calcPan = DSBPAN_LEFT
                             End If
@@ -1029,8 +1016,6 @@ Public Property Let SoundActivated(ByVal nValue As Boolean)
 'Last Modification: 03/03/07
 'Sets wether the sound is activated or not
 '***************************************************
-    Dim i As Long
-    
     If sActivated = nValue Then Exit Property
     
     sActivated = nValue

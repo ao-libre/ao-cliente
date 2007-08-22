@@ -186,10 +186,6 @@ Private Sub cmdOk_Click()
     Unload Me
 End Sub
 
-Private Sub Command1_Click()
-    Unload Me
-End Sub
-
 'A partir de Command2_Click son todos buttons para agregar color al texto
 Private Sub cmdAzul_Click()
     txtMotd.Text = txtMotd & "~50~70~250~" & CStr(chkBold.value) & "~" & CStr(chkItalic.value)

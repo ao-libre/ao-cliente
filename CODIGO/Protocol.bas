@@ -2349,7 +2349,7 @@ End Sub
 
 Private Sub HandlePlayWave()
 '***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 08/14/07
 'Last Modified by: Rapsodius
 'Added support for 3D Sounds.
@@ -7866,7 +7866,7 @@ End Sub
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal nick As String, ByVal reason As String)
+Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal Nick As String, ByVal reason As String)
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7886,7 +7886,7 @@ Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal nick As S
                 Call .WriteByte(Ip(i))
             Next i
         Else
-            Call .WriteASCIIString(nick)
+            Call .WriteASCIIString(Nick)
         End If
         
         Call .WriteASCIIString(reason)

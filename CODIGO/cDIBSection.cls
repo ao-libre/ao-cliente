@@ -70,10 +70,7 @@ Private Declare Function SelectObject Lib "gdi32" (ByVal hdc As Long, ByVal hObj
 Private Declare Function DeleteObject Lib "gdi32" (ByVal hObject As Long) As Long
 Private Declare Function DeleteDC Lib "gdi32" (ByVal hdc As Long) As Long
 Private Declare Function ReleaseDC Lib "user32" (ByVal hWnd As Long, ByVal hdc As Long) As Long
-Private Declare Function LoadImage Lib "user32" Alias "LoadImageA" (ByVal hInst As Long, ByVal lpsz As String, ByVal un1 As Long, ByVal n1 As Long, ByVal n2 As Long, ByVal un2 As Long) As Long
 Private Const BI_RGB = 0&
-Private Const BI_RLE4 = 2&
-Private Const BI_RLE8 = 1&
 Private Const DIB_RGB_COLORS = 0 '  color table in RGBs
 
 Private Type BITMAP
@@ -86,7 +83,6 @@ Private Type BITMAP
     bmBits As Long
 End Type
 Private Declare Function GetObjectAPI Lib "gdi32" Alias "GetObjectA" (ByVal hObject As Long, ByVal nCount As Long, lpObject As Any) As Long
-Private Declare Function timeGetTime Lib "winmm.dll" () As Long
 Private Declare Function CreateCompatibleBitmap Lib "gdi32" (ByVal hdc As Long, ByVal nWidth As Long, ByVal nHeight As Long) As Long
 
 ' Clipboard functions:
@@ -95,7 +91,6 @@ Private Declare Function CloseClipboard Lib "user32" () As Long
 Private Declare Function SetClipboardData Lib "user32" (ByVal wFormat As Long, ByVal hMem As Long) As Long
 Private Declare Function EmptyClipboard Lib "user32" () As Long
 Private Const CF_BITMAP = 2
-Private Const CF_DIB = 8
 
 ' Handle to the current DIBSection:
 Private m_hDIb As Long
@@ -116,10 +111,6 @@ Dim lhDC As Long
 Dim lhBmpOld As Long
 Dim hObj As Long
 Dim lFmt As Long
-Dim b() As Byte
-Dim tBI As BITMAPINFO
-Dim lPtr As Long
-Dim hDibCopy As Long
 
     lhDCDesktop = GetDC(GetDesktopWindow())
     If (lhDCDesktop <> 0) Then

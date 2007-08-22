@@ -62,8 +62,6 @@ Private DirectDraw As DirectDraw7
 
 Private useVideoMemory As Boolean
 
-Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" (ByRef dest As Any, ByRef source As Any, ByVal byteCount As Long)
-
 Private Sub Class_Initialize()
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero

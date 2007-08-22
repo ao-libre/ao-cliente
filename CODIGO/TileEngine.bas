@@ -351,7 +351,6 @@ Sub CargarCabezas()
     Dim N As Integer
     Dim i As Long
     Dim Numheads As Integer
-    Dim index As Integer
     Dim Miscabezas() As tIndiceCabeza
     
     N = FreeFile()
@@ -385,8 +384,7 @@ Sub CargarCascos()
     Dim N As Integer
     Dim i As Long
     Dim NumCascos As Integer
-    Dim index As Integer
-    
+
     Dim Miscabezas() As tIndiceCabeza
     
     N = FreeFile()
@@ -456,7 +454,6 @@ Sub CargarFxs()
     Dim N As Integer
     Dim i As Long
     Dim NumFxs As Integer
-    Dim MisFxs() As tIndiceFx
     
     N = FreeFile()
     Open App.path & "\init\Fxs.ind" For Binary Access Read As #N
@@ -727,22 +724,20 @@ Private Function EstaPCarea(ByVal CharIndex As Integer) As Boolean
 End Function
 
 Sub DoPasosFx(ByVal CharIndex As Integer)
-    Static pie As Boolean
-    
     If Not UserNavegando Then
         With charlist(CharIndex)
             If Not .muerto And EstaPCarea(CharIndex) And (.priv = 0 Or .priv > 5) Then
                 .pie = Not .pie
                 
                 If .pie Then
-                    Call Audio.PlayWave(SND_PASOS1, 1, 1, spNone)
+                    Call Audio.PlayWave(SND_PASOS1, Abs(UserPos.x - .Pos.x), Abs(UserPos.y - .Pos.y), Mod_General.CalcSoundSrc(.Pos.x, .Pos.y))
                 Else
-                    Call Audio.PlayWave(SND_PASOS2, 1, 1, spNone)
+                    Call Audio.PlayWave(SND_PASOS2, Abs(UserPos.x - .Pos.x), Abs(UserPos.y - .Pos.y), Mod_General.CalcSoundSrc(.Pos.x, .Pos.y))
                 End If
             End If
         End With
     Else
-        Call Audio.PlayWave(SND_NAVEGANDO, 1, 1, spNone)
+        Call Audio.PlayWave(SND_NAVEGANDO, 255, 255, eSoundPos.spNone)
     End If
 End Sub
 
@@ -1778,7 +1773,7 @@ End Sub
 #If ConAlfaB Then
 
 Public Sub EfectoNoche(ByRef Surface As DirectDrawSurface7)
-    Dim dArray() As Byte, sArray() As Byte
+    Dim dArray() As Byte
     Dim ddsdDest As DDSURFACEDESC2
     Dim Modo As Long
     Dim rRect As RECT
@@ -1880,6 +1875,10 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
 'Last Modify Date: 12/03/04
 'Draw char's to screen without offcentering them
 '***************************************************
+'Esto lo pongo por un error q me surgio, este sub queria renderear un char
+'con .Heading==0, por lo tanto tiro rt9
+On Error Resume Next
+
     Dim moved As Boolean
     Dim Pos As Integer
     Dim line As String

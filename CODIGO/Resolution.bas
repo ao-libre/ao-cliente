@@ -38,10 +38,7 @@ Private Const CCFORMNAME As Long = 32
 Private Const DM_BITSPERPEL As Long = &H40000
 Private Const DM_PELSWIDTH As Long = &H80000
 Private Const DM_PELSHEIGHT As Long = &H100000
-Private Const CDS_UPDATEREGISTRY As Long = &H1
 Private Const CDS_TEST As Long = &H4
-Private Const DISP_CHANGE_SUCCESSFUL As Long = 0
-Private Const DISP_CHANGE_RESTART As Long = 1
 
 Private Type typDevMODE
     dmDeviceName       As String * CCDEVICENAME
@@ -86,8 +83,6 @@ Private Declare Function ChangeDisplaySettings Lib "user32" Alias "ChangeDisplay
 Public Sub SetResolution()
     Dim lRes As Long
     Dim MidevM As typDevMODE
-    Dim intWidth As Integer
-    Dim intHeight As Integer
     Dim CambiarResolucion As Boolean
     
     lRes = EnumDisplaySettings(0, 0, MidevM)

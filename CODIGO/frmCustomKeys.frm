@@ -602,21 +602,24 @@ Next i
 End Sub
 
 Private Sub Text1_KeyDown(index As Integer, KeyCode As Integer, Shift As Integer)
+Dim i As Long
+
 If LenB(CustomKeys.ReadableName(KeyCode)) = 0 Then Exit Sub
 'If key is not valid, we exit
 
 Text1(index).Text = CustomKeys.ReadableName(KeyCode)
 Text1(index).SelStart = Len(Text1(index).Text)
 
-If CustomKeys.KeyAssigned(KeyCode) Then
-    Text1(index).Text = "" 'If the key is already assigned, simply reject it
-    Call Beep 'Alert the user
-    KeyCode = 0
-    Exit Sub
-End If
-
-'NOTE: Altough class clsCustomKeys automatically checks if key is not valid
-'and if it's already assigned, I want to manually implement this checks
+For i = 1 To CustomKeys.Count
+    If i <> index Then
+        If CustomKeys.BindedKey(i) = KeyCode Then
+            Text1(index).Text = "" 'If the key is already assigned, simply reject it
+            Call Beep 'Alert the user
+            KeyCode = 0
+            Exit Sub
+        End If
+    End If
+Next i
 
 CustomKeys.BindedKey(index) = KeyCode
 

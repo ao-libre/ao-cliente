@@ -339,7 +339,6 @@ Private Sub DrawInventorySlot(ByVal slot As Integer)
 'Last Modify Date: 12/04/06
 'Renders a inventory slot to the given PictureBox
 '***************************************************
-    Dim loopc As Long
     Dim SrcRect As RECT
     Dim TempRect As RECT
     Dim destRect As RECT

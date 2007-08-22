@@ -109,3 +109,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 14/08/2007: Ahora el color de la cantidad de oro en la billetera varia dependiendo de la cantidad de nivel y de oro (Mas precisamente si se cae o no lo que uno lleva). (Tavo)
  * 14/08/2007: Reescritura casi total del engine y limpieza de muchísimas funciones y módulos. Queda mucho por hacer, pero avanzamos.... (Maraxus)
  * 18/08/2007: Arreglé el código de teclas configurables, ahora carga bien las defaults si las guardadas tienen algún problema. (Maraxus)
+ * 22/08/2007: Descarté el código de Maraxus y pongo el mio que lo arregle por mis propios medios. No deberia haber problemas, descarte varias declaraciones inservibles. (Rapsodius)

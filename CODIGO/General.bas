@@ -228,9 +228,9 @@ Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, ByVal Text As String, Opt
 'Automatically scrolls to new text.
 'Text box MUST be multiline and have a 3D
 'apperance!
-'Pablo (ToxicWaste) 01/26/2007 : Now the list refreshes properly.
+'Pablo (ToxicWaste) 01/26/2007 : Now the list refeshes properly.
 'Juan Martín Sotuyo Dodero (Maraxus) 03/29/2007 : Replaced ToxicWaste's code for extra performance.
-'******************************************
+'******************************************r
     With RichTextBox
         If Len(.Text) > 1000 Then
             'Get rid of first line
@@ -587,7 +587,6 @@ Sub SwitchMap(ByVal Map As Integer)
 'Formato de mapas optimizado para reducir el espacio que ocupan.
 'Diseñado y creado por Juan Martín Sotuyo Dodero (Maraxus) (juansotuyo@hotmail.com)
 '**************************************************************
-    Dim loopc As Long
     Dim y As Long
     Dim x As Long
     Dim tempint As Integer
@@ -774,7 +773,7 @@ errorH:
     Call CloseClient
 End Sub
 
-Public Sub InitServersList(ByVal Lst As String)
+Public Sub InitServersList()
 On Error Resume Next
     Dim NumServers As Integer
     Dim i As Integer
@@ -910,7 +909,7 @@ Sub Main()
     AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
     
     
-    Call AddtoRichTextBox(frmCargando.status, "Configurando resoluci{on....")
+    Call AddtoRichTextBox(frmCargando.status, "Configurando resolucion....")
     
     Call Resolution.SetResolution
     

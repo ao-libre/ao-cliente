@@ -130,13 +130,3 @@ Private Sub Form_Deactivate()
 Me.SetFocus
 End Sub
 
-Private Sub Label2_Click()
-If frmtip.Check1.value = vbChecked Then
-    tipf = "1"
-Else
-    tipf = "0"
-End If
-
-Unload Me
-End Sub
-

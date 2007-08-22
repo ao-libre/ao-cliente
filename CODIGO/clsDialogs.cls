@@ -91,16 +91,6 @@ Private dialogCount As Byte
 Private usedFont As StdFont
 
 ''
-' CopyMemory is the fastest way to copy memory blocks, so we abuse of it
-'
-' @param destination Where the data will be copied.
-' @param source The data to be copied.
-' @param length Number of bytes to be copied.
-
-Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" (ByRef destination As Any, ByRef source As Any, ByVal length As Long)
-
-
-''
 ' Initializes the instance of the class.
 
 Private Sub Class_Initialize()

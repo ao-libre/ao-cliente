@@ -164,30 +164,6 @@ Private Declare Function ijlInit Lib "ijl11.dll" (jcprops As Any) As Long
 Private Declare Function ijlFree Lib "ijl11.dll" (jcprops As Any) As Long
 Private Declare Function ijlRead Lib "ijl11.dll" (jcprops As Any, ByVal ioType As Long) As Long
 Private Declare Function ijlWrite Lib "ijl11.dll" (jcprops As Any, ByVal ioType As Long) As Long
-Private Declare Function ijlGetLibVersion Lib "ijl11.dll" () As Long
-Private Declare Function ijlGetErrorString Lib "ijl11.dll" (ByVal Code As Long) As Long
-
-' Win32 Declares
-Private Declare Function GlobalAlloc Lib "kernel32" (ByVal wFlags As Long, ByVal dwBytes As Long) As Long
-Private Declare Function GlobalFree Lib "kernel32" (ByVal hMem As Long) As Long
-Private Declare Function GlobalLock Lib "kernel32" (ByVal hMem As Long) As Long
-Private Declare Function GlobalUnlock Lib "kernel32" (ByVal hMem As Long) As Long
-Private Const GMEM_DDESHARE = &H2000
-Private Const GMEM_DISCARDABLE = &H100
-Private Const GMEM_DISCARDED = &H4000
-Private Const GMEM_FIXED = &H0
-Private Const GMEM_INVALID_HANDLE = &H8000
-Private Const GMEM_LOCKCOUNT = &HFF
-Private Const GMEM_MODIFY = &H80
-Private Const GMEM_MOVEABLE = &H2
-Private Const GMEM_NOCOMPACT = &H10
-Private Const GMEM_NODISCARD = &H20
-Private Const GMEM_NOT_BANKED = &H1000
-Private Const GMEM_NOTIFY = &H4000
-Private Const GMEM_SHARE = &H2000
-Private Const GMEM_VALID_FLAGS = &H7F72
-Private Const GMEM_ZEROINIT = &H40
-Private Const GPTR = (GMEM_FIXED Or GMEM_ZEROINIT)
 
 ' Stuff for replacing a file when you have to Kill the original:
 Private Const MAX_PATH = 260
@@ -214,12 +190,6 @@ Private Declare Function SetFileTime Lib "kernel32" (ByVal hFile As Long, lpCrea
 Private Declare Function SetFileAttributes Lib "kernel32" Alias "SetFileAttributesA" (ByVal lpFileName As String, ByVal dwFileAttributes As Long) As Long
 Private Const OF_WRITE = &H1
 Private Const OF_SHARE_DENY_WRITE = &H20
-Private Const GENERIC_WRITE = &H40000000
-Private Const GENERIC_READ = &H80000000
-Private Const FILE_SHARE_WRITE = &H2
-Private Const CREATE_ALWAYS = 2
-Private Const FILE_BEGIN = 0
-Private Const SECTION_MAP_WRITE = &H2
 
 Private Const INVALID_HANDLE As Long = -1
 
@@ -310,7 +280,6 @@ Public Function LoadJPGFromPtr( _
       ByVal lSize As Long _
    ) As Boolean
 Dim tJ As JPEG_CORE_PROPERTIES_VB
-Dim bFile() As Byte
 Dim lR As Long
 Dim lJPGWidth As Long, lJPGHeight As Long
 
@@ -476,12 +445,8 @@ Public Function SaveJPGToPtr( _
       Optional ByVal lQuality As Long = 90 _
    ) As Boolean
 Dim tJ As JPEG_CORE_PROPERTIES_VB
-Dim bFile() As Byte
 Dim lR As Long
-Dim tFnd As WIN32_FIND_DATA
 Dim hFile As Long
-Dim bFileExisted As Boolean
-Dim b As Boolean
    
    hFile = -1
    

@@ -14,7 +14,8 @@ Attribute VB_Exposed = False
 '**************************************************************
 ' clsCustomKeys.cls - Allows the User to Customize Keys.
 '
-' Created and Implemented by Rapsodius. Revised by Maraxus to fix bugs and fit coding standards.
+' Creation Date: 08-03-07
+' Created and Implemented by Rapsodius
 '**************************************************************
 
 '**************************************************************************
@@ -255,44 +256,49 @@ End Function
 'Reads custom keys from a file
 
 Public Sub LoadCustomKeys()
-'***************************************************
-'Author: Rapsodius
-'Last Modification: 08/18/07
-'Modified by: Juan Martín Sotuyo Dodero (Maraxus) - Fixed error management problem.
-'***************************************************
+'**************************************************************
+' LoadCustomKeys - Reads binded keys from file, raises an
+' error if file doesn't exist or if there is an invalid key
+'
+' Creation Date: 08-21-07
+' Created and Implemented by Rapsodius
+'**************************************************************
     Dim i As Long
     Dim FileNum As Integer
     FileNum = FreeFile()
         
     Open App.path & "\init\BindKeys.bin" For Binary Access Read Lock Read Write As #FileNum
-    
-    For i = 1 To NUM_CUSTOM_KEYS
-        Get #FileNum, , mappedKeys(i)
-        If LenB(ReadableName(mappedKeys(i))) = 0 Then
-            Close #FileNum
-            Call Err.Raise(ERROR_NO_KEY_FILE)
-        End If
-    Next i
-    
+        For i = 1 To NUM_CUSTOM_KEYS
+            Get #FileNum, , mappedKeys(i)
+            If LenB(ReadableName(mappedKeys(i))) = 0 Then
+                Close #FileNum
+                Call Err.Raise(ERROR_NO_KEY_FILE)
+                Exit Sub
+            End If
+        Next i
     Close #FileNum
+
+    If Err.Number > 0 Then
+        Close #FileNum
+        Call Err.Raise(ERROR_NO_KEY_FILE)
+    End If
 End Sub
 
 ''
 ' Saves custom keys to a file
 
 Public Sub SaveCustomKeys()
-'***************************************************
-'Author: Rapsodius
-'Last Modification: 08/04/07
+'**************************************************************
+' SaveCustomKeys - Saves binded keys to the file
 '
-'***************************************************
+' Creation Date: 08-04-07
+' Created and Implemented by Rapsodius
+'**************************************************************
     Dim FileNum As Integer
     FileNum = FreeFile()
     
     Open App.path & "\init\BindKeys.bin" For Binary Access Write As #FileNum
-    
-    Put #FileNum, , mappedKeys()
-    
+        Put #FileNum, , mappedKeys()
     Close #FileNum
 End Sub
 
@@ -307,9 +313,10 @@ Public Property Get BindedKey(ByVal index As eKeyType) As Integer
 'Author: Rapsodius
 'Last Modification: 08/04/07
 '
-'***************************************************
+' Creation Date: 08-04-07
+' Created and Implemented by Rapsodius
+'**************************************************************
     If index < 1 Or index > NUM_CUSTOM_KEYS Then Exit Property
-    
     BindedKey = mappedKeys(index)
 End Property
 
@@ -324,16 +331,17 @@ Public Property Let BindedKey(ByVal index As eKeyType, ByVal NewVal As Integer)
 'Author: Rapsodius
 'Last Modification: 08/04/07
 '
-'***************************************************
+' Creation Date: 08-05-07
+' Last Modification: 08-14-07 by Rapsodius
+' Created and Implemented by Rapsodius
+'**************************************************************
     If index < 1 Or index > NUM_CUSTOM_KEYS Then Exit Property
     
-    'If key is not valid reject it
-    If LenB(ReadableName(NewVal)) = 0 Then
-        Exit Property
+    If LenB(ReadableName(NewVal)) = 0 Then 'If key is not valid...
+        Exit Property                      'Rejects the new assignment
     End If
     
-    'Also reject it in case key is already assigned
-    If KeyAssigned(NewVal) Then
+    If KeyAssigned(NewVal) Then 'Also reject it in case key is already assigned
         Exit Property
     End If
     
@@ -344,11 +352,13 @@ End Property
 'Loads default keys
 
 Public Sub LoadDefaults()
-'***************************************************
-'Author: Rapsodius
-'Last Modification: 08/04/07
+'**************************************************************
+' LoadDefaults - Loads default key codes in case of error
+' or if the user requests it.
 '
-'***************************************************
+' Creation Date: 08-05-07
+' Created and Implemented by Rapsodius
+'**************************************************************
     mappedKeys(eKeyType.mKeyUp) = KeyCodeConstants.vbKeyUp
     mappedKeys(eKeyType.mKeyDown) = KeyCodeConstants.vbKeyDown
     mappedKeys(eKeyType.mKeyLeft) = KeyCodeConstants.vbKeyLeft
@@ -387,7 +397,9 @@ Public Function KeyAssigned(ByVal KeyCode As Integer) As Boolean
 'Author: Rapsodius
 'Last Modification: 08/04/07
 '
-'***************************************************
+' Creation Date: 08-07-07
+' Created and Implemented by Rapsodius
+'**************************************************************
     Dim Counter As Long
     
     KeyAssigned = False
@@ -406,11 +418,6 @@ End Function
 '@return The number of customizable keys
 
 Public Property Get Count() As Byte
-'***************************************************
-'Author: Rapsodius
-'Last Modification: 08/04/07
-'
-'***************************************************
     Count = NUM_CUSTOM_KEYS
 End Property
 
@@ -425,14 +432,13 @@ Private Sub Class_Initialize()
 '***************************************************
 On Error GoTo ErrHand:
     Call LoadCustomKeys
+    Exit Sub
     
-Exit Sub
-
 ErrHand:
     If Err.Number = ERROR_NO_KEY_FILE Then
         Call LoadDefaults
         Call SaveCustomKeys
-        Resume Next
+        Resume
     End If
 End Sub
 
@@ -440,10 +446,5 @@ End Sub
 'Destructor. Saves Keys to file
 
 Private Sub Class_Terminate()
-'***************************************************
-'Author: Rapsodius
-'Last Modification: 08/04/07
-'
-'***************************************************
     Call SaveCustomKeys
 End Sub
