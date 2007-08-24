@@ -351,7 +351,7 @@ On Error GoTo ErrHandler
     bufferIndex = LoadWave(FileName, LoopSound)
     If bufferIndex = 0 Then Exit Function   'If an error ocurred abort
     
-    If x = NO_3D_SOUND Then
+    If SoundSrc = eSoundPos.spNone Then
         With DSBuffers(bufferIndex)
             If .looping Then
                 .Buffer.Play DSBPLAY_LOOPING
@@ -365,66 +365,64 @@ On Error GoTo ErrHandler
         
         PlayWave = bufferIndex
     Else
-        If y <> NO_3D_SOUND Then
-            DSBuffers(bufferIndex).x = x
-            DSBuffers(bufferIndex).y = y
-             
-            tmpX = x
-            tmpY = y
-             
-            Select Case SoundSrc
-                Case eSoundPos.spUp
-                    tmpY = -tmpY
-                Case eSoundPos.spLeft
-                    tmpX = -tmpX
-                Case eSoundPos.spLeftUp
-                    tmpX = -tmpX
-                    tmpY = -tmpY
-                Case eSoundPos.spRightUp
-                    tmpY = -tmpY
-                Case eSoundPos.spLeftDown
-                    tmpX = -tmpX
-            End Select
-                        
-            If Abs(tmpX) <= 8 Then
-                If Abs(tmpY) <= 6 Then
-                    With DSBuffers(bufferIndex)
-                        .SoundSrc = SoundSrc
-                        If .looping Then
-                            .Buffer.Play DSBPLAY_LOOPING
-                        Else
-                            .Buffer.Play DSBPLAY_DEFAULT
-                        End If
-                        
-                        calcVol = ((((Abs(tmpX) + Abs(tmpY)) * (DSBVOLUME_MIN \ DIVIDE_MINVOLUME)) + (14 - (Abs(tmpX) + Abs(tmpY)) * SndVolume)) \ 14 - ((Abs(tmpX) + Abs(tmpY)) * PER_TILE_REDUCTION))
-                        
-                        If calcVol < DSBVOLUME_MIN Then
-                            calcVol = DSBVOLUME_MIN
-                        End If
-                        If calcVol > SndVolume Then
-                            calcVol = SndVolume
-                        End If
-                                                    
-                        calcPanX = ((((Abs(tmpX) * DSBPAN_RIGHT) + (8 - Abs(tmpX)) * DSBPAN_CENTER) \ 8) - (Abs(tmpX) * PER_TILE_PANNING))
-                        
-                        If tmpX >= 0 Then
-                            calcPanX = -calcPanX
-                        End If
-                        
-                        'NOTE: 6* ..... \6 is not an unnecessary calculation!
-                        calcPan = calcPanX \ (((2 * Abs(tmpY)) + (6 * (6 - Abs(tmpY)))) \ 6)
-                        If calcPan < DSBPAN_LEFT Then
-                            calcPan = DSBPAN_LEFT
-                        End If
-                        If calcPan > DSBPAN_RIGHT Then
-                            calcPan = DSBPAN_RIGHT
-                        End If
-                        .Buffer.SetVolume calcVol
-                        .Buffer.SetPan calcPan
-                    End With
+        DSBuffers(bufferIndex).x = x
+        DSBuffers(bufferIndex).y = y
+         
+        tmpX = x
+        tmpY = y
+         
+        Select Case SoundSrc
+            Case eSoundPos.spUp
+                tmpY = -tmpY
+            Case eSoundPos.spLeft
+                tmpX = -tmpX
+            Case eSoundPos.spLeftUp
+                tmpX = -tmpX
+                tmpY = -tmpY
+            Case eSoundPos.spRightUp
+                tmpY = -tmpY
+            Case eSoundPos.spLeftDown
+                tmpX = -tmpX
+        End Select
                     
-                    PlayWave = bufferIndex
-                End If
+        If Abs(tmpX) <= 8 Then
+            If Abs(tmpY) <= 6 Then
+                With DSBuffers(bufferIndex)
+                    .SoundSrc = SoundSrc
+                    If .looping Then
+                        .Buffer.Play DSBPLAY_LOOPING
+                    Else
+                        .Buffer.Play DSBPLAY_DEFAULT
+                    End If
+                    
+                    calcVol = ((((Abs(tmpX) + Abs(tmpY)) * (DSBVOLUME_MIN \ DIVIDE_MINVOLUME)) + (14 - (Abs(tmpX) + Abs(tmpY)) * SndVolume)) \ 14 - ((Abs(tmpX) + Abs(tmpY)) * PER_TILE_REDUCTION))
+                    
+                    If calcVol < DSBVOLUME_MIN Then
+                        calcVol = DSBVOLUME_MIN
+                    End If
+                    If calcVol > SndVolume Then
+                        calcVol = SndVolume
+                    End If
+                                                
+                    calcPanX = ((((Abs(tmpX) * DSBPAN_RIGHT) + (8 - Abs(tmpX)) * DSBPAN_CENTER) \ 8) - (Abs(tmpX) * PER_TILE_PANNING))
+                    
+                    If tmpX >= 0 Then
+                        calcPanX = -calcPanX
+                    End If
+                    
+                    'NOTE: 6* ..... \6 is not an unnecessary calculation!
+                    calcPan = calcPanX \ (((2 * Abs(tmpY)) + (6 * (6 - Abs(tmpY)))) \ 6)
+                    If calcPan < DSBPAN_LEFT Then
+                        calcPan = DSBPAN_LEFT
+                    End If
+                    If calcPan > DSBPAN_RIGHT Then
+                        calcPan = DSBPAN_RIGHT
+                    End If
+                    .Buffer.SetVolume calcVol
+                    .Buffer.SetPan calcPan
+                End With
+                
+                PlayWave = bufferIndex
             End If
         End If
     End If
@@ -460,63 +458,7 @@ On Error Resume Next
     If RefreshAll Then
         For i = 1 To NumSoundBuffers
             With DSBuffers(i)
-                If .x <> NO_3D_SOUND Then
-                    If .y <> NO_3D_SOUND Then
-                        tmpX = .x
-                        tmpY = .y
-                         
-                        Select Case .SoundSrc
-                            Case eSoundPos.spUp
-                                tmpY = -tmpY
-                            Case eSoundPos.spLeft
-                                tmpX = -tmpX
-                            Case eSoundPos.spLeftUp
-                                tmpX = -tmpX
-                                tmpY = -tmpY
-                            Case eSoundPos.spRightUp
-                                tmpY = -tmpY
-                            Case eSoundPos.spLeftDown
-                                tmpX = -tmpX
-                        End Select
-                        
-                        If Abs(tmpX) <= 8 Then
-                            If Abs(tmpY) <= 6 Then
-                                calcVol = ((((Abs(tmpX) + Abs(tmpY)) * (DSBVOLUME_MIN \ DIVIDE_MINVOLUME)) + (14 - (Abs(tmpX) + Abs(tmpY)) * SndVolume)) \ 14 - ((Abs(tmpX) + Abs(tmpY)) * PER_TILE_REDUCTION))
-                                
-                                If calcVol < DSBVOLUME_MIN Then
-                                    calcVol = DSBVOLUME_MIN
-                                End If
-                                If calcVol > SndVolume Then
-                                    calcVol = SndVolume
-                                End If
-                                                                    
-                                calcPanX = ((((Abs(tmpX) * DSBPAN_RIGHT) + (8 - Abs(tmpX)) * DSBPAN_CENTER) \ 8) - (Abs(tmpX) * PER_TILE_PANNING))
-                                
-                                If tmpX >= 0 Then
-                                    calcPanX = -calcPanX
-                                End If
-                                
-                                'NOTE: 6* ..... \6 is not an unnecessary calculation!
-                                calcPan = calcPanX \ (((2 * Abs(tmpY)) + (6 * (6 - Abs(tmpY)))) \ 6)
-                                If calcPan < DSBPAN_LEFT Then
-                                    calcPan = DSBPAN_LEFT
-                                End If
-                                If calcPan > DSBPAN_RIGHT Then
-                                    calcPan = DSBPAN_RIGHT
-                                End If
-                                .Buffer.SetVolume calcVol
-                                .Buffer.SetPan calcPan
-                            End If
-                        End If
-                    End If
-                End If
-            End With
-        Next i
-    Else
-        If bufferIndex <= 0 Or bufferIndex > NumSoundBuffers Then Exit Sub
-        With DSBuffers(bufferIndex)
-            If .x <> NO_3D_SOUND Then
-                If .y <> NO_3D_SOUND Then
+                If .SoundSrc <> eSoundPos.spNone Then
                     tmpX = .x
                     tmpY = .y
                      
@@ -544,7 +486,7 @@ On Error Resume Next
                             If calcVol > SndVolume Then
                                 calcVol = SndVolume
                             End If
-                                                            
+                                                                
                             calcPanX = ((((Abs(tmpX) * DSBPAN_RIGHT) + (8 - Abs(tmpX)) * DSBPAN_CENTER) \ 8) - (Abs(tmpX) * PER_TILE_PANNING))
                             
                             If tmpX >= 0 Then
@@ -562,6 +504,58 @@ On Error Resume Next
                             .Buffer.SetVolume calcVol
                             .Buffer.SetPan calcPan
                         End If
+                    End If
+                End If
+            End With
+        Next i
+    Else
+        If bufferIndex <= 0 Or bufferIndex > NumSoundBuffers Then Exit Sub
+        With DSBuffers(bufferIndex)
+            If .SoundSrc <> eSoundPos.spNone Then
+                tmpX = .x
+                tmpY = .y
+                 
+                Select Case .SoundSrc
+                    Case eSoundPos.spUp
+                        tmpY = -tmpY
+                    Case eSoundPos.spLeft
+                        tmpX = -tmpX
+                    Case eSoundPos.spLeftUp
+                        tmpX = -tmpX
+                        tmpY = -tmpY
+                    Case eSoundPos.spRightUp
+                        tmpY = -tmpY
+                    Case eSoundPos.spLeftDown
+                        tmpX = -tmpX
+                End Select
+                
+                If Abs(tmpX) <= 8 Then
+                    If Abs(tmpY) <= 6 Then
+                        calcVol = ((((Abs(tmpX) + Abs(tmpY)) * (DSBVOLUME_MIN \ DIVIDE_MINVOLUME)) + (14 - (Abs(tmpX) + Abs(tmpY)) * SndVolume)) \ 14 - ((Abs(tmpX) + Abs(tmpY)) * PER_TILE_REDUCTION))
+                        
+                        If calcVol < DSBVOLUME_MIN Then
+                            calcVol = DSBVOLUME_MIN
+                        End If
+                        If calcVol > SndVolume Then
+                            calcVol = SndVolume
+                        End If
+                                                        
+                        calcPanX = ((((Abs(tmpX) * DSBPAN_RIGHT) + (8 - Abs(tmpX)) * DSBPAN_CENTER) \ 8) - (Abs(tmpX) * PER_TILE_PANNING))
+                        
+                        If tmpX >= 0 Then
+                            calcPanX = -calcPanX
+                        End If
+                        
+                        'NOTE: 6* ..... \6 is not an unnecessary calculation!
+                        calcPan = calcPanX \ (((2 * Abs(tmpY)) + (6 * (6 - Abs(tmpY)))) \ 6)
+                        If calcPan < DSBPAN_LEFT Then
+                            calcPan = DSBPAN_LEFT
+                        End If
+                        If calcPan > DSBPAN_RIGHT Then
+                            calcPan = DSBPAN_RIGHT
+                        End If
+                        .Buffer.SetVolume calcVol
+                        .Buffer.SetPan calcPan
                     End If
                 End If
             End If

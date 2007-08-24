@@ -86,6 +86,15 @@ Public Function CalcSoundSrc(ByVal x As Byte, ByVal y As Byte) As eSoundPos
     Dim nY As Integer
     nX = UserPos.x - x
     nY = UserPos.y - y
+    
+    If Abs(nX) > 8 Then
+        CalcSoundSrc = eSoundPos.spNone
+        Exit Function
+    End If
+    If Abs(nY) > 6 Then
+        CalcSoundSrc = eSoundPos.spNone
+        Exit Function
+    End If
 
     Select Case nX
         Case Is < 0
