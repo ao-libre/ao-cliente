@@ -51,8 +51,14 @@ Private Const NUM_CUSTOM_KEYS As Byte = 25
 Private Const ERROR_NO_KEY_FILE As Long = vbObjectError + 16
 
 ''
+'The relative path from the application's location where the key config file is.
+Private Const KEY_CONFIG_FILE As String = "\init\BindKeys.bin"
+
+
+''
 'Array of mapped keys
 Private mappedKeys(1 To NUM_CUSTOM_KEYS) As Integer
+
 
 ''
 'Index of keys on array
@@ -267,21 +273,18 @@ Public Sub LoadCustomKeys()
     Dim FileNum As Integer
     FileNum = FreeFile()
         
-    Open App.path & "\init\BindKeys.bin" For Binary Access Read Lock Read Write As #FileNum
-        For i = 1 To NUM_CUSTOM_KEYS
-            Get #FileNum, , mappedKeys(i)
-            If LenB(ReadableName(mappedKeys(i))) = 0 Then
-                Close #FileNum
-                Call Err.Raise(ERROR_NO_KEY_FILE)
-                Exit Sub
-            End If
-        Next i
-    Close #FileNum
-
-    If Err.Number > 0 Then
-        Close #FileNum
-        Call Err.Raise(ERROR_NO_KEY_FILE)
-    End If
+    Open App.path & KEY_CONFIG_FILE For Binary Access Read Lock Read Write As FileNum
+    
+    For i = 1 To NUM_CUSTOM_KEYS
+        Get FileNum, , mappedKeys(i)
+        If LenB(ReadableName(mappedKeys(i))) = 0 Then
+            Close FileNum
+            Call Err.Raise(ERROR_NO_KEY_FILE)
+            Exit Sub
+        End If
+    Next i
+    
+    Close FileNum
 End Sub
 
 ''
@@ -297,8 +300,10 @@ Public Sub SaveCustomKeys()
     Dim FileNum As Integer
     FileNum = FreeFile()
     
-    Open App.path & "\init\BindKeys.bin" For Binary Access Write As #FileNum
-        Put #FileNum, , mappedKeys()
+    Open App.path & KEY_CONFIG_FILE For Binary Access Write As FileNum
+    
+    Put FileNum, , mappedKeys()
+    
     Close #FileNum
 End Sub
 
@@ -418,6 +423,11 @@ End Function
 '@return The number of customizable keys
 
 Public Property Get Count() As Byte
+'***************************************************
+'Author: Rapsodius
+'Last Modification: 08/04/07
+'
+'***************************************************
     Count = NUM_CUSTOM_KEYS
 End Property
 
@@ -438,7 +448,7 @@ ErrHand:
     If Err.Number = ERROR_NO_KEY_FILE Then
         Call LoadDefaults
         Call SaveCustomKeys
-        Resume
+        Resume Next
     End If
 End Sub
 
@@ -446,5 +456,10 @@ End Sub
 'Destructor. Saves Keys to file
 
 Private Sub Class_Terminate()
+'***************************************************
+'Author: Rapsodius
+'Last Modification: 08/04/07
+'
+'***************************************************
     Call SaveCustomKeys
 End Sub

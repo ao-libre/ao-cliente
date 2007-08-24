@@ -59,6 +59,24 @@ Option Explicit
 Private Const NumSoundBuffers As Byte = 30
 
 ''
+'This indicates that the sound is not 3D
+Private Const NO_3D_SOUND As Byte = 255
+
+''
+'Sound Reduction Offset Per Tile
+Private Const PER_TILE_REDUCTION As Long = 25
+
+''
+'Panning Offset Per Tile
+Private Const PER_TILE_PANNING As Long = 150
+
+''
+'Used to balance volume calculation.
+'Big numbers allow to increase volume.
+Private Const DIVIDE_MINVOLUME As Byte = 2
+
+
+''
 'Relative sound source, used to make fake 3d calculations
 '
 '@param spNone Sound is not 3D
@@ -169,27 +187,6 @@ Dim mActivated As Boolean
 'States wether sound is currently activated or not
 Dim sActivated As Boolean
 
-'%%%%FAKE 3D SOUND STUFF%%%%
-
-''
-'This indicates that the sound is not 3D
-Private Const NO_3D_SOUND As Byte = 255
-
-''
-'Sound Reduction Offset Per Tile
-'NOTE: Leave Constant type as it is to prevent overflows
-Private Const PER_TILE_REDUCTION As Long = 25
-
-''
-'Panning Offset Per Tile
-Private Const PER_TILE_PANNING As Long = 150
-
-''
-'Used to balance volume calculation.
-'Big numbers allow to increase volume.
-Private Const DIVIDE_MINVOLUME As Byte = 2
-
-'%%%%FAKE 3D SOUND STUFF%%%%
 
 ''
 'Constructor. Performs no action at all.
