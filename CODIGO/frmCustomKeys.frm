@@ -594,6 +594,7 @@ Unload Me
 End Sub
 
 Private Sub Form_Load()
+On Local Error Resume Next
 Dim i As Long
 
 For i = 1 To CustomKeys.Count

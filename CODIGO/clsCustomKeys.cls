@@ -88,6 +88,7 @@ Private mappedKeys(1 To NUM_CUSTOM_KEYS) As Integer
 '@param mKeyMeditate Key for start/stop meditation
 '@param mKeyCastSpellMacro Key for start/stop the Cast Spell Macro
 '@param mKeyWorkMacro Key for start/stop the Work Macro
+'@param mKeyExitGame Placeholder for future expansion
 Public Enum eKeyType
     '%%%%Movement Keys%%%%
     mKeyUp = 1
@@ -127,6 +128,7 @@ Public Enum eKeyType
     mKeyMeditate = 23
     mKeyCastSpellMacro = 24
     mKeyWorkMacro = 25
+    mKeyExitGame = 26
     '%%%%Misc. Keys%%%%
 End Enum
 
@@ -389,6 +391,7 @@ Public Sub LoadDefaults()
     mappedKeys(eKeyType.mKeyMeditate) = KeyCodeConstants.vbKeyF6
     mappedKeys(eKeyType.mKeyCastSpellMacro) = KeyCodeConstants.vbKeyF7
     mappedKeys(eKeyType.mKeyWorkMacro) = KeyCodeConstants.vbKeyF8
+    'mappedKeys(eKeyType.mKeyExitGame) = ???
 End Sub
 
 ''

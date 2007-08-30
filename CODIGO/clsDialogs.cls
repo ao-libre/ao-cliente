@@ -53,9 +53,12 @@ Private Const MAX_DIALOGS As Byte = 100
 Private Const MAX_LENGTH As Byte = 18
 
 ''
-' The number of milliseconds the dialog should be rendered.
-Private Const DIALOG_LIFE As Long = 16600
+' Number of milliseconds to add to the lifetime per dialog character
+Private Const MS_PER_CHAR As Byte = 100
 
+''
+' Number of extra milliseconds to add to the lifetime of a new dialog
+Private Const MS_ADD_EXTRA As Integer = 5000
 
 ''
 ' The dialog structure
@@ -64,6 +67,7 @@ Private Const DIALOG_LIFE As Long = 16600
 ' @param    x           X coord for rendering.
 ' @param    y           Y coord for rendering.
 ' @param    startTime   The time (in ms) at which the dialog was created.
+' @param    lifeTime    Time (in ms) this dialog should last.
 ' @param    charIndex   The charIndex that created this dialog.
 ' @param    color       The color to be used when rendering the text.
 ' @param    renderable  Set to True if the chat should be rendered this frame, False otherwise
@@ -73,6 +77,7 @@ Private Type dialog
     x           As Integer
     y           As Integer
     startTime   As Long
+    lifeTime    As Long
     CharIndex   As Integer
     color       As Long
     renderable  As Boolean
@@ -89,6 +94,10 @@ Private dialogCount As Byte
 ''
 ' the size of the font being used to render
 Private usedFont As StdFont
+
+''
+' A millisecond precision timer
+Private Declare Function GetTickCount Lib "kernel32" () As Long
 
 ''
 ' Initializes the instance of the class.
@@ -147,12 +156,12 @@ Private Function BinarySearch(ByVal CharIndex As Integer) As Integer
 End Function
 
 ''
-' Create sa new dialog. If the user already had a dialog, then it's replaced,
+' Creates a new dialog. If the user already had a dialog, then it's replaced,
 ' otherwise a new slot is used.
 '
 ' @param    chat        The text of the chat being spoken.
 ' @param    charIndex   The character saying the chat.
-' @param    color       The color being use din the chat when rendered.
+' @param    color       The color being used in the chat when rendered.
 '
 ' @remarks  If there are no more free slots, and the char didn't have a previous dialog,
 '           the chat is ignored.
@@ -160,8 +169,9 @@ End Function
 Public Sub CreateDialog(ByRef chat As String, ByVal CharIndex As Integer, ByVal color As Long)
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
-'Last Modify Date: 07/28/07
-'Creates a new dialog.
+'Last Modification: 08/29/07 by Rapsodius
+'Changed life time of the dialogs to a variable amount,
+'depending on the number of chars
 '**************************************************************
     Dim slot As Integer
     Dim i As Long
@@ -185,8 +195,9 @@ Public Sub CreateDialog(ByRef chat As String, ByVal CharIndex As Integer, ByVal 
         .CharIndex = CharIndex
         .color = color
         .renderable = False
-        .startTime = GetTickCount
+        .startTime = GetTickCount()
         .textLine = FormatChat(chat)
+        .lifeTime = MS_ADD_EXTRA + (MS_PER_CHAR * Len(chat))
     End With
 End Sub
 
@@ -299,8 +310,8 @@ End Sub
 Public Sub Render()
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
-'Last Modify Date: 07/28/07
-'Renders all renderable dialogs and gets rid of old ones.
+'Last Modification: 08/29/07 by Rapsodius
+'Changed the way it gets rid of older dialogs.
 '**************************************************************
     Dim i As Long
     Dim j As Long
@@ -311,7 +322,7 @@ Public Sub Render()
         'Decrease index to prevent jumping over a dialog
         'Crappy VB will cache the limit of the For loop, so even if it changed, it won't matter
         With dialogs(i - removedDialogs)
-            If .startTime + DIALOG_LIFE < GetTickCount Then
+            If (GetTickCount() - .startTime) >= .lifeTime Then
                 Call RemoveDialog(.CharIndex)
                 
                 removedDialogs = removedDialogs + 1
