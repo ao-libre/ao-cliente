@@ -531,65 +531,6 @@ On Error Resume Next
     End If
 End Sub
 
-'TODO : esto no es del tileengine??
-Sub MoveScreen(ByVal nHeading As E_Heading)
-'******************************************
-'Starts the screen moving in a direction
-'******************************************
-    Dim x As Integer
-    Dim y As Integer
-    Dim tX As Integer
-    Dim tY As Integer
-    
-    'Figure out which way to move
-    Select Case nHeading
-        Case E_Heading.NORTH
-            y = -1
-    
-        Case E_Heading.EAST
-            x = 1
-    
-        Case E_Heading.SOUTH
-            y = 1
-        
-        Case E_Heading.WEST
-            x = -1
-            
-    End Select
-    
-    'Fill temp pos
-    tX = UserPos.x + x
-    tY = UserPos.y + y
-
-    If Not (tX < MinXBorder Or tX > MaxXBorder Or tY < MinYBorder Or tY > MaxYBorder) Then
-        AddtoUserPos.x = x
-        UserPos.x = tX
-        AddtoUserPos.y = y
-        UserPos.y = tY
-        UserMoving = 1
-        
-        bTecho = IIf(MapData(UserPos.x, UserPos.y).Trigger = 1 Or _
-                MapData(UserPos.x, UserPos.y).Trigger = 2 Or _
-                MapData(UserPos.x, UserPos.y).Trigger = 4, True, False)
-        Exit Sub
-    End If
-End Sub
-
-'TODO : esto no es del tileengine??
-Function NextOpenChar()
-'******************************************
-'Finds next open Char
-'******************************************
-    Dim loopc As Long
-    
-    loopc = 1
-    Do While charlist(loopc).Active And loopc < UBound(charlist)
-        loopc = loopc + 1
-    Loop
-    
-    NextOpenChar = loopc
-End Function
-
 'TODO : Si bien nunca estuvo allí, el mapa es algo independiente o a lo sumo dependiente del engine, no va acá!!!
 Sub SwitchMap(ByVal Map As Integer)
 '**************************************************************
@@ -889,15 +830,15 @@ Sub Main()
     frmCargando.Show
     frmCargando.Refresh
     
-    frmConnect.version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
-    AddtoRichTextBox frmCargando.status, "Buscando servidores....", 0, 0, 0, 0, 0, 1
+    frmConnect.Version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
+    AddtoRichTextBox frmCargando.Status, "Buscando servidores....", 0, 0, 0, 0, 0, 1
 
     Call CargarServidores
 'TODO : esto de ServerRecibidos no se podría sacar???
     ServersRecibidos = True
     
-    AddtoRichTextBox frmCargando.status, "Encontrado", , , , 1
-    AddtoRichTextBox frmCargando.status, "Iniciando constantes...", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.Status, "Encontrado", , , , 1
+    AddtoRichTextBox frmCargando.Status, "Iniciando constantes...", 0, 0, 0, 0, 0, 1
     
     Call InicializarNombres
     
@@ -907,25 +848,25 @@ Sub Main()
     frmOldPersonaje.NameTxt.Text = Config_Inicio.Name
     frmOldPersonaje.PasswordTxt.Text = ""
     
-    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
+    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
     
-    AddtoRichTextBox frmCargando.status, "Iniciando motor gráfico...", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.Status, "Iniciando motor gráfico...", 0, 0, 0, 0, 0, 1
     
     If Not InitTileEngine(frmMain.hWnd, 160, 7, 32, 32, 13, 17, 9, 8, 8, 0.03) Then
         Call CloseClient
     End If
     
-    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
+    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
     
     
-    Call AddtoRichTextBox(frmCargando.status, "Configurando resolucion....")
+    Call AddtoRichTextBox(frmCargando.Status, "Configurando resolucion....")
     
     Call Resolution.SetResolution
     
-    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
+    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
     
     
-    Call AddtoRichTextBox(frmCargando.status, "Creando animaciones extra....")
+    Call AddtoRichTextBox(frmCargando.Status, "Creando animaciones extra....")
     
     Call CargarTips
     
@@ -942,19 +883,19 @@ UserMap = 1
     Call InitMI
 #End If
     
-    AddtoRichTextBox frmCargando.status, "                    ¡Bienvenido a Argentum Online!", , , , 1
+    AddtoRichTextBox frmCargando.Status, "                    ¡Bienvenido a Argentum Online!", , , , 1
     
     Unload frmCargando
     
     'Inicializamos el sonido
-    Call AddtoRichTextBox(frmCargando.status, "Iniciando DirectSound....", 0, 0, 0, 0, 0, True)
+    Call AddtoRichTextBox(frmCargando.Status, "Iniciando DirectSound....", 0, 0, 0, 0, 0, True)
     Call Audio.Initialize(DirectX, frmMain.hWnd, App.path & "\" & Config_Inicio.DirSonidos & "\", App.path & "\" & Config_Inicio.DirMusica & "\")
     
     'Enable / Disable audio
     Audio.MusicActivated = Not ClientSetup.bNoMusic
     Audio.SoundActivated = Not ClientSetup.bNoSound
     
-    Call AddtoRichTextBox(frmCargando.status, "Hecho", , , , 1, , False)
+    Call AddtoRichTextBox(frmCargando.Status, "Hecho", , , , 1, , False)
     
     'Inicializamos el inventario gráfico
     Call Inventario.Initialize(DirectDraw, frmMain.picInv)
@@ -1245,7 +1186,7 @@ Public Sub CloseClient()
     
     EngineRun = False
     frmCargando.Show
-    AddtoRichTextBox frmCargando.status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.Status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
     
     Call Resolution.ResetResolution
     
