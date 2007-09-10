@@ -270,7 +270,7 @@ Image1(1).Picture = LoadPicture(App.path & "\Graficos\Botónvender.jpg")
 
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
 If Image1(0).Tag = 0 Then
     Image1(0).Picture = LoadPicture(App.path & "\Graficos\BotónComprar.jpg")
     Image1(0).Tag = 1
@@ -317,7 +317,7 @@ List1(1).Clear
 NPCInvDim = 0
 End Sub
 
-Private Sub Image1_MouseMove(index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Image1_MouseMove(index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
 Select Case index
     Case 0
         If Image1(0).Tag = 1 Then
@@ -357,6 +357,8 @@ Select Case index
         Label1(1).Caption = NPCInventory(List1(0).listIndex + 1).Valor
         Label1(2).Caption = NPCInventory(List1(0).listIndex + 1).Amount
         
+        If Label1(2).Caption <> 0 Then
+        
         Select Case NPCInventory(List1(0).listIndex + 1).OBJType
             Case eObjType.otWeapon
                 Label1(3).Caption = "Max Golpe:" & NPCInventory(List1(0).listIndex + 1).MaxHit
@@ -372,12 +374,16 @@ Select Case index
                 Label1(4).Visible = False
         End Select
         
-        Call DrawGrhtoHdc(Picture1.hDC, NPCInventory(List1(0).listIndex + 1).GrhIndex, SR, DR)
+        Call DrawGrhtoHdc(Picture1.hdc, NPCInventory(List1(0).listIndex + 1).GrhIndex, SR, DR)
+        
+        End If
     
     Case 1
         Label1(0).Caption = Inventario.ItemName(List1(1).listIndex + 1)
         Label1(1).Caption = Inventario.Valor(List1(1).listIndex + 1)
         Label1(2).Caption = Inventario.Amount(List1(1).listIndex + 1)
+        
+        If Label1(2).Caption <> 0 Then
         
         Select Case Inventario.OBJType(List1(1).listIndex + 1)
             Case eObjType.otWeapon
@@ -394,7 +400,10 @@ Select Case index
                 Label1(4).Visible = False
         End Select
         
-        Call DrawGrhtoHdc(Picture1.hDC, Inventario.GrhIndex(List1(1).listIndex + 1), SR, DR)
+        Call DrawGrhtoHdc(Picture1.hdc, Inventario.GrhIndex(List1(1).listIndex + 1), SR, DR)
+        
+        End If
+        
 End Select
 
 If Label1(2).Caption = 0 Then ' 27/08/2006 - GS > No mostrar imagen ni nada, cuando no ahi nada que mostrar.
@@ -411,7 +420,7 @@ End Sub
 '<-------------------------NUEVO-------------------------->
 '<-------------------------NUEVO-------------------------->
 '<-------------------------NUEVO-------------------------->
-Private Sub List1_MouseMove(index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub List1_MouseMove(index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
 If Image1(0).Tag = 0 Then
     Image1(0).Picture = LoadPicture(App.path & "\Graficos\BotónComprar.jpg")
     Image1(0).Tag = 1
