@@ -1524,7 +1524,7 @@ Sub LoadGraphics()
     RLluvia(4).Bottom = 256: RLluvia(5).Bottom = 256: RLluvia(6).Bottom = 256: RLluvia(7).Bottom = 256
     
     'We are done!
-    AddtoRichTextBox frmCargando.Status, "Hecho.", , , , 1, , False
+    AddtoRichTextBox frmCargando.status, "Hecho.", , , , 1, , False
 End Sub
 
 Public Function InitTileEngine(ByVal setDisplayFormhWnd As Long, ByVal setMainViewTop As Integer, ByVal setMainViewLeft As Integer, ByVal setTilePixelHeight As Integer, ByVal setTilePixelWidth As Integer, ByVal setWindowTileHeight As Integer, ByVal setWindowTileWidth As Integer, ByVal setTileBufferSize As Integer, ByVal pixelsToScrollPerFrameX As Integer, pixelsToScrollPerFrameY As Integer, ByVal engineSpeed As Single) As Boolean
@@ -1675,7 +1675,7 @@ On Error GoTo 0
     LTLluvia(3) = 608
     LTLluvia(4) = 736
     
-    AddtoRichTextBox frmCargando.Status, "Cargando Gráficos....", 0, 0, 0, , , True
+    AddtoRichTextBox frmCargando.status, "Cargando Gráficos....", 0, 0, 0, , , True
     Call LoadGraphics
     
     InitTileEngine = True
@@ -1973,7 +1973,7 @@ On Error Resume Next
             If LenB(.Nombre) > 0 Then
                 If Nombres And Abs(MouseTileX - .Pos.x) < 2 And (Abs(MouseTileY - .Pos.y)) < 2 Then
                     Pos = InStr(.Nombre, "<")
-                    If Pos = 0 Then Pos = Len(.Nombre)
+                    If Pos = 0 Then Pos = Len(.Nombre) + 2
                     
                     If .priv = 0 Then
                         If .Criminal Then
@@ -1985,11 +1985,11 @@ On Error Resume Next
                         color = RGB(ColoresPJ(.priv).r, ColoresPJ(.priv).g, ColoresPJ(.priv).b)
                     End If
                     
-                    line = Left$(.Nombre, Pos)
-                    Call RenderText(PixelOffsetX - Len(line) / 2 + 5, PixelOffsetY + 30, line, color, frmMain.font)
+                    line = Left$(.Nombre, Pos - 2)
+                    Call RenderText(PixelOffsetX + 10 - Len(line) * 2, PixelOffsetY + 30, line, color, frmMain.font)
                     
-                    line = mid$(.Nombre, Pos + 1)
-                    Call RenderText(PixelOffsetX - Len(line) / 2 + 5, PixelOffsetY + 45, line, color, frmMain.font)
+                    line = mid$(.Nombre, Pos)
+                    Call RenderText(PixelOffsetX + 10 - Len(line) * 3, PixelOffsetY + 45, line, color, frmMain.font)
                 End If
             End If
         End If

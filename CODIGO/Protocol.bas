@@ -2067,11 +2067,11 @@ On Error GoTo ErrHandler
         
         If privs <> 0 Then
             'If the player belongs to a council AND is an admin, only whos as an admin
-            If (privs And PlayerType.ChaosCouncil) <> 0 And (privs Xor PlayerType.ChaosCouncil) <> 0 Then
+            If (privs And PlayerType.ChaosCouncil) <> 0 And (privs And PlayerType.user) = 0 Then
                 privs = privs Xor PlayerType.ChaosCouncil
             End If
             
-            If (privs And PlayerType.RoyalCouncil) <> 0 And (privs Xor PlayerType.RoyalCouncil) <> 0 Then
+            If (privs And PlayerType.RoyalCouncil) <> 0 And (privs And PlayerType.user) = 0 Then
                 privs = privs Xor PlayerType.RoyalCouncil
             End If
             
