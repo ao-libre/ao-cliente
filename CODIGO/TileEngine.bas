@@ -1524,7 +1524,8 @@ Sub LoadGraphics()
     RLluvia(4).Bottom = 256: RLluvia(5).Bottom = 256: RLluvia(6).Bottom = 256: RLluvia(7).Bottom = 256
     
     'We are done!
-    AddtoRichTextBox frmCargando.status, "Hecho.", , , , 1, , False
+    'Saco esto porque el texto del cargar queda horrible
+    'AddtoRichTextBox frmCargando.status, "Hecho.", , , , 1, , False
 End Sub
 
 Public Function InitTileEngine(ByVal setDisplayFormhWnd As Long, ByVal setMainViewTop As Integer, ByVal setMainViewLeft As Integer, ByVal setTilePixelHeight As Integer, ByVal setTilePixelWidth As Integer, ByVal setWindowTileHeight As Integer, ByVal setWindowTileWidth As Integer, ByVal setTileBufferSize As Integer, ByVal pixelsToScrollPerFrameX As Integer, pixelsToScrollPerFrameY As Integer, ByVal engineSpeed As Single) As Boolean
@@ -1675,7 +1676,9 @@ On Error GoTo 0
     LTLluvia(3) = 608
     LTLluvia(4) = 736
     
-    AddtoRichTextBox frmCargando.status, "Cargando Gráficos....", 0, 0, 0, , , True
+    'Saco esto porque el texto del cargar queda horrible
+    'AddtoRichTextBox frmCargando.status, "Cargando Gráficos....", 0, 0, 0, , , True
+    
     Call LoadGraphics
     
     InitTileEngine = True

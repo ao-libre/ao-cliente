@@ -38,6 +38,7 @@ Begin VB.Form frmCargando
       _ExtentY        =   4233
       _Version        =   393217
       BackColor       =   16512
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmCargando.frx":0000

@@ -830,15 +830,15 @@ Sub Main()
     frmCargando.Show
     frmCargando.Refresh
     
-    frmConnect.Version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
-    AddtoRichTextBox frmCargando.Status, "Buscando servidores....", 0, 0, 0, 0, 0, 1
+    frmConnect.version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
+    AddtoRichTextBox frmCargando.status, "Buscando servidores... ", 0, 0, 0, 0, 0, 1
 
     Call CargarServidores
 'TODO : esto de ServerRecibidos no se podría sacar???
     ServersRecibidos = True
     
-    AddtoRichTextBox frmCargando.Status, "Encontrado", , , , 1
-    AddtoRichTextBox frmCargando.Status, "Iniciando constantes...", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
+    AddtoRichTextBox frmCargando.status, "Iniciando constantes... ", 0, 0, 0, 0, 0, 1
     
     Call InicializarNombres
     
@@ -850,7 +850,7 @@ Sub Main()
     
     AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
     
-    AddtoRichTextBox frmCargando.Status, "Iniciando motor gráfico...", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.status, "Iniciando motor gráfico... ", 0, 0, 0, 0, 0, 1
     
     If Not InitTileEngine(frmMain.hWnd, 160, 7, 32, 32, 13, 17, 9, 8, 8, 0.03) Then
         Call CloseClient
@@ -859,14 +859,14 @@ Sub Main()
     AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
     
     
-    Call AddtoRichTextBox(frmCargando.Status, "Configurando resolucion....")
+    Call AddtoRichTextBox(frmCargando.status, "Configurando resolucion... ", , , , , , 1)
     
     Call Resolution.SetResolution
     
     AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
     
     
-    Call AddtoRichTextBox(frmCargando.Status, "Creando animaciones extra....")
+    Call AddtoRichTextBox(frmCargando.status, "Creando animaciones extra... ", , , , , , 1)
     
     Call CargarTips
     
@@ -878,29 +878,36 @@ UserMap = 1
     Call CargarVersiones
     Call CargarColores
     
-#If SeguridadAlkon Then
-    CualMI = 0
-    Call InitMI
-#End If
+    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
     
-    AddtoRichTextBox frmCargando.Status, "                    ¡Bienvenido a Argentum Online!", , , , 1
-    
-    Unload frmCargando
+    AddtoRichTextBox frmCargando.status, "Iniciando DirectSound... ", 0, 0, 0, 0, 0, True
     
     'Inicializamos el sonido
-    Call AddtoRichTextBox(frmCargando.Status, "Iniciando DirectSound....", 0, 0, 0, 0, 0, True)
     Call Audio.Initialize(DirectX, frmMain.hWnd, App.path & "\" & Config_Inicio.DirSonidos & "\", App.path & "\" & Config_Inicio.DirMusica & "\")
     
     'Enable / Disable audio
     Audio.MusicActivated = Not ClientSetup.bNoMusic
     Audio.SoundActivated = Not ClientSetup.bNoSound
-    
-    Call AddtoRichTextBox(frmCargando.Status, "Hecho", , , , 1, , False)
-    
+        
     'Inicializamos el inventario gráfico
     Call Inventario.Initialize(DirectDraw, frmMain.picInv)
     
     Call Audio.PlayMIDI(MIdi_Inicio & ".mid")
+    
+    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1, , False
+    
+#If SeguridadAlkon Then
+    CualMI = 0
+    Call InitMI
+#End If
+    
+    AddtoRichTextBox frmCargando.status, "                    ¡Bienvenido a Argentum Online!", , , , 1
+    
+    'Give the user enough time to read the welcome text
+    Call Sleep(1750)
+    
+    Unload frmCargando
+    
 
     frmPres.Picture = LoadPicture(App.path & "\Graficos\bosquefinal.jpg")
     frmPres.Show vbModal    'Es modal, así que se detiene la ejecución de Main hasta que se desaparece

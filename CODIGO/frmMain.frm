@@ -911,6 +911,22 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
                 SendTxt.SetFocus
             End If
     End Select
+    
+    Shift = Shift And 7
+    If (Shift And vbAltMask) = vbAltMask Then
+        If (KeyCode >= vbKey0) And (KeyCode <= vbKey9) Then
+            If ((KeyCode - vbKey0) <= CustomKeys.KeyCount) And ((KeyCode - vbKey0) <> CustomKeys.KeybConfig) Then
+                CustomKeys.KeybConfig = (KeyCode - vbKey0)
+                With FontTypes(FontTypeNames.FONTTYPE_VENENO)
+                    If CustomKeys.KeybConfig > 0 Then
+                        Call Mod_General.AddtoRichTextBox(frmMain.RecTxt, "Cambiado a Teclado número " & (KeyCode - vbKey0) & ".", .red, .green, .blue, True, False, False)
+                    Else
+                        Call Mod_General.AddtoRichTextBox(frmMain.RecTxt, "Cambiado a Teclas por defecto.", .red, .green, .blue, True, False, False)
+                    End If
+                End With
+            End If
+        End If
+    End If
 End Sub
 
 Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)

@@ -113,3 +113,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 23/08/2007: Arreglé un problema con los sonidos NO_3D en el clsAudio. (Rapsodius)
  * 29/08/2007: Cambiada la duración de los diálogos dependiendo de su largo en caracteres. (Rapsodius)
  * 31/08/2007: Volé NextOpenChar y MoveScreen de General, estaban duplicadas del TileEngine. (Maraxus)
+ * 20/09/2007: Arreglé el texto del frmCargando porque habia algunas cosas raras... Agregue soporte para multiples configuraciones de teclado en las teclas configurables y arregle un poco el formulario de las custom keys. (Rapsodius)

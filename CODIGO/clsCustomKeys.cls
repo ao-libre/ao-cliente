@@ -33,10 +33,10 @@ Attribute VB_Exposed = False
 '**************************************************************************
 
 ''
-'Customizes User Keys. Complete revision by Maraxus to fit coding standards and fix bugs.
+'Customizes User Keys.
 '
 '@author Rapsodius
-'@version 1.1.0
+'@version 1.2.0
 '@remarks None
 '@date 20070803
 
@@ -51,13 +51,16 @@ Private Const NUM_CUSTOM_KEYS As Byte = 25
 Private Const ERROR_NO_KEY_FILE As Long = vbObjectError + 16
 
 ''
+'Number of Independent Keyboard Configurations
+Private Const NUM_KEY_CONFIG As Byte = 6
+
+''
 'The relative path from the application's location where the key config file is.
 Private Const KEY_CONFIG_FILE As String = "\init\BindKeys.bin"
 
-
 ''
 'Array of mapped keys
-Private mappedKeys(1 To NUM_CUSTOM_KEYS) As Integer
+Private mappedKeys(1 To NUM_CUSTOM_KEYS, 0 To NUM_KEY_CONFIG) As Integer
 
 
 ''
@@ -90,20 +93,13 @@ Private mappedKeys(1 To NUM_CUSTOM_KEYS) As Integer
 '@param mKeyWorkMacro Key for start/stop the Work Macro
 '@param mKeyExitGame Placeholder for future expansion
 Public Enum eKeyType
-    '%%%%Movement Keys%%%%
     mKeyUp = 1
     mKeyDown = 2
     mKeyLeft = 3
     mKeyRight = 4
-    '%%%%Movement Keys%%%%
-    
-    '%%%%Option Keys%%%%
     mKeyToggleMusic = 5
     mKeyRequestRefresh = 6
     mKeyToggleNames = 7
-    '%%%%Option Keys%%%%
-    
-    '%%%%Action Keys%%%%
     mKeyGetObject = 8
     mKeyToggleCombatMode = 9
     mKeyEquipObject = 10
@@ -114,14 +110,8 @@ Public Enum eKeyType
     mKeyDropObject = 15
     mKeyUseObject = 16
     mKeyAttack = 17
-    '%%%%Action Keys%%%%
-    
-    '%%%%Talk Keys%%%%
     mKeyTalk = 18
     mKeyTalkWithGuild = 19
-    '%%%%Talk Keys%%%%
-    
-    '%%%%Misc. Keys%%%%
     mKeyToggleFPS = 20
     mKeyTakeScreenShot = 21
     mKeyShowOptions = 22
@@ -129,8 +119,11 @@ Public Enum eKeyType
     mKeyCastSpellMacro = 24
     mKeyWorkMacro = 25
     mKeyExitGame = 26
-    '%%%%Misc. Keys%%%%
 End Enum
+
+''
+'Which keyboard is currently in use.
+Private numKeyboard As Byte
 
 ''
 'Shows a readable name for a specific Key code
@@ -141,119 +134,74 @@ End Enum
 
 Public Function ReadableName(ByVal KeyCode As Integer) As String
 '***************************************************
-'Author: Rapsodius
-'Last Modification: 08/04/07
+' Author: Rapsodius
+' Last Modification: 08-04-07
 '
 '***************************************************
     Select Case KeyCode
-        '%%%%%%%%%%ALPHANUMERIC CHARACTERS%%%%%%%%%%
-        Case KeyCodeConstants.vbKeyA To KeyCodeConstants.vbKeyZ 'A-Z
+        Case KeyCodeConstants.vbKeyA To KeyCodeConstants.vbKeyZ
             ReadableName = Chr$(KeyCode)
-        
-        Case KeyCodeConstants.vbKeyNumpad0 To KeyCodeConstants.vbKeyNumpad9 '0-9
+        Case KeyCodeConstants.vbKeyNumpad0 To KeyCodeConstants.vbKeyNumpad9
             ReadableName = KeyCode - KeyCodeConstants.vbKeyNumpad0 & " (teclado numérico)"
-        
-        '%%%%%%%%%%ALPHANUMERIC CHARACTERS%%%%%%%%%%
-        
-        '%%%%%%%%%%FUNCTION KEYS%%%%%%%%%%
         Case KeyCodeConstants.vbKeyF1 To KeyCodeConstants.vbKeyF16
-            'I wonder how many people has keyboards with F16...
             ReadableName = "F" & KeyCode - KeyCodeConstants.vbKeyF1 + 1
-        
-        '%%%%%%%%%%FUNCTION KEYS%%%%%%%%%%
-        
-        '%%%%%%%%%%NUMPAD KEYS%%%%%%%%%%
         Case KeyCodeConstants.vbKeyMultiply
             ReadableName = "* (teclado numerico)"
-        
         Case KeyCodeConstants.vbKeyAdd
             ReadableName = "+ (teclado numerico)"
-        
         Case KeyCodeConstants.vbKeySeparator
             'Note: Separator appears in MSDN as the Enter key for
-            'the numpad, but windows recognizes it as the normal
+            'the numpad, but MS recognizes it as the normal
             'Enter key
             ReadableName = "Enter (teclado numérico)"
-        
         Case KeyCodeConstants.vbKeySubtract
             ReadableName = "- (teclado numerico)"
-        
         Case KeyCodeConstants.vbKeyDecimal
             ReadableName = ". (teclado numerico)"
-        
         Case KeyCodeConstants.vbKeyDivide
             ReadableName = "/ (teclado numerico)"
-        
-        '%%%%%%%%%%NUMPAD KEYS%%%%%%%%%%
-        
-        '%%%%%%%%%%MODIFIER KEYS%%%%%%%%%%
         Case KeyCodeConstants.vbKeyShift
             ReadableName = "Shift"
-        
         Case KeyCodeConstants.vbKeyControl
             ReadableName = "Control"
-        
         Case KeyCodeConstants.vbKeyMenu 'Alt
             ReadableName = "Alt"
-        
-        '%%%%%%%%%%MODIFIER KEYS%%%%%%%%%%
-        
-        '%%%%%%%%%%MISC. KEYS%%%%%%%%%%
         Case KeyCodeConstants.vbKeyPause
             ReadableName = "Pausa"
-        
         Case KeyCodeConstants.vbKeyCapital
             ReadableName = "Blq Mayus"
-        
         Case KeyCodeConstants.vbKeyEscape
             ReadableName = "Esc"
-        
         Case KeyCodeConstants.vbKeyPageUp
             ReadableName = "Ret Pag"
-        
         Case KeyCodeConstants.vbKeyPageDown
             ReadableName = "Av Pag"
-        
         Case KeyCodeConstants.vbKeyEnd
             ReadableName = "Fin"
-        
         Case KeyCodeConstants.vbKeyHome
             ReadableName = "Inicio"
-        
         Case KeyCodeConstants.vbKeyLeft
             ReadableName = "Izquierda"
-        
         Case KeyCodeConstants.vbKeyUp
             ReadableName = "Arriba"
-        
         Case KeyCodeConstants.vbKeyRight
             ReadableName = "Derecha"
-        
         Case KeyCodeConstants.vbKeyDown
             ReadableName = "Abajo"
-        
         Case KeyCodeConstants.vbKeyInsert
             ReadableName = "Insertar"
-        
         Case KeyCodeConstants.vbKeyNumlock
             ReadableName = "Blq Num"
-        
         Case KeyCodeConstants.vbKeyScrollLock
             ReadableName = "Blq Despl"
-        
         Case KeyCodeConstants.vbKeySpace
             ReadableName = "Barra Espaciadora"
-        
         Case KeyCodeConstants.vbKeyBack
             ReadableName = "Borrar"
-        
         Case KeyCodeConstants.vbKeyReturn
             ReadableName = "Enter"
-        
         Case KeyCodeConstants.vbKeyDelete
             ReadableName = "Suprimir"
-        '%%%%%%%%%%MISC. KEYS%%%%%%%%%%
-        
         Case Else
             'In all other cases, key is considered not valid.
             ReadableName = Constants.vbNullString
@@ -267,25 +215,31 @@ Public Sub LoadCustomKeys()
 '**************************************************************
 ' LoadCustomKeys - Reads binded keys from file, raises an
 ' error if file doesn't exist or if there is an invalid key
-'
 ' Creation Date: 08-21-07
-' Created and Implemented by Rapsodius
+'
+' Last Modification: 09-20-07 by Rapsodius
+' Added Independent keyboard configuration
 '**************************************************************
     Dim i As Long
+    Dim k As Long
     Dim FileNum As Integer
     FileNum = FreeFile()
+    
+    'Inits keyboard config #0 with default configurations
+    Call InitDefaults
         
     Open App.path & KEY_CONFIG_FILE For Binary Access Read Lock Read Write As FileNum
-    
-    For i = 1 To NUM_CUSTOM_KEYS
-        Get FileNum, , mappedKeys(i)
-        If LenB(ReadableName(mappedKeys(i))) = 0 Then
-            Close FileNum
-            Call Err.Raise(ERROR_NO_KEY_FILE)
-            Exit Sub
-        End If
-    Next i
-    
+        Get #1, , numKeyboard
+        For k = 1 To NUM_KEY_CONFIG
+            For i = 1 To NUM_CUSTOM_KEYS
+                Get FileNum, , mappedKeys(i, k)
+                If LenB(ReadableName(mappedKeys(i, k))) = 0 Then
+                    Close FileNum
+                    Call Err.Raise(ERROR_NO_KEY_FILE)
+                    Exit Sub
+                End If
+            Next i
+        Next k
     Close FileNum
 End Sub
 
@@ -300,14 +254,54 @@ Public Sub SaveCustomKeys()
 ' Created and Implemented by Rapsodius
 '**************************************************************
     Dim FileNum As Integer
+    Dim i As Long
+    Dim k As Long
     FileNum = FreeFile()
     
     Open App.path & KEY_CONFIG_FILE For Binary Access Write As FileNum
-    
-    Put FileNum, , mappedKeys()
-    
+        Put #1, , numKeyboard
+        For k = 1 To NUM_KEY_CONFIG
+            For i = 1 To NUM_CUSTOM_KEYS
+                Put FileNum, , mappedKeys(i, k)
+            Next i
+        Next k
     Close #FileNum
 End Sub
+
+''
+'Gets the currently active key configuration
+'
+'@return The keyboard index in use
+
+Public Property Get KeybConfig() As Byte
+'**************************************************************
+' KeybConfig - Retrieves the active key configuration.
+'
+' Creation Date: 09-20-07
+' Created and Implemented by Rapsodius
+'**************************************************************
+
+    KeybConfig = numKeyboard
+End Property
+
+''
+'Sets the active key configuration
+'
+'@param newValue Key configuration to set as active.
+
+Public Property Let KeybConfig(ByVal newValue As Byte)
+'**************************************************************
+' KeybConfig - Sets the active key configuration.
+'
+' Creation Date: 09-20-07
+' Created and Implemented by Rapsodius
+'**************************************************************
+    If newValue < 0 Or newValue > NUM_KEY_CONFIG Then Exit Property
+    
+    If newValue <> numKeyboard Then
+        numKeyboard = newValue
+    End If
+End Property
 
 ''
 'Gets a key code
@@ -317,14 +311,14 @@ End Sub
 
 Public Property Get BindedKey(ByVal index As eKeyType) As Integer
 '***************************************************
-'Author: Rapsodius
-'Last Modification: 08/04/07
+' Author: Rapsodius
+' Last Modification: 08-04-07
 '
 ' Creation Date: 08-04-07
 ' Created and Implemented by Rapsodius
 '**************************************************************
     If index < 1 Or index > NUM_CUSTOM_KEYS Then Exit Property
-    BindedKey = mappedKeys(index)
+    BindedKey = mappedKeys(index, numKeyboard)
 End Property
 
 ''
@@ -335,10 +329,9 @@ End Property
 
 Public Property Let BindedKey(ByVal index As eKeyType, ByVal NewVal As Integer)
 '***************************************************
-'Author: Rapsodius
-'Last Modification: 08/04/07
-'
+' Author: Rapsodius
 ' Creation Date: 08-05-07
+'
 ' Last Modification: 08-14-07 by Rapsodius
 ' Created and Implemented by Rapsodius
 '**************************************************************
@@ -352,46 +345,88 @@ Public Property Let BindedKey(ByVal index As eKeyType, ByVal NewVal As Integer)
         Exit Property
     End If
     
-    mappedKeys(index) = NewVal
+    mappedKeys(index, numKeyboard) = NewVal
 End Property
+
+''
+'Inits Default keys on config number 0.
+
+Public Sub InitDefaults()
+'**************************************************************
+' InitDefaults - Loads default keys on config number 0.
+'
+' Creation Date: 09-20-07
+' Created and Implemented by Rapsodius
+'**************************************************************
+    mappedKeys(eKeyType.mKeyUp, 0) = KeyCodeConstants.vbKeyUp
+    mappedKeys(eKeyType.mKeyDown, 0) = KeyCodeConstants.vbKeyDown
+    mappedKeys(eKeyType.mKeyLeft, 0) = KeyCodeConstants.vbKeyLeft
+    mappedKeys(eKeyType.mKeyRight, 0) = KeyCodeConstants.vbKeyRight
+    mappedKeys(eKeyType.mKeyToggleMusic, 0) = KeyCodeConstants.vbKeyM
+    mappedKeys(eKeyType.mKeyRequestRefresh, 0) = KeyCodeConstants.vbKeyL
+    mappedKeys(eKeyType.mKeyToggleNames, 0) = KeyCodeConstants.vbKeyN
+    mappedKeys(eKeyType.mKeyGetObject, 0) = KeyCodeConstants.vbKeyA
+    mappedKeys(eKeyType.mKeyToggleCombatMode, 0) = KeyCodeConstants.vbKeyC
+    mappedKeys(eKeyType.mKeyEquipObject, 0) = KeyCodeConstants.vbKeyE
+    mappedKeys(eKeyType.mKeyTamAnimal, 0) = KeyCodeConstants.vbKeyD
+    mappedKeys(eKeyType.mKeySteal, 0) = KeyCodeConstants.vbKeyR
+    mappedKeys(eKeyType.mKeyToggleSafeMode, 0) = KeyCodeConstants.vbKeyMultiply
+    mappedKeys(eKeyType.mKeyHide, 0) = KeyCodeConstants.vbKeyO
+    mappedKeys(eKeyType.mKeyDropObject, 0) = KeyCodeConstants.vbKeyT
+    mappedKeys(eKeyType.mKeyUseObject, 0) = KeyCodeConstants.vbKeyU
+    mappedKeys(eKeyType.mKeyAttack, 0) = KeyCodeConstants.vbKeyControl
+    mappedKeys(eKeyType.mKeyTalk, 0) = KeyCodeConstants.vbKeyReturn
+    mappedKeys(eKeyType.mKeyTalkWithGuild, 0) = KeyCodeConstants.vbKeyDelete
+    mappedKeys(eKeyType.mKeyToggleFPS, 0) = KeyCodeConstants.vbKeyF4
+    mappedKeys(eKeyType.mKeyTakeScreenShot, 0) = KeyCodeConstants.vbKeyF2
+    mappedKeys(eKeyType.mKeyShowOptions, 0) = KeyCodeConstants.vbKeyF5
+    mappedKeys(eKeyType.mKeyMeditate, 0) = KeyCodeConstants.vbKeyF6
+    mappedKeys(eKeyType.mKeyCastSpellMacro, 0) = KeyCodeConstants.vbKeyF7
+    mappedKeys(eKeyType.mKeyWorkMacro, 0) = KeyCodeConstants.vbKeyF8
+    'mappedKeys(eKeyType.mKeyExitGame, 0) = ???
+End Sub
 
 ''
 'Loads default keys
 
 Public Sub LoadDefaults()
 '**************************************************************
-' LoadDefaults - Loads default key codes in case of error
-' or if the user requests it.
-'
+' LoadDefaults - Loads default key codes in case of error.
 ' Creation Date: 08-05-07
-' Created and Implemented by Rapsodius
+'
+' Last Modification: 09-20-07 by Rapsodius
+' Added support for independent keyboards.
 '**************************************************************
-    mappedKeys(eKeyType.mKeyUp) = KeyCodeConstants.vbKeyUp
-    mappedKeys(eKeyType.mKeyDown) = KeyCodeConstants.vbKeyDown
-    mappedKeys(eKeyType.mKeyLeft) = KeyCodeConstants.vbKeyLeft
-    mappedKeys(eKeyType.mKeyRight) = KeyCodeConstants.vbKeyRight
-    mappedKeys(eKeyType.mKeyToggleMusic) = KeyCodeConstants.vbKeyM
-    mappedKeys(eKeyType.mKeyRequestRefresh) = KeyCodeConstants.vbKeyL
-    mappedKeys(eKeyType.mKeyToggleNames) = KeyCodeConstants.vbKeyN
-    mappedKeys(eKeyType.mKeyGetObject) = KeyCodeConstants.vbKeyA
-    mappedKeys(eKeyType.mKeyToggleCombatMode) = KeyCodeConstants.vbKeyC
-    mappedKeys(eKeyType.mKeyEquipObject) = KeyCodeConstants.vbKeyE
-    mappedKeys(eKeyType.mKeyTamAnimal) = KeyCodeConstants.vbKeyD
-    mappedKeys(eKeyType.mKeySteal) = KeyCodeConstants.vbKeyR
-    mappedKeys(eKeyType.mKeyToggleSafeMode) = KeyCodeConstants.vbKeyMultiply
-    mappedKeys(eKeyType.mKeyHide) = KeyCodeConstants.vbKeyO
-    mappedKeys(eKeyType.mKeyDropObject) = KeyCodeConstants.vbKeyT
-    mappedKeys(eKeyType.mKeyUseObject) = KeyCodeConstants.vbKeyU
-    mappedKeys(eKeyType.mKeyAttack) = KeyCodeConstants.vbKeyControl
-    mappedKeys(eKeyType.mKeyTalk) = KeyCodeConstants.vbKeyReturn
-    mappedKeys(eKeyType.mKeyTalkWithGuild) = KeyCodeConstants.vbKeyDelete
-    mappedKeys(eKeyType.mKeyToggleFPS) = KeyCodeConstants.vbKeyF4
-    mappedKeys(eKeyType.mKeyTakeScreenShot) = KeyCodeConstants.vbKeyF2
-    mappedKeys(eKeyType.mKeyShowOptions) = KeyCodeConstants.vbKeyF5
-    mappedKeys(eKeyType.mKeyMeditate) = KeyCodeConstants.vbKeyF6
-    mappedKeys(eKeyType.mKeyCastSpellMacro) = KeyCodeConstants.vbKeyF7
-    mappedKeys(eKeyType.mKeyWorkMacro) = KeyCodeConstants.vbKeyF8
-    'mappedKeys(eKeyType.mKeyExitGame) = ???
+Dim k As Long
+
+    For k = 1 To NUM_KEY_CONFIG
+        mappedKeys(eKeyType.mKeyUp, k) = KeyCodeConstants.vbKeyUp
+        mappedKeys(eKeyType.mKeyDown, k) = KeyCodeConstants.vbKeyDown
+        mappedKeys(eKeyType.mKeyLeft, k) = KeyCodeConstants.vbKeyLeft
+        mappedKeys(eKeyType.mKeyRight, k) = KeyCodeConstants.vbKeyRight
+        mappedKeys(eKeyType.mKeyToggleMusic, k) = KeyCodeConstants.vbKeyM
+        mappedKeys(eKeyType.mKeyRequestRefresh, k) = KeyCodeConstants.vbKeyL
+        mappedKeys(eKeyType.mKeyToggleNames, k) = KeyCodeConstants.vbKeyN
+        mappedKeys(eKeyType.mKeyGetObject, k) = KeyCodeConstants.vbKeyA
+        mappedKeys(eKeyType.mKeyToggleCombatMode, k) = KeyCodeConstants.vbKeyC
+        mappedKeys(eKeyType.mKeyEquipObject, k) = KeyCodeConstants.vbKeyE
+        mappedKeys(eKeyType.mKeyTamAnimal, k) = KeyCodeConstants.vbKeyD
+        mappedKeys(eKeyType.mKeySteal, k) = KeyCodeConstants.vbKeyR
+        mappedKeys(eKeyType.mKeyToggleSafeMode, k) = KeyCodeConstants.vbKeyMultiply
+        mappedKeys(eKeyType.mKeyHide, k) = KeyCodeConstants.vbKeyO
+        mappedKeys(eKeyType.mKeyDropObject, k) = KeyCodeConstants.vbKeyT
+        mappedKeys(eKeyType.mKeyUseObject, k) = KeyCodeConstants.vbKeyU
+        mappedKeys(eKeyType.mKeyAttack, k) = KeyCodeConstants.vbKeyControl
+        mappedKeys(eKeyType.mKeyTalk, k) = KeyCodeConstants.vbKeyReturn
+        mappedKeys(eKeyType.mKeyTalkWithGuild, k) = KeyCodeConstants.vbKeyDelete
+        mappedKeys(eKeyType.mKeyToggleFPS, k) = KeyCodeConstants.vbKeyF4
+        mappedKeys(eKeyType.mKeyTakeScreenShot, k) = KeyCodeConstants.vbKeyF2
+        mappedKeys(eKeyType.mKeyShowOptions, k) = KeyCodeConstants.vbKeyF5
+        mappedKeys(eKeyType.mKeyMeditate, k) = KeyCodeConstants.vbKeyF6
+        mappedKeys(eKeyType.mKeyCastSpellMacro, k) = KeyCodeConstants.vbKeyF7
+        mappedKeys(eKeyType.mKeyWorkMacro, k) = KeyCodeConstants.vbKeyF8
+        'mappedKeys(eKeyType.mKeyExitGame, k) = ???
+    Next k
 End Sub
 
 ''
@@ -402,10 +437,10 @@ End Sub
 
 Public Function KeyAssigned(ByVal KeyCode As Integer) As Boolean
 '***************************************************
-'Author: Rapsodius
-'Last Modification: 08/04/07
-'
+' Author: Rapsodius
 ' Creation Date: 08-07-07
+'
+' Last Modification: 09-20-07 by Rapsodius
 ' Created and Implemented by Rapsodius
 '**************************************************************
     Dim Counter As Long
@@ -413,7 +448,7 @@ Public Function KeyAssigned(ByVal KeyCode As Integer) As Boolean
     KeyAssigned = False
     
     For Counter = 1 To NUM_CUSTOM_KEYS
-        If mappedKeys(Counter) = KeyCode Then
+        If mappedKeys(Counter, numKeyboard) = KeyCode Then
             KeyAssigned = True
             Exit For
         End If
@@ -428,10 +463,24 @@ End Function
 Public Property Get Count() As Byte
 '***************************************************
 'Author: Rapsodius
-'Last Modification: 08/04/07
+'Last Modification: 08-04-07
 '
 '***************************************************
     Count = NUM_CUSTOM_KEYS
+End Property
+
+''
+'Retrieves the number of keyboard configurations
+'
+'@return The number of independent keyboard configurations
+
+Public Property Get KeyCount() As Byte
+'***************************************************
+'Author: Rapsodius
+'Last Modification: 08-04-07
+'
+'***************************************************
+    KeyCount = NUM_KEY_CONFIG
 End Property
 
 ''
@@ -440,7 +489,7 @@ End Property
 Private Sub Class_Initialize()
 '***************************************************
 'Author: Rapsodius
-'Last Modification: 08/04/07
+'Last Modification: 08-04-07
 '
 '***************************************************
 On Error GoTo ErrHand:
@@ -461,7 +510,7 @@ End Sub
 Private Sub Class_Terminate()
 '***************************************************
 'Author: Rapsodius
-'Last Modification: 08/04/07
+'Last Modification: 08-04-07
 '
 '***************************************************
     Call SaveCustomKeys
