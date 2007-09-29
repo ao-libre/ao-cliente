@@ -451,9 +451,9 @@ Sub MoveTo(ByVal Direccion As E_Heading)
             LegalOk = LegalPos(UserPos.x - 1, UserPos.y)
     End Select
     
-    If LegalOk Then
+    If LegalOk And Not UserParalizado Then
         Call WriteWalk(Direccion)
-        If Not UserDescansar And Not UserMeditar And Not UserParalizado Then
+        If Not UserDescansar And Not UserMeditar Then
             MoveCharbyHead UserCharIndex, Direccion
             MoveScreen Direccion
         End If
@@ -816,8 +816,8 @@ Sub Main()
     'Obtener el HushMD5
     Dim fMD5HushYo As String * 32
     
-    fMD5HushYo = md5.GetMD5File(App.path & "\" & App.EXEName & ".exe")
-    Call md5.MD5Reset
+    fMD5HushYo = MD5.GetMD5File(App.path & "\" & App.EXEName & ".exe")
+    Call MD5.MD5Reset
     MD5HushYo = txtOffset(hexMd52Asc(fMD5HushYo), 55)
     
     Debug.Print fMD5HushYo
@@ -848,7 +848,7 @@ Sub Main()
     frmOldPersonaje.NameTxt.Text = Config_Inicio.Name
     frmOldPersonaje.PasswordTxt.Text = ""
     
-    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
+    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
     
     AddtoRichTextBox frmCargando.status, "Iniciando motor gráfico... ", 0, 0, 0, 0, 0, 1
     
@@ -856,14 +856,14 @@ Sub Main()
         Call CloseClient
     End If
     
-    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
+    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
     
     
     Call AddtoRichTextBox(frmCargando.status, "Configurando resolucion... ", , , , , , 1)
     
     Call Resolution.SetResolution
     
-    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
+    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
     
     
     Call AddtoRichTextBox(frmCargando.status, "Creando animaciones extra... ", , , , , , 1)
@@ -1193,7 +1193,7 @@ Public Sub CloseClient()
     
     EngineRun = False
     frmCargando.Show
-    AddtoRichTextBox frmCargando.Status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
     
     Call Resolution.ResetResolution
     
@@ -1213,7 +1213,7 @@ Public Sub CloseClient()
     Set outgoingData = Nothing
     
 #If SeguridadAlkon Then
-    Set md5 = Nothing
+    Set MD5 = Nothing
 #End If
     
     Call UnloadAllForms
