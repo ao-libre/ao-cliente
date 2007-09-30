@@ -541,31 +541,34 @@ Sub SwitchMap(ByVal Map As Integer)
     Dim x As Long
     Dim tempint As Integer
     Dim ByFlags As Byte
+    Dim handle As Integer
     
-    Open DirMapas & "Mapa" & Map & ".map" For Binary As #1
-    Seek #1, 1
+    handle = FreeFile()
+    
+    Open DirMapas & "Mapa" & Map & ".map" For Binary As handle
+    Seek handle, 1
             
     'map Header
-    Get #1, , MapInfo.MapVersion
-    Get #1, , MiCabecera
-    Get #1, , tempint
-    Get #1, , tempint
-    Get #1, , tempint
-    Get #1, , tempint
+    Get handle, , MapInfo.MapVersion
+    Get handle, , MiCabecera
+    Get handle, , tempint
+    Get handle, , tempint
+    Get handle, , tempint
+    Get handle, , tempint
     
     'Load arrays
     For y = YMinMapSize To YMaxMapSize
         For x = XMinMapSize To XMaxMapSize
-            Get #1, , ByFlags
+            Get handle, , ByFlags
             
             MapData(x, y).Blocked = (ByFlags And 1)
             
-            Get #1, , MapData(x, y).Graphic(1).GrhIndex
+            Get handle, , MapData(x, y).Graphic(1).GrhIndex
             InitGrh MapData(x, y).Graphic(1), MapData(x, y).Graphic(1).GrhIndex
             
             'Layer 2 used?
             If ByFlags And 2 Then
-                Get #1, , MapData(x, y).Graphic(2).GrhIndex
+                Get handle, , MapData(x, y).Graphic(2).GrhIndex
                 InitGrh MapData(x, y).Graphic(2), MapData(x, y).Graphic(2).GrhIndex
             Else
                 MapData(x, y).Graphic(2).GrhIndex = 0
@@ -573,7 +576,7 @@ Sub SwitchMap(ByVal Map As Integer)
                 
             'Layer 3 used?
             If ByFlags And 4 Then
-                Get #1, , MapData(x, y).Graphic(3).GrhIndex
+                Get handle, , MapData(x, y).Graphic(3).GrhIndex
                 InitGrh MapData(x, y).Graphic(3), MapData(x, y).Graphic(3).GrhIndex
             Else
                 MapData(x, y).Graphic(3).GrhIndex = 0
@@ -581,7 +584,7 @@ Sub SwitchMap(ByVal Map As Integer)
                 
             'Layer 4 used?
             If ByFlags And 8 Then
-                Get #1, , MapData(x, y).Graphic(4).GrhIndex
+                Get handle, , MapData(x, y).Graphic(4).GrhIndex
                 InitGrh MapData(x, y).Graphic(4), MapData(x, y).Graphic(4).GrhIndex
             Else
                 MapData(x, y).Graphic(4).GrhIndex = 0
@@ -589,7 +592,7 @@ Sub SwitchMap(ByVal Map As Integer)
             
             'Trigger used?
             If ByFlags And 16 Then
-                Get #1, , MapData(x, y).Trigger
+                Get handle, , MapData(x, y).Trigger
             Else
                 MapData(x, y).Trigger = 0
             End If
@@ -604,7 +607,7 @@ Sub SwitchMap(ByVal Map As Integer)
         Next x
     Next y
     
-    Close #1
+    Close handle
     
     MapInfo.Name = ""
     MapInfo.Music = ""
