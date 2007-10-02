@@ -227,7 +227,7 @@ Public Sub LoadCustomKeys()
     
     'Inits keyboard config #0 with default configurations
     Call InitDefaults
-        
+    
     Open App.path & KEY_CONFIG_FILE For Binary Access Read Lock Read Write As FileNum
         Get #1, , numKeyboard
         For k = 1 To NUM_KEY_CONFIG
@@ -259,7 +259,7 @@ Public Sub SaveCustomKeys()
     FileNum = FreeFile()
     
     Open App.path & KEY_CONFIG_FILE For Binary Access Write As FileNum
-        Put #1, , numKeyboard
+        Put FileNum, , numKeyboard
         For k = 1 To NUM_KEY_CONFIG
             For i = 1 To NUM_CUSTOM_KEYS
                 Put FileNum, , mappedKeys(i, k)
@@ -397,7 +397,7 @@ Public Sub LoadDefaults()
 ' Last Modification: 09-20-07 by Rapsodius
 ' Added support for independent keyboards.
 '**************************************************************
-Dim k As Long
+    Dim k As Long
 
     For k = 1 To NUM_KEY_CONFIG
         mappedKeys(eKeyType.mKeyUp, k) = KeyCodeConstants.vbKeyUp
