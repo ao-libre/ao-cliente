@@ -44,7 +44,7 @@ Option Explicit
 
 ''
 'Number of Customizable Keys
-Private Const NUM_CUSTOM_KEYS As Byte = 25
+Private Const NUM_CUSTOM_KEYS As Byte = 27
 
 ''
 'Error Raised in case the key file doesn't exist
@@ -79,6 +79,7 @@ Private mappedKeys(1 To NUM_CUSTOM_KEYS, 0 To NUM_KEY_CONFIG) As Integer
 '@param mKeyTamAnimal Key for taming animals
 '@param mKeySteal Key for Stealing other users' gold or objects
 '@param mKeyToggleSafeMode Key for toggling Safe Mode
+'@param mKeyToggleResuscitationSafe Key for toggling Resuscitation Safe
 '@param mKeyHide Key for hiding the character
 '@param mKeyDropObject Key for dropping inventory objects
 '@param mKeyUseObject Key for using inventory objects
@@ -91,34 +92,35 @@ Private mappedKeys(1 To NUM_CUSTOM_KEYS, 0 To NUM_KEY_CONFIG) As Integer
 '@param mKeyMeditate Key for start/stop meditation
 '@param mKeyCastSpellMacro Key for start/stop the Cast Spell Macro
 '@param mKeyWorkMacro Key for start/stop the Work Macro
-'@param mKeyExitGame Placeholder for future expansion
+'@param mKeyExitGame Key for close the game
 Public Enum eKeyType
     mKeyUp = 1
-    mKeyDown = 2
-    mKeyLeft = 3
-    mKeyRight = 4
-    mKeyToggleMusic = 5
-    mKeyRequestRefresh = 6
-    mKeyToggleNames = 7
-    mKeyGetObject = 8
-    mKeyToggleCombatMode = 9
-    mKeyEquipObject = 10
-    mKeyTamAnimal = 11
-    mKeySteal = 12
-    mKeyToggleSafeMode = 13
-    mKeyHide = 14
-    mKeyDropObject = 15
-    mKeyUseObject = 16
-    mKeyAttack = 17
-    mKeyTalk = 18
-    mKeyTalkWithGuild = 19
-    mKeyToggleFPS = 20
-    mKeyTakeScreenShot = 21
-    mKeyShowOptions = 22
-    mKeyMeditate = 23
-    mKeyCastSpellMacro = 24
-    mKeyWorkMacro = 25
-    mKeyExitGame = 26
+    mKeyDown
+    mKeyLeft
+    mKeyRight
+    mKeyToggleMusic
+    mKeyRequestRefresh
+    mKeyToggleNames
+    mKeyGetObject
+    mKeyToggleCombatMode
+    mKeyEquipObject
+    mKeyTamAnimal
+    mKeySteal
+    mKeyToggleSafeMode
+    mKeyToggleResuscitationSafe
+    mKeyHide
+    mKeyDropObject
+    mKeyUseObject
+    mKeyAttack
+    mKeyTalk
+    mKeyTalkWithGuild
+    mKeyToggleFPS
+    mKeyTakeScreenShot
+    mKeyShowOptions
+    mKeyMeditate
+    mKeyCastSpellMacro
+    mKeyWorkMacro
+    mKeyExitGame
 End Enum
 
 ''
@@ -227,7 +229,7 @@ Public Sub LoadCustomKeys()
     
     'Inits keyboard config #0 with default configurations
     Call InitDefaults
-    
+        
     Open App.path & KEY_CONFIG_FILE For Binary Access Read Lock Read Write As FileNum
         Get #1, , numKeyboard
         For k = 1 To NUM_KEY_CONFIG
@@ -371,6 +373,7 @@ Public Sub InitDefaults()
     mappedKeys(eKeyType.mKeyTamAnimal, 0) = KeyCodeConstants.vbKeyD
     mappedKeys(eKeyType.mKeySteal, 0) = KeyCodeConstants.vbKeyR
     mappedKeys(eKeyType.mKeyToggleSafeMode, 0) = KeyCodeConstants.vbKeyMultiply
+    mappedKeys(eKeyType.mKeyToggleResuscitationSafe, 0) = KeyCodeConstants.vbKeyEnd
     mappedKeys(eKeyType.mKeyHide, 0) = KeyCodeConstants.vbKeyO
     mappedKeys(eKeyType.mKeyDropObject, 0) = KeyCodeConstants.vbKeyT
     mappedKeys(eKeyType.mKeyUseObject, 0) = KeyCodeConstants.vbKeyU
@@ -383,7 +386,7 @@ Public Sub InitDefaults()
     mappedKeys(eKeyType.mKeyMeditate, 0) = KeyCodeConstants.vbKeyF6
     mappedKeys(eKeyType.mKeyCastSpellMacro, 0) = KeyCodeConstants.vbKeyF7
     mappedKeys(eKeyType.mKeyWorkMacro, 0) = KeyCodeConstants.vbKeyF8
-    'mappedKeys(eKeyType.mKeyExitGame, 0) = ???
+    mappedKeys(eKeyType.mKeyExitGame, 0) = KeyCodeConstants.vbKeyF12
 End Sub
 
 ''
@@ -394,38 +397,17 @@ Public Sub LoadDefaults()
 ' LoadDefaults - Loads default key codes in case of error.
 ' Creation Date: 08-05-07
 '
-' Last Modification: 09-20-07 by Rapsodius
-' Added support for independent keyboards.
+' Last Modification: 10-05-07 by Rapsodius
+' Now default key loading is a direct copy from key config #0,
+' which is previously initialized.
 '**************************************************************
-    Dim k As Long
+Dim k As Long
+Dim i As Long
 
     For k = 1 To NUM_KEY_CONFIG
-        mappedKeys(eKeyType.mKeyUp, k) = KeyCodeConstants.vbKeyUp
-        mappedKeys(eKeyType.mKeyDown, k) = KeyCodeConstants.vbKeyDown
-        mappedKeys(eKeyType.mKeyLeft, k) = KeyCodeConstants.vbKeyLeft
-        mappedKeys(eKeyType.mKeyRight, k) = KeyCodeConstants.vbKeyRight
-        mappedKeys(eKeyType.mKeyToggleMusic, k) = KeyCodeConstants.vbKeyM
-        mappedKeys(eKeyType.mKeyRequestRefresh, k) = KeyCodeConstants.vbKeyL
-        mappedKeys(eKeyType.mKeyToggleNames, k) = KeyCodeConstants.vbKeyN
-        mappedKeys(eKeyType.mKeyGetObject, k) = KeyCodeConstants.vbKeyA
-        mappedKeys(eKeyType.mKeyToggleCombatMode, k) = KeyCodeConstants.vbKeyC
-        mappedKeys(eKeyType.mKeyEquipObject, k) = KeyCodeConstants.vbKeyE
-        mappedKeys(eKeyType.mKeyTamAnimal, k) = KeyCodeConstants.vbKeyD
-        mappedKeys(eKeyType.mKeySteal, k) = KeyCodeConstants.vbKeyR
-        mappedKeys(eKeyType.mKeyToggleSafeMode, k) = KeyCodeConstants.vbKeyMultiply
-        mappedKeys(eKeyType.mKeyHide, k) = KeyCodeConstants.vbKeyO
-        mappedKeys(eKeyType.mKeyDropObject, k) = KeyCodeConstants.vbKeyT
-        mappedKeys(eKeyType.mKeyUseObject, k) = KeyCodeConstants.vbKeyU
-        mappedKeys(eKeyType.mKeyAttack, k) = KeyCodeConstants.vbKeyControl
-        mappedKeys(eKeyType.mKeyTalk, k) = KeyCodeConstants.vbKeyReturn
-        mappedKeys(eKeyType.mKeyTalkWithGuild, k) = KeyCodeConstants.vbKeyDelete
-        mappedKeys(eKeyType.mKeyToggleFPS, k) = KeyCodeConstants.vbKeyF4
-        mappedKeys(eKeyType.mKeyTakeScreenShot, k) = KeyCodeConstants.vbKeyF2
-        mappedKeys(eKeyType.mKeyShowOptions, k) = KeyCodeConstants.vbKeyF5
-        mappedKeys(eKeyType.mKeyMeditate, k) = KeyCodeConstants.vbKeyF6
-        mappedKeys(eKeyType.mKeyCastSpellMacro, k) = KeyCodeConstants.vbKeyF7
-        mappedKeys(eKeyType.mKeyWorkMacro, k) = KeyCodeConstants.vbKeyF8
-        'mappedKeys(eKeyType.mKeyExitGame, k) = ???
+        For i = 1 To NUM_CUSTOM_KEYS
+            mappedKeys(i, k) = mappedKeys(i, 0)
+        Next i
     Next k
 End Sub
 

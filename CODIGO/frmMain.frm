@@ -590,11 +590,21 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
    End
+   Begin VB.Image PicResu 
+      BorderStyle     =   1  'Fixed Single
+      Height          =   510
+      Left            =   9810
+      Picture         =   "frmMain.frx":120E
+      Stretch         =   -1  'True
+      Top             =   8100
+      Visible         =   0   'False
+      Width           =   510
+   End
    Begin VB.Image PicAU 
       BorderStyle     =   1  'Fixed Single
       Height          =   510
       Left            =   9300
-      Picture         =   "frmMain.frx":120E
+      Picture         =   "frmMain.frx":2510
       Stretch         =   -1  'True
       Top             =   8100
       Visible         =   0   'False
@@ -604,7 +614,7 @@ Begin VB.Form frmMain
       BorderStyle     =   1  'Fixed Single
       Height          =   510
       Left            =   8790
-      Picture         =   "frmMain.frx":2480
+      Picture         =   "frmMain.frx":3782
       Stretch         =   -1  'True
       Top             =   8100
       Visible         =   0   'False
@@ -627,7 +637,7 @@ Begin VB.Form frmMain
       BorderStyle     =   1  'Fixed Single
       Height          =   510
       Left            =   8280
-      Picture         =   "frmMain.frx":3292
+      Picture         =   "frmMain.frx":4594
       Stretch         =   -1  'True
       Top             =   8100
       Width           =   510
@@ -635,8 +645,8 @@ Begin VB.Form frmMain
    Begin VB.Shape MainViewShp 
       BorderColor     =   &H00404040&
       Height          =   6240
-      Left            =   45
-      Top             =   1965
+      Left            =   120
+      Top             =   2040
       Width           =   8190
    End
    Begin VB.Menu mnuObj 
@@ -757,6 +767,19 @@ Public Sub DesactivarMacroHechizos()
         TrainingMacro.Enabled = False
         Call AddtoRichTextBox(frmMain.RecTxt, "Auto lanzar hechizos desactivado", 0, 150, 150, False, True, False)
 End Sub
+
+Public Sub ControlSeguroResu(ByVal Mostrar As Boolean)
+If Mostrar Then
+    If Not PicResu.Visible Then
+        PicResu.Visible = True
+    End If
+Else
+    If PicResu.Visible Then
+        PicResu.Visible = False
+    End If
+End If
+End Sub
+
 Public Sub DibujarMH()
 PicMH.Visible = True
 End Sub
@@ -883,13 +906,19 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
                 ActivarMacroTrabajo
             End If
         
+        Case CustomKeys.BindedKey(eKeyType.mKeyExitGame)
+            Call WriteQuit
+        
         Case CustomKeys.BindedKey(eKeyType.mKeyToggleSafeMode)
             If frmMain.PicSeg.Visible Then
                 AddtoRichTextBox frmMain.RecTxt, "Escribe /SEG para quitar el seguro", 255, 255, 255, False, False, False
             Else
                 Call WriteSafeToggle
             End If
-        
+            
+        Case CustomKeys.BindedKey(eKeyType.mKeyToggleResuscitationSafe)
+            Call WriteResuscitationToggle
+            
         Case CustomKeys.BindedKey(eKeyType.mKeyAttack)
             If Shift <> 0 Then Exit Sub
             
@@ -1318,7 +1347,7 @@ Private Sub Label4_Click()
     picInv.Visible = True
 
     hlst.Visible = False
-    cmdINFO.Visible = False
+    cmdInfo.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = True
@@ -1337,7 +1366,7 @@ Private Sub Label7_Click()
     'DespInv(1).Visible = False
     picInv.Visible = False
     hlst.Visible = True
-    cmdINFO.Visible = True
+    cmdInfo.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True

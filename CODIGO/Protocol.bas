@@ -72,6 +72,9 @@ Private Enum ServerPacketID
     UpdateNeeded            ' REAU
     SafeModeOn              ' SEGON
     SafeModeOff             ' SEGOFF
+    ResuscitationSafeOn
+    ResuscitationSafeOff
+    OpenPasswordForm
     NobilityLost            ' PN
     CantUseWhileMeditating  ' M!
     UpdateSta               ' ASS
@@ -173,6 +176,7 @@ Private Enum ClientPacketID
     PickUp                  'AG
     CombatModeToggle        'TAB        - SHOULD BE HANLDED JUST BY THE CLIENT!!
     SafeToggle              '/SEG & SEG  (SEG's behaviour has to be coded in the client)
+    ResuscitationSafeToggle
     RequestGuildLeaderInfo  'GLINFO
     RequestAtributes        'ATR
     RequestFame             'FAMA
@@ -264,7 +268,8 @@ Private Enum ClientPacketID
     ChangeDescription       '/DESC
     GuildVote               '/VOTO
     Punishments             '/PENAS
-    ChangePassword          '/PASSWD
+    ChangePassword          '/CONTRASEÑA
+    NewPassword
     Gamble                  '/APOSTAR
     InquiryVote             '/ENCUESTA ( with parameters )
     LeaveFaction            '/RETIRAR ( with no arguments )
@@ -626,6 +631,15 @@ On Error Resume Next
         
         Case ServerPacketID.SafeModeOff             ' SEGOFF
             Call HandleSafeModeOff
+            
+        Case ServerPacketID.ResuscitationSafeOff
+            Call HandleResuscitationSafeOff
+        
+        Case ServerPacketID.ResuscitationSafeOn
+            Call HandleResuscitationSafeOn
+        
+        Case ServerPacketID.OpenPasswordForm
+            Call HandleOpenPasswordForm
         
         Case ServerPacketID.NobilityLost            ' PN
             Call HandleNobilityLost
@@ -1367,6 +1381,42 @@ Private Sub HandleSafeModeOff()
     
     Call frmMain.DesDibujarSeguro
     Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_SEGURO_DESACTIVADO, 255, 0, 0, True, False, False)
+End Sub
+
+''
+' Handles the ResuscitationSafeOff message.
+
+Private Sub HandleResuscitationSafeOff()
+'***************************************************
+'Author: Rapsodius
+'Creation date: 10/10/07
+'***************************************************
+    'Remove packet ID
+    Call incomingData.ReadByte
+    
+    Call frmMain.ControlSeguroResu(False)
+    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_SEGURO_RESU_OFF, 255, 0, 0, True, False, False)
+End Sub
+
+''
+' Handles the ResuscitationSafeOn message.
+
+Private Sub HandleResuscitationSafeOn()
+'***************************************************
+'Author: Rapsodius
+'Creation date: 10/10/07
+'***************************************************
+    'Remove packet ID
+    Call incomingData.ReadByte
+    
+    Call frmMain.ControlSeguroResu(True)
+    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_SEGURO_RESU_ON, 0, 255, 0, True, False, False)
+End Sub
+
+Private Sub HandleOpenPasswordForm()
+    Call incomingData.ReadByte
+    
+    Call frmNewPassword.Show(vbModal, frmMain)
 End Sub
 
 ''
@@ -4753,6 +4803,20 @@ Public Sub WriteSafeToggle()
 End Sub
 
 ''
+' Writes the "ResuscitationSafeToggle" message to the outgoing data buffer.
+'
+' @remarks  The data is not actually sent until the buffer is properly flushed.
+
+Public Sub WriteResuscitationToggle()
+'**************************************************************
+'Author: Rapsodius
+'Creation Date: 10/10/07
+'Writes the Resuscitation safe toggle packet to the outgoing data buffer.
+'**************************************************************
+    Call outgoingData.WriteByte(ClientPacketID.ResuscitationSafeToggle)
+End Sub
+
+''
 ' Writes the "RequestGuildLeaderInfo" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -6346,23 +6410,37 @@ End Sub
 ''
 ' Writes the "ChangePassword" message to the outgoing data buffer.
 '
-' @param    pass The new user's password.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteChangePassword(ByVal pass As String)
+Public Sub WriteChangePassword()
 '***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
+'Author: Rapsodius
+'Last Modification: 10/10/07
 'Writes the "ChangePassword" message to the outgoing data buffer
 '***************************************************
     With outgoingData
         Call .WriteByte(ClientPacketID.ChangePassword)
+    End With
+End Sub
+
+''
+' Writes the "NewPassword" message to the outgoing data buffer.
+'
+' @param    oldPass Previous password.
+' @param    newPass New password.
+' @remarks  The data is not actually sent until the buffer is properly flushed.
+
+Public Sub WriteNewPassword(ByRef oldPass As String, ByRef newPass As String)
+'***************************************************
+'Author: Rapsodius
+'Last Modification: 10/10/07
+'Writes the "NewPassword" message to the outgoing data buffer
+'***************************************************
+    With outgoingData
+        Call .WriteByte(ClientPacketID.NewPassword)
         
-#If SeguridadAlkon Then
-        Call .WriteASCIIStringFixed(pass)
-#Else
-        Call .WriteASCIIString(pass)
-#End If
+        Call .WriteASCIIString(oldPass)
+        Call .WriteASCIIString(newPass)
     End With
 End Sub
 

@@ -282,6 +282,7 @@ End Sub
 
 Private Sub Image1_Click(index As Integer)
 
+Call Audio.PlayWave(SND_CLICK, Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone)
 
 If ServersRecibidos Then
     If Not IsIp(IPTxt) And CurServer <> 0 Then
@@ -300,9 +301,6 @@ End If
 CurServer = 0
 IPdelServidor = IPTxt
 PuertoDelServidor = PortTxt
-
-
-Call Audio.PlayWave(SND_CLICK, Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone)
 
 Select Case index
     Case 0

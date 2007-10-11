@@ -375,19 +375,9 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /penas NICKNAME.")
                 End If
                 
-            Case "/PASSWD"
-                If notNullArguments Then
-#If SeguridadAlkon Then
-                    Call WriteChangePassword(md5.GetMD5String(ArgumentosRaw))
-                    Call md5.MD5Reset
-#Else
-                    Call WriteChangePassword(ArgumentosRaw)
-#End If
-                Else
-                    'Avisar que falta el parametro
-                    Call ShowConsoleMsg("Password nulo. Utilice /passwd PASSWORD, siendo el PASSWORD de su elección.")
-                End If
-                
+            Case "/CONTRASEÑA"
+                Call WriteChangePassword
+            
             Case "/APOSTAR"
                 If UserEstado = 1 Then 'Muerto
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)

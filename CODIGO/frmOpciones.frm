@@ -3,7 +3,7 @@ Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmOpciones 
    BackColor       =   &H00000000&
    BorderStyle     =   3  'Fixed Dialog
-   ClientHeight    =   4755
+   ClientHeight    =   5325
    ClientLeft      =   45
    ClientTop       =   45
    ClientWidth     =   4740
@@ -21,10 +21,18 @@ Begin VB.Form frmOpciones
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   4755
+   ScaleHeight     =   5325
    ScaleWidth      =   4740
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
+   Begin VB.CommandButton cmdChangePassword 
+      Caption         =   "Cambiar Contraseña"
+      Height          =   375
+      Left            =   960
+      TabIndex        =   15
+      Top             =   3600
+      Width           =   2775
+   End
    Begin VB.CommandButton cmdCustomKeys 
       Caption         =   "Configurar Teclas"
       Height          =   375
@@ -46,7 +54,7 @@ Begin VB.Form frmOpciones
       Height          =   375
       Left            =   960
       TabIndex        =   12
-      Top             =   3720
+      Top             =   4320
       Width           =   2775
    End
    Begin VB.Frame Frame2 
@@ -168,7 +176,7 @@ Begin VB.Form frmOpciones
       MouseIcon       =   "frmOpciones.frx":0152
       MousePointer    =   99  'Custom
       TabIndex        =   0
-      Top             =   4200
+      Top             =   4800
       Width           =   2790
    End
    Begin VB.Label Label1 
@@ -272,6 +280,10 @@ Private Sub cmdManual_Click()
     If Not loading Then _
         Call Audio.PlayWave(SND_CLICK, Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone)
     Call ShellExecute(0, "Open", "http://ao.alkon.com.ar/aomanual/", "", App.path, 0)
+End Sub
+
+Private Sub cmdChangePassword_Click()
+    Call WriteChangePassword
 End Sub
 
 Private Sub Command2_Click()
