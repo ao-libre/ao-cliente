@@ -74,7 +74,6 @@ Private Enum ServerPacketID
     SafeModeOff             ' SEGOFF
     ResuscitationSafeOn
     ResuscitationSafeOff
-    OpenPasswordForm
     NobilityLost            ' PN
     CantUseWhileMeditating  ' M!
     UpdateSta               ' ASS
@@ -269,7 +268,6 @@ Private Enum ClientPacketID
     GuildVote               '/VOTO
     Punishments             '/PENAS
     ChangePassword          '/CONTRASEÑA
-    NewPassword
     Gamble                  '/APOSTAR
     InquiryVote             '/ENCUESTA ( with parameters )
     LeaveFaction            '/RETIRAR ( with no arguments )
@@ -637,9 +635,6 @@ On Error Resume Next
         
         Case ServerPacketID.ResuscitationSafeOn
             Call HandleResuscitationSafeOn
-        
-        Case ServerPacketID.OpenPasswordForm
-            Call HandleOpenPasswordForm
         
         Case ServerPacketID.NobilityLost            ' PN
             Call HandleNobilityLost
@@ -1413,12 +1408,6 @@ Private Sub HandleResuscitationSafeOn()
     Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_SEGURO_RESU_ON, 0, 255, 0, True, False, False)
 End Sub
 
-Private Sub HandleOpenPasswordForm()
-    Call incomingData.ReadByte
-    
-    Call frmNewPassword.Show(vbModal, frmMain)
-End Sub
-
 ''
 ' Handles the NobilityLost message.
 
@@ -1583,7 +1572,7 @@ Private Sub HandleUpdateExp()
     
     'Get data and update form
     UserExp = incomingData.ReadLong()
-    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
 End Sub
 
@@ -2131,7 +2120,7 @@ On Error GoTo ErrHandler
             End If
             
             'Log2 of the bit flags sent by the server gives our numbers ^^
-            .priv = log(privs) / log(2)
+            .priv = Log(privs) / Log(2)
         Else
             .priv = 0
         End If
@@ -2626,7 +2615,7 @@ Private Sub HandleUpdateUserStats()
     UserPasarNivel = incomingData.ReadLong()
     UserExp = incomingData.ReadLong()
     
-    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     
     If UserPasarNivel > 0 Then
         frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
@@ -3873,11 +3862,11 @@ On Error GoTo ErrHandler
         .criminales.Caption = "Criminales asesinados: " & CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .status.Caption = " (Ciudadano)"
-            .status.ForeColor = vbBlue
+            .Status.Caption = " (Ciudadano)"
+            .Status.ForeColor = vbBlue
         Else
-            .status.Caption = " (Criminal)"
-            .status.ForeColor = vbRed
+            .Status.Caption = " (Criminal)"
+            .Status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)
@@ -4032,7 +4021,7 @@ On Error GoTo ErrHandler
         codexStr = Split(Buffer.ReadASCIIString(), SEPARATOR)
         
         For i = 0 To 7
-            .Codex(i).Caption = codexStr(i)
+            .codex(i).Caption = codexStr(i)
         Next i
         
         .desc.Text = Buffer.ReadASCIIString()
@@ -5161,7 +5150,7 @@ End Sub
 ' @param    codex   Array of all rules of the guild.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCreateNewGuild(ByVal desc As String, ByVal Name As String, ByVal Site As String, ByRef Codex() As String)
+Public Sub WriteCreateNewGuild(ByVal desc As String, ByVal Name As String, ByVal Site As String, ByRef codex() As String)
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5177,8 +5166,8 @@ Public Sub WriteCreateNewGuild(ByVal desc As String, ByVal Name As String, ByVal
         Call .WriteASCIIString(Name)
         Call .WriteASCIIString(Site)
         
-        For i = LBound(Codex()) To UBound(Codex())
-            temp = temp & Codex(i) & SEPARATOR
+        For i = LBound(codex()) To UBound(codex())
+            temp = temp & codex(i) & SEPARATOR
         Next i
         
         If Len(temp) Then _
@@ -5420,7 +5409,7 @@ End Sub
 ' @param    codex New codex of the clan.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteClanCodexUpdate(ByVal desc As String, ByRef Codex() As String)
+Public Sub WriteClanCodexUpdate(ByVal desc As String, ByRef codex() As String)
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5434,8 +5423,8 @@ Public Sub WriteClanCodexUpdate(ByVal desc As String, ByRef Codex() As String)
         
         Call .WriteASCIIString(desc)
         
-        For i = LBound(Codex()) To UBound(Codex())
-            temp = temp & Codex(i) & SEPARATOR
+        For i = LBound(codex()) To UBound(codex())
+            temp = temp & codex(i) & SEPARATOR
         Next i
         
         If Len(temp) Then _
@@ -6410,34 +6399,19 @@ End Sub
 ''
 ' Writes the "ChangePassword" message to the outgoing data buffer.
 '
-' @remarks  The data is not actually sent until the buffer is properly flushed.
-
-Public Sub WriteChangePassword()
-'***************************************************
-'Author: Rapsodius
-'Last Modification: 10/10/07
-'Writes the "ChangePassword" message to the outgoing data buffer
-'***************************************************
-    With outgoingData
-        Call .WriteByte(ClientPacketID.ChangePassword)
-    End With
-End Sub
-
-''
-' Writes the "NewPassword" message to the outgoing data buffer.
-'
 ' @param    oldPass Previous password.
 ' @param    newPass New password.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteNewPassword(ByRef oldPass As String, ByRef newPass As String)
+Public Sub WriteChangePassword(ByRef oldPass As String, ByRef newPass As String)
 '***************************************************
-'Author: Rapsodius
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 10/10/07
-'Writes the "NewPassword" message to the outgoing data buffer
+'Last Modified By: Rapsodius
+'Writes the "ChangePassword" message to the outgoing data buffer
 '***************************************************
     With outgoingData
-        Call .WriteByte(ClientPacketID.NewPassword)
+        Call .WriteByte(ClientPacketID.ChangePassword)
         
         Call .WriteASCIIString(oldPass)
         Call .WriteASCIIString(newPass)
@@ -7944,7 +7918,7 @@ End Sub
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal Nick As String, ByVal reason As String)
+Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal nick As String, ByVal reason As String)
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7964,7 +7938,7 @@ Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal Nick As S
                 Call .WriteByte(Ip(i))
             Next i
         Else
-            Call .WriteASCIIString(Nick)
+            Call .WriteASCIIString(nick)
         End If
         
         Call .WriteASCIIString(reason)

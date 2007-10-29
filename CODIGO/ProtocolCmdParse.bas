@@ -376,7 +376,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 End If
                 
             Case "/CONTRASEÑA"
-                Call WriteChangePassword
+                Call frmNewPassword.Show(vbModal, frmMain)
             
             Case "/APOSTAR"
                 If UserEstado = 1 Then 'Muerto

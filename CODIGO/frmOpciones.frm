@@ -283,7 +283,7 @@ Private Sub cmdManual_Click()
 End Sub
 
 Private Sub cmdChangePassword_Click()
-    Call WriteChangePassword
+    Call frmNewPassword.Show(vbModal, frmMain)
 End Sub
 
 Private Sub Command2_Click()

@@ -82,11 +82,11 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Command1_Click()
-If Text2.Text <> Text3.Text Then
-    Call MsgBox("Las contraseñas no coinciden", vbCritical Or vbOKOnly Or vbApplicationModal Or vbDefaultButton1, "Cambiar Contraseña")
-    Exit Sub
-End If
-
-Call WriteNewPassword(Text1.Text, Text2.Text)
-Unload Me
+    If Text2.Text <> Text3.Text Then
+        Call MsgBox("Las contraseñas no coinciden", vbCritical Or vbOKOnly Or vbApplicationModal Or vbDefaultButton1, "Cambiar Contraseña")
+        Exit Sub
+    End If
+    
+    Call WriteChangePassword(Text1.Text, Text2.Text)
+    Unload Me
 End Sub
