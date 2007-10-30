@@ -1572,7 +1572,7 @@ Private Sub HandleUpdateExp()
     
     'Get data and update form
     UserExp = incomingData.ReadLong()
-    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
 End Sub
 
@@ -2106,11 +2106,11 @@ On Error GoTo ErrHandler
         
         If privs <> 0 Then
             'If the player belongs to a council AND is an admin, only whos as an admin
-            If (privs And PlayerType.ChaosCouncil) <> 0 And (privs And PlayerType.user) = 0 Then
+            If (privs And PlayerType.ChaosCouncil) <> 0 And (privs And PlayerType.User) = 0 Then
                 privs = privs Xor PlayerType.ChaosCouncil
             End If
             
-            If (privs And PlayerType.RoyalCouncil) <> 0 And (privs And PlayerType.user) = 0 Then
+            If (privs And PlayerType.RoyalCouncil) <> 0 And (privs And PlayerType.User) = 0 Then
                 privs = privs Xor PlayerType.RoyalCouncil
             End If
             
@@ -2120,7 +2120,7 @@ On Error GoTo ErrHandler
             End If
             
             'Log2 of the bit flags sent by the server gives our numbers ^^
-            .priv = Log(privs) / Log(2)
+            .priv = log(privs) / log(2)
         Else
             .priv = 0
         End If
@@ -2615,7 +2615,7 @@ Private Sub HandleUpdateUserStats()
     UserPasarNivel = incomingData.ReadLong()
     UserExp = incomingData.ReadLong()
     
-    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     
     If UserPasarNivel > 0 Then
         frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
@@ -3862,11 +3862,11 @@ On Error GoTo ErrHandler
         .criminales.Caption = "Criminales asesinados: " & CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .Status.Caption = " (Ciudadano)"
-            .Status.ForeColor = vbBlue
+            .status.Caption = " (Ciudadano)"
+            .status.ForeColor = vbBlue
         Else
-            .Status.Caption = " (Criminal)"
-            .Status.ForeColor = vbRed
+            .status.Caption = " (Criminal)"
+            .status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)
@@ -4021,7 +4021,7 @@ On Error GoTo ErrHandler
         codexStr = Split(Buffer.ReadASCIIString(), SEPARATOR)
         
         For i = 0 To 7
-            .codex(i).Caption = codexStr(i)
+            .Codex(i).Caption = codexStr(i)
         Next i
         
         .desc.Text = Buffer.ReadASCIIString()
@@ -5150,7 +5150,7 @@ End Sub
 ' @param    codex   Array of all rules of the guild.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCreateNewGuild(ByVal desc As String, ByVal Name As String, ByVal Site As String, ByRef codex() As String)
+Public Sub WriteCreateNewGuild(ByVal desc As String, ByVal Name As String, ByVal Site As String, ByRef Codex() As String)
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5166,8 +5166,8 @@ Public Sub WriteCreateNewGuild(ByVal desc As String, ByVal Name As String, ByVal
         Call .WriteASCIIString(Name)
         Call .WriteASCIIString(Site)
         
-        For i = LBound(codex()) To UBound(codex())
-            temp = temp & codex(i) & SEPARATOR
+        For i = LBound(Codex()) To UBound(Codex())
+            temp = temp & Codex(i) & SEPARATOR
         Next i
         
         If Len(temp) Then _
@@ -5409,7 +5409,7 @@ End Sub
 ' @param    codex New codex of the clan.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteClanCodexUpdate(ByVal desc As String, ByRef codex() As String)
+Public Sub WriteClanCodexUpdate(ByVal desc As String, ByRef Codex() As String)
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5423,8 +5423,8 @@ Public Sub WriteClanCodexUpdate(ByVal desc As String, ByRef codex() As String)
         
         Call .WriteASCIIString(desc)
         
-        For i = LBound(codex()) To UBound(codex())
-            temp = temp & codex(i) & SEPARATOR
+        For i = LBound(Codex()) To UBound(Codex())
+            temp = temp & Codex(i) & SEPARATOR
         Next i
         
         If Len(temp) Then _
@@ -6413,8 +6413,15 @@ Public Sub WriteChangePassword(ByRef oldPass As String, ByRef newPass As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.ChangePassword)
         
+#If SeguridadAlkon Then
+        Call .WriteASCIIStringFixed(MD5.GetMD5String(oldPass))
+        Call MD5.MD5Reset
+        Call .WriteASCIIStringFixed(MD5.GetMD5String(newPass))
+        Call MD5.MD5Reset
+#Else
         Call .WriteASCIIString(oldPass)
         Call .WriteASCIIString(newPass)
+#End If
     End With
 End Sub
 
