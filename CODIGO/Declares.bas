@@ -369,11 +369,13 @@ Type Inventory
     Amount As Long
     '[/Alejo]
     Equipped As Byte
-    Valor As Long
+    Valor As Single
     OBJType As Integer
     Def As Integer
     MaxHit As Integer
     MinHit As Integer
+    'Nueva variable que indica el precio de venta
+    vVenta As Long
 End Type
 
 Type NpCinV
@@ -381,7 +383,7 @@ Type NpCinV
     Name As String
     GrhIndex As Integer
     Amount As Integer
-    Valor As Long
+    Valor As Single
     OBJType As Integer
     Def As Integer
     MaxHit As Integer
@@ -393,7 +395,8 @@ Type NpCinV
     C5 As String
     C6 As String
     C7 As String
-    
+    'Nueva variable que indica el precio de venta
+    vVenta As Long
 End Type
 
 Type tReputacion 'Fama del usuario

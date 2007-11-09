@@ -2120,7 +2120,7 @@ On Error GoTo ErrHandler
             End If
             
             'Log2 of the bit flags sent by the server gives our numbers ^^
-            .priv = log(privs) / log(2)
+            .priv = Log(privs) / Log(2)
         Else
             .priv = 0
         End If
@@ -2714,7 +2714,8 @@ On Error GoTo ErrHandler
     Dim MaxHit As Integer
     Dim MinHit As Integer
     Dim defense As Integer
-    Dim value As Long
+    Dim value As Single
+    Dim pVenta As Long
     
     slot = Buffer.ReadByte()
     OBJIndex = Buffer.ReadInteger()
@@ -2726,9 +2727,10 @@ On Error GoTo ErrHandler
     MaxHit = Buffer.ReadInteger()
     MinHit = Buffer.ReadInteger()
     defense = Buffer.ReadInteger()
-    value = Buffer.ReadLong()
+    value = Buffer.ReadSingle()
+    pVenta = Buffer.ReadLong()
     
-    Call Inventario.SetItem(slot, OBJIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, defense, value, Name)
+    Call Inventario.SetItem(slot, OBJIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, defense, value, Name, pVenta)
     
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
@@ -2779,7 +2781,8 @@ On Error GoTo ErrHandler
         .MaxHit = Buffer.ReadInteger()
         .MinHit = Buffer.ReadInteger()
         .Def = Buffer.ReadInteger()
-        .Valor = Buffer.ReadLong()
+        .Valor = Buffer.ReadSingle()
+        .vVenta = Buffer.ReadLong()
     End With
     
     'If we got here then packet is complete, copy data back to original queue
@@ -3218,7 +3221,8 @@ On Error GoTo ErrHandler
     With NPCInventory(NPCInvDim + 1)
         .Name = Buffer.ReadASCIIString()
         .Amount = Buffer.ReadInteger()
-        .Valor = Buffer.ReadLong()
+        .Valor = Buffer.ReadSingle()
+        .vVenta = Buffer.ReadLong()
         .GrhIndex = Buffer.ReadInteger()
         .OBJIndex = Buffer.ReadInteger()
         .OBJType = Buffer.ReadByte()
@@ -6414,10 +6418,10 @@ Public Sub WriteChangePassword(ByRef oldPass As String, ByRef newPass As String)
         Call .WriteByte(ClientPacketID.ChangePassword)
         
 #If SeguridadAlkon Then
-        Call .WriteASCIIStringFixed(MD5.GetMD5String(oldPass))
-        Call MD5.MD5Reset
-        Call .WriteASCIIStringFixed(MD5.GetMD5String(newPass))
-        Call MD5.MD5Reset
+        Call .WriteASCIIStringFixed(md5.GetMD5String(oldPass))
+        Call md5.MD5Reset
+        Call .WriteASCIIStringFixed(md5.GetMD5String(newPass))
+        Call md5.MD5Reset
 #Else
         Call .WriteASCIIString(oldPass)
         Call .WriteASCIIString(newPass)

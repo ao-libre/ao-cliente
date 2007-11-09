@@ -97,6 +97,17 @@ Begin VB.Form frmComerciar
       Top             =   1800
       Width           =   2490
    End
+   Begin VB.Label Label1 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      ForeColor       =   &H000000FF&
+      Height          =   195
+      Index           =   5
+      Left            =   1800
+      TabIndex        =   11
+      Top             =   1080
+      Width           =   45
+   End
    Begin VB.Label Label2 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
@@ -281,14 +292,14 @@ If Image1(1).Tag = 0 Then
 End If
 End Sub
 
-Private Sub Image1_Click(index As Integer)
+Private Sub Image1_Click(Index As Integer)
 
 Call Audio.PlayWave(SND_CLICK, Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone)
 
-If List1(index).List(List1(index).listIndex) = "" Or _
-   List1(index).listIndex < 0 Then Exit Sub
+If List1(Index).List(List1(Index).listIndex) = "" Or _
+   List1(Index).listIndex < 0 Then Exit Sub
 
-Select Case index
+Select Case Index
     Case 0
         frmComerciar.List1(0).SetFocus
         LastIndex1 = List1(0).listIndex
@@ -317,8 +328,8 @@ List1(1).Clear
 NPCInvDim = 0
 End Sub
 
-Private Sub Image1_MouseMove(index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
-Select Case index
+Private Sub Image1_MouseMove(Index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
+Select Case Index
     Case 0
         If Image1(0).Tag = 1 Then
                 Image1(0).Picture = LoadPicture(App.path & "\Graficos\BotónComprarApretado.jpg")
@@ -338,7 +349,7 @@ Select Case index
 End Select
 End Sub
 
-Private Sub list1_Click(index As Integer)
+Private Sub list1_Click(Index As Integer)
 Dim SR As RECT, DR As RECT
 
 SR.Left = 0
@@ -351,11 +362,12 @@ DR.Top = 0
 DR.Right = 32
 DR.Bottom = 32
 
-Select Case index
+Select Case Index
     Case 0
         Label1(0).Caption = NPCInventory(List1(0).listIndex + 1).Name
         Label1(1).Caption = NPCInventory(List1(0).listIndex + 1).Valor
         Label1(2).Caption = NPCInventory(List1(0).listIndex + 1).Amount
+        Label1(5).Caption = NPCInventory(List1(0).listIndex + 1).vVenta
         
         If Label1(2).Caption <> 0 Then
         
@@ -382,6 +394,7 @@ Select Case index
         Label1(0).Caption = Inventario.ItemName(List1(1).listIndex + 1)
         Label1(1).Caption = Inventario.Valor(List1(1).listIndex + 1)
         Label1(2).Caption = Inventario.Amount(List1(1).listIndex + 1)
+        Label1(5).Caption = Inventario.vVenta(List1(1).listIndex + 1)
         
         If Label1(2).Caption <> 0 Then
         
@@ -420,7 +433,7 @@ End Sub
 '<-------------------------NUEVO-------------------------->
 '<-------------------------NUEVO-------------------------->
 '<-------------------------NUEVO-------------------------->
-Private Sub List1_MouseMove(index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub List1_MouseMove(Index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
 If Image1(0).Tag = 0 Then
     Image1(0).Picture = LoadPicture(App.path & "\Graficos\BotónComprar.jpg")
     Image1(0).Tag = 1
