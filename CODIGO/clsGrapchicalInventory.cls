@@ -218,7 +218,7 @@ End Property
 
 Public Sub SetItem(ByVal slot As Byte, ByVal eOBJIndex As Integer, ByVal eAmount As Integer, ByVal eEquipped As Byte, _
                         ByVal eGrhIndex As Integer, ByVal eObjType As Integer, ByVal eMaxHit As Integer, ByVal eMinHit As Integer, _
-                        ByVal eDef As Integer, ByVal eValor As Single, ByVal eName As String, ByVal evVenta As Long)
+                        ByVal eDef As Integer, ByVal eValor As Single, ByVal eName As String)
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modify Date: 12/04/06
@@ -237,7 +237,6 @@ Public Sub SetItem(ByVal slot As Byte, ByVal eOBJIndex As Integer, ByVal eAmount
         .OBJIndex = eOBJIndex
         .OBJType = eObjType
         .Valor = eValor
-        .vVenta = evVenta
     End With
     
     'Render inventory slot (we don't need to render the whole inventory)
