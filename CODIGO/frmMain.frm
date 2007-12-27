@@ -1,7 +1,7 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
-Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "msinet.ocx"
-Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.ocx"
+Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "msinet.OCX"
+Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.ocx"
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.ocx"
 Begin VB.Form frmMain 
    BackColor       =   &H00000000&
@@ -575,7 +575,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -594,7 +593,7 @@ Begin VB.Form frmMain
       BorderStyle     =   1  'Fixed Single
       Height          =   510
       Left            =   9810
-      Picture         =   "frmMain.frx":120E
+      Picture         =   "frmMain.frx":120D
       Stretch         =   -1  'True
       Top             =   8100
       Visible         =   0   'False
@@ -604,7 +603,7 @@ Begin VB.Form frmMain
       BorderStyle     =   1  'Fixed Single
       Height          =   510
       Left            =   9300
-      Picture         =   "frmMain.frx":2510
+      Picture         =   "frmMain.frx":250F
       Stretch         =   -1  'True
       Top             =   8100
       Visible         =   0   'False
@@ -614,7 +613,7 @@ Begin VB.Form frmMain
       BorderStyle     =   1  'Fixed Single
       Height          =   510
       Left            =   8790
-      Picture         =   "frmMain.frx":3782
+      Picture         =   "frmMain.frx":3781
       Stretch         =   -1  'True
       Top             =   8100
       Visible         =   0   'False
@@ -637,7 +636,7 @@ Begin VB.Form frmMain
       BorderStyle     =   1  'Fixed Single
       Height          =   510
       Left            =   8280
-      Picture         =   "frmMain.frx":4594
+      Picture         =   "frmMain.frx":4593
       Stretch         =   -1  'True
       Top             =   8100
       Width           =   510
@@ -1247,8 +1246,15 @@ Private Sub Form_Click()
 End Sub
 
 Private Sub Form_DblClick()
+'**************************************************************
+'Author: Unknown
+'Last Modify Date: 12/27/2007
+'12/27/2007: ByVal - Chequea que la ventana de comercio no este ya abierta al hacer doble clic a un comerciante, sobrecarga el List1 del frmComerciar, bug reportado en SF.
+'**************************************************************
     If Not frmForo.Visible Then
-        Call WriteDoubleClick(tX, tY)
+        If Not frmComerciar.Visible Then
+            Call WriteDoubleClick(tX, tY)
+        End If
     End If
 End Sub
 
