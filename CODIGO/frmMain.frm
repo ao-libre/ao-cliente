@@ -575,6 +575,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1249,11 +1250,13 @@ Private Sub Form_DblClick()
 '**************************************************************
 'Author: Unknown
 'Last Modify Date: 12/27/2007
-'12/27/2007: ByVal - Chequea que la ventana de comercio no este ya abierta al hacer doble clic a un comerciante, sobrecarga el List1 del frmComerciar, bug reportado en SF.
+'12/28/2007: ByVal - Chequea que la ventana de comercio y boveda no este abierta al hacer doble clic a un comerciante, sobrecarga la lista de items. Bug reportado en SF.
 '**************************************************************
     If Not frmForo.Visible Then
         If Not frmComerciar.Visible Then
-            Call WriteDoubleClick(tX, tY)
+            If Not frmBancoObj.Visible Then
+                Call WriteDoubleClick(tX, tY)
+            End If
         End If
     End If
 End Sub
