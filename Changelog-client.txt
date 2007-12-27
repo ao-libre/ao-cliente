@@ -115,3 +115,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 31/08/2007: Volé NextOpenChar y MoveScreen de General, estaban duplicadas del TileEngine. (Maraxus)
  * 20/09/2007: Arreglé el texto del frmCargando porque habia algunas cosas raras... Agregue soporte para multiples configuraciones de teclado en las teclas configurables y arregle un poco el formulario de las custom keys. (Rapsodius)
  * 28/10/2007: Arreglé las passwords y agregué soporte para Singles y Doubles en ByteQueue. (Maraxus)
+ * 27/12/2007: Arreglé el bug reportado en SF que decía que cuando estabas comerciando si hacías doble clic fuera de la ventana, se volvía a cargar la lista de items del comerciante hasta el punto de generar un overflow y cerrar el cliente de Argentum (ByVal)
