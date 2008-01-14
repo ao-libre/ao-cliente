@@ -276,7 +276,7 @@ Image1(1).Picture = LoadPicture(App.path & "\Graficos\Botónvender.jpg")
 
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
 If Image1(0).Tag = 0 Then
     Image1(0).Picture = LoadPicture(App.path & "\Graficos\BotónComprar.jpg")
     Image1(0).Tag = 1
@@ -293,6 +293,8 @@ Call Audio.PlayWave(SND_CLICK, Audio.No3DSound, Audio.No3DSound, eSoundPos.spNon
 
 If List1(index).List(List1(index).listIndex) = "" Or _
    List1(index).listIndex < 0 Then Exit Sub
+
+If Not IsNumeric(cantidad.Text) Or cantidad.Text = 0 Then Exit Sub
 
 Select Case index
     Case 0
@@ -319,7 +321,7 @@ List1(1).Clear
 NPCInvDim = 0
 End Sub
 
-Private Sub Image1_MouseMove(index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Image1_MouseMove(index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
 Select Case index
     Case 0
         If Image1(0).Tag = 1 Then
@@ -371,7 +373,7 @@ Select Case index
                 Label1(3).Visible = False
                 Label1(4).Visible = False
         End Select
-        Call DrawGrhtoHdc(Picture1.hDC, UserBancoInventory(List1(0).listIndex + 1).GrhIndex, SR, DR)
+        Call DrawGrhtoHdc(Picture1.hdc, UserBancoInventory(List1(0).listIndex + 1).GrhIndex, SR, DR)
     Case 1
         Label1(0).Caption = Inventario.ItemName(List1(1).listIndex + 1)
         Label1(2).Caption = Inventario.Amount(List1(1).listIndex + 1)
@@ -389,7 +391,7 @@ Select Case index
                 Label1(3).Visible = False
                 Label1(4).Visible = False
         End Select
-        Call DrawGrhtoHdc(Picture1.hDC, Inventario.GrhIndex(List1(1).listIndex + 1), SR, DR)
+        Call DrawGrhtoHdc(Picture1.hdc, Inventario.GrhIndex(List1(1).listIndex + 1), SR, DR)
 End Select
 
 If Label1(2).Caption = 0 Then ' 27/08/2006 - GS > No mostrar imagen ni nada, cuando no ahi nada que mostrar.
@@ -405,7 +407,7 @@ End Sub
 '<-------------------------NUEVO-------------------------->
 '<-------------------------NUEVO-------------------------->
 '<-------------------------NUEVO-------------------------->
-Private Sub List1_MouseMove(index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub List1_MouseMove(index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
 If Image1(0).Tag = 0 Then
     Image1(0).Picture = LoadPicture(App.path & "\Graficos\BotónComprar.jpg")
     Image1(0).Tag = 1
