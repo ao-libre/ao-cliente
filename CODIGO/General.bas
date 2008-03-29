@@ -819,8 +819,8 @@ Sub Main()
     'Obtener el HushMD5
     Dim fMD5HushYo As String * 32
     
-    fMD5HushYo = MD5.GetMD5File(App.path & "\" & App.EXEName & ".exe")
-    Call MD5.MD5Reset
+    fMD5HushYo = md5.GetMD5File(App.path & "\" & App.EXEName & ".exe")
+    Call md5.MD5Reset
     MD5HushYo = txtOffset(hexMd52Asc(fMD5HushYo), 55)
     
     Debug.Print fMD5HushYo
@@ -855,7 +855,7 @@ Sub Main()
     
     AddtoRichTextBox frmCargando.status, "Iniciando motor gráfico... ", 0, 0, 0, 0, 0, 1
     
-    If Not InitTileEngine(frmMain.hWnd, 160, 7, 32, 32, 13, 17, 9, 8, 8, 0.03) Then
+    If Not InitTileEngine(frmMain.hWnd, 160, 7, 32, 32, 13, 17, 9, 8, 8, 0.018) Then
         Call CloseClient
     End If
     
@@ -1216,7 +1216,7 @@ Public Sub CloseClient()
     Set outgoingData = Nothing
     
 #If SeguridadAlkon Then
-    Set MD5 = Nothing
+    Set md5 = Nothing
 #End If
     
     Call UnloadAllForms

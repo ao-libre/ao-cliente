@@ -20,7 +20,6 @@ Attribute VB_Name = "PrevInstance"
 
 ''
 'Prevents multiple instances of the game running on the same computer.
-
 '
 ' @author Fredy Horacio Treboux (liquid) @and Juan Martín Sotuyo Dodero (Maraxus) juansotuyo@gmail.com
 ' @version 1.0.0

@@ -85,27 +85,30 @@ Public Type WorldPos
     y As Integer
 End Type
 
-'Contiene info acerca de donde se puede encontrar un grh
-'tamaño y animacion
+'Contiene info acerca de donde se puede encontrar un grh tamaño y animacion
 Public Type GrhData
     sX As Integer
     sY As Integer
-    FileNum As Integer
+    
+    FileNum As Long
+    
     pixelWidth As Integer
     pixelHeight As Integer
+    
     TileWidth As Single
     TileHeight As Single
     
     NumFrames As Integer
-    Frames(1 To 25) As Integer
-    Speed As Integer
+    Frames() As Long
+    
+    Speed As Single
 End Type
 
 'apunta a una estructura grhdata y mantiene la animacion
 Public Type Grh
     GrhIndex As Integer
-    FrameCounter As Byte
-    SpeedCounter As Byte
+    FrameCounter As Single
+    Speed As Single
     Started As Byte
     Loops As Integer
 End Type
@@ -158,7 +161,8 @@ Public Type Char
     scrollDirectionY As Integer
     
     Moving As Byte
-    MoveOffset As Position
+    MoveOffsetX As Single
+    MoveOffsetY As Single
     
     pie As Boolean
     muerto As Boolean
@@ -226,7 +230,6 @@ Public FPS As Long
 
 Private FramesPerSecCounter As Long
 Private fpsLastCheck As Long
-Private fpsPercentage As Single
 
 'Tamaño del la vista en Tiles
 Private WindowTileWidth As Integer
@@ -557,8 +560,8 @@ On Error Resume Next
         
         'Reset moving stats
         .Moving = 0
-        .MoveOffset.x = 0
-        .MoveOffset.y = 0
+        .MoveOffsetX = 0
+        .MoveOffsetY = 0
         
         'Update position
         .Pos.x = x
@@ -645,7 +648,7 @@ Public Sub InitGrh(ByRef Grh As Grh, ByVal GrhIndex As Integer, Optional ByVal S
     End If
     
     Grh.FrameCounter = 1
-    Grh.SpeedCounter = GrhData(Grh.GrhIndex).Speed
+    Grh.Speed = GrhData(Grh.GrhIndex).Speed
 End Sub
 
 Sub MoveCharbyHead(ByVal CharIndex As Integer, ByVal nHeading As E_Heading)
@@ -686,8 +689,8 @@ Sub MoveCharbyHead(ByVal CharIndex As Integer, ByVal nHeading As E_Heading)
         .Pos.y = nY
         MapData(x, y).CharIndex = 0
         
-        .MoveOffset.x = -1 * (TilePixelWidth * addX)
-        .MoveOffset.y = -1 * (TilePixelHeight * addY)
+        .MoveOffsetX = -1 * (TilePixelWidth * addX)
+        .MoveOffsetY = -1 * (TilePixelHeight * addY)
         
         .Moving = 1
         .Heading = nHeading
@@ -780,8 +783,8 @@ On Error Resume Next
         .Pos.x = nX
         .Pos.y = nY
         
-        .MoveOffset.x = -1 * (TilePixelWidth * addX)
-        .MoveOffset.y = -1 * (TilePixelHeight * addY)
+        .MoveOffsetX = -1 * (TilePixelWidth * addX)
+        .MoveOffsetY = -1 * (TilePixelHeight * addY)
         
         .Moving = 1
         .Heading = nHeading
@@ -879,100 +882,102 @@ Function NextOpenChar() As Integer
     NextOpenChar = loopc
 End Function
 
-Sub LoadGrhData()
-'*****************************************************************
-'Loads Grh.dat
-'*****************************************************************
+''
+' Loads grh data using the new file format.
+'
+' @return   True if the load was successfull, False otherwise.
+
+Private Function LoadGrhData() As Boolean
 On Error GoTo ErrorHandler
-    Dim Grh As Integer
+    Dim Grh As Long
     Dim Frame As Long
-    Dim tempint As Integer
-    
-    'Resize arrays
-    ReDim GrhData(1 To Config_Inicio.NumeroDeBMPs) As GrhData
+    Dim grhCount As Long
+    Dim handle As Integer
+    Dim fileVersion As Long
     
     'Open files
-    Open IniPath & "Graficos.ind" For Binary Access Read As #1
+    handle = FreeFile()
+    Open IniPath & "Graficos.ind" For Binary Access Read As handle
     Seek #1, 1
     
-    Get #1, , MiCabecera
-    Get #1, , tempint
-    Get #1, , tempint
-    Get #1, , tempint
-    Get #1, , tempint
-    Get #1, , tempint
+    'Get file version
+    Get handle, , fileVersion
     
-    'Fill Grh List
+    'Get number of grhs
+    Get handle, , grhCount
     
-    'Get first Grh Number
-    Get #1, , Grh
+    'Resize arrays
+    ReDim GrhData(1 To grhCount) As GrhData
     
-    Do Until Grh <= 0
-        'Get number of frames
-        Get #1, , GrhData(Grh).NumFrames
-        If GrhData(Grh).NumFrames <= 0 Then GoTo ErrorHandler
+    While Not EOF(handle)
+        Get handle, , Grh
         
-        If GrhData(Grh).NumFrames > 1 Then
-            'Read a animation GRH set
-            For Frame = 1 To GrhData(Grh).NumFrames
+        With GrhData(Grh)
+            'Get number of frames
+            Get handle, , .NumFrames
+            If .NumFrames <= 0 Then GoTo ErrorHandler
             
-                Get #1, , GrhData(Grh).Frames(Frame)
-                If GrhData(Grh).Frames(Frame) <= 0 Or GrhData(Grh).Frames(Frame) > Config_Inicio.NumeroDeBMPs Then
-                    GoTo ErrorHandler
-                End If
-            Next Frame
+            ReDim .Frames(1 To GrhData(Grh).NumFrames)
             
-            Get #1, , GrhData(Grh).Speed
-            If GrhData(Grh).Speed <= 0 Then GoTo ErrorHandler
-            
-            'Compute width and height
-            GrhData(Grh).pixelHeight = GrhData(GrhData(Grh).Frames(1)).pixelHeight
-            If GrhData(Grh).pixelHeight <= 0 Then GoTo ErrorHandler
-            
-            GrhData(Grh).pixelWidth = GrhData(GrhData(Grh).Frames(1)).pixelWidth
-            If GrhData(Grh).pixelWidth <= 0 Then GoTo ErrorHandler
-            
-            GrhData(Grh).TileWidth = GrhData(GrhData(Grh).Frames(1)).TileWidth
-            If GrhData(Grh).TileWidth <= 0 Then GoTo ErrorHandler
-            
-            GrhData(Grh).TileHeight = GrhData(GrhData(Grh).Frames(1)).TileHeight
-            If GrhData(Grh).TileHeight <= 0 Then GoTo ErrorHandler
-        Else
-            'Read in normal GRH data
-            Get #1, , GrhData(Grh).FileNum
-            If GrhData(Grh).FileNum <= 0 Then GoTo ErrorHandler
-            
-            Get #1, , GrhData(Grh).sX
-            If GrhData(Grh).sX < 0 Then GoTo ErrorHandler
-            
-            Get #1, , GrhData(Grh).sY
-            If GrhData(Grh).sY < 0 Then GoTo ErrorHandler
+            If .NumFrames > 1 Then
+                'Read a animation GRH set
+                For Frame = 1 To .NumFrames
+                    Get handle, , .Frames(Frame)
+                    If .Frames(Frame) <= 0 Or .Frames(Frame) > grhCount Then
+                        GoTo ErrorHandler
+                    End If
+                Next Frame
                 
-            Get #1, , GrhData(Grh).pixelWidth
-            If GrhData(Grh).pixelWidth <= 0 Then GoTo ErrorHandler
-            
-            Get #1, , GrhData(Grh).pixelHeight
-            If GrhData(Grh).pixelHeight <= 0 Then GoTo ErrorHandler
-            
-            'Compute width and height
-            GrhData(Grh).TileWidth = GrhData(Grh).pixelWidth / TilePixelHeight
-            GrhData(Grh).TileHeight = GrhData(Grh).pixelHeight / TilePixelWidth
-            
-            GrhData(Grh).Frames(1) = Grh
-        End If
-        
-        'Get Next Grh Number
-        Get #1, , Grh
-    Loop
-    '************************************************
+                Get handle, , .Speed
+                
+                If .Speed <= 0 Then GoTo ErrorHandler
+                
+                'Compute width and height
+                .pixelHeight = GrhData(.Frames(1)).pixelHeight
+                If .pixelHeight <= 0 Then GoTo ErrorHandler
+                
+                .pixelWidth = GrhData(.Frames(1)).pixelWidth
+                If .pixelWidth <= 0 Then GoTo ErrorHandler
+                
+                .TileWidth = GrhData(.Frames(1)).TileWidth
+                If .TileWidth <= 0 Then GoTo ErrorHandler
+                
+                .TileHeight = GrhData(.Frames(1)).TileHeight
+                If .TileHeight <= 0 Then GoTo ErrorHandler
+            Else
+                'Read in normal GRH data
+                Get handle, , .FileNum
+                If .FileNum <= 0 Then GoTo ErrorHandler
+                
+                Get handle, , GrhData(Grh).sX
+                If .sX < 0 Then GoTo ErrorHandler
+                
+                Get handle, , .sY
+                If .sY < 0 Then GoTo ErrorHandler
+                
+                Get handle, , .pixelWidth
+                If .pixelWidth <= 0 Then GoTo ErrorHandler
+                
+                Get handle, , .pixelHeight
+                If .pixelHeight <= 0 Then GoTo ErrorHandler
+                
+                'Compute width and height
+                .TileWidth = .pixelWidth / TilePixelHeight
+                .TileHeight = .pixelHeight / TilePixelWidth
+                
+                .Frames(1) = Grh
+            End If
+        End With
+    Wend
     
-    Close #1
-Exit Sub
+    Close handle
+    
+    LoadGrhData = True
+Exit Function
 
 ErrorHandler:
-    Close #1
-    MsgBox "Error while loading the Grh.dat! Stopped at GRH number: " & Grh
-End Sub
+    LoadGrhData = False
+End Function
 
 Function LegalPos(ByVal x As Integer, ByVal y As Integer) As Boolean
 '*****************************************************************
@@ -1017,9 +1022,9 @@ Private Sub DDrawGrhtoSurface(ByRef Grh As Grh, ByVal x As Integer, ByVal y As I
     
     If Animate Then
         If Grh.Started = 1 Then
-            Grh.FrameCounter = 1 + (GrhData(Grh.GrhIndex).NumFrames - 1) * fpsPercentage / GrhData(Grh.GrhIndex).Speed
-            If Grh.FrameCounter >= GrhData(Grh.GrhIndex).NumFrames Then
-                If Grh.FrameCounter > GrhData(Grh.GrhIndex).NumFrames Then Grh.FrameCounter = 1
+            Grh.FrameCounter = Grh.FrameCounter + (timerElapsedTime * GrhData(Grh.GrhIndex).NumFrames / Grh.Speed)
+            If Grh.FrameCounter > GrhData(Grh.GrhIndex).NumFrames Then
+                Grh.FrameCounter = 1
                 
                 If Grh.Loops > 0 Then
                     Grh.Loops = Grh.Loops - 1
@@ -1089,7 +1094,8 @@ Sub DDrawTransGrhtoSurface(ByRef Grh As Grh, ByVal x As Integer, ByVal y As Inte
     
     If Animate Then
         If Grh.Started = 1 Then
-            Grh.FrameCounter = 1 + (GrhData(Grh.GrhIndex).NumFrames - 1) * fpsPercentage / GrhData(Grh.GrhIndex).Speed
+            Grh.FrameCounter = Grh.FrameCounter + (timerElapsedTime * GrhData(Grh.GrhIndex).NumFrames / Grh.Speed)
+            
             If Grh.FrameCounter >= GrhData(Grh.GrhIndex).NumFrames Then
                 If Grh.FrameCounter > GrhData(Grh.GrhIndex).NumFrames Then Grh.FrameCounter = 1
                 
@@ -1138,7 +1144,7 @@ Sub DDrawTransGrhtoSurfaceAlpha(ByRef Grh As Grh, ByVal x As Integer, ByVal y As
     
     If Animate Then
         If Grh.Started = 1 Then
-            Grh.FrameCounter = 1 + (GrhData(Grh.GrhIndex).NumFrames - 1) * fpsPercentage / GrhData(Grh.GrhIndex).Speed
+            Grh.FrameCounter = Grh.FrameCounter + (timerTicksPerFrame * Grh.Speed)
             If Grh.FrameCounter >= GrhData(Grh.GrhIndex).NumFrames Then
                 If Grh.FrameCounter > GrhData(Grh.GrhIndex).NumFrames Then Grh.FrameCounter = 1
                 
@@ -1562,7 +1568,6 @@ Public Function InitTileEngine(ByVal setDisplayFormhWnd As Long, ByVal setMainVi
     'Set FPS value to 60 for startup
     FPS = 60
     FramesPerSecCounter = 60
-    fpsPercentage = 1
     
     MinXBorder = XMinMapSize + (WindowTileWidth \ 2)
     MaxXBorder = XMaxMapSize - (WindowTileWidth \ 2)
@@ -1768,7 +1773,6 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Inte
             fpsLastCheck = DirectX.TickCount
         Else
             FramesPerSecCounter = FramesPerSecCounter + 1
-            fpsPercentage = FramesPerSecCounter / FPS
         End If
         
         'Get timing info
@@ -1895,7 +1899,7 @@ On Error Resume Next
         If .Moving Then
             'If needed, move left and right
             If .scrollDirectionX <> 0 Then
-                .MoveOffset.x = .MoveOffset.x + ScrollPixelsPerFrameX * Sgn(.scrollDirectionX) * timerTicksPerFrame
+                .MoveOffsetX = .MoveOffsetX + ScrollPixelsPerFrameX * Sgn(.scrollDirectionX) * timerTicksPerFrame
                 
                 'Start animations
                 .Body.Walk(.Heading).Started = 1
@@ -1906,16 +1910,16 @@ On Error Resume Next
                 moved = True
                 
                 'Check if we already got there
-                If (Sgn(.scrollDirectionX) = 1 And .MoveOffset.x >= 0) Or _
-                        (Sgn(.scrollDirectionX) = -1 And .MoveOffset.x <= 0) Then
-                    .MoveOffset.x = 0
+                If (Sgn(.scrollDirectionX) = 1 And .MoveOffsetX >= 0) Or _
+                        (Sgn(.scrollDirectionX) = -1 And .MoveOffsetX <= 0) Then
+                    .MoveOffsetX = 0
                     .scrollDirectionX = 0
                 End If
             End If
             
             'If needed, move up and down
             If .scrollDirectionY <> 0 Then
-                .MoveOffset.y = .MoveOffset.y + ScrollPixelsPerFrameY * Sgn(.scrollDirectionY) * timerTicksPerFrame
+                .MoveOffsetY = .MoveOffsetY + ScrollPixelsPerFrameY * Sgn(.scrollDirectionY) * timerTicksPerFrame
                 
                 'Start animations
                 .Body.Walk(.Heading).Started = 1
@@ -1926,9 +1930,9 @@ On Error Resume Next
                 moved = True
                 
                 'Check if we already got there
-                If (Sgn(.scrollDirectionY) = 1 And .MoveOffset.y >= 0) Or _
-                        (Sgn(.scrollDirectionY) = -1 And .MoveOffset.y <= 0) Then
-                    .MoveOffset.y = 0
+                If (Sgn(.scrollDirectionY) = 1 And .MoveOffsetY >= 0) Or _
+                        (Sgn(.scrollDirectionY) = -1 And .MoveOffsetY <= 0) Then
+                    .MoveOffsetY = 0
                     .scrollDirectionY = 0
                 End If
             End If
@@ -1949,8 +1953,8 @@ On Error Resume Next
             .Moving = False
         End If
         
-        PixelOffsetX = PixelOffsetX + .MoveOffset.x
-        PixelOffsetY = PixelOffsetY + .MoveOffset.y
+        PixelOffsetX = PixelOffsetX + .MoveOffsetX
+        PixelOffsetY = PixelOffsetY + .MoveOffsetY
         
         If Not .invisible Then
             'Draw Body
