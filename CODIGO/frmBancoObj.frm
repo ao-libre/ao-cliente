@@ -241,7 +241,7 @@ Public LastIndex2 As Integer
 
 
 Private Sub cantidad_Change()
-If Val(cantidad.Text) < 0 Then
+If Val(cantidad.Text) < 1 Then
     cantidad.Text = 1
 End If
 
@@ -294,7 +294,7 @@ Call Audio.PlayWave(SND_CLICK, Audio.No3DSound, Audio.No3DSound, eSoundPos.spNon
 If List1(index).List(List1(index).listIndex) = "" Or _
    List1(index).listIndex < 0 Then Exit Sub
 
-If Not IsNumeric(cantidad.Text) Or cantidad.Text = 0 Then Exit Sub
+If Not IsNumeric(cantidad.Text) Then Exit Sub
 
 Select Case index
     Case 0
@@ -373,7 +373,9 @@ Select Case index
                 Label1(3).Visible = False
                 Label1(4).Visible = False
         End Select
-        Call DrawGrhtoHdc(Picture1.hdc, UserBancoInventory(List1(0).listIndex + 1).GrhIndex, SR, DR)
+        
+        If UserBancoInventory(List1(0).listIndex + 1).Amount <> 0 Then _
+            Call DrawGrhtoHdc(Picture1.hdc, UserBancoInventory(List1(0).listIndex + 1).GrhIndex, SR, DR)
     Case 1
         Label1(0).Caption = Inventario.ItemName(List1(1).listIndex + 1)
         Label1(2).Caption = Inventario.Amount(List1(1).listIndex + 1)
@@ -391,7 +393,9 @@ Select Case index
                 Label1(3).Visible = False
                 Label1(4).Visible = False
         End Select
-        Call DrawGrhtoHdc(Picture1.hdc, Inventario.GrhIndex(List1(1).listIndex + 1), SR, DR)
+        
+        If UserBancoInventory(List1(1).listIndex + 1).Amount <> 0 Then _
+            Call DrawGrhtoHdc(Picture1.hdc, Inventario.GrhIndex(List1(1).listIndex + 1), SR, DR)
 End Select
 
 If Label1(2).Caption = 0 Then ' 27/08/2006 - GS > No mostrar imagen ni nada, cuando no ahi nada que mostrar.
