@@ -117,4 +117,5 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 28/10/2007: Arreglé las passwords y agregué soporte para Singles y Doubles en ByteQueue. (Maraxus)
  * 27/12/2007: Arreglé el bug reportado en SF que decía que cuando estabas comerciando si hacías doble clic fuera de la ventana, se volvía a cargar la lista de items del comerciante hasta el punto de generar un overflow y cerrar el cliente de Argentum. (ByVal)
  * 28/12/2007: El Bug corregido por mí anteriormente también abarcaba la bóveda. Este también ya fue solucionado. (ByVal)
- * 29/03/2008: Nuevo engine cin las FPS sin límite, sin bugs de rendering y alta performance. Además el código del engine queda bastante más limpio en varios puntos. (Maraxus)
+ * 29/03/2008: Nuevo engine con las FPS sin límite, sin bugs de rendering y alta performance. Además el código del engine queda bastante más limpio en varios puntos. (Maraxus)
+ * 29/03/2008: Fix del bug que mezcla los botones al pedir detalles de un miembro del clan y luego de un aspirante. (Maraxus)

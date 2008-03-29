@@ -294,12 +294,14 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Public frmmiembros As Boolean
-Public frmsolicitudes As Boolean
+Public Enum CharInfoFrmType
+    frmMembers
+    frmMembershipRequests
+End Enum
+
+Public frmType As CharInfoFrmType
 
 Private Sub Aceptar_Click()
-    frmmiembros = False
-    frmsolicitudes = False
     Call WriteGuildAcceptNewMember(Trim$(Right$(Nombre, Len(Nombre) - 8)))
     Unload frmGuildLeader
     Call WriteRequestGuildLeaderInfo
@@ -316,8 +318,6 @@ End Sub
 
 Private Sub Echar_Click()
     Call WriteGuildKickMember(Right$(Nombre, Len(Nombre) - 8))
-    frmmiembros = False
-    frmsolicitudes = False
     Unload frmGuildLeader
     Call WriteRequestGuildLeaderInfo
     Unload Me

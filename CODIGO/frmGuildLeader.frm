@@ -282,7 +282,7 @@ End Sub
 Private Sub Command1_Click()
     If solicitudes.listIndex = -1 Then Exit Sub
     
-    frmCharInfo.frmsolicitudes = True
+    frmCharInfo.frmType = CharInfoFrmType.frmMembershipRequests
     Call WriteGuildMemberInfo(solicitudes.List(solicitudes.listIndex))
 
     'Unload Me
@@ -291,7 +291,7 @@ End Sub
 Private Sub Command2_Click()
     If members.listIndex = -1 Then Exit Sub
     
-    frmCharInfo.frmmiembros = True
+    frmCharInfo.frmType = CharInfoFrmType.frmMembers
     Call WriteGuildMemberInfo(members.List(members.listIndex))
 
     'Unload Me
