@@ -28,8 +28,14 @@ Attribute VB_Name = "Resolution"
 '
 ' @file     Resolution.bas
 ' @author   Juan Martín Sotuyo Dodero (Maraxus) juansotuyo@gmail.com
-' @version  1.0.0
-' @date     20070814
+' @version  1.1.0
+' @date     20080329
+
+'**************************************************************************
+' - HISTORY
+'       v1.0.0  -   Initial release ( 2007/08/14 - Juan Martín Sotuyo Dodero )
+'       v1.1.0  -   Made it reset original depth and frequency at exit ( 2008/03/29 - Juan Martín Sotuyo Dodero )
+'**************************************************************************
 
 Option Explicit
 
@@ -38,7 +44,9 @@ Private Const CCFORMNAME As Long = 32
 Private Const DM_BITSPERPEL As Long = &H40000
 Private Const DM_PELSWIDTH As Long = &H80000
 Private Const DM_PELSHEIGHT As Long = &H100000
+Private Const DM_DISPLAYFREQUENCY As Long = &H400000
 Private Const CDS_TEST As Long = &H4
+Private Const ENUM_CURRENT_SETTINGS As Long = -1
 
 Private Type typDevMODE
     dmDeviceName       As String * CCDEVICENAME
@@ -71,6 +79,8 @@ End Type
 
 Private oldResHeight As Long
 Private oldResWidth As Long
+Private oldDepth As Integer
+Private oldFrequency As Long
 Private bNoResChange As Boolean
 
 
@@ -81,11 +91,18 @@ Private Declare Function ChangeDisplaySettings Lib "user32" Alias "ChangeDisplay
 'TODO : Change this to not depend on any external public variable using args instead!
 
 Public Sub SetResolution()
+'***************************************************
+'Autor: Unknown
+'Last Modification: 03/29/08
+'Changes the display resolution if needed.
+'Last Modified By: Juan Martín Sotuyo Dodero (Maraxus)
+' 03/29/2008: Maraxus - Retrieves current settings storing display depth and frequency for proper restoration.
+'***************************************************
     Dim lRes As Long
     Dim MidevM As typDevMODE
     Dim CambiarResolucion As Boolean
     
-    lRes = EnumDisplaySettings(0, 0, MidevM)
+    lRes = EnumDisplaySettings(0, ENUM_CURRENT_SETTINGS, MidevM)
     
     oldResWidth = Screen.Width \ Screen.TwipsPerPixelX
     oldResHeight = Screen.Height \ Screen.TwipsPerPixelY
@@ -99,10 +116,13 @@ Public Sub SetResolution()
     If CambiarResolucion Then
         
         With MidevM
-              .dmFields = DM_PELSWIDTH Or DM_PELSHEIGHT Or DM_BITSPERPEL
-              .dmPelsWidth = 800
-              .dmPelsHeight = 600
-              .dmBitsPerPel = 16
+            oldDepth = .dmBitsPerPel
+            oldFrequency = .dmDisplayFrequency
+            
+            .dmFields = DM_PELSWIDTH Or DM_PELSHEIGHT Or DM_BITSPERPEL
+            .dmPelsWidth = 800
+            .dmPelsHeight = 600
+            .dmBitsPerPel = 16
         End With
         
         lRes = ChangeDisplaySettings(MidevM, CDS_TEST)
@@ -112,17 +132,26 @@ Public Sub SetResolution()
 End Sub
 
 Public Sub ResetResolution()
+'***************************************************
+'Autor: Unknown
+'Last Modification: 03/29/08
+'Changes the display resolution if needed.
+'Last Modified By: Juan Martín Sotuyo Dodero (Maraxus)
+' 03/29/2008: Maraxus - Properly restores display depth and frequency.
+'***************************************************
     Dim typDevM As typDevMODE
     Dim lRes As Long
     
     If Not bNoResChange Then
     
-        lRes = EnumDisplaySettings(0, 0, typDevM)
+        lRes = EnumDisplaySettings(0, ENUM_CURRENT_SETTINGS, typDevM)
         
         With typDevM
-            .dmFields = DM_PELSWIDTH Or DM_PELSHEIGHT
+            .dmFields = DM_PELSWIDTH Or DM_PELSHEIGHT Or DM_BITSPERPEL Or DM_DISPLAYFREQUENCY
             .dmPelsWidth = oldResWidth
             .dmPelsHeight = oldResHeight
+            .dmBitsPerPel = oldDepth
+            .dmDisplayFrequency = oldFrequency
         End With
         
         lRes = ChangeDisplaySettings(typDevM, CDS_TEST)
