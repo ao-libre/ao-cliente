@@ -243,7 +243,7 @@ Private loading As Boolean
 
 Private Sub Check1_Click(index As Integer)
     If Not loading Then _
-        Call Audio.PlayWave(SND_CLICK, Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone)
+        Call Audio.PlayWave(SND_CLICK)
     
     Select Case index
         Case 0
@@ -272,13 +272,13 @@ End Sub
 
 Private Sub cmdCustomKeys_Click()
     If Not loading Then _
-        Call Audio.PlayWave(SND_CLICK, Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone)
+        Call Audio.PlayWave(SND_CLICK)
     Call frmCustomKeys.Show(vbModal, frmMain)
 End Sub
 
 Private Sub cmdManual_Click()
     If Not loading Then _
-        Call Audio.PlayWave(SND_CLICK, Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone)
+        Call Audio.PlayWave(SND_CLICK)
     Call ShellExecute(0, "Open", "http://ao.alkon.com.ar/aomanual/", "", App.path, 0)
 End Sub
 

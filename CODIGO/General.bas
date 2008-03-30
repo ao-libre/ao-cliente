@@ -66,67 +66,6 @@ Public Function RandomNumber(ByVal LowerBound As Long, ByVal UpperBound As Long)
     RandomNumber = (UpperBound - LowerBound) * Rnd + LowerBound
 End Function
 
-''
-'Calculates relative sound source, from the character
-'
-'@param X Relative X coordinates from sound source
-'@param Y Relative Y coordinates from sound source
-'@return Relative direction of the sound
-
-Public Function CalcSoundSrc(ByVal x As Byte, ByVal y As Byte) As eSoundPos
-'**************************************************************
-' CalcSoundSrc - Parses X and Y positions and returns the
-' relative sound source direction to the user
-'
-' Creation Date: 08-13-07
-' Created and Implemented by Rapsodius
-'**************************************************************
-
-    Dim nX As Integer
-    Dim nY As Integer
-    nX = UserPos.x - x
-    nY = UserPos.y - y
-    
-    If Abs(nX) > 8 Then
-        CalcSoundSrc = eSoundPos.spNone
-        Exit Function
-    End If
-    If Abs(nY) > 6 Then
-        CalcSoundSrc = eSoundPos.spNone
-        Exit Function
-    End If
-
-    Select Case nX
-        Case Is < 0
-            Select Case nY
-                Case Is < 0
-                    CalcSoundSrc = eSoundPos.spLeftDown
-                Case Is > 0
-                    CalcSoundSrc = eSoundPos.spLeftUp
-                Case Else
-                    CalcSoundSrc = eSoundPos.spLeft
-            End Select
-        Case Is > 0
-            Select Case nY
-                Case Is < 0
-                    CalcSoundSrc = eSoundPos.spRightDown
-                Case Is > 0
-                    CalcSoundSrc = eSoundPos.spRightUp
-                Case Else
-                    CalcSoundSrc = eSoundPos.spRight
-            End Select
-        Case Else
-            Select Case nY
-                Case Is < 0
-                    CalcSoundSrc = eSoundPos.spDown
-                Case Is > 0
-                    CalcSoundSrc = eSoundPos.spUp
-                Case Else
-                    CalcSoundSrc = eSoundPos.spNone
-            End Select
-    End Select
-End Function
-
 Sub CargarAnimArmas()
 On Error Resume Next
 
@@ -465,6 +404,8 @@ Sub MoveTo(ByVal Direccion As E_Heading)
     
     If frmMain.macrotrabajo.Enabled Then frmMain.DesactivarMacroTrabajo
     
+    ' Update 3D sounds!
+    Call Audio.MoveListener(UserPos.x, UserPos.y)
 End Sub
 
 Sub RandomMove()
@@ -473,7 +414,7 @@ Sub RandomMove()
 'Last Modify Date: 06/03/2006
 ' 06/03/2006: AlejoLp - Ahora utiliza la funcion MoveTo
 '***************************************************
-    MoveTo RandomNumber(NORTH, WEST)
+    Call MoveTo(RandomNumber(NORTH, WEST))
 End Sub
 
 Sub CheckKeys()
@@ -518,13 +459,23 @@ On Error Resume Next
                 frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.x & "," & UserPos.y & ")"
                 Exit Sub
             End If
+            
+            ' We haven't moved - Update 3D sounds!
+            Call Audio.MoveListener(UserPos.x, UserPos.y)
         Else
             Dim kp As Boolean
             kp = (GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyUp)) < 0) Or _
                 GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyRight)) < 0 Or _
                 GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyDown)) < 0 Or _
                 GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyLeft)) < 0
-            If kp Then Call RandomMove
+            
+            If kp Then
+                Call RandomMove
+            Else
+                ' We haven't moved - Update 3D sounds!
+                Call Audio.MoveListener(UserPos.x, UserPos.y)
+            End If
+            
             If frmMain.TrainingMacro.Enabled Then frmMain.DesactivarMacroHechizos
             frmMain.Coord.Caption = "(" & UserPos.x & "," & UserPos.y & ")"
         End If
@@ -819,8 +770,8 @@ Sub Main()
     'Obtener el HushMD5
     Dim fMD5HushYo As String * 32
     
-    fMD5HushYo = md5.GetMD5File(App.path & "\" & App.EXEName & ".exe")
-    Call md5.MD5Reset
+    fMD5HushYo = MD5.GetMD5File(App.path & "\" & App.EXEName & ".exe")
+    Call MD5.MD5Reset
     MD5HushYo = txtOffset(hexMd52Asc(fMD5HushYo), 55)
     
     Debug.Print fMD5HushYo
@@ -891,7 +842,7 @@ UserMap = 1
     'Enable / Disable audio
     Audio.MusicActivated = Not ClientSetup.bNoMusic
     Audio.SoundActivated = Not ClientSetup.bNoSound
-        
+    
     'Inicializamos el inventario gráfico
     Call Inventario.Initialize(DirectDraw, frmMain.picInv)
     
@@ -1216,7 +1167,7 @@ Public Sub CloseClient()
     Set outgoingData = Nothing
     
 #If SeguridadAlkon Then
-    Set md5 = Nothing
+    Set MD5 = Nothing
 #End If
     
     Call UnloadAllForms

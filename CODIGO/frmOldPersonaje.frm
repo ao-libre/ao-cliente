@@ -190,7 +190,7 @@ End Sub
 
 Private Sub Image1_Click(index As Integer)
 
-Call Audio.PlayWave(SND_CLICK, Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone)
+Call Audio.PlayWave(SND_CLICK)
 
 Select Case index
     Case 0
@@ -213,8 +213,8 @@ Select Case index
         Dim aux As String
         aux = PasswordTxt.Text
 #If SeguridadAlkon Then
-        UserPassword = md5.GetMD5String(aux)
-        Call md5.MD5Reset
+        UserPassword = MD5.GetMD5String(aux)
+        Call MD5.MD5Reset
 #Else
         UserPassword = aux
 #End If
@@ -248,7 +248,7 @@ Select Case index
             Me.lblInfo.Visible = True
             Me.lblInfo.Caption = textoSeguir
             Image1(0).Tag = "1"
-            Call Audio.PlayWave(SND_OVER, Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone)
+            Call Audio.PlayWave(SND_OVER)
             Image1(0).Picture = LoadPicture(App.path & "\Graficos\bsiguientea.jpg")
         End If
     Case 1
@@ -256,7 +256,7 @@ Select Case index
             Me.lblInfo.Visible = True
             Me.lblInfo.Caption = textoSalir
             Image1(1).Tag = "1"
-            Call Audio.PlayWave(SND_OVER, Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone)
+            Call Audio.PlayWave(SND_OVER)
             Image1(1).Picture = LoadPicture(App.path & "\Graficos\bvolvera.jpg")
         End If
     Case 2
@@ -264,7 +264,7 @@ Select Case index
             Me.lblInfo.Visible = True
             Me.lblInfo.Caption = textoKeypad
             Image1(2).Tag = "1"
-            Call Audio.PlayWave(SND_OVER, Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone)
+            Call Audio.PlayWave(SND_OVER)
             Image1(2).Picture = LoadPicture(App.path & "\Graficos\bteclasa.jpg")
         End If
         

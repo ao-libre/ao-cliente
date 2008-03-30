@@ -708,15 +708,17 @@ Sub MoveCharbyHead(ByVal CharIndex As Integer, ByVal nHeading As E_Heading)
 End Sub
 
 Public Sub DoFogataFx()
+    Dim location As Position
+    
     If bFogata Then
-        bFogata = HayFogata()
+        bFogata = HayFogata(location)
         If Not bFogata Then
             Call Audio.StopWave(FogataBufferIndex)
             FogataBufferIndex = 0
         End If
     Else
-        bFogata = HayFogata()
-        If bFogata And FogataBufferIndex = 0 Then FogataBufferIndex = Audio.PlayWave("fuego.wav", 1, 1, spNone, LoopStyle.Enabled)
+        bFogata = HayFogata(location)
+        If bFogata And FogataBufferIndex = 0 Then FogataBufferIndex = Audio.PlayWave("fuego.wav", location.x, location.y, LoopStyle.Enabled)
     End If
 End Sub
 
@@ -733,14 +735,15 @@ Sub DoPasosFx(ByVal CharIndex As Integer)
                 .pie = Not .pie
                 
                 If .pie Then
-                    Call Audio.PlayWave(SND_PASOS1, Abs(UserPos.x - .Pos.x), Abs(UserPos.y - .Pos.y), Mod_General.CalcSoundSrc(.Pos.x, .Pos.y))
+                    Call Audio.PlayWave(SND_PASOS1, .Pos.x, .Pos.y)
                 Else
-                    Call Audio.PlayWave(SND_PASOS2, Abs(UserPos.x - .Pos.x), Abs(UserPos.y - .Pos.y), Mod_General.CalcSoundSrc(.Pos.x, .Pos.y))
+                    Call Audio.PlayWave(SND_PASOS2, .Pos.x, .Pos.y)
                 End If
             End If
         End With
     Else
-        Call Audio.PlayWave(SND_NAVEGANDO, 255, 255, eSoundPos.spNone)
+' TODO : Actually we would have to check if the CharIndex char is in the water or not....
+        Call Audio.PlayWave(SND_NAVEGANDO, charlist(CharIndex).Pos.x, charlist(CharIndex).Pos.y)
     End If
 End Sub
 
@@ -850,7 +853,7 @@ Sub MoveScreen(ByVal nHeading As E_Heading)
     End If
 End Sub
 
-Function HayFogata() As Boolean
+Private Function HayFogata(ByRef location As Position) As Boolean
     Dim j As Long
     Dim k As Long
     
@@ -858,6 +861,9 @@ Function HayFogata() As Boolean
         For k = UserPos.y - 6 To UserPos.y + 6
             If InMapBounds(j, k) Then
                 If MapData(j, k).ObjGrh.GrhIndex = GrhFogata Then
+                    location.x = j
+                    location.y = k
+                    
                     HayFogata = True
                     Exit Function
                 End If
@@ -1473,7 +1479,7 @@ End Sub
 Public Function RenderSounds()
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
-'Last Modify Date: 4/22/2006
+'Last Modify Date: 3/30/2008
 'Actualiza todos los sonidos del mapa.
 '**************************************************************
     If bLluvia(UserMap) = 1 Then
@@ -1482,14 +1488,14 @@ Public Function RenderSounds()
                 If frmMain.IsPlaying <> PlayLoop.plLluviain Then
                     If RainBufferIndex Then _
                         Call Audio.StopWave(RainBufferIndex)
-                    RainBufferIndex = Audio.PlayWave("lluviain.wav", 0, 0, spNone, LoopStyle.Enabled)
+                    RainBufferIndex = Audio.PlayWave("lluviain.wav", 0, 0, LoopStyle.Enabled)
                     frmMain.IsPlaying = PlayLoop.plLluviain
                 End If
             Else
                 If frmMain.IsPlaying <> PlayLoop.plLluviaout Then
                     If RainBufferIndex Then _
                         Call Audio.StopWave(RainBufferIndex)
-                    RainBufferIndex = Audio.PlayWave("lluviaout.wav", 0, 0, spNone, LoopStyle.Enabled)
+                    RainBufferIndex = Audio.PlayWave("lluviaout.wav", 0, 0, LoopStyle.Enabled)
                     frmMain.IsPlaying = PlayLoop.plLluviaout
                 End If
             End If

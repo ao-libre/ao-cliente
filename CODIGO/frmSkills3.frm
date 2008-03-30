@@ -1246,7 +1246,7 @@ Option Explicit
 
 Private Sub Command1_Click(index As Integer)
 
-Call Audio.PlayWave(SND_CLICK, Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone)
+Call Audio.PlayWave(SND_CLICK)
 
 Dim indice
 If (index And &H1) = 0 Then

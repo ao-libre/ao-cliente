@@ -448,13 +448,13 @@ Private Sub Form_Unload(Cancel As Integer)
 End Sub
 
 Private Sub imgEspacio_Click()
-    Call Audio.PlayWave(SND_CLICK, Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone)
+    Call Audio.PlayWave(SND_CLICK)
     Me.txtPassword.Text = Me.txtPassword.Text & " "
     Me.txtPassword.SetFocus
 End Sub
 
 Private Sub imgKeyPad_Click(index As Integer)
-    Call Audio.PlayWave(SND_CLICK, Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone)
+    Call Audio.PlayWave(SND_CLICK)
     If Modo = MAYUSCULA Then
         Me.txtPassword.Text = Me.txtPassword.Text & mid$(MayIndex, index + 1, 1)
     Else
@@ -464,14 +464,14 @@ Private Sub imgKeyPad_Click(index As Integer)
 End Sub
 
 Private Sub imgMay_Click()
-    Call Audio.PlayWave(SND_CLICK, Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone)
+    Call Audio.PlayWave(SND_CLICK)
     Me.Picture = LoadPicture(App.path & "\graficos\KeyPadMay.bmp")
     Modo = MAYUSCULA
     Me.txtPassword.SetFocus
 End Sub
 
 Private Sub imgMin_Click()
-    Call Audio.PlayWave(SND_CLICK, Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone)
+    Call Audio.PlayWave(SND_CLICK)
     Me.Picture = LoadPicture(App.path & "\graficos\KeyPadMin.bmp")
     Modo = MINUSCULA
     Me.txtPassword.SetFocus

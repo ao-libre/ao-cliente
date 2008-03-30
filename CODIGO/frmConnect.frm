@@ -282,7 +282,7 @@ End Sub
 
 Private Sub Image1_Click(index As Integer)
 
-Call Audio.PlayWave(SND_CLICK, Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone)
+Call Audio.PlayWave(SND_CLICK)
 
 If ServersRecibidos Then
     If Not IsIp(IPTxt) And CurServer <> 0 Then
@@ -342,7 +342,7 @@ End Sub
 Private Sub imgGetPass_Click()
 On Error GoTo errH
 
-    Call Audio.PlayWave(SND_CLICK, Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone)
+    Call Audio.PlayWave(SND_CLICK)
     Call Shell(App.path & "\RECUPERAR.EXE", vbNormalFocus)
     Exit Sub
 errH:
@@ -350,7 +350,7 @@ errH:
 End Sub
 
 Private Sub imgServArgentina_Click()
-    Call Audio.PlayWave(SND_CLICK, Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone)
+    Call Audio.PlayWave(SND_CLICK)
     IPTxt.Text = IPdelServidor
     PortTxt.Text = PuertoDelServidor
 End Sub

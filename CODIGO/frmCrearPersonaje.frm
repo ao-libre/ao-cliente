@@ -936,7 +936,7 @@ CheckData = True
 End Function
 
 Private Sub boton_Click(index As Integer)
-    Call Audio.PlayWave(SND_CLICK, Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone)
+    Call Audio.PlayWave(SND_CLICK)
     
     Select Case index
         Case 0
@@ -981,7 +981,7 @@ Private Sub boton_Click(index As Integer)
             
             
         Case 2
-            Call Audio.PlayWave(SND_DICE, Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone)
+            Call Audio.PlayWave(SND_DICE)
             Call TirarDados
     End Select
 End Sub
@@ -1002,7 +1002,7 @@ Private Sub TirarDados()
 End Sub
 
 Private Sub Command1_Click(index As Integer)
-Call Audio.PlayWave(SND_CLICK, Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone)
+Call Audio.PlayWave(SND_CLICK)
 
 Dim indice
 If (index And &H1) = 0 Then

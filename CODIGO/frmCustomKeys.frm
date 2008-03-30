@@ -184,7 +184,7 @@ Begin VB.Form frmCustomKeys
          Height          =   285
          Index           =   21
          Left            =   1920
-         TabIndex        =   54
+         TabIndex        =   55
          Text            =   "Text1"
          Top             =   240
          Width           =   1695
@@ -262,7 +262,7 @@ Begin VB.Form frmCustomKeys
          ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   120
-         TabIndex        =   53
+         TabIndex        =   56
          Top             =   240
          Width           =   1695
       End
@@ -783,7 +783,7 @@ Private Sub Command1_Click()
 
 Dim i As Long
 
-    Call Audio.PlayWave(SND_CLICK, Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone, LoopStyle.Default)
+    Call Audio.PlayWave(SND_CLICK)
 
     For i = 1 To CustomKeys.Count
         If LenB(Text1(i).Text) = 0 Then

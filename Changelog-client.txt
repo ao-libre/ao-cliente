@@ -122,3 +122,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 29/03/2008: Ahora al salir del juego en pantalla completa se reestablece correctamente la profundidad y la frecuencia del display. (Maraxus)
  * 29/03/2008: Corregí un rt-13 al dejar en blanco la cantidad en la boveda y un rt-9 al retirar de la boveda el último elemento de algún item. Además hice inválido el poner 0 como cantidad en la boveda. (Maraxus)
  * 29/03/2008: Corregí un overflow al mandar valores muy grandes en el color de textos usando ~ tanto para mensajes de clan como de GMs. (Maraxus)
+ * 30/03/2008: Reescrito el código de sonido 3D. Ahora es más claro, eficiente y utiliza una física más realista. (Maraxus)

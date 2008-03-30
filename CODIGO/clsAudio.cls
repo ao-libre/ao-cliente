@@ -42,6 +42,10 @@ Attribute VB_Exposed = False
 '   - Add: Documentation
 '   - Change: Volume is no longer the dB amplification / atenuation to be
 '           applied but a percentage for easier interaction with user.
+'
+'30/03/2008 - Juan Martín Sotuyo Dodero (Maraxus) - (juansotuyo@gmail.com)
+'   - Add: 3D-like sound effects by altering frequency to emulate Doppler effect,
+'           volume to emulate distance and panning for position.
 
 
 ''
@@ -49,7 +53,7 @@ Attribute VB_Exposed = False
 '
 ' @file     clsAudio.cls
 ' @author   Juan Martín Sotuyo Dodero (Maraxus) juansotuyo@gmail.com
-' @version  1.1.0
+' @version  1.2.0
 ' @date     20070303
 
 Option Explicit
@@ -59,47 +63,12 @@ Option Explicit
 Private Const NumSoundBuffers As Byte = 30
 
 ''
-'This indicates that the sound is not 3D
-Private Const NO_3D_SOUND As Byte = 255
+' The distance at which the sound is inaudible.
+Private Const MAX_DISTANCE_TO_SOURCE As Integer = 150
 
 ''
-'Sound Reduction Offset Per Tile
-Private Const PER_TILE_REDUCTION As Long = 25
-
-''
-'Panning Offset Per Tile
-Private Const PER_TILE_PANNING As Long = 150
-
-''
-'Used to balance volume calculation.
-'Big numbers allow to increase volume.
-Private Const DIVIDE_MINVOLUME As Byte = 2
-
-
-''
-'Relative sound source, used to make fake 3d calculations
-'
-'@param spNone Sound is not 3D
-'@param spUp Sound Source is above the user
-'@param spDown Sound Source is below the user
-'@param spLeft Souns Source is to the left of the user
-'@param spRight Souns Source is to the right of the user
-'@param spRightDown Souns Source is to the right of the user and below it
-'@param spRightUp Souns Source is to the right of the user and above it
-'@param spLeftDown Souns Source is to the left of the user and below it
-'@param spLeftUp Souns Source is to the left of the user and above it
-
-Public Enum eSoundPos
-    spNone = 0
-    spUp = 1
-    spDown = 2
-    spLeft = 3
-    spRight = 4
-    spRightDown = 5
-    spRightUp = 6
-    spLeftDown = 7
-    spLeftUp = 8
-End Enum
+' The frequency variation coefficient for Doppler effect simulation.
+Private Const DELTA_FQ As Integer = 800
 
 ''
 ' Custom sound buffer structure.
@@ -108,14 +77,14 @@ End Enum
 ' @param    looping     Set to true if the sound will loop until stopped
 ' @param    X           The X position of the sound in map coordinates
 ' @param    Y           The Y position of the sound in map coordinates
-' @param    SoundSrc    Relative sound source for the character
+' @param    normalFq    The frequency of the sound when not affected by Doppler effect.
 ' @param    Buffer      The DirectSoundBuffer object to wich the file is loaded
 Private Type SoundBuffer
     FileName As String
     looping As Boolean
     x As Byte
     y As Byte
-    SoundSrc As eSoundPos
+    normalFq As Long
     Buffer As DirectSoundBuffer
 End Type
 
@@ -186,6 +155,14 @@ Dim mActivated As Boolean
 ''
 'States wether sound is currently activated or not
 Dim sActivated As Boolean
+
+''
+'States the last position where the listener was in the X axis
+Dim lastPosX As Integer
+
+''
+'States the last position where the listener was in the Y axis
+Dim lastPosY As Integer
 
 
 ''
@@ -323,27 +300,21 @@ End Function
 ' Plays a new WAVE file.
 '
 ' @param    FileName    The path to the file to be loaded. Must be a relative path from the default path set at initialization.
-' @param    X           The X position of the sound source, in map coordinates.
-' @param    Y           The Y position of the sound source, in map coordinates.
+' @param    srcX        The X position of the sound source, in map coordinates. -1 if sound should not be altered by 3D alterations.
+' @param    srcY        The Y position of the sound source, in map coordinates. -1 if sound should not be altered by 3D alterations.
 ' @param    LoopSound   The loop state for the sound.
 '
 ' @return   The buffer index in which the sound is playing, or 0 in case of error.
 
-Public Function PlayWave(ByVal FileName As String, ByVal x As Byte, ByVal y As Byte, ByVal SoundSrc As eSoundPos, Optional ByVal LoopSound As LoopStyle = LoopStyle.Default) As Long
+Public Function PlayWave(ByVal FileName As String, Optional ByVal srcX As Byte = 0, Optional ByVal srcY As Byte = 0, Optional ByVal LoopSound As LoopStyle = LoopStyle.Default) As Long
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 08/16/07
-'Last Modified by: Rapsodius
-'Changed the panning calculation formula, now
-'uses the Y coordinate.
+'Last Modification: 03/30/08
+'Last Modified by: Juan Martín Sotuyo Dodero (Maraxus)
+'Added support for 3D sound effects.
 '***************************************************
 On Error GoTo ErrHandler
     Dim bufferIndex As Long
-    Dim tmpX As Integer
-    Dim tmpY As Integer
-    Dim calcVol As Long
-    Dim calcPanX As Long
-    Dim calcPan As Integer
     
     If Not SoundActivated Then Exit Function
     
@@ -351,216 +322,111 @@ On Error GoTo ErrHandler
     bufferIndex = LoadWave(FileName, LoopSound)
     If bufferIndex = 0 Then Exit Function   'If an error ocurred abort
     
-    If SoundSrc = eSoundPos.spNone Then
-        With DSBuffers(bufferIndex)
-            If .looping Then
-                .Buffer.Play DSBPLAY_LOOPING
-            Else
-                .Buffer.Play DSBPLAY_DEFAULT
-            End If
-            
-            'Apply volume
-            Call .Buffer.SetVolume(SndVolume)
-        End With
-        
-        PlayWave = bufferIndex
-    Else
-        DSBuffers(bufferIndex).x = x
-        DSBuffers(bufferIndex).y = y
-         
-        tmpX = x
-        tmpY = y
-         
-        Select Case SoundSrc
-            Case eSoundPos.spUp
-                tmpY = -tmpY
-            Case eSoundPos.spLeft
-                tmpX = -tmpX
-            Case eSoundPos.spLeftUp
-                tmpX = -tmpX
-                tmpY = -tmpY
-            Case eSoundPos.spRightUp
-                tmpY = -tmpY
-            Case eSoundPos.spLeftDown
-                tmpX = -tmpX
-        End Select
-                    
-        If Abs(tmpX) <= 8 Then
-            If Abs(tmpY) <= 6 Then
-                With DSBuffers(bufferIndex)
-                    .SoundSrc = SoundSrc
-                    If .looping Then
-                        .Buffer.Play DSBPLAY_LOOPING
-                    Else
-                        .Buffer.Play DSBPLAY_DEFAULT
-                    End If
-                    
-                    calcVol = ((((Abs(tmpX) + Abs(tmpY)) * (DSBVOLUME_MIN \ DIVIDE_MINVOLUME)) + (14 - (Abs(tmpX) + Abs(tmpY)) * SndVolume)) \ 14 - ((Abs(tmpX) + Abs(tmpY)) * PER_TILE_REDUCTION))
-                    
-                    If calcVol < DSBVOLUME_MIN Then
-                        calcVol = DSBVOLUME_MIN
-                    End If
-                    If calcVol > SndVolume Then
-                        calcVol = SndVolume
-                    End If
-                                                
-                    calcPanX = ((((Abs(tmpX) * DSBPAN_RIGHT) + (8 - Abs(tmpX)) * DSBPAN_CENTER) \ 8) - (Abs(tmpX) * PER_TILE_PANNING))
-                    
-                    If tmpX >= 0 Then
-                        calcPanX = -calcPanX
-                    End If
-                    
-                    'NOTE: 6* ..... \6 is not an unnecessary calculation!
-                    calcPan = calcPanX \ (((2 * Abs(tmpY)) + (6 * (6 - Abs(tmpY)))) \ 6)
-                    If calcPan < DSBPAN_LEFT Then
-                        calcPan = DSBPAN_LEFT
-                    End If
-                    If calcPan > DSBPAN_RIGHT Then
-                        calcPan = DSBPAN_RIGHT
-                    End If
-                    .Buffer.SetVolume calcVol
-                    .Buffer.SetPan calcPan
-                End With
-                
-                PlayWave = bufferIndex
-            End If
+    With DSBuffers(bufferIndex)
+        If .looping Then
+            .Buffer.Play DSBPLAY_LOOPING
+        Else
+            .Buffer.Play DSBPLAY_DEFAULT
         End If
+        
+        'Apply volume
+        Call .Buffer.SetVolume(SndVolume)
+        
+        'Store position
+        .x = srcX
+        .y = srcY
+        
+        'Get standard frequency
+        .normalFq = .Buffer.GetFrequency()
+    End With
+    
+    PlayWave = bufferIndex
+    
+    If srcX <> 0 And srcY <> 0 Then
+        Call Update3DSound(bufferIndex, 0, 0)
     End If
 Exit Function
 
 ErrHandler:
 End Function
 
-''
-'Recalculates fake 3D effect for a specific sound or to all
-'
-' @param    bufferIndex Indicates which sound buffer is to be refreshed
-' @param    RefreshAll  Whether to refresh all sounds or only one, if set to true, ignores the bufferIndex parameter
+Private Sub Update3DSound(ByVal bufferIndex As Long, ByVal deltaX As Integer, ByVal deltaY As Integer)
+'***************************************************
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Last Modification: 03/30/08
+'Refreshes the sound's arguments.
+'***************************************************
+    Dim linearDistanceOld As Single
+    Dim linearDistanceNew As Single
+    Dim deltaDistance As Single
+    Dim distanceXOld As Integer
+    Dim distanceYOld As Integer
+    Dim distanceXNew As Integer
+    Dim distanceYNew As Integer
+    Dim perceivedFq As Long
+    
+    With DSBuffers(bufferIndex)
+        distanceXOld = .x - lastPosX
+        distanceYOld = .y - lastPosY
+        
+        distanceXNew = distanceXOld + deltaX
+        distanceYNew = distanceYOld + deltaY
+        
+        linearDistanceOld = Sqr(distanceXOld * distanceXOld + distanceYOld * distanceYOld)
+        linearDistanceNew = Sqr(distanceXNew * distanceXNew + distanceYNew * distanceYNew)
+        
+        deltaDistance = linearDistanceNew - linearDistanceOld
+        
+        'Update frequency emulating Doppler effect
+        perceivedFq = .normalFq - deltaDistance * DELTA_FQ
+        If perceivedFq < DSBFREQUENCY_MIN Then perceivedFq = DSBFREQUENCY_MIN
+        
+        Call .Buffer.SetFrequency(perceivedFq)
+        
+        'Set volumen amortiguation according to distance
+        Call .Buffer.SetVolume(SndVolume * (1 - linearDistanceNew / MAX_DISTANCE_TO_SOURCE))
+        
+        'Prevent division by zero
+        If linearDistanceNew = 0 Then linearDistanceNew = 1
+        
+        'Set panning according to relative position of the source to the listener
+        Call .Buffer.SetPan((distanceXNew / linearDistanceNew) * DSBPAN_LEFT)
+    End With
+End Sub
 
-Public Sub RefreshWave(ByVal bufferIndex As Byte, ByVal RefreshAll As Boolean)
-'**************************************************************
-' RefreshWave - Recalcs panning and volume for a specific or to
-' all sounds
+''
+' Updates 3D sounds based on the movement of the listener.
 '
-' Creation Date: 08/09/07
-' Last Modification Date: 08/16/07
-' Implemented SoundSrc member of the "SoundBuffer" structure
-'**************************************************************
-On Error Resume Next
-    Dim tmpX As Integer
-    Dim tmpY As Integer
-    Dim calcVol As Long
-    Dim calcPanX As Long
-    Dim calcPan As Integer
+' @param    x   The new coordinate of the listener in the x axis (consider 0 as the furthest point to the left).
+' @param    y   The new coordinate of the listener in the y axis (consider 0 as the furthest point to the front).
+'
+' @return   The buffer index in which the sound is playing, or 0 in case of error.
+
+Public Sub MoveListener(ByVal x As Integer, ByVal y As Integer)
+'***************************************************
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Last Modification: 03/30/08
+'Moves the position of the listener updating all 3D sounds.
+'***************************************************
+    Dim i As Long
+    Dim deltaX As Integer
+    Dim deltaY As Integer
     
-    Dim i As Integer
+    deltaX = x - lastPosX
+    deltaY = y - lastPosY
     
-    If RefreshAll Then
-        For i = 1 To NumSoundBuffers
-            With DSBuffers(i)
-                If .SoundSrc <> eSoundPos.spNone Then
-                    tmpX = .x
-                    tmpY = .y
-                     
-                    Select Case .SoundSrc
-                        Case eSoundPos.spUp
-                            tmpY = -tmpY
-                        Case eSoundPos.spLeft
-                            tmpX = -tmpX
-                        Case eSoundPos.spLeftUp
-                            tmpX = -tmpX
-                            tmpY = -tmpY
-                        Case eSoundPos.spRightUp
-                            tmpY = -tmpY
-                        Case eSoundPos.spLeftDown
-                            tmpX = -tmpX
-                    End Select
-                    
-                    If Abs(tmpX) <= 8 Then
-                        If Abs(tmpY) <= 6 Then
-                            calcVol = ((((Abs(tmpX) + Abs(tmpY)) * (DSBVOLUME_MIN \ DIVIDE_MINVOLUME)) + (14 - (Abs(tmpX) + Abs(tmpY)) * SndVolume)) \ 14 - ((Abs(tmpX) + Abs(tmpY)) * PER_TILE_REDUCTION))
-                            
-                            If calcVol < DSBVOLUME_MIN Then
-                                calcVol = DSBVOLUME_MIN
-                            End If
-                            If calcVol > SndVolume Then
-                                calcVol = SndVolume
-                            End If
-                                                                
-                            calcPanX = ((((Abs(tmpX) * DSBPAN_RIGHT) + (8 - Abs(tmpX)) * DSBPAN_CENTER) \ 8) - (Abs(tmpX) * PER_TILE_PANNING))
-                            
-                            If tmpX >= 0 Then
-                                calcPanX = -calcPanX
-                            End If
-                            
-                            'NOTE: 6* ..... \6 is not an unnecessary calculation!
-                            calcPan = calcPanX \ (((2 * Abs(tmpY)) + (6 * (6 - Abs(tmpY)))) \ 6)
-                            If calcPan < DSBPAN_LEFT Then
-                                calcPan = DSBPAN_LEFT
-                            End If
-                            If calcPan > DSBPAN_RIGHT Then
-                                calcPan = DSBPAN_RIGHT
-                            End If
-                            .Buffer.SetVolume calcVol
-                            .Buffer.SetPan calcPan
-                        End If
-                    End If
-                End If
-            End With
-        Next i
-    Else
-        If bufferIndex <= 0 Or bufferIndex > NumSoundBuffers Then Exit Sub
-        With DSBuffers(bufferIndex)
-            If .SoundSrc <> eSoundPos.spNone Then
-                tmpX = .x
-                tmpY = .y
-                 
-                Select Case .SoundSrc
-                    Case eSoundPos.spUp
-                        tmpY = -tmpY
-                    Case eSoundPos.spLeft
-                        tmpX = -tmpX
-                    Case eSoundPos.spLeftUp
-                        tmpX = -tmpX
-                        tmpY = -tmpY
-                    Case eSoundPos.spRightUp
-                        tmpY = -tmpY
-                    Case eSoundPos.spLeftDown
-                        tmpX = -tmpX
-                End Select
-                
-                If Abs(tmpX) <= 8 Then
-                    If Abs(tmpY) <= 6 Then
-                        calcVol = ((((Abs(tmpX) + Abs(tmpY)) * (DSBVOLUME_MIN \ DIVIDE_MINVOLUME)) + (14 - (Abs(tmpX) + Abs(tmpY)) * SndVolume)) \ 14 - ((Abs(tmpX) + Abs(tmpY)) * PER_TILE_REDUCTION))
-                        
-                        If calcVol < DSBVOLUME_MIN Then
-                            calcVol = DSBVOLUME_MIN
-                        End If
-                        If calcVol > SndVolume Then
-                            calcVol = SndVolume
-                        End If
-                                                        
-                        calcPanX = ((((Abs(tmpX) * DSBPAN_RIGHT) + (8 - Abs(tmpX)) * DSBPAN_CENTER) \ 8) - (Abs(tmpX) * PER_TILE_PANNING))
-                        
-                        If tmpX >= 0 Then
-                            calcPanX = -calcPanX
-                        End If
-                        
-                        'NOTE: 6* ..... \6 is not an unnecessary calculation!
-                        calcPan = calcPanX \ (((2 * Abs(tmpY)) + (6 * (6 - Abs(tmpY)))) \ 6)
-                        If calcPan < DSBPAN_LEFT Then
-                            calcPan = DSBPAN_LEFT
-                        End If
-                        If calcPan > DSBPAN_RIGHT Then
-                            calcPan = DSBPAN_RIGHT
-                        End If
-                        .Buffer.SetVolume calcVol
-                        .Buffer.SetPan calcPan
-                    End If
+    For i = 1 To NumSoundBuffers
+        If Not DSBuffers(i).Buffer Is Nothing Then
+            If DSBuffers(i).Buffer.GetStatus And DSBSTATUS_PLAYING Then
+                If DSBuffers(i).x <> 0 And DSBuffers(i).y <> 0 Then
+                    Call Update3DSound(i, deltaX, deltaY)
                 End If
             End If
-        End With
-    End If
+        End If
+    Next i
+    
+    lastPosX = x
+    lastPosY = y
 End Sub
 
 ''
@@ -1015,18 +881,3 @@ Public Property Let SoundActivated(ByVal nValue As Boolean)
         Call StopWave
     End If
 End Property
-
-''
-'Retrieves the NO_3D_SOUND constant, in order to play normal sounds
-'
-'@return NO_3D_SOUND constant
-
-Public Property Get No3DSound() As Byte
-'**************************************************************
-' Author: Rapsodius
-' Creation Date: 08/14/07
-' Retrieves the NO_3D_SOUND constant, in order to play normal sounds
-'**************************************************************
-    No3DSound = NO_3D_SOUND
-End Property
-

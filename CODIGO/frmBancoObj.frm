@@ -289,7 +289,7 @@ End Sub
 
 Private Sub Image1_Click(index As Integer)
 
-Call Audio.PlayWave(SND_CLICK, Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone)
+Call Audio.PlayWave(SND_CLICK)
 
 If List1(index).List(List1(index).listIndex) = "" Or _
    List1(index).listIndex < 0 Then Exit Sub

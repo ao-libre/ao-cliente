@@ -104,7 +104,6 @@ Private Enum ServerPacketID
     PlayMIDI                ' TM
     PlayWave                ' TW
     guildList               ' GL
-    PlayFireSound           ' FO
     AreaChanged             ' CA
     PauseToggle             ' BKW
     RainToggle              ' LLU
@@ -726,9 +725,6 @@ On Error Resume Next
         Case ServerPacketID.guildList               ' GL
             Call HandleGuildList
         
-        Case ServerPacketID.PlayFireSound           ' FO
-            Call HandlePlayFireSound
-        
         Case ServerPacketID.AreaChanged             ' CA
             Call HandleAreaChanged
         
@@ -902,7 +898,7 @@ On Error Resume Next
     End Select
     
     'Done with this packet, move on to next one
-    If incomingData.length > 0 And Err.Number <> incomingData.NotEnoughDataErrCode Then
+    If incomingData.length > 0 And Err.number <> incomingData.NotEnoughDataErrCode Then
         Err.Clear
         Call HandleIncomingData
     End If
@@ -1850,7 +1846,7 @@ On Error GoTo ErrHandler
 
 ErrHandler:
     Dim error As Long
-    error = Err.Number
+    error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
@@ -1926,7 +1922,7 @@ On Error GoTo ErrHandler
     
 ErrHandler:
     Dim error As Long
-    error = Err.Number
+    error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
@@ -2004,7 +2000,7 @@ On Error GoTo ErrHandler
     
 ErrHandler:
     Dim error As Long
-    error = Err.Number
+    error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
@@ -2044,7 +2040,7 @@ On Error GoTo ErrHandler
     
 ErrHandler:
     Dim error As Long
-    error = Err.Number
+    error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
@@ -2170,7 +2166,7 @@ On Error GoTo ErrHandler
             End If
             
             'Log2 of the bit flags sent by the server gives our numbers ^^
-            .priv = Log(privs) / Log(2)
+            .priv = log(privs) / log(2)
         Else
             .priv = 0
         End If
@@ -2185,7 +2181,7 @@ On Error GoTo ErrHandler
     
 ErrHandler:
     Dim error As Long
-    error = Err.Number
+    error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
@@ -2451,19 +2447,15 @@ Private Sub HandlePlayWave()
     'Remove packet ID
     Call incomingData.ReadByte
         
-    Dim calcX As Byte
-    Dim calcY As Byte
     Dim wave As Byte
-    Dim tmpX As Byte
-    Dim tmpY As Byte
+    Dim srcX As Byte
+    Dim srcY As Byte
     
     wave = incomingData.ReadByte()
-    tmpX = incomingData.ReadByte()
-    tmpY = incomingData.ReadByte()
-    calcX = Abs(UserPos.x - tmpX)
-    calcY = Abs(UserPos.y - tmpY)
+    srcX = incomingData.ReadByte()
+    srcY = incomingData.ReadByte()
         
-    Call Audio.PlayWave(CStr(wave) & ".wav", calcX, calcY, Mod_General.CalcSoundSrc(tmpX, tmpY))
+    Call Audio.PlayWave(CStr(wave) & ".wav", srcX, srcY)
 End Sub
 
 ''
@@ -2506,7 +2498,7 @@ On Error GoTo ErrHandler
     
 ErrHandler:
     Dim error As Long
-    error = Err.Number
+    error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
@@ -2514,24 +2506,6 @@ On Error GoTo 0
 
     If error <> 0 Then _
         Err.Raise error
-End Sub
-
-''
-' Handles the PlayFireSound message.
-
-Private Sub HandlePlayFireSound()
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'
-'***************************************************
-    
-    'Remove packet ID
-    Call incomingData.ReadByte
-    
-    If FogataBufferIndex = 0 Then
-        FogataBufferIndex = Audio.PlayWave("fuego.wav", Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone, LoopStyle.Enabled)
-    End If
 End Sub
 
 ''
@@ -2598,9 +2572,9 @@ Private Sub HandleRainToggle()
             Call Audio.StopWave(RainBufferIndex)
             RainBufferIndex = 0
             If bTecho Then
-                Call Audio.PlayWave("lluviainend.wav", Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone, LoopStyle.Disabled)
+                Call Audio.PlayWave("lluviainend.wav", 0, 0, LoopStyle.Disabled)
             Else
-                Call Audio.PlayWave("lluviaoutend.wav", Audio.No3DSound, Audio.No3DSound, eSoundPos.spNone, LoopStyle.Disabled)
+                Call Audio.PlayWave("lluviaoutend.wav", 0, 0, LoopStyle.Disabled)
             End If
             frmMain.IsPlaying = PlayLoop.plNone
         End If
@@ -2785,7 +2759,7 @@ On Error GoTo ErrHandler
     
 ErrHandler:
     Dim error As Long
-    error = Err.Number
+    error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
@@ -2838,7 +2812,7 @@ On Error GoTo ErrHandler
     
 ErrHandler:
     Dim error As Long
-    error = Err.Number
+    error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
@@ -2886,7 +2860,7 @@ On Error GoTo ErrHandler
     
 ErrHandler:
     Dim error As Long
-    error = Err.Number
+    error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
@@ -2982,7 +2956,7 @@ On Error GoTo ErrHandler
     
 ErrHandler:
     Dim error As Long
-    error = Err.Number
+    error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
@@ -3039,7 +3013,7 @@ On Error GoTo ErrHandler
     
 ErrHandler:
     Dim error As Long
-    error = Err.Number
+    error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
@@ -3096,7 +3070,7 @@ On Error GoTo ErrHandler
     
 ErrHandler:
     Dim error As Long
-    error = Err.Number
+    error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
@@ -3162,7 +3136,7 @@ On Error GoTo ErrHandler
     
 ErrHandler:
     Dim error As Long
-    error = Err.Number
+    error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
@@ -3234,7 +3208,7 @@ On Error GoTo ErrHandler
     
 ErrHandler:
     Dim error As Long
-    error = Err.Number
+    error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
@@ -3288,7 +3262,7 @@ On Error GoTo ErrHandler
     
 ErrHandler:
     Dim error As Long
-    error = Err.Number
+    error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
@@ -3438,7 +3412,7 @@ On Error GoTo ErrHandler
     
 ErrHandler:
     Dim error As Long
-    error = Err.Number
+    error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
@@ -3634,7 +3608,7 @@ On Error GoTo ErrHandler
     
 ErrHandler:
     Dim error As Long
-    error = Err.Number
+    error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
@@ -3693,7 +3667,7 @@ On Error GoTo ErrHandler
     
 ErrHandler:
     Dim error As Long
-    error = Err.Number
+    error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
@@ -3732,7 +3706,7 @@ On Error GoTo ErrHandler
     
 ErrHandler:
     Dim error As Long
-    error = Err.Number
+    error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
@@ -3781,7 +3755,7 @@ On Error GoTo ErrHandler
     
 ErrHandler:
     Dim error As Long
-    error = Err.Number
+    error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
@@ -3830,7 +3804,7 @@ On Error GoTo ErrHandler
     
 ErrHandler:
     Dim error As Long
-    error = Err.Number
+    error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
@@ -3929,7 +3903,7 @@ On Error GoTo ErrHandler
     
 ErrHandler:
     Dim error As Long
-    error = Err.Number
+    error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
@@ -4006,7 +3980,7 @@ On Error GoTo ErrHandler
     
 ErrHandler:
     Dim error As Long
-    error = Err.Number
+    error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
@@ -4086,7 +4060,7 @@ On Error GoTo ErrHandler
     
 ErrHandler:
     Dim error As Long
-    error = Err.Number
+    error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
@@ -4157,7 +4131,7 @@ On Error GoTo ErrHandler
     
 ErrHandler:
     Dim error As Long
-    error = Err.Number
+    error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
@@ -4289,7 +4263,7 @@ On Error GoTo ErrHandler
     
 ErrHandler:
     Dim error As Long
-    error = Err.Number
+    error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
@@ -4357,7 +4331,7 @@ On Error GoTo ErrHandler
     
 ErrHandler:
     Dim error As Long
-    error = Err.Number
+    error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
@@ -4405,7 +4379,7 @@ On Error GoTo ErrHandler
     
 ErrHandler:
     Dim error As Long
-    error = Err.Number
+    error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
@@ -4445,7 +4419,7 @@ On Error GoTo ErrHandler
     
 ErrHandler:
     Dim error As Long
-    error = Err.Number
+    error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
@@ -4510,7 +4484,7 @@ On Error GoTo ErrHandler
     
 ErrHandler:
     Dim error As Long
-    error = Err.Number
+    error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
@@ -4582,7 +4556,7 @@ On Error GoTo ErrHandler
     
 ErrHandler:
     Dim error As Long
-    error = Err.Number
+    error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
@@ -6279,7 +6253,7 @@ End Sub
 ' @param    number The number to report to the centinel.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCentinelReport(ByVal Number As Integer)
+Public Sub WriteCentinelReport(ByVal number As Integer)
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6288,7 +6262,7 @@ Public Sub WriteCentinelReport(ByVal Number As Integer)
     With outgoingData
         Call .WriteByte(ClientPacketID.CentinelReport)
         
-        Call .WriteInteger(Number)
+        Call .WriteInteger(number)
     End With
 End Sub
 
@@ -6466,10 +6440,10 @@ Public Sub WriteChangePassword(ByRef oldPass As String, ByRef newPass As String)
         Call .WriteByte(ClientPacketID.ChangePassword)
         
 #If SeguridadAlkon Then
-        Call .WriteASCIIStringFixed(md5.GetMD5String(oldPass))
-        Call md5.MD5Reset
-        Call .WriteASCIIStringFixed(md5.GetMD5String(newPass))
-        Call md5.MD5Reset
+        Call .WriteASCIIStringFixed(MD5.GetMD5String(oldPass))
+        Call MD5.MD5Reset
+        Call .WriteASCIIStringFixed(MD5.GetMD5String(newPass))
+        Call MD5.MD5Reset
 #Else
         Call .WriteASCIIString(oldPass)
         Call .WriteASCIIString(newPass)
