@@ -1030,12 +1030,14 @@ Private Sub DDrawGrhtoSurface(ByRef Grh As Grh, ByVal x As Integer, ByVal y As I
         If Grh.Started = 1 Then
             Grh.FrameCounter = Grh.FrameCounter + (timerElapsedTime * GrhData(Grh.GrhIndex).NumFrames / Grh.Speed)
             If Grh.FrameCounter > GrhData(Grh.GrhIndex).NumFrames Then
-                Grh.FrameCounter = 1
+                Grh.FrameCounter = (Grh.FrameCounter Mod GrhData(Grh.GrhIndex).NumFrames) + 1
                 
-                If Grh.Loops > 0 Then
-                    Grh.Loops = Grh.Loops - 1
-                Else
-                    Grh.Started = 0
+                If Grh.Loops <> INFINITE_LOOPS Then
+                    If Grh.Loops > 0 Then
+                        Grh.Loops = Grh.Loops - 1
+                    Else
+                        Grh.Started = 0
+                    End If
                 End If
             End If
         End If
@@ -1102,13 +1104,15 @@ Sub DDrawTransGrhtoSurface(ByRef Grh As Grh, ByVal x As Integer, ByVal y As Inte
         If Grh.Started = 1 Then
             Grh.FrameCounter = Grh.FrameCounter + (timerElapsedTime * GrhData(Grh.GrhIndex).NumFrames / Grh.Speed)
             
-            If Grh.FrameCounter >= GrhData(Grh.GrhIndex).NumFrames Then
-                If Grh.FrameCounter > GrhData(Grh.GrhIndex).NumFrames Then Grh.FrameCounter = 1
+            If Grh.FrameCounter > GrhData(Grh.GrhIndex).NumFrames Then
+                Grh.FrameCounter = (Grh.FrameCounter Mod GrhData(Grh.GrhIndex).NumFrames) + 1
                 
-                If Grh.Loops Then
-                    Grh.Loops = Grh.Loops - 1
-                Else
-                    Grh.Started = 0
+                If Grh.Loops <> INFINITE_LOOPS Then
+                    If Grh.Loops > 0 Then
+                        Grh.Loops = Grh.Loops - 1
+                    Else
+                        Grh.Started = 0
+                    End If
                 End If
             End If
         End If
@@ -1151,13 +1155,15 @@ Sub DDrawTransGrhtoSurfaceAlpha(ByRef Grh As Grh, ByVal x As Integer, ByVal y As
     If Animate Then
         If Grh.Started = 1 Then
             Grh.FrameCounter = Grh.FrameCounter + (timerTicksPerFrame * Grh.Speed)
-            If Grh.FrameCounter >= GrhData(Grh.GrhIndex).NumFrames Then
-                If Grh.FrameCounter > GrhData(Grh.GrhIndex).NumFrames Then Grh.FrameCounter = 1
+            If Grh.FrameCounter > GrhData(Grh.GrhIndex).NumFrames Then
+                Grh.FrameCounter = (Grh.FrameCounter Mod GrhData(Grh.GrhIndex).NumFrames) + 1
                 
-                If Grh.Loops Then
-                    Grh.Loops = Grh.Loops - 1
-                Else
-                    Grh.Started = 0
+                If Grh.Loops <> INFINITE_LOOPS Then
+                    If Grh.Loops > 0 Then
+                        Grh.Loops = Grh.Loops - 1
+                    Else
+                        Grh.Started = 0
+                    End If
                 End If
             End If
         End If
@@ -1892,10 +1898,6 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
 'Last Modify Date: 12/03/04
 'Draw char's to screen without offcentering them
 '***************************************************
-'Esto lo pongo por un error q me surgio, este sub queria renderear un char
-'con .Heading==0, por lo tanto tiro rt9
-On Error Resume Next
-
     Dim moved As Boolean
     Dim Pos As Integer
     Dim line As String
@@ -1982,7 +1984,7 @@ On Error Resume Next
             If .Escudo.ShieldWalk(.Heading).GrhIndex Then _
                 Call DDrawTransGrhtoSurface(.Escudo.ShieldWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, 1)
             
-            'Draw name ovew head
+            'Draw name over head
             If LenB(.Nombre) > 0 Then
                 If Nombres And Abs(MouseTileX - .Pos.x) < 2 And (Abs(MouseTileY - .Pos.y)) < 2 Then
                     Pos = InStr(.Nombre, "<")
@@ -2019,7 +2021,7 @@ On Error Resume Next
 #End If
             
             'Check if animation is over
-            If Not .fX.Started Then _
+            If .fX.Started = 0 Then _
                 .FxIndex = 0
         End If
     End With
