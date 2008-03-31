@@ -1072,14 +1072,6 @@ End Sub
 Private Sub lstProfesion_Click()
 On Error Resume Next
     Image1.Picture = LoadPicture(App.path & "\graficos\" & lstProfesion.Text & ".jpg")
-    
-'TODO : Esto vuela en la 0.12.1!!!
-    If lstProfesion.listIndex + 1 = eClass.Druid Then
-        Call MsgBox("Esta clase se encuentra deshabilitada hasta el próximo parche, en el que se le realizarán varios cambios importantes." & vbCrLf _
-            & "Sepan disculpar las molestias.")
-        
-        lstProfesion.listIndex = 0
-    End If
 End Sub
 
 Private Sub txtNombre_Change()

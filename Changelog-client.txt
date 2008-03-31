@@ -124,4 +124,5 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 29/03/2008: Corregí un overflow al mandar valores muy grandes en el color de textos usando ~ tanto para mensajes de clan como de GMs. (Maraxus)
  * 30/03/2008: Reescrito el código de sonido 3D. Ahora es más claro, eficiente y utiliza una física más realista. (Maraxus)
  * 30/03/2008: Eliminé el paquete que hacía reproducir el ruido de la fogata. (Maraxus)
- * 30/03/2008: corregí un bug en la reproducción de animaciones y las hice más fluidas al loopear. (Maraxus)
+ * 30/03/2008: Corregí un bug en la reproducción de animaciones y las hice más fluidas al loopear. (Maraxus)
+ * 30/03/2008: volví a habilitar el druida en la creación de personajes. (Maraxus)
