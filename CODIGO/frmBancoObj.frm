@@ -307,7 +307,7 @@ Select Case index
    Case 1
         LastIndex2 = List1(1).listIndex
         LasActionBuy = False
-        Call WriteEquipItem(List1(1).listIndex + 1)
+        Call WriteBankDeposit(List1(1).listIndex + 1, cantidad.Text)
 End Select
 
 List1(0).Clear
