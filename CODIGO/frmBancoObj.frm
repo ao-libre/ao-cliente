@@ -241,6 +241,7 @@ Public LastIndex2 As Integer
 
 
 Private Sub cantidad_Change()
+
 If Val(cantidad.Text) < 1 Then
     cantidad.Text = 1
 End If
@@ -306,14 +307,9 @@ Select Case index
    Case 1
         LastIndex2 = List1(1).listIndex
         LasActionBuy = False
-        If Not Inventario.Equipped(List1(1).listIndex + 1) Then
-            Call WriteBankDeposit(List1(1).listIndex + 1, cantidad.Text)
-        Else
-            AddtoRichTextBox frmMain.RecTxt, "No podes depositar el item porque lo estas usando.", 2, 51, 223, 1, 1
-            Exit Sub
-        End If
-                
+        Call WriteEquipItem(List1(1).listIndex + 1)
 End Select
+
 List1(0).Clear
 
 List1(1).Clear

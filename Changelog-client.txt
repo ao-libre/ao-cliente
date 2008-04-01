@@ -126,3 +126,6 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 30/03/2008: Eliminé el paquete que hacía reproducir el ruido de la fogata. (Maraxus)
  * 30/03/2008: Corregí un bug en la reproducción de animaciones y las hice más fluidas al loopear. (Maraxus)
  * 30/03/2008: volví a habilitar el druida en la creación de personajes. (Maraxus)
+ * 31/03/2008: Arreglé el bug que permitía mover el personaje si estaba comerciando con un npc o depositando en boveda. (DarkThom)
+ * 31/03/2008: Tambien agregué que no pueda abrir el RecTxt si estaba abierto el formulario del Banco o Comercio Seguro. (DarkThom)
+ * 31/03/2008: Centré mejor el nick y cambie la parte del clan ya que los dos usaban la misma cordenada X. (DarkThom)

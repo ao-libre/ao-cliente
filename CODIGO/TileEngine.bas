@@ -2000,11 +2000,13 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
                         color = RGB(ColoresPJ(.priv).r, ColoresPJ(.priv).g, ColoresPJ(.priv).b)
                     End If
                     
+                    'Nick
                     line = Left$(.Nombre, Pos - 2)
-                    Call RenderText(PixelOffsetX + 10 - Len(line) * 2, PixelOffsetY + 30, line, color, frmMain.font)
+                    Call RenderText(PixelOffsetX + 4 - Len(line) * 2, PixelOffsetY + 30, line, color, frmMain.font)
                     
+                    'Clan
                     line = mid$(.Nombre, Pos)
-                    Call RenderText(PixelOffsetX + 10 - Len(line) * 3, PixelOffsetY + 45, line, color, frmMain.font)
+                    Call RenderText(PixelOffsetX + 15 - Len(line) * 3, PixelOffsetY + 45, line, color, frmMain.font)
                 End If
             End If
         End If

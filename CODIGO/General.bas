@@ -425,6 +425,9 @@ On Error Resume Next
     'No input allowed while Argentum is not the active window
     If Not Application.IsAppActive() Then Exit Sub
     
+    'No walking when in commerce or banking.
+    If Comerciando Then Exit Sub
+    
     'Don't allow any these keys during movement..
     If UserMoving = 0 Then
         If Not UserEstupido Then
