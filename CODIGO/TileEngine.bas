@@ -1969,7 +1969,7 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
             Call DDrawTransGrhtoSurface(.Body.Walk(.Heading), PixelOffsetX, PixelOffsetY, 1, 1)
             
             'Draw Head
-            If .Head.Head(.Heading).GrhIndex Then _
+            If .Head.Head(.Heading).GrhIndex Then
                 Call DDrawTransGrhtoSurface(.Head.Head(.Heading), PixelOffsetX + .Body.HeadOffset.x, PixelOffsetY + .Body.HeadOffset.y, 1, 0)
                 
                 'Draw Helmet
