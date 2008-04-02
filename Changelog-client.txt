@@ -129,3 +129,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 31/03/2008: Arreglé el bug que permitía mover el personaje si estaba comerciando con un npc o depositando en boveda. (DarkThom)
  * 31/03/2008: Tambien agregué que no pueda abrir el RecTxt si estaba abierto el formulario del Banco o Comercio Seguro. (DarkThom)
  * 31/03/2008: Centré mejor el nick y cambie la parte del clan ya que los dos usaban la misma cordenada X. (DarkThom)
+ * 01/04/2008: Se puede vender items equipados. (Maraxus)

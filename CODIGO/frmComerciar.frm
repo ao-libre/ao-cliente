@@ -316,12 +316,8 @@ Select Case index
    Case 1
         LastIndex2 = List1(1).listIndex
         LasActionBuy = False
-        If Not Inventario.Equipped(List1(1).listIndex + 1) Then
-            Call WriteCommerceSell(List1(1).listIndex + 1, cantidad.Text)
-        Else
-            AddtoRichTextBox frmMain.RecTxt, "No podes vender el item porque lo estas usando.", 2, 51, 223, 1, 1
-            Exit Sub
-        End If
+        
+        Call WriteCommerceSell(List1(1).listIndex + 1, cantidad.Text)
 End Select
 
 List1(0).Clear
