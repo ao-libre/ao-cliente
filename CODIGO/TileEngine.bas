@@ -1971,18 +1971,19 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
             'Draw Head
             If .Head.Head(.Heading).GrhIndex Then _
                 Call DDrawTransGrhtoSurface(.Head.Head(.Heading), PixelOffsetX + .Body.HeadOffset.x, PixelOffsetY + .Body.HeadOffset.y, 1, 0)
-            
-            'Draw Helmet
-            If .Casco.Head(.Heading).GrhIndex Then _
-                Call DDrawTransGrhtoSurface(.Casco.Head(.Heading), PixelOffsetX + .Body.HeadOffset.x, PixelOffsetY + .Body.HeadOffset.y, 1, 0)
-            
-            'Draw Weapon
-            If .Arma.WeaponWalk(.Heading).GrhIndex Then _
-                Call DDrawTransGrhtoSurface(.Arma.WeaponWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, 1)
-            
-            'Draw Shield
-            If .Escudo.ShieldWalk(.Heading).GrhIndex Then _
-                Call DDrawTransGrhtoSurface(.Escudo.ShieldWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, 1)
+                
+                'Draw Helmet
+                If .Casco.Head(.Heading).GrhIndex Then _
+                    Call DDrawTransGrhtoSurface(.Casco.Head(.Heading), PixelOffsetX + .Body.HeadOffset.x, PixelOffsetY + .Body.HeadOffset.y, 1, 0)
+                
+                'Draw Weapon
+                If .Arma.WeaponWalk(.Heading).GrhIndex Then _
+                    Call DDrawTransGrhtoSurface(.Arma.WeaponWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, 1)
+                
+                'Draw Shield
+                If .Escudo.ShieldWalk(.Heading).GrhIndex Then _
+                    Call DDrawTransGrhtoSurface(.Escudo.ShieldWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, 1)
+            End If
             
             'Draw name over head
             If LenB(.Nombre) > 0 Then
