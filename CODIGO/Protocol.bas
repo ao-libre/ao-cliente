@@ -345,7 +345,7 @@ Private Enum ClientPacketID
     ItemsInTheFloor         '/PISO
     MakeDumb                '/ESTUPIDO
     MakeDumbNoMore          '/NOESTUPIDO
-    DumpIPTables            '/DUMPSECURITY"
+    DumpIPTables            '/DUMPSECURITY
     CouncilKick             '/KICKCONSE
     SetTrigger              '/TRIGGER
     AskTrigger              '/TRIGGER with no arguments
@@ -1537,7 +1537,7 @@ Private Sub HandleUpdateGold()
     'Get data and update form
     UserGLD = incomingData.ReadLong()
     
-    If UserGLD >= UserLvl * 10000 Then
+    If UserGLD >= CLng(UserLvl) * 10000 Then
         'Changes color
         frmMain.GldLbl.ForeColor = &HFF& 'Red
     Else
