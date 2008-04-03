@@ -232,7 +232,7 @@ Private Function MessageIsValid(ByRef msg As String) As Boolean
           And Char <> "ó" And Char <> "Ó" And Char <> "ö" And Char <> "Ö" And Char <> "ô" _
           And Char <> "Ô" And Char <> "ò" And Char <> "Ò" And Char <> "ú" And Char <> "Ú" _
           And Char <> "ü" And Char <> "Ü" And Char <> "û" And Char <> "Û" And Char <> "ù" _
-          And Char <> "Ù" And Char <> "ñ" And Char <> "Ñ" Then
+          And Char <> "Ù" And Char <> "ñ" And Char <> "Ñ" And Char <> "¡" And Char <> "¿" Then
             Exit Function
         End If
     Next i
