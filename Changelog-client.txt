@@ -131,5 +131,5 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 31/03/2008: Centré mejor el nick y cambie la parte del clan ya que los dos usaban la misma cordenada X. (DarkThom)
  * 01/04/2008: Se puede vender items equipados. (Maraxus)
  * 01/04/2008: No se dibujan cascos, armaduras o escudos de chars sin cabeza (con barca o NPCs). (Maraxus)
- * 01/04/2008: Corregido un overflow al actualizar la cantidad de oro que se posee. (Maraxus)
- * 01/04/2008: "¡" y "¿" ahora son caractéres válidos para mensajes personalizados. (Maraxus)
+ * 02/04/2008: Corregido un overflow al actualizar la cantidad de oro que se posee. (Maraxus)
+ * 02/04/2008: "¡" y "¿" ahora son caractéres válidos para mensajes personalizados. (Maraxus)
