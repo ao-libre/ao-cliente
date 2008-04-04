@@ -134,3 +134,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 02/04/2008: Corregido un overflow al actualizar la cantidad de oro que se posee. (Maraxus)
  * 02/04/2008: "¡" y "¿" ahora son caractéres válidos para mensajes personalizados. (Maraxus)
  * 03/04/2008: Se movió el cambio de resolución más al principio del programa para evitar conflictos en ciertas placas de video y hacer el loading esté centrado incluso en full-screen. (Maraxus)
+ * 03/04/2008: Al loguear se muestra correctamente el color del dinero que se posee según si el mismo se caerá o no al morir. (Maraxus)
