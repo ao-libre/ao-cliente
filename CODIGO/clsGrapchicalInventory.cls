@@ -158,15 +158,6 @@ Public Property Get Valor(ByVal slot As Byte) As Single
     Valor = UserInventory(slot).Valor
 End Property
 
-Public Property Get vVenta(ByVal slot As Byte) As Long
-'***************************************************
-'Author: Nicolas Ezequiel Bouhid (NicoNZ)
-'Last Modify Date: 09/11/07
-'Devuelve el valor de venta de el item seleccionado
-'***************************************************
-    vVenta = UserInventory(slot).vVenta
-End Property
-
 Public Property Get Amount(ByVal slot As Byte) As Long
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -237,7 +228,6 @@ Public Sub SetItem(ByVal slot As Byte, ByVal eOBJIndex As Integer, ByVal eAmount
         .OBJIndex = eOBJIndex
         .OBJType = eObjType
         .Valor = eValor
-        .vVenta = eValor / 3
     End With
     
     'Render inventory slot (we don't need to render the whole inventory)

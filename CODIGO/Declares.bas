@@ -374,8 +374,6 @@ Type Inventory
     Def As Integer
     MaxHit As Integer
     MinHit As Integer
-    'Nueva variable que indica el precio de venta
-    vVenta As Long
 End Type
 
 Type NpCinV
@@ -395,8 +393,6 @@ Type NpCinV
     C5 As String
     C6 As String
     C7 As String
-    'Nueva variable que indica el precio de venta
-    vVenta As Long
 End Type
 
 Type tReputacion 'Fama del usuario

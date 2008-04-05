@@ -351,8 +351,9 @@ DR.Bottom = 32
 
 Select Case Index
     Case 0
+    Debug.Print
         Label1(0).Caption = NPCInventory(List1(0).listIndex + 1).Name
-        Label1(1).Caption = "C:" & NPCInventory(List1(0).listIndex + 1).Valor & " - V:" & NPCInventory(List1(0).listIndex + 1).vVenta
+        Label1(1).Caption = NPCInventory(List1(0).listIndex + 1).Valor
         Label1(2).Caption = NPCInventory(List1(0).listIndex + 1).Amount
         
         If Label1(2).Caption <> 0 Then
@@ -378,7 +379,7 @@ Select Case Index
     
     Case 1
         Label1(0).Caption = Inventario.ItemName(List1(1).listIndex + 1)
-        Label1(1).Caption = "C:" & Inventario.Valor(List1(1).listIndex + 1) & " - V:" & Inventario.vVenta(List1(1).listIndex + 1)
+        Label1(1).Caption = Inventario.Valor(List1(1).listIndex + 1)
         Label1(2).Caption = Inventario.Amount(List1(1).listIndex + 1)
         
         If Label1(2).Caption <> 0 Then
