@@ -138,3 +138,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 04/04/2008: Arreglado el bug del comercio (venta). (NicoNZ)
  * 04/04/2008: Arreglados los mensajes personalizados y un bug que borraba los carteles de otros al moverse. (Maraxus)
  * 04/04/2008: Corregido un typo en elform de depositar que dibujaba imágenes fruta y causaba rt9. (Maraxus)
+ * 04/04/2008: Volví a evitar el movimiento al estar en WorldSave... se ve en algún momento se perdió. (Maraxus)

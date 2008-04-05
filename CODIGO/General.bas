@@ -428,6 +428,9 @@ On Error Resume Next
     'No walking when in commerce or banking.
     If Comerciando Then Exit Sub
     
+    'If game is paused, abort movement.
+    If pausa Then Exit Sub
+    
     'Don't allow any these keys during movement..
     If UserMoving = 0 Then
         If Not UserEstupido Then
@@ -774,8 +777,8 @@ Sub Main()
     'Obtener el HushMD5
     Dim fMD5HushYo As String * 32
     
-    fMD5HushYo = md5.GetMD5File(App.path & "\" & App.EXEName & ".exe")
-    Call md5.MD5Reset
+    fMD5HushYo = MD5.GetMD5File(App.path & "\" & App.EXEName & ".exe")
+    Call MD5.MD5Reset
     MD5HushYo = txtOffset(hexMd52Asc(fMD5HushYo), 55)
     
     Debug.Print fMD5HushYo
@@ -1166,7 +1169,7 @@ Public Sub CloseClient()
     Set outgoingData = Nothing
     
 #If SeguridadAlkon Then
-    Set md5 = Nothing
+    Set MD5 = Nothing
 #End If
     
     Call UnloadAllForms
