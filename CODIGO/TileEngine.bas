@@ -1915,7 +1915,9 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
                 .MoveOffsetX = .MoveOffsetX + ScrollPixelsPerFrameX * Sgn(.scrollDirectionX) * timerTicksPerFrame
                 
                 'Start animations
-                .Body.Walk(.Heading).Started = 1
+'TODO : Este parche es para evita los uncornos exploten al moverse!! REVER!!!
+                If .Body.Walk(.Heading).FrameCounter > 1 Then _
+                    .Body.Walk(.Heading).Started = 1
                 .Arma.WeaponWalk(.Heading).Started = 1
                 .Escudo.ShieldWalk(.Heading).Started = 1
                 
@@ -1935,7 +1937,9 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
                 .MoveOffsetY = .MoveOffsetY + ScrollPixelsPerFrameY * Sgn(.scrollDirectionY) * timerTicksPerFrame
                 
                 'Start animations
-                .Body.Walk(.Heading).Started = 1
+'TODO : Este parche es para evita los uncornos exploten al moverse!! REVER!!!
+                If .Body.Walk(.Heading).FrameCounter > 1 Then _
+                    .Body.Walk(.Heading).Started = 1
                 .Arma.WeaponWalk(.Heading).Started = 1
                 .Escudo.ShieldWalk(.Heading).Started = 1
                 
