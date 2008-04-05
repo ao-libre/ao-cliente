@@ -390,7 +390,7 @@ Select Case index
                 Label1(4).Visible = False
         End Select
         
-        If UserBancoInventory(List1(1).listIndex + 1).Amount <> 0 Then _
+        If Inventario.Amount(List1(1).listIndex + 1) <> 0 Then _
             Call DrawGrhtoHdc(Picture1.hdc, Inventario.GrhIndex(List1(1).listIndex + 1), SR, DR)
 End Select
 
