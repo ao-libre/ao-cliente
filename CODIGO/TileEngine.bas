@@ -226,9 +226,9 @@ Public AddtoUserPos As Position 'Si se mueve
 Public UserCharIndex As Integer
 
 Public EngineRun As Boolean
-Public FPS As Long
 
-Private FramesPerSecCounter As Long
+Public FPS As Long
+Public FramesPerSecCounter As Long
 Private fpsLastCheck As Long
 
 'Tamaño del la vista en Tiles
@@ -1777,6 +1777,11 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Inte
         
         'Display front-buffer!
         Call PrimarySurface.Blt(MainViewRect, BackBufferSurface, MainDestRect, DDBLT_WAIT)
+        
+        'Limit FPS to 100 (an easy number higher than monitor's vertical refresh rates)
+        While (DirectX.TickCount - fpsLastCheck) \ 10 < FramesPerSecCounter
+            Sleep 5
+        Wend
         
         'FPS update
         If fpsLastCheck + 1000 < DirectX.TickCount Then

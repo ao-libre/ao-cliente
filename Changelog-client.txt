@@ -139,3 +139,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 04/04/2008: Arreglados los mensajes personalizados y un bug que borraba los carteles de otros al moverse. (Maraxus)
  * 04/04/2008: Corregido un typo en elform de depositar que dibujaba imágenes fruta y causaba rt9. (Maraxus)
  * 04/04/2008: Volví a evitar el movimiento al estar en WorldSave... se ve en algún momento se perdió. (Maraxus)
+ * 04/04/2008: Limité las FPS a 100. Es un número más alto que el refresco vertical de los monitores y evita que las PCs que superen eso estén a 100% de uso de micro. (Maraxus)
