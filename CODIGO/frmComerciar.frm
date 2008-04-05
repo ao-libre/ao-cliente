@@ -97,17 +97,6 @@ Begin VB.Form frmComerciar
       Top             =   1800
       Width           =   2490
    End
-   Begin VB.Label Label1 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      ForeColor       =   &H000000FF&
-      Height          =   195
-      Index           =   5
-      Left            =   1800
-      TabIndex        =   11
-      Top             =   1080
-      Width           =   45
-   End
    Begin VB.Label Label2 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
@@ -363,9 +352,8 @@ DR.Bottom = 32
 Select Case index
     Case 0
         Label1(0).Caption = NPCInventory(List1(0).listIndex + 1).Name
-        Label1(1).Caption = NPCInventory(List1(0).listIndex + 1).Valor
+        Label1(1).Caption = "C:" & NPCInventory(List1(0).listIndex + 1).Valor & " - V:" & NPCInventory(List1(0).listIndex + 1).vVenta
         Label1(2).Caption = NPCInventory(List1(0).listIndex + 1).Amount
-        Label1(5).Caption = NPCInventory(List1(0).listIndex + 1).vVenta
         
         If Label1(2).Caption <> 0 Then
         
@@ -390,9 +378,8 @@ Select Case index
     
     Case 1
         Label1(0).Caption = Inventario.ItemName(List1(1).listIndex + 1)
-        Label1(1).Caption = Inventario.Valor(List1(1).listIndex + 1)
+        Label1(1).Caption = "C:" & Inventario.Valor(List1(1).listIndex + 1) & " - V:" & Inventario.vVenta(List1(1).listIndex + 1)
         Label1(2).Caption = Inventario.Amount(List1(1).listIndex + 1)
-        Label1(5).Caption = Inventario.vVenta(List1(1).listIndex + 1)
         
         If Label1(2).Caption <> 0 Then
         

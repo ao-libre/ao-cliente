@@ -237,6 +237,7 @@ Public Sub SetItem(ByVal slot As Byte, ByVal eOBJIndex As Integer, ByVal eAmount
         .OBJIndex = eOBJIndex
         .OBJType = eObjType
         .Valor = eValor
+        .vVenta = eValor / 3
     End With
     
     'Render inventory slot (we don't need to render the whole inventory)
