@@ -281,16 +281,16 @@ If Image1(1).Tag = 0 Then
 End If
 End Sub
 
-Private Sub Image1_Click(index As Integer)
+Private Sub Image1_Click(Index As Integer)
 
 Call Audio.PlayWave(SND_CLICK)
 
-If List1(index).List(List1(index).listIndex) = "" Or _
-   List1(index).listIndex < 0 Then Exit Sub
+If List1(Index).List(List1(Index).listIndex) = "" Or _
+   List1(Index).listIndex < 0 Then Exit Sub
 
 If Not IsNumeric(cantidad.Text) Or cantidad.Text = 0 Then Exit Sub
 
-Select Case index
+Select Case Index
     Case 0
         frmComerciar.List1(0).SetFocus
         LastIndex1 = List1(0).listIndex
@@ -315,8 +315,8 @@ List1(1).Clear
 NPCInvDim = 0
 End Sub
 
-Private Sub Image1_MouseMove(index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
-Select Case index
+Private Sub Image1_MouseMove(Index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
+Select Case Index
     Case 0
         If Image1(0).Tag = 1 Then
                 Image1(0).Picture = LoadPicture(App.path & "\Graficos\BotónComprarApretado.jpg")
@@ -336,7 +336,7 @@ Select Case index
 End Select
 End Sub
 
-Private Sub list1_Click(index As Integer)
+Private Sub list1_Click(Index As Integer)
 Dim SR As RECT, DR As RECT
 
 SR.Left = 0
@@ -349,7 +349,7 @@ DR.Top = 0
 DR.Right = 32
 DR.Bottom = 32
 
-Select Case index
+Select Case Index
     Case 0
         Label1(0).Caption = NPCInventory(List1(0).listIndex + 1).Name
         Label1(1).Caption = "C:" & NPCInventory(List1(0).listIndex + 1).Valor & " - V:" & NPCInventory(List1(0).listIndex + 1).vVenta
@@ -418,7 +418,7 @@ End Sub
 '<-------------------------NUEVO-------------------------->
 '<-------------------------NUEVO-------------------------->
 '<-------------------------NUEVO-------------------------->
-Private Sub List1_MouseMove(index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub List1_MouseMove(Index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
 If Image1(0).Tag = 0 Then
     Image1(0).Picture = LoadPicture(App.path & "\Graficos\BotónComprar.jpg")
     Image1(0).Tag = 1

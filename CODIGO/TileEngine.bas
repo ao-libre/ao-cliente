@@ -724,7 +724,7 @@ End Sub
 
 Private Function EstaPCarea(ByVal CharIndex As Integer) As Boolean
     With charlist(CharIndex).Pos
-        EstaPCarea = .x > UserPos.x - MinXBorder And .x < UserPos.x + MinXBorder And .y > UserPos.y - MinYBorder And .y < UserPos.y - MinYBorder
+        EstaPCarea = .x > UserPos.x - MinXBorder And .x < UserPos.x + MinXBorder And .y > UserPos.y - MinYBorder And .y < UserPos.y + MinYBorder
     End With
 End Function
 

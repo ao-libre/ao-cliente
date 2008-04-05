@@ -808,58 +808,61 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
     If LOGGING Then Call CheatingDeath.StoreKey(KeyCode, False)
 #End If
     
-    If (Not SendTxt.Visible) And (Not SendCMSTXT.Visible) And _
-       LenB(CustomKeys.ReadableName(KeyCode)) > 0 Then
-       'Checks if the form has the focus and if the key is valid
+    If (Not SendTxt.Visible) And (Not SendCMSTXT.Visible) Then
         
-        Select Case KeyCode
-            Case CustomKeys.BindedKey(eKeyType.mKeyToggleMusic)
-                Audio.MusicActivated = Not Audio.MusicActivated
-            
-            Case CustomKeys.BindedKey(eKeyType.mKeyGetObject)
-                Call AgarrarItem
-            
-            Case CustomKeys.BindedKey(eKeyType.mKeyToggleCombatMode)
-                Call WriteCombatModeToggle
-                IScombate = Not IScombate
-            
-            Case CustomKeys.BindedKey(eKeyType.mKeyEquipObject)
-                Call EquiparItem
-            
-            Case CustomKeys.BindedKey(eKeyType.mKeyToggleNames)
-                Nombres = Not Nombres
-            
-            Case CustomKeys.BindedKey(eKeyType.mKeyTamAnimal)
-                Call WriteWork(eSkill.Domar)
-            
-            Case CustomKeys.BindedKey(eKeyType.mKeySteal)
-                Call WriteWork(eSkill.Robar)
+        'Checks if the key is valid
+        If LenB(CustomKeys.ReadableName(KeyCode)) > 0 Then
+            Select Case KeyCode
+                Case CustomKeys.BindedKey(eKeyType.mKeyToggleMusic)
+                    Audio.MusicActivated = Not Audio.MusicActivated
+                
+                Case CustomKeys.BindedKey(eKeyType.mKeyGetObject)
+                    Call AgarrarItem
+                
+                Case CustomKeys.BindedKey(eKeyType.mKeyToggleCombatMode)
+                    Call WriteCombatModeToggle
+                    IScombate = Not IScombate
+                
+                Case CustomKeys.BindedKey(eKeyType.mKeyEquipObject)
+                    Call EquiparItem
+                
+                Case CustomKeys.BindedKey(eKeyType.mKeyToggleNames)
+                    Nombres = Not Nombres
+                
+                Case CustomKeys.BindedKey(eKeyType.mKeyTamAnimal)
+                    Call WriteWork(eSkill.Domar)
+                
+                Case CustomKeys.BindedKey(eKeyType.mKeySteal)
+                    Call WriteWork(eSkill.Robar)
+                            
+                Case CustomKeys.BindedKey(eKeyType.mKeyHide)
+                    Call WriteWork(eSkill.Ocultarse)
+                
+                Case CustomKeys.BindedKey(eKeyType.mKeyDropObject)
+                    Call TirarItem
+                
+                Case CustomKeys.BindedKey(eKeyType.mKeyUseObject)
+                    If macrotrabajo.Enabled Then DesactivarMacroTrabajo
                         
-            Case CustomKeys.BindedKey(eKeyType.mKeyHide)
-                Call WriteWork(eSkill.Ocultarse)
-            
-            Case CustomKeys.BindedKey(eKeyType.mKeyDropObject)
-                Call TirarItem
-            
-            Case CustomKeys.BindedKey(eKeyType.mKeyUseObject)
-                If macrotrabajo.Enabled Then DesactivarMacroTrabajo
-                    
-                If MainTimer.Check(TimersIndex.UseItemWithU) Then
-                    Call UsarItem
-                End If
-            
-            Case CustomKeys.BindedKey(eKeyType.mKeyRequestRefresh)
-                If MainTimer.Check(TimersIndex.SendRPU) Then
-                    Call WriteRequestPositionUpdate
-                    Beep
-                End If
-            
-            'Custom messages!
-            Case vbKey0, vbKey1, vbKey2, vbKey3, vbKey4, vbKey5, vbKey6, vbKey7, vbKey8, vbKey9
-                If LenB(CustomMessages.Message((KeyCode - 39) Mod 10)) <> 0 Then
-                    Call WriteTalk(CustomMessages.Message((KeyCode - 39) Mod 10))
-                End If
-        End Select
+                    If MainTimer.Check(TimersIndex.UseItemWithU) Then
+                        Call UsarItem
+                    End If
+                
+                Case CustomKeys.BindedKey(eKeyType.mKeyRequestRefresh)
+                    If MainTimer.Check(TimersIndex.SendRPU) Then
+                        Call WriteRequestPositionUpdate
+                        Beep
+                    End If
+            End Select
+        Else
+            Select Case KeyCode
+                'Custom messages!
+                Case vbKey0 To vbKey9
+                    If LenB(CustomMessages.Message((KeyCode - 39) Mod 10)) <> 0 Then
+                        Call WriteTalk(CustomMessages.Message((KeyCode - 39) Mod 10))
+                    End If
+            End Select
+        End If
     End If
     
     Select Case KeyCode

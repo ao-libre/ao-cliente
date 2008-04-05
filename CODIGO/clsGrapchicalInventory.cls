@@ -452,7 +452,7 @@ End Sub
     font.Name = "Verdana"
     font.bold = True
     font.italic = False
-    font.Size = 7
+    font.size = 7
     font.Underline = False
     font.Strikethrough = False
     
