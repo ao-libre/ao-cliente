@@ -1,7 +1,7 @@
 VERSION 5.00
 Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
-Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.OCX"
 Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.OCX"
+Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.OCX"
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.Form frmMain 
    BackColor       =   &H00000000&
@@ -575,6 +575,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -718,6 +719,8 @@ Public MouseX As Long
 Public MouseY As Long
 Public MouseBoton As Long
 Public MouseShift As Long
+Private clicX As Long
+Private clicY As Long
 
 Public IsPlaying As Byte
 
@@ -969,9 +972,14 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
     End If
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     MouseBoton = Button
     MouseShift = Shift
+End Sub
+
+Private Sub Form_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    clicX = X
+    clicY = Y
 End Sub
 
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
@@ -1170,7 +1178,7 @@ Private Sub cmdLanzar_Click()
     End If
 End Sub
 
-Private Sub CmdLanzar_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub CmdLanzar_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     UsaMacro = False
     CnTd = 0
 End Sub
@@ -1194,7 +1202,9 @@ Private Sub Form_Click()
 
     If Not Comerciando Then
         Call ConvertCPtoTP(MouseX, MouseY, tX, tY)
-
+        
+        If Not AreaPermitida Then Exit Sub
+        
         If MouseShift = 0 Then
             If MouseBoton <> vbRightButton Then
                 '[ybarra]
@@ -1283,9 +1293,9 @@ Private Sub Form_Load()
    Me.Top = 0
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
-    MouseX = x - MainViewShp.Left
-    MouseY = y - MainViewShp.Top
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    MouseX = X - MainViewShp.Left
+    MouseY = Y - MainViewShp.Top
 End Sub
 
 Private Sub hlst_KeyDown(KeyCode As Integer, Shift As Integer)
@@ -1363,7 +1373,7 @@ Private Sub Label4_Click()
     picInv.Visible = True
 
     hlst.Visible = False
-    cmdInfo.Visible = False
+    cmdINFO.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = True
@@ -1382,7 +1392,7 @@ Private Sub Label7_Click()
     'DespInv(1).Visible = False
     picInv.Visible = False
     hlst.Visible = True
-    cmdInfo.Visible = True
+    cmdINFO.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True
@@ -1403,7 +1413,7 @@ Private Sub picInv_DblClick()
     Call UsarItem
 End Sub
 
-Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
     Call Audio.PlayWave(SND_CLICK)
 End Sub
 
@@ -1861,6 +1871,12 @@ Private Sub Winsock1_Error(ByVal number As Integer, Description As String, ByVal
         frmCrearPersonaje.MousePointer = 0
     End If
 End Sub
-
 #End If
 
+Private Function AreaPermitida() As Boolean
+    AreaPermitida = True
+    
+    If clicX < MainViewShp.Left Or clicX > MainViewShp.Left + (32 * 17) Then AreaPermitida = False
+    If clicY < MainViewShp.Top Or clicY > MainViewShp.Top + (32 * 13) Then AreaPermitida = False
+
+End Function

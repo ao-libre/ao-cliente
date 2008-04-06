@@ -142,3 +142,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 05/04/2008: Limité las FPS a 100. Es un número más alto que el refresco vertical de los monitores y evita que las PCs que superen eso estén a 100% de uso de micro. (Maraxus)
  * 05/04/2008: Emparché para evitar una división por cero al moverse NPCs sin anims (Uncornos). (Maraxus)
  * 05/04/2008: El comando /invisible ya no causa un rt9. (Maraxus)
+ * 05/04/2008: Arreglado el bug que permitia hacer clic en zonas donde no se renderizaba. (NicoNZ)
