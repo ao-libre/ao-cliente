@@ -114,12 +114,12 @@ Public Sub PushBackText(ByVal s As String)
 Dim i As Byte
 Dim Vacio As Boolean
 Dim Multiplicador As Integer
+
 If Left$(s, 1) = Chr(3) Then
     Multiplicador = 7
 Else
     Multiplicador = 1
 End If
-
 If p_CANTIDADDIALOGOS > 0 Then
     i = p_CANTIDADDIALOGOS
     Vacio = True

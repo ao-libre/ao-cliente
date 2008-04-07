@@ -1568,7 +1568,7 @@ Private Sub HandleUpdateExp()
     
     'Get data and update form
     UserExp = incomingData.ReadLong()
-    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
 End Sub
 
@@ -1938,7 +1938,7 @@ End Sub
 Private Sub HandleGuildChat()
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
+'Last Modification: 04/07/08 (NicoNZ)
 '
 '***************************************************
     If incomingData.length < 3 Then
@@ -1959,6 +1959,10 @@ On Error GoTo ErrHandler
     Dim r As Byte
     Dim g As Byte
     Dim b As Byte
+    Dim tmp As Integer
+    Dim cont As Integer
+    Dim str2 As String
+    
     
     chat = Buffer.ReadASCIIString()
     
@@ -1992,7 +1996,23 @@ On Error GoTo ErrHandler
             End With
         End If
     Else
-        Call DialogosClanes.PushBackText(ReadField(1, chat, 126))
+        'Guardamos el texto en una variable
+        str2 = ReadField(1, chat, 126)
+        'El texto sobrepasa el ancho de la pantalla?
+        If frmMain.TextWidth(str2) > 500 Then
+            While frmMain.TextWidth(Left$(str2, tmp)) < 500 And cont < 200
+                'Tomamos el ultimo espacio
+                tmp = InStr(tmp + 1, str2, " ")
+                cont = cont + 1
+                'DoEvents
+            Wend
+            'Mostramos el mensaje dividido
+            DialogosClanes.PushBackText (Left$(str2, tmp))
+            DialogosClanes.PushBackText (Right$(str2, Len(str2) - tmp))
+        Else
+            'Mostramos el mensaje
+            Call DialogosClanes.PushBackText(ReadField(1, chat, 126))
+        End If
     End If
     
     'If we got here then packet is complete, copy data back to original queue
@@ -2639,7 +2659,7 @@ Private Sub HandleUpdateUserStats()
     UserPasarNivel = incomingData.ReadLong()
     UserExp = incomingData.ReadLong()
     
-    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     
     If UserPasarNivel > 0 Then
         frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
@@ -2940,17 +2960,17 @@ On Error GoTo ErrHandler
     
     Dim Count As Integer
     Dim i As Long
-    Dim Tmp As String
+    Dim tmp As String
     
     Count = Buffer.ReadInteger()
     
     For i = 1 To Count
-        Tmp = Buffer.ReadASCIIString() & " ("           'Get the object's name
-        Tmp = Tmp & CStr(Buffer.ReadInteger()) & ","    'The iron needed
-        Tmp = Tmp & CStr(Buffer.ReadInteger()) & ","    'The silver needed
-        Tmp = Tmp & CStr(Buffer.ReadInteger()) & ")"    'The gold needed
+        tmp = Buffer.ReadASCIIString() & " ("           'Get the object's name
+        tmp = tmp & CStr(Buffer.ReadInteger()) & ","    'The iron needed
+        tmp = tmp & CStr(Buffer.ReadInteger()) & ","    'The silver needed
+        tmp = tmp & CStr(Buffer.ReadInteger()) & ")"    'The gold needed
         
-        Call frmHerrero.lstArmas.AddItem(Tmp)
+        Call frmHerrero.lstArmas.AddItem(tmp)
         ArmasHerrero(i) = Buffer.ReadInteger()
     Next i
     
@@ -2997,17 +3017,17 @@ On Error GoTo ErrHandler
     
     Dim Count As Integer
     Dim i As Long
-    Dim Tmp As String
+    Dim tmp As String
     
     Count = Buffer.ReadInteger()
     
     For i = 1 To Count
-        Tmp = Buffer.ReadASCIIString() & " ("           'Get the object's name
-        Tmp = Tmp & CStr(Buffer.ReadInteger()) & ","    'The iron needed
-        Tmp = Tmp & CStr(Buffer.ReadInteger()) & ","    'The silver needed
-        Tmp = Tmp & CStr(Buffer.ReadInteger()) & ")"    'The gold needed
+        tmp = Buffer.ReadASCIIString() & " ("           'Get the object's name
+        tmp = tmp & CStr(Buffer.ReadInteger()) & ","    'The iron needed
+        tmp = tmp & CStr(Buffer.ReadInteger()) & ","    'The silver needed
+        tmp = tmp & CStr(Buffer.ReadInteger()) & ")"    'The gold needed
         
-        Call frmHerrero.lstArmaduras.AddItem(Tmp)
+        Call frmHerrero.lstArmaduras.AddItem(tmp)
         ArmadurasHerrero(i) = Buffer.ReadInteger()
     Next i
     
@@ -3054,17 +3074,17 @@ On Error GoTo ErrHandler
     
     Dim Count As Integer
     Dim i As Long
-    Dim Tmp As String
+    Dim tmp As String
     
     Count = Buffer.ReadInteger()
     
     Call frmCarp.lstArmas.Clear
     
     For i = 1 To Count
-        Tmp = Buffer.ReadASCIIString() & " ("          'Get the object's name
-        Tmp = Tmp & CStr(Buffer.ReadInteger()) & ")"    'The wood needed
+        tmp = Buffer.ReadASCIIString() & " ("          'Get the object's name
+        tmp = tmp & CStr(Buffer.ReadInteger()) & ")"    'The wood needed
         
-        Call frmCarp.lstArmas.AddItem(Tmp)
+        Call frmCarp.lstArmas.AddItem(tmp)
         ObjCarpintero(i) = Buffer.ReadInteger()
     Next i
     
@@ -3205,10 +3225,10 @@ On Error GoTo ErrHandler
     'Remove packet ID
     Call Buffer.ReadByte
     
-    Dim Tmp As String
-    Tmp = Buffer.ReadASCIIString()
+    Dim tmp As String
+    tmp = Buffer.ReadASCIIString()
     
-    Call InitCartel(Tmp, Buffer.ReadInteger())
+    Call InitCartel(tmp, Buffer.ReadInteger())
     
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
@@ -3894,11 +3914,11 @@ On Error GoTo ErrHandler
         .criminales.Caption = "Criminales asesinados: " & CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .Status.Caption = " (Ciudadano)"
-            .Status.ForeColor = vbBlue
+            .status.Caption = " (Ciudadano)"
+            .status.ForeColor = vbBlue
         Else
-            .Status.Caption = " (Criminal)"
-            .Status.ForeColor = vbRed
+            .status.Caption = " (Criminal)"
+            .status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)
@@ -4053,7 +4073,7 @@ On Error GoTo ErrHandler
         codexStr = Split(Buffer.ReadASCIIString(), SEPARATOR)
         
         For i = 0 To 7
-            .codex(i).Caption = codexStr(i)
+            .Codex(i).Caption = codexStr(i)
         Next i
         
         .desc.Text = Buffer.ReadASCIIString()
@@ -5182,7 +5202,7 @@ End Sub
 ' @param    codex   Array of all rules of the guild.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCreateNewGuild(ByVal desc As String, ByVal Name As String, ByVal Site As String, ByRef codex() As String)
+Public Sub WriteCreateNewGuild(ByVal desc As String, ByVal Name As String, ByVal Site As String, ByRef Codex() As String)
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5198,8 +5218,8 @@ Public Sub WriteCreateNewGuild(ByVal desc As String, ByVal Name As String, ByVal
         Call .WriteASCIIString(Name)
         Call .WriteASCIIString(Site)
         
-        For i = LBound(codex()) To UBound(codex())
-            temp = temp & codex(i) & SEPARATOR
+        For i = LBound(Codex()) To UBound(Codex())
+            temp = temp & Codex(i) & SEPARATOR
         Next i
         
         If Len(temp) Then _
@@ -5441,7 +5461,7 @@ End Sub
 ' @param    codex New codex of the clan.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteClanCodexUpdate(ByVal desc As String, ByRef codex() As String)
+Public Sub WriteClanCodexUpdate(ByVal desc As String, ByRef Codex() As String)
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -5455,8 +5475,8 @@ Public Sub WriteClanCodexUpdate(ByVal desc As String, ByRef codex() As String)
         
         Call .WriteASCIIString(desc)
         
-        For i = LBound(codex()) To UBound(codex())
-            temp = temp & codex(i) & SEPARATOR
+        For i = LBound(Codex()) To UBound(Codex())
+            temp = temp & Codex(i) & SEPARATOR
         Next i
         
         If Len(temp) Then _
@@ -7957,7 +7977,7 @@ End Sub
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal nick As String, ByVal reason As String)
+Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal Nick As String, ByVal reason As String)
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7977,7 +7997,7 @@ Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal nick As S
                 Call .WriteByte(Ip(i))
             Next i
         Else
-            Call .WriteASCIIString(nick)
+            Call .WriteASCIIString(Nick)
         End If
         
         Call .WriteASCIIString(reason)
