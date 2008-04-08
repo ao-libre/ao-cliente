@@ -110,16 +110,41 @@ Next i
     
 End Sub
 
+''
+' Splits dialogs into lines fitting properly the render area and inserts them
+
 Public Sub PushBackText(ByVal s As String)
+'***************************************************
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Last Modification: 04/07/08
+'Splits dialogs into lines fitting properly the render area and inserts them
+'***************************************************
+    Dim str As String
+    Dim tmp As Integer
+    
+    str = s
+    
+    ' If it's too long to fit, split it
+    Do While frmMain.TextWidth(str) > 500
+        tmp = InStrRev(str, " ")
+        
+        If tmp = 0 Then Exit Do
+        
+        str = Left$(str, tmp - 1)
+    Loop
+    
+    'Show message and continue with the rest
+    Call RealPushBackText(str)
+    
+    If LenB(str) <> LenB(s) Then
+        Call PushBackText(Right$(s, Len(s) - tmp))
+    End If
+End Sub
+
+Private Sub RealPushBackText(ByVal s As String)
 Dim i As Byte
 Dim Vacio As Boolean
-Dim Multiplicador As Integer
 
-If Left$(s, 1) = Chr(3) Then
-    Multiplicador = 7
-Else
-    Multiplicador = 1
-End If
 If p_CANTIDADDIALOGOS > 0 Then
     i = p_CANTIDADDIALOGOS
     Vacio = True
@@ -135,10 +160,10 @@ If p_CANTIDADDIALOGOS > 0 Then
             i = i + 1
         Wend
         p_Dialogos(i).Texto = s
-        p_Dialogos(i).Segundos = p_SEGUNDOS * Multiplicador
+        p_Dialogos(i).Segundos = p_SEGUNDOS
     Else
         p_Dialogos(i + 1).Texto = s
-        p_Dialogos(i + 1).Segundos = p_SEGUNDOS * Multiplicador
+        p_Dialogos(i + 1).Segundos = p_SEGUNDOS
     End If
 End If
 

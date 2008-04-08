@@ -1568,7 +1568,7 @@ Private Sub HandleUpdateExp()
     
     'Get data and update form
     UserExp = incomingData.ReadLong()
-    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
 End Sub
 
@@ -1961,7 +1961,6 @@ On Error GoTo ErrHandler
     Dim b As Byte
     Dim tmp As Integer
     Dim cont As Integer
-    Dim str2 As String
     
     
     chat = Buffer.ReadASCIIString()
@@ -1996,23 +1995,7 @@ On Error GoTo ErrHandler
             End With
         End If
     Else
-        'Guardamos el texto en una variable
-        str2 = ReadField(1, chat, 126)
-        'El texto sobrepasa el ancho de la pantalla?
-        If frmMain.TextWidth(str2) > 500 Then
-            While frmMain.TextWidth(Left$(str2, tmp)) < 500 And cont < 200
-                'Tomamos el ultimo espacio
-                tmp = InStr(tmp + 1, str2, " ")
-                cont = cont + 1
-                'DoEvents
-            Wend
-            'Mostramos el mensaje dividido
-            DialogosClanes.PushBackText (Left$(str2, tmp))
-            DialogosClanes.PushBackText (Right$(str2, Len(str2) - tmp))
-        Else
-            'Mostramos el mensaje
-            Call DialogosClanes.PushBackText(ReadField(1, chat, 126))
-        End If
+        Call DialogosClanes.PushBackText(ReadField(1, chat, 126))
     End If
     
     'If we got here then packet is complete, copy data back to original queue
@@ -2186,7 +2169,7 @@ On Error GoTo ErrHandler
             End If
             
             'Log2 of the bit flags sent by the server gives our numbers ^^
-            .priv = Log(privs) / Log(2)
+            .priv = log(privs) / log(2)
         Else
             .priv = 0
         End If
@@ -2659,7 +2642,7 @@ Private Sub HandleUpdateUserStats()
     UserPasarNivel = incomingData.ReadLong()
     UserExp = incomingData.ReadLong()
     
-    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     
     If UserPasarNivel > 0 Then
         frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
@@ -3914,11 +3897,11 @@ On Error GoTo ErrHandler
         .criminales.Caption = "Criminales asesinados: " & CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .status.Caption = " (Ciudadano)"
-            .status.ForeColor = vbBlue
+            .Status.Caption = " (Ciudadano)"
+            .Status.ForeColor = vbBlue
         Else
-            .status.Caption = " (Criminal)"
-            .status.ForeColor = vbRed
+            .Status.Caption = " (Criminal)"
+            .Status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)
@@ -6466,10 +6449,10 @@ Public Sub WriteChangePassword(ByRef oldPass As String, ByRef newPass As String)
         Call .WriteByte(ClientPacketID.ChangePassword)
         
 #If SeguridadAlkon Then
-        Call .WriteASCIIStringFixed(md5.GetMD5String(oldPass))
-        Call md5.MD5Reset
-        Call .WriteASCIIStringFixed(md5.GetMD5String(newPass))
-        Call md5.MD5Reset
+        Call .WriteASCIIStringFixed(MD5.GetMD5String(oldPass))
+        Call MD5.MD5Reset
+        Call .WriteASCIIStringFixed(MD5.GetMD5String(newPass))
+        Call MD5.MD5Reset
 #Else
         Call .WriteASCIIString(oldPass)
         Call .WriteASCIIString(newPass)
