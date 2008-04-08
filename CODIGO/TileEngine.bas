@@ -1973,10 +1973,9 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
         PixelOffsetX = PixelOffsetX + .MoveOffsetX
         PixelOffsetY = PixelOffsetY + .MoveOffsetY
         
-        If Not .invisible Then
+        If Not .invisible And .Body.Walk(.Heading).GrhIndex Then
             'Draw Body
-            If .Body.Walk(.Heading).GrhIndex Then _
-                Call DDrawTransGrhtoSurface(.Body.Walk(.Heading), PixelOffsetX, PixelOffsetY, 1, 1)
+            Call DDrawTransGrhtoSurface(.Body.Walk(.Heading), PixelOffsetX, PixelOffsetY, 1, 1)
             
             'Draw Head
             If .Head.Head(.Heading).GrhIndex Then
