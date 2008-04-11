@@ -147,3 +147,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 08/04/2008: Solucionado el bug de /invisible. (NicoNZ)
  * 10/04/2008: Ahora cada vez que se quiera lanzar un hechizo o flecha y se le erre al intervalo, hay que volver a apretar lanzar / U. (NicoNZ)
  * 10/04/2008: Arreglos del sonido. Estaba cruzada la constante de paneo, y se bajó el DELTA_FQ. (NicoNZ)
+ * 10/04/2008: Arreglado el macro de carpintería. (NicoNZ)

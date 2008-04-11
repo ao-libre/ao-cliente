@@ -93,6 +93,8 @@ Attribute VB_Exposed = False
 'Código Postal 1900
 'Pablo Ignacio Márquez
 
+Public mostrarCartel As Boolean
+
 Option Explicit
 
 Private Sub Command3_Click()
@@ -102,6 +104,8 @@ Private Sub Command3_Click()
     If frmMain.macrotrabajo.Enabled Then _
         MacroBltIndex = ObjCarpintero(lstArmas.listIndex + 1)
     
+    mostrarCartel = False
+    
     Unload Me
 End Sub
 
@@ -109,7 +113,18 @@ Private Sub Command4_Click()
     Unload Me
 End Sub
 
-Private Sub Form_Deactivate()
-    'Me.SetFocus
+
+Private Sub Form_Activate()
+While frmCarp.mostrarCartel
+    DoEvents
+Wend
+Unload Me
 End Sub
 
+Private Sub Form_Load()
+If mostrarCartel Then
+    MsgBox "Elije un item para construir y cliqueá en Construir.", vbInformation, "Macro Trabajo"
+End If
+Me.Visible = True
+
+End Sub
