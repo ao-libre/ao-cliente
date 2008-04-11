@@ -68,7 +68,7 @@ Private Const MAX_DISTANCE_TO_SOURCE As Integer = 150
 
 ''
 ' The frequency variation coefficient for Doppler effect simulation.
-Private Const DELTA_FQ As Integer = 800
+Private Const DELTA_FQ As Integer = 600
 
 ''
 ' Custom sound buffer structure.
@@ -390,7 +390,7 @@ Private Sub Update3DSound(ByVal bufferIndex As Long, ByVal deltaX As Integer, By
         If linearDistanceNew = 0 Then linearDistanceNew = 1
         
         'Set panning according to relative position of the source to the listener
-        Call .Buffer.SetPan((distanceXNew / linearDistanceNew) * DSBPAN_LEFT)
+        Call .Buffer.SetPan((distanceXNew / linearDistanceNew) * DSBPAN_RIGHT)
     End With
 End Sub
 
