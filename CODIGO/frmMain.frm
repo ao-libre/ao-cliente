@@ -1,8 +1,8 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
-Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.OCX"
-Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.OCX"
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.ocx"
+Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.ocx"
+Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.ocx"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.ocx"
 Begin VB.Form frmMain 
    BackColor       =   &H00000000&
    BorderStyle     =   1  'Fixed Single
@@ -575,6 +575,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1222,11 +1223,17 @@ Private Sub Form_Click()
                     If TrainingMacro.Enabled Then DesactivarMacroHechizos
                     If macrotrabajo.Enabled Then DesactivarMacroTrabajo
                     
-                    If Not MainTimer.Check(TimersIndex.Arrows, False) Then Exit Sub 'Check if arrows interval has finished.
+                    If Not MainTimer.Check(TimersIndex.Arrows, False) Then 'Check if arrows interval has finished.
+                        frmMain.MousePointer = vbDefault
+                        UsingSkill = 0
+                        Exit Sub
+                    End If
                     
                     'Splitted because VB isn't lazy!
                     If UsingSkill = Proyectiles Then
                         If Not MainTimer.Check(TimersIndex.Arrows) Then
+                            frmMain.MousePointer = vbDefault
+                            UsingSkill = 0
                             Exit Sub
                         End If
                     End If
@@ -1234,15 +1241,25 @@ Private Sub Form_Click()
                     'Splitted because VB isn't lazy!
                     If UsingSkill = Magia Then
                         If Not MainTimer.Check(TimersIndex.Attack, False) Then 'Check if attack interval has finished.
-                            If Not MainTimer.Check(TimersIndex.CastAttack) Then Exit Sub 'Corto intervalo de Golpe-Magia
+                            If Not MainTimer.Check(TimersIndex.CastAttack) Then 'Corto intervalo de Golpe-Magia
+                                frmMain.MousePointer = vbDefault
+                                UsingSkill = 0
+                                Exit Sub
+                            End If
                         Else
-                            If Not MainTimer.Check(TimersIndex.CastSpell) Then Exit Sub 'Check if spells interval has finished.
+                            If Not MainTimer.Check(TimersIndex.CastSpell) Then 'Check if spells interval has finished.
+                                frmMain.MousePointer = vbDefault
+                                UsingSkill = 0
+                                Exit Sub
+                            End If
                         End If
                     End If
                     
                     'Splitted because VB isn't lazy!
                     If (UsingSkill = Pesca Or UsingSkill = Robar Or UsingSkill = Talar Or UsingSkill = Mineria Or UsingSkill = FundirMetal) Then
                         If Not MainTimer.Check(TimersIndex.Work) Then
+                            frmMain.MousePointer = vbDefault
+                            UsingSkill = 0
                             Exit Sub
                         End If
                     End If
