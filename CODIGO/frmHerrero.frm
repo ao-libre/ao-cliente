@@ -179,3 +179,6 @@ Private Sub Form_Deactivate()
 'Me.SetFocus
 End Sub
 
+Private Sub Form_Load()
+
+End Sub

@@ -575,6 +575,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1004,25 +1005,26 @@ Private Sub macrotrabajo_Timer()
         Exit Sub
     End If
     
-    If (UsingSkill = eSkill.Pesca Or UsingSkill = eSkill.Talar Or UsingSkill = eSkill.Mineria Or UsingSkill = FundirMetal Or UsingSkill = eSkill.Herreria Or UsingSkill = eSkill.Carpinteria) Then
+    If UsingSkill = eSkill.Pesca Or UsingSkill = eSkill.Talar Or UsingSkill = eSkill.Mineria Or UsingSkill = FundirMetal Or (UsingSkill = eSkill.Herreria And Not frmHerrero.Visible) Then
         Call WriteWorkLeftClick(tX, tY, UsingSkill)
         UsingSkill = 0
     End If
     
     'If Inventario.OBJType(Inventario.SelectedItem) = eObjType.otWeapon Then
-     Call UsarItem
+     If Not (frmCarp.Visible = True) Then Call UsarItem
 End Sub
 
 Public Sub ActivarMacroTrabajo()
     macrotrabajo.Interval = INT_MACRO_TRABAJO
     macrotrabajo.Enabled = True
     Call AddtoRichTextBox(frmMain.RecTxt, "Macro Trabajo ACTIVADO", 0, 200, 200, False, True, False)
-    frmCarp.mostrarCartel = True
 End Sub
 
 Public Sub DesactivarMacroTrabajo()
     macrotrabajo.Enabled = False
     MacroBltIndex = 0
+    UsingSkill = 0
+    MousePointer = vbDefault
     Call AddtoRichTextBox(frmMain.RecTxt, "Macro Trabajo DESACTIVADO", 0, 200, 200, False, True, False)
 End Sub
 
