@@ -211,7 +211,7 @@ Public Sub RefreshAllChars()
     
     For loopc = 1 To LastChar
         If charlist(loopc).Active = 1 Then
-            MapData(charlist(loopc).Pos.X, charlist(loopc).Pos.Y).CharIndex = loopc
+            MapData(charlist(loopc).Pos.x, charlist(loopc).Pos.y).CharIndex = loopc
         End If
     Next loopc
 End Sub
@@ -381,13 +381,13 @@ Sub MoveTo(ByVal Direccion As E_Heading)
     
     Select Case Direccion
         Case E_Heading.NORTH
-            LegalOk = LegalPos(UserPos.X, UserPos.Y - 1)
+            LegalOk = LegalPos(UserPos.x, UserPos.y - 1)
         Case E_Heading.EAST
-            LegalOk = LegalPos(UserPos.X + 1, UserPos.Y)
+            LegalOk = LegalPos(UserPos.x + 1, UserPos.y)
         Case E_Heading.SOUTH
-            LegalOk = LegalPos(UserPos.X, UserPos.Y + 1)
+            LegalOk = LegalPos(UserPos.x, UserPos.y + 1)
         Case E_Heading.WEST
-            LegalOk = LegalPos(UserPos.X - 1, UserPos.Y)
+            LegalOk = LegalPos(UserPos.x - 1, UserPos.y)
     End Select
     
     If LegalOk And Not UserParalizado Then
@@ -405,7 +405,7 @@ Sub MoveTo(ByVal Direccion As E_Heading)
     If frmMain.macrotrabajo.Enabled Then frmMain.DesactivarMacroTrabajo
     
     ' Update 3D sounds!
-    Call Audio.MoveListener(UserPos.X, UserPos.Y)
+    Call Audio.MoveListener(UserPos.x, UserPos.y)
 End Sub
 
 Sub RandomMove()
@@ -450,7 +450,7 @@ On Error Resume Next
             If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyUp)) < 0 Then
                 If frmMain.TrainingMacro.Enabled Then frmMain.DesactivarMacroHechizos
                 Call MoveTo(NORTH)
-                frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.X & "," & UserPos.Y & ")"
+                frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.x & "," & UserPos.y & ")"
                 Exit Sub
             End If
             
@@ -458,7 +458,7 @@ On Error Resume Next
             If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyRight)) < 0 Then
                 If frmMain.TrainingMacro.Enabled Then frmMain.DesactivarMacroHechizos
                 Call MoveTo(EAST)
-                frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.X & "," & UserPos.Y & ")"
+                frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.x & "," & UserPos.y & ")"
                 Exit Sub
             End If
         
@@ -466,7 +466,7 @@ On Error Resume Next
             If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyDown)) < 0 Then
                 If frmMain.TrainingMacro.Enabled Then frmMain.DesactivarMacroHechizos
                 Call MoveTo(SOUTH)
-                frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.X & "," & UserPos.Y & ")"
+                frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.x & "," & UserPos.y & ")"
                 Exit Sub
             End If
         
@@ -474,12 +474,12 @@ On Error Resume Next
             If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyLeft)) < 0 Then
                 If frmMain.TrainingMacro.Enabled Then frmMain.DesactivarMacroHechizos
                 Call MoveTo(WEST)
-                frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.X & "," & UserPos.Y & ")"
+                frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.x & "," & UserPos.y & ")"
                 Exit Sub
             End If
             
             ' We haven't moved - Update 3D sounds!
-            Call Audio.MoveListener(UserPos.X, UserPos.Y)
+            Call Audio.MoveListener(UserPos.x, UserPos.y)
         Else
             Dim kp As Boolean
             kp = (GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyUp)) < 0) Or _
@@ -491,11 +491,11 @@ On Error Resume Next
                 Call RandomMove
             Else
                 ' We haven't moved - Update 3D sounds!
-                Call Audio.MoveListener(UserPos.X, UserPos.Y)
+                Call Audio.MoveListener(UserPos.x, UserPos.y)
             End If
             
             If frmMain.TrainingMacro.Enabled Then frmMain.DesactivarMacroHechizos
-            frmMain.Coord.Caption = "(" & UserPos.X & "," & UserPos.Y & ")"
+            frmMain.Coord.Caption = "(" & UserPos.x & "," & UserPos.y & ")"
         End If
     End If
 End Sub
@@ -506,8 +506,8 @@ Sub SwitchMap(ByVal Map As Integer)
 'Formato de mapas optimizado para reducir el espacio que ocupan.
 'Diseñado y creado por Juan Martín Sotuyo Dodero (Maraxus) (juansotuyo@hotmail.com)
 '**************************************************************
-    Dim Y As Long
-    Dim X As Long
+    Dim y As Long
+    Dim x As Long
     Dim tempint As Integer
     Dim ByFlags As Byte
     Dim handle As Integer
@@ -526,55 +526,55 @@ Sub SwitchMap(ByVal Map As Integer)
     Get handle, , tempint
     
     'Load arrays
-    For Y = YMinMapSize To YMaxMapSize
-        For X = XMinMapSize To XMaxMapSize
+    For y = YMinMapSize To YMaxMapSize
+        For x = XMinMapSize To XMaxMapSize
             Get handle, , ByFlags
             
-            MapData(X, Y).Blocked = (ByFlags And 1)
+            MapData(x, y).Blocked = (ByFlags And 1)
             
-            Get handle, , MapData(X, Y).Graphic(1).GrhIndex
-            InitGrh MapData(X, Y).Graphic(1), MapData(X, Y).Graphic(1).GrhIndex
+            Get handle, , MapData(x, y).Graphic(1).GrhIndex
+            InitGrh MapData(x, y).Graphic(1), MapData(x, y).Graphic(1).GrhIndex
             
             'Layer 2 used?
             If ByFlags And 2 Then
-                Get handle, , MapData(X, Y).Graphic(2).GrhIndex
-                InitGrh MapData(X, Y).Graphic(2), MapData(X, Y).Graphic(2).GrhIndex
+                Get handle, , MapData(x, y).Graphic(2).GrhIndex
+                InitGrh MapData(x, y).Graphic(2), MapData(x, y).Graphic(2).GrhIndex
             Else
-                MapData(X, Y).Graphic(2).GrhIndex = 0
+                MapData(x, y).Graphic(2).GrhIndex = 0
             End If
                 
             'Layer 3 used?
             If ByFlags And 4 Then
-                Get handle, , MapData(X, Y).Graphic(3).GrhIndex
-                InitGrh MapData(X, Y).Graphic(3), MapData(X, Y).Graphic(3).GrhIndex
+                Get handle, , MapData(x, y).Graphic(3).GrhIndex
+                InitGrh MapData(x, y).Graphic(3), MapData(x, y).Graphic(3).GrhIndex
             Else
-                MapData(X, Y).Graphic(3).GrhIndex = 0
+                MapData(x, y).Graphic(3).GrhIndex = 0
             End If
                 
             'Layer 4 used?
             If ByFlags And 8 Then
-                Get handle, , MapData(X, Y).Graphic(4).GrhIndex
-                InitGrh MapData(X, Y).Graphic(4), MapData(X, Y).Graphic(4).GrhIndex
+                Get handle, , MapData(x, y).Graphic(4).GrhIndex
+                InitGrh MapData(x, y).Graphic(4), MapData(x, y).Graphic(4).GrhIndex
             Else
-                MapData(X, Y).Graphic(4).GrhIndex = 0
+                MapData(x, y).Graphic(4).GrhIndex = 0
             End If
             
             'Trigger used?
             If ByFlags And 16 Then
-                Get handle, , MapData(X, Y).Trigger
+                Get handle, , MapData(x, y).Trigger
             Else
-                MapData(X, Y).Trigger = 0
+                MapData(x, y).Trigger = 0
             End If
             
             'Erase NPCs
-            If MapData(X, Y).CharIndex > 0 Then
-                Call EraseChar(MapData(X, Y).CharIndex)
+            If MapData(x, y).CharIndex > 0 Then
+                Call EraseChar(MapData(x, y).CharIndex)
             End If
             
             'Erase OBJs
-            MapData(X, Y).ObjGrh.GrhIndex = 0
-        Next X
-    Next Y
+            MapData(x, y).ObjGrh.GrhIndex = 0
+        Next x
+    Next y
     
     Close handle
     
@@ -788,8 +788,8 @@ Sub Main()
     'Obtener el HushMD5
     Dim fMD5HushYo As String * 32
     
-    fMD5HushYo = md5.GetMD5File(App.path & "\" & App.EXEName & ".exe")
-    Call md5.MD5Reset
+    fMD5HushYo = MD5.GetMD5File(App.path & "\" & App.EXEName & ".exe")
+    Call MD5.MD5Reset
     MD5HushYo = txtOffset(hexMd52Asc(fMD5HushYo), 55)
     
     Debug.Print fMD5HushYo
@@ -1015,11 +1015,11 @@ Private Function CMSValidateChar_(ByVal iAsc As Integer) As Boolean
 End Function
 
 'TODO : como todo lo relativo a mapas, no tiene nada que hacer acá....
-Function HayAgua(ByVal X As Integer, ByVal Y As Integer) As Boolean
-    HayAgua = ((MapData(X, Y).Graphic(1).GrhIndex >= 1505 And MapData(X, Y).Graphic(1).GrhIndex <= 1520) Or _
-            (MapData(X, Y).Graphic(1).GrhIndex >= 5665 And MapData(X, Y).Graphic(1).GrhIndex <= 5680) Or _
-            (MapData(X, Y).Graphic(1).GrhIndex >= 13547 And MapData(X, Y).Graphic(1).GrhIndex <= 13562)) And _
-                MapData(X, Y).Graphic(2).GrhIndex = 0
+Function HayAgua(ByVal x As Integer, ByVal y As Integer) As Boolean
+    HayAgua = ((MapData(x, y).Graphic(1).GrhIndex >= 1505 And MapData(x, y).Graphic(1).GrhIndex <= 1520) Or _
+            (MapData(x, y).Graphic(1).GrhIndex >= 5665 And MapData(x, y).Graphic(1).GrhIndex <= 5680) Or _
+            (MapData(x, y).Graphic(1).GrhIndex >= 13547 And MapData(x, y).Graphic(1).GrhIndex <= 13562)) And _
+                MapData(x, y).Graphic(2).GrhIndex = 0
                 
 End Function
 
@@ -1179,7 +1179,7 @@ Public Sub CloseClient()
     Set outgoingData = Nothing
     
 #If SeguridadAlkon Then
-    Set md5 = Nothing
+    Set MD5 = Nothing
 #End If
     
     Call UnloadAllForms
