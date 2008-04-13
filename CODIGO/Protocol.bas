@@ -1068,7 +1068,6 @@ Private Sub HandleCommerceEnd()
     frmComerciar.List1(1).Clear
     
     'Reset vars
-    NPCInvDim = 0
     Comerciando = False
     
     'Hide form
@@ -1089,7 +1088,7 @@ Private Sub HandleBankEnd()
     
     frmBancoObj.List1(0).Clear
     frmBancoObj.List1(1).Clear
-    NPCInvDim = 0
+    
     Unload frmBancoObj
     Comerciando = False
 End Sub
@@ -1136,6 +1135,8 @@ Private Sub HandleBankInit()
     'Remove packet ID
     Call incomingData.ReadByte
     
+    Call frmBancoObj.List1(1).Clear
+    
     'Fill the inventory list
     For i = 1 To MAX_INVENTORY_SLOTS
         If Inventario.OBJIndex(i) <> 0 Then
@@ -1144,6 +1145,8 @@ Private Sub HandleBankInit()
             frmBancoObj.List1(1).AddItem ""
         End If
     Next i
+    
+    Call frmBancoObj.List1(0).Clear
     
     'Fill the bank list
     For i = 1 To MAX_BANCOINVENTORY_SLOTS
@@ -2169,7 +2172,7 @@ On Error GoTo ErrHandler
             End If
             
             'Log2 of the bit flags sent by the server gives our numbers ^^
-            .priv = Log(privs) / Log(2)
+            .priv = log(privs) / log(2)
         Else
             .priv = 0
         End If
@@ -2817,6 +2820,11 @@ On Error GoTo ErrHandler
         .Valor = Buffer.ReadLong()
     End With
     
+    If frmBancoObj.List1(0).ListCount >= slot Then _
+        Call frmBancoObj.List1(0).RemoveItem(slot - 1)
+    
+    Call frmBancoObj.List1(0).AddItem(UserBancoInventory(slot).Name, slot - 1)
+    
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
@@ -3241,7 +3249,7 @@ Private Sub HandleChangeNPCInventorySlot()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.length < 20 Then
+    If incomingData.length < 21 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -3254,7 +3262,10 @@ On Error GoTo ErrHandler
     'Remove packet ID
     Call Buffer.ReadByte
     
-    With NPCInventory(NPCInvDim + 1)
+    Dim slot As Byte
+    slot = Buffer.ReadByte()
+    
+    With NPCInventory(slot)
         .Name = Buffer.ReadASCIIString()
         .Amount = Buffer.ReadInteger()
         .Valor = Buffer.ReadSingle()
@@ -3266,9 +3277,10 @@ On Error GoTo ErrHandler
         .Def = Buffer.ReadInteger()
     End With
     
-    NPCInvDim = NPCInvDim + 1
+    If frmComerciar.List1(0).ListCount >= slot Then _
+        Call frmComerciar.List1(0).RemoveItem(slot - 1)
     
-    Call frmComerciar.List1(0).AddItem(NPCInventory(NPCInvDim).Name)
+    Call frmComerciar.List1(0).AddItem(NPCInventory(slot).Name, slot - 1)
     
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
@@ -4169,6 +4181,8 @@ Private Sub HandleTradeOK()
     If frmComerciar.Visible Then
         Dim i As Long
         
+        Call frmComerciar.List1(1).Clear
+        
         For i = 1 To MAX_INVENTORY_SLOTS
             If Inventario.OBJIndex(i) <> 0 Then
                 Call frmComerciar.List1(1).AddItem(Inventario.ItemName(i))
@@ -4203,19 +4217,14 @@ Private Sub HandleBankOK()
     Dim i As Long
     
     If frmBancoObj.Visible Then
+        
+        Call frmBancoObj.List1(1).Clear
+        
         For i = 1 To MAX_INVENTORY_SLOTS
             If Inventario.OBJIndex(i) <> 0 Then
                 Call frmBancoObj.List1(1).AddItem(Inventario.ItemName(i))
             Else
                 Call frmBancoObj.List1(1).AddItem("")
-            End If
-        Next i
-        
-        For i = 1 To MAX_BANCOINVENTORY_SLOTS
-            If UserBancoInventory(i).OBJIndex <> 0 Then
-                Call frmBancoObj.List1(0).AddItem(UserBancoInventory(i).Name)
-            Else
-                Call frmBancoObj.List1(0).AddItem("")
             End If
         Next i
         
@@ -6453,10 +6462,10 @@ Public Sub WriteChangePassword(ByRef oldPass As String, ByRef newPass As String)
         Call .WriteByte(ClientPacketID.ChangePassword)
         
 #If SeguridadAlkon Then
-        Call .WriteASCIIStringFixed(md5.GetMD5String(oldPass))
-        Call md5.MD5Reset
-        Call .WriteASCIIStringFixed(md5.GetMD5String(newPass))
-        Call md5.MD5Reset
+        Call .WriteASCIIStringFixed(MD5.GetMD5String(oldPass))
+        Call MD5.MD5Reset
+        Call .WriteASCIIStringFixed(MD5.GetMD5String(newPass))
+        Call MD5.MD5Reset
 #Else
         Call .WriteASCIIString(oldPass)
         Call .WriteASCIIString(newPass)

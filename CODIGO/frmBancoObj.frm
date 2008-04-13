@@ -310,11 +310,6 @@ Select Case index
         Call WriteBankDeposit(List1(1).listIndex + 1, cantidad.Text)
 End Select
 
-List1(0).Clear
-
-List1(1).Clear
-
-NPCInvDim = 0
 End Sub
 
 Private Sub Image1_MouseMove(index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)

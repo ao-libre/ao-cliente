@@ -50,7 +50,7 @@ Public outgoingData As New clsByteQueue
 Public MainTimer As New clsTimer
 
 #If SeguridadAlkon Then
-Public md5 As New clsMD5
+Public MD5 As New clsMD5
 #End If
 
 'Sonidos
@@ -423,7 +423,6 @@ Global OtroInventario(1 To MAX_INVENTORY_SLOTS) As Inventory
 Public UserHechizos(1 To MAXHECHI) As Integer
 
 Public NPCInventory(1 To MAX_NPC_INVENTORY_SLOTS) As NpCinV
-Public NPCInvDim As Integer
 Public UserMeditar As Boolean
 Public UserName As String
 Public UserPassword As String
