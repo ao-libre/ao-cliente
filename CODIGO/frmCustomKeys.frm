@@ -3,161 +3,102 @@ Begin VB.Form frmCustomKeys
    BackColor       =   &H00000000&
    BorderStyle     =   0  'None
    Caption         =   "Form1"
-   ClientHeight    =   6930
+   ClientHeight    =   6570
    ClientLeft      =   0
    ClientTop       =   0
    ClientWidth     =   8220
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   462
+   ScaleHeight     =   438
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   548
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
-   Begin VB.Frame Frame6 
-      BackColor       =   &H00000000&
-      Caption         =   "Teclados"
-      ForeColor       =   &H00FFFFFF&
-      Height          =   615
-      Left            =   120
-      TabIndex        =   0
-      Top             =   0
-      Width           =   7935
-      Begin VB.CheckBox Check1 
-         BackColor       =   &H00000000&
-         Caption         =   "Teclado 6"
-         ForeColor       =   &H0000FF00&
-         Height          =   255
-         Index           =   6
-         Left            =   6720
-         Style           =   1  'Graphical
-         TabIndex        =   7
-         Top             =   240
-         Width           =   975
-      End
-      Begin VB.CheckBox Check1 
-         BackColor       =   &H00000000&
-         Caption         =   "Teclado 5"
-         ForeColor       =   &H0000FF00&
-         Height          =   255
-         Index           =   5
-         Left            =   5640
-         Style           =   1  'Graphical
-         TabIndex        =   6
-         Top             =   240
-         Width           =   975
-      End
-      Begin VB.CheckBox Check1 
-         BackColor       =   &H00000000&
-         Caption         =   "Teclado 4"
-         ForeColor       =   &H0000FF00&
-         Height          =   255
-         Index           =   4
-         Left            =   4560
-         Style           =   1  'Graphical
-         TabIndex        =   5
-         Top             =   240
-         Width           =   975
-      End
-      Begin VB.CheckBox Check1 
-         BackColor       =   &H00000000&
-         Caption         =   "Teclado 3"
-         ForeColor       =   &H0000FF00&
-         Height          =   255
-         Index           =   3
-         Left            =   3480
-         Style           =   1  'Graphical
-         TabIndex        =   4
-         Top             =   240
-         Width           =   975
-      End
-      Begin VB.CheckBox Check1 
-         BackColor       =   &H00000000&
-         Caption         =   "Teclado 2"
-         ForeColor       =   &H0000FF00&
-         Height          =   255
-         Index           =   2
-         Left            =   2400
-         Style           =   1  'Graphical
-         TabIndex        =   3
-         Top             =   240
-         Width           =   975
-      End
-      Begin VB.CheckBox Check1 
-         BackColor       =   &H00000000&
-         Caption         =   "Teclado 1"
-         ForeColor       =   &H0000FF00&
-         Height          =   255
-         Index           =   1
-         Left            =   1320
-         Style           =   1  'Graphical
-         TabIndex        =   2
-         Top             =   240
-         Width           =   975
-      End
-      Begin VB.CheckBox Check1 
-         BackColor       =   &H00000000&
-         Caption         =   "Defecto"
-         ForeColor       =   &H00FFFFFF&
-         Height          =   255
-         Index           =   0
-         Left            =   240
-         Style           =   1  'Graphical
-         TabIndex        =   1
-         Top             =   240
-         Width           =   975
-      End
-   End
-   Begin VB.CommandButton Command1 
+   Begin VB.CommandButton Command2 
       Caption         =   "Guardar y Salir"
       Height          =   375
-      Left            =   3480
-      TabIndex        =   67
-      Top             =   6360
-      Width           =   4575
+      Left            =   3960
+      TabIndex        =   46
+      Top             =   6000
+      Width           =   4095
+   End
+   Begin VB.CommandButton Command1 
+      Caption         =   "Cargar Teclas por defecto"
+      Height          =   375
+      Left            =   3960
+      TabIndex        =   45
+      Top             =   5520
+      Width           =   4095
    End
    Begin VB.Frame Frame5 
       BackColor       =   &H00000000&
       Caption         =   "Otros"
       ForeColor       =   &H00FFFFFF&
-      Height          =   2775
-      Left            =   3480
-      TabIndex        =   52
-      Top             =   3240
-      Width           =   3735
+      Height          =   3855
+      Left            =   3960
+      TabIndex        =   4
+      Top             =   1560
+      Width           =   4095
+      Begin VB.TextBox Text1 
+         Height          =   285
+         Index           =   9
+         Left            =   2280
+         TabIndex        =   57
+         Text            =   "Text1"
+         Top             =   2760
+         Width           =   1695
+      End
+      Begin VB.TextBox Text1 
+         Height          =   285
+         Index           =   13
+         Left            =   2280
+         TabIndex        =   56
+         Text            =   "Text1"
+         Top             =   3120
+         Width           =   1695
+      End
+      Begin VB.TextBox Text1 
+         Height          =   285
+         Index           =   14
+         Left            =   2280
+         TabIndex        =   55
+         Text            =   "Text1"
+         Top             =   3480
+         Width           =   1695
+      End
       Begin VB.TextBox Text1 
          Height          =   285
          Index           =   27
-         Left            =   1920
-         TabIndex        =   66
+         Left            =   2280
+         TabIndex        =   53
          Text            =   "Text1"
          Top             =   2400
          Width           =   1695
       End
       Begin VB.TextBox Text1 
          Height          =   285
-         Index           =   22
-         Left            =   1920
-         TabIndex        =   54
-         Text            =   "Text1"
-         Top             =   600
-         Width           =   1695
-      End
-      Begin VB.TextBox Text1 
-         Height          =   285
          Index           =   26
-         Left            =   1920
-         TabIndex        =   64
+         Left            =   2280
+         TabIndex        =   52
          Text            =   "Text1"
          Top             =   2040
          Width           =   1695
       End
       Begin VB.TextBox Text1 
          Height          =   285
+         Index           =   21
+         Left            =   2280
+         TabIndex        =   48
+         Text            =   "Text1"
+         Top             =   240
+         Width           =   1695
+      End
+      Begin VB.TextBox Text1 
+         Height          =   285
          Index           =   25
-         Left            =   1920
-         TabIndex        =   62
+         Left            =   2280
+         TabIndex        =   44
          Text            =   "Text1"
          Top             =   1680
          Width           =   1695
@@ -165,8 +106,8 @@ Begin VB.Form frmCustomKeys
       Begin VB.TextBox Text1 
          Height          =   285
          Index           =   24
-         Left            =   1920
-         TabIndex        =   60
+         Left            =   2280
+         TabIndex        =   43
          Text            =   "Text1"
          Top             =   1320
          Width           =   1695
@@ -174,95 +115,128 @@ Begin VB.Form frmCustomKeys
       Begin VB.TextBox Text1 
          Height          =   285
          Index           =   23
-         Left            =   1920
-         TabIndex        =   58
+         Left            =   2280
+         TabIndex        =   42
          Text            =   "Text1"
          Top             =   960
          Width           =   1695
       End
       Begin VB.TextBox Text1 
          Height          =   285
-         Index           =   21
-         Left            =   1920
-         TabIndex        =   55
+         Index           =   22
+         Left            =   2280
+         TabIndex        =   41
          Text            =   "Text1"
-         Top             =   240
+         Top             =   600
          Width           =   1695
+      End
+      Begin VB.Label Label9 
+         Alignment       =   1  'Right Justify
+         BackColor       =   &H00000000&
+         Caption         =   "Modo Combate"
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Left            =   960
+         TabIndex        =   60
+         Top             =   2760
+         Width           =   1215
+      End
+      Begin VB.Label Label13 
+         Alignment       =   1  'Right Justify
+         BackColor       =   &H00000000&
+         Caption         =   "Modo Seguro"
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Left            =   960
+         TabIndex        =   59
+         Top             =   3120
+         Width           =   1215
       End
       Begin VB.Label Label26 
          Alignment       =   1  'Right Justify
-         BackStyle       =   0  'Transparent
+         BackColor       =   &H00000000&
+         Caption         =   "Seg. de Resucitación"
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Left            =   480
+         TabIndex        =   58
+         Top             =   3480
+         Width           =   1695
+      End
+      Begin VB.Label Label27 
+         Alignment       =   1  'Right Justify
+         BackColor       =   &H00000000&
          Caption         =   "Salir"
          ForeColor       =   &H00FFFFFF&
          Height          =   255
-         Left            =   120
-         TabIndex        =   65
+         Left            =   480
+         TabIndex        =   54
          Top             =   2400
          Width           =   1695
       End
       Begin VB.Label Label25 
          Alignment       =   1  'Right Justify
-         BackStyle       =   0  'Transparent
+         BackColor       =   &H00000000&
          Caption         =   "Capturar Pantalla"
          ForeColor       =   &H00FFFFFF&
          Height          =   255
-         Left            =   120
-         TabIndex        =   53
+         Left            =   480
+         TabIndex        =   47
          Top             =   600
          Width           =   1695
       End
       Begin VB.Label Label24 
          Alignment       =   1  'Right Justify
-         BackStyle       =   0  'Transparent
+         BackColor       =   &H00000000&
          Caption         =   "Macro Trabajo"
          ForeColor       =   &H00FFFFFF&
          Height          =   255
-         Left            =   120
-         TabIndex        =   63
+         Left            =   480
+         TabIndex        =   40
          Top             =   2040
          Width           =   1695
       End
       Begin VB.Label Label23 
          Alignment       =   1  'Right Justify
-         BackStyle       =   0  'Transparent
+         BackColor       =   &H00000000&
          Caption         =   "Macro Hechizos"
          ForeColor       =   &H00FFFFFF&
          Height          =   255
-         Left            =   120
-         TabIndex        =   61
+         Left            =   480
+         TabIndex        =   39
          Top             =   1680
          Width           =   1695
       End
       Begin VB.Label Label22 
          Alignment       =   1  'Right Justify
-         BackStyle       =   0  'Transparent
+         BackColor       =   &H00000000&
          Caption         =   "Meditar"
          ForeColor       =   &H00FFFFFF&
          Height          =   255
-         Left            =   120
-         TabIndex        =   59
+         Left            =   480
+         TabIndex        =   38
          Top             =   1320
          Width           =   1695
       End
       Begin VB.Label Label21 
          Alignment       =   1  'Right Justify
-         BackStyle       =   0  'Transparent
+         BackColor       =   &H00000000&
          Caption         =   "Mostrar Opciones"
          ForeColor       =   &H00FFFFFF&
          Height          =   255
-         Left            =   120
-         TabIndex        =   57
+         Left            =   480
+         TabIndex        =   37
          Top             =   960
          Width           =   1695
       End
       Begin VB.Label Label20 
          Alignment       =   1  'Right Justify
-         BackStyle       =   0  'Transparent
+         BackColor       =   &H00000000&
          Caption         =   "Mostrar/Ocultar FPS"
          ForeColor       =   &H00FFFFFF&
          Height          =   255
-         Left            =   120
-         TabIndex        =   56
+         Left            =   480
+         TabIndex        =   36
          Top             =   240
          Width           =   1695
       End
@@ -272,15 +246,15 @@ Begin VB.Form frmCustomKeys
       Caption         =   "Hablar"
       ForeColor       =   &H00FFFFFF&
       Height          =   975
-      Left            =   3480
-      TabIndex        =   24
-      Top             =   2160
-      Width           =   3375
+      Left            =   120
+      TabIndex        =   3
+      Top             =   5160
+      Width           =   3735
       Begin VB.TextBox Text1 
          Height          =   285
          Index           =   20
-         Left            =   1560
-         TabIndex        =   28
+         Left            =   1920
+         TabIndex        =   51
          Text            =   "Text1"
          Top             =   600
          Width           =   1695
@@ -288,31 +262,31 @@ Begin VB.Form frmCustomKeys
       Begin VB.TextBox Text1 
          Height          =   285
          Index           =   19
-         Left            =   1560
-         TabIndex        =   26
+         Left            =   1920
+         TabIndex        =   35
          Text            =   "Text1"
          Top             =   240
          Width           =   1695
       End
       Begin VB.Label Label19 
          Alignment       =   1  'Right Justify
-         BackStyle       =   0  'Transparent
+         BackColor       =   &H00000000&
          Caption         =   "Hablar al Clan"
          ForeColor       =   &H00FFFFFF&
          Height          =   255
-         Left            =   240
-         TabIndex        =   27
+         Left            =   600
+         TabIndex        =   34
          Top             =   600
          Width           =   1215
       End
       Begin VB.Label Label18 
          Alignment       =   1  'Right Justify
-         BackStyle       =   0  'Transparent
+         BackColor       =   &H00000000&
          Caption         =   "Hablar a Todos"
          ForeColor       =   &H00FFFFFF&
          Height          =   255
-         Left            =   240
-         TabIndex        =   25
+         Left            =   600
+         TabIndex        =   33
          Top             =   240
          Width           =   1215
       End
@@ -321,97 +295,70 @@ Begin VB.Form frmCustomKeys
       BackColor       =   &H00000000&
       Caption         =   "Acciones"
       ForeColor       =   &H00FFFFFF&
-      Height          =   4215
+      Height          =   3135
       Left            =   120
-      TabIndex        =   29
-      Top             =   2520
-      Width           =   3255
-      Begin VB.TextBox Text1 
-         Height          =   285
-         Index           =   14
-         Left            =   1440
-         TabIndex        =   43
-         Text            =   "Text1"
-         Top             =   2400
-         Width           =   1695
-      End
+      TabIndex        =   2
+      Top             =   1920
+      Width           =   3735
       Begin VB.TextBox Text1 
          Height          =   285
          Index           =   18
-         Left            =   1440
-         TabIndex        =   51
-         Text            =   "Text1"
-         Top             =   3840
-         Width           =   1695
-      End
-      Begin VB.TextBox Text1 
-         Height          =   285
-         Index           =   17
-         Left            =   1440
-         TabIndex        =   49
-         Text            =   "Text1"
-         Top             =   3480
-         Width           =   1695
-      End
-      Begin VB.TextBox Text1 
-         Height          =   285
-         Index           =   16
-         Left            =   1440
-         TabIndex        =   47
-         Text            =   "Text1"
-         Top             =   3120
-         Width           =   1695
-      End
-      Begin VB.TextBox Text1 
-         Height          =   285
-         Index           =   15
-         Left            =   1440
-         TabIndex        =   45
+         Left            =   1920
+         TabIndex        =   50
          Text            =   "Text1"
          Top             =   2760
          Width           =   1695
       End
       Begin VB.TextBox Text1 
          Height          =   285
-         Index           =   13
-         Left            =   1440
-         TabIndex        =   41
+         Index           =   17
+         Left            =   1920
+         TabIndex        =   32
+         Text            =   "Text1"
+         Top             =   2400
+         Width           =   1695
+      End
+      Begin VB.TextBox Text1 
+         Height          =   285
+         Index           =   16
+         Left            =   1920
+         TabIndex        =   31
          Text            =   "Text1"
          Top             =   2040
          Width           =   1695
       End
       Begin VB.TextBox Text1 
          Height          =   285
-         Index           =   12
-         Left            =   1440
-         TabIndex        =   39
+         Index           =   15
+         Left            =   1920
+         TabIndex        =   30
          Text            =   "Text1"
          Top             =   1680
          Width           =   1695
       End
       Begin VB.TextBox Text1 
          Height          =   285
-         Index           =   11
-         Left            =   1440
-         TabIndex        =   37
+         Index           =   12
+         Left            =   1920
+         TabIndex        =   29
          Text            =   "Text1"
          Top             =   1320
          Width           =   1695
       End
       Begin VB.TextBox Text1 
          Height          =   285
-         Index           =   10
-         Left            =   1440
-         TabIndex        =   35
+         Index           =   11
+         Left            =   1920
+         TabIndex        =   28
          Text            =   "Text1"
          Top             =   960
          Width           =   1695
       End
       Begin VB.TextBox Text1 
          Height          =   285
-         Index           =   9
-         Left            =   1440
-         TabIndex        =   33
+         Index           =   10
+         Left            =   1920
+         TabIndex        =   27
          Text            =   "Text1"
          Top             =   600
          Width           =   1695
@@ -419,130 +366,97 @@ Begin VB.Form frmCustomKeys
       Begin VB.TextBox Text1 
          Height          =   285
          Index           =   8
-         Left            =   1440
-         TabIndex        =   31
+         Left            =   1920
+         TabIndex        =   26
          Text            =   "Text1"
          Top             =   240
          Width           =   1695
       End
-      Begin VB.Label Label27 
-         Alignment       =   1  'Right Justify
-         BackStyle       =   0  'Transparent
-         Caption         =   "Seguro Resu"
-         ForeColor       =   &H00FFFFFF&
-         Height          =   255
-         Left            =   240
-         TabIndex        =   42
-         Top             =   2400
-         Width           =   1095
-      End
       Begin VB.Label Label17 
          Alignment       =   1  'Right Justify
-         BackStyle       =   0  'Transparent
+         BackColor       =   &H00000000&
          Caption         =   "Atacar"
          ForeColor       =   &H00FFFFFF&
          Height          =   255
-         Left            =   120
-         TabIndex        =   50
-         Top             =   3840
+         Left            =   600
+         TabIndex        =   25
+         Top             =   2760
          Width           =   1215
       End
       Begin VB.Label Label16 
          Alignment       =   1  'Right Justify
-         BackStyle       =   0  'Transparent
+         BackColor       =   &H00000000&
          Caption         =   "Usar"
          ForeColor       =   &H00FFFFFF&
          Height          =   255
-         Left            =   120
-         TabIndex        =   48
-         Top             =   3480
+         Left            =   600
+         TabIndex        =   24
+         Top             =   2400
          Width           =   1215
       End
       Begin VB.Label Label15 
          Alignment       =   1  'Right Justify
-         BackStyle       =   0  'Transparent
+         BackColor       =   &H00000000&
          Caption         =   "Tirar"
          ForeColor       =   &H00FFFFFF&
          Height          =   255
-         Left            =   120
-         TabIndex        =   46
-         Top             =   3120
+         Left            =   600
+         TabIndex        =   23
+         Top             =   2040
          Width           =   1215
       End
       Begin VB.Label Label14 
          Alignment       =   1  'Right Justify
-         BackStyle       =   0  'Transparent
+         BackColor       =   &H00000000&
          Caption         =   "Ocultar"
          ForeColor       =   &H00FFFFFF&
          Height          =   255
-         Left            =   120
-         TabIndex        =   44
-         Top             =   2760
-         Width           =   1215
-      End
-      Begin VB.Label Label13 
-         Alignment       =   1  'Right Justify
-         BackStyle       =   0  'Transparent
-         Caption         =   "Modo Seguro"
-         ForeColor       =   &H00FFFFFF&
-         Height          =   255
-         Left            =   120
-         TabIndex        =   40
-         Top             =   2040
+         Left            =   600
+         TabIndex        =   22
+         Top             =   1680
          Width           =   1215
       End
       Begin VB.Label Label12 
          Alignment       =   1  'Right Justify
-         BackStyle       =   0  'Transparent
+         BackColor       =   &H00000000&
          Caption         =   "Robar"
          ForeColor       =   &H00FFFFFF&
          Height          =   255
-         Left            =   120
-         TabIndex        =   38
-         Top             =   1680
+         Left            =   600
+         TabIndex        =   21
+         Top             =   1320
          Width           =   1215
       End
       Begin VB.Label Label11 
          Alignment       =   1  'Right Justify
-         BackStyle       =   0  'Transparent
+         BackColor       =   &H00000000&
          Caption         =   "Domar"
          ForeColor       =   &H00FFFFFF&
          Height          =   255
-         Left            =   120
-         TabIndex        =   36
-         Top             =   1320
+         Left            =   600
+         TabIndex        =   20
+         Top             =   960
          Width           =   1215
       End
       Begin VB.Label Label10 
          Alignment       =   1  'Right Justify
-         BackStyle       =   0  'Transparent
+         BackColor       =   &H00000000&
          Caption         =   "Equipar"
          ForeColor       =   &H00FFFFFF&
          Height          =   255
-         Left            =   120
-         TabIndex        =   34
-         Top             =   960
-         Width           =   1215
-      End
-      Begin VB.Label Label9 
-         Alignment       =   1  'Right Justify
-         BackStyle       =   0  'Transparent
-         Caption         =   "Modo Combate"
-         ForeColor       =   &H00FFFFFF&
-         Height          =   255
-         Left            =   120
-         TabIndex        =   32
+         Left            =   600
+         TabIndex        =   19
          Top             =   600
          Width           =   1215
       End
       Begin VB.Label Label8 
          Alignment       =   1  'Right Justify
-         BackStyle       =   0  'Transparent
+         BackColor       =   &H00000000&
          Caption         =   "Agarrar"
          ForeColor       =   &H00FFFFFF&
          Height          =   255
-         Left            =   120
-         TabIndex        =   30
+         Left            =   600
+         TabIndex        =   18
          Top             =   240
          Width           =   1215
       End
@@ -552,15 +466,24 @@ Begin VB.Form frmCustomKeys
       Caption         =   "Opciones Personales"
       ForeColor       =   &H00FFFFFF&
       Height          =   1335
-      Left            =   3480
-      TabIndex        =   17
-      Top             =   720
-      Width           =   4335
+      Left            =   3960
+      TabIndex        =   1
+      Top             =   120
+      Width           =   4095
+      Begin VB.TextBox Text1 
+         Height          =   285
+         Index           =   5
+         Left            =   2280
+         TabIndex        =   49
+         Text            =   "Text1"
+         Top             =   240
+         Width           =   1695
+      End
       Begin VB.TextBox Text1 
          Height          =   285
          Index           =   7
-         Left            =   2520
-         TabIndex        =   23
+         Left            =   2280
+         TabIndex        =   17
          Text            =   "Text1"
          Top             =   960
          Width           =   1695
@@ -568,51 +491,42 @@ Begin VB.Form frmCustomKeys
       Begin VB.TextBox Text1 
          Height          =   285
          Index           =   6
-         Left            =   2520
-         TabIndex        =   21
+         Left            =   2280
+         TabIndex        =   16
          Text            =   "Text1"
          Top             =   600
          Width           =   1695
       End
-      Begin VB.TextBox Text1 
-         Height          =   285
-         Index           =   5
-         Left            =   2520
-         TabIndex        =   19
-         Text            =   "Text1"
-         Top             =   240
-         Width           =   1695
-      End
       Begin VB.Label Label7 
          Alignment       =   1  'Right Justify
-         BackStyle       =   0  'Transparent
+         BackColor       =   &H00000000&
          Caption         =   "Mostrar/Ocultar Nombres"
          ForeColor       =   &H00FFFFFF&
          Height          =   255
-         Left            =   360
-         TabIndex        =   22
+         Left            =   120
+         TabIndex        =   11
          Top             =   960
          Width           =   2055
       End
       Begin VB.Label Label6 
          Alignment       =   1  'Right Justify
-         BackStyle       =   0  'Transparent
+         BackColor       =   &H00000000&
          Caption         =   "Corregir Posicion"
          ForeColor       =   &H00FFFFFF&
          Height          =   255
-         Left            =   360
-         TabIndex        =   20
+         Left            =   120
+         TabIndex        =   10
          Top             =   600
          Width           =   2055
       End
       Begin VB.Label Label5 
          Alignment       =   1  'Right Justify
-         BackStyle       =   0  'Transparent
+         BackColor       =   &H00000000&
          Caption         =   "Activar/Desactivar Musica"
          ForeColor       =   &H00FFFFFF&
          Height          =   255
-         Left            =   360
-         TabIndex        =   18
+         Left            =   120
+         TabIndex        =   9
          Top             =   240
          Width           =   2055
       End
@@ -623,14 +537,14 @@ Begin VB.Form frmCustomKeys
       ForeColor       =   &H00FFFFFF&
       Height          =   1695
       Left            =   120
-      TabIndex        =   8
-      Top             =   720
-      Width           =   3255
+      TabIndex        =   0
+      Top             =   120
+      Width           =   3735
       Begin VB.TextBox Text1 
          Height          =   285
          Index           =   4
-         Left            =   1440
-         TabIndex        =   16
+         Left            =   1920
+         TabIndex        =   15
          Text            =   "Text1"
          Top             =   1320
          Width           =   1695
@@ -638,7 +552,7 @@ Begin VB.Form frmCustomKeys
       Begin VB.TextBox Text1 
          Height          =   285
          Index           =   3
-         Left            =   1440
+         Left            =   1920
          TabIndex        =   14
          Text            =   "Text1"
          Top             =   960
@@ -647,8 +561,8 @@ Begin VB.Form frmCustomKeys
       Begin VB.TextBox Text1 
          Height          =   285
          Index           =   2
-         Left            =   1440
-         TabIndex        =   12
+         Left            =   1920
+         TabIndex        =   13
          Text            =   "Text1"
          Top             =   600
          Width           =   1695
@@ -656,53 +570,53 @@ Begin VB.Form frmCustomKeys
       Begin VB.TextBox Text1 
          Height          =   285
          Index           =   1
-         Left            =   1440
-         TabIndex        =   10
+         Left            =   1920
+         TabIndex        =   12
          Text            =   "Text1"
          Top             =   240
          Width           =   1695
       End
       Begin VB.Label Label4 
          Alignment       =   1  'Right Justify
-         BackStyle       =   0  'Transparent
+         BackColor       =   &H00000000&
          Caption         =   "Derecha"
          ForeColor       =   &H00FFFFFF&
          Height          =   255
-         Left            =   120
-         TabIndex        =   15
+         Left            =   600
+         TabIndex        =   8
          Top             =   1320
          Width           =   1215
       End
       Begin VB.Label Label3 
          Alignment       =   1  'Right Justify
-         BackStyle       =   0  'Transparent
+         BackColor       =   &H00000000&
          Caption         =   "Izquierda"
          ForeColor       =   &H00FFFFFF&
          Height          =   255
-         Left            =   120
-         TabIndex        =   13
+         Left            =   600
+         TabIndex        =   7
          Top             =   960
          Width           =   1215
       End
       Begin VB.Label Label2 
          Alignment       =   1  'Right Justify
-         BackStyle       =   0  'Transparent
+         BackColor       =   &H00000000&
          Caption         =   "Abajo"
          ForeColor       =   &H00FFFFFF&
          Height          =   255
-         Left            =   120
-         TabIndex        =   11
+         Left            =   600
+         TabIndex        =   6
          Top             =   600
          Width           =   1215
       End
       Begin VB.Label Label1 
          Alignment       =   1  'Right Justify
-         BackStyle       =   0  'Transparent
+         BackColor       =   &H00000000&
          Caption         =   "Arriba"
          ForeColor       =   &H00FFFFFF&
          Height          =   255
-         Left            =   120
-         TabIndex        =   9
+         Left            =   600
+         TabIndex        =   5
          Top             =   240
          Width           =   1215
       End
@@ -752,75 +666,45 @@ Attribute VB_Exposed = False
 '
 '@author Rapsodius
 '@date 20070805
-'@version 1.2.0
+'@version 1.0.0
 '@see clsCustomKeys
 
 Option Explicit
-Private Sub Check1_MouseUp(index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
-
-Dim i As Long
-    
-    Check1(index).value = vbChecked
-    CustomKeys.KeybConfig = index
-
-    For i = 1 To CustomKeys.Count
-        Text1(i).Text = CustomKeys.ReadableName(CustomKeys.BindedKey(i))
-        If index = 0 Then
-            Text1(i).Enabled = False
-        Else
-            Text1(i).Enabled = True
-        End If
-    Next i
-        
-    For i = 0 To CustomKeys.KeyCount
-        If i <> index Then
-            Check1(i).value = vbUnchecked
-        End If
-    Next i
-End Sub
 
 Private Sub Command1_Click()
+Call CustomKeys.LoadDefaults
+Dim i As Long
+
+For i = 1 To CustomKeys.Count
+    Text1(i).Text = CustomKeys.ReadableName(CustomKeys.BindedKey(i))
+Next i
+End Sub
+
+Private Sub Command2_Click()
 
 Dim i As Long
 
-    Call Audio.PlayWave(SND_CLICK)
+For i = 1 To CustomKeys.Count
+    If LenB(Text1(i).Text) = 0 Then
+        Call MsgBox("Hay una o mas teclas no validas, por favor verifique.", vbCritical Or vbOKOnly Or vbApplicationModal Or vbDefaultButton1, "Argentum Online")
+        Exit Sub
+    End If
+Next i
 
-    For i = 1 To CustomKeys.Count
-        If LenB(Text1(i).Text) = 0 Then
-            Call MsgBox("Hay una o mas teclas no validas, por favor verifique.", vbCritical Or vbOKOnly Or vbApplicationModal Or vbDefaultButton1, "Argentum Online")
-            Exit Sub
-        End If
-    Next i
-    
-    Unload Me
+Unload Me
 End Sub
 
 Private Sub Form_Load()
-On Local Error Resume Next
-Dim i As Long
-
-    Check1(CustomKeys.KeybConfig).value = vbChecked
-
+    Dim i As Long
+    
     For i = 1 To CustomKeys.Count
         Text1(i).Text = CustomKeys.ReadableName(CustomKeys.BindedKey(i))
-        If CustomKeys.KeybConfig = 0 Then
-            Text1(i).Enabled = False
-        Else
-            Text1(i).Enabled = True
-        End If
     Next i
-    
-    For i = 0 To CustomKeys.KeyCount
-        If i <> CustomKeys.KeybConfig Then
-            Check1(i).value = vbUnchecked
-        End If
-    Next i
-    
 End Sub
 
 Private Sub Text1_KeyDown(index As Integer, KeyCode As Integer, Shift As Integer)
-Dim i As Long
-
+    Dim i As Long
+    
     If LenB(CustomKeys.ReadableName(KeyCode)) = 0 Then Exit Sub
     'If key is not valid, we exit
     
@@ -842,9 +726,9 @@ Dim i As Long
 End Sub
 
 Private Sub Text1_KeyPress(index As Integer, KeyAscii As Integer)
-    KeyAscii = 0
+KeyAscii = 0
 End Sub
 
 Private Sub Text1_KeyUp(index As Integer, KeyCode As Integer, Shift As Integer)
-    Call Text1_KeyDown(index, KeyCode, Shift)
+Call Text1_KeyDown(index, KeyCode, Shift)
 End Sub

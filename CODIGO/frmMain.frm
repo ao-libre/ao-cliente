@@ -1,8 +1,8 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.ocx"
-Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.ocx"
-Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.ocx"
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.OCX"
+Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.OCX"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.Form frmMain 
    BackColor       =   &H00000000&
    BorderStyle     =   1  'Fixed Single
@@ -575,7 +575,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -954,22 +953,6 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
             End If
             
     End Select
-    
-    Shift = Shift And 7
-    If (Shift And vbAltMask) = vbAltMask Then
-        If (KeyCode >= vbKey0) And (KeyCode <= vbKey9) Then
-            If ((KeyCode - vbKey0) <= CustomKeys.KeyCount) And ((KeyCode - vbKey0) <> CustomKeys.KeybConfig) Then
-                CustomKeys.KeybConfig = (KeyCode - vbKey0)
-                With FontTypes(FontTypeNames.FONTTYPE_VENENO)
-                    If CustomKeys.KeybConfig > 0 Then
-                        Call Mod_General.AddtoRichTextBox(frmMain.RecTxt, "Cambiado a Teclado número " & (KeyCode - vbKey0) & ".", .red, .green, .blue, True, False, False)
-                    Else
-                        Call Mod_General.AddtoRichTextBox(frmMain.RecTxt, "Cambiado a Teclas por defecto.", .red, .green, .blue, True, False, False)
-                    End If
-                End With
-            End If
-        End If
-    End If
 End Sub
 
 Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)

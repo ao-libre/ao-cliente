@@ -273,7 +273,7 @@ End Sub
 Private Sub cmdCustomKeys_Click()
     If Not loading Then _
         Call Audio.PlayWave(SND_CLICK)
-    Call frmCustomKeys.Show(vbModal, frmMain)
+    Call frmCustomKeys.Show(vbModal, Me)
 End Sub
 
 Private Sub cmdManual_Click()
@@ -283,7 +283,7 @@ Private Sub cmdManual_Click()
 End Sub
 
 Private Sub cmdChangePassword_Click()
-    Call frmNewPassword.Show(vbModal, frmMain)
+    Call frmNewPassword.Show(vbModal, Me)
 End Sub
 
 Private Sub Command2_Click()
@@ -291,7 +291,7 @@ Private Sub Command2_Click()
 End Sub
 
 Private Sub customMsgCmd_Click()
-    Call frmMessageTxt.Show(vbModeless, frmMain)
+    Call frmMessageTxt.Show(vbModeless, Me)
 End Sub
 
 Private Sub Form_Load()
