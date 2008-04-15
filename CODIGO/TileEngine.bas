@@ -1973,53 +1973,62 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
         PixelOffsetX = PixelOffsetX + .MoveOffsetX
         PixelOffsetY = PixelOffsetY + .MoveOffsetY
         
-        If Not .invisible And .Body.Walk(.Heading).GrhIndex Then
-            'Draw Body
-            Call DDrawTransGrhtoSurface(.Body.Walk(.Heading), PixelOffsetX, PixelOffsetY, 1, 1)
+        If .Head.Head(.Heading).GrhIndex Then
+            If Not .invisible Then
+                'Draw Body
+                If .Body.Walk(.Heading).GrhIndex Then _
+                    Call DDrawTransGrhtoSurface(.Body.Walk(.Heading), PixelOffsetX, PixelOffsetY, 1, 1)
             
-            'Draw Head
-            If .Head.Head(.Heading).GrhIndex Then
-                Call DDrawTransGrhtoSurface(.Head.Head(.Heading), PixelOffsetX + .Body.HeadOffset.x, PixelOffsetY + .Body.HeadOffset.y, 1, 0)
-                
-                'Draw Helmet
-                If .Casco.Head(.Heading).GrhIndex Then _
-                    Call DDrawTransGrhtoSurface(.Casco.Head(.Heading), PixelOffsetX + .Body.HeadOffset.x, PixelOffsetY + .Body.HeadOffset.y, 1, 0)
-                
-                'Draw Weapon
-                If .Arma.WeaponWalk(.Heading).GrhIndex Then _
-                    Call DDrawTransGrhtoSurface(.Arma.WeaponWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, 1)
-                
-                'Draw Shield
-                If .Escudo.ShieldWalk(.Heading).GrhIndex Then _
-                    Call DDrawTransGrhtoSurface(.Escudo.ShieldWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, 1)
-            End If
-            
-            'Draw name over head
-            If LenB(.Nombre) > 0 Then
-                If Nombres And Abs(MouseTileX - .Pos.x) < 2 And (Abs(MouseTileY - .Pos.y)) < 2 Then
-                    Pos = InStr(.Nombre, "<")
-                    If Pos = 0 Then Pos = Len(.Nombre) + 2
+                'Draw Head
+                If .Head.Head(.Heading).GrhIndex Then
+                    Call DDrawTransGrhtoSurface(.Head.Head(.Heading), PixelOffsetX + .Body.HeadOffset.x, PixelOffsetY + .Body.HeadOffset.y, 1, 0)
                     
-                    If .priv = 0 Then
-                        If .Criminal Then
-                            color = RGB(ColoresPJ(50).r, ColoresPJ(50).g, ColoresPJ(50).b)
-                        Else
-                            color = RGB(ColoresPJ(49).r, ColoresPJ(49).g, ColoresPJ(49).b)
+                    'Draw Helmet
+                    If .Casco.Head(.Heading).GrhIndex Then _
+                        Call DDrawTransGrhtoSurface(.Casco.Head(.Heading), PixelOffsetX + .Body.HeadOffset.x, PixelOffsetY + .Body.HeadOffset.y, 1, 0)
+                    
+                    'Draw Weapon
+                    If .Arma.WeaponWalk(.Heading).GrhIndex Then _
+                        Call DDrawTransGrhtoSurface(.Arma.WeaponWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, 1)
+                    
+                    'Draw Shield
+                    If .Escudo.ShieldWalk(.Heading).GrhIndex Then _
+                        Call DDrawTransGrhtoSurface(.Escudo.ShieldWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, 1)
+                
+                
+                    'Draw name over head
+                    If LenB(.Nombre) > 0 Then
+                        If Nombres And Abs(MouseTileX - .Pos.x) < 2 And (Abs(MouseTileY - .Pos.y)) < 2 Then
+                            Pos = InStr(.Nombre, "<")
+                            If Pos = 0 Then Pos = Len(.Nombre) + 2
+                            
+                            If .priv = 0 Then
+                                If .Criminal Then
+                                    color = RGB(ColoresPJ(50).r, ColoresPJ(50).g, ColoresPJ(50).b)
+                                Else
+                                    color = RGB(ColoresPJ(49).r, ColoresPJ(49).g, ColoresPJ(49).b)
+                                End If
+                            Else
+                                color = RGB(ColoresPJ(.priv).r, ColoresPJ(.priv).g, ColoresPJ(.priv).b)
+                            End If
+                            
+                            'Nick
+                            line = Left$(.Nombre, Pos - 2)
+                            Call RenderText(PixelOffsetX + 4 - Len(line) * 2, PixelOffsetY + 30, line, color, frmMain.font)
+                            
+                            'Clan
+                            line = mid$(.Nombre, Pos)
+                            Call RenderText(PixelOffsetX + 15 - Len(line) * 3, PixelOffsetY + 45, line, color, frmMain.font)
                         End If
-                    Else
-                        color = RGB(ColoresPJ(.priv).r, ColoresPJ(.priv).g, ColoresPJ(.priv).b)
                     End If
-                    
-                    'Nick
-                    line = Left$(.Nombre, Pos - 2)
-                    Call RenderText(PixelOffsetX + 4 - Len(line) * 2, PixelOffsetY + 30, line, color, frmMain.font)
-                    
-                    'Clan
-                    line = mid$(.Nombre, Pos)
-                    Call RenderText(PixelOffsetX + 15 - Len(line) * 3, PixelOffsetY + 45, line, color, frmMain.font)
                 End If
             End If
+        Else
+            'Draw Body
+            If .Body.Walk(.Heading).GrhIndex Then _
+                Call DDrawTransGrhtoSurface(.Body.Walk(.Heading), PixelOffsetX, PixelOffsetY, 1, 1)
         End If
+
         
         'Update dialogs
         Call Dialogos.UpdateDialogPos(PixelOffsetX + .Body.HeadOffset.x, PixelOffsetY + .Body.HeadOffset.y, CharIndex)
