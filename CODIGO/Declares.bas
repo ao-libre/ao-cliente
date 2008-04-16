@@ -506,6 +506,7 @@ Public Enum FxMeditar
     MEDIANO = 5
     GRANDE = 6
     XGRANDE = 16
+    XXGRANDE = 32
 End Enum
 
 Public Enum eClanType
@@ -563,10 +564,6 @@ Public SendNewChar As Boolean 'Used during login
 Public Connected As Boolean 'True when connected to server
 Public DownloadingMap As Boolean 'Currently downloading a map from server
 Public UserMap As Integer
-
-'String contants
-Public Const ENDC As String * 1 = vbNullChar    'Endline character for talking with server
-Public Const ENDL As String * 2 = vbCrLf        'Holds the Endline character for textboxes
 
 'Control
 Public prgRun As Boolean 'When true the program ends

@@ -796,7 +796,7 @@ On Error Resume Next
         .scrollDirectionY = Sgn(addY)
         
         'parche para que no medite cuando camina
-        If .FxIndex = FxMeditar.CHICO Or .FxIndex = FxMeditar.GRANDE Or .FxIndex = FxMeditar.MEDIANO Or .FxIndex = FxMeditar.XGRANDE Then
+        If .FxIndex = FxMeditar.CHICO Or .FxIndex = FxMeditar.GRANDE Or .FxIndex = FxMeditar.MEDIANO Or .FxIndex = FxMeditar.XGRANDE Or .FxIndex = FxMeditar.XXGRANDE Then
             .FxIndex = 0
         End If
     End With

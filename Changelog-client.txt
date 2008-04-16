@@ -152,3 +152,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 13/04/2008: Vuelve a haber un único layout de teclas (nunca se pidió otra cosa) y se corrigen lor problemas con su grabado y carga. (Maraxus)
  * 15/04/2008: A veces tiraba el hechizo sin tener el cursor del target puesto. (NicoNZ)
  * 15/04/2008: Cambie algunas cosas en el CharRender para que no se muestre el nick cuando se usa la barca y si se está invi, se vea la barca. (NicoNZ)
+ * 15/04/2008: Agregado el nuevo FX de meditar. (Maraxus)
