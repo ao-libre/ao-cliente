@@ -506,7 +506,7 @@ Public Enum FxMeditar
     MEDIANO = 5
     GRANDE = 6
     XGRANDE = 16
-    XXGRANDE = 32
+    XXGRANDE = 34
 End Enum
 
 Public Enum eClanType
