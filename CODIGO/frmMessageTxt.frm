@@ -14,7 +14,7 @@ Begin VB.Form frmMessageTxt
    MinButton       =   0   'False
    ScaleHeight     =   4695
    ScaleWidth      =   4680
-   StartUpPosition =   3  'Windows Default
+   StartUpPosition =   2  'CenterScreen
    Begin VB.CommandButton cancelCmd 
       Caption         =   "Cancelar"
       Height          =   495
@@ -254,7 +254,7 @@ Exit Sub
 
 ErrHandler:
     'Did detected an invalid message??
-    If Err.Number = CustomMessages.InvalidMessageErrCode Then
+    If Err.number = CustomMessages.InvalidMessageErrCode Then
         Call MsgBox("El Mensaje " & CStr(i + 1) & " es inválido. Modifiquelo por favor.")
     End If
 End Sub
