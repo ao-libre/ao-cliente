@@ -219,7 +219,7 @@ If Not MiMensaje(0).Visible Then
     MiMensaje(0).Visible = True
     MiMensaje(1).Visible = True
     MiMensaje(0).SetFocus
-    command1.Enabled = False
+    Command1.Enabled = False
     Label1.Visible = True
     Label2.Visible = True
 Else
@@ -231,7 +231,11 @@ Else
     
     MiMensaje(0).Visible = False
     MiMensaje(1).Visible = False
-    command1.Enabled = True
+    'Limpio los textboxs (NicoNZ) 04/24/08
+    MiMensaje(0).Text = vbNullString
+    MiMensaje(1).Text = vbNullString
+    
+    Command1.Enabled = True
     Label1.Visible = False
     Label2.Visible = False
 End If
@@ -245,7 +249,7 @@ Private Sub Command3_Click()
 
 MiMensaje(0).Visible = False
 MiMensaje(1).Visible = False
-command1.Enabled = True
+Command1.Enabled = True
 Label1.Visible = False
 Label2.Visible = False
 Dim i
@@ -268,7 +272,7 @@ End Sub
 
 Private Sub MiMensaje_Change(index As Integer)
 If Len(MiMensaje(0).Text) <> 0 And Len(MiMensaje(1).Text) <> 0 Then
-command1.Enabled = True
+Command1.Enabled = True
 End If
 
 End Sub

@@ -154,3 +154,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 15/04/2008: Cambie algunas cosas en el CharRender para que no se muestre el nick cuando se usa la barca y si se está invi, se vea la barca. (NicoNZ)
  * 15/04/2008: Agregado el nuevo FX de meditar. (Maraxus)
  * 21/04/2008: La ventana de configuracion de mensajes se carga en el medio y al cerrarla vuelve el foco al FrmMain. (NicoNZ)
+ * 24/04/2008: No se vaciaban los texboxs al mandar mensajes del foro. (NicoNZ)
