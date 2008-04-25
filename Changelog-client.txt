@@ -155,3 +155,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 15/04/2008: Agregado el nuevo FX de meditar. (Maraxus)
  * 21/04/2008: La ventana de configuracion de mensajes se carga en el medio y al cerrarla vuelve el foco al FrmMain. (NicoNZ)
  * 24/04/2008: No se vaciaban los texboxs al mandar mensajes del foro. (NicoNZ)
+ * 25/04/2008: Para activar/desactivar el seguro/seguro de resu/modo combate, los textbos de texto tienen que estar invisibles. (NicoNZ)

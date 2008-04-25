@@ -575,7 +575,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -856,6 +855,14 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
                         Call WriteRequestPositionUpdate
                         Beep
                     End If
+                Case CustomKeys.BindedKey(eKeyType.mKeyToggleSafeMode)
+                    If frmMain.PicSeg.Visible Then
+                        AddtoRichTextBox frmMain.RecTxt, "Escribe /SEG para quitar el seguro", 255, 255, 255, False, False, False
+                    Else
+                        Call WriteSafeToggle
+                    End If
+                Case CustomKeys.BindedKey(eKeyType.mKeyToggleResuscitationSafe)
+                    Call WriteResuscitationToggle
             End Select
         Else
             Select Case KeyCode
@@ -917,16 +924,6 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
         
         Case CustomKeys.BindedKey(eKeyType.mKeyExitGame)
             Call WriteQuit
-        
-        Case CustomKeys.BindedKey(eKeyType.mKeyToggleSafeMode)
-            If frmMain.PicSeg.Visible Then
-                AddtoRichTextBox frmMain.RecTxt, "Escribe /SEG para quitar el seguro", 255, 255, 255, False, False, False
-            Else
-                Call WriteSafeToggle
-            End If
-            
-        Case CustomKeys.BindedKey(eKeyType.mKeyToggleResuscitationSafe)
-            Call WriteResuscitationToggle
             
         Case CustomKeys.BindedKey(eKeyType.mKeyAttack)
             If Shift <> 0 Then Exit Sub
@@ -972,6 +969,7 @@ Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
         Cancel = 1
     End If
 End Sub
+
 
 Private Sub Macro_Timer()
     PuedeMacrear = True
@@ -1375,7 +1373,7 @@ Private Sub Label4_Click()
     picInv.Visible = True
 
     hlst.Visible = False
-    cmdINFO.Visible = False
+    cmdInfo.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = True
@@ -1394,7 +1392,7 @@ Private Sub Label7_Click()
     'DespInv(1).Visible = False
     picInv.Visible = False
     hlst.Visible = True
-    cmdINFO.Visible = True
+    cmdInfo.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True
