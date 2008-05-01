@@ -152,6 +152,7 @@ Private Enum ServerPacketID
     SendNight               ' NOC
     Pong
     UpdateTagAndStatus
+    ResetCastSpellInterval
     
     'GM messages
     SpawnList               ' SPL
@@ -868,6 +869,9 @@ On Error Resume Next
         
         Case ServerPacketID.UpdateTagAndStatus
             Call HandleUpdateTagAndStatus
+            
+        Case ServerPacketID.ResetCastSpellInterval
+            Call HandleResetCastSpellInterval
         
         '*******************
         'GM messages
@@ -3913,11 +3917,11 @@ On Error GoTo ErrHandler
         .criminales.Caption = "Criminales asesinados: " & CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .status.Caption = " (Ciudadano)"
-            .status.ForeColor = vbBlue
+            .Status.Caption = " (Ciudadano)"
+            .Status.ForeColor = vbBlue
         Else
-            .status.Caption = " (Criminal)"
-            .status.ForeColor = vbRed
+            .Status.Caption = " (Criminal)"
+            .Status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)
@@ -4572,6 +4576,45 @@ On Error GoTo ErrHandler
         
         .Nombre = userTag
     End With
+    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
+    
+ErrHandler:
+    Dim error As Long
+    error = Err.number
+On Error GoTo 0
+    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
+
+    If error <> 0 Then _
+        Err.Raise error
+End Sub
+
+''
+' Handles the ResetCastSpellInterval message.
+
+Private Sub HandleResetCastSpellInterval()
+'***************************************************
+'Author: Nicolás Ezequiel Bouhid (NicoNZ)
+'Last Modification: 05/01/08
+'
+'***************************************************
+    If incomingData.length < 6 Then
+        Err.Raise incomingData.NotEnoughDataErrCode
+        Exit Sub
+    End If
+    
+On Error GoTo ErrHandler
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
+    
+    'Remove packet ID
+    Call Buffer.ReadByte
+    
+    Call MainTimer.Restart(TimersIndex.CastSpell)
     
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
@@ -7973,7 +8016,7 @@ End Sub
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal nick As String, ByVal reason As String)
+Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal Nick As String, ByVal reason As String)
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7993,7 +8036,7 @@ Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal nick As S
                 Call .WriteByte(Ip(i))
             Next i
         Else
-            Call .WriteASCIIString(nick)
+            Call .WriteASCIIString(Nick)
         End If
         
         Call .WriteASCIIString(reason)
