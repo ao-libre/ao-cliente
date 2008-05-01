@@ -152,7 +152,6 @@ Private Enum ServerPacketID
     SendNight               ' NOC
     Pong
     UpdateTagAndStatus
-    ResetCastSpellInterval
     
     'GM messages
     SpawnList               ' SPL
@@ -4592,44 +4591,6 @@ On Error GoTo 0
         Err.Raise error
 End Sub
 
-''
-' Handles the ResetCastSpellInterval message.
-
-Private Sub HandleResetCastSpellInterval()
-'***************************************************
-'Author: Nicolás Ezequiel Bouhid (NicoNZ)
-'Last Modification: 05/01/08
-'
-'***************************************************
-    If incomingData.length < 6 Then
-        Err.Raise incomingData.NotEnoughDataErrCode
-        Exit Sub
-    End If
-    
-On Error GoTo ErrHandler
-    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
-    Call Buffer.CopyBuffer(incomingData)
-    
-    'Remove packet ID
-    Call Buffer.ReadByte
-    
-    Call MainTimer.Restart(TimersIndex.CastSpell)
-    
-    'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
-    
-ErrHandler:
-    Dim error As Long
-    error = Err.number
-On Error GoTo 0
-    
-    'Destroy auxiliar buffer
-    Set Buffer = Nothing
-
-    If error <> 0 Then _
-        Err.Raise error
-End Sub
 
 ''
 ' Writes the "LoginExistingChar" message to the outgoing data buffer.
