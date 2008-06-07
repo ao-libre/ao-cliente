@@ -581,11 +581,11 @@ Sub ResetCharInfo(ByVal CharIndex As Integer)
         .Criminal = 0
         .FxIndex = 0
         .invisible = False
-    
+        
 #If SeguridadAlkon Then
         Call MI(CualMI).ResetInvisible(CharIndex)
 #End If
-    
+        
         .Moving = 0
         .muerto = False
         .Nombre = ""
@@ -1154,7 +1154,8 @@ Sub DDrawTransGrhtoSurfaceAlpha(ByRef Grh As Grh, ByVal x As Integer, ByVal y As
     
     If Animate Then
         If Grh.Started = 1 Then
-            Grh.FrameCounter = Grh.FrameCounter + (timerTicksPerFrame * Grh.Speed)
+            Grh.FrameCounter = Grh.FrameCounter + (timerElapsedTime * GrhData(Grh.GrhIndex).NumFrames / Grh.Speed)
+            
             If Grh.FrameCounter > GrhData(Grh.GrhIndex).NumFrames Then
                 Grh.FrameCounter = (Grh.FrameCounter Mod GrhData(Grh.GrhIndex).NumFrames) + 1
                 
@@ -1198,13 +1199,13 @@ Sub DDrawTransGrhtoSurfaceAlpha(ByRef Grh As Grh, ByVal x As Integer, ByVal y As
     Set Src = SurfaceDB.Surface(GrhData(CurrentGrhIndex).FileNum)
     
     Src.GetSurfaceDesc ddsdSrc
-    Surface.GetSurfaceDesc ddsdDest
+    BackBufferSurface.GetSurfaceDesc ddsdDest
     
     With rDest
         .Left = x
         .Top = y
         .Right = x + GrhData(CurrentGrhIndex).pixelWidth
-        .Bottom = y + GrhData(iGrhIndex).pixelHeight
+        .Bottom = y + GrhData(CurrentGrhIndex).pixelHeight
         
         If .Right > ddsdDest.lWidth Then
             .Right = ddsdDest.lWidth
@@ -1220,14 +1221,14 @@ Sub DDrawTransGrhtoSurfaceAlpha(ByRef Grh As Grh, ByVal x As Integer, ByVal y As
     ' 3 -> 24 bits
     ' 4 -> 32 bits
     
-    If ddsdDest.ddpfPixelFormat.lGBitMask = &H3E0 And ddsdSrc.ddpfPixelFormat.lGBitMask = &H3E0 Then
+    If ddsdDest.ddpfPixelFormat.lGBitMask = &H3E0& And ddsdSrc.ddpfPixelFormat.lGBitMask = &H3E0& Then
         Modo = 0
-    ElseIf ddsdDest.ddpfPixelFormat.lGBitMask = &H7E0 And ddsdSrc.ddpfPixelFormat.lGBitMask = &H7E0 Then
+    ElseIf ddsdDest.ddpfPixelFormat.lGBitMask = &H7E0& And ddsdSrc.ddpfPixelFormat.lGBitMask = &H7E0& Then
         Modo = 1
-'TODO : Revisar las máscaras de 24 y 32 bits!!
-    ElseIf ddsdDest.ddpfPixelFormat.lGBitMask = &H7E0 And ddsdSrc.ddpfPixelFormat.lGBitMask = &H7E0 Then
+'TODO : Revisar las máscaras de 24!! Quizás mirando el campo lRGBBitCount para diferenciar 24 de 32...
+    ElseIf ddsdDest.ddpfPixelFormat.lGBitMask = &H7E0& And ddsdSrc.ddpfPixelFormat.lGBitMask = &H7E0& Then
         Modo = 3
-    ElseIf ddsdDest.ddpfPixelFormat.lGBitMask = &HFF00 And ddsdSrc.ddpfPixelFormat.lGBitMask = &HFF00 Then
+    ElseIf ddsdDest.ddpfPixelFormat.lGBitMask = &HFF00& And ddsdSrc.ddpfPixelFormat.lGBitMask = &HFF00& Then
         Modo = 4
     Else
         'Modo = 2 '16 bits raro ?
@@ -1253,7 +1254,7 @@ On Local Error GoTo HayErrorAlpha
     
     Call BltAlphaFast(ByVal VarPtr(dArray(x + x, y)), ByVal VarPtr(sArray(SourceRect.Left * 2, SourceRect.Top)), rDest.Right - rDest.Left, rDest.Bottom - rDest.Top, ddsdSrc.lPitch, ddsdDest.lPitch, Modo)
     
-    Surface.Unlock rDest
+    BackBufferSurface.Unlock rDest
     DstLock = False
     Src.Unlock SourceRect
     SrcLock = False
@@ -1261,7 +1262,7 @@ Exit Sub
 
 HayErrorAlpha:
     If SrcLock Then Src.Unlock SourceRect
-    If DstLock Then Surface.Unlock rDest
+    If DstLock Then BackBufferSurface.Unlock rDest
 End Sub
 
 #End If 'ConAlfaB = 1
