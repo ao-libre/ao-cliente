@@ -157,4 +157,7 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 24/04/2008: No se vaciaban los texboxs al mandar mensajes del foro. (NicoNZ)
  * 25/04/2008: Para activar/desactivar el seguro/seguro de resu/modo combate, los cuadros de texto tienen que estar invisibles. (NicoNZ)
  * 01/05/2008: Ahora no se resetea el intervalo al errar un hechizo. (NicoNZ)
+ * 07/06/2008: Agregué mensajes al tirar hechizos o flechas mas rápido del intervalo. (NicoNZ)
+ * 01/05/2008: Ahora no se resetea el intervalo al errar un hechizo. (NicoNZ)
  * 07/06/2008: Arreglo el alphablending que no funcionaba. (Maraxus)
+ * 07/06/2008: Agregué mensajes al tirar hechizos o flechas mas rápido del intervalo. (NicoNZ)

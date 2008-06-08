@@ -929,7 +929,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
             If Shift <> 0 Then Exit Sub
             
             If Not MainTimer.Check(TimersIndex.Arrows, False) Then Exit Sub 'Check if arrows interval has finished.
-            If Not MainTimer.Check(TimersIndex.CastSpell, False) Then  'Check if spells interval has finished.
+            If Not MainTimer.Check(TimersIndex.CastSpell, False) Then 'Check if spells interval has finished.
                 If Not MainTimer.Check(TimersIndex.CastAttack) Then Exit Sub 'Corto intervalo Golpe-Hechizo
             Else
                 If Not MainTimer.Check(TimersIndex.Attack) Or UserDescansar Or UserMeditar Then Exit Sub
@@ -1204,12 +1204,16 @@ Private Sub Form_Click()
                 If UsingSkill = 0 Then
                     Call WriteLeftClick(tX, tY)
                 Else
+                
                     If TrainingMacro.Enabled Then DesactivarMacroHechizos
                     If macrotrabajo.Enabled Then DesactivarMacroTrabajo
                     
                     If Not MainTimer.Check(TimersIndex.Arrows, False) Then 'Check if arrows interval has finished.
                         frmMain.MousePointer = vbDefault
                         UsingSkill = 0
+                        With FontTypes(FontTypeNames.FONTTYPE_TALK)
+                            Call AddtoRichTextBox(frmMain.RecTxt, "No podés lanzar flechas tan rapido.", .red, .green, .blue, .bold, .italic)
+                        End With
                         Exit Sub
                     End If
                     
@@ -1218,6 +1222,9 @@ Private Sub Form_Click()
                         If Not MainTimer.Check(TimersIndex.Arrows) Then
                             frmMain.MousePointer = vbDefault
                             UsingSkill = 0
+                            With FontTypes(FontTypeNames.FONTTYPE_TALK)
+                                Call AddtoRichTextBox(frmMain.RecTxt, "No podés lanzar flechas tan rapido.", .red, .green, .blue, .bold, .italic)
+                            End With
                             Exit Sub
                         End If
                     End If
@@ -1228,12 +1235,18 @@ Private Sub Form_Click()
                             If Not MainTimer.Check(TimersIndex.CastAttack) Then 'Corto intervalo de Golpe-Magia
                                 frmMain.MousePointer = vbDefault
                                 UsingSkill = 0
+                                With FontTypes(FontTypeNames.FONTTYPE_TALK)
+                                    Call AddtoRichTextBox(frmMain.RecTxt, "No podés lanzar hechizos tan rapido.", .red, .green, .blue, .bold, .italic)
+                                End With
                                 Exit Sub
                             End If
                         Else
-                            If Not MainTimer.Check(TimersIndex.CastSpell, False) Then 'Check if spells interval has finished.
+                            If Not MainTimer.Check(TimersIndex.CastSpell) Then 'Check if spells interval has finished.
                                 frmMain.MousePointer = vbDefault
                                 UsingSkill = 0
+                                With FontTypes(FontTypeNames.FONTTYPE_TALK)
+                                    Call AddtoRichTextBox(frmMain.RecTxt, "No podés lanzar hechizos tan rapido.", .red, .green, .blue, .bold, .italic)
+                                End With
                                 Exit Sub
                             End If
                         End If
@@ -1373,7 +1386,7 @@ Private Sub Label4_Click()
     picInv.Visible = True
 
     hlst.Visible = False
-    cmdInfo.Visible = False
+    cmdINFO.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = True
@@ -1392,7 +1405,7 @@ Private Sub Label7_Click()
     'DespInv(1).Visible = False
     picInv.Visible = False
     hlst.Visible = True
-    cmdInfo.Visible = True
+    cmdINFO.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True
