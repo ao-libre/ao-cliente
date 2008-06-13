@@ -2753,7 +2753,7 @@ On Error GoTo ErrHandler
     Dim MaxHit As Integer
     Dim MinHit As Integer
     Dim defense As Integer
-    Dim value As Single
+    Dim value As Long
     
     slot = Buffer.ReadByte()
     OBJIndex = Buffer.ReadInteger()
@@ -2765,7 +2765,7 @@ On Error GoTo ErrHandler
     MaxHit = Buffer.ReadInteger()
     MinHit = Buffer.ReadInteger()
     defense = Buffer.ReadInteger()
-    value = Buffer.ReadSingle()
+    value = Buffer.ReadLong()
     
     Call Inventario.SetItem(slot, OBJIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, defense, value, Name)
     
@@ -3269,7 +3269,7 @@ On Error GoTo ErrHandler
     With NPCInventory(slot)
         .Name = Buffer.ReadASCIIString()
         .Amount = Buffer.ReadInteger()
-        .Valor = Buffer.ReadSingle()
+        .Valor = Buffer.ReadLong()
         .GrhIndex = Buffer.ReadInteger()
         .OBJIndex = Buffer.ReadInteger()
         .OBJType = Buffer.ReadByte()
