@@ -369,7 +369,7 @@ Type Inventory
     Amount As Long
     '[/Alejo]
     Equipped As Byte
-    Valor As Long
+    Valor As Single
     OBJType As Integer
     Def As Integer
     MaxHit As Integer
@@ -381,7 +381,7 @@ Type NpCinV
     Name As String
     GrhIndex As Integer
     Amount As Integer
-    Valor As Long
+    Valor As Single
     OBJType As Integer
     Def As Integer
     MaxHit As Integer

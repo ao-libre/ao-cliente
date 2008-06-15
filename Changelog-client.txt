@@ -161,3 +161,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 01/05/2008: Ahora no se resetea el intervalo al errar un hechizo. (NicoNZ)
  * 07/06/2008: Arreglo el alphablending que no funcionaba. (Maraxus)
  * 07/06/2008: Agregué mensajes al tirar hechizos o flechas mas rápido del intervalo. (NicoNZ)
+ * 14/06/2008: Ahora se ve el precio final a la hora de comerciar con un NPC. (NicoNZ)

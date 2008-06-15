@@ -2765,7 +2765,7 @@ On Error GoTo ErrHandler
     MaxHit = Buffer.ReadInteger()
     MinHit = Buffer.ReadInteger()
     defense = Buffer.ReadInteger()
-    value = Buffer.ReadLong()
+    value = Buffer.ReadSingle()
     
     Call Inventario.SetItem(slot, OBJIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, defense, value, Name)
     
@@ -3269,7 +3269,7 @@ On Error GoTo ErrHandler
     With NPCInventory(slot)
         .Name = Buffer.ReadASCIIString()
         .Amount = Buffer.ReadInteger()
-        .Valor = Buffer.ReadLong()
+        .Valor = Buffer.ReadSingle()
         .GrhIndex = Buffer.ReadInteger()
         .OBJIndex = Buffer.ReadInteger()
         .OBJType = Buffer.ReadByte()
@@ -7975,7 +7975,7 @@ End Sub
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal nick As String, ByVal reason As String)
+Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal Nick As String, ByVal reason As String)
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7995,7 +7995,7 @@ Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal nick As S
                 Call .WriteByte(Ip(i))
             Next i
         Else
-            Call .WriteASCIIString(nick)
+            Call .WriteASCIIString(Nick)
         End If
         
         Call .WriteASCIIString(reason)

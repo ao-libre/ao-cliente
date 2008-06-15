@@ -239,6 +239,7 @@ Option Explicit
 Public LastIndex1 As Integer
 Public LastIndex2 As Integer
 Public LasActionBuy As Boolean
+Private lIndex As Byte
 
 Private Sub cantidad_Change()
     If Val(cantidad.Text) < 1 Then
@@ -247,6 +248,12 @@ Private Sub cantidad_Change()
     
     If Val(cantidad.Text) > MAX_INVENTORY_OBJS Then
         cantidad.Text = 1
+    End If
+    
+    If lIndex = 0 Then
+        Label1(1).Caption = Round(NPCInventory(List1(0).listIndex + 1).Valor * Val(cantidad.Text), 0) 'No mostramos numeros reales
+    Else
+        Label1(1).Caption = Round(Inventario.Valor(List1(1).listIndex + 1) * Val(cantidad.Text), 0) 'No mostramos numeros reales
     End If
 End Sub
 
@@ -295,7 +302,7 @@ Select Case index
         frmComerciar.List1(0).SetFocus
         LastIndex1 = List1(0).listIndex
         LasActionBuy = True
-        If UserGLD >= NPCInventory(List1(0).listIndex + 1).Valor * Val(cantidad) Then
+        If UserGLD >= Round(NPCInventory(List1(0).listIndex + 1).Valor * Val(cantidad), 0) Then
             Call WriteCommerceBuy(List1(0).listIndex + 1, cantidad.Text)
         Else
             AddtoRichTextBox frmMain.RecTxt, "No tenés suficiente oro.", 2, 51, 223, 1, 1
@@ -345,11 +352,13 @@ DR.Top = 0
 DR.Right = 32
 DR.Bottom = 32
 
+lIndex = index
+
 Select Case index
     Case 0
-    Debug.Print
+        
         Label1(0).Caption = NPCInventory(List1(0).listIndex + 1).Name
-        Label1(1).Caption = NPCInventory(List1(0).listIndex + 1).Valor
+        Label1(1).Caption = Round(NPCInventory(List1(0).listIndex + 1).Valor * Val(cantidad.Text), 0) 'No mostramos numeros reales
         Label1(2).Caption = NPCInventory(List1(0).listIndex + 1).Amount
         
         If Label1(2).Caption <> 0 Then
@@ -375,7 +384,7 @@ Select Case index
     
     Case 1
         Label1(0).Caption = Inventario.ItemName(List1(1).listIndex + 1)
-        Label1(1).Caption = Inventario.Valor(List1(1).listIndex + 1)
+        Label1(1).Caption = Round(Inventario.Valor(List1(1).listIndex + 1) * Val(cantidad.Text), 0) 'No mostramos numeros reales
         Label1(2).Caption = Inventario.Amount(List1(1).listIndex + 1)
         
         If Label1(2).Caption <> 0 Then
