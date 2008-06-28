@@ -368,13 +368,12 @@ End Sub
 Sub MoveTo(ByVal Direccion As E_Heading)
 '***************************************************
 'Author: Alejandro Santos (AlejoLp)
-'Last Modify Date: 12/08/2007
+'Last Modify Date: 06/28/2008
 'Last Modified By: Lucas Tavolaro Ortiz (Tavo)
 ' 06/03/2006: AlejoLp - Elimine las funciones Move[NSWE] y las converti a esta
 ' 12/08/2007: Tavo    - Si el usuario esta paralizado no se puede mover.
+' 06/28/2008: NicoNZ - Saqué lo que impedía que si el usuario estaba paralizado se ejecute el sub.
 '***************************************************
-    If UserParalizado Then Exit Sub
-    
     Dim LegalOk As Boolean
     
     If Cartel Then Cartel = False

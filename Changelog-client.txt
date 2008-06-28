@@ -162,3 +162,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 07/06/2008: Arreglo el alphablending que no funcionaba. (Maraxus)
  * 07/06/2008: Agregué mensajes al tirar hechizos o flechas mas rápido del intervalo. (NicoNZ)
  * 14/06/2008: Ahora se ve el precio final a la hora de comerciar con un NPC. (NicoNZ)
+ * 28/06/2008: Ahora si estás inmovilizado, te podes mover sobre el mismo eje para las cuatro direcciones, si estás paralizado, no. (NicoNZ)
