@@ -319,12 +319,11 @@ Public CualMI As Integer
 
 #End If
 
-'estados internos del surface (read only)
-Public Enum TextureStatus
-    tsOriginal = 0
-    tsNight = 1
-    tsFog = 2
-End Enum
+' Used by GetTextExtentPoint32
+Private Type Size
+    cx As Long
+    cy As Long
+End Type
 
 '[CODE 001]:MatuX
 Public Enum PlayLoop
@@ -349,6 +348,9 @@ Private Declare Function BltEfectoNoche Lib "vbabdx" (ByRef lpDDSDest As Any, By
 'Very percise counter 64bit system counter
 Private Declare Function QueryPerformanceFrequency Lib "kernel32" (lpFrequency As Currency) As Long
 Private Declare Function QueryPerformanceCounter Lib "kernel32" (lpPerformanceCount As Currency) As Long
+
+'Text width computation. Needed to center text.
+Private Declare Function GetTextExtentPoint32 Lib "gdi32" Alias "GetTextExtentPoint32A" (ByVal hDC As Long, ByVal lpsz As String, ByVal cbString As Long, lpSize As Size) As Long
 
 Sub CargarCabezas()
     Dim N As Integer
@@ -1285,11 +1287,11 @@ Function GetBitmapDimensions(ByVal BmpFile As String, ByRef bmWidth As Long, ByR
     bmHeight = BINFOHeader.biHeight
 End Function
 
-Sub DrawGrhtoHdc(ByVal hdc As Long, ByVal GrhIndex As Integer, ByRef SourceRect As RECT, ByRef destRect As RECT)
+Sub DrawGrhtoHdc(ByVal hDC As Long, ByVal GrhIndex As Integer, ByRef SourceRect As RECT, ByRef destRect As RECT)
 '*****************************************************************
 'Draws a Grh's portion to the given area of any Device Context
 '*****************************************************************
-    Call SurfaceDB.Surface(GrhData(GrhIndex).FileNum).BltToDC(hdc, SourceRect, destRect)
+    Call SurfaceDB.Surface(GrhData(GrhIndex).FileNum).BltToDC(hDC, SourceRect, destRect)
 End Sub
 
 Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffsetX As Integer, ByVal PixelOffsetY As Integer)
@@ -1780,9 +1782,9 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Inte
         Call PrimarySurface.Blt(MainViewRect, BackBufferSurface, MainDestRect, DDBLT_WAIT)
         
         'Limit FPS to 100 (an easy number higher than monitor's vertical refresh rates)
-        While (DirectX.TickCount - fpsLastCheck) \ 10 < FramesPerSecCounter
-            Sleep 5
-        Wend
+        'While (DirectX.TickCount - fpsLastCheck) \ 10 < FramesPerSecCounter
+        '    Sleep 5
+        'Wend
         
         'FPS update
         If fpsLastCheck + 1000 < DirectX.TickCount Then
@@ -1847,28 +1849,34 @@ End Sub
 #End If
 
 Public Sub RenderText(ByVal lngXPos As Integer, ByVal lngYPos As Integer, ByRef strText As String, ByVal lngColor As Long, ByRef font As StdFont)
-   If strText <> "" Then
-        Call BackBufferSurface.SetForeColor(vbBlack)
-        Call BackBufferSurface.SetFont(font)
-        
-        Call BackBufferSurface.DrawText(lngXPos - 2, lngYPos - 1, strText, False)
-        
-        
-        Call BackBufferSurface.SetForeColor(lngColor)
-        Call BackBufferSurface.SetFont(font)
-        
-        Call BackBufferSurface.DrawText(lngXPos, lngYPos, strText, False)
-   End If
-End Sub
-
-Public Sub RenderTextBig(ByVal lngXPos As Integer, ByVal lngYPos As Integer, ByRef strText As String, ByVal lngColor As Long, ByRef backFont As StdFont, ByRef frontFont As StdFont)
     If strText <> "" Then
         Call BackBufferSurface.SetForeColor(vbBlack)
-        Call BackBufferSurface.SetFont(backFont)
+        Call BackBufferSurface.SetFont(font)
         Call BackBufferSurface.DrawText(lngXPos - 2, lngYPos - 1, strText, False)
         
         Call BackBufferSurface.SetForeColor(lngColor)
-        Call BackBufferSurface.SetFont(frontFont)
+        Call BackBufferSurface.DrawText(lngXPos, lngYPos, strText, False)
+    End If
+End Sub
+
+Public Sub RenderTextCentered(ByVal lngXPos As Integer, ByVal lngYPos As Integer, ByRef strText As String, ByVal lngColor As Long, ByRef font As StdFont)
+    Dim hDC As Long
+    Dim ret As Size
+    
+    If strText <> "" Then
+        Call BackBufferSurface.SetFont(font)
+        
+        'Get width of text once rendered
+        hDC = BackBufferSurface.GetDC()
+        Call GetTextExtentPoint32(hDC, strText, Len(strText), ret)
+        Call BackBufferSurface.ReleaseDC(hDC)
+        
+        lngXPos = lngXPos - ret.cx \ 2
+        
+        Call BackBufferSurface.SetForeColor(vbBlack)
+        Call BackBufferSurface.DrawText(lngXPos - 2, lngYPos - 1, strText, False)
+        
+        Call BackBufferSurface.SetForeColor(lngColor)
         Call BackBufferSurface.DrawText(lngXPos, lngYPos, strText, False)
     End If
 End Sub
@@ -2015,11 +2023,11 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
                             
                             'Nick
                             line = Left$(.Nombre, Pos - 2)
-                            Call RenderText(PixelOffsetX + 4 - Len(line) * 2, PixelOffsetY + 30, line, color, frmMain.font)
+                            Call RenderTextCentered(PixelOffsetX + TilePixelWidth \ 2 + 5, PixelOffsetY + 30, line, color, frmMain.font)
                             
                             'Clan
                             line = mid$(.Nombre, Pos)
-                            Call RenderText(PixelOffsetX + 15 - Len(line) * 3, PixelOffsetY + 45, line, color, frmMain.font)
+                            Call RenderTextCentered(PixelOffsetX + TilePixelWidth \ 2 + 5, PixelOffsetY + 45, line, color, frmMain.font)
                         End If
                     End If
                 End If
