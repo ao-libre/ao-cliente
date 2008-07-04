@@ -210,15 +210,17 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
+Private Const MAX_DESC_LENGTH As Integer = 520
+Private Const MAX_CODEX_LENGTH As Integer = 100
 
-Private Sub Command1_Click(index As Integer)
-    Select Case index
+Private Sub Command1_Click(Index As Integer)
+    Select Case Index
         Case 0
             Unload Me
         
         Case 1
             Dim fdesc As String
-            Dim codex() As String
+            Dim Codex() As String
             Dim k As Byte
             Dim Cont As Byte
     
@@ -242,15 +244,15 @@ Private Sub Command1_Click(index As Integer)
                 Exit Sub
             End If
                         
-            ReDim codex(txtCodex1.UBound) As String
+            ReDim Codex(txtCodex1.UBound) As String
             For k = 0 To txtCodex1.UBound
-                codex(k) = txtCodex1(k)
+                Codex(k) = txtCodex1(k)
             Next k
     
             If CreandoClan Then
-                Call WriteCreateNewGuild(fdesc, ClanName, Site, codex)
+                Call WriteCreateNewGuild(fdesc, ClanName, Site, Codex)
             Else
-                Call WriteClanCodexUpdate(fdesc, codex)
+                Call WriteClanCodexUpdate(fdesc, Codex)
             End If
 
             CreandoClan = False
@@ -259,13 +261,12 @@ Private Sub Command1_Click(index As Integer)
     End Select
 End Sub
 
-Private Sub Form_Deactivate()
-
-'If Not frmGuildLeader.Visible Then
-'    Me.SetFocus
-'Else
-'    'Unload Me
-'End If
-'
+Private Sub txtCodex1_Change(Index As Integer)
+    If Len(txtCodex1.Item(Index).Text) > MAX_CODEX_LENGTH Then _
+        txtCodex1.Item(Index).Text = Left$(txtCodex1.Item(Index).Text, MAX_CODEX_LENGTH)
 End Sub
 
+Private Sub txtDesc_Change()
+    If Len(txtDesc.Text) > MAX_DESC_LENGTH Then _
+        txtDesc.Text = Left$(txtDesc.Text, MAX_DESC_LENGTH)
+End Sub

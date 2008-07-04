@@ -320,7 +320,7 @@ Public CualMI As Integer
 #End If
 
 ' Used by GetTextExtentPoint32
-Private Type Size
+Private Type size
     cx As Long
     cy As Long
 End Type
@@ -350,7 +350,7 @@ Private Declare Function QueryPerformanceFrequency Lib "kernel32" (lpFrequency A
 Private Declare Function QueryPerformanceCounter Lib "kernel32" (lpPerformanceCount As Currency) As Long
 
 'Text width computation. Needed to center text.
-Private Declare Function GetTextExtentPoint32 Lib "gdi32" Alias "GetTextExtentPoint32A" (ByVal hDC As Long, ByVal lpsz As String, ByVal cbString As Long, lpSize As Size) As Long
+Private Declare Function GetTextExtentPoint32 Lib "gdi32" Alias "GetTextExtentPoint32A" (ByVal hdc As Long, ByVal lpsz As String, ByVal cbString As Long, lpSize As size) As Long
 
 Sub CargarCabezas()
     Dim N As Integer
@@ -1287,11 +1287,11 @@ Function GetBitmapDimensions(ByVal BmpFile As String, ByRef bmWidth As Long, ByR
     bmHeight = BINFOHeader.biHeight
 End Function
 
-Sub DrawGrhtoHdc(ByVal hDC As Long, ByVal GrhIndex As Integer, ByRef SourceRect As RECT, ByRef destRect As RECT)
+Sub DrawGrhtoHdc(ByVal hdc As Long, ByVal GrhIndex As Integer, ByRef SourceRect As RECT, ByRef destRect As RECT)
 '*****************************************************************
 'Draws a Grh's portion to the given area of any Device Context
 '*****************************************************************
-    Call SurfaceDB.Surface(GrhData(GrhIndex).FileNum).BltToDC(hDC, SourceRect, destRect)
+    Call SurfaceDB.Surface(GrhData(GrhIndex).FileNum).BltToDC(hdc, SourceRect, destRect)
 End Sub
 
 Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffsetX As Integer, ByVal PixelOffsetY As Integer)
@@ -1860,16 +1860,16 @@ Public Sub RenderText(ByVal lngXPos As Integer, ByVal lngYPos As Integer, ByRef 
 End Sub
 
 Public Sub RenderTextCentered(ByVal lngXPos As Integer, ByVal lngYPos As Integer, ByRef strText As String, ByVal lngColor As Long, ByRef font As StdFont)
-    Dim hDC As Long
-    Dim ret As Size
+    Dim hdc As Long
+    Dim ret As size
     
     If strText <> "" Then
         Call BackBufferSurface.SetFont(font)
         
         'Get width of text once rendered
-        hDC = BackBufferSurface.GetDC()
-        Call GetTextExtentPoint32(hDC, strText, Len(strText), ret)
-        Call BackBufferSurface.ReleaseDC(hDC)
+        hdc = BackBufferSurface.GetDC()
+        Call GetTextExtentPoint32(hdc, strText, Len(strText), ret)
+        Call BackBufferSurface.ReleaseDC(hdc)
         
         lngXPos = lngXPos - ret.cx \ 2
         

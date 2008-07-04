@@ -91,6 +91,8 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
+Private Const MAX_PROPOSAL_LENGTH As Integer = 520
+
 Public Nombre As String
 Public T As TIPO
 Public Enum TIPO
@@ -103,13 +105,13 @@ Public Sub SetTipo(ByVal T As TIPO)
     Select Case T
         Case TIPO.ALIANZA
             Me.Caption = "Detalle de solicitud de alianza"
-            Me.text1.MaxLength = 200
+            Me.Text1.MaxLength = 200
         Case TIPO.PAZ
             Me.Caption = "Detalle de solicitud de Paz"
-            Me.text1.MaxLength = 200
+            Me.Text1.MaxLength = 200
         Case TIPO.RECHAZOPJ
             Me.Caption = "Detalle de rechazo de membresía"
-            Me.text1.MaxLength = 50
+            Me.Text1.MaxLength = 50
     End Select
 End Sub
 
@@ -117,7 +119,7 @@ End Sub
 Private Sub Command1_Click()
 
 
-If text1 = "" Then
+If Text1 = "" Then
     If T = PAZ Or T = ALIANZA Then
         MsgBox "Debes redactar un mensaje solicitando la paz o alianza al líder de " & Nombre
     Else
@@ -127,11 +129,11 @@ If text1 = "" Then
 End If
 
 If T = PAZ Then
-    Call WriteGuildOfferPeace(Nombre, Replace(text1, vbCrLf, "º"))
+    Call WriteGuildOfferPeace(Nombre, Replace(Text1, vbCrLf, "º"))
 ElseIf T = ALIANZA Then
-    Call WriteGuildOfferAlliance(Nombre, Replace(text1, vbCrLf, "º"))
+    Call WriteGuildOfferAlliance(Nombre, Replace(Text1, vbCrLf, "º"))
 ElseIf T = RECHAZOPJ Then
-    Call WriteGuildRejectNewMember(Nombre, Replace(Replace(text1.Text, ",", " "), vbCrLf, " "))
+    Call WriteGuildRejectNewMember(Nombre, Replace(Replace(Text1.Text, ",", " "), vbCrLf, " "))
     'Sacamos el char de la lista de aspirantes
     Dim i As Long
     For i = 0 To frmGuildLeader.solicitudes.ListCount - 1
@@ -153,3 +155,7 @@ Private Sub Command2_Click()
 Unload Me
 End Sub
 
+Private Sub Text1_Change()
+    If Len(Text1.Text) > MAX_PROPOSAL_LENGTH Then _
+        Text1.Text = Left$(Text1.Text, MAX_PROPOSAL_LENGTH)
+End Sub

@@ -274,6 +274,8 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
+Private Const MAX_NEWS_LENGTH As Integer = 512
+
 Private Sub cmdElecciones_Click()
     Call WriteGuildOpenElections
     Unload Me
@@ -333,4 +335,9 @@ End Sub
 Private Sub Command8_Click()
     Unload Me
     frmMain.SetFocus
+End Sub
+
+Private Sub txtguildnews_Change()
+    If Len(txtguildnews.Text) > MAX_NEWS_LENGTH Then _
+        txtguildnews.Text = Left$(txtguildnews.Text, MAX_NEWS_LENGTH)
 End Sub
