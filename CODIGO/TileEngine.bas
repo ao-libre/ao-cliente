@@ -1345,7 +1345,6 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
     
     If maxX > XMaxMapSize Then maxX = XMaxMapSize
     
-    
     'If we can, we render around the view area to make it smoother
     If screenminY > YMinMapSize Then
         screenminY = screenminY - 1
@@ -1365,6 +1364,9 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
     
     If screenmaxX < XMaxMapSize Then screenmaxX = screenmaxX + 1
     
+    'Agregado para evitar overflows (NicoNZ)
+    If screenmaxY > YMaxMapSize Then screenmaxY = 100
+    If screenmaxX > XMaxMapSize Then screenmaxX = 100
     
     'Draw floor layer
     For y = screenminY To screenmaxY
