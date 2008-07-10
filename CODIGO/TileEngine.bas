@@ -1364,10 +1364,6 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
     
     If screenmaxX < XMaxMapSize Then screenmaxX = screenmaxX + 1
     
-    'Agregado para evitar overflows (NicoNZ)
-    If screenmaxY > YMaxMapSize Then screenmaxY = 100
-    If screenmaxX > XMaxMapSize Then screenmaxX = 100
-    
     'Draw floor layer
     For y = screenminY To screenmaxY
         For x = screenminX To screenmaxX

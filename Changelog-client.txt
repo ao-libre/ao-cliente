@@ -165,4 +165,3 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 28/06/2008: Ahora si estás inmovilizado, te podes mover sobre el mismo eje para las cuatro direcciones, si estás paralizado, no. (NicoNZ)
  * 01/07/2008: Centro los nicks correctamente y elimino código innecesario. (Maraxus)
  * 04/07/2008: Evito algunos overflows. (Maraxus)
- * 10/07/2008: Corrijo un overflow en el sub RenderScreen. (NicoNZ)
