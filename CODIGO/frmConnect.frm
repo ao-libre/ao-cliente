@@ -197,7 +197,7 @@ Private Sub downloadServer_Click()
 'cambios que hacemos nosotros, compartí los tuyos. Es un cambio justo. Si no estás de acuerdo,
 'no uses nuestro código, pues nadie te obliga o bien utiliza una versión anterior a la 0.12.0.
 '***********************************
-    Call ShellExecute(0, "Open", "http://sourceforge.net/project/downloading.php?group_id=67718&use_mirror=osdn&filename=AOServerSrc.zip&86289150", "", App.path, 0)
+    Call ShellExecute(0, "Open", "http://downloads.sourceforge.net/morgoao/AOServerSrc0.12.1.zip?use_mirror=osdn", "", App.path, 0)
 End Sub
 
 Private Sub Form_Activate()
