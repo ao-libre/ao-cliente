@@ -1780,9 +1780,9 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Inte
         Call PrimarySurface.Blt(MainViewRect, BackBufferSurface, MainDestRect, DDBLT_WAIT)
         
         'Limit FPS to 100 (an easy number higher than monitor's vertical refresh rates)
-        'While (DirectX.TickCount - fpsLastCheck) \ 10 < FramesPerSecCounter
-        '    Sleep 5
-        'Wend
+        While (DirectX.TickCount - fpsLastCheck) \ 10 < FramesPerSecCounter
+            Sleep 5
+        Wend
         
         'FPS update
         If fpsLastCheck + 1000 < DirectX.TickCount Then
