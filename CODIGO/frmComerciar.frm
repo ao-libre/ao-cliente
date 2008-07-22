@@ -251,9 +251,13 @@ Private Sub cantidad_Change()
     End If
     
     If lIndex = 0 Then
-        Label1(1).Caption = Round(NPCInventory(List1(0).listIndex + 1).Valor * Val(cantidad.Text), 0) 'No mostramos numeros reales
+        If List1(0).listIndex <> -1 Then
+            Label1(1).Caption = Round(NPCInventory(List1(0).listIndex + 1).Valor * Val(cantidad.Text), 0) 'No mostramos numeros reales
+        End If
     Else
-        Label1(1).Caption = Round(Inventario.Valor(List1(1).listIndex + 1) * Val(cantidad.Text), 0) 'No mostramos numeros reales
+        If List1(1).listIndex <> -1 Then
+            Label1(1).Caption = Round(Inventario.Valor(List1(1).listIndex + 1) * Val(cantidad.Text), 0) 'No mostramos numeros reales
+        End If
     End If
 End Sub
 
