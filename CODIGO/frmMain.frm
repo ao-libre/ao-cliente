@@ -1310,6 +1310,20 @@ End Sub
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     MouseX = x - MainViewShp.Left
     MouseY = y - MainViewShp.Top
+    
+    'Trim to fit screen
+    If MouseX < 0 Then
+        MouseX = 0
+    ElseIf MouseX > MainViewShp.Width Then
+        MouseX = MainViewShp.Width
+    End If
+    
+    'Trim to fit screen
+    If MouseY < 0 Then
+        MouseY = 0
+    ElseIf MouseY > MainViewShp.Height Then
+        MouseY = MainViewShp.Height
+    End If
 End Sub
 
 Private Sub hlst_KeyDown(KeyCode As Integer, Shift As Integer)
@@ -1387,7 +1401,7 @@ Private Sub Label4_Click()
     picInv.Visible = True
 
     hlst.Visible = False
-    cmdINFO.Visible = False
+    cmdInfo.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = True
@@ -1406,7 +1420,7 @@ Private Sub Label7_Click()
     'DespInv(1).Visible = False
     picInv.Visible = False
     hlst.Visible = True
-    cmdINFO.Visible = True
+    cmdInfo.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True
@@ -1893,8 +1907,8 @@ Private Function InGameArea() As Boolean
 'Last Modification: 04/07/08
 'Checks if last click was performed within or outside the game area.
 '***************************************************
-    If clicX < MainViewShp.Left Or clicX > MainViewShp.Left + (32 * 17) Then Exit Function
-    If clicY < MainViewShp.Top Or clicY > MainViewShp.Top + (32 * 13) Then Exit Function
+    If clicX < MainViewShp.Left Or clicX > MainViewShp.Left + MainViewShp.Width Then Exit Function
+    If clicY < MainViewShp.Top Or clicY > MainViewShp.Top + MainViewShp.Height Then Exit Function
     
     InGameArea = True
 End Function
