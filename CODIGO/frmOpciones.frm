@@ -3,7 +3,7 @@ Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.ocx"
 Begin VB.Form frmOpciones 
    BackColor       =   &H00000000&
    BorderStyle     =   3  'Fixed Dialog
-   ClientHeight    =   5325
+   ClientHeight    =   5760
    ClientLeft      =   45
    ClientTop       =   45
    ClientWidth     =   4740
@@ -21,10 +21,18 @@ Begin VB.Form frmOpciones
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   5325
+   ScaleHeight     =   5760
    ScaleWidth      =   4740
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
+   Begin VB.CommandButton cmdViewMap 
+      Caption         =   "Mapa del Juego"
+      Height          =   375
+      Left            =   960
+      TabIndex        =   16
+      Top             =   4320
+      Width           =   2775
+   End
    Begin VB.CommandButton cmdChangePassword 
       Caption         =   "Cambiar Contraseña"
       Height          =   375
@@ -54,7 +62,7 @@ Begin VB.Form frmOpciones
       Height          =   375
       Left            =   960
       TabIndex        =   12
-      Top             =   4320
+      Top             =   4800
       Width           =   2775
    End
    Begin VB.Frame Frame2 
@@ -176,7 +184,7 @@ Begin VB.Form frmOpciones
       MouseIcon       =   "frmOpciones.frx":0152
       MousePointer    =   99  'Custom
       TabIndex        =   0
-      Top             =   4800
+      Top             =   5280
       Width           =   2790
    End
    Begin VB.Label Label1 
@@ -284,6 +292,10 @@ End Sub
 
 Private Sub cmdChangePassword_Click()
     Call frmNewPassword.Show(vbModal, Me)
+End Sub
+
+Private Sub cmdViewMap_Click()
+    Call frmMapa.Show(vbModal, Me)
 End Sub
 
 Private Sub Command2_Click()
