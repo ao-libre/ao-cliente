@@ -18,7 +18,7 @@ Begin VB.Form frmMapa
    Begin VB.Label lblTexto 
       Alignment       =   2  'Center
       BackStyle       =   0  'Transparent
-      Caption         =   "Label1"
+      Caption         =   $"frmMapa.frx":0000
       BeginProperty Font 
          Name            =   "MS Sans Serif"
          Size            =   12
@@ -29,7 +29,7 @@ Begin VB.Form frmMapa
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H8000000E&
-      Height          =   615
+      Height          =   855
       Left            =   240
       TabIndex        =   0
       Top             =   5040
@@ -53,7 +53,31 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+'**************************************************************************
+'This program is free software; you can redistribute it and/or modify
+'it under the terms of the Affero General Public License;
+'either version 1 of the License, or any later version.
+'
+'This program is distributed in the hope that it will be useful,
+'but WITHOUT ANY WARRANTY; without even the implied warranty of
+'MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+'Affero General Public License for more details.
+'
+'You should have received a copy of the Affero General Public License
+'along with this program; if not, you can find it at http://www.affero.org/oagpl.html
+'**************************************************************************
+
 Option Explicit
+
+''
+' This form is used to show the world map.
+' It has two levels. The world map and the dungeons map.
+' You can toggle between them pressing the arrows
+'
+' @file     frmMapa.frm
+' @author Marco Vanotti (MarKoxX) marcovanotti15@gmail.com
+' @version 1.0.0
+' @date 20080724
 
 ''
 ' Checks what Key is down. If the key is const vbKeyDown or const vbKeyUp, it toggles the maps, else the form unloads.
@@ -100,13 +124,12 @@ Private Sub Form_Load()
 '
 '*************************************************
 
-    On Error GoTo error
+On Error GoTo error
     
     'Cargamos las imagenes de los mapas
-    imgMap.Picture = LoadPicture(App.path & "\Graficos\mapa1.jpg")
-    imgMapDungeon.Picture = LoadPicture(App.path & "\Graficos\mapa2.jpg")
+    imgMap.Picture = LoadPicture(DirGraficos & "mapa1.jpg")
+    imgMapDungeon.Picture = LoadPicture(DirGraficos & "mapa2.jpg")
     
-    lblTexto.Caption = "Mapa de Argentum Online, Presione Arriba y Abajo para cambiar entre mapa global / laberintos. Presione cualquier otra tecla para salir."
     
     'Ajustamos el tamaño del formulario a la imagen más grande
     If imgMap.Width > imgMapDungeon.Width Then
