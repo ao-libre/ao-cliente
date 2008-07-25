@@ -29,7 +29,7 @@ Begin VB.Form frmMapa
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H8000000E&
-      Height          =   855
+      Height          =   975
       Left            =   240
       TabIndex        =   0
       Top             =   5040
