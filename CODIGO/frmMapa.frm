@@ -15,6 +15,26 @@ Begin VB.Form frmMapa
    ScaleWidth      =   8775
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
+   Begin VB.Label lblTexto 
+      Alignment       =   2  'Center
+      BackStyle       =   0  'Transparent
+      Caption         =   "Label1"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   12
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H8000000E&
+      Height          =   615
+      Left            =   240
+      TabIndex        =   0
+      Top             =   5040
+      Width           =   8175
+   End
    Begin VB.Image imgMapDungeon 
       Height          =   4935
       Left            =   0
@@ -33,25 +53,60 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Option Explicit
+
+''
+' Checks what Key is down. If the key is const vbKeyDown or const vbKeyUp, it toggles the maps, else the form unloads.
+'
+' @param KeyCode Specifies the key pressed
+' @param Shift Specifies if Shift Button is pressed
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
+'*************************************************
+'Author: Marco Vanotti (MarKoxX)
+'Last modified: 24/07/08
+'
+'*************************************************
+
     Select Case KeyCode
         Case vbKeyDown, vbKeyUp 'Cambiamos el "nivel" del mapa, al estilo Zelda ;D
             ToggleImgMaps
         Case Else
             Unload Me
     End Select
+    
 End Sub
+
+''
+' Toggle which image is visible.
+'
 Private Sub ToggleImgMaps()
+'*************************************************
+'Author: Marco Vanotti (MarKoxX)
+'Last modified: 24/07/08
+'
+'*************************************************
+
     imgMap.Visible = Not imgMap.Visible
     imgMapDungeon.Visible = Not imgMapDungeon.Visible
 End Sub
 
+''
+' Load the images. Resizes the form, adjusts image's left and top and set lblTexto's Top and Left.
+'
 Private Sub Form_Load()
-    On Error GoTo Error
+'*************************************************
+'Author: Marco Vanotti (MarKoxX)
+'Last modified: 24/07/08
+'
+'*************************************************
+
+    On Error GoTo error
     
     'Cargamos las imagenes de los mapas
     imgMap.Picture = LoadPicture(App.path & "\Graficos\mapa1.jpg")
     imgMapDungeon.Picture = LoadPicture(App.path & "\Graficos\mapa2.jpg")
+    
+    lblTexto.Caption = "Mapa de Argentum Online, Presione Arriba y Abajo para cambiar entre mapa global / laberintos. Presione cualquier otra tecla para salir."
     
     'Ajustamos el tamaño del formulario a la imagen más grande
     If imgMap.Width > imgMapDungeon.Width Then
@@ -61,21 +116,24 @@ Private Sub Form_Load()
     End If
     
     If imgMap.Height > imgMapDungeon.Height Then
-        Me.Height = imgMap.Height
+        Me.Height = imgMap.Height + lblTexto.Height
     Else
-        Me.Height = imgMapDungeon.Height
+        Me.Height = imgMapDungeon.Height + lblTexto.Height
     End If
     
     'Movemos ambas imágenes al centro del formulario
-    imgMap.Left = Me.Width / 2 - imgMap.Width / 2
-    imgMap.Top = Me.Height / 2 - imgMap.Height / 2
+    imgMap.Left = Me.Width * 0.5 - imgMap.Width * 0.5
+    imgMap.Top = (Me.Height - lblTexto.Height) * 0.5 - imgMap.Height * 0.5
     
-    imgMapDungeon.Left = Me.Width / 2 - imgMapDungeon.Width / 2
-    imgMapDungeon.Top = Me.Height / 2 - imgMapDungeon.Height / 2
+    imgMapDungeon.Left = Me.Width * 0.5 - imgMapDungeon.Width * 0.5
+    imgMapDungeon.Top = (Me.Height - lblTexto.Height) * 0.5 - imgMapDungeon.Height * 0.5
+    
+    lblTexto.Top = Me.Height - lblTexto.Height
+    lblTexto.Left = Me.Width * 0.5 - lblTexto.Width * 0.5
     
     imgMapDungeon.Visible = False
     Exit Sub
-Error:
+error:
     MsgBox Err.Description, vbInformation, "Error: " & Err.number
     Unload Me
 End Sub
