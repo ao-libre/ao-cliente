@@ -165,3 +165,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 01/07/2008: Centro los nicks correctamente y elimino código innecesario. (Maraxus)
  * 04/07/2008: Evito algunos overflows. (Maraxus)
  * 24/07/2008: Agregado un mapa en opciones. Las imagenes que carga son Graficos/mapa1.jpg y Graficos/mapa2.jpg (MarKoxX)
+ * 26/07/2008: Saque un inet del frmMain que no se usaba.

@@ -1,8 +1,7 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
-Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.OCX"
-Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.OCX"
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.ocx"
+Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.ocx"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.ocx"
 Begin VB.Form frmMain 
    BackColor       =   &H00000000&
    BorderStyle     =   1  'Fixed Single
@@ -153,14 +152,6 @@ Begin VB.Form frmMain
       Interval        =   60000
       Left            =   3120
       Top             =   2520
-   End
-   Begin InetCtlsObjects.Inet Inet1 
-      Left            =   7605
-      Top             =   1905
-      _ExtentX        =   1005
-      _ExtentY        =   1005
-      _Version        =   393216
-      RequestTimeout  =   30
    End
    Begin VB.PictureBox PanelDer 
       AutoSize        =   -1  'True
@@ -575,7 +566,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -970,8 +960,6 @@ Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
         Cancel = 1
     End If
 End Sub
-
-
 Private Sub Macro_Timer()
     PuedeMacrear = True
 End Sub
@@ -1401,7 +1389,7 @@ Private Sub Label4_Click()
     picInv.Visible = True
 
     hlst.Visible = False
-    cmdInfo.Visible = False
+    cmdINFO.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = True
@@ -1420,7 +1408,7 @@ Private Sub Label7_Click()
     'DespInv(1).Visible = False
     picInv.Visible = False
     hlst.Visible = True
-    cmdInfo.Visible = True
+    cmdINFO.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True
