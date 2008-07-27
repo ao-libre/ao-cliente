@@ -337,8 +337,9 @@ Picture1.SetFocus
 End Sub
 
 Private Sub list1_Click()
-DibujaGrh Inventario.GrhIndex(List1.listIndex + 1)
-
+    If Inventario.GrhIndex(List1.listIndex + 1) <> 0 Then
+        DibujaGrh Inventario.GrhIndex(List1.listIndex + 1)
+    End If
 End Sub
 
 Public Sub DibujaGrh(Grh As Integer)
@@ -354,12 +355,12 @@ DR.Top = 0
 DR.Right = 32
 DR.Bottom = 32
 
-Call DrawGrhtoHdc(Picture1.hDC, Grh, SR, DR)
+Call DrawGrhtoHdc(Picture1.hdc, Grh, SR, DR)
 
 End Sub
 
 Private Sub List2_Click()
-If List2.listIndex >= 0 Then
+If List2.listIndex >= 0 And OtroInventario(List2.listIndex + 1).GrhIndex <> 0 Then
     DibujaGrh OtroInventario(List2.listIndex + 1).GrhIndex
     Label3.Caption = "Cantidad: " & List2.ItemData(List2.listIndex)
     cmdAceptar.Enabled = True
