@@ -252,11 +252,13 @@ Private Sub cantidad_Change()
     
     If lIndex = 0 Then
         If List1(0).listIndex <> -1 Then
-            Label1(1).Caption = Round(NPCInventory(List1(0).listIndex + 1).Valor * Val(cantidad.Text), 0) 'No mostramos numeros reales
+            'El precio, cuando nos venden algo, lo tenemos que redondear para arriba.
+            'Es decir, 1.1 = 2, por lo cual se hace de la siguiente forma Precio = Clng(PrecioFinal + 0.5) Siempre va a darte el proximo numero. O el "Techo" (MarKoxX)
+            Label1(1).Caption = CalculateSellPrice(NPCInventory(List1(0).listIndex + 1).Valor, Val(cantidad.Text)) 'No mostramos numeros reales
         End If
     Else
         If List1(1).listIndex <> -1 Then
-            Label1(1).Caption = Round(Inventario.Valor(List1(1).listIndex + 1) * Val(cantidad.Text), 0) 'No mostramos numeros reales
+            Label1(1).Caption = Fix(Inventario.Valor(List1(1).listIndex + 1) * Val(cantidad.Text)) 'No mostramos numeros reales
         End If
     End If
 End Sub
@@ -292,6 +294,28 @@ If Image1(1).Tag = 0 Then
 End If
 End Sub
 
+''
+' Calculates the selling price of an item (The price that a merchant will sell you the item)
+'
+' @param objValue Specifies value of the item.
+' @param objAmount Specifies amount of items that you want to buy
+' @return   The price of the item.
+
+Private Function CalculateSellPrice(ByRef objValue As Single, ByVal objAmount As Long) As Long
+
+On Error GoTo error
+'*************************************************
+'Author: Marco Vanotti (MarKoxX)
+'Last modified: 27/07/08
+'*************************************************
+    
+    CalculateSellPrice = CLng(objValue * 1000000) / 1000000 * objAmount + 0.5
+    
+    Exit Function
+error:
+    MsgBox Err.Description, vbExclamation, "Error: " & Err.number
+End Function
+
 Private Sub Image1_Click(index As Integer)
 
 Call Audio.PlayWave(SND_CLICK)
@@ -306,7 +330,7 @@ Select Case index
         frmComerciar.List1(0).SetFocus
         LastIndex1 = List1(0).listIndex
         LasActionBuy = True
-        If UserGLD >= Round(NPCInventory(List1(0).listIndex + 1).Valor * Val(cantidad), 0) Then
+        If UserGLD >= CalculateSellPrice(NPCInventory(List1(0).listIndex + 1).Valor, Val(cantidad.Text)) Then
             Call WriteCommerceBuy(List1(0).listIndex + 1, cantidad.Text)
         Else
             AddtoRichTextBox frmMain.RecTxt, "No tenés suficiente oro.", 2, 51, 223, 1, 1
@@ -362,7 +386,7 @@ Select Case index
     Case 0
         
         Label1(0).Caption = NPCInventory(List1(0).listIndex + 1).Name
-        Label1(1).Caption = Round(NPCInventory(List1(0).listIndex + 1).Valor * Val(cantidad.Text), 0) 'No mostramos numeros reales
+        Label1(1).Caption = CalculateSellPrice(NPCInventory(List1(0).listIndex + 1).Valor, Val(cantidad.Text)) 'No mostramos numeros reales
         Label1(2).Caption = NPCInventory(List1(0).listIndex + 1).Amount
         
         If Label1(2).Caption <> 0 Then
