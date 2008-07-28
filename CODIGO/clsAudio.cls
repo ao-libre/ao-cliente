@@ -898,8 +898,6 @@ Public Property Let SoundEffectsActivated(ByVal nValue As Boolean)
 'Last Modification: 28/07/08
 'Sets wether the sound effects are activated or not
 '***************************************************
-    If sEffectsActivated = nValue Then Exit Property
-    
     sEffectsActivated = nValue
 End Property
 
