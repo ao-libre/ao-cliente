@@ -46,14 +46,16 @@ Attribute VB_Exposed = False
 '30/03/2008 - Juan Martín Sotuyo Dodero (Maraxus) - (juansotuyo@gmail.com)
 '   - Add: 3D-like sound effects by altering frequency to emulate Doppler effect,
 '           volume to emulate distance and panning for position.
-
+'
+'28/07/2008 - Franco Zeoli (Noich) - (zeolifranco@gmail.com)
+'   -Add: Optional sound effects
 
 ''
 ' Controls all audio using DirectSound and DirectMusic 7.
 '
 ' @file     clsAudio.cls
 ' @author   Juan Martín Sotuyo Dodero (Maraxus) juansotuyo@gmail.com
-' @version  1.2.0
+' @version  1.2.1
 ' @date     20070303
 
 Option Explicit
@@ -410,12 +412,15 @@ End Sub
 Public Sub MoveListener(ByVal x As Integer, ByVal y As Integer)
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 03/30/08
+'Last Modification: 28/07/08
+'Last Modification by: Franco Zeoli (Noich)
 'Moves the position of the listener updating all 3D sounds.
 '***************************************************
     Dim i As Long
     Dim deltaX As Integer
     Dim deltaY As Integer
+    
+    If Not sEffectsActivated Then Exit Sub
     
     deltaX = x - lastPosX
     deltaY = y - lastPosY
