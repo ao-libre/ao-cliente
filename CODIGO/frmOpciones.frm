@@ -25,6 +25,17 @@ Begin VB.Form frmOpciones
    ScaleWidth      =   4740
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
+   Begin VB.CheckBox Check1 
+      BackColor       =   &H00000000&
+      Caption         =   "Efectos de sonido"
+      ForeColor       =   &H00FFFFFF&
+      Height          =   255
+      Index           =   2
+      Left            =   345
+      TabIndex        =   17
+      Top             =   1515
+      Width           =   1695
+   End
    Begin VB.CommandButton cmdViewMap 
       Caption         =   "Mapa del Juego"
       Height          =   375
@@ -38,7 +49,7 @@ Begin VB.Form frmOpciones
       Height          =   375
       Left            =   960
       TabIndex        =   15
-      Top             =   3600
+      Top             =   3825
       Width           =   2775
    End
    Begin VB.CommandButton cmdCustomKeys 
@@ -46,7 +57,7 @@ Begin VB.Form frmOpciones
       Height          =   375
       Left            =   960
       TabIndex        =   14
-      Top             =   3120
+      Top             =   3345
       Width           =   2775
    End
    Begin VB.CommandButton customMsgCmd 
@@ -54,7 +65,7 @@ Begin VB.Form frmOpciones
       Height          =   375
       Left            =   960
       TabIndex        =   13
-      Top             =   2640
+      Top             =   2865
       Width           =   2775
    End
    Begin VB.CommandButton cmdManual 
@@ -69,7 +80,7 @@ Begin VB.Form frmOpciones
       BackColor       =   &H00000000&
       Caption         =   "Audio"
       ForeColor       =   &H00FFFFFF&
-      Height          =   975
+      Height          =   1260
       Left            =   240
       TabIndex        =   7
       Top             =   600
@@ -131,9 +142,9 @@ Begin VB.Form frmOpciones
       Caption         =   "Diálogos de clan"
       ForeColor       =   &H00FFFFFF&
       Height          =   750
-      Left            =   255
+      Left            =   240
       TabIndex        =   2
-      Top             =   1665
+      Top             =   1860
       Width           =   4230
       Begin VB.TextBox txtCantMensajes 
          Alignment       =   2  'Center
@@ -275,6 +286,13 @@ Private Sub Check1_Click(index As Integer)
                 Slider1(1).Enabled = True
                 Slider1(1).value = Audio.SoundVolume
             End If
+            
+        Case 2
+            If Check1(2).value = vbUnchecked Then
+                Audio.SoundEffectsActivated = False
+            Else
+                Audio.SoundEffectsActivated = True
+            End If
     End Select
 End Sub
 
@@ -326,6 +344,12 @@ Private Sub Form_Load()
     Else
         Check1(1).value = vbUnchecked
         Slider1(1).Enabled = False
+    End If
+    
+    If Audio.SoundEffectsActivated Then
+        Check1(2).value = vbChecked
+    Else
+        Check1(2).value = vbUnchecked
     End If
     
     txtCantMensajes.Text = CStr(DialogosClanes.CantidadDialogos)

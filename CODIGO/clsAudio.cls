@@ -164,6 +164,9 @@ Dim lastPosX As Integer
 'States the last position where the listener was in the Y axis
 Dim lastPosY As Integer
 
+''
+'States wether sound effects are currently activated or not
+Dim sEffectsActivated As Boolean
 
 ''
 'Constructor. Performs no action at all.
@@ -309,8 +312,8 @@ End Function
 Public Function PlayWave(ByVal FileName As String, Optional ByVal srcX As Byte = 0, Optional ByVal srcY As Byte = 0, Optional ByVal LoopSound As LoopStyle = LoopStyle.Default) As Long
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 03/30/08
-'Last Modified by: Juan Martín Sotuyo Dodero (Maraxus)
+'Last Modification: 28/07/08
+'Last Modified by: Franco Zeoli (Noich)
 'Added support for 3D sound effects.
 '***************************************************
 On Error GoTo ErrHandler
@@ -342,8 +345,10 @@ On Error GoTo ErrHandler
     
     PlayWave = bufferIndex
     
-    If srcX <> 0 And srcY <> 0 Then
-        Call Update3DSound(bufferIndex, 0, 0)
+    If sEffectsActivated Then
+        If srcX <> 0 And srcY <> 0 Then
+            Call Update3DSound(bufferIndex, 0, 0)
+        End If
     End If
 Exit Function
 
@@ -880,4 +885,34 @@ Public Property Let SoundActivated(ByVal nValue As Boolean)
     If Not nValue Then
         Call StopWave
     End If
+End Property
+
+''
+' Sets wether sound effects are activated or not.
+'
+' @param nValue True if sound effects should be activated, false otherwise.
+
+Public Property Let SoundEffectsActivated(ByVal nValue As Boolean)
+'***************************************************
+'Author: Franco Zeoli (Noich)
+'Last Modification: 28/07/08
+'Sets wether the sound effects are activated or not
+'***************************************************
+    If sEffectsActivated = nValue Then Exit Property
+    
+    sEffectsActivated = nValue
+End Property
+
+''
+' Retrieves wether sound effects are activated or not.
+'
+' @return   True if sound effects are activated, false otherwise.
+
+Public Property Get SoundEffectsActivated() As Boolean
+'***************************************************
+'Author: Franco Zeoli (Noich)
+'Last Modification: 28/07/08
+'Retrieves wether the sound effects are activated or not
+'***************************************************
+    SoundEffectsActivated = sEffectsActivated
 End Property

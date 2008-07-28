@@ -63,6 +63,7 @@ Public Type tSetupMods
     bNoMusic    As Boolean
     bNoSound    As Boolean
     bNoRes      As Boolean ' 24/06/2006 - ^[GS]^
+    bNoSoundEffects As Boolean
 End Type
 
 Public ClientSetup As tSetupMods
