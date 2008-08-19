@@ -1,7 +1,7 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.ocx"
-Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.ocx"
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.OCX"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.Form frmMain 
    BackColor       =   &H00000000&
    BorderStyle     =   1  'Fixed Single
@@ -915,6 +915,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
             End If
         
         Case CustomKeys.BindedKey(eKeyType.mKeyExitGame)
+            If frmMain.macrotrabajo.Enabled Then DesactivarMacroTrabajo
             Call WriteQuit
             
         Case CustomKeys.BindedKey(eKeyType.mKeyAttack)
@@ -1390,7 +1391,7 @@ Private Sub Label4_Click()
     picInv.Visible = True
 
     hlst.Visible = False
-    cmdInfo.Visible = False
+    cmdINFO.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = True
@@ -1409,7 +1410,7 @@ Private Sub Label7_Click()
     'DespInv(1).Visible = False
     picInv.Visible = False
     hlst.Visible = True
-    cmdInfo.Visible = True
+    cmdINFO.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True
@@ -1424,8 +1425,7 @@ Private Sub picInv_DblClick()
     
     If Not MainTimer.Check(TimersIndex.UseItemWithDblClick) Then Exit Sub
     
-    If macrotrabajo.Enabled Then _
-                     DesactivarMacroTrabajo
+    If macrotrabajo.Enabled Then DesactivarMacroTrabajo
     
     Call UsarItem
 End Sub
@@ -1591,10 +1591,6 @@ Private Sub Socket1_Disconnect()
     
     frmConnect.MousePointer = vbNormal
     
-    If Not frmPasswd.Visible And Not frmCrearPersonaje.Visible Then
-        frmConnect.Visible = True
-    End If
-    
     On Local Error Resume Next
     For i = 0 To Forms.Count - 1
         If Forms(i).Name <> Me.Name And Forms(i).Name <> frmConnect.Name And Forms(i).Name <> frmOldPersonaje.Name And Forms(i).Name <> frmCrearPersonaje.Name And Forms(i).Name <> frmPasswd.Name Then
@@ -1602,6 +1598,10 @@ Private Sub Socket1_Disconnect()
         End If
     Next i
     On Local Error GoTo 0
+    
+    If Not frmPasswd.Visible And Not frmCrearPersonaje.Visible Then
+        frmConnect.Visible = True
+    End If
     
     frmMain.Visible = False
     
@@ -1770,10 +1770,6 @@ Private Sub Winsock1_Close()
     
     frmConnect.MousePointer = vbNormal
     
-    If Not frmPasswd.Visible And Not frmCrearPersonaje.Visible Then
-        frmConnect.Visible = True
-    End If
-    
     On Local Error Resume Next
     For i = 0 To Forms.Count - 1
         If Forms(i).Name <> Me.Name And Forms(i).Name <> frmConnect.Name And Forms(i).Name <> frmOldPersonaje.Name And Forms(i).Name <> frmCrearPersonaje.Name And Forms(i).Name <> frmPasswd.Name Then
@@ -1781,6 +1777,10 @@ Private Sub Winsock1_Close()
         End If
     Next i
     On Local Error GoTo 0
+    
+    If Not frmPasswd.Visible And Not frmCrearPersonaje.Visible Then
+        frmConnect.Visible = True
+    End If
     
     frmMain.Visible = False
 
