@@ -307,9 +307,8 @@ Private Function CalculateSellPrice(ByRef objValue As Single, ByVal objAmount As
 'Last modify by: Franco Zeoli (Noich)
 '*************************************************
     On Error GoTo error
-    
+    'We get a Single value from the server, when vb uses it, by approaching, it can diff with the server value, so we do (Value * 100000) and get the entire part, to discard the unwanted floating values.
     CalculateSellPrice = CCur(objValue * 1000000) / 1000000 * objAmount + 0.5
-    
     
     Exit Function
 error:
@@ -328,7 +327,7 @@ Private Function CalculateBuyPrice(ByRef objValue As Single, ByVal objAmount As 
 'Last modify by: Franco Zeoli (Noich)
 '*************************************************
     On Error GoTo error
-    
+    'We get a Single value from the server, when vb uses it, by approaching, it can diff with the server value, so we do (Value * 100000) and get the entire part, to discard the unwanted floating values.
     CalculateBuyPrice = Fix(CCur(objValue * 1000000) / 1000000 * objAmount)
     
     Exit Function
