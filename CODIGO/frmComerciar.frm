@@ -301,14 +301,14 @@ End Sub
 ' @return   The price of the item.
 
 Private Function CalculateSellPrice(ByRef objValue As Single, ByVal objAmount As Long) As Long
-
-On Error GoTo error
 '*************************************************
 'Author: Marco Vanotti (MarKoxX)
-'Last modified: 27/07/08
+'Last modified: 19/08/2008
+'Last modify by: Franco Zeoli (Noich)
 '*************************************************
+    On Error GoTo error
     
-    CalculateSellPrice = CLng(objValue * 1000000) / 1000000 * objAmount + 0.5
+    CalculateSellPrice = CCur(objValue * 1000000) / 1000000 * objAmount + 0.5
     
     
     Exit Function
@@ -322,14 +322,14 @@ End Function
 ' @param objAmount Specifies amount of items that you want to buy
 ' @return   The price of the item.
 Private Function CalculateBuyPrice(ByRef objValue As Single, ByVal objAmount As Long) As Long
-
-On Error GoTo error
 '*************************************************
 'Author: Marco Vanotti (MarKoxX)
-'Last modified: 27/07/08
+'Last modified: 19/08/2008
+'Last modify by: Franco Zeoli (Noich)
 '*************************************************
+    On Error GoTo error
     
-    CalculateBuyPrice = Fix(CLng(objValue * 1000000) / 1000000 * objAmount)
+    CalculateBuyPrice = Fix(CCur(objValue * 1000000) / 1000000 * objAmount)
     
     Exit Function
 error:
