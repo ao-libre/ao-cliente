@@ -170,3 +170,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 28/07/2008: Ahora los efectos de sonido (doppler y sonido 3d) se pueden habilitar/deshabilitar. (Noich)
  * 16/08/2008: Al salir con /SALIR desactiva el macro de trabajo. (Integer)
  * 19/08/2008: Corregí un overflow en el comercio. (Noich)
+ * 01/12/2008: Arreglo de faltas ortográficas y de gramática. (NicoNZ)

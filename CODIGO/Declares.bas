@@ -304,11 +304,11 @@ Public Const FundirMetal As Integer = 88
 ' MENSAJE_*  --> Mensajes de texto que se muestran en el cuadro de texto
 '
 
-Public Const MENSAJE_CRIATURA_FALLA_GOLPE As String = "La criatura fallo el golpe!!!"
-Public Const MENSAJE_CRIATURA_MATADO As String = "La criatura te ha matado!!!"
-Public Const MENSAJE_RECHAZO_ATAQUE_ESCUDO As String = "Has rechazado el ataque con el escudo!!!"
-Public Const MENSAJE_USUARIO_RECHAZO_ATAQUE_ESCUDO  As String = "El usuario rechazo el ataque con su escudo!!!"
-Public Const MENSAJE_FALLADO_GOLPE As String = "Has fallado el golpe!!!"
+Public Const MENSAJE_CRIATURA_FALLA_GOLPE As String = "¡¡¡La criatura fallo el golpe!!!"
+Public Const MENSAJE_CRIATURA_MATADO As String = "¡¡¡La criatura te ha matado!!!"
+Public Const MENSAJE_RECHAZO_ATAQUE_ESCUDO As String = "¡¡¡Has rechazado el ataque con el escudo!!!"
+Public Const MENSAJE_USUARIO_RECHAZO_ATAQUE_ESCUDO  As String = "¡¡¡El usuario rechazo el ataque con su escudo!!!"
+Public Const MENSAJE_FALLADO_GOLPE As String = "¡¡¡Has fallado el golpe!!!"
 Public Const MENSAJE_SEGURO_ACTIVADO As String = ">>SEGURO ACTIVADO<<"
 Public Const MENSAJE_SEGURO_DESACTIVADO As String = ">>SEGURO DESACTIVADO<<"
 Public Const MENSAJE_PIERDE_NOBLEZA As String = "¡¡Has perdido puntaje de nobleza y ganado puntaje de criminalidad!! Si sigues ayudando a criminales te convertirás en uno de ellos y serás perseguido por las tropas de las ciudades."
@@ -349,7 +349,7 @@ Public Const MENSAJE_PRODUCE_IMPACTO_TORSO As String = " en el torso por "
 
 Public Const MENSAJE_TRABAJO_MAGIA As String = "Haz click sobre el objetivo..."
 Public Const MENSAJE_TRABAJO_PESCA As String = "Haz click sobre el sitio donde quieres pescar..."
-Public Const MENSAJE_TRABAJO_ROBAR As String = "Haz click sobre la victima..."
+Public Const MENSAJE_TRABAJO_ROBAR As String = "Haz click sobre la víctima..."
 Public Const MENSAJE_TRABAJO_TALAR As String = "Haz click sobre el árbol..."
 Public Const MENSAJE_TRABAJO_MINERIA As String = "Haz click sobre el yacimiento..."
 Public Const MENSAJE_TRABAJO_FUNDIRMETAL As String = "Haz click sobre la fragua..."
