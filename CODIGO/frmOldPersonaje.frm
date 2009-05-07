@@ -7,6 +7,7 @@ Begin VB.Form frmOldPersonaje
    ClientLeft      =   0
    ClientTop       =   0
    ClientWidth     =   7200
+   ClipControls    =   0   'False
    LinkTopic       =   "Form1"
    ScaleHeight     =   251
    ScaleMode       =   3  'Pixel

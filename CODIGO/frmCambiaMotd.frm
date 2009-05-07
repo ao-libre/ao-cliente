@@ -6,6 +6,7 @@ Begin VB.Form frmCambiaMotd
    ClientLeft      =   45
    ClientTop       =   330
    ClientWidth     =   5175
+   ClipControls    =   0   'False
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False

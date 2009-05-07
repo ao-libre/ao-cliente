@@ -5,6 +5,7 @@ Begin VB.Form frmUserRequest
    ClientLeft      =   60
    ClientTop       =   345
    ClientWidth     =   4650
+   ClipControls    =   0   'False
    ControlBox      =   0   'False
    BeginProperty Font 
       Name            =   "Tahoma"
@@ -81,7 +82,7 @@ End Sub
 
 Public Sub recievePeticion(ByVal p As String)
 
-text1 = Replace$(p, "º", vbCrLf)
+Text1 = Replace$(p, "º", vbCrLf)
 Me.Show vbModeless, frmMain
 
 End Sub

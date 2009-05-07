@@ -5,6 +5,7 @@ Begin VB.Form frmPasswd
    ClientLeft      =   45
    ClientTop       =   45
    ClientWidth     =   5010
+   ClipControls    =   0   'False
    ControlBox      =   0   'False
    BeginProperty Font 
       Name            =   "Tahoma"
@@ -219,8 +220,8 @@ Private Sub Command1_Click()
 
 If CheckDatos() Then
 #If SeguridadAlkon Then
-    UserPassword = md5.GetMD5String(txtPasswd.Text)
-    Call md5.MD5Reset
+    UserPassword = MD5.GetMD5String(txtPasswd.Text)
+    Call MD5.MD5Reset
 #Else
     UserPassword = txtPasswd.Text
 #End If

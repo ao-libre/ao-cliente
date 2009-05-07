@@ -7,6 +7,7 @@ Begin VB.Form frmSkills3
    ClientLeft      =   0
    ClientTop       =   0
    ClientWidth     =   5955
+   ClipControls    =   0   'False
    BeginProperty Font 
       Name            =   "Tahoma"
       Size            =   8.25

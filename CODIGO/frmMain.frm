@@ -584,7 +584,7 @@ Begin VB.Form frmMain
       BorderStyle     =   1  'Fixed Single
       Height          =   510
       Left            =   9810
-      Picture         =   "frmMain.frx":120D
+      Picture         =   "frmMain.frx":120E
       Stretch         =   -1  'True
       Top             =   8100
       Visible         =   0   'False
@@ -594,7 +594,7 @@ Begin VB.Form frmMain
       BorderStyle     =   1  'Fixed Single
       Height          =   510
       Left            =   9300
-      Picture         =   "frmMain.frx":250F
+      Picture         =   "frmMain.frx":2510
       Stretch         =   -1  'True
       Top             =   8100
       Visible         =   0   'False
@@ -604,7 +604,7 @@ Begin VB.Form frmMain
       BorderStyle     =   1  'Fixed Single
       Height          =   510
       Left            =   8790
-      Picture         =   "frmMain.frx":3781
+      Picture         =   "frmMain.frx":3782
       Stretch         =   -1  'True
       Top             =   8100
       Visible         =   0   'False
@@ -627,7 +627,7 @@ Begin VB.Form frmMain
       BorderStyle     =   1  'Fixed Single
       Height          =   510
       Left            =   8280
-      Picture         =   "frmMain.frx":4593
+      Picture         =   "frmMain.frx":4594
       Stretch         =   -1  'True
       Top             =   8100
       Width           =   510
@@ -717,29 +717,29 @@ Public IsPlaying As Byte
 Dim PuedeMacrear As Boolean
 
 Private Sub cmdMoverHechi_Click(index As Integer)
-    If hlst.listIndex = -1 Then Exit Sub
+    If hlst.ListIndex = -1 Then Exit Sub
     Dim sTemp As String
 
     Select Case index
         Case 1 'subir
-            If hlst.listIndex = 0 Then Exit Sub
+            If hlst.ListIndex = 0 Then Exit Sub
         Case 0 'bajar
-            If hlst.listIndex = hlst.ListCount - 1 Then Exit Sub
+            If hlst.ListIndex = hlst.ListCount - 1 Then Exit Sub
     End Select
 
-    Call WriteMoveSpell(index, hlst.listIndex + 1)
+    Call WriteMoveSpell(index, hlst.ListIndex + 1)
     
     Select Case index
         Case 1 'subir
-            sTemp = hlst.List(hlst.listIndex - 1)
-            hlst.List(hlst.listIndex - 1) = hlst.List(hlst.listIndex)
-            hlst.List(hlst.listIndex) = sTemp
-            hlst.listIndex = hlst.listIndex - 1
+            sTemp = hlst.List(hlst.ListIndex - 1)
+            hlst.List(hlst.ListIndex - 1) = hlst.List(hlst.ListIndex)
+            hlst.List(hlst.ListIndex) = sTemp
+            hlst.ListIndex = hlst.ListIndex - 1
         Case 0 'bajar
-            sTemp = hlst.List(hlst.listIndex + 1)
-            hlst.List(hlst.listIndex + 1) = hlst.List(hlst.listIndex)
-            hlst.List(hlst.listIndex) = sTemp
-            hlst.listIndex = hlst.listIndex + 1
+            sTemp = hlst.List(hlst.ListIndex + 1)
+            hlst.List(hlst.ListIndex + 1) = hlst.List(hlst.ListIndex)
+            hlst.List(hlst.ListIndex) = sTemp
+            hlst.ListIndex = hlst.ListIndex + 1
     End Select
 End Sub
 
@@ -961,6 +961,7 @@ Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
         Cancel = 1
     End If
 End Sub
+
 Private Sub Macro_Timer()
     PuedeMacrear = True
 End Sub
@@ -1123,8 +1124,8 @@ Private Sub TrainingMacro_Timer()
     
     If Comerciando Then Exit Sub
     
-    If hlst.List(hlst.listIndex) <> "(None)" And MainTimer.Check(TimersIndex.CastSpell, False) Then
-        Call WriteCastSpell(hlst.listIndex + 1)
+    If hlst.List(hlst.ListIndex) <> "(None)" And MainTimer.Check(TimersIndex.CastSpell, False) Then
+        Call WriteCastSpell(hlst.ListIndex + 1)
         Call WriteWork(eSkill.Magia)
     End If
     
@@ -1139,13 +1140,13 @@ Private Sub TrainingMacro_Timer()
 End Sub
 
 Private Sub cmdLanzar_Click()
-    If hlst.List(hlst.listIndex) <> "(None)" And MainTimer.Check(TimersIndex.Work, False) Then
+    If hlst.List(hlst.ListIndex) <> "(None)" And MainTimer.Check(TimersIndex.Work, False) Then
         If UserEstado = 1 Then
             With FontTypes(FontTypeNames.FONTTYPE_INFO)
                 Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
             End With
         Else
-            Call WriteCastSpell(hlst.listIndex + 1)
+            Call WriteCastSpell(hlst.ListIndex + 1)
             Call WriteWork(eSkill.Magia)
             UsaMacro = True
         End If
@@ -1158,8 +1159,8 @@ Private Sub CmdLanzar_MouseMove(Button As Integer, Shift As Integer, x As Single
 End Sub
 
 Private Sub cmdINFO_Click()
-    If hlst.listIndex <> -1 Then
-        Call WriteSpellInfo(hlst.listIndex + 1)
+    If hlst.ListIndex <> -1 Then
+        Call WriteSpellInfo(hlst.ListIndex + 1)
     End If
 End Sub
 
@@ -1226,7 +1227,7 @@ Private Sub Form_Click()
                                 frmMain.MousePointer = vbDefault
                                 UsingSkill = 0
                                 With FontTypes(FontTypeNames.FONTTYPE_TALK)
-                                    Call AddtoRichTextBox(frmMain.RecTxt, "No podés lanzar hechizos tan rápido.", .red, .green, .blue, .bold, .italic)
+                                    Call AddtoRichTextBox(frmMain.RecTxt, "No puedes lanzar hechizos tan rápido.", .red, .green, .blue, .bold, .italic)
                                 End With
                                 Exit Sub
                             End If

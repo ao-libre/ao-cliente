@@ -6,6 +6,7 @@ Begin VB.Form frmBancoObj
    ClientLeft      =   45
    ClientTop       =   45
    ClientWidth     =   6930
+   ClipControls    =   0   'False
    ControlBox      =   0   'False
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False

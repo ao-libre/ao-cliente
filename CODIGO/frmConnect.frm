@@ -18,7 +18,6 @@ Begin VB.Form frmConnect
    ScaleHeight     =   600
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   800
-   ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
    Begin VB.CommandButton downloadServer 
@@ -197,7 +196,7 @@ Private Sub downloadServer_Click()
 'cambios que hacemos nosotros, compartí los tuyos. Es un cambio justo. Si no estás de acuerdo,
 'no uses nuestro código, pues nadie te obliga o bien utiliza una versión anterior a la 0.12.0.
 '***********************************
-    Call ShellExecute(0, "Open", "http://downloads.sourceforge.net/morgoao/AOServerSrc0.12.1.zip?use_mirror=osdn", "", App.path, 0)
+    Call ShellExecute(0, "Open", "https://sourceforge.net/project/downloading.php?group_id=67718&filename=AOServerSrc0.12.2.zip&a=42868900", "", App.path, 0)
 End Sub
 
 Private Sub Form_Activate()

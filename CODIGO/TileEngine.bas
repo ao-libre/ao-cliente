@@ -768,22 +768,15 @@ On Error Resume Next
         
         If Sgn(addX) = 1 Then
             nHeading = E_Heading.EAST
-        End If
-        
-        If Sgn(addX) = -1 Then
+        ElseIf Sgn(addX) = -1 Then
             nHeading = E_Heading.WEST
-        End If
-        
-        If Sgn(addY) = -1 Then
+        ElseIf Sgn(addY) = -1 Then
             nHeading = E_Heading.NORTH
-        End If
-        
-        If Sgn(addY) = 1 Then
+        ElseIf Sgn(addY) = 1 Then
             nHeading = E_Heading.SOUTH
         End If
         
         MapData(nX, nY).CharIndex = CharIndex
-        
         
         .Pos.x = nX
         .Pos.y = nY
@@ -905,7 +898,8 @@ On Error GoTo ErrorHandler
     
     'Open files
     handle = FreeFile()
-    Open IniPath & "Graficos.ind" For Binary Access Read As handle
+    
+    Open IniPath & GraphicsFile For Binary Access Read As handle
     Seek #1, 1
     
     'Get file version
@@ -1013,6 +1007,50 @@ Function LegalPos(ByVal x As Integer, ByVal y As Integer) As Boolean
     LegalPos = True
 End Function
 
+Function MoveToLegalPos(ByVal x As Integer, ByVal y As Integer) As Boolean
+'*****************************************************************
+'Author: ZaMa
+'Last Modify Date: 13/03/2006
+'Checks to see if a tile position is legal, including if there is a casper in the tile
+'*****************************************************************
+
+    Dim CharIndex As Integer
+    
+    'Limites del mapa
+    If x < MinXBorder Or x > MaxXBorder Or y < MinYBorder Or y > MaxYBorder Then
+        Exit Function
+    End If
+    
+    'Tile Bloqueado?
+    If MapData(x, y).Blocked = 1 Then
+        Exit Function
+    End If
+    
+    CharIndex = MapData(x, y).CharIndex
+    '¿Hay un personaje?
+    If CharIndex > 0 Then
+        With charlist(CharIndex)
+            ' Si no es casper, no puede pasar
+            If .iHead <> CASPER_HEAD And .iBody <> FRAGATA_FANTASMAL Then
+                Exit Function
+            Else
+                ' No puedo intercambiar con un casper que no este en el agua, si ambos no lo estan
+                If .iHead = CASPER_HEAD Then
+                    If HayAgua(UserPos.x, UserPos.y) Then
+                        If Not HayAgua(x, y) Then Exit Function
+                    End If
+                End If
+            End If
+        End With
+    End If
+   
+    If UserNavegando <> HayAgua(x, y) Then
+        Exit Function
+    End If
+    
+    MoveToLegalPos = True
+End Function
+
 Function InMapBounds(ByVal x As Integer, ByVal y As Integer) As Boolean
 '*****************************************************************
 'Checks to see if a tile position is in the maps bounds
@@ -1048,51 +1086,51 @@ Private Sub DDrawGrhtoSurface(ByRef Grh As Grh, ByVal x As Integer, ByVal y As I
     'Figure out what frame to draw (always 1 if not animated)
     CurrentGrhIndex = GrhData(Grh.GrhIndex).Frames(Grh.FrameCounter)
     
-    'Center Grh over X,Y pos
-    If Center Then
-        If GrhData(CurrentGrhIndex).TileWidth <> 1 Then
-            x = x - Int(GrhData(CurrentGrhIndex).TileWidth * TilePixelWidth / 2) + TilePixelWidth \ 2
+    With GrhData(CurrentGrhIndex)
+        'Center Grh over X,Y pos
+        If Center Then
+            If .TileWidth <> 1 Then
+                x = x - Int(.TileWidth * TilePixelWidth / 2) + TilePixelWidth \ 2
+            End If
+            
+            If .TileHeight <> 1 Then
+                y = y - Int(.TileHeight * TilePixelHeight) + TilePixelHeight
+            End If
         End If
         
-        If GrhData(CurrentGrhIndex).TileHeight <> 1 Then
-            y = y - Int(GrhData(CurrentGrhIndex).TileHeight * TilePixelHeight) + TilePixelHeight
-        End If
-    End If
-    
-    With SourceRect
-        .Left = GrhData(CurrentGrhIndex).sX
-        .Top = GrhData(CurrentGrhIndex).sY
-        .Right = .Left + GrhData(CurrentGrhIndex).pixelWidth
-        .Bottom = .Top + GrhData(CurrentGrhIndex).pixelHeight
+        SourceRect.Left = .sX
+        SourceRect.Top = .sY
+        SourceRect.Right = SourceRect.Left + .pixelWidth
+        SourceRect.Bottom = SourceRect.Top + .pixelHeight
+        
+        'Draw
+        Call BackBufferSurface.BltFast(x, y, SurfaceDB.Surface(.FileNum), SourceRect, DDBLTFAST_WAIT)
     End With
-    
-    'Draw
-    Call BackBufferSurface.BltFast(x, y, SurfaceDB.Surface(GrhData(CurrentGrhIndex).FileNum), SourceRect, DDBLTFAST_WAIT)
 End Sub
 
 Sub DDrawTransGrhIndextoSurface(ByVal GrhIndex As Integer, ByVal x As Integer, ByVal y As Integer, ByVal Center As Byte)
     Dim SourceRect As RECT
     
-    'Center Grh over X,Y pos
-    If Center Then
-        If GrhData(GrhIndex).TileWidth <> 1 Then
-            x = x - Int(GrhData(GrhIndex).TileWidth * TilePixelWidth / 2) + TilePixelWidth \ 2
+    With GrhData(GrhIndex)
+        'Center Grh over X,Y pos
+        If Center Then
+            If .TileWidth <> 1 Then
+                x = x - Int(.TileWidth * TilePixelWidth / 2) + TilePixelWidth \ 2
+            End If
+            
+            If .TileHeight <> 1 Then
+                y = y - Int(.TileHeight * TilePixelHeight) + TilePixelHeight
+            End If
         End If
         
-        If GrhData(GrhIndex).TileHeight <> 1 Then
-            y = y - Int(GrhData(GrhIndex).TileHeight * TilePixelHeight) + TilePixelHeight
-        End If
-    End If
-    
-    With SourceRect
-        .Left = GrhData(GrhIndex).sX
-        .Top = GrhData(GrhIndex).sY
-        .Right = .Left + GrhData(GrhIndex).pixelWidth
-        .Bottom = .Top + GrhData(GrhIndex).pixelHeight
+        SourceRect.Left = .sX
+        SourceRect.Top = .sY
+        SourceRect.Right = SourceRect.Left + .pixelWidth
+        SourceRect.Bottom = SourceRect.Top + .pixelHeight
+        
+        'Draw
+        Call BackBufferSurface.BltFast(x, y, SurfaceDB.Surface(.FileNum), SourceRect, DDBLTFAST_SRCCOLORKEY Or DDBLTFAST_WAIT)
     End With
-    
-    'Draw
-    Call BackBufferSurface.BltFast(x, y, SurfaceDB.Surface(GrhData(GrhIndex).FileNum), SourceRect, DDBLTFAST_SRCCOLORKEY Or DDBLTFAST_WAIT)
 End Sub
 
 Sub DDrawTransGrhtoSurface(ByRef Grh As Grh, ByVal x As Integer, ByVal y As Integer, ByVal Center As Byte, ByVal Animate As Byte)
@@ -1123,26 +1161,26 @@ Sub DDrawTransGrhtoSurface(ByRef Grh As Grh, ByVal x As Integer, ByVal y As Inte
     'Figure out what frame to draw (always 1 if not animated)
     CurrentGrhIndex = GrhData(Grh.GrhIndex).Frames(Grh.FrameCounter)
     
-    'Center Grh over X,Y pos
-    If Center Then
-        If GrhData(CurrentGrhIndex).TileWidth <> 1 Then
-            x = x - Int(GrhData(CurrentGrhIndex).TileWidth * TilePixelWidth / 2) + TilePixelWidth \ 2
+    With GrhData(CurrentGrhIndex)
+        'Center Grh over X,Y pos
+        If Center Then
+            If .TileWidth <> 1 Then
+                x = x - Int(.TileWidth * TilePixelWidth / 2) + TilePixelWidth \ 2
+            End If
+            
+            If .TileHeight <> 1 Then
+                y = y - Int(.TileHeight * TilePixelHeight) + TilePixelHeight
+            End If
         End If
         
-        If GrhData(CurrentGrhIndex).TileHeight <> 1 Then
-            y = y - Int(GrhData(CurrentGrhIndex).TileHeight * TilePixelHeight) + TilePixelHeight
-        End If
-    End If
-    
-    With SourceRect
-        .Left = GrhData(CurrentGrhIndex).sX
-        .Top = GrhData(CurrentGrhIndex).sY
-        .Right = .Left + GrhData(CurrentGrhIndex).pixelWidth
-        .Bottom = .Top + GrhData(CurrentGrhIndex).pixelHeight
+        SourceRect.Left = .sX
+        SourceRect.Top = .sY
+        SourceRect.Right = SourceRect.Left + .pixelWidth
+        SourceRect.Bottom = SourceRect.Top + .pixelHeight
+        
+        'Draw
+        Call BackBufferSurface.BltFast(x, y, SurfaceDB.Surface(.FileNum), SourceRect, DDBLTFAST_SRCCOLORKEY Or DDBLTFAST_WAIT)
     End With
-    
-    'Draw
-    Call BackBufferSurface.BltFast(x, y, SurfaceDB.Surface(GrhData(CurrentGrhIndex).FileNum), SourceRect, DDBLTFAST_SRCCOLORKEY Or DDBLTFAST_WAIT)
 End Sub
 
 #If ConAlfaB = 1 Then
@@ -1153,6 +1191,11 @@ Sub DDrawTransGrhtoSurfaceAlpha(ByRef Grh As Grh, ByVal x As Integer, ByVal y As
 '*****************************************************************
     Dim CurrentGrhIndex As Integer
     Dim SourceRect As RECT
+    Dim Src As DirectDrawSurface7
+    Dim rDest As RECT
+    Dim dArray() As Byte, sArray() As Byte
+    Dim ddsdSrc As DDSURFACEDESC2, ddsdDest As DDSURFACEDESC2
+    Dim Modo As Long
     
     If Animate Then
         If Grh.Started = 1 Then
@@ -1175,45 +1218,37 @@ Sub DDrawTransGrhtoSurfaceAlpha(ByRef Grh As Grh, ByVal x As Integer, ByVal y As
     'Figure out what frame to draw (always 1 if not animated)
     CurrentGrhIndex = GrhData(Grh.GrhIndex).Frames(Grh.FrameCounter)
     
-    'Center Grh over X,Y pos
-    If Center Then
-        If GrhData(CurrentGrhIndex).TileWidth <> 1 Then
-            x = x - Int(GrhData(CurrentGrhIndex).TileWidth * TilePixelWidth / 2) + TilePixelWidth \ 2
+    With GrhData(CurrentGrhIndex)
+        'Center Grh over X,Y pos
+        If Center Then
+            If .TileWidth <> 1 Then
+                x = x - Int(.TileWidth * TilePixelWidth / 2) + TilePixelWidth \ 2
+            End If
+            If .TileHeight <> 1 Then
+                y = y - Int(.TileHeight * TilePixelHeight) + TilePixelHeight
+            End If
         End If
-        If GrhData(CurrentGrhIndex).TileHeight <> 1 Then
-            y = y - Int(GrhData(CurrentGrhIndex).TileHeight * TilePixelHeight) + TilePixelHeight
-        End If
-    End If
-    
-    With SourceRect
-        .Left = GrhData(CurrentGrhIndex).sX
-        .Top = GrhData(CurrentGrhIndex).sY
-        .Right = .Left + GrhData(CurrentGrhIndex).pixelWidth
-        .Bottom = .Top + GrhData(CurrentGrhIndex).pixelHeight
-    End With
-    
-    Dim Src As DirectDrawSurface7
-    Dim rDest As RECT
-    Dim dArray() As Byte, sArray() As Byte
-    Dim ddsdSrc As DDSURFACEDESC2, ddsdDest As DDSURFACEDESC2
-    Dim Modo As Long
-    
-    Set Src = SurfaceDB.Surface(GrhData(CurrentGrhIndex).FileNum)
-    
-    Src.GetSurfaceDesc ddsdSrc
-    BackBufferSurface.GetSurfaceDesc ddsdDest
-    
-    With rDest
-        .Left = x
-        .Top = y
-        .Right = x + GrhData(CurrentGrhIndex).pixelWidth
-        .Bottom = y + GrhData(CurrentGrhIndex).pixelHeight
         
-        If .Right > ddsdDest.lWidth Then
-            .Right = ddsdDest.lWidth
+        SourceRect.Left = .sX
+        SourceRect.Top = .sY
+        SourceRect.Right = SourceRect.Left + .pixelWidth
+        SourceRect.Bottom = SourceRect.Top + .pixelHeight
+        
+        Set Src = SurfaceDB.Surface(.FileNum)
+        
+        Src.GetSurfaceDesc ddsdSrc
+        BackBufferSurface.GetSurfaceDesc ddsdDest
+        
+        rDest.Left = x
+        rDest.Top = y
+        rDest.Right = x + .pixelWidth
+        rDest.Bottom = y + .pixelHeight
+        
+        If rDest.Right > ddsdDest.lWidth Then
+            rDest.Right = ddsdDest.lWidth
         End If
-        If .Bottom > ddsdDest.lHeight Then
-            .Bottom = ddsdDest.lHeight
+        If rDest.Bottom > ddsdDest.lHeight Then
+            rDest.Bottom = ddsdDest.lHeight
         End If
     End With
     
@@ -1541,10 +1576,6 @@ Sub LoadGraphics()
     RLluvia(4).Left = 0:     RLluvia(5).Left = 128:   RLluvia(6).Left = 256:   RLluvia(7).Left = 384
     RLluvia(4).Right = 128:  RLluvia(5).Right = 256:  RLluvia(6).Right = 384:  RLluvia(7).Right = 512
     RLluvia(4).Bottom = 256: RLluvia(5).Bottom = 256: RLluvia(6).Bottom = 256: RLluvia(7).Bottom = 256
-    
-    'We are done!
-    'Saco esto porque el texto del cargar queda horrible
-    'AddtoRichTextBox frmCargando.status, "Hecho.", , , , 1, , False
 End Sub
 
 Public Function InitTileEngine(ByVal setDisplayFormhWnd As Long, ByVal setMainViewTop As Integer, ByVal setMainViewLeft As Integer, ByVal setTilePixelHeight As Integer, ByVal setTilePixelWidth As Integer, ByVal setWindowTileHeight As Integer, ByVal setWindowTileWidth As Integer, ByVal setTileBufferSize As Integer, ByVal pixelsToScrollPerFrameX As Integer, pixelsToScrollPerFrameY As Integer, ByVal engineSpeed As Single) As Boolean
@@ -1694,9 +1725,6 @@ On Error GoTo 0
     LTLluvia(3) = 608
     LTLluvia(4) = 736
     
-    'Saco esto porque el texto del cargar queda horrible
-    'AddtoRichTextBox frmCargando.status, "Cargando Gráficos....", 0, 0, 0, , , True
-    
     Call LoadGraphics
     
     InitTileEngine = True
@@ -1729,12 +1757,10 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Inte
     Static OffsetCounterY As Single
     
     '****** Set main view rectangle ******
-    With MainViewRect
-        .Left = (DisplayFormLeft / Screen.TwipsPerPixelX) + MainViewLeft
-        .Top = (DisplayFormTop / Screen.TwipsPerPixelY) + MainViewTop
-        .Right = .Left + MainViewWidth
-        .Bottom = .Top + MainViewHeight
-    End With
+    MainViewRect.Left = (DisplayFormLeft / Screen.TwipsPerPixelX) + MainViewLeft
+    MainViewRect.Top = (DisplayFormTop / Screen.TwipsPerPixelY) + MainViewTop
+    MainViewRect.Right = MainViewRect.Left + MainViewWidth
+    MainViewRect.Bottom = MainViewRect.Top + MainViewHeight
     
     If EngineRun Then
         If UserMoving Then

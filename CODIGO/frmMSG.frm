@@ -6,6 +6,7 @@ Begin VB.Form frmMSG
    ClientLeft      =   150
    ClientTop       =   435
    ClientWidth     =   2445
+   ClipControls    =   0   'False
    ControlBox      =   0   'False
    BeginProperty Font 
       Name            =   "Verdana"

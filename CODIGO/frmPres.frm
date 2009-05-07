@@ -7,6 +7,7 @@ Begin VB.Form frmPres
    ClientLeft      =   0
    ClientTop       =   0
    ClientWidth     =   4680
+   ClipControls    =   0   'False
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
@@ -77,10 +78,10 @@ Static ticks As Long
 ticks = ticks + 1
 
 If ticks = 1 Then
-    Me.Picture = LoadPicture(App.Path & "\Graficos\alkonao2.jpg")
+    Me.Picture = LoadPicture(App.path & "\Graficos\alkonao2.jpg")
     puedo = True
 ElseIf ticks = 2 Then
-    Me.Picture = LoadPicture(App.Path & "\Graficos\newfinal.jpg")
+    Me.Picture = LoadPicture(App.path & "\Graficos\newfinal.jpg")
 Else
     Unload Me
 End If

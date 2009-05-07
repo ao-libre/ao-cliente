@@ -70,7 +70,7 @@ Private Const MAX_DISTANCE_TO_SOURCE As Integer = 150
 
 ''
 ' The frequency variation coefficient for Doppler effect simulation.
-Private Const DELTA_FQ As Integer = 600
+Private Const DELTA_FQ As Integer = 75
 
 ''
 ' Custom sound buffer structure.
@@ -360,16 +360,18 @@ End Function
 Private Sub Update3DSound(ByVal bufferIndex As Long, ByVal deltaX As Integer, ByVal deltaY As Integer)
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 03/30/08
+'Last Modification: 04/28/09
+'Last Modified by: Marco Vanotti (MarKoxX)
+'Fixed Dopplers formula
 'Refreshes the sound's arguments.
 '***************************************************
     Dim linearDistanceOld As Single
     Dim linearDistanceNew As Single
     Dim deltaDistance As Single
-    Dim distanceXOld As Integer
-    Dim distanceYOld As Integer
-    Dim distanceXNew As Integer
-    Dim distanceYNew As Integer
+    Dim distanceXOld As Long
+    Dim distanceYOld As Long
+    Dim distanceXNew As Long
+    Dim distanceYNew As Long
     Dim perceivedFq As Long
     
     With DSBuffers(bufferIndex)
@@ -385,7 +387,7 @@ Private Sub Update3DSound(ByVal bufferIndex As Long, ByVal deltaX As Integer, By
         deltaDistance = linearDistanceNew - linearDistanceOld
         
         'Update frequency emulating Doppler effect
-        perceivedFq = .normalFq - deltaDistance * DELTA_FQ
+        perceivedFq = .normalFq * (1 - deltaDistance / DELTA_FQ)
         If perceivedFq < DSBFREQUENCY_MIN Then perceivedFq = DSBFREQUENCY_MIN
         
         Call .Buffer.SetFrequency(perceivedFq)
@@ -450,7 +452,8 @@ End Sub
 Private Function LoadWave(ByVal FileName As String, ByVal looping As LoopStyle) As Long
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 10/04/06
+'Last Modification: 04/28/09
+'Last Modification by: Marco Vanotti (MarKoxX)
 'Loads a new wave into memory (if it's not already loaded) and returns
 'the buffer index
 '***************************************************
@@ -473,6 +476,9 @@ On Error GoTo ErrHandler
                 
                 'Set looping if needed
                 If looping <> LoopStyle.Default Then DSBuffers(i).looping = (looping = LoopStyle.Enabled)
+                
+                'Reset default sound frecuency to avoid issues.
+                Call DSBuffers(i).Buffer.SetFrequency(DSBuffers(i).normalFq)
                 
                 Exit Function
             End If

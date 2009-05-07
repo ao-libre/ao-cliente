@@ -1,12 +1,13 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmOpciones 
    BackColor       =   &H00000000&
    BorderStyle     =   3  'Fixed Dialog
-   ClientHeight    =   5760
+   ClientHeight    =   6315
    ClientLeft      =   45
    ClientTop       =   45
-   ClientWidth     =   4740
+   ClientWidth     =   4695
+   ClipControls    =   0   'False
    ControlBox      =   0   'False
    BeginProperty Font 
       Name            =   "Tahoma"
@@ -21,10 +22,18 @@ Begin VB.Form frmOpciones
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   5760
-   ScaleWidth      =   4740
+   ScaleHeight     =   6315
+   ScaleWidth      =   4695
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
+   Begin VB.CommandButton CmdRadioAo 
+      Caption         =   "Escuchar Radio Ao"
+      Height          =   375
+      Left            =   960
+      TabIndex        =   18
+      Top             =   4800
+      Width           =   2775
+   End
    Begin VB.CheckBox Check1 
       BackColor       =   &H00000000&
       Caption         =   "Efectos de sonido"
@@ -73,7 +82,7 @@ Begin VB.Form frmOpciones
       Height          =   375
       Left            =   960
       TabIndex        =   12
-      Top             =   4800
+      Top             =   5280
       Width           =   2775
    End
    Begin VB.Frame Frame2 
@@ -195,7 +204,7 @@ Begin VB.Form frmOpciones
       MouseIcon       =   "frmOpciones.frx":0152
       MousePointer    =   99  'Custom
       TabIndex        =   0
-      Top             =   5280
+      Top             =   5760
       Width           =   2790
    End
    Begin VB.Label Label1 
@@ -310,6 +319,17 @@ End Sub
 
 Private Sub cmdChangePassword_Click()
     Call frmNewPassword.Show(vbModal, Me)
+End Sub
+
+Private Sub CmdRadioAo_Click()
+    If Not loading Then _
+        Call Audio.PlayWave(SND_CLICK)
+    If FileExist(App.path & "\Radio.exe", vbNormal) Then
+        Call ShellExecute(0, "Open", App.path & "\Radio.exe", "", App.path, 0)
+    Else
+        MsgBox "Debe instalar el RAOPlayer para poder escuchar RadioAo correctamente"
+        Call ShellExecute(0, "Open", "http://www.radioao.net/radio.htm", "", App.path, 0)
+    End If
 End Sub
 
 Private Sub cmdViewMap_Click()

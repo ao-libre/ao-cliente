@@ -5,6 +5,7 @@ Begin VB.Form frmCarp
    ClientLeft      =   60
    ClientTop       =   345
    ClientWidth     =   4650
+   ClipControls    =   0   'False
    ControlBox      =   0   'False
    LinkTopic       =   "Form1"
    ScaleHeight     =   3165

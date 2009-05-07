@@ -6,6 +6,7 @@ Begin VB.Form frmGuildURL
    ClientLeft      =   45
    ClientTop       =   330
    ClientWidth     =   6135
+   ClipControls    =   0   'False
    ControlBox      =   0   'False
    BeginProperty Font 
       Name            =   "Tahoma"
@@ -89,8 +90,8 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Command1_Click()
-    If text1 <> "" Then _
-        Call WriteGuildNewWebsite(text1)
+    If Text1 <> "" Then _
+        Call WriteGuildNewWebsite(Text1)
     
     Unload Me
 End Sub

@@ -116,8 +116,9 @@ End Sub
 Public Sub PushBackText(ByVal s As String)
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 04/07/08
+'Last Modification: 07/04/2009
 'Splits dialogs into lines fitting properly the render area and inserts them
+'07/04/2009: Now cuts the string properly in spite of not fitting in the screen. This avoids an infite loop.
 '***************************************************
     Dim str As String
     Dim tmp As Integer
@@ -137,7 +138,7 @@ Public Sub PushBackText(ByVal s As String)
     Call RealPushBackText(str)
     
     If LenB(str) <> LenB(s) Then
-        Call PushBackText(Right$(s, Len(s) - tmp))
+        Call PushBackText(Right$(s, Len(s) - Len(str) - 1))
     End If
 End Sub
 

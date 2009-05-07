@@ -5,6 +5,7 @@ Begin VB.Form frmScreenshots
    ClientLeft      =   0
    ClientTop       =   0
    ClientWidth     =   4680
+   ClipControls    =   0   'False
    LinkTopic       =   "Form1"
    ScaleHeight     =   3195
    ScaleWidth      =   4680

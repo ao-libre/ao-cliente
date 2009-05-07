@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.ocx"
 Begin VB.Form frmCargando 
    AutoRedraw      =   -1  'True
    BackColor       =   &H00000000&
@@ -8,6 +8,7 @@ Begin VB.Form frmCargando
    ClientLeft      =   45
    ClientTop       =   45
    ClientWidth     =   9630
+   ClipControls    =   0   'False
    ControlBox      =   0   'False
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
@@ -38,7 +39,6 @@ Begin VB.Form frmCargando
       _ExtentY        =   4233
       _Version        =   393217
       BackColor       =   16512
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmCargando.frx":0000

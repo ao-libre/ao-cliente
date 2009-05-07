@@ -6,6 +6,7 @@ Begin VB.Form frmCrearPersonaje
    ClientLeft      =   0
    ClientTop       =   0
    ClientWidth     =   12000
+   ClipControls    =   0   'False
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False

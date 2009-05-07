@@ -6,6 +6,7 @@ Begin VB.Form frmGuildBrief
    ClientLeft      =   45
    ClientTop       =   330
    ClientWidth     =   7530
+   ClipControls    =   0   'False
    ControlBox      =   0   'False
    BeginProperty Font 
       Name            =   "Tahoma"
@@ -328,7 +329,7 @@ Option Explicit
 Public EsLeader As Boolean
 
 Private Sub aliado_Click()
-    frmCommet.nombre = Right(nombre.Caption, Len(nombre.Caption) - 7)
+    frmCommet.Nombre = Right(Nombre.Caption, Len(Nombre.Caption) - 7)
     frmCommet.T = TIPO.ALIANZA
     frmCommet.Caption = "Ingrese propuesta de alianza"
     Call frmCommet.Show(vbModal, frmGuildBrief)
@@ -339,18 +340,18 @@ Private Sub Command1_Click()
 End Sub
 
 Private Sub Command2_Click()
-    Call frmGuildSol.RecieveSolicitud(Right$(nombre, Len(nombre) - 7))
+    Call frmGuildSol.RecieveSolicitud(Right$(Nombre, Len(Nombre) - 7))
     Call frmGuildSol.Show(vbModal, frmGuildBrief)
 End Sub
 
 Private Sub Command3_Click()
-    frmCommet.nombre = Right(nombre.Caption, Len(nombre.Caption) - 7)
+    frmCommet.Nombre = Right(Nombre.Caption, Len(Nombre.Caption) - 7)
     frmCommet.T = TIPO.PAZ
     frmCommet.Caption = "Ingrese propuesta de paz"
     Call frmCommet.Show(vbModal, frmGuildBrief)
 End Sub
 
 Private Sub Guerra_Click()
-    Call WriteGuildDeclareWar(Right(nombre.Caption, Len(nombre.Caption) - 7))
+    Call WriteGuildDeclareWar(Right(Nombre.Caption, Len(Nombre.Caption) - 7))
     Unload Me
 End Sub

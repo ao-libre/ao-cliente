@@ -64,6 +64,7 @@ Public Type tSetupMods
     bNoSound    As Boolean
     bNoRes      As Boolean ' 24/06/2006 - ^[GS]^
     bNoSoundEffects As Boolean
+    sGraficos   As String ' 16/04/2009 - Marco
 End Type
 
 Public ClientSetup As tSetupMods

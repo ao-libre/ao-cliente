@@ -6,6 +6,7 @@ Begin VB.Form frmtip
    ClientLeft      =   0
    ClientTop       =   0
    ClientWidth     =   4680
+   ClipControls    =   0   'False
    ControlBox      =   0   'False
    FillColor       =   &H80000004&
    LinkTopic       =   "Form1"

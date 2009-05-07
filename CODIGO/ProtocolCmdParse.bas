@@ -67,8 +67,9 @@ End Sub
 Public Sub ParseUserCommand(ByVal RawCommand As String)
 '***************************************************
 'Author: Alejandro Santos (AlejoLp)
-'Last Modification: 12/20/06
+'Last Modification: 26/03/2009
 'Interpreta, valida y ejecuta el comando ingresado
+'26/03/2009: ZaMa - Flexibilizo la cantidad de parametros de /nene,  /onlinemap y /telep
 '***************************************************
     Dim TmpArgos() As String
     
@@ -447,7 +448,11 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 End If
                 
             Case "/FUNDARCLAN"
-                frmEligeAlineacion.Show vbModeless, frmMain
+                If UserLvl >= 25 Then
+                    frmEligeAlineacion.Show vbModeless, frmMain
+                Else
+                    Call ShowConsoleMsg("Para fundar un clan tenés que ser nivel 25 y tener 90 skills en liderazgo.")
+                End If
             
             Case "/FUNDARCLANGM"
                 Call WriteGuildFundate(eClanType.ct_GM)
@@ -533,8 +538,8 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         Call ShowConsoleMsg("Mapa incorrecto. Utilice /nene MAPA.")
                     End If
                 Else
-                    'Avisar que falta el parametro
-                    Call ShowConsoleMsg("Faltan parámetros. Utilice /nene MAPA.")
+                    'Por default, toma el mapa en el que esta
+                    Call WriteCreaturesInMap(UserMap)
                 End If
                 
             Case "/TELEPLOC"
@@ -546,6 +551,25 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         Call WriteWarpChar(ArgumentosAll(0), ArgumentosAll(1), ArgumentosAll(2), ArgumentosAll(3))
                     Else
                         'No es numerico
+                        Call ShowConsoleMsg("Valor incorrecto. Utilice /telep NICKNAME MAPA X Y.")
+                    End If
+                ElseIf CantidadArgumentos = 3 Then
+                    If ValidNumber(ArgumentosAll(0), eNumber_Types.ent_Integer) And ValidNumber(ArgumentosAll(1), eNumber_Types.ent_Byte) And ValidNumber(ArgumentosAll(2), eNumber_Types.ent_Byte) Then
+                        'Por defecto, si no se indica el nombre, se teletransporta el mismo usuario
+                        Call WriteWarpChar("YO", ArgumentosAll(0), ArgumentosAll(1), ArgumentosAll(2))
+                    ElseIf ValidNumber(ArgumentosAll(1), eNumber_Types.ent_Byte) And ValidNumber(ArgumentosAll(2), eNumber_Types.ent_Byte) Then
+                        'Por defecto, si no se indica el mapa, se teletransporta al mismo donde esta el usuario
+                        Call WriteWarpChar(ArgumentosAll(0), UserMap, ArgumentosAll(1), ArgumentosAll(2))
+                    Else
+                        'No uso ningun formato por defecto
+                        Call ShowConsoleMsg("Valor incorrecto. Utilice /telep NICKNAME MAPA X Y.")
+                    End If
+                ElseIf CantidadArgumentos = 2 Then
+                    If ValidNumber(ArgumentosAll(0), eNumber_Types.ent_Byte) And ValidNumber(ArgumentosAll(1), eNumber_Types.ent_Byte) Then
+                        ' Por defecto, se considera que se quiere unicamente cambiar las coordenadas del usuario, en el mismo mapa
+                        Call WriteWarpChar("YO", UserMap, ArgumentosAll(0), ArgumentosAll(1))
+                    Else
+                        'No uso ningun formato por defecto
                         Call ShowConsoleMsg("Valor incorrecto. Utilice /telep NICKNAME MAPA X Y.")
                     End If
                 Else
@@ -753,7 +777,15 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 Call WriteOnlineGM
                 
             Case "/ONLINEMAP"
-                Call WriteOnlineMap
+                If notNullArguments Then
+                    If ValidNumber(ArgumentosAll(0), eNumber_Types.ent_Integer) Then
+                        Call WriteOnlineMap(ArgumentosAll(0))
+                    Else
+                        Call ShowConsoleMsg("Mapa incorrecto.")
+                    End If
+                Else
+                    Call WriteOnlineMap(UserMap)
+                End If
                 
             Case "/PERDON"
                 If notNullArguments Then
@@ -1401,9 +1433,6 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 
             Case "/ECHARTODOSPJS"
                 Call WriteKickAllChars
-                
-            Case "/TCPESSTATS"
-                Call WriteRequestTCPStats
                 
             Case "/RELOADNPCS"
                 Call WriteReloadNPCs

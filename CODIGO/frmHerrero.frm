@@ -6,6 +6,7 @@ Begin VB.Form frmHerrero
    ClientLeft      =   45
    ClientTop       =   330
    ClientWidth     =   4470
+   ClipControls    =   0   'False
    ControlBox      =   0   'False
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False

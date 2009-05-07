@@ -343,9 +343,11 @@ Sub SetConnected()
 #End If
     
     'Unload the connect form
-    Unload frmConnect
     Unload frmPasswd
     Unload frmCrearPersonaje
+    Unload frmConnect
+    
+    
     
     frmMain.Label8.Caption = UserName
     'Load main form
@@ -380,13 +382,13 @@ Sub MoveTo(ByVal Direccion As E_Heading)
     
     Select Case Direccion
         Case E_Heading.NORTH
-            LegalOk = LegalPos(UserPos.x, UserPos.y - 1)
+            LegalOk = MoveToLegalPos(UserPos.x, UserPos.y - 1)
         Case E_Heading.EAST
-            LegalOk = LegalPos(UserPos.x + 1, UserPos.y)
+            LegalOk = MoveToLegalPos(UserPos.x + 1, UserPos.y)
         Case E_Heading.SOUTH
-            LegalOk = LegalPos(UserPos.x, UserPos.y + 1)
+            LegalOk = MoveToLegalPos(UserPos.x, UserPos.y + 1)
         Case E_Heading.WEST
-            LegalOk = LegalPos(UserPos.x - 1, UserPos.y)
+            LegalOk = MoveToLegalPos(UserPos.x - 1, UserPos.y)
     End Select
     
     If LegalOk And Not UserParalizado Then
@@ -416,11 +418,10 @@ Sub RandomMove()
     Call MoveTo(RandomNumber(NORTH, WEST))
 End Sub
 
-Sub CheckKeys()
+Private Sub CheckKeys()
 '*****************************************************************
 'Checks keys and respond
 '*****************************************************************
-On Error Resume Next
     Static lastMovement As Long
     
     'No input allowed while Argentum is not the active window
@@ -767,14 +768,16 @@ Sub Main()
         Set SurfaceDB = New clsSurfaceManDyn
     End If
     
-    'Read command line. Do it AFTER config file is loaded to prevent this from
-    'canceling the effects of "/nores" option.
-    Call LeerLineaComandos
-    
     If FindPreviousInstance Then
         Call MsgBox("Argentum Online ya esta corriendo! No es posible correr otra instancia del juego. Haga click en Aceptar para salir.", vbApplicationModal + vbInformation + vbOKOnly, "Error al ejecutar")
         End
     End If
+    
+    'Read command line. Do it AFTER config file is loaded to prevent this from
+    'canceling the effects of "/nores" option.
+    Call LeerLineaComandos
+    
+
     
     
     'usaremos esto para ayudar en los parches
@@ -787,8 +790,8 @@ Sub Main()
     'Obtener el HushMD5
     Dim fMD5HushYo As String * 32
     
-    fMD5HushYo = MD5.GetMD5File(App.path & "\" & App.EXEName & ".exe")
-    Call MD5.MD5Reset
+    fMD5HushYo = md5.GetMD5File(App.path & "\" & App.EXEName & ".exe")
+    Call md5.MD5Reset
     MD5HushYo = txtOffset(hexMd52Asc(fMD5HushYo), 55)
     
     Debug.Print fMD5HushYo
@@ -804,7 +807,7 @@ Sub Main()
     frmCargando.Show
     frmCargando.Refresh
     
-    frmConnect.Version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
+    frmConnect.version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
     AddtoRichTextBox frmCargando.Status, "Buscando servidores... ", 0, 0, 0, 0, 0, 1
 
     Call CargarServidores
@@ -926,10 +929,9 @@ UserMap = 1
             
             'Play ambient sounds
             Call RenderSounds
+            
+            Call CheckKeys
         End If
-        
-        Call CheckKeys
-        
         'FPS Counter - mostramos las FPS
         If GetTickCount - lFrameTimer >= 1000 Then
             If FPSFLAG Then frmMain.Caption = Mod_TileEngine.FPS
@@ -1034,10 +1036,23 @@ Public Sub ShowSendCMSGTxt()
         frmMain.SendCMSTXT.SetFocus
     End If
 End Sub
-    
+
+''
+' Checks the command line parameters, if you are running Ao with /nores command and checks the AoUpdate parameters
+'
+'
+
 Public Sub LeerLineaComandos()
+'*************************************************
+'Author: Unknown
+'Last modified: 25/11/2008 (BrianPr)
+'
+'*************************************************
     Dim T() As String
     Dim i As Long
+    
+    Dim UpToDate As Boolean
+    Dim Patch As String
     
     'Parseo los comandos
     T = Split(Command, " ")
@@ -1045,10 +1060,54 @@ Public Sub LeerLineaComandos()
         Select Case UCase$(T(i))
             Case "/NORES" 'no cambiar la resolucion
                 NoRes = True
+            Case "/UPTODATE"
+                UpToDate = True
         End Select
     Next i
+    
+    AoUpdate UpToDate
 End Sub
 
+''
+' Runs AoUpdate if we haven't updated yet, patches aoupdate and runs Client normally if we are updated.
+'
+' @param UpToDate Specifies if we have checked for updates or not
+' @param Patch specifies if we have to patch the AoUpdate program.
+
+Private Sub AoUpdate(ByVal UpToDate As Boolean)
+'*************************************************
+'Author: BrianPr
+'Created: 25/11/2008
+'Last modified: 25/11/2008
+'
+'*************************************************
+On Error GoTo error
+    If Not UpToDate Then
+        'No recibe update, ejecutar AU
+        'Ejecuto el AoUpdate, sino me voy
+        If Dir(App.path & "\AoUpdate.exe", vbArchive) = vbNullString Then
+            MsgBox "No se encuentra el archivo de actualización AoUpdate.exe por favor descarguelo y vuelva a intentar", vbCritical
+            End
+        Else
+            FileCopy App.path & "\AoUpdate.exe", App.path & "\AoUpdateTMP.exe"
+            Call ShellExecute(0, "Open", App.path & "\AoUpdateTMP.exe", App.EXEName & ".exe", App.path, 0)
+            End
+        End If
+    Else
+        If FileExist(App.path & "\AoUpdateTMP.exe", vbArchive) Then Kill App.path & "\AoUpdateTMP.exe"
+    End If
+    
+    Exit Sub
+error:
+    If Err.number = 75 Then 'Si el archivo AoUpdateTMP.exe está en uso, entonces esperamos 5 ms y volvemos a intentarlo hasta que nos deje.
+        Sleep 5
+        Resume
+    Else
+        MsgBox Err.Description & vbCrLf, vbInformation, "[ " & Err.number & " ]" & " Error "
+        'MsgBox "Error al verificar las actualizaciones, vuelva a intentarlo", vbCritical
+    End
+    End If
+End Sub
 Private Sub LoadClientSetup()
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -1063,6 +1122,11 @@ Private Sub LoadClientSetup()
     Close fHandle
     
     NoRes = ClientSetup.bNoRes
+    If ClientSetup.sGraficos <> "" Then
+        GraphicsFile = ClientSetup.sGraficos
+    Else
+        GraphicsFile = "Graficos3.ind"
+    End If
 End Sub
 
 Private Sub InicializarNombres()
@@ -1177,7 +1241,7 @@ Public Sub CloseClient()
     Set outgoingData = Nothing
     
 #If SeguridadAlkon Then
-    Set MD5 = Nothing
+    Set md5 = Nothing
 #End If
     
     Call UnloadAllForms

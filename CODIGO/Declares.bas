@@ -50,7 +50,7 @@ Public outgoingData As New clsByteQueue
 Public MainTimer As New clsTimer
 
 #If SeguridadAlkon Then
-Public MD5 As New clsMD5
+Public md5 As New clsMD5
 #End If
 
 'Sonidos
@@ -75,12 +75,13 @@ Public Const INT_CAST_SPELL As Integer = 1400
 Public Const INT_CAST_ATTACK As Integer = 1000
 Public Const INT_WORK As Integer = 700
 Public Const INT_USEITEMU As Integer = 450
-Public Const INT_USEITEMDCK As Integer = 220
+Public Const INT_USEITEMDCK As Integer = 125
 Public Const INT_SENTRPU As Integer = 2000
 
 Public MacroBltIndex As Integer
 
 Public Const CASPER_HEAD As Integer = 500
+Public Const FRAGATA_FANTASMAL As Integer = 87
 
 Public Const NUMATRIBUTES As Byte = 5
 
@@ -118,6 +119,7 @@ Public UserCiego As Boolean
 Public UserEstupido As Boolean
 
 Public NoRes As Boolean 'no cambiar la resolucion
+Public GraphicsFile As String 'Que graficos.ind usamos
 
 Public RainBufferIndex As Long
 Public FogataBufferIndex As Long

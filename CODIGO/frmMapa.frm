@@ -7,6 +7,7 @@ Begin VB.Form frmMapa
    ClientLeft      =   0
    ClientTop       =   0
    ClientWidth     =   8775
+   ClipControls    =   0   'False
    KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False

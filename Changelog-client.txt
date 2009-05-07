@@ -170,4 +170,27 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 28/07/2008: Ahora los efectos de sonido (doppler y sonido 3d) se pueden habilitar/deshabilitar. (Noich)
  * 16/08/2008: Al salir con /SALIR desactiva el macro de trabajo. (Integer)
  * 19/08/2008: Corregí un overflow en el comercio. (Noich)
+ * 20/08/2008: Cambios en la compresión de recursos. (Maraxus)
+ * 21/08/2008: Elimino un paquete que no servía para nada. (Maraxus)
+ * 21/08/2008: Arreglado el soporte para bmps de 16 y 32 bits. (Maraxus)
+ * 01/10/2008: Pequeña mejora de performance - +1% rendering speed y baja el consumo por parte de forms. (Maraxus)
+ * 02/10/2008: Soluciono un caso particular donde seguían explotando los .ao. (Maraxus)
+ * 02/10/2008: Boost de performance, 2% más para todos,y uso de memoria de video para surfaces. (Maraxus)
+ * 02/10/2008: Cambio la implementación del Static surface Manager para que use una tabla Hash: 30% mejor performance (aprox). (Maraxus)
+ * 02/10/2008: Cambio la implementación del Dynamic surface Manager para que use una tabla Hash: 30% mejor performance (aprox). (Maraxus)
+ * 27/10/2008: Agregado el boton para escuchar Radio Ao en opciones. (NicoNZ)
+ * 15/11/2008: Al ingresar /FUNDARCLAN se chequea que el usuario sea nivel 25 o más. (NicoNZ)
+ * 25/11/2008: Se agregó que al leer la línea de comandos verifique parámetros para el AoUpdate (BrianPr)
  * 01/12/2008: Arreglo de faltas ortográficas y de gramática. (NicoNZ)
+
+- 0.12.2
+
+
+ * 20/01/2009: Modificado el nuevo modulo de compresión de archivos .ao (Marco)
+ * 13/03/2009: Se puede caminar a un tile donde haya un casper. (ZaMa)
+ * 26/03/2009: Comandos mas flexibles: /onlinemap, /nene, /telep. (ZaMa)
+ * 30/03/2009: Modificaciones en el panelGM. (ZaMa)
+ * 07/04/2009: Arreglado bug de chat de clanes por pantalla. (ZaMa)
+ * 28/04/2009: Arreglada la fórmula del efecto Doppler (Marco)
+ * 07/05/2009: Arreglado el error que tiraba CLSAudio al cambiar de mapa (Marco)
+ * 07/05/2009: Arreglado el RunTime9 que tiraba si tocabas una tecla en FRMConnect (Marco)

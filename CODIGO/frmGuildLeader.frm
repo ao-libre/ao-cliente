@@ -6,6 +6,7 @@ Begin VB.Form frmGuildLeader
    ClientLeft      =   45
    ClientTop       =   330
    ClientWidth     =   5880
+   ClipControls    =   0   'False
    ControlBox      =   0   'False
    BeginProperty Font 
       Name            =   "Tahoma"

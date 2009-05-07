@@ -6,6 +6,7 @@ Begin VB.Form frmSpawnList
    ClientLeft      =   45
    ClientTop       =   330
    ClientWidth     =   3300
+   ClipControls    =   0   'False
    ControlBox      =   0   'False
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False

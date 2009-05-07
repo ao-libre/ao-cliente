@@ -97,6 +97,7 @@ Private Enum ServerPacketID
     CharacterCreate         ' CC
     CharacterRemove         ' BP
     CharacterMove           ' MP, +, * and _ '
+    ForceCharMove
     CharacterChange         ' CP
     ObjectCreate            ' HO
     ObjectDelete            ' BO
@@ -400,7 +401,6 @@ Private Enum ClientPacketID
     ShowServerForm          '/SHOW INT
     night                   '/NOCHE
     KickAllChars            '/ECHARTODOSPJS
-    RequestTCPStats         '/TCPESSTATS
     ReloadNPCs              '/RELOADNPCS
     ReloadServerIni         '/RELOADSINI
     ReloadSpells            '/RELOADHECHIZOS
@@ -432,9 +432,12 @@ Public Enum FontTypeNames
     FONTTYPE_GMMSG
     FONTTYPE_GM
     FONTTYPE_CITIZEN
+    FONTTYPE_CONSE
+    FONTTYPE_DIOS
+    
 End Enum
 
-Public FontTypes(18) As tFont
+Public FontTypes(20) As tFont
 
 ''
 ' Initializes the fonts array
@@ -545,12 +548,28 @@ Public Sub InitFonts()
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_GM)
-        .green = 185
+        .red = 30
+        .green = 255
+        .blue = 30
         .bold = 1
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_CITIZEN)
         .blue = 200
+        .bold = 1
+    End With
+    
+    With FontTypes(FontTypeNames.FONTTYPE_CONSE)
+        .red = 30
+        .green = 150
+        .blue = 30
+        .bold = 1
+    End With
+    
+    With FontTypes(FontTypeNames.FONTTYPE_DIOS)
+        .red = 250
+        .green = 250
+        .blue = 150
         .bold = 1
     End With
 End Sub
@@ -703,6 +722,9 @@ On Error Resume Next
         
         Case ServerPacketID.CharacterMove           ' MP, +, * and _ '
             Call HandleCharacterMove
+            
+        Case ServerPacketID.ForceCharMove
+            Call HandleForceCharMove
         
         Case ServerPacketID.CharacterChange         ' CP
             Call HandleCharacterChange
@@ -918,10 +940,7 @@ Private Sub HandleLogged()
     Call incomingData.ReadByte
     
     ' Variable initialization
-    UserCiego = False
     EngineRun = True
-    IScombate = False
-    UserDescansar = False
     Nombres = True
     
     'Set connected state
@@ -1020,11 +1039,12 @@ Private Sub HandleDisconnect()
     frmConnect.Visible = True
     
     'Reset global vars
-    UserParalizado = False
     IScombate = False
-    pausa = False
-    UserMeditar = False
     UserDescansar = False
+    UserParalizado = False
+    pausa = False
+    UserCiego = False
+    UserMeditar = False
     UserNavegando = False
     bRain = False
     bFogata = False
@@ -1572,7 +1592,7 @@ Private Sub HandleUpdateExp()
     
     'Get data and update form
     UserExp = incomingData.ReadLong()
-    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
 End Sub
 
@@ -1688,7 +1708,7 @@ Private Sub HandleNPCHitUser()
         Case bPiernaDerecha
             Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_GOLPE_PIERNA_DER & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, False)
         Case bTorso
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_GOLPE_TORSO & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, False)
+            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_GOLPE_TORSO & CStr(incomingData.ReadInteger() & "!!"), 255, 0, 0, True, False, False)
     End Select
 End Sub
 
@@ -2263,6 +2283,27 @@ Private Sub HandleCharacterMove()
     
     Call RefreshAllChars
 End Sub
+Private Sub HandleForceCharMove()
+    
+    If incomingData.length < 2 Then
+        Err.Raise incomingData.NotEnoughDataErrCode
+        Exit Sub
+    End If
+    
+    'Remove packet ID
+    Call incomingData.ReadByte
+    
+    Dim Direccion As Byte
+    
+    Direccion = incomingData.ReadByte()
+
+    Call MoveCharbyHead(UserCharIndex, Direccion)
+    Call MoveScreen(Direccion)
+    
+    Call RefreshAllChars
+
+End Sub
+
 
 ''
 ' Handles the CharacterChange message.
@@ -2292,8 +2333,10 @@ Private Sub HandleCharacterChange()
         
         If tempint < LBound(BodyData()) Or tempint > UBound(BodyData()) Then
             .Body = BodyData(0)
+            .iBody = 0
         Else
             .Body = BodyData(tempint)
+            .iBody = tempint
         End If
         
         
@@ -2301,8 +2344,10 @@ Private Sub HandleCharacterChange()
         
         If tempint < LBound(HeadData()) Or tempint > UBound(HeadData()) Then
             .Head = HeadData(0)
+            .iHead = 0
         Else
             .Head = HeadData(headIndex)
+            .iHead = headIndex
         End If
         
         .muerto = (headIndex = CASPER_HEAD)
@@ -2646,7 +2691,7 @@ Private Sub HandleUpdateUserStats()
     UserPasarNivel = incomingData.ReadLong()
     UserExp = incomingData.ReadLong()
     
-    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     
     If UserPasarNivel > 0 Then
         frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
@@ -3914,11 +3959,11 @@ On Error GoTo ErrHandler
         .criminales.Caption = "Criminales asesinados: " & CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .status.Caption = " (Ciudadano)"
-            .status.ForeColor = vbBlue
+            .Status.Caption = " (Ciudadano)"
+            .Status.ForeColor = vbBlue
         Else
-            .status.Caption = " (Criminal)"
-            .status.ForeColor = vbRed
+            .Status.Caption = " (Criminal)"
+            .Status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)
@@ -4194,11 +4239,11 @@ Private Sub HandleTradeOK()
         
         'Alter order according to if we bought or sold so the labels and grh remain the same
         If frmComerciar.LasActionBuy Then
-            frmComerciar.List1(1).listIndex = frmComerciar.LastIndex2
-            frmComerciar.List1(0).listIndex = frmComerciar.LastIndex1
+            frmComerciar.List1(1).ListIndex = frmComerciar.LastIndex2
+            frmComerciar.List1(0).ListIndex = frmComerciar.LastIndex1
         Else
-            frmComerciar.List1(0).listIndex = frmComerciar.LastIndex1
-            frmComerciar.List1(1).listIndex = frmComerciar.LastIndex2
+            frmComerciar.List1(0).ListIndex = frmComerciar.LastIndex1
+            frmComerciar.List1(1).ListIndex = frmComerciar.LastIndex2
         End If
     End If
 End Sub
@@ -4231,11 +4276,11 @@ Private Sub HandleBankOK()
         
         'Alter order according to if we bought or sold so the labels and grh remain the same
         If frmBancoObj.LasActionBuy Then
-            frmBancoObj.List1(1).listIndex = frmBancoObj.LastIndex2
-            frmBancoObj.List1(0).listIndex = frmBancoObj.LastIndex1
+            frmBancoObj.List1(1).ListIndex = frmBancoObj.LastIndex2
+            frmBancoObj.List1(0).ListIndex = frmBancoObj.LastIndex1
         Else
-            frmBancoObj.List1(0).listIndex = frmBancoObj.LastIndex1
-            frmBancoObj.List1(1).listIndex = frmBancoObj.LastIndex2
+            frmBancoObj.List1(0).ListIndex = frmBancoObj.LastIndex1
+            frmBancoObj.List1(1).ListIndex = frmBancoObj.LastIndex2
         End If
     End If
 End Sub
@@ -4499,7 +4544,7 @@ On Error GoTo ErrHandler
         For i = 0 To UBound(userList())
             Call frmPanelGm.cboListaUsus.AddItem(userList(i))
         Next i
-        If frmPanelGm.cboListaUsus.ListCount > 0 Then frmPanelGm.cboListaUsus.listIndex = 0
+        If frmPanelGm.cboListaUsus.ListCount > 0 Then frmPanelGm.cboListaUsus.ListIndex = 0
     End If
     
     'If we got here then packet is complete, copy data back to original queue
@@ -6464,10 +6509,10 @@ Public Sub WriteChangePassword(ByRef oldPass As String, ByRef newPass As String)
         Call .WriteByte(ClientPacketID.ChangePassword)
         
 #If SeguridadAlkon Then
-        Call .WriteASCIIStringFixed(MD5.GetMD5String(oldPass))
-        Call MD5.MD5Reset
-        Call .WriteASCIIStringFixed(MD5.GetMD5String(newPass))
-        Call MD5.MD5Reset
+        Call .WriteASCIIStringFixed(md5.GetMD5String(oldPass))
+        Call md5.MD5Reset
+        Call .WriteASCIIStringFixed(md5.GetMD5String(newPass))
+        Call md5.MD5Reset
 #Else
         Call .WriteASCIIString(oldPass)
         Call .WriteASCIIString(newPass)
@@ -7250,13 +7295,18 @@ End Sub
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteOnlineMap()
+Public Sub WriteOnlineMap(ByVal Map As Integer)
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
+'Last Modification: 26/03/2009
 'Writes the "OnlineMap" message to the outgoing data buffer
+'26/03/2009: Now you don't need to be in the map to use the comand, so you send the map to server
 '***************************************************
-    Call outgoingData.WriteByte(ClientPacketID.OnlineMap)
+    With outgoingData
+        Call .WriteByte(ClientPacketID.OnlineMap)
+        
+        Call .WriteInteger(Map)
+    End With
 End Sub
 
 ''
@@ -7975,7 +8025,7 @@ End Sub
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal nick As String, ByVal reason As String)
+Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal Nick As String, ByVal reason As String)
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7995,7 +8045,7 @@ Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal nick As S
                 Call .WriteByte(Ip(i))
             Next i
         Else
-            Call .WriteASCIIString(nick)
+            Call .WriteASCIIString(Nick)
         End If
         
         Call .WriteASCIIString(reason)
@@ -8815,20 +8865,6 @@ Public Sub WriteKickAllChars()
 'Writes the "KickAllChars" message to the outgoing data buffer
 '***************************************************
     Call outgoingData.WriteByte(ClientPacketID.KickAllChars)
-End Sub
-
-''
-' Writes the "RequestTCPStats" message to the outgoing data buffer.
-'
-' @remarks  The data is not actually sent until the buffer is properly flushed.
-
-Public Sub WriteRequestTCPStats()
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'Writes the "RequestTCPStats" message to the outgoing data buffer
-'***************************************************
-    Call outgoingData.WriteByte(ClientPacketID.RequestTCPStats)
 End Sub
 
 ''

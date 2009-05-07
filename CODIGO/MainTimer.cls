@@ -98,11 +98,11 @@ End Enum
 Private Declare Function GetTickCount Lib "kernel32" () As Long
 
 ''
-' Sets a new intrval for a timer.
+' Sets a new interval for a timer.
 '
 ' @param TimerIndex Timer´s Index
 ' @param Interval New lenght for the Timer´s cicle in miliseconds.
-' @remarks  Must be donde after creating the timer and before using it, otherwise, Interval will be 0
+' @remarks  Must be done after creating the timer and before using it, otherwise, Interval will be 0
 
 Public Sub SetInterval(ByVal TimerIndex As TimersIndex, ByVal Interval As Long)
 '*************************************************
@@ -114,6 +114,24 @@ Public Sub SetInterval(ByVal TimerIndex As TimersIndex, ByVal Interval As Long)
     
     Timer(TimerIndex).Interval = Interval
 End Sub
+
+''
+' Retrieves the interval of a timer.
+'
+' @param TimerIndex Timer´s Index
+'
+' @return The requested timer's interval.
+
+Public Function GetInterval(ByVal TimerIndex As TimersIndex) As Long
+'*************************************************
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Last modified: 13/10/2008
+'Desc: Retrieves the interval of a timer.
+'*************************************************
+    If TimerIndex < 1 Or TimerIndex > CANTIDADTIMERS Then Exit Function
+    
+    GetInterval = Timer(TimerIndex).Interval
+End Function
 
 ''
 ' Starts the timer.
