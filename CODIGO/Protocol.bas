@@ -1592,7 +1592,7 @@ Private Sub HandleUpdateExp()
     
     'Get data and update form
     UserExp = incomingData.ReadLong()
-    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
 End Sub
 
@@ -2193,7 +2193,7 @@ On Error GoTo ErrHandler
             End If
             
             'Log2 of the bit flags sent by the server gives our numbers ^^
-            .priv = Log(privs) / Log(2)
+            .priv = log(privs) / log(2)
         Else
             .priv = 0
         End If
@@ -2283,6 +2283,10 @@ Private Sub HandleCharacterMove()
     
     Call RefreshAllChars
 End Sub
+
+''
+' Handles the ForceCharMove message.
+
 Private Sub HandleForceCharMove()
     
     If incomingData.length < 2 Then
@@ -2301,9 +2305,7 @@ Private Sub HandleForceCharMove()
     Call MoveScreen(Direccion)
     
     Call RefreshAllChars
-
 End Sub
-
 
 ''
 ' Handles the CharacterChange message.
@@ -2691,7 +2693,7 @@ Private Sub HandleUpdateUserStats()
     UserPasarNivel = incomingData.ReadLong()
     UserExp = incomingData.ReadLong()
     
-    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     
     If UserPasarNivel > 0 Then
         frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"

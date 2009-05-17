@@ -360,10 +360,11 @@ End Function
 Private Sub Update3DSound(ByVal bufferIndex As Long, ByVal deltaX As Integer, ByVal deltaY As Integer)
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 04/28/09
+'Last Modification: 05/09/09
 'Last Modified by: Marco Vanotti (MarKoxX)
 'Fixed Dopplers formula
 'Refreshes the sound's arguments.
+'Fixed the sndVolume formula
 '***************************************************
     Dim linearDistanceOld As Single
     Dim linearDistanceNew As Single
@@ -393,7 +394,11 @@ Private Sub Update3DSound(ByVal bufferIndex As Long, ByVal deltaX As Integer, By
         Call .Buffer.SetFrequency(perceivedFq)
         
         'Set volumen amortiguation according to distance
-        Call .Buffer.SetVolume(SndVolume * (1 - linearDistanceNew / MAX_DISTANCE_TO_SOURCE))
+        If linearDistanceNew > MAX_DISTANCE_TO_SOURCE Then
+            Call .Buffer.SetVolume(SndVolume + (DSBVOLUME_MIN - SndVolume))
+        Else
+            Call .Buffer.SetVolume(SndVolume + (linearDistanceNew / MAX_DISTANCE_TO_SOURCE) * (DSBVOLUME_MIN - SndVolume))
+        End If
         
         'Prevent division by zero
         If linearDistanceNew = 0 Then linearDistanceNew = 1

@@ -196,7 +196,7 @@ Private Sub downloadServer_Click()
 'cambios que hacemos nosotros, compartí los tuyos. Es un cambio justo. Si no estás de acuerdo,
 'no uses nuestro código, pues nadie te obliga o bien utiliza una versión anterior a la 0.12.0.
 '***********************************
-    Call ShellExecute(0, "Open", "https://sourceforge.net/project/downloading.php?group_id=67718&filename=AOServerSrc0.12.2.zip&a=42868900", "", App.path, 0)
+    Call ShellExecute(0, "Open", "https://sourceforge.net/project/downloading.php?group_id=67718&filename=AOServerSrc0.12.2.zip&a=42868900", "", App.Path, SW_SHOWNORMAL)
 End Sub
 
 Private Sub Form_Activate()
@@ -252,7 +252,7 @@ Private Sub Form_Load()
  Next
  PortTxt.Text = Config_Inicio.Puerto
  
- FONDO.Picture = LoadPicture(App.path & "\Graficos\Conectar.jpg")
+ FONDO.Picture = LoadPicture(App.Path & "\Graficos\Conectar.jpg")
 
 
  '[CODE]:MatuX
@@ -329,7 +329,7 @@ Select Case index
         
     Case 2
         On Error GoTo errH
-        Call Shell(App.path & "\RECUPERAR.EXE", vbNormalFocus)
+        Call Shell(App.Path & "\RECUPERAR.EXE", vbNormalFocus)
 
 End Select
 Exit Sub
@@ -342,7 +342,7 @@ Private Sub imgGetPass_Click()
 On Error GoTo errH
 
     Call Audio.PlayWave(SND_CLICK)
-    Call Shell(App.path & "\RECUPERAR.EXE", vbNormalFocus)
+    Call Shell(App.Path & "\RECUPERAR.EXE", vbNormalFocus)
     Exit Sub
 errH:
     Call MsgBox("No se encuentra el programa recuperar.exe", vbCritical, "Argentum Online")

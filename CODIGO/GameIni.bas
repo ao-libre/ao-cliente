@@ -64,7 +64,7 @@ Public Type tSetupMods
     bNoSound    As Boolean
     bNoRes      As Boolean ' 24/06/2006 - ^[GS]^
     bNoSoundEffects As Boolean
-    sGraficos   As String ' 16/04/2009 - Marco
+    sGraficos   As String * 13
 End Type
 
 Public ClientSetup As tSetupMods
@@ -82,7 +82,7 @@ Public Function LeerGameIni() As tGameIni
     Dim N As Integer
     Dim GameIni As tGameIni
     N = FreeFile
-    Open App.path & "\init\Inicio.con" For Binary As #N
+    Open App.Path & "\init\Inicio.con" For Binary As #N
     Get #N, , MiCabecera
     
     Get #N, , GameIni
@@ -96,7 +96,7 @@ On Local Error Resume Next
 
 Dim N As Integer
 N = FreeFile
-Open App.path & "\init\Inicio.con" For Binary As #N
+Open App.Path & "\init\Inicio.con" For Binary As #N
 Put #N, , MiCabecera
 Put #N, , GameIniConfiguration
 Close #N

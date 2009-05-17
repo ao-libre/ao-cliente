@@ -182,10 +182,6 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 15/11/2008: Al ingresar /FUNDARCLAN se chequea que el usuario sea nivel 25 o más. (NicoNZ)
  * 25/11/2008: Se agregó que al leer la línea de comandos verifique parámetros para el AoUpdate (BrianPr)
  * 01/12/2008: Arreglo de faltas ortográficas y de gramática. (NicoNZ)
-
-- 0.12.2
-
-
  * 20/01/2009: Modificado el nuevo modulo de compresión de archivos .ao (Marco)
  * 13/03/2009: Se puede caminar a un tile donde haya un casper. (ZaMa)
  * 26/03/2009: Comandos mas flexibles: /onlinemap, /nene, /telep. (ZaMa)
@@ -194,3 +190,13 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 28/04/2009: Arreglada la fórmula del efecto Doppler (Marco)
  * 07/05/2009: Arreglado el error que tiraba CLSAudio al cambiar de mapa (Marco)
  * 07/05/2009: Arreglado el RunTime9 que tiraba si tocabas una tecla en FRMConnect (Marco)
+ * 09/05/2009: Arreglado el bug 2789294 (Rt 5 en CLSAudio) (Marco)
+ * 10/05/2009: No se puede intercambiar posición con un casper que este en la orilla. (ZaMa)
+ * 11/05/2009: Arreglado el bug #2789937 (Marco)
+ * 12/05/2009: Arreglado RT9 en Función RemoveLRU (Maraxus)
+ * 14/05/2009: Se usa SW_SHOWNORMAL para llamar a ShellExecute, debería con esto andar bien en Win98 y Win Vista (Maraxus)
+ * 14/05/2009: Cuando el cliente ejecuta el AoUpdate propaga el /nores para que no se pierda (Maraxus)
+ * 16/05/2009: Se arregla el rt9 con los cortes, arregla bug #2792555 (Maraxus)
+
+
+- 0.12.2

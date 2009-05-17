@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "Mscomctl.ocx"
 Begin VB.Form frmOpciones 
    BackColor       =   &H00000000&
    BorderStyle     =   3  'Fixed Dialog
@@ -314,7 +314,7 @@ End Sub
 Private Sub cmdManual_Click()
     If Not loading Then _
         Call Audio.PlayWave(SND_CLICK)
-    Call ShellExecute(0, "Open", "http://ao.alkon.com.ar/aomanual/", "", App.path, 0)
+    Call ShellExecute(0, "Open", "http://ao.alkon.com.ar/aomanual/", "", App.path, SW_SHOWNORMAL)
 End Sub
 
 Private Sub cmdChangePassword_Click()
@@ -325,10 +325,10 @@ Private Sub CmdRadioAo_Click()
     If Not loading Then _
         Call Audio.PlayWave(SND_CLICK)
     If FileExist(App.path & "\Radio.exe", vbNormal) Then
-        Call ShellExecute(0, "Open", App.path & "\Radio.exe", "", App.path, 0)
+        Call ShellExecute(0, "Open", App.path & "\Radio.exe", "", App.path, SW_SHOWNORMAL)
     Else
         MsgBox "Debe instalar el RAOPlayer para poder escuchar RadioAo correctamente"
-        Call ShellExecute(0, "Open", "http://www.radioao.net/radio.htm", "", App.path, 0)
+        Call ShellExecute(0, "Open", "http://www.radioao.net/radio.htm", "", App.path, SW_SHOWNORMAL)
     End If
 End Sub
 

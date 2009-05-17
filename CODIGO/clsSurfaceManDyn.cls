@@ -164,7 +164,7 @@ End Property
 Private Function LoadSurface(ByVal fileIndex As Long) As DirectDrawSurface7
 '**************************************************************
 'Author: Nicolas Matias Gonzalez (NIGO)
-'Last Modify Date: 11/30/2007
+'Last Modify Date: 05/11/2009
 'Loads the surface named fileIndex + ".bmp" and inserts it to the
 'surface list in the listIndex position
 '**************************************************************
@@ -238,17 +238,17 @@ On Error GoTo ErrHandler
 Exit Function
 
 ErrHandler:
-    If Err.number = DDERR_OUTOFMEMORY Or Err.number = DDERR_OUTOFVIDEOMEMORY Then
+    If Err.Number = DDERR_OUTOFMEMORY Or Err.Number = DDERR_OUTOFVIDEOMEMORY Then
         'Remove a surface and try again
         If RemoveLRU() Then
-            Resume Next
+            Resume
         Else
             MsgBox "No hay memoria disponible! El programa abortará. Cierra algunos programas e intenta de nuevo"
             End
         End If
     Else
         MsgBox "Un error inesperado ocurrió al intentar cargar el gráfico " & CStr(fileIndex) & ".BMP" & ". " & vbCrLf & _
-                "El código de error es " & CStr(Err.number) & " - " & Err.Description & vbCrLf & vbCrLf & "Copia este mensaje y notifica a los administradores.", _
+                "El código de error es " & CStr(Err.Number) & " - " & Err.Description & vbCrLf & vbCrLf & "Copia este mensaje y notifica a los administradores.", _
                 vbOKOnly Or vbCritical Or vbExclamation, "Error"
         End
     End If
@@ -282,17 +282,16 @@ Private Function RemoveLRU() As Boolean
         End With
     Next i
     
-    'Retrieve the surface desc
-    Call surfaceList(LRUi).SurfaceEntry(LRUj).Surface.GetSurfaceDesc(ddsd)
-    
-    'Remove it
-    Set surfaceList(LRUi).SurfaceEntry(LRUj).Surface = Nothing
-    surfaceList(LRUi).SurfaceEntry(LRUj).fileIndex = 0
-    
-    'Move back the list (if necessary)
     If LRUj Then
         RemoveLRU = True
+        'Retrieve the surface desc
+        Call surfaceList(LRUi).SurfaceEntry(LRUj).Surface.GetSurfaceDesc(ddsd)
         
+        'Remove it
+        Set surfaceList(LRUi).SurfaceEntry(LRUj).Surface = Nothing
+        surfaceList(LRUi).SurfaceEntry(LRUj).fileIndex = 0
+        
+        'Move back the list (if necessary)
         With surfaceList(LRUi)
             For j = LRUj To .surfaceCount - 1
                 .SurfaceEntry(j) = .SurfaceEntry(j + 1)
@@ -305,8 +304,8 @@ Private Function RemoveLRU() As Boolean
                 Erase .SurfaceEntry
             End If
         End With
+        
+        'Update the used bytes
+        usedBytes = usedBytes - ddsd.lHeight * ddsd.lPitch
     End If
-    
-    'Update the used bytes
-    usedBytes = usedBytes - ddsd.lHeight * ddsd.lPitch
 End Function

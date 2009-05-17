@@ -359,7 +359,7 @@ Sub CargarCabezas()
     Dim Miscabezas() As tIndiceCabeza
     
     N = FreeFile()
-    Open App.path & "\init\Cabezas.ind" For Binary Access Read As #N
+    Open App.Path & "\init\Cabezas.ind" For Binary Access Read As #N
     
     'cabecera
     Get #N, , MiCabecera
@@ -393,7 +393,7 @@ Sub CargarCascos()
     Dim Miscabezas() As tIndiceCabeza
     
     N = FreeFile()
-    Open App.path & "\init\Cascos.ind" For Binary Access Read As #N
+    Open App.Path & "\init\Cascos.ind" For Binary Access Read As #N
     
     'cabecera
     Get #N, , MiCabecera
@@ -426,7 +426,7 @@ Sub CargarCuerpos()
     Dim MisCuerpos() As tIndiceCuerpo
     
     N = FreeFile()
-    Open App.path & "\init\Personajes.ind" For Binary Access Read As #N
+    Open App.Path & "\init\Personajes.ind" For Binary Access Read As #N
     
     'cabecera
     Get #N, , MiCabecera
@@ -461,7 +461,7 @@ Sub CargarFxs()
     Dim NumFxs As Integer
     
     N = FreeFile()
-    Open App.path & "\init\Fxs.ind" For Binary Access Read As #N
+    Open App.Path & "\init\Fxs.ind" For Binary Access Read As #N
     
     'cabecera
     Get #N, , MiCabecera
@@ -485,7 +485,7 @@ Sub CargarTips()
     Dim NumTips As Integer
     
     N = FreeFile
-    Open App.path & "\init\Tips.ayu" For Binary Access Read As #N
+    Open App.Path & "\init\Tips.ayu" For Binary Access Read As #N
     
     'cabecera
     Get #N, , MiCabecera
@@ -509,7 +509,7 @@ Sub CargarArrayLluvia()
     Dim Nu As Integer
     
     N = FreeFile()
-    Open App.path & "\init\fk.ind" For Binary Access Read As #N
+    Open App.Path & "\init\fk.ind" For Binary Access Read As #N
     
     'cabecera
     Get #N, , MiCabecera
@@ -705,7 +705,9 @@ Sub MoveCharbyHead(ByVal CharIndex As Integer, ByVal nHeading As E_Heading)
     
     'areas viejos
     If (nY < MinLimiteY) Or (nY > MaxLimiteY) Or (nX < MinLimiteX) Or (nX > MaxLimiteX) Then
-        Call EraseChar(CharIndex)
+        If CharIndex <> UserCharIndex Then
+            Call EraseChar(CharIndex)
+        End If
     End If
 End Sub
 
@@ -1010,10 +1012,10 @@ End Function
 Function MoveToLegalPos(ByVal x As Integer, ByVal y As Integer) As Boolean
 '*****************************************************************
 'Author: ZaMa
-'Last Modify Date: 13/03/2006
+'Last Modify Date: 10/05/2009
 'Checks to see if a tile position is legal, including if there is a casper in the tile
+'10/05/2009: ZaMa - Now you can't change position with a casper which is in the shore.
 '*****************************************************************
-
     Dim CharIndex As Integer
     
     'Limites del mapa
@@ -1034,11 +1036,12 @@ Function MoveToLegalPos(ByVal x As Integer, ByVal y As Integer) As Boolean
             If .iHead <> CASPER_HEAD And .iBody <> FRAGATA_FANTASMAL Then
                 Exit Function
             Else
-                ' No puedo intercambiar con un casper que no este en el agua, si ambos no lo estan
-                If .iHead = CASPER_HEAD Then
-                    If HayAgua(UserPos.x, UserPos.y) Then
-                        If Not HayAgua(x, y) Then Exit Function
-                    End If
+                ' No puedo intercambiar con un casper que este en la orilla (Lado tierra)
+                If HayAgua(UserPos.x, UserPos.y) Then
+                    If Not HayAgua(x, y) Then Exit Function
+                Else
+                    ' No puedo intercambiar con un casper que este en la orilla (Lado agua)
+                    If HayAgua(x, y) Then Exit Function
                 End If
             End If
         End With
@@ -1065,7 +1068,8 @@ End Function
 Private Sub DDrawGrhtoSurface(ByRef Grh As Grh, ByVal x As Integer, ByVal y As Integer, ByVal Center As Byte, ByVal Animate As Byte)
     Dim CurrentGrhIndex As Integer
     Dim SourceRect As RECT
-    
+On Error GoTo error
+        
     If Animate Then
         If Grh.Started = 1 Then
             Grh.FrameCounter = Grh.FrameCounter + (timerElapsedTime * GrhData(Grh.GrhIndex).NumFrames / Grh.Speed)
@@ -1106,6 +1110,17 @@ Private Sub DDrawGrhtoSurface(ByRef Grh As Grh, ByVal x As Integer, ByVal y As I
         'Draw
         Call BackBufferSurface.BltFast(x, y, SurfaceDB.Surface(.FileNum), SourceRect, DDBLTFAST_WAIT)
     End With
+Exit Sub
+
+error:
+    If Err.Number = 9 And Grh.FrameCounter < 1 Then
+        Grh.FrameCounter = 1
+        Resume
+    Else
+        MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & _
+        vbCrLf & Err.Description, vbExclamation, "[ " & Err.Number & " ] Error"
+        End
+    End If
 End Sub
 
 Sub DDrawTransGrhIndextoSurface(ByVal GrhIndex As Integer, ByVal x As Integer, ByVal y As Integer, ByVal Center As Byte)
@@ -1140,6 +1155,8 @@ Sub DDrawTransGrhtoSurface(ByRef Grh As Grh, ByVal x As Integer, ByVal y As Inte
     Dim CurrentGrhIndex As Integer
     Dim SourceRect As RECT
     
+On Error GoTo error
+    
     If Animate Then
         If Grh.Started = 1 Then
             Grh.FrameCounter = Grh.FrameCounter + (timerElapsedTime * GrhData(Grh.GrhIndex).NumFrames / Grh.Speed)
@@ -1172,7 +1189,7 @@ Sub DDrawTransGrhtoSurface(ByRef Grh As Grh, ByVal x As Integer, ByVal y As Inte
                 y = y - Int(.TileHeight * TilePixelHeight) + TilePixelHeight
             End If
         End If
-        
+                
         SourceRect.Left = .sX
         SourceRect.Top = .sY
         SourceRect.Right = SourceRect.Left + .pixelWidth
@@ -1181,6 +1198,17 @@ Sub DDrawTransGrhtoSurface(ByRef Grh As Grh, ByVal x As Integer, ByVal y As Inte
         'Draw
         Call BackBufferSurface.BltFast(x, y, SurfaceDB.Surface(.FileNum), SourceRect, DDBLTFAST_SRCCOLORKEY Or DDBLTFAST_WAIT)
     End With
+Exit Sub
+
+error:
+    If Err.Number = 9 And Grh.FrameCounter < 1 Then
+        Grh.FrameCounter = 1
+        Resume
+    Else
+        MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & _
+        vbCrLf & Err.Description, vbExclamation, "[ " & Err.Number & " ] Error"
+        End
+    End If
 End Sub
 
 #If ConAlfaB = 1 Then
@@ -1588,7 +1616,7 @@ Public Function InitTileEngine(ByVal setDisplayFormhWnd As Long, ByVal setMainVi
     Dim SurfaceDesc As DDSURFACEDESC2
     Dim ddck As DDCOLORKEY
     
-    IniPath = App.path & "\Init\"
+    IniPath = App.Path & "\Init\"
     
     'Fill startup variables
     MainViewTop = setMainViewTop
@@ -2050,7 +2078,7 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
                             Call RenderTextCentered(PixelOffsetX + TilePixelWidth \ 2 + 5, PixelOffsetY + 30, line, color, frmMain.font)
                             
                             'Clan
-                            line = mid$(.Nombre, Pos)
+                            line = Mid$(.Nombre, Pos)
                             Call RenderTextCentered(PixelOffsetX + TilePixelWidth \ 2 + 5, PixelOffsetY + 45, line, color, frmMain.font)
                         End If
                     End If
