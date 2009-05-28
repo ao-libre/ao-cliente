@@ -537,6 +537,18 @@ Public Enum eEditOptions
     eo_Raza
 End Enum
 
+Public Enum eEditNpcOptions
+    Vida = 1
+    Oro
+    Experiencia
+    Punteria
+    Evasion
+    Def
+    MagDef
+    DañoMax
+    DañoMin
+End Enum
+
 ''
 ' TRIGGERS
 '
