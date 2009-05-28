@@ -717,60 +717,6 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call ShowConsoleMsg("Faltan parámetros.")
                 End If
             
-            Case "/MODNPC"
-                If notNullArguments And CantidadArgumentos = 3 Then
-                    Select Case UCase$(ArgumentosAll(1))
-                        Case "ORO"
-                            tmpInt = eEditNpcOptions.Oro
-                        
-                        Case "VIDA"
-                            tmpInt = eEditNpcOptions.Vida
-                        
-                        Case "PUNTERIA"
-                            tmpInt = eEditNpcOptions.Punteria
-                        
-                        Case "EVASION"
-                            tmpInt = eEditNpcOptions.Evasion
-                        
-                        Case "DAÑOMIN"
-                            tmpInt = eEditNpcOptions.DañoMin
-                        
-                        Case "DAÑOMAX"
-                            tmpInt = eEditNpcOptions.DañoMax
-                        
-                        Case "EXPERIENCIA"
-                            tmpInt = eEditNpcOptions.Experiencia
-                        
-                        Case "DEF"
-                            tmpInt = eEditNpcOptions.Def
-                        
-                        Case "MAGDEF"
-                            tmpInt = eEditNpcOptions.MagDef
-                        
-                        Case Else
-                            tmpInt = -1
-                    End Select
-                    
-                    If tmpInt > 0 Then
-                        If IsNumeric(ArgumentosAll(0)) And IsNumeric(ArgumentosAll(2)) Then
-                            If Val(ArgumentosAll(0)) > 0 And Val(ArgumentosAll(0)) < 100000 Then
-                                Call WriteEditNpc(Val(ArgumentosAll(0)), tmpInt, Val(ArgumentosAll(2)))
-                            Else
-                                Call ShowConsoleMsg("Número de Npc inválido.")
-                            End If
-                        Else
-                            Call ShowConsoleMsg("Valores inválidos.")
-                        End If
-                    Else
-                        'Avisar que no exite el comando
-                        Call ShowConsoleMsg("Comando incorrecto.")
-                    End If
-                Else
-                    'Avisar que falta el parametro
-                    Call ShowConsoleMsg("Faltan parámetros.")
-                End If
-
-                
             Case "/INFO"
                 If notNullArguments Then
                     Call WriteRequestCharInfo(ArgumentosRaw)

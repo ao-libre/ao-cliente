@@ -410,7 +410,6 @@ Private Enum ClientPacketID
     ChatColor               '/CHATCOLOR
     Ignored                 '/IGNORADO
     CheckSlot               '/SLOT
-    EditNpc                 '/MODNPC
 End Enum
 
 Public Enum FontTypeNames
@@ -1593,7 +1592,7 @@ Private Sub HandleUpdateExp()
     
     'Get data and update form
     UserExp = incomingData.ReadLong()
-    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
 End Sub
 
@@ -2694,7 +2693,7 @@ Private Sub HandleUpdateUserStats()
     UserPasarNivel = incomingData.ReadLong()
     UserExp = incomingData.ReadLong()
     
-    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     
     If UserPasarNivel > 0 Then
         frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
@@ -7143,32 +7142,6 @@ Public Sub WriteEditChar(ByVal UserName As String, ByVal EditOption As eEditOpti
         
         Call .WriteASCIIString(arg1)
         Call .WriteASCIIString(arg2)
-    End With
-End Sub
-
-''
-' Writes the "EditChar" message to the outgoing data buffer.
-'
-' @param    NpcNro      The Number of the npc to be edited.
-' @param    editOption  Indicates what to edit in the npc.
-' @param    arg1        Additional argument 1. Contents depend on editoption.
-' @param    arg2        Additional argument 2. Contents depend on editoption.
-' @remarks  The data is not actually sent until the buffer is properly flushed.
-
-Public Sub WriteEditNpc(ByVal NroNpc As Integer, ByVal EditOption As eEditNpcOptions, ByVal Arg As Long)
-'***************************************************
-'Author: ZaMa
-'Last Modification: 27/05/2009
-'Writes the "EditNpc" message to the outgoing data buffer
-'***************************************************
-    With outgoingData
-        Call .WriteByte(ClientPacketID.EditNpc)
-        
-        Call .WriteInteger(NroNpc)
-        
-        Call .WriteByte(EditOption)
-        
-        Call .WriteLong(Arg)
     End With
 End Sub
 
