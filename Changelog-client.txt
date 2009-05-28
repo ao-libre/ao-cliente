@@ -197,7 +197,6 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 14/05/2009: Se usa SW_SHOWNORMAL para llamar a ShellExecute, debería con esto andar bien en Win98 y Win Vista (Maraxus)
  * 14/05/2009: Cuando el cliente ejecuta el AoUpdate propaga el /nores para que no se pierda (Maraxus)
  * 16/05/2009: Se arregla el rt9 con los cortes, arregla bug #2792555 (Maraxus)
- * 28/05/2009: Agrego nuevo comando para dioses: /ModNpc. (ZaMa) 
  * 28/05/2009: Fix al bug #2796312
 
 - 0.12.2
