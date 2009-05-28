@@ -410,6 +410,7 @@ Private Enum ClientPacketID
     ChatColor               '/CHATCOLOR
     Ignored                 '/IGNORADO
     CheckSlot               '/SLOT
+    EditNpc                 '/MODNPC
 End Enum
 
 Public Enum FontTypeNames
@@ -2193,7 +2194,7 @@ On Error GoTo ErrHandler
             End If
             
             'Log2 of the bit flags sent by the server gives our numbers ^^
-            .priv = log(privs) / log(2)
+            .priv = Log(privs) / Log(2)
         Else
             .priv = 0
         End If
@@ -7127,7 +7128,7 @@ End Sub
 ' @param    arg2        Additional argument 2. Contents depend on editoption.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteEditChar(ByVal UserName As String, ByVal editOption As eEditOptions, ByVal arg1 As String, ByVal arg2 As String)
+Public Sub WriteEditChar(ByVal UserName As String, ByVal EditOption As eEditOptions, ByVal arg1 As String, ByVal arg2 As String)
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -7138,10 +7139,36 @@ Public Sub WriteEditChar(ByVal UserName As String, ByVal editOption As eEditOpti
         
         Call .WriteASCIIString(UserName)
         
-        Call .WriteByte(editOption)
+        Call .WriteByte(EditOption)
         
         Call .WriteASCIIString(arg1)
         Call .WriteASCIIString(arg2)
+    End With
+End Sub
+
+''
+' Writes the "EditChar" message to the outgoing data buffer.
+'
+' @param    NpcNro      The Number of the npc to be edited.
+' @param    editOption  Indicates what to edit in the npc.
+' @param    arg1        Additional argument 1. Contents depend on editoption.
+' @param    arg2        Additional argument 2. Contents depend on editoption.
+' @remarks  The data is not actually sent until the buffer is properly flushed.
+
+Public Sub WriteEditNpc(ByVal NroNpc As Integer, ByVal EditOption As eEditNpcOptions, ByVal Arg As Long)
+'***************************************************
+'Author: ZaMa
+'Last Modification: 27/05/2009
+'Writes the "EditNpc" message to the outgoing data buffer
+'***************************************************
+    With outgoingData
+        Call .WriteByte(ClientPacketID.EditNpc)
+        
+        Call .WriteInteger(NroNpc)
+        
+        Call .WriteByte(EditOption)
+        
+        Call .WriteLong(Arg)
     End With
 End Sub
 
