@@ -43,19 +43,19 @@ Public bLluvia() As Byte ' Array para determinar si
 Private lFrameTimer As Long
 
 Public Function DirGraficos() As String
-    DirGraficos = App.Path & "\" & Config_Inicio.DirGraficos & "\"
+    DirGraficos = App.path & "\" & Config_Inicio.DirGraficos & "\"
 End Function
 
 Public Function DirSound() As String
-    DirSound = App.Path & "\" & Config_Inicio.DirSonidos & "\"
+    DirSound = App.path & "\" & Config_Inicio.DirSonidos & "\"
 End Function
 
 Public Function DirMidi() As String
-    DirMidi = App.Path & "\" & Config_Inicio.DirMusica & "\"
+    DirMidi = App.path & "\" & Config_Inicio.DirMusica & "\"
 End Function
 
 Public Function DirMapas() As String
-    DirMapas = App.Path & "\" & Config_Inicio.DirMapas & "\"
+    DirMapas = App.path & "\" & Config_Inicio.DirMapas & "\"
 End Function
 
 Public Function RandomNumber(ByVal LowerBound As Long, ByVal UpperBound As Long) As Long
@@ -72,7 +72,7 @@ On Error Resume Next
     Dim loopc As Long
     Dim arch As String
     
-    arch = App.Path & "\init\" & "armas.dat"
+    arch = App.path & "\init\" & "armas.dat"
     
     NumWeaponAnims = Val(GetVar(arch, "INIT", "NumArmas"))
     
@@ -89,13 +89,13 @@ End Sub
 Sub CargarVersiones()
 On Error GoTo errorH:
 
-    Versiones(1) = Val(GetVar(App.Path & "\init\" & "versiones.ini", "Graficos", "Val"))
-    Versiones(2) = Val(GetVar(App.Path & "\init\" & "versiones.ini", "Wavs", "Val"))
-    Versiones(3) = Val(GetVar(App.Path & "\init\" & "versiones.ini", "Midis", "Val"))
-    Versiones(4) = Val(GetVar(App.Path & "\init\" & "versiones.ini", "Init", "Val"))
-    Versiones(5) = Val(GetVar(App.Path & "\init\" & "versiones.ini", "Mapas", "Val"))
-    Versiones(6) = Val(GetVar(App.Path & "\init\" & "versiones.ini", "E", "Val"))
-    Versiones(7) = Val(GetVar(App.Path & "\init\" & "versiones.ini", "O", "Val"))
+    Versiones(1) = Val(GetVar(App.path & "\init\" & "versiones.ini", "Graficos", "Val"))
+    Versiones(2) = Val(GetVar(App.path & "\init\" & "versiones.ini", "Wavs", "Val"))
+    Versiones(3) = Val(GetVar(App.path & "\init\" & "versiones.ini", "Midis", "Val"))
+    Versiones(4) = Val(GetVar(App.path & "\init\" & "versiones.ini", "Init", "Val"))
+    Versiones(5) = Val(GetVar(App.path & "\init\" & "versiones.ini", "Mapas", "Val"))
+    Versiones(6) = Val(GetVar(App.path & "\init\" & "versiones.ini", "E", "Val"))
+    Versiones(7) = Val(GetVar(App.path & "\init\" & "versiones.ini", "O", "Val"))
 Exit Sub
 
 errorH:
@@ -106,7 +106,7 @@ Sub CargarColores()
 On Error Resume Next
     Dim archivoC As String
     
-    archivoC = App.Path & "\init\colores.dat"
+    archivoC = App.path & "\init\colores.dat"
     
     If Not FileExist(archivoC, vbArchive) Then
 'TODO : Si hay que reinstalar, porque no cierra???
@@ -156,7 +156,7 @@ On Error Resume Next
     Dim loopc As Long
     Dim arch As String
     
-    arch = App.Path & "\init\" & "escudos.dat"
+    arch = App.path & "\init\" & "escudos.dat"
     
     NumEscudosAnims = Val(GetVar(arch, "INIT", "NumEscudos"))
     
@@ -232,7 +232,7 @@ Function AsciiValidos(ByVal cad As String) As Boolean
     cad = LCase$(cad)
     
     For i = 1 To Len(cad)
-        car = Asc(Mid$(cad, i, 1))
+        car = Asc(mid$(cad, i, 1))
         
         If ((car < 97 Or car > 122) Or car = Asc("º")) And (car <> 255) And (car <> 32) Then
             Exit Function
@@ -258,7 +258,7 @@ Function CheckUserData(ByVal checkemail As Boolean) As Boolean
     End If
     
     For loopc = 1 To Len(UserPassword)
-        CharAscii = Asc(Mid$(UserPassword, loopc, 1))
+        CharAscii = Asc(mid$(UserPassword, loopc, 1))
         If Not LegalCharacter(CharAscii) Then
             MsgBox ("Password inválido. El caractér " & Chr$(CharAscii) & " no está permitido.")
             Exit Function
@@ -276,7 +276,7 @@ Function CheckUserData(ByVal checkemail As Boolean) As Boolean
     End If
     
     For loopc = 1 To Len(UserName)
-        CharAscii = Asc(Mid$(UserName, loopc, 1))
+        CharAscii = Asc(mid$(UserName, loopc, 1))
         If Not LegalCharacter(CharAscii) Then
             MsgBox ("Nombre inválido. El caractér " & Chr$(CharAscii) & " no está permitido.")
             Exit Function
@@ -603,9 +603,9 @@ Function ReadField(ByVal Pos As Integer, ByRef Text As String, ByVal SepASCII As
     Next i
     
     If CurrentPos = 0 Then
-        ReadField = Mid$(Text, lastPos + 1, Len(Text) - lastPos)
+        ReadField = mid$(Text, lastPos + 1, Len(Text) - lastPos)
     Else
-        ReadField = Mid$(Text, lastPos + 1, CurrentPos - lastPos - 1)
+        ReadField = mid$(Text, lastPos + 1, CurrentPos - lastPos - 1)
     End If
 End Function
 
@@ -641,7 +641,7 @@ Sub WriteClientVer()
     Dim hFile As Integer
         
     hFile = FreeFile()
-    Open App.Path & "\init\Ver.bin" For Binary Access Write Lock Read As #hFile
+    Open App.path & "\init\Ver.bin" For Binary Access Write Lock Read As #hFile
     Put #hFile, , CLng(777)
     Put #hFile, , CLng(777)
     Put #hFile, , CLng(777)
@@ -676,12 +676,12 @@ On Error GoTo errorH
     Dim c As Integer
     Dim i As Long
     
-    f = App.Path & "\init\sinfo.dat"
+    f = App.path & "\init\sinfo.dat"
     c = Val(GetVar(f, "INIT", "Cant"))
     
     ReDim ServersLst(1 To c) As tServerInfo
     For i = 1 To c
-        ServersLst(i).Desc = GetVar(f, "S" & i, "Desc")
+        ServersLst(i).desc = GetVar(f, "S" & i, "Desc")
         ServersLst(i).Ip = Trim$(GetVar(f, "S" & i, "Ip"))
         ServersLst(i).PassRecPort = CInt(GetVar(f, "S" & i, "P2"))
         ServersLst(i).Puerto = CInt(GetVar(f, "S" & i, "PJ"))
@@ -715,7 +715,7 @@ On Error Resume Next
         cur$ = ReadField(i, RawServersList, Asc(";"))
         ServersLst(i).Ip = ReadField(1, cur$, Asc(":"))
         ServersLst(i).Puerto = ReadField(2, cur$, Asc(":"))
-        ServersLst(i).Desc = ReadField(4, cur$, Asc(":"))
+        ServersLst(i).desc = ReadField(4, cur$, Asc(":"))
         ServersLst(i).PassRecPort = ReadField(3, cur$, Asc(":"))
     Next i
     
@@ -750,12 +750,12 @@ Sub Main()
     Call WriteClientVer
     
     'Load config file
-    If FileExist(App.Path & "\init\Inicio.con", vbNormal) Then
+    If FileExist(App.path & "\init\Inicio.con", vbNormal) Then
         Config_Inicio = LeerGameIni()
     End If
     
     'Load ao.dat config file
-    If FileExist(App.Path & "\init\ao.dat", vbArchive) Then
+    If FileExist(App.path & "\init\ao.dat", vbArchive) Then
         Call LoadClientSetup
         
         If ClientSetup.bDinamic Then
@@ -781,16 +781,16 @@ Sub Main()
     
     
     'usaremos esto para ayudar en los parches
-    Call SaveSetting("ArgentumOnlineCliente", "Init", "Path", App.Path & "\")
+    Call SaveSetting("ArgentumOnlineCliente", "Init", "Path", App.path & "\")
     
-    ChDrive App.Path
-    ChDir App.Path
+    ChDrive App.path
+    ChDir App.path
 
 #If SeguridadAlkon Then
     'Obtener el HushMD5
     Dim fMD5HushYo As String * 32
     
-    fMD5HushYo = md5.GetMD5File(App.Path & "\" & App.EXEName & ".exe")
+    fMD5HushYo = md5.GetMD5File(App.path & "\" & App.EXEName & ".exe")
     Call md5.MD5Reset
     MD5HushYo = txtOffset(hexMd52Asc(fMD5HushYo), 55)
     
@@ -808,14 +808,14 @@ Sub Main()
     frmCargando.Refresh
     
     frmConnect.version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
-    AddtoRichTextBox frmCargando.Status, "Buscando servidores... ", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.status, "Buscando servidores... ", 0, 0, 0, 0, 0, 1
 
     Call CargarServidores
 'TODO : esto de ServerRecibidos no se podría sacar???
     ServersRecibidos = True
     
-    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
-    AddtoRichTextBox frmCargando.Status, "Iniciando constantes... ", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
+    AddtoRichTextBox frmCargando.status, "Iniciando constantes... ", 0, 0, 0, 0, 0, 1
     
     Call InicializarNombres
     
@@ -825,17 +825,17 @@ Sub Main()
     frmOldPersonaje.NameTxt.Text = Config_Inicio.Name
     frmOldPersonaje.PasswordTxt.Text = ""
     
-    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
+    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
     
-    AddtoRichTextBox frmCargando.Status, "Iniciando motor gráfico... ", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.status, "Iniciando motor gráfico... ", 0, 0, 0, 0, 0, 1
     
     If Not InitTileEngine(frmMain.hWnd, 160, 7, 32, 32, 13, 17, 9, 8, 8, 0.018) Then
         Call CloseClient
     End If
     
-    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
+    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
     
-    Call AddtoRichTextBox(frmCargando.Status, "Creando animaciones extra... ", , , , , , 1)
+    Call AddtoRichTextBox(frmCargando.status, "Creando animaciones extra... ", , , , , , 1)
     
     Call CargarTips
     
@@ -847,12 +847,12 @@ UserMap = 1
     Call CargarVersiones
     Call CargarColores
     
-    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
+    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
     
-    AddtoRichTextBox frmCargando.Status, "Iniciando DirectSound... ", 0, 0, 0, 0, 0, True
+    AddtoRichTextBox frmCargando.status, "Iniciando DirectSound... ", 0, 0, 0, 0, 0, True
     
     'Inicializamos el sonido
-    Call Audio.Initialize(DirectX, frmMain.hWnd, App.Path & "\" & Config_Inicio.DirSonidos & "\", App.Path & "\" & Config_Inicio.DirMusica & "\")
+    Call Audio.Initialize(DirectX, frmMain.hWnd, App.path & "\" & Config_Inicio.DirSonidos & "\", App.path & "\" & Config_Inicio.DirMusica & "\")
     'Enable / Disable audio
     Audio.MusicActivated = Not ClientSetup.bNoMusic
     Audio.SoundActivated = Not ClientSetup.bNoSound
@@ -862,14 +862,14 @@ UserMap = 1
     
     Call Audio.PlayMIDI(MIdi_Inicio & ".mid")
     
-    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1, , False
+    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1, , False
     
 #If SeguridadAlkon Then
     CualMI = 0
     Call InitMI
 #End If
     
-    AddtoRichTextBox frmCargando.Status, "                    ¡Bienvenido a Argentum Online!", , , , 1
+    AddtoRichTextBox frmCargando.status, "                    ¡Bienvenido a Argentum Online!", , , , 1
     
     'Give the user enough time to read the welcome text
     Call Sleep(1750)
@@ -877,7 +877,7 @@ UserMap = 1
     Unload frmCargando
     
 
-    frmPres.Picture = LoadPicture(App.Path & "\Graficos\bosquefinal.jpg")
+    frmPres.Picture = LoadPicture(App.path & "\Graficos\bosquefinal.jpg")
     frmPres.Show vbModal    'Es modal, así que se detiene la ejecución de Main hasta que se desaparece
     
 #If UsarWrench = 1 Then
@@ -915,8 +915,8 @@ UserMap = 1
     Call MainTimer.Start(TimersIndex.CastAttack)
     
     'Set the dialog's font
-    Dialogos.Font = frmMain.Font
-    DialogosClanes.Font = frmMain.Font
+    Dialogos.font = frmMain.font
+    DialogosClanes.font = frmMain.font
     
     
     ' Load the form for screenshots
@@ -994,7 +994,7 @@ On Error GoTo errHnd
         '3er test: Recorre todos los caracteres y los valída
         For lX = 0 To Len(sString) - 1
             If Not (lX = (lPos - 1)) Then   'No chequeamos la '@'
-                iAsc = Asc(Mid$(sString, (lX + 1), 1))
+                iAsc = Asc(mid$(sString, (lX + 1), 1))
                 If Not CMSValidateChar_(iAsc) Then _
                     Exit Function
             End If
@@ -1086,30 +1086,30 @@ On Error GoTo error
     If Not UpToDate Then
         'No recibe update, ejecutar AU
         'Ejecuto el AoUpdate, sino me voy
-        If Dir(App.Path & "\AoUpdate.exe", vbArchive) = vbNullString Then
+        If Dir(App.path & "\AoUpdate.exe", vbArchive) = vbNullString Then
             MsgBox "No se encuentra el archivo de actualización AoUpdate.exe por favor descarguelo y vuelva a intentar", vbCritical
             End
         Else
-            FileCopy App.Path & "\AoUpdate.exe", App.Path & "\AoUpdateTMP.exe"
+            FileCopy App.path & "\AoUpdate.exe", App.path & "\AoUpdateTMP.exe"
             
             If NoRes Then
                 extraArgs = " /nores"
             End If
             
-            Call ShellExecute(0, "Open", App.Path & "\AoUpdateTMP.exe", App.EXEName & ".exe" & extraArgs, App.Path, SW_SHOWNORMAL)
+            Call ShellExecute(0, "Open", App.path & "\AoUpdateTMP.exe", App.EXEName & ".exe" & extraArgs, App.path, SW_SHOWNORMAL)
             End
         End If
     Else
-        If FileExist(App.Path & "\AoUpdateTMP.exe", vbArchive) Then Kill App.Path & "\AoUpdateTMP.exe"
+        If FileExist(App.path & "\AoUpdateTMP.exe", vbArchive) Then Kill App.path & "\AoUpdateTMP.exe"
     End If
 Exit Sub
 
 error:
-    If Err.Number = 75 Then 'Si el archivo AoUpdateTMP.exe está en uso, entonces esperamos 5 ms y volvemos a intentarlo hasta que nos deje.
+    If Err.number = 75 Then 'Si el archivo AoUpdateTMP.exe está en uso, entonces esperamos 5 ms y volvemos a intentarlo hasta que nos deje.
         Sleep 5
         Resume
     Else
-        MsgBox Err.Description & vbCrLf, vbInformation, "[ " & Err.Number & " ]" & " Error "
+        MsgBox Err.Description & vbCrLf, vbInformation, "[ " & Err.number & " ]" & " Error "
         End
     End If
 End Sub
@@ -1123,7 +1123,7 @@ Private Sub LoadClientSetup()
     Dim fHandle As Integer
     
     fHandle = FreeFile
-    Open App.Path & "\init\ao.dat" For Binary Access Read Lock Write As fHandle
+    Open App.path & "\init\ao.dat" For Binary Access Read Lock Write As fHandle
         Get fHandle, , ClientSetup
     Close fHandle
     
@@ -1227,7 +1227,7 @@ Public Sub CloseClient()
     
     EngineRun = False
     frmCargando.Show
-    AddtoRichTextBox frmCargando.Status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
     
     Call Resolution.ResetResolution
     

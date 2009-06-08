@@ -535,6 +535,7 @@ Public Enum eEditOptions
     eo_Asesino
     eo_Sex
     eo_Raza
+    eo_addGold
 End Enum
 
 ''

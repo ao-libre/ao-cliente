@@ -698,6 +698,9 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         Case "RAZA"
                             tmpInt = eEditOptions.eo_Raza
                         
+                        Case "AGREGAR"
+                            tmpInt = eEditOptions.eo_addGold
+                        
                         Case Else
                             tmpInt = -1
                     End Select
