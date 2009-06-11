@@ -199,5 +199,7 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 16/05/2009: Se arregla el rt9 con los cortes, arregla bug #2792555 (Maraxus)
  * 28/05/2009: Fix al bug #2796312
  * 08/06/2009: Se agregó el comando /mod AGREGAR oro
+ * 11/06/2009: Agregados algunos checks en el cliente (para equipar, agarrar, tirar, domar, robar, ocultar, meditar)
+
 
 - 0.12.2
