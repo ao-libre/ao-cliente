@@ -701,7 +701,7 @@ Sub MoveCharbyHead(ByVal CharIndex As Integer, ByVal nHeading As E_Heading)
         .scrollDirectionY = addY
     End With
     
-    If UserEstado <> 1 Then Call DoPasosFx(CharIndex)
+    If UserEstado = 0 Then Call DoPasosFx(CharIndex)
     
     'areas viejos
     If (nY < MinLimiteY) Or (nY > MaxLimiteY) Or (nX < MinLimiteX) Or (nX > MaxLimiteX) Then
