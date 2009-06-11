@@ -824,14 +824,32 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
                     Nombres = Not Nombres
                 
                 Case CustomKeys.BindedKey(eKeyType.mKeyTamAnimal)
-                    Call WriteWork(eSkill.Domar)
-                
+                    If UserEstado = 1 Then
+                        With FontTypes(FontTypeNames.FONTTYPE_INFO)
+                            Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+                        End With
+                    Else
+                        Call WriteWork(eSkill.Domar)
+                    End If
+                    
                 Case CustomKeys.BindedKey(eKeyType.mKeySteal)
-                    Call WriteWork(eSkill.Robar)
-                            
+                    If UserEstado = 1 Then
+                        With FontTypes(FontTypeNames.FONTTYPE_INFO)
+                            Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+                        End With
+                    Else
+                        Call WriteWork(eSkill.Robar)
+                    End If
+                    
                 Case CustomKeys.BindedKey(eKeyType.mKeyHide)
-                    Call WriteWork(eSkill.Ocultarse)
-                
+                    If UserEstado = 1 Then
+                        With FontTypes(FontTypeNames.FONTTYPE_INFO)
+                            Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+                        End With
+                    Else
+                        Call WriteWork(eSkill.Ocultarse)
+                    End If
+                                    
                 Case CustomKeys.BindedKey(eKeyType.mKeyDropObject)
                     Call TirarItem
                 
@@ -1080,19 +1098,31 @@ End Sub
 ''''''''''''''''''''''''''''''''''''''
 
 Private Sub TirarItem()
-    If (Inventario.SelectedItem > 0 And Inventario.SelectedItem < MAX_INVENTORY_SLOTS + 1) Or (Inventario.SelectedItem = FLAGORO) Then
-        If Inventario.Amount(Inventario.SelectedItem) = 1 Then
-            Call WriteDrop(Inventario.SelectedItem, 1)
-        Else
-           If Inventario.Amount(Inventario.SelectedItem) > 1 Then
+    If UserEstado = 1 Then
+        With FontTypes(FontTypeNames.FONTTYPE_INFO)
+            Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+        End With
+    Else
+        If (Inventario.SelectedItem > 0 And Inventario.SelectedItem < MAX_INVENTORY_SLOTS + 1) Or (Inventario.SelectedItem = FLAGORO) Then
+            If Inventario.Amount(Inventario.SelectedItem) = 1 Then
+                Call WriteDrop(Inventario.SelectedItem, 1)
+            Else
+                If Inventario.Amount(Inventario.SelectedItem) > 1 Then
                 frmCantidad.Show , frmMain
-           End If
+                End If
+            End If
         End If
     End If
 End Sub
 
 Private Sub AgarrarItem()
-    Call WritePickUp
+    If UserEstado = 1 Then
+        With FontTypes(FontTypeNames.FONTTYPE_INFO)
+            Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+        End With
+    Else
+        Call WritePickUp
+    End If
 End Sub
 
 Private Sub UsarItem()
@@ -1105,8 +1135,14 @@ Private Sub UsarItem()
 End Sub
 
 Private Sub EquiparItem()
-    If (Inventario.SelectedItem > 0) And (Inventario.SelectedItem < MAX_INVENTORY_SLOTS + 1) Then _
+    If UserEstado = 1 Then
+        With FontTypes(FontTypeNames.FONTTYPE_INFO)
+                Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+        End With
+    Else
+        If (Inventario.SelectedItem > 0) And (Inventario.SelectedItem < MAX_INVENTORY_SLOTS + 1) Then _
         Call WriteEquipItem(Inventario.SelectedItem)
+    End If
 End Sub
 
 ''''''''''''''''''''''''''''''''''''''

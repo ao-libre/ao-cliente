@@ -1534,6 +1534,8 @@ Private Sub HandleUpdateHP()
     'Is the user alive??
     If UserMinHP = 0 Then
         UserEstado = 1
+        frmMain.DesactivarMacroTrabajo
+        frmMain.DesactivarMacroHechizos
     Else
         UserEstado = 0
     End If
@@ -2716,6 +2718,8 @@ Private Sub HandleUpdateUserStats()
     
     If UserMinHP = 0 Then
         UserEstado = 1
+        frmMain.DesactivarMacroTrabajo
+        frmMain.DesactivarMacroHechizos
     Else
         UserEstado = 0
     End If
