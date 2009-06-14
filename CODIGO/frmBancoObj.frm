@@ -97,6 +97,20 @@ Begin VB.Form frmBancoObj
       Top             =   1800
       Width           =   2490
    End
+   Begin VB.Image CmdMoverBov 
+      Height          =   375
+      Index           =   0
+      Left            =   3240
+      Top             =   2280
+      Width           =   375
+   End
+   Begin VB.Image CmdMoverBov 
+      Height          =   375
+      Index           =   1
+      Left            =   3240
+      Top             =   1800
+      Width           =   375
+   End
    Begin VB.Label Label2 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
@@ -237,9 +251,7 @@ Option Explicit
 Public LasActionBuy As Boolean
 Public LastIndex1 As Integer
 Public LastIndex2 As Integer
-
-
-
+Public NoPuedeMover As Boolean
 
 Private Sub cantidad_Change()
 
@@ -261,8 +273,39 @@ If (KeyAscii <> 8) Then
 End If
 End Sub
 
+Private Sub CmdMoverBov_Click(index As Integer)
+If List1(0).ListIndex = -1 Then Exit Sub
+
+If NoPuedeMover Then Exit Sub
+
+Select Case index
+    Case 1 'subir
+        If List1(0).ListIndex <= 0 Then
+            With FontTypes(FontTypeNames.FONTTYPE_INFO)
+                Call ShowConsoleMsg("No puedes mover el objeto en esa dirección.", .red, .green, .blue, .bold, .italic)
+            End With
+            Exit Sub
+        End If
+        LastIndex1 = List1(0).ListIndex - 1
+    Case 0 'bajar
+        If List1(0).ListIndex >= List1(0).ListCount - 1 Then
+            With FontTypes(FontTypeNames.FONTTYPE_INFO)
+                Call ShowConsoleMsg("No puedes mover el objeto en esa dirección.", .red, .green, .blue, .bold, .italic)
+            End With
+            Exit Sub
+        End If
+        LastIndex1 = List1(0).ListIndex + 1
+End Select
+
+NoPuedeMover = True
+LasActionBuy = True
+LastIndex2 = List1(1).ListIndex
+Call WriteMoveBank(index, List1(0).ListIndex + 1)
+End Sub
+
 Private Sub Command2_Click()
     Call WriteBankEnd
+    NoPuedeMover = False
 End Sub
 
 Private Sub Form_Deactivate()
@@ -293,22 +336,22 @@ Private Sub Image1_Click(index As Integer)
 
 Call Audio.PlayWave(SND_CLICK)
 
-If List1(index).List(List1(index).listIndex) = "" Or _
-   List1(index).listIndex < 0 Then Exit Sub
+If List1(index).List(List1(index).ListIndex) = "" Or _
+   List1(index).ListIndex < 0 Then Exit Sub
 
 If Not IsNumeric(cantidad.Text) Then Exit Sub
 
 Select Case index
     Case 0
         frmBancoObj.List1(0).SetFocus
-        LastIndex1 = List1(0).listIndex
+        LastIndex1 = List1(0).ListIndex
         LasActionBuy = True
-        Call WriteBankExtractItem(List1(0).listIndex + 1, cantidad.Text)
+        Call WriteBankExtractItem(List1(0).ListIndex + 1, cantidad.Text)
         
    Case 1
-        LastIndex2 = List1(1).listIndex
+        LastIndex2 = List1(1).ListIndex
         LasActionBuy = False
-        Call WriteBankDeposit(List1(1).listIndex + 1, cantidad.Text)
+        Call WriteBankDeposit(List1(1).ListIndex + 1, cantidad.Text)
 End Select
 
 End Sub
@@ -349,45 +392,45 @@ DR.Bottom = 32
 
 Select Case index
     Case 0
-        Label1(0).Caption = UserBancoInventory(List1(0).listIndex + 1).Name
-        Label1(2).Caption = UserBancoInventory(List1(0).listIndex + 1).Amount
-        Select Case UserBancoInventory(List1(0).listIndex + 1).OBJType
+        Label1(0).Caption = UserBancoInventory(List1(0).ListIndex + 1).Name
+        Label1(2).Caption = UserBancoInventory(List1(0).ListIndex + 1).Amount
+        Select Case UserBancoInventory(List1(0).ListIndex + 1).OBJType
             Case 2
-                Label1(3).Caption = "Max Golpe:" & UserBancoInventory(List1(0).listIndex + 1).MaxHit
-                Label1(4).Caption = "Min Golpe:" & UserBancoInventory(List1(0).listIndex + 1).MinHit
+                Label1(3).Caption = "Max Golpe:" & UserBancoInventory(List1(0).ListIndex + 1).MaxHit
+                Label1(4).Caption = "Min Golpe:" & UserBancoInventory(List1(0).ListIndex + 1).MinHit
                 Label1(3).Visible = True
                 Label1(4).Visible = True
             Case 3, 17
                 Label1(3).Visible = False
-                Label1(4).Caption = "Defensa:" & UserBancoInventory(List1(0).listIndex + 1).Def
+                Label1(4).Caption = "Defensa:" & UserBancoInventory(List1(0).ListIndex + 1).Def
                 Label1(4).Visible = True
             Case Else
                 Label1(3).Visible = False
                 Label1(4).Visible = False
         End Select
         
-        If UserBancoInventory(List1(0).listIndex + 1).Amount <> 0 Then _
-            Call DrawGrhtoHdc(Picture1.hdc, UserBancoInventory(List1(0).listIndex + 1).GrhIndex, SR, DR)
+        If UserBancoInventory(List1(0).ListIndex + 1).Amount <> 0 Then _
+            Call DrawGrhtoHdc(Picture1.hdc, UserBancoInventory(List1(0).ListIndex + 1).GrhIndex, SR, DR)
     Case 1
-        Label1(0).Caption = Inventario.ItemName(List1(1).listIndex + 1)
-        Label1(2).Caption = Inventario.Amount(List1(1).listIndex + 1)
-        Select Case Inventario.OBJType(List1(1).listIndex + 1)
+        Label1(0).Caption = Inventario.ItemName(List1(1).ListIndex + 1)
+        Label1(2).Caption = Inventario.Amount(List1(1).ListIndex + 1)
+        Select Case Inventario.OBJType(List1(1).ListIndex + 1)
             Case 2
-                Label1(3).Caption = "Max Golpe:" & Inventario.MaxHit(List1(1).listIndex + 1)
-                Label1(4).Caption = "Min Golpe:" & Inventario.MinHit(List1(1).listIndex + 1)
+                Label1(3).Caption = "Max Golpe:" & Inventario.MaxHit(List1(1).ListIndex + 1)
+                Label1(4).Caption = "Min Golpe:" & Inventario.MinHit(List1(1).ListIndex + 1)
                 Label1(3).Visible = True
                 Label1(4).Visible = True
             Case 3, 17
                 Label1(3).Visible = False
-                Label1(4).Caption = "Defensa:" & Inventario.Def(List1(1).listIndex + 1)
+                Label1(4).Caption = "Defensa:" & Inventario.Def(List1(1).ListIndex + 1)
                 Label1(4).Visible = True
             Case Else
                 Label1(3).Visible = False
                 Label1(4).Visible = False
         End Select
         
-        If Inventario.Amount(List1(1).listIndex + 1) <> 0 Then _
-            Call DrawGrhtoHdc(Picture1.hdc, Inventario.GrhIndex(List1(1).listIndex + 1), SR, DR)
+        If Inventario.Amount(List1(1).ListIndex + 1) <> 0 Then _
+            Call DrawGrhtoHdc(Picture1.hdc, Inventario.GrhIndex(List1(1).ListIndex + 1), SR, DR)
 End Select
 
 If Label1(2).Caption = 0 Then ' 27/08/2006 - GS > No mostrar imagen ni nada, cuando no ahi nada que mostrar.

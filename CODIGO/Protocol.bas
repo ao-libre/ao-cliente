@@ -208,6 +208,7 @@ Private Enum ClientPacketID
     BankDeposit             'DEPO
     ForumPost               'DEMSG
     MoveSpell               'DESPHE
+    MoveBank
     ClanCodexUpdate         'DESCOD
     UserCommerceOffer       'OFRECER
     GuildAcceptPeace        'ACEPPEAT
@@ -1594,7 +1595,7 @@ Private Sub HandleUpdateExp()
     
     'Get data and update form
     UserExp = incomingData.ReadLong()
-    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
 End Sub
 
@@ -2695,7 +2696,7 @@ Private Sub HandleUpdateUserStats()
     UserPasarNivel = incomingData.ReadLong()
     UserExp = incomingData.ReadLong()
     
-    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     
     If UserPasarNivel > 0 Then
         frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
@@ -3965,11 +3966,11 @@ On Error GoTo ErrHandler
         .criminales.Caption = "Criminales asesinados: " & CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .Status.Caption = " (Ciudadano)"
-            .Status.ForeColor = vbBlue
+            .status.Caption = " (Ciudadano)"
+            .status.ForeColor = vbBlue
         Else
-            .Status.Caption = " (Criminal)"
-            .Status.ForeColor = vbRed
+            .status.Caption = " (Criminal)"
+            .status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)
@@ -4288,7 +4289,10 @@ Private Sub HandleBankOK()
             frmBancoObj.List1(0).ListIndex = frmBancoObj.LastIndex1
             frmBancoObj.List1(1).ListIndex = frmBancoObj.LastIndex2
         End If
+        
+        frmBancoObj.NoPuedeMover = False
     End If
+       
 End Sub
 
 ''
@@ -5497,6 +5501,27 @@ Public Sub WriteMoveSpell(ByVal upwards As Boolean, ByVal slot As Byte)
 '***************************************************
     With outgoingData
         Call .WriteByte(ClientPacketID.MoveSpell)
+        
+        Call .WriteBoolean(upwards)
+        Call .WriteByte(slot)
+    End With
+End Sub
+
+''
+' Writes the "MoveBank" message to the outgoing data buffer.
+'
+' @param    upwards True if the item will be moved up in the list, False if it will be moved downwards.
+' @param    slot Bank List slot where the item which's info is requested is.
+' @remarks  The data is not actually sent until the buffer is properly flushed.
+
+Public Sub WriteMoveBank(ByVal upwards As Boolean, ByVal slot As Byte)
+'***************************************************
+'Author: Torres Patricio (Pato)
+'Last Modification: 06/14/09
+'Writes the "MoveBank" message to the outgoing data buffer
+'***************************************************
+    With outgoingData
+        Call .WriteByte(ClientPacketID.MoveBank)
         
         Call .WriteBoolean(upwards)
         Call .WriteByte(slot)
