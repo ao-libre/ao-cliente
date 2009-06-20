@@ -191,7 +191,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 Call WriteRest
                 
             Case "/MEDITAR"
-                If UserMinMAN = UserMaxMAN Or UserMaxMAN <> 0 Then Exit Sub
+                If UserMinMAN = UserMaxMAN Then Exit Sub
                 
                 If UserEstado = 1 Then 'Muerto
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)

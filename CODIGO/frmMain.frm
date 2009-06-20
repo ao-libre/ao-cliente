@@ -566,7 +566,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2646
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -911,6 +910,13 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
         Case CustomKeys.BindedKey(eKeyType.mKeyMeditate)
             If UserMinMAN = UserMaxMAN Then Exit Sub
             
+            If UserEstado = 1 Then
+                With FontTypes(FontTypeNames.FONTTYPE_INFO)
+                    Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+                End With
+                Exit Sub
+            End If
+                
             If Not PuedeMacrear Then
                 AddtoRichTextBox frmMain.RecTxt, "No tan rápido..!", 255, 255, 255, False, False, False
             Else
@@ -1430,7 +1436,7 @@ Private Sub Label4_Click()
     picInv.Visible = True
 
     hlst.Visible = False
-    cmdINFO.Visible = False
+    cmdInfo.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = True
@@ -1449,7 +1455,7 @@ Private Sub Label7_Click()
     'DespInv(1).Visible = False
     picInv.Visible = False
     hlst.Visible = True
-    cmdINFO.Visible = True
+    cmdInfo.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True
