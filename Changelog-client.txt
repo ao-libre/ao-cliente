@@ -203,5 +203,5 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 14/06/2009: Ahora es posible ordenar la bóveda (Pato)
  * 20/06/2009: Fix al commit anterior de Jamicheli y agregué un checkeo del estado del user al meditar (Pato)
  * 20/06/2009: Otro fix al commit de jamicheli(cuando el user moría se desactivaban los macros sin fijarse si estaban activados), también agregue checkeos del estado del user al momento de activar los macros (Pato)
-
+ * 21/06/2009: Agregué el comando /SETINIVAR (BrianPr)
 - 0.12.2

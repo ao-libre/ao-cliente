@@ -1475,6 +1475,14 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             
             Case "/PING"
                 Call WritePing
+                
+            Case "/SETINIVAR"
+                If CantidadArgumentos = 3 Then
+                    ArgumentosAll(2) = Replace(ArgumentosAll(2), "+", " ")
+                    Call WriteSetIniVar(ArgumentosAll(0), ArgumentosAll(1), ArgumentosAll(2))
+                Else
+                    Call ShowConsoleMsg("Prámetros incorrectos. Utilice /SETINIVAR LLAVE CLAVE VALOR")
+                End If
             
 #If SeguridadAlkon Then
             Case Else
