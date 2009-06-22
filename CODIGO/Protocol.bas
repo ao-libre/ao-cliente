@@ -411,6 +411,7 @@ Private Enum ClientPacketID
     ChatColor               '/CHATCOLOR
     Ignored                 '/IGNORADO
     CheckSlot               '/SLOT
+    SetIniVar               '/SETINIVAR LLAVE CLAVE VALOR
 End Enum
 
 Public Enum FontTypeNames
@@ -1595,7 +1596,7 @@ Private Sub HandleUpdateExp()
     
     'Get data and update form
     UserExp = incomingData.ReadLong()
-    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
 End Sub
 
@@ -2696,7 +2697,7 @@ Private Sub HandleUpdateUserStats()
     UserPasarNivel = incomingData.ReadLong()
     UserExp = incomingData.ReadLong()
     
-    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     
     If UserPasarNivel > 0 Then
         frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
@@ -3966,11 +3967,11 @@ On Error GoTo ErrHandler
         .criminales.Caption = "Criminales asesinados: " & CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .status.Caption = " (Ciudadano)"
-            .status.ForeColor = vbBlue
+            .Status.Caption = " (Ciudadano)"
+            .Status.ForeColor = vbBlue
         Else
-            .status.Caption = " (Criminal)"
-            .status.ForeColor = vbRed
+            .Status.Caption = " (Criminal)"
+            .Status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)
@@ -9060,6 +9061,29 @@ Public Sub WritePing()
     DoEvents
     
     pingTime = GetTickCount
+End Sub
+
+''
+' Writes the "SetIniVar" message to the outgoing data buffer.
+'
+' @param    sLlave the name of the key which contains the value to edit
+' @param    sClave the name of the value to edit
+' @param    sValor the new value to set to sClave
+' @remarks  The data is not actually sent until the buffer is properly flushed.
+
+Public Sub WriteSetIniVar(ByRef sLlave As String, ByRef sClave As String, ByRef sValor As String)
+'***************************************************
+'Author: Brian Chaia (BrianPr)
+'Last Modification: 21/06/2009
+'Writes the "SetIniVar" message to the outgoing data buffer
+'***************************************************
+    With outgoingData
+        Call .WriteByte(ClientPacketID.SetIniVar)
+        
+        Call .WriteASCIIString(sLlave)
+        Call .WriteASCIIString(sClave)
+        Call .WriteASCIIString(sValor)
+    End With
 End Sub
 
 ''
