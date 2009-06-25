@@ -204,4 +204,6 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 20/06/2009: Fix al commit anterior de Jamicheli y agregué un checkeo del estado del user al meditar (Pato)
  * 20/06/2009: Otro fix al commit de jamicheli(cuando el user moría se desactivaban los macros sin fijarse si estaban activados), también agregue checkeos del estado del user al momento de activar los macros (Pato)
  * 21/06/2009: Agregué el comando /SETINIVAR (BrianPr)
+ * 25/06/2009: Fix al bug #2811927 (Pato)
+
 - 0.12.2
