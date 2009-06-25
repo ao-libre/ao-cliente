@@ -359,7 +359,7 @@ Sub CargarCabezas()
     Dim Miscabezas() As tIndiceCabeza
     
     N = FreeFile()
-    Open App.Path & "\init\Cabezas.ind" For Binary Access Read As #N
+    Open App.path & "\init\Cabezas.ind" For Binary Access Read As #N
     
     'cabecera
     Get #N, , MiCabecera
@@ -393,7 +393,7 @@ Sub CargarCascos()
     Dim Miscabezas() As tIndiceCabeza
     
     N = FreeFile()
-    Open App.Path & "\init\Cascos.ind" For Binary Access Read As #N
+    Open App.path & "\init\Cascos.ind" For Binary Access Read As #N
     
     'cabecera
     Get #N, , MiCabecera
@@ -426,7 +426,7 @@ Sub CargarCuerpos()
     Dim MisCuerpos() As tIndiceCuerpo
     
     N = FreeFile()
-    Open App.Path & "\init\Personajes.ind" For Binary Access Read As #N
+    Open App.path & "\init\Personajes.ind" For Binary Access Read As #N
     
     'cabecera
     Get #N, , MiCabecera
@@ -461,7 +461,7 @@ Sub CargarFxs()
     Dim NumFxs As Integer
     
     N = FreeFile()
-    Open App.Path & "\init\Fxs.ind" For Binary Access Read As #N
+    Open App.path & "\init\Fxs.ind" For Binary Access Read As #N
     
     'cabecera
     Get #N, , MiCabecera
@@ -485,7 +485,7 @@ Sub CargarTips()
     Dim NumTips As Integer
     
     N = FreeFile
-    Open App.Path & "\init\Tips.ayu" For Binary Access Read As #N
+    Open App.path & "\init\Tips.ayu" For Binary Access Read As #N
     
     'cabecera
     Get #N, , MiCabecera
@@ -509,7 +509,7 @@ Sub CargarArrayLluvia()
     Dim Nu As Integer
     
     N = FreeFile()
-    Open App.Path & "\init\fk.ind" For Binary Access Read As #N
+    Open App.path & "\init\fk.ind" For Binary Access Read As #N
     
     'cabecera
     Get #N, , MiCabecera
@@ -1024,7 +1024,7 @@ Function MoveToLegalPos(ByVal x As Integer, ByVal y As Integer) As Boolean
     End If
     
     'Tile Bloqueado?
-    If MapData(x, y).Blocked = 1 Then
+    If MapData(x, y).Blocked = 1 Or MapData(UserPos.x, UserPos.y).Blocked = 1 Then
         Exit Function
     End If
     
@@ -1113,12 +1113,12 @@ On Error GoTo error
 Exit Sub
 
 error:
-    If Err.Number = 9 And Grh.FrameCounter < 1 Then
+    If Err.number = 9 And Grh.FrameCounter < 1 Then
         Grh.FrameCounter = 1
         Resume
     Else
         MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & _
-        vbCrLf & Err.Description, vbExclamation, "[ " & Err.Number & " ] Error"
+        vbCrLf & Err.Description, vbExclamation, "[ " & Err.number & " ] Error"
         End
     End If
 End Sub
@@ -1201,12 +1201,12 @@ On Error GoTo error
 Exit Sub
 
 error:
-    If Err.Number = 9 And Grh.FrameCounter < 1 Then
+    If Err.number = 9 And Grh.FrameCounter < 1 Then
         Grh.FrameCounter = 1
         Resume
     Else
         MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & _
-        vbCrLf & Err.Description, vbExclamation, "[ " & Err.Number & " ] Error"
+        vbCrLf & Err.Description, vbExclamation, "[ " & Err.number & " ] Error"
         End
     End If
 End Sub
@@ -1616,7 +1616,7 @@ Public Function InitTileEngine(ByVal setDisplayFormhWnd As Long, ByVal setMainVi
     Dim SurfaceDesc As DDSURFACEDESC2
     Dim ddck As DDCOLORKEY
     
-    IniPath = App.Path & "\Init\"
+    IniPath = App.path & "\Init\"
     
     'Fill startup variables
     MainViewTop = setMainViewTop
@@ -2078,7 +2078,7 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
                             Call RenderTextCentered(PixelOffsetX + TilePixelWidth \ 2 + 5, PixelOffsetY + 30, line, color, frmMain.font)
                             
                             'Clan
-                            line = Mid$(.Nombre, Pos)
+                            line = mid$(.Nombre, Pos)
                             Call RenderTextCentered(PixelOffsetX + TilePixelWidth \ 2 + 5, PixelOffsetY + 45, line, color, frmMain.font)
                         End If
                     End If
