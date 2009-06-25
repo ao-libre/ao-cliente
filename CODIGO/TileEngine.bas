@@ -1024,13 +1024,18 @@ Function MoveToLegalPos(ByVal x As Integer, ByVal y As Integer) As Boolean
     End If
     
     'Tile Bloqueado?
-    If MapData(x, y).Blocked = 1 Or MapData(UserPos.x, UserPos.y).Blocked = 1 Then
+    If MapData(x, y).Blocked = 1 Then
         Exit Function
     End If
     
     CharIndex = MapData(x, y).CharIndex
     '¿Hay un personaje?
     If CharIndex > 0 Then
+    
+        If MapData(UserPos.x, UserPos.y).Blocked = 1 Then
+            Exit Function
+        End If
+        
         With charlist(CharIndex)
             ' Si no es casper, no puede pasar
             If .iHead <> CASPER_HEAD And .iBody <> FRAGATA_FANTASMAL Then
