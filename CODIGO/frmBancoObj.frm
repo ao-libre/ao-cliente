@@ -99,17 +99,17 @@ Begin VB.Form frmBancoObj
    End
    Begin VB.Image CmdMoverBov 
       Height          =   375
-      Index           =   0
-      Left            =   3240
-      Top             =   2280
-      Width           =   375
+      Index           =   1
+      Left            =   0
+      Top             =   4200
+      Width           =   570
    End
    Begin VB.Image CmdMoverBov 
       Height          =   375
-      Index           =   1
-      Left            =   3240
-      Top             =   1800
-      Width           =   375
+      Index           =   0
+      Left            =   0
+      Top             =   4560
+      Width           =   570
    End
    Begin VB.Label Label2 
       AutoSize        =   -1  'True
@@ -318,6 +318,9 @@ Private Sub Form_Load()
 Me.Picture = LoadPicture(App.path & "\Graficos\comerciar.jpg")
 Image1(0).Picture = LoadPicture(App.path & "\Graficos\BotónComprar.jpg")
 Image1(1).Picture = LoadPicture(App.path & "\Graficos\Botónvender.jpg")
+
+CmdMoverBov(1).Picture = LoadPicture(App.path & "\Graficos\FlechaSubirObjeto.jpg")
+CmdMoverBov(0).Picture = LoadPicture(App.path & "\Graficos\FlechaBajarObjeto.jpg")
 
 End Sub
 
