@@ -209,3 +209,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 21/06/2009: Agregué el comando /SETINIVAR (BrianPr)
  * 25/06/2009: Fix al bug #2811927 (Pato)
  * 19/07/2009: Ahora se limpia la lista de las propuestas de alianza/paz de los clanes (Marco)
+ * 21/07/2009: El formulario de comercio seguro se carga como vbModal (Marco)
