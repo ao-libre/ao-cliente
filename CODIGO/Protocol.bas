@@ -3822,6 +3822,7 @@ On Error GoTo ErrHandler
     
     guildList = Split(Buffer.ReadASCIIString(), SEPARATOR)
     
+    Call frmPeaceProp.lista.Clear
     For i = 0 To UBound(guildList())
         Call frmPeaceProp.lista.AddItem(guildList(i))
     Next i
@@ -3871,6 +3872,7 @@ On Error GoTo ErrHandler
     
     guildList = Split(Buffer.ReadASCIIString(), SEPARATOR)
     
+    Call frmPeaceProp.lista.Clear
     For i = 0 To UBound(guildList())
         Call frmPeaceProp.lista.AddItem(guildList(i))
     Next i
