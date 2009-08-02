@@ -1012,9 +1012,10 @@ End Function
 Function MoveToLegalPos(ByVal x As Integer, ByVal y As Integer) As Boolean
 '*****************************************************************
 'Author: ZaMa
-'Last Modify Date: 10/05/2009
+'Last Modify Date: 01/08/2009
 'Checks to see if a tile position is legal, including if there is a casper in the tile
 '10/05/2009: ZaMa - Now you can't change position with a casper which is in the shore.
+'01/08/2009: ZaMa - Now invisible admins can't change position with caspers.
 '*****************************************************************
     Dim CharIndex As Integer
     
@@ -1047,6 +1048,11 @@ Function MoveToLegalPos(ByVal x As Integer, ByVal y As Integer) As Boolean
                 Else
                     ' No puedo intercambiar con un casper que este en la orilla (Lado agua)
                     If HayAgua(x, y) Then Exit Function
+                End If
+                
+                ' Los admins no pueden intercambiar pos con caspers cuando estan invisibles
+                If charlist(UserCharIndex).priv > 0 And charlist(UserCharIndex).priv < 6 Then
+                    If charlist(UserCharIndex).invisible = True Then Exit Function
                 End If
             End If
         End With
