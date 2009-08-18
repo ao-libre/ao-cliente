@@ -1258,3 +1258,25 @@ Public Sub CloseClient()
     
     End
 End Sub
+
+Public Function esGM(CharIndex As Integer) As Boolean
+esGM = False
+If charlist(CharIndex).priv >= 1 And charlist(CharIndex).priv <= 5 Or charlist(CharIndex).priv = 25 Then _
+    esGM = True
+
+End Function
+
+Public Function getTagPosition(ByVal Nick As String) As Integer
+Dim buf As Integer
+buf = InStr(Nick, "<")
+If buf > 0 Then
+    getTagPosition = buf
+    Exit Function
+End If
+buf = InStr(Nick, "[")
+If buf > 0 Then
+    getTagPosition = buf
+    Exit Function
+End If
+getTagPosition = Len(Nick) + 2
+End Function
