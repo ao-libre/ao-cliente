@@ -2070,9 +2070,10 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
                 
                     'Draw name over head
                     If LenB(.Nombre) > 0 Then
-                        If Nombres And Abs(MouseTileX - .Pos.x) < 2 And (Abs(MouseTileY - .Pos.y)) < 2 Then
-                            Pos = InStr(.Nombre, "<")
-                            If Pos = 0 Then Pos = Len(.Nombre) + 2
+                        If Nombres And esGM(UserCharIndex) Or Abs(MouseTileX - .Pos.x) < 2 And (Abs(MouseTileY - .Pos.y)) < 2 Then
+                            Pos = getTagPosition(.Nombre)
+                            'Pos = InStr(.Nombre, "<")
+                            'If Pos = 0 Then Pos = Len(.Nombre) + 2
                             
                             If .priv = 0 Then
                                 If .Criminal Then
