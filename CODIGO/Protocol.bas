@@ -1600,7 +1600,7 @@ Private Sub HandleUpdateExp()
     
     'Get data and update form
     UserExp = incomingData.ReadLong()
-    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
 End Sub
 
@@ -1666,8 +1666,8 @@ Private Sub HandlePosUpdate()
     Call incomingData.ReadByte
     
     'Remove char from old position
-    If MapData(UserPos.x, UserPos.y).charindex = UserCharIndex Then
-        MapData(UserPos.x, UserPos.y).charindex = 0
+    If MapData(UserPos.x, UserPos.y).CharIndex = UserCharIndex Then
+        MapData(UserPos.x, UserPos.y).CharIndex = 0
     End If
     
     'Set new pos
@@ -1675,7 +1675,7 @@ Private Sub HandlePosUpdate()
     UserPos.y = incomingData.ReadByte()
     
     'Set char
-    MapData(UserPos.x, UserPos.y).charindex = UserCharIndex
+    MapData(UserPos.x, UserPos.y).CharIndex = UserCharIndex
     charlist(UserCharIndex).Pos = UserPos
     
     'Are we under a roof?
@@ -1857,21 +1857,21 @@ On Error GoTo ErrHandler
     Call Buffer.ReadByte
     
     Dim chat As String
-    Dim charindex As Integer
+    Dim CharIndex As Integer
     Dim r As Byte
     Dim g As Byte
     Dim b As Byte
     
     chat = Buffer.ReadASCIIString()
-    charindex = Buffer.ReadInteger()
+    CharIndex = Buffer.ReadInteger()
     
     r = Buffer.ReadByte()
     g = Buffer.ReadByte()
     b = Buffer.ReadByte()
     
     'Only add the chat if the character exists (a CharacterRemove may have been sent to the PC / NPC area before the buffer was flushed)
-    If charlist(charindex).Active Then _
-        Call Dialogos.CreateDialog(chat, charindex, RGB(r, g, b))
+    If charlist(CharIndex).Active Then _
+        Call Dialogos.CreateDialog(chat, CharIndex, RGB(r, g, b))
     
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
@@ -2155,7 +2155,7 @@ On Error GoTo ErrHandler
     'Remove packet ID
     Call Buffer.ReadByte
     
-    Dim charindex As Integer
+    Dim CharIndex As Integer
     Dim Body As Integer
     Dim Head As Integer
     Dim Heading As E_Heading
@@ -2166,7 +2166,7 @@ On Error GoTo ErrHandler
     Dim helmet As Integer
     Dim privs As Integer
     
-    charindex = Buffer.ReadInteger()
+    CharIndex = Buffer.ReadInteger()
     Body = Buffer.ReadInteger()
     Head = Buffer.ReadInteger()
     Heading = Buffer.ReadByte()
@@ -2177,8 +2177,8 @@ On Error GoTo ErrHandler
     helmet = Buffer.ReadInteger()
     
     
-    With charlist(charindex)
-        Call SetCharacterFx(charindex, Buffer.ReadInteger(), Buffer.ReadInteger())
+    With charlist(CharIndex)
+        Call SetCharacterFx(CharIndex, Buffer.ReadInteger(), Buffer.ReadInteger())
         
         .Nombre = Buffer.ReadASCIIString()
         .Criminal = Buffer.ReadByte()
@@ -2207,7 +2207,7 @@ On Error GoTo ErrHandler
         End If
     End With
     
-    Call MakeChar(charindex, Body, Head, Heading, x, y, weapon, shield, helmet)
+    Call MakeChar(CharIndex, Body, Head, Heading, x, y, weapon, shield, helmet)
     
     Call RefreshAllChars
     
@@ -2239,9 +2239,9 @@ Private Sub HandleCharacterChangeNick()
     
     'Remove packet id
     Call incomingData.ReadByte
-    Dim charindex As Integer
-    charindex = incomingData.ReadInteger
-    charlist(charindex).Nombre = incomingData.ReadASCIIString
+    Dim CharIndex As Integer
+    CharIndex = incomingData.ReadInteger
+    charlist(CharIndex).Nombre = incomingData.ReadASCIIString
     
 End Sub
 
@@ -2262,11 +2262,11 @@ Private Sub HandleCharacterRemove()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Dim charindex As Integer
+    Dim CharIndex As Integer
     
-    charindex = incomingData.ReadInteger()
+    CharIndex = incomingData.ReadInteger()
     
-    Call EraseChar(charindex)
+    Call EraseChar(CharIndex)
     Call RefreshAllChars
 End Sub
 
@@ -2287,26 +2287,26 @@ Private Sub HandleCharacterMove()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Dim charindex As Integer
+    Dim CharIndex As Integer
     Dim x As Byte
     Dim y As Byte
     
-    charindex = incomingData.ReadInteger()
+    CharIndex = incomingData.ReadInteger()
     x = incomingData.ReadByte()
     y = incomingData.ReadByte()
     
-    With charlist(charindex)
+    With charlist(CharIndex)
         If .FxIndex >= 40 And .FxIndex <= 49 Then   'If it's meditating, we remove the FX
             .FxIndex = 0
         End If
         
         ' Play steps sounds if the user is not an admin of any kind
         If .priv <> 1 And .priv <> 2 And .priv <> 3 And .priv <> 5 And .priv <> 25 Then
-            Call DoPasosFx(charindex)
+            Call DoPasosFx(CharIndex)
         End If
     End With
     
-    Call MoveCharbyPos(charindex, x, y)
+    Call MoveCharbyPos(CharIndex, x, y)
     
     Call RefreshAllChars
 End Sub
@@ -2340,8 +2340,8 @@ End Sub
 Private Sub HandleCharacterChange()
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'
+'Last Modification: 25/08/2009
+'25/08/2009: ZaMa - Changed a variable used incorrectly.
 '***************************************************
     If incomingData.length < 18 Then
         Err.Raise incomingData.NotEnoughDataErrCode
@@ -2351,13 +2351,13 @@ Private Sub HandleCharacterChange()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Dim charindex As Integer
+    Dim CharIndex As Integer
     Dim tempint As Integer
     Dim headIndex As Integer
     
-    charindex = incomingData.ReadInteger()
+    CharIndex = incomingData.ReadInteger()
     
-    With charlist(charindex)
+    With charlist(CharIndex)
         tempint = incomingData.ReadInteger()
         
         If tempint < LBound(BodyData()) Or tempint > UBound(BodyData()) Then
@@ -2371,7 +2371,7 @@ Private Sub HandleCharacterChange()
         
         headIndex = incomingData.ReadInteger()
         
-        If tempint < LBound(HeadData()) Or tempint > UBound(HeadData()) Then
+        If headIndex < LBound(HeadData()) Or headIndex > UBound(HeadData()) Then
             .Head = HeadData(0)
             .iHead = 0
         Else
@@ -2392,7 +2392,7 @@ Private Sub HandleCharacterChange()
         tempint = incomingData.ReadInteger()
         If tempint <> 0 Then .Casco = CascoAnimData(tempint)
         
-        Call SetCharacterFx(charindex, incomingData.ReadInteger(), incomingData.ReadInteger())
+        Call SetCharacterFx(CharIndex, incomingData.ReadInteger(), incomingData.ReadInteger())
     End With
     
     Call RefreshAllChars
@@ -2681,15 +2681,15 @@ Private Sub HandleCreateFX()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Dim charindex As Integer
+    Dim CharIndex As Integer
     Dim fX As Integer
     Dim Loops As Integer
     
-    charindex = incomingData.ReadInteger()
+    CharIndex = incomingData.ReadInteger()
     fX = incomingData.ReadInteger()
     Loops = incomingData.ReadInteger()
     
-    Call SetCharacterFx(charindex, fX, Loops)
+    Call SetCharacterFx(CharIndex, fX, Loops)
 End Sub
 
 ''
@@ -2720,7 +2720,7 @@ Private Sub HandleUpdateUserStats()
     UserPasarNivel = incomingData.ReadLong()
     UserExp = incomingData.ReadLong()
     
-    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     
     If UserPasarNivel > 0 Then
         frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
@@ -3558,16 +3558,16 @@ Private Sub HandleSetInvisible()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Dim charindex As Integer
+    Dim CharIndex As Integer
     
-    charindex = incomingData.ReadInteger()
-    charlist(charindex).invisible = incomingData.ReadBoolean()
+    CharIndex = incomingData.ReadInteger()
+    charlist(CharIndex).invisible = incomingData.ReadBoolean()
     
 #If SeguridadAlkon Then
-    If charlist(charindex).invisible Then
-        Call MI(CualMI).SetInvisible(charindex)
+    If charlist(CharIndex).invisible Then
+        Call MI(CualMI).SetInvisible(CharIndex)
     Else
-        Call MI(CualMI).ResetInvisible(charindex)
+        Call MI(CualMI).ResetInvisible(CharIndex)
     End If
 #End If
 
@@ -3992,11 +3992,11 @@ On Error GoTo ErrHandler
         .criminales.Caption = "Criminales asesinados: " & CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .status.Caption = " (Ciudadano)"
-            .status.ForeColor = vbBlue
+            .Status.Caption = " (Ciudadano)"
+            .Status.ForeColor = vbBlue
         Else
-            .status.Caption = " (Criminal)"
-            .status.ForeColor = vbRed
+            .Status.Caption = " (Criminal)"
+            .Status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)
@@ -4636,16 +4636,16 @@ On Error GoTo ErrHandler
     'Remove packet ID
     Call Buffer.ReadByte
     
-    Dim charindex As Integer
+    Dim CharIndex As Integer
     Dim Criminal As Boolean
     Dim userTag As String
     
-    charindex = Buffer.ReadInteger()
+    CharIndex = Buffer.ReadInteger()
     Criminal = Buffer.ReadBoolean()
     userTag = Buffer.ReadASCIIString()
     
     'Update char status adn tag!
-    With charlist(charindex)
+    With charlist(CharIndex)
         If Criminal Then
             .Criminal = 1
         Else
@@ -4818,7 +4818,7 @@ End Sub
 ' @param    chat The chat text to be sent to the user.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteWhisper(ByVal charindex As Integer, ByVal chat As String)
+Public Sub WriteWhisper(ByVal CharIndex As Integer, ByVal chat As String)
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -4827,7 +4827,7 @@ Public Sub WriteWhisper(ByVal charindex As Integer, ByVal chat As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.Whisper)
         
-        Call .WriteInteger(charindex)
+        Call .WriteInteger(CharIndex)
         
         Call .WriteASCIIString(chat)
     End With
