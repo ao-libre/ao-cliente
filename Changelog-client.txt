@@ -211,3 +211,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 19/07/2009: Ahora se limpia la lista de las propuestas de alianza/paz de los clanes (Marco)
  * 21/07/2009: El formulario de comercio seguro se carga como vbModal (Marco)
  * 01/08/2009: Los admins invisibles no pueden intercambiar pos con caspers. (ZaMa)
+ * 09/08/2009: Solucione un bug que hacia que si usabamos un body mayor al numero de cabezas que teniamos nos dejaba sin cabeza. (Ladder by patch)
