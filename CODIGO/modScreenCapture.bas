@@ -19,6 +19,10 @@ Option Explicit
 '  Description: Changed ScreenCapture to use the Screenshots directory.
 '               Fixed a bug that caused the DC not to be allways released (added INVALID_HANDLE constant)
 '
+'  Author: Torres Patricio (Pato)
+'  Date: 25 August 2009
+'  Description: Added FullScreenCapture Function.
+'
 '
 ' Copyright.
 ' IJL.DLL is a copyright © Intel, which is a registered trade mark of the Intel
@@ -538,8 +542,46 @@ On Error GoTo Err:
 Exit Sub
 
 Err:
-    AddtoRichTextBox frmMain.RecTxt, Err.Number & "-" & Err.Description, 200, 200, 200, False, False, False
+    AddtoRichTextBox frmMain.RecTxt, Err.number & "-" & Err.Description, 200, 200, 200, False, False, False
     
     If hdcc <> INVALID_HANDLE Then _
         Call ReleaseDC(frmMain.hWnd, hdcc)
 End Sub
+
+Public Function FullScreenCapture(ByVal file As String) As Boolean
+'Medio desprolijo donde pongo la pic, pero es lo que hay por ahora
+    Dim c As New cDIBSection
+    Dim hdcc As Long
+    Dim handle As Long
+    
+    hdcc = GetDC(handle)
+    
+    frmScreenshots.Picture1.AutoRedraw = True
+    
+    If NoRes Then
+        frmScreenshots.Picture1.Width = Screen.Width
+        frmScreenshots.Picture1.Height = Screen.Height
+        
+        Call BitBlt(frmScreenshots.Picture1.hdc, 0, 0, Screen.Width / Screen.TwipsPerPixelX, Screen.Height / Screen.TwipsPerPixelY, hdcc, 0, 0, SRCCOPY)
+    Else
+        frmScreenshots.Picture1.Width = 12000
+        frmScreenshots.Picture1.Height = 9000
+        
+        Call BitBlt(frmScreenshots.Picture1.hdc, 0, 0, 800, 600, hdcc, 0, 0, SRCCOPY)
+    End If
+    
+    Call ReleaseDC(handle, hdcc)
+    
+    hdcc = INVALID_HANDLE
+    
+    If Not FileExist(App.path & "\TEMP", vbDirectory) Then MkDir (App.path & "\TEMP")
+    
+    frmScreenshots.Picture1.Refresh
+    frmScreenshots.Picture1.Picture = frmScreenshots.Picture1.Image
+    
+    c.CreateFromPicture frmScreenshots.Picture1.Picture
+    
+    SaveJPG c, file
+    
+    FullScreenCapture = True
+End Function
