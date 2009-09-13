@@ -931,6 +931,11 @@ For i = 1 To NUMATRIBUTOS
     End If
 Next i
 
+If Len(UserName) > 30 Then
+    MsgBox ("El nombre debe tener menos de 30 letras.")
+    Exit Function
+End If
+
 CheckData = True
 
 
@@ -957,9 +962,9 @@ Private Sub boton_Click(index As Integer)
                 MsgBox "Nombre invalido, se han removido los espacios al final del nombre"
             End If
             
-            UserRaza = lstRaza.listIndex + 1
-            UserSexo = lstGenero.listIndex + 1
-            UserClase = lstProfesion.listIndex + 1
+            UserRaza = lstRaza.ListIndex + 1
+            UserSexo = lstGenero.ListIndex + 1
+            UserClase = lstProfesion.ListIndex + 1
             
             UserAtributos(1) = Val(lbFuerza.Caption)
             UserAtributos(2) = Val(lbInteligencia.Caption)
@@ -967,7 +972,7 @@ Private Sub boton_Click(index As Integer)
             UserAtributos(4) = Val(lbCarisma.Caption)
             UserAtributos(5) = Val(lbConstitucion.Caption)
             
-            UserHogar = lstHogar.listIndex + 1
+            UserHogar = lstHogar.ListIndex + 1
             
             'Barrin 3/10/03
             If CheckData() Then
@@ -1058,7 +1063,7 @@ For i = LBound(ListaClases()) To UBound(ListaClases())
     lstProfesion.AddItem ListaClases(i)
 Next i
 
-lstProfesion.listIndex = 1
+lstProfesion.ListIndex = 1
 
 Image1.Picture = LoadPicture(App.path & "\graficos\" & lstProfesion.Text & ".jpg")
 
