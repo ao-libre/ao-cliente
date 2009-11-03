@@ -1220,7 +1220,7 @@ Private Sub HandleUserCommerceInit()
     
     'Set state and show form
     Comerciando = True
-    Call frmComerciarUsu.Show(vbModal, frmMain)
+    Call frmComerciarUsu.Show(vbModeless, frmMain)
 End Sub
 
 ''
@@ -1600,7 +1600,7 @@ Private Sub HandleUpdateExp()
     
     'Get data and update form
     UserExp = incomingData.ReadLong()
-    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
 End Sub
 
@@ -2720,7 +2720,7 @@ Private Sub HandleUpdateUserStats()
     UserPasarNivel = incomingData.ReadLong()
     UserExp = incomingData.ReadLong()
     
-    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     
     If UserPasarNivel > 0 Then
         frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
