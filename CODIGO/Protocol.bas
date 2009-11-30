@@ -1113,8 +1113,8 @@ Private Sub HandleBankEnd()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    frmBancoObj.List1(0).Clear
-    frmBancoObj.List1(1).Clear
+    Set InvBanco(0) = Nothing
+    Set InvBanco(1) = Nothing
     
     Unload frmBancoObj
     Comerciando = False
@@ -1162,26 +1162,25 @@ Private Sub HandleBankInit()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Call frmBancoObj.List1(1).Clear
+    Call InvBanco(0).Initialize(DirectDraw, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
+    Call InvBanco(1).Initialize(DirectDraw, frmBancoObj.PicInv, Inventario.MaxObjs)
     
-    'Fill the inventory list
-    For i = 1 To MAX_INVENTORY_SLOTS
-        If Inventario.OBJIndex(i) <> 0 Then
-            frmBancoObj.List1(1).AddItem Inventario.ItemName(i)
-        Else
-            frmBancoObj.List1(1).AddItem ""
-        End If
+    For i = 1 To Inventario.MaxObjs
+        With Inventario
+            Call InvBanco(1).SetItem(i, .OBJIndex(i), _
+                .Amount(i), .Equipped(i), .GrhIndex(i), _
+                .OBJType(i), .MaxHit(i), .MinHit(i), .Def(i), _
+                .Valor(i), .ItemName(i))
+        End With
     Next i
     
-    Call frmBancoObj.List1(0).Clear
-    
-    'Fill the bank list
     For i = 1 To MAX_BANCOINVENTORY_SLOTS
-        If UserBancoInventory(i).OBJIndex <> 0 Then
-            frmBancoObj.List1(0).AddItem UserBancoInventory(i).Name
-        Else
-            frmBancoObj.List1(0).AddItem ""
-        End If
+        With UserBancoInventory(i)
+            Call InvBanco(0).SetItem(i, .OBJIndex, _
+                .Amount, .Equipped, .GrhIndex, _
+                .OBJType, .MaxHit, .MinHit, .Def, _
+                .Valor, .Name)
+        End With
     Next i
     
     'Set state and show form
@@ -2895,12 +2894,13 @@ On Error GoTo ErrHandler
         .MinHit = Buffer.ReadInteger()
         .Def = Buffer.ReadInteger()
         .Valor = Buffer.ReadLong()
+        
+        If Comerciando Then
+            Call InvBanco(0).SetItem(slot, .OBJIndex, .Amount, _
+                .Equipped, .GrhIndex, .OBJType, .MaxHit, _
+                .MinHit, .Def, .Valor, .Name)
+        End If
     End With
-    
-    If frmBancoObj.List1(0).ListCount >= slot Then _
-        Call frmBancoObj.List1(0).RemoveItem(slot - 1)
-    
-    Call frmBancoObj.List1(0).AddItem(UserBancoInventory(slot).Name, slot - 1)
     
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
@@ -3992,11 +3992,11 @@ On Error GoTo ErrHandler
         .criminales.Caption = "Criminales asesinados: " & CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .Status.Caption = " (Ciudadano)"
-            .Status.ForeColor = vbBlue
+            .status.Caption = " (Ciudadano)"
+            .status.ForeColor = vbBlue
         Else
-            .Status.Caption = " (Criminal)"
-            .Status.ForeColor = vbRed
+            .status.Caption = " (Criminal)"
+            .status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)
@@ -4297,23 +4297,21 @@ Private Sub HandleBankOK()
     
     If frmBancoObj.Visible Then
         
-        Call frmBancoObj.List1(1).Clear
-        
-        For i = 1 To MAX_INVENTORY_SLOTS
-            If Inventario.OBJIndex(i) <> 0 Then
-                Call frmBancoObj.List1(1).AddItem(Inventario.ItemName(i))
-            Else
-                Call frmBancoObj.List1(1).AddItem("")
-            End If
+        For i = 1 To Inventario.MaxObjs
+            With Inventario
+                Call InvBanco(1).SetItem(i, .OBJIndex(i), .Amount(i), _
+                    .Equipped(i), .GrhIndex(i), .OBJType(i), .MaxHit(i), _
+                    .MinHit(i), .Def(i), .Valor(i), .ItemName(i))
+            End With
         Next i
         
         'Alter order according to if we bought or sold so the labels and grh remain the same
         If frmBancoObj.LasActionBuy Then
-            frmBancoObj.List1(1).ListIndex = frmBancoObj.LastIndex2
-            frmBancoObj.List1(0).ListIndex = frmBancoObj.LastIndex1
+            'frmBancoObj.List1(1).ListIndex = frmBancoObj.LastIndex2
+            'frmBancoObj.List1(0).ListIndex = frmBancoObj.LastIndex1
         Else
-            frmBancoObj.List1(0).ListIndex = frmBancoObj.LastIndex1
-            frmBancoObj.List1(1).ListIndex = frmBancoObj.LastIndex2
+            'frmBancoObj.List1(0).ListIndex = frmBancoObj.LastIndex1
+            'frmBancoObj.List1(1).ListIndex = frmBancoObj.LastIndex2
         End If
         
         frmBancoObj.NoPuedeMover = False

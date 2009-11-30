@@ -38,6 +38,7 @@ Public DialogosClanes As New clsGuildDlg
 Public Dialogos As New clsDialogs
 Public Audio As New clsAudio
 Public Inventario As New clsGrapchicalInventory
+Public InvBanco(1) As New clsGrapchicalInventory
 Public SurfaceDB As clsSurfaceManager   'No va new porque es una interfaz, el new se pone al decidir que clase de objeto es
 Public CustomKeys As New clsCustomKeys
 Public CustomMessages As New clsCustomMessages
