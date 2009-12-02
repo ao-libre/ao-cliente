@@ -433,8 +433,8 @@ If InvBanco(0).SelectedItem <> 0 Then
     
 Else
     Label1(0).Caption = ""
-    Label1(3).Visible = False
-    Label1(4).Visible = False
+    Label1(1).Visible = False
+    Label1(2).Visible = False
     Picture1.BackColor = vbBlack
 End If
 
@@ -494,8 +494,8 @@ If InvBanco(1).SelectedItem <> 0 Then
     End With
 Else
     Label1(0).Caption = ""
-    Label1(3).Visible = False
-    Label1(4).Visible = False
+    Label1(1).Visible = False
+    Label1(2).Visible = False
     Picture1.BackColor = vbBlack
 End If
 End Sub
