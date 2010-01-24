@@ -215,4 +215,3 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 19/09/2009: Agregada una función para sacar screens de toda la pantalla. (Pato)
  * 19/09/2099: Ahora la función CheckData se fija que el nombre del personaje no supere los 30 caracteres. (Pato)
  * 03/11/2009: El formulario de comercio nuevamente se carga como vbModeless (Pato)
- * 30/11/2009: Agrego inventarios gráficos para la bóveda. (Pato)
