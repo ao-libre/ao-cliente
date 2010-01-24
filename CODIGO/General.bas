@@ -808,14 +808,14 @@ Sub Main()
     frmCargando.Refresh
     
     frmConnect.version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
-    AddtoRichTextBox frmCargando.Status, "Buscando servidores... ", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.status, "Buscando servidores... ", 0, 0, 0, 0, 0, 1
 
     Call CargarServidores
 'TODO : esto de ServerRecibidos no se podría sacar???
     ServersRecibidos = True
     
-    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
-    AddtoRichTextBox frmCargando.Status, "Iniciando constantes... ", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
+    AddtoRichTextBox frmCargando.status, "Iniciando constantes... ", 0, 0, 0, 0, 0, 1
     
     Call InicializarNombres
     
@@ -825,17 +825,17 @@ Sub Main()
     frmOldPersonaje.NameTxt.Text = Config_Inicio.Name
     frmOldPersonaje.PasswordTxt.Text = ""
     
-    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
+    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
     
-    AddtoRichTextBox frmCargando.Status, "Iniciando motor gráfico... ", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.status, "Iniciando motor gráfico... ", 0, 0, 0, 0, 0, 1
     
     If Not InitTileEngine(frmMain.hWnd, 160, 7, 32, 32, 13, 17, 9, 8, 8, 0.018) Then
         Call CloseClient
     End If
     
-    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
+    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
     
-    Call AddtoRichTextBox(frmCargando.Status, "Creando animaciones extra... ", , , , , , 1)
+    Call AddtoRichTextBox(frmCargando.status, "Creando animaciones extra... ", , , , , , 1)
     
     Call CargarTips
     
@@ -847,9 +847,9 @@ UserMap = 1
     Call CargarVersiones
     Call CargarColores
     
-    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1
+    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
     
-    AddtoRichTextBox frmCargando.Status, "Iniciando DirectSound... ", 0, 0, 0, 0, 0, True
+    AddtoRichTextBox frmCargando.status, "Iniciando DirectSound... ", 0, 0, 0, 0, 0, True
     
     'Inicializamos el sonido
     Call Audio.Initialize(DirectX, frmMain.hWnd, App.path & "\" & Config_Inicio.DirSonidos & "\", App.path & "\" & Config_Inicio.DirMusica & "\")
@@ -858,18 +858,18 @@ UserMap = 1
     Audio.SoundActivated = Not ClientSetup.bNoSound
     Audio.SoundEffectsActivated = Not ClientSetup.bNoSoundEffects
     'Inicializamos el inventario gráfico
-    Call Inventario.Initialize(DirectDraw, frmMain.PicInv, MAX_INVENTORY_SLOTS)
+    Call Inventario.Initialize(DirectDraw, frmMain.picInv)
     
     Call Audio.PlayMIDI(MIdi_Inicio & ".mid")
     
-    AddtoRichTextBox frmCargando.Status, "Hecho", , , , 1, , False
+    AddtoRichTextBox frmCargando.status, "Hecho", , , , 1, , False
     
 #If SeguridadAlkon Then
     CualMI = 0
     Call InitMI
 #End If
     
-    AddtoRichTextBox frmCargando.Status, "                    ¡Bienvenido a Argentum Online!", , , , 1
+    AddtoRichTextBox frmCargando.status, "                    ¡Bienvenido a Argentum Online!", , , , 1
     
     'Give the user enough time to read the welcome text
     Call Sleep(1750)
@@ -1227,7 +1227,7 @@ Public Sub CloseClient()
     
     EngineRun = False
     frmCargando.Show
-    AddtoRichTextBox frmCargando.Status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
+    AddtoRichTextBox frmCargando.status, "Liberando recursos...", 0, 0, 0, 0, 0, 1
     
     Call Resolution.ResetResolution
     
