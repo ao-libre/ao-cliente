@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "Mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
 Begin VB.Form frmOpciones 
    BackColor       =   &H00000000&
    BorderStyle     =   3  'Fixed Dialog
@@ -324,12 +324,7 @@ End Sub
 Private Sub CmdRadioAo_Click()
     If Not loading Then _
         Call Audio.PlayWave(SND_CLICK)
-    If FileExist(App.path & "\Radio.exe", vbNormal) Then
-        Call ShellExecute(0, "Open", App.path & "\Radio.exe", "", App.path, SW_SHOWNORMAL)
-    Else
-        MsgBox "Debe instalar el RAOPlayer para poder escuchar RadioAo correctamente"
-        Call ShellExecute(0, "Open", "http://www.radioao.net/radio.htm", "", App.path, SW_SHOWNORMAL)
-    End If
+        Call ShellExecute(0, "Open", "http://radio.radioargentum.com/", "", App.path, SW_SHOWNORMAL)
 End Sub
 
 Private Sub cmdViewMap_Click()
