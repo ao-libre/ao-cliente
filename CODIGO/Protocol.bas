@@ -1113,8 +1113,8 @@ Private Sub HandleBankEnd()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Set InvBanco(0) = Nothing
-    Set InvBanco(1) = Nothing
+    frmBancoObj.List1(0).Clear
+    frmBancoObj.List1(1).Clear
     
     Unload frmBancoObj
     Comerciando = False
@@ -1162,25 +1162,26 @@ Private Sub HandleBankInit()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Call InvBanco(0).Initialize(DirectDraw, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
-    Call InvBanco(1).Initialize(DirectDraw, frmBancoObj.PicInv, Inventario.MaxObjs)
+    Call frmBancoObj.List1(1).Clear
     
-    For i = 1 To Inventario.MaxObjs
-        With Inventario
-            Call InvBanco(1).SetItem(i, .OBJIndex(i), _
-                .Amount(i), .Equipped(i), .GrhIndex(i), _
-                .OBJType(i), .MaxHit(i), .MinHit(i), .Def(i), _
-                .Valor(i), .ItemName(i))
-        End With
+    'Fill the inventory list
+    For i = 1 To MAX_INVENTORY_SLOTS
+        If Inventario.OBJIndex(i) <> 0 Then
+            frmBancoObj.List1(1).AddItem Inventario.ItemName(i)
+        Else
+            frmBancoObj.List1(1).AddItem ""
+        End If
     Next i
     
+    Call frmBancoObj.List1(0).Clear
+    
+    'Fill the bank list
     For i = 1 To MAX_BANCOINVENTORY_SLOTS
-        With UserBancoInventory(i)
-            Call InvBanco(0).SetItem(i, .OBJIndex, _
-                .Amount, .Equipped, .GrhIndex, _
-                .OBJType, .MaxHit, .MinHit, .Def, _
-                .Valor, .Name)
-        End With
+        If UserBancoInventory(i).OBJIndex <> 0 Then
+            frmBancoObj.List1(0).AddItem UserBancoInventory(i).Name
+        Else
+            frmBancoObj.List1(0).AddItem ""
+        End If
     Next i
     
     'Set state and show form
@@ -1219,7 +1220,7 @@ Private Sub HandleUserCommerceInit()
     
     'Set state and show form
     Comerciando = True
-    Call frmComerciarUsu.Show(vbModeless, frmMain)
+    Call frmComerciarUsu.Show(vbModal, frmMain)
 End Sub
 
 ''
@@ -1599,7 +1600,7 @@ Private Sub HandleUpdateExp()
     
     'Get data and update form
     UserExp = incomingData.ReadLong()
-    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
 End Sub
 
@@ -2719,7 +2720,7 @@ Private Sub HandleUpdateUserStats()
     UserPasarNivel = incomingData.ReadLong()
     UserExp = incomingData.ReadLong()
     
-    frmMain.exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
+    frmMain.Exp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     
     If UserPasarNivel > 0 Then
         frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
@@ -2894,13 +2895,12 @@ On Error GoTo ErrHandler
         .MinHit = Buffer.ReadInteger()
         .Def = Buffer.ReadInteger()
         .Valor = Buffer.ReadLong()
-        
-        If Comerciando Then
-            Call InvBanco(0).SetItem(slot, .OBJIndex, .Amount, _
-                .Equipped, .GrhIndex, .OBJType, .MaxHit, _
-                .MinHit, .Def, .Valor, .Name)
-        End If
     End With
+    
+    If frmBancoObj.List1(0).ListCount >= slot Then _
+        Call frmBancoObj.List1(0).RemoveItem(slot - 1)
+    
+    Call frmBancoObj.List1(0).AddItem(UserBancoInventory(slot).Name, slot - 1)
     
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
@@ -3992,11 +3992,11 @@ On Error GoTo ErrHandler
         .criminales.Caption = "Criminales asesinados: " & CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .status.Caption = " (Ciudadano)"
-            .status.ForeColor = vbBlue
+            .Status.Caption = " (Ciudadano)"
+            .Status.ForeColor = vbBlue
         Else
-            .status.Caption = " (Criminal)"
-            .status.ForeColor = vbRed
+            .Status.Caption = " (Criminal)"
+            .Status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)
@@ -4297,21 +4297,23 @@ Private Sub HandleBankOK()
     
     If frmBancoObj.Visible Then
         
-        For i = 1 To Inventario.MaxObjs
-            With Inventario
-                Call InvBanco(1).SetItem(i, .OBJIndex(i), .Amount(i), _
-                    .Equipped(i), .GrhIndex(i), .OBJType(i), .MaxHit(i), _
-                    .MinHit(i), .Def(i), .Valor(i), .ItemName(i))
-            End With
+        Call frmBancoObj.List1(1).Clear
+        
+        For i = 1 To MAX_INVENTORY_SLOTS
+            If Inventario.OBJIndex(i) <> 0 Then
+                Call frmBancoObj.List1(1).AddItem(Inventario.ItemName(i))
+            Else
+                Call frmBancoObj.List1(1).AddItem("")
+            End If
         Next i
         
         'Alter order according to if we bought or sold so the labels and grh remain the same
         If frmBancoObj.LasActionBuy Then
-            'frmBancoObj.List1(1).ListIndex = frmBancoObj.LastIndex2
-            'frmBancoObj.List1(0).ListIndex = frmBancoObj.LastIndex1
+            frmBancoObj.List1(1).ListIndex = frmBancoObj.LastIndex2
+            frmBancoObj.List1(0).ListIndex = frmBancoObj.LastIndex1
         Else
-            'frmBancoObj.List1(0).ListIndex = frmBancoObj.LastIndex1
-            'frmBancoObj.List1(1).ListIndex = frmBancoObj.LastIndex2
+            frmBancoObj.List1(0).ListIndex = frmBancoObj.LastIndex1
+            frmBancoObj.List1(1).ListIndex = frmBancoObj.LastIndex2
         End If
         
         frmBancoObj.NoPuedeMover = False
