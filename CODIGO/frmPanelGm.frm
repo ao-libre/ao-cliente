@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.ocx"
 Begin VB.Form frmPanelGm 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Panel GM"
@@ -22,6 +22,15 @@ Begin VB.Form frmPanelGm
       TabIndex        =   12
       Top             =   360
       Width           =   3975
+      Begin VB.CommandButton cmdConsulta 
+         Caption         =   "/CONSULTA"
+         CausesValidation=   0   'False
+         Height          =   315
+         Left            =   1320
+         TabIndex        =   87
+         Top             =   1320
+         Width           =   1095
+      End
       Begin VB.CommandButton cmdNOREAL 
          Caption         =   "/NOREAL"
          CausesValidation=   0   'False
@@ -1065,6 +1074,10 @@ Private Sub cmdCONDEN_Click()
             Call WriteTurnCriminal(Nick)
 End Sub
 
+Private Sub cmdConsulta_Click()
+    WriteConsulta
+End Sub
+
 Private Sub cmdCT_Click()
     '/CT
     Dim tStr As String
@@ -1571,7 +1584,7 @@ Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
 End Sub
 
 Private Sub TabStrip_Click()
-    Call showTab(TabStrip.SelectedItem.index)
+    Call showTab(TabStrip.SelectedItem.Index)
 End Sub
 
 Private Sub showTab(TabId As Byte)

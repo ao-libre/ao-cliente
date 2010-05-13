@@ -49,6 +49,9 @@ Attribute VB_Exposed = False
 '
 '28/07/2008 - Franco Zeoli (Noich) - (zeolifranco@gmail.com)
 '   -Add: Optional sound effects
+'
+'23/03/2010 - Torres Patricio(Pato) - (paatoo.torres@gmail.com)
+'   -Add: ORE code to reproduce MP3
 
 ''
 ' Controls all audio using DirectSound and DirectMusic 7.
@@ -84,8 +87,8 @@ Private Const DELTA_FQ As Integer = 75
 Private Type SoundBuffer
     FileName As String
     looping As Boolean
-    x As Byte
-    y As Byte
+    X As Byte
+    Y As Byte
     normalFq As Long
     Buffer As DirectSoundBuffer
 End Type
@@ -170,6 +173,12 @@ Dim lastPosY As Integer
 'States wether sound effects are currently activated or not
 Dim sEffectsActivated As Boolean
 
+'**** Used By MP3 Playing. *****
+Dim IMC   As IMediaControl
+Dim IBA   As IBasicAudio
+Dim IME   As IMediaEvent
+Dim IMPos As IMediaPosition
+
 ''
 'Constructor. Performs no action at all.
 
@@ -187,17 +196,13 @@ End Sub
 Private Sub Class_Terminate()
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 16/03/04
+'Last Modification: 12/31/09
 'Destroy's all DirectMusic and DirectSound objects
+'12/31/09 - Pato: Use StopWave method to prevent errors.
 '***************************************************
 On Local Error Resume Next
-    Dim loopc As Long
-    
     'Stop every channel being used and destroy the buffer
-    For loopc = 1 To NumSoundBuffers
-        Call DSBuffers(loopc).Buffer.Stop
-        Set DSBuffers(loopc).Buffer = Nothing
-    Next loopc
+    Call StopWave
     
     'Stop music
     Call Performance.Stop(Segment, SegState, 0, 0)
@@ -338,8 +343,8 @@ On Error GoTo ErrHandler
         Call .Buffer.SetVolume(SndVolume)
         
         'Store position
-        .x = srcX
-        .y = srcY
+        .X = srcX
+        .Y = srcY
         
         'Get standard frequency
         .normalFq = .Buffer.GetFrequency()
@@ -356,6 +361,25 @@ Exit Function
 
 ErrHandler:
 End Function
+
+Private Sub ResetSoundValues()
+'***************************************************
+'Author: Torres Patricio (Pato)
+'Last Modification: 03/04/10
+'Reset the frequency, volume and pan.
+'***************************************************
+    Dim i As Long
+    
+    For i = 1 To NumSoundBuffers
+        If Not DSBuffers(i).Buffer Is Nothing Then
+            With DSBuffers(i)
+                Call .Buffer.SetFrequency(.normalFq)
+                Call .Buffer.SetVolume(SndVolume)
+                Call .Buffer.SetPan(0)
+            End With
+        End If
+    Next i
+End Sub
 
 Private Sub Update3DSound(ByVal bufferIndex As Long, ByVal deltaX As Integer, ByVal deltaY As Integer)
 '***************************************************
@@ -376,8 +400,8 @@ Private Sub Update3DSound(ByVal bufferIndex As Long, ByVal deltaX As Integer, By
     Dim perceivedFq As Long
     
     With DSBuffers(bufferIndex)
-        distanceXOld = .x - lastPosX
-        distanceYOld = .y - lastPosY
+        distanceXOld = .X - lastPosX
+        distanceYOld = .Y - lastPosY
         
         distanceXNew = distanceXOld + deltaX
         distanceYNew = distanceYOld + deltaY
@@ -416,7 +440,7 @@ End Sub
 '
 ' @return   The buffer index in which the sound is playing, or 0 in case of error.
 
-Public Sub MoveListener(ByVal x As Integer, ByVal y As Integer)
+Public Sub MoveListener(ByVal X As Integer, ByVal Y As Integer)
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 28/07/08
@@ -429,21 +453,21 @@ Public Sub MoveListener(ByVal x As Integer, ByVal y As Integer)
     
     If Not sEffectsActivated Then Exit Sub
     
-    deltaX = x - lastPosX
-    deltaY = y - lastPosY
+    deltaX = X - lastPosX
+    deltaY = Y - lastPosY
     
     For i = 1 To NumSoundBuffers
         If Not DSBuffers(i).Buffer Is Nothing Then
             If DSBuffers(i).Buffer.GetStatus And DSBSTATUS_PLAYING Then
-                If DSBuffers(i).x <> 0 And DSBuffers(i).y <> 0 Then
+                If DSBuffers(i).X <> 0 And DSBuffers(i).Y <> 0 Then
                     Call Update3DSound(i, deltaX, deltaY)
                 End If
             End If
         End If
     Next i
     
-    lastPosX = x
-    lastPosY = y
+    lastPosX = X
+    lastPosY = Y
 End Sub
 
 ''
@@ -589,9 +613,11 @@ Public Property Get PlayingSound() As Boolean
     Dim i As Long
     
     For i = 1 To NumSoundBuffers
-        If DSBuffers(i).Buffer.GetStatus() And DSBSTATUS_PLAYING Then
-            PlayingSound = True
-            Exit Property
+        If Not DSBuffers(i).Buffer Is Nothing Then
+            If DSBuffers(i).Buffer.GetStatus() And DSBSTATUS_PLAYING Then
+                PlayingSound = True
+                Exit Property
+            End If
         End If
     Next i
 End Property
@@ -667,6 +693,8 @@ On Error GoTo ErrHandler
         'Make sure we have a loaded segment
         If Segment Is Nothing Then Exit Function
     End If
+    
+    MusicMP3Stop
     
     'Play it
     Call Segment.SetRepeats(Loops)
@@ -834,6 +862,195 @@ Public Property Get MusicLenght() As Long
 End Property
 
 ''
+' Destroy the MP3 objects.
+'
+' @return   True If the objects were destroy.
+
+Public Function MusicMP3Empty() As Boolean
+'**************************************
+'* Created by: Fredrik Alexandersson  *
+'* Modify Date: 20/5/2003             *
+'**************************************
+    On Error GoTo ErrorHandl
+    
+    If ObjPtr(IMC) > 0 Then
+        Call MusicMP3Stop
+    End If
+    
+    Set IBA = Nothing
+    Set IME = Nothing
+    Set IMPos = Nothing
+    Set IMC = Nothing
+    
+    MusicMP3Empty = True
+    Exit Function
+
+ErrorHandl:
+    MusicMP3Empty = False
+    End
+End Function
+
+''
+' Loads a new MP3 file.
+'
+' @param    FilePath    The path to the file to be loaded.
+' @return   True    If file was properly loaded and started playing, False otherwise.
+
+Public Function MusicMP3Load(ByVal FilePath As String, Optional ByVal Volume As Long = 0, Optional ByVal Balance As Long = 0) As Boolean '**** Loads a MP3 *****
+'**************************************
+'* Created by: Fredrik Alexandersson  *
+'* Modify Date: 20/5/2003             *
+'**************************************
+    On Error GoTo ErrorHandl
+    
+    If Not FileExist(FilePath, vbArchive) Then Exit Function
+    
+    If Not MusicMP3Empty() = True Then GoTo ErrorHandl
+    
+    Set IMC = New FilgraphManager
+    Call IMC.RenderFile(FilePath)
+    
+    Set IBA = IMC
+    
+    If Volume > 0 Then Volume = 0
+    If Volume < -4000 Then Volume = -4000
+    
+    IBA.Volume = Volume
+    
+    If Balance > 5000 Then Balance = 5000
+    If Balance < -5000 Then Balance = -5000
+    
+    IBA.Balance = Balance
+    
+    Set IME = IMC
+    
+    Set IMPos = IMC
+    If ObjPtr(IMPos) Then IMPos.Rate = 1#
+    IMPos.CurrentPosition = 0
+    
+    MusicMP3Load = True
+    Exit Function
+
+ErrorHandl:
+    MusicMP3Load = False
+End Function
+
+''
+' Plays a new MP3 file.
+'
+' @param    FilePath    The path to the file to be loaded. If the path is null then play the loaded MP3.
+'
+' @return   True    If file was properly loaded and started playing, False otherwise.
+
+Public Function MusicMP3Play(Optional ByVal FilePath As String = "") As Boolean
+'**************************************
+'* Created by: Fredrik Alexandersson  *
+'* Modify Date: 20/5/2003             *
+'**************************************
+    On Error GoTo ErrorHandl
+    
+    If Not MusicActivated Then Exit Function
+    
+    If Not Music Then Exit Function
+    
+    If LenB(FilePath) > 0 Then
+        If Not MusicMP3Load(FilePath) Then Exit Function
+    Else
+        If IMC Is Nothing Then Exit Function
+    End If
+    
+    StopMidi
+    Call IMC.Run
+    
+    MusicMP3Play = True
+    Exit Function
+
+ErrorHandl:
+    MusicMP3Play = False
+End Function
+
+''
+' Check if the song need looping.
+
+Public Sub MusicMP3GetLoop()
+    On Error GoTo ErrorHandl
+    
+    If IMPos.StopTime = IMPos.CurrentPosition Then
+        MusicMP3Stop
+        MusicMP3Play
+    End If
+ErrorHandl:
+End Sub
+
+''
+' Stop a the current MP3 file.
+'
+' @return   True    If file was properly stop, False otherwise.
+
+Public Function MusicMP3Stop() As Boolean
+'**************************************
+'* Created by: Fredrik Alexandersson  *
+'* Modify Date: 20/5/2003             *
+'**************************************
+    On Error GoTo ErrorHandl
+    
+    IMC.Stop
+    IMPos.CurrentPosition = 0
+    
+    MusicMP3Stop = True
+    Exit Function
+
+ErrorHandl:
+    MusicMP3Stop = False
+End Function
+
+''
+' Pause a the current MP3 file.
+'
+' @return   True    If file was properly pause, False otherwise.
+
+Public Function MusicMP3Pause() As Boolean
+'***************************************************
+' Created by: Juan Martín Sotuyo Dodero
+' Modify Date: 25/6/2004
+'***************************************************
+    On Error GoTo ErrorHandl
+    
+    Call IMC.Pause
+    
+    MusicMP3Pause = True
+    Exit Function
+
+ErrorHandl:
+    MusicMP3Pause = False
+End Function
+
+''
+' Set the volume to the current MP3.
+'
+' @param    Volume The new volume to the current MP3.
+' @return   True    If the volume was properly change, False otherwise.
+
+Public Function MusicMP3VolumeSet(ByVal Volume As Long) As Boolean
+'**************************************
+'* Created by: Fredrik Alexandersson  *
+'* Modify Date: 20/5/2003             *
+'**************************************
+    On Error GoTo ErrorHandl
+    
+    If Volume > 0 Then Volume = 0
+    If Volume < -4000 Then Volume = -4000
+    
+    IBA.Volume = Volume
+
+    MusicMP3VolumeSet = True
+    Exit Function
+
+ErrorHandl:
+    MusicMP3VolumeSet = False
+End Function
+
+''
 ' Retrieves wether music is activated or not.
 '
 ' @return   True if music is activated, false otherwise.
@@ -911,10 +1128,15 @@ End Property
 Public Property Let SoundEffectsActivated(ByVal nValue As Boolean)
 '***************************************************
 'Author: Franco Zeoli (Noich)
-'Last Modification: 28/07/08
+'Last Modification: 03/04/10
 'Sets wether the sound effects are activated or not
+'03/04/10 - Pato: If sound effects are disable, then reset the frequency, volume and pan.
 '***************************************************
     sEffectsActivated = nValue
+    
+    If Not nValue Then
+        Call ResetSoundValues
+    End If
 End Property
 
 ''

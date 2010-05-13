@@ -1,79 +1,93 @@
 VERSION 5.00
 Begin VB.Form frmNewPassword 
-   BorderStyle     =   1  'Fixed Single
+   BorderStyle     =   0  'None
    Caption         =   "Cambiar Contraseña"
-   ClientHeight    =   3195
-   ClientLeft      =   45
-   ClientTop       =   330
-   ClientWidth     =   4680
+   ClientHeight    =   3555
+   ClientLeft      =   0
+   ClientTop       =   -75
+   ClientWidth     =   4755
    ClipControls    =   0   'False
    ControlBox      =   0   'False
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   213
+   ScaleHeight     =   237
    ScaleMode       =   3  'Pixel
-   ScaleWidth      =   312
+   ScaleWidth      =   317
+   ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
-   Begin VB.CommandButton Command1 
-      Caption         =   "Aceptar"
-      Default         =   -1  'True
-      Height          =   495
-      Left            =   293
-      TabIndex        =   3
-      Top             =   2400
-      Width           =   4095
-   End
    Begin VB.TextBox Text3 
-      Height          =   285
+      Appearance      =   0  'Flat
+      BackColor       =   &H00000000&
+      BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   225
       IMEMode         =   3  'DISABLE
-      Left            =   293
+      Left            =   375
       PasswordChar    =   "*"
       TabIndex        =   2
-      Top             =   1920
-      Width           =   4095
+      Top             =   2265
+      Width           =   4005
    End
    Begin VB.TextBox Text2 
-      Height          =   285
+      Appearance      =   0  'Flat
+      BackColor       =   &H00000000&
+      BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   225
       IMEMode         =   3  'DISABLE
-      Left            =   293
+      Left            =   375
       PasswordChar    =   "*"
       TabIndex        =   1
-      Top             =   1200
-      Width           =   4095
+      Top             =   1545
+      Width           =   4005
    End
    Begin VB.TextBox Text1 
-      Height          =   285
+      Appearance      =   0  'Flat
+      BackColor       =   &H00000000&
+      BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   225
       IMEMode         =   3  'DISABLE
-      Left            =   293
+      Left            =   375
       PasswordChar    =   "*"
       TabIndex        =   0
-      Top             =   480
-      Width           =   4095
+      Top             =   825
+      Width           =   4005
    End
-   Begin VB.Label Label3 
-      Caption         =   "Confirmar contraseña nueva:"
-      Height          =   255
-      Left            =   293
-      TabIndex        =   6
-      Top             =   1560
-      Width           =   4095
-   End
-   Begin VB.Label Label2 
-      Caption         =   "Contraseña nueva:"
-      Height          =   255
-      Left            =   293
-      TabIndex        =   5
-      Top             =   840
-      Width           =   4095
-   End
-   Begin VB.Label Label1 
-      Caption         =   "Contraseña anterior:"
-      Height          =   255
-      Left            =   293
-      TabIndex        =   4
-      Top             =   120
-      Width           =   4095
+   Begin VB.Image imgAceptar 
+      Height          =   495
+      Left            =   990
+      Tag             =   "1"
+      Top             =   2730
+      Width           =   2775
    End
 End
 Attribute VB_Name = "frmNewPassword"
@@ -83,7 +97,42 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Private Sub Command1_Click()
+Private clsFormulario As clsFormMovementManager
+
+Private cBotonAceptar As clsGraphicalButton
+
+Public LastPressed As clsGraphicalButton
+
+Private Sub Form_Load()
+    ' Handles Form movement (drag and drop).
+    Set clsFormulario = New clsFormMovementManager
+    clsFormulario.Initialize Me
+    
+    Me.Picture = LoadPicture(App.path & "\graficos\VentanaCambiarcontrasenia.jpg")
+    
+    Call LoadButtons
+End Sub
+
+Private Sub LoadButtons()
+    Dim GrhPath As String
+    
+    GrhPath = DirGraficos
+
+    Set cBotonAceptar = New clsGraphicalButton
+    
+    Set LastPressed = New clsGraphicalButton
+    
+    
+    Call cBotonAceptar.Initialize(imgAceptar, GrhPath & "BotonAceptarCambiarContrasenia.jpg", _
+                                    GrhPath & "BotonAceptarRolloverCambiarContrasenia.jpg", _
+                                    GrhPath & "BotonAceptarClickCambiarContrasenia.jpg", Me)
+End Sub
+
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    LastPressed.ToggleToNormal
+End Sub
+
+Private Sub imgAceptar_Click()
     If Text2.Text <> Text3.Text Then
         Call MsgBox("Las contraseñas no coinciden", vbCritical Or vbOKOnly Or vbApplicationModal Or vbDefaultButton1, "Cambiar Contraseña")
         Exit Sub
@@ -91,4 +140,8 @@ Private Sub Command1_Click()
     
     Call WriteChangePassword(Text1.Text, Text2.Text)
     Unload Me
+End Sub
+
+Private Sub Text3_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    LastPressed.ToggleToNormal
 End Sub

@@ -1,898 +1,980 @@
 VERSION 5.00
 Begin VB.Form frmEstadisticas 
    BackColor       =   &H00C0C0C0&
-   BorderStyle     =   1  'Fixed Single
+   BorderStyle     =   0  'None
    Caption         =   "Estadisticas"
-   ClientHeight    =   6315
-   ClientLeft      =   45
-   ClientTop       =   330
-   ClientWidth     =   6900
+   ClientHeight    =   6675
+   ClientLeft      =   0
+   ClientTop       =   -75
+   ClientWidth     =   6975
    ClipControls    =   0   'False
    Icon            =   "FrmEstadisticas.frx":0000
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   6315
-   ScaleWidth      =   6900
+   ScaleHeight     =   445
+   ScaleMode       =   3  'Pixel
+   ScaleWidth      =   465
+   ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
-   Begin VB.CommandButton Command1 
-      Cancel          =   -1  'True
-      Caption         =   "OK"
-      Default         =   -1  'True
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   375
-      Left            =   60
-      MouseIcon       =   "FrmEstadisticas.frx":000C
-      MousePointer    =   99  'Custom
-      TabIndex        =   6
-      Top             =   5880
+   Begin VB.Image imgCerrar 
+      Height          =   360
+      Left            =   105
+      Tag             =   "1"
+      Top             =   6240
       Width           =   6810
    End
+   Begin VB.Shape shpSkillsBar 
+      BorderStyle     =   0  'Transparent
+      FillStyle       =   0  'Solid
+      Height          =   120
+      Index           =   20
+      Left            =   5415
+      Top             =   5805
+      Width           =   1095
+   End
+   Begin VB.Shape shpSkillsBar 
+      BorderStyle     =   0  'Transparent
+      FillStyle       =   0  'Solid
+      Height          =   120
+      Index           =   19
+      Left            =   5415
+      Top             =   5535
+      Width           =   1095
+   End
+   Begin VB.Shape shpSkillsBar 
+      BorderStyle     =   0  'Transparent
+      FillStyle       =   0  'Solid
+      Height          =   120
+      Index           =   18
+      Left            =   5415
+      Top             =   5265
+      Width           =   1095
+   End
+   Begin VB.Shape shpSkillsBar 
+      BorderStyle     =   0  'Transparent
+      FillStyle       =   0  'Solid
+      Height          =   120
+      Index           =   17
+      Left            =   5415
+      Top             =   4995
+      Width           =   1095
+   End
+   Begin VB.Shape shpSkillsBar 
+      BorderStyle     =   0  'Transparent
+      FillStyle       =   0  'Solid
+      Height          =   120
+      Index           =   16
+      Left            =   5415
+      Top             =   4725
+      Width           =   1095
+   End
+   Begin VB.Shape shpSkillsBar 
+      BorderStyle     =   0  'Transparent
+      FillStyle       =   0  'Solid
+      Height          =   120
+      Index           =   15
+      Left            =   5415
+      Top             =   4470
+      Width           =   1095
+   End
+   Begin VB.Shape shpSkillsBar 
+      BorderStyle     =   0  'Transparent
+      FillStyle       =   0  'Solid
+      Height          =   120
+      Index           =   14
+      Left            =   5415
+      Top             =   4230
+      Width           =   1095
+   End
+   Begin VB.Shape shpSkillsBar 
+      BorderStyle     =   0  'Transparent
+      FillStyle       =   0  'Solid
+      Height          =   120
+      Index           =   13
+      Left            =   5415
+      Top             =   3975
+      Width           =   1095
+   End
+   Begin VB.Shape shpSkillsBar 
+      BorderStyle     =   0  'Transparent
+      FillStyle       =   0  'Solid
+      Height          =   120
+      Index           =   12
+      Left            =   5415
+      Top             =   3720
+      Width           =   1095
+   End
+   Begin VB.Shape shpSkillsBar 
+      BorderStyle     =   0  'Transparent
+      FillStyle       =   0  'Solid
+      Height          =   120
+      Index           =   11
+      Left            =   5415
+      Top             =   3450
+      Width           =   1095
+   End
+   Begin VB.Shape shpSkillsBar 
+      BorderStyle     =   0  'Transparent
+      FillStyle       =   0  'Solid
+      Height          =   120
+      Index           =   10
+      Left            =   5415
+      Top             =   3195
+      Width           =   1095
+   End
+   Begin VB.Shape shpSkillsBar 
+      BorderStyle     =   0  'Transparent
+      FillStyle       =   0  'Solid
+      Height          =   120
+      Index           =   9
+      Left            =   5415
+      Top             =   2940
+      Width           =   1095
+   End
+   Begin VB.Shape shpSkillsBar 
+      BorderStyle     =   0  'Transparent
+      FillStyle       =   0  'Solid
+      Height          =   120
+      Index           =   8
+      Left            =   5415
+      Top             =   2670
+      Width           =   1095
+   End
+   Begin VB.Shape shpSkillsBar 
+      BorderStyle     =   0  'Transparent
+      FillStyle       =   0  'Solid
+      Height          =   120
+      Index           =   7
+      Left            =   5415
+      Top             =   2400
+      Width           =   1095
+   End
+   Begin VB.Shape shpSkillsBar 
+      BorderStyle     =   0  'Transparent
+      FillStyle       =   0  'Solid
+      Height          =   120
+      Index           =   6
+      Left            =   5415
+      Top             =   2145
+      Width           =   1095
+   End
+   Begin VB.Shape shpSkillsBar 
+      BorderStyle     =   0  'Transparent
+      FillStyle       =   0  'Solid
+      Height          =   120
+      Index           =   5
+      Left            =   5415
+      Top             =   1890
+      Width           =   1095
+   End
+   Begin VB.Shape shpSkillsBar 
+      BorderStyle     =   0  'Transparent
+      FillStyle       =   0  'Solid
+      Height          =   120
+      Index           =   4
+      Left            =   5415
+      Top             =   1635
+      Width           =   1095
+   End
+   Begin VB.Shape shpSkillsBar 
+      BorderStyle     =   0  'Transparent
+      FillStyle       =   0  'Solid
+      Height          =   120
+      Index           =   3
+      Left            =   5415
+      Top             =   1380
+      Width           =   1095
+   End
+   Begin VB.Shape shpSkillsBar 
+      BorderStyle     =   0  'Transparent
+      FillStyle       =   0  'Solid
+      Height          =   120
+      Index           =   2
+      Left            =   5415
+      Top             =   1125
+      Width           =   1095
+   End
+   Begin VB.Shape shpSkillsBar 
+      BorderColor     =   &H00000000&
+      BorderStyle     =   0  'Transparent
+      FillStyle       =   0  'Solid
+      Height          =   120
+      Index           =   1
+      Left            =   5415
+      Top             =   885
+      Width           =   1095
+   End
    Begin VB.Label Label6 
       BackStyle       =   0  'Transparent
-      Caption         =   "Estadisticas1"
+      Caption         =   "000"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
       Height          =   195
       Index           =   5
-      Left            =   240
-      TabIndex        =   43
-      Top             =   5580
-      Width           =   2475
+      Left            =   2325
+      TabIndex        =   36
+      Top             =   5880
+      Width           =   555
    End
    Begin VB.Label Label6 
       BackStyle       =   0  'Transparent
-      Caption         =   "Estadisticas1"
+      Caption         =   "000"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
       Height          =   195
       Index           =   4
-      Left            =   240
-      TabIndex        =   42
-      Top             =   5340
-      Width           =   2475
+      Left            =   960
+      TabIndex        =   35
+      Top             =   5670
+      Width           =   1785
    End
    Begin VB.Label Label6 
       BackStyle       =   0  'Transparent
-      Caption         =   "Estadisticas1"
+      Caption         =   "000"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
       Height          =   195
       Index           =   3
-      Left            =   240
-      TabIndex        =   41
-      Top             =   5100
-      Width           =   2475
+      Left            =   1920
+      TabIndex        =   34
+      Top             =   5460
+      Width           =   825
    End
    Begin VB.Label Label6 
       BackStyle       =   0  'Transparent
-      Caption         =   "Estadisticas1"
+      Caption         =   "000"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
       Height          =   195
       Index           =   2
-      Left            =   240
-      TabIndex        =   40
-      Top             =   4860
-      Width           =   2475
+      Left            =   1920
+      TabIndex        =   33
+      Top             =   5220
+      Width           =   825
    End
    Begin VB.Label Label6 
       BackStyle       =   0  'Transparent
-      Caption         =   "Estadisticas1"
+      Caption         =   "000"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
       Height          =   195
       Index           =   1
-      Left            =   240
-      TabIndex        =   39
-      Top             =   4620
-      Width           =   2475
+      Left            =   1920
+      TabIndex        =   32
+      Top             =   4980
+      Width           =   825
    End
    Begin VB.Label Label6 
       BackStyle       =   0  'Transparent
-      Caption         =   "Estadisticas1"
+      Caption         =   "000"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
       Height          =   195
       Index           =   0
-      Left            =   240
-      TabIndex        =   38
-      Top             =   4380
-      Width           =   2475
+      Left            =   1920
+      TabIndex        =   31
+      Top             =   4740
+      Width           =   825
    End
-   Begin VB.Shape Shape4 
-      Height          =   1815
-      Left            =   120
-      Top             =   4020
-      Width           =   2715
-   End
-   Begin VB.Shape Shape3 
-      Height          =   2055
-      Left            =   120
-      Top             =   1920
-      Width           =   2715
-   End
-   Begin VB.Shape Shape1 
-      Height          =   1755
-      Left            =   120
-      Top             =   120
-      Width           =   2715
-   End
-   Begin VB.Shape Shape2 
-      Height          =   5715
-      Left            =   2880
-      Top             =   120
-      Width           =   3855
-   End
-   Begin VB.Label Label5 
-      Alignment       =   2  'Center
+   Begin VB.Label Skills 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
-      Caption         =   "Estadisticas"
+      Caption         =   "000"
       BeginProperty Font 
          Name            =   "Tahoma"
-         Size            =   9
+         Size            =   8.25
          Charset         =   0
          Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00000000&
-      Height          =   210
-      Left            =   945
-      TabIndex        =   37
-      Top             =   4080
-      Width           =   1080
-   End
-   Begin VB.Label Skills 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "Pablo2"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00000000&
-      Height          =   195
-      Index           =   21
-      Left            =   3585
-      TabIndex        =   36
-      Top             =   5400
-      Width           =   480
-   End
-   Begin VB.Label Skills 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "Pablo2"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00000000&
+      ForeColor       =   &H00FFFFFF&
       Height          =   195
       Index           =   20
-      Left            =   3585
-      TabIndex        =   35
-      Top             =   5175
-      Width           =   480
+      Left            =   4155
+      TabIndex        =   30
+      Top             =   5760
+      Width           =   315
    End
    Begin VB.Label Skills 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
-      Caption         =   "Pablo2"
+      Caption         =   "000"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   8.25
          Charset         =   0
-         Weight          =   400
+         Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00000000&
+      ForeColor       =   &H00FFFFFF&
       Height          =   195
       Index           =   19
-      Left            =   3585
-      TabIndex        =   34
-      Top             =   4935
-      Width           =   480
+      Left            =   4605
+      TabIndex        =   29
+      Top             =   5520
+      Width           =   315
    End
    Begin VB.Label Skills 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
-      Caption         =   "Pablo2"
+      Caption         =   "000"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   8.25
          Charset         =   0
-         Weight          =   400
+         Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00000000&
+      ForeColor       =   &H00FFFFFF&
       Height          =   195
       Index           =   18
-      Left            =   3585
-      TabIndex        =   33
-      Top             =   4695
-      Width           =   480
+      Left            =   4725
+      TabIndex        =   28
+      Top             =   5235
+      Width           =   315
    End
    Begin VB.Label Skills 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
-      Caption         =   "Pablo2"
+      Caption         =   "000"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   8.25
          Charset         =   0
-         Weight          =   400
+         Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00000000&
+      ForeColor       =   &H00FFFFFF&
       Height          =   195
       Index           =   17
-      Left            =   3585
-      TabIndex        =   32
-      Top             =   4470
-      Width           =   480
+      Left            =   4440
+      TabIndex        =   27
+      Top             =   4965
+      Width           =   315
    End
    Begin VB.Label Skills 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
-      Caption         =   "Pablo2"
+      Caption         =   "000"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   8.25
          Charset         =   0
-         Weight          =   400
+         Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00000000&
+      ForeColor       =   &H00FFFFFF&
       Height          =   195
       Index           =   16
-      Left            =   3585
-      TabIndex        =   31
-      Top             =   4230
-      Width           =   480
+      Left            =   3960
+      TabIndex        =   26
+      Top             =   4680
+      Width           =   315
    End
    Begin VB.Label Skills 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
-      Caption         =   "Pablo2"
+      Caption         =   "000"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   8.25
          Charset         =   0
-         Weight          =   400
+         Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00000000&
+      ForeColor       =   &H00FFFFFF&
       Height          =   195
       Index           =   15
-      Left            =   3585
-      TabIndex        =   30
-      Top             =   3990
-      Width           =   480
+      Left            =   3885
+      TabIndex        =   25
+      Top             =   4440
+      Width           =   315
    End
    Begin VB.Label Skills 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
-      Caption         =   "Pablo2"
+      Caption         =   "000"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   8.25
          Charset         =   0
-         Weight          =   400
+         Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00000000&
+      ForeColor       =   &H00FFFFFF&
       Height          =   195
       Index           =   14
-      Left            =   3585
-      TabIndex        =   29
-      Top             =   3765
-      Width           =   480
+      Left            =   4080
+      TabIndex        =   24
+      Top             =   4200
+      Width           =   315
    End
    Begin VB.Label Skills 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
-      Caption         =   "Pablo2"
+      Caption         =   "000"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   8.25
          Charset         =   0
-         Weight          =   400
+         Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00000000&
+      ForeColor       =   &H00FFFFFF&
       Height          =   195
       Index           =   13
-      Left            =   3585
-      TabIndex        =   28
-      Top             =   3525
-      Width           =   480
-   End
-   Begin VB.Label Label4 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "Reputacion1"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00000000&
-      Height          =   195
-      Index           =   7
-      Left            =   285
-      TabIndex        =   27
-      Top             =   3660
-      Width           =   900
-   End
-   Begin VB.Label Label4 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "Reputacion1"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00000000&
-      Height          =   195
-      Index           =   6
-      Left            =   285
-      TabIndex        =   26
-      Top             =   3420
-      Width           =   900
-   End
-   Begin VB.Label Label4 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "Reputacion1"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00000000&
-      Height          =   195
-      Index           =   5
-      Left            =   285
-      TabIndex        =   25
-      Top             =   3180
-      Width           =   900
-   End
-   Begin VB.Label Label4 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "Reputacion1"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00000000&
-      Height          =   195
-      Index           =   4
-      Left            =   285
-      TabIndex        =   24
-      Top             =   2940
-      Width           =   900
-   End
-   Begin VB.Label Label4 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "Reputacion1"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00000000&
-      Height          =   195
-      Index           =   3
-      Left            =   285
+      Left            =   3825
       TabIndex        =   23
-      Top             =   2700
-      Width           =   900
+      Top             =   3915
+      Width           =   315
    End
-   Begin VB.Label Label4 
+   Begin VB.Label Skills 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
-      Caption         =   "Reputacion1"
+      Caption         =   "000"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00000000&
-      Height          =   195
-      Index           =   2
-      Left            =   285
-      TabIndex        =   22
-      Top             =   2475
-      Width           =   900
-   End
-   Begin VB.Label Label4 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "Reputacion1"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00000000&
-      Height          =   195
-      Index           =   1
-      Left            =   285
-      TabIndex        =   21
-      Top             =   2235
-      Width           =   900
-   End
-   Begin VB.Label Label3 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "Reputacion"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   9
          Charset         =   0
          Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00000000&
-      Height          =   210
-      Left            =   945
-      TabIndex        =   20
-      Top             =   1965
-      Width           =   1050
-   End
-   Begin VB.Label Skills 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "Pablo2"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00000000&
+      ForeColor       =   &H00FFFFFF&
       Height          =   195
       Index           =   12
-      Left            =   3585
-      TabIndex        =   19
-      Top             =   3285
-      Width           =   480
+      Left            =   3705
+      TabIndex        =   22
+      Top             =   3660
+      Width           =   315
    End
-   Begin VB.Label Skills 
+   Begin VB.Label Label4 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
-      Caption         =   "Pablo2"
+      Caption         =   "000"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   8.25
          Charset         =   0
-         Weight          =   400
+         Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00000000&
-      Height          =   195
-      Index           =   11
-      Left            =   3585
-      TabIndex        =   18
-      Top             =   3060
-      Width           =   480
-   End
-   Begin VB.Label Skills 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "Pablo2"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00000000&
-      Height          =   195
-      Index           =   10
-      Left            =   3585
-      TabIndex        =   17
-      Top             =   2820
-      Width           =   480
-   End
-   Begin VB.Label Skills 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "Pablo2"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00000000&
-      Height          =   195
-      Index           =   9
-      Left            =   3585
-      TabIndex        =   16
-      Top             =   2580
-      Width           =   480
-   End
-   Begin VB.Label Skills 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "Pablo2"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00000000&
-      Height          =   195
-      Index           =   8
-      Left            =   3585
-      TabIndex        =   15
-      Top             =   2355
-      Width           =   480
-   End
-   Begin VB.Label Skills 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "Pablo2"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00000000&
+      ForeColor       =   &H00FFFFFF&
       Height          =   195
       Index           =   7
-      Left            =   3585
-      TabIndex        =   14
-      Top             =   2115
-      Width           =   480
+      Left            =   1065
+      TabIndex        =   21
+      Top             =   3900
+      Width           =   315
    End
-   Begin VB.Label Skills 
+   Begin VB.Label Label4 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
-      Caption         =   "Pablo2"
+      Caption         =   "000"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   8.25
          Charset         =   0
-         Weight          =   400
+         Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00000000&
+      ForeColor       =   &H00FFFFFF&
       Height          =   195
       Index           =   6
-      Left            =   3585
+      Left            =   1065
+      TabIndex        =   20
+      Top             =   3630
+      Width           =   315
+   End
+   Begin VB.Label Label4 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "000"
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   195
+      Index           =   5
+      Left            =   1065
+      TabIndex        =   19
+      Top             =   3375
+      Width           =   315
+   End
+   Begin VB.Label Label4 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "000"
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   195
+      Index           =   4
+      Left            =   1065
+      TabIndex        =   18
+      Top             =   3120
+      Width           =   315
+   End
+   Begin VB.Label Label4 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "000"
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   195
+      Index           =   2
+      Left            =   1065
+      TabIndex        =   17
+      Top             =   2880
+      Width           =   315
+   End
+   Begin VB.Label Label4 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "000"
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   195
+      Index           =   1
+      Left            =   1065
+      TabIndex        =   16
+      Top             =   2625
+      Width           =   315
+   End
+   Begin VB.Label Skills 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "000"
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   195
+      Index           =   11
+      Left            =   4740
+      TabIndex        =   15
+      Top             =   3420
+      Width           =   315
+   End
+   Begin VB.Label Skills 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "000"
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   195
+      Index           =   10
+      Left            =   3930
+      TabIndex        =   14
+      Top             =   3165
+      Width           =   315
+   End
+   Begin VB.Label Skills 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "000"
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   195
+      Index           =   9
+      Left            =   3690
       TabIndex        =   13
-      Top             =   1875
-      Width           =   480
+      Top             =   2910
+      Width           =   315
    End
    Begin VB.Label Skills 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
-      Caption         =   "Pablo2"
+      Caption         =   "000"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   8.25
          Charset         =   0
-         Weight          =   400
+         Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00000000&
+      ForeColor       =   &H00FFFFFF&
       Height          =   195
-      Index           =   5
-      Left            =   3585
+      Index           =   8
+      Left            =   4230
       TabIndex        =   12
-      Top             =   1650
-      Width           =   480
+      Top             =   2640
+      Width           =   315
    End
    Begin VB.Label Skills 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
-      Caption         =   "Pablo2"
+      Caption         =   "000"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00000000&
-      Height          =   195
-      Index           =   4
-      Left            =   3585
-      TabIndex        =   11
-      Top             =   1410
-      Width           =   480
-   End
-   Begin VB.Label Skills 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "Pablo2"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00000000&
-      Height          =   195
-      Index           =   3
-      Left            =   3585
-      TabIndex        =   10
-      Top             =   1170
-      Width           =   480
-   End
-   Begin VB.Label Skills 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "Pablo2"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00000000&
-      Height          =   195
-      Index           =   2
-      Left            =   3585
-      TabIndex        =   9
-      Top             =   945
-      Width           =   480
-   End
-   Begin VB.Label Skills 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "Pablo2"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00000000&
-      Height          =   195
-      Index           =   1
-      Left            =   3585
-      TabIndex        =   8
-      Top             =   720
-      Width           =   480
-   End
-   Begin VB.Label Label2 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "Skills"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   9.75
          Charset         =   0
          Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00000000&
-      Height          =   240
-      Left            =   4650
-      TabIndex        =   7
-      Top             =   255
-      Width           =   465
+      ForeColor       =   &H00FFFFFF&
+      Height          =   195
+      Index           =   7
+      Left            =   3945
+      TabIndex        =   11
+      Top             =   2370
+      Width           =   315
    End
-   Begin VB.Label Atri 
+   Begin VB.Label Skills 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
-      Caption         =   "Pablo"
+      Caption         =   "000"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   8.25
          Charset         =   0
-         Weight          =   400
+         Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00000000&
+      ForeColor       =   &H00FFFFFF&
+      Height          =   195
+      Index           =   6
+      Left            =   3900
+      TabIndex        =   10
+      Top             =   2115
+      Width           =   315
+   End
+   Begin VB.Label Skills 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "000"
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
       Height          =   195
       Index           =   5
-      Left            =   300
-      TabIndex        =   5
-      Top             =   1365
-      Width           =   390
+      Left            =   3825
+      TabIndex        =   9
+      Top             =   1875
+      Width           =   315
    End
-   Begin VB.Label Atri 
+   Begin VB.Label Skills 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
-      Caption         =   "Pablo"
+      Caption         =   "000"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00000000&
-      Height          =   195
-      Index           =   4
-      Left            =   300
-      TabIndex        =   4
-      Top             =   1155
-      Width           =   390
-   End
-   Begin VB.Label Atri 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "Pablo"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00000000&
-      Height          =   195
-      Index           =   3
-      Left            =   300
-      TabIndex        =   3
-      Top             =   945
-      Width           =   390
-   End
-   Begin VB.Label Atri 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "Pablo"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00000000&
-      Height          =   195
-      Index           =   2
-      Left            =   300
-      TabIndex        =   2
-      Top             =   735
-      Width           =   390
-   End
-   Begin VB.Label Atri 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "Pablo"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00000000&
-      Height          =   195
-      Index           =   1
-      Left            =   300
-      TabIndex        =   1
-      Top             =   510
-      Width           =   390
-   End
-   Begin VB.Label Label1 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "Atributos"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   9
          Charset         =   0
          Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00000000&
-      Height          =   210
-      Left            =   1005
+      ForeColor       =   &H00FFFFFF&
+      Height          =   195
+      Index           =   4
+      Left            =   4590
+      TabIndex        =   8
+      Top             =   1605
+      Width           =   315
+   End
+   Begin VB.Label Skills 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "000"
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   195
+      Index           =   3
+      Left            =   4635
+      TabIndex        =   7
+      Top             =   1350
+      Width           =   315
+   End
+   Begin VB.Label Skills 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "000"
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   195
+      Index           =   2
+      Left            =   3630
+      TabIndex        =   6
+      Top             =   1095
+      Width           =   315
+   End
+   Begin VB.Label Skills 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "000"
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   195
+      Index           =   1
+      Left            =   3645
+      TabIndex        =   5
+      Top             =   855
+      Width           =   315
+   End
+   Begin VB.Label Atri 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "00"
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   195
+      Index           =   5
+      Left            =   1500
+      TabIndex        =   4
+      Top             =   1890
+      Width           =   210
+   End
+   Begin VB.Label Atri 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "00"
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   195
+      Index           =   4
+      Left            =   1500
+      TabIndex        =   3
+      Top             =   1635
+      Width           =   210
+   End
+   Begin VB.Label Atri 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "00"
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   195
+      Index           =   3
+      Left            =   1500
+      TabIndex        =   2
+      Top             =   1380
+      Width           =   210
+   End
+   Begin VB.Label Atri 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "00"
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   195
+      Index           =   2
+      Left            =   1500
+      TabIndex        =   1
+      Top             =   1095
+      Width           =   210
+   End
+   Begin VB.Label Atri 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "00"
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   195
+      Index           =   1
+      Left            =   1500
       TabIndex        =   0
-      Top             =   210
-      Width           =   885
+      Top             =   840
+      Width           =   210
    End
 End
 Attribute VB_Name = "frmEstadisticas"
@@ -934,47 +1016,98 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private Sub Command1_Click()
-Unload Me
-End Sub
+Private clsFormulario As clsFormMovementManager
+
+Private cBotonCerrar As clsGraphicalButton
+Public LastPressed As clsGraphicalButton
+
+Private Const ANCHO_BARRA As Byte = 73 'pixeles
+Private Const BAR_LEFT_POS As Integer = 361 'pixeles
 
 Public Sub Iniciar_Labels()
 'Iniciamos los labels con los valores de los atributos y los skills
 Dim i As Integer
+Dim Ancho As Integer
+
 For i = 1 To NUMATRIBUTOS
-    Atri(i).Caption = AtributosNames(i) & ": " & UserAtributos(i)
+    Atri(i).Caption = UserAtributos(i)
 Next
+
 For i = 1 To NUMSKILLS
-    Skills(i).Caption = SkillsNames(i) & ": " & UserSkills(i)
+    Skills(i).Caption = UserSkills(i)
+    Ancho = IIf(PorcentajeSkills(i) = 0, ANCHO_BARRA, (100 - PorcentajeSkills(i)) / 100 * ANCHO_BARRA)
+    shpSkillsBar(i).Width = Ancho
+    shpSkillsBar(i).Left = BAR_LEFT_POS + ANCHO_BARRA - Ancho
 Next
 
 
-Label4(1).Caption = "Asesino: " & UserReputacion.AsesinoRep
-Label4(2).Caption = "Bandido: " & UserReputacion.BandidoRep
-Label4(3).Caption = "Burgues: " & UserReputacion.BurguesRep
-Label4(4).Caption = "Ladrón: " & UserReputacion.LadronesRep
-Label4(5).Caption = "Noble: " & UserReputacion.NobleRep
-Label4(6).Caption = "Plebe: " & UserReputacion.PlebeRep
+Label4(1).Caption = UserReputacion.AsesinoRep
+Label4(2).Caption = UserReputacion.BandidoRep
+'Label4(3).Caption = "Burgues: " & UserReputacion.BurguesRep
+Label4(4).Caption = UserReputacion.LadronesRep
+Label4(5).Caption = UserReputacion.NobleRep
+Label4(6).Caption = UserReputacion.PlebeRep
 
 If UserReputacion.Promedio < 0 Then
     Label4(7).ForeColor = vbRed
-    Label4(7).Caption = "Status: CRIMINAL"
+    Label4(7).Caption = "Criminal"
 Else
     Label4(7).ForeColor = vbBlue
-    Label4(7).Caption = "Status: Ciudadano"
+    Label4(7).Caption = "Ciudadano"
 End If
 
 With UserEstadisticas
-    Label6(0).Caption = "Criminales matados: " & .CriminalesMatados
-    Label6(1).Caption = "Ciudadanos matados: " & .CiudadanosMatados
-    Label6(2).Caption = "Usuarios matados: " & .UsuariosMatados
-    Label6(3).Caption = "NPCs matados: " & .NpcsMatados
-    Label6(4).Caption = "Clase: " & .Clase
-    Label6(5).Caption = "Tiempo restante en carcel: " & .PenaCarcel
+    Label6(0).Caption = .CriminalesMatados
+    Label6(1).Caption = .CiudadanosMatados
+    Label6(2).Caption = .UsuariosMatados
+    Label6(3).Caption = .NpcsMatados
+    Label6(4).Caption = .Clase
+    Label6(5).Caption = .PenaCarcel
 End With
 
 End Sub
 
+Private Sub Form_Load()
+    ' Handles Form movement (drag and drop).
+    Set clsFormulario = New clsFormMovementManager
+    clsFormulario.Initialize Me
+    
+    Me.Picture = LoadPicture(App.path & "\graficos\VentanaEstadisticas.jpg")
+    
+    Call LoadButtons
+End Sub
+
+Private Sub LoadButtons()
+    
+    Dim GrhPath As String
+    
+    GrhPath = DirGraficos
+    
+    Set cBotonCerrar = New clsGraphicalButton
+    Set LastPressed = New clsGraphicalButton
+    
+    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarEstadisticas.jpg", _
+                                    GrhPath & "BotonCerrarRolloverEstadisticas.jpg", _
+                                    GrhPath & "BotonCerrarClickEstadisticas.jpg", Me)
+
+End Sub
+
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    LastPressed.ToggleToNormal
+End Sub
+
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
 Unload Me
+End Sub
+
+Private Sub imgCerrar_Click()
+    Unload Me
+End Sub
+
+Private Sub imgCerrar_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    If imgCerrar.Tag = 1 Then
+        imgCerrar.Picture = LoadPicture(App.path & "\graficos\BotonCerrarApretadoEstadisticas.jpg")
+        imgCerrar.Tag = 0
+    End If
+
 End Sub

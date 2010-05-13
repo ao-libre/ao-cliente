@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin VB.Form frmGuildFoundation 
-   BorderStyle     =   1  'Fixed Single
+   BorderStyle     =   0  'None
    Caption         =   "Creación de un Clan"
    ClientHeight    =   3840
-   ClientLeft      =   45
-   ClientTop       =   330
+   ClientLeft      =   0
+   ClientTop       =   -75
    ClientWidth     =   4050
    ClipControls    =   0   'False
    ControlBox      =   0   'False
@@ -20,111 +20,44 @@ Begin VB.Form frmGuildFoundation
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   3840
-   ScaleWidth      =   4050
+   ScaleHeight     =   256
+   ScaleMode       =   3  'Pixel
+   ScaleWidth      =   270
+   ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
-   Begin VB.CommandButton Command2 
-      Cancel          =   -1  'True
-      Caption         =   "Cancelar"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   375
-      Left            =   120
-      MouseIcon       =   "frmGuildFoundation.frx":0000
-      MousePointer    =   99  'Custom
-      TabIndex        =   7
-      Top             =   3360
-      Width           =   975
-   End
-   Begin VB.CommandButton Command1 
-      Caption         =   "Siguiente"
-      Height          =   375
-      Left            =   3000
-      MouseIcon       =   "frmGuildFoundation.frx":0152
-      MousePointer    =   99  'Custom
-      TabIndex        =   6
-      Top             =   3360
-      Width           =   975
-   End
-   Begin VB.Frame Frame2 
-      Caption         =   "Web site del clan"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   855
-      Left            =   120
-      TabIndex        =   4
-      Top             =   2400
-      Width           =   3855
-      Begin VB.TextBox Text2 
-         Height          =   285
-         Left            =   120
-         TabIndex        =   5
-         Top             =   360
-         Width           =   3495
-      End
-   End
-   Begin VB.Frame Frame1 
-      Caption         =   "Información básica"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   2175
-      Left            =   120
+   Begin VB.TextBox txtClanName 
+      BackColor       =   &H00000000&
+      BorderStyle     =   0  'None
+      ForeColor       =   &H00FFFFFF&
+      Height          =   285
+      Left            =   360
       TabIndex        =   0
-      Top             =   120
-      Width           =   3855
-      Begin VB.TextBox txtClanName 
-         Height          =   285
-         Left            =   240
-         TabIndex        =   2
-         Top             =   1680
-         Width           =   3375
-      End
-      Begin VB.Label Label2 
-         Caption         =   $"frmGuildFoundation.frx":02A4
-         BeginProperty Font 
-            Name            =   "Tahoma"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   -1  'True
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   975
-         Left            =   240
-         TabIndex        =   3
-         Top             =   600
-         Width           =   3495
-      End
-      Begin VB.Label Label1 
-         Caption         =   "Nombre del clan:"
-         Height          =   255
-         Left            =   240
-         TabIndex        =   1
-         Top             =   360
-         Width           =   1455
-      End
+      Top             =   1815
+      Width           =   3345
+   End
+   Begin VB.TextBox txtWeb 
+      BackColor       =   &H00000000&
+      BorderStyle     =   0  'None
+      ForeColor       =   &H00FFFFFF&
+      Height          =   285
+      Left            =   360
+      TabIndex        =   1
+      Top             =   2760
+      Width           =   3345
+   End
+   Begin VB.Image imgSiguiente 
+      Height          =   375
+      Left            =   2400
+      Tag             =   "1"
+      Top             =   3240
+      Width           =   1335
+   End
+   Begin VB.Image imgCancelar 
+      Height          =   375
+      Left            =   240
+      Tag             =   "1"
+      Top             =   3240
+      Width           =   1335
    End
 End
 Attribute VB_Name = "frmGuildFoundation"
@@ -165,34 +98,75 @@ Attribute VB_Exposed = False
 'Pablo Ignacio Márquez
 
 Option Explicit
+Private clsFormulario As clsFormMovementManager
 
-Private Sub Command1_Click()
-ClanName = txtClanName
-Site = Text2
-Unload Me
-frmGuildDetails.Show , Me
-End Sub
+Private cBotonSiguiente As clsGraphicalButton
+Private cBotonCancelar As clsGraphicalButton
 
-Private Sub Command2_Click()
-Unload Me
-End Sub
+Public LastPressed As clsGraphicalButton
 
 Private Sub Form_Deactivate()
-Me.SetFocus
+    Me.SetFocus
 End Sub
 
 Private Sub Form_Load()
+    ' Handles Form movement (drag and drop).
+    Set clsFormulario = New clsFormMovementManager
+    clsFormulario.Initialize Me
 
-If Len(txtClanName.Text) <= 30 Then
-    If Not AsciiValidos(txtClanName) Then
-        MsgBox "Nombre invalido."
-        Exit Sub
-    End If
-Else
+    Me.Picture = LoadPicture(App.path & "\graficos\VentanaNombreClan.jpg")
+        
+    Call LoadButtons
+    
+    If Len(txtClanName.Text) <= 30 Then
+        If Not AsciiValidos(txtClanName) Then
+            MsgBox "Nombre invalido."
+            Exit Sub
+        End If
+    Else
         MsgBox "Nombre demasiado extenso."
         Exit Sub
-End If
+    End If
+
+End Sub
+
+Private Sub LoadButtons()
+    Dim GrhPath As String
+    
+    GrhPath = DirGraficos
+
+    Set cBotonSiguiente = New clsGraphicalButton
+    Set cBotonCancelar = New clsGraphicalButton
+    
+    Set LastPressed = New clsGraphicalButton
+    
+    
+    Call cBotonSiguiente.Initialize(imgSiguiente, GrhPath & "BotonSiguienteNombreClan.jpg", _
+                                    GrhPath & "BotonSiguienteRolloverNombreClan.jpg", _
+                                    GrhPath & "BotonSiguienteClickNombreClan.jpg", Me)
+
+    Call cBotonCancelar.Initialize(imgCancelar, GrhPath & "BotonCancelarNombreClan.jpg", _
+                                    GrhPath & "BotonCancelarRolloverNombreClan.jpg", _
+                                    GrhPath & "BotonCancelarClickNombreClan.jpg", Me)
+
+End Sub
 
 
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    LastPressed.ToggleToNormal
+End Sub
 
+Private Sub imgCancelar_Click()
+    Unload Me
+End Sub
+
+Private Sub imgSiguiente_Click()
+    ClanName = txtClanName.Text
+    Site = txtWeb.Text
+    Unload Me
+    frmGuildDetails.Show , frmMain
+End Sub
+
+Private Sub txtWeb_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    LastPressed.ToggleToNormal
 End Sub

@@ -1,11 +1,11 @@
 VERSION 5.00
 Begin VB.Form frmGuildURL 
-   BorderStyle     =   1  'Fixed Single
+   BorderStyle     =   0  'None
    Caption         =   "Oficial Web Site"
-   ClientHeight    =   1035
-   ClientLeft      =   45
-   ClientTop       =   330
-   ClientWidth     =   6135
+   ClientHeight    =   1425
+   ClientLeft      =   0
+   ClientTop       =   -75
+   ClientWidth     =   6225
    ClipControls    =   0   'False
    ControlBox      =   0   'False
    BeginProperty Font 
@@ -20,34 +20,36 @@ Begin VB.Form frmGuildURL
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   1035
-   ScaleWidth      =   6135
+   ScaleHeight     =   95
+   ScaleMode       =   3  'Pixel
+   ScaleWidth      =   415
+   ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
-   Begin VB.CommandButton Command1 
-      Caption         =   "Aceptar"
-      Default         =   -1  'True
-      Height          =   255
-      Left            =   120
-      MouseIcon       =   "frmGuildURL.frx":0000
-      MousePointer    =   99  'Custom
-      TabIndex        =   2
-      Top             =   720
-      Width           =   5895
-   End
-   Begin VB.TextBox Text1 
-      Height          =   285
-      Left            =   120
-      TabIndex        =   1
-      Top             =   360
-      Width           =   5895
-   End
-   Begin VB.Label Label1 
-      Caption         =   "Ingrese la direccion del site:"
-      Height          =   255
-      Left            =   120
+   Begin VB.TextBox txtUrl 
+      BackColor       =   &H00000000&
+      BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   225
+      Left            =   210
       TabIndex        =   0
-      Top             =   120
-      Width           =   4215
+      Top             =   600
+      Width           =   5805
+   End
+   Begin VB.Image imgAceptar 
+      Height          =   255
+      Left            =   165
+      Tag             =   "1"
+      Top             =   960
+      Width           =   5880
    End
 End
 Attribute VB_Name = "frmGuildURL"
@@ -89,10 +91,49 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private Sub Command1_Click()
-    If Text1 <> "" Then _
-        Call WriteGuildNewWebsite(Text1)
+Private clsFormulario As clsFormMovementManager
+
+Private cBotonAceptar As clsGraphicalButton
+
+Public LastPressed As clsGraphicalButton
+
+Private Sub Form_Load()
+    ' Handles Form movement (drag and drop).
+    Set clsFormulario = New clsFormMovementManager
+    clsFormulario.Initialize Me
+    
+    Me.Picture = LoadPicture(App.path & "\graficos\VentanaUrlClan.jpg")
+    
+    Call LoadButtons
+End Sub
+
+Private Sub LoadButtons()
+    Dim GrhPath As String
+    
+    GrhPath = DirGraficos
+
+    Set cBotonAceptar = New clsGraphicalButton
+    
+    Set LastPressed = New clsGraphicalButton
+    
+    
+    Call cBotonAceptar.Initialize(imgAceptar, GrhPath & "BotonAceptarUrl.jpg", _
+                                    GrhPath & "BotonAceptaRolloverrUrl.jpg", _
+                                    GrhPath & "BotonAceptarClickUrl.jpg", Me)
+
+End Sub
+
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    LastPressed.ToggleToNormal
+End Sub
+
+Private Sub imgAceptar_Click()
+    If txtUrl.Text <> "" Then _
+        Call WriteGuildNewWebsite(txtUrl.Text)
     
     Unload Me
 End Sub
 
+Private Sub txtUrl_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    LastPressed.ToggleToNormal
+End Sub

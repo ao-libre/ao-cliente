@@ -1,107 +1,154 @@
 VERSION 5.00
 Begin VB.Form frmBancoObj 
-   BackColor       =   &H00000000&
-   BorderStyle     =   3  'Fixed Dialog
-   ClientHeight    =   7290
-   ClientLeft      =   45
-   ClientTop       =   45
-   ClientWidth     =   6930
+   BackColor       =   &H80000000&
+   BorderStyle     =   0  'None
+   ClientHeight    =   7950
+   ClientLeft      =   0
+   ClientTop       =   0
+   ClientWidth     =   6915
    ClipControls    =   0   'False
    ControlBox      =   0   'False
+   ForeColor       =   &H8000000F&
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   486
-   ScaleMode       =   3  'Pixel
-   ScaleWidth      =   462
+   ScaleHeight     =   530
+   ScaleMode       =   0  'User
+   ScaleWidth      =   461
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
-   Begin VB.TextBox cantidad 
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   285
-      Left            =   3105
-      TabIndex        =   8
-      Text            =   "1"
-      Top             =   6690
-      Width           =   1080
-   End
-   Begin VB.PictureBox Picture1 
-      AutoRedraw      =   -1  'True
+   Begin VB.TextBox CantidadOro 
+      Alignment       =   2  'Center
       BackColor       =   &H00000000&
-      FillStyle       =   0  'Solid
-      Height          =   600
-      Left            =   435
-      ScaleHeight     =   540
-      ScaleWidth      =   495
+      BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   270
+      Left            =   3525
+      MaxLength       =   7
+      TabIndex        =   7
+      Text            =   "1"
+      Top             =   1410
+      Width           =   1035
+   End
+   Begin VB.TextBox cantidad 
+      Alignment       =   2  'Center
+      BackColor       =   &H00000000&
+      BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   270
+      Left            =   3195
+      MaxLength       =   5
+      TabIndex        =   6
+      Text            =   "1"
+      Top             =   3930
+      Width           =   615
+   End
+   Begin VB.PictureBox PicBancoInv 
+      Appearance      =   0  'Flat
+      BackColor       =   &H00000000&
+      ForeColor       =   &H80000008&
+      Height          =   3795
+      Left            =   540
+      ScaleHeight     =   3765
+      ScaleWidth      =   2400
+      TabIndex        =   4
+      Top             =   2400
+      Width           =   2430
+   End
+   Begin VB.PictureBox PicInv 
+      Appearance      =   0  'Flat
+      BackColor       =   &H00000000&
+      ForeColor       =   &H80000008&
+      Height          =   3795
+      Left            =   4020
+      ScaleHeight     =   16.617
+      ScaleMode       =   0  'User
+      ScaleWidth      =   825.806
       TabIndex        =   3
-      Top             =   750
-      Width           =   555
+      Top             =   2400
+      Width           =   2430
    End
-   Begin VB.CommandButton Command2 
-      Caption         =   "OK"
+   Begin VB.Label lblUserGld 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "0"
       BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
+         Name            =   "MS Sans Serif"
+         Size            =   9.75
          Charset         =   0
-         Weight          =   400
+         Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+      ForeColor       =   &H00FFFFFF&
       Height          =   240
-      Left            =   6195
-      MousePointer    =   99  'Custom
-      TabIndex        =   2
-      Top             =   6780
-      Width           =   465
+      Left            =   3600
+      TabIndex        =   5
+      Top             =   945
+      Width           =   135
    End
-   Begin VB.ListBox List1 
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   3960
+   Begin VB.Image imgDepositarOro 
+      Height          =   930
+      Left            =   1560
+      Tag             =   "0"
+      Top             =   945
+      Width           =   1050
+   End
+   Begin VB.Image imgRetirarOro 
+      Height          =   765
+      Left            =   4695
+      Tag             =   "0"
+      Top             =   945
+      Width           =   945
+   End
+   Begin VB.Image imgCerrar 
+      Height          =   255
+      Left            =   6150
+      Tag             =   "0"
+      Top             =   360
+      Width           =   255
+   End
+   Begin VB.Image Image1 
+      Height          =   255
       Index           =   1
-      Left            =   3855
-      TabIndex        =   1
-      Top             =   1800
-      Width           =   2490
+      Left            =   3360
+      MousePointer    =   99  'Custom
+      Top             =   3480
+      Width           =   255
    End
-   Begin VB.ListBox List1 
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   3960
+   Begin VB.Image Image1 
+      Height          =   255
       Index           =   0
-      Left            =   615
-      TabIndex        =   0
-      Top             =   1800
-      Width           =   2490
+      Left            =   3360
+      MousePointer    =   99  'Custom
+      Top             =   4440
+      Width           =   255
    End
    Begin VB.Image CmdMoverBov 
       Height          =   375
       Index           =   1
       Left            =   0
       Top             =   4200
+      Visible         =   0   'False
       Width           =   570
    End
    Begin VB.Image CmdMoverBov 
@@ -109,91 +156,70 @@ Begin VB.Form frmBancoObj
       Index           =   0
       Left            =   0
       Top             =   4560
+      Visible         =   0   'False
       Width           =   570
    End
-   Begin VB.Label Label2 
+   Begin VB.Label Label1 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
-      Caption         =   "Cantidad"
       BeginProperty Font 
-         Name            =   "Tahoma"
+         Name            =   "MS Sans Serif"
          Size            =   8.25
          Charset         =   0
-         Weight          =   400
+         Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H8000000E&
+      ForeColor       =   &H00FFFFFF&
       Height          =   195
-      Left            =   2265
-      TabIndex        =   9
-      Top             =   6750
-      Width           =   645
-   End
-   Begin VB.Image Image1 
-      Height          =   330
       Index           =   1
-      Left            =   3855
-      MousePointer    =   99  'Custom
-      Tag             =   "1"
-      Top             =   6165
-      Width           =   2460
-   End
-   Begin VB.Image Image1 
-      Height          =   330
-      Index           =   0
-      Left            =   615
-      MousePointer    =   99  'Custom
-      Tag             =   "1"
-      Top             =   6150
-      Width           =   2460
-   End
-   Begin VB.Label Label1 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      ForeColor       =   &H000000FF&
-      Height          =   195
-      Index           =   3
-      Left            =   3990
-      TabIndex        =   7
-      Top             =   975
+      Left            =   2160
+      TabIndex        =   2
+      Top             =   6990
       Visible         =   0   'False
-      Width           =   45
+      Width           =   750
    End
    Begin VB.Label Label1 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
-      ForeColor       =   &H000000FF&
-      Height          =   195
-      Index           =   4
-      Left            =   3990
-      TabIndex        =   6
-      Top             =   630
-      Visible         =   0   'False
-      Width           =   45
-   End
-   Begin VB.Label Label1 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      ForeColor       =   &H000000FF&
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
       Height          =   195
       Index           =   2
-      Left            =   2730
-      TabIndex        =   5
-      Top             =   1170
-      Width           =   45
+      Left            =   2160
+      TabIndex        =   1
+      Top             =   7245
+      Visible         =   0   'False
+      Width           =   750
    End
    Begin VB.Label Label1 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
-      ForeColor       =   &H000000FF&
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
       Height          =   195
       Index           =   0
-      Left            =   1125
-      TabIndex        =   4
-      Top             =   450
-      Width           =   45
+      Left            =   2160
+      TabIndex        =   0
+      Top             =   6750
+      Width           =   750
    End
 End
 Attribute VB_Name = "frmBancoObj"
@@ -248,6 +274,15 @@ Option Explicit
 '<-------------------------NUEVO-------------------------->
 '<-------------------------NUEVO-------------------------->
 
+Private clsFormulario As clsFormMovementManager
+
+Private cBotonRetirarOro As clsGraphicalButton
+Private cBotonDepositarOro As clsGraphicalButton
+Private cBotonCerrar As clsGraphicalButton
+
+Public LastPressed As clsGraphicalButton
+
+
 Public LasActionBuy As Boolean
 Public LastIndex1 As Integer
 Public LastIndex2 As Integer
@@ -255,207 +290,186 @@ Public NoPuedeMover As Boolean
 
 Private Sub cantidad_Change()
 
-If Val(cantidad.Text) < 1 Then
-    cantidad.Text = 1
-End If
-
-If Val(cantidad.Text) > MAX_INVENTORY_OBJS Then
-    cantidad.Text = 1
-End If
+    If Val(cantidad.Text) < 1 Then
+        cantidad.Text = 1
+    End If
+    
+    If Val(cantidad.Text) > MAX_INVENTORY_OBJS Then
+        cantidad.Text = MAX_INVENTORY_OBJS
+    End If
 
 End Sub
 
 Private Sub cantidad_KeyPress(KeyAscii As Integer)
-If (KeyAscii <> 8) Then
-    If (KeyAscii <> 6) And (KeyAscii < 48 Or KeyAscii > 57) Then
-        KeyAscii = 0
+    If (KeyAscii <> 8) Then
+        If (KeyAscii <> 6) And (KeyAscii < 48 Or KeyAscii > 57) Then
+            KeyAscii = 0
+        End If
     End If
-End If
 End Sub
 
-Private Sub CmdMoverBov_Click(index As Integer)
-If List1(0).ListIndex = -1 Then Exit Sub
+Private Sub CantidadOro_Change()
+    If Val(CantidadOro.Text) < 1 Then
+        cantidad.Text = 1
+    End If
+End Sub
 
-If NoPuedeMover Then Exit Sub
-
-Select Case index
-    Case 1 'subir
-        If List1(0).ListIndex <= 0 Then
-            With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                Call ShowConsoleMsg("No puedes mover el objeto en esa dirección.", .red, .green, .blue, .bold, .italic)
-            End With
-            Exit Sub
+Private Sub CantidadOro_KeyPress(KeyAscii As Integer)
+    If (KeyAscii <> 8) Then
+        If (KeyAscii <> 6) And (KeyAscii < 48 Or KeyAscii > 57) Then
+            KeyAscii = 0
         End If
-        LastIndex1 = List1(0).ListIndex - 1
-    Case 0 'bajar
-        If List1(0).ListIndex >= List1(0).ListCount - 1 Then
-            With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                Call ShowConsoleMsg("No puedes mover el objeto en esa dirección.", .red, .green, .blue, .bold, .italic)
-            End With
-            Exit Sub
-        End If
-        LastIndex1 = List1(0).ListIndex + 1
-End Select
-
-NoPuedeMover = True
-LasActionBuy = True
-LastIndex2 = List1(1).ListIndex
-Call WriteMoveBank(index, List1(0).ListIndex + 1)
+    End If
 End Sub
-
-Private Sub Command2_Click()
-    Call WriteBankEnd
-    NoPuedeMover = False
-End Sub
-
-Private Sub Form_Deactivate()
-'Me.SetFocus
-End Sub
-
 
 Private Sub Form_Load()
-'Cargamos la interfase
-Me.Picture = LoadPicture(App.path & "\Graficos\comerciar.jpg")
-Image1(0).Picture = LoadPicture(App.path & "\Graficos\BotónComprar.jpg")
-Image1(1).Picture = LoadPicture(App.path & "\Graficos\Botónvender.jpg")
+    ' Handles Form movement (drag and drop).
+    Set clsFormulario = New clsFormMovementManager
+    clsFormulario.Initialize Me
 
-CmdMoverBov(1).Picture = LoadPicture(App.path & "\Graficos\FlechaSubirObjeto.jpg")
-CmdMoverBov(0).Picture = LoadPicture(App.path & "\Graficos\FlechaBajarObjeto.jpg")
+    'Cargamos la interfase
+    Me.Picture = LoadPicture(App.path & "\Graficos\Boveda.jpg")
+    
+    Call LoadButtons
+    
+End Sub
+
+Private Sub LoadButtons()
+
+    Dim GrhPath As String
+    
+    GrhPath = DirGraficos
+    CmdMoverBov(1).Picture = LoadPicture(App.path & "\Graficos\FlechaSubirObjeto.jpg")
+    CmdMoverBov(0).Picture = LoadPicture(App.path & "\Graficos\FlechaBajarObjeto.jpg")
+    
+    Set cBotonRetirarOro = New clsGraphicalButton
+    Set cBotonDepositarOro = New clsGraphicalButton
+    Set cBotonCerrar = New clsGraphicalButton
+    
+    Set LastPressed = New clsGraphicalButton
+
+
+    Call cBotonDepositarOro.Initialize(imgDepositarOro, "", GrhPath & "BotonDepositaOroApretado.jpg", GrhPath & "BotonDepositaOroApretado.jpg", Me)
+    Call cBotonRetirarOro.Initialize(imgRetirarOro, "", GrhPath & "BotonRetirarOroApretado.jpg", GrhPath & "BotonRetirarOroApretado.jpg", Me)
+    Call cBotonCerrar.Initialize(imgCerrar, "", GrhPath & "xPrendida.bmp", GrhPath & "xPrendida.bmp", Me)
+    
+    Image1(0).MouseIcon = picMouseIcon
+    Image1(1).MouseIcon = picMouseIcon
+    
+End Sub
+
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    Call LastPressed.ToggleToNormal
+End Sub
+
+Private Sub Image1_Click(Index As Integer)
+    
+    Call Audio.PlayWave(SND_CLICK)
+    
+    If InvBanco(Index).SelectedItem = 0 Then Exit Sub
+    
+    If Not IsNumeric(cantidad.Text) Then Exit Sub
+    
+    Select Case Index
+        Case 0
+            LastIndex1 = InvBanco(0).SelectedItem
+            LasActionBuy = True
+            Call WriteBankExtractItem(InvBanco(0).SelectedItem, cantidad.Text)
+            
+       Case 1
+            LastIndex2 = InvBanco(1).SelectedItem
+            LasActionBuy = False
+            Call WriteBankDeposit(InvBanco(1).SelectedItem, cantidad.Text)
+    End Select
 
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
-If Image1(0).Tag = 0 Then
-    Image1(0).Picture = LoadPicture(App.path & "\Graficos\BotónComprar.jpg")
-    Image1(0).Tag = 1
-End If
-If Image1(1).Tag = 0 Then
-    Image1(1).Picture = LoadPicture(App.path & "\Graficos\Botónvender.jpg")
-    Image1(1).Tag = 1
-End If
+
+Private Sub imgDepositarOro_Click()
+    Call WriteBankDepositGold(Val(CantidadOro.Text))
 End Sub
 
-Private Sub Image1_Click(index As Integer)
+Private Sub imgRetirarOro_Click()
+    Call WriteBankExtractGold(Val(CantidadOro.Text))
+End Sub
 
-Call Audio.PlayWave(SND_CLICK)
+Private Sub PicBancoInv_Click()
 
-If List1(index).List(List1(index).ListIndex) = "" Or _
-   List1(index).ListIndex < 0 Then Exit Sub
-
-If Not IsNumeric(cantidad.Text) Then Exit Sub
-
-Select Case index
-    Case 0
-        frmBancoObj.List1(0).SetFocus
-        LastIndex1 = List1(0).ListIndex
-        LasActionBuy = True
-        Call WriteBankExtractItem(List1(0).ListIndex + 1, cantidad.Text)
+    If InvBanco(0).SelectedItem <> 0 Then
+        With UserBancoInventory(InvBanco(0).SelectedItem)
+            Label1(0).Caption = .Name
+            
+            Select Case .OBJType
+                Case 2, 32
+                    Label1(1).Caption = "Máx Golpe:" & .MaxHit
+                    Label1(2).Caption = "Mín Golpe:" & .MinHit
+                    Label1(1).Visible = True
+                    Label1(2).Visible = True
+                    
+                Case 3, 16, 17
+                    Label1(1).Caption = "Máx Defensa:" & .MaxDef
+                    Label1(2).Caption = "Mín Defensa:" & .MinDef
+                    Label1(1).Visible = True
+                    Label1(2).Visible = True
+                    
+                Case Else
+                    Label1(1).Visible = False
+                    Label1(2).Visible = False
+                    
+            End Select
+            
+        End With
         
-   Case 1
-        LastIndex2 = List1(1).ListIndex
-        LasActionBuy = False
-        Call WriteBankDeposit(List1(1).ListIndex + 1, cantidad.Text)
-End Select
+    Else
+        Label1(0).Caption = ""
+        Label1(1).Visible = False
+        Label1(2).Visible = False
+    End If
 
 End Sub
 
-Private Sub Image1_MouseMove(index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
-Select Case index
-    Case 0
-        If Image1(0).Tag = 1 Then
-                Image1(0).Picture = LoadPicture(App.path & "\Graficos\BotónComprarApretado.jpg")
-                Image1(0).Tag = 0
-                Image1(1).Picture = LoadPicture(App.path & "\Graficos\Botónvender.jpg")
-                Image1(1).Tag = 1
-        End If
-        
-    Case 1
-        If Image1(1).Tag = 1 Then
-                Image1(1).Picture = LoadPicture(App.path & "\Graficos\Botónvenderapretado.jpg")
-                Image1(1).Tag = 0
-                Image1(0).Picture = LoadPicture(App.path & "\Graficos\BotónComprar.jpg")
-                Image1(0).Tag = 1
-        End If
-        
-End Select
+Private Sub PicBancoInv_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    Call LastPressed.ToggleToNormal
 End Sub
 
-Private Sub list1_Click(index As Integer)
-Dim SR As RECT, DR As RECT
-
-SR.Left = 0
-SR.Top = 0
-SR.Right = 32
-SR.Bottom = 32
-
-DR.Left = 0
-DR.Top = 0
-DR.Right = 32
-DR.Bottom = 32
-
-Select Case index
-    Case 0
-        Label1(0).Caption = UserBancoInventory(List1(0).ListIndex + 1).Name
-        Label1(2).Caption = UserBancoInventory(List1(0).ListIndex + 1).Amount
-        Select Case UserBancoInventory(List1(0).ListIndex + 1).OBJType
-            Case 2
-                Label1(3).Caption = "Max Golpe:" & UserBancoInventory(List1(0).ListIndex + 1).MaxHit
-                Label1(4).Caption = "Min Golpe:" & UserBancoInventory(List1(0).ListIndex + 1).MinHit
-                Label1(3).Visible = True
-                Label1(4).Visible = True
-            Case 3, 17
-                Label1(3).Visible = False
-                Label1(4).Caption = "Defensa:" & UserBancoInventory(List1(0).ListIndex + 1).Def
-                Label1(4).Visible = True
-            Case Else
-                Label1(3).Visible = False
-                Label1(4).Visible = False
-        End Select
-        
-        If UserBancoInventory(List1(0).ListIndex + 1).Amount <> 0 Then _
-            Call DrawGrhtoHdc(Picture1.hdc, UserBancoInventory(List1(0).ListIndex + 1).GrhIndex, SR, DR)
-    Case 1
-        Label1(0).Caption = Inventario.ItemName(List1(1).ListIndex + 1)
-        Label1(2).Caption = Inventario.Amount(List1(1).ListIndex + 1)
-        Select Case Inventario.OBJType(List1(1).ListIndex + 1)
-            Case 2
-                Label1(3).Caption = "Max Golpe:" & Inventario.MaxHit(List1(1).ListIndex + 1)
-                Label1(4).Caption = "Min Golpe:" & Inventario.MinHit(List1(1).ListIndex + 1)
-                Label1(3).Visible = True
-                Label1(4).Visible = True
-            Case 3, 17
-                Label1(3).Visible = False
-                Label1(4).Caption = "Defensa:" & Inventario.Def(List1(1).ListIndex + 1)
-                Label1(4).Visible = True
-            Case Else
-                Label1(3).Visible = False
-                Label1(4).Visible = False
-        End Select
-        
-        If Inventario.Amount(List1(1).ListIndex + 1) <> 0 Then _
-            Call DrawGrhtoHdc(Picture1.hdc, Inventario.GrhIndex(List1(1).ListIndex + 1), SR, DR)
-End Select
-
-If Label1(2).Caption = 0 Then ' 27/08/2006 - GS > No mostrar imagen ni nada, cuando no ahi nada que mostrar.
-    Label1(3).Visible = False
-    Label1(4).Visible = False
-    Picture1.Visible = False
-Else
-    Picture1.Visible = True
-    Picture1.Refresh
-End If
-
+Private Sub PicInv_Click()
+    
+    If InvBanco(1).SelectedItem <> 0 Then
+        With Inventario
+            Label1(0).Caption = .ItemName(InvBanco(1).SelectedItem)
+            
+            Select Case .OBJType(InvBanco(1).SelectedItem)
+                Case eObjType.otWeapon, eObjType.otFlechas
+                    Label1(1).Caption = "Máx Golpe:" & .MaxHit(InvBanco(1).SelectedItem)
+                    Label1(2).Caption = "Mín Golpe:" & .MinHit(InvBanco(1).SelectedItem)
+                    Label1(1).Visible = True
+                    Label1(2).Visible = True
+                    
+                Case eObjType.otcasco, eObjType.otArmadura, eObjType.otescudo ' 3, 16, 17
+                    Label1(1).Caption = "Máx Defensa:" & .MaxDef(InvBanco(1).SelectedItem)
+                    Label1(2).Caption = "Mín Defensa:" & .MinDef(InvBanco(1).SelectedItem)
+                    Label1(1).Visible = True
+                    Label1(2).Visible = True
+                    
+                Case Else
+                    Label1(1).Visible = False
+                    Label1(2).Visible = False
+                    
+            End Select
+            
+        End With
+    Else
+        Label1(0).Caption = ""
+        Label1(1).Visible = False
+        Label1(2).Visible = False
+    End If
 End Sub
-'<-------------------------NUEVO-------------------------->
-'<-------------------------NUEVO-------------------------->
-'<-------------------------NUEVO-------------------------->
-Private Sub List1_MouseMove(index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
-If Image1(0).Tag = 0 Then
-    Image1(0).Picture = LoadPicture(App.path & "\Graficos\BotónComprar.jpg")
-    Image1(0).Tag = 1
-End If
-If Image1(1).Tag = 0 Then
-    Image1(1).Picture = LoadPicture(App.path & "\Graficos\Botónvender.jpg")
-    Image1(1).Tag = 1
-End If
+
+Private Sub PicInv_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    Call LastPressed.ToggleToNormal
+End Sub
+
+Private Sub imgCerrar_Click()
+    Call WriteBankEnd
+    NoPuedeMover = False
 End Sub

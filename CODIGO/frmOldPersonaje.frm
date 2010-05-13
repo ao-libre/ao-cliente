@@ -167,7 +167,7 @@ Image1(2).Picture = LoadPicture(App.path & "\Graficos\bteclas.jpg")
 
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
 If Image1(0).Tag = "1" Then
             Me.lblInfo.Visible = False
             Me.lblInfo.Caption = vbNullString
@@ -189,11 +189,11 @@ End If
 
 End Sub
 
-Private Sub Image1_Click(index As Integer)
+Private Sub Image1_Click(Index As Integer)
 
 Call Audio.PlayWave(SND_CLICK)
 
-Select Case index
+Select Case Index
     Case 0
        
 #If UsarWrench = 1 Then
@@ -214,8 +214,8 @@ Select Case index
         Dim aux As String
         aux = PasswordTxt.Text
 #If SeguridadAlkon Then
-        UserPassword = MD5.GetMD5String(aux)
-        Call MD5.MD5Reset
+        UserPassword = md5.GetMD5String(aux)
+        Call md5.MD5Reset
 #Else
         UserPassword = aux
 #End If
@@ -242,8 +242,8 @@ Select Case index
 End Select
 End Sub
 
-Private Sub Image1_MouseMove(index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
-Select Case index
+Private Sub Image1_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Select Case Index
     Case 0
         If Image1(0).Tag = "0" Then
             Me.lblInfo.Visible = True

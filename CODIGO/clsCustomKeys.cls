@@ -73,10 +73,11 @@ Private mappedKeys(1 To NUM_CUSTOM_KEYS) As Integer
 '@param mKeyLeft Key for moving character left
 '@param mKeyRight Key for moving character right
 '@param mKeyToggleMusic Key for toggling background music
+'@param mKeyToggleSound Key for toggling sound
+'@param mKeyToggleFxs Key for togglig the 3D Fxs
 '@param mKeyRequestRefresh Key for sending a request refreshing packet
 '@param mKeyToggleNames Key for toggling characters' names
 '@param mKeyGetObject Key for retrieving an object from the ground
-'@param mKeyToggleCombatMode Key for toggling combat mode
 '@param mKeyEquipObject Key for equiping an inventory object
 '@param mKeyTamAnimal Key for taming animals
 '@param mKeySteal Key for Stealing other users' gold or objects
@@ -88,7 +89,6 @@ Private mappedKeys(1 To NUM_CUSTOM_KEYS) As Integer
 '@param mKeyAttack Key for attacking other Users/NPCs
 '@param mKeyTalk Key for talking (to all)
 '@param mKeyTalkWithGuild Key for talking (only to guild members)
-'@param mKeyToggleFPS Key for toggling the FPS counter
 '@param mKeyTakeScreenShot Key for taking a snapshot of the screen
 '@param mKeyShowOptions Key for showing the "Options" form
 '@param mKeyMeditate Key for start/stop meditation
@@ -101,10 +101,11 @@ Public Enum eKeyType
     mKeyLeft
     mKeyRight
     mKeyToggleMusic
+    mKeyToggleSound
+    mKeyToggleFxs
     mKeyRequestRefresh
     mKeyToggleNames
     mKeyGetObject
-    mKeyToggleCombatMode
     mKeyEquipObject
     mKeyTamAnimal
     mKeySteal
@@ -116,7 +117,6 @@ Public Enum eKeyType
     mKeyAttack
     mKeyTalk
     mKeyTalkWithGuild
-    mKeyToggleFPS
     mKeyTakeScreenShot
     mKeyShowOptions
     mKeyMeditate
@@ -298,14 +298,14 @@ End Sub
 '@param index Index of the key code to retrieve
 '@return The Key code that belongs to index
 
-Public Property Get BindedKey(ByVal index As eKeyType) As Integer
+Public Property Get BindedKey(ByVal Index As eKeyType) As Integer
 '***************************************************
 'Author: Rapsodius
 'Last Modification: 08/04/07
 '
 '***************************************************
-    If index < 1 Or index > NUM_CUSTOM_KEYS Then Exit Property
-    BindedKey = mappedKeys(index)
+    If Index < 1 Or Index > NUM_CUSTOM_KEYS Then Exit Property
+    BindedKey = mappedKeys(Index)
 End Property
 
 ''
@@ -314,13 +314,13 @@ End Property
 '@param index Index of the key to change
 '@param NewVal New key code
 
-Public Property Let BindedKey(ByVal index As eKeyType, ByVal NewVal As Integer)
+Public Property Let BindedKey(ByVal Index As eKeyType, ByVal NewVal As Integer)
 '***************************************************
 'Author: Rapsodius
 'Last Modification: 08/05/07
 '
 '***************************************************
-    If index < 1 Or index > NUM_CUSTOM_KEYS Then Exit Property
+    If Index < 1 Or Index > NUM_CUSTOM_KEYS Then Exit Property
     
     If LenB(ReadableName(NewVal)) = 0 Then 'If key is not valid...
         Exit Property                      'Rejects the new assignment
@@ -330,7 +330,7 @@ Public Property Let BindedKey(ByVal index As eKeyType, ByVal NewVal As Integer)
         Exit Property
     End If
     
-    mappedKeys(index) = NewVal
+    mappedKeys(Index) = NewVal
 End Property
 
 ''
@@ -347,10 +347,11 @@ Public Sub LoadDefaults()
     mappedKeys(eKeyType.mKeyLeft) = KeyCodeConstants.vbKeyLeft
     mappedKeys(eKeyType.mKeyRight) = KeyCodeConstants.vbKeyRight
     mappedKeys(eKeyType.mKeyToggleMusic) = KeyCodeConstants.vbKeyM
+    mappedKeys(eKeyType.mKeyToggleSound) = KeyCodeConstants.vbKeyS
+    mappedKeys(eKeyType.mKeyToggleFxs) = KeyCodeConstants.vbKeyF
     mappedKeys(eKeyType.mKeyRequestRefresh) = KeyCodeConstants.vbKeyL
     mappedKeys(eKeyType.mKeyToggleNames) = KeyCodeConstants.vbKeyN
     mappedKeys(eKeyType.mKeyGetObject) = KeyCodeConstants.vbKeyA
-    mappedKeys(eKeyType.mKeyToggleCombatMode) = KeyCodeConstants.vbKeyC
     mappedKeys(eKeyType.mKeyEquipObject) = KeyCodeConstants.vbKeyE
     mappedKeys(eKeyType.mKeyTamAnimal) = KeyCodeConstants.vbKeyD
     mappedKeys(eKeyType.mKeySteal) = KeyCodeConstants.vbKeyR
@@ -362,7 +363,6 @@ Public Sub LoadDefaults()
     mappedKeys(eKeyType.mKeyAttack) = KeyCodeConstants.vbKeyControl
     mappedKeys(eKeyType.mKeyTalk) = KeyCodeConstants.vbKeyReturn
     mappedKeys(eKeyType.mKeyTalkWithGuild) = KeyCodeConstants.vbKeyDelete
-    mappedKeys(eKeyType.mKeyToggleFPS) = KeyCodeConstants.vbKeyF4
     mappedKeys(eKeyType.mKeyTakeScreenShot) = KeyCodeConstants.vbKeyF2
     mappedKeys(eKeyType.mKeyShowOptions) = KeyCodeConstants.vbKeyF5
     mappedKeys(eKeyType.mKeyMeditate) = KeyCodeConstants.vbKeyF6

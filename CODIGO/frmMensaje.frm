@@ -1,35 +1,25 @@
 VERSION 5.00
 Begin VB.Form frmMensaje 
    BackColor       =   &H00C0C0C0&
-   Caption         =   "Mensaje"
-   ClientHeight    =   3195
-   ClientLeft      =   60
-   ClientTop       =   345
+   BorderStyle     =   0  'None
+   ClientHeight    =   3180
+   ClientLeft      =   0
+   ClientTop       =   -75
    ClientWidth     =   3990
    ClipControls    =   0   'False
    ControlBox      =   0   'False
    LinkTopic       =   "Form1"
-   ScaleHeight     =   3195
-   ScaleWidth      =   3990
+   ScaleHeight     =   212
+   ScaleMode       =   3  'Pixel
+   ScaleWidth      =   266
+   ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
-   Begin VB.CommandButton Command1 
-      Caption         =   "Cerrar"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+   Begin VB.Image imgCerrar 
       Height          =   375
-      Left            =   120
-      MouseIcon       =   "frmMensaje.frx":0000
-      MousePointer    =   99  'Custom
-      TabIndex        =   1
-      Top             =   2760
-      Width           =   3735
+      Left            =   720
+      Tag             =   "1"
+      Top             =   2685
+      Width           =   2655
    End
    Begin VB.Label msg 
       BackStyle       =   0  'Transparent
@@ -42,12 +32,12 @@ Begin VB.Form frmMensaje
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00000000&
-      Height          =   2535
-      Left            =   60
+      ForeColor       =   &H00FFFFFF&
+      Height          =   2055
+      Left            =   240
       TabIndex        =   0
-      Top             =   120
-      Width           =   3855
+      Top             =   480
+      Width           =   3495
       WordWrap        =   -1  'True
    End
 End
@@ -90,11 +80,49 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private Sub Command1_Click()
-Unload Me
-End Sub
+Private clsFormulario As clsFormMovementManager
+
+Private cBotonCerrar As clsGraphicalButton
+
+Public LastPressed As clsGraphicalButton
 
 Private Sub Form_Deactivate()
-Me.SetFocus
+    Me.SetFocus
 End Sub
 
+Private Sub Form_Load()
+    ' Handles Form movement (drag and drop).
+    Set clsFormulario = New clsFormMovementManager
+    clsFormulario.Initialize Me
+    
+    Me.Picture = LoadPicture(App.path & "\Graficos\VentanaMsj.jpg")
+    
+    Call LoadButtons
+End Sub
+
+Private Sub LoadButtons()
+    Dim GrhPath As String
+    
+    GrhPath = DirGraficos
+
+    Set cBotonCerrar = New clsGraphicalButton
+    
+    Set LastPressed = New clsGraphicalButton
+    
+    
+    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarMsj.jpg", _
+                                    GrhPath & "BotonCerrarRolloverMsj.jpg", _
+                                    GrhPath & "BotonCerrarClickMsj.jpg", Me)
+End Sub
+
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    LastPressed.ToggleToNormal
+End Sub
+
+Private Sub imgCerrar_Click()
+    Unload Me
+End Sub
+
+Private Sub msg_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    LastPressed.ToggleToNormal
+End Sub

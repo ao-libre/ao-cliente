@@ -1,197 +1,60 @@
 VERSION 5.00
 Begin VB.Form frmEligeAlineacion 
-   BackColor       =   &H00000000&
+   BackColor       =   &H00C0C0C0&
    BorderStyle     =   1  'Fixed Single
-   ClientHeight    =   5250
+   ClientHeight    =   5265
    ClientLeft      =   15
    ClientTop       =   15
-   ClientWidth     =   6705
+   ClientWidth     =   6720
    ClipControls    =   0   'False
    ControlBox      =   0   'False
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   5250
-   ScaleWidth      =   6705
+   ScaleHeight     =   5265
+   ScaleWidth      =   6720
    StartUpPosition =   1  'CenterOwner
-   Begin VB.Label lblSalir 
-      Alignment       =   2  'Center
-      BorderStyle     =   1  'Fixed Single
-      Caption         =   "Salir"
-      BeginProperty Font 
-         Name            =   "Courier New"
-         Size            =   12
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   285
-      Left            =   5400
-      TabIndex        =   10
-      Top             =   4860
-      Width           =   915
+   Begin VB.Image imgReal 
+      Height          =   765
+      Left            =   795
+      Tag             =   "1"
+      Top             =   300
+      Width           =   5745
    End
-   Begin VB.Label lblDescripcion 
-      BackColor       =   &H00000040&
-      BackStyle       =   0  'Transparent
-      Caption         =   $"frmEligeAlineacion.frx":0000
-      ForeColor       =   &H00FFFFFF&
-      Height          =   645
-      Index           =   1
-      Left            =   1095
-      TabIndex        =   9
-      Top             =   4140
-      Width           =   5505
+   Begin VB.Image imgNeutral 
+      Height          =   570
+      Left            =   810
+      Tag             =   "1"
+      Top             =   2220
+      Width           =   5730
    End
-   Begin VB.Label lblDescripcion 
-      BackColor       =   &H00000080&
-      BackStyle       =   0  'Transparent
-      Caption         =   $"frmEligeAlineacion.frx":00D5
-      ForeColor       =   &H00FFFFFF&
-      Height          =   645
-      Index           =   5
-      Left            =   1095
-      TabIndex        =   8
-      Top             =   3240
-      Width           =   5505
+   Begin VB.Image imgLegal 
+      Height          =   705
+      Left            =   810
+      Tag             =   "1"
+      Top             =   1320
+      Width           =   5715
    End
-   Begin VB.Label lblDescripcion 
-      BackColor       =   &H00400040&
-      BackStyle       =   0  'Transparent
-      Caption         =   $"frmEligeAlineacion.frx":01B1
-      ForeColor       =   &H00FFFFFF&
-      Height          =   645
-      Index           =   2
-      Left            =   1095
-      TabIndex        =   7
-      Top             =   2295
-      Width           =   5505
+   Begin VB.Image imgCaos 
+      Height          =   675
+      Left            =   822
+      Tag             =   "1"
+      Top             =   4117
+      Width           =   5700
    End
-   Begin VB.Label lblDescripcion 
-      BackColor       =   &H00800000&
-      BackStyle       =   0  'Transparent
-      Caption         =   $"frmEligeAlineacion.frx":025D
-      ForeColor       =   &H00FFFFFF&
-      Height          =   645
-      Index           =   4
-      Left            =   1095
-      TabIndex        =   6
-      Top             =   1350
-      Width           =   5505
+   Begin VB.Image imgCriminal 
+      Height          =   705
+      Left            =   818
+      Tag             =   "1"
+      Top             =   3150
+      Width           =   5865
    End
-   Begin VB.Label lblDescripcion 
-      BackColor       =   &H00400000&
-      BackStyle       =   0  'Transparent
-      Caption         =   $"frmEligeAlineacion.frx":0326
-      ForeColor       =   &H00FFFFFF&
-      Height          =   825
-      Index           =   0
-      Left            =   1095
-      TabIndex        =   5
-      Top             =   270
-      Width           =   5505
-   End
-   Begin VB.Label lblNombre 
-      BackStyle       =   0  'Transparent
-      Caption         =   "Alineación del mal"
-      BeginProperty Font 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00FFFFFF&
-      Height          =   240
-      Index           =   1
-      Left            =   1005
-      TabIndex        =   4
-      Top             =   3915
-      Width           =   1680
-   End
-   Begin VB.Label lblNombre 
-      BackStyle       =   0  'Transparent
-      Caption         =   "Alineación criminal"
-      BeginProperty Font 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00FFFFFF&
-      Height          =   240
-      Index           =   5
-      Left            =   1005
-      TabIndex        =   3
-      Top             =   3015
-      Width           =   1680
-   End
-   Begin VB.Label lblNombre 
-      BackStyle       =   0  'Transparent
-      Caption         =   "Alineación neutral"
-      BeginProperty Font 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00FFFFFF&
-      Height          =   240
-      Index           =   2
-      Left            =   1005
-      TabIndex        =   2
-      Top             =   2070
-      Width           =   1635
-   End
-   Begin VB.Label lblNombre 
-      BackStyle       =   0  'Transparent
-      Caption         =   "Alineación legal"
-      BeginProperty Font 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00FFFFFF&
-      Height          =   240
-      Index           =   4
-      Left            =   1005
-      TabIndex        =   1
-      Top             =   1125
-      Width           =   1455
-   End
-   Begin VB.Label lblNombre 
-      BackStyle       =   0  'Transparent
-      Caption         =   "Alineación Real"
-      BeginProperty Font 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00FFFFFF&
-      Height          =   240
-      Index           =   0
-      Left            =   1000
-      TabIndex        =   0
-      Top             =   45
-      Width           =   1455
+   Begin VB.Image imgSalir 
+      Height          =   315
+      Left            =   5520
+      Tag             =   "1"
+      Top             =   4800
+      Width           =   930
    End
 End
 Attribute VB_Name = "frmEligeAlineacion"
@@ -220,52 +83,106 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Dim LastColoured As Byte
+Private clsFormulario As clsFormMovementManager
 
-'odio programar sin tiempo (c) el oso
+Private cBotonCriminal As clsGraphicalButton
+Private cBotonCaos As clsGraphicalButton
+Private cBotonLegal As clsGraphicalButton
+Private cBotonNeutral As clsGraphicalButton
+Private cBotonReal As clsGraphicalButton
+Private cBotonSalir As clsGraphicalButton
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
-    lblDescripcion(LastColoured).BorderStyle = 0
-    lblDescripcion(LastColoured).BackStyle = 0
+Public LastPressed As clsGraphicalButton
+
+Private Enum eAlineacion
+    ieREAL = 0
+    ieCAOS = 1
+    ieNeutral = 2
+    ieLegal = 4
+    ieCriminal = 5
+End Enum
+
+Private Sub Form_Load()
+    ' Handles Form movement (drag and drop).
+    Set clsFormulario = New clsFormMovementManager
+    clsFormulario.Initialize Me
+    
+    Me.Picture = LoadPicture(App.path & "\graficos\VentanaFundarClan.jpg")
+    
+    Call LoadButtons
 End Sub
 
-Private Sub lblDescripcion_Click(index As Integer)
-    Call WriteGuildFundate(index)
+Private Sub LoadButtons()
+    Dim GrhPath As String
+    
+    GrhPath = DirGraficos
+
+    Set cBotonCriminal = New clsGraphicalButton
+    Set cBotonCaos = New clsGraphicalButton
+    Set cBotonLegal = New clsGraphicalButton
+    Set cBotonNeutral = New clsGraphicalButton
+    Set cBotonReal = New clsGraphicalButton
+    Set cBotonSalir = New clsGraphicalButton
+    
+    Set LastPressed = New clsGraphicalButton
+    
+    
+    Call cBotonCriminal.Initialize(imgCriminal, "", _
+                                    GrhPath & "BotonCriminal.jpg", _
+                                    GrhPath & "BotonCriminal.jpg", Me)
+
+    Call cBotonCaos.Initialize(imgCaos, "", _
+                                    GrhPath & "BotonCaos.jpg", _
+                                    GrhPath & "BotonCaos.jpg", Me)
+
+    Call cBotonLegal.Initialize(imgLegal, "", _
+                                    GrhPath & "BotonLegal.jpg", _
+                                    GrhPath & "BotonLegal.jpg", Me)
+
+    Call cBotonNeutral.Initialize(imgNeutral, "", _
+                                    GrhPath & "BotonNeutral.jpg", _
+                                    GrhPath & "BotonNeutral.jpg", Me)
+
+    Call cBotonReal.Initialize(imgReal, "", _
+                                    GrhPath & "BotonReal.jpg", _
+                                    GrhPath & "BotonReal.jpg", Me)
+                                    
+    Call cBotonSalir.Initialize(imgSalir, GrhPath & "BotonSalirAlineacion.jpg", _
+                                    GrhPath & "BotonSalirRolloverAlineacion.jpg", _
+                                    GrhPath & "BotonSalirClickAlineacion.jpg", Me)
+
+
+End Sub
+
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    LastPressed.ToggleToNormal
+End Sub
+
+Private Sub imgCaos_Click()
+    Call WriteGuildFundation(eAlineacion.ieCAOS)
     Unload Me
 End Sub
 
-Private Sub lblDescripcion_MouseMove(index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
-    
-    If LastColoured <> index Then
-        lblDescripcion(LastColoured).BorderStyle = 0
-        lblDescripcion(LastColoured).BackStyle = 0
-    End If
-    
-    lblDescripcion(index).BorderStyle = 1
-    lblDescripcion(index).BackStyle = 1
-    
-    Select Case index
-        Case 0
-            lblDescripcion(index).BackColor = &H400000
-        Case 4
-            lblDescripcion(index).BackColor = &H800000
-        Case 2
-            lblDescripcion(index).BackColor = 4194368
-        Case 5
-            lblDescripcion(index).BackColor = &H80&
-        Case 1
-            lblDescripcion(index).BackColor = &H40&
-    End Select
-    
-    LastColoured = index
+Private Sub imgCriminal_Click()
+    Call WriteGuildFundation(eAlineacion.ieCriminal)
+    Unload Me
 End Sub
 
-
-Private Sub lblNombre_MouseMove(index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
-    lblDescripcion(LastColoured).BorderStyle = 0
-    lblDescripcion(LastColoured).BackStyle = 0
+Private Sub imgLegal_Click()
+    Call WriteGuildFundation(eAlineacion.ieLegal)
+    Unload Me
 End Sub
 
-Private Sub lblSalir_Click()
+Private Sub imgNeutral_Click()
+    Call WriteGuildFundation(eAlineacion.ieNeutral)
+    Unload Me
+End Sub
+
+Private Sub imgReal_Click()
+    Call WriteGuildFundation(eAlineacion.ieREAL)
+    Unload Me
+End Sub
+
+Private Sub imgSalir_Click()
     Unload Me
 End Sub
