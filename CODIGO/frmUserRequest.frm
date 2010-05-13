@@ -1,9 +1,9 @@
 VERSION 5.00
 Begin VB.Form frmUserRequest 
-   Caption         =   "Peticion"
+   BorderStyle     =   0  'None
    ClientHeight    =   2430
-   ClientLeft      =   60
-   ClientTop       =   345
+   ClientLeft      =   0
+   ClientTop       =   -75
    ClientWidth     =   4650
    ClipControls    =   0   'False
    ControlBox      =   0   'False
@@ -17,24 +17,37 @@ Begin VB.Form frmUserRequest
       Strikethrough   =   0   'False
    EndProperty
    LinkTopic       =   "Form1"
-   ScaleHeight     =   2430
-   ScaleWidth      =   4650
+   ScaleHeight     =   162
+   ScaleMode       =   3  'Pixel
+   ScaleWidth      =   310
+   ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
-   Begin VB.CommandButton Command1 
-      Caption         =   "Cerrar"
-      Height          =   495
-      Left            =   120
-      TabIndex        =   1
-      Top             =   1800
-      Width           =   4335
-   End
    Begin VB.TextBox Text1 
-      Height          =   1575
-      Left            =   120
+      BackColor       =   &H00000000&
+      BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   1395
+      Left            =   225
       MultiLine       =   -1  'True
       TabIndex        =   0
-      Top             =   120
-      Width           =   4335
+      Top             =   405
+      Width           =   4185
+   End
+   Begin VB.Image imgCerrar 
+      Height          =   375
+      Left            =   120
+      Tag             =   "1"
+      Top             =   1920
+      Width           =   4350
    End
 End
 Attribute VB_Name = "frmUserRequest"
@@ -76,13 +89,51 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private Sub Command1_Click()
-Unload Me
-End Sub
+Private cBotonCerrar As clsGraphicalButton
+
+Public LastPressed As clsGraphicalButton
+
+Private clsFormulario As New clsFormMovementManager
 
 Public Sub recievePeticion(ByVal p As String)
 
-Text1 = Replace$(p, "º", vbCrLf)
-Me.Show vbModeless, frmMain
+    Text1 = Replace$(p, "º", vbCrLf)
+    Me.Show vbModeless, frmMain
 
+End Sub
+
+Private Sub Form_Load()
+    ' Handles Form movement (drag and drop).
+    clsFormulario.Initialize Me
+    
+    Me.Picture = LoadPicture(App.path & "\graficos\VentanaPeticion.jpg")
+    
+    Call LoadButtons
+End Sub
+
+Private Sub LoadButtons()
+    Dim GrhPath As String
+    
+    GrhPath = DirGraficos
+
+    Set cBotonCerrar = New clsGraphicalButton
+    
+    Set LastPressed = New clsGraphicalButton
+    
+    
+    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarPeticion.jpg", _
+                                    GrhPath & "BotonCerrarRolloverPeticion.jpg", _
+                                    GrhPath & "BotonCerrarClickPeticion.jpg", Me)
+End Sub
+
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    LastPressed.ToggleToNormal
+End Sub
+
+Private Sub imgCerrar_Click()
+    Unload Me
+End Sub
+
+Private Sub Text1_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    LastPressed.ToggleToNormal
 End Sub

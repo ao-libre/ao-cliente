@@ -201,7 +201,7 @@ Private Const INVALID_HANDLE As Long = -1
 Private Const SRCCOPY = &HCC0020 ' (DWORD) dest = source
 
 'Good old bitblt
-Private Declare Function BitBlt Lib "gdi32" (ByVal hDestDC As Long, ByVal x As Long, ByVal y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, ByVal xSrc As Long, ByVal ySrc As Long, ByVal dwRop As Long) As Long
+Private Declare Function BitBlt Lib "gdi32" (ByVal hDestDC As Long, ByVal X As Long, ByVal Y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, ByVal xSrc As Long, ByVal ySrc As Long, ByVal dwRop As Long) As Long
 
 Public Function LoadJPG( _
       ByRef cDib As cDIBSection, _
@@ -505,7 +505,7 @@ Dim hFile As Long
 
 End Function
 
-Public Sub ScreenCapture()
+Public Sub ScreenCapture(Optional ByVal Autofragshooter As Boolean = False)
 'Medio desprolijo donde pongo la pic, pero es lo que hay por ahora
 On Error GoTo Err:
     Dim hWnd As Long
@@ -515,21 +515,24 @@ On Error GoTo Err:
     Dim i As Long
     Dim hdcc As Long
     
+    Dim dirFile As String
+    
     hdcc = GetDC(frmMain.hWnd)
     
     frmScreenshots.Picture1.AutoRedraw = True
-    frmScreenshots.Picture1.Width = 11900
-    frmScreenshots.Picture1.Height = 8650
-    
-    Call BitBlt(frmScreenshots.Picture1.hdc, 0, 0, 794, 580, hdcc, 0, 0, SRCCOPY)
-    
+    frmScreenshots.Picture1.Width = 12090
+    frmScreenshots.Picture1.Height = 9075
+
+    Call BitBlt(frmScreenshots.Picture1.hdc, 0, 0, 800, 600, hdcc, 0, 0, SRCCOPY)
     Call ReleaseDC(frmMain.hWnd, hdcc)
     
     hdcc = INVALID_HANDLE
     
-    If Not FileExist(App.path & "\Screenshots", vbDirectory) Then MkDir (App.path & "\Screenshots")
+    dirFile = IIf(Autofragshooter, "\Screenshots\FragShooter", "\Screenshots")
     
-    file = App.path & "\Screenshots\" & Format(Now, "DD-MM-YYYY hh-mm-ss") & ".jpg"
+    If Not FileExist(App.path & dirFile, vbDirectory) Then MkDir (App.path & dirFile)
+    
+    file = App.path & dirFile & "\" & Format(Now, "DD-MM-YYYY hh-mm-ss") & ".jpg"
     
     frmScreenshots.Picture1.Refresh
     frmScreenshots.Picture1.Picture = frmScreenshots.Picture1.Image
@@ -538,11 +541,11 @@ On Error GoTo Err:
     
     SaveJPG c, file
     
-    AddtoRichTextBox frmMain.RecTxt, "Screen Capturada!", 200, 200, 200, False, False, False
+    AddtoRichTextBox frmMain.RecTxt, "Screen Capturada!", 200, 200, 200, False, False, True
 Exit Sub
 
 Err:
-    AddtoRichTextBox frmMain.RecTxt, Err.number & "-" & Err.Description, 200, 200, 200, False, False, False
+    Call AddtoRichTextBox(frmMain.RecTxt, Err.number & "-" & Err.Description, 200, 200, 200, False, False, True)
     
     If hdcc <> INVALID_HANDLE Then _
         Call ReleaseDC(frmMain.hWnd, hdcc)

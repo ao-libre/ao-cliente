@@ -30,8 +30,8 @@ Private usedFont As StdFont
 Public Property Let CantidadDialogos(ByVal v As Byte)
     If v > 0 Then
         ReDim Preserve p_Dialogos(1 To v) As t_GuildDlg
+        p_CANTIDADDIALOGOS = v
     End If
-    p_CANTIDADDIALOGOS = v
 End Property
 
 ''
@@ -80,18 +80,18 @@ End Sub
 
 Public Sub Draw()
 Dim i As Byte
-Dim y As Long
+Dim Y As Long
 
 If Not p_Activo Then Exit Sub
 
-y = 250
+Y = 250
 '500 600 700 800 900
     For i = 1 To p_CANTIDADDIALOGOS
         If Trim$(p_Dialogos(i).Texto) <> vbNullString Then
             If Left$(p_Dialogos(i).Texto, 1) = Chr(3) Then
-                Call Mod_TileEngine.RenderText(260, y + (i * 10), mid(p_Dialogos(i).Texto, 2), vbGreen, usedFont)
+                Call Mod_TileEngine.RenderText(260, Y + (i * 10), mid(p_Dialogos(i).Texto, 2), vbGreen, usedFont)
             Else
-                Call Mod_TileEngine.RenderText(260, y + (i * 10), p_Dialogos(i).Texto, vbYellow, usedFont)
+                Call Mod_TileEngine.RenderText(260, Y + (i * 10), p_Dialogos(i).Texto, vbYellow, usedFont)
             End If
         End If
     Next i
