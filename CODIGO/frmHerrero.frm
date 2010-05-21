@@ -610,7 +610,7 @@ Private Sub Form_Load()
     
     Cargando = True
     
-    MaxConstItem = CInt((UserLvl - 2) / 5)
+    MaxConstItem = CInt((UserLevel - 2) * 0.2)
     MaxConstItem = IIf(MaxConstItem < 1, 1, MaxConstItem)
     
     For i = 1 To MaxConstItem
