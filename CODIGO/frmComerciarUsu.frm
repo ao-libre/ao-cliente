@@ -5,7 +5,7 @@ Begin VB.Form frmComerciarUsu
    ClientHeight    =   8850
    ClientLeft      =   0
    ClientTop       =   0
-   ClientWidth     =   10005
+   ClientWidth     =   9975
    ClipControls    =   0   'False
    ControlBox      =   0   'False
    LinkTopic       =   "Form1"
@@ -13,7 +13,7 @@ Begin VB.Form frmComerciarUsu
    MinButton       =   0   'False
    ScaleHeight     =   590
    ScaleMode       =   3  'Pixel
-   ScaleWidth      =   667
+   ScaleWidth      =   665
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
    Begin VB.PictureBox picInvOroProp 

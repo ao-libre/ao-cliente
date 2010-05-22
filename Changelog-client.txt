@@ -248,3 +248,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 16/02/2010: Nombres de skills intuitivos. (ZaMa)
  * 19/02/2010: Simplificacion de Comandos. (ZaMa)
  * 27/03/2010: Agregadas noticias de la web (Se agregó un WebBrowser!)
+ * 21/05/2010: La ventana de party no pierde el foco al cambiar la consola. (ZaMa)
