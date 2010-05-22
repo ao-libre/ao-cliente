@@ -1011,7 +1011,7 @@ Private Sub HandleLogged()
     'Set connected state
     Call SetConnected
     
-    If bShowTutorial Then frmTutorial.Show
+    If bShowTutorial Then frmTutorial.Show , vbModeless
     
     'Show tip
     If tipf = "1" And PrimeraVez Then

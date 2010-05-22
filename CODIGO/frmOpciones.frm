@@ -464,7 +464,7 @@ Private Sub imgSoporte_Click()
 End Sub
 
 Private Sub imgTutorial_Click()
-    frmTutorial.Show
+    frmTutorial.Show , vbModeless
 End Sub
 
 Private Sub Form_Load()

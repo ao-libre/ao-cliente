@@ -184,7 +184,6 @@ Begin VB.Form frmComerciarUsu
       _ExtentY        =   2858
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -589,6 +588,30 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
     End If
 End Sub
 
+Private Sub txtAgregar_Change()
+'**************************************************************
+'Author: Unknown
+'Last Modify Date: 03/10/2009
+'**************************************************************
+    'Make sure only valid chars are inserted (with Shift + Insert they can paste illegal chars)
+    Dim i As Long
+    Dim tempstr As String
+    Dim CharAscii As Integer
+    
+    For i = 1 To Len(txtAgregar.Text)
+        CharAscii = Asc(mid$(txtAgregar.Text, i, 1))
+        
+        If CharAscii >= 48 And CharAscii <= 57 Then
+            tempstr = tempstr & Chr$(CharAscii)
+        End If
+    Next i
+    
+    If tempstr <> txtAgregar.Text Then
+        'We only set it if it's different, otherwise the event will be raised
+        'constantly and the client will crush
+        txtAgregar.Text = tempstr
+    End If
+End Sub
 
 Private Sub txtAgregar_KeyDown(KeyCode As Integer, Shift As Integer)
 If Not ((KeyCode >= 48 And KeyCode <= 57) Or KeyCode = vbKeyBack Or _
