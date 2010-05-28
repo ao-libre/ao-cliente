@@ -290,7 +290,7 @@ Private Enum ClientPacketID
     ShowGuildNews
     ShareNpc                '/COMPARTIRNPC
     StopSharingNpc          '/NOCOMPARTIRNPC
-    Consulta
+    Consultation
 End Enum
 
 Public Enum FontTypeNames
@@ -6909,17 +6909,17 @@ Public Sub WriteResucitate()
 End Sub
 
 ''
-' Writes the "Consulta" message to the outgoing data buffer.
+' Writes the "Consultation" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteConsulta()
+Public Sub WriteConsultation()
 '***************************************************
 'Author: ZaMa
 'Last Modification: 01/05/2010
-'Writes the "Consulta" message to the outgoing data buffer
+'Writes the "Consultation" message to the outgoing data buffer
 '***************************************************
-    Call outgoingData.WriteByte(ClientPacketID.Consulta)
+    Call outgoingData.WriteByte(ClientPacketID.Consultation)
 
 End Sub
 

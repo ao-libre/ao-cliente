@@ -1075,7 +1075,7 @@ Private Sub cmdCONDEN_Click()
 End Sub
 
 Private Sub cmdConsulta_Click()
-    WriteConsulta
+    WriteConsultation
 End Sub
 
 Private Sub cmdCT_Click()
