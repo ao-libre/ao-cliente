@@ -975,10 +975,20 @@ With incomingData
             Dim Distance As Byte
             Dim Hogar As String
             Dim tiempo As Integer
+            Dim msg As String
             Distance = .ReadByte
             tiempo = .ReadInteger
             Hogar = .ReadASCIIString
-            Call ShowConsoleMsg("Estás a " & Distance & " mapas de distancia de " & Hogar & ", este viaje durará " & tiempo & " segundos.", 255, 0, 0, True)
+            If tiempo >= 60 Then
+                If tiempo Mod 60 = 0 Then
+                    msg = tiempo / 60 & " minutos."
+                Else
+                    msg = tiempo / 60 & " minutos y " & tiempo Mod 60 & " segundos."
+                End If
+            Else
+                msg = tiempo & " segundos."
+            End If
+            Call ShowConsoleMsg("Te encuentras a " & Distance & " mapas de " & Chr(34) & Hogar & Chr(34) & ", este viaje durará " & msg, 255, 0, 0, True)
             Traveling = True
         Case eMessages.FinishHome
             Call ShowConsoleMsg(MENSAJE_HOGAR, 255, 255, 255)
