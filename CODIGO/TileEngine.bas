@@ -1870,12 +1870,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Inte
         Else
             Call RenderScreen(UserPos.X - AddtoUserPos.X, UserPos.Y - AddtoUserPos.Y, OffsetCounterX, OffsetCounterY)
         End If
-        If ClientSetup.bActive Then
-            If isCapturePending Then
-                Call ScreenCapture(True)
-                isCapturePending = False
-            End If
-        End If
+        
         Call Dialogos.Render
         Call DibujarCartel
         
@@ -1888,7 +1883,16 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Inte
         While (DirectX.TickCount - fpsLastCheck) \ 10 < FramesPerSecCounter
             Sleep 5
         Wend
+            
+        If ClientSetup.bActive Then
+            If isCapturePending Then
+                DoEvents
+                Call ScreenCapture(True)
+                isCapturePending = False
+            End If
+        End If
         
+            
         'FPS update
         If fpsLastCheck + 1000 < DirectX.TickCount Then
             FPS = FramesPerSecCounter
