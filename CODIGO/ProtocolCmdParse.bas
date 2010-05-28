@@ -209,7 +209,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 Call WriteMeditate
         
             Case "/CONSULTA"
-                Call WriteConsulta
+                Call WriteConsultation
             
             Case "/RESUCITAR"
                 Call WriteResucitate
