@@ -173,7 +173,7 @@ Begin VB.Form frmMessageTxt
       Height          =   255
       Index           =   1
       Left            =   1200
-      TabIndex        =   2
+      TabIndex        =   1
       Top             =   600
       Width           =   3330
    End
@@ -193,7 +193,7 @@ Begin VB.Form frmMessageTxt
       Height          =   255
       Index           =   0
       Left            =   1200
-      TabIndex        =   1
+      TabIndex        =   0
       Top             =   180
       Width           =   3330
    End
@@ -213,7 +213,7 @@ Begin VB.Form frmMessageTxt
       Height          =   255
       Index           =   2
       Left            =   1200
-      TabIndex        =   0
+      TabIndex        =   2
       Top             =   1005
       Width           =   3330
    End
