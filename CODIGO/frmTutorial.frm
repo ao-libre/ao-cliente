@@ -276,6 +276,7 @@ Private Sub imgSiguiente_Click()
 End Sub
 
 Private Sub lblCerrar_Click()
+    bShowTutorial = False 'Mientras no se pueda tildar/destildar para verlo más tarde, esto queda así :P
     Unload Me
 End Sub
 
