@@ -605,6 +605,7 @@ Private Sub LoadDefaultValues()
     
     MaxConstItem = CInt((UserLvl - 2) * 0.2)
     MaxConstItem = IIf(MaxConstItem < 1, 1, MaxConstItem)
+    MaxConstItem = IIf(UserClase = eClass.Worker, MaxConstItem, 1)
     
     For i = 1 To MaxConstItem
         cboItemsCiclo.AddItem i
