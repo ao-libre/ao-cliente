@@ -625,6 +625,8 @@ Private Sub Form_Load()
     UsarMacro = True
     Armas = True
     UltimaPestania = 0
+    
+    MirandoHerreria = True
 End Sub
 
 Public Sub HideExtraControls(ByVal NumItems As Integer, Optional ByVal Upgrading As Boolean = False)
@@ -747,6 +749,10 @@ End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastPressed.ToggleToNormal
+End Sub
+
+Private Sub Form_Unload(Cancel As Integer)
+    MirandoHerreria = False
 End Sub
 
 Private Sub imgCerrar_Click()

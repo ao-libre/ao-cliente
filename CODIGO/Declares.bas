@@ -732,6 +732,8 @@ Public MirandoForo As Boolean
 Public MirandoAsignarSkills As Boolean
 Public MirandoEstadisticas As Boolean
 Public MirandoParty As Boolean
+Public MirandoCarpinteria As Boolean
+Public MirandoHerreria As Boolean
 '<-------------------------NUEVO-------------------------->
 
 Public UserClase As eClass
