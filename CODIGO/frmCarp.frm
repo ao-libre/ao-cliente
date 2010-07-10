@@ -516,6 +516,8 @@ Private Sub Form_Load()
     
     Me.Picture = LoadPicture(App.path & "\graficos\VentanaCarpinteriaItems.jpg")
     LoadButtons
+    
+    MirandoCarpinteria = True
 End Sub
 
 Private Sub LoadButtons()
@@ -768,6 +770,10 @@ End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastPressed.ToggleToNormal
+End Sub
+
+Private Sub Form_Unload(Cancel As Integer)
+    MirandoCarpinteria = False
 End Sub
 
 Private Sub imgCerrar_Click()
