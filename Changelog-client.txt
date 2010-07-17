@@ -215,6 +215,9 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 19/09/2009: Agregada una función para sacar screens de toda la pantalla. (Pato)
  * 19/09/2099: Ahora la función CheckData se fija que el nombre del personaje no supere los 30 caracteres. (Pato)
  * 03/11/2009: El formulario de comercio nuevamente se carga como vbModeless (Pato)
+
+- 0.13.0
+
  * 30/11/2009: Agrego inventarios gráficos para la bóveda. (Pato)
  * 16/11/2009: Ahora los /ct adminten radio como parametro opcional. (ZaMa)
  * 18/11/2009: Agregue el comando /Liberar. (ZaMa)
@@ -251,3 +254,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 21/05/2010: La ventana de party no pierde el foco al cambiar la consola. (ZaMa)
  * 04/07/2010: Sólo el trabajador puede contruir de a más de un ítem por ciclo. (Pato)
  * 10/07/2010: Ya no carga mas los formularios de herria y carpinteria al hacer doble click en el inv. (ZaMa)
+ * 17/07/2010: Ahora muestra el guildnews desde las opciones de clan aunque este desabilitado al loguear. (ZaMa)

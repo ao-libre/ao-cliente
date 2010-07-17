@@ -988,7 +988,7 @@ With incomingData
             Else
                 msg = tiempo & " segundos."
             End If
-            Call ShowConsoleMsg("Te encuentras a " & Distance & " mapas de " & Chr(34) & Hogar & Chr(34) & ", este viaje durará " & msg, 255, 0, 0, True)
+            Call ShowConsoleMsg("Te encuentras a " & Distance & " mapas de la " & Hogar & ", este viaje durará " & msg, 255, 0, 0, True)
             Traveling = True
         Case eMessages.FinishHome
             Call ShowConsoleMsg(MENSAJE_HOGAR, 255, 255, 255)
@@ -4342,7 +4342,7 @@ On Error GoTo ErrHandler
         frmGuildNews.txtClanesAliados.Text = sTemp & guildList(i) & vbCrLf
     Next i
     
-    If ClientSetup.bGuildNews Then frmGuildNews.Show vbModeless, frmMain
+    If ClientSetup.bGuildNews Or bShowGuildNews Then frmGuildNews.Show vbModeless, frmMain
     
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
