@@ -165,6 +165,10 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y A
     LastPressed.ToggleToNormal
 End Sub
 
+Private Sub Form_Unload(Cancel As Integer)
+    bShowGuildNews = False
+End Sub
+
 Private Sub imgAceptar_Click()
     On Error Resume Next
     Unload Me

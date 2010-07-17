@@ -939,6 +939,7 @@ Public clsForos As New clsForum
 Public isCapturePending As Boolean
 Public Traveling As Boolean
 
+Public bShowGuildNews As Boolean
 Public GuildNames() As String
 Public GuildMembers() As String
 

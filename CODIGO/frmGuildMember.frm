@@ -211,6 +211,7 @@ Private Sub imgDetalles_Click()
 End Sub
 
 Private Sub imgNoticias_Click()
+    bShowGuildNews = True
     Call WriteShowGuildNews
 End Sub
 
