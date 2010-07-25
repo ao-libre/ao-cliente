@@ -1462,6 +1462,9 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         
                         Case "ZONA" '/MODMAPINFO ZONA
                             Call WriteChangeMapInfoZone(ArgumentosAll(1))
+                            
+                        Case "ROBONPC" '/MODMAPINFO ROBONPC
+                            Call WriteChangeMapInfoStealNpc(ArgumentosAll(1))
                     End Select
                 Else
                     'Avisar que falta el parametro

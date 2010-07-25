@@ -485,6 +485,7 @@ Public Enum eGMCommands
     ChangeMapInfoNoResu     '/MODMAPINFO RESUSINEFECTO
     ChangeMapInfoLand       '/MODMAPINFO TERRENO
     ChangeMapInfoZone       '/MODMAPINFO ZONA
+    ChangeMapInfoStealNpc   '/MODMAPINFO ROBONPC
     SaveChars               '/GRABAR
     CleanSOS                '/BORRAR SOS
     ShowServerForm          '/SHOW INT

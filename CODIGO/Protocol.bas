@@ -4572,11 +4572,11 @@ On Error GoTo ErrHandler
         .criminales.Caption = CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .status.Caption = " Ciudadano"
-            .status.ForeColor = vbBlue
+            .Status.Caption = " Ciudadano"
+            .Status.ForeColor = vbBlue
         Else
-            .status.Caption = " Criminal"
-            .status.ForeColor = vbRed
+            .Status.Caption = " Criminal"
+            .Status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)
@@ -9812,6 +9812,26 @@ Public Sub WriteChangeMapInfoZone(ByVal zone As String)
         Call .WriteByte(eGMCommands.ChangeMapInfoZone)
         
         Call .WriteASCIIString(zone)
+    End With
+End Sub
+
+''
+' Writes the "ChangeMapInfoStealNpc" message to the outgoing data buffer.
+'
+' @param    forbid TRUE if stealNpc forbiden.
+' @remarks  The data is not actually sent until the buffer is properly flushed.
+
+Public Sub WriteChangeMapInfoStealNpc(ByVal forbid As Boolean)
+'***************************************************
+'Author: ZaMa
+'Last Modification: 25/07/2010
+'Writes the "ChangeMapInfoStealNpc" message to the outgoing data buffer
+'***************************************************
+    With outgoingData
+        Call .WriteByte(ClientPacketID.GMCommands)
+        Call .WriteByte(eGMCommands.ChangeMapInfoStealNpc)
+        
+        Call .WriteBoolean(forbid)
     End With
 End Sub
 
