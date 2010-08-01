@@ -256,3 +256,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 10/07/2010: Ya no carga mas los formularios de herria y carpinteria al hacer doble click en el inv. (ZaMa)
  * 17/07/2010: Ahora muestra el guildnews desde las opciones de clan aunque este desabilitado al loguear. (ZaMa)
  * 25/07/2010: Ahora se puede cambiar la propiedad RoboNpcPermitido con /modmapinfo. (ZaMa)
+ * 31/07/2010: Ahora los textos se renderizan con GDI. (Salvito)

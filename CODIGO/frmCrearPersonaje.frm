@@ -16,6 +16,12 @@ Begin VB.Form frmCrearPersonaje
    ScaleWidth      =   799
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
+   Begin VB.Timer Repaint 
+      Enabled         =   0   'False
+      Interval        =   250
+      Left            =   6360
+      Top             =   8400
+   End
    Begin VB.ComboBox lstAlienacion 
       BackColor       =   &H00000000&
       Enabled         =   0   'False
@@ -607,6 +613,7 @@ Begin VB.Form frmCrearPersonaje
       Left            =   5445
       TabIndex        =   26
       Top             =   4830
+      Visible         =   0   'False
       Width           =   225
    End
    Begin VB.Label lblAtributoFinal 
@@ -627,6 +634,7 @@ Begin VB.Form frmCrearPersonaje
       Left            =   5445
       TabIndex        =   25
       Top             =   4470
+      Visible         =   0   'False
       Width           =   225
    End
    Begin VB.Label lblAtributoFinal 
@@ -647,6 +655,7 @@ Begin VB.Form frmCrearPersonaje
       Left            =   5445
       TabIndex        =   24
       Top             =   4125
+      Visible         =   0   'False
       Width           =   225
    End
    Begin VB.Label lblAtributoFinal 
@@ -667,6 +676,7 @@ Begin VB.Form frmCrearPersonaje
       Left            =   5445
       TabIndex        =   23
       Top             =   3780
+      Visible         =   0   'False
       Width           =   225
    End
    Begin VB.Label lblAtributoFinal 
@@ -687,6 +697,7 @@ Begin VB.Form frmCrearPersonaje
       Left            =   5445
       TabIndex        =   22
       Top             =   3450
+      Visible         =   0   'False
       Width           =   225
    End
    Begin VB.Label lblModRaza 
@@ -1060,6 +1071,7 @@ Begin VB.Form frmCrearPersonaje
       Left            =   4500
       TabIndex        =   13
       Top             =   4470
+      Visible         =   0   'False
       Width           =   225
    End
    Begin VB.Label lblAtributos 
@@ -1081,6 +1093,7 @@ Begin VB.Form frmCrearPersonaje
       Left            =   4500
       TabIndex        =   12
       Top             =   4125
+      Visible         =   0   'False
       Width           =   225
    End
    Begin VB.Label lblAtributos 
@@ -1102,6 +1115,7 @@ Begin VB.Form frmCrearPersonaje
       Left            =   4500
       TabIndex        =   11
       Top             =   4830
+      Visible         =   0   'False
       Width           =   225
    End
    Begin VB.Label lblAtributos 
@@ -1123,6 +1137,7 @@ Begin VB.Form frmCrearPersonaje
       Left            =   4500
       TabIndex        =   10
       Top             =   3780
+      Visible         =   0   'False
       Width           =   225
    End
    Begin VB.Label lblAtributos 
@@ -1144,6 +1159,7 @@ Begin VB.Form frmCrearPersonaje
       Left            =   4500
       TabIndex        =   9
       Top             =   3450
+      Visible         =   0   'False
       Width           =   225
    End
 End
@@ -1510,10 +1526,10 @@ Function CheckData() As Boolean
         MsgBox "Seleccione el hogar del personaje."
         Exit Function
     End If
-    
+    'Toqueteado x Salvito
     Dim i As Integer
     For i = 1 To NUMATRIBUTOS
-        If UserAtributos(i) = 0 Then
+        If Val(lblAtributos(i).Caption) = 0 Then
             MsgBox "Los atributos del personaje son invalidos."
             Exit Function
         End If
@@ -1596,11 +1612,7 @@ Private Sub imgCrear_Click()
     UserRaza = lstRaza.ListIndex + 1
     UserSexo = lstGenero.ListIndex + 1
     UserClase = lstProfesion.ListIndex + 1
-    
-    For i = 1 To NUMATRIBUTES
-        UserAtributos(i) = Val(lblAtributos(i).Caption)
-    Next i
-    
+       
     UserHogar = lstHogar.ListIndex + 1
     
     If Not CheckData Then Exit Sub
@@ -1638,6 +1650,9 @@ Private Sub imgCrear_Click()
         Unload Me
         
     Else
+        For i = 1 To NUMATRIBUTES
+             UserAtributos(i) = Val(lblAtributos(i).Caption)
+        Next i
         Call Login
     End If
     
@@ -1810,6 +1825,18 @@ Private Sub picHead_Click(Index As Integer)
     
     Call UpdateHeadSelection
     
+End Sub
+
+' Toqueteado x Salvito
+Private Sub Repaint_Timer()
+    TextDrawer.DrawDice
+    Repaint.Enabled = False
+End Sub
+' Toqueteado x Salvito
+Private Sub Form_Paint()
+ If Not TextDrawer.SentPaint Then
+    Repaint.Enabled = True
+ End If
 End Sub
 
 Private Sub tAnimacion_Timer()
@@ -2164,9 +2191,12 @@ Private Sub txtPasswd_MouseMove(Button As Integer, Shift As Integer, X As Single
 End Sub
 
 Public Sub UpdateStats()
-    
+' Toqueteado x Salvito
     Call UpdateRazaMod
     Call UpdateStars
+    DoEvents
+    Repaint.Enabled = False
+    TextDrawer.DrawDice False
 End Sub
 
 Private Sub UpdateRazaMod()
