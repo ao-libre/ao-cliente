@@ -123,8 +123,7 @@ oldFont = SelectObject(hdc, lngFont)
 tsize = 0
 letters = ""
 
-For i = 30 To 250
-    If i <> 127 Then
+For i = 32 To 255
         letters = letters & Chr(i)
         Call GetTextExtentPoint32(hdc, Chr(i), 1, ret)
         lettersrect(i).Left = tsize
@@ -132,8 +131,9 @@ For i = 30 To 250
         lettersrect(i).Top = 0
         lettersrect(i).Bottom = 13
         tsize = tsize + ret.cx
-    End If
+        If i = 126 Then i = 160
 Next i
+
     surfacesize.cy = ret.cy
     surfacesize.cx = tsize
     If oldFont <> 0 Then
@@ -202,7 +202,7 @@ On Error GoTo ErrHandler
     SetBkMode hdc, TEXT_OPAQUE
     SetBkColor hdc, bkcolor
     SetTextColor hdc, color
-    TextOut hdc, 22, 0, letters, Len(letters)
+    TextOut hdc, 0, 0, letters, Len(letters)
     If oldFont <> 0 Then Call SelectObject(hdc, oldFont)
     DeleteObject lngFont
     newSurface.ReleaseDC hdc
