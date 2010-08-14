@@ -216,12 +216,12 @@ On Error GoTo ErrHandler
 Exit Function
 
 ErrHandler:
-    If Err.number = DDERR_OUTOFMEMORY Or Err.number = DDERR_OUTOFVIDEOMEMORY Then
+    If Err.Number = DDERR_OUTOFMEMORY Or Err.Number = DDERR_OUTOFVIDEOMEMORY Then
             MsgBox "No hay memoria disponible! El programa abortará. Cierra algunos programas e intenta de nuevo"
             End
     Else
         MsgBox "Un error inesperado ocurrió al intentar crear el texto" & ". " & vbCrLf & _
-                "El código de error es " & CStr(Err.number) & " - " & Err.Description & vbCrLf & vbCrLf & "Copia este mensaje y notifica a los administradores.", _
+                "El código de error es " & CStr(Err.Number) & " - " & Err.Description & vbCrLf & vbCrLf & "Copia este mensaje y notifica a los administradores.", _
                 vbOKOnly Or vbCritical Or vbExclamation, "Error"
         End
     End If
@@ -235,12 +235,14 @@ Public Function DrawText(ByVal X As Long, ByVal Y As Long, ByVal Text As String,
 '**************************************************************
     Dim i As Integer
     Dim tx As Long
+    Dim textSurface As DirectDrawSurface7
     Dim bytestring() As Byte
     If X > 120 And X < 799 And Y > 246 And Y < 668 Then
         bytestring = StrConv(Text, vbFromUnicode)
         tx = X
+        Set textSurface = GetTextSurface(color)
         For i = 0 To UBound(bytestring) ' - 1
-            Call Surface.BltFast(tx, Y, GetTextSurface(color), lettersrect(bytestring(i)), DDBLTFAST_SRCCOLORKEY Or DDBLTFAST_WAIT)
+            Call Surface.BltFast(tx, Y, textSurface, lettersrect(bytestring(i)), DDBLTFAST_SRCCOLORKEY Or DDBLTFAST_WAIT)
             tx = tx + lettersrect(bytestring(i)).Right - lettersrect(bytestring(i)).Left
         Next i
     End If
