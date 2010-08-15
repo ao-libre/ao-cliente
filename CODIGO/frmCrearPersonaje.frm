@@ -229,19 +229,6 @@ Begin VB.Form frmCrearPersonaje
       Top             =   6360
       Width           =   615
    End
-   Begin VB.PictureBox picTemp 
-      AutoRedraw      =   -1  'True
-      BackColor       =   &H00000000&
-      Height          =   975
-      Left            =   7080
-      ScaleHeight     =   61
-      ScaleMode       =   3  'Pixel
-      ScaleWidth      =   37
-      TabIndex        =   15
-      Top             =   6360
-      Visible         =   0   'False
-      Width           =   615
-   End
    Begin VB.PictureBox picHead 
       Appearance      =   0  'Flat
       AutoRedraw      =   -1  'True
@@ -254,7 +241,7 @@ Begin VB.Form frmCrearPersonaje
       ScaleHeight     =   24
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   24
-      TabIndex        =   28
+      TabIndex        =   27
       Top             =   5880
       Visible         =   0   'False
       Width           =   360
@@ -271,7 +258,7 @@ Begin VB.Form frmCrearPersonaje
       ScaleHeight     =   24
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   24
-      TabIndex        =   29
+      TabIndex        =   28
       Top             =   5880
       Visible         =   0   'False
       Width           =   360
@@ -288,7 +275,7 @@ Begin VB.Form frmCrearPersonaje
       ScaleHeight     =   24
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   24
-      TabIndex        =   30
+      TabIndex        =   29
       Top             =   5880
       Visible         =   0   'False
       Width           =   360
@@ -305,7 +292,7 @@ Begin VB.Form frmCrearPersonaje
       ScaleHeight     =   24
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   24
-      TabIndex        =   31
+      TabIndex        =   30
       Top             =   5880
       Visible         =   0   'False
       Width           =   360
@@ -322,7 +309,7 @@ Begin VB.Form frmCrearPersonaje
       ScaleHeight     =   24
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   24
-      TabIndex        =   27
+      TabIndex        =   26
       Top             =   5880
       Visible         =   0   'False
       Width           =   360
@@ -551,7 +538,7 @@ Begin VB.Form frmCrearPersonaje
       ForeColor       =   &H00FFFFFF&
       Height          =   375
       Left            =   4440
-      TabIndex        =   32
+      TabIndex        =   31
       Top             =   7395
       Width           =   1455
    End
@@ -562,8 +549,8 @@ Begin VB.Form frmCrearPersonaje
       Visible         =   0   'False
       X1              =   479
       X2              =   505
-      Y1              =   417
-      Y2              =   417
+      Y1              =   416
+      Y2              =   416
    End
    Begin VB.Line Line1 
       BorderColor     =   &H000000FF&
@@ -580,8 +567,8 @@ Begin VB.Form frmCrearPersonaje
       BorderStyle     =   3  'Dot
       Index           =   1
       Visible         =   0   'False
-      X1              =   505
-      X2              =   505
+      X1              =   504
+      X2              =   504
       Y1              =   392
       Y2              =   416
    End
@@ -611,7 +598,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   195
       Index           =   5
       Left            =   5445
-      TabIndex        =   26
+      TabIndex        =   25
       Top             =   4830
       Visible         =   0   'False
       Width           =   225
@@ -632,7 +619,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   195
       Index           =   4
       Left            =   5445
-      TabIndex        =   25
+      TabIndex        =   24
       Top             =   4470
       Visible         =   0   'False
       Width           =   225
@@ -653,7 +640,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   195
       Index           =   3
       Left            =   5445
-      TabIndex        =   24
+      TabIndex        =   23
       Top             =   4125
       Visible         =   0   'False
       Width           =   225
@@ -674,7 +661,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   195
       Index           =   2
       Left            =   5445
-      TabIndex        =   23
+      TabIndex        =   22
       Top             =   3780
       Visible         =   0   'False
       Width           =   225
@@ -695,7 +682,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   195
       Index           =   1
       Left            =   5445
-      TabIndex        =   22
+      TabIndex        =   21
       Top             =   3450
       Visible         =   0   'False
       Width           =   225
@@ -717,7 +704,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   195
       Index           =   5
       Left            =   4950
-      TabIndex        =   21
+      TabIndex        =   20
       Top             =   4830
       Width           =   225
    End
@@ -738,7 +725,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   195
       Index           =   4
       Left            =   4950
-      TabIndex        =   20
+      TabIndex        =   19
       Top             =   4470
       Width           =   225
    End
@@ -759,7 +746,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   195
       Index           =   3
       Left            =   4950
-      TabIndex        =   19
+      TabIndex        =   18
       Top             =   4125
       Width           =   225
    End
@@ -780,7 +767,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   195
       Index           =   2
       Left            =   4950
-      TabIndex        =   18
+      TabIndex        =   17
       Top             =   3780
       Width           =   225
    End
@@ -801,7 +788,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   195
       Index           =   1
       Left            =   4950
-      TabIndex        =   17
+      TabIndex        =   16
       Top             =   3450
       Width           =   225
    End
@@ -825,7 +812,7 @@ Begin VB.Form frmCrearPersonaje
       ForeColor       =   &H00FFFFFF&
       Height          =   4935
       Left            =   9480
-      TabIndex        =   16
+      TabIndex        =   15
       Top             =   1800
       Width           =   1935
    End
@@ -1841,8 +1828,9 @@ End Sub
 
 Private Sub tAnimacion_Timer()
     Dim SR As RECT
-    Dim DR As RECT
     Dim Grh As Long
+    Dim X As Long
+    Dim Y As Long
     Static Frame As Byte
     
     If currentGrh = 0 Then Exit Sub
@@ -1860,15 +1848,11 @@ Private Sub tAnimacion_Timer()
         SR.Right = SR.Left + .pixelWidth
         SR.Bottom = SR.Top + .pixelHeight
         
-        DR.Left = (picPJ.Width - .pixelWidth) \ 2 - 2
-        DR.Top = (picPJ.Height - .pixelHeight) \ 2 - 2
-        DR.Right = DR.Left + .pixelWidth
-        DR.Bottom = DR.Top + .pixelHeight
+        X = picPJ.Width / 2 - .pixelWidth / 2
+        Y = (picPJ.Height - .pixelHeight) - 5
         
-        picTemp.BackColor = picTemp.BackColor
-        
-        Call DrawGrhtoHdc(picTemp.hdc, Grh, SR, DR)
-        Call DrawTransparentGrhtoHdc(picPJ.hdc, picTemp.hdc, DR, DR, vbBlack)
+        Call DrawTransparentGrhtoHdc(picPJ.hdc, X, Y, Grh, SR, vbBlack)
+        Y = Y + .pixelHeight
     End With
     
     Grh = HeadData(UserHead).Head(Dir).GrhIndex
@@ -1879,24 +1863,20 @@ Private Sub tAnimacion_Timer()
         SR.Right = SR.Left + .pixelWidth
         SR.Bottom = SR.Top + .pixelHeight
         
-        DR.Left = (picPJ.Width - .pixelWidth) \ 2 - 2
-        DR.Top = DR.Bottom + BodyData(UserBody).HeadOffset.Y - .pixelHeight
-        DR.Right = DR.Left + .pixelWidth
-        DR.Bottom = DR.Top + .pixelHeight
+        X = picPJ.Width / 2 - .pixelWidth / 2
+        Y = Y + BodyData(UserBody).HeadOffset.Y - .pixelHeight
         
-        picTemp.BackColor = picTemp.BackColor
-        
-        Call DrawGrhtoHdc(picTemp.hdc, Grh, SR, DR)
-        Call DrawTransparentGrhtoHdc(picPJ.hdc, picTemp.hdc, DR, DR, vbBlack)
+        Call DrawTransparentGrhtoHdc(picPJ.hdc, X, Y, Grh, SR, vbBlack)
     End With
 End Sub
 
 Private Sub DrawHead(ByVal Head As Integer, ByVal PicIndex As Integer)
 
     Dim SR As RECT
-    Dim DR As RECT
     Dim Grh As Long
-
+    Dim X As Long
+    Dim Y As Long
+    
     Call DrawImageInPicture(picHead(PicIndex), Me.Picture, 0, 0, , , picHead(PicIndex).Left, picHead(PicIndex).Top)
     
     Grh = HeadData(Head).Head(Dir).GrhIndex
@@ -1907,15 +1887,10 @@ Private Sub DrawHead(ByVal Head As Integer, ByVal PicIndex As Integer)
         SR.Right = SR.Left + .pixelWidth
         SR.Bottom = SR.Top + .pixelHeight
         
-        DR.Left = (picHead(0).Width - .pixelWidth) \ 2 + 1
-        DR.Top = 0
-        DR.Right = DR.Left + .pixelWidth
-        DR.Bottom = DR.Top + .pixelHeight
+        X = picHead(PicIndex).Width / 2 - .pixelWidth / 2
+        Y = 1
         
-        picTemp.BackColor = picTemp.BackColor
-        
-        Call DrawGrhtoHdc(picTemp.hdc, Grh, SR, DR)
-        Call DrawTransparentGrhtoHdc(picHead(PicIndex).hdc, picTemp.hdc, DR, DR, vbBlack)
+        Call DrawTransparentGrhtoHdc(picHead(PicIndex).hdc, X, Y, Grh, SR, vbBlack)
     End With
     
 End Sub
