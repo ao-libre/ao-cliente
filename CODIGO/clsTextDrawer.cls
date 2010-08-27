@@ -193,7 +193,7 @@ On Error GoTo ErrHandler
         
     Set newSurface = DirectDraw.CreateSurface(ddsd)
     bkcolor = &H0
-    If color = vbBlack Then bkcolor = &H111111
+    If color = vbBlack Then bkcolor = &H10101
     
     'Dibujo el texto
     hdc = newSurface.GetDC
@@ -216,12 +216,12 @@ On Error GoTo ErrHandler
 Exit Function
 
 ErrHandler:
-    If Err.Number = DDERR_OUTOFMEMORY Or Err.Number = DDERR_OUTOFVIDEOMEMORY Then
+    If Err.number = DDERR_OUTOFMEMORY Or Err.number = DDERR_OUTOFVIDEOMEMORY Then
             MsgBox "No hay memoria disponible! El programa abortará. Cierra algunos programas e intenta de nuevo"
             End
     Else
         MsgBox "Un error inesperado ocurrió al intentar crear el texto" & ". " & vbCrLf & _
-                "El código de error es " & CStr(Err.Number) & " - " & Err.Description & vbCrLf & vbCrLf & "Copia este mensaje y notifica a los administradores.", _
+                "El código de error es " & CStr(Err.number) & " - " & Err.Description & vbCrLf & vbCrLf & "Copia este mensaje y notifica a los administradores.", _
                 vbOKOnly Or vbCritical Or vbExclamation, "Error"
         End
     End If
