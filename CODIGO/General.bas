@@ -186,7 +186,7 @@ On Error Resume Next
     Next loopc
 End Sub
 
-Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, ByVal text As String, Optional ByVal red As Integer = -1, Optional ByVal green As Integer, Optional ByVal blue As Integer, Optional ByVal bold As Boolean = False, Optional ByVal italic As Boolean = False, Optional ByVal bCrLf As Boolean = True)
+Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, ByVal Text As String, Optional ByVal red As Integer = -1, Optional ByVal green As Integer, Optional ByVal blue As Integer, Optional ByVal bold As Boolean = False, Optional ByVal italic As Boolean = False, Optional ByVal bCrLf As Boolean = True)
 '******************************************
 'Adds text to a Richtext box at the bottom.
 'Automatically scrolls to new text.
@@ -196,22 +196,22 @@ Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, ByVal text As String, Opt
 'Juan Martín Sotuyo Dodero (Maraxus) 03/29/2007 : Replaced ToxicWaste's code for extra performance.
 '******************************************r
     With RichTextBox
-        If Len(.text) > 1000 Then
+        If Len(.Text) > 1000 Then
             'Get rid of first line
-            .SelStart = InStr(1, .text, vbCrLf) + 1
-            .SelLength = Len(.text) - .SelStart + 2
+            .SelStart = InStr(1, .Text, vbCrLf) + 1
+            .SelLength = Len(.Text) - .SelStart + 2
             .TextRTF = .SelRTF
         End If
         
-        .SelStart = Len(.text)
+        .SelStart = Len(.Text)
         .SelLength = 0
         .SelBold = bold
         .SelItalic = italic
         
         If Not red = -1 Then .SelColor = RGB(red, green, blue)
         
-        If bCrLf And Len(.text) > 0 Then text = vbCrLf & text
-        .SelText = text
+        If bCrLf And Len(.Text) > 0 Then Text = vbCrLf & Text
+        .SelText = Text
         
         RichTextBox.refresh
     End With
@@ -228,7 +228,7 @@ Public Sub RefreshAllChars()
     
     For loopc = 1 To LastChar
         If charlist(loopc).Active = 1 Then
-            MapData(charlist(loopc).Pos.x, charlist(loopc).Pos.y).CharIndex = loopc
+            MapData(charlist(loopc).Pos.X, charlist(loopc).Pos.Y).CharIndex = loopc
         End If
     Next loopc
 End Sub
@@ -400,13 +400,13 @@ Sub MoveTo(ByVal Direccion As E_Heading)
     
     Select Case Direccion
         Case E_Heading.NORTH
-            LegalOk = MoveToLegalPos(UserPos.x, UserPos.y - 1)
+            LegalOk = MoveToLegalPos(UserPos.X, UserPos.Y - 1)
         Case E_Heading.EAST
-            LegalOk = MoveToLegalPos(UserPos.x + 1, UserPos.y)
+            LegalOk = MoveToLegalPos(UserPos.X + 1, UserPos.Y)
         Case E_Heading.SOUTH
-            LegalOk = MoveToLegalPos(UserPos.x, UserPos.y + 1)
+            LegalOk = MoveToLegalPos(UserPos.X, UserPos.Y + 1)
         Case E_Heading.WEST
-            LegalOk = MoveToLegalPos(UserPos.x - 1, UserPos.y)
+            LegalOk = MoveToLegalPos(UserPos.X - 1, UserPos.Y)
     End Select
     
     If LegalOk And Not UserParalizado Then
@@ -424,7 +424,7 @@ Sub MoveTo(ByVal Direccion As E_Heading)
     If frmMain.macrotrabajo.Enabled Then Call frmMain.DesactivarMacroTrabajo
     
     ' Update 3D sounds!
-    Call Audio.MoveListener(UserPos.x, UserPos.y)
+    Call Audio.MoveListener(UserPos.X, UserPos.Y)
 End Sub
 
 Sub RandomMove()
@@ -471,7 +471,7 @@ Private Sub CheckKeys()
             If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyUp)) < 0 Then
                 If frmMain.TrainingMacro.Enabled Then frmMain.DesactivarMacroHechizos
                 Call MoveTo(NORTH)
-                frmMain.Coord.Caption = UserMap & " X: " & UserPos.x & " Y: " & UserPos.y
+                frmMain.Coord.Caption = UserMap & " X: " & UserPos.X & " Y: " & UserPos.Y
                 Exit Sub
             End If
             
@@ -480,7 +480,7 @@ Private Sub CheckKeys()
                 If frmMain.TrainingMacro.Enabled Then frmMain.DesactivarMacroHechizos
                 Call MoveTo(EAST)
                 'frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.x & "," & UserPos.y & ")"
-                frmMain.Coord.Caption = UserMap & " X: " & UserPos.x & " Y: " & UserPos.y
+                frmMain.Coord.Caption = UserMap & " X: " & UserPos.X & " Y: " & UserPos.Y
                 Exit Sub
             End If
         
@@ -488,7 +488,7 @@ Private Sub CheckKeys()
             If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyDown)) < 0 Then
                 If frmMain.TrainingMacro.Enabled Then frmMain.DesactivarMacroHechizos
                 Call MoveTo(SOUTH)
-                frmMain.Coord.Caption = UserMap & " X: " & UserPos.x & " Y: " & UserPos.y
+                frmMain.Coord.Caption = UserMap & " X: " & UserPos.X & " Y: " & UserPos.Y
                 Exit Sub
             End If
         
@@ -496,12 +496,12 @@ Private Sub CheckKeys()
             If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyLeft)) < 0 Then
                 If frmMain.TrainingMacro.Enabled Then frmMain.DesactivarMacroHechizos
                 Call MoveTo(WEST)
-                frmMain.Coord.Caption = UserMap & " X: " & UserPos.x & " Y: " & UserPos.y
+                frmMain.Coord.Caption = UserMap & " X: " & UserPos.X & " Y: " & UserPos.Y
                 Exit Sub
             End If
             
             ' We haven't moved - Update 3D sounds!
-            Call Audio.MoveListener(UserPos.x, UserPos.y)
+            Call Audio.MoveListener(UserPos.X, UserPos.Y)
         Else
             Dim kp As Boolean
             kp = (GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyUp)) < 0) Or _
@@ -513,12 +513,12 @@ Private Sub CheckKeys()
                 Call RandomMove
             Else
                 ' We haven't moved - Update 3D sounds!
-                Call Audio.MoveListener(UserPos.x, UserPos.y)
+                Call Audio.MoveListener(UserPos.X, UserPos.Y)
             End If
             
             If frmMain.TrainingMacro.Enabled Then frmMain.DesactivarMacroHechizos
             'frmMain.Coord.Caption = "(" & UserPos.x & "," & UserPos.y & ")"
-            frmMain.Coord.Caption = "X: " & UserPos.x & " Y: " & UserPos.y
+            frmMain.Coord.Caption = "X: " & UserPos.X & " Y: " & UserPos.Y
         End If
     End If
 End Sub
@@ -529,8 +529,8 @@ Sub SwitchMap(ByVal Map As Integer)
 'Formato de mapas optimizado para reducir el espacio que ocupan.
 'Diseñado y creado por Juan Martín Sotuyo Dodero (Maraxus) (juansotuyo@hotmail.com)
 '**************************************************************
-    Dim y As Long
-    Dim x As Long
+    Dim Y As Long
+    Dim X As Long
     Dim tempint As Integer
     Dim ByFlags As Byte
     Dim handle As Integer
@@ -549,55 +549,55 @@ Sub SwitchMap(ByVal Map As Integer)
     Get handle, , tempint
     
     'Load arrays
-    For y = YMinMapSize To YMaxMapSize
-        For x = XMinMapSize To XMaxMapSize
+    For Y = YMinMapSize To YMaxMapSize
+        For X = XMinMapSize To XMaxMapSize
             Get handle, , ByFlags
             
-            MapData(x, y).Blocked = (ByFlags And 1)
+            MapData(X, Y).Blocked = (ByFlags And 1)
             
-            Get handle, , MapData(x, y).Graphic(1).GrhIndex
-            InitGrh MapData(x, y).Graphic(1), MapData(x, y).Graphic(1).GrhIndex
+            Get handle, , MapData(X, Y).Graphic(1).GrhIndex
+            InitGrh MapData(X, Y).Graphic(1), MapData(X, Y).Graphic(1).GrhIndex
             
             'Layer 2 used?
             If ByFlags And 2 Then
-                Get handle, , MapData(x, y).Graphic(2).GrhIndex
-                InitGrh MapData(x, y).Graphic(2), MapData(x, y).Graphic(2).GrhIndex
+                Get handle, , MapData(X, Y).Graphic(2).GrhIndex
+                InitGrh MapData(X, Y).Graphic(2), MapData(X, Y).Graphic(2).GrhIndex
             Else
-                MapData(x, y).Graphic(2).GrhIndex = 0
+                MapData(X, Y).Graphic(2).GrhIndex = 0
             End If
                 
             'Layer 3 used?
             If ByFlags And 4 Then
-                Get handle, , MapData(x, y).Graphic(3).GrhIndex
-                InitGrh MapData(x, y).Graphic(3), MapData(x, y).Graphic(3).GrhIndex
+                Get handle, , MapData(X, Y).Graphic(3).GrhIndex
+                InitGrh MapData(X, Y).Graphic(3), MapData(X, Y).Graphic(3).GrhIndex
             Else
-                MapData(x, y).Graphic(3).GrhIndex = 0
+                MapData(X, Y).Graphic(3).GrhIndex = 0
             End If
                 
             'Layer 4 used?
             If ByFlags And 8 Then
-                Get handle, , MapData(x, y).Graphic(4).GrhIndex
-                InitGrh MapData(x, y).Graphic(4), MapData(x, y).Graphic(4).GrhIndex
+                Get handle, , MapData(X, Y).Graphic(4).GrhIndex
+                InitGrh MapData(X, Y).Graphic(4), MapData(X, Y).Graphic(4).GrhIndex
             Else
-                MapData(x, y).Graphic(4).GrhIndex = 0
+                MapData(X, Y).Graphic(4).GrhIndex = 0
             End If
             
             'Trigger used?
             If ByFlags And 16 Then
-                Get handle, , MapData(x, y).Trigger
+                Get handle, , MapData(X, Y).Trigger
             Else
-                MapData(x, y).Trigger = 0
+                MapData(X, Y).Trigger = 0
             End If
             
             'Erase NPCs
-            If MapData(x, y).CharIndex > 0 Then
-                Call EraseChar(MapData(x, y).CharIndex)
+            If MapData(X, Y).CharIndex > 0 Then
+                Call EraseChar(MapData(X, Y).CharIndex)
             End If
             
             'Erase OBJs
-            MapData(x, y).ObjGrh.GrhIndex = 0
-        Next x
-    Next y
+            MapData(X, Y).ObjGrh.GrhIndex = 0
+        Next X
+    Next Y
     
     Close handle
     
@@ -607,7 +607,7 @@ Sub SwitchMap(ByVal Map As Integer)
     CurMap = Map
 End Sub
 
-Function ReadField(ByVal Pos As Integer, ByRef text As String, ByVal SepASCII As Byte) As String
+Function ReadField(ByVal Pos As Integer, ByRef Text As String, ByVal SepASCII As Byte) As String
 '*****************************************************************
 'Gets a field from a delimited string
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -622,17 +622,17 @@ Function ReadField(ByVal Pos As Integer, ByRef text As String, ByVal SepASCII As
     
     For i = 1 To Pos
         lastPos = CurrentPos
-        CurrentPos = InStr(lastPos + 1, text, delimiter, vbBinaryCompare)
+        CurrentPos = InStr(lastPos + 1, Text, delimiter, vbBinaryCompare)
     Next i
     
     If CurrentPos = 0 Then
-        ReadField = mid$(text, lastPos + 1, Len(text) - lastPos)
+        ReadField = mid$(Text, lastPos + 1, Len(Text) - lastPos)
     Else
-        ReadField = mid$(text, lastPos + 1, CurrentPos - lastPos - 1)
+        ReadField = mid$(Text, lastPos + 1, CurrentPos - lastPos - 1)
     End If
 End Function
 
-Function FieldCount(ByRef text As String, ByVal SepASCII As Byte) As Long
+Function FieldCount(ByRef Text As String, ByVal SepASCII As Byte) As Long
 '*****************************************************************
 'Gets the number of fields in a delimited string
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -642,14 +642,14 @@ Function FieldCount(ByRef text As String, ByVal SepASCII As Byte) As Long
     Dim curPos As Long
     Dim delimiter As String * 1
     
-    If LenB(text) = 0 Then Exit Function
+    If LenB(Text) = 0 Then Exit Function
     
     delimiter = Chr$(SepASCII)
     
     curPos = 0
     
     Do
-        curPos = InStr(curPos + 1, text, delimiter)
+        curPos = InStr(curPos + 1, Text, delimiter)
         Count = Count + 1
     Loop While curPos <> 0
     
@@ -827,14 +827,14 @@ Sub Main()
     frmCargando.refresh
     
     frmConnect.version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
-    Call AddtoRichTextBox(frmCargando.status, "Buscando servidores... ", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.Status, "Buscando servidores... ", 255, 255, 255, True, False, True)
 
     Call CargarServidores
 'TODO : esto de ServerRecibidos no se podría sacar???
     ServersRecibidos = True
     
-    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
-    Call AddtoRichTextBox(frmCargando.status, "Iniciando constantes... ", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.Status, "Hecho", 255, 0, 0, True, False, False)
+    Call AddtoRichTextBox(frmCargando.Status, "Iniciando constantes... ", 255, 255, 255, True, False, True)
     
     Call InicializarNombres
     
@@ -847,9 +847,9 @@ Sub Main()
         .txtNombre.SelLength = Len(.txtNombre)
     End With
     
-    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
+    Call AddtoRichTextBox(frmCargando.Status, "Hecho", 255, 0, 0, True, False, False)
     
-    Call AddtoRichTextBox(frmCargando.status, "Iniciando motor gráfico... ", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.Status, "Iniciando motor gráfico... ", 255, 255, 255, True, False, True)
     
     If Not InitTileEngine(frmMain.hWnd, 149, 13, 32, 32, 13, 17, 9, 8, 8, 0.018) Then
         Call CloseClient
@@ -859,9 +859,9 @@ Sub Main()
     Set TextDrawer = New clsTextDrawer
     Call TextDrawer.InitText(DirectDraw)
     
-    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
+    Call AddtoRichTextBox(frmCargando.Status, "Hecho", 255, 0, 0, True, False, False)
     
-    Call AddtoRichTextBox(frmCargando.status, "Creando animaciones extra... ", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.Status, "Creando animaciones extra... ", 255, 255, 255, True, False, True)
     
     Call CargarTips
     
@@ -872,9 +872,9 @@ UserMap = 1
     Call CargarAnimEscudos
     Call CargarColores
     
-    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
+    Call AddtoRichTextBox(frmCargando.Status, "Hecho", 255, 0, 0, True, False, False)
     
-    Call AddtoRichTextBox(frmCargando.status, "Iniciando DirectSound... ", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.Status, "Iniciando DirectSound... ", 255, 255, 255, True, False, True)
     
     'Inicializamos el sonido
     Call Audio.Initialize(DirectX, frmMain.hWnd, App.path & "\" & Config_Inicio.DirSonidos & "\", App.path & "\" & Config_Inicio.DirMusica & "\")
@@ -887,14 +887,14 @@ UserMap = 1
     
     Call Audio.MusicMP3Play(App.path & "\MP3\" & MP3_Inicio & ".mp3")
     
-    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
+    Call AddtoRichTextBox(frmCargando.Status, "Hecho", 255, 0, 0, True, False, False)
     
 #If SeguridadAlkon Then
     CualMI = 0
     Call InitMI
 #End If
     
-    Call AddtoRichTextBox(frmCargando.status, "                    ¡Bienvenido a Argentum Online!", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.Status, "                    ¡Bienvenido a Argentum Online!", 255, 255, 255, True, False, True)
     
     'Give the user enough time to read the welcome text
     Call Sleep(500)
@@ -961,7 +961,7 @@ UserMap = 1
             Call CheckKeys
         End If
         'FPS Counter - mostramos las FPS
-        If GetTickCount - lFrameTimer >= 1000 Then
+        If GetTickCount - lFrameTimer >= 500 Then
             If FPSFLAG Then frmMain.lblFPS.Caption = Mod_TileEngine.FPS
             
             lFrameTimer = GetTickCount
@@ -1043,11 +1043,11 @@ Private Function CMSValidateChar_(ByVal iAsc As Integer) As Boolean
 End Function
 
 'TODO : como todo lo relativo a mapas, no tiene nada que hacer acá....
-Function HayAgua(ByVal x As Integer, ByVal y As Integer) As Boolean
-    HayAgua = ((MapData(x, y).Graphic(1).GrhIndex >= 1505 And MapData(x, y).Graphic(1).GrhIndex <= 1520) Or _
-            (MapData(x, y).Graphic(1).GrhIndex >= 5665 And MapData(x, y).Graphic(1).GrhIndex <= 5680) Or _
-            (MapData(x, y).Graphic(1).GrhIndex >= 13547 And MapData(x, y).Graphic(1).GrhIndex <= 13562)) And _
-                MapData(x, y).Graphic(2).GrhIndex = 0
+Function HayAgua(ByVal X As Integer, ByVal Y As Integer) As Boolean
+    HayAgua = ((MapData(X, Y).Graphic(1).GrhIndex >= 1505 And MapData(X, Y).Graphic(1).GrhIndex <= 1520) Or _
+            (MapData(X, Y).Graphic(1).GrhIndex >= 5665 And MapData(X, Y).Graphic(1).GrhIndex <= 5680) Or _
+            (MapData(X, Y).Graphic(1).GrhIndex >= 13547 And MapData(X, Y).Graphic(1).GrhIndex <= 13562)) And _
+                MapData(X, Y).Graphic(2).GrhIndex = 0
                 
 End Function
 
@@ -1265,7 +1265,7 @@ Public Sub CleanDialogs()
 'Removes all text from the console and dialogs
 '**************************************************************
     'Clean console and dialogs
-    frmMain.RecTxt.text = vbNullString
+    frmMain.RecTxt.Text = vbNullString
     
     Call DialogosClanes.RemoveDialogs
     
@@ -1283,7 +1283,7 @@ Public Sub CloseClient()
     
     EngineRun = False
     frmCargando.Show
-    Call AddtoRichTextBox(frmCargando.status, "Liberando recursos...", 0, 0, 0, 0, 0, 0)
+    Call AddtoRichTextBox(frmCargando.Status, "Liberando recursos...", 0, 0, 0, 0, 0, 0)
     
     Call Resolution.ResetResolution
     
@@ -1338,19 +1338,19 @@ End If
 getTagPosition = Len(Nick) + 2
 End Function
 
-Public Sub checkText(ByVal text As String)
+Public Sub checkText(ByVal Text As String)
 Dim Nivel As Integer
-If Right(text, Len(MENSAJE_FRAGSHOOTER_TE_HA_MATADO)) = MENSAJE_FRAGSHOOTER_TE_HA_MATADO Then
+If Right(Text, Len(MENSAJE_FRAGSHOOTER_TE_HA_MATADO)) = MENSAJE_FRAGSHOOTER_TE_HA_MATADO Then
     Call ScreenCapture(True)
     Exit Sub
 End If
-If Left(text, Len(MENSAJE_FRAGSHOOTER_HAS_MATADO)) = MENSAJE_FRAGSHOOTER_HAS_MATADO Then
+If Left(Text, Len(MENSAJE_FRAGSHOOTER_HAS_MATADO)) = MENSAJE_FRAGSHOOTER_HAS_MATADO Then
     EsperandoLevel = True
     Exit Sub
 End If
 If EsperandoLevel Then
-    If Right(text, Len(MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA)) = MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA Then
-        If CInt(mid(text, Len(MENSAJE_FRAGSHOOTER_HAS_GANADO), (Len(text) - (Len(MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA) + Len(MENSAJE_FRAGSHOOTER_HAS_GANADO))))) / 2 > ClientSetup.byMurderedLevel Then
+    If Right(Text, Len(MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA)) = MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA Then
+        If CInt(mid(Text, Len(MENSAJE_FRAGSHOOTER_HAS_GANADO), (Len(Text) - (Len(MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA) + Len(MENSAJE_FRAGSHOOTER_HAS_GANADO))))) / 2 > ClientSetup.byMurderedLevel Then
             Call ScreenCapture(True)
         End If
     End If

@@ -228,9 +228,11 @@ Public UserCharIndex As Integer
 
 Public EngineRun As Boolean
 
-Public FPS As Long
+Public FPS As Double
 Public FramesPerSecCounter As Long
 Private fpsLastCheck As Long
+Public ResetFPS As Long
+Public FPS_MAX As Double
 
 'Tamaño del la vista en Tiles
 Private WindowTileWidth As Integer
@@ -535,11 +537,11 @@ Sub CargarArrayLluvia()
     Close #N
 End Sub
 
-Sub ConvertCPtoTP(ByVal viewPortX As Integer, ByVal viewPortY As Integer, ByRef tX As Byte, ByRef tY As Byte)
+Sub ConvertCPtoTP(ByVal viewPortX As Integer, ByVal viewPortY As Integer, ByRef tx As Byte, ByRef tY As Byte)
 '******************************************
 'Converts where the mouse is in the main window to a tile position. MUST be called eveytime the mouse moves.
 '******************************************
-    tX = UserPos.X + viewPortX \ TilePixelWidth - WindowTileWidth \ 2
+    tx = UserPos.X + viewPortX \ TilePixelWidth - WindowTileWidth \ 2
     tY = UserPos.Y + viewPortY \ TilePixelHeight - WindowTileHeight \ 2
 End Sub
 
@@ -820,7 +822,7 @@ Sub MoveScreen(ByVal nHeading As E_Heading)
 '******************************************
     Dim X As Integer
     Dim Y As Integer
-    Dim tX As Integer
+    Dim tx As Integer
     Dim tY As Integer
     
     'Figure out which way to move
@@ -839,16 +841,16 @@ Sub MoveScreen(ByVal nHeading As E_Heading)
     End Select
     
     'Fill temp pos
-    tX = UserPos.X + X
+    tx = UserPos.X + X
     tY = UserPos.Y + Y
     
     'Check to see if its out of bounds
-    If tX < MinXBorder Or tX > MaxXBorder Or tY < MinYBorder Or tY > MaxYBorder Then
+    If tx < MinXBorder Or tx > MaxXBorder Or tY < MinYBorder Or tY > MaxYBorder Then
         Exit Sub
     Else
         'Start moving... MainLoop does the rest
         AddtoUserPos.X = X
-        UserPos.X = tX
+        UserPos.X = tx
         AddtoUserPos.Y = Y
         UserPos.Y = tY
         UserMoving = 1
@@ -1701,6 +1703,8 @@ Public Function InitTileEngine(ByVal setDisplayFormhWnd As Long, ByVal setMainVi
     'Set FPS value to 60 for startup
     FPS = 60
     FramesPerSecCounter = 60
+    FPS_MAX = 100
+    ResetFPS = 100
     
     MinXBorder = XMinMapSize + (WindowTileWidth \ 2)
     MaxXBorder = XMaxMapSize - (WindowTileWidth \ 2)
@@ -1891,9 +1895,20 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Inte
         'Display front-buffer!
         Call PrimarySurface.Blt(MainViewRect, BackBufferSurface, MainDestRect, DDBLT_WAIT)
         
-        'Limit FPS to 100 (an easy number higher than monitor's vertical refresh rates)
-        While (DirectX.TickCount - fpsLastCheck) \ 10 < FramesPerSecCounter
-            Sleep 5
+        'FPS update
+        DeltaTime = Abs(DirectX.TickCount - fpsLastCheck)
+        
+        If FramesPerSecCounter >= ResetFPS Then
+            FramesPerSecCounter = 1
+            fpsLastCheck = DirectX.TickCount
+        Else
+            FramesPerSecCounter = FramesPerSecCounter + 1
+        End If
+        If DeltaTime > 0 Then FPS = Round(FramesPerSecCounter * 1000# / DeltaTime, 1)
+            
+        While DeltaTime / (1000 / FPS_MAX) < FramesPerSecCounter
+            Sleep 1
+            DeltaTime = Abs(DirectX.TickCount - fpsLastCheck)
         Wend
             
         If ClientSetup.bActive Then
@@ -1903,17 +1918,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Inte
                 isCapturePending = False
             End If
         End If
-        
-            
-        'FPS update
-        If fpsLastCheck + 1000 < DirectX.TickCount Then
-            FPS = FramesPerSecCounter
-            FramesPerSecCounter = 1
-            fpsLastCheck = DirectX.TickCount
-        Else
-            FramesPerSecCounter = FramesPerSecCounter + 1
-        End If
-        
+    
         'Get timing info
         timerElapsedTime = GetElapsedTime()
         timerTicksPerFrame = timerElapsedTime * engineBaseSpeed

@@ -1,7 +1,7 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.ocx"
-Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.ocx"
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.OCX"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.Form frmMain 
    BorderStyle     =   0  'None
    ClientHeight    =   8700
@@ -254,7 +254,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2619
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -368,7 +367,7 @@ Begin VB.Form frmMain
       Caption         =   "101"
       ForeColor       =   &H00FFFFFF&
       Height          =   180
-      Left            =   6705
+      Left            =   6660
       TabIndex        =   26
       Top             =   60
       Width           =   555
@@ -963,7 +962,7 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Public tX As Byte
+Public tx As Byte
 Public tY As Byte
 Public MouseX As Long
 Public MouseY As Long
@@ -1144,7 +1143,7 @@ With GrhData(GrhIndex)
 End With
 
 Call DrawGrhtoHdc(picSM(Index).hdc, GrhIndex, SR, DR)
-picSM(Index).Refresh
+picSM(Index).refresh
 
 Select Case Index
     Case eSMType.sResucitation
@@ -1493,7 +1492,7 @@ Private Sub macrotrabajo_Timer()
     
     If UsingSkill = eSkill.Pesca Or UsingSkill = eSkill.Talar Or UsingSkill = eSkill.Mineria Or _
                 UsingSkill = FundirMetal Or (UsingSkill = eSkill.Herreria And Not frmHerrero.Visible) Then
-        Call WriteWorkLeftClick(tX, tY, UsingSkill)
+        Call WriteWorkLeftClick(tx, tY, UsingSkill)
         UsingSkill = 0
     End If
     
@@ -1523,12 +1522,12 @@ Private Sub mnuEquipar_Click()
 End Sub
 
 Private Sub mnuNPCComerciar_Click()
-    Call WriteLeftClick(tX, tY)
+    Call WriteLeftClick(tx, tY)
     Call WriteCommerceStart
 End Sub
 
 Private Sub mnuNpcDesc_Click()
-    Call WriteLeftClick(tX, tY)
+    Call WriteLeftClick(tx, tY)
 End Sub
 
 Private Sub mnuTirar_Click()
@@ -1707,13 +1706,13 @@ Private Sub TrainingMacro_Timer()
         Call WriteWork(eSkill.Magia)
     End If
     
-    Call ConvertCPtoTP(MouseX, MouseY, tX, tY)
+    Call ConvertCPtoTP(MouseX, MouseY, tx, tY)
     
     If UsingSkill = Magia And Not MainTimer.Check(TimersIndex.CastSpell) Then Exit Sub
     
     If UsingSkill = Proyectiles And Not MainTimer.Check(TimersIndex.Attack) Then Exit Sub
     
-    Call WriteWorkLeftClick(tX, tY, UsingSkill)
+    Call WriteWorkLeftClick(tx, tY, UsingSkill)
     UsingSkill = 0
 End Sub
 
@@ -1754,7 +1753,7 @@ Private Sub Form_Click()
 #End If
 
     If Not Comerciando Then
-        Call ConvertCPtoTP(MouseX, MouseY, tX, tY)
+        Call ConvertCPtoTP(MouseX, MouseY, tx, tY)
         
         If Not InGameArea() Then Exit Sub
         
@@ -1771,7 +1770,7 @@ Private Sub Form_Click()
                 End If
                 '[/ybarra]
                 If UsingSkill = 0 Then
-                    Call WriteLeftClick(tX, tY)
+                    Call WriteLeftClick(tx, tY)
                 Else
                 
                     If TrainingMacro.Enabled Then Call DesactivarMacroHechizos
@@ -1833,7 +1832,7 @@ Private Sub Form_Click()
                     If frmMain.MousePointer <> 2 Then Exit Sub 'Parcheo porque a veces tira el hechizo sin tener el cursor (NicoNZ)
                     
                     frmMain.MousePointer = vbDefault
-                    Call WriteWorkLeftClick(tX, tY, UsingSkill)
+                    Call WriteWorkLeftClick(tx, tY, UsingSkill)
                     UsingSkill = 0
                 End If
             Else
@@ -1842,7 +1841,7 @@ Private Sub Form_Click()
         ElseIf (MouseShift And 1) = 1 Then
             If Not CustomKeys.KeyAssigned(KeyCodeConstants.vbKeyShift) Then
                 If MouseBoton = vbLeftButton Then
-                    Call WriteWarpChar("YO", UserMap, tX, tY)
+                    Call WriteWarpChar("YO", UserMap, tx, tY)
                 End If
             End If
         End If
@@ -1856,7 +1855,7 @@ Private Sub Form_DblClick()
 '12/28/2007: ByVal - Chequea que la ventana de comercio y boveda no este abierta al hacer doble clic a un comerciante, sobrecarga la lista de items.
 '**************************************************************
     If Not MirandoForo And Not Comerciando Then 'frmComerciar.Visible And Not frmBancoObj.Visible Then
-        Call WriteDoubleClick(tX, tY)
+        Call WriteDoubleClick(tx, tY)
     End If
 End Sub
 
@@ -2226,10 +2225,10 @@ End Sub
 Private Sub AbrirMenuViewPort()
 #If (ConMenuseConextuales = 1) Then
 
-If tX >= MinXBorder And tY >= MinYBorder And _
-    tY <= MaxYBorder And tX <= MaxXBorder Then
-    If MapData(tX, tY).CharIndex > 0 Then
-        If charlist(MapData(tX, tY).CharIndex).invisible = False Then
+If tx >= MinXBorder And tY >= MinYBorder And _
+    tY <= MaxYBorder And tx <= MaxXBorder Then
+    If MapData(tx, tY).CharIndex > 0 Then
+        If charlist(MapData(tx, tY).CharIndex).invisible = False Then
         
             Dim i As Long
             Dim M As New frmMenuseFashion
@@ -2239,8 +2238,8 @@ If tX >= MinXBorder And tY >= MinYBorder And _
             M.SetMenuId 1
             M.ListaInit 2, False
             
-            If charlist(MapData(tX, tY).CharIndex).Nombre <> "" Then
-                M.ListaSetItem 0, charlist(MapData(tX, tY).CharIndex).Nombre, True
+            If charlist(MapData(tx, tY).CharIndex).Nombre <> "" Then
+                M.ListaSetItem 0, charlist(MapData(tx, tY).CharIndex).Nombre, True
             Else
                 M.ListaSetItem 0, "<NPC>", True
             End If
@@ -2276,10 +2275,10 @@ Case 0 'Inventario
 Case 1 'Menu del ViewPort del engine
     Select Case Sel
     Case 0 'Nombre
-        Call WriteLeftClick(tX, tY)
+        Call WriteLeftClick(tx, tY)
         
     Case 1 'Comerciar
-        Call WriteLeftClick(tX, tY)
+        Call WriteLeftClick(tx, tY)
         Call WriteCommerceStart
     End Select
 End Select
