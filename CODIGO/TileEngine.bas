@@ -1847,6 +1847,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Inte
 '***************************************************
     Static OffsetCounterX As Single
     Static OffsetCounterY As Single
+    Dim DeltaTime As Long
     
     '****** Set main view rectangle ******
     MainViewRect.Left = (DisplayFormLeft / Screen.TwipsPerPixelX) + MainViewLeft
@@ -1904,6 +1905,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Inte
         Else
             FramesPerSecCounter = FramesPerSecCounter + 1
         End If
+        
         If DeltaTime > 0 Then FPS = Round(FramesPerSecCounter * 1000# / DeltaTime, 1)
             
         While DeltaTime / (1000 / FPS_MAX) < FramesPerSecCounter

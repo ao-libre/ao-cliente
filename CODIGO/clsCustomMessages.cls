@@ -77,14 +77,16 @@ On Error GoTo ErrHandler
     
     Open App.path & MESSAGE_FILE_PATH For Input As handle
     
-    For i = 0 To MESSAGE_COUNT - 1
+    Do While (i < MESSAGE_COUNT) And (Not EOF(handle))
         Line Input #handle, CustomMessages(i)
         
         'Purge invalid messages
         If Not MessageIsValid(CustomMessages(i)) Then
             CustomMessages(i) = vbNullString
         End If
-    Next i
+        
+        i = i + 1
+    Loop
     
     Close handle
     
@@ -137,17 +139,17 @@ End Sub
 ' @param    index   The message index to retrieve.
 ' @return   The message requested.
 
-Public Property Get Message(ByVal index As Integer) As String
+Public Property Get Message(ByVal Index As Integer) As String
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 07/26/07
 'Retrieves the requested message.
 '***************************************************
-    If index < 0 Or index >= MESSAGE_COUNT Then
+    If Index < 0 Or Index >= MESSAGE_COUNT Then
         Exit Property
     End If
     
-    Message = CustomMessages(index)
+    Message = CustomMessages(Index)
 End Property
 
 ''
@@ -156,13 +158,13 @@ End Property
 ' @param    index   The message index to be set.
 ' @param    nValue  The message to be stored.
 
-Public Property Let Message(ByVal index As Integer, ByVal nValue As String)
+Public Property Let Message(ByVal Index As Integer, ByVal nValue As String)
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 07/26/07
 'Sets the given message index with the requested message.
 '***************************************************
-    If index < 0 Or index >= MESSAGE_COUNT Then
+    If Index < 0 Or Index >= MESSAGE_COUNT Then
         Exit Property
     End If
     
@@ -171,7 +173,7 @@ Public Property Let Message(ByVal index As Integer, ByVal nValue As String)
         Exit Property
     End If
     
-    CustomMessages(index) = nValue
+    CustomMessages(Index) = nValue
 End Property
 
 ''
