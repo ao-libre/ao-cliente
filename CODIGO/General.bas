@@ -213,7 +213,7 @@ Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, ByVal Text As String, Opt
         If bCrLf And Len(.Text) > 0 Then Text = vbCrLf & Text
         .SelText = Text
         
-        RichTextBox.refresh
+        RichTextBox.Refresh
     End With
 End Sub
 
@@ -824,7 +824,7 @@ Sub Main()
         Set picMouseIcon = LoadPicture(DirExtras & "Hand.ico")
     
     frmCargando.Show
-    frmCargando.refresh
+    frmCargando.Refresh
     
     frmConnect.version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
     Call AddtoRichTextBox(frmCargando.Status, "Buscando servidores... ", 255, 255, 255, True, False, True)
@@ -883,7 +883,7 @@ UserMap = 1
     Audio.SoundActivated = Not ClientSetup.bNoSound
     Audio.SoundEffectsActivated = Not ClientSetup.bNoSoundEffects
     'Inicializamos el inventario gráfico
-    Call Inventario.Initialize(DirectDraw, frmMain.PicInv, MAX_INVENTORY_SLOTS)
+    Call Inventario.Initialize(DirectDraw, frmMain.picInv, MAX_INVENTORY_SLOTS)
     
     Call Audio.MusicMP3Play(App.path & "\MP3\" & MP3_Inicio & ".mp3")
     

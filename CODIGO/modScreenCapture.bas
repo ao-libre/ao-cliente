@@ -528,13 +528,19 @@ On Error GoTo Err:
     
     hdcc = INVALID_HANDLE
     
-    dirFile = IIf(Autofragshooter, "\Screenshots\FragShooter", "\Screenshots")
+    ' Primero chequea si existe la carpeta Screenshots
+    dirFile = App.path & "\Screenshots"
+    If Not FileExist(dirFile, vbDirectory) Then MkDir (dirFile)
     
-    If Not FileExist(App.path & dirFile, vbDirectory) Then MkDir (App.path & dirFile)
+    ' Si es una imagen de Autofragshooter, se fija si existe la carpeta
+    If Autofragshooter Then
+        dirFile = dirFile & "\FragShooter"
+        If Not FileExist(dirFile, vbDirectory) Then MkDir (dirFile)
+    End If
     
-    file = App.path & dirFile & "\" & Format(Now, "DD-MM-YYYY hh-mm-ss") & ".jpg"
+    file = dirFile & "\" & Format(Now, "DD-MM-YYYY hh-mm-ss") & ".jpg"
     
-    frmScreenshots.Picture1.Refresh
+    frmScreenshots.Picture1.refresh
     frmScreenshots.Picture1.Picture = frmScreenshots.Picture1.Image
     
     c.CreateFromPicture frmScreenshots.Picture1.Picture
@@ -579,7 +585,7 @@ Public Function FullScreenCapture(ByVal file As String) As Boolean
     
     If Not FileExist(App.path & "\TEMP", vbDirectory) Then MkDir (App.path & "\TEMP")
     
-    frmScreenshots.Picture1.Refresh
+    frmScreenshots.Picture1.refresh
     frmScreenshots.Picture1.Picture = frmScreenshots.Picture1.Image
     
     c.CreateFromPicture frmScreenshots.Picture1.Picture
