@@ -594,7 +594,6 @@ Begin VB.Form frmCrearPersonaje
       Left            =   5445
       TabIndex        =   25
       Top             =   4830
-      Visible         =   0   'False
       Width           =   225
    End
    Begin VB.Label lblAtributoFinal 
@@ -615,7 +614,6 @@ Begin VB.Form frmCrearPersonaje
       Left            =   5445
       TabIndex        =   24
       Top             =   4470
-      Visible         =   0   'False
       Width           =   225
    End
    Begin VB.Label lblAtributoFinal 
@@ -636,7 +634,6 @@ Begin VB.Form frmCrearPersonaje
       Left            =   5445
       TabIndex        =   23
       Top             =   4125
-      Visible         =   0   'False
       Width           =   225
    End
    Begin VB.Label lblAtributoFinal 
@@ -657,7 +654,6 @@ Begin VB.Form frmCrearPersonaje
       Left            =   5445
       TabIndex        =   22
       Top             =   3780
-      Visible         =   0   'False
       Width           =   225
    End
    Begin VB.Label lblAtributoFinal 
@@ -678,7 +674,6 @@ Begin VB.Form frmCrearPersonaje
       Left            =   5445
       TabIndex        =   21
       Top             =   3450
-      Visible         =   0   'False
       Width           =   225
    End
    Begin VB.Label lblModRaza 
@@ -1052,7 +1047,6 @@ Begin VB.Form frmCrearPersonaje
       Left            =   4500
       TabIndex        =   13
       Top             =   4470
-      Visible         =   0   'False
       Width           =   225
    End
    Begin VB.Label lblAtributos 
@@ -1074,7 +1068,6 @@ Begin VB.Form frmCrearPersonaje
       Left            =   4500
       TabIndex        =   12
       Top             =   4125
-      Visible         =   0   'False
       Width           =   225
    End
    Begin VB.Label lblAtributos 
@@ -1096,7 +1089,6 @@ Begin VB.Form frmCrearPersonaje
       Left            =   4500
       TabIndex        =   11
       Top             =   4830
-      Visible         =   0   'False
       Width           =   225
    End
    Begin VB.Label lblAtributos 
@@ -1118,7 +1110,6 @@ Begin VB.Form frmCrearPersonaje
       Left            =   4500
       TabIndex        =   10
       Top             =   3780
-      Visible         =   0   'False
       Width           =   225
    End
    Begin VB.Label lblAtributos 
@@ -1140,7 +1131,6 @@ Begin VB.Form frmCrearPersonaje
       Left            =   4500
       TabIndex        =   9
       Top             =   3450
-      Visible         =   0   'False
       Width           =   225
    End
 End
