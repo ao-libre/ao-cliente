@@ -518,24 +518,6 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     'Avisar que falta el parametro
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /acceptparty NICKNAME.")
                 End If
-
-            Case "/FPS"
-                    If ValidNumber(ArgumentosRaw, eNumber_Types.ent_Long) Then
-                        If ArgumentosRaw >= 20 Then FPS_MAX = ArgumentosRaw
-                        FramesPerSecCounter = ResetFPS
-                        If ResetFPS < FPS_MAX Then
-                            ResetFPS = FPS_MAX
-                            Call ShowConsoleMsg("ResetFPS: " & ResetFPS)
-                        End If
-                    End If
-                    Call ShowConsoleMsg("Maximo FPS: " & FPS_MAX)
-                    
-            Case "/RESETFPS"
-                    If ValidNumber(ArgumentosRaw, eNumber_Types.ent_Long) Then
-                        ResetFPS = ArgumentosRaw
-                        If ResetFPS < FPS_MAX Then ResetFPS = FPS_MAX
-                    End If
-                    Call ShowConsoleMsg("ResetFPS: " & ResetFPS)
                     
             '
             ' BEGIN GM COMMANDS

@@ -1257,7 +1257,7 @@ Private Sub HandleBankInit()
     
         BankGold = incomingData.ReadLong
     Call InvBanco(0).Initialize(DirectDraw, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
-    Call InvBanco(1).Initialize(DirectDraw, frmBancoObj.PicInv, Inventario.MaxObjs)
+    Call InvBanco(1).Initialize(DirectDraw, frmBancoObj.picInv, Inventario.MaxObjs)
     
     For i = 1 To Inventario.MaxObjs
         With Inventario
@@ -3441,7 +3441,6 @@ Private Sub HandleAtributes()
             If .Visible Then
                 For i = 1 To NUMATRIBUTES
                     .lblAtributos(i).Caption = UserAtributos(i)
-                    UserAtributos(i) = 0
                 Next i
                 
                 .UpdateStats
@@ -4154,9 +4153,7 @@ Private Sub HandleDiceRoll()
 'Last Modification: 05/17/06
 '
 '***************************************************
-' Toqueteado x Salvito
 
-Dim i As Long
     If incomingData.length < 6 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
@@ -4165,11 +4162,18 @@ Dim i As Long
     'Remove packet ID
     Call incomingData.ReadByte
     
-  
+    UserAtributos(eAtributos.Fuerza) = incomingData.ReadByte()
+    UserAtributos(eAtributos.Agilidad) = incomingData.ReadByte()
+    UserAtributos(eAtributos.Inteligencia) = incomingData.ReadByte()
+    UserAtributos(eAtributos.Carisma) = incomingData.ReadByte()
+    UserAtributos(eAtributos.Constitucion) = incomingData.ReadByte()
+         
     With frmCrearPersonaje
-        For i = 1 To NUMATRIBUTES
-            .lblAtributos(i).Caption = incomingData.ReadByte()
-        Next i
+        .lblAtributos(eAtributos.Fuerza) = UserAtributos(eAtributos.Fuerza)
+        .lblAtributos(eAtributos.Agilidad) = UserAtributos(eAtributos.Agilidad)
+        .lblAtributos(eAtributos.Inteligencia) = UserAtributos(eAtributos.Inteligencia)
+        .lblAtributos(eAtributos.Carisma) = UserAtributos(eAtributos.Carisma)
+        .lblAtributos(eAtributos.Constitucion) = UserAtributos(eAtributos.Constitucion)
         
         .UpdateStats
     End With
@@ -4569,11 +4573,11 @@ On Error GoTo ErrHandler
         .criminales.Caption = CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .status.Caption = " Ciudadano"
-            .status.ForeColor = vbBlue
+            .Status.Caption = " Ciudadano"
+            .Status.ForeColor = vbBlue
         Else
-            .status.Caption = " Criminal"
-            .status.ForeColor = vbRed
+            .Status.Caption = " Criminal"
+            .Status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)

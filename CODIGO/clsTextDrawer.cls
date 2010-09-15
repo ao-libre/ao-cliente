@@ -326,6 +326,7 @@ If strText <> "" Then
 End If
 
 End Function
+
 Private Sub Class_Terminate()
 '**************************************************************
 'Author: Alejandro Salvo (Salvito)
@@ -393,15 +394,8 @@ Public Function DrawDice(Optional refresh As Boolean = True) As Long
     ReleaseDC frmCrearPersonaje.hWnd, hdc
   
 End Function
+
 Public Property Get SentPaint() As Boolean
     SentPaint = TeTireUnPaint
     TeTireUnPaint = False
 End Property
-
-
-
-
-
-
-
-
