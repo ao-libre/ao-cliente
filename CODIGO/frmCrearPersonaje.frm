@@ -16,12 +16,6 @@ Begin VB.Form frmCrearPersonaje
    ScaleWidth      =   799
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
-   Begin VB.Timer Repaint 
-      Enabled         =   0   'False
-      Interval        =   250
-      Left            =   6360
-      Top             =   8400
-   End
    Begin VB.ComboBox lstAlienacion 
       BackColor       =   &H00000000&
       Enabled         =   0   'False
@@ -1599,7 +1593,11 @@ Private Sub imgCrear_Click()
     UserRaza = lstRaza.ListIndex + 1
     UserSexo = lstGenero.ListIndex + 1
     UserClase = lstProfesion.ListIndex + 1
-       
+    
+    For i = 1 To NUMATRIBUTES
+        UserAtributos(i) = Val(lblAtributos(i).Caption)
+    Next i
+         
     UserHogar = lstHogar.ListIndex + 1
     
     If Not CheckData Then Exit Sub
@@ -1637,9 +1635,6 @@ Private Sub imgCrear_Click()
         Unload Me
         
     Else
-        For i = 1 To NUMATRIBUTES
-             UserAtributos(i) = Val(lblAtributos(i).Caption)
-        Next i
         Call Login
     End If
     
@@ -1812,18 +1807,6 @@ Private Sub picHead_Click(Index As Integer)
     
     Call UpdateHeadSelection
     
-End Sub
-
-' Toqueteado x Salvito
-Private Sub Repaint_Timer()
-    TextDrawer.DrawDice
-    Repaint.Enabled = False
-End Sub
-' Toqueteado x Salvito
-Private Sub Form_Paint()
- If Not TextDrawer.SentPaint Then
-    Repaint.Enabled = True
- End If
 End Sub
 
 Private Sub tAnimacion_Timer()
@@ -2166,12 +2149,8 @@ Private Sub txtPasswd_MouseMove(Button As Integer, Shift As Integer, X As Single
 End Sub
 
 Public Sub UpdateStats()
-' Toqueteado x Salvito
     Call UpdateRazaMod
     Call UpdateStars
-    DoEvents
-    Repaint.Enabled = False
-    TextDrawer.DrawDice False
 End Sub
 
 Private Sub UpdateRazaMod()

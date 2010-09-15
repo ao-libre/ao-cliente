@@ -228,11 +228,9 @@ Public UserCharIndex As Integer
 
 Public EngineRun As Boolean
 
-Public FPS As Double
+Public FPS As Long
 Public FramesPerSecCounter As Long
 Private fpsLastCheck As Long
-Public ResetFPS As Long
-Public FPS_MAX As Double
 
 'Tamaño del la vista en Tiles
 Private WindowTileWidth As Integer
@@ -354,13 +352,9 @@ Private Declare Function QueryPerformanceCounter Lib "kernel32" (lpPerformanceCo
 
 'Text width computation. Needed to center text.
 Private Declare Function GetTextExtentPoint32 Lib "gdi32" Alias "GetTextExtentPoint32A" (ByVal hdc As Long, ByVal lpsz As String, ByVal cbString As Long, lpSize As size) As Long
-Private Declare Function GetDC Lib "user32" (ByVal hWnd As Long) As Long
-Private Declare Function ReleaseDC Lib "user32" (ByVal hWnd As Long, ByVal hdc As Long) As Long
 
 Private Declare Function SetPixel Lib "gdi32" (ByVal hdc As Long, ByVal X As Long, ByVal Y As Long, ByVal crColor As Long) As Long
 Private Declare Function GetPixel Lib "gdi32" (ByVal hdc As Long, ByVal X As Long, ByVal Y As Long) As Long
-
-Public TextDrawer As clsTextDrawer
 
 Sub CargarCabezas()
     Dim N As Integer
@@ -1703,8 +1697,6 @@ Public Function InitTileEngine(ByVal setDisplayFormhWnd As Long, ByVal setMainVi
     'Set FPS value to 60 for startup
     FPS = 60
     FramesPerSecCounter = 60
-    FPS_MAX = 100
-    ResetFPS = 100
     
     MinXBorder = XMinMapSize + (WindowTileWidth \ 2)
     MaxXBorder = XMaxMapSize - (WindowTileWidth \ 2)
@@ -1847,7 +1839,6 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Inte
 '***************************************************
     Static OffsetCounterX As Single
     Static OffsetCounterY As Single
-    Dim DeltaTime As Long
     
     '****** Set main view rectangle ******
     MainViewRect.Left = (DisplayFormLeft / Screen.TwipsPerPixelX) + MainViewLeft
@@ -1896,21 +1887,9 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Inte
         'Display front-buffer!
         Call PrimarySurface.Blt(MainViewRect, BackBufferSurface, MainDestRect, DDBLT_WAIT)
         
-        'FPS update
-        DeltaTime = Abs(DirectX.TickCount - fpsLastCheck)
-        
-        If FramesPerSecCounter >= ResetFPS Then
-            FramesPerSecCounter = 1
-            fpsLastCheck = DirectX.TickCount
-        Else
-            FramesPerSecCounter = FramesPerSecCounter + 1
-        End If
-        
-        If DeltaTime > 0 Then FPS = Round(FramesPerSecCounter * 1000# / DeltaTime, 1)
-            
-        While DeltaTime / (1000 / FPS_MAX) < FramesPerSecCounter
-            Sleep 1
-            DeltaTime = Abs(DirectX.TickCount - fpsLastCheck)
+        'Limit FPS to 100 (an easy number higher than monitor's vertical refresh rates)
+        While (DirectX.TickCount - fpsLastCheck) \ 10 < FramesPerSecCounter
+            Sleep 5
         Wend
             
         If ClientSetup.bActive Then
@@ -1919,6 +1898,15 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Inte
                 Call ScreenCapture(True)
                 isCapturePending = False
             End If
+        End If
+        
+        'FPS update
+        If fpsLastCheck + 1000 < DirectX.TickCount Then
+            FPS = FramesPerSecCounter
+            FramesPerSecCounter = 1
+            fpsLastCheck = DirectX.TickCount
+        Else
+            FramesPerSecCounter = FramesPerSecCounter + 1
         End If
     
         'Get timing info
@@ -1976,9 +1964,12 @@ End Sub
 
 Public Sub RenderText(ByVal lngXPos As Integer, ByVal lngYPos As Integer, ByRef strText As String, ByVal lngColor As Long, ByRef font As StdFont)
     If strText <> "" Then
-        'Toqueteado x Salvito
-        TextDrawer.DrawText lngXPos - 2, lngYPos - 1, strText, vbBlack, BackBufferSurface
-        TextDrawer.DrawText lngXPos, lngYPos, strText, lngColor, BackBufferSurface
+        Call BackBufferSurface.SetForeColor(vbBlack)
+        Call BackBufferSurface.SetFont(font)
+        Call BackBufferSurface.DrawText(lngXPos - 2, lngYPos - 1, strText, False)
+        
+        Call BackBufferSurface.SetForeColor(lngColor)
+        Call BackBufferSurface.DrawText(lngXPos, lngYPos, strText, False)
     End If
 End Sub
 
@@ -1987,16 +1978,20 @@ Public Sub RenderTextCentered(ByVal lngXPos As Integer, ByVal lngYPos As Integer
     Dim ret As size
     
     If strText <> "" Then
-        'Toqueteado x Salvito
+        Call BackBufferSurface.SetFont(font)
         
         'Get width of text once rendered
-        hdc = GetDC(frmMain.hWnd)
+        hdc = BackBufferSurface.GetDC()
         Call GetTextExtentPoint32(hdc, strText, Len(strText), ret)
-        ReleaseDC frmMain.hWnd, hdc
+        Call BackBufferSurface.ReleaseDC(hdc)
+        
         lngXPos = lngXPos - ret.cx \ 2
         
-        TextDrawer.DrawText lngXPos - 2, lngYPos - 1, strText, vbBlack, BackBufferSurface
-        TextDrawer.DrawText lngXPos, lngYPos, strText, lngColor, BackBufferSurface
+        Call BackBufferSurface.SetForeColor(vbBlack)
+        Call BackBufferSurface.DrawText(lngXPos - 2, lngYPos - 1, strText, False)
+        
+        Call BackBufferSurface.SetForeColor(lngColor)
+        Call BackBufferSurface.DrawText(lngXPos, lngYPos, strText, False)
     End If
 End Sub
 
