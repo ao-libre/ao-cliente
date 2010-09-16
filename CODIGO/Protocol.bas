@@ -465,7 +465,10 @@ Public Sub HandleIncomingData()
 '***************************************************
 On Error Resume Next
 
-    Select Case incomingData.PeekByte()
+    Dim PacketID As Byte
+    PacketID = incomingData.PeekByte()
+    
+    Select Case PacketID
         Case ServerPacketID.logged                  ' LOGGED
             Call HandleLogged
         
@@ -1256,7 +1259,7 @@ Private Sub HandleBankInit()
     
         BankGold = incomingData.ReadLong
     Call InvBanco(0).Initialize(DirectDraw, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
-    Call InvBanco(1).Initialize(DirectDraw, frmBancoObj.picInv, Inventario.MaxObjs)
+    Call InvBanco(1).Initialize(DirectDraw, frmBancoObj.PicInv, Inventario.MaxObjs)
     
     For i = 1 To Inventario.MaxObjs
         With Inventario
@@ -1389,6 +1392,7 @@ Private Sub HandleShowBlacksmithForm()
     If frmMain.macrotrabajo.Enabled And (MacroBltIndex > 0) Then
         Call WriteCraftBlacksmith(MacroBltIndex)
     Else
+        MirandoHerreria = True
         frmHerrero.Show , frmMain
     End If
 End Sub
@@ -1408,6 +1412,7 @@ Private Sub HandleShowCarpenterForm()
     If frmMain.macrotrabajo.Enabled And (MacroBltIndex > 0) Then
         Call WriteCraftCarpenter(MacroBltIndex)
     Else
+        MirandoCarpinteria = True
         frmCarp.Show , frmMain
     End If
 End Sub
@@ -4572,11 +4577,11 @@ On Error GoTo ErrHandler
         .criminales.Caption = CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .Status.Caption = " Ciudadano"
-            .Status.ForeColor = vbBlue
+            .status.Caption = " Ciudadano"
+            .status.ForeColor = vbBlue
         Else
-            .Status.Caption = " Criminal"
-            .Status.ForeColor = vbRed
+            .status.Caption = " Criminal"
+            .status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)
