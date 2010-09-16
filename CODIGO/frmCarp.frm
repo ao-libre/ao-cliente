@@ -517,7 +517,6 @@ Private Sub Form_Load()
     Me.Picture = LoadPicture(App.path & "\graficos\VentanaCarpinteriaItems.jpg")
     LoadButtons
     
-    MirandoCarpinteria = True
 End Sub
 
 Private Sub LoadButtons()
