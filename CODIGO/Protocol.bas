@@ -1000,8 +1000,6 @@ With incomingData
 End With
 End Sub
 
-
-
 ''
 ' Handles the Logged message.
 
@@ -1015,6 +1013,7 @@ Private Sub HandleLogged()
     Call incomingData.ReadByte
     
     ' Variable initialization
+    UserClase = incomingData.ReadByte
     EngineRun = True
     Nombres = True
     
@@ -4233,7 +4232,7 @@ Private Sub HandleSendSkills()
 'Last Modification: 11/19/09
 '11/19/09: Pato - Now the server send the percentage of progress of the skills.
 '***************************************************
-    If incomingData.length < 2 + NUMSKILLS * 2 Then
+    If incomingData.length < 1 + NUMSKILLS * 2 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -4241,13 +4240,13 @@ Private Sub HandleSendSkills()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    UserClase = incomingData.ReadByte
     Dim i As Long
     
     For i = 1 To NUMSKILLS
         UserSkills(i) = incomingData.ReadByte()
         PorcentajeSkills(i) = incomingData.ReadByte()
     Next i
+    
     LlegaronSkills = True
 End Sub
 
