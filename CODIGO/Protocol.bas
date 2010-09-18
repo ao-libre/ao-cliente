@@ -4577,11 +4577,11 @@ On Error GoTo ErrHandler
         .criminales.Caption = CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .status.Caption = " Ciudadano"
-            .status.ForeColor = vbBlue
+            .Status.Caption = " Ciudadano"
+            .Status.ForeColor = vbBlue
         Else
-            .status.Caption = " Criminal"
-            .status.ForeColor = vbRed
+            .Status.Caption = " Criminal"
+            .Status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)
@@ -9677,6 +9677,46 @@ Public Sub WriteChangeMapInfoPK(ByVal isPK As Boolean)
         Call .WriteByte(eGMCommands.ChangeMapInfoPK)
         
         Call .WriteBoolean(isPK)
+    End With
+End Sub
+
+''
+' Writes the "ChangeMapInfoNoOcultar" message to the outgoing data buffer.
+'
+' @param    PermitirOcultar True if the map permits to hide, False otherwise.
+' @remarks  The data is not actually sent until the buffer is properly flushed.
+
+Public Sub WriteChangeMapInfoNoOcultar(ByVal PermitirOcultar As Boolean)
+'***************************************************
+'Author: ZaMa
+'Last Modification: 19/09/2010
+'Writes the "ChangeMapInfoNoOcultar" message to the outgoing data buffer
+'***************************************************
+    With outgoingData
+        Call .WriteByte(ClientPacketID.GMCommands)
+        Call .WriteByte(eGMCommands.ChangeMapInfoNoOcultar)
+        
+        Call .WriteBoolean(PermitirOcultar)
+    End With
+End Sub
+
+''
+' Writes the "ChangeMapInfoNoInvocar" message to the outgoing data buffer.
+'
+' @param    PermitirInvocar True if the map permits to invoke, False otherwise.
+' @remarks  The data is not actually sent until the buffer is properly flushed.
+
+Public Sub WriteChangeMapInfoNoInvocar(ByVal PermitirInvocar As Boolean)
+'***************************************************
+'Author: ZaMa
+'Last Modification: 18/09/2010
+'Writes the "ChangeMapInfoNoInvocar" message to the outgoing data buffer
+'***************************************************
+    With outgoingData
+        Call .WriteByte(ClientPacketID.GMCommands)
+        Call .WriteByte(eGMCommands.ChangeMapInfoNoInvocar)
+        
+        Call .WriteBoolean(PermitirInvocar)
     End With
 End Sub
 
