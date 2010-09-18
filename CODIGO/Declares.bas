@@ -817,6 +817,7 @@ Public Enum eEditOptions
     eo_Sex
     eo_Raza
     eo_addGold
+    eo_Vida
 End Enum
 
 ''

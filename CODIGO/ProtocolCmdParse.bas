@@ -71,6 +71,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
 'Interpreta, valida y ejecuta el comando ingresado
 '26/03/2009: ZaMa - Flexibilizo la cantidad de parametros de /nene,  /onlinemap y /telep
 '16/11/2009: ZaMa - Ahora el /ct admite radio
+'18/09/2010: ZaMa - Agrego el comando /mod username vida xxx
 '***************************************************
     Dim TmpArgos() As String
     
@@ -739,11 +740,15 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         Case "AGREGAR"
                             tmpInt = eEditOptions.eo_addGold
                         
+                        Case "VIDA"
+                            tmpInt = eEditOptions.eo_Vida
+                            
                         Case Else
                             tmpInt = -1
                     End Select
                     
                     If tmpInt > 0 Then
+                        
                         If CantidadArgumentos = 3 Then
                             Call WriteEditChar(ArgumentosAll(0), tmpInt, ArgumentosAll(2), "")
                         Else

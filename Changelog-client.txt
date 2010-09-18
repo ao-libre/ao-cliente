@@ -261,3 +261,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 16/09/2010: Ya no se dibujan los bodies cuando estan invisibles (Fin al corte de cabezas). (ZaMa)
  * 18/09/2010: Agrego comandos /modmapinfo OcultarSinEfecto y /modmapinfo InvocarSinEfecto. (ZaMa)
  * 18/09/2010: Ahora se puede cambiar un mensaje personalizado con Ctrl+Shift+NroMsj se copia lo que este escrito. (ZaMa) 
+ * 18/09/2010: Agrego comando /mod Yo Vida xxx solo para rms(todos) o dioses. (ZaMa)
