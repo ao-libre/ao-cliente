@@ -1,7 +1,7 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.ocx"
-Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.ocx"
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.OCX"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.Form frmMain 
    BorderStyle     =   0  'None
    ClientHeight    =   8700
@@ -174,7 +174,7 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H000000FF&
       Height          =   315
-      Left            =   120
+      Left            =   150
       MaxLength       =   160
       MultiLine       =   -1  'True
       TabIndex        =   2
@@ -1143,7 +1143,7 @@ With GrhData(GrhIndex)
 End With
 
 Call DrawGrhtoHdc(picSM(Index).hdc, GrhIndex, SR, DR)
-picSM(Index).Refresh
+picSM(Index).refresh
 
 Select Case Index
     Case eSMType.sResucitation
@@ -1491,13 +1491,13 @@ Private Sub macrotrabajo_Timer()
     End If
     
     If UsingSkill = eSkill.Pesca Or UsingSkill = eSkill.Talar Or UsingSkill = eSkill.Mineria Or _
-                UsingSkill = FundirMetal Or (UsingSkill = eSkill.Herreria And Not MirandoHerreria) Then
+                UsingSkill = FundirMetal Or (UsingSkill = eSkill.Herreria And Not frmHerrero.Visible) Then
         Call WriteWorkLeftClick(tx, tY, UsingSkill)
         UsingSkill = 0
     End If
     
     'If Inventario.OBJType(Inventario.SelectedItem) = eObjType.otWeapon Then
-     If Not MirandoCarpinteria Then Call UsarItem
+     If Not (frmCarp.Visible = True) Then Call UsarItem
 End Sub
 
 Public Sub ActivarMacroTrabajo()
@@ -1582,33 +1582,6 @@ Select Case Index
             Call ActivarMacroTrabajo
         End If
 End Select
-End Sub
-
-Private Sub SendTxt_KeyDown(KeyCode As Integer, Shift As Integer)
-    
-    ' Control + Shift
-    If Shift = 3 Then
-        
-        ' Only allow numeric keys
-        If KeyCode >= vbKey0 And KeyCode <= vbKey9 Then
-            
-            ' Get Msg Number
-            Dim NroMsg As Integer
-            NroMsg = KeyCode - vbKey0 - 1
-            
-            ' Pressed "0", so Msg Number is 9
-            If NroMsg = -1 Then NroMsg = 9
-            
-            CustomMessages.Message(NroMsg) = SendTxt.Text
-            
-            With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                Call ShowConsoleMsg("¡¡""" & SendTxt.Text & """ fue guardado como mensaje personalizado " & NroMsg + 1 & "!!", .red, .green, .blue, .bold, .italic)
-            End With
-            
-        End If
-        
-    End If
-    
 End Sub
 
 Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
