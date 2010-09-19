@@ -485,9 +485,7 @@ Public Enum eGMCommands
     ChangeMapInfoNoResu     '/MODMAPINFO RESUSINEFECTO
     ChangeMapInfoLand       '/MODMAPINFO TERRENO
     ChangeMapInfoZone       '/MODMAPINFO ZONA
-    ChangeMapInfoStealNpc   '/MODMAPINFO ROBONPCm
-    ChangeMapInfoNoOcultar  '/MODMAPINFO OCULTARSINEFECTO
-    ChangeMapInfoNoInvocar  '/MODMAPINFO INVOCARSINEFECTO
+    ChangeMapInfoStealNpc   '/MODMAPINFO ROBONPC
     SaveChars               '/GRABAR
     CleanSOS                '/BORRAR SOS
     ShowServerForm          '/SHOW INT
@@ -817,7 +815,6 @@ Public Enum eEditOptions
     eo_Sex
     eo_Raza
     eo_addGold
-    eo_Vida
 End Enum
 
 ''

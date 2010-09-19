@@ -465,10 +465,7 @@ Public Sub HandleIncomingData()
 '***************************************************
 On Error Resume Next
 
-    Dim PacketID As Byte
-    PacketID = incomingData.PeekByte()
-    
-    Select Case PacketID
+    Select Case incomingData.PeekByte()
         Case ServerPacketID.logged                  ' LOGGED
             Call HandleLogged
         
@@ -1003,6 +1000,8 @@ With incomingData
 End With
 End Sub
 
+
+
 ''
 ' Handles the Logged message.
 
@@ -1016,7 +1015,6 @@ Private Sub HandleLogged()
     Call incomingData.ReadByte
     
     ' Variable initialization
-    UserClase = incomingData.ReadByte
     EngineRun = True
     Nombres = True
     
@@ -1259,7 +1257,7 @@ Private Sub HandleBankInit()
     
         BankGold = incomingData.ReadLong
     Call InvBanco(0).Initialize(DirectDraw, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
-    Call InvBanco(1).Initialize(DirectDraw, frmBancoObj.PicInv, Inventario.MaxObjs)
+    Call InvBanco(1).Initialize(DirectDraw, frmBancoObj.picInv, Inventario.MaxObjs)
     
     For i = 1 To Inventario.MaxObjs
         With Inventario
@@ -1392,7 +1390,6 @@ Private Sub HandleShowBlacksmithForm()
     If frmMain.macrotrabajo.Enabled And (MacroBltIndex > 0) Then
         Call WriteCraftBlacksmith(MacroBltIndex)
     Else
-        MirandoHerreria = True
         frmHerrero.Show , frmMain
     End If
 End Sub
@@ -1412,7 +1409,6 @@ Private Sub HandleShowCarpenterForm()
     If frmMain.macrotrabajo.Enabled And (MacroBltIndex > 0) Then
         Call WriteCraftCarpenter(MacroBltIndex)
     Else
-        MirandoCarpinteria = True
         frmCarp.Show , frmMain
     End If
 End Sub
@@ -4237,7 +4233,7 @@ Private Sub HandleSendSkills()
 'Last Modification: 11/19/09
 '11/19/09: Pato - Now the server send the percentage of progress of the skills.
 '***************************************************
-    If incomingData.length < 1 + NUMSKILLS * 2 Then
+    If incomingData.length < 2 + NUMSKILLS * 2 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -4245,13 +4241,13 @@ Private Sub HandleSendSkills()
     'Remove packet ID
     Call incomingData.ReadByte
     
+    UserClase = incomingData.ReadByte
     Dim i As Long
     
     For i = 1 To NUMSKILLS
         UserSkills(i) = incomingData.ReadByte()
         PorcentajeSkills(i) = incomingData.ReadByte()
     Next i
-    
     LlegaronSkills = True
 End Sub
 
@@ -9677,46 +9673,6 @@ Public Sub WriteChangeMapInfoPK(ByVal isPK As Boolean)
         Call .WriteByte(eGMCommands.ChangeMapInfoPK)
         
         Call .WriteBoolean(isPK)
-    End With
-End Sub
-
-''
-' Writes the "ChangeMapInfoNoOcultar" message to the outgoing data buffer.
-'
-' @param    PermitirOcultar True if the map permits to hide, False otherwise.
-' @remarks  The data is not actually sent until the buffer is properly flushed.
-
-Public Sub WriteChangeMapInfoNoOcultar(ByVal PermitirOcultar As Boolean)
-'***************************************************
-'Author: ZaMa
-'Last Modification: 19/09/2010
-'Writes the "ChangeMapInfoNoOcultar" message to the outgoing data buffer
-'***************************************************
-    With outgoingData
-        Call .WriteByte(ClientPacketID.GMCommands)
-        Call .WriteByte(eGMCommands.ChangeMapInfoNoOcultar)
-        
-        Call .WriteBoolean(PermitirOcultar)
-    End With
-End Sub
-
-''
-' Writes the "ChangeMapInfoNoInvocar" message to the outgoing data buffer.
-'
-' @param    PermitirInvocar True if the map permits to invoke, False otherwise.
-' @remarks  The data is not actually sent until the buffer is properly flushed.
-
-Public Sub WriteChangeMapInfoNoInvocar(ByVal PermitirInvocar As Boolean)
-'***************************************************
-'Author: ZaMa
-'Last Modification: 18/09/2010
-'Writes the "ChangeMapInfoNoInvocar" message to the outgoing data buffer
-'***************************************************
-    With outgoingData
-        Call .WriteByte(ClientPacketID.GMCommands)
-        Call .WriteByte(eGMCommands.ChangeMapInfoNoInvocar)
-        
-        Call .WriteBoolean(PermitirInvocar)
     End With
 End Sub
 
