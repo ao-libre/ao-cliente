@@ -169,7 +169,7 @@ Private cBotonLiderGrupo As clsGraphicalButton
 Private cBotonExpulsar As clsGraphicalButton
 Private cBotonSalirParty As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Public LastButtonPressed As clsGraphicalButton
 
 
 Private sPartyChat As String
@@ -210,7 +210,7 @@ Private Sub LoadButtons()
     Set cBotonExpulsar = New clsGraphicalButton
     Set cBotonSalirParty = New clsGraphicalButton
     
-    Set LastPressed = New clsGraphicalButton
+    Set LastButtonPressed = New clsGraphicalButton
     
     
     Call cBotonAgregar.Initialize(imgAgregar, GrhPath & "BotonAgregarParty.jpg", _
@@ -254,7 +254,7 @@ Private Sub LoadButtons()
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
@@ -331,7 +331,7 @@ End Sub
 Private Sub lstMembers_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
 
     If EsPartyLeader Then
-        LastPressed.ToggleToNormal
+        LastButtonPressed.ToggleToNormal
     End If
     
 End Sub
@@ -385,7 +385,7 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
 End Sub
 
 Private Sub txtToAdd_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub txtToAdd_KeyPress(KeyAscii As Integer)

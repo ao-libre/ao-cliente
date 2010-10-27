@@ -265,7 +265,7 @@ Private cBotonSoporte As clsGraphicalButton
 Private cBotonTutorial As clsGraphicalButton
 Private cBotonSalir As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Public LastButtonPressed As clsGraphicalButton
 
 Private picCheckBox As Picture
 
@@ -276,7 +276,7 @@ Private bSoundEffectsActivated As Boolean
 Private loading As Boolean
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub imgCambiarPasswd_Click()
@@ -495,7 +495,7 @@ Private Sub LoadButtons()
     Set cBotonTutorial = New clsGraphicalButton
     Set cBotonSalir = New clsGraphicalButton
     
-    Set LastPressed = New clsGraphicalButton
+    Set LastButtonPressed = New clsGraphicalButton
     
     Call cBotonConfigTeclas.Initialize(imgConfigTeclas, GrhPath & "BotonConfigurarTeclas.jpg", _
                                     GrhPath & "BotonConfigurarTeclasRollover.jpg", _

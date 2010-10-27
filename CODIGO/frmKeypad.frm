@@ -420,7 +420,7 @@ Private MinMayBack(1) As Picture
 Private cBotonMin As clsGraphicalButton
 Private cBotonMay As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Public LastButtonPressed As clsGraphicalButton
 
 Private Const MinIndex = "1234567890-=\qwertyuiop[]asdfghjkl;'zxcvbnm,./"
 Private Const MayIndex = "!@#$%^&*()_+|QWERTYUIOP{}ASDFGHJKL:""ZXCVBNM<>?"
@@ -461,7 +461,7 @@ Private Sub LoadButtons()
     Set cBotonMin = New clsGraphicalButton
     Set cBotonMay = New clsGraphicalButton
     
-    Set LastPressed = New clsGraphicalButton
+    Set LastButtonPressed = New clsGraphicalButton
     
     
     Call cBotonMin.Initialize(imgMay, GrhPath & "BotonMay.jpg", _
@@ -475,7 +475,7 @@ Private Sub LoadButtons()
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub imgCerrar_Click()
@@ -501,7 +501,7 @@ Private Sub imgKeyPad_Click(Index As Integer)
 End Sub
 
 Private Sub imgKeyPad_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub imgMay_Click()

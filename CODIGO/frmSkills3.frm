@@ -902,7 +902,7 @@ Private cSkillNames(1 To NUMSKILLS) As clsGraphicalButton
 Private cBtonAceptar As clsGraphicalButton
 Private cBotonCancelar As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Public LastButtonPressed As clsGraphicalButton
 
 Private bPuedeMagia As Boolean
 Private bPuedeMeditar As Boolean
@@ -946,7 +946,7 @@ Private Sub LoadButtons()
     Set cBtonAceptar = New clsGraphicalButton
     Set cBotonCancelar = New clsGraphicalButton
     
-    Set LastPressed = New clsGraphicalButton
+    Set LastButtonPressed = New clsGraphicalButton
     
     Call cBtonAceptar.Initialize(imgAceptar, GrhPath & "BotonAceptarSkills.jpg", _
                                     GrhPath & "BotonAceptarRolloverSkills.jpg", _
@@ -1240,7 +1240,7 @@ Private Sub RestarSkillPoint(ByVal SkillIndex As Integer)
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
     lblHelp.Caption = ""
 End Sub
 
@@ -1616,7 +1616,7 @@ Private Sub imgTalar_MouseMove(Button As Integer, Shift As Integer, X As Single,
 End Sub
 
 Private Sub lblHelp_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub ShowHelp(ByVal eeSkill As eSkill)

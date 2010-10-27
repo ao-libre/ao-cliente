@@ -623,7 +623,7 @@ Private clsFormulario As clsFormMovementManager
 Private cBotonGuardar As clsGraphicalButton
 Private cBotonDefaultKeys As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Public LastButtonPressed As clsGraphicalButton
 
 Private Sub Form_Load()
     Dim i As Long
@@ -649,7 +649,7 @@ Private Sub LoadButtons()
     Set cBotonGuardar = New clsGraphicalButton
     Set cBotonDefaultKeys = New clsGraphicalButton
     
-    Set LastPressed = New clsGraphicalButton
+    Set LastButtonPressed = New clsGraphicalButton
     
     
     Call cBotonGuardar.Initialize(imgGuardar, GrhPath & "BotonGuardarConfigKey.jpg", _
@@ -662,7 +662,7 @@ Private Sub LoadButtons()
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub imgDefaultKeys_Click()
@@ -719,5 +719,5 @@ Private Sub Text1_KeyUp(Index As Integer, KeyCode As Integer, Shift As Integer)
 End Sub
 
 Private Sub Text1_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub

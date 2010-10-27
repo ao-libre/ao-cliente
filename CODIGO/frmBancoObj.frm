@@ -280,7 +280,7 @@ Private cBotonRetirarOro As clsGraphicalButton
 Private cBotonDepositarOro As clsGraphicalButton
 Private cBotonCerrar As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Public LastButtonPressed As clsGraphicalButton
 
 
 Public LasActionBuy As Boolean
@@ -346,7 +346,7 @@ Private Sub LoadButtons()
     Set cBotonDepositarOro = New clsGraphicalButton
     Set cBotonCerrar = New clsGraphicalButton
     
-    Set LastPressed = New clsGraphicalButton
+    Set LastButtonPressed = New clsGraphicalButton
 
 
     Call cBotonDepositarOro.Initialize(imgDepositarOro, "", GrhPath & "BotonDepositaOroApretado.jpg", GrhPath & "BotonDepositaOroApretado.jpg", Me)
@@ -359,7 +359,7 @@ Private Sub LoadButtons()
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    Call LastPressed.ToggleToNormal
+    Call LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub Image1_Click(Index As Integer)
@@ -429,7 +429,7 @@ Private Sub PicBancoInv_Click()
 End Sub
 
 Private Sub PicBancoInv_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    Call LastPressed.ToggleToNormal
+    Call LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub PicInv_Click()
@@ -466,7 +466,7 @@ Private Sub PicInv_Click()
 End Sub
 
 Private Sub PicInv_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    Call LastPressed.ToggleToNormal
+    Call LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub imgCerrar_Click()

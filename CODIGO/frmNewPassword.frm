@@ -101,7 +101,7 @@ Private clsFormulario As clsFormMovementManager
 
 Private cBotonAceptar As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Public LastButtonPressed As clsGraphicalButton
 
 Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
@@ -120,7 +120,7 @@ Private Sub LoadButtons()
 
     Set cBotonAceptar = New clsGraphicalButton
     
-    Set LastPressed = New clsGraphicalButton
+    Set LastButtonPressed = New clsGraphicalButton
     
     
     Call cBotonAceptar.Initialize(imgAceptar, GrhPath & "BotonAceptarCambiarContrasenia.jpg", _
@@ -129,7 +129,7 @@ Private Sub LoadButtons()
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub imgAceptar_Click()
@@ -143,5 +143,5 @@ Private Sub imgAceptar_Click()
 End Sub
 
 Private Sub Text3_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub

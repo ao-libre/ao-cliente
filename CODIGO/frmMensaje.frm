@@ -84,7 +84,7 @@ Private clsFormulario As clsFormMovementManager
 
 Private cBotonCerrar As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Public LastButtonPressed As clsGraphicalButton
 
 Private Sub Form_Deactivate()
     Me.SetFocus
@@ -107,7 +107,7 @@ Private Sub LoadButtons()
 
     Set cBotonCerrar = New clsGraphicalButton
     
-    Set LastPressed = New clsGraphicalButton
+    Set LastButtonPressed = New clsGraphicalButton
     
     
     Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarMsj.jpg", _
@@ -116,7 +116,7 @@ Private Sub LoadButtons()
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub imgCerrar_Click()
@@ -124,5 +124,5 @@ Private Sub imgCerrar_Click()
 End Sub
 
 Private Sub msg_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub

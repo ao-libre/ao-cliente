@@ -1202,7 +1202,7 @@ Private cBotonAlineacion As clsGraphicalButton
 Private cBotonVolver As clsGraphicalButton
 Private cBotonCrear As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Public LastButtonPressed As clsGraphicalButton
 
 Private picFullStar As Picture
 Private picHalfStar As Picture
@@ -1350,7 +1350,7 @@ Private Sub IniciarGraficos()
     Set cBotonVolver = New clsGraphicalButton
     Set cBotonCrear = New clsGraphicalButton
     
-    Set LastPressed = New clsGraphicalButton
+    Set LastButtonPressed = New clsGraphicalButton
     
     
     Call cBotonPasswd.Initialize(imgPasswd, "", GrhPath & "BotonContraseña.jpg", _
@@ -2126,7 +2126,7 @@ Private Sub LoadHelp()
 End Sub
 
 Private Sub ClearLabel()
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
     lblHelp = ""
 End Sub
 

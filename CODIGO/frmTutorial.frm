@@ -167,7 +167,7 @@ Private clsFormulario As clsFormMovementManager
 Private cBotonSiguiente As clsGraphicalButton
 Private cBotonAnterior As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Public LastButtonPressed As clsGraphicalButton
 
 Private Type tTutorial
     sTitle As String
@@ -205,7 +205,7 @@ Private Sub LoadButtons()
     Set cBotonSiguiente = New clsGraphicalButton
     Set cBotonAnterior = New clsGraphicalButton
     
-    Set LastPressed = New clsGraphicalButton
+    Set LastButtonPressed = New clsGraphicalButton
     
     
     Call cBotonSiguiente.Initialize(imgSiguiente, GrhPath & "BotonSiguienteTutorial.jpg", _
@@ -233,7 +233,7 @@ Private Sub LoadButtons()
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub imgAnterior_Click()
@@ -322,5 +322,5 @@ Private Sub SelectPage(ByVal lPage As Long)
 End Sub
 
 Private Sub lblMensaje_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub

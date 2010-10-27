@@ -386,7 +386,7 @@ Private cBotonRechazar As clsGraphicalButton
 Private cBotonEchar As clsGraphicalButton
 Private cBotonAceptar As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Public LastButtonPressed As clsGraphicalButton
 
 Public Enum CharInfoFrmType
     frmMembers
@@ -417,7 +417,7 @@ Private Sub LoadButtons()
     Set cBotonEchar = New clsGraphicalButton
     Set cBotonAceptar = New clsGraphicalButton
     
-    Set LastPressed = New clsGraphicalButton
+    Set LastButtonPressed = New clsGraphicalButton
     
     
     Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarInfoChar.jpg", _
@@ -443,7 +443,7 @@ Private Sub LoadButtons()
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub imgAceptar_Click()
@@ -475,5 +475,5 @@ Private Sub imgRechazar_Click()
 End Sub
 
 Private Sub txtMiembro_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
