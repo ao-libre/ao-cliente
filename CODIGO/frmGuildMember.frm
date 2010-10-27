@@ -154,7 +154,7 @@ Private cBotonNoticias As clsGraphicalButton
 Private cBotonDetalles As clsGraphicalButton
 Private cBotonCerrar As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Public LastButtonPressed As clsGraphicalButton
 
 Private Sub Form_Load()
 
@@ -177,7 +177,7 @@ Private Sub LoadButtons()
     Set cBotonDetalles = New clsGraphicalButton
     Set cBotonCerrar = New clsGraphicalButton
     
-    Set LastPressed = New clsGraphicalButton
+    Set LastButtonPressed = New clsGraphicalButton
     
     
     Call cBotonDetalles.Initialize(imgDetalles, GrhPath & "BotonDetallesMiembroClan.jpg", _
@@ -195,7 +195,7 @@ Private Sub LoadButtons()
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub imgCerrar_Click()

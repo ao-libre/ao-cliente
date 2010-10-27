@@ -103,7 +103,7 @@ Private clsFormulario As clsFormMovementManager
 Private cBotonSiguiente As clsGraphicalButton
 Private cBotonCancelar As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Public LastButtonPressed As clsGraphicalButton
 
 Private Sub Form_Deactivate()
     Me.SetFocus
@@ -138,7 +138,7 @@ Private Sub LoadButtons()
     Set cBotonSiguiente = New clsGraphicalButton
     Set cBotonCancelar = New clsGraphicalButton
     
-    Set LastPressed = New clsGraphicalButton
+    Set LastButtonPressed = New clsGraphicalButton
     
     
     Call cBotonSiguiente.Initialize(imgSiguiente, GrhPath & "BotonSiguienteNombreClan.jpg", _
@@ -153,7 +153,7 @@ End Sub
 
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub imgCancelar_Click()
@@ -168,5 +168,5 @@ Private Sub imgSiguiente_Click()
 End Sub
 
 Private Sub txtWeb_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub

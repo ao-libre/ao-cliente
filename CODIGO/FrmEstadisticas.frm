@@ -1019,7 +1019,7 @@ Option Explicit
 Private clsFormulario As clsFormMovementManager
 
 Private cBotonCerrar As clsGraphicalButton
-Public LastPressed As clsGraphicalButton
+Public LastButtonPressed As clsGraphicalButton
 
 Private Const ANCHO_BARRA As Byte = 73 'pixeles
 Private Const BAR_LEFT_POS As Integer = 361 'pixeles
@@ -1084,7 +1084,7 @@ Private Sub LoadButtons()
     GrhPath = DirGraficos
     
     Set cBotonCerrar = New clsGraphicalButton
-    Set LastPressed = New clsGraphicalButton
+    Set LastButtonPressed = New clsGraphicalButton
     
     Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarEstadisticas.jpg", _
                                     GrhPath & "BotonCerrarRolloverEstadisticas.jpg", _
@@ -1093,7 +1093,7 @@ Private Sub LoadButtons()
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)

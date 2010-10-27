@@ -157,7 +157,7 @@ Private cBotonVerde As clsGraphicalButton
 Private cBotonMarron As clsGraphicalButton
 Private cBotonAceptar As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Public LastButtonPressed As clsGraphicalButton
 
 Private picNegrita As Picture
 Private picCursiva As Picture
@@ -190,7 +190,7 @@ Private Sub LoadButtons()
     Set cBotonMarron = New clsGraphicalButton
     Set cBotonAceptar = New clsGraphicalButton
     
-    Set LastPressed = New clsGraphicalButton
+    Set LastButtonPressed = New clsGraphicalButton
     
     
     Call cBotonAzul.Initialize(imgAzul, GrhPath & "BotonAzul.jpg", _
@@ -234,7 +234,7 @@ Private Sub LoadButtons()
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub imgAceptar_Click()
@@ -302,7 +302,7 @@ Private Sub imgOptCursiva_Click(Index As Integer)
 End Sub
 
 Private Sub imgOptCursiva_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub imgOptNegrita_Click(Index As Integer)
@@ -318,7 +318,7 @@ Private Sub imgOptNegrita_Click(Index As Integer)
 End Sub
 
 Private Sub imgOptNegrita_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub imgRojo_Click()

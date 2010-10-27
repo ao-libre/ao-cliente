@@ -1,7 +1,7 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
-Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.OCX"
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.ocx"
+Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.ocx"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.ocx"
 Begin VB.Form frmMain 
    BorderStyle     =   0  'None
    ClientHeight    =   8700
@@ -254,6 +254,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2619
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -984,7 +985,7 @@ Private cBotonEstadisticas As clsGraphicalButton
 Private cBotonClanes As clsGraphicalButton
 Private cBotonAsignarSkill As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Public LastButtonPressed As clsGraphicalButton
 
 Public picSkillStar As Picture
 
@@ -1023,7 +1024,7 @@ Private Sub LoadButtons()
     Set cBotonAsignarSkill = New clsGraphicalButton
     Set cBotonMapa = New clsGraphicalButton
     
-    Set LastPressed = New clsGraphicalButton
+    Set LastButtonPressed = New clsGraphicalButton
     
     
     Call cBotonDiamArriba.Initialize(imgInvScrollUp, "", _
@@ -1143,7 +1144,7 @@ With GrhData(GrhIndex)
 End With
 
 Call DrawGrhtoHdc(picSM(Index).hdc, GrhIndex, SR, DR)
-picSM(Index).refresh
+picSM(Index).Refresh
 
 Select Case Index
     Case eSMType.sResucitation
@@ -1459,7 +1460,7 @@ Private Sub imgOpciones_Click()
 End Sub
 
 Private Sub InvEqu_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub lblScroll_Click(Index As Integer)
@@ -1921,7 +1922,7 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y A
         MouseY = MainViewShp.Height
     End If
     
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
     
 End Sub
 
@@ -2191,7 +2192,7 @@ Private Sub Socket1_Disconnect()
 #If SeguridadAlkon Then
     LOGGING = False
     LOGSTRING = False
-    LastPressed = 0
+    LastButtonPressed = 0
     LastMouse = False
     LastAmount = 0
 #End If

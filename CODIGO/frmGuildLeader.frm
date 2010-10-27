@@ -288,7 +288,7 @@ Private cBotonPropuestasPaz As clsGraphicalButton
 Private cBotonPropuestasAlianzas As clsGraphicalButton
 Private cBotonCerrar As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Public LastButtonPressed As clsGraphicalButton
 
 Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
@@ -316,7 +316,7 @@ Private Sub LoadButtons()
     Set cBotonPropuestasAlianzas = New clsGraphicalButton
     Set cBotonCerrar = New clsGraphicalButton
     
-    Set LastPressed = New clsGraphicalButton
+    Set LastButtonPressed = New clsGraphicalButton
     
     
     Call cBotonElecciones.Initialize(imgElecciones, GrhPath & "BotonElecciones.jpg", _
@@ -363,11 +363,11 @@ Private Sub LoadButtons()
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub guildslist_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub imgActualizar_Click()
@@ -424,11 +424,11 @@ Private Sub imgPropuestasPaz_Click()
 End Sub
 
 Private Sub members_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub solicitudes_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub txtguildnews_Change()
@@ -437,7 +437,7 @@ Private Sub txtguildnews_Change()
 End Sub
 
 Private Sub txtguildnews_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub txtFiltrarClanes_Change()

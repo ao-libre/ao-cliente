@@ -103,7 +103,7 @@ Private Const MAX_PROPOSAL_LENGTH As Integer = 520
 Private cBotonEnviar As clsGraphicalButton
 Private cBotonCerrar As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Public LastButtonPressed As clsGraphicalButton
 
 Public Nombre As String
 
@@ -132,7 +132,7 @@ Private Sub LoadButtons()
     Set cBotonEnviar = New clsGraphicalButton
     Set cBotonCerrar = New clsGraphicalButton
     
-    Set LastPressed = New clsGraphicalButton
+    Set LastButtonPressed = New clsGraphicalButton
     
     
     Call cBotonEnviar.Initialize(imgEnviar, GrhPath & "BotonEnviarSolicitud.jpg", _
@@ -145,7 +145,7 @@ Private Sub LoadButtons()
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub imgCerrar_Click()
@@ -212,5 +212,5 @@ Private Sub LoadBackGround()
 End Sub
 
 Private Sub Text1_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub

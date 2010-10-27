@@ -117,7 +117,7 @@ Private cBotonCerrar As clsGraphicalButton
 Private cBotonDetalles As clsGraphicalButton
 Private cBotonRechazar As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Public LastButtonPressed As clsGraphicalButton
 
 
 Private TipoProp As TIPO_PROPUESTA
@@ -147,7 +147,7 @@ Private Sub LoadButtons()
     Set cBotonDetalles = New clsGraphicalButton
     Set cBotonRechazar = New clsGraphicalButton
     
-    Set LastPressed = New clsGraphicalButton
+    Set LastButtonPressed = New clsGraphicalButton
     
     
     Call cBotonAceptar.Initialize(imgAceptar, GrhPath & "BotonAceptarOferta.jpg", _

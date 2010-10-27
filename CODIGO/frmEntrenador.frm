@@ -112,7 +112,7 @@ Private clsFormulario As clsFormMovementManager
 Private cBotonLuchar As clsGraphicalButton
 Private cBotonSalir As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Public LastButtonPressed As clsGraphicalButton
 
 Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
@@ -133,7 +133,7 @@ Private Sub LoadButtons()
     Set cBotonLuchar = New clsGraphicalButton
     Set cBotonSalir = New clsGraphicalButton
     
-    Set LastPressed = New clsGraphicalButton
+    Set LastButtonPressed = New clsGraphicalButton
     
     
     Call cBotonLuchar.Initialize(imgLuchar, GrhPath & "BotonLuchar.jpg", _
@@ -147,7 +147,7 @@ Private Sub LoadButtons()
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub imgLuchar_Click()
@@ -160,5 +160,5 @@ Private Sub imgSalir_Click()
 End Sub
 
 Private Sub lstCriaturas_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub

@@ -304,7 +304,7 @@ Private cBotonForo As clsGraphicalButton
 Private cBotonConectarse As clsGraphicalButton
 Private cBotonTeclas As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Public LastButtonPressed As clsGraphicalButton
 
 Private Sub Form_Activate()
 'On Error Resume Next
@@ -408,7 +408,7 @@ Private Sub LoadButtons()
     Set cBotonConectarse = New clsGraphicalButton
     Set cBotonTeclas = New clsGraphicalButton
     
-    Set LastPressed = New clsGraphicalButton
+    Set LastButtonPressed = New clsGraphicalButton
 
         
     Call cBotonCrearPj.Initialize(imgCrearPj, GrhPath & "BotonCrearPersonajeConectar.jpg", _
@@ -454,7 +454,7 @@ Private Sub LoadButtons()
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub CheckServers()

@@ -219,7 +219,7 @@ Private cBotonDejarAnuncio As clsGraphicalButton
 Private cBotonDejarMsg As clsGraphicalButton
 Private cBotonCerrar As clsGraphicalButton
 Private cBotonListaMsg As clsGraphicalButton
-Public LastPressed As clsGraphicalButton
+Public LastButtonPressed As clsGraphicalButton
 
 ' Para controlar las imagenes de fondo y el envio de posteos
 Private ForoActual As eForumType
@@ -342,7 +342,7 @@ Private Sub LoadButtons()
     Set cBotonCerrar = New clsGraphicalButton
     Set cBotonListaMsg = New clsGraphicalButton
 
-    Set LastPressed = New clsGraphicalButton
+    Set LastButtonPressed = New clsGraphicalButton
 
     ' Initialize buttons
     Call cBotonDejarAnuncio.Initialize(imgDejarAnuncio, GrhPath & "BotonDejarAnuncioForo.jpg", _
@@ -365,7 +365,7 @@ Private Sub LoadButtons()
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub imgTab_Click(Index As Integer)
@@ -460,7 +460,7 @@ Private Sub lstTitulos_Click()
 End Sub
 
 Private Sub lstTitulos_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub txtPost_Change()
@@ -470,7 +470,7 @@ Private Sub txtPost_Change()
 End Sub
 
 Private Sub txtPost_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub txtTitulo_Change()

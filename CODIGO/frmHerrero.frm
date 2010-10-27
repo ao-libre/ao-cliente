@@ -489,7 +489,7 @@ Private UltimaPestania As Byte
 Private cPicCerrar As clsGraphicalButton
 Private cPicConstruir(0 To 3) As clsGraphicalButton
 Private cPicMejorar(0 To 3) As clsGraphicalButton
-Public LastPressed As clsGraphicalButton
+Public LastButtonPressed As clsGraphicalButton
 
 Private Cargando As Boolean
 
@@ -529,7 +529,7 @@ Private Sub CargarImagenes()
     Set cPicMejorar(2) = New clsGraphicalButton
     Set cPicMejorar(3) = New clsGraphicalButton
 
-    Set LastPressed = New clsGraphicalButton
+    Set LastButtonPressed = New clsGraphicalButton
     
     Call cPicCerrar.Initialize(imgCerrar, ImgPath & "BotonCerrarHerreria.jpg", ImgPath & "BotonCerrarRolloverHerreria.jpg", ImgPath & "BotonCerrarClickHerreria.jpg", Me)
     Call cPicConstruir(0).Initialize(picConstruir0, ImgPath & "BotonConstruirHerreria.jpg", ImgPath & "BotonConstruirRolloverHerreria.jpg", ImgPath & "BotonConstruirClickHerreria.jpg", Me)
@@ -748,7 +748,7 @@ Next i
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
@@ -790,19 +790,19 @@ Private Sub picConstruir3_Click()
 End Sub
 
 Private Sub picLingotes0_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub picLingotes1_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub picLingotes2_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub picLingotes3_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub picMejorar0_Click()

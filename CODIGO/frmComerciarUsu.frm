@@ -184,7 +184,6 @@ Begin VB.Form frmComerciarUsu
       _ExtentY        =   2858
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -272,14 +271,14 @@ Private cBotonAceptar As clsGraphicalButton
 Private cBotonCancelar As clsGraphicalButton
 Private cBotonRechazar As clsGraphicalButton
 Private cBotonConfirmar As clsGraphicalButton
-Public LastPressed As clsGraphicalButton
+Public LastButtonPressed As clsGraphicalButton
 
 Private Const GOLD_OFFER_SLOT As Byte = INV_OFFER_SLOTS + 1
 
 Private sCommerceChat As String
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub imgAceptar_Click()
@@ -476,7 +475,7 @@ Private Sub LoadButtons()
     Set cBotonRechazar = New clsGraphicalButton
     Set cBotonCancelar = New clsGraphicalButton
     
-    Set LastPressed = New clsGraphicalButton
+    Set LastButtonPressed = New clsGraphicalButton
     
     Call cBotonAceptar.Initialize(imgAceptar, GrhPath & "BotonAceptarComUsu.jpg", _
                                         GrhPath & "BotonAceptarRolloverComUsu.jpg", _
@@ -514,11 +513,11 @@ Private Sub picInvComercio_Click()
 End Sub
 
 Private Sub picInvComercio_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub picInvOfertaOtro_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub picInvOfertaProp_Click()
@@ -526,7 +525,7 @@ Private Sub picInvOfertaProp_Click()
 End Sub
 
 Private Sub picInvOfertaProp_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub picInvOroOfertaOtro_Click()

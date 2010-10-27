@@ -502,7 +502,7 @@ Private cBotonCerrar As clsGraphicalButton
 Private cBotonConstruir(0 To 4) As clsGraphicalButton
 Private cBotonMejorar(0 To 4) As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Public LastButtonPressed As clsGraphicalButton
 
 Private UsarMacro As Boolean
 
@@ -550,7 +550,7 @@ Private Sub LoadButtons()
     Set cBotonMejorar(2) = New clsGraphicalButton
     Set cBotonMejorar(3) = New clsGraphicalButton
 
-    Set LastPressed = New clsGraphicalButton
+    Set LastButtonPressed = New clsGraphicalButton
     
     Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarCarpinteria.jpg", _
                                     GrhPath & "BotonCerrarRolloverCarpinteria.jpg", _
@@ -769,7 +769,7 @@ End Sub
 
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)

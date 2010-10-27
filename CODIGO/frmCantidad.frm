@@ -95,7 +95,7 @@ Private clsFormulario As clsFormMovementManager
 
 Private cBotonTirar As clsGraphicalButton
 Private cBotonTirarTodo As clsGraphicalButton
-Public LastPressed As clsGraphicalButton
+Public LastButtonPressed As clsGraphicalButton
 
 Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
@@ -116,7 +116,7 @@ Private Sub LoadButtons()
     Set cBotonTirar = New clsGraphicalButton
     Set cBotonTirarTodo = New clsGraphicalButton
     
-    Set LastPressed = New clsGraphicalButton
+    Set LastButtonPressed = New clsGraphicalButton
 
     Call cBotonTirar.Initialize(imgTirar, GrhPath & "BotonTirar.jpg", GrhPath & "BotonTirarRollover.jpg", _
                         GrhPath & "BotonTirarClick.jpg", Me)
@@ -126,7 +126,7 @@ Private Sub LoadButtons()
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub imgTirar_Click()
@@ -185,5 +185,5 @@ Private Sub txtCantidad_KeyPress(KeyAscii As Integer)
 End Sub
 
 Private Sub txtCantidad_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub

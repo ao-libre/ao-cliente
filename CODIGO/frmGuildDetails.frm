@@ -264,7 +264,7 @@ Private clsFormulario As clsFormMovementManager
 Private cBotonConfirmar As clsGraphicalButton
 Private cBotonSalir As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Public LastButtonPressed As clsGraphicalButton
 
 Private Const MAX_DESC_LENGTH As Integer = 520
 Private Const MAX_CODEX_LENGTH As Integer = 100
@@ -287,7 +287,7 @@ Private Sub LoadButtons()
     Set cBotonConfirmar = New clsGraphicalButton
     Set cBotonSalir = New clsGraphicalButton
     
-    Set LastPressed = New clsGraphicalButton
+    Set LastButtonPressed = New clsGraphicalButton
     
     
     Call cBotonConfirmar.Initialize(imgConfirmar, GrhPath & "BotonConfirmarCodex.jpg", _
@@ -300,7 +300,7 @@ Private Sub LoadButtons()
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub imgConfirmar_Click()
@@ -347,7 +347,7 @@ Private Sub txtCodex1_Change(Index As Integer)
 End Sub
 
 Private Sub txtCodex1_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub txtDesc_Change()

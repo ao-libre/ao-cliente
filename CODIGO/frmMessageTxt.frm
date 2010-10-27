@@ -244,7 +244,7 @@ Private clsFormulario As clsFormMovementManager
 Private cBotonGuardar As clsGraphicalButton
 Private cBotonCancelar As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Public LastButtonPressed As clsGraphicalButton
 
 Private Sub Form_Load()
     Dim i As Long
@@ -271,7 +271,7 @@ Private Sub LoadButtons()
     Set cBotonGuardar = New clsGraphicalButton
     Set cBotonCancelar = New clsGraphicalButton
     
-    Set LastPressed = New clsGraphicalButton
+    Set LastButtonPressed = New clsGraphicalButton
 
     Call cBotonGuardar.Initialize(imgGuardar, GrhPath & "BotonGuardarCustomMsg.jpg", GrhPath & "BotonGuardarRolloverCustomMsg.jpg", _
                                     GrhPath & "BotonGuardarClickCustomMsg.jpg", Me)
@@ -280,7 +280,7 @@ Private Sub LoadButtons()
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub imgCancelar_Click()
@@ -307,5 +307,5 @@ ErrHandler:
 End Sub
 
 Private Sub messageTxt_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub

@@ -252,7 +252,7 @@ Private cBotonVender As clsGraphicalButton
 Private cBotonComprar As clsGraphicalButton
 Private cBotonCruz As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Public LastButtonPressed As clsGraphicalButton
 
 Private Sub cantidad_Change()
     If Val(cantidad.Text) < 1 Then
@@ -305,7 +305,7 @@ Private Sub LoadButtons()
     Set cBotonComprar = New clsGraphicalButton
     Set cBotonCruz = New clsGraphicalButton
     
-    Set LastPressed = New clsGraphicalButton
+    Set LastButtonPressed = New clsGraphicalButton
     
     
     Call cBotonVender.Initialize(imgVender, GrhPath & "BotonVender.jpg", _
@@ -324,7 +324,7 @@ Private Sub LoadButtons()
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 ''
@@ -440,7 +440,7 @@ Private Sub picInvNpc_Click()
 End Sub
 
 Private Sub picInvNpc_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 
@@ -481,5 +481,5 @@ Private Sub picInvUser_Click()
 End Sub
 
 Private Sub picInvUser_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastPressed.ToggleToNormal
+    LastButtonPressed.ToggleToNormal
 End Sub
