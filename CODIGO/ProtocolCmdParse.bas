@@ -71,6 +71,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
 'Interpreta, valida y ejecuta el comando ingresado
 '26/03/2009: ZaMa - Flexibilizo la cantidad de parametros de /nene,  /onlinemap y /telep
 '16/11/2009: ZaMa - Ahora el /ct admite radio
+'18/09/2010: ZaMa - Agrego el comando /mod username vida xxx
 '***************************************************
     Dim TmpArgos() As String
     
@@ -739,11 +740,15 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         Case "AGREGAR"
                             tmpInt = eEditOptions.eo_addGold
                         
+                        Case "VIDA"
+                            tmpInt = eEditOptions.eo_Vida
+                            
                         Case Else
                             tmpInt = -1
                     End Select
                     
                     If tmpInt > 0 Then
+                        
                         If CantidadArgumentos = 3 Then
                             Call WriteEditChar(ArgumentosAll(0), tmpInt, ArgumentosAll(2), "")
                         Else
@@ -1449,13 +1454,13 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                             Call WriteChangeMapInfoRestricted(ArgumentosAll(1))
                         
                         Case "MAGIASINEFECTO" '/MODMAPINFO MAGIASINEFECTO
-                            Call WriteChangeMapInfoNoMagic(ArgumentosAll(1))
+                            Call WriteChangeMapInfoNoMagic(ArgumentosAll(1) = "1")
                         
                         Case "INVISINEFECTO" '/MODMAPINFO INVISINEFECTO
-                            Call WriteChangeMapInfoNoInvi(ArgumentosAll(1))
+                            Call WriteChangeMapInfoNoInvi(ArgumentosAll(1) = "1")
                         
                         Case "RESUSINEFECTO" '/MODMAPINFO RESUSINEFECTO
-                            Call WriteChangeMapInfoNoResu(ArgumentosAll(1))
+                            Call WriteChangeMapInfoNoResu(ArgumentosAll(1) = "1")
                         
                         Case "TERRENO" '/MODMAPINFO TERRENO
                             Call WriteChangeMapInfoLand(ArgumentosAll(1))
@@ -1464,7 +1469,14 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                             Call WriteChangeMapInfoZone(ArgumentosAll(1))
                             
                         Case "ROBONPC" '/MODMAPINFO ROBONPC
-                            Call WriteChangeMapInfoStealNpc(ArgumentosAll(1))
+                            Call WriteChangeMapInfoStealNpc(ArgumentosAll(1) = "1")
+                            
+                        Case "OCULTARSINEFECTO" '/MODMAPINFO OCULTARSINEFECTO
+                            Call WriteChangeMapInfoNoOcultar(ArgumentosAll(1) = "1")
+                            
+                        Case "INVOCARSINEFECTO" '/MODMAPINFO INVOCARSINEFECTO
+                            Call WriteChangeMapInfoNoInvocar(ArgumentosAll(1) = "1")
+                            
                     End Select
                 Else
                     'Avisar que falta el parametro
