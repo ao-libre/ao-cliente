@@ -485,7 +485,9 @@ Public Enum eGMCommands
     ChangeMapInfoNoResu     '/MODMAPINFO RESUSINEFECTO
     ChangeMapInfoLand       '/MODMAPINFO TERRENO
     ChangeMapInfoZone       '/MODMAPINFO ZONA
-    ChangeMapInfoStealNpc   '/MODMAPINFO ROBONPC
+    ChangeMapInfoStealNpc   '/MODMAPINFO ROBONPCm
+    ChangeMapInfoNoOcultar  '/MODMAPINFO OCULTARSINEFECTO
+    ChangeMapInfoNoInvocar  '/MODMAPINFO INVOCARSINEFECTO
     SaveChars               '/GRABAR
     CleanSOS                '/BORRAR SOS
     ShowServerForm          '/SHOW INT
@@ -815,6 +817,7 @@ Public Enum eEditOptions
     eo_Sex
     eo_Raza
     eo_addGold
+    eo_Vida
 End Enum
 
 ''
@@ -937,7 +940,10 @@ Public Foros(0 To 2) As tForo
 ' Forum info handler
 Public clsForos As New clsForum
 
-Public isCapturePending As Boolean
+'FragShooter
+Public isCapturePending As Boolean 'Cuando recibe el cambio de cuerpo a un muerto y es el usuario q matamos, hacemos la screen
+Public killedUserIndexFragShooter As Integer 'El UserIndex que matamos y estamos esperando q cambie su cuerpo
+
 Public Traveling As Boolean
 
 Public bShowGuildNews As Boolean

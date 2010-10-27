@@ -465,7 +465,10 @@ Public Sub HandleIncomingData()
 '***************************************************
 On Error Resume Next
 
-    Select Case incomingData.PeekByte()
+    Dim Packet As Byte
+
+    Packet = incomingData.PeekByte()
+    Select Case Packet
         Case ServerPacketID.logged                  ' LOGGED
             Call HandleLogged
         
@@ -801,7 +804,12 @@ On Error Resume Next
 End Sub
 
 Public Sub HandleMultiMessage()
-
+'***************************************************
+'Author: Unknown
+'Last Modification: 09/28/2010
+' 09/28/2010: C4b3z0n - Ahora se le saco la "," a los minutos de distancia del /hogar, ya que a veces quedaba "12,5 minutos y 30segundos"
+' 09/21/2010: C4b3z0n - Now the fragshooter operates taking the screen after the change of killed charindex to ghost only if target charindex is visible to the client, else it will take screenshot like before.
+'***************************************************
     Dim BodyPart As Byte
     Dim Daño As Integer
     
@@ -956,43 +964,61 @@ With incomingData
             End Select
 
         Case eMessages.HaveKilledUser
-            Dim level As Long
-            Call ShowConsoleMsg(MENSAJE_HAS_MATADO_A & charlist(.ReadInteger).Nombre & MENSAJE_22, 255, 0, 0, True, False)
-            level = .ReadLong
-            Call ShowConsoleMsg(MENSAJE_HAS_GANADO_EXPE_1 & level & MENSAJE_HAS_GANADO_EXPE_2, 255, 0, 0, True, False)
+            Dim killedUser As Integer
+            Dim Exp As Long
+            
+            killedUser = .ReadInteger
+            Exp = .ReadLong
+            
+            Call ShowConsoleMsg(MENSAJE_HAS_MATADO_A & charlist(killedUser).Nombre & MENSAJE_22, 255, 0, 0, True, False)
+            Call ShowConsoleMsg(MENSAJE_HAS_GANADO_EXPE_1 & Exp & MENSAJE_HAS_GANADO_EXPE_2, 255, 0, 0, True, False)
+            
             If ClientSetup.bKill And ClientSetup.bActive Then
-                If level / 2 > ClientSetup.byMurderedLevel Then
-                    isCapturePending = True
+                If Exp \ 2 > ClientSetup.byMurderedLevel Then
+                    If EstaPCarea(killedUser) Then 'Si el usuario esta en el area, esperamos el cambio de cuerpo
+                        killedUserIndexFragShooter = killedUser 'ahora esperamos a que el cuerpo cambie
+                    Else 'Lo mate pero no lo tengo en el area visible, saco la screen con el mensaje en consola.
+                        isCapturePending = True
+                    End If
                 End If
             End If
+            
         Case eMessages.UserKill
             Call ShowConsoleMsg(charlist(.ReadInteger).Nombre & MENSAJE_TE_HA_MATADO, 255, 0, 0, True, False)
+            
             If ClientSetup.bDie And ClientSetup.bActive Then _
                 isCapturePending = True
+                
         Case eMessages.EarnExp
-            Call ShowConsoleMsg(MENSAJE_HAS_GANADO_EXPE_1 & .ReadLong & MENSAJE_HAS_GANADO_EXPE_2, 255, 0, 0, True, False)
+            'Call ShowConsoleMsg(MENSAJE_HAS_GANADO_EXPE_1 & .ReadLong & MENSAJE_HAS_GANADO_EXPE_2, 255, 0, 0, True, False)
+        
         Case eMessages.GoHome
             Dim Distance As Byte
             Dim Hogar As String
             Dim tiempo As Integer
             Dim msg As String
+            
             Distance = .ReadByte
             tiempo = .ReadInteger
             Hogar = .ReadASCIIString
+            
             If tiempo >= 60 Then
                 If tiempo Mod 60 = 0 Then
                     msg = tiempo / 60 & " minutos."
                 Else
-                    msg = tiempo / 60 & " minutos y " & tiempo Mod 60 & " segundos."
+                    msg = CInt(tiempo \ 60) & " minutos y " & tiempo Mod 60 & " segundos."  'Agregado el CInt() asi el número no es con , [C4b3z0n - 09/28/2010]
                 End If
             Else
                 msg = tiempo & " segundos."
             End If
+            
             Call ShowConsoleMsg("Te encuentras a " & Distance & " mapas de la " & Hogar & ", este viaje durará " & msg, 255, 0, 0, True)
             Traveling = True
+        
         Case eMessages.FinishHome
             Call ShowConsoleMsg(MENSAJE_HOGAR, 255, 255, 255)
             Traveling = False
+        
         Case eMessages.CancelGoHome
             Call ShowConsoleMsg(MENSAJE_HOGAR_CANCEL, 255, 0, 0, True)
             Traveling = False
@@ -1692,9 +1718,10 @@ End Sub
 Private Sub HandleUpdateGold()
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 08/14/07
-'Last Modified By: Lucas Tavolaro Ortiz (Tavo)
-'- 08/14/07: Added GldLbl color variation depending on User Gold and Level
+'Last Modification: 09/21/10
+'Last Modified By: C4b3z0n
+'- 08/14/07: Tavo - Added GldLbl color variation depending on User Gold and Level
+'- 09/21/10: C4b3z0n - Modified color change of gold ONLY if the player's level is greater than 12 (NOT newbie).
 '***************************************************
     'Check packet is complete
     If incomingData.length < 5 Then
@@ -1708,7 +1735,7 @@ Private Sub HandleUpdateGold()
     'Get data and update form
     UserGLD = incomingData.ReadLong()
     
-    If UserGLD >= CLng(UserLvl) * 10000 Then
+    If UserGLD >= CLng(UserLvl) * 10000 And UserLvl > 12 Then 'Si el nivel es mayor de 12, es decir, no es newbie.
         'Changes color
         frmMain.GldLbl.ForeColor = &HFF& 'Red
     Else
@@ -2660,8 +2687,9 @@ End Sub
 Private Sub HandleCharacterChange()
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 25/08/2009
+'Last Modification: 21/09/2010 - C4b3z0n
 '25/08/2009: ZaMa - Changed a variable used incorrectly.
+'21/09/2010: C4b3z0n - Added code for FragShooter. If its waiting for the death of certain UserIndex, and it dies, then the capture of the screen will occur.
 '***************************************************
     If incomingData.length < 18 Then
         Err.Raise incomingData.NotEnoughDataErrCode
@@ -2700,6 +2728,11 @@ Private Sub HandleCharacterChange()
         End If
         
         .muerto = (headIndex = CASPER_HEAD)
+        
+        If .muerto And killedUserIndexFragShooter = CharIndex Then 'fragshooter: Si el usuario que es un muerto es el que habiamos matado nosotros
+            isCapturePending = True '"programamos" la screen para q se haga
+            killedUserIndexFragShooter = 0 'ya no estamos esperando la muerte
+        End If
 
         .Heading = incomingData.ReadByte()
         
@@ -4573,11 +4606,11 @@ On Error GoTo ErrHandler
         .criminales.Caption = CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .Status.Caption = " Ciudadano"
-            .Status.ForeColor = vbBlue
+            .status.Caption = " Ciudadano"
+            .status.ForeColor = vbBlue
         Else
-            .Status.Caption = " Criminal"
-            .Status.ForeColor = vbRed
+            .status.Caption = " Criminal"
+            .status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)
@@ -9673,6 +9706,46 @@ Public Sub WriteChangeMapInfoPK(ByVal isPK As Boolean)
         Call .WriteByte(eGMCommands.ChangeMapInfoPK)
         
         Call .WriteBoolean(isPK)
+    End With
+End Sub
+
+''
+' Writes the "ChangeMapInfoNoOcultar" message to the outgoing data buffer.
+'
+' @param    PermitirOcultar True if the map permits to hide, False otherwise.
+' @remarks  The data is not actually sent until the buffer is properly flushed.
+
+Public Sub WriteChangeMapInfoNoOcultar(ByVal PermitirOcultar As Boolean)
+'***************************************************
+'Author: ZaMa
+'Last Modification: 19/09/2010
+'Writes the "ChangeMapInfoNoOcultar" message to the outgoing data buffer
+'***************************************************
+    With outgoingData
+        Call .WriteByte(ClientPacketID.GMCommands)
+        Call .WriteByte(eGMCommands.ChangeMapInfoNoOcultar)
+        
+        Call .WriteBoolean(PermitirOcultar)
+    End With
+End Sub
+
+''
+' Writes the "ChangeMapInfoNoInvocar" message to the outgoing data buffer.
+'
+' @param    PermitirInvocar True if the map permits to invoke, False otherwise.
+' @remarks  The data is not actually sent until the buffer is properly flushed.
+
+Public Sub WriteChangeMapInfoNoInvocar(ByVal PermitirInvocar As Boolean)
+'***************************************************
+'Author: ZaMa
+'Last Modification: 18/09/2010
+'Writes the "ChangeMapInfoNoInvocar" message to the outgoing data buffer
+'***************************************************
+    With outgoingData
+        Call .WriteByte(ClientPacketID.GMCommands)
+        Call .WriteByte(eGMCommands.ChangeMapInfoNoInvocar)
+        
+        Call .WriteBoolean(PermitirInvocar)
     End With
 End Sub
 

@@ -174,7 +174,7 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H000000FF&
       Height          =   315
-      Left            =   150
+      Left            =   120
       MaxLength       =   160
       MultiLine       =   -1  'True
       TabIndex        =   2
@@ -1582,6 +1582,50 @@ Select Case Index
             Call ActivarMacroTrabajo
         End If
 End Select
+End Sub
+
+Private Sub SendTxt_KeyDown(KeyCode As Integer, Shift As Integer)
+    
+    ' Control + Shift
+    If Shift = 3 Then
+        On Error GoTo ErrHandler
+        
+        ' Only allow numeric keys
+        If KeyCode >= vbKey0 And KeyCode <= vbKey9 Then
+            
+            ' Get Msg Number
+            Dim NroMsg As Integer
+            NroMsg = KeyCode - vbKey0 - 1
+            
+            ' Pressed "0", so Msg Number is 9
+            If NroMsg = -1 Then NroMsg = 9
+            
+            'Como es KeyDown, si mantenes _
+             apretado el mensaje llena la consola
+            If CustomMessages.Message(NroMsg) = SendTxt.Text Then
+                Exit Sub
+            End If
+            
+            CustomMessages.Message(NroMsg) = SendTxt.Text
+            
+            With FontTypes(FontTypeNames.FONTTYPE_INFO)
+                Call ShowConsoleMsg("¡¡""" & SendTxt.Text & """ fue guardado como mensaje personalizado " & NroMsg + 1 & "!!", .red, .green, .blue, .bold, .italic)
+            End With
+            
+        End If
+        
+    End If
+    
+    Exit Sub
+    
+ErrHandler:
+    'Did detected an invalid message??
+    If Err.number = CustomMessages.InvalidMessageErrCode Then
+        With FontTypes(FontTypeNames.FONTTYPE_INFO)
+            Call ShowConsoleMsg("El Mensaje es inválido. Modifiquelo por favor.", .red, .green, .blue, .bold, .italic)
+        End With
+    End If
+    
 End Sub
 
 Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
