@@ -1041,6 +1041,7 @@ Private Sub HandleLogged()
     Call incomingData.ReadByte
     
     ' Variable initialization
+    UserClase = incomingData.ReadByte
     EngineRun = True
     Nombres = True
     
@@ -1283,7 +1284,7 @@ Private Sub HandleBankInit()
     
         BankGold = incomingData.ReadLong
     Call InvBanco(0).Initialize(DirectDraw, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
-    Call InvBanco(1).Initialize(DirectDraw, frmBancoObj.picInv, Inventario.MaxObjs)
+    Call InvBanco(1).Initialize(DirectDraw, frmBancoObj.PicInv, Inventario.MaxObjs)
     
     For i = 1 To Inventario.MaxObjs
         With Inventario
@@ -4274,7 +4275,6 @@ Private Sub HandleSendSkills()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    UserClase = incomingData.ReadByte
     Dim i As Long
     
     For i = 1 To NUMSKILLS
