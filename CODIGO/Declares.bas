@@ -503,6 +503,8 @@ Public Enum eGMCommands
     Ignored                 '/IGNORADO
     CheckSlot               '/SLOT
     SetIniVar               '/SETINIVAR LLAVE CLAVE VALOR
+    CreatePretorianClan     '/CREARPRETORIANOS
+    RemovePretorianClan     '/ELIMINARPRETORIANOS
 End Enum
 
 '

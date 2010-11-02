@@ -468,6 +468,8 @@ On Error Resume Next
     Dim Packet As Byte
 
     Packet = incomingData.PeekByte()
+    Debug.Print Packet
+    
     Select Case Packet
         Case ServerPacketID.logged                  ' LOGGED
             Call HandleLogged
@@ -1039,6 +1041,8 @@ Private Sub HandleLogged()
 '***************************************************
     'Remove packet ID
     Call incomingData.ReadByte
+    
+    UserClase = incomingData.ReadByte
     
     ' Variable initialization
     UserClase = incomingData.ReadByte
@@ -4276,7 +4280,7 @@ Private Sub HandleSendSkills()
     Call incomingData.ReadByte
     
     Dim i As Long
-    
+
     For i = 1 To NUMSKILLS
         UserSkills(i) = incomingData.ReadByte()
         PorcentajeSkills(i) = incomingData.ReadByte()
@@ -10206,6 +10210,48 @@ Public Sub WriteSetIniVar(ByRef sLlave As String, ByRef sClave As String, ByRef 
         Call .WriteASCIIString(sLlave)
         Call .WriteASCIIString(sClave)
         Call .WriteASCIIString(sValor)
+    End With
+End Sub
+
+''
+' Writes the "CreatePretorianClan" message to the outgoing data buffer.
+'
+' @param    Map         The map in which create the pretorian clan.
+' @param    X           The x pos where the king is settled.
+' @param    Y           The y pos where the king is settled.
+' @remarks  The data is not actually sent until the buffer is properly flushed.
+
+Public Sub WriteCreatePretorianClan(ByVal Map As Integer, ByVal X As Byte, ByVal Y As Byte)
+'***************************************************
+'Author: ZaMa
+'Last Modification: 29/10/2010
+'Writes the "CreatePretorianClan" message to the outgoing data buffer
+'***************************************************
+    With outgoingData
+        Call .WriteByte(ClientPacketID.GMCommands)
+        Call .WriteByte(eGMCommands.CreatePretorianClan)
+        Call .WriteInteger(Map)
+        Call .WriteByte(X)
+        Call .WriteByte(Y)
+    End With
+End Sub
+
+''
+' Writes the "DeletePretorianClan" message to the outgoing data buffer.
+'
+' @param    Map         The map which contains the pretorian clan to be removed.
+' @remarks  The data is not actually sent until the buffer is properly flushed.
+
+Public Sub WriteDeletePretorianClan(ByVal Map As Integer)
+'***************************************************
+'Author: ZaMa
+'Last Modification: 29/10/2010
+'Writes the "DeletePretorianClan" message to the outgoing data buffer
+'***************************************************
+    With outgoingData
+        Call .WriteByte(ClientPacketID.GMCommands)
+        Call .WriteByte(eGMCommands.RemovePretorianClan)
+        Call .WriteInteger(Map)
     End With
 End Sub
 
