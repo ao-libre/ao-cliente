@@ -1427,6 +1427,43 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             Case "/CENTINELAACTIVADO"
                 Call WriteToggleCentinelActivated
                 
+            Case "/CREARPRETORIANOS"
+            
+                If CantidadArgumentos = 3 Then
+                    
+                    If ValidNumber(ArgumentosAll(0), eNumber_Types.ent_Integer) And _
+                       ValidNumber(ArgumentosAll(1), eNumber_Types.ent_Byte) And _
+                       ValidNumber(ArgumentosAll(2), eNumber_Types.ent_Byte) Then
+                       
+                        Call WriteCreatePretorianClan(Val(ArgumentosAll(0)), Val(ArgumentosAll(1)), _
+                                                      Val(ArgumentosAll(2)))
+                    Else
+                        'Faltan o sobran los parametros con el formato propio
+                        Call ShowConsoleMsg("Formato incorrecto. Utilice /CrearPretorianos MAPA X Y.")
+                    End If
+                    
+                Else
+                    'Avisar que falta el parametro
+                    Call ShowConsoleMsg("Faltan parámetros. Utilice /CrearPretorianos MAPA X Y.")
+                End If
+                
+            Case "/ELIMINARPRETORIANOS"
+            
+                If CantidadArgumentos <> 1 Then
+                    
+                    If ValidNumber(ArgumentosAll(0), eNumber_Types.ent_Integer) Then
+                       
+                        Call WriteDeletePretorianClan(Val(ArgumentosAll(0)))
+                    Else
+                        'Faltan o sobran los parametros con el formato propio
+                        Call ShowConsoleMsg("Formato incorrecto. Utilice /EliminarPretorianos MAPA.")
+                    End If
+                    
+                Else
+                    'Avisar que falta el parametro
+                    Call ShowConsoleMsg("Faltan parámetros. Utilice /EliminarPretorianos MAPA.")
+                End If
+            
             Case "/DOBACKUP"
                 Call WriteDoBackup
                 
