@@ -1042,8 +1042,6 @@ Private Sub HandleLogged()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    UserClase = incomingData.ReadByte
-    
     ' Variable initialization
     UserClase = incomingData.ReadByte
     EngineRun = True
@@ -4610,11 +4608,11 @@ On Error GoTo ErrHandler
         .criminales.Caption = CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .status.Caption = " Ciudadano"
-            .status.ForeColor = vbBlue
+            .Status.Caption = " Ciudadano"
+            .Status.ForeColor = vbBlue
         Else
-            .status.Caption = " Criminal"
-            .status.ForeColor = vbRed
+            .Status.Caption = " Criminal"
+            .Status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)
