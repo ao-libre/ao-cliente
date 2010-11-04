@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "Mscomctl.ocx"
 Begin VB.Form frmOpciones 
    BackColor       =   &H8000000A&
    BorderStyle     =   0  'None
@@ -464,7 +464,7 @@ Private Sub imgSoporte_Click()
 End Sub
 
 Private Sub imgTutorial_Click()
-    frmTutorial.Show , vbModeless
+    frmTutorial.Show vbModeless
 End Sub
 
 Private Sub Form_Load()

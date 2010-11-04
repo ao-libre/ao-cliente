@@ -264,4 +264,5 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 18/09/2010: Agrego comando /mod Yo Vida xxx solo para rms(todos) o dioses. (ZaMa)
  * 21/09/2010: Ahora el FragShooter saca una foto DESPUES del cambio de cuerpo a fantasma SI el personaje que mato esta en el area visible, sino saca como antes. Modifique el tipo de acceso a PUBLIC de la funcion EstaPCarea() ya que lo utilizo para saber si el personaje esta en mi area. (C4b3z0n)
  * 12/10/2010: Cuando se asigna un mensaje personalizado con Ctrl+Shift+NroMsj si es inválido lo avisa por consola. (Pato)
- * 30/10/2010 : Agrego los comandos "/CrearPretorianos MAPA X Y" y "/EliminarPretorianos MAPA". (ZaMA)
+ * 30/10/2010: Agrego los comandos "/CrearPretorianos MAPA X Y" y "/EliminarPretorianos MAPA". (ZaMA)
+ * 03/11/2010: Implemento lo propuesto por GD, se puede usar macro aun que se esté en otra ventana. (Pato) 
