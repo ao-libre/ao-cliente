@@ -1449,7 +1449,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 
             Case "/ELIMINARPRETORIANOS"
             
-                If CantidadArgumentos <> 1 Then
+                If CantidadArgumentos = 1 Then
                     
                     If ValidNumber(ArgumentosAll(0), eNumber_Types.ent_Integer) Then
                        
