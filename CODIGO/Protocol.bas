@@ -3799,7 +3799,7 @@ On Error GoTo ErrHandler
     
     Call MsgBox(Buffer.ReadASCIIString())
     
-    If frmConnect.Visible Then
+    If frmConnect.Visible And (Not frmCrearPersonaje.Visible) Then
 #If UsarWrench = 1 Then
         frmMain.Socket1.Disconnect
         frmMain.Socket1.Cleanup
@@ -4608,11 +4608,11 @@ On Error GoTo ErrHandler
         .criminales.Caption = CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .Status.Caption = " Ciudadano"
-            .Status.ForeColor = vbBlue
+            .status.Caption = " Ciudadano"
+            .status.ForeColor = vbBlue
         Else
-            .Status.Caption = " Criminal"
-            .Status.ForeColor = vbRed
+            .status.Caption = " Criminal"
+            .status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)
