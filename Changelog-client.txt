@@ -266,3 +266,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 12/10/2010: Cuando se asigna un mensaje personalizado con Ctrl+Shift+NroMsj si es inválido lo avisa por consola. (Pato)
  * 30/10/2010: Agrego los comandos "/CrearPretorianos MAPA X Y" y "/EliminarPretorianos MAPA". (ZaMA)
  * 03/11/2010: Implemento lo propuesto por GD, se puede usar macro aun que se esté en otra ventana. (Pato) 
+ * 24/02/2011: Fix al bug que perdías la conexión cuando intentabas crear un personaje que ya existía. (Pato)
