@@ -1104,6 +1104,7 @@ On Error GoTo error
                         Grh.Loops = Grh.Loops - 1
                     Else
                         Grh.Started = 0
+                        Exit Sub
                     End If
                 End If
             End If
@@ -1192,6 +1193,7 @@ On Error GoTo error
                         Grh.Loops = Grh.Loops - 1
                     Else
                         Grh.Started = 0
+                        Exit Sub
                     End If
                 End If
             End If
@@ -1260,6 +1262,7 @@ Sub DDrawTransGrhtoSurfaceAlpha(ByRef Grh As Grh, ByVal X As Integer, ByVal Y As
                         Grh.Loops = Grh.Loops - 1
                     Else
                         Grh.Started = 0
+                        Exit Sub
                     End If
                 End If
             End If
