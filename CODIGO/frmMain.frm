@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.ocx"
-Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.OCX"
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.Form frmMain 
    BorderStyle     =   0  'None
@@ -991,6 +991,16 @@ Public picSkillStar As Picture
 
 Dim PuedeMacrear As Boolean
 
+Public WithEvents dragInventory As clsGrapchicalInventory
+Attribute dragInventory.VB_VarHelpID = -1
+
+'Usado para controlar que no se dispare el binding de la tecla CTRL cuando se usa CTRL+Tecla.
+Dim CtrlMaskOn As Boolean
+
+Public Sub dragInventory_dragDone(ByVal originalSlot As Integer, ByVal newSlot As Integer)
+Call Protocol.WriteMoveItem(originalSlot, newSlot, eMoveType.Inventory)
+End Sub
+
 Private Sub Form_Load()
     
     If NoRes Then
@@ -1005,8 +1015,15 @@ Private Sub Form_Load()
     
     Call LoadButtons
     
+    Set dragInventory = Inventario
+    
     Me.Left = 0
     Me.Top = 0
+    
+    ' Detect links in console
+    EnableURLDetect RecTxt.hwnd, Me.hwnd
+    
+    CtrlMaskOn = False
 End Sub
 
 Private Sub LoadButtons()
@@ -1186,14 +1203,54 @@ End Sub
 Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
 '***************************************************
 'Autor: Unknown
-'Last Modification: 18/11/2009
+'Last Modification: 18/11/2010
 '18/11/2009: ZaMa - Ahora se pueden poner comandos en los mensajes personalizados (execpto guildchat y privados)
+'18/11/2010: Amraphen - Agregué el handle correspondiente para las nuevas configuraciones de teclas (CTRL+0..9).
 '***************************************************
 #If SeguridadAlkon Then
     If LOGGING Then Call CheatingDeath.StoreKey(KeyCode, False)
 #End If
     
     If (Not SendTxt.Visible) And (Not SendCMSTXT.Visible) Then
+    
+        'Verificamos si se está presionando la tecla CTRL.
+        If Shift = 2 Then
+            If KeyCode >= vbKey0 And KeyCode <= vbKey9 Then
+                If KeyCode = vbKey0 Then
+                    'Si es CTRL+0 muestro la ventana de configuración de teclas.
+                    Call frmCustomKeys.Show(vbModal, Me)
+                    
+                ElseIf KeyCode >= vbKey1 And KeyCode <= vbKey9 Then
+                    'Si es CTRL+1..9 cambio la configuración.
+                    If KeyCode - vbKey0 = CustomKeys.CurrentConfig Then Exit Sub
+                    
+                    CustomKeys.CurrentConfig = KeyCode - vbKey0
+                    
+                    Dim sMsg As String
+                    
+                    sMsg = "¡Se ha cargado la configuración "
+                    If CustomKeys.CurrentConfig = 0 Then
+                        sMsg = sMsg & "default"
+                    Else
+                        sMsg = sMsg & "perzonalizada número " & CStr(CustomKeys.CurrentConfig)
+                    End If
+                    sMsg = sMsg & "!"
+
+                    Call ShowConsoleMsg(sMsg, 255, 255, 255, True)
+                End If
+                
+                CtrlMaskOn = True
+                Exit Sub
+            End If
+        End If
+        
+        If KeyCode = vbKeyControl Then
+            'Chequeo que no se haya usado un CTRL + tecla antes de disparar las bindings.
+            If CtrlMaskOn Then
+                CtrlMaskOn = False
+                Exit Sub
+            End If
+        End If
         
         'Checks if the key is valid
         If LenB(CustomKeys.ReadableName(KeyCode)) > 0 Then
@@ -1265,6 +1322,10 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
                     Call WriteResuscitationToggle
             End Select
         Else
+            
+            'Evito que se muestren los mensajes personalizados cuando se cambie una configuración de teclas.
+            If Shift = 2 Then Exit Sub
+            
             Select Case KeyCode
                 'Custom messages!
                 Case vbKey0 To vbKey9
@@ -1361,8 +1422,11 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
             
             If TrainingMacro.Enabled Then Call DesactivarMacroHechizos
             If macrotrabajo.Enabled Then Call DesactivarMacroTrabajo
+            
+            If frmCustomKeys.Visible Then Exit Sub 'Chequeo si está visible la ventana de configuración de teclas.
+            
             Call WriteAttack
-        
+            
         Case CustomKeys.BindedKey(eKeyType.mKeyTalk)
             If SendCMSTXT.Visible Then Exit Sub
             
@@ -1393,6 +1457,10 @@ Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
     End If
 End Sub
 
+Private Sub Form_Unload(Cancel As Integer)
+    DisableURLDetect
+End Sub
+
 Private Sub imgAsignarSkill_Click()
     Dim i As Integer
     
@@ -1406,7 +1474,7 @@ Private Sub imgAsignarSkill_Click()
     LlegaronSkills = False
     
     For i = 1 To NUMSKILLS
-        frmSkills3.Text1(i).Caption = UserSkills(i)
+        frmSkills3.text1(i).Caption = UserSkills(i)
     Next i
     
     Alocados = SkillPoints
@@ -1492,13 +1560,13 @@ Private Sub macrotrabajo_Timer()
     'End If
     
     If UsingSkill = eSkill.Pesca Or UsingSkill = eSkill.Talar Or UsingSkill = eSkill.Mineria Or _
-                UsingSkill = FundirMetal Or (UsingSkill = eSkill.Herreria And Not frmHerrero.Visible) Then
+                UsingSkill = FundirMetal Or (UsingSkill = eSkill.Herreria And Not MirandoHerreria) Then
         Call WriteWorkLeftClick(tx, tY, UsingSkill)
         UsingSkill = 0
     End If
     
     'If Inventario.OBJType(Inventario.SelectedItem) = eObjType.otWeapon Then
-     If Not (frmCarp.Visible = True) Then Call UsarItem
+     If Not MirandoCarpinteria Then Call UsarItem
 End Sub
 
 Public Sub ActivarMacroTrabajo()
@@ -1585,6 +1653,10 @@ Select Case Index
 End Select
 End Sub
 
+Private Sub RecTxt_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    StartCheckingLinks
+End Sub
+
 Private Sub SendTxt_KeyDown(KeyCode As Integer, Shift As Integer)
     
     ' Control + Shift
@@ -1639,8 +1711,8 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
         SendTxt.Visible = False
         
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
         Else
             hlst.SetFocus
         End If
@@ -1924,6 +1996,9 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y A
     
     LastButtonPressed.ToggleToNormal
     
+    ' Disable links checking (not over consola)
+    StopCheckingLinks
+    
 End Sub
 
 Private Sub hlst_KeyDown(KeyCode As Integer, Shift As Integer)
@@ -1953,7 +2028,7 @@ Private Sub Label4_Click()
     InvEqu.Picture = LoadPicture(App.path & "\Graficos\Centroinventario.jpg")
 
     ' Activo controles de inventario
-    picInv.Visible = True
+    PicInv.Visible = True
     imgInvScrollUp.Visible = True
     imgInvScrollDown.Visible = True
 
@@ -1981,7 +2056,7 @@ Private Sub Label7_Click()
     cmdMoverHechi(1).Visible = True
     
     ' Desactivo controles de inventario
-    picInv.Visible = False
+    PicInv.Visible = False
     imgInvScrollUp.Visible = False
     imgInvScrollDown.Visible = False
 
@@ -2014,8 +2089,8 @@ On Error Resume Next  'el .SetFocus causaba errores al salir y volver a entrar
         (Not frmMSG.Visible) And (Not MirandoForo) And _
         (Not frmEstadisticas.Visible) And (Not frmCantidad.Visible) And (Not MirandoParty) Then
          
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
         ElseIf hlst.Visible Then
             hlst.SetFocus
         End If
@@ -2023,8 +2098,8 @@ On Error Resume Next  'el .SetFocus causaba errores al salir y volver a entrar
 End Sub
 
 Private Sub RecTxt_KeyDown(KeyCode As Integer, Shift As Integer)
-    If picInv.Visible Then
-        picInv.SetFocus
+    If PicInv.Visible Then
+        PicInv.SetFocus
     Else
         hlst.SetFocus
     End If
@@ -2080,8 +2155,8 @@ Private Sub SendCMSTXT_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
         Me.SendCMSTXT.Visible = False
         
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
         Else
             hlst.SetFocus
         End If
@@ -2129,8 +2204,8 @@ End Sub
 Private Sub Socket1_Connect()
     
     'Clean input and output buffers
-    Call incomingData.ReadASCIIStringFixed(incomingData.length)
-    Call outgoingData.ReadASCIIStringFixed(outgoingData.length)
+    Call incomingData.ReadASCIIStringFixed(incomingData.Length)
+    Call outgoingData.ReadASCIIStringFixed(outgoingData.Length)
     
 #If SeguridadAlkon Then
     Call ConnectionStablished(Socket1.PeerAddress)
@@ -2161,87 +2236,30 @@ Private Sub Socket1_Connect()
 End Sub
 
 Private Sub Socket1_Disconnect()
-    Dim i As Long
-    
-    Second.Enabled = False
-    Connected = False
-    
+    ResetAllInfo
     Socket1.Cleanup
-    
-    frmConnect.MousePointer = vbNormal
-    
-    Do While i < Forms.Count - 1
-        i = i + 1
-        
-        If Forms(i).Name <> Me.Name And Forms(i).Name <> frmConnect.Name And Forms(i).Name <> frmCrearPersonaje.Name Then
-            Unload Forms(i)
-        End If
-    Loop
-    
-    On Local Error GoTo 0
-    
-    If Not frmCrearPersonaje.Visible Then
-        frmConnect.Visible = True
-    End If
-    
-    frmMain.Visible = False
-    
-    pausa = False
-    UserMeditar = False
-    
-#If SeguridadAlkon Then
-    LOGGING = False
-    LOGSTRING = False
-    segLastPressed = 0
-    LastMouse = False
-    LastAmount = 0
-#End If
-
-    UserClase = 0
-    UserSexo = 0
-    UserRaza = 0
-    UserHogar = 0
-    UserEmail = ""
-    
-    For i = 1 To NUMSKILLS
-        UserSkills(i) = 0
-    Next i
-
-    For i = 1 To NUMATRIBUTOS
-        UserAtributos(i) = 0
-    Next i
-    
-    For i = 1 To MAX_INVENTORY_SLOTS
-        
-    Next i
-    
-    macrotrabajo.Enabled = False
-
-    SkillPoints = 0
-    Alocados = 0
 End Sub
 
 Private Sub Socket1_LastError(ErrorCode As Integer, ErrorString As String, Response As Integer)
     '*********************************************
     'Handle socket errors
     '*********************************************
-    If ErrorCode = 24036 Then
-        Call MsgBox("Por favor espere, intentando completar conexion.", vbApplicationModal + vbInformation + vbOKOnly + vbDefaultButton1, "Error")
-        Exit Sub
-    End If
+    Select Case ErrorCode
+        Case TOO_FAST 'jajasAJ CUALQUEIRA AJJAJA
+            Call MsgBox("Por favor espere, intentando completar conexion.", vbApplicationModal + vbInformation + vbOKOnly + vbDefaultButton1, "Error")
+            Exit Sub
+        Case REFUSED 'Vivan las negradas
+            Call MsgBox("El servidor se encuentra cerrado o no te has podido conectar correctamente.", vbApplicationModal + vbInformation + vbOKOnly + vbDefaultButton1, "Error")
+        Case TIME_OUT
+            Call MsgBox("El tiempo de espera se ha agotado, intenta nuevamente.", vbApplicationModal + vbInformation + vbOKOnly + vbDefaultButton1, "Error")
+        Case Else
+            Call MsgBox(ErrorString, vbApplicationModal + vbInformation + vbOKOnly + vbDefaultButton1, "Error")
+    End Select
     
-    Call MsgBox(ErrorString, vbApplicationModal + vbInformation + vbOKOnly + vbDefaultButton1, "Error")
     frmConnect.MousePointer = 1
     Response = 0
-    Second.Enabled = False
 
     frmMain.Socket1.Disconnect
-    
-    If Not frmCrearPersonaje.Visible Then
-        frmConnect.Show
-    Else
-        frmCrearPersonaje.MousePointer = 0
-    End If
 End Sub
 
 Private Sub Socket1_Read(dataLength As Integer, IsUrgent As Integer)
@@ -2276,7 +2294,8 @@ If tx >= MinXBorder And tY >= MinYBorder And _
         If charlist(MapData(tx, tY).CharIndex).invisible = False Then
         
             Dim i As Long
-            Dim M As New frmMenuseFashion
+            Dim M As frmMenuseFashion
+            Set M = New frmMenuseFashion
             
             Load M
             M.SetCallback Me
@@ -2393,8 +2412,8 @@ Private Sub Winsock1_Connect()
     Debug.Print "Winsock Connect"
     
     'Clean input and output buffers
-    Call incomingData.ReadASCIIStringFixed(incomingData.length)
-    Call outgoingData.ReadASCIIStringFixed(outgoingData.length)
+    Call incomingData.ReadASCIIStringFixed(incomingData.Length)
+    Call outgoingData.ReadASCIIStringFixed(outgoingData.Length)
     
 #If SeguridadAlkon Then
     Call ConnectionStablished(Winsock1.RemoteHostIP)
@@ -2449,7 +2468,7 @@ Private Sub Winsock1_DataArrival(ByVal bytesTotal As Long)
     Call HandleIncomingData
 End Sub
 
-Private Sub Winsock1_Error(ByVal number As Integer, Description As String, ByVal Scode As Long, ByVal source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
+Private Sub Winsock1_Error(ByVal number As Integer, Description As String, ByVal Scode As Long, ByVal Source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
     '*********************************************
     'Handle socket errors
     '*********************************************

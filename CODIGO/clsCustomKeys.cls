@@ -53,6 +53,10 @@ Option Explicit
 Private Const NUM_CUSTOM_KEYS As Byte = 27
 
 ''
+'Number of Key Configurations
+Private Const NUM_CUSTOM_CONFIGS As Byte = 9
+
+''
 'Error Raised in case the key file doesn't exist
 Private Const ERROR_NO_KEY_FILE As Long = vbObjectError + 16
 
@@ -62,8 +66,11 @@ Private Const KEY_CONFIG_FILE As String = "\init\BindKeys.bin"
 
 ''
 'Array of mapped keys
-Private mappedKeys(1 To NUM_CUSTOM_KEYS) As Integer
+Private mappedKeys(0 To NUM_CUSTOM_CONFIGS, 1 To NUM_CUSTOM_KEYS) As Integer
 
+''
+'Active Key Configuration
+Private ActiveConfig As Byte
 
 ''
 'Index of keys on array
@@ -246,28 +253,57 @@ End Function
 Public Sub LoadCustomKeys()
 '***************************************************
 'Author: Rapsodius
-'Last Modification: 08/21/07
-'
+'Last Modification: 18/11/2010
+'16/11/2010: Amraphen - Adapté el procedimiento para cargar todas las configuraciones de teclas.
+'18/11/2010: Amraphen - Modifiqué la forma en que se cargan los bindings y ahora carga los del formato viejo.
 '***************************************************
-    Dim i As Long
-    Dim FileNum As Integer
-    FileNum = FreeFile()
-    
-    'Inits keyboard config with default configurations
-    Call LoadDefaults
+Dim i As Long
+Dim j As Long
+Dim FileNum As Integer
+
+     'Si no existe el archivo lo creamos con los bindings default:
+    If Not FileExist(App.path & KEY_CONFIG_FILE, vbArchive) Then
+        For i = 0 To NUM_CUSTOM_CONFIGS
+            Call LoadDefaults(i)
+        Next i
         
-    Open App.path & KEY_CONFIG_FILE For Binary Access Read Lock Read Write As FileNum
+        ActiveConfig = 1
+        
+        Call SaveCustomKeys
+    Else 'Existe el archivo, verificamos qué formato tiene:
+        
+        FileNum = FreeFile
     
-    For i = 1 To NUM_CUSTOM_KEYS
-        Get FileNum, , mappedKeys(i)
-        If LenB(ReadableName(mappedKeys(i))) = 0 Then
-            Close FileNum
-            Call Err.Raise(ERROR_NO_KEY_FILE)
-            Exit Sub
+        If FileLen(App.path & KEY_CONFIG_FILE) < (NUM_CUSTOM_CONFIGS * NUM_CUSTOM_KEYS * 2) + 1 Then
+            'Formato viejo
+            Open App.path & KEY_CONFIG_FILE For Binary Access Read Lock Read Write As FileNum
+            
+            ActiveConfig = 1
+            
+            For i = 0 To NUM_CUSTOM_CONFIGS
+                Call LoadDefaults(i)
+            Next i
+            
+            For j = 1 To NUM_CUSTOM_KEYS
+                Get FileNum, , mappedKeys(ActiveConfig, j)
+            Next j
+        Else
+            'Formato nuevo
+            Open App.path & KEY_CONFIG_FILE For Binary Access Read Lock Read Write As FileNum
+            
+            Get FileNum, , ActiveConfig
+            
+            For i = 0 To NUM_CUSTOM_CONFIGS
+                For j = 1 To NUM_CUSTOM_KEYS
+                    Get FileNum, , mappedKeys(i, j)
+                Next j
+            Next i
         End If
-    Next i
-    
-    Close FileNum
+        
+        Close FileNum
+        
+        Call SaveCustomKeys
+    End If
 End Sub
 
 ''
@@ -276,20 +312,29 @@ End Sub
 Public Sub SaveCustomKeys()
 '***************************************************
 'Author: Rapsodius
-'Last Modification: 08/04/07
-'
+'Last Modification: 18/11/10
+'16/11/2010: Amraphen - Adapté el procedimiento para guardar todas las configuraciones de teclas.
+'18/11/2010: Amraphen - Ahora se guarda la configuración activa.
 '***************************************************
-    Dim FileNum As Integer
-    Dim i As Long
+Dim i As Long
+Dim j As Long
+Dim FileNum As Integer
+
     FileNum = FreeFile()
     
     Open App.path & KEY_CONFIG_FILE For Binary Access Write As FileNum
     
-    For i = 1 To NUM_CUSTOM_KEYS
-        Put FileNum, , mappedKeys(i)
+    'Guardo la configuración activa:
+    Put FileNum, , ActiveConfig
+    
+    'Guardo las distintas configuraciones:
+    For i = 0 To NUM_CUSTOM_CONFIGS
+        For j = 1 To NUM_CUSTOM_KEYS
+            Put FileNum, , mappedKeys(i, j)
+        Next j
     Next i
     
-    Close #FileNum
+    Close FileNum
 End Sub
 
 ''
@@ -301,11 +346,12 @@ End Sub
 Public Property Get BindedKey(ByVal Index As eKeyType) As Integer
 '***************************************************
 'Author: Rapsodius
-'Last Modification: 08/04/07
-'
+'Last Modification: 16/11/2010
+'16/11/2010: Amraphen - Adapté la propiedad para que cargue el bind de la tecla en la configuración activa.
 '***************************************************
     If Index < 1 Or Index > NUM_CUSTOM_KEYS Then Exit Property
-    BindedKey = mappedKeys(Index)
+    
+    BindedKey = mappedKeys(ActiveConfig, Index)
 End Property
 
 ''
@@ -317,8 +363,8 @@ End Property
 Public Property Let BindedKey(ByVal Index As eKeyType, ByVal NewVal As Integer)
 '***************************************************
 'Author: Rapsodius
-'Last Modification: 08/05/07
-'
+'Last Modification: 16/11/2010
+'16/11/2010: Amraphen - Adapté la propiedad para que guarde el bind de la tecla en la configuración activa.
 '***************************************************
     If Index < 1 Or Index > NUM_CUSTOM_KEYS Then Exit Property
     
@@ -330,45 +376,47 @@ Public Property Let BindedKey(ByVal Index As eKeyType, ByVal NewVal As Integer)
         Exit Property
     End If
     
-    mappedKeys(Index) = NewVal
+    mappedKeys(ActiveConfig, Index) = NewVal
 End Property
 
 ''
 'Loads default keys
+'
+'@param KeyConfig Index of the key configuration to change
 
-Public Sub LoadDefaults()
+Public Sub LoadDefaults(ByVal KeyConfig As Byte)
 '***************************************************
 'Author: Rapsodius
-'Last Modification: 08/04/07
-'
+'Last Modification: 16/11/2010
+'16/11/2010: Amraphen - Adapté el procedimiento para que cargue los bindings por default en una sola configuración.
 '***************************************************
-    mappedKeys(eKeyType.mKeyUp) = KeyCodeConstants.vbKeyUp
-    mappedKeys(eKeyType.mKeyDown) = KeyCodeConstants.vbKeyDown
-    mappedKeys(eKeyType.mKeyLeft) = KeyCodeConstants.vbKeyLeft
-    mappedKeys(eKeyType.mKeyRight) = KeyCodeConstants.vbKeyRight
-    mappedKeys(eKeyType.mKeyToggleMusic) = KeyCodeConstants.vbKeyM
-    mappedKeys(eKeyType.mKeyToggleSound) = KeyCodeConstants.vbKeyS
-    mappedKeys(eKeyType.mKeyToggleFxs) = KeyCodeConstants.vbKeyF
-    mappedKeys(eKeyType.mKeyRequestRefresh) = KeyCodeConstants.vbKeyL
-    mappedKeys(eKeyType.mKeyToggleNames) = KeyCodeConstants.vbKeyN
-    mappedKeys(eKeyType.mKeyGetObject) = KeyCodeConstants.vbKeyA
-    mappedKeys(eKeyType.mKeyEquipObject) = KeyCodeConstants.vbKeyE
-    mappedKeys(eKeyType.mKeyTamAnimal) = KeyCodeConstants.vbKeyD
-    mappedKeys(eKeyType.mKeySteal) = KeyCodeConstants.vbKeyR
-    mappedKeys(eKeyType.mKeyToggleSafeMode) = KeyCodeConstants.vbKeyMultiply
-    mappedKeys(eKeyType.mKeyToggleResuscitationSafe) = KeyCodeConstants.vbKeyEnd
-    mappedKeys(eKeyType.mKeyHide) = KeyCodeConstants.vbKeyO
-    mappedKeys(eKeyType.mKeyDropObject) = KeyCodeConstants.vbKeyT
-    mappedKeys(eKeyType.mKeyUseObject) = KeyCodeConstants.vbKeyU
-    mappedKeys(eKeyType.mKeyAttack) = KeyCodeConstants.vbKeyControl
-    mappedKeys(eKeyType.mKeyTalk) = KeyCodeConstants.vbKeyReturn
-    mappedKeys(eKeyType.mKeyTalkWithGuild) = KeyCodeConstants.vbKeyDelete
-    mappedKeys(eKeyType.mKeyTakeScreenShot) = KeyCodeConstants.vbKeyF2
-    mappedKeys(eKeyType.mKeyShowOptions) = KeyCodeConstants.vbKeyF5
-    mappedKeys(eKeyType.mKeyMeditate) = KeyCodeConstants.vbKeyF6
-    mappedKeys(eKeyType.mKeyCastSpellMacro) = KeyCodeConstants.vbKeyF7
-    mappedKeys(eKeyType.mKeyWorkMacro) = KeyCodeConstants.vbKeyF8
-    mappedKeys(eKeyType.mKeyExitGame) = KeyCodeConstants.vbKeyF12
+    mappedKeys(KeyConfig, eKeyType.mKeyUp) = KeyCodeConstants.vbKeyUp
+    mappedKeys(KeyConfig, eKeyType.mKeyDown) = KeyCodeConstants.vbKeyDown
+    mappedKeys(KeyConfig, eKeyType.mKeyLeft) = KeyCodeConstants.vbKeyLeft
+    mappedKeys(KeyConfig, eKeyType.mKeyRight) = KeyCodeConstants.vbKeyRight
+    mappedKeys(KeyConfig, eKeyType.mKeyToggleMusic) = KeyCodeConstants.vbKeyM
+    mappedKeys(KeyConfig, eKeyType.mKeyToggleSound) = KeyCodeConstants.vbKeyS
+    mappedKeys(KeyConfig, eKeyType.mKeyToggleFxs) = KeyCodeConstants.vbKeyF
+    mappedKeys(KeyConfig, eKeyType.mKeyRequestRefresh) = KeyCodeConstants.vbKeyL
+    mappedKeys(KeyConfig, eKeyType.mKeyToggleNames) = KeyCodeConstants.vbKeyN
+    mappedKeys(KeyConfig, eKeyType.mKeyGetObject) = KeyCodeConstants.vbKeyA
+    mappedKeys(KeyConfig, eKeyType.mKeyEquipObject) = KeyCodeConstants.vbKeyE
+    mappedKeys(KeyConfig, eKeyType.mKeyTamAnimal) = KeyCodeConstants.vbKeyD
+    mappedKeys(KeyConfig, eKeyType.mKeySteal) = KeyCodeConstants.vbKeyR
+    mappedKeys(KeyConfig, eKeyType.mKeyToggleSafeMode) = KeyCodeConstants.vbKeyMultiply
+    mappedKeys(KeyConfig, eKeyType.mKeyToggleResuscitationSafe) = KeyCodeConstants.vbKeyEnd
+    mappedKeys(KeyConfig, eKeyType.mKeyHide) = KeyCodeConstants.vbKeyO
+    mappedKeys(KeyConfig, eKeyType.mKeyDropObject) = KeyCodeConstants.vbKeyT
+    mappedKeys(KeyConfig, eKeyType.mKeyUseObject) = KeyCodeConstants.vbKeyU
+    mappedKeys(KeyConfig, eKeyType.mKeyAttack) = KeyCodeConstants.vbKeyControl
+    mappedKeys(KeyConfig, eKeyType.mKeyTalk) = KeyCodeConstants.vbKeyReturn
+    mappedKeys(KeyConfig, eKeyType.mKeyTalkWithGuild) = KeyCodeConstants.vbKeyDelete
+    mappedKeys(KeyConfig, eKeyType.mKeyTakeScreenShot) = KeyCodeConstants.vbKeyF2
+    mappedKeys(KeyConfig, eKeyType.mKeyShowOptions) = KeyCodeConstants.vbKeyF5
+    mappedKeys(KeyConfig, eKeyType.mKeyMeditate) = KeyCodeConstants.vbKeyF6
+    mappedKeys(KeyConfig, eKeyType.mKeyCastSpellMacro) = KeyCodeConstants.vbKeyF7
+    mappedKeys(KeyConfig, eKeyType.mKeyWorkMacro) = KeyCodeConstants.vbKeyF8
+    mappedKeys(KeyConfig, eKeyType.mKeyExitGame) = KeyCodeConstants.vbKeyF12
 End Sub
 
 ''
@@ -380,15 +428,15 @@ End Sub
 Public Function KeyAssigned(ByVal KeyCode As Integer) As Boolean
 '***************************************************
 'Author: Rapsodius
-'Last Modification: 08/04/07
-'
+'Last Modification: 16/11/2010
+'16/11/2010: Amraphen - Adapté la función para que trabaje sobre la configuración activa.
 '***************************************************
-    Dim Counter As Long
+Dim Counter As Long
     
     KeyAssigned = False
     
     For Counter = 1 To NUM_CUSTOM_KEYS
-        If mappedKeys(Counter) = KeyCode Then
+        If mappedKeys(ActiveConfig, Counter) = KeyCode Then
             KeyAssigned = True
             Exit For
         End If
@@ -400,13 +448,57 @@ End Function
 '
 '@return The number of customizable keys
 
-Public Property Get Count() As Byte
+Public Property Get KeyCount() As Byte
 '***************************************************
 'Author: Rapsodius
-'Last Modification: 08/04/07
+'Last Modification: 16/11/2010
+'16/11/2010: Amraphen - Cambié el nombre para evitar confusiones.
+'***************************************************
+    KeyCount = NUM_CUSTOM_KEYS
+End Property
+
+''
+'Retrieves the number of customizable key configurations
+'
+'@return The number of customizable key configurations
+
+Public Property Get ConfigCount() As Byte
+'***************************************************
+'Author: Amraphen
+'Last Modification: 16/11/2010
 '
 '***************************************************
-    Count = NUM_CUSTOM_KEYS
+    ConfigCount = NUM_CUSTOM_CONFIGS
+End Property
+
+''
+'Sets the currently active key configuration index
+'
+'@param NewVal New currently active key configuration index
+
+Public Property Let CurrentConfig(ByVal NewVal As Byte)
+'***************************************************
+'Author: Amraphen
+'Last Modification: 16/11/2010
+'
+'***************************************************
+    If NewVal < 0 Or NewVal > NUM_CUSTOM_CONFIGS Then Exit Property
+    
+    ActiveConfig = NewVal
+End Property
+
+''
+'Retrieves the currently active key configuration index
+'
+'@return The currently active key configuration index
+
+Public Property Get CurrentConfig() As Byte
+'***************************************************
+'Author: Amraphen
+'Last Modification: 16/11/2010
+'
+'***************************************************
+    CurrentConfig = ActiveConfig
 End Property
 
 ''
@@ -415,19 +507,12 @@ End Property
 Private Sub Class_Initialize()
 '***************************************************
 'Author: Rapsodius
-'Last Modification: 08/04/07
-'
+'Last Modification: 18/11/2010
+'16/11/2010: Amraphen - Adapté el procedimiento para que trabaje sobre las distintas configuraciones de teclas.
+'18/11/2010: Amraphen - Ahora el manejo de errores se hace desde el sub LoadCustomKeys
 '***************************************************
-On Error GoTo ErrHand:
+
     Call LoadCustomKeys
-    Exit Sub
-    
-ErrHand:
-    If Err.number = ERROR_NO_KEY_FILE Then
-        Call LoadDefaults
-        Call SaveCustomKeys
-        Resume Next
-    End If
 End Sub
 
 ''

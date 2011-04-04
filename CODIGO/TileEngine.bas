@@ -200,7 +200,7 @@ Public Type MapInfo
 End Type
 
 'DX7 Objects
-Public DirectX As New DirectX7
+Public DirectX As DirectX7
 Public DirectDraw As DirectDraw7
 Private PrimarySurface As DirectDrawSurface7
 Private PrimaryClipper As DirectDrawClipper
@@ -1220,6 +1220,16 @@ On Error GoTo error
         SourceRect.Right = SourceRect.Left + .pixelWidth
         SourceRect.Bottom = SourceRect.Top + .pixelHeight
         
+        If X < BackBufferRect.Left Then
+            SourceRect.Left = SourceRect.Left - X
+            X = 0
+        End If
+        
+        If Y < BackBufferRect.Top Then
+            SourceRect.Top = SourceRect.Top - Y
+            Y = 0
+        End If
+        
         'Draw
         Call BackBufferSurface.BltFast(X, Y, SurfaceDB.Surface(.FileNum), SourceRect, DDBLTFAST_SRCCOLORKEY Or DDBLTFAST_WAIT)
     End With
@@ -1461,7 +1471,7 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
     maxX = screenmaxX + TileBufferSize
     
     'Make sure mins and maxs are allways in map bounds
-    If minY < XMinMapSize Then
+    If minY < YMinMapSize Then
         minYOffset = YMinMapSize - minY
         minY = YMinMapSize
     End If
@@ -1483,7 +1493,11 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
         ScreenY = 1
     End If
     
-    If screenmaxY < YMaxMapSize Then screenmaxY = screenmaxY + 1
+    If screenmaxY < YMaxMapSize Then
+        screenmaxY = screenmaxY + 1
+    ElseIf screenmaxY > YMaxMapSize Then
+        screenmaxY = YMaxMapSize
+    End If
     
     If screenminX > XMinMapSize Then
         screenminX = screenminX - 1
@@ -1492,7 +1506,11 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
         ScreenX = 1
     End If
     
-    If screenmaxX < XMaxMapSize Then screenmaxX = screenmaxX + 1
+    If screenmaxX < XMaxMapSize Then
+        screenmaxX = screenmaxX + 1
+    ElseIf screenmaxX > XMaxMapSize Then
+        screenmaxX = XMaxMapSize
+    End If
     
     'Draw floor layer
     For Y = screenminY To screenmaxY
@@ -1775,7 +1793,7 @@ On Error GoTo 0
     
     'Create Primary Clipper
     Set PrimaryClipper = DirectDraw.CreateClipper(0)
-    Call PrimaryClipper.SetHWnd(frmMain.hWnd)
+    Call PrimaryClipper.SetHWnd(frmMain.hwnd)
     Call PrimarySurface.SetClipper(PrimaryClipper)
     
     With BackBufferRect
@@ -1901,12 +1919,13 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Inte
         While (DirectX.TickCount - fpsLastCheck) \ 10 < FramesPerSecCounter
             Sleep 5
         Wend
-            
+        
+        'Si está activado el FragShooter y está esperando para sacar una foto, lo hacemos:
         If ClientSetup.bActive Then
-            If isCapturePending Then
+            If FragShooterCapturePending Then
                 DoEvents
                 Call ScreenCapture(True)
-                isCapturePending = False
+                FragShooterCapturePending = False
             End If
         End If
         

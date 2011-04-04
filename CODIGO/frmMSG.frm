@@ -123,15 +123,16 @@ End If
 End Sub
 
 Private Sub Form_Deactivate()
-    ' Handles Form movement (drag and drop).
-    Set clsFormulario = New clsFormMovementManager
-    clsFormulario.Initialize Me
-    
     Me.Visible = False
     List1.Clear
 End Sub
 
 Private Sub Form_Load()
+
+    ' Handles Form movement (drag and drop).
+    Set clsFormulario = New clsFormMovementManager
+    clsFormulario.Initialize Me
+    
     List1.Clear
     
     Me.Picture = LoadPicture(App.path & "\graficos\VentanaShowSos.jpg")
