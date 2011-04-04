@@ -745,8 +745,9 @@ Private Sub InventoryWindow_MouseUp(Button As Integer, Shift As Integer, X As Si
     
         InvSelectedItem = temp_x + (temp_y + InventoryOffset) * (InventoryWindow.ScaleWidth \ ownTilePixelWidth) + 1
         
-        If Not InvSelectedItem = slotDragged Then
-            Call DrawInventory
+        Call DrawInventory
+        
+        If InvSelectedItem <> slotDragged Then
             RaiseEvent dragDone(slotDragged, InvSelectedItem)
         End If
     Else
