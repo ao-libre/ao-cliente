@@ -44,14 +44,21 @@ Private startdX As Integer
 Private startdY As Integer
 
 Private ShowValue As Boolean
+Private ValueFormated As Boolean
+
 Private ImgContainer As Boolean
 
+Private slotDragged As Integer
+
 Private InvSurface As DirectDrawSurface7            'DD Surface used to render everything
+Private bufferInvSurface As DirectDrawSurface7
 
 Private Inventory() As Inventory    'User's inventory
 
 Private WithEvents InventoryWindow As PictureBox    'Placeholder where to render the inventory
 Attribute InventoryWindow.VB_VarHelpID = -1
+
+Public Event dragDone(ByVal originalSlot As Integer, ByVal newSlot As Integer)
 
 #If ConMenuesConextuales = 1 Then
     Dim ItemMenu As Menu    'Menu to be shown as pop up
@@ -71,6 +78,8 @@ Private Sub Class_Terminate()
 'Last Modify Date: 27/07/04
 '
 '***************************************************
+    Set InvSurface = Nothing
+    Set bufferInvSurface = Nothing
 End Sub
 
 Public Sub ScrollInventory(ByVal Up As Boolean)
@@ -308,6 +317,20 @@ Public Sub ToggleShowValue(ByVal bShow As Boolean)
     Next slot
 End Sub
 
+Public Sub ClearAllSlots()
+'***************************************************
+'Author: ZaMa
+'Last Modify Date: 15/03/2011
+'Clear All Slots.
+'***************************************************
+
+    Dim slot As Long
+    For slot = 1 To Me.MaxObjs
+        Call SetItem(slot, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, vbNullString)
+    Next slot
+
+End Sub
+
 Public Sub SetItem(ByVal slot As Byte, ByVal eOBJIndex As Integer, ByVal eAmount As Long, ByVal eEquipped As Byte, _
                         ByVal eGrhIndex As Integer, ByVal eObjType As Integer, ByVal eMaxHit As Integer, ByVal eMinHit As Integer, _
                         ByVal MaxDef As Integer, ByVal MinDef As Integer, ByVal eValor As Single, ByVal eName As String)
@@ -376,37 +399,42 @@ Private Sub DrawInventory()
     Dim destRect As RECT
     
     With TempRect
+        .Bottom = InventoryWindow.Height
+        .Right = InventoryWindow.Width
+    End With
+    
+    With destRect
         .Bottom = ownTilePixelHeight
         .Right = ownTilePixelWidth
     End With
     
-    destRect = TempRect
-    
     'Clear the inventory window
     InventoryWindow.Cls
     
+    'Clear the slot area
+    Call InvSurface.BltColorFill(TempRect, InventoryWindow.BackColor)
+    
     For loopc = InventoryOffset * (InventoryWindow.ScaleWidth \ ownTilePixelWidth) + 1 To UBound(Inventory)
-        'Clear the slot area
-        Call InvSurface.BltColorFill(TempRect, InventoryWindow.BackColor)
-        
+    'For loopc = 1 To UBound(Inventory)
+    
         If Inventory(loopc).GrhIndex Then
             'Get source rect
             With SrcRect
-                .Left = GrhData(Inventory(loopc).GrhIndex).sX
-                .Top = GrhData(Inventory(loopc).GrhIndex).sY
+                .Left = .Left + GrhData(Inventory(loopc).GrhIndex).sX
+                .Top = .Top + GrhData(Inventory(loopc).GrhIndex).sY
                 .Right = .Left + ownTilePixelWidth
                 .Bottom = .Top + ownTilePixelHeight
             End With
             
             'Render the item grh and the amount
             InvSurface.SetForeColor vbWhite
-            InvSurface.BltFast startdX, startdY, SurfaceDB.Surface(GrhData(Inventory(loopc).GrhIndex).FileNum), SrcRect, DDBLTFAST_WAIT Or DDBLTFAST_NOCOLORKEY
-            InvSurface.DrawText startdX / 2, startdY / 2, Inventory(loopc).Amount, False
+            InvSurface.BltFast destRect.Left + startdX, destRect.Top + startdY, SurfaceDB.Surface(GrhData(Inventory(loopc).GrhIndex).FileNum), SrcRect, DDBLTFAST_WAIT
+            InvSurface.DrawText destRect.Left + startdX / 2, destRect.Top + startdY / 2, Inventory(loopc).Amount, False
             
             'If equipped we render "E"
             If Inventory(loopc).Equipped Then
                 InvSurface.SetForeColor vbYellow
-                InvSurface.DrawText 20, 20, "E", False
+                InvSurface.DrawText destRect.Left + 20, destRect.Top + 20, "E", False
             End If
             
             'Render a box around the selected item
@@ -414,16 +442,12 @@ Private Sub DrawInventory()
                 If ImgContainer Then
                     InvSurface.SetForeColor vbGreen
                     InvSurface.setDrawStyle DrawStyleConstants.vbDot
-                    InvSurface.DrawBox 0, 0, ownTilePixelWidth, ownTilePixelHeight
+                    InvSurface.DrawBox destRect.Left, destRect.Top, destRect.Left + ownTilePixelWidth, destRect.Top + ownTilePixelHeight
                 End If
             End If
         End If
         
         'Render the item to the Inventory Window
-        Call InvSurface.BltToDC(InventoryWindow.hdc, TempRect, destRect)
-        
-        Call InventoryWindow.Refresh
-        
         With destRect
             'Check if we have reached the right end of the inventory picturebox
             If .Left = (InventoryWindow.ScaleWidth - (InventoryWindow.ScaleWidth Mod ownTilePixelWidth) - ownTilePixelWidth) Then
@@ -437,6 +461,110 @@ Private Sub DrawInventory()
             End If
         End With
     Next loopc
+
+    Call bufferInvSurface.BltFast(0, 0, InvSurface, TempRect, DDBLTFAST_WAIT)
+    Call InvSurface.BltToDC(InventoryWindow.hdc, TempRect, TempRect)
+    
+    Call InventoryWindow.Refresh
+End Sub
+
+Private Sub InventoryWindow_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+'***************************************************
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Last Modify Date: 27/07/04
+'Implements the mouse move event of the inventory picture box
+'Displays a ToolTip of the item under the mouse
+'***************************************************
+    Dim temp_x As Integer
+    Dim temp_y As Integer
+    Dim TempItem As Integer
+    
+    'Exit if it got outside the control's areanv
+    If X < 0 Or Y < 0 Or X > InventoryWindow.Width Or Y > InventoryWindow.Height Then _
+        Exit Sub
+    
+    If Button = vbRightButton Then
+        'Call DrawInventory(slotDragged, X, Y)
+        Call DrawFloatingItem(slotDragged, X, Y)
+    Else
+        temp_x = X \ ownTilePixelWidth
+        temp_y = Y \ ownTilePixelHeight
+        
+        TempItem = temp_x + (temp_y + InventoryOffset) * (InventoryWindow.ScaleWidth \ ownTilePixelWidth) + 1
+    
+        If TempItem <= UBound(Inventory) Then
+            InventoryWindow.ToolTipText = Inventory(TempItem).Name
+        End If
+    End If
+End Sub
+
+Private Sub InventoryWindow_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    Dim temp_x As Integer
+    Dim temp_y As Integer
+    Dim TempItem As Integer
+    
+    'Exit if it got outside the control's area
+    If X < 0 Or Y < 0 Or X > InventoryWindow.Width Or Y > InventoryWindow.Height Then Exit Sub
+    
+    If Button = vbRightButton Then
+    
+        temp_x = X \ ownTilePixelWidth
+        temp_y = Y \ ownTilePixelHeight
+    
+        TempItem = temp_x + (temp_y + InventoryOffset) * (InventoryWindow.ScaleWidth \ ownTilePixelWidth) + 1
+        
+        slotDragged = TempItem
+        
+    End If
+        
+End Sub
+
+Private Sub DrawFloatingItem(ByVal slot As Integer, ByVal X As Integer, ByVal Y As Integer)
+'***************************************************
+'Author: Ignacio Mariano Tirabasso (Budi)
+'Last Modify Date: 03/01/11
+'Renders a floating item
+'***************************************************
+    Dim TempRect As RECT
+    Dim SrcRectSlot As RECT
+    
+    With TempRect
+        .Bottom = InventoryWindow.Height
+        .Right = InventoryWindow.Width
+    End With
+
+    Call bufferInvSurface.BltFast(0, 0, InvSurface, TempRect, DDBLTFAST_DONOTWAIT)
+    
+    Dim upperLeftSlot As Integer
+    upperLeftSlot = InventoryOffset * (InventoryWindow.ScaleWidth \ ownTilePixelWidth) + 1
+    
+    'If not in renderable area we exit
+    If slot < upperLeftSlot Then Exit Sub
+    
+    If Inventory(slot).GrhIndex Then
+        'Get source rect
+        With SrcRectSlot
+            .Left = GrhData(Inventory(slot).GrhIndex).sX
+            .Top = GrhData(Inventory(slot).GrhIndex).sY
+            .Right = .Left + TilePixelWidth
+            .Bottom = .Top + TilePixelHeight
+        End With
+        
+        'Render the item grh and the amount
+        bufferInvSurface.SetForeColor vbWhite
+        Call bufferInvSurface.BltFast(X, Y, SurfaceDB.Surface(CLng(GrhData(Inventory(slot).GrhIndex).FileNum)), SrcRectSlot, DDBLTFAST_WAIT Or DDBLTFAST_SRCCOLORKEY)
+        
+        'If equipped we render "E"
+        If Inventory(slot).Equipped Then
+            bufferInvSurface.SetForeColor vbYellow
+            bufferInvSurface.DrawText X + 20, Y + 20, "E", False
+        End If
+    End If
+    
+    'Render the item to the Inventory Window
+    Call bufferInvSurface.BltToDC(InventoryWindow.hdc, TempRect, TempRect)
+    
+    Call InventoryWindow.Refresh
 End Sub
 
 Private Sub DrawInventorySlot(ByVal slot As Integer)
@@ -445,15 +573,8 @@ Private Sub DrawInventorySlot(ByVal slot As Integer)
 'Last Modify Date: 12/04/06
 'Renders a inventory slot to the given PictureBox
 '***************************************************
-    Dim SrcRect As RECT
-    Dim TempRect As RECT
     Dim destRect As RECT
     Dim SrcRectSlot As RECT
-    
-    With TempRect
-        .Bottom = ownTilePixelHeight
-        .Right = ownTilePixelWidth
-    End With
     
     Dim upperLeftSlot As Integer
     upperLeftSlot = InventoryOffset * (InventoryWindow.ScaleWidth \ ownTilePixelWidth) + 1
@@ -469,16 +590,10 @@ Private Sub DrawInventorySlot(ByVal slot As Integer)
     End With
     
     'Clear the slot area
-    Call InvSurface.BltColorFill(TempRect, InventoryWindow.BackColor)
+    Call InvSurface.BltColorFill(destRect, InventoryWindow.BackColor)
     
     If Inventory(slot).GrhIndex Then
         'Get source rect
-        With SrcRect
-            .Left = GrhData(Inventory(slot).GrhIndex).sX
-            .Top = GrhData(Inventory(slot).GrhIndex).sY
-            .Right = .Left + ownTilePixelWidth
-            .Bottom = .Top + ownTilePixelHeight
-        End With
         With SrcRectSlot
             .Left = GrhData(Inventory(slot).GrhIndex).sX
             .Top = GrhData(Inventory(slot).GrhIndex).sY
@@ -488,14 +603,19 @@ Private Sub DrawInventorySlot(ByVal slot As Integer)
         
         'Render the item grh and the amount
         InvSurface.SetForeColor vbWhite
-        InvSurface.BltFast startdX, startdY, SurfaceDB.Surface(CLng(GrhData(Inventory(slot).GrhIndex).FileNum)), SrcRectSlot, DDBLTFAST_WAIT Or DDBLTFAST_NOCOLORKEY
-        If ShowValue Then InvSurface.DrawText startdX / 2, startdY / 2, Inventory(slot).Amount, False
-
+        InvSurface.BltFast destRect.Left + startdX, destRect.Top + startdY, SurfaceDB.Surface(CLng(GrhData(Inventory(slot).GrhIndex).FileNum)), SrcRectSlot, DDBLTFAST_WAIT Or DDBLTFAST_NOCOLORKEY
+        
+        If ShowValue Then
+            Dim sValue As String
+            sValue = IIf(ValueFormated, Format(Inventory(slot).Amount, "#,###,###,###"), Inventory(slot).Amount)
+       '     sValue = Inventory(slot).Amount
+            InvSurface.DrawText destRect.Left + startdX / 2, destRect.Top + startdY / 2, sValue, False
+        End If
         
         'If equipped we render "E"
         If Inventory(slot).Equipped Then
             InvSurface.SetForeColor vbYellow
-            InvSurface.DrawText 20, 20, "E", False
+            InvSurface.DrawText destRect.Left + 20, destRect.Top + 20, "E", False
         End If
         
         'Render a box around the selected item
@@ -503,13 +623,13 @@ Private Sub DrawInventorySlot(ByVal slot As Integer)
             If ImgContainer Then
                 InvSurface.SetForeColor vbGreen
                 InvSurface.setDrawStyle DrawStyleConstants.vbDot
-                InvSurface.DrawBox 0, 0, ownTilePixelWidth, ownTilePixelHeight
+                InvSurface.DrawBox destRect.Left, destRect.Top, destRect.Left + ownTilePixelWidth, destRect.Top + ownTilePixelHeight
             End If
         End If
     End If
     
     'Render the item to the Inventory Window
-    InvSurface.BltToDC InventoryWindow.hdc, TempRect, destRect
+    InvSurface.BltToDC InventoryWindow.hdc, destRect, destRect
     
     Call InventoryWindow.Refresh
 End Sub
@@ -523,7 +643,7 @@ End Sub
                             Optional ByVal FontSize As Integer = 7, Optional ByVal TileWidth As Integer = 32, _
                             Optional ByVal TileHeight As Integer = 32, Optional ByVal startX As Integer = 0, _
                             Optional ByVal startY As Integer = 0, Optional ByVal bImgContainer As Boolean = True, _
-                            Optional ByVal bShowText As Boolean = True)
+                            Optional ByVal bShowText As Boolean = True, Optional FormatValue As Boolean = False)
 #End If
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -531,7 +651,11 @@ End Sub
 'Sets the reference to the picture box on which to render the inventory
 '03/12/09: I added the optionals args FontSize, TileWidth, TileHeight, startX and startY. (Budi)
 '***************************************************
+
+    Dim ddck As DDCOLORKEY
+
     Set InventoryWindow = InvPic
+    ValueFormated = FormatValue
     
     'Make sure auto-redraw is set to true
     InventoryWindow.AutoRedraw = True
@@ -546,15 +670,19 @@ End Sub
     
     'Make sure DirectDraw was correctly initialized
     If DirectDraw Is Nothing Then Exit Sub
-      
+            
     'Set surface's description
     With SurfaceDesc
         .lFlags = DDSD_CAPS Or DDSD_HEIGHT Or DDSD_WIDTH
         .ddsCaps.lCaps = DDSCAPS_OFFSCREENPLAIN Or DDSCAPS_SYSTEMMEMORY
-        .lHeight = TileHeight
-        .lWidth = TileWidth
+        .lHeight = InventoryWindow.Height
+        .lWidth = InventoryWindow.Width
     End With
-
+    
+        'Create inventory surface
+    Set InvSurface = DirectDraw.CreateSurface(SurfaceDesc)
+    Set bufferInvSurface = DirectDraw.CreateSurface(SurfaceDesc)
+    
     ownTilePixelHeight = TileHeight
     ownTilePixelWidth = TileWidth
     startdX = startX
@@ -563,13 +691,12 @@ End Sub
     ImgContainer = bImgContainer
     ShowValue = bShowText
    
-    'Create inventory surface
-    Set InvSurface = DirectDraw.CreateSurface(SurfaceDesc)
     
     'Prepare surfaces for text rendering
     InvSurface.SetFontTransparency True
 'TODO : Fonts should be in a separate class / collection
-    Dim font As New StdFont
+    Dim font As StdFont
+    Set font = New StdFont
     Dim Ifnt As IFont
     
     font.Name = "Verdana"
@@ -582,6 +709,7 @@ End Sub
     Set Ifnt = font
     
     InvSurface.SetFont Ifnt
+    bufferInvSurface.SetFont Ifnt
 '\TODO
     
     If ImgContainer Then _
@@ -590,31 +718,6 @@ End Sub
 #If ConMenuesConextuales = 1 Then
     Set ItemMenu = PopUpMenu
 #End If
-End Sub
-
-Private Sub InventoryWindow_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modify Date: 27/07/04
-'Implements the mouse move event of the inventory picture box
-'Displays a ToolTip of the item under the mouse
-'***************************************************
-    Dim temp_x As Integer
-    Dim temp_y As Integer
-    Dim TempItem As Integer
-    
-    'Exit if it got outside the control's area
-    If X < 0 Or Y < 0 Or X > InventoryWindow.Width Or Y > InventoryWindow.Height Then _
-        Exit Sub
-    
-    temp_x = X \ ownTilePixelWidth
-    temp_y = Y \ ownTilePixelHeight
-    
-    TempItem = temp_x + (temp_y + InventoryOffset) * (InventoryWindow.ScaleWidth \ ownTilePixelWidth) + 1
-    
-    If TempItem <= UBound(Inventory) Then
-        InventoryWindow.ToolTipText = Inventory(TempItem).Name
-    End If
 End Sub
 
 Private Sub InventoryWindow_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
@@ -626,22 +729,36 @@ Private Sub InventoryWindow_MouseUp(Button As Integer, Shift As Integer, X As Si
 '***************************************************
     'Store previously selected item
     Dim prevSelItem As Long
+    Dim TempItem As Long
+    Dim temp_x As Long
+    Dim temp_y As Long
     
     'Exit if it got outside the control's area
     If X < 0 Or Y < 0 Or X > InventoryWindow.Width Or Y > InventoryWindow.Height Then _
         Exit Sub
     
     prevSelItem = InvSelectedItem
-
-    'Get the currently clickced item
-    InvSelectedItem = ClickItem(CInt(X), CInt(Y))
     
-    'Update needed inventory slots
-    If prevSelItem <> InvSelectedItem Then
-        If prevSelItem <> 0 And prevSelItem <> FLAGORO Then Call DrawInventorySlot(prevSelItem)
-        If InvSelectedItem Then Call DrawInventorySlot(InvSelectedItem)
+    If Button = vbRightButton Then
+        temp_x = X \ ownTilePixelWidth
+        temp_y = Y \ ownTilePixelHeight
+    
+        InvSelectedItem = temp_x + (temp_y + InventoryOffset) * (InventoryWindow.ScaleWidth \ ownTilePixelWidth) + 1
+        
+        If Not InvSelectedItem = slotDragged Then
+            Call DrawInventory
+            RaiseEvent dragDone(slotDragged, InvSelectedItem)
+        End If
+    Else
+        'Get the currently clickced item
+        InvSelectedItem = ClickItem(CInt(X), CInt(Y))
+    
+        'Update needed inventory slots
+        If prevSelItem <> InvSelectedItem Then
+            If prevSelItem <> 0 And prevSelItem <> FLAGORO Then Call DrawInventorySlot(prevSelItem)
+            If InvSelectedItem Then Call DrawInventorySlot(InvSelectedItem)
+        End If
     End If
-    
 #If ConMenuesConextuales = 1 Then
     'If it was a right click on the same item we had selected before, show popup menu
     If Button = vbRightButton And prevSelItem = InvSelectedItem Then

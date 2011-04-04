@@ -213,7 +213,7 @@ Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, ByVal Text As String, Opt
         If bCrLf And Len(.Text) > 0 Then Text = vbCrLf & Text
         .SelText = Text
         
-        RichTextBox.refresh
+        RichTextBox.Refresh
     End With
 End Sub
 
@@ -785,12 +785,14 @@ Sub Main()
     Else
         Set SurfaceDB = New clsSurfaceManStatic
     End If
-    
+ 
+#If Testeo = 0 Then
     If FindPreviousInstance Then
         Call MsgBox("Argentum Online ya esta corriendo! No es posible correr otra instancia del juego. Haga click en Aceptar para salir.", vbApplicationModal + vbInformation + vbOKOnly, "Error al ejecutar")
         End
     End If
-    
+#End If
+
     'Read command line. Do it AFTER config file is loaded to prevent this from
     'canceling the effects of "/nores" option.
     Call LeerLineaComandos
@@ -819,90 +821,17 @@ Sub Main()
     'Set resolution BEFORE the loading form is displayed, therefore it will be centered.
     Call Resolution.SetResolution
     
-    ' Mouse Pointer (Loaded before opening any form with buttons in it)
-    If FileExist(DirExtras & "Hand.ico", vbArchive) Then _
-        Set picMouseIcon = LoadPicture(DirExtras & "Hand.ico")
-    
-    frmCargando.Show
-    frmCargando.refresh
-    
-    frmConnect.version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
-    Call AddtoRichTextBox(frmCargando.status, "Buscando servidores... ", 255, 255, 255, True, False, True)
+    ' Load constants, classes, flags, graphics..
+    LoadInitialConfig
 
-    Call CargarServidores
-'TODO : esto de ServerRecibidos no se podría sacar???
-    ServersRecibidos = True
-    
-    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
-    Call AddtoRichTextBox(frmCargando.status, "Iniciando constantes... ", 255, 255, 255, True, False, True)
-    
-    Call InicializarNombres
-    
-    ' Initialize FONTTYPES
-    Call Protocol.InitFonts
-    
-    With frmConnect
-        .txtNombre = Config_Inicio.Name
-        .txtNombre.SelStart = 0
-        .txtNombre.SelLength = Len(.txtNombre)
-    End With
-    
-    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
-    
-    Call AddtoRichTextBox(frmCargando.status, "Iniciando motor gráfico... ", 255, 255, 255, True, False, True)
-    
-    If Not InitTileEngine(frmMain.hWnd, 149, 13, 32, 32, 13, 17, 9, 8, 8, 0.018) Then
-        Call CloseClient
-    End If
-    
-    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
-    
-    Call AddtoRichTextBox(frmCargando.status, "Creando animaciones extra... ", 255, 255, 255, True, False, True)
-    
-    Call CargarTips
-    
-UserMap = 1
-    
-    Call CargarArrayLluvia
-    Call CargarAnimArmas
-    Call CargarAnimEscudos
-    Call CargarColores
-    
-    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
-    
-    Call AddtoRichTextBox(frmCargando.status, "Iniciando DirectSound... ", 255, 255, 255, True, False, True)
-    
-    'Inicializamos el sonido
-    Call Audio.Initialize(DirectX, frmMain.hWnd, App.path & "\" & Config_Inicio.DirSonidos & "\", App.path & "\" & Config_Inicio.DirMusica & "\")
-    'Enable / Disable audio
-    Audio.MusicActivated = Not ClientSetup.bNoMusic
-    Audio.SoundActivated = Not ClientSetup.bNoSound
-    Audio.SoundEffectsActivated = Not ClientSetup.bNoSoundEffects
-    'Inicializamos el inventario gráfico
-    Call Inventario.Initialize(DirectDraw, frmMain.PicInv, MAX_INVENTORY_SLOTS)
-    
-    Call Audio.MusicMP3Play(App.path & "\MP3\" & MP3_Inicio & ".mp3")
-    
-    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
-    
-#If SeguridadAlkon Then
-    CualMI = 0
-    Call InitMI
-#End If
-    
-    Call AddtoRichTextBox(frmCargando.status, "                    ¡Bienvenido a Argentum Online!", 255, 255, 255, True, False, True)
-    
-    'Give the user enough time to read the welcome text
-    Call Sleep(500)
-    
-    Unload frmCargando
-    
+#If Testeo <> 1 Then
     Dim PresPath As String
     PresPath = DirGraficos & "Presentacion" & RandomNumber(1, 4) & ".jpg"
     
     frmPres.Picture = LoadPicture(PresPath)
     frmPres.Show vbModal    'Es modal, así que se detiene la ejecución de Main hasta que se desaparece
-    
+#End If
+
 #If UsarWrench = 1 Then
     frmMain.Socket1.Startup
 #End If
@@ -914,29 +843,9 @@ UserMap = 1
     prgRun = True
     pausa = False
     
-    'Set the intervals of timers
-    Call MainTimer.SetInterval(TimersIndex.Attack, INT_ATTACK)
-    Call MainTimer.SetInterval(TimersIndex.Work, INT_WORK)
-    Call MainTimer.SetInterval(TimersIndex.UseItemWithU, INT_USEITEMU)
-    Call MainTimer.SetInterval(TimersIndex.UseItemWithDblClick, INT_USEITEMDCK)
-    Call MainTimer.SetInterval(TimersIndex.SendRPU, INT_SENTRPU)
-    Call MainTimer.SetInterval(TimersIndex.CastSpell, INT_CAST_SPELL)
-    Call MainTimer.SetInterval(TimersIndex.Arrows, INT_ARROWS)
-    Call MainTimer.SetInterval(TimersIndex.CastAttack, INT_CAST_ATTACK)
-    
-    frmMain.macrotrabajo.Interval = INT_MACRO_TRABAJO
-    frmMain.macrotrabajo.Enabled = False
-    
-   'Init timers
-    Call MainTimer.Start(TimersIndex.Attack)
-    Call MainTimer.Start(TimersIndex.Work)
-    Call MainTimer.Start(TimersIndex.UseItemWithU)
-    Call MainTimer.Start(TimersIndex.UseItemWithDblClick)
-    Call MainTimer.Start(TimersIndex.SendRPU)
-    Call MainTimer.Start(TimersIndex.CastSpell)
-    Call MainTimer.Start(TimersIndex.Arrows)
-    Call MainTimer.Start(TimersIndex.CastAttack)
-    
+    ' Intervals
+    LoadTimerIntervals
+        
     'Set the dialog's font
     Dialogos.font = frmMain.font
     DialogosClanes.font = frmMain.font
@@ -976,11 +885,163 @@ UserMap = 1
     Call CloseClient
 End Sub
 
-Sub WriteVar(ByVal file As String, ByVal Main As String, ByVal Var As String, ByVal value As String)
+Private Sub LoadInitialConfig()
+'***************************************************
+'Author: ZaMa
+'Last Modification: 15/03/2011
+'15/03/2011: ZaMa - Initialize classes lazy way.
+'***************************************************
+
+    Dim i As Long
+
+    frmCargando.Show
+    frmCargando.Refresh
+
+    frmConnect.version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
+    
+    '###########
+    ' SERVIDORES
+    'TODO : esto de ServerRecibidos no se podría sacar???
+    Call AddtoRichTextBox(frmCargando.status, "Buscando servidores... ", 255, 255, 255, True, False, True)
+    Call CargarServidores
+    ServersRecibidos = True
+    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
+    
+    '###########
+    ' CONSTANTES
+    Call AddtoRichTextBox(frmCargando.status, "Iniciando constantes... ", 255, 255, 255, True, False, True)
+    Call InicializarNombres
+    ' Initialize FONTTYPES
+    Call Protocol.InitFonts
+    
+    With frmConnect
+        .txtNombre = Config_Inicio.Name
+        .txtNombre.SelStart = 0
+        .txtNombre.SelLength = Len(.txtNombre)
+    End With
+    
+    UserMap = 1
+    
+    ' Mouse Pointer (Loaded before opening any form with buttons in it)
+    If FileExist(DirExtras & "Hand.ico", vbArchive) Then _
+        Set picMouseIcon = LoadPicture(DirExtras & "Hand.ico")
+    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
+    
+    '#######
+    ' CLASES
+    Call AddtoRichTextBox(frmCargando.status, "Instanciando clases... ", 255, 255, 255, True, False, True)
+    Set Dialogos = New clsDialogs
+    Set Audio = New clsAudio
+    Set Inventario = New clsGrapchicalInventory
+    Set InvBanco(0) = New clsGrapchicalInventory
+    Set InvBanco(1) = New clsGrapchicalInventory
+    Set InvComUsu = New clsGrapchicalInventory
+    Set InvOroComUsu(0) = New clsGrapchicalInventory
+    Set InvOroComUsu(1) = New clsGrapchicalInventory
+    Set InvOroComUsu(2) = New clsGrapchicalInventory
+    Set InvOfferComUsu(0) = New clsGrapchicalInventory
+    Set InvOfferComUsu(1) = New clsGrapchicalInventory
+    Set InvComNpc = New clsGrapchicalInventory
+    For i = 1 To MAX_LIST_ITEMS
+        Set InvLingosHerreria(i) = New clsGrapchicalInventory
+        Set InvMaderasCarpinteria(i) = New clsGrapchicalInventory
+    Next i
+    Set CustomKeys = New clsCustomKeys
+    Set CustomMessages = New clsCustomMessages
+    Set incomingData = New clsByteQueue
+    Set outgoingData = New clsByteQueue
+    Set MainTimer = New clsTimer
+    Set clsForos = New clsForum
+    
+#If SeguridadAlkon Then
+    Set md5 = New clsMD5
+#End If
+    Set DirectX = New DirectX7
+    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
+    
+    '##############
+    ' MOTOR GRÁFICO
+    Call AddtoRichTextBox(frmCargando.status, "Iniciando motor gráfico... ", 255, 255, 255, True, False, True)
+    
+    If Not InitTileEngine(frmMain.hwnd, 149, 13, 32, 32, 13, 17, 9, 8, 8, 0.018) Then
+        Call CloseClient
+    End If
+    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
+    
+    '###################
+    ' ANIMACIONES EXTRAS
+    Call AddtoRichTextBox(frmCargando.status, "Creando animaciones extra... ", 255, 255, 255, True, False, True)
+    Call CargarTips
+    Call CargarArrayLluvia
+    Call CargarAnimArmas
+    Call CargarAnimEscudos
+    Call CargarColores
+    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
+    
+    '#############
+    ' DIRECT SOUND
+    Call AddtoRichTextBox(frmCargando.status, "Iniciando DirectSound... ", 255, 255, 255, True, False, True)
+    'Inicializamos el sonido
+    Call Audio.Initialize(DirectX, frmMain.hwnd, App.path & "\" & Config_Inicio.DirSonidos & "\", App.path & "\" & Config_Inicio.DirMusica & "\")
+    'Enable / Disable audio
+    Audio.MusicActivated = Not ClientSetup.bNoMusic
+    Audio.SoundActivated = Not ClientSetup.bNoSound
+    Audio.SoundEffectsActivated = Not ClientSetup.bNoSoundEffects
+    'Inicializamos el inventario gráfico
+    Call Inventario.Initialize(DirectDraw, frmMain.PicInv, MAX_INVENTORY_SLOTS)
+    Call Audio.MusicMP3Play(App.path & "\MP3\" & MP3_Inicio & ".mp3")
+    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
+    
+#If SeguridadAlkon Then
+    CualMI = 0
+    Call InitMI
+#End If
+    
+    Call AddtoRichTextBox(frmCargando.status, "                    ¡Bienvenido a Argentum Online!", 255, 255, 255, True, False, True)
+
+    'Give the user enough time to read the welcome text
+    Call Sleep(500)
+    
+    Unload frmCargando
+    
+End Sub
+
+Private Sub LoadTimerIntervals()
+'***************************************************
+'Author: ZaMa
+'Last Modification: 15/03/2011
+'Set the intervals of timers
+'***************************************************
+    
+    Call MainTimer.SetInterval(TimersIndex.Attack, INT_ATTACK)
+    Call MainTimer.SetInterval(TimersIndex.Work, INT_WORK)
+    Call MainTimer.SetInterval(TimersIndex.UseItemWithU, INT_USEITEMU)
+    Call MainTimer.SetInterval(TimersIndex.UseItemWithDblClick, INT_USEITEMDCK)
+    Call MainTimer.SetInterval(TimersIndex.SendRPU, INT_SENTRPU)
+    Call MainTimer.SetInterval(TimersIndex.CastSpell, INT_CAST_SPELL)
+    Call MainTimer.SetInterval(TimersIndex.Arrows, INT_ARROWS)
+    Call MainTimer.SetInterval(TimersIndex.CastAttack, INT_CAST_ATTACK)
+    
+    frmMain.macrotrabajo.Interval = INT_MACRO_TRABAJO
+    frmMain.macrotrabajo.Enabled = False
+    
+   'Init timers
+    Call MainTimer.Start(TimersIndex.Attack)
+    Call MainTimer.Start(TimersIndex.Work)
+    Call MainTimer.Start(TimersIndex.UseItemWithU)
+    Call MainTimer.Start(TimersIndex.UseItemWithDblClick)
+    Call MainTimer.Start(TimersIndex.SendRPU)
+    Call MainTimer.Start(TimersIndex.CastSpell)
+    Call MainTimer.Start(TimersIndex.Arrows)
+    Call MainTimer.Start(TimersIndex.CastAttack)
+
+End Sub
+
+Sub WriteVar(ByVal file As String, ByVal Main As String, ByVal Var As String, ByVal Value As String)
 '*****************************************************************
 'Writes a var to a text file
 '*****************************************************************
-    writeprivateprofilestring Main, Var, value, file
+    writeprivateprofilestring Main, Var, Value, file
 End Sub
 
 Function GetVar(ByVal file As String, ByVal Main As String, ByVal Var As String) As String
@@ -1089,7 +1150,10 @@ Public Sub LeerLineaComandos()
         End Select
     Next i
     
+#If Testeo = 0 Then
     Call AoUpdate(UpToDate, NoRes)
+#End If
+
 End Sub
 
 ''
@@ -1166,6 +1230,7 @@ Private Sub LoadClientSetup()
     End If
     
     ClientSetup.bGuildNews = Not ClientSetup.bGuildNews
+    Set DialogosClanes = New clsGuildDlg
     DialogosClanes.Activo = Not ClientSetup.bGldMsgConsole
     DialogosClanes.CantidadDialogos = ClientSetup.bCantMsgs
 End Sub
@@ -1414,4 +1479,105 @@ Public Function ForumAlignment(ByVal yForumType As Byte) As Byte
     End Select
     
 End Function
+
+Public Sub ResetAllInfo()
+    
+    ' Save config.ini
+    SaveGameini
+    
+    ' Disable timers
+    frmMain.Second.Enabled = False
+    frmMain.macrotrabajo.Enabled = False
+    Connected = False
+    
+    'Unload all forms except frmMain, frmConnect and frmCrearPersonaje
+    Dim frm As Form
+    For Each frm In Forms
+        If frm.Name <> frmMain.Name And frm.Name <> frmConnect.Name And _
+            frm.Name <> frmCrearPersonaje.Name Then
+            
+            Unload frm
+        End If
+    Next
+    
+    On Local Error GoTo 0
+    
+    ' Return to connection screen
+    frmConnect.MousePointer = vbNormal
+    If Not frmCrearPersonaje.Visible Then frmConnect.Visible = True
+    frmMain.Visible = False
+    
+    'Stop audio
+    Call Audio.StopWave
+    frmMain.IsPlaying = PlayLoop.plNone
+
+    
+    ' Reset flags
+    pausa = False
+    UserMeditar = False
+    UserEstupido = False
+    UserCiego = False
+    UserDescansar = False
+    UserParalizado = False
+    Traveling = False
+    UserNavegando = False
+    bRain = False
+    bFogata = False
+    Comerciando = False
+    bShowTutorial = False
+    
+    MirandoAsignarSkills = False
+    MirandoCarpinteria = False
+    MirandoEstadisticas = False
+    MirandoForo = False
+    MirandoHerreria = False
+    MirandoParty = False
+    
+    'Delete all kind of dialogs
+    Call CleanDialogs
+    
+#If SeguridadAlkon Then
+    LOGGING = False
+    LOGSTRING = False
+    segLastPressed = 0
+    LastMouse = False
+    LastAmount = 0
+#End If
+
+    'Reset some char variables...
+    Dim i As Long
+    For i = 1 To LastChar
+        charlist(i).invisible = False
+    Next i
+
+    ' Reset stats
+    UserClase = 0
+    UserSexo = 0
+    UserRaza = 0
+    UserHogar = 0
+    UserEmail = ""
+    SkillPoints = 0
+    Alocados = 0
+    
+    ' Reset skills
+    For i = 1 To NUMSKILLS
+        UserSkills(i) = 0
+    Next i
+
+    ' Reset attributes
+    For i = 1 To NUMATRIBUTOS
+        UserAtributos(i) = 0
+    Next i
+    
+    ' Clear inventory slots
+    Inventario.ClearAllSlots
+
+#If SeguridadAlkon Then
+    Call MI(CualMI).Inicializar(RandomNumber(1, 1000), 10000)
+#End If
+
+    ' Connection screen midi
+    Call Audio.PlayMIDI("2.mid")
+
+End Sub
 

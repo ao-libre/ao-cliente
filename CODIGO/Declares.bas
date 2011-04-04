@@ -34,38 +34,44 @@ Attribute VB_Name = "Mod_Declaraciones"
 Option Explicit
 
 'Objetos públicos
-Public DialogosClanes As New clsGuildDlg
-Public Dialogos As New clsDialogs
-Public Audio As New clsAudio
-Public Inventario As New clsGrapchicalInventory
-Public InvBanco(1) As New clsGrapchicalInventory
+Public DialogosClanes As clsGuildDlg
+Public Dialogos As clsDialogs
+Public Audio As clsAudio
+Public Inventario As clsGrapchicalInventory
+Public InvBanco(1) As clsGrapchicalInventory
 
 'Inventarios de comercio con usuario
-Public InvComUsu As New clsGrapchicalInventory ' Inventario del usuario visible en el comercio
-Public InvOroComUsu(2) As New clsGrapchicalInventory ' Inventarios de oro (ambos usuarios)
-Public InvOfferComUsu(1) As New clsGrapchicalInventory ' Inventarios de ofertas (ambos usuarios)
+Public InvComUsu As clsGrapchicalInventory  ' Inventario del usuario visible en el comercio
+Public InvOroComUsu(2) As clsGrapchicalInventory  ' Inventarios de oro (ambos usuarios)
+Public InvOfferComUsu(1) As clsGrapchicalInventory  ' Inventarios de ofertas (ambos usuarios)
 
-Public InvComNpc As New clsGrapchicalInventory ' Inventario con los items que ofrece el npc
+Public InvComNpc As clsGrapchicalInventory  ' Inventario con los items que ofrece el npc
 
 'Inventarios de herreria
 Public Const MAX_LIST_ITEMS As Byte = 4
-Public InvLingosHerreria(1 To MAX_LIST_ITEMS) As New clsGrapchicalInventory
-Public InvMaderasCarpinteria(1 To MAX_LIST_ITEMS) As New clsGrapchicalInventory
+Public InvLingosHerreria(1 To MAX_LIST_ITEMS) As clsGrapchicalInventory
+Public InvMaderasCarpinteria(1 To MAX_LIST_ITEMS) As clsGrapchicalInventory
                 
 Public SurfaceDB As clsSurfaceManager   'No va new porque es una interfaz, el new se pone al decidir que clase de objeto es
-Public CustomKeys As New clsCustomKeys
-Public CustomMessages As New clsCustomMessages
+Public CustomKeys As clsCustomKeys
+Public CustomMessages As clsCustomMessages
 
-Public incomingData As New clsByteQueue
-Public outgoingData As New clsByteQueue
+Public incomingData As clsByteQueue
+Public outgoingData As clsByteQueue
 
 ''
 'The main timer of the game.
-Public MainTimer As New clsTimer
+Public MainTimer As clsTimer
 
 #If SeguridadAlkon Then
-Public md5 As New clsMD5
+Public md5 As clsMD5
 #End If
+
+'Error code
+Public Const TOO_FAST As Long = 24036
+Public Const REFUSED As Long = 24061
+Public Const TIME_OUT As Long = 24060
+
 
 'Sonidos
 Public Const SND_CLICK As String = "click.Wav"
@@ -505,6 +511,17 @@ Public Enum eGMCommands
     SetIniVar               '/SETINIVAR LLAVE CLAVE VALOR
     CreatePretorianClan     '/CREARPRETORIANOS
     RemovePretorianClan     '/ELIMINARPRETORIANOS
+    EnableDenounces         '/DENUNCIAS
+    ShowDenouncesList       '/SHOW DENUNCIAS
+    MapMessage              '/MAPMSG
+    SetDialog               '/SETDIALOG
+    Impersonate             '/IMPERSONAR
+    Imitate                 '/MIMETIZAR
+    RecordAdd
+    RecordRemove
+    RecordAddObs
+    RecordListRequest
+    RecordDetailsRequest
 End Enum
 
 '
@@ -820,6 +837,7 @@ Public Enum eEditOptions
     eo_Raza
     eo_addGold
     eo_Vida
+    eo_Poss
 End Enum
 
 ''
@@ -876,7 +894,7 @@ Public Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
 
 'Para ejecutar el browser y programas externos
 Public Const SW_SHOWNORMAL As Long = 1
-Public Declare Function ShellExecute Lib "shell32.dll" Alias "ShellExecuteA" (ByVal hWnd As Long, ByVal lpOperation As String, ByVal lpFile As String, ByVal lpParameters As String, ByVal lpDirectory As String, ByVal nShowCmd As Long) As Long
+Public Declare Function ShellExecute Lib "shell32.dll" Alias "ShellExecuteA" (ByVal hwnd As Long, ByVal lpOperation As String, ByVal lpFile As String, ByVal lpParameters As String, ByVal lpDirectory As String, ByVal nShowCmd As Long) As Long
 
 'Lista de cabezas
 Public Type tIndiceCabeza
@@ -940,11 +958,13 @@ End Type
 Public Foros(0 To 2) As tForo
 
 ' Forum info handler
-Public clsForos As New clsForum
+Public clsForos As clsForum
 
-'FragShooter
-Public isCapturePending As Boolean 'Cuando recibe el cambio de cuerpo a un muerto y es el usuario q matamos, hacemos la screen
-Public killedUserIndexFragShooter As Integer 'El UserIndex que matamos y estamos esperando q cambie su cuerpo
+'FragShooter variables
+Public FragShooterCapturePending As Boolean
+Public FragShooterNickname As String
+Public FragShooterKilledSomeone As Boolean
+
 
 Public Traveling As Boolean
 
@@ -982,3 +1002,10 @@ Public Const MADERA_GRH As Integer = 550
 Public Const MADERA_ELFICA_GRH As Integer = 1999
 
 Public picMouseIcon As Picture
+
+Public Enum eMoveType
+    Inventory = 1
+    Bank
+End Enum
+
+Public Const MP3_INITIAL_INDEX As Integer = 1000

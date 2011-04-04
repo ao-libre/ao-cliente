@@ -32,30 +32,22 @@ Public Enum eNumber_Types
 End Enum
 
 Public Sub AuxWriteWhisper(ByVal UserName As String, ByVal Mensaje As String)
+'***************************************************
+'Author: Unknown
+'Last Modification: 03/12/2010
+'03/12/2010: Enanoh - Ahora se envía el nick en vez del index del usuario.
+'***************************************************
     If LenB(UserName) = 0 Then Exit Sub
     
-    Dim i As Long
-    Dim nameLength As Long
     
     If (InStrB(UserName, "+") <> 0) Then
         UserName = Replace$(UserName, "+", " ")
     End If
     
     UserName = UCase$(UserName)
-    nameLength = Len(UserName)
     
-    i = 1
-    Do While i <= LastChar
-        If UCase$(charlist(i).Nombre) = UserName Or UCase$(Left$(charlist(i).Nombre, nameLength + 2)) = UserName & " <" Then
-            Exit Do
-        Else
-            i = i + 1
-        End If
-    Loop
+    Call WriteWhisper(UserName, Mensaje)
     
-    If i <= LastChar Then
-        Call WriteWhisper(i, Mensaje)
-    End If
 End Sub
 
 ''
@@ -632,9 +624,14 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                             
                         Case "INT"
                             Call WriteShowServerForm
-                            
+                        
+                        Case "DENUNCIAS"
+                            Call WriteShowDenouncesList
                     End Select
                 End If
+                
+            Case "/DENUNCIAS"
+                Call WriteEnableDenounces
                 
             Case "/IRA"
                 If notNullArguments Then
@@ -742,7 +739,10 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         
                         Case "VIDA"
                             tmpInt = eEditOptions.eo_Vida
-                            
+                         
+                        Case "POSS"
+                            tmpInt = eEditOptions.eo_Poss
+                         
                         Case Else
                             tmpInt = -1
                     End Select
@@ -902,6 +902,14 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             Case "/RMSG"
                 If notNullArguments Then
                     Call WriteServerMessage(ArgumentosRaw)
+                Else
+                    'Avisar que falta el parametro
+                    Call ShowConsoleMsg("Escriba un mensaje.")
+                End If
+            
+            Case "/MAPMSG"
+                If notNullArguments Then
+                    Call WriteMapMessage(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
                     Call ShowConsoleMsg("Escriba un mensaje.")
@@ -1588,6 +1596,20 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             Case "/HOGAR"
                 Call WriteHome
                 
+            Case "/SETDIALOG"
+                If notNullArguments Then
+                    Call WriteSetDialog(ArgumentosRaw)
+                Else
+                    'Avisar que falta el parametro
+                    Call ShowConsoleMsg("Faltan parámetros. Utilice /SETDIALOG DIALOGO.")
+                End If
+            
+            Case "/IMPERSONAR"
+                Call WriteImpersonate
+                
+            Case "/MIMETIZAR"
+                Call WriteImitate
+            
 #If SeguridadAlkon Then
             Case Else
                 Call ParseUserCommandEx(Comando, CantidadArgumentos, ArgumentosAll, ArgumentosRaw)

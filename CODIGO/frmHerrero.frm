@@ -625,8 +625,6 @@ Private Sub Form_Load()
     UsarMacro = True
     Armas = True
     UltimaPestania = 0
-    
-    MirandoHerreria = True
 End Sub
 
 Public Sub HideExtraControls(ByVal NumItems As Integer, Optional ByVal Upgrading As Boolean = False)

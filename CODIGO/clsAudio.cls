@@ -173,6 +173,10 @@ Dim lastPosY As Integer
 'States wether sound effects are currently activated or not
 Dim sEffectsActivated As Boolean
 
+''
+'Determines wether last music played was a MP3 or not.
+Private LastPlayMP3 As Boolean
+
 '**** Used By MP3 Playing. *****
 Dim IMC   As IMediaControl
 Dim IBA   As IBasicAudio
@@ -228,7 +232,7 @@ End Sub
 '
 ' @return   True if no errors occured, false otherwise.
 
-Public Function Initialize(ByRef dX As DirectX7, ByVal hWnd As Long, ByVal sound_path As String, ByVal music_path As String) As Boolean
+Public Function Initialize(ByRef dX As DirectX7, ByVal hwnd As Long, ByVal sound_path As String, ByVal music_path As String) As Boolean
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 16/03/04
@@ -245,7 +249,7 @@ On Error GoTo ErrHandler
     'Initialize DirectSound
     Set DirectSound = dX.DirectSoundCreate("")
     
-    Call DirectSound.SetCooperativeLevel(hWnd, DSSCL_PRIORITY)
+    Call DirectSound.SetCooperativeLevel(hwnd, DSSCL_PRIORITY)
     
     'Set sound path
     SoundPath = sound_path
@@ -254,7 +258,7 @@ On Error GoTo ErrHandler
     SndVolume = 0
     
     'Initialize DirectMusic
-    Music = InitializedirectMusic(dX, hWnd)
+    Music = InitializedirectMusic(dX, hwnd)
     
     'Set music path
     MusicPath = music_path
@@ -284,7 +288,7 @@ End Function
 '
 ' @return   True if no errors occured, false otherwise.
 
-Private Function InitializedirectMusic(ByRef dX As DirectX7, ByVal hWnd As Long) As Boolean
+Private Function InitializedirectMusic(ByRef dX As DirectX7, ByVal hwnd As Long) As Boolean
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 16/03/04
@@ -294,7 +298,7 @@ On Error GoTo ErrHandler
     Set Loader = DirectX.DirectMusicLoaderCreate()
     
     Set Performance = dX.DirectMusicPerformanceCreate()
-    Call Performance.Init(DirectSound, hWnd)
+    Call Performance.Init(DirectSound, hwnd)
     Call Performance.SetMasterAutoDownload(True)        'Enable auto download of instruments
     
     'Set to port default, 1 channel group is enough for MIDIs
@@ -681,6 +685,8 @@ On Error GoTo ErrHandler
     If LenB(file) > 0 Then _
         CurrentMusicFile = file
     
+    LastPlayMP3 = False
+    
     If Not MusicActivated Then Exit Function
     
     If Not Music Then Exit Function
@@ -949,6 +955,11 @@ Public Function MusicMP3Play(Optional ByVal FilePath As String = "") As Boolean
 '**************************************
     On Error GoTo ErrorHandl
     
+    If LenB(FilePath) > 0 Then _
+        CurrentMusicFile = FilePath
+    
+    LastPlayMP3 = True
+    
     If Not MusicActivated Then Exit Function
     
     If Not Music Then Exit Function
@@ -1080,9 +1091,17 @@ Public Property Let MusicActivated(ByVal nValue As Boolean)
     mActivated = nValue
     
     If nValue Then
-        Call PlayMIDI(CurrentMusicFile)
+        If LastPlayMP3 Then
+            Call MusicMP3Play(CurrentMusicFile)
+        Else
+            Call PlayMIDI(CurrentMusicFile)
+        End If
     Else
-        Call StopMidi
+        If LastPlayMP3 Then
+            Call MusicMP3Stop
+        Else
+            Call StopMidi
+        End If
     End If
 End Property
 

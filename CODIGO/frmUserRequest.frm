@@ -93,7 +93,7 @@ Private cBotonCerrar As clsGraphicalButton
 
 Public LastButtonPressed As clsGraphicalButton
 
-Private clsFormulario As New clsFormMovementManager
+Private clsFormulario As clsFormMovementManager
 
 Public Sub recievePeticion(ByVal p As String)
 
@@ -104,6 +104,7 @@ End Sub
 
 Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
+    Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
     Me.Picture = LoadPicture(App.path & "\graficos\VentanaPeticion.jpg")

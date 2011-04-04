@@ -45,7 +45,7 @@ Begin VB.Form frmConnect
       NoFolders       =   0   'False
       Transparent     =   0   'False
       ViewID          =   "{0057D0E0-3573-11CF-AE69-08002B2E1262}"
-      Location        =   ""
+      Location        =   "http:///"
    End
    Begin VB.TextBox txtPasswd 
       BackColor       =   &H00000000&
@@ -155,7 +155,7 @@ Begin VB.Form frmConnect
       NoFolders       =   0   'False
       Transparent     =   0   'False
       ViewID          =   "{0057D0E0-3573-11CF-AE69-08002B2E1262}"
-      Location        =   ""
+      Location        =   "http:///"
    End
    Begin VB.Image imgTeclas 
       Height          =   375
@@ -353,8 +353,12 @@ Private Sub Form_Load()
     EngineRun = False
     '[END]
     
+#If Testeo = 1 Then
+    webNoticias.Visible = False
+#Else
     webNoticias.Navigate ("http://ao.alkon.com.ar/noticiascliente/noticias.php")
-    
+#End If
+
     PortTxt.Text = Config_Inicio.Puerto
  
      '[CODE]:MatuX
@@ -621,7 +625,7 @@ End Sub
 Private Sub WebAuxiliar_BeforeNavigate2(ByVal pDisp As Object, URL As Variant, flags As Variant, TargetFrameName As Variant, PostData As Variant, Headers As Variant, Cancel As Boolean)
     
     If InStr(1, URL, "alkon") <> 0 Then
-        Call ShellExecute(hWnd, "open", URL, vbNullString, vbNullString, SW_SHOWNORMAL)
+        Call ShellExecute(hwnd, "open", URL, vbNullString, vbNullString, SW_SHOWNORMAL)
         Cancel = True
     End If
     
