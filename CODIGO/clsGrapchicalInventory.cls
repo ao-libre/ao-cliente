@@ -420,8 +420,8 @@ Private Sub DrawInventory()
         If Inventory(loopc).GrhIndex Then
             'Get source rect
             With SrcRect
-                .Left = .Left + GrhData(Inventory(loopc).GrhIndex).sX
-                .Top = .Top + GrhData(Inventory(loopc).GrhIndex).sY
+                .Left = GrhData(Inventory(loopc).GrhIndex).sX
+                .Top = GrhData(Inventory(loopc).GrhIndex).sY
                 .Right = .Left + ownTilePixelWidth
                 .Bottom = .Top + ownTilePixelHeight
             End With
