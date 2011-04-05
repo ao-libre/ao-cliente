@@ -65,9 +65,9 @@ Begin VB.Form frmBancoObj
       Appearance      =   0  'Flat
       BackColor       =   &H00000000&
       ForeColor       =   &H80000008&
-      Height          =   3795
+      Height          =   3840
       Left            =   540
-      ScaleHeight     =   3765
+      ScaleHeight     =   3810
       ScaleWidth      =   2400
       TabIndex        =   4
       Top             =   2400
@@ -77,9 +77,9 @@ Begin VB.Form frmBancoObj
       Appearance      =   0  'Flat
       BackColor       =   &H00000000&
       ForeColor       =   &H80000008&
-      Height          =   3795
+      Height          =   3840
       Left            =   4020
-      ScaleHeight     =   16.617
+      ScaleHeight     =   16.816
       ScaleMode       =   0  'User
       ScaleWidth      =   825.806
       TabIndex        =   3

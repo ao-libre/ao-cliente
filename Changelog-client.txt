@@ -285,3 +285,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 15/03/2011: Ahora se limpian todas las variables y flags en todos los casos cuando se desconecta el personaje. (ZaMa)
  * 15/03/2011: Elimino todas las declaraciones dinamicas de objetos (ahora son lazy). (ZaMa)
  * 26/03/2011: Habilito la reproduccion de mp3 para mapas. (ZaMa)
+ * 05/04/2011: Hice varios cambios en el manejo de inventarios gráficos. (Pato)

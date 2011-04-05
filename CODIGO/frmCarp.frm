@@ -22,14 +22,14 @@ Begin VB.Form frmCarp
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
       FillStyle       =   0  'Solid
-      Height          =   465
+      Height          =   480
       Index           =   4
       Left            =   5430
-      ScaleHeight     =   31
+      ScaleHeight     =   32
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   32
       TabIndex        =   14
-      Top             =   3945
+      Top             =   3930
       Visible         =   0   'False
       Width           =   480
    End
@@ -38,14 +38,14 @@ Begin VB.Form frmCarp
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
       FillStyle       =   0  'Solid
-      Height          =   465
+      Height          =   480
       Index           =   3
       Left            =   5430
-      ScaleHeight     =   31
+      ScaleHeight     =   32
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   32
       TabIndex        =   13
-      Top             =   3150
+      Top             =   3135
       Visible         =   0   'False
       Width           =   480
    End
@@ -54,14 +54,14 @@ Begin VB.Form frmCarp
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
       FillStyle       =   0  'Solid
-      Height          =   465
+      Height          =   480
       Index           =   2
       Left            =   5430
-      ScaleHeight     =   31
+      ScaleHeight     =   32
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   32
       TabIndex        =   12
-      Top             =   2355
+      Top             =   2340
       Visible         =   0   'False
       Width           =   480
    End
@@ -70,14 +70,14 @@ Begin VB.Form frmCarp
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
       FillStyle       =   0  'Solid
-      Height          =   465
+      Height          =   480
       Index           =   1
       Left            =   5430
-      ScaleHeight     =   31
+      ScaleHeight     =   32
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   32
       TabIndex        =   11
-      Top             =   1560
+      Top             =   1545
       Visible         =   0   'False
       Width           =   480
    End
@@ -129,14 +129,14 @@ Begin VB.Form frmCarp
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
       FillStyle       =   0  'Solid
-      Height          =   465
+      Height          =   480
       Index           =   1
       Left            =   870
-      ScaleHeight     =   31
+      ScaleHeight     =   32
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   32
       TabIndex        =   10
-      Top             =   1560
+      Top             =   1545
       Visible         =   0   'False
       Width           =   480
    End
@@ -145,13 +145,13 @@ Begin VB.Form frmCarp
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
       FillStyle       =   0  'Solid
-      Height          =   465
+      Height          =   480
       Left            =   1710
-      ScaleHeight     =   31
+      ScaleHeight     =   32
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   64
       TabIndex        =   9
-      Top             =   1560
+      Top             =   1545
       Visible         =   0   'False
       Width           =   960
    End
@@ -168,13 +168,13 @@ Begin VB.Form frmCarp
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
       FillStyle       =   0  'Solid
-      Height          =   465
+      Height          =   480
       Left            =   1710
-      ScaleHeight     =   31
+      ScaleHeight     =   32
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   64
       TabIndex        =   8
-      Top             =   2355
+      Top             =   2340
       Visible         =   0   'False
       Width           =   960
    End
@@ -183,14 +183,14 @@ Begin VB.Form frmCarp
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
       FillStyle       =   0  'Solid
-      Height          =   465
+      Height          =   480
       Index           =   2
       Left            =   870
-      ScaleHeight     =   31
+      ScaleHeight     =   32
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   32
       TabIndex        =   7
-      Top             =   2355
+      Top             =   2340
       Visible         =   0   'False
       Width           =   480
    End
@@ -199,13 +199,13 @@ Begin VB.Form frmCarp
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
       FillStyle       =   0  'Solid
-      Height          =   465
+      Height          =   480
       Left            =   1710
-      ScaleHeight     =   31
+      ScaleHeight     =   32
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   64
       TabIndex        =   6
-      Top             =   3150
+      Top             =   3135
       Visible         =   0   'False
       Width           =   960
    End
@@ -214,14 +214,14 @@ Begin VB.Form frmCarp
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
       FillStyle       =   0  'Solid
-      Height          =   465
+      Height          =   480
       Index           =   3
       Left            =   870
-      ScaleHeight     =   31
+      ScaleHeight     =   32
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   32
       TabIndex        =   5
-      Top             =   3150
+      Top             =   3135
       Visible         =   0   'False
       Width           =   480
    End
@@ -230,13 +230,13 @@ Begin VB.Form frmCarp
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
       FillStyle       =   0  'Solid
-      Height          =   465
+      Height          =   480
       Left            =   1710
-      ScaleHeight     =   31
+      ScaleHeight     =   32
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   64
       TabIndex        =   4
-      Top             =   3945
+      Top             =   3930
       Visible         =   0   'False
       Width           =   960
    End
@@ -245,14 +245,14 @@ Begin VB.Form frmCarp
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
       FillStyle       =   0  'Solid
-      Height          =   465
+      Height          =   480
       Index           =   4
       Left            =   870
-      ScaleHeight     =   31
+      ScaleHeight     =   32
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   32
       TabIndex        =   3
-      Top             =   3945
+      Top             =   3930
       Visible         =   0   'False
       Width           =   480
    End
@@ -771,6 +771,12 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y A
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
+    Dim i As Long
+    
+    For i = 1 To MAX_LIST_ITEMS
+        Set InvMaderasCarpinteria(i) = Nothing
+    Next i
+
     MirandoCarpinteria = False
 End Sub
 
