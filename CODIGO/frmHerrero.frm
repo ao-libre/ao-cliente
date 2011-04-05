@@ -44,13 +44,13 @@ Begin VB.Form frmHerrero
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
       FillStyle       =   0  'Solid
-      Height          =   465
+      Height          =   480
       Index           =   1
       Left            =   5430
-      ScaleHeight     =   465
+      ScaleHeight     =   480
       ScaleWidth      =   480
       TabIndex        =   13
-      Top             =   1560
+      Top             =   1545
       Visible         =   0   'False
       Width           =   480
    End
@@ -59,13 +59,13 @@ Begin VB.Form frmHerrero
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
       FillStyle       =   0  'Solid
-      Height          =   465
+      Height          =   480
       Index           =   2
       Left            =   5400
-      ScaleHeight     =   465
+      ScaleHeight     =   480
       ScaleWidth      =   480
       TabIndex        =   12
-      Top             =   2355
+      Top             =   2340
       Visible         =   0   'False
       Width           =   480
    End
@@ -74,13 +74,13 @@ Begin VB.Form frmHerrero
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
       FillStyle       =   0  'Solid
-      Height          =   465
+      Height          =   480
       Index           =   3
       Left            =   5430
-      ScaleHeight     =   465
+      ScaleHeight     =   480
       ScaleWidth      =   480
       TabIndex        =   11
-      Top             =   3150
+      Top             =   3135
       Visible         =   0   'False
       Width           =   480
    End
@@ -89,13 +89,13 @@ Begin VB.Form frmHerrero
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
       FillStyle       =   0  'Solid
-      Height          =   465
+      Height          =   480
       Index           =   4
       Left            =   5430
-      ScaleHeight     =   465
+      ScaleHeight     =   480
       ScaleWidth      =   480
       TabIndex        =   10
-      Top             =   3945
+      Top             =   3930
       Visible         =   0   'False
       Width           =   480
    End
@@ -123,13 +123,13 @@ Begin VB.Form frmHerrero
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
       FillStyle       =   0  'Solid
-      Height          =   465
+      Height          =   480
       Index           =   4
       Left            =   870
-      ScaleHeight     =   465
+      ScaleHeight     =   480
       ScaleWidth      =   480
       TabIndex        =   9
-      Top             =   3945
+      Top             =   3930
       Visible         =   0   'False
       Width           =   480
    End
@@ -138,12 +138,12 @@ Begin VB.Form frmHerrero
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
       FillStyle       =   0  'Solid
-      Height          =   465
+      Height          =   480
       Left            =   1710
-      ScaleHeight     =   465
+      ScaleHeight     =   480
       ScaleWidth      =   1440
       TabIndex        =   8
-      Top             =   3945
+      Top             =   3930
       Visible         =   0   'False
       Width           =   1440
    End
@@ -152,13 +152,13 @@ Begin VB.Form frmHerrero
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
       FillStyle       =   0  'Solid
-      Height          =   465
+      Height          =   480
       Index           =   3
       Left            =   870
-      ScaleHeight     =   465
+      ScaleHeight     =   480
       ScaleWidth      =   480
       TabIndex        =   7
-      Top             =   3150
+      Top             =   3135
       Visible         =   0   'False
       Width           =   480
    End
@@ -167,12 +167,12 @@ Begin VB.Form frmHerrero
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
       FillStyle       =   0  'Solid
-      Height          =   465
+      Height          =   480
       Left            =   1710
-      ScaleHeight     =   465
+      ScaleHeight     =   480
       ScaleWidth      =   1440
       TabIndex        =   6
-      Top             =   3150
+      Top             =   3135
       Visible         =   0   'False
       Width           =   1440
    End
@@ -181,13 +181,13 @@ Begin VB.Form frmHerrero
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
       FillStyle       =   0  'Solid
-      Height          =   465
+      Height          =   480
       Index           =   2
       Left            =   870
-      ScaleHeight     =   465
+      ScaleHeight     =   480
       ScaleWidth      =   480
       TabIndex        =   5
-      Top             =   2355
+      Top             =   2340
       Visible         =   0   'False
       Width           =   480
    End
@@ -196,12 +196,12 @@ Begin VB.Form frmHerrero
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
       FillStyle       =   0  'Solid
-      Height          =   465
+      Height          =   480
       Left            =   1710
-      ScaleHeight     =   465
+      ScaleHeight     =   480
       ScaleWidth      =   1440
       TabIndex        =   4
-      Top             =   2355
+      Top             =   2340
       Visible         =   0   'False
       Width           =   1440
    End
@@ -218,12 +218,12 @@ Begin VB.Form frmHerrero
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
       FillStyle       =   0  'Solid
-      Height          =   465
+      Height          =   480
       Left            =   1710
-      ScaleHeight     =   465
+      ScaleHeight     =   480
       ScaleWidth      =   1440
       TabIndex        =   3
-      Top             =   1560
+      Top             =   1545
       Visible         =   0   'False
       Width           =   1440
    End
@@ -232,13 +232,13 @@ Begin VB.Form frmHerrero
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
       FillStyle       =   0  'Solid
-      Height          =   465
+      Height          =   480
       Index           =   1
       Left            =   870
-      ScaleHeight     =   465
+      ScaleHeight     =   480
       ScaleWidth      =   480
       TabIndex        =   2
-      Top             =   1560
+      Top             =   1545
       Visible         =   0   'False
       Width           =   480
    End
@@ -750,6 +750,12 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y A
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
+    Dim i As Long
+    
+    For i = 1 To MAX_LIST_ITEMS
+        Set InvLingosHerreria(i) = Nothing
+    Next i
+    
     MirandoHerreria = False
 End Sub
 

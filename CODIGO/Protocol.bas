@@ -1171,11 +1171,14 @@ Private Sub HandleCommerceEnd()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    'Reset vars
-    Comerciando = False
+    Set InvComUsu = Nothing
+    Set InvComNpc = Nothing
     
     'Hide form
     Unload frmComerciar
+    
+    'Reset vars
+    Comerciando = False
 End Sub
 
 ''
@@ -1210,6 +1213,9 @@ Private Sub HandleCommerceInit()
     
     'Remove packet ID
     Call incomingData.ReadByte
+    
+    Set InvComUsu = New clsGrapchicalInventory
+    Set InvComNpc = New clsGrapchicalInventory
     
     ' Initialize commerce inventories
     Call InvComUsu.Initialize(DirectDraw, frmComerciar.picInvUser, Inventario.MaxObjs)
@@ -1259,9 +1265,12 @@ Private Sub HandleBankInit()
     'Remove packet ID
     Call incomingData.ReadByte
     
-        BankGold = incomingData.ReadLong
+    Set InvBanco(0) = New clsGrapchicalInventory
+    Set InvBanco(1) = New clsGrapchicalInventory
+    
+    BankGold = incomingData.ReadLong
     Call InvBanco(0).Initialize(DirectDraw, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
-    Call InvBanco(1).Initialize(DirectDraw, frmBancoObj.picInv, Inventario.MaxObjs)
+    Call InvBanco(1).Initialize(DirectDraw, frmBancoObj.PicInv, Inventario.MaxObjs)
     
     For i = 1 To Inventario.MaxObjs
         With Inventario
@@ -1302,7 +1311,15 @@ Private Sub HandleUserCommerceInit()
     
     'Remove packet ID
     Call incomingData.ReadByte
+    
     TradingUserName = incomingData.ReadASCIIString
+    
+    Set InvComUsu = New clsGrapchicalInventory
+    Set InvOfferComUsu(0) = New clsGrapchicalInventory
+    Set InvOfferComUsu(1) = New clsGrapchicalInventory
+    Set InvOroComUsu(0) = New clsGrapchicalInventory
+    Set InvOroComUsu(1) = New clsGrapchicalInventory
+    Set InvOroComUsu(2) = New clsGrapchicalInventory
     
     ' Initialize commerce inventories
     Call InvComUsu.Initialize(DirectDraw, frmComerciarUsu.picInvComercio, Inventario.MaxObjs)
@@ -3507,6 +3524,10 @@ On Error GoTo ErrHandler
         End With
     Next i
     
+    For i = 1 To MAX_LIST_ITEMS
+        Set InvLingosHerreria(i) = New clsGrapchicalInventory
+    Next i
+    
     With frmHerrero
         ' Inicializo los inventarios
         Call InvLingosHerreria(1).Initialize(DirectDraw, .picLingotes0, 3, , , , , , False)
@@ -3684,6 +3705,10 @@ On Error GoTo ErrHandler
             .OBJIndex = Buffer.ReadInteger()
             .Upgrade = Buffer.ReadInteger()
         End With
+    Next i
+    
+    For i = 1 To MAX_LIST_ITEMS
+        Set InvMaderasCarpinteria(i) = New clsGrapchicalInventory
     Next i
     
     With frmCarp
