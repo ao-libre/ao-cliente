@@ -1172,7 +1172,7 @@ Sub DDrawTransGrhIndextoSurface(ByVal GrhIndex As Integer, ByVal X As Integer, B
     End With
 End Sub
 
-Sub DDrawTransGrhtoSurface(ByRef Grh As Grh, ByVal X As Integer, ByVal Y As Integer, ByVal Center As Byte, ByVal Animate As Byte)
+Sub DDrawTransGrhtoSurface(ByRef Grh As Grh, ByVal X As Integer, ByVal Y As Integer, ByVal Center As Byte, ByVal Animate As Byte, Optional ByVal killAtEnd As Byte = 1)
 '*****************************************************************
 'Draws a GRH transparently to a X and Y position
 '*****************************************************************
@@ -1193,7 +1193,7 @@ On Error GoTo error
                         Grh.Loops = Grh.Loops - 1
                     Else
                         Grh.Started = 0
-                        Exit Sub
+                        If killAtEnd Then Exit Sub
                     End If
                 End If
             End If
@@ -1248,7 +1248,7 @@ End Sub
 
 #If ConAlfaB = 1 Then
 
-Sub DDrawTransGrhtoSurfaceAlpha(ByRef Grh As Grh, ByVal X As Integer, ByVal Y As Integer, ByVal Center As Byte, ByVal Animate As Byte)
+Sub DDrawTransGrhtoSurfaceAlpha(ByRef Grh As Grh, ByVal X As Integer, ByVal Y As Integer, ByVal Center As Byte, ByVal Animate As Byte, Optional ByVal killAtEnd As Byte = 1)
 '*****************************************************************
 'Draws a GRH transparently to a X and Y position
 '*****************************************************************
@@ -1272,7 +1272,7 @@ Sub DDrawTransGrhtoSurfaceAlpha(ByRef Grh As Grh, ByVal X As Integer, ByVal Y As
                         Grh.Loops = Grh.Loops - 1
                     Else
                         Grh.Started = 0
-                        Exit Sub
+                        If killAtEnd Then Exit Sub
                     End If
                 End If
             End If
@@ -2129,7 +2129,7 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
         If Not .invisible Then
             'Draw Body
             If .Body.Walk(.Heading).GrhIndex Then _
-                Call DDrawTransGrhtoSurface(.Body.Walk(.Heading), PixelOffsetX, PixelOffsetY, 1, 1)
+                Call DDrawTransGrhtoSurface(.Body.Walk(.Heading), PixelOffsetX, PixelOffsetY, 1, 1, 0)
         
             'Draw Head
             If .Head.Head(.Heading).GrhIndex Then
@@ -2141,11 +2141,11 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
                 
                 'Draw Weapon
                 If .Arma.WeaponWalk(.Heading).GrhIndex Then _
-                    Call DDrawTransGrhtoSurface(.Arma.WeaponWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, 1)
+                    Call DDrawTransGrhtoSurface(.Arma.WeaponWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, 1, 0)
                 
                 'Draw Shield
                 If .Escudo.ShieldWalk(.Heading).GrhIndex Then _
-                    Call DDrawTransGrhtoSurface(.Escudo.ShieldWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, 1)
+                    Call DDrawTransGrhtoSurface(.Escudo.ShieldWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, 1, 0)
             
             
                 'Draw name over head
