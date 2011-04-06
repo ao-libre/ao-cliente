@@ -286,3 +286,4 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 15/03/2011: Elimino todas las declaraciones dinamicas de objetos (ahora son lazy). (ZaMa)
  * 26/03/2011: Habilito la reproduccion de mp3 para mapas. (ZaMa)
  * 05/04/2011: Hice varios cambios en el manejo de inventarios gráficos. (Pato)
+ * 05/04/2011: Vuelvo a fixear el bug que cuando intentabas crear un personaje que existía perdías la conexión(Se perdió en el último merge). (Pato)
