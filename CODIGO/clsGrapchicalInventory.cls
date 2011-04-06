@@ -50,6 +50,8 @@ Private ImgContainer As Boolean
 
 Private slotDragged As Integer
 
+Private dragAndDropOn As Boolean
+
 Private InvSurface As DirectDrawSurface7            'DD Surface used to render everything
 Private bufferInvSurface As DirectDrawSurface7
 
@@ -484,8 +486,9 @@ Private Sub InventoryWindow_MouseMove(Button As Integer, Shift As Integer, X As 
         Exit Sub
     
     If Button = vbRightButton Then
-        'Call DrawInventory(slotDragged, X, Y)
-        Call DrawFloatingItem(slotDragged, X, Y)
+        If dragAndDropOn Then
+            Call DrawFloatingItem(slotDragged, X, Y)
+        End If
     Else
         temp_x = X \ ownTilePixelWidth
         temp_y = Y \ ownTilePixelHeight
@@ -503,20 +506,19 @@ Private Sub InventoryWindow_MouseDown(Button As Integer, Shift As Integer, X As 
     Dim temp_y As Integer
     Dim TempItem As Integer
     
-    'Exit if it got outside the control's area
-    If X < 0 Or Y < 0 Or X > InventoryWindow.Width Or Y > InventoryWindow.Height Then Exit Sub
-    
-    If Button = vbRightButton Then
-    
-        temp_x = X \ ownTilePixelWidth
-        temp_y = Y \ ownTilePixelHeight
-    
-        TempItem = temp_x + (temp_y + InventoryOffset) * (InventoryWindow.ScaleWidth \ ownTilePixelWidth) + 1
+    If dragAndDropOn Then
+        'Exit if it got outside the control's area
+        If X < 0 Or Y < 0 Or X > InventoryWindow.Width Or Y > InventoryWindow.Height Then Exit Sub
         
-        slotDragged = TempItem
+        If Button = vbRightButton Then
+            temp_x = X \ ownTilePixelWidth
+            temp_y = Y \ ownTilePixelHeight
         
+            TempItem = temp_x + (temp_y + InventoryOffset) * (InventoryWindow.ScaleWidth \ ownTilePixelWidth) + 1
+            
+            slotDragged = TempItem
+        End If
     End If
-        
 End Sub
 
 Private Sub DrawFloatingItem(ByVal slot As Integer, ByVal X As Integer, ByVal Y As Integer)
@@ -643,7 +645,7 @@ End Sub
                             Optional ByVal FontSize As Integer = 7, Optional ByVal TileWidth As Integer = 32, _
                             Optional ByVal TileHeight As Integer = 32, Optional ByVal startX As Integer = 0, _
                             Optional ByVal startY As Integer = 0, Optional ByVal bImgContainer As Boolean = True, _
-                            Optional ByVal bShowText As Boolean = True, Optional FormatValue As Boolean = False)
+                            Optional ByVal bShowText As Boolean = True, Optional FormatValue As Boolean = False, Optional ByVal dragAndDrop As Boolean = False)
 #End If
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -691,6 +693,7 @@ End Sub
     ImgContainer = bImgContainer
     ShowValue = bShowText
    
+    dragAndDropOn = dragAndDrop
     
     'Prepare surfaces for text rendering
     InvSurface.SetFontTransparency True
@@ -740,15 +743,17 @@ Private Sub InventoryWindow_MouseUp(Button As Integer, Shift As Integer, X As Si
     prevSelItem = InvSelectedItem
     
     If Button = vbRightButton Then
-        temp_x = X \ ownTilePixelWidth
-        temp_y = Y \ ownTilePixelHeight
-    
-        InvSelectedItem = temp_x + (temp_y + InventoryOffset) * (InventoryWindow.ScaleWidth \ ownTilePixelWidth) + 1
+        If dragAndDropOn Then
+            temp_x = X \ ownTilePixelWidth
+            temp_y = Y \ ownTilePixelHeight
         
-        Call DrawInventory
-        
-        If InvSelectedItem <> slotDragged Then
-            RaiseEvent dragDone(slotDragged, InvSelectedItem)
+            InvSelectedItem = temp_x + (temp_y + InventoryOffset) * (InventoryWindow.ScaleWidth \ ownTilePixelWidth) + 1
+            
+            Call DrawInventory
+            
+            If InvSelectedItem <> slotDragged Then
+                RaiseEvent dragDone(slotDragged, InvSelectedItem)
+            End If
         End If
     Else
         'Get the currently clickced item

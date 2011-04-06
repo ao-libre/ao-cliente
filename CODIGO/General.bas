@@ -152,8 +152,10 @@ Sub InitMI()
     Dim CualMITemp As Integer
     
     alternativos = RandomNumber(1, 7368)
-    CualMITemp = RandomNumber(1, 1233)
     
+    Do
+        CualMITemp = RandomNumber(1, 1233)
+    Loop While CualMITemp = CualMI
 
     Set MI(CualMITemp) = New clsManagerInvisibles
     Call MI(CualMITemp).Inicializar(alternativos, 10000)
@@ -902,14 +904,14 @@ Private Sub LoadInitialConfig()
     '###########
     ' SERVIDORES
     'TODO : esto de ServerRecibidos no se podría sacar???
-    Call AddtoRichTextBox(frmCargando.Status, "Buscando servidores... ", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.status, "Buscando servidores... ", 255, 255, 255, True, False, True)
     Call CargarServidores
     ServersRecibidos = True
-    Call AddtoRichTextBox(frmCargando.Status, "Hecho", 255, 0, 0, True, False, False)
+    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
     
     '###########
     ' CONSTANTES
-    Call AddtoRichTextBox(frmCargando.Status, "Iniciando constantes... ", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.status, "Iniciando constantes... ", 255, 255, 255, True, False, True)
     Call InicializarNombres
     ' Initialize FONTTYPES
     Call Protocol.InitFonts
@@ -925,11 +927,11 @@ Private Sub LoadInitialConfig()
     ' Mouse Pointer (Loaded before opening any form with buttons in it)
     If FileExist(DirExtras & "Hand.ico", vbArchive) Then _
         Set picMouseIcon = LoadPicture(DirExtras & "Hand.ico")
-    Call AddtoRichTextBox(frmCargando.Status, "Hecho", 255, 0, 0, True, False, False)
+    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
     
     '#######
     ' CLASES
-    Call AddtoRichTextBox(frmCargando.Status, "Instanciando clases... ", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.status, "Instanciando clases... ", 255, 255, 255, True, False, True)
     Set Dialogos = New clsDialogs
     Set Audio = New clsAudio
     Set Inventario = New clsGrapchicalInventory
@@ -944,30 +946,30 @@ Private Sub LoadInitialConfig()
     Set md5 = New clsMD5
 #End If
     Set DirectX = New DirectX7
-    Call AddtoRichTextBox(frmCargando.Status, "Hecho", 255, 0, 0, True, False, False)
+    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
     
     '##############
     ' MOTOR GRÁFICO
-    Call AddtoRichTextBox(frmCargando.Status, "Iniciando motor gráfico... ", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.status, "Iniciando motor gráfico... ", 255, 255, 255, True, False, True)
     
     If Not InitTileEngine(frmMain.hwnd, 149, 13, 32, 32, 13, 17, 9, 8, 8, 0.018) Then
         Call CloseClient
     End If
-    Call AddtoRichTextBox(frmCargando.Status, "Hecho", 255, 0, 0, True, False, False)
+    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
     
     '###################
     ' ANIMACIONES EXTRAS
-    Call AddtoRichTextBox(frmCargando.Status, "Creando animaciones extra... ", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.status, "Creando animaciones extra... ", 255, 255, 255, True, False, True)
     Call CargarTips
     Call CargarArrayLluvia
     Call CargarAnimArmas
     Call CargarAnimEscudos
     Call CargarColores
-    Call AddtoRichTextBox(frmCargando.Status, "Hecho", 255, 0, 0, True, False, False)
+    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
     
     '#############
     ' DIRECT SOUND
-    Call AddtoRichTextBox(frmCargando.Status, "Iniciando DirectSound... ", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.status, "Iniciando DirectSound... ", 255, 255, 255, True, False, True)
     'Inicializamos el sonido
     Call Audio.Initialize(DirectX, frmMain.hwnd, App.path & "\" & Config_Inicio.DirSonidos & "\", App.path & "\" & Config_Inicio.DirMusica & "\")
     'Enable / Disable audio
@@ -975,16 +977,16 @@ Private Sub LoadInitialConfig()
     Audio.SoundActivated = Not ClientSetup.bNoSound
     Audio.SoundEffectsActivated = Not ClientSetup.bNoSoundEffects
     'Inicializamos el inventario gráfico
-    Call Inventario.Initialize(DirectDraw, frmMain.PicInv, MAX_INVENTORY_SLOTS)
+    Call Inventario.Initialize(DirectDraw, frmMain.PicInv, MAX_INVENTORY_SLOTS, , , , , , , , , True)
     Call Audio.MusicMP3Play(App.path & "\MP3\" & MP3_Inicio & ".mp3")
-    Call AddtoRichTextBox(frmCargando.Status, "Hecho", 255, 0, 0, True, False, False)
+    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
     
 #If SeguridadAlkon Then
     CualMI = 0
     Call InitMI
 #End If
     
-    Call AddtoRichTextBox(frmCargando.Status, "                    ¡Bienvenido a Argentum Online!", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.status, "                    ¡Bienvenido a Argentum Online!", 255, 255, 255, True, False, True)
 
     'Give the user enough time to read the welcome text
     Call Sleep(500)
@@ -1331,7 +1333,7 @@ Public Sub CloseClient()
     
     EngineRun = False
     frmCargando.Show
-    Call AddtoRichTextBox(frmCargando.Status, "Liberando recursos...", 0, 0, 0, 0, 0, 0)
+    Call AddtoRichTextBox(frmCargando.status, "Liberando recursos...", 0, 0, 0, 0, 0, 0)
     
     Call Resolution.ResetResolution
     
@@ -1567,4 +1569,3 @@ Public Sub ResetAllInfo()
     Call Audio.PlayMIDI("2.mid")
 
 End Sub
-
