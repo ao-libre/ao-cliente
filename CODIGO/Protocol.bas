@@ -4610,11 +4610,11 @@ On Error GoTo ErrHandler
         .criminales.Caption = CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .status.Caption = " Ciudadano"
-            .status.ForeColor = vbBlue
+            .Status.Caption = " Ciudadano"
+            .Status.ForeColor = vbBlue
         Else
-            .status.Caption = " Criminal"
-            .status.ForeColor = vbRed
+            .Status.Caption = " Criminal"
+            .Status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)
@@ -10632,6 +10632,7 @@ On Error GoTo ErrHandler
         .txtCreador.Text = Buffer.ReadASCIIString
         .txtDescrip.Text = Buffer.ReadASCIIString
         
+        'Status del pj
         If Buffer.ReadBoolean Then
             .lblEstado.ForeColor = vbGreen
             .lblEstado.Caption = "ONLINE"
@@ -10639,14 +10640,16 @@ On Error GoTo ErrHandler
             .lblEstado.ForeColor = vbRed
             .lblEstado.Caption = "OFFLINE"
         End If
-    
+        
+        'IP del personaje
         tmpStr = Buffer.ReadASCIIString
         If LenB(tmpStr) Then
-            .txtIP.Text = Format(tmpStr, "hh:mm:ss")
+            .txtIP.Text = tmpStr
         Else
             .txtIP.Text = "Usuario offline"
         End If
         
+        'Tiempo online
         tmpStr = Buffer.ReadASCIIString
         If LenB(tmpStr) Then
             .txtTimeOn.Text = tmpStr
@@ -10654,6 +10657,7 @@ On Error GoTo ErrHandler
             .txtTimeOn.Text = "Usuario offline"
         End If
         
+        'Observaciones
         tmpStr = Buffer.ReadASCIIString
         If LenB(tmpStr) Then
             .txtObs.Text = tmpStr
