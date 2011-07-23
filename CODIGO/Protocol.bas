@@ -50,6 +50,7 @@ Private Type tFont
     italic As Boolean
 End Type
 
+#If SeguridadAlkon = 0 Then
 Private Enum ServerPacketID
     logged                  ' LOGGED
     RemoveDialogs           ' QTDL
@@ -296,6 +297,7 @@ Private Enum ClientPacketID
     Consultation
     MoveItem                'Drag and drop
 End Enum
+#End If
 
 Public Enum FontTypeNames
     FONTTYPE_TALK
@@ -1270,7 +1272,7 @@ Private Sub HandleBankInit()
     
     BankGold = incomingData.ReadLong
     Call InvBanco(0).Initialize(DirectDraw, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
-    Call InvBanco(1).Initialize(DirectDraw, frmBancoObj.picInv, Inventario.MaxObjs)
+    Call InvBanco(1).Initialize(DirectDraw, frmBancoObj.PicInv, Inventario.MaxObjs)
     
     For i = 1 To Inventario.MaxObjs
         With Inventario
@@ -4610,11 +4612,11 @@ On Error GoTo ErrHandler
         .criminales.Caption = CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .Status.Caption = " Ciudadano"
-            .Status.ForeColor = vbBlue
+            .status.Caption = " Ciudadano"
+            .status.ForeColor = vbBlue
         Else
-            .Status.Caption = " Criminal"
-            .Status.ForeColor = vbRed
+            .status.Caption = " Criminal"
+            .status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)
