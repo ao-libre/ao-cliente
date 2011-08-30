@@ -88,8 +88,8 @@ Y = 250
 '500 600 700 800 900
     For i = 1 To p_CANTIDADDIALOGOS
         If Trim$(p_Dialogos(i).Texto) <> vbNullString Then
-            If Left$(p_Dialogos(i).Texto, 1) = Chr(3) Then
-                Call Mod_TileEngine.RenderText(260, Y + (i * 10), mid(p_Dialogos(i).Texto, 2), vbGreen, usedFont)
+            If Left$(p_Dialogos(i).Texto, 1) = Chr$(3) Then
+                Call Mod_TileEngine.RenderText(260, Y + (i * 10), mid$(p_Dialogos(i).Texto, 2), vbGreen, usedFont)
             Else
                 Call Mod_TileEngine.RenderText(260, Y + (i * 10), p_Dialogos(i).Texto, vbYellow, usedFont)
             End If

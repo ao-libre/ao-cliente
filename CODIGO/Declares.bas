@@ -560,12 +560,12 @@ Public Const MENSAJE_GOLPE_CRIATURA_1 As String = "¡¡Le has pegado a la criatura
 
 Public Const MENSAJE_ATAQUE_FALLO As String = " te atacó y falló!!"
 
-Public Const MENSAJE_RECIVE_IMPACTO_CABEZA As String = " te ha pegado en la cabeza por "
-Public Const MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ As String = " te ha pegado el brazo izquierdo por "
-Public Const MENSAJE_RECIVE_IMPACTO_BRAZO_DER As String = " te ha pegado el brazo derecho por "
-Public Const MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ As String = " te ha pegado la pierna izquierda por "
-Public Const MENSAJE_RECIVE_IMPACTO_PIERNA_DER As String = " te ha pegado la pierna derecha por "
-Public Const MENSAJE_RECIVE_IMPACTO_TORSO As String = " te ha pegado en el torso por "
+Public Const MENSAJE_RECIBE_IMPACTO_CABEZA As String = " te ha pegado en la cabeza por "
+Public Const MENSAJE_RECIBE_IMPACTO_BRAZO_IZQ As String = " te ha pegado el brazo izquierdo por "
+Public Const MENSAJE_RECIBE_IMPACTO_BRAZO_DER As String = " te ha pegado el brazo derecho por "
+Public Const MENSAJE_RECIBE_IMPACTO_PIERNA_IZQ As String = " te ha pegado la pierna izquierda por "
+Public Const MENSAJE_RECIBE_IMPACTO_PIERNA_DER As String = " te ha pegado la pierna derecha por "
+Public Const MENSAJE_RECIBE_IMPACTO_TORSO As String = " te ha pegado en el torso por "
 
 Public Const MENSAJE_PRODUCE_IMPACTO_1 As String = "¡¡Le has pegado a "
 Public Const MENSAJE_PRODUCE_IMPACTO_CABEZA As String = " en la cabeza por "
@@ -581,7 +581,7 @@ Public Const MENSAJE_TRABAJO_ROBAR As String = "Haz click sobre la víctima..."
 Public Const MENSAJE_TRABAJO_TALAR As String = "Haz click sobre el árbol..."
 Public Const MENSAJE_TRABAJO_MINERIA As String = "Haz click sobre el yacimiento..."
 Public Const MENSAJE_TRABAJO_FUNDIRMETAL As String = "Haz click sobre la fragua..."
-Public Const MENSAJE_TRABAJO_PROYECTILES As String = "Haz click sobre la victima..."
+Public Const MENSAJE_TRABAJO_PROYECTILES As String = "Haz click sobre la víctima..."
 
 Public Const MENSAJE_ENTRAR_PARTY_1 As String = "Si deseas entrar en una party con "
 Public Const MENSAJE_ENTRAR_PARTY_2 As String = ", escribe /entrarparty"

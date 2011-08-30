@@ -164,4 +164,3 @@ Public Function WndProc(ByVal hwnd As Long, ByVal uMsg As Long, ByVal wParam As 
     
     WndProc = CallWindowProc(lOldProc, hwnd, uMsg, wParam, lParam)
 End Function
-
