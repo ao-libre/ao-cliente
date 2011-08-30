@@ -108,4 +108,3 @@ Put #N, , MiCabecera
 Put #N, , GameIniConfiguration
 Close #N
 End Sub
-

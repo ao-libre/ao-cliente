@@ -306,7 +306,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         Call WriteInquiryVote(ArgumentosRaw)
                     Else
                         'No es numerico
-                        Call ShowConsoleMsg("Para votar una opcion, escribe /encuesta NUMERODEOPCION, por ejemplo para votar la opcion 1, escribe /encuesta 1.")
+                        Call ShowConsoleMsg("Para votar una opción, escribe /encuesta NUMERODEOPCION, por ejemplo para votar la opcion 1, escribe /encuesta 1.")
                     End If
                 End If
         
@@ -334,7 +334,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         Call WriteCentinelReport(CInt(ArgumentosRaw))
                     Else
                         'No es numerico
-                        Call ShowConsoleMsg("El código de verificación debe ser numerico. Utilice /centinela X, siendo X el código de verificación.")
+                        Call ShowConsoleMsg("El código de verificación debe ser numérico. Utilice /centinela X, siendo X el código de verificación.")
                     End If
                 Else
                     'Avisar que falta el parametro
@@ -467,7 +467,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     End If
                 Else
                     'Avisar que falta el parametro
-                    Call ShowConsoleMsg("Faltan paramtetros. Utilice /depositar CANTIDAD.")
+                    Call ShowConsoleMsg("Faltan parámetros. Utilice /depositar CANTIDAD.")
                 End If
                 
             Case "/DENUNCIAR"
@@ -482,7 +482,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 If UserLvl >= 25 Then
                     Call WriteGuildFundate
                 Else
-                    Call ShowConsoleMsg("Para fundar un clan tenés que ser nivel 25 y tener 90 skills en liderazgo.")
+                    Call ShowConsoleMsg("Para fundar un clan tienes que ser nivel 25 y tener 90 skills en liderazgo.")
                 End If
             
             Case "/FUNDARCLANGM"
@@ -1123,7 +1123,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         Call WriteSetTrigger(ArgumentosRaw)
                     Else
                         'No es numerico
-                        Call ShowConsoleMsg("Numero incorrecto. Utilice /trigger NUMERO.")
+                        Call ShowConsoleMsg("Número incorrecto. Utilice /trigger NUMERO.")
                     End If
                 Else
                     'Version sin parametro
@@ -1525,7 +1525,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     End Select
                 Else
                     'Avisar que falta el parametro
-                    Call ShowConsoleMsg("Faltan parametros. Opciones: PK, BACKUP, RESTRINGIR, MAGIASINEFECTO, INVISINEFECTO, RESUSINEFECTO, TERRENO, ZONA")
+                    Call ShowConsoleMsg("Faltan parámetros. Opciones: PK, BACKUP, RESTRINGIR, MAGIASINEFECTO, INVISINEFECTO, RESUSINEFECTO, TERRENO, ZONA")
                 End If
                 
             Case "/GRABAR"

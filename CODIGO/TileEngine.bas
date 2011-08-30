@@ -1141,7 +1141,7 @@ error:
         Grh.FrameCounter = 1
         Resume
     Else
-        MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & _
+        MsgBox "Ocurrió un error inesperado, por favor comuníquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & _
         vbCrLf & Err.Description, vbExclamation, "[ " & Err.number & " ] Error"
         End
     End If
@@ -1240,7 +1240,7 @@ error:
         Grh.FrameCounter = 1
         Resume
     Else
-        MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & _
+        MsgBox "Ocurrió un error inesperado, por favor comuníquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & _
         vbCrLf & Err.Description, vbExclamation, "[ " & Err.number & " ] Error"
         End
     End If
@@ -1765,7 +1765,7 @@ On Error Resume Next
     Set DirectX = New DirectX7
     
     If Err Then
-        MsgBox "No se puede iniciar DirectX. Por favor asegurese de tener la ultima version correctamente instalada."
+        MsgBox "No se puede iniciar DirectX. Por favor asegúrese de tener la última versión correctamente instalada."
         Exit Function
     End If
 
@@ -1775,7 +1775,7 @@ On Error Resume Next
     Set DirectDraw = DirectX.DirectDrawCreate("")
     
     If Err Then
-        MsgBox "No se puede iniciar DirectDraw. Por favor asegurese de tener la ultima version correctamente instalada."
+        MsgBox "No se puede iniciar DirectX. Por favor asegúrese de tener la última versión correctamente instalada."
         Exit Function
     End If
     

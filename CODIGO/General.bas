@@ -67,7 +67,7 @@ Public Function RandomNumber(ByVal LowerBound As Long, ByVal UpperBound As Long)
     Randomize Timer
     
     'Generate random number
-    RandomNumber = (UpperBound - LowerBound) * Rnd + LowerBound
+    RandomNumber = Fix((UpperBound - LowerBound) * Rnd) + LowerBound
 End Function
 
 Public Function GetRawName(ByRef sName As String) As String
@@ -83,7 +83,7 @@ Public Function GetRawName(ByRef sName As String) As String
     Pos = InStr(1, sName, "<")
     
     If Pos > 0 Then
-        GetRawName = Trim(Left(sName, Pos - 1))
+        GetRawName = Trim$(Left$(sName, Pos - 1))
     Else
         GetRawName = sName
     End If
@@ -118,7 +118,7 @@ On Error Resume Next
     
     If Not FileExist(archivoC, vbArchive) Then
 'TODO : Si hay que reinstalar, porque no cierra???
-        Call MsgBox("ERROR: no se ha podido cargar los colores. Falta el archivo colores.dat, reinstale el juego", vbCritical + vbOKOnly)
+        Call MsgBox("ERROR: No se ha podido cargar los colores. Falta el archivo colores.dat, reinstale el juego.", vbCritical + vbOKOnly)
         Exit Sub
     End If
     
@@ -267,7 +267,7 @@ Function CheckUserData(ByVal checkemail As Boolean) As Boolean
     Dim CharAscii As Integer
     
     If checkemail And UserEmail = "" Then
-        MsgBox ("Dirección de email invalida")
+        MsgBox ("Dirección de email inválida")
         Exit Function
     End If
     
@@ -279,7 +279,7 @@ Function CheckUserData(ByVal checkemail As Boolean) As Boolean
     For loopc = 1 To Len(UserPassword)
         CharAscii = Asc(mid$(UserPassword, loopc, 1))
         If Not LegalCharacter(CharAscii) Then
-            MsgBox ("Password inválido. El caractér " & Chr$(CharAscii) & " no está permitido.")
+            MsgBox ("Password inválido. El caracter " & Chr$(CharAscii) & " no está permitido.")
             Exit Function
         End If
     Next loopc
@@ -297,7 +297,7 @@ Function CheckUserData(ByVal checkemail As Boolean) As Boolean
     For loopc = 1 To Len(UserName)
         CharAscii = Asc(mid$(UserName, loopc, 1))
         If Not LegalCharacter(CharAscii) Then
-            MsgBox ("Nombre inválido. El caractér " & Chr$(CharAscii) & " no está permitido.")
+            MsgBox ("Nombre inválido. El caracter " & Chr$(CharAscii) & " no está permitido.")
             Exit Function
         End If
     Next loopc
@@ -790,7 +790,7 @@ Sub Main()
  
 #If Testeo = 0 Then
     If FindPreviousInstance Then
-        Call MsgBox("Argentum Online ya esta corriendo! No es posible correr otra instancia del juego. Haga click en Aceptar para salir.", vbApplicationModal + vbInformation + vbOKOnly, "Error al ejecutar")
+        Call MsgBox("¡Argentum Online ya está corriendo! No es posible correr otra instancia del juego. Haga click en Aceptar para salir.", vbApplicationModal + vbInformation + vbOKOnly, "Error al ejecutar")
         End
     End If
 #End If
@@ -1265,14 +1265,14 @@ Private Sub InicializarNombres()
     ListaRazas(eRaza.Enano) = "Enano"
 
     ListaClases(eClass.Mage) = "Mago"
-    ListaClases(eClass.Cleric) = "Clerigo"
+    ListaClases(eClass.Cleric) = "Clérigo"
     ListaClases(eClass.Warrior) = "Guerrero"
     ListaClases(eClass.Assasin) = "Asesino"
-    ListaClases(eClass.Thief) = "Ladron"
+    ListaClases(eClass.Thief) = "Ladrón"
     ListaClases(eClass.Bard) = "Bardo"
     ListaClases(eClass.Druid) = "Druida"
     ListaClases(eClass.Bandit) = "Bandido"
-    ListaClases(eClass.Paladin) = "Paladin"
+    ListaClases(eClass.Paladin) = "Paladín"
     ListaClases(eClass.Hunter) = "Cazador"
     ListaClases(eClass.Worker) = "Trabajador"
     ListaClases(eClass.Pirat) = "Pirata"
@@ -1289,20 +1289,20 @@ Private Sub InicializarNombres()
     SkillsNames(eSkill.Comerciar) = "Comercio"
     SkillsNames(eSkill.Defensa) = "Defensa con escudos"
     SkillsNames(eSkill.Pesca) = "Pesca"
-    SkillsNames(eSkill.Mineria) = "Mineria"
-    SkillsNames(eSkill.Carpinteria) = "Carpinteria"
-    SkillsNames(eSkill.Herreria) = "Herreria"
+    SkillsNames(eSkill.Mineria) = "Minería"
+    SkillsNames(eSkill.Carpinteria) = "Carpintería"
+    SkillsNames(eSkill.Herreria) = "Herrería"
     SkillsNames(eSkill.Liderazgo) = "Liderazgo"
     SkillsNames(eSkill.Domar) = "Domar animales"
     SkillsNames(eSkill.Proyectiles) = "Combate a distancia"
     SkillsNames(eSkill.Wrestling) = "Combate sin armas"
-    SkillsNames(eSkill.Navegacion) = "Navegacion"
+    SkillsNames(eSkill.Navegacion) = "Navegación"
 
     AtributosNames(eAtributos.Fuerza) = "Fuerza"
     AtributosNames(eAtributos.Agilidad) = "Agilidad"
     AtributosNames(eAtributos.Inteligencia) = "Inteligencia"
     AtributosNames(eAtributos.Carisma) = "Carisma"
-    AtributosNames(eAtributos.Constitucion) = "Constitucion"
+    AtributosNames(eAtributos.Constitucion) = "Constitución"
 End Sub
 
 ''
@@ -1390,17 +1390,17 @@ End Function
 
 Public Sub checkText(ByVal Text As String)
 Dim Nivel As Integer
-If Right(Text, Len(MENSAJE_FRAGSHOOTER_TE_HA_MATADO)) = MENSAJE_FRAGSHOOTER_TE_HA_MATADO Then
+If Right$(Text, Len(MENSAJE_FRAGSHOOTER_TE_HA_MATADO)) = MENSAJE_FRAGSHOOTER_TE_HA_MATADO Then
     Call ScreenCapture(True)
     Exit Sub
 End If
-If Left(Text, Len(MENSAJE_FRAGSHOOTER_HAS_MATADO)) = MENSAJE_FRAGSHOOTER_HAS_MATADO Then
+If Left$(Text, Len(MENSAJE_FRAGSHOOTER_HAS_MATADO)) = MENSAJE_FRAGSHOOTER_HAS_MATADO Then
     EsperandoLevel = True
     Exit Sub
 End If
 If EsperandoLevel Then
-    If Right(Text, Len(MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA)) = MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA Then
-        If CInt(mid(Text, Len(MENSAJE_FRAGSHOOTER_HAS_GANADO), (Len(Text) - (Len(MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA) + Len(MENSAJE_FRAGSHOOTER_HAS_GANADO))))) / 2 > ClientSetup.byMurderedLevel Then
+    If Right$(Text, Len(MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA)) = MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA Then
+        If CInt(mid$(Text, Len(MENSAJE_FRAGSHOOTER_HAS_GANADO), (Len(Text) - (Len(MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA) + Len(MENSAJE_FRAGSHOOTER_HAS_GANADO))))) / 2 > ClientSetup.byMurderedLevel Then
             Call ScreenCapture(True)
         End If
     End If
@@ -1569,3 +1569,26 @@ Public Sub ResetAllInfo()
     Call Audio.PlayMIDI("2.mid")
 
 End Sub
+
+Public Function stringSinTildes(ByRef str As String) As String
+Dim temp As String
+
+temp = str
+
+If InStr(1, str, "á") > 0 Then temp = Replace(temp, "á", "a")
+If InStr(1, str, "Á") > 0 Then temp = Replace(temp, "Á", "A")
+
+If InStr(1, str, "é") > 0 Then temp = Replace(temp, "é", "e")
+If InStr(1, str, "É") > 0 Then temp = Replace(temp, "É", "E")
+
+If InStr(1, str, "í") > 0 Then temp = Replace(temp, "í", "i")
+If InStr(1, str, "Í") > 0 Then temp = Replace(temp, "Í", "I")
+
+If InStr(1, str, "ó") > 0 Then temp = Replace(temp, "ó", "o")
+If InStr(1, str, "Ó") > 0 Then temp = Replace(temp, "Ó", "O")
+
+If InStr(1, str, "ú") > 0 Then temp = Replace(temp, "ú", "u")
+If InStr(1, str, "Ú") > 0 Then temp = Replace(temp, "Ú", "U")
+
+stringSinTildes = temp
+End Function

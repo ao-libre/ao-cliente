@@ -361,7 +361,7 @@ On Local Error GoTo ErrHandler
     Wend
     
     If FileHead.lngNumFiles = 0 Then
-        MsgBox "No se encontraron archivos de extención " & GRH_SOURCE_FILE_EXT & " en " & SourcePath & ".", , "Error"
+        MsgBox "No se encontraron archivos de extensión " & GRH_SOURCE_FILE_EXT & " en " & SourcePath & ".", , "Error"
         Exit Function
     End If
     
@@ -531,7 +531,7 @@ On Local Error GoTo ErrHandler
 Exit Function
 
 ErrHandler:
-    Call MsgBox("Error al intentar decodificar recursos. Razon: " & Err.number & " : " & Err.Description, vbOKOnly, "Error")
+    Call MsgBox("Error al intentar decodificar recursos. Razón: " & Err.number & " : " & Err.Description, vbOKOnly, "Error")
 End Function
 
 ''
@@ -645,7 +645,7 @@ ErrHandler:
     Erase SourceData
     Erase InfoHead
     
-    Call MsgBox("No se pudo extraer el archivo binario correctamente. Razon: " & Err.number & " : " & Err.Description, vbOKOnly, "Error")
+    Call MsgBox("No se pudo extraer el archivo binario correctamente. Razón: " & Err.number & " : " & Err.Description, vbOKOnly, "Error")
 End Function
 
 ''
@@ -1102,7 +1102,7 @@ ErrHandler:
     Close NewResourceFile
     Close OldResourceFile
     
-    Call MsgBox("No se pudo terminar de crear el parche. Razon: " & Err.number & " : " & Err.Description, vbOKOnly, "Error")
+    Call MsgBox("No se pudo terminar de crear el parche. Razón: " & Err.number & " : " & Err.Description, vbOKOnly, "Error")
 End Function
 
 ''
@@ -1385,7 +1385,7 @@ ErrHandler:
     'Destroy file if created
     If FileExist(OutputFilePath, vbNormal) Then Call Kill(OutputFilePath)
     
-    Call MsgBox("No se pudo parchear. Razon: " & Err.number & " : " & Err.Description, vbOKOnly, "Error")
+    Call MsgBox("No se pudo parchear. Razón: " & Err.number & " : " & Err.Description, vbOKOnly, "Error")
 End Function
 
 Private Function AlignScan(ByVal inWidth As Long, ByVal inDepth As Integer) As Long

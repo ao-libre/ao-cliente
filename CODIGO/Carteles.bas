@@ -33,45 +33,43 @@ Attribute VB_Name = "Carteles"
 
 Option Explicit
 
-Const XPosCartel = 360
-Const YPosCartel = 335
-Const MAXLONG = 40
+Private Const XPosCartel = 360
+privateConst YPosCartel = 335
+privateConst MAXLONG = 40
 
 'Carteles
-Public Cartel As Boolean
-Public Leyenda As String
-Public LeyendaFormateada() As String
-Public textura As Integer
+Private Cartel As Boolean
+Private Leyenda As String
+Private LeyendaFormateada() As String
+Private textura As Integer
 
+Sub InitCartel(ByRef Ley As String, ByVal Grh As Integer)
+Dim i As Integer, k As Integer, anti As Integer
 
-Sub InitCartel(Ley As String, Grh As Integer)
-If Not Cartel Then
-    Leyenda = Ley
-    textura = Grh
-    Cartel = True
-    ReDim LeyendaFormateada(0 To (Len(Ley) \ (MAXLONG \ 2)))
-                
-    Dim i As Integer, k As Integer, anti As Integer
-    anti = 1
-    k = 0
-    i = 0
-    Call DarFormato(Leyenda, i, k, anti)
-    i = 0
-    Do While LeyendaFormateada(i) <> "" And i < UBound(LeyendaFormateada)
-        
-       i = i + 1
-    Loop
-    ReDim Preserve LeyendaFormateada(0 To i)
-Else
-    Exit Sub
-End If
+If Cartel Then Exit Sub
+
+Leyenda = Ley
+textura = Grh
+Cartel = True
+
+ReDim LeyendaFormateada(0 To (Len(Ley) \ (MAXLONG \ 2))) As String
+anti = 1
+k = 0
+i = 0
+Call DarFormato(Leyenda, i, k, anti)
+i = 0
+
+Do While (Len(LeyendaFormateada(i)) <> 0) And (i < UBound(LeyendaFormateada))
+   i = i + 1
+Loop
+
+ReDim Preserve LeyendaFormateada(0 To i) As String
 End Sub
 
-
-Private Function DarFormato(s As String, i As Integer, k As Integer, anti As Integer)
+Private Function DarFormato(ByRef s As String, ByRef i As Integer, ByRef k As Integer, ByRef anti As Integer)
 If anti + i <= Len(s) + 1 Then
     If ((i >= MAXLONG) And mid$(s, anti + i, 1) = " ") Or (anti + i = Len(s)) Then
-        LeyendaFormateada(k) = mid(s, anti, i + 1)
+        LeyendaFormateada(k) = mid$(s, anti, i + 1)
         k = k + 1
         anti = anti + i + 1
         i = 0
@@ -82,18 +80,18 @@ If anti + i <= Len(s) + 1 Then
 End If
 End Function
 
-
 Sub DibujarCartel()
-If Not Cartel Then Exit Sub
-Dim x As Integer, y As Integer
-x = XPosCartel + 20
-y = YPosCartel + 60
-Call DDrawTransGrhIndextoSurface(textura, XPosCartel, YPosCartel, 0)
+Dim X As Integer, Y As Integer
 Dim j As Integer, desp As Integer
 
+If Not Cartel Then Exit Sub
+
+X = XPosCartel + 20
+Y = YPosCartel + 60
+Call DDrawTransGrhIndextoSurface(textura, XPosCartel, YPosCartel, 0)
+
 For j = 0 To UBound(LeyendaFormateada)
-    RenderText x, y + desp, LeyendaFormateada(j), vbWhite, frmMain.font
-    desp = desp + (frmMain.font.Size) + 5
+    RenderText X, Y + desp, LeyendaFormateada(j), vbWhite, frmMain.font
+    desp = desp + (frmMain.font.size) + 5
 Next
 End Sub
-
