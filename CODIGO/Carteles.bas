@@ -34,11 +34,11 @@ Attribute VB_Name = "Carteles"
 Option Explicit
 
 Private Const XPosCartel = 360
-privateConst YPosCartel = 335
-privateConst MAXLONG = 40
+Private Const YPosCartel = 335
+Private Const MAXLONG = 40
 
 'Carteles
-Private Cartel As Boolean
+Public Cartel As Boolean
 Private Leyenda As String
 Private LeyendaFormateada() As String
 Private textura As Integer
