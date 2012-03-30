@@ -1196,18 +1196,32 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 
             Case "/NOCAOS"
                 If notNullArguments Then
-                    Call WriteChaosLegionKick(ArgumentosRaw)
+                    tmpArr = Split(ArgumentosRaw, "@", 2)
+                    
+                    If UBound(tmpArr) = 1 Then
+                        Call WriteChaosLegionKick(tmpArr(0), tmpArr(1))
+                    Else
+                        'Faltan los parametros con el formato propio
+                        Call ShowConsoleMsg("Faltan parámetros. Utilice /nocaos NICKNAME@MOTIVO.")
+                    End If
                 Else
                     'Avisar que falta el parametro
-                    Call ShowConsoleMsg("Faltan parámetros. Utilice /nocaos NICKNAME.")
+                    Call ShowConsoleMsg("Faltan parámetros. Utilice /nocaos NICKNAME@MOTIVO.")
                 End If
     
             Case "/NOREAL"
                 If notNullArguments Then
-                    Call WriteRoyalArmyKick(ArgumentosRaw)
+                    tmpArr = Split(ArgumentosRaw, "@", 2)
+                    
+                    If UBound(tmpArr) = 1 Then
+                        Call WriteRoyalArmyKick(tmpArr(0), tmpArr(1))
+                    Else
+                        'Faltan los parametros con el formato propio
+                        Call ShowConsoleMsg("Faltan parámetros. Utilice /noreal NICKNAME@MOTIVO.")
+                    End If
                 Else
                     'Avisar que falta el parametro
-                    Call ShowConsoleMsg("Faltan parámetros. Utilice /noreal NICKNAME.")
+                    Call ShowConsoleMsg("Faltan parámetros. Utilice /noreal NICKNAME@MOTIVO.")
                 End If
     
             Case "/FORCEMIDI"
@@ -1609,6 +1623,14 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 
             Case "/MIMETIZAR"
                 Call WriteImitate
+                
+            Case "/DMSG"
+                If notNullArguments Then
+                    Call WriteHigherAdminsMessage(ArgumentosRaw)
+                Else
+                    'Avisar que falta el parametro
+                    Call ShowConsoleMsg("Escriba un mensaje.")
+                End If
             
 #If SeguridadAlkon Then
             Case Else

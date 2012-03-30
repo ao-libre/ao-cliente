@@ -1602,7 +1602,7 @@ Private Sub imgCrear_Click()
     For i = 1 To Len(UserPassword)
         CharAscii = Asc(mid$(UserPassword, i, 1))
         If Not LegalCharacter(CharAscii) Then
-            MsgBox ("Password inválido. El caractér " & Chr$(CharAscii) & " no está permitido.")
+            MsgBox ("Password inválido. El caracter " & Chr$(CharAscii) & " no está permitido.")
             Exit Sub
         End If
     Next i
