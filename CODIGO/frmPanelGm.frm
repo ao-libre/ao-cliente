@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
 Begin VB.Form frmPanelGm 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Panel GM"
@@ -1660,13 +1660,18 @@ End Sub
 
 Private Sub cmdNOCAOS_Click()
     '/NOCAOS
+    Dim tStr As String
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
-    If LenB(Nick) <> 0 Then _
-        If MsgBox("¿Seguro desea expulsar a " & Nick & " de la legión oscura?", vbYesNo, "Atencion!") = vbYes Then _
-            Call WriteChaosLegionKick(Nick)
+    If LenB(Nick) <> 0 Then
+        tStr = InputBox("Escriba el motivo de la expulsión.", "Expulsión de la Legión Oscura a " & Nick)
+        
+        If LenB(tStr) <> 0 Then _
+            If MsgBox("¿Seguro desea expulsar a " & Nick & " de la legión oscura?", vbYesNo, "Atencion!") = vbYes Then _
+                Call WriteChaosLegionKick(Nick, tStr)
+    End If
 End Sub
 
 Private Sub cmdNOESTUPIDO_Click()
@@ -1681,13 +1686,18 @@ End Sub
 
 Private Sub cmdNOREAL_Click()
     '/NOREAL
+    Dim tStr As String
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
-    If LenB(Nick) <> 0 Then _
-        If MsgBox("¿Seguro desea expulsar a " & Nick & " de la armada real?", vbYesNo, "Atencion!") = vbYes Then _
-            Call WriteRoyalArmyKick(Nick)
+    If LenB(Nick) <> 0 Then
+        tStr = InputBox("Escriba el motivo de la expulsión.", "Expulsión del Ejército Real a " & Nick)
+        
+        If LenB(tStr) <> 0 Then _
+            If MsgBox("¿Seguro desea expulsar a " & Nick & " de la armada real?", vbYesNo, "Atencion!") = vbYes Then _
+                Call WriteRoyalArmyKick(Nick, tStr)
+    End If
 End Sub
 
 Private Sub cmdOCULTANDO_Click()
