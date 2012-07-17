@@ -1272,7 +1272,7 @@ Private Sub HandleBankInit()
     
     BankGold = incomingData.ReadLong
     Call InvBanco(0).Initialize(DirectDraw, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
-    Call InvBanco(1).Initialize(DirectDraw, frmBancoObj.PicInv, Inventario.MaxObjs)
+    Call InvBanco(1).Initialize(DirectDraw, frmBancoObj.picInv, Inventario.MaxObjs)
     
     For i = 1 To Inventario.MaxObjs
         With Inventario
@@ -4171,14 +4171,15 @@ Private Sub HandleSetInvisible()
     Dim CharIndex As Integer
     
     CharIndex = incomingData.ReadInteger()
-    charlist(CharIndex).invisible = incomingData.ReadBoolean()
     
 #If SeguridadAlkon Then
-    If charlist(CharIndex).invisible Then
+    If incomingData.ReadBoolean() Then
         Call MI(CualMI).SetInvisible(CharIndex)
     Else
         Call MI(CualMI).ResetInvisible(CharIndex)
     End If
+#Else
+    charlist(CharIndex).invisible = incomingData.ReadBoolean()
 #End If
 
 End Sub
@@ -8394,7 +8395,7 @@ End Sub
 ' Writes the "BanChar" message to the outgoing data buffer.
 '
 ' @param    username The user to be banned.
-' @param    reason The reson for which the user is banned.
+' @param    reason The reson for which the user is to be banned.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteBanChar(ByVal UserName As String, ByVal Reason As String)
@@ -10468,6 +10469,21 @@ Public Sub WriteImitate()
     Call outgoingData.WriteByte(eGMCommands.Imitate)
 End Sub
 
+Public Sub WriteAlterGuildName(ByVal GuildName As String, ByVal newGuildName As String)
+'***************************************************
+'Author: Lex!
+'Last Modification: 14/05/12
+'Writes the "AlterGuildName" message to the outgoing data buffer
+'***************************************************
+    With outgoingData
+        Call .WriteByte(ClientPacketID.GMCommands)
+        Call .WriteByte(eGMCommands.AlterGuildName)
+        
+        Call .WriteASCIIString(GuildName)
+        Call .WriteASCIIString(newGuildName)
+    End With
+End Sub
+    
 ''
 ' Writes the "RecordAddObs" message to the outgoing data buffer.
 '

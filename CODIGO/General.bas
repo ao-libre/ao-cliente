@@ -279,7 +279,7 @@ Function CheckUserData(ByVal checkemail As Boolean) As Boolean
     For loopc = 1 To Len(UserPassword)
         CharAscii = Asc(mid$(UserPassword, loopc, 1))
         If Not LegalCharacter(CharAscii) Then
-            MsgBox ("Password inválido. El caracter " & Chr$(CharAscii) & " no está permitido.")
+            MsgBox ("Password inválido. El caractér " & Chr$(CharAscii) & " no está permitido.")
             Exit Function
         End If
     Next loopc
@@ -809,6 +809,7 @@ Sub Main()
     'Obtener el HushMD5
     Dim fMD5HushYo As String * 32
     
+    Set md5 = New clsMD5
     fMD5HushYo = md5.GetMD5File(App.path & "\" & App.EXEName & ".exe")
     Call md5.MD5Reset
     MD5HushYo = txtOffset(hexMd52Asc(fMD5HushYo), 55)
@@ -904,14 +905,14 @@ Private Sub LoadInitialConfig()
     '###########
     ' SERVIDORES
     'TODO : esto de ServerRecibidos no se podría sacar???
-    Call AddtoRichTextBox(frmCargando.status, "Buscando servidores... ", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.Status, "Buscando servidores... ", 255, 255, 255, True, False, True)
     Call CargarServidores
     ServersRecibidos = True
-    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
+    Call AddtoRichTextBox(frmCargando.Status, "Hecho", 255, 0, 0, True, False, False)
     
     '###########
     ' CONSTANTES
-    Call AddtoRichTextBox(frmCargando.status, "Iniciando constantes... ", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.Status, "Iniciando constantes... ", 255, 255, 255, True, False, True)
     Call InicializarNombres
     ' Initialize FONTTYPES
     Call Protocol.InitFonts
@@ -927,11 +928,11 @@ Private Sub LoadInitialConfig()
     ' Mouse Pointer (Loaded before opening any form with buttons in it)
     If FileExist(DirExtras & "Hand.ico", vbArchive) Then _
         Set picMouseIcon = LoadPicture(DirExtras & "Hand.ico")
-    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
+    Call AddtoRichTextBox(frmCargando.Status, "Hecho", 255, 0, 0, True, False, False)
     
     '#######
     ' CLASES
-    Call AddtoRichTextBox(frmCargando.status, "Instanciando clases... ", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.Status, "Instanciando clases... ", 255, 255, 255, True, False, True)
     Set Dialogos = New clsDialogs
     Set Audio = New clsAudio
     Set Inventario = New clsGrapchicalInventory
@@ -946,30 +947,30 @@ Private Sub LoadInitialConfig()
     Set md5 = New clsMD5
 #End If
     Set DirectX = New DirectX7
-    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
+    Call AddtoRichTextBox(frmCargando.Status, "Hecho", 255, 0, 0, True, False, False)
     
     '##############
     ' MOTOR GRÁFICO
-    Call AddtoRichTextBox(frmCargando.status, "Iniciando motor gráfico... ", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.Status, "Iniciando motor gráfico... ", 255, 255, 255, True, False, True)
     
     If Not InitTileEngine(frmMain.hwnd, 149, 13, 32, 32, 13, 17, 9, 8, 8, 0.018) Then
         Call CloseClient
     End If
-    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
+    Call AddtoRichTextBox(frmCargando.Status, "Hecho", 255, 0, 0, True, False, False)
     
     '###################
     ' ANIMACIONES EXTRAS
-    Call AddtoRichTextBox(frmCargando.status, "Creando animaciones extra... ", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.Status, "Creando animaciones extra... ", 255, 255, 255, True, False, True)
     Call CargarTips
     Call CargarArrayLluvia
     Call CargarAnimArmas
     Call CargarAnimEscudos
     Call CargarColores
-    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
+    Call AddtoRichTextBox(frmCargando.Status, "Hecho", 255, 0, 0, True, False, False)
     
     '#############
     ' DIRECT SOUND
-    Call AddtoRichTextBox(frmCargando.status, "Iniciando DirectSound... ", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.Status, "Iniciando DirectSound... ", 255, 255, 255, True, False, True)
     'Inicializamos el sonido
     Call Audio.Initialize(DirectX, frmMain.hwnd, App.path & "\" & Config_Inicio.DirSonidos & "\", App.path & "\" & Config_Inicio.DirMusica & "\")
     'Enable / Disable audio
@@ -977,16 +978,16 @@ Private Sub LoadInitialConfig()
     Audio.SoundActivated = Not ClientSetup.bNoSound
     Audio.SoundEffectsActivated = Not ClientSetup.bNoSoundEffects
     'Inicializamos el inventario gráfico
-    Call Inventario.Initialize(DirectDraw, frmMain.PicInv, MAX_INVENTORY_SLOTS, , , , , , , , , True)
+    Call Inventario.Initialize(DirectDraw, frmMain.picInv, MAX_INVENTORY_SLOTS, , , , , , , , , True)
     Call Audio.MusicMP3Play(App.path & "\MP3\" & MP3_Inicio & ".mp3")
-    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
+    Call AddtoRichTextBox(frmCargando.Status, "Hecho", 255, 0, 0, True, False, False)
     
 #If SeguridadAlkon Then
     CualMI = 0
     Call InitMI
 #End If
     
-    Call AddtoRichTextBox(frmCargando.status, "                    ¡Bienvenido a Argentum Online!", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.Status, "                    ¡Bienvenido a Argentum Online!", 255, 255, 255, True, False, True)
 
     'Give the user enough time to read the welcome text
     Call Sleep(500)
@@ -1141,6 +1142,8 @@ Public Sub LeerLineaComandos()
     
 #If Testeo = 0 Then
     Call AoUpdate(UpToDate, NoRes)
+#Else
+    NoRes = True
 #End If
 
 End Sub
@@ -1333,7 +1336,7 @@ Public Sub CloseClient()
     
     EngineRun = False
     frmCargando.Show
-    Call AddtoRichTextBox(frmCargando.status, "Liberando recursos...", 0, 0, 0, 0, 0, 0)
+    Call AddtoRichTextBox(frmCargando.Status, "Liberando recursos...", 0, 0, 0, 0, 0, 0)
     
     Call Resolution.ResetResolution
     
@@ -1536,7 +1539,11 @@ Public Sub ResetAllInfo()
     'Reset some char variables...
     Dim i As Long
     For i = 1 To LastChar
+#If SeguridadAlkon Then
+        Call MI(CualMI).ResetInvisible(i)
+#Else
         charlist(i).invisible = False
+#End If
     Next i
 
     ' Reset stats
