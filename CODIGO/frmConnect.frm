@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{EAB22AC0-30C1-11CF-A7EB-0000C05BAE0B}#1.1#0"; "shdocvw.dll"
+Object = "{EAB22AC0-30C1-11CF-A7EB-0000C05BAE0B}#1.1#0"; "ieframe.dll"
 Begin VB.Form frmConnect 
    BackColor       =   &H00E0E0E0&
    BorderStyle     =   0  'None
@@ -356,7 +356,7 @@ Private Sub Form_Load()
 #If Testeo = 1 Then
     webNoticias.Visible = False
 #Else
-    webNoticias.Navigate ("http://ao.alkon.com.ar/noticiascliente/noticias.php")
+    webNoticias.Navigate ("http://argentumonline.3dgames.com.ar/noticiascliente/noticias.php")
 #End If
 
     PortTxt.Text = Config_Inicio.Puerto
@@ -576,11 +576,11 @@ Private Sub imgCrearPj_Click()
 End Sub
 
 Private Sub imgLeerMas_Click()
-    Call ShellExecute(0, "Open", "http://ao.alkon.com.ar", "", App.path, SW_SHOWNORMAL)
+    Call ShellExecute(0, "Open", "http://argentumonline.3dgames.com.ar", "", App.path, SW_SHOWNORMAL)
 End Sub
 
 Private Sub imgManual_Click()
-    Call ShellExecute(0, "Open", "http://ao.alkon.com.ar/manual/", "", App.path, SW_SHOWNORMAL)
+    Call ShellExecute(0, "Open", "http://argentumonline.3dgames.com.ar/manual/", "", App.path, SW_SHOWNORMAL)
 End Sub
 
 Private Sub imgRecuperar_Click()
@@ -594,7 +594,7 @@ errH:
 End Sub
 
 Private Sub imgReglamento_Click()
-    Call ShellExecute(0, "Open", "http://ao.alkon.com.ar/reglamento.html", "", App.path, SW_SHOWNORMAL)
+    Call ShellExecute(0, "Open", "http://argentumonline.3dgames.com.ar/reglamento.html", "", App.path, SW_SHOWNORMAL)
 End Sub
 
 Private Sub imgSalir_Click()
@@ -615,7 +615,7 @@ Private Sub imgTeclas_Click()
 End Sub
 
 Private Sub imgVerForo_Click()
-    Call ShellExecute(0, "Open", "http://www.alkon.com.ar/foro/argentum-online.53/", "", App.path, SW_SHOWNORMAL)
+    Call ShellExecute(0, "Open", "http://foros.3dgames.com.ar/argentum-online-oficial.408", "", App.path, SW_SHOWNORMAL)
 End Sub
 
 Private Sub txtPasswd_KeyPress(KeyAscii As Integer)
@@ -624,7 +624,7 @@ End Sub
 
 Private Sub WebAuxiliar_BeforeNavigate2(ByVal pDisp As Object, URL As Variant, flags As Variant, TargetFrameName As Variant, PostData As Variant, Headers As Variant, Cancel As Boolean)
     
-    If InStr(1, URL, "alkon") <> 0 Then
+    If InStr(1, URL, "3dgames") <> 0 Then
         Call ShellExecute(hwnd, "open", URL, vbNullString, vbNullString, SW_SHOWNORMAL)
         Cancel = True
     End If

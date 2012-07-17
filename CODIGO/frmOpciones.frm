@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "Mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.ocx"
 Begin VB.Form frmOpciones 
    BackColor       =   &H8000000A&
    BorderStyle     =   0  'None
@@ -432,7 +432,7 @@ End Sub
 Private Sub imgManual_Click()
     If Not loading Then _
         Call Audio.PlayWave(SND_CLICK)
-    Call ShellExecute(0, "Open", "http://ao.alkon.com.ar/manual/", "", App.path, SW_SHOWNORMAL)
+    Call ShellExecute(0, "Open", "http://argentumonline.3dgames.com.ar/manual/", "", App.path, SW_SHOWNORMAL)
 End Sub
 
 Private Sub imgMapa_Click()

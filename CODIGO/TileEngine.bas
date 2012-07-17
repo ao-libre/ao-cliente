@@ -167,7 +167,11 @@ Public Type Char
     
     pie As Boolean
     muerto As Boolean
+    
+#If SeguridadAlkon = 0 Then
     invisible As Boolean
+#End If
+    
     priv As Byte
 End Type
 
@@ -587,10 +591,11 @@ Sub ResetCharInfo(ByVal CharIndex As Integer)
         .Criminal = 0
         .Atacable = False
         .FxIndex = 0
-        .invisible = False
         
 #If SeguridadAlkon Then
         Call MI(CualMI).ResetInvisible(CharIndex)
+#Else
+        .invisible = False
 #End If
         
         .Moving = 0
@@ -1064,7 +1069,11 @@ Function MoveToLegalPos(ByVal X As Integer, ByVal Y As Integer) As Boolean
                 
                 ' Los admins no pueden intercambiar pos con caspers cuando estan invisibles
                 If charlist(UserCharIndex).priv > 0 And charlist(UserCharIndex).priv < 6 Then
-                    If charlist(UserCharIndex).invisible = True Then Exit Function
+#If SeguridadAlkon Then
+                    If MI(CualMI).IsInvisible(UserCharIndex) Then Exit Function
+#Else
+                    If charlist(UserCharIndex).invisible Then Exit Function
+#End If
                 End If
             End If
         End With
@@ -2126,7 +2135,11 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
         PixelOffsetX = PixelOffsetX + .MoveOffsetX
         PixelOffsetY = PixelOffsetY + .MoveOffsetY
         
+#If SeguridadAlkon Then
+        If Not MI(CualMI).IsInvisible(CharIndex) Then
+#Else
         If Not .invisible Then
+#End If
             'Draw Body
             If .Body.Walk(.Heading).GrhIndex Then _
                 Call DDrawTransGrhtoSurface(.Body.Walk(.Heading), PixelOffsetX, PixelOffsetY, 1, 1, 0)

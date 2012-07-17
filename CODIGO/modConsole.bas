@@ -114,6 +114,8 @@ Public Sub StartCheckingLinks()
 'Last Modification: 18/11/2010
 'Starts checking links (in console range)
 '***************************************************
+    If App.LogMode = 0 Then Exit Sub
+    
     If lOldProc = 0 Then
         lOldProc = SetWindowLong(hWndParent, GWL_WNDPROC, AddressOf WndProc)
     End If
@@ -125,6 +127,8 @@ Public Sub StopCheckingLinks()
 'Last Modification: 18/11/2010
 'Stops checking links (out of console range)
 '***************************************************
+    If App.LogMode = 0 Then Exit Sub
+    
     If lOldProc Then
         SetWindowLong hWndParent, GWL_WNDPROC, lOldProc
         lOldProc = 0

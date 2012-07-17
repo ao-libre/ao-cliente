@@ -1632,6 +1632,20 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call ShowConsoleMsg("Escriba un mensaje.")
                 End If
             
+            Case "/ACLAN"
+                If notNullArguments Then
+                    tmpArr = Split(ArgumentosRaw, "@", 2)
+                    If UBound(tmpArr) = 1 Then
+                        Call WriteAlterGuildName(tmpArr(0), tmpArr(1))
+                    Else
+                        'Faltan los parametros con el formato propio
+                        Call ShowConsoleMsg("Formato incorrecto. Utilice /ACLAN ORIGEN@DESTINO.")
+                    End If
+                Else
+                    'Avisar que falta el parametro
+                    Call ShowConsoleMsg("Faltan parámetros. Utilice /ACLAN ORIGEN@DESTINO.")
+                End If
+                
 #If SeguridadAlkon Then
             Case Else
                 Call ParseUserCommandEx(Comando, CantidadArgumentos, ArgumentosAll, ArgumentosRaw)
