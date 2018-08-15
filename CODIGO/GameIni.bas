@@ -47,7 +47,7 @@ Public Type tGameIni
     fX As Byte
     tip As Byte
     Password As String
-    Name As String
+    name As String
     DirGraficos As String
     DirSonidos As String
     DirMusica As String
@@ -58,13 +58,12 @@ End Type
 
 Public Type tSetupMods
     bDinamic    As Boolean
-    byMemory    As Byte
+    byMemory    As Integer
     bUseVideo   As Boolean
     bNoMusic    As Boolean
     bNoSound    As Boolean
     bNoRes      As Boolean ' 24/06/2006 - ^[GS]^
     bNoSoundEffects As Boolean
-    sGraficos   As String * 13
     bGuildNews  As Boolean ' 11/19/09
     bDie        As Boolean ' 11/23/09 - FragShooter
     bKill       As Boolean ' 11/23/09 - FragShooter
@@ -72,6 +71,17 @@ Public Type tSetupMods
     bActive     As Boolean
     bGldMsgConsole As Boolean
     bCantMsgs   As Byte
+    
+    
+    'New dx8
+    ProyectileEngine As Boolean
+    PartyMembers As Boolean
+    TonalidadPJ As Boolean
+    UsarSombras As Boolean
+    ParticleEngine As Boolean
+    vSync As Boolean
+    Aceleracion As Byte
+    LimiteFPS As Boolean
 End Type
 
 Public ClientSetup As tSetupMods
@@ -108,3 +118,4 @@ Put #N, , MiCabecera
 Put #N, , GameIniConfiguration
 Close #N
 End Sub
+

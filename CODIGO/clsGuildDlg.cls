@@ -88,10 +88,13 @@ Y = 250
 '500 600 700 800 900
     For i = 1 To p_CANTIDADDIALOGOS
         If Trim$(p_Dialogos(i).Texto) <> vbNullString Then
-            If Left$(p_Dialogos(i).Texto, 1) = Chr$(3) Then
-                Call Mod_TileEngine.RenderText(260, Y + (i * 10), mid$(p_Dialogos(i).Texto, 2), vbGreen, usedFont)
+            If Left$(p_Dialogos(i).Texto, 1) = Chr(3) Then
+                'Call Mod_TileEngine.RenderText(260, Y + (i * 10), mid(p_Dialogos(i).Texto, 2), vbGreen, usedFont)
+                'DrawText1 TexthDC, 260, Y + (i * 10), mid(p_Dialogos(i).Texto, 2), vbGreen
+                
             Else
-                Call Mod_TileEngine.RenderText(260, Y + (i * 10), p_Dialogos(i).Texto, vbYellow, usedFont)
+                'Call Mod_TileEngine.RenderText(260, Y + (i * 10), p_Dialogos(i).Texto, vbYellow, usedFont)
+                'DrawText1 TexthDC, 260, Y + (i * 10), p_Dialogos(i).Texto, vbYellow
             End If
         End If
     Next i
@@ -175,13 +178,13 @@ End Sub
 '
 ' @return   The font being used to render dialogs.
 
-Public Property Get font() As StdFont
+Public Property Get Font() As StdFont
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
 'Last Modify Date: 04/27/06
 'Retrieves the font being used to render dialogs.
 '**************************************************************
-    font = usedFont
+    Font = usedFont
 End Property
 
 ''
@@ -189,7 +192,7 @@ End Property
 '
 ' @param    nValue  The new font to be used to render dialogs.
 
-Public Property Let font(ByRef nValue As StdFont)
+Public Property Let Font(ByRef nValue As StdFont)
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
 'Last Modify Date: 04/27/06
@@ -197,3 +200,4 @@ Public Property Let font(ByRef nValue As StdFont)
 '**************************************************************
     Set usedFont = nValue
 End Property
+

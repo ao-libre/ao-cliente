@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmPanelGm 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Panel GM"
@@ -1604,11 +1604,6 @@ Private Sub cmdLASTIP_Click()
         Call WriteLastIP(Nick)
 End Sub
 
-Private Sub cmdLIMPIAR_Click()
-    '/LIMPIAR
-    Call WriteCleanWorld
-End Sub
-
 Private Sub cmdLLUVIA_Click()
     '/LLUVIA
     Call WriteRainToggle
@@ -1660,18 +1655,13 @@ End Sub
 
 Private Sub cmdNOCAOS_Click()
     '/NOCAOS
-    Dim tStr As String
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
-    If LenB(Nick) <> 0 Then
-        tStr = InputBox("Escriba el motivo de la expulsión.", "Expulsión de la Legión Oscura a " & Nick)
-        
-        If LenB(tStr) <> 0 Then _
-            If MsgBox("¿Seguro desea expulsar a " & Nick & " de la legión oscura?", vbYesNo, "Atencion!") = vbYes Then _
-                Call WriteChaosLegionKick(Nick, tStr)
-    End If
+    If LenB(Nick) <> 0 Then _
+        If MsgBox("¿Seguro desea expulsar a " & Nick & " de la legión oscura?", vbYesNo, "Atencion!") = vbYes Then _
+            Call WriteChaosLegionKick(Nick)
 End Sub
 
 Private Sub cmdNOESTUPIDO_Click()
@@ -1686,18 +1676,13 @@ End Sub
 
 Private Sub cmdNOREAL_Click()
     '/NOREAL
-    Dim tStr As String
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
-    If LenB(Nick) <> 0 Then
-        tStr = InputBox("Escriba el motivo de la expulsión.", "Expulsión del Ejército Real a " & Nick)
-        
-        If LenB(tStr) <> 0 Then _
-            If MsgBox("¿Seguro desea expulsar a " & Nick & " de la armada real?", vbYesNo, "Atencion!") = vbYes Then _
-                Call WriteRoyalArmyKick(Nick, tStr)
-    End If
+    If LenB(Nick) <> 0 Then _
+        If MsgBox("¿Seguro desea expulsar a " & Nick & " de la armada real?", vbYesNo, "Atencion!") = vbYes Then _
+            Call WriteRoyalArmyKick(Nick)
 End Sub
 
 Private Sub cmdOCULTANDO_Click()
@@ -1968,7 +1953,7 @@ End Sub
 
 Private Sub lstUsers_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If Button = vbRightButton Then
-        PopUpMenu mnuSeguimientos
+        PopupMenu mnuSeguimientos
     Else
         If lstUsers.ListIndex <> -1 Then
             Call ClearRecordDetails
@@ -2033,3 +2018,4 @@ Private Sub showTab(TabId As Byte)
         cmdCerrar.Top = .Height + 465
     End With
 End Sub
+

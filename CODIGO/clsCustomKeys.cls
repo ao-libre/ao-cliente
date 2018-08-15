@@ -72,6 +72,7 @@ Private mappedKeys(0 To NUM_CUSTOM_CONFIGS, 1 To NUM_CUSTOM_KEYS) As Integer
 'Active Key Configuration
 Private ActiveConfig As Byte
 
+
 ''
 'Index of keys on array
 '
@@ -457,8 +458,6 @@ Public Property Get KeyCount() As Byte
     KeyCount = NUM_CUSTOM_KEYS
 End Property
 
-''
-'Retrieves the number of customizable key configurations
 '
 '@return The number of customizable key configurations
 
@@ -526,3 +525,4 @@ Private Sub Class_Terminate()
 '***************************************************
     Call SaveCustomKeys
 End Sub
+

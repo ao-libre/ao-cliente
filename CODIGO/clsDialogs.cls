@@ -74,12 +74,12 @@ Private Const MS_ADD_EXTRA As Integer = 5000
 '                           (used to skip dialogs from people outside render area).
 Private Type dialog
     textLine()  As String
-    x           As Integer
-    y           As Integer
+    X           As Integer
+    Y           As Integer
     startTime   As Long
     lifeTime    As Long
     CharIndex   As Integer
-    color       As Long
+    Color       As Long
     renderable  As Boolean
 End Type
 
@@ -97,7 +97,6 @@ Private usedFont As StdFont
 
 ''
 ' A millisecond precision timer
-Private Declare Function GetTickCount Lib "kernel32" () As Long
 
 ''
 ' Initializes the instance of the class.
@@ -129,20 +128,20 @@ Private Function BinarySearch(ByVal CharIndex As Integer) As Integer
 'Returns the index of the dialog in the list, or the negation
 'of the position were it should be if not found (for binary insertion)
 '**************************************************************
-    Dim min As Long
-    Dim max As Long
+    Dim Min As Long
+    Dim Max As Long
     Dim mid As Long
     
-    min = 0
-    max = dialogCount - 1
+    Min = 0
+    Max = dialogCount - 1
     
-    Do While min <= max
-        mid = (min + max) \ 2
+    Do While Min <= Max
+        mid = (Min + Max) \ 2
         
         If dialogs(mid).CharIndex < CharIndex Then
-            min = mid + 1
+            Min = mid + 1
         ElseIf dialogs(mid).CharIndex > CharIndex Then
-            max = mid - 1
+            Max = mid - 1
         Else
             'We found it
             BinarySearch = mid
@@ -152,7 +151,7 @@ Private Function BinarySearch(ByVal CharIndex As Integer) As Integer
     
     'Not found, return the negation of the position where it should be
     '(all higher values are to the right of the list and lower values are to the left)
-    BinarySearch = Not min
+    BinarySearch = Not Min
 End Function
 
 ''
@@ -166,7 +165,7 @@ End Function
 ' @remarks  If there are no more free slots, and the char didn't have a previous dialog,
 '           the chat is ignored.
 
-Public Sub CreateDialog(ByRef chat As String, ByVal CharIndex As Integer, ByVal color As Long)
+Public Sub CreateDialog(ByRef chat As String, ByVal CharIndex As Integer, ByVal Color As Long)
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
 'Last Modification: 08/29/07 by Rapsodius
@@ -193,7 +192,7 @@ Public Sub CreateDialog(ByRef chat As String, ByVal CharIndex As Integer, ByVal 
     
     With dialogs(slot)
         .CharIndex = CharIndex
-        .color = color
+        .Color = ColorToDX8(Color)
         .renderable = False
         .startTime = GetTickCount()
         .textLine = FormatChat(chat)
@@ -285,7 +284,7 @@ End Function
 ' @param    y           The Y coord where to start rendering.
 ' @param    charIndex   The character whose dialog's position is being updated.
 
-Public Sub UpdateDialogPos(ByVal x As Integer, ByVal y As Integer, ByVal CharIndex As Integer)
+Public Sub UpdateDialogPos(ByVal X As Integer, ByVal Y As Integer, ByVal CharIndex As Integer)
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
 'Last Modify Date: 07/28/07
@@ -297,8 +296,8 @@ Public Sub UpdateDialogPos(ByVal x As Integer, ByVal y As Integer, ByVal CharInd
     
     If slot >= 0 Then
         With dialogs(slot)
-            .x = x - (MAX_LENGTH \ 2) * 3
-            .y = y - (UBound(.textLine()) * 3)
+            .X = X - (MAX_LENGTH \ 2) * 3
+            .Y = Y - (UBound(.textLine()) * 3)
             .renderable = True
         End With
     End If
@@ -314,7 +313,7 @@ Public Sub Render()
 'Changed the way it gets rid of older dialogs.
 '**************************************************************
     Dim i As Long
-    Dim j As Long
+    Dim J As Long
     Dim offset As Integer
     Dim removedDialogs As Long
     
@@ -330,10 +329,10 @@ Public Sub Render()
                 offset = -(usedFont.Size + 2) * UBound(.textLine())
                 
                 'Render it
-                For j = 0 To UBound(.textLine())
-                    Call RenderText(.x, .y + offset, .textLine(j), .color, usedFont)
+                For J = 0 To UBound(.textLine())
+                    Call DrawText(.X, .Y + offset, .textLine(J), .Color)
                     offset = offset + usedFont.Size + 5
-                Next j
+                Next J
                 
                 'Won't render it unless it's updated in next frmae
                 .renderable = False
@@ -384,13 +383,13 @@ End Sub
 '
 ' @return   The font being used to render dialogs.
 
-Public Property Get font() As StdFont
+Public Property Get Font() As StdFont
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
 'Last Modify Date: 07/28/07
 'Retrieves the font being used to render dialogs.
 '**************************************************************
-    font = usedFont
+    Font = usedFont
 End Property
 
 ''
@@ -398,7 +397,7 @@ End Property
 '
 ' @param    nValue  The new font to be used to render dialogs.
 
-Public Property Let font(ByRef nValue As StdFont)
+Public Property Let Font(ByRef nValue As StdFont)
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
 'Last Modify Date: 07/28/07
@@ -406,3 +405,5 @@ Public Property Let font(ByRef nValue As StdFont)
 '**************************************************************
     Set usedFont = nValue
 End Property
+
+
