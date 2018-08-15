@@ -16,6 +16,35 @@ Begin VB.Form frmCrearPersonaje
    ScaleWidth      =   799
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
+   Begin VB.PictureBox picTemp 
+      AutoRedraw      =   -1  'True
+      BackColor       =   &H00000000&
+      Height          =   990
+      Left            =   6840
+      ScaleHeight     =   62
+      ScaleMode       =   3  'Pixel
+      ScaleWidth      =   37
+      TabIndex        =   32
+      Top             =   6840
+      Visible         =   0   'False
+      Width           =   615
+   End
+   Begin VB.PictureBox picPJ 
+      Appearance      =   0  'Flat
+      AutoRedraw      =   -1  'True
+      BackColor       =   &H00000000&
+      BorderStyle     =   0  'None
+      ForeColor       =   &H80000008&
+      Height          =   870
+      Left            =   6840
+      ScaleHeight     =   58
+      ScaleMode       =   3  'Pixel
+      ScaleWidth      =   41
+      TabIndex        =   31
+      Top             =   6840
+      Visible         =   0   'False
+      Width           =   615
+   End
    Begin VB.ComboBox lstAlienacion 
       BackColor       =   &H00000000&
       Enabled         =   0   'False
@@ -208,21 +237,6 @@ Begin VB.Form frmCrearPersonaje
       Top             =   1320
       Width           =   5055
    End
-   Begin VB.PictureBox picPJ 
-      Appearance      =   0  'Flat
-      AutoRedraw      =   -1  'True
-      BackColor       =   &H00000000&
-      BorderStyle     =   0  'None
-      ForeColor       =   &H80000008&
-      Height          =   975
-      Left            =   7080
-      ScaleHeight     =   65
-      ScaleMode       =   3  'Pixel
-      ScaleWidth      =   41
-      TabIndex        =   14
-      Top             =   6360
-      Width           =   615
-   End
    Begin VB.PictureBox picHead 
       Appearance      =   0  'Flat
       AutoRedraw      =   -1  'True
@@ -235,7 +249,7 @@ Begin VB.Form frmCrearPersonaje
       ScaleHeight     =   24
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   24
-      TabIndex        =   27
+      TabIndex        =   26
       Top             =   5880
       Visible         =   0   'False
       Width           =   360
@@ -252,7 +266,7 @@ Begin VB.Form frmCrearPersonaje
       ScaleHeight     =   24
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   24
-      TabIndex        =   28
+      TabIndex        =   27
       Top             =   5880
       Visible         =   0   'False
       Width           =   360
@@ -269,7 +283,7 @@ Begin VB.Form frmCrearPersonaje
       ScaleHeight     =   24
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   24
-      TabIndex        =   29
+      TabIndex        =   28
       Top             =   5880
       Visible         =   0   'False
       Width           =   360
@@ -286,7 +300,7 @@ Begin VB.Form frmCrearPersonaje
       ScaleHeight     =   24
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   24
-      TabIndex        =   30
+      TabIndex        =   29
       Top             =   5880
       Visible         =   0   'False
       Width           =   360
@@ -303,7 +317,7 @@ Begin VB.Form frmCrearPersonaje
       ScaleHeight     =   24
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   24
-      TabIndex        =   26
+      TabIndex        =   25
       Top             =   5880
       Visible         =   0   'False
       Width           =   360
@@ -532,7 +546,7 @@ Begin VB.Form frmCrearPersonaje
       ForeColor       =   &H00FFFFFF&
       Height          =   375
       Left            =   4440
-      TabIndex        =   31
+      TabIndex        =   30
       Top             =   7395
       Width           =   1455
    End
@@ -592,7 +606,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   195
       Index           =   5
       Left            =   5445
-      TabIndex        =   25
+      TabIndex        =   24
       Top             =   4830
       Width           =   225
    End
@@ -612,7 +626,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   195
       Index           =   4
       Left            =   5445
-      TabIndex        =   24
+      TabIndex        =   23
       Top             =   4470
       Width           =   225
    End
@@ -632,7 +646,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   195
       Index           =   3
       Left            =   5445
-      TabIndex        =   23
+      TabIndex        =   22
       Top             =   4125
       Width           =   225
    End
@@ -652,7 +666,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   195
       Index           =   2
       Left            =   5445
-      TabIndex        =   22
+      TabIndex        =   21
       Top             =   3780
       Width           =   225
    End
@@ -672,7 +686,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   195
       Index           =   1
       Left            =   5445
-      TabIndex        =   21
+      TabIndex        =   20
       Top             =   3450
       Width           =   225
    End
@@ -693,7 +707,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   195
       Index           =   5
       Left            =   4950
-      TabIndex        =   20
+      TabIndex        =   19
       Top             =   4830
       Width           =   225
    End
@@ -714,7 +728,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   195
       Index           =   4
       Left            =   4950
-      TabIndex        =   19
+      TabIndex        =   18
       Top             =   4470
       Width           =   225
    End
@@ -735,7 +749,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   195
       Index           =   3
       Left            =   4950
-      TabIndex        =   18
+      TabIndex        =   17
       Top             =   4125
       Width           =   225
    End
@@ -756,7 +770,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   195
       Index           =   2
       Left            =   4950
-      TabIndex        =   17
+      TabIndex        =   16
       Top             =   3780
       Width           =   225
    End
@@ -777,7 +791,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   195
       Index           =   1
       Left            =   4950
-      TabIndex        =   16
+      TabIndex        =   15
       Top             =   3450
       Width           =   225
    End
@@ -801,7 +815,7 @@ Begin VB.Form frmCrearPersonaje
       ForeColor       =   &H00FFFFFF&
       Height          =   4935
       Left            =   9480
-      TabIndex        =   15
+      TabIndex        =   14
       Top             =   1800
       Width           =   1935
    End
@@ -971,18 +985,18 @@ Begin VB.Form frmCrearPersonaje
    Begin VB.Image DirPJ 
       Height          =   225
       Index           =   1
-      Left            =   7455
+      Left            =   7560
       Picture         =   "frmCrearPersonaje.frx":0046
-      Top             =   7320
+      Top             =   6360
       Visible         =   0   'False
       Width           =   240
    End
    Begin VB.Image DirPJ 
       Height          =   225
       Index           =   0
-      Left            =   7080
+      Left            =   6960
       Picture         =   "frmCrearPersonaje.frx":0358
-      Top             =   7320
+      Top             =   6360
       Visible         =   0   'False
       Width           =   240
    End
@@ -1296,10 +1310,6 @@ Private Sub Form_Load()
     UserHogar = 0
     UserEmail = ""
     UserHead = 0
-    
-#If SeguridadAlkon Then
-    Call ProtectForm(Me)
-#End If
 
 End Sub
 
@@ -1591,18 +1601,12 @@ Private Sub imgCrear_Click()
     UserHogar = lstHogar.ListIndex + 1
     
     If Not CheckData Then Exit Sub
-    
-#If SeguridadAlkon Then
-    UserPassword = md5.GetMD5String(txtPasswd.Text)
-    Call md5.MD5Reset
-#Else
     UserPassword = txtPasswd.Text
-#End If
     
     For i = 1 To Len(UserPassword)
         CharAscii = Asc(mid$(UserPassword, i, 1))
         If Not LegalCharacter(CharAscii) Then
-            MsgBox ("Password inválido. El caracter " & Chr$(CharAscii) & " no está permitido.")
+            MsgBox ("Password inválido. El caractér " & Chr$(CharAscii) & " no está permitido.")
             Exit Sub
         End If
     Next i
@@ -1800,12 +1804,13 @@ Private Sub picHead_Click(Index As Integer)
 End Sub
 
 Private Sub tAnimacion_Timer()
+On Error Resume Next
     Dim SR As RECT
+    Dim DR As RECT
     Dim Grh As Long
-    Dim X As Long
-    Dim Y As Long
     Static Frame As Byte
     
+    If frmMain.Visible = False Then Exit Sub
     If currentGrh = 0 Then Exit Sub
     UserHead = CheckCabeza(UserHead)
     
@@ -1816,54 +1821,67 @@ Private Sub tAnimacion_Timer()
     Grh = GrhData(currentGrh).Frames(Frame)
     
     With GrhData(Grh)
-        SR.Left = .sX
-        SR.Top = .sY
+        SR.Left = .SX
+        SR.Top = .SY
         SR.Right = SR.Left + .pixelWidth
-        SR.Bottom = SR.Top + .pixelHeight
+        SR.bottom = SR.Top + .pixelHeight
         
-        X = picPJ.Width / 2 - .pixelWidth / 2
-        Y = (picPJ.Height - .pixelHeight) - 5
+        DR.Left = (picPJ.Width - .pixelWidth) \ 2 - 2
+        DR.Top = ((picPJ.Height - .pixelHeight) \ 2) + 5
+        DR.Right = DR.Left + .pixelWidth
+        DR.bottom = DR.Top + .pixelHeight
         
-        Call DrawTransparentGrhtoHdc(picPJ.hdc, X, Y, Grh, SR, vbBlack)
-        Y = Y + .pixelHeight
+        picTemp.BackColor = picTemp.BackColor
+        
+        Call DrawGrhtoHdc(picTemp.hdc, Grh, SR, DR)
+        Call DrawTransparentGrhtoHdc(picPJ.hdc, picTemp.hdc, DR, DR, vbBlack)
     End With
     
     Grh = HeadData(UserHead).Head(Dir).GrhIndex
     
     With GrhData(Grh)
-        SR.Left = .sX
-        SR.Top = .sY
+        SR.Left = .SX
+        SR.Top = .SY
         SR.Right = SR.Left + .pixelWidth
-        SR.Bottom = SR.Top + .pixelHeight
+        SR.bottom = SR.Top + .pixelHeight
         
-        X = picPJ.Width / 2 - .pixelWidth / 2
-        Y = Y + BodyData(UserBody).HeadOffset.Y - .pixelHeight
+        DR.Left = (picPJ.Width - .pixelWidth) \ 2 - 2
+        DR.Top = DR.bottom + BodyData(UserBody).HeadOffset.Y - .pixelHeight
+        DR.Right = DR.Left + .pixelWidth
+        DR.bottom = DR.Top + .pixelHeight
         
-        Call DrawTransparentGrhtoHdc(picPJ.hdc, X, Y, Grh, SR, vbBlack)
+        picTemp.BackColor = picTemp.BackColor
+        
+        Call DrawGrhtoHdc(picTemp.hdc, Grh, SR, DR)
+        Call DrawTransparentGrhtoHdc(picPJ.hdc, picTemp.hdc, DR, DR, vbBlack)
     End With
 End Sub
 
 Private Sub DrawHead(ByVal Head As Integer, ByVal PicIndex As Integer)
 
     Dim SR As RECT
+    Dim DR As RECT
     Dim Grh As Long
-    Dim X As Long
-    Dim Y As Long
-    
+
     Call DrawImageInPicture(picHead(PicIndex), Me.Picture, 0, 0, , , picHead(PicIndex).Left, picHead(PicIndex).Top)
     
     Grh = HeadData(Head).Head(Dir).GrhIndex
 
     With GrhData(Grh)
-        SR.Left = .sX
-        SR.Top = .sY
+        SR.Left = .SX
+        SR.Top = .SY
         SR.Right = SR.Left + .pixelWidth
-        SR.Bottom = SR.Top + .pixelHeight
+        SR.bottom = SR.Top + .pixelHeight
         
-        X = picHead(PicIndex).Width / 2 - .pixelWidth / 2
-        Y = 1
+        DR.Left = (picHead(0).Width - .pixelWidth) \ 2 + 1
+        DR.Top = 5
+        DR.Right = DR.Left + .pixelWidth
+        DR.bottom = DR.Top + .pixelHeight
         
-        Call DrawTransparentGrhtoHdc(picHead(PicIndex).hdc, X, Y, Grh, SR, vbBlack)
+        picTemp.BackColor = picTemp.BackColor
+        
+        Call DrawGrhtoHdc(picTemp.hdc, Grh, SR, DR)
+        Call DrawTransparentGrhtoHdc(picHead(PicIndex).hdc, picTemp.hdc, DR, DR, vbBlack)
     End With
     
 End Sub
@@ -1877,11 +1895,11 @@ Private Sub txtMail_MouseMove(Button As Integer, Shift As Integer, X As Single, 
 End Sub
 
 Private Sub txtNombre_Change()
-    txtNombre.Text = LTrim$(txtNombre.Text)
+    txtNombre.Text = LTrim(txtNombre.Text)
 End Sub
 
 Private Sub txtNombre_KeyPress(KeyAscii As Integer)
-    KeyAscii = Asc(UCase(Chr$(KeyAscii)))
+    KeyAscii = Asc(UCase(Chr(KeyAscii)))
 End Sub
 
 Private Sub DarCuerpoYCabeza()
@@ -2270,7 +2288,7 @@ Private Sub LoadCharInfo()
     'Modificadores de Clase
     For i = 1 To NroClases
         With ModClase(i)
-            SearchVar = stringSinTildes(ListaClases(i))
+            SearchVar = ListaClases(i)
             
             .Evasion = Val(GetVar(IniPath & "CharInfo.dat", "MODEVASION", SearchVar))
             .AtaqueArmas = Val(GetVar(IniPath & "CharInfo.dat", "MODATAQUEARMAS", SearchVar))

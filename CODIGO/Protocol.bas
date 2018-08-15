@@ -43,14 +43,13 @@ Option Explicit
 Private Const SEPARATOR As String * 1 = vbNullChar
 
 Private Type tFont
-    red As Byte
-    green As Byte
-    blue As Byte
+    Red As Byte
+    Green As Byte
+    Blue As Byte
     bold As Boolean
     italic As Boolean
 End Type
 
-#If SeguridadAlkon = 0 Then
 Private Enum ServerPacketID
     logged                  ' LOGGED
     RemoveDialogs           ' QTDL
@@ -162,142 +161,140 @@ Private Enum ServerPacketID
     MultiMessage
     StopWorking
     CancelOfferItem
+    DecirPalabrasMagicas
 End Enum
 
 Private Enum ClientPacketID
-    LoginExistingChar       'OLOGIN
-    ThrowDices              'TIRDAD
-    LoginNewChar            'NLOGIN
-    Talk                    ';
-    Yell                    '-
-    Whisper                 '\
-    Walk                    'M
-    RequestPositionUpdate   'RPU
-    Attack                  'AT
-    PickUp                  'AG
-    SafeToggle              '/SEG & SEG  (SEG's behaviour has to be coded in the client)
-    ResuscitationSafeToggle
-    RequestGuildLeaderInfo  'GLINFO
-    RequestAtributes        'ATR
-    RequestFame             'FAMA
-    RequestSkills           'ESKI
-    RequestMiniStats        'FEST
-    CommerceEnd             'FINCOM
-    UserCommerceEnd         'FINCOMUSU
-    UserCommerceConfirm
-    CommerceChat
-    BankEnd                 'FINBAN
-    UserCommerceOk          'COMUSUOK
-    UserCommerceReject      'COMUSUNO
-    Drop                    'TI
-    CastSpell               'LH
-    LeftClick               'LC
-    DoubleClick             'RC
-    Work                    'UK
-    UseSpellMacro           'UMH
-    UseItem                 'USA
-    CraftBlacksmith         'CNS
-    CraftCarpenter          'CNC
-    WorkLeftClick           'WLC
-    CreateNewGuild          'CIG
-    SpellInfo               'INFS
-    EquipItem               'EQUI
-    ChangeHeading           'CHEA
-    ModifySkills            'SKSE
-    Train                   'ENTR
-    CommerceBuy             'COMP
-    BankExtractItem         'RETI
-    CommerceSell            'VEND
-    BankDeposit             'DEPO
-    ForumPost               'DEMSG
-    MoveSpell               'DESPHE
-    MoveBank
-    ClanCodexUpdate         'DESCOD
-    UserCommerceOffer       'OFRECER
-    GuildAcceptPeace        'ACEPPEAT
-    GuildRejectAlliance     'RECPALIA
-    GuildRejectPeace        'RECPPEAT
-    GuildAcceptAlliance     'ACEPALIA
-    GuildOfferPeace         'PEACEOFF
-    GuildOfferAlliance      'ALLIEOFF
-    GuildAllianceDetails    'ALLIEDET
-    GuildPeaceDetails       'PEACEDET
-    GuildRequestJoinerInfo  'ENVCOMEN
-    GuildAlliancePropList   'ENVALPRO
-    GuildPeacePropList      'ENVPROPP
-    GuildDeclareWar         'DECGUERR
-    GuildNewWebsite         'NEWWEBSI
-    GuildAcceptNewMember    'ACEPTARI
-    GuildRejectNewMember    'RECHAZAR
-    GuildKickMember         'ECHARCLA
-    GuildUpdateNews         'ACTGNEWS
-    GuildMemberInfo         '1HRINFO<
-    GuildOpenElections      'ABREELEC
-    GuildRequestMembership  'SOLICITUD
-    GuildRequestDetails     'CLANDETAILS
-    Online                  '/ONLINE
-    Quit                    '/SALIR
-    GuildLeave              '/SALIRCLAN
-    RequestAccountState     '/BALANCE
-    PetStand                '/QUIETO
-    PetFollow               '/ACOMPAÑAR
-    ReleasePet              '/LIBERAR
-    TrainList               '/ENTRENAR
-    Rest                    '/DESCANSAR
-    Meditate                '/MEDITAR
-    Resucitate              '/RESUCITAR
-    Heal                    '/CURAR
-    Help                    '/AYUDA
-    RequestStats            '/EST
-    CommerceStart           '/COMERCIAR
-    BankStart               '/BOVEDA
-    Enlist                  '/ENLISTAR
-    Information             '/INFORMACION
-    Reward                  '/RECOMPENSA
-    RequestMOTD             '/MOTD
-    Uptime                  '/UPTIME
-    PartyLeave              '/SALIRPARTY
-    PartyCreate             '/CREARPARTY
-    PartyJoin               '/PARTY
-    Inquiry                 '/ENCUESTA ( with no params )
-    GuildMessage            '/CMSG
-    PartyMessage            '/PMSG
-    CentinelReport          '/CENTINELA
-    GuildOnline             '/ONLINECLAN
-    PartyOnline             '/ONLINEPARTY
-    CouncilMessage          '/BMSG
-    RoleMasterRequest       '/ROL
-    GMRequest               '/GM
-    bugReport               '/_BUG
-    ChangeDescription       '/DESC
-    GuildVote               '/VOTO
-    Punishments             '/PENAS
-    ChangePassword          '/CONTRASEÑA
-    Gamble                  '/APOSTAR
-    InquiryVote             '/ENCUESTA ( with parameters )
-    LeaveFaction            '/RETIRAR ( with no arguments )
-    BankExtractGold         '/RETIRAR ( with arguments )
-    BankDepositGold         '/DEPOSITAR
-    Denounce                '/DENUNCIAR
-    GuildFundate            '/FUNDARCLAN
-    GuildFundation
-    PartyKick               '/ECHARPARTY
-    PartySetLeader          '/PARTYLIDER
-    PartyAcceptMember       '/ACCEPTPARTY
-    Ping                    '/PING
-    
-    RequestPartyForm
-    ItemUpgrade
-    GMCommands
-    InitCrafting
-    Home
-    ShowGuildNews
-    ShareNpc                '/COMPARTIRNPC
-    StopSharingNpc          '/NOCOMPARTIRNPC
-    Consultation
-    MoveItem                'Drag and drop
+    LoginExistingChar = 1     'OLOGIN
+    ThrowDices = 2            'TIRDAD
+    LoginNewChar = 3          'NLOGIN
+    Talk = 4                  ';
+    Yell = 5                  '-
+    Whisper = 6                 '\
+    Walk = 7                     'M
+    RequestPositionUpdate = 8    'RPU
+    Attack = 9                  'AT
+    PickUp = 10                   'AG
+    SafeToggle = 11              '/SEG & SEG  (SEG's behaviour has to be coded in the client)
+    ResuscitationSafeToggle = 12
+    RequestGuildLeaderInfo = 13   'GLINFO
+    RequestAtributes = 14         'ATR
+    RequestFame = 15              'FAMA
+    RequestSkills = 16            'ESKI
+    RequestMiniStats = 17         'FEST
+    CommerceEnd = 18             'FINCOM
+    UserCommerceEnd = 19         'FINCOMUSU
+    UserCommerceConfirm = 20
+    CommerceChat = 21
+    BankEnd = 22                'FINBAN
+    UserCommerceOk = 23           'COMUSUOK
+    UserCommerceReject = 24       'COMUSUNO
+    Drop = 25                   'TI
+    CastSpell = 26                'LH
+    LeftClick = 27               'LC
+    DoubleClick = 28             'RC
+    Work = 29                     'UK
+    UseSpellMacro = 30           'UMH
+    UseItem = 31              'USA
+    CraftBlacksmith = 32          'CNS
+    CraftCarpenter = 33           'CNC
+    WorkLeftClick = 34           'WLC
+    CreateNewGuild = 35           'CIG
+    sadasdA = 36
+    EquipItem = 37               'EQUI
+    ChangeHeading = 38           'CHEA
+    ModifySkills = 39             'SKSE
+    Train = 40                   'ENTR
+    CommerceBuy = 41              'COMP
+    BankExtractItem = 42          'RETI
+    CommerceSell = 43            'VEND
+    BankDeposit = 44              'DEPO
+    ForumPost = 45                'DEMSG
+    MoveSpell = 46               'DESPHE
+    MoveBank = 47
+    ClanCodexUpdate = 48         'DESCOD
+    UserCommerceOffer = 49        'OFRECER
+    GuildAcceptPeace = 50         'ACEPPEAT
+    GuildRejectAlliance = 51      'RECPALIA
+    GuildRejectPeace = 52        'RECPPEAT
+    GuildAcceptAlliance = 53      'ACEPALIA
+    GuildOfferPeace = 54          'PEACEOFF
+    GuildOfferAlliance = 55       'ALLIEOFF
+    GuildAllianceDetails = 56     'ALLIEDET
+    GuildPeaceDetails = 57        'PEACEDET
+    GuildRequestJoinerInfo = 58   'ENVCOMEN
+    GuildAlliancePropList = 59    'ENVALPRO
+    GuildPeacePropList = 60       'ENVPROPP
+    GuildDeclareWar = 61          'DECGUERR
+    GuildNewWebsite = 62          'NEWWEBSI
+    GuildAcceptNewMember = 63     'ACEPTARI
+    GuildRejectNewMember = 64     'RECHAZAR
+    GuildKickMember = 65         'ECHARCLA
+    GuildUpdateNews = 66          'ACTGNEWS
+    GuildMemberInfo = 67          '1HRINFO<
+    GuildOpenElections = 68       'ABREELEC
+    GuildRequestMembership = 69   'SOLICITUD
+    GuildRequestDetails = 70      'CLANDETAILS
+    Online = 71                  '/ONLINE
+    Quit = 72                     '/SALIR
+    GuildLeave = 73               '/SALIRCLAN
+    RequestAccountState = 74      '/BALANCE
+    PetStand = 75                 '/QUIETO
+    PetFollow = 76                '/ACOMPAÑAR
+    ReleasePet = 77              '/LIBERAR
+    TrainList = 78                '/ENTRENAR
+    Rest = 79                     '/DESCANSAR
+    Meditate = 80                '/MEDITAR
+    Resucitate = 81               '/RESUCITAR
+    Heal = 82                     '/CURAR
+    Help = 83                    '/AYUDA
+    RequestStats = 84             '/EST
+    CommerceStart = 85           '/COMERCIAR
+    BankStart = 86               '/BOVEDA
+    Enlist = 87                   '/ENLISTAR
+    Information = 88            '/INFORMACION
+    Reward = 89                   '/RECOMPENSA
+    RequestMOTD = 90              '/MOTD
+    UpTime = 91                   '/UPTIME
+    PartyLeave = 92               '/SALIRPARTY
+    PartyCreate = 93              '/CREARPARTY
+    PartyJoin = 94                '/PARTY
+    Inquiry = 95                  '/ENCUESTA ( with no params )
+    GuildMessage = 96             '/CMSG
+    PartyMessage = 97             '/PMSG
+    GuildOnline = 98              '/ONLINECLAN
+    PartyOnline = 99             '/ONLINEPARTY
+    CouncilMessage = 100           '/BMSG
+    RoleMasterRequest = 101     '/ROL
+    GMRequest = 102              '/GM
+    bugReport = 103              '/_BUG
+    ChangeDescription = 104      '/DESC
+    GuildVote = 105              '/VOTO
+    Punishments = 106           '/PENAS
+    ChangePassword = 107         '/CONTRASEÑA
+    Gamble = 108                '/APOSTAR
+    InquiryVote = 109            '/ENCUESTA ( with parameters )
+    LeaveFaction = 110          '/RETIRAR ( with no arguments )
+    BankExtractGold = 111        '/RETIRAR ( with arguments )
+    BankDepositGold = 112        '/DEPOSITAR
+    Denounce = 113               '/DENUNCIAR
+    GuildFundate = 114          '/FUNDARCLAN
+    GuildFundation = 115
+    PartyKick = 116              '/ECHARPARTY
+    PartySetLeader = 117         '/PARTYLIDER
+    PartyAcceptMember = 118      '/ACCEPTPARTY
+    Ping = 119                  '/PING
+    RequestPartyForm = 120
+    ItemUpgrade = 121
+    GMCommands = 122
+    InitCrafting = 123
+    Home = 124
+    ShowGuildNews = 125
+    ShareNpc = 126               '/COMPARTIR
+    StopSharingNpc = 127
+    Consultation = 128
+    moveItem = 129
 End Enum
-#End If
 
 Public Enum FontTypeNames
     FONTTYPE_TALK
@@ -335,127 +332,127 @@ Public Sub InitFonts()
 '
 '***************************************************
     With FontTypes(FontTypeNames.FONTTYPE_TALK)
-        .red = 255
-        .green = 255
-        .blue = 255
+        .Red = 255
+        .Green = 255
+        .Blue = 255
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_FIGHT)
-        .red = 255
+        .Red = 255
         .bold = 1
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_WARNING)
-        .red = 32
-        .green = 51
-        .blue = 223
+        .Red = 32
+        .Green = 51
+        .Blue = 223
         .bold = 1
         .italic = 1
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_INFO)
-        .red = 65
-        .green = 190
-        .blue = 156
+        .Red = 65
+        .Green = 190
+        .Blue = 156
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_INFOBOLD)
-        .red = 65
-        .green = 190
-        .blue = 156
+        .Red = 65
+        .Green = 190
+        .Blue = 156
         .bold = 1
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_EJECUCION)
-        .red = 130
-        .green = 130
-        .blue = 130
+        .Red = 130
+        .Green = 130
+        .Blue = 130
         .bold = 1
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_PARTY)
-        .red = 255
-        .green = 180
-        .blue = 250
+        .Red = 255
+        .Green = 180
+        .Blue = 250
     End With
     
-    FontTypes(FontTypeNames.FONTTYPE_VENENO).green = 255
+    FontTypes(FontTypeNames.FONTTYPE_VENENO).Green = 255
     
     With FontTypes(FontTypeNames.FONTTYPE_GUILD)
-        .red = 255
-        .green = 255
-        .blue = 255
+        .Red = 255
+        .Green = 255
+        .Blue = 255
         .bold = 1
     End With
     
-    FontTypes(FontTypeNames.FONTTYPE_SERVER).green = 185
+    FontTypes(FontTypeNames.FONTTYPE_SERVER).Green = 185
     
     With FontTypes(FontTypeNames.FONTTYPE_GUILDMSG)
-        .red = 228
-        .green = 199
-        .blue = 27
+        .Red = 228
+        .Green = 199
+        .Blue = 27
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_CONSEJO)
-        .red = 130
-        .green = 130
-        .blue = 255
+        .Red = 130
+        .Green = 130
+        .Blue = 255
         .bold = 1
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_CONSEJOCAOS)
-        .red = 255
-        .green = 60
+        .Red = 255
+        .Green = 60
         .bold = 1
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_CONSEJOVesA)
-        .green = 200
-        .blue = 255
+        .Green = 200
+        .Blue = 255
         .bold = 1
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_CONSEJOCAOSVesA)
-        .red = 255
-        .green = 50
+        .Red = 255
+        .Green = 50
         .bold = 1
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_CENTINELA)
-        .green = 255
+        .Green = 255
         .bold = 1
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_GMMSG)
-        .red = 255
-        .green = 255
-        .blue = 255
+        .Red = 255
+        .Green = 255
+        .Blue = 255
         .italic = 1
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_GM)
-        .red = 30
-        .green = 255
-        .blue = 30
+        .Red = 30
+        .Green = 255
+        .Blue = 30
         .bold = 1
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_CITIZEN)
-        .blue = 200
+        .Blue = 200
         .bold = 1
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_CONSE)
-        .red = 30
-        .green = 150
-        .blue = 30
+        .Red = 30
+        .Green = 150
+        .Blue = 30
         .bold = 1
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_DIOS)
-        .red = 250
-        .green = 250
-        .blue = 150
+        .Red = 250
+        .Green = 250
+        .Blue = 150
         .bold = 1
     End With
 End Sub
@@ -803,18 +800,13 @@ On Error Resume Next
         Case ServerPacketID.CancelOfferItem
             Call HandleCancelOfferItem
             
-#If SeguridadAlkon Then
-        Case Else
-            Call HandleIncomingDataEx
-#Else
         Case Else
             'ERROR : Abort!
             Exit Sub
-#End If
     End Select
     
     'Done with this packet, move on to next one
-    If incomingData.Length > 0 And Err.number <> incomingData.NotEnoughDataErrCode Then
+    If incomingData.length > 0 And Err.number <> incomingData.NotEnoughDataErrCode Then
         Err.Clear
         Call HandleIncomingData
     End If
@@ -830,14 +822,13 @@ Public Sub HandleMultiMessage()
 '***************************************************
     Dim BodyPart As Byte
     Dim Daño As Integer
+    Dim SpellIndex As Integer
+    Dim Nombre As String
     
 With incomingData
     Call .ReadByte
     
     Select Case .ReadByte
-        Case eMessages.DontSeeAnything
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_NO_VES_NADA_INTERESANTE, 65, 190, 156, False, False, True)
-        
         Case eMessages.NPCSwing
             Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_CRIATURA_FALLA_GOLPE, 255, 0, 0, True, False, True)
         
@@ -893,7 +884,7 @@ With incomingData
             End Select
         
         Case eMessages.UserHitNPC
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_GOLPE_CRIATURA_1 & CStr(incomingData.ReadLong()) & MENSAJE_2, 255, 0, 0, True, False, True)
+            Call AddtoRichTextBox(frmMain.RecTxt, "¡¡Le has quitado " & CStr(incomingData.ReadLong()) & " puntos de vida a la criatura!!", 255, 0, 0, True, False, True)
         
         Case eMessages.UserAttackedSwing
             Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & charlist(incomingData.ReadInteger()).Nombre & MENSAJE_ATAQUE_FALLO, 255, 0, 0, True, False, True)
@@ -907,22 +898,22 @@ With incomingData
             
             Select Case BodyPart
                 Case bCabeza
-                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & MENSAJE_RECIBE_IMPACTO_CABEZA & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
+                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & MENSAJE_RECIVE_IMPACTO_CABEZA & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
                 
                 Case bBrazoIzquierdo
-                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & MENSAJE_RECIBE_IMPACTO_BRAZO_IZQ & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
+                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
                 
                 Case bBrazoDerecho
-                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & MENSAJE_RECIBE_IMPACTO_BRAZO_DER & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
+                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & MENSAJE_RECIVE_IMPACTO_BRAZO_DER & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
                 
                 Case bPiernaIzquierda
-                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & MENSAJE_RECIBE_IMPACTO_PIERNA_IZQ & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
+                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
                 
                 Case bPiernaDerecha
-                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & MENSAJE_RECIBE_IMPACTO_PIERNA_DER & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
+                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & MENSAJE_RECIVE_IMPACTO_PIERNA_DER & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
                 
                 Case bTorso
-                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & MENSAJE_RECIBE_IMPACTO_TORSO & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
+                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & MENSAJE_RECIVE_IMPACTO_TORSO & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
             End Select
         
         Case eMessages.UserHittedUser
@@ -1041,14 +1032,43 @@ With incomingData
             
             Call ShowConsoleMsg("Te encuentras a " & Distance & " mapas de la " & Hogar & ", este viaje durará " & msg, 255, 0, 0, True)
             Traveling = True
-        
-        Case eMessages.FinishHome
-            Call ShowConsoleMsg(MENSAJE_HOGAR, 255, 255, 255)
-            Traveling = False
-        
+
         Case eMessages.CancelGoHome
             Call ShowConsoleMsg(MENSAJE_HOGAR_CANCEL, 255, 0, 0, True)
             Traveling = False
+                   
+        Case eMessages.FinishHome
+            Call ShowConsoleMsg(MENSAJE_HOGAR, 255, 255, 255)
+            Traveling = False
+            
+        Case eMessages.UserMuerto
+            Call ShowConsoleMsg(MENSAJE_USER_MUERTO, 255, 255, 255)
+        
+        Case eMessages.NpcInmune
+            Call ShowConsoleMsg(NPC_INMUNE, 210, 220, 220)
+            
+        Case eMessages.Hechizo_HechiceroMSG_NOMBRE
+            SpellIndex = .ReadByte
+            Nombre = .ReadASCIIString
+         
+            Call ShowConsoleMsg(Hechizos(SpellIndex).HechiceroMsg & " " & Nombre & ".", 210, 220, 220)
+         
+        Case eMessages.Hechizo_HechiceroMSG_ALGUIEN
+            SpellIndex = .ReadByte
+         
+            Call ShowConsoleMsg(Hechizos(SpellIndex).HechiceroMsg & " alguien.", 210, 220, 220)
+         
+        Case eMessages.Hechizo_HechiceroMSG_CRIATURA
+            SpellIndex = .ReadByte
+            Call ShowConsoleMsg(Hechizos(SpellIndex).HechiceroMsg & " la criatura.", 210, 220, 220)
+         
+        Case eMessages.Hechizo_PropioMSG
+            SpellIndex = .ReadByte
+            Call ShowConsoleMsg(Hechizos(SpellIndex).PropioMsg, 210, 220, 220)
+         
+        Case eMessages.Hechizo_TargetMSG
+            SpellIndex = .ReadByte
+            Call ShowConsoleMsg(Hechizos(SpellIndex).TargetMsg, 210, 220, 220)
     End Select
 End With
 End Sub
@@ -1111,7 +1131,7 @@ Private Sub HandleRemoveCharDialog()
 '
 '***************************************************
     'Check if the packet is complete
-    If incomingData.Length < 3 Then
+    If incomingData.length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -1220,8 +1240,8 @@ Private Sub HandleCommerceInit()
     Set InvComNpc = New clsGrapchicalInventory
     
     ' Initialize commerce inventories
-    Call InvComUsu.Initialize(DirectDraw, frmComerciar.picInvUser, Inventario.MaxObjs)
-    Call InvComNpc.Initialize(DirectDraw, frmComerciar.picInvNpc, MAX_NPC_INVENTORY_SLOTS)
+    Call InvComUsu.Initialize(DirectD3D8, frmComerciar.picInvUser, Inventario.MaxObjs)
+    Call InvComNpc.Initialize(DirectD3D8, frmComerciar.picInvNpc, MAX_NPC_INVENTORY_SLOTS)
 
     'Fill user inventory
     For i = 1 To MAX_INVENTORY_SLOTS
@@ -1242,7 +1262,7 @@ Private Sub HandleCommerceInit()
                 Call InvComNpc.SetItem(i, .OBJIndex, _
                 .Amount, 0, .GrhIndex, _
                 .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, _
-                .Valor, .Name)
+                .Valor, .name)
             End With
         End If
     Next i
@@ -1271,8 +1291,8 @@ Private Sub HandleBankInit()
     Set InvBanco(1) = New clsGrapchicalInventory
     
     BankGold = incomingData.ReadLong
-    Call InvBanco(0).Initialize(DirectDraw, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
-    Call InvBanco(1).Initialize(DirectDraw, frmBancoObj.picInv, Inventario.MaxObjs)
+    Call InvBanco(0).Initialize(DirectD3D8, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
+    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.PicInv, Inventario.MaxObjs)
     
     For i = 1 To Inventario.MaxObjs
         With Inventario
@@ -1288,7 +1308,7 @@ Private Sub HandleBankInit()
             Call InvBanco(0).SetItem(i, .OBJIndex, _
                 .Amount, .Equipped, .GrhIndex, _
                 .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, _
-                .Valor, .Name)
+                .Valor, .name)
         End With
     Next i
     
@@ -1324,12 +1344,12 @@ Private Sub HandleUserCommerceInit()
     Set InvOroComUsu(2) = New clsGrapchicalInventory
     
     ' Initialize commerce inventories
-    Call InvComUsu.Initialize(DirectDraw, frmComerciarUsu.picInvComercio, Inventario.MaxObjs)
-    Call InvOfferComUsu(0).Initialize(DirectDraw, frmComerciarUsu.picInvOfertaProp, INV_OFFER_SLOTS)
-    Call InvOfferComUsu(1).Initialize(DirectDraw, frmComerciarUsu.picInvOfertaOtro, INV_OFFER_SLOTS)
-    Call InvOroComUsu(0).Initialize(DirectDraw, frmComerciarUsu.picInvOroProp, INV_GOLD_SLOTS, , TilePixelWidth * 2, TilePixelHeight, TilePixelWidth / 2, , , , True)
-    Call InvOroComUsu(1).Initialize(DirectDraw, frmComerciarUsu.picInvOroOfertaProp, INV_GOLD_SLOTS, , TilePixelWidth * 2, TilePixelHeight, TilePixelWidth / 2, , , , True)
-    Call InvOroComUsu(2).Initialize(DirectDraw, frmComerciarUsu.picInvOroOfertaOtro, INV_GOLD_SLOTS, , TilePixelWidth * 2, TilePixelHeight, TilePixelWidth / 2, , , , True)
+    Call InvComUsu.Initialize(DirectD3D8, frmComerciarUsu.picInvComercio, Inventario.MaxObjs)
+    Call InvOfferComUsu(0).Initialize(DirectD3D8, frmComerciarUsu.picInvOfertaProp, INV_OFFER_SLOTS)
+    Call InvOfferComUsu(1).Initialize(DirectD3D8, frmComerciarUsu.picInvOfertaOtro, INV_OFFER_SLOTS)
+    Call InvOroComUsu(0).Initialize(DirectD3D8, frmComerciarUsu.picInvOroProp, INV_GOLD_SLOTS, , TilePixelWidth * 2, TilePixelHeight, TilePixelWidth / 2)
+    Call InvOroComUsu(1).Initialize(DirectD3D8, frmComerciarUsu.picInvOroOfertaProp, INV_GOLD_SLOTS, , TilePixelWidth * 2, TilePixelHeight, TilePixelWidth / 2)
+    Call InvOroComUsu(2).Initialize(DirectD3D8, frmComerciarUsu.picInvOroOfertaOtro, INV_GOLD_SLOTS, , TilePixelWidth * 2, TilePixelHeight, TilePixelWidth / 2)
 
     'Fill user inventory
     For i = 1 To MAX_INVENTORY_SLOTS
@@ -1393,7 +1413,7 @@ Private Sub HandleUserOfferConfirm()
         ' Now he can accept the offer or reject it
         .HabilitarAceptarRechazar True
         
-        .PrintCommerceMsg "¡" & TradingUserName & " ha confirmado su oferta!", FontTypeNames.FONTTYPE_CONSE
+        .PrintCommerceMsg TradingUserName & " ha confirmado su oferta!", FontTypeNames.FONTTYPE_CONSE
     End With
     
 End Sub
@@ -1611,7 +1631,7 @@ Private Sub HandleUpdateSta()
 '
 '***************************************************
     'Check packet is complete
-    If incomingData.Length < 3 Then
+    If incomingData.length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -1645,7 +1665,7 @@ Private Sub HandleUpdateMana()
 '
 '***************************************************
     'Check packet is complete
-    If incomingData.Length < 3 Then
+    If incomingData.length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -1679,7 +1699,7 @@ Private Sub HandleUpdateHP()
 '
 '***************************************************
     'Check packet is complete
-    If incomingData.Length < 3 Then
+    If incomingData.length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -1704,7 +1724,6 @@ Private Sub HandleUpdateHP()
     'Is the user alive??
     If UserMinHP = 0 Then
         UserEstado = 1
-        If frmMain.TrainingMacro Then Call frmMain.DesactivarMacroHechizos
         If frmMain.macrotrabajo Then Call frmMain.DesactivarMacroTrabajo
     Else
         UserEstado = 0
@@ -1723,7 +1742,7 @@ Private Sub HandleUpdateGold()
 '- 09/21/10: C4b3z0n - Modified color change of gold ONLY if the player's level is greater than 12 (NOT newbie).
 '***************************************************
     'Check packet is complete
-    If incomingData.Length < 5 Then
+    If incomingData.length < 5 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -1755,7 +1774,7 @@ Private Sub HandleUpdateBankGold()
 '
 '***************************************************
     'Check packet is complete
-    If incomingData.Length < 5 Then
+    If incomingData.length < 5 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -1777,7 +1796,7 @@ Private Sub HandleUpdateExp()
 '
 '***************************************************
     'Check packet is complete
-    If incomingData.Length < 5 Then
+    If incomingData.length < 5 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -1800,7 +1819,7 @@ Private Sub HandleUpdateStrenghtAndDexterity()
 'Last Modification: 11/26/09
 '***************************************************
     'Check packet is complete
-    If incomingData.Length < 3 Then
+    If incomingData.length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -1825,7 +1844,7 @@ Private Sub HandleUpdateStrenght()
 'Last Modification: 11/26/09
 '***************************************************
     'Check packet is complete
-    If incomingData.Length < 2 Then
+    If incomingData.length < 2 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -1847,7 +1866,7 @@ Private Sub HandleUpdateDexterity()
 'Last Modification: 11/26/09
 '***************************************************
     'Check packet is complete
-    If incomingData.Length < 2 Then
+    If incomingData.length < 2 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -1869,7 +1888,7 @@ Private Sub HandleChangeMap()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 5 Then
+    If incomingData.length < 5 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -1882,10 +1901,6 @@ Private Sub HandleChangeMap()
 'TODO: Once on-the-fly editor is implemented check for map version before loading....
 'For now we just drop it
     Call incomingData.ReadInteger
-        
-#If SeguridadAlkon Then
-    Call InitMI
-#End If
     
     If FileExist(DirMapas & "Mapa" & UserMap & ".map", vbNormal) Then
         Call SwitchMap(UserMap)
@@ -1913,7 +1928,7 @@ Private Sub HandlePosUpdate()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 3 Then
+    If incomingData.length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -1921,26 +1936,13 @@ Private Sub HandlePosUpdate()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    'Remove char from old position
-    If MapData(UserPos.X, UserPos.Y).CharIndex = UserCharIndex Then
-        MapData(UserPos.X, UserPos.Y).CharIndex = 0
-    End If
+    Call Map_RemoveOldUser
     
-    'Set new pos
-    UserPos.X = incomingData.ReadByte()
-    UserPos.Y = incomingData.ReadByte()
-    
-    'Set char
-    MapData(UserPos.X, UserPos.Y).CharIndex = UserCharIndex
-    charlist(UserCharIndex).Pos = UserPos
-    
-    'Are we under a roof?
-    bTecho = IIf(MapData(UserPos.X, UserPos.Y).Trigger = 1 Or _
-            MapData(UserPos.X, UserPos.Y).Trigger = 2 Or _
-            MapData(UserPos.X, UserPos.Y).Trigger = 4, True, False)
-                
+    '// Seteamos la Posicion en el Mapa
+    Call Char_MapPosSet(incomingData.ReadByte(), incomingData.ReadByte())
+
     'Update pos label
-    frmMain.Coord.Caption = UserMap & " X: " & UserPos.X & " Y: " & UserPos.Y
+    Call Char_UserPos
 End Sub
 
 ''
@@ -1952,7 +1954,7 @@ Private Sub HandleNPCHitUser()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 4 Then
+    If incomingData.length < 4 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -1976,119 +1978,12 @@ Private Sub HandleNPCHitUser()
     End Select
 End Sub
 
-''
-' Handles the UserHitNPC message.
 
-Private Sub HandleUserHitNPC()
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'
-'***************************************************
-    If incomingData.Length < 5 Then
-        Err.Raise incomingData.NotEnoughDataErrCode
-        Exit Sub
-    End If
-    
-    'Remove packet ID
-    Call incomingData.ReadByte
-    
-    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_GOLPE_CRIATURA_1 & CStr(incomingData.ReadLong()) & MENSAJE_2, 255, 0, 0, True, False, True)
-End Sub
+
 
 ''
-' Handles the UserAttackedSwing message.
 
-Private Sub HandleUserAttackedSwing()
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'
-'***************************************************
-    If incomingData.Length < 3 Then
-        Err.Raise incomingData.NotEnoughDataErrCode
-        Exit Sub
-    End If
-    
-    'Remove packet ID
-    Call incomingData.ReadByte
-    
-    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & charlist(incomingData.ReadInteger()).Nombre & MENSAJE_ATAQUE_FALLO, 255, 0, 0, True, False, True)
-End Sub
 
-''
-' Handles the UserHittingByUser message.
-
-Private Sub HandleUserHittedByUser()
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'
-'***************************************************
-    If incomingData.Length < 6 Then
-        Err.Raise incomingData.NotEnoughDataErrCode
-        Exit Sub
-    End If
-    
-    'Remove packet ID
-    Call incomingData.ReadByte
-    
-    Dim attacker As String
-    
-    attacker = charlist(incomingData.ReadInteger()).Nombre
-    
-    Select Case incomingData.ReadByte
-        Case bCabeza
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & attacker & MENSAJE_RECIBE_IMPACTO_CABEZA & CStr(incomingData.ReadInteger() & MENSAJE_2), 255, 0, 0, True, False, True)
-        Case bBrazoIzquierdo
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & attacker & MENSAJE_RECIBE_IMPACTO_BRAZO_IZQ & CStr(incomingData.ReadInteger() & MENSAJE_2), 255, 0, 0, True, False, True)
-        Case bBrazoDerecho
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & attacker & MENSAJE_RECIBE_IMPACTO_BRAZO_DER & CStr(incomingData.ReadInteger() & MENSAJE_2), 255, 0, 0, True, False, True)
-        Case bPiernaIzquierda
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & attacker & MENSAJE_RECIBE_IMPACTO_PIERNA_IZQ & CStr(incomingData.ReadInteger() & MENSAJE_2), 255, 0, 0, True, False, True)
-        Case bPiernaDerecha
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & attacker & MENSAJE_RECIBE_IMPACTO_PIERNA_DER & CStr(incomingData.ReadInteger() & MENSAJE_2), 255, 0, 0, True, False, True)
-        Case bTorso
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & attacker & MENSAJE_RECIBE_IMPACTO_TORSO & CStr(incomingData.ReadInteger() & MENSAJE_2), 255, 0, 0, True, False, True)
-    End Select
-End Sub
-
-''
-' Handles the UserHittedUser message.
-
-Private Sub HandleUserHittedUser()
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'
-'***************************************************
-    If incomingData.Length < 6 Then
-        Err.Raise incomingData.NotEnoughDataErrCode
-        Exit Sub
-    End If
-    
-    'Remove packet ID
-    Call incomingData.ReadByte
-    
-    Dim Victim As String
-    
-    Victim = charlist(incomingData.ReadInteger()).Nombre
-    
-    Select Case incomingData.ReadByte
-        Case bCabeza
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_PRODUCE_IMPACTO_1 & Victim & MENSAJE_PRODUCE_IMPACTO_CABEZA & CStr(incomingData.ReadInteger() & MENSAJE_2), 255, 0, 0, True, False, True)
-        Case bBrazoIzquierdo
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_PRODUCE_IMPACTO_1 & Victim & MENSAJE_PRODUCE_IMPACTO_BRAZO_IZQ & CStr(incomingData.ReadInteger() & MENSAJE_2), 255, 0, 0, True, False, True)
-        Case bBrazoDerecho
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_PRODUCE_IMPACTO_1 & Victim & MENSAJE_PRODUCE_IMPACTO_BRAZO_DER & CStr(incomingData.ReadInteger() & MENSAJE_2), 255, 0, 0, True, False, True)
-        Case bPiernaIzquierda
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_PRODUCE_IMPACTO_1 & Victim & MENSAJE_PRODUCE_IMPACTO_PIERNA_IZQ & CStr(incomingData.ReadInteger() & MENSAJE_2), 255, 0, 0, True, False, True)
-        Case bPiernaDerecha
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_PRODUCE_IMPACTO_1 & Victim & MENSAJE_PRODUCE_IMPACTO_PIERNA_DER & CStr(incomingData.ReadInteger() & MENSAJE_2), 255, 0, 0, True, False, True)
-        Case bTorso
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_PRODUCE_IMPACTO_1 & Victim & MENSAJE_PRODUCE_IMPACTO_TORSO & CStr(incomingData.ReadInteger() & MENSAJE_2), 255, 0, 0, True, False, True)
-    End Select
-End Sub
 
 ''
 ' Handles the ChatOverHead message.
@@ -2099,7 +1994,7 @@ Private Sub HandleChatOverHead()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 8 Then
+    If incomingData.length < 8 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -2126,7 +2021,7 @@ On Error GoTo ErrHandler
     b = Buffer.ReadByte()
     
     'Only add the chat if the character exists (a CharacterRemove may have been sent to the PC / NPC area before the buffer was flushed)
-    If charlist(CharIndex).Active Then _
+    If Char_Check(CharIndex) Then _
         Call Dialogos.CreateDialog(Trim$(chat), CharIndex, RGB(r, g, b))
     
     'If we got here then packet is complete, copy data back to original queue
@@ -2153,7 +2048,7 @@ Private Sub HandleConsoleMessage()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 4 Then
+    If incomingData.length < 4 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -2201,7 +2096,7 @@ On Error GoTo ErrHandler
         Call AddtoRichTextBox(frmMain.RecTxt, Left$(chat, InStr(1, chat, "~") - 1), r, g, b, Val(ReadField(5, chat, 126)) <> 0, Val(ReadField(6, chat, 126)) <> 0)
     Else
         With FontTypes(FontIndex)
-            Call AddtoRichTextBox(frmMain.RecTxt, chat, .red, .green, .blue, .bold, .italic)
+            Call AddtoRichTextBox(frmMain.RecTxt, chat, .Red, .Green, .Blue, .bold, .italic)
         End With
         
         ' Para no perder el foco cuando chatea por party
@@ -2234,7 +2129,7 @@ Private Sub HandleGuildChat()
 'Last Modification: 04/07/08 (NicoNZ)
 '
 '***************************************************
-    If incomingData.Length < 3 Then
+    If incomingData.length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -2284,7 +2179,7 @@ On Error GoTo ErrHandler
             Call AddtoRichTextBox(frmMain.RecTxt, Left$(chat, InStr(1, chat, "~") - 1), r, g, b, Val(ReadField(5, chat, 126)) <> 0, Val(ReadField(6, chat, 126)) <> 0)
         Else
             With FontTypes(FontTypeNames.FONTTYPE_GUILDMSG)
-                Call AddtoRichTextBox(frmMain.RecTxt, chat, .red, .green, .blue, .bold, .italic)
+                Call AddtoRichTextBox(frmMain.RecTxt, chat, .Red, .Green, .Blue, .bold, .italic)
             End With
         End If
     Else
@@ -2315,7 +2210,7 @@ Private Sub HandleCommerceChat()
 'Last Modification: 03/12/2009
 '
 '***************************************************
-    If incomingData.Length < 4 Then
+    If incomingData.length < 4 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -2363,7 +2258,7 @@ On Error GoTo ErrHandler
         Call AddtoRichTextBox(frmComerciarUsu.CommerceConsole, Left$(chat, InStr(1, chat, "~") - 1), r, g, b, Val(ReadField(5, chat, 126)) <> 0, Val(ReadField(6, chat, 126)) <> 0)
     Else
         With FontTypes(FontIndex)
-            Call AddtoRichTextBox(frmComerciarUsu.CommerceConsole, chat, .red, .green, .blue, .bold, .italic)
+            Call AddtoRichTextBox(frmComerciarUsu.CommerceConsole, chat, .Red, .Green, .Blue, .bold, .italic)
         End With
     End If
     
@@ -2391,7 +2286,7 @@ Private Sub HandleShowMessageBox()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 3 Then
+    If incomingData.length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -2431,7 +2326,7 @@ Private Sub HandleUserIndexInServer()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 3 Then
+    If incomingData.length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -2451,7 +2346,7 @@ Private Sub HandleUserCharIndexInServer()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 3 Then
+    If incomingData.length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -2459,15 +2354,10 @@ Private Sub HandleUserCharIndexInServer()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    UserCharIndex = incomingData.ReadInteger()
-    UserPos = charlist(UserCharIndex).Pos
-    
-    'Are we under a roof?
-    bTecho = IIf(MapData(UserPos.X, UserPos.Y).Trigger = 1 Or _
-            MapData(UserPos.X, UserPos.Y).Trigger = 2 Or _
-            MapData(UserPos.X, UserPos.Y).Trigger = 4, True, False)
-
-    frmMain.Coord.Caption = UserMap & " X: " & UserPos.X & " Y: " & UserPos.Y
+    Call Char_UserIndexSet(incomingData.ReadInteger())
+                     
+    'Update pos label
+    Call Char_UserPos
 End Sub
 
 ''
@@ -2479,7 +2369,7 @@ Private Sub HandleCharacterCreate()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 24 Then
+    If incomingData.length < 24 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -2516,7 +2406,7 @@ On Error GoTo ErrHandler
     
     
     With charlist(CharIndex)
-        Call SetCharacterFx(CharIndex, Buffer.ReadInteger(), Buffer.ReadInteger())
+        Call Char_SetFx(CharIndex, Buffer.ReadInteger(), Buffer.ReadInteger())
         
         .Nombre = Buffer.ReadASCIIString()
         NickColor = Buffer.ReadByte()
@@ -2553,9 +2443,9 @@ On Error GoTo ErrHandler
         End If
     End With
     
-    Call MakeChar(CharIndex, Body, Head, Heading, X, Y, weapon, shield, helmet)
+    Call Char_Make(CharIndex, Body, Head, Heading, X, Y, weapon, shield, helmet)
     
-    Call RefreshAllChars
+    Call Char_RefreshAll
     
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
@@ -2578,7 +2468,7 @@ Private Sub HandleCharacterChangeNick()
 'Last Modification: 07/23/09
 '
 '***************************************************
-    If incomingData.Length < 6 Then
+    If incomingData.length < 6 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -2587,7 +2477,8 @@ Private Sub HandleCharacterChangeNick()
     Call incomingData.ReadByte
     Dim CharIndex As Integer
     CharIndex = incomingData.ReadInteger
-    charlist(CharIndex).Nombre = incomingData.ReadASCIIString
+    
+    Call Char_SetName(CharIndex, incomingData.ReadASCIIString)
     
 End Sub
 
@@ -2600,7 +2491,7 @@ Private Sub HandleCharacterRemove()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 3 Then
+    If incomingData.length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -2612,7 +2503,7 @@ Private Sub HandleCharacterRemove()
     
     CharIndex = incomingData.ReadInteger()
     
-    Call EraseChar(CharIndex)
+    Call Char_Erase(CharIndex)
     Call RefreshAllChars
 End Sub
 
@@ -2625,7 +2516,7 @@ Private Sub HandleCharacterMove()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 5 Then
+    If incomingData.length < 5 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -2647,14 +2538,16 @@ Private Sub HandleCharacterMove()
         End If
         
         ' Play steps sounds if the user is not an admin of any kind
+
         If .priv <> 1 And .priv <> 2 And .priv <> 3 And .priv <> 5 And .priv <> 25 Then
             Call DoPasosFx(CharIndex)
         End If
+
     End With
     
-    Call MoveCharbyPos(CharIndex, X, Y)
+    Call Char_MovebyPos(CharIndex, X, Y)
     
-    Call RefreshAllChars
+    Call Char_RefreshAll
 End Sub
 
 ''
@@ -2662,7 +2555,7 @@ End Sub
 
 Private Sub HandleForceCharMove()
     
-    If incomingData.Length < 2 Then
+    If incomingData.length < 2 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -2674,10 +2567,11 @@ Private Sub HandleForceCharMove()
     
     Direccion = incomingData.ReadByte()
 
-    Call MoveCharbyHead(UserCharIndex, Direccion)
-    Call MoveScreen(Direccion)
+
+    Call Char_MovebyHead(UserCharIndex, Direccion)
+    Call Char_MoveScreen(Direccion)
     
-    Call RefreshAllChars
+    Call Char_RefreshAll
 End Sub
 
 ''
@@ -2690,7 +2584,7 @@ Private Sub HandleCharacterChange()
 '25/08/2009: ZaMa - Changed a variable used incorrectly.
 '21/09/2010: C4b3z0n - Added code for FragShooter. If its waiting for the death of certain UserIndex, and it dies, then the capture of the screen will occur.
 '***************************************************
-    If incomingData.Length < 18 Then
+    If incomingData.length < 18 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -2700,49 +2594,32 @@ Private Sub HandleCharacterChange()
     
     Dim CharIndex As Integer
     Dim tempint As Integer
-    Dim headIndex As Integer
+    Dim HeadIndex As Integer
     
     CharIndex = incomingData.ReadInteger()
     
-    With charlist(CharIndex)
-        tempint = incomingData.ReadInteger()
+    '// Char Body
+    Call Char_SetBody(CharIndex, incomingData.ReadInteger())
+
+    '// Char Head
+    Call Char_SetHead(CharIndex, incomingData.ReadInteger)
         
-        If tempint < LBound(BodyData()) Or tempint > UBound(BodyData()) Then
-            .Body = BodyData(0)
-            .iBody = 0
-        Else
-            .Body = BodyData(tempint)
-            .iBody = tempint
-        End If
+    '// Char Heading
+    Call Char_SetHeading(CharIndex, incomingData.ReadByte())
         
+    '// Char Weapon
+    Call Char_SetWeapon(CharIndex, incomingData.ReadInteger())
         
-        headIndex = incomingData.ReadInteger()
+    '// Char Shield
+    Call Char_SetShield(CharIndex, incomingData.ReadInteger())
         
-        If headIndex < LBound(HeadData()) Or headIndex > UBound(HeadData()) Then
-            .Head = HeadData(0)
-            .iHead = 0
-        Else
-            .Head = HeadData(headIndex)
-            .iHead = headIndex
-        End If
+    '// Char Casco
+    Call Char_SetCasco(CharIndex, incomingData.ReadInteger())
         
-        .muerto = (headIndex = CASPER_HEAD)
+    '// Char Fx
+    Call Char_SetFx(CharIndex, incomingData.ReadInteger(), incomingData.ReadInteger())
         
-        .Heading = incomingData.ReadByte()
-        
-        tempint = incomingData.ReadInteger()
-        If tempint <> 0 Then .Arma = WeaponAnimData(tempint)
-        
-        tempint = incomingData.ReadInteger()
-        If tempint <> 0 Then .Escudo = ShieldAnimData(tempint)
-        
-        tempint = incomingData.ReadInteger()
-        If tempint <> 0 Then .Casco = CascoAnimData(tempint)
-        
-        Call SetCharacterFx(CharIndex, incomingData.ReadInteger(), incomingData.ReadInteger())
-    End With
-    
-    Call RefreshAllChars
+    Call Char_RefreshAll
 End Sub
 
 ''
@@ -2754,7 +2631,7 @@ Private Sub HandleObjectCreate()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 5 Then
+    If incomingData.length < 5 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -2762,15 +2639,15 @@ Private Sub HandleObjectCreate()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Dim X As Byte
-    Dim Y As Byte
+    Dim X        As Byte
+    Dim Y        As Byte
+    Dim GrhIndex As Integer
     
     X = incomingData.ReadByte()
     Y = incomingData.ReadByte()
-    
-    MapData(X, Y).ObjGrh.GrhIndex = incomingData.ReadInteger()
-    
-    Call InitGrh(MapData(X, Y).ObjGrh, MapData(X, Y).ObjGrh.GrhIndex)
+    GrhIndex = incomingData.ReadInteger()
+        
+    Call Map_CreateObject(X, Y, GrhIndex)
 End Sub
 
 ''
@@ -2782,7 +2659,7 @@ Private Sub HandleObjectDelete()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 3 Then
+    If incomingData.length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -2790,12 +2667,18 @@ Private Sub HandleObjectDelete()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Dim X As Byte
-    Dim Y As Byte
-    
+    Dim X   As Byte
+    Dim Y   As Byte
+    Dim Obj As Integer
+
     X = incomingData.ReadByte()
     Y = incomingData.ReadByte()
-    MapData(X, Y).ObjGrh.GrhIndex = 0
+        
+    Obj = Map_PosExitsObject(X, Y)
+        
+    If (Obj > 0) Then
+        Call Map_DestroyObject(X, Y)
+    End If
 End Sub
 
 ''
@@ -2807,7 +2690,7 @@ Private Sub HandleBlockPosition()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 4 Then
+    If incomingData.length < 4 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -2817,14 +2700,16 @@ Private Sub HandleBlockPosition()
     
     Dim X As Byte
     Dim Y As Byte
+    Dim block As Boolean
     
     X = incomingData.ReadByte()
     Y = incomingData.ReadByte()
+    block = incomingData.ReadBoolean()
     
-    If incomingData.ReadBoolean() Then
-        MapData(X, Y).Blocked = 1
+    If block Then
+        Map_SetBlocked X, Y, 1
     Else
-        MapData(X, Y).Blocked = 0
+        Map_SetBlocked X, Y, 0
     End If
 End Sub
 
@@ -2837,7 +2722,7 @@ Private Sub HandlePlayMIDI()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 5 Then
+    If incomingData.length < 5 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -2853,7 +2738,7 @@ Private Sub HandlePlayMIDI()
     
     If currentMidi Then
         If currentMidi > MP3_INITIAL_INDEX Then
-            Call Audio.MusicMP3Play(App.path & "\MP3\" & currentMidi & ".mp3")
+            'Call Audio.MusicMP3Play(App.path & "\MP3\" & currentMidi & ".mp3")
         Else
             Call Audio.PlayMIDI(CStr(currentMidi) & ".mid", Loops)
         End If
@@ -2871,7 +2756,7 @@ Private Sub HandlePlayWave()
 'Last Modified by: Rapsodius
 'Added support for 3D Sounds.
 '***************************************************
-    If incomingData.Length < 3 Then
+    If incomingData.length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -2899,7 +2784,7 @@ Private Sub HandleGuildList()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 3 Then
+    If incomingData.length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -2950,7 +2835,7 @@ Private Sub HandleAreaChanged()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 3 Then
+    If incomingData.length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -3025,7 +2910,7 @@ Private Sub HandleCreateFX()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 7 Then
+    If incomingData.length < 7 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -3034,14 +2919,14 @@ Private Sub HandleCreateFX()
     Call incomingData.ReadByte
     
     Dim CharIndex As Integer
-    Dim fX As Integer
+    Dim FX As Integer
     Dim Loops As Integer
     
     CharIndex = incomingData.ReadInteger()
-    fX = incomingData.ReadInteger()
+    FX = incomingData.ReadInteger()
     Loops = incomingData.ReadInteger()
     
-    Call SetCharacterFx(CharIndex, fX, Loops)
+    Call Char_SetFx(CharIndex, FX, Loops)
 End Sub
 
 ''
@@ -3053,7 +2938,7 @@ Private Sub HandleUpdateUserStats()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 26 Then
+    If incomingData.length < 26 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -3118,7 +3003,6 @@ Private Sub HandleUpdateUserStats()
     
     If UserMinHP = 0 Then
         UserEstado = 1
-        If frmMain.TrainingMacro Then Call frmMain.DesactivarMacroHechizos
         If frmMain.macrotrabajo Then Call frmMain.DesactivarMacroTrabajo
     Else
         UserEstado = 0
@@ -3142,7 +3026,7 @@ Private Sub HandleWorkRequestTarget()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 2 Then
+    If incomingData.length < 2 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -3181,7 +3065,7 @@ Private Sub HandleChangeInventorySlot()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 22 Then
+    If incomingData.length < 22 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -3196,7 +3080,7 @@ On Error GoTo ErrHandler
     
     Dim slot As Byte
     Dim OBJIndex As Integer
-    Dim Name As String
+    Dim name As String
     Dim Amount As Integer
     Dim Equipped As Boolean
     Dim GrhIndex As Integer
@@ -3205,11 +3089,11 @@ On Error GoTo ErrHandler
     Dim MinHit As Integer
     Dim MaxDef As Integer
     Dim MinDef As Integer
-    Dim value As Single
+    Dim Value As Single
     
     slot = Buffer.ReadByte()
     OBJIndex = Buffer.ReadInteger()
-    Name = Buffer.ReadASCIIString()
+    name = Buffer.ReadASCIIString()
     Amount = Buffer.ReadInteger()
     Equipped = Buffer.ReadBoolean()
     GrhIndex = Buffer.ReadInteger()
@@ -3218,7 +3102,7 @@ On Error GoTo ErrHandler
     MinHit = Buffer.ReadInteger()
     MaxDef = Buffer.ReadInteger()
     MinDef = Buffer.ReadInteger
-    value = Buffer.ReadSingle()
+    Value = Buffer.ReadSingle()
     
     If Equipped Then
         Select Case OBJType
@@ -3252,7 +3136,7 @@ On Error GoTo ErrHandler
         End Select
     End If
     
-    Call Inventario.SetItem(slot, OBJIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, value, Name)
+    Call Inventario.SetItem(slot, OBJIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, name)
 
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
@@ -3293,7 +3177,7 @@ Private Sub HandleStopWorking()
     Call incomingData.ReadByte
     
     With FontTypes(FontTypeNames.FONTTYPE_INFO)
-        Call ShowConsoleMsg("¡Has terminado de trabajar!", .red, .green, .blue, .bold, .italic)
+        Call ShowConsoleMsg("¡Has terminado de trabajar!", .Red, .Green, .Blue, .bold, .italic)
     End With
     
     If frmMain.macrotrabajo.Enabled Then Call frmMain.DesactivarMacroTrabajo
@@ -3345,7 +3229,7 @@ Private Sub HandleChangeBankSlot()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 21 Then
+    If incomingData.length < 21 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -3363,7 +3247,7 @@ On Error GoTo ErrHandler
     
     With UserBancoInventory(slot)
         .OBJIndex = Buffer.ReadInteger()
-        .Name = Buffer.ReadASCIIString()
+        .name = Buffer.ReadASCIIString()
         .Amount = Buffer.ReadInteger()
         .GrhIndex = Buffer.ReadInteger()
         .OBJType = Buffer.ReadByte()
@@ -3376,7 +3260,7 @@ On Error GoTo ErrHandler
         If Comerciando Then
             Call InvBanco(0).SetItem(slot, .OBJIndex, .Amount, _
                 .Equipped, .GrhIndex, .OBJType, .MaxHit, _
-                .MinHit, .MaxDef, .MinDef, .Valor, .Name)
+                .MinHit, .MaxDef, .MinDef, .Valor, .name)
         End If
     End With
     
@@ -3404,41 +3288,46 @@ Private Sub HandleChangeSpellSlot()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 6 Then
+    If incomingData.length < 4 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
-    
+ 
 On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
-    
+ 
     'Remove packet ID
     Call Buffer.ReadByte
-    
+ 
     Dim slot As Byte
     slot = Buffer.ReadByte()
-    
+    Dim str As String
+ 
     UserHechizos(slot) = Buffer.ReadInteger()
-    
+ 
     If slot <= frmMain.hlst.ListCount Then
-        frmMain.hlst.List(slot - 1) = Buffer.ReadASCIIString()
+         str = DevolverNombreHechizo(UserHechizos(slot))
+        If str <> vbNullString Then _
+            frmMain.hlst.List(slot - 1) = str
     Else
-        Call frmMain.hlst.AddItem(Buffer.ReadASCIIString())
+        str = DevolverNombreHechizo(UserHechizos(slot))
+        If str <> vbNullString Then Call frmMain.hlst.AddItem(str)
+     
     End If
-    
+ 
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
-    
+ 
 ErrHandler:
     Dim error As Long
     error = Err.number
 On Error GoTo 0
-    
+ 
     'Destroy auxiliar buffer
     Set Buffer = Nothing
-
+ 
     If error <> 0 Then _
         Err.Raise error
 End Sub
@@ -3452,7 +3341,7 @@ Private Sub HandleAtributes()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 1 + NUMATRIBUTES Then
+    If incomingData.length < 1 + NUMATRIBUTES Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -3491,7 +3380,7 @@ Private Sub HandleBlacksmithWeapons()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 3 Then
+    If incomingData.length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -3506,7 +3395,7 @@ On Error GoTo ErrHandler
     
     Dim Count As Integer
     Dim i As Long
-    Dim j As Long
+    Dim J As Long
     Dim k As Long
     
     Count = Buffer.ReadInteger()
@@ -3516,7 +3405,7 @@ On Error GoTo ErrHandler
     
     For i = 1 To Count
         With ArmasHerrero(i)
-            .Name = Buffer.ReadASCIIString()    'Get the object's name
+            .name = Buffer.ReadASCIIString()    'Get the object's name
             .GrhIndex = Buffer.ReadInteger()
             .LinH = Buffer.ReadInteger()        'The iron needed
             .LinP = Buffer.ReadInteger()        'The silver needed
@@ -3532,10 +3421,10 @@ On Error GoTo ErrHandler
     
     With frmHerrero
         ' Inicializo los inventarios
-        Call InvLingosHerreria(1).Initialize(DirectDraw, .picLingotes0, 3, , , , , , False)
-        Call InvLingosHerreria(2).Initialize(DirectDraw, .picLingotes1, 3, , , , , , False)
-        Call InvLingosHerreria(3).Initialize(DirectDraw, .picLingotes2, 3, , , , , , False)
-        Call InvLingosHerreria(4).Initialize(DirectDraw, .picLingotes3, 3, , , , , , False)
+        Call InvLingosHerreria(1).Initialize(DirectD3D8, .picLingotes0, 3, , , , , , False)
+        Call InvLingosHerreria(2).Initialize(DirectD3D8, .picLingotes1, 3, , , , , , False)
+        Call InvLingosHerreria(3).Initialize(DirectD3D8, .picLingotes2, 3, , , , , , False)
+        Call InvLingosHerreria(4).Initialize(DirectD3D8, .picLingotes3, 3, , , , , , False)
         
         Call .HideExtraControls(Count)
         Call .RenderList(1, True)
@@ -3546,18 +3435,18 @@ On Error GoTo ErrHandler
             If .Upgrade Then
                 For k = 1 To Count
                     If .Upgrade = ArmasHerrero(k).OBJIndex Then
-                        j = j + 1
+                        J = J + 1
                 
-                        ReDim Preserve HerreroMejorar(j) As tItemsConstruibles
+                        ReDim Preserve HerreroMejorar(J) As tItemsConstruibles
                         
-                        HerreroMejorar(j).Name = .Name
-                        HerreroMejorar(j).GrhIndex = .GrhIndex
-                        HerreroMejorar(j).OBJIndex = .OBJIndex
-                        HerreroMejorar(j).UpgradeName = ArmasHerrero(k).Name
-                        HerreroMejorar(j).UpgradeGrhIndex = ArmasHerrero(k).GrhIndex
-                        HerreroMejorar(j).LinH = ArmasHerrero(k).LinH - .LinH * 0.85
-                        HerreroMejorar(j).LinP = ArmasHerrero(k).LinP - .LinP * 0.85
-                        HerreroMejorar(j).LinO = ArmasHerrero(k).LinO - .LinO * 0.85
+                        HerreroMejorar(J).name = .name
+                        HerreroMejorar(J).GrhIndex = .GrhIndex
+                        HerreroMejorar(J).OBJIndex = .OBJIndex
+                        HerreroMejorar(J).UpgradeName = ArmasHerrero(k).name
+                        HerreroMejorar(J).UpgradeGrhIndex = ArmasHerrero(k).GrhIndex
+                        HerreroMejorar(J).LinH = ArmasHerrero(k).LinH - .LinH * 0.85
+                        HerreroMejorar(J).LinP = ArmasHerrero(k).LinP - .LinP * 0.85
+                        HerreroMejorar(J).LinO = ArmasHerrero(k).LinO - .LinO * 0.85
                         
                         Exit For
                     End If
@@ -3590,7 +3479,7 @@ Private Sub HandleBlacksmithArmors()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 3 Then
+    If incomingData.length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -3605,7 +3494,7 @@ On Error GoTo ErrHandler
     
     Dim Count As Integer
     Dim i As Long
-    Dim j As Long
+    Dim J As Long
     Dim k As Long
     
     Count = Buffer.ReadInteger()
@@ -3614,7 +3503,7 @@ On Error GoTo ErrHandler
     
     For i = 1 To Count
         With ArmadurasHerrero(i)
-            .Name = Buffer.ReadASCIIString()    'Get the object's name
+            .name = Buffer.ReadASCIIString()    'Get the object's name
             .GrhIndex = Buffer.ReadInteger()
             .LinH = Buffer.ReadInteger()        'The iron needed
             .LinP = Buffer.ReadInteger()        'The silver needed
@@ -3624,25 +3513,25 @@ On Error GoTo ErrHandler
         End With
     Next i
     
-    j = UBound(HerreroMejorar)
+    J = UBound(HerreroMejorar)
     
     For i = 1 To Count
         With ArmadurasHerrero(i)
             If .Upgrade Then
                 For k = 1 To Count
                     If .Upgrade = ArmadurasHerrero(k).OBJIndex Then
-                        j = j + 1
+                        J = J + 1
                 
-                        ReDim Preserve HerreroMejorar(j) As tItemsConstruibles
+                        ReDim Preserve HerreroMejorar(J) As tItemsConstruibles
                         
-                        HerreroMejorar(j).Name = .Name
-                        HerreroMejorar(j).GrhIndex = .GrhIndex
-                        HerreroMejorar(j).OBJIndex = .OBJIndex
-                        HerreroMejorar(j).UpgradeName = ArmadurasHerrero(k).Name
-                        HerreroMejorar(j).UpgradeGrhIndex = ArmadurasHerrero(k).GrhIndex
-                        HerreroMejorar(j).LinH = ArmadurasHerrero(k).LinH - .LinH * 0.85
-                        HerreroMejorar(j).LinP = ArmadurasHerrero(k).LinP - .LinP * 0.85
-                        HerreroMejorar(j).LinO = ArmadurasHerrero(k).LinO - .LinO * 0.85
+                        HerreroMejorar(J).name = .name
+                        HerreroMejorar(J).GrhIndex = .GrhIndex
+                        HerreroMejorar(J).OBJIndex = .OBJIndex
+                        HerreroMejorar(J).UpgradeName = ArmadurasHerrero(k).name
+                        HerreroMejorar(J).UpgradeGrhIndex = ArmadurasHerrero(k).GrhIndex
+                        HerreroMejorar(J).LinH = ArmadurasHerrero(k).LinH - .LinH * 0.85
+                        HerreroMejorar(J).LinP = ArmadurasHerrero(k).LinP - .LinP * 0.85
+                        HerreroMejorar(J).LinO = ArmadurasHerrero(k).LinO - .LinO * 0.85
                         
                         Exit For
                     End If
@@ -3675,7 +3564,7 @@ Private Sub HandleCarpenterObjects()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 3 Then
+    If incomingData.length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -3690,7 +3579,7 @@ On Error GoTo ErrHandler
     
     Dim Count As Integer
     Dim i As Long
-    Dim j As Long
+    Dim J As Long
     Dim k As Long
     
     Count = Buffer.ReadInteger()
@@ -3700,7 +3589,7 @@ On Error GoTo ErrHandler
     
     For i = 1 To Count
         With ObjCarpintero(i)
-            .Name = Buffer.ReadASCIIString()        'Get the object's name
+            .name = Buffer.ReadASCIIString()        'Get the object's name
             .GrhIndex = Buffer.ReadInteger()
             .Madera = Buffer.ReadInteger()          'The wood needed
             .MaderaElfica = Buffer.ReadInteger()    'The elfic wood needed
@@ -3715,10 +3604,10 @@ On Error GoTo ErrHandler
     
     With frmCarp
         ' Inicializo los inventarios
-        Call InvMaderasCarpinteria(1).Initialize(DirectDraw, .picMaderas0, 2, , , , , , False)
-        Call InvMaderasCarpinteria(2).Initialize(DirectDraw, .picMaderas1, 2, , , , , , False)
-        Call InvMaderasCarpinteria(3).Initialize(DirectDraw, .picMaderas2, 2, , , , , , False)
-        Call InvMaderasCarpinteria(4).Initialize(DirectDraw, .picMaderas3, 2, , , , , , False)
+        Call InvMaderasCarpinteria(1).Initialize(DirectD3D8, .picMaderas0, 2, , , , , , False)
+        Call InvMaderasCarpinteria(2).Initialize(DirectD3D8, .picMaderas1, 2, , , , , , False)
+        Call InvMaderasCarpinteria(3).Initialize(DirectD3D8, .picMaderas2, 2, , , , , , False)
+        Call InvMaderasCarpinteria(4).Initialize(DirectD3D8, .picMaderas3, 2, , , , , , False)
         
         Call .HideExtraControls(Count)
         Call .RenderList(1)
@@ -3729,17 +3618,17 @@ On Error GoTo ErrHandler
             If .Upgrade Then
                 For k = 1 To Count
                     If .Upgrade = ObjCarpintero(k).OBJIndex Then
-                        j = j + 1
+                        J = J + 1
                 
-                        ReDim Preserve CarpinteroMejorar(j) As tItemsConstruibles
+                        ReDim Preserve CarpinteroMejorar(J) As tItemsConstruibles
                         
-                        CarpinteroMejorar(j).Name = .Name
-                        CarpinteroMejorar(j).GrhIndex = .GrhIndex
-                        CarpinteroMejorar(j).OBJIndex = .OBJIndex
-                        CarpinteroMejorar(j).UpgradeName = ObjCarpintero(k).Name
-                        CarpinteroMejorar(j).UpgradeGrhIndex = ObjCarpintero(k).GrhIndex
-                        CarpinteroMejorar(j).Madera = ObjCarpintero(k).Madera - .Madera * 0.85
-                        CarpinteroMejorar(j).MaderaElfica = ObjCarpintero(k).MaderaElfica - .MaderaElfica * 0.85
+                        CarpinteroMejorar(J).name = .name
+                        CarpinteroMejorar(J).GrhIndex = .GrhIndex
+                        CarpinteroMejorar(J).OBJIndex = .OBJIndex
+                        CarpinteroMejorar(J).UpgradeName = ObjCarpintero(k).name
+                        CarpinteroMejorar(J).UpgradeGrhIndex = ObjCarpintero(k).GrhIndex
+                        CarpinteroMejorar(J).Madera = ObjCarpintero(k).Madera - .Madera * 0.85
+                        CarpinteroMejorar(J).MaderaElfica = ObjCarpintero(k).MaderaElfica - .MaderaElfica * 0.85
                         
                         Exit For
                     End If
@@ -3787,7 +3676,7 @@ Private Sub HandleErrorMessage()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 3 Then
+    If incomingData.length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -3866,7 +3755,7 @@ Private Sub HandleShowSignal()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 5 Then
+    If incomingData.length < 5 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -3908,7 +3797,7 @@ Private Sub HandleChangeNPCInventorySlot()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 21 Then
+    If incomingData.length < 21 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -3925,7 +3814,7 @@ On Error GoTo ErrHandler
     slot = Buffer.ReadByte()
     
     With NPCInventory(slot)
-        .Name = Buffer.ReadASCIIString()
+        .name = Buffer.ReadASCIIString()
         .Amount = Buffer.ReadInteger()
         .Valor = Buffer.ReadSingle()
         .GrhIndex = Buffer.ReadInteger()
@@ -3961,7 +3850,7 @@ Private Sub HandleUpdateHungerAndThirst()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 5 Then
+    If incomingData.length < 5 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -4004,7 +3893,7 @@ Private Sub HandleFame()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 29 Then
+    If incomingData.length < 29 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -4034,7 +3923,7 @@ Private Sub HandleMiniStats()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 20 Then
+    If incomingData.length < 20 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -4061,7 +3950,7 @@ Private Sub HandleLevelUp()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 3 Then
+    If incomingData.length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -4083,7 +3972,7 @@ Private Sub HandleAddForumMessage()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 8 Then
+    If incomingData.length < 8 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -4160,7 +4049,7 @@ Private Sub HandleSetInvisible()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 4 Then
+    If incomingData.length < 4 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -4171,16 +4060,7 @@ Private Sub HandleSetInvisible()
     Dim CharIndex As Integer
     
     CharIndex = incomingData.ReadInteger()
-    
-#If SeguridadAlkon Then
-    If incomingData.ReadBoolean() Then
-        Call MI(CualMI).SetInvisible(CharIndex)
-    Else
-        Call MI(CualMI).ResetInvisible(CharIndex)
-    End If
-#Else
-    charlist(CharIndex).invisible = incomingData.ReadBoolean()
-#End If
+    Call Char_SetInvisible(CharIndex, incomingData.ReadBoolean())
 
 End Sub
 
@@ -4194,7 +4074,7 @@ Private Sub HandleDiceRoll()
 '
 '***************************************************
 
-    If incomingData.Length < 6 Then
+    If incomingData.length < 6 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -4273,16 +4153,18 @@ Private Sub HandleSendSkills()
 'Last Modification: 11/19/09
 '11/19/09: Pato - Now the server send the percentage of progress of the skills.
 '***************************************************
-    If incomingData.Length < 2 + NUMSKILLS * 2 Then
+    If incomingData.length < 2 + NUMSKILLS * 2 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
     'Remove packet ID
     Call incomingData.ReadByte
+
+    UserClase = incomingData.ReadByte
     
     Dim i As Long
-
+    
     For i = 1 To NUMSKILLS
         UserSkills(i) = incomingData.ReadByte()
         PorcentajeSkills(i) = incomingData.ReadByte()
@@ -4300,7 +4182,7 @@ Private Sub HandleTrainerCreatureList()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 3 Then
+    If incomingData.length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -4347,7 +4229,7 @@ Private Sub HandleGuildNews()
 'Last Modification: 11/19/09
 '11/19/09: Pato - Is optional show the frmGuildNews form
 '***************************************************
-    If incomingData.Length < 7 Then
+    If incomingData.length < 7 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -4409,7 +4291,7 @@ Private Sub HandleOfferDetails()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 3 Then
+    If incomingData.length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -4448,7 +4330,7 @@ Private Sub HandleAlianceProposalsList()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 3 Then
+    If incomingData.length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -4498,7 +4380,7 @@ Private Sub HandlePeaceProposalsList()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 3 Then
+    If incomingData.length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -4548,7 +4430,7 @@ Private Sub HandleCharacterInfo()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 35 Then
+    If incomingData.length < 35 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -4613,11 +4495,11 @@ On Error GoTo ErrHandler
         .criminales.Caption = CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .Status.Caption = " Ciudadano"
-            .Status.ForeColor = vbBlue
+            .status.Caption = " Ciudadano"
+            .status.ForeColor = vbBlue
         Else
-            .Status.Caption = " Criminal"
-            .Status.ForeColor = vbRed
+            .status.Caption = " Criminal"
+            .status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)
@@ -4647,7 +4529,7 @@ Private Sub HandleGuildLeaderInfo()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 9 Then
+    If incomingData.length < 9 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -4724,7 +4606,7 @@ Private Sub HandleGuildDetails()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 26 Then
+    If incomingData.length < 26 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -4844,7 +4726,7 @@ Private Sub HandleShowUserRequest()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 3 Then
+    If incomingData.length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -4914,7 +4796,7 @@ Private Sub HandleTradeOK()
                     Call InvComNpc.SetItem(i, .OBJIndex, _
                     .Amount, 0, .GrhIndex, _
                     .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, _
-                    .Valor, .Name)
+                    .Valor, .name)
                 End With
             ' Compraron o vendieron cierta cantidad (no su totalidad)
             ElseIf NPCInventory(i).Amount <> InvComNpc.Amount(i) Then
@@ -4972,7 +4854,7 @@ Private Sub HandleChangeUserTradeSlot()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 22 Then
+    If incomingData.length < 22 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -5027,7 +4909,7 @@ Private Sub HandleSendNight()
 'Last Modification: 01/08/07
 '
 '***************************************************
-    If incomingData.Length < 2 Then
+    If incomingData.length < 2 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -5048,7 +4930,7 @@ Private Sub HandleSpawnList()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 3 Then
+    If incomingData.length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -5095,7 +4977,7 @@ Private Sub HandleShowSOSForm()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 3 Then
+    If incomingData.length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -5143,7 +5025,7 @@ Private Sub HandleShowDenounces()
 'Last Modification: 14/11/2010
 '
 '***************************************************
-    If incomingData.Length < 3 Then
+    If incomingData.length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -5163,7 +5045,7 @@ On Error GoTo ErrHandler
     
     With FontTypes(FontTypeNames.FONTTYPE_GUILDMSG)
         For DenounceIndex = 0 To UBound(DenounceList())
-            Call AddtoRichTextBox(frmMain.RecTxt, DenounceList(DenounceIndex), .red, .green, .blue, .bold, .italic)
+            Call AddtoRichTextBox(frmMain.RecTxt, DenounceList(DenounceIndex), .Red, .Green, .Blue, .bold, .italic)
         Next DenounceIndex
     End With
     
@@ -5191,7 +5073,7 @@ Private Sub HandleShowPartyForm()
 'Last Modification: 11/26/09
 '
 '***************************************************
-    If incomingData.Length < 3 Then
+    If incomingData.length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -5243,7 +5125,7 @@ Private Sub HandleShowMOTDEditionForm()
 'Last Modification: 05/17/06
 '
 '*************************************Su**************
-    If incomingData.Length < 3 Then
+    If incomingData.length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -5298,7 +5180,7 @@ Private Sub HandleUserNameList()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 3 Then
+    If incomingData.length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -5364,7 +5246,7 @@ Private Sub HandleGuildMemberInfo()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 3 Then
+    If incomingData.length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -5426,7 +5308,7 @@ Private Sub HandleUpdateTagAndStatus()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 6 Then
+    If incomingData.length < 6 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -5494,19 +5376,11 @@ Public Sub WriteLoginExistingChar()
         
         Call .WriteASCIIString(UserName)
         
-#If SeguridadAlkon Then
-        Call .WriteASCIIStringFixed(UserPassword)
-#Else
         Call .WriteASCIIString(UserPassword)
-#End If
         
         Call .WriteByte(App.Major)
         Call .WriteByte(App.Minor)
         Call .WriteByte(App.Revision)
-        
-#If SeguridadAlkon Then
-        Call .WriteASCIIStringFixed(MD5HushYo)
-#End If
     End With
 End Sub
 
@@ -5541,20 +5415,11 @@ Public Sub WriteLoginNewChar()
         Call .WriteByte(ClientPacketID.LoginNewChar)
         
         Call .WriteASCIIString(UserName)
-        
-#If SeguridadAlkon Then
-        Call .WriteASCIIStringFixed(UserPassword)
-#Else
         Call .WriteASCIIString(UserPassword)
-#End If
         
         Call .WriteByte(App.Major)
         Call .WriteByte(App.Minor)
         Call .WriteByte(App.Revision)
-        
-#If SeguridadAlkon Then
-        Call .WriteASCIIStringFixed(MD5HushYo)
-#End If
         
         Call .WriteByte(UserRaza)
         Call .WriteByte(UserSexo)
@@ -6117,51 +5982,33 @@ End Sub
 ' @param    codex   Array of all rules of the guild.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCreateNewGuild(ByVal Desc As String, ByVal Name As String, ByVal Site As String, ByRef Codex() As String)
+Public Sub WriteCreateNewGuild(ByVal Desc As String, ByVal name As String, ByVal Site As String, ByRef Codex() As String)
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
 'Writes the "CreateNewGuild" message to the outgoing data buffer
 '***************************************************
-    Dim temp As String
+    Dim Temp As String
     Dim i As Long
     
     With outgoingData
         Call .WriteByte(ClientPacketID.CreateNewGuild)
         
         Call .WriteASCIIString(Desc)
-        Call .WriteASCIIString(Name)
+        Call .WriteASCIIString(name)
         Call .WriteASCIIString(Site)
         
         For i = LBound(Codex()) To UBound(Codex())
-            temp = temp & Codex(i) & SEPARATOR
+            Temp = Temp & Codex(i) & SEPARATOR
         Next i
         
-        If Len(temp) Then _
-            temp = Left$(temp, Len(temp) - 1)
+        If Len(Temp) Then _
+            Temp = Left$(Temp, Len(Temp) - 1)
         
-        Call .WriteASCIIString(temp)
+        Call .WriteASCIIString(Temp)
     End With
 End Sub
 
-''
-' Writes the "SpellInfo" message to the outgoing data buffer.
-'
-' @param    slot Spell List slot where the spell which's info is requested is.
-' @remarks  The data is not actually sent until the buffer is properly flushed.
-
-Public Sub WriteSpellInfo(ByVal slot As Byte)
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'Writes the "SpellInfo" message to the outgoing data buffer
-'***************************************************
-    With outgoingData
-        Call .WriteByte(ClientPacketID.SpellInfo)
-        
-        Call .WriteByte(slot)
-    End With
-End Sub
 
 ''
 ' Writes the "EquipItem" message to the outgoing data buffer.
@@ -6404,7 +6251,7 @@ Public Sub WriteClanCodexUpdate(ByVal Desc As String, ByRef Codex() As String)
 'Last Modification: 05/17/06
 'Writes the "ClanCodexUpdate" message to the outgoing data buffer
 '***************************************************
-    Dim temp As String
+    Dim Temp As String
     Dim i As Long
     
     With outgoingData
@@ -6413,13 +6260,13 @@ Public Sub WriteClanCodexUpdate(ByVal Desc As String, ByRef Codex() As String)
         Call .WriteASCIIString(Desc)
         
         For i = LBound(Codex()) To UBound(Codex())
-            temp = temp & Codex(i) & SEPARATOR
+            Temp = Temp & Codex(i) & SEPARATOR
         Next i
         
-        If Len(temp) Then _
-            temp = Left$(temp, Len(temp) - 1)
+        If Len(Temp) Then _
+            Temp = Left$(Temp, Len(Temp) - 1)
         
-        Call .WriteASCIIString(temp)
+        Call .WriteASCIIString(Temp)
     End With
 End Sub
 
@@ -7158,7 +7005,7 @@ Public Sub WriteUpTime()
 'Last Modification: 05/17/06
 'Writes the "UpTime" message to the outgoing data buffer
 '***************************************************
-    Call outgoingData.WriteByte(ClientPacketID.Uptime)
+    Call outgoingData.WriteByte(ClientPacketID.UpTime)
 End Sub
 
 ''
@@ -7255,24 +7102,6 @@ Public Sub WritePartyMessage(ByVal Message As String)
     End With
 End Sub
 
-''
-' Writes the "CentinelReport" message to the outgoing data buffer.
-'
-' @param    number The number to report to the centinel.
-' @remarks  The data is not actually sent until the buffer is properly flushed.
-
-Public Sub WriteCentinelReport(ByVal number As Integer)
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'Writes the "CentinelReport" message to the outgoing data buffer
-'***************************************************
-    With outgoingData
-        Call .WriteByte(ClientPacketID.CentinelReport)
-        
-        Call .WriteInteger(number)
-    End With
-End Sub
 
 ''
 ' Writes the "GuildOnline" message to the outgoing data buffer.
@@ -7446,16 +7275,8 @@ Public Sub WriteChangePassword(ByRef oldPass As String, ByRef newPass As String)
 '***************************************************
     With outgoingData
         Call .WriteByte(ClientPacketID.ChangePassword)
-        
-#If SeguridadAlkon Then
-        Call .WriteASCIIStringFixed(md5.GetMD5String(oldPass))
-        Call md5.MD5Reset
-        Call .WriteASCIIStringFixed(md5.GetMD5String(newPass))
-        Call md5.MD5Reset
-#Else
         Call .WriteASCIIString(oldPass)
         Call .WriteASCIIString(newPass)
-#End If
     End With
 End Sub
 
@@ -7713,6 +7534,8 @@ Public Sub WriteHome()
         Call .WriteByte(ClientPacketID.Home)
     End With
 End Sub
+
+
 
 ''
 ' Writes the "GMMessage" message to the outgoing data buffer.
@@ -8074,7 +7897,7 @@ End Sub
 ' @param    time The time (in minutes) the user will have to spend there.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteJail(ByVal UserName As String, ByVal Reason As String, ByVal time As Byte)
+Public Sub WriteJail(ByVal UserName As String, ByVal Reason As String, ByVal Time As Byte)
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -8087,7 +7910,7 @@ Public Sub WriteJail(ByVal UserName As String, ByVal Reason As String, ByVal tim
         Call .WriteASCIIString(UserName)
         Call .WriteASCIIString(Reason)
         
-        Call .WriteByte(time)
+        Call .WriteByte(Time)
     End With
 End Sub
 
@@ -8517,21 +8340,6 @@ Public Sub WriteResetNPCInventory()
 '***************************************************
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.ResetNPCInventory)
-End Sub
-
-''
-' Writes the "CleanWorld" message to the outgoing data buffer.
-'
-' @remarks  The data is not actually sent until the buffer is properly flushed.
-
-Public Sub WriteCleanWorld()
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'Writes the "CleanWorld" message to the outgoing data buffer
-'***************************************************
-    Call outgoingData.WriteByte(ClientPacketID.GMCommands)
-    Call outgoingData.WriteByte(eGMCommands.CleanWorld)
 End Sub
 
 ''
@@ -9199,10 +9007,9 @@ End Sub
 ' Writes the "ChaosLegionKick" message to the outgoing data buffer.
 '
 ' @param    username The name of the user to be kicked from the Chaos Legion.
-' @param    reason The reson for which the user is kicked from the Chaos Legion.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteChaosLegionKick(ByVal UserName As String, ByVal Reason As String)
+Public Sub WriteChaosLegionKick(ByVal UserName As String)
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -9213,7 +9020,6 @@ Public Sub WriteChaosLegionKick(ByVal UserName As String, ByVal Reason As String
         Call .WriteByte(eGMCommands.ChaosLegionKick)
         
         Call .WriteASCIIString(UserName)
-        Call .WriteASCIIString(Reason)
     End With
 End Sub
 
@@ -9221,10 +9027,9 @@ End Sub
 ' Writes the "RoyalArmyKick" message to the outgoing data buffer.
 '
 ' @param    username The name of the user to be kicked from the Royal Army.
-' @param    reason The reson for which the user is kicked from the Royal Army.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteRoyalArmyKick(ByVal UserName As String, ByVal Reason As String)
+Public Sub WriteRoyalArmyKick(ByVal UserName As String)
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -9235,7 +9040,6 @@ Public Sub WriteRoyalArmyKick(ByVal UserName As String, ByVal Reason As String)
         Call .WriteByte(eGMCommands.RoyalArmyKick)
         
         Call .WriteASCIIString(UserName)
-        Call .WriteASCIIString(Reason)
     End With
 End Sub
 
@@ -9699,20 +9503,6 @@ Public Sub WriteAlterName(ByVal UserName As String, ByVal newName As String)
     End With
 End Sub
 
-''
-' Writes the "ToggleCentinelActivated" message to the outgoing data buffer.
-'
-' @remarks  The data is not actually sent until the buffer is properly flushed.
-
-Public Sub WriteToggleCentinelActivated()
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'Writes the "ToggleCentinelActivated" message to the outgoing data buffer
-'***************************************************
-    Call outgoingData.WriteByte(ClientPacketID.GMCommands)
-    Call outgoingData.WriteByte(eGMCommands.ToggleCentinelActivated)
-End Sub
 
 ''
 ' Writes the "DoBackup" message to the outgoing data buffer.
@@ -10370,10 +10160,10 @@ Public Sub FlushBuffer()
     Dim sndData As String
     
     With outgoingData
-        If .Length = 0 Then _
+        If .length = 0 Then _
             Exit Sub
         
-        sndData = .ReadASCIIStringFixed(.Length)
+        sndData = .ReadASCIIStringFixed(.length)
         
         Call SendData(sndData)
     End With
@@ -10398,16 +10188,6 @@ Private Sub SendData(ByRef sdData As String)
     If Not frmMain.Socket1.Connected Then Exit Sub
 #Else
     If frmMain.Winsock1.State <> sckConnected Then Exit Sub
-#End If
-
-#If SeguridadAlkon Then
-    Dim data() As Byte
-    
-    data = StrConv(sdData, vbFromUnicode)
-    
-    Call DataSent(data)
-    
-    sdData = StrConv(data, vbUnicode)
 #End If
     
     'Send data!
@@ -10469,21 +10249,6 @@ Public Sub WriteImitate()
     Call outgoingData.WriteByte(eGMCommands.Imitate)
 End Sub
 
-Public Sub WriteAlterGuildName(ByVal GuildName As String, ByVal newGuildName As String)
-'***************************************************
-'Author: Lex!
-'Last Modification: 14/05/12
-'Writes the "AlterGuildName" message to the outgoing data buffer
-'***************************************************
-    With outgoingData
-        Call .WriteByte(ClientPacketID.GMCommands)
-        Call .WriteByte(eGMCommands.AlterGuildName)
-        
-        Call .WriteASCIIString(GuildName)
-        Call .WriteASCIIString(newGuildName)
-    End With
-End Sub
-    
 ''
 ' Writes the "RecordAddObs" message to the outgoing data buffer.
 '
@@ -10586,7 +10351,7 @@ Private Sub HandleRecordList()
 'Last Modification: 29/11/2010
 '
 '***************************************************
-    If incomingData.Length < 2 Then
+    If incomingData.length < 2 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -10634,7 +10399,7 @@ Private Sub HandleRecordDetails()
 'Last Modification: 29/11/2010
 '
 '***************************************************
-    If incomingData.Length < 2 Then
+    If incomingData.length < 2 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -10712,28 +10477,32 @@ Public Sub WriteMoveItem(ByVal originalSlot As Integer, ByVal newSlot As Integer
 'Writes the "MoveItem" message to the outgoing data buffer
 '***************************************************
     With outgoingData
-        Call .WriteByte(ClientPacketID.MoveItem)
+        Call .WriteByte(ClientPacketID.moveItem)
         Call .WriteByte(originalSlot)
         Call .WriteByte(newSlot)
         Call .WriteByte(moveType)
     End With
 End Sub
 
-''
-' Writes the "HigherAdminsMessage" message to the outgoing data buffer.
-'
-' @param    message The message to be sent to the other higher admins online.
-' @remarks  The data is not actually sent until the buffer is properly flushed.
+Private Sub HandleDecirPalabrasMagicas()
+    If incomingData.length < 2 Then
+        Err.Raise incomingData.NotEnoughDataErrCode
+        Exit Sub
+    End If
+    
+    
+    'Remove packet ID
+    Call incomingData.ReadByte
+    
+    Dim Spell As Integer
+    Dim CharIndex As Integer
+    
+    Spell = incomingData.ReadInteger
+    CharIndex = incomingData.ReadInteger
+    
+    'Only add the chat if the character exists (a CharacterRemove may have been sent to the PC / NPC area before the buffer was flushed)
+    If Char_Check(CharIndex) Then _
+        Call Dialogos.CreateDialog(Hechizos(Spell).PalabrasMagicas, CharIndex, RGB(200, 250, 150))
 
-Public Sub WriteHigherAdminsMessage(ByVal Message As String)
-'***************************************************
-'Author: Torres Patricio (Pato)
-'Last Modification: 03/30/12
-'Writes the "HigherAdminsMessage" message to the outgoing data buffer
-'***************************************************
-    With outgoingData
-        Call .WriteByte(ClientPacketID.GMCommands)
-        Call .WriteByte(eGMCommands.HigherAdminsMessage)
-        Call .WriteASCIIString(Message)
-    End With
 End Sub
+

@@ -179,23 +179,36 @@ Private Const OFFSET_BUTTONS As Integer = 43 ' pixels
 
 
 Private Sub Form_Load()
-    ' Handles Form movement (drag and drop).
-    Set clsFormulario = New clsFormMovementManager
-    clsFormulario.Initialize Me
+        ' Handles Form movement (drag and drop).
+        '<EhHeader>
+        On Error GoTo Form_Load_Err
+        '</EhHeader>
+100     Set clsFormulario = New clsFormMovementManager
+102     clsFormulario.Initialize Me
     
-    lstMembers.Clear
+104     lstMembers.Clear
         
-    If EsPartyLeader Then
-        Me.Picture = LoadPicture(App.path & "\graficos\VentanaPartyLider.jpg")
-        Me.Height = LEADER_FORM_HEIGHT
-    Else
-        Me.Picture = LoadPicture(App.path & "\graficos\VentanaPartyMiembro.jpg")
-        Me.Height = NORMAL_FORM_HEIGHT
-    End If
+106     If EsPartyLeader Then
+108         Me.Picture = LoadPicture(App.path & "\graficos\VentanaPartyLider.jpg")
+110         Me.Height = LEADER_FORM_HEIGHT
+        Else
+112         Me.Picture = LoadPicture(App.path & "\graficos\VentanaPartyMiembro.jpg")
+114         Me.Height = NORMAL_FORM_HEIGHT
+        End If
     
-    Call LoadButtons
+116     Call LoadButtons
 
-    MirandoParty = True
+118     MirandoParty = True
+        '<EhFooter>
+        Exit Sub
+
+Form_Load_Err:
+        MsgBox Err.Description & vbCrLf & _
+               "in ARGENTUM.frmParty.Form_Load " & _
+               "at line " & Erl, _
+               vbExclamation + vbOKOnly, "Application Error"
+        Resume Next
+        '</EhFooter>
 End Sub
 
 Private Sub LoadButtons()
@@ -264,7 +277,7 @@ End Sub
 Private Sub imgAgregar_Click()
     If Len(txtToAdd) > 0 Then
         If Not IsNumeric(txtToAdd) Then
-            Call WritePartyAcceptMember(Trim$(txtToAdd.Text))
+            Call WritePartyAcceptMember(Trim(txtToAdd.Text))
             Unload Me
             Call WriteRequestPartyForm
         End If
@@ -304,7 +317,7 @@ Private Function GetName() As String
 '**************************************************************
     Dim sName As String
     
-    sName = Trim$(mid$(lstMembers.List(lstMembers.ListIndex), 1, InStr(lstMembers.List(lstMembers.ListIndex), " (")))
+    sName = Trim(mid(lstMembers.List(lstMembers.ListIndex), 1, InStr(lstMembers.List(lstMembers.ListIndex), " (")))
     If Len(sName) > 0 Then GetName = sName
         
 End Function

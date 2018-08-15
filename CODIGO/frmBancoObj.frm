@@ -339,8 +339,8 @@ Private Sub LoadButtons()
     Dim GrhPath As String
     
     GrhPath = DirGraficos
-    CmdMoverBov(1).Picture = LoadPicture(App.path & "\Graficos\FlechaSubirObjeto.jpg")
-    CmdMoverBov(0).Picture = LoadPicture(App.path & "\Graficos\FlechaBajarObjeto.jpg")
+    'CmdMoverBov(1).Picture = LoadPicture(App.path & "\Graficos\FlechaSubirObjeto.jpg")
+    'CmdMoverBov(0).Picture = LoadPicture(App.path & "\Graficos\FlechaBajarObjeto.jpg")
     
     Set cBotonRetirarOro = New clsGraphicalButton
     Set cBotonDepositarOro = New clsGraphicalButton

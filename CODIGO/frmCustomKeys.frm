@@ -3,17 +3,17 @@ Begin VB.Form frmCustomKeys
    BackColor       =   &H8000000B&
    BorderStyle     =   0  'None
    Caption         =   "Form1"
-   ClientHeight    =   8085
+   ClientHeight    =   7500
    ClientLeft      =   0
    ClientTop       =   0
-   ClientWidth     =   8220
+   ClientWidth     =   8205
    ClipControls    =   0   'False
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   539
+   ScaleHeight     =   500
    ScaleMode       =   3  'Pixel
-   ScaleWidth      =   548
+   ScaleWidth      =   547
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
    Begin VB.TextBox Text1 
@@ -31,9 +31,9 @@ Begin VB.Form frmCustomKeys
       ForeColor       =   &H00FFFFFF&
       Height          =   225
       Index           =   6
-      Left            =   6375
+      Left            =   6270
       TabIndex        =   17
-      Top             =   2475
+      Top             =   1620
       Width           =   1620
    End
    Begin VB.TextBox Text1 
@@ -51,9 +51,9 @@ Begin VB.Form frmCustomKeys
       ForeColor       =   &H00FFFFFF&
       Height          =   225
       Index           =   7
-      Left            =   6375
+      Left            =   6270
       TabIndex        =   18
-      Top             =   2835
+      Top             =   1980
       Width           =   1620
    End
    Begin VB.TextBox Text1 
@@ -71,9 +71,9 @@ Begin VB.Form frmCustomKeys
       ForeColor       =   &H00FFFFFF&
       Height          =   225
       Index           =   9
-      Left            =   6375
+      Left            =   6270
       TabIndex        =   16
-      Top             =   2100
+      Top             =   1245
       Width           =   1620
    End
    Begin VB.TextBox Text1 
@@ -91,9 +91,9 @@ Begin VB.Form frmCustomKeys
       ForeColor       =   &H00FFFFFF&
       Height          =   225
       Index           =   8
-      Left            =   6375
+      Left            =   6270
       TabIndex        =   15
-      Top             =   1740
+      Top             =   885
       Width           =   1620
    End
    Begin VB.TextBox Text1 
@@ -111,9 +111,9 @@ Begin VB.Form frmCustomKeys
       ForeColor       =   &H00FFFFFF&
       Height          =   225
       Index           =   5
-      Left            =   6375
+      Left            =   6270
       TabIndex        =   14
-      Top             =   1365
+      Top             =   525
       Width           =   1620
    End
    Begin VB.TextBox Text1 
@@ -131,9 +131,9 @@ Begin VB.Form frmCustomKeys
       ForeColor       =   &H00FFFFFF&
       Height          =   225
       Index           =   22
-      Left            =   6360
+      Left            =   6270
       TabIndex        =   19
-      Top             =   3810
+      Top             =   2835
       Width           =   1620
    End
    Begin VB.TextBox Text1 
@@ -151,9 +151,9 @@ Begin VB.Form frmCustomKeys
       ForeColor       =   &H00FFFFFF&
       Height          =   225
       Index           =   23
-      Left            =   6360
+      Left            =   6270
       TabIndex        =   20
-      Top             =   4215
+      Top             =   3240
       Width           =   1620
    End
    Begin VB.TextBox Text1 
@@ -171,9 +171,9 @@ Begin VB.Form frmCustomKeys
       ForeColor       =   &H00FFFFFF&
       Height          =   225
       Index           =   24
-      Left            =   6360
+      Left            =   6270
       TabIndex        =   21
-      Top             =   4635
+      Top             =   3660
       Width           =   1620
    End
    Begin VB.TextBox Text1 
@@ -191,9 +191,9 @@ Begin VB.Form frmCustomKeys
       ForeColor       =   &H00FFFFFF&
       Height          =   225
       Index           =   25
-      Left            =   6360
+      Left            =   6270
       TabIndex        =   22
-      Top             =   5055
+      Top             =   4080
       Width           =   1620
    End
    Begin VB.TextBox Text1 
@@ -211,9 +211,9 @@ Begin VB.Form frmCustomKeys
       ForeColor       =   &H00FFFFFF&
       Height          =   225
       Index           =   26
-      Left            =   6360
+      Left            =   6270
       TabIndex        =   23
-      Top             =   5460
+      Top             =   4485
       Width           =   1620
    End
    Begin VB.TextBox Text1 
@@ -231,9 +231,9 @@ Begin VB.Form frmCustomKeys
       ForeColor       =   &H00FFFFFF&
       Height          =   225
       Index           =   27
-      Left            =   6360
+      Left            =   6270
       TabIndex        =   24
-      Top             =   5865
+      Top             =   4890
       Width           =   1620
    End
    Begin VB.TextBox Text1 
@@ -251,9 +251,9 @@ Begin VB.Form frmCustomKeys
       ForeColor       =   &H00FFFFFF&
       Height          =   225
       Index           =   15
-      Left            =   6360
+      Left            =   6270
       TabIndex        =   26
-      Top             =   6660
+      Top             =   5685
       Width           =   1620
    End
    Begin VB.TextBox Text1 
@@ -271,9 +271,9 @@ Begin VB.Form frmCustomKeys
       ForeColor       =   &H00FFFFFF&
       Height          =   225
       Index           =   14
-      Left            =   6360
+      Left            =   6270
       TabIndex        =   25
-      Top             =   6255
+      Top             =   5280
       Width           =   1620
    End
    Begin VB.TextBox Text1 
@@ -293,7 +293,7 @@ Begin VB.Form frmCustomKeys
       Index           =   20
       Left            =   2070
       TabIndex        =   12
-      Top             =   6480
+      Top             =   5565
       Width           =   1620
    End
    Begin VB.TextBox Text1 
@@ -313,7 +313,7 @@ Begin VB.Form frmCustomKeys
       Index           =   21
       Left            =   2070
       TabIndex        =   13
-      Top             =   6840
+      Top             =   5925
       Width           =   1620
    End
    Begin VB.TextBox Text1 
@@ -331,9 +331,9 @@ Begin VB.Form frmCustomKeys
       ForeColor       =   &H80000004&
       Height          =   225
       Index           =   10
-      Left            =   2085
+      Left            =   2070
       TabIndex        =   4
-      Top             =   3180
+      Top             =   2325
       Width           =   1620
    End
    Begin VB.TextBox Text1 
@@ -351,9 +351,9 @@ Begin VB.Form frmCustomKeys
       ForeColor       =   &H80000004&
       Height          =   225
       Index           =   11
-      Left            =   2085
+      Left            =   2070
       TabIndex        =   5
-      Top             =   3540
+      Top             =   2685
       Width           =   1620
    End
    Begin VB.TextBox Text1 
@@ -371,9 +371,9 @@ Begin VB.Form frmCustomKeys
       ForeColor       =   &H80000004&
       Height          =   225
       Index           =   12
-      Left            =   2085
+      Left            =   2070
       TabIndex        =   6
-      Top             =   3900
+      Top             =   3045
       Width           =   1620
    End
    Begin VB.TextBox Text1 
@@ -391,9 +391,9 @@ Begin VB.Form frmCustomKeys
       ForeColor       =   &H80000004&
       Height          =   225
       Index           =   13
-      Left            =   2085
+      Left            =   2070
       TabIndex        =   7
-      Top             =   4260
+      Top             =   3405
       Width           =   1620
    End
    Begin VB.TextBox Text1 
@@ -411,9 +411,9 @@ Begin VB.Form frmCustomKeys
       ForeColor       =   &H80000004&
       Height          =   225
       Index           =   16
-      Left            =   2085
+      Left            =   2070
       TabIndex        =   8
-      Top             =   4620
+      Top             =   3765
       Width           =   1620
    End
    Begin VB.TextBox Text1 
@@ -431,9 +431,9 @@ Begin VB.Form frmCustomKeys
       ForeColor       =   &H80000004&
       Height          =   225
       Index           =   17
-      Left            =   2085
+      Left            =   2070
       TabIndex        =   9
-      Top             =   4980
+      Top             =   4125
       Width           =   1620
    End
    Begin VB.TextBox Text1 
@@ -451,9 +451,9 @@ Begin VB.Form frmCustomKeys
       ForeColor       =   &H80000004&
       Height          =   225
       Index           =   18
-      Left            =   2085
+      Left            =   2070
       TabIndex        =   10
-      Top             =   5340
+      Top             =   4485
       Width           =   1620
    End
    Begin VB.TextBox Text1 
@@ -471,9 +471,9 @@ Begin VB.Form frmCustomKeys
       ForeColor       =   &H80000004&
       Height          =   225
       Index           =   19
-      Left            =   2085
+      Left            =   2070
       TabIndex        =   11
-      Top             =   5700
+      Top             =   4845
       Width           =   1620
    End
    Begin VB.TextBox Text1 
@@ -491,9 +491,9 @@ Begin VB.Form frmCustomKeys
       ForeColor       =   &H80000004&
       Height          =   225
       Index           =   1
-      Left            =   2055
+      Left            =   2070
       TabIndex        =   0
-      Top             =   1320
+      Top             =   510
       Width           =   1620
    End
    Begin VB.TextBox Text1 
@@ -511,9 +511,9 @@ Begin VB.Form frmCustomKeys
       ForeColor       =   &H80000004&
       Height          =   225
       Index           =   2
-      Left            =   2055
+      Left            =   2070
       TabIndex        =   1
-      Top             =   1695
+      Top             =   870
       Width           =   1620
    End
    Begin VB.TextBox Text1 
@@ -531,9 +531,9 @@ Begin VB.Form frmCustomKeys
       ForeColor       =   &H80000004&
       Height          =   225
       Index           =   3
-      Left            =   2055
+      Left            =   2070
       TabIndex        =   2
-      Top             =   2055
+      Top             =   1230
       Width           =   1620
    End
    Begin VB.TextBox Text1 
@@ -551,143 +551,22 @@ Begin VB.Form frmCustomKeys
       ForeColor       =   &H80000004&
       Height          =   225
       Index           =   4
-      Left            =   2040
+      Left            =   2070
       TabIndex        =   3
-      Top             =   2415
+      Top             =   1590
       Width           =   1620
-   End
-   Begin VB.Label lblTab 
-      BackStyle       =   0  'Transparent
-      Height          =   375
-      Index           =   2
-      Left            =   2040
-      MousePointer    =   99  'Custom
-      TabIndex        =   36
-      Top             =   360
-      Width           =   855
-   End
-   Begin VB.Label lblTab 
-      BackStyle       =   0  'Transparent
-      Height          =   375
-      Index           =   3
-      Left            =   2880
-      MousePointer    =   99  'Custom
-      TabIndex        =   35
-      Top             =   360
-      Width           =   735
-   End
-   Begin VB.Label lblTab 
-      BackStyle       =   0  'Transparent
-      Height          =   375
-      Index           =   4
-      Left            =   3600
-      MousePointer    =   99  'Custom
-      TabIndex        =   34
-      Top             =   360
-      Width           =   615
-   End
-   Begin VB.Label lblTab 
-      BackStyle       =   0  'Transparent
-      Height          =   375
-      Index           =   5
-      Left            =   4200
-      MousePointer    =   99  'Custom
-      TabIndex        =   33
-      Top             =   360
-      Width           =   735
-   End
-   Begin VB.Label lblTab 
-      BackStyle       =   0  'Transparent
-      Height          =   375
-      Index           =   6
-      Left            =   4920
-      MousePointer    =   99  'Custom
-      TabIndex        =   32
-      Top             =   360
-      Width           =   735
-   End
-   Begin VB.Label lblTab 
-      BackStyle       =   0  'Transparent
-      Height          =   375
-      Index           =   7
-      Left            =   5640
-      MousePointer    =   99  'Custom
-      TabIndex        =   31
-      Top             =   360
-      Width           =   735
-   End
-   Begin VB.Label lblTab 
-      BackStyle       =   0  'Transparent
-      Height          =   375
-      Index           =   8
-      Left            =   6360
-      MousePointer    =   99  'Custom
-      TabIndex        =   30
-      Top             =   360
-      Width           =   735
-   End
-   Begin VB.Label lblTab 
-      BackStyle       =   0  'Transparent
-      Height          =   375
-      Index           =   9
-      Left            =   7080
-      MousePointer    =   99  'Custom
-      TabIndex        =   29
-      Top             =   360
-      Width           =   735
-   End
-   Begin VB.Label lblTab 
-      BackStyle       =   0  'Transparent
-      Height          =   375
-      Index           =   1
-      Left            =   1200
-      MousePointer    =   99  'Custom
-      TabIndex        =   28
-      Top             =   360
-      Width           =   855
-   End
-   Begin VB.Label lblTab 
-      BackStyle       =   0  'Transparent
-      Height          =   375
-      Index           =   0
-      Left            =   360
-      MousePointer    =   99  'Custom
-      TabIndex        =   27
-      Top             =   360
-      Width           =   855
    End
    Begin VB.Image imgDefaultKeys 
       Height          =   375
-      Left            =   240
-      Top             =   7440
+      Left            =   960
+      Top             =   6720
       Width           =   2655
    End
    Begin VB.Image imgGuardar 
       Height          =   375
-      Left            =   3120
-      Top             =   7440
+      Left            =   4680
+      Top             =   6720
       Width           =   2655
-   End
-   Begin VB.Image imgTab 
-      Height          =   900
-      Left            =   0
-      Top             =   0
-      Width           =   8220
-   End
-   Begin VB.Image chkActivo 
-      Height          =   450
-      Left            =   5880
-      Picture         =   "frmCustomKeys.frx":0000
-      Top             =   7440
-      Width           =   390
-   End
-   Begin VB.Image chkInactivo 
-      Height          =   420
-      Left            =   5880
-      MousePointer    =   99  'Custom
-      Picture         =   "frmCustomKeys.frx":2EE5
-      Top             =   7440
-      Width           =   390
    End
 End
 Attribute VB_Name = "frmCustomKeys"
@@ -746,10 +625,9 @@ Private cBotonDefaultKeys As clsGraphicalButton
 
 Public LastButtonPressed As clsGraphicalButton
 
-'Index de la configuración que seleccionó como activa
 Private SelectedConfig As Byte
-Private CurrentTab As Integer
 Private InitialConfig As Byte
+Private CurrentTab As Integer
 
 Private Sub Form_Load()
     Dim i As Long
@@ -761,8 +639,15 @@ Private Sub Form_Load()
     Me.Picture = LoadPicture(App.path & "\graficos\VentanaConfigurarTeclas.jpg")
     
     Call LoadButtons
-
-    Call TabInitialize
+    
+    SelectedConfig = CustomKeys.CurrentConfig
+    InitialConfig = SelectedConfig
+    
+    CurrentTab = SelectedConfig
+    
+    For i = 1 To CustomKeys.KeyCount
+        Text1(i).Text = CustomKeys.ReadableName(CustomKeys.BindedKey(i))
+    Next i
 End Sub
 
 Private Sub LoadButtons()
@@ -784,58 +669,11 @@ Private Sub LoadButtons()
                                     GrhPath & "BotonDefaultKeysRollover.jpg", _
                                     GrhPath & "BotonDefaultKeysClick.jpg", Me)
                                     
-    chkInactivo.MouseIcon = picMouseIcon
 End Sub
+
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
-End Sub
-
-Private Sub ShowConfig()
-
-    Dim i As Long
-
-    For i = 1 To CustomKeys.KeyCount
-        Text1(i).Text = CustomKeys.ReadableName(CustomKeys.BindedKey(i))
-    Next i
-End Sub
-
-Private Sub chkInactivo_Click()
-    SelectedConfig = CustomKeys.CurrentConfig
-    chkActivo.Visible = True
-    Call Audio.PlayWave(SND_CLICK)
-End Sub
-
-Private Sub TabInitialize()
-        
-    Dim i As Long
-    
-    For i = 0 To CustomKeys.ConfigCount
-        lblTab(i).MouseIcon = picMouseIcon
-    Next i
-    
-    SelectedConfig = CustomKeys.CurrentConfig
-    InitialConfig = SelectedConfig
-    
-    CurrentTab = SelectedConfig
-    Call LoadTab(CurrentTab)
-    
-    chkActivo.Visible = True
-    
-    Call ShowConfig
-    
-End Sub
-
-Private Sub LoadTab(ByVal TabIndex As Byte)
-    
-    If TabIndex = 0 Then
-        imgTab.Visible = False
-    Else
-        imgTab.Picture = LoadPicture(DirGraficos & "ConfigTeclas_Tab" & CStr(TabIndex) & ".jpg")
-        imgTab.Visible = True
-    End If
-    
-    CurrentTab = TabIndex
 End Sub
 
 Private Sub imgDefaultKeys_Click()
@@ -874,22 +712,6 @@ Private Sub imgGuardar_Click()
     Unload Me
 End Sub
 
-Private Sub lblTab_Click(Index As Integer)
-
-    CustomKeys.CurrentConfig = Index
-    Call LoadTab(Index)
-    
-    Call ShowConfig
-    
-    If SelectedConfig = Index Then
-        chkActivo.Visible = True
-    Else
-        chkActivo.Visible = False
-    End If
-
-    Call Audio.PlayWave(SND_CLICK)
-
-End Sub
 
 Private Sub Text1_KeyDown(Index As Integer, KeyCode As Integer, Shift As Integer)
     Dim i As Long
@@ -923,6 +745,18 @@ Private Sub Text1_KeyPress(Index As Integer, KeyAscii As Integer)
     KeyAscii = 0
 End Sub
 
+Private Sub Text1_KeyUp(Index As Integer, KeyCode As Integer, Shift As Integer)
+    Call Text1_KeyDown(Index, KeyCode, Shift)
+End Sub
+
 Private Sub Text1_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
+End Sub
+Private Sub ShowConfig()
+
+    Dim i As Long
+
+    For i = 1 To CustomKeys.KeyCount
+        Text1(i).Text = CustomKeys.ReadableName(CustomKeys.BindedKey(i))
+    Next i
 End Sub

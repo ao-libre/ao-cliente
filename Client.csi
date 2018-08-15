@@ -1,0 +1,14 @@
+[History]
+1=#P0#=mb	#P1#=HandleDecirPalabrasMagicas	#P2#=ARGENTUM/Protocol/HandleDecirPalabrasMagicas	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20161228172444	#P7#=0	#P8#=19	.
+2=#P0#=mb	#P1#=HandleChatOverHead	#P2#=ARGENTUM/Protocol/HandleChatOverHead	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20161228172256	#P7#=0	#P8#=8496	.
+3=#P0#=mb	#P1#=Main	#P2#=ARGENTUM/Mod_General/Main	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20161228172136	#P7#=0	#P8#=12	.
+4=#P0#=mb	#P1#=HandleMultiMessage	#P2#=ARGENTUM/Protocol/HandleMultiMessage	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20161228171859	#P7#=0	#P8#=0	.
+5=#P0#=mb	#P1#=cmdINFO_Click	#P2#=ARGENTUM/frmMain/cmdINFO_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20161228171629	#P7#=0	#P8#=8	.
+6=#P0#=mb	#P1#=WriteCreateNewGuild	#P2#=ARGENTUM/Protocol/WriteCreateNewGuild	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20161228171611	#P7#=0	#P8#=0	.
+7=#P0#=mb	#P1#=CargarHechizos	#P2#=ARGENTUM/Mod_General/CargarHechizos	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20161228171300	#P7#=0	#P8#=5	.
+8=#P0#=mb	#P1#=ResetAllInfo	#P2#=ARGENTUM/Mod_General/ResetAllInfo	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20161228171220	#P7#=0	#P8#=30	.
+9=#P0#=mb	#P1#=WriteMoveItem	#P2#=ARGENTUM/Protocol/WriteMoveItem	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20131208204626	#P7#=0	#P8#=9	.
+10=#P0#=mb	#P1#=HandleIncomingData	#P2#=ARGENTUM/Protocol/HandleIncomingData	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20131208204621	#P7#=0	#P8#=349	.
+11=#P0#=mb	#P1#=DDrawTransGrhtoSurface	#P2#=ARGENTUM/Mod_TileEngine/DDrawTransGrhtoSurface	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20131208204427	#P7#=0	#P8#=62	.
+12=#P0#=mb	#P1#=RenderScreen	#P2#=ARGENTUM/Mod_TileEngine/RenderScreen	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20131208203547	#P7#=0	#P8#=187	.
+13=#P0#=mb	#P1#=DDrawTransGrhIndextoSurface	#P2#=ARGENTUM/Mod_TileEngine/DDrawTransGrhIndextoSurface	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20131208202321	#P7#=0	#P8#=23	.

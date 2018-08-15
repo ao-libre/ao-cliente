@@ -1,5 +1,4 @@
 VERSION 5.00
-Object = "{EAB22AC0-30C1-11CF-A7EB-0000C05BAE0B}#1.1#0"; "ieframe.dll"
 Begin VB.Form frmConnect 
    BackColor       =   &H00E0E0E0&
    BorderStyle     =   0  'None
@@ -22,31 +21,6 @@ Begin VB.Form frmConnect
    ScaleWidth      =   800
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
-   Begin SHDocVwCtl.WebBrowser webNoticias 
-      Height          =   4440
-      Left            =   435
-      TabIndex        =   5
-      Top             =   1680
-      Width           =   2850
-      ExtentX         =   5027
-      ExtentY         =   7832
-      ViewMode        =   0
-      Offline         =   0
-      Silent          =   0
-      RegisterAsBrowser=   0
-      RegisterAsDropTarget=   1
-      AutoArrange     =   0   'False
-      NoClientEdge    =   0   'False
-      AlignLeft       =   0   'False
-      NoWebView       =   0   'False
-      HideFileNames   =   0   'False
-      SingleClick     =   0   'False
-      SingleSelection =   0   'False
-      NoFolders       =   0   'False
-      Transparent     =   0   'False
-      ViewID          =   "{0057D0E0-3573-11CF-AE69-08002B2E1262}"
-      Location        =   ""
-   End
    Begin VB.TextBox txtPasswd 
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
@@ -130,32 +104,6 @@ Begin VB.Form frmConnect
       Text            =   "localhost"
       Top             =   2760
       Width           =   1575
-   End
-   Begin SHDocVwCtl.WebBrowser WebAuxiliar 
-      Height          =   360
-      Left            =   960
-      TabIndex        =   6
-      Top             =   0
-      Visible         =   0   'False
-      Width           =   330
-      ExtentX         =   582
-      ExtentY         =   635
-      ViewMode        =   0
-      Offline         =   0
-      Silent          =   0
-      RegisterAsBrowser=   0
-      RegisterAsDropTarget=   1
-      AutoArrange     =   0   'False
-      NoClientEdge    =   0   'False
-      AlignLeft       =   0   'False
-      NoWebView       =   0   'False
-      HideFileNames   =   0   'False
-      SingleClick     =   0   'False
-      SingleSelection =   0   'False
-      NoFolders       =   0   'False
-      Transparent     =   0   'False
-      ViewID          =   "{0057D0E0-3573-11CF-AE69-08002B2E1262}"
-      Location        =   ""
    End
    Begin VB.Image imgTeclas 
       Height          =   375
@@ -352,12 +300,6 @@ Private Sub Form_Load()
     '[CODE 002]:MatuX
     EngineRun = False
     '[END]
-    
-#If Testeo = 1 Then
-    webNoticias.Visible = False
-#Else
-    webNoticias.Navigate ("http://argentumonline.3dgames.com.ar/noticiascliente/noticias.php")
-#End If
 
     PortTxt.Text = Config_Inicio.Puerto
  
@@ -382,7 +324,7 @@ Private Sub CheckLicenseAgreement()
     Dim i As Long
     
     For i = 0 To Me.Controls.Count - 1
-        If Me.Controls(i).Name = "imgCodigoFuente" Then
+        If Me.Controls(i).name = "imgCodigoFuente" Then
             Exit For
         End If
     Next i
@@ -529,13 +471,9 @@ Private Sub imgConectarse_Click()
     
     Dim aux As String
     aux = txtPasswd.Text
-    
-#If SeguridadAlkon Then
-    UserPassword = md5.GetMD5String(aux)
-    Call md5.MD5Reset
-#Else
     UserPassword = aux
-#End If
+
+
     If CheckUserData(False) = True Then
         EstadoLogin = Normal
         
@@ -576,11 +514,11 @@ Private Sub imgCrearPj_Click()
 End Sub
 
 Private Sub imgLeerMas_Click()
-    Call ShellExecute(0, "Open", "http://argentumonline.3dgames.com.ar", "", App.path, SW_SHOWNORMAL)
+    Call ShellExecute(0, "Open", "http://ao.alkon.com.ar", "", App.path, SW_SHOWNORMAL)
 End Sub
 
 Private Sub imgManual_Click()
-    Call ShellExecute(0, "Open", "http://argentumonline.3dgames.com.ar/manual/", "", App.path, SW_SHOWNORMAL)
+    Call ShellExecute(0, "Open", "http://ao.alkon.com.ar/manual/", "", App.path, SW_SHOWNORMAL)
 End Sub
 
 Private Sub imgRecuperar_Click()
@@ -594,7 +532,7 @@ errH:
 End Sub
 
 Private Sub imgReglamento_Click()
-    Call ShellExecute(0, "Open", "http://argentumonline.3dgames.com.ar/reglamento.html", "", App.path, SW_SHOWNORMAL)
+    Call ShellExecute(0, "Open", "http://ao.alkon.com.ar/reglamento.html", "", App.path, SW_SHOWNORMAL)
 End Sub
 
 Private Sub imgSalir_Click()
@@ -615,7 +553,7 @@ Private Sub imgTeclas_Click()
 End Sub
 
 Private Sub imgVerForo_Click()
-    Call ShellExecute(0, "Open", "http://foros.3dgames.com.ar/argentum-online-oficial.408", "", App.path, SW_SHOWNORMAL)
+    Call ShellExecute(0, "Open", "http://www.alkon.com.ar/foro/argentum-online.53/", "", App.path, SW_SHOWNORMAL)
 End Sub
 
 Private Sub txtPasswd_KeyPress(KeyAscii As Integer)
@@ -624,20 +562,9 @@ End Sub
 
 Private Sub WebAuxiliar_BeforeNavigate2(ByVal pDisp As Object, URL As Variant, flags As Variant, TargetFrameName As Variant, PostData As Variant, Headers As Variant, Cancel As Boolean)
     
-    If InStr(1, URL, "3dgames") <> 0 Then
-        Call ShellExecute(hwnd, "open", URL, vbNullString, vbNullString, SW_SHOWNORMAL)
+    If InStr(1, URL, "alkon") <> 0 Then
+        Call ShellExecute(hWnd, "open", URL, vbNullString, vbNullString, SW_SHOWNORMAL)
         Cancel = True
     End If
-    
-End Sub
-
-Private Sub webNoticias_NavigateError(ByVal pDisp As Object, URL As Variant, Frame As Variant, StatusCode As Variant, Cancel As Boolean)
-    If StatusCode = 500 Then webNoticias.Visible = False
-End Sub
-
-Private Sub webNoticias_NewWindow2(ppDisp As Object, Cancel As Boolean)
-    
-    WebAuxiliar.RegisterAsBrowser = True
-    Set ppDisp = WebAuxiliar.Object
     
 End Sub

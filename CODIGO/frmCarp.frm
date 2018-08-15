@@ -686,7 +686,7 @@ Public Sub HideExtraControls(ByVal NumItems As Integer, Optional ByVal Upgrading
     If NumItems > MAX_LIST_ITEMS Then
         Scroll.Visible = True
         Cargando = True
-        Scroll.max = NumItems - MAX_LIST_ITEMS
+        Scroll.Max = NumItems - MAX_LIST_ITEMS
         Cargando = False
     Else
         Scroll.Visible = False
@@ -699,45 +699,51 @@ Public Sub HideExtraControls(ByVal NumItems As Integer, Optional ByVal Upgrading
 End Sub
 
 Private Sub RenderItem(ByRef Pic As PictureBox, ByVal GrhIndex As Long)
+On Error Resume Next
+
     Dim SR As RECT
     Dim DR As RECT
     
     With GrhData(GrhIndex)
-        SR.Left = .sX
-        SR.Top = .sY
+        SR.Left = .SX
+        SR.Top = .SY
         SR.Right = SR.Left + .pixelWidth
-        SR.Bottom = SR.Top + .pixelHeight
+        SR.bottom = SR.Top + .pixelHeight
     End With
     
     DR.Left = 0
     DR.Top = 0
     DR.Right = 32
-    DR.Bottom = 32
+    DR.bottom = 32
     
     Call DrawGrhtoHdc(Pic.hdc, GrhIndex, SR, DR)
     Pic.Refresh
 End Sub
 
+
 Public Sub RenderList(ByVal Inicio As Integer)
-Dim i As Long
-Dim NumItems As Integer
+On Error Resume Next
 
-NumItems = UBound(ObjCarpintero)
-Inicio = Inicio - 1
-
-For i = 1 To MAX_LIST_ITEMS
-    If i + Inicio <= NumItems Then
-        With ObjCarpintero(i + Inicio)
-            ' Agrego el item
-            Call RenderItem(picItem(i), .GrhIndex)
-            picItem(i).ToolTipText = .Name
-        
-            ' Inventario de leños
-            Call InvMaderasCarpinteria(i).SetItem(1, 0, .Madera, 0, MADERA_GRH, 0, 0, 0, 0, 0, 0, "Leña")
-            Call InvMaderasCarpinteria(i).SetItem(2, 0, .MaderaElfica, 0, MADERA_ELFICA_GRH, 0, 0, 0, 0, 0, 0, "Leña élfica")
-        End With
-    End If
-Next i
+    Dim i As Long
+    Dim NumItems As Integer
+    
+    NumItems = UBound(ObjCarpintero)
+    Inicio = Inicio - 1
+    
+    For i = 1 To MAX_LIST_ITEMS
+        If i + Inicio <= NumItems Then
+            With ObjCarpintero(i + Inicio)
+                ' Agrego el item
+                Call RenderItem(picItem(i), .GrhIndex)
+                picItem(i).ToolTipText = .name
+            
+                ' Inventario de leños
+                Call InvMaderasCarpinteria(i).SetItem(1, 0, .Madera, 0, MADERA_GRH, 0, 0, 0, 0, 0, 0, "Leña")
+                Call InvMaderasCarpinteria(i).SetItem(2, 0, .MaderaElfica, 0, MADERA_ELFICA_GRH, 0, 0, 0, 0, 0, 0, "Leña élfica")
+            End With
+        End If
+    Next i
+    
 End Sub
 
 Public Sub RenderUpgradeList(ByVal Inicio As Integer)
@@ -752,7 +758,7 @@ For i = 1 To MAX_LIST_ITEMS
         With CarpinteroMejorar(i + Inicio)
             ' Agrego el item
             Call RenderItem(picItem(i), .GrhIndex)
-            picItem(i).ToolTipText = .Name
+            picItem(i).ToolTipText = .name
             
             Call RenderItem(picUpgrade(i), .UpgradeGrhIndex)
             picUpgrade(i).ToolTipText = .UpgradeName

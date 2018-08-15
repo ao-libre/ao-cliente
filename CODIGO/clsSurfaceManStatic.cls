@@ -50,7 +50,7 @@ Const HASH_TABLE_SIZE As Long = 541
 
 Private Type SURFACE_ENTRY_STATIC
     fileIndex As Long
-    Surface As DirectDrawSurface7
+    Surface As Direct3DTexture8
 End Type
 
 Private Type HashBucket
@@ -60,9 +60,7 @@ End Type
 
 Private surfaceList(HASH_TABLE_SIZE - 1) As HashBucket
 
-Private DirectDraw As DirectDraw7
-
-Private useVideoMemory As Boolean
+Private DirectD3D As D3DX8
 
 Private Const DIB_PAL_COLORS As Long = 1
 Private Const DIB_RGB_COLORS As Long = 0
@@ -87,33 +85,30 @@ Private Sub Class_Terminate()
 'Clean up
 '**************************************************************
     Dim i As Long
-    Dim j As Long
+    Dim J As Long
     
     'Destroy every surface in memory
     For i = 0 To HASH_TABLE_SIZE - 1
-        For j = 1 To surfaceList(i).sufraceCount
-            Set surfaceList(i).SurfaceEntry(j).Surface = Nothing
-        Next j
+        For J = 1 To surfaceList(i).sufraceCount
+            Set surfaceList(i).SurfaceEntry(J).Surface = Nothing
+        Next J
         
         'Destroy the array
         Erase surfaceList(i).SurfaceEntry
     Next i
 End Sub
 
-Private Sub clsSurfaceManager_Initialize(ByRef DD As DirectDraw7, ByVal videoMemory As Boolean, ByVal graphicPath As String, Optional ByVal maxMemoryUsageInMb As Long = -1&)
+Private Sub clsSurfaceManager_Initialize(ByRef DD As D3DX8, ByVal graphicPath As String, Optional ByVal maxMemoryUsageInMb As Long = -1&)
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
-'Last Modify Date: 3/06/2006
-'
+'Last Modify Date: 29/07/2012 - ^[GS]^
 '**************************************************************
-    Set DirectDraw = DD
-    
-    useVideoMemory = videoMemory
-    
+    Set DirectD3D = DD
+
     Call LoadSurfaces(graphicPath)
 End Sub
 
-Private Property Get clsSurfaceManager_Surface(ByVal fileIndex As Long) As DirectDrawSurface7
+Private Property Get clsSurfaceManager_Surface(ByVal fileIndex As Long) As Direct3DTexture8
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
 'Last Modify Date: 3/06/2006
@@ -127,20 +122,20 @@ On Error GoTo ErrHandler:
         For i = 1 To .sufraceCount
             If .SurfaceEntry(i).fileIndex = fileIndex Then
                 Set clsSurfaceManager_Surface = .SurfaceEntry(i).Surface
-                Exit Function
+                Exit Property
             End If
         Next i
     End With
     
-    'We have a missing bmp!
-    MsgBox "No se encuentra el archivo " & CStr(fileIndex) & ".bmp. Reinstale el juego, " _
+    'We have a missing resource!
+    MsgBox "No se encuentra el recurso " & CStr(fileIndex) & ". Reinstale el juego, " _
         & "y si el problema persiste contactese con los adminsitradores", vbOKOnly Or vbCritical Or vbExclamation, "Error"
     
     End
 Exit Property
 
 ErrHandler:
-    MsgBox "Un error inesperado ocurrió a intentar cargar el archivo " & CStr(fileIndex) & ".bmp. & vbcrlf" _
+    MsgBox "Un error inesperado ocurrió a intentar cargar el recurso " & CStr(fileIndex) & ". & vbcrlf" _
         & "Error: " & CStr(Err.number), vbOKOnly Or vbCritical Or vbExclamation, "Error"
     
     End
@@ -173,39 +168,21 @@ Private Sub LoadSurface(ByRef bmpInfo As BITMAPINFO, ByRef data() As Byte, ByVal
 On Error GoTo ErrHandler
 
     Dim newSurface As SURFACE_ENTRY_STATIC
-    Dim ddsd As DDSURFACEDESC2
-    Dim ddck As DDCOLORKEY
-    Dim sDC As Long
-    
-    'Set up the surface desc
-    ddsd.lFlags = DDSD_CAPS Or DDSD_HEIGHT Or DDSD_WIDTH
-    If useVideoMemory Then
-        ddsd.ddsCaps.lCaps = DDSCAPS_OFFSCREENPLAIN Or DDSCAPS_VIDEOMEMORY
-    Else
-        ddsd.ddsCaps.lCaps = DDSCAPS_OFFSCREENPLAIN Or DDSCAPS_SYSTEMMEMORY
-    End If
-    ddsd.lWidth = bmpInfo.bmiHeader.biWidth
-    ddsd.lHeight = bmpInfo.bmiHeader.biHeight
-    
+    Dim surface_desc As D3DSURFACE_DESC
+    Dim texture_info As D3DXIMAGE_INFO
+
     With newSurface
         .fileIndex = fileIndex
         
-        'Load surface
-        Set .Surface = DirectDraw.CreateSurface(ddsd)
-        sDC = .Surface.GetDC
+        Set newSurface.Surface = DirectD3D.CreateTextureFromFileInMemoryEx(DirectDevice, data(0), UBound(data) + 1, _
+                D3DX_DEFAULT, D3DX_DEFAULT, 3, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, D3DX_FILTER_NONE, _
+                D3DX_FILTER_NONE, &HFF000000, texture_info, ByVal 0)
         
-        Call SetDIBitsToDevice(sDC, 0, 0, bmpInfo.bmiHeader.biWidth, bmpInfo.bmiHeader.biHeight, 0, 0, 0, bmpInfo.bmiHeader.biHeight, data(0), bmpInfo, DIB_RGB_COLORS)
         
-        Call .Surface.ReleaseDC(sDC)
+        newSurface.Surface.GetLevelDesc 0, surface_desc
         
-        'Set colorkey
-        ddck.high = 0
-        ddck.low = 0
-        Call .Surface.SetColorKey(DDCKEY_SRCBLT, ddck)
-        
-        'Retrieve the updated surface desc
-        Call .Surface.GetSurfaceDesc(ddsd)
     End With
+    
     
     'Store the surface in the given index (it MUST be empty or data will be lost)
     With surfaceList(fileIndex Mod HASH_TABLE_SIZE)
@@ -217,14 +194,7 @@ On Error GoTo ErrHandler
 Exit Sub
 
 ErrHandler:
-    If Err.number = DDERR_OUTOFVIDEOMEMORY Then
-        ' No video memory? Try system memory! We want all surfaces loaded!
-        ddsd.ddsCaps.lCaps = DDSCAPS_OFFSCREENPLAIN Or DDSCAPS_SYSTEMMEMORY
-        Resume
-    End If
-    
-    MsgBox "Un error inesperado ocurrió al intentar cargar el gráfico " & CStr(fileIndex) & ".BMP" & ". " & vbCrLf & _
-            "El código de error es " & CStr(Err.number) & " - " & Err.Description & vbCrLf & vbCrLf & "Copia este mensaje y notifica a los administradores.", _
-            vbOKOnly Or vbCritical Or vbExclamation, "Error"
-        End
+
 End Sub
+
+

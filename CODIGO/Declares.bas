@@ -33,6 +33,11 @@ Attribute VB_Name = "Mod_Declaraciones"
 
 Option Explicit
 
+Public Sonidos As clsSoundMapas
+
+'//Caminata fluida
+Public Movement_Speed As Single
+
 'Objetos públicos
 Public DialogosClanes As clsGuildDlg
 Public Dialogos As clsDialogs
@@ -52,7 +57,6 @@ Public Const MAX_LIST_ITEMS As Byte = 4
 Public InvLingosHerreria(1 To MAX_LIST_ITEMS) As clsGrapchicalInventory
 Public InvMaderasCarpinteria(1 To MAX_LIST_ITEMS) As clsGrapchicalInventory
                 
-Public SurfaceDB As clsSurfaceManager   'No va new porque es una interfaz, el new se pone al decidir que clase de objeto es
 Public CustomKeys As clsCustomKeys
 Public CustomMessages As clsCustomMessages
 
@@ -63,9 +67,6 @@ Public outgoingData As clsByteQueue
 'The main timer of the game.
 Public MainTimer As clsTimer
 
-#If SeguridadAlkon Then
-Public md5 As clsMD5
-#End If
 
 'Error code
 Public Const TOO_FAST As Long = 24036
@@ -156,7 +157,7 @@ Public Type tColor
     b As Byte
 End Type
 
-Public ColoresPJ(0 To 50) As tColor
+Public ColoresPJ(0 To 50) As Long
 
 
 Public Type tServerInfo
@@ -179,7 +180,6 @@ Public UserCiego As Boolean
 Public UserEstupido As Boolean
 
 Public NoRes As Boolean 'no cambiar la resolucion
-Public GraphicsFile As String 'Que graficos.ind usamos
 
 Public RainBufferIndex As Long
 Public FogataBufferIndex As Long
@@ -419,7 +419,6 @@ Public Enum eGMCommands
     SpawnListRequest        '/CC
     SpawnCreature           'SPA
     ResetNPCInventory       '/RESETINV
-    CleanWorld              '/LIMPIAR
     ServerMessage           '/RMSG
     nickToIP                '/NICK2IP
     IPToNick                '/IP2NICK
@@ -479,7 +478,6 @@ Public Enum eGMCommands
     AlterPassword           '/APASS
     AlterMail               '/AEMAIL
     AlterName               '/ANAME
-    ToggleCentinelActivated '/CENTINELAACTIVADO
     DoBackUp                '/DOBACKUP
     ShowGuildMessages       '/SHOWCMSG
     SaveMap                 '/GUARDAMAPA
@@ -522,8 +520,6 @@ Public Enum eGMCommands
     RecordAddObs
     RecordListRequest
     RecordDetailsRequest
-    AlterGuildName
-    HigherAdminsMessage
 End Enum
 
 '
@@ -562,12 +558,12 @@ Public Const MENSAJE_GOLPE_CRIATURA_1 As String = "¡¡Le has pegado a la criatura
 
 Public Const MENSAJE_ATAQUE_FALLO As String = " te atacó y falló!!"
 
-Public Const MENSAJE_RECIBE_IMPACTO_CABEZA As String = " te ha pegado en la cabeza por "
-Public Const MENSAJE_RECIBE_IMPACTO_BRAZO_IZQ As String = " te ha pegado el brazo izquierdo por "
-Public Const MENSAJE_RECIBE_IMPACTO_BRAZO_DER As String = " te ha pegado el brazo derecho por "
-Public Const MENSAJE_RECIBE_IMPACTO_PIERNA_IZQ As String = " te ha pegado la pierna izquierda por "
-Public Const MENSAJE_RECIBE_IMPACTO_PIERNA_DER As String = " te ha pegado la pierna derecha por "
-Public Const MENSAJE_RECIBE_IMPACTO_TORSO As String = " te ha pegado en el torso por "
+Public Const MENSAJE_RECIVE_IMPACTO_CABEZA As String = " te ha pegado en la cabeza por "
+Public Const MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ As String = " te ha pegado el brazo izquierdo por "
+Public Const MENSAJE_RECIVE_IMPACTO_BRAZO_DER As String = " te ha pegado el brazo derecho por "
+Public Const MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ As String = " te ha pegado la pierna izquierda por "
+Public Const MENSAJE_RECIVE_IMPACTO_PIERNA_DER As String = " te ha pegado la pierna derecha por "
+Public Const MENSAJE_RECIVE_IMPACTO_TORSO As String = " te ha pegado en el torso por "
 
 Public Const MENSAJE_PRODUCE_IMPACTO_1 As String = "¡¡Le has pegado a "
 Public Const MENSAJE_PRODUCE_IMPACTO_CABEZA As String = " en la cabeza por "
@@ -583,7 +579,7 @@ Public Const MENSAJE_TRABAJO_ROBAR As String = "Haz click sobre la víctima..."
 Public Const MENSAJE_TRABAJO_TALAR As String = "Haz click sobre el árbol..."
 Public Const MENSAJE_TRABAJO_MINERIA As String = "Haz click sobre el yacimiento..."
 Public Const MENSAJE_TRABAJO_FUNDIRMETAL As String = "Haz click sobre la fragua..."
-Public Const MENSAJE_TRABAJO_PROYECTILES As String = "Haz click sobre la víctima..."
+Public Const MENSAJE_TRABAJO_PROYECTILES As String = "Haz click sobre la victima..."
 
 Public Const MENSAJE_ENTRAR_PARTY_1 As String = "Si deseas entrar en una party con "
 Public Const MENSAJE_ENTRAR_PARTY_2 As String = ", escribe /entrarparty"
@@ -595,7 +591,6 @@ Public Const MENSAJE_FRAGSHOOTER_HAS_MATADO As String = "Has matado a"
 Public Const MENSAJE_FRAGSHOOTER_HAS_GANADO As String = "Has ganado "
 Public Const MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA As String = "puntos de experiencia."
 
-Public Const MENSAJE_NO_VES_NADA_INTERESANTE As String = "No ves nada interesante."
 Public Const MENSAJE_HAS_MATADO_A As String = "Has matado a "
 Public Const MENSAJE_HAS_GANADO_EXPE_1 As String = "Has ganado "
 Public Const MENSAJE_HAS_GANADO_EXPE_2 As String = " puntos de experiencia."
@@ -604,8 +599,10 @@ Public Const MENSAJE_TE_HA_MATADO As String = " te ha matado!"
 Public Const MENSAJE_HOGAR As String = "Has llegado a tu hogar. El viaje ha finalizado."
 Public Const MENSAJE_HOGAR_CANCEL As String = "Tu viaje ha sido cancelado."
 
+Public Const MENSAJE_USER_MUERTO As String = "No puedes realizar esta acción estando muerto."
+
+Public Const NPC_INMUNE As String = "El npc es inmune al hechizo."
 Public Enum eMessages
-    DontSeeAnything
     NPCSwing
     NPCKillUser
     BlockedWithShieldUser
@@ -629,12 +626,23 @@ Public Enum eMessages
     GoHome
     CancelGoHome
     FinishHome
+    
+    '//Nuevos mensajes
+    UserMuerto
+    NpcInmune
+    
+    Hechizo_HechiceroMSG_NOMBRE
+    Hechizo_HechiceroMSG_ALGUIEN
+    Hechizo_HechiceroMSG_CRIATURA
+ 
+    Hechizo_PropioMSG
+    Hechizo_TargetMSG
 End Enum
 
 'Inventario
 Type Inventory
     OBJIndex As Integer
-    Name As String
+    name As String
     GrhIndex As Integer
     '[Alejo]: tipo de datos ahora es Long
     Amount As Long
@@ -650,7 +658,7 @@ End Type
 
 Type NpCinV
     OBJIndex As Integer
-    Name As String
+    name As String
     GrhIndex As Integer
     Amount As Integer
     Valor As Single
@@ -689,7 +697,7 @@ Type tEstadisticasUsu
 End Type
 
 Type tItemsConstruibles
-    Name As String
+    name As String
     OBJIndex As Integer
     GrhIndex As Integer
     LinH As Integer
@@ -979,7 +987,6 @@ Public Const OFFSET_HEAD As Integer = -34
 Public Enum eSMType
     sResucitation
     sSafemode
-    mSpells
     mWork
 End Enum
 
@@ -1011,3 +1018,31 @@ Public Enum eMoveType
 End Enum
 
 Public Const MP3_INITIAL_INDEX As Integer = 1000
+
+'/////OPTIMIZACION DE STRINGS////////
+Public NumHechizos As Byte
+Public Hechizos() As tHechizos
+ 
+Public Type tHechizos
+    Nombre As String
+    Desc As String
+    PalabrasMagicas As String
+    ManaRequerida As Integer
+    SkillRequerido As Byte
+    EnergiaRequerida As Integer
+ 
+    '//Mensajes
+    HechiceroMsg As String
+    PropioMsg As String
+    TargetMsg As String
+End Type
+ 
+Public NumNpcs As Integer
+Public Npcs() As tNpcs
+ 
+Public Type tNpcs
+    Nombre As String
+    Desc As String
+    NroExpresiones As Byte
+    Expresiones() As String
+End Type

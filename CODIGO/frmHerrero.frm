@@ -662,7 +662,7 @@ Public Sub HideExtraControls(ByVal NumItems As Integer, Optional ByVal Upgrading
     If NumItems > MAX_LIST_ITEMS Then
         Scroll.Visible = True
         Cargando = True
-        Scroll.max = NumItems - MAX_LIST_ITEMS
+        Scroll.Max = NumItems - MAX_LIST_ITEMS
         Cargando = False
     Else
         Scroll.Visible = False
@@ -670,53 +670,61 @@ Public Sub HideExtraControls(ByVal NumItems As Integer, Optional ByVal Upgrading
 End Sub
 
 Private Sub RenderItem(ByRef Pic As PictureBox, ByVal GrhIndex As Long)
+On Error Resume Next
+
     Dim SR As RECT
     Dim DR As RECT
     
     With GrhData(GrhIndex)
-        SR.Left = .sX
-        SR.Top = .sY
+        SR.Left = .SX
+        SR.Top = .SY
         SR.Right = SR.Left + .pixelWidth
-        SR.Bottom = SR.Top + .pixelHeight
+        SR.bottom = SR.Top + .pixelHeight
     End With
     
     DR.Left = 0
     DR.Top = 0
     DR.Right = 32
-    DR.Bottom = 32
+    DR.bottom = 32
     
     Call DrawGrhtoHdc(Pic.hdc, GrhIndex, SR, DR)
     Pic.Refresh
 End Sub
 
+
 Public Sub RenderList(ByVal Inicio As Integer, ByVal Armas As Boolean)
-Dim i As Long
-Dim NumItems As Integer
-Dim ObjHerrero() As tItemsConstruibles
+On Error Resume Next
 
-If Armas Then
-    ObjHerrero = ArmasHerrero
-Else
-    ObjHerrero = ArmadurasHerrero
-End If
-
-NumItems = UBound(ObjHerrero)
-Inicio = Inicio - 1
-
-For i = 1 To MAX_LIST_ITEMS
-    If i + Inicio <= NumItems Then
-        With ObjHerrero(i + Inicio)
-            ' Agrego el item
-            Call RenderItem(picItem(i), .GrhIndex)
-            picItem(i).ToolTipText = .Name
-            
-             ' Inventariode lingotes
-            Call InvLingosHerreria(i).SetItem(1, 0, .LinH, 0, LH_GRH, 0, 0, 0, 0, 0, 0, "Lingotes de Hierro")
-            Call InvLingosHerreria(i).SetItem(2, 0, .LinP, 0, LP_GRH, 0, 0, 0, 0, 0, 0, "Lingotes de Plata")
-            Call InvLingosHerreria(i).SetItem(3, 0, .LinO, 0, LO_GRH, 0, 0, 0, 0, 0, 0, "Lingotes de Oro")
-        End With
+    Dim i As Long
+    Dim NumItems As Integer
+    Dim ObjHerrero() As tItemsConstruibles
+    
+    If Armas Then
+        ObjHerrero = ArmasHerrero
+    Else
+        ObjHerrero = ArmadurasHerrero
     End If
-Next i
+    
+    NumItems = UBound(ObjHerrero)
+    Inicio = Inicio - 1
+    
+    For i = 1 To MAX_LIST_ITEMS
+        If i + Inicio <= NumItems Then
+            With ObjHerrero(i + Inicio)
+                ' Agrego el item
+                Call RenderItem(picItem(i), .GrhIndex)
+                picItem(i).ToolTipText = .name
+     
+                Call RenderItem(picUpgradeItem(i), .UpgradeGrhIndex)
+                picUpgradeItem(i).ToolTipText = .UpgradeName
+                
+                 ' Inventariode lingotes
+                Call InvLingosHerreria(i).SetItem(1, 0, .LinH, 0, LH_GRH, 0, 0, 0, 0, 0, 0, "Lingotes de Hierro")
+                Call InvLingosHerreria(i).SetItem(2, 0, .LinP, 0, LP_GRH, 0, 0, 0, 0, 0, 0, "Lingotes de Plata")
+                Call InvLingosHerreria(i).SetItem(3, 0, .LinO, 0, LO_GRH, 0, 0, 0, 0, 0, 0, "Lingotes de Oro")
+            End With
+        End If
+    Next i
 End Sub
 
 Public Sub RenderUpgradeList(ByVal Inicio As Integer)
@@ -731,7 +739,7 @@ For i = 1 To MAX_LIST_ITEMS
         With HerreroMejorar(i + Inicio)
             ' Agrego el item
             Call RenderItem(picItem(i), .GrhIndex)
-            picItem(i).ToolTipText = .Name
+            picItem(i).ToolTipText = .name
             
             Call RenderItem(picUpgradeItem(i), .UpgradeGrhIndex)
             picUpgradeItem(i).ToolTipText = .UpgradeName
