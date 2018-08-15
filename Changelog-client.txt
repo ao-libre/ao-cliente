@@ -1,0 +1,291 @@
+---------------------------------------
+ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
+---------------------------------------
+
+
+- 0.11.5
+
+ * 01/03/2006: Implementé el nuevo inventario gráfico y eliminé el viejo (Maraxus)
+ * 01/03/2006: Implementé el nuevo engine de sonido y eliminé todos los sistemas viejos (Maraxus)
+ * 06/03/2006: Creacion de constantes y enums varios (mensajes, heading) (AlejoLp)
+ * 06/03/2006: Elimine las funciones Move[NSWE] y las converti a MoveTo(E_Heading) (AlejoLp)
+ * 06/03/2006: Incorporación de los nuevos managers de surfaces y su interfaz. La implementación queda pendientes hasta estar lsito el nuevo AOSetup (Maraxus)
+ * 06/03/2006: Corrección de todos los bugs reportados y cerrados en el bug tracker de SF (Maraxus).
+ * 06/03/2006: Incorporación del formulario para cambios del MOTD (OuTIme) con algunos agregados míos (Maraxus).
+ * 11/03/2006: Implementación definitiva de los nuevos managers de texturas. (Maraxus).
+ * 11/03/2006: Implementación del ClientSetup en vez del viejo y obsoleto RenderMod. (Maraxus).
+ * 11/03/2006: Se eliminaron variables viejas o mal tipadas. (Maraxus).
+ * 15/03/2006: Se mejoró el sistema anticheats. (Maraxus).
+ * 18/03/2006: Corregí varios bugs que impedían que uno se loguease. (Maraxus).
+ * 18/03/2006: Corregí un bug que te hacía perder puntos de skills al no actualizar los valores al asignar. (Maraxus).
+ * 18/03/2006: Corregí un bug que te permitía asignar un skill por encima de 100. (Maraxus).
+ * 30/03/2006: Corregí bugs que evitaban la conexión del cliente con seguridad de Alkon. (Maraxus).
+ * 31/03/2006: El NLOGIN no envía losa tributos, ya que estos no son usados por el servidor. (Maraxus).
+ * 01/04/2006: Corregí el bug que no actualizaba la posición del rect donde debía renderizar. (Maraxus).
+ * 01/04/2006: El ValCode y MD5 se llevaron al final de OLOGIN para evitar problemas si el MD5 tenía comas. (Maraxus).
+ * 01/04/2006: Eliminé el head y body del mensaje NLOGIN (eran ceros). (Maraxus).
+ * 06/04/2006: Agregué un error manager al insertar elementos a la lista de surfaces dinámica (a algunos OS no le gusta y deben usar el estático). (Maraxus).
+ * 06/04/2006: Corregí un bug que permitía utilizar el item de arriba a la izquierda al hacer doble click en un slot vacío. (Maraxus).
+ * 06/04/2006: Corregí los accesos inválidos con el AO Dinámico en OS como XP. (Maraxus).
+ * 06/04/2006: Corregí un bug en el AO dinámico que producía una pérdida de performance al llenarse la memoria. (Maraxus).
+ * 12/04/2006: Corregí numerosos bugs con el engine de sonido, y un problema de performance con el inventario gráfico. (Maraxus).
+ * 12/04/2006: Corregí bugs varios a lo largo del código. (Maraxus).
+ * 14/04/2006: Los RMs no se escuchan al caminar. (Maraxus).
+ * 14/04/2006: Corregí bugs varios. (Maraxus).
+ * 14/04/2006: Mejoré el engine de sonido. (Maraxus).
+ * 14/04/2006: Al activar la música reproduce el midi correcto para el mapa y no el 2 que estaba por default. (Maraxus).
+ * 19/04/2006: La bóveda ahora muestra los datos correctamente. (Maraxus).
+ * 19/04/2006: Se corrigió un rt 9 en el inventario gráfico al tener el oro como item elegido. (Maraxus).
+ * 19/04/2006: Las coords del char se muestran corerctamente al loguear y al apretar la L. (Maraxus).
+ * 20/04/2006: corregí un bug que no desactivaba los sonidos de pasos propios y lluvia al desactivar los sonidos. (Maraxus).
+ * 21/04/2006: El panelGM y la lista de guilds no se esconden al agregarse texto a la consola. (Maraxus).
+
+- 0.12.0
+
+ * 27/04/2006: Se agregó la clase clsByteQueue utilizada por el nuevo protocolo. (Maraxus).
+ * 27/04/2006: Evita que se introduzcan valores menores a 1 al comerciar. (Maraxus).
+ * 28/04/2006: Agregué la clase Timer, reemplazando a los antiguos Timers que permitían en corte de intervalos. (Integer)
+ * 13/04/2006: Modifiqué algunas cositas de la clase MainTimer para qu sea más segura y abstraiga sus datos. (Maraxus)
+ * 17/04/2006: Eliminé código que no se usaba y renombré el frmPasswdSinPadrinos por frmPasswd. (Maraxus)
+ * 18/04/2006: Corregí el .vbp que no se adaptaba al cambio de nombres de ayer, eliminé el formulario de recuperar Passwords y el de borrar PJs. (Maraxus)
+ * 19/05/2006: Agregué sliders para el volumen del audio en el frmOpciones y le arreglé un poco su interfaz. (Integer)
+ * 20/05/2006: Corregí un rt5 con los sliders al estar desactivada la música. (Maraxus)
+ * 01/06/2006: Terminé de implementar la clase MainTimer y puse nuevos timers. (Maraxus)
+ * 09/06/2006: Ahora el macro de hechizos funciona correctamente. (Integer)
+ * 11/06/2006: Se corrigió un bug que permitía desplazar hechizos desde el inventario. (Maraxus)
+ * 13/06/2006: Se corrigió un bug tiraba rt9 al arrastrar items del inventario en en área de juego. (Maraxus)
+ * 15/06/2006: Se modificó ligeramente clsByteQueue para que trabaje tirando códigos de error al intentarse pasar los límites del buffer para lecutra y/o escritura (Maraxus).
+ * 16/06/2006: Quité el Timer FPS y limpie el Timer Second (Integer).
+ * 22/06/2006: Hice que se acepte "localhost" como IP del servidor, ya que antes fallaba si no se ingresaba como "127.0.0.1" (Maraxus).
+ * 23/06/2006: Eliminé el manejo del paquete "PART" que nunca se enviaba desde el server. (Maraxus).
+ * 24/06/2006: El nores se setea ahora desde el AOSetup. (^[GS]^).
+ * 24/06/2006: Limpié un poco de código. (Maraxus).
+ * 24/06/2006: Hice el AO.dat se lea antes que la línea de comandos para evitar que se pise la opción "/nores". (Maraxus).
+ * 29/06/2006: AltGr no funciona igual que Ctrl. (Integer)
+ * 27/07/2006: Elimine lst_servers, imgServEspana_Click, La Desc y PassRecPort Ya Que No Se Utilizaban. (Shura)
+ * 06/08/2006: Puse un Error Handler en Sub Main. (Integer)
+ * 13/08/2006: Solucioné un bug en las CambioDeArea. (Integer)
+ * 26/08/2006: Modifiqué la clase Timer. Gracias a NIGO por la sugerencia. (Integer)
+ * 27/08/2006: En la Ventana de Comercio/Boveda, no dejar imagen e informacion cuando seleccionamos un elemento con -nada-. (^[GS]^)
+ * 24/10/2006: Correccion de centrado de la superficie en la capa 2 del mapa. (^[GS]^)
+ * 18/12/2006: Nuevo protocolo completo. Queda pendiente escribir el parser y reemplazar las viejas llamadas a SendData. (Maraxus)
+ * 24/12/2006: Corregi la baja de fps al acercarnos a los bordes de los mapas. (NIGO)
+ * 04/01/2007: Agregué uso de named mutex para evitar clientes multiples. (liquid)
+ * 06/01/2007: ProtocolCmdParse listo. (NIGO)
+ * 06/01/2007: NIGO, te corregi un par de bugs.. eran boludeces, pero son faciles de encontrar si chequeas que el cliente compila (ctr+f5) :). (liquid)
+ * 07/01/2007: Corregí el único bug que no permitía compilar (WriteTime fue cambiado por WriteServerTime). (Maraxus)
+ * 08/01/2007: El parser chequea que el estado del usuario sea valido al usar comandos. (NIGO)
+ * 10/01/2007: BUG #1629687 reparado. (Tavo)
+ * 10/01/2007: Cambie algunos senddata por writes, faltan varios!, y llamar al Parser.. (liquid)
+ * 11/01/2007: Rehice el panelgm (NIGO)
+ * 13/01/2007: Arreglé el módulo PrevInstance para que desde la IDE se pueda ejecutar multiples veces el cliente y el código sea más limpio (Maraxus)
+ * 13/01/2007: Agregué el HandleDiceRoll que había sido omitido (Maraxus)
+ * 13/01/2007: El formulario de password al crear personaje pone los caractéres como asteriscos (Maraxus)
+ * 13/01/2007: Arreglé varios bugs en el manejo de raza, clase, sexo y ciudad (Maraxus)
+ * 13/01/2007: Corregíel orden de los datos al crearse un nuevo PJ (Maraxus)
+ * 13/01/2007: Corregido los BUGs #1634085 y #1559986. (Tavo)
+ * 14/01/2007: Evitados los ciclos infinitos en HandleIncomingData. (Maraxus)
+ * 14/01/2007: Corregí un bug en el protocolo, entré a Ulla por primera vez en la 0.11.6. (Maraxus)
+ * 18/01/2007: Arreglé un problema con WinXP y el PrevInstance. (Maraxus)
+ * 18/01/2007: Andan las estadísticas. (Maraxus)
+ * 18/01/2007: Agregué un par de casos donde debía saltar la NOT_ENOUGH_DATA exception. (Maraxus)
+ * 08/02/2007: Subo las adiciones de Toxic y Salvito. Destaco el screen shooter con F2. (Maraxus)
+ * 10/02/2007: Corregí un bug con la bóveda, ahora anda correctamente. (Maraxus)
+ * 30/03/2007: Agregado el macro para trabajar (Salvito) 
+ * 31/03/2007: Agregué el comando /PING. (Maraxus)
+ * 26/06/2007: Corregí un error en el envío de privados. (Maraxus)
+ * 09/07/2007: Ya no pueden aparecer chats de NPCs muertos con proyectiles, magias u otras cosas que impliquen clicks. (Maraxus)
+ * 10/07/2007: Corregí un bug en la clsByteQueue que causaba un rt9 al querer limpiarsela si estaba llena. (Maraxus)
+ * 11/07/2007: Corregí un bug con el botón actualizar del panelgm. (Maraxus)
+ * 10/07/2007: Agregué protección antimacros al form de creación de pjs. (Maraxus)
+ * 26/07/2007: Cambié el ReadField del cliente por el mas actualizado, cambié la declaración de las funciones str2ipv4l y AEMAILSplit para que devuelvan arrays de bytes y de strings respectivamente. (Rapsodius)
+ * 26/07/2007: Agregué mensajes customizables con acceso rápido con las teclas 1-0. (Maraxus)
+ * 29/07/2007: Remplacé cDialogos por clsDialogos. Es más limpia y no dibuja chats fuera del rango de visión. Las función de dibujo de texto las moví al TileEngine donde siempre debieron estar. (Maraxus)
+
+- 0.12.1
+
+ * 12/08/2007: Si el usuario esta paralizado no se puede mover. (Tavo)
+ * 14/08/2007: Nueva formula para calcular Panning y volumen, clase clsAudio totalmente modularizada, agregado enum eSoundPos (clsAudio) y Function CalcSoundSrc (General). (Rapsodius)
+ * 14/08/2007: Ahora el color de la cantidad de oro en la billetera varia dependiendo de la cantidad de nivel y de oro (Mas precisamente si se cae o no lo que uno lleva). (Tavo)
+ * 14/08/2007: Reescritura casi total del engine y limpieza de muchísimas funciones y módulos. Queda mucho por hacer, pero avanzamos.... (Maraxus)
+ * 18/08/2007: Arreglé el código de teclas configurables, ahora carga bien las defaults si las guardadas tienen algún problema. (Maraxus)
+ * 22/08/2007: Descarté el código de Maraxus y pongo el mio que lo arregle por mis propios medios. No deberia haber problemas, descarte varias declaraciones inservibles. (Rapsodius)
+ * 23/08/2007: Arreglé un problema con los sonidos NO_3D en el clsAudio. (Rapsodius)
+ * 29/08/2007: Cambiada la duración de los diálogos dependiendo de su largo en caracteres. (Rapsodius)
+ * 31/08/2007: Volé NextOpenChar y MoveScreen de General, estaban duplicadas del TileEngine. (Maraxus)
+ * 20/09/2007: Arreglé el texto del frmCargando porque habia algunas cosas raras... Agregue soporte para multiples configuraciones de teclado en las teclas configurables y arregle un poco el formulario de las custom keys. (Rapsodius)
+ * 28/10/2007: Arreglé las passwords y agregué soporte para Singles y Doubles en ByteQueue. (Maraxus)
+ * 27/12/2007: Arreglé el bug reportado en SF que decía que cuando estabas comerciando si hacías doble clic fuera de la ventana, se volvía a cargar la lista de items del comerciante hasta el punto de generar un overflow y cerrar el cliente de Argentum. (ByVal)
+ * 28/12/2007: El Bug corregido por mí anteriormente también abarcaba la bóveda. Este también ya fue solucionado. (ByVal)
+ * 29/03/2008: Nuevo engine con las FPS sin límite, sin bugs de rendering y alta performance. Además el código del engine queda bastante más limpio en varios puntos. (Maraxus)
+ * 29/03/2008: Fix del bug que mezcla los botones al pedir detalles de un miembro del clan y luego de un aspirante. (Maraxus)
+ * 29/03/2008: Ahora al salir del juego en pantalla completa se reestablece correctamente la profundidad y la frecuencia del display. (Maraxus)
+ * 29/03/2008: Corregí un rt-13 al dejar en blanco la cantidad en la boveda y un rt-9 al retirar de la boveda el último elemento de algún item. Además hice inválido el poner 0 como cantidad en la boveda. (Maraxus)
+ * 29/03/2008: Corregí un overflow al mandar valores muy grandes en el color de textos usando ~ tanto para mensajes de clan como de GMs. (Maraxus)
+ * 30/03/2008: Reescrito el código de sonido 3D. Ahora es más claro, eficiente y utiliza una física más realista. (Maraxus)
+ * 30/03/2008: Eliminé el paquete que hacía reproducir el ruido de la fogata. (Maraxus)
+ * 30/03/2008: Corregí un bug en la reproducción de animaciones y las hice más fluidas al loopear. (Maraxus)
+ * 30/03/2008: volví a habilitar el druida en la creación de personajes. (Maraxus)
+ * 31/03/2008: Arreglé el bug que permitía mover el personaje si estaba comerciando con un npc o depositando en boveda. (DarkThom)
+ * 31/03/2008: Tambien agregué que no pueda abrir el RecTxt si estaba abierto el formulario del Banco o Comercio Seguro. (DarkThom)
+ * 31/03/2008: Centré mejor el nick y cambie la parte del clan ya que los dos usaban la misma cordenada X. (DarkThom)
+ * 01/04/2008: Se puede vender items equipados. (Maraxus)
+ * 01/04/2008: No se dibujan cascos, armaduras o escudos de chars sin cabeza (con barca o NPCs). (Maraxus)
+ * 02/04/2008: Corregido un overflow al actualizar la cantidad de oro que se posee. (Maraxus)
+ * 02/04/2008: "¡" y "¿" ahora son caractéres válidos para mensajes personalizados. (Maraxus)
+ * 03/04/2008: Se movió el cambio de resolución más al principio del programa para evitar conflictos en ciertas placas de video y hacer el loading esté centrado incluso en full-screen. (Maraxus)
+ * 03/04/2008: Al loguear se muestra correctamente el color del dinero que se posee según si el mismo se caerá o no al morir. (Maraxus)
+ * 04/04/2008: Arreglado el bug del comercio (venta). (NicoNZ)
+ * 04/04/2008: Arreglados los mensajes personalizados y un bug que borraba los carteles de otros al moverse. (Maraxus)
+ * 04/04/2008: Corregido un typo en elform de depositar que dibujaba imágenes fruta y causaba rt9. (Maraxus)
+ * 04/04/2008: Volví a evitar el movimiento al estar en WorldSave... se ve en algún momento se perdió. (Maraxus)
+ * 05/04/2008: Limité las FPS a 100. Es un número más alto que el refresco vertical de los monitores y evita que las PCs que superen eso estén a 100% de uso de micro. (Maraxus)
+ * 05/04/2008: Emparché para evitar una división por cero al moverse NPCs sin anims (Uncornos). (Maraxus)
+ * 05/04/2008: El comando /invisible ya no causa un rt9. (Maraxus)
+ * 05/04/2008: Arreglado el bug que permitia hacer clic en zonas donde no se renderizaba. (NicoNZ)
+ * 07/04/2008: Ahora el texto de clan en pantalla hace WordWrap. (NicoNZ)
+ * 08/04/2008: Solucionado el bug de /invisible. (NicoNZ)
+ * 10/04/2008: Ahora cada vez que se quiera lanzar un hechizo o flecha y se le erre al intervalo, hay que volver a apretar lanzar / U. (NicoNZ)
+ * 10/04/2008: Arreglos del sonido. Estaba cruzada la constante de paneo, y se bajó el DELTA_FQ. (Maraxus)
+ * 10/04/2008: Arreglado el macro de carpintería. (NicoNZ)
+ * 13/04/2008: El sistema de comercio y banco ahora son completamente equivalentes, simplificando el código y corrigiendo los problemas con el comercio. (Maraxus)
+ * 13/04/2008: Vuelve a haber un único layout de teclas (nunca se pidió otra cosa) y se corrigen lor problemas con su grabado y carga. (Maraxus)
+ * 15/04/2008: A veces tiraba el hechizo sin tener el cursor del target puesto. (NicoNZ)
+ * 15/04/2008: Cambie algunas cosas en el CharRender para que no se muestre el nick cuando se usa la barca y si se está invi, se vea la barca. (NicoNZ)
+ * 15/04/2008: Agregado el nuevo FX de meditar. (Maraxus)
+ * 21/04/2008: La ventana de configuracion de mensajes se carga en el medio y al cerrarla vuelve el foco al FrmMain. (NicoNZ)
+ * 24/04/2008: No se vaciaban los texboxs al mandar mensajes del foro. (NicoNZ)
+ * 25/04/2008: Para activar/desactivar el seguro/seguro de resu/modo combate, los cuadros de texto tienen que estar invisibles. (NicoNZ)
+ * 01/05/2008: Ahora no se resetea el intervalo al errar un hechizo. (NicoNZ)
+ * 07/06/2008: Agregué mensajes al tirar hechizos o flechas mas rápido del intervalo. (NicoNZ)
+ * 01/05/2008: Ahora no se resetea el intervalo al errar un hechizo. (NicoNZ)
+ * 07/06/2008: Arreglo el alphablending que no funcionaba. (Maraxus)
+ * 14/06/2008: Ahora se ve el precio final a la hora de comerciar con un NPC. (NicoNZ)
+ * 28/06/2008: Ahora si estás inmovilizado, te podes mover sobre el mismo eje para las cuatro direcciones, si estás paralizado, no. (NicoNZ)
+ * 01/07/2008: Centro los nicks correctamente y elimino código innecesario. (Maraxus)
+ * 04/07/2008: Evito algunos overflows. (Maraxus)
+ * 24/07/2008: Agregado un mapa en opciones. Las imagenes que carga son Graficos/mapa1.jpg y Graficos/mapa2.jpg (MarKoxX)
+ * 26/07/2008: Saque un inet del frmMain que no se usaba. (Noich)
+ * 27/07/2008: Fix del bug 2027273 (MarKoxX)
+ * 28/07/2008: Ahora los efectos de sonido (doppler y sonido 3d) se pueden habilitar/deshabilitar. (Noich)
+ * 16/08/2008: Al salir con /SALIR desactiva el macro de trabajo. (Integer)
+ * 19/08/2008: Corregí un overflow en el comercio. (Noich)
+
+- 0.12.2
+
+ * 20/08/2008: Cambios en la compresión de recursos. (Maraxus)
+ * 21/08/2008: Elimino un paquete que no servía para nada. (Maraxus)
+ * 21/08/2008: Arreglado el soporte para bmps de 16 y 32 bits. (Maraxus)
+ * 01/10/2008: Pequeña mejora de performance - +1% rendering speed y baja el consumo por parte de forms. (Maraxus)
+ * 02/10/2008: Soluciono un caso particular donde seguían explotando los .ao. (Maraxus)
+ * 02/10/2008: Boost de performance, 2% más para todos,y uso de memoria de video para surfaces. (Maraxus)
+ * 02/10/2008: Cambio la implementación del Static surface Manager para que use una tabla Hash: 30% mejor performance (aprox). (Maraxus)
+ * 02/10/2008: Cambio la implementación del Dynamic surface Manager para que use una tabla Hash: 30% mejor performance (aprox). (Maraxus)
+ * 27/10/2008: Agregado el boton para escuchar Radio Ao en opciones. (NicoNZ)
+ * 15/11/2008: Al ingresar /FUNDARCLAN se chequea que el usuario sea nivel 25 o más. (NicoNZ)
+ * 25/11/2008: Se agregó que al leer la línea de comandos verifique parámetros para el AoUpdate (BrianPr)
+ * 01/12/2008: Arreglo de faltas ortográficas y de gramática. (NicoNZ)
+ * 20/01/2009: Modificado el nuevo modulo de compresión de archivos .ao (Marco)
+ * 13/03/2009: Se puede caminar a un tile donde haya un casper. (ZaMa)
+ * 26/03/2009: Comandos mas flexibles: /onlinemap, /nene, /telep. (ZaMa)
+ * 30/03/2009: Modificaciones en el panelGM. (ZaMa)
+ * 07/04/2009: Arreglado bug de chat de clanes por pantalla. (ZaMa)
+ * 28/04/2009: Arreglada la fórmula del efecto Doppler (Marco)
+ * 07/05/2009: Arreglado el error que tiraba CLSAudio al cambiar de mapa (Marco)
+ * 07/05/2009: Arreglado el RunTime9 que tiraba si tocabas una tecla en FRMConnect (Marco)
+ * 09/05/2009: Arreglado el bug 2789294 (Rt 5 en CLSAudio) (Marco)
+ * 10/05/2009: No se puede intercambiar posición con un casper que este en la orilla. (ZaMa)
+ * 11/05/2009: Arreglado el bug #2789937 (Marco)
+ * 12/05/2009: Arreglado RT9 en Función RemoveLRU (Maraxus)
+ * 14/05/2009: Se usa SW_SHOWNORMAL para llamar a ShellExecute, debería con esto andar bien en Win98 y Win Vista (Maraxus)
+ * 14/05/2009: Cuando el cliente ejecuta el AoUpdate propaga el /nores para que no se pierda (Maraxus)
+ * 16/05/2009: Se arregla el rt9 con los cortes, arregla bug #2792555 (Maraxus)
+ * 28/05/2009: Fix al bug #2796312 (Pato)
+ * 08/06/2009: Se agregó el comando /mod AGREGAR oro
+ * 11/06/2009: Agregados algunos checks en el cliente (para equipar, agarrar, tirar, domar, robar, ocultar, meditar) (Jamicheli)
+ * 14/06/2009: Ahora es posible ordenar la bóveda (Pato)
+ * 20/06/2009: Fix al commit anterior de Jamicheli y agregué un checkeo del estado del user al meditar (Pato)
+ * 20/06/2009: Otro fix al commit de jamicheli(cuando el user moría se desactivaban los macros sin fijarse si estaban activados), también agregue checkeos del estado del user al momento de activar los macros (Pato)
+ * 21/06/2009: Agregué el comando /SETINIVAR (BrianPr)
+ * 25/06/2009: Fix al bug #2811927 (Pato)
+ * 19/07/2009: Ahora se limpia la lista de las propuestas de alianza/paz de los clanes (Marco)
+ * 21/07/2009: El formulario de comercio seguro se carga como vbModal (Marco)
+ * 01/08/2009: Los admins invisibles no pueden intercambiar pos con caspers. (ZaMa)
+ * 09/08/2009: Solucione un bug que hacia que si usabamos un body mayor al numero de cabezas que teniamos nos dejaba sin cabeza. (Ladder by patch)
+ * 19/09/2009: Agregada una función para sacar screens de toda la pantalla. (Pato)
+ * 19/09/2099: Ahora la función CheckData se fija que el nombre del personaje no supere los 30 caracteres. (Pato)
+ * 03/11/2009: El formulario de comercio nuevamente se carga como vbModeless (Pato)
+
+- 0.13.0
+
+ * 30/11/2009: Agrego inventarios gráficos para la bóveda. (Pato)
+ * 16/11/2009: Ahora los /ct adminten radio como parametro opcional. (ZaMa)
+ * 18/11/2009: Agregue el comando /Liberar. (ZaMa)
+ * 18/11/2009: Se admiten comandos en los mensajes personalizados. (ZaMa)
+ * 19/11/2009: Ahora es opcional ver el GuildNews al loguear. (Pato)
+ * 20/11/2009: Agrego el nuevo sistema de entrenamiento de skills (Pato)
+ * 22/11/2009: Sistema de Fundicion. (Budi)
+ * 25/11/2009: Agregué el fragshooter, y reordené los botones del frmOpciones para que no ocupe toda la pantalla (Testeado en una vm) (Budi)
+ * 27/11/2009: Clase Trabajadora Unica. (Sin Testear) (ZaMa)
+ * 27/11/2009: Cambios marketineros. (Budi)
+ * 30/11/2009: Trueque. (ZaMa)
+ * 30/11/2009: Administración de party (Sin testear) (Budi)
+ * 30/11/2009: Nueva interfaz, pantalla principal de 800x600, droga y stats del equipo en pantalla principal. (Testeado, faltan detalles) (Budi)
+ * 04/12/2009: Cambios en la interfaz principal y de comercio seguro. (Budi)
+ * 04/12/2009: Sistema de mochilas (Sin testear) (Budi)
+ * 05/12/2009: Quité el Sistema de Combate (Budi)
+ * 10/12/2009: Implementé el sistema de upgrade de ítems. (Pato)
+ * 12/12/2009: Strings del lado del cliente.  (Budi)
+ * 14/12/2009: Unificación de comandos de GMs. (Budi)
+ * 26/12/2009: Agregue Inventario grafico para comercio con usuarios. (ZaMa)
+ * 26/12/2009: Sigo aplicando y adaptando interfaces. (ZaMa)
+ * 28/12/2009: Ahora se selecciona el head al crear pj. (Pato)
+ * 28/12/2009: Modificaciones en el sistema gráfico de herrería. (Pato)
+ * 29/12/2009: Retoques en la clase para manejar botones. (ZaMa)
+ * 29/12/2009: Ya no se envian las 7 versiones al loguear o crear PJ. (Pato)
+ * 29/12/2009: Agrego clase para poder mover todas las ventanas sin barras. (Zama)
+ * 31/12/2009: Múltiples modificaciones en los sistemas gráficos de herrería y carpintería. (Pato)
+ * 02/01/2010: Implemento foros faccionarios y arreglo detalles. (ZaMa)
+ * 14/01/2010: Simplificación de comandos. (Pato)
+ * 15/02/2010: Permitir especificar la cantidad de items a construir. (ZaMa)
+ * 16/02/2010: Nombres de skills intuitivos. (ZaMa)
+ * 19/02/2010: Simplificacion de Comandos. (ZaMa)
+ * 27/03/2010: Agregadas noticias de la web (Se agregó un WebBrowser!)
+ * 21/05/2010: La ventana de party no pierde el foco al cambiar la consola. (ZaMa)
+ * 04/07/2010: Sólo el trabajador puede contruir de a más de un ítem por ciclo. (Pato)
+ * 10/07/2010: Ya no carga mas los formularios de herria y carpinteria al hacer doble click en el inv. (ZaMa)
+ * 17/07/2010: Ahora muestra el guildnews desde las opciones de clan aunque este desabilitado al loguear. (ZaMa)
+ * 25/07/2010: Ahora se puede cambiar la propiedad RoboNpcPermitido con /modmapinfo. (ZaMa)
+ * 11/09/2010: Arregle validacion sobre existencia de carpeta para screenshots. (ZaMa)
+ * 16/09/2010: Ahora se peuden usar items despues de entrar en la ventana de carpinteria o herreria. (ZaMa)
+ * 16/09/2010: Ya no se dibujan los bodies cuando estan invisibles (Fin al corte de cabezas). (ZaMa)
+ * 18/09/2010: Agrego comandos /modmapinfo OcultarSinEfecto y /modmapinfo InvocarSinEfecto. (ZaMa)
+ * 18/09/2010: Ahora se puede cambiar un mensaje personalizado con Ctrl+Shift+NroMsj se copia lo que este escrito. (ZaMa) 
+ * 18/09/2010: Agrego comando /mod Yo Vida xxx solo para rms(todos) o dioses. (ZaMa)
+ * 21/09/2010: Ahora el FragShooter saca una foto DESPUES del cambio de cuerpo a fantasma SI el personaje que mato esta en el area visible, sino saca como antes. Modifique el tipo de acceso a PUBLIC de la funcion EstaPCarea() ya que lo utilizo para saber si el personaje esta en mi area. (C4b3z0n)
+ * 12/10/2010: Cuando se asigna un mensaje personalizado con Ctrl+Shift+NroMsj si es inválido lo avisa por consola. (Pato)
+ * 30/10/2010: Agrego los comandos "/CrearPretorianos MAPA X Y" y "/EliminarPretorianos MAPA". (ZaMA)
+ * 03/11/2010: Implemento lo propuesto por GD, se puede usar macro aun que se esté en otra ventana. (Pato) 
+ * 14/11/2010: /SHOW DENUNCIAS muestra las últimas 20 denuncias realizadas. (ZaMa)
+ * 14/11/2010: /DENUNCIAS activa / desactiva la aparición de denuncias en consola. (ZaMa)
+ * 14/11/2010: /mapmsg: Mensaje por consola solo en el mapa en el que estas. (ZaMa)
+ * 16/11/2010: Arreglé el FragShooter y ahora las screenshots del mismo se guardan en distintas carpetas dependiendo si mataste a alguien o te mataron. (Amraphen)
+ * 18/11/2010: Ahora se distinguen los links por consola, y al clickearlos abre el browser. (ZaMa)
+ * 18/11/2010: Ahora se pueden usar items despues de habilitar el macro trabajo. (ZaMa)
+ * 18/11/2010: Agrego nuevo sistema de configuración de teclas. (Amraphen)
+ * 20/11/2010: /impersonar copia body, head y descripción del NPC que se clickeo previamente, teleporta al personaje en la posición de este y lo elimina. (ZaMa)
+ * 20/11/2010: /Mimetizar copia body, head y descripción del NPC que se clickeo previamente. (ZaMa)
+ * 30/11/2010: Nuevo sistema de prontuario interno en el panel de GMS. (Amraphen)
+ * 02/12/2010: Ahora no se puede modificar la config 0 (default) en teclas configurables. (ZaMa)
+ * 02/12/2010: Agrego nueva interface de config de teclas. (ZaMa)
+ * 06/12/2010: Ahora no se dispara el binding de CTRL cuando se cambia una configuración de teclas desde el atajo del teclado. (Amraphen)
+ * 06/01/2011: Drag and drop en inventario. (Budi)
+ * 24/02/2011: Fix al bug que perdías la conexión cuando intentabas crear un personaje que ya existía. (Pato)
+ * 15/03/2011: Agrego /mod user poss map-x-y (cambia la poss del usuario este online o no). (ZaMa)
+ * 15/03/2011: Ahora se limpian todas las variables y flags en todos los casos cuando se desconecta el personaje. (ZaMa)
+ * 15/03/2011: Elimino todas las declaraciones dinamicas de objetos (ahora son lazy). (ZaMa)
+ * 26/03/2011: Habilito la reproduccion de mp3 para mapas. (ZaMa)
+ * 05/04/2011: Hice varios cambios en el manejo de inventarios gráficos. (Pato)
+ * 05/04/2011: Vuelvo a fixear el bug que cuando intentabas crear un personaje que existía perdías la conexión(Se perdió en el último merge). (Pato)
+ * 06/04/2011: Arreglo un bug al cambiar de mapa y un pequeñop bug estético que hacía que a veces los chars titilen. (Pato)
+ * 07/04/2011 : Arregladas ciertas cuestiones con los seguimientos. (Amraphen)
