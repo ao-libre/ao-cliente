@@ -173,7 +173,7 @@ Public Type Char
     Escudo As ShieldAnimData
     UsandoArma As Boolean
     
-    fX As Grh
+    FX As Grh
     FxIndex As Integer
     
     Criminal As Byte
@@ -829,14 +829,14 @@ Sub MoveScreen(ByVal nHeading As E_Heading)
 End Sub
 
 Private Function HayFogata(ByRef Location As Position) As Boolean
-    Dim j As Long
+    Dim J As Long
     Dim k As Long
     
-    For j = UserPos.X - 8 To UserPos.X + 8
+    For J = UserPos.X - 8 To UserPos.X + 8
         For k = UserPos.Y - 6 To UserPos.Y + 6
-            If InMapBounds(j, k) Then
-                If MapData(j, k).ObjGrh.GrhIndex = GrhFogata Then
-                    Location.X = j
+            If InMapBounds(J, k) Then
+                If MapData(J, k).ObjGrh.GrhIndex = GrhFogata Then
+                    Location.X = J
                     Location.Y = k
                     
                     HayFogata = True
@@ -844,7 +844,7 @@ Private Function HayFogata(ByRef Location As Position) As Boolean
                 End If
             End If
         Next k
-    Next j
+    Next J
 End Function
 
 Function NextOpenChar() As Integer
@@ -1284,36 +1284,36 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
     Call Effect_UpdateAll
     
     If ClientSetup.ProyectileEngine = True Then
-        Dim j As Integer
+        Dim J As Integer
         
         If LastProjectile > 0 Then
-            For j = 1 To LastProjectile
-                If ProjectileList(j).Grh.GrhIndex Then
+            For J = 1 To LastProjectile
+                If ProjectileList(J).Grh.GrhIndex Then
                     Dim Angle As Single
                     'Update the position
-                    Angle = DegreeToRadian * Engine_GetAngle(ProjectileList(j).X, ProjectileList(j).Y, ProjectileList(j).tX, ProjectileList(j).tY)
-                    ProjectileList(j).X = ProjectileList(j).X + (Sin(Angle) * ElapsedTime * 0.63)
-                    ProjectileList(j).Y = ProjectileList(j).Y - (Cos(Angle) * ElapsedTime * 0.63)
+                    Angle = DegreeToRadian * Engine_GetAngle(ProjectileList(J).X, ProjectileList(J).Y, ProjectileList(J).tX, ProjectileList(J).tY)
+                    ProjectileList(J).X = ProjectileList(J).X + (Sin(Angle) * ElapsedTime * 0.63)
+                    ProjectileList(J).Y = ProjectileList(J).Y - (Cos(Angle) * ElapsedTime * 0.63)
                     
                     'Update the rotation
-                    If ProjectileList(j).RotateSpeed > 0 Then
-                        ProjectileList(j).Rotate = ProjectileList(j).Rotate + (ProjectileList(j).RotateSpeed * ElapsedTime * 0.01)
-                        Do While ProjectileList(j).Rotate > 360
-                            ProjectileList(j).Rotate = ProjectileList(j).Rotate - 360
+                    If ProjectileList(J).RotateSpeed > 0 Then
+                        ProjectileList(J).Rotate = ProjectileList(J).Rotate + (ProjectileList(J).RotateSpeed * ElapsedTime * 0.01)
+                        Do While ProjectileList(J).Rotate > 360
+                            ProjectileList(J).Rotate = ProjectileList(J).Rotate - 360
                         Loop
                     End If
     
                     'Draw if within range
-                    X = ((-minX - 1) * 32) + ProjectileList(j).X + PixelOffsetX + ((10 - TileBufferSize) * 32) - 288 + ProjectileList(j).OffsetX
-                    Y = ((-minY - 1) * 32) + ProjectileList(j).Y + PixelOffsetY + ((10 - TileBufferSize) * 32) - 288 + ProjectileList(j).OffsetY
+                    X = ((-minX - 1) * 32) + ProjectileList(J).X + PixelOffsetX + ((10 - TileBufferSize) * 32) - 288 + ProjectileList(J).OffsetX
+                    Y = ((-minY - 1) * 32) + ProjectileList(J).Y + PixelOffsetY + ((10 - TileBufferSize) * 32) - 288 + ProjectileList(J).OffsetY
                     If Y >= -32 Then
                         If Y <= (ScreenHeight + 32) Then
                             If X >= -32 Then
                                 If X <= (ScreenWidth + 32) Then
-                                    If ProjectileList(j).Rotate = 0 Then
-                                        DDrawTransGrhtoSurface ProjectileList(j).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, 50, 50, True, 0
+                                    If ProjectileList(J).Rotate = 0 Then
+                                        DDrawTransGrhtoSurface ProjectileList(J).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, 50, 50, True, 0
                                     Else
-                                        DDrawTransGrhtoSurface ProjectileList(j).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, 50, 50, True, ProjectileList(j).Rotate
+                                        DDrawTransGrhtoSurface ProjectileList(J).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, 50, 50, True, ProjectileList(J).Rotate
                                     End If
                                 End If
                             End If
@@ -1321,18 +1321,18 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
                     End If
                     
                 End If
-            Next j
+            Next J
             
             'Check if it is close enough to the target to remove
-            For j = 1 To LastProjectile
-                If ProjectileList(j).Grh.GrhIndex Then
-                    If Abs(ProjectileList(j).X - ProjectileList(j).tX) < 20 Then
-                        If Abs(ProjectileList(j).Y - ProjectileList(j).tY) < 20 Then
-                            Engine_Projectile_Erase j
+            For J = 1 To LastProjectile
+                If ProjectileList(J).Grh.GrhIndex Then
+                    If Abs(ProjectileList(J).X - ProjectileList(J).tX) < 20 Then
+                        If Abs(ProjectileList(J).Y - ProjectileList(J).tY) < 20 Then
+                            Engine_Projectile_Erase J
                         End If
                     End If
                 End If
-            Next j
+            Next J
             
         End If
     End If
@@ -1495,7 +1495,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Inte
     If frmBancoObj.PicBancoInv.Visible Then _
         Call InvBanco(0).DrawInv
          
-    If frmBancoObj.PicInv.Visible Then _
+    If frmBancoObj.picInv.Visible Then _
         Call InvBanco(1).DrawInv
     
     
@@ -1825,10 +1825,10 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
         Movement_Speed = 1
         'Draw FX
         If .FxIndex <> 0 Then
-            Call DDrawTransGrhtoSurface(.fX, PixelOffsetX + FxData(.FxIndex).OffsetX, PixelOffsetY + FxData(.FxIndex).OffsetY, 1, MapData(.Pos.X, .Pos.Y).Engine_Light(), 1, .Pos.X, .Pos.Y, False)
+            Call DDrawTransGrhtoSurface(.FX, PixelOffsetX + FxData(.FxIndex).OffsetX, PixelOffsetY + FxData(.FxIndex).OffsetY, 1, MapData(.Pos.X, .Pos.Y).Engine_Light(), 1, .Pos.X, .Pos.Y, False)
             
             'Check if animation is over
-            If .fX.Started = 0 Then _
+            If .FX.Started = 0 Then _
                 .FxIndex = 0
         End If
         
@@ -1872,19 +1872,19 @@ Private Sub RenderName(ByVal CharIndex As Long, ByVal X As Integer, ByVal Y As I
     End With
 End Sub
 
-Public Sub SetCharacterFx(ByVal CharIndex As Integer, ByVal fX As Integer, ByVal Loops As Integer)
+Public Sub SetCharacterFx(ByVal CharIndex As Integer, ByVal FX As Integer, ByVal Loops As Integer)
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modify Date: 12/03/04
 'Sets an FX to the character.
 '***************************************************
     With charlist(CharIndex)
-        .FxIndex = fX
+        .FxIndex = FX
         
         If .FxIndex > 0 Then
-            Call InitGrh(.fX, FxData(fX).Animacion)
+            Call InitGrh(.FX, FxData(FX).Animacion)
         
-            .fX.Loops = Loops
+            .FX.Loops = Loops
         End If
     End With
 End Sub
