@@ -744,7 +744,8 @@ On Error Resume Next
         Case ServerPacketID.GuildMemberInfo
             Call HandleGuildMemberInfo
             
-        
+        Case ServerPacketID.DecirPalabrasMagicas
+            Call HandleDecirPalabrasMagicas
         
         '*******************
         'GM messages
@@ -1068,7 +1069,8 @@ With incomingData
          
         Case eMessages.Hechizo_TargetMSG
             SpellIndex = .ReadByte
-            Call ShowConsoleMsg(Hechizos(SpellIndex).TargetMsg, 210, 220, 220)
+            Nombre = .ReadASCIIString
+            Call ShowConsoleMsg(Nombre & " " & Hechizos(SpellIndex).TargetMsg, 210, 220, 220)
     End Select
 End With
 End Sub
@@ -1292,7 +1294,7 @@ Private Sub HandleBankInit()
     
     BankGold = incomingData.ReadLong
     Call InvBanco(0).Initialize(DirectD3D8, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
-    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.PicInv, Inventario.MaxObjs)
+    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.picInv, Inventario.MaxObjs)
     
     For i = 1 To Inventario.MaxObjs
         With Inventario
@@ -4495,11 +4497,11 @@ On Error GoTo ErrHandler
         .criminales.Caption = CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .status.Caption = " Ciudadano"
-            .status.ForeColor = vbBlue
+            .Status.Caption = " Ciudadano"
+            .Status.ForeColor = vbBlue
         Else
-            .status.Caption = " Criminal"
-            .status.ForeColor = vbRed
+            .Status.Caption = " Criminal"
+            .Status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)
@@ -10497,7 +10499,7 @@ Private Sub HandleDecirPalabrasMagicas()
     Dim Spell As Integer
     Dim CharIndex As Integer
     
-    Spell = incomingData.ReadInteger
+    Spell = incomingData.ReadByte
     CharIndex = incomingData.ReadInteger
     
     'Only add the chat if the character exists (a CharacterRemove may have been sent to the PC / NPC area before the buffer was flushed)
