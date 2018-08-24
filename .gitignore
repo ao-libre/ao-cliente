@@ -1,6 +1,4 @@
-/Screenshots
-Logs/*
-WorldBackup/*
+Screenshots/*
 Codigo/*.log
 .DS_Store
 *.vbw
