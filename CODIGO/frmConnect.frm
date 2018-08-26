@@ -553,11 +553,7 @@ Private Sub imgTeclas_Click()
 End Sub
 
 Private Sub imgVerForo_Click()
-    Call ShellExecute(0, "Open", "http://www.argentumonline.org", "", App.path, SW_SHOWNORMAL)
-End Sub
-
-Private Sub IPTxt_Change()
-
+    Call ShellExecute(0, "Open", "https://www.reddit.com/r/argentumonlineoficial/", "", App.path, SW_SHOWNORMAL)
 End Sub
 
 Private Sub txtPasswd_KeyPress(KeyAscii As Integer)
