@@ -1472,7 +1472,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Inte
         If UserCiego Then
             DirectDevice.Clear 0, ByVal 0, D3DCLEAR_TARGET, 0, 1#, 0
         Else
-            Call RenderScreen(UserPos.X - AddtoUserPos.X, UserPos.Y - AddtoUserPos.Y, OffsetCounterX - ZoomOffset(1), OffsetCounterY - ZoomOffset(0))
+            Call RenderScreen(UserPos.X - AddtoUserPos.X, UserPos.Y - AddtoUserPos.Y, OffsetCounterX, OffsetCounterY)
         End If
         
         Call Dialogos.Render
