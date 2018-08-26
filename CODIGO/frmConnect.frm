@@ -446,7 +446,7 @@ Private Sub imgCodigoFuente_Click()
 'cambios que hacemos nosotros, compartí los tuyos. Es un cambio justo. Si no estás de acuerdo,
 'no uses nuestro código, pues nadie te obliga o bien utiliza una versión anterior a la 0.12.0.
 '***********************************
-    Call ShellExecute(0, "Open", "https://sourceforge.net/project/downloading.php?group_id=67718&filename=AOServerSrc0.12.2.zip&a=42868900", "", App.path, SW_SHOWNORMAL)
+    Call ShellExecute(0, "Open", "https://github.com/ao-oficial", "", App.path, SW_SHOWNORMAL)
 
 End Sub
 
@@ -514,11 +514,11 @@ Private Sub imgCrearPj_Click()
 End Sub
 
 Private Sub imgLeerMas_Click()
-    Call ShellExecute(0, "Open", "http://ao.alkon.com.ar", "", App.path, SW_SHOWNORMAL)
+    Call ShellExecute(0, "Open", "http://www.argentumonline.org", "", App.path, SW_SHOWNORMAL)
 End Sub
 
 Private Sub imgManual_Click()
-    Call ShellExecute(0, "Open", "http://ao.alkon.com.ar/manual/", "", App.path, SW_SHOWNORMAL)
+    Call ShellExecute(0, "Open", "http://www.argentumonline.org", "", App.path, SW_SHOWNORMAL)
 End Sub
 
 Private Sub imgRecuperar_Click()
@@ -532,7 +532,7 @@ errH:
 End Sub
 
 Private Sub imgReglamento_Click()
-    Call ShellExecute(0, "Open", "http://ao.alkon.com.ar/reglamento.html", "", App.path, SW_SHOWNORMAL)
+    Call ShellExecute(0, "Open", "http://www.argentumonline.org", "", App.path, SW_SHOWNORMAL)
 End Sub
 
 Private Sub imgSalir_Click()
@@ -553,7 +553,11 @@ Private Sub imgTeclas_Click()
 End Sub
 
 Private Sub imgVerForo_Click()
-    Call ShellExecute(0, "Open", "http://www.alkon.com.ar/foro/argentum-online.53/", "", App.path, SW_SHOWNORMAL)
+    Call ShellExecute(0, "Open", "http://www.argentumonline.org", "", App.path, SW_SHOWNORMAL)
+End Sub
+
+Private Sub IPTxt_Change()
+
 End Sub
 
 Private Sub txtPasswd_KeyPress(KeyAscii As Integer)
@@ -563,7 +567,7 @@ End Sub
 Private Sub WebAuxiliar_BeforeNavigate2(ByVal pDisp As Object, URL As Variant, flags As Variant, TargetFrameName As Variant, PostData As Variant, Headers As Variant, Cancel As Boolean)
     
     If InStr(1, URL, "alkon") <> 0 Then
-        Call ShellExecute(hWnd, "open", URL, vbNullString, vbNullString, SW_SHOWNORMAL)
+        Call ShellExecute(hwnd, "open", URL, vbNullString, vbNullString, SW_SHOWNORMAL)
         Cancel = True
     End If
     
