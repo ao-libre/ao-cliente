@@ -1495,7 +1495,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Inte
     If frmBancoObj.PicBancoInv.Visible Then _
         Call InvBanco(0).DrawInv
          
-    If frmBancoObj.picInv.Visible Then _
+    If frmBancoObj.PicInv.Visible Then _
         Call InvBanco(1).DrawInv
     
     
@@ -1825,7 +1825,7 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
         Movement_Speed = 1
         'Draw FX
         If .FxIndex <> 0 Then
-            Call DDrawTransGrhtoSurface(.FX, PixelOffsetX + FxData(.FxIndex).OffsetX, PixelOffsetY + FxData(.FxIndex).OffsetY, 1, MapData(.Pos.X, .Pos.Y).Engine_Light(), 1, .Pos.X, .Pos.Y, False)
+            Call DDrawTransGrhtoSurface(.FX, PixelOffsetX + FxData(.FxIndex).OffsetX, PixelOffsetY + FxData(.FxIndex).OffsetY, 1, MapData(.Pos.X, .Pos.Y).Engine_Light(), 1, .Pos.X, .Pos.Y, True)
             
             'Check if animation is over
             If .FX.Started = 0 Then _
