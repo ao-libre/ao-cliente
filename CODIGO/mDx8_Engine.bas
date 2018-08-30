@@ -48,31 +48,31 @@ Public Function Engine_DirectX8_Init() As Boolean
         .BackBufferHeight = frmMain.MainViewPic.ScaleHeight
         .EnableAutoDepthStencil = 1
         .AutoDepthStencilFormat = D3DFMT_D16
-        .hDeviceWindow = frmMain.MainViewPic.hWnd
+        .hDeviceWindow = frmMain.MainViewPic.hwnd
     End With
 
     Select Case ClientSetup.Aceleracion
         Case 0 '   Software
             Set DirectDevice = DirectD3D.CreateDevice( _
                                 D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, _
-                                frmMain.MainViewPic.hWnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING, _
+                                frmMain.MainViewPic.hwnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING, _
                                 D3DWindow)
         Case 1 '   Hardware
             Set DirectDevice = DirectD3D.CreateDevice( _
                                 D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, _
-                                frmMain.MainViewPic.hWnd, _
+                                frmMain.MainViewPic.hwnd, _
                                 D3DCREATE_HARDWARE_VERTEXPROCESSING, _
                                 D3DWindow)
         Case 2 '   Mixed
             Set DirectDevice = DirectD3D.CreateDevice( _
                                 D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, _
-                                frmMain.MainViewPic.hWnd, _
+                                frmMain.MainViewPic.hwnd, _
                                 D3DCREATE_MIXED_VERTEXPROCESSING, _
                                 D3DWindow)
         Case Else '   Si no hay opcion entramos en Software para asegurarnos que funcione el cliente
             Set DirectDevice = DirectD3D.CreateDevice( _
                                 D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, _
-                                frmMain.MainViewPic.hWnd, _
+                                frmMain.MainViewPic.hwnd, _
                                 D3DCREATE_SOFTWARE_VERTEXPROCESSING, _
                                 D3DWindow)
     End Select
@@ -326,8 +326,28 @@ Public Sub Engine_Long_To_RGB_List(RGB_List() As Long, long_color As Long)
     RGB_List(2) = RGB_List(0)
     RGB_List(3) = RGB_List(0)
 End Sub
+Public Function SetARGB_Alpha(RGB_List() As Long, alpha As Byte) As Long()
+'***************************************************
+'Author: Juan Manuel Couso (Cucsifae)
+'Last Modification: 29/08/18
+'Obtiene un ARGB list le modifica el alpha y devuelve una copia
+'***************************************************
+Dim tempColor As D3DCOLORVALUE
+Dim tempARGB(0 To 3) As Long
+'convertimos el valor del rgb list a D3DCOLOR
+Call ARGBtoD3DCOLORVALUE(RGB_List(1), tempColor)
+'comprobamos ue no se salga del rango permitido
+If alpha > 255 Then alpha = 255
+If alpha < 0 Then alpha = 0
+'seteamos el alpha
+tempColor.a = alpha
+'generamos el nuevo RGB_List
+Call Engine_D3DColor_To_RGB_List(tempARGB(), tempColor)
 
-Private Function Engine_Collision_Between(ByVal value As Single, ByVal Bound1 As Single, ByVal Bound2 As Single) As Byte
+SetARGB_Alpha = tempARGB()
+End Function
+
+Private Function Engine_Collision_Between(ByVal Value As Single, ByVal Bound1 As Single, ByVal Bound2 As Single) As Byte
 '*****************************************************************
 'Find if a value is between two other values (used for line collision)
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_Collision_Between
@@ -335,12 +355,12 @@ Private Function Engine_Collision_Between(ByVal value As Single, ByVal Bound1 As
 
     'Checks if a value lies between two bounds
     If Bound1 > Bound2 Then
-        If value >= Bound2 Then
-            If value <= Bound1 Then Engine_Collision_Between = 1
+        If Value >= Bound2 Then
+            If Value <= Bound1 Then Engine_Collision_Between = 1
         End If
     Else
-        If value >= Bound1 Then
-            If value <= Bound2 Then Engine_Collision_Between = 1
+        If Value >= Bound1 Then
+            If Value <= Bound2 Then Engine_Collision_Between = 1
         End If
     End If
     
