@@ -1,5 +1,6 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.OCX"
 Begin VB.Form frmCargando 
    AutoRedraw      =   -1  'True
    BackColor       =   &H80000000&
@@ -56,6 +57,13 @@ Begin VB.Form frmCargando
       TabIndex        =   0
       Top             =   240
       Width           =   9600
+      Begin InetCtlsObjects.Inet Inet1 
+         Left            =   3000
+         Top             =   2640
+         _ExtentX        =   1005
+         _ExtentY        =   1005
+         _Version        =   393216
+      End
    End
 End
 Attribute VB_Name = "frmCargando"
@@ -97,7 +105,10 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
+Dim f As Integer
+
 Private Sub Form_Load()
+    Me.Analizar
     Me.Picture = LoadPicture(DirGraficos & "VentanaCargando.jpg")
     LOGO.Picture = LoadPicture(DirGraficos & "ImagenCargando.jpg")
 End Sub
@@ -108,4 +119,40 @@ End Sub
 
 Private Sub Status_KeyPress(KeyAscii As Integer)
     Debug.Print 1
+End Sub
+
+'Mas info de esta funcion:
+'http://www.gs-zone.org/temas/como-configurar-el-autoupdate-completo.78653/
+Function Analizar()
+    On Error Resume Next
+    
+    Dim IX As Integer
+    Dim tX As Integer
+    Dim DifX As Integer
+           
+    'LINK1 Variable que contiene el numero de actualización correcto del servidor
+    IX = Inet1.OpenURL("https://raw.githubusercontent.com/ao-oficial/ao-website/master/parches.txt") 'Host
+    tX = LeerInt(App.path & "\INIT\Update.ini")
+    DifX = IX - tX
+ 
+    If Not (DifX = 0) Then
+        If MsgBox("Tu versión no es la actuál, ¿Deseas ejecutar el actualizador automático?.", vbYesNo) = vbYes Then
+            Call ShellExecute(Me.hwnd, "open", App.path & "/Autoupdate.exe", "", "", 1)
+            End
+        End If
+    End If
+End Function
+
+Private Function LeerInt(ByVal Ruta As String) As Integer
+    f = FreeFile
+    Open Ruta For Input As f
+    LeerInt = Input$(LOF(f), #f)
+    Close #f
+End Function
+ 
+Private Sub GuardarInt(ByVal Ruta As String, ByVal data As Integer)
+    f = FreeFile
+    Open Ruta For Output As f
+    Print #f, data
+    Close #f
 End Sub
