@@ -192,6 +192,7 @@ Public Type Char
     muerto As Boolean
     invisible As Boolean
     priv As Byte
+    attacking As Boolean
     
     Aura(1 To 4) As Aura
     ParticleIndex As Integer
@@ -581,6 +582,9 @@ On Error Resume Next
         'Update position
         .Pos.X = X
         .Pos.Y = Y
+        
+        'attack state
+        .attacking = False
         
         'Make active
         .active = 1
@@ -1686,6 +1690,15 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
             End If
         End If
         
+        'if is attacking we set the attack anim
+        If .attacking And .Arma.WeaponWalk(.Heading).Started = 0 Then
+            .Arma.WeaponWalk(.Heading).Started = 1
+            .Arma.WeaponWalk(.Heading).FrameCounter = 1
+        'if the anim has ended or we are no longer attacking end the animation
+        ElseIf .Arma.WeaponWalk(.Heading).FrameCounter > 4 And .attacking Then
+            .attacking = False 'this is just for testing, it shouldnt be done here
+        End If
+        
         'If done moving stop animation
         If Not moved Then
             'Stop animations
@@ -1697,7 +1710,7 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
             .Body.Walk(.Heading).FrameCounter = 1
             
             '//Movimiento del arma y el escudo
-            If Not .Movement Then
+            If Not .Movement And Not .attacking Then
                  .Arma.WeaponWalk(.Heading).Started = 0
                  .Arma.WeaponWalk(.Heading).FrameCounter = 1
                 
