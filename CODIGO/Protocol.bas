@@ -141,7 +141,7 @@ Private Enum ServerPacketID
     SendNight               ' NOC
     Pong
     UpdateTagAndStatus
-    PlayAttackAnim
+    
     
     'GM messages
     SpawnList               ' SPL
@@ -163,6 +163,7 @@ Private Enum ServerPacketID
     StopWorking
     CancelOfferItem
     DecirPalabrasMagicas
+    PlayAttackAnim
 End Enum
 
 Private Enum ClientPacketID
@@ -3248,7 +3249,7 @@ On Error GoTo ErrHandler
     'Remove packet ID
     Call Buffer.ReadByte
     
-    Dim Slot As Byte
+     Dim Slot As Byte
     Slot = Buffer.ReadByte()
     
     With UserBancoInventory(Slot)
