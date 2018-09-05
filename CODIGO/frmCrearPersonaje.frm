@@ -1620,6 +1620,9 @@ Private Sub imgCrear_Click()
     
     EstadoLogin = E_MODO.CrearNuevoPj
     
+    'Clear spell list
+    frmMain.hlst.Clear
+    
 #If UsarWrench = 1 Then
     If Not frmMain.Socket1.Connected Then
 #Else
