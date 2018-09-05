@@ -324,7 +324,7 @@ Private Sub CheckLicenseAgreement()
     Dim i As Long
     
     For i = 0 To Me.Controls.Count - 1
-        If Me.Controls(i).name = "imgCodigoFuente" Then
+        If Me.Controls(i).Name = "imgCodigoFuente" Then
             Exit For
         End If
     Next i
@@ -472,7 +472,8 @@ Private Sub imgConectarse_Click()
     Dim aux As String
     aux = txtPasswd.Text
     UserPassword = aux
-
+    'Clear spell list
+    frmMain.hlst.Clear
 
     If CheckUserData(False) = True Then
         EstadoLogin = Normal
