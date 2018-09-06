@@ -833,14 +833,14 @@ Sub MoveScreen(ByVal nHeading As E_Heading)
 End Sub
 
 Private Function HayFogata(ByRef Location As Position) As Boolean
-    Dim j As Long
+    Dim J As Long
     Dim k As Long
     
-    For j = UserPos.X - 8 To UserPos.X + 8
+    For J = UserPos.X - 8 To UserPos.X + 8
         For k = UserPos.Y - 6 To UserPos.Y + 6
-            If InMapBounds(j, k) Then
-                If MapData(j, k).ObjGrh.GrhIndex = GrhFogata Then
-                    Location.X = j
+            If InMapBounds(J, k) Then
+                If MapData(J, k).ObjGrh.GrhIndex = GrhFogata Then
+                    Location.X = J
                     Location.Y = k
                     
                     HayFogata = True
@@ -848,7 +848,7 @@ Private Function HayFogata(ByRef Location As Position) As Boolean
                 End If
             End If
         Next k
-    Next j
+    Next J
 End Function
 
 Function NextOpenChar() As Integer
@@ -1188,19 +1188,30 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
                     (ScreenX - 1) * TilePixelWidth + PixelOffsetX, _
                     (ScreenY - 1) * TilePixelHeight + PixelOffsetY, _
                     0, 1, X, Y)
-                    
-                'Layer 2
-                If MapData(X, Y).Graphic(2).GrhIndex <> 0 Then
-                    Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(2), _
-                        (ScreenX - 1) * TilePixelWidth + PixelOffsetX, _
-                        (ScreenY - 1) * TilePixelHeight + PixelOffsetY, _
-                        0, MapData(X, Y).Engine_Light(), 0, X, Y)
-                End If
             End If
             
             ScreenX = ScreenX + 1
         Next X
         ScreenX = ScreenX - X + screenminX
+        ScreenY = ScreenY + 1
+    Next Y
+    
+    '<----- Layer 2 ----->
+    ScreenY = minYOffset - Engine_Get_TileBuffer
+    For Y = minY To maxY
+        ScreenX = minXOffset - Engine_Get_TileBuffer
+        For X = minX To maxX
+        If Map_InBounds(X, Y) Then
+            PixelOffsetXTemp = ScreenX * TilePixelWidth + PixelOffsetX
+            PixelOffsetYTemp = ScreenY * TilePixelHeight + PixelOffsetY
+            'Layer 2
+            If MapData(X, Y).Graphic(2).GrhIndex <> 0 Then
+                Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(2), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1, X, Y)
+            End If
+        End If
+            ScreenX = ScreenX + 1
+        Next X
+
         ScreenY = ScreenY + 1
     Next Y
     
@@ -1288,36 +1299,36 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
     Call Effect_UpdateAll
     
     If ClientSetup.ProyectileEngine = True Then
-        Dim j As Integer
+        Dim J As Integer
         
         If LastProjectile > 0 Then
-            For j = 1 To LastProjectile
-                If ProjectileList(j).Grh.GrhIndex Then
+            For J = 1 To LastProjectile
+                If ProjectileList(J).Grh.GrhIndex Then
                     Dim Angle As Single
                     'Update the position
-                    Angle = DegreeToRadian * Engine_GetAngle(ProjectileList(j).X, ProjectileList(j).Y, ProjectileList(j).tX, ProjectileList(j).tY)
-                    ProjectileList(j).X = ProjectileList(j).X + (Sin(Angle) * ElapsedTime * 0.63)
-                    ProjectileList(j).Y = ProjectileList(j).Y - (Cos(Angle) * ElapsedTime * 0.63)
+                    Angle = DegreeToRadian * Engine_GetAngle(ProjectileList(J).X, ProjectileList(J).Y, ProjectileList(J).tX, ProjectileList(J).tY)
+                    ProjectileList(J).X = ProjectileList(J).X + (Sin(Angle) * ElapsedTime * 0.63)
+                    ProjectileList(J).Y = ProjectileList(J).Y - (Cos(Angle) * ElapsedTime * 0.63)
                     
                     'Update the rotation
-                    If ProjectileList(j).RotateSpeed > 0 Then
-                        ProjectileList(j).Rotate = ProjectileList(j).Rotate + (ProjectileList(j).RotateSpeed * ElapsedTime * 0.01)
-                        Do While ProjectileList(j).Rotate > 360
-                            ProjectileList(j).Rotate = ProjectileList(j).Rotate - 360
+                    If ProjectileList(J).RotateSpeed > 0 Then
+                        ProjectileList(J).Rotate = ProjectileList(J).Rotate + (ProjectileList(J).RotateSpeed * ElapsedTime * 0.01)
+                        Do While ProjectileList(J).Rotate > 360
+                            ProjectileList(J).Rotate = ProjectileList(J).Rotate - 360
                         Loop
                     End If
     
                     'Draw if within range
-                    X = ((-minX - 1) * 32) + ProjectileList(j).X + PixelOffsetX + ((10 - TileBufferSize) * 32) - 288 + ProjectileList(j).OffsetX
-                    Y = ((-minY - 1) * 32) + ProjectileList(j).Y + PixelOffsetY + ((10 - TileBufferSize) * 32) - 288 + ProjectileList(j).OffsetY
+                    X = ((-minX - 1) * 32) + ProjectileList(J).X + PixelOffsetX + ((10 - TileBufferSize) * 32) - 288 + ProjectileList(J).OffsetX
+                    Y = ((-minY - 1) * 32) + ProjectileList(J).Y + PixelOffsetY + ((10 - TileBufferSize) * 32) - 288 + ProjectileList(J).OffsetY
                     If Y >= -32 Then
                         If Y <= (ScreenHeight + 32) Then
                             If X >= -32 Then
                                 If X <= (ScreenWidth + 32) Then
-                                    If ProjectileList(j).Rotate = 0 Then
-                                        DDrawTransGrhtoSurface ProjectileList(j).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, 50, 50, True, 0
+                                    If ProjectileList(J).Rotate = 0 Then
+                                        DDrawTransGrhtoSurface ProjectileList(J).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, 50, 50, True, 0
                                     Else
-                                        DDrawTransGrhtoSurface ProjectileList(j).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, 50, 50, True, ProjectileList(j).Rotate
+                                        DDrawTransGrhtoSurface ProjectileList(J).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, 50, 50, True, ProjectileList(J).Rotate
                                     End If
                                 End If
                             End If
@@ -1325,18 +1336,18 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
                     End If
                     
                 End If
-            Next j
+            Next J
             
             'Check if it is close enough to the target to remove
-            For j = 1 To LastProjectile
-                If ProjectileList(j).Grh.GrhIndex Then
-                    If Abs(ProjectileList(j).X - ProjectileList(j).tX) < 20 Then
-                        If Abs(ProjectileList(j).Y - ProjectileList(j).tY) < 20 Then
-                            Engine_Projectile_Erase j
+            For J = 1 To LastProjectile
+                If ProjectileList(J).Grh.GrhIndex Then
+                    If Abs(ProjectileList(J).X - ProjectileList(J).tX) < 20 Then
+                        If Abs(ProjectileList(J).Y - ProjectileList(J).tY) < 20 Then
+                            Engine_Projectile_Erase J
                         End If
                     End If
                 End If
-            Next j
+            Next J
             
         End If
     End If
@@ -1903,7 +1914,7 @@ Public Sub SetCharacterFx(ByVal CharIndex As Integer, ByVal fX As Integer, ByVal
 End Sub
 
 
-Public Sub Device_Textured_Render(ByVal X As Integer, ByVal Y As Integer, ByVal Texture As Direct3DTexture8, ByRef src_rect As RECT, ByRef Color_List() As Long, Optional alpha As Boolean = False, Optional ByVal Angle As Single = 0, Optional ByVal Shadow As Boolean = False)
+Public Sub Device_Textured_Render(ByVal X As Integer, ByVal Y As Integer, ByVal Texture As Direct3DTexture8, ByRef src_rect As RECT, ByRef Color_List() As Long, Optional Alpha As Boolean = False, Optional ByVal Angle As Single = 0, Optional ByVal Shadow As Boolean = False)
     If Shadow And ClientSetup.UsarSombras = False Then Exit Sub
     
     Dim dest_rect As RECT
@@ -1941,7 +1952,7 @@ Public Sub Device_Textured_Render(ByVal X As Integer, ByVal Y As Integer, ByVal 
         temp_verts(3).Y = temp_verts(3).Y - (src_rect.Right - src_rect.Left) * 0.5
     End If
     
-    If alpha Then
+    If Alpha Then
         DirectDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
         DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
     End If
@@ -1954,13 +1965,13 @@ Public Sub Device_Textured_Render(ByVal X As Integer, ByVal Y As Integer, ByVal 
                 indexList(0), D3DFMT_INDEX16, _
                 temp_verts(0), Len(temp_verts(0))
                 
-    If alpha Then
+    If Alpha Then
         DirectDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
         DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
     End If
 End Sub
 
-Public Sub Device_Textured_Render_Scale(ByVal X As Integer, ByVal Y As Integer, ByVal Texture As Direct3DTexture8, ByRef src_rect As RECT, ByRef Color_List() As Long, Optional alpha As Boolean = False, Optional ByVal Angle As Single = 0, Optional ByVal Shadow As Boolean = False)
+Public Sub Device_Textured_Render_Scale(ByVal X As Integer, ByVal Y As Integer, ByVal Texture As Direct3DTexture8, ByRef src_rect As RECT, ByRef Color_List() As Long, Optional Alpha As Boolean = False, Optional ByVal Angle As Single = 0, Optional ByVal Shadow As Boolean = False)
     If Shadow And ClientSetup.UsarSombras = False Then Exit Sub
     
     Dim dest_rect As RECT
@@ -1984,14 +1995,14 @@ Public Sub Device_Textured_Render_Scale(ByVal X As Integer, ByVal Y As Integer, 
     
     DirectDevice.SetTexture 0, Texture
     
-    If alpha Then
+    If Alpha Then
         DirectDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_ONE
         DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_ONE
     End If
         
     DirectDevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, temp_verts(0), Len(temp_verts(0))
         
-    If alpha Then
+    If Alpha Then
         DirectDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
         DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
     End If
@@ -2075,7 +2086,7 @@ error:
     End If
 End Sub
 
-Sub DDrawTransGrhIndextoSurface(ByVal GrhIndex As Integer, ByVal X As Integer, ByVal Y As Integer, ByVal Center As Byte, ByRef Color_List() As Long, Optional ByVal Angle As Single = 0, Optional ByVal alpha As Boolean = False)
+Sub DDrawTransGrhIndextoSurface(ByVal GrhIndex As Integer, ByVal X As Integer, ByVal Y As Integer, ByVal Center As Byte, ByRef Color_List() As Long, Optional ByVal Angle As Single = 0, Optional ByVal Alpha As Boolean = False)
     Dim SourceRect As RECT
     
     With GrhData(GrhIndex)
@@ -2096,7 +2107,7 @@ Sub DDrawTransGrhIndextoSurface(ByVal GrhIndex As Integer, ByVal X As Integer, B
         SourceRect.bottom = SourceRect.Top + .pixelHeight
         
         'Draw
-        Call Device_Textured_Render(X, Y, SurfaceDB.Surface(.FileNum), SourceRect, Color_List(), alpha, Angle, False)
+        Call Device_Textured_Render(X, Y, SurfaceDB.Surface(.FileNum), SourceRect, Color_List(), Alpha, Angle, False)
     End With
 End Sub
 
@@ -2161,7 +2172,7 @@ error:
 End Sub
 
 
-Sub DDrawTransGrhIndextoSurfaceScale(ByVal GrhIndex As Integer, ByVal X As Integer, ByVal Y As Integer, ByVal Center As Byte, ByRef Color_List() As Long, Optional ByVal Angle As Single = 0, Optional ByVal alpha As Boolean = False)
+Sub DDrawTransGrhIndextoSurfaceScale(ByVal GrhIndex As Integer, ByVal X As Integer, ByVal Y As Integer, ByVal Center As Byte, ByRef Color_List() As Long, Optional ByVal Angle As Single = 0, Optional ByVal Alpha As Boolean = False)
     Dim SourceRect As RECT
     
     With GrhData(GrhIndex)
@@ -2182,11 +2193,11 @@ Sub DDrawTransGrhIndextoSurfaceScale(ByVal GrhIndex As Integer, ByVal X As Integ
         SourceRect.bottom = SourceRect.Top + .pixelHeight
         
         'Draw
-        Call Device_Textured_Render_Scale(X, Y, SurfaceDB.Surface(.FileNum), SourceRect, Color_List(), alpha, Angle, False)
+        Call Device_Textured_Render_Scale(X, Y, SurfaceDB.Surface(.FileNum), SourceRect, Color_List(), Alpha, Angle, False)
     End With
 End Sub
 
-Sub DDrawTransGrhtoSurface(ByRef Grh As Grh, ByVal X As Integer, ByVal Y As Integer, ByVal Center As Byte, ByRef Color_List() As Long, ByVal Animate As Byte, ByVal posX As Byte, ByVal posY As Byte, Optional ByVal alpha As Boolean = False, Optional ByVal Angle As Single = 0, Optional ByVal Shadow As Boolean = False)
+Sub DDrawTransGrhtoSurface(ByRef Grh As Grh, ByVal X As Integer, ByVal Y As Integer, ByVal Center As Byte, ByRef Color_List() As Long, ByVal Animate As Byte, ByVal posX As Byte, ByVal posY As Byte, Optional ByVal Alpha As Boolean = False, Optional ByVal Angle As Single = 0, Optional ByVal Shadow As Boolean = False)
 '*****************************************************************
 'Draws a GRH transparently to a X and Y position
 '*****************************************************************
@@ -2235,7 +2246,7 @@ On Error GoTo error
         SourceRect.Right = SourceRect.Left + .pixelWidth
         SourceRect.bottom = SourceRect.Top + .pixelHeight
         
-        Call Device_Textured_Render(X, Y, SurfaceDB.Surface(.FileNum), SourceRect, Color_List(), alpha, Angle, False)
+        Call Device_Textured_Render(X, Y, SurfaceDB.Surface(.FileNum), SourceRect, Color_List(), Alpha, Angle, False)
     End With
 Exit Sub
 
