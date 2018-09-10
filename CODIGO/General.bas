@@ -206,7 +206,7 @@ End Sub
 
 Sub SaveGameini()
     'Grabamos los datos del usuario en el Game.ini
-    Config_Inicio.name = "BetaTester"
+    Config_Inicio.Name = "BetaTester"
     Config_Inicio.Password = "DammLamers"
     Config_Inicio.Puerto = UserPort
     
@@ -571,7 +571,7 @@ Sub SwitchMap(ByVal Map As Integer)
     '   Erase particle effects
     ReDim Effect(1 To NumEffects)
     
-    MapInfo.name = ""
+    MapInfo.Name = ""
     MapInfo.Music = ""
     
     CurMap = Map
@@ -629,8 +629,8 @@ Function FieldCount(ByRef Text As String, ByVal SepASCII As Byte) As Long
     FieldCount = Count
 End Function
 
-Function FileExist(ByVal File As String, ByVal FileType As VbFileAttribute) As Boolean
-    FileExist = (Dir$(File, FileType) <> "")
+Function FileExist(ByVal file As String, ByVal FileType As VbFileAttribute) As Boolean
+    FileExist = (Dir$(file, FileType) <> "")
 End Function
 
 Sub WriteClientVer()
@@ -881,7 +881,7 @@ Private Sub LoadInitialConfig()
     Call Protocol.InitFonts
     
     With frmConnect
-        .txtNombre = Config_Inicio.name
+        .txtNombre = Config_Inicio.Name
         .txtNombre.SelStart = 0
         .txtNombre.SelLength = Len(.txtNombre)
     End With
@@ -929,7 +929,7 @@ Private Sub LoadInitialConfig()
     ' ANIMACIONES EXTRAS
     Call AddtoRichTextBox(frmCargando.status, "Creando animaciones extra... ", 255, 255, 255, True, False, True)
     Call CargarTips
-    'Call CargarArrayLluvia
+    Call CargarArrayLluvia
     Call CargarAnimArmas
     Call CargarAnimEscudos
     Call CargarColores
@@ -990,14 +990,14 @@ Private Sub LoadTimerIntervals()
 
 End Sub
 
-Sub WriteVar(ByVal File As String, ByVal Main As String, ByVal Var As String, ByVal Value As String)
+Sub WriteVar(ByVal file As String, ByVal Main As String, ByVal Var As String, ByVal Value As String)
 '*****************************************************************
 'Writes a var to a text file
 '*****************************************************************
-    writeprivateprofilestring Main, Var, Value, File
+    writeprivateprofilestring Main, Var, Value, file
 End Sub
 
-Function GetVar(ByVal File As String, ByVal Main As String, ByVal Var As String) As String
+Function GetVar(ByVal file As String, ByVal Main As String, ByVal Var As String) As String
 '*****************************************************************
 'Gets a Var from a text file
 '*****************************************************************
@@ -1005,7 +1005,7 @@ Function GetVar(ByVal File As String, ByVal Main As String, ByVal Var As String)
     
     sSpaces = Space$(500) ' This tells the computer how long the longest string can be. If you want, you can change the number 100 to any number you wish
     
-    getprivateprofilestring Main, Var, vbNullString, sSpaces, Len(sSpaces), File
+    getprivateprofilestring Main, Var, vbNullString, sSpaces, Len(sSpaces), file
     
     GetVar = RTrim$(sSpaces)
     GetVar = Left$(GetVar, Len(GetVar) - 1)
@@ -1374,10 +1374,10 @@ m = 255 / MAXATRIBUTOS
 getDexterityColor = RGB(255, m * UserAgilidad, 0)
 End Function
 
-Public Function getCharIndexByName(ByVal name As String) As Integer
+Public Function getCharIndexByName(ByVal Name As String) As Integer
 Dim i As Long
 For i = 1 To LastChar
-    If charlist(i).Nombre = name Then
+    If charlist(i).Nombre = Name Then
         getCharIndexByName = i
         Exit Function
     End If
@@ -1437,8 +1437,8 @@ Public Sub ResetAllInfo()
     'Unload all forms except frmMain, frmConnect and frmCrearPersonaje
     Dim frm As Form
     For Each frm In Forms
-        If frm.name <> frmMain.name And frm.name <> frmConnect.name And _
-            frm.name <> frmCrearPersonaje.name Then
+        If frm.Name <> frmMain.Name And frm.Name <> frmConnect.Name And _
+            frm.Name <> frmCrearPersonaje.Name Then
             
             Unload frm
         End If
@@ -1542,32 +1542,32 @@ Public Sub CargarHechizos()
 '********************************
 On Error GoTo errorH
     Dim PathName As String
-    Dim j As Long
+    Dim J As Long
  
     PathName = App.path & "\init\Hechizos.dat"
     NumHechizos = Val(GetVar(PathName, "INIT", "NumHechizos"))
  
     ReDim Hechizos(1 To NumHechizos) As tHechizos
-    For j = 1 To NumHechizos
-        With Hechizos(j)
-            .Desc = GetVar(PathName, "HECHIZO" & j, "Desc")
-            .PalabrasMagicas = GetVar(PathName, "HECHIZO" & j, "PalabrasMagicas")
-            .Nombre = GetVar(PathName, "HECHIZO" & j, "Nombre")
-            .SkillRequerido = GetVar(PathName, "HECHIZO" & j, "MinSkill")
+    For J = 1 To NumHechizos
+        With Hechizos(J)
+            .Desc = GetVar(PathName, "HECHIZO" & J, "Desc")
+            .PalabrasMagicas = GetVar(PathName, "HECHIZO" & J, "PalabrasMagicas")
+            .Nombre = GetVar(PathName, "HECHIZO" & J, "Nombre")
+            .SkillRequerido = GetVar(PathName, "HECHIZO" & J, "MinSkill")
          
-            If j <> 38 And j <> 39 Then
-                .EnergiaRequerida = GetVar(PathName, "HECHIZO" & j, "StaRequerido")
+            If J <> 38 And J <> 39 Then
+                .EnergiaRequerida = GetVar(PathName, "HECHIZO" & J, "StaRequerido")
                  
-                .HechiceroMsg = GetVar(PathName, "HECHIZO" & j, "HechizeroMsg")
-                .ManaRequerida = GetVar(PathName, "HECHIZO" & j, "ManaRequerido")
+                .HechiceroMsg = GetVar(PathName, "HECHIZO" & J, "HechizeroMsg")
+                .ManaRequerida = GetVar(PathName, "HECHIZO" & J, "ManaRequerido")
              
              
-                .PropioMsg = GetVar(PathName, "HECHIZO" & j, "PropioMsg")
+                .PropioMsg = GetVar(PathName, "HECHIZO" & J, "PropioMsg")
              
-                .TargetMsg = GetVar(PathName, "HECHIZO" & j, "TargetMsg")
+                .TargetMsg = GetVar(PathName, "HECHIZO" & J, "TargetMsg")
             End If
         End With
-    Next j
+    Next J
  
 Exit Sub
  

@@ -1376,6 +1376,28 @@ Public Function RenderSounds()
 '**************************************************************
 
 Dim Location As Position
+
+        If bRain Then
+            If bLluvia(UserMap) Then
+                If bTecho Then
+                    If frmMain.IsPlaying <> PlayLoop.plLluviain Then
+                        If RainBufferIndex Then _
+                            Call Audio.StopWave(RainBufferIndex)
+                        RainBufferIndex = Audio.PlayWave("lluviain.wav", 0, 0, LoopStyle.Enabled)
+                        frmMain.IsPlaying = PlayLoop.plLluviain
+                    End If
+                Else
+                    If frmMain.IsPlaying <> PlayLoop.plLluviaout Then
+                        If RainBufferIndex Then _
+                            Call Audio.StopWave(RainBufferIndex)
+                        RainBufferIndex = Audio.PlayWave("lluviaout.wav", 0, 0, LoopStyle.Enabled)
+                        frmMain.IsPlaying = PlayLoop.plLluviaout
+                    End If
+                End If
+            End If
+        End If
+
+        
         If bFogata Then
                 bFogata = Map_CheckBonfire(Location)
 
@@ -1383,7 +1405,7 @@ Dim Location As Position
                         Call Audio.StopWave(FogataBufferIndex)
                         FogataBufferIndex = 0
                 End If
-
+        
         Else
                 bFogata = Map_CheckBonfire(Location)
 
@@ -1518,7 +1540,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Inte
     If frmBancoObj.PicBancoInv.Visible Then _
         Call InvBanco(0).DrawInv
          
-    If frmBancoObj.picInv.Visible Then _
+    If frmBancoObj.PicInv.Visible Then _
         Call InvBanco(1).DrawInv
     
     
