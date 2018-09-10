@@ -1377,8 +1377,8 @@ Public Function RenderSounds()
 
 Dim Location As Position
 
-        If bRain Then
-            If bLluvia(UserMap) Then
+        If bRain And bLluvia(UserMap) Then
+
                 If bTecho Then
                     If frmMain.IsPlaying <> PlayLoop.plLluviain Then
                         If RainBufferIndex Then _
@@ -1394,7 +1394,7 @@ Dim Location As Position
                         frmMain.IsPlaying = PlayLoop.plLluviaout
                     End If
                 End If
-            End If
+
         End If
 
         
