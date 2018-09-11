@@ -108,7 +108,7 @@ End Sub
 '
 '   @return   True if no errors occured, false otherwise.
 
-Public Function Initialize(ByRef dX As DirectX8, ByVal hWnd As Long, ByVal sound_path As String, ByVal music_path As String) As Boolean
+Public Function Initialize(ByRef dX As DirectX8, ByVal hwnd As Long, ByVal sound_path As String, ByVal music_path As String) As Boolean
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 16/03/04
@@ -125,7 +125,7 @@ On Error GoTo ErrHandler
     'Initialize DirectSound
     Set DirectSound = dX.DirectSoundCreate("")
     
-    Call DirectSound.SetCooperativeLevel(hWnd, DSSCL_PRIORITY)
+    Call DirectSound.SetCooperativeLevel(hwnd, DSSCL_PRIORITY)
     
     'Set sound path
     SoundPath = sound_path
@@ -134,7 +134,7 @@ On Error GoTo ErrHandler
     SndVolume = 0
     
     'Initialize DirectMusic
-    Music = InitializedirectMusic(dX, hWnd)
+    Music = InitializedirectMusic(dX, hwnd)
     
     'Set music path
     MusicPath = music_path
@@ -165,7 +165,7 @@ End Function
 '
 '   @return   True if no errors occured, false otherwise.
 
-Private Function InitializedirectMusic(ByRef dX As DirectX8, ByVal hWnd As Long) As Boolean
+Private Function InitializedirectMusic(ByRef dX As DirectX8, ByVal hwnd As Long) As Boolean
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 16/03/04
@@ -176,7 +176,7 @@ On Error GoTo ErrHandler
     Set Loader = DirectX.DirectMusicLoaderCreate()
     
     Set Performance = dX.DirectMusicPerformanceCreate()
-    Call Performance.InitAudio(hWnd, DMUS_AUDIOF_ALL, mus_Params, Nothing, DMUS_APATH_DYNAMIC_STEREO, 128)
+    Call Performance.InitAudio(hwnd, DMUS_AUDIOF_ALL, mus_Params, Nothing, DMUS_APATH_DYNAMIC_STEREO, 128)
     Call Performance.SetMasterAutoDownload(True)        'Enable auto download of instruments
     
     'Set to port default, 1 channel group is enough for MIDIs
@@ -200,7 +200,7 @@ End Function
 '
 '   @return   The buffer index in which the sound is playing, or 0 in case of error.
 
-Public Function PlayWave(ByVal FileName As String, Optional ByVal srcX As Byte = 0, Optional ByVal srcY As Byte = 0, Optional ByVal LoopSound As LoopStyle = LoopStyle.Default) As Long
+Public Function PlayWave(ByVal FileName As String, Optional ByVal srcX As Byte = 0, Optional ByVal srcY As Byte = 0, Optional ByVal LoopSound As LoopStyle = LoopStyle.Default, Optional ByVal Char As Boolean = False) As Long
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 28/07/08
@@ -237,13 +237,17 @@ On Error GoTo ErrHandler
     
     If sEffectsActivated Then
         If srcX <> 0 And srcY <> 0 Then
-            Call Update3DSound(bufferIndex, 0, 0)
+            If Char Then
+                Call Update3DSound(bufferIndex, 0, 0, True)
+            Else
+                Call Update3DSound(bufferIndex, 0, 0)
+            End If
         End If
     End If
 Exit Function
 
 ErrHandler:
-    'Call Log_Engine("Error in Sound Engine. Function PlayWave, " & Err.Description & "(" & Err.number & ")")
+    Debug.Print ("Error in Sound Engine. Function PlayWave, " & Err.Description & "(" & Err.number & ")")
 End Function
 
 Private Sub ResetSoundValues()
@@ -265,7 +269,7 @@ Private Sub ResetSoundValues()
     Next i
 End Sub
 
-Private Sub Update3DSound(ByVal bufferIndex As Long, ByVal deltaX As Integer, ByVal deltaY As Integer)
+Private Sub Update3DSound(ByVal bufferIndex As Long, ByVal deltaX As Integer, ByVal deltaY As Integer, Optional ByVal Char As Boolean = False)
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/09/09
@@ -273,6 +277,7 @@ Private Sub Update3DSound(ByVal bufferIndex As Long, ByVal deltaX As Integer, By
 'Fixed Dopplers formula
 'Refreshes the sound's arguments.
 'Fixed the sndVolume formula
+'Fixed 3D Volume
 '***************************************************
     Dim linearDistanceOld As Single
     Dim linearDistanceNew As Single
@@ -312,7 +317,11 @@ Private Sub Update3DSound(ByVal bufferIndex As Long, ByVal deltaX As Integer, By
         If linearDistanceNew = 0 Then linearDistanceNew = 1
         
         'Set panning according to relative position of the source to the listener
-        Call .Buffer.SetPan((distanceXNew / linearDistanceNew) * DSBPAN_RIGHT)
+        If Char Then
+            Call .Buffer.SetPan(DSBPAN_CENTER)
+        Else
+            Call .Buffer.SetPan((distanceXNew / linearDistanceNew) * DSBPAN_RIGHT)
+        End If
     End With
 End Sub
 
@@ -335,7 +344,7 @@ Public Sub MoveListener(ByVal X As Integer, ByVal Y As Integer)
     Dim deltaX As Integer
     Dim deltaY As Integer
     
-    If Not sEffectsActivated Then Exit Sub
+    If sEffectsActivated = False Then Exit Sub
     
     deltaX = X - lastPosX
     deltaY = Y - lastPosY
@@ -344,7 +353,7 @@ Public Sub MoveListener(ByVal X As Integer, ByVal Y As Integer)
         If Not DSBuffers(i).Buffer Is Nothing Then
             If DSBuffers(i).Buffer.GetStatus And DSBSTATUS_PLAYING Then
                 If DSBuffers(i).X <> 0 And DSBuffers(i).Y <> 0 Then
-                    Call Update3DSound(i, deltaX, deltaY)
+                    Call Update3DSound(i, deltaX, deltaY, True)
                 End If
             End If
         End If
