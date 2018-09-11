@@ -247,7 +247,7 @@ On Error GoTo ErrHandler
 Exit Function
 
 ErrHandler:
-    Debug.Print ("Error in Sound Engine. Function PlayWave, " & Err.Description & "(" & Err.number & ")")
+    'Call Log_Engine("Error in Sound Engine. Function PlayWave, " & Err.Description & "(" & Err.number & ")")
 End Function
 
 Private Sub ResetSoundValues()
