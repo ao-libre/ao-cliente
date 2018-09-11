@@ -179,3 +179,6 @@ Private Sub imgAceptar_MouseMove(Button As Integer, Shift As Integer, X As Singl
     LastButtonPressed.ToggleToNormal
 End Sub
 
+Private Sub txtClanesGuerra_Change()
+
+End Sub

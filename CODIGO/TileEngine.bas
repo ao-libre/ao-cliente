@@ -179,7 +179,7 @@ Public Type Char
     Criminal As Byte
     Atacable As Byte
     
-    Nombre As String
+    nombre As String
     
     scrollDirectionX As Integer
     scrollDirectionY As Integer
@@ -1510,7 +1510,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Inte
     If frmBancoObj.PicBancoInv.Visible Then _
         Call InvBanco(0).DrawInv
          
-    If frmBancoObj.PicInv.Visible Then _
+    If frmBancoObj.picInv.Visible Then _
         Call InvBanco(1).DrawInv
     
     
@@ -1741,7 +1741,7 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
         
         If Not .muerto Then
             If Abs(MouseTileX - .Pos.X) < 1 And (Abs(MouseTileY - .Pos.Y)) < 1 And CharIndex <> UserCharIndex And ClientSetup.TonalidadPJ Then
-                If .Nombre <> "" Then
+                If .nombre <> "" Then
                     Call Engine_Long_To_RGB_List(ColorFinal(), D3DColorXRGB(0, 255, 0))
                 Else
                     ColorFinal(0) = MapData(.Pos.X, .Pos.Y).Engine_Light(0)
@@ -1794,7 +1794,7 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
                 End If
             
                 'Draw name over head
-                If LenB(.Nombre) > 0 Then
+                If LenB(.nombre) > 0 Then
                     If Nombres Then
                         Call RenderName(CharIndex, PixelOffsetX, PixelOffsetY)
                     End If
@@ -1802,9 +1802,9 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
             
         Else 'Usuario invisible
         
-            If CharIndex = UserCharIndex Or mid$(charlist(CharIndex).Nombre, _
-                getTagPosition(.Nombre)) = mid$(charlist(UserCharIndex).Nombre, getTagPosition(charlist(UserCharIndex).Nombre)) And _
-                    Len(mid$(charlist(CharIndex).Nombre, getTagPosition(.Nombre))) > 0 Then
+            If CharIndex = UserCharIndex Or mid$(charlist(CharIndex).nombre, _
+                getTagPosition(.nombre)) = mid$(charlist(UserCharIndex).nombre, getTagPosition(charlist(UserCharIndex).nombre)) And _
+                    Len(mid$(charlist(CharIndex).nombre, getTagPosition(.nombre))) > 0 Then
                 
                 Movement_Speed = 0.5
                 
@@ -1830,7 +1830,7 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
                 
                 
                     'Draw name over head
-                    If LenB(.Nombre) > 0 Then
+                    If LenB(.nombre) > 0 Then
                         If Nombres Then
                              Call RenderName(CharIndex, PixelOffsetX, PixelOffsetY, True)
                         End If
@@ -1864,7 +1864,7 @@ Private Sub RenderName(ByVal CharIndex As Long, ByVal X As Integer, ByVal Y As I
     Dim Color As Long
    
     With charlist(CharIndex)
-            Pos = getTagPosition(.Nombre)
+            Pos = getTagPosition(.nombre)
     
             If .priv = 0 Then
                     If .muerto Then
@@ -1885,12 +1885,12 @@ Private Sub RenderName(ByVal CharIndex As Long, ByVal X As Integer, ByVal Y As I
             End If
             
             'Nick
-            line = Left$(.Nombre, Pos - 2)
+            line = Left$(.nombre, Pos - 2)
             'Fonts_Render_String line, (X + 16) - Fonts_Render_String_Width(line, Settings.Engine_Name_Font) / 2, Y + 30, color, Settings.Engine_Name_Font
             Call DrawText(X - (Len(line) * 6 / 2) + 14, Y + 30, line, Color)
             
             'Clan
-            line = mid$(.Nombre, Pos)
+            line = mid$(.nombre, Pos)
             'Fonts_Render_String line, (X + 16) - Fonts_Render_String_Width(line, Settings.Engine_Name_Font) / 2, Y + 30 + Fuentes(Settings.Engine_Font).CharactersHeight, D3DColorXRGB(255, 230, 130), Settings.Engine_Name_Font
             Call DrawText(X - (Len(line) * 6 / 2) + 14, Y + 45, line, Color)
     End With
@@ -1914,7 +1914,7 @@ Public Sub SetCharacterFx(ByVal CharIndex As Integer, ByVal fX As Integer, ByVal
 End Sub
 
 
-Public Sub Device_Textured_Render(ByVal X As Integer, ByVal Y As Integer, ByVal Texture As Direct3DTexture8, ByRef src_rect As RECT, ByRef Color_List() As Long, Optional Alpha As Boolean = False, Optional ByVal Angle As Single = 0, Optional ByVal Shadow As Boolean = False)
+Public Sub Device_Textured_Render(ByVal X As Integer, ByVal Y As Integer, ByVal Texture As Direct3DTexture8, ByRef src_rect As RECT, ByRef Color_List() As Long, Optional alpha As Boolean = False, Optional ByVal Angle As Single = 0, Optional ByVal Shadow As Boolean = False)
     If Shadow And ClientSetup.UsarSombras = False Then Exit Sub
     
     Dim dest_rect As RECT
@@ -1952,7 +1952,7 @@ Public Sub Device_Textured_Render(ByVal X As Integer, ByVal Y As Integer, ByVal 
         temp_verts(3).Y = temp_verts(3).Y - (src_rect.Right - src_rect.Left) * 0.5
     End If
     
-    If Alpha Then
+    If alpha Then
         DirectDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
         DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
     End If
@@ -1965,13 +1965,13 @@ Public Sub Device_Textured_Render(ByVal X As Integer, ByVal Y As Integer, ByVal 
                 indexList(0), D3DFMT_INDEX16, _
                 temp_verts(0), Len(temp_verts(0))
                 
-    If Alpha Then
+    If alpha Then
         DirectDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
         DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
     End If
 End Sub
 
-Public Sub Device_Textured_Render_Scale(ByVal X As Integer, ByVal Y As Integer, ByVal Texture As Direct3DTexture8, ByRef src_rect As RECT, ByRef Color_List() As Long, Optional Alpha As Boolean = False, Optional ByVal Angle As Single = 0, Optional ByVal Shadow As Boolean = False)
+Public Sub Device_Textured_Render_Scale(ByVal X As Integer, ByVal Y As Integer, ByVal Texture As Direct3DTexture8, ByRef src_rect As RECT, ByRef Color_List() As Long, Optional alpha As Boolean = False, Optional ByVal Angle As Single = 0, Optional ByVal Shadow As Boolean = False)
     If Shadow And ClientSetup.UsarSombras = False Then Exit Sub
     
     Dim dest_rect As RECT
@@ -1995,14 +1995,14 @@ Public Sub Device_Textured_Render_Scale(ByVal X As Integer, ByVal Y As Integer, 
     
     DirectDevice.SetTexture 0, Texture
     
-    If Alpha Then
+    If alpha Then
         DirectDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_ONE
         DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_ONE
     End If
         
     DirectDevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, temp_verts(0), Len(temp_verts(0))
         
-    If Alpha Then
+    If alpha Then
         DirectDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
         DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
     End If
@@ -2086,7 +2086,7 @@ error:
     End If
 End Sub
 
-Sub DDrawTransGrhIndextoSurface(ByVal GrhIndex As Integer, ByVal X As Integer, ByVal Y As Integer, ByVal Center As Byte, ByRef Color_List() As Long, Optional ByVal Angle As Single = 0, Optional ByVal Alpha As Boolean = False)
+Sub DDrawTransGrhIndextoSurface(ByVal GrhIndex As Integer, ByVal X As Integer, ByVal Y As Integer, ByVal Center As Byte, ByRef Color_List() As Long, Optional ByVal Angle As Single = 0, Optional ByVal alpha As Boolean = False)
     Dim SourceRect As RECT
     
     With GrhData(GrhIndex)
@@ -2107,7 +2107,7 @@ Sub DDrawTransGrhIndextoSurface(ByVal GrhIndex As Integer, ByVal X As Integer, B
         SourceRect.bottom = SourceRect.Top + .pixelHeight
         
         'Draw
-        Call Device_Textured_Render(X, Y, SurfaceDB.Surface(.FileNum), SourceRect, Color_List(), Alpha, Angle, False)
+        Call Device_Textured_Render(X, Y, SurfaceDB.Surface(.FileNum), SourceRect, Color_List(), alpha, Angle, False)
     End With
 End Sub
 
@@ -2172,7 +2172,7 @@ error:
 End Sub
 
 
-Sub DDrawTransGrhIndextoSurfaceScale(ByVal GrhIndex As Integer, ByVal X As Integer, ByVal Y As Integer, ByVal Center As Byte, ByRef Color_List() As Long, Optional ByVal Angle As Single = 0, Optional ByVal Alpha As Boolean = False)
+Sub DDrawTransGrhIndextoSurfaceScale(ByVal GrhIndex As Integer, ByVal X As Integer, ByVal Y As Integer, ByVal Center As Byte, ByRef Color_List() As Long, Optional ByVal Angle As Single = 0, Optional ByVal alpha As Boolean = False)
     Dim SourceRect As RECT
     
     With GrhData(GrhIndex)
@@ -2193,11 +2193,11 @@ Sub DDrawTransGrhIndextoSurfaceScale(ByVal GrhIndex As Integer, ByVal X As Integ
         SourceRect.bottom = SourceRect.Top + .pixelHeight
         
         'Draw
-        Call Device_Textured_Render_Scale(X, Y, SurfaceDB.Surface(.FileNum), SourceRect, Color_List(), Alpha, Angle, False)
+        Call Device_Textured_Render_Scale(X, Y, SurfaceDB.Surface(.FileNum), SourceRect, Color_List(), alpha, Angle, False)
     End With
 End Sub
 
-Sub DDrawTransGrhtoSurface(ByRef Grh As Grh, ByVal X As Integer, ByVal Y As Integer, ByVal Center As Byte, ByRef Color_List() As Long, ByVal Animate As Byte, ByVal posX As Byte, ByVal posY As Byte, Optional ByVal Alpha As Boolean = False, Optional ByVal Angle As Single = 0, Optional ByVal Shadow As Boolean = False)
+Sub DDrawTransGrhtoSurface(ByRef Grh As Grh, ByVal X As Integer, ByVal Y As Integer, ByVal Center As Byte, ByRef Color_List() As Long, ByVal Animate As Byte, ByVal posX As Byte, ByVal posY As Byte, Optional ByVal alpha As Boolean = False, Optional ByVal Angle As Single = 0, Optional ByVal Shadow As Boolean = False)
 '*****************************************************************
 'Draws a GRH transparently to a X and Y position
 '*****************************************************************
@@ -2246,7 +2246,7 @@ On Error GoTo error
         SourceRect.Right = SourceRect.Left + .pixelWidth
         SourceRect.bottom = SourceRect.Top + .pixelHeight
         
-        Call Device_Textured_Render(X, Y, SurfaceDB.Surface(.FileNum), SourceRect, Color_List(), Alpha, Angle, False)
+        Call Device_Textured_Render(X, Y, SurfaceDB.Surface(.FileNum), SourceRect, Color_List(), alpha, Angle, False)
     End With
 Exit Sub
 

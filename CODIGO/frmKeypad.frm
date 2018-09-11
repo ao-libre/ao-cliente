@@ -428,10 +428,10 @@ Private Modo As e_modo_keypad
 
 Private Sub Form_Activate()
 Dim i As Integer
-Dim j As Integer
+Dim J As Integer
     i = RandomNumber(-2000, 2000)
-    j = RandomNumber(-350, 350)
-    Me.Top = Me.Top + j
+    J = RandomNumber(-350, 350)
+    Me.Top = Me.Top + J
     Me.Left = Me.Left + i
 
 End Sub

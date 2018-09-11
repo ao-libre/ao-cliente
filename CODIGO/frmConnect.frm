@@ -446,7 +446,7 @@ Private Sub imgCodigoFuente_Click()
 'cambios que hacemos nosotros, compartí los tuyos. Es un cambio justo. Si no estás de acuerdo,
 'no uses nuestro código, pues nadie te obliga o bien utiliza una versión anterior a la 0.12.0.
 '***********************************
-    Call ShellExecute(0, "Open", "https://github.com/ao-oficial", "", App.path, SW_SHOWNORMAL)
+    Call ShellExecute(0, "Open", "https://github.com/ao-libre", "", App.path, SW_SHOWNORMAL)
 
 End Sub
 
@@ -555,6 +555,10 @@ End Sub
 
 Private Sub imgVerForo_Click()
     Call ShellExecute(0, "Open", "https://www.reddit.com/r/argentumonlineoficial/", "", App.path, SW_SHOWNORMAL)
+End Sub
+
+Private Sub IPTxt_Change()
+
 End Sub
 
 Private Sub txtPasswd_KeyPress(KeyAscii As Integer)
