@@ -160,7 +160,7 @@ End Type
 '
 Private Declare Function GetDC Lib "user32" (ByVal hwnd As Long) As Long
 Private Declare Function ReleaseDC Lib "user32" (ByVal hwnd As Long, ByVal hdc As Long) As Long
-Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" (ByRef dest As Any, ByRef Source As Any, ByVal byteCount As Long)
+Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" (ByRef dest As Any, ByRef source As Any, ByVal byteCount As Long)
 
 '
 
@@ -513,7 +513,7 @@ Public Sub ScreenCapture(Optional ByVal Autofragshooter As Boolean = False)
 '**************************************************************
 On Error GoTo Err:
     Dim hwnd As Long
-    Dim file As String
+    Dim File As String
     Dim sI As String
     Dim c As cDIBSection
     Set c = New cDIBSection
@@ -551,10 +551,10 @@ On Error GoTo Err:
         If Not FileExist(dirFile, vbDirectory) Then Call MkDir(dirFile)
         
         'Nuevo formato de las screenshots del FragShooter: "VICTIMA/ASESINO(DD-MM-YYYY hh-mm-ss).jpg"
-        file = dirFile & "\" & FragShooterNickname & "(" & Format(Now, "DD-MM-YYYY hh-mm-ss") & ").jpg"
+        File = dirFile & "\" & FragShooterNickname & "(" & Format(Now, "DD-MM-YYYY hh-mm-ss") & ").jpg"
     Else
         'Si no es screenshot del FragShooter, entonces se usa el formato "DD-MM-YYYY hh-mm-ss.jpg"
-        file = dirFile & "\" & Format(Now, "DD-MM-YYYY hh-mm-ss") & ".jpg"
+        File = dirFile & "\" & Format(Now, "DD-MM-YYYY hh-mm-ss") & ".jpg"
     End If
     
     frmScreenshots.Picture1.Refresh
@@ -562,7 +562,7 @@ On Error GoTo Err:
     
     c.CreateFromPicture frmScreenshots.Picture1.Picture
     
-    SaveJPG c, file
+    SaveJPG c, File
     
     AddtoRichTextBox frmMain.RecTxt, "Screen Capturada!", 200, 200, 200, False, False, True
 Exit Sub
@@ -574,7 +574,7 @@ Err:
         Call ReleaseDC(frmMain.hwnd, hdcc)
 End Sub
 
-Public Function FullScreenCapture(ByVal file As String) As Boolean
+Public Function FullScreenCapture(ByVal File As String) As Boolean
 'Medio desprolijo donde pongo la pic, pero es lo que hay por ahora
     Dim c As cDIBSection
     Set c = New cDIBSection
@@ -608,7 +608,7 @@ Public Function FullScreenCapture(ByVal file As String) As Boolean
     
     c.CreateFromPicture frmScreenshots.Picture1.Picture
     
-    SaveJPG c, file
+    SaveJPG c, File
     
     FullScreenCapture = True
 End Function

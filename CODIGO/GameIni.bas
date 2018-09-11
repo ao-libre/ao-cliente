@@ -47,7 +47,7 @@ Public Type tGameIni
     fX As Byte
     tip As Byte
     Password As String
-    name As String
+    Name As String
     DirGraficos As String
     DirSonidos As String
     DirMusica As String

@@ -945,7 +945,7 @@ Private Sub LoadInitialConfig()
     Audio.SoundActivated = Not ClientSetup.bNoSound
     Audio.SoundEffectsActivated = Not ClientSetup.bNoSoundEffects
     'Inicializamos el inventario gráfico
-    Call Inventario.Initialize(DirectD3D8, frmMain.PicInv, MAX_INVENTORY_SLOTS)
+    Call Inventario.Initialize(DirectD3D8, frmMain.picInv, MAX_INVENTORY_SLOTS)
     'Call Audio.MusicMP3Play(App.path & "\MP3\" & MP3_Inicio & ".mp3")
     Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
     
@@ -1377,7 +1377,7 @@ End Function
 Public Function getCharIndexByName(ByVal Name As String) As Integer
 Dim i As Long
 For i = 1 To LastChar
-    If charlist(i).Nombre = Name Then
+    If charlist(i).nombre = Name Then
         getCharIndexByName = i
         Exit Function
     End If
@@ -1519,16 +1519,16 @@ Dim i As Long
  
     For i = 1 To NumHechizos
         If i = Index Then
-            DevolverNombreHechizo = Hechizos(i).Nombre
+            DevolverNombreHechizo = Hechizos(i).nombre
             Exit Function
         End If
     Next i
 End Function
-Public Function DevolverIndexHechizo(ByVal Nombre As String) As Byte
+Public Function DevolverIndexHechizo(ByVal nombre As String) As Byte
 Dim i As Long
  
     For i = 1 To NumHechizos
-        If Hechizos(i).Nombre = Nombre Then
+        If Hechizos(i).nombre = nombre Then
             DevolverIndexHechizo = i
             Exit Function
         End If
@@ -1552,7 +1552,7 @@ On Error GoTo errorH
         With Hechizos(J)
             .Desc = GetVar(PathName, "HECHIZO" & J, "Desc")
             .PalabrasMagicas = GetVar(PathName, "HECHIZO" & J, "PalabrasMagicas")
-            .Nombre = GetVar(PathName, "HECHIZO" & J, "Nombre")
+            .nombre = GetVar(PathName, "HECHIZO" & J, "Nombre")
             .SkillRequerido = GetVar(PathName, "HECHIZO" & J, "MinSkill")
          
             If J <> 38 And J <> 39 Then

@@ -332,17 +332,17 @@ Public Function SetARGB_Alpha(RGB_List() As Long, alpha As Byte) As Long()
 'Last Modification: 29/08/18
 'Obtiene un ARGB list le modifica el alpha y devuelve una copia
 '***************************************************
-Dim tempColor As D3DCOLORVALUE
+Dim TempColor As D3DCOLORVALUE
 Dim tempARGB(0 To 3) As Long
 'convertimos el valor del rgb list a D3DCOLOR
-Call ARGBtoD3DCOLORVALUE(RGB_List(1), tempColor)
+Call ARGBtoD3DCOLORVALUE(RGB_List(1), TempColor)
 'comprobamos ue no se salga del rango permitido
 If alpha > 255 Then alpha = 255
 If alpha < 0 Then alpha = 0
 'seteamos el alpha
-tempColor.a = alpha
+TempColor.a = alpha
 'generamos el nuevo RGB_List
-Call Engine_D3DColor_To_RGB_List(tempARGB(), tempColor)
+Call Engine_D3DColor_To_RGB_List(tempARGB(), TempColor)
 
 SetARGB_Alpha = tempARGB()
 End Function

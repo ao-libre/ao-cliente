@@ -38,7 +38,7 @@ End Sub
  
 Public Sub LoadSoundMapInfo()
     Dim i As Integer
-    Dim j As Integer
+    Dim J As Integer
     Dim Temps As String
     Dim MAPFILE As String
    
@@ -54,11 +54,11 @@ Public Sub LoadSoundMapInfo()
             ReDim p_Mapas(i).Probabilidad(1 To p_Mapas(i).cantidad) As Single
             ReDim p_Mapas(i).SoundIndex(1 To p_Mapas(i).cantidad) As Integer
            
-            For j = 1 To p_Mapas(i).cantidad
-                p_Mapas(i).flags(j) = Val(GetVar(MAPFILE & i & ".dat", "SONIDO" & j, "Flags"))
-                p_Mapas(i).Probabilidad(j) = Val(GetVar(MAPFILE & i & ".dat", "SONIDO" & j, "Probabilidad"))
-                p_Mapas(i).SoundIndex(j) = Val(GetVar(MAPFILE & i & ".dat", "SONIDO" & j, "Sonido"))
-            Next j
+            For J = 1 To p_Mapas(i).cantidad
+                p_Mapas(i).flags(J) = Val(GetVar(MAPFILE & i & ".dat", "SONIDO" & J, "Flags"))
+                p_Mapas(i).Probabilidad(J) = Val(GetVar(MAPFILE & i & ".dat", "SONIDO" & J, "Probabilidad"))
+                p_Mapas(i).SoundIndex(J) = Val(GetVar(MAPFILE & i & ".dat", "SONIDO" & J, "Sonido"))
+            Next J
         Else
             p_Mapas(i).cantidad = 0
         End If
