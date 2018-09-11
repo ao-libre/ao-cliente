@@ -4,3 +4,5 @@ Codigo/*.log
 *.vbw
 *.oca
 Thumbs.db
+INIT/Inicio.con
+INIT/AO.dat
