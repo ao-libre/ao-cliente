@@ -1215,8 +1215,8 @@ End Sub
 Private Sub SumarSkillPoint(ByVal SkillIndex As Integer)
     If Alocados > 0 Then
 
-        If Val(Text1(SkillIndex).Caption) < MAXSKILLPOINTS Then
-            Text1(SkillIndex).Caption = Val(Text1(SkillIndex).Caption) + 1
+        If Val(text1(SkillIndex).Caption) < MAXSKILLPOINTS Then
+            text1(SkillIndex).Caption = Val(text1(SkillIndex).Caption) + 1
             flags(SkillIndex) = flags(SkillIndex) + 1
             Alocados = Alocados - 1
         End If
@@ -1229,8 +1229,8 @@ End Sub
 Private Sub RestarSkillPoint(ByVal SkillIndex As Integer)
     If Alocados < SkillPoints Then
         
-        If Val(Text1(SkillIndex).Caption) > 0 And flags(SkillIndex) > 0 Then
-            Text1(SkillIndex).Caption = Val(Text1(SkillIndex).Caption) - 1
+        If Val(text1(SkillIndex).Caption) > 0 And flags(SkillIndex) > 0 Then
+            text1(SkillIndex).Caption = Val(text1(SkillIndex).Caption) - 1
             flags(SkillIndex) = flags(SkillIndex) - 1
             Alocados = Alocados + 1
         End If
@@ -1253,9 +1253,9 @@ Private Sub imgAceptar_Click()
     Dim i As Long
 
     For i = 1 To NUMSKILLS
-        skillChanges(i) = CByte(Text1(i).Caption) - UserSkills(i)
+        skillChanges(i) = CByte(text1(i).Caption) - UserSkills(i)
         'Actualizamos nuestros datos locales
-        UserSkills(i) = Val(Text1(i).Caption)
+        UserSkills(i) = Val(text1(i).Caption)
     Next i
     
     Call WriteModifySkills(skillChanges())

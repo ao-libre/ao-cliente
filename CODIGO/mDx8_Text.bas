@@ -93,7 +93,7 @@ Private Function Es_Emoticon(ByVal ascii As Byte) As Boolean ' GSZAO
     End If
 End Function ' GSZAO
 
-Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, ByVal Text As String, ByVal X As Long, ByVal Y As Long, ByVal Color As Long, Optional ByVal Center As Boolean = False, Optional ByVal Alpha As Byte = 255)
+Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, ByVal Text As String, ByVal X As Long, ByVal Y As Long, ByVal Color As Long, Optional ByVal Center As Boolean = False, Optional ByVal alpha As Byte = 255)
 '*****************************************************************
 'Render text with a custom font
 '*****************************************************************
@@ -105,7 +105,7 @@ Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, ByVal Text As String
     Dim u As Single
     Dim v As Single
     Dim i As Long
-    Dim j As Long
+    Dim J As Long
     Dim KeyPhrase As Byte
     Dim TempColor As Long
     Dim ResetColor As Byte
@@ -170,10 +170,10 @@ Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, ByVal Text As String
             ascii() = StrConv(tempstr(i), vbFromUnicode)
         
             'Loop through the characters
-            For j = 1 To Len(tempstr(i))
+            For J = 1 To Len(tempstr(i))
 
                 'Copy from the cached vertex array to the temp vertex array
-                CopyMemory TempVA(0), UseFont.HeaderInfo.CharVA(ascii(j - 1)).Vertex(0), 32 * 4
+                CopyMemory TempVA(0), UseFont.HeaderInfo.CharVA(ascii(J - 1)).Vertex(0), 32 * 4
                 
                 'Set up the verticies
                 TempVA(0).X = X + Count
@@ -189,12 +189,12 @@ Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, ByVal Text As String
                 TempVA(3).Y = TempVA(2).Y
                 
                 'Set the colors
-                If Es_Emoticon(ascii(j - 1)) Then ' GSZAO los colores no afectan a los emoticones!
+                If Es_Emoticon(ascii(J - 1)) Then ' GSZAO los colores no afectan a los emoticones!
                     TempVA(0).Color = -1
                     TempVA(1).Color = -1
                     TempVA(2).Color = -1
                     TempVA(3).Color = -1
-                    If (ascii(j - 1) <> 157) Then Count = Count + 5   ' Los emoticones tienen tamaño propio (despues hay que cargarlos "correctamente" para evitar hacer esto)
+                    If (ascii(J - 1) <> 157) Then Count = Count + 5   ' Los emoticones tienen tamaño propio (despues hay que cargarlos "correctamente" para evitar hacer esto)
                 Else
                     TempVA(0).Color = TempColor
                     TempVA(1).Color = TempColor
@@ -206,7 +206,7 @@ Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, ByVal Text As String
                 DirectDevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, TempVA(0), Len(TempVA(0))
                 
                 'Shift over the the position to render the next character
-                Count = Count + UseFont.HeaderInfo.CharWidth(ascii(j - 1))
+                Count = Count + UseFont.HeaderInfo.CharWidth(ascii(J - 1))
     
                 'Check to reset the color
                 If ResetColor Then
@@ -214,7 +214,7 @@ Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, ByVal Text As String
                     TempColor = Color
                 End If
                 
-            Next j
+            Next J
             
         End If
     Next i

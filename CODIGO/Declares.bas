@@ -641,8 +641,8 @@ End Enum
 
 'Inventario
 Type Inventory
-    OBJIndex As Integer
-    name As String
+    ObjIndex As Integer
+    Name As String
     GrhIndex As Integer
     '[Alejo]: tipo de datos ahora es Long
     Amount As Long
@@ -657,8 +657,8 @@ Type Inventory
 End Type
 
 Type NpCinV
-    OBJIndex As Integer
-    name As String
+    ObjIndex As Integer
+    Name As String
     GrhIndex As Integer
     Amount As Integer
     Valor As Single
@@ -697,8 +697,8 @@ Type tEstadisticasUsu
 End Type
 
 Type tItemsConstruibles
-    name As String
-    OBJIndex As Integer
+    Name As String
+    ObjIndex As Integer
     GrhIndex As Integer
     LinH As Integer
     LinP As Integer
@@ -1024,7 +1024,7 @@ Public NumHechizos As Byte
 Public Hechizos() As tHechizos
  
 Public Type tHechizos
-    Nombre As String
+    nombre As String
     Desc As String
     PalabrasMagicas As String
     ManaRequerida As Integer
@@ -1041,7 +1041,7 @@ Public NumNpcs As Integer
 Public Npcs() As tNpcs
  
 Public Type tNpcs
-    Nombre As String
+    nombre As String
     Desc As String
     NroExpresiones As Byte
     Expresiones() As String

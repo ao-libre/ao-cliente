@@ -554,7 +554,7 @@ Private Sub ConstruirItem(ByVal Index As Integer)
     Dim ItemIndex As Integer
     Dim CantItemsCiclo As Integer
     
-    If Scroll.Visible = True Then ItemIndex = Scroll.value
+    If Scroll.Visible = True Then ItemIndex = Scroll.Value
     ItemIndex = ItemIndex + Index
     
     Select Case UltimaPestania
@@ -562,7 +562,7 @@ Private Sub ConstruirItem(ByVal Index As Integer)
         
             If UsarMacro Then
                 CantItemsCiclo = Val(cboItemsCiclo.Text)
-                MacroBltIndex = ArmasHerrero(ItemIndex).OBJIndex
+                MacroBltIndex = ArmasHerrero(ItemIndex).ObjIndex
                 frmMain.ActivarMacroTrabajo
             Else
                 ' Que cosntruya el maximo, total si sobra no importa, valida el server
@@ -570,13 +570,13 @@ Private Sub ConstruirItem(ByVal Index As Integer)
             End If
             
             Call WriteInitCrafting(Val(txtCantItems.Text), CantItemsCiclo)
-            Call WriteCraftBlacksmith(ArmasHerrero(ItemIndex).OBJIndex)
+            Call WriteCraftBlacksmith(ArmasHerrero(ItemIndex).ObjIndex)
             
         Case ePestania.ieArmaduras
         
             If UsarMacro Then
                 CantItemsCiclo = Val(cboItemsCiclo.Text)
-                MacroBltIndex = ArmadurasHerrero(ItemIndex).OBJIndex
+                MacroBltIndex = ArmadurasHerrero(ItemIndex).ObjIndex
                 frmMain.ActivarMacroTrabajo
              Else
                 ' Que cosntruya el maximo, total si sobra no importa, valida el server
@@ -584,10 +584,10 @@ Private Sub ConstruirItem(ByVal Index As Integer)
             End If
             
             Call WriteInitCrafting(Val(txtCantItems.Text), CantItemsCiclo)
-            Call WriteCraftBlacksmith(ArmadurasHerrero(ItemIndex).OBJIndex)
+            Call WriteCraftBlacksmith(ArmadurasHerrero(ItemIndex).ObjIndex)
         
         Case ePestania.ieMejorar
-            Call WriteItemUpgrade(HerreroMejorar(ItemIndex).OBJIndex)
+            Call WriteItemUpgrade(HerreroMejorar(ItemIndex).ObjIndex)
     End Select
     
     Unload Me
@@ -713,7 +713,7 @@ On Error Resume Next
             With ObjHerrero(i + Inicio)
                 ' Agrego el item
                 Call RenderItem(picItem(i), .GrhIndex)
-                picItem(i).ToolTipText = .name
+                picItem(i).ToolTipText = .Name
      
                 Call RenderItem(picUpgradeItem(i), .UpgradeGrhIndex)
                 picUpgradeItem(i).ToolTipText = .UpgradeName
@@ -739,7 +739,7 @@ For i = 1 To MAX_LIST_ITEMS
         With HerreroMejorar(i + Inicio)
             ' Agrego el item
             Call RenderItem(picItem(i), .GrhIndex)
-            picItem(i).ToolTipText = .name
+            picItem(i).ToolTipText = .Name
             
             Call RenderItem(picUpgradeItem(i), .UpgradeGrhIndex)
             picUpgradeItem(i).ToolTipText = .UpgradeName
@@ -840,7 +840,7 @@ Private Sub picPestania_Click(Index As Integer)
     If Cargando Then Exit Sub
     If UltimaPestania = Index Then Exit Sub
     
-    Scroll.value = 0
+    Scroll.Value = 0
     
     Select Case Index
         Case ePestania.ieArmas
@@ -883,12 +883,16 @@ Private Sub picPestania_Click(Index As Integer)
     UltimaPestania = Index
 End Sub
 
+Private Sub picUpgradeItem_Click(Index As Integer)
+
+End Sub
+
 Private Sub Scroll_Change()
     Dim i As Long
     
     If Cargando Then Exit Sub
     
-    i = Scroll.value
+    i = Scroll.Value
     ' Cargo inventarios e imagenes
     
     Select Case UltimaPestania

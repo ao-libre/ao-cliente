@@ -613,7 +613,7 @@ Private Sub LoadDefaultValues()
     
     cboItemsCiclo.ListIndex = 0
     
-    Scroll.value = 0
+    Scroll.Value = 0
     
     UsarMacro = True
     
@@ -628,7 +628,7 @@ Private Sub Construir(ByVal Index As Integer)
     Dim ItemIndex As Integer
     Dim CantItemsCiclo As Integer
     
-    If Scroll.Visible = True Then ItemIndex = Scroll.value
+    If Scroll.Visible = True Then ItemIndex = Scroll.Value
     ItemIndex = ItemIndex + Index
     
     Select Case UltimaPestania
@@ -636,7 +636,7 @@ Private Sub Construir(ByVal Index As Integer)
         
             If UsarMacro Then
                 CantItemsCiclo = Val(cboItemsCiclo.Text)
-                MacroBltIndex = ObjCarpintero(ItemIndex).OBJIndex
+                MacroBltIndex = ObjCarpintero(ItemIndex).ObjIndex
                 frmMain.ActivarMacroTrabajo
             Else
                 ' Que cosntruya el maximo, total si sobra no importa, valida el server
@@ -644,10 +644,10 @@ Private Sub Construir(ByVal Index As Integer)
             End If
             
             Call WriteInitCrafting(Val(txtCantItems.Text), CantItemsCiclo)
-            Call WriteCraftCarpenter(ObjCarpintero(ItemIndex).OBJIndex)
+            Call WriteCraftCarpenter(ObjCarpintero(ItemIndex).ObjIndex)
             
         Case ePestania.ieMejorar
-            Call WriteItemUpgrade(CarpinteroMejorar(ItemIndex).OBJIndex)
+            Call WriteItemUpgrade(CarpinteroMejorar(ItemIndex).ObjIndex)
     End Select
         
     Unload Me
@@ -735,7 +735,7 @@ On Error Resume Next
             With ObjCarpintero(i + Inicio)
                 ' Agrego el item
                 Call RenderItem(picItem(i), .GrhIndex)
-                picItem(i).ToolTipText = .name
+                picItem(i).ToolTipText = .Name
             
                 ' Inventario de leños
                 Call InvMaderasCarpinteria(i).SetItem(1, 0, .Madera, 0, MADERA_GRH, 0, 0, 0, 0, 0, 0, "Leña")
@@ -758,7 +758,7 @@ For i = 1 To MAX_LIST_ITEMS
         With CarpinteroMejorar(i + Inicio)
             ' Agrego el item
             Call RenderItem(picItem(i), .GrhIndex)
-            picItem(i).ToolTipText = .name
+            picItem(i).ToolTipText = .Name
             
             Call RenderItem(picUpgrade(i), .UpgradeGrhIndex)
             picUpgrade(i).ToolTipText = .UpgradeName
@@ -842,7 +842,7 @@ Private Sub imgPestania_Click(Index As Integer)
     If Cargando Then Exit Sub
     If UltimaPestania = Index Then Exit Sub
     
-    Scroll.value = 0
+    Scroll.Value = 0
     
     Select Case Index
         Case ePestania.ieItems
@@ -872,12 +872,16 @@ Private Sub imgPestania_Click(Index As Integer)
 
 End Sub
 
+Private Sub picUpgrade_Click(Index As Integer)
+
+End Sub
+
 Private Sub Scroll_Change()
     Dim i As Long
     
     If Cargando Then Exit Sub
     
-    i = Scroll.value
+    i = Scroll.Value
     ' Cargo inventarios e imagenes
     
     Select Case UltimaPestania

@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "Mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "mscomctl.ocx"
 Begin VB.Form frmOpciones 
    BackColor       =   &H8000000A&
    BorderStyle     =   0  'None
@@ -377,7 +377,7 @@ Private Sub imgChkMusica_Click()
         If Not Audio.MusicActivated Then  'Prevent the music from reloading
             Audio.MusicActivated = True
             Slider1(0).Enabled = True
-            Slider1(0).value = Audio.MusicVolume
+            Slider1(0).Value = Audio.MusicVolume
         End If
         
         imgChkMusica.Picture = picCheckBox
@@ -417,7 +417,7 @@ Private Sub imgChkSonidos_Click()
     Else
         Audio.SoundActivated = True
         Slider1(1).Enabled = True
-        Slider1(1).value = Audio.SoundVolume
+        Slider1(1).Value = Audio.SoundVolume
         
         imgChkSonidos.Picture = picCheckBox
     End If
@@ -545,7 +545,7 @@ Private Sub LoadUserConfig()
     If bMusicActivated Then
         imgChkMusica.Picture = picCheckBox
         
-        Slider1(0).value = Audio.MusicVolume
+        Slider1(0).Value = Audio.MusicVolume
     End If
     
     
@@ -556,7 +556,7 @@ Private Sub LoadUserConfig()
     If bSoundActivated Then
         imgChkSonidos.Picture = picCheckBox
         
-        Slider1(1).value = Audio.SoundVolume
+        Slider1(1).Value = Audio.SoundVolume
     End If
     
     
@@ -588,17 +588,17 @@ End Sub
 Private Sub Slider1_Change(Index As Integer)
     Select Case Index
         Case 0
-            Audio.MusicVolume = Slider1(0).value
+            Audio.MusicVolume = Slider1(0).Value
         Case 1
-            Audio.SoundVolume = Slider1(1).value
+            Audio.SoundVolume = Slider1(1).Value
     End Select
 End Sub
 
 Private Sub Slider1_Scroll(Index As Integer)
     Select Case Index
         Case 0
-            Audio.MusicVolume = Slider1(0).value
+            Audio.MusicVolume = Slider1(0).Value
         Case 1
-            Audio.SoundVolume = Slider1(1).value
+            Audio.SoundVolume = Slider1(1).Value
     End Select
 End Sub

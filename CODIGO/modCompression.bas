@@ -155,33 +155,33 @@ Private Sub Sort_Info_Headers(ByRef InfoHead() As INFOHEADER, ByVal first As Lon
 'Sorts the info headers by their file name using QuickSort.
 '*****************************************************************
     Dim aux As INFOHEADER
-    Dim min As Long
+    Dim Min As Long
     Dim Max As Long
     Dim comp As String
     
-    min = first
+    Min = first
     Max = last
     
-    comp = InfoHead((min + Max) \ 2).strFileName
+    comp = InfoHead((Min + Max) \ 2).strFileName
     
-    Do While min <= Max
-        Do While InfoHead(min).strFileName < comp And min < last
-            min = min + 1
+    Do While Min <= Max
+        Do While InfoHead(Min).strFileName < comp And Min < last
+            Min = Min + 1
         Loop
         Do While InfoHead(Max).strFileName > comp And Max > first
             Max = Max - 1
         Loop
-        If min <= Max Then
-            aux = InfoHead(min)
-            InfoHead(min) = InfoHead(Max)
+        If Min <= Max Then
+            aux = InfoHead(Min)
+            InfoHead(Min) = InfoHead(Max)
             InfoHead(Max) = aux
-            min = min + 1
+            Min = Min + 1
             Max = Max - 1
         End If
     Loop
     
     If first < Max Then Call Sort_Info_Headers(InfoHead, first, Max)
-    If min < last Then Call Sort_Info_Headers(InfoHead, min, last)
+    If Min < last Then Call Sort_Info_Headers(InfoHead, Min, last)
 End Sub
 
 ''
@@ -465,7 +465,7 @@ On Local Error GoTo ErrHandler
     End If
     
     If Not prgBar Is Nothing Then
-        prgBar.value = 0
+        prgBar.Value = 0
         prgBar.Max = FileHead.lngNumFiles + 1
     End If
     
@@ -520,7 +520,7 @@ On Local Error GoTo ErrHandler
             Close SourceFile
         
             'Update progress bar
-            If Not prgBar Is Nothing Then prgBar.value = prgBar.value + 1
+            If Not prgBar Is Nothing Then prgBar.Value = prgBar.Value + 1
             DoEvents
         Next LoopC
         
@@ -691,7 +691,7 @@ On Local Error GoTo ErrHandler
     
     'Update progress bar
     If Not prgBar Is Nothing Then
-        prgBar.value = 0
+        prgBar.Value = 0
         prgBar.Max = FileHead.lngNumFiles + 1
     End If
     
@@ -720,7 +720,7 @@ On Local Error GoTo ErrHandler
         End If
             
         'Update progress bar
-        If Not prgBar Is Nothing Then prgBar.value = prgBar.value + 1
+        If Not prgBar Is Nothing Then prgBar.Value = prgBar.Value + 1
         DoEvents
     Next LoopC
     
@@ -994,7 +994,7 @@ On Local Error GoTo ErrHandler
             Open OutputFilePath For Binary Access Read Write As OutputFile
                 
                 If Not prgBar Is Nothing Then
-                    prgBar.value = 0
+                    prgBar.Value = 0
                     prgBar.Max = (OldFileHead.lngNumFiles + NewFileHead.lngNumFiles) + 1
                 End If
                 
@@ -1008,7 +1008,7 @@ On Local Error GoTo ErrHandler
                   And ReadNext_InfoHead(NewResourceFile, NewFileHead, NewInfoHead, NewReadFiles) Then
                     
                     'Update
-                    prgBar.value = prgBar.value + 2
+                    prgBar.Value = prgBar.Value + 2
                     
                     Do 'Main loop
                         'Comparisons are between encrypted names, for ordering issues
@@ -1045,7 +1045,7 @@ On Local Error GoTo ErrHandler
                             End If
                             
                             'Update
-                            If Not prgBar Is Nothing Then prgBar.value = prgBar.value + 2
+                            If Not prgBar Is Nothing Then prgBar.Value = prgBar.Value + 2
                         
                         ElseIf OldInfoHead.strFileName < NewInfoHead.strFileName Then
                             
@@ -1062,7 +1062,7 @@ On Local Error GoTo ErrHandler
                             End If
                             
                             'Update
-                            If Not prgBar Is Nothing Then prgBar.value = prgBar.value + 1
+                            If Not prgBar Is Nothing Then prgBar.Value = prgBar.Value + 1
                         
                         Else
                             
@@ -1085,7 +1085,7 @@ On Local Error GoTo ErrHandler
                             End If
                             
                             'Update
-                            If Not prgBar Is Nothing Then prgBar.value = prgBar.value + 1
+                            If Not prgBar Is Nothing Then prgBar.Value = prgBar.Value + 1
                         End If
                         
                         DoEvents
@@ -1105,7 +1105,7 @@ On Local Error GoTo ErrHandler
                     Put OutputFile, , OldInfoHead
                     
                     'Update
-                    If Not prgBar Is Nothing Then prgBar.value = prgBar.value + 1
+                    If Not prgBar Is Nothing Then prgBar.Value = prgBar.Value + 1
                     DoEvents
                 Wend
                 
@@ -1122,7 +1122,7 @@ On Local Error GoTo ErrHandler
                     Put OutputFile, , data
                     
                     'Update
-                    If Not prgBar Is Nothing Then prgBar.value = prgBar.value + 1
+                    If Not prgBar Is Nothing Then prgBar.Value = prgBar.Value + 1
                     DoEvents
                 Wend
             
@@ -1234,7 +1234,7 @@ On Local Error GoTo ErrHandler
                 Put OutputFile, , PatchFileHead
   
                 If Not prgBar Is Nothing Then
-                    prgBar.value = 0
+                    prgBar.Value = 0
                     prgBar.Max = PatchFileHead.lngNumFiles + 1
                 End If
                 
@@ -1266,7 +1266,7 @@ On Local Error GoTo ErrHandler
                             'Update
                             DataOutputPos = DataOutputPos + UBound(data) + 1
                             WrittenFiles = WrittenFiles + 1
-                            If Not prgBar Is Nothing Then prgBar.value = WrittenFiles
+                            If Not prgBar Is Nothing Then prgBar.Value = WrittenFiles
                         Else
                             Exit Do
                         End If
@@ -1299,7 +1299,7 @@ On Local Error GoTo ErrHandler
                                 'Update
                                 DataOutputPos = DataOutputPos + UBound(data) + 1
                                 WrittenFiles = WrittenFiles + 1
-                                If Not prgBar Is Nothing Then prgBar.value = WrittenFiles
+                                If Not prgBar Is Nothing Then prgBar.Value = WrittenFiles
                             Else
                                 Err.Description = "Incongruencia en archivos de recurso"
                                 GoTo ErrHandler
@@ -1321,7 +1321,7 @@ On Local Error GoTo ErrHandler
                                 'Update
                                 DataOutputPos = DataOutputPos + UBound(data) + 1
                                 WrittenFiles = WrittenFiles + 1
-                                If Not prgBar Is Nothing Then prgBar.value = WrittenFiles
+                                If Not prgBar Is Nothing Then prgBar.Value = WrittenFiles
                             Else
                                 Err.Description = "Incongruencia en archivos de recurso"
                                 GoTo ErrHandler
@@ -1345,7 +1345,7 @@ On Local Error GoTo ErrHandler
                     'Update
                     DataOutputPos = DataOutputPos + UBound(data) + 1
                     WrittenFiles = WrittenFiles + 1
-                    If Not prgBar Is Nothing Then prgBar.value = WrittenFiles
+                    If Not prgBar Is Nothing Then prgBar.Value = WrittenFiles
                     DoEvents
                 Wend
             
