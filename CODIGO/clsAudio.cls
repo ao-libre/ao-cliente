@@ -200,7 +200,7 @@ End Function
 '
 '   @return   The buffer index in which the sound is playing, or 0 in case of error.
 
-Public Function PlayWave(ByVal FileName As String, Optional ByVal srcX As Byte = 0, Optional ByVal srcY As Byte = 0, Optional ByVal LoopSound As LoopStyle = LoopStyle.Default) As Long
+Public Function PlayWave(ByVal FileName As String, Optional ByVal srcX As Byte = 0, Optional ByVal srcY As Byte = 0, Optional ByVal LoopSound As LoopStyle = LoopStyle.Default, Optional ByVal Char As Boolean = False) As Long
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 28/07/08
@@ -237,7 +237,11 @@ On Error GoTo ErrHandler
     
     If sEffectsActivated Then
         If srcX <> 0 And srcY <> 0 Then
-            Call Update3DSound(bufferIndex, 0, 0)
+            If Char Then
+                Call Update3DSound(bufferIndex, 0, 0, True)
+            Else
+                Call Update3DSound(bufferIndex, 0, 0)
+            End If
         End If
     End If
 Exit Function
@@ -265,7 +269,7 @@ Private Sub ResetSoundValues()
     Next i
 End Sub
 
-Private Sub Update3DSound(ByVal bufferIndex As Long, ByVal deltaX As Integer, ByVal deltaY As Integer)
+Private Sub Update3DSound(ByVal bufferIndex As Long, ByVal deltaX As Integer, ByVal deltaY As Integer, Optional ByVal Char As Boolean = False)
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/09/09
@@ -273,6 +277,7 @@ Private Sub Update3DSound(ByVal bufferIndex As Long, ByVal deltaX As Integer, By
 'Fixed Dopplers formula
 'Refreshes the sound's arguments.
 'Fixed the sndVolume formula
+'Fixed 3D Volume
 '***************************************************
     Dim linearDistanceOld As Single
     Dim linearDistanceNew As Single
@@ -312,7 +317,11 @@ Private Sub Update3DSound(ByVal bufferIndex As Long, ByVal deltaX As Integer, By
         If linearDistanceNew = 0 Then linearDistanceNew = 1
         
         'Set panning according to relative position of the source to the listener
-        Call .Buffer.SetPan((distanceXNew / linearDistanceNew) * DSBPAN_RIGHT)
+        If Char Then
+            Call .Buffer.SetPan(DSBPAN_CENTER)
+        Else
+            Call .Buffer.SetPan((distanceXNew / linearDistanceNew) * DSBPAN_RIGHT)
+        End If
     End With
 End Sub
 
@@ -335,7 +344,7 @@ Public Sub MoveListener(ByVal X As Integer, ByVal Y As Integer)
     Dim deltaX As Integer
     Dim deltaY As Integer
     
-    If Not sEffectsActivated Then Exit Sub
+    If sEffectsActivated = False Then Exit Sub
     
     deltaX = X - lastPosX
     deltaY = Y - lastPosY
@@ -344,7 +353,7 @@ Public Sub MoveListener(ByVal X As Integer, ByVal Y As Integer)
         If Not DSBuffers(i).Buffer Is Nothing Then
             If DSBuffers(i).Buffer.GetStatus And DSBSTATUS_PLAYING Then
                 If DSBuffers(i).X <> 0 And DSBuffers(i).Y <> 0 Then
-                    Call Update3DSound(i, deltaX, deltaY)
+                    Call Update3DSound(i, deltaX, deltaY, True)
                 End If
             End If
         End If

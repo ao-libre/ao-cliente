@@ -1911,12 +1911,10 @@ Private Sub HandleChangeMap()
     
     If FileExist(DirMapas & "Mapa" & UserMap & ".map", vbNormal) Then
         Call SwitchMap(UserMap)
-        If bLluvia(UserMap) = 0 Then
-            If bRain Then
+        If bRain And bLluvia(UserMap) = 0 Then
                 Call Audio.StopWave(RainBufferIndex)
                 RainBufferIndex = 0
                 frmMain.IsPlaying = PlayLoop.plNone
-            End If
         End If
     Else
         'no encontramos el mapa en el hd
@@ -2891,18 +2889,19 @@ Private Sub HandleRainToggle()
     bTecho = (MapData(UserPos.X, UserPos.Y).Trigger = 1 Or _
             MapData(UserPos.X, UserPos.Y).Trigger = 2 Or _
             MapData(UserPos.X, UserPos.Y).Trigger = 4)
-    If bRain Then
-        If bLluvia(UserMap) Then
+            
+    If bRain And bLluvia(UserMap) Then
             'Stop playing the rain sound
             Call Audio.StopWave(RainBufferIndex)
             RainBufferIndex = 0
+            
             If bTecho Then
                 Call Audio.PlayWave("lluviainend.wav", 0, 0, LoopStyle.Disabled)
             Else
                 Call Audio.PlayWave("lluviaoutend.wav", 0, 0, LoopStyle.Disabled)
             End If
+            
             frmMain.IsPlaying = PlayLoop.plNone
-        End If
     End If
     
     bRain = Not bRain
@@ -4502,11 +4501,11 @@ On Error GoTo ErrHandler
         .criminales.Caption = CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .status.Caption = " Ciudadano"
-            .status.ForeColor = vbBlue
+            .Status.Caption = " Ciudadano"
+            .Status.ForeColor = vbBlue
         Else
-            .status.Caption = " Criminal"
-            .status.ForeColor = vbRed
+            .Status.Caption = " Criminal"
+            .Status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)
