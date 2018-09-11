@@ -829,7 +829,7 @@ Public Sub HandleMultiMessage()
     Dim BodyPart As Byte
     Dim Daño As Integer
     Dim SpellIndex As Integer
-    Dim Nombre As String
+    Dim nombre As String
     
 With incomingData
     Call .ReadByte
@@ -893,12 +893,12 @@ With incomingData
             Call AddtoRichTextBox(frmMain.RecTxt, "¡¡Le has quitado " & CStr(incomingData.ReadLong()) & " puntos de vida a la criatura!!", 255, 0, 0, True, False, True)
         
         Case eMessages.UserAttackedSwing
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & charlist(incomingData.ReadInteger()).Nombre & MENSAJE_ATAQUE_FALLO, 255, 0, 0, True, False, True)
+            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & charlist(incomingData.ReadInteger()).nombre & MENSAJE_ATAQUE_FALLO, 255, 0, 0, True, False, True)
         
         Case eMessages.UserHittedByUser
             Dim AttackerName As String
             
-            AttackerName = GetRawName(charlist(incomingData.ReadInteger()).Nombre)
+            AttackerName = GetRawName(charlist(incomingData.ReadInteger()).nombre)
             BodyPart = incomingData.ReadByte()
             Daño = incomingData.ReadInteger()
             
@@ -926,7 +926,7 @@ With incomingData
 
             Dim VictimName As String
             
-            VictimName = GetRawName(charlist(incomingData.ReadInteger()).Nombre)
+            VictimName = GetRawName(charlist(incomingData.ReadInteger()).nombre)
             BodyPart = incomingData.ReadByte()
             Daño = incomingData.ReadInteger()
             
@@ -985,13 +985,13 @@ With incomingData
             KilledUser = .ReadInteger
             Exp = .ReadLong
             
-            Call ShowConsoleMsg(MENSAJE_HAS_MATADO_A & charlist(KilledUser).Nombre & MENSAJE_22, 255, 0, 0, True, False)
+            Call ShowConsoleMsg(MENSAJE_HAS_MATADO_A & charlist(KilledUser).nombre & MENSAJE_22, 255, 0, 0, True, False)
             Call ShowConsoleMsg(MENSAJE_HAS_GANADO_EXPE_1 & Exp & MENSAJE_HAS_GANADO_EXPE_2, 255, 0, 0, True, False)
             
             'Sacamos un screenshot si está activado el FragShooter:
             If ClientSetup.bKill And ClientSetup.bActive Then
                 If Exp \ 2 > ClientSetup.byMurderedLevel Then
-                    FragShooterNickname = charlist(KilledUser).Nombre
+                    FragShooterNickname = charlist(KilledUser).nombre
                     FragShooterKilledSomeone = True
                     
                     FragShooterCapturePending = True
@@ -1003,11 +1003,11 @@ With incomingData
             
             KillerUser = .ReadInteger
             
-            Call ShowConsoleMsg(charlist(KillerUser).Nombre & MENSAJE_TE_HA_MATADO, 255, 0, 0, True, False)
+            Call ShowConsoleMsg(charlist(KillerUser).nombre & MENSAJE_TE_HA_MATADO, 255, 0, 0, True, False)
             
             'Sacamos un screenshot si está activado el FragShooter:
             If ClientSetup.bDie And ClientSetup.bActive Then
-                FragShooterNickname = charlist(KillerUser).Nombre
+                FragShooterNickname = charlist(KillerUser).nombre
                 FragShooterKilledSomeone = False
                 
                 FragShooterCapturePending = True
@@ -1055,9 +1055,9 @@ With incomingData
             
         Case eMessages.Hechizo_HechiceroMSG_NOMBRE
             SpellIndex = .ReadByte
-            Nombre = .ReadASCIIString
+            nombre = .ReadASCIIString
          
-            Call ShowConsoleMsg(Hechizos(SpellIndex).HechiceroMsg & " " & Nombre & ".", 210, 220, 220)
+            Call ShowConsoleMsg(Hechizos(SpellIndex).HechiceroMsg & " " & nombre & ".", 210, 220, 220)
          
         Case eMessages.Hechizo_HechiceroMSG_ALGUIEN
             SpellIndex = .ReadByte
@@ -1074,8 +1074,8 @@ With incomingData
          
         Case eMessages.Hechizo_TargetMSG
             SpellIndex = .ReadByte
-            Nombre = .ReadASCIIString
-            Call ShowConsoleMsg(Nombre & " " & Hechizos(SpellIndex).TargetMsg, 210, 220, 220)
+            nombre = .ReadASCIIString
+            Call ShowConsoleMsg(nombre & " " & Hechizos(SpellIndex).TargetMsg, 210, 220, 220)
     End Select
 End With
 End Sub
@@ -1299,7 +1299,7 @@ Private Sub HandleBankInit()
     
     BankGold = incomingData.ReadLong
     Call InvBanco(0).Initialize(DirectD3D8, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
-    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.PicInv, Inventario.MaxObjs)
+    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.picInv, Inventario.MaxObjs)
     
     For i = 1 To Inventario.MaxObjs
         With Inventario
@@ -2413,7 +2413,7 @@ On Error GoTo ErrHandler
     With charlist(CharIndex)
         Call Char_SetFx(CharIndex, Buffer.ReadInteger(), Buffer.ReadInteger())
         
-        .Nombre = Buffer.ReadASCIIString()
+        .nombre = Buffer.ReadASCIIString()
         NickColor = Buffer.ReadByte()
         
         If (NickColor And eNickColor.ieCriminal) <> 0 Then
@@ -4462,7 +4462,7 @@ On Error GoTo ErrHandler
             .imgPeticion.Visible = True
         End If
         
-        .Nombre.Caption = Buffer.ReadASCIIString()
+        .nombre.Caption = Buffer.ReadASCIIString()
         .Raza.Caption = ListaRazas(Buffer.ReadByte())
         .Clase.Caption = ListaClases(Buffer.ReadByte())
         
@@ -4630,7 +4630,7 @@ On Error GoTo ErrHandler
         .imgOfrecerAlianza.Visible = .EsLeader
         .imgOfrecerPaz.Visible = .EsLeader
         
-        .Nombre.Caption = Buffer.ReadASCIIString()
+        .nombre.Caption = Buffer.ReadASCIIString()
         .fundador.Caption = Buffer.ReadASCIIString()
         .creacion.Caption = Buffer.ReadASCIIString()
         .lider.Caption = Buffer.ReadASCIIString()
@@ -5345,7 +5345,7 @@ On Error GoTo ErrHandler
         
         .Atacable = (NickColor And eNickColor.ieAtacable) <> 0
         
-        .Nombre = UserTag
+        .nombre = UserTag
     End With
     
     'If we got here then packet is complete, copy data back to original queue

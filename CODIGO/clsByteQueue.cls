@@ -161,16 +161,16 @@ End Sub
 ' @return   The smaller of val1 and val2
 ' @remarks  This method is faster than Iif() and cleaner, therefore it's used instead of it
 
-Private Function min(ByVal val1 As Long, ByVal val2 As Long) As Long
+Private Function Min(ByVal val1 As Long, ByVal val2 As Long) As Long
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 04/27/06
 'It's faster than iif and I like it better
 '***************************************************
     If val1 < val2 Then
-        min = val1
+        Min = val1
     Else
-        min = val2
+        Min = val2
     End If
 End Function
 
@@ -253,7 +253,7 @@ Private Function RemoveData(ByVal dataLength As Long) As Long
 'Moves forward the queue overwriting the first dataLength bytes
 '***************************************************
     'Figure out how many bytes we can remove
-    RemoveData = min(dataLength, queueLength)
+    RemoveData = Min(dataLength, queueLength)
     
     'Remove data - prevent rt9 when cleaning a full queue
     If RemoveData <> queueCapacity Then _
@@ -271,7 +271,7 @@ End Function
 ' @see PeekByte
 ' @see ReadByte
 
-Public Function WriteByte(ByVal value As Byte) As Long
+Public Function WriteByte(ByVal Value As Byte) As Long
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 04/27/06
@@ -279,7 +279,7 @@ Public Function WriteByte(ByVal value As Byte) As Long
 '***************************************************
     Dim buf(0) As Byte
     
-    buf(0) = value
+    buf(0) = Value
     
     WriteByte = WriteData(buf, 1)
 End Function
@@ -292,7 +292,7 @@ End Function
 ' @see PeekInteger
 ' @see ReadInteger
 
-Public Function WriteInteger(ByVal value As Integer) As Long
+Public Function WriteInteger(ByVal Value As Integer) As Long
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 04/27/06
@@ -301,7 +301,7 @@ Public Function WriteInteger(ByVal value As Integer) As Long
     Dim buf(1) As Byte
     
     'Copy data to temp buffer
-    Call CopyMemory(buf(0), value, 2)
+    Call CopyMemory(buf(0), Value, 2)
     
     WriteInteger = WriteData(buf, 2)
 End Function
@@ -314,7 +314,7 @@ End Function
 ' @see PeekLong
 ' @see ReadLong
 
-Public Function WriteLong(ByVal value As Long) As Long
+Public Function WriteLong(ByVal Value As Long) As Long
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 04/27/06
@@ -323,7 +323,7 @@ Public Function WriteLong(ByVal value As Long) As Long
     Dim buf(3) As Byte
     
     'Copy data to temp buffer
-    Call CopyMemory(buf(0), value, 4)
+    Call CopyMemory(buf(0), Value, 4)
     
     WriteLong = WriteData(buf, 4)
 End Function
@@ -336,7 +336,7 @@ End Function
 ' @see PeekSingle
 ' @see ReadSingle
 
-Public Function WriteSingle(ByVal value As Single) As Long
+Public Function WriteSingle(ByVal Value As Single) As Long
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 10/28/07
@@ -345,7 +345,7 @@ Public Function WriteSingle(ByVal value As Single) As Long
     Dim buf(3) As Byte
     
     'Copy data to temp buffer
-    Call CopyMemory(buf(0), value, 4)
+    Call CopyMemory(buf(0), Value, 4)
     
     WriteSingle = WriteData(buf, 4)
 End Function
@@ -358,7 +358,7 @@ End Function
 ' @see PeekDouble
 ' @see ReadDouble
 
-Public Function WriteDouble(ByVal value As Double) As Long
+Public Function WriteDouble(ByVal Value As Double) As Long
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 10/28/07
@@ -367,7 +367,7 @@ Public Function WriteDouble(ByVal value As Double) As Long
     Dim buf(7) As Byte
     
     'Copy data to temp buffer
-    Call CopyMemory(buf(0), value, 8)
+    Call CopyMemory(buf(0), Value, 8)
     
     WriteDouble = WriteData(buf, 8)
 End Function
@@ -380,7 +380,7 @@ End Function
 ' @see PeekBoolean
 ' @see ReadBoolean
 
-Public Function WriteBoolean(ByVal value As Boolean) As Long
+Public Function WriteBoolean(ByVal Value As Boolean) As Long
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 04/27/06
@@ -388,7 +388,7 @@ Public Function WriteBoolean(ByVal value As Boolean) As Long
 '***************************************************
     Dim buf(0) As Byte
     
-    If value Then buf(0) = 1
+    If Value Then buf(0) = 1
     
     WriteBoolean = WriteData(buf, 1)
 End Function
@@ -401,19 +401,19 @@ End Function
 ' @see PeekASCIIStringFixed
 ' @see ReadASCIIStringFixed
 
-Public Function WriteASCIIStringFixed(ByVal value As String) As Long
+Public Function WriteASCIIStringFixed(ByVal Value As String) As Long
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 04/27/06
 'Writes a fixed length ASCII string to the queue
 '***************************************************
     Dim buf() As Byte
-    ReDim buf(Len(value) - 1) As Byte
+    ReDim buf(Len(Value) - 1) As Byte
     
     'Copy data to temp buffer
-    Call CopyMemory(buf(0), ByVal StrPtr(StrConv(value, vbFromUnicode)), Len(value))
+    Call CopyMemory(buf(0), ByVal StrPtr(StrConv(Value, vbFromUnicode)), Len(Value))
     
-    WriteASCIIStringFixed = WriteData(buf, Len(value))
+    WriteASCIIStringFixed = WriteData(buf, Len(Value))
 End Function
 
 ''
@@ -424,19 +424,19 @@ End Function
 ' @see PeekUnicodeStringFixed
 ' @see ReadUnicodeStringFixed
 
-Public Function WriteUnicodeStringFixed(ByVal value As String) As Long
+Public Function WriteUnicodeStringFixed(ByVal Value As String) As Long
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 04/27/06
 'Writes a fixed length UNICODE string to the queue
 '***************************************************
     Dim buf() As Byte
-    ReDim buf(LenB(value)) As Byte
+    ReDim buf(LenB(Value)) As Byte
     
     'Copy data to temp buffer
-    Call CopyMemory(buf(0), ByVal StrPtr(value), LenB(value))
+    Call CopyMemory(buf(0), ByVal StrPtr(Value), LenB(Value))
     
-    WriteUnicodeStringFixed = WriteData(buf, LenB(value))
+    WriteUnicodeStringFixed = WriteData(buf, LenB(Value))
 End Function
 
 ''
@@ -447,24 +447,24 @@ End Function
 ' @see PeekASCIIString
 ' @see ReadASCIIString
 
-Public Function WriteASCIIString(ByVal value As String) As Long
+Public Function WriteASCIIString(ByVal Value As String) As Long
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 04/27/06
 'Writes a variable length ASCII string to the queue
 '***************************************************
     Dim buf() As Byte
-    ReDim buf(Len(value) + 1) As Byte
+    ReDim buf(Len(Value) + 1) As Byte
     
     'Copy length to temp buffer
-    Call CopyMemory(buf(0), CInt(Len(value)), 2)
+    Call CopyMemory(buf(0), CInt(Len(Value)), 2)
     
-    If Len(value) > 0 Then
+    If Len(Value) > 0 Then
         'Copy data to temp buffer
-        Call CopyMemory(buf(2), ByVal StrPtr(StrConv(value, vbFromUnicode)), Len(value))
+        Call CopyMemory(buf(2), ByVal StrPtr(StrConv(Value, vbFromUnicode)), Len(Value))
     End If
     
-    WriteASCIIString = WriteData(buf, Len(value) + 2)
+    WriteASCIIString = WriteData(buf, Len(Value) + 2)
 End Function
 
 ''
@@ -475,24 +475,24 @@ End Function
 ' @see PeekUnicodeString
 ' @see ReadUnicodeString
 
-Public Function WriteUnicodeString(ByVal value As String) As Long
+Public Function WriteUnicodeString(ByVal Value As String) As Long
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 04/27/06
 'Writes a variable length UNICODE string to the queue
 '***************************************************
     Dim buf() As Byte
-    ReDim buf(LenB(value) + 1) As Byte
+    ReDim buf(LenB(Value) + 1) As Byte
     
     'Copy length to temp buffer
-    Call CopyMemory(buf(0), CInt(Len(value)), 2)
+    Call CopyMemory(buf(0), CInt(Len(Value)), 2)
     
-    If Len(value) > 0 Then
+    If Len(Value) > 0 Then
         'Copy data to temp buffer
-        Call CopyMemory(buf(2), ByVal StrPtr(value), LenB(value))
+        Call CopyMemory(buf(2), ByVal StrPtr(Value), LenB(Value))
     End If
     
-    WriteUnicodeString = WriteData(buf, LenB(value) + 2)
+    WriteUnicodeString = WriteData(buf, LenB(Value) + 2)
 End Function
 
 ''
@@ -505,16 +505,16 @@ End Function
 ' @see PeekBlock
 ' @see ReadBlock
 
-Public Function WriteBlock(ByRef value() As Byte, Optional ByVal length As Long = -1) As Long
+Public Function WriteBlock(ByRef Value() As Byte, Optional ByVal length As Long = -1) As Long
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 04/27/06
 'Writes a byte array to the queue
 '***************************************************
     'Prevent from copying memory outside the array
-    If length > UBound(value()) + 1 Or length < 0 Then length = UBound(value()) + 1
+    If length > UBound(Value()) + 1 Or length < 0 Then length = UBound(Value()) + 1
     
-    WriteBlock = WriteData(value, length)
+    WriteBlock = WriteData(Value, length)
 End Function
 
 ''
@@ -1173,7 +1173,7 @@ End Property
 ' @remarks If the new capacity is smaller than the current Length, all exceeding data is lost.
 ' @see Length
 
-Public Property Let Capacity(ByVal value As Long)
+Public Property Let Capacity(ByVal Value As Long)
 '***************************************************
 'Autor: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 04/27/06
@@ -1181,10 +1181,10 @@ Public Property Let Capacity(ByVal value As Long)
 'All data in the queue exceeding the new capacity is lost
 '***************************************************
     'Upate capacity
-    queueCapacity = value
+    queueCapacity = Value
     
     'All extra data is lost
-    If length > value Then queueLength = value
+    If length > Value Then queueLength = Value
     
     'Resize the queue
     ReDim Preserve data(queueCapacity - 1) As Byte
