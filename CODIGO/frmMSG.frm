@@ -171,7 +171,7 @@ End Sub
 
 Private Sub List1_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If Button = vbRightButton Then
-        PopUpMenu menU_usuario
+        PopupMenu menU_usuario
     End If
 
 End Sub

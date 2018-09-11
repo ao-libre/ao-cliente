@@ -259,7 +259,7 @@ Public Sub LoadCustomKeys()
 '18/11/2010: Amraphen - Modifiqué la forma en que se cargan los bindings y ahora carga los del formato viejo.
 '***************************************************
 Dim i As Long
-Dim j As Long
+Dim J As Long
 Dim FileNum As Integer
 
      'Si no existe el archivo lo creamos con los bindings default:
@@ -285,9 +285,9 @@ Dim FileNum As Integer
                 Call LoadDefaults(i)
             Next i
             
-            For j = 1 To NUM_CUSTOM_KEYS
-                Get FileNum, , mappedKeys(ActiveConfig, j)
-            Next j
+            For J = 1 To NUM_CUSTOM_KEYS
+                Get FileNum, , mappedKeys(ActiveConfig, J)
+            Next J
         Else
             'Formato nuevo
             Open App.path & KEY_CONFIG_FILE For Binary Access Read Lock Read Write As FileNum
@@ -295,9 +295,9 @@ Dim FileNum As Integer
             Get FileNum, , ActiveConfig
             
             For i = 0 To NUM_CUSTOM_CONFIGS
-                For j = 1 To NUM_CUSTOM_KEYS
-                    Get FileNum, , mappedKeys(i, j)
-                Next j
+                For J = 1 To NUM_CUSTOM_KEYS
+                    Get FileNum, , mappedKeys(i, J)
+                Next J
             Next i
         End If
         
@@ -318,7 +318,7 @@ Public Sub SaveCustomKeys()
 '18/11/2010: Amraphen - Ahora se guarda la configuración activa.
 '***************************************************
 Dim i As Long
-Dim j As Long
+Dim J As Long
 Dim FileNum As Integer
 
     FileNum = FreeFile()
@@ -330,9 +330,9 @@ Dim FileNum As Integer
     
     'Guardo las distintas configuraciones:
     For i = 0 To NUM_CUSTOM_CONFIGS
-        For j = 1 To NUM_CUSTOM_KEYS
-            Put FileNum, , mappedKeys(i, j)
-        Next j
+        For J = 1 To NUM_CUSTOM_KEYS
+            Put FileNum, , mappedKeys(i, J)
+        Next J
     Next i
     
     Close FileNum

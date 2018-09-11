@@ -18,8 +18,8 @@ Public Sub Char_Erase(ByVal CharIndex As Integer)
                 If (CharIndex = 0) Then Exit Sub
                 If (CharIndex > LastChar) Then Exit Sub
                 
-                If Map_InBounds(.Pos.x, .Pos.y) Then  '// Posicion valida
-                        MapData(.Pos.x, .Pos.y).CharIndex = 0  '// Borramos el user
+                If Map_InBounds(.Pos.X, .Pos.Y) Then  '// Posicion valida
+                        MapData(.Pos.X, .Pos.Y).CharIndex = 0  '// Borramos el user
                 End If
        
                 'Update lastchar
@@ -74,10 +74,10 @@ Private Sub Char_ResetInfo(ByVal CharIndex As Integer)
             
             .Moving = 0
             .muerto = False
-            .Nombre = ""
+            .nombre = ""
             .pie = False
-            .Pos.x = 0
-            .Pos.y = 0
+            .Pos.X = 0
+            .Pos.Y = 0
             .UsandoArma = False
             .attacking = False
             
@@ -89,7 +89,7 @@ Private Sub Char_ResetInfo(ByVal CharIndex As Integer)
  
 End Sub
  
-Private Sub Char_MapPosGet(ByVal CharIndex As Long, ByRef x As Byte, ByRef y As Byte)
+Private Sub Char_MapPosGet(ByVal CharIndex As Long, ByRef X As Byte, ByRef Y As Byte)
                                 
         '*****************************************************************
         'Author: Aaron Perkins
@@ -103,24 +103,24 @@ Private Sub Char_MapPosGet(ByVal CharIndex As Long, ByRef x As Byte, ByRef y As 
         With charlist(CharIndex)
                   
                 'Get map pos
-                x = .Pos.x
-                y = .Pos.y
+                X = .Pos.X
+                Y = .Pos.Y
         
         End With
  
 End Sub
  
-Public Sub Char_MapPosSet(ByVal x As Byte, ByVal y As Byte)
+Public Sub Char_MapPosSet(ByVal X As Byte, ByVal Y As Byte)
 
         'Sets the user postion
 
-        If (Map_InBounds(x, y)) Then  '// Posicion valida
+        If (Map_InBounds(X, Y)) Then  '// Posicion valida
         
-                UserPos.x = x
-                UserPos.y = y
+                UserPos.X = X
+                UserPos.Y = Y
                         
                 'Set char
-                MapData(UserPos.x, UserPos.y).CharIndex = UserCharIndex
+                MapData(UserPos.X, UserPos.Y).CharIndex = UserCharIndex
                 charlist(UserCharIndex).Pos = UserPos
         
                 Exit Sub
@@ -138,9 +138,9 @@ Public Function Char_Techo() As Boolean
  
         With charlist(UserCharIndex)
       
-                If (Map_InBounds(.Pos.x, .Pos.y)) Then '// Posicion valida
+                If (Map_InBounds(.Pos.X, .Pos.Y)) Then '// Posicion valida
                        
-                        If (MapData(.Pos.x, .Pos.y).Trigger = eTrigger.BAJOTECHO) Then
+                        If (MapData(.Pos.X, .Pos.Y).Trigger = eTrigger.BAJOTECHO) Then
                                 Char_Techo = True
                         End If
                                
@@ -349,7 +349,7 @@ Public Sub Char_SetName(ByVal CharIndex As Integer, ByVal Name As String)
  
                 With charlist(CharIndex)
                
-                        .Nombre = Name
+                        .nombre = Name
  
                         Exit Sub
  

@@ -215,6 +215,10 @@ Private Sub imgNoticias_Click()
     Call WriteShowGuildNews
 End Sub
 
+Private Sub lstMiembros_Click()
+
+End Sub
+
 Private Sub txtSearch_Change()
     Call FiltrarListaClanes(txtSearch.Text)
 End Sub

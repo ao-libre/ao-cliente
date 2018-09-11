@@ -206,7 +206,7 @@ End Sub
 
 Sub SaveGameini()
     'Grabamos los datos del usuario en el Game.ini
-    Config_Inicio.name = "BetaTester"
+    Config_Inicio.Name = "BetaTester"
     Config_Inicio.Password = "DammLamers"
     Config_Inicio.Puerto = UserPort
     
@@ -571,7 +571,7 @@ Sub SwitchMap(ByVal Map As Integer)
     '   Erase particle effects
     ReDim Effect(1 To NumEffects)
     
-    MapInfo.name = ""
+    MapInfo.Name = ""
     MapInfo.Music = ""
     
     CurMap = Map
@@ -881,7 +881,7 @@ Private Sub LoadInitialConfig()
     Call Protocol.InitFonts
     
     With frmConnect
-        .txtNombre = Config_Inicio.name
+        .txtNombre = Config_Inicio.Name
         .txtNombre.SelStart = 0
         .txtNombre.SelLength = Len(.txtNombre)
     End With
@@ -945,7 +945,7 @@ Private Sub LoadInitialConfig()
     Audio.SoundActivated = Not ClientSetup.bNoSound
     Audio.SoundEffectsActivated = Not ClientSetup.bNoSoundEffects
     'Inicializamos el inventario gráfico
-    Call Inventario.Initialize(DirectD3D8, frmMain.PicInv, MAX_INVENTORY_SLOTS)
+    Call Inventario.Initialize(DirectD3D8, frmMain.picInv, MAX_INVENTORY_SLOTS)
     'Call Audio.MusicMP3Play(App.path & "\MP3\" & MP3_Inicio & ".mp3")
     Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
     
@@ -1374,10 +1374,10 @@ m = 255 / MAXATRIBUTOS
 getDexterityColor = RGB(255, m * UserAgilidad, 0)
 End Function
 
-Public Function getCharIndexByName(ByVal name As String) As Integer
+Public Function getCharIndexByName(ByVal Name As String) As Integer
 Dim i As Long
 For i = 1 To LastChar
-    If charlist(i).Nombre = name Then
+    If charlist(i).nombre = Name Then
         getCharIndexByName = i
         Exit Function
     End If
@@ -1437,8 +1437,8 @@ Public Sub ResetAllInfo()
     'Unload all forms except frmMain, frmConnect and frmCrearPersonaje
     Dim frm As Form
     For Each frm In Forms
-        If frm.name <> frmMain.name And frm.name <> frmConnect.name And _
-            frm.name <> frmCrearPersonaje.name Then
+        If frm.Name <> frmMain.Name And frm.Name <> frmConnect.Name And _
+            frm.Name <> frmCrearPersonaje.Name Then
             
             Unload frm
         End If
@@ -1519,16 +1519,16 @@ Dim i As Long
  
     For i = 1 To NumHechizos
         If i = Index Then
-            DevolverNombreHechizo = Hechizos(i).Nombre
+            DevolverNombreHechizo = Hechizos(i).nombre
             Exit Function
         End If
     Next i
 End Function
-Public Function DevolverIndexHechizo(ByVal Nombre As String) As Byte
+Public Function DevolverIndexHechizo(ByVal nombre As String) As Byte
 Dim i As Long
  
     For i = 1 To NumHechizos
-        If Hechizos(i).Nombre = Nombre Then
+        If Hechizos(i).nombre = nombre Then
             DevolverIndexHechizo = i
             Exit Function
         End If
@@ -1542,32 +1542,32 @@ Public Sub CargarHechizos()
 '********************************
 On Error GoTo errorH
     Dim PathName As String
-    Dim j As Long
+    Dim J As Long
  
     PathName = App.path & "\init\Hechizos.dat"
     NumHechizos = Val(GetVar(PathName, "INIT", "NumHechizos"))
  
     ReDim Hechizos(1 To NumHechizos) As tHechizos
-    For j = 1 To NumHechizos
-        With Hechizos(j)
-            .Desc = GetVar(PathName, "HECHIZO" & j, "Desc")
-            .PalabrasMagicas = GetVar(PathName, "HECHIZO" & j, "PalabrasMagicas")
-            .Nombre = GetVar(PathName, "HECHIZO" & j, "Nombre")
-            .SkillRequerido = GetVar(PathName, "HECHIZO" & j, "MinSkill")
+    For J = 1 To NumHechizos
+        With Hechizos(J)
+            .Desc = GetVar(PathName, "HECHIZO" & J, "Desc")
+            .PalabrasMagicas = GetVar(PathName, "HECHIZO" & J, "PalabrasMagicas")
+            .nombre = GetVar(PathName, "HECHIZO" & J, "Nombre")
+            .SkillRequerido = GetVar(PathName, "HECHIZO" & J, "MinSkill")
          
-            If j <> 38 And j <> 39 Then
-                .EnergiaRequerida = GetVar(PathName, "HECHIZO" & j, "StaRequerido")
+            If J <> 38 And J <> 39 Then
+                .EnergiaRequerida = GetVar(PathName, "HECHIZO" & J, "StaRequerido")
                  
-                .HechiceroMsg = GetVar(PathName, "HECHIZO" & j, "HechizeroMsg")
-                .ManaRequerida = GetVar(PathName, "HECHIZO" & j, "ManaRequerido")
+                .HechiceroMsg = GetVar(PathName, "HECHIZO" & J, "HechizeroMsg")
+                .ManaRequerida = GetVar(PathName, "HECHIZO" & J, "ManaRequerido")
              
              
-                .PropioMsg = GetVar(PathName, "HECHIZO" & j, "PropioMsg")
+                .PropioMsg = GetVar(PathName, "HECHIZO" & J, "PropioMsg")
              
-                .TargetMsg = GetVar(PathName, "HECHIZO" & j, "TargetMsg")
+                .TargetMsg = GetVar(PathName, "HECHIZO" & J, "TargetMsg")
             End If
         End With
-    Next j
+    Next J
  
 Exit Sub
  

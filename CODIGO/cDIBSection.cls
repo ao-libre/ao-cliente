@@ -54,7 +54,7 @@ Private Type BITMAPINFO
     bmiColors As RGBQUAD
 End Type
 Private Declare Function CreateCompatibleDC Lib "gdi32" (ByVal hdc As Long) As Long
-Private Declare Function GetDC Lib "user32" (ByVal hWnd As Long) As Long
+Private Declare Function GetDC Lib "user32" (ByVal hwnd As Long) As Long
 Private Declare Function GetDesktopWindow Lib "user32" () As Long
 ' Note - this is not the declare in the API viewer - modify lplpVoid to be
 ' Byref so we get the pointer back:
@@ -65,11 +65,11 @@ Private Declare Function CreateDIBSection Lib "gdi32" _
     lplpVoid As Long, _
     ByVal handle As Long, _
     ByVal dw As Long) As Long
-Private Declare Function BitBlt Lib "gdi32" (ByVal hDestDC As Long, ByVal x As Long, ByVal y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, ByVal xSrc As Long, ByVal ySrc As Long, ByVal dwRop As Long) As Long
+Private Declare Function BitBlt Lib "gdi32" (ByVal hDestDC As Long, ByVal X As Long, ByVal Y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, ByVal xSrc As Long, ByVal ySrc As Long, ByVal dwRop As Long) As Long
 Private Declare Function SelectObject Lib "gdi32" (ByVal hdc As Long, ByVal hObject As Long) As Long
 Private Declare Function DeleteObject Lib "gdi32" (ByVal hObject As Long) As Long
 Private Declare Function DeleteDC Lib "gdi32" (ByVal hdc As Long) As Long
-Private Declare Function ReleaseDC Lib "user32" (ByVal hWnd As Long, ByVal hdc As Long) As Long
+Private Declare Function ReleaseDC Lib "user32" (ByVal hwnd As Long, ByVal hdc As Long) As Long
 Private Const BI_RGB = 0&
 Private Const DIB_RGB_COLORS = 0 '  color table in RGBs
 
@@ -86,7 +86,7 @@ Private Declare Function GetObjectAPI Lib "gdi32" Alias "GetObjectA" (ByVal hObj
 Private Declare Function CreateCompatibleBitmap Lib "gdi32" (ByVal hdc As Long, ByVal nWidth As Long, ByVal nHeight As Long) As Long
 
 ' Clipboard functions:
-Private Declare Function OpenClipboard Lib "user32" (ByVal hWnd As Long) As Long
+Private Declare Function OpenClipboard Lib "user32" (ByVal hwnd As Long) As Long
 Private Declare Function CloseClipboard Lib "user32" () As Long
 Private Declare Function SetClipboardData Lib "user32" (ByVal wFormat As Long, ByVal hMem As Long) As Long
 Private Declare Function EmptyClipboard Lib "user32" () As Long
@@ -281,7 +281,7 @@ Public Sub RandomiseBits( _
         Optional ByVal bGray As Boolean = False _
     )
 Dim bDib() As Byte
-Dim x As Long, y As Long
+Dim X As Long, Y As Long
 Dim lC As Long
 Dim tSA As SAFEARRAY2D
 Dim xEnd As Long
@@ -303,22 +303,22 @@ Dim xEnd As Long
     
     xEnd = (Width - 1) * 3
     If (bGray) Then
-        For y = 0 To m_tBI.bmiHeader.biHeight - 1
-            For x = 0 To xEnd Step 3
+        For Y = 0 To m_tBI.bmiHeader.biHeight - 1
+            For X = 0 To xEnd Step 3
                 lC = Rnd * 255
-                bDib(x, y) = lC
-                bDib(x + 1, y) = lC
-                bDib(x + 2, y) = lC
-            Next x
-        Next y
+                bDib(X, Y) = lC
+                bDib(X + 1, Y) = lC
+                bDib(X + 2, Y) = lC
+            Next X
+        Next Y
     Else
-        For x = 0 To xEnd Step 3
-            For y = 0 To m_tBI.bmiHeader.biHeight - 1
-                bDib(x, y) = 0
-                bDib(x + 1, y) = Rnd * 255
-                bDib(x + 2, y) = Rnd * 255
-            Next y
-        Next x
+        For X = 0 To xEnd Step 3
+            For Y = 0 To m_tBI.bmiHeader.biHeight - 1
+                bDib(X, Y) = 0
+                bDib(X + 1, Y) = Rnd * 255
+                bDib(X + 2, Y) = Rnd * 255
+            Next Y
+        Next X
     End If
     
     ' Clear the temporary array descriptor
@@ -391,7 +391,7 @@ Dim tSATo As SAFEARRAY2D
 Dim xScale As Single
 Dim yScale As Single
 
-Dim x As Long, y As Long, xEnd As Long, xOut As Long
+Dim X As Long, Y As Long, xEnd As Long, xOut As Long
 
 Dim fX As Single, fY As Single
 Dim ifY As Long, ifX As Long
@@ -407,14 +407,14 @@ Dim ir2 As Long, ig2 As Long, ib2 As Long
     
     xEnd = cDibTo.Width - 1
         
-    For y = 0 To cDibTo.Height - 1
+    For Y = 0 To cDibTo.Height - 1
         
-        fY = y * yScale
+        fY = Y * yScale
         ifY = Int(fY)
         dy = fY - ifY
         
-        For x = 0 To xEnd
-            fX = x * xScale
+        For X = 0 To xEnd
+            fX = X * xScale
             ifX = Int(fX)
             dX = fX - ifX
             
@@ -440,14 +440,14 @@ Dim ir2 As Long, ig2 As Long, ib2 As Long
             If (b > 255) Then
                 b = 255
             End If
-            xOut = x * 3
-            bDibTo(xOut, y) = b
-            bDibTo(xOut + 1, y) = g
-            bDibTo(xOut + 2, y) = r
+            xOut = X * 3
+            bDibTo(xOut, Y) = b
+            bDibTo(xOut + 1, Y) = g
+            bDibTo(xOut + 2, Y) = r
             
-        Next x
+        Next X
         
-    Next y
+    Next Y
 
     ' Clear the temporary array descriptor
     ' (This does not appear to be necessary, but
