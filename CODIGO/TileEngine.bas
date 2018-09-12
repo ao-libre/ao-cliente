@@ -1368,8 +1368,7 @@ Public Function RenderSounds()
 '**************************************************************
 Dim Location As Position
 
-        If bRain Then
-            If bLluvia(UserMap) Then
+        If bRain And bLluvia(UserMap) Then
                 If bTecho Then
                     If frmMain.IsPlaying <> PlayLoop.plLluviain Then
                         If RainBufferIndex Then _
@@ -1385,7 +1384,6 @@ Dim Location As Position
                         frmMain.IsPlaying = PlayLoop.plLluviaout
                     End If
                 End If
-            End If
         End If
 
         If bFogata Then
@@ -1530,7 +1528,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Inte
     If frmBancoObj.PicBancoInv.Visible Then _
         Call InvBanco(0).DrawInv
          
-    If frmBancoObj.picInv.Visible Then _
+    If frmBancoObj.PicInv.Visible Then _
         Call InvBanco(1).DrawInv
     
     
