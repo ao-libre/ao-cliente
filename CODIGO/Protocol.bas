@@ -829,7 +829,7 @@ Public Sub HandleMultiMessage()
     Dim BodyPart As Byte
     Dim Daño As Integer
     Dim SpellIndex As Integer
-    Dim nombre As String
+    Dim Nombre As String
     
 With incomingData
     Call .ReadByte
@@ -893,12 +893,12 @@ With incomingData
             Call AddtoRichTextBox(frmMain.RecTxt, "¡¡Le has quitado " & CStr(incomingData.ReadLong()) & " puntos de vida a la criatura!!", 255, 0, 0, True, False, True)
         
         Case eMessages.UserAttackedSwing
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & charlist(incomingData.ReadInteger()).nombre & MENSAJE_ATAQUE_FALLO, 255, 0, 0, True, False, True)
+            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & charlist(incomingData.ReadInteger()).Nombre & MENSAJE_ATAQUE_FALLO, 255, 0, 0, True, False, True)
         
         Case eMessages.UserHittedByUser
             Dim AttackerName As String
             
-            AttackerName = GetRawName(charlist(incomingData.ReadInteger()).nombre)
+            AttackerName = GetRawName(charlist(incomingData.ReadInteger()).Nombre)
             BodyPart = incomingData.ReadByte()
             Daño = incomingData.ReadInteger()
             
@@ -926,7 +926,7 @@ With incomingData
 
             Dim VictimName As String
             
-            VictimName = GetRawName(charlist(incomingData.ReadInteger()).nombre)
+            VictimName = GetRawName(charlist(incomingData.ReadInteger()).Nombre)
             BodyPart = incomingData.ReadByte()
             Daño = incomingData.ReadInteger()
             
@@ -985,13 +985,13 @@ With incomingData
             KilledUser = .ReadInteger
             Exp = .ReadLong
             
-            Call ShowConsoleMsg(MENSAJE_HAS_MATADO_A & charlist(KilledUser).nombre & MENSAJE_22, 255, 0, 0, True, False)
+            Call ShowConsoleMsg(MENSAJE_HAS_MATADO_A & charlist(KilledUser).Nombre & MENSAJE_22, 255, 0, 0, True, False)
             Call ShowConsoleMsg(MENSAJE_HAS_GANADO_EXPE_1 & Exp & MENSAJE_HAS_GANADO_EXPE_2, 255, 0, 0, True, False)
             
             'Sacamos un screenshot si está activado el FragShooter:
             If ClientSetup.bKill And ClientSetup.bActive Then
                 If Exp \ 2 > ClientSetup.byMurderedLevel Then
-                    FragShooterNickname = charlist(KilledUser).nombre
+                    FragShooterNickname = charlist(KilledUser).Nombre
                     FragShooterKilledSomeone = True
                     
                     FragShooterCapturePending = True
@@ -1003,11 +1003,11 @@ With incomingData
             
             KillerUser = .ReadInteger
             
-            Call ShowConsoleMsg(charlist(KillerUser).nombre & MENSAJE_TE_HA_MATADO, 255, 0, 0, True, False)
+            Call ShowConsoleMsg(charlist(KillerUser).Nombre & MENSAJE_TE_HA_MATADO, 255, 0, 0, True, False)
             
             'Sacamos un screenshot si está activado el FragShooter:
             If ClientSetup.bDie And ClientSetup.bActive Then
-                FragShooterNickname = charlist(KillerUser).nombre
+                FragShooterNickname = charlist(KillerUser).Nombre
                 FragShooterKilledSomeone = False
                 
                 FragShooterCapturePending = True
@@ -1055,9 +1055,9 @@ With incomingData
             
         Case eMessages.Hechizo_HechiceroMSG_NOMBRE
             SpellIndex = .ReadByte
-            nombre = .ReadASCIIString
+            Nombre = .ReadASCIIString
          
-            Call ShowConsoleMsg(Hechizos(SpellIndex).HechiceroMsg & " " & nombre & ".", 210, 220, 220)
+            Call ShowConsoleMsg(Hechizos(SpellIndex).HechiceroMsg & " " & Nombre & ".", 210, 220, 220)
          
         Case eMessages.Hechizo_HechiceroMSG_ALGUIEN
             SpellIndex = .ReadByte
@@ -1074,8 +1074,8 @@ With incomingData
          
         Case eMessages.Hechizo_TargetMSG
             SpellIndex = .ReadByte
-            nombre = .ReadASCIIString
-            Call ShowConsoleMsg(nombre & " " & Hechizos(SpellIndex).TargetMsg, 210, 220, 220)
+            Nombre = .ReadASCIIString
+            Call ShowConsoleMsg(Nombre & " " & Hechizos(SpellIndex).TargetMsg, 210, 220, 220)
     End Select
 End With
 End Sub
@@ -1299,7 +1299,7 @@ Private Sub HandleBankInit()
     
     BankGold = incomingData.ReadLong
     Call InvBanco(0).Initialize(DirectD3D8, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
-    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.picInv, Inventario.MaxObjs)
+    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.PicInv, Inventario.MaxObjs)
     
     For i = 1 To Inventario.MaxObjs
         With Inventario
@@ -2413,7 +2413,7 @@ On Error GoTo ErrHandler
     With charlist(CharIndex)
         Call Char_SetFx(CharIndex, Buffer.ReadInteger(), Buffer.ReadInteger())
         
-        .nombre = Buffer.ReadASCIIString()
+        .Nombre = Buffer.ReadASCIIString()
         NickColor = Buffer.ReadByte()
         
         If (NickColor And eNickColor.ieCriminal) <> 0 Then
@@ -4462,7 +4462,7 @@ On Error GoTo ErrHandler
             .imgPeticion.Visible = True
         End If
         
-        .nombre.Caption = Buffer.ReadASCIIString()
+        .Nombre.Caption = Buffer.ReadASCIIString()
         .Raza.Caption = ListaRazas(Buffer.ReadByte())
         .Clase.Caption = ListaClases(Buffer.ReadByte())
         
@@ -4501,11 +4501,11 @@ On Error GoTo ErrHandler
         .criminales.Caption = CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .Status.Caption = " Ciudadano"
-            .Status.ForeColor = vbBlue
+            .status.Caption = " Ciudadano"
+            .status.ForeColor = vbBlue
         Else
-            .Status.Caption = " Criminal"
-            .Status.ForeColor = vbRed
+            .status.Caption = " Criminal"
+            .status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)
@@ -4630,7 +4630,7 @@ On Error GoTo ErrHandler
         .imgOfrecerAlianza.Visible = .EsLeader
         .imgOfrecerPaz.Visible = .EsLeader
         
-        .nombre.Caption = Buffer.ReadASCIIString()
+        .Nombre.Caption = Buffer.ReadASCIIString()
         .fundador.Caption = Buffer.ReadASCIIString()
         .creacion.Caption = Buffer.ReadASCIIString()
         .lider.Caption = Buffer.ReadASCIIString()
@@ -5231,15 +5231,18 @@ End Sub
 ' Handles the Pong message.
 
 Private Sub HandlePong()
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'
-'***************************************************
+
+    '***************************************************
+    'Author: Juan Martín Sotuyo Dodero (Maraxus)
+    'Last Modification: 05/17/06
+    '
+    '***************************************************
+    Dim tmpPing As Long
+
+    tmpPing = GetTickCount - pingTime
+ 
     Call incomingData.ReadByte
-    
-    Call AddtoRichTextBox(frmMain.RecTxt, "El ping es " & (GetTickCount - pingTime) & " ms.", 255, 0, 0, True, False, True)
-    
+    Call AddtoRichTextBox(frmMain.RecTxt, "El ping es " & CStr(tmpPing) & " ms.", 255, 0, 0, True, False, True)
     pingTime = 0
 End Sub
 
@@ -5345,7 +5348,7 @@ On Error GoTo ErrHandler
         
         .Atacable = (NickColor And eNickColor.ieAtacable) <> 0
         
-        .nombre = UserTag
+        .Nombre = UserTag
     End With
     
     'If we got here then packet is complete, copy data back to original queue
@@ -10043,21 +10046,19 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WritePing()
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 26/01/2007
-'Writes the "Ping" message to the outgoing data buffer
-'***************************************************
+
+    '***************************************************
+    'Author: Juan Martín Sotuyo Dodero (Maraxus)
+    'Last Modification: 26/01/2007
+    'Writes the "Ping" message to the outgoing data buffer
+    '***************************************************
     'Prevent the timer from being cut
     If pingTime <> 0 Then Exit Sub
-    
     Call outgoingData.WriteByte(ClientPacketID.Ping)
-    
+    pingTime = GetTickCount
     ' Avoid computing errors due to frame rate
     Call FlushBuffer
     DoEvents
-    
-    pingTime = GetTickCount
 End Sub
 
 ''
