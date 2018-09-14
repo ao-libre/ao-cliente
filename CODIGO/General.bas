@@ -157,35 +157,44 @@ On Error Resume Next
     Next LoopC
 End Sub
 
-Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, ByVal Text As String, Optional ByVal Red As Integer = -1, Optional ByVal Green As Integer, Optional ByVal Blue As Integer, Optional ByVal bold As Boolean = False, Optional ByVal italic As Boolean = False, Optional ByVal bCrLf As Boolean = True)
-'******************************************
-'Adds text to a Richtext box at the bottom.
-'Automatically scrolls to new text.
-'Text box MUST be multiline and have a 3D
-'apperance!
-'Pablo (ToxicWaste) 01/26/2007 : Now the list refeshes properly.
-'Juan Martín Sotuyo Dodero (Maraxus) 03/29/2007 : Replaced ToxicWaste's code for extra performance.
-'******************************************r
+Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, _
+                     ByVal Text As String, _
+                     Optional ByVal Red As Integer = -1, _
+                     Optional ByVal Green As Integer = -1, _
+                     Optional ByVal Blue As Integer = -1, _
+                     Optional ByVal bold As Boolean = False, _
+                     Optional ByVal italic As Boolean = False, _
+                     Optional ByVal bCrLf As Boolean = True)
+
     With RichTextBox
-        If Len(.Text) > 1000 Then
+
+        Dim StrLen As String ' Optimizacion, + rapido
+        
+        StrLen = Len(.Text)
+
+        If StrLen > 1000 Then
             'Get rid of first line
             .SelStart = InStr(1, .Text, vbCrLf) + 1
-            .SelLength = Len(.Text) - .SelStart + 2
+            .SelLength = StrLen - .SelStart + 2
             .TextRTF = .SelRTF
         End If
         
-        .SelStart = Len(.Text)
+        .SelStart = StrLen
         .SelLength = 0
         .SelBold = bold
         .SelItalic = italic
         
         If Not Red = -1 Then .SelColor = RGB(Red, Green, Blue)
         
-        If bCrLf And Len(.Text) > 0 Then Text = vbCrLf & Text
+        If bCrLf And StrLen > 0 Then
+            Text = vbCrLf & Text
+        End If
+
         .SelText = Text
         
-        RichTextBox.Refresh
+        .Refresh
     End With
+
 End Sub
 
 'TODO : Never was sure this is really necessary....
@@ -945,7 +954,7 @@ Private Sub LoadInitialConfig()
     Audio.SoundActivated = Not ClientSetup.bNoSound
     Audio.SoundEffectsActivated = Not ClientSetup.bNoSoundEffects
     'Inicializamos el inventario gráfico
-    Call Inventario.Initialize(DirectD3D8, frmMain.picInv, MAX_INVENTORY_SLOTS)
+    Call Inventario.Initialize(DirectD3D8, frmMain.PicInv, MAX_INVENTORY_SLOTS)
     'Call Audio.MusicMP3Play(App.path & "\MP3\" & MP3_Inicio & ".mp3")
     Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
     
@@ -1240,7 +1249,7 @@ Private Sub InicializarNombres()
     SkillsNames(eSkill.Tacticas) = "Evasión en combate"
     SkillsNames(eSkill.Armas) = "Combate cuerpo a cuerpo"
     SkillsNames(eSkill.Meditar) = "Meditar"
-    SkillsNames(eSkill.Apuñalar) = "Apuñalar"
+    SkillsNames(eSkill.Apu�alar) = "Apuñalar"
     SkillsNames(eSkill.Ocultarse) = "Ocultarse"
     SkillsNames(eSkill.Supervivencia) = "Supervivencia"
     SkillsNames(eSkill.Talar) = "Talar árboles"
@@ -1377,7 +1386,7 @@ End Function
 Public Function getCharIndexByName(ByVal Name As String) As Integer
 Dim i As Long
 For i = 1 To LastChar
-    If charlist(i).nombre = Name Then
+    If charlist(i).Nombre = Name Then
         getCharIndexByName = i
         Exit Function
     End If
@@ -1519,16 +1528,16 @@ Dim i As Long
  
     For i = 1 To NumHechizos
         If i = Index Then
-            DevolverNombreHechizo = Hechizos(i).nombre
+            DevolverNombreHechizo = Hechizos(i).Nombre
             Exit Function
         End If
     Next i
 End Function
-Public Function DevolverIndexHechizo(ByVal nombre As String) As Byte
+Public Function DevolverIndexHechizo(ByVal Nombre As String) As Byte
 Dim i As Long
  
     For i = 1 To NumHechizos
-        If Hechizos(i).nombre = nombre Then
+        If Hechizos(i).Nombre = Nombre Then
             DevolverIndexHechizo = i
             Exit Function
         End If
@@ -1552,7 +1561,7 @@ On Error GoTo errorH
         With Hechizos(J)
             .Desc = GetVar(PathName, "HECHIZO" & J, "Desc")
             .PalabrasMagicas = GetVar(PathName, "HECHIZO" & J, "PalabrasMagicas")
-            .nombre = GetVar(PathName, "HECHIZO" & J, "Nombre")
+            .Nombre = GetVar(PathName, "HECHIZO" & J, "Nombre")
             .SkillRequerido = GetVar(PathName, "HECHIZO" & J, "MinSkill")
          
             If J <> 38 And J <> 39 Then

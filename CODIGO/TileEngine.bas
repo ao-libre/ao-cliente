@@ -179,7 +179,7 @@ Public Type Char
     Criminal As Byte
     Atacable As Byte
     
-    nombre As String
+    Nombre As String
     
     scrollDirectionX As Integer
     scrollDirectionY As Integer
@@ -541,12 +541,22 @@ Sub CargarArrayLluvia()
     Close #N
 End Sub
 
-Sub ConvertCPtoTP(ByVal viewPortX As Integer, ByVal viewPortY As Integer, ByRef tX As Byte, ByRef tY As Byte)
-'******************************************
-'Converts where the mouse is in the main window to a tile position. MUST be called eveytime the mouse moves.
-'******************************************
-    tX = UserPos.X + viewPortX \ TilePixelWidth - WindowTileWidth \ 2
-    tY = UserPos.Y + viewPortY \ TilePixelHeight - WindowTileHeight \ 2
+Sub ConvertCPtoTP(ByVal viewPortX As Integer, _
+                  ByVal viewPortY As Integer, _
+                  ByRef tX As Byte, _
+                  ByRef tY As Byte)
+
+    '******************************************
+    'Converts where the mouse is in the main window to a tile position. MUST be called eveytime the mouse moves.
+    '******************************************
+    If InMapBounds(UserPos.X, UserPos.Y) Then
+        tX = UserPos.X + viewPortX \ TilePixelWidth - WindowTileWidth \ 2
+        tY = UserPos.Y + viewPortY \ TilePixelHeight - WindowTileHeight \ 2
+
+        Exit Sub
+
+    End If
+
 End Sub
 
 Sub MakeChar(ByVal CharIndex As Integer, ByVal Body As Integer, ByVal Head As Integer, ByVal Heading As Byte, ByVal X As Integer, ByVal Y As Integer, ByVal Arma As Integer, ByVal Escudo As Integer, ByVal Casco As Integer)
@@ -734,18 +744,26 @@ Sub DoPasosFx(ByVal CharIndex As Integer)
 End Sub
 
 Sub MoveCharbyPos(ByVal CharIndex As Integer, ByVal nX As Integer, ByVal nY As Integer)
-On Error Resume Next
-    Dim X As Integer
-    Dim Y As Integer
-    Dim addx As Integer
-    Dim addy As Integer
+
+    'On Error Resume Next
+
+    Dim X        As Integer
+
+    Dim Y        As Integer
+
+    Dim addx     As Integer
+
+    Dim addy     As Integer
+
     Dim nHeading As E_Heading
     
     With charlist(CharIndex)
         X = .Pos.X
         Y = .Pos.Y
         
-        MapData(X, Y).CharIndex = 0
+        If InMapBounds(X, Y) Then
+            MapData(X, Y).CharIndex = 0
+        End If
         
         addx = nX - X
         addy = nY - Y
@@ -778,6 +796,7 @@ On Error Resume Next
         If .FxIndex = FxMeditar.CHICO Or .FxIndex = FxMeditar.GRANDE Or .FxIndex = FxMeditar.MEDIANO Or .FxIndex = FxMeditar.XGRANDE Or .FxIndex = FxMeditar.XXGRANDE Then
             .FxIndex = 0
         End If
+
     End With
     
     If Not EstaPCarea(CharIndex) Then Call Dialogos.RemoveDialog(CharIndex)
@@ -785,6 +804,7 @@ On Error Resume Next
     If (nY < MinLimiteY) Or (nY > MaxLimiteY) Or (nX < MinLimiteX) Or (nX > MaxLimiteX) Then
         Call Char_Erase(CharIndex)
     End If
+
 End Sub
 
 Sub MoveScreen(ByVal nHeading As E_Heading)
@@ -1510,7 +1530,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Inte
     If frmBancoObj.PicBancoInv.Visible Then _
         Call InvBanco(0).DrawInv
          
-    If frmBancoObj.picInv.Visible Then _
+    If frmBancoObj.PicInv.Visible Then _
         Call InvBanco(1).DrawInv
     
     
@@ -1741,7 +1761,7 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
         
         If Not .muerto Then
             If Abs(MouseTileX - .Pos.X) < 1 And (Abs(MouseTileY - .Pos.Y)) < 1 And CharIndex <> UserCharIndex And ClientSetup.TonalidadPJ Then
-                If .nombre <> "" Then
+                If .Nombre <> "" Then
                     Call Engine_Long_To_RGB_List(ColorFinal(), D3DColorXRGB(0, 255, 0))
                 Else
                     ColorFinal(0) = MapData(.Pos.X, .Pos.Y).Engine_Light(0)
@@ -1794,7 +1814,7 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
                 End If
             
                 'Draw name over head
-                If LenB(.nombre) > 0 Then
+                If LenB(.Nombre) > 0 Then
                     If Nombres Then
                         Call RenderName(CharIndex, PixelOffsetX, PixelOffsetY)
                     End If
@@ -1802,9 +1822,9 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
             
         Else 'Usuario invisible
         
-            If CharIndex = UserCharIndex Or mid$(charlist(CharIndex).nombre, _
-                getTagPosition(.nombre)) = mid$(charlist(UserCharIndex).nombre, getTagPosition(charlist(UserCharIndex).nombre)) And _
-                    Len(mid$(charlist(CharIndex).nombre, getTagPosition(.nombre))) > 0 Then
+            If CharIndex = UserCharIndex Or mid$(charlist(CharIndex).Nombre, _
+                getTagPosition(.Nombre)) = mid$(charlist(UserCharIndex).Nombre, getTagPosition(charlist(UserCharIndex).Nombre)) And _
+                    Len(mid$(charlist(CharIndex).Nombre, getTagPosition(.Nombre))) > 0 Then
                 
                 Movement_Speed = 0.5
                 
@@ -1830,7 +1850,7 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
                 
                 
                     'Draw name over head
-                    If LenB(.nombre) > 0 Then
+                    If LenB(.Nombre) > 0 Then
                         If Nombres Then
                              Call RenderName(CharIndex, PixelOffsetX, PixelOffsetY, True)
                         End If
@@ -1864,7 +1884,7 @@ Private Sub RenderName(ByVal CharIndex As Long, ByVal X As Integer, ByVal Y As I
     Dim Color As Long
    
     With charlist(CharIndex)
-            Pos = getTagPosition(.nombre)
+            Pos = getTagPosition(.Nombre)
     
             If .priv = 0 Then
                     If .muerto Then
@@ -1885,12 +1905,12 @@ Private Sub RenderName(ByVal CharIndex As Long, ByVal X As Integer, ByVal Y As I
             End If
             
             'Nick
-            line = Left$(.nombre, Pos - 2)
+            line = Left$(.Nombre, Pos - 2)
             'Fonts_Render_String line, (X + 16) - Fonts_Render_String_Width(line, Settings.Engine_Name_Font) / 2, Y + 30, color, Settings.Engine_Name_Font
             Call DrawText(X - (Len(line) * 6 / 2) + 14, Y + 30, line, Color)
             
             'Clan
-            line = mid$(.nombre, Pos)
+            line = mid$(.Nombre, Pos)
             'Fonts_Render_String line, (X + 16) - Fonts_Render_String_Width(line, Settings.Engine_Name_Font) / 2, Y + 30 + Fuentes(Settings.Engine_Font).CharactersHeight, D3DColorXRGB(255, 230, 130), Settings.Engine_Name_Font
             Call DrawText(X - (Len(line) * 6 / 2) + 14, Y + 45, line, Color)
     End With
