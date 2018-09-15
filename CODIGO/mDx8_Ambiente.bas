@@ -54,11 +54,11 @@ Public Sub Init_Ambient(ByVal Map As Integer)
 '***************************************************
     With CurMapAmbient
         .Fog = -1
-        .UseDayAmbient = True
+        .UseDayAmbient = False
         .OwnAmbientLight.a = 255
-        .OwnAmbientLight.r = 0
-        .OwnAmbientLight.g = 0
-        .OwnAmbientLight.b = 0
+        .OwnAmbientLight.r = 255
+        .OwnAmbientLight.g = 255
+        .OwnAmbientLight.b = 255
         
         .Rain = True
         .Snow = False
