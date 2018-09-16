@@ -883,10 +883,6 @@ Private Sub picPestania_Click(Index As Integer)
     UltimaPestania = Index
 End Sub
 
-Private Sub picUpgradeItem_Click(Index As Integer)
-
-End Sub
-
 Private Sub Scroll_Change()
     Dim i As Long
     
