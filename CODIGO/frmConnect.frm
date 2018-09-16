@@ -557,10 +557,6 @@ Private Sub imgVerForo_Click()
     Call ShellExecute(0, "Open", "https://www.reddit.com/r/argentumonlineoficial/", "", App.path, SW_SHOWNORMAL)
 End Sub
 
-Private Sub IPTxt_Change()
-
-End Sub
-
 Private Sub txtPasswd_KeyPress(KeyAscii As Integer)
     If KeyAscii = vbKeyReturn Then imgConectarse_Click
 End Sub
