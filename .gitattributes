@@ -2,18 +2,17 @@
 * text=auto
 
 # Declare encoding of all files for code.
-*.bas encoding=microsoft-1252
-*.cls encoding=microsoft-1252
-*.vbp encoding=microsoft-1252
-*.frm encoding=microsoft-1252
-*.frx encoding=microsoft-1252
+*.bas encoding=ansi
+*.cls encoding=ansi
+*.vbp encoding=ansi
+*.frm encoding=ansi
 
 # Declare files that will always have CRLF line endings on checkout.
 *.bas text eol=crlf
 *.cls text eol=crlf
 *.vbp text eol=crlf
-*.frx text eol=crlf
 *.frm text eol=crlf
+*.frx text=lf
 
 # Denote all files that are truly binary and should not be modified.
 *.png binary
