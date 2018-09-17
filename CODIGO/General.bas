@@ -33,6 +33,10 @@ Attribute VB_Name = "Mod_General"
 
 Option Explicit
 
+#If False Then 'to fix VB fucking up the var names
+    Dim status, Nombre, PicInv As String
+#End If
+
 Public iplst As String
 
 Public bFogata As Boolean
@@ -681,7 +685,6 @@ On Error GoTo errorH
     For i = 1 To c
         ServersLst(i).Desc = GetVar(f, "S" & i, "Desc")
         ServersLst(i).Ip = Trim$(GetVar(f, "S" & i, "Ip"))
-        ServersLst(i).PassRecPort = CInt(GetVar(f, "S" & i, "P2"))
         ServersLst(i).Puerto = CInt(GetVar(f, "S" & i, "PJ"))
         frmConnect.lstServers.AddItem (ServersLst(i).Desc)
     Next i
@@ -715,7 +718,6 @@ On Error Resume Next
         ServersLst(i).Ip = ReadField(1, cur$, Asc(":"))
         ServersLst(i).Puerto = ReadField(2, cur$, Asc(":"))
         ServersLst(i).Desc = ReadField(4, cur$, Asc(":"))
-        ServersLst(i).PassRecPort = ReadField(3, cur$, Asc(":"))
     Next i
     
     CurServer = 1

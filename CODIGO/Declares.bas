@@ -164,7 +164,6 @@ Public Type tServerInfo
     Ip As String
     Puerto As Integer
     Desc As String
-    PassRecPort As Integer
 End Type
 
 Public ServersLst() As tServerInfo
