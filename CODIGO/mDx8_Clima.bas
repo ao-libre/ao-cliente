@@ -29,7 +29,7 @@ Public Estado_Actual_Date As Byte
 Public current_State As Byte
 Public blendSteps(1 To 3) As Double
 Public blendAmount(1 To 3) As Double
-Public tempcolor(1 To 3) As Double
+Public TempColor(1 To 3) As Double
 Public greaterDif, greaterStep As Integer
 
 Public Sub Init_MeteoEngine()
@@ -128,12 +128,12 @@ Public Sub Start_Rampage()
 'Last Modification: 27/05/2010
 'Init Rampage
 '***************************************************
-    Dim X As Byte, Y As Byte, tempcolor As D3DCOLORVALUE
-    tempcolor.a = 255: tempcolor.b = 255: tempcolor.r = 255: tempcolor.g = 255
+    Dim X As Byte, Y As Byte, TempColor As D3DCOLORVALUE
+    TempColor.a = 255: TempColor.b = 255: TempColor.r = 255: TempColor.g = 255
     
         For X = XMinMapSize To XMaxMapSize
             For Y = YMinMapSize To YMaxMapSize
-                Call Engine_D3DColor_To_RGB_List(MapData(X, Y).Engine_Light(), tempcolor)
+                Call Engine_D3DColor_To_RGB_List(MapData(X, Y).Engine_Light(), TempColor)
             Next Y
         Next X
 End Sub
@@ -168,9 +168,9 @@ Public Sub calculateBlendSteps(ByVal origState As Integer, ByVal destState As In
     blendSteps(3) = 0
     greaterDif = 0
     greaterStep = 0
-    tempcolor(1) = 0
-    tempcolor(2) = 0
-    tempcolor(3) = 0
+    TempColor(1) = 0
+    TempColor(2) = 0
+    TempColor(3) = 0
     
     With Estados(destState)
         blendSteps(1) = .r - Estados(origState).r
@@ -180,19 +180,19 @@ Public Sub calculateBlendSteps(ByVal origState As Integer, ByVal destState As In
     
     'we save the state to change since we are using floating point values we cant
     'directly set the blendAmount to Estado_actual
-    tempcolor(1) = Estados(Estado_Actual_Date).r
-    tempcolor(2) = Estados(Estado_Actual_Date).g
-    tempcolor(3) = Estados(Estado_Actual_Date).b
+    TempColor(1) = Estados(Estado_Actual_Date).r
+    TempColor(2) = Estados(Estado_Actual_Date).g
+    TempColor(3) = Estados(Estado_Actual_Date).b
     
 
-    If blendSteps(1) >= blendSteps(2) Then
+    If Abs(blendSteps(1)) >= Abs(blendSteps(2)) Then
         greaterDif = blendSteps(1)
         greaterStep = 1
-        If blendSteps(1) < blendSteps(3) Then
+        If Abs(blendSteps(1)) < Abs(blendSteps(3)) Then
             greaterDif = blendSteps(3)
             greaterStep = 3
         End If
-    ElseIf blendSteps(2) >= blendSteps(3) Then
+    ElseIf Abs(blendSteps(2)) >= Abs(blendSteps(3)) Then
         greaterDif = blendSteps(2)
         greaterStep = 2
     Else
@@ -200,18 +200,28 @@ Public Sub calculateBlendSteps(ByVal origState As Integer, ByVal destState As In
         greaterStep = 3
     End If
     
-    blendAmount(greaterStep) = 1
-    
+        blendAmount(greaterStep) = 1
+
     If greaterStep = 1 Then
-        blendAmount(2) = blendSteps(1) / blendSteps(2)
-        blendAmount(3) = blendSteps(1) / blendSteps(3)
+        blendAmount(2) = blendSteps(2) / blendSteps(greaterStep)
+        blendAmount(3) = blendSteps(3) / blendSteps(greaterStep)
     ElseIf greaterStep = 2 Then
-        blendAmount(1) = blendSteps(2) / blendSteps(1)
-        blendAmount(3) = blendSteps(2) / blendSteps(3)
+        blendAmount(1) = blendSteps(1) / blendSteps(greaterStep)
+        blendAmount(3) = blendSteps(3) / blendSteps(greaterStep)
     Else
-        blendAmount(1) = blendSteps(3) / blendSteps(1)
-        blendAmount(2) = blendSteps(3) / blendSteps(2)
+        blendAmount(1) = blendSteps(1) / blendSteps(greaterStep)
+        blendAmount(2) = blendSteps(2) / blendSteps(greaterStep)
     End If
+    
+    Dim i As Byte
+    
+    
+    For i = 1 To UBound(blendAmount())
+    
+        If blendSteps(i) < 0 And blendAmount(i) > 0 Then
+            blendAmount(i) = blendAmount(i) * -1
+        End If
+    Next i
     
 End Sub
 
@@ -232,24 +242,29 @@ For i = 1 To UBound(blendAmount())
     
     If blendAmount(i) < 0 And blendSteps(i) <> 0 Then
         'generamos el nuevo color
-        tempcolor(i) = tempcolor(i) - blendAmount(i)
-        blendSteps(i) = blendSteps(i) + blendAmount(i)
+        TempColor(i) = TempColor(i) + blendAmount(i)
+        blendSteps(i) = blendSteps(i) - blendAmount(i)
         If blendSteps(i) > 0 Then blendSteps(i) = 0
         
     ElseIf blendAmount(i) > 0 And blendSteps(i) <> 0 Then
         'generamos el nuevo color
-        tempcolor(i) = tempcolor(i) + blendAmount(i)
-        blendSteps(i) = blendSteps(i) + blendAmount(i)
+        TempColor(i) = TempColor(i) + blendAmount(i)
+        blendSteps(i) = blendSteps(i) - blendAmount(i)
         If blendSteps(i) < 0 Then blendSteps(i) = 0
-        
+        'TODO: on some situations (ex. at TempColor(i) = 254 ish) blendSteps(i) - blendAmount(i) dont behave as expected
     End If
     
 Next i
-Dim tempocolor As Long
-tempocolor = D3DColorARGB(255, CInt(tempcolor(1)), CInt(tempcolor(2)), CInt(tempcolor(3)))
-'lo aplicamos al mapa
-Call applyLightToMap(tempcolor)
 
+Dim tempColorVal As D3DCOLORVALUE
+
+tempColorVal.a = 255
+tempColorVal.r = CInt(TempColor(1))
+tempColorVal.g = CInt(TempColor(2))
+tempColorVal.b = CInt(TempColor(3))
+
+'lo aplicamos al mapa
+Call applyLightToMap(tempColorVal)
 
     
 End Sub
@@ -257,7 +272,13 @@ End Sub
 Sub applyLightToMap(Color As D3DCOLORVALUE)
 
 Dim X As Byte, Y As Byte
-    
+
+'quick fix to prevent rgba overflow
+If Color.r > 255 Then Color.r = 255
+If Color.g > 255 Then Color.g = 255
+If Color.b > 255 Then Color.b = 255
+If Color.a > 255 Then Color.a = 255
+
 For X = XMinMapSize To XMaxMapSize
     For Y = YMinMapSize To YMaxMapSize
         Call Engine_D3DColor_To_RGB_List(MapData(X, Y).Engine_Light(), Color)
