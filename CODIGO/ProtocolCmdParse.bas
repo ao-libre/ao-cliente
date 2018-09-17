@@ -1220,7 +1220,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /forcewav WAV.")
                 End If
                 
-            Case "/BORRARPENA"
+            Case "/MODIFICARPENA"
                 If notNullArguments Then
                     tmpArr = Split(ArgumentosRaw, "@", 3)
                     If UBound(tmpArr) = 2 Then

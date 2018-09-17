@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmPanelGm 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Panel GM"
@@ -1043,7 +1043,7 @@ Begin VB.Form frmPanelGm
          Width           =   1335
       End
       Begin VB.CommandButton cmdBORRARPENA 
-         Caption         =   "/BORRARPENA"
+         Caption         =   "/MODIFICARPENA"
          CausesValidation=   0   'False
          Height          =   315
          Left            =   2520
