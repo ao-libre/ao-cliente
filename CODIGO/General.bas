@@ -34,7 +34,7 @@ Attribute VB_Name = "Mod_General"
 Option Explicit
 
 #If False Then 'to fix VB fucking up the var names
-    Dim status, Nombre, PicInv As String
+    Dim status, Nombre, PicInv, F As String
 #End If
 
 Public iplst As String
@@ -672,20 +672,20 @@ Public Sub CargarServidores()
 'Added Instruction "CloseClient" before End so the mutex is cleared
 '********************************
 On Error GoTo errorH
-    Dim f As String
+    Dim F As String
     Dim c As Integer
     Dim i As Long
     
-    f = App.path & "\init\sinfo.dat"
-    c = Val(GetVar(f, "INIT", "Cant"))
+    F = App.path & "\init\sinfo.dat"
+    c = Val(GetVar(F, "INIT", "Cant"))
     
     frmConnect.lstServers.Clear
     
     ReDim ServersLst(1 To c) As tServerInfo
     For i = 1 To c
-        ServersLst(i).Desc = GetVar(f, "S" & i, "Desc")
-        ServersLst(i).Ip = Trim$(GetVar(f, "S" & i, "Ip"))
-        ServersLst(i).Puerto = CInt(GetVar(f, "S" & i, "PJ"))
+        ServersLst(i).Desc = GetVar(F, "S" & i, "Desc")
+        ServersLst(i).Ip = Trim$(GetVar(F, "S" & i, "Ip"))
+        ServersLst(i).Puerto = CInt(GetVar(F, "S" & i, "PJ"))
         frmConnect.lstServers.AddItem (ServersLst(i).Desc)
     Next i
     CurServer = 1
@@ -1590,27 +1590,24 @@ Sub DownloadServersFile(myURL As String)
 'implemented by Cucsifae
 '**********************************************************
 On Error GoTo error
+Dim strData As String
+Dim F As Integer
 
-Dim oStream As Object
-Dim WinHttpReq As Object
-Set WinHttpReq = CreateObject("Microsoft.XMLHTTP")
-WinHttpReq.Open "GET", myURL, False
-WinHttpReq.Send
+strData = frmCargando.Inet1.OpenURL(myURL)
 
-myURL = WinHttpReq.responseBody
-If WinHttpReq.status = 200 Then
-    Set oStream = CreateObject("ADODB.Stream")
-    oStream.Open
-    oStream.Type = 1
-    oStream.Write WinHttpReq.responseBody
-    oStream.SaveToFile App.path & "\init\sinfo.dat", 2  ' 1 = no overwrite, 2 = overwrite
-    oStream.Close
-End If
+If frmCargando.Inet1.ResponseCode <> 0 Then GoTo errorinet
+F = FreeFile
+
+Open App.path & "/init/sinfo.dat" For Output As #F
+    Print #F, strData
+Close #F
 
 Exit Sub
 
 error:
     Debug.Print Err.number
     Call MsgBox("Error al descargar la lista de servidores: " & Err.Description, vbCritical + vbOKOnly, "Argentum Online")
-
+    Exit Sub
+errorinet:
+    Call MsgBox("Error al descargar la lista de servidores: Error de Inet " & frmCargando.Inet1.ResponseCode, vbCritical + vbOKOnly, "Argentum Online")
 End Sub
