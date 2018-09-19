@@ -872,10 +872,6 @@ Private Sub imgPestania_Click(Index As Integer)
 
 End Sub
 
-Private Sub picUpgrade_Click(Index As Integer)
-
-End Sub
-
 Private Sub Scroll_Change()
     Dim i As Long
     

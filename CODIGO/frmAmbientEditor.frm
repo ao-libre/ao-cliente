@@ -340,6 +340,3 @@ Private Sub Command9_Click()
     End If
 End Sub
 
-Private Sub Text1_Change(Index As Integer)
-
-End Sub

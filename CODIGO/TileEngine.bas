@@ -1366,8 +1366,26 @@ Public Function RenderSounds()
 'Last Modify Date: 3/30/2008
 'Actualiza todos los sonidos del mapa.
 '**************************************************************
-
 Dim Location As Position
+
+        If bRain And bLluvia(UserMap) Then
+                If bTecho Then
+                    If frmMain.IsPlaying <> PlayLoop.plLluviain Then
+                        If RainBufferIndex Then _
+                            Call Audio.StopWave(RainBufferIndex)
+                        RainBufferIndex = Audio.PlayWave("lluviain.wav", 0, 0, LoopStyle.Enabled)
+                        frmMain.IsPlaying = PlayLoop.plLluviain
+                    End If
+                Else
+                    If frmMain.IsPlaying <> PlayLoop.plLluviaout Then
+                        If RainBufferIndex Then _
+                            Call Audio.StopWave(RainBufferIndex)
+                        RainBufferIndex = Audio.PlayWave("lluviaout.wav", 0, 0, LoopStyle.Enabled)
+                        frmMain.IsPlaying = PlayLoop.plLluviaout
+                    End If
+                End If
+        End If
+
         If bFogata Then
                 bFogata = Map_CheckBonfire(Location)
 
@@ -1487,7 +1505,6 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Inte
         If UserCiego Then
             DirectDevice.Clear 0, ByVal 0, D3DCLEAR_TARGET, 0, 1#, 0
         Else
-            Call Actualizar_Estado(Estado_Actual_Date)
             Call RenderScreen(UserPos.X - AddtoUserPos.X, UserPos.Y - AddtoUserPos.Y, OffsetCounterX, OffsetCounterY)
         End If
         
