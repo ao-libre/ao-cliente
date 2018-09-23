@@ -217,6 +217,9 @@ Public Type MapBlock
     
     Trigger As Integer
     Engine_Light(0 To 3) As Long 'Standelf, Light Engine.
+    
+    fX As Grh 'Cucsifae: send FX to map coordinates
+    FxIndex As Integer
 End Type
 
 'Info de cada mapa
@@ -1249,6 +1252,16 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
                             Call DDrawTransGrhtoSurface(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1, X, Y)
                         End If
                     End If
+                    
+                    'map FX
+                    If .FxIndex <> 0 Then
+                        Call DDrawTransGrhtoSurface(.fX, PixelOffsetXTemp + FxData(.FxIndex).OffsetX, PixelOffsetYTemp + FxData(.FxIndex).OffsetY, 1, MapData(X, Y).Engine_Light(), 1, X, Y)
+                        
+                        If .fX.Started = 0 Then _
+                            .FxIndex = 0
+                    End If
+                    
+                    
                 End With
             End If
             
@@ -1528,7 +1541,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Inte
     If frmBancoObj.PicBancoInv.Visible Then _
         Call InvBanco(0).DrawInv
          
-    If frmBancoObj.PicInv.Visible Then _
+    If frmBancoObj.picInv.Visible Then _
         Call InvBanco(1).DrawInv
     
     
