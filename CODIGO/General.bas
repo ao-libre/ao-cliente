@@ -34,7 +34,7 @@ Attribute VB_Name = "Mod_General"
 Option Explicit
 
 #If False Then 'to fix VB fucking up the var names
-    Dim status, Nombre, PicInv, F As String
+    Dim Status, nombre, picInv, f As String
 #End If
 
 Public iplst As String
@@ -562,6 +562,9 @@ Sub SwitchMap(ByVal Map As Integer)
             If (Obj > 0) Then
                 Call Map_DestroyObject(X, Y)
             End If
+            
+            MapData(X, Y).fX = 0
+            MapData(X, Y).FxIndex = 0
             
             'Erase Lights
             Call Engine_D3DColor_To_RGB_List(MapData(X, Y).Engine_Light(), Estado_Actual) 'Standelf, Light & Meteo Engine
