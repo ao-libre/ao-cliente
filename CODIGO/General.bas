@@ -563,9 +563,6 @@ Sub SwitchMap(ByVal Map As Integer)
                 Call Map_DestroyObject(X, Y)
             End If
             
-            MapData(X, Y).fX = 0
-            MapData(X, Y).FxIndex = 0
-            
             'Erase Lights
             Call Engine_D3DColor_To_RGB_List(MapData(X, Y).Engine_Light(), Estado_Actual) 'Standelf, Light & Meteo Engine
         Next X
@@ -684,11 +681,13 @@ On Error GoTo errorH
     
     frmConnect.lstServers.Clear
     
+    frmConnect.lstServers.Clear
+    
     ReDim ServersLst(1 To c) As tServerInfo
     For i = 1 To c
-        ServersLst(i).Desc = GetVar(F, "S" & i, "Desc")
-        ServersLst(i).Ip = Trim$(GetVar(F, "S" & i, "Ip"))
-        ServersLst(i).Puerto = CInt(GetVar(F, "S" & i, "PJ"))
+        ServersLst(i).Desc = GetVar(f, "S" & i, "Desc")
+        ServersLst(i).Ip = Trim$(GetVar(f, "S" & i, "Ip"))
+        ServersLst(i).Puerto = CInt(GetVar(f, "S" & i, "PJ"))
         frmConnect.lstServers.AddItem (ServersLst(i).Desc)
     Next i
     CurServer = 1
@@ -697,7 +696,7 @@ Exit Sub
 errorH:
     Call MsgBox("Error cargando los servidores, actualicelos de la web", vbCritical + vbOKOnly, "Argentum Online")
     
-    Call CloseClient
+    'Call CloseClient
 End Sub
 
 Public Sub InitServersList()
@@ -876,10 +875,10 @@ Private Sub LoadInitialConfig()
     '###########
     ' SERVIDORES
     'TODO : esto de ServerRecibidos no se podria sacar???
-    Call AddtoRichTextBox(frmCargando.status, "Buscando servidores... ", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.Status, "Buscando servidores... ", 255, 255, 255, True, False, True)
     Call DownloadServersFile("https://raw.githubusercontent.com/ao-libre/ao-cliente/master/INIT/sinfo.dat")
-    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
-    Call AddtoRichTextBox(frmCargando.status, "Cargando servidores... ", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.Status, "Hecho", 255, 0, 0, True, False, False)
+    Call AddtoRichTextBox(frmCargando.Status, "Cargando servidores... ", 255, 255, 255, True, False, True)
     Call CargarServidores
     ServersRecibidos = True
     Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
@@ -961,7 +960,7 @@ Private Sub LoadInitialConfig()
     Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
     
     
-    Call AddtoRichTextBox(frmCargando.status, "                    ¡Bienvenido a Argentum Online!", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.Status, "                    ¡Bienvenido a Argentum Online!", 255, 255, 255, True, False, True)
 
     'Give the user enough time to read the welcome text
     Call Sleep(500)
@@ -1594,16 +1593,16 @@ Sub DownloadServersFile(myURL As String)
 '**********************************************************
 On Error GoTo error
 Dim strData As String
-Dim F As Integer
+Dim f As Integer
 
 strData = frmCargando.Inet1.OpenURL(myURL)
 
 If frmCargando.Inet1.ResponseCode <> 0 Then GoTo errorinet
-F = FreeFile
+f = FreeFile
 
-Open App.path & "/init/sinfo.dat" For Output As #F
-    Print #F, strData
-Close #F
+Open App.path & "/init/sinfo.dat" For Output As #f
+    Print #f, strData
+Close #f
 
 Exit Sub
 
