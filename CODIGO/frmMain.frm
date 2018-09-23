@@ -71,23 +71,23 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   450
       Index           =   2
-      Left            =   11040
+      Left            =   10875
       MousePointer    =   99  'Custom
       ScaleHeight     =   450
       ScaleWidth      =   420
       TabIndex        =   33
-      Top             =   8400
+      Top             =   8445
       Width           =   420
    End
    Begin VB.PictureBox picSM 
       Appearance      =   0  'Flat
       AutoRedraw      =   -1  'True
-      BackColor       =   &H80000005&
+      BackColor       =   &H00000000&
       BorderStyle     =   0  'None
       ForeColor       =   &H80000008&
       Height          =   450
       Index           =   1
-      Left            =   10575
+      Left            =   10470
       MousePointer    =   99  'Custom
       ScaleHeight     =   450
       ScaleWidth      =   420
@@ -103,7 +103,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   450
       Index           =   0
-      Left            =   10200
+      Left            =   10050
       MousePointer    =   99  'Custom
       ScaleHeight     =   30
       ScaleMode       =   3  'Pixel
@@ -219,6 +219,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2619
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -334,7 +335,7 @@ Begin VB.Form frmMain
       EndProperty
       Height          =   450
       Left            =   10320
-      MouseIcon       =   "frmMain.frx":0388
+      MouseIcon       =   "frmMain.frx":0387
       MousePointer    =   99  'Custom
       TabIndex        =   19
       Top             =   1920
@@ -367,7 +368,7 @@ Begin VB.Form frmMain
    Begin VB.Image cmdInfo 
       Height          =   405
       Left            =   10680
-      MouseIcon       =   "frmMain.frx":04DA
+      MouseIcon       =   "frmMain.frx":04D9
       MousePointer    =   99  'Custom
       Top             =   5280
       Visible         =   0   'False
@@ -397,9 +398,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   0
       Left            =   11430
-      MouseIcon       =   "frmMain.frx":062C
+      MouseIcon       =   "frmMain.frx":062B
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":077E
+      Picture         =   "frmMain.frx":077D
       Top             =   3480
       Visible         =   0   'False
       Width           =   225
@@ -408,9 +409,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   1
       Left            =   11430
-      MouseIcon       =   "frmMain.frx":0AC2
+      MouseIcon       =   "frmMain.frx":0AC1
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":0C14
+      Picture         =   "frmMain.frx":0C13
       Top             =   3225
       Visible         =   0   'False
       Width           =   225
@@ -529,7 +530,7 @@ Begin VB.Form frmMain
    Begin VB.Image CmdLanzar 
       Height          =   375
       Left            =   8760
-      MouseIcon       =   "frmMain.frx":0F58
+      MouseIcon       =   "frmMain.frx":0F57
       MousePointer    =   99  'Custom
       Top             =   5280
       Visible         =   0   'False
@@ -548,7 +549,7 @@ Begin VB.Form frmMain
       EndProperty
       Height          =   435
       Left            =   8880
-      MouseIcon       =   "frmMain.frx":10AA
+      MouseIcon       =   "frmMain.frx":10A9
       MousePointer    =   99  'Custom
       TabIndex        =   18
       Top             =   1920
@@ -1626,8 +1627,8 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
         SendTxt.Visible = False
         
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
         Else
             hlst.SetFocus
         End If
@@ -1726,7 +1727,7 @@ Private Sub cmdINFO_Click()
      
         If Index <> 0 Then _
             Msj = "%%%%%%%%%%%% INFO DEL HECHIZO %%%%%%%%%%%%" & vbCrLf _
-                                               & "Nombre:" & Hechizos(Index).nombre & vbCrLf _
+                                               & "Nombre:" & Hechizos(Index).Nombre & vbCrLf _
                                                & "Descripción:" & Hechizos(Index).Desc & vbCrLf _
                                                & "Skill requerido: " & Hechizos(Index).SkillRequerido & " de magia." & vbCrLf _
                                                & "Maná necesario: " & Hechizos(Index).ManaRequerida & vbCrLf _
@@ -1937,13 +1938,13 @@ Private Sub Label4_Click()
     InvEqu.Picture = LoadPicture(App.path & "\Graficos\Centroinventario.jpg")
 
     ' Activo controles de inventario
-    picInv.Visible = True
+    PicInv.Visible = True
     imgInvScrollUp.Visible = True
     imgInvScrollDown.Visible = True
 
     ' Desactivo controles de hechizo
     hlst.Visible = False
-    cmdInfo.Visible = False
+    cmdINFO.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = False
@@ -1958,14 +1959,14 @@ Private Sub Label7_Click()
     
     ' Activo controles de hechizos
     hlst.Visible = True
-    cmdInfo.Visible = True
+    cmdINFO.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True
     cmdMoverHechi(1).Visible = True
     
     ' Desactivo controles de inventario
-    picInv.Visible = False
+    PicInv.Visible = False
     imgInvScrollUp.Visible = False
     imgInvScrollDown.Visible = False
 
@@ -1998,8 +1999,8 @@ On Error Resume Next  'el .SetFocus causaba errores al salir y volver a entrar
         (Not frmMSG.Visible) And (Not MirandoForo) And _
         (Not frmEstadisticas.Visible) And (Not frmCantidad.Visible) And (Not MirandoParty) Then
          
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
         ElseIf hlst.Visible Then
             hlst.SetFocus
         End If
@@ -2007,8 +2008,8 @@ On Error Resume Next  'el .SetFocus causaba errores al salir y volver a entrar
 End Sub
 
 Private Sub RecTxt_KeyDown(KeyCode As Integer, Shift As Integer)
-    If picInv.Visible Then
-        picInv.SetFocus
+    If PicInv.Visible Then
+        PicInv.SetFocus
     Else
         hlst.SetFocus
     End If
@@ -2064,8 +2065,8 @@ Private Sub SendCMSTXT_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
         Me.SendCMSTXT.Visible = False
         
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
         Else
             hlst.SetFocus
         End If
@@ -2194,8 +2195,8 @@ If tX >= MinXBorder And tY >= MinYBorder And _
             m.SetMenuId 1
             m.ListaInit 2, False
             
-            If charlist(MapData(tX, tY).CharIndex).nombre <> "" Then
-                m.ListaSetItem 0, charlist(MapData(tX, tY).CharIndex).nombre, True
+            If charlist(MapData(tX, tY).CharIndex).Nombre <> "" Then
+                m.ListaSetItem 0, charlist(MapData(tX, tY).CharIndex).Nombre, True
             Else
                 m.ListaSetItem 0, "<NPC>", True
             End If
