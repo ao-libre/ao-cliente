@@ -21,17 +21,18 @@ Begin VB.Form frmCargando
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
    Begin RichTextLib.RichTextBox Status 
-      Height          =   1545
+      Height          =   1905
       Left            =   2400
       TabIndex        =   1
       TabStop         =   0   'False
       ToolTipText     =   "Mensajes del servidor"
-      Top             =   4320
+      Top             =   4200
       Width           =   5160
       _ExtentX        =   9102
-      _ExtentY        =   2725
+      _ExtentY        =   3360
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmCargando.frx":0000
@@ -103,7 +104,9 @@ Attribute VB_Exposed = False
 'Pablo Ignacio Márquez
 
 Option Explicit
-
+#If False Then 'to fix VB fucking up the var names
+    Dim f As Variant
+#End If
 Dim f As Integer
 
 Private Sub Form_Load()
@@ -111,6 +114,7 @@ Private Sub Form_Load()
     Me.Picture = LoadPicture(DirGraficos & "VentanaCargando.jpg")
     LOGO.Picture = LoadPicture(DirGraficos & "ImagenCargando.jpg")
 End Sub
+
 
 Private Sub LOGO_KeyPress(KeyAscii As Integer)
     Debug.Print 2
