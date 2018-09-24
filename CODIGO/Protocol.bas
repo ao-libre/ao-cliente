@@ -10535,15 +10535,16 @@ Private Sub HandleAttackAnim()
     charlist(CharIndex).attacking = True 'should be done in separated sub?
 End Sub
 Private Sub HandleFXtoMap()
-    If incomingData.length < 7 Then
+    If incomingData.length < 8 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
     
-    Dim X, Y, FxIndex As Integer
+    Dim X, Y, FxIndex, Loops As Integer
     
     'Remove packet ID
     Call incomingData.ReadByte
+    Loops = incomingData.ReadByte
     X = incomingData.ReadInteger
     Y = incomingData.ReadInteger
     FxIndex = incomingData.ReadInteger
@@ -10553,7 +10554,7 @@ Private Sub HandleFXtoMap()
     
         If .FxIndex > 0 Then
                         
-        Call InitGrh(.fX, FxData(fX).Animacion)
+        Call InitGrh(.fX, FxData(.FxIndex).Animacion)
             .fX.Loops = Loops
         End If
     End With
