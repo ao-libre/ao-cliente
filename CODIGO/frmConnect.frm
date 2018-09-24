@@ -277,6 +277,7 @@ Public LastButtonPressed As clsGraphicalButton
 
 Private Sub Form_Activate()
 'On Error Resume Next
+Call CargarServidores
 
 If ServersRecibidos Then
     If CurServer <> 0 Then
