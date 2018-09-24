@@ -512,7 +512,7 @@ Sub SwitchMap(ByVal Map As Integer)
     For Y = YMinMapSize To YMaxMapSize
         For X = XMinMapSize To XMaxMapSize
             Get handle, , ByFlags
-            
+            MapData(X, Y).FxIndex = 0
             MapData(X, Y).Blocked = (ByFlags And 1)
             
             Get handle, , MapData(X, Y).Graphic(1).GrhIndex

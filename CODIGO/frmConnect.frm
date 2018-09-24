@@ -21,6 +21,27 @@ Begin VB.Form frmConnect
    ScaleWidth      =   800
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
+   Begin VB.ListBox lstServers 
+      Appearance      =   0  'Flat
+      BackColor       =   &H00000000&
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H0000FF00&
+      Height          =   4905
+      ItemData        =   "frmConnect.frx":000C
+      Left            =   8685
+      List            =   "frmConnect.frx":000E
+      TabIndex        =   5
+      Top             =   1680
+      Width           =   2775
+   End
    Begin VB.TextBox txtPasswd 
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
@@ -555,6 +576,11 @@ End Sub
 
 Private Sub imgVerForo_Click()
     Call ShellExecute(0, "Open", "https://www.reddit.com/r/argentumonlineoficial/", "", App.path, SW_SHOWNORMAL)
+End Sub
+
+Private Sub lstServers_Click()
+ IPTxt.Text = ServersLst(lstServers.ListIndex + 1).Ip
+ PortTxt.Text = ServersLst(lstServers.ListIndex + 1).Puerto
 End Sub
 
 Private Sub txtPasswd_KeyPress(KeyAscii As Integer)

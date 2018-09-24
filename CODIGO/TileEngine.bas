@@ -35,7 +35,9 @@ Attribute VB_Name = "Mod_TileEngine"
 
 Option Explicit
 
-
+#If False Then 'to fix VB fucking up the var names
+    Dim Nombre, PicInv As String
+#End If
 
 'Quad Draw
 Public indexList(0 To 5) As Integer
@@ -1251,6 +1253,14 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
                         Else 'NORMAL
                             Call DDrawTransGrhtoSurface(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1, X, Y)
                         End If
+                    End If
+                    
+                    If MapData(X, Y).FxIndex <> 0 Then
+                        
+                        Call DDrawTransGrhtoSurface(MapData(X, Y).fx, PixelOffsetXTemp + FxData(.FxIndex).OffsetX, PixelOffsetYTemp + FxData(.FxIndex).OffsetY, 1, MapData(X, Y).Engine_Light(), 1, X, Y, True)
+                        
+                        If MapData(X, Y).fx.Started = 0 Then _
+                            MapData(X, Y).FxIndex = 0
                     End If
                 End With
             End If
