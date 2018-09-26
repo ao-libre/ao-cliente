@@ -6,7 +6,7 @@ Attribute VB_Name = "mDx8_Clima"
     the Lights.
 '***************************************************
 
-Enum e_estados
+Public Enum e_estados
     AMANECER = 1
     MEDIODIA = 2
     DIA = 3
@@ -15,7 +15,7 @@ Enum e_estados
     Lluvia = 6
 End Enum
 
-Enum e_render
+Public Enum e_render
     BEGINING = 1
     RUNNING = 2
     STOPPING = 3
@@ -75,9 +75,9 @@ Public Sub Init_MeteoEngine()
     
     With Estados(e_estados.Lluvia)
         .a = 255
-        .r = 230
-        .g = 230
-        .b = 230
+        .r = 210
+        .g = 210
+        .b = 210
     End With
     
     Estado_Actual_Date = 3
@@ -116,6 +116,11 @@ Public Sub Actualizar_Estado(ByVal Estado As Byte)
         Call BlendStates
     ElseIf current_State = e_render.RUNNING Then
         Call applyLightToMap(Estado_Actual)
+        
+        If Estado_Actual_Date = e_estados.Lluvia Then
+            bRain = True
+        End If
+        
         current_State = e_render.STOPPED
     End If
     
@@ -287,4 +292,15 @@ Next X
         
 Call LightRenderAll
 
+End Sub
+
+Public Sub ShowRainNoBlend()
+'**************************************************************************************
+'*Shows the rain light condition without blending it, used to change maps while raining
+'*Cucsifae
+'**************************************************************************************
+    Estado_Actual_Date = e_estados.Lluvia
+    current_State = e_render.RUNNING
+    Estado_Actual = Estados(Estado_Actual_Date)
+    Actualizar_Estado (Estado_Actual_Date)
 End Sub

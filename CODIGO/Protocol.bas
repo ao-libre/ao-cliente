@@ -33,7 +33,9 @@ Attribute VB_Name = "Protocol"
 ' @date     20060517
 
 Option Explicit
-
+#If False Then
+    Dim nombre, picInv, Status As Variant
+#End If
 ''
 ' TODO : /BANIP y /UNBANIP ya no trabajan con nicks. Esto lo puede mentir en forma local el cliente con un paquete a NickToIp
 
@@ -1915,6 +1917,8 @@ Private Sub HandleChangeMap()
                 Call Audio.StopWave(RainBufferIndex)
                 RainBufferIndex = 0
                 frmMain.IsPlaying = PlayLoop.plNone
+        ElseIf bRain Then 'if already raining we just change the map light to that state
+            Call ShowRainNoBlend
         End If
     Else
         'no encontramos el mapa en el hd
@@ -2902,9 +2906,12 @@ Private Sub HandleRainToggle()
             End If
             
             frmMain.IsPlaying = PlayLoop.plNone
+            bRain = False
+            Actualizar_Estado (e_estados.DIA)
+    ElseIf Not bRain And bLluvia(UserMap) Then
+            Actualizar_Estado (e_estados.Lluvia)
     End If
     
-    bRain = Not bRain
 End Sub
 
 ''

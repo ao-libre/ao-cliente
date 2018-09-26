@@ -334,6 +334,8 @@ Sub SetConnected()
     'Load main form
     frmMain.Visible = True
     
+    Estado_Actual_Date = e_estados.DIA
+
     Call frmMain.ControlSM(eSMType.mWork, False)
     
     FPSFLAG = True
