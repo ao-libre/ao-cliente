@@ -166,6 +166,7 @@ Private Enum ServerPacketID
     CancelOfferItem
     DecirPalabrasMagicas
     PlayAttackAnim
+    FXtoMap
 End Enum
 
 Private Enum ClientPacketID
@@ -753,6 +754,9 @@ On Error Resume Next
             
         Case ServerPacketID.PlayAttackAnim
             Call HandleAttackAnim
+            
+        Case ServerPacketID.FXtoMap
+            Call HandleFXtoMap
         
         '*******************
         'GM messages
@@ -10535,4 +10539,28 @@ Private Sub HandleAttackAnim()
     'Set the animation trigger on true
     charlist(CharIndex).attacking = True 'should be done in separated sub?
 End Sub
-
+Private Sub HandleFXtoMap()
+    If incomingData.length < 8 Then
+        Err.Raise incomingData.NotEnoughDataErrCode
+        Exit Sub
+    End If
+    
+    Dim X, Y, FxIndex, Loops As Integer
+    
+    'Remove packet ID
+    Call incomingData.ReadByte
+    Loops = incomingData.ReadByte
+    X = incomingData.ReadInteger
+    Y = incomingData.ReadInteger
+    FxIndex = incomingData.ReadInteger
+    'Set the fx on the map
+    With MapData(X, Y) 'TODO: hay que hacer una funcion separada que haga esto
+        .FxIndex = FxIndex
+    
+        If .FxIndex > 0 Then
+                        
+        Call InitGrh(.fX, FxData(.FxIndex).Animacion)
+            .fX.Loops = Loops
+        End If
+    End With
+End Sub

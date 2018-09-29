@@ -1,7 +1,14 @@
 [INIT]
-Cant =1
+Cant =2
 
 [S1]
-Desc=Argentum Online - Oficial
-IP=191.237.255.81
+Desc=Argentum Online Libre - Oficial
+IP=190.0.163.13
+PJ= 7667
+
+[S2]
+Desc=Argentum Online - Localhost
+IP=localhost
 PJ= 7666
+
+

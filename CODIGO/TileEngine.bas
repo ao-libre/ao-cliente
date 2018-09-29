@@ -35,7 +35,9 @@ Attribute VB_Name = "Mod_TileEngine"
 
 Option Explicit
 
-
+#If False Then 'to fix VB fucking up the var names
+    Dim Nombre, PicInv As String
+#End If
 
 'Quad Draw
 Public indexList(0 To 5) As Integer
@@ -173,7 +175,7 @@ Public Type Char
     Escudo As ShieldAnimData
     UsandoArma As Boolean
     
-    fX As Grh
+    fx As Grh
     FxIndex As Integer
     
     Criminal As Byte
@@ -217,6 +219,9 @@ Public Type MapBlock
     
     Trigger As Integer
     Engine_Light(0 To 3) As Long 'Standelf, Light Engine.
+    
+    fx As Grh
+    FxIndex As Integer
 End Type
 
 'Info de cada mapa
@@ -1249,6 +1254,14 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
                             Call DDrawTransGrhtoSurface(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1, X, Y)
                         End If
                     End If
+                    
+                    If MapData(X, Y).FxIndex <> 0 Then
+                        
+                        Call DDrawTransGrhtoSurface(MapData(X, Y).fx, PixelOffsetXTemp + FxData(.FxIndex).OffsetX, PixelOffsetYTemp + FxData(.FxIndex).OffsetY, 1, MapData(X, Y).Engine_Light(), 1, X, Y, True)
+                        
+                        If MapData(X, Y).fx.Started = 0 Then _
+                            MapData(X, Y).FxIndex = 0
+                    End If
                 End With
             End If
             
@@ -1868,10 +1881,10 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
         Movement_Speed = 1
         'Draw FX
         If .FxIndex <> 0 Then
-            Call DDrawTransGrhtoSurface(.fX, PixelOffsetX + FxData(.FxIndex).OffsetX, PixelOffsetY + FxData(.FxIndex).OffsetY, 1, SetARGB_Alpha(MapData(.Pos.X, .Pos.Y).Engine_Light(), 180), 1, .Pos.X, .Pos.Y, True)
+            Call DDrawTransGrhtoSurface(.fx, PixelOffsetX + FxData(.FxIndex).OffsetX, PixelOffsetY + FxData(.FxIndex).OffsetY, 1, SetARGB_Alpha(MapData(.Pos.X, .Pos.Y).Engine_Light(), 180), 1, .Pos.X, .Pos.Y, True)
             
             'Check if animation is over
-            If .fX.Started = 0 Then _
+            If .fx.Started = 0 Then _
                 .FxIndex = 0
         End If
         
@@ -1915,19 +1928,19 @@ Private Sub RenderName(ByVal CharIndex As Long, ByVal X As Integer, ByVal Y As I
     End With
 End Sub
 
-Public Sub SetCharacterFx(ByVal CharIndex As Integer, ByVal fX As Integer, ByVal Loops As Integer)
+Public Sub SetCharacterFx(ByVal CharIndex As Integer, ByVal fx As Integer, ByVal Loops As Integer)
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modify Date: 12/03/04
 'Sets an FX to the character.
 '***************************************************
     With charlist(CharIndex)
-        .FxIndex = fX
+        .FxIndex = fx
         
         If .FxIndex > 0 Then
-            Call InitGrh(.fX, FxData(fX).Animacion)
+            Call InitGrh(.fx, FxData(fx).Animacion)
         
-            .fX.Loops = Loops
+            .fx.Loops = Loops
         End If
     End With
 End Sub
