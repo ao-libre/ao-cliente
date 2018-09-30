@@ -519,6 +519,7 @@ Public Enum eGMCommands
     RecordAddObs
     RecordListRequest
     RecordDetailsRequest
+    ExitDestroy
 End Enum
 
 '
