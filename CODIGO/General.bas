@@ -127,7 +127,7 @@ On Error Resume Next
     
     Dim i As Long
     
-    For i = 0 To 48 '49 y 50 reservados para ciudadano y criminal
+    For i = 0 To 47 '48, 49 y 50 reservados para atacables, ciudadano y criminal
         ColoresPJ(i) = D3DColorXRGB(GetVar(archivoC, CStr(i), "R"), GetVar(archivoC, CStr(i), "G"), GetVar(archivoC, CStr(i), "B"))
     Next i
     
@@ -137,8 +137,8 @@ On Error Resume Next
     '   Ciuda
     ColoresPJ(49) = D3DColorXRGB(GetVar(archivoC, "CI", "R"), GetVar(archivoC, "CI", "G"), GetVar(archivoC, "CI", "B"))
     
-    '   Atacable
-    ColoresPJ(50) = D3DColorXRGB(GetVar(archivoC, "AT", "R"), GetVar(archivoC, "AT", "G"), GetVar(archivoC, "AT", "B"))
+    '   Atacable TODO: hay que implementar un color para los atacables y hacer que funcione.
+    'ColoresPJ(48) = D3DColorXRGB(GetVar(archivoC, "AT", "R"), GetVar(archivoC, "AT", "G"), GetVar(archivoC, "AT", "B"))
 End Sub
 
 Sub CargarAnimEscudos()
