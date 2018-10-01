@@ -36,7 +36,7 @@ Attribute VB_Name = "Mod_TileEngine"
 Option Explicit
 
 #If False Then 'to fix VB fucking up the var names
-    Dim Nombre, PicInv As String
+    Dim Nombre, PicInv, fx As String
 #End If
 
 'Quad Draw
@@ -1773,7 +1773,12 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
         If Not .muerto Then
             If Abs(MouseTileX - .Pos.X) < 1 And (Abs(MouseTileY - .Pos.Y)) < 1 And CharIndex <> UserCharIndex And ClientSetup.TonalidadPJ Then
                 If .Nombre <> "" Then
-                    Call Engine_Long_To_RGB_List(ColorFinal(), D3DColorXRGB(0, 255, 0))
+                    If .Criminal Then
+                        Call Engine_Long_To_RGB_List(ColorFinal(), D3DColorXRGB(204, 100, 100))
+                    Else
+                        Call Engine_Long_To_RGB_List(ColorFinal(), D3DColorXRGB(100, 100, 255))
+                    End If
+                    
                 Else
                     ColorFinal(0) = MapData(.Pos.X, .Pos.Y).Engine_Light(0)
                     ColorFinal(1) = MapData(.Pos.X, .Pos.Y).Engine_Light(1)
