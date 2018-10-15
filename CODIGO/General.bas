@@ -34,7 +34,7 @@ Attribute VB_Name = "Mod_General"
 Option Explicit
 
 #If False Then 'to fix VB fucking up the var names
-    Dim Status, nombre, picInv, f As String
+    Dim Status, Nombre, PicInv, f As String
 #End If
 
 Public iplst As String
@@ -203,7 +203,7 @@ Public Sub RefreshAllChars()
     
     For LoopC = 1 To LastChar
         If charlist(LoopC).active = 1 Then
-            MapData(charlist(LoopC).Pos.X, charlist(LoopC).Pos.Y).CharIndex = LoopC
+            MapData(charlist(LoopC).Pos.x, charlist(LoopC).Pos.Y).CharIndex = LoopC
         End If
     Next LoopC
 End Sub
@@ -362,13 +362,13 @@ Sub MoveTo(ByVal Direccion As E_Heading)
     
     Select Case Direccion
         Case E_Heading.NORTH
-            LegalOk = MoveToLegalPos(UserPos.X, UserPos.Y - 1)
+            LegalOk = MoveToLegalPos(UserPos.x, UserPos.Y - 1)
         Case E_Heading.EAST
-            LegalOk = MoveToLegalPos(UserPos.X + 1, UserPos.Y)
+            LegalOk = MoveToLegalPos(UserPos.x + 1, UserPos.Y)
         Case E_Heading.SOUTH
-            LegalOk = MoveToLegalPos(UserPos.X, UserPos.Y + 1)
+            LegalOk = MoveToLegalPos(UserPos.x, UserPos.Y + 1)
         Case E_Heading.WEST
-            LegalOk = MoveToLegalPos(UserPos.X - 1, UserPos.Y)
+            LegalOk = MoveToLegalPos(UserPos.x - 1, UserPos.Y)
     End Select
     
     If LegalOk And Not UserParalizado Then
@@ -386,7 +386,7 @@ Sub MoveTo(ByVal Direccion As E_Heading)
     If frmMain.macrotrabajo.Enabled Then Call frmMain.DesactivarMacroTrabajo
     
     ' Update 3D sounds!
-    Call Audio.MoveListener(UserPos.X, UserPos.Y)
+    Call Audio.MoveListener(UserPos.x, UserPos.Y)
 End Sub
 
 Sub RandomMove()
@@ -459,7 +459,7 @@ Private Sub CheckKeys()
             End If
             
             ' We haven't moved - Update 3D sounds!
-            Call Audio.MoveListener(UserPos.X, UserPos.Y)
+            Call Audio.MoveListener(UserPos.x, UserPos.Y)
         Else
             Dim kp As Boolean
             kp = (GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyUp)) < 0) Or _
@@ -471,7 +471,7 @@ Private Sub CheckKeys()
                 Call RandomMove
             Else
                 ' We haven't moved - Update 3D sounds!
-                Call Audio.MoveListener(UserPos.X, UserPos.Y)
+                Call Audio.MoveListener(UserPos.x, UserPos.Y)
             End If
             
             Call Char_UserPos
@@ -486,12 +486,12 @@ Sub SwitchMap(ByVal Map As Integer)
 'Diseñado y creado por Juan Martin Sotuyo Dodero (Maraxus) (juansotuyo@hotmail.com)
 '**************************************************************
     Dim Y As Long
-    Dim X As Long
+    Dim x As Long
     Dim tempint As Integer
     Dim ByFlags As Byte
     Dim handle As Integer
     Dim CharIndex As Integer
-    Dim Obj       As Integer
+    Dim obj       As Integer
     
     handle = FreeFile()
     
@@ -510,62 +510,62 @@ Sub SwitchMap(ByVal Map As Integer)
     
     'Load arrays
     For Y = YMinMapSize To YMaxMapSize
-        For X = XMinMapSize To XMaxMapSize
+        For x = XMinMapSize To XMaxMapSize
             Get handle, , ByFlags
-            MapData(X, Y).FxIndex = 0
-            MapData(X, Y).Blocked = (ByFlags And 1)
+            MapData(x, Y).FxIndex = 0
+            MapData(x, Y).Blocked = (ByFlags And 1)
             
-            Get handle, , MapData(X, Y).Graphic(1).GrhIndex
-            InitGrh MapData(X, Y).Graphic(1), MapData(X, Y).Graphic(1).GrhIndex
+            Get handle, , MapData(x, Y).Graphic(1).GrhIndex
+            InitGrh MapData(x, Y).Graphic(1), MapData(x, Y).Graphic(1).GrhIndex
             
             'Layer 2 used?
             If ByFlags And 2 Then
-                Get handle, , MapData(X, Y).Graphic(2).GrhIndex
-                InitGrh MapData(X, Y).Graphic(2), MapData(X, Y).Graphic(2).GrhIndex
+                Get handle, , MapData(x, Y).Graphic(2).GrhIndex
+                InitGrh MapData(x, Y).Graphic(2), MapData(x, Y).Graphic(2).GrhIndex
             Else
-                MapData(X, Y).Graphic(2).GrhIndex = 0
+                MapData(x, Y).Graphic(2).GrhIndex = 0
             End If
                 
             'Layer 3 used?
             If ByFlags And 4 Then
-                Get handle, , MapData(X, Y).Graphic(3).GrhIndex
-                InitGrh MapData(X, Y).Graphic(3), MapData(X, Y).Graphic(3).GrhIndex
+                Get handle, , MapData(x, Y).Graphic(3).GrhIndex
+                InitGrh MapData(x, Y).Graphic(3), MapData(x, Y).Graphic(3).GrhIndex
             Else
-                MapData(X, Y).Graphic(3).GrhIndex = 0
+                MapData(x, Y).Graphic(3).GrhIndex = 0
             End If
                 
             'Layer 4 used?
             If ByFlags And 8 Then
-                Get handle, , MapData(X, Y).Graphic(4).GrhIndex
-                InitGrh MapData(X, Y).Graphic(4), MapData(X, Y).Graphic(4).GrhIndex
+                Get handle, , MapData(x, Y).Graphic(4).GrhIndex
+                InitGrh MapData(x, Y).Graphic(4), MapData(x, Y).Graphic(4).GrhIndex
             Else
-                MapData(X, Y).Graphic(4).GrhIndex = 0
+                MapData(x, Y).Graphic(4).GrhIndex = 0
             End If
             
             'Trigger used?
             If ByFlags And 16 Then
-                Get handle, , MapData(X, Y).Trigger
+                Get handle, , MapData(x, Y).Trigger
             Else
-                MapData(X, Y).Trigger = 0
+                MapData(x, Y).Trigger = 0
             End If
             
             'Erase NPCs
-            CharIndex = Char_MapPosExits(X, Y)
+            CharIndex = Char_MapPosExits(x, Y)
  
             If (CharIndex > 0) Then
                 Call Char_Erase(CharIndex)
             End If
 
             'Erase OBJs
-            Obj = Map_PosExitsObject(X, Y)
+            obj = Map_PosExitsObject(x, Y)
 
-            If (Obj > 0) Then
-                Call Map_DestroyObject(X, Y)
+            If (obj > 0) Then
+                Call Map_DestroyObject(x, Y)
             End If
             
             'Erase Lights
-            Call Engine_D3DColor_To_RGB_List(MapData(X, Y).Engine_Light(), Estado_Actual) 'Standelf, Light & Meteo Engine
-        Next X
+            Call Engine_D3DColor_To_RGB_List(MapData(x, Y).Engine_Light(), Estado_Actual) 'Standelf, Light & Meteo Engine
+        Next x
     Next Y
     
     Close handle
@@ -751,7 +751,7 @@ Sub Main()
     Call WriteClientVer
     
     'Load config file
-    If FileExist(App.path & "\init\Inicio.con", vbNormal) Then
+    If FileExist(App.path & "\INIT\Inicio.con", vbNormal) Then
         Config_Inicio = LeerGameIni()
     End If
     
@@ -769,15 +769,15 @@ Sub Main()
     End If
  
     ' Map Sounds
-       Set Sonidos = New clsSoundMapas
-       Call Sonidos.LoadSoundMapInfo
+    Set Sonidos = New clsSoundMapas
+    Call Sonidos.LoadSoundMapInfo
        
-#If Testeo = 0 Then
-    If FindPreviousInstance Then
-        Call MsgBox("Argentum Online ya esta corriendo! No es posible correr otra instancia del juego. Haga click en Aceptar para salir.", vbApplicationModal + vbInformation + vbOKOnly, "Error al ejecutar")
-        End
-    End If
-#End If
+    #If Testeo = 0 Then
+        If FindPreviousInstance Then
+            Call MsgBox("Argentum Online ya esta corriendo! No es posible correr otra instancia del juego. Haga click en Aceptar para salir.", vbApplicationModal + vbInformation + vbOKOnly, "Error al ejecutar")
+            End
+        End If
+    #End If
 
     'Read command line. Do it AFTER config file is loaded to prevent this from
     'canceling the effects of "/nores" option.
@@ -792,24 +792,24 @@ Sub Main()
     MD5HushYo = "0123456789abcdef"  'We aren't using a real MD5
     
     tipf = Config_Inicio.tip
+
+    ' Load constants, classes, flags, graphics..
+    LoadInitialConfig
     
     'Set resolution BEFORE the loading form is displayed, therefore it will be centered.
     Call Resolution.SetResolution
-    
-    ' Load constants, classes, flags, graphics..
-    LoadInitialConfig
 
-#If Testeo <> 1 Then
-    Dim PresPath As String
-    PresPath = DirGraficos & "Presentacion" & RandomNumber(1, 4) & ".jpg"
+    #If Testeo <> 1 Then
+        Dim PresPath As String
+        PresPath = DirGraficos & "Presentacion" & RandomNumber(1, 4) & ".jpg"
+        
+        frmPres.Picture = LoadPicture(PresPath)
+        frmPres.Show vbModal    'Es modal, asi que se detiene la ejecucionn de Main hasta que se desaparece
+    #End If
     
-    frmPres.Picture = LoadPicture(PresPath)
-    frmPres.Show vbModal    'Es modal, asi que se detiene la ejecucionn de Main hasta que se desaparece
-#End If
-
-#If UsarWrench = 1 Then
-    frmMain.Socket1.Startup
-#End If
+    #If UsarWrench = 1 Then
+        frmMain.Socket1.Startup
+    #End If
 
     frmConnect.Visible = True
     
@@ -953,7 +953,7 @@ Private Sub LoadInitialConfig()
     Audio.SoundActivated = Not ClientSetup.bNoSound
     Audio.SoundEffectsActivated = Not ClientSetup.bNoSoundEffects
     'Inicializamos el inventario grafico
-    Call Inventario.Initialize(DirectD3D8, frmMain.picInv, MAX_INVENTORY_SLOTS)
+    Call Inventario.Initialize(DirectD3D8, frmMain.PicInv, MAX_INVENTORY_SLOTS)
     'Call Audio.MusicMP3Play(App.path & "\MP3\" & MP3_Inicio & ".mp3")
     Call AddtoRichTextBox(frmCargando.Status, "Hecho", 255, 0, 0, True, False, False)
     
@@ -1061,11 +1061,11 @@ Private Function CMSValidateChar_(ByVal iAsc As Integer) As Boolean
 End Function
 
 'TODO : como todo lo relativo a mapas, no tiene nada que hacer aca....
-Function HayAgua(ByVal X As Integer, ByVal Y As Integer) As Boolean
-    HayAgua = ((MapData(X, Y).Graphic(1).GrhIndex >= 1505 And MapData(X, Y).Graphic(1).GrhIndex <= 1520) Or _
-            (MapData(X, Y).Graphic(1).GrhIndex >= 5665 And MapData(X, Y).Graphic(1).GrhIndex <= 5680) Or _
-            (MapData(X, Y).Graphic(1).GrhIndex >= 13547 And MapData(X, Y).Graphic(1).GrhIndex <= 13562)) And _
-                MapData(X, Y).Graphic(2).GrhIndex = 0
+Function HayAgua(ByVal x As Integer, ByVal Y As Integer) As Boolean
+    HayAgua = ((MapData(x, Y).Graphic(1).GrhIndex >= 1505 And MapData(x, Y).Graphic(1).GrhIndex <= 1520) Or _
+            (MapData(x, Y).Graphic(1).GrhIndex >= 5665 And MapData(x, Y).Graphic(1).GrhIndex <= 5680) Or _
+            (MapData(x, Y).Graphic(1).GrhIndex >= 13547 And MapData(x, Y).Graphic(1).GrhIndex <= 13562)) And _
+                MapData(x, Y).Graphic(2).GrhIndex = 0
                 
 End Function
 
@@ -1385,7 +1385,7 @@ End Function
 Public Function getCharIndexByName(ByVal Name As String) As Integer
 Dim i As Long
 For i = 1 To LastChar
-    If charlist(i).nombre = Name Then
+    If charlist(i).Nombre = Name Then
         getCharIndexByName = i
         Exit Function
     End If
@@ -1522,21 +1522,21 @@ Public Sub ResetAllInfo()
 
 End Sub
 
-Public Function DevolverNombreHechizo(ByVal Index As Byte) As String
+Public Function DevolverNombreHechizo(ByVal index As Byte) As String
 Dim i As Long
  
     For i = 1 To NumHechizos
-        If i = Index Then
-            DevolverNombreHechizo = Hechizos(i).nombre
+        If i = index Then
+            DevolverNombreHechizo = Hechizos(i).Nombre
             Exit Function
         End If
     Next i
 End Function
-Public Function DevolverIndexHechizo(ByVal nombre As String) As Byte
+Public Function DevolverIndexHechizo(ByVal Nombre As String) As Byte
 Dim i As Long
  
     For i = 1 To NumHechizos
-        If Hechizos(i).nombre = nombre Then
+        If Hechizos(i).Nombre = Nombre Then
             DevolverIndexHechizo = i
             Exit Function
         End If
@@ -1550,32 +1550,32 @@ Public Sub CargarHechizos()
 '********************************
 On Error GoTo errorH
     Dim PathName As String
-    Dim J As Long
+    Dim j As Long
  
     PathName = App.path & "\init\Hechizos.dat"
     NumHechizos = Val(GetVar(PathName, "INIT", "NumHechizos"))
  
     ReDim Hechizos(1 To NumHechizos) As tHechizos
-    For J = 1 To NumHechizos
-        With Hechizos(J)
-            .Desc = GetVar(PathName, "HECHIZO" & J, "Desc")
-            .PalabrasMagicas = GetVar(PathName, "HECHIZO" & J, "PalabrasMagicas")
-            .nombre = GetVar(PathName, "HECHIZO" & J, "Nombre")
-            .SkillRequerido = GetVar(PathName, "HECHIZO" & J, "MinSkill")
+    For j = 1 To NumHechizos
+        With Hechizos(j)
+            .Desc = GetVar(PathName, "HECHIZO" & j, "Desc")
+            .PalabrasMagicas = GetVar(PathName, "HECHIZO" & j, "PalabrasMagicas")
+            .Nombre = GetVar(PathName, "HECHIZO" & j, "Nombre")
+            .SkillRequerido = GetVar(PathName, "HECHIZO" & j, "MinSkill")
          
-            If J <> 38 And J <> 39 Then
-                .EnergiaRequerida = GetVar(PathName, "HECHIZO" & J, "StaRequerido")
+            If j <> 38 And j <> 39 Then
+                .EnergiaRequerida = GetVar(PathName, "HECHIZO" & j, "StaRequerido")
                  
-                .HechiceroMsg = GetVar(PathName, "HECHIZO" & J, "HechizeroMsg")
-                .ManaRequerida = GetVar(PathName, "HECHIZO" & J, "ManaRequerido")
+                .HechiceroMsg = GetVar(PathName, "HECHIZO" & j, "HechizeroMsg")
+                .ManaRequerida = GetVar(PathName, "HECHIZO" & j, "ManaRequerido")
              
              
-                .PropioMsg = GetVar(PathName, "HECHIZO" & J, "PropioMsg")
+                .PropioMsg = GetVar(PathName, "HECHIZO" & j, "PropioMsg")
              
-                .TargetMsg = GetVar(PathName, "HECHIZO" & J, "TargetMsg")
+                .TargetMsg = GetVar(PathName, "HECHIZO" & j, "TargetMsg")
             End If
         End With
-    Next J
+    Next j
  
 Exit Sub
  
