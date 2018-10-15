@@ -32,7 +32,6 @@ Begin VB.Form frmCargando
       _ExtentY        =   3360
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmCargando.frx":0000
@@ -124,7 +123,7 @@ Function Analizar()
            
     If Not (CheckIfRunningLastVersion = True) Then
         If MsgBox("Tu versión no es la actuál, ¿Deseas ejecutar el actualizador automático?.", vbYesNo) = vbYes Then
-            Call ShellExecute(Me.hwnd, "open", App.path & "/Autoupdate.exe", "", "", 1)
+            Call ShellExecute(Me.hwnd, "open", App.path & "\Autoupdate.exe", "", "", 1)
             End
         End If
     End If
