@@ -203,7 +203,7 @@ Public Sub RefreshAllChars()
     
     For LoopC = 1 To LastChar
         If charlist(LoopC).active = 1 Then
-            MapData(charlist(LoopC).Pos.x, charlist(LoopC).Pos.Y).CharIndex = LoopC
+            MapData(charlist(LoopC).Pos.X, charlist(LoopC).Pos.Y).CharIndex = LoopC
         End If
     Next LoopC
 End Sub
@@ -362,13 +362,13 @@ Sub MoveTo(ByVal Direccion As E_Heading)
     
     Select Case Direccion
         Case E_Heading.NORTH
-            LegalOk = MoveToLegalPos(UserPos.x, UserPos.Y - 1)
+            LegalOk = MoveToLegalPos(UserPos.X, UserPos.Y - 1)
         Case E_Heading.EAST
-            LegalOk = MoveToLegalPos(UserPos.x + 1, UserPos.Y)
+            LegalOk = MoveToLegalPos(UserPos.X + 1, UserPos.Y)
         Case E_Heading.SOUTH
-            LegalOk = MoveToLegalPos(UserPos.x, UserPos.Y + 1)
+            LegalOk = MoveToLegalPos(UserPos.X, UserPos.Y + 1)
         Case E_Heading.WEST
-            LegalOk = MoveToLegalPos(UserPos.x - 1, UserPos.Y)
+            LegalOk = MoveToLegalPos(UserPos.X - 1, UserPos.Y)
     End Select
     
     If LegalOk And Not UserParalizado Then
@@ -386,7 +386,7 @@ Sub MoveTo(ByVal Direccion As E_Heading)
     If frmMain.macrotrabajo.Enabled Then Call frmMain.DesactivarMacroTrabajo
     
     ' Update 3D sounds!
-    Call Audio.MoveListener(UserPos.x, UserPos.Y)
+    Call Audio.MoveListener(UserPos.X, UserPos.Y)
 End Sub
 
 Sub RandomMove()
@@ -459,7 +459,7 @@ Private Sub CheckKeys()
             End If
             
             ' We haven't moved - Update 3D sounds!
-            Call Audio.MoveListener(UserPos.x, UserPos.Y)
+            Call Audio.MoveListener(UserPos.X, UserPos.Y)
         Else
             Dim kp As Boolean
             kp = (GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyUp)) < 0) Or _
@@ -471,7 +471,7 @@ Private Sub CheckKeys()
                 Call RandomMove
             Else
                 ' We haven't moved - Update 3D sounds!
-                Call Audio.MoveListener(UserPos.x, UserPos.Y)
+                Call Audio.MoveListener(UserPos.X, UserPos.Y)
             End If
             
             Call Char_UserPos
@@ -486,7 +486,7 @@ Sub SwitchMap(ByVal Map As Integer)
 'Diseñado y creado por Juan Martin Sotuyo Dodero (Maraxus) (juansotuyo@hotmail.com)
 '**************************************************************
     Dim Y As Long
-    Dim x As Long
+    Dim X As Long
     Dim tempint As Integer
     Dim ByFlags As Byte
     Dim handle As Integer
@@ -510,62 +510,62 @@ Sub SwitchMap(ByVal Map As Integer)
     
     'Load arrays
     For Y = YMinMapSize To YMaxMapSize
-        For x = XMinMapSize To XMaxMapSize
+        For X = XMinMapSize To XMaxMapSize
             Get handle, , ByFlags
-            MapData(x, Y).FxIndex = 0
-            MapData(x, Y).Blocked = (ByFlags And 1)
+            MapData(X, Y).FxIndex = 0
+            MapData(X, Y).Blocked = (ByFlags And 1)
             
-            Get handle, , MapData(x, Y).Graphic(1).GrhIndex
-            InitGrh MapData(x, Y).Graphic(1), MapData(x, Y).Graphic(1).GrhIndex
+            Get handle, , MapData(X, Y).Graphic(1).GrhIndex
+            InitGrh MapData(X, Y).Graphic(1), MapData(X, Y).Graphic(1).GrhIndex
             
             'Layer 2 used?
             If ByFlags And 2 Then
-                Get handle, , MapData(x, Y).Graphic(2).GrhIndex
-                InitGrh MapData(x, Y).Graphic(2), MapData(x, Y).Graphic(2).GrhIndex
+                Get handle, , MapData(X, Y).Graphic(2).GrhIndex
+                InitGrh MapData(X, Y).Graphic(2), MapData(X, Y).Graphic(2).GrhIndex
             Else
-                MapData(x, Y).Graphic(2).GrhIndex = 0
+                MapData(X, Y).Graphic(2).GrhIndex = 0
             End If
                 
             'Layer 3 used?
             If ByFlags And 4 Then
-                Get handle, , MapData(x, Y).Graphic(3).GrhIndex
-                InitGrh MapData(x, Y).Graphic(3), MapData(x, Y).Graphic(3).GrhIndex
+                Get handle, , MapData(X, Y).Graphic(3).GrhIndex
+                InitGrh MapData(X, Y).Graphic(3), MapData(X, Y).Graphic(3).GrhIndex
             Else
-                MapData(x, Y).Graphic(3).GrhIndex = 0
+                MapData(X, Y).Graphic(3).GrhIndex = 0
             End If
                 
             'Layer 4 used?
             If ByFlags And 8 Then
-                Get handle, , MapData(x, Y).Graphic(4).GrhIndex
-                InitGrh MapData(x, Y).Graphic(4), MapData(x, Y).Graphic(4).GrhIndex
+                Get handle, , MapData(X, Y).Graphic(4).GrhIndex
+                InitGrh MapData(X, Y).Graphic(4), MapData(X, Y).Graphic(4).GrhIndex
             Else
-                MapData(x, Y).Graphic(4).GrhIndex = 0
+                MapData(X, Y).Graphic(4).GrhIndex = 0
             End If
             
             'Trigger used?
             If ByFlags And 16 Then
-                Get handle, , MapData(x, Y).Trigger
+                Get handle, , MapData(X, Y).Trigger
             Else
-                MapData(x, Y).Trigger = 0
+                MapData(X, Y).Trigger = 0
             End If
             
             'Erase NPCs
-            CharIndex = Char_MapPosExits(x, Y)
+            CharIndex = Char_MapPosExits(X, Y)
  
             If (CharIndex > 0) Then
                 Call Char_Erase(CharIndex)
             End If
 
             'Erase OBJs
-            obj = Map_PosExitsObject(x, Y)
+            obj = Map_PosExitsObject(X, Y)
 
             If (obj > 0) Then
-                Call Map_DestroyObject(x, Y)
+                Call Map_DestroyObject(X, Y)
             End If
             
             'Erase Lights
-            Call Engine_D3DColor_To_RGB_List(MapData(x, Y).Engine_Light(), Estado_Actual) 'Standelf, Light & Meteo Engine
-        Next x
+            Call Engine_D3DColor_To_RGB_List(MapData(X, Y).Engine_Light(), Estado_Actual) 'Standelf, Light & Meteo Engine
+        Next X
     Next Y
     
     Close handle
@@ -1063,11 +1063,11 @@ Private Function CMSValidateChar_(ByVal iAsc As Integer) As Boolean
 End Function
 
 'TODO : como todo lo relativo a mapas, no tiene nada que hacer aca....
-Function HayAgua(ByVal x As Integer, ByVal Y As Integer) As Boolean
-    HayAgua = ((MapData(x, Y).Graphic(1).GrhIndex >= 1505 And MapData(x, Y).Graphic(1).GrhIndex <= 1520) Or _
-            (MapData(x, Y).Graphic(1).GrhIndex >= 5665 And MapData(x, Y).Graphic(1).GrhIndex <= 5680) Or _
-            (MapData(x, Y).Graphic(1).GrhIndex >= 13547 And MapData(x, Y).Graphic(1).GrhIndex <= 13562)) And _
-                MapData(x, Y).Graphic(2).GrhIndex = 0
+Function HayAgua(ByVal X As Integer, ByVal Y As Integer) As Boolean
+    HayAgua = ((MapData(X, Y).Graphic(1).GrhIndex >= 1505 And MapData(X, Y).Graphic(1).GrhIndex <= 1520) Or _
+            (MapData(X, Y).Graphic(1).GrhIndex >= 5665 And MapData(X, Y).Graphic(1).GrhIndex <= 5680) Or _
+            (MapData(X, Y).Graphic(1).GrhIndex >= 13547 And MapData(X, Y).Graphic(1).GrhIndex <= 13562)) And _
+                MapData(X, Y).Graphic(2).GrhIndex = 0
                 
 End Function
 
@@ -1300,8 +1300,6 @@ Public Sub CloseClient()
     Call PrevInstance.ReleaseInstance
     
     EngineRun = False
-    frmCargando.Show
-    Call AddtoRichTextBox(frmCargando.status, "Liberando recursos...", 0, 0, 0, 0, 0, 0)
     
     Call Resolution.ResetResolution
     
@@ -1524,11 +1522,11 @@ Public Sub ResetAllInfo()
 
 End Sub
 
-Public Function DevolverNombreHechizo(ByVal index As Byte) As String
+Public Function DevolverNombreHechizo(ByVal Index As Byte) As String
 Dim i As Long
  
     For i = 1 To NumHechizos
-        If i = index Then
+        If i = Index Then
             DevolverNombreHechizo = Hechizos(i).Nombre
             Exit Function
         End If
