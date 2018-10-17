@@ -590,10 +590,6 @@ frmConnect.Show
 End Sub
 
 
-Private Sub lblAccData_Click(Index As Integer)
-
-End Sub
-
 Private Sub picChar_Click(Index As Integer)
     Seleccionado = Index + 1
     If cPJ(Seleccionado).Nombre <> "" Then
