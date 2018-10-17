@@ -329,6 +329,3 @@ Private Sub imgVerde_Click()
     txtMotd.Text = txtMotd & "~23~104~26~" & CStr(yNegrita) & "~" & CStr(yCursiva)
 End Sub
 
-Private Sub txtMotd_Change()
-
-End Sub

@@ -21,6 +21,14 @@ Begin VB.Form frmConnect
    ScaleWidth      =   800
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
+   Begin VB.CommandButton cmdNuevaCuenta 
+      Caption         =   "Nueva cuenta"
+      Height          =   495
+      Left            =   5280
+      TabIndex        =   6
+      Top             =   4800
+      Width           =   1335
+   End
    Begin VB.ListBox lstServers 
       Appearance      =   0  'Flat
       BackColor       =   &H00000000&
@@ -275,6 +283,10 @@ Private cBotonTeclas As clsGraphicalButton
 
 Public LastButtonPressed As clsGraphicalButton
 
+Private Sub cmdNuevaCuenta_Click()
+frmCrearCuenta.Show
+End Sub
+
 Private Sub Form_Activate()
 'On Error Resume Next
 Call CargarServidores
@@ -489,15 +501,13 @@ Private Sub imgConectarse_Click()
 #End If
     
     'update user info
-    UserName = txtNombre.Text
-    
-    Dim aux As String
-    aux = txtPasswd.Text
-    UserPassword = aux
+    AccountName = txtNombre.Text
+    AccountPassword = txtPasswd.Text
+
     'Clear spell list
     frmMain.hlst.Clear
 
-    If CheckUserData(False) = True Then
+    If CheckUserData() = True Then
         EstadoLogin = Normal
         
 #If UsarWrench = 1 Then
@@ -513,27 +523,7 @@ Private Sub imgConectarse_Click()
 End Sub
 
 Private Sub imgCrearPj_Click()
-    
-    Call CheckServers
-    
-    EstadoLogin = E_MODO.Dados
-#If UsarWrench = 1 Then
-    If frmMain.Socket1.Connected Then
-        frmMain.Socket1.Disconnect
-        frmMain.Socket1.Cleanup
-        DoEvents
-    End If
-    frmMain.Socket1.HostName = CurServerIp
-    frmMain.Socket1.RemotePort = CurServerPort
-    frmMain.Socket1.Connect
-#Else
-    If frmMain.Winsock1.State <> sckClosed Then
-        frmMain.Winsock1.Close
-        DoEvents
-    End If
-    frmMain.Winsock1.Connect CurServerIp, CurServerPort
-#End If
-
+MsgBox ("Usar cuenta")
 End Sub
 
 Private Sub imgLeerMas_Click()

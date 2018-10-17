@@ -478,6 +478,3 @@ Private Sub txtMiembro_MouseMove(Button As Integer, Shift As Integer, X As Singl
     LastButtonPressed.ToggleToNormal
 End Sub
 
-Private Sub txtPeticiones_Change()
-
-End Sub
