@@ -34,7 +34,7 @@ Attribute VB_Name = "Mod_General"
 Option Explicit
 
 #If False Then 'to fix VB fucking up the var names
-    Dim Status, nombre, picInv, f As String
+    Dim Status, Nombre, PicInv, f As String
 #End If
 
 Public iplst As String
@@ -486,7 +486,7 @@ Sub SwitchMap(ByVal Map As Integer)
     Dim ByFlags As Byte
     Dim handle As Integer
     Dim CharIndex As Integer
-    Dim Obj       As Integer
+    Dim obj       As Integer
     
     handle = FreeFile()
     
@@ -552,9 +552,9 @@ Sub SwitchMap(ByVal Map As Integer)
             End If
 
             'Erase OBJs
-            Obj = Map_PosExitsObject(X, Y)
+            obj = Map_PosExitsObject(X, Y)
 
-            If (Obj > 0) Then
+            If (obj > 0) Then
                 Call Map_DestroyObject(X, Y)
             End If
             
@@ -746,7 +746,7 @@ Sub Main()
     Call WriteClientVer
     
     'Load config file
-    If FileExist(App.path & "\init\Inicio.con", vbNormal) Then
+    If FileExist(App.path & "\INIT\Inicio.con", vbNormal) Then
         Config_Inicio = LeerGameIni()
     End If
     
@@ -764,15 +764,15 @@ Sub Main()
     End If
  
     ' Map Sounds
-       Set Sonidos = New clsSoundMapas
-       Call Sonidos.LoadSoundMapInfo
+    Set Sonidos = New clsSoundMapas
+    Call Sonidos.LoadSoundMapInfo
        
-#If Testeo = 0 Then
-    If FindPreviousInstance Then
-        Call MsgBox("Argentum Online ya esta corriendo! No es posible correr otra instancia del juego. Haga click en Aceptar para salir.", vbApplicationModal + vbInformation + vbOKOnly, "Error al ejecutar")
-        End
-    End If
-#End If
+    #If Testeo = 0 Then
+        If FindPreviousInstance Then
+            Call MsgBox("Argentum Online ya esta corriendo! No es posible correr otra instancia del juego. Haga click en Aceptar para salir.", vbApplicationModal + vbInformation + vbOKOnly, "Error al ejecutar")
+            End
+        End If
+    #End If
 
     'Read command line. Do it AFTER config file is loaded to prevent this from
     'canceling the effects of "/nores" option.
@@ -787,24 +787,24 @@ Sub Main()
     MD5HushYo = "0123456789abcdef"  'We aren't using a real MD5
     
     tipf = Config_Inicio.tip
+
+    ' Load constants, classes, flags, graphics..
+    LoadInitialConfig
     
     'Set resolution BEFORE the loading form is displayed, therefore it will be centered.
     Call Resolution.SetResolution
-    
-    ' Load constants, classes, flags, graphics..
-    LoadInitialConfig
 
-#If Testeo <> 1 Then
-    Dim PresPath As String
-    PresPath = DirGraficos & "Presentacion" & RandomNumber(1, 4) & ".jpg"
+    #If Testeo <> 1 Then
+        Dim PresPath As String
+        PresPath = DirGraficos & "Presentacion" & RandomNumber(1, 4) & ".jpg"
+        
+        frmPres.Picture = LoadPicture(PresPath)
+        frmPres.Show vbModal    'Es modal, asi que se detiene la ejecucionn de Main hasta que se desaparece
+    #End If
     
-    frmPres.Picture = LoadPicture(PresPath)
-    frmPres.Show vbModal    'Es modal, asi que se detiene la ejecucionn de Main hasta que se desaparece
-#End If
-
-#If UsarWrench = 1 Then
-    frmMain.Socket1.Startup
-#End If
+    #If UsarWrench = 1 Then
+        frmMain.Socket1.Startup
+    #End If
 
     frmConnect.Visible = True
     
@@ -948,7 +948,7 @@ Private Sub LoadInitialConfig()
     Audio.SoundActivated = Not ClientSetup.bNoSound
     Audio.SoundEffectsActivated = Not ClientSetup.bNoSoundEffects
     'Inicializamos el inventario grafico
-    Call Inventario.Initialize(DirectD3D8, frmMain.picInv, MAX_INVENTORY_SLOTS)
+    Call Inventario.Initialize(DirectD3D8, frmMain.PicInv, MAX_INVENTORY_SLOTS)
     'Call Audio.MusicMP3Play(App.path & "\MP3\" & MP3_Inicio & ".mp3")
     Call AddtoRichTextBox(frmCargando.Status, "Hecho", 255, 0, 0, True, False, False)
     
@@ -1293,8 +1293,6 @@ Public Sub CloseClient()
     Call PrevInstance.ReleaseInstance
     
     EngineRun = False
-    frmCargando.Show
-    Call AddtoRichTextBox(frmCargando.Status, "Liberando recursos...", 0, 0, 0, 0, 0, 0)
     
     Call Resolution.ResetResolution
     
@@ -1380,7 +1378,7 @@ End Function
 Public Function getCharIndexByName(ByVal Name As String) As Integer
 Dim i As Long
 For i = 1 To LastChar
-    If charlist(i).nombre = Name Then
+    If charlist(i).Nombre = Name Then
         getCharIndexByName = i
         Exit Function
     End If
@@ -1522,16 +1520,16 @@ Dim i As Long
  
     For i = 1 To NumHechizos
         If i = Index Then
-            DevolverNombreHechizo = Hechizos(i).nombre
+            DevolverNombreHechizo = Hechizos(i).Nombre
             Exit Function
         End If
     Next i
 End Function
-Public Function DevolverIndexHechizo(ByVal nombre As String) As Byte
+Public Function DevolverIndexHechizo(ByVal Nombre As String) As Byte
 Dim i As Long
  
     For i = 1 To NumHechizos
-        If Hechizos(i).nombre = nombre Then
+        If Hechizos(i).Nombre = Nombre Then
             DevolverIndexHechizo = i
             Exit Function
         End If
@@ -1545,32 +1543,32 @@ Public Sub CargarHechizos()
 '********************************
 On Error GoTo errorH
     Dim PathName As String
-    Dim J As Long
+    Dim j As Long
  
     PathName = App.path & "\init\Hechizos.dat"
     NumHechizos = Val(GetVar(PathName, "INIT", "NumHechizos"))
  
     ReDim Hechizos(1 To NumHechizos) As tHechizos
-    For J = 1 To NumHechizos
-        With Hechizos(J)
-            .Desc = GetVar(PathName, "HECHIZO" & J, "Desc")
-            .PalabrasMagicas = GetVar(PathName, "HECHIZO" & J, "PalabrasMagicas")
-            .nombre = GetVar(PathName, "HECHIZO" & J, "Nombre")
-            .SkillRequerido = GetVar(PathName, "HECHIZO" & J, "MinSkill")
+    For j = 1 To NumHechizos
+        With Hechizos(j)
+            .Desc = GetVar(PathName, "HECHIZO" & j, "Desc")
+            .PalabrasMagicas = GetVar(PathName, "HECHIZO" & j, "PalabrasMagicas")
+            .Nombre = GetVar(PathName, "HECHIZO" & j, "Nombre")
+            .SkillRequerido = GetVar(PathName, "HECHIZO" & j, "MinSkill")
          
-            If J <> 38 And J <> 39 Then
-                .EnergiaRequerida = GetVar(PathName, "HECHIZO" & J, "StaRequerido")
+            If j <> 38 And j <> 39 Then
+                .EnergiaRequerida = GetVar(PathName, "HECHIZO" & j, "StaRequerido")
                  
-                .HechiceroMsg = GetVar(PathName, "HECHIZO" & J, "HechizeroMsg")
-                .ManaRequerida = GetVar(PathName, "HECHIZO" & J, "ManaRequerido")
+                .HechiceroMsg = GetVar(PathName, "HECHIZO" & j, "HechizeroMsg")
+                .ManaRequerida = GetVar(PathName, "HECHIZO" & j, "ManaRequerido")
              
              
-                .PropioMsg = GetVar(PathName, "HECHIZO" & J, "PropioMsg")
+                .PropioMsg = GetVar(PathName, "HECHIZO" & j, "PropioMsg")
              
-                .TargetMsg = GetVar(PathName, "HECHIZO" & J, "TargetMsg")
+                .TargetMsg = GetVar(PathName, "HECHIZO" & j, "TargetMsg")
             End If
         End With
-    Next J
+    Next j
  
 Exit Sub
  
