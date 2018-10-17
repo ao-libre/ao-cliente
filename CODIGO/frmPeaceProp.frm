@@ -220,6 +220,3 @@ Private Sub imgRechazar_Click()
     Unload Me
 End Sub
 
-Private Sub lista_Click()
-
-End Sub

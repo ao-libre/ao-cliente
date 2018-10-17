@@ -234,43 +234,38 @@ Function AsciiValidos(ByVal cad As String) As Boolean
     AsciiValidos = True
 End Function
 
-Function CheckUserData(ByVal checkemail As Boolean) As Boolean
+Function CheckUserData() As Boolean
     'Validamos los datos del user
     Dim LoopC As Long
     Dim CharAscii As Integer
     
-    If checkemail And UserEmail = "" Then
-        MsgBox ("Direccion de email invalida")
-        Exit Function
-    End If
-    
-    If UserPassword = "" Then
+    If AccountPassword = "" Then
         MsgBox ("Ingrese un password.")
         Exit Function
     End If
     
-    For LoopC = 1 To Len(UserPassword)
-        CharAscii = Asc(mid$(UserPassword, LoopC, 1))
+    For LoopC = 1 To Len(AccountPassword)
+        CharAscii = Asc(mid$(AccountPassword, LoopC, 1))
         If Not LegalCharacter(CharAscii) Then
             MsgBox ("Password invalido. El caracter " & Chr$(CharAscii) & " no esta¡ permitido.")
             Exit Function
         End If
     Next LoopC
     
-    If UserName = "" Then
-        MsgBox ("Ingrese un nombre de personaje.")
+    If AccountName = "" Then
+        MsgBox ("Ingrese un email valido.")
         Exit Function
     End If
     
-    If Len(UserName) > 30 Then
+    If Len(AccountName) > 30 Then
         MsgBox ("El nombre debe tener menos de 30 letras.")
         Exit Function
     End If
     
-    For LoopC = 1 To Len(UserName)
-        CharAscii = Asc(mid$(UserName, LoopC, 1))
+    For LoopC = 1 To Len(AccountName)
+        CharAscii = Asc(mid$(AccountName, LoopC, 1))
         If Not LegalCharacter(CharAscii) Then
-            MsgBox ("Nombre inva¡lido. El caracter " & Chr$(CharAscii) & " no esta¡ permitido.")
+            MsgBox ("Nombre invalido. El caracter " & Chr$(CharAscii) & " no esta permitido.")
             Exit Function
         End If
     Next LoopC

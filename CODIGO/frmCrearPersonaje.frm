@@ -71,6 +71,7 @@ Begin VB.Form frmCrearPersonaje
    Begin VB.TextBox txtMail 
       BackColor       =   &H80000012&
       BorderStyle     =   0  'None
+      Enabled         =   0   'False
       BeginProperty Font 
          Name            =   "MS Sans Serif"
          Size            =   8.25
@@ -84,12 +85,14 @@ Begin VB.Form frmCrearPersonaje
       Height          =   225
       Left            =   3480
       TabIndex        =   3
+      Text            =   "Deshabilitado"
       Top             =   2280
       Width           =   5055
    End
    Begin VB.TextBox txtConfirmPasswd 
       BackColor       =   &H80000012&
       BorderStyle     =   0  'None
+      Enabled         =   0   'False
       BeginProperty Font 
          Name            =   "Courier"
          Size            =   9.75
@@ -103,14 +106,15 @@ Begin VB.Form frmCrearPersonaje
       Height          =   225
       IMEMode         =   3  'DISABLE
       Left            =   6120
-      PasswordChar    =   "*"
       TabIndex        =   2
+      Text            =   "Deshabilitado"
       Top             =   1800
       Width           =   2415
    End
    Begin VB.TextBox txtPasswd 
       BackColor       =   &H80000012&
       BorderStyle     =   0  'None
+      Enabled         =   0   'False
       BeginProperty Font 
          Name            =   "Courier"
          Size            =   9.75
@@ -124,8 +128,8 @@ Begin VB.Form frmCrearPersonaje
       Height          =   225
       IMEMode         =   3  'DISABLE
       Left            =   3480
-      PasswordChar    =   "*"
       TabIndex        =   1
+      Text            =   "Deshabilitado"
       Top             =   1800
       Width           =   2415
    End
@@ -1477,15 +1481,15 @@ Private Sub CargarCombos()
 End Sub
 
 Function CheckData() As Boolean
-    If txtPasswd.Text <> txtConfirmPasswd.Text Then
-        MsgBox "Los passwords que tipeo no coinciden, por favor vuelva a ingresarlos."
-        Exit Function
-    End If
+    'If txtPasswd.Text <> txtConfirmPasswd.Text Then
+    '    MsgBox "Los passwords que tipeo no coinciden, por favor vuelva a ingresarlos."
+    '    Exit Function
+    'End If
     
-    If Not CheckMailString(txtMail.Text) Then
-        MsgBox "Direccion de mail invalida."
-        Exit Function
-    End If
+    'If Not CheckMailString(txtMail.Text) Then
+    '    MsgBox "Direccion de mail invalida."
+    '    Exit Function
+    'End If
 
     If UserRaza = 0 Then
         MsgBox "Seleccione la raza del personaje."
@@ -1506,6 +1510,12 @@ Function CheckData() As Boolean
         MsgBox "Seleccione el hogar del personaje."
         Exit Function
     End If
+    
+    If AccountHash = vbNullString Then
+        MsgBox "Error, debe iniciar sesion nuevamente"
+        Exit Function
+    End If
+
     'Toqueteado x Salvito
     Dim i As Integer
     For i = 1 To NUMATRIBUTOS
@@ -1577,7 +1587,7 @@ Private Sub UpdateHeadSelection()
     Call DrawHead(CheckCabeza(Head), 0)
 End Sub
 
-Private Sub imgCrear_Click()
+Private Sub ImgCrear_Click()
 
     Dim i As Integer
     Dim CharAscii As Byte
@@ -1600,17 +1610,15 @@ Private Sub imgCrear_Click()
     UserHogar = lstHogar.ListIndex + 1
     
     If Not CheckData Then Exit Sub
-    UserPassword = txtPasswd.Text
+    'UserPassword = txtPasswd.Text
     
-    For i = 1 To Len(UserPassword)
-        CharAscii = Asc(mid$(UserPassword, i, 1))
-        If Not LegalCharacter(CharAscii) Then
-            MsgBox ("Password inválido. El caractér " & Chr$(CharAscii) & " no está permitido.")
-            Exit Sub
-        End If
-    Next i
-    
-    UserEmail = txtMail.Text
+    'For i = 1 To Len(UserPassword)
+    '    CharAscii = Asc(mid$(UserPassword, i, 1))
+    '    If Not LegalCharacter(CharAscii) Then
+    '        MsgBox ("Password inválido. El caractér " & Chr$(CharAscii) & " no está permitido.")
+    '        Exit Sub
+    '    End If
+    'Next i
     
 #If UsarWrench = 1 Then
     frmMain.Socket1.HostName = CurServerIp
