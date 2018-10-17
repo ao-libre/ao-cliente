@@ -30,6 +30,3 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Private Sub Picture1_Click()
-
-End Sub

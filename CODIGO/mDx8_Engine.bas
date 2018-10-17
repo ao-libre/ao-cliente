@@ -729,7 +729,73 @@ Public Sub Engine_Update_FPS()
        ' End If
 End Sub
 
+Public Sub DrawPJ(ByVal Index As Byte)
+    Dim cColor As Long
+   
+    If cPJ(Index).Nombre <> "" Then
+        frmPanelAccount.lblAccData(Index).Caption = cPJ(Index).Nombre
+        Select Case cPJ(Index).Color
+            Case 1 'Verde
+                cColor = RGB(0, 225, 0)
+            Case 2 'Azul
+                cColor = RGB(0, 0, 255)
+            Case 3 'Rojo
+                cColor = RGB(255, 0, 0)
+            Case 4 'Noble
+                cColor = RGB(207, 146, 3)
+            Case 5 'gris
+                cColor = RGB(128, 128, 128)
+            
+        End Select
+        frmPanelAccount.lblAccData(Index).ForeColor = cColor
+    End If
 
+    If cPJ(Index).Nombre = "" Then Exit Sub
+   
+    Dim i As Integer
+   
+    Dim init_x As Integer
+    Dim init_y As Integer
+    Dim grhtemp As Grh
+    Static re As RECT
+   
+    re.Left = 0
+    re.Top = 0
+    re.bottom = 80
+    re.Right = 76
+   
+    init_x = 25
+    init_y = 20
+   
+    Dim Light(3) As Long
+    Light(0) = D3DColorXRGB(255, 255, 255)
+    Light(1) = D3DColorXRGB(255, 255, 255)
+    Light(2) = D3DColorXRGB(255, 255, 255)
+    Light(3) = D3DColorXRGB(255, 255, 255)
+   
+    DirectDevice.BeginScene
+    DirectDevice.Clear 0, ByVal 0&, D3DCLEAR_TARGET, 0, 0, 0
 
+    If cPJ(Index).Body <> 0 Then
+        Call DDrawTransGrhtoSurface(BodyData(cPJ(Index).Body).Walk(3), PixelOffsetX + init_x, PixelOffsetY + init_y, 0, Light(), 0, init_x, init_y)
+    End If
+     
+    If cPJ(Index).Head <> 0 Then
+        Call DDrawTransGrhtoSurface(HeadData(cPJ(Index).Head).Head(3), PixelOffsetX + init_x + 4, PixelOffsetY + init_y - 8, 0, Light(), 0, init_x, init_y)
+    End If
 
+    If cPJ(Index).Helmet <> 0 Then
+        Call DDrawTransGrhtoSurface(CascoAnimData(cPJ(Index).Helmet).Head(3), PixelOffsetX + init_x + 4, PixelOffsetY + init_y - 8, 0, Light(), 0, init_x, init_y)
+    End If
+     
+    If cPJ(Index).Weapon <> 0 Then
+        Call DDrawTransGrhtoSurface(WeaponAnimData(cPJ(Index).Weapon).WeaponWalk(3), PixelOffsetX + init_x, PixelOffsetY + init_y, 0, Light(), 0, init_x, init_y)
+    End If
+     
+    If cPJ(Index).Shield <> 0 Then
+        Call DDrawTransGrhtoSurface(ShieldAnimData(cPJ(Index).Shield).ShieldWalk(3), PixelOffsetX + init_x, PixelOffsetY + init_y, 0, Light(), 0, init_x, init_y)
+    End If
 
+    DirectDevice.EndScene
+    DirectDevice.Present re, ByVal 0&, frmPanelAccount.picChar(Index - 1).hwnd, ByVal 0&
+End Sub

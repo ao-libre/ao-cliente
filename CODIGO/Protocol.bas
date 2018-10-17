@@ -167,6 +167,7 @@ Private Enum ServerPacketID
     DecirPalabrasMagicas
     PlayAttackAnim
     FXtoMap
+    AccountLogged
 End Enum
 
 Private Enum ClientPacketID
@@ -299,6 +300,8 @@ Private Enum ClientPacketID
     StopSharingNpc = 127
     Consultation = 128
     moveItem = 129
+    LoginExistingAccount = 130
+    LoginNewAccount = 131
 End Enum
 
 Public Enum FontTypeNames
@@ -758,6 +761,10 @@ On Error Resume Next
         Case ServerPacketID.FXtoMap
             Call HandleFXtoMap
         
+        'CHOTS | Accounts
+        Case ServerPacketID.AccountLogged
+            Call HandleAccountLogged
+
         '*******************
         'GM messages
         '*******************
@@ -5369,7 +5376,30 @@ On Error GoTo 0
         Err.Raise error
 End Sub
 
+''
+' Writes the "LoginExistingAccount" message to the outgoing data buffer.
+'
+' @remarks  The data is not actually sent until the buffer is properly flushed.
 
+Public Sub WriteLoginExistingAccount()
+'***************************************************
+'Author: Juan Andres Dalmasso (CHOTS)
+'Last Modification: 12/10/2018
+'Writes the "LoginExistingAccount" message to the outgoing data buffer
+'***************************************************
+    
+    With outgoingData
+        Call .WriteByte(ClientPacketID.LoginExistingAccount)
+        
+        Call .WriteASCIIString(AccountName)
+        
+        Call .WriteASCIIString(AccountPassword)
+        
+        Call .WriteByte(App.Major)
+        Call .WriteByte(App.Minor)
+        Call .WriteByte(App.Revision)
+    End With
+End Sub
 ''
 ' Writes the "LoginExistingChar" message to the outgoing data buffer.
 '
@@ -5378,17 +5408,35 @@ End Sub
 Public Sub WriteLoginExistingChar()
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
+'Last Modification: 12/10/2018
+'CHOTS: Accounts
 'Writes the "LoginExistingChar" message to the outgoing data buffer
 '***************************************************
-    Dim i As Long
-    
     With outgoingData
         Call .WriteByte(ClientPacketID.LoginExistingChar)
         
         Call .WriteASCIIString(UserName)
         
-        Call .WriteASCIIString(UserPassword)
+        Call .WriteASCIIString(AccountHash)
+        
+        Call .WriteByte(App.Major)
+        Call .WriteByte(App.Minor)
+        Call .WriteByte(App.Revision)
+    End With
+End Sub
+Public Sub WriteLoginNewAccount()
+'***************************************************
+'Author: Juan Andres Dalmasso (CHOTS)
+'Last Modification: 12/10/2018
+'CHOTS: Accounts
+'Writes the "LoginNewAccount" message to the outgoing data buffer
+'***************************************************
+    With outgoingData
+        Call .WriteByte(ClientPacketID.LoginNewAccount)
+        
+        Call .WriteASCIIString(AccountName)
+        
+        Call .WriteASCIIString(AccountPassword)
         
         Call .WriteByte(App.Major)
         Call .WriteByte(App.Minor)
@@ -5427,7 +5475,7 @@ Public Sub WriteLoginNewChar()
         Call .WriteByte(ClientPacketID.LoginNewChar)
         
         Call .WriteASCIIString(UserName)
-        Call .WriteASCIIString(UserPassword)
+        Call .WriteASCIIString(AccountHash)
         
         Call .WriteByte(App.Major)
         Call .WriteByte(App.Minor)
@@ -5437,8 +5485,6 @@ Public Sub WriteLoginNewChar()
         Call .WriteByte(UserSexo)
         Call .WriteByte(UserClase)
         Call .WriteInteger(UserHead)
-        
-        Call .WriteASCIIString(UserEmail)
         
         Call .WriteByte(UserHogar)
     End With
@@ -10571,4 +10617,39 @@ Private Sub HandleFXtoMap()
             .fX.Loops = Loops
         End If
     End With
+End Sub
+
+Private Sub HandleAccountLogged()
+    If incomingData.length < 32 Then
+        Err.Raise incomingData.NotEnoughDataErrCode
+        Exit Sub
+    End If
+    
+    Dim i As Byte
+
+    'Remove packet ID
+    Call incomingData.ReadByte
+    AccountName = incomingData.ReadASCIIString
+    AccountHash = incomingData.ReadASCIIString
+    NumberOfCharacters = incomingData.ReadByte
+    
+    If NumberOfCharacters > 0 Then
+        For i = 1 To NumberOfCharacters
+            cPJ(i).nombre = incomingData.ReadASCIIString
+            cPJ(i).Body = incomingData.ReadInteger
+            cPJ(i).Head = incomingData.ReadInteger
+            cPJ(i).weapon = incomingData.ReadInteger
+            cPJ(i).shield = incomingData.ReadInteger
+            cPJ(i).helmet = incomingData.ReadInteger
+            cPJ(i).Class = incomingData.ReadByte
+            cPJ(i).Race = incomingData.ReadByte
+            cPJ(i).Map = incomingData.ReadInteger
+            cPJ(i).Level = incomingData.ReadByte
+            cPJ(i).Gold = incomingData.ReadLong
+            cPJ(i).Color = 5
+            Call mDx8_Engine.DrawPJ(i)
+        Next i
+    End If
+    
+    frmPanelAccount.Show
 End Sub
