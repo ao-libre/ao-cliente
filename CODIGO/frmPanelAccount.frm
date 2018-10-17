@@ -502,17 +502,6 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Public Seleccionado As Byte
 
-Private Sub cmdCerrar_Click()
-frmMain.Socket1.Disconnect
-Unload Me
-frmConnect.Show
-End Sub
-
-Private Sub cmdConnt_Click()
-UserName = lblAccData(1 + Seleccionado).Caption
-Call WriteLoginExistingChar
-End Sub
-
 Private Sub cmdCerrarSesion_Click()
     frmMain.Socket1.Disconnect
     Unload Me
@@ -524,7 +513,7 @@ If NumberOfCharacters >= 10 Then
     MsgBox "Error: No puedes crear mas de 10 personajes."
     Exit Sub
 End If
-For i = 1 To 0
+For i = 1 To 10
   If lblAccData(i).Caption = "" Then
      frmCrearPersonaje.Show
      Exit Sub
@@ -612,7 +601,7 @@ End Sub
 Private Sub picChar_DblClick(Index As Integer)
     Seleccionado = Index + 1
     If Not lblAccData(Seleccionado).Caption = "" Then
-        UserName = lblAccData(Index + 1).Caption
+        UserName = lblAccData(Seleccionado).Caption
         WriteLoginExistingChar
     Else
         frmCrearPersonaje.Show
