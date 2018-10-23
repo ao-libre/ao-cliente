@@ -10632,6 +10632,8 @@ Private Sub HandleAccountLogged()
     AccountName = incomingData.ReadASCIIString
     AccountHash = incomingData.ReadASCIIString
     NumberOfCharacters = incomingData.ReadByte
+
+    ReDim cPJ(1 To 10) As PjCuenta
     
     If NumberOfCharacters > 0 Then
         For i = 1 To NumberOfCharacters
