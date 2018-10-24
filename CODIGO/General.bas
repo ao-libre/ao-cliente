@@ -1455,7 +1455,6 @@ Public Sub ResetAllInfo()
     'Stop audio
     Call Audio.StopWave
     frmMain.IsPlaying = PlayLoop.plNone
-
     
     ' Reset flags
     pausa = False

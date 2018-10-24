@@ -17,30 +17,6 @@ Begin VB.Form frmPanelAccount
    ScaleMode       =   0  'User
    ScaleWidth      =   808.081
    StartUpPosition =   2  'CenterScreen
-   Begin VB.CommandButton cmdCerrarSesion 
-      Caption         =   "Cerrar Sesion"
-      Height          =   495
-      Left            =   840
-      TabIndex        =   25
-      Top             =   7920
-      Width           =   2055
-   End
-   Begin VB.CommandButton cmdCrear 
-      Caption         =   "Crear PJ"
-      Height          =   495
-      Left            =   4920
-      TabIndex        =   24
-      Top             =   7920
-      Width           =   2055
-   End
-   Begin VB.CommandButton cmdConectar 
-      Caption         =   "Conectar"
-      Height          =   495
-      Left            =   8760
-      TabIndex        =   23
-      Top             =   7920
-      Width           =   2055
-   End
    Begin VB.PictureBox picChar 
       Appearance      =   0  'Flat
       BackColor       =   &H00000000&
@@ -186,83 +162,143 @@ Begin VB.Form frmPanelAccount
       Left            =   600
       Top             =   1440
    End
+   Begin VB.Image imgConectar 
+      Height          =   375
+      Left            =   9120
+      Top             =   8040
+      Width           =   1335
+   End
+   Begin VB.Image imgCrearPersonaje 
+      Height          =   375
+      Left            =   5280
+      Top             =   8040
+      Width           =   1335
+   End
+   Begin VB.Image imgSalir 
+      Height          =   375
+      Left            =   1200
+      Top             =   8040
+      Width           =   1335
+   End
    Begin VB.Label lblCharData 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
-      Caption         =   "Mapa: "
-      ForeColor       =   &H00000000&
-      Height          =   195
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   210
       Index           =   5
-      Left            =   2040
-      TabIndex        =   29
-      Top             =   7080
-      Width           =   495
-   End
-   Begin VB.Label lblCharData 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "Oro: "
-      ForeColor       =   &H00000000&
-      Height          =   195
-      Index           =   4
-      Left            =   2040
-      TabIndex        =   28
-      Top             =   6720
-      Width           =   345
-   End
-   Begin VB.Label lblCharData 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "Nivel: "
-      ForeColor       =   &H00000000&
-      Height          =   195
-      Index           =   3
-      Left            =   2040
-      TabIndex        =   27
-      Top             =   6360
-      Width           =   450
-   End
-   Begin VB.Label lblCharData 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "Raza: "
-      ForeColor       =   &H00000000&
-      Height          =   195
-      Index           =   1
-      Left            =   2040
+      Left            =   3240
       TabIndex        =   26
-      Top             =   6000
-      Width           =   465
-   End
-   Begin VB.Image ImgSalir 
-      Height          =   255
-      Left            =   11595
-      Top             =   90
-      Width           =   255
+      Top             =   7215
+      Width           =   45
    End
    Begin VB.Label lblCharData 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
-      Caption         =   "Clase:"
-      ForeColor       =   &H00000000&
-      Height          =   195
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   210
+      Index           =   4
+      Left            =   3240
+      TabIndex        =   25
+      Top             =   6885
+      Width           =   45
+   End
+   Begin VB.Label lblCharData 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   210
+      Index           =   3
+      Left            =   3240
+      TabIndex        =   24
+      Top             =   6540
+      Width           =   45
+   End
+   Begin VB.Label lblCharData 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   210
+      Index           =   1
+      Left            =   3240
+      TabIndex        =   23
+      Top             =   6180
+      Width           =   45
+   End
+   Begin VB.Label lblCharData 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   210
       Index           =   2
-      Left            =   2040
+      Left            =   3240
       TabIndex        =   22
-      Top             =   5640
-      Width           =   435
+      Top             =   5835
+      Width           =   45
    End
    Begin VB.Label lblCharData 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
-      Caption         =   "Nombre: "
-      ForeColor       =   &H00000000&
-      Height          =   195
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   210
       Index           =   0
-      Left            =   2040
+      Left            =   3240
       TabIndex        =   21
-      Top             =   5280
-      Width           =   645
+      Top             =   5520
+      Width           =   45
    End
    Begin VB.Label lblAccData 
       Alignment       =   2  'Center
@@ -282,7 +318,7 @@ Begin VB.Form frmPanelAccount
       Index           =   10
       Left            =   8700
       TabIndex        =   20
-      Top             =   4770
+      Top             =   4890
       Width           =   1245
    End
    Begin VB.Label lblAccData 
@@ -303,7 +339,7 @@ Begin VB.Form frmPanelAccount
       Index           =   9
       Left            =   6930
       TabIndex        =   19
-      Top             =   4770
+      Top             =   4890
       Width           =   1245
    End
    Begin VB.Label lblAccData 
@@ -324,7 +360,7 @@ Begin VB.Form frmPanelAccount
       Index           =   8
       Left            =   5280
       TabIndex        =   18
-      Top             =   4770
+      Top             =   4890
       Width           =   1245
    End
    Begin VB.Label lblAccData 
@@ -345,7 +381,7 @@ Begin VB.Form frmPanelAccount
       Index           =   7
       Left            =   3600
       TabIndex        =   17
-      Top             =   4770
+      Top             =   4890
       Width           =   1245
    End
    Begin VB.Label lblAccData 
@@ -366,7 +402,7 @@ Begin VB.Form frmPanelAccount
       Index           =   6
       Left            =   1890
       TabIndex        =   16
-      Top             =   4770
+      Top             =   4890
       Width           =   1245
    End
    Begin VB.Label lblAccData 
@@ -387,7 +423,7 @@ Begin VB.Form frmPanelAccount
       Index           =   5
       Left            =   8730
       TabIndex        =   15
-      Top             =   2910
+      Top             =   3030
       Width           =   1245
    End
    Begin VB.Label lblAccData 
@@ -408,7 +444,7 @@ Begin VB.Form frmPanelAccount
       Index           =   4
       Left            =   6960
       TabIndex        =   14
-      Top             =   2910
+      Top             =   3030
       Width           =   1245
    End
    Begin VB.Label lblAccData 
@@ -429,7 +465,7 @@ Begin VB.Form frmPanelAccount
       Index           =   3
       Left            =   5310
       TabIndex        =   13
-      Top             =   2910
+      Top             =   3030
       Width           =   1245
    End
    Begin VB.Label lblAccData 
@@ -450,7 +486,7 @@ Begin VB.Form frmPanelAccount
       Index           =   2
       Left            =   3630
       TabIndex        =   12
-      Top             =   2910
+      Top             =   3030
       Width           =   1245
    End
    Begin VB.Label lblAccData 
@@ -471,7 +507,7 @@ Begin VB.Form frmPanelAccount
       Index           =   1
       Left            =   1890
       TabIndex        =   11
-      Top             =   2910
+      Top             =   3030
       Width           =   1245
    End
    Begin VB.Label lblAccData 
@@ -479,20 +515,20 @@ Begin VB.Form frmPanelAccount
       BackStyle       =   0  'Transparent
       BeginProperty Font 
          Name            =   "Arial"
-         Size            =   20.25
+         Size            =   15.75
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00000000&
-      Height          =   495
+      ForeColor       =   &H00FFFFFF&
+      Height          =   375
       Index           =   0
-      Left            =   2400
+      Left            =   2760
       TabIndex        =   10
-      Top             =   720
-      Width           =   6585
+      Top             =   876
+      Width           =   6465
    End
 End
 Attribute VB_Name = "frmPanelAccount"
@@ -502,45 +538,8 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Public Seleccionado As Byte
 
-Private Sub cmdCerrarSesion_Click()
-    frmMain.Socket1.Disconnect
-    Unload Me
-    frmConnect.Show
-End Sub
-
-Private Sub cmdCrear_Click()
-If NumberOfCharacters >= 10 Then
-    MsgBox "Error: No puedes crear mas de 10 personajes."
-    Exit Sub
-End If
-For i = 1 To 10
-  If lblAccData(i).Caption = "" Then
-     frmCrearPersonaje.Show
-     Exit Sub
-  End If
-Next i
-
-End Sub
-
-Private Sub cmdConectar_Click()
-#If UsarWrench = 1 Then
-    If Not frmMain.Socket1.Connected Then
-#Else
-    If frmMain.Winsock1.State <> sckConnected Then
-#End If
-        MsgBox "Error: Se ha perdido la conexion con el server."
-        AccountName = vbNullString
-        AccountHash = vbNullString
-        NumberOfCharacters = 0
-        Unload Me
-    Else
-        UserName = lblAccData(Seleccionado).Caption
-        Call WriteLoginExistingChar
-    End If
-End Sub
-
 Private Sub Form_Load()
-
+Me.Picture = LoadPicture(DirGraficos & "VentanaCuenta.jpg")
 On Error Resume Next
     Unload frmConnect
 
@@ -570,6 +569,41 @@ End Sub
 
 Private Sub lblName_Click(Index As Integer)
     Seleccionado = Index
+End Sub
+
+Private Sub imgConectar_Click()
+If lblAccData(Seleccionado).Caption = vbNullString Then
+    MsgBox "Error: No has seleccionado un personaje."
+    Exit Sub
+End If
+
+#If UsarWrench = 1 Then
+    If Not frmMain.Socket1.Connected Then
+#Else
+    If frmMain.Winsock1.State <> sckConnected Then
+#End If
+        MsgBox "Error: Se ha perdido la conexion con el server."
+        AccountName = vbNullString
+        AccountHash = vbNullString
+        NumberOfCharacters = 0
+        Unload Me
+    Else
+        UserName = lblAccData(Seleccionado).Caption
+        Call WriteLoginExistingChar
+    End If
+End Sub
+
+Private Sub imgCrearPersonaje_Click()
+If NumberOfCharacters >= 10 Then
+    MsgBox "Error: No puedes crear mas de 10 personajes."
+    Exit Sub
+End If
+For i = 1 To 10
+  If lblAccData(i).Caption = "" Then
+     frmCrearPersonaje.Show
+     Exit Sub
+  End If
+Next i
 End Sub
 
 Private Sub imgSalir_Click()
