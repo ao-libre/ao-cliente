@@ -247,18 +247,23 @@ Function CheckUserData() As Boolean
     For LoopC = 1 To Len(AccountPassword)
         CharAscii = Asc(mid$(AccountPassword, LoopC, 1))
         If Not LegalCharacter(CharAscii) Then
-            MsgBox ("Password invalido. El caracter " & Chr$(CharAscii) & " no esta¡ permitido.")
+            MsgBox ("Password invalido. El caracter " & Chr$(CharAscii) & " no esta permitido.")
             Exit Function
         End If
     Next LoopC
     
     If AccountName = "" Then
-        MsgBox ("Ingrese un email valido.")
+        MsgBox "Ingrese un e-mail."
         Exit Function
+    End If
+
+    If Not CheckMailString(AccountName) Then
+        MsgBox "Direccion de e-mail invalida."
+        Exit Sub
     End If
     
     If Len(AccountName) > 30 Then
-        MsgBox ("El nombre debe tener menos de 30 letras.")
+        MsgBox "El e-mail debe tener menos de 30 letras."
         Exit Function
     End If
     

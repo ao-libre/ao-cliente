@@ -1481,16 +1481,6 @@ Private Sub CargarCombos()
 End Sub
 
 Function CheckData() As Boolean
-    'If txtPasswd.Text <> txtConfirmPasswd.Text Then
-    '    MsgBox "Los passwords que tipeo no coinciden, por favor vuelva a ingresarlos."
-    '    Exit Function
-    'End If
-    
-    'If Not CheckMailString(txtMail.Text) Then
-    '    MsgBox "Direccion de mail invalida."
-    '    Exit Function
-    'End If
-
     If UserRaza = 0 Then
         MsgBox "Seleccione la raza del personaje."
         Exit Function
@@ -1610,15 +1600,6 @@ Private Sub ImgCrear_Click()
     UserHogar = lstHogar.ListIndex + 1
     
     If Not CheckData Then Exit Sub
-    'UserPassword = txtPasswd.Text
-    
-    'For i = 1 To Len(UserPassword)
-    '    CharAscii = Asc(mid$(UserPassword, i, 1))
-    '    If Not LegalCharacter(CharAscii) Then
-    '        MsgBox ("Password inválido. El caractér " & Chr$(CharAscii) & " no está permitido.")
-    '        Exit Sub
-    '    End If
-    'Next i
     
 #If UsarWrench = 1 Then
     frmMain.Socket1.HostName = CurServerIp
