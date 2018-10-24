@@ -13,6 +13,9 @@ Public TileBufferSize As Integer
 Public Const ScreenWidth As Long = 536
 Public Const ScreenHeight As Long = 412
 
+Public Const HeadOffsetAltos As Integer = -8
+Public Const HeadOffsetBajos As Integer = 2
+
 Public MainScreenRect As RECT
 Public ConnectScreenRect As RECT
 '
@@ -756,7 +759,7 @@ Public Sub DrawPJ(ByVal Index As Byte)
    
     Dim init_x As Integer
     Dim init_y As Integer
-    Dim head_offset As Byte
+    Dim head_offset As Integer
     Dim grhtemp As Grh
     Static re As RECT
    
@@ -775,9 +778,9 @@ Public Sub DrawPJ(ByVal Index As Byte)
     Light(3) = D3DColorXRGB(255, 255, 255)
     
     If cPJ(Index).Race = eRaza.Humano Or cPJ(Index).Race = eRaza.Elfo Or cPJ(Index).Race = eRaza.ElfoOscuro Then
-        head_offset = 8
+        head_offset = HeadOffsetAltos
     Else
-        head_offset = 0
+        head_offset = HeadOffsetBajos
     End If
    
     DirectDevice.BeginScene
@@ -788,11 +791,11 @@ Public Sub DrawPJ(ByVal Index As Byte)
     End If
      
     If cPJ(Index).Head <> 0 Then
-        Call DDrawTransGrhtoSurface(HeadData(cPJ(Index).Head).Head(3), PixelOffsetX + init_x + 4, PixelOffsetY + init_y - head_offset, 0, Light(), 0, init_x, init_y)
+        Call DDrawTransGrhtoSurface(HeadData(cPJ(Index).Head).Head(3), PixelOffsetX + init_x + 4, PixelOffsetY + init_y + head_offset, 0, Light(), 0, init_x, init_y)
     End If
 
     If cPJ(Index).helmet <> 0 Then
-        Call DDrawTransGrhtoSurface(CascoAnimData(cPJ(Index).helmet).Head(3), PixelOffsetX + init_x + 4, PixelOffsetY + init_y - head_offset, 0, Light(), 0, init_x, init_y)
+        Call DDrawTransGrhtoSurface(CascoAnimData(cPJ(Index).helmet).Head(3), PixelOffsetX + init_x + 4, PixelOffsetY + init_y + head_offset, 0, Light(), 0, init_x, init_y)
     End If
      
     If cPJ(Index).weapon <> 0 Then
