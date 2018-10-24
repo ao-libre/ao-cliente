@@ -539,7 +539,7 @@ Attribute VB_Exposed = False
 Public Seleccionado As Byte
 
 Private Sub Form_Load()
-Me.Picture = LoadPicture(DirGraficos & "VentanaCuenta.jpg")
+   Me.Picture = LoadPicture(DirGraficos & "VentanaCuenta.jpg")
 On Error Resume Next
     Unload frmConnect
 
@@ -572,44 +572,44 @@ Private Sub lblName_Click(Index As Integer)
 End Sub
 
 Private Sub imgConectar_Click()
-If lblAccData(Seleccionado).Caption = vbNullString Then
-    MsgBox "Error: No has seleccionado un personaje."
-    Exit Sub
-End If
+   If lblAccData(Seleccionado).Caption = vbNullString Then
+       MsgBox "Error: No has seleccionado un personaje."
+       Exit Sub
+   End If
 
-#If UsarWrench = 1 Then
-    If Not frmMain.Socket1.Connected Then
-#Else
-    If frmMain.Winsock1.State <> sckConnected Then
-#End If
-        MsgBox "Error: Se ha perdido la conexion con el server."
-        AccountName = vbNullString
-        AccountHash = vbNullString
-        NumberOfCharacters = 0
-        Unload Me
-    Else
-        UserName = lblAccData(Seleccionado).Caption
-        Call WriteLoginExistingChar
-    End If
+   #If UsarWrench = 1 Then
+      If Not frmMain.Socket1.Connected Then
+   #Else
+      If frmMain.Winsock1.State <> sckConnected Then
+   #End If
+         MsgBox "Error: Se ha perdido la conexion con el server."
+         AccountName = vbNullString
+         AccountHash = vbNullString
+         NumberOfCharacters = 0
+         Unload Me
+      Else
+         UserName = lblAccData(Seleccionado).Caption
+         Call WriteLoginExistingChar
+      End If
 End Sub
 
 Private Sub imgCrearPersonaje_Click()
-If NumberOfCharacters >= 10 Then
-    MsgBox "Error: No puedes crear mas de 10 personajes."
-    Exit Sub
-End If
-For i = 1 To 10
-  If lblAccData(i).Caption = "" Then
-     frmCrearPersonaje.Show
-     Exit Sub
-  End If
-Next i
+   If NumberOfCharacters >= 10 Then
+       MsgBox "Error: No puedes crear mas de 10 personajes."
+       Exit Sub
+   End If
+   For i = 1 To 10
+     If lblAccData(i).Caption = "" Then
+        frmCrearPersonaje.Show
+        Exit Sub
+     End If
+   Next i
 End Sub
 
 Private Sub imgSalir_Click()
-frmMain.Socket1.Disconnect
-Unload Me
-frmConnect.Show
+   frmMain.Socket1.Disconnect
+   Unload Me
+   frmConnect.Show
 End Sub
 
 

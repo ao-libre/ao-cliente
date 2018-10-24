@@ -84,12 +84,12 @@ Private Sub cmdCrear_Click()
 End Sub
 
 Private Sub Form_Load()
-Dim i As Byte
-lblCuentaNombre.Caption = AccountName
+    Dim i As Byte
+    lblCuentaNombre.Caption = AccountName
 
-If NumberOfCharacters > 0 Then
-    For i = 1 To NumberOfCharacters
-        Call lstPersonajes.AddItem(UserCharacters(i))
-    Next i
-End If
+    If NumberOfCharacters > 0 Then
+        For i = 1 To NumberOfCharacters
+            Call lstPersonajes.AddItem(UserCharacters(i))
+        Next i
+    End If
 End Sub

@@ -284,7 +284,7 @@ Private cBotonTeclas As clsGraphicalButton
 Public LastButtonPressed As clsGraphicalButton
 
 Private Sub cmdNuevaCuenta_Click()
-frmCrearCuenta.Show
+  frmCrearCuenta.Show
 End Sub
 
 Private Sub Form_Activate()
@@ -523,7 +523,7 @@ Private Sub imgConectarse_Click()
 End Sub
 
 Private Sub imgCrearPj_Click()
-MsgBox ("Usar cuenta")
+    MsgBox ("Usar cuenta")
 End Sub
 
 Private Sub imgLeerMas_Click()
