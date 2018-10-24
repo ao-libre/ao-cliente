@@ -725,9 +725,9 @@ Public Type PjCuenta
     nombre      As String
     Head        As Integer
     Body        As Integer
-    Shield      As Byte
-    Helmet      As Byte
-    Weapon      As Byte
+    shield      As Byte
+    helmet      As Byte
+    weapon      As Byte
     Mapa        As Integer
     Class       As Byte
     Race        As Byte
@@ -737,7 +737,7 @@ Public Type PjCuenta
     Gold        As Long
 End Type
 
-Public cPJ(1 To 10) As PjCuenta
+Public cPJ() As PjCuenta
 
 Public NPCInventory(1 To MAX_NPC_INVENTORY_SLOTS) As NpCinV
 Public UserMeditar As Boolean
