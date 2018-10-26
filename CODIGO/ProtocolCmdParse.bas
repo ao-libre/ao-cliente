@@ -955,6 +955,9 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             Case "/DT"
                 Call WriteTeleportDestroy
                 
+            Case "/DE"
+                Call WriteExitDestroy
+                
             Case "/LLUVIA"
                 Call WriteRainToggle
                 

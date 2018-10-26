@@ -8507,7 +8507,20 @@ Public Sub WriteTeleportDestroy()
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.TeleportDestroy)
 End Sub
+''
+' Writes the "TeleportDestroy" message to the outgoing data buffer.
+'
+' @remarks  The data is not actually sent until the buffer is properly flushed.
 
+Public Sub WriteExitDestroy()
+'***************************************************
+'Author: Cucsijuan
+'Last Modification: 30/09/18
+'Writes the "TeleportDestroy" message to the outgoing data buffer
+'***************************************************
+    Call outgoingData.WriteByte(ClientPacketID.GMCommands)
+    Call outgoingData.WriteByte(eGMCommands.ExitDestroy)
+End Sub
 ''
 ' Writes the "RainToggle" message to the outgoing data buffer.
 '

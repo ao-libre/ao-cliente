@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
-Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.OCX"
+Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "msinet.ocx"
 Begin VB.Form frmCargando 
    AutoRedraw      =   -1  'True
    BackColor       =   &H80000000&
@@ -32,7 +32,6 @@ Begin VB.Form frmCargando
       _ExtentY        =   3360
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmCargando.frx":0000
@@ -104,17 +103,12 @@ Attribute VB_Exposed = False
 'Pablo Ignacio Márquez
 
 Option Explicit
-#If False Then 'to fix VB fucking up the var names
-    Dim f As Variant
-#End If
-Dim f As Integer
 
 Private Sub Form_Load()
     Me.Analizar
     Me.Picture = LoadPicture(DirGraficos & "VentanaCargando.jpg")
     LOGO.Picture = LoadPicture(DirGraficos & "ImagenCargando.jpg")
 End Sub
-
 
 Private Sub LOGO_KeyPress(KeyAscii As Integer)
     Debug.Print 2
@@ -124,38 +118,30 @@ Private Sub Status_KeyPress(KeyAscii As Integer)
     Debug.Print 1
 End Sub
 
-'Mas info de esta funcion:
-'http://www.gs-zone.org/temas/como-configurar-el-autoupdate-completo.78653/
 Function Analizar()
     On Error Resume Next
-    
-    Dim IX As Integer
-    Dim tX As Integer
-    Dim DifX As Integer
            
-    'LINK1 Variable que contiene el numero de actualización correcto del servidor
-    IX = Inet1.OpenURL("https://raw.githubusercontent.com/ao-oficial/ao-website/master/parches.txt") 'Host
-    tX = LeerInt(App.path & "\INIT\Update.ini")
-    DifX = IX - tX
- 
-    If Not (DifX = 0) Then
+    If Not (CheckIfRunningLastVersion = True) Then
         If MsgBox("Tu versión no es la actuál, ¿Deseas ejecutar el actualizador automático?.", vbYesNo) = vbYes Then
-            Call ShellExecute(Me.hwnd, "open", App.path & "/Autoupdate.exe", "", "", 1)
+            Call ShellExecute(Me.hwnd, "open", App.path & "\Autoupdate.exe", "", "", 1)
             End
         End If
     End If
 End Function
 
-Private Function LeerInt(ByVal Ruta As String) As Integer
-    f = FreeFile
-    Open Ruta For Input As f
-    LeerInt = Input$(LOF(f), #f)
-    Close #f
+Private Function CheckIfRunningLastVersion() As Boolean
+    Dim responseGithub As String, versionNumberMaster As String, versionNumberLocal As String
+    Dim JsonObject As Object
+
+    responseGithub = Inet1.OpenURL("https://api.github.com/repos/ao-libre/ao-cliente/releases/latest")
+    Set JsonObject = JSON.parse(responseGithub)
+    
+    versionNumberMaster = JsonObject.Item("tag_name")
+    versionNumberLocal = GetVar(App.path & "\INIT\version.ini", "Cliente", "version")
+    
+    If versionNumberMaster = versionNumberLocal Then
+        CheckIfRunningLastVersion = True
+    Else
+        CheckIfRunningLastVersion = False
+    End If
 End Function
- 
-Private Sub GuardarInt(ByVal Ruta As String, ByVal data As Integer)
-    f = FreeFile
-    Open Ruta For Output As f
-    Print #f, data
-    Close #f
-End Sub
