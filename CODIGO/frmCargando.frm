@@ -120,10 +120,12 @@ End Sub
 
 Function Analizar()
     On Error Resume Next
+    Dim binaryFileToOpen As String
            
     If Not (CheckIfRunningLastVersion = True) Then
         If MsgBox("Tu versión no es la actuál, ¿Deseas ejecutar el actualizador automático?.", vbYesNo) = vbYes Then
-            Call ShellExecute(Me.hwnd, "open", App.path & "\Autoupdate.exe", "", "", 1)
+            binaryFileToOpen = GetVar(App.path & "\INIT\Config.ini", "Launcher", "fileName")
+            Call ShellExecute(Me.hwnd, "open", App.path & binaryFileToOpen, "", "", 1)
             End
         End If
     End If
@@ -137,7 +139,7 @@ Private Function CheckIfRunningLastVersion() As Boolean
     Set JsonObject = JSON.parse(responseGithub)
     
     versionNumberMaster = JsonObject.Item("tag_name")
-    versionNumberLocal = GetVar(App.path & "\INIT\version.ini", "Cliente", "version")
+    versionNumberLocal = GetVar(App.path & "\INIT\Config.ini", "Cliente", "version")
     
     If versionNumberMaster = versionNumberLocal Then
         CheckIfRunningLastVersion = True
