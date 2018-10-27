@@ -32,7 +32,6 @@ Begin VB.Form frmCargando
       _ExtentY        =   3360
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmCargando.frx":0000
@@ -73,10 +72,10 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 'Argentum Online 0.11.6
 '
-'Copyright (C) 2002 Márquez Pablo Ignacio
+'Copyright (C) 2002 MÃ¡rquez Pablo Ignacio
 'Copyright (C) 2002 Otto Perez
 'Copyright (C) 2002 Aaron Perkins
-'Copyright (C) 2002 Matías Fernando Pequeño
+'Copyright (C) 2002 MatÃ­as Fernando PequeÃ±o
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the Affero General Public License;
@@ -98,10 +97,10 @@ Attribute VB_Exposed = False
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 número 983 piso 7 dto A
+'Calle 3 nÃºmero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'Código Postal 1900
-'Pablo Ignacio Márquez
+'CÃ³digo Postal 1900
+'Pablo Ignacio MÃ¡rquez
 
 Option Explicit
 
@@ -124,7 +123,7 @@ Function Analizar()
     Dim binaryFileToOpen As String
            
     If Not (CheckIfRunningLastVersion = True) Then
-        If MsgBox("Tu versión no es la actuál, ¿Deseas ejecutar el actualizador automático?.", vbYesNo) = vbYes Then
+        If MsgBox("Tu versiÃ³n no es la actuÃ¡l, Â¿Deseas ejecutar el actualizador automÃ¡tico?.", vbYesNo) = vbYes Then
             binaryFileToOpen = GetVar(App.path & "\INIT\Config.ini", "Launcher", "fileToOpen")
             Call ShellExecute(Me.hwnd, "open", App.path & binaryFileToOpen, "", "", 1)
             End
