@@ -1,5 +1,5 @@
 [INIT]
-Cant =2
+Cant =3
 
 [S1]
 Desc=Argentum Online Libre - Oficial
@@ -11,5 +11,9 @@ Desc=Argentum Online - Localhost
 IP=localhost
 PJ= 7666
 
+[S3]
+Desc=Argentum Online Libre - Atómico
+IP=18.228.12.255
+PJ= 7666
 
 
