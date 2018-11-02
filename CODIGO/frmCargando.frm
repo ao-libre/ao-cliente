@@ -32,7 +32,6 @@ Begin VB.Form frmCargando
       _ExtentY        =   3360
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmCargando.frx":0000
@@ -124,7 +123,7 @@ Function Analizar()
     Dim binaryFileToOpen As String
            
     If Not (CheckIfRunningLastVersion = True) Then
-                If MsgBox("Tu version no es la actual, ¿Deseas ejecutar el actualizador?.", vbYesNo) = vbYes Then
+                If MsgBox("Tu version no es la actual, Â¿Deseas ejecutar el actualizador?.", vbYesNo) = vbYes Then
             binaryFileToOpen = GetVar(App.path & "\INIT\Config.ini", "Launcher", "fileToOpen")
             Call ShellExecute(Me.hwnd, "open", App.path & binaryFileToOpen, "", "", 1)
             End
