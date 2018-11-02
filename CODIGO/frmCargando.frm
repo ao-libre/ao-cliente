@@ -123,7 +123,7 @@ Function Analizar()
     Dim binaryFileToOpen As String
            
     If Not (CheckIfRunningLastVersion = True) Then
-        If MsgBox("Tu versión no es la actuál, ¿Deseas ejecutar el actualizador automático?.", vbYesNo) = vbYes Then
+		If MsgBox("Tu version no es la actual, ¿Deseas ejecutar el actualizador?.", vbYesNo) = vbYes Then
             binaryFileToOpen = GetVar(App.path & "\INIT\Config.ini", "Launcher", "fileToOpen")
             Call ShellExecute(Me.hwnd, "open", App.path & binaryFileToOpen, "", "", 1)
             End
