@@ -21,14 +21,6 @@ Begin VB.Form frmConnect
    ScaleWidth      =   800
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
-   Begin VB.CommandButton cmdNuevaCuenta 
-      Caption         =   "Nueva cuenta"
-      Height          =   495
-      Left            =   5280
-      TabIndex        =   6
-      Top             =   4800
-      Width           =   1335
-   End
    Begin VB.ListBox lstServers 
       Appearance      =   0  'Flat
       BackColor       =   &H00000000&
@@ -188,7 +180,7 @@ Begin VB.Form frmConnect
       Top             =   8400
       Width           =   1335
    End
-   Begin VB.Image imgCrearPj 
+   Begin VB.Image imgCrearCuenta 
       Height          =   375
       Left            =   600
       Top             =   8400
@@ -269,7 +261,7 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private cBotonCrearPj As clsGraphicalButton
+Private cBotonCrearCuenta As clsGraphicalButton
 Private cBotonRecuperarPass As clsGraphicalButton
 Private cBotonManual As clsGraphicalButton
 Private cBotonReglamento As clsGraphicalButton
@@ -283,9 +275,6 @@ Private cBotonTeclas As clsGraphicalButton
 
 Public LastButtonPressed As clsGraphicalButton
 
-Private Sub cmdNuevaCuenta_Click()
-  frmCrearCuenta.Show
-End Sub
 
 Private Sub Form_Activate()
 'On Error Resume Next
@@ -376,7 +365,7 @@ Private Sub LoadButtons()
     
     GrhPath = DirGraficos
     
-    Set cBotonCrearPj = New clsGraphicalButton
+    Set cBotonCrearCuenta = New clsGraphicalButton
     Set cBotonRecuperarPass = New clsGraphicalButton
     Set cBotonManual = New clsGraphicalButton
     Set cBotonReglamento = New clsGraphicalButton
@@ -391,9 +380,9 @@ Private Sub LoadButtons()
     Set LastButtonPressed = New clsGraphicalButton
 
         
-    Call cBotonCrearPj.Initialize(imgCrearPj, GrhPath & "BotonCrearPersonajeConectar.jpg", _
-                                    GrhPath & "BotonCrearPersonajeRolloverConectar.jpg", _
-                                    GrhPath & "BotonCrearPersonajeClickConectar.jpg", Me)
+    Call cBotonCrearCuenta.Initialize(imgCrearCuenta, GrhPath & "BotonCrearCuenta.jpg", _
+                                    GrhPath & "BotonCrearCuentaRollover.jpg", _
+                                    GrhPath & "BotonCrearCuentaClick.jpg", Me)
                                     
     Call cBotonRecuperarPass.Initialize(imgRecuperar, GrhPath & "BotonRecuperarPass.jpg", _
                                     GrhPath & "BotonRecuperarPassRollover.jpg", _
@@ -522,12 +511,12 @@ Private Sub imgConectarse_Click()
     
 End Sub
 
-Private Sub imgCrearPj_Click()
-    MsgBox ("Usar cuenta")
-End Sub
-
 Private Sub imgLeerMas_Click()
     Call ShellExecute(0, "Open", "http://www.argentumonline.org", "", App.path, SW_SHOWNORMAL)
+End Sub
+
+Private Sub imgCrearCuenta_Click()
+    frmCrearCuenta.Show
 End Sub
 
 Private Sub imgManual_Click()
