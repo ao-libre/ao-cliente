@@ -73,16 +73,16 @@ Begin VB.Form frmCrearCuenta
       Width           =   2480
    End
    Begin VB.Image imgSalir 
-      Height          =   495
-      Left            =   480
-      Top             =   3720
-      Width           =   1455
+      Height          =   375
+      Left            =   560
+      Top             =   3800
+      Width           =   1335
    End
    Begin VB.Image imgCrearCuenta 
-      Height          =   495
-      Left            =   4440
-      Top             =   3720
-      Width           =   1455
+      Height          =   375
+      Left            =   4520
+      Top             =   3800
+      Width           =   1335
    End
 End
 Attribute VB_Name = "frmCrearCuenta"
@@ -90,11 +90,18 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Option Explicit
+Private cBotonCrearCuenta As clsGraphicalButton
+Private cBotonSalir As clsGraphicalButton
+
+Public LastButtonPressed As clsGraphicalButton
+
 Private Sub Form_Load()
     Me.Picture = LoadPicture(App.path & "\graficos\frmCuentaNueva.jpg")
     txtCuentaEmail.Text = ""
     txtCuentaPassword.Text = ""
     txtCuentaRepite.Text = ""
+    LoadButtons
 End Sub
 
 Private Sub imgCrearCuenta_Click()
@@ -105,7 +112,6 @@ Private Sub imgCrearCuenta_Click()
     
     AccountName = txtCuentaEmail.Text
     AccountPassword = txtCuentaPassword.Text
-    'CHOTS | @TODO validar mail y password
     
     #If UsarWrench = 1 Then
         If frmMain.Socket1.Connected Then
@@ -127,6 +133,9 @@ End Sub
 
 Private Sub imgSalir_Click()
     Unload Me
+End Sub
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Function IsFormValid() As Boolean
@@ -158,3 +167,23 @@ Private Function IsFormValid() As Boolean
     
     IsFormValid = True
 End Function
+
+Private Sub LoadButtons()
+    
+    Dim GrhPath As String
+    
+    GrhPath = DirGraficos
+    
+    Set cBotonCrearCuenta = New clsGraphicalButton
+    Set cBotonSalir = New clsGraphicalButton
+    
+    Set LastButtonPressed = New clsGraphicalButton
+
+    Call cBotonCrearCuenta.Initialize(Me.imgCrearCuenta, GrhPath & "BotonCrearCuenta.jpg", _
+                                    GrhPath & "BotonCrearCuentaRollover.jpg", _
+                                    GrhPath & "BotonCrearCuentaClick.jpg", Me)
+
+    Call cBotonSalir.Initialize(Me.imgSalir, GrhPath & "BotonSalirConnect.jpg", _
+                                    GrhPath & "BotonBotonSalirRolloverConnect.jpg", _
+                                    GrhPath & "BotonSalirClickConnect.jpg", Me)
+End Sub
