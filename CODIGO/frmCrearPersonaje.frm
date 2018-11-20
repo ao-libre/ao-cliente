@@ -1366,8 +1366,8 @@ Private Sub IniciarGraficos()
     Set LastButtonPressed = New clsGraphicalButton
     
     
-    Call cBotonPasswd.Initialize(imgPasswd, "", GrhPath & "BotonContraseña.jpg", _
-                                    GrhPath & "BotonContraseña.jpg", Me, , , False, False)
+    Call cBotonPasswd.Initialize(imgPasswd, "", GrhPath & "BotonPassword.jpg", _
+                                    GrhPath & "BotonPassword.jpg", Me, , , False, False)
                                     
     Call cBotonTirarDados.Initialize(imgTirarDados, "", GrhPath & "BotonTirarDados.jpg", _
                                     GrhPath & "BotonTirarDados.jpg", Me, , , False, False)
