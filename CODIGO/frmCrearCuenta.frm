@@ -129,11 +129,14 @@ Private Sub imgCrearCuenta_Click()
         End If
         frmMain.Winsock1.Connect CurServerIp, CurServerPort
     #End If
+
+    Unload frmCrearCuenta
 End Sub
 
 Private Sub imgSalir_Click()
     Unload Me
 End Sub
+
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
 End Sub
