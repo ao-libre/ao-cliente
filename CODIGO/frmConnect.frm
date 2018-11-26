@@ -1,4 +1,5 @@
 VERSION 5.00
+Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.OCX"
 Begin VB.Form frmConnect 
    BackColor       =   &H00E0E0E0&
    BorderStyle     =   0  'None
@@ -10,6 +11,15 @@ Begin VB.Form frmConnect
    ClipControls    =   0   'False
    ControlBox      =   0   'False
    FillColor       =   &H00000040&
+   BeginProperty Font 
+      Name            =   "Calibri"
+      Size            =   5.25
+      Charset         =   0
+      Weight          =   400
+      Underline       =   0   'False
+      Italic          =   0   'False
+      Strikethrough   =   0   'False
+   EndProperty
    Icon            =   "frmConnect.frx":0000
    KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
@@ -21,6 +31,32 @@ Begin VB.Form frmConnect
    ScaleWidth      =   800
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
+   Begin InetCtlsObjects.Inet InetReddit 
+      Left            =   120
+      Top             =   1080
+      _ExtentX        =   1005
+      _ExtentY        =   1005
+      _Version        =   393216
+   End
+   Begin VB.ListBox lstRedditPosts 
+      Appearance      =   0  'Flat
+      BackColor       =   &H80000012&
+      BeginProperty Font 
+         Name            =   "Calibri"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H80000018&
+      Height          =   4320
+      Left            =   480
+      TabIndex        =   1
+      Top             =   1680
+      Width           =   2775
+   End
    Begin VB.ListBox lstServers 
       Appearance      =   0  'Flat
       BackColor       =   &H00000000&
@@ -38,7 +74,7 @@ Begin VB.Form frmConnect
       ItemData        =   "frmConnect.frx":000C
       Left            =   8685
       List            =   "frmConnect.frx":000E
-      TabIndex        =   5
+      TabIndex        =   6
       Top             =   1680
       Width           =   2775
    End
@@ -59,7 +95,7 @@ Begin VB.Form frmConnect
       IMEMode         =   3  'DISABLE
       Left            =   4920
       PasswordChar    =   "*"
-      TabIndex        =   1
+      TabIndex        =   5
       Top             =   3720
       Width           =   2460
    End
@@ -78,7 +114,7 @@ Begin VB.Form frmConnect
       ForeColor       =   &H00FFFFFF&
       Height          =   225
       Left            =   4905
-      TabIndex        =   0
+      TabIndex        =   4
       Top             =   3210
       Width           =   2460
    End
@@ -121,7 +157,7 @@ Begin VB.Form frmConnect
       ForeColor       =   &H0000FF00&
       Height          =   195
       Left            =   5760
-      TabIndex        =   4
+      TabIndex        =   3
       Text            =   "localhost"
       Top             =   2760
       Width           =   1575
@@ -210,7 +246,7 @@ Begin VB.Form frmConnect
       ForeColor       =   &H000000FF&
       Height          =   195
       Left            =   240
-      TabIndex        =   3
+      TabIndex        =   0
       Top             =   240
       Width           =   555
    End
@@ -273,22 +309,30 @@ Private cBotonForo As clsGraphicalButton
 Private cBotonConectarse As clsGraphicalButton
 Private cBotonTeclas As clsGraphicalButton
 
+Private Type tRedditPost
+    Title As String
+    Url As String
+End Type
+
+Dim Posts() As tRedditPost
+
 Public LastButtonPressed As clsGraphicalButton
 
 Private Sub Form_Activate()
 'On Error Resume Next
-Call CargarServidores
-
-If ServersRecibidos Then
-    If CurServer <> 0 Then
-        IPTxt = ServersLst(1).Ip
-        PortTxt = ServersLst(1).Puerto
-    Else
-        IPTxt = IPdelServidor
-        PortTxt = PuertoDelServidor
+    Call CargarServidores
+    
+    If ServersRecibidos Then
+        If CurServer <> 0 Then
+            IPTxt = ServersLst(1).Ip
+            PortTxt = ServersLst(1).Puerto
+        Else
+            IPTxt = IPdelServidor
+            PortTxt = PuertoDelServidor
+        End If
     End If
-End If
-
+    
+    Call GetPostsFromReddit
 End Sub
 
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
@@ -579,20 +623,52 @@ Private Sub imgVerForo_Click()
     Call ShellExecute(0, "Open", "https://www.reddit.com/r/argentumonlineoficial/", "", App.path, SW_SHOWNORMAL)
 End Sub
 
+Private Sub lstRedditPosts_Click()
+    Call ShellExecute(0, "Open", Posts(lstRedditPosts.ListIndex + 1).Url, "", App.path, SW_SHOWNORMAL)
+    'Posts(1).Url
+End Sub
+
 Private Sub lstServers_Click()
- IPTxt.Text = ServersLst(lstServers.ListIndex + 1).Ip
- PortTxt.Text = ServersLst(lstServers.ListIndex + 1).Puerto
+    IPTxt.Text = ServersLst(lstServers.ListIndex + 1).Ip
+    PortTxt.Text = ServersLst(lstServers.ListIndex + 1).Puerto
 End Sub
 
 Private Sub txtPasswd_KeyPress(KeyAscii As Integer)
     If KeyAscii = vbKeyReturn Then imgConectarse_Click
 End Sub
 
-Private Sub WebAuxiliar_BeforeNavigate2(ByVal pDisp As Object, URL As Variant, flags As Variant, TargetFrameName As Variant, PostData As Variant, Headers As Variant, Cancel As Boolean)
+Private Sub WebAuxiliar_BeforeNavigate2(ByVal pDisp As Object, Url As Variant, flags As Variant, TargetFrameName As Variant, PostData As Variant, Headers As Variant, Cancel As Boolean)
     
-    If InStr(1, URL, "alkon") <> 0 Then
-        Call ShellExecute(hwnd, "open", URL, vbNullString, vbNullString, SW_SHOWNORMAL)
+    If InStr(1, Url, "alkon") <> 0 Then
+        Call ShellExecute(hwnd, "open", Url, vbNullString, vbNullString, SW_SHOWNORMAL)
         Cancel = True
     End If
     
 End Sub
+
+Private Sub GetPostsFromReddit()
+    Dim ResponseGithub As String
+    Dim JsonObject As Object
+    Dim Endpoint As String
+    
+    Endpoint = GetVar(App.path & "\INIT\Config.ini", "Parameters", "SubRedditEndpoint")
+    ResponseGithub = InetReddit.OpenURL(Endpoint)
+    Set JsonObject = JSON.parse(ResponseGithub)
+    
+    Dim qtyPostsOnReddit As Integer
+    qtyPostsOnReddit = JsonObject.Item("data").Item("children").Count
+    ReDim Posts(qtyPostsOnReddit)
+    
+    Dim i As Integer
+    i = 1
+    Do While i <= qtyPostsOnReddit
+        Posts(i).Title = JsonObject.Item("data").Item("children").Item(i).Item("data").Item("title")
+        Posts(i).Url = JsonObject.Item("data").Item("children").Item(i).Item("data").Item("url")
+        
+        lstRedditPosts.AddItem JsonObject.Item("data").Item("children").Item(i).Item("data").Item("title")
+        
+        i = i + 1
+    Loop
+End Sub
+
+
