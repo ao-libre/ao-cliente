@@ -311,7 +311,7 @@ Private cBotonTeclas As clsGraphicalButton
 
 Private Type tRedditPost
     Title As String
-    Url As String
+    URL As String
 End Type
 
 Dim Posts() As tRedditPost
@@ -603,8 +603,7 @@ Private Sub imgVerForo_Click()
 End Sub
 
 Private Sub lstRedditPosts_Click()
-    Call ShellExecute(0, "Open", Posts(lstRedditPosts.ListIndex + 1).Url, "", App.path, SW_SHOWNORMAL)
-    'Posts(1).Url
+    Call ShellExecute(0, "Open", Posts(lstRedditPosts.ListIndex + 1).URL, "", App.path, SW_SHOWNORMAL)
 End Sub
 
 Private Sub lstServers_Click()
@@ -614,15 +613,6 @@ End Sub
 
 Private Sub txtPasswd_KeyPress(KeyAscii As Integer)
     If KeyAscii = vbKeyReturn Then imgConectarse_Click
-End Sub
-
-Private Sub WebAuxiliar_BeforeNavigate2(ByVal pDisp As Object, Url As Variant, flags As Variant, TargetFrameName As Variant, PostData As Variant, Headers As Variant, Cancel As Boolean)
-    
-    If InStr(1, Url, "alkon") <> 0 Then
-        Call ShellExecute(hwnd, "open", Url, vbNullString, vbNullString, SW_SHOWNORMAL)
-        Cancel = True
-    End If
-    
 End Sub
 
 Private Sub GetPostsFromReddit()
@@ -642,7 +632,7 @@ Private Sub GetPostsFromReddit()
     i = 1
     Do While i <= qtyPostsOnReddit
         Posts(i).Title = JsonObject.Item("data").Item("children").Item(i).Item("data").Item("title")
-        Posts(i).Url = JsonObject.Item("data").Item("children").Item(i).Item("data").Item("url")
+        Posts(i).URL = JsonObject.Item("data").Item("children").Item(i).Item("data").Item("url")
         
         lstRedditPosts.AddItem JsonObject.Item("data").Item("children").Item(i).Item("data").Item("title")
         
