@@ -329,6 +329,7 @@ Sub SetConnected()
     'Unload the connect form
     Unload frmCrearPersonaje
     Unload frmConnect
+    Unload frmPanelAccount
     
     frmMain.lblName.Caption = UserName
     'Load main form
