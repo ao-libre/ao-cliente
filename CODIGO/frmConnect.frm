@@ -638,13 +638,13 @@ End Sub
 Private Sub GetPostsFromReddit()
 On Error Resume Next
 
-    Dim ResponseGithub As String
+    Dim ResponseReddit As String
     Dim JsonObject As Object
     Dim Endpoint As String
     
     Endpoint = GetVar(App.path & "\INIT\Config.ini", "Parameters", "SubRedditEndpoint")
-    ResponseGithub = InetReddit.OpenURL(Endpoint)
-    Set JsonObject = JSON.parse(ResponseGithub)
+    ResponseReddit = InetReddit.OpenURL(Endpoint)
+    Set JsonObject = JSON.parse(ResponseReddit)
     
     Dim qtyPostsOnReddit As Integer
     qtyPostsOnReddit = JsonObject.Item("data").Item("children").Count
