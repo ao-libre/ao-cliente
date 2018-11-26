@@ -616,6 +616,8 @@ Private Sub txtPasswd_KeyPress(KeyAscii As Integer)
 End Sub
 
 Private Sub GetPostsFromReddit()
+On Error Resume Next
+
     Dim ResponseGithub As String
     Dim JsonObject As Object
     Dim Endpoint As String
