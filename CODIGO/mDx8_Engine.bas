@@ -733,79 +733,70 @@ Public Sub Engine_Update_FPS()
 End Sub
 
 Public Sub DrawPJ(ByVal Index As Byte)
-    Dim cColor As Long
-   
-    If cPJ(Index).Nombre <> "" Then
+
+    If LenB(cPJ(Index).Nombre) > 0 Then
+
         frmPanelAccount.lblAccData(Index).Caption = cPJ(Index).Nombre
+
+        Dim Color As Long
+
         Select Case cPJ(Index).Color
-            Case 1 'Verde
-                cColor = RGB(0, 225, 0)
-            Case 2 'Azul
-                cColor = RGB(0, 0, 255)
-            Case 3 'Rojo
-                cColor = RGB(255, 0, 0)
-            Case 4 'Noble
-                cColor = RGB(207, 146, 3)
-            Case 5 'blanco
-                cColor = RGB(255, 255, 255)
-            
+            Case 1    'Verde
+               Color = RGB(0, 225, 0)
+            Case 2    'Azul
+               Color = RGB(0, 0, 255)
+            Case 3    'Rojo
+               Color = RGB(255, 0, 0)
+            Case 4    'Noble
+               Color = RGB(207, 146, 3)
+            Case 5    'blanco
+               Color = RGB(255, 255, 255)
         End Select
-        frmPanelAccount.lblAccData(Index).ForeColor = cColor
-    End If
 
-    If cPJ(Index).Nombre = "" Then Exit Sub
-   
-    Dim i As Integer
-   
-    Dim init_x As Integer
-    Dim init_y As Integer
-    Dim head_offset As Integer
-    Dim grhtemp As Grh
-    Static re As RECT
-   
-    re.Left = 0
-    re.Top = 0
-    re.bottom = 80
-    re.Right = 76
-   
-    init_x = 25
-    init_y = 20
-   
-    Dim Light(3) As Long
-    Light(0) = D3DColorXRGB(255, 255, 255)
-    Light(1) = D3DColorXRGB(255, 255, 255)
-    Light(2) = D3DColorXRGB(255, 255, 255)
-    Light(3) = D3DColorXRGB(255, 255, 255)
-    
-    If cPJ(Index).Race = eRaza.Humano Or cPJ(Index).Race = eRaza.Elfo Or cPJ(Index).Race = eRaza.ElfoOscuro Then
-        head_offset = HeadOffsetAltos
+        frmPanelAccount.lblAccData(Index).ForeColor = Color
     Else
-        head_offset = HeadOffsetBajos
+        Exit Sub
     End If
-   
-    DirectDevice.BeginScene
-    DirectDevice.Clear 0, ByVal 0&, D3DCLEAR_TARGET, 0, 0, 0
 
-    If cPJ(Index).Body <> 0 Then
-        Call DDrawTransGrhtoSurface(BodyData(cPJ(Index).Body).Walk(3), PixelOffsetX + init_x, PixelOffsetY + init_y, 0, Light(), 0, init_x, init_y)
+    Dim RE As RECT
+
+    RE.Left = 0
+    RE.Top = 0
+    RE.bottom = 80
+    RE.Right = 76
+
+    Dim Init_X As Integer, Init_Y As Integer
+    Init_X = 25
+    Init_Y = 20
+
+    Dim Head_Offset As Byte
+
+    If cPJ(Index).Race <> eRaza.Gnomo Then
+        Head_Offset = 8
+    Else
+        Head_Offset = 0
     End If
-     
+
+    Engine_BeginScene
+
     If cPJ(Index).Head <> 0 Then
-        Call DDrawTransGrhtoSurface(HeadData(cPJ(Index).Head).Head(3), PixelOffsetX + init_x + 4, PixelOffsetY + init_y + head_offset, 0, Light(), 0, init_x, init_y)
+
+        Call DDrawTransGrhtoSurface(HeadData(cPJ(Index).Head).Head(3), PixelOffsetX + Init_X + 4, PixelOffsetY + Init_Y - Head_Offset, 0, Normal_RGBList(), 0, Init_X, Init_Y)
+
+        If cPJ(Index).Body <> 0 Then _
+           Call DDrawTransGrhtoSurface(BodyData(cPJ(Index).Body).Walk(3), PixelOffsetX + Init_X, PixelOffsetY + Init_Y, 0, Normal_RGBList(), 0, Init_X, Init_Y)
+
+        If cPJ(Index).helmet <> 0 Then _
+           Call DDrawTransGrhtoSurface(CascoAnimData(cPJ(Index).helmet).Head(3), PixelOffsetX + Init_X + 4, PixelOffsetY + Init_Y - Head_Offset, 0, Normal_RGBList(), 0, Init_X, Init_Y)
+
+        If cPJ(Index).weapon <> 0 Then _
+           Call DDrawTransGrhtoSurface(WeaponAnimData(cPJ(Index).weapon).WeaponWalk(3), PixelOffsetX + Init_X, PixelOffsetY + Init_Y, 0, Normal_RGBList(), 0, Init_X, Init_Y)
+
+        If cPJ(Index).shield <> 0 Then _
+           Call DDrawTransGrhtoSurface(ShieldAnimData(cPJ(Index).shield).ShieldWalk(3), PixelOffsetX + Init_X, PixelOffsetY + Init_Y, 0, Normal_RGBList(), 0, Init_X, Init_Y)
+
     End If
 
-    If cPJ(Index).helmet <> 0 Then
-        Call DDrawTransGrhtoSurface(CascoAnimData(cPJ(Index).helmet).Head(3), PixelOffsetX + init_x + 4, PixelOffsetY + init_y + head_offset, 0, Light(), 0, init_x, init_y)
-    End If
-     
-    If cPJ(Index).weapon <> 0 Then
-        Call DDrawTransGrhtoSurface(WeaponAnimData(cPJ(Index).weapon).WeaponWalk(3), PixelOffsetX + init_x, PixelOffsetY + init_y, 0, Light(), 0, init_x, init_y)
-    End If
-     
-    If cPJ(Index).shield <> 0 Then
-        Call DDrawTransGrhtoSurface(ShieldAnimData(cPJ(Index).shield).ShieldWalk(3), PixelOffsetX + init_x, PixelOffsetY + init_y, 0, Light(), 0, init_x, init_y)
-    End If
+    Engine_EndScene RE, frmPanelAccount.picChar(Index - 1).hwnd
 
-    DirectDevice.EndScene
-    DirectDevice.Present re, ByVal 0&, frmPanelAccount.picChar(Index - 1).hwnd, ByVal 0&
 End Sub
