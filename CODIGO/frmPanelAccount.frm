@@ -27,7 +27,7 @@ Begin VB.Form frmPanelAccount
       Left            =   8760
       ScaleHeight     =   1200
       ScaleWidth      =   1140
-      TabIndex        =   9
+      TabIndex        =   15
       Top             =   3570
       Width           =   1140
    End
@@ -41,7 +41,7 @@ Begin VB.Form frmPanelAccount
       Left            =   7005
       ScaleHeight     =   1200
       ScaleWidth      =   1140
-      TabIndex        =   8
+      TabIndex        =   14
       Top             =   3570
       Width           =   1140
    End
@@ -55,7 +55,7 @@ Begin VB.Form frmPanelAccount
       Left            =   5355
       ScaleHeight     =   1200
       ScaleWidth      =   1140
-      TabIndex        =   7
+      TabIndex        =   13
       Top             =   3570
       Width           =   1140
    End
@@ -69,7 +69,7 @@ Begin VB.Form frmPanelAccount
       Left            =   3660
       ScaleHeight     =   1200
       ScaleWidth      =   1140
-      TabIndex        =   6
+      TabIndex        =   12
       Top             =   3570
       Width           =   1140
    End
@@ -83,7 +83,7 @@ Begin VB.Form frmPanelAccount
       Left            =   1965
       ScaleHeight     =   1200
       ScaleWidth      =   1140
-      TabIndex        =   5
+      TabIndex        =   11
       Top             =   3570
       Width           =   1140
    End
@@ -97,7 +97,7 @@ Begin VB.Form frmPanelAccount
       Left            =   8760
       ScaleHeight     =   1200
       ScaleWidth      =   1140
-      TabIndex        =   4
+      TabIndex        =   5
       Top             =   1695
       Width           =   1140
    End
@@ -111,7 +111,7 @@ Begin VB.Form frmPanelAccount
       Left            =   7005
       ScaleHeight     =   1200
       ScaleWidth      =   1140
-      TabIndex        =   3
+      TabIndex        =   4
       Top             =   1695
       Width           =   1140
    End
@@ -125,7 +125,7 @@ Begin VB.Form frmPanelAccount
       Left            =   5325
       ScaleHeight     =   1200
       ScaleWidth      =   1140
-      TabIndex        =   2
+      TabIndex        =   3
       Top             =   1695
       Width           =   1140
    End
@@ -139,7 +139,7 @@ Begin VB.Form frmPanelAccount
       Left            =   3675
       ScaleHeight     =   1200
       ScaleWidth      =   1140
-      TabIndex        =   1
+      TabIndex        =   2
       Top             =   1695
       Width           =   1140
    End
@@ -153,14 +153,9 @@ Begin VB.Form frmPanelAccount
       Left            =   1920
       ScaleHeight     =   1185
       ScaleWidth      =   1140
-      TabIndex        =   0
+      TabIndex        =   1
       Top             =   1695
       Width           =   1140
-   End
-   Begin VB.Timer Timer1 
-      Interval        =   500
-      Left            =   600
-      Top             =   1440
    End
    Begin VB.Image imgConectar 
       Height          =   375
@@ -422,7 +417,7 @@ Begin VB.Form frmPanelAccount
       Height          =   195
       Index           =   5
       Left            =   8730
-      TabIndex        =   15
+      TabIndex        =   10
       Top             =   3030
       Width           =   1245
    End
@@ -443,7 +438,7 @@ Begin VB.Form frmPanelAccount
       Height          =   195
       Index           =   4
       Left            =   6960
-      TabIndex        =   14
+      TabIndex        =   9
       Top             =   3030
       Width           =   1245
    End
@@ -464,7 +459,7 @@ Begin VB.Form frmPanelAccount
       Height          =   195
       Index           =   3
       Left            =   5310
-      TabIndex        =   13
+      TabIndex        =   8
       Top             =   3030
       Width           =   1245
    End
@@ -485,7 +480,7 @@ Begin VB.Form frmPanelAccount
       Height          =   195
       Index           =   2
       Left            =   3630
-      TabIndex        =   12
+      TabIndex        =   7
       Top             =   3030
       Width           =   1245
    End
@@ -506,7 +501,7 @@ Begin VB.Form frmPanelAccount
       Height          =   195
       Index           =   1
       Left            =   1890
-      TabIndex        =   11
+      TabIndex        =   6
       Top             =   3030
       Width           =   1245
    End
@@ -526,7 +521,7 @@ Begin VB.Form frmPanelAccount
       Height          =   375
       Index           =   0
       Left            =   2760
-      TabIndex        =   10
+      TabIndex        =   0
       Top             =   876
       Width           =   6465
    End
@@ -641,9 +636,3 @@ Private Sub picChar_DblClick(Index As Integer)
         frmCrearPersonaje.Show
     End If
 End Sub
-
-
-Private Sub Timer1_Timer()
-   'CHOTS | Removed by juanmz
-End Sub
-
