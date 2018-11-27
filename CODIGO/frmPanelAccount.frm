@@ -644,9 +644,6 @@ End Sub
 
 
 Private Sub Timer1_Timer()
-    Dim i As Byte
-    For i = 1 To 10
-        mDx8_Engine.DrawPJ i
-    Next i
+   'CHOTS | Removed by juanmz
 End Sub
 
