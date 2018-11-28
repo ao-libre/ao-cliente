@@ -491,7 +491,7 @@ Sub SwitchMap(ByVal Map As Integer)
     Dim ByFlags As Byte
     Dim handle As Integer
     Dim CharIndex As Integer
-    Dim obj       As Integer
+    Dim Obj       As Integer
     
     handle = FreeFile()
     
@@ -557,9 +557,9 @@ Sub SwitchMap(ByVal Map As Integer)
             End If
 
             'Erase OBJs
-            obj = Map_PosExitsObject(X, Y)
+            Obj = Map_PosExitsObject(X, Y)
 
-            If (obj > 0) Then
+            If (Obj > 0) Then
                 Call Map_DestroyObject(X, Y)
             End If
             
@@ -792,12 +792,12 @@ Sub Main()
     MD5HushYo = "0123456789abcdef"  'We aren't using a real MD5
     
     tipf = Config_Inicio.tip
-
-    ' Load constants, classes, flags, graphics..
-    LoadInitialConfig
     
     'Set resolution BEFORE the loading form is displayed, therefore it will be centered.
     Call Resolution.SetResolution
+
+    ' Load constants, classes, flags, graphics..
+    LoadInitialConfig
 
     #If Testeo <> 1 Then
         Dim PresPath As String
@@ -831,6 +831,9 @@ Sub Main()
     Call Load(frmScreenshots)
         
     Do While prgRun
+    
+        Engine_BeginScene
+        
         'Solo dibujamos si la ventana no esta minimizada
         If frmMain.WindowState <> 1 And frmMain.Visible Then
             Call ShowNextFrame(frmMain.Top, frmMain.Left, frmMain.MouseX, frmMain.MouseY)
@@ -850,7 +853,9 @@ Sub Main()
         ' If there is anything to be sent, we send it
         Call FlushBuffer
         
-        DoEvents
+        DoEvents 'DoEvents must be within BeginScene() and EndScene() to allow drawing from any UI's event (Except Modal)
+        
+        Engine_EndScene
     Loop
     
     Call CloseClient
@@ -1548,32 +1553,32 @@ Public Sub CargarHechizos()
 '********************************
 On Error GoTo errorH
     Dim PathName As String
-    Dim j As Long
+    Dim J As Long
  
     PathName = App.path & "\init\Hechizos.dat"
     NumHechizos = Val(GetVar(PathName, "INIT", "NumHechizos"))
  
     ReDim Hechizos(1 To NumHechizos) As tHechizos
-    For j = 1 To NumHechizos
-        With Hechizos(j)
-            .Desc = GetVar(PathName, "HECHIZO" & j, "Desc")
-            .PalabrasMagicas = GetVar(PathName, "HECHIZO" & j, "PalabrasMagicas")
-            .Nombre = GetVar(PathName, "HECHIZO" & j, "Nombre")
-            .SkillRequerido = GetVar(PathName, "HECHIZO" & j, "MinSkill")
+    For J = 1 To NumHechizos
+        With Hechizos(J)
+            .Desc = GetVar(PathName, "HECHIZO" & J, "Desc")
+            .PalabrasMagicas = GetVar(PathName, "HECHIZO" & J, "PalabrasMagicas")
+            .Nombre = GetVar(PathName, "HECHIZO" & J, "Nombre")
+            .SkillRequerido = GetVar(PathName, "HECHIZO" & J, "MinSkill")
          
-            If j <> 38 And j <> 39 Then
-                .EnergiaRequerida = GetVar(PathName, "HECHIZO" & j, "StaRequerido")
+            If J <> 38 And J <> 39 Then
+                .EnergiaRequerida = GetVar(PathName, "HECHIZO" & J, "StaRequerido")
                  
-                .HechiceroMsg = GetVar(PathName, "HECHIZO" & j, "HechizeroMsg")
-                .ManaRequerida = GetVar(PathName, "HECHIZO" & j, "ManaRequerido")
+                .HechiceroMsg = GetVar(PathName, "HECHIZO" & J, "HechizeroMsg")
+                .ManaRequerida = GetVar(PathName, "HECHIZO" & J, "ManaRequerido")
              
              
-                .PropioMsg = GetVar(PathName, "HECHIZO" & j, "PropioMsg")
+                .PropioMsg = GetVar(PathName, "HECHIZO" & J, "PropioMsg")
              
-                .TargetMsg = GetVar(PathName, "HECHIZO" & j, "TargetMsg")
+                .TargetMsg = GetVar(PathName, "HECHIZO" & J, "TargetMsg")
             End If
         End With
-    Next j
+    Next J
  
 Exit Sub
  
