@@ -10624,6 +10624,8 @@ Private Sub HandleAccountLogged()
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
+    
+    Dim i As Byte
 
     'Remove packet ID
     Call incomingData.ReadByte
@@ -10631,10 +10633,9 @@ Private Sub HandleAccountLogged()
     AccountHash = incomingData.ReadASCIIString
     NumberOfCharacters = incomingData.ReadByte
 
+    ReDim cPJ(1 To 10) As PjCuenta
+    
     If NumberOfCharacters > 0 Then
-        Dim i As Byte
-        ReDim cPJ(1 To NumberOfCharacters) As PjCuenta
-
         For i = 1 To NumberOfCharacters
             cPJ(i).nombre = incomingData.ReadASCIIString
             cPJ(i).Body = incomingData.ReadInteger
@@ -10648,15 +10649,9 @@ Private Sub HandleAccountLogged()
             cPJ(i).Level = incomingData.ReadByte
             cPJ(i).Gold = incomingData.ReadLong
             cPJ(i).Color = 5
+            Call mDx8_Engine.DrawPJ(i)
         Next i
     End If
     
     frmPanelAccount.Show
-
-    If frmPanelAccount.Visible Then
-        For i = 1 To NumberOfCharacters
-            DoEvents
-            Call mDx8_Engine.DrawPJ(i)
-        Next i
-    End If
 End Sub
