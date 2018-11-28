@@ -788,8 +788,7 @@ Public Sub DrawPJ(ByVal Index As Byte)
         head_offset = HeadOffsetBajos
     End If
    
-    DirectDevice.BeginScene
-    DirectDevice.Clear 0, ByVal 0&, D3DCLEAR_TARGET, 0, 0, 0
+    Call Engine_Clear
 
     If cPJ(Index).Body <> 0 Then
         Call DDrawTransGrhtoSurface(BodyData(cPJ(Index).Body).Walk(3), PixelOffsetX + init_x, PixelOffsetY + init_y, 0, Light(), 0, init_x, init_y)
@@ -811,6 +810,5 @@ Public Sub DrawPJ(ByVal Index As Byte)
         Call DDrawTransGrhtoSurface(ShieldAnimData(cPJ(Index).shield).ShieldWalk(3), PixelOffsetX + init_x, PixelOffsetY + init_y, 0, Light(), 0, init_x, init_y)
     End If
 
-    DirectDevice.EndScene
-    DirectDevice.Present re, ByVal 0&, frmPanelAccount.picChar(Index - 1).hwnd, ByVal 0&
+    Engine_Present re, frmPanelAccount.picChar(Index - 1).hwnd
 End Sub
