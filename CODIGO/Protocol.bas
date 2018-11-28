@@ -10649,9 +10649,14 @@ Private Sub HandleAccountLogged()
             cPJ(i).Level = incomingData.ReadByte
             cPJ(i).Gold = incomingData.ReadLong
             cPJ(i).Color = 5
-            Call mDx8_Engine.DrawPJ(i)
         Next i
     End If
     
     frmPanelAccount.Show
+
+    If frmPanelAccount.Visible Then
+        For i = 1 To NumberOfCharacters
+            Call mDx8_Engine.DrawPJ(i)
+        Next i
+    End If
 End Sub
