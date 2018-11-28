@@ -34,7 +34,7 @@ Attribute VB_Name = "Mod_General"
 Option Explicit
 
 #If False Then 'to fix VB fucking up the var names
-    Dim Status, nombre, picInv, f As String
+    Dim Status, Nombre, PicInv, f As String
 #End If
 
 Public iplst As String
@@ -491,7 +491,7 @@ Sub SwitchMap(ByVal Map As Integer)
     Dim ByFlags As Byte
     Dim handle As Integer
     Dim CharIndex As Integer
-    Dim obj       As Integer
+    Dim Obj       As Integer
     
     handle = FreeFile()
     
@@ -557,9 +557,9 @@ Sub SwitchMap(ByVal Map As Integer)
             End If
 
             'Erase OBJs
-            obj = Map_PosExitsObject(X, Y)
+            Obj = Map_PosExitsObject(X, Y)
 
-            If (obj > 0) Then
+            If (Obj > 0) Then
                 Call Map_DestroyObject(X, Y)
             End If
             
@@ -958,7 +958,7 @@ Private Sub LoadInitialConfig()
     Audio.SoundActivated = Not ClientSetup.bNoSound
     Audio.SoundEffectsActivated = Not ClientSetup.bNoSoundEffects
     'Inicializamos el inventario grafico
-    Call Inventario.Initialize(DirectD3D8, frmMain.picInv, MAX_INVENTORY_SLOTS)
+    Call Inventario.Initialize(DirectD3D8, frmMain.PicInv, MAX_INVENTORY_SLOTS)
     'Call Audio.MusicMP3Play(App.path & "\MP3\" & MP3_Inicio & ".mp3")
     Call AddtoRichTextBox(frmCargando.Status, "Hecho", 255, 0, 0, True, False, False)
     
@@ -1388,7 +1388,7 @@ End Function
 Public Function getCharIndexByName(ByVal Name As String) As Integer
 Dim i As Long
 For i = 1 To LastChar
-    If charlist(i).nombre = Name Then
+    If charlist(i).Nombre = Name Then
         getCharIndexByName = i
         Exit Function
     End If
@@ -1530,16 +1530,16 @@ Dim i As Long
  
     For i = 1 To NumHechizos
         If i = Index Then
-            DevolverNombreHechizo = Hechizos(i).nombre
+            DevolverNombreHechizo = Hechizos(i).Nombre
             Exit Function
         End If
     Next i
 End Function
-Public Function DevolverIndexHechizo(ByVal nombre As String) As Byte
+Public Function DevolverIndexHechizo(ByVal Nombre As String) As Byte
 Dim i As Long
  
     For i = 1 To NumHechizos
-        If Hechizos(i).nombre = nombre Then
+        If Hechizos(i).Nombre = Nombre Then
             DevolverIndexHechizo = i
             Exit Function
         End If
@@ -1553,32 +1553,32 @@ Public Sub CargarHechizos()
 '********************************
 On Error GoTo errorH
     Dim PathName As String
-    Dim j As Long
+    Dim J As Long
  
     PathName = App.path & "\init\Hechizos.dat"
     NumHechizos = Val(GetVar(PathName, "INIT", "NumHechizos"))
  
     ReDim Hechizos(1 To NumHechizos) As tHechizos
-    For j = 1 To NumHechizos
-        With Hechizos(j)
-            .Desc = GetVar(PathName, "HECHIZO" & j, "Desc")
-            .PalabrasMagicas = GetVar(PathName, "HECHIZO" & j, "PalabrasMagicas")
-            .nombre = GetVar(PathName, "HECHIZO" & j, "Nombre")
-            .SkillRequerido = GetVar(PathName, "HECHIZO" & j, "MinSkill")
+    For J = 1 To NumHechizos
+        With Hechizos(J)
+            .Desc = GetVar(PathName, "HECHIZO" & J, "Desc")
+            .PalabrasMagicas = GetVar(PathName, "HECHIZO" & J, "PalabrasMagicas")
+            .Nombre = GetVar(PathName, "HECHIZO" & J, "Nombre")
+            .SkillRequerido = GetVar(PathName, "HECHIZO" & J, "MinSkill")
          
-            If j <> 38 And j <> 39 Then
-                .EnergiaRequerida = GetVar(PathName, "HECHIZO" & j, "StaRequerido")
+            If J <> 38 And J <> 39 Then
+                .EnergiaRequerida = GetVar(PathName, "HECHIZO" & J, "StaRequerido")
                  
-                .HechiceroMsg = GetVar(PathName, "HECHIZO" & j, "HechizeroMsg")
-                .ManaRequerida = GetVar(PathName, "HECHIZO" & j, "ManaRequerido")
+                .HechiceroMsg = GetVar(PathName, "HECHIZO" & J, "HechizeroMsg")
+                .ManaRequerida = GetVar(PathName, "HECHIZO" & J, "ManaRequerido")
              
              
-                .PropioMsg = GetVar(PathName, "HECHIZO" & j, "PropioMsg")
+                .PropioMsg = GetVar(PathName, "HECHIZO" & J, "PropioMsg")
              
-                .TargetMsg = GetVar(PathName, "HECHIZO" & j, "TargetMsg")
+                .TargetMsg = GetVar(PathName, "HECHIZO" & J, "TargetMsg")
             End If
         End With
-    Next j
+    Next J
  
 Exit Sub
  
