@@ -157,7 +157,7 @@ Begin VB.Form frmPanelAccount
       Top             =   1695
       Width           =   1140
    End
-   Begin VB.Timer Timer1 
+   Begin VB.Timer Timer1
       Interval        =   500
       Left            =   600
       Top             =   1440
@@ -642,8 +642,9 @@ Private Sub picChar_DblClick(Index As Integer)
     End If
 End Sub
 
-
 Private Sub Timer1_Timer()
-   'CHOTS | Removed by juanmz
+    Dim i As Byte
+    For i = 1 To 10
+        mDx8_Engine.DrawPJ i
+    Next i
 End Sub
-
