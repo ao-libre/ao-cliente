@@ -1487,7 +1487,7 @@ End Sub
 Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Integer, ByVal MouseViewX As Integer, ByVal MouseViewY As Integer)
 
     If EngineRun Then
-        Engine_BeginScene
+        Call Engine_Clear
         
         If UserMoving Then
             '****** Move screen Left and Right if needed ******
@@ -1533,7 +1533,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Inte
         timerElapsedTime = GetElapsedTime()
         timerTicksPerFrame = timerElapsedTime * Engine_Get_BaseSpeed
         
-        Engine_EndScene MainScreenRect, 0
+        Call Engine_Present(MainScreenRect, 0)
     End If
     
     
@@ -1612,7 +1612,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Inte
 
     '//Inventario
     If frmMain.Visible Then Call Inventario.DrawInv
-    
+
 End Sub
 
 
@@ -2054,11 +2054,11 @@ Public Sub RenderItem(ByVal hWndDest As Long, ByVal GrhIndex As Long)
         .bottom = 32
     End With
     
-    Engine_BeginScene
+    Engine_Clear
 
-        Call DDrawTransGrhIndextoSurface(GrhIndex, 0, 0, 0, Normal_RGBList(), 0, False)
+    Call DDrawTransGrhIndextoSurface(GrhIndex, 0, 0, 0, Normal_RGBList(), 0, False)
         
-    Engine_EndScene DR, hWndDest
+    Engine_Present DR, hWndDest
     
 End Sub
 

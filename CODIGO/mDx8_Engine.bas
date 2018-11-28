@@ -25,7 +25,6 @@ Public Type TLVERTEX
   Z As Single
   rhw As Single
   Color As Long
-  Specular As Long
   tu As Single
   tv As Single
 End Type
@@ -45,12 +44,12 @@ Public Function Engine_DirectX8_Init() As Boolean
     
     With D3DWindow
         .Windowed = True
-        .SwapEffect = IIf((ClientSetup.vSync) = True, D3DSWAPEFFECT_COPY_VSYNC, D3DSWAPEFFECT_COPY)  'Settings
+        .SwapEffect = IIf((ClientSetup.vSync) = True, D3DSWAPEFFECT_COPY_VSYNC, D3DSWAPEFFECT_DISCARD)
         .BackBufferFormat = DispMode.Format
         .BackBufferWidth = frmMain.MainViewPic.ScaleWidth
         .BackBufferHeight = frmMain.MainViewPic.ScaleHeight
-        .EnableAutoDepthStencil = 1
-        .AutoDepthStencilFormat = D3DFMT_D16
+        .EnableAutoDepthStencil = 0
+        .AutoDepthStencilFormat = 0
         .hDeviceWindow = frmMain.MainViewPic.hwnd
     End With
 
@@ -83,7 +82,7 @@ Public Function Engine_DirectX8_Init() As Boolean
     Engine_Init_FontTextures
     Engine_Init_FontSettings
     
-    DirectDevice.SetVertexShader D3DFVF_XYZRHW Or D3DFVF_TEX1 Or D3DFVF_DIFFUSE Or D3DFVF_SPECULAR
+    DirectDevice.SetVertexShader D3DFVF_XYZRHW Or D3DFVF_DIFFUSE Or D3DFVF_TEX1
     DirectDevice.SetRenderState D3DRS_LIGHTING, False
     DirectDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
     DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
@@ -180,10 +179,9 @@ Public Sub Engine_Draw_Line(X1 As Single, Y1 As Single, X2 As Single, Y2 As Sing
 On Error GoTo error
 Dim Vertex(1) As TLVERTEX
 
-    Vertex(0) = Geometry_Create_TLVertex(X1, Y1, 0, 1, Color, 0, 0, 0)
-    Vertex(1) = Geometry_Create_TLVertex(X2, Y2, 0, 1, Color2, 0, 0, 0)
+    Vertex(0) = Geometry_Create_TLVertex(X1, Y1, 0, 1, Color, 0, 0)
+    Vertex(1) = Geometry_Create_TLVertex(X2, Y2, 0, 1, Color2, 0, 0)
 
-    DirectDevice.SetVertexShader D3DFVF_XYZRHW Or D3DFVF_TEX1 Or D3DFVF_DIFFUSE Or D3DFVF_SPECULAR
     DirectDevice.SetTexture 0, Nothing
     DirectDevice.DrawPrimitiveUP D3DPT_LINELIST, 1, Vertex(0), Len(Vertex(0))
 Exit Sub
@@ -196,9 +194,8 @@ Public Sub Engine_Draw_Point(X1 As Single, Y1 As Single, Optional Color As Long 
 On Error GoTo error
 Dim Vertex(0) As TLVERTEX
 
-    Vertex(0) = Geometry_Create_TLVertex(X1, Y1, 0, 1, Color, 0, 0, 0)
+    Vertex(0) = Geometry_Create_TLVertex(X1, Y1, 0, 1, Color, 0, 0)
 
-    DirectDevice.SetVertexShader D3DFVF_XYZRHW Or D3DFVF_TEX1 Or D3DFVF_DIFFUSE Or D3DFVF_SPECULAR
     DirectDevice.SetTexture 0, Nothing
     DirectDevice.DrawPrimitiveUP D3DPT_POINTLIST, 1, Vertex(0), Len(Vertex(0))
 Exit Sub
@@ -475,26 +472,35 @@ Public Sub Engine_BeginScene(Optional ByVal Color As Long = 0)
 'Blisse-AO | DD Clear & BeginScene
 '***************************************************
 
-    DirectDevice.Clear 0, ByVal 0, D3DCLEAR_TARGET, Color, 1#, 0
     DirectDevice.BeginScene
 
 End Sub
 
-Public Sub Engine_EndScene(ByRef destRect As RECT, Optional ByVal hWndDest As Long = 0)
+Public Sub Engine_Clear(Optional ByVal Color As Long = 0)
+
+    DirectDevice.Clear 0, ByVal 0, D3DCLEAR_TARGET, Color, 1#, 0
+    
+End Sub
+
+Public Sub Engine_Present(ByRef destRect As RECT, Optional ByVal hWndDest As Long = 0)
+    
+    If hWndDest = 0 Then
+        DirectDevice.Present destRect, ByVal 0&, ByVal 0&, ByVal 0&
+    Else
+        DirectDevice.Present destRect, ByVal 0, hWndDest, ByVal 0
+    End If
+    
+End Sub
+
+Public Sub Engine_EndScene()
 '***************************************************
 'Author: Ezequiel Juárez (Standelf)
 'Last Modification: 29/12/10
 'Blisse-AO | DD EndScene & Present
 '***************************************************
     
+    DirectDevice.EndScene
     
-    If hWndDest = 0 Then
-        DirectDevice.EndScene
-        DirectDevice.Present destRect, ByVal 0&, ByVal 0&, ByVal 0&
-    Else
-        DirectDevice.EndScene
-        DirectDevice.Present destRect, ByVal 0, hWndDest, ByVal 0
-    End If
 End Sub
 
 Public Sub Geometry_Create_Box(ByRef Verts() As TLVERTEX, ByRef dest As RECT, ByRef src As RECT, ByRef RGB_List() As Long, _
@@ -534,9 +540,9 @@ Public Sub Geometry_Create_Box(ByRef Verts() As TLVERTEX, ByRef dest As RECT, By
     End If
 
     If Textures_Width And Textures_Height Then
-        Verts(0) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, RGB_List(0), 0, src.Left / Textures_Width, (src.bottom + 1) / Textures_Height)
+        Verts(0) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, RGB_List(0), src.Left / Textures_Width, (src.bottom + 1) / Textures_Height)
     Else
-        Verts(0) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, RGB_List(0), 0, 0, 0)
+        Verts(0) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, RGB_List(0), 0, 0)
     End If
 
     If Angle = 0 Then
@@ -548,9 +554,9 @@ Public Sub Geometry_Create_Box(ByRef Verts() As TLVERTEX, ByRef dest As RECT, By
     End If
     
     If Textures_Width And Textures_Height Then
-        Verts(1) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, RGB_List(1), 0, src.Left / Textures_Width, src.Top / Textures_Height)
+        Verts(1) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, RGB_List(1), src.Left / Textures_Width, src.Top / Textures_Height)
     Else
-        Verts(1) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, RGB_List(1), 0, 0, 1)
+        Verts(1) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, RGB_List(1), 0, 1)
     End If
 
     If Angle = 0 Then
@@ -562,9 +568,9 @@ Public Sub Geometry_Create_Box(ByRef Verts() As TLVERTEX, ByRef dest As RECT, By
     End If
 
     If Textures_Width And Textures_Height Then
-        Verts(2) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, RGB_List(2), 0, (src.Right + 1) / Textures_Width, (src.bottom + 1) / Textures_Height)
+        Verts(2) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, RGB_List(2), (src.Right + 1) / Textures_Width, (src.bottom + 1) / Textures_Height)
     Else
-        Verts(2) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, RGB_List(2), 0, 1, 0)
+        Verts(2) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, RGB_List(2), 1, 0)
     End If
 
     If Angle = 0 Then
@@ -576,15 +582,15 @@ Public Sub Geometry_Create_Box(ByRef Verts() As TLVERTEX, ByRef dest As RECT, By
     End If
 
     If Textures_Width And Textures_Height Then
-        Verts(3) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, RGB_List(3), 0, (src.Right + 1) / Textures_Width, src.Top / Textures_Height)
+        Verts(3) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, RGB_List(3), (src.Right + 1) / Textures_Width, src.Top / Textures_Height)
     Else
-        Verts(3) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, RGB_List(3), 0, 1, 1)
+        Verts(3) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, RGB_List(3), 1, 1)
     End If
 
 End Sub
 
 Public Function Geometry_Create_TLVertex(ByVal X As Single, ByVal Y As Single, ByVal Z As Single, _
-                                            ByVal rhw As Single, ByVal Color As Long, ByVal Specular As Long, tu As Single, _
+                                            ByVal rhw As Single, ByVal Color As Long, tu As Single, _
                                             ByVal tv As Single) As TLVERTEX
 '**************************************************************
 'Author: Aaron Perkins
@@ -595,7 +601,6 @@ Public Function Geometry_Create_TLVertex(ByVal X As Single, ByVal Y As Single, B
     Geometry_Create_TLVertex.Z = Z
     Geometry_Create_TLVertex.rhw = rhw
     Geometry_Create_TLVertex.Color = Color
-    Geometry_Create_TLVertex.Specular = Specular
     Geometry_Create_TLVertex.tu = tu
     Geometry_Create_TLVertex.tv = tv
 End Function
