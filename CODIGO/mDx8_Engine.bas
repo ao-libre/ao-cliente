@@ -802,6 +802,6 @@ Public Sub DrawPJ(ByVal Index As Byte)
 
     End If
 
-    Engine_EndScene RE, frmPanelAccount.picChar(Index - 1).hwnd
+    Engine_Present RE, frmPanelAccount.picChar(Index - 1).hwnd
 
 End Sub
