@@ -404,12 +404,13 @@ Private Sub DrawInventory()
 
     
     'Clear the inventory window
-    Engine_BeginScene
+    
+    Engine_Clear
     
         For LoopC = InventoryOffset * (InventoryWindow.ScaleWidth \ ownTilePixelWidth) + 1 To UBound(Inventory)
             
-            startdX = ((LoopC - 1) Mod (frmMain.picInv.Width / 32)) * 32
-            startdY = ((LoopC - 1) \ (frmMain.picInv.Width / 32)) * 32
+            startdX = ((LoopC - 1) Mod (frmMain.PicInv.Width / 32)) * 32
+            startdY = ((LoopC - 1) \ (frmMain.PicInv.Width / 32)) * 32
             
             
             Call Engine_Long_To_RGB_List(Inv_Color(), -1)
@@ -438,7 +439,8 @@ Private Sub DrawInventory()
             End If
         Next LoopC
         
-    Engine_EndScene destRect, InventoryWindow.hwnd
+    Engine_Present destRect, InventoryWindow.hwnd
+    
 End Sub
 
 Private Sub InventoryWindow_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)

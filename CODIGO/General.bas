@@ -34,7 +34,7 @@ Attribute VB_Name = "Mod_General"
 Option Explicit
 
 #If False Then 'to fix VB fucking up the var names
-    Dim Status, Nombre, PicInv, f As String
+    Dim Status, nombre, picInv, f As String
 #End If
 
 Public iplst As String
@@ -792,12 +792,12 @@ Sub Main()
     MD5HushYo = "0123456789abcdef"  'We aren't using a real MD5
     
     tipf = Config_Inicio.tip
-
-    ' Load constants, classes, flags, graphics..
-    LoadInitialConfig
     
     'Set resolution BEFORE the loading form is displayed, therefore it will be centered.
     Call Resolution.SetResolution
+
+    ' Load constants, classes, flags, graphics..
+    LoadInitialConfig
 
     #If Testeo <> 1 Then
         Dim PresPath As String
@@ -831,6 +831,9 @@ Sub Main()
     Call Load(frmScreenshots)
         
     Do While prgRun
+    
+        Engine_BeginScene
+        
         'Solo dibujamos si la ventana no esta minimizada
         If frmMain.WindowState <> 1 And frmMain.Visible Then
             Call ShowNextFrame(frmMain.Top, frmMain.Left, frmMain.MouseX, frmMain.MouseY)
@@ -850,7 +853,9 @@ Sub Main()
         ' If there is anything to be sent, we send it
         Call FlushBuffer
         
-        DoEvents
+        DoEvents 'DoEvents must be within BeginScene() and EndScene() to allow drawing from any UI's event (Except Modal)
+        
+        Engine_EndScene
     Loop
     
     Call CloseClient
@@ -953,7 +958,7 @@ Private Sub LoadInitialConfig()
     Audio.SoundActivated = Not ClientSetup.bNoSound
     Audio.SoundEffectsActivated = Not ClientSetup.bNoSoundEffects
     'Inicializamos el inventario grafico
-    Call Inventario.Initialize(DirectD3D8, frmMain.PicInv, MAX_INVENTORY_SLOTS)
+    Call Inventario.Initialize(DirectD3D8, frmMain.picInv, MAX_INVENTORY_SLOTS)
     'Call Audio.MusicMP3Play(App.path & "\MP3\" & MP3_Inicio & ".mp3")
     Call AddtoRichTextBox(frmCargando.Status, "Hecho", 255, 0, 0, True, False, False)
     
@@ -1383,7 +1388,7 @@ End Function
 Public Function getCharIndexByName(ByVal Name As String) As Integer
 Dim i As Long
 For i = 1 To LastChar
-    If charlist(i).Nombre = Name Then
+    If charlist(i).nombre = Name Then
         getCharIndexByName = i
         Exit Function
     End If
@@ -1525,16 +1530,16 @@ Dim i As Long
  
     For i = 1 To NumHechizos
         If i = Index Then
-            DevolverNombreHechizo = Hechizos(i).Nombre
+            DevolverNombreHechizo = Hechizos(i).nombre
             Exit Function
         End If
     Next i
 End Function
-Public Function DevolverIndexHechizo(ByVal Nombre As String) As Byte
+Public Function DevolverIndexHechizo(ByVal nombre As String) As Byte
 Dim i As Long
  
     For i = 1 To NumHechizos
-        If Hechizos(i).Nombre = Nombre Then
+        If Hechizos(i).nombre = nombre Then
             DevolverIndexHechizo = i
             Exit Function
         End If
@@ -1558,7 +1563,7 @@ On Error GoTo errorH
         With Hechizos(j)
             .Desc = GetVar(PathName, "HECHIZO" & j, "Desc")
             .PalabrasMagicas = GetVar(PathName, "HECHIZO" & j, "PalabrasMagicas")
-            .Nombre = GetVar(PathName, "HECHIZO" & j, "Nombre")
+            .nombre = GetVar(PathName, "HECHIZO" & j, "Nombre")
             .SkillRequerido = GetVar(PathName, "HECHIZO" & j, "MinSkill")
          
             If j <> 38 And j <> 39 Then
