@@ -650,6 +650,9 @@ On Error Resume Next
     qtyPostsOnReddit = JsonObject.Item("data").Item("children").Count
     ReDim Posts(qtyPostsOnReddit)
     
+    'Clear lstRedditPosts before populate it again to prevent repeated values.
+    lstRedditPosts.Clear
+    
     Dim i As Integer
     i = 1
     Do While i <= qtyPostsOnReddit
