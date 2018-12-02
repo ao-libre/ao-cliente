@@ -1589,23 +1589,26 @@ End Sub
 Sub DownloadServersFile(myURL As String)
 '**********************************************************
 'Downloads the sinfo.dat file from a given url
-'Last change: 17/09/2018
-'implemented by Cucsifae
+'Last change: 01/11/2018
+'Implemented by Cucsifae
+'Check content of strData to avoid clean the file sinfo.ini if there is no response from Github by Recox
 '**********************************************************
 On Error GoTo error
-Dim strData As String
-Dim f As Integer
-
-strData = frmCargando.Inet1.OpenURL(myURL)
-
-If frmCargando.Inet1.ResponseCode <> 0 Then GoTo errorinet
-f = FreeFile
-
-Open App.path & "/init/sinfo.dat" For Output As #f
-    Print #f, strData
-Close #f
-
-Exit Sub
+    Dim strData As String
+    Dim f As Integer
+    
+    strData = frmCargando.Inet1.OpenURL(myURL)
+    
+    If frmCargando.Inet1.ResponseCode <> 0 Then GoTo errorinet
+    f = FreeFile
+    
+    If LenB(strData) <> 0 Then
+        Open App.path & "/init/sinfo.dat" For Output As #f
+            Print #f, strData
+        Close #f
+    End If
+    
+    Exit Sub
 
 error:
     Debug.Print Err.number
