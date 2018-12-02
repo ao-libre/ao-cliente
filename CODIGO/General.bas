@@ -34,7 +34,7 @@ Attribute VB_Name = "Mod_General"
 Option Explicit
 
 #If False Then 'to fix VB fucking up the var names
-    Dim Status, Nombre, PicInv, f As String
+    Dim status, Nombre, PicInv, f As String
 #End If
 
 Public iplst As String
@@ -492,7 +492,7 @@ Sub SwitchMap(ByVal Map As Integer)
     Dim ByFlags As Byte
     Dim handle As Integer
     Dim CharIndex As Integer
-    Dim Obj       As Integer
+    Dim obj       As Integer
     
     handle = FreeFile()
     
@@ -558,9 +558,9 @@ Sub SwitchMap(ByVal Map As Integer)
             End If
 
             'Erase OBJs
-            Obj = Map_PosExitsObject(X, Y)
+            obj = Map_PosExitsObject(X, Y)
 
-            If (Obj > 0) Then
+            If (obj > 0) Then
                 Call Map_DestroyObject(X, Y)
             End If
             
@@ -1555,32 +1555,32 @@ Public Sub CargarHechizos()
 '********************************
 On Error GoTo errorH
     Dim PathName As String
-    Dim J As Long
+    Dim j As Long
  
     PathName = App.path & "\init\Hechizos.dat"
     NumHechizos = Val(GetVar(PathName, "INIT", "NumHechizos"))
  
     ReDim Hechizos(1 To NumHechizos) As tHechizos
-    For J = 1 To NumHechizos
-        With Hechizos(J)
-            .Desc = GetVar(PathName, "HECHIZO" & J, "Desc")
-            .PalabrasMagicas = GetVar(PathName, "HECHIZO" & J, "PalabrasMagicas")
-            .Nombre = GetVar(PathName, "HECHIZO" & J, "Nombre")
-            .SkillRequerido = GetVar(PathName, "HECHIZO" & J, "MinSkill")
+    For j = 1 To NumHechizos
+        With Hechizos(j)
+            .Desc = GetVar(PathName, "HECHIZO" & j, "Desc")
+            .PalabrasMagicas = GetVar(PathName, "HECHIZO" & j, "PalabrasMagicas")
+            .Nombre = GetVar(PathName, "HECHIZO" & j, "Nombre")
+            .SkillRequerido = GetVar(PathName, "HECHIZO" & j, "MinSkill")
          
-            If J <> 38 And J <> 39 Then
-                .EnergiaRequerida = GetVar(PathName, "HECHIZO" & J, "StaRequerido")
+            If j <> 38 And j <> 39 Then
+                .EnergiaRequerida = GetVar(PathName, "HECHIZO" & j, "StaRequerido")
                  
-                .HechiceroMsg = GetVar(PathName, "HECHIZO" & J, "HechizeroMsg")
-                .ManaRequerida = GetVar(PathName, "HECHIZO" & J, "ManaRequerido")
+                .HechiceroMsg = GetVar(PathName, "HECHIZO" & j, "HechizeroMsg")
+                .ManaRequerida = GetVar(PathName, "HECHIZO" & j, "ManaRequerido")
              
              
-                .PropioMsg = GetVar(PathName, "HECHIZO" & J, "PropioMsg")
+                .PropioMsg = GetVar(PathName, "HECHIZO" & j, "PropioMsg")
              
-                .TargetMsg = GetVar(PathName, "HECHIZO" & J, "TargetMsg")
+                .TargetMsg = GetVar(PathName, "HECHIZO" & j, "TargetMsg")
             End If
         End With
-    Next J
+    Next j
  
 Exit Sub
  
@@ -1591,23 +1591,26 @@ End Sub
 Sub DownloadServersFile(myURL As String)
 '**********************************************************
 'Downloads the sinfo.dat file from a given url
-'Last change: 17/09/2018
-'implemented by Cucsifae
+'Last change: 01/11/2018
+'Implemented by Cucsifae
+'Check content of strData to avoid clean the file sinfo.ini if there is no response from Github by Recox
 '**********************************************************
 On Error GoTo error
-Dim strData As String
-Dim f As Integer
-
-strData = frmCargando.Inet1.OpenURL(myURL)
-
-If frmCargando.Inet1.ResponseCode <> 0 Then GoTo errorinet
-f = FreeFile
-
-Open App.path & "/init/sinfo.dat" For Output As #f
-    Print #f, strData
-Close #f
-
-Exit Sub
+    Dim strData As String
+    Dim f As Integer
+    
+    strData = frmCargando.Inet1.OpenURL(myURL)
+    
+    If frmCargando.Inet1.ResponseCode <> 0 Then GoTo errorinet
+    f = FreeFile
+    
+    If LenB(strData) <> 0 Then
+        Open App.path & "/init/sinfo.dat" For Output As #f
+            Print #f, strData
+        Close #f
+    End If
+    
+    Exit Sub
 
 error:
     Debug.Print Err.number
