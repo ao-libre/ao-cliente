@@ -1,7 +1,7 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.ocx"
-Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.ocx"
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "richtx32.ocx"
+Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.OCX"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "mswinsck.ocx"
 Begin VB.Form frmMain 
    BorderStyle     =   0  'None
    ClientHeight    =   8985
@@ -33,7 +33,7 @@ Begin VB.Form frmMain
    Visible         =   0   'False
    Begin SocketWrenchCtrl.Socket Socket1 
       Left            =   6750
-      Top             =   1920
+      Top             =   2520
       _Version        =   65536
       _ExtentX        =   741
       _ExtentY        =   741
@@ -191,7 +191,7 @@ Begin VB.Form frmMain
    End
    Begin MSWinsockLib.Winsock Winsock1 
       Left            =   6240
-      Top             =   1920
+      Top             =   2520
       _ExtentX        =   741
       _ExtentY        =   741
       _Version        =   393216
@@ -219,7 +219,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2619
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -335,7 +334,7 @@ Begin VB.Form frmMain
       EndProperty
       Height          =   450
       Left            =   10320
-      MouseIcon       =   "frmMain.frx":0387
+      MouseIcon       =   "frmMain.frx":0388
       MousePointer    =   99  'Custom
       TabIndex        =   19
       Top             =   1920
@@ -368,7 +367,7 @@ Begin VB.Form frmMain
    Begin VB.Image cmdInfo 
       Height          =   405
       Left            =   10680
-      MouseIcon       =   "frmMain.frx":04D9
+      MouseIcon       =   "frmMain.frx":04DA
       MousePointer    =   99  'Custom
       Top             =   5280
       Visible         =   0   'False
@@ -398,9 +397,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   0
       Left            =   11430
-      MouseIcon       =   "frmMain.frx":062B
+      MouseIcon       =   "frmMain.frx":062C
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":077D
+      Picture         =   "frmMain.frx":077E
       Top             =   3480
       Visible         =   0   'False
       Width           =   225
@@ -409,9 +408,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   1
       Left            =   11430
-      MouseIcon       =   "frmMain.frx":0AC1
+      MouseIcon       =   "frmMain.frx":0AC2
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":0C13
+      Picture         =   "frmMain.frx":0C14
       Top             =   3225
       Visible         =   0   'False
       Width           =   225
@@ -530,7 +529,7 @@ Begin VB.Form frmMain
    Begin VB.Image CmdLanzar 
       Height          =   375
       Left            =   8760
-      MouseIcon       =   "frmMain.frx":0F57
+      MouseIcon       =   "frmMain.frx":0F58
       MousePointer    =   99  'Custom
       Top             =   5280
       Visible         =   0   'False
@@ -549,7 +548,7 @@ Begin VB.Form frmMain
       EndProperty
       Height          =   435
       Left            =   8880
-      MouseIcon       =   "frmMain.frx":10A9
+      MouseIcon       =   "frmMain.frx":10AA
       MousePointer    =   99  'Custom
       TabIndex        =   18
       Top             =   1920
@@ -1468,7 +1467,7 @@ Private Sub lblScroll_Click(Index As Integer)
 End Sub
 
 Private Sub lblCerrar_Click()
-    prgRun = False
+    Call CloseClient
 End Sub
 
 Private Sub lblMinimizar_Click()
@@ -1512,9 +1511,6 @@ Public Sub DesactivarMacroTrabajo()
     Call AddtoRichTextBox(frmMain.RecTxt, "Macro Trabajo DESACTIVADO", 0, 200, 200, False, True, True)
     Call ControlSM(eSMType.mWork, False)
 End Sub
-
-
-
 
 Private Sub mnuEquipar_Click()
     Call EquiparItem
@@ -1627,8 +1623,8 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
         SendTxt.Visible = False
         
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
         Else
             hlst.SetFocus
         End If
@@ -1938,7 +1934,7 @@ Private Sub Label4_Click()
     InvEqu.Picture = LoadPicture(App.path & "\Graficos\Centroinventario.jpg")
 
     ' Activo controles de inventario
-    picInv.Visible = True
+    PicInv.Visible = True
     imgInvScrollUp.Visible = True
     imgInvScrollDown.Visible = True
 
@@ -1966,7 +1962,7 @@ Private Sub Label7_Click()
     cmdMoverHechi(1).Visible = True
     
     ' Desactivo controles de inventario
-    picInv.Visible = False
+    PicInv.Visible = False
     imgInvScrollUp.Visible = False
     imgInvScrollDown.Visible = False
 
@@ -1999,8 +1995,8 @@ On Error Resume Next  'el .SetFocus causaba errores al salir y volver a entrar
         (Not frmMSG.Visible) And (Not MirandoForo) And _
         (Not frmEstadisticas.Visible) And (Not frmCantidad.Visible) And (Not MirandoParty) Then
          
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
         ElseIf hlst.Visible Then
             hlst.SetFocus
         End If
@@ -2008,8 +2004,8 @@ On Error Resume Next  'el .SetFocus causaba errores al salir y volver a entrar
 End Sub
 
 Private Sub RecTxt_KeyDown(KeyCode As Integer, Shift As Integer)
-    If picInv.Visible Then
-        picInv.SetFocus
+    If PicInv.Visible Then
+        PicInv.SetFocus
     Else
         hlst.SetFocus
     End If
@@ -2065,8 +2061,8 @@ Private Sub SendCMSTXT_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
         Me.SendCMSTXT.Visible = False
         
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
         Else
             hlst.SetFocus
         End If
@@ -2114,8 +2110,8 @@ End Sub
 Private Sub Socket1_Connect()
     
     'Clean input and output buffers
-    Call incomingData.ReadASCIIStringFixed(incomingData.length)
-    Call outgoingData.ReadASCIIStringFixed(outgoingData.length)
+    Call incomingData.ReadASCIIStringFixed(incomingData.Length)
+    Call outgoingData.ReadASCIIStringFixed(outgoingData.Length)
     
     Second.Enabled = True
 
@@ -2312,8 +2308,8 @@ Private Sub Winsock1_Connect()
     Debug.Print "Winsock Connect"
     
     'Clean input and output buffers
-    Call incomingData.ReadASCIIStringFixed(incomingData.length)
-    Call outgoingData.ReadASCIIStringFixed(outgoingData.length)
+    Call incomingData.ReadASCIIStringFixed(incomingData.Length)
+    Call outgoingData.ReadASCIIStringFixed(outgoingData.Length)
     
     Second.Enabled = True
     

@@ -1,4 +1,5 @@
 VERSION 5.00
+Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "msinet.ocx"
 Begin VB.Form frmConnect 
    BackColor       =   &H00E0E0E0&
    BorderStyle     =   0  'None
@@ -337,7 +338,7 @@ End Sub
 
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
     If KeyCode = 27 Then
-        prgRun = False
+        Call CloseClient
     End If
 End Sub
 
@@ -581,7 +582,7 @@ Private Sub imgReglamento_Click()
 End Sub
 
 Private Sub imgSalir_Click()
-    prgRun = False
+    Call CloseClient
 End Sub
 
 Private Sub imgServArgentina_Click()

@@ -34,7 +34,7 @@ Attribute VB_Name = "Mod_Declaraciones"
 Option Explicit
 
 #If False Then
-    Dim nombre As String
+    Dim Nombre As String
 #End If
 
 Public Sonidos As clsSoundMapas
@@ -722,7 +722,7 @@ Global OtroInventario(1 To MAX_INVENTORY_SLOTS) As Inventory
 Public UserHechizos(1 To MAXHECHI) As Integer
 
 Public Type PjCuenta
-    nombre      As String
+    Nombre      As String
     Head        As Integer
     Body        As Integer
     shield      As Byte
@@ -1051,7 +1051,7 @@ Public NumHechizos As Byte
 Public Hechizos() As tHechizos
  
 Public Type tHechizos
-    nombre As String
+    Nombre As String
     Desc As String
     PalabrasMagicas As String
     ManaRequerida As Integer
@@ -1068,7 +1068,7 @@ Public NumNpcs As Integer
 Public Npcs() As tNpcs
  
 Public Type tNpcs
-    nombre As String
+    Nombre As String
     Desc As String
     NroExpresiones As Byte
     Expresiones() As String

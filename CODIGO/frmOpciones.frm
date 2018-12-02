@@ -440,7 +440,7 @@ Private Sub imgMapa_Click()
 End Sub
 
 Private Sub imgMsgPersonalizado_Click()
-    Call frmMessageTxt.Show(vbModeless, Me)
+    Call frmMessageTxt.Show(vbModal, Me)
 End Sub
 
 Private Sub imgRadio_Click()

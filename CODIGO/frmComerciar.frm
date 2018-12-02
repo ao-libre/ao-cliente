@@ -8,6 +8,7 @@ Begin VB.Form frmComerciar
    ClientWidth     =   6930
    ClipControls    =   0   'False
    ControlBox      =   0   'False
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
@@ -482,4 +483,10 @@ End Sub
 
 Private Sub picInvUser_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
+End Sub
+
+Private Sub Form_KeyPress(KeyAscii As Integer)
+If KeyAscii = 27 Then
+    Call WriteCommerceEnd
+End If
 End Sub
