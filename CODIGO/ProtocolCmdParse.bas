@@ -114,7 +114,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
     End If
     
     ' Sacar cartel APESTA!! (y es ilógico, estás diciendo una pausa/espacio  :rolleyes: )
-    If Comando = "" Then Comando = " "
+    If LenB(Comando) = 0 Then Comando = " "
     
     If Left$(Comando, 1) = "/" Then
         ' Comando normal
