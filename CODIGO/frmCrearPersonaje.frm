@@ -1154,10 +1154,10 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 'Argentum Online 0.11.6
 '
-'Copyright (C) 2002 M·rquez Pablo Ignacio
+'Copyright (C) 2002 M√°rquez Pablo Ignacio
 'Copyright (C) 2002 Otto Perez
 'Copyright (C) 2002 Aaron Perkins
-'Copyright (C) 2002 MatÌas Fernando PequeÒo
+'Copyright (C) 2002 Mat√≠as Fernando Peque√±o
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the Affero General Public License;
@@ -1179,10 +1179,10 @@ Attribute VB_Exposed = False
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 n˙mero 983 piso 7 dto A
+'Calle 3 n√∫mero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'CÛdigo Postal 1900
-'Pablo Ignacio M·rquez
+'C√≥digo Postal 1900
+'Pablo Ignacio M√°rquez
 
 Option Explicit
 
@@ -1265,8 +1265,8 @@ Private Type tModClase
     Evasion As Double
     AtaqueArmas As Double
     AtaqueProyectiles As Double
-    DaÒoArmas As Double
-    DaÒoProyectiles As Double
+    Da√±oArmas As Double
+    Da√±oProyectiles As Double
     Escudo As Double
     Magia As Double
     Vida As Double
@@ -1318,11 +1318,11 @@ Private Sub CargarEspecialidades()
     
     vEspecialidades(eClass.Hunter) = "Ocultarse"
     vEspecialidades(eClass.Thief) = "Robar y Ocultarse"
-    vEspecialidades(eClass.Assasin) = "ApuÒalar"
+    vEspecialidades(eClass.Assasin) = "Apu√±alar"
     vEspecialidades(eClass.Bandit) = "Combate Sin Armas"
     vEspecialidades(eClass.Druid) = "Domar"
     vEspecialidades(eClass.Pirat) = "Navegar"
-    vEspecialidades(eClass.Worker) = "ExtracciÛn y ConstrucciÛn"
+    vEspecialidades(eClass.Worker) = "Extracci√≥n y Construcci√≥n"
 End Sub
 
 Private Sub IniciarGraficos()
@@ -1374,8 +1374,8 @@ Private Sub IniciarGraficos()
     Call cBotonNombre.Initialize(imgNombre, "", GrhPath & "BotonNombrePJ.jpg", _
                                     GrhPath & "BotonNombrePJ.jpg", Me, , , False, False)
                                     
-    Call cBotonConfirmPasswd.Initialize(imgConfirmPasswd, "", GrhPath & "BotonRepetirContraseÒa.jpg", _
-                                    GrhPath & "BotonRepetirContraseÒa.jpg", Me, , , False, False)
+    Call cBotonConfirmPasswd.Initialize(imgConfirmPasswd, "", GrhPath & "BotonRepetirContrase√±a.jpg", _
+                                    GrhPath & "BotonRepetirContrase√±a.jpg", Me, , , False, False)
                                     
     Call cBotonAtributos.Initialize(imgAtributos, "", GrhPath & "BotonAtributos.jpg", _
                                     GrhPath & "BotonAtributos.jpg", Me, , , False, False)
@@ -1477,16 +1477,22 @@ Private Sub CargarCombos()
 End Sub
 
 Function CheckData() As Boolean
-    
+
+   If LenB(txtNombre.Text) = 0 Then
+        MsgBox "Ingresa el nombre de tu nuevo personaje."
+        txtNombre.SetFocus
+        Exit Function
+    End If
+
     If LenB(txtPasswd.Text) = 0 Then
-        MsgBox "Ingresa una contraseÒa."
+        MsgBox "Ingresa una contrase√±a."
         txtPasswd.SetFocus
         Exit Function
     End If
     
     If LenB(txtConfirmPasswd.Text) = 0 Then
-        MsgBox "Debes ingresar nuevamente la contraseÒa."
-        txtConfirmPasswd.Text.SetFocus
+        MsgBox "Debes ingresar nuevamente la contrase√±a."
+        txtConfirmPasswd.SetFocus
         Exit Function
     End If
     
@@ -1618,7 +1624,7 @@ Private Sub imgCrear_Click()
     For i = 1 To Len(UserPassword)
         CharAscii = Asc(mid$(UserPassword, i, 1))
         If Not LegalCharacter(CharAscii) Then
-            MsgBox ("Password inv·lido. El caractÈr " & Chr$(CharAscii) & " no est· permitido.")
+            MsgBox ("Password inv√°lido. El caract√©r " & Chr$(CharAscii) & " no est√° permitido.")
             Exit Sub
         End If
     Next i
@@ -2130,32 +2136,32 @@ Private Function CheckDir(ByRef Dir As E_Heading) As E_Heading
 End Function
 
 Private Sub LoadHelp()
-    vHelp(eHelp.iePasswd) = "La contraseÒa que utilizar·s para conectar tu personaje al juego."
-    vHelp(eHelp.ieTirarDados) = "Presionando sobre la Esfera Roja, se modificar·n al azar los atributos de tu personaje, de esta manera puedes elegir los que m·s te parezcan para definir a tu personaje."
-    vHelp(eHelp.ieMail) = "Es sumamente importante que ingreses una direcciÛn de correo electrÛnico v·lida, ya que en el caso de perder la contraseÒa de tu personaje, se te enviar· cuando lo requieras, a esa direcciÛn."
-    vHelp(eHelp.ieNombre) = "SÈ cuidadoso al seleccionar el nombre de tu personaje. Argentum es un juego de rol, un mundo m·gico y fant·stico, y si seleccion·s un nombre obsceno o con connotaciÛn polÌtica, los administradores borrar·n tu personaje y no habr· ninguna posibilidad de recuperarlo."
-    vHelp(eHelp.ieConfirmPasswd) = "La contraseÒa que utilizar·s para conectar tu personaje al juego."
+    vHelp(eHelp.iePasswd) = "La contrase√±a que utilizar√°s para conectar tu personaje al juego."
+    vHelp(eHelp.ieTirarDados) = "Presionando sobre la Esfera Roja, se modificar√°n al azar los atributos de tu personaje, de esta manera puedes elegir los que m√°s te parezcan para definir a tu personaje."
+    vHelp(eHelp.ieMail) = "Es sumamente importante que ingreses una direcci√≥n de correo electr√≥nico v√°lida, ya que en el caso de perder la contrase√±a de tu personaje, se te enviar√° cuando lo requieras, a esa direcci√≥n."
+    vHelp(eHelp.ieNombre) = "S√© cuidadoso al seleccionar el nombre de tu personaje. Argentum es un juego de rol, un mundo m√°gico y fant√°stico, y si seleccion√°s un nombre obsceno o con connotaci√≥n pol√≠tica, los administradores borrar√°n tu personaje y no habr√° ninguna posibilidad de recuperarlo."
+    vHelp(eHelp.ieConfirmPasswd) = "La contrase√±a que utilizar√°s para conectar tu personaje al juego."
     vHelp(eHelp.ieAtributos) = "Son las cualidades que definen tu personaje. Generalmente se los llama ""Dados"". (Ver Tirar Dados)"
-    vHelp(eHelp.ieD) = "Son los atributos que obtuviste al azar. Presion· la esfera roja para volver a tirarlos."
+    vHelp(eHelp.ieD) = "Son los atributos que obtuviste al azar. Presion√° la esfera roja para volver a tirarlos."
     vHelp(eHelp.ieM) = "Son los modificadores por raza que influyen en los atributos de tu personaje."
     vHelp(eHelp.ieF) = "Los atributos finales de tu personaje, de acuerdo a la raza que elegiste."
-    vHelp(eHelp.ieFuerza) = "De ella depender· quÈ tan potentes ser·n tus golpes, tanto con armas de cuerpo a cuerpo, a distancia o sin armas."
-    vHelp(eHelp.ieAgilidad) = "Este atributo intervendr· en quÈ tan bueno seas, tanto evadiendo como acertando golpes, respecto de otros personajes como de las criaturas a las q te enfrentes."
-    vHelp(eHelp.ieInteligencia) = "Influir· de manera directa en cu·nto man· ganar·s por nivel."
-    vHelp(eHelp.ieCarisma) = "Ser· necesario tanto para la relaciÛn con otros personajes (entrenamiento en parties) como con las criaturas (domar animales)."
-    vHelp(eHelp.ieConstitucion) = "Afectar· a la cantidad de vida que podr·s ganar por nivel."
-    vHelp(eHelp.ieEvasion) = "Eval˙a la habilidad esquivando ataques fÌsicos."
-    vHelp(eHelp.ieMagia) = "Punt˙a la cantidad de man· que se tendr·."
-    vHelp(eHelp.ieVida) = "Valora la cantidad de salud que se podr· llegar a tener."
+    vHelp(eHelp.ieFuerza) = "De ella depender√° qu√© tan potentes ser√°n tus golpes, tanto con armas de cuerpo a cuerpo, a distancia o sin armas."
+    vHelp(eHelp.ieAgilidad) = "Este atributo intervendr√° en qu√© tan bueno seas, tanto evadiendo como acertando golpes, respecto de otros personajes como de las criaturas a las q te enfrentes."
+    vHelp(eHelp.ieInteligencia) = "Influir√° de manera directa en cu√°nto man√° ganar√°s por nivel."
+    vHelp(eHelp.ieCarisma) = "Ser√° necesario tanto para la relaci√≥n con otros personajes (entrenamiento en parties) como con las criaturas (domar animales)."
+    vHelp(eHelp.ieConstitucion) = "Afectar√° a la cantidad de vida que podr√°s ganar por nivel."
+    vHelp(eHelp.ieEvasion) = "Eval√∫a la habilidad esquivando ataques f√≠sicos."
+    vHelp(eHelp.ieMagia) = "Punt√∫a la cantidad de man√° que se tendr√°."
+    vHelp(eHelp.ieVida) = "Valora la cantidad de salud que se podr√° llegar a tener."
     vHelp(eHelp.ieEscudos) = "Estima la habilidad para rechazar golpes con escudos."
-    vHelp(eHelp.ieArmas) = "Eval˙a la habilidad en el combate cuerpo a cuerpo con armas."
-    vHelp(eHelp.ieArcos) = "Eval˙a la habilidad en el combate a distancia con arcos. "
+    vHelp(eHelp.ieArmas) = "Eval√∫a la habilidad en el combate cuerpo a cuerpo con armas."
+    vHelp(eHelp.ieArcos) = "Eval√∫a la habilidad en el combate a distancia con arcos. "
     vHelp(eHelp.ieEspecialidad) = ""
-    vHelp(eHelp.iePuebloOrigen) = "Define el hogar de tu personaje. Sin embargo, el personaje nacer· en Nemahuak, la ciudad de los novatos."
-    vHelp(eHelp.ieRaza) = "De la raza que elijas depender· cÛmo se modifiquen los dados que saques. PodÈs cambiar de raza para poder visualizar cÛmo se modifican los distintos atributos."
-    vHelp(eHelp.ieClase) = "La clase influir· en las caracterÌsticas principales que tenga tu personaje, asi como en las magias e items que podr· utilizar. Las estrellas que ves abajo te mostrar·n en quÈ habilidades se destaca la misma."
-    vHelp(eHelp.ieGenero) = "Indica si el personaje ser· masculino o femenino. Esto influye en los items que podr· equipar."
-    vHelp(eHelp.ieAlineacion) = "Indica si el personaje seguir· la senda del mal o del bien. (Actualmente deshabilitado)"
+    vHelp(eHelp.iePuebloOrigen) = "Define el hogar de tu personaje. Sin embargo, el personaje nacer√° en Nemahuak, la ciudad de los novatos."
+    vHelp(eHelp.ieRaza) = "De la raza que elijas depender√° c√≥mo se modifiquen los dados que saques. Pod√©s cambiar de raza para poder visualizar c√≥mo se modifican los distintos atributos."
+    vHelp(eHelp.ieClase) = "La clase influir√° en las caracter√≠sticas principales que tenga tu personaje, asi como en las magias e items que podr√° utilizar. Las estrellas que ves abajo te mostrar√°n en qu√© habilidades se destaca la misma."
+    vHelp(eHelp.ieGenero) = "Indica si el personaje ser√° masculino o femenino. Esto influye en los items que podr√° equipar."
+    vHelp(eHelp.ieAlineacion) = "Indica si el personaje seguir√° la senda del mal o del bien. (Actualmente deshabilitado)"
 End Sub
 
 Private Sub ClearLabel()
@@ -2224,13 +2230,13 @@ Private Sub UpdateStars()
     
     ' Estrellas de armas
     NumStars = (0.509 + 0.01185 * Val(lblAtributoFinal(eAtributos.Fuerza).Caption)) * ModClase(UserClase).Hit * _
-                ModClase(UserClase).DaÒoArmas + 0.119 * ModClase(UserClase).AtaqueArmas * _
+                ModClase(UserClase).Da√±oArmas + 0.119 * ModClase(UserClase).AtaqueArmas * _
                 Val(lblAtributoFinal(eAtributos.Agilidad).Caption)
     Call SetStars(imgArmasStar, NumStars * 2)
     
     ' Estrellas de arcos
     NumStars = (0.4915 + 0.01265 * Val(lblAtributoFinal(eAtributos.Fuerza).Caption)) * _
-                ModClase(UserClase).DaÒoProyectiles * ModClase(UserClase).Hit + 0.119 * ModClase(UserClase).AtaqueProyectiles * _
+                ModClase(UserClase).Da√±oProyectiles * ModClase(UserClase).Hit + 0.119 * ModClase(UserClase).AtaqueProyectiles * _
                 Val(lblAtributoFinal(eAtributos.Agilidad).Caption)
     Call SetStars(imgArcoStar, NumStars * 2)
 End Sub
@@ -2308,8 +2314,8 @@ Private Sub LoadCharInfo()
             .Evasion = Val(GetVar(IniPath & "CharInfo.dat", "MODEVASION", SearchVar))
             .AtaqueArmas = Val(GetVar(IniPath & "CharInfo.dat", "MODATAQUEARMAS", SearchVar))
             .AtaqueProyectiles = Val(GetVar(IniPath & "CharInfo.dat", "MODATAQUEPROYECTILES", SearchVar))
-            .DaÒoArmas = Val(GetVar(IniPath & "CharInfo.dat", "MODDA—OARMAS", SearchVar))
-            .DaÒoProyectiles = Val(GetVar(IniPath & "CharInfo.dat", "MODDA—OPROYECTILES", SearchVar))
+            .Da√±oArmas = Val(GetVar(IniPath & "CharInfo.dat", "MODDA√ëOARMAS", SearchVar))
+            .Da√±oProyectiles = Val(GetVar(IniPath & "CharInfo.dat", "MODDA√ëOPROYECTILES", SearchVar))
             .Escudo = Val(GetVar(IniPath & "CharInfo.dat", "MODESCUDO", SearchVar))
             .Hit = Val(GetVar(IniPath & "CharInfo.dat", "HIT", SearchVar))
             .Magia = Val(GetVar(IniPath & "CharInfo.dat", "MODMAGIA", SearchVar))
