@@ -522,7 +522,7 @@ Public Function StringToJSON(st As String) As String
    Dim rows As Variant
 
    lRecCnt = 0
-   If st = "" Then
+   If LenB(st) = 0 Then
       StringToJSON = "null"
    Else
       rows = Split(st, RECORD_SEP)

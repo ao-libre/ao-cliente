@@ -239,7 +239,12 @@ Function CheckUserData() As Boolean
     Dim LoopC As Long
     Dim CharAscii As Integer
     
-    If AccountPassword = "" Then
+    If checkemail And LenB(UserEmail) = 0 Then
+        MsgBox ("Direccion de email invalida")
+        Exit Function
+    End If
+    
+    If LenB(UserPassword) = 0 Then
         MsgBox ("Ingrese un password.")
         Exit Function
     End If
@@ -252,18 +257,13 @@ Function CheckUserData() As Boolean
         End If
     Next LoopC
     
-    If AccountName = "" Then
-        MsgBox "Ingrese un e-mail."
-        Exit Function
-    End If
-
-    If Not CheckMailString(AccountName) Then
-        MsgBox "Direccion de e-mail invalida."
+    If LenB(UserName) = 0 Then
+        MsgBox ("Ingrese un nombre de personaje.")
         Exit Function
     End If
     
-    If Len(AccountName) > 30 Then
-        MsgBox "El e-mail debe tener menos de 30 letras."
+    If LenB(UserName) > 30 Then
+        MsgBox ("El nombre debe tener menos de 30 letras.")
         Exit Function
     End If
     

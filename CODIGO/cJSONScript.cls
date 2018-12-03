@@ -24,7 +24,7 @@ Public Function Eval(sJSON As String) As String
    Dim i As Long
    
    Set o = JSON.parse(sJSON)
-   If (JSON.GetParserErrors = "") And Not (o Is Nothing) Then
+   If (LenB(JSON.GetParserErrors) = 0) And Not (o Is Nothing) Then
       For i = 1 To o.Count
          Select Case VarType(o.Item(i))
          Case vbNull
@@ -111,7 +111,7 @@ Public Function ExecCommand(ByRef obj As Variant) As String
                      
                   Case "get":
                      sRet = ExecCommand(dictVars(CStr(this.Item("name"))))
-                     If sRet = "" Then
+                     If LenB(sRet) = 0 Then
                         sRet = ExecCommand(this.Item("default"))
                      End If
                      
