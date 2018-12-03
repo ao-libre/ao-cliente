@@ -157,7 +157,7 @@ Begin VB.Form frmPanelAccount
       Top             =   1695
       Width           =   1140
    End
-   Begin VB.Timer Timer1
+   Begin VB.Timer Timer1 
       Interval        =   500
       Left            =   600
       Top             =   1440
@@ -537,6 +537,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Public Seleccionado As Byte
+Public AllCharactersLoadedInRender As Boolean
 
 Private Sub Form_Load()
    Me.Picture = LoadPicture(DirGraficos & "VentanaCuenta.jpg")
@@ -555,9 +556,9 @@ On Error Resume Next
     
     Me.lblAccData(0).Caption = AccountName
 
-If Curper = True Then
-   Call FormParser.Parse_Form(Me)
-End If
+    If Curper = True Then
+       Call FormParser.Parse_Form(Me)
+    End If
 
 End Sub
 Private Sub Image5_Click()
@@ -643,8 +644,11 @@ Private Sub picChar_DblClick(Index As Integer)
 End Sub
 
 Private Sub Timer1_Timer()
-    Dim i As Byte
-    For i = 1 To 10
-        mDx8_Engine.DrawPJ i
-    Next i
+    If AllCharactersLoadedInRender = False Then
+        Dim i As Byte
+        For i = 1 To 10
+           mDx8_Engine.DrawPJ i
+        Next i
+    AllCharactersLoadedInRender = True
+    End If
 End Sub
