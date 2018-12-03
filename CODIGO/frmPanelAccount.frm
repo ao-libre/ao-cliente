@@ -616,7 +616,6 @@ End Sub
 
 Private Sub picChar_Click(Index As Integer)
     Seleccionado = Index + 1
-    mDx8_Engine.DrawPJ Seleccionado
     If cPJ(Seleccionado).Nombre <> "" Then
        lblCharData(0) = "Nombre: " & cPJ(Seleccionado).Nombre
        lblCharData(1) = "Clase: " & ListaClases(cPJ(Seleccionado).Class)
