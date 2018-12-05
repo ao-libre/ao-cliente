@@ -33,7 +33,7 @@ Attribute VB_Name = "Mod_Declaraciones"
 
 Option Explicit
 
-#If False Then
+#If False Then 'to fix VB fucking up the var names
     Dim nombre As String
 #End If
 
@@ -171,7 +171,6 @@ Public Type tServerInfo
 End Type
 
 Public ServersLst() As tServerInfo
-Public ServersRecibidos As Boolean
 
 Public CurServer As Integer
 
