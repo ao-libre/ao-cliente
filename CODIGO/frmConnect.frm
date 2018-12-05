@@ -1,5 +1,4 @@
 VERSION 5.00
-Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.ocx"
 Begin VB.Form frmConnect 
    BackColor       =   &H00E0E0E0&
    BorderStyle     =   0  'None
