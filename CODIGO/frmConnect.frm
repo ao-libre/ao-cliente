@@ -1,4 +1,5 @@
 VERSION 5.00
+Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.ocx"
 Begin VB.Form frmConnect 
    BackColor       =   &H00E0E0E0&
    BorderStyle     =   0  'None
@@ -319,21 +320,18 @@ Public LastButtonPressed As clsGraphicalButton
 
 
 Private Sub Form_Activate()
-'On Error Resume Next
-    Call CargarServidores
     
-    If ServersRecibidos Then
-        If CurServer <> 0 Then
-            IPTxt = ServersLst(1).Ip
-            PortTxt = ServersLst(1).Puerto
-        Else
-            IPTxt = IPdelServidor
-            PortTxt = PuertoDelServidor
-        End If
+    If CurServer <> 0 Then
+        IPTxt = ServersLst(1).Ip
+        PortTxt = ServersLst(1).Puerto
+    Else
+        IPTxt = IPdelServidor
+        PortTxt = PuertoDelServidor
     End If
     
     Call GetPostsFromReddit
 End Sub
+
 
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
     If KeyCode = 27 Then
@@ -470,18 +468,16 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y A
 End Sub
 
 Private Sub CheckServers()
-    If ServersRecibidos Then
-        If Not IsIp(IPTxt) And CurServer <> 0 Then
-            If MsgBox("Atencion, está intentando conectarse a un servidor no oficial, NoLand Studios no se hace responsable de los posibles problemas que estos servidores presenten. ¿Desea continuar?", vbYesNo) = vbNo Then
-                If CurServer <> 0 Then
-                    IPTxt = ServersLst(CurServer).Ip
-                    PortTxt = ServersLst(CurServer).Puerto
-                Else
-                    IPTxt = IPdelServidor
-                    PortTxt = PuertoDelServidor
-                End If
-                Exit Sub
+    If Not IsIp(IPTxt) And CurServer <> 0 Then
+        If MsgBox("Atencion, está intentando conectarse a un servidor no oficial, NoLand Studios no se hace responsable de los posibles problemas que estos servidores presenten. ¿Desea continuar?", vbYesNo) = vbNo Then
+            If CurServer <> 0 Then
+                IPTxt = ServersLst(CurServer).Ip
+                PortTxt = ServersLst(CurServer).Puerto
+            Else
+                IPTxt = IPdelServidor
+                PortTxt = PuertoDelServidor
             End If
+            Exit Sub
         End If
     End If
     CurServer = 0
@@ -608,6 +604,7 @@ End Sub
 Private Sub lstServers_Click()
     IPTxt.Text = ServersLst(lstServers.ListIndex + 1).Ip
     PortTxt.Text = ServersLst(lstServers.ListIndex + 1).Puerto
+    CurServer = lstServers.ListIndex + 1
 End Sub
 
 Private Sub txtPasswd_KeyPress(KeyAscii As Integer)
