@@ -34,7 +34,7 @@ Attribute VB_Name = "Mod_General"
 Option Explicit
 
 #If False Then 'to fix VB fucking up the var names
-    Dim status, Nombre, PicInv, f As String
+    Dim Status, Nombre, PicInv, f, Obj, J As String
 #End If
 
 Public iplst As String
@@ -690,38 +690,13 @@ On Error GoTo errorH
         frmConnect.lstServers.AddItem (ServersLst(i).Desc)
     Next i
     CurServer = 1
+
 Exit Sub
 
 errorH:
     Call MsgBox("Error cargando los servidores, actualicelos de la web", vbCritical + vbOKOnly, "Argentum Online")
     
     'Call CloseClient
-End Sub
-
-Public Sub InitServersList()
-On Error Resume Next
-    Dim NumServers As Integer
-    Dim i As Integer
-    Dim Cont As Integer
-    
-    i = 1
-    
-    Do While (ReadField(i, RawServersList, Asc(";")) <> "")
-        i = i + 1
-        Cont = Cont + 1
-    Loop
-    
-    ReDim ServersLst(1 To Cont) As tServerInfo
-    
-    For i = 1 To Cont
-        Dim cur$
-        cur$ = ReadField(i, RawServersList, Asc(";"))
-        ServersLst(i).Ip = ReadField(1, cur$, Asc(":"))
-        ServersLst(i).Puerto = ReadField(2, cur$, Asc(":"))
-        ServersLst(i).Desc = ReadField(4, cur$, Asc(":"))
-    Next i
-    
-    CurServer = 1
 End Sub
 
 Public Function CurServerPasRecPort() As Integer
@@ -878,14 +853,10 @@ Private Sub LoadInitialConfig()
     
     '###########
     ' SERVIDORES
-    'TODO : esto de ServerRecibidos no se podria sacar???
-    Call AddtoRichTextBox(frmCargando.status, "Buscando servidores... ", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.Status, "Buscando servidores... ", 255, 255, 255, True, False, True)
     Call DownloadServersFile("https://raw.githubusercontent.com/ao-libre/ao-cliente/master/INIT/sinfo.dat")
-    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
-    Call AddtoRichTextBox(frmCargando.status, "Cargando servidores... ", 255, 255, 255, True, False, True)
     Call CargarServidores
-    ServersRecibidos = True
-    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
+    Call AddtoRichTextBox(frmCargando.Status, "Hecho", 255, 0, 0, True, False, False)
     
     '###########
     ' CONSTANTES

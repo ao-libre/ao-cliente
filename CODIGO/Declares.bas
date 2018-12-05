@@ -171,7 +171,6 @@ Public Type tServerInfo
 End Type
 
 Public ServersLst() As tServerInfo
-Public ServersRecibidos As Boolean
 
 Public CurServer As Integer
 
