@@ -17,6 +17,11 @@ Begin VB.Form frmPanelAccount
    ScaleMode       =   0  'User
    ScaleWidth      =   808.081
    StartUpPosition =   2  'CenterScreen
+   Begin VB.Timer tmrRender 
+      Interval        =   500
+      Left            =   600
+      Top             =   1320
+   End
    Begin VB.PictureBox picChar 
       Appearance      =   0  'Flat
       BackColor       =   &H00000000&
@@ -156,11 +161,6 @@ Begin VB.Form frmPanelAccount
       TabIndex        =   0
       Top             =   1695
       Width           =   1140
-   End
-   Begin VB.Timer Timer1 
-      Interval        =   500
-      Left            =   600
-      Top             =   1440
    End
    Begin VB.Image imgConectar 
       Height          =   375
@@ -538,17 +538,19 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Public Seleccionado As Byte
 Public AllCharactersLoadedInRender As Boolean
-
 Private Sub Form_Load()
-   Me.Picture = LoadPicture(DirGraficos & "VentanaCuenta.jpg")
 On Error Resume Next
     Unload frmConnect
+    
+    Me.Picture = LoadPicture(DirGraficos & "VentanaCuenta.jpg")
+    
+    AllCharactersLoadedInRender = False
+    
+    Dim i As Byte
 
     Me.Icon = frmMain.Icon
     
     Dim CharIndex As Integer
-    
-    Dim i As Byte
     
     For i = 1 To 10
         lblAccData(i).Caption = ""
@@ -643,12 +645,12 @@ Private Sub picChar_DblClick(Index As Integer)
     End If
 End Sub
 
-Private Sub Timer1_Timer()
-    If AllCharactersLoadedInRender = False Then
-        Dim i As Byte
-        For i = 1 To 10
-           mDx8_Engine.DrawPJ i
-        Next i
+Private Sub tmrRender_Timer()
+If AllCharactersLoadedInRender = False Then
+    Dim i As Byte
+    For i = 1 To 10
+       mDx8_Engine.DrawPJ i
+    Next i
     AllCharactersLoadedInRender = True
-    End If
+End If
 End Sub
