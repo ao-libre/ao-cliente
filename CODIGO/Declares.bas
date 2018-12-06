@@ -730,10 +730,11 @@ Public Type PjCuenta
     Mapa        As Integer
     Class       As Byte
     Race        As Byte
-    Color       As Byte
     Map         As Integer
     Level       As Byte
     Gold        As Long
+    Criminal    As Boolean
+    Dead        As Boolean
 End Type
 
 Public cPJ() As PjCuenta
