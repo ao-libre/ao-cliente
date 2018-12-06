@@ -646,9 +646,16 @@ Private Sub picChar_DblClick(Index As Integer)
 End Sub
 
 Private Sub tmrRender_Timer()
+On Error GoTo Errhandler
+
 Dim i As Byte
 For i = 1 To 10
    mDx8_Engine.DrawPJ i
 Next i
 Me.tmrRender.Enabled = False
+Exit Sub
+
+Errhandler:
+    Me.tmrRender.Enabled = False
+
 End Sub
