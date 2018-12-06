@@ -738,24 +738,22 @@ Public Sub Engine_Update_FPS()
 End Sub
 
 Public Sub DrawPJ(ByVal Index As Byte)
+    If LenB(cPJ(Index).Nombre) = 0 Then Exit Sub
+
     Dim cColor As Long
-   
-    If cPJ(Index).Nombre <> "" Then
-        frmPanelAccount.lblAccData(Index).Caption = cPJ(Index).Nombre
 
-        If cPJ(Index).Criminal Then
-            cColor = RGB(255, 0, 0)
-        Else
-            cColor = RGB(0, 0, 255)
-        End If
+    frmPanelAccount.lblAccData(Index).Caption = cPJ(Index).Nombre
 
-        frmPanelAccount.lblAccData(Index).ForeColor = cColor
+    If cPJ(Index).Criminal Then
+        cColor = RGB(255, 0, 0)
+    Else
+        cColor = RGB(0, 0, 255)
     End If
 
-    If cPJ(Index).Nombre = "" Then Exit Sub
-   
+    frmPanelAccount.lblAccData(Index).ForeColor = cColor
+
     Dim i As Integer
-   
+
     Dim init_x As Integer
     Dim init_y As Integer
     Dim head_offset As Integer
@@ -766,22 +764,22 @@ Public Sub DrawPJ(ByVal Index As Byte)
     re.Top = 0
     re.bottom = 80
     re.Right = 76
-   
+
     init_x = 25
     init_y = 20
-   
+
     Dim Light(3) As Long
     Light(0) = D3DColorXRGB(255, 255, 255)
     Light(1) = D3DColorXRGB(255, 255, 255)
     Light(2) = D3DColorXRGB(255, 255, 255)
     Light(3) = D3DColorXRGB(255, 255, 255)
-    
+
     If cPJ(Index).Race = eRaza.Humano Or cPJ(Index).Race = eRaza.Elfo Or cPJ(Index).Race = eRaza.ElfoOscuro Then
         head_offset = HeadOffsetAltos
     Else
         head_offset = HeadOffsetBajos
     End If
-   
+
     Call Engine_Clear
 
     If cPJ(Index).Body <> 0 Then
