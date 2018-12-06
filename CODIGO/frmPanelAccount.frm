@@ -162,6 +162,28 @@ Begin VB.Form frmPanelAccount
       Top             =   1695
       Width           =   1140
    End
+   Begin VB.Label lblAccData 
+      Alignment       =   2  'Center
+      BackColor       =   &H00000000&
+      BackStyle       =   0  'Transparent
+      Caption         =   "Personaje X"
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   195
+      Index           =   1
+      Left            =   1890
+      TabIndex        =   6
+      Top             =   3094
+      Width           =   1245
+   End
    Begin VB.Image imgConectar 
       Height          =   375
       Left            =   9120
@@ -318,7 +340,7 @@ Begin VB.Form frmPanelAccount
       Index           =   10
       Left            =   8700
       TabIndex        =   20
-      Top             =   4890
+      Top             =   4939
       Width           =   1245
    End
    Begin VB.Label lblAccData 
@@ -339,7 +361,7 @@ Begin VB.Form frmPanelAccount
       Index           =   9
       Left            =   6930
       TabIndex        =   19
-      Top             =   4890
+      Top             =   4939
       Width           =   1245
    End
    Begin VB.Label lblAccData 
@@ -360,7 +382,7 @@ Begin VB.Form frmPanelAccount
       Index           =   8
       Left            =   5280
       TabIndex        =   18
-      Top             =   4890
+      Top             =   4939
       Width           =   1245
    End
    Begin VB.Label lblAccData 
@@ -381,7 +403,7 @@ Begin VB.Form frmPanelAccount
       Index           =   7
       Left            =   3600
       TabIndex        =   17
-      Top             =   4890
+      Top             =   4939
       Width           =   1245
    End
    Begin VB.Label lblAccData 
@@ -402,7 +424,7 @@ Begin VB.Form frmPanelAccount
       Index           =   6
       Left            =   1890
       TabIndex        =   16
-      Top             =   4890
+      Top             =   4939
       Width           =   1245
    End
    Begin VB.Label lblAccData 
@@ -423,7 +445,7 @@ Begin VB.Form frmPanelAccount
       Index           =   5
       Left            =   8730
       TabIndex        =   10
-      Top             =   3030
+      Top             =   3094
       Width           =   1245
    End
    Begin VB.Label lblAccData 
@@ -444,7 +466,7 @@ Begin VB.Form frmPanelAccount
       Index           =   4
       Left            =   6960
       TabIndex        =   9
-      Top             =   3030
+      Top             =   3094
       Width           =   1245
    End
    Begin VB.Label lblAccData 
@@ -465,7 +487,7 @@ Begin VB.Form frmPanelAccount
       Index           =   3
       Left            =   5310
       TabIndex        =   8
-      Top             =   3030
+      Top             =   3094
       Width           =   1245
    End
    Begin VB.Label lblAccData 
@@ -486,28 +508,7 @@ Begin VB.Form frmPanelAccount
       Index           =   2
       Left            =   3630
       TabIndex        =   7
-      Top             =   3030
-      Width           =   1245
-   End
-   Begin VB.Label lblAccData 
-      Alignment       =   2  'Center
-      BackStyle       =   0  'Transparent
-      Caption         =   "Personaje X"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00FFFFFF&
-      Height          =   195
-      Index           =   1
-      Left            =   1890
-      TabIndex        =   6
-      Top             =   3030
+      Top             =   3094
       Width           =   1245
    End
    Begin VB.Label lblAccData 
@@ -537,14 +538,13 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Public Seleccionado As Byte
-Public AllCharactersLoadedInRender As Boolean
 Private Sub Form_Load()
 On Error Resume Next
     Unload frmConnect
     
     Me.Picture = LoadPicture(DirGraficos & "VentanaCuenta.jpg")
-    
-    AllCharactersLoadedInRender = False
+
+    Me.tmrRender.Enabled = True
     
     Dim i As Byte
 
@@ -646,11 +646,9 @@ Private Sub picChar_DblClick(Index As Integer)
 End Sub
 
 Private Sub tmrRender_Timer()
-If AllCharactersLoadedInRender = False Then
-    Dim i As Byte
-    For i = 1 To 10
-       mDx8_Engine.DrawPJ i
-    Next i
-    AllCharactersLoadedInRender = True
-End If
+Dim i As Byte
+For i = 1 To 10
+   mDx8_Engine.DrawPJ i
+Next i
+Me.tmrRender.Enabled = False
 End Sub
