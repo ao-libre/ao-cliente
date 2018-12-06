@@ -742,19 +742,13 @@ Public Sub DrawPJ(ByVal Index As Byte)
    
     If cPJ(Index).Nombre <> "" Then
         frmPanelAccount.lblAccData(Index).Caption = cPJ(Index).Nombre
-        Select Case cPJ(Index).Color
-            Case 1 'Verde
-                cColor = RGB(0, 225, 0)
-            Case 2 'Azul
-                cColor = RGB(0, 0, 255)
-            Case 3 'Rojo
-                cColor = RGB(255, 0, 0)
-            Case 4 'Noble
-                cColor = RGB(207, 146, 3)
-            Case 5 'blanco
-                cColor = RGB(255, 255, 255)
-            
-        End Select
+
+        If cPJ(Index).Criminal Then
+            cColor = RGB(255, 0, 0)
+        Else
+            cColor = RGB(0, 0, 255)
+        End If
+
         frmPanelAccount.lblAccData(Index).ForeColor = cColor
     End If
 
@@ -793,9 +787,13 @@ Public Sub DrawPJ(ByVal Index As Byte)
     If cPJ(Index).Body <> 0 Then
         Call DDrawTransGrhtoSurface(BodyData(cPJ(Index).Body).Walk(3), PixelOffsetX + init_x, PixelOffsetY + init_y, 0, Light(), 0, init_x, init_y)
     End If
-     
-    If cPJ(Index).Head <> 0 Then
-        Call DDrawTransGrhtoSurface(HeadData(cPJ(Index).Head).Head(3), PixelOffsetX + init_x + 4, PixelOffsetY + init_y + head_offset, 0, Light(), 0, init_x, init_y)
+
+    If cPJ(Index).Dead Then
+        Call DDrawTransGrhtoSurface(HeadData(CASPER_HEAD).Head(3), PixelOffsetX + init_x + 4, PixelOffsetY + init_y + head_offset, 0, Light(), 0, init_x, init_y)
+    Else
+        If cPJ(Index).Head <> 0 Then
+            Call DDrawTransGrhtoSurface(HeadData(cPJ(Index).Head).Head(3), PixelOffsetX + init_x + 4, PixelOffsetY + init_y + head_offset, 0, Light(), 0, init_x, init_y)
+        End If
     End If
 
     If cPJ(Index).helmet <> 0 Then

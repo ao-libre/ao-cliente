@@ -10648,7 +10648,8 @@ Private Sub HandleAccountLogged()
             cPJ(i).Map = incomingData.ReadInteger
             cPJ(i).Level = incomingData.ReadByte
             cPJ(i).Gold = incomingData.ReadLong
-            cPJ(i).Color = 5
+            cPJ(i).Criminal = incomingData.ReadBoolean
+            cPJ(i).Dead = incomingData.ReadBoolean
         Next i
     End If
     
