@@ -320,15 +320,6 @@ Public LastButtonPressed As clsGraphicalButton
 
 
 Private Sub Form_Activate()
-    
-    If CurServer <> 0 Then
-        IPTxt = ServersLst(1).Ip
-        PortTxt = ServersLst(1).Puerto
-    Else
-        IPTxt = IPdelServidor
-        PortTxt = PuertoDelServidor
-    End If
-    
     Call GetPostsFromReddit
 End Sub
 
@@ -365,18 +356,20 @@ Private Sub Form_Load()
     EngineRun = False
     '[END]
     
-    Call CargarServidores
-
     PortTxt.Text = Config_Inicio.Puerto
- 
-     '[CODE]:MatuX
-    '
-    '  El código para mostrar la versión se genera acá para
-    ' evitar que por X razones luego desaparezca, como suele
-    ' pasar a veces :)
-       version.Caption = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
-    '[END]'
     
+    Call CargarServidores
+    
+    If CurServer <> 0 Then
+        IPTxt = ServersLst(CurServer).Ip
+        PortTxt = ServersLst(CurServer).Puerto
+    Else
+        IPTxt = ServersLst(1).Ip
+        PortTxt = ServersLst(1).Puerto
+    End If
+
+    version.Caption = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
+
     Me.Picture = LoadPicture(App.path & "\graficos\VentanaConectar.jpg")
     
     Call LoadButtons
@@ -471,7 +464,7 @@ End Sub
 
 Private Sub CheckServers()
     If Not IsIp(IPTxt) And CurServer <> 0 Then
-        If MsgBox("Atencion, está intentando conectarse a un servidor no oficial, NoLand Studios no se hace responsable de los posibles problemas que estos servidores presenten. ¿Desea continuar?", vbYesNo) = vbNo Then
+        If MsgBox("Atencion, esta intentando conectarse a un servidor no oficial, NoLand Studios no se hace responsable de los posibles problemas que estos servidores presenten. ¿Desea continuar?", vbYesNo) = vbNo Then
             If CurServer <> 0 Then
                 IPTxt = ServersLst(CurServer).Ip
                 PortTxt = ServersLst(CurServer).Puerto
@@ -482,7 +475,6 @@ Private Sub CheckServers()
             Exit Sub
         End If
     End If
-    CurServer = 0
     IPdelServidor = IPTxt
     PuertoDelServidor = PortTxt
 End Sub
