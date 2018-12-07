@@ -390,8 +390,8 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
     If KeyCode = vbKeyReturn Then
         If LenB(sPartyChat) <> 0 Then Call WritePartyMessage(sPartyChat)
         
-        sPartyChat = ""
-        SendTxt.Text = ""
+        sPartyChat = vbNullString
+        SendTxt.Text = vbNullString
         KeyCode = 0
         SendTxt.SetFocus
     End If

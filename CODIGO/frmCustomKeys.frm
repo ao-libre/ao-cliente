@@ -728,7 +728,7 @@ Private Sub Text1_KeyDown(Index As Integer, KeyCode As Integer, Shift As Integer
     For i = 1 To CustomKeys.KeyCount
         If i <> Index Then
             If CustomKeys.BindedKey(i) = KeyCode Then
-                Text1(Index).Text = "" 'If the key is already assigned, simply reject it
+                Text1(Index).Text = vbNullString 'If the key is already assigned, simply reject it
                 Call Beep 'Alert the user
                 KeyCode = 0
                 

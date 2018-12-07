@@ -154,7 +154,7 @@ End Sub
 
 Private Sub imgEnviar_Click()
 
-    If Text1 = "" Then
+    If Text1 = vbNullString Then
         If T = PAZ Or T = ALIANZA Then
             MsgBox "Debes redactar un mensaje solicitando la paz o alianza al líder de " & Nombre
         Else
