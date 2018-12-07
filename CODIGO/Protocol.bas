@@ -34,7 +34,7 @@ Attribute VB_Name = "Protocol"
 
 Option Explicit
 #If False Then
-    Dim nombre, picInv, Status As Variant
+    Dim nombre, picInv, Status, length As Variant
 #End If
 ''
 ' TODO : /BANIP y /UNBANIP ya no trabajan con nicks. Esto lo puede mentir en forma local el cliente con un paquete a NickToIp
@@ -10654,10 +10654,4 @@ Private Sub HandleAccountLogged()
     End If
     
     frmPanelAccount.Show
-
-    If frmPanelAccount.Visible Then
-        For i = 1 To NumberOfCharacters
-            Call mDx8_Engine.DrawPJ(i)
-        Next i
-    End If
 End Sub

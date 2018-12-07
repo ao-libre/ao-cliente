@@ -691,7 +691,8 @@ On Error GoTo errorH
         ServersLst(i).Puerto = CInt(GetVar(f, "S" & i, "PJ"))
         frmConnect.lstServers.AddItem (ServersLst(i).Desc)
     Next i
-    CurServer = 1
+    
+    If CurServer = 0 Then CurServer = 1
 
 Exit Sub
 
