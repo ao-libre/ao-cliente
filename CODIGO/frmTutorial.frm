@@ -305,7 +305,7 @@ Private Sub LoadTutorial()
                 ' Cargo cada linea de la pagina
                 For lLine = 1 To NumLines
                     sLine = GetVar(TutorialPath, "PAG" & lPage, "Line" & lLine)
-                    .sPage = .sPage & sLine & vbCrLf
+                    .sPage = .sPage & sLine & vbNewLine
                 Next lLine
             End With
             

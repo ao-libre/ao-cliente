@@ -57,7 +57,7 @@ Private Function parseObject(ByRef str As String, ByRef Index As Long) As Dictio
    ' "{"
    Call skipChar(str, Index)
    If mid$(str, Index, 1) <> "{" Then
-      psErrors = psErrors & "Invalid Object at position " & Index & " : " & mid$(str, Index) & vbCrLf
+      psErrors = psErrors & "Invalid Object at position " & Index & " : " & mid$(str, Index) & vbNewLine
       Exit Function
    End If
    
@@ -72,7 +72,7 @@ Private Function parseObject(ByRef str As String, ByRef Index As Long) As Dictio
          Index = Index + 1
          Call skipChar(str, Index)
       ElseIf Index > Len(str) Then
-         psErrors = psErrors & "Missing '}': " & Right$(str, 20) & vbCrLf
+         psErrors = psErrors & "Missing '}': " & Right$(str, 20) & vbNewLine
          Exit Do
       End If
 
@@ -83,7 +83,7 @@ Private Function parseObject(ByRef str As String, ByRef Index As Long) As Dictio
       
       parseObject.Add sKey, parseValue(str, Index)
       If Err.number <> 0 Then
-         psErrors = psErrors & Err.Description & ": " & sKey & vbCrLf
+         psErrors = psErrors & Err.Description & ": " & sKey & vbNewLine
          Exit Do
       End If
    Loop
@@ -101,7 +101,7 @@ Private Function parseArray(ByRef str As String, ByRef Index As Long) As Collect
    ' "["
    Call skipChar(str, Index)
    If mid$(str, Index, 1) <> "[" Then
-      psErrors = psErrors & "Invalid Array at position " & Index & " : " + mid$(str, Index, 20) & vbCrLf
+      psErrors = psErrors & "Invalid Array at position " & Index & " : " + mid$(str, Index, 20) & vbNewLine
       Exit Function
    End If
    
@@ -117,7 +117,7 @@ Private Function parseArray(ByRef str As String, ByRef Index As Long) As Collect
          Index = Index + 1
          Call skipChar(str, Index)
       ElseIf Index > Len(str) Then
-         psErrors = psErrors & "Missing ']': " & Right$(str, 20) & vbCrLf
+         psErrors = psErrors & "Missing ']': " & Right$(str, 20) & vbNewLine
          Exit Do
       End If
 
@@ -125,7 +125,7 @@ Private Function parseArray(ByRef str As String, ByRef Index As Long) As Collect
       On Error Resume Next
       parseArray.Add parseValue(str, Index)
       If Err.number <> 0 Then
-         psErrors = psErrors & Err.Description & ": " & mid$(str, Index, 20) & vbCrLf
+         psErrors = psErrors & Err.Description & ": " & mid$(str, Index, 20) & vbNewLine
          Exit Do
       End If
    Loop
@@ -255,7 +255,7 @@ Private Function parseBoolean(ByRef str As String, ByRef Index As Long) As Boole
       parseBoolean = False
       Index = Index + 5
    Else
-      psErrors = psErrors & "Invalid Boolean at position " & Index & " : " & mid$(str, Index) & vbCrLf
+      psErrors = psErrors & "Invalid Boolean at position " & Index & " : " & mid$(str, Index) & vbNewLine
    End If
 
 End Function
@@ -270,7 +270,7 @@ Private Function parseNull(ByRef str As String, ByRef Index As Long)
       parseNull = Null
       Index = Index + 4
    Else
-      psErrors = psErrors & "Invalid null value at position " & Index & " : " & mid$(str, Index) & vbCrLf
+      psErrors = psErrors & "Invalid null value at position " & Index & " : " & mid$(str, Index) & vbNewLine
    End If
 
 End Function
@@ -291,7 +291,7 @@ Private Function parseKey(ByRef str As String, ByRef Index As Long) As String
             If Not dquote Then
                Call skipChar(str, Index)
                If mid$(str, Index, 1) <> ":" Then
-                  psErrors = psErrors & "Invalid Key at position " & Index & " : " & parseKey & vbCrLf
+                  psErrors = psErrors & "Invalid Key at position " & Index & " : " & parseKey & vbNewLine
                   Exit Do
                End If
             End If
@@ -301,7 +301,7 @@ Private Function parseKey(ByRef str As String, ByRef Index As Long) As String
             If Not squote Then
                Call skipChar(str, Index)
                If mid$(str, Index, 1) <> ":" Then
-                  psErrors = psErrors & "Invalid Key at position " & Index & " : " & parseKey & vbCrLf
+                  psErrors = psErrors & "Invalid Key at position " & Index & " : " & parseKey & vbNewLine
                   Exit Do
                End If
             End If
@@ -313,7 +313,7 @@ Private Function parseKey(ByRef str As String, ByRef Index As Long) As String
                parseKey = parseKey & Char
             End If
          Case Else
-            If InStr(vbCrLf & vbCr & vbLf & vbTab & " ", Char) Then
+            If InStr(vbNewLine & vbCr & vbLf & vbTab & " ", Char) Then
             Else
                parseKey = parseKey & Char
             End If
@@ -532,9 +532,9 @@ Public Function StringToJSON(st As String) As String
          For lFld = LBound(fld) To UBound(fld) Step 2
             sFlds = (sFlds & IIf(sFlds <> "", ",", "") & """" & fld(lFld) & """:""" & toUnicode(fld(lFld + 1) & "") & """")
          Next 'fld
-         sRecs.Append IIf((Trim$(sRecs.toString) <> ""), "," & vbCrLf, "") & "{" & sFlds & "}"
+         sRecs.Append IIf((Trim$(sRecs.toString) <> ""), "," & vbNewLine, "") & "{" & sFlds & "}"
       Next 'rec
-      StringToJSON = ("( {""Records"": [" & vbCrLf & sRecs.toString & vbCrLf & "], " & """RecordCount"":""" & lRecCnt & """ } )")
+      StringToJSON = ("( {""Records"": [" & vbNewLine & sRecs.toString & vbNewLine & "], " & """RecordCount"":""" & lRecCnt & """ } )")
    End If
 End Function
 
@@ -559,10 +559,10 @@ Public Function RStoJSON(rs As ADODB.Recordset) As String
             For Each fld In rs.Fields
                sFlds = (sFlds & IIf(sFlds <> "", ",", "") & """" & fld.Name & """:""" & toUnicode(fld.Value & "") & """")
             Next 'fld
-            sRecs.Append IIf((Trim$(sRecs.toString) <> ""), "," & vbCrLf, "") & "{" & sFlds & "}"
+            sRecs.Append IIf((Trim$(sRecs.toString) <> ""), "," & vbNewLine, "") & "{" & sFlds & "}"
             rs.MoveNext
          Loop
-         RStoJSON = ("( {""Records"": [" & vbCrLf & sRecs.toString & vbCrLf & "], " & """RecordCount"":""" & lRecCnt & """ } )")
+         RStoJSON = ("( {""Records"": [" & vbNewLine & sRecs.toString & vbNewLine & "], " & """RecordCount"":""" & lRecCnt & """ } )")
       End If
    End If
 

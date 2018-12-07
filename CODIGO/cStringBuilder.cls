@@ -105,7 +105,7 @@ End Sub
 
 Public Sub AppendNL(ByRef sThis As String)
    Append sThis
-   Append vbCrLf
+   Append vbNewLine
 End Sub
 
 Public Sub Append(ByRef sThis As String)
