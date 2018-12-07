@@ -58,7 +58,7 @@ Public Function ColorToDX8(ByVal long_color As Long) As Long
     Dim temp_color As String
     Dim Red As Integer, Blue As Integer, Green As Integer
     
-    temp_color = Hex(long_color)
+    temp_color = Hex$(long_color)
     If Len(temp_color) < 6 Then
         'Give is 6 digits for easy RGB conversion.
         temp_color = String(6 - Len(temp_color), "0") + temp_color
@@ -123,27 +123,27 @@ Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, ByVal Text As String
     'Analizar mensaje, palabra por palabra... GSZAO
     Dim NewText As String
     
-    tempstr = Split(Text, Chr(32))
+    tempstr = Split(Text, Chr$(32))
     NewText = Text
     Text = vbNullString
     
     For i = 0 To UBound(tempstr)
         If tempstr(i) = ":)" Or tempstr(i) = "=)" Then
-            tempstr(i) = Chr(129)
+            tempstr(i) = Chr$(129)
         ElseIf tempstr(i) = ":@" Or tempstr(i) = "=@" Then
-            tempstr(i) = Chr(137)
+            tempstr(i) = Chr$(137)
         ElseIf tempstr(i) = ":(" Or tempstr(i) = "=(" Then
-            tempstr(i) = Chr(141)
+            tempstr(i) = Chr$(141)
         ElseIf tempstr(i) = "^^" Or tempstr(i) = "^_^" Then
-            tempstr(i) = Chr(143)
+            tempstr(i) = Chr$(143)
         ElseIf tempstr(i) = ":D" Or tempstr(i) = "=D" Then
-            tempstr(i) = Chr(144)
+            tempstr(i) = Chr$(144)
         ElseIf tempstr(i) = "xD" Or tempstr(i) = "XD" Then
-            tempstr(i) = Chr(157)
+            tempstr(i) = Chr$(157)
         ElseIf tempstr(i) = ":S" Or tempstr(i) = "=S" Then
-            tempstr(i) = Chr(160)
+            tempstr(i) = Chr$(160)
         End If
-        Text = Text & Chr(32) & tempstr(i)
+        Text = Text & Chr$(32) & tempstr(i)
     Next
     ' Made by ^[GS]^ for GSZAO
     

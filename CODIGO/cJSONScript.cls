@@ -84,7 +84,7 @@ Public Function ExecCommand(ByRef obj As Variant) As String
                   End If
                   
                   ' command implementation
-                  Select Case LCase(key)
+                  Select Case LCase$(key)
                   Case "alert":
                      MsgBox ExecCommand(this.Item("message")), vbInformation, ExecCommand(this.Item("title"))
                      
@@ -93,9 +93,9 @@ Public Function ExecCommand(ByRef obj As Variant) As String
                      
                   Case "switch"
                      sOut = ExecCommand(this.Item("default"))
-                     sRet = LCase(ExecCommand(this.Item("case")))
+                     sRet = LCase$(ExecCommand(this.Item("case")))
                      For j = 0 To this.Item("items").Count - 1
-                        If LCase(this.Item("items").Item(j + 1).Item("case")) = sRet Then
+                        If LCase$(this.Item("items").Item(j + 1).Item("case")) = sRet Then
                            sOut = ExecCommand(this.Item("items").Item(j + 1).Item("return"))
                            Exit For
                         End If
@@ -125,9 +125,9 @@ Public Function ExecCommand(ByRef obj As Variant) As String
                      val2 = ExecCommand(this.Item("value2"))
                      
                      bRes = False
-                     Select Case LCase(this.Item("type"))
+                     Select Case LCase$(this.Item("type"))
                      Case "eq" ' =
-                        If LCase(val1) = LCase(val2) Then
+                        If LCase$(val1) = LCase$(val2) Then
                            bRes = True
                         End If
                         
@@ -175,7 +175,7 @@ Public Function ExecCommand(ByRef obj As Variant) As String
                      End If
                      
                      
-                     SB.Append "<%" & UCase(key) & "(" & sRet & ")%>"
+                     SB.Append "<%" & UCase$(key) & "(" & sRet & ")%>"
                      
                   End Select
                Next i

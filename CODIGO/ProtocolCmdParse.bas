@@ -1518,7 +1518,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 
             Case "/BORRAR"
                 If notNullArguments Then
-                    Select Case UCase(ArgumentosAll(0))
+                    Select Case UCase$(ArgumentosAll(0))
                         Case "SOS" ' "/BORRAR SOS"
                             Call WriteCleanSOS
                             

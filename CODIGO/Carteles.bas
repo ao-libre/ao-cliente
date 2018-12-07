@@ -36,7 +36,7 @@ End Sub
 Private Function DarFormato(s As String, i As Integer, k As Integer, anti As Integer)
 If anti + i <= Len(s) + 1 Then
     If ((i >= MAXLONG) And mid$(s, anti + i, 1) = " ") Or (anti + i = Len(s)) Then
-        LeyendaFormateada(k) = mid(s, anti, i + 1)
+        LeyendaFormateada(k) = mid$(s, anti, i + 1)
         k = k + 1
         anti = anti + i + 1
         i = 0
