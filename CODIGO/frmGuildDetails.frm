@@ -309,7 +309,7 @@ Private Sub imgConfirmar_Click()
     Dim k As Byte
     Dim Cont As Byte
 
-    fdesc = Replace(txtDesc, vbCrLf, "º", , , vbBinaryCompare)
+    fdesc = Replace(txtDesc, vbNewLine, "º", , , vbBinaryCompare)
 
 
     Cont = 0

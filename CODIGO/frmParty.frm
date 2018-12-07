@@ -203,7 +203,7 @@ Private Sub Form_Load()
         Exit Sub
 
 Form_Load_Err:
-        MsgBox Err.Description & vbCrLf & _
+        MsgBox Err.Description & vbNewLine & _
                "in ARGENTUM.frmParty.Form_Load " & _
                "at line " & Erl, _
                vbExclamation + vbOKOnly, "Application Error"
