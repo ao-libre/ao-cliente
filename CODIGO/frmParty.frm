@@ -277,7 +277,7 @@ End Sub
 Private Sub imgAgregar_Click()
     If Len(txtToAdd) > 0 Then
         If Not IsNumeric(txtToAdd) Then
-            Call WritePartyAcceptMember(Trim(txtToAdd.Text))
+            Call WritePartyAcceptMember(Trim$(txtToAdd.Text))
             Unload Me
             Call WriteRequestPartyForm
         End If
@@ -317,7 +317,7 @@ Private Function GetName() As String
 '**************************************************************
     Dim sName As String
     
-    sName = Trim(mid(lstMembers.List(lstMembers.ListIndex), 1, InStr(lstMembers.List(lstMembers.ListIndex), " (")))
+    sName = Trim$(mid$(lstMembers.List(lstMembers.ListIndex), 1, InStr(lstMembers.List(lstMembers.ListIndex), " (")))
     If Len(sName) > 0 Then GetName = sName
         
 End Function

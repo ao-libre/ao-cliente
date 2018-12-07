@@ -105,13 +105,13 @@ On Error Resume Next
         If Modo = 0 Then
             ReDim GrhDatContra(Len(Contra) - 1)
             For LoopC = 0 To UBound(GrhDatContra)
-                GrhDatContra(LoopC) = Asc(mid(Contra, LoopC + 1, 1))
+                GrhDatContra(LoopC) = Asc(mid$(Contra, LoopC + 1, 1))
             Next LoopC
             GrhUsaContra = True
         ElseIf Modo = 1 Then
             ReDim MapsDatContra(Len(Contra) - 1)
             For LoopC = 0 To UBound(MapsDatContra)
-                MapsDatContra(LoopC) = Asc(mid(Contra, LoopC + 1, 1))
+                MapsDatContra(LoopC) = Asc(mid$(Contra, LoopC + 1, 1))
             Next LoopC
             MapsUsaContra = True
         End If
