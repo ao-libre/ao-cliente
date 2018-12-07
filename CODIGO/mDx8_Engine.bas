@@ -738,11 +738,12 @@ Public Sub Engine_Update_FPS()
 End Sub
 
 Public Sub DrawPJ(ByVal Index As Byte)
-    If LenB(cPJ(Index).Nombre) = 0 Then Exit Sub
+
+    If LenB(cPJ(Index).nombre) = 0 Then Exit Sub
 
     Dim cColor As Long
 
-    frmPanelAccount.lblAccData(Index).Caption = cPJ(Index).Nombre
+    frmPanelAccount.lblAccData(Index).Caption = cPJ(Index).nombre
 
     If cPJ(Index).Criminal Then
         cColor = RGB(255, 128, 128)
