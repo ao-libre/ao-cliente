@@ -1622,8 +1622,8 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
     If KeyCode = vbKeyReturn Then
         If LenB(stxtbuffer) <> 0 Then Call ParseUserCommand(stxtbuffer)
         
-        stxtbuffer = ""
-        SendTxt.Text = ""
+        stxtbuffer = vbNullString
+        SendTxt.Text = vbNullString
         KeyCode = 0
         SendTxt.Visible = False
         
@@ -2060,8 +2060,8 @@ Private Sub SendCMSTXT_KeyUp(KeyCode As Integer, Shift As Integer)
             Call ParseUserCommand("/CMSG " & stxtbuffercmsg)
         End If
 
-        stxtbuffercmsg = ""
-        SendCMSTXT.Text = ""
+        stxtbuffercmsg = vbNullString
+        SendCMSTXT.Text = vbNullString
         KeyCode = 0
         Me.SendCMSTXT.Visible = False
         
@@ -2292,7 +2292,7 @@ Private Sub Winsock1_Close()
     UserSexo = 0
     UserRaza = 0
     UserHogar = 0
-    UserEmail = ""
+    UserEmail = vbNullString
     
     For i = 1 To NUMSKILLS
         UserSkills(i) = 0

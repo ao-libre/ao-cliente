@@ -80,7 +80,7 @@ Public Property Let TheString(ByRef sThis As String)
    lLen = LenB(sThis)
    If lLen = 0 Then
       'Clear
-      m_sString = ""
+      m_sString = vbNullString
       m_iPos = 0
       m_iLen = 0
    Else
@@ -98,7 +98,7 @@ Public Property Let TheString(ByRef sThis As String)
 End Property
 
 Public Sub Clear()
-   m_sString = ""
+   m_sString = vbNullString
    m_iPos = 0
    m_iLen = 0
 End Sub

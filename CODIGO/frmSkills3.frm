@@ -1241,7 +1241,7 @@ End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
-    lblHelp.Caption = ""
+    lblHelp.Caption = vbNullString
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)

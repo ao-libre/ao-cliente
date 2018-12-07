@@ -134,7 +134,7 @@ Private Sub imgTirar_Click()
         If Not IsNumeric(txtCantidad.Text) Then Exit Sub  'Should never happen
         
         Call WriteDrop(Inventario.SelectedItem, frmCantidad.txtCantidad.Text)
-        frmCantidad.txtCantidad.Text = ""
+        frmCantidad.txtCantidad.Text = vbNullString
     End If
     
     Unload Me
@@ -156,7 +156,7 @@ Private Sub imgTirarTodo_Click()
         End If
     End If
 
-    frmCantidad.txtCantidad.Text = ""
+    frmCantidad.txtCantidad.Text = vbNullString
 End Sub
 
 Private Sub txtCantidad_Change()
