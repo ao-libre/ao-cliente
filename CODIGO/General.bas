@@ -244,7 +244,7 @@ Function CheckUserData() As Boolean
         Exit Function
     End If
     
-    If LenB(UserPassword) = 0 Then
+    If UserPassword = vbNullString Then
         MsgBox ("Ingrese un password.")
         Exit Function
     End If
@@ -257,7 +257,7 @@ Function CheckUserData() As Boolean
         End If
     Next LoopC
     
-    If LenB(UserName) = 0 Then
+    If UserName = vbNullString Then
         MsgBox ("Ingrese un nombre de personaje.")
         Exit Function
     End If
@@ -576,8 +576,8 @@ Sub SwitchMap(ByVal Map As Integer)
     '   Erase particle effects
     ReDim Effect(1 To NumEffects)
     
-    MapInfo.Name = ""
-    MapInfo.Music = ""
+    MapInfo.Name = vbNullString
+    MapInfo.Music = vbNullString
     
     CurMap = Map
     
@@ -878,7 +878,7 @@ Private Sub LoadInitialConfig()
     ' Mouse Pointer (Loaded before opening any form with buttons in it)
     If FileExist(DirExtras & "Hand.ico", vbArchive) Then _
         Set picMouseIcon = LoadPicture(DirExtras & "Hand.ico")
-    Call AddtoRichTextBox(frmCargando.Status, "Hecho", 255, 0, 0, True, False, False)
+    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
     
     '#######
     ' CLASES
@@ -1476,7 +1476,7 @@ Public Sub ResetAllInfo()
     UserSexo = 0
     UserRaza = 0
     UserHogar = 0
-    UserEmail = ""
+    UserEmail = vbNullString
     SkillPoints = 0
     Alocados = 0
     

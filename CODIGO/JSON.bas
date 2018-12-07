@@ -20,7 +20,7 @@ Public Function GetParserErrors() As String
 End Function
 
 Public Function ClearParserErrors() As String
-   psErrors = ""
+   psErrors = vbNullString
 End Function
 
 
@@ -31,7 +31,7 @@ Public Function parse(ByRef str As String) As Object
 
    Dim Index As Long
    Index = 1
-   psErrors = ""
+   psErrors = vbNullString
    On Error Resume Next
    Call skipChar(str, Index)
    Select Case mid(str, Index, 1)
@@ -522,12 +522,12 @@ Public Function StringToJSON(st As String) As String
    Dim rows As Variant
 
    lRecCnt = 0
-   If LenB(st) = 0 Then
+   If st = vbNullString Then
       StringToJSON = "null"
    Else
       rows = Split(st, RECORD_SEP)
       For lRecCnt = LBound(rows) To UBound(rows)
-         sFlds = ""
+         sFlds = vbNullString
          fld = Split(rows(lRecCnt), FIELD_SEP)
          For lFld = LBound(fld) To UBound(fld) Step 2
             sFlds = (sFlds & IIf(sFlds <> "", ",", "") & """" & fld(lFld) & """:""" & toUnicode(fld(lFld + 1) & "") & """")
@@ -555,7 +555,7 @@ Public Function RStoJSON(rs As ADODB.Recordset) As String
       Else
          Do While Not rs.EOF And Not rs.BOF
             lRecCnt = lRecCnt + 1
-            sFlds = ""
+            sFlds = vbNullString
             For Each fld In rs.Fields
                sFlds = (sFlds & IIf(sFlds <> "", ",", "") & """" & fld.Name & """:""" & toUnicode(fld.Value & "") & """")
             Next 'fld
@@ -657,7 +657,7 @@ Public Function toUnicode(str As String) As String
 End Function
 
 Private Sub Class_Initialize()
-   psErrors = ""
+   psErrors = vbNullString
 End Sub
 
 
