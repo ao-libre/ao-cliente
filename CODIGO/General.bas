@@ -244,7 +244,7 @@ Function CheckUserData() As Boolean
         Exit Function
     End If
     
-    If UserPassword = vbNullString Then
+    If LenB(UserPassword) = 0 Then
         MsgBox ("Ingrese un password.")
         Exit Function
     End If
@@ -257,7 +257,7 @@ Function CheckUserData() As Boolean
         End If
     Next LoopC
     
-    If UserName = vbNullString Then
+    If LenB(UserName) = 0 Then
         MsgBox ("Ingrese un nombre de personaje.")
         Exit Function
     End If
@@ -1114,7 +1114,7 @@ On Error GoTo error
     If Not UpToDate Then
         'No recibe update, ejecutar AU
         'Ejecuto el AoUpdate, sino me voy
-        If Dir(App.path & "\AoUpdate.exe", vbArchive) = vbNullString Then
+        If LenB(Dir(App.path & "\AoUpdate.exe", vbArchive)) = 0 Then
             MsgBox "No se encuentra el archivo de actualizacion AoUpdate.exe por favor descarguelo y vuelva a intentar", vbCritical
             End
         Else

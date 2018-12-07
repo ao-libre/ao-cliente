@@ -111,7 +111,7 @@ Public Function ExecCommand(ByRef obj As Variant) As String
                      
                   Case "get":
                      sRet = ExecCommand(dictVars(CStr(this.Item("name"))))
-                     If sRet = vbNullString Then
+                     If LenB(sRet) = 0 Then
                         sRet = ExecCommand(this.Item("default"))
                      End If
                      

@@ -549,7 +549,7 @@ Begin VB.Form frmMain
       EndProperty
       Height          =   435
       Left            =   8880
-      MouseIcon       =   "frmMain.frx":10A9
+      MouseIcon       =   "frmMain.frx":10AA
       MousePointer    =   99  'Custom
       TabIndex        =   18
       Top             =   1920
@@ -2169,7 +2169,7 @@ Private Sub Socket1_Read(dataLength As Integer, IsUrgent As Integer)
     Call Socket1.Read(RD, dataLength)
     data = StrConv(RD, vbFromUnicode)
     
-    If RD = vbNullString Then Exit Sub
+    If LenB(RD) = 0 Then Exit Sub
     
     'Put data in the buffer
     Call incomingData.WriteBlock(data)
