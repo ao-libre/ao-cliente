@@ -1374,8 +1374,8 @@ Private Sub IniciarGraficos()
     Call cBotonNombre.Initialize(imgNombre, "", GrhPath & "BotonNombrePJ.jpg", _
                                     GrhPath & "BotonNombrePJ.jpg", Me, , , False, False)
                                     
-    Call cBotonConfirmPasswd.Initialize(imgConfirmPasswd, "", GrhPath & "BotonRepetirContraseña.jpg", _
-                                    GrhPath & "BotonRepetirContraseña.jpg", Me, , , False, False)
+    Call cBotonConfirmPasswd.Initialize(imgConfirmPasswd, "", GrhPath & "BotonRepetirPassword.jpg", _
+                                    GrhPath & "BotonRepetirPassword.jpg", Me, , , False, False)
                                     
     Call cBotonAtributos.Initialize(imgAtributos, "", GrhPath & "BotonAtributos.jpg", _
                                     GrhPath & "BotonAtributos.jpg", Me, , , False, False)
