@@ -161,7 +161,7 @@ Private Function LoadSurface(ByVal fileIndex As Long) As Direct3DTexture8
 '**************************************************************
 'Author: Nicolas Matias Gonzalez (NIGO)
 'Last Modify Date: 09/10/2012 - ^[GS]^
-'Loads the surface named fileIndex + ""& LanguageGame & ".bmp" and inserts it to the
+'Loads the surface named fileIndex + ".bmp" and inserts it to the
 'surface list in the listIndex position
 '**************************************************************
 On Error GoTo ErrHandler

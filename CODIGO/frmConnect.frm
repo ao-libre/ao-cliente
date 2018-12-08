@@ -489,10 +489,6 @@ Private Sub CheckServers()
     PuertoDelServidor = PortTxt
 End Sub
 
-Private Sub Image1_Click()
-
-End Sub
-
 Private Sub imgBorrarPj_Click()
 
 On Error GoTo errH
