@@ -46,6 +46,27 @@ Public bLluvia() As Byte ' Array para determinar si
 
 Private lFrameTimer As Long
 
+'Global Variable to set the language around the app.
+Public Const LanguageGame As String
+
+Private Sub SetLanguage ()
+'***************************************************
+'Author: Recox
+'Last Modify Date: 09/12/2018
+'Last Modified By: Recox
+'Set the language of the game in a public constant to use it around the texts and images
+'***************************************************
+    Dim LanguageGame As String
+
+    LanguageGame = GetVar(App.path & "\INIT\Config.ini", "Cliente", "Language")
+
+    If LanguageGame = "spanish" Then
+        SetLanguage = "es"
+    Else
+        SetLanguage = "en"
+    End If
+End Function
+
 Public Function DirGraficos() As String
     DirGraficos = App.path & "\" & Config_Inicio.DirGraficos & "\"
 End Function
@@ -849,6 +870,9 @@ Private Sub LoadInitialConfig()
     frmCargando.Refresh
 
     frmConnect.version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
+    '###########
+    ' LENGUAJE
+    Call AddtoRichTextBox(frmCargando.Status, "Cargando lenguaje ... ", 255, 255, 255, True, False, True)
     
     '###########
     ' SERVIDORES
