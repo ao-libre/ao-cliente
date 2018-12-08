@@ -1,7 +1,7 @@
 VERSION 5.00
 Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
-Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.OCX"
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
+Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.ocx"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.ocx"
 Begin VB.Form frmMain 
    BorderStyle     =   0  'None
    ClientHeight    =   8985
@@ -219,7 +219,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2619
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -985,9 +984,9 @@ Private Sub Form_Load()
         clsFormulario.Initialize Me, 120
     End If
 
-    Me.Picture = LoadPicture(DirGraficos & "VentanaPrincipal.JPG")
+    Me.Picture = LoadPicture(DirGraficos & "VentanaPrincipal" & LanguageGame & ".jpg")
     
-    InvEqu.Picture = LoadPicture(DirGraficos & "CentroInventario.jpg")
+    InvEqu.Picture = LoadPicture(DirGraficos & "CentroInventario" & LanguageGame & ".jpg")
     
     Call LoadButtons
     
@@ -1031,24 +1030,24 @@ Private Sub LoadButtons()
                                     GrhPath & "BotonDiamAbajoF.bmp", Me)
     
     Call cBotonMapa.Initialize(imgMapa, "", _
-                                    GrhPath & "BotonMapaRollover.jpg", _
-                                    GrhPath & "BotonMapaClick.jpg", Me)
+                                    GrhPath & "BotonMapaRollover" & LanguageGame & ".jpg", _
+                                    GrhPath & "BotonMapaClick" & LanguageGame & ".jpg", Me)
                                     
     Call cBotonGrupo.Initialize(imgGrupo, "", _
-                                    GrhPath & "BotonGrupoRollover.jpg", _
-                                    GrhPath & "BotonGrupoClick.jpg", Me)
+                                    GrhPath & "BotonGrupoRollover" & LanguageGame & ".jpg", _
+                                    GrhPath & "BotonGrupoClick" & LanguageGame & ".jpg", Me)
 
     Call cBotonOpciones.Initialize(imgOpciones, "", _
-                                    GrhPath & "BotonOpcionesRollover.jpg", _
-                                    GrhPath & "BotonOpcionesClick.jpg", Me)
+                                    GrhPath & "BotonOpcionesRollover" & LanguageGame & ".jpg", _
+                                    GrhPath & "BotonOpcionesClick" & LanguageGame & ".jpg", Me)
 
     Call cBotonEstadisticas.Initialize(imgEstadisticas, "", _
-                                    GrhPath & "BotonEstadisticasRollover.jpg", _
-                                    GrhPath & "BotonEstadisticasClick.jpg", Me)
+                                    GrhPath & "BotonEstadisticasRollover" & LanguageGame & ".jpg", _
+                                    GrhPath & "BotonEstadisticasClick" & LanguageGame & ".jpg", Me)
 
     Call cBotonClanes.Initialize(imgClanes, "", _
-                                    GrhPath & "BotonClanesRollover.jpg", _
-                                    GrhPath & "BotonClanesClick.jpg", Me)
+                                    GrhPath & "BotonClanesRollover" & LanguageGame & ".jpg", _
+                                    GrhPath & "BotonClanesClick" & LanguageGame & ".jpg", Me)
 
     Set picSkillStar = LoadPicture(GrhPath & "BotonAsignarSkills.bmp")
 
@@ -1935,7 +1934,7 @@ End Sub
 Private Sub Label4_Click()
     Call Audio.PlayWave(SND_CLICK)
 
-    InvEqu.Picture = LoadPicture(App.path & "\Graficos\Centroinventario.jpg")
+    InvEqu.Picture = LoadPicture(App.path & "\Graficos\Centroinventario" & LanguageGame & ".jpg")
 
     ' Activo controles de inventario
     PicInv.Visible = True
@@ -1955,7 +1954,7 @@ End Sub
 Private Sub Label7_Click()
     Call Audio.PlayWave(SND_CLICK)
 
-    InvEqu.Picture = LoadPicture(App.path & "\Graficos\Centrohechizos.jpg")
+    InvEqu.Picture = LoadPicture(App.path & "\Graficos\Centrohechizos" & LanguageGame & ".jpg")
     
     ' Activo controles de hechizos
     hlst.Visible = True
@@ -2114,8 +2113,8 @@ End Sub
 Private Sub Socket1_Connect()
     
     'Clean input and output buffers
-    Call incomingData.ReadASCIIStringFixed(incomingData.length)
-    Call outgoingData.ReadASCIIStringFixed(outgoingData.length)
+    Call incomingData.ReadASCIIStringFixed(incomingData.Length)
+    Call outgoingData.ReadASCIIStringFixed(outgoingData.Length)
     
     Second.Enabled = True
 
@@ -2309,8 +2308,8 @@ Private Sub Winsock1_Connect()
     Debug.Print "Winsock Connect"
     
     'Clean input and output buffers
-    Call incomingData.ReadASCIIStringFixed(incomingData.length)
-    Call outgoingData.ReadASCIIStringFixed(outgoingData.length)
+    Call incomingData.ReadASCIIStringFixed(incomingData.Length)
+    Call outgoingData.ReadASCIIStringFixed(outgoingData.Length)
     
     Second.Enabled = True
     

@@ -135,7 +135,7 @@ Private Sub Form_Load()
     
     List1.Clear
     
-    Me.Picture = LoadPicture(App.path & "\graficos\VentanaShowSos.jpg")
+    Me.Picture = LoadPicture(App.path & "\graficos\VentanaShowSos" & LanguageGame  & ".jpg")
     
     Call LoadButtons
 End Sub
@@ -150,9 +150,9 @@ Private Sub LoadButtons()
     Set LastButtonPressed = New clsGraphicalButton
     
     
-    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarShowSos.jpg", _
-                                    GrhPath & "BotonCerrarRolloverShowSos.jpg", _
-                                    GrhPath & "BotonCerrarClickShowSos.jpg", Me)
+    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarShowSos" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonCerrarRolloverShowSos" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonCerrarClickShowSos" & LanguageGame  & ".jpg", Me)
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)

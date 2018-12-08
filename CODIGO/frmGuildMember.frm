@@ -162,7 +162,7 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
 
-    Me.Picture = LoadPicture(DirGraficos & "VentanaMiembroClan.jpg")
+    Me.Picture = LoadPicture(DirGraficos & "VentanaMiembroClan" & LanguageGame  & ".jpg")
     
     Call LoadButtons
     
@@ -180,17 +180,17 @@ Private Sub LoadButtons()
     Set LastButtonPressed = New clsGraphicalButton
     
     
-    Call cBotonDetalles.Initialize(imgDetalles, GrhPath & "BotonDetallesMiembroClan.jpg", _
-                                    GrhPath & "BotonDetallesRolloverMiembroClan.jpg", _
-                                    GrhPath & "BotonDetallesClickMiembroClan.jpg", Me)
+    Call cBotonDetalles.Initialize(imgDetalles, GrhPath & "BotonDetallesMiembroClan" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonDetallesRolloverMiembroClan" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonDetallesClickMiembroClan" & LanguageGame  & ".jpg", Me)
 
-    Call cBotonNoticias.Initialize(imgNoticias, GrhPath & "BotonNoticiasMiembroClan.jpg", _
-                                    GrhPath & "BotonNoticiasRolloverMiembroClan.jpg", _
-                                    GrhPath & "BotonNoticiasClickMiembroClan.jpg", Me)
+    Call cBotonNoticias.Initialize(imgNoticias, GrhPath & "BotonNoticiasMiembroClan" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonNoticiasRolloverMiembroClan" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonNoticiasClickMiembroClan" & LanguageGame  & ".jpg", Me)
 
-    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarMimebroClan.jpg", _
-                                    GrhPath & "BotonCerrarRolloverMimebroClan.jpg", _
-                                    GrhPath & "BotonCerrarClickMimebroClan.jpg", Me)
+    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarMimebroClan" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonCerrarRolloverMimebroClan" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonCerrarClickMimebroClan" & LanguageGame  & ".jpg", Me)
 
 End Sub
 

@@ -114,7 +114,7 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
 
-    Me.Picture = LoadPicture(App.path & "\graficos\VentanaNombreClan.jpg")
+    Me.Picture = LoadPicture(App.path & "\graficos\VentanaNombreClan" & LanguageGame  & ".jpg")
         
     Call LoadButtons
     
@@ -141,13 +141,13 @@ Private Sub LoadButtons()
     Set LastButtonPressed = New clsGraphicalButton
     
     
-    Call cBotonSiguiente.Initialize(imgSiguiente, GrhPath & "BotonSiguienteNombreClan.jpg", _
-                                    GrhPath & "BotonSiguienteRolloverNombreClan.jpg", _
-                                    GrhPath & "BotonSiguienteClickNombreClan.jpg", Me)
+    Call cBotonSiguiente.Initialize(imgSiguiente, GrhPath & "BotonSiguienteNombreClan" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonSiguienteRolloverNombreClan" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonSiguienteClickNombreClan" & LanguageGame  & ".jpg", Me)
 
-    Call cBotonCancelar.Initialize(imgCancelar, GrhPath & "BotonCancelarNombreClan.jpg", _
-                                    GrhPath & "BotonCancelarRolloverNombreClan.jpg", _
-                                    GrhPath & "BotonCancelarClickNombreClan.jpg", Me)
+    Call cBotonCancelar.Initialize(imgCancelar, GrhPath & "BotonCancelarNombreClan" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonCancelarRolloverNombreClan" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonCancelarClickNombreClan" & LanguageGame  & ".jpg", Me)
 
 End Sub
 

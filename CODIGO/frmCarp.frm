@@ -514,7 +514,7 @@ Private Sub Form_Load()
     
     Call LoadDefaultValues
     
-    Me.Picture = LoadPicture(App.path & "\graficos\VentanaCarpinteriaItems.jpg")
+    Me.Picture = LoadPicture(App.path & "\graficos\VentanaCarpinteriaItems" & LanguageGame  & ".jpg")
     LoadButtons
 End Sub
 
@@ -524,13 +524,13 @@ Private Sub LoadButtons()
     
     GrhPath = DirGraficos
 
-    Set Pestanias(ePestania.ieItems) = LoadPicture(GrhPath & "VentanaCarpinteriaItems.jpg")
-    Set Pestanias(ePestania.ieMejorar) = LoadPicture(GrhPath & "VentanaCarpinteriaMejorar.jpg")
+    Set Pestanias(ePestania.ieItems) = LoadPicture(GrhPath & "VentanaCarpinteriaItems" & LanguageGame  & ".jpg")
+    Set Pestanias(ePestania.ieMejorar) = LoadPicture(GrhPath & "VentanaCarpinteriaMejorar" & LanguageGame  & ".jpg")
     
     Set picCheck = LoadPicture(GrhPath & "CheckBoxCarpinteria.jpg")
     
-    Set picRecuadroItem = LoadPicture(GrhPath & "RecuadroItemsCarpinteria.jpg")
-    Set picRecuadroMaderas = LoadPicture(GrhPath & "RecuadroMadera.jpg")
+    Set picRecuadroItem = LoadPicture(GrhPath & "RecuadroItemsCarpinteria" & LanguageGame  & ".jpg")
+    Set picRecuadroMaderas = LoadPicture(GrhPath & "RecuadroMadera" & LanguageGame  & ".jpg")
     
     For Index = 1 To MAX_LIST_ITEMS
         imgMarcoItem(Index).Picture = picRecuadroItem
@@ -550,43 +550,43 @@ Private Sub LoadButtons()
 
     Set LastButtonPressed = New clsGraphicalButton
     
-    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarCarpinteria.jpg", _
-                                    GrhPath & "BotonCerrarRolloverCarpinteria.jpg", _
-                                    GrhPath & "BotonCerrarClickCarpinteria.jpg", Me)
+    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarCarpinteria" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonCerrarRolloverCarpinteria" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonCerrarClickCarpinteria" & LanguageGame  & ".jpg", Me)
                                     
-    Call cBotonConstruir(0).Initialize(imgConstruir0, GrhPath & "BotonConstruirCarpinteria.jpg", _
-                                    GrhPath & "BotonConstruirRolloverCarpinteria.jpg", _
-                                    GrhPath & "BotonConstruirClickCarpinteria.jpg", Me)
+    Call cBotonConstruir(0).Initialize(imgConstruir0, GrhPath & "BotonConstruirCarpinteria" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonConstruirRolloverCarpinteria" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonConstruirClickCarpinteria" & LanguageGame  & ".jpg", Me)
                                     
-    Call cBotonConstruir(1).Initialize(imgConstruir1, GrhPath & "BotonConstruirCarpinteria.jpg", _
-                                    GrhPath & "BotonConstruirRolloverCarpinteria.jpg", _
-                                    GrhPath & "BotonConstruirClickCarpinteria.jpg", Me)
+    Call cBotonConstruir(1).Initialize(imgConstruir1, GrhPath & "BotonConstruirCarpinteria" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonConstruirRolloverCarpinteria" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonConstruirClickCarpinteria" & LanguageGame  & ".jpg", Me)
                                     
-    Call cBotonConstruir(2).Initialize(imgConstruir2, GrhPath & "BotonConstruirCarpinteria.jpg", _
-                                    GrhPath & "BotonConstruirRolloverCarpinteria.jpg", _
-                                    GrhPath & "BotonConstruirClickCarpinteria.jpg", Me)
+    Call cBotonConstruir(2).Initialize(imgConstruir2, GrhPath & "BotonConstruirCarpinteria" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonConstruirRolloverCarpinteria" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonConstruirClickCarpinteria" & LanguageGame  & ".jpg", Me)
                                     
-    Call cBotonConstruir(3).Initialize(imgConstruir3, GrhPath & "BotonConstruirCarpinteria.jpg", _
-                                    GrhPath & "BotonConstruirRolloverCarpinteria.jpg", _
-                                    GrhPath & "BotonConstruirClickCarpinteria.jpg", Me)
+    Call cBotonConstruir(3).Initialize(imgConstruir3, GrhPath & "BotonConstruirCarpinteria" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonConstruirRolloverCarpinteria" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonConstruirClickCarpinteria" & LanguageGame  & ".jpg", Me)
     
-    Call cBotonMejorar(0).Initialize(imgMejorar0, GrhPath & "BotonMejorarCarpinteria.jpg", _
-                                    GrhPath & "BotonMejorarRolloverCarpinteria.jpg", _
-                                    GrhPath & "BotonMejorarClickCarpinteria.jpg", Me)
+    Call cBotonMejorar(0).Initialize(imgMejorar0, GrhPath & "BotonMejorarCarpinteria" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonMejorarRolloverCarpinteria" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonMejorarClickCarpinteria" & LanguageGame  & ".jpg", Me)
     
-    Call cBotonMejorar(1).Initialize(imgMejorar1, GrhPath & "BotonMejorarCarpinteria.jpg", _
-                                    GrhPath & "BotonMejorarRolloverCarpinteria.jpg", _
-                                    GrhPath & "BotonMejorarClickCarpinteria.jpg", Me)
+    Call cBotonMejorar(1).Initialize(imgMejorar1, GrhPath & "BotonMejorarCarpinteria" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonMejorarRolloverCarpinteria" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonMejorarClickCarpinteria" & LanguageGame  & ".jpg", Me)
     
-    Call cBotonMejorar(2).Initialize(imgMejorar2, GrhPath & "BotonMejorarCarpinteria.jpg", _
-                                    GrhPath & "BotonMejorarRolloverCarpinteria.jpg", _
-                                    GrhPath & "BotonMejorarClickCarpinteria.jpg", Me)
+    Call cBotonMejorar(2).Initialize(imgMejorar2, GrhPath & "BotonMejorarCarpinteria" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonMejorarRolloverCarpinteria" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonMejorarClickCarpinteria" & LanguageGame  & ".jpg", Me)
     
-    Call cBotonMejorar(3).Initialize(imgMejorar3, GrhPath & "BotonMejorarCarpinteria.jpg", _
-                                    GrhPath & "BotonMejorarRolloverCarpinteria.jpg", _
-                                    GrhPath & "BotonMejorarClickCarpinteria.jpg", Me)
+    Call cBotonMejorar(3).Initialize(imgMejorar3, GrhPath & "BotonMejorarCarpinteria" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonMejorarRolloverCarpinteria" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonMejorarClickCarpinteria" & LanguageGame  & ".jpg", Me)
                                     
-    imgCantidadCiclo.Picture = LoadPicture(GrhPath & "ConstruirPorCiclo.jpg")
+    imgCantidadCiclo.Picture = LoadPicture(GrhPath & "ConstruirPorCiclo" & LanguageGame  & ".jpg")
     
     imgChkMacro.Picture = picCheck
     

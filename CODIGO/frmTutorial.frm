@@ -187,7 +187,7 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
-    Me.Picture = LoadPicture(DirGraficos & "VentanaTutorial.jpg")
+    Me.Picture = LoadPicture(DirGraficos & "VentanaTutorial" & LanguageGame  & ".jpg")
     
     Call LoadButtons
     
@@ -208,18 +208,18 @@ Private Sub LoadButtons()
     Set LastButtonPressed = New clsGraphicalButton
     
     
-    Call cBotonSiguiente.Initialize(imgSiguiente, GrhPath & "BotonSiguienteTutorial.jpg", _
-                                    GrhPath & "BotonSiguienteRolloverTutorial.jpg", _
-                                    GrhPath & "BotonSiguienteClickTutorial.jpg", Me, _
-                                    GrhPath & "BotonSiguienteGris.jpg")
+    Call cBotonSiguiente.Initialize(imgSiguiente, GrhPath & "BotonSiguienteTutorial" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonSiguienteRolloverTutorial" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonSiguienteClickTutorial" & LanguageGame  & ".jpg", Me, _
+                                    GrhPath & "BotonSiguienteGris" & LanguageGame  & ".jpg")
 
-    Call cBotonAnterior.Initialize(imgAnterior, GrhPath & "BotonAnteriorTutorial.jpg", _
-                                    GrhPath & "BotonAnteriorRolloverTutorial.jpg", _
-                                    GrhPath & "BotonAnteriorClickTutorial.jpg", Me, _
-                                    GrhPath & "BotonAnteriorGris.jpg", True)
+    Call cBotonAnterior.Initialize(imgAnterior, GrhPath & "BotonAnteriorTutorial" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonAnteriorRolloverTutorial" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonAnteriorClickTutorial" & LanguageGame  & ".jpg", Me, _
+                                    GrhPath & "BotonAnteriorGris" & LanguageGame  & ".jpg", True)
                                     
     Set picCheck = LoadPicture(GrhPath & "CheckTutorial.bmp")
-    Set picMostrar = LoadPicture(GrhPath & "NoMostrarTutorial.bmp")
+    Set picMostrar = LoadPicture(GrhPath & "NoMostrarTutorial"& LanguageGame & ".bmp")
     
     imgMostrar.Picture = picMostrar
     

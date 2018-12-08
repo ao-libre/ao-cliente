@@ -107,7 +107,7 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
-    Me.Picture = LoadPicture(App.path & "\graficos\VentanaFundarClan.jpg")
+    Me.Picture = LoadPicture(App.path & "\graficos\VentanaFundarClan" & LanguageGame  & ".jpg")
     
     Call LoadButtons
 End Sub
@@ -128,28 +128,28 @@ Private Sub LoadButtons()
     
     
     Call cBotonCriminal.Initialize(imgCriminal, "", _
-                                    GrhPath & "BotonCriminal.jpg", _
-                                    GrhPath & "BotonCriminal.jpg", Me)
+                                    GrhPath & "BotonCriminal" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonCriminal" & LanguageGame  & ".jpg", Me)
 
     Call cBotonCaos.Initialize(imgCaos, "", _
-                                    GrhPath & "BotonCaos.jpg", _
-                                    GrhPath & "BotonCaos.jpg", Me)
+                                    GrhPath & "BotonCaos" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonCaos" & LanguageGame  & ".jpg", Me)
 
     Call cBotonLegal.Initialize(imgLegal, "", _
-                                    GrhPath & "BotonLegal.jpg", _
-                                    GrhPath & "BotonLegal.jpg", Me)
+                                    GrhPath & "BotonLegal" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonLegal" & LanguageGame  & ".jpg", Me)
 
     Call cBotonNeutral.Initialize(imgNeutral, "", _
-                                    GrhPath & "BotonNeutral.jpg", _
-                                    GrhPath & "BotonNeutral.jpg", Me)
+                                    GrhPath & "BotonNeutral" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonNeutral" & LanguageGame  & ".jpg", Me)
 
     Call cBotonReal.Initialize(imgReal, "", _
-                                    GrhPath & "BotonReal.jpg", _
-                                    GrhPath & "BotonReal.jpg", Me)
+                                    GrhPath & "BotonReal" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonReal" & LanguageGame  & ".jpg", Me)
                                     
-    Call cBotonSalir.Initialize(imgSalir, GrhPath & "BotonSalirAlineacion.jpg", _
-                                    GrhPath & "BotonSalirRolloverAlineacion.jpg", _
-                                    GrhPath & "BotonSalirClickAlineacion.jpg", Me)
+    Call cBotonSalir.Initialize(imgSalir, GrhPath & "BotonSalirAlineacion" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonSalirRolloverAlineacion" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonSalirClickAlineacion" & LanguageGame  & ".jpg", Me)
 
 
 End Sub

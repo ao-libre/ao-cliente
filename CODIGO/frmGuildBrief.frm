@@ -492,7 +492,7 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
-    Me.Picture = LoadPicture(App.path & "\graficos\VentanaDetallesClan.jpg")
+    Me.Picture = LoadPicture(App.path & "\graficos\VentanaDetallesClan" & LanguageGame  & ".jpg")
     
     Call LoadButtons
     
@@ -512,25 +512,25 @@ Private Sub LoadButtons()
     Set LastButtonPressed = New clsGraphicalButton
     
     
-    Call cBotonGuerra.Initialize(imgDeclararGuerra, GrhPath & "BotonDeclararGuerra.jpg", _
-                                    GrhPath & "BotonDeclararGuerraRollover.jpg", _
-                                    GrhPath & "BotonDeclararGuerraClick.jpg", Me)
+    Call cBotonGuerra.Initialize(imgDeclararGuerra, GrhPath & "BotonDeclararGuerra" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonDeclararGuerraRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonDeclararGuerraClick" & LanguageGame  & ".jpg", Me)
 
-    Call cBotonAlianza.Initialize(imgOfrecerAlianza, GrhPath & "BotonOfrecerAlianza.jpg", _
-                                    GrhPath & "BotonOfrecerAlianzaRollover.jpg", _
-                                    GrhPath & "BotonOfrecerAlianzaClick.jpg", Me)
+    Call cBotonAlianza.Initialize(imgOfrecerAlianza, GrhPath & "BotonOfrecerAlianza" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonOfrecerAlianzaRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonOfrecerAlianzaClick" & LanguageGame  & ".jpg", Me)
 
-    Call cBotonPaz.Initialize(imgOfrecerPaz, GrhPath & "BotonOfrecerPaz.jpg", _
-                                    GrhPath & "BotonOfrecerPazRollover.jpg", _
-                                    GrhPath & "BotonOfrecerPazClick.jpg", Me)
+    Call cBotonPaz.Initialize(imgOfrecerPaz, GrhPath & "BotonOfrecerPaz" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonOfrecerPazRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonOfrecerPazClick" & LanguageGame  & ".jpg", Me)
 
-    Call cBotonSolicitarIngreso.Initialize(imgSolicitarIngreso, GrhPath & "BotonSolicitarIngreso.jpg", _
-                                    GrhPath & "BotonSolicitarIngresoRollover.jpg", _
-                                    GrhPath & "BotonSolicitarIngresoClick.jpg", Me)
+    Call cBotonSolicitarIngreso.Initialize(imgSolicitarIngreso, GrhPath & "BotonSolicitarIngreso" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonSolicitarIngresoRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonSolicitarIngresoClick" & LanguageGame  & ".jpg", Me)
 
-    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarDetallesClan.jpg", _
-                                    GrhPath & "BotonCerrarRolloverDetallesClan.jpg", _
-                                    GrhPath & "BotonCerrarClickDetallesClan.jpg", Me)
+    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarDetallesClan" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonCerrarRolloverDetallesClan" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonCerrarClickDetallesClan" & LanguageGame  & ".jpg", Me)
 
 
     If Not EsLeader Then

@@ -786,13 +786,13 @@ Public Function Get_Image(ByRef ResourcePath As String, ByRef FileName As String
     ExistFile = False
     
     If SoloBMP = True Then
-        If Get_InfoHeader(ResourcePath, FileName & ".BMP", InfoHead, 0) Then ' ¿BMP?
-            FileName = FileName & ".BMP"
+        If Get_InfoHeader(ResourcePath, FileName & ""& LanguageGame & ".bmp", InfoHead, 0) Then ' ¿BMP?
+            FileName = FileName & ""& LanguageGame & ".bmp"
             ExistFile = True
         End If
     Else
-        If Get_InfoHeader(ResourcePath, FileName & ".BMP", InfoHead, 0) Then ' ¿BMP?
-            FileName = FileName & ".BMP"
+        If Get_InfoHeader(ResourcePath, FileName & ""& LanguageGame & ".bmp", InfoHead, 0) Then ' ¿BMP?
+            FileName = FileName & ""& LanguageGame & ".bmp"
             ExistFile = True
         ElseIf Get_InfoHeader(ResourcePath, FileName & ".PNG", InfoHead, 0) Then ' Existe PNG?
             FileName = FileName & ".PNG" ' usamos el PNG

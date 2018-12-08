@@ -170,7 +170,7 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
-    Me.Picture = LoadPicture(DirGraficos & "VentanaCambioMOTD.jpg")
+    Me.Picture = LoadPicture(DirGraficos & "VentanaCambioMOTD" & LanguageGame  & ".jpg")
     
     Call LoadButtons
 End Sub
@@ -193,41 +193,41 @@ Private Sub LoadButtons()
     Set LastButtonPressed = New clsGraphicalButton
     
     
-    Call cBotonAzul.Initialize(imgAzul, GrhPath & "BotonAzul.jpg", _
-                                    GrhPath & "BotonAzulRollover.jpg", _
-                                    GrhPath & "BotonAzulClick.jpg", Me)
+    Call cBotonAzul.Initialize(imgAzul, GrhPath & "BotonAzul" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonAzulRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonAzulClick" & LanguageGame  & ".jpg", Me)
 
-    Call cBotonRojo.Initialize(imgRojo, GrhPath & "BotonRojo.jpg", _
-                                    GrhPath & "BotonRojoRollover.jpg", _
-                                    GrhPath & "BotonRojoClick.jpg", Me)
+    Call cBotonRojo.Initialize(imgRojo, GrhPath & "BotonRojo" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonRojoRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonRojoClick" & LanguageGame  & ".jpg", Me)
 
-    Call cBotonBlanco.Initialize(imgBlanco, GrhPath & "BotonBlanco.jpg", _
-                                    GrhPath & "BotonBlancoRollover.jpg", _
-                                    GrhPath & "BotonBlancoClick.jpg", Me)
+    Call cBotonBlanco.Initialize(imgBlanco, GrhPath & "BotonBlanco" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonBlancoRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonBlancoClick" & LanguageGame  & ".jpg", Me)
 
-    Call cBotonGris.Initialize(imgGris, GrhPath & "BotonGris.jpg", _
-                                    GrhPath & "BotonGrisRollover.jpg", _
-                                    GrhPath & "BotonGrisClick.jpg", Me)
+    Call cBotonGris.Initialize(imgGris, GrhPath & "BotonGris" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonGrisRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonGrisClick" & LanguageGame  & ".jpg", Me)
                                     
-    Call cBotonAmarillo.Initialize(imgAmarillo, GrhPath & "BotonAmarillo.jpg", _
-                                    GrhPath & "BotonAmarilloRollover.jpg", _
-                                    GrhPath & "BotonAmarilloClick.jpg", Me)
+    Call cBotonAmarillo.Initialize(imgAmarillo, GrhPath & "BotonAmarillo" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonAmarilloRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonAmarilloClick" & LanguageGame  & ".jpg", Me)
 
-    Call cBotonMorado.Initialize(imgMorado, GrhPath & "BotonMorado.jpg", _
-                                    GrhPath & "BotonMoradoRollover.jpg", _
-                                    GrhPath & "BotonMoradoClick.jpg", Me)
+    Call cBotonMorado.Initialize(imgMorado, GrhPath & "BotonMorado" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonMoradoRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonMoradoClick" & LanguageGame  & ".jpg", Me)
 
-    Call cBotonVerde.Initialize(imgVerde, GrhPath & "BotonVerde.jpg", _
-                                    GrhPath & "BotonVerdeRollover.jpg", _
-                                    GrhPath & "BotonVerdeClick.jpg", Me)
+    Call cBotonVerde.Initialize(imgVerde, GrhPath & "BotonVerde" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonVerdeRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonVerdeClick" & LanguageGame  & ".jpg", Me)
 
-    Call cBotonMarron.Initialize(imgMarron, GrhPath & "BotonMarron.jpg", _
-                                    GrhPath & "BotonMarronRollover.jpg", _
-                                    GrhPath & "BotonMarronClick.jpg", Me)
+    Call cBotonMarron.Initialize(imgMarron, GrhPath & "BotonMarron" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonMarronRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonMarronClick" & LanguageGame  & ".jpg", Me)
 
-    Call cBotonAceptar.Initialize(imgAceptar, GrhPath & "BotonAceptarMotd.jpg", _
-                                    GrhPath & "BotonAceptarRolloverMotd.jpg", _
-                                    GrhPath & "BotonAceptarClickMotd.jpg", Me)
+    Call cBotonAceptar.Initialize(imgAceptar, GrhPath & "BotonAceptarMotd" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonAceptarRolloverMotd" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonAceptarClickMotd" & LanguageGame  & ".jpg", Me)
                                     
     Set picNegrita = LoadPicture(DirGraficos & "OpcionPrendidaN.jpg")
     Set picCursiva = LoadPicture(DirGraficos & "OpcionPrendidaC.jpg")

@@ -443,8 +443,8 @@ Private Sub Form_Load()
     
     Dim GrhPath As String
     GrhPath = DirGraficos
-    Set MinMayBack(0) = LoadPicture(GrhPath & "TecladoMinuscula.jpg")
-    Set MinMayBack(1) = LoadPicture(GrhPath & "TecladoMayuscula.jpg")
+    Set MinMayBack(0) = LoadPicture(GrhPath & "TecladoMinuscula" & LanguageGame  & ".jpg")
+    Set MinMayBack(1) = LoadPicture(GrhPath & "TecladoMayuscula" & LanguageGame  & ".jpg")
     
     Call LoadButtons
     
@@ -464,13 +464,13 @@ Private Sub LoadButtons()
     Set LastButtonPressed = New clsGraphicalButton
     
     
-    Call cBotonMin.Initialize(imgMay, GrhPath & "BotonMay.jpg", _
-                                    GrhPath & "BotonMayRollover.jpg", _
-                                    GrhPath & "BotonMayClick.jpg", Me)
+    Call cBotonMin.Initialize(imgMay, GrhPath & "BotonMay" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonMayRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonMayClick" & LanguageGame  & ".jpg", Me)
 
-    Call cBotonMay.Initialize(imgMin, GrhPath & "BotonMin.jpg", _
-                                    GrhPath & "BotonMinRollover.jpg", _
-                                    GrhPath & "BotonMinClick.jpg", Me)
+    Call cBotonMay.Initialize(imgMin, GrhPath & "BotonMin" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonMinRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonMinClick" & LanguageGame  & ".jpg", Me)
 
 End Sub
 
@@ -508,7 +508,7 @@ Private Sub imgMay_Click()
     If Modo = MAYUSCULA Then Exit Sub
     
     'Call Audio.PlayWave(SND_CLICK)
-    Me.Picture = MinMayBack(e_modo_keypad.MAYUSCULA)  'LoadPicture(App.path & "\graficos\KeyPadMay.bmp")
+    Me.Picture = MinMayBack(e_modo_keypad.MAYUSCULA)  'LoadPicture(App.path & "\graficos\KeyPadMay"& LanguageGame & ".bmp")
     Modo = MAYUSCULA
     Me.txtPassword.SetFocus
 End Sub
@@ -517,7 +517,7 @@ Private Sub imgMin_Click()
     If Modo = MINUSCULA Then Exit Sub
     
     'Call Audio.PlayWave(SND_CLICK)
-    Me.Picture = MinMayBack(e_modo_keypad.MINUSCULA) 'LoadPicture(App.path & "\graficos\KeyPadMin.bmp")
+    Me.Picture = MinMayBack(e_modo_keypad.MINUSCULA) 'LoadPicture(App.path & "\graficos\KeyPadMin"& LanguageGame & ".bmp")
     Modo = MINUSCULA
     Me.txtPassword.SetFocus
 End Sub

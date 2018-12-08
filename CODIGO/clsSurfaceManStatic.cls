@@ -162,7 +162,7 @@ Private Sub LoadSurface(ByRef bmpInfo As BITMAPINFO, ByRef data() As Byte, ByVal
 '**************************************************************
 'Author: Nicolas Matias Gonzalez (NIGO)
 'Last Modify Date: 11/30/2007
-'Loads the surface named fileIndex + ".bmp" and inserts it to the
+'Loads the surface named fileIndex + ""& LanguageGame & ".bmp" and inserts it to the
 'surface list in the listIndex position
 '**************************************************************
 On Error GoTo ErrHandler

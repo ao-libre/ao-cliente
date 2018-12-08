@@ -373,7 +373,7 @@ Private Sub Form_Load()
        version.Caption = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
     '[END]'
     
-    Me.Picture = LoadPicture(App.path & "\graficos\VentanaConectar.jpg")
+    Me.Picture = LoadPicture(App.path & "\graficos\VentanaConectar" & LanguageGame  & ".jpg")
     
     Call LoadButtons
 
@@ -419,45 +419,45 @@ Private Sub LoadButtons()
     Set LastButtonPressed = New clsGraphicalButton
 
         
-    Call cBotonCrearPj.Initialize(imgCrearPj, GrhPath & "BotonCrearPersonajeConectar.jpg", _
-                                    GrhPath & "BotonCrearPersonajeRolloverConectar.jpg", _
-                                    GrhPath & "BotonCrearPersonajeClickConectar.jpg", Me)
+    Call cBotonCrearPj.Initialize(imgCrearPj, GrhPath & "BotonCrearPersonajeConectar" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonCrearPersonajeRolloverConectar" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonCrearPersonajeClickConectar" & LanguageGame  & ".jpg", Me)
                                     
-    Call cBotonRecuperarPass.Initialize(imgRecuperar, GrhPath & "BotonRecuperarPass.jpg", _
-                                    GrhPath & "BotonRecuperarPassRollover.jpg", _
-                                    GrhPath & "BotonRecuperarPassClick.jpg", Me)
+    Call cBotonRecuperarPass.Initialize(imgRecuperar, GrhPath & "BotonRecuperarPass" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonRecuperarPassRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonRecuperarPassClick" & LanguageGame  & ".jpg", Me)
                                     
-    Call cBotonManual.Initialize(imgManual, GrhPath & "BotonManual.jpg", _
-                                    GrhPath & "BotonManualRollover.jpg", _
-                                    GrhPath & "BotonManualClick.jpg", Me)
+    Call cBotonManual.Initialize(imgManual, GrhPath & "BotonManual" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonManualRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonManualClick" & LanguageGame  & ".jpg", Me)
                                     
-    Call cBotonReglamento.Initialize(imgReglamento, GrhPath & "BotonReglamento.jpg", _
-                                    GrhPath & "BotonReglamentoRollover.jpg", _
-                                    GrhPath & "BotonReglamentoClick.jpg", Me)
+    Call cBotonReglamento.Initialize(imgReglamento, GrhPath & "BotonReglamento" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonReglamentoRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonReglamentoClick" & LanguageGame  & ".jpg", Me)
                                     
-    Call cBotonCodigoFuente.Initialize(imgCodigoFuente, GrhPath & "BotonCodigoFuente.jpg", _
-                                    GrhPath & "BotonCodigoFuenteRollover.jpg", _
-                                    GrhPath & "BotonCodigoFuenteClick.jpg", Me)
+    Call cBotonCodigoFuente.Initialize(imgCodigoFuente, GrhPath & "BotonCodigoFuente" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonCodigoFuenteRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonCodigoFuenteClick" & LanguageGame  & ".jpg", Me)
                                     
-    Call cBotonBorrarPj.Initialize(imgBorrarPj, GrhPath & "BotonBorrarPersonaje.jpg", _
-                                    GrhPath & "BotonBorrarPersonajeRollover.jpg", _
-                                    GrhPath & "BotonBorrarPersonajeClick.jpg", Me)
+    Call cBotonBorrarPj.Initialize(imgBorrarPj, GrhPath & "BotonBorrarPersonaje" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonBorrarPersonajeRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonBorrarPersonajeClick" & LanguageGame  & ".jpg", Me)
                                     
-    Call cBotonSalir.Initialize(imgSalir, GrhPath & "BotonSalirConnect.jpg", _
-                                    GrhPath & "BotonBotonSalirRolloverConnect.jpg", _
-                                    GrhPath & "BotonSalirClickConnect.jpg", Me)
+    Call cBotonSalir.Initialize(imgSalir, GrhPath & "BotonSalirConnect" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonBotonSalirRolloverConnect" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonSalirClickConnect" & LanguageGame  & ".jpg", Me)
                                     
-    Call cBotonForo.Initialize(imgVerForo, GrhPath & "BotonVerForo.jpg", _
-                                    GrhPath & "BotonVerForoRollover.jpg", _
-                                    GrhPath & "BotonVerForoClick.jpg", Me)
+    Call cBotonForo.Initialize(imgVerForo, GrhPath & "BotonVerForo" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonVerForoRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonVerForoClick" & LanguageGame  & ".jpg", Me)
                                     
-    Call cBotonConectarse.Initialize(imgConectarse, GrhPath & "BotonConectarse.jpg", _
-                                    GrhPath & "BotonConectarseRollover.jpg", _
-                                    GrhPath & "BotonConectarseClick.jpg", Me)
+    Call cBotonConectarse.Initialize(imgConectarse, GrhPath & "BotonConectarse" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonConectarseRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonConectarseClick" & LanguageGame  & ".jpg", Me)
                                     
-    Call cBotonTeclas.Initialize(imgTeclas, GrhPath & "BotonTeclas.jpg", _
-                                    GrhPath & "BotonTeclasRollover.jpg", _
-                                    GrhPath & "BotonTeclasClick.jpg", Me)
+    Call cBotonTeclas.Initialize(imgTeclas, GrhPath & "BotonTeclas" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonTeclasRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonTeclasClick" & LanguageGame  & ".jpg", Me)
 
 End Sub
 

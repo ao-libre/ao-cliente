@@ -102,7 +102,7 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
-    Me.Picture = LoadPicture(App.path & "\graficos\VentanaTirarOro.jpg")
+    Me.Picture = LoadPicture(App.path & "\graficos\VentanaTirarOro" & LanguageGame  & ".jpg")
     
     Call LoadButtons
 End Sub
@@ -118,10 +118,10 @@ Private Sub LoadButtons()
     
     Set LastButtonPressed = New clsGraphicalButton
 
-    Call cBotonTirar.Initialize(imgTirar, GrhPath & "BotonTirar.jpg", GrhPath & "BotonTirarRollover.jpg", _
-                        GrhPath & "BotonTirarClick.jpg", Me)
-    Call cBotonTirarTodo.Initialize(imgTirarTodo, GrhPath & "BotonTirarTodo.jpg", GrhPath & "BotonTirarTodoRollover.jpg", _
-                        GrhPath & "BotonTirarTodoClick.jpg", Me)
+    Call cBotonTirar.Initialize(imgTirar, GrhPath & "BotonTirar" & LanguageGame  & ".jpg", GrhPath & "BotonTirarRollover" & LanguageGame  & ".jpg", _
+                        GrhPath & "BotonTirarClick" & LanguageGame  & ".jpg", Me)
+    Call cBotonTirarTodo.Initialize(imgTirarTodo, GrhPath & "BotonTirarTodo" & LanguageGame  & ".jpg", GrhPath & "BotonTirarTodoRollover" & LanguageGame  & ".jpg", _
+                        GrhPath & "BotonTirarTodoClick" & LanguageGame  & ".jpg", Me)
 
 End Sub
 

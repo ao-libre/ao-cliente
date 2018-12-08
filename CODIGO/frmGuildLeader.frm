@@ -295,7 +295,7 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
-    Me.Picture = LoadPicture(App.path & "\graficos\VentanaAdministrarClan.jpg")
+    Me.Picture = LoadPicture(App.path & "\graficos\VentanaAdministrarClan" & LanguageGame  & ".jpg")
     
     Call LoadButtons
 End Sub
@@ -319,45 +319,45 @@ Private Sub LoadButtons()
     Set LastButtonPressed = New clsGraphicalButton
     
     
-    Call cBotonElecciones.Initialize(imgElecciones, GrhPath & "BotonElecciones.jpg", _
-                                    GrhPath & "BotonEleccionesRollover.jpg", _
-                                    GrhPath & "BotonEleccionesClick.jpg", Me)
+    Call cBotonElecciones.Initialize(imgElecciones, GrhPath & "BotonElecciones" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonEleccionesRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonEleccionesClick" & LanguageGame  & ".jpg", Me)
 
-    Call cBotonActualizar.Initialize(imgActualizar, GrhPath & "BotonActualizar.jpg", _
-                                    GrhPath & "BotonActualizarRollover.jpg", _
-                                    GrhPath & "BotonActualizarClick.jpg", Me)
+    Call cBotonActualizar.Initialize(imgActualizar, GrhPath & "BotonActualizar" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonActualizarRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonActualizarClick" & LanguageGame  & ".jpg", Me)
 
-    Call cBotonDetallesClan.Initialize(imgDetallesClan, GrhPath & "BotonDetallesAdministrarClan.jpg", _
-                                    GrhPath & "BotonDetallesRolloverAdministrarClan.jpg", _
-                                    GrhPath & "BotonDetallesClickAdministrarClan.jpg", Me)
+    Call cBotonDetallesClan.Initialize(imgDetallesClan, GrhPath & "BotonDetallesAdministrarClan" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonDetallesRolloverAdministrarClan" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonDetallesClickAdministrarClan" & LanguageGame  & ".jpg", Me)
 
-    Call cBotonDetallesMiembros.Initialize(imgDetallesMiembros, GrhPath & "BotonDetallesAdministrarClan.jpg", _
-                                    GrhPath & "BotonDetallesRolloverAdministrarClan.jpg", _
-                                    GrhPath & "BotonDetallesClickAdministrarClan.jpg", Me)
+    Call cBotonDetallesMiembros.Initialize(imgDetallesMiembros, GrhPath & "BotonDetallesAdministrarClan" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonDetallesRolloverAdministrarClan" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonDetallesClickAdministrarClan" & LanguageGame  & ".jpg", Me)
                                     
-    Call cBotonDetallesSolicitudes.Initialize(imgDetallesSolicitudes, GrhPath & "BotonDetallesAdministrarClan.jpg", _
-                                    GrhPath & "BotonDetallesRolloverAdministrarClan.jpg", _
-                                    GrhPath & "BotonDetallesClickAdministrarClan.jpg", Me)
+    Call cBotonDetallesSolicitudes.Initialize(imgDetallesSolicitudes, GrhPath & "BotonDetallesAdministrarClan" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonDetallesRolloverAdministrarClan" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonDetallesClickAdministrarClan" & LanguageGame  & ".jpg", Me)
 
-    Call cBotonEditarCodex.Initialize(imgEditarCodex, GrhPath & "BotonEditarCodex.jpg", _
-                                    GrhPath & "BotonEditarCodexRollover.jpg", _
-                                    GrhPath & "BotonEditarCodexClick.jpg", Me)
+    Call cBotonEditarCodex.Initialize(imgEditarCodex, GrhPath & "BotonEditarCodex" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonEditarCodexRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonEditarCodexClick" & LanguageGame  & ".jpg", Me)
 
-    Call cBotonEditarURL.Initialize(imgEditarURL, GrhPath & "BotonEditarURL.jpg", _
-                                    GrhPath & "BotonEditarURLRollover.jpg", _
-                                    GrhPath & "BotonEditarURLClick.jpg", Me)
+    Call cBotonEditarURL.Initialize(imgEditarURL, GrhPath & "BotonEditarURL" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonEditarURLRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonEditarURLClick" & LanguageGame  & ".jpg", Me)
 
-    Call cBotonPropuestasPaz.Initialize(imgPropuestasPaz, GrhPath & "BotonPropuestaPaz.jpg", _
-                                    GrhPath & "BotonPropuestaPazRollover.jpg", _
-                                    GrhPath & "BotonPropuestaPazClick.jpg", Me)
+    Call cBotonPropuestasPaz.Initialize(imgPropuestasPaz, GrhPath & "BotonPropuestaPaz" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonPropuestaPazRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonPropuestaPazClick" & LanguageGame  & ".jpg", Me)
 
-    Call cBotonPropuestasAlianzas.Initialize(imgPropuestasAlianzas, GrhPath & "BotonPropuestasAlianzas.jpg", _
-                                    GrhPath & "BotonPropuestasAlianzasRollover.jpg", _
-                                    GrhPath & "BotonPropuestasAlianzasClick.jpg", Me)
+    Call cBotonPropuestasAlianzas.Initialize(imgPropuestasAlianzas, GrhPath & "BotonPropuestasAlianzas" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonPropuestasAlianzasRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonPropuestasAlianzasClick" & LanguageGame  & ".jpg", Me)
 
-    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarAdministrarClan.jpg", _
-                                    GrhPath & "BotonCerrarRolloverAdministrarClan.jpg", _
-                                    GrhPath & "BotonCerrarClickAdministrarClan.jpg", Me)
+    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarAdministrarClan" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonCerrarRolloverAdministrarClan" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonCerrarClickAdministrarClan" & LanguageGame  & ".jpg", Me)
 
 
 End Sub

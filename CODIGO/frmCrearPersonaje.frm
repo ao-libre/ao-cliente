@@ -1285,7 +1285,7 @@ Private currentGrh As Long
 Private Dir As E_Heading
 
 Private Sub Form_Load()
-    Me.Picture = LoadPicture(DirGraficos & "VentanaCrearPersonaje.jpg")
+    Me.Picture = LoadPicture(DirGraficos & "VentanaCrearPersonaje" & LanguageGame  & ".jpg")
     
     Cargando = True
     Call LoadCharInfo
@@ -1362,89 +1362,89 @@ Private Sub IniciarGraficos()
     Set LastButtonPressed = New clsGraphicalButton
     
     
-    Call cBotonPasswd.Initialize(imgPasswd, "", GrhPath & "BotonPassword.jpg", _
-                                    GrhPath & "BotonPassword.jpg", Me, , , False, False)
+    Call cBotonPasswd.Initialize(imgPasswd, "", GrhPath & "BotonPassword" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonPassword" & LanguageGame  & ".jpg", Me, , , False, False)
                                     
-    Call cBotonTirarDados.Initialize(imgTirarDados, "", GrhPath & "BotonTirarDados.jpg", _
-                                    GrhPath & "BotonTirarDados.jpg", Me, , , False, False)
+    Call cBotonTirarDados.Initialize(imgTirarDados, "", GrhPath & "BotonTirarDados" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonTirarDados" & LanguageGame  & ".jpg", Me, , , False, False)
                                     
-    Call cBotonMail.Initialize(imgMail, "", GrhPath & "BotonMailPj.jpg", _
-                                    GrhPath & "BotonMailPj.jpg", Me, , , False, False)
+    Call cBotonMail.Initialize(imgMail, "", GrhPath & "BotonMailPj" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonMailPj" & LanguageGame  & ".jpg", Me, , , False, False)
                                     
-    Call cBotonNombre.Initialize(imgNombre, "", GrhPath & "BotonNombrePJ.jpg", _
-                                    GrhPath & "BotonNombrePJ.jpg", Me, , , False, False)
+    Call cBotonNombre.Initialize(imgNombre, "", GrhPath & "BotonNombrePJ" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonNombrePJ" & LanguageGame  & ".jpg", Me, , , False, False)
                                     
-    Call cBotonConfirmPasswd.Initialize(imgConfirmPasswd, "", GrhPath & "BotonRepetirPassword.jpg", _
-                                    GrhPath & "BotonRepetirPassword.jpg", Me, , , False, False)
+    Call cBotonConfirmPasswd.Initialize(imgConfirmPasswd, "", GrhPath & "BotonRepetirPassword" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonRepetirPassword" & LanguageGame  & ".jpg", Me, , , False, False)
                                     
-    Call cBotonAtributos.Initialize(imgAtributos, "", GrhPath & "BotonAtributos.jpg", _
-                                    GrhPath & "BotonAtributos.jpg", Me, , , False, False)
+    Call cBotonAtributos.Initialize(imgAtributos, "", GrhPath & "BotonAtributos" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonAtributos" & LanguageGame  & ".jpg", Me, , , False, False)
                                     
-    Call cBotonD.Initialize(imgD, "", GrhPath & "BotonD.jpg", _
-                                    GrhPath & "BotonD.jpg", Me, , , False, False)
+    Call cBotonD.Initialize(imgD, "", GrhPath & "BotonD" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonD" & LanguageGame  & ".jpg", Me, , , False, False)
                                     
-    Call cBotonM.Initialize(imgM, "", GrhPath & "BotonM.jpg", _
-                                    GrhPath & "BotonM.jpg", Me, , , False, False)
+    Call cBotonM.Initialize(imgM, "", GrhPath & "BotonM" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonM" & LanguageGame  & ".jpg", Me, , , False, False)
                                     
-    Call cBotonF.Initialize(imgF, "", GrhPath & "BotonF.jpg", _
-                                    GrhPath & "BotonF.jpg", Me, , , False, False)
+    Call cBotonF.Initialize(imgF, "", GrhPath & "BotonF" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonF" & LanguageGame  & ".jpg", Me, , , False, False)
                                     
-    Call cBotonFuerza.Initialize(imgFuerza, "", GrhPath & "BotonFuerza.jpg", _
-                                    GrhPath & "BotonFuerza.jpg", Me, , , False, False)
+    Call cBotonFuerza.Initialize(imgFuerza, "", GrhPath & "BotonFuerza" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonFuerza" & LanguageGame  & ".jpg", Me, , , False, False)
                                     
-    Call cBotonAgilidad.Initialize(imgAgilidad, "", GrhPath & "BotonAgilidad.jpg", _
-                                    GrhPath & "BotonAgilidad.jpg", Me, , , False, False)
+    Call cBotonAgilidad.Initialize(imgAgilidad, "", GrhPath & "BotonAgilidad" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonAgilidad" & LanguageGame  & ".jpg", Me, , , False, False)
                                     
-    Call cBotonInteligencia.Initialize(imgInteligencia, "", GrhPath & "BotonInteligencia.jpg", _
-                                    GrhPath & "BotonInteligencia.jpg", Me, , , False, False)
+    Call cBotonInteligencia.Initialize(imgInteligencia, "", GrhPath & "BotonInteligencia" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonInteligencia" & LanguageGame  & ".jpg", Me, , , False, False)
                                     
-    Call cBotonCarisma.Initialize(imgCarisma, "", GrhPath & "BotonCarisma.jpg", _
-                                    GrhPath & "BotonCarisma.jpg", Me, , , False, False)
+    Call cBotonCarisma.Initialize(imgCarisma, "", GrhPath & "BotonCarisma" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonCarisma" & LanguageGame  & ".jpg", Me, , , False, False)
                                     
-    Call cBotonConstitucion.Initialize(imgConstitucion, "", GrhPath & "BotonConstitucion.jpg", _
-                                    GrhPath & "BotonConstitucion.jpg", Me, , , False, False)
+    Call cBotonConstitucion.Initialize(imgConstitucion, "", GrhPath & "BotonConstitucion" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonConstitucion" & LanguageGame  & ".jpg", Me, , , False, False)
                                     
-    Call cBotonEvasion.Initialize(imgEvasion, "", GrhPath & "BotonEvasion.jpg", _
-                                    GrhPath & "BotonEvasion.jpg", Me, , , False, False)
+    Call cBotonEvasion.Initialize(imgEvasion, "", GrhPath & "BotonEvasion" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonEvasion" & LanguageGame  & ".jpg", Me, , , False, False)
                                     
-    Call cBotonMagia.Initialize(imgMagia, "", GrhPath & "BotonMagia.jpg", _
-                                    GrhPath & "BotonMagia.jpg", Me, , , False, False)
+    Call cBotonMagia.Initialize(imgMagia, "", GrhPath & "BotonMagia" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonMagia" & LanguageGame  & ".jpg", Me, , , False, False)
                                     
-    Call cBotonVida.Initialize(imgVida, "", GrhPath & "BotonVida.jpg", _
-                                    GrhPath & "BotonVida.jpg", Me, , , False, False)
+    Call cBotonVida.Initialize(imgVida, "", GrhPath & "BotonVida" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonVida" & LanguageGame  & ".jpg", Me, , , False, False)
                                     
-    Call cBotonEscudos.Initialize(imgEscudos, "", GrhPath & "BotonEscudos.jpg", _
-                                    GrhPath & "BotonEscudos.jpg", Me, , , False, False)
+    Call cBotonEscudos.Initialize(imgEscudos, "", GrhPath & "BotonEscudos" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonEscudos" & LanguageGame  & ".jpg", Me, , , False, False)
                                     
-    Call cBotonArmas.Initialize(imgArmas, "", GrhPath & "BotonArmas.jpg", _
-                                    GrhPath & "BotonArmas.jpg", Me, , , False, False)
+    Call cBotonArmas.Initialize(imgArmas, "", GrhPath & "BotonArmas" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonArmas" & LanguageGame  & ".jpg", Me, , , False, False)
                                     
-    Call cBotonArcos.Initialize(imgArcos, "", GrhPath & "BotonArcos.jpg", _
-                                    GrhPath & "BotonArcos.jpg", Me, , , False, False)
+    Call cBotonArcos.Initialize(imgArcos, "", GrhPath & "BotonArcos" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonArcos" & LanguageGame  & ".jpg", Me, , , False, False)
                                     
-    Call cBotonEspecialidad.Initialize(imgEspecialidad, "", GrhPath & "BotonEspecialidad.jpg", _
-                                    GrhPath & "BotonEspecialidad.jpg", Me, , , False, False)
+    Call cBotonEspecialidad.Initialize(imgEspecialidad, "", GrhPath & "BotonEspecialidad" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonEspecialidad" & LanguageGame  & ".jpg", Me, , , False, False)
                                     
-    Call cBotonPuebloOrigen.Initialize(imgPuebloOrigen, "", GrhPath & "BotonPuebloOrigen.jpg", _
-                                    GrhPath & "BotonPuebloOrigen.jpg", Me, , , False, False)
+    Call cBotonPuebloOrigen.Initialize(imgPuebloOrigen, "", GrhPath & "BotonPuebloOrigen" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonPuebloOrigen" & LanguageGame  & ".jpg", Me, , , False, False)
                                     
-    Call cBotonRaza.Initialize(imgRaza, "", GrhPath & "BotonRaza.jpg", _
-                                    GrhPath & "BotonRaza.jpg", Me, , , False, False)
+    Call cBotonRaza.Initialize(imgRaza, "", GrhPath & "BotonRaza" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonRaza" & LanguageGame  & ".jpg", Me, , , False, False)
                                     
-    Call cBotonClase.Initialize(imgClase, "", GrhPath & "BotonClase.jpg", _
-                                    GrhPath & "BotonClase.jpg", Me, , , False, False)
+    Call cBotonClase.Initialize(imgClase, "", GrhPath & "BotonClase" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonClase" & LanguageGame  & ".jpg", Me, , , False, False)
                                     
-    Call cBotonGenero.Initialize(imgGenero, "", GrhPath & "BotonGenero.jpg", _
-                                    GrhPath & "BotonGenero.jpg", Me, , , False, False)
+    Call cBotonGenero.Initialize(imgGenero, "", GrhPath & "BotonGenero" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonGenero" & LanguageGame  & ".jpg", Me, , , False, False)
                                     
-    Call cBotonAlineacion.Initialize(imgalineacion, "", GrhPath & "BotonAlineacion.jpg", _
-                                    GrhPath & "BotonAlineacion.jpg", Me, , , False, False)
+    Call cBotonAlineacion.Initialize(imgalineacion, "", GrhPath & "BotonAlineacion" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonAlineacion" & LanguageGame  & ".jpg", Me, , , False, False)
                                     
-    Call cBotonVolver.Initialize(imgVolver, "", GrhPath & "BotonVolverRollover.jpg", _
-                                    GrhPath & "BotonVolverClick.jpg", Me)
+    Call cBotonVolver.Initialize(imgVolver, "", GrhPath & "BotonVolverRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonVolverClick" & LanguageGame  & ".jpg", Me)
                                     
-    Call cBotonCrear.Initialize(imgCrear, "", GrhPath & "BotonCrearPersonajeRollover.jpg", _
-                                    GrhPath & "BotonCrearPersonajeClick.jpg", Me)
+    Call cBotonCrear.Initialize(imgCrear, "", GrhPath & "BotonCrearPersonajeRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonCrearPersonajeClick" & LanguageGame  & ".jpg", Me)
 
     Set picFullStar = LoadPicture(GrhPath & "EstrellaSimple.jpg")
     Set picHalfStar = LoadPicture(GrhPath & "EstrellaMitad.jpg")
@@ -1780,7 +1780,7 @@ End Sub
 
 Private Sub lstProfesion_Click()
 On Error Resume Next
-'    Image1.Picture = LoadPicture(App.path & "\graficos\" & lstProfesion.Text & ".jpg")
+'    Image1.Picture = LoadPicture(App.path & "\graficos\" & lstProfesion.Text & "" & LanguageGame  & ".jpg")
 '
     UserClase = lstProfesion.ListIndex + 1
     

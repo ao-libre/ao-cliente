@@ -274,7 +274,7 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
-    Me.Picture = LoadPicture(App.path & "\graficos\VentanaCodex.jpg")
+    Me.Picture = LoadPicture(App.path & "\graficos\VentanaCodex" & LanguageGame  & ".jpg")
     
     Call LoadButtons
 End Sub
@@ -290,13 +290,13 @@ Private Sub LoadButtons()
     Set LastButtonPressed = New clsGraphicalButton
     
     
-    Call cBotonConfirmar.Initialize(imgConfirmar, GrhPath & "BotonConfirmarCodex.jpg", _
-                                    GrhPath & "BotonConfirmarRolloverCodex.jpg", _
-                                    GrhPath & "BotonConfirmarClickCodex.jpg", Me)
+    Call cBotonConfirmar.Initialize(imgConfirmar, GrhPath & "BotonConfirmarCodex" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonConfirmarRolloverCodex" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonConfirmarClickCodex" & LanguageGame  & ".jpg", Me)
 
-    Call cBotonSalir.Initialize(imgSalir, GrhPath & "BotonSalirCodex.jpg", _
-                                    GrhPath & "BotonSalirRolloverCodex.jpg", _
-                                    GrhPath & "BotonSalirClickCodex.jpg", Me)
+    Call cBotonSalir.Initialize(imgSalir, GrhPath & "BotonSalirCodex" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonSalirRolloverCodex" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonSalirClickCodex" & LanguageGame  & ".jpg", Me)
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)

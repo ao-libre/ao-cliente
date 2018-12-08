@@ -107,7 +107,7 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
-    Me.Picture = LoadPicture(App.path & "\graficos\VentanaPeticion.jpg")
+    Me.Picture = LoadPicture(App.path & "\graficos\VentanaPeticion" & LanguageGame  & ".jpg")
     
     Call LoadButtons
 End Sub
@@ -122,9 +122,9 @@ Private Sub LoadButtons()
     Set LastButtonPressed = New clsGraphicalButton
     
     
-    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarPeticion.jpg", _
-                                    GrhPath & "BotonCerrarRolloverPeticion.jpg", _
-                                    GrhPath & "BotonCerrarClickPeticion.jpg", Me)
+    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarPeticion" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonCerrarRolloverPeticion" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonCerrarClickPeticion" & LanguageGame  & ".jpg", Me)
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)

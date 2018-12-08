@@ -327,15 +327,15 @@ Private Sub LoadButtons()
     GrhPath = DirGraficos
     
     ' Load pictures
-    Set FondosListaMsg(eForumType.ieGeneral) = LoadPicture(GrhPath & "ForoGeneral.jpg")
-    Set FondosListaMsg(eForumType.ieREAL) = LoadPicture(GrhPath & "ForoReal.jpg")
-    Set FondosListaMsg(eForumType.ieCAOS) = LoadPicture(GrhPath & "ForoCaos.jpg")
+    Set FondosListaMsg(eForumType.ieGeneral) = LoadPicture(GrhPath & "ForoGeneral" & LanguageGame  & ".jpg")
+    Set FondosListaMsg(eForumType.ieREAL) = LoadPicture(GrhPath & "ForoReal" & LanguageGame  & ".jpg")
+    Set FondosListaMsg(eForumType.ieCAOS) = LoadPicture(GrhPath & "ForoCaos" & LanguageGame  & ".jpg")
     
-    Set FondosDejarMsg(eForumType.ieGeneral) = LoadPicture(GrhPath & "ForoMsgGeneral.jpg")
-    Set FondosDejarMsg(eForumType.ieREAL) = LoadPicture(GrhPath & "ForoMsgReal.jpg")
-    Set FondosDejarMsg(eForumType.ieCAOS) = LoadPicture(GrhPath & "ForoMsgCaos.jpg")
+    Set FondosDejarMsg(eForumType.ieGeneral) = LoadPicture(GrhPath & "ForoMsgGeneral" & LanguageGame  & ".jpg")
+    Set FondosDejarMsg(eForumType.ieREAL) = LoadPicture(GrhPath & "ForoMsgReal" & LanguageGame  & ".jpg")
+    Set FondosDejarMsg(eForumType.ieCAOS) = LoadPicture(GrhPath & "ForoMsgCaos" & LanguageGame  & ".jpg")
     
-    imgMarcoTexto.Picture = LoadPicture(GrhPath & "MarcoTextBox.jpg")
+    imgMarcoTexto.Picture = LoadPicture(GrhPath & "MarcoTextBox" & LanguageGame  & ".jpg")
 
     Set cBotonDejarAnuncio = New clsGraphicalButton
     Set cBotonDejarMsg = New clsGraphicalButton
@@ -345,22 +345,22 @@ Private Sub LoadButtons()
     Set LastButtonPressed = New clsGraphicalButton
 
     ' Initialize buttons
-    Call cBotonDejarAnuncio.Initialize(imgDejarAnuncio, GrhPath & "BotonDejarAnuncioForo.jpg", _
-                                            GrhPath & "BotonDejarAnuncioRolloverForo.jpg", _
-                                            GrhPath & "BotonDejarAnuncioClickForo.jpg", Me)
+    Call cBotonDejarAnuncio.Initialize(imgDejarAnuncio, GrhPath & "BotonDejarAnuncioForo" & LanguageGame  & ".jpg", _
+                                            GrhPath & "BotonDejarAnuncioRolloverForo" & LanguageGame  & ".jpg", _
+                                            GrhPath & "BotonDejarAnuncioClickForo" & LanguageGame  & ".jpg", Me)
                                             
-    Call cBotonDejarMsg.Initialize(imgDejarMsg, GrhPath & "BotonDejarMsgForo.jpg", _
-                                            GrhPath & "BotonDejarMsgRolloverForo.jpg", _
-                                            GrhPath & "BotonDejarMsgClickForo.jpg", Me, _
-                                            GrhPath & "BotonDejarMsgDisabledForo.jpg")
+    Call cBotonDejarMsg.Initialize(imgDejarMsg, GrhPath & "BotonDejarMsgForo" & LanguageGame  & ".jpg", _
+                                            GrhPath & "BotonDejarMsgRolloverForo" & LanguageGame  & ".jpg", _
+                                            GrhPath & "BotonDejarMsgClickForo" & LanguageGame  & ".jpg", Me, _
+                                            GrhPath & "BotonDejarMsgDisabledForo" & LanguageGame  & ".jpg")
                                             
-    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarForo.jpg", _
-                                            GrhPath & "BotonCerrarRolloverForo.jpg", _
-                                            GrhPath & "BotonCerrarClickForo.jpg", Me)
+    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarForo" & LanguageGame  & ".jpg", _
+                                            GrhPath & "BotonCerrarRolloverForo" & LanguageGame  & ".jpg", _
+                                            GrhPath & "BotonCerrarClickForo" & LanguageGame  & ".jpg", Me)
                                             
-    Call cBotonListaMsg.Initialize(imgListaMsg, GrhPath & "BotonListaMsgForo.jpg", _
-                                            GrhPath & "BotonListaMsgRolloverForo.jpg", _
-                                            GrhPath & "BotonListaMsgClickForo.jpg", Me)
+    Call cBotonListaMsg.Initialize(imgListaMsg, GrhPath & "BotonListaMsgForo" & LanguageGame  & ".jpg", _
+                                            GrhPath & "BotonListaMsgRolloverForo" & LanguageGame  & ".jpg", _
+                                            GrhPath & "BotonListaMsgClickForo" & LanguageGame  & ".jpg", Me)
 
 End Sub
 

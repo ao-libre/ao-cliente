@@ -472,7 +472,7 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
-    Me.Picture = LoadPicture(App.path & "\graficos\VentanaOpciones.jpg")
+    Me.Picture = LoadPicture(App.path & "\graficos\VentanaOpciones" & LanguageGame  & ".jpg")
     LoadButtons
     
     loading = True      'Prevent sounds when setting check's values
@@ -497,41 +497,41 @@ Private Sub LoadButtons()
     
     Set LastButtonPressed = New clsGraphicalButton
     
-    Call cBotonConfigTeclas.Initialize(imgConfigTeclas, GrhPath & "BotonConfigurarTeclas.jpg", _
-                                    GrhPath & "BotonConfigurarTeclasRollover.jpg", _
-                                    GrhPath & "BotonConfigurarTeclasClick.jpg", Me)
+    Call cBotonConfigTeclas.Initialize(imgConfigTeclas, GrhPath & "BotonConfigurarTeclas" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonConfigurarTeclasRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonConfigurarTeclasClick" & LanguageGame  & ".jpg", Me)
                                     
-    Call cBotonMsgPersonalizado.Initialize(imgMsgPersonalizado, GrhPath & "BotonMsgPersonalizadoTeclas.jpg", _
-                                    GrhPath & "BotonMsgPersonalizadoRollover.jpg", _
-                                    GrhPath & "BotonMsgPersonalizadoClick.jpg", Me)
+    Call cBotonMsgPersonalizado.Initialize(imgMsgPersonalizado, GrhPath & "BotonMsgPersonalizadoTeclas" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonMsgPersonalizadoRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonMsgPersonalizadoClick" & LanguageGame  & ".jpg", Me)
                                     
-    Call cBotonMapa.Initialize(imgMapa, GrhPath & "BotonMapaAo.jpg", _
-                                    GrhPath & "BotonMapaAoRollover.jpg", _
-                                    GrhPath & "BotonMapaAoClick.jpg", Me)
+    Call cBotonMapa.Initialize(imgMapa, GrhPath & "BotonMapaAo" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonMapaAoRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonMapaAoClick" & LanguageGame  & ".jpg", Me)
                                     
-    Call cBotonCambiarPasswd.Initialize(imgCambiarPasswd, GrhPath & "BotonCambiarContrasenia.jpg", _
-                                    GrhPath & "BotonCambiarContraseniaRollover.jpg", _
-                                    GrhPath & "BotonCambiarContraseniaClick.jpg", Me)
+    Call cBotonCambiarPasswd.Initialize(imgCambiarPasswd, GrhPath & "BotonCambiarContrasenia" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonCambiarContraseniaRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonCambiarContraseniaClick" & LanguageGame  & ".jpg", Me)
                                     
-    Call cBotonManual.Initialize(imgManual, GrhPath & "BotonManualAo.jpg", _
-                                    GrhPath & "BotonManualAoRollover.jpg", _
-                                    GrhPath & "BotonManualAoClick.jpg", Me)
+    Call cBotonManual.Initialize(imgManual, GrhPath & "BotonManualAo" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonManualAoRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonManualAoClick" & LanguageGame  & ".jpg", Me)
                                     
-    Call cBotonRadio.Initialize(imgRadio, GrhPath & "BotonEscucharRadioAo.jpg", _
-                                    GrhPath & "BotonEscucharRadioAoRollover.jpg", _
-                                    GrhPath & "BotonEscucharRadioAoClick.jpg", Me)
+    Call cBotonRadio.Initialize(imgRadio, GrhPath & "BotonEscucharRadioAo" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonEscucharRadioAoRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonEscucharRadioAoClick" & LanguageGame  & ".jpg", Me)
                                     
-    Call cBotonSoporte.Initialize(imgSoporte, GrhPath & "BotonSoporte.jpg", _
-                                    GrhPath & "BotonSoporteRollover.jpg", _
-                                    GrhPath & "BotonSoporteClick.jpg", Me)
+    Call cBotonSoporte.Initialize(imgSoporte, GrhPath & "BotonSoporte" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonSoporteRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonSoporteClick" & LanguageGame  & ".jpg", Me)
                                     
-    Call cBotonTutorial.Initialize(imgTutorial, GrhPath & "BotonTutorial.jpg", _
-                                    GrhPath & "BotonTutorialRollover.jpg", _
-                                    GrhPath & "BotonTutorialClick.jpg", Me)
+    Call cBotonTutorial.Initialize(imgTutorial, GrhPath & "BotonTutorial" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonTutorialRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonTutorialClick" & LanguageGame  & ".jpg", Me)
                                     
-    Call cBotonSalir.Initialize(imgSalir, GrhPath & "BotonSalirOpciones.jpg", _
-                                    GrhPath & "BotonSalirRolloverOpciones.jpg", _
-                                    GrhPath & "BotonSalirClickOpciones.jpg", Me)
+    Call cBotonSalir.Initialize(imgSalir, GrhPath & "BotonSalirOpciones" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonSalirRolloverOpciones" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonSalirClickOpciones" & LanguageGame  & ".jpg", Me)
                                     
     Set picCheckBox = LoadPicture(GrhPath & "CheckBoxOpciones.jpg")
 End Sub

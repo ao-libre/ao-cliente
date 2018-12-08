@@ -108,7 +108,7 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
-    Me.Picture = LoadPicture(App.path & "\graficos\VentanaCambiarcontrasenia.jpg")
+    Me.Picture = LoadPicture(App.path & "\graficos\VentanaCambiarcontrasenia" & LanguageGame  & ".jpg")
     
     Call LoadButtons
 End Sub
@@ -123,9 +123,9 @@ Private Sub LoadButtons()
     Set LastButtonPressed = New clsGraphicalButton
     
     
-    Call cBotonAceptar.Initialize(imgAceptar, GrhPath & "BotonAceptarCambiarContrasenia.jpg", _
-                                    GrhPath & "BotonAceptarRolloverCambiarContrasenia.jpg", _
-                                    GrhPath & "BotonAceptarClickCambiarContrasenia.jpg", Me)
+    Call cBotonAceptar.Initialize(imgAceptar, GrhPath & "BotonAceptarCambiarContrasenia" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonAceptarRolloverCambiarContrasenia" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonAceptarClickCambiarContrasenia" & LanguageGame  & ".jpg", Me)
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)

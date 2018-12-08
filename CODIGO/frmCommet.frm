@@ -135,13 +135,13 @@ Private Sub LoadButtons()
     Set LastButtonPressed = New clsGraphicalButton
     
     
-    Call cBotonEnviar.Initialize(imgEnviar, GrhPath & "BotonEnviarSolicitud.jpg", _
-                                    GrhPath & "BotonEnviarRolloverSolicitud.jpg", _
-                                    GrhPath & "BotonEnviarClickSolicitud.jpg", Me)
+    Call cBotonEnviar.Initialize(imgEnviar, GrhPath & "BotonEnviarSolicitud" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonEnviarRolloverSolicitud" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonEnviarClickSolicitud" & LanguageGame  & ".jpg", Me)
 
-    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarSolicitud.jpg", _
-                                    GrhPath & "BotonCerrarRolloverSolicitud.jpg", _
-                                    GrhPath & "BotonCerrarClickSolicitud.jpg", Me)
+    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarSolicitud" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonCerrarRolloverSolicitud" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonCerrarClickSolicitud" & LanguageGame  & ".jpg", Me)
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
@@ -199,13 +199,13 @@ Private Sub LoadBackGround()
 
     Select Case T
         Case TIPO.ALIANZA
-            Me.Picture = LoadPicture(DirGraficos & "VentanaPropuestaAlianza.jpg")
+            Me.Picture = LoadPicture(DirGraficos & "VentanaPropuestaAlianza" & LanguageGame  & ".jpg")
             
         Case TIPO.PAZ
-            Me.Picture = LoadPicture(DirGraficos & "VentanaPropuestaPaz.jpg")
+            Me.Picture = LoadPicture(DirGraficos & "VentanaPropuestaPaz" & LanguageGame  & ".jpg")
             
         Case TIPO.RECHAZOPJ
-            Me.Picture = LoadPicture(DirGraficos & "VentanaMotivoRechazo.jpg")
+            Me.Picture = LoadPicture(DirGraficos & "VentanaMotivoRechazo" & LanguageGame  & ".jpg")
             
     End Select
     

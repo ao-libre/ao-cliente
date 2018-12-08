@@ -150,30 +150,30 @@ Private Sub LoadButtons()
     Set LastButtonPressed = New clsGraphicalButton
     
     
-    Call cBotonAceptar.Initialize(imgAceptar, GrhPath & "BotonAceptarOferta.jpg", _
-                                    GrhPath & "BotonAceptarRolloverOferta.jpg", _
-                                    GrhPath & "BotonAceptarClickOferta.jpg", Me)
+    Call cBotonAceptar.Initialize(imgAceptar, GrhPath & "BotonAceptarOferta" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonAceptarRolloverOferta" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonAceptarClickOferta" & LanguageGame  & ".jpg", Me)
 
-    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarOferta.jpg", _
-                                    GrhPath & "BotonCerrarRolloverOferta.jpg", _
-                                    GrhPath & "BotonCerrarClickOferta.jpg", Me)
+    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarOferta" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonCerrarRolloverOferta" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonCerrarClickOferta" & LanguageGame  & ".jpg", Me)
 
-    Call cBotonDetalles.Initialize(imgDetalle, GrhPath & "BotonDetallesOferta.jpg", _
-                                    GrhPath & "BotonDetallesRolloverOferta.jpg", _
-                                    GrhPath & "BotonDetallesClickOferta.jpg", Me)
+    Call cBotonDetalles.Initialize(imgDetalle, GrhPath & "BotonDetallesOferta" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonDetallesRolloverOferta" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonDetallesClickOferta" & LanguageGame  & ".jpg", Me)
 
-    Call cBotonRechazar.Initialize(imgRechazar, GrhPath & "BotonRechazarOferta.jpg", _
-                                    GrhPath & "BotonRechazarRolloverOferta.jpg", _
-                                    GrhPath & "BotonRechazarClickOferta.jpg", Me)
+    Call cBotonRechazar.Initialize(imgRechazar, GrhPath & "BotonRechazarOferta" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonRechazarRolloverOferta" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonRechazarClickOferta" & LanguageGame  & ".jpg", Me)
 
 
 End Sub
 
 Private Sub LoadBackGround()
     If TipoProp = TIPO_PROPUESTA.ALIANZA Then
-        Me.Picture = LoadPicture(DirGraficos & "VentanaOfertaAlianza.jpg")
+        Me.Picture = LoadPicture(DirGraficos & "VentanaOfertaAlianza" & LanguageGame  & ".jpg")
     Else
-        Me.Picture = LoadPicture(DirGraficos & "VentanaOfertaPaz.jpg")
+        Me.Picture = LoadPicture(DirGraficos & "VentanaOfertaPaz" & LanguageGame  & ".jpg")
     End If
 End Sub
 

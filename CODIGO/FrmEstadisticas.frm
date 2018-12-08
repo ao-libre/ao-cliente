@@ -1072,7 +1072,7 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
-    Me.Picture = LoadPicture(App.path & "\graficos\VentanaEstadisticas.jpg")
+    Me.Picture = LoadPicture(App.path & "\graficos\VentanaEstadisticas" & LanguageGame  & ".jpg")
     
     Call LoadButtons
 End Sub
@@ -1086,9 +1086,9 @@ Private Sub LoadButtons()
     Set cBotonCerrar = New clsGraphicalButton
     Set LastButtonPressed = New clsGraphicalButton
     
-    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarEstadisticas.jpg", _
-                                    GrhPath & "BotonCerrarRolloverEstadisticas.jpg", _
-                                    GrhPath & "BotonCerrarClickEstadisticas.jpg", Me)
+    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarEstadisticas" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonCerrarRolloverEstadisticas" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonCerrarClickEstadisticas" & LanguageGame  & ".jpg", Me)
 
 End Sub
 
@@ -1106,7 +1106,7 @@ End Sub
 
 Private Sub imgCerrar_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If imgCerrar.Tag = 1 Then
-        imgCerrar.Picture = LoadPicture(App.path & "\graficos\BotonCerrarApretadoEstadisticas.jpg")
+        imgCerrar.Picture = LoadPicture(App.path & "\graficos\BotonCerrarApretadoEstadisticas" & LanguageGame  & ".jpg")
         imgCerrar.Tag = 0
     End If
 

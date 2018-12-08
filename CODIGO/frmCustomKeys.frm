@@ -636,7 +636,7 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
-    Me.Picture = LoadPicture(App.path & "\graficos\VentanaConfigurarTeclas.jpg")
+    Me.Picture = LoadPicture(App.path & "\graficos\VentanaConfigurarTeclas" & LanguageGame  & ".jpg")
     
     Call LoadButtons
     
@@ -661,13 +661,13 @@ Private Sub LoadButtons()
     Set LastButtonPressed = New clsGraphicalButton
     
     
-    Call cBotonGuardar.Initialize(imgGuardar, GrhPath & "BotonGuardarConfigKey.jpg", _
-                                    GrhPath & "BotonGuardarRolloverConfigKey.jpg", _
-                                    GrhPath & "BotonGuardarClickConfigKey.jpg", Me)
+    Call cBotonGuardar.Initialize(imgGuardar, GrhPath & "BotonGuardarConfigKey" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonGuardarRolloverConfigKey" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonGuardarClickConfigKey" & LanguageGame  & ".jpg", Me)
 
-    Call cBotonDefaultKeys.Initialize(imgDefaultKeys, GrhPath & "BotonDefaultKeys.jpg", _
-                                    GrhPath & "BotonDefaultKeysRollover.jpg", _
-                                    GrhPath & "BotonDefaultKeysClick.jpg", Me)
+    Call cBotonDefaultKeys.Initialize(imgDefaultKeys, GrhPath & "BotonDefaultKeys" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonDefaultKeysRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonDefaultKeysClick" & LanguageGame  & ".jpg", Me)
                                     
 End Sub
 

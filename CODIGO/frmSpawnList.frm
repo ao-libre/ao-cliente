@@ -99,7 +99,7 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
-    Me.Picture = LoadPicture(App.path & "\graficos\VentanaInvocar.jpg")
+    Me.Picture = LoadPicture(App.path & "\graficos\VentanaInvocar" & LanguageGame  & ".jpg")
     
     Call LoadButtons
 End Sub
@@ -115,13 +115,13 @@ Private Sub LoadButtons()
     Set LastButtonPressed = New clsGraphicalButton
     
     
-    Call cBotonInvocar.Initialize(imgInvocar, GrhPath & "BotonInvocar.jpg", _
-                                    GrhPath & "BotonInvocarRollover.jpg", _
-                                    GrhPath & "BotonInvocarClick.jpg", Me)
+    Call cBotonInvocar.Initialize(imgInvocar, GrhPath & "BotonInvocar" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonInvocarRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonInvocarClick" & LanguageGame  & ".jpg", Me)
 
-    Call cBotonSalir.Initialize(imgSalir, GrhPath & "BotonSalirInvocar.jpg", _
-                                    GrhPath & "BotonSalirRolloverInvocar.jpg", _
-                                    GrhPath & "BotonSalirClickInvocar.jpg", Me)
+    Call cBotonSalir.Initialize(imgSalir, GrhPath & "BotonSalirInvocar" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonSalirRolloverInvocar" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonSalirClickInvocar" & LanguageGame  & ".jpg", Me)
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)

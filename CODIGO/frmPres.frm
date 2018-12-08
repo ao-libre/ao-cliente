@@ -85,7 +85,7 @@ If ticks = 1 Then
     puedo = True
 
 ElseIf ticks = 2 Then
-    PresPath = DirGraficos & "Presentacion" & RandomNumber(5, 8) & ".jpg"
+    PresPath = DirGraficos & "Presentacion" & RandomNumber(5, 8) & "" & LanguageGame  & ".jpg"
     Me.Picture = LoadPicture(PresPath)
     
 Else

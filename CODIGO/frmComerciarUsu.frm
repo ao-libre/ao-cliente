@@ -455,7 +455,7 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
 
-    Me.Picture = LoadPicture(DirGraficos & "VentanaComercioUsuario.jpg")
+    Me.Picture = LoadPicture(DirGraficos & "VentanaComercioUsuario" & LanguageGame  & ".jpg")
     
     LoadButtons
     
@@ -478,24 +478,24 @@ Private Sub LoadButtons()
     
     Set LastButtonPressed = New clsGraphicalButton
     
-    Call cBotonAceptar.Initialize(imgAceptar, GrhPath & "BotonAceptarComUsu.jpg", _
-                                        GrhPath & "BotonAceptarRolloverComUsu.jpg", _
-                                        GrhPath & "BotonAceptarClickComUsu.jpg", Me, _
-                                        GrhPath & "BotonAceptarGrisComUsu.jpg", True)
+    Call cBotonAceptar.Initialize(imgAceptar, GrhPath & "BotonAceptarComUsu" & LanguageGame  & ".jpg", _
+                                        GrhPath & "BotonAceptarRolloverComUsu" & LanguageGame  & ".jpg", _
+                                        GrhPath & "BotonAceptarClickComUsu" & LanguageGame  & ".jpg", Me, _
+                                        GrhPath & "BotonAceptarGrisComUsu" & LanguageGame  & ".jpg", True)
                                     
-    Call cBotonConfirmar.Initialize(imgConfirmar, GrhPath & "BotonConfirmarComUsu.jpg", _
-                                        GrhPath & "BotonConfirmarRolloverComUsu.jpg", _
-                                        GrhPath & "BotonConfirmarClickComUsu.jpg", Me, _
-                                        GrhPath & "BotonConfirmarGrisComUsu.jpg", True)
+    Call cBotonConfirmar.Initialize(imgConfirmar, GrhPath & "BotonConfirmarComUsu" & LanguageGame  & ".jpg", _
+                                        GrhPath & "BotonConfirmarRolloverComUsu" & LanguageGame  & ".jpg", _
+                                        GrhPath & "BotonConfirmarClickComUsu" & LanguageGame  & ".jpg", Me, _
+                                        GrhPath & "BotonConfirmarGrisComUsu" & LanguageGame  & ".jpg", True)
                                         
-    Call cBotonRechazar.Initialize(imgRechazar, GrhPath & "BotonRechazarComUsu.jpg", _
-                                        GrhPath & "BotonRechazarRolloverComUsu.jpg", _
-                                        GrhPath & "BotonRechazarClickComUsu.jpg", Me, _
-                                        GrhPath & "BotonRechazarGrisComUsu.jpg", True)
+    Call cBotonRechazar.Initialize(imgRechazar, GrhPath & "BotonRechazarComUsu" & LanguageGame  & ".jpg", _
+                                        GrhPath & "BotonRechazarRolloverComUsu" & LanguageGame  & ".jpg", _
+                                        GrhPath & "BotonRechazarClickComUsu" & LanguageGame  & ".jpg", Me, _
+                                        GrhPath & "BotonRechazarGrisComUsu" & LanguageGame  & ".jpg", True)
                                         
-    Call cBotonCancelar.Initialize(imgCancelar, GrhPath & "BotonCancelarComUsu.jpg", _
-                                        GrhPath & "BotonCancelarRolloverComUsu.jpg", _
-                                        GrhPath & "BotonCancelarClickComUsu.jpg", Me)
+    Call cBotonCancelar.Initialize(imgCancelar, GrhPath & "BotonCancelarComUsu" & LanguageGame  & ".jpg", _
+                                        GrhPath & "BotonCancelarRolloverComUsu" & LanguageGame  & ".jpg", _
+                                        GrhPath & "BotonCancelarClickComUsu" & LanguageGame  & ".jpg", Me)
     
 End Sub
 

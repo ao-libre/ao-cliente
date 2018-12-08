@@ -550,11 +550,11 @@ On Error GoTo Err:
         End If
         If Not FileExist(dirFile, vbDirectory) Then Call MkDir(dirFile)
         
-        'Nuevo formato de las screenshots del FragShooter: "VICTIMA/ASESINO(DD-MM-YYYY hh-mm-ss).jpg"
-        File = dirFile & "\" & FragShooterNickname & "(" & Format(Now, "DD-MM-YYYY hh-mm-ss") & ").jpg"
+        'Nuevo formato de las screenshots del FragShooter: "VICTIMA/ASESINO(DD-MM-YYYY hh-mm-ss)" & LanguageGame  & ".jpg"
+        File = dirFile & "\" & FragShooterNickname & "(" & Format(Now, "DD-MM-YYYY hh-mm-ss") & ")" & LanguageGame  & ".jpg"
     Else
-        'Si no es screenshot del FragShooter, entonces se usa el formato "DD-MM-YYYY hh-mm-ss.jpg"
-        File = dirFile & "\" & Format(Now, "DD-MM-YYYY hh-mm-ss") & ".jpg"
+        'Si no es screenshot del FragShooter, entonces se usa el formato "DD-MM-YYYY hh-mm-ss" & LanguageGame  & ".jpg"
+        File = dirFile & "\" & Format(Now, "DD-MM-YYYY hh-mm-ss") & "" & LanguageGame  & ".jpg"
     End If
     
     frmScreenshots.Picture1.Refresh

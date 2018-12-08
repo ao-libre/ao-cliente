@@ -924,7 +924,7 @@ Private Sub Form_Load()
     
     Call ValidarSkills
     
-    Me.Picture = LoadPicture(DirGraficos & "VentanaSkills.jpg")
+    Me.Picture = LoadPicture(DirGraficos & "VentanaSkills" & LanguageGame  & ".jpg")
     Call LoadButtons
     
     Call LoadHelp
@@ -948,13 +948,13 @@ Private Sub LoadButtons()
     
     Set LastButtonPressed = New clsGraphicalButton
     
-    Call cBtonAceptar.Initialize(imgAceptar, GrhPath & "BotonAceptarSkills.jpg", _
-                                    GrhPath & "BotonAceptarRolloverSkills.jpg", _
-                                    GrhPath & "BotonAceptarClickSkills.jpg", Me)
+    Call cBtonAceptar.Initialize(imgAceptar, GrhPath & "BotonAceptarSkills" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonAceptarRolloverSkills" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonAceptarClickSkills" & LanguageGame  & ".jpg", Me)
 
-    Call cBotonCancelar.Initialize(imgCancelar, GrhPath & "BotonCacelarSkills.jpg", _
-                                    GrhPath & "BotonCacelarRolloverSkills.jpg", _
-                                    GrhPath & "BotonCacelarClickSkills.jpg", Me)
+    Call cBotonCancelar.Initialize(imgCancelar, GrhPath & "BotonCacelarSkills" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonCacelarRolloverSkills" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonCacelarClickSkills" & LanguageGame  & ".jpg", Me)
 
     Call cBotonMas(1).Initialize(imgMas1, GrhPath & "BotonMasSkills.jpg", _
                                     GrhPath & "BotonMasRolloverSkills.jpg", _
@@ -1126,88 +1126,88 @@ Private Sub LoadButtons()
                                     GrhPath & "BotonMenosClickSkills.jpg", Me)
 
     Call cSkillNames(1).Initialize(imgMagia, "", _
-                                    GrhPath & "MagiaRollover.jpg", _
-                                    GrhPath & "MagiaRollover.jpg", Me, _
-                                    GrhPath & "MagiaBloqueado.jpg", Not bPuedeMagia, False, False)
+                                    GrhPath & "MagiaRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "MagiaRollover" & LanguageGame  & ".jpg", Me, _
+                                    GrhPath & "MagiaBloqueado" & LanguageGame  & ".jpg", Not bPuedeMagia, False, False)
 
     Call cSkillNames(2).Initialize(imgRobar, "", _
-                                    GrhPath & "RobarRollover.jpg", _
-                                    GrhPath & "RobarRollover.jpg", Me, , , False, False)
+                                    GrhPath & "RobarRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "RobarRollover" & LanguageGame  & ".jpg", Me, , , False, False)
 
     Call cSkillNames(3).Initialize(imgEvasion, "", _
-                                    GrhPath & "EvasionRollover.jpg", _
-                                    GrhPath & "EvasionRollover.jpg", Me, , , False, False)
+                                    GrhPath & "EvasionRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "EvasionRollover" & LanguageGame  & ".jpg", Me, , , False, False)
                                     
     Call cSkillNames(4).Initialize(imgCombateArmas, "", _
-                                    GrhPath & "CombateConArmasRollover.jpg", _
-                                    GrhPath & "CombateConArmasRollover.jpg", Me, , , False, False)
+                                    GrhPath & "CombateConArmasRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "CombateConArmasRollover" & LanguageGame  & ".jpg", Me, , , False, False)
     
     Call cSkillNames(5).Initialize(imgMeditar, "", _
-                                    GrhPath & "MeditarRollover.jpg", _
-                                    GrhPath & "MeditarRollover.jpg", Me, _
-                                    GrhPath & "MeditarBloqueado.jpg", Not bPuedeMeditar, False, False)
+                                    GrhPath & "MeditarRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "MeditarRollover" & LanguageGame  & ".jpg", Me, _
+                                    GrhPath & "MeditarBloqueado" & LanguageGame  & ".jpg", Not bPuedeMeditar, False, False)
 
     Call cSkillNames(6).Initialize(imgApunialar, "", _
-                                    GrhPath & "ApuñalarRollover.jpg", _
-                                    GrhPath & "ApuñalarRollover.jpg", Me, , , False, False)
+                                    GrhPath & "ApunalarRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "ApunalarRollover" & LanguageGame  & ".jpg", Me, , , False, False)
 
     Call cSkillNames(7).Initialize(imgOcultarse, "", _
-                                    GrhPath & "OcultarseRollover.jpg", _
-                                    GrhPath & "OcultarseRollover.jpg", Me, , , False, False)
+                                    GrhPath & "OcultarseRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "OcultarseRollover" & LanguageGame  & ".jpg", Me, , , False, False)
 
     Call cSkillNames(8).Initialize(imgSupervivencia, "", _
-                                    GrhPath & "SupervivenciaRollover.jpg", _
-                                    GrhPath & "SupervivenciaRollover.jpg", Me, , , False, False)
+                                    GrhPath & "SupervivenciaRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "SupervivenciaRollover" & LanguageGame  & ".jpg", Me, , , False, False)
     
     Call cSkillNames(9).Initialize(imgTalar, "", _
-                                    GrhPath & "TalarRollover.jpg", _
-                                    GrhPath & "TalarRollover.jpg", Me, , , False, False)
+                                    GrhPath & "TalarRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "TalarRollover" & LanguageGame  & ".jpg", Me, , , False, False)
 
     Call cSkillNames(10).Initialize(imgComercio, "", _
-                                    GrhPath & "ComercioRollover.jpg", _
-                                    GrhPath & "ComercioRollover.jpg", Me, , , False, False)
+                                    GrhPath & "ComercioRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "ComercioRollover" & LanguageGame  & ".jpg", Me, , , False, False)
 
     Call cSkillNames(11).Initialize(imgEscudos, "", _
-                                    GrhPath & "DefensaConEscudosRollover.jpg", _
-                                    GrhPath & "DefensaConEscudosRollover.jpg", Me, _
-                                    GrhPath & "DefensaEscudosBloqueado.jpg", Not bPuedeEscudo, False, False)
+                                    GrhPath & "DefensaConEscudosRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "DefensaConEscudosRollover" & LanguageGame  & ".jpg", Me, _
+                                    GrhPath & "DefensaEscudosBloqueado" & LanguageGame  & ".jpg", Not bPuedeEscudo, False, False)
 
     Call cSkillNames(12).Initialize(imgPesca, "", _
-                                    GrhPath & "PescaRollover.jpg", _
-                                    GrhPath & "PescaRollover.jpg", Me, , , False, False)
+                                    GrhPath & "PescaRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "PescaRollover" & LanguageGame  & ".jpg", Me, , , False, False)
 
     Call cSkillNames(13).Initialize(imgMineria, "", _
-                                    GrhPath & "MineriaRollover.jpg", _
-                                    GrhPath & "MineriaRollover.jpg", Me, , , False, False)
+                                    GrhPath & "MineriaRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "MineriaRollover" & LanguageGame  & ".jpg", Me, , , False, False)
 
     Call cSkillNames(14).Initialize(imgCarpinteria, "", _
-                                    GrhPath & "CarpinteriaRollover.jpg", _
-                                    GrhPath & "CarpinteriaRollover.jpg", Me, , , False, False)
+                                    GrhPath & "CarpinteriaRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "CarpinteriaRollover" & LanguageGame  & ".jpg", Me, , , False, False)
 
     Call cSkillNames(15).Initialize(imgHerreria, "", _
-                                    GrhPath & "HerreriaRollover.jpg", _
-                                    GrhPath & "HerreriaRollover.jpg", Me, , , False, False)
+                                    GrhPath & "HerreriaRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "HerreriaRollover" & LanguageGame  & ".jpg", Me, , , False, False)
 
     Call cSkillNames(16).Initialize(imgLiderazgo, "", _
-                                    GrhPath & "LiderazgoRollover.jpg", _
-                                    GrhPath & "LiderazgoRollover.jpg", Me, , , False, False)
+                                    GrhPath & "LiderazgoRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "LiderazgoRollover" & LanguageGame  & ".jpg", Me, , , False, False)
 
     Call cSkillNames(17).Initialize(imgDomar, "", _
-                                    GrhPath & "DomarAnimalesRollover.jpg", _
-                                    GrhPath & "DomarAnimalesRollover.jpg", Me, , , False, False)
+                                    GrhPath & "DomarAnimalesRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "DomarAnimalesRollover" & LanguageGame  & ".jpg", Me, , , False, False)
 
     Call cSkillNames(18).Initialize(imgCombateDistancia, "", _
-                                    GrhPath & "CombateADistanciaRollover.jpg", _
-                                    GrhPath & "CombateADistanciaRollover.jpg", Me, _
-                                    GrhPath & "CombateADistanciaBloqueado.jpg", Not bPuedeCombateDistancia, False, False)
+                                    GrhPath & "CombateADistanciaRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "CombateADistanciaRollover" & LanguageGame  & ".jpg", Me, _
+                                    GrhPath & "CombateADistanciaBloqueado" & LanguageGame  & ".jpg", Not bPuedeCombateDistancia, False, False)
 
     Call cSkillNames(19).Initialize(imgCombateSinArmas, "", _
-                                    GrhPath & "CombateSinArmasRollover.jpg", _
-                                    GrhPath & "CombateSinArmasRollover.jpg", Me, , , False, False)
+                                    GrhPath & "CombateSinArmasRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "CombateSinArmasRollover" & LanguageGame  & ".jpg", Me, , , False, False)
 
     Call cSkillNames(20).Initialize(imgNavegacion, "", _
-                                    GrhPath & "NavegacionRollover.jpg", _
-                                    GrhPath & "NavegacionRollover.jpg", Me, , , False, False)
+                                    GrhPath & "NavegacionRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "NavegacionRollover" & LanguageGame  & ".jpg", Me, , , False, False)
 
 
 End Sub

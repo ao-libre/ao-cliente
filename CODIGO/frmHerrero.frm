@@ -504,14 +504,14 @@ Private Sub CargarImagenes()
     
     ImgPath = App.path & "\graficos\"
 
-    Set Pestanias(ePestania.ieArmas) = LoadPicture(ImgPath & "VentanaHerreriaArmas.jpg")
-    Set Pestanias(ePestania.ieArmaduras) = LoadPicture(ImgPath & "VentanaHerreriaArmaduras.jpg")
-    Set Pestanias(ePestania.ieMejorar) = LoadPicture(ImgPath & "VentanaHerreriaMejorar.jpg")
+    Set Pestanias(ePestania.ieArmas) = LoadPicture(ImgPath & "VentanaHerreriaArmas" & LanguageGame  & ".jpg")
+    Set Pestanias(ePestania.ieArmaduras) = LoadPicture(ImgPath & "VentanaHerreriaArmaduras" & LanguageGame  & ".jpg")
+    Set Pestanias(ePestania.ieMejorar) = LoadPicture(ImgPath & "VentanaHerreriaMejorar" & LanguageGame  & ".jpg")
     
     Set picCheck = LoadPicture(ImgPath & "CheckBoxHerreria.jpg")
     
-    Set picRecuadroItem = LoadPicture(ImgPath & "RecuadroItemsHerreria.jpg")
-    Set picRecuadroLingotes = LoadPicture(ImgPath & "RecuadroLingotes.jpg")
+    Set picRecuadroItem = LoadPicture(ImgPath & "RecuadroItemsHerreria" & LanguageGame  & ".jpg")
+    Set picRecuadroLingotes = LoadPicture(ImgPath & "RecuadroLingotes" & LanguageGame  & ".jpg")
     
     For Index = 1 To MAX_LIST_ITEMS
         imgMarcoItem(Index).Picture = picRecuadroItem
@@ -531,17 +531,17 @@ Private Sub CargarImagenes()
 
     Set LastButtonPressed = New clsGraphicalButton
     
-    Call cPicCerrar.Initialize(imgCerrar, ImgPath & "BotonCerrarHerreria.jpg", ImgPath & "BotonCerrarRolloverHerreria.jpg", ImgPath & "BotonCerrarClickHerreria.jpg", Me)
-    Call cPicConstruir(0).Initialize(picConstruir0, ImgPath & "BotonConstruirHerreria.jpg", ImgPath & "BotonConstruirRolloverHerreria.jpg", ImgPath & "BotonConstruirClickHerreria.jpg", Me)
-    Call cPicConstruir(1).Initialize(picConstruir1, ImgPath & "BotonConstruirHerreria.jpg", ImgPath & "BotonConstruirRolloverHerreria.jpg", ImgPath & "BotonConstruirClickHerreria.jpg", Me)
-    Call cPicConstruir(2).Initialize(picConstruir2, ImgPath & "BotonConstruirHerreria.jpg", ImgPath & "BotonConstruirRolloverHerreria.jpg", ImgPath & "BotonConstruirClickHerreria.jpg", Me)
-    Call cPicConstruir(3).Initialize(picConstruir3, ImgPath & "BotonConstruirHerreria.jpg", ImgPath & "BotonConstruirRolloverHerreria.jpg", ImgPath & "BotonConstruirClickHerreria.jpg", Me)
-    Call cPicMejorar(0).Initialize(picMejorar0, ImgPath & "BotonMejorarHerreria.jpg", ImgPath & "BotonMejorarRolloverHerreria.jpg", ImgPath & "BotonMejorarClickHerreria.jpg", Me)
-    Call cPicMejorar(1).Initialize(picMejorar1, ImgPath & "BotonMejorarHerreria.jpg", ImgPath & "BotonMejorarRolloverHerreria.jpg", ImgPath & "BotonMejorarClickHerreria.jpg", Me)
-    Call cPicMejorar(2).Initialize(picMejorar2, ImgPath & "BotonMejorarHerreria.jpg", ImgPath & "BotonMejorarRolloverHerreria.jpg", ImgPath & "BotonMejorarClickHerreria.jpg", Me)
-    Call cPicMejorar(3).Initialize(picMejorar3, ImgPath & "BotonMejorarHerreria.jpg", ImgPath & "BotonMejorarRolloverHerreria.jpg", ImgPath & "BotonMejorarClickHerreria.jpg", Me)
+    Call cPicCerrar.Initialize(imgCerrar, ImgPath & "BotonCerrarHerreria" & LanguageGame  & ".jpg", ImgPath & "BotonCerrarRolloverHerreria" & LanguageGame  & ".jpg", ImgPath & "BotonCerrarClickHerreria" & LanguageGame  & ".jpg", Me)
+    Call cPicConstruir(0).Initialize(picConstruir0, ImgPath & "BotonConstruirHerreria" & LanguageGame  & ".jpg", ImgPath & "BotonConstruirRolloverHerreria" & LanguageGame  & ".jpg", ImgPath & "BotonConstruirClickHerreria" & LanguageGame  & ".jpg", Me)
+    Call cPicConstruir(1).Initialize(picConstruir1, ImgPath & "BotonConstruirHerreria" & LanguageGame  & ".jpg", ImgPath & "BotonConstruirRolloverHerreria" & LanguageGame  & ".jpg", ImgPath & "BotonConstruirClickHerreria" & LanguageGame  & ".jpg", Me)
+    Call cPicConstruir(2).Initialize(picConstruir2, ImgPath & "BotonConstruirHerreria" & LanguageGame  & ".jpg", ImgPath & "BotonConstruirRolloverHerreria" & LanguageGame  & ".jpg", ImgPath & "BotonConstruirClickHerreria" & LanguageGame  & ".jpg", Me)
+    Call cPicConstruir(3).Initialize(picConstruir3, ImgPath & "BotonConstruirHerreria" & LanguageGame  & ".jpg", ImgPath & "BotonConstruirRolloverHerreria" & LanguageGame  & ".jpg", ImgPath & "BotonConstruirClickHerreria" & LanguageGame  & ".jpg", Me)
+    Call cPicMejorar(0).Initialize(picMejorar0, ImgPath & "BotonMejorarHerreria" & LanguageGame  & ".jpg", ImgPath & "BotonMejorarRolloverHerreria" & LanguageGame  & ".jpg", ImgPath & "BotonMejorarClickHerreria" & LanguageGame  & ".jpg", Me)
+    Call cPicMejorar(1).Initialize(picMejorar1, ImgPath & "BotonMejorarHerreria" & LanguageGame  & ".jpg", ImgPath & "BotonMejorarRolloverHerreria" & LanguageGame  & ".jpg", ImgPath & "BotonMejorarClickHerreria" & LanguageGame  & ".jpg", Me)
+    Call cPicMejorar(2).Initialize(picMejorar2, ImgPath & "BotonMejorarHerreria" & LanguageGame  & ".jpg", ImgPath & "BotonMejorarRolloverHerreria" & LanguageGame  & ".jpg", ImgPath & "BotonMejorarClickHerreria" & LanguageGame  & ".jpg", Me)
+    Call cPicMejorar(3).Initialize(picMejorar3, ImgPath & "BotonMejorarHerreria" & LanguageGame  & ".jpg", ImgPath & "BotonMejorarRolloverHerreria" & LanguageGame  & ".jpg", ImgPath & "BotonMejorarClickHerreria" & LanguageGame  & ".jpg", Me)
 
-    imgCantidadCiclo.Picture = LoadPicture(ImgPath & "ConstruirPorCiclo.jpg")
+    imgCantidadCiclo.Picture = LoadPicture(ImgPath & "ConstruirPorCiclo" & LanguageGame  & ".jpg")
     
     picPestania(ePestania.ieArmas).MouseIcon = picMouseIcon
     picPestania(ePestania.ieArmaduras).MouseIcon = picMouseIcon

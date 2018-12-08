@@ -400,7 +400,7 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
-    Me.Picture = LoadPicture(App.path & "\Graficos\VentanaInfoPj.jpg")
+    Me.Picture = LoadPicture(App.path & "\Graficos\VentanaInfoPj" & LanguageGame  & ".jpg")
     
     Call LoadButtons
     
@@ -420,25 +420,25 @@ Private Sub LoadButtons()
     Set LastButtonPressed = New clsGraphicalButton
     
     
-    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarInfoChar.jpg", _
-                                    GrhPath & "BotonCerrarRolloverInfoChar.jpg", _
-                                    GrhPath & "BotonCerrarClickInfoChar.jpg", Me)
+    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarInfoChar" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonCerrarRolloverInfoChar" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonCerrarClickInfoChar" & LanguageGame  & ".jpg", Me)
 
-    Call cBotonPeticion.Initialize(imgPeticion, GrhPath & "BotonPeticion.jpg", _
-                                    GrhPath & "BotonPeticionRollover.jpg", _
-                                    GrhPath & "BotonPeticionClick.jpg", Me)
+    Call cBotonPeticion.Initialize(imgPeticion, GrhPath & "BotonPeticion" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonPeticionRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonPeticionClick" & LanguageGame  & ".jpg", Me)
 
-    Call cBotonRechazar.Initialize(imgRechazar, GrhPath & "BotonRechazar.jpg", _
-                                    GrhPath & "BotonRechazarRollover.jpg", _
-                                    GrhPath & "BotonRechazarClick.jpg", Me)
+    Call cBotonRechazar.Initialize(imgRechazar, GrhPath & "BotonRechazar" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonRechazarRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonRechazarClick" & LanguageGame  & ".jpg", Me)
 
-    Call cBotonEchar.Initialize(imgEchar, GrhPath & "BotonEchar.jpg", _
-                                    GrhPath & "BotonEcharRollover.jpg", _
-                                    GrhPath & "BotonEcharClick.jpg", Me)
+    Call cBotonEchar.Initialize(imgEchar, GrhPath & "BotonEchar" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonEcharRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonEcharClick" & LanguageGame  & ".jpg", Me)
                                     
-    Call cBotonAceptar.Initialize(imgAceptar, GrhPath & "BotonAceptarInfoChar.jpg", _
-                                    GrhPath & "BotonAceptarRolloverInfoChar.jpg", _
-                                    GrhPath & "BotonAceptarClickInfoChar.jpg", Me)
+    Call cBotonAceptar.Initialize(imgAceptar, GrhPath & "BotonAceptarInfoChar" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonAceptarRolloverInfoChar" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonAceptarClickInfoChar" & LanguageGame  & ".jpg", Me)
 
 End Sub
 

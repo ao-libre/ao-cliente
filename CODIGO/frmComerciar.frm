@@ -290,7 +290,7 @@ Private Sub Form_Load()
 
     
     'Cargamos la interfase
-    Me.Picture = LoadPicture(DirGraficos & "ventanacomercio.jpg")
+    Me.Picture = LoadPicture(DirGraficos & "ventanacomercio" & LanguageGame  & ".jpg")
     
     Call LoadButtons
     
@@ -308,13 +308,13 @@ Private Sub LoadButtons()
     Set LastButtonPressed = New clsGraphicalButton
     
     
-    Call cBotonVender.Initialize(imgVender, GrhPath & "BotonVender.jpg", _
-                                    GrhPath & "BotonVenderRollover.jpg", _
-                                    GrhPath & "BotonVenderClick.jpg", Me)
+    Call cBotonVender.Initialize(imgVender, GrhPath & "BotonVender" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonVenderRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonVenderClick" & LanguageGame  & ".jpg", Me)
 
-    Call cBotonComprar.Initialize(imgComprar, GrhPath & "BotonComprar.jpg", _
-                                    GrhPath & "BotonComprarRollover.jpg", _
-                                    GrhPath & "BotonComprarClick.jpg", Me)
+    Call cBotonComprar.Initialize(imgComprar, GrhPath & "BotonComprar" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonComprarRollover" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonComprarClick" & LanguageGame  & ".jpg", Me)
 
     Call cBotonCruz.Initialize(imgCross, "", _
                                     GrhPath & "BotonCruzApretadaComercio.jpg", _

@@ -257,7 +257,7 @@ Private Sub Form_Load()
         messageTxt(i) = CustomMessages.Message(i)
     Next i
 
-    Me.Picture = LoadPicture(App.path & "\graficos\VentanaMensajesPersonalizados.jpg")
+    Me.Picture = LoadPicture(App.path & "\graficos\VentanaMensajesPersonalizados" & LanguageGame  & ".jpg")
     
     LoadButtons
     
@@ -273,10 +273,10 @@ Private Sub LoadButtons()
     
     Set LastButtonPressed = New clsGraphicalButton
 
-    Call cBotonGuardar.Initialize(imgGuardar, GrhPath & "BotonGuardarCustomMsg.jpg", GrhPath & "BotonGuardarRolloverCustomMsg.jpg", _
-                                    GrhPath & "BotonGuardarClickCustomMsg.jpg", Me)
-    Call cBotonCancelar.Initialize(imgCancelar, GrhPath & "BotonCancelarCustomMsg.jpg", GrhPath & "BotonCancelarRolloverCustomMsg.jpg", _
-                                    GrhPath & "BotonCancelarClickCustomMsg.jpg", Me)
+    Call cBotonGuardar.Initialize(imgGuardar, GrhPath & "BotonGuardarCustomMsg" & LanguageGame  & ".jpg", GrhPath & "BotonGuardarRolloverCustomMsg" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonGuardarClickCustomMsg" & LanguageGame  & ".jpg", Me)
+    Call cBotonCancelar.Initialize(imgCancelar, GrhPath & "BotonCancelarCustomMsg" & LanguageGame  & ".jpg", GrhPath & "BotonCancelarRolloverCustomMsg" & LanguageGame  & ".jpg", _
+                                    GrhPath & "BotonCancelarClickCustomMsg" & LanguageGame  & ".jpg", Me)
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
