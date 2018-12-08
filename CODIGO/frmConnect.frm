@@ -1,5 +1,4 @@
 VERSION 5.00
-Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.ocx"
 Begin VB.Form frmConnect 
    BackColor       =   &H00E0E0E0&
    BorderStyle     =   0  'None
@@ -31,13 +30,6 @@ Begin VB.Form frmConnect
    ScaleWidth      =   800
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
-   Begin InetCtlsObjects.Inet InetIpApi 
-      Left            =   960
-      Top             =   1080
-      _ExtentX        =   1005
-      _ExtentY        =   1005
-      _Version        =   393216
-   End
    Begin InetCtlsObjects.Inet InetReddit 
       Left            =   120
       Top             =   1080
@@ -318,7 +310,7 @@ Private cBotonTeclas As clsGraphicalButton
 
 Private Type tRedditPost
     Title As String
-    Url As String
+    URL As String
 End Type
 
 Dim Posts() As tRedditPost
@@ -329,7 +321,7 @@ Public LastButtonPressed As clsGraphicalButton
 Private Sub Form_Activate()
     
     If CurServer <> 0 Then
-        IPTxt = ServersLst(1).ip
+        IPTxt = ServersLst(1).Ip
         PortTxt = ServersLst(1).Puerto
     Else
         IPTxt = IPdelServidor
@@ -482,7 +474,7 @@ Private Sub CheckServers()
     If Not IsIp(IPTxt) And CurServer <> 0 Then
         If MsgBox("Atencion, esta intentando conectarse a un servidor no oficial, NoLand Studios no se hace responsable de los posibles problemas que estos servidores presenten. ¿Desea continuar?", vbYesNo) = vbNo Then
             If CurServer <> 0 Then
-                IPTxt = ServersLst(CurServer).ip
+                IPTxt = ServersLst(CurServer).Ip
                 PortTxt = ServersLst(CurServer).Puerto
             Else
                 IPTxt = IPdelServidor
@@ -608,11 +600,11 @@ Private Sub imgVerForo_Click()
 End Sub
 
 Private Sub lstRedditPosts_Click()
-    Call ShellExecute(0, "Open", Posts(lstRedditPosts.ListIndex + 1).Url, "", App.path, SW_SHOWNORMAL)
+    Call ShellExecute(0, "Open", Posts(lstRedditPosts.ListIndex + 1).URL, "", App.path, SW_SHOWNORMAL)
 End Sub
 
 Private Sub lstServers_Click()
-    IPTxt.Text = ServersLst(lstServers.ListIndex + 1).ip
+    IPTxt.Text = ServersLst(lstServers.ListIndex + 1).Ip
     PortTxt.Text = ServersLst(lstServers.ListIndex + 1).Puerto
     CurServer = lstServers.ListIndex + 1
 End Sub
@@ -643,7 +635,7 @@ On Error Resume Next
     i = 1
     Do While i <= qtyPostsOnReddit
         Posts(i).Title = JsonObject.Item("data").Item("children").Item(i).Item("data").Item("title")
-        Posts(i).Url = JsonObject.Item("data").Item("children").Item(i).Item("data").Item("url")
+        Posts(i).URL = JsonObject.Item("data").Item("children").Item(i).Item("data").Item("url")
         
         lstRedditPosts.AddItem JsonObject.Item("data").Item("children").Item(i).Item("data").Item("title")
         
