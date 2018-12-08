@@ -60,7 +60,7 @@ Private Sub SetLanguage()
 
     LanguageConfig = GetVar(App.path & "\INIT\Config.ini", "Cliente", "Language")
 
-    If LanguageGame = "spanish" Then
+    If LanguageConfig = "spanish" Then
         LanguageGame = "_es"
     Else
         LanguageGame = "_en"

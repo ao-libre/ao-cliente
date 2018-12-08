@@ -1,4 +1,5 @@
 VERSION 5.00
+Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.ocx"
 Begin VB.Form frmConnect 
    BackColor       =   &H00E0E0E0&
    BorderStyle     =   0  'None
@@ -161,6 +162,18 @@ Begin VB.Form frmConnect
       Top             =   2760
       Width           =   1575
    End
+   Begin VB.Image ImgSpanish 
+      Height          =   375
+      Left            =   4800
+      Top             =   4680
+      Width           =   1335
+   End
+   Begin VB.Image imgEnglish 
+      Height          =   375
+      Left            =   6240
+      Top             =   4680
+      Width           =   1335
+   End
    Begin VB.Image imgTeclas 
       Height          =   375
       Left            =   6120
@@ -307,6 +320,8 @@ Private cBotonLeerMas As clsGraphicalButton
 Private cBotonForo As clsGraphicalButton
 Private cBotonConectarse As clsGraphicalButton
 Private cBotonTeclas As clsGraphicalButton
+Private cBotonEnglish As clsGraphicalButton
+Private cBotonSpanish As clsGraphicalButton
 
 Private Type tRedditPost
     Title As String
@@ -373,29 +388,9 @@ Private Sub Form_Load()
        version.Caption = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
     '[END]'
     
-    Me.Picture = LoadPicture(App.path & "\graficos\VentanaConectar" & LanguageGame  & ".jpg")
+    Me.Picture = LoadPicture(App.path & "\graficos\VentanaConectar" & LanguageGame & ".jpg")
     
     Call LoadButtons
-
-    Call CheckLicenseAgreement
-        
-End Sub
-
-Private Sub CheckLicenseAgreement()
-    'Recordatorio para cumplir la licencia, por si borrás el Boton sin leer el code...
-    Dim i As Long
-    
-    For i = 0 To Me.Controls.Count - 1
-        If Me.Controls(i).Name = "imgCodigoFuente" Then
-            Exit For
-        End If
-    Next i
-    
-    If i = Me.Controls.Count Then
-        MsgBox "No debe eliminarse la posibilidad de bajar el código de sus servidor. Caso contrario estarían violando la licencia Affero GPL y con ella derechos de autor, incurriendo de esta forma en un delito punible por ley." & vbCrLf & vbCrLf & vbCrLf & _
-                "Argentum Online es libre, es de todos. Mantengamoslo así. Si tanto te gusta el juego y querés los cambios que hacemos nosotros, compartí los tuyos. Es un cambio justo. Si no estás de acuerdo, no uses nuestro código, pues nadie te obliga o bien utiliza una versión anterior a la 0.12.0.", vbCritical Or vbApplicationModal
-    End If
-
 End Sub
 
 Private Sub LoadButtons()
@@ -415,49 +410,60 @@ Private Sub LoadButtons()
     Set cBotonForo = New clsGraphicalButton
     Set cBotonConectarse = New clsGraphicalButton
     Set cBotonTeclas = New clsGraphicalButton
+    Set cBotonEnglish = New clsGraphicalButton
+    Set cBotonSpanish = New clsGraphicalButton
     
     Set LastButtonPressed = New clsGraphicalButton
 
         
-    Call cBotonCrearPj.Initialize(imgCrearPj, GrhPath & "BotonCrearPersonajeConectar" & LanguageGame  & ".jpg", _
-                                    GrhPath & "BotonCrearPersonajeRolloverConectar" & LanguageGame  & ".jpg", _
-                                    GrhPath & "BotonCrearPersonajeClickConectar" & LanguageGame  & ".jpg", Me)
+    Call cBotonCrearPj.Initialize(imgCrearPj, GrhPath & "BotonCrearPersonajeConectar" & LanguageGame & ".jpg", _
+                                    GrhPath & "BotonCrearPersonajeRolloverConectar" & LanguageGame & ".jpg", _
+                                    GrhPath & "BotonCrearPersonajeClickConectar" & LanguageGame & ".jpg", Me)
                                     
-    Call cBotonRecuperarPass.Initialize(imgRecuperar, GrhPath & "BotonRecuperarPass" & LanguageGame  & ".jpg", _
-                                    GrhPath & "BotonRecuperarPassRollover" & LanguageGame  & ".jpg", _
-                                    GrhPath & "BotonRecuperarPassClick" & LanguageGame  & ".jpg", Me)
+    Call cBotonRecuperarPass.Initialize(imgRecuperar, GrhPath & "BotonRecuperarPass" & LanguageGame & ".jpg", _
+                                    GrhPath & "BotonRecuperarPassRollover" & LanguageGame & ".jpg", _
+                                    GrhPath & "BotonRecuperarPassClick" & LanguageGame & ".jpg", Me)
                                     
-    Call cBotonManual.Initialize(imgManual, GrhPath & "BotonManual" & LanguageGame  & ".jpg", _
-                                    GrhPath & "BotonManualRollover" & LanguageGame  & ".jpg", _
-                                    GrhPath & "BotonManualClick" & LanguageGame  & ".jpg", Me)
+    Call cBotonManual.Initialize(imgManual, GrhPath & "BotonManual" & LanguageGame & ".jpg", _
+                                    GrhPath & "BotonManualRollover" & LanguageGame & ".jpg", _
+                                    GrhPath & "BotonManualClick" & LanguageGame & ".jpg", Me)
                                     
-    Call cBotonReglamento.Initialize(imgReglamento, GrhPath & "BotonReglamento" & LanguageGame  & ".jpg", _
-                                    GrhPath & "BotonReglamentoRollover" & LanguageGame  & ".jpg", _
-                                    GrhPath & "BotonReglamentoClick" & LanguageGame  & ".jpg", Me)
+    Call cBotonReglamento.Initialize(imgReglamento, GrhPath & "BotonReglamento" & LanguageGame & ".jpg", _
+                                    GrhPath & "BotonReglamentoRollover" & LanguageGame & ".jpg", _
+                                    GrhPath & "BotonReglamentoClick" & LanguageGame & ".jpg", Me)
                                     
-    Call cBotonCodigoFuente.Initialize(imgCodigoFuente, GrhPath & "BotonCodigoFuente" & LanguageGame  & ".jpg", _
-                                    GrhPath & "BotonCodigoFuenteRollover" & LanguageGame  & ".jpg", _
-                                    GrhPath & "BotonCodigoFuenteClick" & LanguageGame  & ".jpg", Me)
+    Call cBotonCodigoFuente.Initialize(imgCodigoFuente, GrhPath & "BotonCodigoFuente" & LanguageGame & ".jpg", _
+                                    GrhPath & "BotonCodigoFuenteRollover" & LanguageGame & ".jpg", _
+                                    GrhPath & "BotonCodigoFuenteClick" & LanguageGame & ".jpg", Me)
                                     
-    Call cBotonBorrarPj.Initialize(imgBorrarPj, GrhPath & "BotonBorrarPersonaje" & LanguageGame  & ".jpg", _
-                                    GrhPath & "BotonBorrarPersonajeRollover" & LanguageGame  & ".jpg", _
-                                    GrhPath & "BotonBorrarPersonajeClick" & LanguageGame  & ".jpg", Me)
+    Call cBotonBorrarPj.Initialize(imgBorrarPj, GrhPath & "BotonBorrarPersonaje" & LanguageGame & ".jpg", _
+                                    GrhPath & "BotonBorrarPersonajeRollover" & LanguageGame & ".jpg", _
+                                    GrhPath & "BotonBorrarPersonajeClick" & LanguageGame & ".jpg", Me)
                                     
-    Call cBotonSalir.Initialize(imgSalir, GrhPath & "BotonSalirConnect" & LanguageGame  & ".jpg", _
-                                    GrhPath & "BotonBotonSalirRolloverConnect" & LanguageGame  & ".jpg", _
-                                    GrhPath & "BotonSalirClickConnect" & LanguageGame  & ".jpg", Me)
+    Call cBotonSalir.Initialize(imgSalir, GrhPath & "BotonSalirConnect" & LanguageGame & ".jpg", _
+                                    GrhPath & "BotonBotonSalirRolloverConnect" & LanguageGame & ".jpg", _
+                                    GrhPath & "BotonSalirClickConnect" & LanguageGame & ".jpg", Me)
                                     
-    Call cBotonForo.Initialize(imgVerForo, GrhPath & "BotonVerForo" & LanguageGame  & ".jpg", _
-                                    GrhPath & "BotonVerForoRollover" & LanguageGame  & ".jpg", _
-                                    GrhPath & "BotonVerForoClick" & LanguageGame  & ".jpg", Me)
+    Call cBotonForo.Initialize(imgVerForo, GrhPath & "BotonVerForo" & LanguageGame & ".jpg", _
+                                    GrhPath & "BotonVerForoRollover" & LanguageGame & ".jpg", _
+                                    GrhPath & "BotonVerForoClick" & LanguageGame & ".jpg", Me)
                                     
-    Call cBotonConectarse.Initialize(imgConectarse, GrhPath & "BotonConectarse" & LanguageGame  & ".jpg", _
-                                    GrhPath & "BotonConectarseRollover" & LanguageGame  & ".jpg", _
-                                    GrhPath & "BotonConectarseClick" & LanguageGame  & ".jpg", Me)
+    Call cBotonConectarse.Initialize(imgConectarse, GrhPath & "BotonConectarse" & LanguageGame & ".jpg", _
+                                    GrhPath & "BotonConectarseRollover" & LanguageGame & ".jpg", _
+                                    GrhPath & "BotonConectarseClick" & LanguageGame & ".jpg", Me)
                                     
-    Call cBotonTeclas.Initialize(imgTeclas, GrhPath & "BotonTeclas" & LanguageGame  & ".jpg", _
-                                    GrhPath & "BotonTeclasRollover" & LanguageGame  & ".jpg", _
-                                    GrhPath & "BotonTeclasClick" & LanguageGame  & ".jpg", Me)
+    Call cBotonTeclas.Initialize(imgTeclas, GrhPath & "BotonTeclas" & LanguageGame & ".jpg", _
+                                    GrhPath & "BotonTeclasRollover" & LanguageGame & ".jpg", _
+                                    GrhPath & "BotonTeclasClick" & LanguageGame & ".jpg", Me)
+                                    
+    Call cBotonEnglish.Initialize(imgEnglish, GrhPath & "BotonEnglish" & LanguageGame & ".jpg", _
+                                    GrhPath & "BotonEnglishRollover" & LanguageGame & ".jpg", _
+                                    GrhPath & "BotonEnglishClick" & LanguageGame & ".jpg", Me)
+                                    
+    Call cBotonSpanish.Initialize(ImgSpanish, GrhPath & "BotonSpanish" & LanguageGame & ".jpg", _
+                                    GrhPath & "BotonSpanishRollover" & LanguageGame & ".jpg", _
+                                    GrhPath & "BotonSpanishClick" & LanguageGame & ".jpg", Me)
+                                        
 
 End Sub
 
@@ -481,6 +487,10 @@ Private Sub CheckServers()
     CurServer = 0
     IPdelServidor = IPTxt
     PuertoDelServidor = PortTxt
+End Sub
+
+Private Sub Image1_Click()
+
 End Sub
 
 Private Sub imgBorrarPj_Click()
@@ -604,6 +614,26 @@ Private Sub imgServArgentina_Click()
     Call Audio.PlayWave(SND_CLICK)
     IPTxt.Text = IPdelServidor
     PortTxt.Text = PuertoDelServidor
+End Sub
+
+Private Sub ImgSpanish_Click()
+    Call WriteLanguageParameterInConfig("spanish")
+    Call LaunchPopUpBeforeClose
+End Sub
+
+Private Sub imgEnglish_Click()
+    Call WriteLanguageParameterInConfig("english")
+    Call LaunchPopUpBeforeClose
+End Sub
+
+Private Sub WriteLanguageParameterInConfig(language As String)
+    Call WriteVar(App.path & "\INIT\Config.ini", "Cliente", "Language", language)
+End Sub
+
+Private Sub LaunchPopUpBeforeClose()
+    If MsgBox("Debes reiniciar para aplicar los cambios / you should restart the app to apply the changes", vbYesNo) = vbYes Then
+        End
+    End If
 End Sub
 
 Private Sub imgTeclas_Click()
