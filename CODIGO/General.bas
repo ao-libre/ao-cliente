@@ -34,7 +34,7 @@ Attribute VB_Name = "Mod_General"
 Option Explicit
 
 #If False Then 'to fix VB fucking up the var names
-    Dim Status, Nombre, PicInv, f, Obj, J As String
+    Dim status, Nombre, PicInv, f, obj, j As String
 #End If
 
 Public iplst As String
@@ -492,7 +492,7 @@ Sub SwitchMap(ByVal Map As Integer)
     Dim ByFlags As Byte
     Dim handle As Integer
     Dim CharIndex As Integer
-    Dim Obj       As Integer
+    Dim obj       As Integer
     
     handle = FreeFile()
     
@@ -558,9 +558,9 @@ Sub SwitchMap(ByVal Map As Integer)
             End If
 
             'Erase OBJs
-            Obj = Map_PosExitsObject(X, Y)
+            obj = Map_PosExitsObject(X, Y)
 
-            If (Obj > 0) Then
+            If (obj > 0) Then
                 Call Map_DestroyObject(X, Y)
             End If
             
@@ -665,6 +665,27 @@ Public Function IsIp(ByVal Ip As String) As Boolean
     Next i
 End Function
 
+Private Function GetCountryFromIp(ByVal Ip As String) As String
+'********************************
+'Author: Recox
+'Last Modification: 08/12/2018
+'Added endpoint to obtain the country of the server.
+'********************************
+On Error Resume Next
+    Dim URL As String
+    Dim Endpoint As String
+    Dim JsonObject As Object
+    Dim Response As String
+    
+    URL = GetVar(App.path & "\INIT\Config.ini", "Parameters", "IpApiEndpoint")
+    Endpoint = URL & Ip & "/json/"
+    
+    Response = frmConnect.InetIpApi.OpenURL(Endpoint)
+    Set JsonObject = JSON.parse(Response)
+    
+    GetCountryFromIp = JsonObject.Item("country")
+End Function
+
 Public Sub CargarServidores()
 '********************************
 'Author: Unknown
@@ -673,22 +694,32 @@ Public Sub CargarServidores()
 'Added Instruction "CloseClient" before End so the mutex is cleared
 '********************************
 On Error GoTo errorH
-    Dim F As String
-    Dim c As Integer
-    Dim i As Long
+    Dim File As String
+    Dim Quantity As Integer
+    Dim i As Integer
+    Dim CountryCode As String
+    Dim IpApiEnabled As Boolean
     
-    F = App.path & "\init\sinfo.dat"
-    c = Val(GetVar(F, "INIT", "Cant"))
+    File = App.path & "\init\sinfo.dat"
+    Quantity = Val(GetVar(File, "INIT", "Cant"))
+    IpApiEnabled = GetVar(App.path & "\INIT\Config.ini", "Parameters", "IpApiEnabled")
     
     frmConnect.lstServers.Clear
     
-    frmConnect.lstServers.Clear
-    
-    ReDim ServersLst(1 To c) As tServerInfo
-    For i = 1 To c
-        ServersLst(i).Desc = GetVar(f, "S" & i, "Desc")
-        ServersLst(i).Ip = Trim$(GetVar(f, "S" & i, "Ip"))
-        ServersLst(i).Puerto = CInt(GetVar(f, "S" & i, "PJ"))
+    ReDim ServersLst(1 To Quantity) As tServerInfo
+    For i = 1 To Quantity
+        Dim CurrentIp As String
+        CurrentIp = Trim$(GetVar(File, "S" & i, "Ip"))
+        
+        If IpApiEnabled Then
+            CountryCode = GetCountryFromIp(CurrentIp)
+            ServersLst(i).Desc = CountryCode & " " & GetVar(File, "S" & i, "Desc")
+        Else
+            ServersLst(i).Desc = GetVar(File, "S" & i, "Desc")
+        End If
+        
+        ServersLst(i).Ip = CurrentIp
+        ServersLst(i).Puerto = CInt(GetVar(File, "S" & i, "PJ"))
         frmConnect.lstServers.AddItem (ServersLst(i).Desc)
     Next i
     
@@ -856,13 +887,14 @@ Private Sub LoadInitialConfig()
     
     '###########
     ' SERVIDORES
-    Call AddtoRichTextBox(frmCargando.Status, "Buscando servidores... ", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.status, "Buscando servidores... ", 255, 255, 255, True, False, True)
     Call DownloadServersFile("https://raw.githubusercontent.com/ao-libre/ao-cliente/master/INIT/sinfo.dat")
-    Call AddtoRichTextBox(frmCargando.Status, "Hecho", 255, 0, 0, True, False, False)
+    Call CargarServidores
+    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
     
     '###########
     ' CONSTANTES
-    Call AddtoRichTextBox(frmCargando.Status, "Iniciando constantes... ", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.status, "Iniciando constantes... ", 255, 255, 255, True, False, True)
     Call InicializarNombres
     ' Initialize FONTTYPES
     Call Protocol.InitFonts
@@ -882,7 +914,7 @@ Private Sub LoadInitialConfig()
     
     '#######
     ' CLASES
-    Call AddtoRichTextBox(frmCargando.Status, "Instanciando clases... ", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.status, "Instanciando clases... ", 255, 255, 255, True, False, True)
     Set Dialogos = New clsDialogs
     Set Audio = New clsAudio
     Set Inventario = New clsGrapchicalInventory
@@ -896,7 +928,7 @@ Private Sub LoadInitialConfig()
     
     '##############
     ' MOTOR GRAÅFICO
-    Call AddtoRichTextBox(frmCargando.Status, "Iniciando motor grafico... ", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.status, "Iniciando motor grafico... ", 255, 255, 255, True, False, True)
     
     '     Iniciamos el Engine de DirectX 8
     If Not Engine_DirectX8_Init Then
@@ -910,21 +942,21 @@ Private Sub LoadInitialConfig()
     
     Engine_DirectX8_Aditional_Init
     
-    Call AddtoRichTextBox(frmCargando.Status, "Hecho", 255, 0, 0, True, False, False)
+    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
     
     '###################
     ' ANIMACIONES EXTRAS
-    Call AddtoRichTextBox(frmCargando.Status, "Creando animaciones extra... ", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.status, "Creando animaciones extra... ", 255, 255, 255, True, False, True)
     Call CargarTips
     Call CargarArrayLluvia
     Call CargarAnimArmas
     Call CargarAnimEscudos
     Call CargarColores
-    Call AddtoRichTextBox(frmCargando.Status, "Hecho", 255, 0, 0, True, False, False)
+    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
     
     '#############
     ' DIRECT SOUND
-    Call AddtoRichTextBox(frmCargando.Status, "Iniciando DirectSound... ", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.status, "Iniciando DirectSound... ", 255, 255, 255, True, False, True)
     'Inicializamos el sonido
     Call Audio.Initialize(DirectX, frmMain.hwnd, App.path & "\" & Config_Inicio.DirSonidos & "\", App.path & "\" & Config_Inicio.DirMusica & "\")
     'Enable / Disable audio
@@ -934,10 +966,10 @@ Private Sub LoadInitialConfig()
     'Inicializamos el inventario grafico
     Call Inventario.Initialize(DirectD3D8, frmMain.PicInv, MAX_INVENTORY_SLOTS)
     'Call Audio.MusicMP3Play(App.path & "\MP3\" & MP3_Inicio & ".mp3")
-    Call AddtoRichTextBox(frmCargando.Status, "Hecho", 255, 0, 0, True, False, False)
+    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
     
     
-    Call AddtoRichTextBox(frmCargando.Status, "                    °Bienvenido a Argentum Online!", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.status, "                    °Bienvenido a Argentum Online!", 255, 255, 255, True, False, True)
 
     'Give the user enough time to read the welcome text
     Call Sleep(500)
@@ -1526,32 +1558,32 @@ Public Sub CargarHechizos()
 '********************************
 On Error GoTo errorH
     Dim PathName As String
-    Dim J As Long
+    Dim j As Long
  
     PathName = App.path & "\init\Hechizos.dat"
     NumHechizos = Val(GetVar(PathName, "INIT", "NumHechizos"))
  
     ReDim Hechizos(1 To NumHechizos) As tHechizos
-    For J = 1 To NumHechizos
-        With Hechizos(J)
-            .Desc = GetVar(PathName, "HECHIZO" & J, "Desc")
-            .PalabrasMagicas = GetVar(PathName, "HECHIZO" & J, "PalabrasMagicas")
-            .Nombre = GetVar(PathName, "HECHIZO" & J, "Nombre")
-            .SkillRequerido = GetVar(PathName, "HECHIZO" & J, "MinSkill")
+    For j = 1 To NumHechizos
+        With Hechizos(j)
+            .Desc = GetVar(PathName, "HECHIZO" & j, "Desc")
+            .PalabrasMagicas = GetVar(PathName, "HECHIZO" & j, "PalabrasMagicas")
+            .Nombre = GetVar(PathName, "HECHIZO" & j, "Nombre")
+            .SkillRequerido = GetVar(PathName, "HECHIZO" & j, "MinSkill")
          
-            If J <> 38 And J <> 39 Then
-                .EnergiaRequerida = GetVar(PathName, "HECHIZO" & J, "StaRequerido")
+            If j <> 38 And j <> 39 Then
+                .EnergiaRequerida = GetVar(PathName, "HECHIZO" & j, "StaRequerido")
                  
-                .HechiceroMsg = GetVar(PathName, "HECHIZO" & J, "HechizeroMsg")
-                .ManaRequerida = GetVar(PathName, "HECHIZO" & J, "ManaRequerido")
+                .HechiceroMsg = GetVar(PathName, "HECHIZO" & j, "HechizeroMsg")
+                .ManaRequerida = GetVar(PathName, "HECHIZO" & j, "ManaRequerido")
              
              
-                .PropioMsg = GetVar(PathName, "HECHIZO" & J, "PropioMsg")
+                .PropioMsg = GetVar(PathName, "HECHIZO" & j, "PropioMsg")
              
-                .TargetMsg = GetVar(PathName, "HECHIZO" & J, "TargetMsg")
+                .TargetMsg = GetVar(PathName, "HECHIZO" & j, "TargetMsg")
             End If
         End With
-    Next J
+    Next j
  
 Exit Sub
  
