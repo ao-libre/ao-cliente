@@ -510,8 +510,8 @@ Private Sub CargarImagenes()
     
     Set picCheck = LoadPicture(ImgPath & "CheckBoxHerreria.jpg")
     
-    Set picRecuadroItem = LoadPicture(ImgPath & "RecuadroItemsHerreria" & LanguageGame  & ".jpg")
-    Set picRecuadroLingotes = LoadPicture(ImgPath & "RecuadroLingotes" & LanguageGame  & ".jpg")
+    Set picRecuadroItem = LoadPicture(ImgPath & "RecuadroItemsHerreria.jpg")
+    Set picRecuadroLingotes = LoadPicture(ImgPath & "RecuadroLingotes.jpg")
     
     For Index = 1 To MAX_LIST_ITEMS
         imgMarcoItem(Index).Picture = picRecuadroItem

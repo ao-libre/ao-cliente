@@ -529,8 +529,8 @@ Private Sub LoadButtons()
     
     Set picCheck = LoadPicture(GrhPath & "CheckBoxCarpinteria.jpg")
     
-    Set picRecuadroItem = LoadPicture(GrhPath & "RecuadroItemsCarpinteria" & LanguageGame  & ".jpg")
-    Set picRecuadroMaderas = LoadPicture(GrhPath & "RecuadroMadera" & LanguageGame  & ".jpg")
+    Set picRecuadroItem = LoadPicture(GrhPath & "RecuadroItemsCarpinteria.jpg")
+    Set picRecuadroMaderas = LoadPicture(GrhPath & "RecuadroMadera.jpg")
     
     For Index = 1 To MAX_LIST_ITEMS
         imgMarcoItem(Index).Picture = picRecuadroItem
