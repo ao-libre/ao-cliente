@@ -549,7 +549,7 @@ Begin VB.Form frmMain
       EndProperty
       Height          =   435
       Left            =   8880
-      MouseIcon       =   "frmMain.frx":10AA
+      MouseIcon       =   "frmMain.frx":10A9
       MousePointer    =   99  'Custom
       TabIndex        =   18
       Top             =   1920
@@ -909,10 +909,10 @@ Attribute VB_Exposed = False
 '--------------------------------------------------------------------------------
 'Argentum Online 0.11.6
 '
-'Copyright (C) 2002 Márquez Pablo Ignacio
+'Copyright (C) 2002 MÃ¡rquez Pablo Ignacio
 'Copyright (C) 2002 Otto Perez
 'Copyright (C) 2002 Aaron Perkins
-'Copyright (C) 2002 Matías Fernando Pequeño
+'Copyright (C) 2002 MatÃ­as Fernando PequeÃ±o
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the Affero General Public License;
@@ -934,10 +934,10 @@ Attribute VB_Exposed = False
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 número 983 piso 7 dto A
+'Calle 3 nÃºmero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'Código Postal 1900
-'Pablo Ignacio Márquez
+'CÃ³digo Postal 1900
+'Pablo Ignacio MÃ¡rquez
 
 Option Explicit
 
@@ -1126,10 +1126,10 @@ Select Case Index
     Case eSMType.sResucitation
         If Mostrar Then
             Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_SEGURO_RESU_ON, 0, 255, 0, True, False, True)
-            picSM(Index).ToolTipText = "Seguro de resucitación activado."
+            picSM(Index).ToolTipText = "Seguro de resucitaciÃ³n activado."
         Else
             Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_SEGURO_RESU_OFF, 255, 0, 0, True, False, True)
-            picSM(Index).ToolTipText = "Seguro de resucitación desactivado."
+            picSM(Index).ToolTipText = "Seguro de resucitaciÃ³n desactivado."
         End If
         
     Case eSMType.sSafemode
@@ -1157,31 +1157,31 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
 'Autor: Unknown
 'Last Modification: 18/11/2010
 '18/11/2009: ZaMa - Ahora se pueden poner comandos en los mensajes personalizados (execpto guildchat y privados)
-'18/11/2010: Amraphen - Agregué el handle correspondiente para las nuevas configuraciones de teclas (CTRL+0..9).
+'18/11/2010: Amraphen - AgreguÃ© el handle correspondiente para las nuevas configuraciones de teclas (CTRL+0..9).
 '***************************************************
     
     If (Not SendTxt.Visible) And (Not SendCMSTXT.Visible) Then
     
-        'Verificamos si se está presionando la tecla CTRL.
+        'Verificamos si se estÃ¡ presionando la tecla CTRL.
         If Shift = 2 Then
             If KeyCode >= vbKey0 And KeyCode <= vbKey9 Then
                 If KeyCode = vbKey0 Then
-                    'Si es CTRL+0 muestro la ventana de configuración de teclas.
+                    'Si es CTRL+0 muestro la ventana de configuraciÃ³n de teclas.
                     Call frmCustomKeys.Show(vbModal, Me)
                     
                 ElseIf KeyCode >= vbKey1 And KeyCode <= vbKey9 Then
-                    'Si es CTRL+1..9 cambio la configuración.
+                    'Si es CTRL+1..9 cambio la configuraciÃ³n.
                     If KeyCode - vbKey0 = CustomKeys.CurrentConfig Then Exit Sub
                     
                     CustomKeys.CurrentConfig = KeyCode - vbKey0
                     
                     Dim sMsg As String
                     
-                    sMsg = "¡Se ha cargado la configuración "
+                    sMsg = "Â¡Se ha cargado la configuraciÃ³n "
                     If CustomKeys.CurrentConfig = 0 Then
                         sMsg = sMsg & "default"
                     Else
-                        sMsg = sMsg & "perzonalizada número " & CStr(CustomKeys.CurrentConfig)
+                        sMsg = sMsg & "perzonalizada nÃºmero " & CStr(CustomKeys.CurrentConfig)
                     End If
                     sMsg = sMsg & "!"
 
@@ -1225,7 +1225,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
                 Case CustomKeys.BindedKey(eKeyType.mKeyTamAnimal)
                     If UserEstado = 1 Then
                         With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                            Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
+                            Call ShowConsoleMsg("Â¡Â¡EstÃ¡s muerto!!", .Red, .Green, .Blue, .bold, .italic)
                         End With
                     Else
                         Call WriteWork(eSkill.Domar)
@@ -1234,7 +1234,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
                 Case CustomKeys.BindedKey(eKeyType.mKeySteal)
                     If UserEstado = 1 Then
                         With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                            Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
+                            Call ShowConsoleMsg("Â¡Â¡EstÃ¡s muerto!!", .Red, .Green, .Blue, .bold, .italic)
                         End With
                     Else
                         Call WriteWork(eSkill.Robar)
@@ -1243,7 +1243,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
                 Case CustomKeys.BindedKey(eKeyType.mKeyHide)
                     If UserEstado = 1 Then
                         With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                            Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
+                            Call ShowConsoleMsg("Â¡Â¡EstÃ¡s muerto!!", .Red, .Green, .Blue, .bold, .italic)
                         End With
                     Else
                         Call WriteWork(eSkill.Ocultarse)
@@ -1272,7 +1272,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
             End Select
         Else
             
-            'Evito que se muestren los mensajes personalizados cuando se cambie una configuración de teclas.
+            'Evito que se muestren los mensajes personalizados cuando se cambie una configuraciÃ³n de teclas.
             If Shift = 2 Then Exit Sub
             
             Select Case KeyCode
@@ -1315,7 +1315,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
             
             If UserEstado = 1 Then
                 With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                    Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
+                    Call ShowConsoleMsg("Â¡Â¡EstÃ¡s muerto!!", .Red, .Green, .Blue, .bold, .italic)
                 End With
                 Exit Sub
             End If
@@ -1328,7 +1328,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
         Case CustomKeys.BindedKey(eKeyType.mKeyWorkMacro)
             If UserEstado = 1 Then
                 With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                    Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
+                    Call ShowConsoleMsg("Â¡Â¡EstÃ¡s muerto!!", .Red, .Green, .Blue, .bold, .italic)
                 End With
                 Exit Sub
             End If
@@ -1355,7 +1355,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
             
             If macrotrabajo.Enabled Then Call DesactivarMacroTrabajo
             
-            If frmCustomKeys.Visible Then Exit Sub 'Chequeo si está visible la ventana de configuración de teclas.
+            If frmCustomKeys.Visible Then Exit Sub 'Chequeo si estÃ¡ visible la ventana de configuraciÃ³n de teclas.
             
             Call WriteAttack
             
@@ -1482,7 +1482,7 @@ Private Sub macrotrabajo_Timer()
     End If
     
     'Macros are disabled if not using Argentum!
-    'If Not Application.IsAppActive() Then  'Implemento lo propuesto por GD, se puede usar macro aun que se esté en otra ventana
+    'If Not Application.IsAppActive() Then  'Implemento lo propuesto por GD, se puede usar macro aun que se estÃ© en otra ventana
     '    Call DesactivarMacroTrabajo
     '    Exit Sub
     'End If
@@ -1538,11 +1538,11 @@ Private Sub mnuUsar_Click()
 End Sub
 
 Private Sub PicMH_Click()
-    Call AddtoRichTextBox(frmMain.RecTxt, "Auto lanzar hechizos. Utiliza esta habilidad para entrenar únicamente. Para activarlo/desactivarlo utiliza F7.", 255, 255, 255, False, False, True)
+    Call AddtoRichTextBox(frmMain.RecTxt, "Auto lanzar hechizos. Utiliza esta habilidad para entrenar Ãºnicamente. Para activarlo/desactivarlo utiliza F7.", 255, 255, 255, False, False, True)
 End Sub
 
 Private Sub Coord_Click()
-    Call AddtoRichTextBox(frmMain.RecTxt, "Estas coordenadas son tu ubicación en el mapa. Utiliza la letra L para corregirla si esta no se corresponde con la del servidor por efecto del Lag.", 255, 255, 255, False, False, True)
+    Call AddtoRichTextBox(frmMain.RecTxt, "Estas coordenadas son tu ubicaciÃ³n en el mapa. Utiliza la letra L para corregirla si esta no se corresponde con la del servidor por efecto del Lag.", 255, 255, 255, False, False, True)
 End Sub
 
 Private Sub picSM_DblClick(Index As Integer)
@@ -1556,7 +1556,7 @@ Select Case Index
     Case eSMType.mWork
         If UserEstado = 1 Then
             With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
+                Call ShowConsoleMsg("Â¡Â¡EstÃ¡s muerto!!", .Red, .Green, .Blue, .bold, .italic)
             End With
             Exit Sub
         End If
@@ -1598,7 +1598,7 @@ Private Sub SendTxt_KeyDown(KeyCode As Integer, Shift As Integer)
             CustomMessages.Message(NroMsg) = SendTxt.Text
             
             With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                Call ShowConsoleMsg("¡¡""" & SendTxt.Text & """ fue guardado como mensaje personalizado " & NroMsg + 1 & "!!", .Red, .Green, .Blue, .bold, .italic)
+                Call ShowConsoleMsg("Â¡Â¡""" & SendTxt.Text & """ fue guardado como mensaje personalizado " & NroMsg + 1 & "!!", .Red, .Green, .Blue, .bold, .italic)
             End With
             
         End If
@@ -1611,7 +1611,7 @@ ErrHandler:
     'Did detected an invalid message??
     If Err.number = CustomMessages.InvalidMessageErrCode Then
         With FontTypes(FontTypeNames.FONTTYPE_INFO)
-            Call ShowConsoleMsg("El Mensaje es inválido. Modifiquelo por favor.", .Red, .Green, .Blue, .bold, .italic)
+            Call ShowConsoleMsg("El Mensaje es invÃ¡lido. Modifiquelo por favor.", .Red, .Green, .Blue, .bold, .italic)
         End With
     End If
     
@@ -1649,7 +1649,7 @@ End Sub
 Private Sub TirarItem()
     If UserEstado = 1 Then
         With FontTypes(FontTypeNames.FONTTYPE_INFO)
-            Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
+            Call ShowConsoleMsg("Â¡Â¡EstÃ¡s muerto!!", .Red, .Green, .Blue, .bold, .italic)
         End With
     Else
         If (Inventario.SelectedItem > 0 And Inventario.SelectedItem < MAX_INVENTORY_SLOTS + 1) Or (Inventario.SelectedItem = FLAGORO) Then
@@ -1667,7 +1667,7 @@ End Sub
 Private Sub AgarrarItem()
     If UserEstado = 1 Then
         With FontTypes(FontTypeNames.FONTTYPE_INFO)
-            Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
+            Call ShowConsoleMsg("Â¡Â¡EstÃ¡s muerto!!", .Red, .Green, .Blue, .bold, .italic)
         End With
     Else
         Call WritePickUp
@@ -1686,7 +1686,7 @@ End Sub
 Private Sub EquiparItem()
     If UserEstado = 1 Then
         With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
+                Call ShowConsoleMsg("Â¡Â¡EstÃ¡s muerto!!", .Red, .Green, .Blue, .bold, .italic)
         End With
     Else
         If Comerciando Then Exit Sub
@@ -1704,7 +1704,7 @@ Private Sub cmdLanzar_Click()
     If hlst.List(hlst.ListIndex) <> "(None)" And MainTimer.Check(TimersIndex.Work, False) Then
         If UserEstado = 1 Then
             With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
+                Call ShowConsoleMsg("Â¡Â¡EstÃ¡s muerto!!", .Red, .Green, .Blue, .bold, .italic)
             End With
         Else
             Call WriteCastSpell(hlst.ListIndex + 1)
@@ -1728,10 +1728,10 @@ Private Sub cmdINFO_Click()
         If Index <> 0 Then _
             Msj = "%%%%%%%%%%%% INFO DEL HECHIZO %%%%%%%%%%%%" & vbCrLf _
                                                & "Nombre:" & Hechizos(Index).Nombre & vbCrLf _
-                                               & "Descripción:" & Hechizos(Index).Desc & vbCrLf _
+                                               & "DescripciÃ³n:" & Hechizos(Index).Desc & vbCrLf _
                                                & "Skill requerido: " & Hechizos(Index).SkillRequerido & " de magia." & vbCrLf _
-                                               & "Maná necesario: " & Hechizos(Index).ManaRequerida & vbCrLf _
-                                               & "Energía necesaria: " & Hechizos(Index).EnergiaRequerida & vbCrLf _
+                                               & "ManÃ¡ necesario: " & Hechizos(Index).ManaRequerida & vbCrLf _
+                                               & "EnergÃ­a necesaria: " & Hechizos(Index).EnergiaRequerida & vbCrLf _
                                                & "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
                                              
         Call ShowConsoleMsg(Msj, 210, 220, 220)
@@ -1806,7 +1806,7 @@ Private Sub MainViewPic_Click()
                         frmMain.MousePointer = vbDefault
                         UsingSkill = 0
                         With FontTypes(FontTypeNames.FONTTYPE_TALK)
-                            Call AddtoRichTextBox(frmMain.RecTxt, "No puedes lanzar proyectiles tan rápido.", .Red, .Green, .Blue, .bold, .italic)
+                            Call AddtoRichTextBox(frmMain.RecTxt, "No puedes lanzar proyectiles tan rÃ¡pido.", .Red, .Green, .Blue, .bold, .italic)
                         End With
                         Exit Sub
                     End If
@@ -1817,7 +1817,7 @@ Private Sub MainViewPic_Click()
                             frmMain.MousePointer = vbDefault
                             UsingSkill = 0
                             With FontTypes(FontTypeNames.FONTTYPE_TALK)
-                                Call AddtoRichTextBox(frmMain.RecTxt, "No puedes lanzar proyectiles tan rápido.", .Red, .Green, .Blue, .bold, .italic)
+                                Call AddtoRichTextBox(frmMain.RecTxt, "No puedes lanzar proyectiles tan rÃ¡pido.", .Red, .Green, .Blue, .bold, .italic)
                             End With
                             Exit Sub
                         End If
@@ -1830,7 +1830,7 @@ Private Sub MainViewPic_Click()
                                 frmMain.MousePointer = vbDefault
                                 UsingSkill = 0
                                 With FontTypes(FontTypeNames.FONTTYPE_TALK)
-                                    Call AddtoRichTextBox(frmMain.RecTxt, "No puedes lanzar hechizos tan rápido.", .Red, .Green, .Blue, .bold, .italic)
+                                    Call AddtoRichTextBox(frmMain.RecTxt, "No puedes lanzar hechizos tan rÃ¡pido.", .Red, .Green, .Blue, .bold, .italic)
                                 End With
                                 Exit Sub
                             End If
@@ -2019,7 +2019,7 @@ Private Sub SendTxt_Change()
 '**************************************************************
 'Author: Unknown
 'Last Modify Date: 3/06/2006
-'3/06/2006: Maraxus - impedí se inserten caractéres no imprimibles
+'3/06/2006: Maraxus - impedÃ­ se inserten caractÃ©res no imprimibles
 '**************************************************************
     If Len(SendTxt.Text) > 160 Then
         stxtbuffer = "Soy un cheater, avisenle a un gm"
