@@ -1,10 +1,10 @@
 Attribute VB_Name = "Mod_TileEngine"
 'Argentum Online 0.11.6
 '
-'Copyright (C) 2002 M·rquez Pablo Ignacio
+'Copyright (C) 2002 M√°rquez Pablo Ignacio
 'Copyright (C) 2002 Otto Perez
 'Copyright (C) 2002 Aaron Perkins
-'Copyright (C) 2002 MatÌas Fernando PequeÒo
+'Copyright (C) 2002 Mat√≠as Fernando Peque√±o
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the Affero General Public License;
@@ -26,10 +26,10 @@ Attribute VB_Name = "Mod_TileEngine"
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 n˙mero 983 piso 7 dto A
+'Calle 3 n√∫mero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'CÛdigo Postal 1900
-'Pablo Ignacio M·rquez
+'C√≥digo Postal 1900
+'Pablo Ignacio M√°rquez
 
 
 
@@ -109,7 +109,7 @@ Public Type WorldPos
     Y As Integer
 End Type
 
-'Contiene info acerca de donde se puede encontrar un grh tamaÒo y animacion
+'Contiene info acerca de donde se puede encontrar un grh tama√±o y animacion
 Public Type GrhData
     SX As Integer
     SY As Integer
@@ -258,7 +258,7 @@ Public FPS As Long
 Public FramesPerSecCounter As Long
 Public FPSLastCheck As Long
 
-'TamaÒo del la vista en Tiles
+'Tama√±o del la vista en Tiles
 Private WindowTileWidth As Integer
 Private WindowTileHeight As Integer
 
@@ -270,14 +270,14 @@ Private MainViewTop As Integer
 Private MainViewLeft As Integer
 
 'Cuantos tiles el engine mete en el BUFFER cuando
-'dibuja el mapa. Ojo un tamaÒo muy grande puede
+'dibuja el mapa. Ojo un tama√±o muy grande puede
 'volver el engine muy lento
 Public TileBufferSize As Integer
 
 Private TileBufferPixelOffsetX As Integer
 Private TileBufferPixelOffsetY As Integer
 
-'TamaÒo de los tiles en pixels
+'Tama√±o de los tiles en pixels
 Public TilePixelHeight As Integer
 Public TilePixelWidth As Integer
 
@@ -313,7 +313,7 @@ Private MouseTileY As Byte
 
 
 
-'ø?ø?ø?ø?ø?ø?ø?ø?ø?øGraficosø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?
+'¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬øGraficos¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?
 Public GrhData() As GrhData 'Guarda todos los grh
 Public BodyData() As BodyData
 Public HeadData() As HeadData
@@ -321,12 +321,12 @@ Public FxData() As tIndiceFx
 Public WeaponAnimData() As WeaponAnimData
 Public ShieldAnimData() As ShieldAnimData
 Public CascoAnimData() As HeadData
-'ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?
+'¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?
 
-'ø?ø?ø?ø?ø?ø?ø?ø?ø?øMapa?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?
+'¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬øMapa?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?
 Public MapData() As MapBlock ' Mapa
 Public MapInfo As MapInfo ' Info acerca del mapa en uso
-'ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?
+'¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?
 
 Public Normal_RGBList(0 To 3) As Long
 
@@ -357,7 +357,7 @@ End Enum
 '[END]'
 '
 '       [END]
-'ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?
+'¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?
 
 
 'Very percise counter 64bit system counter
@@ -975,7 +975,7 @@ Function LegalPos(ByVal X As Integer, ByVal Y As Integer) As Boolean
         Exit Function
     End If
     
-    'øHay un personaje?
+    '¬øHay un personaje?
     If MapData(X, Y).CharIndex > 0 Then
         Exit Function
     End If
@@ -1008,7 +1008,7 @@ Function MoveToLegalPos(ByVal X As Integer, ByVal Y As Integer) As Boolean
     End If
     
     CharIndex = MapData(X, Y).CharIndex
-    'øHay un personaje?
+    '¬øHay un personaje?
     If CharIndex > 0 Then
     
         If MapData(UserPos.X, UserPos.Y).Blocked = 1 Then
@@ -1111,7 +1111,7 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
 '**************************************************************
 'Author: Aaron Perkins
 'Last Modify Date: 8/14/2007
-'Last modified by: Juan MartÌn Sotuyo Dodero (Maraxus)
+'Last modified by: Juan Mart√≠n Sotuyo Dodero (Maraxus)
 'Renders everything to the viewport
 '**************************************************************
     Dim Y           As Long     'Keeps track of where on map we are
@@ -1276,12 +1276,6 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
             ScreenX = minXOffset - Engine_Get_TileBuffer
             For X = minX To maxX
                 If Map_InBounds(X, Y) Then
-                    'If Abs(MouseTileX - X) < 1 And (Abs(MouseTileY - Y)) < 1 And Settings.NombreItems And MapData(X, Y).OBJInfo.Name <> "" Then
-                        'Engine_Draw_Box ScreenX * TilePixelWidth + PixelOffsetX, ScreenY * TilePixelHeight + PixelOffsetY, Fonts_Render_String_Width(MapData(X, Y).OBJInfo.Name, Settings.Engine_Font) + 1, Fuentes(Settings.Engine_Font).CharactersHeight, D3DColorARGB(100, 0, 0, 0)
-                        'Fonts_Render_String MapData(X, Y).OBJInfo.Name, ScreenX * TilePixelWidth + PixelOffsetX, ScreenY * TilePixelHeight + PixelOffsetY, D3DColorARGB(100, 255, 255, 255), Settings.Engine_Font
-                        
-                    'End If
-                    
                     'Layer 4
                     If Not bTecho Then
                         If MapData(X, Y).Graphic(4).GrhIndex Then
@@ -1311,10 +1305,11 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
     'Effects Update
     Call Effect_UpdateAll
     
-    If ClientSetup.ProyectileEngine = True Then
-        Dim J As Integer
-        
+    If ClientSetup.ProyectileEngine Then
+                            
         If LastProjectile > 0 Then
+            Dim J As Long ' Long siempre en los bucles es mucho mas rapido                       
+                                
             For J = 1 To LastProjectile
                 If ProjectileList(J).Grh.GrhIndex Then
                     Dim Angle As Single
@@ -1375,7 +1370,7 @@ End Sub
 
 Public Function RenderSounds()
 '**************************************************************
-'Author: Juan MartÌn Sotuyo Dodero
+'Author: Juan Mart√≠n Sotuyo Dodero
 'Last Modify Date: 3/30/2008
 'Actualiza todos los sonidos del mapa.
 '**************************************************************
@@ -1430,7 +1425,7 @@ Public Function InitTileEngine(ByVal setDisplayFormhWnd As Long, ByVal setTilePi
 '***************************************************
 'Author: Aaron Perkins
 'Last Modification: 08/14/07
-'Last modified by: Juan MartÌn Sotuyo Dodero (Maraxus)
+'Last modified by: Juan Mart√≠n Sotuyo Dodero (Maraxus)
 'Configures the engine to start running.
 '***************************************************
     TilePixelWidth = setTilePixelWidth
@@ -1615,39 +1610,6 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Inte
 
 End Sub
 
-
-Public Sub RenderText(ByVal lngXPos As Integer, ByVal lngYPos As Integer, ByRef strText As String, ByVal lngColor As Long, ByRef Font As StdFont)
-    If strText <> "" Then
-        'Call BackBufferSurface.SetForeColor(vbBlack)
-        'Call BackBufferSurface.SetFont(Font)
-       ' Call BackBufferSurface.DrawText(lngXPos - 2, lngYPos - 1, strText, False)
-        
-        'Call BackBufferSurface.SetForeColor(lngColor)
-        'Call BackBufferSurface.DrawText(lngXPos, lngYPos, strText, False)
-    End If
-End Sub
-
-Public Sub RenderTextCentered(ByVal lngXPos As Integer, ByVal lngYPos As Integer, ByRef strText As String, ByVal lngColor As Long, ByRef Font As StdFont)
-    Dim hdc As Long
-    Dim ret As Size
-    
-    If strText <> "" Then
-        
-        'Call BackBufferSurface.SetFont(Font)
-        
-        'Get width of text once rendered
-        'TexthDC = BackBufferSurface.GetDC
-        'Call GetTextExtentPoint32(TexthDC, strText, Len(strText), ret)
-       ' lngXPos = lngXPos - ret.cx \ 2
-        'DrawText1 TexthDC, lngXPos, lngYPos, strText, lngColor
-       ' BackBufferSurface.ReleaseDC TexthDC
-        
-        
-        
-        
-    End If
-End Sub
-
 Private Function GetElapsedTime() As Single
 '**************************************************************
 'Author: Aaron Perkins
@@ -1675,7 +1637,7 @@ End Function
 
 Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, ByVal PixelOffsetY As Integer)
 '***************************************************
-'Author: Juan MartÌn Sotuyo Dodero (Maraxus)
+'Author: Juan Mart√≠n Sotuyo Dodero (Maraxus)
 'Last Modify Date: 16/09/2010 (Zama)
 'Draw char's to screen without offcentering them
 '16/09/2010: ZaMa - Ya no se dibujan los bodies cuando estan invisibles.
@@ -1916,25 +1878,23 @@ Private Sub RenderName(ByVal CharIndex As Long, ByVal X As Integer, ByVal Y As I
                 Color = ColoresPJ(.priv)
             End If
     
-            If Invi = True Then
+            If Invi Then
                 Color = D3DColorARGB(180, 150, 180, 220)
             End If
             
             'Nick
             line = Left$(.Nombre, Pos - 2)
-            'Fonts_Render_String line, (X + 16) - Fonts_Render_String_Width(line, Settings.Engine_Name_Font) / 2, Y + 30, color, Settings.Engine_Name_Font
-            Call DrawText(X - (Len(line) * 6 / 2) + 14, Y + 30, line, Color)
+            Call DrawText(X - (Len(line) * 6 / 2) + 16, Y + 30, line, Color)
             
             'Clan
             line = mid$(.Nombre, Pos)
-            'Fonts_Render_String line, (X + 16) - Fonts_Render_String_Width(line, Settings.Engine_Name_Font) / 2, Y + 30 + Fuentes(Settings.Engine_Font).CharactersHeight, D3DColorXRGB(255, 230, 130), Settings.Engine_Name_Font
-            Call DrawText(X - (Len(line) * 6 / 2) + 14, Y + 45, line, Color)
+            Call DrawText(X - (Len(line) * 6 / 2) + 16, Y + 45, line, Color)
     End With
 End Sub
 
 Public Sub SetCharacterFx(ByVal CharIndex As Integer, ByVal fx As Integer, ByVal Loops As Integer)
 '***************************************************
-'Author: Juan MartÌn Sotuyo Dodero (Maraxus)
+'Author: Juan Mart√≠n Sotuyo Dodero (Maraxus)
 'Last Modify Date: 12/03/04
 'Sets an FX to the character.
 '***************************************************
@@ -2117,7 +2077,7 @@ error:
         Resume
     Else
         'Call Log_Engine("Error in DDrawGrhtoSurface, " & Err.Description & ", (" & Err.number & ")")
-        MsgBox "Error en el Engine Gr·fico, Por favor contacte a los adminsitradores enviandoles el archivo Errors.Log que se encuentra el la carpeta del cliente.", vbCritical
+        MsgBox "Error en el Engine Gr√°fico, Por favor contacte a los adminsitradores enviandoles el archivo Errors.Log que se encuentra el la carpeta del cliente.", vbCritical
         Call CloseClient
     End If
 End Sub
@@ -2202,7 +2162,7 @@ error:
         Resume
     Else
         'Call Log_Engine("Error in DDrawGrhtoSurface, " & Err.Description & ", (" & Err.number & ")")
-        MsgBox "Error en el Engine Gr·fico, Por favor contacte a los adminsitradores enviandoles el archivo Errors.Log que se encuentra el la carpeta del cliente.", vbCritical
+        MsgBox "Error en el Engine Gr√°fico, Por favor contacte a los adminsitradores enviandoles el archivo Errors.Log que se encuentra el la carpeta del cliente.", vbCritical
         Call CloseClient
     End If
 End Sub
@@ -2292,14 +2252,14 @@ error:
         Resume
     Else
         'Call Log_Engine("Error in DDrawTransGrhtoSurface, " & Err.Description & ", (" & Err.number & ")")
-        MsgBox "Error en el Engine Gr·fico, Por favor contacte a los adminsitradores enviandoles el archivo Errors.Log que se encuentra el la carpeta del cliente.", vbCritical
+        MsgBox "Error en el Engine Gr√°fico, Por favor contacte a los adminsitradores enviandoles el archivo Errors.Log que se encuentra el la carpeta del cliente.", vbCritical
         Call CloseClient
     End If
 End Sub
 
 Public Function GrhCheck(ByVal GrhIndex As Long) As Boolean
         '**************************************************************
-        'Author: Aaron Perkins - Modified by Juan MartÌn Sotuyo Dodero
+        'Author: Aaron Perkins - Modified by Juan Mart√≠n Sotuyo Dodero
         'Last Modify Date: 1/04/2003
         '
         '**************************************************************
