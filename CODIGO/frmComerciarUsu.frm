@@ -583,8 +583,8 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
     If KeyCode = vbKeyReturn Then
         If LenB(sCommerceChat) <> 0 Then Call WriteCommerceChat(sCommerceChat)
         
-        sCommerceChat = ""
-        SendTxt.Text = ""
+        sCommerceChat = vbNullString
+        SendTxt.Text = vbNullString
         KeyCode = 0
     End If
 End Sub

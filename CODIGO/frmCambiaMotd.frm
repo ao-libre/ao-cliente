@@ -242,10 +242,10 @@ Private Sub imgAceptar_Click()
     Dim i As Long, N As Long, Pos As Long
     
     If Len(txtMotd.Text) >= 2 Then
-        If Right$(txtMotd.Text, 2) = vbCrLf Then txtMotd.Text = Left$(txtMotd.Text, Len(txtMotd.Text) - 2)
+        If Right$(txtMotd.Text, 2) = vbNewLine Then txtMotd.Text = Left$(txtMotd.Text, Len(txtMotd.Text) - 2)
     End If
     
-    T = Split(txtMotd.Text, vbCrLf)
+    T = Split(txtMotd.Text, vbNewLine)
     
     For i = LBound(T) To UBound(T)
         N = 0

@@ -239,12 +239,12 @@ Function CheckUserData(ByVal checkemail As Boolean) As Boolean
     Dim LoopC As Long
     Dim CharAscii As Integer
     
-    If checkemail And UserEmail = "" Then
+    If checkemail And LenB(UserEmail) = 0 Then
         MsgBox ("Direccion de email invalida")
         Exit Function
     End If
     
-    If UserPassword = "" Then
+    If LenB(UserPassword) = 0 Then
         MsgBox ("Ingrese un password.")
         Exit Function
     End If
@@ -257,7 +257,7 @@ Function CheckUserData(ByVal checkemail As Boolean) As Boolean
         End If
     Next LoopC
     
-    If UserName = "" Then
+    If LenB(UserName) = 0 Then
         MsgBox ("Ingrese un nombre de personaje.")
         Exit Function
     End If
@@ -575,8 +575,8 @@ Sub SwitchMap(ByVal Map As Integer)
     '   Erase particle effects
     ReDim Effect(1 To NumEffects)
     
-    MapInfo.Name = ""
-    MapInfo.Music = ""
+    MapInfo.Name = vbNullString
+    MapInfo.Music = vbNullString
     
     CurMap = Map
     
@@ -875,7 +875,7 @@ Private Sub LoadInitialConfig()
     ' Mouse Pointer (Loaded before opening any form with buttons in it)
     If FileExist(DirExtras & "Hand.ico", vbArchive) Then _
         Set picMouseIcon = LoadPicture(DirExtras & "Hand.ico")
-    Call AddtoRichTextBox(frmCargando.Status, "Hecho", 255, 0, 0, True, False, False)
+    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
     
     '#######
     ' CLASES
@@ -1111,7 +1111,7 @@ On Error GoTo error
     If Not UpToDate Then
         'No recibe update, ejecutar AU
         'Ejecuto el AoUpdate, sino me voy
-        If Dir(App.path & "\AoUpdate.exe", vbArchive) = vbNullString Then
+        If LenB(Dir(App.path & "\AoUpdate.exe", vbArchive)) = 0 Then
             MsgBox "No se encuentra el archivo de actualizacion AoUpdate.exe por favor descarguelo y vuelva a intentar", vbCritical
             End
         Else
@@ -1474,7 +1474,7 @@ Public Sub ResetAllInfo()
     UserSexo = 0
     UserRaza = 0
     UserHogar = 0
-    UserEmail = ""
+    UserEmail = vbNullString
     SkillPoints = 0
     Alocados = 0
     

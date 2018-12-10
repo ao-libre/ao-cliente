@@ -20,7 +20,7 @@ Public Function GetParserErrors() As String
 End Function
 
 Public Function ClearParserErrors() As String
-   psErrors = ""
+   psErrors = vbNullString
 End Function
 
 
@@ -31,10 +31,10 @@ Public Function parse(ByRef str As String) As Object
 
    Dim Index As Long
    Index = 1
-   psErrors = ""
+   psErrors = vbNullString
    On Error Resume Next
    Call skipChar(str, Index)
-   Select Case mid(str, Index, 1)
+   Select Case mid$(str, Index, 1)
       Case "{"
          Set parse = parseObject(str, Index)
       Case "["
@@ -56,8 +56,8 @@ Private Function parseObject(ByRef str As String, ByRef Index As Long) As Dictio
    
    ' "{"
    Call skipChar(str, Index)
-   If mid(str, Index, 1) <> "{" Then
-      psErrors = psErrors & "Invalid Object at position " & Index & " : " & mid(str, Index) & vbCrLf
+   If mid$(str, Index, 1) <> "{" Then
+      psErrors = psErrors & "Invalid Object at position " & Index & " : " & mid$(str, Index) & vbNewLine
       Exit Function
    End If
    
@@ -65,14 +65,14 @@ Private Function parseObject(ByRef str As String, ByRef Index As Long) As Dictio
 
    Do
       Call skipChar(str, Index)
-      If "}" = mid(str, Index, 1) Then
+      If "}" = mid$(str, Index, 1) Then
          Index = Index + 1
          Exit Do
-      ElseIf "," = mid(str, Index, 1) Then
+      ElseIf "," = mid$(str, Index, 1) Then
          Index = Index + 1
          Call skipChar(str, Index)
       ElseIf Index > Len(str) Then
-         psErrors = psErrors & "Missing '}': " & Right(str, 20) & vbCrLf
+         psErrors = psErrors & "Missing '}': " & Right$(str, 20) & vbNewLine
          Exit Do
       End If
 
@@ -83,7 +83,7 @@ Private Function parseObject(ByRef str As String, ByRef Index As Long) As Dictio
       
       parseObject.Add sKey, parseValue(str, Index)
       If Err.number <> 0 Then
-         psErrors = psErrors & Err.Description & ": " & sKey & vbCrLf
+         psErrors = psErrors & Err.Description & ": " & sKey & vbNewLine
          Exit Do
       End If
    Loop
@@ -100,8 +100,8 @@ Private Function parseArray(ByRef str As String, ByRef Index As Long) As Collect
 
    ' "["
    Call skipChar(str, Index)
-   If mid(str, Index, 1) <> "[" Then
-      psErrors = psErrors & "Invalid Array at position " & Index & " : " + mid(str, Index, 20) & vbCrLf
+   If mid$(str, Index, 1) <> "[" Then
+      psErrors = psErrors & "Invalid Array at position " & Index & " : " + mid$(str, Index, 20) & vbNewLine
       Exit Function
    End If
    
@@ -110,14 +110,14 @@ Private Function parseArray(ByRef str As String, ByRef Index As Long) As Collect
    Do
 
       Call skipChar(str, Index)
-      If "]" = mid(str, Index, 1) Then
+      If "]" = mid$(str, Index, 1) Then
          Index = Index + 1
          Exit Do
-      ElseIf "," = mid(str, Index, 1) Then
+      ElseIf "," = mid$(str, Index, 1) Then
          Index = Index + 1
          Call skipChar(str, Index)
       ElseIf Index > Len(str) Then
-         psErrors = psErrors & "Missing ']': " & Right(str, 20) & vbCrLf
+         psErrors = psErrors & "Missing ']': " & Right$(str, 20) & vbNewLine
          Exit Do
       End If
 
@@ -125,7 +125,7 @@ Private Function parseArray(ByRef str As String, ByRef Index As Long) As Collect
       On Error Resume Next
       parseArray.Add parseValue(str, Index)
       If Err.number <> 0 Then
-         psErrors = psErrors & Err.Description & ": " & mid(str, Index, 20) & vbCrLf
+         psErrors = psErrors & Err.Description & ": " & mid$(str, Index, 20) & vbNewLine
          Exit Do
       End If
    Loop
@@ -139,7 +139,7 @@ Private Function parseValue(ByRef str As String, ByRef Index As Long)
 
    Call skipChar(str, Index)
 
-   Select Case mid(str, Index, 1)
+   Select Case mid$(str, Index, 1)
       Case "{"
          Set parseValue = parseObject(str, Index)
       Case "["
@@ -168,15 +168,15 @@ Private Function parseString(ByRef str As String, ByRef Index As Long) As String
    Dim SB As New cStringBuilder
 
    Call skipChar(str, Index)
-   quote = mid(str, Index, 1)
+   quote = mid$(str, Index, 1)
    Index = Index + 1
    
    Do While Index > 0 And Index <= Len(str)
-      Char = mid(str, Index, 1)
+      Char = mid$(str, Index, 1)
       Select Case (Char)
          Case "\"
             Index = Index + 1
-            Char = mid(str, Index, 1)
+            Char = mid$(str, Index, 1)
             Select Case (Char)
                Case """", "\", "/", "'"
                   SB.Append Char
@@ -198,8 +198,8 @@ Private Function parseString(ByRef str As String, ByRef Index As Long) As String
                   Index = Index + 1
                Case "u"
                   Index = Index + 1
-                  code = mid(str, Index, 4)
-                  SB.Append ChrW(Val("&h" + code))
+                  code = mid$(str, Index, 4)
+                  SB.Append ChrW$(Val("&h" + code))
                   Index = Index + 4
             End Select
          Case quote
@@ -231,7 +231,7 @@ Private Function parseNumber(ByRef str As String, ByRef Index As Long)
 
    Call skipChar(str, Index)
    Do While Index > 0 And Index <= Len(str)
-      Char = mid(str, Index, 1)
+      Char = mid$(str, Index, 1)
       If InStr("+-0123456789.eE", Char) Then
          Value = Value & Char
          Index = Index + 1
@@ -248,14 +248,14 @@ End Function
 Private Function parseBoolean(ByRef str As String, ByRef Index As Long) As Boolean
 
    Call skipChar(str, Index)
-   If mid(str, Index, 4) = "true" Then
+   If mid$(str, Index, 4) = "true" Then
       parseBoolean = True
       Index = Index + 4
-   ElseIf mid(str, Index, 5) = "false" Then
+   ElseIf mid$(str, Index, 5) = "false" Then
       parseBoolean = False
       Index = Index + 5
    Else
-      psErrors = psErrors & "Invalid Boolean at position " & Index & " : " & mid(str, Index) & vbCrLf
+      psErrors = psErrors & "Invalid Boolean at position " & Index & " : " & mid$(str, Index) & vbNewLine
    End If
 
 End Function
@@ -266,11 +266,11 @@ End Function
 Private Function parseNull(ByRef str As String, ByRef Index As Long)
 
    Call skipChar(str, Index)
-   If mid(str, Index, 4) = "null" Then
+   If mid$(str, Index, 4) = "null" Then
       parseNull = Null
       Index = Index + 4
    Else
-      psErrors = psErrors & "Invalid null value at position " & Index & " : " & mid(str, Index) & vbCrLf
+      psErrors = psErrors & "Invalid null value at position " & Index & " : " & mid$(str, Index) & vbNewLine
    End If
 
 End Function
@@ -283,15 +283,15 @@ Private Function parseKey(ByRef str As String, ByRef Index As Long) As String
 
    Call skipChar(str, Index)
    Do While Index > 0 And Index <= Len(str)
-      Char = mid(str, Index, 1)
+      Char = mid$(str, Index, 1)
       Select Case (Char)
          Case """"
             dquote = Not dquote
             Index = Index + 1
             If Not dquote Then
                Call skipChar(str, Index)
-               If mid(str, Index, 1) <> ":" Then
-                  psErrors = psErrors & "Invalid Key at position " & Index & " : " & parseKey & vbCrLf
+               If mid$(str, Index, 1) <> ":" Then
+                  psErrors = psErrors & "Invalid Key at position " & Index & " : " & parseKey & vbNewLine
                   Exit Do
                End If
             End If
@@ -300,8 +300,8 @@ Private Function parseKey(ByRef str As String, ByRef Index As Long) As String
             Index = Index + 1
             If Not squote Then
                Call skipChar(str, Index)
-               If mid(str, Index, 1) <> ":" Then
-                  psErrors = psErrors & "Invalid Key at position " & Index & " : " & parseKey & vbCrLf
+               If mid$(str, Index, 1) <> ":" Then
+                  psErrors = psErrors & "Invalid Key at position " & Index & " : " & parseKey & vbNewLine
                   Exit Do
                End If
             End If
@@ -313,7 +313,7 @@ Private Function parseKey(ByRef str As String, ByRef Index As Long) As String
                parseKey = parseKey & Char
             End If
          Case Else
-            If InStr(vbCrLf & vbCr & vbLf & vbTab & " ", Char) Then
+            If InStr(vbNewLine & vbCr & vbLf & vbTab & " ", Char) Then
             Else
                parseKey = parseKey & Char
             End If
@@ -331,7 +331,7 @@ Private Sub skipChar(ByRef str As String, ByRef Index As Long)
    Dim bStartComment As Boolean
    Dim bLongComment As Boolean
    Do While Index > 0 And Index <= Len(str)
-      Select Case mid(str, Index, 1)
+      Select Case mid$(str, Index, 1)
       Case vbCr, vbLf
          If Not bLongComment Then
             bStartComment = False
@@ -445,10 +445,10 @@ Private Function Encode(str) As String
    aL2 = Array(&H22, &H5C, &H2F, &H62, &H66, &H6E, &H72, &H74)
    For i = 1 To Len(str)
       p = True
-      c = mid(str, i, 1)
+      c = mid$(str, i, 1)
       For j = 0 To 7
-         If c = Chr(aL1(j)) Then
-            SB.Append "\" & Chr(aL2(j))
+         If c = Chr$(aL1(j)) Then
+            SB.Append "\" & Chr$(aL2(j))
             p = False
             Exit For
          End If
@@ -460,7 +460,7 @@ Private Function Encode(str) As String
          If a > 31 And a < 127 Then
             SB.Append c
          ElseIf a > -1 Or a < 65535 Then
-            SB.Append "\u" & String(4 - Len(Hex(a)), "0") & Hex(a)
+            SB.Append "\u" & String(4 - Len(Hex$(a)), "0") & Hex$(a)
          End If
       End If
    Next
@@ -487,7 +487,7 @@ Private Function multiArray(aBD, iBC, sPS, ByRef sPT)   ' Array BoDy, Integer Ba
       sPB1 = sPT & sPS
       For i = 1 To Len(sPB1)
          If i <> 1 Then sPB2 = sPB2 & ","
-         sPB2 = sPB2 & mid(sPB1, i, 1)
+         sPB2 = sPB2 & mid$(sPB1, i, 1)
       Next
       '        multiArray = multiArray & toString(Eval("aBD(" & sPB2 & ")"))
       SB.Append toString(aBD(sPB2))
@@ -499,7 +499,7 @@ Private Function multiArray(aBD, iBC, sPS, ByRef sPT)   ' Array BoDy, Integer Ba
          If i < iDU Then SB.Append ","
       Next
       SB.Append "]"
-      sPT = Left(sPT, iBC - 2)
+      sPT = Left$(sPT, iBC - 2)
    End If
    Err.Clear
    multiArray = SB.toString
@@ -522,19 +522,19 @@ Public Function StringToJSON(st As String) As String
    Dim rows As Variant
 
    lRecCnt = 0
-   If st = "" Then
+   If LenB(st) = 0 Then
       StringToJSON = "null"
    Else
       rows = Split(st, RECORD_SEP)
       For lRecCnt = LBound(rows) To UBound(rows)
-         sFlds = ""
+         sFlds = vbNullString
          fld = Split(rows(lRecCnt), FIELD_SEP)
          For lFld = LBound(fld) To UBound(fld) Step 2
             sFlds = (sFlds & IIf(sFlds <> "", ",", "") & """" & fld(lFld) & """:""" & toUnicode(fld(lFld + 1) & "") & """")
          Next 'fld
-         sRecs.Append IIf((Trim(sRecs.toString) <> ""), "," & vbCrLf, "") & "{" & sFlds & "}"
+         sRecs.Append IIf((Trim$(sRecs.toString) <> ""), "," & vbNewLine, "") & "{" & sFlds & "}"
       Next 'rec
-      StringToJSON = ("( {""Records"": [" & vbCrLf & sRecs.toString & vbCrLf & "], " & """RecordCount"":""" & lRecCnt & """ } )")
+      StringToJSON = ("( {""Records"": [" & vbNewLine & sRecs.toString & vbNewLine & "], " & """RecordCount"":""" & lRecCnt & """ } )")
    End If
 End Function
 
@@ -555,14 +555,14 @@ Public Function RStoJSON(rs As ADODB.Recordset) As String
       Else
          Do While Not rs.EOF And Not rs.BOF
             lRecCnt = lRecCnt + 1
-            sFlds = ""
+            sFlds = vbNullString
             For Each fld In rs.Fields
                sFlds = (sFlds & IIf(sFlds <> "", ",", "") & """" & fld.Name & """:""" & toUnicode(fld.Value & "") & """")
             Next 'fld
-            sRecs.Append IIf((Trim(sRecs.toString) <> ""), "," & vbCrLf, "") & "{" & sFlds & "}"
+            sRecs.Append IIf((Trim$(sRecs.toString) <> ""), "," & vbNewLine, "") & "{" & sFlds & "}"
             rs.MoveNext
          Loop
-         RStoJSON = ("( {""Records"": [" & vbCrLf & sRecs.toString & vbCrLf & "], " & """RecordCount"":""" & lRecCnt & """ } )")
+         RStoJSON = ("( {""Records"": [" & vbNewLine & sRecs.toString & vbNewLine & "], " & """RecordCount"":""" & lRecCnt & """ } )")
       End If
    End If
 
@@ -625,7 +625,7 @@ Public Function toUnicode(str As String) As String
    Dim uChrCode As Integer
 
    For X = 1 To Len(str)
-      uChrCode = Asc(mid(str, X, 1))
+      uChrCode = Asc(mid$(str, X, 1))
       Select Case uChrCode
          Case 8:   ' backspace
             uStr.Append "\b"
@@ -644,9 +644,9 @@ Public Function toUnicode(str As String) As String
          Case 92: ' backslash
             uStr.Append "\\"
          Case 123, 125:  ' "{" and "}"
-            uStr.Append ("\u" & Right("0000" & Hex(uChrCode), 4))
+            uStr.Append ("\u" & Right$("0000" & Hex$(uChrCode), 4))
          Case Is < 32, Is > 127: ' non-ascii characters
-            uStr.Append ("\u" & Right("0000" & Hex(uChrCode), 4))
+            uStr.Append ("\u" & Right$("0000" & Hex$(uChrCode), 4))
          Case Else
             uStr.Append Chr$(uChrCode)
       End Select
@@ -657,7 +657,7 @@ Public Function toUnicode(str As String) As String
 End Function
 
 Private Sub Class_Initialize()
-   psErrors = ""
+   psErrors = vbNullString
 End Sub
 
 

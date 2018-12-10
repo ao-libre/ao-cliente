@@ -549,7 +549,7 @@ Begin VB.Form frmMain
       EndProperty
       Height          =   435
       Left            =   8880
-      MouseIcon       =   "frmMain.frx":10A9
+      MouseIcon       =   "frmMain.frx":10AA
       MousePointer    =   99  'Custom
       TabIndex        =   18
       Top             =   1920
@@ -1622,8 +1622,8 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
     If KeyCode = vbKeyReturn Then
         If LenB(stxtbuffer) <> 0 Then Call ParseUserCommand(stxtbuffer)
         
-        stxtbuffer = ""
-        SendTxt.Text = ""
+        stxtbuffer = vbNullString
+        SendTxt.Text = vbNullString
         KeyCode = 0
         SendTxt.Visible = False
         
@@ -2060,8 +2060,8 @@ Private Sub SendCMSTXT_KeyUp(KeyCode As Integer, Shift As Integer)
             Call ParseUserCommand("/CMSG " & stxtbuffercmsg)
         End If
 
-        stxtbuffercmsg = ""
-        SendCMSTXT.Text = ""
+        stxtbuffercmsg = vbNullString
+        SendCMSTXT.Text = vbNullString
         KeyCode = 0
         Me.SendCMSTXT.Visible = False
         
@@ -2166,7 +2166,7 @@ Private Sub Socket1_Read(dataLength As Integer, IsUrgent As Integer)
     Call Socket1.Read(RD, dataLength)
     data = StrConv(RD, vbFromUnicode)
     
-    If RD = vbNullString Then Exit Sub
+    If LenB(RD) = 0 Then Exit Sub
     
     'Put data in the buffer
     Call incomingData.WriteBlock(data)
@@ -2289,7 +2289,7 @@ Private Sub Winsock1_Close()
     UserSexo = 0
     UserRaza = 0
     UserHogar = 0
-    UserEmail = ""
+    UserEmail = vbNullString
     
     For i = 1 To NUMSKILLS
         UserSkills(i) = 0
