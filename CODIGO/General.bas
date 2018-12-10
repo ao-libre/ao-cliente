@@ -262,7 +262,7 @@ Function CheckUserData(ByVal checkemail As Boolean) As Boolean
         Exit Function
     End If
     
-    If Len(UserName) > 30 Then
+    If LenB(UserName) > 30 Then
         MsgBox ("El nombre debe tener menos de 30 letras.")
         Exit Function
     End If
