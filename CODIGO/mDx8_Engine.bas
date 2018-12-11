@@ -22,6 +22,7 @@ Public Type TLVERTEX
   Z As Single
   rhw As Single
   Color As Long
+  Specular As Long
   tu As Single
   tv As Single
 End Type
@@ -45,8 +46,6 @@ Public Function Engine_DirectX8_Init() As Boolean
         .BackBufferFormat = DispMode.Format
         .BackBufferWidth = frmMain.MainViewPic.ScaleWidth
         .BackBufferHeight = frmMain.MainViewPic.ScaleHeight
-        .EnableAutoDepthStencil = 0
-        .AutoDepthStencilFormat = 0
         .hDeviceWindow = frmMain.MainViewPic.hwnd
     End With
 
@@ -79,7 +78,7 @@ Public Function Engine_DirectX8_Init() As Boolean
     Engine_Init_FontTextures
     Engine_Init_FontSettings
     
-    DirectDevice.SetVertexShader D3DFVF_XYZRHW Or D3DFVF_DIFFUSE Or D3DFVF_TEX1
+    DirectDevice.SetVertexShader D3DFVF_XYZRHW Or D3DFVF_DIFFUSE Or D3DFVF_TEX1 Or D3DFVF_SPECULAR
     DirectDevice.SetRenderState D3DRS_LIGHTING, False
     DirectDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
     DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
@@ -470,26 +469,11 @@ Public Sub Engine_BeginScene(Optional ByVal Color As Long = 0)
 '***************************************************
 
     DirectDevice.BeginScene
-
-End Sub
-
-Public Sub Engine_Clear(Optional ByVal Color As Long = 0)
-
     DirectDevice.Clear 0, ByVal 0, D3DCLEAR_TARGET, Color, 1#, 0
     
 End Sub
 
-Public Sub Engine_Present(ByRef destRect As RECT, Optional ByVal hWndDest As Long = 0)
-    
-    If hWndDest = 0 Then
-        DirectDevice.Present destRect, ByVal 0&, ByVal 0&, ByVal 0&
-    Else
-        DirectDevice.Present destRect, ByVal 0, hWndDest, ByVal 0
-    End If
-    
-End Sub
-
-Public Sub Engine_EndScene()
+Public Sub Engine_EndScene(ByRef destRect As RECT, Optional ByVal hWndDest As Long = 0)
 '***************************************************
 'Author: Ezequiel Juárez (Standelf)
 'Last Modification: 29/12/10
@@ -497,6 +481,12 @@ Public Sub Engine_EndScene()
 '***************************************************
     
     DirectDevice.EndScene
+        
+    If hWndDest = 0 Then
+        DirectDevice.Present destRect, ByVal 0&, ByVal 0&, ByVal 0&
+    Else
+        DirectDevice.Present destRect, ByVal 0, hWndDest, ByVal 0
+    End If
     
 End Sub
 
