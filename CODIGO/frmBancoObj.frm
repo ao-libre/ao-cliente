@@ -421,7 +421,7 @@ Private Sub PicBancoInv_Click()
         End With
         
     Else
-        Label1(0).Caption = ""
+        Label1(0).Caption = vbNullString
         Label1(1).Visible = False
         Label1(2).Visible = False
     End If
@@ -459,7 +459,7 @@ Private Sub PicInv_Click()
             
         End With
     Else
-        Label1(0).Caption = ""
+        Label1(0).Caption = vbNullString
         Label1(1).Visible = False
         Label1(2).Visible = False
     End If

@@ -31,6 +31,13 @@ Begin VB.Form frmConnect
    ScaleWidth      =   800
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
+   Begin InetCtlsObjects.Inet InetIpApi 
+      Left            =   840
+      Top             =   1080
+      _ExtentX        =   1005
+      _ExtentY        =   1005
+      _Version        =   393216
+   End
    Begin InetCtlsObjects.Inet InetReddit 
       Left            =   120
       Top             =   1080

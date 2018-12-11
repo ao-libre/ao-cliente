@@ -565,7 +565,7 @@ End Property
 '
 '   @return   True if file was properly loaded and started playing, False otherwise.
 
-Public Function PlayMIDI(Optional ByVal File As String = "", Optional ByVal Loops As Long = -1) As Boolean
+Public Function PlayMIDI(Optional ByVal File As String = vbNullString, Optional ByVal Loops As Long = -1) As Boolean
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 16/03/04

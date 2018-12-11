@@ -27,7 +27,7 @@ Public Sub Reset_Party()
             PartyMembers(i).ExpParty = 0
             PartyMembers(i).Head = 0
             PartyMembers(i).Lvl = 0
-            PartyMembers(i).Name = ""
+            PartyMembers(i).Name = vbNullString
         Next i
 End Sub
 
@@ -78,7 +78,7 @@ Public Sub Kick_PartyMember(ByVal Member As Byte)
 '***************************************************
     If Member < 1 Or Member > 5 Then Exit Sub
         With PartyMembers(Member)
-            .Name = ""
+            .Name = vbNullString
             .ExpParty = 0
             .Head = 0
             .Lvl = 0

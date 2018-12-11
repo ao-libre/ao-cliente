@@ -203,7 +203,7 @@ Private Sub Form_Load()
         Exit Sub
 
 Form_Load_Err:
-        MsgBox Err.Description & vbCrLf & _
+        MsgBox Err.Description & vbNewLine & _
                "in ARGENTUM.frmParty.Form_Load " & _
                "at line " & Erl, _
                vbExclamation + vbOKOnly, "Application Error"
@@ -277,7 +277,7 @@ End Sub
 Private Sub imgAgregar_Click()
     If Len(txtToAdd) > 0 Then
         If Not IsNumeric(txtToAdd) Then
-            Call WritePartyAcceptMember(Trim(txtToAdd.Text))
+            Call WritePartyAcceptMember(Trim$(txtToAdd.Text))
             Unload Me
             Call WriteRequestPartyForm
         End If
@@ -317,7 +317,7 @@ Private Function GetName() As String
 '**************************************************************
     Dim sName As String
     
-    sName = Trim(mid(lstMembers.List(lstMembers.ListIndex), 1, InStr(lstMembers.List(lstMembers.ListIndex), " (")))
+    sName = Trim$(mid$(lstMembers.List(lstMembers.ListIndex), 1, InStr(lstMembers.List(lstMembers.ListIndex), " (")))
     If Len(sName) > 0 Then GetName = sName
         
 End Function
@@ -390,8 +390,8 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
     If KeyCode = vbKeyReturn Then
         If LenB(sPartyChat) <> 0 Then Call WritePartyMessage(sPartyChat)
         
-        sPartyChat = ""
-        SendTxt.Text = ""
+        sPartyChat = vbNullString
+        SendTxt.Text = vbNullString
         KeyCode = 0
         SendTxt.SetFocus
     End If
