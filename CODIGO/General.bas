@@ -239,7 +239,7 @@ Function CheckUserData() As Boolean
     Dim LoopC As Long
     Dim CharAscii As Integer
 
-    If LenB(UserPassword) = 0 Then
+    If LenB(AccountPassword) = 0 Then
         MsgBox ("Ingrese un password.")
         Exit Function
     End If
@@ -262,7 +262,7 @@ Function CheckUserData() As Boolean
         Exit Function
     End If
 
-    If LenB(AccountName) > 30 Then
+    If Len(AccountName) > 30 Then
         MsgBox "El e-mail debe tener menos de 30 letras."
         Exit Function
     End If
@@ -886,7 +886,7 @@ Private Sub LoadInitialConfig()
     ' SERVIDORES
     Call AddtoRichTextBox(frmCargando.status, "Buscando servidores... ", 255, 255, 255, True, False, True)
     Call DownloadServersFile("https://raw.githubusercontent.com/ao-libre/ao-cliente/master/INIT/sinfo.dat")
-    Call AddtoRichTextBox(frmCargando.Status, "Hecho", 255, 0, 0, True, False, False)
+    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
     
     '###########
     ' CONSTANTES
@@ -1255,7 +1255,7 @@ Private Sub InicializarNombres()
     SkillsNames(eSkill.Tacticas) = "Evasion en combate"
     SkillsNames(eSkill.Armas) = "Combate cuerpo a cuerpo"
     SkillsNames(eSkill.Meditar) = "Meditar"
-    SkillsNames(eSkill.Apu?lar) = "Apu?lar"
+    SkillsNames(eSkill.Apuñalar) = "Apuñalar"
     SkillsNames(eSkill.Ocultarse) = "Ocultarse"
     SkillsNames(eSkill.Supervivencia) = "Supervivencia"
     SkillsNames(eSkill.Talar) = "Talar Arboles"
