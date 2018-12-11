@@ -238,13 +238,8 @@ Function CheckUserData() As Boolean
     'Validamos los datos del user
     Dim LoopC As Long
     Dim CharAscii As Integer
-    
-    If checkemail And LenB(UserEmail) = 0 Then
-        MsgBox ("Direccion de email invalida")
-        Exit Function
-    End If
-    
-    If LenB(UserPassword) = 0 Then
+
+    If LenB(AccountPassword) = 0 Then
         MsgBox ("Ingrese un password.")
         Exit Function
     End If
@@ -261,9 +256,9 @@ Function CheckUserData() As Boolean
         MsgBox ("Ingrese un nombre de personaje.")
         Exit Function
     End If
-    
-    If LenB(UserName) > 30 Then
-        MsgBox ("El nombre debe tener menos de 30 letras.")
+
+    If Len(AccountName) > 30 Then
+        MsgBox "El e-mail debe tener menos de 30 letras."
         Exit Function
     End If
     
@@ -886,7 +881,6 @@ Private Sub LoadInitialConfig()
     ' SERVIDORES
     Call AddtoRichTextBox(frmCargando.status, "Buscando servidores... ", 255, 255, 255, True, False, True)
     Call DownloadServersFile("https://raw.githubusercontent.com/ao-libre/ao-cliente/master/INIT/sinfo.dat")
-    Call CargarServidores
     Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
     
     '###########

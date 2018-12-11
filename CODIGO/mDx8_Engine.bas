@@ -729,11 +729,11 @@ End Sub
 
 Public Sub DrawPJ(ByVal Index As Byte)
 
-    If LenB(cPJ(Index).nombre) = 0 Then Exit Sub
+    If LenB(cPJ(Index).Nombre) = 0 Then Exit Sub
 
     Dim cColor As Long
 
-    frmPanelAccount.lblAccData(Index).Caption = cPJ(Index).nombre
+    frmPanelAccount.lblAccData(Index).Caption = cPJ(Index).Nombre
 
     If cPJ(Index).Criminal Then
         cColor = RGB(255, 128, 128)
@@ -771,7 +771,7 @@ Public Sub DrawPJ(ByVal Index As Byte)
         head_offset = HeadOffsetBajos
     End If
 
-    Call Engine_Clear
+    Call Engine_BeginScene
 
     If cPJ(Index).Body <> 0 Then
         Call DDrawTransGrhtoSurface(BodyData(cPJ(Index).Body).Walk(3), PixelOffsetX + init_x, PixelOffsetY + init_y, 0, Light(), 0, init_x, init_y)
@@ -797,5 +797,5 @@ Public Sub DrawPJ(ByVal Index As Byte)
         Call DDrawTransGrhtoSurface(ShieldAnimData(cPJ(Index).shield).ShieldWalk(3), PixelOffsetX + init_x, PixelOffsetY + init_y, 0, Light(), 0, init_x, init_y)
     End If
 
-    Engine_Present re, frmPanelAccount.picChar(Index - 1).hwnd
+    Engine_EndScene re, frmPanelAccount.picChar(Index - 1).hwnd
 End Sub
