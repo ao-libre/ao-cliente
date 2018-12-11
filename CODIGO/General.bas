@@ -1254,7 +1254,7 @@ Private Sub InicializarNombres()
     SkillsNames(eSkill.Tacticas) = "Evasion en combate"
     SkillsNames(eSkill.Armas) = "Combate cuerpo a cuerpo"
     SkillsNames(eSkill.Meditar) = "Meditar"
-    SkillsNames(eSkill.ApuÃ±alar) = "ApuÃ±alar"
+    SkillsNames(eSkill.Apuñalar) = "Apuñalar"
     SkillsNames(eSkill.Ocultarse) = "Ocultarse"
     SkillsNames(eSkill.Supervivencia) = "Supervivencia"
     SkillsNames(eSkill.Talar) = "Talar Arboles"
