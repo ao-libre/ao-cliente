@@ -4,7 +4,7 @@ Attribute VB_Name = "Mod_General"
 'Copyright (C) 2002 Marquez Pablo Ignacio
 'Copyright (C) 2002 Otto Perez
 'Copyright (C) 2002 Aaron Perkins
-'Copyright (C) 2002 Matias Fernando PequeÒo
+'Copyright (C) 2002 Matias Fernando Peque√±o
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the Affero General Public License;
@@ -226,7 +226,7 @@ Function AsciiValidos(ByVal cad As String) As Boolean
     For i = 1 To Len(cad)
         car = Asc(mid$(cad, i, 1))
         
-        If ((car < 97 Or car > 122) Or car = Asc("¬∫")) And (car <> 255) And (car <> 32) Then
+        If ((car < 97 Or car > 122) Or car = Asc("√Ç¬∫")) And (car <> 255) And (car <> 32) Then
             Exit Function
         End If
     Next i
@@ -252,7 +252,7 @@ Function CheckUserData(ByVal checkemail As Boolean) As Boolean
     For LoopC = 1 To Len(UserPassword)
         CharAscii = Asc(mid$(UserPassword, LoopC, 1))
         If Not LegalCharacter(CharAscii) Then
-            MsgBox ("Password invalido. El caracter " & Chr$(CharAscii) & " no esta° permitido.")
+            MsgBox ("Password invalido. El caracter " & Chr$(CharAscii) & " no esta¬° permitido.")
             Exit Function
         End If
     Next LoopC
@@ -270,7 +270,7 @@ Function CheckUserData(ByVal checkemail As Boolean) As Boolean
     For LoopC = 1 To Len(UserName)
         CharAscii = Asc(mid$(UserName, LoopC, 1))
         If Not LegalCharacter(CharAscii) Then
-            MsgBox ("Nombre inva°lido. El caracter " & Chr$(CharAscii) & " no esta° permitido.")
+            MsgBox ("Nombre inva¬°lido. El caracter " & Chr$(CharAscii) & " no esta¬° permitido.")
             Exit Function
         End If
     Next LoopC
@@ -479,11 +479,11 @@ Private Sub CheckKeys()
     End If
 End Sub
 
-'TODO : Si bien nunca estuvo alla≠, el mapa es algo independiente o a lo sumo dependiente del engine, no va aca°!!!
+'TODO : Si bien nunca estuvo alla¬≠, el mapa es algo independiente o a lo sumo dependiente del engine, no va aca¬°!!!
 Sub SwitchMap(ByVal Map As Integer)
 '**************************************************************
 'Formato de mapas optimizado para reducir el espacio que ocupan.
-'DiseÒado y creado por Juan Martin Sotuyo Dodero (Maraxus) (juansotuyo@hotmail.com)
+'Dise√±ado y creado por Juan Martin Sotuyo Dodero (Maraxus) (juansotuyo@hotmail.com)
 '**************************************************************
     Dim Y As Long
     Dim X As Long
@@ -664,6 +664,27 @@ Public Function IsIp(ByVal Ip As String) As Boolean
     Next i
 End Function
 
+Private Function GetCountryFromIp(ByVal Ip As String) As String
+'********************************
+'Author: Recox
+'Last Modification: 08/12/2018
+'Added endpoint to obtain the country of the server.
+'********************************
+On Error Resume Next
+    Dim URL As String
+    Dim Endpoint As String
+    Dim JsonObject As Object
+    Dim Response As String
+    
+    URL = GetVar(App.path & "\INIT\Config.ini", "Parameters", "IpApiEndpoint")
+    Endpoint = URL & Ip & "/json/"
+    
+    Response = frmConnect.InetIpApi.OpenURL(Endpoint)
+    Set JsonObject = JSON.parse(Response)
+    
+    GetCountryFromIp = JsonObject.Item("country")
+End Function
+
 Public Sub CargarServidores()
 '********************************
 'Author: Unknown
@@ -672,20 +693,32 @@ Public Sub CargarServidores()
 'Added Instruction "CloseClient" before End so the mutex is cleared
 '********************************
 On Error GoTo errorH
-    Dim f As String
-    Dim c As Integer
-    Dim i As Long
+    Dim File As String
+    Dim Quantity As Integer
+    Dim i As Integer
+    Dim CountryCode As String
+    Dim IpApiEnabled As Boolean
     
-    f = App.path & "\init\sinfo.dat"
-    c = Val(GetVar(f, "INIT", "Cant"))
+    File = App.path & "\init\sinfo.dat"
+    Quantity = Val(GetVar(File, "INIT", "Cant"))
+    IpApiEnabled = GetVar(App.path & "\INIT\Config.ini", "Parameters", "IpApiEnabled")
     
     frmConnect.lstServers.Clear
     
-    ReDim ServersLst(1 To c) As tServerInfo
-    For i = 1 To c
-        ServersLst(i).Desc = GetVar(f, "S" & i, "Desc")
-        ServersLst(i).Ip = Trim$(GetVar(f, "S" & i, "Ip"))
-        ServersLst(i).Puerto = CInt(GetVar(f, "S" & i, "PJ"))
+    ReDim ServersLst(1 To Quantity) As tServerInfo
+    For i = 1 To Quantity
+        Dim CurrentIp As String
+        CurrentIp = Trim$(GetVar(File, "S" & i, "Ip"))
+        
+        If IpApiEnabled Then
+            CountryCode = GetCountryFromIp(CurrentIp)
+            ServersLst(i).Desc = CountryCode & " " & GetVar(File, "S" & i, "Desc")
+        Else
+            ServersLst(i).Desc = GetVar(File, "S" & i, "Desc")
+        End If
+        
+        ServersLst(i).Ip = CurrentIp
+        ServersLst(i).Puerto = CInt(GetVar(File, "S" & i, "PJ"))
         frmConnect.lstServers.AddItem (ServersLst(i).Desc)
     Next i
     CurServer = 1
@@ -889,7 +922,7 @@ Private Sub LoadInitialConfig()
     
     
     '##############
-    ' MOTOR GRAÅFICO
+    ' MOTOR GRA¬ÅFICO
     Call AddtoRichTextBox(frmCargando.status, "Iniciando motor grafico... ", 255, 255, 255, True, False, True)
     
     '     Iniciamos el Engine de DirectX 8
@@ -931,7 +964,7 @@ Private Sub LoadInitialConfig()
     Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
     
     
-    Call AddtoRichTextBox(frmCargando.status, "                    °Bienvenido a Argentum Online!", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.status, "                    ¬°Bienvenido a Argentum Online!", 255, 255, 255, True, False, True)
 
     'Give the user enough time to read the welcome text
     Call Sleep(500)
@@ -1221,7 +1254,7 @@ Private Sub InicializarNombres()
     SkillsNames(eSkill.Tacticas) = "Evasion en combate"
     SkillsNames(eSkill.Armas) = "Combate cuerpo a cuerpo"
     SkillsNames(eSkill.Meditar) = "Meditar"
-    SkillsNames(eSkill.ApuÒalar) = "ApuÒalar"
+    SkillsNames(eSkill.Apu√±alar) = "Apu√±alar"
     SkillsNames(eSkill.Ocultarse) = "Ocultarse"
     SkillsNames(eSkill.Supervivencia) = "Supervivencia"
     SkillsNames(eSkill.Talar) = "Talar Arboles"
