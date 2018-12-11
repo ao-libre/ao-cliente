@@ -154,7 +154,7 @@ End Sub
 
 Private Sub imgEnviar_Click()
 
-    If Text1 = "" Then
+    If LenB(Text1) = 0 Then
         If T = PAZ Or T = ALIANZA Then
             MsgBox "Debes redactar un mensaje solicitando la paz o alianza al líder de " & Nombre
         Else
@@ -165,13 +165,13 @@ Private Sub imgEnviar_Click()
     End If
     
     If T = PAZ Then
-        Call WriteGuildOfferPeace(Nombre, Replace(Text1, vbCrLf, "º"))
+        Call WriteGuildOfferPeace(Nombre, Replace(Text1, vbNewLine, "º"))
         
     ElseIf T = ALIANZA Then
-        Call WriteGuildOfferAlliance(Nombre, Replace(Text1, vbCrLf, "º"))
+        Call WriteGuildOfferAlliance(Nombre, Replace(Text1, vbNewLine, "º"))
         
     ElseIf T = RECHAZOPJ Then
-        Call WriteGuildRejectNewMember(Nombre, Replace(Replace(Text1.Text, ",", " "), vbCrLf, " "))
+        Call WriteGuildRejectNewMember(Nombre, Replace(Replace(Text1.Text, ",", " "), vbNewLine, " "))
         'Sacamos el char de la lista de aspirantes
         Dim i As Long
         

@@ -4,7 +4,7 @@ Attribute VB_Name = "Mod_General"
 'Copyright (C) 2002 Marquez Pablo Ignacio
 'Copyright (C) 2002 Otto Perez
 'Copyright (C) 2002 Aaron Perkins
-'Copyright (C) 2002 Matias Fernando PequeÒo
+'Copyright (C) 2002 Matias Fernando Peque√±o
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the Affero General Public License;
@@ -34,7 +34,7 @@ Attribute VB_Name = "Mod_General"
 Option Explicit
 
 #If False Then 'to fix VB fucking up the var names
-    Dim Status, Nombre, PicInv, f, obj, j As String
+    Dim status, Nombre, PicInv, f, obj, j As String
 #End If
 
 Public iplst As String
@@ -226,7 +226,7 @@ Function AsciiValidos(ByVal cad As String) As Boolean
     For i = 1 To Len(cad)
         car = Asc(mid$(cad, i, 1))
         
-        If ((car < 97 Or car > 122) Or car = Asc("¬∫")) And (car <> 255) And (car <> 32) Then
+        If ((car < 97 Or car > 122) Or car = Asc("√Ç¬∫")) And (car <> 255) And (car <> 32) Then
             Exit Function
         End If
     Next i
@@ -239,12 +239,12 @@ Function CheckUserData(ByVal checkemail As Boolean) As Boolean
     Dim LoopC As Long
     Dim CharAscii As Integer
     
-    If checkemail And UserEmail = "" Then
+    If checkemail And LenB(UserEmail) = 0 Then
         MsgBox ("Direccion de email invalida")
         Exit Function
     End If
     
-    If UserPassword = "" Then
+    If LenB(UserPassword) = 0 Then
         MsgBox ("Ingrese un password.")
         Exit Function
     End If
@@ -252,17 +252,17 @@ Function CheckUserData(ByVal checkemail As Boolean) As Boolean
     For LoopC = 1 To Len(UserPassword)
         CharAscii = Asc(mid$(UserPassword, LoopC, 1))
         If Not LegalCharacter(CharAscii) Then
-            MsgBox ("Password invalido. El caracter " & Chr$(CharAscii) & " no esta° permitido.")
+            MsgBox ("Password invalido. El caracter " & Chr$(CharAscii) & " no esta¬° permitido.")
             Exit Function
         End If
     Next LoopC
     
-    If UserName = "" Then
+    If LenB(UserName) = 0 Then
         MsgBox ("Ingrese un nombre de personaje.")
         Exit Function
     End If
     
-    If Len(UserName) > 30 Then
+    If LenB(UserName) > 30 Then
         MsgBox ("El nombre debe tener menos de 30 letras.")
         Exit Function
     End If
@@ -270,7 +270,7 @@ Function CheckUserData(ByVal checkemail As Boolean) As Boolean
     For LoopC = 1 To Len(UserName)
         CharAscii = Asc(mid$(UserName, LoopC, 1))
         If Not LegalCharacter(CharAscii) Then
-            MsgBox ("Nombre inva°lido. El caracter " & Chr$(CharAscii) & " no esta° permitido.")
+            MsgBox ("Nombre inva¬°lido. El caracter " & Chr$(CharAscii) & " no esta¬° permitido.")
             Exit Function
         End If
     Next LoopC
@@ -479,11 +479,11 @@ Private Sub CheckKeys()
     End If
 End Sub
 
-'TODO : Si bien nunca estuvo alla≠, el mapa es algo independiente o a lo sumo dependiente del engine, no va aca°!!!
+'TODO : Si bien nunca estuvo alla¬≠, el mapa es algo independiente o a lo sumo dependiente del engine, no va aca¬°!!!
 Sub SwitchMap(ByVal Map As Integer)
 '**************************************************************
 'Formato de mapas optimizado para reducir el espacio que ocupan.
-'DiseÒado y creado por Juan Martin Sotuyo Dodero (Maraxus) (juansotuyo@hotmail.com)
+'Dise√±ado y creado por Juan Martin Sotuyo Dodero (Maraxus) (juansotuyo@hotmail.com)
 '**************************************************************
     Dim Y As Long
     Dim X As Long
@@ -575,8 +575,8 @@ Sub SwitchMap(ByVal Map As Integer)
     '   Erase particle effects
     ReDim Effect(1 To NumEffects)
     
-    MapInfo.Name = ""
-    MapInfo.Music = ""
+    MapInfo.Name = vbNullString
+    MapInfo.Music = vbNullString
     
     CurMap = Map
     
@@ -839,9 +839,7 @@ Sub Main()
     Call Load(frmScreenshots)
         
     Do While prgRun
-    
-        Engine_BeginScene
-        
+
         'Solo dibujamos si la ventana no esta minimizada
         If frmMain.WindowState <> 1 And frmMain.Visible Then
             Call ShowNextFrame(frmMain.Top, frmMain.Left, frmMain.MouseX, frmMain.MouseY)
@@ -861,9 +859,8 @@ Sub Main()
         ' If there is anything to be sent, we send it
         Call FlushBuffer
         
-        DoEvents 'DoEvents must be within BeginScene() and EndScene() to allow drawing from any UI's event (Except Modal)
+        DoEvents
         
-        Engine_EndScene
     Loop
     
     Call CloseClient
@@ -885,14 +882,14 @@ Private Sub LoadInitialConfig()
     
     '###########
     ' SERVIDORES
-    Call AddtoRichTextBox(frmCargando.Status, "Buscando servidores... ", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.status, "Buscando servidores... ", 255, 255, 255, True, False, True)
     Call DownloadServersFile("https://raw.githubusercontent.com/ao-libre/ao-cliente/master/INIT/sinfo.dat")
     Call CargarServidores
-    Call AddtoRichTextBox(frmCargando.Status, "Hecho", 255, 0, 0, True, False, False)
+    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
     
     '###########
     ' CONSTANTES
-    Call AddtoRichTextBox(frmCargando.Status, "Iniciando constantes... ", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.status, "Iniciando constantes... ", 255, 255, 255, True, False, True)
     Call InicializarNombres
     ' Initialize FONTTYPES
     Call Protocol.InitFonts
@@ -908,11 +905,11 @@ Private Sub LoadInitialConfig()
     ' Mouse Pointer (Loaded before opening any form with buttons in it)
     If FileExist(DirExtras & "Hand.ico", vbArchive) Then _
         Set picMouseIcon = LoadPicture(DirExtras & "Hand.ico")
-    Call AddtoRichTextBox(frmCargando.Status, "Hecho", 255, 0, 0, True, False, False)
+    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
     
     '#######
     ' CLASES
-    Call AddtoRichTextBox(frmCargando.Status, "Instanciando clases... ", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.status, "Instanciando clases... ", 255, 255, 255, True, False, True)
     Set Dialogos = New clsDialogs
     Set Audio = New clsAudio
     Set Inventario = New clsGrapchicalInventory
@@ -925,8 +922,8 @@ Private Sub LoadInitialConfig()
     
     
     '##############
-    ' MOTOR GRAÅFICO
-    Call AddtoRichTextBox(frmCargando.Status, "Iniciando motor grafico... ", 255, 255, 255, True, False, True)
+    ' MOTOR GRA¬ÅFICO
+    Call AddtoRichTextBox(frmCargando.status, "Iniciando motor grafico... ", 255, 255, 255, True, False, True)
     
     '     Iniciamos el Engine de DirectX 8
     If Not Engine_DirectX8_Init Then
@@ -940,21 +937,21 @@ Private Sub LoadInitialConfig()
     
     Engine_DirectX8_Aditional_Init
     
-    Call AddtoRichTextBox(frmCargando.Status, "Hecho", 255, 0, 0, True, False, False)
+    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
     
     '###################
     ' ANIMACIONES EXTRAS
-    Call AddtoRichTextBox(frmCargando.Status, "Creando animaciones extra... ", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.status, "Creando animaciones extra... ", 255, 255, 255, True, False, True)
     Call CargarTips
     Call CargarArrayLluvia
     Call CargarAnimArmas
     Call CargarAnimEscudos
     Call CargarColores
-    Call AddtoRichTextBox(frmCargando.Status, "Hecho", 255, 0, 0, True, False, False)
+    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
     
     '#############
     ' DIRECT SOUND
-    Call AddtoRichTextBox(frmCargando.Status, "Iniciando DirectSound... ", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.status, "Iniciando DirectSound... ", 255, 255, 255, True, False, True)
     'Inicializamos el sonido
     Call Audio.Initialize(DirectX, frmMain.hwnd, App.path & "\" & Config_Inicio.DirSonidos & "\", App.path & "\" & Config_Inicio.DirMusica & "\")
     'Enable / Disable audio
@@ -964,10 +961,10 @@ Private Sub LoadInitialConfig()
     'Inicializamos el inventario grafico
     Call Inventario.Initialize(DirectD3D8, frmMain.PicInv, MAX_INVENTORY_SLOTS)
     'Call Audio.MusicMP3Play(App.path & "\MP3\" & MP3_Inicio & ".mp3")
-    Call AddtoRichTextBox(frmCargando.Status, "Hecho", 255, 0, 0, True, False, False)
+    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
     
     
-    Call AddtoRichTextBox(frmCargando.Status, "                    °Bienvenido a Argentum Online!", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.status, "                    ¬°Bienvenido a Argentum Online!", 255, 255, 255, True, False, True)
 
     'Give the user enough time to read the welcome text
     Call Sleep(500)
@@ -1144,7 +1141,7 @@ On Error GoTo error
     If Not UpToDate Then
         'No recibe update, ejecutar AU
         'Ejecuto el AoUpdate, sino me voy
-        If Dir(App.path & "\AoUpdate.exe", vbArchive) = vbNullString Then
+        If LenB(Dir(App.path & "\AoUpdate.exe", vbArchive)) = 0 Then
             MsgBox "No se encuentra el archivo de actualizacion AoUpdate.exe por favor descarguelo y vuelva a intentar", vbCritical
             End
         Else
@@ -1257,7 +1254,7 @@ Private Sub InicializarNombres()
     SkillsNames(eSkill.Tacticas) = "Evasion en combate"
     SkillsNames(eSkill.Armas) = "Combate cuerpo a cuerpo"
     SkillsNames(eSkill.Meditar) = "Meditar"
-    SkillsNames(eSkill.ApuÒalar) = "ApuÒalar"
+    SkillsNames(eSkill.Apu√±alar) = "Apu√±alar"
     SkillsNames(eSkill.Ocultarse) = "Ocultarse"
     SkillsNames(eSkill.Supervivencia) = "Supervivencia"
     SkillsNames(eSkill.Talar) = "Talar Arboles"
@@ -1507,7 +1504,7 @@ Public Sub ResetAllInfo()
     UserSexo = 0
     UserRaza = 0
     UserHogar = 0
-    UserEmail = ""
+    UserEmail = vbNullString
     SkillPoints = 0
     Alocados = 0
     

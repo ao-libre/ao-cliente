@@ -1307,7 +1307,7 @@ Private Sub Form_Load()
     UserSexo = 0
     UserRaza = 0
     UserHogar = 0
-    UserEmail = ""
+    UserEmail = vbNullString
     UserHead = 0
 
 End Sub
@@ -1916,11 +1916,11 @@ Private Sub txtMail_MouseMove(Button As Integer, Shift As Integer, X As Single, 
 End Sub
 
 Private Sub txtNombre_Change()
-    txtNombre.Text = LTrim(txtNombre.Text)
+    txtNombre.Text = LTrim$(txtNombre.Text)
 End Sub
 
 Private Sub txtNombre_KeyPress(KeyAscii As Integer)
-    KeyAscii = Asc(UCase(Chr(KeyAscii)))
+    KeyAscii = Asc(UCase$(Chr$(KeyAscii)))
 End Sub
 
 Private Sub DarCuerpoYCabeza()
@@ -2156,7 +2156,7 @@ Private Sub LoadHelp()
     vHelp(eHelp.ieEscudos) = "Estima la habilidad para rechazar golpes con escudos."
     vHelp(eHelp.ieArmas) = "Evalúa la habilidad en el combate cuerpo a cuerpo con armas."
     vHelp(eHelp.ieArcos) = "Evalúa la habilidad en el combate a distancia con arcos. "
-    vHelp(eHelp.ieEspecialidad) = ""
+    vHelp(eHelp.ieEspecialidad) = vbNullString
     vHelp(eHelp.iePuebloOrigen) = "Define el hogar de tu personaje. Sin embargo, el personaje nacerá en Nemahuak, la ciudad de los novatos."
     vHelp(eHelp.ieRaza) = "De la raza que elijas dependerá cómo se modifiquen los dados que saques. Podés cambiar de raza para poder visualizar cómo se modifican los distintos atributos."
     vHelp(eHelp.ieClase) = "La clase influirá en las características principales que tenga tu personaje, asi como en las magias e items que podrá utilizar. Las estrellas que ves abajo te mostrarán en qué habilidades se destaca la misma."
@@ -2166,7 +2166,7 @@ End Sub
 
 Private Sub ClearLabel()
     LastButtonPressed.ToggleToNormal
-    lblHelp = ""
+    lblHelp = vbNullString
 End Sub
 
 Private Sub txtNombre_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
