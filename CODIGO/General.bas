@@ -4,7 +4,7 @@ Attribute VB_Name = "Mod_General"
 'Copyright (C) 2002 Marquez Pablo Ignacio
 'Copyright (C) 2002 Otto Perez
 'Copyright (C) 2002 Aaron Perkins
-'Copyright (C) 2002 Matias Fernando Pequeño
+'Copyright (C) 2002 Matias Fernando PequeÃ±o
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the Affero General Public License;
@@ -226,7 +226,7 @@ Function AsciiValidos(ByVal cad As String) As Boolean
     For i = 1 To Len(cad)
         car = Asc(mid$(cad, i, 1))
         
-        If ((car < 97 Or car > 122) Or car = Asc("Âº")) And (car <> 255) And (car <> 32) Then
+        If ((car < 97 Or car > 122) Or car = Asc("Ã‚Âº")) And (car <> 255) And (car <> 32) Then
             Exit Function
         End If
     Next i
@@ -252,7 +252,7 @@ Function CheckUserData(ByVal checkemail As Boolean) As Boolean
     For LoopC = 1 To Len(UserPassword)
         CharAscii = Asc(mid$(UserPassword, LoopC, 1))
         If Not LegalCharacter(CharAscii) Then
-            MsgBox ("Password invalido. El caracter " & Chr$(CharAscii) & " no esta¡ permitido.")
+            MsgBox ("Password invalido. El caracter " & Chr$(CharAscii) & " no estaÂ¡ permitido.")
             Exit Function
         End If
     Next LoopC
@@ -270,7 +270,7 @@ Function CheckUserData(ByVal checkemail As Boolean) As Boolean
     For LoopC = 1 To Len(UserName)
         CharAscii = Asc(mid$(UserName, LoopC, 1))
         If Not LegalCharacter(CharAscii) Then
-            MsgBox ("Nombre inva¡lido. El caracter " & Chr$(CharAscii) & " no esta¡ permitido.")
+            MsgBox ("Nombre invaÂ¡lido. El caracter " & Chr$(CharAscii) & " no estaÂ¡ permitido.")
             Exit Function
         End If
     Next LoopC
@@ -481,7 +481,7 @@ End Sub
 
 Sub SwitchMap(ByVal Map As Integer)
     '**********************************************************************************
-    'Dise�ado y creado por Juan Mart�n Sotuyo Dodero (Maraxus) (juansotuyo@hotmail.com)
+    'Diseñado y creado por Juan Martín Sotuyo Dodero (Maraxus) (juansotuyo@hotmail.com)
     '**********************************************************************************
     
     '**********************************************************************************
@@ -492,7 +492,7 @@ Sub SwitchMap(ByVal Map As Integer)
 
     Dim Y        As Long
     Dim X        As Long
-    Dim tempint  As Integer
+    
     Dim ByFlags  As Byte
     Dim handle   As Integer
     Dim fileBuff As clsByteBuffer
@@ -936,7 +936,7 @@ Private Sub LoadInitialConfig()
     
     
     '##############
-    ' MOTOR GRAFICO
+    ' MOTOR GRAÂFICO
     Call AddtoRichTextBox(frmCargando.status, "Iniciando motor grafico... ", 255, 255, 255, True, False, True)
     
     '     Iniciamos el Engine de DirectX 8
@@ -978,7 +978,7 @@ Private Sub LoadInitialConfig()
     Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
     
     
-    Call AddtoRichTextBox(frmCargando.status, "                    ¡Bienvenido a Argentum Online!", 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.status, "                    Â¡Bienvenido a Argentum Online!", 255, 255, 255, True, False, True)
 
     'Give the user enough time to read the welcome text
     Call Sleep(500)
@@ -1268,7 +1268,7 @@ Private Sub InicializarNombres()
     SkillsNames(eSkill.Tacticas) = "Evasion en combate"
     SkillsNames(eSkill.Armas) = "Combate cuerpo a cuerpo"
     SkillsNames(eSkill.Meditar) = "Meditar"
-    SkillsNames(eSkill.Apu�alar) = "Apu�alar"
+    SkillsNames(eSkill.Apuñalar) = "Apuñalar"
     SkillsNames(eSkill.Ocultarse) = "Ocultarse"
     SkillsNames(eSkill.Supervivencia) = "Supervivencia"
     SkillsNames(eSkill.Talar) = "Talar Arboles"
