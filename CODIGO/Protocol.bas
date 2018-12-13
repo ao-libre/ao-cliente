@@ -10650,6 +10650,7 @@ Private Sub HandleAccountLogged()
             cPJ(i).Gold = incomingData.ReadLong
             cPJ(i).Criminal = incomingData.ReadBoolean
             cPJ(i).Dead = incomingData.ReadBoolean
+            cPJ(i).GameMaster = incomingData.ReadBoolean
         Next i
     End If
     
