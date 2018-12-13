@@ -735,10 +735,14 @@ Public Sub DrawPJ(ByVal Index As Byte)
 
     frmPanelAccount.lblAccData(Index).Caption = cPJ(Index).Nombre
 
-    If cPJ(Index).Criminal Then
-        cColor = RGB(255, 128, 128)
+    If cPJ(Index).GameMaster Then
+        cColor = RGB(57, 255, 20)
     Else
-        cColor = RGB(0, 192, 192)
+        If cPJ(Index).Criminal Then
+            cColor = RGB(255, 128, 128)
+        Else
+            cColor = RGB(0, 192, 192)
+        End If
     End If
 
     frmPanelAccount.lblAccData(Index).ForeColor = cColor

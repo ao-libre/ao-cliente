@@ -735,6 +735,7 @@ Public Type PjCuenta
     Gold        As Long
     Criminal    As Boolean
     Dead        As Boolean
+    GameMaster  As Boolean
 End Type
 
 Public cPJ() As PjCuenta
