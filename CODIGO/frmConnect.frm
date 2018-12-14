@@ -547,7 +547,7 @@ Private Sub imgConectarse_Click()
         EstadoLogin = Normal
         
 #If UsarWrench = 1 Then
-    frmMain.Socket1.HostName = CurServerIp
+    frmMain.Socket1.hostname = CurServerIp
     frmMain.Socket1.RemotePort = CurServerPort
     frmMain.Socket1.Connect
 #Else
@@ -569,7 +569,7 @@ Private Sub imgCrearPj_Click()
         frmMain.Socket1.Cleanup
         DoEvents
     End If
-    frmMain.Socket1.HostName = CurServerIp
+    frmMain.Socket1.hostname = CurServerIp
     frmMain.Socket1.RemotePort = CurServerPort
     frmMain.Socket1.Connect
 #Else
@@ -648,6 +648,7 @@ On Error Resume Next
     
     Endpoint = GetVar(App.path & "\INIT\Config.ini", "Parameters", "SubRedditEndpoint")
     ResponseReddit = InetReddit.OpenURL(Endpoint)
+    
     Set JsonObject = JSON.parse(ResponseReddit)
     
     Dim qtyPostsOnReddit As Integer

@@ -34,7 +34,7 @@ Attribute VB_Name = "Mod_Declaraciones"
 Option Explicit
 
 #If False Then 'to fix VB fucking up the var names
-    Dim nombre As String
+    Dim Nombre As String
 #End If
 
 Public Sonidos As clsSoundMapas
@@ -168,6 +168,8 @@ Public Type tServerInfo
     Ip As String
     Puerto As Integer
     Desc As String
+    Ping As String
+    Country As String
 End Type
 
 Public ServersLst() As tServerInfo
@@ -796,7 +798,7 @@ Public ListaClases(1 To NUMCLASES) As String
 
 Public SkillPoints As Integer
 Public Alocados As Integer
-Public flags() As Integer
+Public Flags() As Integer
 Public Oscuridad As Integer
 Public logged As Boolean
 
@@ -1027,7 +1029,7 @@ Public NumHechizos As Byte
 Public Hechizos() As tHechizos
  
 Public Type tHechizos
-    nombre As String
+    Nombre As String
     Desc As String
     PalabrasMagicas As String
     ManaRequerida As Integer
@@ -1044,7 +1046,7 @@ Public NumNpcs As Integer
 Public Npcs() As tNpcs
  
 Public Type tNpcs
-    nombre As String
+    Nombre As String
     Desc As String
     NroExpresiones As Byte
     Expresiones() As String

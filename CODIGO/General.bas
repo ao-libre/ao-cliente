@@ -689,8 +689,10 @@ Public Sub CargarServidores()
 '********************************
 'Author: Unknown
 'Last Modification: 07/26/07
-'Last Modified by: Rapsodius
-'Added Instruction "CloseClient" before End so the mutex is cleared
+'Last Modified by: Recox
+'Added Instruction "CloseClient" before End so the mutex is cleared (Rapsodius)
+'Added IP Api to get the country of the IP. (Recox)
+'Get ping from server (Recox)
 '********************************
 On Error GoTo errorH
     Dim File As String
@@ -710,15 +712,27 @@ On Error GoTo errorH
         Dim CurrentIp As String
         CurrentIp = Trim$(GetVar(File, "S" & i, "Ip"))
         
-        If IpApiEnabled Then
-            CountryCode = GetCountryFromIp(CurrentIp)
-            ServersLst(i).Desc = CountryCode & " " & GetVar(File, "S" & i, "Desc")
+        If IpApiEnabled = 0 Then
+        
+           'If is not numeric do a url transformation
+            If CheckIfIpIsNumeric(CurrentIp) = False Then
+                CurrentIp = GetIPFromHostName(CurrentIp)
+            End If
+            
+            CountryCode = GetCountryCode(CurrentIp)
+            ServersLst(i).Desc = CountryCode & " - " & GetVar(File, "S" & i, "Desc")
         Else
             ServersLst(i).Desc = GetVar(File, "S" & i, "Desc")
         End If
         
-        ServersLst(i).Ip = CurrentIp
+        Dim Ping As String
+        Ping = PingAddress(CurrentIp, "SomeRandomText")
+        
+        ServersLst(i).Ip = GetVar(File, "S" & i, "Ip")
         ServersLst(i).Puerto = CInt(GetVar(File, "S" & i, "PJ"))
+        ServersLst(i).Ping = Ping
+        ServersLst(i).Desc = Ping & " " & ServersLst(i).Desc
+        
         frmConnect.lstServers.AddItem (ServersLst(i).Desc)
     Next i
     CurServer = 1
@@ -730,6 +744,26 @@ errorH:
     
     'Call CloseClient
 End Sub
+
+Private Function CheckIfIpIsNumeric(CurrentIp As String) As String
+    If IsNumeric(mid$(CurrentIp, 1, 1)) Then
+        CheckIfIpIsNumeric = True
+    Else
+        CheckIfIpIsNumeric = False
+    End If
+End Function
+
+Private Function GetCountryCode(CurrentIp As String) As String
+    Dim CountryCode As String
+    CountryCode = GetCountryFromIp(CurrentIp)
+    
+    If LenB(CountryCode) > 0 Then
+        GetCountryCode = CountryCode
+    Else
+        GetCountryCode = "??"
+    End If
+    
+End Function
 
 Public Function CurServerPasRecPort() As Integer
     If CurServer <> 0 Then
