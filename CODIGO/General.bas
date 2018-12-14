@@ -725,13 +725,11 @@ On Error GoTo errorH
             ServersLst(i).Desc = GetVar(File, "S" & i, "Desc")
         End If
         
-        Dim Ping As String
-        Ping = PingAddress(CurrentIp, "SomeRandomText")
-        
         ServersLst(i).Ip = GetVar(File, "S" & i, "Ip")
         ServersLst(i).Puerto = CInt(GetVar(File, "S" & i, "PJ"))
-        ServersLst(i).Ping = Ping
-        ServersLst(i).Desc = Ping & " " & ServersLst(i).Desc
+        'ServersLst(i).Ping = PingAddress(CurrentIp, "SomeRandomText")
+        'ServersLst(i).Country = CountryCode
+        ServersLst(i).Desc = PingAddress(CurrentIp, "SomeRandomText") & " " & ServersLst(i).Desc
         
         frmConnect.lstServers.AddItem (ServersLst(i).Desc)
     Next i

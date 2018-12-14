@@ -63,7 +63,7 @@ Public Type ICMP_ECHO_REPLY
   'Reserved        As Integer
    DataPointer     As Long
    Options         As ICMP_OPTIONS
-   Data            As String * 250
+   data            As String * 250
 End Type
 
 Private Type HOSTENT
@@ -79,7 +79,7 @@ Private Declare Function gethostbyname Lib "WSOCK32.DLL" _
   
 Private Declare Sub CopyMemory Lib "kernel32" _
    Alias "RtlMoveMemory" _
-  (xDest As Any, _
+  (XDest As Any, _
    xSource As Any, _
    ByVal nbytes As Long)
 
@@ -109,12 +109,6 @@ Private Declare Function IcmpSendEcho Lib "icmp.dll" _
     
 Private Declare Function inet_addr Lib "WSOCK32.DLL" _
    (ByVal s As String) As Long
-   
-Private Declare Function GetRTTAndHopCount Lib "iphlpapi.dll" _
-    (ByVal lDestIPAddr As Long, _
-    ByRef lHopCount As Long, _
-    ByVal lMaxHops As Long, _
-    ByRef lRTT As Long) As Long
 
 '*****************************************
 Public Function Ping(strAddress As String, strDataToSend As String, ECHO As ICMP_ECHO_REPLY) As Long
@@ -318,9 +312,9 @@ Public Function PingAddress(strAddressToResolve As String, strDataToSend As Stri
       Debug.Print "Round Trip Time : " & ECHO.RoundTripTime & " ms"
       Debug.Print "Data Size : " & ECHO.DataSize & " bytes"
       
-      If Left$(ECHO.Data, 1) <> Chr$(0) Then
-         logPos = InStr(ECHO.Data, Chr$(0))
-         Debug.Print "Echo Data : " & Left$(ECHO.Data, logPos - 1)
+      If Left$(ECHO.data, 1) <> Chr$(0) Then
+         logPos = InStr(ECHO.data, Chr$(0))
+         Debug.Print "Echo Data : " & Left$(ECHO.data, logPos - 1)
       End If
    
       Debug.Print "Data Pointer : " & ECHO.DataPointer
@@ -336,30 +330,5 @@ Public Function PingAddress(strAddressToResolve As String, strDataToSend As Stri
    End If
    
 End Function
-
-Public Function SimplePing(sIPadr As String) As Boolean
-
-    ' Based on an article on 'Codeguru' by 'Bill Nolde'
-    ' Thx to this guy! It 's simple and great!
-
-    ' Implemented for VB by G. Wirth, Ulm,  Germany
-    ' Enjoy!
-    
-    Dim lIPadr      As Long
-    Dim lHopsCount  As Long
-    Dim lRTT        As Long
-    Dim lMaxHops    As Long
-    Dim lResult     As Long
-    
-    Const SUCCESS = 1
-    
-    lMaxHops = 20               ' should be enough ...
-    
-    lIPadr = inet_addr(sIPadr)
-    
-    SimplePing = (GetRTTAndHopCount(lIPadr, lHopsCount, lMaxHops, lRTT) = SUCCESS)
-    
-End Function
-
 
 
