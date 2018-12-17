@@ -7,6 +7,7 @@ Begin VB.Form frmCerrar
    ClientLeft      =   0
    ClientTop       =   0
    ClientWidth     =   5025
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    Picture         =   "frmCerrar.frx":0000
    ScaleHeight     =   212
@@ -14,6 +15,14 @@ Begin VB.Form frmCerrar
    ScaleWidth      =   335
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
+   Begin VB.CommandButton cCancelQuit 
+      Caption         =   "Salir (ESC)"
+      Height          =   315
+      Left            =   3600
+      TabIndex        =   2
+      Top             =   2760
+      Width           =   1140
+   End
    Begin VB.CommandButton cSalir 
       Caption         =   "Salir del Juego"
       BeginProperty Font 
@@ -54,18 +63,20 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-
 Option Explicit
 
 Private clsFormulario As clsFormMovementManager
 
-Private Sub cCerrar_Click()
+Private Sub cCancelQuit_Click()
     Call Audio.PlayWave(SND_CLICK)
+    Set clsFormulario = Nothing
     Unload Me
 End Sub
 
 Private Sub cRegresar_Click()
     Call Audio.PlayWave(SND_CLICK)
+    
+    Set clsFormulario = Nothing
     
     If UserParalizado Then 'Inmo
         With FontTypes(FontTypeNames.FONTTYPE_WARNING)
@@ -82,6 +93,7 @@ End Sub
 
 Private Sub cSalir_Click()
     Call Audio.PlayWave(SND_CLICK)
+    Set clsFormulario = Nothing
     Call CloseClient
 End Sub
 
@@ -91,6 +103,7 @@ End Sub
 
 Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
     If KeyCode = vbKeyEscape Then
+        Set clsFormulario = Nothing
         Unload Me
     End If
 End Sub
