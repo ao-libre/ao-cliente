@@ -1468,7 +1468,8 @@ Private Sub lblScroll_Click(Index As Integer)
 End Sub
 
 Private Sub lblCerrar_Click()
-    prgRun = False
+    Call Audio.PlayWave(SND_CLICK)
+    frmCerrar.Show vbModal
 End Sub
 
 Private Sub lblMinimizar_Click()
