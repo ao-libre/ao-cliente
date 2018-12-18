@@ -223,7 +223,7 @@ Begin VB.Form frmConnect
       Top             =   8400
       Width           =   1335
    End
-   Begin VB.Image imgCrearPj 
+   Begin VB.Image imgCrearCuenta 
       Height          =   375
       Left            =   600
       Top             =   8400
@@ -304,7 +304,7 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private cBotonCrearPj As clsGraphicalButton
+Private cBotonCrearCuenta As clsGraphicalButton
 Private cBotonRecuperarPass As clsGraphicalButton
 Private cBotonManual As clsGraphicalButton
 Private cBotonReglamento As clsGraphicalButton
@@ -325,16 +325,8 @@ Dim Posts() As tRedditPost
 
 Public LastButtonPressed As clsGraphicalButton
 
+
 Private Sub Form_Activate()
-    
-    If CurServer <> 0 Then
-        IPTxt = ServersLst(1).Ip
-        PortTxt = ServersLst(1).Puerto
-    Else
-        IPTxt = IPdelServidor
-        PortTxt = PuertoDelServidor
-    End If
-    
     Call GetPostsFromReddit
 End Sub
 
@@ -370,17 +362,21 @@ Private Sub Form_Load()
     '[CODE 002]:MatuX
     EngineRun = False
     '[END]
-
-    PortTxt.Text = Config_Inicio.Puerto
- 
-     '[CODE]:MatuX
-    '
-    '  El código para mostrar la versión se genera acá para
-    ' evitar que por X razones luego desaparezca, como suele
-    ' pasar a veces :)
-       version.Caption = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
-    '[END]'
     
+    PortTxt.Text = Config_Inicio.Puerto
+    
+    Call CargarServidores
+    
+    If CurServer <> 0 Then
+        IPTxt = ServersLst(CurServer).Ip
+        PortTxt = ServersLst(CurServer).Puerto
+    Else
+        IPTxt = ServersLst(1).Ip
+        PortTxt = ServersLst(1).Puerto
+    End If
+
+    version.Caption = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
+
     Me.Picture = LoadPicture(App.path & "\graficos\VentanaConectar.jpg")
     
     Call LoadButtons
@@ -412,7 +408,7 @@ Private Sub LoadButtons()
     
     GrhPath = DirGraficos
     
-    Set cBotonCrearPj = New clsGraphicalButton
+    Set cBotonCrearCuenta = New clsGraphicalButton
     Set cBotonRecuperarPass = New clsGraphicalButton
     Set cBotonManual = New clsGraphicalButton
     Set cBotonReglamento = New clsGraphicalButton
@@ -427,9 +423,9 @@ Private Sub LoadButtons()
     Set LastButtonPressed = New clsGraphicalButton
 
         
-    Call cBotonCrearPj.Initialize(imgCrearPj, GrhPath & "BotonCrearPersonajeConectar.jpg", _
-                                    GrhPath & "BotonCrearPersonajeRolloverConectar.jpg", _
-                                    GrhPath & "BotonCrearPersonajeClickConectar.jpg", Me)
+    Call cBotonCrearCuenta.Initialize(imgCrearCuenta, GrhPath & "BotonCrearCuenta.jpg", _
+                                    GrhPath & "BotonCrearCuentaRollover.jpg", _
+                                    GrhPath & "BotonCrearCuentaClick.jpg", Me)
                                     
     Call cBotonRecuperarPass.Initialize(imgRecuperar, GrhPath & "BotonRecuperarPass.jpg", _
                                     GrhPath & "BotonRecuperarPassRollover.jpg", _
@@ -475,7 +471,7 @@ End Sub
 
 Private Sub CheckServers()
     If Not IsIp(IPTxt) And CurServer <> 0 Then
-        If MsgBox("Atencion, está intentando conectarse a un servidor no oficial, NoLand Studios no se hace responsable de los posibles problemas que estos servidores presenten. ¿Desea continuar?", vbYesNo) = vbNo Then
+        If MsgBox("Atencion, esta intentando conectarse a un servidor no oficial, NoLand Studios no se hace responsable de los posibles problemas que estos servidores presenten. ¿Desea continuar?", vbYesNo) = vbNo Then
             If CurServer <> 0 Then
                 IPTxt = ServersLst(CurServer).Ip
                 PortTxt = ServersLst(CurServer).Puerto
@@ -486,7 +482,6 @@ Private Sub CheckServers()
             Exit Sub
         End If
     End If
-    CurServer = 0
     IPdelServidor = IPTxt
     PuertoDelServidor = PortTxt
 End Sub
@@ -535,15 +530,13 @@ Private Sub imgConectarse_Click()
 #End If
     
     'update user info
-    UserName = txtNombre.Text
-    
-    Dim aux As String
-    aux = txtPasswd.Text
-    UserPassword = aux
+    AccountName = txtNombre.Text
+    AccountPassword = txtPasswd.Text
+
     'Clear spell list
     frmMain.hlst.Clear
 
-    If CheckUserData(False) = True Then
+    If CheckUserData() = True Then
         EstadoLogin = Normal
         
 #If UsarWrench = 1 Then
@@ -558,32 +551,12 @@ Private Sub imgConectarse_Click()
     
 End Sub
 
-Private Sub imgCrearPj_Click()
-    
-    Call CheckServers
-    
-    EstadoLogin = E_MODO.Dados
-#If UsarWrench = 1 Then
-    If frmMain.Socket1.Connected Then
-        frmMain.Socket1.Disconnect
-        frmMain.Socket1.Cleanup
-        DoEvents
-    End If
-    frmMain.Socket1.HostName = CurServerIp
-    frmMain.Socket1.RemotePort = CurServerPort
-    frmMain.Socket1.Connect
-#Else
-    If frmMain.Winsock1.State <> sckClosed Then
-        frmMain.Winsock1.Close
-        DoEvents
-    End If
-    frmMain.Winsock1.Connect CurServerIp, CurServerPort
-#End If
-
-End Sub
-
 Private Sub imgLeerMas_Click()
     Call ShellExecute(0, "Open", "http://www.argentumonline.org", "", App.path, SW_SHOWNORMAL)
+End Sub
+
+Private Sub imgCrearCuenta_Click()
+    frmCrearCuenta.Show
 End Sub
 
 Private Sub imgManual_Click()

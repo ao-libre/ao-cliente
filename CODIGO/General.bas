@@ -234,47 +234,47 @@ Function AsciiValidos(ByVal cad As String) As Boolean
     AsciiValidos = True
 End Function
 
-Function CheckUserData(ByVal checkemail As Boolean) As Boolean
+Function CheckUserData() As Boolean
     'Validamos los datos del user
     Dim LoopC As Long
     Dim CharAscii As Integer
-    
-    If checkemail And LenB(UserEmail) = 0 Then
-        MsgBox ("Direccion de email invalida")
-        Exit Function
-    End If
-    
-    If LenB(UserPassword) = 0 Then
+
+    If LenB(AccountPassword) = 0 Then
         MsgBox ("Ingrese un password.")
         Exit Function
     End If
-    
-    For LoopC = 1 To Len(UserPassword)
-        CharAscii = Asc(mid$(UserPassword, LoopC, 1))
+
+    For LoopC = 1 To Len(AccountPassword)
+        CharAscii = Asc(mid$(AccountPassword, LoopC, 1))
         If Not LegalCharacter(CharAscii) Then
-            MsgBox ("Password invalido. El caracter " & Chr$(CharAscii) & " no esta¡ permitido.")
+            MsgBox ("Password invalido. El caracter " & Chr$(CharAscii) & " no esta permitido.")
             Exit Function
         End If
     Next LoopC
-    
-    If LenB(UserName) = 0 Then
-        MsgBox ("Ingrese un nombre de personaje.")
+
+    If LenB(AccountName) = 0 Then
+        MsgBox "Ingrese un e-mail."
         Exit Function
     End If
-    
-    If LenB(UserName) > 30 Then
-        MsgBox ("El nombre debe tener menos de 30 letras.")
+
+    If Not CheckMailString(AccountName) Then
+        MsgBox "Direccion de e-mail invalida."
         Exit Function
     End If
-    
-    For LoopC = 1 To Len(UserName)
-        CharAscii = Asc(mid$(UserName, LoopC, 1))
+
+    If Len(AccountName) > 30 Then
+        MsgBox "El e-mail debe tener menos de 30 letras."
+        Exit Function
+    End If
+
+    For LoopC = 1 To Len(AccountName)
+        CharAscii = Asc(mid$(AccountName, LoopC, 1))
         If Not LegalCharacter(CharAscii) Then
-            MsgBox ("Nombre inva¡lido. El caracter " & Chr$(CharAscii) & " no esta¡ permitido.")
+            MsgBox ("Nombre invalido. El caracter " & Chr$(CharAscii) & " no esta permitido.")
             Exit Function
         End If
     Next LoopC
-    
+
     CheckUserData = True
 End Function
 
@@ -329,6 +329,7 @@ Sub SetConnected()
     'Unload the connect form
     Unload frmCrearPersonaje
     Unload frmConnect
+    Unload frmPanelAccount
     
     frmMain.lblName.Caption = UserName
     'Load main form
@@ -735,7 +736,8 @@ On Error GoTo errorH
         ServersLst(i).Puerto = CInt(GetVar(File, "S" & i, "PJ"))
         frmConnect.lstServers.AddItem (ServersLst(i).Desc)
     Next i
-    CurServer = 1
+    
+    If CurServer = 0 Then CurServer = 1
 
 Exit Sub
 
@@ -898,7 +900,6 @@ Private Sub LoadInitialConfig()
     ' SERVIDORES
     Call AddtoRichTextBox(frmCargando.status, "Buscando servidores... ", 255, 255, 255, True, False, True)
     Call DownloadServersFile("https://raw.githubusercontent.com/ao-libre/ao-cliente/master/INIT/sinfo.dat")
-    Call CargarServidores
     Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
     
     '###########
@@ -1480,7 +1481,6 @@ Public Sub ResetAllInfo()
     'Stop audio
     Call Audio.StopWave
     frmMain.IsPlaying = PlayLoop.plNone
-
     
     ' Reset flags
     pausa = False

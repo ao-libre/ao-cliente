@@ -13,6 +13,9 @@ Public TileBufferSize As Integer
 Public Const ScreenWidth As Long = 536
 Public Const ScreenHeight As Long = 412
 
+Public Const HeadOffsetAltos As Integer = -8
+Public Const HeadOffsetBajos As Integer = 2
+
 Public MainScreenRect As RECT
 Public ConnectScreenRect As RECT
 '
@@ -724,7 +727,79 @@ Public Sub Engine_Update_FPS()
        ' End If
 End Sub
 
+Public Sub DrawPJ(ByVal Index As Byte)
 
+    If LenB(cPJ(Index).Nombre) = 0 Then Exit Sub
 
+    Dim cColor As Long
 
+    frmPanelAccount.lblAccData(Index).Caption = cPJ(Index).Nombre
 
+    If cPJ(Index).GameMaster Then
+        cColor = RGB(57, 255, 20)
+    Else
+        If cPJ(Index).Criminal Then
+            cColor = RGB(255, 128, 128)
+        Else
+            cColor = RGB(0, 192, 192)
+        End If
+    End If
+
+    frmPanelAccount.lblAccData(Index).ForeColor = cColor
+
+    Dim i As Integer
+
+    Dim init_x As Integer
+    Dim init_y As Integer
+    Dim head_offset As Integer
+    Dim grhtemp As Grh
+    Static re As RECT
+   
+    re.Left = 0
+    re.Top = 0
+    re.bottom = 80
+    re.Right = 76
+
+    init_x = 25
+    init_y = 20
+
+    Dim Light(3) As Long
+    Light(0) = D3DColorXRGB(255, 255, 255)
+    Light(1) = D3DColorXRGB(255, 255, 255)
+    Light(2) = D3DColorXRGB(255, 255, 255)
+    Light(3) = D3DColorXRGB(255, 255, 255)
+
+    If cPJ(Index).Race = eRaza.Humano Or cPJ(Index).Race = eRaza.Elfo Or cPJ(Index).Race = eRaza.ElfoOscuro Then
+        head_offset = HeadOffsetAltos
+    Else
+        head_offset = HeadOffsetBajos
+    End If
+
+    Call Engine_BeginScene
+
+    If cPJ(Index).Body <> 0 Then
+        Call DDrawTransGrhtoSurface(BodyData(cPJ(Index).Body).Walk(3), PixelOffsetX + init_x, PixelOffsetY + init_y, 0, Light(), 0, init_x, init_y)
+    End If
+
+    If cPJ(Index).Dead Then
+        Call DDrawTransGrhtoSurface(HeadData(CASPER_HEAD).Head(3), PixelOffsetX + init_x + 4, PixelOffsetY + init_y + head_offset, 0, Light(), 0, init_x, init_y)
+    Else
+        If cPJ(Index).Head <> 0 Then
+            Call DDrawTransGrhtoSurface(HeadData(cPJ(Index).Head).Head(3), PixelOffsetX + init_x + 4, PixelOffsetY + init_y + head_offset, 0, Light(), 0, init_x, init_y)
+        End If
+    End If
+
+    If cPJ(Index).helmet <> 0 Then
+        Call DDrawTransGrhtoSurface(CascoAnimData(cPJ(Index).helmet).Head(3), PixelOffsetX + init_x + 4, PixelOffsetY + init_y + head_offset, 0, Light(), 0, init_x, init_y)
+    End If
+     
+    If cPJ(Index).weapon <> 0 Then
+        Call DDrawTransGrhtoSurface(WeaponAnimData(cPJ(Index).weapon).WeaponWalk(3), PixelOffsetX + init_x, PixelOffsetY + init_y, 0, Light(), 0, init_x, init_y)
+    End If
+     
+    If cPJ(Index).shield <> 0 Then
+        Call DDrawTransGrhtoSurface(ShieldAnimData(cPJ(Index).shield).ShieldWalk(3), PixelOffsetX + init_x, PixelOffsetY + init_y, 0, Light(), 0, init_x, init_y)
+    End If
+
+    Engine_EndScene re, frmPanelAccount.picChar(Index - 1).hwnd
+End Sub

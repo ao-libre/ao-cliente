@@ -58,9 +58,11 @@ End Function
 
 Sub Login()
     If EstadoLogin = E_MODO.Normal Then
-        Call WriteLoginExistingChar
+        Call WriteLoginExistingAccount
     ElseIf EstadoLogin = E_MODO.CrearNuevoPj Then
         Call WriteLoginNewChar
+    ElseIf EstadoLogin = E_MODO.CrearCuenta Then
+        Call WriteLoginNewAccount
     End If
     
     DoEvents

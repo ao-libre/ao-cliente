@@ -33,7 +33,7 @@ Attribute VB_Name = "Mod_Declaraciones"
 
 Option Explicit
 
-#If False Then 'to fix VB fucking up the var names
+#If False Then
     Dim nombre As String
 #End If
 
@@ -720,10 +720,34 @@ Global OtroInventario(1 To MAX_INVENTORY_SLOTS) As Inventory
 
 Public UserHechizos(1 To MAXHECHI) As Integer
 
+Public Type PjCuenta
+    nombre      As String
+    Head        As Integer
+    Body        As Integer
+    shield      As Byte
+    helmet      As Byte
+    weapon      As Byte
+    Mapa        As Integer
+    Class       As Byte
+    Race        As Byte
+    Map         As Integer
+    Level       As Byte
+    Gold        As Long
+    Criminal    As Boolean
+    Dead        As Boolean
+    GameMaster  As Boolean
+End Type
+
+Public cPJ() As PjCuenta
+
 Public NPCInventory(1 To MAX_NPC_INVENTORY_SLOTS) As NpCinV
 Public UserMeditar As Boolean
 Public UserName As String
+Public AccountName As String
+Public AccountPassword As String
+Public AccountHash As String
 Public UserPassword As String
+Public NumberOfCharacters As Byte
 Public UserMaxHP As Integer
 Public UserMinHP As Integer
 Public UserMaxMAN As Integer
@@ -812,6 +836,7 @@ Public Enum E_MODO
     Normal = 1
     CrearNuevoPj = 2
     Dados = 3
+    CrearCuenta = 4
 End Enum
 
 Public EstadoLogin As E_MODO
