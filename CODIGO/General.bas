@@ -479,111 +479,125 @@ Private Sub CheckKeys()
     End If
 End Sub
 
-'TODO : Si bien nunca estuvo allaÂ­, el mapa es algo independiente o a lo sumo dependiente del engine, no va acaÂ¡!!!
 Sub SwitchMap(ByVal Map As Integer)
-'**************************************************************
-'Formato de mapas optimizado para reducir el espacio que ocupan.
-'DiseÃ±ado y creado por Juan Martin Sotuyo Dodero (Maraxus) (juansotuyo@hotmail.com)
-'**************************************************************
-    Dim Y As Long
-    Dim X As Long
-    Dim tempint As Integer
-    Dim ByFlags As Byte
-    Dim handle As Integer
-    Dim CharIndex As Integer
-    Dim obj       As Integer
+    '**********************************************************************************
+    'Diseñado y creado por Juan Martín Sotuyo Dodero (Maraxus) (juansotuyo@hotmail.com)
+    '**********************************************************************************
     
+    '**********************************************************************************
+    'Formato de mapas optimizado para reducir el espacio que ocupan.
+    'Nueva carga de mapas desde la memoria (clsByteBuffer)
+    '[ https://www.gs-zone.org/temas/carga-de-mapas-desde-la-memoria-cliente.91444/ ]
+    '**********************************************************************************
+
+    Dim Y        As Long
+    Dim X        As Long
+    
+    Dim ByFlags  As Byte
+    Dim handle   As Integer
+    Dim fileBuff As clsByteBuffer
+   
+    Dim dData()  As Byte
+    Dim dLen     As Long
+   
+    Set fileBuff = New clsByteBuffer
+   
+    dLen = FileLen(DirMapas & "Mapa" & Map & ".map")
+    ReDim dData(dLen - 1)
+   
     handle = FreeFile()
-    
-    Call Char_CleanAll
-    
+   
     Open DirMapas & "Mapa" & Map & ".map" For Binary As handle
-    Seek handle, 1
-            
-    'map Header
-    Get handle, , MapInfo.MapVersion
-    Get handle, , MiCabecera
-    Get handle, , tempint
-    Get handle, , tempint
-    Get handle, , tempint
-    Get handle, , tempint
+        Get handle, , dData
+    Close handle
+     
+    fileBuff.initializeReader dData
     
+    MapInfo.MapVersion = fileBuff.getInteger
+   
+    With MiCabecera
+        .Desc = fileBuff.getString(Len(.Desc))
+        .CRC = fileBuff.getLong
+        .MagicWord = fileBuff.getLong
+    End With
+    
+    fileBuff.getDouble
+   
     'Load arrays
     For Y = YMinMapSize To YMaxMapSize
         For X = XMinMapSize To XMaxMapSize
-            Get handle, , ByFlags
-            MapData(X, Y).FxIndex = 0
-            MapData(X, Y).Blocked = (ByFlags And 1)
-            
-            Get handle, , MapData(X, Y).Graphic(1).GrhIndex
-            InitGrh MapData(X, Y).Graphic(1), MapData(X, Y).Graphic(1).GrhIndex
-            
-            'Layer 2 used?
-            If ByFlags And 2 Then
-                Get handle, , MapData(X, Y).Graphic(2).GrhIndex
-                InitGrh MapData(X, Y).Graphic(2), MapData(X, Y).Graphic(2).GrhIndex
-            Else
-                MapData(X, Y).Graphic(2).GrhIndex = 0
-            End If
-                
-            'Layer 3 used?
-            If ByFlags And 4 Then
-                Get handle, , MapData(X, Y).Graphic(3).GrhIndex
-                InitGrh MapData(X, Y).Graphic(3), MapData(X, Y).Graphic(3).GrhIndex
-            Else
-                MapData(X, Y).Graphic(3).GrhIndex = 0
-            End If
-                
-            'Layer 4 used?
-            If ByFlags And 8 Then
-                Get handle, , MapData(X, Y).Graphic(4).GrhIndex
-                InitGrh MapData(X, Y).Graphic(4), MapData(X, Y).Graphic(4).GrhIndex
-            Else
-                MapData(X, Y).Graphic(4).GrhIndex = 0
-            End If
-            
-            'Trigger used?
-            If ByFlags And 16 Then
-                Get handle, , MapData(X, Y).Trigger
-            Else
-                MapData(X, Y).Trigger = 0
-            End If
-            
-            'Erase NPCs
-            CharIndex = Char_MapPosExits(X, Y)
- 
-            If (CharIndex > 0) Then
-                Call Char_Erase(CharIndex)
-            End If
+            ByFlags = fileBuff.getByte()
 
-            'Erase OBJs
-            obj = Map_PosExitsObject(X, Y)
-
-            If (obj > 0) Then
-                Call Map_DestroyObject(X, Y)
-            End If
+            With MapData(X, Y)
             
-            'Erase Lights
-            Call Engine_D3DColor_To_RGB_List(MapData(X, Y).Engine_Light(), Estado_Actual) 'Standelf, Light & Meteo Engine
+                .Blocked = (ByFlags And 1)
+                .Graphic(1).GrhIndex = fileBuff.getInteger()
+                InitGrh .Graphic(1), .Graphic(1).GrhIndex
+           
+                'Layer 2 used?
+                If ByFlags And 2 Then
+                    .Graphic(2).GrhIndex = fileBuff.getInteger()
+                    InitGrh .Graphic(2), .Graphic(2).GrhIndex
+                Else
+                    .Graphic(2).GrhIndex = 0
+                End If
+               
+                'Layer 3 used?
+                If ByFlags And 4 Then
+                    .Graphic(3).GrhIndex = fileBuff.getInteger()
+                    InitGrh .Graphic(3), .Graphic(3).GrhIndex
+                Else
+                    .Graphic(3).GrhIndex = 0
+                End If
+               
+                'Layer 4 used?
+                If ByFlags And 8 Then
+                    .Graphic(4).GrhIndex = fileBuff.getInteger()
+                    InitGrh .Graphic(4), .Graphic(4).GrhIndex
+                Else
+                    .Graphic(4).GrhIndex = 0
+                End If
+           
+                'Trigger used?
+                If ByFlags And 16 Then
+                    .Trigger = fileBuff.getInteger()
+                Else
+                    .Trigger = 0
+                End If
+           
+                'Erase NPCs
+                If .CharIndex > 0 Then
+                    .CharIndex = 0
+                End If
+           
+                'Erase OBJs
+                If .ObjGrh.GrhIndex > 0 Then
+                    .ObjGrh.GrhIndex = 0
+                End If
+            
+                'Erase Lights
+                Call Engine_D3DColor_To_RGB_List(.Engine_Light(), Estado_Actual) 'Standelf, Light & Meteo Engine
+            
+            End With
         Next X
     Next Y
     
-    Close handle
-    
     Call LightRemoveAll
     
-    '   Erase particle effects
+    'Erase particle effects
     ReDim Effect(1 To NumEffects)
     
+    'Limpiamos el buffer
+    Set fileBuff = Nothing
+   
     MapInfo.Name = vbNullString
     MapInfo.Music = vbNullString
     
     CurMap = Map
     
     Init_Ambient Map
-    
-    'If UserMap = 120 Then Effect_Waterfall_Begin Engine_TPtoSPX(8), Engine_TPtoSPY(3), 1, 800
 End Sub
+
 Function ReadField(ByVal Pos As Integer, ByRef Text As String, ByVal SepASCII As Byte) As String
 '*****************************************************************
 'Gets a field from a delimited string
