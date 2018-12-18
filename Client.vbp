@@ -109,6 +109,8 @@ Class=clsSurfaceManStatic; CODIGO\clsSurfaceManStatic.cls
 Module=JSON; CODIGO\JSON.bas
 Class=cStringBuilder; CODIGO\cStringBuilder.cls
 Class=cJSONScript; CODIGO\cJSONScript.cls
+Class=clsByteBuffer; CODIGO\clsByteBuffer.cls
+Form=CODIGO\frmCerrar.frm
 IconForm="frmMain"
 Startup="Sub Main"
 HelpFile=""
@@ -148,4 +150,3 @@ DebugStartupOption=0
 
 [MS Transaction Server]
 AutoRefresh=1
-
