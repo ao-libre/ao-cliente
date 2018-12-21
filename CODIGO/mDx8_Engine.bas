@@ -346,7 +346,7 @@ Call Engine_D3DColor_To_RGB_List(tempARGB(), TempColor)
 SetARGB_Alpha = tempARGB()
 End Function
 
-Private Function Engine_Collision_Between(ByVal Value As Single, ByVal Bound1 As Single, ByVal Bound2 As Single) As Byte
+Private Function Engine_Collision_Between(ByVal value As Single, ByVal Bound1 As Single, ByVal Bound2 As Single) As Byte
 '*****************************************************************
 'Find if a value is between two other values (used for line collision)
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_Collision_Between
@@ -354,12 +354,12 @@ Private Function Engine_Collision_Between(ByVal Value As Single, ByVal Bound1 As
 
     'Checks if a value lies between two bounds
     If Bound1 > Bound2 Then
-        If Value >= Bound2 Then
-            If Value <= Bound1 Then Engine_Collision_Between = 1
+        If value >= Bound2 Then
+            If value <= Bound1 Then Engine_Collision_Between = 1
         End If
     Else
-        If Value >= Bound1 Then
-            If Value <= Bound2 Then Engine_Collision_Between = 1
+        If value >= Bound1 Then
+            If value <= Bound2 Then Engine_Collision_Between = 1
         End If
     End If
     
@@ -730,18 +730,19 @@ End Sub
 Public Sub DrawPJ(ByVal Index As Byte)
 
     If LenB(cPJ(Index).Nombre) = 0 Then Exit Sub
-
     Dim cColor As Long
-
     frmPanelAccount.lblAccData(Index).Caption = cPJ(Index).Nombre
+    
+    ColoresFile = App.path & "\init\colores.dat"
 
     If cPJ(Index).GameMaster Then
-        cColor = RGB(57, 255, 20)
+        '1 is Consejeros in Colores.dat
+        cColor = RGB(GetVar(ColoresFile, "1", "R"), GetVar(ColoresFile, "1", "G"), GetVar(ColoresFile, "1", "B"))
     Else
         If cPJ(Index).Criminal Then
-            cColor = RGB(255, 128, 128)
+            cColor = RGB(GetVar(ColoresFile, "CR", "R"), GetVar(ColoresFile, "CR", "G"), GetVar(ColoresFile, "CR", "B"))
         Else
-            cColor = RGB(0, 192, 192)
+            cColor = RGB(GetVar(ColoresFile, "CI", "R"), GetVar(ColoresFile, "CI", "G"), GetVar(ColoresFile, "CI", "B"))
         End If
     End If
 
