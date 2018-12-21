@@ -710,6 +710,7 @@ On Error GoTo errorH
     Dim i As Integer
     Dim CountryCode As String
     Dim IpApiEnabled As Boolean
+    Dim DoPingsEnabled As Boolean
     
     File = App.path & "\init\sinfo.dat"
     Quantity = Val(GetVar(File, "INIT", "Cant"))
@@ -741,12 +742,12 @@ On Error GoTo errorH
         'ServersLst(i).Ping = PingAddress(CurrentIp, "SomeRandomText")
         'ServersLst(i).Country = CountryCode
 
-        'We should delete this validations and append text to the desc when we start working in something more suitable 
+        'We should delete this validations and append text to the desc when we start working in something more suitable
         'in the UI to show the Pings, Country, Desc, etc.
         'All this functions are in the CODIGO/modPing.bas
         If DoPingsEnabled Then
             ServersLst(i).Desc = PingAddress(CurrentIp, "SomeRandomText") & " " & ServersLst(i).Desc
-        Else
+        End If
 
         frmConnect.lstServers.AddItem (ServersLst(i).Desc)
     Next i
