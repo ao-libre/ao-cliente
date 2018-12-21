@@ -346,7 +346,7 @@ Call Engine_D3DColor_To_RGB_List(tempARGB(), TempColor)
 SetARGB_Alpha = tempARGB()
 End Function
 
-Private Function Engine_Collision_Between(ByVal value As Single, ByVal Bound1 As Single, ByVal Bound2 As Single) As Byte
+Private Function Engine_Collision_Between(ByVal Value As Single, ByVal Bound1 As Single, ByVal Bound2 As Single) As Byte
 '*****************************************************************
 'Find if a value is between two other values (used for line collision)
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_Collision_Between
@@ -354,12 +354,12 @@ Private Function Engine_Collision_Between(ByVal value As Single, ByVal Bound1 As
 
     'Checks if a value lies between two bounds
     If Bound1 > Bound2 Then
-        If value >= Bound2 Then
-            If value <= Bound1 Then Engine_Collision_Between = 1
+        If Value >= Bound2 Then
+            If Value <= Bound1 Then Engine_Collision_Between = 1
         End If
     Else
-        If value >= Bound1 Then
-            If value <= Bound2 Then Engine_Collision_Between = 1
+        If Value >= Bound1 Then
+            If Value <= Bound2 Then Engine_Collision_Between = 1
         End If
     End If
     
