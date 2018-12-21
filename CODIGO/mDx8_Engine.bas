@@ -730,18 +730,19 @@ End Sub
 Public Sub DrawPJ(ByVal Index As Byte)
 
     If LenB(cPJ(Index).Nombre) = 0 Then Exit Sub
-
     Dim cColor As Long
-
     frmPanelAccount.lblAccData(Index).Caption = cPJ(Index).Nombre
+    
+    ColoresFile = App.path & "\init\colores.dat"
 
     If cPJ(Index).GameMaster Then
-        cColor = RGB(57, 255, 20)
+        '1 is Consejeros in Colores.dat
+        cColor = RGB(GetVar(ColoresFile, "1", "R"), GetVar(ColoresFile, "1", "G"), GetVar(ColoresFile, "1", "B"))
     Else
         If cPJ(Index).Criminal Then
-            cColor = RGB(255, 128, 128)
+            cColor = RGB(GetVar(ColoresFile, "CR", "R"), GetVar(ColoresFile, "CR", "G"), GetVar(ColoresFile, "CR", "B"))
         Else
-            cColor = RGB(0, 192, 192)
+            cColor = RGB(GetVar(ColoresFile, "CI", "R"), GetVar(ColoresFile, "CI", "G"), GetVar(ColoresFile, "CI", "B"))
         End If
     End If
 
