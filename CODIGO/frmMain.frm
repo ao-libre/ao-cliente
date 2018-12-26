@@ -219,7 +219,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2619
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -979,11 +978,11 @@ End Sub
 
 Private Sub Form_Load()
     
-    If NoRes Then
+    'If NoRes Then lo sacamos hasta darle una buena solucion
         ' Handles Form movement (drag and drop).
-        Set clsFormulario = New clsFormMovementManager
-        clsFormulario.Initialize Me, 120
-    End If
+       ' Set clsFormulario = New clsFormMovementManager
+        'clsFormulario.Initialize Me, 120
+    'End If
 
     Me.Picture = LoadPicture(DirGraficos & "VentanaPrincipal.JPG")
     
@@ -1728,7 +1727,7 @@ Private Sub cmdINFO_Click()
      
         If Index <> 0 Then _
             Msj = "%%%%%%%%%%%% INFO DEL HECHIZO %%%%%%%%%%%%" & vbCrLf _
-                                               & "Nombre:" & Hechizos(Index).Nombre & vbCrLf _
+                                               & "Nombre:" & Hechizos(Index).nombre & vbCrLf _
                                                & "Descripción:" & Hechizos(Index).Desc & vbCrLf _
                                                & "Skill requerido: " & Hechizos(Index).SkillRequerido & " de magia." & vbCrLf _
                                                & "Maná necesario: " & Hechizos(Index).ManaRequerida & vbCrLf _
@@ -2199,8 +2198,8 @@ If tX >= MinXBorder And tY >= MinYBorder And _
             m.SetMenuId 1
             m.ListaInit 2, False
             
-            If charlist(MapData(tX, tY).CharIndex).Nombre <> "" Then
-                m.ListaSetItem 0, charlist(MapData(tX, tY).CharIndex).Nombre, True
+            If charlist(MapData(tX, tY).CharIndex).nombre <> "" Then
+                m.ListaSetItem 0, charlist(MapData(tX, tY).CharIndex).nombre, True
             Else
                 m.ListaSetItem 0, "<NPC>", True
             End If
