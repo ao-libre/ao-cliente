@@ -81,7 +81,7 @@ Private oldResHeight As Long
 Private oldResWidth As Long
 Private oldDepth As Integer
 Private oldFrequency As Long
-Private bNoResChange As Boolean
+Public bNoResChange As Boolean
 
 
 Private Declare Function EnumDisplaySettings Lib "user32" Alias "EnumDisplaySettingsA" (ByVal lpszDeviceName As Long, ByVal iModeNum As Long, lptypDevMode As Any) As Boolean

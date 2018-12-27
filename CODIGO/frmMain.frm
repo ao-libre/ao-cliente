@@ -219,6 +219,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2619
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -978,11 +979,11 @@ End Sub
 
 Private Sub Form_Load()
     
-    'If NoRes Then lo sacamos hasta darle una buena solucion
+    If bNoResChange Then
         ' Handles Form movement (drag and drop).
-       ' Set clsFormulario = New clsFormMovementManager
-        'clsFormulario.Initialize Me, 120
-    'End If
+        Set clsFormulario = New clsFormMovementManager
+        clsFormulario.Initialize Me, 120
+    End If
 
     Me.Picture = LoadPicture(DirGraficos & "VentanaPrincipal.JPG")
     
