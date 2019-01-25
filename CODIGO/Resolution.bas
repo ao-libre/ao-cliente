@@ -2,7 +2,7 @@ Attribute VB_Name = "Resolution"
 '**************************************************************
 ' Resolution.bas - Performs resolution changes.
 '
-' Designed and implemented by Juan Martín Sotuyo Dodero (Maraxus)
+' Designed and implemented by Juan MartÃ­n Sotuyo Dodero (Maraxus)
 ' (juansotuyo@gmail.com)
 '**************************************************************
 
@@ -22,19 +22,19 @@ Attribute VB_Name = "Resolution"
 
 ''
 'Handles all incoming / outgoing packets for client - server communications
-'The binary prtocol here used was designed by Juan Martín Sotuyo Dodero.
+'The binary prtocol here used was designed by Juan MartÃ­n Sotuyo Dodero.
 'This is the first time it's used in Alkon, though the second time it's coded.
 'This implementation has several enhacements from the first design.
 '
 ' @file     Resolution.bas
-' @author   Juan Martín Sotuyo Dodero (Maraxus) juansotuyo@gmail.com
+' @author   Juan MartÃ­n Sotuyo Dodero (Maraxus) juansotuyo@gmail.com
 ' @version  1.1.0
 ' @date     20080329
 
 '**************************************************************************
 ' - HISTORY
-'       v1.0.0  -   Initial release ( 2007/08/14 - Juan Martín Sotuyo Dodero )
-'       v1.1.0  -   Made it reset original depth and frequency at exit ( 2008/03/29 - Juan Martín Sotuyo Dodero )
+'       v1.0.0  -   Initial release ( 2007/08/14 - Juan MartÃ­n Sotuyo Dodero )
+'       v1.1.0  -   Made it reset original depth and frequency at exit ( 2008/03/29 - Juan MartÃ­n Sotuyo Dodero )
 '**************************************************************************
 
 Option Explicit
@@ -95,7 +95,7 @@ Public Sub SetResolution()
         'Autor: Unknown
         'Last Modification: 03/29/08
         'Changes the display resolution if needed.
-        'Last Modified By: Juan Martín Sotuyo Dodero (Maraxus)
+        'Last Modified By: Juan MartÃ­n Sotuyo Dodero (Maraxus)
         ' 03/29/2008: Maraxus - Retrieves current settings storing display depth and frequency for proper restoration.
         '***************************************************
 
@@ -109,7 +109,7 @@ Public Sub SetResolution()
         oldResHeight = Screen.Height \ Screen.TwipsPerPixelY
    
         If oldResWidth <> 800 Or oldResHeight <> 600 Then
-                If MsgBox("¿Desea jugar en pantalla completa?", vbYesNo, "Cambio de Resolución") = vbYes Then
+                If MsgBox("Â¿Desea jugar en pantalla completa?", vbYesNo, "Cambio de ResoluciÃ³n") = vbYes Then
                         frmMain.WindowState = vbMaximized
 
                         With MidevM
@@ -121,8 +121,11 @@ Public Sub SetResolution()
                                 .dmPelsHeight = 600
                                 '.dmBitsPerPel = 16
                         End With
-     
+ 
                         lRes = ChangeDisplaySettings(MidevM, CDS_TEST)
+    
+                        ' En pantalla chica que pueda mover
+                        NoRes = True
                         
                 Else
                         bNoResChange = True
@@ -130,6 +133,9 @@ Public Sub SetResolution()
                         'MidevM.dmBitsPerPel = 16
                         lRes = ChangeDisplaySettings(MidevM, CDS_TEST)
                         frmMain.WindowState = vbNormal
+    
+                        ' En pantalla grande no porque japish runtime
+                        NoRes = False
                         
                 End If
         End If
@@ -142,7 +148,7 @@ Public Sub ResetResolution()
 'Autor: Unknown
 'Last Modification: 03/29/08
 'Changes the display resolution if needed.
-'Last Modified By: Juan Martín Sotuyo Dodero (Maraxus)
+'Last Modified By: Juan MartÃ­n Sotuyo Dodero (Maraxus)
 ' 03/29/2008: Maraxus - Properly restores display depth and frequency.
 '***************************************************
     Dim typDevM As typDevMODE
