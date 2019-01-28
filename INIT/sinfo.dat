@@ -1,12 +1,7 @@
 [INIT]
-Cant=2
+Cant=1
 
 [S1]
-Desc=Argentum Online - Atomico
-IP=as.atomico.com.ar
-PJ=7666
-
-[S2]
 Desc=Argentum Online - Localhost
 IP=localhost
 PJ=7666
