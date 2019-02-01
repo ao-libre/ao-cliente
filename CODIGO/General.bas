@@ -251,11 +251,6 @@ Function CheckUserData() As Boolean
             Exit Function
         End If
     Next LoopC
-    
-    If LenB(UserName) = 0 Then
-        MsgBox ("Ingrese un nombre de personaje.")
-        Exit Function
-    End If
 
     If Len(AccountName) > 30 Then
         MsgBox "El e-mail debe tener menos de 30 letras."

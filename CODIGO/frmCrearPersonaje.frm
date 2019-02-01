@@ -1493,22 +1493,6 @@ Function CheckData() As Boolean
         txtPasswd.SetFocus
         Exit Function
     End If
-    
-    If LenB(txtConfirmPasswd.Text) = 0 Then
-        MsgBox "Debes ingresar nuevamente la contraseña."
-        txtConfirmPasswd.SetFocus
-        Exit Function
-    End If
-    
-    If txtPasswd.Text <> txtConfirmPasswd.Text Then
-        MsgBox "Los passwords que tipeo no coinciden, por favor vuelva a ingresarlos."
-        Exit Function
-    End If
-    
-    If Not CheckMailString(txtMail.Text) Then
-        MsgBox "Direccion de mail invalida."
-        Exit Function
-    End If
 
     If UserRaza = 0 Then
         MsgBox "Seleccione la raza del personaje."
