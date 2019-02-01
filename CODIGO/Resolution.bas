@@ -109,7 +109,7 @@ Public Sub SetResolution()
         oldResHeight = Screen.Height \ Screen.TwipsPerPixelY
    
         If oldResWidth <> 800 Or oldResHeight <> 600 Then
-                If MsgBox("¿Desea jugar en pantalla completa?", vbYesNo, "Cambio de Resolución") = vbYes Then
+                If MsgBox("Desea jugar en pantalla completa?", vbYesNo, "Cambio de Resolucion") = vbYes Then
                         frmMain.WindowState = vbMaximized
 
                         With MidevM
