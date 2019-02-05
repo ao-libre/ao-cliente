@@ -381,7 +381,7 @@ Private Sub imgComprar_Click()
     If UserGLD >= CalculateSellPrice(NPCInventory(InvComNpc.SelectedItem).Valor, Val(cantidad.Text)) Then
         Call WriteCommerceBuy(InvComNpc.SelectedItem, Val(cantidad.Text))
     Else
-        Call AddtoRichTextBox(frmMain.RecTxt, "No tienes suficiente oro.", 2, 51, 223, 1, 1)
+        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_SIN_ORO_SUFICIENTE").Item("TEXTO"), 2, 51, 223, 1, 1)
         Exit Sub
     End If
     
@@ -420,13 +420,13 @@ Private Sub picInvNpc_Click()
     
         Select Case NPCInventory(ItemSlot).OBJType
             Case eObjType.otWeapon
-                Label1(2).Caption = "Máx Golpe:" & NPCInventory(ItemSlot).MaxHit
-                Label1(3).Caption = "Mín Golpe:" & NPCInventory(ItemSlot).MinHit
+                Label1(2).Caption = "Máx " & JsonLanguage.Item("GOLPE").Item("TEXTO") & ":" & NPCInventory(ItemSlot).MaxHit
+                Label1(3).Caption = "Min " & JsonLanguage.Item("GOLPE").Item("TEXTO") & ":" & NPCInventory(ItemSlot).MinHit
                 Label1(2).Visible = True
                 Label1(3).Visible = True
             Case eObjType.otArmadura, eObjType.otcasco, eObjType.otescudo
-                Label1(2).Caption = "Máx Defensa:" & NPCInventory(ItemSlot).MaxDef
-                Label1(3).Caption = "Mín Defensa:" & NPCInventory(ItemSlot).MinDef
+                Label1(2).Caption = "Máx " & JsonLanguage.Item("DEFENSA").Item("TEXTO") & ":" & NPCInventory(ItemSlot).MaxDef
+                Label1(3).Caption = "Min " & JsonLanguage.Item("DEFENSA").Item("TEXTO") & ":" & NPCInventory(ItemSlot).MinDef
                 Label1(2).Visible = True
                 Label1(3).Visible = True
             Case Else
@@ -461,13 +461,13 @@ Private Sub picInvUser_Click()
     
         Select Case Inventario.OBJType(ItemSlot)
             Case eObjType.otWeapon
-                Label1(2).Caption = "Máx Golpe:" & Inventario.MaxHit(ItemSlot)
-                Label1(3).Caption = "Mín Golpe:" & Inventario.MinHit(ItemSlot)
+                Label1(2).Caption = "Máx " & JsonLanguage.Item("GOLPE").Item("TEXTO") & ":" & Inventario.MaxHit(ItemSlot)
+                Label1(3).Caption = "Min " & JsonLanguage.Item("GOLPE").Item("TEXTO") & ":" & Inventario.MinHit(ItemSlot)
                 Label1(2).Visible = True
                 Label1(3).Visible = True
             Case eObjType.otArmadura, eObjType.otcasco, eObjType.otescudo
-                Label1(2).Caption = "Máx Defensa:" & Inventario.MaxDef(ItemSlot)
-                Label1(3).Caption = "Mín Defensa:" & Inventario.MinDef(ItemSlot)
+                Label1(2).Caption = "Máx " & JsonLanguage.Item("DEFENSA").Item("TEXTO") & ":" & Inventario.MaxDef(ItemSlot)
+                Label1(3).Caption = "Min " & JsonLanguage.Item("DEFENSA").Item("TEXTO") & ":" & Inventario.MinDef(ItemSlot)
                 Label1(2).Visible = True
                 Label1(3).Visible = True
             Case Else

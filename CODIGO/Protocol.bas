@@ -34,7 +34,7 @@ Attribute VB_Name = "Protocol"
 
 Option Explicit
 #If False Then
-    Dim Nombre, picInv, status, length As Variant
+    Dim Nombre, PicInv, status, length As Variant
 #End If
 ''
 ' TODO : /BANIP y /UNBANIP ya no trabajan con nicks. Esto lo puede mentir en forma local el cliente con un paquete a NickToIp
@@ -855,19 +855,19 @@ Public Sub HandleMultiMessage()
         Select Case .ReadByte
 
             Case eMessages.NPCSwing
-                Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_CRIATURA_FALLA_GOLPE").item("TEXTO"), 255, 0, 0, True, False, True)
+                Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_CRIATURA_FALLA_GOLPE").Item("TEXTO"), 255, 0, 0, True, False, True)
         
             Case eMessages.NPCKillUser
-                Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_CRIATURA_MATADO").item("TEXTO"), 255, 0, 0, True, False, True)
+                Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_CRIATURA_MATADO").Item("TEXTO"), 255, 0, 0, True, False, True)
         
             Case eMessages.BlockedWithShieldUser
-                Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_RECHAZO_ATAQUE_ESCUDO").item("TEXTO"), 255, 0, 0, True, False, True)
+                Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_RECHAZO_ATAQUE_ESCUDO").Item("TEXTO"), 255, 0, 0, True, False, True)
         
             Case eMessages.BlockedWithShieldOther
-                Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_USUARIO_RECHAZO_ATAQUE_ESCUDO").item("TEXTO"), 255, 0, 0, True, False, True)
+                Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_USUARIO_RECHAZO_ATAQUE_ESCUDO").Item("TEXTO"), 255, 0, 0, True, False, True)
         
             Case eMessages.UserSwing
-                Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_FALLADO_GOLPE").item("TEXTO"), 255, 0, 0, True, False, True)
+                Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_FALLADO_GOLPE").Item("TEXTO"), 255, 0, 0, True, False, True)
         
             Case eMessages.SafeModeOn
                 Call frmMain.ControlSM(eSMType.sSafemode, True)
@@ -882,44 +882,44 @@ Public Sub HandleMultiMessage()
                 Call frmMain.ControlSM(eSMType.sResucitation, True)
         
             Case eMessages.NobilityLost
-                Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_PIERDE_NOBLEZA").item("TEXTO"), 255, 0, 0, False, False, True)
+                Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_PIERDE_NOBLEZA").Item("TEXTO"), 255, 0, 0, False, False, True)
         
             Case eMessages.CantUseWhileMeditating
-                Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_USAR_MEDITANDO").item("TEXTO"), 255, 0, 0, False, False, True)
+                Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_USAR_MEDITANDO").Item("TEXTO"), 255, 0, 0, False, False, True)
         
             Case eMessages.NPCHitUser
 
                 Select Case incomingData.ReadByte()
 
                     Case bCabeza
-                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_GOLPE_CABEZA").item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_GOLPE_CABEZA").Item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
                 
                     Case bBrazoIzquierdo
-                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_GOLPE_BRAZO_IZQ").item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_GOLPE_BRAZO_IZQ").Item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
                 
                     Case bBrazoDerecho
-                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_GOLPE_BRAZO_DER").item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_GOLPE_BRAZO_DER").Item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
                 
                     Case bPiernaIzquierda
-                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_GOLPE_PIERNA_IZQ").item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_GOLPE_PIERNA_IZQ").Item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
                 
                     Case bPiernaDerecha
-                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_GOLPE_PIERNA_DER").item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_GOLPE_PIERNA_DER").Item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
                 
                     Case bTorso
-                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_GOLPE_TORSO").item("TEXTO") & CStr(incomingData.ReadInteger() & "!!"), 255, 0, 0, True, False, True)
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_GOLPE_TORSO").Item("TEXTO") & CStr(incomingData.ReadInteger() & "!!"), 255, 0, 0, True, False, True)
 
                 End Select
         
             Case eMessages.UserHitNPC
                 Dim MsgHitNpc As String
-                    MsgHitNpc = JsonLanguage.item("MENSAJE_DAMAGE_NPC").item("TEXTO")
+                    MsgHitNpc = JsonLanguage.Item("MENSAJE_DAMAGE_NPC").Item("TEXTO")
                     MsgHitNpc = Replace$(MsgHitNpc, "VAR_DAÑO", CStr(incomingData.ReadLong()))
                     
                 Call AddtoRichTextBox(frmMain.RecTxt, MsgHitNpc, 255, 0, 0, True, False, True)
         
             Case eMessages.UserAttackedSwing
-                Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & charlist(incomingData.ReadInteger()).Nombre & JsonLanguage.item("MENSAJE_ATAQUE_FALLO").item("TEXTO"), 255, 0, 0, True, False, True)
+                Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & charlist(incomingData.ReadInteger()).Nombre & JsonLanguage.Item("MENSAJE_ATAQUE_FALLO").Item("TEXTO"), 255, 0, 0, True, False, True)
         
             Case eMessages.UserHittedByUser
 
@@ -932,22 +932,22 @@ Public Sub HandleMultiMessage()
                 Select Case BodyPart
 
                     Case bCabeza
-                        Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_CABEZA").item("TEXTO") & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
+                        Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_CABEZA").Item("TEXTO") & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
                 
                     Case bBrazoIzquierdo
-                        Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ").item("TEXTO") & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
+                        Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ").Item("TEXTO") & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
                 
                     Case bBrazoDerecho
-                        Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_BRAZO_DER").item("TEXTO") & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
+                        Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_BRAZO_DER").Item("TEXTO") & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
                 
                     Case bPiernaIzquierda
-                        Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ").item("TEXTO") & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
+                        Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ").Item("TEXTO") & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
                 
                     Case bPiernaDerecha
-                        Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_PIERNA_DER").item("TEXTO") & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
+                        Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_PIERNA_DER").Item("TEXTO") & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
                 
                     Case bTorso
-                        Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_TORSO").item("TEXTO") & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
+                        Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_TORSO").Item("TEXTO") & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
 
                 End Select
         
@@ -962,22 +962,22 @@ Public Sub HandleMultiMessage()
                 Select Case BodyPart
 
                     Case bCabeza
-                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_1").item("TEXTO") & VictimName & JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_CABEZA").item("TEXTO") & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_1").Item("TEXTO") & VictimName & JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_CABEZA").Item("TEXTO") & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
                 
                     Case bBrazoIzquierdo
-                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_1").item("TEXTO") & VictimName & JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_BRAZO_IZQ").item("TEXTO") & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_1").Item("TEXTO") & VictimName & JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_BRAZO_IZQ").Item("TEXTO") & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
                 
                     Case bBrazoDerecho
-                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_1").item("TEXTO") & VictimName & JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_BRAZO_DER").item("TEXTO") & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_1").Item("TEXTO") & VictimName & JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_BRAZO_DER").Item("TEXTO") & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
                 
                     Case bPiernaIzquierda
-                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_1").item("TEXTO") & VictimName & JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_PIERNA_IZQ").item("TEXTO") & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_1").Item("TEXTO") & VictimName & JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_PIERNA_IZQ").Item("TEXTO") & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
                 
                     Case bPiernaDerecha
-                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_1").item("TEXTO") & VictimName & JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_PIERNA_DER").item("TEXTO") & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_1").Item("TEXTO") & VictimName & JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_PIERNA_DER").Item("TEXTO") & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
                 
                     Case bTorso
-                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_1").item("TEXTO") & VictimName & JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_TORSO").item("TEXTO") & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_1").Item("TEXTO") & VictimName & JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_TORSO").Item("TEXTO") & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
 
                 End Select
         
@@ -989,25 +989,25 @@ Public Sub HandleMultiMessage()
                 Select Case UsingSkill
 
                     Case Magia
-                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_TRABAJO_MAGIA").item("TEXTO"), 100, 100, 120, 0, 0)
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_TRABAJO_MAGIA").Item("TEXTO"), 100, 100, 120, 0, 0)
                 
                     Case Pesca
-                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_TRABAJO_PESCA").item("TEXTO"), 100, 100, 120, 0, 0)
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_TRABAJO_PESCA").Item("TEXTO"), 100, 100, 120, 0, 0)
                 
                     Case Robar
-                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_TRABAJO_ROBAR").item("TEXTO"), 100, 100, 120, 0, 0)
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_TRABAJO_ROBAR").Item("TEXTO"), 100, 100, 120, 0, 0)
                 
                     Case Talar
-                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_TRABAJO_TALAR").item("TEXTO"), 100, 100, 120, 0, 0)
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_TRABAJO_TALAR").Item("TEXTO"), 100, 100, 120, 0, 0)
                 
                     Case Mineria
-                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_TRABAJO_MINERIA").item("TEXTO"), 100, 100, 120, 0, 0)
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_TRABAJO_MINERIA").Item("TEXTO"), 100, 100, 120, 0, 0)
                 
                     Case FundirMetal
-                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_TRABAJO_FUNDIRMETAL").item("TEXTO"), 100, 100, 120, 0, 0)
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_TRABAJO_FUNDIRMETAL").Item("TEXTO"), 100, 100, 120, 0, 0)
                 
                     Case Proyectiles
-                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_TRABAJO_PROYECTILES").item("TEXTO"), 100, 100, 120, 0, 0)
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_TRABAJO_PROYECTILES").Item("TEXTO"), 100, 100, 120, 0, 0)
 
                 End Select
 
@@ -1022,10 +1022,10 @@ Public Sub HandleMultiMessage()
                 KilledUser = .ReadInteger
                 Exp = .ReadLong
             
-                Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_HAS_MATADO_A").item("TEXTO") & charlist(KilledUser).Nombre & MENSAJE_22, 255, 0, 0, True, False)
+                Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_HAS_MATADO_A").Item("TEXTO") & charlist(KilledUser).Nombre & MENSAJE_22, 255, 0, 0, True, False)
                 
                 ' Para mejor lectura
-                MensajeExp = JsonLanguage.item("MENSAJE_HAS_GANADO_EXP").item("TEXTO") 'String original
+                MensajeExp = JsonLanguage.Item("MENSAJE_HAS_GANADO_EXP").Item("TEXTO") 'String original
                 MensajeExp = Replace$(MensajeExp, "VAR_EXP_GANADA", Exp) 'Parte a reemplazar
                 
                 Call ShowConsoleMsg(MensajeExp, 255, 0, 0, True, False)
@@ -1048,7 +1048,7 @@ Public Sub HandleMultiMessage()
             
                 KillerUser = .ReadInteger
             
-                Call ShowConsoleMsg(charlist(KillerUser).Nombre & JsonLanguage.item("MENSAJE_TE_HA_MATADO").item("TEXTO"), 255, 0, 0, True, False)
+                Call ShowConsoleMsg(charlist(KillerUser).Nombre & JsonLanguage.Item("MENSAJE_TE_HA_MATADO").Item("TEXTO"), 255, 0, 0, True, False)
             
                 'Sacamos un screenshot si está activado el FragShooter:
                 If ClientSetup.bDie And ClientSetup.bActive Then
@@ -1080,18 +1080,18 @@ Public Sub HandleMultiMessage()
             
                 If tiempo >= 60 Then
                     If tiempo Mod 60 = 0 Then
-                        msg = tiempo / 60 & " " & JsonLanguage.item("MINUTOS").item("TEXTO") & "."
+                        msg = tiempo / 60 & " " & JsonLanguage.Item("MINUTOS").Item("TEXTO") & "."
                     Else
-                        msg = CInt(tiempo \ 60) & " " & JsonLanguage.item("MINUTOS").item("TEXTO") & " " & JsonLanguage.item("LETRA_Y").item("TEXTO") & " " & tiempo Mod 60 & " " & JsonLanguage.item("SEGUNDOS").item("TEXTO") & "."  'Agregado el CInt() asi el número no es con , [C4b3z0n - 09/28/2010]
+                        msg = CInt(tiempo \ 60) & " " & JsonLanguage.Item("MINUTOS").Item("TEXTO") & " " & JsonLanguage.Item("LETRA_Y").Item("TEXTO") & " " & tiempo Mod 60 & " " & JsonLanguage.Item("SEGUNDOS").Item("TEXTO") & "."  'Agregado el CInt() asi el número no es con , [C4b3z0n - 09/28/2010]
 
                     End If
 
                 Else
-                    msg = tiempo & " " & JsonLanguage.item("SEGUNDOS").item("TEXTO") & "."
+                    msg = tiempo & " " & JsonLanguage.Item("SEGUNDOS").Item("TEXTO") & "."
 
                 End If
                 
-                msgGoHome = JsonLanguage.item("MENSAJE_ESTAS_A_MAPAS_DE_DURACION_VIAJE").item("TEXTO") & msg
+                msgGoHome = JsonLanguage.Item("MENSAJE_ESTAS_A_MAPAS_DE_DURACION_VIAJE").Item("TEXTO") & msg
                 msgGoHome = Replace$(msgGoHome, "VAR_DISTANCIA_MAPAS", Distance)
                 msgGoHome = Replace$(msgGoHome, "VAR_MAPA_DESTINO", Hogar)
                 
@@ -1099,18 +1099,18 @@ Public Sub HandleMultiMessage()
                 Traveling = True
 
             Case eMessages.CancelGoHome
-                Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_HOGAR_CANCEL").item("TEXTO"), 255, 0, 0, True)
+                Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_HOGAR_CANCEL").Item("TEXTO"), 255, 0, 0, True)
                 Traveling = False
                    
             Case eMessages.FinishHome
-                Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_HOGAR").item("TEXTO"), 255, 255, 255)
+                Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_HOGAR").Item("TEXTO"), 255, 255, 255)
                 Traveling = False
             
             Case eMessages.UserMuerto
-                Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO"), 255, 255, 255)
+                Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO"), 255, 255, 255)
         
             Case eMessages.NpcInmune
-                Call ShowConsoleMsg(JsonLanguage.item("NPC_INMUNE").item("TEXTO"), 210, 220, 220)
+                Call ShowConsoleMsg(JsonLanguage.Item("NPC_INMUNE").Item("TEXTO"), 210, 220, 220)
             
             Case eMessages.Hechizo_HechiceroMSG_NOMBRE
                 SpellIndex = .ReadByte
@@ -1121,7 +1121,7 @@ Public Sub HandleMultiMessage()
             Case eMessages.Hechizo_HechiceroMSG_ALGUIEN
                 SpellIndex = .ReadByte
          
-                Call ShowConsoleMsg(Hechizos(SpellIndex).HechiceroMsg & " " & JsonLanguage.item("ALGUIEN").item("TEXTO") & ".", 210, 220, 220)
+                Call ShowConsoleMsg(Hechizos(SpellIndex).HechiceroMsg & " " & JsonLanguage.Item("ALGUIEN").Item("TEXTO") & ".", 210, 220, 220)
          
             Case eMessages.Hechizo_HechiceroMSG_CRIATURA
                 SpellIndex = .ReadByte
@@ -1361,7 +1361,7 @@ Private Sub HandleBankInit()
     
     BankGold = incomingData.ReadLong
     Call InvBanco(0).Initialize(DirectD3D8, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
-    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.picInv, Inventario.MaxObjs)
+    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.PicInv, Inventario.MaxObjs)
     
     For i = 1 To Inventario.MaxObjs
         With Inventario
@@ -1482,7 +1482,7 @@ Private Sub HandleUserOfferConfirm()
         ' Now he can accept the offer or reject it
         .HabilitarAceptarRechazar True
         
-        .PrintCommerceMsg TradingUserName & JsonLanguage.item("MENSAJE_OFFER_ACCEPTED").item("TEXTO"), FontTypeNames.FONTTYPE_CONSE
+        .PrintCommerceMsg TradingUserName & JsonLanguage.Item("MENSAJE_COMM_OFERTA_ACEPTA").Item("TEXTO"), FontTypeNames.FONTTYPE_CONSE
     End With
     
 End Sub
@@ -1539,7 +1539,7 @@ Private Sub HandleNPCSwing()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_CRIATURA_FALLA_GOLPE").item("TEXTO"), 255, 0, 0, True, False, True)
+    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_CRIATURA_FALLA_GOLPE").Item("TEXTO"), 255, 0, 0, True, False, True)
 End Sub
 
 ''
@@ -1554,7 +1554,7 @@ Private Sub HandleNPCKillUser()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_CRIATURA_MATADO").item("TEXTO"), 255, 0, 0, True, False, True)
+    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_CRIATURA_MATADO").Item("TEXTO"), 255, 0, 0, True, False, True)
 End Sub
 
 ''
@@ -1569,7 +1569,7 @@ Private Sub HandleBlockedWithShieldUser()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_RECHAZO_ATAQUE_ESCUDO").item("TEXTO"), 255, 0, 0, True, False, True)
+    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_RECHAZO_ATAQUE_ESCUDO").Item("TEXTO"), 255, 0, 0, True, False, True)
 End Sub
 
 ''
@@ -1584,7 +1584,7 @@ Private Sub HandleBlockedWithShieldOther()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_RECHAZO_ATAQUE_ESCUDO").item("TEXTO"), 255, 0, 0, True, False, True)
+    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_RECHAZO_ATAQUE_ESCUDO").Item("TEXTO"), 255, 0, 0, True, False, True)
 End Sub
 
 ''
@@ -1599,7 +1599,7 @@ Private Sub HandleUserSwing()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_FALLADO_GOLPE").item("TEXTO"), 255, 0, 0, True, False, True)
+    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_FALLADO_GOLPE").Item("TEXTO"), 255, 0, 0, True, False, True)
 End Sub
 
 ''
@@ -1672,7 +1672,7 @@ Private Sub HandleNobilityLost()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_PIERDE_NOBLEZA").item("TEXTO"), 255, 0, 0, False, False, True)
+    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_PIERDE_NOBLEZA").Item("TEXTO"), 255, 0, 0, False, False, True)
 End Sub
 
 ''
@@ -1687,7 +1687,7 @@ Private Sub HandleCantUseWhileMeditating()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_USAR_MEDITANDO").item("TEXTO"), 255, 0, 0, False, False, True)
+    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_USAR_MEDITANDO").Item("TEXTO"), 255, 0, 0, False, False, True)
 End Sub
 
 ''
@@ -1980,7 +1980,7 @@ Private Sub HandleChangeMap()
         End If
     Else
         'no encontramos el mapa en el hd
-        MsgBox JsonLanguage.item("ERROR_MAPAS").item("TEXTO")
+        MsgBox JsonLanguage.Item("ERROR_MAPAS").Item("TEXTO")
         
         Call CloseClient
     End If
@@ -2031,17 +2031,17 @@ Private Sub HandleNPCHitUser()
     
     Select Case incomingData.ReadByte()
         Case bCabeza
-            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_GOLPE_CABEZA").item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
+            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_GOLPE_CABEZA").Item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
         Case bBrazoIzquierdo
-            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_GOLPE_BRAZO_IZQ").item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
+            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_GOLPE_BRAZO_IZQ").Item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
         Case bBrazoDerecho
-            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_GOLPE_BRAZO_DER").item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
+            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_GOLPE_BRAZO_DER").Item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
         Case bPiernaIzquierda
-            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_GOLPE_PIERNA_IZQ").item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
+            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_GOLPE_PIERNA_IZQ").Item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
         Case bPiernaDerecha
-            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_GOLPE_BRAZO_DER").item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
+            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_GOLPE_BRAZO_DER").Item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
         Case bTorso
-            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_GOLPE_TORSO").item("TEXTO") & CStr(incomingData.ReadInteger() & "!!"), 255, 0, 0, True, False, True)
+            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_GOLPE_TORSO").Item("TEXTO") & CStr(incomingData.ReadInteger() & "!!"), 255, 0, 0, True, False, True)
     End Select
 End Sub
 
@@ -3101,19 +3101,19 @@ Private Sub HandleWorkRequestTarget()
     
     Select Case UsingSkill
         Case Magia
-            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_TRABAJO_MAGIA").item("TEXTO"), 100, 100, 120, 0, 0)
+            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_TRABAJO_MAGIA").Item("TEXTO"), 100, 100, 120, 0, 0)
         Case Pesca
-            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_TRABAJO_PESCA").item("TEXTO"), 100, 100, 120, 0, 0)
+            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_TRABAJO_PESCA").Item("TEXTO"), 100, 100, 120, 0, 0)
         Case Robar
-            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_TRABAJO_ROBAR").item("TEXTO"), 100, 100, 120, 0, 0)
+            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_TRABAJO_ROBAR").Item("TEXTO"), 100, 100, 120, 0, 0)
         Case Talar
-            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_TRABAJO_TALAR").item("TEXTO"), 100, 100, 120, 0, 0)
+            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_TRABAJO_TALAR").Item("TEXTO"), 100, 100, 120, 0, 0)
         Case Mineria
-            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_TRABAJO_MINERIA").item("TEXTO"), 100, 100, 120, 0, 0)
+            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_TRABAJO_MINERIA").Item("TEXTO"), 100, 100, 120, 0, 0)
         Case FundirMetal
-            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_TRABAJO_FUNDIRMETAL").item("TEXTO"), 100, 100, 120, 0, 0)
+            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_TRABAJO_FUNDIRMETAL").Item("TEXTO"), 100, 100, 120, 0, 0)
         Case Proyectiles
-            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_TRABAJO_PROYECTILES").item("TEXTO"), 100, 100, 120, 0, 0)
+            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_TRABAJO_PROYECTILES").Item("TEXTO"), 100, 100, 120, 0, 0)
     End Select
 End Sub
 
@@ -3238,7 +3238,7 @@ Private Sub HandleStopWorking()
     Call incomingData.ReadByte
     
     With FontTypes(FontTypeNames.FONTTYPE_INFO)
-        Call ShowConsoleMsg(Strigs(eMessageType.Consola, "MENSAJE_WORK_FINISHED"), .Red, .Green, .Blue, .bold, .italic)
+        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_WORK_FINISHED"), .Red, .Green, .Blue, .bold, .italic)
     End With
     
     If frmMain.macrotrabajo.Enabled Then Call frmMain.DesactivarMacroTrabajo
@@ -3277,7 +3277,7 @@ Private Sub HandleCancelOfferItem()
         Not frmComerciarUsu.HasAnyItem(InvOroComUsu(1)) Then Call frmComerciarUsu.HabilitarConfirmar(False)
     
     With FontTypes(FontTypeNames.FONTTYPE_INFO)
-        Call frmComerciarUsu.PrintCommerceMsg(JsonLanguage.item("MENSAJE_NO_COMM_OBJETO").item("TEXTO"), FontTypeNames.FONTTYPE_INFO)
+        Call frmComerciarUsu.PrintCommerceMsg(JsonLanguage.Item("MENSAJE_NO_COMM_OBJETO").Item("TEXTO"), FontTypeNames.FONTTYPE_INFO)
     End With
 End Sub
 
@@ -4547,19 +4547,19 @@ On Error GoTo ErrHandler
         caos = Buffer.ReadBoolean()
         
         If armada Then
-            .ejercito.Caption = JsonLanguage.item("ARMADA").item("TEXTO")
+            .ejercito.Caption = JsonLanguage.Item("ARMADA").Item("TEXTO")
         ElseIf caos Then
-            .ejercito.Caption = JsonLanguage.item("LEGION").item("TEXTO")
+            .ejercito.Caption = JsonLanguage.Item("LEGION").Item("TEXTO")
         End If
         
         .Ciudadanos.Caption = CStr(Buffer.ReadLong())
         .criminales.Caption = CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .status.Caption = " " & JsonLanguage.item("CIUDADANO").item("TEXTO")
+            .status.Caption = " " & JsonLanguage.Item("CIUDADANO").Item("TEXTO")
             .status.ForeColor = vbBlue
         Else
-            .status.Caption = " " & JsonLanguage.item("CRIMINAL").item("TEXTO")
+            .status.Caption = " " & JsonLanguage.Item("CRIMINAL").Item("TEXTO")
             .status.ForeColor = vbRed
         End If
         
@@ -4693,9 +4693,9 @@ On Error GoTo ErrHandler
         .Miembros.Caption = Buffer.ReadInteger()
         
         If Buffer.ReadBoolean() Then
-            .eleccion.Caption = JsonLanguage.item( UCase$.item("TEXTO")("ABIERTA"))
+            .eleccion.Caption = JsonLanguage.Item(UCase$.Item("TEXTO")("ABIERTA"))
         Else
-            .eleccion.Caption = JsonLanguage.item( UCase$.item("TEXTO")("CERRADA"))
+            .eleccion.Caption = JsonLanguage.Item(UCase$.Item("TEXTO")("CERRADA"))
         End If
         
         .lblAlineacion.Caption = Buffer.ReadASCIIString()
@@ -4944,7 +4944,7 @@ On Error GoTo ErrHandler
         End If
     End With
     
-    Call frmComerciarUsu.PrintCommerceMsg(TradingUserName & JsonLanguage.item("MENSAJE_OFFER_CHANGED").item("TEXTO"), FontTypeNames.FONTTYPE_VENENO)
+    Call frmComerciarUsu.PrintCommerceMsg(TradingUserName & JsonLanguage.Item("MENSAJE_COMM_OFERTA_CAMBIA").Item("TEXTO"), FontTypeNames.FONTTYPE_VENENO)
     
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
@@ -5293,7 +5293,7 @@ Private Sub HandlePong()
 '***************************************************
     Call incomingData.ReadByte
     
-    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_PING").item("TEXTO") & (GetTickCount - pingTime) & JsonLanguage.item("MILISEGUNDOS").item("TEXTO") & ".", 255, 0, 0, True, False, True)
+    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_PING").Item("TEXTO") & (GetTickCount - pingTime) & JsonLanguage.Item("MILISEGUNDOS").Item("TEXTO") & ".", 255, 0, 0, True, False, True)
     
     pingTime = 0
 End Sub
@@ -10535,10 +10535,10 @@ On Error GoTo ErrHandler
         'Status del pj
         If Buffer.ReadBoolean Then
             .lblEstado.ForeColor = vbGreen
-            .lblEstado.Caption = JsonLanguage.item( UCase$.item("TEXTO")("EN_LINEA"))
+            .lblEstado.Caption = JsonLanguage.Item(UCase$.Item("TEXTO")("EN_LINEA"))
         Else
             .lblEstado.ForeColor = vbRed
-            .lblEstado.Caption = JsonLanguage.item( UCase$.item("TEXTO")("DESCONECTADO"))
+            .lblEstado.Caption = JsonLanguage.Item(UCase$.Item("TEXTO")("DESCONECTADO"))
         End If
         
         'IP del personaje
@@ -10546,7 +10546,7 @@ On Error GoTo ErrHandler
         If LenB(tmpStr) Then
             .txtIP.Text = tmpStr
         Else
-            .txtIP.Text = JsonLanguage.item("USUARIO").item("TEXTO") & JsonLanguage.item("DESCONECTADO").item("TEXTO")
+            .txtIP.Text = JsonLanguage.Item("USUARIO").Item("TEXTO") & JsonLanguage.Item("DESCONECTADO").Item("TEXTO")
         End If
         
         'Tiempo online
@@ -10554,7 +10554,7 @@ On Error GoTo ErrHandler
         If LenB(tmpStr) Then
             .txtTimeOn.Text = tmpStr
         Else
-            .txtTimeOn.Text = JsonLanguage.item("USUARIO").item("TEXTO") & JsonLanguage.item("DESCONECTADO").item("TEXTO")
+            .txtTimeOn.Text = JsonLanguage.Item("USUARIO").Item("TEXTO") & JsonLanguage.Item("DESCONECTADO").Item("TEXTO")
         End If
         
         'Observaciones
@@ -10562,7 +10562,7 @@ On Error GoTo ErrHandler
         If LenB(tmpStr) Then
             .txtObs.Text = tmpStr
         Else
-            .txtObs.Text = JsonLanguage.item("MENSAJE_NO_NOVEDADES").item("TEXTO")
+            .txtObs.Text = JsonLanguage.Item("MENSAJE_NO_NOVEDADES").Item("TEXTO")
         End If
     End With
     

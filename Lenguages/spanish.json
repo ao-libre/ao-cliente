@@ -160,7 +160,7 @@
 			0
 		]
 	},
-   "MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ":{
+	"MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ":{
 		"TEXTO":" te ha pegado la pierna izquierda por ",
 		"COLOR":[
 			255,
@@ -232,22 +232,22 @@
 			0
 		]
 	},
-   "MENSAJE_PRODUCE_IMPACTO_TORSO":{
+	"MENSAJE_PRODUCE_IMPACTO_TORSO":{
       "TEXTO":" en el torso por ",
       "COLOR":[
-         255,
-         0,
-         0
-      ]
-   },
-   "MENSAJE_TRABAJO_MAGIA":{
-      "TEXTO":"Haz click sobre el objetivo...",
-      "COLOR":[
-         255,
-         0,
-         0
-      ]
-   },
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_TRABAJO_MAGIA":{
+		"TEXTO":"Haz click sobre el objetivo...",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
 	"MENSAJE_TRABAJO_PESCA":{
 		"TEXTO":"Haz click sobre el sitio donde quieres pescar...",
 		"COLOR":[
@@ -328,14 +328,14 @@
 			0
 		]
 	},
-   "MENSAJE_FRAGSHOOTER_HAS_MATADO":{
-      "TEXTO":"Has matado a",
-      "COLOR":[
+	"MENSAJE_FRAGSHOOTER_HAS_MATADO":{
+		"TEXTO":"Has matado a",
+		"COLOR":[
 			255,
 			0,
 			0
-      ]
-   },
+		]
+	},
 	"MENSAJE_FRAGSHOOTER_HAS_GANADO":{
 		"TEXTO":"Has ganado ",
 		"COLOR":[
@@ -392,14 +392,14 @@
 			0
 		]
 	},
-   "MENSAJE_USER_MUERTO":{
-      "TEXTO":"No puedes realizar esta acción estando muerto.",
-      "COLOR":[
-         255,
-         255,
-         255
-      ]
-   },
+	"MENSAJE_USER_MUERTO":{
+		"TEXTO":"No puedes realizar esta acción estando muerto.",
+		"COLOR":[
+			255,
+			255,
+			255
+		]
+	},
 	"NPC_INMUNE":{
 		"TEXTO":"El npc es inmune al hechizo.",
 		"COLOR":[
@@ -418,22 +418,6 @@
 	},
 	"MENSAJE_ESTAS_A_MAPAS_DE_DURACION_VIAJE":{
 		"TEXTO":"Te encuentras a VAR_DISTANCIA_MAPAS mapas de VAR_MAPA_DESTINO, este viaje durará ",
-		"COLOR":[
-			255,
-			0,
-			0
-		]
-	},
-	"MENSAJE_OFFER_ACCEPTED":{
-		"TEXTO":" ha confirmado su oferta!",
-		"COLOR":[
-			255,
-			0,
-			0
-		]
-	},
-	"MENSAJE_OFFER_CHANGED":{
-		"TEXTO":" ha modificado su oferta.",
 		"COLOR":[
 			255,
 			0,
@@ -472,6 +456,51 @@
 			0
 		]
 	},
+	"MENSAJE_SIN_ORO_SUFICIENTE":{
+		"TEXTO":"No tienes suficiente oro."
+	},
+	"MENSAJE_SIN_CANTIDAD_SUFICIENTE":{
+		"TEXTO":"¡No tienes esa cantidad!"
+	},
+	"MENSAJE_NO_SELECCIONASTE_NADA":{
+		"TEXTO":"¡No tienes ningún item seleccionado!"
+	},
+	"MENSAJE_COMM_OFERTA_ACEPTA":{
+		"TEXTO":" ha confirmado su oferta!",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_COMM_OFERTA_CAMBIA":{
+		"TEXTO":" ha modificado su oferta.",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_COMM_AGREGA":{
+		"TEXTO":"¡Agregaste VAR_CANTIDAD_AGREGA VAR_QUE_AGREGA a tu oferta!!"
+	},
+	"MENSAJE_COMM_SACA":{
+		"TEXTO":"¡¡Quitaste VAR_CANTIDAD_SACA VAR_QUE_SACA de tu oferta!!"
+	},
+	"MENSAJE_COMM_OFERTA_COMFIRMADA":{
+		"TEXTO":"¡Has confirmado tu oferta! Ya no puedes cambiarla."
+	},
+	"MENSAJE_COMM_INFO":{
+		"TEXTO": [
+			"Una vez termines de formar tu oferta, debes presionar en [CONFIRMAR], tras lo cual ya no podrás modificarla.",
+			"Luego que el otro usuario confirme su oferta, podrás aceptarla o rechazarla. Si la rechazas, se terminará el comercio.",
+			"Cuando ambos acepten la oferta del otro, se realizará el intercambio.",
+			"Si se intercambian más ítems de los que pueden entrar en tu inventario, es probable que caigan al suelo, así que presta mucha atención a esto."
+		]
+	},
+	"MENSAJE_SOY_CHEATER":{
+		"TEXTO":"Soy un cheater, avisenle a un gm"
+	},
 	"TIEMPO":{
 		"TEXTO":"tiempo"
 	},
@@ -508,8 +537,8 @@
 	"LETRA_Y":{
 		"TEXTO":"y"
 	},
-   "ERROR_MAPAS":{
-      "TEXTO":"Error en los mapas, algún archivo ha sido modificado o esta dañado."
+	"ERROR_MAPAS":{
+		"TEXTO":"Error en los mapas, algún archivo ha sido modificado o esta dañado."
 	},
 	"ARMADA":{
 		"TEXTO":"Armada Real"
@@ -520,9 +549,9 @@
 	"CIUDADANO":{
 		"TEXTO":"Ciudadano"
 	},
-   "CRIMINAL":{
-      "TEXTO":"Criminal"
-   },
+	"CRIMINAL":{
+		"TEXTO":"Criminal"
+	},
 	"EN_LINEA":{
 		"TEXTO":"En Linea"
 	},
@@ -558,10 +587,10 @@
 	},
 	"PANTALLA_COMPLETA":{
 		"TEXTO":"Desea jugar en pantalla completa?"
-	}
+	},
 	"AMBIENT-EDITOR":{
 		"TEXTOS":[
-			"Editor de Ambientes"
+			"Editor de Ambientes",
 			"Luz Ambiental",
 			"Usar Luz del Día",
 			"Usar Luz Propia",
@@ -578,10 +607,10 @@
 			"Recargar Ambiente",
 			"Guardar Ambiente"
 		]
-	}
+	},
 	"CERRAR":{
 		"TEXTOS":[
-			"Regresar a la pantalla de inicio"
+			"Regresar a la pantalla de inicio",
 			"Salir del Juego"
 		]
 	}
