@@ -373,7 +373,7 @@ End Sub
 Private Sub imgActualizar_Click()
     Dim k As String
 
-    k = Replace(txtguildnews, vbNewLine, "º")
+    k = Replace$(txtguildnews, vbNewLine, "º")
     
     Call WriteGuildUpdateNews(k)
 End Sub
