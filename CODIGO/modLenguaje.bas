@@ -16,17 +16,6 @@ Private Declare Function GetLocaleInfo _
                                         ByVal LCType As Long, _
                                         ByVal lpLCData As String, _
                                         ByVal cchData As Long) As Long
-        
-Public Enum eMessageType
-    Consola
-    Palabras
-    Letras
-    Err
-    Facciones
-    Estadisticas
-    Cliente
-    Interfaz
-End Enum
 
 Public JsonLanguage As Object
 
