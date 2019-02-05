@@ -152,7 +152,7 @@ Begin VB.Form frmAmbientEditor
       End
    End
    Begin VB.Frame Frame1 
-      Caption         =   "Luz Ambiente"
+      Caption         =   "Luz Ambiental"
       Height          =   1695
       Left            =   120
       TabIndex        =   2
@@ -255,7 +255,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Check1_Click()
-    If Check1.Value = Checked Then
+    If Check1.value = Checked Then
         HScroll1.Enabled = True
     Else
         HScroll1.Enabled = False
@@ -263,7 +263,7 @@ Private Sub Check1_Click()
 End Sub
 
 Private Sub Check2_Click()
-    If Check2.Value = Checked Then
+    If Check2.value = Checked Then
         CurMapAmbient.Snow = True
     Else
         CurMapAmbient.Snow = False
@@ -273,7 +273,7 @@ Private Sub Check2_Click()
 End Sub
 
 Private Sub Check3_Click()
-    If Check3.Value = Checked Then
+    If Check3.value = Checked Then
         CurMapAmbient.Rain = True
     Else
         CurMapAmbient.Rain = False
@@ -303,7 +303,7 @@ Private Sub Command2_Click()
 End Sub
 
 Private Sub Command7_Click()
-    If Option1(0).Value = True Then
+    If Option1(0).value = True Then
         CurMapAmbient.UseDayAmbient = True
             CurMapAmbient.OwnAmbientLight.a = 255
             CurMapAmbient.OwnAmbientLight.r = 0
@@ -327,16 +327,36 @@ Private Sub Command8_Click()
     CurMapAmbient.MapBlocks(UserPos.X, UserPos.Y).Light.b = Val(Text4.Text)
     CurMapAmbient.MapBlocks(UserPos.X, UserPos.Y).Light.g = Val(Text3.Text)
     CurMapAmbient.MapBlocks(UserPos.X, UserPos.Y).Light.r = Val(Text2.Text)
-    CurMapAmbient.MapBlocks(UserPos.X, UserPos.Y).Light.range = Val(HScroll2.Value)
+    CurMapAmbient.MapBlocks(UserPos.X, UserPos.Y).Light.range = Val(HScroll2.value)
     
-    Create_Light_To_Map UserPos.X, UserPos.Y, Val(HScroll2.Value), Val(Text2.Text), Val(Text3.Text), Val(Text4.Text)
+    Create_Light_To_Map UserPos.X, UserPos.Y, Val(HScroll2.value), Val(Text2.Text), Val(Text3.Text), Val(Text4.Text)
 End Sub
 
 Private Sub Command9_Click()
-    If Check1.Value = Unchecked Then
+    If Check1.value = Unchecked Then
         CurMapAmbient.Fog = -1
     Else
-        CurMapAmbient.Fog = Val(HScroll1.Value)
+        CurMapAmbient.Fog = Val(HScroll1.value)
     End If
 End Sub
 
+Private Sub Form_Load()
+    With Me
+        .Frame1.Caption = JsonLanguage.item("AMBIENT-EDITOR").item(0)
+        .Option1(0).Caption = JsonLanguage.item("AMBIENT-EDITOR").item(1)
+        .Option1(1).Caption = JsonLanguage.item("AMBIENT-EDITOR").item(2)
+        .Command7.Caption = JsonLanguage.item("AMBIENT-EDITOR").item(3)
+        .Frame3.Caption = JsonLanguage.item("AMBIENT-EDITOR").item(4)
+        .Label4.Caption = JsonLanguage.item("AMBIENT-EDITOR").item(5)
+        .Command8.Caption = JsonLanguage.item("AMBIENT-EDITOR").item(6)
+        .Command10.Caption = JsonLanguage.item("AMBIENT-EDITOR").item(7)
+        .Frame2.Caption = JsonLanguage.item("AMBIENT-EDITOR").item(8)
+        .Check1.Caption = JsonLanguage.item("AMBIENT-EDITOR").item(9)
+        .Label2.Caption = JsonLanguage.item("AMBIENT-EDITOR").item(10)
+        .Command9.Caption = JsonLanguage.item("AMBIENT-EDITOR").item(3)
+        .Check2.Caption = JsonLanguage.item("AMBIENT-EDITOR").item(11)
+        .Check3.Caption = JsonLanguage.item("AMBIENT-EDITOR").item(12)
+        .Command1.Caption = JsonLanguage.item("AMBIENT-EDITOR").item(13)
+        .Command2.Caption = JsonLanguage.item("AMBIENT-EDITOR").item(14)
+    End With
+End Sub

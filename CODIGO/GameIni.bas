@@ -52,8 +52,7 @@ Public Type tGameIni
     DirSonidos As String
     DirMusica As String
     DirMapas As String
-    NumeroDeBMPs As Long
-    NumeroMapas As Integer
+    DirLenguages As String
 End Type
 
 Public Type tSetupMods
@@ -109,13 +108,13 @@ Public Function LeerGameIni() As tGameIni
 End Function
 
 Public Sub EscribirGameIni(ByRef GameIniConfiguration As tGameIni)
-On Local Error Resume Next
-
-Dim N As Integer
-N = FreeFile
-Open App.path & "\init\Inicio.con" For Binary As #N
-Put #N, , MiCabecera
-Put #N, , GameIniConfiguration
-Close #N
+    On Local Error Resume Next
+    
+    Dim N As Integer
+    N = FreeFile
+    Open App.path & "\init\Inicio.con" For Binary As #N
+    Put #N, , MiCabecera
+    Put #N, , GameIniConfiguration
+    Close #N
 End Sub
 
