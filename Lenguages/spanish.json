@@ -558,6 +558,7 @@
    },
    "AMBIENT-EDITOR":{
       "TEXTOS":[
+		 "Editor de Ambientes"
          "Luz Ambiental",
          "Usar Luz del Día",
          "Usar Luz Propia",
