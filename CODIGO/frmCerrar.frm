@@ -113,6 +113,11 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
-    Me.Picture = LoadPicture(App.path & "\Graficos\frmCerrar.jpg")
+    With Me
+        .Picture = LoadPicture(App.path & "\Graficos\frmCerrar.jpg")
+        .cRegresar.Caption = JsonLanguage.Item("CERRAR").Item(0)
+        .cSalir.Caption = JsonLanguage.Item("CERRAR").Item(1)
+    End With
+    
 End Sub
 
