@@ -1072,7 +1072,7 @@ Public Sub HandleMultiMessage()
 
                 Dim msg      As String
                 
-                Dim msgGoHole As String
+                Dim msgGoHome As String
             
                 Distance = .ReadByte
                 tiempo = .ReadInteger
@@ -2729,14 +2729,14 @@ Private Sub HandleObjectDelete()
     
     Dim X   As Byte
     Dim Y   As Byte
-    Dim obj As Integer
+    Dim Obj As Integer
 
     X = incomingData.ReadByte()
     Y = incomingData.ReadByte()
         
-    obj = Map_PosExitsObject(X, Y)
+    Obj = Map_PosExitsObject(X, Y)
         
-    If (obj > 0) Then
+    If (Obj > 0) Then
         Call Map_DestroyObject(X, Y)
     End If
 End Sub
@@ -3456,7 +3456,7 @@ On Error GoTo ErrHandler
     
     Dim Count As Integer
     Dim i As Long
-    Dim j As Long
+    Dim J As Long
     Dim k As Long
     
     Count = Buffer.ReadInteger()
@@ -3496,18 +3496,18 @@ On Error GoTo ErrHandler
             If .Upgrade Then
                 For k = 1 To Count
                     If .Upgrade = ArmasHerrero(k).ObjIndex Then
-                        j = j + 1
+                        J = J + 1
                 
-                        ReDim Preserve HerreroMejorar(j) As tItemsConstruibles
+                        ReDim Preserve HerreroMejorar(J) As tItemsConstruibles
                         
-                        HerreroMejorar(j).Name = .Name
-                        HerreroMejorar(j).GrhIndex = .GrhIndex
-                        HerreroMejorar(j).ObjIndex = .ObjIndex
-                        HerreroMejorar(j).UpgradeName = ArmasHerrero(k).Name
-                        HerreroMejorar(j).UpgradeGrhIndex = ArmasHerrero(k).GrhIndex
-                        HerreroMejorar(j).LinH = ArmasHerrero(k).LinH - .LinH * 0.85
-                        HerreroMejorar(j).LinP = ArmasHerrero(k).LinP - .LinP * 0.85
-                        HerreroMejorar(j).LinO = ArmasHerrero(k).LinO - .LinO * 0.85
+                        HerreroMejorar(J).Name = .Name
+                        HerreroMejorar(J).GrhIndex = .GrhIndex
+                        HerreroMejorar(J).ObjIndex = .ObjIndex
+                        HerreroMejorar(J).UpgradeName = ArmasHerrero(k).Name
+                        HerreroMejorar(J).UpgradeGrhIndex = ArmasHerrero(k).GrhIndex
+                        HerreroMejorar(J).LinH = ArmasHerrero(k).LinH - .LinH * 0.85
+                        HerreroMejorar(J).LinP = ArmasHerrero(k).LinP - .LinP * 0.85
+                        HerreroMejorar(J).LinO = ArmasHerrero(k).LinO - .LinO * 0.85
                         
                         Exit For
                     End If
@@ -3555,7 +3555,7 @@ On Error GoTo ErrHandler
     
     Dim Count As Integer
     Dim i As Long
-    Dim j As Long
+    Dim J As Long
     Dim k As Long
     
     Count = Buffer.ReadInteger()
@@ -3574,25 +3574,25 @@ On Error GoTo ErrHandler
         End With
     Next i
     
-    j = UBound(HerreroMejorar)
+    J = UBound(HerreroMejorar)
     
     For i = 1 To Count
         With ArmadurasHerrero(i)
             If .Upgrade Then
                 For k = 1 To Count
                     If .Upgrade = ArmadurasHerrero(k).ObjIndex Then
-                        j = j + 1
+                        J = J + 1
                 
-                        ReDim Preserve HerreroMejorar(j) As tItemsConstruibles
+                        ReDim Preserve HerreroMejorar(J) As tItemsConstruibles
                         
-                        HerreroMejorar(j).Name = .Name
-                        HerreroMejorar(j).GrhIndex = .GrhIndex
-                        HerreroMejorar(j).ObjIndex = .ObjIndex
-                        HerreroMejorar(j).UpgradeName = ArmadurasHerrero(k).Name
-                        HerreroMejorar(j).UpgradeGrhIndex = ArmadurasHerrero(k).GrhIndex
-                        HerreroMejorar(j).LinH = ArmadurasHerrero(k).LinH - .LinH * 0.85
-                        HerreroMejorar(j).LinP = ArmadurasHerrero(k).LinP - .LinP * 0.85
-                        HerreroMejorar(j).LinO = ArmadurasHerrero(k).LinO - .LinO * 0.85
+                        HerreroMejorar(J).Name = .Name
+                        HerreroMejorar(J).GrhIndex = .GrhIndex
+                        HerreroMejorar(J).ObjIndex = .ObjIndex
+                        HerreroMejorar(J).UpgradeName = ArmadurasHerrero(k).Name
+                        HerreroMejorar(J).UpgradeGrhIndex = ArmadurasHerrero(k).GrhIndex
+                        HerreroMejorar(J).LinH = ArmadurasHerrero(k).LinH - .LinH * 0.85
+                        HerreroMejorar(J).LinP = ArmadurasHerrero(k).LinP - .LinP * 0.85
+                        HerreroMejorar(J).LinO = ArmadurasHerrero(k).LinO - .LinO * 0.85
                         
                         Exit For
                     End If
@@ -3640,7 +3640,7 @@ On Error GoTo ErrHandler
     
     Dim Count As Integer
     Dim i As Long
-    Dim j As Long
+    Dim J As Long
     Dim k As Long
     
     Count = Buffer.ReadInteger()
@@ -3679,17 +3679,17 @@ On Error GoTo ErrHandler
             If .Upgrade Then
                 For k = 1 To Count
                     If .Upgrade = ObjCarpintero(k).ObjIndex Then
-                        j = j + 1
+                        J = J + 1
                 
-                        ReDim Preserve CarpinteroMejorar(j) As tItemsConstruibles
+                        ReDim Preserve CarpinteroMejorar(J) As tItemsConstruibles
                         
-                        CarpinteroMejorar(j).Name = .Name
-                        CarpinteroMejorar(j).GrhIndex = .GrhIndex
-                        CarpinteroMejorar(j).ObjIndex = .ObjIndex
-                        CarpinteroMejorar(j).UpgradeName = ObjCarpintero(k).Name
-                        CarpinteroMejorar(j).UpgradeGrhIndex = ObjCarpintero(k).GrhIndex
-                        CarpinteroMejorar(j).Madera = ObjCarpintero(k).Madera - .Madera * 0.85
-                        CarpinteroMejorar(j).MaderaElfica = ObjCarpintero(k).MaderaElfica - .MaderaElfica * 0.85
+                        CarpinteroMejorar(J).Name = .Name
+                        CarpinteroMejorar(J).GrhIndex = .GrhIndex
+                        CarpinteroMejorar(J).ObjIndex = .ObjIndex
+                        CarpinteroMejorar(J).UpgradeName = ObjCarpintero(k).Name
+                        CarpinteroMejorar(J).UpgradeGrhIndex = ObjCarpintero(k).GrhIndex
+                        CarpinteroMejorar(J).Madera = ObjCarpintero(k).Madera - .Madera * 0.85
+                        CarpinteroMejorar(J).MaderaElfica = ObjCarpintero(k).MaderaElfica - .MaderaElfica * 0.85
                         
                         Exit For
                     End If
@@ -4693,9 +4693,9 @@ On Error GoTo ErrHandler
         .Miembros.Caption = Buffer.ReadInteger()
         
         If Buffer.ReadBoolean() Then
-            .eleccion.Caption = JsonLanguage.Item(UCase$.Item("TEXTO")("ABIERTA"))
+            .eleccion.Caption = UCase$(JsonLanguage.Item("ABIERTA").Item("TEXTO"))
         Else
-            .eleccion.Caption = JsonLanguage.Item(UCase$.Item("TEXTO")("CERRADA"))
+            .eleccion.Caption = UCase$(JsonLanguage.Item("CERRADA").Item("TEXTO"))
         End If
         
         .lblAlineacion.Caption = Buffer.ReadASCIIString()
@@ -10535,10 +10535,10 @@ On Error GoTo ErrHandler
         'Status del pj
         If Buffer.ReadBoolean Then
             .lblEstado.ForeColor = vbGreen
-            .lblEstado.Caption = JsonLanguage.Item(UCase$.Item("TEXTO")("EN_LINEA"))
+            .lblEstado.Caption = UCase$(JsonLanguage.Item("EN_LINEA").Item("TEXTO"))
         Else
             .lblEstado.ForeColor = vbRed
-            .lblEstado.Caption = JsonLanguage.Item(UCase$.Item("TEXTO")("DESCONECTADO"))
+            .lblEstado.Caption = UCase$(JsonLanguage.Item("DESCONECTADO").Item("TEXTO"))
         End If
         
         'IP del personaje

@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "richtx32.ocx"
 Begin VB.Form frmComerciarUsu 
    BorderStyle     =   0  'None
    ClientHeight    =   8850
@@ -184,7 +184,6 @@ Begin VB.Form frmComerciarUsu
       _ExtentY        =   2858
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -329,7 +328,7 @@ Private Sub imgAgregar_Click()
             MENSAJE_COMM_AGREGA = Replace$(MENSAJE_COMM_AGREGA, "VAR_CANTIDAD_AGREGA", Val(txtAgregar.Text))
             MENSAJE_COMM_AGREGA = Replace$(MENSAJE_COMM_AGREGA, "VAR_QUE_AGREGA", "monedas de oro")
             If Val(txtAgregar.Text) = 1 Then
-                MENSAJE_COMM_AGREGA_ORO = Replace$(MENSAJE_COMM_AGREGA_ORO, "monedas", "moneda")
+                MENSAJE_COMM_AGREGA = Replace$(MENSAJE_COMM_AGREGA, "monedas", "moneda")
             End If
             
             Call PrintCommerceMsg(MENSAJE_COMM_AGREGA, FontTypeNames.FONTTYPE_GUILD)
@@ -440,7 +439,7 @@ Private Sub imgQuitar_Click()
         If Amount <> 0 Then
             With InvOfferComUsu(0)
                 
-                MENSAJE_COMM_SACA = Replace$(MENSAJE_COMM_SACA_ORO, "VAR_CANTIDAD_SACA", Amount * (-1))
+                MENSAJE_COMM_SACA = Replace$(MENSAJE_COMM_SACA, "VAR_CANTIDAD_SACA", Amount * (-1))
                 MENSAJE_COMM_SACA = Replace$(MENSAJE_COMM_SACA, "VAR_QUE_SACA", .ItemName(.SelectedItem))
                 
                 Call PrintCommerceMsg(MENSAJE_COMM_SACA, FontTypeNames.FONTTYPE_GUILD)
