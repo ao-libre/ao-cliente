@@ -1615,7 +1615,7 @@ Private Sub ImgCrear_Click()
     If Not CheckData Then Exit Sub
     
 #If UsarWrench = 1 Then
-    frmMain.Socket1.hostname = CurServerIp
+    frmMain.Socket1.HostName = CurServerIp
     frmMain.Socket1.RemotePort = CurServerPort
 #End If
     
@@ -2309,7 +2309,7 @@ Private Sub LoadCharInfo()
     'Modificadores de Raza
     For i = 1 To NroRazas
         With ModRaza(i)
-            SearchVar = Replace$(ListaRazas(i), " ", "")
+            SearchVar = Replace(ListaRazas(i), " ", "")
         
             .Fuerza = Val(GetVar(IniPath & "CharInfo.dat", "MODRAZA", SearchVar + "Fuerza"))
             .Agilidad = Val(GetVar(IniPath & "CharInfo.dat", "MODRAZA", SearchVar + "Agilidad"))

@@ -165,13 +165,13 @@ Private Sub imgEnviar_Click()
     End If
     
     If T = PAZ Then
-        Call WriteGuildOfferPeace(Nombre, Replace$(Text1, vbNewLine, "º"))
+        Call WriteGuildOfferPeace(Nombre, Replace(Text1, vbNewLine, "º"))
         
     ElseIf T = ALIANZA Then
-        Call WriteGuildOfferAlliance(Nombre, Replace$(Text1, vbNewLine, "º"))
+        Call WriteGuildOfferAlliance(Nombre, Replace(Text1, vbNewLine, "º"))
         
     ElseIf T = RECHAZOPJ Then
-        Call WriteGuildRejectNewMember(Nombre, Replace$(Replace$(Text1.Text, ",", " "), vbNewLine, " "))
+        Call WriteGuildRejectNewMember(Nombre, Replace(Replace(Text1.Text, ",", " "), vbNewLine, " "))
         'Sacamos el char de la lista de aspirantes
         Dim i As Long
         
