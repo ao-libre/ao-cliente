@@ -558,6 +558,17 @@
 	"DESCONECTADO":{
 		"TEXTO":"Desconectado"
 	},
+	"HABILIDADES": {
+		"TEXTO":[
+			"Ocultarse",
+			"Robar y Ocultarse",
+			"Apuñalar",
+			"Combate Sin Armas"
+			"Domar",
+			"Navegar",
+			"Extracción y Construcción"	
+		]
+	},
 	"ACTUALIZAR_CLIENTE":{
 		"TEXTO":"Tu version no es la actual, ¿Deseas ejecutar el actualizador?."
 	},
@@ -571,7 +582,7 @@
 		"TEXTO":"Iniciando constantes..."
 	},
 	"INICIA_MOTOR_GRAFICO":{
-		"TEXTO":"Iniciando motor gráfico..."
+		"TEXTO":"Iniciando motor grafico..."
 	},
 	"INICIA_FXS":{
 		"TEXTO":"Creando animaciones extra..."
@@ -587,6 +598,21 @@
 	},
 	"PANTALLA_COMPLETA":{
 		"TEXTO":"Desea jugar en pantalla completa?"
+	},
+	"VALIDACION_EMAIL":{
+		"TEXTO":"Ingrese un correo electronico."
+	},
+	"VALIDACION_BAD_EMAIL":{
+		"TEXTO":[
+			"Direccion de correo electronico invalida.",
+			"El correo electronico debe tener menos de 30 letras."
+		]
+	},
+	"VALIDACION_PASSWORD":{
+		"TEXTO":"Ingrese una contraseña."
+	},
+	"VALIDACION_BAD_PASSWORD":{
+		"TEXTO":"Los contraseñas no coinciden."
 	},
 	"AMBIENT-EDITOR":{
 		"TEXTOS":[

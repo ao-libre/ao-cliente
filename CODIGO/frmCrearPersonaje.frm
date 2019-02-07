@@ -1320,13 +1320,13 @@ Private Sub CargarEspecialidades()
 
     ReDim vEspecialidades(1 To NroClases)
     
-    vEspecialidades(eClass.Hunter) = "Ocultarse"
-    vEspecialidades(eClass.Thief) = "Robar y Ocultarse"
-    vEspecialidades(eClass.Assasin) = "Apuñalar"
-    vEspecialidades(eClass.Bandit) = "Combate Sin Armas"
-    vEspecialidades(eClass.Druid) = "Domar"
-    vEspecialidades(eClass.Pirat) = "Navegar"
-    vEspecialidades(eClass.Worker) = "Extracción y Construcción"
+    vEspecialidades(eClass.Hunter) = JsonLanguage.Item("HABILIDADES").Item("TEXTO").Item(0)
+    vEspecialidades(eClass.Thief) = JsonLanguage.Item("HABILIDADES").Item("TEXTO").Item(1)
+    vEspecialidades(eClass.Assasin) = JsonLanguage.Item("HABILIDADES").Item("TEXTO").Item(2)
+    vEspecialidades(eClass.Bandit) = JsonLanguage.Item("HABILIDADES").Item("TEXTO").Item(3)
+    vEspecialidades(eClass.Druid) = JsonLanguage.Item("HABILIDADES").Item("TEXTO").Item(4)
+    vEspecialidades(eClass.Pirat) = JsonLanguage.Item("HABILIDADES").Item("TEXTO").Item(5)
+    vEspecialidades(eClass.Worker) = JsonLanguage.Item("HABILIDADES").Item("TEXTO").Item(6)
 End Sub
 
 Private Sub IniciarGraficos()
@@ -1615,7 +1615,7 @@ Private Sub ImgCrear_Click()
     If Not CheckData Then Exit Sub
     
 #If UsarWrench = 1 Then
-    frmMain.Socket1.HostName = CurServerIp
+    frmMain.Socket1.hostname = CurServerIp
     frmMain.Socket1.RemotePort = CurServerPort
 #End If
     
