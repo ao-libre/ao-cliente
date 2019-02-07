@@ -12,7 +12,7 @@ Este es un error comun que les suele pasar a varias personas, esto es debido que
 Visual Basic 6 lee el .vbp en CLRF, hay varias formas de solucionarlo:
 
 Opcion a:
-Con Notepad++ cambiar el EOL del archivo a CLRS
+Con Notepad++ cambiar el EOL del archivo a CLRF
 
 Opcion b:
 Abrir un editor de texto y reemplazar todos los `'\n'` por `'\r\n'`
