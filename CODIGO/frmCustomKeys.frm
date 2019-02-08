@@ -690,7 +690,7 @@ Private Sub imgGuardar_Click()
     
     For i = 1 To CustomKeys.KeyCount
         If LenB(Text1(i).Text) = 0 Then
-            Call MsgBox("Hay una o más teclas no válidas, por favor verifique.", vbCritical Or vbOKOnly Or vbApplicationModal Or vbDefaultButton1, "Argentum Online")
+            Call MsgBox(JsonLanguage.Item("CUSTOMKEYS_TECLA_INVALIDA").Item("TEXTO"), vbCritical Or vbOKOnly Or vbApplicationModal Or vbDefaultButton1, "Argentum Online")
             Exit Sub
         End If
     Next i
@@ -698,13 +698,15 @@ Private Sub imgGuardar_Click()
     CustomKeys.CurrentConfig = SelectedConfig
     
     If SelectedConfig <> InitialConfig Then
-        sMsg = "¡Se ha cargado la configuración "
+
+        sMsg = JsonLanguage.Item("CUSTOMKEYS_CONFIG_CARGADA").Item("TEXTO")
+        
         If SelectedConfig = 0 Then
-            sMsg = sMsg & "default"
+            sMsg = Replace$(sMsg, "VAR_CONFIG_ELEGIDA", JsonLanguage.Item("PREDETERMINADA").Item("TEXTO"))
         Else
-            sMsg = sMsg & "personalizada número " & CStr(SelectedConfig)
+            sMsg = Replace$(sMsg, "VAR_CONFIG_ELEGIDA", JsonLanguage.Item("PERSONALIZADA").Item("TEXTO"))
+            sMsg = Replace$(sMsg, "VAR_CONFIG_CUSTOM_NUMERO", CStr(SelectedConfig))
         End If
-        sMsg = sMsg & "!"
         
         Call ShowConsoleMsg(sMsg, 255, 255, 255, True)
     End If

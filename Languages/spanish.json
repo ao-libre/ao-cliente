@@ -540,6 +540,9 @@
 	"ERROR_MAPAS":{
 		"TEXTO":"Error en los mapas, algún archivo ha sido modificado o esta dañado."
 	},
+	"ERROR_CONN_LOST":{
+		"TEXTO":"Error: Se ha perdido la conexion con el servidor."
+	},
 	"ARMADA":{
 		"TEXTO":"Armada Real"
 	},
@@ -557,6 +560,12 @@
 	},
 	"DESCONECTADO":{
 		"TEXTO":"Desconectado"
+	},
+	"PREDETERMINADA":{
+		"TEXTO":"predeterminada"
+	},
+	"PERSONALIZADA":{
+		"TEXTO":"personalizada"
 	},
 	"HABILIDADES": {
 		"TEXTO":[
@@ -614,6 +623,102 @@
 	"VALIDACION_BAD_PASSWORD":{
 		"TEXTO":"Los contraseñas no coinciden."
 	},
+	"VALIDACION_NOMBRE_PJ":{
+		"TEXTO":"Ingresa el nombre de tu nuevo personaje."
+	},
+	"VALIDACION_BAD_NOMBRE_PJ":{
+		"TEXTO":[
+			"El nombre del personaje debe tener menos de 30 letras.",
+			"Nombre invalido, se han removido los espacios al final del nombre"
+		]
+	},
+	"VALIDACION_RAZA":{
+		"TEXTO":"Seleccione la raza del personaje."
+	},
+	"VALIDACION_SEXO":{
+		"TEXTO":"Seleccione el sexo del personaje."
+	},
+	"VALIDACION_CLASE":{
+		"TEXTO":"Seleccione la clase del personaje."
+	},
+	"VALIDACION_HOGAR":{
+		"TEXTO":"Seleccione el hogar del personaje."
+	},
+	"VALIDACION_HASH":{
+		"TEXTO":"Ha ocurrido un error en el inicio de sesion, por favor, intente nuevamente."
+	},
+	"VALIDACION_ATRIBUTOS":{
+		"TEXTO":"Los atributos del personaje son invalidos."
+	},
+	"AYUDA_CREARPJ_DADOS":{
+		"TEXTO":"Presionando sobre la Esfera Roja, se modificarán al azar los atributos de tu personaje, de esta manera puedes elegir los que más te parezcan para definir a tu personaje."
+	},
+	"AYUDA_CREARPJ_CORREO":{
+		"TEXTO":"Es sumamente importante que ingreses una dirección de correo electrónico válida, ya que en el caso de perder la contraseña de tu personaje, se te enviará cuando lo requieras, a esa dirección."
+	},
+	"AYUDA_CREARPJ_NOMBREPJ":{
+		"TEXTO":"Sé cuidadoso al seleccionar el nombre de tu personaje. Argentum es un juego de rol, un mundo mágico y fantástico, y si seleccionás un nombre obsceno o con connotación política, los administradores borrarán tu personaje y no habrá ninguna posibilidad de recuperarlo."
+	},
+	"AYUDA_CREARPJ_ATRIBUTOS":{
+		"TEXTO":"Son las cualidades que definen tu personaje. Generalmente se los llama [DADOS]. (Ver Tirar Dados)"
+	},
+	"AYUDA_CREARPJ_IED":{
+		"TEXTO":"Son los atributos que obtuviste al azar. Presioná la esfera roja para volver a tirarlos."
+	},
+	"AYUDA_CREARPJ_IEM":{
+		"TEXTO":"Son los modificadores por raza que influyen en los atributos de tu personaje."
+	},
+	"AYUDA_CREARPJ_IEF":{
+		"TEXTO":"Los atributos finales de tu personaje, de acuerdo a la raza que elegiste."
+	},
+	"AYUDA_CREARPJ_FUERZA":{
+		"TEXTO":"De ella dependerá qué tan potentes serán tus golpes, tanto con armas de cuerpo a cuerpo, a distancia o sin armas."
+	},
+	"AYUDA_CREARPJ_AGILIDAD":{
+		"TEXTO":"Este atributo intervendrá en qué tan bueno seas, tanto evadiendo como acertando golpes, respecto de otros personajes como de las criaturas a las q te enfrentes."
+	},
+	"AYUDA_CREARPJ_INTELIGENCIA":{
+		"TEXTO":"Influirá de manera directa en cuánto maná ganarás por nivel."
+	},
+	"AYUDA_CREARPJ_CARISMA":{
+		"TEXTO":"Será necesario tanto para la relación con otros personajes (entrenamiento en grupos) como con las criaturas (domar animales)."
+	},
+	"AYUDA_CREARPJ_CONSTITUCION":{
+		"TEXTO":"Afectará a la cantidad de vida que podrás ganar por nivel."
+	},
+	"AYUDA_CREARPJ_EVASION":{
+		"TEXTO":"Evalúa la habilidad esquivando ataques físicos."
+	},
+	"AYUDA_CREARPJ_MAGIA":{
+		"TEXTO":"Puntúa la cantidad de maná que se tendrá."
+	},
+	"AYUDA_CREARPJ_VIDA":{
+		"TEXTO":"Valora la cantidad de salud que se podrá llegar a tener."
+	},
+	"AYUDA_CREARPJ_ESCUDOS":{
+		"TEXTO":"Estima la habilidad para rechazar golpes con escudos."
+	},
+	"AYUDA_CREARPJ_ARMAS":{
+		"TEXTO":"Evalúa la habilidad en el combate cuerpo a cuerpo con armas."
+	},
+	"AYUDA_CREARPJ_ARCOS":{
+		"TEXTO":"Evalúa la habilidad en el combate a distancia con arcos. "
+	},
+	"AYUDA_CREARPJ_HOGAR":{
+		"TEXTO":"Define el hogar de tu personaje. Sin embargo, el personaje nacerá en Nemahuak, la ciudad de los novatos."
+	},
+	"AYUDA_CREARPJ_RAZA":{
+		"TEXTO":"De la raza que elijas dependerá cómo se modifiquen los dados que saques. Podés cambiar de raza para poder visualizar cómo se modifican los distintos atributos."
+	},
+	"AYUDA_CREARPJ_CLASE":{
+		"TEXTO":"La clase influirá en las características principales que tenga tu personaje, asi como en las magias e items que podrá utilizar. Las estrellas que ves abajo te mostrarán en qué habilidades se destaca la misma."
+	},
+	"AYUDA_CREARPJ_GENERO":{
+		"TEXTO":"Indica si el personaje será masculino o femenino. Esto influye en los items que podrá equipar."
+	},
+	"AYUDA_CREARPJ_ALINEACION":{
+		"TEXTO":"Indica si el personaje seguirá la senda del mal o del bien. (Actualmente deshabilitado)"
+	},
 	"AMBIENT-EDITOR":{
 		"TEXTOS":[
 			"Editor de Ambientes",
@@ -639,5 +744,11 @@
 			"Regresar a la pantalla de inicio",
 			"Salir del Juego"
 		]
+	},
+	"CUSTOMKEYS_TECLA_INVALIDA":{
+		"TEXTO":"Hay una o más teclas invalidas, por favor verifique."
+	},
+	"CUSTOMKEYS_CONFIG_CARGADA":{
+		"TEXTO":"¡Se ha cargado la configuración VAR_CONFIG_ELEGIDA VAR_CONFIG_CUSTOM_NUMERO !"
 	}
 }

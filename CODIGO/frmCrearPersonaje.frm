@@ -1483,39 +1483,33 @@ End Sub
 Function CheckData() As Boolean
     
     If LenB(txtNombre.Text) = 0 Then
-        MsgBox "Ingresa el nombre de tu nuevo personaje."
+        MsgBox JsonLanguage.Item("VALIDADION_NOMBRE_PJ").Item("TEXTO")
         txtNombre.SetFocus
-        Exit Function
-    End If
-    
-    If LenB(txtPasswd.Text) = 0 Then
-        MsgBox "Ingresa una contraseña."
-        txtPasswd.SetFocus
         Exit Function
     End If
 
     If UserRaza = 0 Then
-        MsgBox "Seleccione la raza del personaje."
+        MsgBox JsonLanguage.Item("VALIDADION_RAZA").Item("TEXTO")
         Exit Function
     End If
     
     If UserSexo = 0 Then
-        MsgBox "Seleccione el sexo del personaje."
+        MsgBox JsonLanguage.Item("VALIDADION_SEXO").Item("TEXTO")
         Exit Function
     End If
     
     If UserClase = 0 Then
-        MsgBox "Seleccione la clase del personaje."
+        MsgBox JsonLanguage.Item("VALIDADION_CLASE").Item("TEXTO")
         Exit Function
     End If
     
     If UserHogar = 0 Then
-        MsgBox "Seleccione el hogar del personaje."
+        MsgBox JsonLanguage.Item("VALIDADION_HOGAR").Item("TEXTO")
         Exit Function
     End If
     
-    If AccountHash = vbNullString Then
-        MsgBox "Error, debe iniciar sesion nuevamente"
+    If LenB(AccountHash) = 0 Then
+        MsgBox JsonLanguage.Item("VALIDADION_HASH").Item("TEXTO")
         Exit Function
     End If
 
@@ -1523,13 +1517,13 @@ Function CheckData() As Boolean
     Dim i As Integer
     For i = 1 To NUMATRIBUTOS
         If Val(lblAtributos(i).Caption) = 0 Then
-            MsgBox "Los atributos del personaje son invalidos."
+            MsgBox JsonLanguage.Item("VALIDADION_ATRIBUTOS").Item("TEXTO")
             Exit Function
         End If
     Next i
     
-    If Len(UserName) > 30 Then
-        MsgBox ("El nombre debe tener menos de 30 letras.")
+    If LenB(UserName) > 30 Then
+        MsgBox JsonLanguage.Item("VALIDADION_BAD_NOMBRE_PJ").Item("TEXTO").Item(0)
         Exit Function
     End If
     
@@ -1599,7 +1593,7 @@ Private Sub ImgCrear_Click()
             
     If Right$(UserName, 1) = " " Then
         UserName = RTrim$(UserName)
-        MsgBox "Nombre invalido, se han removido los espacios al final del nombre"
+        MsgBox JsonLanguage.Item("VALIDADION_BAD_NOMBRE_PJ").Item("TEXTO").Item(1)
     End If
     
     UserRaza = lstRaza.ListIndex + 1
@@ -1629,7 +1623,7 @@ Private Sub ImgCrear_Click()
 #Else
     If frmMain.Winsock1.State <> sckConnected Then
 #End If
-        MsgBox "Error: Se ha perdido la conexion con el server."
+        MsgBox JsonLanguage.Item("ERROR_CONN_LOST").Item("TEXTO")
         Unload Me
         
     Else
@@ -2119,32 +2113,29 @@ Private Function CheckDir(ByRef Dir As E_Heading) As E_Heading
 End Function
 
 Private Sub LoadHelp()
-    vHelp(eHelp.iePasswd) = "La contraseña que utilizarás para conectar tu personaje al juego."
-    vHelp(eHelp.ieTirarDados) = "Presionando sobre la Esfera Roja, se modificarán al azar los atributos de tu personaje, de esta manera puedes elegir los que más te parezcan para definir a tu personaje."
-    vHelp(eHelp.ieMail) = "Es sumamente importante que ingreses una dirección de correo electrónico válida, ya que en el caso de perder la contraseña de tu personaje, se te enviará cuando lo requieras, a esa dirección."
-    vHelp(eHelp.ieNombre) = "Sé cuidadoso al seleccionar el nombre de tu personaje. Argentum es un juego de rol, un mundo mágico y fantástico, y si seleccionás un nombre obsceno o con connotación política, los administradores borrarán tu personaje y no habrá ninguna posibilidad de recuperarlo."
-    vHelp(eHelp.ieConfirmPasswd) = "La contraseña que utilizarás para conectar tu personaje al juego."
-    vHelp(eHelp.ieAtributos) = "Son las cualidades que definen tu personaje. Generalmente se los llama ""Dados"". (Ver Tirar Dados)"
-    vHelp(eHelp.ieD) = "Son los atributos que obtuviste al azar. Presioná la esfera roja para volver a tirarlos."
-    vHelp(eHelp.ieM) = "Son los modificadores por raza que influyen en los atributos de tu personaje."
-    vHelp(eHelp.ieF) = "Los atributos finales de tu personaje, de acuerdo a la raza que elegiste."
-    vHelp(eHelp.ieFuerza) = "De ella dependerá qué tan potentes serán tus golpes, tanto con armas de cuerpo a cuerpo, a distancia o sin armas."
-    vHelp(eHelp.ieAgilidad) = "Este atributo intervendrá en qué tan bueno seas, tanto evadiendo como acertando golpes, respecto de otros personajes como de las criaturas a las q te enfrentes."
-    vHelp(eHelp.ieInteligencia) = "Influirá de manera directa en cuánto maná ganarás por nivel."
-    vHelp(eHelp.ieCarisma) = "Será necesario tanto para la relación con otros personajes (entrenamiento en parties) como con las criaturas (domar animales)."
-    vHelp(eHelp.ieConstitucion) = "Afectará a la cantidad de vida que podrás ganar por nivel."
-    vHelp(eHelp.ieEvasion) = "Evalúa la habilidad esquivando ataques físicos."
-    vHelp(eHelp.ieMagia) = "Puntúa la cantidad de maná que se tendrá."
-    vHelp(eHelp.ieVida) = "Valora la cantidad de salud que se podrá llegar a tener."
-    vHelp(eHelp.ieEscudos) = "Estima la habilidad para rechazar golpes con escudos."
-    vHelp(eHelp.ieArmas) = "Evalúa la habilidad en el combate cuerpo a cuerpo con armas."
-    vHelp(eHelp.ieArcos) = "Evalúa la habilidad en el combate a distancia con arcos. "
-    vHelp(eHelp.ieEspecialidad) = vbNullString
-    vHelp(eHelp.iePuebloOrigen) = "Define el hogar de tu personaje. Sin embargo, el personaje nacerá en Nemahuak, la ciudad de los novatos."
-    vHelp(eHelp.ieRaza) = "De la raza que elijas dependerá cómo se modifiquen los dados que saques. Podés cambiar de raza para poder visualizar cómo se modifican los distintos atributos."
-    vHelp(eHelp.ieClase) = "La clase influirá en las características principales que tenga tu personaje, asi como en las magias e items que podrá utilizar. Las estrellas que ves abajo te mostrarán en qué habilidades se destaca la misma."
-    vHelp(eHelp.ieGenero) = "Indica si el personaje será masculino o femenino. Esto influye en los items que podrá equipar."
-    vHelp(eHelp.ieAlineacion) = "Indica si el personaje seguirá la senda del mal o del bien. (Actualmente deshabilitado)"
+    vHelp(eHelp.ieTirarDados) = JsonLanguage.Item("AYUDA_CREARPJ_DADOS").Item("TEXTO")
+    vHelp(eHelp.ieMail) = JsonLanguage.Item("AYUDA_CREARPJ_CORREO").Item("TEXTO")
+    vHelp(eHelp.ieNombre) = JsonLanguage.Item("AYUDA_CREARPJ_NOMBREPJ").Item("TEXTO")
+    vHelp(eHelp.ieAtributos) = JsonLanguage.Item("AYUDA_CREARPJ_ATRIBUTOS").Item("TEXTO")
+    vHelp(eHelp.ieD) = JsonLanguage.Item("AYUDA_CREARPJ_IED").Item("TEXTO")
+    vHelp(eHelp.ieM) = JsonLanguage.Item("AYUDA_CREARPJ_IEM").Item("TEXTO")
+    vHelp(eHelp.ieF) = JsonLanguage.Item("AYUDA_CREARPJ_IEF").Item("TEXTO")
+    vHelp(eHelp.ieFuerza) = JsonLanguage.Item("AYUDA_CREARPJ_FUERZA").Item("TEXTO")
+    vHelp(eHelp.ieAgilidad) = JsonLanguage.Item("AYUDA_CREARPJ_AGILIDAD").Item("TEXTO")
+    vHelp(eHelp.ieInteligencia) = JsonLanguage.Item("AYUDA_CREARPJ_INTELIGENCIA").Item("TEXTO")
+    vHelp(eHelp.ieCarisma) = JsonLanguage.Item("AYUDA_CREARPJ_CARISMA").Item("TEXTO")
+    vHelp(eHelp.ieConstitucion) = JsonLanguage.Item("AYUDA_CREARPJ_CONSTITUCION").Item("TEXTO")
+    vHelp(eHelp.ieEvasion) = JsonLanguage.Item("AYUDA_CREARPJ_EVASION").Item("TEXTO")
+    vHelp(eHelp.ieMagia) = JsonLanguage.Item("AYUDA_CREARPJ_MAGIA").Item("TEXTO")
+    vHelp(eHelp.ieVida) = JsonLanguage.Item("AYUDA_CREARPJ_VIDA").Item("TEXTO")
+    vHelp(eHelp.ieEscudos) = JsonLanguage.Item("AYUDA_CREARPJ_ESCUDOS").Item("TEXTO")
+    vHelp(eHelp.ieArmas) = JsonLanguage.Item("AYUDA_CREARPJ_ARMAS").Item("TEXTO")
+    vHelp(eHelp.ieArcos) = JsonLanguage.Item("AYUDA_CREARPJ_ARCOS").Item("TEXTO")
+    vHelp(eHelp.iePuebloOrigen) = JsonLanguage.Item("AYUDA_CREARPJ_HOGAR").Item("TEXTO")
+    vHelp(eHelp.ieRaza) = JsonLanguage.Item("AYUDA_CREARPJ_RAZA").Item("TEXTO")
+    vHelp(eHelp.ieClase) = JsonLanguage.Item("AYUDA_CREARPJ_CLASE").Item("TEXTO")
+    vHelp(eHelp.ieGenero) = JsonLanguage.Item("AYUDA_CREARPJ_GENERO").Item("TEXTO")
+    vHelp(eHelp.ieAlineacion) = JsonLanguage.Item("AYUDA_CREARPJ_ALINEACION").Item("TEXTO")
 End Sub
 
 Private Sub ClearLabel()
@@ -2175,11 +2166,11 @@ Private Sub UpdateRazaMod()
         SelRaza = lstRaza.ListIndex + 1
         
         With ModRaza(SelRaza)
-            lblModRaza(eAtributos.Fuerza).Caption = IIf(.Fuerza >= 0, "+", "") & .Fuerza
-            lblModRaza(eAtributos.Agilidad).Caption = IIf(.Agilidad >= 0, "+", "") & .Agilidad
-            lblModRaza(eAtributos.Inteligencia).Caption = IIf(.Inteligencia >= 0, "+", "") & .Inteligencia
+            lblModRaza(eAtributos.Fuerza).Caption = IIf(.Fuerza >= 0, "+", vbNullString) & .Fuerza
+            lblModRaza(eAtributos.Agilidad).Caption = IIf(.Agilidad >= 0, "+", vbNullString) & .Agilidad
+            lblModRaza(eAtributos.Inteligencia).Caption = IIf(.Inteligencia >= 0, "+", vbNullString) & .Inteligencia
             lblModRaza(eAtributos.Carisma).Caption = IIf(.Carisma >= 0, "+", "") & .Carisma
-            lblModRaza(eAtributos.Constitucion).Caption = IIf(.Constitucion >= 0, "+", "") & .Constitucion
+            lblModRaza(eAtributos.Constitucion).Caption = IIf(.Constitucion >= 0, "+", vbNullString) & .Constitucion
         End With
     End If
     
