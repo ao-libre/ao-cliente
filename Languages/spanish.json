@@ -931,6 +931,12 @@
 		"TEXTO":[
 		]
 	},
+	"TIP":{
+		"TEXTO":[
+			"Aceptar",
+			"Mostrar la proxima vez"
+		]
+	},
 	"CUSTOMKEYS_TECLA_INVALIDA":{
 		"TEXTO":"Hay una o más teclas invalidas, por favor verifique."
 	},
