@@ -667,17 +667,89 @@
 	},
 	"ATENCION":{
 		"TEXTO":"Atencion"
-	}
-	"HABILIDADES": {
-		"TEXTO":[
-			"Ocultarse",
-			"Robar y Ocultarse",
-			"Apuñalar",
-			"Combate Sin Armas"
-			"Domar",
-			"Navegar",
-			"Extracción y Construcción"	
-		]
+	},
+	"MAGIA":{
+		"TEXTO":"Magia",
+		"DESCRIPCION":"- Representa la habilidad de un personaje de las áreas mágica.\n- Indica la variedad de hechizos que es capaz de dominar el personaje."
+	},
+	"ROBAR":{
+		"TEXTO":"Robar",
+		"DESCRIPCION":"- Habilidades de hurto. Nunca por medio de la violencia.\n- Indica la probabilidad de exito del personaje al intentar apoderarse de oro de otro, en caso de ser Ladron, tambien podra apoderarse de items."
+	},
+	"EVASION_DE_COMBATE":{
+		"TEXTO":"Evasion en Combate",
+		"DESCRIPCION":"- Representa la habilidad general para moverse en combate entre golpes enemigos sin morir o tropezar en el intento.\n- Indica la posibilidad de evadir un golpe fisico del personaje."
+	},
+	"COMBATE_CON_ARMAS":{
+		"TEXTO":"Combate con Armas",
+		"DESCRIPCION":"- Representa la habilidad del personaje para manejar armas de combate cuerpo a cuerpo.\n- Indica la probabilidad de impactar al oponente con armas cuerpo a cuerpo."
+	},
+	"MEDITAR":{
+		"TEXTO":"Meditar",
+		"DESCRIPCION":"- Representa la capacidad del personaje de concentrarse para abstrarse dentro de su mente, y asi revitalizar su fuerza espiritual.\n- Indica la velocidad a la que el personaje recupera mana (Solo para clases magicas)."
+	},
+	"APUNALAR":{
+		"TEXTO":"Apuñalar",
+		"DESCRIPCION":"- Representa la destreza para inflingir daño grave con armas cortas.\n- Indica la posibilidad de apuñalar al enemigo en un ataque. El Asesino es la unica clase que no necesita 10 skills para comenzar a entrenar esta habilidad."
+	},
+	"OCULTARSE":{
+		"TEXTO":"Ocultarse",
+		"DESCRIPCION":"- La habilidad propia de un personaje para mimetizarse con el medio y evitar se perciba su presencia.\n- Indica la facilidad con la que uno puede desaparecer de la vista de los demas y por cuanto tiempo."
+	},
+	"SUPERVIVENCIA":{
+		"TEXTO":"Supervivencia",
+		"DESCRIPCION":"- Es el conjunto de habilidades necesarias para sobrevivir fuera de una ciudad en base a lo que la naturaleza ofrece.\n- Permite conocer la salud de las criaturas guiándose exclusivamente por su aspecto, así como encender fogatas junto a las que descansar."
+	},
+	"TALAR":{
+		"TEXTO":"Talar",
+		"DESCRIPCION": "- Es la habilidad en el uso del hacha para evitar desperdiciar leña y maximizar la efectividad de cada golpe dado.\n- Indica la probabilidad de obtener leña por golpe."
+	},
+	"COMERCIO":{
+		"TEXTO":"Comercio",
+		"DESCRIPCION":"- Es la habilidad para regatear los precios exigidos en la compra y evitar ser regateado al vender.\n- Indica que tan caro se compra en el comercio con NPCs."
+	},
+	"DEFENSA_CON_ESCUDOS":{
+		"TEXTO":"Defensa con Escudos",
+		"DESCRIPCION":"- Es la habilidad de interponer correctamente el escudo ante cada embate enemigo para evitar ser impactado sin perder el equilibrio y poder responder rápidamente con la otra mano.\n- Indica las probabilidades de bloquear un impacto con el escudo."
+	},
+	"PESCA":{
+		"TEXTO":"Pesca"{
+		"DESCRIPCION":"- Es el conjunto de conocimientos básicos para poder armar un señuelo, poner la carnada en el anzuelo y saber dónde buscar peces.\n- Indica la probabilidad de tener éxito en cada intento de pescar."
+	},
+	"MINERIA":{
+		"TEXTO":"Mineria",
+		"DESCRIPCION":"- Es el conjunto de conocimientos sobre los distintos minerales, el dónde se obtienen, cómo deben ser extraídos y trabajados.\n- Indica la probabilidad de tener éxito en cada intento de minar y la capacidad, o no de convertir estos minerales en lingotes."
+	},
+	"CARPINTERIA":{
+		"TEXTO":"Carpinteria",
+		"DESCRIPCION":"- Es el conjunto de conocimientos para saber serruchar, lijar, encolar y clavar madera con un buen nivel de terminación.\n- Indica la habilidad en el manejo de estas herramientas, el que tan bueno se es en el oficio de carpintero."
+	},
+	"HERRERIA":{
+		"TEXTO":"Mineria",
+		"DESCRIPCION":"- Es el conjunto de conocimientos para saber procesar cada tipo de mineral para fundirlo, forjarlo y crear aleaciones.\n- Indica la habilidad en el manejo de estas técnicas, el que tan bueno se es en el oficio de herrero."
+	},
+	"LIDERAZGO":{
+		"TEXTO":"Liderazgo",
+		"DESCRIPCION":"- Es la habilidad propia del personaje para convencer a otros a seguirlo en batalla.\n- Permite crear clanes y grupos."
+	},
+	"DOMAR_ANIMALES":{
+		"TEXTO":"Domar Animales",
+		"DESCRIPCION":"- Es la habilidad en el trato con animales para que estos te sigan y ayuden en combate.\n- Indica la posibilidad de lograr domar a una criatura y qué clases de criaturas se puede domar."
+	},
+	"COMBATE_A_DISTANCIA":{
+		"TEXTO":"Combate a Distancia",
+		"DESCRIPCION":"- Es el manejo de las armas de largo alcance.\n- Indica la probabilidad de éxito para impactar a un enemigo con este tipo de armas."
+	},
+	"COMBATE_CUERPO_A_CUERPO":{
+		"TEXTO":"Combate Cuerpo a Cuerpo",
+		"DESCRIPCION":"- Es la habilidad del personaje para entrar en combate sin arma alguna salvo sus propios brazos.\n- Indica la probabilidad de éxito para impactar a un enemigo estando desarmado. El Bandido y Ladrón tienen habilidades extras asociadas a esta habilidad."
+	},
+	"NAVEGACION":{
+		"TEXTO":"Navegacion",
+		"DESCRIPCION":"- Es la habilidad para controlar barcos en el mar sin naufragar.\n- Indica que clase de barcos se pueden utilizar."
+	},
+	"AYUDA_NO_USAR_HABILIDAD":{
+		"TEXTO":"* Habilidad inhabilitada para tu clase."
 	},
 	"ACTUALIZAR_CLIENTE":{
 		"TEXTO":"Tu version no es la actual, ¿Deseas ejecutar el actualizador?."
@@ -822,6 +894,7 @@
 	"AYUDA_CREARPJ_ALINEACION":{
 		"TEXTO":"Indica si el personaje seguirá la senda del mal o del bien. (Actualmente deshabilitado)"
 	},
+	"AYUDA_SKILLS_"
 	"AMBIENT-EDITOR":{
 		"TEXTOS":[
 			"Editor de Ambientes",
