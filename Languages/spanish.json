@@ -563,6 +563,12 @@
 	"ERROR_WINSOCK_TIME-OUT":{
 		"TEXTO":"El tiempo de espera se ha agotado, intenta nuevamente."
 	},
+	"ERROR_PERSONAJE_NO_SELECCIONADO":{
+		"TEXTO":"No has seleccionado un personaje.
+	},
+	"ERROR_DEMASIADOS_PJS":{
+		"TEXTO":"No puedes crear mas de 10 personajes."
+	},
 	"ERROR":{
 		"TEXTO":"Error"
 	},
@@ -640,6 +646,24 @@
 	},
 	"HECHIZOS":{
 		"TEXTO":"hechizos"
+	},
+	"NOMBRE":{
+		"TEXTO":"Nombre"
+	},
+	"CLASE":{
+		"TEXTO":"Clase"
+	},
+	"RAZA":{
+		"TEXTO":"Raza"
+	},
+	"NIVEL":{
+		"TEXTO":"Nivel"
+	},
+	"ORO":{
+		"TEXTO":"Oro"
+	},
+	"MAPA":{
+		"TEXTO":"Mapa"
 	},
 	"HABILIDADES": {
 		"TEXTO":[

@@ -219,7 +219,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2619
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1957,7 +1956,7 @@ Private Sub Label4_Click()
 
     ' Desactivo controles de hechizo
     hlst.Visible = False
-    cmdINFO.Visible = False
+    cmdInfo.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = False
@@ -1972,7 +1971,7 @@ Private Sub Label7_Click()
     
     ' Activo controles de hechizos
     hlst.Visible = True
-    cmdINFO.Visible = True
+    cmdInfo.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True
@@ -2035,7 +2034,7 @@ Private Sub SendTxt_Change()
 '3/06/2006: Maraxus - impedí se inserten caractéres no imprimibles
 '**************************************************************
     If Len(SendTxt.Text) > 160 Then
-        stxtbuffer = "Soy un cheater, avisenle a un gm"
+        stxtbuffer = JsonLanguage.Item("MENSAJE_SOY_CHEATER").Item("TEXTO")
     Else
         'Make sure only valid chars are inserted (with Shift + Insert they can paste illegal chars)
         Dim i As Long

@@ -265,7 +265,7 @@ On Local Error GoTo ErrHandler
         
         'Check the file for validity
         If LOF(ResourceFile) <> FileHead.lngFileSize Then
-            MsgBox "Archivo de recursos dañado. " & ResourceFilePath, , "Error"
+            MsgBox "Archivo de recursos dañado. " & ResourceFilePath, , JsonLanguage.Item("Error").Item("TEXTO")
             Close ResourceFile
             Exit Function
         End If
@@ -281,7 +281,7 @@ Exit Function
 ErrHandler:
     Close ResourceFile
     
-    Call MsgBox("Error al intentar leer el archivo " & ResourceFilePath & ". Razón: " & Err.number & " : " & Err.Description, vbOKOnly, "Error")
+    Call MsgBox("Error al intentar leer el archivo " & ResourceFilePath & ". Razón: " & Err.number & " : " & Err.Description, vbOKOnly, JsonLanguage.Item("Error").Item("TEXTO"))
 End Function
 
 ''
@@ -457,15 +457,15 @@ On Local Error GoTo ErrHandler
     
     If FileHead.lngNumFiles = 0 Then
         'If GraficosPNG = False Then ' GSZAO
-            MsgBox "No se encontraron archivos de extensión " & BMP_SOURCE_FILE_EXT & " en " & SourcePath & ".", , "Error"
+            MsgBox "No se encontraron archivos de extensión " & BMP_SOURCE_FILE_EXT & " en " & SourcePath & ".", , JsonLanguage.Item("Error").Item("TEXTO")
         'Else
-        '    MsgBox "No se encontraron archivos de extensión " & PNG_SOURCE_FILE_EXT & " en " & SourcePath & ".", , "Error"
+        '    MsgBox "No se encontraron archivos de extensión " & PNG_SOURCE_FILE_EXT & " en " & SourcePath & ".", , JsonLanguage.Item("Error").Item("TEXTO")
         'End If
         Exit Function
     End If
     
     If Not prgBar Is Nothing Then
-        prgBar.Value = 0
+        prgBar.value = 0
         prgBar.Max = FileHead.lngNumFiles + 1
     End If
     
@@ -520,7 +520,7 @@ On Local Error GoTo ErrHandler
             Close SourceFile
         
             'Update progress bar
-            If Not prgBar Is Nothing Then prgBar.Value = prgBar.Value + 1
+            If Not prgBar Is Nothing Then prgBar.value = prgBar.value + 1
             DoEvents
         Next LoopC
         
@@ -543,7 +543,7 @@ ErrHandler:
     Erase InfoHead
     Close OutputFile
     
-    Call MsgBox("No se pudo crear el archivo binario. Razón: " & Err.number & " : " & Err.Description, vbOKOnly, "Error")
+    Call MsgBox("No se pudo crear el archivo binario. Razón: " & Err.number & " : " & Err.Description, vbOKOnly, JsonLanguage.Item("Error").Item("TEXTO"))
 End Function
 
 ''
@@ -622,7 +622,7 @@ On Local Error GoTo ErrHandler
 Exit Function
 
 ErrHandler:
-    Call MsgBox("Error al intentar decodificar recursos. Razón: " & Err.number & " : " & Err.Description, vbOKOnly, "Error")
+    Call MsgBox("Error al intentar decodificar recursos. Razón: " & Err.number & " : " & Err.Description, vbOKOnly, JsonLanguage.Item("Error").Item("TEXTO"))
 End Function
 
 ''
@@ -664,7 +664,7 @@ On Local Error GoTo ErrHandler
     
         'Check the file for validity
         If LOF(ResourceFile) <> FileHead.lngFileSize Then
-            Call MsgBox("Archivo de recursos dañado. " & ResourceFilePath, , "Error")
+            Call MsgBox("Archivo de recursos dañado. " & ResourceFilePath, , JsonLanguage.Item("Error").Item("TEXTO"))
             Close ResourceFile
             Exit Function
         End If
@@ -684,14 +684,14 @@ On Local Error GoTo ErrHandler
         If RequiredSpace >= General_Drive_Get_Free_Bytes(Left$(App.path, 3)) Then
             Erase InfoHead
             Close ResourceFile
-            Call MsgBox("No hay suficiente espacio en el disco para extraer los archivos.", , "Error")
+            Call MsgBox("No hay suficiente espacio en el disco para extraer los archivos.", , JsonLanguage.Item("Error").Item("TEXTO"))
             Exit Function
         End If
     Close ResourceFile
     
     'Update progress bar
     If Not prgBar Is Nothing Then
-        prgBar.Value = 0
+        prgBar.value = 0
         prgBar.Max = FileHead.lngNumFiles + 1
     End If
     
@@ -715,12 +715,12 @@ On Local Error GoTo ErrHandler
             Erase SourceData
             Erase InfoHead
             
-            Call MsgBox("No se pudo extraer el archivo " & InfoHead(LoopC).strFileName, vbOKOnly, "Error")
+            Call MsgBox("No se pudo extraer el archivo " & InfoHead(LoopC).strFileName, vbOKOnly, JsonLanguage.Item("Error").Item("TEXTO"))
             Exit Function
         End If
             
         'Update progress bar
-        If Not prgBar Is Nothing Then prgBar.Value = prgBar.Value + 1
+        If Not prgBar Is Nothing Then prgBar.value = prgBar.value + 1
         DoEvents
     Next LoopC
     
@@ -733,7 +733,7 @@ ErrHandler:
     Erase SourceData
     Erase InfoHead
     
-    Call MsgBox("No se pudo extraer el archivo binario correctamente. Razón: " & Err.number & " : " & Err.Description, vbOKOnly, "Error")
+    Call MsgBox("No se pudo extraer el archivo binario correctamente. Razón: " & Err.number & " : " & Err.Description, vbOKOnly, JsonLanguage.Item("Error").Item("TEXTO"))
 End Function
 
 ''
@@ -967,7 +967,7 @@ On Local Error GoTo ErrHandler
         Get OldResourceFile, 1, OldFileHead
         'Check the file for validity
         If LOF(OldResourceFile) <> OldFileHead.lngFileSize Then
-            Call MsgBox("Archivo de recursos anterior dañado. " & OldResourceFilePath, , "Error")
+            Call MsgBox("Archivo de recursos anterior dañado. " & OldResourceFilePath, , JsonLanguage.Item("Error").Item("TEXTO"))
             Close OldResourceFile
             Exit Function
         End If
@@ -980,7 +980,7 @@ On Local Error GoTo ErrHandler
             Get NewResourceFile, 1, NewFileHead
             'Check the file for validity
             If LOF(NewResourceFile) <> NewFileHead.lngFileSize Then
-                Call MsgBox("Archivo de recursos anterior dañado. " & NewResourceFilePath, , "Error")
+                Call MsgBox("Archivo de recursos anterior dañado. " & NewResourceFilePath, , JsonLanguage.Item("Error").Item("TEXTO"))
                 Close NewResourceFile
                 Close OldResourceFile
                 Exit Function
@@ -994,7 +994,7 @@ On Local Error GoTo ErrHandler
             Open OutputFilePath For Binary Access Read Write As OutputFile
                 
                 If Not prgBar Is Nothing Then
-                    prgBar.Value = 0
+                    prgBar.value = 0
                     prgBar.Max = (OldFileHead.lngNumFiles + NewFileHead.lngNumFiles) + 1
                 End If
                 
@@ -1008,7 +1008,7 @@ On Local Error GoTo ErrHandler
                   And ReadNext_InfoHead(NewResourceFile, NewFileHead, NewInfoHead, NewReadFiles) Then
                     
                     'Update
-                    prgBar.Value = prgBar.Value + 2
+                    prgBar.value = prgBar.value + 2
                     
                     Do 'Main loop
                         'Comparisons are between encrypted names, for ordering issues
@@ -1045,7 +1045,7 @@ On Local Error GoTo ErrHandler
                             End If
                             
                             'Update
-                            If Not prgBar Is Nothing Then prgBar.Value = prgBar.Value + 2
+                            If Not prgBar Is Nothing Then prgBar.value = prgBar.value + 2
                         
                         ElseIf OldInfoHead.strFileName < NewInfoHead.strFileName Then
                             
@@ -1062,7 +1062,7 @@ On Local Error GoTo ErrHandler
                             End If
                             
                             'Update
-                            If Not prgBar Is Nothing Then prgBar.Value = prgBar.Value + 1
+                            If Not prgBar Is Nothing Then prgBar.value = prgBar.value + 1
                         
                         Else
                             
@@ -1085,7 +1085,7 @@ On Local Error GoTo ErrHandler
                             End If
                             
                             'Update
-                            If Not prgBar Is Nothing Then prgBar.Value = prgBar.Value + 1
+                            If Not prgBar Is Nothing Then prgBar.value = prgBar.value + 1
                         End If
                         
                         DoEvents
@@ -1105,7 +1105,7 @@ On Local Error GoTo ErrHandler
                     Put OutputFile, , OldInfoHead
                     
                     'Update
-                    If Not prgBar Is Nothing Then prgBar.Value = prgBar.Value + 1
+                    If Not prgBar Is Nothing Then prgBar.value = prgBar.value + 1
                     DoEvents
                 Wend
                 
@@ -1122,7 +1122,7 @@ On Local Error GoTo ErrHandler
                     Put OutputFile, , data
                     
                     'Update
-                    If Not prgBar Is Nothing Then prgBar.Value = prgBar.Value + 1
+                    If Not prgBar Is Nothing Then prgBar.value = prgBar.value + 1
                     DoEvents
                 Wend
             
@@ -1143,7 +1143,7 @@ ErrHandler:
     Close NewResourceFile
     Close OldResourceFile
     
-    Call MsgBox("No se pudo terminar de crear el parche. Razón: " & Err.number & " : " & Err.Description, vbOKOnly, "Error")
+    Call MsgBox("No se pudo terminar de crear el parche. Razón: " & Err.number & " : " & Err.Description, vbOKOnly, JsonLanguage.Item("Error").Item("TEXTO"))
 End Function
 
 ''
@@ -1200,7 +1200,7 @@ On Local Error GoTo ErrHandler
         Get ResourceFile, , FileHead
         'Check the file for validity
         If LOF(ResourceFile) <> FileHead.lngFileSize Then
-            Call MsgBox("Archivo de recursos anterior dañado. " & ResourceFilePath, , "Error")
+            Call MsgBox("Archivo de recursos anterior dañado. " & ResourceFilePath, , JsonLanguage.Item("Error").Item("TEXTO"))
             Close ResourceFile
             Exit Function
         End If
@@ -1214,7 +1214,7 @@ On Local Error GoTo ErrHandler
             
             'Check the file version
             If OldResourceVersion <> FileHead.lngFileVersion Then
-                Call MsgBox("Incongruencia en versiones.", , "Error")
+                Call MsgBox("Incongruencia en versiones.", , JsonLanguage.Item("Error").Item("TEXTO"))
                 Close ResourceFile
                 Close PatchFile
                 Exit Function
@@ -1234,7 +1234,7 @@ On Local Error GoTo ErrHandler
                 Put OutputFile, , PatchFileHead
   
                 If Not prgBar Is Nothing Then
-                    prgBar.Value = 0
+                    prgBar.value = 0
                     prgBar.Max = PatchFileHead.lngNumFiles + 1
                 End If
                 
@@ -1266,7 +1266,7 @@ On Local Error GoTo ErrHandler
                             'Update
                             DataOutputPos = DataOutputPos + UBound(data) + 1
                             WrittenFiles = WrittenFiles + 1
-                            If Not prgBar Is Nothing Then prgBar.Value = WrittenFiles
+                            If Not prgBar Is Nothing Then prgBar.value = WrittenFiles
                         Else
                             Exit Do
                         End If
@@ -1299,7 +1299,7 @@ On Local Error GoTo ErrHandler
                                 'Update
                                 DataOutputPos = DataOutputPos + UBound(data) + 1
                                 WrittenFiles = WrittenFiles + 1
-                                If Not prgBar Is Nothing Then prgBar.Value = WrittenFiles
+                                If Not prgBar Is Nothing Then prgBar.value = WrittenFiles
                             Else
                                 Err.Description = "Incongruencia en archivos de recurso"
                                 GoTo ErrHandler
@@ -1321,7 +1321,7 @@ On Local Error GoTo ErrHandler
                                 'Update
                                 DataOutputPos = DataOutputPos + UBound(data) + 1
                                 WrittenFiles = WrittenFiles + 1
-                                If Not prgBar Is Nothing Then prgBar.Value = WrittenFiles
+                                If Not prgBar Is Nothing Then prgBar.value = WrittenFiles
                             Else
                                 Err.Description = "Incongruencia en archivos de recurso"
                                 GoTo ErrHandler
@@ -1345,7 +1345,7 @@ On Local Error GoTo ErrHandler
                     'Update
                     DataOutputPos = DataOutputPos + UBound(data) + 1
                     WrittenFiles = WrittenFiles + 1
-                    If Not prgBar Is Nothing Then prgBar.Value = WrittenFiles
+                    If Not prgBar Is Nothing Then prgBar.value = WrittenFiles
                     DoEvents
                 Wend
             
@@ -1380,7 +1380,7 @@ ErrHandler:
     'Destroy file if created
     If FileExist(OutputFilePath, vbNormal) Then Call Kill(OutputFilePath)
     
-    Call MsgBox("No se pudo parchear. Razón: " & Err.number & " : " & Err.Description, vbOKOnly, "Error")
+    Call MsgBox("No se pudo parchear. Razón: " & Err.number & " : " & Err.Description, vbOKOnly, JsonLanguage.Item("Error").Item("TEXTO"))
 End Function
 
 Private Function AlignScan(ByVal inWidth As Long, ByVal inDepth As Integer) As Long

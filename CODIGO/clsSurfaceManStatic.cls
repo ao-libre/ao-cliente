@@ -85,13 +85,13 @@ Private Sub Class_Terminate()
 'Clean up
 '**************************************************************
     Dim i As Long
-    Dim J As Long
+    Dim j As Long
     
     'Destroy every surface in memory
     For i = 0 To HASH_TABLE_SIZE - 1
-        For J = 1 To surfaceList(i).sufraceCount
-            Set surfaceList(i).SurfaceEntry(J).Surface = Nothing
-        Next J
+        For j = 1 To surfaceList(i).sufraceCount
+            Set surfaceList(i).SurfaceEntry(j).Surface = Nothing
+        Next j
         
         'Destroy the array
         Erase surfaceList(i).SurfaceEntry
@@ -129,14 +129,14 @@ On Error GoTo ErrHandler:
     
     'We have a missing resource!
     MsgBox "No se encuentra el recurso " & CStr(fileIndex) & ". Reinstale el juego, " _
-        & "y si el problema persiste contactese con los adminsitradores", vbOKOnly Or vbCritical Or vbExclamation, "Error"
+        & "y si el problema persiste contactese con los adminsitradores", vbOKOnly Or vbCritical Or vbExclamation, JsonLanguage.Item("Error").Item("TEXTO")
     
     End
 Exit Property
 
 ErrHandler:
     MsgBox "Un error inesperado ocurrió a intentar cargar el recurso " & CStr(fileIndex) & ". & vbcrlf" _
-        & "Error: " & CStr(Err.number), vbOKOnly Or vbCritical Or vbExclamation, "Error"
+        & "Error: " & CStr(Err.number), vbOKOnly Or vbCritical Or vbExclamation, JsonLanguage.Item("Error").Item("TEXTO")
     
     End
 End Property

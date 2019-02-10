@@ -300,7 +300,7 @@ Private Sub imgExpulsar_Click()
     Dim fName As String
     fName = GetName
     
-    If fName <> "" Then
+    If LenB(fName) = 0 Then
         Call WritePartyKick(fName)
         Unload Me
         
@@ -355,7 +355,7 @@ Private Sub SendTxt_Change()
 'Last Modify Date: 03/10/2009
 '**************************************************************
     If Len(SendTxt.Text) > 160 Then
-        sPartyChat = "Soy un cheater, avisenle a un gm"
+        sPartyChat = JsonLanguage.Item("MENSAJE_SOY_CHEATER").Item("TEXTO")
     Else
         'Make sure only valid chars are inserted (with Shift + Insert they can paste illegal chars)
         Dim i As Long
