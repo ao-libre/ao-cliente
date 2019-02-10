@@ -665,6 +665,9 @@
 	"MAPA":{
 		"TEXTO":"Mapa"
 	},
+	"ATENCION":{
+		"TEXTO":"Atencion"
+	}
 	"HABILIDADES": {
 		"TEXTO":[
 			"Ocultarse",
@@ -850,6 +853,10 @@
 		"TEXTOS":[
 			"Regresar a la pantalla de inicio",
 			"Salir del Juego"
+		]
+	},
+	"PANEL-GM":{
+		"TEXTO":[
 		]
 	},
 	"CUSTOMKEYS_TECLA_INVALIDA":{
