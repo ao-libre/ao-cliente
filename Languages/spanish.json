@@ -40,10 +40,27 @@
 		]
 	},
 	"MENSAJE_SEGURO_ACTIVADO":{
-		"TEXTO":">>SEGURO ACTIVADO<<"
+		"TEXTO":
+			[
+				">>SEGURO ACTIVADO<<",
+				"Seguro activado."
+			]
 	},
 	"MENSAJE_SEGURO_DESACTIVADO":{
-		"TEXTO":">>SEGURO DESACTIVADO<<"
+		"TEXTO":
+			[
+				">>SEGURO DESACTIVADO<<",
+				"Seguro desactivado."
+			]
+	},
+	"MENSAJE_MACRO_ACTIVADO":{
+		"TEXTO":"Macro de trabajo activado."
+	},
+	"MENSAJE_MACRO_DESACTIVADO":{
+		"TEXTO":"Macro de trabajo desactivado."
+	},
+	"MENSAJE_MACRO_ADVERTENCIA""MENSAJE_MACRO_ADVERTENCIA":{
+		"TEXTO":"No puedes lanzar VAR_LANZADO tan rapido."
 	},
 	"MENSAJE_PIERDE_NOBLEZA":{
 		"TEXTO":"¡¡Has perdido puntaje de nobleza y ganado puntaje de criminalidad!! Si sigues ayudando a criminales te convertirás en uno de ellos y serás perseguido por las tropas de las ciudades.",
@@ -62,7 +79,7 @@
 		]
 	},
 	"MENSAJE_SEGURO_RESU_ON":{
-		"TEXTO":"SEGURO DE RESURRECCIÓN ACTIVADO",
+		"TEXTO":"Seguro de Resurrecion activado",
 		"COLOR":[
 			255,
 			0,
@@ -70,7 +87,7 @@
 		]
 	},
 	"MENSAJE_SEGURO_RESU_OFF":{
-		"TEXTO":"SEGURO DE RESURRECCION DESACTIVADO",
+		"TEXTO":"Seguro de Resurrecion desactivado",
 		"COLOR":[
 			255,
 			0,
@@ -393,7 +410,10 @@
 		]
 	},
 	"MENSAJE_USER_MUERTO":{
-		"TEXTO":"No puedes realizar esta acción estando muerto.",
+		"TEXTO":[
+			"¡¡¡Estas Muerto!!!",
+			"No puedes realizar esta acción estando muerto."
+		}
 		"COLOR":[
 			255,
 			255,
@@ -498,8 +518,56 @@
 			"Si se intercambian más ítems de los que pueden entrar en tu inventario, es probable que caigan al suelo, así que presta mucha atención a esto."
 		]
 	},
+	"MENSAJE_AUTO_CAST_SPELL":{
+		"TEXTO":"Auto-lanzar hechizos. Utiliza esta habilidad para entrenar unicamente. Para activarlo/desactivarlo utiliza F7.",
+		"COLOR":[
+			255,
+			255,
+			255
+		]
+	},
+	"MENSAJE_INFO_COORDENADAS":{
+		"TEXTO":"Estas coordenadas son tu ubicacion en el mapa. Utiliza la letra L para corregirla si esta no se corresponde con la del servidor por efecto del Lag."
+	},
 	"MENSAJE_SOY_CHEATER":{
 		"TEXTO":"Soy un cheater, avisenle a un gm"
+	},
+	"MENSAJE_CUSTOM_PERSONALIZADO":{
+		"TEXTO":"¡¡ VAR_MENSAJE fue guardado como mensaje personalizado VAR_MENSAJE_NUMERO !!"
+	},
+	"MENSAJE_CUSTOM_INVALIDO":{
+		"TEXTO":"El Mensaje es invalido. Modifiquelo por favor."
+	},
+	"MENSAJE_INFO_HECHIZOS":{
+		"TEXTO":[
+			"INFO. DEL HECHIZO",
+			"Nombre",
+			"Descripcion",
+			"Habilidad requerida",
+			"Mana requerido",
+			"Energia necesaria"
+		]
+	},
+	"ERROR_MAPAS":{
+		"TEXTO":"Error en los mapas, algún archivo ha sido modificado o esta dañado."
+	},
+	"ERROR_CONN_LOST":{
+		"TEXTO":"Error: Se ha perdido la conexion con el servidor."
+	},
+	"ERROR_WINSOCK_TOO-FAST":{
+		"TEXTO":"Por favor espere, intentando completar conexion."
+	},
+	"ERROR_WINSOCK_REFUSED":{
+		"TEXTO":"El servidor se encuentra cerrado o no te has podido conectar correctamente."
+	},
+	"ERROR_WINSOCK_TIME-OUT":{
+		"TEXTO":"El tiempo de espera se ha agotado, intenta nuevamente."
+	},
+	"ERROR":{
+		"TEXTO":"Error"
+	},
+	"COMERCIAR":{
+		"TEXTO":"Comerciar"
 	},
 	"TIEMPO":{
 		"TEXTO":"tiempo"
@@ -534,14 +602,11 @@
 	"HECHO":{
 		"TEXTO":"Hecho"
 	},
+	"NADA":{
+		"TEXTO":"Nada"
+	},
 	"LETRA_Y":{
 		"TEXTO":"y"
-	},
-	"ERROR_MAPAS":{
-		"TEXTO":"Error en los mapas, algún archivo ha sido modificado o esta dañado."
-	},
-	"ERROR_CONN_LOST":{
-		"TEXTO":"Error: Se ha perdido la conexion con el servidor."
 	},
 	"ARMADA":{
 		"TEXTO":"Armada Real"
@@ -566,6 +631,15 @@
 	},
 	"PERSONALIZADA":{
 		"TEXTO":"personalizada"
+	},
+	"ANUNCIO":{
+		"TEXTO":"Anuncio"
+	},
+	"PROYECTILES":{
+		"TEXTO":"proyectiles"
+	},
+	"HECHIZOS":{
+		"TEXTO":"hechizos"
 	},
 	"HABILIDADES": {
 		"TEXTO":[
@@ -629,7 +703,9 @@
 	"VALIDACION_BAD_NOMBRE_PJ":{
 		"TEXTO":[
 			"El nombre del personaje debe tener menos de 30 letras.",
-			"Nombre invalido, se han removido los espacios al final del nombre"
+			"Nombre invalido, se han removido los espacios al final del nombre",
+			"Nombre invalido.",
+			"Nombre demasiado extenso."
 		]
 	},
 	"VALIDACION_RAZA":{
@@ -737,6 +813,13 @@
 			"Llueve",
 			"Recargar Ambiente",
 			"Guardar Ambiente"
+		]
+	},
+	"HERRERO":{
+		"TEXTO":[
+			"Lingotes de Hierro",
+			"Lingotes de Plata",
+			"Lingotes de Oro"
 		]
 	},
 	"CERRAR":{
