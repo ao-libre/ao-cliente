@@ -59,7 +59,7 @@
 	"MENSAJE_MACRO_DESACTIVADO":{
 		"TEXTO":"Macro de trabajo desactivado."
 	},
-	"MENSAJE_MACRO_ADVERTENCIA""MENSAJE_MACRO_ADVERTENCIA":{
+	"MENSAJE_MACRO_ADVERTENCIA":{
 		"TEXTO":"No puedes lanzar VAR_LANZADO tan rapido."
 	},
 	"MENSAJE_PIERDE_NOBLEZA":{
@@ -413,7 +413,7 @@
 		"TEXTO":[
 			"¡¡¡Estas Muerto!!!",
 			"No puedes realizar esta acción estando muerto."
-		}
+		],
 		"COLOR":[
 			255,
 			255,
@@ -564,7 +564,7 @@
 		"TEXTO":"El tiempo de espera se ha agotado, intenta nuevamente."
 	},
 	"ERROR_PERSONAJE_NO_SELECCIONADO":{
-		"TEXTO":"No has seleccionado un personaje.
+		"TEXTO":"No has seleccionado un personaje."
 	},
 	"ERROR_DEMASIADOS_PJS":{
 		"TEXTO":"No puedes crear mas de 10 personajes."
@@ -713,7 +713,7 @@
 		"DESCRIPCION":"- Es la habilidad de interponer correctamente el escudo ante cada embate enemigo para evitar ser impactado sin perder el equilibrio y poder responder rápidamente con la otra mano.\n- Indica las probabilidades de bloquear un impacto con el escudo."
 	},
 	"PESCA":{
-		"TEXTO":"Pesca"{
+		"TEXTO":"Pesca",
 		"DESCRIPCION":"- Es el conjunto de conocimientos básicos para poder armar un señuelo, poner la carnada en el anzuelo y saber dónde buscar peces.\n- Indica la probabilidad de tener éxito en cada intento de pescar."
 	},
 	"MINERIA":{
@@ -894,7 +894,6 @@
 	"AYUDA_CREARPJ_ALINEACION":{
 		"TEXTO":"Indica si el personaje seguirá la senda del mal o del bien. (Actualmente deshabilitado)"
 	},
-	"AYUDA_SKILLS_"
 	"AMBIENT-EDITOR":{
 		"TEXTOS":[
 			"Editor de Ambientes",
