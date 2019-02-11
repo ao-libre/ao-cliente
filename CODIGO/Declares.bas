@@ -312,60 +312,23 @@ Enum eGenero
 End Enum
 
 Public Enum PlayerType
-
     User = &H1
-    Consejero = &H2
-    SemiDios = &H4
-    Dios = &H8
-    Admin = &H10
     RoleMaster = &H20
     ChaosCouncil = &H40
     RoyalCouncil = &H80
-
 End Enum
 
 Public Enum eObjType
-
-    otUseOnce = 1
     otWeapon = 2
     otArmadura = 3
-    otArboles = 4
-    otGuita = 5
-    otPuertas = 6
-    otContenedores = 7
-    otCarteles = 8
-    otLlaves = 9
-    otForos = 10
-    otPociones = 11
-    otBebidas = 13
     otLeña = 14
-    otFogata = 15
     otescudo = 16
     otcasco = 17
-    otAnillo = 18
-    otTeleport = 19
-    otYacimiento = 22
-    otMinerales = 23
-    otPergaminos = 24
-    otInstrumentos = 26
-    otYunque = 27
-    otFragua = 28
-    otBarcos = 31
     otFlechas = 32
-    otBotellaVacia = 33
-    otBotellaLlena = 34
-    otManchas = 35          'No se usa
-    otArbolElfico = 36
-    otMochilas = 37
-    otCualquiera = 1000
-
 End Enum
 
 Public Enum eMochilas
-
-    Mediana = 1
     GRANDE = 2
-
 End Enum
 
 Public MaxInventorySlots As Byte
@@ -374,11 +337,8 @@ Public Const FundirMetal As Integer = 88
 
 ' Determina el color del nick
 Public Enum eNickColor
-
     ieCriminal = &H1
-    ieCiudadano = &H2
     ieAtacable = &H4
-
 End Enum
 
 Public Enum eGMCommands
@@ -875,14 +835,7 @@ Public Enum FxMeditar
 End Enum
 
 Public Enum eClanType
-
-    ct_RoyalArmy
-    ct_Evil
-    ct_Neutral
     ct_GM
-    ct_Legal
-    ct_Criminal
-
 End Enum
 
 Public Enum eEditOptions
@@ -919,15 +872,7 @@ End Enum
 ' @param ZONAPELEA al pelear en este trigger no se caen las cosas y no cambia el estado de ciuda o crimi
 '
 Public Enum eTrigger
-
-    NADA = 0
     BAJOTECHO = 1
-    trigger_2 = 2
-    POSINVALIDA = 3
-    ZONASEGURA = 4
-    ANTIPIQUETE = 5
-    ZONAPELEA = 6
-
 End Enum
 
 'Server stuff
@@ -1022,11 +967,8 @@ End Enum
 
 ' Indica los privilegios para visualizar los diferentes foros
 Public Enum eForumVisibility
-
-    ieGENERAL_MEMBER = &H1
     ieREAL_MEMBER = &H2
     ieCAOS_MEMBER = &H4
-
 End Enum
 
 ' Indica el tipo de foro
@@ -1101,10 +1043,7 @@ Public Const MADERA_ELFICA_GRH As Integer = 1999
 Public picMouseIcon            As Picture
 
 Public Enum eMoveType
-
     Inventory = 1
-    Bank
-
 End Enum
 
 Public Const MP3_INITIAL_INDEX As Integer = 1000

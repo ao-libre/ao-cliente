@@ -40,47 +40,12 @@ Option Explicit
 ' IJL Declares:
 
 Private Enum IJLERR
-
     '// The following "error" values indicate an "OK" condition.
     IJL_OK = 0
-    IJL_INTERRUPT_OK = 1
-    IJL_ROI_OK = 2
-
-    '// The following "error" values indicate an error has occurred.
-    IJL_EXCEPTION_DETECTED = -1
-    IJL_INVALID_ENCODER = -2
-    IJL_UNSUPPORTED_SUBSAMPLING = -3
-    IJL_UNSUPPORTED_BYTES_PER_PIXEL = -4
-    IJL_MEMORY_ERROR = -5
-    IJL_BAD_HUFFMAN_TABLE = -6
-    IJL_BAD_QUANT_TABLE = -7
-    IJL_INVALID_JPEG_PROPERTIES = -8
-    IJL_ERR_FILECLOSE = -9
-    IJL_INVALID_FILENAME = -10
-    IJL_ERROR_EOF = -11
-    IJL_PROG_NOT_SUPPORTED = -12
-    IJL_ERR_NOT_JPEG = -13
-    IJL_ERR_COMP = -14
-    IJL_ERR_SOF = -15
-    IJL_ERR_DNL = -16
-    IJL_ERR_NO_HUF = -17
-    IJL_ERR_NO_QUAN = -18
-    IJL_ERR_NO_FRAME = -19
-    IJL_ERR_MULT_FRAME = -20
-    IJL_ERR_DATA = -21
-    IJL_ERR_NO_IMAGE = -22
-    IJL_FILE_ERROR = -23
-    IJL_INTERNAL_ERROR = -24
-    IJL_BAD_RST_MARKER = -25
-    IJL_THUMBNAIL_DIB_TOO_SMALL = -26
-    IJL_THUMBNAIL_DIB_WRONG_COLOR = -27
-    IJL_RESERVED = -99
-
 End Enum
 
 Private Enum IJLIOTYPE
 
-    IJL_SETUP = -1&
     ''// Read JPEG parameters (i.e., height, width, channels,
     ''// sampling, etc.) from a JPEG bit stream.
     IJL_JFILE_READPARAMS = 0&
@@ -88,34 +53,9 @@ Private Enum IJLIOTYPE
     ''// Read a JPEG Interchange Format image.
     IJL_JFILE_READWHOLEIMAGE = 2&
     IJL_JBUFF_READWHOLEIMAGE = 3&
-    ''// Read JPEG tables from a JPEG Abbreviated Format bit stream.
-    IJL_JFILE_READHEADER = 4&
-    IJL_JBUFF_READHEADER = 5&
-    ''// Read image info from a JPEG Abbreviated Format bit stream.
-    IJL_JFILE_READENTROPY = 6&
-    IJL_JBUFF_READENTROPY = 7&
     ''// Write an entire JFIF bit stream.
     IJL_JFILE_WRITEWHOLEIMAGE = 8&
     IJL_JBUFF_WRITEWHOLEIMAGE = 9&
-    ''// Write a JPEG Abbreviated Format bit stream.
-    IJL_JFILE_WRITEHEADER = 10&
-    IJL_JBUFF_WRITEHEADER = 11&
-    ''// Write image info to a JPEG Abbreviated Format bit stream.
-    IJL_JFILE_WRITEENTROPY = 12&
-    IJL_JBUFF_WRITEENTROPY = 13&
-    ''// Scaled Decoding Options:
-    ''// Reads a JPEG image scaled to 1/2 size.
-    IJL_JFILE_READONEHALF = 14&
-    IJL_JBUFF_READONEHALF = 15&
-    ''// Reads a JPEG image scaled to 1/4 size.
-    IJL_JFILE_READONEQUARTER = 16&
-    IJL_JBUFF_READONEQUARTER = 17&
-    ''// Reads a JPEG image scaled to 1/8 size.
-    IJL_JFILE_READONEEIGHTH = 18&
-    IJL_JBUFF_READONEEIGHTH = 19&
-    ''// Reads an embedded thumbnail from a JFIF bit stream.
-    IJL_JFILE_READTHUMBNAIL = 20&
-    IJL_JBUFF_READTHUMBNAIL = 21&
 
 End Enum
 
