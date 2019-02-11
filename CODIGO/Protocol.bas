@@ -302,6 +302,7 @@ Private Enum ClientPacketID
     moveItem = 129
     LoginExistingAccount = 130
     LoginNewAccount = 131
+    CentinelReport = 132         '/CENTINELA
 End Enum
 
 Public Enum FontTypeNames
@@ -7204,6 +7205,25 @@ Public Sub WritePartyMessage(ByVal Message As String)
     End With
 End Sub
 
+''
+' Writes the "CentinelReport" message to the outgoing data buffer.
+'
+' @param    number The number to report to the centinel.
+' @remarks  The data is not actually sent until the buffer is properly flushed.
+
+Public Sub WriteCentinelReport(ByVal Clave As String)
+'***************************************************
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Last Modification: 02/05/2012
+'                   Nuevo centinela : maTih.-
+'Writes the "CentinelReport" message to the outgoing data buffer
+'***************************************************
+    With outgoingData
+        Call .WriteByte(ClientPacketID.CentinelReport)
+        
+        Call .WriteASCIIString(Clave)
+    End With
+End Sub
 
 ''
 ' Writes the "GuildOnline" message to the outgoing data buffer.
@@ -9618,6 +9638,20 @@ Public Sub WriteAlterName(ByVal UserName As String, ByVal newName As String)
     End With
 End Sub
 
+''
+' Writes the "ToggleCentinelActivated" message to the outgoing data buffer.
+'
+' @remarks  The data is not actually sent until the buffer is properly flushed.
+
+Public Sub WriteToggleCentinelActivated()
+'***************************************************
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Last Modification: 05/17/06
+'Writes the "ToggleCentinelActivated" message to the outgoing data buffer
+'***************************************************
+    Call outgoingData.WriteByte(ClientPacketID.GMCommands)
+    Call outgoingData.WriteByte(eGMCommands.ToggleCentinelActivated)
+End Sub
 
 ''
 ' Writes the "DoBackup" message to the outgoing data buffer.

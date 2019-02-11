@@ -327,6 +327,14 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     'Avisar que falta el parametro
                     Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_INPUT_MSJ").Item("TEXTO"))
                 End If
+
+            Case "/CENTINELA"
+                If notNullArguments Then
+                   Call WriteCentinelReport(ArgumentosRaw)
+                Else
+                    'Avisar que falta el parametro
+                    Call ShowConsoleMsg("Faltan parámetros. Utilice /centinela X, siendo X el código de verificación.")
+                End If
         
             Case "/ONLINECLAN"
                 Call WriteGuildOnline
@@ -1418,7 +1426,9 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     'Avisar que falta el parametro
                     Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /slot NICK@SLOT.")
                 End If
-                
+
+            Case "/CENTINELAACTIVADO"
+                Call WriteToggleCentinelActivated      
                 
             Case "/CREARPRETORIANOS"
             
