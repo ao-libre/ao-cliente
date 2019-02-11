@@ -1,0 +1,1059 @@
+{
+   "MENSAJE_CRIATURA_FALLA_GOLPE":{
+      "TEXTO":"The creature failed coup!!!",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_CRIATURA_MATADO":{
+      "TEXTO":"The creature killed you!!!",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_RECHAZO_ATAQUE_ESCUDO":{
+      "TEXTO":"You have rejected the attack with the shield!!!",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_USUARIO_RECHAZO_ATAQUE_ESCUDO":{
+      "TEXTO":"The user rejected the attack with his shield!!!",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_FALLADO_GOLPE":{
+      "TEXTO":"You have failed the coup!!!",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_SEGURO_ACTIVADO":{
+      "TEXTO":[
+         ">>SECURITY ENABLED<<",
+         "Insurance activated."
+      ]
+   },
+   "MENSAJE_SEGURO_DESACTIVADO":{
+      "TEXTO":[
+         ">>INSURANCE DISABLED<<",
+         "Insurance off."
+      ]
+   },
+   "MENSAJE_MACRO_ACTIVADO":{
+      "TEXTO":"Macro to work on."
+   },
+   "MENSAJE_MACRO_DESACTIVADO":{
+      "TEXTO":"Macro work off."
+   },
+   "MENSAJE_MACRO_ADVERTENCIA":{
+      "TEXTO":"You can't cast VAR_LANZADO so fast."
+   },
+   "MENSAJE_PIERDE_NOBLEZA":{
+      "TEXTO":"You've lost score of nobility, and earned a score of crime!! If you are still helping criminals, you become one of them and you'll be pursued by the troops of the cities.",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_USAR_MEDITANDO":{
+      "TEXTO":"You're meditating! You must stop and meditate to use objects.",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_SEGURO_RESU_ON":{
+      "TEXTO":"Insurance Resurrecion activated",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_SEGURO_RESU_OFF":{
+      "TEXTO":"Insurance Resurrecion off",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_GOLPE_CABEZA":{
+      "TEXTO":"The creature has hit you in the head ",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_GOLPE_BRAZO_IZQ":{
+      "TEXTO":"The creature has hit the left arm by ",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_GOLPE_BRAZO_DER":{
+      "TEXTO":"The creature has hit the right arm ",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_GOLPE_PIERNA_IZQ":{
+      "TEXTO":"The creature has hit the left leg by ",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_GOLPE_PIERNA_DER":{
+      "TEXTO":"The creature has hit the right leg by ",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_GOLPE_TORSO":{
+      "TEXTO":"The creature has hit in the torso by ",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_GOLPE_CRIATURA_1":{
+      "TEXTO":"You've been glued to the creature "
+   },
+   "MENSAJE_ATAQUE_FALLO":{
+      "TEXTO":" you attacked and failed!!",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_RECIVE_IMPACTO_CABEZA":{
+      "TEXTO":" has hit in the head by ",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ":{
+      "TEXTO":" you have glued the left arm by ",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_RECIVE_IMPACTO_BRAZO_DER":{
+      "TEXTO":" you have pasted the right arm ",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ":{
+      "TEXTO":" you have pasted the left leg by ",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_RECIVE_IMPACTO_PIERNA_DER":{
+      "TEXTO":" you have pasted the right leg by ",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_RECIVE_IMPACTO_TORSO":{
+      "TEXTO":" has hit in the torso by ",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_PRODUCE_IMPACTO_1":{
+      "TEXTO":"Have you glued to ",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_PRODUCE_IMPACTO_CABEZA":{
+      "TEXTO":" in the head by ",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_PRODUCE_IMPACTO_BRAZO_IZQ":{
+      "TEXTO":" in the left arm by ",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_PRODUCE_IMPACTO_BRAZO_DER":{
+      "TEXTO":" in the right arm ",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_PRODUCE_IMPACTO_PIERNA_IZQ":{
+      "TEXTO":" in the left leg by ",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_PRODUCE_IMPACTO_PIERNA_DER":{
+      "TEXTO":" in the right leg by ",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_PRODUCE_IMPACTO_TORSO":{
+      "TEXTO":" in the torso by ",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_TRABAJO_MAGIA":{
+      "TEXTO":"Click on the target...",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_TRABAJO_PESCA":{
+      "TEXTO":"Click on the site where you want to fish...",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_TRABAJO_ROBAR":{
+      "TEXTO":"Click on the victim...",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_TRABAJO_TALAR":{
+      "TEXTO":"Click on the tree...",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_TRABAJO_MINERIA":{
+      "TEXTO":"Click on the site...",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_TRABAJO_FUNDIRMETAL":{
+      "TEXTO":"Click on the forge...",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_TRABAJO_PROYECTILES":{
+      "TEXTO":"Click on the victim...",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_ENTRAR_PARTY_1":{
+      "TEXTO":"If you want to go in a party with ",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_ENTRAR_PARTY_2":{
+      "TEXTO":",}, write \/entrarparty",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_NENE":{
+      "TEXTO":"Number of NPCs: ",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_FRAGSHOOTER_TE_HA_MATADO":{
+      "TEXTO":"you have been killed!",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_FRAGSHOOTER_HAS_MATADO":{
+      "TEXTO":"Have you killed",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_FRAGSHOOTER_HAS_GANADO":{
+      "TEXTO":"You've won ",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA":{
+      "TEXTO":"points of experience.",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_HAS_MATADO_A":{
+      "TEXTO":"Have you killed ",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_HAS_GANADO_EXP":{
+      "TEXTO":"You won VAR_EXP_GANADA experience points.",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_TE_HA_MATADO":{
+      "TEXTO":" you have been killed!",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_HOGAR":{
+      "TEXTO":"You have arrived at your home.",
+      "COLOR":[
+         255,
+         255,
+         255
+      ]
+   },
+   "MENSAJE_HOGAR_CANCEL":{
+      "TEXTO":"You cannot travel while in jail.",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_USER_MUERTO":{
+      "TEXTO":[
+         "You're Dead!!!",
+         "You can't perform this action while dead."
+      ],
+      "COLOR":[
+         255,
+         255,
+         255
+      ]
+   },
+   "NPC_INMUNE":{
+      "TEXTO":"The npc is immune to the spell.",
+      "COLOR":[
+         "Two hundred ten",
+         "Two hundred twenty",
+         "Two hundred twenty"
+      ]
+   },
+   "MENSAJE_DAMAGE_NPC":{
+      "TEXTO":"You've removed VAR_DAÑO points of the creature to life!!",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_ESTAS_A_MAPAS_DE_DURACION_VIAJE":{
+      "TEXTO":"You will find VAR_DISTANCIA_MAPAS maps VAR_MAPA_DESTINO, this trip will last ",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_WORK_FINISHED":{
+      "TEXTO":"You've finished work!",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_NO_COMM_OBJETO":{
+      "TEXTO":"You can't trade this item!",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_PING":{
+      "TEXTO":"The ping is ",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_NO_NOVEDADES":{
+      "TEXTO":"No comments",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_SIN_ORO_SUFICIENTE":{
+      "TEXTO":"You don't have enough gold."
+   },
+   "MENSAJE_SIN_CANTIDAD_SUFICIENTE":{
+      "TEXTO":"You don't have that amount!"
+   },
+   "MENSAJE_NO_SELECCIONASTE_NADA":{
+      "TEXTO":"You don't have any selected item!"
+   },
+   "MENSAJE_COMM_OFERTA_ACEPTA":{
+      "TEXTO":" has confirmed your offer!",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_COMM_OFERTA_CAMBIA":{
+      "TEXTO":" it has revised its offer.",
+      "COLOR":[
+         255,
+         0,
+         0
+      ]
+   },
+   "MENSAJE_COMM_AGREGA":{
+      "TEXTO":"I added VAR_CANTIDAD_AGREGA VAR_QUE_AGREGA to your offer!!"
+   },
+   "MENSAJE_COMM_SACA":{
+      "TEXTO":"Quitaste VAR_CANTIDAD_SACA VAR_QUE_SACA of your offer!!"
+   },
+   "MENSAJE_COMM_OFERTA_COMFIRMADA":{
+      "TEXTO":"You have confirmed your offer! You cannot change it."
+   },
+   "MENSAJE_COMM_INFO":{
+      "TEXTO":[
+         "Once you're done forming your offer, you must press [CONFIRM], after which it can't be changed.",
+         "Then the other user confirm your bid, you'll be able to accept it or reject it. If you refuse, will end the trade.",
+         "When both accept the offer of the other, will be the exchange.",
+         "If swapping more items that can go into your inventory, it is likely to fall to the ground, so pay close attention to this."
+      ]
+   },
+   "MENSAJE_AUTO_CAST_SPELL":{
+      "TEXTO":"Self-cast spells. Use this skill to train only. To activate\/deactivate it using F7.",
+      "COLOR":[
+         255,
+         255,
+         255
+      ]
+   },
+   "MENSAJE_INFO_COORDENADAS":{
+      "TEXTO":"These coordinates are your location on the map. Uses the letter L to correct it if this does not match with the server due to the Lag."
+   },
+   "MENSAJE_SOY_CHEATER":{
+      "TEXTO":"I'm a cheater, avisenle a gm"
+   },
+   "MENSAJE_CUSTOM_PERSONALIZADO":{
+      "TEXTO":" VAR_MENSAJE was saved as a custom message VAR_MENSAJE_NUMERO !!"
+   },
+   "MENSAJE_CUSTOM_INVALIDO":{
+      "TEXTO":"The Message is invalid. Modifiquelo please."
+   },
+   "MENSAJE_INFO_HECHIZOS":{
+      "TEXTO":[
+         "INFO. THE SPELL",
+         "Name",
+         "Description",
+         "Skill required",
+         "Mana required",
+         "Energy needed"
+      ]
+   },
+   "MENSAJE_NO_SALIR":{
+      "TEXTO":[
+         "You can't be paralyzed."
+      ]
+   },
+   "MENSAJE_INPUT_MSJ":{
+      "TEXTO":"Type a message."
+   },
+   "MENSAJE_INPUT_ASK":{
+      "TEXTO":"Type a question."
+   },
+   "MENSAJE_INPUT_BUG":{
+      "TEXTO":"Type a description of the bug."
+   },
+   "MENSAJE_INPUT_COMENTARIO":{
+      "TEXTO":"Type a comment."
+   },
+   "MENSAJE_COMERCIANDO":{
+      "TEXTO":"You are already trading."
+   },
+   "MENSAJE_ENCUESTA":{
+      "TEXTO":"To vote on a option, type \/survey NUMERODEOPCION, for example, to vote for the option 1, type \/survey 1."
+   },
+   "MENSAJE_FALTAN_PARAMETROS":{
+      "TEXTO":"Missing parameters. Use"
+   },
+   "MENSAJE_CANTIDAD_INCORRECTA":{
+      "TEXTO":"Incorrect amount. Use"
+   },
+   "MENSAJE_MAPA_INCORRECTO":{
+      "TEXTO":"Map incorrect. Use"
+   },
+   "MENSAJE_VALOR_INCORRECTO":{
+      "TEXTO":"Incorrect value. Use"
+   },
+   "MENSAJE_TIEMPO_INCORRECTO":{
+      "TEXTO":"Wrong time. Use"
+   },
+   "MENSAJE_FORMATO_INCORRECTO":{
+      "TEXTO":"Incorrect format. Use"
+   },
+   "MENSAJE_COMANDO_INCORRECTO":{
+      "TEXTO":"Command incorrect."
+   },
+   "MENSAJE_MIDI_INCORRECTO":{
+      "TEXTO":"Midi wrong. Use"
+   },
+   "MENSAJE_WAV_INCORRECTO":{
+      "TEXTO":"Wav wrong. Use"
+   },
+   "MENSAJE_NPC_INCORRECTO":{
+      "TEXTO":"NPC wrong. Use"
+   },
+   "MENSAJE_OBJETO_INCORRECTO":{
+      "TEXTO":"Incorrect object. Use"
+   },
+   "MENSAJE_ONCLAN":{
+      "TEXTO":"Use \/onclan name of the clan."
+   },
+   "ERROR_MAPAS":{
+      "TEXTO":"Error in the maps, some file has been modified or is damaged."
+   },
+   "MENSAJE_FUNDAR_CLAN":{
+      "TEXTO":"To found a clan you have to be level 25 and have 90 skills in leadership."
+   },
+   "ERROR_CONN_LOST":{
+      "TEXTO":"Error: has lost the connection with the server."
+   },
+   "ERROR_WINSOCK_TOO-FAST":{
+      "TEXTO":"Please wait, attempting to complete the connection."
+   },
+   "ERROR_WINSOCK_REFUSED":{
+      "TEXTO":"The server is closed or you have not been able to successfully connect."
+   },
+   "ERROR_WINSOCK_TIME-OUT":{
+      "TEXTO":"The wait time has timed out, please try again."
+   },
+   "ERROR_PERSONAJE_NO_SELECCIONADO":{
+      "TEXTO":"You have not selected a character."
+   },
+   "ERROR_DEMASIADOS_PJS":{
+      "TEXTO":"You can't create more than 10 characters."
+   },
+   "ERROR_DIRECTX_INIT":{
+      "TEXTO":"Failed to initialize the graphic engine. Please, check if you have your libraries and your drivers up to date."
+   },
+   "ERROR_DIRECTDEVICE_INIT":{
+      "TEXTO":"Unable to initialize DirectDevice. Please, check if you have your libraries and your drivers up to date."
+   },
+   "ERROR_DESCARGA_SERVIDORES":{
+      "TEXTO":"Failed to download the server list"
+   },
+   "ERROR_DESCARGA_SERVIDORES_INET":{
+      "TEXTO":"Failed to download the server list: Error Inet"
+   },
+   "ERROR_ARCHIVO_CORRUPTO":{
+      "TEXTO":"Resources file corrupted"
+   },
+   "ERROR_LEER_ARCHIVO":{
+      "TEXTO":"Error while attempting to read the file: VAR_ARCHIVO\nReason: VAR_ERROR"
+   },
+   "ERROR_LEER_PARCHE":{
+      "TEXTO":"Not been able to process the patch."
+   },
+   "ERROR_EXTRAER_ARCHIVO":{
+      "TEXTO":"Could not extract the file"
+   },
+   "ERROR_EXTRAER_BINARIO":{
+      "TEXTO":"Could not remove the binary file correctly. Reason: VAR_ERROR"
+   },
+   "ERROR_EXT_NO_ENCONTRADA":{
+      "TEXTO":"No files were found of extension VAR_EXT in VAR_PATH."
+   },
+   "ERROR_CREAR_BINARIO":{
+      "TEXTO":"Failed to create the binary file. Reason: VAR_ERROR"
+   },
+   "ERROR_CREAR_PARCHE":{
+      "TEXTO":"Failed to create the patch. Reason: VAR_ERROR"
+   },
+   "ERROR_DECODE_RECURSOS":{
+      "TEXTO":"Error when try to decode resources. Reason: VAR_ERROR"
+   },
+   "ERROR_SIN_ESPACIO":{
+      "TEXTO":"There is not enough space on the disk to extract the files."
+   },
+   "ERROR_VERSIONES_RECURSOS":{
+      "TEXTO":"His has found an inconsistency in the versions."
+   },
+   "ERROR_404":{
+      "TEXTO":"Could not find the resource"
+   },
+   "ERROR":{
+      "TEXTO":"Error"
+   },
+   "COMERCIAR":{
+      "TEXTO":"Trade"
+   },
+   "TIEMPO":{
+      "TEXTO":"time"
+   },
+   "MINUTOS":{
+      "TEXTO":"minutes"
+   },
+   "SEGUNDOS":{
+      "TEXTO":"seconds"
+   },
+   "MILISEGUNDOS":{
+      "TEXTO":"milliseconds"
+   },
+   "ALGUIEN":{
+      "TEXTO":"someone"
+   },
+   "ABIERTA":{
+      "TEXTO":"open"
+   },
+   "CERRADA":{
+      "TEXTO":"closed"
+   },
+   "USUARIO":{
+      "TEXTO":"User"
+   },
+   "GOLPE":{
+      "TEXTO":"Blow"
+   },
+   "DEFENSA":{
+      "TEXTO":"Defense"
+   },
+   "HECHO":{
+      "TEXTO":"Fact"
+   },
+   "NADA":{
+      "TEXTO":"Nothing"
+   },
+   "LETRA_Y":{
+      "TEXTO":"and"
+   },
+   "ARMADA":{
+      "TEXTO":"Royal Navy"
+   },
+   "LEGION":{
+      "TEXTO":"Legion Dark"
+   },
+   "CIUDADANO":{
+      "TEXTO":"Citizen"
+   },
+   "CRIMINAL":{
+      "TEXTO":"Criminal"
+   },
+   "EN_LINEA":{
+      "TEXTO":"Online"
+   },
+   "DESCONECTADO":{
+      "TEXTO":"Disconnected"
+   },
+   "PREDETERMINADA":{
+      "TEXTO":"default"
+   },
+   "PERSONALIZADA":{
+      "TEXTO":"custom"
+   },
+   "ANUNCIO":{
+      "TEXTO":"Announcement"
+   },
+   "PROYECTILES":{
+      "TEXTO":"projectiles"
+   },
+   "HECHIZOS":{
+      "TEXTO":"spells"
+   },
+   "NOMBRE":{
+      "TEXTO":"Name"
+   },
+   "CLASE":{
+      "TEXTO":"Class"
+   },
+   "RAZA":{
+      "TEXTO":"Race"
+   },
+   "NIVEL":{
+      "TEXTO":"Level"
+   },
+   "ORO":{
+      "TEXTO":"Gold"
+   },
+   "MAPA":{
+      "TEXTO":"Map"
+   },
+   "ATENCION":{
+      "TEXTO":"Attention"
+   },
+   "MAGIA":{
+      "TEXTO":"Magic",
+      "DESCRIPCION":"- Represents the ability of a character to the areas magic.\n- Indicates the variety of spells that is able to master the character."
+   },
+   "ROBAR":{
+      "TEXTO":"Steal",
+      "DESCRIPCION":"- Skills of theft. Never by means of violence.\n- Indicates the probability of success of the character when you try to seize the gold of another, in case of being a Thief, you will also be able to seize items."
+   },
+   "EVASION_DE_COMBATE":{
+      "TEXTO":"Evasion in Combat",
+      "DESCRIPCION":"- Represents the general ability to move in combat between hits enemies without dying or tripping in the attempt.\n- Indicates the possibility of evading a physical injury of the character."
+   },
+   "COMBATE_CON_ARMAS":{
+      "TEXTO":"Combat with Weapons",
+      "DESCRIPCION":"- Represents the ability of the character to use a weapon of melee combat.\n- Indicates the probability of hitting the opponent with melee weapons."
+   },
+   "MEDITAR":{
+      "TEXTO":"Meditate",
+      "DESCRIPCION":"- Represents the character's ability to concentrate for abstrarse within your mind, and revitalize your spiritual strength.\n- Indicates the speed at which the character recovers mana (Only for classes magical)."
+   },
+   "APUNALAR":{
+      "TEXTO":"Stab",
+      "DESCRIPCION":"- Represents the ability to inflict serious harm with short-range weapons.\n- Indicates the possibility of stabbing the enemy in an attack. The Assassin is the only class that doesn't need 10 skills to begin to train this skill."
+   },
+   "OCULTARSE":{
+      "TEXTO":"Hide",
+      "DESCRIPCION":"- The ability of a character to blend in with the environment and avoid be aware of your presence.\n- Indicates the ease with which one can disappear from the view of others, and for how long."
+   },
+   "SUPERVIVENCIA":{
+      "TEXTO":"Survival",
+      "DESCRIPCION":"- Is the set of skills needed to survive outside of the city on the basis of what nature offers.\n- Allows to know the health of the creatures guided solely by their appearance, as well as lighting fires beside which to rest."
+   },
+   "TALAR":{
+      "TEXTO":"Cut",
+      "DESCRIPCION":"- Is the skill in the use of the axe to avoid wasting wood and maximize the effectiveness of every blow given.\n- Indicates the probability of obtaining firewood per hit."
+   },
+   "COMERCIO":{
+      "TEXTO":"Trade",
+      "DESCRIPCION":"- Is the ability to haggle the prices demanded in the purchase and avoid being haggled to sell.\n- Indicates how expensive is shopping in the trade with NPCs."
+   },
+   "DEFENSA_CON_ESCUDOS":{
+      "TEXTO":"Defense with Shields",
+      "DESCRIPCION":"- Is the ability to file correctly the shield against every assault of the enemy to avoid being hit without losing balance and be able to respond quickly with the other hand.\n- Indicates the likelihood of blocking an impact with the shield."
+   },
+   "PESCA":{
+      "TEXTO":"Fishing",
+      "DESCRIPCION":"- Is the set of basic knowledge to be able to put together a decoy, put the bait on the hook and know where to find fish.\n- Indicates the probability of success in each attempt of fishing."
+   },
+   "MINERIA":{
+      "TEXTO":"Mining",
+      "DESCRIPCION":"- Is the set of knowledge about the different minerals, where to get, how they should be extracted and worked.\n- Indicates the probability of success in each attempt to undermine and the ability, or not to convert these minerals into ingots."
+   },
+   "CARPINTERIA":{
+      "TEXTO":"Carpinteria",
+      "DESCRIPCION":"- Is the set of knowledge to learn sawing, sanding, gluing and nailing wood with a good level of completion.\n- Indicates skill in the handling of these tools, the how good is the work of a carpenter."
+   },
+   "HERRERIA":{
+      "TEXTO":"Mining",
+      "DESCRIPCION":"- Is the set of knowledge to know how to process each type of ore to smelt it, shape it, and create alloys.\n- Indicates skill in the handling of these techniques, the how good it is in the craft of the blacksmith."
+   },
+   "LIDERAZGO":{
+      "TEXTO":"Leadership",
+      "DESCRIPCION":"- Is the ability of the character to convince others to follow him in battle.\n- Allows you to create clans and groups."
+   },
+   "DOMAR_ANIMALES":{
+      "TEXTO":"Tame Animals",
+      "DESCRIPCION":"- Is the skill in dealing with animals so that these to follow you and help in combat.\n- Indicates the possibility of achieving to tame a creature, and what kinds of creatures you can tame."
+   },
+   "COMBATE_A_DISTANCIA":{
+      "TEXTO":"Ranged combat",
+      "DESCRIPCION":"- Is the management of the long-range weapons.\n- Indicates the probability of success for a hit to an enemy with weapons of this kind."
+   },
+   "COMBATE_CUERPO_A_CUERPO":{
+      "TEXTO":"Melee combat",
+      "DESCRIPCION":"- Is the ability of the character to enter combat without a weapon on any basis except their own arms.\n- Indicates the probability of success for a hit to an enemy while unarmed. The Bandit and Thief have extra skills associated with this skill."
+   },
+   "NAVEGACION":{
+      "TEXTO":"Navigation",
+      "DESCRIPCION":"- Is the ability to control ships at sea without shipwreck.\n- Indicates which class of ships you can use."
+   },
+   "AYUDA_NO_USAR_HABILIDAD":{
+      "TEXTO":"* Ability disabled for your class."
+   },
+   "ACTUALIZAR_CLIENTE":{
+      "TEXTO":"Your version is not current, do you Want to run the updater?."
+   },
+   "OTRO_CLIENTE_ABIERTO":{
+      "TEXTO":"Argentum Online is already running! It is not possible to run another instance of the game. Click Ok to exit."
+   },
+   "BUSCA_SERVIDORES":{
+      "TEXTO":"Looking for servers..."
+   },
+   "INICIA_CONSTANTES":{
+      "TEXTO":"Starting constant..."
+   },
+   "INICIA_MOTOR_GRAFICO":{
+      "TEXTO":"Starting engine graphic..."
+   },
+   "INICIA_FXS":{
+      "TEXTO":"Creating animations extra..."
+   },
+   "INICIA_SONIDO":{
+      "TEXTO":"Starting Up DirectSound..."
+   },
+   "INICIA_CLASES":{
+      "TEXTO":"Instantiating classes..."
+   },
+   "BIENVENIDO":{
+      "TEXTO":"Welcome to Argentum Online!"
+   },
+   "PANTALLA_COMPLETA":{
+      "TEXTO":"You want to play in full screen?"
+   },
+   "VALIDACION_EMAIL":{
+      "TEXTO":"Enter an e-mail."
+   },
+   "VALIDACION_BAD_EMAIL":{
+      "TEXTO":[
+         "E-mail address invalid.",
+         "The email address must be less than 30 letters."
+      ]
+   },
+   "VALIDACION_PASSWORD":{
+      "TEXTO":"Please enter a password."
+   },
+   "VALIDACION_BAD_PASSWORD":{
+      "TEXTO":[
+         "The passwords do not match.",
+         "Password overrides. The character VAR_CHAR_INVALIDO is not allowed."
+      ]
+   },
+   "VALIDACION_NOMBRE_PJ":{
+      "TEXTO":"Enter the name of your new character."
+   },
+   "VALIDACION_BAD_NOMBRE_PJ":{
+      "TEXTO":[
+         "The name of the character must be under 30 letters.",
+         "Invalid name invalid, have been removed the spaces at the end of the name",
+         "Invalid name invalid.",
+         "Name is too long.",
+         "Name invalid.The character VAR_CHAR_INVALIDO is not allowed."
+      ]
+   },
+   "VALIDACION_RAZA":{
+      "TEXTO":"Select the race of the character."
+   },
+   "VALIDACION_SEXO":{
+      "TEXTO":"Select the gender of the character."
+   },
+   "VALIDACION_CLASE":{
+      "TEXTO":"Select the class of the character."
+   },
+   "VALIDACION_HOGAR":{
+      "TEXTO":"Select the home's character."
+   },
+   "VALIDACION_HASH":{
+      "TEXTO":"An error has occurred in the beginning of session, please try again."
+   },
+   "VALIDACION_ATRIBUTOS":{
+      "TEXTO":"The character attributes are invalid."
+   },
+   "AYUDA_CREARPJ_DADOS":{
+      "TEXTO":"By pressing on the Red Sphere, it will change randomly the attributes of your character, this way you can choose the ones you seem to define your character."
+   },
+   "AYUDA_CREARPJ_CORREO":{
+      "TEXTO":"It is extremely important that you enter a valid e-mail address, as in the case of losing the password of your character, will be sent to you when you need it, to that address."
+   },
+   "AYUDA_CREARPJ_NOMBREPJ":{
+      "TEXTO":"Be careful when you select the name of your character. Argentum is a role-playing game, a world that is magical and fantastic, and if seleccionás a name that is obscene or with political connotation, the administrators deleted your character and there will be no possibility to recover it."
+   },
+   "AYUDA_CREARPJ_ATRIBUTOS":{
+      "TEXTO":"Are the qualities that define your character. Usually called the [DICE]. (See Roll)"
+   },
+   "AYUDA_CREARPJ_IED":{
+      "TEXTO":"Are the attributes that you got the chance. Press the red sphere to re-throw them."
+   },
+   "AYUDA_CREARPJ_IEM":{
+      "TEXTO":"Are the modifiers for the race that influence the attributes of your character."
+   },
+   "AYUDA_CREARPJ_IEF":{
+      "TEXTO":"The final attributes of your character, according to the race you chose."
+   },
+   "AYUDA_CREARPJ_FUERZA":{
+      "TEXTO":"It will depend on how potent will be your strokes, both with weapons melee, ranged or unarmed."
+   },
+   "AYUDA_CREARPJ_AGILIDAD":{
+      "TEXTO":"This attribute will be speaking on how good you are, both dodging as hitting bumps, in respect of other characters as well as creatures to the q you'll face."
+   },
+   "AYUDA_CREARPJ_INTELIGENCIA":{
+      "TEXTO":"It will influence directly on how much mana you will gain per level."
+   },
+   "AYUDA_CREARPJ_CARISMA":{
+      "TEXTO":"It will be necessary both for the relationship with the other characters (training groups) as well as with the creatures (tame animals)."
+   },
+   "AYUDA_CREARPJ_CONSTITUCION":{
+      "TEXTO":"Affect the amount of life you gain per level."
+   },
+   "AYUDA_CREARPJ_EVASION":{
+      "TEXTO":"Assesses the ability dodging physical attacks."
+   },
+   "AYUDA_CREARPJ_MAGIA":{
+      "TEXTO":"Score the amount of mana you will have."
+   },
+   "AYUDA_CREARPJ_VIDA":{
+      "TEXTO":"Assesses the amount of health that you may have."
+   },
+   "AYUDA_CREARPJ_ESCUDOS":{
+      "TEXTO":"Estimated the ability to reject shots with shields."
+   },
+   "AYUDA_CREARPJ_ARMAS":{
+      "TEXTO":"Assesses ability in melee combat with weapons."
+   },
+   "AYUDA_CREARPJ_ARCOS":{
+      "TEXTO":"Assesses ability in ranged combat with bows. "
+   },
+   "AYUDA_CREARPJ_HOGAR":{
+      "TEXTO":"Defines the home of your character. However, the character will be born in Nemahuak, the city of rookies."
+   },
+   "AYUDA_CREARPJ_RAZA":{
+      "TEXTO":"Of the race you choose will depend on how you modify the dice you roll out. You can change your race to be able to see how to modify the various attributes."
+   },
+   "AYUDA_CREARPJ_CLASE":{
+      "TEXTO":"The class will have an influence on the main features that have your character, as well as in the spells and items you can use. The stars that you see below will show you what skills are highlighted the same."
+   },
+   "AYUDA_CREARPJ_GENERO":{
+      "TEXTO":"Indicates if the character will be male or female. This influences the items that you can equip."
+   },
+   "AYUDA_CREARPJ_ALINEACION":{
+      "TEXTO":"Indicates if the character will follow the path of evil or of good. (Currently disabled)"
+   },
+   "AMBIENT-EDITOR":{
+      "TEXTOS":[
+         "Editor Environments",
+         "Ambient Light",
+         "Use the Light of the Day",
+         "Use A Light Of Its Own",
+         "Apply",
+         "Lights",
+         "Range: ",
+         "Create Light in Current Position",
+         "Clear Light Current",
+         "Meteo",
+         "Use Fog in the Map",
+         "Degree of Fog",
+         "Snow",
+         "It rains",
+         "Reload Environment",
+         "Save Environment"
+      ]
+   },
+   "HERRERO":{
+      "TEXTO":[
+         "Iron ingots",
+         "Silver bullion",
+         "Gold bullion"
+      ]
+   },
+   "CERRAR":{
+      "TEXTOS":[
+         "Return to the home screen",
+         "Exit the Game"
+      ]
+   },
+   "PANEL-GM":{
+      "TEXTO":[
+
+      ]
+   },
+   "TIP":{
+      "TEXTO":[
+         "Ok",
+         "Show up the next time"
+      ]
+   },
+   "CUSTOMKEYS_TECLA_INVALIDA":{
+      "TEXTO":"There are one or more keys are invalid, please check."
+   },
+   "CUSTOMKEYS_CONFIG_CARGADA":{
+      "TEXTO":"It has loaded the configuration VAR_CONFIG_ELEGIDA VAR_CONFIG_CUSTOM_NUMERO !"
+   }
+}
