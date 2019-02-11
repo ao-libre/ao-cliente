@@ -26,12 +26,9 @@ Private lastPos                     As Long
 Private hFile                       As Long
 
 Private Const INVALID_FILE_HANDLER  As Integer = -1
-Private Const DEFAULT_MAX_SIZE_FILE As Long = 65535
 Private Const BYTE_SIZE             As Byte = 1
-Private Const BOOL_SIZE             As Byte = 2
 Private Const INTEGER_SIZE          As Byte = 2
 Private Const LONG_SIZE             As Byte = 4
-Private Const SINGLE_SIZE           As Byte = 4
 Private Const DOUBLE_SIZE           As Byte = 8
 
 Public Sub initializeReader(ByRef arrayByte() As Byte)

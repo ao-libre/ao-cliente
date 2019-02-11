@@ -123,19 +123,6 @@ Private Declare Function GetObjectAPI _
                 Alias "GetObjectA" (ByVal hObject As Long, _
                                     ByVal nCount As Long, _
                                     lpObject As Any) As Long
-Private Declare Function CreateCompatibleBitmap _
-                Lib "gdi32" (ByVal hdc As Long, _
-                             ByVal nWidth As Long, _
-                             ByVal nHeight As Long) As Long
-
-' Clipboard functions:
-Private Declare Function OpenClipboard Lib "user32" (ByVal hwnd As Long) As Long
-Private Declare Function CloseClipboard Lib "user32" () As Long
-Private Declare Function SetClipboardData _
-                Lib "user32" (ByVal wFormat As Long, _
-                              ByVal hMem As Long) As Long
-Private Declare Function EmptyClipboard Lib "user32" () As Long
-Private Const CF_BITMAP = 2
 
 ' Handle to the current DIBSection:
 Private m_hDIb    As Long

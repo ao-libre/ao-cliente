@@ -45,17 +45,8 @@ Private Enum IJLERR
 End Enum
 
 Private Enum IJLIOTYPE
-
-    ''// Read JPEG parameters (i.e., height, width, channels,
-    ''// sampling, etc.) from a JPEG bit stream.
-    IJL_JFILE_READPARAMS = 0&
-    IJL_JBUFF_READPARAMS = 1&
-    ''// Read a JPEG Interchange Format image.
-    IJL_JFILE_READWHOLEIMAGE = 2&
-    IJL_JBUFF_READWHOLEIMAGE = 3&
     ''// Write an entire JFIF bit stream.
     IJL_JFILE_WRITEWHOLEIMAGE = 8&
-    IJL_JBUFF_WRITEWHOLEIMAGE = 9&
 
 End Enum
 
@@ -115,9 +106,6 @@ Private Declare Sub CopyMemory _
 
 Private Declare Function ijlInit Lib "ijl11.dll" (jcprops As Any) As Long
 Private Declare Function ijlFree Lib "ijl11.dll" (jcprops As Any) As Long
-Private Declare Function ijlRead _
-                Lib "ijl11.dll" (jcprops As Any, _
-                                 ByVal ioType As Long) As Long
 Private Declare Function ijlWrite _
                 Lib "ijl11.dll" (jcprops As Any, _
                                  ByVal ioType As Long) As Long
