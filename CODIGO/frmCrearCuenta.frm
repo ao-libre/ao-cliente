@@ -164,7 +164,7 @@ Private Function IsFormValid() As Boolean
     End If
     
     If Not txtCuentaPassword.Text = txtCuentaRepite.Text Then
-        MsgBox JsonLanguage.Item("VALIDACION_BAD_PASSWORD").Item("TEXTO")
+        MsgBox JsonLanguage.Item("VALIDACION_BAD_PASSWORD").Item("TEXTO").Item(0)
         Exit Function
     End If
     

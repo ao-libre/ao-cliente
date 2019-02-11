@@ -248,27 +248,27 @@ Function CheckUserData() As Boolean
     Dim CharAscii As Integer
 
     If LenB(AccountPassword) = 0 Then
-        MsgBox ("Ingrese un password.")
+        MsgBox JsonLanguage.Item("VALIDACION_PASSWORD").Item("TEXTO")
         Exit Function
     End If
     
-    For LoopC = 1 To Len(AccountPassword)
+    For LoopC = 1 To LenB(AccountPassword)
         CharAscii = Asc(mid$(AccountPassword, LoopC, 1))
         If Not LegalCharacter(CharAscii) Then
-            MsgBox ("Password invalido. El caracter " & Chr$(CharAscii) & " no esta permitido.")
+            MsgBox Replace$(JsonLanguage.Item("VALIDACION_BAD_PASSWORD").Item("TEXTO").Item(1), "VAR_CHAR_INVALIDO", Chr$(CharAscii))
             Exit Function
         End If
     Next LoopC
 
-    If Len(AccountName) > 30 Then
-        MsgBox "El e-mail debe tener menos de 30 letras."
+    If LenB(AccountName) > 30 Then
+        MsgBox JsonLanguage.Item("VALIDACION_BAD_EMAIL").Item("TEXTO").Item(1)
         Exit Function
     End If
     
-    For LoopC = 1 To Len(AccountName)
+    For LoopC = 1 To LenB(AccountName)
         CharAscii = Asc(mid$(AccountName, LoopC, 1))
         If Not LegalCharacter(CharAscii) Then
-            MsgBox ("Nombre invalido. El caracter " & Chr$(CharAscii) & " no esta permitido.")
+            MsgBox Replace$(JsonLanguage.Item("VALIDACION_BAD_PASSWORD").Item("TEXTO").Item(4), "VAR_CHAR_INVALIDO", Chr$(CharAscii))
             Exit Function
         End If
     Next LoopC
@@ -1383,6 +1383,7 @@ Public Sub CloseClient()
     Set MainTimer = Nothing
     Set incomingData = Nothing
     Set outgoingData = Nothing
+    Set JsonLanguage = Nothing
     
     Call UnloadAllForms
     
@@ -1672,8 +1673,8 @@ On Error GoTo error
 
 error:
     Debug.Print Err.number
-    Call MsgBox("Error al descargar la lista de servidores: " & Err.Description, vbCritical + vbOKOnly, "Argentum Online")
+    Call MsgBox(JsonLanguage.Item("ERROR_DESCARGA_SERVIDORES").Item("TEXTO") & ": " & Err.Description, vbCritical + vbOKOnly, "Argentum Online")
     Exit Sub
 errorinet:
-    Call MsgBox("Error al descargar la lista de servidores: Error de Inet " & frmCargando.Inet1.ResponseCode, vbCritical + vbOKOnly, "Argentum Online")
+    Call MsgBox(JsonLanguage.Item("ERROR_DESCARGA_SERVIDORES_INET").Item("TEXTO") & " " & frmCargando.Inet1.ResponseCode, vbCritical + vbOKOnly, "Argentum Online")
 End Sub

@@ -548,8 +548,70 @@
 			"Energia necesaria"
 		]
 	},
+	"MENSAJE_NO_SALIR":{
+		"TEXTO":[
+			"No puedes salir estando paralizado."
+		]
+	},
+	"MENSAJE_INPUT_MSJ":{
+		"TEXTO":"Escriba un mensaje."
+	},
+	"MENSAJE_INPUT_ASK":{
+		"TEXTO":"Escriba una pregunta."
+	},
+	"MENSAJE_INPUT_BUG":{
+		"TEXTO":"Escriba una descripción del bug."
+	},
+	"MENSAJE_INPUT_COMENTARIO":{
+		"TEXTO":"Escriba un comentario."
+	},
+	"MENSAJE_COMERCIANDO":{
+		"TEXTO":"Ya estas comerciando."
+	},
+	"MENSAJE_ENCUESTA":{
+		"TEXTO":"Para votar una opcion, escribe /encuesta NUMERODEOPCION, por ejemplo para votar la opcion 1, escribe /encuesta 1."
+	},
+	"MENSAJE_FALTAN_PARAMETROS":{
+		"TEXTO":"Faltan parámetros. Utilice"
+	},
+	"MENSAJE_CANTIDAD_INCORRECTA":{
+		"TEXTO":"Cantidad incorrecta. Utilice"
+	},
+	"MENSAJE_MAPA_INCORRECTO":{
+		"TEXTO":"Mapa incorrecto. Utilice"
+	},
+	"MENSAJE_VALOR_INCORRECTO":{
+		"TEXTO":"Valor incorrecto. Utilice"
+	},
+	"MENSAJE_TIEMPO_INCORRECTO":{
+		"TEXTO":"Tiempo incorrecto. Utilice"
+	},
+	"MENSAJE_FORMATO_INCORRECTO":{
+		"TEXTO":"Formato incorrecto. Utilice"
+	},
+	"MENSAJE_COMANDO_INCORRECTO":{
+		"TEXTO":"Comando incorrecto."
+	},
+	"MENSAJE_MIDI_INCORRECTO":{
+		"TEXTO":"Midi incorrecto. Utilice"
+	},
+	"MENSAJE_WAV_INCORRECTO":{
+		"TEXTO":"Wav incorrecto. Utilice"
+	},
+	"MENSAJE_NPC_INCORRECTO":{
+		"TEXTO":"NPC incorrecto. Utilice"
+	},
+	"MENSAJE_OBJETO_INCORRECTO":{
+		"TEXTO":"Objeto incorrecto. Utilice"
+	},
+	"MENSAJE_ONCLAN":{
+		"TEXTO":"Utilice /onclan nombre del clan."
+	},
 	"ERROR_MAPAS":{
 		"TEXTO":"Error en los mapas, algún archivo ha sido modificado o esta dañado."
+	},
+	"MENSAJE_FUNDAR_CLAN":{
+		"TEXTO":"Para fundar un clan tenés que ser nivel 25 y tener 90 skills en liderazgo."
 	},
 	"ERROR_CONN_LOST":{
 		"TEXTO":"Error: Se ha perdido la conexion con el servidor."
@@ -568,6 +630,54 @@
 	},
 	"ERROR_DEMASIADOS_PJS":{
 		"TEXTO":"No puedes crear mas de 10 personajes."
+	},
+	"ERROR_DIRECTX_INIT":{
+		"TEXTO":"No se pudo inicializar el motor gráfico. Por favor, verifique si tiene sus librerías y sus controladores actualizados."
+	},
+	"ERROR_DIRECTDEVICE_INIT":{
+		"TEXTO":"No se puede inicializar DirectDevice. Por favor, verifique si tiene sus librerías y sus controladores actualizados."
+	},
+	"ERROR_DESCARGA_SERVIDORES":{
+		"TEXTO":"Error al descargar la lista de servidores"
+	},
+	"ERROR_DESCARGA_SERVIDORES_INET":{
+		"TEXTO":"Error al descargar la lista de servidores: Error de Inet"
+	},
+	"ERROR_ARCHIVO_CORRUPTO":{
+		"TEXTO":"Archivo de recursos dañado"
+	},
+	"ERROR_LEER_ARCHIVO":{
+		"TEXTO":"Error al intentar leer el archivo: VAR_ARCHIVO\nRazón: VAR_ERROR"
+	},
+	"ERROR_LEER_PARCHE":{
+		"TEXTO":"No se ha podido procesar el parche."
+	},
+	"ERROR_EXTRAER_ARCHIVO":{
+		"TEXTO":"No se pudo extraer el archivo"
+	},
+	"ERROR_EXTRAER_BINARIO":{
+		"TEXTO":"No se pudo extraer el archivo binario correctamente. Razón: VAR_ERROR"
+	},
+	"ERROR_EXT_NO_ENCONTRADA":{
+		"TEXTO":"No se encontraron archivos de extensión VAR_EXT en VAR_PATH."
+	},
+	"ERROR_CREAR_BINARIO":{
+		"TEXTO":"No se pudo crear el archivo binario. Razón: VAR_ERROR"
+	},
+	"ERROR_CREAR_PARCHE":{
+		"TEXTO":"No se pudo crear el parche. Razón: VAR_ERROR"
+	},
+	"ERROR_DECODE_RECURSOS":{
+		"TEXTO":"Error al intentar decodificar recursos. Razón: VAR_ERROR"
+	},
+	"ERROR_SIN_ESPACIO":{
+		"TEXTO":"No hay suficiente espacio en el disco para extraer los archivos."
+	},
+	"ERROR_VERSIONES_RECURSOS":{
+		"TEXTO":"Su ha encontrado una incongruencia en las versiones."
+	},
+	"ERROR_404":{
+		"TEXTO":"No se pudo encontrar el recurso"
 	},
 	"ERROR":{
 		"TEXTO":"Error"
@@ -794,7 +904,10 @@
 		"TEXTO":"Ingrese una contraseña."
 	},
 	"VALIDACION_BAD_PASSWORD":{
-		"TEXTO":"Los contraseñas no coinciden."
+		"TEXTO": [
+			"Los contraseñas no coinciden.",
+			"Contraseña invalida. El caracter VAR_CHAR_INVALIDO no esta permitido."
+		]
 	},
 	"VALIDACION_NOMBRE_PJ":{
 		"TEXTO":"Ingresa el nombre de tu nuevo personaje."
@@ -804,7 +917,8 @@
 			"El nombre del personaje debe tener menos de 30 letras.",
 			"Nombre invalido, se han removido los espacios al final del nombre",
 			"Nombre invalido.",
-			"Nombre demasiado extenso."
+			"Nombre demasiado extenso.",
+			"Nombre inválido.El caracter VAR_CHAR_INVALIDO no esta permitido."
 		]
 	},
 	"VALIDACION_RAZA":{

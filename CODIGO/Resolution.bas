@@ -109,7 +109,7 @@ Public Sub SetResolution()
         oldResHeight = Screen.Height \ Screen.TwipsPerPixelY
         
         If oldResWidth <> 800 Or oldResHeight <> 600 Then
-                If MsgBox(JsonLanguage.Item("PANTALLA_COMPLETA").Item("TEXTO"), vbYesNo, "Cambio de Resolucion") = vbYes Then
+                If MsgBox(JsonLanguage.Item("PANTALLA_COMPLETA").Item("TEXTO"), vbYesNo, "Argentum Online") = vbYes Then
                         frmMain.WindowState = vbMaximized
 
                         With MidevM
