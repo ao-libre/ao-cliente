@@ -1409,7 +1409,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
                     If LenB(CustomMessage) <> 0 Then
 
                         ' No se pueden mandar mensajes personalizados de clan o privado!
-                        If UCase(Left(CustomMessage, 5)) <> "/CMSG" And Left(CustomMessage, 1) <> "\" Then
+                        If UCase$(Left$(CustomMessage, 5)) <> "/CMSG" And Left$(CustomMessage, 1) <> "\" Then
                             
                             Call ParseUserCommand(CustomMessage)
 
