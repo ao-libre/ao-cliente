@@ -219,6 +219,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2619
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1599,7 +1600,7 @@ Private Sub SendTxt_KeyDown(KeyCode As Integer, Shift As Integer)
                 MENSAJE_PERSONALIZADO = Replace$(MENSAJE_PERSONALIZADO, "VAR_MENSAJE_NUMERO", NroMsg + 1)
             
             With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                Call ShowConsoleMsg(MENSAJE_CUSTOM_PERSONALIZADO, .Red, .Green, .Blue, .bold, .italic)
+                Call ShowConsoleMsg(MENSAJE_PERSONALIZADO, .Red, .Green, .Blue, .bold, .italic)
             End With
             
         End If
@@ -1804,9 +1805,9 @@ Private Sub MainViewPic_Click()
                         With FontTypes(FontTypeNames.FONTTYPE_TALK)
                             VAR_LANZANDO = JsonLanguage.Item("PROYECTILES").Item("TEXTO")
                             MENSAJE_ADVERTENCIA = JsonLanguage.Item("MENSAJE_MACRO_ADVERTENCIA").Item("TEXTO")
-                            MENSAJE_ADVERTENCIA = Replace$(MENSAJE_ADVERTENCIA, "VAR_LANZADO", VAR_LANZADO)
+                            MENSAJE_ADVERTENCIA = Replace$(MENSAJE_ADVERTENCIA, "VAR_LANZADO", VAR_LANZANDO)
                             
-                            Call AddtoRichTextBox(MENSAJE_ADVERTENCIA, .Red, .Green, .Blue, .bold, .italic)
+                            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_ADVERTENCIA, .Red, .Green, .Blue, .bold, .italic)
                         End With
                         Exit Sub
                     End If
@@ -1819,7 +1820,7 @@ Private Sub MainViewPic_Click()
                             With FontTypes(FontTypeNames.FONTTYPE_TALK)
                                 VAR_LANZANDO = JsonLanguage.Item("PROYECTILES").Item("TEXTO")
                                 MENSAJE_ADVERTENCIA = JsonLanguage.Item("MENSAJE_MACRO_ADVERTENCIA").Item("TEXTO")
-                                MENSAJE_ADVERTENCIA = Replace$(MENSAJE_ADVERTENCIA, "VAR_LANZADO", VAR_LANZADO)
+                                MENSAJE_ADVERTENCIA = Replace$(MENSAJE_ADVERTENCIA, "VAR_LANZADO", VAR_LANZANDO)
                                 
                                 Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_ADVERTENCIA, .Red, .Green, .Blue, .bold, .italic)
                             End With
@@ -1836,7 +1837,7 @@ Private Sub MainViewPic_Click()
                                 With FontTypes(FontTypeNames.FONTTYPE_TALK)
                                     VAR_LANZANDO = JsonLanguage.Item("HECHIZOS").Item("TEXTO")
                                     MENSAJE_ADVERTENCIA = JsonLanguage.Item("MENSAJE_MACRO_ADVERTENCIA").Item("TEXTO")
-                                    MENSAJE_ADVERTENCIA = Replace$(MENSAJE_ADVERTENCIA, "VAR_LANZADO", VAR_LANZADO)
+                                    MENSAJE_ADVERTENCIA = Replace$(MENSAJE_ADVERTENCIA, "VAR_LANZADO", VAR_LANZANDO)
                                     
                                     Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_ADVERTENCIA, .Red, .Green, .Blue, .bold, .italic)
                                 End With
@@ -1849,7 +1850,7 @@ Private Sub MainViewPic_Click()
                                 With FontTypes(FontTypeNames.FONTTYPE_TALK)
                                     VAR_LANZANDO = JsonLanguage.Item("HECHIZOS").Item("TEXTO")
                                     MENSAJE_ADVERTENCIA = JsonLanguage.Item("MENSAJE_MACRO_ADVERTENCIA").Item("TEXTO")
-                                    MENSAJE_ADVERTENCIA = Replace$(MENSAJE_ADVERTENCIA, "VAR_LANZADO", VAR_LANZADO)
+                                    MENSAJE_ADVERTENCIA = Replace$(MENSAJE_ADVERTENCIA, "VAR_LANZADO", VAR_LANZANDO)
                                     
                                     Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_ADVERTENCIA, .Red, .Green, .Blue, .bold, .italic)
                                 End With
@@ -1956,7 +1957,7 @@ Private Sub Label4_Click()
 
     ' Desactivo controles de hechizo
     hlst.Visible = False
-    cmdInfo.Visible = False
+    cmdINFO.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = False
@@ -1971,7 +1972,7 @@ Private Sub Label7_Click()
     
     ' Activo controles de hechizos
     hlst.Visible = True
-    cmdInfo.Visible = True
+    cmdINFO.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True

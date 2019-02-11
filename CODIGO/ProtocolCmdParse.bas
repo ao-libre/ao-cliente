@@ -366,7 +366,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteBugReport(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
-                    Call ShowConsoleMsg(sonLanguage.Item("MENSAJE_INPUT_BUG").Item("TEXTO"))
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_INPUT_BUG").Item("TEXTO"))
                 End If
             
             Case "/DESC"
