@@ -525,6 +525,7 @@ Public Enum eGMCommands
     RecordListRequest
     RecordDetailsRequest
     ExitDestroy
+    ToggleCentinelActivated '/CENTINELAACTIVADO
 End Enum
 
 '

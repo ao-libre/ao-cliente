@@ -2381,4 +2381,3 @@ Private Function InGameArea() As Boolean
     
     InGameArea = True
 End Function
-
