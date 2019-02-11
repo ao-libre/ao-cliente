@@ -1328,7 +1328,7 @@ Private Sub InicializarNombres()
     SkillsNames(eSkill.Domar) = JsonLanguage.Item("HABILIDADES").Item("DOMAR_ANIMALES").Item("TEXTO")
     SkillsNames(eSkill.Proyectiles) = JsonLanguage.Item("HABILIDADES").Item("COMBATE_A_DISTANCIA").Item("TEXTO")
     SkillsNames(eSkill.Wrestling) = JsonLanguage.Item("HABILIDADES").Item("COMBATE_CUERPO_A_CUERPO").Item("TEXTO")
-    SkillsNames(eSkill.Navegacion) = JsonLanguage.Item("HABILIDADES").Item("NAGEGACION").Item("TEXTO")
+    SkillsNames(eSkill.Navegacion) = JsonLanguage.Item("HABILIDADES").Item("NAVEGACION").Item("TEXTO")
 
     AtributosNames(eAtributos.Fuerza) = JsonLanguage.Item("ATRIBUTOS").Item("FUERZA")
     AtributosNames(eAtributos.Agilidad) = JsonLanguage.Item("ATRIBUTOS").Item("AGILIDAD")
