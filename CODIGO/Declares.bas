@@ -321,7 +321,6 @@ End Enum
 Public Enum eObjType
     otWeapon = 2
     otArmadura = 3
-    otLeña = 14
     otescudo = 16
     otcasco = 17
     otFlechas = 32

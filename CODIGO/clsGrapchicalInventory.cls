@@ -57,7 +57,7 @@ Private Inventory()                As Inventory    'User's inventory
 Private WithEvents InventoryWindow As PictureBox    'Placeholder where to render the inventory
 Attribute InventoryWindow.VB_VarHelpID = -1
 
-Public Event dragDone(ByVal originalSlot As Integer, ByVal newSlot As Integer)
+'Public Event dragDone(ByVal originalSlot As Integer, ByVal newSlot As Integer)
 
 #If ConMenuesConextuales = 1 Then
     Dim ItemMenu As Menu    'Menu to be shown as pop up
