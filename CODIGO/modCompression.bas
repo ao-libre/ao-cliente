@@ -98,13 +98,6 @@ Public Type BITMAPINFO
 
 End Type
 
-Private Const BI_RGB       As Long = 0
-Private Const BI_RLE8      As Long = 1
-Private Const BI_RLE4      As Long = 2
-Private Const BI_BITFIELDS As Long = 3
-Private Const BI_JPG       As Long = 4
-Private Const BI_PNG       As Long = 5
-
 'To get free bytes in drive
 Private Declare Function GetDiskFreeSpace _
                 Lib "kernel32" _

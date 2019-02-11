@@ -80,15 +80,11 @@ Public Const SND_CLICK                            As String = "click.Wav"
 Public Const SND_PASOS1                           As String = "23.Wav"
 Public Const SND_PASOS2                           As String = "24.Wav"
 Public Const SND_NAVEGANDO                        As String = "50.wav"
-Public Const SND_OVER                             As String = "click2.Wav"
 Public Const SND_DICE                             As String = "cupdice.Wav"
-Public Const SND_LLUVIAINEND                      As String = "lluviainend.wav"
-Public Const SND_LLUVIAOUTEND                     As String = "lluviaoutend.wav"
 
 ' Head index of the casper. Used to know if a char is killed
 
 ' Constantes de intervalo
-Public Const INT_MACRO_HECHIS                     As Integer = 2788
 Public Const INT_MACRO_TRABAJO                    As Integer = 900
 
 Public Const INT_ATTACK                           As Integer = 1500
@@ -147,9 +143,6 @@ Public Const GNOMO_M_PRIMER_CABEZA                As Integer = 470
 Public Const GNOMO_M_ULTIMA_CABEZA                As Integer = 484
 Public Const GNOMO_M_CUERPO_DESNUDO               As Integer = 260
 
-'Musica
-Public Const MP3_Inicio                           As Byte = 101
-
 Public RawServersList                             As String
 
 Public Type tColor
@@ -195,13 +188,6 @@ Public Const bBrazoDerecho = 4
 Public Const bBrazoIzquierdo = 5
 Public Const bTorso = 6
 
-'Timers de GetTickCount
-Public Const tAt = 2000
-Public Const tUs = 600
-
-Public Const PrimerBodyBarco = 84
-Public Const UltimoBodyBarco = 87
-
 Public NumEscudosAnims                                   As Integer
 
 Public ArmasHerrero()                                    As tItemsConstruibles
@@ -219,7 +205,6 @@ Public UserBancoInventory(1 To MAX_BANCOINVENTORY_SLOTS) As Inventory
 Public TradingUserName                                   As String
 
 Public Tips()                                            As String * 255
-Public Const LoopAdEternum                               As Integer = 999
 
 'Direcciones
 Public Enum E_Heading
@@ -234,7 +219,6 @@ End Enum
 'Objetos
 Public Const MAX_INVENTORY_OBJS         As Integer = 10000
 Public Const MAX_INVENTORY_SLOTS        As Byte = 30
-Public Const MAX_NORMAL_INVENTORY_SLOTS As Byte = 20
 Public Const MAX_NPC_INVENTORY_SLOTS    As Byte = 50
 Public Const MAXHECHI                   As Byte = 35
 
@@ -247,8 +231,6 @@ Public Const MAXATRIBUTOS               As Byte = 38
 
 Public Const FLAGORO                    As Integer = MAX_INVENTORY_SLOTS + 1
 Public Const GOLD_OFFER_SLOT            As Integer = INV_OFFER_SLOTS + 1
-
-Public Const FOgata                     As Integer = 1521
 
 Public Enum eClass
 
@@ -1108,10 +1090,6 @@ Public Const GRH_INI_SM        As Integer = 4978
 
 Public Const ORO_INDEX         As Integer = 12
 Public Const ORO_GRH           As Integer = 511
-
-Public Const GRH_HALF_STAR     As Integer = 5357
-Public Const GRH_FULL_STAR     As Integer = 5358
-Public Const GRH_GLOW_STAR     As Integer = 5359
 
 Public Const LH_GRH            As Integer = 724
 Public Const LP_GRH            As Integer = 725

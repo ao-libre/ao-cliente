@@ -18,7 +18,7 @@ End Type
 Public DX_Count         As Count
 
 'Fuente de Cuenta
-Public Const Count_Font As Byte = 8
+'Public Const Count_Font As Byte = 8
 
 Public Sub RenderCount()
     

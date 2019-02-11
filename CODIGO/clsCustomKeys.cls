@@ -56,10 +56,6 @@ Private Const NUM_CUSTOM_KEYS                                     As Byte = 27
 Private Const NUM_CUSTOM_CONFIGS                                  As Byte = 9
 
 ''
-'Error Raised in case the key file doesn't exist
-Private Const ERROR_NO_KEY_FILE                                   As Long = vbObjectError + 16
-
-''
 'The relative path from the application's location where the key config file is.
 Private Const KEY_CONFIG_FILE                                     As String = "\init\BindKeys.bin"
 
@@ -265,7 +261,6 @@ End Function
 ''
 'Reads custom keys from a file.
 '
-'@remarks   If the custom keys file is not found ERROR_NO_KEY_FILE is raised.
 
 Public Sub LoadCustomKeys()
     '***************************************************

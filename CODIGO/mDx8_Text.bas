@@ -66,7 +66,6 @@ Private Type CustomFont
 
 End Type
 
-Private Const Font_Default_TextureNum As Long = -1   'The texture number used to represent this font - only used for AlternateRendering - keep negative to prevent interfering with game textures
 Private cfonts(1 To 2)                As CustomFont ' _Default2 As CustomFont
 
 Public Function ColorToDX8(ByVal long_color As Long) As Long

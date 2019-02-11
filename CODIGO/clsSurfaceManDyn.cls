@@ -79,10 +79,6 @@ Private ResourcePath                     As String
 
 Private Declare Function GetTickCount Lib "kernel32" () As Long
 
-Private Const DIB_PAL_COLORS As Long = 1
-Private Const DIB_RGB_COLORS As Long = 0
-
-
 Private Sub Class_Initialize()
     '**************************************************************
     'Author: Juan Martín Sotuyo Dodero

@@ -5,14 +5,6 @@ Attribute VB_Name = "JSON"
 
 Option Explicit
 
-Const INVALID_JSON     As Long = 1
-Const INVALID_OBJECT   As Long = 2
-Const INVALID_ARRAY    As Long = 3
-Const INVALID_BOOLEAN  As Long = 4
-Const INVALID_NULL     As Long = 5
-Const INVALID_KEY      As Long = 6
-Const INVALID_RPC_CALL As Long = 7
-
 Private psErrors       As String
 
 Public Function GetParserErrors() As String
