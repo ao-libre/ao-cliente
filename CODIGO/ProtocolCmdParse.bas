@@ -333,7 +333,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                    Call WriteCentinelReport(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
-                    Call ShowConsoleMsg("Faltan parámetros. Utilice /centinela X, siendo X el código de verificación.")
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_CENTINELA").Item("TEXTO"))
                 End If
         
             Case "/ONLINECLAN"
@@ -1428,7 +1428,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 End If
 
             Case "/CENTINELAACTIVADO"
-                Call WriteToggleCentinelActivated      
+                Call WriteToggleCentinelActivated
                 
             Case "/CREARPRETORIANOS"
             

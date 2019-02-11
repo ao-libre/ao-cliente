@@ -553,6 +553,9 @@
 			"No puedes salir estando paralizado."
 		]
 	},
+	"MENSAJE_CENTINELA":{
+		"TEXTO":"Faltan parámetros. Utilice /centinela X, siendo X el código de verificación."
+	},
 	"MENSAJE_INPUT_MSJ":{
 		"TEXTO":"Escriba un mensaje."
 	},

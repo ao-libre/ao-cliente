@@ -551,6 +551,9 @@
          "You can't be paralyzed."
       ]
    },
+   "MENSAJE_CENTINELA":{
+		"TEXTO":"Missing parameters. Use /centinela X, being X the verification code."
+	},
    "MENSAJE_INPUT_MSJ":{
       "TEXTO":"Type a message."
    },
