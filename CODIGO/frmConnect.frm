@@ -685,23 +685,6 @@ Resume Next
     
 End Sub
 
-Private Sub imgLeerMas_Click()
-    
-    On Error GoTo imgLeerMas_Click_Err
-    
-    Call ShellExecute(0, "Open", "http://www.argentumonline.org", "", App.path, SW_SHOWNORMAL)
-
-    
-    Exit Sub
-
-imgLeerMas_Click_Err:
-    If Err.number <> 0 Then
-        LogError Err.number, Err.Description, "frmConnect" & "->" & "imgLeerMas_Click"
-    End If
-Resume Next
-    
-End Sub
-
 Private Sub imgCrearCuenta_Click()
     
     On Error GoTo imgCrearCuenta_Click_Err

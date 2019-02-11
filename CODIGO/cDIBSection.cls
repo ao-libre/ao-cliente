@@ -148,91 +148,6 @@ Private m_lPtr    As Long
 ' Type containing the Bitmap information:
 Private m_tBI     As BITMAPINFO
 
-Public Function CopyToClipboard(Optional ByVal bAsDIB As Boolean = True) As Boolean
-    
-    On Error GoTo CopyToClipboard_Err
-    
-    Dim lhDCDesktop As Long
-    Dim lhDC        As Long
-    Dim lhBmpOld    As Long
-    Dim hObj        As Long
-    Dim lFmt        As Long
-
-    lhDCDesktop = GetDC(GetDesktopWindow())
-
-    If (lhDCDesktop <> 0) Then
-        lhDC = CreateCompatibleDC(lhDCDesktop)
-
-        If (lhDC <> 0) Then
-            If (bAsDIB) Then
-                MsgBox "I don't know how to put a DIB on the clipboard! Copy as bitmap instead!!!"
-                ' Create a duplicate DIBSection and copy
-                ' to the clipboard:
-                'LSet tBI = m_tBI
-                'hDibCopy = CreateDIBSection( _
-                '        lhDC, _
-                '        m_tBI, _
-                '        DIB_RGB_COLORS, _
-                '        lPtr, _
-                '        0, 0)
-                'If (hDibCopy <> 0) Then
-                '    lhBmpOld = SelectObject(lhDC, hObj)
-                '    BitBlt lhDC, 0, 0, Width, Height, m_hDC, 0, 0, vbSrcCopy
-                '    SelectObject lhDC, lhBmpOld
-                '    lFmt = CF_DIB
-                '
-                '     '....
-                                    
-                'Else
-                '    hObj = 0
-                'End If
-            Else
-                ' Create a compatible bitmap and copy to
-                ' the clipboard:
-                hObj = CreateCompatibleBitmap(lhDCDesktop, Width, Height)
-
-                If (hObj <> 0) Then
-                    lhBmpOld = SelectObject(lhDC, hObj)
-                    PaintPicture lhDC
-                    SelectObject lhDC, lhBmpOld
-                    lFmt = CF_BITMAP
-
-                    ' Now set the clipboard to the bitmap:
-                    If (OpenClipboard(0) <> 0) Then
-                        EmptyClipboard
-
-                        If (SetClipboardData(lFmt, hObj) <> 0) Then
-                            CopyToClipboard = True
-
-                        End If
-
-                        CloseClipboard
-
-                    End If
-
-                End If
-
-            End If
-
-            DeleteDC lhDC
-
-        End If
-
-        DeleteDC lhDCDesktop
-
-    End If
-
-    
-    Exit Function
-
-CopyToClipboard_Err:
-    If Err.number <> 0 Then
-        LogError Err.number, Err.Description, "cDIBSection" & "->" & "CopyToClipboard"
-    End If
-Resume Next
-    
-End Function
-
 Public Function CreateDIB(ByVal lhDC As Long, _
                           ByVal lWidth As Long, _
                           ByVal lHeight As Long, _
@@ -443,40 +358,6 @@ Resume Next
     
 End Sub
 
-Public Property Get hdc() As Long
-    
-    On Error GoTo hdc_Err
-    
-    hdc = m_hDC
-
-    
-    Exit Property
-
-hdc_Err:
-    If Err.number <> 0 Then
-        LogError Err.number, Err.Description, "cDIBSection" & "->" & "hdc"
-    End If
-Resume Next
-    
-End Property
-
-Public Property Get hDib() As Long
-    
-    On Error GoTo hDib_Err
-    
-    hDib = m_hDIb
-
-    
-    Exit Property
-
-hDib_Err:
-    If Err.number <> 0 Then
-        LogError Err.number, Err.Description, "cDIBSection" & "->" & "hDib"
-    End If
-Resume Next
-    
-End Property
-
 Public Property Get DIBSectionBitsPtr() As Long
     
     On Error GoTo DIBSectionBitsPtr_Err
@@ -493,74 +374,6 @@ DIBSectionBitsPtr_Err:
 Resume Next
     
 End Property
-
-Public Sub RandomiseBits(Optional ByVal bGray As Boolean = False)
-    
-    On Error GoTo RandomiseBits_Err
-    
-    Dim bDib() As Byte
-    Dim X      As Long, Y As Long
-    Dim lC     As Long
-    Dim tSA    As SAFEARRAY2D
-    Dim xEnd   As Long
-    
-    ' Get the bits in the from DIB section:
-    With tSA
-        .cbElements = 1
-        .cDims = 2
-        .Bounds(0).lLbound = 0
-        .Bounds(0).cElements = m_tBI.bmiHeader.biHeight
-        .Bounds(1).lLbound = 0
-        .Bounds(1).cElements = BytesPerScanLine()
-        .pvData = m_lPtr
-
-    End With
-
-    CopyMemory ByVal VarPtrArray(bDib()), VarPtr(tSA), 4
-
-    ' random:
-    Randomize Timer
-    
-    xEnd = (Width - 1) * 3
-
-    If (bGray) Then
-
-        For Y = 0 To m_tBI.bmiHeader.biHeight - 1
-            For X = 0 To xEnd Step 3
-                lC = Rnd * 255
-                bDib(X, Y) = lC
-                bDib(X + 1, Y) = lC
-                bDib(X + 2, Y) = lC
-            Next X
-        Next Y
-
-    Else
-
-        For X = 0 To xEnd Step 3
-            For Y = 0 To m_tBI.bmiHeader.biHeight - 1
-                bDib(X, Y) = 0
-                bDib(X + 1, Y) = Rnd * 255
-                bDib(X + 2, Y) = Rnd * 255
-            Next Y
-        Next X
-
-    End If
-    
-    ' Clear the temporary array descriptor
-    ' (This does not appear to be necessary, but
-    ' for safety do it anyway)
-    CopyMemory ByVal VarPtrArray(bDib), 0&, 4
-    
-    
-    Exit Sub
-
-RandomiseBits_Err:
-    If Err.number <> 0 Then
-        LogError Err.number, Err.Description, "cDIBSection" & "->" & "RandomiseBits"
-    End If
-Resume Next
-    
-End Sub
 
 Public Sub ClearUp()
     
@@ -590,38 +403,6 @@ ClearUp_Err:
 Resume Next
     
 End Sub
-
-Public Function Resample(ByVal lNewHeight As Long, ByVal lNewWidth As Long) As cDIBSection
-    
-    On Error GoTo Resample_Err
-    
-    Dim cDib As cDIBSection
-    Set cDib = New cDIBSection
-
-    If cDib.Create(lNewWidth, lNewHeight) Then
-        If (lNewWidth <> m_tBI.bmiHeader.biWidth) Or (lNewHeight <> m_tBI.bmiHeader.biHeight) Then
-            ' Change in size, do resample:
-            ResampleDib cDib
-        Else
-            ' No size change so just return a copy:
-            cDib.LoadPictureBlt m_hDC
-
-        End If
-
-        Set Resample = cDib
-
-    End If
-
-    
-    Exit Function
-
-Resample_Err:
-    If Err.number <> 0 Then
-        LogError Err.number, Err.Description, "cDIBSection" & "->" & "Resample"
-    End If
-Resume Next
-    
-End Function
 
 Private Function ResampleDib(ByRef cDibTo As cDIBSection) As Boolean
     

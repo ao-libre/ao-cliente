@@ -57,7 +57,7 @@ Private Inventory()                As Inventory    'User's inventory
 Private WithEvents InventoryWindow As PictureBox    'Placeholder where to render the inventory
 Attribute InventoryWindow.VB_VarHelpID = -1
 
-'Public Event dragDone(ByVal originalSlot As Integer, ByVal newSlot As Integer)
+Public Event dragDone(ByVal originalSlot As Integer, ByVal newSlot As Integer)
 
 #If ConMenuesConextuales = 1 Then
     Dim ItemMenu As Menu    'Menu to be shown as pop up
@@ -525,59 +525,6 @@ Resume Next
     
 End Property
 
-Public Sub SetMaxObjs(ByVal MaxObjs As Byte)
-    
-    On Error GoTo SetMaxObjs_Err
-    
-
-    '***************************************************
-    'Author: Torres Patricio (Pato)
-    'Last Modify Date: 09/16/09
-    'Set the capacity of the Inventary
-    '***************************************************
-    If UBound(Inventory) = MaxObjs Then Exit Sub
-    
-    ReDim Preserve Inventory(1 To MaxObjs) As Inventory
-
-    
-    Exit Sub
-
-SetMaxObjs_Err:
-    If Err.number <> 0 Then
-        LogError Err.number, Err.Description, "clsGrapchicalInventory" & "->" & "SetMaxObjs"
-    End If
-Resume Next
-    
-End Sub
-
-Public Sub ToggleShowValue(ByVal bShow As Boolean)
-    '***************************************************
-    'Author: ZaMa
-    'Last Modify Date: 11/12
-    'Indicates if the amount of the items in the inventory is shown
-    '***************************************************
-    
-    On Error GoTo ToggleShowValue_Err
-    
-    ShowValue = bShow
-    
-    Dim slot As Integer
-
-    ' Update Inventory
-    'For slot = 1 To Me.MaxObjs
-    'DrawInventorySlot (slot)
-    'Next slot
-    
-    Exit Sub
-
-ToggleShowValue_Err:
-    If Err.number <> 0 Then
-        LogError Err.number, Err.Description, "clsGrapchicalInventory" & "->" & "ToggleShowValue"
-    End If
-Resume Next
-    
-End Sub
-
 Public Sub ClearAllSlots()
     '***************************************************
     'Author: ZaMa
@@ -727,8 +674,8 @@ Private Sub DrawInventory()
     
     For LoopC = InventoryOffset * (InventoryWindow.ScaleWidth \ ownTilePixelWidth) + 1 To UBound(Inventory)
             
-        startdX = ((LoopC - 1) Mod (frmMain.PicInv.Width / 32)) * 32
-        startdY = ((LoopC - 1) \ (frmMain.PicInv.Width / 32)) * 32
+        startdX = ((LoopC - 1) Mod (frmMain.picInv.Width / 32)) * 32
+        startdY = ((LoopC - 1) \ (frmMain.picInv.Width / 32)) * 32
             
         Call Engine_Long_To_RGB_List(Inv_Color(), -1)
             

@@ -634,46 +634,6 @@ Resume Next
 End Sub
 
 ''
-'   Retrieves wether there are sounds currentyl playing or not.
-'
-'   @return   true if there is at least one sound playing, false otherwise.
-
-Public Property Get PlayingSound() As Boolean
-    '***************************************************
-    'Author: Juan Martín Sotuyo Dodero (Maraxus)
-    'Last Modification: 16/03/04
-    'Returns true if there is at least one sound playing
-    '***************************************************
-    
-    On Error GoTo PlayingSound_Err
-    
-    Dim i As Long
-    
-    For i = 1 To NumSoundBuffers
-
-        If Not DSBuffers(i).Buffer Is Nothing Then
-            If DSBuffers(i).Buffer.GetStatus() And DSBSTATUS_PLAYING Then
-                PlayingSound = True
-                Exit Property
-
-            End If
-
-        End If
-
-    Next i
-
-    
-    Exit Property
-
-PlayingSound_Err:
-    If Err.number <> 0 Then
-        LogError Err.number, Err.Description, "clsAudio" & "->" & "PlayingSound"
-    End If
-Resume Next
-    
-End Property
-
-''
 '   Sets the volume of sound.
 '
 '   @param    Volume  New value to be set, in percentage (0 to 100).
@@ -922,36 +882,6 @@ Resume Next
 End Property
 
 ''
-'   Gets the music's tempo.
-'
-'   @return   Current music'tempo.
-
-Public Property Get MusicTempo() As Single
-    
-    On Error GoTo MusicTempo_Err
-    
-
-    '***************************************************
-    'Author: Juan Martín Sotuyo Dodero (Maraxus)
-    'Last Modification: 16/03/04
-    'Returns the music's tempo
-    '***************************************************
-    If Not Music Then Exit Property
-    
-    MusicTempo = Performance.GetMasterTempo()
-
-    
-    Exit Property
-
-MusicTempo_Err:
-    If Err.number <> 0 Then
-        LogError Err.number, Err.Description, "clsAudio" & "->" & "MusicTempo"
-    End If
-Resume Next
-    
-End Property
-
-''
 '   Gets the music's volume.
 '
 '   @return   Current music's volume as a percentage.
@@ -1006,36 +936,6 @@ Public Property Get PlayingMusic() As Boolean
 PlayingMusic_Err:
     If Err.number <> 0 Then
         LogError Err.number, Err.Description, "clsAudio" & "->" & "PlayingMusic"
-    End If
-Resume Next
-    
-End Property
-
-''
-'   Retrieves the music's length.
-'
-'   @return   Current music's length.
-
-Public Property Get MusicLenght() As Long
-    
-    On Error GoTo MusicLenght_Err
-    
-
-    '***************************************************
-    'Author: Juan Martín Sotuyo Dodero (Maraxus)
-    'Last Modification: 16/03/04
-    'Returns the lenght of the current midi
-    '***************************************************
-    If Not Music Then Exit Property
-    
-    MusicLenght = Segment.GetLength()
-
-    
-    Exit Property
-
-MusicLenght_Err:
-    If Err.number <> 0 Then
-        LogError Err.number, Err.Description, "clsAudio" & "->" & "MusicLenght"
     End If
 Resume Next
     

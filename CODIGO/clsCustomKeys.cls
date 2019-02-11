@@ -572,31 +572,6 @@ Resume Next
     
 End Property
 
-'
-'@return The number of customizable key configurations
-
-Public Property Get ConfigCount() As Byte
-    '***************************************************
-    'Author: Amraphen
-    'Last Modification: 16/11/2010
-    '
-    '***************************************************
-    
-    On Error GoTo ConfigCount_Err
-    
-    ConfigCount = NUM_CUSTOM_CONFIGS
-
-    
-    Exit Property
-
-ConfigCount_Err:
-    If Err.number <> 0 Then
-        LogError Err.number, Err.Description, "clsCustomKeys" & "->" & "ConfigCount"
-    End If
-Resume Next
-    
-End Property
-
 ''
 'Sets the currently active key configuration index
 '

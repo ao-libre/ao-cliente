@@ -323,33 +323,6 @@ Resume Next
 End Sub
 
 ''
-' Retrieves the font being used to render dialogs.
-'
-' @return   The font being used to render dialogs.
-
-Public Property Get Font() As StdFont
-    '**************************************************************
-    'Author: Juan Martín Sotuyo Dodero
-    'Last Modify Date: 04/27/06
-    'Retrieves the font being used to render dialogs.
-    '**************************************************************
-    
-    On Error GoTo Font_Err
-    
-    Font = usedFont
-
-    
-    Exit Property
-
-Font_Err:
-    If Err.number <> 0 Then
-        LogError Err.number, Err.Description, "clsGuildDlg" & "->" & "Font"
-    End If
-Resume Next
-    
-End Property
-
-''
 ' Sets the font being used to render dialogs.
 '
 ' @param    nValue  The new font to be used to render dialogs.

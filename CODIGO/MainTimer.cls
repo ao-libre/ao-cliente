@@ -133,38 +133,6 @@ Resume Next
 End Sub
 
 ''
-' Retrieves the interval of a timer.
-'
-' @param TimerIndex Timer´s Index
-'
-' @return The requested timer's interval.
-
-Public Function GetInterval(ByVal TimerIndex As TimersIndex) As Long
-    
-    On Error GoTo GetInterval_Err
-    
-
-    '*************************************************
-    'Author: Juan Martín Sotuyo Dodero (Maraxus)
-    'Last modified: 13/10/2008
-    'Desc: Retrieves the interval of a timer.
-    '*************************************************
-    If TimerIndex < 1 Or TimerIndex > CANTIDADTIMERS Then Exit Function
-    
-    GetInterval = Timer(TimerIndex).Interval
-
-    
-    Exit Function
-
-GetInterval_Err:
-    If Err.number <> 0 Then
-        LogError Err.number, Err.Description, "clsTimer" & "->" & "GetInterval"
-    End If
-Resume Next
-    
-End Function
-
-''
 ' Starts the timer.
 '
 ' @param TimerIndex Timer´s Index
@@ -190,73 +158,6 @@ Public Sub Start(ByVal TimerIndex As TimersIndex)
 Start_Err:
     If Err.number <> 0 Then
         LogError Err.number, Err.Description, "clsTimer" & "->" & "Start"
-    End If
-Resume Next
-    
-End Sub
-
-''
-' Resume the timer form where we had stoped.
-'
-' @param TimerIndex Timer´s Index
-' @remarks  Makes the Timer continue from where it had stoped.
-
-Public Sub Continue(ByVal TimerIndex As TimersIndex)
-    
-    On Error GoTo Continue_Err
-    
-
-    '*************************************************
-    'Author: Nacho (Integer)
-    'Last modified:
-    'Desc: Continue our timer from where we had stopped it.
-    '*************************************************
-    If TimerIndex < 1 Or TimerIndex > CANTIDADTIMERS Then Exit Sub
-    
-    Timer(TimerIndex).Run = True 'We allow the Timer to run.
-    
-    'We´ll set the StartTick again
-    Timer(TimerIndex).StartTick = Timer(TimerIndex).StartTick + Timer(TimerIndex).CurrentTick
-
-    
-    Exit Sub
-
-Continue_Err:
-    If Err.number <> 0 Then
-        LogError Err.number, Err.Description, "clsTimer" & "->" & "Continue"
-    End If
-Resume Next
-    
-End Sub
-
-''
-' Pauses the Timer
-'
-' @param TimerIndex Timer´s Index
-' @remarks  Can be resumed with Continue()
-
-Public Sub Pause(ByVal TimerIndex As TimersIndex)
-    
-    On Error GoTo Pause_Err
-    
-
-    '*************************************************
-    'Author: Nacho (Integer)
-    'Last modified:
-    'Desc: Pauses the timer.
-    '*************************************************
-    If TimerIndex < 1 Or TimerIndex > CANTIDADTIMERS Then Exit Sub
-    
-    Timer(TimerIndex).Run = False 'Don´t allow the timer to run.
-    
-    Timer(TimerIndex).CurrentTick = GetTickCount - Timer(TimerIndex).StartTick 'Calculates acutual tick
-
-    
-    Exit Sub
-
-Pause_Err:
-    If Err.number <> 0 Then
-        LogError Err.number, Err.Description, "clsTimer" & "->" & "Pause"
     End If
 Resume Next
     
@@ -317,33 +218,3 @@ Check_Err:
 Resume Next
     
 End Function
-
-''
-' Restarts timer.
-'
-' @param TimerIndex Timer´s Index
-
-Public Sub Restart(ByVal TimerIndex As TimersIndex)
-    
-    On Error GoTo Restart_Err
-    
-
-    '*************************************************
-    'Author: Nacho Agustin (Integer)
-    'Last modified:
-    'Desc: Restarts timer
-    '*************************************************
-    If TimerIndex < 1 Or TimerIndex > CANTIDADTIMERS Then Exit Sub
-    
-    Timer(TimerIndex).StartTick = GetTickCount
-
-    
-    Exit Sub
-
-Restart_Err:
-    If Err.number <> 0 Then
-        LogError Err.number, Err.Description, "clsTimer" & "->" & "Restart"
-    End If
-Resume Next
-    
-End Sub
