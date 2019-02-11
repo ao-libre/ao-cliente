@@ -119,15 +119,30 @@ End Enum
 
 Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
+    
+    On Error GoTo Form_Load_Err
+    
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
 
     Call LoadBackGround
     Call LoadButtons
 
+    
+    Exit Sub
+
+Form_Load_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCommet" & "->" & "Form_Load"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadButtons()
+    
+    On Error GoTo LoadButtons_Err
+    
     Dim GrhPath As String
     
     GrhPath = DirGraficos
@@ -141,19 +156,55 @@ Private Sub LoadButtons()
 
     Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarSolicitud.jpg", GrhPath & "BotonCerrarRolloverSolicitud.jpg", GrhPath & "BotonCerrarClickSolicitud.jpg", Me)
 
+    
+    Exit Sub
+
+LoadButtons_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCommet" & "->" & "LoadButtons"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Form_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+Form_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCommet" & "->" & "Form_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgCerrar_Click()
+    
+    On Error GoTo imgCerrar_Click_Err
+    
     Unload Me
 
+    
+    Exit Sub
+
+imgCerrar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCommet" & "->" & "imgCerrar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgEnviar_Click()
+    
+    On Error GoTo imgEnviar_Click_Err
+    
 
     If LenB(Text1) = 0 Then
         If T = PAZ Or T = ALIANZA Then
@@ -195,15 +246,39 @@ Private Sub imgEnviar_Click()
     
     Unload Me
 
+    
+    Exit Sub
+
+imgEnviar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCommet" & "->" & "imgEnviar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Text1_Change()
+    
+    On Error GoTo Text1_Change_Err
+    
 
     If Len(Text1.Text) > MAX_PROPOSAL_LENGTH Then Text1.Text = Left$(Text1.Text, MAX_PROPOSAL_LENGTH)
 
+    
+    Exit Sub
+
+Text1_Change_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCommet" & "->" & "Text1_Change"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadBackGround()
+    
+    On Error GoTo LoadBackGround_Err
+    
 
     Select Case T
 
@@ -218,9 +293,30 @@ Private Sub LoadBackGround()
             
     End Select
     
+    
+    Exit Sub
+
+LoadBackGround_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCommet" & "->" & "LoadBackGround"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Text1_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Text1_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+Text1_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCommet" & "->" & "Text1_MouseMove"
+    End If
+Resume Next
+    
 End Sub

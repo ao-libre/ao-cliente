@@ -119,6 +119,9 @@ Private Declare Function inet_addr Lib "WSOCK32.DLL" (ByVal s As String) As Long
 Public Function Ping(strAddress As String, _
                      strDataToSend As String, _
                      ECHO As ICMP_ECHO_REPLY) As Long
+    
+    On Error GoTo Ping_Err
+    
 
     'If Ping succeeds :
     '.RoundTripTime = time in ms for the ping to complete,
@@ -162,10 +165,22 @@ Public Function Ping(strAddress As String, _
 
     End If
 
+    
+    Exit Function
+
+Ping_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "modPing" & "->" & "Ping"
+    End If
+Resume Next
+    
 End Function
 
 '*****************************************
 Public Function GetStatusCode(lngStatus As Long) As String
+    
+    On Error GoTo GetStatusCode_Err
+    
 
     Dim msg As String
 
@@ -233,10 +248,22 @@ Public Function GetStatusCode(lngStatus As Long) As String
 
     GetStatusCode = CStr(lngStatus) & "   [ " & msg & " ]"
 
+    
+    Exit Function
+
+GetStatusCode_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "modPing" & "->" & "GetStatusCode"
+    End If
+Resume Next
+    
 End Function
 
 '*****************************************
 Public Function GetIPFromHostName(ByVal strHostName As String) As String
+    
+    On Error GoTo GetIPFromHostName_Err
+    
 
     'converts a host name to an IP address.
 
@@ -283,32 +310,77 @@ Public Function GetIPFromHostName(ByVal strHostName As String) As String
 
     End If
 
+    
+    Exit Function
+
+GetIPFromHostName_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "modPing" & "->" & "GetIPFromHostName"
+    End If
+Resume Next
+    
 End Function
 
 '*****************************************
 Private Function IPToText(ByVal IPAddress As String) As String
+    
+    On Error GoTo IPToText_Err
+    
 
     IPToText = CStr(Asc(IPAddress)) & "." & CStr(Asc(mid$(IPAddress, 2, 1))) & "." & CStr(Asc(mid$(IPAddress, 3, 1))) & "." & CStr(Asc(mid$(IPAddress, 4, 1)))
 
+    
+    Exit Function
+
+IPToText_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "modPing" & "->" & "IPToText"
+    End If
+Resume Next
+    
 End Function
 
 '*****************************************
 Public Sub SocketsCleanup()
+    
+    On Error GoTo SocketsCleanup_Err
+    
 
     If WSACleanup() <> 0 Then
         MsgBox "Windows Sockets error occurred in Cleanup.", vbExclamation
 
     End If
 
+    
+    Exit Sub
+
+SocketsCleanup_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "modPing" & "->" & "SocketsCleanup"
+    End If
+Resume Next
+    
 End Sub
 
 '*****************************************
 Public Function SocketsInitialize() As Boolean
+    
+    On Error GoTo SocketsInitialize_Err
+    
 
     Dim WSAD As WSADATA
 
     SocketsInitialize = WSAStartup(WS_VERSION_REQD, WSAD) = IP_SUCCESS
 
+    
+    Exit Function
+
+SocketsInitialize_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "modPing" & "->" & "SocketsInitialize"
+    End If
+Resume Next
+    
 End Function
 
 '*****************************************
@@ -316,6 +388,9 @@ End Function
 '*****************************************
 Public Function PingAddress(strAddressToResolve As String, _
                             strDataToSend As String) As String
+    
+    On Error GoTo PingAddress_Err
+    
 
     Dim ECHO         As ICMP_ECHO_REPLY
     Dim logPos       As Long
@@ -355,5 +430,14 @@ Public Function PingAddress(strAddressToResolve As String, _
 
     End If
 
+    
+    Exit Function
+
+PingAddress_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "modPing" & "->" & "PingAddress"
+    End If
+Resume Next
+    
 End Function
 

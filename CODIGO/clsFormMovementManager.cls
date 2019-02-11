@@ -48,16 +48,31 @@ Public Sub Initialize(ByRef tForm As Form, Optional ByVal VerticalLimit As Integ
     'Last Modify Date: 29/12/09
     'Sets the reference to the form
     '***************************************************
+    
+    On Error GoTo Initialize_Err
+    
     Set Formulario = tForm
     
     LimitY = VerticalLimit
 
+    
+    Exit Sub
+
+Initialize_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsFormMovementManager" & "->" & "Initialize"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Formulario_MouseDown(Button As Integer, _
                                  Shift As Integer, _
                                  X As Single, _
                                  Y As Single)
+    
+    On Error GoTo Formulario_MouseDown_Err
+    
 
     '***************************************************
     'Author: ZaMa
@@ -72,12 +87,24 @@ Private Sub Formulario_MouseDown(Button As Integer, _
     DragX = X
     Dragy = Y
 
+    
+    Exit Sub
+
+Formulario_MouseDown_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsFormMovementManager" & "->" & "Formulario_MouseDown"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Formulario_MouseMove(Button As Integer, _
                                  Shift As Integer, _
                                  X As Single, _
                                  Y As Single)
+    
+    On Error GoTo Formulario_MouseMove_Err
+    
 
     '***************************************************
     'Author: ZaMa
@@ -95,4 +122,13 @@ Private Sub Formulario_MouseMove(Button As Integer, _
 
     End If
 
+    
+    Exit Sub
+
+Formulario_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsFormMovementManager" & "->" & "Formulario_MouseMove"
+    End If
+Resume Next
+    
 End Sub

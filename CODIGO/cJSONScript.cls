@@ -17,6 +17,9 @@ Dim dictVars    As New Dictionary
 Dim plNestCount As Long
 
 Public Function Eval(sJSON As String) As String
+    
+    On Error GoTo Eval_Err
+    
     Dim SB As New cStringBuilder
     Dim o  As Object
     Dim c  As Object
@@ -53,9 +56,21 @@ Public Function Eval(sJSON As String) As String
 
     Eval = SB.toString
 
+    
+    Exit Function
+
+Eval_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "cJSONScript" & "->" & "Eval"
+    End If
+Resume Next
+    
 End Function
 
 Public Function ExecCommand(ByRef obj As Variant) As String
+    
+    On Error GoTo ExecCommand_Err
+    
     Dim SB As New cStringBuilder
    
     If plNestCount > 40 Then
@@ -256,5 +271,14 @@ Public Function ExecCommand(ByRef obj As Variant) As String
     ExecCommand = SB.toString
     Set SB = Nothing
    
+    
+    Exit Function
+
+ExecCommand_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "cJSONScript" & "->" & "ExecCommand"
+    End If
+Resume Next
+    
 End Function
 

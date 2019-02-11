@@ -175,6 +175,9 @@ Private Function General_Drive_Get_Free_Bytes(ByVal DriveName As String) As Curr
     'Last Modify Date: 6/07/2004
     '
     '**************************************************************
+    
+    On Error GoTo General_Drive_Get_Free_Bytes_Err
+    
     Dim retval As Long
     Dim FB     As Currency
     Dim BT     As Currency
@@ -184,6 +187,15 @@ Private Function General_Drive_Get_Free_Bytes(ByVal DriveName As String) As Curr
     
     General_Drive_Get_Free_Bytes = FB * 10000 'convert result to actual size in bytes
 
+    
+    Exit Function
+
+General_Drive_Get_Free_Bytes_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "modCompression" & "->" & "General_Drive_Get_Free_Bytes"
+    End If
+Resume Next
+    
 End Function
 
 ''
@@ -201,6 +213,9 @@ Private Sub Sort_Info_Headers(ByRef InfoHead() As INFOHEADER, _
     'Last Modify Date: 08/20/2007
     'Sorts the info headers by their file name using QuickSort.
     '*****************************************************************
+    
+    On Error GoTo Sort_Info_Headers_Err
+    
     Dim aux  As INFOHEADER
     Dim Min  As Long
     Dim Max  As Long
@@ -234,6 +249,15 @@ Private Sub Sort_Info_Headers(ByRef InfoHead() As INFOHEADER, _
     If first < Max Then Call Sort_Info_Headers(InfoHead, first, Max)
     If Min < last Then Call Sort_Info_Headers(InfoHead, Min, last)
 
+    
+    Exit Sub
+
+Sort_Info_Headers_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "modCompression" & "->" & "Sort_Info_Headers"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -262,6 +286,9 @@ Private Function BinarySearch(ByRef ResourceFile As Integer, _
     'Last Modify Date: 08/21/2007
     'Searches for the specified InfoHeader
     '*****************************************************************
+    
+    On Error GoTo BinarySearch_Err
+    
     Dim ReadingHead  As Long
     Dim ReadInfoHead As INFOHEADER
     
@@ -287,6 +314,15 @@ Private Function BinarySearch(ByRef ResourceFile As Integer, _
 
     Loop
 
+    
+    Exit Function
+
+BinarySearch_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "modCompression" & "->" & "BinarySearch"
+    End If
+Resume Next
+    
 End Function
 
 ''
@@ -307,6 +343,9 @@ Private Function Get_InfoHeader(ByRef ResourcePath As String, _
     'Last Modify Date: 16/07/2012 - ^[GS]^
     'Retrieves the InfoHead of the specified graphic file
     '*****************************************************************
+    
+    On Error GoTo Get_InfoHeader_Err
+    
     Dim ResourceFile     As Integer
     Dim ResourceFilePath As String
     Dim FileHead         As FILEHEADER
@@ -351,6 +390,15 @@ ErrHandler:
     
     Call MsgBox("Error al intentar leer el archivo " & ResourceFilePath & ". Razón: " & Err.number & " : " & Err.Description, vbOKOnly, "Error")
 
+    
+    Exit Function
+
+Get_InfoHeader_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "modCompression" & "->" & "Get_InfoHeader"
+    End If
+Resume Next
+    
 End Function
 
 ''
@@ -364,6 +412,9 @@ Private Sub Compress_Data(ByRef data() As Byte, Optional Modo As Byte = 0)
     'Last Modify Date: 17/07/2012 - ^[GS]^
     'Compresses binary data avoiding data loses
     '*****************************************************************
+    
+    On Error GoTo Compress_Data_Err
+    
     Dim Dimensions As Long
     Dim DimBuffer  As Long
     Dim BufTemp()  As Byte
@@ -411,6 +462,15 @@ Private Sub Compress_Data(ByRef data() As Byte, Optional Modo As Byte = 0)
 
     ' GSZAO - Seguridad
     
+    
+    Exit Sub
+
+Compress_Data_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "modCompression" & "->" & "Compress_Data"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -427,6 +487,9 @@ Private Sub Decompress_Data(ByRef data() As Byte, _
     'Last Modify Date: 16/07/2012 - ^[GS]^
     'Decompresses binary data
     '*****************************************************************
+    
+    On Error GoTo Decompress_Data_Err
+    
     Dim BufTemp() As Byte
     Dim LoopC     As Integer
     
@@ -464,6 +527,15 @@ Private Sub Decompress_Data(ByRef data() As Byte, _
     
     Erase BufTemp
 
+    
+    Exit Sub
+
+Decompress_Data_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "modCompression" & "->" & "Decompress_Data"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -486,6 +558,9 @@ Public Function Compress_Files(ByRef SourcePath As String, _
     'Last Modify Date: 14/09/2012 - ^[GS]^
     'Compresses all graphic files to a resource file
     '*****************************************************************
+    
+    On Error GoTo Compress_Files_Err
+    
     Dim SourceFileName As String
     Dim OutputFilePath As String
     Dim SourceFile     As Long
@@ -648,6 +723,15 @@ ErrHandler:
     
     Call MsgBox("No se pudo crear el archivo binario. Razón: " & Err.number & " : " & Err.Description, vbOKOnly, "Error")
 
+    
+    Exit Function
+
+Compress_Files_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "modCompression" & "->" & "Compress_Files"
+    End If
+Resume Next
+    
 End Function
 
 ''
@@ -671,6 +755,9 @@ Public Function Get_File_RawData(ByRef ResourcePath As String, _
     'Last Modify Date: 16/07/2012 - ^[GS]^
     'Retrieves a byte array with the compressed data from the specified file
     '*****************************************************************
+    
+    On Error GoTo Get_File_RawData_Err
+    
     Dim ResourceFilePath As String
     Dim ResourceFile     As Integer
     
@@ -700,6 +787,15 @@ Public Function Get_File_RawData(ByRef ResourcePath As String, _
 ErrHandler:
     Close ResourceFile
 
+    
+    Exit Function
+
+Get_File_RawData_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "modCompression" & "->" & "Get_File_RawData"
+    End If
+Resume Next
+    
 End Function
 
 ''
@@ -722,6 +818,9 @@ Public Function Extract_File(ByRef ResourcePath As String, _
     'Last Modify Date: 14/09/2012 - ^[GS]^
     'Extract the specific file from a resource file
     '*****************************************************************
+    
+    On Error GoTo Extract_File_Err
+    
     On Local Error GoTo ErrHandler
     
     If Get_File_RawData(ResourcePath, InfoHead, data, Modo) Then
@@ -739,6 +838,15 @@ Public Function Extract_File(ByRef ResourcePath As String, _
 ErrHandler:
     Call MsgBox("Error al intentar decodificar recursos. Razón: " & Err.number & " : " & Err.Description, vbOKOnly, "Error")
 
+    
+    Exit Function
+
+Extract_File_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "modCompression" & "->" & "Extract_File"
+    End If
+Resume Next
+    
 End Function
 
 ''
@@ -759,6 +867,9 @@ Public Function Extract_Files(ByRef ResourcePath As String, _
     'Last Modify Date: 17/07/2012 - ^[GS]^
     'Extracts all files from a resource file
     '*****************************************************************
+    
+    On Error GoTo Extract_Files_Err
+    
     Dim LoopC            As Long
     Dim ResourceFile     As Integer
     Dim ResourceFilePath As String
@@ -864,6 +975,15 @@ ErrHandler:
     
     Call MsgBox("No se pudo extraer el archivo binario correctamente. Razón: " & Err.number & " : " & Err.Description, vbOKOnly, "Error")
 
+    
+    Exit Function
+
+Extract_Files_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "modCompression" & "->" & "Extract_Files"
+    End If
+Resume Next
+    
 End Function
 
 ''
@@ -886,6 +1006,9 @@ Public Function Get_File_Data(ByRef ResourcePath As String, _
     'Last Modify Date: 16/07/2012 - ^[GS]^
     'Retrieves a byte array with the specified file data
     '*****************************************************************
+    
+    On Error GoTo Get_File_Data_Err
+    
     Dim InfoHead As INFOHEADER
     
     If Get_InfoHeader(ResourcePath, FileName, InfoHead, Modo) Then
@@ -897,6 +1020,15 @@ Public Function Get_File_Data(ByRef ResourcePath As String, _
         'Call MsgBox("No se se encontro el recurso " & FileName)
     End If
 
+    
+    Exit Function
+
+Get_File_Data_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "modCompression" & "->" & "Get_File_Data"
+    End If
+Resume Next
+    
 End Function
 
 ''
@@ -918,6 +1050,9 @@ Public Function Get_Image(ByRef ResourcePath As String, _
     'Last Modify Date: 09/10/2012 - ^[GS]^
     'Retrieves image file data
     '*****************************************************************
+    
+    On Error GoTo Get_Image_Err
+    
     Dim InfoHead  As INFOHEADER
     Dim ExistFile As Boolean
     
@@ -950,6 +1085,15 @@ Public Function Get_Image(ByRef ResourcePath As String, _
 
     End If
 
+    
+    Exit Function
+
+Get_Image_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "modCompression" & "->" & "Get_Image"
+    End If
+Resume Next
+    
 End Function
 
 ''
@@ -966,6 +1110,9 @@ Private Function Compare_Datas(ByRef data1() As Byte, ByRef data2() As Byte) As 
     'Last Modify Date: 02/11/2007
     'Compare two byte arrays to detect any difference
     '*****************************************************************
+    
+    On Error GoTo Compare_Datas_Err
+    
     Dim length As Long
     Dim act    As Long
     
@@ -984,6 +1131,15 @@ Private Function Compare_Datas(ByRef data1() As Byte, ByRef data2() As Byte) As 
 
     End If
 
+    
+    Exit Function
+
+Compare_Datas_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "modCompression" & "->" & "Compare_Datas"
+    End If
+Resume Next
+    
 End Function
 
 ''
@@ -1010,6 +1166,9 @@ Private Function ReadNext_InfoHead(ByRef ResourceFile As Integer, _
     'Last Modify Date: 08/24/2007
     'Reads the next InfoHeader
     '*****************************************************************
+    
+    On Error GoTo ReadNext_InfoHead_Err
+    
 
     If ReadFiles < FileHead.lngNumFiles Then
         'Read header
@@ -1022,6 +1181,15 @@ Private Function ReadNext_InfoHead(ByRef ResourceFile As Integer, _
     
     ReadFiles = ReadFiles + 1
 
+    
+    Exit Function
+
+ReadNext_InfoHead_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "modCompression" & "->" & "ReadNext_InfoHead"
+    End If
+Resume Next
+    
 End Function
 
 ''
@@ -1091,6 +1259,9 @@ Public Function Make_Patch(ByRef NewResourcePath As String, _
     'Last Modify Date: 17/07/2012 - ^[GS]^
     'Compares two resource versions and make a patch file
     '*****************************************************************
+    
+    On Error GoTo Make_Patch_Err
+    
     Dim NewResourceFile     As Integer
     Dim NewResourceFilePath As String
     Dim NewFileHead         As FILEHEADER
@@ -1326,6 +1497,15 @@ ErrHandler:
     
     Call MsgBox("No se pudo terminar de crear el parche. Razón: " & Err.number & " : " & Err.Description, vbOKOnly, "Error")
 
+    
+    Exit Function
+
+Make_Patch_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "modCompression" & "->" & "Make_Patch"
+    End If
+Resume Next
+    
 End Function
 
 ''
@@ -1345,6 +1525,9 @@ Public Function Apply_Patch(ByRef ResourcePath As String, _
     'Last Modify Date: 17/07/2012 - ^[GS]^
     'Follows patches instructions to update a resource file
     '*****************************************************************
+    
+    On Error GoTo Apply_Patch_Err
+    
     Dim ResourceFile       As Integer
     Dim ResourceFilePath   As String
     Dim FileHead           As FILEHEADER
@@ -1587,6 +1770,15 @@ ErrHandler:
     
     Call MsgBox("No se pudo parchear. Razón: " & Err.number & " : " & Err.Description, vbOKOnly, "Error")
 
+    
+    Exit Function
+
+Apply_Patch_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "modCompression" & "->" & "Apply_Patch"
+    End If
+Resume Next
+    
 End Function
 
 Private Function AlignScan(ByVal inWidth As Long, ByVal inDepth As Integer) As Long
@@ -1594,8 +1786,20 @@ Private Function AlignScan(ByVal inWidth As Long, ByVal inDepth As Integer) As L
     'Author: Unknown
     'Last Modify Date: Unknown
     '*****************************************************************
+    
+    On Error GoTo AlignScan_Err
+    
     AlignScan = (((inWidth * inDepth) + &H1F) And Not &H1F&) \ &H8
 
+    
+    Exit Function
+
+AlignScan_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "modCompression" & "->" & "AlignScan"
+    End If
+Resume Next
+    
 End Function
 
 ''
@@ -1611,6 +1815,9 @@ Public Function GetVersion(ByVal ResourceFilePath As String) As Long
     'Last Modify Date: 11/23/2008
     '
     '*****************************************************************
+    
+    On Error GoTo GetVersion_Err
+    
     Dim ResourceFile As Integer
     Dim FileHead     As FILEHEADER
     
@@ -1623,5 +1830,14 @@ Public Function GetVersion(ByVal ResourceFilePath As String) As Long
     
     GetVersion = FileHead.lngFileVersion
 
+    
+    Exit Function
+
+GetVersion_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "modCompression" & "->" & "GetVersion"
+    End If
+Resume Next
+    
 End Function
 

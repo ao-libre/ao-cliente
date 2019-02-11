@@ -248,6 +248,9 @@ Private Declare Function BitBlt _
                              ByVal dwRop As Long) As Long
 
 Public Function LoadJPG(ByRef cDib As cDIBSection, ByVal sFile As String) As Boolean
+    
+    On Error GoTo LoadJPG_Err
+    
     Dim tJ        As JPEG_CORE_PROPERTIES_VB
     Dim bFile()   As Byte
     Dim lR        As Long
@@ -327,11 +330,23 @@ Public Function LoadJPG(ByRef cDib As cDIBSection, ByVal sFile As String) As Boo
 
     End If
    
+    
+    Exit Function
+
+LoadJPG_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "modScreenCapture" & "->" & "LoadJPG"
+    End If
+Resume Next
+    
 End Function
 
 Public Function LoadJPGFromPtr(ByRef cDib As cDIBSection, _
                                ByVal lPtr As Long, _
                                ByVal lSize As Long) As Boolean
+    
+    On Error GoTo LoadJPGFromPtr_Err
+    
     Dim tJ        As JPEG_CORE_PROPERTIES_VB
     Dim lR        As Long
     Dim lJPGWidth As Long, lJPGHeight As Long
@@ -406,11 +421,23 @@ Public Function LoadJPGFromPtr(ByRef cDib As cDIBSection, _
 
     End If
    
+    
+    Exit Function
+
+LoadJPGFromPtr_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "modScreenCapture" & "->" & "LoadJPGFromPtr"
+    End If
+Resume Next
+    
 End Function
 
 Public Function SaveJPG(ByRef cDib As cDIBSection, _
                         ByVal sFile As String, _
                         Optional ByVal lQuality As Long = 90) As Boolean
+    
+    On Error GoTo SaveJPG_Err
+    
     Dim tJ           As JPEG_CORE_PROPERTIES_VB
     Dim bFile()      As Byte
     Dim lPtr         As Long
@@ -503,12 +530,24 @@ Public Function SaveJPG(ByRef cDib As cDIBSection, _
 
     End If
 
+    
+    Exit Function
+
+SaveJPG_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "modScreenCapture" & "->" & "SaveJPG"
+    End If
+Resume Next
+    
 End Function
 
 Public Function SaveJPGToPtr(ByRef cDib As cDIBSection, _
                              ByVal lPtr As Long, _
                              ByRef lBufSize As Long, _
                              Optional ByVal lQuality As Long = 90) As Boolean
+    
+    On Error GoTo SaveJPGToPtr_Err
+    
     Dim tJ    As JPEG_CORE_PROPERTIES_VB
     Dim lR    As Long
     Dim hFile As Long
@@ -566,6 +605,15 @@ Public Function SaveJPGToPtr(ByRef cDib As cDIBSection, _
 
     End If
 
+    
+    Exit Function
+
+SaveJPGToPtr_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "modScreenCapture" & "->" & "SaveJPGToPtr"
+    End If
+Resume Next
+    
 End Function
 
 Public Sub ScreenCapture(Optional ByVal Autofragshooter As Boolean = False)
@@ -646,6 +694,9 @@ End Sub
 
 Public Function FullScreenCapture(ByVal File As String) As Boolean
     'Medio desprolijo donde pongo la pic, pero es lo que hay por ahora
+    
+    On Error GoTo FullScreenCapture_Err
+    
     Dim c As cDIBSection
     Set c = New cDIBSection
     Dim hdcc   As Long
@@ -683,4 +734,13 @@ Public Function FullScreenCapture(ByVal File As String) As Boolean
     
     FullScreenCapture = True
 
+    
+    Exit Function
+
+FullScreenCapture_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "modScreenCapture" & "->" & "FullScreenCapture"
+    End If
+Resume Next
+    
 End Function

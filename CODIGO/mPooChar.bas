@@ -12,6 +12,9 @@ Public Sub Char_Erase(ByVal CharIndex As Integer)
     '*****************************************************************
     'Erases a character from CharList and map
     '*****************************************************************
+    
+    On Error GoTo Char_Erase_Err
+    
  
     With charlist(CharIndex)
         
@@ -55,9 +58,21 @@ Public Sub Char_Erase(ByVal CharIndex As Integer)
  
     End With
  
+    
+    Exit Sub
+
+Char_Erase_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mPooChar" & "->" & "Char_Erase"
+    End If
+Resume Next
+    
 End Sub
  
 Private Sub Char_ResetInfo(ByVal CharIndex As Integer)
+    
+    On Error GoTo Char_ResetInfo_Err
+    
 
     '*****************************************************************
     'Author: Ao 13.0
@@ -90,9 +105,21 @@ Private Sub Char_ResetInfo(ByVal CharIndex As Integer)
 
     End With
  
+    
+    Exit Sub
+
+Char_ResetInfo_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mPooChar" & "->" & "Char_ResetInfo"
+    End If
+Resume Next
+    
 End Sub
  
 Private Sub Char_MapPosGet(ByVal CharIndex As Long, ByRef X As Byte, ByRef Y As Byte)
+    
+    On Error GoTo Char_MapPosGet_Err
+    
                                 
     '*****************************************************************
     'Author: Aaron Perkins
@@ -111,9 +138,21 @@ Private Sub Char_MapPosGet(ByVal CharIndex As Long, ByRef X As Byte, ByRef Y As 
         
     End With
  
+    
+    Exit Sub
+
+Char_MapPosGet_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mPooChar" & "->" & "Char_MapPosGet"
+    End If
+Resume Next
+    
 End Sub
  
 Public Sub Char_MapPosSet(ByVal X As Byte, ByVal Y As Byte)
+    
+    On Error GoTo Char_MapPosSet_Err
+    
 
     'Sets the user postion
 
@@ -130,9 +169,21 @@ Public Sub Char_MapPosSet(ByVal X As Byte, ByVal Y As Byte)
  
     End If
 
+    
+    Exit Sub
+
+Char_MapPosSet_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mPooChar" & "->" & "Char_MapPosSet"
+    End If
+Resume Next
+    
 End Sub
  
 Public Function Char_Techo() As Boolean
+    
+    On Error GoTo Char_Techo_Err
+    
 
     '// Autor : Marcos Zeni
     '// Nueva forma de establecer si el usuario esta bajo un techo
@@ -152,9 +203,21 @@ Public Function Char_Techo() As Boolean
    
     End With
 
+    
+    Exit Function
+
+Char_Techo_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mPooChar" & "->" & "Char_Techo"
+    End If
+Resume Next
+    
 End Function
  
 Public Function Char_MapPosExits(ByVal X As Byte, ByVal Y As Byte) As Integer
+    
+    On Error GoTo Char_MapPosExits_Err
+    
  
     '*****************************************************************
     'Checks to see if a tile position has a char_index and return it
@@ -167,9 +230,21 @@ Public Function Char_MapPosExits(ByVal X As Byte, ByVal Y As Byte) As Integer
 
     End If
   
+    
+    Exit Function
+
+Char_MapPosExits_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mPooChar" & "->" & "Char_MapPosExits"
+    End If
+Resume Next
+    
 End Function
  
 Public Sub Char_UserPos()
+    
+    On Error GoTo Char_UserPos_Err
+    
 
     '// Author Miqueas
     '// Actualizamo el lbl de la posicion del usuario
@@ -190,9 +265,21 @@ Public Sub Char_UserPos()
  
     End If
  
+    
+    Exit Sub
+
+Char_UserPos_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mPooChar" & "->" & "Char_UserPos"
+    End If
+Resume Next
+    
 End Sub
  
 Public Sub Char_UserIndexSet(ByVal CharIndex As Integer)
+    
+    On Error GoTo Char_UserIndexSet_Err
+    
  
     UserCharIndex = CharIndex
  
@@ -205,9 +292,21 @@ Public Sub Char_UserIndexSet(ByVal CharIndex As Integer)
  
     End With
          
+    
+    Exit Sub
+
+Char_UserIndexSet_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mPooChar" & "->" & "Char_UserIndexSet"
+    End If
+Resume Next
+    
 End Sub
  
 Public Function Char_Check(ByVal CharIndex As Integer) As Boolean
+    
+    On Error GoTo Char_Check_Err
+    
        
     '**************************************************************
     'Author: Aaron Perkins - Modified by Juan Martín Sotuyo Dodero
@@ -226,9 +325,21 @@ Public Function Char_Check(ByVal CharIndex As Integer) As Boolean
  
     End If
    
+    
+    Exit Function
+
+Char_Check_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mPooChar" & "->" & "Char_Check"
+    End If
+Resume Next
+    
 End Function
  
 Public Sub Char_SetInvisible(ByVal CharIndex As Integer, ByVal value As Boolean)
+    
+    On Error GoTo Char_SetInvisible_Err
+    
        
     '**************************************************************
     'Author: Aaron Perkins - Modified by Juan Martín Sotuyo Dodero
@@ -248,9 +359,21 @@ Public Sub Char_SetInvisible(ByVal CharIndex As Integer, ByVal value As Boolean)
  
     End If
  
+    
+    Exit Sub
+
+Char_SetInvisible_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mPooChar" & "->" & "Char_SetInvisible"
+    End If
+Resume Next
+    
 End Sub
  
 Public Sub Char_SetBody(ByVal CharIndex As Integer, ByVal BodyIndex As Integer)
+    
+    On Error GoTo Char_SetBody_Err
+    
  
     '**************************************************************
     'Author: Aaron Perkins
@@ -279,9 +402,21 @@ Public Sub Char_SetBody(ByVal CharIndex As Integer, ByVal BodyIndex As Integer)
  
     End If
  
+    
+    Exit Sub
+
+Char_SetBody_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mPooChar" & "->" & "Char_SetBody"
+    End If
+Resume Next
+    
 End Sub
  
 Public Sub Char_SetHead(ByVal CharIndex As Integer, ByVal HeadIndex As Integer)
+    
+    On Error GoTo Char_SetHead_Err
+    
  
     '**************************************************************
     'Author: Aaron Perkins
@@ -311,9 +446,21 @@ Public Sub Char_SetHead(ByVal CharIndex As Integer, ByVal HeadIndex As Integer)
  
     End If
  
+    
+    Exit Sub
+
+Char_SetHead_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mPooChar" & "->" & "Char_SetHead"
+    End If
+Resume Next
+    
 End Sub
  
 Public Sub Char_SetHeading(ByVal CharIndex As Long, ByVal Heading As Byte)
+    
+    On Error GoTo Char_SetHeading_Err
+    
  
     '**************************************************************
     'Author: Aaron Perkins
@@ -335,9 +482,21 @@ Public Sub Char_SetHeading(ByVal CharIndex As Long, ByVal Heading As Byte)
  
     End If
  
+    
+    Exit Sub
+
+Char_SetHeading_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mPooChar" & "->" & "Char_SetHeading"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub Char_SetName(ByVal CharIndex As Integer, ByVal Name As String)
+    
+    On Error GoTo Char_SetName_Err
+    
  
     '**************************************************************
     'Author: Miqueas150
@@ -363,9 +522,21 @@ Public Sub Char_SetName(ByVal CharIndex As Integer, ByVal Name As String)
  
     End If
  
+    
+    Exit Sub
+
+Char_SetName_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mPooChar" & "->" & "Char_SetName"
+    End If
+Resume Next
+    
 End Sub
  
 Public Sub Char_SetWeapon(ByVal CharIndex As Integer, ByVal WeaponIndex As Integer)
+    
+    On Error GoTo Char_SetWeapon_Err
+    
  
     '**************************************************************
     'Author: Aaron Perkins
@@ -391,9 +562,21 @@ Public Sub Char_SetWeapon(ByVal CharIndex As Integer, ByVal WeaponIndex As Integ
  
     End If
  
+    
+    Exit Sub
+
+Char_SetWeapon_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mPooChar" & "->" & "Char_SetWeapon"
+    End If
+Resume Next
+    
 End Sub
  
 Public Sub Char_SetShield(ByVal CharIndex As Integer, ByVal ShieldIndex As Integer)
+    
+    On Error GoTo Char_SetShield_Err
+    
  
     '**************************************************************
     'Author: Aaron Perkins
@@ -419,9 +602,21 @@ Public Sub Char_SetShield(ByVal CharIndex As Integer, ByVal ShieldIndex As Integ
  
     End If
  
+    
+    Exit Sub
+
+Char_SetShield_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mPooChar" & "->" & "Char_SetShield"
+    End If
+Resume Next
+    
 End Sub
  
 Public Sub Char_SetCasco(ByVal CharIndex As Integer, ByVal CascoIndex As Integer)
+    
+    On Error GoTo Char_SetCasco_Err
+    
  
     '**************************************************************
     'Author: Aaron Perkins
@@ -447,11 +642,23 @@ Public Sub Char_SetCasco(ByVal CharIndex As Integer, ByVal CascoIndex As Integer
  
     End If
      
+    
+    Exit Sub
+
+Char_SetCasco_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mPooChar" & "->" & "Char_SetCasco"
+    End If
+Resume Next
+    
 End Sub
  
 Public Sub Char_SetFx(ByVal CharIndex As Integer, _
                       ByVal fX As Integer, _
                       ByVal Loops As Integer)
+    
+    On Error GoTo Char_SetFx_Err
+    
  
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -476,6 +683,15 @@ Public Sub Char_SetFx(ByVal CharIndex As Integer, _
         
     End If
    
+    
+    Exit Sub
+
+Char_SetFx_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mPooChar" & "->" & "Char_SetFx"
+    End If
+Resume Next
+    
 End Sub
  
 Public Sub Char_Make(ByVal CharIndex As Integer, _
@@ -487,6 +703,9 @@ Public Sub Char_Make(ByVal CharIndex As Integer, _
                      ByVal Arma As Integer, _
                      ByVal Escudo As Integer, _
                      ByVal Casco As Integer)
+    
+    On Error GoTo Char_Make_Err
+    
  
     'Apuntamos al ultimo Char
  
@@ -534,6 +753,15 @@ Public Sub Char_Make(ByVal CharIndex As Integer, _
     'Plot on map
     MapData(X, Y).CharIndex = CharIndex
        
+    
+    Exit Sub
+
+Char_Make_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mPooChar" & "->" & "Char_Make"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub Char_RefreshAll()
@@ -541,6 +769,9 @@ Public Sub Char_RefreshAll()
     'Goes through the charlist and replots all the characters on the map
     'Used to make sure everyone is visible
     '*****************************************************************
+    
+    On Error GoTo Char_RefreshAll_Err
+    
  
     Dim LoopC As Long
    
@@ -561,9 +792,21 @@ Public Sub Char_RefreshAll()
 
     Next LoopC
  
+    
+    Exit Sub
+
+Char_RefreshAll_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mPooChar" & "->" & "Char_RefreshAll"
+    End If
+Resume Next
+    
 End Sub
 
 Sub Char_MovebyPos(ByVal CharIndex As Integer, ByVal nX As Integer, ByVal nY As Integer)
+    
+    On Error GoTo Char_MovebyPos_Err
+    
 
     Dim X        As Integer
     Dim Y        As Integer
@@ -635,12 +878,24 @@ Sub Char_MovebyPos(ByVal CharIndex As Integer, ByVal nX As Integer, ByVal nY As 
 
     End If
 
+    
+    Exit Sub
+
+Char_MovebyPos_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mPooChar" & "->" & "Char_MovebyPos"
+    End If
+Resume Next
+    
 End Sub
 
 Sub Char_MoveScreen(ByVal nHeading As E_Heading)
     '******************************************
     'Starts the screen moving in a direction
     '******************************************
+    
+    On Error GoTo Char_MoveScreen_Err
+    
 
     Dim X  As Integer
     Dim Y  As Integer
@@ -688,12 +943,24 @@ Sub Char_MoveScreen(ByVal nHeading As E_Heading)
                
     End If
 
+    
+    Exit Sub
+
+Char_MoveScreen_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mPooChar" & "->" & "Char_MoveScreen"
+    End If
+Resume Next
+    
 End Sub
 
 Sub Char_MovebyHead(ByVal CharIndex As Integer, ByVal nHeading As E_Heading)
     '*****************************************************************
     'Starts the movement of a character in nHeading direction
     '*****************************************************************
+    
+    On Error GoTo Char_MovebyHead_Err
+    
 
     Dim addx As Integer
     Dim addy As Integer
@@ -772,10 +1039,22 @@ Sub Char_MovebyHead(ByVal CharIndex As Integer, ByVal nHeading As E_Heading)
 
     End If
 
+    
+    Exit Sub
+
+Char_MovebyHead_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mPooChar" & "->" & "Char_MovebyHead"
+    End If
+Resume Next
+    
 End Sub
 
 Sub Char_CleanAll()
     '// Borramos los obj y char que esten
+    
+    On Error GoTo Char_CleanAll_Err
+    
 
     Dim X         As Long, Y As Long
     Dim CharIndex As Integer, obj As Integer
@@ -802,5 +1081,14 @@ Sub Char_CleanAll()
         Next Y
     Next X
 
+    
+    Exit Sub
+
+Char_CleanAll_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mPooChar" & "->" & "Char_CleanAll"
+    End If
+Resume Next
+    
 End Sub
 

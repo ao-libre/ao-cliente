@@ -106,20 +106,56 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Form_Load()
+    
+    On Error GoTo Form_Load_Err
+    
     Me.Analizar
     Me.Picture = LoadPicture(DirGraficos & "VentanaCargando.jpg")
     LOGO.Picture = LoadPicture(DirGraficos & "ImagenCargando.jpg")
 
+    
+    Exit Sub
+
+Form_Load_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCargando" & "->" & "Form_Load"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LOGO_KeyPress(KeyAscii As Integer)
+    
+    On Error GoTo LOGO_KeyPress_Err
+    
     Debug.Print 2
 
+    
+    Exit Sub
+
+LOGO_KeyPress_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCargando" & "->" & "LOGO_KeyPress"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Status_KeyPress(KeyAscii As Integer)
+    
+    On Error GoTo Status_KeyPress_Err
+    
     Debug.Print 1
 
+    
+    Exit Sub
+
+Status_KeyPress_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCargando" & "->" & "Status_KeyPress"
+    End If
+Resume Next
+    
 End Sub
 
 Function Analizar()
@@ -141,6 +177,9 @@ Function Analizar()
 End Function
 
 Private Function CheckIfRunningLastVersion() As Boolean
+    
+    On Error GoTo CheckIfRunningLastVersion_Err
+    
     Dim responseGithub As String, versionNumberMaster As String, versionNumberLocal As String
     Dim JsonObject     As Object
 
@@ -157,4 +196,13 @@ Private Function CheckIfRunningLastVersion() As Boolean
 
     End If
 
+    
+    Exit Function
+
+CheckIfRunningLastVersion_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCargando" & "->" & "CheckIfRunningLastVersion"
+    End If
+Resume Next
+    
 End Function

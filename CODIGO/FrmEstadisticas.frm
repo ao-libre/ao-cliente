@@ -1026,6 +1026,9 @@ Private Const BAR_LEFT_POS As Integer = 361 'pixeles
 
 Public Sub Iniciar_Labels()
     'Iniciamos los labels con los valores de los atributos y los skills
+    
+    On Error GoTo Iniciar_Labels_Err
+    
     Dim i     As Integer
     Dim Ancho As Integer
 
@@ -1066,10 +1069,22 @@ Public Sub Iniciar_Labels()
 
     End With
 
+    
+    Exit Sub
+
+Iniciar_Labels_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmEstadisticas" & "->" & "Iniciar_Labels"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
+    
+    On Error GoTo Form_Load_Err
+    
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
@@ -1077,9 +1092,21 @@ Private Sub Form_Load()
     
     Call LoadButtons
 
+    
+    Exit Sub
+
+Form_Load_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmEstadisticas" & "->" & "Form_Load"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadButtons()
+    
+    On Error GoTo LoadButtons_Err
+    
     
     Dim GrhPath As String
     
@@ -1090,27 +1117,75 @@ Private Sub LoadButtons()
     
     Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarEstadisticas.jpg", GrhPath & "BotonCerrarRolloverEstadisticas.jpg", GrhPath & "BotonCerrarClickEstadisticas.jpg", Me)
 
+    
+    Exit Sub
+
+LoadButtons_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmEstadisticas" & "->" & "LoadButtons"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Form_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+Form_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmEstadisticas" & "->" & "Form_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
+    
+    On Error GoTo Form_QueryUnload_Err
+    
     Unload Me
 
+    
+    Exit Sub
+
+Form_QueryUnload_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmEstadisticas" & "->" & "Form_QueryUnload"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgCerrar_Click()
+    
+    On Error GoTo imgCerrar_Click_Err
+    
     Unload Me
 
+    
+    Exit Sub
+
+imgCerrar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmEstadisticas" & "->" & "imgCerrar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgCerrar_MouseMove(Button As Integer, _
                                 Shift As Integer, _
                                 X As Single, _
                                 Y As Single)
+    
+    On Error GoTo imgCerrar_MouseMove_Err
+    
 
     If imgCerrar.Tag = 1 Then
         imgCerrar.Picture = LoadPicture(App.path & "\graficos\BotonCerrarApretadoEstadisticas.jpg")
@@ -1118,4 +1193,13 @@ Private Sub imgCerrar_MouseMove(Button As Integer, _
 
     End If
 
+    
+    Exit Sub
+
+imgCerrar_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmEstadisticas" & "->" & "imgCerrar_MouseMove"
+    End If
+Resume Next
+    
 End Sub

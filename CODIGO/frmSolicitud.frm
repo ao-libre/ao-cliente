@@ -110,13 +110,28 @@ Public LastButtonPressed As clsGraphicalButton
 Dim CName                As String
 
 Public Sub RecieveSolicitud(ByVal GuildName As String)
+    
+    On Error GoTo RecieveSolicitud_Err
+    
 
     CName = GuildName
 
+    
+    Exit Sub
+
+RecieveSolicitud_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildSol" & "->" & "RecieveSolicitud"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
+    
+    On Error GoTo Form_Load_Err
+    
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
@@ -124,9 +139,21 @@ Private Sub Form_Load()
     
     Call LoadButtons
 
+    
+    Exit Sub
+
+Form_Load_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildSol" & "->" & "Form_Load"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadButtons()
+    
+    On Error GoTo LoadButtons_Err
+    
     Dim GrhPath As String
     
     GrhPath = DirGraficos
@@ -140,26 +167,83 @@ Private Sub LoadButtons()
 
     Call cBotonEnviar.Initialize(imgEnviar, GrhPath & "BotonEnviarIngreso.jpg", GrhPath & "BotonEnviarRolloverIngreso.jpg", GrhPath & "BotonEnviarClickIngreso.jpg", Me)
 
+    
+    Exit Sub
+
+LoadButtons_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildSol" & "->" & "LoadButtons"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Form_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+Form_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildSol" & "->" & "Form_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgCerrar_Click()
+    
+    On Error GoTo imgCerrar_Click_Err
+    
     Unload Me
 
+    
+    Exit Sub
+
+imgCerrar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildSol" & "->" & "imgCerrar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgEnviar_Click()
+    
+    On Error GoTo imgEnviar_Click_Err
+    
     Call WriteGuildRequestMembership(CName, Replace(Replace(Text1.Text, ",", ";"), vbNewLine, "º"))
 
     Unload Me
 
+    
+    Exit Sub
+
+imgEnviar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildSol" & "->" & "imgEnviar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Text1_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Text1_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+Text1_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildSol" & "->" & "Text1_MouseMove"
+    End If
+Resume Next
+    
 End Sub

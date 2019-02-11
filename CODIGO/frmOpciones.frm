@@ -276,16 +276,43 @@ Private bSoundEffectsActivated As Boolean
 Private loading                As Boolean
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Form_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+Form_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmOpciones" & "->" & "Form_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgCambiarPasswd_Click()
+    
+    On Error GoTo imgCambiarPasswd_Click_Err
+    
     Call frmNewPassword.Show(vbModal, Me)
 
+    
+    Exit Sub
+
+imgCambiarPasswd_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmOpciones" & "->" & "imgCambiarPasswd_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgChkAlMorir_Click()
+    
+    On Error GoTo imgChkAlMorir_Click_Err
+    
     ClientSetup.bDie = Not ClientSetup.bDie
     
     If ClientSetup.bDie Then
@@ -295,9 +322,21 @@ Private Sub imgChkAlMorir_Click()
 
     End If
 
+    
+    Exit Sub
+
+imgChkAlMorir_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmOpciones" & "->" & "imgChkAlMorir_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgChkDesactivarFragShooter_Click()
+    
+    On Error GoTo imgChkDesactivarFragShooter_Click_Err
+    
     ClientSetup.bActive = Not ClientSetup.bActive
     
     If ClientSetup.bActive Then
@@ -307,9 +346,21 @@ Private Sub imgChkDesactivarFragShooter_Click()
 
     End If
 
+    
+    Exit Sub
+
+imgChkDesactivarFragShooter_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmOpciones" & "->" & "imgChkDesactivarFragShooter_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgChkRequiredLvl_Click()
+    
+    On Error GoTo imgChkRequiredLvl_Click_Err
+    
     ClientSetup.bKill = Not ClientSetup.bKill
     
     If ClientSetup.bKill Then
@@ -319,9 +370,21 @@ Private Sub imgChkRequiredLvl_Click()
 
     End If
 
+    
+    Exit Sub
+
+imgChkRequiredLvl_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmOpciones" & "->" & "imgChkRequiredLvl_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub txtCantMensajes_Change()
+    
+    On Error GoTo txtCantMensajes_Change_Err
+    
     txtCantMensajes.Text = Val(txtCantMensajes.Text)
     
     If txtCantMensajes.Text > 0 Then
@@ -331,25 +394,61 @@ Private Sub txtCantMensajes_Change()
 
     End If
 
+    
+    Exit Sub
+
+txtCantMensajes_Change_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmOpciones" & "->" & "txtCantMensajes_Change"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub txtLevel_Change()
+    
+    On Error GoTo txtLevel_Change_Err
+    
 
     If Not IsNumeric(txtLevel) Then txtLevel = 0
     txtLevel = Trim$(txtLevel)
     ClientSetup.byMurderedLevel = CByte(txtLevel)
 
+    
+    Exit Sub
+
+txtLevel_Change_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmOpciones" & "->" & "txtLevel_Change"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgChkConsola_Click()
+    
+    On Error GoTo imgChkConsola_Click_Err
+    
     DialogosClanes.Activo = False
     
     imgChkConsola.Picture = picCheckBox
     Set imgChkPantalla.Picture = Nothing
 
+    
+    Exit Sub
+
+imgChkConsola_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmOpciones" & "->" & "imgChkConsola_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgChkEfectosSonido_Click()
+    
+    On Error GoTo imgChkEfectosSonido_Click_Err
+    
 
     If loading Then Exit Sub
     
@@ -366,17 +465,41 @@ Private Sub imgChkEfectosSonido_Click()
 
     End If
             
+    
+    Exit Sub
+
+imgChkEfectosSonido_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmOpciones" & "->" & "imgChkEfectosSonido_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgChkMostrarNews_Click()
+    
+    On Error GoTo imgChkMostrarNews_Click_Err
+    
     ClientSetup.bGuildNews = True
     
     imgChkMostrarNews.Picture = picCheckBox
     Set imgChkNoMostrarNews.Picture = Nothing
 
+    
+    Exit Sub
+
+imgChkMostrarNews_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmOpciones" & "->" & "imgChkMostrarNews_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgChkMusica_Click()
+    
+    On Error GoTo imgChkMusica_Click_Err
+    
 
     If loading Then Exit Sub
     
@@ -401,25 +524,61 @@ Private Sub imgChkMusica_Click()
 
     End If
 
+    
+    Exit Sub
+
+imgChkMusica_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmOpciones" & "->" & "imgChkMusica_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgChkNoMostrarNews_Click()
+    
+    On Error GoTo imgChkNoMostrarNews_Click_Err
+    
     ClientSetup.bGuildNews = False
     
     imgChkNoMostrarNews.Picture = picCheckBox
     Set imgChkMostrarNews.Picture = Nothing
 
+    
+    Exit Sub
+
+imgChkNoMostrarNews_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmOpciones" & "->" & "imgChkNoMostrarNews_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgChkPantalla_Click()
+    
+    On Error GoTo imgChkPantalla_Click_Err
+    
     DialogosClanes.Activo = True
     
     imgChkPantalla.Picture = picCheckBox
     Set imgChkConsola.Picture = Nothing
 
+    
+    Exit Sub
+
+imgChkPantalla_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmOpciones" & "->" & "imgChkPantalla_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgChkSonidos_Click()
+    
+    On Error GoTo imgChkSonidos_Click_Err
+    
 
     If loading Then Exit Sub
     
@@ -443,61 +602,169 @@ Private Sub imgChkSonidos_Click()
 
     End If
 
+    
+    Exit Sub
+
+imgChkSonidos_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmOpciones" & "->" & "imgChkSonidos_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgConfigTeclas_Click()
+    
+    On Error GoTo imgConfigTeclas_Click_Err
+    
 
     If Not loading Then Call Audio.PlayWave(SND_CLICK)
     Call frmCustomKeys.Show(vbModal, Me)
 
+    
+    Exit Sub
+
+imgConfigTeclas_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmOpciones" & "->" & "imgConfigTeclas_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgManual_Click()
+    
+    On Error GoTo imgManual_Click_Err
+    
 
     If Not loading Then Call Audio.PlayWave(SND_CLICK)
     Call ShellExecute(0, "Open", "http://ao.alkon.com.ar/manual/", "", App.path, SW_SHOWNORMAL)
 
+    
+    Exit Sub
+
+imgManual_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmOpciones" & "->" & "imgManual_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMapa_Click()
+    
+    On Error GoTo imgMapa_Click_Err
+    
     Call frmMapa.Show(vbModal, Me)
 
+    
+    Exit Sub
+
+imgMapa_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmOpciones" & "->" & "imgMapa_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMsgPersonalizado_Click()
+    
+    On Error GoTo imgMsgPersonalizado_Click_Err
+    
     Call frmMessageTxt.Show(vbModeless, Me)
 
+    
+    Exit Sub
+
+imgMsgPersonalizado_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmOpciones" & "->" & "imgMsgPersonalizado_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgRadio_Click()
+    
+    On Error GoTo imgRadio_Click_Err
+    
 
     If Not loading Then Call Audio.PlayWave(SND_CLICK)
 
     Call ShellExecute(0, "Open", "http://www.radioargentum.com/repro.html", "", App.path, SW_SHOWNORMAL)
 
+    
+    Exit Sub
+
+imgRadio_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmOpciones" & "->" & "imgRadio_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgSalir_Click()
+    
+    On Error GoTo imgSalir_Click_Err
+    
     Unload Me
     frmMain.SetFocus
 
+    
+    Exit Sub
+
+imgSalir_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmOpciones" & "->" & "imgSalir_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgSoporte_Click()
+    
+    On Error GoTo imgSoporte_Click_Err
+    
     
     If Not loading Then Call Audio.PlayWave(SND_CLICK)
     
     Call ShellExecute(0, "Open", "http://www.aostaff.com.ar/soporte/", "", App.path, SW_SHOWNORMAL)
 
+    
+    Exit Sub
+
+imgSoporte_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmOpciones" & "->" & "imgSoporte_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgTutorial_Click()
+    
+    On Error GoTo imgTutorial_Click_Err
+    
     frmTutorial.Show vbModeless
 
+    
+    Exit Sub
+
+imgTutorial_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmOpciones" & "->" & "imgTutorial_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
+    
+    On Error GoTo Form_Load_Err
+    
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
@@ -508,9 +775,21 @@ Private Sub Form_Load()
     LoadUserConfig
     loading = False     'Enable sounds when setting check's values
 
+    
+    Exit Sub
+
+Form_Load_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmOpciones" & "->" & "Form_Load"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadButtons()
+    
+    On Error GoTo LoadButtons_Err
+    
     Dim GrhPath As String
     
     GrhPath = DirGraficos
@@ -547,9 +826,21 @@ Private Sub LoadButtons()
                                     
     Set picCheckBox = LoadPicture(GrhPath & "CheckBoxOpciones.jpg")
 
+    
+    Exit Sub
+
+LoadButtons_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmOpciones" & "->" & "LoadButtons"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadUserConfig()
+    
+    On Error GoTo LoadUserConfig_Err
+    
 
     ' Load music config
     bMusicActivated = Audio.MusicActivated
@@ -600,9 +891,21 @@ Private Sub LoadUserConfig()
     
     txtLevel = ClientSetup.byMurderedLevel
 
+    
+    Exit Sub
+
+LoadUserConfig_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmOpciones" & "->" & "LoadUserConfig"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Slider1_Change(Index As Integer)
+    
+    On Error GoTo Slider1_Change_Err
+    
 
     Select Case Index
 
@@ -614,9 +917,21 @@ Private Sub Slider1_Change(Index As Integer)
 
     End Select
 
+    
+    Exit Sub
+
+Slider1_Change_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmOpciones" & "->" & "Slider1_Change"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Slider1_Scroll(Index As Integer)
+    
+    On Error GoTo Slider1_Scroll_Err
+    
 
     Select Case Index
 
@@ -628,4 +943,13 @@ Private Sub Slider1_Scroll(Index As Integer)
 
     End Select
 
+    
+    Exit Sub
+
+Slider1_Scroll_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmOpciones" & "->" & "Slider1_Scroll"
+    End If
+Resume Next
+    
 End Sub

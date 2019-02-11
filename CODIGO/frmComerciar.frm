@@ -253,6 +253,9 @@ Private cBotonCruz       As clsGraphicalButton
 Public LastButtonPressed As clsGraphicalButton
 
 Private Sub cantidad_Change()
+    
+    On Error GoTo cantidad_Change_Err
+    
 
     If Val(cantidad.Text) < 1 Then
         cantidad.Text = 1
@@ -280,9 +283,21 @@ Private Sub cantidad_Change()
 
     End If
 
+    
+    Exit Sub
+
+cantidad_Change_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciar" & "->" & "cantidad_Change"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cantidad_KeyPress(KeyAscii As Integer)
+    
+    On Error GoTo cantidad_KeyPress_Err
+    
 
     If (KeyAscii <> 8) Then
         If (KeyAscii <> 6) And (KeyAscii < 48 Or KeyAscii > 57) Then
@@ -292,10 +307,22 @@ Private Sub cantidad_KeyPress(KeyAscii As Integer)
 
     End If
 
+    
+    Exit Sub
+
+cantidad_KeyPress_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciar" & "->" & "cantidad_KeyPress"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
+    
+    On Error GoTo Form_Load_Err
+    
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
@@ -304,9 +331,21 @@ Private Sub Form_Load()
     
     Call LoadButtons
     
+    
+    Exit Sub
+
+Form_Load_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciar" & "->" & "Form_Load"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadButtons()
+    
+    On Error GoTo LoadButtons_Err
+    
     Dim GrhPath As String
     
     GrhPath = DirGraficos
@@ -323,11 +362,32 @@ Private Sub LoadButtons()
 
     Call cBotonCruz.Initialize(imgCross, "", GrhPath & "BotonCruzApretadaComercio.jpg", GrhPath & "BotonCruzApretadaComercio.jpg", Me)
 
+    
+    Exit Sub
+
+LoadButtons_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciar" & "->" & "LoadButtons"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Form_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+Form_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciar" & "->" & "Form_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -345,13 +405,13 @@ Private Function CalculateSellPrice(ByRef objValue As Single, _
     'Last modified: 19/08/2008
     'Last modify by: Franco Zeoli (Noich)
     '*************************************************
-    On Error GoTo error
+    On Error GoTo Error
 
     'We get a Single value from the server, when vb uses it, by approaching, it can diff with the server value, so we do (Value * 100000) and get the entire part, to discard the unwanted floating values.
     CalculateSellPrice = CCur(objValue * 1000000) / 1000000 * objAmount + 0.5
     
     Exit Function
-error:
+Error:
     MsgBox Err.Description, vbExclamation, "Error: " & Err.number
 
 End Function
@@ -370,18 +430,21 @@ Private Function CalculateBuyPrice(ByRef objValue As Single, _
     'Last modified: 19/08/2008
     'Last modify by: Franco Zeoli (Noich)
     '*************************************************
-    On Error GoTo error
+    On Error GoTo Error
 
     'We get a Single value from the server, when vb uses it, by approaching, it can diff with the server value, so we do (Value * 100000) and get the entire part, to discard the unwanted floating values.
     CalculateBuyPrice = Fix(CCur(objValue * 1000000) / 1000000 * objAmount)
     
     Exit Function
-error:
+Error:
     MsgBox Err.Description, vbExclamation, "Error: " & Err.number
 
 End Function
 
 Private Sub imgComprar_Click()
+    
+    On Error GoTo imgComprar_Click_Err
+    
 
     ' Debe tener seleccionado un item para comprarlo.
     If InvComNpc.SelectedItem = 0 Then Exit Sub
@@ -400,14 +463,38 @@ Private Sub imgComprar_Click()
 
     End If
     
+    
+    Exit Sub
+
+imgComprar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciar" & "->" & "imgComprar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgCross_Click()
+    
+    On Error GoTo imgCross_Click_Err
+    
     Call WriteCommerceEnd
 
+    
+    Exit Sub
+
+imgCross_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciar" & "->" & "imgCross_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgVender_Click()
+    
+    On Error GoTo imgVender_Click_Err
+    
 
     ' Debe tener seleccionado un item para comprarlo.
     If InvComUsu.SelectedItem = 0 Then Exit Sub
@@ -420,9 +507,21 @@ Private Sub imgVender_Click()
 
     Call WriteCommerceSell(InvComUsu.SelectedItem, Val(cantidad.Text))
 
+    
+    Exit Sub
+
+imgVender_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciar" & "->" & "imgVender_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub picInvNpc_Click()
+    
+    On Error GoTo picInvNpc_Click_Err
+    
     Dim ItemSlot As Byte
     
     ItemSlot = InvComNpc.SelectedItem
@@ -463,17 +562,41 @@ Private Sub picInvNpc_Click()
 
     End If
 
+    
+    Exit Sub
+
+picInvNpc_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciar" & "->" & "picInvNpc_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub picInvNpc_MouseMove(Button As Integer, _
                                 Shift As Integer, _
                                 X As Single, _
                                 Y As Single)
+    
+    On Error GoTo picInvNpc_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+picInvNpc_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciar" & "->" & "picInvNpc_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub picInvUser_Click()
+    
+    On Error GoTo picInvUser_Click_Err
+    
     Dim ItemSlot As Byte
     
     ItemSlot = InvComUsu.SelectedItem
@@ -514,12 +637,33 @@ Private Sub picInvUser_Click()
 
     End If
 
+    
+    Exit Sub
+
+picInvUser_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciar" & "->" & "picInvUser_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub picInvUser_MouseMove(Button As Integer, _
                                  Shift As Integer, _
                                  X As Single, _
                                  Y As Single)
+    
+    On Error GoTo picInvUser_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+picInvUser_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciar" & "->" & "picInvUser_MouseMove"
+    End If
+Resume Next
+    
 End Sub

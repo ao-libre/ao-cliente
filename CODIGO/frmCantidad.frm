@@ -99,6 +99,9 @@ Public LastButtonPressed As clsGraphicalButton
 
 Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
+    
+    On Error GoTo Form_Load_Err
+    
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
@@ -106,9 +109,21 @@ Private Sub Form_Load()
     
     Call LoadButtons
 
+    
+    Exit Sub
+
+Form_Load_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCantidad" & "->" & "Form_Load"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadButtons()
+    
+    On Error GoTo LoadButtons_Err
+    
 
     Dim GrhPath As String
     
@@ -122,14 +137,38 @@ Private Sub LoadButtons()
     Call cBotonTirar.Initialize(imgTirar, GrhPath & "BotonTirar.jpg", GrhPath & "BotonTirarRollover.jpg", GrhPath & "BotonTirarClick.jpg", Me)
     Call cBotonTirarTodo.Initialize(imgTirarTodo, GrhPath & "BotonTirarTodo.jpg", GrhPath & "BotonTirarTodoRollover.jpg", GrhPath & "BotonTirarTodoClick.jpg", Me)
 
+    
+    Exit Sub
+
+LoadButtons_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCantidad" & "->" & "LoadButtons"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Form_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+Form_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCantidad" & "->" & "Form_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgTirar_Click()
+    
+    On Error GoTo imgTirar_Click_Err
+    
 
     If LenB(txtCantidad.Text) > 0 Then
         If Not IsNumeric(txtCantidad.Text) Then Exit Sub  'Should never happen
@@ -141,9 +180,21 @@ Private Sub imgTirar_Click()
     
     Unload Me
 
+    
+    Exit Sub
+
+imgTirar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCantidad" & "->" & "imgTirar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgTirarTodo_Click()
+    
+    On Error GoTo imgTirarTodo_Click_Err
+    
 
     If Inventario.SelectedItem = 0 Then Exit Sub
     
@@ -165,6 +216,15 @@ Private Sub imgTirarTodo_Click()
 
     frmCantidad.txtCantidad.Text = vbNullString
 
+    
+    Exit Sub
+
+imgTirarTodo_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCantidad" & "->" & "imgTirarTodo_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub txtCantidad_Change()
@@ -190,6 +250,9 @@ ErrHandler:
 End Sub
 
 Private Sub txtCantidad_KeyPress(KeyAscii As Integer)
+    
+    On Error GoTo txtCantidad_KeyPress_Err
+    
 
     If (KeyAscii <> 8) Then
         If (KeyAscii < 48 Or KeyAscii > 57) Then
@@ -199,12 +262,33 @@ Private Sub txtCantidad_KeyPress(KeyAscii As Integer)
 
     End If
 
+    
+    Exit Sub
+
+txtCantidad_KeyPress_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCantidad" & "->" & "txtCantidad_KeyPress"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub txtCantidad_MouseMove(Button As Integer, _
                                   Shift As Integer, _
                                   X As Single, _
                                   Y As Single)
+    
+    On Error GoTo txtCantidad_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+txtCantidad_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCantidad" & "->" & "txtCantidad_MouseMove"
+    End If
+Resume Next
+    
 End Sub

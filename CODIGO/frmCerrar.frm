@@ -68,13 +68,28 @@ Option Explicit
 Private clsFormulario As clsFormMovementManager
 
 Private Sub cCancelQuit_Click()
+    
+    On Error GoTo cCancelQuit_Click_Err
+    
     Call Audio.PlayWave(SND_CLICK)
     Set clsFormulario = Nothing
     Unload Me
 
+    
+    Exit Sub
+
+cCancelQuit_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCerrar" & "->" & "cCancelQuit_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cRegresar_Click()
+    
+    On Error GoTo cRegresar_Click_Err
+    
     Call Audio.PlayWave(SND_CLICK)
     
     Set clsFormulario = Nothing
@@ -95,21 +110,57 @@ Private Sub cRegresar_Click()
     Call WriteQuit
     Unload Me
 
+    
+    Exit Sub
+
+cRegresar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCerrar" & "->" & "cRegresar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cSalir_Click()
+    
+    On Error GoTo cSalir_Click_Err
+    
     Call Audio.PlayWave(SND_CLICK)
     Set clsFormulario = Nothing
     Call CloseClient
 
+    
+    Exit Sub
+
+cSalir_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCerrar" & "->" & "cSalir_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_Deactivate()
+    
+    On Error GoTo Form_Deactivate_Err
+    
     Me.SetFocus
 
+    
+    Exit Sub
+
+Form_Deactivate_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCerrar" & "->" & "Form_Deactivate"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo Form_KeyUp_Err
+    
 
     If KeyCode = vbKeyEscape Then
         Set clsFormulario = Nothing
@@ -117,14 +168,35 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
 
     End If
 
+    
+    Exit Sub
+
+Form_KeyUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCerrar" & "->" & "Form_KeyUp"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
+    
+    On Error GoTo Form_Load_Err
+    
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
     Me.Picture = LoadPicture(App.path & "\Graficos\frmCerrar.jpg")
 
+    
+    Exit Sub
+
+Form_Load_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCerrar" & "->" & "Form_Load"
+    End If
+Resume Next
+    
 End Sub
 

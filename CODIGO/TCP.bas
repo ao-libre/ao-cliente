@@ -38,6 +38,9 @@ Public LlegaronAtrib  As Boolean
 Public LlegoFama      As Boolean
 
 Public Function PuedoQuitarFoco() As Boolean
+    
+    On Error GoTo PuedoQuitarFoco_Err
+    
     PuedoQuitarFoco = True
 
     'PuedoQuitarFoco = Not frmEstadisticas.Visible And _
@@ -52,9 +55,21 @@ Public Function PuedoQuitarFoco() As Boolean
     '                 Not frmCommet.Visible And _
     '                 Not frmPeaceProp.Visible
     '
+    
+    Exit Function
+
+PuedoQuitarFoco_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TCP" & "->" & "PuedoQuitarFoco"
+    End If
+Resume Next
+    
 End Function
 
 Sub Login()
+    
+    On Error GoTo Login_Err
+    
 
     If EstadoLogin = E_MODO.Normal Then
         Call WriteLoginExistingAccount
@@ -69,4 +84,13 @@ Sub Login()
     
     Call FlushBuffer
 
+    
+    Exit Sub
+
+Login_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TCP" & "->" & "Login"
+    End If
+Resume Next
+    
 End Sub

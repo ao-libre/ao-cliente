@@ -75,6 +75,9 @@ Private Sub Class_Terminate()
     'Destroy's all DirectMusic and DirectSound objects
     '12/31/09 - Pato: Use StopWave method to prevent errors.
     '***************************************************
+    
+    On Error GoTo Class_Terminate_Err
+    
     On Local Error Resume Next
 
     Dim LoopC As Long
@@ -101,6 +104,15 @@ Private Sub Class_Terminate()
     
     inited = False
 
+    
+    Exit Sub
+
+Class_Terminate_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsAudio" & "->" & "Class_Terminate"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -285,6 +297,9 @@ Private Sub ResetSoundValues()
     'Last Modification: 03/04/10
     'Reset the frequency, volume and pan.
     '***************************************************
+    
+    On Error GoTo ResetSoundValues_Err
+    
     Dim i As Long
     
     For i = 1 To NumSoundBuffers
@@ -302,6 +317,15 @@ Private Sub ResetSoundValues()
 
     Next i
 
+    
+    Exit Sub
+
+ResetSoundValues_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsAudio" & "->" & "ResetSoundValues"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Update3DSound(ByVal bufferIndex As Long, _
@@ -317,6 +341,9 @@ Private Sub Update3DSound(ByVal bufferIndex As Long, _
     'Fixed the sndVolume formula
     'Fixed 3D Volume
     '***************************************************
+    
+    On Error GoTo Update3DSound_Err
+    
     Dim linearDistanceOld As Single
     Dim linearDistanceNew As Single
     Dim deltaDistance     As Single
@@ -366,6 +393,15 @@ Private Sub Update3DSound(ByVal bufferIndex As Long, _
 
     End With
 
+    
+    Exit Sub
+
+Update3DSound_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsAudio" & "->" & "Update3DSound"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -383,6 +419,9 @@ Public Sub MoveListener(ByVal X As Integer, ByVal Y As Integer)
     'Last Modification by: Franco Zeoli (Noich)
     'Moves the position of the listener updating all 3D sounds.
     '***************************************************
+    
+    On Error GoTo MoveListener_Err
+    
     Dim i      As Long
     Dim deltaX As Integer
     Dim deltaY As Integer
@@ -410,6 +449,15 @@ Public Sub MoveListener(ByVal X As Integer, ByVal Y As Integer)
     lastPosX = X
     lastPosY = Y
 
+    
+    Exit Sub
+
+MoveListener_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsAudio" & "->" & "MoveListener"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -541,6 +589,9 @@ End Function
 '   @param    bufferIndex     The index of the sound file to stop playing. If 0, all sounds are stopped.
 
 Public Sub StopWave(Optional ByVal bufferIndex As Long = 0)
+    
+    On Error GoTo StopWave_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -571,6 +622,15 @@ Public Sub StopWave(Optional ByVal bufferIndex As Long = 0)
 
     End If
 
+    
+    Exit Sub
+
+StopWave_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsAudio" & "->" & "StopWave"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -584,6 +644,9 @@ Public Property Get PlayingSound() As Boolean
     'Last Modification: 16/03/04
     'Returns true if there is at least one sound playing
     '***************************************************
+    
+    On Error GoTo PlayingSound_Err
+    
     Dim i As Long
     
     For i = 1 To NumSoundBuffers
@@ -599,6 +662,15 @@ Public Property Get PlayingSound() As Boolean
 
     Next i
 
+    
+    Exit Property
+
+PlayingSound_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsAudio" & "->" & "PlayingSound"
+    End If
+Resume Next
+    
 End Property
 
 ''
@@ -612,6 +684,9 @@ Public Property Let SoundVolume(ByVal Volume As Byte)
     'Last Modification: 16/03/04
     'Sets the sound's volume as a percentage
     '***************************************************
+    
+    On Error GoTo SoundVolume_Err
+    
     Dim i As Long
     
     If Volume > 100 Then Exit Property
@@ -631,6 +706,15 @@ Public Property Let SoundVolume(ByVal Volume As Byte)
 
     Next i
 
+    
+    Exit Property
+
+SoundVolume_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsAudio" & "->" & "SoundVolume"
+    End If
+Resume Next
+    
 End Property
 
 ''
@@ -644,8 +728,20 @@ Public Property Get SoundVolume() As Byte
     'Last Modification: 16/03/04
     'Sets the music's volume as a percentage
     '***************************************************
+    
+    On Error GoTo SoundVolume_Err
+    
     SoundVolume = CByte((SndVolume - DSBVOLUME_MIN) * 100 / (DSBVOLUME_MAX - DSBVOLUME_MIN))
 
+    
+    Exit Property
+
+SoundVolume_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsAudio" & "->" & "SoundVolume"
+    End If
+Resume Next
+    
 End Property
 
 ''
@@ -766,6 +862,9 @@ End Sub
 '   @param    Tempo   New Tempo value. Must be in the range of 0.25 to 2.0
 
 Public Property Let MusicTempo(ByVal Tempo As Single)
+    
+    On Error GoTo MusicTempo_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -778,6 +877,15 @@ Public Property Let MusicTempo(ByVal Tempo As Single)
     
     Call Performance.SetMasterTempo(Tempo)
 
+    
+    Exit Property
+
+MusicTempo_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsAudio" & "->" & "MusicTempo"
+    End If
+Resume Next
+    
 End Property
 
 ''
@@ -786,6 +894,9 @@ End Property
 '   @param    Volume  Percentage to wich to set the music volume.
 
 Public Property Let MusicVolume(ByVal Volume As Long)
+    
+    On Error GoTo MusicVolume_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -799,6 +910,15 @@ Public Property Let MusicVolume(ByVal Volume As Long)
     '   Volume ranges from -10000 to 10000
     Call Performance.SetMasterVolume(Volume * 200 - 10000)
 
+    
+    Exit Property
+
+MusicVolume_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsAudio" & "->" & "MusicVolume"
+    End If
+Resume Next
+    
 End Property
 
 ''
@@ -807,6 +927,9 @@ End Property
 '   @return   Current music'tempo.
 
 Public Property Get MusicTempo() As Single
+    
+    On Error GoTo MusicTempo_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -817,6 +940,15 @@ Public Property Get MusicTempo() As Single
     
     MusicTempo = Performance.GetMasterTempo()
 
+    
+    Exit Property
+
+MusicTempo_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsAudio" & "->" & "MusicTempo"
+    End If
+Resume Next
+    
 End Property
 
 ''
@@ -825,6 +957,9 @@ End Property
 '   @return   Current music's volume as a percentage.
 
 Public Property Get MusicVolume() As Long
+    
+    On Error GoTo MusicVolume_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -835,6 +970,15 @@ Public Property Get MusicVolume() As Long
     
     MusicVolume = (Performance.GetMasterVolume() + 10000) / 200
 
+    
+    Exit Property
+
+MusicVolume_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsAudio" & "->" & "MusicVolume"
+    End If
+Resume Next
+    
 End Property
 
 ''
@@ -843,6 +987,9 @@ End Property
 '   @return   True if there is a MIDI playing, false otherwise.
 
 Public Property Get PlayingMusic() As Boolean
+    
+    On Error GoTo PlayingMusic_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -853,6 +1000,15 @@ Public Property Get PlayingMusic() As Boolean
     
     PlayingMusic = Performance.IsPlaying(Segment, SegState)
 
+    
+    Exit Property
+
+PlayingMusic_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsAudio" & "->" & "PlayingMusic"
+    End If
+Resume Next
+    
 End Property
 
 ''
@@ -861,6 +1017,9 @@ End Property
 '   @return   Current music's length.
 
 Public Property Get MusicLenght() As Long
+    
+    On Error GoTo MusicLenght_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -871,6 +1030,15 @@ Public Property Get MusicLenght() As Long
     
     MusicLenght = Segment.GetLength()
 
+    
+    Exit Property
+
+MusicLenght_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsAudio" & "->" & "MusicLenght"
+    End If
+Resume Next
+    
 End Property
 
 ''
@@ -884,8 +1052,20 @@ Public Property Get MusicActivated() As Boolean
     'Last Modification: 03/03/07
     'Retrieves wether the music is activated or not
     '***************************************************
+    
+    On Error GoTo MusicActivated_Err
+    
     MusicActivated = mActivated
 
+    
+    Exit Property
+
+MusicActivated_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsAudio" & "->" & "MusicActivated"
+    End If
+Resume Next
+    
 End Property
 
 ''
@@ -894,6 +1074,9 @@ End Property
 '   @param    nValue  True if music should be activated, false otherwise.
 
 Public Property Let MusicActivated(ByVal nValue As Boolean)
+    
+    On Error GoTo MusicActivated_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -911,6 +1094,15 @@ Public Property Let MusicActivated(ByVal nValue As Boolean)
 
     End If
 
+    
+    Exit Property
+
+MusicActivated_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsAudio" & "->" & "MusicActivated"
+    End If
+Resume Next
+    
 End Property
 
 ''
@@ -924,8 +1116,20 @@ Public Property Get SoundActivated() As Boolean
     'Last Modification: 03/03/07
     'Retrieves wether the sound is activated or not
     '***************************************************
+    
+    On Error GoTo SoundActivated_Err
+    
     SoundActivated = sActivated
 
+    
+    Exit Property
+
+SoundActivated_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsAudio" & "->" & "SoundActivated"
+    End If
+Resume Next
+    
 End Property
 
 ''
@@ -934,6 +1138,9 @@ End Property
 '   @param    nValue  True if sound should be activated, false otherwise.
 
 Public Property Let SoundActivated(ByVal nValue As Boolean)
+    
+    On Error GoTo SoundActivated_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -949,6 +1156,15 @@ Public Property Let SoundActivated(ByVal nValue As Boolean)
 
     End If
 
+    
+    Exit Property
+
+SoundActivated_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsAudio" & "->" & "SoundActivated"
+    End If
+Resume Next
+    
 End Property
 
 ''
@@ -963,6 +1179,9 @@ Public Property Let SoundEffectsActivated(ByVal nValue As Boolean)
     'Sets wether the sound effects are activated or not
     '03/04/10 - Pato: If sound effects are disable, then reset the frequency, volume and pan.
     '***************************************************
+    
+    On Error GoTo SoundEffectsActivated_Err
+    
     sEffectsActivated = nValue
     
     If Not nValue Then
@@ -970,6 +1189,15 @@ Public Property Let SoundEffectsActivated(ByVal nValue As Boolean)
 
     End If
 
+    
+    Exit Property
+
+SoundEffectsActivated_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsAudio" & "->" & "SoundEffectsActivated"
+    End If
+Resume Next
+    
 End Property
 
 ''
@@ -983,7 +1211,19 @@ Public Property Get SoundEffectsActivated() As Boolean
     'Last Modification: 28/07/08
     'Retrieves wether the sound effects are activated or not
     '***************************************************
+    
+    On Error GoTo SoundEffectsActivated_Err
+    
     SoundEffectsActivated = sEffectsActivated
 
+    
+    Exit Property
+
+SoundEffectsActivated_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsAudio" & "->" & "SoundEffectsActivated"
+    End If
+Resume Next
+    
 End Property
 

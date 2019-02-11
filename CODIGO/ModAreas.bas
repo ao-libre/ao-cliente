@@ -40,6 +40,9 @@ Public MinLimiteY As Integer
 Public MaxLimiteY As Integer
 
 Public Sub CambioDeArea(ByVal X As Byte, ByVal Y As Byte)
+    
+    On Error GoTo CambioDeArea_Err
+    
     Dim loopX As Long, loopY As Long, CharIndex As Integer, ObjIndex As Integer
     
     MinLimiteX = (X \ 9 - 1) * 9
@@ -78,4 +81,13 @@ Public Sub CambioDeArea(ByVal X As Byte, ByVal Y As Byte)
     
     Call RefreshAllChars
 
+    
+    Exit Sub
+
+CambioDeArea_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "ModAreas" & "->" & "CambioDeArea"
+    End If
+Resume Next
+    
 End Sub

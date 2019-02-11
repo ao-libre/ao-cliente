@@ -51,6 +51,9 @@ Public Sub AddPost(ByVal ForumType As eForumType, _
     'Last Modify Date: -
     '
     '***************************************************
+    
+    On Error GoTo AddPost_Err
+    
 
     With Foros(ForumType)
 
@@ -76,6 +79,15 @@ Public Sub AddPost(ByVal ForumType As eForumType, _
 
     End With
 
+    
+    Exit Sub
+
+AddPost_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsForum" & "->" & "AddPost"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub ClearForums()
@@ -84,6 +96,9 @@ Public Sub ClearForums()
     'Last Modify Date: -
     '
     '***************************************************
+    
+    On Error GoTo ClearForums_Err
+    
 
     Dim Index As Long
     
@@ -159,6 +174,15 @@ Public Sub ClearForums()
 
     End If
 
+    
+    Exit Sub
+
+ClearForums_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsForum" & "->" & "ClearForums"
+    End If
+Resume Next
+    
 End Sub
 
 Public Function GetNroPost(ByVal ForumType As eForumType) As Byte
@@ -167,9 +191,21 @@ Public Function GetNroPost(ByVal ForumType As eForumType) As Byte
     'Last Modify Date: -
     '
     '***************************************************
+    
+    On Error GoTo GetNroPost_Err
+    
 
     GetNroPost = CantPosts(ForumType)
 
+    
+    Exit Function
+
+GetNroPost_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsForum" & "->" & "GetNroPost"
+    End If
+Resume Next
+    
 End Function
 
 Public Function GetNroSticky(ByVal ForumType As eForumType) As Byte
@@ -178,12 +214,27 @@ Public Function GetNroSticky(ByVal ForumType As eForumType) As Byte
     'Last Modify Date: -
     '
     '***************************************************
+    
+    On Error GoTo GetNroSticky_Err
+    
 
     GetNroSticky = CantStickys(ForumType)
 
+    
+    Exit Function
+
+GetNroSticky_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsForum" & "->" & "GetNroSticky"
+    End If
+Resume Next
+    
 End Function
 
 Private Sub MoveArray(ByVal ForumType As eForumType, ByVal Sticky As Boolean)
+    
+    On Error GoTo MoveArray_Err
+    
     Dim i As Long
 
     With Foros(ForumType)
@@ -208,4 +259,13 @@ Private Sub MoveArray(ByVal ForumType As eForumType, ByVal Sticky As Boolean)
 
     End With
 
+    
+    Exit Sub
+
+MoveArray_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsForum" & "->" & "MoveArray"
+    End If
+Resume Next
+    
 End Sub

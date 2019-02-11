@@ -97,15 +97,30 @@ Private cBotonSalir       As clsGraphicalButton
 Public LastButtonPressed  As clsGraphicalButton
 
 Private Sub Form_Load()
+    
+    On Error GoTo Form_Load_Err
+    
     Me.Picture = LoadPicture(App.path & "\graficos\frmCuentaNueva.jpg")
     txtCuentaEmail.Text = ""
     txtCuentaPassword.Text = ""
     txtCuentaRepite.Text = ""
     LoadButtons
 
+    
+    Exit Sub
+
+Form_Load_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearCuenta" & "->" & "Form_Load"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgCrearCuenta_Click()
+    
+    On Error GoTo imgCrearCuenta_Click_Err
+    
 
     If Not IsFormValid Then Exit Sub
 
@@ -139,19 +154,55 @@ Private Sub imgCrearCuenta_Click()
 
     Unload frmCrearCuenta
 
+    
+    Exit Sub
+
+imgCrearCuenta_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearCuenta" & "->" & "imgCrearCuenta_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgSalir_Click()
+    
+    On Error GoTo imgSalir_Click_Err
+    
     Unload Me
 
+    
+    Exit Sub
+
+imgSalir_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearCuenta" & "->" & "imgSalir_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Form_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+Form_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearCuenta" & "->" & "Form_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Function IsFormValid() As Boolean
+    
+    On Error GoTo IsFormValid_Err
+    
 
     If txtCuentaEmail.Text = "" Then
         MsgBox "Ingrese un e-mail."
@@ -185,9 +236,21 @@ Private Function IsFormValid() As Boolean
     
     IsFormValid = True
 
+    
+    Exit Function
+
+IsFormValid_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearCuenta" & "->" & "IsFormValid"
+    End If
+Resume Next
+    
 End Function
 
 Private Sub LoadButtons()
+    
+    On Error GoTo LoadButtons_Err
+    
     
     Dim GrhPath As String
     
@@ -202,4 +265,13 @@ Private Sub LoadButtons()
 
     Call cBotonSalir.Initialize(Me.imgSalir, GrhPath & "BotonSalirConnect.jpg", GrhPath & "BotonBotonSalirRolloverConnect.jpg", GrhPath & "BotonSalirClickConnect.jpg", Me)
 
+    
+    Exit Sub
+
+LoadButtons_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearCuenta" & "->" & "LoadButtons"
+    End If
+Resume Next
+    
 End Sub

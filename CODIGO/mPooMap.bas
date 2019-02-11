@@ -11,6 +11,9 @@ Option Explicit
 Private Const GrhFogata As Integer = 1521
 
 Public Sub Map_RemoveOldUser()
+    
+    On Error GoTo Map_RemoveOldUser_Err
+    
 
     With MapData(UserPos.X, UserPos.Y)
 
@@ -21,9 +24,21 @@ Public Sub Map_RemoveOldUser()
 
     End With
 
+    
+    Exit Sub
+
+Map_RemoveOldUser_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mPooMap" & "->" & "Map_RemoveOldUser"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub Map_CreateObject(ByVal X As Byte, ByVal Y As Byte, ByVal GrhIndex As Integer)
+    
+    On Error GoTo Map_CreateObject_Err
+    
 
     'Dim objgrh As Integer
         
@@ -47,9 +62,21 @@ Public Sub Map_CreateObject(ByVal X As Byte, ByVal Y As Byte, ByVal GrhIndex As 
 
     End If
 
+    
+    Exit Sub
+
+Map_CreateObject_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mPooMap" & "->" & "Map_CreateObject"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub Map_DestroyObject(ByVal X As Byte, ByVal Y As Byte)
+    
+    On Error GoTo Map_DestroyObject_Err
+    
 
     If (Map_InBounds(X, Y)) Then
 
@@ -63,9 +90,21 @@ Public Sub Map_DestroyObject(ByVal X As Byte, ByVal Y As Byte)
 
     End If
 
+    
+    Exit Sub
+
+Map_DestroyObject_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mPooMap" & "->" & "Map_DestroyObject"
+    End If
+Resume Next
+    
 End Sub
 
 Public Function Map_PosExitsObject(ByVal X As Byte, ByVal Y As Byte) As Integer
+    
+    On Error GoTo Map_PosExitsObject_Err
+    
  
     '*****************************************************************
     'Checks to see if a tile position has a char_index and return it
@@ -78,6 +117,15 @@ Public Function Map_PosExitsObject(ByVal X As Byte, ByVal Y As Byte) As Integer
 
     End If
  
+    
+    Exit Function
+
+Map_PosExitsObject_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mPooMap" & "->" & "Map_PosExitsObject"
+    End If
+Resume Next
+    
 End Function
 
 Public Function Map_GetBlocked(ByVal X As Integer, ByVal Y As Integer) As Boolean
@@ -86,21 +134,45 @@ Public Function Map_GetBlocked(ByVal X As Integer, ByVal Y As Integer) As Boolea
     'Last Modify Date: 10/07/2002
     'Checks to see if a tile position is blocked
     '*****************************************************************
+    
+    On Error GoTo Map_GetBlocked_Err
+    
 
     If (Map_InBounds(X, Y)) Then
         Map_GetBlocked = (MapData(X, Y).Blocked)
 
     End If
 
+    
+    Exit Function
+
+Map_GetBlocked_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mPooMap" & "->" & "Map_GetBlocked"
+    End If
+Resume Next
+    
 End Function
 
 Public Sub Map_SetBlocked(ByVal X As Byte, ByVal Y As Byte, ByVal block As Byte)
+    
+    On Error GoTo Map_SetBlocked_Err
+    
 
     If (Map_InBounds(X, Y)) Then
         MapData(X, Y).Blocked = block
 
     End If
 
+    
+    Exit Sub
+
+Map_SetBlocked_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mPooMap" & "->" & "Map_SetBlocked"
+    End If
+Resume Next
+    
 End Sub
 
 Sub Map_MoveTo(ByVal Direccion As E_Heading)
@@ -112,6 +184,9 @@ Sub Map_MoveTo(ByVal Direccion As E_Heading)
     ' 12/08/2007: Tavo    - Si el usuario esta paralizado no se puede mover.
     ' 06/28/2008: NicoNZ - Saqué lo que impedía que si el usuario estaba paralizado se ejecute el sub.
     '***************************************************
+    
+    On Error GoTo Map_MoveTo_Err
+    
 
     Dim LegalOk As Boolean
     
@@ -160,6 +235,15 @@ Sub Map_MoveTo(ByVal Direccion As E_Heading)
     ' Update 3D sounds!
     Call Audio.MoveListener(UserPos.X, UserPos.Y)
         
+    
+    Exit Sub
+
+Map_MoveTo_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mPooMap" & "->" & "Map_MoveTo"
+    End If
+Resume Next
+    
 End Sub
 
 Function Map_LegalPos(ByVal X As Integer, ByVal Y As Integer) As Boolean
@@ -170,6 +254,9 @@ Function Map_LegalPos(ByVal X As Integer, ByVal Y As Integer) As Boolean
     '10/05/2009: ZaMa - Now you can't change position with a casper which is in the shore.
     '01/08/2009: ZaMa - Now invisible admins can't change position with caspers.
     '*****************************************************************
+    
+    On Error GoTo Map_LegalPos_Err
+    
 
     Dim CharIndex As Integer
     
@@ -255,12 +342,24 @@ Function Map_LegalPos(ByVal X As Integer, ByVal Y As Integer) As Boolean
     
     Map_LegalPos = True
 
+    
+    Exit Function
+
+Map_LegalPos_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mPooMap" & "->" & "Map_LegalPos"
+    End If
+Resume Next
+    
 End Function
 
 Function Map_InBounds(ByVal X As Integer, ByVal Y As Integer) As Boolean
     '*****************************************************************
     'Checks to see if a tile position is in the maps bounds
     '*****************************************************************
+    
+    On Error GoTo Map_InBounds_Err
+    
 
     If (X < XMinMapSize) Or (X > XMaxMapSize) Or (Y < YMinMapSize) Or (Y > YMaxMapSize) Then
         Map_InBounds = False
@@ -271,9 +370,21 @@ Function Map_InBounds(ByVal X As Integer, ByVal Y As Integer) As Boolean
     
     Map_InBounds = True
 
+    
+    Exit Function
+
+Map_InBounds_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mPooMap" & "->" & "Map_InBounds"
+    End If
+Resume Next
+    
 End Function
 
 Public Function Map_CheckBonfire(ByRef Location As Position) As Boolean
+    
+    On Error GoTo Map_CheckBonfire_Err
+    
 
     Dim j As Long
     Dim k As Long
@@ -297,9 +408,21 @@ Public Function Map_CheckBonfire(ByRef Location As Position) As Boolean
         Next k
     Next j
 
+    
+    Exit Function
+
+Map_CheckBonfire_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mPooMap" & "->" & "Map_CheckBonfire"
+    End If
+Resume Next
+    
 End Function
 
 Function Map_CheckWater(ByVal X As Integer, ByVal Y As Integer) As Boolean
+    
+    On Error GoTo Map_CheckWater_Err
+    
 
     If Map_InBounds(X, Y) Then
 
@@ -316,5 +439,14 @@ Function Map_CheckWater(ByVal X As Integer, ByVal Y As Integer) As Boolean
 
     End If
                   
+    
+    Exit Function
+
+Map_CheckWater_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mPooMap" & "->" & "Map_CheckWater"
+    End If
+Resume Next
+    
 End Function
 

@@ -115,6 +115,9 @@ Private MisMSG(0 To MAX_GM_MSG) As String
 Private Apunt(0 To MAX_GM_MSG)  As Integer
 
 Public Sub CrearGMmSg(Nick As String, msg As String)
+    
+    On Error GoTo CrearGMmSg_Err
+    
 
     If List1.ListCount < MAX_GM_MSG Then
         List1.AddItem Nick & "-" & List1.ListCount
@@ -123,15 +126,39 @@ Public Sub CrearGMmSg(Nick As String, msg As String)
 
     End If
 
+    
+    Exit Sub
+
+CrearGMmSg_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMSG" & "->" & "CrearGMmSg"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_Deactivate()
+    
+    On Error GoTo Form_Deactivate_Err
+    
     Me.Visible = False
     List1.Clear
 
+    
+    Exit Sub
+
+Form_Deactivate_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMSG" & "->" & "Form_Deactivate"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_Load()
+    
+    On Error GoTo Form_Load_Err
+    
 
     ' Handles Form movement (drag and drop).
     Set clsFormulario = New clsFormMovementManager
@@ -143,9 +170,21 @@ Private Sub Form_Load()
     
     Call LoadButtons
 
+    
+    Exit Sub
+
+Form_Load_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMSG" & "->" & "Form_Load"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadButtons()
+    
+    On Error GoTo LoadButtons_Err
+    
     Dim GrhPath As String
     
     GrhPath = DirGraficos
@@ -156,40 +195,112 @@ Private Sub LoadButtons()
     
     Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarShowSos.jpg", GrhPath & "BotonCerrarRolloverShowSos.jpg", GrhPath & "BotonCerrarClickShowSos.jpg", Me)
 
+    
+    Exit Sub
+
+LoadButtons_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMSG" & "->" & "LoadButtons"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Form_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+Form_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMSG" & "->" & "Form_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgCerrar_Click()
+    
+    On Error GoTo imgCerrar_Click_Err
+    
     Me.Visible = False
     List1.Clear
 
+    
+    Exit Sub
+
+imgCerrar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMSG" & "->" & "imgCerrar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub list1_Click()
+    
+    On Error GoTo list1_Click_Err
+    
     Dim ind As Integer
     ind = Val(ReadField(2, List1.List(List1.ListIndex), Asc("-")))
 
+    
+    Exit Sub
+
+list1_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMSG" & "->" & "list1_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub List1_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo List1_MouseDown_Err
+    
 
     If Button = vbRightButton Then
         PopupMenu menU_usuario
 
     End If
 
+    
+    Exit Sub
+
+List1_MouseDown_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMSG" & "->" & "List1_MouseDown"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub List1_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo List1_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+List1_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMSG" & "->" & "List1_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub mnuBorrar_Click()
+    
+    On Error GoTo mnuBorrar_Click_Err
+    
 
     If List1.ListIndex < 0 Then Exit Sub
     'Pablo (ToxicWaste)
@@ -201,24 +312,57 @@ Private Sub mnuBorrar_Click()
     
     List1.RemoveItem List1.ListIndex
 
+    
+    Exit Sub
+
+mnuBorrar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMSG" & "->" & "mnuBorrar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub mnuIR_Click()
     'Pablo (ToxicWaste)
+    
+    On Error GoTo mnuIR_Click_Err
+    
     Dim aux As String
     aux = mid$(ReadField(1, List1.List(List1.ListIndex), Asc("-")), 10, Len(ReadField(1, List1.List(List1.ListIndex), Asc("-"))))
     Call WriteGoToChar(aux)
     '/Pablo (ToxicWaste)
     'Call WriteGoToChar(ReadField(1, List1.List(List1.listIndex), Asc("-")))
     
+    
+    Exit Sub
+
+mnuIR_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMSG" & "->" & "mnuIR_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub mnutraer_Click()
     'Pablo (ToxicWaste)
+    
+    On Error GoTo mnutraer_Click_Err
+    
     Dim aux As String
     aux = mid$(ReadField(1, List1.List(List1.ListIndex), Asc("-")), 10, Len(ReadField(1, List1.List(List1.ListIndex), Asc("-"))))
     Call WriteSummonChar(aux)
 
     'Pablo (ToxicWaste)
     'Call WriteSummonChar(ReadField(1, List1.List(List1.listIndex), Asc("-")))
+    
+    Exit Sub
+
+mnutraer_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMSG" & "->" & "mnutraer_Click"
+    End If
+Resume Next
+    
 End Sub

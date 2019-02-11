@@ -1195,31 +1195,70 @@ Option Explicit
 ' CuasesValidation parameter set to false (unless you want to code your custom flag system to know when to allow or not the loose of focus).
 
 Private Sub cboListaUsus_Validate(Cancel As Boolean)
+    
+    On Error GoTo cboListaUsus_Validate_Err
+    
     Cancel = True
 
+    
+    Exit Sub
+
+cboListaUsus_Validate_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cboListaUsus_Validate"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdACEPTCONSE_Click()
     '/ACEPTCONSE
+    
+    On Error GoTo cmdACEPTCONSE_Click_Err
+    
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
     If LenB(Nick) <> 0 Then If MsgBox("¿Seguro desea aceptar a " & Nick & " como consejero real?", vbYesNo, "Atencion!") = vbYes Then Call WriteAcceptRoyalCouncilMember(Nick)
 
+    
+    Exit Sub
+
+cmdACEPTCONSE_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdACEPTCONSE_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdACEPTCONSECAOS_Click()
     '/ACEPTCONSECAOS
+    
+    On Error GoTo cmdACEPTCONSECAOS_Click_Err
+    
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
     If LenB(Nick) <> 0 Then If MsgBox("¿Seguro desea aceptar a " & Nick & " como consejero del caos?", vbYesNo, "Atencion!") = vbYes Then Call WriteAcceptChaosCouncilMember(Nick)
 
+    
+    Exit Sub
+
+cmdACEPTCONSECAOS_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdACEPTCONSECAOS_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdAddFollow_Click()
+    
+    On Error GoTo cmdAddFollow_Click_Err
+    
     Dim i As Long
 
     For i = 0 To lstUsers.ListCount
@@ -1249,9 +1288,21 @@ Private Sub cmdAddFollow_Click()
     txtNuevoUsuario.Text = vbNullString
     txtNuevaDescrip.Text = vbNullString
 
+    
+    Exit Sub
+
+cmdAddFollow_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdAddFollow_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdAddObs_Click()
+    
+    On Error GoTo cmdAddObs_Click_Err
+    
     Dim Obs As String
     
     Obs = InputBox("Ingrese la observación", "Nueva Observación")
@@ -1270,10 +1321,22 @@ Private Sub cmdAddObs_Click()
     
     Call WriteRecordAddObs(lstUsers.ListIndex + 1, Obs)
 
+    
+    Exit Sub
+
+cmdAddObs_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdAddObs_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdADVERTENCIA_Click()
     '/ADVERTENCIA
+    
+    On Error GoTo cmdADVERTENCIA_Click_Err
+    
     Dim tStr As String
     Dim Nick As String
 
@@ -1290,20 +1353,44 @@ Private Sub cmdADVERTENCIA_Click()
 
     End If
 
+    
+    Exit Sub
+
+cmdADVERTENCIA_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdADVERTENCIA_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdBAL_Click()
     '/BAL
+    
+    On Error GoTo cmdBAL_Click_Err
+    
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
     If LenB(Nick) <> 0 Then Call WriteRequestCharGold(Nick)
 
+    
+    Exit Sub
+
+cmdBAL_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdBAL_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdBAN_Click()
     '/BAN
+    
+    On Error GoTo cmdBAN_Click_Err
+    
     Dim tStr As String
     Dim Nick As String
 
@@ -1316,20 +1403,44 @@ Private Sub cmdBAN_Click()
 
     End If
 
+    
+    Exit Sub
+
+cmdBAN_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdBAN_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdBANCLAN_Click()
     '/BANCLAN
+    
+    On Error GoTo cmdBANCLAN_Click_Err
+    
     Dim tStr As String
     
     tStr = InputBox("Escriba el nombre del clan.", "Banear clan")
 
     If LenB(tStr) <> 0 Then If MsgBox("¿Seguro desea banear al clan " & tStr & "?", vbYesNo, "Atencion!") = vbYes Then Call WriteGuildBan(tStr)
 
+    
+    Exit Sub
+
+cmdBANCLAN_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdBANCLAN_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdBANIP_Click()
     '/BANIP
+    
+    On Error GoTo cmdBANIP_Click_Err
+    
     Dim tStr   As String
     Dim Reason As String
     
@@ -1339,29 +1450,77 @@ Private Sub cmdBANIP_Click()
     
     If LenB(tStr) <> 0 Then If MsgBox("¿Seguro desea banear la ip " & tStr & "?", vbYesNo, "Atencion!") = vbYes Then Call ParseUserCommand("/BANIP " & tStr & " " & Reason) 'We use the Parser to control the command format
 
+    
+    Exit Sub
+
+cmdBANIP_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdBANIP_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdBANIPLIST_Click()
     '/BANIPLIST
+    
+    On Error GoTo cmdBANIPLIST_Click_Err
+    
     Call WriteBannedIPList
 
+    
+    Exit Sub
+
+cmdBANIPLIST_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdBANIPLIST_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdBANIPRELOAD_Click()
     '/BANIPRELOAD
+    
+    On Error GoTo cmdBANIPRELOAD_Click_Err
+    
     Call WriteBannedIPReload
 
+    
+    Exit Sub
+
+cmdBANIPRELOAD_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdBANIPRELOAD_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdBORRAR_SOS_Click()
+    
+    On Error GoTo cmdBORRAR_SOS_Click_Err
+    
 
     '/BORRAR SOS
     If MsgBox("¿Seguro desea borrar el SOS?", vbYesNo, "Atencion!") = vbYes Then Call WriteCleanSOS
 
+    
+    Exit Sub
+
+cmdBORRAR_SOS_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdBORRAR_SOS_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdBORRARPENA_Click()
     '/BORRARPENA
+    
+    On Error GoTo cmdBORRARPENA_Click_Err
+    
     Dim tStr As String
     Dim Nick As String
 
@@ -1374,30 +1533,66 @@ Private Sub cmdBORRARPENA_Click()
 
     End If
 
+    
+    Exit Sub
+
+cmdBORRARPENA_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdBORRARPENA_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdBOV_Click()
     '/BOV
+    
+    On Error GoTo cmdBOV_Click_Err
+    
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
     If LenB(Nick) <> 0 Then Call WriteRequestCharBank(Nick)
 
+    
+    Exit Sub
+
+cmdBOV_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdBOV_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdCAOSMSG_Click()
     '/CAOSMSG
+    
+    On Error GoTo cmdCAOSMSG_Click_Err
+    
     Dim tStr As String
     
     tStr = InputBox("Escriba un Mensaje.", "Mensaje por consola LegionOscura")
 
     If LenB(tStr) <> 0 Then Call WriteChaosLegionMessage(tStr)
 
+    
+    Exit Sub
+
+cmdCAOSMSG_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdCAOSMSG_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdCARCEL_Click()
     '/CARCEL
+    
+    On Error GoTo cmdCARCEL_Click_Err
+    
     Dim tStr As String
     Dim Nick As String
 
@@ -1415,539 +1610,1283 @@ Private Sub cmdCARCEL_Click()
 
     End If
 
+    
+    Exit Sub
+
+cmdCARCEL_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdCARCEL_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdCC_Click()
     '/CC
+    
+    On Error GoTo cmdCC_Click_Err
+    
     Call WriteSpawnListRequest
 
+    
+    Exit Sub
+
+cmdCC_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdCC_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdCHATCOLOR_Click()
     '/CHATCOLOR
+    
+    On Error GoTo cmdCHATCOLOR_Click_Err
+    
     Dim tStr As String
     
     tStr = InputBox("Defina el color (R G B). Deje en blanco para usar el default.", "Cambiar color del chat")
     
     Call ParseUserCommand("/CHATCOLOR " & tStr) 'We use the Parser to control the command format
 
+    
+    Exit Sub
+
+cmdCHATCOLOR_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdCHATCOLOR_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdCI_Click()
     '/CI
+    
+    On Error GoTo cmdCI_Click_Err
+    
     Dim tStr As String
     
     tStr = InputBox("Indique el número del objeto a crear.", "Crear Objeto")
 
     If LenB(tStr) <> 0 Then If MsgBox("¿Seguro desea crear el objeto " & tStr & "?", vbYesNo, "Atencion!") = vbYes Then Call ParseUserCommand("/CI " & tStr) 'We use the Parser to control the command format
 
+    
+    Exit Sub
+
+cmdCI_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdCI_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdCIUMSG_Click()
     '/CIUMSG
+    
+    On Error GoTo cmdCIUMSG_Click_Err
+    
     Dim tStr As String
     
     tStr = InputBox("Escriba un Mensaje.", "Mensaje por consola Ciudadanos")
 
     If LenB(tStr) <> 0 Then Call WriteCitizenMessage(tStr)
 
+    
+    Exit Sub
+
+cmdCIUMSG_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdCIUMSG_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdCONDEN_Click()
     '/CONDEN
+    
+    On Error GoTo cmdCONDEN_Click_Err
+    
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
     If LenB(Nick) <> 0 Then If MsgBox("¿Seguro desea volver criminal a " & Nick & "?", vbYesNo, "Atencion!") = vbYes Then Call WriteTurnCriminal(Nick)
 
+    
+    Exit Sub
+
+cmdCONDEN_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdCONDEN_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdConsulta_Click()
+    
+    On Error GoTo cmdConsulta_Click_Err
+    
     WriteConsultation
 
+    
+    Exit Sub
+
+cmdConsulta_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdConsulta_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdCT_Click()
     '/CT
+    
+    On Error GoTo cmdCT_Click_Err
+    
     Dim tStr As String
     
     tStr = InputBox("Indique la posición donde lleva el portal (MAPA X Y).", "Crear Portal")
 
     If LenB(tStr) <> 0 Then Call ParseUserCommand("/CT " & tStr) 'We use the Parser to control the command format
 
+    
+    Exit Sub
+
+cmdCT_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdCT_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdDE_Click()
+    
+    On Error GoTo cmdDE_Click_Err
+    
 
     '/DE
     If MsgBox("¿Seguro desea destruir el Tile Exit?", vbYesNo, "Atencion!") = vbYes Then Call WriteExitDestroy
 
+    
+    Exit Sub
+
+cmdDE_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdDE_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdDEST_Click()
+    
+    On Error GoTo cmdDEST_Click_Err
+    
 
     '/DEST
     If MsgBox("¿Seguro desea destruir el objeto sobre el que esta parado?", vbYesNo, "Atencion!") = vbYes Then Call WriteDestroyItems
 
+    
+    Exit Sub
+
+cmdDEST_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdDEST_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdDONDE_Click()
     '/DONDE
+    
+    On Error GoTo cmdDONDE_Click_Err
+    
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
     If LenB(Nick) <> 0 Then Call WriteWhere(Nick)
 
+    
+    Exit Sub
+
+cmdDONDE_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdDONDE_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdDT_Click()
+    
+    On Error GoTo cmdDT_Click_Err
+    
 
     'DT
     If MsgBox("¿Seguro desea destruir el portal?", vbYesNo, "Atencion!") = vbYes Then Call WriteTeleportDestroy
 
+    
+    Exit Sub
+
+cmdDT_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdDT_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdECHAR_Click()
     '/ECHAR
+    
+    On Error GoTo cmdECHAR_Click_Err
+    
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
     If LenB(Nick) <> 0 Then Call WriteKick(Nick)
 
+    
+    Exit Sub
+
+cmdECHAR_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdECHAR_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdEJECUTAR_Click()
     '/EJECUTAR
+    
+    On Error GoTo cmdEJECUTAR_Click_Err
+    
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
     If LenB(Nick) <> 0 Then If MsgBox("¿Seguro desea ejecutar a " & Nick & "?", vbYesNo, "Atencion!") = vbYes Then Call WriteExecute(Nick)
 
+    
+    Exit Sub
+
+cmdEJECUTAR_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdEJECUTAR_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdESTUPIDO_Click()
     '/ESTUPIDO
+    
+    On Error GoTo cmdESTUPIDO_Click_Err
+    
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
     If LenB(Nick) <> 0 Then Call WriteMakeDumb(Nick)
 
+    
+    Exit Sub
+
+cmdESTUPIDO_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdESTUPIDO_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdGMSG_Click()
     '/GMSG
+    
+    On Error GoTo cmdGMSG_Click_Err
+    
     Dim tStr As String
     
     tStr = InputBox("Escriba el mensaje.", "Mensaje por consola de GM")
 
     If LenB(tStr) <> 0 Then Call WriteGMMessage(tStr)
 
+    
+    Exit Sub
+
+cmdGMSG_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdGMSG_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdHORA_Click()
     '/HORA
+    
+    On Error GoTo cmdHORA_Click_Err
+    
     Call Protocol.WriteServerTime
 
+    
+    Exit Sub
+
+cmdHORA_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdHORA_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdIGNORADO_Click()
     '/IGNORADO
+    
+    On Error GoTo cmdIGNORADO_Click_Err
+    
     Call WriteIgnored
 
+    
+    Exit Sub
+
+cmdIGNORADO_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdIGNORADO_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdINFO_Click()
     '/INFO
+    
+    On Error GoTo cmdINFO_Click_Err
+    
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
     If LenB(Nick) <> 0 Then Call WriteRequestCharInfo(Nick)
 
+    
+    Exit Sub
+
+cmdINFO_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdINFO_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdINV_Click()
     '/INV
+    
+    On Error GoTo cmdINV_Click_Err
+    
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
     If LenB(Nick) <> 0 Then Call WriteRequestCharInventory(Nick)
 
+    
+    Exit Sub
+
+cmdINV_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdINV_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdINVISIBLE_Click()
     '/INVISIBLE
+    
+    On Error GoTo cmdINVISIBLE_Click_Err
+    
     Call WriteInvisible
 
+    
+    Exit Sub
+
+cmdINVISIBLE_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdINVISIBLE_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdIP2NICK_Click()
     '/IP2NICK
+    
+    On Error GoTo cmdIP2NICK_Click_Err
+    
     Dim tStr As String
     
     tStr = InputBox("Escriba la ip.", "IP to Nick")
 
     If LenB(tStr) <> 0 Then Call ParseUserCommand("/IP2NICK " & tStr) 'We use the Parser to control the command format
 
+    
+    Exit Sub
+
+cmdIP2NICK_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdIP2NICK_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdIRA_Click()
     '/IRA
+    
+    On Error GoTo cmdIRA_Click_Err
+    
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
     If LenB(Nick) <> 0 Then Call WriteGoToChar(Nick)
 
+    
+    Exit Sub
+
+cmdIRA_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdIRA_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdIRCERCA_Click()
     '/IRCERCA
+    
+    On Error GoTo cmdIRCERCA_Click_Err
+    
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
     If LenB(Nick) <> 0 Then Call WriteGoNearby(Nick)
 
+    
+    Exit Sub
+
+cmdIRCERCA_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdIRCERCA_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdKICKCONSE_Click()
     'KICKCONSE
+    
+    On Error GoTo cmdKICKCONSE_Click_Err
+    
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
     If LenB(Nick) <> 0 Then If MsgBox("¿Seguro desea destituir a " & Nick & " de su cargo de consejero?", vbYesNo, "Atencion!") = vbYes Then Call WriteCouncilKick(Nick)
 
+    
+    Exit Sub
+
+cmdKICKCONSE_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdKICKCONSE_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdLASTEMAIL_Click()
     '/LASTEMAIL
+    
+    On Error GoTo cmdLASTEMAIL_Click_Err
+    
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
     If LenB(Nick) <> 0 Then Call WriteRequestCharMail(Nick)
 
+    
+    Exit Sub
+
+cmdLASTEMAIL_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdLASTEMAIL_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdLASTIP_Click()
     '/LASTIP
+    
+    On Error GoTo cmdLASTIP_Click_Err
+    
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
     If LenB(Nick) <> 0 Then Call WriteLastIP(Nick)
 
+    
+    Exit Sub
+
+cmdLASTIP_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdLASTIP_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdLLUVIA_Click()
     '/LLUVIA
+    
+    On Error GoTo cmdLLUVIA_Click_Err
+    
     Call WriteRainToggle
 
+    
+    Exit Sub
+
+cmdLLUVIA_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdLLUVIA_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdMASSDEST_Click()
+    
+    On Error GoTo cmdMASSDEST_Click_Err
+    
 
     '/MASSDEST
     If MsgBox("¿Seguro desea destruir todos los items del mapa?", vbYesNo, "Atencion!") = vbYes Then Call WriteDestroyAllItemsInArea
 
+    
+    Exit Sub
+
+cmdMASSDEST_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdMASSDEST_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdMIEMBROSCLAN_Click()
     '/MIEMBROSCLAN
+    
+    On Error GoTo cmdMIEMBROSCLAN_Click_Err
+    
     Dim tStr As String
     
     tStr = InputBox("Escriba el nombre del clan.", "Lista de miembros del clan")
 
     If LenB(tStr) <> 0 Then Call WriteGuildMemberList(tStr)
 
+    
+    Exit Sub
+
+cmdMIEMBROSCLAN_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdMIEMBROSCLAN_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdMOTDCAMBIA_Click()
     '/MOTDCAMBIA
+    
+    On Error GoTo cmdMOTDCAMBIA_Click_Err
+    
     Call WriteChangeMOTD
 
+    
+    Exit Sub
+
+cmdMOTDCAMBIA_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdMOTDCAMBIA_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdNAVE_Click()
     '/NAVE
+    
+    On Error GoTo cmdNAVE_Click_Err
+    
     Call WriteNavigateToggle
 
+    
+    Exit Sub
+
+cmdNAVE_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdNAVE_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdNENE_Click()
     '/NENE
+    
+    On Error GoTo cmdNENE_Click_Err
+    
     Dim tStr As String
     
     tStr = InputBox("Indique el mapa.", "Número de NPCs enemigos.")
 
     If LenB(tStr) <> 0 Then Call ParseUserCommand("/NENE " & tStr) 'We use the Parser to control the command format
 
+    
+    Exit Sub
+
+cmdNENE_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdNENE_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdNICK2IP_Click()
     '/NICK2IP
+    
+    On Error GoTo cmdNICK2IP_Click_Err
+    
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
     If LenB(Nick) <> 0 Then Call WriteNickToIP(Nick)
 
+    
+    Exit Sub
+
+cmdNICK2IP_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdNICK2IP_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdNOCAOS_Click()
     '/NOCAOS
+    
+    On Error GoTo cmdNOCAOS_Click_Err
+    
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
     If LenB(Nick) <> 0 Then If MsgBox("¿Seguro desea expulsar a " & Nick & " de la legión oscura?", vbYesNo, "Atencion!") = vbYes Then Call WriteChaosLegionKick(Nick)
 
+    
+    Exit Sub
+
+cmdNOCAOS_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdNOCAOS_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdNOESTUPIDO_Click()
     '/NOESTUPIDO
+    
+    On Error GoTo cmdNOESTUPIDO_Click_Err
+    
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
     If LenB(Nick) <> 0 Then Call WriteMakeDumbNoMore(Nick)
 
+    
+    Exit Sub
+
+cmdNOESTUPIDO_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdNOESTUPIDO_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdNOREAL_Click()
     '/NOREAL
+    
+    On Error GoTo cmdNOREAL_Click_Err
+    
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
     If LenB(Nick) <> 0 Then If MsgBox("¿Seguro desea expulsar a " & Nick & " de la armada real?", vbYesNo, "Atencion!") = vbYes Then Call WriteRoyalArmyKick(Nick)
 
+    
+    Exit Sub
+
+cmdNOREAL_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdNOREAL_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdOCULTANDO_Click()
     '/OCULTANDO
+    
+    On Error GoTo cmdOCULTANDO_Click_Err
+    
     Call WriteHiding
 
+    
+    Exit Sub
+
+cmdOCULTANDO_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdOCULTANDO_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdONLINECAOS_Click()
     '/ONLINECAOS
+    
+    On Error GoTo cmdONLINECAOS_Click_Err
+    
     Call WriteOnlineChaosLegion
 
+    
+    Exit Sub
+
+cmdONLINECAOS_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdONLINECAOS_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdONLINEGM_Click()
     '/ONLINEGM
+    
+    On Error GoTo cmdONLINEGM_Click_Err
+    
     Call WriteOnlineGM
 
+    
+    Exit Sub
+
+cmdONLINEGM_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdONLINEGM_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdONLINEMAP_Click()
     '/ONLINEMAP
+    
+    On Error GoTo cmdONLINEMAP_Click_Err
+    
     Call WriteOnlineMap(UserMap)
 
+    
+    Exit Sub
+
+cmdONLINEMAP_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdONLINEMAP_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdONLINEREAL_Click()
     '/ONLINEREAL
+    
+    On Error GoTo cmdONLINEREAL_Click_Err
+    
     Call WriteOnlineRoyalArmy
 
+    
+    Exit Sub
+
+cmdONLINEREAL_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdONLINEREAL_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdPENAS_Click()
     '/PENAS
+    
+    On Error GoTo cmdPENAS_Click_Err
+    
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
     If LenB(Nick) <> 0 Then Call WritePunishments(Nick)
 
+    
+    Exit Sub
+
+cmdPENAS_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdPENAS_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdPERDON_Click()
     '/PERDON
+    
+    On Error GoTo cmdPERDON_Click_Err
+    
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
     If LenB(Nick) <> 0 Then Call WriteForgive(Nick)
 
+    
+    Exit Sub
+
+cmdPERDON_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdPERDON_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdPISO_Click()
     '/PISO
+    
+    On Error GoTo cmdPISO_Click_Err
+    
     Call WriteItemsInTheFloor
 
+    
+    Exit Sub
+
+cmdPISO_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdPISO_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdRAJAR_Click()
     '/RAJAR
+    
+    On Error GoTo cmdRAJAR_Click_Err
+    
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
     If LenB(Nick) <> 0 Then If MsgBox("¿Seguro desea resetear la facción de " & Nick & "?", vbYesNo, "Atencion!") = vbYes Then Call WriteResetFactions(Nick)
 
+    
+    Exit Sub
+
+cmdRAJAR_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdRAJAR_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdRAJARCLAN_Click()
     '/RAJARCLAN
+    
+    On Error GoTo cmdRAJARCLAN_Click_Err
+    
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
     If LenB(Nick) <> 0 Then If MsgBox("¿Seguro desea expulsar a " & Nick & " de su clan?", vbYesNo, "Atencion!") = vbYes Then Call WriteRemoveCharFromGuild(Nick)
 
+    
+    Exit Sub
+
+cmdRAJARCLAN_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdRAJARCLAN_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdREALMSG_Click()
     '/REALMSG
+    
+    On Error GoTo cmdREALMSG_Click_Err
+    
     Dim tStr As String
     
     tStr = InputBox("Escriba un Mensaje.", "Mensaje por consola ArmadaReal")
 
     If LenB(tStr) <> 0 Then Call WriteRoyalArmyMessage(tStr)
 
+    
+    Exit Sub
+
+cmdREALMSG_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdREALMSG_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdRefresh_Click()
+    
+    On Error GoTo cmdRefresh_Click_Err
+    
     Call ClearRecordDetails
     Call WriteRecordListRequest
 
+    
+    Exit Sub
+
+cmdRefresh_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdRefresh_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdREM_Click()
     '/REM
+    
+    On Error GoTo cmdREM_Click_Err
+    
     Dim tStr As String
     
     tStr = InputBox("Escriba el comentario.", "Comentario en el logGM")
 
     If LenB(tStr) <> 0 Then Call WriteComment(tStr)
 
+    
+    Exit Sub
+
+cmdREM_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdREM_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdREVIVIR_Click()
     '/REVIVIR
+    
+    On Error GoTo cmdREVIVIR_Click_Err
+    
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
     If LenB(Nick) <> 0 Then Call WriteReviveChar(Nick)
 
+    
+    Exit Sub
+
+cmdREVIVIR_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdREVIVIR_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdRMSG_Click()
     '/RMSG
+    
+    On Error GoTo cmdRMSG_Click_Err
+    
     Dim tStr As String
     
     tStr = InputBox("Escriba el mensaje.", "Mensaje por consola de RoleMaster")
 
     If LenB(tStr) <> 0 Then Call WriteServerMessage(tStr)
 
+    
+    Exit Sub
+
+cmdRMSG_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdRMSG_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdSETDESC_Click()
     '/SETDESC
+    
+    On Error GoTo cmdSETDESC_Click_Err
+    
     Dim tStr As String
     
     tStr = InputBox("Escriba una DESC.", "Set Description")
 
     If LenB(tStr) <> 0 Then Call WriteSetCharDescription(tStr)
 
+    
+    Exit Sub
+
+cmdSETDESC_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdSETDESC_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdSHOW_SOS_Click()
     '/SHOW SOS
+    
+    On Error GoTo cmdSHOW_SOS_Click_Err
+    
     Call WriteSOSShowList
 
+    
+    Exit Sub
+
+cmdSHOW_SOS_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdSHOW_SOS_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdSHOWCMSG_Click()
     '/SHOWCMSG
+    
+    On Error GoTo cmdSHOWCMSG_Click_Err
+    
     Dim tStr As String
     
     tStr = InputBox("Escriba el nombre del clan que desea escuchar.", "Escuchar los mensajes del clan")
 
     If LenB(tStr) <> 0 Then Call WriteShowGuildMessages(tStr)
 
+    
+    Exit Sub
+
+cmdSHOWCMSG_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdSHOWCMSG_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdSHOWNAME_Click()
     '/SHOWNAME
+    
+    On Error GoTo cmdSHOWNAME_Click_Err
+    
     Call WriteShowName
 
+    
+    Exit Sub
+
+cmdSHOWNAME_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdSHOWNAME_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdSILENCIAR_Click()
     '/SILENCIAR
+    
+    On Error GoTo cmdSILENCIAR_Click_Err
+    
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
     If LenB(Nick) <> 0 Then Call WriteSilence(Nick)
 
+    
+    Exit Sub
+
+cmdSILENCIAR_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdSILENCIAR_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdSKILLS_Click()
     '/SKILLS
+    
+    On Error GoTo cmdSKILLS_Click_Err
+    
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
     If LenB(Nick) <> 0 Then Call WriteRequestCharSkills(Nick)
 
+    
+    Exit Sub
+
+cmdSKILLS_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdSKILLS_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdSMSG_Click()
     '/SMSG
+    
+    On Error GoTo cmdSMSG_Click_Err
+    
     Dim tStr As String
     
     tStr = InputBox("Escriba el mensaje.", "Mensaje de sistema")
 
     If LenB(tStr) <> 0 Then Call WriteSystemMessage(tStr)
 
+    
+    Exit Sub
+
+cmdSMSG_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdSMSG_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdSTAT_Click()
     '/STAT
+    
+    On Error GoTo cmdSTAT_Click_Err
+    
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
     If LenB(Nick) <> 0 Then Call WriteRequestCharStats(Nick)
 
+    
+    Exit Sub
+
+cmdSTAT_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdSTAT_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdSUM_Click()
     '/SUM
+    
+    On Error GoTo cmdSUM_Click_Err
+    
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
     If LenB(Nick) <> 0 Then Call WriteSummonChar(Nick)
 
+    
+    Exit Sub
+
+cmdSUM_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdSUM_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdTALKAS_Click()
     '/TALKAS
+    
+    On Error GoTo cmdTALKAS_Click_Err
+    
     Dim tStr As String
     
     tStr = InputBox("Escriba un Mensaje.", "Hablar por NPC")
 
     If LenB(tStr) <> 0 Then Call WriteTalkAsNPC(tStr)
 
+    
+    Exit Sub
+
+cmdTALKAS_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdTALKAS_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdTELEP_Click()
     '/TELEP
+    
+    On Error GoTo cmdTELEP_Click_Err
+    
     Dim tStr As String
     Dim Nick As String
 
@@ -1960,35 +2899,83 @@ Private Sub cmdTELEP_Click()
 
     End If
 
+    
+    Exit Sub
+
+cmdTELEP_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdTELEP_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdTRABAJANDO_Click()
     '/TRABAJANDO
+    
+    On Error GoTo cmdTRABAJANDO_Click_Err
+    
     Call WriteWorking
 
+    
+    Exit Sub
+
+cmdTRABAJANDO_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdTRABAJANDO_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdUNBAN_Click()
     '/UNBAN
+    
+    On Error GoTo cmdUNBAN_Click_Err
+    
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
     If LenB(Nick) <> 0 Then If MsgBox("¿Seguro desea unbanear a " & Nick & "?", vbYesNo, "Atencion!") = vbYes Then Call WriteUnbanChar(Nick)
 
+    
+    Exit Sub
+
+cmdUNBAN_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdUNBAN_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdUNBANIP_Click()
     '/UNBANIP
+    
+    On Error GoTo cmdUNBANIP_Click_Err
+    
     Dim tStr As String
     
     tStr = InputBox("Escriba el ip.", "Unbanear IP")
 
     If LenB(tStr) <> 0 Then If MsgBox("¿Seguro desea unbanear la ip " & tStr & "?", vbYesNo, "Atencion!") = vbYes Then Call ParseUserCommand("/UNBANIP " & tStr) 'We use the Parser to control the command format
 
+    
+    Exit Sub
+
+cmdUNBANIP_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdUNBANIP_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_Load()
+    
+    On Error GoTo Form_Load_Err
+    
     Call showTab(1)
     
     'Actualiza los usuarios online
@@ -2000,28 +2987,76 @@ Private Sub Form_Load()
     'Oculta el menú usado para el PopUp
     mnuSeguimientos.Visible = False
 
+    
+    Exit Sub
+
+Form_Load_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "Form_Load"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdActualiza_Click()
+    
+    On Error GoTo cmdActualiza_Click_Err
+    
     Call WriteRequestUserList
     Call FlushBuffer
 
+    
+    Exit Sub
+
+cmdActualiza_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdActualiza_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdCerrar_Click()
+    
+    On Error GoTo cmdCerrar_Click_Err
+    
     Unload Me
 
+    
+    Exit Sub
+
+cmdCerrar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "cmdCerrar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
+    
+    On Error GoTo Form_QueryUnload_Err
+    
     Unload Me
 
+    
+    Exit Sub
+
+Form_QueryUnload_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "Form_QueryUnload"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub lstUsers_MouseUp(Button As Integer, _
                              Shift As Integer, _
                              X As Single, _
                              Y As Single)
+    
+    On Error GoTo lstUsers_MouseUp_Err
+    
 
     If Button = vbRightButton Then
         PopupMenu mnuSeguimientos
@@ -2035,9 +3070,21 @@ Private Sub lstUsers_MouseUp(Button As Integer, _
 
     End If
 
+    
+    Exit Sub
+
+lstUsers_MouseUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "lstUsers_MouseUp"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub ClearRecordDetails()
+    
+    On Error GoTo ClearRecordDetails_Err
+    
     txtIP.Text = vbNullString
     txtCreador.Text = vbNullString
     txtDescrip.Text = vbNullString
@@ -2045,9 +3092,21 @@ Private Sub ClearRecordDetails()
     txtTimeOn.Text = vbNullString
     lblEstado.Caption = vbNullString
 
+    
+    Exit Sub
+
+ClearRecordDetails_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "ClearRecordDetails"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub mnuDelete_Click()
+    
+    On Error GoTo mnuDelete_Click_Err
+    
 
     With lstUsers
 
@@ -2065,9 +3124,21 @@ Private Sub mnuDelete_Click()
 
     End With
 
+    
+    Exit Sub
+
+mnuDelete_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "mnuDelete_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub mnuIra_Click()
+    
+    On Error GoTo mnuIra_Click_Err
+    
 
     With lstUsers
 
@@ -2078,9 +3149,21 @@ Private Sub mnuIra_Click()
 
     End With
 
+    
+    Exit Sub
+
+mnuIra_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "mnuIra_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub mnuSum_Click()
+    
+    On Error GoTo mnuSum_Click_Err
+    
 
     With lstUsers
 
@@ -2091,14 +3174,38 @@ Private Sub mnuSum_Click()
 
     End With
 
+    
+    Exit Sub
+
+mnuSum_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "mnuSum_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub TabStrip_Click()
+    
+    On Error GoTo TabStrip_Click_Err
+    
     Call showTab(TabStrip.SelectedItem.Index)
 
+    
+    Exit Sub
+
+TabStrip_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "TabStrip_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub showTab(TabId As Byte)
+    
+    On Error GoTo showTab_Err
+    
     Dim i As Byte
     
     For i = 1 To Frame.UBound
@@ -2112,5 +3219,14 @@ Private Sub showTab(TabId As Byte)
 
     End With
 
+    
+    Exit Sub
+
+showTab_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelGm" & "->" & "showTab"
+    End If
+Resume Next
+    
 End Sub
 

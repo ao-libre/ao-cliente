@@ -973,11 +973,26 @@ Attribute dragInventory.VB_VarHelpID = -1
 Dim CtrlMaskOn                  As Boolean
 
 Public Sub dragInventory_dragDone(ByVal originalSlot As Integer, ByVal newSlot As Integer)
+    
+    On Error GoTo dragInventory_dragDone_Err
+    
     Call Protocol.WriteMoveItem(originalSlot, newSlot, eMoveType.Inventory)
 
+    
+    Exit Sub
+
+dragInventory_dragDone_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "dragInventory_dragDone"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_Load()
+    
+    On Error GoTo Form_Load_Err
+    
     
     If NoRes Then
         ' Handles Form movement (drag and drop).
@@ -1004,9 +1019,21 @@ Private Sub Form_Load()
     
     CtrlMaskOn = False
 
+    
+    Exit Sub
+
+Form_Load_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "Form_Load"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadButtons()
+    
+    On Error GoTo LoadButtons_Err
+    
     Dim GrhPath As String
     Dim i       As Integer
     
@@ -1050,9 +1077,21 @@ Private Sub LoadButtons()
         picSM(i).MouseIcon = picMouseIcon
     Next i
 
+    
+    Exit Sub
+
+LoadButtons_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "LoadButtons"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub LightSkillStar(ByVal bTurnOn As Boolean)
+    
+    On Error GoTo LightSkillStar_Err
+    
 
     If bTurnOn Then
         imgAsignarSkill.Picture = picSkillStar
@@ -1061,9 +1100,21 @@ Public Sub LightSkillStar(ByVal bTurnOn As Boolean)
 
     End If
 
+    
+    Exit Sub
+
+LightSkillStar_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "LightSkillStar"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdMoverHechi_Click(Index As Integer)
+    
+    On Error GoTo cmdMoverHechi_Click_Err
+    
 
     If hlst.Visible = True Then
         If hlst.ListIndex = -1 Then Exit Sub
@@ -1101,9 +1152,21 @@ Private Sub cmdMoverHechi_Click(Index As Integer)
 
     End If
 
+    
+    Exit Sub
+
+cmdMoverHechi_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "cmdMoverHechi_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub ControlSM(ByVal Index As Byte, ByVal Mostrar As Boolean)
+    
+    On Error GoTo ControlSM_Err
+    
     Dim GrhIndex As Long
     Dim SR       As RECT
     Dim DR       As RECT
@@ -1163,6 +1226,15 @@ Public Sub ControlSM(ByVal Index As Byte, ByVal Mostrar As Boolean)
 
     SMStatus(Index) = Mostrar
 
+    
+    Exit Sub
+
+ControlSM_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "ControlSM"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
@@ -1172,6 +1244,9 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
     '18/11/2009: ZaMa - Ahora se pueden poner comandos en los mensajes personalizados (execpto guildchat y privados)
     '18/11/2010: Amraphen - Agregué el handle correspondiente para las nuevas configuraciones de teclas (CTRL+0..9).
     '***************************************************
+    
+    On Error GoTo Form_KeyUp_Err
+    
     
     If (Not SendTxt.Visible) And (Not SendCMSTXT.Visible) Then
     
@@ -1440,21 +1515,57 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
             
     End Select
 
+    
+    Exit Sub
+
+Form_KeyUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "Form_KeyUp"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Form_MouseDown_Err
+    
     MouseBoton = Button
     MouseShift = Shift
 
+    
+    Exit Sub
+
+Form_MouseDown_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "Form_MouseDown"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Form_MouseUp_Err
+    
     clicX = X
     clicY = Y
 
+    
+    Exit Sub
+
+Form_MouseUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "Form_MouseUp"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
+    
+    On Error GoTo Form_QueryUnload_Err
+    
 
     If prgRun = True Then
         prgRun = False
@@ -1462,14 +1573,38 @@ Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
 
     End If
 
+    
+    Exit Sub
+
+Form_QueryUnload_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "Form_QueryUnload"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
+    
+    On Error GoTo Form_Unload_Err
+    
     DisableURLDetect
 
+    
+    Exit Sub
+
+Form_Unload_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "Form_Unload"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgAsignarSkill_Click()
+    
+    On Error GoTo imgAsignarSkill_Click_Err
+    
     Dim i As Integer
     
     LlegaronSkills = False
@@ -1489,16 +1624,40 @@ Private Sub imgAsignarSkill_Click()
     frmSkills3.puntos.Caption = SkillPoints
     frmSkills3.Show , frmMain
 
+    
+    Exit Sub
+
+imgAsignarSkill_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "imgAsignarSkill_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgClanes_Click()
+    
+    On Error GoTo imgClanes_Click_Err
+    
 
     If frmGuildLeader.Visible Then Unload frmGuildLeader
     Call WriteRequestGuildLeaderInfo
 
+    
+    Exit Sub
+
+imgClanes_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "imgClanes_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgEstadisticas_Click()
+    
+    On Error GoTo imgEstadisticas_Click_Err
+    
     LlegaronAtrib = False
     LlegaronSkills = False
     LlegoFama = False
@@ -1517,58 +1676,178 @@ Private Sub imgEstadisticas_Click()
     LlegaronSkills = False
     LlegoFama = False
 
+    
+    Exit Sub
+
+imgEstadisticas_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "imgEstadisticas_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgGrupo_Click()
+    
+    On Error GoTo imgGrupo_Click_Err
+    
     Call WriteRequestPartyForm
 
+    
+    Exit Sub
+
+imgGrupo_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "imgGrupo_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgInvScrollDown_Click()
+    
+    On Error GoTo imgInvScrollDown_Click_Err
+    
     Call Inventario.ScrollInventory(True)
 
+    
+    Exit Sub
+
+imgInvScrollDown_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "imgInvScrollDown_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgInvScrollUp_Click()
+    
+    On Error GoTo imgInvScrollUp_Click_Err
+    
     Call Inventario.ScrollInventory(False)
 
+    
+    Exit Sub
+
+imgInvScrollUp_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "imgInvScrollUp_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMapa_Click()
+    
+    On Error GoTo imgMapa_Click_Err
+    
     Call frmMapa.Show(vbModeless, frmMain)
 
+    
+    Exit Sub
+
+imgMapa_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "imgMapa_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgOpciones_Click()
+    
+    On Error GoTo imgOpciones_Click_Err
+    
     Call frmOpciones.Show(vbModeless, frmMain)
 
+    
+    Exit Sub
+
+imgOpciones_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "imgOpciones_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub InvEqu_MouseMove(Button As Integer, _
                              Shift As Integer, _
                              X As Single, _
                              Y As Single)
+    
+    On Error GoTo InvEqu_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+InvEqu_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "InvEqu_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub lblScroll_Click(Index As Integer)
+    
+    On Error GoTo lblScroll_Click_Err
+    
     Inventario.ScrollInventory (Index = 0)
 
+    
+    Exit Sub
+
+lblScroll_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "lblScroll_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub lblCerrar_Click()
+    
+    On Error GoTo lblCerrar_Click_Err
+    
     Call Audio.PlayWave(SND_CLICK)
     frmCerrar.Show vbModal
 
+    
+    Exit Sub
+
+lblCerrar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "lblCerrar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub lblMinimizar_Click()
+    
+    On Error GoTo lblMinimizar_Click_Err
+    
     Me.WindowState = 1
 
+    
+    Exit Sub
+
+lblMinimizar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "lblMinimizar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub macrotrabajo_Timer()
+    
+    On Error GoTo macrotrabajo_Timer_Err
+    
 
     If Inventario.SelectedItem = 0 Then
         Call DesactivarMacroTrabajo
@@ -1591,17 +1870,41 @@ Private Sub macrotrabajo_Timer()
     'If Inventario.OBJType(Inventario.SelectedItem) = eObjType.otWeapon Then
     If Not MirandoCarpinteria Then Call UsarItem
 
+    
+    Exit Sub
+
+macrotrabajo_Timer_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "macrotrabajo_Timer"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub ActivarMacroTrabajo()
+    
+    On Error GoTo ActivarMacroTrabajo_Err
+    
     macrotrabajo.Interval = INT_MACRO_TRABAJO
     macrotrabajo.Enabled = True
     Call AddtoRichTextBox(frmMain.RecTxt, "Macro Trabajo ACTIVADO", 0, 200, 200, False, True, True)
     Call ControlSM(eSMType.mWork, True)
 
+    
+    Exit Sub
+
+ActivarMacroTrabajo_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "ActivarMacroTrabajo"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub DesactivarMacroTrabajo()
+    
+    On Error GoTo DesactivarMacroTrabajo_Err
+    
     macrotrabajo.Enabled = False
     MacroBltIndex = 0
     UsingSkill = 0
@@ -1609,45 +1912,141 @@ Public Sub DesactivarMacroTrabajo()
     Call AddtoRichTextBox(frmMain.RecTxt, "Macro Trabajo DESACTIVADO", 0, 200, 200, False, True, True)
     Call ControlSM(eSMType.mWork, False)
 
+    
+    Exit Sub
+
+DesactivarMacroTrabajo_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "DesactivarMacroTrabajo"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub mnuEquipar_Click()
+    
+    On Error GoTo mnuEquipar_Click_Err
+    
     Call EquiparItem
 
+    
+    Exit Sub
+
+mnuEquipar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "mnuEquipar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub mnuNPCComerciar_Click()
+    
+    On Error GoTo mnuNPCComerciar_Click_Err
+    
     Call WriteLeftClick(tX, tY)
     Call WriteCommerceStart
 
+    
+    Exit Sub
+
+mnuNPCComerciar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "mnuNPCComerciar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub mnuNpcDesc_Click()
+    
+    On Error GoTo mnuNpcDesc_Click_Err
+    
     Call WriteLeftClick(tX, tY)
 
+    
+    Exit Sub
+
+mnuNpcDesc_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "mnuNpcDesc_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub mnuTirar_Click()
+    
+    On Error GoTo mnuTirar_Click_Err
+    
     Call TirarItem
 
+    
+    Exit Sub
+
+mnuTirar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "mnuTirar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub mnuUsar_Click()
+    
+    On Error GoTo mnuUsar_Click_Err
+    
     Call UsarItem
 
+    
+    Exit Sub
+
+mnuUsar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "mnuUsar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub PicMH_Click()
+    
+    On Error GoTo PicMH_Click_Err
+    
     Call AddtoRichTextBox(frmMain.RecTxt, "Auto lanzar hechizos. Utiliza esta habilidad para entrenar únicamente. Para activarlo/desactivarlo utiliza F7.", 255, 255, 255, False, False, True)
 
+    
+    Exit Sub
+
+PicMH_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "PicMH_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Coord_Click()
+    
+    On Error GoTo Coord_Click_Err
+    
     Call AddtoRichTextBox(frmMain.RecTxt, "Estas coordenadas son tu ubicación en el mapa. Utiliza la letra L para corregirla si esta no se corresponde con la del servidor por efecto del Lag.", 255, 255, 255, False, False, True)
 
+    
+    Exit Sub
+
+Coord_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "Coord_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub picSM_DblClick(Index As Integer)
+    
+    On Error GoTo picSM_DblClick_Err
+    
 
     Select Case Index
 
@@ -1679,14 +2078,35 @@ Private Sub picSM_DblClick(Index As Integer)
 
     End Select
 
+    
+    Exit Sub
+
+picSM_DblClick_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "picSM_DblClick"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub RecTxt_MouseMove(Button As Integer, _
                              Shift As Integer, _
                              X As Single, _
                              Y As Single)
+    
+    On Error GoTo RecTxt_MouseMove_Err
+    
     StartCheckingLinks
 
+    
+    Exit Sub
+
+RecTxt_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "RecTxt_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub SendTxt_KeyDown(KeyCode As Integer, Shift As Integer)
@@ -1742,6 +2162,9 @@ ErrHandler:
 End Sub
 
 Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo SendTxt_KeyUp_Err
+    
 
     'Send text
     If KeyCode = vbKeyReturn Then
@@ -1761,12 +2184,33 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
 
     End If
 
+    
+    Exit Sub
+
+SendTxt_KeyUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "SendTxt_KeyUp"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Second_Timer()
+    
+    On Error GoTo Second_Timer_Err
+    
 
     If Not DialogosClanes Is Nothing Then DialogosClanes.PassTimer
 
+    
+    Exit Sub
+
+Second_Timer_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "Second_Timer"
+    End If
+Resume Next
+    
 End Sub
 
 '[END]'
@@ -1776,6 +2220,9 @@ End Sub
 ''''''''''''''''''''''''''''''''''''''
 
 Private Sub TirarItem()
+    
+    On Error GoTo TirarItem_Err
+    
 
     If UserEstado = 1 Then
 
@@ -1802,9 +2249,21 @@ Private Sub TirarItem()
 
     End If
 
+    
+    Exit Sub
+
+TirarItem_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "TirarItem"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub AgarrarItem()
+    
+    On Error GoTo AgarrarItem_Err
+    
 
     If UserEstado = 1 Then
 
@@ -1818,9 +2277,21 @@ Private Sub AgarrarItem()
 
     End If
 
+    
+    Exit Sub
+
+AgarrarItem_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "AgarrarItem"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub UsarItem()
+    
+    On Error GoTo UsarItem_Err
+    
 
     If pausa Then Exit Sub
     
@@ -1828,9 +2299,21 @@ Private Sub UsarItem()
     
     If (Inventario.SelectedItem > 0) And (Inventario.SelectedItem < MAX_INVENTORY_SLOTS + 1) Then Call WriteUseItem(Inventario.SelectedItem)
 
+    
+    Exit Sub
+
+UsarItem_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "UsarItem"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub EquiparItem()
+    
+    On Error GoTo EquiparItem_Err
+    
 
     If UserEstado = 1 Then
 
@@ -1847,9 +2330,21 @@ Private Sub EquiparItem()
 
     End If
 
+    
+    Exit Sub
+
+EquiparItem_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "EquiparItem"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdLanzar_Click()
+    
+    On Error GoTo cmdLanzar_Click_Err
+    
 
     If hlst.List(hlst.ListIndex) <> "(None)" And MainTimer.Check(TimersIndex.Work, False) Then
         If UserEstado = 1 Then
@@ -1868,18 +2363,42 @@ Private Sub cmdLanzar_Click()
 
     End If
 
+    
+    Exit Sub
+
+cmdLanzar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "cmdLanzar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub CmdLanzar_MouseMove(Button As Integer, _
                                 Shift As Integer, _
                                 X As Single, _
                                 Y As Single)
+    
+    On Error GoTo CmdLanzar_MouseMove_Err
+    
     UsaMacro = False
     CnTd = 0
 
+    
+    Exit Sub
+
+CmdLanzar_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "CmdLanzar_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cmdINFO_Click()
+    
+    On Error GoTo cmdINFO_Click_Err
+    
 
     If hlst.ListIndex <> -1 Then
         Dim Index As Integer
@@ -1892,19 +2411,52 @@ Private Sub cmdINFO_Click()
         
     End If
 
+    
+    Exit Sub
+
+cmdINFO_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "cmdINFO_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub DespInv_Click(Index As Integer)
+    
+    On Error GoTo DespInv_Click_Err
+    
     Inventario.ScrollInventory (Index = 0)
 
+    
+    Exit Sub
+
+DespInv_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "DespInv_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub MainViewPic_MouseDown(Button As Integer, _
                                   Shift As Integer, _
                                   X As Single, _
                                   Y As Single)
+    
+    On Error GoTo MainViewPic_MouseDown_Err
+    
     MouseBoton = Button
     MouseShift = Shift
+    
+    
+    Exit Sub
+
+MainViewPic_MouseDown_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "MainViewPic_MouseDown"
+    End If
+Resume Next
     
 End Sub
 
@@ -1912,8 +2464,20 @@ Private Sub MainViewPic_MouseMove(Button As Integer, _
                                   Shift As Integer, _
                                   X As Single, _
                                   Y As Single)
+    
+    On Error GoTo MainViewPic_MouseMove_Err
+    
     MouseX = X
     MouseY = Y
+    
+    
+    Exit Sub
+
+MainViewPic_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "MainViewPic_MouseMove"
+    End If
+Resume Next
     
 End Sub
 
@@ -1921,12 +2485,27 @@ Private Sub MainViewPic_MouseUp(Button As Integer, _
                                 Shift As Integer, _
                                 X As Single, _
                                 Y As Single)
+    
+    On Error GoTo MainViewPic_MouseUp_Err
+    
     clicX = X
     clicY = Y
 
+    
+    Exit Sub
+
+MainViewPic_MouseUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "MainViewPic_MouseUp"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub MainViewPic_DblClick()
+    
+    On Error GoTo MainViewPic_DblClick_Err
+    
 
     '**************************************************************
     'Author: Unknown
@@ -1938,14 +2517,38 @@ Private Sub MainViewPic_DblClick()
 
     End If
 
+    
+    Exit Sub
+
+MainViewPic_DblClick_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "MainViewPic_DblClick"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub SendTxt_Click()
+    
+    On Error GoTo SendTxt_Click_Err
+    
     SendTxt.Tag = 0 ' GSZAO
 
+    
+    Exit Sub
+
+SendTxt_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "SendTxt_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub MainViewPic_Click()
+    
+    On Error GoTo MainViewPic_Click_Err
+    
 
     If Cartel Then Cartel = False
 
@@ -2082,9 +2685,21 @@ Private Sub MainViewPic_Click()
 
     End If
 
+    
+    Exit Sub
+
+MainViewPic_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "MainViewPic_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_DblClick()
+    
+    On Error GoTo Form_DblClick_Err
+    
 
     '**************************************************************
     'Author: Unknown
@@ -2096,9 +2711,21 @@ Private Sub Form_DblClick()
 
     End If
 
+    
+    Exit Sub
+
+Form_DblClick_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "Form_DblClick"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Form_MouseMove_Err
+    
     MouseX = X - MainViewPic.Left
     MouseY = Y - MainViewPic.Top
     
@@ -2123,24 +2750,72 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y A
     ' Disable links checking (not over consola)
     StopCheckingLinks
     
+    
+    Exit Sub
+
+Form_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "Form_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub hlst_KeyDown(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo hlst_KeyDown_Err
+    
     KeyCode = 0
 
+    
+    Exit Sub
+
+hlst_KeyDown_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "hlst_KeyDown"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub hlst_KeyPress(KeyAscii As Integer)
+    
+    On Error GoTo hlst_KeyPress_Err
+    
     KeyAscii = 0
 
+    
+    Exit Sub
+
+hlst_KeyPress_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "hlst_KeyPress"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub hlst_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo hlst_KeyUp_Err
+    
     KeyCode = 0
 
+    
+    Exit Sub
+
+hlst_KeyUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "hlst_KeyUp"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub lblDropGold_Click()
+    
+    On Error GoTo lblDropGold_Click_Err
+    
 
     Inventario.SelectGold
 
@@ -2149,9 +2824,21 @@ Private Sub lblDropGold_Click()
 
     End If
     
+    
+    Exit Sub
+
+lblDropGold_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "lblDropGold_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Label4_Click()
+    
+    On Error GoTo Label4_Click_Err
+    
     Call Audio.PlayWave(SND_CLICK)
 
     InvEqu.Picture = LoadPicture(App.path & "\Graficos\Centroinventario.jpg")
@@ -2169,9 +2856,21 @@ Private Sub Label4_Click()
     cmdMoverHechi(0).Visible = False
     cmdMoverHechi(1).Visible = False
     
+    
+    Exit Sub
+
+Label4_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "Label4_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Label7_Click()
+    
+    On Error GoTo Label7_Click_Err
+    
     Call Audio.PlayWave(SND_CLICK)
 
     InvEqu.Picture = LoadPicture(App.path & "\Graficos\Centrohechizos.jpg")
@@ -2189,9 +2888,21 @@ Private Sub Label7_Click()
     imgInvScrollUp.Visible = False
     imgInvScrollDown.Visible = False
 
+    
+    Exit Sub
+
+Label7_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "Label7_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub picInv_DblClick()
+    
+    On Error GoTo picInv_DblClick_Err
+    
 
     If MirandoCarpinteria Or MirandoHerreria Then Exit Sub
     
@@ -2201,11 +2912,32 @@ Private Sub picInv_DblClick()
     
     Call UsarItem
 
+    
+    Exit Sub
+
+picInv_DblClick_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "picInv_DblClick"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo picInv_MouseUp_Err
+    
     Call Audio.PlayWave(SND_CLICK)
 
+    
+    Exit Sub
+
+picInv_MouseUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "picInv_MouseUp"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub RecTxt_Change()
@@ -2232,6 +2964,9 @@ Private Sub RecTxt_Change()
 End Sub
 
 Private Sub RecTxt_KeyDown(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo RecTxt_KeyDown_Err
+    
 
     If PicInv.Visible Then
         PicInv.SetFocus
@@ -2240,9 +2975,21 @@ Private Sub RecTxt_KeyDown(KeyCode As Integer, Shift As Integer)
 
     End If
 
+    
+    Exit Sub
+
+RecTxt_KeyDown_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "RecTxt_KeyDown"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub SendTxt_Change()
+    
+    On Error GoTo SendTxt_Change_Err
+    
 
     '**************************************************************
     'Author: Unknown
@@ -2278,15 +3025,39 @@ Private Sub SendTxt_Change()
 
     End If
 
+    
+    Exit Sub
+
+SendTxt_Change_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "SendTxt_Change"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub SendTxt_KeyPress(KeyAscii As Integer)
+    
+    On Error GoTo SendTxt_KeyPress_Err
+    
 
     If Not (KeyAscii = vbKeyBack) And Not (KeyAscii >= vbKeySpace And KeyAscii <= 250) Then KeyAscii = 0
 
+    
+    Exit Sub
+
+SendTxt_KeyPress_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "SendTxt_KeyPress"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub SendCMSTXT_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo SendCMSTXT_KeyUp_Err
+    
 
     'Send text
     If KeyCode = vbKeyReturn Then
@@ -2311,15 +3082,39 @@ Private Sub SendCMSTXT_KeyUp(KeyCode As Integer, Shift As Integer)
 
     End If
 
+    
+    Exit Sub
+
+SendCMSTXT_KeyUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "SendCMSTXT_KeyUp"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub SendCMSTXT_KeyPress(KeyAscii As Integer)
+    
+    On Error GoTo SendCMSTXT_KeyPress_Err
+    
 
     If Not (KeyAscii = vbKeyBack) And Not (KeyAscii >= vbKeySpace And KeyAscii <= 250) Then KeyAscii = 0
 
+    
+    Exit Sub
+
+SendCMSTXT_KeyPress_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "SendCMSTXT_KeyPress"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub SendCMSTXT_Change()
+    
+    On Error GoTo SendCMSTXT_Change_Err
+    
 
     If Len(SendCMSTXT.Text) > 160 Then
         stxtbuffercmsg = "Soy un cheater, avisenle a un GM"
@@ -2350,6 +3145,15 @@ Private Sub SendCMSTXT_Change()
 
     End If
 
+    
+    Exit Sub
+
+SendCMSTXT_Change_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "SendCMSTXT_Change"
+    End If
+Resume Next
+    
 End Sub
 
 ''''''''''''''''''''''''''''''''''''''
@@ -2358,6 +3162,9 @@ End Sub
 #If UsarWrench = 1 Then
 
     Private Sub Socket1_Connect()
+    
+    On Error GoTo Socket1_Connect_Err
+    
     
         'Clean input and output buffers
         Call incomingData.ReadASCIIStringFixed(incomingData.length)
@@ -2382,17 +3189,41 @@ End Sub
 
         End Select
 
+    
+    Exit Sub
+
+Socket1_Connect_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "Socket1_Connect"
+    End If
+Resume Next
+    
     End Sub
 
 Private Sub Socket1_Disconnect()
+    
+    On Error GoTo Socket1_Disconnect_Err
+    
     ResetAllInfo
     Socket1.Cleanup
 
+    
+    Exit Sub
+
+Socket1_Disconnect_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "Socket1_Disconnect"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Socket1_LastError(ErrorCode As Integer, _
                               ErrorString As String, _
                               Response As Integer)
+    
+    On Error GoTo Socket1_LastError_Err
+    
 
     '*********************************************
     'Handle socket errors
@@ -2419,9 +3250,21 @@ Private Sub Socket1_LastError(ErrorCode As Integer, _
 
     frmMain.Socket1.Disconnect
 
+    
+    Exit Sub
+
+Socket1_LastError_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "Socket1_LastError"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Socket1_Read(dataLength As Integer, IsUrgent As Integer)
+    
+    On Error GoTo Socket1_Read_Err
+    
     Dim RD     As String
     Dim data() As Byte
     
@@ -2436,11 +3279,23 @@ Private Sub Socket1_Read(dataLength As Integer, IsUrgent As Integer)
     'Send buffer to Handle data
     Call HandleIncomingData
 
+    
+    Exit Sub
+
+Socket1_Read_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "Socket1_Read"
+    End If
+Resume Next
+    
 End Sub
 
 #End If
 
 Private Sub AbrirMenuViewPort()
+    
+    On Error GoTo AbrirMenuViewPort_Err
+    
     #If (ConMenuseConextuales = 1) Then
 
         If tX >= MinXBorder And tY >= MinYBorder And tY <= MaxYBorder And tX <= MaxXBorder Then
@@ -2477,9 +3332,21 @@ Private Sub AbrirMenuViewPort()
 
     #End If
 
+    
+    Exit Sub
+
+AbrirMenuViewPort_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "AbrirMenuViewPort"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub CallbackMenuFashion(ByVal MenuId As Long, ByVal Sel As Long)
+    
+    On Error GoTo CallbackMenuFashion_Err
+    
 
     Select Case MenuId
 
@@ -2521,11 +3388,32 @@ Public Sub CallbackMenuFashion(ByVal MenuId As Long, ByVal Sel As Long)
 
     End Select
 
+    
+    Exit Sub
+
+CallbackMenuFashion_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "CallbackMenuFashion"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub SonidosMapas_Timer()
+    
+    On Error GoTo SonidosMapas_Timer_Err
+    
     Sonidos.ReproducirSonidosDeMapas
 
+    
+    Exit Sub
+
+SonidosMapas_Timer_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "SonidosMapas_Timer"
+    End If
+Resume Next
+    
 End Sub
 
 '
@@ -2649,6 +3537,9 @@ End Sub
 #End If
 
 Private Function InGameArea() As Boolean
+    
+    On Error GoTo InGameArea_Err
+    
 
     '***************************************************
     'Author: NicoNZ
@@ -2660,5 +3551,14 @@ Private Function InGameArea() As Boolean
     
     InGameArea = True
 
+    
+    Exit Function
+
+InGameArea_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMain" & "->" & "InGameArea"
+    End If
+Resume Next
+    
 End Function
 

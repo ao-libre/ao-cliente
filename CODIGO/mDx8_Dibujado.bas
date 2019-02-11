@@ -48,13 +48,28 @@ Private Declare Function SetBitmapBits _
                              lpBits As Any) As Long
 
 Public Sub ArrayToPicturePNG(ByRef byteArray() As Byte, ByRef imgDest As IPicture) ' GSZAO
+    
+    On Error GoTo ArrayToPicturePNG_Err
+    
     Call SetBitmapBits(imgDest.handle, UBound(byteArray), byteArray(0))
 
+    
+    Exit Sub
+
+ArrayToPicturePNG_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Dibujado" & "->" & "ArrayToPicturePNG"
+    End If
+Resume Next
+    
 End Sub
 
 Public Function ArrayToPicture(inArray() As Byte, _
                                offset As Long, _
                                Size As Long) As IPicture
+    
+    On Error GoTo ArrayToPicture_Err
+    
     
     Dim o_hMem        As Long
     Dim o_lpMem       As Long
@@ -84,6 +99,15 @@ Public Function ArrayToPicture(inArray() As Byte, _
 
     End If
 
+    
+    Exit Function
+
+ArrayToPicture_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Dibujado" & "->" & "ArrayToPicture"
+    End If
+Resume Next
+    
 End Function
 
 Sub DrawGrhtoHdc(ByVal desthDC As Long, _

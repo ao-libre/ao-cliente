@@ -149,6 +149,9 @@ Private m_lPtr    As Long
 Private m_tBI     As BITMAPINFO
 
 Public Function CopyToClipboard(Optional ByVal bAsDIB As Boolean = True) As Boolean
+    
+    On Error GoTo CopyToClipboard_Err
+    
     Dim lhDCDesktop As Long
     Dim lhDC        As Long
     Dim lhBmpOld    As Long
@@ -219,12 +222,24 @@ Public Function CopyToClipboard(Optional ByVal bAsDIB As Boolean = True) As Bool
 
     End If
 
+    
+    Exit Function
+
+CopyToClipboard_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "cDIBSection" & "->" & "CopyToClipboard"
+    End If
+Resume Next
+    
 End Function
 
 Public Function CreateDIB(ByVal lhDC As Long, _
                           ByVal lWidth As Long, _
                           ByVal lHeight As Long, _
                           ByRef hDib As Long) As Boolean
+    
+    On Error GoTo CreateDIB_Err
+    
 
     With m_tBI.bmiHeader
         .biSize = Len(m_tBI.bmiHeader)
@@ -240,9 +255,21 @@ Public Function CreateDIB(ByVal lhDC As Long, _
     hDib = CreateDIBSection(lhDC, m_tBI, DIB_RGB_COLORS, m_lPtr, 0, 0)
     CreateDIB = (hDib <> 0)
 
+    
+    Exit Function
+
+CreateDIB_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "cDIBSection" & "->" & "CreateDIB"
+    End If
+Resume Next
+    
 End Function
 
 Public Function CreateFromPicture(ByRef picThis As StdPicture)
+    
+    On Error GoTo CreateFromPicture_Err
+    
     Dim lhDC        As Long
     Dim lhDCDesktop As Long
     Dim lhBmpOld    As Long
@@ -271,9 +298,21 @@ Public Function CreateFromPicture(ByRef picThis As StdPicture)
 
     End If
 
+    
+    Exit Function
+
+CreateFromPicture_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "cDIBSection" & "->" & "CreateFromPicture"
+    End If
+Resume Next
+    
 End Function
 
 Public Function Create(ByVal lWidth As Long, ByVal lHeight As Long) As Boolean
+    
+    On Error GoTo Create_Err
+    
     ClearUp
     m_hDC = CreateCompatibleDC(0)
 
@@ -289,22 +328,67 @@ Public Function Create(ByVal lWidth As Long, ByVal lHeight As Long) As Boolean
 
     End If
 
+    
+    Exit Function
+
+Create_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "cDIBSection" & "->" & "Create"
+    End If
+Resume Next
+    
 End Function
 
 Public Property Get BytesPerScanLine() As Long
     ' Scans must align on dword boundaries:
+    
+    On Error GoTo BytesPerScanLine_Err
+    
     BytesPerScanLine = (m_tBI.bmiHeader.biWidth * 3 + 3) And &HFFFFFFFC
 
+    
+    Exit Property
+
+BytesPerScanLine_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "cDIBSection" & "->" & "BytesPerScanLine"
+    End If
+Resume Next
+    
 End Property
 
 Public Property Get Width() As Long
+    
+    On Error GoTo Width_Err
+    
     Width = m_tBI.bmiHeader.biWidth
 
+    
+    Exit Property
+
+Width_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "cDIBSection" & "->" & "Width"
+    End If
+Resume Next
+    
 End Property
 
 Public Property Get Height() As Long
+    
+    On Error GoTo Height_Err
+    
     Height = m_tBI.bmiHeader.biHeight
 
+    
+    Exit Property
+
+Height_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "cDIBSection" & "->" & "Height"
+    End If
+Resume Next
+    
 End Property
 
 Public Sub LoadPictureBlt(ByVal lhDC As Long, _
@@ -313,11 +397,23 @@ Public Sub LoadPictureBlt(ByVal lhDC As Long, _
                           Optional ByVal lSrcWidth As Long = -1, _
                           Optional ByVal lSrcHeight As Long = -1, _
                           Optional ByVal eRop As RasterOpConstants = vbSrcCopy)
+    
+    On Error GoTo LoadPictureBlt_Err
+    
 
     If lSrcWidth < 0 Then lSrcWidth = m_tBI.bmiHeader.biWidth
     If lSrcHeight < 0 Then lSrcHeight = m_tBI.bmiHeader.biHeight
     BitBlt m_hDC, 0, 0, lSrcWidth, lSrcHeight, lhDC, lSrcLeft, lSrcTop, eRop
 
+    
+    Exit Sub
+
+LoadPictureBlt_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "cDIBSection" & "->" & "LoadPictureBlt"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub PaintPicture(ByVal lhDC As Long, _
@@ -328,29 +424,80 @@ Public Sub PaintPicture(ByVal lhDC As Long, _
                         Optional ByVal lSrcLeft As Long = 0, _
                         Optional ByVal lSrcTop As Long = 0, _
                         Optional ByVal eRop As RasterOpConstants = vbSrcCopy)
+    
+    On Error GoTo PaintPicture_Err
+    
 
     If (lDestWidth < 0) Then lDestWidth = m_tBI.bmiHeader.biWidth
     If (lDestHeight < 0) Then lDestHeight = m_tBI.bmiHeader.biHeight
     BitBlt lhDC, lDestLeft, lDestTop, lDestWidth, lDestHeight, m_hDC, lSrcLeft, lSrcTop, eRop
 
+    
+    Exit Sub
+
+PaintPicture_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "cDIBSection" & "->" & "PaintPicture"
+    End If
+Resume Next
+    
 End Sub
 
 Public Property Get hdc() As Long
+    
+    On Error GoTo hdc_Err
+    
     hdc = m_hDC
 
+    
+    Exit Property
+
+hdc_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "cDIBSection" & "->" & "hdc"
+    End If
+Resume Next
+    
 End Property
 
 Public Property Get hDib() As Long
+    
+    On Error GoTo hDib_Err
+    
     hDib = m_hDIb
 
+    
+    Exit Property
+
+hDib_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "cDIBSection" & "->" & "hDib"
+    End If
+Resume Next
+    
 End Property
 
 Public Property Get DIBSectionBitsPtr() As Long
+    
+    On Error GoTo DIBSectionBitsPtr_Err
+    
     DIBSectionBitsPtr = m_lPtr
 
+    
+    Exit Property
+
+DIBSectionBitsPtr_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "cDIBSection" & "->" & "DIBSectionBitsPtr"
+    End If
+Resume Next
+    
 End Property
 
 Public Sub RandomiseBits(Optional ByVal bGray As Boolean = False)
+    
+    On Error GoTo RandomiseBits_Err
+    
     Dim bDib() As Byte
     Dim X      As Long, Y As Long
     Dim lC     As Long
@@ -404,9 +551,21 @@ Public Sub RandomiseBits(Optional ByVal bGray As Boolean = False)
     ' for safety do it anyway)
     CopyMemory ByVal VarPtrArray(bDib), 0&, 4
     
+    
+    Exit Sub
+
+RandomiseBits_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "cDIBSection" & "->" & "RandomiseBits"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub ClearUp()
+    
+    On Error GoTo ClearUp_Err
+    
 
     If (m_hDC <> 0) Then
         If (m_hDIb <> 0) Then
@@ -421,9 +580,21 @@ Public Sub ClearUp()
 
     m_hDC = 0: m_hDIb = 0: m_hBmpOld = 0: m_lPtr = 0
 
+    
+    Exit Sub
+
+ClearUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "cDIBSection" & "->" & "ClearUp"
+    End If
+Resume Next
+    
 End Sub
 
 Public Function Resample(ByVal lNewHeight As Long, ByVal lNewWidth As Long) As cDIBSection
+    
+    On Error GoTo Resample_Err
+    
     Dim cDib As cDIBSection
     Set cDib = New cDIBSection
 
@@ -441,9 +612,21 @@ Public Function Resample(ByVal lNewHeight As Long, ByVal lNewWidth As Long) As c
 
     End If
 
+    
+    Exit Function
+
+Resample_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "cDIBSection" & "->" & "Resample"
+    End If
+Resume Next
+    
 End Function
 
 Private Function ResampleDib(ByRef cDibTo As cDIBSection) As Boolean
+    
+    On Error GoTo ResampleDib_Err
+    
     Dim bDibFrom() As Byte
     Dim bDibTo()   As Byte
 
@@ -547,10 +730,31 @@ Private Function ResampleDib(ByRef cDibTo As cDIBSection) As Boolean
     CopyMemory ByVal VarPtrArray(bDibFrom), 0&, 4
     CopyMemory ByVal VarPtrArray(bDibTo), 0&, 4
 
+    
+    Exit Function
+
+ResampleDib_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "cDIBSection" & "->" & "ResampleDib"
+    End If
+Resume Next
+    
 End Function
 
 Private Sub Class_Terminate()
+    
+    On Error GoTo Class_Terminate_Err
+    
     ClearUp
 
+    
+    Exit Sub
+
+Class_Terminate_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "cDIBSection" & "->" & "Class_Terminate"
+    End If
+Resume Next
+    
 End Sub
 

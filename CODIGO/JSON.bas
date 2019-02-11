@@ -16,13 +16,37 @@ Const INVALID_RPC_CALL As Long = 7
 Private psErrors       As String
 
 Public Function GetParserErrors() As String
+    
+    On Error GoTo GetParserErrors_Err
+    
     GetParserErrors = psErrors
 
+    
+    Exit Function
+
+GetParserErrors_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "JSON" & "->" & "GetParserErrors"
+    End If
+Resume Next
+    
 End Function
 
 Public Function ClearParserErrors() As String
+    
+    On Error GoTo ClearParserErrors_Err
+    
     psErrors = vbNullString
 
+    
+    Exit Function
+
+ClearParserErrors_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "JSON" & "->" & "ClearParserErrors"
+    End If
+Resume Next
+    
 End Function
 
 '
@@ -158,6 +182,9 @@ End Function
 '   parse string / number / object / array / true / false / null
 '
 Private Function parseValue(ByRef str As String, ByRef Index As Long)
+    
+    On Error GoTo parseValue_Err
+    
 
     Call skipChar(str, Index)
 
@@ -183,12 +210,24 @@ Private Function parseValue(ByRef str As String, ByRef Index As Long)
 
     End Select
 
+    
+    Exit Function
+
+parseValue_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "JSON" & "->" & "parseValue"
+    End If
+Resume Next
+    
 End Function
 
 '
 '   parse string
 '
 Private Function parseString(ByRef str As String, ByRef Index As Long) As String
+    
+    On Error GoTo parseString_Err
+    
 
     Dim quote As String
     Dim Char  As String
@@ -262,12 +301,24 @@ Private Function parseString(ByRef str As String, ByRef Index As Long) As String
     parseString = SB.toString
     Set SB = Nothing
    
+    
+    Exit Function
+
+parseString_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "JSON" & "->" & "parseString"
+    End If
+Resume Next
+    
 End Function
 
 '
 '   parse number
 '
 Private Function parseNumber(ByRef str As String, ByRef Index As Long)
+    
+    On Error GoTo parseNumber_Err
+    
 
     Dim value As String
     Dim Char  As String
@@ -288,12 +339,24 @@ Private Function parseNumber(ByRef str As String, ByRef Index As Long)
 
     Loop
 
+    
+    Exit Function
+
+parseNumber_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "JSON" & "->" & "parseNumber"
+    End If
+Resume Next
+    
 End Function
 
 '
 '   parse true / false
 '
 Private Function parseBoolean(ByRef str As String, ByRef Index As Long) As Boolean
+    
+    On Error GoTo parseBoolean_Err
+    
 
     Call skipChar(str, Index)
 
@@ -308,12 +371,24 @@ Private Function parseBoolean(ByRef str As String, ByRef Index As Long) As Boole
 
     End If
 
+    
+    Exit Function
+
+parseBoolean_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "JSON" & "->" & "parseBoolean"
+    End If
+Resume Next
+    
 End Function
 
 '
 '   parse null
 '
 Private Function parseNull(ByRef str As String, ByRef Index As Long)
+    
+    On Error GoTo parseNull_Err
+    
 
     Call skipChar(str, Index)
 
@@ -325,9 +400,21 @@ Private Function parseNull(ByRef str As String, ByRef Index As Long)
 
     End If
 
+    
+    Exit Function
+
+parseNull_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "JSON" & "->" & "parseNull"
+    End If
+Resume Next
+    
 End Function
 
 Private Function parseKey(ByRef str As String, ByRef Index As Long) As String
+    
+    On Error GoTo parseKey_Err
+    
 
     Dim dquote As Boolean
     Dim squote As Boolean
@@ -394,12 +481,24 @@ Private Function parseKey(ByRef str As String, ByRef Index As Long) As String
 
     Loop
 
+    
+    Exit Function
+
+parseKey_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "JSON" & "->" & "parseKey"
+    End If
+Resume Next
+    
 End Function
 
 '
 '   skip special character
 '
 Private Sub skipChar(ByRef str As String, ByRef Index As Long)
+    
+    On Error GoTo skipChar_Err
+    
     Dim bComment      As Boolean
     Dim bStartComment As Boolean
     Dim bLongComment  As Boolean
@@ -465,9 +564,21 @@ Private Sub skipChar(ByRef str As String, ByRef Index As Long)
         Index = Index + 1
     Loop
 
+    
+    Exit Sub
+
+skipChar_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "JSON" & "->" & "skipChar"
+    End If
+Resume Next
+    
 End Sub
 
 Public Function toString(ByRef obj As Variant) As String
+    
+    On Error GoTo toString_Err
+    
     Dim SB As New cStringBuilder
 
     Select Case VarType(obj)
@@ -535,9 +646,21 @@ Public Function toString(ByRef obj As Variant) As String
     toString = SB.toString
     Set SB = Nothing
    
+    
+    Exit Function
+
+toString_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "JSON" & "->" & "toString"
+    End If
+Resume Next
+    
 End Function
 
 Private Function Encode(str) As String
+    
+    On Error GoTo Encode_Err
+    
 
     Dim SB  As New cStringBuilder
     Dim i   As Long
@@ -583,6 +706,15 @@ Private Function Encode(str) As String
     Encode = SB.toString
     Set SB = Nothing
    
+    
+    Exit Function
+
+Encode_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "JSON" & "->" & "Encode"
+    End If
+Resume Next
+    
 End Function
 
 Private Function multiArray(aBD, _
@@ -637,6 +769,9 @@ End Function
 ' Miscellaneous JSON functions
 
 Public Function StringToJSON(st As String) As String
+    
+    On Error GoTo StringToJSON_Err
+    
    
     Const FIELD_SEP = "~"
     Const RECORD_SEP = "|"
@@ -670,6 +805,15 @@ Public Function StringToJSON(st As String) As String
 
     End If
 
+    
+    Exit Function
+
+StringToJSON_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "JSON" & "->" & "StringToJSON"
+    End If
+Resume Next
+    
 End Function
 
 Public Function RStoJSON(rs As ADODB.Recordset) As String
@@ -759,6 +903,9 @@ End Function
 'End Function
 
 Public Function toUnicode(str As String) As String
+    
+    On Error GoTo toUnicode_Err
+    
 
     Dim X        As Long
     Dim uStr     As New cStringBuilder
@@ -808,10 +955,31 @@ Public Function toUnicode(str As String) As String
     toUnicode = uStr.toString
     Exit Function
 
+    
+    Exit Function
+
+toUnicode_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "JSON" & "->" & "toUnicode"
+    End If
+Resume Next
+    
 End Function
 
 Private Sub Class_Initialize()
+    
+    On Error GoTo Class_Initialize_Err
+    
     psErrors = vbNullString
 
+    
+    Exit Sub
+
+Class_Initialize_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "JSON" & "->" & "Class_Initialize"
+    End If
+Resume Next
+    
 End Sub
 

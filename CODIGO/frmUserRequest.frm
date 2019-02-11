@@ -96,14 +96,29 @@ Public LastButtonPressed As clsGraphicalButton
 Private clsFormulario    As clsFormMovementManager
 
 Public Sub recievePeticion(ByVal p As String)
+    
+    On Error GoTo recievePeticion_Err
+    
 
     Text1 = Replace$(p, "º", vbNewLine)
     Me.Show vbModeless, frmMain
 
+    
+    Exit Sub
+
+recievePeticion_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmUserRequest" & "->" & "recievePeticion"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
+    
+    On Error GoTo Form_Load_Err
+    
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
@@ -111,9 +126,21 @@ Private Sub Form_Load()
     
     Call LoadButtons
 
+    
+    Exit Sub
+
+Form_Load_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmUserRequest" & "->" & "Form_Load"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadButtons()
+    
+    On Error GoTo LoadButtons_Err
+    
     Dim GrhPath As String
     
     GrhPath = DirGraficos
@@ -124,19 +151,64 @@ Private Sub LoadButtons()
     
     Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarPeticion.jpg", GrhPath & "BotonCerrarRolloverPeticion.jpg", GrhPath & "BotonCerrarClickPeticion.jpg", Me)
 
+    
+    Exit Sub
+
+LoadButtons_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmUserRequest" & "->" & "LoadButtons"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Form_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+Form_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmUserRequest" & "->" & "Form_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgCerrar_Click()
+    
+    On Error GoTo imgCerrar_Click_Err
+    
     Unload Me
 
+    
+    Exit Sub
+
+imgCerrar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmUserRequest" & "->" & "imgCerrar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Text1_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Text1_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+Text1_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmUserRequest" & "->" & "Text1_MouseMove"
+    End If
+Resume Next
+    
 End Sub

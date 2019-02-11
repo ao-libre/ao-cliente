@@ -36,6 +36,9 @@ End Type
 Private EndTime As Long
 
 Public Function Engine_DirectX8_Init() As Boolean
+    
+    On Error GoTo Engine_DirectX8_Init_Err
+    
 
     Dim DispMode  As D3DDISPLAYMODE
     Dim D3DWindow As D3DPRESENT_PARAMETERS
@@ -110,6 +113,15 @@ Public Function Engine_DirectX8_Init() As Boolean
     
     Engine_DirectX8_Init = True
 
+    
+    Exit Function
+
+Engine_DirectX8_Init_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Engine" & "->" & "Engine_DirectX8_Init"
+    End If
+Resume Next
+    
 End Function
 
 Public Sub Engine_DirectX8_End()
@@ -154,6 +166,9 @@ Public Sub Engine_DirectX8_Aditional_Init()
     'Author: Standelf
     'Last Modify Date: 30/12/2010
     '**************************************************************
+    
+    On Error GoTo Engine_DirectX8_Aditional_Init_Err
+    
 
     FPS = 101
     FramesPerSecCounter = 101
@@ -174,6 +189,15 @@ Public Sub Engine_DirectX8_Aditional_Init()
     Init_MeteoEngine
     Engine_Init_ParticleEngine
     
+    
+    Exit Sub
+
+Engine_DirectX8_Aditional_Init_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Engine" & "->" & "Engine_DirectX8_Aditional_Init"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub Engine_Draw_Line(X1 As Single, _
@@ -183,7 +207,7 @@ Public Sub Engine_Draw_Line(X1 As Single, _
                             Optional Color As Long = -1, _
                             Optional Color2 As Long = -1)
 
-    On Error GoTo error
+    On Error GoTo Error
 
     Dim Vertex(1) As TLVERTEX
 
@@ -194,14 +218,14 @@ Public Sub Engine_Draw_Line(X1 As Single, _
     DirectDevice.DrawPrimitiveUP D3DPT_LINELIST, 1, Vertex(0), Len(Vertex(0))
     Exit Sub
 
-error:
+Error:
 
     'Call Log_Engine("Error in Engine_Draw_Line, " & Err.Description & " (" & Err.number & ")")
 End Sub
 
 Public Sub Engine_Draw_Point(X1 As Single, Y1 As Single, Optional Color As Long = -1)
 
-    On Error GoTo error
+    On Error GoTo Error
 
     Dim Vertex(0) As TLVERTEX
 
@@ -211,7 +235,7 @@ Public Sub Engine_Draw_Point(X1 As Single, Y1 As Single, Optional Color As Long 
     DirectDevice.DrawPrimitiveUP D3DPT_POINTLIST, 1, Vertex(0), Len(Vertex(0))
     Exit Sub
 
-error:
+Error:
 
     'Call Log_Engine("Error in Engine_Draw_Point, " & Err.Description & " (" & Err.number & ")")
 End Sub
@@ -221,6 +245,9 @@ Public Function Engine_ElapsedTime() As Long
     'Gets the time that past since the last call
     'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_ElapsedTime
     '**************************************************************
+    
+    On Error GoTo Engine_ElapsedTime_Err
+    
     Dim Start_Time As Long
 
     'Get current time
@@ -232,6 +259,15 @@ Public Function Engine_ElapsedTime() As Long
     'Get next end time
     EndTime = Start_Time
 
+    
+    Exit Function
+
+Engine_ElapsedTime_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Engine" & "->" & "Engine_ElapsedTime"
+    End If
+Resume Next
+    
 End Function
 
 Public Function Engine_PixelPosX(ByVal X As Integer) As Integer
@@ -239,8 +275,20 @@ Public Function Engine_PixelPosX(ByVal X As Integer) As Integer
     'Converts a tile position to a screen position
     'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_PixelPosX
     '*****************************************************************
+    
+    On Error GoTo Engine_PixelPosX_Err
+    
 
     Engine_PixelPosX = (X - 1) * 32
+    
+    
+    Exit Function
+
+Engine_PixelPosX_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Engine" & "->" & "Engine_PixelPosX"
+    End If
+Resume Next
     
 End Function
 
@@ -249,8 +297,20 @@ Public Function Engine_PixelPosY(ByVal Y As Integer) As Integer
     'Converts a tile position to a screen position
     'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_PixelPosY
     '*****************************************************************
+    
+    On Error GoTo Engine_PixelPosY_Err
+    
 
     Engine_PixelPosY = (Y - 1) * 32
+    
+    
+    Exit Function
+
+Engine_PixelPosY_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Engine" & "->" & "Engine_PixelPosY"
+    End If
+Resume Next
     
 End Function
 
@@ -260,8 +320,20 @@ Public Function Engine_TPtoSPX(ByVal X As Byte) As Long
     'Takes the tile position and returns the pixel location on the screen
     'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_TPtoSPX
     '************************************************************
+    
+    On Error GoTo Engine_TPtoSPX_Err
+    
 
     Engine_TPtoSPX = Engine_PixelPosX(X - ((UserPos.X - HalfWindowTileWidth) - Engine_Get_TileBuffer)) + OffsetCounterX - 272 + ((10 - TileBufferSize) * 32)
+    
+    
+    Exit Function
+
+Engine_TPtoSPX_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Engine" & "->" & "Engine_TPtoSPX"
+    End If
+Resume Next
     
 End Function
 
@@ -271,8 +343,20 @@ Public Function Engine_TPtoSPY(ByVal Y As Byte) As Long
     'Takes the tile position and returns the pixel location on the screen
     'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_TPtoSPY
     '************************************************************
+    
+    On Error GoTo Engine_TPtoSPY_Err
+    
 
     Engine_TPtoSPY = Engine_PixelPosY(Y - ((UserPos.Y - HalfWindowTileHeight) - Engine_Get_TileBuffer)) + OffsetCounterY - 272 + ((10 - TileBufferSize) * 32)
+    
+    
+    Exit Function
+
+Engine_TPtoSPY_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Engine" & "->" & "Engine_TPtoSPY"
+    End If
+Resume Next
     
 End Function
 
@@ -281,6 +365,9 @@ Private Function Engine_FToDW(f As Single) As Long
     'Converts a float to a D-Word, or in Visual Basic terms, a Single to a Long
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_FToDW
     '*****************************************************************
+    
+    On Error GoTo Engine_FToDW_Err
+    
     Dim buf As D3DXBuffer
 
     'Converts a single into a long (Float to DWORD)
@@ -288,6 +375,15 @@ Private Function Engine_FToDW(f As Single) As Long
     DirectD3D8.BufferSetData buf, 0, 4, 1, f
     DirectD3D8.BufferGetData buf, 0, 4, 1, Effect_FToDW
 
+    
+    Exit Function
+
+Engine_FToDW_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Engine" & "->" & "Engine_FToDW"
+    End If
+Resume Next
+    
 End Function
 
 Public Sub Engine_Draw_Box(ByVal X As Integer, _
@@ -300,6 +396,9 @@ Public Sub Engine_Draw_Box(ByVal X As Integer, _
     'Last Modification: 29/12/10
     'Blisse-AO | Render Box
     '***************************************************
+    
+    On Error GoTo Engine_Draw_Box_Err
+    
     Dim b_Rect           As RECT
     Dim b_Color(0 To 3)  As Long
     Dim b_Vertex(0 To 3) As TLVERTEX
@@ -319,6 +418,15 @@ Public Sub Engine_Draw_Box(ByVal X As Integer, _
     DirectDevice.SetTexture 0, Nothing
     DirectDevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, b_Vertex(0), Len(b_Vertex(0))
 
+    
+    Exit Sub
+
+Engine_Draw_Box_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Engine" & "->" & "Engine_Draw_Box"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub Engine_D3DColor_To_RGB_List(RGB_List() As Long, Color As D3DCOLORVALUE)
@@ -327,11 +435,23 @@ Public Sub Engine_D3DColor_To_RGB_List(RGB_List() As Long, Color As D3DCOLORVALU
     'Last Modification: 14/05/10
     'Blisse-AO | Set a D3DColorValue to a RGB List
     '***************************************************
+    
+    On Error GoTo Engine_D3DColor_To_RGB_List_Err
+    
     RGB_List(0) = D3DColorARGB(Color.a, Color.r, Color.g, Color.b)
     RGB_List(1) = RGB_List(0)
     RGB_List(2) = RGB_List(0)
     RGB_List(3) = RGB_List(0)
 
+    
+    Exit Sub
+
+Engine_D3DColor_To_RGB_List_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Engine" & "->" & "Engine_D3DColor_To_RGB_List"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub Engine_Long_To_RGB_List(RGB_List() As Long, long_color As Long)
@@ -340,11 +460,23 @@ Public Sub Engine_Long_To_RGB_List(RGB_List() As Long, long_color As Long)
     'Last Modification: 16/05/10
     'Blisse-AO | Set a Long Color to a RGB List
     '***************************************************
+    
+    On Error GoTo Engine_Long_To_RGB_List_Err
+    
     RGB_List(0) = long_color
     RGB_List(1) = RGB_List(0)
     RGB_List(2) = RGB_List(0)
     RGB_List(3) = RGB_List(0)
 
+    
+    Exit Sub
+
+Engine_Long_To_RGB_List_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Engine" & "->" & "Engine_Long_To_RGB_List"
+    End If
+Resume Next
+    
 End Sub
 
 Public Function SetARGB_Alpha(RGB_List() As Long, alpha As Byte) As Long()
@@ -353,6 +485,9 @@ Public Function SetARGB_Alpha(RGB_List() As Long, alpha As Byte) As Long()
     'Last Modification: 29/08/18
     'Obtiene un ARGB list le modifica el alpha y devuelve una copia
     '***************************************************
+    
+    On Error GoTo SetARGB_Alpha_Err
+    
     Dim TempColor        As D3DCOLORVALUE
     Dim tempARGB(0 To 3) As Long
     'convertimos el valor del rgb list a D3DCOLOR
@@ -368,6 +503,15 @@ Public Function SetARGB_Alpha(RGB_List() As Long, alpha As Byte) As Long()
 
     SetARGB_Alpha = tempARGB()
 
+    
+    Exit Function
+
+SetARGB_Alpha_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Engine" & "->" & "SetARGB_Alpha"
+    End If
+Resume Next
+    
 End Function
 
 Private Function Engine_Collision_Between(ByVal value As Single, _
@@ -377,6 +521,9 @@ Private Function Engine_Collision_Between(ByVal value As Single, _
     'Find if a value is between two other values (used for line collision)
     'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_Collision_Between
     '*****************************************************************
+    
+    On Error GoTo Engine_Collision_Between_Err
+    
 
     'Checks if a value lies between two bounds
     If Bound1 > Bound2 Then
@@ -394,6 +541,15 @@ Private Function Engine_Collision_Between(ByVal value As Single, _
 
     End If
     
+    
+    Exit Function
+
+Engine_Collision_Between_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Engine" & "->" & "Engine_Collision_Between"
+    End If
+Resume Next
+    
 End Function
 
 Public Function Engine_Collision_Line(ByVal L1X1 As Long, _
@@ -408,6 +564,9 @@ Public Function Engine_Collision_Line(ByVal L1X1 As Long, _
     'Check if two lines intersect (return 1 if true)
     'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_Collision_Line
     '*****************************************************************
+    
+    On Error GoTo Engine_Collision_Line_Err
+    
     Dim m1 As Single
     Dim M2 As Single
     Dim b1 As Single
@@ -452,6 +611,15 @@ Public Function Engine_Collision_Line(ByVal L1X1 As Long, _
         
     End If
     
+    
+    Exit Function
+
+Engine_Collision_Line_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Engine" & "->" & "Engine_Collision_Line"
+    End If
+Resume Next
+    
 End Function
 
 Public Function Engine_Collision_LineRect(ByVal SX As Long, _
@@ -466,6 +634,9 @@ Public Function Engine_Collision_LineRect(ByVal SX As Long, _
     'Check if a line intersects with a rectangle (returns 1 if true)
     'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_Collision_LineRect
     '*****************************************************************
+    
+    On Error GoTo Engine_Collision_LineRect_Err
+    
 
     'Top line
     If Engine_Collision_Line(SX, SY, SX + SW, SY, X1, Y1, X2, Y2) Then
@@ -495,6 +666,15 @@ Public Function Engine_Collision_LineRect(ByVal SX As Long, _
 
     End If
 
+    
+    Exit Function
+
+Engine_Collision_LineRect_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Engine" & "->" & "Engine_Collision_LineRect"
+    End If
+Resume Next
+    
 End Function
 
 Function Engine_Collision_Rect(ByVal X1 As Integer, _
@@ -509,6 +689,9 @@ Function Engine_Collision_Rect(ByVal X1 As Integer, _
     'Check for collision between two rectangles
     'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_Collision_Rect
     '*****************************************************************
+    
+    On Error GoTo Engine_Collision_Rect_Err
+    
 
     If X1 + Width1 >= X2 Then
         If X1 <= X2 + Width2 Then
@@ -524,6 +707,15 @@ Function Engine_Collision_Rect(ByVal X1 As Integer, _
 
     End If
 
+    
+    Exit Function
+
+Engine_Collision_Rect_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Engine" & "->" & "Engine_Collision_Rect"
+    End If
+Resume Next
+    
 End Function
 
 Public Sub Engine_BeginScene(Optional ByVal Color As Long = 0)
@@ -532,9 +724,21 @@ Public Sub Engine_BeginScene(Optional ByVal Color As Long = 0)
     'Last Modification: 29/12/10
     'Blisse-AO | DD Clear & BeginScene
     '***************************************************
+    
+    On Error GoTo Engine_BeginScene_Err
+    
 
     DirectDevice.BeginScene
     DirectDevice.Clear 0, ByVal 0, D3DCLEAR_TARGET, Color, 1#, 0
+    
+    
+    Exit Sub
+
+Engine_BeginScene_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Engine" & "->" & "Engine_BeginScene"
+    End If
+Resume Next
     
 End Sub
 
@@ -545,6 +749,9 @@ Public Sub Engine_EndScene(ByRef destRect As RECT, Optional ByVal hWndDest As Lo
     'Blisse-AO | DD EndScene & Present
     '***************************************************
     
+    On Error GoTo Engine_EndScene_Err
+    
+    
     DirectDevice.EndScene
         
     If hWndDest = 0 Then
@@ -553,6 +760,15 @@ Public Sub Engine_EndScene(ByRef destRect As RECT, Optional ByVal hWndDest As Lo
         DirectDevice.Present destRect, ByVal 0, hWndDest, ByVal 0
 
     End If
+    
+    
+    Exit Sub
+
+Engine_EndScene_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Engine" & "->" & "Engine_EndScene"
+    End If
+Resume Next
     
 End Sub
 
@@ -568,6 +784,9 @@ Public Sub Geometry_Create_Box(ByRef Verts() As TLVERTEX, _
     'Modified by Juan Martín Sotuyo Dodero
     'Last Modify Date: 11/17/2002
     '**************************************************************
+    
+    On Error GoTo Geometry_Create_Box_Err
+    
 
     Dim x_center    As Single
     Dim y_center    As Single
@@ -654,6 +873,15 @@ Public Sub Geometry_Create_Box(ByRef Verts() As TLVERTEX, _
 
     End If
 
+    
+    Exit Sub
+
+Geometry_Create_Box_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Engine" & "->" & "Geometry_Create_Box"
+    End If
+Resume Next
+    
 End Sub
 
 Public Function Geometry_Create_TLVertex(ByVal X As Single, _
@@ -667,6 +895,9 @@ Public Function Geometry_Create_TLVertex(ByVal X As Single, _
     'Author: Aaron Perkins
     'Last Modify Date: 10/07/2002
     '**************************************************************
+    
+    On Error GoTo Geometry_Create_TLVertex_Err
+    
     Geometry_Create_TLVertex.X = X
     Geometry_Create_TLVertex.Y = Y
     Geometry_Create_TLVertex.Z = Z
@@ -675,6 +906,15 @@ Public Function Geometry_Create_TLVertex(ByVal X As Single, _
     Geometry_Create_TLVertex.tu = tu
     Geometry_Create_TLVertex.tv = tv
 
+    
+    Exit Function
+
+Geometry_Create_TLVertex_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Engine" & "->" & "Geometry_Create_TLVertex"
+    End If
+Resume Next
+    
 End Function
 
 Public Sub Engine_ZoomIn()
@@ -682,6 +922,9 @@ Public Sub Engine_ZoomIn()
     'Author: Standelf
     'Last Modify Date: 29/12/2010
     '**************************************************************
+    
+    On Error GoTo Engine_ZoomIn_Err
+    
 
     With MainScreenRect
         .Top = 0
@@ -691,6 +934,15 @@ Public Sub Engine_ZoomIn()
 
     End With
     
+    
+    Exit Sub
+
+Engine_ZoomIn_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Engine" & "->" & "Engine_ZoomIn"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub Engine_ZoomOut()
@@ -698,6 +950,9 @@ Public Sub Engine_ZoomOut()
     'Author: Standelf
     'Last Modify Date: 29/12/2010
     '**************************************************************
+    
+    On Error GoTo Engine_ZoomOut_Err
+    
 
     With MainScreenRect
         .Top = 0
@@ -707,6 +962,15 @@ Public Sub Engine_ZoomOut()
 
     End With
     
+    
+    Exit Sub
+
+Engine_ZoomOut_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Engine" & "->" & "Engine_ZoomOut"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub Engine_ZoomNormal()
@@ -714,6 +978,9 @@ Public Sub Engine_ZoomNormal()
     'Author: Standelf
     'Last Modify Date: 29/12/2010
     '**************************************************************
+    
+    On Error GoTo Engine_ZoomNormal_Err
+    
 
     With MainScreenRect
         .Top = 0
@@ -723,6 +990,15 @@ Public Sub Engine_ZoomNormal()
 
     End With
     
+    
+    Exit Sub
+
+Engine_ZoomNormal_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Engine" & "->" & "Engine_ZoomNormal"
+    End If
+Resume Next
+    
 End Sub
 
 Public Function ZoomOffset(ByVal offset As Byte) As Single
@@ -730,8 +1006,20 @@ Public Function ZoomOffset(ByVal offset As Byte) As Single
     'Author: Standelf
     'Last Modify Date: 30/01/2011
     '**************************************************************
+    
+    On Error GoTo ZoomOffset_Err
+    
 
     ZoomOffset = IIf((offset = 1), (ScreenHeight - MainScreenRect.bottom) / 2, (ScreenWidth - MainScreenRect.Right) / 2)
+    
+    
+    Exit Function
+
+ZoomOffset_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Engine" & "->" & "ZoomOffset"
+    End If
+Resume Next
     
 End Function
 
@@ -740,8 +1028,20 @@ Public Sub Engine_Set_BaseSpeed(ByVal BaseSpeed As Single)
     'Author: Standelf
     'Last Modify Date: 29/12/2010
     '**************************************************************
+    
+    On Error GoTo Engine_Set_BaseSpeed_Err
+    
 
     Engine_BaseSpeed = BaseSpeed
+    
+    
+    Exit Sub
+
+Engine_Set_BaseSpeed_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Engine" & "->" & "Engine_Set_BaseSpeed"
+    End If
+Resume Next
     
 End Sub
 
@@ -750,8 +1050,20 @@ Public Function Engine_Get_BaseSpeed() As Single
     'Author: Standelf
     'Last Modify Date: 29/12/2010
     '**************************************************************
+    
+    On Error GoTo Engine_Get_BaseSpeed_Err
+    
 
     Engine_Get_BaseSpeed = Engine_BaseSpeed
+    
+    
+    Exit Function
+
+Engine_Get_BaseSpeed_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Engine" & "->" & "Engine_Get_BaseSpeed"
+    End If
+Resume Next
     
 End Function
 
@@ -760,8 +1072,20 @@ Public Sub Engine_Set_TileBuffer(ByVal setTileBufferSize As Single)
     'Author: Standelf
     'Last Modify Date: 30/12/2010
     '**************************************************************
+    
+    On Error GoTo Engine_Set_TileBuffer_Err
+    
 
     TileBufferSize = setTileBufferSize
+    
+    
+    Exit Sub
+
+Engine_Set_TileBuffer_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Engine" & "->" & "Engine_Set_TileBuffer"
+    End If
+Resume Next
     
 End Sub
 
@@ -770,8 +1094,20 @@ Public Function Engine_Get_TileBuffer() As Single
     'Author: Standelf
     'Last Modify Date: 30/12/2010
     '**************************************************************
+    
+    On Error GoTo Engine_Get_TileBuffer_Err
+    
 
     Engine_Get_TileBuffer = TileBufferSize
+    
+    
+    Exit Function
+
+Engine_Get_TileBuffer_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Engine" & "->" & "Engine_Get_TileBuffer"
+    End If
+Resume Next
     
 End Function
 
@@ -783,8 +1119,20 @@ Function Engine_Distance(ByVal X1 As Integer, _
     'Author: Standelf
     'Last Modification: -
     '***************************************************
+    
+    On Error GoTo Engine_Distance_Err
+    
 
     Engine_Distance = Abs(X1 - X2) + Abs(Y1 - Y2)
+    
+    
+    Exit Function
+
+Engine_Distance_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Engine" & "->" & "Engine_Distance"
+    End If
+Resume Next
     
 End Function
 
@@ -794,6 +1142,9 @@ Public Sub Engine_Update_FPS()
     'Last Modification: 10/01/2011
     'Limit FPS & Calculate later
     '***************************************************
+    
+    On Error GoTo Engine_Update_FPS_Err
+    
 
     If ClientSetup.LimiteFPS And Not ClientSetup.vSync Then
 
@@ -817,9 +1168,21 @@ Public Sub Engine_Update_FPS()
     'Fonts_Render_String FPS, 2, 2, -1, Settings.Engine_Font
     'DrawText 2, 2, FPS, -1
     ' End If
+    
+    Exit Sub
+
+Engine_Update_FPS_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Engine" & "->" & "Engine_Update_FPS"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub DrawPJ(ByVal Index As Byte)
+    
+    On Error GoTo DrawPJ_Err
+    
 
     If LenB(cPJ(Index).Nombre) = 0 Then Exit Sub
     Dim cColor As Long
@@ -907,4 +1270,13 @@ Public Sub DrawPJ(ByVal Index As Byte)
 
     Engine_EndScene re, frmPanelAccount.picChar(Index - 1).hwnd
 
+    
+    Exit Sub
+
+DrawPJ_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Engine" & "->" & "DrawPJ"
+    End If
+Resume Next
+    
 End Sub

@@ -118,6 +118,9 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Command1_Click()
+    
+    On Error GoTo Command1_Click_Err
+    
 
     If frmtip.Check1.value = vbChecked Then
         tipf = "1"
@@ -128,10 +131,31 @@ Private Sub Command1_Click()
 
     Unload Me
 
+    
+    Exit Sub
+
+Command1_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmtip" & "->" & "Command1_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_Deactivate()
+    
+    On Error GoTo Form_Deactivate_Err
+    
     Me.SetFocus
 
+    
+    Exit Sub
+
+Form_Deactivate_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmtip" & "->" & "Form_Deactivate"
+    End If
+Resume Next
+    
 End Sub
 

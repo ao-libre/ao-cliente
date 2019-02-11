@@ -292,6 +292,9 @@ Public LastButtonPressed          As clsGraphicalButton
 
 Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
+    
+    On Error GoTo Form_Load_Err
+    
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
@@ -299,9 +302,21 @@ Private Sub Form_Load()
     
     Call LoadButtons
 
+    
+    Exit Sub
+
+Form_Load_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildLeader" & "->" & "Form_Load"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadButtons()
+    
+    On Error GoTo LoadButtons_Err
+    
     Dim GrhPath As String
     
     GrhPath = DirGraficos
@@ -339,122 +354,338 @@ Private Sub LoadButtons()
 
     Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarAdministrarClan.jpg", GrhPath & "BotonCerrarRolloverAdministrarClan.jpg", GrhPath & "BotonCerrarClickAdministrarClan.jpg", Me)
 
+    
+    Exit Sub
+
+LoadButtons_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildLeader" & "->" & "LoadButtons"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Form_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+Form_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildLeader" & "->" & "Form_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub guildslist_MouseMove(Button As Integer, _
                                  Shift As Integer, _
                                  X As Single, _
                                  Y As Single)
+    
+    On Error GoTo guildslist_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+guildslist_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildLeader" & "->" & "guildslist_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgActualizar_Click()
+    
+    On Error GoTo imgActualizar_Click_Err
+    
     Dim k As String
 
     k = Replace(txtguildnews, vbNewLine, "º")
     
     Call WriteGuildUpdateNews(k)
 
+    
+    Exit Sub
+
+imgActualizar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildLeader" & "->" & "imgActualizar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgCerrar_Click()
+    
+    On Error GoTo imgCerrar_Click_Err
+    
     Unload Me
     frmMain.SetFocus
 
+    
+    Exit Sub
+
+imgCerrar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildLeader" & "->" & "imgCerrar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgDetallesClan_Click()
+    
+    On Error GoTo imgDetallesClan_Click_Err
+    
     frmGuildBrief.EsLeader = True
     Call WriteGuildRequestDetails(guildslist.List(guildslist.ListIndex))
 
+    
+    Exit Sub
+
+imgDetallesClan_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildLeader" & "->" & "imgDetallesClan_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgDetallesMiembros_Click()
+    
+    On Error GoTo imgDetallesMiembros_Click_Err
+    
 
     If members.ListIndex = -1 Then Exit Sub
     
     frmCharInfo.frmType = CharInfoFrmType.frmMembers
     Call WriteGuildMemberInfo(members.List(members.ListIndex))
 
+    
+    Exit Sub
+
+imgDetallesMiembros_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildLeader" & "->" & "imgDetallesMiembros_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgDetallesSolicitudes_Click()
+    
+    On Error GoTo imgDetallesSolicitudes_Click_Err
+    
 
     If solicitudes.ListIndex = -1 Then Exit Sub
     
     frmCharInfo.frmType = CharInfoFrmType.frmMembershipRequests
     Call WriteGuildMemberInfo(solicitudes.List(solicitudes.ListIndex))
 
+    
+    Exit Sub
+
+imgDetallesSolicitudes_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildLeader" & "->" & "imgDetallesSolicitudes_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgEditarCodex_Click()
+    
+    On Error GoTo imgEditarCodex_Click_Err
+    
     Call frmGuildDetails.Show(vbModal, frmGuildLeader)
 
+    
+    Exit Sub
+
+imgEditarCodex_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildLeader" & "->" & "imgEditarCodex_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgEditarURL_Click()
+    
+    On Error GoTo imgEditarURL_Click_Err
+    
     Call frmGuildURL.Show(vbModeless, frmGuildLeader)
 
+    
+    Exit Sub
+
+imgEditarURL_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildLeader" & "->" & "imgEditarURL_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgElecciones_Click()
+    
+    On Error GoTo imgElecciones_Click_Err
+    
     Call WriteGuildOpenElections
     Unload Me
 
+    
+    Exit Sub
+
+imgElecciones_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildLeader" & "->" & "imgElecciones_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgPropuestasAlianzas_Click()
+    
+    On Error GoTo imgPropuestasAlianzas_Click_Err
+    
     Call WriteGuildAlliancePropList
 
+    
+    Exit Sub
+
+imgPropuestasAlianzas_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildLeader" & "->" & "imgPropuestasAlianzas_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgPropuestasPaz_Click()
+    
+    On Error GoTo imgPropuestasPaz_Click_Err
+    
     Call WriteGuildPeacePropList
 
+    
+    Exit Sub
+
+imgPropuestasPaz_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildLeader" & "->" & "imgPropuestasPaz_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub members_MouseMove(Button As Integer, _
                               Shift As Integer, _
                               X As Single, _
                               Y As Single)
+    
+    On Error GoTo members_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+members_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildLeader" & "->" & "members_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub solicitudes_MouseMove(Button As Integer, _
                                   Shift As Integer, _
                                   X As Single, _
                                   Y As Single)
+    
+    On Error GoTo solicitudes_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+solicitudes_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildLeader" & "->" & "solicitudes_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub txtguildnews_Change()
+    
+    On Error GoTo txtguildnews_Change_Err
+    
 
     If Len(txtguildnews.Text) > MAX_NEWS_LENGTH Then txtguildnews.Text = Left$(txtguildnews.Text, MAX_NEWS_LENGTH)
 
+    
+    Exit Sub
+
+txtguildnews_Change_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildLeader" & "->" & "txtguildnews_Change"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub txtguildnews_MouseMove(Button As Integer, _
                                    Shift As Integer, _
                                    X As Single, _
                                    Y As Single)
+    
+    On Error GoTo txtguildnews_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+txtguildnews_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildLeader" & "->" & "txtguildnews_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub txtFiltrarClanes_Change()
+    
+    On Error GoTo txtFiltrarClanes_Change_Err
+    
     Call FiltrarListaClanes(txtFiltrarClanes.Text)
 
+    
+    Exit Sub
+
+txtFiltrarClanes_Change_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildLeader" & "->" & "txtFiltrarClanes_Change"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub txtFiltrarClanes_GotFocus()
+    
+    On Error GoTo txtFiltrarClanes_GotFocus_Err
+    
 
     With txtFiltrarClanes
         .SelStart = 0
@@ -462,9 +693,21 @@ Private Sub txtFiltrarClanes_GotFocus()
 
     End With
 
+    
+    Exit Sub
+
+txtFiltrarClanes_GotFocus_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildLeader" & "->" & "txtFiltrarClanes_GotFocus"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub FiltrarListaClanes(ByRef sCompare As String)
+    
+    On Error GoTo FiltrarListaClanes_Err
+    
 
     Dim lIndex As Long
     
@@ -490,14 +733,38 @@ Private Sub FiltrarListaClanes(ByRef sCompare As String)
 
     End With
 
+    
+    Exit Sub
+
+FiltrarListaClanes_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildLeader" & "->" & "FiltrarListaClanes"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub txtFiltrarMiembros_Change()
+    
+    On Error GoTo txtFiltrarMiembros_Change_Err
+    
     Call FiltrarListaMiembros(txtFiltrarMiembros.Text)
 
+    
+    Exit Sub
+
+txtFiltrarMiembros_Change_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildLeader" & "->" & "txtFiltrarMiembros_Change"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub txtFiltrarMiembros_GotFocus()
+    
+    On Error GoTo txtFiltrarMiembros_GotFocus_Err
+    
 
     With txtFiltrarMiembros
         .SelStart = 0
@@ -505,9 +772,21 @@ Private Sub txtFiltrarMiembros_GotFocus()
 
     End With
 
+    
+    Exit Sub
+
+txtFiltrarMiembros_GotFocus_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildLeader" & "->" & "txtFiltrarMiembros_GotFocus"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub FiltrarListaMiembros(ByRef sCompare As String)
+    
+    On Error GoTo FiltrarListaMiembros_Err
+    
 
     Dim lIndex As Long
     
@@ -533,5 +812,14 @@ Private Sub FiltrarListaMiembros(ByRef sCompare As String)
 
     End With
 
+    
+    Exit Sub
+
+FiltrarListaMiembros_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildLeader" & "->" & "FiltrarListaMiembros"
+    End If
+Resume Next
+    
 End Sub
 

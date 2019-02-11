@@ -271,6 +271,9 @@ Private Const MAX_CODEX_LENGTH As Integer = 100
 
 Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
+    
+    On Error GoTo Form_Load_Err
+    
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
@@ -278,9 +281,21 @@ Private Sub Form_Load()
     
     Call LoadButtons
 
+    
+    Exit Sub
+
+Form_Load_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildDetails" & "->" & "Form_Load"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadButtons()
+    
+    On Error GoTo LoadButtons_Err
+    
     Dim GrhPath As String
     
     GrhPath = DirGraficos
@@ -294,14 +309,38 @@ Private Sub LoadButtons()
 
     Call cBotonSalir.Initialize(imgSalir, GrhPath & "BotonSalirCodex.jpg", GrhPath & "BotonSalirRolloverCodex.jpg", GrhPath & "BotonSalirClickCodex.jpg", Me)
 
+    
+    Exit Sub
+
+LoadButtons_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildDetails" & "->" & "LoadButtons"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Form_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+Form_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildDetails" & "->" & "Form_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgConfirmar_Click()
+    
+    On Error GoTo imgConfirmar_Click_Err
+    
     Dim fdesc   As String
     Dim Codex() As String
     Dim k       As Byte
@@ -338,17 +377,50 @@ Private Sub imgConfirmar_Click()
     CreandoClan = False
     Unload Me
 
+    
+    Exit Sub
+
+imgConfirmar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildDetails" & "->" & "imgConfirmar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgSalir_Click()
+    
+    On Error GoTo imgSalir_Click_Err
+    
     Unload Me
 
+    
+    Exit Sub
+
+imgSalir_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildDetails" & "->" & "imgSalir_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub txtCodex1_Change(Index As Integer)
+    
+    On Error GoTo txtCodex1_Change_Err
+    
 
     If Len(txtCodex1.Item(Index).Text) > MAX_CODEX_LENGTH Then txtCodex1.Item(Index).Text = Left$(txtCodex1.Item(Index).Text, MAX_CODEX_LENGTH)
 
+    
+    Exit Sub
+
+txtCodex1_Change_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildDetails" & "->" & "txtCodex1_Change"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub txtCodex1_MouseMove(Index As Integer, _
@@ -356,12 +428,36 @@ Private Sub txtCodex1_MouseMove(Index As Integer, _
                                 Shift As Integer, _
                                 X As Single, _
                                 Y As Single)
+    
+    On Error GoTo txtCodex1_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+txtCodex1_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildDetails" & "->" & "txtCodex1_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub txtDesc_Change()
+    
+    On Error GoTo txtDesc_Change_Err
+    
 
     If Len(txtDesc.Text) > MAX_DESC_LENGTH Then txtDesc.Text = Left$(txtDesc.Text, MAX_DESC_LENGTH)
 
+    
+    Exit Sub
+
+txtDesc_Change_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildDetails" & "->" & "txtDesc_Change"
+    End If
+Resume Next
+    
 End Sub

@@ -70,6 +70,9 @@ Sub Engine_Init_ParticleEngine(Optional ByVal SkipToTextures As Boolean = False)
     'done for any reason in particular, they just use so little memory since they are so small
     'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_Init_ParticleEngine
     '*****************************************************************
+    
+    On Error GoTo Engine_Init_ParticleEngine_Err
+    
     Dim i As Byte
 
     If Not SkipToTextures Then
@@ -85,6 +88,15 @@ Sub Engine_Init_ParticleEngine(Optional ByVal SkipToTextures As Boolean = False)
         Set ParticleTexture(i) = DirectD3D8.CreateTextureFromFileEx(DirectDevice, App.path & "\graficos\p" & i & ".png", D3DX_DEFAULT, D3DX_DEFAULT, D3DX_DEFAULT, 0, D3DFMT_UNKNOWN, D3DPOOL_MANAGED, D3DX_FILTER_POINT, D3DX_FILTER_POINT, &HFF000000, ByVal 0, ByVal 0)
     Next i
 
+    
+    Exit Sub
+
+Engine_Init_ParticleEngine_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Engine_Init_ParticleEngine"
+    End If
+Resume Next
+    
 End Sub
 
 Private Function Effect_FToDW(f As Single) As Long
@@ -92,6 +104,9 @@ Private Function Effect_FToDW(f As Single) As Long
     'Converts a float to a D-Word, or in Visual Basic terms, a Single to a Long
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_FToDW
     '*****************************************************************
+    
+    On Error GoTo Effect_FToDW_Err
+    
     Dim buf As D3DXBuffer
 
     'Converts a single into a long (Float to DWORD)
@@ -99,6 +114,15 @@ Private Function Effect_FToDW(f As Single) As Long
     DirectD3D8.BufferSetData buf, 0, 4, 1, f
     DirectD3D8.BufferGetData buf, 0, 4, 1, Effect_FToDW
 
+    
+    Exit Function
+
+Effect_FToDW_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_FToDW"
+    End If
+Resume Next
+    
 End Function
 
 Sub Effect_Kill(ByVal EffectIndex As Integer, Optional ByVal KillAll As Boolean = False)
@@ -106,6 +130,9 @@ Sub Effect_Kill(ByVal EffectIndex As Integer, Optional ByVal KillAll As Boolean 
     'Kills (stops) a single effect or all effects
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Kill
     '*****************************************************************
+    
+    On Error GoTo Effect_Kill_Err
+    
     Dim LoopC As Long
 
     'Check If To Kill All Effects
@@ -126,6 +153,15 @@ Sub Effect_Kill(ByVal EffectIndex As Integer, Optional ByVal KillAll As Boolean 
         
     End If
 
+    
+    Exit Sub
+
+Effect_Kill_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_Kill"
+    End If
+Resume Next
+    
 End Sub
 
 Private Function Effect_NextOpenSlot() As Integer
@@ -133,6 +169,9 @@ Private Function Effect_NextOpenSlot() As Integer
     'Finds the next open effects index
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_NextOpenSlot
     '*****************************************************************
+    
+    On Error GoTo Effect_NextOpenSlot_Err
+    
     Dim EffectIndex As Integer
 
     'Find The Next Open Effect Slot
@@ -157,6 +196,15 @@ Private Function Effect_NextOpenSlot() As Integer
     Effect(EffectIndex).GoToX = -30000
     Effect(EffectIndex).GoToY = -30000
 
+    
+    Exit Function
+
+Effect_NextOpenSlot_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_NextOpenSlot"
+    End If
+Resume Next
+    
 End Function
 
 Public Sub Effect_Render(ByVal EffectIndex As Integer, _
@@ -164,6 +212,9 @@ Public Sub Effect_Render(ByVal EffectIndex As Integer, _
     '*****************************************************************
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Render
     '*****************************************************************
+    
+    On Error GoTo Effect_Render_Err
+    
 
     'Check if we have the device
     If DirectDevice.TestCooperativeLevel <> D3D_OK Then Exit Sub
@@ -183,12 +234,24 @@ Public Sub Effect_Render(ByVal EffectIndex As Integer, _
     'Reset the render state back to normal
     If SetRenderStates Then DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
 
+    
+    Exit Sub
+
+Effect_Render_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_Render"
+    End If
+Resume Next
+    
 End Sub
 
 Function Effect_Snow_Begin(ByVal Gfx As Integer, ByVal Particles As Integer) As Integer
     '*****************************************************************
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Snow_Begin
     '*****************************************************************
+    
+    On Error GoTo Effect_Snow_Begin_Err
+    
     Dim EffectIndex As Integer
     Dim LoopC       As Long
 
@@ -227,6 +290,15 @@ Function Effect_Snow_Begin(ByVal Gfx As Integer, ByVal Particles As Integer) As 
     'Set the initial time
     Effect(EffectIndex).PreviousFrame = timeGetTime
 
+    
+    Exit Function
+
+Effect_Snow_Begin_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_Snow_Begin"
+    End If
+Resume Next
+    
 End Function
 
 Private Sub Effect_Snow_Reset(ByVal EffectIndex As Integer, _
@@ -235,6 +307,9 @@ Private Sub Effect_Snow_Reset(ByVal EffectIndex As Integer, _
     '*****************************************************************
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Snow_Reset
     '*****************************************************************
+    
+    On Error GoTo Effect_Snow_Reset_Err
+    
 
     If FirstReset = 1 Then
 
@@ -255,12 +330,24 @@ Private Sub Effect_Snow_Reset(ByVal EffectIndex As Integer, _
     'Set the color
     Effect(EffectIndex).Particles(Index).ResetColor 1, 1, 1, 0.8, 0
 
+    
+    Exit Sub
+
+Effect_Snow_Reset_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_Snow_Reset"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Effect_Snow_Update(ByVal EffectIndex As Integer)
     '*****************************************************************
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Snow_Update
     '*****************************************************************
+    
+    On Error GoTo Effect_Snow_Update_Err
+    
     Dim ElapsedTime As Single
     Dim LoopC       As Long
 
@@ -301,9 +388,21 @@ Private Sub Effect_Snow_Update(ByVal EffectIndex As Integer)
 
     Next LoopC
 
+    
+    Exit Sub
+
+Effect_Snow_Update_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_Snow_Update"
+    End If
+Resume Next
+    
 End Sub
 
 Sub Effect_UpdateAll()
+    
+    On Error GoTo Effect_UpdateAll_Err
+    
 
     If ClientSetup.ParticleEngine = False And bRain = False Then Exit Sub
     '*****************************************************************
@@ -356,12 +455,24 @@ Sub Effect_UpdateAll()
     'Set the render state back for normal rendering
     DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
 
+    
+    Exit Sub
+
+Effect_UpdateAll_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_UpdateAll"
+    End If
+Resume Next
+    
 End Sub
 
 Function Effect_Rain_Begin(ByVal Gfx As Integer, ByVal Particles As Integer) As Integer
     '*****************************************************************
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Rain_Begin
     '*****************************************************************
+    
+    On Error GoTo Effect_Rain_Begin_Err
+    
     Dim EffectIndex As Integer
     Dim LoopC       As Long
 
@@ -400,6 +511,15 @@ Function Effect_Rain_Begin(ByVal Gfx As Integer, ByVal Particles As Integer) As 
     'Set The Initial Time
     Effect(EffectIndex).PreviousFrame = timeGetTime
 
+    
+    Exit Function
+
+Effect_Rain_Begin_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_Rain_Begin"
+    End If
+Resume Next
+    
 End Function
 
 Private Sub Effect_Rain_Reset(ByVal EffectIndex As Integer, _
@@ -408,6 +528,9 @@ Private Sub Effect_Rain_Reset(ByVal EffectIndex As Integer, _
     '*****************************************************************
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Rain_Reset
     '*****************************************************************
+    
+    On Error GoTo Effect_Rain_Reset_Err
+    
 
     If FirstReset = 1 Then
 
@@ -428,12 +551,24 @@ Private Sub Effect_Rain_Reset(ByVal EffectIndex As Integer, _
     'Set the color
     Effect(EffectIndex).Particles(Index).ResetColor 1, 1, 1, 0.4, 0
 
+    
+    Exit Sub
+
+Effect_Rain_Reset_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_Rain_Reset"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Effect_Rain_Update(ByVal EffectIndex As Integer)
     '*****************************************************************
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Rain_Update
     '*****************************************************************
+    
+    On Error GoTo Effect_Rain_Update_Err
+    
     Dim ElapsedTime As Single
     Dim LoopC       As Long
 
@@ -474,6 +609,15 @@ Private Sub Effect_Rain_Update(ByVal EffectIndex As Integer)
 
     Next LoopC
 
+    
+    Exit Sub
+
+Effect_Rain_Update_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_Rain_Update"
+    End If
+Resume Next
+    
 End Sub
 
 Function Effect_EquationTemplate_Begin(ByVal X As Single, _
@@ -486,6 +630,9 @@ Function Effect_EquationTemplate_Begin(ByVal X As Single, _
     'wiki page: http://www.vbgore.com/Particle_effect_equations
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_EquationTemplate_Begin
     '*****************************************************************
+    
+    On Error GoTo Effect_EquationTemplate_Begin_Err
+    
     Dim EffectIndex As Integer
     Dim LoopC       As Long
 
@@ -527,6 +674,15 @@ Function Effect_EquationTemplate_Begin(ByVal X As Single, _
     'Set The Initial Time
     Effect(EffectIndex).PreviousFrame = timeGetTime
 
+    
+    Exit Function
+
+Effect_EquationTemplate_Begin_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_EquationTemplate_Begin"
+    End If
+Resume Next
+    
 End Function
 
 Private Sub Effect_EquationTemplate_Reset(ByVal EffectIndex As Integer, _
@@ -534,6 +690,9 @@ Private Sub Effect_EquationTemplate_Reset(ByVal EffectIndex As Integer, _
     '*****************************************************************
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_EquationTemplate_Reset
     '*****************************************************************
+    
+    On Error GoTo Effect_EquationTemplate_Reset_Err
+    
     Dim X As Single
     Dim Y As Single
     Dim r As Single
@@ -547,12 +706,24 @@ Private Sub Effect_EquationTemplate_Reset(ByVal EffectIndex As Integer, _
     Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).X + X, Effect(EffectIndex).Y + Y, 0, 0, 0, 0
     Effect(EffectIndex).Particles(Index).ResetColor 1, 1, 1, 1, 0.2 + (Rnd * 0.2)
 
+    
+    Exit Sub
+
+Effect_EquationTemplate_Reset_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_EquationTemplate_Reset"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Effect_EquationTemplate_Update(ByVal EffectIndex As Integer)
     '*****************************************************************
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_EquationTemplate_Update
     '*****************************************************************
+    
+    On Error GoTo Effect_EquationTemplate_Update_Err
+    
     Dim ElapsedTime As Single
     Dim LoopC       As Long
 
@@ -607,6 +778,15 @@ Private Sub Effect_EquationTemplate_Update(ByVal EffectIndex As Integer)
 
     Next LoopC
 
+    
+    Exit Sub
+
+Effect_EquationTemplate_Update_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_EquationTemplate_Update"
+    End If
+Resume Next
+    
 End Sub
 
 Function Effect_Fire_Begin(ByVal X As Single, _
@@ -618,6 +798,9 @@ Function Effect_Fire_Begin(ByVal X As Single, _
     '*****************************************************************
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Fire_Begin
     '*****************************************************************
+    
+    On Error GoTo Effect_Fire_Begin_Err
+    
     Dim EffectIndex As Integer
     Dim LoopC       As Long
 
@@ -660,23 +843,47 @@ Function Effect_Fire_Begin(ByVal X As Single, _
     'Set The Initial Time
     Effect(EffectIndex).PreviousFrame = timeGetTime
 
+    
+    Exit Function
+
+Effect_Fire_Begin_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_Fire_Begin"
+    End If
+Resume Next
+    
 End Function
 
 Private Sub Effect_Fire_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
     '*****************************************************************
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Fire_Reset
     '*****************************************************************
+    
+    On Error GoTo Effect_Fire_Reset_Err
+    
 
     'Reset the particle
     Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).X - 10 + Rnd * 20, Effect(EffectIndex).Y - 10 + Rnd * 20, -Sin((Effect(EffectIndex).Direction + (Rnd * 70) - 35) * DegreeToRadian) * 8, Cos((Effect(EffectIndex).Direction + (Rnd * 70) - 35) * DegreeToRadian) * 8, 0, 0
     Effect(EffectIndex).Particles(Index).ResetColor 1, 0.2, 0.2, 0.4 + (Rnd * 0.2), 0.03 + (Rnd * 0.07)
 
+    
+    Exit Sub
+
+Effect_Fire_Reset_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_Fire_Reset"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Effect_Fire_Update(ByVal EffectIndex As Integer)
     '*****************************************************************
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Fire_Update
     '*****************************************************************
+    
+    On Error GoTo Effect_Fire_Update_Err
+    
     Dim ElapsedTime As Single
     Dim LoopC       As Long
 
@@ -731,6 +938,15 @@ Private Sub Effect_Fire_Update(ByVal EffectIndex As Integer)
 
     Next LoopC
 
+    
+    Exit Sub
+
+Effect_Fire_Update_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_Fire_Update"
+    End If
+Resume Next
+    
 End Sub
 
 Function Effect_Protection_Begin(ByVal X As Single, _
@@ -742,6 +958,9 @@ Function Effect_Protection_Begin(ByVal X As Single, _
     '*****************************************************************
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Protection_Begin
     '*****************************************************************
+    
+    On Error GoTo Effect_Protection_Begin_Err
+    
     Dim EffectIndex As Integer
     Dim LoopC       As Long
 
@@ -784,12 +1003,24 @@ Function Effect_Protection_Begin(ByVal X As Single, _
     'Set The Initial Time
     Effect(EffectIndex).PreviousFrame = timeGetTime
 
+    
+    Exit Function
+
+Effect_Protection_Begin_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_Protection_Begin"
+    End If
+Resume Next
+    
 End Function
 
 Private Sub Effect_Protection_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
     '*****************************************************************
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Protection_Reset
     '*****************************************************************
+    
+    On Error GoTo Effect_Protection_Reset_Err
+    
     Dim a As Single
     Dim X As Single
     Dim Y As Single
@@ -803,12 +1034,24 @@ Private Sub Effect_Protection_Reset(ByVal EffectIndex As Integer, ByVal Index As
     Effect(EffectIndex).Particles(Index).ResetIt X, Y, 0, Rnd * -1, 0, -2
     Effect(EffectIndex).Particles(Index).ResetColor 0.1, 0.1, 0.9, 0.6 + (Rnd * 0.4), 0.06 + (Rnd * 0.2)
 
+    
+    Exit Sub
+
+Effect_Protection_Reset_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_Protection_Reset"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Effect_Protection_Update(ByVal EffectIndex As Integer)
     '*****************************************************************
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Protection_Update
     '*****************************************************************
+    
+    On Error GoTo Effect_Protection_Update_Err
+    
     Dim ElapsedTime As Single
     Dim LoopC       As Long
 
@@ -866,6 +1109,15 @@ Private Sub Effect_Protection_Update(ByVal EffectIndex As Integer)
 
     Next LoopC
 
+    
+    Exit Sub
+
+Effect_Protection_Update_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_Protection_Update"
+    End If
+Resume Next
+    
 End Sub
 
 Function Effect_Waterfall_Begin(ByVal X As Single, _
@@ -875,6 +1127,9 @@ Function Effect_Waterfall_Begin(ByVal X As Single, _
     '*****************************************************************
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Waterfall_Begin
     '*****************************************************************
+    
+    On Error GoTo Effect_Waterfall_Begin_Err
+    
     Dim EffectIndex As Integer
     Dim LoopC       As Long
 
@@ -915,12 +1170,24 @@ Function Effect_Waterfall_Begin(ByVal X As Single, _
     'Set The Initial Time
     Effect(EffectIndex).PreviousFrame = timeGetTime
 
+    
+    Exit Function
+
+Effect_Waterfall_Begin_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_Waterfall_Begin"
+    End If
+Resume Next
+    
 End Function
 
 Private Sub Effect_Waterfall_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
     '*****************************************************************
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Waterfall_Reset
     '*****************************************************************
+    
+    On Error GoTo Effect_Waterfall_Reset_Err
+    
 
     If Int(Rnd * 10) = 1 Then
         Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).X + (Rnd * 332), Effect(EffectIndex).Y + (Rnd * 130), 0, 8 + (Rnd * 6), 0, 0
@@ -931,12 +1198,24 @@ Private Sub Effect_Waterfall_Reset(ByVal EffectIndex As Integer, ByVal Index As 
 
     Effect(EffectIndex).Particles(Index).ResetColor 0.1, 0.1, 0.2, 0.2 + (Rnd * 0.4), 0.1
     
+    
+    Exit Sub
+
+Effect_Waterfall_Reset_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_Waterfall_Reset"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Effect_Waterfall_Update(ByVal EffectIndex As Integer)
     '*****************************************************************
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Waterfall_Update
     '*****************************************************************
+    
+    On Error GoTo Effect_Waterfall_Update_Err
+    
     Dim ElapsedTime As Single
     Dim LoopC       As Long
 
@@ -979,6 +1258,15 @@ Private Sub Effect_Waterfall_Update(ByVal EffectIndex As Integer)
 
     Next LoopC
 
+    
+    Exit Sub
+
+Effect_Waterfall_Update_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_Waterfall_Update"
+    End If
+Resume Next
+    
 End Sub
 
 Function Effect_Summon_Begin(ByVal X As Single, _
@@ -989,6 +1277,9 @@ Function Effect_Summon_Begin(ByVal X As Single, _
     '*****************************************************************
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Summon_Begin
     '*****************************************************************
+    
+    On Error GoTo Effect_Summon_Begin_Err
+    
     Dim EffectIndex As Integer
     Dim LoopC       As Long
 
@@ -1030,12 +1321,24 @@ Function Effect_Summon_Begin(ByVal X As Single, _
     'Set The Initial Time
     Effect(EffectIndex).PreviousFrame = timeGetTime
 
+    
+    Exit Function
+
+Effect_Summon_Begin_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_Summon_Begin"
+    End If
+Resume Next
+    
 End Function
 
 Private Sub Effect_Summon_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
     '*****************************************************************
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Summon_Reset
     '*****************************************************************
+    
+    On Error GoTo Effect_Summon_Reset_Err
+    
     Dim X As Single
     Dim Y As Single
     Dim r As Single
@@ -1055,12 +1358,24 @@ Private Sub Effect_Summon_Reset(ByVal EffectIndex As Integer, ByVal Index As Lon
     Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).X + X, Effect(EffectIndex).Y + Y, 0, 0, 0, 0
     Effect(EffectIndex).Particles(Index).ResetColor 0, Rnd, 0, 0.9, 0.2 + (Rnd * 0.2)
  
+    
+    Exit Sub
+
+Effect_Summon_Reset_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_Summon_Reset"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Effect_Summon_Update(ByVal EffectIndex As Integer)
     '*****************************************************************
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Summon_Update
     '*****************************************************************
+    
+    On Error GoTo Effect_Summon_Update_Err
+    
     Dim ElapsedTime As Single
     Dim LoopC       As Long
 
@@ -1115,6 +1430,15 @@ Private Sub Effect_Summon_Update(ByVal EffectIndex As Integer)
 
     Next LoopC
 
+    
+    Exit Sub
+
+Effect_Summon_Update_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_Summon_Update"
+    End If
+Resume Next
+    
 End Sub
 
 Function Effect_Bless_Begin(ByVal X As Single, _
@@ -1126,6 +1450,9 @@ Function Effect_Bless_Begin(ByVal X As Single, _
     '*****************************************************************
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Bless_Begin
     '*****************************************************************
+    
+    On Error GoTo Effect_Bless_Begin_Err
+    
     Dim EffectIndex As Integer
     Dim LoopC       As Long
 
@@ -1168,12 +1495,24 @@ Function Effect_Bless_Begin(ByVal X As Single, _
     'Set The Initial Time
     Effect(EffectIndex).PreviousFrame = timeGetTime
 
+    
+    Exit Function
+
+Effect_Bless_Begin_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_Bless_Begin"
+    End If
+Resume Next
+    
 End Function
 
 Private Sub Effect_Bless_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
     '*****************************************************************
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Bless_Reset
     '*****************************************************************
+    
+    On Error GoTo Effect_Bless_Reset_Err
+    
     Dim a As Single
     Dim X As Single
     Dim Y As Single
@@ -1187,12 +1526,24 @@ Private Sub Effect_Bless_Reset(ByVal EffectIndex As Integer, ByVal Index As Long
     Effect(EffectIndex).Particles(Index).ResetIt X, Y, 0, Rnd * -1, 0, -2
     Effect(EffectIndex).Particles(Index).ResetColor 1, 1, 0.2, 0.6 + (Rnd * 0.4), 0.06 + (Rnd * 0.2)
 
+    
+    Exit Sub
+
+Effect_Bless_Reset_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_Bless_Reset"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Effect_Bless_Update(ByVal EffectIndex As Integer)
     '*****************************************************************
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Bless_Update
     '*****************************************************************
+    
+    On Error GoTo Effect_Bless_Update_Err
+    
     Dim ElapsedTime As Single
     Dim LoopC       As Long
 
@@ -1250,6 +1601,15 @@ Private Sub Effect_Bless_Update(ByVal EffectIndex As Integer)
 
     Next LoopC
 
+    
+    Exit Sub
+
+Effect_Bless_Update_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_Bless_Update"
+    End If
+Resume Next
+    
 End Sub
 
 Function Effect_Heal_Begin(ByVal X As Single, _
@@ -1260,6 +1620,9 @@ Function Effect_Heal_Begin(ByVal X As Single, _
     '*****************************************************************
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Heal_Begin
     '*****************************************************************
+    
+    On Error GoTo Effect_Heal_Begin_Err
+    
     Dim EffectIndex As Integer
     Dim LoopC       As Long
 
@@ -1303,16 +1666,37 @@ Function Effect_Heal_Begin(ByVal X As Single, _
     'Set The Initial Time
     Effect(EffectIndex).PreviousFrame = timeGetTime
 
+    
+    Exit Function
+
+Effect_Heal_Begin_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_Heal_Begin"
+    End If
+Resume Next
+    
 End Function
 
 Private Sub Effect_Heal_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
     '*****************************************************************
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Heal_Reset
     '*****************************************************************
+    
+    On Error GoTo Effect_Heal_Reset_Err
+    
 
     'Reset the particle
     Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).X - 10 + Rnd * 20, Effect(EffectIndex).Y - 10 + Rnd * 20, -Sin((180 + (Rnd * 90) - 45) * 0.0174533) * 8 + (Rnd * 3), Cos((180 + (Rnd * 90) - 45) * 0.0174533) * 8 + (Rnd * 3), 0, 0
     Effect(EffectIndex).Particles(Index).ResetColor 0.8, 0.2, 0.2, 0.6 + (Rnd * 0.2), 0.01 + (Rnd * 0.5)
+    
+    
+    Exit Sub
+
+Effect_Heal_Reset_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_Heal_Reset"
+    End If
+Resume Next
     
 End Sub
 
@@ -1320,6 +1704,9 @@ Private Sub Effect_Heal_Update(ByVal EffectIndex As Integer)
     '*****************************************************************
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Heal_Update
     '*****************************************************************
+    
+    On Error GoTo Effect_Heal_Update_Err
+    
     Dim ElapsedTime As Single
     Dim LoopC       As Long
     Dim i           As Integer
@@ -1375,6 +1762,15 @@ Private Sub Effect_Heal_Update(ByVal EffectIndex As Integer)
 
     Next LoopC
 
+    
+    Exit Sub
+
+Effect_Heal_Update_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_Heal_Update"
+    End If
+Resume Next
+    
 End Sub
 
 Function Effect_Strengthen_Begin(ByVal X As Single, _
@@ -1386,6 +1782,9 @@ Function Effect_Strengthen_Begin(ByVal X As Single, _
     '*****************************************************************
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Strengthen_Begin
     '*****************************************************************
+    
+    On Error GoTo Effect_Strengthen_Begin_Err
+    
     Dim EffectIndex As Integer
     Dim LoopC       As Long
 
@@ -1428,12 +1827,24 @@ Function Effect_Strengthen_Begin(ByVal X As Single, _
     'Set The Initial Time
     Effect(EffectIndex).PreviousFrame = timeGetTime
 
+    
+    Exit Function
+
+Effect_Strengthen_Begin_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_Strengthen_Begin"
+    End If
+Resume Next
+    
 End Function
 
 Private Sub Effect_Strengthen_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
     '*****************************************************************
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Strengthen_Reset
     '*****************************************************************
+    
+    On Error GoTo Effect_Strengthen_Reset_Err
+    
     Dim a As Single
     Dim X As Single
     Dim Y As Single
@@ -1447,12 +1858,24 @@ Private Sub Effect_Strengthen_Reset(ByVal EffectIndex As Integer, ByVal Index As
     Effect(EffectIndex).Particles(Index).ResetIt X, Y, 0, Rnd * -1, 0, -2
     Effect(EffectIndex).Particles(Index).ResetColor 0.2, 1, 0.2, 0.6 + (Rnd * 0.4), 0.06 + (Rnd * 0.2)
 
+    
+    Exit Sub
+
+Effect_Strengthen_Reset_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_Strengthen_Reset"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Effect_Strengthen_Update(ByVal EffectIndex As Integer)
     '*****************************************************************
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Strengthen_Update
     '*****************************************************************
+    
+    On Error GoTo Effect_Strengthen_Update_Err
+    
     Dim ElapsedTime As Single
     Dim LoopC       As Long
 
@@ -1510,9 +1933,21 @@ Private Sub Effect_Strengthen_Update(ByVal EffectIndex As Integer)
 
     Next LoopC
 
+    
+    Exit Sub
+
+Effect_Strengthen_Update_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_Strengthen_Update"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub SetSpellCast()
+    
+    On Error GoTo SetSpellCast_Err
+    
 
     If frmMain.hlst.List(frmMain.hlst.ListIndex) = "Resucitar" Then
         SpellGrhIndex = 24665
@@ -1531,9 +1966,21 @@ Public Sub SetSpellCast()
 
     End If
 
+    
+    Exit Sub
+
+SetSpellCast_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "SetSpellCast"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Effect_UpdateBinding(ByVal EffectIndex As Integer)
+    
+    On Error GoTo Effect_UpdateBinding_Err
+    
  
     '***************************************************
     'Updates the binding of a particle effect to a target, if
@@ -1623,6 +2070,15 @@ Private Sub Effect_UpdateBinding(ByVal EffectIndex As Integer)
 
     End If
  
+    
+    Exit Sub
+
+Effect_UpdateBinding_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_UpdateBinding"
+    End If
+Resume Next
+    
 End Sub
 
 Public Function Engine_GetAngle(ByVal CenterX As Integer, _
@@ -1711,6 +2167,9 @@ Function Effect_Rayo_Begin(ByVal X As Single, _
     '*****************************************************************
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Rayo_Begin
     '*****************************************************************
+    
+    On Error GoTo Effect_Rayo_Begin_Err
+    
     Dim EffectIndex As Integer
     Dim LoopC       As Long
 
@@ -1754,24 +2213,48 @@ Function Effect_Rayo_Begin(ByVal X As Single, _
     'Set The Initial Time
     Effect(EffectIndex).PreviousFrame = timeGetTime
 
+    
+    Exit Function
+
+Effect_Rayo_Begin_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_Rayo_Begin"
+    End If
+Resume Next
+    
 End Function
 
 Private Sub Effect_Rayo_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
     '*****************************************************************
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Rayo_Reset
     '*****************************************************************
+    
+    On Error GoTo Effect_Rayo_Reset_Err
+    
 
     'Reset the particle
     Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).X - 10 + Rnd * 20, Effect(EffectIndex).Y - 10 + Rnd * 20, -Sin((180 + (Rnd * 90) - 45) * 0.0174533) * 8 + (Rnd * 3), Cos((180 + (Rnd * 90) - 45) * 0.0174533) * 8 + (Rnd * 3), 0, 0
     Effect(EffectIndex).Particles(Index).ResetColor 0, 0.8, 0.8, 0.6 + (Rnd * 0.2), 0.001 + (Rnd * 0.5)
     '      Effect(EffectIndex).Particles(Index).ResetColor (Rnd * 0.8), (Rnd * 0.8), (Rnd * 0.8), 0.6 + (Rnd * 0.2), 0.001 + (Rnd * 0.5)
 
+    
+    Exit Sub
+
+Effect_Rayo_Reset_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_Rayo_Reset"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Effect_Rayo_Update(ByVal EffectIndex As Integer)
     '*****************************************************************
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Rayo_Update
     '*****************************************************************
+    
+    On Error GoTo Effect_Rayo_Update_Err
+    
     Dim ElapsedTime As Single
     Dim LoopC       As Long
     Dim i           As Integer
@@ -1827,9 +2310,21 @@ Private Sub Effect_Rayo_Update(ByVal EffectIndex As Integer)
 
     Next LoopC
 
+    
+    Exit Sub
+
+Effect_Rayo_Update_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_Rayo_Update"
+    End If
+Resume Next
+    
 End Sub
 
 Sub Engine_Weather_Update()
+    
+    On Error GoTo Engine_Weather_Update_Err
+    
 
     If bRain And bLluvia(UserMap) = 1 And CurMapAmbient.Rain = True Then
         If WeatherEffectIndex <= 0 Then
@@ -1867,12 +2362,24 @@ Sub Engine_Weather_Update()
 
     End If
     
+    
+    Exit Sub
+
+Engine_Weather_Update_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Engine_Weather_Update"
+    End If
+Resume Next
+    
 End Sub
 
 Sub Engine_Weather_UpdateFog()
     '*****************************************************************
     'Update the fog effects
     '*****************************************************************
+    
+    On Error GoTo Engine_Weather_UpdateFog_Err
+    
 
     Dim i           As Long
     Dim X           As Long
@@ -1962,6 +2469,15 @@ Sub Engine_Weather_UpdateFog()
 
     Next i
 
+    
+    Exit Sub
+
+Engine_Weather_UpdateFog_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Engine_Weather_UpdateFog"
+    End If
+Resume Next
+    
 End Sub
 
 Function Effect_Smoke_Begin(ByVal X As Single, _
@@ -1973,6 +2489,9 @@ Function Effect_Smoke_Begin(ByVal X As Single, _
     '*****************************************************************
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Smoke_Begin
     '*****************************************************************
+    
+    On Error GoTo Effect_Smoke_Begin_Err
+    
     Dim EffectIndex As Integer
     Dim LoopC       As Long
 
@@ -2015,12 +2534,24 @@ Function Effect_Smoke_Begin(ByVal X As Single, _
     'Set The Initial Time
     Effect(EffectIndex).PreviousFrame = timeGetTime
 
+    
+    Exit Function
+
+Effect_Smoke_Begin_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_Smoke_Begin"
+    End If
+Resume Next
+    
 End Function
 
 Private Sub Effect_Smoke_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
     '*****************************************************************
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Smoke_Reset
     '*****************************************************************
+    
+    On Error GoTo Effect_Smoke_Reset_Err
+    
 
     'Reset the particle
     'Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).x - 10 + Rnd * 20, Effect(EffectIndex).Y - 10 + Rnd * 20, -Sin((Effect(EffectIndex).Direction + (Rnd * 70) - 35) * DegreeToRadian) * 8, Cos((Effect(EffectIndex).Direction + (Rnd * 70) - 35) * DegreeToRadian) * 8, 0, 0
@@ -2028,12 +2559,24 @@ Private Sub Effect_Smoke_Reset(ByVal EffectIndex As Integer, ByVal Index As Long
     Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).X - 10 + Rnd * 20, Effect(EffectIndex).Y - 10 + Rnd * 20, -Sin((Effect(EffectIndex).Direction + (Rnd * 70) - 35) * DegreeToRadian) * 5, Cos((Effect(EffectIndex).Direction + (Rnd * 70) - 35) * DegreeToRadian) * 8, 2, 0
     Effect(EffectIndex).Particles(Index).ResetColor 0.2, 0.2, 0.2, 0.2 + (Rnd * 0.2), 0.03 + (Rnd * 0.01)
 
+    
+    Exit Sub
+
+Effect_Smoke_Reset_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_Smoke_Reset"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Effect_Smoke_Update(ByVal EffectIndex As Integer)
     '*****************************************************************
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Smoke_Update
     '*****************************************************************
+    
+    On Error GoTo Effect_Smoke_Update_Err
+    
     Dim ElapsedTime As Single
     Dim LoopC       As Long
 
@@ -2088,6 +2631,15 @@ Private Sub Effect_Smoke_Update(ByVal EffectIndex As Integer)
 
     Next LoopC
 
+    
+    Exit Sub
+
+Effect_Smoke_Update_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Effect_Smoke_Update"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub Engine_CreateEffect(ByVal CharIndex As Integer, _
@@ -2095,6 +2647,9 @@ Public Sub Engine_CreateEffect(ByVal CharIndex As Integer, _
                                ByVal X As Single, _
                                ByVal Y As Single, _
                                ByVal Loops As Integer)
+    
+    On Error GoTo Engine_CreateEffect_Err
+    
 
     If Not ValidNumber(Effect, eNumber_Types.ent_Byte) Then
         'Call Log_Engine("Error in Engine_CreateEffect, The effect " & Effect & " is not valid.")
@@ -2129,6 +2684,15 @@ Public Sub Engine_CreateEffect(ByVal CharIndex As Integer, _
 
     End Select
 
+    
+    Exit Sub
+
+Engine_CreateEffect_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Engine_CreateEffect"
+    End If
+Resume Next
+    
 End Sub
 
 Public Function Speed_Particle() As Single
@@ -2136,10 +2700,22 @@ Public Function Speed_Particle() As Single
     'Author: Standelf
     'Last Modify Date: 06/01/2011
     '***************************************************
+    
+    On Error GoTo Speed_Particle_Err
+    
 
     Dim ElapsedTime As Single
     ElapsedTime = Engine_ElapsedTime
     Speed_Particle = ElapsedTime * 0.2
 
+    
+    Exit Function
+
+Speed_Particle_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Particulas" & "->" & "Speed_Particle"
+    End If
+Resume Next
+    
 End Function
 

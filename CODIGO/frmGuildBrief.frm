@@ -484,12 +484,27 @@ Public LastButtonPressed       As clsGraphicalButton
 Public EsLeader                As Boolean
 
 Private Sub Desc_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Desc_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+Desc_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildBrief" & "->" & "Desc_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
+    
+    On Error GoTo Form_Load_Err
+    
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
@@ -497,9 +512,21 @@ Private Sub Form_Load()
     
     Call LoadButtons
     
+    
+    Exit Sub
+
+Form_Load_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildBrief" & "->" & "Form_Load"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadButtons()
+    
+    On Error GoTo LoadButtons_Err
+    
     Dim GrhPath As String
     
     GrhPath = DirGraficos
@@ -529,40 +556,121 @@ Private Sub LoadButtons()
 
     End If
 
+    
+    Exit Sub
+
+LoadButtons_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildBrief" & "->" & "LoadButtons"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Form_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+Form_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildBrief" & "->" & "Form_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgCerrar_Click()
+    
+    On Error GoTo imgCerrar_Click_Err
+    
     Unload Me
 
+    
+    Exit Sub
+
+imgCerrar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildBrief" & "->" & "imgCerrar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgDeclararGuerra_Click()
+    
+    On Error GoTo imgDeclararGuerra_Click_Err
+    
     Call WriteGuildDeclareWar(Nombre.Caption)
     Unload Me
 
+    
+    Exit Sub
+
+imgDeclararGuerra_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildBrief" & "->" & "imgDeclararGuerra_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgOfrecerAlianza_Click()
+    
+    On Error GoTo imgOfrecerAlianza_Click_Err
+    
     frmCommet.Nombre = Nombre.Caption
     frmCommet.T = TIPO.ALIANZA
     Call frmCommet.Show(vbModal, frmGuildBrief)
 
+    
+    Exit Sub
+
+imgOfrecerAlianza_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildBrief" & "->" & "imgOfrecerAlianza_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgOfrecerPaz_Click()
+    
+    On Error GoTo imgOfrecerPaz_Click_Err
+    
     frmCommet.Nombre = Nombre.Caption
     frmCommet.T = TIPO.PAZ
     Call frmCommet.Show(vbModal, frmGuildBrief)
 
+    
+    Exit Sub
+
+imgOfrecerPaz_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildBrief" & "->" & "imgOfrecerPaz_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgSolicitarIngreso_Click()
+    
+    On Error GoTo imgSolicitarIngreso_Click_Err
+    
     Call frmGuildSol.RecieveSolicitud(Nombre.Caption)
     Call frmGuildSol.Show(vbModal, frmGuildBrief)
 
+    
+    Exit Sub
+
+imgSolicitarIngreso_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildBrief" & "->" & "imgSolicitarIngreso_Click"
+    End If
+Resume Next
+    
 End Sub

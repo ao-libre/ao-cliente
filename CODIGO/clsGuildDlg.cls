@@ -30,6 +30,9 @@ Private p_Activo     As Boolean
 Private usedFont     As StdFont
 
 Public Property Let CantidadDialogos(ByVal v As Byte)
+    
+    On Error GoTo CantidadDialogos_Err
+    
 
     If v > 0 Then
         ReDim Preserve p_Dialogos(1 To v) As t_GuildDlg
@@ -37,6 +40,15 @@ Public Property Let CantidadDialogos(ByVal v As Byte)
 
     End If
 
+    
+    Exit Property
+
+CantidadDialogos_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGuildDlg" & "->" & "CantidadDialogos"
+    End If
+Resume Next
+    
 End Property
 
 ''
@@ -48,12 +60,24 @@ Public Sub RemoveDialogs()
     'Last Modification: 04/02/07
     'Removes all dialogs
     '***************************************************
+    
+    On Error GoTo RemoveDialogs_Err
+    
     Dim i As Long
     
     For i = 1 To p_CANTIDADDIALOGOS
         p_Dialogos(i).Texto = vbNullString
     Next i
 
+    
+    Exit Sub
+
+RemoveDialogs_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGuildDlg" & "->" & "RemoveDialogs"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -67,28 +91,79 @@ Public Property Get CantidadDialogos() As Byte
     'Last Modification: 04/01/07
     'Retrieves the number of dialogs to be displayed on screen
     '***************************************************
+    
+    On Error GoTo CantidadDialogos_Err
+    
     CantidadDialogos = p_CANTIDADDIALOGOS
 
+    
+    Exit Property
+
+CantidadDialogos_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGuildDlg" & "->" & "CantidadDialogos"
+    End If
+Resume Next
+    
 End Property
 
 Public Property Let Activo(ByVal v As Boolean)
+    
+    On Error GoTo Activo_Err
+    
     p_Activo = v
 
+    
+    Exit Property
+
+Activo_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGuildDlg" & "->" & "Activo"
+    End If
+Resume Next
+    
 End Property
 
 Public Property Get Activo() As Boolean
+    
+    On Error GoTo Activo_Err
+    
     Activo = p_Activo
 
+    
+    Exit Property
+
+Activo_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGuildDlg" & "->" & "Activo"
+    End If
+Resume Next
+    
 End Property
 
 Private Sub Class_Initialize()
+    
+    On Error GoTo Class_Initialize_Err
+    
     p_CANTIDADDIALOGOS = 5
     ReDim p_Dialogos(1 To p_CANTIDADDIALOGOS) As t_GuildDlg
     p_Activo = True
 
+    
+    Exit Sub
+
+Class_Initialize_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGuildDlg" & "->" & "Class_Initialize"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub Draw()
+    
+    On Error GoTo Draw_Err
+    
     Dim i As Byte
     Dim Y As Long
 
@@ -114,9 +189,21 @@ Public Sub Draw()
 
     Next i
 
+    
+    Exit Sub
+
+Draw_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGuildDlg" & "->" & "Draw"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub PassTimer()
+    
+    On Error GoTo PassTimer_Err
+    
     Dim i As Byte
 
     For i = 1 To p_CANTIDADDIALOGOS
@@ -130,6 +217,15 @@ Public Sub PassTimer()
 
     Next i
     
+    
+    Exit Sub
+
+PassTimer_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGuildDlg" & "->" & "PassTimer"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -142,6 +238,9 @@ Public Sub PushBackText(ByVal s As String)
     'Splits dialogs into lines fitting properly the render area and inserts them
     '07/04/2009: Now cuts the string properly in spite of not fitting in the screen. This avoids an infite loop.
     '***************************************************
+    
+    On Error GoTo PushBackText_Err
+    
     Dim str As String
     Dim tmp As Integer
     
@@ -164,9 +263,21 @@ Public Sub PushBackText(ByVal s As String)
 
     End If
 
+    
+    Exit Sub
+
+PushBackText_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGuildDlg" & "->" & "PushBackText"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub RealPushBackText(ByVal s As String)
+    
+    On Error GoTo RealPushBackText_Err
+    
     Dim i     As Byte
     Dim Vacio As Boolean
 
@@ -200,6 +311,15 @@ Private Sub RealPushBackText(ByVal s As String)
 
     End If
 
+    
+    Exit Sub
+
+RealPushBackText_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGuildDlg" & "->" & "RealPushBackText"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -213,8 +333,20 @@ Public Property Get Font() As StdFont
     'Last Modify Date: 04/27/06
     'Retrieves the font being used to render dialogs.
     '**************************************************************
+    
+    On Error GoTo Font_Err
+    
     Font = usedFont
 
+    
+    Exit Property
+
+Font_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGuildDlg" & "->" & "Font"
+    End If
+Resume Next
+    
 End Property
 
 ''
@@ -228,7 +360,19 @@ Public Property Let Font(ByRef nValue As StdFont)
     'Last Modify Date: 04/27/06
     'Sets the font being used to render dialogs.
     '**************************************************************
+    
+    On Error GoTo Font_Err
+    
     Set usedFont = nValue
 
+    
+    Exit Property
+
+Font_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGuildDlg" & "->" & "Font"
+    End If
+Resume Next
+    
 End Property
 

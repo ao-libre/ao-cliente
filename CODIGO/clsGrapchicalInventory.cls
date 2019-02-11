@@ -88,6 +88,9 @@ Public Sub ScrollInventory(ByVal Up As Boolean)
     'Scrolls the graphical inventory up / down
     '14/01/2010: ZaMa - Now redraws inventory only if needed
     '***************************************************
+    
+    On Error GoTo ScrollInventory_Err
+    
 
     'Only move if there is something to show up /down
     If CanScroll(Up) Then
@@ -97,9 +100,21 @@ Public Sub ScrollInventory(ByVal Up As Boolean)
         'DrawInventory
     End If
 
+    
+    Exit Sub
+
+ScrollInventory_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGrapchicalInventory" & "->" & "ScrollInventory"
+    End If
+Resume Next
+    
 End Sub
 
 Public Function CanScroll(ByVal Up As Boolean)
+    
+    On Error GoTo CanScroll_Err
+    
 
     '***************************************************
     'Author: ZaMa
@@ -113,6 +128,15 @@ Public Function CanScroll(ByVal Up As Boolean)
 
     End If
     
+    
+    Exit Function
+
+CanScroll_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGrapchicalInventory" & "->" & "CanScroll"
+    End If
+Resume Next
+    
 End Function
 
 Public Sub SelectGold()
@@ -121,6 +145,9 @@ Public Sub SelectGold()
     'Last Modify Date: 27/07/04
     'Sets the gold as the currently selected item
     '***************************************************
+    
+    On Error GoTo SelectGold_Err
+    
     Dim prevSelectedItem As Long
     
     'Store preivously selected item
@@ -135,9 +162,21 @@ Public Sub SelectGold()
         'Call DrawInventorySlot(prevSelectedItem)
     End If
 
+    
+    Exit Sub
+
+SelectGold_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGrapchicalInventory" & "->" & "SelectGold"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub DeselectItem()
+    
+    On Error GoTo DeselectItem_Err
+    
 
     '***************************************************
     'Author: ZaMa
@@ -156,6 +195,15 @@ Public Sub DeselectItem()
     'Redraw old item to deselect it
     'Call DrawInventorySlot(ClearSlot)
 
+    
+    Exit Sub
+
+DeselectItem_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGrapchicalInventory" & "->" & "DeselectItem"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub ChangeSlotItemAmount(ByVal slot As Byte, ByVal Amount As Long)
@@ -166,11 +214,23 @@ Public Sub ChangeSlotItemAmount(ByVal slot As Byte, ByVal Amount As Long)
     'Change the amount of the required item, and update the slot.
     '***************************************************
     
+    On Error GoTo ChangeSlotItemAmount_Err
+    
+    
     Inventory(slot).Amount = Amount
     
     'Update Amount
     'Call DrawInventorySlot(slot)
 
+    
+    Exit Sub
+
+ChangeSlotItemAmount_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGrapchicalInventory" & "->" & "ChangeSlotItemAmount"
+    End If
+Resume Next
+    
 End Sub
 
 Public Property Get SelectedItem() As Long
@@ -179,8 +239,20 @@ Public Property Get SelectedItem() As Long
     'Last Modify Date: 27/07/04
     'Retrieves the selected item index
     '***************************************************
+    
+    On Error GoTo SelectedItem_Err
+    
     SelectedItem = InvSelectedItem
 
+    
+    Exit Property
+
+SelectedItem_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGrapchicalInventory" & "->" & "SelectedItem"
+    End If
+Resume Next
+    
 End Property
 
 Public Property Get MaxHit(ByVal slot As Byte) As Integer
@@ -189,8 +261,20 @@ Public Property Get MaxHit(ByVal slot As Byte) As Integer
     'Last Modify Date: 27/07/04
     'Retrieves the max hit of the selected item
     '***************************************************
+    
+    On Error GoTo MaxHit_Err
+    
     MaxHit = Inventory(slot).MaxHit
 
+    
+    Exit Property
+
+MaxHit_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGrapchicalInventory" & "->" & "MaxHit"
+    End If
+Resume Next
+    
 End Property
 
 Public Property Get MinHit(ByVal slot As Byte) As Integer
@@ -199,8 +283,20 @@ Public Property Get MinHit(ByVal slot As Byte) As Integer
     'Last Modify Date: 27/07/04
     'Retrieves the min hit of the selected item
     '***************************************************
+    
+    On Error GoTo MinHit_Err
+    
     MinHit = Inventory(slot).MinHit
 
+    
+    Exit Property
+
+MinHit_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGrapchicalInventory" & "->" & "MinHit"
+    End If
+Resume Next
+    
 End Property
 
 Public Property Get MaxDef(ByVal slot As Byte) As Integer
@@ -209,8 +305,20 @@ Public Property Get MaxDef(ByVal slot As Byte) As Integer
     'Last Modify Date: 27/07/04
     'Retrieves the defense of the selected item
     '***************************************************
+    
+    On Error GoTo MaxDef_Err
+    
     MaxDef = Inventory(slot).MaxDef
 
+    
+    Exit Property
+
+MaxDef_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGrapchicalInventory" & "->" & "MaxDef"
+    End If
+Resume Next
+    
 End Property
 
 Public Property Get MinDef(ByVal slot As Byte) As Integer
@@ -219,8 +327,20 @@ Public Property Get MinDef(ByVal slot As Byte) As Integer
     'Last Modify Date: 02/1209
     'Retrieves the defense of the selected item
     '***************************************************
+    
+    On Error GoTo MinDef_Err
+    
     MinDef = Inventory(slot).MinDef
 
+    
+    Exit Property
+
+MinDef_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGrapchicalInventory" & "->" & "MinDef"
+    End If
+Resume Next
+    
 End Property
 
 Public Property Get GrhIndex(ByVal slot As Byte) As Integer
@@ -229,8 +349,20 @@ Public Property Get GrhIndex(ByVal slot As Byte) As Integer
     'Last Modify Date: 27/07/04
     'Retrieves the grh index of the selected item
     '***************************************************
+    
+    On Error GoTo GrhIndex_Err
+    
     GrhIndex = Inventory(slot).GrhIndex
 
+    
+    Exit Property
+
+GrhIndex_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGrapchicalInventory" & "->" & "GrhIndex"
+    End If
+Resume Next
+    
 End Property
 
 Public Property Get Valor(ByVal slot As Byte) As Single
@@ -239,11 +371,26 @@ Public Property Get Valor(ByVal slot As Byte) As Single
     'Last Modify Date: 27/07/04
     'Retrieves the value of the selected item
     '***************************************************
+    
+    On Error GoTo Valor_Err
+    
     Valor = Inventory(slot).Valor
 
+    
+    Exit Property
+
+Valor_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGrapchicalInventory" & "->" & "Valor"
+    End If
+Resume Next
+    
 End Property
 
 Public Property Get Amount(ByVal slot As Byte) As Long
+    
+    On Error GoTo Amount_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -257,6 +404,15 @@ Public Property Get Amount(ByVal slot As Byte) As Long
 
     End If
 
+    
+    Exit Property
+
+Amount_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGrapchicalInventory" & "->" & "Amount"
+    End If
+Resume Next
+    
 End Property
 
 Public Property Get ObjIndex(ByVal slot As Byte) As Integer
@@ -265,8 +421,20 @@ Public Property Get ObjIndex(ByVal slot As Byte) As Integer
     'Last Modify Date: 27/07/04
     'Retrieves the selected item's object index
     '***************************************************
+    
+    On Error GoTo ObjIndex_Err
+    
     ObjIndex = Inventory(slot).ObjIndex
 
+    
+    Exit Property
+
+ObjIndex_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGrapchicalInventory" & "->" & "ObjIndex"
+    End If
+Resume Next
+    
 End Property
 
 Public Property Get OBJType(ByVal slot As Byte) As Integer
@@ -275,8 +443,20 @@ Public Property Get OBJType(ByVal slot As Byte) As Integer
     'Last Modify Date: 27/07/04
     'Retrieves the selected item's object type
     '***************************************************
+    
+    On Error GoTo OBJType_Err
+    
     OBJType = Inventory(slot).OBJType
 
+    
+    Exit Property
+
+OBJType_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGrapchicalInventory" & "->" & "OBJType"
+    End If
+Resume Next
+    
 End Property
 
 Public Property Get ItemName(ByVal slot As Byte) As String
@@ -285,8 +465,20 @@ Public Property Get ItemName(ByVal slot As Byte) As String
     'Last Modify Date: 27/07/04
     'Retrieves the selected item's name
     '***************************************************
+    
+    On Error GoTo ItemName_Err
+    
     ItemName = Inventory(slot).Name
 
+    
+    Exit Property
+
+ItemName_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGrapchicalInventory" & "->" & "ItemName"
+    End If
+Resume Next
+    
 End Property
 
 Public Property Get Equipped(ByVal slot As Byte) As Boolean
@@ -295,8 +487,20 @@ Public Property Get Equipped(ByVal slot As Byte) As Boolean
     'Last Modify Date: 27/07/04
     'Retrieves True if the item at the given pos is eqiupped
     '***************************************************
+    
+    On Error GoTo Equipped_Err
+    
     Equipped = Inventory(slot).Equipped
 
+    
+    Exit Property
+
+Equipped_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGrapchicalInventory" & "->" & "Equipped"
+    End If
+Resume Next
+    
 End Property
 
 Public Property Get MaxObjs() As Byte
@@ -305,11 +509,26 @@ Public Property Get MaxObjs() As Byte
     'Last Modify Date: 09/16/09
     'Retrieves the capacity of the Inventory
     '***************************************************
+    
+    On Error GoTo MaxObjs_Err
+    
     MaxObjs = UBound(Inventory)
 
+    
+    Exit Property
+
+MaxObjs_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGrapchicalInventory" & "->" & "MaxObjs"
+    End If
+Resume Next
+    
 End Property
 
 Public Sub SetMaxObjs(ByVal MaxObjs As Byte)
+    
+    On Error GoTo SetMaxObjs_Err
+    
 
     '***************************************************
     'Author: Torres Patricio (Pato)
@@ -320,6 +539,15 @@ Public Sub SetMaxObjs(ByVal MaxObjs As Byte)
     
     ReDim Preserve Inventory(1 To MaxObjs) As Inventory
 
+    
+    Exit Sub
+
+SetMaxObjs_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGrapchicalInventory" & "->" & "SetMaxObjs"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub ToggleShowValue(ByVal bShow As Boolean)
@@ -328,6 +556,9 @@ Public Sub ToggleShowValue(ByVal bShow As Boolean)
     'Last Modify Date: 11/12
     'Indicates if the amount of the items in the inventory is shown
     '***************************************************
+    
+    On Error GoTo ToggleShowValue_Err
+    
     ShowValue = bShow
     
     Dim slot As Integer
@@ -336,6 +567,15 @@ Public Sub ToggleShowValue(ByVal bShow As Boolean)
     'For slot = 1 To Me.MaxObjs
     'DrawInventorySlot (slot)
     'Next slot
+    
+    Exit Sub
+
+ToggleShowValue_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGrapchicalInventory" & "->" & "ToggleShowValue"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub ClearAllSlots()
@@ -344,6 +584,9 @@ Public Sub ClearAllSlots()
     'Last Modify Date: 15/03/2011
     'Clear All Slots.
     '***************************************************
+    
+    On Error GoTo ClearAllSlots_Err
+    
 
     Dim slot As Long
 
@@ -351,6 +594,15 @@ Public Sub ClearAllSlots()
         Call SetItem(slot, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, vbNullString)
     Next slot
 
+    
+    Exit Sub
+
+ClearAllSlots_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGrapchicalInventory" & "->" & "ClearAllSlots"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub SetItem(ByVal slot As Byte, _
@@ -365,6 +617,9 @@ Public Sub SetItem(ByVal slot As Byte, _
                    ByVal MinDef As Integer, _
                    ByVal eValor As Single, _
                    ByVal eName As String)
+    
+    On Error GoTo SetItem_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -392,6 +647,15 @@ Public Sub SetItem(ByVal slot As Byte, _
     
     'Render inventory slot (we don't need to render the whole inventory)
     'Call DrawInventorySlot(slot)
+    
+    Exit Sub
+
+SetItem_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGrapchicalInventory" & "->" & "SetItem"
+    End If
+Resume Next
+    
 End Sub
 
 Private Function ClickItem(ByVal X As Long, ByVal Y As Long) As Long
@@ -400,6 +664,9 @@ Private Function ClickItem(ByVal X As Long, ByVal Y As Long) As Long
     'Last Modify Date: 27/07/04
     'Selects the item clicked if it's valid and return's it's index
     '***************************************************
+    
+    On Error GoTo ClickItem_Err
+    
     Dim TempItem As Long
     Dim temp_x   As Long
     Dim temp_y   As Long
@@ -422,6 +689,15 @@ Private Function ClickItem(ByVal X As Long, ByVal Y As Long) As Long
 
     End If
 
+    
+    Exit Function
+
+ClickItem_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGrapchicalInventory" & "->" & "ClickItem"
+    End If
+Resume Next
+    
 End Function
 
 Private Sub DrawInventory()
@@ -430,6 +706,9 @@ Private Sub DrawInventory()
     'Last Modify Date: 27/07/04
     'Renders the inventory to the given PictureBox
     '***************************************************
+    
+    On Error GoTo DrawInventory_Err
+    
     Dim LoopC             As Long
 
     Dim destRect          As RECT
@@ -483,6 +762,15 @@ Private Sub DrawInventory()
         
     Call Engine_EndScene(destRect, InventoryWindow.hwnd)
     
+    
+    Exit Sub
+
+DrawInventory_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGrapchicalInventory" & "->" & "DrawInventory"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub InventoryWindow_MouseMove(Button As Integer, _
@@ -495,6 +783,9 @@ Private Sub InventoryWindow_MouseMove(Button As Integer, _
     'Implements the mouse move event of the inventory picture box
     'Displays a ToolTip of the item under the mouse
     '***************************************************
+    
+    On Error GoTo InventoryWindow_MouseMove_Err
+    
     Dim temp_x   As Integer
     Dim temp_y   As Integer
     Dim TempItem As Integer
@@ -512,12 +803,24 @@ Private Sub InventoryWindow_MouseMove(Button As Integer, _
 
     End If
 
+    
+    Exit Sub
+
+InventoryWindow_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGrapchicalInventory" & "->" & "InventoryWindow_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub InventoryWindow_MouseDown(Button As Integer, _
                                       Shift As Integer, _
                                       X As Single, _
                                       Y As Single)
+    
+    On Error GoTo InventoryWindow_MouseDown_Err
+    
     Dim temp_x   As Integer
     Dim temp_y   As Integer
     Dim TempItem As Integer
@@ -539,9 +842,21 @@ Private Sub InventoryWindow_MouseDown(Button As Integer, _
 
     End If
 
+    
+    Exit Sub
+
+InventoryWindow_MouseDown_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGrapchicalInventory" & "->" & "InventoryWindow_MouseDown"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub DrawInv(Optional ByVal r As Boolean = False)
+    
+    On Error GoTo DrawInv_Err
+    
 
     If GetTickCount - InventoryTickCount > 100 Then
         Call DrawInventory
@@ -549,6 +864,15 @@ Public Sub DrawInv(Optional ByVal r As Boolean = False)
 
     End If
 
+    
+    Exit Sub
+
+DrawInv_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGrapchicalInventory" & "->" & "DrawInv"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub Initialize(ByRef DirectD3D As D3DX8, _
@@ -567,6 +891,9 @@ Public Sub Initialize(ByRef DirectD3D As D3DX8, _
     'Sets the reference to the picture box on which to render the inventory
     '03/12/09: I added the optionals args FontSize, TileWidth, TileHeight, startX and startY. (Budi)
     '***************************************************
+    
+    On Error GoTo Initialize_Err
+    
     Set InventoryWindow = InvPic
     
     'Make sure auto-redraw is set to true
@@ -590,6 +917,15 @@ Public Sub Initialize(ByRef DirectD3D As D3DX8, _
     
     If ImgContainer Then InvSelectedItem = ClickItem(1, 1)   'If there is anything there we select the top left item
 
+    
+    Exit Sub
+
+Initialize_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGrapchicalInventory" & "->" & "Initialize"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub InventoryWindow_MouseUp(Button As Integer, _
@@ -603,6 +939,9 @@ Private Sub InventoryWindow_MouseUp(Button As Integer, _
     'Check outs which item was clicked
     '***************************************************
     'Store previously selected item
+    
+    On Error GoTo InventoryWindow_MouseUp_Err
+    
     Dim prevSelItem As Long
     Dim TempItem    As Long
     Dim temp_x      As Long
@@ -642,4 +981,13 @@ Private Sub InventoryWindow_MouseUp(Button As Integer, _
 
     End If
 
+    
+    Exit Sub
+
+InventoryWindow_MouseUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGrapchicalInventory" & "->" & "InventoryWindow_MouseUp"
+    End If
+Resume Next
+    
 End Sub

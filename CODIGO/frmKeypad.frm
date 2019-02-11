@@ -429,6 +429,9 @@ Private Const MayIndex = "!@#$%^&*()_+|QWERTYUIOP{}ASDFGHJKL:""ZXCVBNM<>?"
 Private Modo As e_modo_keypad
 
 Private Sub Form_Activate()
+    
+    On Error GoTo Form_Activate_Err
+    
     Dim i As Integer
     Dim j As Integer
     i = RandomNumber(-2000, 2000)
@@ -436,10 +439,22 @@ Private Sub Form_Activate()
     Me.Top = Me.Top + j
     Me.Left = Me.Left + i
 
+    
+    Exit Sub
+
+Form_Activate_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmKeypad" & "->" & "Form_Activate"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
+    
+    On Error GoTo Form_Load_Err
+    
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
@@ -454,9 +469,21 @@ Private Sub Form_Load()
     
     Modo = MINUSCULA
 
+    
+    Exit Sub
+
+Form_Load_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmKeypad" & "->" & "Form_Load"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadButtons()
+    
+    On Error GoTo LoadButtons_Err
+    
     Dim GrhPath As String
     
     GrhPath = DirGraficos
@@ -470,26 +497,74 @@ Private Sub LoadButtons()
 
     Call cBotonMay.Initialize(imgMin, GrhPath & "BotonMin.jpg", GrhPath & "BotonMinRollover.jpg", GrhPath & "BotonMinClick.jpg", Me)
 
+    
+    Exit Sub
+
+LoadButtons_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmKeypad" & "->" & "LoadButtons"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Form_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+Form_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmKeypad" & "->" & "Form_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgCerrar_Click()
+    
+    On Error GoTo imgCerrar_Click_Err
+    
     Unload Me
 
+    
+    Exit Sub
+
+imgCerrar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmKeypad" & "->" & "imgCerrar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgEspacio_Click()
+    
+    On Error GoTo imgEspacio_Click_Err
+    
     Call Audio.PlayWave(SND_CLICK)
     Me.txtPassword.Text = Me.txtPassword.Text & " "
     Me.txtPassword.SetFocus
 
+    
+    Exit Sub
+
+imgEspacio_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmKeypad" & "->" & "imgEspacio_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgKeyPad_Click(Index As Integer)
+    
+    On Error GoTo imgKeyPad_Click_Err
+    
     Call Audio.PlayWave(SND_CLICK)
     
     If Modo = MAYUSCULA Then
@@ -501,6 +576,15 @@ Private Sub imgKeyPad_Click(Index As Integer)
     
     Me.txtPassword.SetFocus
 
+    
+    Exit Sub
+
+imgKeyPad_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmKeypad" & "->" & "imgKeyPad_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgKeyPad_MouseMove(Index As Integer, _
@@ -508,11 +592,26 @@ Private Sub imgKeyPad_MouseMove(Index As Integer, _
                                 Shift As Integer, _
                                 X As Single, _
                                 Y As Single)
+    
+    On Error GoTo imgKeyPad_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+imgKeyPad_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmKeypad" & "->" & "imgKeyPad_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMay_Click()
+    
+    On Error GoTo imgMay_Click_Err
+    
 
     If Modo = MAYUSCULA Then Exit Sub
     
@@ -521,9 +620,21 @@ Private Sub imgMay_Click()
     Modo = MAYUSCULA
     Me.txtPassword.SetFocus
 
+    
+    Exit Sub
+
+imgMay_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmKeypad" & "->" & "imgMay_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMin_Click()
+    
+    On Error GoTo imgMin_Click_Err
+    
 
     If Modo = MINUSCULA Then Exit Sub
     
@@ -532,9 +643,21 @@ Private Sub imgMin_Click()
     Modo = MINUSCULA
     Me.txtPassword.SetFocus
 
+    
+    Exit Sub
+
+imgMin_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmKeypad" & "->" & "imgMin_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub txtPassword_KeyPress(KeyAscii As Integer)
+    
+    On Error GoTo txtPassword_KeyPress_Err
+    
 
     If KeyAscii = 13 Then
         frmConnect.txtPasswd.Text = Me.txtPassword.Text
@@ -544,4 +667,13 @@ Private Sub txtPassword_KeyPress(KeyAscii As Integer)
 
     End If
 
+    
+    Exit Sub
+
+txtPassword_KeyPress_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmKeypad" & "->" & "txtPassword_KeyPress"
+    End If
+Resume Next
+    
 End Sub

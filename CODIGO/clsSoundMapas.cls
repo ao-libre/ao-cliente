@@ -34,12 +34,27 @@ Private Const NumMaps As Integer = 291
  
 Private Sub Class_Initialize()
     'armar el array
+    
+    On Error GoTo Class_Initialize_Err
+    
     ReDim p_Mapas(1 To NumMaps) As p_tSoundMapInfo
     Call LoadSoundMapInfo
 
+    
+    Exit Sub
+
+Class_Initialize_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsSoundMapas" & "->" & "Class_Initialize"
+    End If
+Resume Next
+    
 End Sub
  
 Public Sub LoadSoundMapInfo()
+    
+    On Error GoTo LoadSoundMapInfo_Err
+    
     Dim i       As Integer
     Dim j       As Integer
     Dim Temps   As String
@@ -70,10 +85,22 @@ Public Sub LoadSoundMapInfo()
 
     Next i
 
+    
+    Exit Sub
+
+LoadSoundMapInfo_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsSoundMapas" & "->" & "LoadSoundMapInfo"
+    End If
+Resume Next
+    
 End Sub
  
 Public Sub ReproducirSonidosDeMapas()
     'Nos fijamos el mapa del personaje, sus sonidos y lo aplicamos al mapa. Simple y óptimo
+    
+    On Error GoTo ReproducirSonidosDeMapas_Err
+    
     Dim i          As Long
     Dim SonidoMapa As Byte
     Dim posX       As Byte
@@ -112,4 +139,13 @@ Public Sub ReproducirSonidosDeMapas()
 
     End If
 
+    
+    Exit Sub
+
+ReproducirSonidosDeMapas_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsSoundMapas" & "->" & "ReproducirSonidosDeMapas"
+    End If
+Resume Next
+    
 End Sub

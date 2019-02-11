@@ -400,6 +400,9 @@ Private Declare Function GetPixel _
                              ByVal Y As Long) As Long
 
 Sub CargarCabezas()
+    
+    On Error GoTo CargarCabezas_Err
+    
     Dim N            As Integer
     Dim i            As Long
     Dim Numheads     As Integer
@@ -433,9 +436,21 @@ Sub CargarCabezas()
     
     Close #N
 
+    
+    Exit Sub
+
+CargarCabezas_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TileEngine" & "->" & "CargarCabezas"
+    End If
+Resume Next
+    
 End Sub
 
 Sub CargarCascos()
+    
+    On Error GoTo CargarCascos_Err
+    
     Dim N            As Integer
     Dim i            As Long
     Dim NumCascos    As Integer
@@ -470,9 +485,21 @@ Sub CargarCascos()
     
     Close #N
 
+    
+    Exit Sub
+
+CargarCascos_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TileEngine" & "->" & "CargarCascos"
+    End If
+Resume Next
+    
 End Sub
 
 Sub CargarCuerpos()
+    
+    On Error GoTo CargarCuerpos_Err
+    
     Dim N            As Integer
     Dim i            As Long
     Dim NumCuerpos   As Integer
@@ -509,9 +536,21 @@ Sub CargarCuerpos()
     
     Close #N
 
+    
+    Exit Sub
+
+CargarCuerpos_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TileEngine" & "->" & "CargarCuerpos"
+    End If
+Resume Next
+    
 End Sub
 
 Sub CargarFxs()
+    
+    On Error GoTo CargarFxs_Err
+    
     Dim N      As Integer
     Dim i      As Long
     Dim NumFxs As Integer
@@ -535,9 +574,21 @@ Sub CargarFxs()
     
     Close #N
 
+    
+    Exit Sub
+
+CargarFxs_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TileEngine" & "->" & "CargarFxs"
+    End If
+Resume Next
+    
 End Sub
 
 Sub CargarTips()
+    
+    On Error GoTo CargarTips_Err
+    
     Dim N       As Integer
     Dim i       As Long
     Dim NumTips As Integer
@@ -560,9 +611,21 @@ Sub CargarTips()
     
     Close #N
 
+    
+    Exit Sub
+
+CargarTips_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TileEngine" & "->" & "CargarTips"
+    End If
+Resume Next
+    
 End Sub
 
 Sub CargarArrayLluvia()
+    
+    On Error GoTo CargarArrayLluvia_Err
+    
     Dim N  As Integer
     Dim i  As Long
     Dim Nu As Integer
@@ -585,6 +648,15 @@ Sub CargarArrayLluvia()
     
     Close #N
 
+    
+    Exit Sub
+
+CargarArrayLluvia_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TileEngine" & "->" & "CargarArrayLluvia"
+    End If
+Resume Next
+    
 End Sub
 
 Sub ConvertCPtoTP(ByVal viewPortX As Integer, _
@@ -594,9 +666,21 @@ Sub ConvertCPtoTP(ByVal viewPortX As Integer, _
     '******************************************
     'Converts where the mouse is in the main window to a tile position. MUST be called eveytime the mouse moves.
     '******************************************
+    
+    On Error GoTo ConvertCPtoTP_Err
+    
     tX = UserPos.X + viewPortX \ TilePixelWidth - WindowTileWidth \ 2
     tY = UserPos.Y + viewPortY \ TilePixelHeight - WindowTileHeight \ 2
 
+    
+    Exit Sub
+
+ConvertCPtoTP_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TileEngine" & "->" & "ConvertCPtoTP"
+    End If
+Resume Next
+    
 End Sub
 
 Sub MakeChar(ByVal CharIndex As Integer, _
@@ -662,6 +746,9 @@ Public Sub InitGrh(ByRef Grh As Grh, _
     '*****************************************************************
     'Sets up a grh. MUST be done before rendering
     '*****************************************************************
+    
+    On Error GoTo InitGrh_Err
+    
     Grh.GrhIndex = GrhIndex
     
     If Started = 2 Then
@@ -690,12 +777,24 @@ Public Sub InitGrh(ByRef Grh As Grh, _
     Grh.FrameCounter = 1
     Grh.Speed = GrhData(Grh.GrhIndex).Speed
 
+    
+    Exit Sub
+
+InitGrh_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TileEngine" & "->" & "InitGrh"
+    End If
+Resume Next
+    
 End Sub
 
 Sub MoveCharbyHead(ByVal CharIndex As Integer, ByVal nHeading As E_Heading)
     '*****************************************************************
     'Starts the movement of a character in nHeading direction
     '*****************************************************************
+    
+    On Error GoTo MoveCharbyHead_Err
+    
     Dim addx As Integer
     Dim addy As Integer
     Dim X    As Integer
@@ -758,9 +857,21 @@ Sub MoveCharbyHead(ByVal CharIndex As Integer, ByVal nHeading As E_Heading)
 
     End If
 
+    
+    Exit Sub
+
+MoveCharbyHead_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TileEngine" & "->" & "MoveCharbyHead"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub DoFogataFx()
+    
+    On Error GoTo DoFogataFx_Err
+    
     Dim Location As Position
     
     If bFogata Then
@@ -779,9 +890,21 @@ Public Sub DoFogataFx()
 
     End If
 
+    
+    Exit Sub
+
+DoFogataFx_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TileEngine" & "->" & "DoFogataFx"
+    End If
+Resume Next
+    
 End Sub
 
 Public Function EstaPCarea(ByVal CharIndex As Integer) As Boolean
+    
+    On Error GoTo EstaPCarea_Err
+    
 
     '***************************************************
     'Author: Unknown
@@ -793,9 +916,21 @@ Public Function EstaPCarea(ByVal CharIndex As Integer) As Boolean
 
     End With
 
+    
+    Exit Function
+
+EstaPCarea_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TileEngine" & "->" & "EstaPCarea"
+    End If
+Resume Next
+    
 End Function
 
 Sub DoPasosFx(ByVal CharIndex As Integer)
+    
+    On Error GoTo DoPasosFx_Err
+    
 
     If Not UserNavegando Then
 
@@ -821,6 +956,15 @@ Sub DoPasosFx(ByVal CharIndex As Integer)
 
     End If
 
+    
+    Exit Sub
+
+DoPasosFx_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TileEngine" & "->" & "DoPasosFx"
+    End If
+Resume Next
+    
 End Sub
 
 Sub MoveCharbyPos(ByVal CharIndex As Integer, ByVal nX As Integer, ByVal nY As Integer)
@@ -888,6 +1032,9 @@ Sub MoveScreen(ByVal nHeading As E_Heading)
     '******************************************
     'Starts the screen moving in a direction
     '******************************************
+    
+    On Error GoTo MoveScreen_Err
+    
     Dim X  As Integer
     Dim Y  As Integer
     Dim tX As Integer
@@ -929,9 +1076,21 @@ Sub MoveScreen(ByVal nHeading As E_Heading)
 
     End If
 
+    
+    Exit Sub
+
+MoveScreen_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TileEngine" & "->" & "MoveScreen"
+    End If
+Resume Next
+    
 End Sub
 
 Private Function HayFogata(ByRef Location As Position) As Boolean
+    
+    On Error GoTo HayFogata_Err
+    
     Dim j As Long
     Dim k As Long
     
@@ -953,12 +1112,24 @@ Private Function HayFogata(ByRef Location As Position) As Boolean
         Next k
     Next j
 
+    
+    Exit Function
+
+HayFogata_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TileEngine" & "->" & "HayFogata"
+    End If
+Resume Next
+    
 End Function
 
 Function NextOpenChar() As Integer
     '*****************************************************************
     'Finds next open char slot in CharList
     '*****************************************************************
+    
+    On Error GoTo NextOpenChar_Err
+    
     Dim LoopC As Long
     Dim Dale  As Boolean
     
@@ -971,6 +1142,15 @@ Function NextOpenChar() As Integer
     
     NextOpenChar = LoopC
 
+    
+    Exit Function
+
+NextOpenChar_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TileEngine" & "->" & "NextOpenChar"
+    End If
+Resume Next
+    
 End Function
 
 ''
@@ -1083,6 +1263,9 @@ ErrorHandler:
 End Function
 
 Function LegalPos(ByVal X As Integer, ByVal Y As Integer) As Boolean
+    
+    On Error GoTo LegalPos_Err
+    
 
     '*****************************************************************
     'Checks to see if a tile position is legal
@@ -1112,6 +1295,15 @@ Function LegalPos(ByVal X As Integer, ByVal Y As Integer) As Boolean
     
     LegalPos = True
 
+    
+    Exit Function
+
+LegalPos_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TileEngine" & "->" & "LegalPos"
+    End If
+Resume Next
+    
 End Function
 
 Function MoveToLegalPos(ByVal X As Integer, ByVal Y As Integer) As Boolean
@@ -1122,6 +1314,9 @@ Function MoveToLegalPos(ByVal X As Integer, ByVal Y As Integer) As Boolean
     '10/05/2009: ZaMa - Now you can't change position with a casper which is in the shore.
     '01/08/2009: ZaMa - Now invisible admins can't change position with caspers.
     '*****************************************************************
+    
+    On Error GoTo MoveToLegalPos_Err
+    
     Dim CharIndex As Integer
     
     'Limites del mapa
@@ -1182,9 +1377,21 @@ Function MoveToLegalPos(ByVal X As Integer, ByVal Y As Integer) As Boolean
     
     MoveToLegalPos = True
 
+    
+    Exit Function
+
+MoveToLegalPos_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TileEngine" & "->" & "MoveToLegalPos"
+    End If
+Resume Next
+    
 End Function
 
 Function InMapBounds(ByVal X As Integer, ByVal Y As Integer) As Boolean
+    
+    On Error GoTo InMapBounds_Err
+    
 
     '*****************************************************************
     'Checks to see if a tile position is in the maps bounds
@@ -1196,6 +1403,15 @@ Function InMapBounds(ByVal X As Integer, ByVal Y As Integer) As Boolean
     
     InMapBounds = True
 
+    
+    Exit Function
+
+InMapBounds_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TileEngine" & "->" & "InMapBounds"
+    End If
+Resume Next
+    
 End Function
 
 Function GetBitmapDimensions(ByVal BmpFile As String, _
@@ -1204,6 +1420,9 @@ Function GetBitmapDimensions(ByVal BmpFile As String, _
     '*****************************************************************
     'Gets the dimensions of a bmp
     '*****************************************************************
+    
+    On Error GoTo GetBitmapDimensions_Err
+    
     Dim BMHeader    As BITMAPFILEHEADER
     Dim BINFOHeader As BITMAPINFOHEADER
     
@@ -1217,6 +1436,15 @@ Function GetBitmapDimensions(ByVal BmpFile As String, _
     bmWidth = BINFOHeader.biWidth
     bmHeight = BINFOHeader.biHeight
 
+    
+    Exit Function
+
+GetBitmapDimensions_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TileEngine" & "->" & "GetBitmapDimensions"
+    End If
+Resume Next
+    
 End Function
 
 Public Sub DrawTransparentGrhtoHdc(ByVal dsthdc As Long, _
@@ -1228,6 +1456,9 @@ Public Sub DrawTransparentGrhtoHdc(ByVal dsthdc As Long, _
     'Author: Torres Patricio (Pato)
     'Last Modify Date: 27/07/2012 - ^[GS]^
     '*************************************************************
+    
+    On Error GoTo DrawTransparentGrhtoHdc_Err
+    
     Dim Color As Long
     Dim X     As Long
     Dim Y     As Long
@@ -1244,6 +1475,15 @@ Public Sub DrawTransparentGrhtoHdc(ByVal dsthdc As Long, _
         Next Y
     Next X
 
+    
+    Exit Sub
+
+DrawTransparentGrhtoHdc_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TileEngine" & "->" & "DrawTransparentGrhtoHdc"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub DrawImageInPicture(ByRef PictureBox As PictureBox, _
@@ -1261,9 +1501,21 @@ Public Sub DrawImageInPicture(ByRef PictureBox As PictureBox, _
     'Last Modify Date: 12/28/2009
     'Draw Picture in the PictureBox
     '*************************************************************
+    
+    On Error GoTo DrawImageInPicture_Err
+    
 
     Call PictureBox.PaintPicture(Picture, X1, Y1, Width1, Height1, X2, Y2, Width2, Height2)
 
+    
+    Exit Sub
+
+DrawImageInPicture_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TileEngine" & "->" & "DrawImageInPicture"
+    End If
+Resume Next
+    
 End Sub
 
 Sub RenderScreen(ByVal tilex As Integer, _
@@ -1276,6 +1528,9 @@ Sub RenderScreen(ByVal tilex As Integer, _
     'Last modified by: Juan Martín Sotuyo Dodero (Maraxus)
     'Renders everything to the viewport
     '**************************************************************
+    
+    On Error GoTo RenderScreen_Err
+    
     Dim Y                As Long     'Keeps track of where on map we are
     Dim X                As Long     'Keeps track of where on map we are
     Dim screenminY       As Integer  'Start Y pos on current screen
@@ -1572,6 +1827,15 @@ Sub RenderScreen(ByVal tilex As Integer, _
     If ClientSetup.PartyMembers Then Call Draw_Party_Members
     Call RenderCount
 
+    
+    Exit Sub
+
+RenderScreen_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TileEngine" & "->" & "RenderScreen"
+    End If
+Resume Next
+    
 End Sub
 
 Public Function RenderSounds()
@@ -1580,6 +1844,9 @@ Public Function RenderSounds()
     'Last Modify Date: 3/30/2008
     'Actualiza todos los sonidos del mapa.
     '**************************************************************
+    
+    On Error GoTo RenderSounds_Err
+    
     Dim Location As Position
 
     If bRain And bLluvia(UserMap) Then
@@ -1623,17 +1890,38 @@ Public Function RenderSounds()
 
     End If
 
+    
+    Exit Function
+
+RenderSounds_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TileEngine" & "->" & "RenderSounds"
+    End If
+Resume Next
+    
 End Function
 
 Function HayUserAbajo(ByVal X As Integer, _
                       ByVal Y As Integer, _
                       ByVal GrhIndex As Long) As Boolean
+    
+    On Error GoTo HayUserAbajo_Err
+    
 
     If GrhIndex > 0 Then
         HayUserAbajo = charlist(UserCharIndex).Pos.X >= X - (GrhData(GrhIndex).TileWidth \ 2) And charlist(UserCharIndex).Pos.X <= X + (GrhData(GrhIndex).TileWidth \ 2) And charlist(UserCharIndex).Pos.Y >= Y - (GrhData(GrhIndex).TileHeight - 1) And charlist(UserCharIndex).Pos.Y <= Y
 
     End If
 
+    
+    Exit Function
+
+HayUserAbajo_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TileEngine" & "->" & "HayUserAbajo"
+    End If
+Resume Next
+    
 End Function
 
 Public Function InitTileEngine(ByVal setDisplayFormhWnd As Long, _
@@ -1686,14 +1974,29 @@ Public Function InitTileEngine(ByVal setDisplayFormhWnd As Long, _
 End Function
 
 Public Sub LoadGraphics()
+    
+    On Error GoTo LoadGraphics_Err
+    
     Call SurfaceDB.Initialize(DirectD3D8, App.path & "\graficos\", ClientSetup.byMemory)
 
+    
+    Exit Sub
+
+LoadGraphics_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TileEngine" & "->" & "LoadGraphics"
+    End If
+Resume Next
+    
 End Sub
 
 Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
                   ByVal DisplayFormLeft As Integer, _
                   ByVal MouseViewX As Integer, _
                   ByVal MouseViewY As Integer)
+    
+    On Error GoTo ShowNextFrame_Err
+    
 
     If EngineRun Then
         Call Engine_BeginScene
@@ -1817,6 +2120,15 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
     '//Inventario
     If frmMain.Visible Then Call Inventario.DrawInv
 
+    
+    Exit Sub
+
+ShowNextFrame_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TileEngine" & "->" & "ShowNextFrame"
+    End If
+Resume Next
+    
 End Sub
 
 Private Function GetElapsedTime() As Single
@@ -1825,6 +2137,9 @@ Private Function GetElapsedTime() As Single
     'Last Modify Date: 10/07/2002
     'Gets the time that past since the last call
     '**************************************************************
+    
+    On Error GoTo GetElapsedTime_Err
+    
     Dim Start_Time    As Currency
     Static end_time   As Currency
     Static timer_freq As Currency
@@ -1844,6 +2159,15 @@ Private Function GetElapsedTime() As Single
     'Get next end time
     Call QueryPerformanceCounter(end_time)
 
+    
+    Exit Function
+
+GetElapsedTime_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TileEngine" & "->" & "GetElapsedTime"
+    End If
+Resume Next
+    
 End Function
 
 Private Sub CharRender(ByVal CharIndex As Long, _
@@ -1855,6 +2179,9 @@ Private Sub CharRender(ByVal CharIndex As Long, _
     'Draw char's to screen without offcentering them
     '16/09/2010: ZaMa - Ya no se dibujan los bodies cuando estan invisibles.
     '***************************************************
+    
+    On Error GoTo CharRender_Err
+    
     Dim moved As Boolean
     Dim Pos   As Integer
     Dim line  As String
@@ -2086,12 +2413,24 @@ Private Sub CharRender(ByVal CharIndex As Long, _
         
     End With
 
+    
+    Exit Sub
+
+CharRender_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TileEngine" & "->" & "CharRender"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub RenderName(ByVal CharIndex As Long, _
                        ByVal X As Integer, _
                        ByVal Y As Integer, _
                        Optional ByVal Invi As Boolean = False)
+    
+    On Error GoTo RenderName_Err
+    
     Dim Pos   As Integer
     Dim line  As String
     Dim Color As Long
@@ -2133,11 +2472,23 @@ Private Sub RenderName(ByVal CharIndex As Long, _
 
     End With
 
+    
+    Exit Sub
+
+RenderName_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TileEngine" & "->" & "RenderName"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub SetCharacterFx(ByVal CharIndex As Integer, _
                           ByVal fX As Integer, _
                           ByVal Loops As Integer)
+    
+    On Error GoTo SetCharacterFx_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -2156,6 +2507,15 @@ Public Sub SetCharacterFx(ByVal CharIndex As Integer, _
 
     End With
 
+    
+    Exit Sub
+
+SetCharacterFx_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TileEngine" & "->" & "SetCharacterFx"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub Device_Textured_Render(ByVal X As Integer, _
@@ -2166,6 +2526,9 @@ Public Sub Device_Textured_Render(ByVal X As Integer, _
                                   Optional alpha As Boolean = False, _
                                   Optional ByVal Angle As Single = 0, _
                                   Optional ByVal Shadow As Boolean = False)
+    
+    On Error GoTo Device_Textured_Render_Err
+    
 
     If Shadow And ClientSetup.UsarSombras = False Then Exit Sub
     
@@ -2222,6 +2585,15 @@ Public Sub Device_Textured_Render(ByVal X As Integer, _
 
     End If
 
+    
+    Exit Sub
+
+Device_Textured_Render_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TileEngine" & "->" & "Device_Textured_Render"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub Device_Textured_Render_Scale(ByVal X As Integer, _
@@ -2232,6 +2604,9 @@ Public Sub Device_Textured_Render_Scale(ByVal X As Integer, _
                                         Optional alpha As Boolean = False, _
                                         Optional ByVal Angle As Single = 0, _
                                         Optional ByVal Shadow As Boolean = False)
+    
+    On Error GoTo Device_Textured_Render_Scale_Err
+    
 
     If Shadow And ClientSetup.UsarSombras = False Then Exit Sub
     
@@ -2271,9 +2646,21 @@ Public Sub Device_Textured_Render_Scale(ByVal X As Integer, _
 
     End If
 
+    
+    Exit Sub
+
+Device_Textured_Render_Scale_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TileEngine" & "->" & "Device_Textured_Render_Scale"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub RenderItem(ByVal hWndDest As Long, ByVal GrhIndex As Long)
+    
+    On Error GoTo RenderItem_Err
+    
     Dim DR As RECT
     
     With DR
@@ -2290,6 +2677,15 @@ Public Sub RenderItem(ByVal hWndDest As Long, ByVal GrhIndex As Long)
         
     Call Engine_EndScene(DR, hWndDest)
     
+    
+    Exit Sub
+
+RenderItem_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TileEngine" & "->" & "RenderItem"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub DDrawGrhtoSurface(ByRef Grh As Grh, _
@@ -2304,7 +2700,7 @@ Private Sub DDrawGrhtoSurface(ByRef Grh As Grh, _
     
     If Grh.GrhIndex = 0 Then Exit Sub
 
-    On Error GoTo error
+    On Error GoTo Error
         
     If Animate Then
         If Grh.Started = 1 Then
@@ -2360,7 +2756,7 @@ Private Sub DDrawGrhtoSurface(ByRef Grh As Grh, _
 
     Exit Sub
 
-error:
+Error:
 
     If Err.number = 9 And Grh.FrameCounter < 1 Then
         Grh.FrameCounter = 1
@@ -2381,6 +2777,9 @@ Sub DDrawTransGrhIndextoSurface(ByVal GrhIndex As Integer, _
                                 ByRef Color_List() As Long, _
                                 Optional ByVal Angle As Single = 0, _
                                 Optional ByVal alpha As Boolean = False)
+    
+    On Error GoTo DDrawTransGrhIndextoSurface_Err
+    
     Dim SourceRect As RECT
     
     With GrhData(GrhIndex)
@@ -2409,6 +2808,15 @@ Sub DDrawTransGrhIndextoSurface(ByVal GrhIndex As Integer, _
 
     End With
 
+    
+    Exit Sub
+
+DDrawTransGrhIndextoSurface_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TileEngine" & "->" & "DDrawTransGrhIndextoSurface"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub DDrawGrhtoSurfaceScale(ByRef Grh As Grh, _
@@ -2423,7 +2831,7 @@ Public Sub DDrawGrhtoSurfaceScale(ByRef Grh As Grh, _
     
     If Grh.GrhIndex = 0 Then Exit Sub
 
-    On Error GoTo error
+    On Error GoTo Error
         
     If Animate Then
         If Grh.Started = 1 Then
@@ -2479,7 +2887,7 @@ Public Sub DDrawGrhtoSurfaceScale(ByRef Grh As Grh, _
 
     Exit Sub
 
-error:
+Error:
 
     If Err.number = 9 And Grh.FrameCounter < 1 Then
         Grh.FrameCounter = 1
@@ -2500,6 +2908,9 @@ Sub DDrawTransGrhIndextoSurfaceScale(ByVal GrhIndex As Integer, _
                                      ByRef Color_List() As Long, _
                                      Optional ByVal Angle As Single = 0, _
                                      Optional ByVal alpha As Boolean = False)
+    
+    On Error GoTo DDrawTransGrhIndextoSurfaceScale_Err
+    
     Dim SourceRect As RECT
     
     With GrhData(GrhIndex)
@@ -2528,6 +2939,15 @@ Sub DDrawTransGrhIndextoSurfaceScale(ByVal GrhIndex As Integer, _
 
     End With
 
+    
+    Exit Sub
+
+DDrawTransGrhIndextoSurfaceScale_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TileEngine" & "->" & "DDrawTransGrhIndextoSurfaceScale"
+    End If
+Resume Next
+    
 End Sub
 
 Sub DDrawTransGrhtoSurface(ByRef Grh As Grh, _
@@ -2549,7 +2969,7 @@ Sub DDrawTransGrhtoSurface(ByRef Grh As Grh, _
     
     If Grh.GrhIndex = 0 Then Exit Sub
     
-    On Error GoTo error
+    On Error GoTo Error
     
     If Animate Then
         If Grh.Started = 1 Then
@@ -2604,7 +3024,7 @@ Sub DDrawTransGrhtoSurface(ByRef Grh As Grh, _
 
     Exit Sub
 
-error:
+Error:
 
     If Err.number = 9 And Grh.FrameCounter < 1 Then
         Grh.FrameCounter = 1
@@ -2625,12 +3045,24 @@ Public Function GrhCheck(ByVal GrhIndex As Long) As Boolean
     '
     '**************************************************************
     'check grh_index
+    
+    On Error GoTo GrhCheck_Err
+    
 
     If GrhIndex > 0 And GrhIndex <= UBound(GrhData()) Then
         GrhCheck = GrhData(GrhIndex).NumFrames
 
     End If
 
+    
+    Exit Function
+
+GrhCheck_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TileEngine" & "->" & "GrhCheck"
+    End If
+Resume Next
+    
 End Function
 
 Public Sub GrhUninitialize(Grh As Grh)
@@ -2639,6 +3071,9 @@ Public Sub GrhUninitialize(Grh As Grh)
     'Last Modify Date: 1/04/2003
     'Resets a Grh
     '*****************************************************************
+    
+    On Error GoTo GrhUninitialize_Err
+    
 
     With Grh
         
@@ -2653,4 +3088,13 @@ Public Sub GrhUninitialize(Grh As Grh)
                 
     End With
 
+    
+    Exit Sub
+
+GrhUninitialize_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_TileEngine" & "->" & "GrhUninitialize"
+    End If
+Resume Next
+    
 End Sub

@@ -70,6 +70,9 @@ Private Const Font_Default_TextureNum As Long = -1   'The texture number used to
 Private cfonts(1 To 2)                As CustomFont ' _Default2 As CustomFont
 
 Public Function ColorToDX8(ByVal long_color As Long) As Long
+    
+    On Error GoTo ColorToDX8_Err
+    
     Dim temp_color As String
     Dim Red        As Integer, Blue As Integer, Green As Integer
     
@@ -87,6 +90,15 @@ Public Function ColorToDX8(ByVal long_color As Long) As Long
     
     ColorToDX8 = D3DColorXRGB(Red, Green, Blue)
 
+    
+    Exit Function
+
+ColorToDX8_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Text" & "->" & "ColorToDX8"
+    End If
+Resume Next
+    
 End Function
 
 Public Sub Text_Render_Special(ByVal intX As Integer, _
@@ -98,11 +110,23 @@ Public Sub Text_Render_Special(ByVal intX As Integer, _
     'Text_Render_Special by ^[GS]^
     '*****************************************************************
     
+    On Error GoTo Text_Render_Special_Err
+    
+    
     If LenB(strText) <> 0 Then
         lngColor = ColorToDX8(lngColor)
         Call Engine_Render_Text(cfonts(1), strText, intX, intY, lngColor, bolCentred)
 
     End If
+    
+    
+    Exit Sub
+
+Text_Render_Special_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Text" & "->" & "Text_Render_Special"
+    End If
+Resume Next
     
 End Sub ' GSZAO
 
@@ -110,6 +134,9 @@ Private Function Es_Emoticon(ByVal ascii As Byte) As Boolean ' GSZAO
     '*****************************************************************
     'Emoticones by ^[GS]^
     '*****************************************************************
+    
+    On Error GoTo Es_Emoticon_Err
+    
     Es_Emoticon = False
 
     If (ascii = 129 Or ascii = 137 Or ascii = 141 Or ascii = 143 Or ascii = 144 Or ascii = 157 Or ascii = 160) Then
@@ -117,6 +144,15 @@ Private Function Es_Emoticon(ByVal ascii As Byte) As Boolean ' GSZAO
 
     End If
 
+    
+    Exit Function
+
+Es_Emoticon_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Text" & "->" & "Es_Emoticon"
+    End If
+Resume Next
+    
 End Function ' GSZAO
 
 Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, _
@@ -129,6 +165,9 @@ Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, _
     '*****************************************************************
     'Render text with a custom font
     '*****************************************************************
+    
+    On Error GoTo Engine_Render_Text_Err
+    
     Dim TempVA(0 To 3) As TLVERTEX
     Dim tempstr()      As String
     Dim Count          As Integer
@@ -260,9 +299,21 @@ Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, _
 
     Next i
 
+    
+    Exit Sub
+
+Engine_Render_Text_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Text" & "->" & "Engine_Render_Text"
+    End If
+Resume Next
+    
 End Sub
 
 Public Function ARGBtoD3DCOLORVALUE(ByVal ARGB As Long, ByRef Color As D3DCOLORVALUE)
+    
+    On Error GoTo ARGBtoD3DCOLORVALUE_Err
+    
     Dim dest(3) As Byte
     CopyMemory dest(0), ARGB, 4
     Color.a = dest(3)
@@ -270,12 +321,24 @@ Public Function ARGBtoD3DCOLORVALUE(ByVal ARGB As Long, ByRef Color As D3DCOLORV
     Color.g = dest(1)
     Color.b = dest(0)
 
+    
+    Exit Function
+
+ARGBtoD3DCOLORVALUE_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Text" & "->" & "ARGBtoD3DCOLORVALUE"
+    End If
+Resume Next
+    
 End Function
 
 Public Function ARGB(ByVal r As Long, _
                      ByVal g As Long, _
                      ByVal b As Long, _
                      ByVal a As Long) As Long
+    
+    On Error GoTo ARGB_Err
+    
         
     Dim c As Long
         
@@ -295,6 +358,15 @@ Public Function ARGB(ByVal r As Long, _
     
     ARGB = c
 
+    
+    Exit Function
+
+ARGB_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Text" & "->" & "ARGB"
+    End If
+Resume Next
+    
 End Function
 
 Private Function Engine_GetTextWidth(ByRef UseFont As CustomFont, _
@@ -303,6 +375,9 @@ Private Function Engine_GetTextWidth(ByRef UseFont As CustomFont, _
     'Returns the width of text
     'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_GetTextWidth
     '***************************************************
+    
+    On Error GoTo Engine_GetTextWidth_Err
+    
     Dim i As Integer
 
     'Make sure we have text
@@ -316,6 +391,15 @@ Private Function Engine_GetTextWidth(ByRef UseFont As CustomFont, _
         
     Next i
 
+    
+    Exit Function
+
+Engine_GetTextWidth_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Text" & "->" & "Engine_GetTextWidth"
+    End If
+Resume Next
+    
 End Function
 
 Sub Engine_Init_FontTextures()
@@ -358,6 +442,9 @@ Sub Engine_Init_FontSettings()
     'Init the custom font settings
     'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_Init_FontSettings
     '*****************************************************************
+    
+    On Error GoTo Engine_Init_FontSettings_Err
+    
     Dim FileNum  As Byte
     Dim LoopChar As Long
     Dim Row      As Single
@@ -424,17 +511,38 @@ Sub Engine_Init_FontSettings()
         
     Next LoopChar
 
+    
+    Exit Sub
+
+Engine_Init_FontSettings_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Text" & "->" & "Engine_Init_FontSettings"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub DrawText(ByVal X As Integer, _
                     ByVal Y As Integer, _
                     ByVal Text As String, _
                     ByVal Color As Long)
+    
+    On Error GoTo DrawText_Err
+    
     Dim aux As D3DCOLORVALUE
     'Obtener_RGB Color, r, g, b
     ARGBtoD3DCOLORVALUE Color, aux
     Color = D3DColorARGB(255, aux.r, aux.g, aux.b)
     Engine_Render_Text cfonts(1), Text, X, Y, Color
 
+    
+    Exit Sub
+
+DrawText_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Text" & "->" & "DrawText"
+    End If
+Resume Next
+    
 End Sub
 

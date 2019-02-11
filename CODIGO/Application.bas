@@ -37,6 +37,18 @@ Public Function IsAppActive() As Boolean
     'Last Modify Date: 03/03/2007
     'Checks if this is the active application or not
     '***************************************************
+    
+    On Error GoTo IsAppActive_Err
+    
     IsAppActive = (GetActiveWindow <> 0)
 
+    
+    Exit Function
+
+IsAppActive_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Application" & "->" & "IsAppActive"
+    End If
+Resume Next
+    
 End Function

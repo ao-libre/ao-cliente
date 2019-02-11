@@ -130,15 +130,30 @@ End Enum
 
 Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
+    
+    On Error GoTo Form_Load_Err
+    
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
     Call LoadBackGround
     Call LoadButtons
 
+    
+    Exit Sub
+
+Form_Load_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPeaceProp" & "->" & "Form_Load"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadButtons()
+    
+    On Error GoTo LoadButtons_Err
+    
     Dim GrhPath As String
     
     GrhPath = DirGraficos
@@ -158,9 +173,21 @@ Private Sub LoadButtons()
 
     Call cBotonRechazar.Initialize(imgRechazar, GrhPath & "BotonRechazarOferta.jpg", GrhPath & "BotonRechazarRolloverOferta.jpg", GrhPath & "BotonRechazarClickOferta.jpg", Me)
 
+    
+    Exit Sub
+
+LoadButtons_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPeaceProp" & "->" & "LoadButtons"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadBackGround()
+    
+    On Error GoTo LoadBackGround_Err
+    
 
     If TipoProp = TIPO_PROPUESTA.ALIANZA Then
         Me.Picture = LoadPicture(DirGraficos & "VentanaOfertaAlianza.jpg")
@@ -169,14 +196,38 @@ Private Sub LoadBackGround()
 
     End If
 
+    
+    Exit Sub
+
+LoadBackGround_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPeaceProp" & "->" & "LoadBackGround"
+    End If
+Resume Next
+    
 End Sub
 
 Public Property Let ProposalType(ByVal nValue As TIPO_PROPUESTA)
+    
+    On Error GoTo ProposalType_Err
+    
     TipoProp = nValue
 
+    
+    Exit Property
+
+ProposalType_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPeaceProp" & "->" & "ProposalType"
+    End If
+Resume Next
+    
 End Property
 
 Private Sub imgAceptar_Click()
+    
+    On Error GoTo imgAceptar_Click_Err
+    
 
     If TipoProp = PAZ Then
         Call WriteGuildAcceptPeace(lista.List(lista.ListIndex))
@@ -189,14 +240,38 @@ Private Sub imgAceptar_Click()
     
     Unload Me
 
+    
+    Exit Sub
+
+imgAceptar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPeaceProp" & "->" & "imgAceptar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgCerrar_Click()
+    
+    On Error GoTo imgCerrar_Click_Err
+    
     Unload Me
 
+    
+    Exit Sub
+
+imgCerrar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPeaceProp" & "->" & "imgCerrar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgDetalle_Click()
+    
+    On Error GoTo imgDetalle_Click_Err
+    
 
     If TipoProp = PAZ Then
         Call WriteGuildPeaceDetails(lista.List(lista.ListIndex))
@@ -205,9 +280,21 @@ Private Sub imgDetalle_Click()
 
     End If
 
+    
+    Exit Sub
+
+imgDetalle_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPeaceProp" & "->" & "imgDetalle_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgRechazar_Click()
+    
+    On Error GoTo imgRechazar_Click_Err
+    
 
     If TipoProp = PAZ Then
         Call WriteGuildRejectPeace(lista.List(lista.ListIndex))
@@ -220,5 +307,14 @@ Private Sub imgRechazar_Click()
     
     Unload Me
 
+    
+    Exit Sub
+
+imgRechazar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPeaceProp" & "->" & "imgRechazar_Click"
+    End If
+Resume Next
+    
 End Sub
 

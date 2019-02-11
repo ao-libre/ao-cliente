@@ -63,6 +63,9 @@ Public Sub Initialize(ByRef imgButton As Image, _
     'Last Modify Date: 22/12/09
     'Sets the reference to the image container
     '***************************************************
+    
+    On Error GoTo Initialize_Err
+    
     Set ButtonHolder = imgButton
     Set FormActual = Formulario
     
@@ -91,9 +94,21 @@ Public Sub Initialize(ByRef imgButton As Image, _
 
     End With
     
+    
+    Exit Sub
+
+Initialize_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGraphicalButton" & "->" & "Initialize"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub ButtonHolder_Click()
+    
+    On Error GoTo ButtonHolder_Click_Err
+    
 
     '***************************************************
     'Author: ZaMa
@@ -106,12 +121,24 @@ Private Sub ButtonHolder_Click()
     
     Call Audio.PlayWave(SND_CLICK)
 
+    
+    Exit Sub
+
+ButtonHolder_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGraphicalButton" & "->" & "ButtonHolder_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub ButtonHolder_MouseDown(Button As Integer, _
                                    Shift As Integer, _
                                    X As Single, _
                                    Y As Single)
+    
+    On Error GoTo ButtonHolder_MouseDown_Err
+    
 
     '***************************************************
     'Author: ZaMa
@@ -123,12 +150,24 @@ Private Sub ButtonHolder_MouseDown(Button As Integer, _
     
     ButtonHolder.Picture = ClickButtonImage
 
+    
+    Exit Sub
+
+ButtonHolder_MouseDown_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGraphicalButton" & "->" & "ButtonHolder_MouseDown"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub ButtonHolder_MouseMove(Button As Integer, _
                                    Shift As Integer, _
                                    X As Single, _
                                    Y As Single)
+    
+    On Error GoTo ButtonHolder_MouseMove_Err
+    
 
     '***************************************************
     'Author: ZaMa
@@ -150,9 +189,21 @@ Private Sub ButtonHolder_MouseMove(Button As Integer, _
 
     End If
 
+    
+    Exit Sub
+
+ButtonHolder_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGraphicalButton" & "->" & "ButtonHolder_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub ToggleToNormal()
+    
+    On Error GoTo ToggleToNormal_Err
+    
 
     '***************************************************
     'Author: ZaMa
@@ -166,12 +217,24 @@ Public Sub ToggleToNormal()
     ButtonHolder.Picture = NormalButtonImage
     OverButton = False
 
+    
+    Exit Sub
+
+ToggleToNormal_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGraphicalButton" & "->" & "ToggleToNormal"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub ButtonHolder_MouseUp(Button As Integer, _
                                  Shift As Integer, _
                                  X As Single, _
                                  Y As Single)
+    
+    On Error GoTo ButtonHolder_MouseUp_Err
+    
 
     '***************************************************
     'Author: ZaMa
@@ -183,9 +246,21 @@ Private Sub ButtonHolder_MouseUp(Button As Integer, _
     
     ButtonHolder.Picture = RollOverButtonImage
 
+    
+    Exit Sub
+
+ButtonHolder_MouseUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGraphicalButton" & "->" & "ButtonHolder_MouseUp"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub EnableButton(Optional ByVal ToogleEnable As Boolean = True)
+    
+    On Error GoTo EnableButton_Err
+    
 
     If Disabled = Not ToogleEnable Then Exit Sub
     
@@ -199,9 +274,30 @@ Public Sub EnableButton(Optional ByVal ToogleEnable As Boolean = True)
 
     End If
     
+    
+    Exit Sub
+
+EnableButton_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGraphicalButton" & "->" & "EnableButton"
+    End If
+Resume Next
+    
 End Sub
 
 Public Function IsEnabled() As Boolean
+    
+    On Error GoTo IsEnabled_Err
+    
     IsEnabled = Not Disabled
 
+    
+    Exit Function
+
+IsEnabled_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsGraphicalButton" & "->" & "IsEnabled"
+    End If
+Resume Next
+    
 End Function

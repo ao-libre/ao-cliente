@@ -34,6 +34,9 @@ Public Enum eNumber_Types
 End Enum
 
 Public Sub AuxWriteWhisper(ByVal UserName As String, ByVal Mensaje As String)
+    
+    On Error GoTo AuxWriteWhisper_Err
+    
 
     '***************************************************
     'Author: Unknown
@@ -50,6 +53,15 @@ Public Sub AuxWriteWhisper(ByVal UserName As String, ByVal Mensaje As String)
     UserName = UCase$(UserName)
     
     Call WriteWhisper(UserName, Mensaje)
+    
+    
+    Exit Sub
+
+AuxWriteWhisper_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "ProtocolCmdParse" & "->" & "AuxWriteWhisper"
+    End If
+Resume Next
     
 End Sub
 
@@ -68,6 +80,9 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
     '16/11/2009: ZaMa - Ahora el /ct admite radio
     '18/09/2010: ZaMa - Agrego el comando /mod username vida xxx
     '***************************************************
+    
+    On Error GoTo ParseUserCommand_Err
+    
     Dim TmpArgos()         As String
     
     Dim Comando            As String
@@ -2040,6 +2055,15 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
 
     End If
 
+    
+    Exit Sub
+
+ParseUserCommand_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "ProtocolCmdParse" & "->" & "ParseUserCommand"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -2063,8 +2087,20 @@ Public Sub ShowConsoleMsg(ByVal Message As String, _
     'Last Modification: 01/03/07
     '
     '***************************************************
+    
+    On Error GoTo ShowConsoleMsg_Err
+    
     Call AddtoRichTextBox(frmMain.RecTxt, Message, Red, Green, Blue, bold, italic)
 
+    
+    Exit Sub
+
+ShowConsoleMsg_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "ProtocolCmdParse" & "->" & "ShowConsoleMsg"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -2080,6 +2116,9 @@ Public Function ValidNumber(ByVal Numero As String, _
     'Last Modification: 01/06/07
     '
     '***************************************************
+    
+    On Error GoTo ValidNumber_Err
+    
     Dim Minimo As Long
     Dim Maximo As Long
     
@@ -2107,6 +2146,15 @@ Public Function ValidNumber(ByVal Numero As String, _
     
     If Val(Numero) >= Minimo And Val(Numero) <= Maximo Then ValidNumber = True
 
+    
+    Exit Function
+
+ValidNumber_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "ProtocolCmdParse" & "->" & "ValidNumber"
+    End If
+Resume Next
+    
 End Function
 
 ''
@@ -2120,6 +2168,9 @@ Private Function validipv4str(ByVal Ip As String) As Boolean
     'Last Modification: 01/06/07
     '
     '***************************************************
+    
+    On Error GoTo validipv4str_Err
+    
     Dim tmpArr() As String
     
     tmpArr = Split(Ip, ".")
@@ -2130,6 +2181,15 @@ Private Function validipv4str(ByVal Ip As String) As Boolean
     
     validipv4str = True
 
+    
+    Exit Function
+
+validipv4str_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "ProtocolCmdParse" & "->" & "validipv4str"
+    End If
+Resume Next
+    
 End Function
 
 ''
@@ -2146,6 +2206,9 @@ Private Function str2ipv4l(ByVal Ip As String) As Byte()
     'Otherwise, the default is a Variant or Array of Variants, that slows down
     'the function
     '***************************************************
+    
+    On Error GoTo str2ipv4l_Err
+    
     Dim tmpArr() As String
     Dim bArr(3)  As Byte
     
@@ -2158,6 +2221,15 @@ Private Function str2ipv4l(ByVal Ip As String) As Byte()
 
     str2ipv4l = bArr
 
+    
+    Exit Function
+
+str2ipv4l_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "ProtocolCmdParse" & "->" & "str2ipv4l"
+    End If
+Resume Next
+    
 End Function
 
 ''
@@ -2176,6 +2248,9 @@ Private Function AEMAILSplit(ByRef Text As String) As String()
     'Otherwise, the default is a Variant or Array of Variants, that slows down
     'the function
     '***************************************************
+    
+    On Error GoTo AEMAILSplit_Err
+    
     Dim tmpArr(0 To 1) As String
     Dim Pos            As Byte
     
@@ -2191,4 +2266,13 @@ Private Function AEMAILSplit(ByRef Text As String) As String()
     
     AEMAILSplit = tmpArr
 
+    
+    Exit Function
+
+AEMAILSplit_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "ProtocolCmdParse" & "->" & "AEMAILSplit"
+    End If
+Resume Next
+    
 End Function

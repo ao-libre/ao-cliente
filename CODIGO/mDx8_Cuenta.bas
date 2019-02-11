@@ -21,6 +21,9 @@ Public DX_Count         As Count
 Public Const Count_Font As Byte = 8
 
 Public Sub RenderCount()
+    
+    On Error GoTo RenderCount_Err
+    
 
     '   Si no hay cuenta no rompemos mas el render
     If DX_Count.DoIt = False Then Exit Sub
@@ -37,6 +40,15 @@ Public Sub RenderCount()
     'Checkeamos la cuenta, si es necesario restamos valor
     Call CheckCount
 
+    
+    Exit Sub
+
+RenderCount_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Cuenta" & "->" & "RenderCount"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub CheckCount()
@@ -45,6 +57,9 @@ Public Sub CheckCount()
     'Last Modification: 23/12/10
     'Check the count
     '***************************************************
+    
+    On Error GoTo CheckCount_Err
+    
 
     '   Si no hay cuenta no rompemos mas
     If DX_Count.DoIt = False Then Exit Sub
@@ -65,6 +80,15 @@ Public Sub CheckCount()
 
     End If
 
+    
+    Exit Sub
+
+CheckCount_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Cuenta" & "->" & "CheckCount"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub InitCount(ByVal Max As Byte)
@@ -73,6 +97,9 @@ Public Sub InitCount(ByVal Max As Byte)
     'Last Modification: 23/12/10
     'Check the count
     '***************************************************
+    
+    On Error GoTo InitCount_Err
+    
 
     '   Si hay cuenta no rompemos a la actual
     If DX_Count.DoIt = True Then Exit Sub
@@ -89,5 +116,14 @@ Public Sub InitCount(ByVal Max As Byte)
 
     End With
 
+    
+    Exit Sub
+
+InitCount_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Cuenta" & "->" & "InitCount"
+    End If
+Resume Next
+    
 End Sub
 

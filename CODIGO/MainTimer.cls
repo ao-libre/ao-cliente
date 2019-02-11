@@ -108,6 +108,9 @@ Private Declare Function GetTickCount Lib "kernel32" () As Long
 ' @remarks  Must be done after creating the timer and before using it, otherwise, Interval will be 0
 
 Public Sub SetInterval(ByVal TimerIndex As TimersIndex, ByVal Interval As Long)
+    
+    On Error GoTo SetInterval_Err
+    
 
     '*************************************************
     'Author: Nacho (Integer)
@@ -118,6 +121,15 @@ Public Sub SetInterval(ByVal TimerIndex As TimersIndex, ByVal Interval As Long)
     
     Timer(TimerIndex).Interval = Interval
 
+    
+    Exit Sub
+
+SetInterval_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsTimer" & "->" & "SetInterval"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -128,6 +140,9 @@ End Sub
 ' @return The requested timer's interval.
 
 Public Function GetInterval(ByVal TimerIndex As TimersIndex) As Long
+    
+    On Error GoTo GetInterval_Err
+    
 
     '*************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -138,6 +153,15 @@ Public Function GetInterval(ByVal TimerIndex As TimersIndex) As Long
     
     GetInterval = Timer(TimerIndex).Interval
 
+    
+    Exit Function
+
+GetInterval_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsTimer" & "->" & "GetInterval"
+    End If
+Resume Next
+    
 End Function
 
 ''
@@ -147,6 +171,9 @@ End Function
 ' @remarks  Do this for starting the timer.
 
 Public Sub Start(ByVal TimerIndex As TimersIndex)
+    
+    On Error GoTo Start_Err
+    
 
     '*************************************************
     'Author: Nacho (Integer)
@@ -157,6 +184,15 @@ Public Sub Start(ByVal TimerIndex As TimersIndex)
     
     Timer(TimerIndex).Run = True 'We allow the Timer to run.
 
+    
+    Exit Sub
+
+Start_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsTimer" & "->" & "Start"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -166,6 +202,9 @@ End Sub
 ' @remarks  Makes the Timer continue from where it had stoped.
 
 Public Sub Continue(ByVal TimerIndex As TimersIndex)
+    
+    On Error GoTo Continue_Err
+    
 
     '*************************************************
     'Author: Nacho (Integer)
@@ -179,6 +218,15 @@ Public Sub Continue(ByVal TimerIndex As TimersIndex)
     'We´ll set the StartTick again
     Timer(TimerIndex).StartTick = Timer(TimerIndex).StartTick + Timer(TimerIndex).CurrentTick
 
+    
+    Exit Sub
+
+Continue_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsTimer" & "->" & "Continue"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -188,6 +236,9 @@ End Sub
 ' @remarks  Can be resumed with Continue()
 
 Public Sub Pause(ByVal TimerIndex As TimersIndex)
+    
+    On Error GoTo Pause_Err
+    
 
     '*************************************************
     'Author: Nacho (Integer)
@@ -200,6 +251,15 @@ Public Sub Pause(ByVal TimerIndex As TimersIndex)
     
     Timer(TimerIndex).CurrentTick = GetTickCount - Timer(TimerIndex).StartTick 'Calculates acutual tick
 
+    
+    Exit Sub
+
+Pause_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsTimer" & "->" & "Pause"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -212,6 +272,9 @@ End Sub
 
 Public Function Check(ByVal TimerIndex As TimersIndex, _
                       Optional Restart As Boolean = True) As Boolean
+    
+    On Error GoTo Check_Err
+    
 
     '*************************************************
     'Author: Nacho Agustin (Integer)
@@ -244,6 +307,15 @@ Public Function Check(ByVal TimerIndex As TimersIndex, _
 
     End If
 
+    
+    Exit Function
+
+Check_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsTimer" & "->" & "Check"
+    End If
+Resume Next
+    
 End Function
 
 ''
@@ -252,6 +324,9 @@ End Function
 ' @param TimerIndex Timer´s Index
 
 Public Sub Restart(ByVal TimerIndex As TimersIndex)
+    
+    On Error GoTo Restart_Err
+    
 
     '*************************************************
     'Author: Nacho Agustin (Integer)
@@ -262,4 +337,13 @@ Public Sub Restart(ByVal TimerIndex As TimersIndex)
     
     Timer(TimerIndex).StartTick = GetTickCount
 
+    
+    Exit Sub
+
+Restart_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsTimer" & "->" & "Restart"
+    End If
+Resume Next
+    
 End Sub

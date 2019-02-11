@@ -341,6 +341,9 @@ Public FontTypes(20) As tFont
 ' Initializes the fonts array
 
 Public Sub InitFonts()
+    
+    On Error GoTo InitFonts_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -491,6 +494,15 @@ Public Sub InitFonts()
 
     End With
 
+    
+    Exit Sub
+
+InitFonts_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "InitFonts"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -872,6 +884,9 @@ Public Sub HandleMultiMessage()
     ' 09/21/2010: C4b3z0n - Now the fragshooter operates taking the screen after the change of killed charindex to ghost only if target charindex is visible to the client, else it will take screenshot like before.
     ' 11/16/2010: Amraphen - Recoded how the FragShooter works.
     '***************************************************
+    
+    On Error GoTo HandleMultiMessage_Err
+    
     Dim BodyPart As Byte
     Dim Daño As Integer
     Dim SpellIndex As Integer
@@ -1143,6 +1158,15 @@ Public Sub HandleMultiMessage()
 
     End With
 
+    
+    Exit Sub
+
+HandleMultiMessage_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleMultiMessage"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -1155,6 +1179,9 @@ Private Sub HandleLogged()
     '
     '***************************************************
     'Remove packet ID
+    
+    On Error GoTo HandleLogged_Err
+    
     Call incomingData.ReadByte
     
     ' Variable initialization
@@ -1176,6 +1203,15 @@ Private Sub HandleLogged()
 
     End If
 
+    
+    Exit Sub
+
+HandleLogged_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleLogged"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -1188,16 +1224,31 @@ Private Sub HandleRemoveDialogs()
     '
     '***************************************************
     'Remove packet ID
+    
+    On Error GoTo HandleRemoveDialogs_Err
+    
     Call incomingData.ReadByte
     
     Call Dialogos.RemoveAllDialogs
 
+    
+    Exit Sub
+
+HandleRemoveDialogs_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleRemoveDialogs"
+    End If
+Resume Next
+    
 End Sub
 
 ''
 ' Handles the RemoveCharDialog message.
 
 Private Sub HandleRemoveCharDialog()
+    
+    On Error GoTo HandleRemoveCharDialog_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -1216,6 +1267,15 @@ Private Sub HandleRemoveCharDialog()
     
     Call Dialogos.RemoveDialog(incomingData.ReadInteger())
 
+    
+    Exit Sub
+
+HandleRemoveCharDialog_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleRemoveCharDialog"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -1228,10 +1288,22 @@ Private Sub HandleNavigateToggle()
     '
     '***************************************************
     'Remove packet ID
+    
+    On Error GoTo HandleNavigateToggle_Err
+    
     Call incomingData.ReadByte
     
     UserNavegando = Not UserNavegando
 
+    
+    Exit Sub
+
+HandleNavigateToggle_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleNavigateToggle"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -1243,6 +1315,9 @@ Private Sub HandleDisconnect()
     'Last Modification: 05/17/06
     '
     '***************************************************
+    
+    On Error GoTo HandleDisconnect_Err
+    
     Dim i As Long
     
     'Remove packet ID
@@ -1257,6 +1332,15 @@ Private Sub HandleDisconnect()
     #End If
     ResetAllInfo
 
+    
+    Exit Sub
+
+HandleDisconnect_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleDisconnect"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -1269,6 +1353,9 @@ Private Sub HandleCommerceEnd()
     '
     '***************************************************
     'Remove packet ID
+    
+    On Error GoTo HandleCommerceEnd_Err
+    
     Call incomingData.ReadByte
     
     Set InvComUsu = Nothing
@@ -1280,6 +1367,15 @@ Private Sub HandleCommerceEnd()
     'Reset vars
     Comerciando = False
 
+    
+    Exit Sub
+
+HandleCommerceEnd_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleCommerceEnd"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -1292,6 +1388,9 @@ Private Sub HandleBankEnd()
     '
     '***************************************************
     'Remove packet ID
+    
+    On Error GoTo HandleBankEnd_Err
+    
     Call incomingData.ReadByte
     
     Set InvBanco(0) = Nothing
@@ -1300,6 +1399,15 @@ Private Sub HandleBankEnd()
     Unload frmBancoObj
     Comerciando = False
 
+    
+    Exit Sub
+
+HandleBankEnd_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleBankEnd"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -1311,6 +1419,9 @@ Private Sub HandleCommerceInit()
     'Last Modification: 05/17/06
     '
     '***************************************************
+    
+    On Error GoTo HandleCommerceInit_Err
+    
     Dim i As Long
     
     'Remove packet ID
@@ -1355,6 +1466,15 @@ Private Sub HandleCommerceInit()
     Comerciando = True
     frmComerciar.Show , frmMain
 
+    
+    Exit Sub
+
+HandleCommerceInit_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleCommerceInit"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -1366,6 +1486,9 @@ Private Sub HandleBankInit()
     'Last Modification: 05/17/06
     '
     '***************************************************
+    
+    On Error GoTo HandleBankInit_Err
+    
     Dim i        As Long
     Dim BankGold As Long
     
@@ -1404,6 +1527,15 @@ Private Sub HandleBankInit()
     
     frmBancoObj.Show , frmMain
 
+    
+    Exit Sub
+
+HandleBankInit_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleBankInit"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -1415,6 +1547,9 @@ Private Sub HandleUserCommerceInit()
     'Last Modification: 05/17/06
     '
     '***************************************************
+    
+    On Error GoTo HandleUserCommerceInit_Err
+    
     Dim i As Long
     
     'Remove packet ID
@@ -1460,6 +1595,15 @@ Private Sub HandleUserCommerceInit()
     Comerciando = True
     Call frmComerciarUsu.Show(vbModeless, frmMain)
 
+    
+    Exit Sub
+
+HandleUserCommerceInit_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleUserCommerceInit"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -1472,6 +1616,9 @@ Private Sub HandleUserCommerceEnd()
     '
     '***************************************************
     'Remove packet ID
+    
+    On Error GoTo HandleUserCommerceEnd_Err
+    
     Call incomingData.ReadByte
     
     Set InvComUsu = Nothing
@@ -1485,6 +1632,15 @@ Private Sub HandleUserCommerceEnd()
     Unload frmComerciarUsu
     Comerciando = False
 
+    
+    Exit Sub
+
+HandleUserCommerceEnd_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleUserCommerceEnd"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -1496,6 +1652,9 @@ Private Sub HandleUserOfferConfirm()
     '
     '***************************************************
     'Remove packet ID
+    
+    On Error GoTo HandleUserOfferConfirm_Err
+    
     Call incomingData.ReadByte
     
     With frmComerciarUsu
@@ -1505,6 +1664,15 @@ Private Sub HandleUserOfferConfirm()
         .PrintCommerceMsg TradingUserName & " ha confirmado su oferta!", FontTypeNames.FONTTYPE_CONSE
 
     End With
+    
+    
+    Exit Sub
+
+HandleUserOfferConfirm_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleUserOfferConfirm"
+    End If
+Resume Next
     
 End Sub
 
@@ -1518,6 +1686,9 @@ Private Sub HandleShowBlacksmithForm()
     '
     '***************************************************
     'Remove packet ID
+    
+    On Error GoTo HandleShowBlacksmithForm_Err
+    
     Call incomingData.ReadByte
     
     If frmMain.macrotrabajo.Enabled And (MacroBltIndex > 0) Then
@@ -1528,6 +1699,15 @@ Private Sub HandleShowBlacksmithForm()
 
     End If
 
+    
+    Exit Sub
+
+HandleShowBlacksmithForm_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleShowBlacksmithForm"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -1540,6 +1720,9 @@ Private Sub HandleShowCarpenterForm()
     '
     '***************************************************
     'Remove packet ID
+    
+    On Error GoTo HandleShowCarpenterForm_Err
+    
     Call incomingData.ReadByte
     
     If frmMain.macrotrabajo.Enabled And (MacroBltIndex > 0) Then
@@ -1550,6 +1733,15 @@ Private Sub HandleShowCarpenterForm()
 
     End If
 
+    
+    Exit Sub
+
+HandleShowCarpenterForm_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleShowCarpenterForm"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -1562,10 +1754,22 @@ Private Sub HandleNPCSwing()
     '
     '***************************************************
     'Remove packet ID
+    
+    On Error GoTo HandleNPCSwing_Err
+    
     Call incomingData.ReadByte
     
     Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_CRIATURA_FALLA_GOLPE, 255, 0, 0, True, False, True)
 
+    
+    Exit Sub
+
+HandleNPCSwing_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleNPCSwing"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -1578,10 +1782,22 @@ Private Sub HandleNPCKillUser()
     '
     '***************************************************
     'Remove packet ID
+    
+    On Error GoTo HandleNPCKillUser_Err
+    
     Call incomingData.ReadByte
     
     Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_CRIATURA_MATADO, 255, 0, 0, True, False, True)
 
+    
+    Exit Sub
+
+HandleNPCKillUser_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleNPCKillUser"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -1594,10 +1810,22 @@ Private Sub HandleBlockedWithShieldUser()
     '
     '***************************************************
     'Remove packet ID
+    
+    On Error GoTo HandleBlockedWithShieldUser_Err
+    
     Call incomingData.ReadByte
     
     Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_RECHAZO_ATAQUE_ESCUDO, 255, 0, 0, True, False, True)
 
+    
+    Exit Sub
+
+HandleBlockedWithShieldUser_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleBlockedWithShieldUser"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -1610,10 +1838,22 @@ Private Sub HandleBlockedWithShieldOther()
     '
     '***************************************************
     'Remove packet ID
+    
+    On Error GoTo HandleBlockedWithShieldOther_Err
+    
     Call incomingData.ReadByte
     
     Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_USUARIO_RECHAZO_ATAQUE_ESCUDO, 255, 0, 0, True, False, True)
 
+    
+    Exit Sub
+
+HandleBlockedWithShieldOther_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleBlockedWithShieldOther"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -1626,10 +1866,22 @@ Private Sub HandleUserSwing()
     '
     '***************************************************
     'Remove packet ID
+    
+    On Error GoTo HandleUserSwing_Err
+    
     Call incomingData.ReadByte
     
     Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_FALLADO_GOLPE, 255, 0, 0, True, False, True)
 
+    
+    Exit Sub
+
+HandleUserSwing_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleUserSwing"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -1642,10 +1894,22 @@ Private Sub HandleSafeModeOn()
     '
     '***************************************************
     'Remove packet ID
+    
+    On Error GoTo HandleSafeModeOn_Err
+    
     Call incomingData.ReadByte
     
     Call frmMain.ControlSM(eSMType.sSafemode, True)
 
+    
+    Exit Sub
+
+HandleSafeModeOn_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleSafeModeOn"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -1658,10 +1922,22 @@ Private Sub HandleSafeModeOff()
     '
     '***************************************************
     'Remove packet ID
+    
+    On Error GoTo HandleSafeModeOff_Err
+    
     Call incomingData.ReadByte
     
     Call frmMain.ControlSM(eSMType.sSafemode, False)
 
+    
+    Exit Sub
+
+HandleSafeModeOff_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleSafeModeOff"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -1673,10 +1949,22 @@ Private Sub HandleResuscitationSafeOff()
     'Creation date: 10/10/07
     '***************************************************
     'Remove packet ID
+    
+    On Error GoTo HandleResuscitationSafeOff_Err
+    
     Call incomingData.ReadByte
     
     Call frmMain.ControlSM(eSMType.sResucitation, False)
 
+    
+    Exit Sub
+
+HandleResuscitationSafeOff_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleResuscitationSafeOff"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -1688,10 +1976,22 @@ Private Sub HandleResuscitationSafeOn()
     'Creation date: 10/10/07
     '***************************************************
     'Remove packet ID
+    
+    On Error GoTo HandleResuscitationSafeOn_Err
+    
     Call incomingData.ReadByte
     
     Call frmMain.ControlSM(eSMType.sResucitation, True)
 
+    
+    Exit Sub
+
+HandleResuscitationSafeOn_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleResuscitationSafeOn"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -1704,10 +2004,22 @@ Private Sub HandleNobilityLost()
     '
     '***************************************************
     'Remove packet ID
+    
+    On Error GoTo HandleNobilityLost_Err
+    
     Call incomingData.ReadByte
     
     Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_PIERDE_NOBLEZA, 255, 0, 0, False, False, True)
 
+    
+    Exit Sub
+
+HandleNobilityLost_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleNobilityLost"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -1720,16 +2032,31 @@ Private Sub HandleCantUseWhileMeditating()
     '
     '***************************************************
     'Remove packet ID
+    
+    On Error GoTo HandleCantUseWhileMeditating_Err
+    
     Call incomingData.ReadByte
     
     Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_USAR_MEDITANDO, 255, 0, 0, False, False, True)
 
+    
+    Exit Sub
+
+HandleCantUseWhileMeditating_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleCantUseWhileMeditating"
+    End If
+Resume Next
+    
 End Sub
 
 ''
 ' Handles the UpdateSta message.
 
 Private Sub HandleUpdateSta()
+    
+    On Error GoTo HandleUpdateSta_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -1760,12 +2087,24 @@ Private Sub HandleUpdateSta()
     
     frmMain.shpEnergia.Visible = (bWidth <> 75)
     
+    
+    Exit Sub
+
+HandleUpdateSta_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleUpdateSta"
+    End If
+Resume Next
+    
 End Sub
 
 ''
 ' Handles the UpdateMana message.
 
 Private Sub HandleUpdateMana()
+    
+    On Error GoTo HandleUpdateMana_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -1796,12 +2135,24 @@ Private Sub HandleUpdateMana()
     
     frmMain.shpMana.Visible = (bWidth <> 75)
 
+    
+    Exit Sub
+
+HandleUpdateMana_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleUpdateMana"
+    End If
+Resume Next
+    
 End Sub
 
 ''
 ' Handles the UpdateHP message.
 
 Private Sub HandleUpdateHP()
+    
+    On Error GoTo HandleUpdateHP_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -1842,12 +2193,24 @@ Private Sub HandleUpdateHP()
 
     End If
 
+    
+    Exit Sub
+
+HandleUpdateHP_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleUpdateHP"
+    End If
+Resume Next
+    
 End Sub
 
 ''
 ' Handles the UpdateGold message.
 
 Private Sub HandleUpdateGold()
+    
+    On Error GoTo HandleUpdateGold_Err
+    
 
     '***************************************************
     'Autor: Juan Martín Sotuyo Dodero (Maraxus)
@@ -1880,12 +2243,24 @@ Private Sub HandleUpdateGold()
     
     frmMain.GldLbl.Caption = UserGLD
 
+    
+    Exit Sub
+
+HandleUpdateGold_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleUpdateGold"
+    End If
+Resume Next
+    
 End Sub
 
 ''
 ' Handles the UpdateBankGold message.
 
 Private Sub HandleUpdateBankGold()
+    
+    On Error GoTo HandleUpdateBankGold_Err
+    
 
     '***************************************************
     'Autor: ZaMa
@@ -1904,12 +2279,24 @@ Private Sub HandleUpdateBankGold()
     
     frmBancoObj.lblUserGld.Caption = incomingData.ReadLong
     
+    
+    Exit Sub
+
+HandleUpdateBankGold_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleUpdateBankGold"
+    End If
+Resume Next
+    
 End Sub
 
 ''
 ' Handles the UpdateExp message.
 
 Private Sub HandleUpdateExp()
+    
+    On Error GoTo HandleUpdateExp_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -1931,12 +2318,24 @@ Private Sub HandleUpdateExp()
     frmMain.lblExp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
 
+    
+    Exit Sub
+
+HandleUpdateExp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleUpdateExp"
+    End If
+Resume Next
+    
 End Sub
 
 ''
 ' Handles the UpdateStrenghtAndDexterity message.
 
 Private Sub HandleUpdateStrenghtAndDexterity()
+    
+    On Error GoTo HandleUpdateStrenghtAndDexterity_Err
+    
 
     '***************************************************
     'Author: Budi
@@ -1960,11 +2359,23 @@ Private Sub HandleUpdateStrenghtAndDexterity()
     frmMain.lblStrg.ForeColor = getStrenghtColor()
     frmMain.lblDext.ForeColor = getDexterityColor()
 
+    
+    Exit Sub
+
+HandleUpdateStrenghtAndDexterity_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleUpdateStrenghtAndDexterity"
+    End If
+Resume Next
+    
 End Sub
 
 ' Handles the UpdateStrenghtAndDexterity message.
 
 Private Sub HandleUpdateStrenght()
+    
+    On Error GoTo HandleUpdateStrenght_Err
+    
 
     '***************************************************
     'Author: Budi
@@ -1985,11 +2396,23 @@ Private Sub HandleUpdateStrenght()
     frmMain.lblStrg.Caption = UserFuerza
     frmMain.lblStrg.ForeColor = getStrenghtColor()
 
+    
+    Exit Sub
+
+HandleUpdateStrenght_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleUpdateStrenght"
+    End If
+Resume Next
+    
 End Sub
 
 ' Handles the UpdateStrenghtAndDexterity message.
 
 Private Sub HandleUpdateDexterity()
+    
+    On Error GoTo HandleUpdateDexterity_Err
+    
 
     '***************************************************
     'Author: Budi
@@ -2010,11 +2433,23 @@ Private Sub HandleUpdateDexterity()
     frmMain.lblDext.Caption = UserAgilidad
     frmMain.lblDext.ForeColor = getDexterityColor()
 
+    
+    Exit Sub
+
+HandleUpdateDexterity_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleUpdateDexterity"
+    End If
+Resume Next
+    
 End Sub
 
 ''
 ' Handles the ChangeMap message.
 Private Sub HandleChangeMap()
+    
+    On Error GoTo HandleChangeMap_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -2054,12 +2489,24 @@ Private Sub HandleChangeMap()
 
     End If
 
+    
+    Exit Sub
+
+HandleChangeMap_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleChangeMap"
+    End If
+Resume Next
+    
 End Sub
 
 ''
 ' Handles the PosUpdate message.
 
 Private Sub HandlePosUpdate()
+    
+    On Error GoTo HandlePosUpdate_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -2083,12 +2530,24 @@ Private Sub HandlePosUpdate()
     'Update pos label
     Call Char_UserPos
 
+    
+    Exit Sub
+
+HandlePosUpdate_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandlePosUpdate"
+    End If
+Resume Next
+    
 End Sub
 
 ''
 ' Handles the NPCHitUser message.
 
 Private Sub HandleNPCHitUser()
+    
+    On Error GoTo HandleNPCHitUser_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -2126,6 +2585,15 @@ Private Sub HandleNPCHitUser()
 
     End Select
 
+    
+    Exit Sub
+
+HandleNPCHitUser_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleNPCHitUser"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -2175,15 +2643,15 @@ Private Sub HandleChatOverHead()
     Call incomingData.CopyBuffer(Buffer)
 
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
     
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
@@ -2271,15 +2739,15 @@ Private Sub HandleConsoleMessage()
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
@@ -2366,15 +2834,15 @@ Private Sub HandleGuildChat()
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
@@ -2455,15 +2923,15 @@ Private Sub HandleCommerceChat()
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
@@ -2499,15 +2967,15 @@ Private Sub HandleShowMessageBox()
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
@@ -2515,6 +2983,9 @@ End Sub
 ' Handles the UserIndexInServer message.
 
 Private Sub HandleUserIndexInServer()
+    
+    On Error GoTo HandleUserIndexInServer_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -2532,12 +3003,24 @@ Private Sub HandleUserIndexInServer()
     
     UserIndex = incomingData.ReadInteger()
 
+    
+    Exit Sub
+
+HandleUserIndexInServer_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleUserIndexInServer"
+    End If
+Resume Next
+    
 End Sub
 
 ''
 ' Handles the UserCharIndexInServer message.
 
 Private Sub HandleUserCharIndexInServer()
+    
+    On Error GoTo HandleUserCharIndexInServer_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -2558,6 +3041,15 @@ Private Sub HandleUserCharIndexInServer()
     'Update pos label
     Call Char_UserPos
 
+    
+    Exit Sub
+
+HandleUserCharIndexInServer_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleUserCharIndexInServer"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -2660,19 +3152,22 @@ Private Sub HandleCharacterCreate()
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
 Private Sub HandleCharacterChangeNick()
+    
+    On Error GoTo HandleCharacterChangeNick_Err
+    
 
     '***************************************************
     'Author: Budi
@@ -2692,12 +3187,24 @@ Private Sub HandleCharacterChangeNick()
     
     Call Char_SetName(CharIndex, incomingData.ReadASCIIString)
     
+    
+    Exit Sub
+
+HandleCharacterChangeNick_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleCharacterChangeNick"
+    End If
+Resume Next
+    
 End Sub
 
 ''
 ' Handles the CharacterRemove message.
 
 Private Sub HandleCharacterRemove()
+    
+    On Error GoTo HandleCharacterRemove_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -2720,12 +3227,24 @@ Private Sub HandleCharacterRemove()
     Call Char_Erase(CharIndex)
     Call RefreshAllChars
 
+    
+    Exit Sub
+
+HandleCharacterRemove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleCharacterRemove"
+    End If
+Resume Next
+    
 End Sub
 
 ''
 ' Handles the CharacterMove message.
 
 Private Sub HandleCharacterMove()
+    
+    On Error GoTo HandleCharacterMove_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -2769,12 +3288,24 @@ Private Sub HandleCharacterMove()
     
     Call Char_RefreshAll
 
+    
+    Exit Sub
+
+HandleCharacterMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleCharacterMove"
+    End If
+Resume Next
+    
 End Sub
 
 ''
 ' Handles the ForceCharMove message.
 
 Private Sub HandleForceCharMove()
+    
+    On Error GoTo HandleForceCharMove_Err
+    
     
     If incomingData.length < 2 Then
         Err.Raise incomingData.NotEnoughDataErrCode
@@ -2794,12 +3325,24 @@ Private Sub HandleForceCharMove()
     
     Call Char_RefreshAll
 
+    
+    Exit Sub
+
+HandleForceCharMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleForceCharMove"
+    End If
+Resume Next
+    
 End Sub
 
 ''
 ' Handles the CharacterChange message.
 
 Private Sub HandleCharacterChange()
+    
+    On Error GoTo HandleCharacterChange_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -2845,12 +3388,24 @@ Private Sub HandleCharacterChange()
         
     Call Char_RefreshAll
 
+    
+    Exit Sub
+
+HandleCharacterChange_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleCharacterChange"
+    End If
+Resume Next
+    
 End Sub
 
 ''
 ' Handles the ObjectCreate message.
 
 Private Sub HandleObjectCreate()
+    
+    On Error GoTo HandleObjectCreate_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -2876,12 +3431,24 @@ Private Sub HandleObjectCreate()
         
     Call Map_CreateObject(X, Y, GrhIndex)
 
+    
+    Exit Sub
+
+HandleObjectCreate_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleObjectCreate"
+    End If
+Resume Next
+    
 End Sub
 
 ''
 ' Handles the ObjectDelete message.
 
 Private Sub HandleObjectDelete()
+    
+    On Error GoTo HandleObjectDelete_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -2911,12 +3478,24 @@ Private Sub HandleObjectDelete()
 
     End If
 
+    
+    Exit Sub
+
+HandleObjectDelete_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleObjectDelete"
+    End If
+Resume Next
+    
 End Sub
 
 ''
 ' Handles the BlockPosition message.
 
 Private Sub HandleBlockPosition()
+    
+    On Error GoTo HandleBlockPosition_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -2947,12 +3526,24 @@ Private Sub HandleBlockPosition()
 
     End If
 
+    
+    Exit Sub
+
+HandleBlockPosition_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleBlockPosition"
+    End If
+Resume Next
+    
 End Sub
 
 ''
 ' Handles the PlayMIDI message.
 
 Private Sub HandlePlayMIDI()
+    
+    On Error GoTo HandlePlayMIDI_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -2984,12 +3575,24 @@ Private Sub HandlePlayMIDI()
 
     End If
     
+    
+    Exit Sub
+
+HandlePlayMIDI_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandlePlayMIDI"
+    End If
+Resume Next
+    
 End Sub
 
 ''
 ' Handles the PlayWave message.
 
 Private Sub HandlePlayWave()
+    
+    On Error GoTo HandlePlayWave_Err
+    
 
     '***************************************************
     'Autor: Juan Martín Sotuyo Dodero (Maraxus)
@@ -3016,6 +3619,15 @@ Private Sub HandlePlayWave()
         
     Call Audio.PlayWave(CStr(wave) & ".wav", srcX, srcY)
 
+    
+    Exit Sub
+
+HandlePlayWave_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandlePlayWave"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -3063,15 +3675,15 @@ Private Sub HandleGuildList()
     End With
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
@@ -3079,6 +3691,9 @@ End Sub
 ' Handles the AreaChanged message.
 
 Private Sub HandleAreaChanged()
+    
+    On Error GoTo HandleAreaChanged_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -3102,6 +3717,15 @@ Private Sub HandleAreaChanged()
         
     Call CambioDeArea(X, Y)
 
+    
+    Exit Sub
+
+HandleAreaChanged_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleAreaChanged"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -3114,10 +3738,22 @@ Private Sub HandlePauseToggle()
     '
     '***************************************************
     'Remove packet ID
+    
+    On Error GoTo HandlePauseToggle_Err
+    
     Call incomingData.ReadByte
     
     pausa = Not pausa
 
+    
+    Exit Sub
+
+HandlePauseToggle_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandlePauseToggle"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -3130,6 +3766,9 @@ Private Sub HandleRainToggle()
     '
     '***************************************************
     'Remove packet ID
+    
+    On Error GoTo HandleRainToggle_Err
+    
     Call incomingData.ReadByte
     
     If Not InMapBounds(UserPos.X, UserPos.Y) Then Exit Sub
@@ -3154,12 +3793,24 @@ Private Sub HandleRainToggle()
     
     bRain = Not bRain
 
+    
+    Exit Sub
+
+HandleRainToggle_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleRainToggle"
+    End If
+Resume Next
+    
 End Sub
 
 ''
 ' Handles the CreateFX message.
 
 Private Sub HandleCreateFX()
+    
+    On Error GoTo HandleCreateFX_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -3185,12 +3836,24 @@ Private Sub HandleCreateFX()
     
     Call Char_SetFx(CharIndex, fX, Loops)
 
+    
+    Exit Sub
+
+HandleCreateFX_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleCreateFX"
+    End If
+Resume Next
+    
 End Sub
 
 ''
 ' Handles the UpdateUserStats message.
 
 Private Sub HandleUpdateUserStats()
+    
+    On Error GoTo HandleUpdateUserStats_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -3279,12 +3942,24 @@ Private Sub HandleUpdateUserStats()
 
     End If
 
+    
+    Exit Sub
+
+HandleUpdateUserStats_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleUpdateUserStats"
+    End If
+Resume Next
+    
 End Sub
 
 ''
 ' Handles the WorkRequestTarget message.
 
 Private Sub HandleWorkRequestTarget()
+    
+    On Error GoTo HandleWorkRequestTarget_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -3329,6 +4004,15 @@ Private Sub HandleWorkRequestTarget()
 
     End Select
 
+    
+    Exit Sub
+
+HandleWorkRequestTarget_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleWorkRequestTarget"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -3434,15 +4118,15 @@ Private Sub HandleChangeInventorySlot()
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
@@ -3453,11 +4137,23 @@ Private Sub HandleAddSlots()
     'Last Modification: 12/01/09
     '
     '***************************************************
+    
+    On Error GoTo HandleAddSlots_Err
+    
 
     Call incomingData.ReadByte
     
     MaxInventorySlots = incomingData.ReadByte
 
+    
+    Exit Sub
+
+HandleAddSlots_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleAddSlots"
+    End If
+Resume Next
+    
 End Sub
 
 ' Handles the StopWorking message.
@@ -3467,6 +4163,9 @@ Private Sub HandleStopWorking()
     'Last Modification: 12/01/09
     '
     '***************************************************
+    
+    On Error GoTo HandleStopWorking_Err
+    
 
     Call incomingData.ReadByte
     
@@ -3477,6 +4176,15 @@ Private Sub HandleStopWorking()
     
     If frmMain.macrotrabajo.Enabled Then Call frmMain.DesactivarMacroTrabajo
 
+    
+    Exit Sub
+
+HandleStopWorking_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleStopWorking"
+    End If
+Resume Next
+    
 End Sub
 
 ' Handles the CancelOfferItem message.
@@ -3487,6 +4195,9 @@ Private Sub HandleCancelOfferItem()
     'Last Modification: 05/03/10
     '
     '***************************************************
+    
+    On Error GoTo HandleCancelOfferItem_Err
+    
     Dim slot   As Byte
     Dim Amount As Long
     
@@ -3517,6 +4228,15 @@ Private Sub HandleCancelOfferItem()
 
     End With
 
+    
+    Exit Sub
+
+HandleCancelOfferItem_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleCancelOfferItem"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -3570,15 +4290,15 @@ Private Sub HandleChangeBankSlot()
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
@@ -3628,15 +4348,15 @@ Private Sub HandleChangeSpellSlot()
     Call incomingData.CopyBuffer(Buffer)
  
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
  
     'Destroy auxiliar buffer
     Set Buffer = Nothing
  
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
@@ -3644,6 +4364,9 @@ End Sub
 ' Handles the Attributes message.
 
 Private Sub HandleAtributes()
+    
+    On Error GoTo HandleAtributes_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -3687,6 +4410,15 @@ Private Sub HandleAtributes()
 
     End If
 
+    
+    Exit Sub
+
+HandleAtributes_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleAtributes"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -3793,15 +4525,15 @@ Private Sub HandleBlacksmithWeapons()
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
@@ -3894,15 +4626,15 @@ Private Sub HandleBlacksmithArmors()
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
@@ -4008,15 +4740,15 @@ Private Sub HandleCarpenterObjects()
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
@@ -4030,10 +4762,22 @@ Private Sub HandleRestOK()
     '
     '***************************************************
     'Remove packet ID
+    
+    On Error GoTo HandleRestOK_Err
+    
     Call incomingData.ReadByte
     
     UserDescansar = Not UserDescansar
 
+    
+    Exit Sub
+
+HandleRestOK_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleRestOK"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -4078,15 +4822,15 @@ Private Sub HandleErrorMessage()
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
@@ -4100,10 +4844,22 @@ Private Sub HandleBlind()
     '
     '***************************************************
     'Remove packet ID
+    
+    On Error GoTo HandleBlind_Err
+    
     Call incomingData.ReadByte
     
     UserCiego = True
 
+    
+    Exit Sub
+
+HandleBlind_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleBlind"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -4116,10 +4872,22 @@ Private Sub HandleDumb()
     '
     '***************************************************
     'Remove packet ID
+    
+    On Error GoTo HandleDumb_Err
+    
     Call incomingData.ReadByte
     
     UserEstupido = True
 
+    
+    Exit Sub
+
+HandleDumb_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleDumb"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -4156,15 +4924,15 @@ Private Sub HandleShowSignal()
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
@@ -4214,15 +4982,15 @@ Private Sub HandleChangeNPCInventorySlot()
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
@@ -4230,6 +4998,9 @@ End Sub
 ' Handles the UpdateHungerAndThirst message.
 
 Private Sub HandleUpdateHungerAndThirst()
+    
+    On Error GoTo HandleUpdateHungerAndThirst_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -4269,12 +5040,24 @@ Private Sub HandleUpdateHungerAndThirst()
     
     frmMain.shpSed.Visible = (bWidth <> 75)
     
+    
+    Exit Sub
+
+HandleUpdateHungerAndThirst_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleUpdateHungerAndThirst"
+    End If
+Resume Next
+    
 End Sub
 
 ''
 ' Handles the Fame message.
 
 Private Sub HandleFame()
+    
+    On Error GoTo HandleFame_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -4303,12 +5086,24 @@ Private Sub HandleFame()
     
     LlegoFama = True
 
+    
+    Exit Sub
+
+HandleFame_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleFame"
+    End If
+Resume Next
+    
 End Sub
 
 ''
 ' Handles the MiniStats message.
 
 Private Sub HandleMiniStats()
+    
+    On Error GoTo HandleMiniStats_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -4334,12 +5129,24 @@ Private Sub HandleMiniStats()
 
     End With
 
+    
+    Exit Sub
+
+HandleMiniStats_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleMiniStats"
+    End If
+Resume Next
+    
 End Sub
 
 ''
 ' Handles the LevelUp message.
 
 Private Sub HandleLevelUp()
+    
+    On Error GoTo HandleLevelUp_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -4359,6 +5166,15 @@ Private Sub HandleLevelUp()
     
     Call frmMain.LightSkillStar(True)
 
+    
+    Exit Sub
+
+HandleLevelUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleLevelUp"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -4411,15 +5227,15 @@ Private Sub HandleAddForumMessage()
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
@@ -4433,6 +5249,9 @@ Private Sub HandleShowForumForm()
     '
     '***************************************************
     'Remove packet ID
+    
+    On Error GoTo HandleShowForumForm_Err
+    
     Call incomingData.ReadByte
     
     frmForo.Privilegios = incomingData.ReadByte
@@ -4443,12 +5262,24 @@ Private Sub HandleShowForumForm()
 
     End If
 
+    
+    Exit Sub
+
+HandleShowForumForm_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleShowForumForm"
+    End If
+Resume Next
+    
 End Sub
 
 ''
 ' Handles the SetInvisible message.
 
 Private Sub HandleSetInvisible()
+    
+    On Error GoTo HandleSetInvisible_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -4469,6 +5300,15 @@ Private Sub HandleSetInvisible()
     CharIndex = incomingData.ReadInteger()
     Call Char_SetInvisible(CharIndex, incomingData.ReadBoolean())
 
+    
+    Exit Sub
+
+HandleSetInvisible_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleSetInvisible"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -4480,6 +5320,9 @@ Private Sub HandleDiceRoll()
     'Last Modification: 05/17/06
     '
     '***************************************************
+    
+    On Error GoTo HandleDiceRoll_Err
+    
 
     If incomingData.length < 6 Then
         Err.Raise incomingData.NotEnoughDataErrCode
@@ -4507,6 +5350,15 @@ Private Sub HandleDiceRoll()
 
     End With
 
+    
+    Exit Sub
+
+HandleDiceRoll_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleDiceRoll"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -4519,10 +5371,22 @@ Private Sub HandleMeditateToggle()
     '
     '***************************************************
     'Remove packet ID
+    
+    On Error GoTo HandleMeditateToggle_Err
+    
     Call incomingData.ReadByte
     
     UserMeditar = Not UserMeditar
 
+    
+    Exit Sub
+
+HandleMeditateToggle_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleMeditateToggle"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -4535,10 +5399,22 @@ Private Sub HandleBlindNoMore()
     '
     '***************************************************
     'Remove packet ID
+    
+    On Error GoTo HandleBlindNoMore_Err
+    
     Call incomingData.ReadByte
     
     UserCiego = False
 
+    
+    Exit Sub
+
+HandleBlindNoMore_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleBlindNoMore"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -4551,16 +5427,31 @@ Private Sub HandleDumbNoMore()
     '
     '***************************************************
     'Remove packet ID
+    
+    On Error GoTo HandleDumbNoMore_Err
+    
     Call incomingData.ReadByte
     
     UserEstupido = False
 
+    
+    Exit Sub
+
+HandleDumbNoMore_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleDumbNoMore"
+    End If
+Resume Next
+    
 End Sub
 
 ''
 ' Handles the SendSkills message.
 
 Private Sub HandleSendSkills()
+    
+    On Error GoTo HandleSendSkills_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -4587,6 +5478,15 @@ Private Sub HandleSendSkills()
     
     LlegaronSkills = True
 
+    
+    Exit Sub
+
+HandleSendSkills_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleSendSkills"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -4629,15 +5529,15 @@ Private Sub HandleTrainerCreatureList()
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
@@ -4695,15 +5595,15 @@ Private Sub HandleGuildNews()
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
@@ -4738,15 +5638,15 @@ Private Sub HandleOfferDetails()
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
@@ -4793,15 +5693,15 @@ Private Sub HandleAlianceProposalsList()
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
@@ -4848,15 +5748,15 @@ Private Sub HandlePeaceProposalsList()
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
@@ -4957,15 +5857,15 @@ Private Sub HandleCharacterInfo()
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
@@ -5039,15 +5939,15 @@ Private Sub HandleGuildLeaderInfo()
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
@@ -5119,15 +6019,15 @@ Private Sub HandleGuildDetails()
     frmGuildBrief.Show vbModeless, frmMain
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
@@ -5141,10 +6041,22 @@ Private Sub HandleShowGuildAlign()
     '
     '***************************************************
     'Remove packet ID
+    
+    On Error GoTo HandleShowGuildAlign_Err
+    
     Call incomingData.ReadByte
     
     frmEligeAlineacion.Show vbModeless, frmMain
 
+    
+    Exit Sub
+
+HandleShowGuildAlign_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleShowGuildAlign"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -5157,11 +6069,23 @@ Private Sub HandleShowGuildFundationForm()
     '
     '***************************************************
     'Remove packet ID
+    
+    On Error GoTo HandleShowGuildFundationForm_Err
+    
     Call incomingData.ReadByte
     
     CreandoClan = True
     frmGuildFoundation.Show , frmMain
 
+    
+    Exit Sub
+
+HandleShowGuildFundationForm_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleShowGuildFundationForm"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -5174,10 +6098,22 @@ Private Sub HandleParalizeOK()
     '
     '***************************************************
     'Remove packet ID
+    
+    On Error GoTo HandleParalizeOK_Err
+    
     Call incomingData.ReadByte
     
     UserParalizado = Not UserParalizado
 
+    
+    Exit Sub
+
+HandleParalizeOK_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleParalizeOK"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -5212,15 +6148,15 @@ Private Sub HandleShowUserRequest()
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
@@ -5234,6 +6170,9 @@ Private Sub HandleTradeOK()
     '
     '***************************************************
     'Remove packet ID
+    
+    On Error GoTo HandleTradeOK_Err
+    
     Call incomingData.ReadByte
     
     If frmComerciar.Visible Then
@@ -5279,6 +6218,15 @@ Private Sub HandleTradeOK()
     
     End If
 
+    
+    Exit Sub
+
+HandleTradeOK_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleTradeOK"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -5291,6 +6239,9 @@ Private Sub HandleBankOK()
     '
     '***************************************************
     'Remove packet ID
+    
+    On Error GoTo HandleBankOK_Err
+    
     Call incomingData.ReadByte
     
     Dim i As Long
@@ -5320,6 +6271,15 @@ Private Sub HandleBankOK()
 
     End If
        
+    
+    Exit Sub
+
+HandleBankOK_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleBankOK"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -5368,15 +6328,15 @@ Private Sub HandleChangeUserTradeSlot()
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
@@ -5384,6 +6344,9 @@ End Sub
 ' Handles the SendNight message.
 
 Private Sub HandleSendNight()
+    
+    On Error GoTo HandleSendNight_Err
+    
 
     '***************************************************
     'Author: Fredy Horacio Treboux (liquid)
@@ -5402,6 +6365,15 @@ Private Sub HandleSendNight()
     Dim tBool As Boolean 'CHECK, este handle no hace nada con lo que recibe.. porque, ehmm.. no hay noche?.. o si?
     tBool = incomingData.ReadBoolean()
 
+    
+    Exit Sub
+
+HandleSendNight_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleSendNight"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -5444,15 +6416,15 @@ Private Sub HandleSpawnList()
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
@@ -5496,15 +6468,15 @@ Private Sub HandleShowSOSForm()
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
@@ -5550,15 +6522,15 @@ Private Sub HandleShowDenounces()
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
@@ -5605,15 +6577,15 @@ Private Sub HandleShowPartyForm()
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
@@ -5649,15 +6621,15 @@ Private Sub HandleShowMOTDEditionForm()
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
@@ -5671,10 +6643,22 @@ Private Sub HandleShowGMPanelForm()
     '
     '***************************************************
     'Remove packet ID
+    
+    On Error GoTo HandleShowGMPanelForm_Err
+    
     Call incomingData.ReadByte
     
     frmPanelGm.Show vbModeless, frmMain
 
+    
+    Exit Sub
+
+HandleShowGMPanelForm_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleShowGMPanelForm"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -5722,15 +6706,15 @@ Private Sub HandleUserNameList()
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
@@ -5743,12 +6727,24 @@ Private Sub HandlePong()
     'Last Modification: 05/17/06
     '
     '***************************************************
+    
+    On Error GoTo HandlePong_Err
+    
     Call incomingData.ReadByte
     
     Call AddtoRichTextBox(frmMain.RecTxt, "El ping es " & (GetTickCount - pingTime) & " ms.", 255, 0, 0, True, False, True)
     
     pingTime = 0
 
+    
+    Exit Sub
+
+HandlePong_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandlePong"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -5807,15 +6803,15 @@ Private Sub HandleGuildMemberInfo()
     End With
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
@@ -5872,15 +6868,15 @@ Private Sub HandleUpdateTagAndStatus()
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
@@ -5896,6 +6892,9 @@ Public Sub WriteLoginExistingAccount()
     'Writes the "LoginExistingAccount" message to the outgoing data buffer
     '***************************************************
     
+    On Error GoTo WriteLoginExistingAccount_Err
+    
+    
     With outgoingData
         Call .WriteByte(ClientPacketID.LoginExistingAccount)
         
@@ -5909,6 +6908,15 @@ Public Sub WriteLoginExistingAccount()
 
     End With
 
+    
+    Exit Sub
+
+WriteLoginExistingAccount_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteLoginExistingAccount"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -5917,6 +6925,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteLoginExistingChar()
+    
+    On Error GoTo WriteLoginExistingChar_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -5937,9 +6948,21 @@ Public Sub WriteLoginExistingChar()
 
     End With
 
+    
+    Exit Sub
+
+WriteLoginExistingChar_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteLoginExistingChar"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub WriteLoginNewAccount()
+    
+    On Error GoTo WriteLoginNewAccount_Err
+    
 
     '***************************************************
     'Author: Juan Andres Dalmasso (CHOTS)
@@ -5960,6 +6983,15 @@ Public Sub WriteLoginNewAccount()
 
     End With
 
+    
+    Exit Sub
+
+WriteLoginNewAccount_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteLoginNewAccount"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -5973,8 +7005,20 @@ Public Sub WriteThrowDices()
     'Last Modification: 05/17/06
     'Writes the "ThrowDices" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteThrowDices_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.ThrowDices)
 
+    
+    Exit Sub
+
+WriteThrowDices_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteThrowDices"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -5988,6 +7032,9 @@ Public Sub WriteLoginNewChar()
     'Last Modification: 05/17/06
     'Writes the "LoginNewChar" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteLoginNewChar_Err
+    
     Dim i As Long
     
     With outgoingData
@@ -6009,6 +7056,15 @@ Public Sub WriteLoginNewChar()
 
     End With
 
+    
+    Exit Sub
+
+WriteLoginNewChar_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteLoginNewChar"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6018,6 +7074,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteTalk(ByVal chat As String)
+    
+    On Error GoTo WriteTalk_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -6031,6 +7090,15 @@ Public Sub WriteTalk(ByVal chat As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteTalk_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteTalk"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6040,6 +7108,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteYell(ByVal chat As String)
+    
+    On Error GoTo WriteYell_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -6053,6 +7124,15 @@ Public Sub WriteYell(ByVal chat As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteYell_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteYell"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6063,6 +7143,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteWhisper(ByVal CharName As String, ByVal chat As String)
+    
+    On Error GoTo WriteWhisper_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -6079,6 +7162,15 @@ Public Sub WriteWhisper(ByVal CharName As String, ByVal chat As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteWhisper_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteWhisper"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6088,6 +7180,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteWalk(ByVal Heading As E_Heading)
+    
+    On Error GoTo WriteWalk_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -6101,6 +7196,15 @@ Public Sub WriteWalk(ByVal Heading As E_Heading)
 
     End With
 
+    
+    Exit Sub
+
+WriteWalk_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteWalk"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6114,8 +7218,20 @@ Public Sub WriteRequestPositionUpdate()
     'Last Modification: 05/17/06
     'Writes the "RequestPositionUpdate" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteRequestPositionUpdate_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.RequestPositionUpdate)
 
+    
+    Exit Sub
+
+WriteRequestPositionUpdate_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteRequestPositionUpdate"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6129,10 +7245,22 @@ Public Sub WriteAttack()
     'Last Modification: 05/17/06
     'Writes the "Attack" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteAttack_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.Attack)
     'Iniciamos la animacion de ataque
     charlist(UserCharIndex).attacking = True
 
+    
+    Exit Sub
+
+WriteAttack_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteAttack"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6146,8 +7274,20 @@ Public Sub WritePickUp()
     'Last Modification: 05/17/06
     'Writes the "PickUp" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WritePickUp_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.PickUp)
 
+    
+    Exit Sub
+
+WritePickUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WritePickUp"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6161,8 +7301,20 @@ Public Sub WriteSafeToggle()
     'Last Modification: 05/17/06
     'Writes the "SafeToggle" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteSafeToggle_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.SafeToggle)
 
+    
+    Exit Sub
+
+WriteSafeToggle_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteSafeToggle"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6176,8 +7328,20 @@ Public Sub WriteResuscitationToggle()
     'Creation Date: 10/10/07
     'Writes the Resuscitation safe toggle packet to the outgoing data buffer.
     '**************************************************************
+    
+    On Error GoTo WriteResuscitationToggle_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.ResuscitationSafeToggle)
 
+    
+    Exit Sub
+
+WriteResuscitationToggle_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteResuscitationToggle"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6191,8 +7355,20 @@ Public Sub WriteRequestGuildLeaderInfo()
     'Last Modification: 05/17/06
     'Writes the "RequestGuildLeaderInfo" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteRequestGuildLeaderInfo_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.RequestGuildLeaderInfo)
 
+    
+    Exit Sub
+
+WriteRequestGuildLeaderInfo_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteRequestGuildLeaderInfo"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub WriteRequestPartyForm()
@@ -6201,8 +7377,20 @@ Public Sub WriteRequestPartyForm()
     'Last Modification: 11/26/09
     'Writes the "RequestPartyForm" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteRequestPartyForm_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.RequestPartyForm)
 
+    
+    Exit Sub
+
+WriteRequestPartyForm_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteRequestPartyForm"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6217,9 +7405,21 @@ Public Sub WriteItemUpgrade(ByVal ItemIndex As Integer)
     'Last Modification: 12/09/09
     'Writes the "ItemUpgrade" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteItemUpgrade_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.ItemUpgrade)
     Call outgoingData.WriteInteger(ItemIndex)
 
+    
+    Exit Sub
+
+WriteItemUpgrade_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteItemUpgrade"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6233,8 +7433,20 @@ Public Sub WriteRequestAtributes()
     'Last Modification: 05/17/06
     'Writes the "RequestAtributes" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteRequestAtributes_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.RequestAtributes)
 
+    
+    Exit Sub
+
+WriteRequestAtributes_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteRequestAtributes"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6248,8 +7460,20 @@ Public Sub WriteRequestFame()
     'Last Modification: 05/17/06
     'Writes the "RequestFame" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteRequestFame_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.RequestFame)
 
+    
+    Exit Sub
+
+WriteRequestFame_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteRequestFame"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6263,8 +7487,20 @@ Public Sub WriteRequestSkills()
     'Last Modification: 05/17/06
     'Writes the "RequestSkills" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteRequestSkills_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.RequestSkills)
 
+    
+    Exit Sub
+
+WriteRequestSkills_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteRequestSkills"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6278,8 +7514,20 @@ Public Sub WriteRequestMiniStats()
     'Last Modification: 05/17/06
     'Writes the "RequestMiniStats" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteRequestMiniStats_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.RequestMiniStats)
 
+    
+    Exit Sub
+
+WriteRequestMiniStats_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteRequestMiniStats"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6293,8 +7541,20 @@ Public Sub WriteCommerceEnd()
     'Last Modification: 05/17/06
     'Writes the "CommerceEnd" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteCommerceEnd_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.CommerceEnd)
 
+    
+    Exit Sub
+
+WriteCommerceEnd_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteCommerceEnd"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6308,8 +7568,20 @@ Public Sub WriteUserCommerceEnd()
     'Last Modification: 05/17/06
     'Writes the "UserCommerceEnd" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteUserCommerceEnd_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.UserCommerceEnd)
 
+    
+    Exit Sub
+
+WriteUserCommerceEnd_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteUserCommerceEnd"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6323,8 +7595,20 @@ Public Sub WriteUserCommerceConfirm()
     'Last Modification: 14/12/2009
     'Writes the "UserCommerceConfirm" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteUserCommerceConfirm_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.UserCommerceConfirm)
 
+    
+    Exit Sub
+
+WriteUserCommerceConfirm_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteUserCommerceConfirm"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6338,8 +7622,20 @@ Public Sub WriteBankEnd()
     'Last Modification: 05/17/06
     'Writes the "BankEnd" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteBankEnd_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.BankEnd)
 
+    
+    Exit Sub
+
+WriteBankEnd_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteBankEnd"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6353,8 +7649,20 @@ Public Sub WriteUserCommerceOk()
     'Last Modification: 01/10/07
     'Writes the "UserCommerceOk" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteUserCommerceOk_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.UserCommerceOk)
 
+    
+    Exit Sub
+
+WriteUserCommerceOk_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteUserCommerceOk"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6368,8 +7676,20 @@ Public Sub WriteUserCommerceReject()
     'Last Modification: 05/17/06
     'Writes the "UserCommerceReject" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteUserCommerceReject_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.UserCommerceReject)
 
+    
+    Exit Sub
+
+WriteUserCommerceReject_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteUserCommerceReject"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6380,6 +7700,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteDrop(ByVal slot As Byte, ByVal Amount As Integer)
+    
+    On Error GoTo WriteDrop_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -6394,6 +7717,15 @@ Public Sub WriteDrop(ByVal slot As Byte, ByVal Amount As Integer)
 
     End With
 
+    
+    Exit Sub
+
+WriteDrop_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteDrop"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6403,6 +7735,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteCastSpell(ByVal slot As Byte)
+    
+    On Error GoTo WriteCastSpell_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -6416,6 +7751,15 @@ Public Sub WriteCastSpell(ByVal slot As Byte)
 
     End With
 
+    
+    Exit Sub
+
+WriteCastSpell_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteCastSpell"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6426,6 +7770,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteLeftClick(ByVal X As Byte, ByVal Y As Byte)
+    
+    On Error GoTo WriteLeftClick_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -6440,6 +7787,15 @@ Public Sub WriteLeftClick(ByVal X As Byte, ByVal Y As Byte)
 
     End With
 
+    
+    Exit Sub
+
+WriteLeftClick_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteLeftClick"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6450,6 +7806,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteDoubleClick(ByVal X As Byte, ByVal Y As Byte)
+    
+    On Error GoTo WriteDoubleClick_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -6464,6 +7823,15 @@ Public Sub WriteDoubleClick(ByVal X As Byte, ByVal Y As Byte)
 
     End With
 
+    
+    Exit Sub
+
+WriteDoubleClick_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteDoubleClick"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6473,6 +7841,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteWork(ByVal Skill As eSkill)
+    
+    On Error GoTo WriteWork_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -6486,6 +7857,15 @@ Public Sub WriteWork(ByVal Skill As eSkill)
 
     End With
 
+    
+    Exit Sub
+
+WriteWork_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteWork"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6499,8 +7879,20 @@ Public Sub WriteUseSpellMacro()
     'Last Modification: 05/17/06
     'Writes the "UseSpellMacro" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteUseSpellMacro_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.UseSpellMacro)
 
+    
+    Exit Sub
+
+WriteUseSpellMacro_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteUseSpellMacro"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6510,6 +7902,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteUseItem(ByVal slot As Byte)
+    
+    On Error GoTo WriteUseItem_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -6523,6 +7918,15 @@ Public Sub WriteUseItem(ByVal slot As Byte)
 
     End With
 
+    
+    Exit Sub
+
+WriteUseItem_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteUseItem"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6532,6 +7936,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteCraftBlacksmith(ByVal Item As Integer)
+    
+    On Error GoTo WriteCraftBlacksmith_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -6545,6 +7952,15 @@ Public Sub WriteCraftBlacksmith(ByVal Item As Integer)
 
     End With
 
+    
+    Exit Sub
+
+WriteCraftBlacksmith_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteCraftBlacksmith"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6554,6 +7970,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteCraftCarpenter(ByVal Item As Integer)
+    
+    On Error GoTo WriteCraftCarpenter_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -6567,6 +7986,15 @@ Public Sub WriteCraftCarpenter(ByVal Item As Integer)
 
     End With
 
+    
+    Exit Sub
+
+WriteCraftCarpenter_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteCraftCarpenter"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6579,9 +8007,21 @@ Public Sub WriteShowGuildNews()
     'Last Modification: 21/02/2010
     'Writes the "ShowGuildNews" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteShowGuildNews_Err
+    
  
     outgoingData.WriteByte (ClientPacketID.ShowGuildNews)
 
+    
+    Exit Sub
+
+WriteShowGuildNews_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteShowGuildNews"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6593,6 +8033,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteWorkLeftClick(ByVal X As Byte, ByVal Y As Byte, ByVal Skill As eSkill)
+    
+    On Error GoTo WriteWorkLeftClick_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -6609,6 +8052,15 @@ Public Sub WriteWorkLeftClick(ByVal X As Byte, ByVal Y As Byte, ByVal Skill As e
 
     End With
 
+    
+    Exit Sub
+
+WriteWorkLeftClick_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteWorkLeftClick"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6629,6 +8081,9 @@ Public Sub WriteCreateNewGuild(ByVal Desc As String, _
     'Last Modification: 05/17/06
     'Writes the "CreateNewGuild" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteCreateNewGuild_Err
+    
     Dim Temp As String
     Dim i    As Long
     
@@ -6649,6 +8104,15 @@ Public Sub WriteCreateNewGuild(ByVal Desc As String, _
 
     End With
 
+    
+    Exit Sub
+
+WriteCreateNewGuild_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteCreateNewGuild"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6658,6 +8122,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteEquipItem(ByVal slot As Byte)
+    
+    On Error GoTo WriteEquipItem_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -6671,6 +8138,15 @@ Public Sub WriteEquipItem(ByVal slot As Byte)
 
     End With
 
+    
+    Exit Sub
+
+WriteEquipItem_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteEquipItem"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6680,6 +8156,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteChangeHeading(ByVal Heading As E_Heading)
+    
+    On Error GoTo WriteChangeHeading_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -6693,6 +8172,15 @@ Public Sub WriteChangeHeading(ByVal Heading As E_Heading)
 
     End With
 
+    
+    Exit Sub
+
+WriteChangeHeading_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteChangeHeading"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6707,6 +8195,9 @@ Public Sub WriteModifySkills(ByRef skillEdt() As Byte)
     'Last Modification: 05/17/06
     'Writes the "ModifySkills" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteModifySkills_Err
+    
     Dim i As Long
     
     With outgoingData
@@ -6718,6 +8209,15 @@ Public Sub WriteModifySkills(ByRef skillEdt() As Byte)
 
     End With
 
+    
+    Exit Sub
+
+WriteModifySkills_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteModifySkills"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6727,6 +8227,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteTrain(ByVal creature As Byte)
+    
+    On Error GoTo WriteTrain_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -6740,6 +8243,15 @@ Public Sub WriteTrain(ByVal creature As Byte)
 
     End With
 
+    
+    Exit Sub
+
+WriteTrain_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteTrain"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6750,6 +8262,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteCommerceBuy(ByVal slot As Byte, ByVal Amount As Integer)
+    
+    On Error GoTo WriteCommerceBuy_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -6764,6 +8279,15 @@ Public Sub WriteCommerceBuy(ByVal slot As Byte, ByVal Amount As Integer)
 
     End With
 
+    
+    Exit Sub
+
+WriteCommerceBuy_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteCommerceBuy"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6774,6 +8298,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteBankExtractItem(ByVal slot As Byte, ByVal Amount As Integer)
+    
+    On Error GoTo WriteBankExtractItem_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -6788,6 +8315,15 @@ Public Sub WriteBankExtractItem(ByVal slot As Byte, ByVal Amount As Integer)
 
     End With
 
+    
+    Exit Sub
+
+WriteBankExtractItem_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteBankExtractItem"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6798,6 +8334,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteCommerceSell(ByVal slot As Byte, ByVal Amount As Integer)
+    
+    On Error GoTo WriteCommerceSell_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -6812,6 +8351,15 @@ Public Sub WriteCommerceSell(ByVal slot As Byte, ByVal Amount As Integer)
 
     End With
 
+    
+    Exit Sub
+
+WriteCommerceSell_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteCommerceSell"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6822,6 +8370,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteBankDeposit(ByVal slot As Byte, ByVal Amount As Integer)
+    
+    On Error GoTo WriteBankDeposit_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -6836,6 +8387,15 @@ Public Sub WriteBankDeposit(ByVal slot As Byte, ByVal Amount As Integer)
 
     End With
 
+    
+    Exit Sub
+
+WriteBankDeposit_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteBankDeposit"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6848,6 +8408,9 @@ End Sub
 Public Sub WriteForumPost(ByVal Title As String, _
                           ByVal Message As String, _
                           ByVal ForumMsgType As Byte)
+    
+    On Error GoTo WriteForumPost_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -6863,6 +8426,15 @@ Public Sub WriteForumPost(ByVal Title As String, _
 
     End With
 
+    
+    Exit Sub
+
+WriteForumPost_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteForumPost"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6873,6 +8445,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteMoveSpell(ByVal upwards As Boolean, ByVal slot As Byte)
+    
+    On Error GoTo WriteMoveSpell_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -6887,6 +8462,15 @@ Public Sub WriteMoveSpell(ByVal upwards As Boolean, ByVal slot As Byte)
 
     End With
 
+    
+    Exit Sub
+
+WriteMoveSpell_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteMoveSpell"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6897,6 +8481,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteMoveBank(ByVal upwards As Boolean, ByVal slot As Byte)
+    
+    On Error GoTo WriteMoveBank_Err
+    
 
     '***************************************************
     'Author: Torres Patricio (Pato)
@@ -6911,6 +8498,15 @@ Public Sub WriteMoveBank(ByVal upwards As Boolean, ByVal slot As Byte)
 
     End With
 
+    
+    Exit Sub
+
+WriteMoveBank_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteMoveBank"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6926,6 +8522,9 @@ Public Sub WriteClanCodexUpdate(ByVal Desc As String, ByRef Codex() As String)
     'Last Modification: 05/17/06
     'Writes the "ClanCodexUpdate" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteClanCodexUpdate_Err
+    
     Dim Temp As String
     Dim i    As Long
     
@@ -6944,6 +8543,15 @@ Public Sub WriteClanCodexUpdate(ByVal Desc As String, ByRef Codex() As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteClanCodexUpdate_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteClanCodexUpdate"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6956,6 +8564,9 @@ End Sub
 Public Sub WriteUserCommerceOffer(ByVal slot As Byte, _
                                   ByVal Amount As Long, _
                                   ByVal OfferSlot As Byte)
+    
+    On Error GoTo WriteUserCommerceOffer_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -6971,9 +8582,21 @@ Public Sub WriteUserCommerceOffer(ByVal slot As Byte, _
 
     End With
 
+    
+    Exit Sub
+
+WriteUserCommerceOffer_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteUserCommerceOffer"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub WriteCommerceChat(ByVal chat As String)
+    
+    On Error GoTo WriteCommerceChat_Err
+    
 
     '***************************************************
     'Author: ZaMa
@@ -6987,6 +8610,15 @@ Public Sub WriteCommerceChat(ByVal chat As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteCommerceChat_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteCommerceChat"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -6996,6 +8628,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteGuildAcceptPeace(ByVal guild As String)
+    
+    On Error GoTo WriteGuildAcceptPeace_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -7009,6 +8644,15 @@ Public Sub WriteGuildAcceptPeace(ByVal guild As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteGuildAcceptPeace_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteGuildAcceptPeace"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7018,6 +8662,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteGuildRejectAlliance(ByVal guild As String)
+    
+    On Error GoTo WriteGuildRejectAlliance_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -7031,6 +8678,15 @@ Public Sub WriteGuildRejectAlliance(ByVal guild As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteGuildRejectAlliance_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteGuildRejectAlliance"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7040,6 +8696,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteGuildRejectPeace(ByVal guild As String)
+    
+    On Error GoTo WriteGuildRejectPeace_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -7053,6 +8712,15 @@ Public Sub WriteGuildRejectPeace(ByVal guild As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteGuildRejectPeace_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteGuildRejectPeace"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7062,6 +8730,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteGuildAcceptAlliance(ByVal guild As String)
+    
+    On Error GoTo WriteGuildAcceptAlliance_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -7075,6 +8746,15 @@ Public Sub WriteGuildAcceptAlliance(ByVal guild As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteGuildAcceptAlliance_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteGuildAcceptAlliance"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7085,6 +8765,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteGuildOfferPeace(ByVal guild As String, ByVal proposal As String)
+    
+    On Error GoTo WriteGuildOfferPeace_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -7099,6 +8782,15 @@ Public Sub WriteGuildOfferPeace(ByVal guild As String, ByVal proposal As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteGuildOfferPeace_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteGuildOfferPeace"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7109,6 +8801,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteGuildOfferAlliance(ByVal guild As String, ByVal proposal As String)
+    
+    On Error GoTo WriteGuildOfferAlliance_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -7123,6 +8818,15 @@ Public Sub WriteGuildOfferAlliance(ByVal guild As String, ByVal proposal As Stri
 
     End With
 
+    
+    Exit Sub
+
+WriteGuildOfferAlliance_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteGuildOfferAlliance"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7132,6 +8836,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteGuildAllianceDetails(ByVal guild As String)
+    
+    On Error GoTo WriteGuildAllianceDetails_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -7145,6 +8852,15 @@ Public Sub WriteGuildAllianceDetails(ByVal guild As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteGuildAllianceDetails_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteGuildAllianceDetails"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7154,6 +8870,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteGuildPeaceDetails(ByVal guild As String)
+    
+    On Error GoTo WriteGuildPeaceDetails_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -7167,6 +8886,15 @@ Public Sub WriteGuildPeaceDetails(ByVal guild As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteGuildPeaceDetails_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteGuildPeaceDetails"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7176,6 +8904,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteGuildRequestJoinerInfo(ByVal UserName As String)
+    
+    On Error GoTo WriteGuildRequestJoinerInfo_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -7189,6 +8920,15 @@ Public Sub WriteGuildRequestJoinerInfo(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteGuildRequestJoinerInfo_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteGuildRequestJoinerInfo"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7202,8 +8942,20 @@ Public Sub WriteGuildAlliancePropList()
     'Last Modification: 05/17/06
     'Writes the "GuildAlliancePropList" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteGuildAlliancePropList_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GuildAlliancePropList)
 
+    
+    Exit Sub
+
+WriteGuildAlliancePropList_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteGuildAlliancePropList"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7217,8 +8969,20 @@ Public Sub WriteGuildPeacePropList()
     'Last Modification: 05/17/06
     'Writes the "GuildPeacePropList" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteGuildPeacePropList_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GuildPeacePropList)
 
+    
+    Exit Sub
+
+WriteGuildPeacePropList_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteGuildPeacePropList"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7228,6 +8992,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteGuildDeclareWar(ByVal guild As String)
+    
+    On Error GoTo WriteGuildDeclareWar_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -7241,6 +9008,15 @@ Public Sub WriteGuildDeclareWar(ByVal guild As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteGuildDeclareWar_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteGuildDeclareWar"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7250,6 +9026,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteGuildNewWebsite(ByVal URL As String)
+    
+    On Error GoTo WriteGuildNewWebsite_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -7263,6 +9042,15 @@ Public Sub WriteGuildNewWebsite(ByVal URL As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteGuildNewWebsite_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteGuildNewWebsite"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7272,6 +9060,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteGuildAcceptNewMember(ByVal UserName As String)
+    
+    On Error GoTo WriteGuildAcceptNewMember_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -7285,6 +9076,15 @@ Public Sub WriteGuildAcceptNewMember(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteGuildAcceptNewMember_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteGuildAcceptNewMember"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7295,6 +9095,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteGuildRejectNewMember(ByVal UserName As String, ByVal Reason As String)
+    
+    On Error GoTo WriteGuildRejectNewMember_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -7309,6 +9112,15 @@ Public Sub WriteGuildRejectNewMember(ByVal UserName As String, ByVal Reason As S
 
     End With
 
+    
+    Exit Sub
+
+WriteGuildRejectNewMember_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteGuildRejectNewMember"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7318,6 +9130,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteGuildKickMember(ByVal UserName As String)
+    
+    On Error GoTo WriteGuildKickMember_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -7331,6 +9146,15 @@ Public Sub WriteGuildKickMember(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteGuildKickMember_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteGuildKickMember"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7340,6 +9164,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteGuildUpdateNews(ByVal news As String)
+    
+    On Error GoTo WriteGuildUpdateNews_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -7353,6 +9180,15 @@ Public Sub WriteGuildUpdateNews(ByVal news As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteGuildUpdateNews_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteGuildUpdateNews"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7362,6 +9198,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteGuildMemberInfo(ByVal UserName As String)
+    
+    On Error GoTo WriteGuildMemberInfo_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -7375,6 +9214,15 @@ Public Sub WriteGuildMemberInfo(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteGuildMemberInfo_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteGuildMemberInfo"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7388,8 +9236,20 @@ Public Sub WriteGuildOpenElections()
     'Last Modification: 05/17/06
     'Writes the "GuildOpenElections" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteGuildOpenElections_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GuildOpenElections)
 
+    
+    Exit Sub
+
+WriteGuildOpenElections_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteGuildOpenElections"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7400,6 +9260,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteGuildRequestMembership(ByVal guild As String, ByVal Application As String)
+    
+    On Error GoTo WriteGuildRequestMembership_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -7414,6 +9277,15 @@ Public Sub WriteGuildRequestMembership(ByVal guild As String, ByVal Application 
 
     End With
 
+    
+    Exit Sub
+
+WriteGuildRequestMembership_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteGuildRequestMembership"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7423,6 +9295,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteGuildRequestDetails(ByVal guild As String)
+    
+    On Error GoTo WriteGuildRequestDetails_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -7436,6 +9311,15 @@ Public Sub WriteGuildRequestDetails(ByVal guild As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteGuildRequestDetails_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteGuildRequestDetails"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7449,8 +9333,20 @@ Public Sub WriteOnline()
     'Last Modification: 05/17/06
     'Writes the "Online" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteOnline_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.Online)
 
+    
+    Exit Sub
+
+WriteOnline_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteOnline"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7464,8 +9360,20 @@ Public Sub WriteQuit()
     'Last Modification: 08/16/08
     'Writes the "Quit" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteQuit_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.Quit)
 
+    
+    Exit Sub
+
+WriteQuit_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteQuit"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7479,8 +9387,20 @@ Public Sub WriteGuildLeave()
     'Last Modification: 05/17/06
     'Writes the "GuildLeave" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteGuildLeave_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GuildLeave)
 
+    
+    Exit Sub
+
+WriteGuildLeave_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteGuildLeave"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7494,8 +9414,20 @@ Public Sub WriteRequestAccountState()
     'Last Modification: 05/17/06
     'Writes the "RequestAccountState" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteRequestAccountState_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.RequestAccountState)
 
+    
+    Exit Sub
+
+WriteRequestAccountState_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteRequestAccountState"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7509,8 +9441,20 @@ Public Sub WritePetStand()
     'Last Modification: 05/17/06
     'Writes the "PetStand" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WritePetStand_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.PetStand)
 
+    
+    Exit Sub
+
+WritePetStand_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WritePetStand"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7524,8 +9468,20 @@ Public Sub WritePetFollow()
     'Last Modification: 05/17/06
     'Writes the "PetFollow" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WritePetFollow_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.PetFollow)
 
+    
+    Exit Sub
+
+WritePetFollow_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WritePetFollow"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7539,8 +9495,20 @@ Public Sub WriteReleasePet()
     'Last Modification: 18/11/2009
     'Writes the "ReleasePet" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteReleasePet_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.ReleasePet)
 
+    
+    Exit Sub
+
+WriteReleasePet_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteReleasePet"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7554,8 +9522,20 @@ Public Sub WriteTrainList()
     'Last Modification: 05/17/06
     'Writes the "TrainList" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteTrainList_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.TrainList)
 
+    
+    Exit Sub
+
+WriteTrainList_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteTrainList"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7569,8 +9549,20 @@ Public Sub WriteRest()
     'Last Modification: 05/17/06
     'Writes the "Rest" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteRest_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.Rest)
 
+    
+    Exit Sub
+
+WriteRest_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteRest"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7584,8 +9576,20 @@ Public Sub WriteMeditate()
     'Last Modification: 05/17/06
     'Writes the "Meditate" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteMeditate_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.Meditate)
 
+    
+    Exit Sub
+
+WriteMeditate_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteMeditate"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7599,8 +9603,20 @@ Public Sub WriteResucitate()
     'Last Modification: 05/17/06
     'Writes the "Resucitate" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteResucitate_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.Resucitate)
 
+    
+    Exit Sub
+
+WriteResucitate_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteResucitate"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7614,8 +9630,20 @@ Public Sub WriteConsultation()
     'Last Modification: 01/05/2010
     'Writes the "Consultation" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteConsultation_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.Consultation)
 
+    
+    Exit Sub
+
+WriteConsultation_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteConsultation"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7629,8 +9657,20 @@ Public Sub WriteHeal()
     'Last Modification: 05/17/06
     'Writes the "Heal" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteHeal_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.Heal)
 
+    
+    Exit Sub
+
+WriteHeal_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteHeal"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7644,8 +9684,20 @@ Public Sub WriteHelp()
     'Last Modification: 05/17/06
     'Writes the "Help" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteHelp_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.Help)
 
+    
+    Exit Sub
+
+WriteHelp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteHelp"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7659,8 +9711,20 @@ Public Sub WriteRequestStats()
     'Last Modification: 05/17/06
     'Writes the "RequestStats" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteRequestStats_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.RequestStats)
 
+    
+    Exit Sub
+
+WriteRequestStats_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteRequestStats"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7674,8 +9738,20 @@ Public Sub WriteCommerceStart()
     'Last Modification: 05/17/06
     'Writes the "CommerceStart" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteCommerceStart_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.CommerceStart)
 
+    
+    Exit Sub
+
+WriteCommerceStart_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteCommerceStart"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7689,8 +9765,20 @@ Public Sub WriteBankStart()
     'Last Modification: 05/17/06
     'Writes the "BankStart" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteBankStart_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.BankStart)
 
+    
+    Exit Sub
+
+WriteBankStart_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteBankStart"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7704,8 +9792,20 @@ Public Sub WriteEnlist()
     'Last Modification: 05/17/06
     'Writes the "Enlist" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteEnlist_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.Enlist)
 
+    
+    Exit Sub
+
+WriteEnlist_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteEnlist"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7719,8 +9819,20 @@ Public Sub WriteInformation()
     'Last Modification: 05/17/06
     'Writes the "Information" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteInformation_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.Information)
 
+    
+    Exit Sub
+
+WriteInformation_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteInformation"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7734,8 +9846,20 @@ Public Sub WriteReward()
     'Last Modification: 05/17/06
     'Writes the "Reward" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteReward_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.Reward)
 
+    
+    Exit Sub
+
+WriteReward_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteReward"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7749,8 +9873,20 @@ Public Sub WriteRequestMOTD()
     'Last Modification: 05/17/06
     'Writes the "RequestMOTD" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteRequestMOTD_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.RequestMOTD)
 
+    
+    Exit Sub
+
+WriteRequestMOTD_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteRequestMOTD"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7764,8 +9900,20 @@ Public Sub WriteUpTime()
     'Last Modification: 05/17/06
     'Writes the "UpTime" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteUpTime_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.UpTime)
 
+    
+    Exit Sub
+
+WriteUpTime_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteUpTime"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7779,8 +9927,20 @@ Public Sub WritePartyLeave()
     'Last Modification: 05/17/06
     'Writes the "PartyLeave" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WritePartyLeave_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.PartyLeave)
 
+    
+    Exit Sub
+
+WritePartyLeave_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WritePartyLeave"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7794,8 +9954,20 @@ Public Sub WritePartyCreate()
     'Last Modification: 05/17/06
     'Writes the "PartyCreate" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WritePartyCreate_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.PartyCreate)
 
+    
+    Exit Sub
+
+WritePartyCreate_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WritePartyCreate"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7809,8 +9981,20 @@ Public Sub WritePartyJoin()
     'Last Modification: 05/17/06
     'Writes the "PartyJoin" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WritePartyJoin_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.PartyJoin)
 
+    
+    Exit Sub
+
+WritePartyJoin_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WritePartyJoin"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7824,8 +10008,20 @@ Public Sub WriteInquiry()
     'Last Modification: 05/17/06
     'Writes the "Inquiry" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteInquiry_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.Inquiry)
 
+    
+    Exit Sub
+
+WriteInquiry_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteInquiry"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7835,6 +10031,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteGuildMessage(ByVal Message As String)
+    
+    On Error GoTo WriteGuildMessage_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -7848,6 +10047,15 @@ Public Sub WriteGuildMessage(ByVal Message As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteGuildMessage_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteGuildMessage"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7857,6 +10065,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WritePartyMessage(ByVal Message As String)
+    
+    On Error GoTo WritePartyMessage_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -7870,6 +10081,15 @@ Public Sub WritePartyMessage(ByVal Message As String)
 
     End With
 
+    
+    Exit Sub
+
+WritePartyMessage_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WritePartyMessage"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7883,8 +10103,20 @@ Public Sub WriteGuildOnline()
     'Last Modification: 05/17/06
     'Writes the "GuildOnline" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteGuildOnline_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GuildOnline)
 
+    
+    Exit Sub
+
+WriteGuildOnline_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteGuildOnline"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7898,8 +10130,20 @@ Public Sub WritePartyOnline()
     'Last Modification: 05/17/06
     'Writes the "PartyOnline" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WritePartyOnline_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.PartyOnline)
 
+    
+    Exit Sub
+
+WritePartyOnline_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WritePartyOnline"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7909,6 +10153,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteCouncilMessage(ByVal Message As String)
+    
+    On Error GoTo WriteCouncilMessage_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -7922,6 +10169,15 @@ Public Sub WriteCouncilMessage(ByVal Message As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteCouncilMessage_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteCouncilMessage"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7931,6 +10187,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteRoleMasterRequest(ByVal Message As String)
+    
+    On Error GoTo WriteRoleMasterRequest_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -7944,6 +10203,15 @@ Public Sub WriteRoleMasterRequest(ByVal Message As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteRoleMasterRequest_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteRoleMasterRequest"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7957,8 +10225,20 @@ Public Sub WriteGMRequest()
     'Last Modification: 05/17/06
     'Writes the "GMRequest" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteGMRequest_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMRequest)
 
+    
+    Exit Sub
+
+WriteGMRequest_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteGMRequest"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7968,6 +10248,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteBugReport(ByVal Message As String)
+    
+    On Error GoTo WriteBugReport_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -7981,6 +10264,15 @@ Public Sub WriteBugReport(ByVal Message As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteBugReport_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteBugReport"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -7990,6 +10282,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteChangeDescription(ByVal Desc As String)
+    
+    On Error GoTo WriteChangeDescription_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -8003,6 +10298,15 @@ Public Sub WriteChangeDescription(ByVal Desc As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteChangeDescription_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteChangeDescription"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8012,6 +10316,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteGuildVote(ByVal UserName As String)
+    
+    On Error GoTo WriteGuildVote_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -8025,6 +10332,15 @@ Public Sub WriteGuildVote(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteGuildVote_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteGuildVote"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8034,6 +10350,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WritePunishments(ByVal UserName As String)
+    
+    On Error GoTo WritePunishments_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -8047,6 +10366,15 @@ Public Sub WritePunishments(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WritePunishments_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WritePunishments"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8057,6 +10385,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteChangePassword(ByRef oldPass As String, ByRef newPass As String)
+    
+    On Error GoTo WriteChangePassword_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -8071,6 +10402,15 @@ Public Sub WriteChangePassword(ByRef oldPass As String, ByRef newPass As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteChangePassword_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteChangePassword"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8080,6 +10420,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteGamble(ByVal Amount As Integer)
+    
+    On Error GoTo WriteGamble_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -8093,6 +10436,15 @@ Public Sub WriteGamble(ByVal Amount As Integer)
 
     End With
 
+    
+    Exit Sub
+
+WriteGamble_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteGamble"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8102,6 +10454,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteInquiryVote(ByVal opt As Byte)
+    
+    On Error GoTo WriteInquiryVote_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -8115,6 +10470,15 @@ Public Sub WriteInquiryVote(ByVal opt As Byte)
 
     End With
 
+    
+    Exit Sub
+
+WriteInquiryVote_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteInquiryVote"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8128,8 +10492,20 @@ Public Sub WriteLeaveFaction()
     'Last Modification: 05/17/06
     'Writes the "LeaveFaction" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteLeaveFaction_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.LeaveFaction)
 
+    
+    Exit Sub
+
+WriteLeaveFaction_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteLeaveFaction"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8139,6 +10515,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteBankExtractGold(ByVal Amount As Long)
+    
+    On Error GoTo WriteBankExtractGold_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -8152,6 +10531,15 @@ Public Sub WriteBankExtractGold(ByVal Amount As Long)
 
     End With
 
+    
+    Exit Sub
+
+WriteBankExtractGold_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteBankExtractGold"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8161,6 +10549,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteBankDepositGold(ByVal Amount As Long)
+    
+    On Error GoTo WriteBankDepositGold_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -8174,6 +10565,15 @@ Public Sub WriteBankDepositGold(ByVal Amount As Long)
 
     End With
 
+    
+    Exit Sub
+
+WriteBankDepositGold_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteBankDepositGold"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8183,6 +10583,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteDenounce(ByVal Message As String)
+    
+    On Error GoTo WriteDenounce_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -8196,6 +10599,15 @@ Public Sub WriteDenounce(ByVal Message As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteDenounce_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteDenounce"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8211,8 +10623,20 @@ Public Sub WriteGuildFundate()
     '14/12/2009: ZaMa - Now first checks if the user can foundate a guild.
     '03/21/2001: Pato - Deleted de clanType param.
     '***************************************************
+    
+    On Error GoTo WriteGuildFundate_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GuildFundate)
 
+    
+    Exit Sub
+
+WriteGuildFundate_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteGuildFundate"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8222,6 +10646,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteGuildFundation(ByVal clanType As eClanType)
+    
+    On Error GoTo WriteGuildFundation_Err
+    
 
     '***************************************************
     'Author: ZaMa
@@ -8235,6 +10662,15 @@ Public Sub WriteGuildFundation(ByVal clanType As eClanType)
 
     End With
 
+    
+    Exit Sub
+
+WriteGuildFundation_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteGuildFundation"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8244,6 +10680,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WritePartyKick(ByVal UserName As String)
+    
+    On Error GoTo WritePartyKick_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -8257,6 +10696,15 @@ Public Sub WritePartyKick(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WritePartyKick_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WritePartyKick"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8266,6 +10714,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WritePartySetLeader(ByVal UserName As String)
+    
+    On Error GoTo WritePartySetLeader_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -8279,6 +10730,15 @@ Public Sub WritePartySetLeader(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WritePartySetLeader_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WritePartySetLeader"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8288,6 +10748,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WritePartyAcceptMember(ByVal UserName As String)
+    
+    On Error GoTo WritePartyAcceptMember_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -8301,6 +10764,15 @@ Public Sub WritePartyAcceptMember(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WritePartyAcceptMember_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WritePartyAcceptMember"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8310,6 +10782,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteGuildMemberList(ByVal guild As String)
+    
+    On Error GoTo WriteGuildMemberList_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -8324,6 +10799,15 @@ Public Sub WriteGuildMemberList(ByVal guild As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteGuildMemberList_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteGuildMemberList"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8333,6 +10817,9 @@ End Sub
 ' @param    NroPorCiclo The amount of items to craft per cicle.
 
 Public Sub WriteInitCrafting(ByVal cantidad As Long, ByVal NroPorCiclo As Integer)
+    
+    On Error GoTo WriteInitCrafting_Err
+    
 
     '***************************************************
     'Author: ZaMa
@@ -8347,12 +10834,24 @@ Public Sub WriteInitCrafting(ByVal cantidad As Long, ByVal NroPorCiclo As Intege
 
     End With
 
+    
+    Exit Sub
+
+WriteInitCrafting_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteInitCrafting"
+    End If
+Resume Next
+    
 End Sub
 
 ''
 ' Writes the "Home" message to the outgoing data buffer.
 '
 Public Sub WriteHome()
+    
+    On Error GoTo WriteHome_Err
+    
 
     '***************************************************
     'Author: Budi
@@ -8364,6 +10863,15 @@ Public Sub WriteHome()
 
     End With
 
+    
+    Exit Sub
+
+WriteHome_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteHome"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8373,6 +10881,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteGMMessage(ByVal Message As String)
+    
+    On Error GoTo WriteGMMessage_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -8386,6 +10897,15 @@ Public Sub WriteGMMessage(ByVal Message As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteGMMessage_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteGMMessage"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8399,9 +10919,21 @@ Public Sub WriteShowName()
     'Last Modification: 05/17/06
     'Writes the "ShowName" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteShowName_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.showName)
 
+    
+    Exit Sub
+
+WriteShowName_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteShowName"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8415,9 +10947,21 @@ Public Sub WriteOnlineRoyalArmy()
     'Last Modification: 05/17/06
     'Writes the "OnlineRoyalArmy" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteOnlineRoyalArmy_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.OnlineRoyalArmy)
 
+    
+    Exit Sub
+
+WriteOnlineRoyalArmy_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteOnlineRoyalArmy"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8431,9 +10975,21 @@ Public Sub WriteOnlineChaosLegion()
     'Last Modification: 05/17/06
     'Writes the "OnlineChaosLegion" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteOnlineChaosLegion_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.OnlineChaosLegion)
 
+    
+    Exit Sub
+
+WriteOnlineChaosLegion_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteOnlineChaosLegion"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8443,6 +10999,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteGoNearby(ByVal UserName As String)
+    
+    On Error GoTo WriteGoNearby_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -8457,6 +11016,15 @@ Public Sub WriteGoNearby(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteGoNearby_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteGoNearby"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8466,6 +11034,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteComment(ByVal Message As String)
+    
+    On Error GoTo WriteComment_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -8480,6 +11051,15 @@ Public Sub WriteComment(ByVal Message As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteComment_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteComment"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8493,9 +11073,21 @@ Public Sub WriteServerTime()
     'Last Modification: 05/17/06
     'Writes the "ServerTime" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteServerTime_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.serverTime)
 
+    
+    Exit Sub
+
+WriteServerTime_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteServerTime"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8505,6 +11097,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteWhere(ByVal UserName As String)
+    
+    On Error GoTo WriteWhere_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -8519,6 +11114,15 @@ Public Sub WriteWhere(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteWhere_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteWhere"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8528,6 +11132,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteCreaturesInMap(ByVal Map As Integer)
+    
+    On Error GoTo WriteCreaturesInMap_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -8542,6 +11149,15 @@ Public Sub WriteCreaturesInMap(ByVal Map As Integer)
 
     End With
 
+    
+    Exit Sub
+
+WriteCreaturesInMap_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteCreaturesInMap"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8555,9 +11171,21 @@ Public Sub WriteWarpMeToTarget()
     'Last Modification: 05/17/06
     'Writes the "WarpMeToTarget" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteWarpMeToTarget_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.WarpMeToTarget)
 
+    
+    Exit Sub
+
+WriteWarpMeToTarget_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteWarpMeToTarget"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8573,6 +11201,9 @@ Public Sub WriteWarpChar(ByVal UserName As String, _
                          ByVal Map As Integer, _
                          ByVal X As Byte, _
                          ByVal Y As Byte)
+    
+    On Error GoTo WriteWarpChar_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -8592,6 +11223,15 @@ Public Sub WriteWarpChar(ByVal UserName As String, _
 
     End With
 
+    
+    Exit Sub
+
+WriteWarpChar_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteWarpChar"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8601,6 +11241,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteSilence(ByVal UserName As String)
+    
+    On Error GoTo WriteSilence_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -8615,6 +11258,15 @@ Public Sub WriteSilence(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteSilence_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteSilence"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8628,9 +11280,21 @@ Public Sub WriteSOSShowList()
     'Last Modification: 05/17/06
     'Writes the "SOSShowList" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteSOSShowList_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.SOSShowList)
 
+    
+    Exit Sub
+
+WriteSOSShowList_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteSOSShowList"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8640,6 +11304,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteSOSRemove(ByVal UserName As String)
+    
+    On Error GoTo WriteSOSRemove_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -8654,6 +11321,15 @@ Public Sub WriteSOSRemove(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteSOSRemove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteSOSRemove"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8663,6 +11339,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteGoToChar(ByVal UserName As String)
+    
+    On Error GoTo WriteGoToChar_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -8677,6 +11356,15 @@ Public Sub WriteGoToChar(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteGoToChar_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteGoToChar"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8690,9 +11378,21 @@ Public Sub WriteInvisible()
     'Last Modification: 05/17/06
     'Writes the "invisible" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteInvisible_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.invisible)
 
+    
+    Exit Sub
+
+WriteInvisible_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteInvisible"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8706,9 +11406,21 @@ Public Sub WriteGMPanel()
     'Last Modification: 05/17/06
     'Writes the "GMPanel" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteGMPanel_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.GMPanel)
 
+    
+    Exit Sub
+
+WriteGMPanel_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteGMPanel"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8722,9 +11434,21 @@ Public Sub WriteRequestUserList()
     'Last Modification: 05/17/06
     'Writes the "RequestUserList" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteRequestUserList_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.RequestUserList)
 
+    
+    Exit Sub
+
+WriteRequestUserList_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteRequestUserList"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8738,9 +11462,21 @@ Public Sub WriteWorking()
     'Last Modification: 05/17/06
     'Writes the "Working" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteWorking_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.Working)
 
+    
+    Exit Sub
+
+WriteWorking_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteWorking"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8754,9 +11490,21 @@ Public Sub WriteHiding()
     'Last Modification: 05/17/06
     'Writes the "Hiding" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteHiding_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.Hiding)
 
+    
+    Exit Sub
+
+WriteHiding_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteHiding"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8768,6 +11516,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteJail(ByVal UserName As String, ByVal Reason As String, ByVal Time As Byte)
+    
+    On Error GoTo WriteJail_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -8785,6 +11536,15 @@ Public Sub WriteJail(ByVal UserName As String, ByVal Reason As String, ByVal Tim
 
     End With
 
+    
+    Exit Sub
+
+WriteJail_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteJail"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8798,9 +11558,21 @@ Public Sub WriteKillNPC()
     'Last Modification: 05/17/06
     'Writes the "KillNPC" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteKillNPC_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.KillNPC)
 
+    
+    Exit Sub
+
+WriteKillNPC_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteKillNPC"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8811,6 +11583,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteWarnUser(ByVal UserName As String, ByVal Reason As String)
+    
+    On Error GoTo WriteWarnUser_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -8826,6 +11601,15 @@ Public Sub WriteWarnUser(ByVal UserName As String, ByVal Reason As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteWarnUser_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteWarnUser"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8841,6 +11625,9 @@ Public Sub WriteEditChar(ByVal UserName As String, _
                          ByVal EditOption As eEditOptions, _
                          ByVal arg1 As String, _
                          ByVal arg2 As String)
+    
+    On Error GoTo WriteEditChar_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -8860,6 +11647,15 @@ Public Sub WriteEditChar(ByVal UserName As String, _
 
     End With
 
+    
+    Exit Sub
+
+WriteEditChar_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteEditChar"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8869,6 +11665,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteRequestCharInfo(ByVal UserName As String)
+    
+    On Error GoTo WriteRequestCharInfo_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -8883,6 +11682,15 @@ Public Sub WriteRequestCharInfo(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteRequestCharInfo_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteRequestCharInfo"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8892,6 +11700,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteRequestCharStats(ByVal UserName As String)
+    
+    On Error GoTo WriteRequestCharStats_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -8906,6 +11717,15 @@ Public Sub WriteRequestCharStats(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteRequestCharStats_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteRequestCharStats"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8915,6 +11735,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteRequestCharGold(ByVal UserName As String)
+    
+    On Error GoTo WriteRequestCharGold_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -8929,6 +11752,15 @@ Public Sub WriteRequestCharGold(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteRequestCharGold_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteRequestCharGold"
+    End If
+Resume Next
+    
 End Sub
     
 ''
@@ -8938,6 +11770,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteRequestCharInventory(ByVal UserName As String)
+    
+    On Error GoTo WriteRequestCharInventory_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -8952,6 +11787,15 @@ Public Sub WriteRequestCharInventory(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteRequestCharInventory_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteRequestCharInventory"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8961,6 +11805,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteRequestCharBank(ByVal UserName As String)
+    
+    On Error GoTo WriteRequestCharBank_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -8975,6 +11822,15 @@ Public Sub WriteRequestCharBank(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteRequestCharBank_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteRequestCharBank"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -8984,6 +11840,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteRequestCharSkills(ByVal UserName As String)
+    
+    On Error GoTo WriteRequestCharSkills_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -8998,6 +11857,15 @@ Public Sub WriteRequestCharSkills(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteRequestCharSkills_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteRequestCharSkills"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9007,6 +11875,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteReviveChar(ByVal UserName As String)
+    
+    On Error GoTo WriteReviveChar_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -9021,6 +11892,15 @@ Public Sub WriteReviveChar(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteReviveChar_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteReviveChar"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9034,9 +11914,21 @@ Public Sub WriteOnlineGM()
     'Last Modification: 05/17/06
     'Writes the "OnlineGM" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteOnlineGM_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.OnlineGM)
 
+    
+    Exit Sub
+
+WriteOnlineGM_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteOnlineGM"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9045,6 +11937,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteOnlineMap(ByVal Map As Integer)
+    
+    On Error GoTo WriteOnlineMap_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -9060,6 +11955,15 @@ Public Sub WriteOnlineMap(ByVal Map As Integer)
 
     End With
 
+    
+    Exit Sub
+
+WriteOnlineMap_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteOnlineMap"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9069,6 +11973,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteForgive(ByVal UserName As String)
+    
+    On Error GoTo WriteForgive_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -9083,6 +11990,15 @@ Public Sub WriteForgive(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteForgive_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteForgive"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9092,6 +12008,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteKick(ByVal UserName As String)
+    
+    On Error GoTo WriteKick_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -9106,6 +12025,15 @@ Public Sub WriteKick(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteKick_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteKick"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9115,6 +12043,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteExecute(ByVal UserName As String)
+    
+    On Error GoTo WriteExecute_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -9129,6 +12060,15 @@ Public Sub WriteExecute(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteExecute_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteExecute"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9139,6 +12079,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteBanChar(ByVal UserName As String, ByVal Reason As String)
+    
+    On Error GoTo WriteBanChar_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -9155,6 +12098,15 @@ Public Sub WriteBanChar(ByVal UserName As String, ByVal Reason As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteBanChar_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteBanChar"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9164,6 +12116,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteUnbanChar(ByVal UserName As String)
+    
+    On Error GoTo WriteUnbanChar_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -9178,6 +12133,15 @@ Public Sub WriteUnbanChar(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteUnbanChar_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteUnbanChar"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9191,9 +12155,21 @@ Public Sub WriteNPCFollow()
     'Last Modification: 05/17/06
     'Writes the "NPCFollow" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteNPCFollow_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.NPCFollow)
 
+    
+    Exit Sub
+
+WriteNPCFollow_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteNPCFollow"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9203,6 +12179,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteSummonChar(ByVal UserName As String)
+    
+    On Error GoTo WriteSummonChar_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -9217,6 +12196,15 @@ Public Sub WriteSummonChar(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteSummonChar_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteSummonChar"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9230,9 +12218,21 @@ Public Sub WriteSpawnListRequest()
     'Last Modification: 05/17/06
     'Writes the "SpawnListRequest" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteSpawnListRequest_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.SpawnListRequest)
 
+    
+    Exit Sub
+
+WriteSpawnListRequest_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteSpawnListRequest"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9242,6 +12242,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteSpawnCreature(ByVal creatureIndex As Integer)
+    
+    On Error GoTo WriteSpawnCreature_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -9256,6 +12259,15 @@ Public Sub WriteSpawnCreature(ByVal creatureIndex As Integer)
 
     End With
 
+    
+    Exit Sub
+
+WriteSpawnCreature_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteSpawnCreature"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9269,9 +12281,21 @@ Public Sub WriteResetNPCInventory()
     'Last Modification: 05/17/06
     'Writes the "ResetNPCInventory" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteResetNPCInventory_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.ResetNPCInventory)
 
+    
+    Exit Sub
+
+WriteResetNPCInventory_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteResetNPCInventory"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9281,6 +12305,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteServerMessage(ByVal Message As String)
+    
+    On Error GoTo WriteServerMessage_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -9295,6 +12322,15 @@ Public Sub WriteServerMessage(ByVal Message As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteServerMessage_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteServerMessage"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9304,6 +12340,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteMapMessage(ByVal Message As String)
+    
+    On Error GoTo WriteMapMessage_Err
+    
 
     '***************************************************
     'Author: ZaMa
@@ -9318,6 +12357,15 @@ Public Sub WriteMapMessage(ByVal Message As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteMapMessage_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteMapMessage"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9327,6 +12375,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteNickToIP(ByVal UserName As String)
+    
+    On Error GoTo WriteNickToIP_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -9341,6 +12392,15 @@ Public Sub WriteNickToIP(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteNickToIP_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteNickToIP"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9350,6 +12410,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteIPToNick(ByRef Ip() As Byte)
+    
+    On Error GoTo WriteIPToNick_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -9370,6 +12433,15 @@ Public Sub WriteIPToNick(ByRef Ip() As Byte)
 
     End With
 
+    
+    Exit Sub
+
+WriteIPToNick_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteIPToNick"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9379,6 +12451,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteGuildOnlineMembers(ByVal guild As String)
+    
+    On Error GoTo WriteGuildOnlineMembers_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -9393,6 +12468,15 @@ Public Sub WriteGuildOnlineMembers(ByVal guild As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteGuildOnlineMembers_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteGuildOnlineMembers"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9407,6 +12491,9 @@ Public Sub WriteTeleportCreate(ByVal Map As Integer, _
                                ByVal X As Byte, _
                                ByVal Y As Byte, _
                                Optional ByVal Radio As Byte = 0)
+    
+    On Error GoTo WriteTeleportCreate_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -9426,6 +12513,15 @@ Public Sub WriteTeleportCreate(ByVal Map As Integer, _
 
     End With
 
+    
+    Exit Sub
+
+WriteTeleportCreate_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteTeleportCreate"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9439,9 +12535,21 @@ Public Sub WriteTeleportDestroy()
     'Last Modification: 05/17/06
     'Writes the "TeleportDestroy" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteTeleportDestroy_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.TeleportDestroy)
 
+    
+    Exit Sub
+
+WriteTeleportDestroy_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteTeleportDestroy"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9455,9 +12563,21 @@ Public Sub WriteExitDestroy()
     'Last Modification: 30/09/18
     'Writes the "TeleportDestroy" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteExitDestroy_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.ExitDestroy)
 
+    
+    Exit Sub
+
+WriteExitDestroy_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteExitDestroy"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9471,9 +12591,21 @@ Public Sub WriteRainToggle()
     'Last Modification: 05/17/06
     'Writes the "RainToggle" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteRainToggle_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.RainToggle)
 
+    
+    Exit Sub
+
+WriteRainToggle_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteRainToggle"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9483,6 +12615,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteSetCharDescription(ByVal Desc As String)
+    
+    On Error GoTo WriteSetCharDescription_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -9497,6 +12632,15 @@ Public Sub WriteSetCharDescription(ByVal Desc As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteSetCharDescription_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteSetCharDescription"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9507,6 +12651,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteForceMIDIToMap(ByVal midiID As Byte, ByVal Map As Integer)
+    
+    On Error GoTo WriteForceMIDIToMap_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -9523,6 +12670,15 @@ Public Sub WriteForceMIDIToMap(ByVal midiID As Byte, ByVal Map As Integer)
 
     End With
 
+    
+    Exit Sub
+
+WriteForceMIDIToMap_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteForceMIDIToMap"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9538,6 +12694,9 @@ Public Sub WriteForceWAVEToMap(ByVal waveID As Byte, _
                                ByVal Map As Integer, _
                                ByVal X As Byte, _
                                ByVal Y As Byte)
+    
+    On Error GoTo WriteForceWAVEToMap_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -9557,6 +12716,15 @@ Public Sub WriteForceWAVEToMap(ByVal waveID As Byte, _
 
     End With
 
+    
+    Exit Sub
+
+WriteForceWAVEToMap_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteForceWAVEToMap"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9566,6 +12734,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteRoyalArmyMessage(ByVal Message As String)
+    
+    On Error GoTo WriteRoyalArmyMessage_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -9580,6 +12751,15 @@ Public Sub WriteRoyalArmyMessage(ByVal Message As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteRoyalArmyMessage_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteRoyalArmyMessage"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9589,6 +12769,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteChaosLegionMessage(ByVal Message As String)
+    
+    On Error GoTo WriteChaosLegionMessage_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -9603,6 +12786,15 @@ Public Sub WriteChaosLegionMessage(ByVal Message As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteChaosLegionMessage_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteChaosLegionMessage"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9612,6 +12804,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteCitizenMessage(ByVal Message As String)
+    
+    On Error GoTo WriteCitizenMessage_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -9626,6 +12821,15 @@ Public Sub WriteCitizenMessage(ByVal Message As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteCitizenMessage_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteCitizenMessage"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9635,6 +12839,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteCriminalMessage(ByVal Message As String)
+    
+    On Error GoTo WriteCriminalMessage_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -9649,6 +12856,15 @@ Public Sub WriteCriminalMessage(ByVal Message As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteCriminalMessage_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteCriminalMessage"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9658,6 +12874,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteTalkAsNPC(ByVal Message As String)
+    
+    On Error GoTo WriteTalkAsNPC_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -9672,6 +12891,15 @@ Public Sub WriteTalkAsNPC(ByVal Message As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteTalkAsNPC_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteTalkAsNPC"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9685,9 +12913,21 @@ Public Sub WriteDestroyAllItemsInArea()
     'Last Modification: 05/17/06
     'Writes the "DestroyAllItemsInArea" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteDestroyAllItemsInArea_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.DestroyAllItemsInArea)
 
+    
+    Exit Sub
+
+WriteDestroyAllItemsInArea_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteDestroyAllItemsInArea"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9697,6 +12937,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteAcceptRoyalCouncilMember(ByVal UserName As String)
+    
+    On Error GoTo WriteAcceptRoyalCouncilMember_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -9711,6 +12954,15 @@ Public Sub WriteAcceptRoyalCouncilMember(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteAcceptRoyalCouncilMember_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteAcceptRoyalCouncilMember"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9720,6 +12972,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteAcceptChaosCouncilMember(ByVal UserName As String)
+    
+    On Error GoTo WriteAcceptChaosCouncilMember_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -9734,6 +12989,15 @@ Public Sub WriteAcceptChaosCouncilMember(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteAcceptChaosCouncilMember_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteAcceptChaosCouncilMember"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9747,9 +13011,21 @@ Public Sub WriteItemsInTheFloor()
     'Last Modification: 05/17/06
     'Writes the "ItemsInTheFloor" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteItemsInTheFloor_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.ItemsInTheFloor)
 
+    
+    Exit Sub
+
+WriteItemsInTheFloor_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteItemsInTheFloor"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9759,6 +13035,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteMakeDumb(ByVal UserName As String)
+    
+    On Error GoTo WriteMakeDumb_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -9773,6 +13052,15 @@ Public Sub WriteMakeDumb(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteMakeDumb_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteMakeDumb"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9782,6 +13070,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteMakeDumbNoMore(ByVal UserName As String)
+    
+    On Error GoTo WriteMakeDumbNoMore_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -9796,6 +13087,15 @@ Public Sub WriteMakeDumbNoMore(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteMakeDumbNoMore_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteMakeDumbNoMore"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9809,9 +13109,21 @@ Public Sub WriteDumpIPTables()
     'Last Modification: 05/17/06
     'Writes the "DumpIPTables" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteDumpIPTables_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.dumpIPTables)
 
+    
+    Exit Sub
+
+WriteDumpIPTables_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteDumpIPTables"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9821,6 +13133,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteCouncilKick(ByVal UserName As String)
+    
+    On Error GoTo WriteCouncilKick_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -9835,6 +13150,15 @@ Public Sub WriteCouncilKick(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteCouncilKick_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteCouncilKick"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9844,6 +13168,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteSetTrigger(ByVal Trigger As eTrigger)
+    
+    On Error GoTo WriteSetTrigger_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -9858,6 +13185,15 @@ Public Sub WriteSetTrigger(ByVal Trigger As eTrigger)
 
     End With
 
+    
+    Exit Sub
+
+WriteSetTrigger_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteSetTrigger"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9871,9 +13207,21 @@ Public Sub WriteAskTrigger()
     'Last Modification: 04/13/07
     'Writes the "AskTrigger" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteAskTrigger_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.AskTrigger)
 
+    
+    Exit Sub
+
+WriteAskTrigger_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteAskTrigger"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9887,9 +13235,21 @@ Public Sub WriteBannedIPList()
     'Last Modification: 05/17/06
     'Writes the "BannedIPList" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteBannedIPList_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.BannedIPList)
 
+    
+    Exit Sub
+
+WriteBannedIPList_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteBannedIPList"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9903,9 +13263,21 @@ Public Sub WriteBannedIPReload()
     'Last Modification: 05/17/06
     'Writes the "BannedIPReload" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteBannedIPReload_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.BannedIPReload)
 
+    
+    Exit Sub
+
+WriteBannedIPReload_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteBannedIPReload"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9915,6 +13287,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteGuildBan(ByVal guild As String)
+    
+    On Error GoTo WriteGuildBan_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -9929,6 +13304,15 @@ Public Sub WriteGuildBan(ByVal guild As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteGuildBan_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteGuildBan"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9945,6 +13329,9 @@ Public Sub WriteBanIP(ByVal byIp As Boolean, _
                       ByRef Ip() As Byte, _
                       ByVal Nick As String, _
                       ByVal Reason As String)
+    
+    On Error GoTo WriteBanIP_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -9976,6 +13363,15 @@ Public Sub WriteBanIP(ByVal byIp As Boolean, _
 
     End With
 
+    
+    Exit Sub
+
+WriteBanIP_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteBanIP"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -9985,6 +13381,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteUnbanIP(ByRef Ip() As Byte)
+    
+    On Error GoTo WriteUnbanIP_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -10005,6 +13404,15 @@ Public Sub WriteUnbanIP(ByRef Ip() As Byte)
 
     End With
 
+    
+    Exit Sub
+
+WriteUnbanIP_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteUnbanIP"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10014,6 +13422,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteCreateItem(ByVal ItemIndex As Long)
+    
+    On Error GoTo WriteCreateItem_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -10027,6 +13438,15 @@ Public Sub WriteCreateItem(ByVal ItemIndex As Long)
 
     End With
 
+    
+    Exit Sub
+
+WriteCreateItem_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteCreateItem"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10040,9 +13460,21 @@ Public Sub WriteDestroyItems()
     'Last Modification: 05/17/06
     'Writes the "DestroyItems" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteDestroyItems_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.DestroyItems)
 
+    
+    Exit Sub
+
+WriteDestroyItems_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteDestroyItems"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10052,6 +13484,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteChaosLegionKick(ByVal UserName As String)
+    
+    On Error GoTo WriteChaosLegionKick_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -10066,6 +13501,15 @@ Public Sub WriteChaosLegionKick(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteChaosLegionKick_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteChaosLegionKick"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10075,6 +13519,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteRoyalArmyKick(ByVal UserName As String)
+    
+    On Error GoTo WriteRoyalArmyKick_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -10089,6 +13536,15 @@ Public Sub WriteRoyalArmyKick(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteRoyalArmyKick_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteRoyalArmyKick"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10098,6 +13554,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteForceMIDIAll(ByVal midiID As Byte)
+    
+    On Error GoTo WriteForceMIDIAll_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -10112,6 +13571,15 @@ Public Sub WriteForceMIDIAll(ByVal midiID As Byte)
 
     End With
 
+    
+    Exit Sub
+
+WriteForceMIDIAll_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteForceMIDIAll"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10121,6 +13589,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteForceWAVEAll(ByVal waveID As Byte)
+    
+    On Error GoTo WriteForceWAVEAll_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -10135,6 +13606,15 @@ Public Sub WriteForceWAVEAll(ByVal waveID As Byte)
 
     End With
 
+    
+    Exit Sub
+
+WriteForceWAVEAll_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteForceWAVEAll"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10147,6 +13627,9 @@ End Sub
 Public Sub WriteRemovePunishment(ByVal UserName As String, _
                                  ByVal punishment As Byte, _
                                  ByVal NewText As String)
+    
+    On Error GoTo WriteRemovePunishment_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -10163,6 +13646,15 @@ Public Sub WriteRemovePunishment(ByVal UserName As String, _
 
     End With
 
+    
+    Exit Sub
+
+WriteRemovePunishment_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteRemovePunishment"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10176,9 +13668,21 @@ Public Sub WriteTileBlockedToggle()
     'Last Modification: 05/17/06
     'Writes the "TileBlockedToggle" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteTileBlockedToggle_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.TileBlockedToggle)
 
+    
+    Exit Sub
+
+WriteTileBlockedToggle_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteTileBlockedToggle"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10192,9 +13696,21 @@ Public Sub WriteKillNPCNoRespawn()
     'Last Modification: 05/17/06
     'Writes the "KillNPCNoRespawn" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteKillNPCNoRespawn_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.KillNPCNoRespawn)
 
+    
+    Exit Sub
+
+WriteKillNPCNoRespawn_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteKillNPCNoRespawn"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10208,9 +13724,21 @@ Public Sub WriteKillAllNearbyNPCs()
     'Last Modification: 05/17/06
     'Writes the "KillAllNearbyNPCs" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteKillAllNearbyNPCs_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.KillAllNearbyNPCs)
 
+    
+    Exit Sub
+
+WriteKillAllNearbyNPCs_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteKillAllNearbyNPCs"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10220,6 +13748,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteLastIP(ByVal UserName As String)
+    
+    On Error GoTo WriteLastIP_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -10234,6 +13765,15 @@ Public Sub WriteLastIP(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteLastIP_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteLastIP"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10247,9 +13787,21 @@ Public Sub WriteChangeMOTD()
     'Last Modification: 05/17/06
     'Writes the "ChangeMOTD" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteChangeMOTD_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.ChangeMOTD)
 
+    
+    Exit Sub
+
+WriteChangeMOTD_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteChangeMOTD"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10259,6 +13811,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteSetMOTD(ByVal Message As String)
+    
+    On Error GoTo WriteSetMOTD_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -10273,6 +13828,15 @@ Public Sub WriteSetMOTD(ByVal Message As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteSetMOTD_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteSetMOTD"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10282,6 +13846,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteSystemMessage(ByVal Message As String)
+    
+    On Error GoTo WriteSystemMessage_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -10296,6 +13863,15 @@ Public Sub WriteSystemMessage(ByVal Message As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteSystemMessage_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteSystemMessage"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10305,6 +13881,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteCreateNPC(ByVal NPCIndex As Integer)
+    
+    On Error GoTo WriteCreateNPC_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -10319,6 +13898,15 @@ Public Sub WriteCreateNPC(ByVal NPCIndex As Integer)
 
     End With
 
+    
+    Exit Sub
+
+WriteCreateNPC_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteCreateNPC"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10328,6 +13916,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteCreateNPCWithRespawn(ByVal NPCIndex As Integer)
+    
+    On Error GoTo WriteCreateNPCWithRespawn_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -10342,6 +13933,15 @@ Public Sub WriteCreateNPCWithRespawn(ByVal NPCIndex As Integer)
 
     End With
 
+    
+    Exit Sub
+
+WriteCreateNPCWithRespawn_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteCreateNPCWithRespawn"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10352,6 +13952,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteImperialArmour(ByVal armourIndex As Byte, ByVal objectIndex As Integer)
+    
+    On Error GoTo WriteImperialArmour_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -10368,6 +13971,15 @@ Public Sub WriteImperialArmour(ByVal armourIndex As Byte, ByVal objectIndex As I
 
     End With
 
+    
+    Exit Sub
+
+WriteImperialArmour_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteImperialArmour"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10378,6 +13990,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteChaosArmour(ByVal armourIndex As Byte, ByVal objectIndex As Integer)
+    
+    On Error GoTo WriteChaosArmour_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -10394,6 +14009,15 @@ Public Sub WriteChaosArmour(ByVal armourIndex As Byte, ByVal objectIndex As Inte
 
     End With
 
+    
+    Exit Sub
+
+WriteChaosArmour_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteChaosArmour"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10407,9 +14031,21 @@ Public Sub WriteNavigateToggle()
     'Last Modification: 05/17/06
     'Writes the "NavigateToggle" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteNavigateToggle_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.NavigateToggle)
 
+    
+    Exit Sub
+
+WriteNavigateToggle_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteNavigateToggle"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10423,9 +14059,21 @@ Public Sub WriteServerOpenToUsersToggle()
     'Last Modification: 05/17/06
     'Writes the "ServerOpenToUsersToggle" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteServerOpenToUsersToggle_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.ServerOpenToUsersToggle)
 
+    
+    Exit Sub
+
+WriteServerOpenToUsersToggle_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteServerOpenToUsersToggle"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10439,9 +14087,21 @@ Public Sub WriteTurnOffServer()
     'Last Modification: 05/17/06
     'Writes the "TurnOffServer" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteTurnOffServer_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.TurnOffServer)
 
+    
+    Exit Sub
+
+WriteTurnOffServer_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteTurnOffServer"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10451,6 +14111,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteTurnCriminal(ByVal UserName As String)
+    
+    On Error GoTo WriteTurnCriminal_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -10465,6 +14128,15 @@ Public Sub WriteTurnCriminal(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteTurnCriminal_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteTurnCriminal"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10474,6 +14146,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteResetFactions(ByVal UserName As String)
+    
+    On Error GoTo WriteResetFactions_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -10488,6 +14163,15 @@ Public Sub WriteResetFactions(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteResetFactions_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteResetFactions"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10497,6 +14181,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteRemoveCharFromGuild(ByVal UserName As String)
+    
+    On Error GoTo WriteRemoveCharFromGuild_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -10511,6 +14198,15 @@ Public Sub WriteRemoveCharFromGuild(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteRemoveCharFromGuild_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteRemoveCharFromGuild"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10520,6 +14216,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteRequestCharMail(ByVal UserName As String)
+    
+    On Error GoTo WriteRequestCharMail_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -10534,6 +14233,15 @@ Public Sub WriteRequestCharMail(ByVal UserName As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteRequestCharMail_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteRequestCharMail"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10544,6 +14252,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteAlterPassword(ByVal UserName As String, ByVal CopyFrom As String)
+    
+    On Error GoTo WriteAlterPassword_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -10559,6 +14270,15 @@ Public Sub WriteAlterPassword(ByVal UserName As String, ByVal CopyFrom As String
 
     End With
 
+    
+    Exit Sub
+
+WriteAlterPassword_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteAlterPassword"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10569,6 +14289,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteAlterMail(ByVal UserName As String, ByVal newMail As String)
+    
+    On Error GoTo WriteAlterMail_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -10584,6 +14307,15 @@ Public Sub WriteAlterMail(ByVal UserName As String, ByVal newMail As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteAlterMail_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteAlterMail"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10594,6 +14326,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteAlterName(ByVal UserName As String, ByVal newName As String)
+    
+    On Error GoTo WriteAlterName_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -10609,6 +14344,15 @@ Public Sub WriteAlterName(ByVal UserName As String, ByVal newName As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteAlterName_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteAlterName"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10622,9 +14366,21 @@ Public Sub WriteDoBackup()
     'Last Modification: 05/17/06
     'Writes the "DoBackup" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteDoBackup_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.DoBackUp)
 
+    
+    Exit Sub
+
+WriteDoBackup_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteDoBackup"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10634,6 +14390,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteShowGuildMessages(ByVal guild As String)
+    
+    On Error GoTo WriteShowGuildMessages_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -10648,6 +14407,15 @@ Public Sub WriteShowGuildMessages(ByVal guild As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteShowGuildMessages_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteShowGuildMessages"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10661,9 +14429,21 @@ Public Sub WriteSaveMap()
     'Last Modification: 05/17/06
     'Writes the "SaveMap" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteSaveMap_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.SaveMap)
 
+    
+    Exit Sub
+
+WriteSaveMap_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteSaveMap"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10673,6 +14453,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteChangeMapInfoPK(ByVal isPK As Boolean)
+    
+    On Error GoTo WriteChangeMapInfoPK_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -10687,6 +14470,15 @@ Public Sub WriteChangeMapInfoPK(ByVal isPK As Boolean)
 
     End With
 
+    
+    Exit Sub
+
+WriteChangeMapInfoPK_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteChangeMapInfoPK"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10696,6 +14488,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteChangeMapInfoNoOcultar(ByVal PermitirOcultar As Boolean)
+    
+    On Error GoTo WriteChangeMapInfoNoOcultar_Err
+    
 
     '***************************************************
     'Author: ZaMa
@@ -10710,6 +14505,15 @@ Public Sub WriteChangeMapInfoNoOcultar(ByVal PermitirOcultar As Boolean)
 
     End With
 
+    
+    Exit Sub
+
+WriteChangeMapInfoNoOcultar_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteChangeMapInfoNoOcultar"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10719,6 +14523,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteChangeMapInfoNoInvocar(ByVal PermitirInvocar As Boolean)
+    
+    On Error GoTo WriteChangeMapInfoNoInvocar_Err
+    
 
     '***************************************************
     'Author: ZaMa
@@ -10733,6 +14540,15 @@ Public Sub WriteChangeMapInfoNoInvocar(ByVal PermitirInvocar As Boolean)
 
     End With
 
+    
+    Exit Sub
+
+WriteChangeMapInfoNoInvocar_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteChangeMapInfoNoInvocar"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10742,6 +14558,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteChangeMapInfoBackup(ByVal backup As Boolean)
+    
+    On Error GoTo WriteChangeMapInfoBackup_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -10756,6 +14575,15 @@ Public Sub WriteChangeMapInfoBackup(ByVal backup As Boolean)
 
     End With
 
+    
+    Exit Sub
+
+WriteChangeMapInfoBackup_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteChangeMapInfoBackup"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10765,6 +14593,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteChangeMapInfoRestricted(ByVal restrict As String)
+    
+    On Error GoTo WriteChangeMapInfoRestricted_Err
+    
 
     '***************************************************
     'Author: Pablo (ToxicWaste)
@@ -10779,6 +14610,15 @@ Public Sub WriteChangeMapInfoRestricted(ByVal restrict As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteChangeMapInfoRestricted_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteChangeMapInfoRestricted"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10788,6 +14628,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteChangeMapInfoNoMagic(ByVal nomagic As Boolean)
+    
+    On Error GoTo WriteChangeMapInfoNoMagic_Err
+    
 
     '***************************************************
     'Author: Pablo (ToxicWaste)
@@ -10802,6 +14645,15 @@ Public Sub WriteChangeMapInfoNoMagic(ByVal nomagic As Boolean)
 
     End With
 
+    
+    Exit Sub
+
+WriteChangeMapInfoNoMagic_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteChangeMapInfoNoMagic"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10811,6 +14663,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteChangeMapInfoNoInvi(ByVal noinvi As Boolean)
+    
+    On Error GoTo WriteChangeMapInfoNoInvi_Err
+    
 
     '***************************************************
     'Author: Pablo (ToxicWaste)
@@ -10825,6 +14680,15 @@ Public Sub WriteChangeMapInfoNoInvi(ByVal noinvi As Boolean)
 
     End With
 
+    
+    Exit Sub
+
+WriteChangeMapInfoNoInvi_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteChangeMapInfoNoInvi"
+    End If
+Resume Next
+    
 End Sub
                             
 ''
@@ -10834,6 +14698,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteChangeMapInfoNoResu(ByVal noresu As Boolean)
+    
+    On Error GoTo WriteChangeMapInfoNoResu_Err
+    
 
     '***************************************************
     'Author: Pablo (ToxicWaste)
@@ -10848,6 +14715,15 @@ Public Sub WriteChangeMapInfoNoResu(ByVal noresu As Boolean)
 
     End With
 
+    
+    Exit Sub
+
+WriteChangeMapInfoNoResu_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteChangeMapInfoNoResu"
+    End If
+Resume Next
+    
 End Sub
                         
 ''
@@ -10857,6 +14733,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteChangeMapInfoLand(ByVal land As String)
+    
+    On Error GoTo WriteChangeMapInfoLand_Err
+    
 
     '***************************************************
     'Author: Pablo (ToxicWaste)
@@ -10871,6 +14750,15 @@ Public Sub WriteChangeMapInfoLand(ByVal land As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteChangeMapInfoLand_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteChangeMapInfoLand"
+    End If
+Resume Next
+    
 End Sub
                         
 ''
@@ -10880,6 +14768,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteChangeMapInfoZone(ByVal zone As String)
+    
+    On Error GoTo WriteChangeMapInfoZone_Err
+    
 
     '***************************************************
     'Author: Pablo (ToxicWaste)
@@ -10894,6 +14785,15 @@ Public Sub WriteChangeMapInfoZone(ByVal zone As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteChangeMapInfoZone_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteChangeMapInfoZone"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10903,6 +14803,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteChangeMapInfoStealNpc(ByVal forbid As Boolean)
+    
+    On Error GoTo WriteChangeMapInfoStealNpc_Err
+    
 
     '***************************************************
     'Author: ZaMa
@@ -10917,6 +14820,15 @@ Public Sub WriteChangeMapInfoStealNpc(ByVal forbid As Boolean)
 
     End With
 
+    
+    Exit Sub
+
+WriteChangeMapInfoStealNpc_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteChangeMapInfoStealNpc"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10930,9 +14842,21 @@ Public Sub WriteSaveChars()
     'Last Modification: 05/17/06
     'Writes the "SaveChars" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteSaveChars_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.SaveChars)
 
+    
+    Exit Sub
+
+WriteSaveChars_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteSaveChars"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10946,9 +14870,21 @@ Public Sub WriteCleanSOS()
     'Last Modification: 05/17/06
     'Writes the "CleanSOS" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteCleanSOS_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.CleanSOS)
 
+    
+    Exit Sub
+
+WriteCleanSOS_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteCleanSOS"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10962,9 +14898,21 @@ Public Sub WriteShowServerForm()
     'Last Modification: 05/17/06
     'Writes the "ShowServerForm" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteShowServerForm_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.ShowServerForm)
 
+    
+    Exit Sub
+
+WriteShowServerForm_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteShowServerForm"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10978,9 +14926,21 @@ Public Sub WriteShowDenouncesList()
     'Last Modification: 14/11/2010
     'Writes the "ShowDenouncesList" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteShowDenouncesList_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.ShowDenouncesList)
 
+    
+    Exit Sub
+
+WriteShowDenouncesList_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteShowDenouncesList"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -10994,9 +14954,21 @@ Public Sub WriteEnableDenounces()
     'Last Modification: 14/11/2010
     'Writes the "EnableDenounces" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteEnableDenounces_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.EnableDenounces)
 
+    
+    Exit Sub
+
+WriteEnableDenounces_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteEnableDenounces"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -11010,9 +14982,21 @@ Public Sub WriteNight()
     'Last Modification: 05/17/06
     'Writes the "Night" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteNight_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.night)
 
+    
+    Exit Sub
+
+WriteNight_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteNight"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -11026,9 +15010,21 @@ Public Sub WriteKickAllChars()
     'Last Modification: 05/17/06
     'Writes the "KickAllChars" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteKickAllChars_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.KickAllChars)
 
+    
+    Exit Sub
+
+WriteKickAllChars_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteKickAllChars"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -11042,9 +15038,21 @@ Public Sub WriteReloadNPCs()
     'Last Modification: 05/17/06
     'Writes the "ReloadNPCs" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteReloadNPCs_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.ReloadNPCs)
 
+    
+    Exit Sub
+
+WriteReloadNPCs_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteReloadNPCs"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -11058,9 +15066,21 @@ Public Sub WriteReloadServerIni()
     'Last Modification: 05/17/06
     'Writes the "ReloadServerIni" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteReloadServerIni_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.ReloadServerIni)
 
+    
+    Exit Sub
+
+WriteReloadServerIni_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteReloadServerIni"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -11074,9 +15094,21 @@ Public Sub WriteReloadSpells()
     'Last Modification: 05/17/06
     'Writes the "ReloadSpells" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteReloadSpells_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.ReloadSpells)
 
+    
+    Exit Sub
+
+WriteReloadSpells_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteReloadSpells"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -11090,9 +15122,21 @@ Public Sub WriteReloadObjects()
     'Last Modification: 05/17/06
     'Writes the "ReloadObjects" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteReloadObjects_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.ReloadObjects)
 
+    
+    Exit Sub
+
+WriteReloadObjects_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteReloadObjects"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -11106,9 +15150,21 @@ Public Sub WriteRestart()
     'Last Modification: 05/17/06
     'Writes the "Restart" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteRestart_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.Restart)
 
+    
+    Exit Sub
+
+WriteRestart_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteRestart"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -11122,9 +15178,21 @@ Public Sub WriteResetAutoUpdate()
     'Last Modification: 05/17/06
     'Writes the "ResetAutoUpdate" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteResetAutoUpdate_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.ResetAutoUpdate)
 
+    
+    Exit Sub
+
+WriteResetAutoUpdate_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteResetAutoUpdate"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -11136,6 +15204,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteChatColor(ByVal r As Byte, ByVal g As Byte, ByVal b As Byte)
+    
+    On Error GoTo WriteChatColor_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -11152,6 +15223,15 @@ Public Sub WriteChatColor(ByVal r As Byte, ByVal g As Byte, ByVal b As Byte)
 
     End With
 
+    
+    Exit Sub
+
+WriteChatColor_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteChatColor"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -11165,9 +15245,21 @@ Public Sub WriteIgnored()
     'Last Modification: 05/17/06
     'Writes the "Ignored" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteIgnored_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.Ignored)
 
+    
+    Exit Sub
+
+WriteIgnored_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteIgnored"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -11178,6 +15270,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteCheckSlot(ByVal UserName As String, ByVal slot As Byte)
+    
+    On Error GoTo WriteCheckSlot_Err
+    
 
     '***************************************************
     'Author: Pablo (ToxicWaste)
@@ -11192,6 +15287,15 @@ Public Sub WriteCheckSlot(ByVal UserName As String, ByVal slot As Byte)
 
     End With
 
+    
+    Exit Sub
+
+WriteCheckSlot_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteCheckSlot"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -11200,6 +15304,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WritePing()
+    
+    On Error GoTo WritePing_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -11217,6 +15324,15 @@ Public Sub WritePing()
     
     pingTime = GetTickCount
 
+    
+    Exit Sub
+
+WritePing_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WritePing"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -11230,8 +15346,20 @@ Public Sub WriteShareNpc()
     'Last Modification: 15/04/2010
     'Writes the "ShareNpc" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteShareNpc_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.ShareNpc)
 
+    
+    Exit Sub
+
+WriteShareNpc_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteShareNpc"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -11245,8 +15373,20 @@ Public Sub WriteStopSharingNpc()
     'Last Modification: 15/04/2010
     'Writes the "StopSharingNpc" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteStopSharingNpc_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.StopSharingNpc)
 
+    
+    Exit Sub
+
+WriteStopSharingNpc_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteStopSharingNpc"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -11260,6 +15400,9 @@ End Sub
 Public Sub WriteSetIniVar(ByRef sLlave As String, _
                           ByRef sClave As String, _
                           ByRef sValor As String)
+    
+    On Error GoTo WriteSetIniVar_Err
+    
 
     '***************************************************
     'Author: Brian Chaia (BrianPr)
@@ -11276,6 +15419,15 @@ Public Sub WriteSetIniVar(ByRef sLlave As String, _
 
     End With
 
+    
+    Exit Sub
+
+WriteSetIniVar_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteSetIniVar"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -11289,6 +15441,9 @@ End Sub
 Public Sub WriteCreatePretorianClan(ByVal Map As Integer, _
                                     ByVal X As Byte, _
                                     ByVal Y As Byte)
+    
+    On Error GoTo WriteCreatePretorianClan_Err
+    
 
     '***************************************************
     'Author: ZaMa
@@ -11304,6 +15459,15 @@ Public Sub WriteCreatePretorianClan(ByVal Map As Integer, _
 
     End With
 
+    
+    Exit Sub
+
+WriteCreatePretorianClan_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteCreatePretorianClan"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -11313,6 +15477,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteDeletePretorianClan(ByVal Map As Integer)
+    
+    On Error GoTo WriteDeletePretorianClan_Err
+    
 
     '***************************************************
     'Author: ZaMa
@@ -11326,6 +15493,15 @@ Public Sub WriteDeletePretorianClan(ByVal Map As Integer)
 
     End With
 
+    
+    Exit Sub
+
+WriteDeletePretorianClan_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteDeletePretorianClan"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -11339,6 +15515,9 @@ Public Sub FlushBuffer()
     'Last Modification: 05/17/06
     'Sends all data existing in the buffer
     '***************************************************
+    
+    On Error GoTo FlushBuffer_Err
+    
     Dim sndData As String
     
     With outgoingData
@@ -11351,6 +15530,15 @@ Public Sub FlushBuffer()
 
     End With
 
+    
+    Exit Sub
+
+FlushBuffer_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "FlushBuffer"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -11359,6 +15547,9 @@ End Sub
 ' @param    sdData  The data to be sent to the server.
 
 Private Sub SendData(ByRef sdData As String)
+    
+    On Error GoTo SendData_Err
+    
     
     'No enviamos nada si no estamos conectados
     #If UsarWrench = 1 Then
@@ -11384,6 +15575,15 @@ Private Sub SendData(ByRef sdData As String)
         Call frmMain.Winsock1.SendData(sdData)
     #End If
 
+    
+    Exit Sub
+
+SendData_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "SendData"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -11393,6 +15593,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteSetDialog(ByVal dialog As String)
+    
+    On Error GoTo WriteSetDialog_Err
+    
 
     '***************************************************
     'Author: Amraphen
@@ -11407,6 +15610,15 @@ Public Sub WriteSetDialog(ByVal dialog As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteSetDialog_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteSetDialog"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -11420,9 +15632,21 @@ Public Sub WriteImpersonate()
     'Last Modification: 20/11/2010
     'Writes the "Impersonate" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteImpersonate_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.Impersonate)
 
+    
+    Exit Sub
+
+WriteImpersonate_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteImpersonate"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -11436,9 +15660,21 @@ Public Sub WriteImitate()
     'Last Modification: 20/11/2010
     'Writes the "Imitate" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteImitate_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.Imitate)
 
+    
+    Exit Sub
+
+WriteImitate_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteImitate"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -11447,6 +15683,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteRecordAddObs(ByVal RecordIndex As Byte, ByVal Observation As String)
+    
+    On Error GoTo WriteRecordAddObs_Err
+    
 
     '***************************************************
     'Author: Amraphen
@@ -11462,6 +15701,15 @@ Public Sub WriteRecordAddObs(ByVal RecordIndex As Byte, ByVal Observation As Str
 
     End With
 
+    
+    Exit Sub
+
+WriteRecordAddObs_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteRecordAddObs"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -11470,6 +15718,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteRecordAdd(ByVal Nickname As String, ByVal Reason As String)
+    
+    On Error GoTo WriteRecordAdd_Err
+    
 
     '***************************************************
     'Author: Amraphen
@@ -11485,6 +15736,15 @@ Public Sub WriteRecordAdd(ByVal Nickname As String, ByVal Reason As String)
 
     End With
 
+    
+    Exit Sub
+
+WriteRecordAdd_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteRecordAdd"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -11493,6 +15753,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteRecordRemove(ByVal RecordIndex As Byte)
+    
+    On Error GoTo WriteRecordRemove_Err
+    
 
     '***************************************************
     'Author: Amraphen
@@ -11507,6 +15770,15 @@ Public Sub WriteRecordRemove(ByVal RecordIndex As Byte)
 
     End With
 
+    
+    Exit Sub
+
+WriteRecordRemove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteRecordRemove"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -11520,9 +15792,21 @@ Public Sub WriteRecordListRequest()
     'Last Modification: 29/11/2010
     'Writes the "RecordListRequest" message to the outgoing data buffer
     '***************************************************
+    
+    On Error GoTo WriteRecordListRequest_Err
+    
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
     Call outgoingData.WriteByte(eGMCommands.RecordListRequest)
 
+    
+    Exit Sub
+
+WriteRecordListRequest_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteRecordListRequest"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -11531,6 +15815,9 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteRecordDetailsRequest(ByVal RecordIndex As Byte)
+    
+    On Error GoTo WriteRecordDetailsRequest_Err
+    
 
     '***************************************************
     'Author: Amraphen
@@ -11545,6 +15832,15 @@ Public Sub WriteRecordDetailsRequest(ByVal RecordIndex As Byte)
 
     End With
 
+    
+    Exit Sub
+
+WriteRecordDetailsRequest_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteRecordDetailsRequest"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -11588,15 +15884,15 @@ Private Sub HandleRecordList()
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
@@ -11676,15 +15972,15 @@ Private Sub HandleRecordDetails()
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
@@ -11694,6 +15990,9 @@ End Sub
 Public Sub WriteMoveItem(ByVal originalSlot As Integer, _
                          ByVal newSlot As Integer, _
                          ByVal moveType As eMoveType)
+    
+    On Error GoTo WriteMoveItem_Err
+    
 
     '***************************************************
     'Author: Budi
@@ -11708,9 +16007,21 @@ Public Sub WriteMoveItem(ByVal originalSlot As Integer, _
 
     End With
 
+    
+    Exit Sub
+
+WriteMoveItem_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "WriteMoveItem"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub HandleDecirPalabrasMagicas()
+    
+    On Error GoTo HandleDecirPalabrasMagicas_Err
+    
 
     If incomingData.length < 2 Then
         Err.Raise incomingData.NotEnoughDataErrCode
@@ -11730,9 +16041,21 @@ Private Sub HandleDecirPalabrasMagicas()
     'Only add the chat if the character exists (a CharacterRemove may have been sent to the PC / NPC area before the buffer was flushed)
     If Char_Check(CharIndex) Then Call Dialogos.CreateDialog(Hechizos(Spell).PalabrasMagicas, CharIndex, RGB(200, 250, 150))
 
+    
+    Exit Sub
+
+HandleDecirPalabrasMagicas_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleDecirPalabrasMagicas"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub HandleAttackAnim()
+    
+    On Error GoTo HandleAttackAnim_Err
+    
 
     If incomingData.length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
@@ -11748,9 +16071,21 @@ Private Sub HandleAttackAnim()
     'Set the animation trigger on true
     charlist(CharIndex).attacking = True 'should be done in separated sub?
 
+    
+    Exit Sub
+
+HandleAttackAnim_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleAttackAnim"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub HandleFXtoMap()
+    
+    On Error GoTo HandleFXtoMap_Err
+    
 
     If incomingData.length < 8 Then
         Err.Raise incomingData.NotEnoughDataErrCode
@@ -11780,9 +16115,21 @@ Private Sub HandleFXtoMap()
 
     End With
 
+    
+    Exit Sub
+
+HandleFXtoMap_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleFXtoMap"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub HandleAccountLogged()
+    
+    On Error GoTo HandleAccountLogged_Err
+    
 
     If incomingData.length < 32 Then
         Err.Raise incomingData.NotEnoughDataErrCode
@@ -11823,4 +16170,13 @@ Private Sub HandleAccountLogged()
     
     frmPanelAccount.Show
 
+    
+    Exit Sub
+
+HandleAccountLogged_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Protocol" & "->" & "HandleAccountLogged"
+    End If
+Resume Next
+    
 End Sub

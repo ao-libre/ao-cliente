@@ -11,6 +11,9 @@ Public LeyendaFormateada() As String
 Public textura             As Integer
 
 Sub InitCartel(Ley As String, Grh As Integer)
+    
+    On Error GoTo InitCartel_Err
+    
 
     If Not Cartel Then
         Leyenda = Ley
@@ -35,9 +38,21 @@ Sub InitCartel(Ley As String, Grh As Integer)
 
     End If
 
+    
+    Exit Sub
+
+InitCartel_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Carteles" & "->" & "InitCartel"
+    End If
+Resume Next
+    
 End Sub
 
 Private Function DarFormato(s As String, i As Integer, k As Integer, anti As Integer)
+    
+    On Error GoTo DarFormato_Err
+    
 
     If anti + i <= Len(s) + 1 Then
         If ((i >= MAXLONG) And mid$(s, anti + i, 1) = " ") Or (anti + i = Len(s)) Then
@@ -54,9 +69,21 @@ Private Function DarFormato(s As String, i As Integer, k As Integer, anti As Int
 
     End If
 
+    
+    Exit Function
+
+DarFormato_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Carteles" & "->" & "DarFormato"
+    End If
+Resume Next
+    
 End Function
 
 Sub DibujarCartel()
+    
+    On Error GoTo DibujarCartel_Err
+    
     Dim X As Integer, Y As Integer
 
     If Not Cartel Then Exit Sub
@@ -73,5 +100,14 @@ Sub DibujarCartel()
         desp = desp + (frmMain.Font.Size) + 5
     Next
 
+    
+    Exit Sub
+
+DibujarCartel_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Carteles" & "->" & "DibujarCartel"
+    End If
+Resume Next
+    
 End Sub
 

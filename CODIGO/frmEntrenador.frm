@@ -114,6 +114,9 @@ Public LastButtonPressed As clsGraphicalButton
 
 Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
+    
+    On Error GoTo Form_Load_Err
+    
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
         
@@ -121,9 +124,21 @@ Private Sub Form_Load()
     
     Call LoadButtons
     
+    
+    Exit Sub
+
+Form_Load_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmEntrenador" & "->" & "Form_Load"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadButtons()
+    
+    On Error GoTo LoadButtons_Err
+    
     Dim GrhPath As String
     
     GrhPath = DirGraficos
@@ -137,28 +152,85 @@ Private Sub LoadButtons()
 
     Call cBotonSalir.Initialize(imgSalir, GrhPath & "BotonSalirEntrenador.jpg", GrhPath & "BotonSalirRolloverEntrenador.jpg", GrhPath & "BotonSalirClickEntrenador.jpg", Me)
 
+    
+    Exit Sub
+
+LoadButtons_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmEntrenador" & "->" & "LoadButtons"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Form_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+Form_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmEntrenador" & "->" & "Form_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgLuchar_Click()
+    
+    On Error GoTo imgLuchar_Click_Err
+    
     Call WriteTrain(lstCriaturas.ListIndex + 1)
     Unload Me
 
+    
+    Exit Sub
+
+imgLuchar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmEntrenador" & "->" & "imgLuchar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgSalir_Click()
+    
+    On Error GoTo imgSalir_Click_Err
+    
     Unload Me
 
+    
+    Exit Sub
+
+imgSalir_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmEntrenador" & "->" & "imgSalir_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub lstCriaturas_MouseMove(Button As Integer, _
                                    Shift As Integer, _
                                    X As Single, _
                                    Y As Single)
+    
+    On Error GoTo lstCriaturas_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+lstCriaturas_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmEntrenador" & "->" & "lstCriaturas_MouseMove"
+    End If
+Resume Next
+    
 End Sub

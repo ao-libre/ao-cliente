@@ -501,6 +501,9 @@ Private Armas                 As Boolean
 Private clsFormulario         As clsFormMovementManager
 
 Private Sub CargarImagenes()
+    
+    On Error GoTo CargarImagenes_Err
+    
     Dim ImgPath As String
     Dim Index   As Integer
     
@@ -551,9 +554,21 @@ Private Sub CargarImagenes()
     
     picCheckBox.MouseIcon = picMouseIcon
 
+    
+    Exit Sub
+
+CargarImagenes_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmHerrero" & "->" & "CargarImagenes"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub ConstruirItem(ByVal Index As Integer)
+    
+    On Error GoTo ConstruirItem_Err
+    
     Dim ItemIndex      As Integer
     Dim CantItemsCiclo As Integer
     
@@ -599,9 +614,21 @@ Private Sub ConstruirItem(ByVal Index As Integer)
     
     Unload Me
 
+    
+    Exit Sub
+
+ConstruirItem_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmHerrero" & "->" & "ConstruirItem"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_Load()
+    
+    On Error GoTo Form_Load_Err
+    
     Dim MaxConstItem As Integer
     Dim i            As Integer
     
@@ -633,10 +660,22 @@ Private Sub Form_Load()
     Armas = True
     UltimaPestania = 0
 
+    
+    Exit Sub
+
+Form_Load_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmHerrero" & "->" & "Form_Load"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub HideExtraControls(ByVal NumItems As Integer, _
                              Optional ByVal Upgrading As Boolean = False)
+    
+    On Error GoTo HideExtraControls_Err
+    
     Dim i As Integer
     
     picLingotes0.Visible = (NumItems >= 1)
@@ -678,6 +717,15 @@ Public Sub HideExtraControls(ByVal NumItems As Integer, _
 
     End If
 
+    
+    Exit Sub
+
+HideExtraControls_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmHerrero" & "->" & "HideExtraControls"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub RenderItem(ByRef Pic As PictureBox, ByVal GrhIndex As Long)
@@ -749,6 +797,9 @@ Public Sub RenderList(ByVal Inicio As Integer, ByVal Armas As Boolean)
 End Sub
 
 Public Sub RenderUpgradeList(ByVal Inicio As Integer)
+    
+    On Error GoTo RenderUpgradeList_Err
+    
     Dim i        As Long
     Dim NumItems As Integer
 
@@ -778,14 +829,38 @@ Public Sub RenderUpgradeList(ByVal Inicio As Integer)
 
     Next i
 
+    
+    Exit Sub
+
+RenderUpgradeList_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmHerrero" & "->" & "RenderUpgradeList"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Form_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+Form_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmHerrero" & "->" & "Form_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
+    
+    On Error GoTo Form_Unload_Err
+    
     Dim i As Long
     
     For i = 1 To MAX_LIST_ITEMS
@@ -794,14 +869,38 @@ Private Sub Form_Unload(Cancel As Integer)
     
     MirandoHerreria = False
 
+    
+    Exit Sub
+
+Form_Unload_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmHerrero" & "->" & "Form_Unload"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgCerrar_Click()
+    
+    On Error GoTo imgCerrar_Click_Err
+    
     Unload Me
 
+    
+    Exit Sub
+
+imgCerrar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmHerrero" & "->" & "imgCerrar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub picCheckBox_Click()
+    
+    On Error GoTo picCheckBox_Click_Err
+    
     
     UsarMacro = Not UsarMacro
 
@@ -815,81 +914,237 @@ Private Sub picCheckBox_Click()
     cboItemsCiclo.Visible = UsarMacro
     imgCantidadCiclo.Visible = UsarMacro
 
+    
+    Exit Sub
+
+picCheckBox_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmHerrero" & "->" & "picCheckBox_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub picConstruir0_Click()
+    
+    On Error GoTo picConstruir0_Click_Err
+    
     Call ConstruirItem(1)
 
+    
+    Exit Sub
+
+picConstruir0_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmHerrero" & "->" & "picConstruir0_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub picConstruir1_Click()
+    
+    On Error GoTo picConstruir1_Click_Err
+    
     Call ConstruirItem(2)
 
+    
+    Exit Sub
+
+picConstruir1_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmHerrero" & "->" & "picConstruir1_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub picConstruir2_Click()
+    
+    On Error GoTo picConstruir2_Click_Err
+    
     Call ConstruirItem(3)
 
+    
+    Exit Sub
+
+picConstruir2_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmHerrero" & "->" & "picConstruir2_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub picConstruir3_Click()
+    
+    On Error GoTo picConstruir3_Click_Err
+    
     Call ConstruirItem(4)
 
+    
+    Exit Sub
+
+picConstruir3_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmHerrero" & "->" & "picConstruir3_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub picLingotes0_MouseMove(Button As Integer, _
                                    Shift As Integer, _
                                    X As Single, _
                                    Y As Single)
+    
+    On Error GoTo picLingotes0_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+picLingotes0_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmHerrero" & "->" & "picLingotes0_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub picLingotes1_MouseMove(Button As Integer, _
                                    Shift As Integer, _
                                    X As Single, _
                                    Y As Single)
+    
+    On Error GoTo picLingotes1_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+picLingotes1_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmHerrero" & "->" & "picLingotes1_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub picLingotes2_MouseMove(Button As Integer, _
                                    Shift As Integer, _
                                    X As Single, _
                                    Y As Single)
+    
+    On Error GoTo picLingotes2_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+picLingotes2_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmHerrero" & "->" & "picLingotes2_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub picLingotes3_MouseMove(Button As Integer, _
                                    Shift As Integer, _
                                    X As Single, _
                                    Y As Single)
+    
+    On Error GoTo picLingotes3_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+picLingotes3_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmHerrero" & "->" & "picLingotes3_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub picMejorar0_Click()
+    
+    On Error GoTo picMejorar0_Click_Err
+    
     Call ConstruirItem(1)
 
+    
+    Exit Sub
+
+picMejorar0_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmHerrero" & "->" & "picMejorar0_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub picMejorar1_Click()
+    
+    On Error GoTo picMejorar1_Click_Err
+    
     Call ConstruirItem(2)
 
+    
+    Exit Sub
+
+picMejorar1_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmHerrero" & "->" & "picMejorar1_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub picMejorar2_Click()
+    
+    On Error GoTo picMejorar2_Click_Err
+    
     Call ConstruirItem(3)
 
+    
+    Exit Sub
+
+picMejorar2_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmHerrero" & "->" & "picMejorar2_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub picMejorar3_Click()
+    
+    On Error GoTo picMejorar3_Click_Err
+    
     Call ConstruirItem(4)
 
+    
+    Exit Sub
+
+picMejorar3_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmHerrero" & "->" & "picMejorar3_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub picPestania_Click(Index As Integer)
+    
+    On Error GoTo picPestania_Click_Err
+    
     Dim i        As Integer
     Dim NumItems As Integer
     
@@ -940,9 +1195,21 @@ Private Sub picPestania_Click(Index As Integer)
 
     UltimaPestania = Index
 
+    
+    Exit Sub
+
+picPestania_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmHerrero" & "->" & "picPestania_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Scroll_Change()
+    
+    On Error GoTo Scroll_Change_Err
+    
     Dim i As Long
     
     If Cargando Then Exit Sub
@@ -963,6 +1230,15 @@ Private Sub Scroll_Change()
 
     End Select
 
+    
+    Exit Sub
+
+Scroll_Change_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmHerrero" & "->" & "Scroll_Change"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub txtCantItems_Change()
@@ -988,6 +1264,9 @@ ErrHandler:
 End Sub
 
 Private Sub txtCantItems_KeyPress(KeyAscii As Integer)
+    
+    On Error GoTo txtCantItems_KeyPress_Err
+    
 
     If (KeyAscii <> 8) Then
         If (KeyAscii < 48 Or KeyAscii > 57) Then
@@ -997,5 +1276,14 @@ Private Sub txtCantItems_KeyPress(KeyAscii As Integer)
 
     End If
 
+    
+    Exit Sub
+
+txtCantItems_KeyPress_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmHerrero" & "->" & "txtCantItems_KeyPress"
+    End If
+Resume Next
+    
 End Sub
 

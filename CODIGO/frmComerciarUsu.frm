@@ -278,20 +278,47 @@ Private Const GOLD_OFFER_SLOT As Byte = INV_OFFER_SLOTS + 1
 Private sCommerceChat         As String
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Form_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+Form_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciarUsu" & "->" & "Form_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgAceptar_Click()
+    
+    On Error GoTo imgAceptar_Click_Err
+    
 
     If Not cBotonAceptar.IsEnabled Then Exit Sub  ' Deshabilitado
     
     Call WriteUserCommerceOk
     HabilitarAceptarRechazar False
     
+    
+    Exit Sub
+
+imgAceptar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciarUsu" & "->" & "imgAceptar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgAgregar_Click()
+    
+    On Error GoTo imgAgregar_Click_Err
+    
    
     ' No tiene seleccionado ningun item
     If InvComUsu.SelectedItem = 0 Then
@@ -369,14 +396,38 @@ Private Sub imgAgregar_Click()
 
     End With
 
+    
+    Exit Sub
+
+imgAgregar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciarUsu" & "->" & "imgAgregar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgCancelar_Click()
+    
+    On Error GoTo imgCancelar_Click_Err
+    
     Call WriteUserCommerceEnd
 
+    
+    Exit Sub
+
+imgCancelar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciarUsu" & "->" & "imgCancelar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgConfirmar_Click()
+    
+    On Error GoTo imgConfirmar_Click_Err
+    
 
     If Not cBotonConfirmar.IsEnabled Then Exit Sub  ' Deshabilitado
     
@@ -388,9 +439,21 @@ Private Sub imgConfirmar_Click()
     Call PrintCommerceMsg("¡Has confirmado tu oferta! Ya no puedes cambiarla.", FontTypeNames.FONTTYPE_CONSE)
     Call WriteUserCommerceConfirm
 
+    
+    Exit Sub
+
+imgConfirmar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciarUsu" & "->" & "imgConfirmar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgQuitar_Click()
+    
+    On Error GoTo imgQuitar_Click_Err
+    
     Dim Amount     As Long
     Dim InvComSlot As Byte
 
@@ -460,18 +523,42 @@ Private Sub imgQuitar_Click()
     ' Si quito todos los items de la oferta, no puede confirmarla
     If Not HasAnyItem(InvOfferComUsu(0)) And Not HasAnyItem(InvOroComUsu(1)) Then HabilitarConfirmar (False)
 
+    
+    Exit Sub
+
+imgQuitar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciarUsu" & "->" & "imgQuitar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgRechazar_Click()
+    
+    On Error GoTo imgRechazar_Click_Err
+    
 
     If Not cBotonRechazar.IsEnabled Then Exit Sub  ' Deshabilitado
     
     Call WriteUserCommerceReject
 
+    
+    Exit Sub
+
+imgRechazar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciarUsu" & "->" & "imgRechazar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
+    
+    On Error GoTo Form_Load_Err
+    
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
 
@@ -484,9 +571,21 @@ Private Sub Form_Load()
     Call PrintCommerceMsg("> Cuando ambos acepten la oferta del otro, se realizará el intercambio.", FontTypeNames.FONTTYPE_GUILDMSG)
     Call PrintCommerceMsg("> Si se intercambian más ítems de los que pueden entrar en tu inventario, es probable que caigan al suelo, así que presta mucha atención a esto.", FontTypeNames.FONTTYPE_GUILDMSG)
     
+    
+    Exit Sub
+
+Form_Load_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciarUsu" & "->" & "Form_Load"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadButtons()
+    
+    On Error GoTo LoadButtons_Err
+    
 
     Dim GrhPath As String
     GrhPath = DirGraficos
@@ -506,72 +605,204 @@ Private Sub LoadButtons()
                                         
     Call cBotonCancelar.Initialize(imgCancelar, GrhPath & "BotonCancelarComUsu.jpg", GrhPath & "BotonCancelarRolloverComUsu.jpg", GrhPath & "BotonCancelarClickComUsu.jpg", Me)
     
+    
+    Exit Sub
+
+LoadButtons_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciarUsu" & "->" & "LoadButtons"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_LostFocus()
+    
+    On Error GoTo Form_LostFocus_Err
+    
     Me.SetFocus
 
+    
+    Exit Sub
+
+Form_LostFocus_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciarUsu" & "->" & "Form_LostFocus"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub SubtxtAgregar_Change()
+    
+    On Error GoTo SubtxtAgregar_Change_Err
+    
 
     If Val(txtAgregar.Text) < 1 Then txtAgregar.Text = "1"
 
     If Val(txtAgregar.Text) > 2147483647 Then txtAgregar.Text = "2147483647"
 
+    
+    Exit Sub
+
+SubtxtAgregar_Change_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciarUsu" & "->" & "SubtxtAgregar_Change"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub picInvComercio_Click()
+    
+    On Error GoTo picInvComercio_Click_Err
+    
     Call InvOroComUsu(0).DeselectItem
 
+    
+    Exit Sub
+
+picInvComercio_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciarUsu" & "->" & "picInvComercio_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub picInvComercio_MouseMove(Button As Integer, _
                                      Shift As Integer, _
                                      X As Single, _
                                      Y As Single)
+    
+    On Error GoTo picInvComercio_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+picInvComercio_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciarUsu" & "->" & "picInvComercio_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub picInvOfertaOtro_MouseMove(Button As Integer, _
                                        Shift As Integer, _
                                        X As Single, _
                                        Y As Single)
+    
+    On Error GoTo picInvOfertaOtro_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+picInvOfertaOtro_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciarUsu" & "->" & "picInvOfertaOtro_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub picInvOfertaProp_Click()
+    
+    On Error GoTo picInvOfertaProp_Click_Err
+    
     InvOroComUsu(1).DeselectItem
 
+    
+    Exit Sub
+
+picInvOfertaProp_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciarUsu" & "->" & "picInvOfertaProp_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub picInvOfertaProp_MouseMove(Button As Integer, _
                                        Shift As Integer, _
                                        X As Single, _
                                        Y As Single)
+    
+    On Error GoTo picInvOfertaProp_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+picInvOfertaProp_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciarUsu" & "->" & "picInvOfertaProp_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub picInvOroOfertaOtro_Click()
     ' No se puede seleccionar el oro que oferta el otro :P
+    
+    On Error GoTo picInvOroOfertaOtro_Click_Err
+    
     InvOroComUsu(2).DeselectItem
 
+    
+    Exit Sub
+
+picInvOroOfertaOtro_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciarUsu" & "->" & "picInvOroOfertaOtro_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub picInvOroOfertaProp_Click()
+    
+    On Error GoTo picInvOroOfertaProp_Click_Err
+    
     InvOfferComUsu(0).SelectGold
 
+    
+    Exit Sub
+
+picInvOroOfertaProp_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciarUsu" & "->" & "picInvOroOfertaProp_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub picInvOroProp_Click()
+    
+    On Error GoTo picInvOroProp_Click_Err
+    
     InvComUsu.SelectGold
 
+    
+    Exit Sub
+
+picInvOroProp_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciarUsu" & "->" & "picInvOroProp_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub SendTxt_Change()
+    
+    On Error GoTo SendTxt_Change_Err
+    
 
     '**************************************************************
     'Author: Unknown
@@ -606,15 +837,39 @@ Private Sub SendTxt_Change()
 
     End If
 
+    
+    Exit Sub
+
+SendTxt_Change_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciarUsu" & "->" & "SendTxt_Change"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub SendTxt_KeyPress(KeyAscii As Integer)
+    
+    On Error GoTo SendTxt_KeyPress_Err
+    
 
     If Not (KeyAscii = vbKeyBack) And Not (KeyAscii >= vbKeySpace And KeyAscii <= 250) Then KeyAscii = 0
 
+    
+    Exit Sub
+
+SendTxt_KeyPress_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciarUsu" & "->" & "SendTxt_KeyPress"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo SendTxt_KeyUp_Err
+    
 
     'Send text
     If KeyCode = vbKeyReturn Then
@@ -626,6 +881,15 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
 
     End If
 
+    
+    Exit Sub
+
+SendTxt_KeyUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciarUsu" & "->" & "SendTxt_KeyUp"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub txtAgregar_Change()
@@ -634,6 +898,9 @@ Private Sub txtAgregar_Change()
     'Last Modify Date: 03/10/2009
     '**************************************************************
     'Make sure only valid chars are inserted (with Shift + Insert they can paste illegal chars)
+    
+    On Error GoTo txtAgregar_Change_Err
+    
     Dim i         As Long
     Dim tempstr   As String
     Dim CharAscii As Integer
@@ -655,18 +922,42 @@ Private Sub txtAgregar_Change()
 
     End If
 
+    
+    Exit Sub
+
+txtAgregar_Change_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciarUsu" & "->" & "txtAgregar_Change"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub txtAgregar_KeyDown(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo txtAgregar_KeyDown_Err
+    
 
     If Not ((KeyCode >= 48 And KeyCode <= 57) Or KeyCode = vbKeyBack Or KeyCode = vbKeyDelete Or (KeyCode >= 37 And KeyCode <= 40)) Then
         KeyCode = 0
 
     End If
 
+    
+    Exit Sub
+
+txtAgregar_KeyDown_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciarUsu" & "->" & "txtAgregar_KeyDown"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub txtAgregar_KeyPress(KeyAscii As Integer)
+    
+    On Error GoTo txtAgregar_KeyPress_Err
+    
 
     If Not ((KeyAscii >= 48 And KeyAscii <= 57) Or KeyAscii = vbKeyBack Or KeyAscii = vbKeyDelete Or (KeyAscii >= 37 And KeyAscii <= 40)) Then
         'txtCant = KeyCode
@@ -674,6 +965,15 @@ Private Sub txtAgregar_KeyPress(KeyAscii As Integer)
 
     End If
 
+    
+    Exit Sub
+
+txtAgregar_KeyPress_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciarUsu" & "->" & "txtAgregar_KeyPress"
+    End If
+Resume Next
+    
 End Sub
 
 Private Function CheckAvailableSlot(ByVal InvSlot As Byte, ByVal Amount As Long) As Byte
@@ -720,6 +1020,9 @@ Err:
 End Function
 
 Public Sub UpdateInvCom(ByVal ObjIndex As Integer, ByVal Amount As Long)
+    
+    On Error GoTo UpdateInvCom_Err
+    
     Dim slot            As Byte
     Dim RemainingAmount As Long
     Dim DifAmount       As Long
@@ -747,18 +1050,42 @@ Public Sub UpdateInvCom(ByVal ObjIndex As Integer, ByVal Amount As Long)
 
     Next slot
 
+    
+    Exit Sub
+
+UpdateInvCom_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciarUsu" & "->" & "UpdateInvCom"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub PrintCommerceMsg(ByRef msg As String, ByVal FontIndex As Integer)
+    
+    On Error GoTo PrintCommerceMsg_Err
+    
     
     With FontTypes(FontIndex)
         Call AddtoRichTextBox(frmComerciarUsu.CommerceConsole, msg, .Red, .Green, .Blue, .bold, .italic)
 
     End With
     
+    
+    Exit Sub
+
+PrintCommerceMsg_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciarUsu" & "->" & "PrintCommerceMsg"
+    End If
+Resume Next
+    
 End Sub
 
 Public Function HasAnyItem(ByRef Inventory As clsGrapchicalInventory) As Boolean
+    
+    On Error GoTo HasAnyItem_Err
+    
 
     Dim slot As Long
     
@@ -767,15 +1094,48 @@ Public Function HasAnyItem(ByRef Inventory As clsGrapchicalInventory) As Boolean
         If Inventory.Amount(slot) > 0 Then HasAnyItem = True: Exit Function
     Next slot
     
+    
+    Exit Function
+
+HasAnyItem_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciarUsu" & "->" & "HasAnyItem"
+    End If
+Resume Next
+    
 End Function
 
 Public Sub HabilitarConfirmar(ByVal Habilitar As Boolean)
+    
+    On Error GoTo HabilitarConfirmar_Err
+    
     Call cBotonConfirmar.EnableButton(Habilitar)
 
+    
+    Exit Sub
+
+HabilitarConfirmar_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciarUsu" & "->" & "HabilitarConfirmar"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub HabilitarAceptarRechazar(ByVal Habilitar As Boolean)
+    
+    On Error GoTo HabilitarAceptarRechazar_Err
+    
     Call cBotonAceptar.EnableButton(Habilitar)
     Call cBotonRechazar.EnableButton(Habilitar)
 
+    
+    Exit Sub
+
+HabilitarAceptarRechazar_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciarUsu" & "->" & "HabilitarAceptarRechazar"
+    End If
+Resume Next
+    
 End Sub

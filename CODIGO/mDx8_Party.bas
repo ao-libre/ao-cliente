@@ -24,6 +24,9 @@ Public Sub Reset_Party()
     'Last Modification: 27/07/10
     'Reset all of Party Members
     '***************************************************
+    
+    On Error GoTo Reset_Party_Err
+    
     Dim i As Byte
 
     For i = 1 To 5
@@ -33,6 +36,15 @@ Public Sub Reset_Party()
         PartyMembers(i).Name = vbNullString
     Next i
 
+    
+    Exit Sub
+
+Reset_Party_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Party" & "->" & "Reset_Party"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub Draw_Party_Members()
@@ -41,6 +53,9 @@ Public Sub Draw_Party_Members()
     'Last Modification: 26/05/10
     'Render Party Members
     '***************************************************
+    
+    On Error GoTo Draw_Party_Members_Err
+    
     Dim i As Byte, Count As Byte
     Count = 0
 
@@ -63,6 +78,15 @@ Public Sub Draw_Party_Members()
         'Fonts_Render_String "Miembros de Party", 405, 5, D3DColorARGB(100, 255, 128, 0), 3
     End If
 
+    
+    Exit Sub
+
+Draw_Party_Members_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Party" & "->" & "Draw_Party_Members"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub Set_PartyMember(ByVal Member As Byte, _
@@ -70,6 +94,9 @@ Public Sub Set_PartyMember(ByVal Member As Byte, _
                            ExpParty As Long, _
                            Lvl As Byte, _
                            Head As Integer)
+    
+    On Error GoTo Set_PartyMember_Err
+    
 
     '***************************************************
     'Author: Ezequiel Juárez (Standelf)
@@ -86,9 +113,21 @@ Public Sub Set_PartyMember(ByVal Member As Byte, _
 
     End With
 
+    
+    Exit Sub
+
+Set_PartyMember_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Party" & "->" & "Set_PartyMember"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub Kick_PartyMember(ByVal Member As Byte)
+    
+    On Error GoTo Kick_PartyMember_Err
+    
 
     '***************************************************
     'Author: Ezequiel Juárez (Standelf)
@@ -105,5 +144,14 @@ Public Sub Kick_PartyMember(ByVal Member As Byte)
 
     End With
 
+    
+    Exit Sub
+
+Kick_PartyMember_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Party" & "->" & "Kick_PartyMember"
+    End If
+Resume Next
+    
 End Sub
 

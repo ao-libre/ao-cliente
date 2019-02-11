@@ -399,6 +399,9 @@ Public frmType As CharInfoFrmType
 
 Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
+    
+    On Error GoTo Form_Load_Err
+    
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
@@ -406,9 +409,21 @@ Private Sub Form_Load()
     
     Call LoadButtons
     
+    
+    Exit Sub
+
+Form_Load_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCharInfo" & "->" & "Form_Load"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadButtons()
+    
+    On Error GoTo LoadButtons_Err
+    
     Dim GrhPath As String
     
     GrhPath = DirGraficos
@@ -431,51 +446,144 @@ Private Sub LoadButtons()
                                     
     Call cBotonAceptar.Initialize(imgAceptar, GrhPath & "BotonAceptarInfoChar.jpg", GrhPath & "BotonAceptarRolloverInfoChar.jpg", GrhPath & "BotonAceptarClickInfoChar.jpg", Me)
 
+    
+    Exit Sub
+
+LoadButtons_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCharInfo" & "->" & "LoadButtons"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Form_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+Form_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCharInfo" & "->" & "Form_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgAceptar_Click()
+    
+    On Error GoTo imgAceptar_Click_Err
+    
     Call WriteGuildAcceptNewMember(Nombre)
     Unload frmGuildLeader
     Call WriteRequestGuildLeaderInfo
     Unload Me
 
+    
+    Exit Sub
+
+imgAceptar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCharInfo" & "->" & "imgAceptar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgCerrar_Click()
+    
+    On Error GoTo imgCerrar_Click_Err
+    
     Unload Me
 
+    
+    Exit Sub
+
+imgCerrar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCharInfo" & "->" & "imgCerrar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgEchar_Click()
+    
+    On Error GoTo imgEchar_Click_Err
+    
     Call WriteGuildKickMember(Nombre)
     Unload frmGuildLeader
     Call WriteRequestGuildLeaderInfo
     Unload Me
 
+    
+    Exit Sub
+
+imgEchar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCharInfo" & "->" & "imgEchar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgPeticion_Click()
+    
+    On Error GoTo imgPeticion_Click_Err
+    
     Call WriteGuildRequestJoinerInfo(Nombre)
 
+    
+    Exit Sub
+
+imgPeticion_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCharInfo" & "->" & "imgPeticion_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgRechazar_Click()
+    
+    On Error GoTo imgRechazar_Click_Err
+    
     frmCommet.T = RECHAZOPJ
     frmCommet.Nombre = Nombre.Caption
     frmCommet.Show vbModeless, frmCharInfo
 
+    
+    Exit Sub
+
+imgRechazar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCharInfo" & "->" & "imgRechazar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub txtMiembro_MouseMove(Button As Integer, _
                                  Shift As Integer, _
                                  X As Single, _
                                  Y As Single)
+    
+    On Error GoTo txtMiembro_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+txtMiembro_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCharInfo" & "->" & "txtMiembro_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 

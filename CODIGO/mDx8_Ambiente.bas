@@ -37,6 +37,9 @@ End Type
 Public CurMapAmbient As MapAmbient
     
 Public Sub Apply_OwnAmbient()
+    
+    On Error GoTo Apply_OwnAmbient_Err
+    
 
     If CurMapAmbient.UseDayAmbient = False Then
         Estado_Actual = CurMapAmbient.OwnAmbientLight
@@ -56,9 +59,21 @@ Public Sub Apply_OwnAmbient()
             
     Call LightRenderAll
 
+    
+    Exit Sub
+
+Apply_OwnAmbient_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Ambiente" & "->" & "Apply_OwnAmbient"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub Init_Ambient(ByVal Map As Integer)
+    
+    On Error GoTo Init_Ambient_Err
+    
 
     '***************************************************
     'Author: Standelf
@@ -133,6 +148,15 @@ Public Sub Init_Ambient(ByVal Map As Integer)
             
     End With
 
+    
+    Exit Sub
+
+Init_Ambient_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Ambiente" & "->" & "Init_Ambient"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub Save_Ambient(ByVal Map As Integer)
@@ -140,6 +164,9 @@ Public Sub Save_Ambient(ByVal Map As Integer)
     'Author: Standelf
     'Last Modification: 15/10/10
     '***************************************************
+    
+    On Error GoTo Save_Ambient_Err
+    
     Debug.Print CurMapAmbient.UseDayAmbient
     
     Dim File
@@ -148,5 +175,14 @@ Public Sub Save_Ambient(ByVal Map As Integer)
     Put File, , CurMapAmbient
     Close #File
 
+    
+    Exit Sub
+
+Save_Ambient_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Ambiente" & "->" & "Save_Ambient"
+    End If
+Resume Next
+    
 End Sub
 

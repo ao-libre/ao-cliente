@@ -59,6 +59,9 @@ Private Function CreateNamedMutex(ByRef mutexName As String) As Boolean
     'Last Modification: 01/04/07
     'Last Modified by: Juan Martín Sotuyo Dodero (Maraxus) - Changed Security Atributes to make it work in all OS
     '***************************************************
+    
+    On Error GoTo CreateNamedMutex_Err
+    
     Dim sa As SECURITY_ATTRIBUTES
     
     With sa
@@ -72,12 +75,24 @@ Private Function CreateNamedMutex(ByRef mutexName As String) As Boolean
     
     CreateNamedMutex = Not (Err.LastDllError = ERROR_ALREADY_EXISTS) 'check if the mutex already existed
 
+    
+    Exit Function
+
+CreateNamedMutex_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "PrevInstance" & "->" & "CreateNamedMutex"
+    End If
+Resume Next
+    
 End Function
 
 ''
 ' Checks if there's another instance of the app running, returns True if there is or False otherwise.
 
 Public Function FindPreviousInstance() As Boolean
+    
+    On Error GoTo FindPreviousInstance_Err
+    
 
     '***************************************************
     'Author: Fredy Horacio Treboux (liquid)
@@ -94,6 +109,15 @@ Public Function FindPreviousInstance() As Boolean
 
     End If
 
+    
+    Exit Function
+
+FindPreviousInstance_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "PrevInstance" & "->" & "FindPreviousInstance"
+    End If
+Resume Next
+    
 End Function
 
 ''
@@ -105,7 +129,19 @@ Public Sub ReleaseInstance()
     'Last Modification: 01/04/07
     '
     '***************************************************
+    
+    On Error GoTo ReleaseInstance_Err
+    
     Call ReleaseMutex(mutexHID)
     Call CloseHandle(mutexHID)
 
+    
+    Exit Sub
+
+ReleaseInstance_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "PrevInstance" & "->" & "ReleaseInstance"
+    End If
+Resume Next
+    
 End Sub

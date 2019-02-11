@@ -115,6 +115,9 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
     'Last modified: 24/07/08
     '
     '*************************************************
+    
+    On Error GoTo Form_KeyDown_Err
+    
 
     Select Case KeyCode
 
@@ -125,6 +128,15 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
             Unload Me
 
     End Select
+    
+    
+    Exit Sub
+
+Form_KeyDown_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMapa" & "->" & "Form_KeyDown"
+    End If
+Resume Next
     
 End Sub
 
@@ -137,6 +149,9 @@ Private Sub ToggleImgMaps()
     'Last modified: 24/07/08
     '
     '*************************************************
+    
+    On Error GoTo ToggleImgMaps_Err
+    
 
     imgToogleMap(CurrentMap).Visible = False
     
@@ -152,6 +167,15 @@ Private Sub ToggleImgMaps()
     imgToogleMap(CurrentMap).Visible = True
     Me.Picture = picMaps(CurrentMap)
 
+    
+    Exit Sub
+
+ToggleImgMaps_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMapa" & "->" & "ToggleImgMaps"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -164,7 +188,7 @@ Private Sub Form_Load()
     '
     '*************************************************
 
-    On Error GoTo error
+    On Error GoTo Error
     
     ' Handles Form movement (drag and drop).
     Set clsFormulario = New clsFormMovementManager
@@ -183,18 +207,42 @@ Private Sub Form_Load()
     imgToogleMap(1).MouseIcon = picMouseIcon
     
     Exit Sub
-error:
+Error:
     MsgBox Err.Description, vbInformation, "Error: " & Err.number
     Unload Me
 
 End Sub
 
 Private Sub imgCerrar_Click()
+    
+    On Error GoTo imgCerrar_Click_Err
+    
     Unload Me
 
+    
+    Exit Sub
+
+imgCerrar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMapa" & "->" & "imgCerrar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgToogleMap_Click(Index As Integer)
+    
+    On Error GoTo imgToogleMap_Click_Err
+    
     ToggleImgMaps
 
+    
+    Exit Sub
+
+imgToogleMap_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMapa" & "->" & "imgToogleMap_Click"
+    End If
+Resume Next
+    
 End Sub

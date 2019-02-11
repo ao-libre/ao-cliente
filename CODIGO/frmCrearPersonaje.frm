@@ -1295,6 +1295,9 @@ Private currentGrh As Long
 Private Dir        As E_Heading
 
 Private Sub Form_Load()
+    
+    On Error GoTo Form_Load_Err
+    
     Me.Picture = LoadPicture(DirGraficos & "VentanaCrearPersonaje.jpg")
     
     Cargando = True
@@ -1320,9 +1323,21 @@ Private Sub Form_Load()
     UserEmail = vbNullString
     UserHead = 0
 
+    
+    Exit Sub
+
+Form_Load_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "Form_Load"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub CargarEspecialidades()
+    
+    On Error GoTo CargarEspecialidades_Err
+    
 
     ReDim vEspecialidades(1 To NroClases)
     
@@ -1334,9 +1349,21 @@ Private Sub CargarEspecialidades()
     vEspecialidades(eClass.Pirat) = "Navegar"
     vEspecialidades(eClass.Worker) = "Extracción y Construcción"
 
+    
+    Exit Sub
+
+CargarEspecialidades_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "CargarEspecialidades"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub IniciarGraficos()
+    
+    On Error GoTo IniciarGraficos_Err
+    
 
     Dim GrhPath As String
     GrhPath = DirGraficos
@@ -1432,9 +1459,21 @@ Private Sub IniciarGraficos()
     Set picHalfStar = LoadPicture(GrhPath & "EstrellaMitad.jpg")
     Set picGlowStar = LoadPicture(GrhPath & "EstrellaBrillante.jpg")
 
+    
+    Exit Sub
+
+IniciarGraficos_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "IniciarGraficos"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub CargarCombos()
+    
+    On Error GoTo CargarCombos_Err
+    
     Dim i As Integer
     
     lstProfesion.Clear
@@ -1457,9 +1496,21 @@ Private Sub CargarCombos()
     
     lstProfesion.ListIndex = 1
 
+    
+    Exit Sub
+
+CargarCombos_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "CargarCombos"
+    End If
+Resume Next
+    
 End Sub
 
 Function CheckData() As Boolean
+    
+    On Error GoTo CheckData_Err
+    
     
     If LenB(txtNombre.Text) = 0 Then
         MsgBox "Ingresa el nombre de tu nuevo personaje."
@@ -1526,15 +1577,39 @@ Function CheckData() As Boolean
     
     CheckData = True
 
+    
+    Exit Function
+
+CheckData_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "CheckData"
+    End If
+Resume Next
+    
 End Function
 
 Private Sub TirarDados()
+    
+    On Error GoTo TirarDados_Err
+    
     Call WriteThrowDices
     Call FlushBuffer
 
+    
+    Exit Sub
+
+TirarDados_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "TirarDados"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub DirPJ_Click(Index As Integer)
+    
+    On Error GoTo DirPJ_Click_Err
+    
 
     Select Case Index
 
@@ -1548,14 +1623,38 @@ Private Sub DirPJ_Click(Index As Integer)
     
     Call UpdateHeadSelection
 
+    
+    Exit Sub
+
+DirPJ_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "DirPJ_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Form_MouseMove_Err
+    
     ClearLabel
 
+    
+    Exit Sub
+
+Form_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "Form_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub HeadPJ_Click(Index As Integer)
+    
+    On Error GoTo HeadPJ_Click_Err
+    
 
     Select Case Index
 
@@ -1569,9 +1668,21 @@ Private Sub HeadPJ_Click(Index As Integer)
     
     Call UpdateHeadSelection
     
+    
+    Exit Sub
+
+HeadPJ_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "HeadPJ_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub UpdateHeadSelection()
+    
+    On Error GoTo UpdateHeadSelection_Err
+    
     Dim Head As Integer
     
     Head = UserHead
@@ -1591,9 +1702,21 @@ Private Sub UpdateHeadSelection()
     Head = Head - 1
     Call DrawHead(CheckCabeza(Head), 0)
 
+    
+    Exit Sub
+
+UpdateHeadSelection_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "UpdateHeadSelection"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub ImgCrear_Click()
+    
+    On Error GoTo ImgCrear_Click_Err
+    
 
     Dim i         As Integer
     Dim CharAscii As Byte
@@ -1645,226 +1768,583 @@ Private Sub ImgCrear_Click()
     
         bShowTutorial = True
 
+    
+    Exit Sub
+
+ImgCrear_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "ImgCrear_Click"
+    End If
+Resume Next
+    
     End Sub
 
 Private Sub imgDados_Click()
+    
+    On Error GoTo imgDados_Click_Err
+    
     Call Audio.PlayWave(SND_DICE)
     Call TirarDados
 
+    
+    Exit Sub
+
+imgDados_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "imgDados_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgEspecialidad_MouseMove(Button As Integer, _
                                       Shift As Integer, _
                                       X As Single, _
                                       Y As Single)
+    
+    On Error GoTo imgEspecialidad_MouseMove_Err
+    
     lblHelp.Caption = vHelp(eHelp.ieEspecialidad)
 
+    
+    Exit Sub
+
+imgEspecialidad_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "imgEspecialidad_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgNombre_MouseMove(Button As Integer, _
                                 Shift As Integer, _
                                 X As Single, _
                                 Y As Single)
+    
+    On Error GoTo imgNombre_MouseMove_Err
+    
     lblHelp.Caption = vHelp(eHelp.ieNombre)
 
+    
+    Exit Sub
+
+imgNombre_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "imgNombre_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgPasswd_MouseMove(Button As Integer, _
                                 Shift As Integer, _
                                 X As Single, _
                                 Y As Single)
+    
+    On Error GoTo imgPasswd_MouseMove_Err
+    
     lblHelp.Caption = vHelp(eHelp.iePasswd)
 
+    
+    Exit Sub
+
+imgPasswd_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "imgPasswd_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgConfirmPasswd_MouseMove(Button As Integer, _
                                        Shift As Integer, _
                                        X As Single, _
                                        Y As Single)
+    
+    On Error GoTo imgConfirmPasswd_MouseMove_Err
+    
     lblHelp.Caption = vHelp(eHelp.ieConfirmPasswd)
 
+    
+    Exit Sub
+
+imgConfirmPasswd_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "imgConfirmPasswd_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgAtributos_MouseMove(Button As Integer, _
                                    Shift As Integer, _
                                    X As Single, _
                                    Y As Single)
+    
+    On Error GoTo imgAtributos_MouseMove_Err
+    
     lblHelp.Caption = vHelp(eHelp.ieAtributos)
 
+    
+    Exit Sub
+
+imgAtributos_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "imgAtributos_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgD_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo imgD_MouseMove_Err
+    
     lblHelp.Caption = vHelp(eHelp.ieD)
 
+    
+    Exit Sub
+
+imgD_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "imgD_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgM_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo imgM_MouseMove_Err
+    
     lblHelp.Caption = vHelp(eHelp.ieM)
 
+    
+    Exit Sub
+
+imgM_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "imgM_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgF_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo imgF_MouseMove_Err
+    
     lblHelp.Caption = vHelp(eHelp.ieF)
 
+    
+    Exit Sub
+
+imgF_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "imgF_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgFuerza_MouseMove(Button As Integer, _
                                 Shift As Integer, _
                                 X As Single, _
                                 Y As Single)
+    
+    On Error GoTo imgFuerza_MouseMove_Err
+    
     lblHelp.Caption = vHelp(eHelp.ieFuerza)
 
+    
+    Exit Sub
+
+imgFuerza_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "imgFuerza_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgAgilidad_MouseMove(Button As Integer, _
                                   Shift As Integer, _
                                   X As Single, _
                                   Y As Single)
+    
+    On Error GoTo imgAgilidad_MouseMove_Err
+    
     lblHelp.Caption = vHelp(eHelp.ieAgilidad)
 
+    
+    Exit Sub
+
+imgAgilidad_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "imgAgilidad_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgInteligencia_MouseMove(Button As Integer, _
                                       Shift As Integer, _
                                       X As Single, _
                                       Y As Single)
+    
+    On Error GoTo imgInteligencia_MouseMove_Err
+    
     lblHelp.Caption = vHelp(eHelp.ieInteligencia)
 
+    
+    Exit Sub
+
+imgInteligencia_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "imgInteligencia_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgCarisma_MouseMove(Button As Integer, _
                                  Shift As Integer, _
                                  X As Single, _
                                  Y As Single)
+    
+    On Error GoTo imgCarisma_MouseMove_Err
+    
     lblHelp.Caption = vHelp(eHelp.ieCarisma)
 
+    
+    Exit Sub
+
+imgCarisma_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "imgCarisma_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgConstitucion_MouseMove(Button As Integer, _
                                       Shift As Integer, _
                                       X As Single, _
                                       Y As Single)
+    
+    On Error GoTo imgConstitucion_MouseMove_Err
+    
     lblHelp.Caption = vHelp(eHelp.ieConstitucion)
 
+    
+    Exit Sub
+
+imgConstitucion_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "imgConstitucion_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgArcos_MouseMove(Button As Integer, _
                                Shift As Integer, _
                                X As Single, _
                                Y As Single)
+    
+    On Error GoTo imgArcos_MouseMove_Err
+    
     lblHelp.Caption = vHelp(eHelp.ieArcos)
 
+    
+    Exit Sub
+
+imgArcos_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "imgArcos_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgArmas_MouseMove(Button As Integer, _
                                Shift As Integer, _
                                X As Single, _
                                Y As Single)
+    
+    On Error GoTo imgArmas_MouseMove_Err
+    
     lblHelp.Caption = vHelp(eHelp.ieArmas)
 
+    
+    Exit Sub
+
+imgArmas_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "imgArmas_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgEscudos_MouseMove(Button As Integer, _
                                  Shift As Integer, _
                                  X As Single, _
                                  Y As Single)
+    
+    On Error GoTo imgEscudos_MouseMove_Err
+    
     lblHelp.Caption = vHelp(eHelp.ieEscudos)
 
+    
+    Exit Sub
+
+imgEscudos_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "imgEscudos_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgEvasion_MouseMove(Button As Integer, _
                                  Shift As Integer, _
                                  X As Single, _
                                  Y As Single)
+    
+    On Error GoTo imgEvasion_MouseMove_Err
+    
     lblHelp.Caption = vHelp(eHelp.ieEvasion)
 
+    
+    Exit Sub
+
+imgEvasion_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "imgEvasion_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMagia_MouseMove(Button As Integer, _
                                Shift As Integer, _
                                X As Single, _
                                Y As Single)
+    
+    On Error GoTo imgMagia_MouseMove_Err
+    
     lblHelp.Caption = vHelp(eHelp.ieMagia)
 
+    
+    Exit Sub
+
+imgMagia_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "imgMagia_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMail_MouseMove(Button As Integer, _
                               Shift As Integer, _
                               X As Single, _
                               Y As Single)
+    
+    On Error GoTo imgMail_MouseMove_Err
+    
     lblHelp.Caption = vHelp(eHelp.ieMail)
 
+    
+    Exit Sub
+
+imgMail_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "imgMail_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgVida_MouseMove(Button As Integer, _
                               Shift As Integer, _
                               X As Single, _
                               Y As Single)
+    
+    On Error GoTo imgVida_MouseMove_Err
+    
     lblHelp.Caption = vHelp(eHelp.ieVida)
 
+    
+    Exit Sub
+
+imgVida_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "imgVida_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgTirarDados_MouseMove(Button As Integer, _
                                     Shift As Integer, _
                                     X As Single, _
                                     Y As Single)
+    
+    On Error GoTo imgTirarDados_MouseMove_Err
+    
     lblHelp.Caption = vHelp(eHelp.ieTirarDados)
 
+    
+    Exit Sub
+
+imgTirarDados_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "imgTirarDados_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgPuebloOrigen_MouseMove(Button As Integer, _
                                       Shift As Integer, _
                                       X As Single, _
                                       Y As Single)
+    
+    On Error GoTo imgPuebloOrigen_MouseMove_Err
+    
     lblHelp.Caption = vHelp(eHelp.iePuebloOrigen)
 
+    
+    Exit Sub
+
+imgPuebloOrigen_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "imgPuebloOrigen_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgRaza_MouseMove(Button As Integer, _
                               Shift As Integer, _
                               X As Single, _
                               Y As Single)
+    
+    On Error GoTo imgRaza_MouseMove_Err
+    
     lblHelp.Caption = vHelp(eHelp.ieRaza)
 
+    
+    Exit Sub
+
+imgRaza_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "imgRaza_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgClase_MouseMove(Button As Integer, _
                                Shift As Integer, _
                                X As Single, _
                                Y As Single)
+    
+    On Error GoTo imgClase_MouseMove_Err
+    
     lblHelp.Caption = vHelp(eHelp.ieClase)
 
+    
+    Exit Sub
+
+imgClase_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "imgClase_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgGenero_MouseMove(Button As Integer, _
                                 Shift As Integer, _
                                 X As Single, _
                                 Y As Single)
+    
+    On Error GoTo imgGenero_MouseMove_Err
+    
     lblHelp.Caption = vHelp(eHelp.ieGenero)
 
+    
+    Exit Sub
+
+imgGenero_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "imgGenero_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgalineacion_MouseMove(Button As Integer, _
                                     Shift As Integer, _
                                     X As Single, _
                                     Y As Single)
+    
+    On Error GoTo imgalineacion_MouseMove_Err
+    
     lblHelp.Caption = vHelp(eHelp.ieAlineacion)
 
+    
+    Exit Sub
+
+imgalineacion_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "imgalineacion_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgVolver_Click()
+    
+    On Error GoTo imgVolver_Click_Err
+    
     Call Audio.PlayMIDI("2.mid")
     
     bShowTutorial = False
     
     Unload Me
 
+    
+    Exit Sub
+
+imgVolver_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "imgVolver_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub lstGenero_Click()
+    
+    On Error GoTo lstGenero_Click_Err
+    
     UserSexo = lstGenero.ListIndex + 1
     Call DarCuerpoYCabeza
 
+    
+    Exit Sub
+
+lstGenero_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "lstGenero_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub lstProfesion_Click()
@@ -1881,19 +2361,46 @@ Private Sub lstProfesion_Click()
 End Sub
 
 Private Sub UpdateEspecialidad(ByVal eClase As eClass)
+    
+    On Error GoTo UpdateEspecialidad_Err
+    
     lblEspecialidad.Caption = vEspecialidades(eClase)
 
+    
+    Exit Sub
+
+UpdateEspecialidad_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "UpdateEspecialidad"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub lstRaza_Click()
+    
+    On Error GoTo lstRaza_Click_Err
+    
     UserRaza = lstRaza.ListIndex + 1
     Call DarCuerpoYCabeza
     
     Call UpdateStats
 
+    
+    Exit Sub
+
+lstRaza_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "lstRaza_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub picHead_Click(Index As Integer)
+    
+    On Error GoTo picHead_Click_Err
+    
 
     ' No se mueve si clickea al medio
     If Index = 2 Then Exit Sub
@@ -1920,6 +2427,15 @@ Private Sub picHead_Click(Index As Integer)
     UserHead = Head
     
     Call UpdateHeadSelection
+    
+    
+    Exit Sub
+
+picHead_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "picHead_Click"
+    End If
+Resume Next
     
 End Sub
 
@@ -1984,6 +2500,9 @@ Private Sub tAnimacion_Timer()
 End Sub
 
 Private Sub DrawHead(ByVal Head As Integer, ByVal PicIndex As Integer)
+    
+    On Error GoTo DrawHead_Err
+    
 
     Dim SR  As RECT
     Dim DR  As RECT
@@ -2011,35 +2530,95 @@ Private Sub DrawHead(ByVal Head As Integer, ByVal PicIndex As Integer)
 
     End With
     
+    
+    Exit Sub
+
+DrawHead_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "DrawHead"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub txtConfirmPasswd_MouseMove(Button As Integer, _
                                        Shift As Integer, _
                                        X As Single, _
                                        Y As Single)
+    
+    On Error GoTo txtConfirmPasswd_MouseMove_Err
+    
     lblHelp.Caption = vHelp(eHelp.ieConfirmPasswd)
 
+    
+    Exit Sub
+
+txtConfirmPasswd_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "txtConfirmPasswd_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub txtMail_MouseMove(Button As Integer, _
                               Shift As Integer, _
                               X As Single, _
                               Y As Single)
+    
+    On Error GoTo txtMail_MouseMove_Err
+    
     lblHelp.Caption = vHelp(eHelp.ieMail)
 
+    
+    Exit Sub
+
+txtMail_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "txtMail_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub txtNombre_Change()
+    
+    On Error GoTo txtNombre_Change_Err
+    
     txtNombre.Text = LTrim$(txtNombre.Text)
 
+    
+    Exit Sub
+
+txtNombre_Change_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "txtNombre_Change"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub txtNombre_KeyPress(KeyAscii As Integer)
+    
+    On Error GoTo txtNombre_KeyPress_Err
+    
     KeyAscii = Asc(UCase$(Chr$(KeyAscii)))
 
+    
+    Exit Sub
+
+txtNombre_KeyPress_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "txtNombre_KeyPress"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub DarCuerpoYCabeza()
+    
+    On Error GoTo DarCuerpoYCabeza_Err
+    
 
     Dim bVisible  As Boolean
     Dim PicIndex  As Integer
@@ -2134,9 +2713,21 @@ Private Sub DarCuerpoYCabeza()
 
     If currentGrh > 0 Then tAnimacion.Interval = Round(GrhData(currentGrh).Speed / GrhData(currentGrh).NumFrames)
 
+    
+    Exit Sub
+
+DarCuerpoYCabeza_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "DarCuerpoYCabeza"
+    End If
+Resume Next
+    
 End Sub
 
 Private Function CheckCabeza(ByVal Head As Integer) As Integer
+    
+    On Error GoTo CheckCabeza_Err
+    
 
     Select Case UserSexo
 
@@ -2276,9 +2867,21 @@ Private Function CheckCabeza(ByVal Head As Integer) As Integer
 
     End Select
 
+    
+    Exit Function
+
+CheckCabeza_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "CheckCabeza"
+    End If
+Resume Next
+    
 End Function
 
 Private Function CheckDir(ByRef Dir As E_Heading) As E_Heading
+    
+    On Error GoTo CheckDir_Err
+    
 
     If Dir > E_Heading.WEST Then Dir = E_Heading.NORTH
     If Dir < E_Heading.NORTH Then Dir = E_Heading.WEST
@@ -2289,9 +2892,21 @@ Private Function CheckDir(ByRef Dir As E_Heading) As E_Heading
 
     If currentGrh > 0 Then tAnimacion.Interval = Round(GrhData(currentGrh).Speed / GrhData(currentGrh).NumFrames)
 
+    
+    Exit Function
+
+CheckDir_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "CheckDir"
+    End If
+Resume Next
+    
 End Function
 
 Private Sub LoadHelp()
+    
+    On Error GoTo LoadHelp_Err
+    
     vHelp(eHelp.iePasswd) = "La contraseña que utilizarás para conectar tu personaje al juego."
     vHelp(eHelp.ieTirarDados) = "Presionando sobre la Esfera Roja, se modificarán al azar los atributos de tu personaje, de esta manera puedes elegir los que más te parezcan para definir a tu personaje."
     vHelp(eHelp.ieMail) = "Es sumamente importante que ingreses una dirección de correo electrónico válida, ya que en el caso de perder la contraseña de tu personaje, se te enviará cuando lo requieras, a esa dirección."
@@ -2319,37 +2934,97 @@ Private Sub LoadHelp()
     vHelp(eHelp.ieGenero) = "Indica si el personaje será masculino o femenino. Esto influye en los items que podrá equipar."
     vHelp(eHelp.ieAlineacion) = "Indica si el personaje seguirá la senda del mal o del bien. (Actualmente deshabilitado)"
 
+    
+    Exit Sub
+
+LoadHelp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "LoadHelp"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub ClearLabel()
+    
+    On Error GoTo ClearLabel_Err
+    
     LastButtonPressed.ToggleToNormal
     lblHelp = vbNullString
 
+    
+    Exit Sub
+
+ClearLabel_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "ClearLabel"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub txtNombre_MouseMove(Button As Integer, _
                                 Shift As Integer, _
                                 X As Single, _
                                 Y As Single)
+    
+    On Error GoTo txtNombre_MouseMove_Err
+    
     lblHelp.Caption = vHelp(eHelp.ieNombre)
 
+    
+    Exit Sub
+
+txtNombre_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "txtNombre_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub txtPasswd_MouseMove(Button As Integer, _
                                 Shift As Integer, _
                                 X As Single, _
                                 Y As Single)
+    
+    On Error GoTo txtPasswd_MouseMove_Err
+    
     lblHelp.Caption = vHelp(eHelp.iePasswd)
 
+    
+    Exit Sub
+
+txtPasswd_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "txtPasswd_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub UpdateStats()
+    
+    On Error GoTo UpdateStats_Err
+    
     Call UpdateRazaMod
     Call UpdateStars
 
+    
+    Exit Sub
+
+UpdateStats_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "UpdateStats"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub UpdateRazaMod()
+    
+    On Error GoTo UpdateRazaMod_Err
+    
     Dim SelRaza As Integer
     Dim i       As Integer
     
@@ -2373,9 +3048,21 @@ Private Sub UpdateRazaMod()
         lblAtributoFinal(i).Caption = Val(lblAtributos(i).Caption) + Val(lblModRaza(i))
     Next i
     
+    
+    Exit Sub
+
+UpdateRazaMod_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "UpdateRazaMod"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub UpdateStars()
+    
+    On Error GoTo UpdateStars_Err
+    
     Dim NumStars As Double
     
     If UserClase = 0 Then Exit Sub
@@ -2404,9 +3091,21 @@ Private Sub UpdateStars()
     NumStars = (0.4915 + 0.01265 * Val(lblAtributoFinal(eAtributos.Fuerza).Caption)) * ModClase(UserClase).DañoProyectiles * ModClase(UserClase).Hit + 0.119 * ModClase(UserClase).AtaqueProyectiles * Val(lblAtributoFinal(eAtributos.Agilidad).Caption)
     Call SetStars(imgArcoStar, NumStars * 2)
 
+    
+    Exit Sub
+
+UpdateStars_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "UpdateStars"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub SetStars(ByRef ImgContainer As Object, ByVal NumStars As Integer)
+    
+    On Error GoTo SetStars_Err
+    
     Dim FullStars   As Integer
     Dim HasHalfStar As Boolean
     Dim Index       As Integer
@@ -2470,9 +3169,21 @@ Private Sub SetStars(ByRef ImgContainer As Object, ByVal NumStars As Integer)
 
     End If
 
+    
+    Exit Sub
+
+SetStars_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "SetStars"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadCharInfo()
+    
+    On Error GoTo LoadCharInfo_Err
+    
     Dim SearchVar As String
     Dim i         As Integer
     
@@ -2518,4 +3229,13 @@ Private Sub LoadCharInfo()
 
     Next i
 
+    
+    Exit Sub
+
+LoadCharInfo_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "LoadCharInfo"
+    End If
+Resume Next
+    
 End Sub

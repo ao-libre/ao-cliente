@@ -62,6 +62,9 @@ Private Sub Class_Terminate()
     'Last Modify Date: 5/01/2006
     '
     '**************************************************************
+    
+    On Error GoTo Class_Terminate_Err
+    
     Dim i As Long
     
     'Clean up
@@ -75,6 +78,15 @@ Private Sub Class_Terminate()
 
     End If
 
+    
+    Exit Sub
+
+Class_Terminate_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "ClsIniReader" & "->" & "Class_Terminate"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -90,6 +102,9 @@ Public Sub Initialize(ByVal File As String)
     'Last Modify Date: 5/01/2006
     'Opens the requested file and loads it's data into memory
     '**************************************************************
+    
+    On Error GoTo Initialize_Err
+    
     Dim handle As Integer
     Dim Text   As String
     Dim Pos    As Long
@@ -166,6 +181,15 @@ Public Sub Initialize(ByVal File As String)
 
     End If
 
+    
+    Exit Sub
+
+Initialize_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "ClsIniReader" & "->" & "Initialize"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -185,6 +209,9 @@ Private Sub SortChildNodes(ByRef Node As MainNode, _
     'Sorts the list of values in a given MainNode using quicksort,
     'this allows the use of Binary Search for faster searches
     '**************************************************************
+    
+    On Error GoTo SortChildNodes_Err
+    
     Dim Min  As Integer      'First item in the list
     Dim Max  As Integer      'Last item in the list
     Dim comp As String      'Item used to compare
@@ -221,6 +248,15 @@ Private Sub SortChildNodes(ByRef Node As MainNode, _
     If first < Max Then SortChildNodes Node, first, Max
     If Min < last Then SortChildNodes Node, Min, last
 
+    
+    Exit Sub
+
+SortChildNodes_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "ClsIniReader" & "->" & "SortChildNodes"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -237,6 +273,9 @@ Private Sub SortMainNodes(ByVal first As Integer, ByVal last As Integer)
     'Sorts the MainNodes list using quicksort,
     'this allows the use of Binary Search for faster searches
     '**************************************************************
+    
+    On Error GoTo SortMainNodes_Err
+    
     Dim Min  As Integer      'First item in the list
     Dim Max  As Integer      'Last item in the list
     Dim comp As String      'Item used to compare
@@ -270,6 +309,15 @@ Private Sub SortMainNodes(ByVal first As Integer, ByVal last As Integer)
     If first < Max Then SortMainNodes first, Max
     If Min < last Then SortMainNodes Min, last
 
+    
+    Exit Sub
+
+SortMainNodes_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "ClsIniReader" & "->" & "SortMainNodes"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -286,6 +334,9 @@ Public Function GetValue(ByVal Main As String, ByVal key As String) As String
     'Last Modify Date: 5/01/2006
     'Returns a value if the key and main node exist, or a nullstring otherwise
     '**************************************************************
+    
+    On Error GoTo GetValue_Err
+    
     Dim i As Long
     Dim j As Long
     
@@ -301,6 +352,15 @@ Public Function GetValue(ByVal Main As String, ByVal key As String) As String
 
     End If
 
+    
+    Exit Function
+
+GetValue_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "ClsIniReader" & "->" & "GetValue"
+    End If
+Resume Next
+    
 End Function
 
 ''
@@ -318,6 +378,9 @@ Private Function FindKey(ByRef Node As MainNode, ByVal key As String) As Long
     'Returns the index of the value which key matches the requested one,
     'or the negation of the position were it should be if not found
     '**************************************************************
+    
+    On Error GoTo FindKey_Err
+    
     Dim Min As Long
     Dim Max As Long
     Dim mid As Long
@@ -345,6 +408,15 @@ Private Function FindKey(ByRef Node As MainNode, ByVal key As String) As Long
     '(all higher values are to the right of the list and lower values are to the left)
     FindKey = Not mid
 
+    
+    Exit Function
+
+FindKey_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "ClsIniReader" & "->" & "FindKey"
+    End If
+Resume Next
+    
 End Function
 
 ''
@@ -361,6 +433,9 @@ Private Function FindMain(ByVal Name As String) As Long
     'Returns the index of the MainNode which name matches the requested one,
     'or the negation of the position were it should be if not found
     '**************************************************************
+    
+    On Error GoTo FindMain_Err
+    
     Dim Min As Long
     Dim Max As Long
     Dim mid As Long
@@ -388,5 +463,14 @@ Private Function FindMain(ByVal Name As String) As Long
     '(all higher values are to the right of the list and lower values are to the left)
     FindMain = Not mid
 
+    
+    Exit Function
+
+FindMain_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "ClsIniReader" & "->" & "FindMain"
+    End If
+Resume Next
+    
 End Function
 

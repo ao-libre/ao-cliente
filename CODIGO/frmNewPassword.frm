@@ -105,6 +105,9 @@ Public LastButtonPressed As clsGraphicalButton
 
 Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
+    
+    On Error GoTo Form_Load_Err
+    
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
@@ -112,9 +115,21 @@ Private Sub Form_Load()
     
     Call LoadButtons
 
+    
+    Exit Sub
+
+Form_Load_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmNewPassword" & "->" & "Form_Load"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadButtons()
+    
+    On Error GoTo LoadButtons_Err
+    
     Dim GrhPath As String
     
     GrhPath = DirGraficos
@@ -125,14 +140,38 @@ Private Sub LoadButtons()
     
     Call cBotonAceptar.Initialize(imgAceptar, GrhPath & "BotonAceptarCambiarContrasenia.jpg", GrhPath & "BotonAceptarRolloverCambiarContrasenia.jpg", GrhPath & "BotonAceptarClickCambiarContrasenia.jpg", Me)
 
+    
+    Exit Sub
+
+LoadButtons_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmNewPassword" & "->" & "LoadButtons"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Form_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+Form_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmNewPassword" & "->" & "Form_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgAceptar_Click()
+    
+    On Error GoTo imgAceptar_Click_Err
+    
 
     If Text2.Text <> Text3.Text Then
         Call MsgBox("Las contraseñas no coinciden", vbCritical Or vbOKOnly Or vbApplicationModal Or vbDefaultButton1, "Cambiar Contraseña")
@@ -143,9 +182,30 @@ Private Sub imgAceptar_Click()
     Call WriteChangePassword(Text1.Text, Text2.Text)
     Unload Me
 
+    
+    Exit Sub
+
+imgAceptar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmNewPassword" & "->" & "imgAceptar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Text3_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Text3_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+Text3_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmNewPassword" & "->" & "Text3_MouseMove"
+    End If
+Resume Next
+    
 End Sub

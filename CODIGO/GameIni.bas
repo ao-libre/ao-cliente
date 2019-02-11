@@ -93,13 +93,28 @@ Public MiCabecera    As tCabecera
 Public Config_Inicio As tGameIni
 
 Public Sub IniciarCabecera(ByRef Cabecera As tCabecera)
+    
+    On Error GoTo IniciarCabecera_Err
+    
     Cabecera.Desc = "Argentum Online by Noland Studios. Copyright Noland-Studios 2001, pablomarquez@noland-studios.com.ar"
     Cabecera.CRC = Rnd * 100
     Cabecera.MagicWord = Rnd * 10
 
+    
+    Exit Sub
+
+IniciarCabecera_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "GameIni" & "->" & "IniciarCabecera"
+    End If
+Resume Next
+    
 End Sub
 
 Public Function LeerGameIni() As tGameIni
+    
+    On Error GoTo LeerGameIni_Err
+    
     Dim N       As Integer
     Dim GameIni As tGameIni
     N = FreeFile
@@ -111,9 +126,21 @@ Public Function LeerGameIni() As tGameIni
     Close #N
     LeerGameIni = GameIni
 
+    
+    Exit Function
+
+LeerGameIni_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "GameIni" & "->" & "LeerGameIni"
+    End If
+Resume Next
+    
 End Function
 
 Public Sub EscribirGameIni(ByRef GameIniConfiguration As tGameIni)
+    
+    On Error GoTo EscribirGameIni_Err
+    
     On Local Error Resume Next
 
     Dim N As Integer
@@ -123,5 +150,14 @@ Public Sub EscribirGameIni(ByRef GameIniConfiguration As tGameIni)
     Put #N, , GameIniConfiguration
     Close #N
 
+    
+    Exit Sub
+
+EscribirGameIni_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "GameIni" & "->" & "EscribirGameIni"
+    End If
+Resume Next
+    
 End Sub
 

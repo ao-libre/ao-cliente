@@ -27,6 +27,9 @@ Public Function Create_Light_To_Map(ByVal map_x As Byte, _
                                     Optional ByVal Red As Byte = 255, _
                                     Optional ByVal Green = 255, _
                                     Optional ByVal Blue As Byte = 255)
+    
+    On Error GoTo Create_Light_To_Map_Err
+    
     NumLights = NumLights + 1
    
     ReDim Preserve Light_List(1 To NumLights) As tLight
@@ -42,9 +45,21 @@ Public Function Create_Light_To_Map(ByVal map_x As Byte, _
    
     Call LightRender(NumLights)
 
+    
+    Exit Function
+
+Create_Light_To_Map_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Luces" & "->" & "Create_Light_To_Map"
+    End If
+Resume Next
+    
 End Function
 
 Public Function Delete_Light_To_Map(ByVal X As Byte, ByVal Y As Byte)
+    
+    On Error GoTo Delete_Light_To_Map_Err
+    
    
     Dim i As Long
    
@@ -58,11 +73,23 @@ Public Function Delete_Light_To_Map(ByVal X As Byte, ByVal Y As Byte)
 
     Next i
  
+    
+    Exit Function
+
+Delete_Light_To_Map_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Luces" & "->" & "Delete_Light_To_Map"
+    End If
+Resume Next
+    
 End Function
 
 #If LightEngine = 1 Then '   Luces Radiales
 
     Public Function Delete_Light_To_Index(ByVal light_index As Integer)
+    
+    On Error GoTo Delete_Light_To_Index_Err
+    
    
         Dim min_x As Integer
         Dim min_y As Integer
@@ -89,9 +116,21 @@ End Function
             Next Xa
         Next Ya
    
+    
+    Exit Function
+
+Delete_Light_To_Index_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Luces" & "->" & "Delete_Light_To_Index"
+    End If
+Resume Next
+    
     End Function
 
 Private Sub LightRender(ByVal light_index As Integer)
+    
+    On Error GoTo LightRender_Err
+    
  
     On Local Error Resume Next
  
@@ -149,6 +188,15 @@ Private Sub LightRender(ByVal light_index As Integer)
         Next Xa
     Next Ya
 
+    
+    Exit Sub
+
+LightRender_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Luces" & "->" & "LightRender"
+    End If
+Resume Next
+    
 End Sub
 
 Private Function LightCalculate(ByVal cRadio As Integer, ByVal LightX As Integer, ByVal LightY As Integer, ByVal XCoord As Integer, ByVal YCoord As Integer, TileLight As Long, LightColor As D3DCOLORVALUE, AmbientColor As D3DCOLORVALUE) As Long
@@ -361,11 +409,23 @@ End Sub
 
 Public Sub DeInit_LightEngine()
     'Kill Font's
+    
+    On Error GoTo DeInit_LightEngine_Err
+    
     Erase Light_List()
     
     'Exit, The works is done.
     Exit Sub
 
+    
+    Exit Sub
+
+DeInit_LightEngine_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Luces" & "->" & "DeInit_LightEngine"
+    End If
+Resume Next
+    
 End Sub
 
 Public Function LightRenderAll() As Boolean

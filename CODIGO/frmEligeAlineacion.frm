@@ -106,6 +106,9 @@ End Enum
 
 Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
+    
+    On Error GoTo Form_Load_Err
+    
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
@@ -113,9 +116,21 @@ Private Sub Form_Load()
     
     Call LoadButtons
 
+    
+    Exit Sub
+
+Form_Load_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmEligeAlineacion" & "->" & "Form_Load"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadButtons()
+    
+    On Error GoTo LoadButtons_Err
+    
     Dim GrhPath As String
     
     GrhPath = DirGraficos
@@ -141,44 +156,137 @@ Private Sub LoadButtons()
                                     
     Call cBotonSalir.Initialize(imgSalir, GrhPath & "BotonSalirAlineacion.jpg", GrhPath & "BotonSalirRolloverAlineacion.jpg", GrhPath & "BotonSalirClickAlineacion.jpg", Me)
 
+    
+    Exit Sub
+
+LoadButtons_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmEligeAlineacion" & "->" & "LoadButtons"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Form_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+Form_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmEligeAlineacion" & "->" & "Form_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgCaos_Click()
+    
+    On Error GoTo imgCaos_Click_Err
+    
     Call WriteGuildFundation(eAlineacion.ieCAOS)
     Unload Me
 
+    
+    Exit Sub
+
+imgCaos_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmEligeAlineacion" & "->" & "imgCaos_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgCriminal_Click()
+    
+    On Error GoTo imgCriminal_Click_Err
+    
     Call WriteGuildFundation(eAlineacion.ieCriminal)
     Unload Me
 
+    
+    Exit Sub
+
+imgCriminal_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmEligeAlineacion" & "->" & "imgCriminal_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgLegal_Click()
+    
+    On Error GoTo imgLegal_Click_Err
+    
     Call WriteGuildFundation(eAlineacion.ieLegal)
     Unload Me
 
+    
+    Exit Sub
+
+imgLegal_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmEligeAlineacion" & "->" & "imgLegal_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgNeutral_Click()
+    
+    On Error GoTo imgNeutral_Click_Err
+    
     Call WriteGuildFundation(eAlineacion.ieNeutral)
     Unload Me
 
+    
+    Exit Sub
+
+imgNeutral_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmEligeAlineacion" & "->" & "imgNeutral_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgReal_Click()
+    
+    On Error GoTo imgReal_Click_Err
+    
     Call WriteGuildFundation(eAlineacion.ieREAL)
     Unload Me
 
+    
+    Exit Sub
+
+imgReal_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmEligeAlineacion" & "->" & "imgReal_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgSalir_Click()
+    
+    On Error GoTo imgSalir_Click_Err
+    
     Unload Me
 
+    
+    Exit Sub
+
+imgSalir_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmEligeAlineacion" & "->" & "imgSalir_Click"
+    End If
+Resume Next
+    
 End Sub

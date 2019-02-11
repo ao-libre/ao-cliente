@@ -27,6 +27,9 @@ Public Sub Engine_Projectile_Create(ByVal AttackerIndex As Integer, _
     'Creates a projectile for a ranged weapon
     'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_Projectile_Create
     '*****************************************************************
+    
+    On Error GoTo Engine_Projectile_Create_Err
+    
     Dim ProjectileIndex As Integer
 
     If AttackerIndex = 0 Then Exit Sub
@@ -130,6 +133,15 @@ Public Sub Engine_Projectile_Create(ByVal AttackerIndex As Integer, _
     
     InitGrh ProjectileList(ProjectileIndex).Grh, GrhIndex
     
+    
+    Exit Sub
+
+Engine_Projectile_Create_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Projectile" & "->" & "Engine_Projectile_Create"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub Engine_Projectile_Erase(ByVal ProjectileIndex As Integer)
@@ -138,6 +150,9 @@ Public Sub Engine_Projectile_Erase(ByVal ProjectileIndex As Integer)
     'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_Projectile_Erase
     '*****************************************************************
     'Clear the selected index
+    
+    On Error GoTo Engine_Projectile_Erase_Err
+    
     ProjectileList(ProjectileIndex).Grh.FrameCounter = 0
     ProjectileList(ProjectileIndex).Grh.GrhIndex = 0
     ProjectileList(ProjectileIndex).X = 0
@@ -171,5 +186,14 @@ Public Sub Engine_Projectile_Erase(ByVal ProjectileIndex As Integer)
 
     End If
  
+    
+    Exit Sub
+
+Engine_Projectile_Erase_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Projectile" & "->" & "Engine_Projectile_Erase"
+    End If
+Resume Next
+    
 End Sub
 

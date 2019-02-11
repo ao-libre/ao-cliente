@@ -101,9 +101,21 @@ Private Sub Class_Initialize()
     'Last Modify Date: 3/06/2006
     '
     '**************************************************************
+    
+    On Error GoTo Class_Initialize_Err
+    
     usedBytes = 0
     maxBytesToUse = MIN_MEMORY_TO_USE
 
+    
+    Exit Sub
+
+Class_Initialize_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsSurfaceManDyn" & "->" & "Class_Initialize"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Class_Terminate()
@@ -112,6 +124,9 @@ Private Sub Class_Terminate()
     'Last Modify Date: 3/06/2006
     'Clean up
     '**************************************************************
+    
+    On Error GoTo Class_Terminate_Err
+    
     Dim i As Long
     Dim j As Long
     
@@ -131,6 +146,15 @@ Private Sub Class_Terminate()
 
     Next i
 
+    
+    Exit Sub
+
+Class_Terminate_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsSurfaceManDyn" & "->" & "Class_Terminate"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub clsSurfaceManager_Initialize(ByRef DD As D3DX8, _
@@ -141,6 +165,9 @@ Private Sub clsSurfaceManager_Initialize(ByRef DD As D3DX8, _
     'Last Modify Date: 29/07/2012 - ^[GS]^
     'Initializes the manager
     '**************************************************************
+    
+    On Error GoTo clsSurfaceManager_Initialize_Err
+    
     Set DirectD3D = DD
     
     ResourcePath = graphicPath
@@ -154,6 +181,15 @@ Private Sub clsSurfaceManager_Initialize(ByRef DD As D3DX8, _
 
     End If
 
+    
+    Exit Sub
+
+clsSurfaceManager_Initialize_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsSurfaceManDyn" & "->" & "clsSurfaceManager_Initialize"
+    End If
+Resume Next
+    
 End Sub
 
 Private Property Get clsSurfaceManager_Surface(ByVal fileIndex As Long) As Direct3DTexture8
@@ -162,6 +198,9 @@ Private Property Get clsSurfaceManager_Surface(ByVal fileIndex As Long) As Direc
     'Last Modify Date: 3/06/2006
     'Retrieves the requested texture
     '**************************************************************
+    
+    On Error GoTo clsSurfaceManager_Surface_Err
+    
     Dim i As Long
     
     ' Search the index on the list
@@ -183,6 +222,15 @@ Private Property Get clsSurfaceManager_Surface(ByVal fileIndex As Long) As Direc
     'Not in memory, load it!
     Set clsSurfaceManager_Surface = LoadSurface(fileIndex)
 
+    
+    Exit Property
+
+clsSurfaceManager_Surface_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsSurfaceManDyn" & "->" & "clsSurfaceManager_Surface"
+    End If
+Resume Next
+    
 End Property
 
 Private Function LoadSurface(ByVal fileIndex As Long) As Direct3DTexture8
@@ -252,6 +300,9 @@ Private Function RemoveLRU() As Boolean
     'Last Modify Date: 3/06/2006
     'Removes the Least Recently Used surface to make some room for new ones
     '**************************************************************
+    
+    On Error GoTo RemoveLRU_Err
+    
     Dim LRUi    As Long
     Dim LRUj    As Long
     Dim LRUtime As Long
@@ -313,5 +364,14 @@ Private Function RemoveLRU() As Boolean
 
     End If
 
+    
+    Exit Function
+
+RemoveLRU_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsSurfaceManDyn" & "->" & "RemoveLRU"
+    End If
+Resume Next
+    
 End Function
 

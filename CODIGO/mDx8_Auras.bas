@@ -28,6 +28,9 @@ Public Auras() As Aura '   List of Aura's
 Public Sub SetCharacterAura(ByVal CharIndex As Integer, _
                             ByVal AuraIndex As Byte, _
                             ByVal slot As Byte)
+    
+    On Error GoTo SetCharacterAura_Err
+    
 
     '***************************************************
     'Author: Standelf
@@ -36,6 +39,15 @@ Public Sub SetCharacterAura(ByVal CharIndex As Integer, _
     If slot <= 0 Or slot >= 5 Then Exit Sub
     Set_Aura CharIndex, slot, AuraIndex
 
+    
+    Exit Sub
+
+SetCharacterAura_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Auras" & "->" & "SetCharacterAura"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub Load_Auras()
@@ -44,6 +56,9 @@ Public Sub Load_Auras()
     'Last Modification: 26/05/10
     'Load Auras
     '***************************************************
+    
+    On Error GoTo Load_Auras_Err
+    
     Dim i As Integer, AurasTotales As Integer, Leer As New ClsIniReader
     Leer.Initialize App.path & "\init\auras.ini"
 
@@ -73,6 +88,15 @@ Public Sub Load_Auras()
                                                          
     Set Leer = Nothing
 
+    
+    Exit Sub
+
+Load_Auras_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Auras" & "->" & "Load_Auras"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub DeInit_Auras()
@@ -82,14 +106,29 @@ Public Sub DeInit_Auras()
     'DeInit Auras
     '***************************************************
     '   Erase Data
+    
+    On Error GoTo DeInit_Auras_Err
+    
     Erase Auras()
     
     '   Finish
     Exit Sub
 
+    
+    Exit Sub
+
+DeInit_Auras_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Auras" & "->" & "DeInit_Auras"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub Set_Aura(ByVal CharIndex As Integer, slot As Byte, Aura As Byte)
+    
+    On Error GoTo Set_Aura_Err
+    
 
     '***************************************************
     'Author: Ezequiel Juárez (Standelf)
@@ -117,6 +156,15 @@ Public Sub Set_Aura(ByVal CharIndex As Integer, slot As Byte, Aura As Byte)
 
     End With
 
+    
+    Exit Sub
+
+Set_Aura_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Auras" & "->" & "Set_Aura"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub Delete_All_Auras(ByVal CharIndex As Integer)
@@ -125,14 +173,29 @@ Public Sub Delete_All_Auras(ByVal CharIndex As Integer)
     'Last Modification: 26/05/10
     'Kill all of aura´s from Char
     '***************************************************
+    
+    On Error GoTo Delete_All_Auras_Err
+    
     Delete_Aura CharIndex, 1
     Delete_Aura CharIndex, 2
     Delete_Aura CharIndex, 3
     Delete_Aura CharIndex, 4
 
+    
+    Exit Sub
+
+Delete_All_Auras_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Auras" & "->" & "Delete_All_Auras"
+    End If
+Resume Next
+    
 End Sub
     
 Public Sub Delete_Aura(ByVal CharIndex As Integer, slot As Byte)
+    
+    On Error GoTo Delete_Aura_Err
+    
 
     '***************************************************
     'Author: Ezequiel Juárez (Standelf)
@@ -143,9 +206,21 @@ Public Sub Delete_Aura(ByVal CharIndex As Integer, slot As Byte)
     
     charlist(CharIndex).Aura(slot) = Auras(1) '1 = Fake Aura
 
+    
+    Exit Sub
+
+Delete_Aura_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Auras" & "->" & "Delete_Aura"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub Update_Aura(ByVal CharIndex As Integer, slot As Byte)
+    
+    On Error GoTo Update_Aura_Err
+    
 
     '***************************************************
     'Author: Ezequiel Juárez (Standelf)
@@ -166,6 +241,15 @@ Public Sub Update_Aura(ByVal CharIndex As Integer, slot As Byte)
 
     End With
 
+    
+    Exit Sub
+
+Update_Aura_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Auras" & "->" & "Update_Aura"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub Render_Auras(ByVal CharIndex As Integer, X As Integer, Y As Integer)

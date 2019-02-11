@@ -255,6 +255,9 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Check1_Click()
+    
+    On Error GoTo Check1_Click_Err
+    
 
     If Check1.value = Checked Then
         HScroll1.Enabled = True
@@ -263,9 +266,21 @@ Private Sub Check1_Click()
 
     End If
 
+    
+    Exit Sub
+
+Check1_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmAmbientEditor" & "->" & "Check1_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Check2_Click()
+    
+    On Error GoTo Check2_Click_Err
+    
 
     If Check2.value = Checked Then
         CurMapAmbient.Snow = True
@@ -276,9 +291,21 @@ Private Sub Check2_Click()
 
     End If
 
+    
+    Exit Sub
+
+Check2_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmAmbientEditor" & "->" & "Check2_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Check3_Click()
+    
+    On Error GoTo Check3_Click_Err
+    
 
     If Check3.value = Checked Then
         CurMapAmbient.Rain = True
@@ -287,14 +314,38 @@ Private Sub Check3_Click()
 
     End If
 
+    
+    Exit Sub
+
+Check3_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmAmbientEditor" & "->" & "Check3_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Command1_Click()
+    
+    On Error GoTo Command1_Click_Err
+    
     Init_Ambient UserMap
 
+    
+    Exit Sub
+
+Command1_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmAmbientEditor" & "->" & "Command1_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Command10_Click()
+    
+    On Error GoTo Command10_Click_Err
+    
     CurMapAmbient.MapBlocks(UserPos.X, UserPos.Y).Light.b = 0
     CurMapAmbient.MapBlocks(UserPos.X, UserPos.Y).Light.g = 0
     CurMapAmbient.MapBlocks(UserPos.X, UserPos.Y).Light.r = 0
@@ -303,17 +354,41 @@ Private Sub Command10_Click()
     Call Delete_Light_To_Map(UserPos.X, UserPos.Y)
     Call LightRenderAll
 
+    
+    Exit Sub
+
+Command10_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmAmbientEditor" & "->" & "Command10_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Command2_Click()
+    
+    On Error GoTo Command2_Click_Err
+    
     Save_Ambient UserMap
     DoEvents
     
     Init_Ambient UserMap
 
+    
+    Exit Sub
+
+Command2_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmAmbientEditor" & "->" & "Command2_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Command7_Click()
+    
+    On Error GoTo Command7_Click_Err
+    
 
     If Option1(0).value = True Then
         CurMapAmbient.UseDayAmbient = True
@@ -335,9 +410,21 @@ Private Sub Command7_Click()
     
     Call Apply_OwnAmbient
 
+    
+    Exit Sub
+
+Command7_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmAmbientEditor" & "->" & "Command7_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Command8_Click()
+    
+    On Error GoTo Command8_Click_Err
+    
     CurMapAmbient.MapBlocks(UserPos.X, UserPos.Y).Light.b = Val(Text4.Text)
     CurMapAmbient.MapBlocks(UserPos.X, UserPos.Y).Light.g = Val(Text3.Text)
     CurMapAmbient.MapBlocks(UserPos.X, UserPos.Y).Light.r = Val(Text2.Text)
@@ -345,9 +432,21 @@ Private Sub Command8_Click()
     
     Create_Light_To_Map UserPos.X, UserPos.Y, Val(HScroll2.value), Val(Text2.Text), Val(Text3.Text), Val(Text4.Text)
 
+    
+    Exit Sub
+
+Command8_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmAmbientEditor" & "->" & "Command8_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Command9_Click()
+    
+    On Error GoTo Command9_Click_Err
+    
 
     If Check1.value = Unchecked Then
         CurMapAmbient.Fog = -1
@@ -356,5 +455,14 @@ Private Sub Command9_Click()
 
     End If
 
+    
+    Exit Sub
+
+Command9_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmAmbientEditor" & "->" & "Command9_Click"
+    End If
+Resume Next
+    
 End Sub
 

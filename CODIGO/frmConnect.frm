@@ -329,6 +329,9 @@ Public LastButtonPressed As clsGraphicalButton
 
 Private Sub Form_Activate()
     
+    On Error GoTo Form_Activate_Err
+    
+    
     If CurServer <> 0 Then
         IPTxt = ServersLst(1).Ip
         PortTxt = ServersLst(1).Puerto
@@ -340,18 +343,42 @@ Private Sub Form_Activate()
     
     Call GetPostsFromReddit
 
+    
+    Exit Sub
+
+Form_Activate_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmConnect" & "->" & "Form_Activate"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo Form_KeyDown_Err
+    
 
     If KeyCode = 27 Then
         prgRun = False
 
     End If
 
+    
+    Exit Sub
+
+Form_KeyDown_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmConnect" & "->" & "Form_KeyDown"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo Form_KeyUp_Err
+    
 
     'Make Server IP and Port box visible
     If KeyCode = vbKeyI And Shift = vbCtrlMask Then
@@ -371,10 +398,22 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
 
     End If
 
+    
+    Exit Sub
+
+Form_KeyUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmConnect" & "->" & "Form_KeyUp"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_Load()
     '[CODE 002]:MatuX
+    
+    On Error GoTo Form_Load_Err
+    
     EngineRun = False
     '[END]
     
@@ -399,10 +438,22 @@ Private Sub Form_Load()
 
     Call CheckLicenseAgreement
         
+    
+    Exit Sub
+
+Form_Load_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmConnect" & "->" & "Form_Load"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub CheckLicenseAgreement()
     'Recordatorio para cumplir la licencia, por si borrás el Boton sin leer el code...
+    
+    On Error GoTo CheckLicenseAgreement_Err
+    
     Dim i As Long
     
     For i = 0 To Me.Controls.Count - 1
@@ -419,9 +470,21 @@ Private Sub CheckLicenseAgreement()
 
     End If
 
+    
+    Exit Sub
+
+CheckLicenseAgreement_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmConnect" & "->" & "CheckLicenseAgreement"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadButtons()
+    
+    On Error GoTo LoadButtons_Err
+    
     
     Dim GrhPath As String
     
@@ -461,14 +524,38 @@ Private Sub LoadButtons()
                                     
     Call cBotonTeclas.Initialize(imgTeclas, GrhPath & "BotonTeclas.jpg", GrhPath & "BotonTeclasRollover.jpg", GrhPath & "BotonTeclasClick.jpg", Me)
 
+    
+    Exit Sub
+
+LoadButtons_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmConnect" & "->" & "LoadButtons"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Form_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+Form_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmConnect" & "->" & "Form_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub CheckServers()
+    
+    On Error GoTo CheckServers_Err
+    
 
     If Not IsIp(IPTxt) And CurServer <> 0 Then
         If MsgBox("Atencion, esta intentando conectarse a un servidor no oficial, NoLand Studios no se hace responsable de los posibles problemas que estos servidores presenten. ¿Desea continuar?", vbYesNo) = vbNo Then
@@ -490,6 +577,15 @@ Private Sub CheckServers()
     IPdelServidor = IPTxt
     PuertoDelServidor = PortTxt
 
+    
+    Exit Sub
+
+CheckServers_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmConnect" & "->" & "CheckServers"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgBorrarPj_Click()
@@ -517,11 +613,26 @@ Private Sub imgCodigoFuente_Click()
     'cambios que hacemos nosotros, compartí los tuyos. Es un cambio justo. Si no estás de acuerdo,
     'no uses nuestro código, pues nadie te obliga o bien utiliza una versión anterior a la 0.12.0.
     '***********************************
+    
+    On Error GoTo imgCodigoFuente_Click_Err
+    
     Call ShellExecute(0, "Open", "https://github.com/ao-libre", "", App.path, SW_SHOWNORMAL)
 
+    
+    Exit Sub
+
+imgCodigoFuente_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmConnect" & "->" & "imgCodigoFuente_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgConectarse_Click()
+    
+    On Error GoTo imgConectarse_Click_Err
+    
     Call CheckServers
     
     #If UsarWrench = 1 Then
@@ -563,21 +674,66 @@ Private Sub imgConectarse_Click()
 
     End If
     
+    
+    Exit Sub
+
+imgConectarse_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmConnect" & "->" & "imgConectarse_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgLeerMas_Click()
+    
+    On Error GoTo imgLeerMas_Click_Err
+    
     Call ShellExecute(0, "Open", "http://www.argentumonline.org", "", App.path, SW_SHOWNORMAL)
 
+    
+    Exit Sub
+
+imgLeerMas_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmConnect" & "->" & "imgLeerMas_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgCrearCuenta_Click()
+    
+    On Error GoTo imgCrearCuenta_Click_Err
+    
     frmCrearCuenta.Show
 
+    
+    Exit Sub
+
+imgCrearCuenta_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmConnect" & "->" & "imgCrearCuenta_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgManual_Click()
+    
+    On Error GoTo imgManual_Click_Err
+    
     Call ShellExecute(0, "Open", "http://www.argentumonline.org", "", App.path, SW_SHOWNORMAL)
 
+    
+    Exit Sub
+
+imgManual_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmConnect" & "->" & "imgManual_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgRecuperar_Click()
@@ -593,51 +749,147 @@ errH:
 End Sub
 
 Private Sub imgReglamento_Click()
+    
+    On Error GoTo imgReglamento_Click_Err
+    
     Call ShellExecute(0, "Open", "http://www.argentumonline.org", "", App.path, SW_SHOWNORMAL)
 
+    
+    Exit Sub
+
+imgReglamento_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmConnect" & "->" & "imgReglamento_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgSalir_Click()
+    
+    On Error GoTo imgSalir_Click_Err
+    
     prgRun = False
 
+    
+    Exit Sub
+
+imgSalir_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmConnect" & "->" & "imgSalir_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgServArgentina_Click()
+    
+    On Error GoTo imgServArgentina_Click_Err
+    
     Call Audio.PlayWave(SND_CLICK)
     IPTxt.Text = IPdelServidor
     PortTxt.Text = PuertoDelServidor
 
+    
+    Exit Sub
+
+imgServArgentina_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmConnect" & "->" & "imgServArgentina_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgTeclas_Click()
+    
+    On Error GoTo imgTeclas_Click_Err
+    
     Load frmKeypad
     frmKeypad.Show vbModal
     Unload frmKeypad
     txtPasswd.SetFocus
 
+    
+    Exit Sub
+
+imgTeclas_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmConnect" & "->" & "imgTeclas_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgVerForo_Click()
+    
+    On Error GoTo imgVerForo_Click_Err
+    
     Call ShellExecute(0, "Open", "https://www.reddit.com/r/argentumonlineoficial/", "", App.path, SW_SHOWNORMAL)
 
+    
+    Exit Sub
+
+imgVerForo_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmConnect" & "->" & "imgVerForo_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub lstRedditPosts_Click()
+    
+    On Error GoTo lstRedditPosts_Click_Err
+    
     Call ShellExecute(0, "Open", Posts(lstRedditPosts.ListIndex + 1).URL, "", App.path, SW_SHOWNORMAL)
 
+    
+    Exit Sub
+
+lstRedditPosts_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmConnect" & "->" & "lstRedditPosts_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub lstServers_Click()
+    
+    On Error GoTo lstServers_Click_Err
+    
     IPTxt.Text = ServersLst(lstServers.ListIndex + 1).Ip
     PortTxt.Text = ServersLst(lstServers.ListIndex + 1).Puerto
     CurServer = lstServers.ListIndex + 1
 
+    
+    Exit Sub
+
+lstServers_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmConnect" & "->" & "lstServers_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub txtPasswd_KeyPress(KeyAscii As Integer)
+    
+    On Error GoTo txtPasswd_KeyPress_Err
+    
 
     If KeyAscii = vbKeyReturn Then imgConectarse_Click
 
+    
+    Exit Sub
+
+txtPasswd_KeyPress_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmConnect" & "->" & "txtPasswd_KeyPress"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub GetPostsFromReddit()

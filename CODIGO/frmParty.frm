@@ -177,41 +177,43 @@ Private Const NORMAL_FORM_HEIGHT As Integer = 4455
 Private Const OFFSET_BUTTONS     As Integer = 43 ' pixels
 
 Private Sub Form_Load()
-
-        ' Handles Form movement (drag and drop).
-        '<EhHeader>
-        On Error GoTo Form_Load_Err
-
-        '</EhHeader>
-100     Set clsFormulario = New clsFormMovementManager
-102     clsFormulario.Initialize Me
     
-104     lstMembers.Clear
+    On Error GoTo Form_Load_Err
+    
+
+    ' Handles Form movement (drag and drop).
+    Set clsFormulario = New clsFormMovementManager
+    clsFormulario.Initialize Me
+    
+    lstMembers.Clear
         
-106     If EsPartyLeader Then
-108         Me.Picture = LoadPicture(App.path & "\graficos\VentanaPartyLider.jpg")
-110         Me.Height = LEADER_FORM_HEIGHT
-        Else
-112         Me.Picture = LoadPicture(App.path & "\graficos\VentanaPartyMiembro.jpg")
-114         Me.Height = NORMAL_FORM_HEIGHT
+    If EsPartyLeader Then
+        Me.Picture = LoadPicture(App.path & "\graficos\VentanaPartyLider.jpg")
+        Me.Height = LEADER_FORM_HEIGHT
+    Else
+        Me.Picture = LoadPicture(App.path & "\graficos\VentanaPartyMiembro.jpg")
+        Me.Height = NORMAL_FORM_HEIGHT
 
-        End If
+    End If
     
-116     Call LoadButtons
+    Call LoadButtons
 
-118     MirandoParty = True
-        '<EhFooter>
-        Exit Sub
+    MirandoParty = True
+    
+    Exit Sub
 
 Form_Load_Err:
-        MsgBox Err.Description & vbNewLine & "in ARGENTUM.frmParty.Form_Load " & "at line " & Erl, vbExclamation + vbOKOnly, "Application Error"
-
-        Resume Next
-
-        '</EhFooter>
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmParty" & "->" & "Form_Load"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadButtons()
+    
+    On Error GoTo LoadButtons_Err
+    
     Dim GrhPath As String
     
     GrhPath = DirGraficos
@@ -250,19 +252,55 @@ Private Sub LoadButtons()
     imgDisolver.Top = Me.ScaleHeight - OFFSET_BUTTONS
     imgCerrar.Top = Me.ScaleHeight - OFFSET_BUTTONS
 
+    
+    Exit Sub
+
+LoadButtons_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmParty" & "->" & "LoadButtons"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Form_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+Form_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmParty" & "->" & "Form_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
+    
+    On Error GoTo Form_Unload_Err
+    
     MirandoParty = False
 
+    
+    Exit Sub
+
+Form_Unload_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmParty" & "->" & "Form_Unload"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgAgregar_Click()
+    
+    On Error GoTo imgAgregar_Click_Err
+    
 
     If Len(txtToAdd) > 0 Then
         If Not IsNumeric(txtToAdd) Then
@@ -274,20 +312,56 @@ Private Sub imgAgregar_Click()
 
     End If
 
+    
+    Exit Sub
+
+imgAgregar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmParty" & "->" & "imgAgregar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgCerrar_Click()
+    
+    On Error GoTo imgCerrar_Click_Err
+    
     Unload Me
 
+    
+    Exit Sub
+
+imgCerrar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmParty" & "->" & "imgCerrar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgDisolver_Click()
+    
+    On Error GoTo imgDisolver_Click_Err
+    
     Call WritePartyLeave
     Unload Me
 
+    
+    Exit Sub
+
+imgDisolver_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmParty" & "->" & "imgDisolver_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgExpulsar_Click()
+    
+    On Error GoTo imgExpulsar_Click_Err
+    
    
     If lstMembers.ListIndex < 0 Then Exit Sub
     
@@ -303,6 +377,15 @@ Private Sub imgExpulsar_Click()
 
     End If
 
+    
+    Exit Sub
+
+imgExpulsar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmParty" & "->" & "imgExpulsar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Function GetName() As String
@@ -310,15 +393,30 @@ Private Function GetName() As String
     'Author: ZaMa
     'Last Modify Date: 27/12/2009
     '**************************************************************
+    
+    On Error GoTo GetName_Err
+    
     Dim sName As String
     
     sName = Trim$(mid$(lstMembers.List(lstMembers.ListIndex), 1, InStr(lstMembers.List(lstMembers.ListIndex), " (")))
 
     If Len(sName) > 0 Then GetName = sName
         
+    
+    Exit Function
+
+GetName_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmParty" & "->" & "GetName"
+    End If
+Resume Next
+    
 End Function
 
 Private Sub imgLiderGrupo_Click()
+    
+    On Error GoTo imgLiderGrupo_Click_Err
+    
     
     If lstMembers.ListIndex < 0 Then Exit Sub
     
@@ -332,27 +430,63 @@ Private Sub imgLiderGrupo_Click()
 
     End If
 
+    
+    Exit Sub
+
+imgLiderGrupo_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmParty" & "->" & "imgLiderGrupo_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgSalirParty_Click()
+    
+    On Error GoTo imgSalirParty_Click_Err
+    
     Call WritePartyLeave
     Unload Me
 
+    
+    Exit Sub
+
+imgSalirParty_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmParty" & "->" & "imgSalirParty_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub lstMembers_MouseDown(Button As Integer, _
                                  Shift As Integer, _
                                  X As Single, _
                                  Y As Single)
+    
+    On Error GoTo lstMembers_MouseDown_Err
+    
 
     If EsPartyLeader Then
         LastButtonPressed.ToggleToNormal
 
     End If
     
+    
+    Exit Sub
+
+lstMembers_MouseDown_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmParty" & "->" & "lstMembers_MouseDown"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub SendTxt_Change()
+    
+    On Error GoTo SendTxt_Change_Err
+    
 
     '**************************************************************
     'Author: Unknown
@@ -387,15 +521,39 @@ Private Sub SendTxt_Change()
 
     End If
 
+    
+    Exit Sub
+
+SendTxt_Change_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmParty" & "->" & "SendTxt_Change"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub SendTxt_KeyPress(KeyAscii As Integer)
+    
+    On Error GoTo SendTxt_KeyPress_Err
+    
 
     If Not (KeyAscii = vbKeyBack) And Not (KeyAscii >= vbKeySpace And KeyAscii <= 250) Then KeyAscii = 0
 
+    
+    Exit Sub
+
+SendTxt_KeyPress_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmParty" & "->" & "SendTxt_KeyPress"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo SendTxt_KeyUp_Err
+    
 
     'Send text
     If KeyCode = vbKeyReturn Then
@@ -408,25 +566,70 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
 
     End If
 
+    
+    Exit Sub
+
+SendTxt_KeyUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmParty" & "->" & "SendTxt_KeyUp"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub txtToAdd_MouseMove(Button As Integer, _
                                Shift As Integer, _
                                X As Single, _
                                Y As Single)
+    
+    On Error GoTo txtToAdd_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+txtToAdd_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmParty" & "->" & "txtToAdd_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub txtToAdd_KeyPress(KeyAscii As Integer)
+    
+    On Error GoTo txtToAdd_KeyPress_Err
+    
 
     If Not (KeyAscii = vbKeyBack) And Not (KeyAscii >= vbKeySpace And KeyAscii <= 250) Then KeyAscii = 0
 
+    
+    Exit Sub
+
+txtToAdd_KeyPress_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmParty" & "->" & "txtToAdd_KeyPress"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub txtToAdd_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo txtToAdd_KeyUp_Err
+    
 
     If KeyCode = vbKeyReturn Then imgAgregar_Click
 
+    
+    Exit Sub
+
+txtToAdd_KeyUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmParty" & "->" & "txtToAdd_KeyUp"
+    End If
+Resume Next
+    
 End Sub
 

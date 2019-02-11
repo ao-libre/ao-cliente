@@ -141,6 +141,9 @@ End Enum
 '@remarks All keys not listed here are considered not valid
 
 Public Function ReadableName(ByVal KeyCode As Integer) As String
+    
+    On Error GoTo ReadableName_Err
+    
 
     '***************************************************
     'Author: Rapsodius
@@ -248,6 +251,15 @@ Public Function ReadableName(ByVal KeyCode As Integer) As String
 
     End Select
 
+    
+    Exit Function
+
+ReadableName_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsCustomKeys" & "->" & "ReadableName"
+    End If
+Resume Next
+    
 End Function
 
 ''
@@ -262,6 +274,9 @@ Public Sub LoadCustomKeys()
     '16/11/2010: Amraphen - Adapté el procedimiento para cargar todas las configuraciones de teclas.
     '18/11/2010: Amraphen - Modifiqué la forma en que se cargan los bindings y ahora carga los del formato viejo.
     '***************************************************
+    
+    On Error GoTo LoadCustomKeys_Err
+    
     Dim i       As Long
     Dim j       As Long
     Dim FileNum As Integer
@@ -314,6 +329,15 @@ Public Sub LoadCustomKeys()
 
     End If
 
+    
+    Exit Sub
+
+LoadCustomKeys_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsCustomKeys" & "->" & "LoadCustomKeys"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -326,6 +350,9 @@ Public Sub SaveCustomKeys()
     '16/11/2010: Amraphen - Adapté el procedimiento para guardar todas las configuraciones de teclas.
     '18/11/2010: Amraphen - Ahora se guarda la configuración activa.
     '***************************************************
+    
+    On Error GoTo SaveCustomKeys_Err
+    
     Dim i       As Long
     Dim j       As Long
     Dim FileNum As Integer
@@ -346,6 +373,15 @@ Public Sub SaveCustomKeys()
     
     Close FileNum
 
+    
+    Exit Sub
+
+SaveCustomKeys_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsCustomKeys" & "->" & "SaveCustomKeys"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -355,6 +391,9 @@ End Sub
 '@return The Key code that belongs to index
 
 Public Property Get BindedKey(ByVal Index As eKeyType) As Integer
+    
+    On Error GoTo BindedKey_Err
+    
 
     '***************************************************
     'Author: Rapsodius
@@ -365,6 +404,15 @@ Public Property Get BindedKey(ByVal Index As eKeyType) As Integer
     
     BindedKey = mappedKeys(ActiveConfig, Index)
 
+    
+    Exit Property
+
+BindedKey_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsCustomKeys" & "->" & "BindedKey"
+    End If
+Resume Next
+    
 End Property
 
 ''
@@ -374,6 +422,9 @@ End Property
 '@param NewVal New key code
 
 Public Property Let BindedKey(ByVal Index As eKeyType, ByVal NewVal As Integer)
+    
+    On Error GoTo BindedKey_Err
+    
 
     '***************************************************
     'Author: Rapsodius
@@ -395,6 +446,15 @@ Public Property Let BindedKey(ByVal Index As eKeyType, ByVal NewVal As Integer)
     
     mappedKeys(ActiveConfig, Index) = NewVal
 
+    
+    Exit Property
+
+BindedKey_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsCustomKeys" & "->" & "BindedKey"
+    End If
+Resume Next
+    
 End Property
 
 ''
@@ -408,6 +468,9 @@ Public Sub LoadDefaults(ByVal KeyConfig As Byte)
     'Last Modification: 16/11/2010
     '16/11/2010: Amraphen - Adapté el procedimiento para que cargue los bindings por default en una sola configuración.
     '***************************************************
+    
+    On Error GoTo LoadDefaults_Err
+    
     mappedKeys(KeyConfig, eKeyType.mKeyUp) = KeyCodeConstants.vbKeyUp
     mappedKeys(KeyConfig, eKeyType.mKeyDown) = KeyCodeConstants.vbKeyDown
     mappedKeys(KeyConfig, eKeyType.mKeyLeft) = KeyCodeConstants.vbKeyLeft
@@ -436,6 +499,15 @@ Public Sub LoadDefaults(ByVal KeyConfig As Byte)
     mappedKeys(KeyConfig, eKeyType.mKeyWorkMacro) = KeyCodeConstants.vbKeyF8
     mappedKeys(KeyConfig, eKeyType.mKeyExitGame) = KeyCodeConstants.vbKeyF12
 
+    
+    Exit Sub
+
+LoadDefaults_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsCustomKeys" & "->" & "LoadDefaults"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -450,6 +522,9 @@ Public Function KeyAssigned(ByVal KeyCode As Integer) As Boolean
     'Last Modification: 16/11/2010
     '16/11/2010: Amraphen - Adapté la función para que trabaje sobre la configuración activa.
     '***************************************************
+    
+    On Error GoTo KeyAssigned_Err
+    
     Dim Counter As Long
     
     KeyAssigned = False
@@ -464,6 +539,15 @@ Public Function KeyAssigned(ByVal KeyCode As Integer) As Boolean
 
     Next Counter
 
+    
+    Exit Function
+
+KeyAssigned_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsCustomKeys" & "->" & "KeyAssigned"
+    End If
+Resume Next
+    
 End Function
 
 ''
@@ -477,8 +561,20 @@ Public Property Get KeyCount() As Byte
     'Last Modification: 16/11/2010
     '16/11/2010: Amraphen - Cambié el nombre para evitar confusiones.
     '***************************************************
+    
+    On Error GoTo KeyCount_Err
+    
     KeyCount = NUM_CUSTOM_KEYS
 
+    
+    Exit Property
+
+KeyCount_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsCustomKeys" & "->" & "KeyCount"
+    End If
+Resume Next
+    
 End Property
 
 '
@@ -490,8 +586,20 @@ Public Property Get ConfigCount() As Byte
     'Last Modification: 16/11/2010
     '
     '***************************************************
+    
+    On Error GoTo ConfigCount_Err
+    
     ConfigCount = NUM_CUSTOM_CONFIGS
 
+    
+    Exit Property
+
+ConfigCount_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsCustomKeys" & "->" & "ConfigCount"
+    End If
+Resume Next
+    
 End Property
 
 ''
@@ -500,6 +608,9 @@ End Property
 '@param NewVal New currently active key configuration index
 
 Public Property Let CurrentConfig(ByVal NewVal As Byte)
+    
+    On Error GoTo CurrentConfig_Err
+    
 
     '***************************************************
     'Author: Amraphen
@@ -510,6 +621,15 @@ Public Property Let CurrentConfig(ByVal NewVal As Byte)
     
     ActiveConfig = NewVal
 
+    
+    Exit Property
+
+CurrentConfig_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsCustomKeys" & "->" & "CurrentConfig"
+    End If
+Resume Next
+    
 End Property
 
 ''
@@ -523,8 +643,20 @@ Public Property Get CurrentConfig() As Byte
     'Last Modification: 16/11/2010
     '
     '***************************************************
+    
+    On Error GoTo CurrentConfig_Err
+    
     CurrentConfig = ActiveConfig
 
+    
+    Exit Property
+
+CurrentConfig_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsCustomKeys" & "->" & "CurrentConfig"
+    End If
+Resume Next
+    
 End Property
 
 ''
@@ -537,9 +669,21 @@ Private Sub Class_Initialize()
     '16/11/2010: Amraphen - Adapté el procedimiento para que trabaje sobre las distintas configuraciones de teclas.
     '18/11/2010: Amraphen - Ahora el manejo de errores se hace desde el sub LoadCustomKeys
     '***************************************************
+    
+    On Error GoTo Class_Initialize_Err
+    
 
     Call LoadCustomKeys
 
+    
+    Exit Sub
+
+Class_Initialize_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsCustomKeys" & "->" & "Class_Initialize"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -551,7 +695,19 @@ Private Sub Class_Terminate()
     'Last Modification: 08/04/07
     '
     '***************************************************
+    
+    On Error GoTo Class_Terminate_Err
+    
     Call SaveCustomKeys
 
+    
+    Exit Sub
+
+Class_Terminate_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsCustomKeys" & "->" & "Class_Terminate"
+    End If
+Resume Next
+    
 End Sub
 

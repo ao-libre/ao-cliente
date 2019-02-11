@@ -913,6 +913,9 @@ Private vsHelp(1 To NUMSKILLS)      As String
 
 Private Sub Form_Load()
     
+    On Error GoTo Form_Load_Err
+    
+    
     MirandoAsignarSkills = True
     
     ' Handles Form movement (drag and drop).
@@ -929,9 +932,21 @@ Private Sub Form_Load()
     
     Call LoadHelp
 
+    
+    Exit Sub
+
+Form_Load_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "Form_Load"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadButtons()
+    
+    On Error GoTo LoadButtons_Err
+    
     Dim GrhPath As String
     Dim i       As Long
     
@@ -1072,9 +1087,21 @@ Private Sub LoadButtons()
 
     Call cSkillNames(20).Initialize(imgNavegacion, "", GrhPath & "NavegacionRollover.jpg", GrhPath & "NavegacionRollover.jpg", Me, , , False, False)
 
+    
+    Exit Sub
+
+LoadButtons_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "LoadButtons"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub SumarSkillPoint(ByVal SkillIndex As Integer)
+    
+    On Error GoTo SumarSkillPoint_Err
+    
 
     If Alocados > 0 Then
 
@@ -1089,9 +1116,21 @@ Private Sub SumarSkillPoint(ByVal SkillIndex As Integer)
     
     puntos.Caption = Alocados
 
+    
+    Exit Sub
+
+SumarSkillPoint_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "SumarSkillPoint"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub RestarSkillPoint(ByVal SkillIndex As Integer)
+    
+    On Error GoTo RestarSkillPoint_Err
+    
 
     If Alocados < SkillPoints Then
         
@@ -1106,20 +1145,56 @@ Private Sub RestarSkillPoint(ByVal SkillIndex As Integer)
     
     puntos.Caption = Alocados
 
+    
+    Exit Sub
+
+RestarSkillPoint_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "RestarSkillPoint"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Form_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
     lblHelp.Caption = vbNullString
 
+    
+    Exit Sub
+
+Form_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "Form_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
+    
+    On Error GoTo Form_Unload_Err
+    
     MirandoAsignarSkills = False
 
+    
+    Exit Sub
+
+Form_Unload_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "Form_Unload"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgAceptar_Click()
+    
+    On Error GoTo imgAceptar_Click_Err
+    
     Dim skillChanges(NUMSKILLS) As Byte
     Dim i                       As Long
 
@@ -1137,318 +1212,978 @@ Private Sub imgAceptar_Click()
     
     Unload Me
 
+    
+    Exit Sub
+
+imgAceptar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgAceptar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgApunialar_MouseMove(Button As Integer, _
                                    Shift As Integer, _
                                    X As Single, _
                                    Y As Single)
+    
+    On Error GoTo imgApunialar_MouseMove_Err
+    
     Call ShowHelp(eSkill.Apuñalar)
 
+    
+    Exit Sub
+
+imgApunialar_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgApunialar_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgCancelar_Click()
+    
+    On Error GoTo imgCancelar_Click_Err
+    
     Unload Me
 
+    
+    Exit Sub
+
+imgCancelar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgCancelar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgCarpinteria_MouseMove(Button As Integer, _
                                      Shift As Integer, _
                                      X As Single, _
                                      Y As Single)
+    
+    On Error GoTo imgCarpinteria_MouseMove_Err
+    
     Call ShowHelp(eSkill.Carpinteria)
 
+    
+    Exit Sub
+
+imgCarpinteria_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgCarpinteria_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgCombateArmas_MouseMove(Button As Integer, _
                                       Shift As Integer, _
                                       X As Single, _
                                       Y As Single)
+    
+    On Error GoTo imgCombateArmas_MouseMove_Err
+    
     Call ShowHelp(eSkill.Armas)
 
+    
+    Exit Sub
+
+imgCombateArmas_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgCombateArmas_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgCombateDistancia_MouseMove(Button As Integer, _
                                           Shift As Integer, _
                                           X As Single, _
                                           Y As Single)
+    
+    On Error GoTo imgCombateDistancia_MouseMove_Err
+    
     Call ShowHelp(eSkill.Proyectiles)
 
+    
+    Exit Sub
+
+imgCombateDistancia_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgCombateDistancia_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgCombateSinArmas_MouseMove(Button As Integer, _
                                          Shift As Integer, _
                                          X As Single, _
                                          Y As Single)
+    
+    On Error GoTo imgCombateSinArmas_MouseMove_Err
+    
     Call ShowHelp(eSkill.Wrestling)
 
+    
+    Exit Sub
+
+imgCombateSinArmas_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgCombateSinArmas_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgComercio_MouseMove(Button As Integer, _
                                   Shift As Integer, _
                                   X As Single, _
                                   Y As Single)
+    
+    On Error GoTo imgComercio_MouseMove_Err
+    
     Call ShowHelp(eSkill.Comerciar)
 
+    
+    Exit Sub
+
+imgComercio_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgComercio_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgDomar_MouseMove(Button As Integer, _
                                Shift As Integer, _
                                X As Single, _
                                Y As Single)
+    
+    On Error GoTo imgDomar_MouseMove_Err
+    
     Call ShowHelp(eSkill.Domar)
 
+    
+    Exit Sub
+
+imgDomar_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgDomar_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgEscudos_MouseMove(Button As Integer, _
                                  Shift As Integer, _
                                  X As Single, _
                                  Y As Single)
+    
+    On Error GoTo imgEscudos_MouseMove_Err
+    
     Call ShowHelp(eSkill.Defensa)
 
+    
+    Exit Sub
+
+imgEscudos_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgEscudos_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgEvasion_MouseMove(Button As Integer, _
                                  Shift As Integer, _
                                  X As Single, _
                                  Y As Single)
+    
+    On Error GoTo imgEvasion_MouseMove_Err
+    
     Call ShowHelp(eSkill.Tacticas)
 
+    
+    Exit Sub
+
+imgEvasion_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgEvasion_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgHerreria_MouseMove(Button As Integer, _
                                   Shift As Integer, _
                                   X As Single, _
                                   Y As Single)
+    
+    On Error GoTo imgHerreria_MouseMove_Err
+    
     Call ShowHelp(eSkill.Herreria)
 
+    
+    Exit Sub
+
+imgHerreria_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgHerreria_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgLiderazgo_MouseMove(Button As Integer, _
                                    Shift As Integer, _
                                    X As Single, _
                                    Y As Single)
+    
+    On Error GoTo imgLiderazgo_MouseMove_Err
+    
     Call ShowHelp(eSkill.Liderazgo)
 
+    
+    Exit Sub
+
+imgLiderazgo_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgLiderazgo_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMagia_MouseMove(Button As Integer, _
                                Shift As Integer, _
                                X As Single, _
                                Y As Single)
+    
+    On Error GoTo imgMagia_MouseMove_Err
+    
     Call ShowHelp(eSkill.Magia)
 
+    
+    Exit Sub
+
+imgMagia_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMagia_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMas1_Click()
+    
+    On Error GoTo imgMas1_Click_Err
+    
     Call SumarSkillPoint(1)
 
+    
+    Exit Sub
+
+imgMas1_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMas1_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMas10_Click()
+    
+    On Error GoTo imgMas10_Click_Err
+    
     Call SumarSkillPoint(10)
 
+    
+    Exit Sub
+
+imgMas10_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMas10_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMas11_Click()
+    
+    On Error GoTo imgMas11_Click_Err
+    
     Call SumarSkillPoint(11)
 
+    
+    Exit Sub
+
+imgMas11_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMas11_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMas12_Click()
+    
+    On Error GoTo imgMas12_Click_Err
+    
     Call SumarSkillPoint(12)
 
+    
+    Exit Sub
+
+imgMas12_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMas12_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMas13_Click()
+    
+    On Error GoTo imgMas13_Click_Err
+    
     Call SumarSkillPoint(13)
 
+    
+    Exit Sub
+
+imgMas13_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMas13_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMas14_Click()
+    
+    On Error GoTo imgMas14_Click_Err
+    
     Call SumarSkillPoint(14)
 
+    
+    Exit Sub
+
+imgMas14_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMas14_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMas15_Click()
+    
+    On Error GoTo imgMas15_Click_Err
+    
     Call SumarSkillPoint(15)
 
+    
+    Exit Sub
+
+imgMas15_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMas15_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMas16_Click()
+    
+    On Error GoTo imgMas16_Click_Err
+    
     Call SumarSkillPoint(16)
 
+    
+    Exit Sub
+
+imgMas16_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMas16_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMas17_Click()
+    
+    On Error GoTo imgMas17_Click_Err
+    
     Call SumarSkillPoint(17)
 
+    
+    Exit Sub
+
+imgMas17_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMas17_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMas18_Click()
+    
+    On Error GoTo imgMas18_Click_Err
+    
     Call SumarSkillPoint(18)
 
+    
+    Exit Sub
+
+imgMas18_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMas18_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMas19_Click()
+    
+    On Error GoTo imgMas19_Click_Err
+    
     Call SumarSkillPoint(19)
 
+    
+    Exit Sub
+
+imgMas19_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMas19_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMas2_Click()
+    
+    On Error GoTo imgMas2_Click_Err
+    
     Call SumarSkillPoint(2)
 
+    
+    Exit Sub
+
+imgMas2_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMas2_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMas20_Click()
+    
+    On Error GoTo imgMas20_Click_Err
+    
     Call SumarSkillPoint(20)
 
+    
+    Exit Sub
+
+imgMas20_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMas20_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMas3_Click()
+    
+    On Error GoTo imgMas3_Click_Err
+    
     Call SumarSkillPoint(3)
 
+    
+    Exit Sub
+
+imgMas3_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMas3_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMas4_Click()
+    
+    On Error GoTo imgMas4_Click_Err
+    
     Call SumarSkillPoint(4)
 
+    
+    Exit Sub
+
+imgMas4_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMas4_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMas5_Click()
+    
+    On Error GoTo imgMas5_Click_Err
+    
     Call SumarSkillPoint(5)
 
+    
+    Exit Sub
+
+imgMas5_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMas5_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMas6_Click()
+    
+    On Error GoTo imgMas6_Click_Err
+    
     Call SumarSkillPoint(6)
 
+    
+    Exit Sub
+
+imgMas6_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMas6_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMas7_Click()
+    
+    On Error GoTo imgMas7_Click_Err
+    
     Call SumarSkillPoint(7)
 
+    
+    Exit Sub
+
+imgMas7_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMas7_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMas8_Click()
+    
+    On Error GoTo imgMas8_Click_Err
+    
     Call SumarSkillPoint(8)
 
+    
+    Exit Sub
+
+imgMas8_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMas8_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMas9_Click()
+    
+    On Error GoTo imgMas9_Click_Err
+    
     Call SumarSkillPoint(9)
 
+    
+    Exit Sub
+
+imgMas9_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMas9_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMeditar_MouseMove(Button As Integer, _
                                  Shift As Integer, _
                                  X As Single, _
                                  Y As Single)
+    
+    On Error GoTo imgMeditar_MouseMove_Err
+    
     Call ShowHelp(eSkill.Meditar)
 
+    
+    Exit Sub
+
+imgMeditar_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMeditar_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMenos1_Click()
+    
+    On Error GoTo imgMenos1_Click_Err
+    
     Call RestarSkillPoint(1)
 
+    
+    Exit Sub
+
+imgMenos1_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMenos1_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMenos10_Click()
+    
+    On Error GoTo imgMenos10_Click_Err
+    
     Call RestarSkillPoint(10)
 
+    
+    Exit Sub
+
+imgMenos10_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMenos10_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMenos11_Click()
+    
+    On Error GoTo imgMenos11_Click_Err
+    
     Call RestarSkillPoint(11)
 
+    
+    Exit Sub
+
+imgMenos11_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMenos11_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMenos12_Click()
+    
+    On Error GoTo imgMenos12_Click_Err
+    
     Call RestarSkillPoint(12)
 
+    
+    Exit Sub
+
+imgMenos12_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMenos12_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMenos13_Click()
+    
+    On Error GoTo imgMenos13_Click_Err
+    
     Call RestarSkillPoint(13)
 
+    
+    Exit Sub
+
+imgMenos13_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMenos13_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMenos14_Click()
+    
+    On Error GoTo imgMenos14_Click_Err
+    
     Call RestarSkillPoint(14)
 
+    
+    Exit Sub
+
+imgMenos14_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMenos14_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMenos15_Click()
+    
+    On Error GoTo imgMenos15_Click_Err
+    
     Call RestarSkillPoint(15)
 
+    
+    Exit Sub
+
+imgMenos15_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMenos15_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMenos16_Click()
+    
+    On Error GoTo imgMenos16_Click_Err
+    
     Call RestarSkillPoint(16)
 
+    
+    Exit Sub
+
+imgMenos16_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMenos16_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMenos17_Click()
+    
+    On Error GoTo imgMenos17_Click_Err
+    
     Call RestarSkillPoint(17)
 
+    
+    Exit Sub
+
+imgMenos17_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMenos17_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMenos18_Click()
+    
+    On Error GoTo imgMenos18_Click_Err
+    
     Call RestarSkillPoint(18)
 
+    
+    Exit Sub
+
+imgMenos18_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMenos18_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMenos19_Click()
+    
+    On Error GoTo imgMenos19_Click_Err
+    
     Call RestarSkillPoint(19)
 
+    
+    Exit Sub
+
+imgMenos19_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMenos19_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMenos2_Click()
+    
+    On Error GoTo imgMenos2_Click_Err
+    
     Call RestarSkillPoint(2)
 
+    
+    Exit Sub
+
+imgMenos2_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMenos2_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMenos20_Click()
+    
+    On Error GoTo imgMenos20_Click_Err
+    
     Call RestarSkillPoint(20)
 
+    
+    Exit Sub
+
+imgMenos20_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMenos20_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMenos3_Click()
+    
+    On Error GoTo imgMenos3_Click_Err
+    
     Call RestarSkillPoint(3)
 
+    
+    Exit Sub
+
+imgMenos3_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMenos3_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMenos4_Click()
+    
+    On Error GoTo imgMenos4_Click_Err
+    
     Call RestarSkillPoint(4)
 
+    
+    Exit Sub
+
+imgMenos4_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMenos4_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMenos5_Click()
+    
+    On Error GoTo imgMenos5_Click_Err
+    
     Call RestarSkillPoint(5)
 
+    
+    Exit Sub
+
+imgMenos5_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMenos5_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMenos6_Click()
+    
+    On Error GoTo imgMenos6_Click_Err
+    
     Call RestarSkillPoint(6)
 
+    
+    Exit Sub
+
+imgMenos6_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMenos6_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMenos7_Click()
+    
+    On Error GoTo imgMenos7_Click_Err
+    
     Call RestarSkillPoint(7)
 
+    
+    Exit Sub
+
+imgMenos7_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMenos7_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMenos8_Click()
+    
+    On Error GoTo imgMenos8_Click_Err
+    
     Call RestarSkillPoint(8)
 
+    
+    Exit Sub
+
+imgMenos8_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMenos8_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMenos9_Click()
+    
+    On Error GoTo imgMenos9_Click_Err
+    
     Call RestarSkillPoint(9)
 
+    
+    Exit Sub
+
+imgMenos9_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMenos9_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadHelp()
+    
+    On Error GoTo LoadHelp_Err
+    
     
     vsHelp(eSkill.Magia) = "Magia:" & vbCrLf & "- Representa la habilidad de un personaje de las áreas mágica." & vbCrLf & "- Indica la variedad de hechizos que es capaz de dominar el personaje."
 
@@ -1510,78 +2245,198 @@ Private Sub LoadHelp()
     
     vsHelp(eSkill.Navegacion) = "Navegación:" & vbCrLf & "- Es la habilidad para controlar barcos en el mar sin naufragar." & vbCrLf & "- Indica que clase de barcos se pueden utilizar."
     
+    
+    Exit Sub
+
+LoadHelp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "LoadHelp"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMineria_MouseMove(Button As Integer, _
                                  Shift As Integer, _
                                  X As Single, _
                                  Y As Single)
+    
+    On Error GoTo imgMineria_MouseMove_Err
+    
     Call ShowHelp(eSkill.Mineria)
 
+    
+    Exit Sub
+
+imgMineria_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgMineria_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgNavegacion_MouseMove(Button As Integer, _
                                     Shift As Integer, _
                                     X As Single, _
                                     Y As Single)
+    
+    On Error GoTo imgNavegacion_MouseMove_Err
+    
     Call ShowHelp(eSkill.Navegacion)
 
+    
+    Exit Sub
+
+imgNavegacion_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgNavegacion_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgOcultarse_MouseMove(Button As Integer, _
                                    Shift As Integer, _
                                    X As Single, _
                                    Y As Single)
+    
+    On Error GoTo imgOcultarse_MouseMove_Err
+    
     Call ShowHelp(eSkill.Ocultarse)
 
+    
+    Exit Sub
+
+imgOcultarse_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgOcultarse_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgPesca_MouseMove(Button As Integer, _
                                Shift As Integer, _
                                X As Single, _
                                Y As Single)
+    
+    On Error GoTo imgPesca_MouseMove_Err
+    
     Call ShowHelp(eSkill.Pesca)
 
+    
+    Exit Sub
+
+imgPesca_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgPesca_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgRobar_MouseMove(Button As Integer, _
                                Shift As Integer, _
                                X As Single, _
                                Y As Single)
+    
+    On Error GoTo imgRobar_MouseMove_Err
+    
     Call ShowHelp(eSkill.Robar)
 
+    
+    Exit Sub
+
+imgRobar_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgRobar_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgSupervivencia_MouseMove(Button As Integer, _
                                        Shift As Integer, _
                                        X As Single, _
                                        Y As Single)
+    
+    On Error GoTo imgSupervivencia_MouseMove_Err
+    
     Call ShowHelp(eSkill.Supervivencia)
 
+    
+    Exit Sub
+
+imgSupervivencia_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgSupervivencia_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgTalar_MouseMove(Button As Integer, _
                                Shift As Integer, _
                                X As Single, _
                                Y As Single)
+    
+    On Error GoTo imgTalar_MouseMove_Err
+    
     Call ShowHelp(eSkill.Talar)
 
+    
+    Exit Sub
+
+imgTalar_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "imgTalar_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub lblHelp_MouseMove(Button As Integer, _
                               Shift As Integer, _
                               X As Single, _
                               Y As Single)
+    
+    On Error GoTo lblHelp_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+lblHelp_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "lblHelp_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub ShowHelp(ByVal eeSkill As eSkill)
+    
+    On Error GoTo ShowHelp_Err
+    
     lblHelp.Caption = vsHelp(eeSkill)
 
+    
+    Exit Sub
+
+ShowHelp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "ShowHelp"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub ValidarSkills()
+    
+    On Error GoTo ValidarSkills_Err
+    
 
     bPuedeMagia = True
     bPuedeMeditar = True
@@ -1621,4 +2476,13 @@ Private Sub ValidarSkills()
     imgMas18.Enabled = bPuedeCombateDistancia
     imgMenos18.Enabled = bPuedeCombateDistancia
 
+    
+    Exit Sub
+
+ValidarSkills_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "ValidarSkills"
+    End If
+Resume Next
+    
 End Sub

@@ -21,6 +21,9 @@ Public Estado_Actual      As D3DCOLORVALUE
 Public Estado_Actual_Date As Byte
 
 Public Sub Init_MeteoEngine()
+    
+    On Error GoTo Init_MeteoEngine_Err
+    
 
     '***************************************************
     'Author: Standelf
@@ -69,17 +72,41 @@ Public Sub Init_MeteoEngine()
     
     Estado_Actual_Date = 3
     
+    
+    Exit Sub
+
+Init_MeteoEngine_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Clima" & "->" & "Init_MeteoEngine"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub Set_AmbientColor()
+    
+    On Error GoTo Set_AmbientColor_Err
+    
     Estado_Actual.a = 255
     Estado_Actual.b = CurMapAmbient.OwnAmbientLight.b
     Estado_Actual.g = CurMapAmbient.OwnAmbientLight.g
     Estado_Actual.r = CurMapAmbient.OwnAmbientLight.r
 
+    
+    Exit Sub
+
+Set_AmbientColor_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Clima" & "->" & "Set_AmbientColor"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub Actualizar_Estado(ByVal Estado As Byte)
+    
+    On Error GoTo Actualizar_Estado_Err
+    
 
     '***************************************************
     'Author: Standelf
@@ -104,6 +131,15 @@ Public Sub Actualizar_Estado(ByVal Estado As Byte)
         
     Call LightRenderAll
 
+    
+    Exit Sub
+
+Actualizar_Estado_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Clima" & "->" & "Actualizar_Estado"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub Start_Rampage()
@@ -112,6 +148,9 @@ Public Sub Start_Rampage()
     'Last Modification: 27/05/2010
     'Init Rampage
     '***************************************************
+    
+    On Error GoTo Start_Rampage_Err
+    
     Dim X As Byte, Y As Byte, TempColor As D3DCOLORVALUE
     TempColor.a = 255: TempColor.b = 255: TempColor.r = 255: TempColor.g = 255
     
@@ -121,6 +160,15 @@ Public Sub Start_Rampage()
         Next Y
     Next X
 
+    
+    Exit Sub
+
+Start_Rampage_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Clima" & "->" & "Start_Rampage"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub End_Rampage()
@@ -129,6 +177,9 @@ Public Sub End_Rampage()
     'Last Modification: 27/05/2010
     'End Rampage
     '***************************************************
+    
+    On Error GoTo End_Rampage_Err
+    
     OnRampageImgGrh = 0
     OnRampageImg = 0
     
@@ -142,5 +193,14 @@ Public Sub End_Rampage()
 
     Call LightRenderAll
 
+    
+    Exit Sub
+
+End_Rampage_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "mDx8_Clima" & "->" & "End_Rampage"
+    End If
+Resume Next
+    
 End Sub
 

@@ -63,19 +63,46 @@ Option Explicit
 Dim puedo As Boolean
 
 Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo Form_KeyUp_Err
+    
 
     If KeyCode = 27 Then If puedo Then Unload Me
 
+    
+    Exit Sub
+
+Form_KeyUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPres" & "->" & "Form_KeyUp"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_Load()
+    
+    On Error GoTo Form_Load_Err
+    
     Me.Width = 800 * Screen.TwipsPerPixelX
     Me.Height = 600 * Screen.TwipsPerPixelY
     puedo = False
 
+    
+    Exit Sub
+
+Form_Load_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPres" & "->" & "Form_Load"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Timer1_Timer()
+    
+    On Error GoTo Timer1_Timer_Err
+    
     Static ticks As Long
 
     Dim PresPath As String
@@ -96,4 +123,13 @@ Private Sub Timer1_Timer()
 
     End If
 
+    
+    Exit Sub
+
+Timer1_Timer_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPres" & "->" & "Timer1_Timer"
+    End If
+Resume Next
+    
 End Sub

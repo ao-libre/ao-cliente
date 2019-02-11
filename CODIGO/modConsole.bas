@@ -118,12 +118,24 @@ Public Sub EnableURLDetect(ByVal hWndRichTextbox As Long, ByVal hWndOwner As Lon
     'Last Modification: 18/11/2010
     'Enables url detection in richtexbox.
     '***************************************************
+    
+    On Error GoTo EnableURLDetect_Err
+    
     SendMessage hWndRichTextbox, EM_SETEVENTMASK, 0, ByVal ENM_LINK Or SendMessage(hWndRichTextbox, EM_GETEVENTMASK, 0, 0)
     SendMessage hWndRichTextbox, EM_AUTOURLDETECT, 1, ByVal 0
     
     hWndParent = hWndOwner
     hWndRTB = hWndRichTextbox
 
+    
+    Exit Sub
+
+EnableURLDetect_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "modConsole" & "->" & "EnableURLDetect"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub DisableURLDetect()
@@ -132,12 +144,27 @@ Public Sub DisableURLDetect()
     'Last Modification: 18/11/2010
     'Disables url detection in richtexbox.
     '***************************************************
+    
+    On Error GoTo DisableURLDetect_Err
+    
     SendMessage hWndRTB, EM_AUTOURLDETECT, 0, ByVal 0
     StopCheckingLinks
 
+    
+    Exit Sub
+
+DisableURLDetect_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "modConsole" & "->" & "DisableURLDetect"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub StartCheckingLinks()
+    
+    On Error GoTo StartCheckingLinks_Err
+    
 
     '***************************************************
     'Author: ZaMa
@@ -149,9 +176,21 @@ Public Sub StartCheckingLinks()
 
     End If
 
+    
+    Exit Sub
+
+StartCheckingLinks_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "modConsole" & "->" & "StartCheckingLinks"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub StopCheckingLinks()
+    
+    On Error GoTo StopCheckingLinks_Err
+    
 
     '***************************************************
     'Author: ZaMa
@@ -164,6 +203,15 @@ Public Sub StopCheckingLinks()
 
     End If
 
+    
+    Exit Sub
+
+StopCheckingLinks_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "modConsole" & "->" & "StopCheckingLinks"
+    End If
+Resume Next
+    
 End Sub
 
 Public Function WndProc(ByVal hwnd As Long, _
@@ -175,6 +223,9 @@ Public Function WndProc(ByVal hwnd As Long, _
     'Last Modification: 18/11/2010
     'Get "Click" event on link and open browser.
     '***************************************************
+    
+    On Error GoTo WndProc_Err
+    
     Dim uHead As NMHDR
     Dim eLink As ENLINK
     Dim eText As TEXTRANGE
@@ -207,5 +258,14 @@ Public Function WndProc(ByVal hwnd As Long, _
     
     WndProc = CallWindowProc(lOldProc, hwnd, uMsg, wParam, lParam)
 
+    
+    Exit Function
+
+WndProc_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "modConsole" & "->" & "WndProc"
+    End If
+Resume Next
+    
 End Function
 

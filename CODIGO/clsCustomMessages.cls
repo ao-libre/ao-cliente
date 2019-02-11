@@ -105,6 +105,9 @@ Private Sub Class_Terminate()
     'Last Modification: 07/26/07
     'Stores all messages back into config file for later use.
     '***************************************************
+    
+    On Error GoTo Class_Terminate_Err
+    
     Dim handle        As Integer
     Dim i             As Long
     Dim directories() As String
@@ -135,6 +138,15 @@ Private Sub Class_Terminate()
     
     Close handle
 
+    
+    Exit Sub
+
+Class_Terminate_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsCustomMessages" & "->" & "Class_Terminate"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -144,6 +156,9 @@ End Sub
 ' @return   The message requested.
 
 Public Property Get Message(ByVal Index As Integer) As String
+    
+    On Error GoTo Message_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -157,6 +172,15 @@ Public Property Get Message(ByVal Index As Integer) As String
     
     Message = CustomMessages(Index)
 
+    
+    Exit Property
+
+Message_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsCustomMessages" & "->" & "Message"
+    End If
+Resume Next
+    
 End Property
 
 ''
@@ -166,6 +190,9 @@ End Property
 ' @param    nValue  The message to be stored.
 
 Public Property Let Message(ByVal Index As Integer, ByVal nValue As String)
+    
+    On Error GoTo Message_Err
+    
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -185,6 +212,15 @@ Public Property Let Message(ByVal Index As Integer, ByVal nValue As String)
     
     CustomMessages(Index) = nValue
 
+    
+    Exit Property
+
+Message_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsCustomMessages" & "->" & "Message"
+    End If
+Resume Next
+    
 End Property
 
 ''
@@ -198,8 +234,20 @@ Public Property Get InvalidMessageErrCode() As Long
     'Last Modification: 07/26/07
     'Retrieves the INVALID_MESSAGE error code.
     '***************************************************
+    
+    On Error GoTo InvalidMessageErrCode_Err
+    
     InvalidMessageErrCode = INVALID_MESSAGE
 
+    
+    Exit Property
+
+InvalidMessageErrCode_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsCustomMessages" & "->" & "InvalidMessageErrCode"
+    End If
+Resume Next
+    
 End Property
 
 ''
@@ -218,6 +266,9 @@ Private Function MessageIsValid(ByRef msg As String) As Boolean
     'it was causing problems and detected as many messages
     'as wrong with nothing bad on them
     '***************************************************
+    
+    On Error GoTo MessageIsValid_Err
+    
     Dim i     As Long
     Dim Char  As String * 1
     Dim ascii As Byte
@@ -251,4 +302,13 @@ Private Function MessageIsValid(ByRef msg As String) As Boolean
     
     MessageIsValid = True
 
+    
+    Exit Function
+
+MessageIsValid_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsCustomMessages" & "->" & "MessageIsValid"
+    End If
+Resume Next
+    
 End Function

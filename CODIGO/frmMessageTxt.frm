@@ -247,6 +247,9 @@ Private cBotonCancelar   As clsGraphicalButton
 Public LastButtonPressed As clsGraphicalButton
 
 Private Sub Form_Load()
+    
+    On Error GoTo Form_Load_Err
+    
     Dim i As Long
     
     ' Handles Form movement (drag and drop).
@@ -261,9 +264,21 @@ Private Sub Form_Load()
     
     LoadButtons
     
+    
+    Exit Sub
+
+Form_Load_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMessageTxt" & "->" & "Form_Load"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadButtons()
+    
+    On Error GoTo LoadButtons_Err
+    
     Dim GrhPath As String
     
     GrhPath = DirGraficos
@@ -276,16 +291,49 @@ Private Sub LoadButtons()
     Call cBotonGuardar.Initialize(imgGuardar, GrhPath & "BotonGuardarCustomMsg.jpg", GrhPath & "BotonGuardarRolloverCustomMsg.jpg", GrhPath & "BotonGuardarClickCustomMsg.jpg", Me)
     Call cBotonCancelar.Initialize(imgCancelar, GrhPath & "BotonCancelarCustomMsg.jpg", GrhPath & "BotonCancelarRolloverCustomMsg.jpg", GrhPath & "BotonCancelarClickCustomMsg.jpg", Me)
 
+    
+    Exit Sub
+
+LoadButtons_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMessageTxt" & "->" & "LoadButtons"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Form_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+Form_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMessageTxt" & "->" & "Form_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgCancelar_Click()
+    
+    On Error GoTo imgCancelar_Click_Err
+    
     Unload Me
 
+    
+    Exit Sub
+
+imgCancelar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMessageTxt" & "->" & "imgCancelar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgGuardar_Click()
@@ -316,6 +364,18 @@ Private Sub messageTxt_MouseMove(Index As Integer, _
                                  Shift As Integer, _
                                  X As Single, _
                                  Y As Single)
+    
+    On Error GoTo messageTxt_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+messageTxt_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMessageTxt" & "->" & "messageTxt_MouseMove"
+    End If
+Resume Next
+    
 End Sub

@@ -105,6 +105,9 @@ Public Sub SetResolution()
     'Last Modified By: Juan Martín Sotuyo Dodero (Maraxus)
     ' 03/29/2008: Maraxus - Retrieves current settings storing display depth and frequency for proper restoration.
     '***************************************************
+    
+    On Error GoTo SetResolution_Err
+    
 
     Dim lRes              As Long
     Dim MidevM            As typDevMODE
@@ -151,6 +154,15 @@ Public Sub SetResolution()
   
     CambiarResolucion = (oldResWidth < 800 Or oldResHeight < 600)
 
+    
+    Exit Sub
+
+SetResolution_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Resolution" & "->" & "SetResolution"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub ResetResolution()
@@ -161,6 +173,9 @@ Public Sub ResetResolution()
     'Last Modified By: Juan Martín Sotuyo Dodero (Maraxus)
     ' 03/29/2008: Maraxus - Properly restores display depth and frequency.
     '***************************************************
+    
+    On Error GoTo ResetResolution_Err
+    
     Dim typDevM As typDevMODE
     Dim lRes    As Long
     
@@ -181,5 +196,14 @@ Public Sub ResetResolution()
 
     End If
 
+    
+    Exit Sub
+
+ResetResolution_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Resolution" & "->" & "ResetResolution"
+    End If
+Resume Next
+    
 End Sub
 

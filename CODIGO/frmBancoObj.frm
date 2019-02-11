@@ -286,6 +286,9 @@ Public LastIndex2          As Integer
 Public NoPuedeMover        As Boolean
 
 Private Sub cantidad_Change()
+    
+    On Error GoTo cantidad_Change_Err
+    
 
     If Val(cantidad.Text) < 1 Then
         cantidad.Text = 1
@@ -297,9 +300,21 @@ Private Sub cantidad_Change()
 
     End If
 
+    
+    Exit Sub
+
+cantidad_Change_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmBancoObj" & "->" & "cantidad_Change"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub cantidad_KeyPress(KeyAscii As Integer)
+    
+    On Error GoTo cantidad_KeyPress_Err
+    
 
     If (KeyAscii <> 8) Then
         If (KeyAscii <> 6) And (KeyAscii < 48 Or KeyAscii > 57) Then
@@ -309,18 +324,42 @@ Private Sub cantidad_KeyPress(KeyAscii As Integer)
 
     End If
 
+    
+    Exit Sub
+
+cantidad_KeyPress_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmBancoObj" & "->" & "cantidad_KeyPress"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub CantidadOro_Change()
+    
+    On Error GoTo CantidadOro_Change_Err
+    
 
     If Val(CantidadOro.Text) < 1 Then
         cantidad.Text = 1
 
     End If
 
+    
+    Exit Sub
+
+CantidadOro_Change_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmBancoObj" & "->" & "CantidadOro_Change"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub CantidadOro_KeyPress(KeyAscii As Integer)
+    
+    On Error GoTo CantidadOro_KeyPress_Err
+    
 
     If (KeyAscii <> 8) Then
         If (KeyAscii <> 6) And (KeyAscii < 48 Or KeyAscii > 57) Then
@@ -330,10 +369,22 @@ Private Sub CantidadOro_KeyPress(KeyAscii As Integer)
 
     End If
 
+    
+    Exit Sub
+
+CantidadOro_KeyPress_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmBancoObj" & "->" & "CantidadOro_KeyPress"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
+    
+    On Error GoTo Form_Load_Err
+    
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
 
@@ -342,9 +393,21 @@ Private Sub Form_Load()
     
     Call LoadButtons
     
+    
+    Exit Sub
+
+Form_Load_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmBancoObj" & "->" & "Form_Load"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadButtons()
+    
+    On Error GoTo LoadButtons_Err
+    
 
     Dim GrhPath As String
     
@@ -365,14 +428,38 @@ Private Sub LoadButtons()
     Image1(0).MouseIcon = picMouseIcon
     Image1(1).MouseIcon = picMouseIcon
     
+    
+    Exit Sub
+
+LoadButtons_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmBancoObj" & "->" & "LoadButtons"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Form_MouseMove_Err
+    
     Call LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+Form_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmBancoObj" & "->" & "Form_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Image1_Click(Index As Integer)
+    
+    On Error GoTo Image1_Click_Err
+    
     
     Call Audio.PlayWave(SND_CLICK)
     
@@ -394,19 +481,55 @@ Private Sub Image1_Click(Index As Integer)
 
     End Select
 
+    
+    Exit Sub
+
+Image1_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmBancoObj" & "->" & "Image1_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgDepositarOro_Click()
+    
+    On Error GoTo imgDepositarOro_Click_Err
+    
     Call WriteBankDepositGold(Val(CantidadOro.Text))
 
+    
+    Exit Sub
+
+imgDepositarOro_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmBancoObj" & "->" & "imgDepositarOro_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgRetirarOro_Click()
+    
+    On Error GoTo imgRetirarOro_Click_Err
+    
     Call WriteBankExtractGold(Val(CantidadOro.Text))
 
+    
+    Exit Sub
+
+imgRetirarOro_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmBancoObj" & "->" & "imgRetirarOro_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub PicBancoInv_Click()
+    
+    On Error GoTo PicBancoInv_Click_Err
+    
 
     If InvBanco(0).SelectedItem <> 0 Then
 
@@ -442,17 +565,41 @@ Private Sub PicBancoInv_Click()
 
     End If
 
+    
+    Exit Sub
+
+PicBancoInv_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmBancoObj" & "->" & "PicBancoInv_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub PicBancoInv_MouseMove(Button As Integer, _
                                   Shift As Integer, _
                                   X As Single, _
                                   Y As Single)
+    
+    On Error GoTo PicBancoInv_MouseMove_Err
+    
     Call LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+PicBancoInv_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmBancoObj" & "->" & "PicBancoInv_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub PicInv_Click()
+    
+    On Error GoTo PicInv_Click_Err
+    
     
     If InvBanco(1).SelectedItem <> 0 Then
 
@@ -488,18 +635,51 @@ Private Sub PicInv_Click()
 
     End If
 
+    
+    Exit Sub
+
+PicInv_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmBancoObj" & "->" & "PicInv_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub PicInv_MouseMove(Button As Integer, _
                              Shift As Integer, _
                              X As Single, _
                              Y As Single)
+    
+    On Error GoTo PicInv_MouseMove_Err
+    
     Call LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+PicInv_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmBancoObj" & "->" & "PicInv_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgCerrar_Click()
+    
+    On Error GoTo imgCerrar_Click_Err
+    
     Call WriteBankEnd
     NoPuedeMover = False
 
+    
+    Exit Sub
+
+imgCerrar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmBancoObj" & "->" & "imgCerrar_Click"
+    End If
+Resume Next
+    
 End Sub

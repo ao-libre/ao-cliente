@@ -510,6 +510,9 @@ Private UsarMacro               As Boolean
 
 Private Sub Form_Load()
     
+    On Error GoTo Form_Load_Err
+    
+    
     ' Handles Form movement (drag and drop).
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
@@ -519,9 +522,21 @@ Private Sub Form_Load()
     Me.Picture = LoadPicture(App.path & "\graficos\VentanaCarpinteriaItems.jpg")
     LoadButtons
 
+    
+    Exit Sub
+
+Form_Load_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCarp" & "->" & "Form_Load"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadButtons()
+    
+    On Error GoTo LoadButtons_Err
+    
     Dim GrhPath As String
     Dim Index   As Long
     
@@ -580,9 +595,21 @@ Private Sub LoadButtons()
     
     imgChkMacro.MouseIcon = picMouseIcon
 
+    
+    Exit Sub
+
+LoadButtons_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCarp" & "->" & "LoadButtons"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadDefaultValues()
+    
+    On Error GoTo LoadDefaultValues_Err
+    
     
     Dim MaxConstItem As Integer
     Dim i            As Integer
@@ -607,9 +634,21 @@ Private Sub LoadDefaultValues()
     
     Cargando = False
 
+    
+    Exit Sub
+
+LoadDefaultValues_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCarp" & "->" & "LoadDefaultValues"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Construir(ByVal Index As Integer)
+    
+    On Error GoTo Construir_Err
+    
 
     Dim ItemIndex      As Integer
     Dim CantItemsCiclo As Integer
@@ -641,10 +680,22 @@ Private Sub Construir(ByVal Index As Integer)
         
     Unload Me
 
+    
+    Exit Sub
+
+Construir_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCarp" & "->" & "Construir"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub HideExtraControls(ByVal NumItems As Integer, _
                              Optional ByVal Upgrading As Boolean = False)
+    
+    On Error GoTo HideExtraControls_Err
+    
     Dim i As Integer
     
     picMaderas0.Visible = (NumItems >= 1)
@@ -687,6 +738,15 @@ Public Sub HideExtraControls(ByVal NumItems As Integer, _
     imgChkMacro.Visible = Not Upgrading
     imgCantidadCiclo.Visible = Not Upgrading And UsarMacro
 
+    
+    Exit Sub
+
+HideExtraControls_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCarp" & "->" & "HideExtraControls"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub RenderItem(ByRef Pic As PictureBox, ByVal GrhIndex As Long)
@@ -746,6 +806,9 @@ Public Sub RenderList(ByVal Inicio As Integer)
 End Sub
 
 Public Sub RenderUpgradeList(ByVal Inicio As Integer)
+    
+    On Error GoTo RenderUpgradeList_Err
+    
     Dim i        As Long
     Dim NumItems As Integer
 
@@ -774,14 +837,38 @@ Public Sub RenderUpgradeList(ByVal Inicio As Integer)
 
     Next i
 
+    
+    Exit Sub
+
+RenderUpgradeList_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCarp" & "->" & "RenderUpgradeList"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Form_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+Form_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCarp" & "->" & "Form_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
+    
+    On Error GoTo Form_Unload_Err
+    
     Dim i As Long
     
     For i = 1 To MAX_LIST_ITEMS
@@ -790,14 +877,38 @@ Private Sub Form_Unload(Cancel As Integer)
 
     MirandoCarpinteria = False
 
+    
+    Exit Sub
+
+Form_Unload_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCarp" & "->" & "Form_Unload"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgCerrar_Click()
+    
+    On Error GoTo imgCerrar_Click_Err
+    
     Unload Me
 
+    
+    Exit Sub
+
+imgCerrar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCarp" & "->" & "imgCerrar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgChkMacro_Click()
+    
+    On Error GoTo imgChkMacro_Click_Err
+    
     UsarMacro = Not UsarMacro
     
     If UsarMacro Then
@@ -810,49 +921,157 @@ Private Sub imgChkMacro_Click()
     cboItemsCiclo.Visible = UsarMacro
     imgCantidadCiclo.Visible = UsarMacro
 
+    
+    Exit Sub
+
+imgChkMacro_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCarp" & "->" & "imgChkMacro_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgConstruir0_Click()
+    
+    On Error GoTo imgConstruir0_Click_Err
+    
     Call Construir(1)
 
+    
+    Exit Sub
+
+imgConstruir0_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCarp" & "->" & "imgConstruir0_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgConstruir1_Click()
+    
+    On Error GoTo imgConstruir1_Click_Err
+    
     Call Construir(2)
 
+    
+    Exit Sub
+
+imgConstruir1_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCarp" & "->" & "imgConstruir1_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgConstruir2_Click()
+    
+    On Error GoTo imgConstruir2_Click_Err
+    
     Call Construir(3)
 
+    
+    Exit Sub
+
+imgConstruir2_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCarp" & "->" & "imgConstruir2_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgConstruir3_Click()
+    
+    On Error GoTo imgConstruir3_Click_Err
+    
     Call Construir(4)
 
+    
+    Exit Sub
+
+imgConstruir3_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCarp" & "->" & "imgConstruir3_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMejorar0_Click()
+    
+    On Error GoTo imgMejorar0_Click_Err
+    
     Call Construir(1)
 
+    
+    Exit Sub
+
+imgMejorar0_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCarp" & "->" & "imgMejorar0_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMejorar1_Click()
+    
+    On Error GoTo imgMejorar1_Click_Err
+    
     Call Construir(2)
 
+    
+    Exit Sub
+
+imgMejorar1_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCarp" & "->" & "imgMejorar1_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMejorar2_Click()
+    
+    On Error GoTo imgMejorar2_Click_Err
+    
     Call Construir(3)
 
+    
+    Exit Sub
+
+imgMejorar2_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCarp" & "->" & "imgMejorar2_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMejorar3_Click()
+    
+    On Error GoTo imgMejorar3_Click_Err
+    
     Call Construir(4)
 
+    
+    Exit Sub
+
+imgMejorar3_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCarp" & "->" & "imgMejorar3_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgPestania_Click(Index As Integer)
+    
+    On Error GoTo imgPestania_Click_Err
+    
     Dim i        As Integer
     Dim NumItems As Integer
     
@@ -888,9 +1107,21 @@ Private Sub imgPestania_Click(Index As Integer)
 
     UltimaPestania = Index
 
+    
+    Exit Sub
+
+imgPestania_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCarp" & "->" & "imgPestania_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Scroll_Change()
+    
+    On Error GoTo Scroll_Change_Err
+    
     Dim i As Long
     
     If Cargando Then Exit Sub
@@ -908,4 +1139,13 @@ Private Sub Scroll_Change()
 
     End Select
 
+    
+    Exit Sub
+
+Scroll_Change_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCarp" & "->" & "Scroll_Change"
+    End If
+Resume Next
+    
 End Sub

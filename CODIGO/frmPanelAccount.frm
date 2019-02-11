@@ -569,6 +569,9 @@ Private Sub Form_Load()
 End Sub
 
 Private Sub Image5_Click()
+    
+    On Error GoTo Image5_Click_Err
+    
 
     If Not lblAccData(Index + 1).Caption = "" Then
         UserName = lblAccData(Index + 1).Caption
@@ -576,14 +579,38 @@ Private Sub Image5_Click()
 
     End If
 
+    
+    Exit Sub
+
+Image5_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelAccount" & "->" & "Image5_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub lblName_Click(Index As Integer)
+    
+    On Error GoTo lblName_Click_Err
+    
     Seleccionado = Index
 
+    
+    Exit Sub
+
+lblName_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelAccount" & "->" & "lblName_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgConectar_Click()
+    
+    On Error GoTo imgConectar_Click_Err
+    
 
     If lblAccData(Seleccionado).Caption = vbNullString Then
         MsgBox "Error: No has seleccionado un personaje."
@@ -609,9 +636,21 @@ Private Sub imgConectar_Click()
 
         End If
 
+    
+    Exit Sub
+
+imgConectar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelAccount" & "->" & "imgConectar_Click"
+    End If
+Resume Next
+    
     End Sub
 
 Private Sub imgCrearPersonaje_Click()
+    
+    On Error GoTo imgCrearPersonaje_Click_Err
+    
 
     If NumberOfCharacters >= 10 Then
         MsgBox "Error: No puedes crear mas de 10 personajes."
@@ -629,16 +668,40 @@ Private Sub imgCrearPersonaje_Click()
 
     Next i
 
+    
+    Exit Sub
+
+imgCrearPersonaje_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelAccount" & "->" & "imgCrearPersonaje_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgSalir_Click()
+    
+    On Error GoTo imgSalir_Click_Err
+    
     frmMain.Socket1.Disconnect
     Unload Me
     frmConnect.Show
 
+    
+    Exit Sub
+
+imgSalir_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelAccount" & "->" & "imgSalir_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub picChar_Click(Index As Integer)
+    
+    On Error GoTo picChar_Click_Err
+    
     Seleccionado = Index + 1
 
     If cPJ(Seleccionado).Nombre <> "" Then
@@ -658,9 +721,21 @@ Private Sub picChar_Click(Index As Integer)
 
     End If
 
+    
+    Exit Sub
+
+picChar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelAccount" & "->" & "picChar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub picChar_DblClick(Index As Integer)
+    
+    On Error GoTo picChar_DblClick_Err
+    
     Seleccionado = Index + 1
 
     If Not lblAccData(Seleccionado).Caption = "" Then
@@ -671,6 +746,15 @@ Private Sub picChar_DblClick(Index As Integer)
 
     End If
 
+    
+    Exit Sub
+
+picChar_DblClick_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelAccount" & "->" & "picChar_DblClick"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub tmrRender_Timer()

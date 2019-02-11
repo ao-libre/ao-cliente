@@ -97,6 +97,9 @@ Private Sub Class_Terminate()
     'Last Modify Date: 3/06/2006
     'Clean up
     '**************************************************************
+    
+    On Error GoTo Class_Terminate_Err
+    
     Dim i As Long
     Dim j As Long
     
@@ -110,6 +113,15 @@ Private Sub Class_Terminate()
         Erase surfaceList(i).SurfaceEntry
     Next i
 
+    
+    Exit Sub
+
+Class_Terminate_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsSurfaceManStatic" & "->" & "Class_Terminate"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub clsSurfaceManager_Initialize(ByRef DD As D3DX8, _
@@ -119,10 +131,22 @@ Private Sub clsSurfaceManager_Initialize(ByRef DD As D3DX8, _
     'Author: Juan Martín Sotuyo Dodero
     'Last Modify Date: 29/07/2012 - ^[GS]^
     '**************************************************************
+    
+    On Error GoTo clsSurfaceManager_Initialize_Err
+    
     Set DirectD3D = DD
 
     Call LoadSurfaces(graphicPath)
 
+    
+    Exit Sub
+
+clsSurfaceManager_Initialize_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "clsSurfaceManStatic" & "->" & "clsSurfaceManager_Initialize"
+    End If
+Resume Next
+    
 End Sub
 
 Private Property Get clsSurfaceManager_Surface(ByVal fileIndex As Long) As Direct3DTexture8

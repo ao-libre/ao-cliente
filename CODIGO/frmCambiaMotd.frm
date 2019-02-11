@@ -167,6 +167,9 @@ Private yCursiva         As Byte
 
 Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
+    
+    On Error GoTo Form_Load_Err
+    
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
@@ -174,9 +177,21 @@ Private Sub Form_Load()
     
     Call LoadButtons
 
+    
+    Exit Sub
+
+Form_Load_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCambiaMotd" & "->" & "Form_Load"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadButtons()
+    
+    On Error GoTo LoadButtons_Err
+    
     Dim GrhPath As String
     
     GrhPath = DirGraficos
@@ -214,14 +229,38 @@ Private Sub LoadButtons()
     Set picNegrita = LoadPicture(DirGraficos & "OpcionPrendidaN.jpg")
     Set picCursiva = LoadPicture(DirGraficos & "OpcionPrendidaC.jpg")
 
+    
+    Exit Sub
+
+LoadButtons_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCambiaMotd" & "->" & "LoadButtons"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Form_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+Form_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCambiaMotd" & "->" & "Form_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgAceptar_Click()
+    
+    On Error GoTo imgAceptar_Click_Err
+    
     Dim T() As String
     Dim i   As Long, N As Long, Pos As Long
     
@@ -252,39 +291,123 @@ Private Sub imgAceptar_Click()
     Call WriteSetMOTD(txtMotd.Text)
     Unload Me
 
+    
+    Exit Sub
+
+imgAceptar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCambiaMotd" & "->" & "imgAceptar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgAmarillo_Click()
+    
+    On Error GoTo imgAmarillo_Click_Err
+    
     txtMotd.Text = txtMotd & "~244~244~0~" & CStr(yNegrita) & "~" & CStr(yCursiva)
 
+    
+    Exit Sub
+
+imgAmarillo_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCambiaMotd" & "->" & "imgAmarillo_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgAzul_Click()
+    
+    On Error GoTo imgAzul_Click_Err
+    
     txtMotd.Text = txtMotd & "~50~70~250~" & CStr(yNegrita) & "~" & CStr(yCursiva)
 
+    
+    Exit Sub
+
+imgAzul_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCambiaMotd" & "->" & "imgAzul_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgBlanco_Click()
+    
+    On Error GoTo imgBlanco_Click_Err
+    
     txtMotd.Text = txtMotd & "~255~255~255~" & CStr(yNegrita) & "~" & CStr(yCursiva)
 
+    
+    Exit Sub
+
+imgBlanco_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCambiaMotd" & "->" & "imgBlanco_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgGris_Click()
+    
+    On Error GoTo imgGris_Click_Err
+    
     txtMotd.Text = txtMotd & "~157~157~157~" & CStr(yNegrita) & "~" & CStr(yCursiva)
 
+    
+    Exit Sub
+
+imgGris_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCambiaMotd" & "->" & "imgGris_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMarron_Click()
+    
+    On Error GoTo imgMarron_Click_Err
+    
     txtMotd.Text = txtMotd & "~97~58~31~" & CStr(yNegrita) & "~" & CStr(yCursiva)
 
+    
+    Exit Sub
+
+imgMarron_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCambiaMotd" & "->" & "imgMarron_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgMorado_Click()
+    
+    On Error GoTo imgMorado_Click_Err
+    
     txtMotd.Text = txtMotd & "~128~0~128~" & CStr(yNegrita) & "~" & CStr(yCursiva)
 
+    
+    Exit Sub
+
+imgMorado_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCambiaMotd" & "->" & "imgMorado_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgOptCursiva_Click(Index As Integer)
+    
+    On Error GoTo imgOptCursiva_Click_Err
+    
     
     If yCursiva = 0 Then
         imgOptCursiva(0).Picture = picCursiva
@@ -295,6 +418,15 @@ Private Sub imgOptCursiva_Click(Index As Integer)
 
     End If
 
+    
+    Exit Sub
+
+imgOptCursiva_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCambiaMotd" & "->" & "imgOptCursiva_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgOptCursiva_MouseMove(Index As Integer, _
@@ -302,11 +434,26 @@ Private Sub imgOptCursiva_MouseMove(Index As Integer, _
                                     Shift As Integer, _
                                     X As Single, _
                                     Y As Single)
+    
+    On Error GoTo imgOptCursiva_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+imgOptCursiva_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCambiaMotd" & "->" & "imgOptCursiva_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgOptNegrita_Click(Index As Integer)
+    
+    On Error GoTo imgOptNegrita_Click_Err
+    
     
     If yNegrita = 0 Then
         imgOptNegrita(0).Picture = picNegrita
@@ -317,6 +464,15 @@ Private Sub imgOptNegrita_Click(Index As Integer)
 
     End If
     
+    
+    Exit Sub
+
+imgOptNegrita_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCambiaMotd" & "->" & "imgOptNegrita_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgOptNegrita_MouseMove(Index As Integer, _
@@ -324,17 +480,53 @@ Private Sub imgOptNegrita_MouseMove(Index As Integer, _
                                     Shift As Integer, _
                                     X As Single, _
                                     Y As Single)
+    
+    On Error GoTo imgOptNegrita_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+imgOptNegrita_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCambiaMotd" & "->" & "imgOptNegrita_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgRojo_Click()
+    
+    On Error GoTo imgRojo_Click_Err
+    
     txtMotd.Text = txtMotd & "~255~0~0~" & CStr(yNegrita) & "~" & CStr(yCursiva)
 
+    
+    Exit Sub
+
+imgRojo_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCambiaMotd" & "->" & "imgRojo_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgVerde_Click()
+    
+    On Error GoTo imgVerde_Click_Err
+    
     txtMotd.Text = txtMotd & "~23~104~26~" & CStr(yNegrita) & "~" & CStr(yCursiva)
 
+    
+    Exit Sub
+
+imgVerde_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCambiaMotd" & "->" & "imgVerde_Click"
+    End If
+Resume Next
+    
 End Sub
 

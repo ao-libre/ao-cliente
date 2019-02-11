@@ -47,37 +47,109 @@ Public bLluvia()    As Byte ' Array para determinar si
 Private lFrameTimer As Long
 
 Public Function DirGraficos() As String
+    
+    On Error GoTo DirGraficos_Err
+    
     DirGraficos = App.path & "\" & Config_Inicio.DirGraficos & "\"
 
+    
+    Exit Function
+
+DirGraficos_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "DirGraficos"
+    End If
+Resume Next
+    
 End Function
 
 Public Function DirSound() As String
+    
+    On Error GoTo DirSound_Err
+    
     DirSound = App.path & "\" & Config_Inicio.DirSonidos & "\"
 
+    
+    Exit Function
+
+DirSound_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "DirSound"
+    End If
+Resume Next
+    
 End Function
 
 Public Function DirMidi() As String
+    
+    On Error GoTo DirMidi_Err
+    
     DirMidi = App.path & "\" & Config_Inicio.DirMusica & "\"
 
+    
+    Exit Function
+
+DirMidi_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "DirMidi"
+    End If
+Resume Next
+    
 End Function
 
 Public Function DirMapas() As String
+    
+    On Error GoTo DirMapas_Err
+    
     DirMapas = App.path & "\" & Config_Inicio.DirMapas & "\"
 
+    
+    Exit Function
+
+DirMapas_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "DirMapas"
+    End If
+Resume Next
+    
 End Function
 
 Public Function DirExtras() As String
+    
+    On Error GoTo DirExtras_Err
+    
     DirExtras = App.path & "\EXTRAS\"
 
+    
+    Exit Function
+
+DirExtras_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "DirExtras"
+    End If
+Resume Next
+    
 End Function
 
 Public Function RandomNumber(ByVal LowerBound As Long, ByVal UpperBound As Long) As Long
     'Initialize randomizer
+    
+    On Error GoTo RandomNumber_Err
+    
     Randomize Timer
     
     'Generate random number
     RandomNumber = (UpperBound - LowerBound) * Rnd + LowerBound
 
+    
+    Exit Function
+
+RandomNumber_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "RandomNumber"
+    End If
+Resume Next
+    
 End Function
 
 Public Function GetRawName(ByRef sName As String) As String
@@ -87,6 +159,9 @@ Public Function GetRawName(ByRef sName As String) As String
     'Last Modified By: -
     'Returns the char name without the clan name (if it has it).
     '***************************************************
+    
+    On Error GoTo GetRawName_Err
+    
 
     Dim Pos As Integer
     
@@ -99,6 +174,15 @@ Public Function GetRawName(ByRef sName As String) As String
 
     End If
 
+    
+    Exit Function
+
+GetRawName_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "GetRawName"
+    End If
+Resume Next
+    
 End Function
 
 Sub CargarAnimArmas()
@@ -182,6 +266,9 @@ Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, _
                      Optional ByVal bold As Boolean = False, _
                      Optional ByVal italic As Boolean = False, _
                      Optional ByVal bCrLf As Boolean = True)
+    
+    On Error GoTo AddtoRichTextBox_Err
+    
 
     '******************************************
     'Adds text to a Richtext box at the bottom.
@@ -215,6 +302,15 @@ Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, _
 
     End With
 
+    
+    Exit Sub
+
+AddtoRichTextBox_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "AddtoRichTextBox"
+    End If
+Resume Next
+    
 End Sub
 
 'TODO : Never was sure this is really necessary....
@@ -224,6 +320,9 @@ Public Sub RefreshAllChars()
     'Goes through the charlist and replots all the characters on the map
     'Used to make sure everyone is visible
     '*****************************************************************
+    
+    On Error GoTo RefreshAllChars_Err
+    
     Dim LoopC As Long
     
     For LoopC = 1 To LastChar
@@ -235,19 +334,43 @@ Public Sub RefreshAllChars()
 
     Next LoopC
 
+    
+    Exit Sub
+
+RefreshAllChars_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "RefreshAllChars"
+    End If
+Resume Next
+    
 End Sub
 
 Sub SaveGameini()
     'Grabamos los datos del usuario en el Game.ini
+    
+    On Error GoTo SaveGameini_Err
+    
     Config_Inicio.Name = "BetaTester"
     Config_Inicio.Password = "DammLamers"
     Config_Inicio.Puerto = UserPort
     
     Call EscribirGameIni(Config_Inicio)
 
+    
+    Exit Sub
+
+SaveGameini_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "SaveGameini"
+    End If
+Resume Next
+    
 End Sub
 
 Function AsciiValidos(ByVal cad As String) As Boolean
+    
+    On Error GoTo AsciiValidos_Err
+    
     Dim car As Byte
     Dim i   As Long
     
@@ -265,10 +388,22 @@ Function AsciiValidos(ByVal cad As String) As Boolean
     
     AsciiValidos = True
 
+    
+    Exit Function
+
+AsciiValidos_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "AsciiValidos"
+    End If
+Resume Next
+    
 End Function
 
 Function CheckUserData() As Boolean
     'Validamos los datos del user
+    
+    On Error GoTo CheckUserData_Err
+    
     Dim LoopC     As Long
     Dim CharAscii As Integer
 
@@ -308,6 +443,15 @@ Function CheckUserData() As Boolean
     
     CheckUserData = True
 
+    
+    Exit Function
+
+CheckUserData_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "CheckUserData"
+    End If
+Resume Next
+    
 End Function
 
 Sub UnloadAllForms()
@@ -324,6 +468,9 @@ Sub UnloadAllForms()
 End Sub
 
 Function LegalCharacter(ByVal KeyAscii As Integer) As Boolean
+    
+    On Error GoTo LegalCharacter_Err
+    
 
     '*****************************************************************
     'Only allow characters that are Win 95 filename compatible
@@ -355,6 +502,15 @@ Function LegalCharacter(ByVal KeyAscii As Integer) As Boolean
     'else everything is cool
     LegalCharacter = True
 
+    
+    Exit Function
+
+LegalCharacter_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "LegalCharacter"
+    End If
+Resume Next
+    
 End Function
 
 Sub SetConnected()
@@ -362,6 +518,9 @@ Sub SetConnected()
     'Sets the client to "Connect" mode
     '*****************************************************************
     'Set Connected
+    
+    On Error GoTo SetConnected_Err
+    
     Connected = True
     
     Call SaveGameini
@@ -379,14 +538,35 @@ Sub SetConnected()
     
     FPSFLAG = True
 
+    
+    Exit Sub
+
+SetConnected_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "SetConnected"
+    End If
+Resume Next
+    
 End Sub
 
 Sub CargarTip()
+    
+    On Error GoTo CargarTip_Err
+    
     Dim N As Integer
     N = RandomNumber(1, UBound(Tips))
     
     frmtip.tip.Caption = Tips(N)
 
+    
+    Exit Sub
+
+CargarTip_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "CargarTip"
+    End If
+Resume Next
+    
 End Sub
 
 Sub MoveTo(ByVal Direccion As E_Heading)
@@ -398,6 +578,9 @@ Sub MoveTo(ByVal Direccion As E_Heading)
     ' 12/08/2007: Tavo    - Si el usuario esta paralizado no se puede mover.
     ' 06/28/2008: NicoNZ - Saque lo que impedia que si el usuario estaba paralizado se ejecute el sub.
     '***************************************************
+    
+    On Error GoTo MoveTo_Err
+    
     Dim LegalOk As Boolean
     
     If Cartel Then Cartel = False
@@ -441,6 +624,15 @@ Sub MoveTo(ByVal Direccion As E_Heading)
     ' Update 3D sounds!
     Call Audio.MoveListener(UserPos.X, UserPos.Y)
 
+    
+    Exit Sub
+
+MoveTo_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "MoveTo"
+    End If
+Resume Next
+    
 End Sub
 
 Sub RandomMove()
@@ -449,14 +641,29 @@ Sub RandomMove()
     'Last Modify Date: 06/03/2006
     ' 06/03/2006: AlejoLp - Ahora utiliza la funcion MoveTo
     '***************************************************
+    
+    On Error GoTo RandomMove_Err
+    
     Call Map_MoveTo(RandomNumber(NORTH, WEST))
 
+    
+    Exit Sub
+
+RandomMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "RandomMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub CheckKeys()
     '*****************************************************************
     'Checks keys and respond
     '*****************************************************************
+    
+    On Error GoTo CheckKeys_Err
+    
     Static LastMovement As Long
     
     'No input allowed while Argentum is not the active window
@@ -539,12 +746,24 @@ Private Sub CheckKeys()
 
     End If
 
+    
+    Exit Sub
+
+CheckKeys_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "CheckKeys"
+    End If
+Resume Next
+    
 End Sub
 
 Sub SwitchMap(ByVal Map As Integer)
     '**********************************************************************************
     'Diseñado y creado por Juan Martín Sotuyo Dodero (Maraxus) (juansotuyo@hotmail.com)
     '**********************************************************************************
+    
+    On Error GoTo SwitchMap_Err
+    
     
     '**********************************************************************************
     'Formato de mapas optimizado para reducir el espacio que ocupan.
@@ -667,6 +886,15 @@ Sub SwitchMap(ByVal Map As Integer)
     
     Init_Ambient Map
 
+    
+    Exit Sub
+
+SwitchMap_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "SwitchMap"
+    End If
+Resume Next
+    
 End Sub
 
 Function ReadField(ByVal Pos As Integer, _
@@ -677,6 +905,9 @@ Function ReadField(ByVal Pos As Integer, _
     'Author: Juan Martin Sotuyo Dodero (Maraxus)
     'Last Modify Date: 11/15/2004
     '*****************************************************************
+    
+    On Error GoTo ReadField_Err
+    
     Dim i          As Long
     Dim lastPos    As Long
     Dim CurrentPos As Long
@@ -696,6 +927,15 @@ Function ReadField(ByVal Pos As Integer, _
 
     End If
 
+    
+    Exit Function
+
+ReadField_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "ReadField"
+    End If
+Resume Next
+    
 End Function
 
 Function FieldCount(ByRef Text As String, ByVal SepASCII As Byte) As Long
@@ -704,6 +944,9 @@ Function FieldCount(ByRef Text As String, ByVal SepASCII As Byte) As Long
     'Author: Juan Martin Sotuyo Dodero (Maraxus)
     'Last Modify Date: 07/29/2007
     '*****************************************************************
+    
+    On Error GoTo FieldCount_Err
+    
     Dim Count     As Long
     Dim curPos    As Long
     Dim delimiter As String * 1
@@ -721,14 +964,38 @@ Function FieldCount(ByRef Text As String, ByVal SepASCII As Byte) As Long
     
     FieldCount = Count
 
+    
+    Exit Function
+
+FieldCount_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "FieldCount"
+    End If
+Resume Next
+    
 End Function
 
 Function FileExist(ByVal File As String, ByVal FileType As VbFileAttribute) As Boolean
+    
+    On Error GoTo FileExist_Err
+    
     FileExist = (Dir$(File, FileType) <> "")
 
+    
+    Exit Function
+
+FileExist_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "FileExist"
+    End If
+Resume Next
+    
 End Function
 
 Sub WriteClientVer()
+    
+    On Error GoTo WriteClientVer_Err
+    
     Dim hFile As Integer
         
     hFile = FreeFile()
@@ -743,9 +1010,21 @@ Sub WriteClientVer()
     
     Close #hFile
 
+    
+    Exit Sub
+
+WriteClientVer_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "WriteClientVer"
+    End If
+Resume Next
+    
 End Sub
 
 Public Function IsIp(ByVal Ip As String) As Boolean
+    
+    On Error GoTo IsIp_Err
+    
     Dim i As Long
     
     For i = 1 To UBound(ServersLst)
@@ -758,6 +1037,15 @@ Public Function IsIp(ByVal Ip As String) As Boolean
 
     Next i
 
+    
+    Exit Function
+
+IsIp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "IsIp"
+    End If
+Resume Next
+    
 End Function
 
 Private Function GetCountryFromIp(ByVal Ip As String) As String
@@ -858,6 +1146,9 @@ errorH:
 End Sub
 
 Private Function CheckIfIpIsNumeric(CurrentIp As String) As String
+    
+    On Error GoTo CheckIfIpIsNumeric_Err
+    
 
     If IsNumeric(mid$(CurrentIp, 1, 1)) Then
         CheckIfIpIsNumeric = True
@@ -866,9 +1157,21 @@ Private Function CheckIfIpIsNumeric(CurrentIp As String) As String
 
     End If
 
+    
+    Exit Function
+
+CheckIfIpIsNumeric_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "CheckIfIpIsNumeric"
+    End If
+Resume Next
+    
 End Function
 
 Private Function GetCountryCode(CurrentIp As String) As String
+    
+    On Error GoTo GetCountryCode_Err
+    
     Dim CountryCode As String
     CountryCode = GetCountryFromIp(CurrentIp)
 
@@ -879,9 +1182,21 @@ Private Function GetCountryCode(CurrentIp As String) As String
 
     End If
 
+    
+    Exit Function
+
+GetCountryCode_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "GetCountryCode"
+    End If
+Resume Next
+    
 End Function
 
 Public Function CurServerPasRecPort() As Integer
+    
+    On Error GoTo CurServerPasRecPort_Err
+    
 
     If CurServer <> 0 Then
         CurServerPasRecPort = 7667
@@ -890,9 +1205,21 @@ Public Function CurServerPasRecPort() As Integer
 
     End If
 
+    
+    Exit Function
+
+CurServerPasRecPort_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "CurServerPasRecPort"
+    End If
+Resume Next
+    
 End Function
 
 Public Function CurServerIp() As String
+    
+    On Error GoTo CurServerIp_Err
+    
 
     If CurServer <> 0 Then
         CurServerIp = ServersLst(CurServer).Ip
@@ -901,9 +1228,21 @@ Public Function CurServerIp() As String
 
     End If
 
+    
+    Exit Function
+
+CurServerIp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "CurServerIp"
+    End If
+Resume Next
+    
 End Function
 
 Public Function CurServerPort() As Integer
+    
+    On Error GoTo CurServerPort_Err
+    
 
     If CurServer <> 0 Then
         CurServerPort = ServersLst(CurServer).Puerto
@@ -912,9 +1251,21 @@ Public Function CurServerPort() As Integer
 
     End If
 
+    
+    Exit Function
+
+CurServerPort_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "CurServerPort"
+    End If
+Resume Next
+    
 End Function
 
 Sub Main()
+    
+    On Error GoTo Main_Err
+    
     Call WriteClientVer
     
     'Load config file
@@ -1032,6 +1383,15 @@ Sub Main()
     
     Call CloseClient
 
+    
+    Exit Sub
+
+Main_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "Main"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadInitialConfig()
@@ -1040,6 +1400,9 @@ Private Sub LoadInitialConfig()
     'Last Modification: 15/03/2011
     '15/03/2011: ZaMa - Initialize classes lazy way.
     '***************************************************
+    
+    On Error GoTo LoadInitialConfig_Err
+    
 
     Dim i As Long
 
@@ -1138,6 +1501,15 @@ Private Sub LoadInitialConfig()
     
     Unload frmCargando
     
+    
+    Exit Sub
+
+LoadInitialConfig_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "LoadInitialConfig"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadTimerIntervals()
@@ -1146,6 +1518,9 @@ Private Sub LoadTimerIntervals()
     'Last Modification: 15/03/2011
     'Set the intervals of timers
     '***************************************************
+    
+    On Error GoTo LoadTimerIntervals_Err
+    
     
     Call MainTimer.SetInterval(TimersIndex.Attack, INT_ATTACK)
     Call MainTimer.SetInterval(TimersIndex.Work, INT_WORK)
@@ -1169,6 +1544,15 @@ Private Sub LoadTimerIntervals()
     Call MainTimer.Start(TimersIndex.Arrows)
     Call MainTimer.Start(TimersIndex.CastAttack)
 
+    
+    Exit Sub
+
+LoadTimerIntervals_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "LoadTimerIntervals"
+    End If
+Resume Next
+    
 End Sub
 
 Sub WriteVar(ByVal File As String, _
@@ -1178,14 +1562,29 @@ Sub WriteVar(ByVal File As String, _
     '*****************************************************************
     'Writes a var to a text file
     '*****************************************************************
+    
+    On Error GoTo WriteVar_Err
+    
     writeprivateprofilestring Main, Var, value, File
 
+    
+    Exit Sub
+
+WriteVar_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "WriteVar"
+    End If
+Resume Next
+    
 End Sub
 
 Function GetVar(ByVal File As String, ByVal Main As String, ByVal Var As String) As String
     '*****************************************************************
     'Gets a Var from a text file
     '*****************************************************************
+    
+    On Error GoTo GetVar_Err
+    
     Dim sSpaces As String ' This will hold the input that the program will retrieve
     
     sSpaces = Space$(500) ' This tells the computer how long the longest string can be. If you want, you can change the number 100 to any number you wish
@@ -1195,6 +1594,15 @@ Function GetVar(ByVal File As String, ByVal Main As String, ByVal Var As String)
     GetVar = RTrim$(sSpaces)
     GetVar = Left$(GetVar, Len(GetVar) - 1)
 
+    
+    Exit Function
+
+GetVar_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "GetVar"
+    End If
+Resume Next
+    
 End Function
 
 '[CODE 002]:MatuX
@@ -1241,17 +1649,44 @@ End Function
 
 '  Corregida por Maraxus para que reconozca como validas casillas con puntos antes de la arroba
 Private Function CMSValidateChar_(ByVal iAsc As Integer) As Boolean
+    
+    On Error GoTo CMSValidateChar__Err
+    
     CMSValidateChar_ = (iAsc >= 48 And iAsc <= 57) Or (iAsc >= 65 And iAsc <= 90) Or (iAsc >= 97 And iAsc <= 122) Or (iAsc = 95) Or (iAsc = 45) Or (iAsc = 46)
 
+    
+    Exit Function
+
+CMSValidateChar__Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "CMSValidateChar_"
+    End If
+Resume Next
+    
 End Function
 
 'TODO : como todo lo relativo a mapas, no tiene nada que hacer aca....
 Function HayAgua(ByVal X As Integer, ByVal Y As Integer) As Boolean
+    
+    On Error GoTo HayAgua_Err
+    
     HayAgua = ((MapData(X, Y).Graphic(1).GrhIndex >= 1505 And MapData(X, Y).Graphic(1).GrhIndex <= 1520) Or (MapData(X, Y).Graphic(1).GrhIndex >= 5665 And MapData(X, Y).Graphic(1).GrhIndex <= 5680) Or (MapData(X, Y).Graphic(1).GrhIndex >= 13547 And MapData(X, Y).Graphic(1).GrhIndex <= 13562)) And MapData(X, Y).Graphic(2).GrhIndex = 0
                 
+    
+    Exit Function
+
+HayAgua_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "HayAgua"
+    End If
+Resume Next
+    
 End Function
 
 Public Sub ShowSendTxt()
+    
+    On Error GoTo ShowSendTxt_Err
+    
 
     If Not frmCantidad.Visible Then
         frmMain.SendTxt.Visible = True
@@ -1259,9 +1694,21 @@ Public Sub ShowSendTxt()
 
     End If
 
+    
+    Exit Sub
+
+ShowSendTxt_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "ShowSendTxt"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub ShowSendCMSGTxt()
+    
+    On Error GoTo ShowSendCMSGTxt_Err
+    
 
     If Not frmCantidad.Visible Then
         frmMain.SendCMSTXT.Visible = True
@@ -1269,6 +1716,15 @@ Public Sub ShowSendCMSGTxt()
 
     End If
 
+    
+    Exit Sub
+
+ShowSendCMSGTxt_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "ShowSendCMSGTxt"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -1282,6 +1738,9 @@ Public Sub LeerLineaComandos()
     'Last modified: 25/11/2008 (BrianPr)
     '
     '*************************************************
+    
+    On Error GoTo LeerLineaComandos_Err
+    
     Dim T()      As String
     Dim i        As Long
     
@@ -1309,6 +1768,15 @@ Public Sub LeerLineaComandos()
         Call AoUpdate(UpToDate, NoRes)
     #End If
 
+    
+    Exit Sub
+
+LeerLineaComandos_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "LeerLineaComandos"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -1325,7 +1793,7 @@ Private Sub AoUpdate(ByVal UpToDate As Boolean, ByVal NoRes As Boolean)
     'Last modified: 25/11/2008
     '
     '*************************************************
-    On Error GoTo error
+    On Error GoTo Error
 
     Dim extraArgs As String
 
@@ -1357,7 +1825,7 @@ Private Sub AoUpdate(ByVal UpToDate As Boolean, ByVal NoRes As Boolean)
 
     Exit Sub
 
-error:
+Error:
 
     If Err.number = 75 Then 'Si el archivo AoUpdateTMP.exe esta en uso, entonces esperamos 5 ms y volvemos a intentarlo hasta que nos deje.
         Sleep 5
@@ -1376,6 +1844,9 @@ Private Sub LoadClientSetup()
     'Last Modify Date: 11/19/09
     '11/19/09: Pato - Is optional show the frmGuildNews form
     '**************************************************************
+    
+    On Error GoTo LoadClientSetup_Err
+    
     Dim fHandle As Integer
     
     If FileExist(App.path & "\init\ao.dat", vbArchive) Then
@@ -1397,6 +1868,15 @@ Private Sub LoadClientSetup()
     DialogosClanes.Activo = Not ClientSetup.bGldMsgConsole
     DialogosClanes.CantidadDialogos = ClientSetup.bCantMsgs
 
+    
+    Exit Sub
+
+LoadClientSetup_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "LoadClientSetup"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub SaveClientSetup()
@@ -1405,6 +1885,9 @@ Private Sub SaveClientSetup()
     'Last Modify Date: 03/11/10
     '
     '**************************************************************
+    
+    On Error GoTo SaveClientSetup_Err
+    
     Dim fHandle As Integer
     
     fHandle = FreeFile
@@ -1420,6 +1903,15 @@ Private Sub SaveClientSetup()
     Put fHandle, , ClientSetup
     Close fHandle
 
+    
+    Exit Sub
+
+SaveClientSetup_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "SaveClientSetup"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub InicializarNombres()
@@ -1428,6 +1920,9 @@ Private Sub InicializarNombres()
     'Last Modify Date: 11/27/2005
     'Inicializa los nombres de razas, ciudades, clases, skills, atributos, etc.
     '**************************************************************
+    
+    On Error GoTo InicializarNombres_Err
+    
     Ciudades(eCiudad.cUllathorpe) = "Ullathorpe"
     Ciudades(eCiudad.cNix) = "Nix"
     Ciudades(eCiudad.cBanderbill) = "Banderbill"
@@ -1480,6 +1975,15 @@ Private Sub InicializarNombres()
     AtributosNames(eAtributos.Carisma) = "Carisma"
     AtributosNames(eAtributos.Constitucion) = "Constitucion"
 
+    
+    Exit Sub
+
+InicializarNombres_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "InicializarNombres"
+    End If
+Resume Next
+    
 End Sub
 
 ''
@@ -1492,12 +1996,24 @@ Public Sub CleanDialogs()
     'Removes all text from the console and dialogs
     '**************************************************************
     'Clean console and dialogs
+    
+    On Error GoTo CleanDialogs_Err
+    
     frmMain.RecTxt.Text = vbNullString
     
     Call DialogosClanes.RemoveDialogs
     
     Call Dialogos.RemoveAllDialogs
 
+    
+    Exit Sub
+
+CleanDialogs_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "CleanDialogs"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub CloseClient()
@@ -1507,6 +2023,9 @@ Public Sub CloseClient()
     'Frees all used resources, cleans up and leaves
     '**************************************************************
     ' Allow new instances of the client to be opened
+    
+    On Error GoTo CloseClient_Err
+    
     Call PrevInstance.ReleaseInstance
     
     EngineRun = False
@@ -1537,16 +2056,40 @@ Public Sub CloseClient()
     Call EscribirGameIni(Config_Inicio)
     End
 
+    
+    Exit Sub
+
+CloseClient_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "CloseClient"
+    End If
+Resume Next
+    
 End Sub
 
 Public Function esGM(CharIndex As Integer) As Boolean
+    
+    On Error GoTo esGM_Err
+    
     esGM = False
 
     If charlist(CharIndex).priv >= 1 And charlist(CharIndex).priv <= 5 Or charlist(CharIndex).priv = 25 Then esGM = True
 
+    
+    Exit Function
+
+esGM_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "esGM"
+    End If
+Resume Next
+    
 End Function
 
 Public Function getTagPosition(ByVal Nick As String) As Integer
+    
+    On Error GoTo getTagPosition_Err
+    
     Dim buf As Integer
     buf = InStr(Nick, "<")
 
@@ -1566,9 +2109,21 @@ Public Function getTagPosition(ByVal Nick As String) As Integer
 
     getTagPosition = Len(Nick) + 2
 
+    
+    Exit Function
+
+getTagPosition_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "getTagPosition"
+    End If
+Resume Next
+    
 End Function
 
 Public Sub checkText(ByVal Text As String)
+    
+    On Error GoTo checkText_Err
+    
     Dim Nivel As Integer
 
     If Right(Text, Len(MENSAJE_FRAGSHOOTER_TE_HA_MATADO)) = MENSAJE_FRAGSHOOTER_TE_HA_MATADO Then
@@ -1596,23 +2151,59 @@ Public Sub checkText(ByVal Text As String)
 
     EsperandoLevel = False
 
+    
+    Exit Sub
+
+checkText_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "checkText"
+    End If
+Resume Next
+    
 End Sub
 
 Public Function getStrenghtColor() As Long
+    
+    On Error GoTo getStrenghtColor_Err
+    
     Dim m As Long
     m = 255 / MAXATRIBUTOS
     getStrenghtColor = RGB(255 - (m * UserFuerza), (m * UserFuerza), 0)
 
+    
+    Exit Function
+
+getStrenghtColor_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "getStrenghtColor"
+    End If
+Resume Next
+    
 End Function
 
 Public Function getDexterityColor() As Long
+    
+    On Error GoTo getDexterityColor_Err
+    
     Dim m As Long
     m = 255 / MAXATRIBUTOS
     getDexterityColor = RGB(255, m * UserAgilidad, 0)
 
+    
+    Exit Function
+
+getDexterityColor_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "getDexterityColor"
+    End If
+Resume Next
+    
 End Function
 
 Public Function getCharIndexByName(ByVal Name As String) As Integer
+    
+    On Error GoTo getCharIndexByName_Err
+    
     Dim i As Long
 
     For i = 1 To LastChar
@@ -1625,9 +2216,21 @@ Public Function getCharIndexByName(ByVal Name As String) As Integer
 
     Next i
 
+    
+    Exit Function
+
+getCharIndexByName_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "getCharIndexByName"
+    End If
+Resume Next
+    
 End Function
 
 Public Function EsAnuncio(ByVal ForumType As Byte) As Boolean
+    
+    On Error GoTo EsAnuncio_Err
+    
 
     '***************************************************
     'Author: ZaMa
@@ -1647,9 +2250,21 @@ Public Function EsAnuncio(ByVal ForumType As Byte) As Boolean
             
     End Select
     
+    
+    Exit Function
+
+EsAnuncio_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "EsAnuncio"
+    End If
+Resume Next
+    
 End Function
 
 Public Function ForumAlignment(ByVal yForumType As Byte) As Byte
+    
+    On Error GoTo ForumAlignment_Err
+    
 
     '***************************************************
     'Author: ZaMa
@@ -1669,9 +2284,21 @@ Public Function ForumAlignment(ByVal yForumType As Byte) As Byte
             
     End Select
     
+    
+    Exit Function
+
+ForumAlignment_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "ForumAlignment"
+    End If
+Resume Next
+    
 End Function
 
 Public Sub ResetAllInfo()
+    
+    On Error GoTo ResetAllInfo_Err
+    
     
     ' Save config.ini
     SaveGameini
@@ -1763,9 +2390,21 @@ Public Sub ResetAllInfo()
     ' Connection screen midi
     Call Audio.PlayMIDI("2.mid")
 
+    
+    Exit Sub
+
+ResetAllInfo_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "ResetAllInfo"
+    End If
+Resume Next
+    
 End Sub
 
 Public Function DevolverNombreHechizo(ByVal Index As Byte) As String
+    
+    On Error GoTo DevolverNombreHechizo_Err
+    
     Dim i As Long
  
     For i = 1 To NumHechizos
@@ -1778,9 +2417,21 @@ Public Function DevolverNombreHechizo(ByVal Index As Byte) As String
 
     Next i
 
+    
+    Exit Function
+
+DevolverNombreHechizo_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "DevolverNombreHechizo"
+    End If
+Resume Next
+    
 End Function
 
 Public Function DevolverIndexHechizo(ByVal Nombre As String) As Byte
+    
+    On Error GoTo DevolverIndexHechizo_Err
+    
     Dim i As Long
  
     For i = 1 To NumHechizos
@@ -1793,6 +2444,15 @@ Public Function DevolverIndexHechizo(ByVal Nombre As String) As Byte
 
     Next i
 
+    
+    Exit Function
+
+DevolverIndexHechizo_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "Mod_General" & "->" & "DevolverIndexHechizo"
+    End If
+Resume Next
+    
 End Function
 
 Public Sub CargarHechizos()
@@ -1851,7 +2511,7 @@ Sub DownloadServersFile(myURL As String)
     'Implemented by Cucsifae
     'Check content of strData to avoid clean the file sinfo.ini if there is no response from Github by Recox
     '**********************************************************
-    On Error GoTo error
+    On Error GoTo Error
 
     Dim strData As String
     Dim f       As Integer
@@ -1870,7 +2530,7 @@ Sub DownloadServersFile(myURL As String)
     
     Exit Sub
 
-error:
+Error:
     Debug.Print Err.number
     Call MsgBox("Error al descargar la lista de servidores: " & Err.Description, vbCritical + vbOKOnly, "Argentum Online")
     Exit Sub

@@ -630,6 +630,9 @@ Private InitialConfig     As Byte
 Private CurrentTab        As Integer
 
 Private Sub Form_Load()
+    
+    On Error GoTo Form_Load_Err
+    
     Dim i As Long
     
     ' Handles Form movement (drag and drop).
@@ -649,9 +652,21 @@ Private Sub Form_Load()
         Text1(i).Text = CustomKeys.ReadableName(CustomKeys.BindedKey(i))
     Next i
 
+    
+    Exit Sub
+
+Form_Load_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCustomKeys" & "->" & "Form_Load"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadButtons()
+    
+    On Error GoTo LoadButtons_Err
+    
     Dim GrhPath As String
     
     GrhPath = DirGraficos
@@ -665,22 +680,58 @@ Private Sub LoadButtons()
 
     Call cBotonDefaultKeys.Initialize(imgDefaultKeys, GrhPath & "BotonDefaultKeys.jpg", GrhPath & "BotonDefaultKeysRollover.jpg", GrhPath & "BotonDefaultKeysClick.jpg", Me)
                                     
+    
+    Exit Sub
+
+LoadButtons_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCustomKeys" & "->" & "LoadButtons"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Form_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+Form_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCustomKeys" & "->" & "Form_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgDefaultKeys_Click()
+    
+    On Error GoTo imgDefaultKeys_Click_Err
+    
 
     Call CustomKeys.LoadDefaults(CustomKeys.CurrentConfig)
 
     Call ShowConfig
 
+    
+    Exit Sub
+
+imgDefaultKeys_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCustomKeys" & "->" & "imgDefaultKeys_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgGuardar_Click()
+    
+    On Error GoTo imgGuardar_Click_Err
+    
 
     Dim i    As Long
     Dim sMsg As String
@@ -715,9 +766,21 @@ Private Sub imgGuardar_Click()
     
     Unload Me
 
+    
+    Exit Sub
+
+imgGuardar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCustomKeys" & "->" & "imgGuardar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Text1_KeyDown(Index As Integer, KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo Text1_KeyDown_Err
+    
     Dim i As Long
     
     ' Can't change default combination
@@ -747,16 +810,49 @@ Private Sub Text1_KeyDown(Index As Integer, KeyCode As Integer, Shift As Integer
     
     CustomKeys.BindedKey(Index) = KeyCode
     
+    
+    Exit Sub
+
+Text1_KeyDown_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCustomKeys" & "->" & "Text1_KeyDown"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Text1_KeyPress(Index As Integer, KeyAscii As Integer)
+    
+    On Error GoTo Text1_KeyPress_Err
+    
     KeyAscii = 0
 
+    
+    Exit Sub
+
+Text1_KeyPress_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCustomKeys" & "->" & "Text1_KeyPress"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Text1_KeyUp(Index As Integer, KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo Text1_KeyUp_Err
+    
     Call Text1_KeyDown(Index, KeyCode, Shift)
 
+    
+    Exit Sub
+
+Text1_KeyUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCustomKeys" & "->" & "Text1_KeyUp"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Text1_MouseMove(Index As Integer, _
@@ -764,11 +860,26 @@ Private Sub Text1_MouseMove(Index As Integer, _
                             Shift As Integer, _
                             X As Single, _
                             Y As Single)
+    
+    On Error GoTo Text1_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+Text1_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCustomKeys" & "->" & "Text1_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub ShowConfig()
+    
+    On Error GoTo ShowConfig_Err
+    
 
     Dim i As Long
 
@@ -776,4 +887,13 @@ Private Sub ShowConfig()
         Text1(i).Text = CustomKeys.ReadableName(CustomKeys.BindedKey(i))
     Next i
 
+    
+    Exit Sub
+
+ShowConfig_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCustomKeys" & "->" & "ShowConfig"
+    End If
+Resume Next
+    
 End Sub

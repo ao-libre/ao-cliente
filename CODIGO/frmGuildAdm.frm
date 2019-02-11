@@ -129,6 +129,9 @@ Public LastButtonPressed As clsGraphicalButton
 
 Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
+    
+    On Error GoTo Form_Load_Err
+    
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
         
@@ -136,9 +139,21 @@ Private Sub Form_Load()
     
     Call LoadButtons
     
+    
+    Exit Sub
+
+Form_Load_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildAdm" & "->" & "Form_Load"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadButtons()
+    
+    On Error GoTo LoadButtons_Err
+    
     Dim GrhPath As String
     
     GrhPath = DirGraficos
@@ -152,40 +167,112 @@ Private Sub LoadButtons()
 
     Call cBotonDetalles.Initialize(imgDetalles, GrhPath & "BotonDetallesListaClanes.jpg", GrhPath & "BotonDetallesRolloverListaClanes.jpg", GrhPath & "BotonDetallesClickListaClanes.jpg", Me)
 
+    
+    Exit Sub
+
+LoadButtons_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildAdm" & "->" & "LoadButtons"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Form_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+Form_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildAdm" & "->" & "Form_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub guildslist_MouseMove(Button As Integer, _
                                  Shift As Integer, _
                                  X As Single, _
                                  Y As Single)
+    
+    On Error GoTo guildslist_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+guildslist_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildAdm" & "->" & "guildslist_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgCerrar_Click()
+    
+    On Error GoTo imgCerrar_Click_Err
+    
     Unload Me
     frmMain.SetFocus
 
+    
+    Exit Sub
+
+imgCerrar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildAdm" & "->" & "imgCerrar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgDetalles_Click()
+    
+    On Error GoTo imgDetalles_Click_Err
+    
     frmGuildBrief.EsLeader = False
 
     Call WriteGuildRequestDetails(guildslist.List(guildslist.ListIndex))
 
+    
+    Exit Sub
+
+imgDetalles_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildAdm" & "->" & "imgDetalles_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub txtBuscar_Change()
+    
+    On Error GoTo txtBuscar_Change_Err
+    
     Call FiltrarListaClanes(txtBuscar.Text)
 
+    
+    Exit Sub
+
+txtBuscar_Change_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildAdm" & "->" & "txtBuscar_Change"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub txtBuscar_GotFocus()
+    
+    On Error GoTo txtBuscar_GotFocus_Err
+    
 
     With txtBuscar
         .SelStart = 0
@@ -193,9 +280,21 @@ Private Sub txtBuscar_GotFocus()
 
     End With
 
+    
+    Exit Sub
+
+txtBuscar_GotFocus_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildAdm" & "->" & "txtBuscar_GotFocus"
+    End If
+Resume Next
+    
 End Sub
 
 Public Sub FiltrarListaClanes(ByRef sCompare As String)
+    
+    On Error GoTo FiltrarListaClanes_Err
+    
 
     Dim lIndex As Long
     
@@ -225,4 +324,13 @@ Public Sub FiltrarListaClanes(ByRef sCompare As String)
 
     End If
 
+    
+    Exit Sub
+
+FiltrarListaClanes_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildAdm" & "->" & "FiltrarListaClanes"
+    End If
+Resume Next
+    
 End Sub

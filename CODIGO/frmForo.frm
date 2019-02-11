@@ -237,12 +237,27 @@ Private FondosDejarMsg(0 To 2) As Picture
 Private FondosListaMsg(0 To 2) As Picture
 
 Private Sub Form_Unload(Cancel As Integer)
+    
+    On Error GoTo Form_Unload_Err
+    
     MirandoForo = False
     Privilegios = 0
 
+    
+    Exit Sub
+
+Form_Unload_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmForo" & "->" & "Form_Unload"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgDejarAnuncio_Click()
+    
+    On Error GoTo imgDejarAnuncio_Click_Err
+    
     Lectura = False
     VerListaMsg = False
     Sticky = True
@@ -250,9 +265,21 @@ Private Sub imgDejarAnuncio_Click()
     'Switch to proper background
     ToogleScreen
 
+    
+    Exit Sub
+
+imgDejarAnuncio_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmForo" & "->" & "imgDejarAnuncio_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgDejarMsg_Click()
+    
+    On Error GoTo imgDejarMsg_Click_Err
+    
 
     If Not cBotonDejarMsg.IsEnabled Then Exit Sub
     
@@ -289,21 +316,57 @@ Private Sub imgDejarMsg_Click()
     'Switch to proper background
     ToogleScreen
 
+    
+    Exit Sub
+
+imgDejarMsg_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmForo" & "->" & "imgDejarMsg_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgCerrar_Click()
+    
+    On Error GoTo imgCerrar_Click_Err
+    
     Unload Me
 
+    
+    Exit Sub
+
+imgCerrar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmForo" & "->" & "imgCerrar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgListaMsg_Click()
+    
+    On Error GoTo imgListaMsg_Click_Err
+    
     VerListaMsg = True
     ToogleScreen
 
+    
+    Exit Sub
+
+imgListaMsg_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmForo" & "->" & "imgListaMsg_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
+    
+    On Error GoTo Form_Load_Err
+    
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
@@ -326,9 +389,21 @@ Private Sub Form_Load()
     ' Si no es armada o gm, no puede ver el tab de armadas.
     If (Privilegios And eForumVisibility.ieREAL_MEMBER) = 0 Then imgTab(1).Visible = False
     
+    
+    Exit Sub
+
+Form_Load_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmForo" & "->" & "Form_Load"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadButtons()
+    
+    On Error GoTo LoadButtons_Err
+    
 
     Dim GrhPath As String
     GrhPath = DirGraficos
@@ -360,14 +435,38 @@ Private Sub LoadButtons()
                                             
     Call cBotonListaMsg.Initialize(imgListaMsg, GrhPath & "BotonListaMsgForo.jpg", GrhPath & "BotonListaMsgRolloverForo.jpg", GrhPath & "BotonListaMsgClickForo.jpg", Me)
 
+    
+    Exit Sub
+
+LoadButtons_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmForo" & "->" & "LoadButtons"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Form_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+Form_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmForo" & "->" & "Form_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgTab_Click(Index As Integer)
+    
+    On Error GoTo imgTab_Click_Err
+    
 
     Call Audio.PlayWave(SND_CLICK)
     
@@ -388,9 +487,21 @@ Private Sub imgTab_Click(Index As Integer)
 
     End If
 
+    
+    Exit Sub
+
+imgTab_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmForo" & "->" & "imgTab_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub ToogleScreen()
+    
+    On Error GoTo ToogleScreen_Err
+    
     
     Dim PostOffset As Integer
     
@@ -447,9 +558,21 @@ Private Sub ToogleScreen()
 
     End If
     
+    
+    Exit Sub
+
+ToogleScreen_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmForo" & "->" & "ToogleScreen"
+    End If
+Resume Next
+    
 End Sub
 
 Private Function PuedeDejarAnuncios() As Boolean
+    
+    On Error GoTo PuedeDejarAnuncios_Err
+    
     
     ' No puede
     If CanPostSticky = 0 Then Exit Function
@@ -463,48 +586,120 @@ Private Function PuedeDejarAnuncios() As Boolean
     
     PuedeDejarAnuncios = True
     
+    
+    Exit Function
+
+PuedeDejarAnuncios_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmForo" & "->" & "PuedeDejarAnuncios"
+    End If
+Resume Next
+    
 End Function
 
 Private Sub lstTitulos_Click()
+    
+    On Error GoTo lstTitulos_Click_Err
+    
     VerListaMsg = False
     Lectura = True
     ToogleScreen
 
+    
+    Exit Sub
+
+lstTitulos_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmForo" & "->" & "lstTitulos_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub lstTitulos_MouseMove(Button As Integer, _
                                  Shift As Integer, _
                                  X As Single, _
                                  Y As Single)
+    
+    On Error GoTo lstTitulos_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+lstTitulos_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmForo" & "->" & "lstTitulos_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub txtPost_Change()
+    
+    On Error GoTo txtPost_Change_Err
+    
 
     If Lectura Then Exit Sub
     
     Call cBotonDejarMsg.EnableButton(Len(txtTitulo.Text) <> 0 And Len(txtPost.Text) <> 0)
 
+    
+    Exit Sub
+
+txtPost_Change_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmForo" & "->" & "txtPost_Change"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub txtPost_MouseMove(Button As Integer, _
                               Shift As Integer, _
                               X As Single, _
                               Y As Single)
+    
+    On Error GoTo txtPost_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+txtPost_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmForo" & "->" & "txtPost_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub txtTitulo_Change()
+    
+    On Error GoTo txtTitulo_Change_Err
+    
 
     If Lectura Then Exit Sub
     
     Call cBotonDejarMsg.EnableButton(Len(txtTitulo.Text) <> 0 And Len(txtPost.Text) <> 0)
 
+    
+    Exit Sub
+
+txtTitulo_Change_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmForo" & "->" & "txtTitulo_Change"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub UpdateList()
+    
+    On Error GoTo UpdateList_Err
+    
     Dim PostIndex As Long
     
     lstTitulos.Clear
@@ -525,9 +720,21 @@ Private Sub UpdateList()
 
     End With
     
+    
+    Exit Sub
+
+UpdateList_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmForo" & "->" & "UpdateList"
+    End If
+Resume Next
+    
 End Sub
 
 Private Function GetStickyPost() As Byte
+    
+    On Error GoTo GetStickyPost_Err
+    
 
     Select Case ForoActual
 
@@ -542,9 +749,21 @@ Private Function GetStickyPost() As Byte
             
     End Select
     
+    
+    Exit Function
+
+GetStickyPost_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmForo" & "->" & "GetStickyPost"
+    End If
+Resume Next
+    
 End Function
 
 Private Function GetNormalPost() As Byte
+    
+    On Error GoTo GetNormalPost_Err
+    
 
     Select Case ForoActual
 
@@ -558,5 +777,14 @@ Private Function GetNormalPost() As Byte
             GetNormalPost = eForumMsgType.ieCAOS
             
     End Select
+    
+    
+    Exit Function
+
+GetNormalPost_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmForo" & "->" & "GetNormalPost"
+    End If
+Resume Next
     
 End Function

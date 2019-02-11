@@ -184,6 +184,9 @@ Private NumPages    As Long
 Private CurrentPage As Long
 
 Private Sub Form_Load()
+    
+    On Error GoTo Form_Load_Err
+    
 
     ' Handles Form movement (drag and drop).
     Set clsFormulario = New clsFormMovementManager
@@ -198,9 +201,21 @@ Private Sub Form_Load()
     CurrentPage = 1
     Call SelectPage(CurrentPage)
 
+    
+    Exit Sub
+
+Form_Load_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmTutorial" & "->" & "Form_Load"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadButtons()
+    
+    On Error GoTo LoadButtons_Err
+    
     Dim GrhPath As String
     
     GrhPath = DirGraficos
@@ -228,14 +243,38 @@ Private Sub LoadButtons()
     
     lblCerrar.MouseIcon = picMouseIcon
 
+    
+    Exit Sub
+
+LoadButtons_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmTutorial" & "->" & "LoadButtons"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    
+    On Error GoTo Form_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+Form_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmTutorial" & "->" & "Form_MouseMove"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgAnterior_Click()
+    
+    On Error GoTo imgAnterior_Click_Err
+    
 
     If Not cBotonAnterior.IsEnabled Then Exit Sub
     
@@ -247,9 +286,21 @@ Private Sub imgAnterior_Click()
     
     Call SelectPage(CurrentPage)
 
+    
+    Exit Sub
+
+imgAnterior_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmTutorial" & "->" & "imgAnterior_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgCheck_Click()
+    
+    On Error GoTo imgCheck_Click_Err
+    
     
     bShowTutorial = Not bShowTutorial
     
@@ -260,9 +311,21 @@ Private Sub imgCheck_Click()
 
     End If
 
+    
+    Exit Sub
+
+imgCheck_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmTutorial" & "->" & "imgCheck_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub imgSiguiente_Click()
+    
+    On Error GoTo imgSiguiente_Click_Err
+    
     
     If Not cBotonSiguiente.IsEnabled Then Exit Sub
     
@@ -276,15 +339,39 @@ Private Sub imgSiguiente_Click()
     
     Call SelectPage(CurrentPage)
 
+    
+    Exit Sub
+
+imgSiguiente_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmTutorial" & "->" & "imgSiguiente_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub lblCerrar_Click()
+    
+    On Error GoTo lblCerrar_Click_Err
+    
     bShowTutorial = False 'Mientras no se pueda tildar/destildar para verlo más tarde, esto queda así :P
     Unload Me
 
+    
+    Exit Sub
+
+lblCerrar_Click_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmTutorial" & "->" & "lblCerrar_Click"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub LoadTutorial()
+    
+    On Error GoTo LoadTutorial_Err
+    
     
     Dim TutorialPath As String
     Dim lPage        As Long
@@ -320,19 +407,52 @@ Private Sub LoadTutorial()
     
     lblPagTotal.Caption = NumPages
 
+    
+    Exit Sub
+
+LoadTutorial_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmTutorial" & "->" & "LoadTutorial"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub SelectPage(ByVal lPage As Long)
+    
+    On Error GoTo SelectPage_Err
+    
     lblTitulo.Caption = Tutorial(lPage).sTitle
     lblMensaje.Caption = Tutorial(lPage).sPage
     lblPagActual.Caption = lPage
 
+    
+    Exit Sub
+
+SelectPage_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmTutorial" & "->" & "SelectPage"
+    End If
+Resume Next
+    
 End Sub
 
 Private Sub lblMensaje_MouseMove(Button As Integer, _
                                  Shift As Integer, _
                                  X As Single, _
                                  Y As Single)
+    
+    On Error GoTo lblMensaje_MouseMove_Err
+    
     LastButtonPressed.ToggleToNormal
 
+    
+    Exit Sub
+
+lblMensaje_MouseMove_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmTutorial" & "->" & "lblMensaje_MouseMove"
+    End If
+Resume Next
+    
 End Sub

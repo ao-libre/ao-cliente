@@ -1,4 +1,4 @@
-Attribute VB_Name = "Mod_ErrorLOG"
+Attribute VB_Name = "Error"
 'Argentum Online 0.11.6
 '
 'Copyright (C) 2002 Márquez Pablo Ignacio
@@ -34,22 +34,19 @@ Attribute VB_Name = "Mod_ErrorLOG"
 
 Option Explicit
 
-Public Sub LogError(desc As String)
-On Error Resume Next
-Dim nfile As Integer
-nfile = FreeFile ' obtenemos un canal
-Open App.Path & "\errores.log" For Append As #nfile
-Print #nfile, desc
-Close #nfile
-End Sub
+Public Sub LogError(Numero As Integer, Desc As String, Location As String)
 
-Public Sub LogCustom(desc As String)
-On Error Resume Next
-Dim nfile As Integer
-nfile = FreeFile ' obtenemos un canal
-Open App.Path & "\custom.log" For Append As #nfile
-Print #nfile, Now & " " & desc
-Close #nfile
-End Sub
+    On Error Resume Next
 
+    Dim nfile As Integer
+        nfile = FreeFile ' obtenemos un canal
+    
+    Open App.path & "\errores.log" For Append As #nfile
+        Print #nfile, "Error: " & Numero
+        Print #nfile, "Descripcion: " & Desc
+        Print #nfile, "Fuente: " & Location
+        Print #nfile, vbNullString
+    Close #nfile
+
+End Sub
 
