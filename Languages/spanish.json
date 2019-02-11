@@ -549,9 +549,7 @@
 		]
 	},
 	"MENSAJE_NO_SALIR":{
-		"TEXTO":[
-			"No puedes salir estando paralizado."
-		]
+		"TEXTO":"No puedes salir estando paralizado."
 	},
 	"MENSAJE_CENTINELA":{
 		"TEXTO":"Faltan parámetros. Utilice /centinela X, siendo X el código de verificación."
@@ -655,6 +653,9 @@
 	"ERROR_LEER_PARCHE":{
 		"TEXTO":"No se ha podido procesar el parche."
 	},
+	"ERROR_LEER_RECURSO":{
+		"TEXTO":"Un error inesperado ocurrió a intentar cargar el recurso: VAR_ARCHIVO. Error: VAR_ERROR"
+	},
 	"ERROR_EXTRAER_ARCHIVO":{
 		"TEXTO":"No se pudo extraer el archivo"
 	},
@@ -681,6 +682,9 @@
 	},
 	"ERROR_404":{
 		"TEXTO":"No se pudo encontrar el recurso"
+	},
+	"ERROR_GUARDAR_SCREENSHOT":{
+		"TEXTO":"No se pudo Guarrdar el JPG"
 	},
 	"ERROR":{
 		"TEXTO":"Error"

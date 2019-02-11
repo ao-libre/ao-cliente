@@ -1108,7 +1108,7 @@ Public Sub HandleMultiMessage()
                 Traveling = False
             
             Case eMessages.UserMuerto
-                Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO").Item(1), 255, 255, 255)
+                Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO").Item(2), 255, 255, 255)
         
             Case eMessages.NpcInmune
                 Call ShowConsoleMsg(JsonLanguage.Item("NPC_INMUNE").Item("TEXTO"), 210, 220, 220)

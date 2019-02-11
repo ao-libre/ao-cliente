@@ -126,7 +126,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             Case "/SALIR"
                 If UserParalizado Then 'Inmo
                     With FontTypes(FontTypeNames.FONTTYPE_WARNING)
-                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_NO_SALIR").Item("TEXTO").Item(0), .Red, .Green, .Blue, .bold, .italic)
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_NO_SALIR").Item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
                     End With
                     Exit Sub
                 End If

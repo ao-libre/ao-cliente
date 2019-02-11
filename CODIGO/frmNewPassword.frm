@@ -134,7 +134,7 @@ End Sub
 
 Private Sub imgAceptar_Click()
     If Text2.Text <> Text3.Text Then
-        Call MsgBox(JsonLanguage.Item("VALIDACION_BAD_PASSWORD").Item("TEXTO").Item(0), vbCritical Or vbOKOnly Or vbApplicationModal Or vbDefaultButton1, "Cambiar Contraseña")
+        Call MsgBox(JsonLanguage.Item("VALIDACION_BAD_PASSWORD").Item("TEXTO").Item(1), vbCritical Or vbOKOnly Or vbApplicationModal Or vbDefaultButton1, "Cambiar Contraseña")
         Exit Sub
     End If
     

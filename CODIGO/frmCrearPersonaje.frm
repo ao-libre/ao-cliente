@@ -1524,7 +1524,7 @@ Function CheckData() As Boolean
     Next i
     
     If LenB(UserName) > 30 Then
-        MsgBox JsonLanguage.Item("VALIDADION_BAD_NOMBRE_PJ").Item("TEXTO").Item(0)
+        MsgBox JsonLanguage.Item("VALIDADION_BAD_NOMBRE_PJ").Item("TEXTO").Item(1)
         Exit Function
     End If
     
@@ -1594,7 +1594,7 @@ Private Sub ImgCrear_Click()
             
     If Right$(UserName, 1) = " " Then
         UserName = RTrim$(UserName)
-        MsgBox JsonLanguage.Item("VALIDADION_BAD_NOMBRE_PJ").Item("TEXTO").Item(1)
+        MsgBox JsonLanguage.Item("VALIDADION_BAD_NOMBRE_PJ").Item("TEXTO").Item(2)
     End If
     
     UserRaza = lstRaza.ListIndex + 1

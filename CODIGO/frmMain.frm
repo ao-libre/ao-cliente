@@ -219,7 +219,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2619
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1134,18 +1133,18 @@ Select Case Index
         
     Case eSMType.sSafemode
         If Mostrar Then
-            Call AddtoRichTextBox(frmMain.RecTxt, UCase$(JsonLanguage.Item("MENSAJE_SEGURO_ACTIVADO").Item("TEXTO").Item(0)), 0, 255, 0, True, False, True)
-            picSM(Index).ToolTipText = JsonLanguage.Item("MENSAJE_SEGURO_ACTIVADO").Item("TEXTO").Item(1)
+            Call AddtoRichTextBox(frmMain.RecTxt, UCase$(JsonLanguage.Item("MENSAJE_SEGURO_ACTIVADO").Item("TEXTO").Item(1)), 0, 255, 0, True, False, True)
+            picSM(Index).ToolTipText = JsonLanguage.Item("MENSAJE_SEGURO_ACTIVADO").Item("TEXTO").Item(2)
         Else
-            Call AddtoRichTextBox(frmMain.RecTxt, UCase$(JsonLanguage.Item("MENSAJE_SEGURO_DESACTIVADO").Item("TEXTO").Item(0)), 255, 0, 0, True, False, True)
-            picSM(Index).ToolTipText = JsonLanguage.Item("MENSAJE_SEGURO_DESACTIVADO").Item("TEXTO").Item(1)
+            Call AddtoRichTextBox(frmMain.RecTxt, UCase$(JsonLanguage.Item("MENSAJE_SEGURO_DESACTIVADO").Item("TEXTO").Item(1)), 255, 0, 0, True, False, True)
+            picSM(Index).ToolTipText = JsonLanguage.Item("MENSAJE_SEGURO_DESACTIVADO").Item("TEXTO").Item(2)
         End If
         
     Case eSMType.mWork
         If Mostrar Then
-            picSM(Index).ToolTipText = JsonLanguage.Item("MENSAJE_MACRO_ACTIVADO").Item("TEXTO")
+            picSM(Index).ToolTipText = JsonLanguage.Item("MENSAJE_MACRO_ACTIVADO").Item("TEXTO").Item(1)
         Else
-            picSM(Index).ToolTipText = JsonLanguage.Item("MENSAJE_MACRO_DESACTIVADO").Item("TEXTO")
+            picSM(Index).ToolTipText = JsonLanguage.Item("MENSAJE_MACRO_DESACTIVADO").Item("TEXTO").Item(1)
         End If
 End Select
 
@@ -1224,7 +1223,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
                 Case CustomKeys.BindedKey(eKeyType.mKeyTamAnimal)
                     If UserEstado = 1 Then
                         With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                            Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO").Item(0), .Red, .Green, .Blue, .bold, .italic)
+                            Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO").Item(1), .Red, .Green, .Blue, .bold, .italic)
                         End With
                     Else
                         Call WriteWork(eSkill.Domar)
@@ -1233,7 +1232,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
                 Case CustomKeys.BindedKey(eKeyType.mKeySteal)
                     If UserEstado = 1 Then
                         With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                            Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO").Item(0), .Red, .Green, .Blue, .bold, .italic)
+                            Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO").Item(1), .Red, .Green, .Blue, .bold, .italic)
                         End With
                     Else
                         Call WriteWork(eSkill.Robar)
@@ -1242,7 +1241,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
                 Case CustomKeys.BindedKey(eKeyType.mKeyHide)
                     If UserEstado = 1 Then
                         With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                            Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO").Item(0), .Red, .Green, .Blue, .bold, .italic)
+                            Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO").Item(1), .Red, .Green, .Blue, .bold, .italic)
                         End With
                     Else
                         Call WriteWork(eSkill.Ocultarse)
@@ -1314,7 +1313,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
             
             If UserEstado = 1 Then
                 With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO").Item(0), .Red, .Green, .Blue, .bold, .italic)
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO").Item(1), .Red, .Green, .Blue, .bold, .italic)
                 End With
                 Exit Sub
             End If
@@ -1327,7 +1326,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
         Case CustomKeys.BindedKey(eKeyType.mKeyWorkMacro)
             If UserEstado = 1 Then
                 With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO").Item(0), .Red, .Green, .Blue, .bold, .italic)
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO").Item(1), .Red, .Green, .Blue, .bold, .italic)
                 End With
                 Exit Sub
             End If
@@ -1553,7 +1552,7 @@ Select Case Index
     Case eSMType.mWork
         If UserEstado = 1 Then
             With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO").Item(0), .Red, .Green, .Blue, .bold, .italic)
+                Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO").Item(1), .Red, .Green, .Blue, .bold, .italic)
             End With
             Exit Sub
         End If
@@ -1651,7 +1650,7 @@ End Sub
 Private Sub TirarItem()
     If UserEstado = 1 Then
         With FontTypes(FontTypeNames.FONTTYPE_INFO)
-            Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO").Item(0), .Red, .Green, .Blue, .bold, .italic)
+            Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO").Item(1), .Red, .Green, .Blue, .bold, .italic)
         End With
     Else
         If (Inventario.SelectedItem > 0 And Inventario.SelectedItem < MAX_INVENTORY_SLOTS + 1) Or (Inventario.SelectedItem = FLAGORO) Then
@@ -1669,7 +1668,7 @@ End Sub
 Private Sub AgarrarItem()
     If UserEstado = 1 Then
         With FontTypes(FontTypeNames.FONTTYPE_INFO)
-            Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO").Item(0), .Red, .Green, .Blue, .bold, .italic)
+            Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO").Item(1), .Red, .Green, .Blue, .bold, .italic)
         End With
     Else
         Call WritePickUp
@@ -1688,7 +1687,7 @@ End Sub
 Private Sub EquiparItem()
     If UserEstado = 1 Then
         With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO").Item(0), .Red, .Green, .Blue, .bold, .italic)
+                Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO").Item(1), .Red, .Green, .Blue, .bold, .italic)
         End With
     Else
         If Comerciando Then Exit Sub
@@ -1702,7 +1701,7 @@ Private Sub cmdLanzar_Click()
     If hlst.List(hlst.ListIndex) <> "(" & JsonLanguage.Item("NADA").Item("TEXTO") & ")" And MainTimer.Check(TimersIndex.Work, False) Then
         If UserEstado = 1 Then
             With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO").Item(0), .Red, .Green, .Blue, .bold, .italic)
+                Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO").Item(1), .Red, .Green, .Blue, .bold, .italic)
             End With
         Else
             Call WriteCastSpell(hlst.ListIndex + 1)
@@ -1724,12 +1723,12 @@ Private Sub cmdINFO_Click()
         Dim Msj As String
      
         If Index <> 0 Then _
-            Msj = "%%%%%%%%%%%% " & JsonLanguage.Item("MENSAJE_INFO_HECHIZO").Item("TEXTO").Item(0) & " %%%%%%%%%%%%" & vbCrLf _
-             & JsonLanguage.Item("MENSAJE_INFO_HECHIZO").Item("TEXTO").Item(1) & ": " & Hechizos(Index).Nombre & vbCrLf _
-             & JsonLanguage.Item("MENSAJE_INFO_HECHIZO").Item("TEXTO").Item(2) & ": " & Hechizos(Index).Desc & vbCrLf _
-             & JsonLanguage.Item("MENSAJE_INFO_HECHIZO").Item("TEXTO").Item(3) & ": " & Hechizos(Index).SkillRequerido & vbCrLf _
-             & JsonLanguage.Item("MENSAJE_INFO_HECHIZO").Item("TEXTO").Item(4) & ": " & Hechizos(Index).ManaRequerida & vbCrLf _
-             & JsonLanguage.Item("MENSAJE_INFO_HECHIZO").Item("TEXTO").Item(5) & ": " & Hechizos(Index).EnergiaRequerida & vbCrLf _
+            Msj = "%%%%%%%%%%%% " & JsonLanguage.Item("MENSAJE_INFO_HECHIZO").Item("TEXTO").Item(1) & " %%%%%%%%%%%%" & vbCrLf _
+             & JsonLanguage.Item("MENSAJE_INFO_HECHIZO").Item("TEXTO").Item(2) & ": " & Hechizos(Index).Nombre & vbCrLf _
+             & JsonLanguage.Item("MENSAJE_INFO_HECHIZO").Item("TEXTO").Item(3) & ": " & Hechizos(Index).Desc & vbCrLf _
+             & JsonLanguage.Item("MENSAJE_INFO_HECHIZO").Item("TEXTO").Item(4) & ": " & Hechizos(Index).SkillRequerido & vbCrLf _
+             & JsonLanguage.Item("MENSAJE_INFO_HECHIZO").Item("TEXTO").Item(5) & ": " & Hechizos(Index).ManaRequerida & vbCrLf _
+             & JsonLanguage.Item("MENSAJE_INFO_HECHIZO").Item("TEXTO").Item(6) & ": " & Hechizos(Index).EnergiaRequerida & vbCrLf _
              & "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
                                              
         Call ShowConsoleMsg(Msj, 210, 220, 220)

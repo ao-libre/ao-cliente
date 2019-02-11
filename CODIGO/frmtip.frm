@@ -134,8 +134,8 @@ End Sub
 Private Sub Form_Load()
     
     With Me
-        .Command1.Caption = JsonLanguage.Item("TIP").Item("TEXTO").Item(0)
-        .Check1.Caption = JsonLanguage.Item("TIP").Item("TEXTO").Item(1)
+        .Command1.Caption = JsonLanguage.Item("TIP").Item("TEXTO").Item(1)
+        .Check1.Caption = JsonLanguage.Item("TIP").Item("TEXTO").Item(2)
     End With
     
 End Sub

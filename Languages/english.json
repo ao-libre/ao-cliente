@@ -52,10 +52,10 @@
       ]
    },
    "MENSAJE_MACRO_ACTIVADO":{
-      "TEXTO":"Macro to work on."
+      "TEXTO":"Work Macro ON."
    },
    "MENSAJE_MACRO_DESACTIVADO":{
-      "TEXTO":"Macro work off."
+      "TEXTO":"Work Macro OFF."
    },
    "MENSAJE_MACRO_ADVERTENCIA":{
       "TEXTO":"You can't cast VAR_LANZADO so fast."
@@ -69,7 +69,7 @@
       ]
    },
    "MENSAJE_USAR_MEDITANDO":{
-      "TEXTO":"You're meditating! You must stop and meditate to use objects.",
+      "TEXTO":"You're meditating! You can't use objects while meditating.",
       "COLOR":[
          255,
          0,
@@ -77,7 +77,7 @@
       ]
    },
    "MENSAJE_SEGURO_RESU_ON":{
-      "TEXTO":"Insurance Resurrecion activated",
+      "TEXTO":"Resurrection Insurance activated",
       "COLOR":[
          255,
          0,
@@ -85,7 +85,7 @@
       ]
    },
    "MENSAJE_SEGURO_RESU_OFF":{
-      "TEXTO":"Insurance Resurrecion off",
+      "TEXTO":"Resurrection Insurance deactivated",
       "COLOR":[
          255,
          0,
@@ -101,7 +101,7 @@
       ]
    },
    "MENSAJE_GOLPE_BRAZO_IZQ":{
-      "TEXTO":"The creature has hit the left arm by ",
+      "TEXTO":"The creature has hit you in the left arm by ",
       "COLOR":[
          255,
          0,
@@ -109,7 +109,7 @@
       ]
    },
    "MENSAJE_GOLPE_BRAZO_DER":{
-      "TEXTO":"The creature has hit the right arm ",
+      "TEXTO":"The creature has hit you in the right arm ",
       "COLOR":[
          255,
          0,
@@ -117,7 +117,7 @@
       ]
    },
    "MENSAJE_GOLPE_PIERNA_IZQ":{
-      "TEXTO":"The creature has hit the left leg by ",
+      "TEXTO":"The creature has hit you in the left leg by ",
       "COLOR":[
          255,
          0,
@@ -125,7 +125,7 @@
       ]
    },
    "MENSAJE_GOLPE_PIERNA_DER":{
-      "TEXTO":"The creature has hit the right leg by ",
+      "TEXTO":"The creature has hit you in the right leg by ",
       "COLOR":[
          255,
          0,
@@ -133,7 +133,7 @@
       ]
    },
    "MENSAJE_GOLPE_TORSO":{
-      "TEXTO":"The creature has hit in the torso by ",
+      "TEXTO":"The creature has hit you in the torso by ",
       "COLOR":[
          255,
          0,
@@ -141,10 +141,10 @@
       ]
    },
    "MENSAJE_GOLPE_CRIATURA_1":{
-      "TEXTO":"You've been glued to the creature "
+      "TEXTO":"You've been hit by the creature "
    },
    "MENSAJE_ATAQUE_FALLO":{
-      "TEXTO":" you attacked and failed!!",
+      "TEXTO":" attacked and failed!!",
       "COLOR":[
          255,
          0,
@@ -152,7 +152,7 @@
       ]
    },
    "MENSAJE_RECIVE_IMPACTO_CABEZA":{
-      "TEXTO":" has hit in the head by ",
+      "TEXTO":" has hit you in the head by ",
       "COLOR":[
          255,
          0,
@@ -160,7 +160,7 @@
       ]
    },
    "MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ":{
-      "TEXTO":" you have glued the left arm by ",
+      "TEXTO":" you've been hit in the left arm by ",
       "COLOR":[
          255,
          0,
@@ -168,7 +168,7 @@
       ]
    },
    "MENSAJE_RECIVE_IMPACTO_BRAZO_DER":{
-      "TEXTO":" you have pasted the right arm ",
+      "TEXTO":" you've been hit in the right arm ",
       "COLOR":[
          255,
          0,
@@ -176,7 +176,7 @@
       ]
    },
    "MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ":{
-      "TEXTO":" you have pasted the left leg by ",
+      "TEXTO":" you've been hit in the left leg by ",
       "COLOR":[
          255,
          0,
@@ -184,7 +184,7 @@
       ]
    },
    "MENSAJE_RECIVE_IMPACTO_PIERNA_DER":{
-      "TEXTO":" you have pasted the right leg by ",
+      "TEXTO":" you've been hit in the right leg by ",
       "COLOR":[
          255,
          0,
@@ -192,7 +192,7 @@
       ]
    },
    "MENSAJE_RECIVE_IMPACTO_TORSO":{
-      "TEXTO":" has hit in the torso by ",
+      "TEXTO":" has've been hit in the torso by ",
       "COLOR":[
          255,
          0,
@@ -200,7 +200,7 @@
       ]
    },
    "MENSAJE_PRODUCE_IMPACTO_1":{
-      "TEXTO":"Have you glued to ",
+      "TEXTO":"Have you hit by ",
       "COLOR":[
          255,
          0,
@@ -320,7 +320,7 @@
       ]
    },
    "MENSAJE_ENTRAR_PARTY_2":{
-      "TEXTO":",}, write \/entrarparty",
+      "TEXTO":", write /entrarparty",
       "COLOR":[
          255,
          0,
@@ -344,7 +344,7 @@
       ]
    },
    "MENSAJE_FRAGSHOOTER_HAS_MATADO":{
-      "TEXTO":"Have you killed",
+      "TEXTO":"You have killed",
       "COLOR":[
          255,
          0,
@@ -360,7 +360,7 @@
       ]
    },
    "MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA":{
-      "TEXTO":"points of experience.",
+      "TEXTO":"experience points.",
       "COLOR":[
          255,
          0,
@@ -368,7 +368,7 @@
       ]
    },
    "MENSAJE_HAS_MATADO_A":{
-      "TEXTO":"Have you killed ",
+      "TEXTO":"You have killed ",
       "COLOR":[
          255,
          0,
@@ -392,7 +392,7 @@
       ]
    },
    "MENSAJE_HOGAR":{
-      "TEXTO":"You have arrived at your home.",
+      "TEXTO":"You have arrived home.",
       "COLOR":[
          255,
          255,
@@ -400,7 +400,7 @@
       ]
    },
    "MENSAJE_HOGAR_CANCEL":{
-      "TEXTO":"You cannot travel while in jail.",
+      "TEXTO":"You cannot travel while being in prison.",
       "COLOR":[
          255,
          0,
@@ -427,7 +427,7 @@
       ]
    },
    "MENSAJE_DAMAGE_NPC":{
-      "TEXTO":"You've removed VAR_DAÑO points of the creature to life!!",
+      "TEXTO":"You've taken VAR_DAÑO health points of the creature!!",
       "COLOR":[
          255,
          0,
@@ -443,7 +443,7 @@
       ]
    },
    "MENSAJE_WORK_FINISHED":{
-      "TEXTO":"You've finished work!",
+      "TEXTO":"You've finished working!",
       "COLOR":[
          255,
          0,
@@ -459,7 +459,7 @@
       ]
    },
    "MENSAJE_PING":{
-      "TEXTO":"The ping is ",
+      "TEXTO":"The current ping is ",
       "COLOR":[
          255,
          0,
@@ -500,10 +500,10 @@
       ]
    },
    "MENSAJE_COMM_AGREGA":{
-      "TEXTO":"I added VAR_CANTIDAD_AGREGA VAR_QUE_AGREGA to your offer!!"
+      "TEXTO":"Added VAR_CANTIDAD_AGREGA VAR_QUE_AGREGA to your offer!!"
    },
    "MENSAJE_COMM_SACA":{
-      "TEXTO":"Quitaste VAR_CANTIDAD_SACA VAR_QUE_SACA of your offer!!"
+      "TEXTO":"Removed VAR_CANTIDAD_SACA VAR_QUE_SACA of your offer!!"
    },
    "MENSAJE_COMM_OFERTA_COMFIRMADA":{
       "TEXTO":"You have confirmed your offer! You cannot change it."
@@ -517,7 +517,7 @@
       ]
    },
    "MENSAJE_AUTO_CAST_SPELL":{
-      "TEXTO":"Self-cast spells. Use this skill to train only. To activate\/deactivate it using F7.",
+      "TEXTO":"Self-cast spells. Use this skill to train only. To activate/deactivate it using F7.",
       "COLOR":[
          255,
          255,
@@ -528,13 +528,13 @@
       "TEXTO":"These coordinates are your location on the map. Uses the letter L to correct it if this does not match with the server due to the Lag."
    },
    "MENSAJE_SOY_CHEATER":{
-      "TEXTO":"I'm a cheater, avisenle a gm"
+      "TEXTO":"I'm a cheater, tell a GM"
    },
    "MENSAJE_CUSTOM_PERSONALIZADO":{
       "TEXTO":" VAR_MENSAJE was saved as a custom message VAR_MENSAJE_NUMERO !!"
    },
    "MENSAJE_CUSTOM_INVALIDO":{
-      "TEXTO":"The Message is invalid. Modifiquelo please."
+      "TEXTO":"The Message is invalid. Change it, please."
    },
    "MENSAJE_INFO_HECHIZOS":{
       "TEXTO":[
@@ -547,9 +547,7 @@
       ]
    },
    "MENSAJE_NO_SALIR":{
-      "TEXTO":[
-         "You can't be paralyzed."
-      ]
+      "TEXTO":"You can't exit while being be paralyzed."
    },
    "MENSAJE_CENTINELA":{
 		"TEXTO":"Missing parameters. Use /centinela X, being X the verification code."
@@ -570,7 +568,7 @@
       "TEXTO":"You are already trading."
    },
    "MENSAJE_ENCUESTA":{
-      "TEXTO":"To vote on a option, type \/survey NUMERODEOPCION, for example, to vote for the option 1, type \/survey 1."
+      "TEXTO":"To vote on a option, type /encuesta NUMERODEOPCION, for example, to vote for the option 1, type /encuesta 1."
    },
    "MENSAJE_FALTAN_PARAMETROS":{
       "TEXTO":"Missing parameters. Use"
@@ -591,7 +589,7 @@
       "TEXTO":"Incorrect format. Use"
    },
    "MENSAJE_COMANDO_INCORRECTO":{
-      "TEXTO":"Command incorrect."
+      "TEXTO":"Incorrect command."
    },
    "MENSAJE_MIDI_INCORRECTO":{
       "TEXTO":"Midi wrong. Use"
@@ -606,7 +604,7 @@
       "TEXTO":"Incorrect object. Use"
    },
    "MENSAJE_ONCLAN":{
-      "TEXTO":"Use \/onclan name of the clan."
+      "TEXTO":"Use /ONCLAN name-of-the-clan."
    },
    "ERROR_MAPAS":{
       "TEXTO":"Error in the maps, some file has been modified or is damaged."
@@ -633,10 +631,10 @@
       "TEXTO":"You can't create more than 10 characters."
    },
    "ERROR_DIRECTX_INIT":{
-      "TEXTO":"Failed to initialize the graphic engine. Please, check if you have your libraries and your drivers up to date."
+      "TEXTO":"Failed to initialize the graphic engine. Please, check if you have your libraries and your drivers up-to-date."
    },
    "ERROR_DIRECTDEVICE_INIT":{
-      "TEXTO":"Unable to initialize DirectDevice. Please, check if you have your libraries and your drivers up to date."
+      "TEXTO":"Unable to initialize DirectDevice. Please, check if you have your libraries and your drivers up-to-date."
    },
    "ERROR_DESCARGA_SERVIDORES":{
       "TEXTO":"Failed to download the server list"
@@ -907,7 +905,7 @@
    "VALIDACION_BAD_PASSWORD":{
       "TEXTO":[
          "The passwords do not match.",
-         "Password overrides. The character VAR_CHAR_INVALIDO is not allowed."
+         "Invalid password. The character VAR_CHAR_INVALIDO is not allowed."
       ]
    },
    "VALIDACION_NOMBRE_PJ":{
@@ -916,10 +914,10 @@
    "VALIDACION_BAD_NOMBRE_PJ":{
       "TEXTO":[
          "The name of the character must be under 30 letters.",
-         "Invalid name invalid, have been removed the spaces at the end of the name",
-         "Invalid name invalid.",
+         "Invalid name, have been removed the spaces at the end of the name",
+         "Invalid name.",
          "Name is too long.",
-         "Name invalid.The character VAR_CHAR_INVALIDO is not allowed."
+         "Invalid name. The character VAR_CHAR_INVALIDO is not allowed."
       ]
    },
    "VALIDACION_RAZA":{
@@ -1011,7 +1009,7 @@
    },
    "AMBIENT-EDITOR":{
       "TEXTOS":[
-         "Editor Environments",
+         "Environments Editor",
          "Ambient Light",
          "Use the Light of the Day",
          "Use A Light Of Its Own",
@@ -1054,7 +1052,7 @@
       ]
    },
    "CUSTOMKEYS_TECLA_INVALIDA":{
-      "TEXTO":"There are one or more keys are invalid, please check."
+      "TEXTO":"There are one or more invalid keys, please check again."
    },
    "CUSTOMKEYS_CONFIG_CARGADA":{
       "TEXTO":"It has loaded the configuration VAR_CONFIG_ELEGIDA VAR_CONFIG_CUSTOM_NUMERO !"

@@ -154,17 +154,17 @@ Private Function IsFormValid() As Boolean
     End If
 
     If Not CheckMailString(txtCuentaEmail.Text) Then
-        MsgBox JsonLanguage.Item("VALIDACION_BAD_EMAIL").Item("TEXTO").Item(0)
-        Exit Function
-    End If
-    
-    If Len(txtCuentaEmail.Text) > 30 Then
         MsgBox JsonLanguage.Item("VALIDACION_BAD_EMAIL").Item("TEXTO").Item(1)
         Exit Function
     End If
     
+    If Len(txtCuentaEmail.Text) > 30 Then
+        MsgBox JsonLanguage.Item("VALIDACION_BAD_EMAIL").Item("TEXTO").Item(2)
+        Exit Function
+    End If
+    
     If Not txtCuentaPassword.Text = txtCuentaRepite.Text Then
-        MsgBox JsonLanguage.Item("VALIDACION_BAD_PASSWORD").Item("TEXTO").Item(0)
+        MsgBox JsonLanguage.Item("VALIDACION_BAD_PASSWORD").Item("TEXTO").Item(1)
         Exit Function
     End If
     

@@ -719,9 +719,9 @@ On Error Resume Next
                 picUpgradeItem(i).ToolTipText = .UpgradeName
                 
                  ' Inventariode lingotes
-                Call InvLingosHerreria(i).SetItem(1, 0, .LinH, 0, LH_GRH, 0, 0, 0, 0, 0, 0, JsonLanguage.Item("HERRERO").Item("TEXTO").Item(0))
-                Call InvLingosHerreria(i).SetItem(2, 0, .LinP, 0, LP_GRH, 0, 0, 0, 0, 0, 0, JsonLanguage.Item("HERRERO").Item("TEXTO").Item(1))
-                Call InvLingosHerreria(i).SetItem(3, 0, .LinO, 0, LO_GRH, 0, 0, 0, 0, 0, 0, JsonLanguage.Item("HERRERO").Item("TEXTO").Item(2))
+                Call InvLingosHerreria(i).SetItem(1, 0, .LinH, 0, LH_GRH, 0, 0, 0, 0, 0, 0, JsonLanguage.Item("HERRERO").Item("TEXTO").Item(1))
+                Call InvLingosHerreria(i).SetItem(2, 0, .LinP, 0, LP_GRH, 0, 0, 0, 0, 0, 0, JsonLanguage.Item("HERRERO").Item("TEXTO").Item(2))
+                Call InvLingosHerreria(i).SetItem(3, 0, .LinO, 0, LO_GRH, 0, 0, 0, 0, 0, 0, JsonLanguage.Item("HERRERO").Item("TEXTO").Item(3))
             End With
         End If
     Next i
@@ -745,9 +745,9 @@ For i = 1 To MAX_LIST_ITEMS
             picUpgradeItem(i).ToolTipText = .UpgradeName
             
              ' Inventariode lingotes
-            Call InvLingosHerreria(i).SetItem(1, 0, .LinH, 0, LH_GRH, 0, 0, 0, 0, 0, 0, JsonLanguage.Item("HERRERO").Item("TEXTO").Item(0))
-            Call InvLingosHerreria(i).SetItem(2, 0, .LinP, 0, LP_GRH, 0, 0, 0, 0, 0, 0, JsonLanguage.Item("HERRERO").Item("TEXTO").Item(1))
-            Call InvLingosHerreria(i).SetItem(3, 0, .LinO, 0, LO_GRH, 0, 0, 0, 0, 0, 0, JsonLanguage.Item("HERRERO").Item("TEXTO").Item(2))
+            Call InvLingosHerreria(i).SetItem(1, 0, .LinH, 0, LH_GRH, 0, 0, 0, 0, 0, 0, JsonLanguage.Item("HERRERO").Item("TEXTO").Item(1))
+            Call InvLingosHerreria(i).SetItem(2, 0, .LinP, 0, LP_GRH, 0, 0, 0, 0, 0, 0, JsonLanguage.Item("HERRERO").Item("TEXTO").Item(2))
+            Call InvLingosHerreria(i).SetItem(3, 0, .LinO, 0, LO_GRH, 0, 0, 0, 0, 0, 0, JsonLanguage.Item("HERRERO").Item("TEXTO").Item(3))
         End With
     End If
 Next i
