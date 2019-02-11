@@ -68,19 +68,6 @@ Private DirectD3D                        As D3DX8
 
 Private Const DIB_PAL_COLORS             As Long = 1
 Private Const DIB_RGB_COLORS             As Long = 0
-Private Declare Function SetDIBitsToDevice _
-                Lib "GDI32.dll" (ByVal hdc As Long, _
-                                 ByVal XDest As Long, _
-                                 ByVal YDest As Long, _
-                                 ByVal dwWidth As Long, _
-                                 ByVal dwHeight As Long, _
-                                 ByVal xSrc As Long, _
-                                 ByVal ySrc As Long, _
-                                 ByVal uStartScan As Long, _
-                                 ByVal CScanLine As Long, _
-                                 lpBits As Any, _
-                                 lpbmi As BITMAPINFO, _
-                                 ByVal fuColorUse As Long) As Long
     
 Private Sub Class_Initialize()
 

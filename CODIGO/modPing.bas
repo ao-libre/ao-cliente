@@ -91,8 +91,6 @@ Private Declare Sub CopyMemory _
                                        xSource As Any, _
                                        ByVal nbytes As Long)
 
-Private Declare Function lstrlenA Lib "kernel32" (lpString As Any) As Long
-
 Private Declare Function WSAStartup _
                 Lib "WSOCK32.DLL" (ByVal wVersionRequired As Long, _
                                    lpWSADATA As WSADATA) As Long

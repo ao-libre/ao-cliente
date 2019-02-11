@@ -353,7 +353,6 @@ Private llTick                 As Long  'Contador
 
 Public charlist(1 To 10000)    As Char
 
-' Used by GetTextExtentPoint32
 Private Type Size
 
     cx As Long
@@ -380,14 +379,6 @@ Private Declare Function QueryPerformanceFrequency _
                 Lib "kernel32" (lpFrequency As Currency) As Long
 Private Declare Function QueryPerformanceCounter _
                 Lib "kernel32" (lpPerformanceCount As Currency) As Long
-
-'Text width computation. Needed to center text.
-Private Declare Function GetTextExtentPoint32 _
-                Lib "gdi32" _
-                Alias "GetTextExtentPoint32A" (ByVal hdc As Long, _
-                                               ByVal lpsz As String, _
-                                               ByVal cbString As Long, _
-                                               lpSize As Size) As Long
 
 Private Declare Function SetPixel _
                 Lib "gdi32" (ByVal hdc As Long, _

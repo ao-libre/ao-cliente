@@ -54,11 +54,6 @@ Private Declare Function uncompress _
                                 destlen As Any, _
                                 src As Any, _
                                 ByVal srclen As Long) As Long
-Private Declare Sub CopyMemory _
-                Lib "kernel32" _
-                Alias "RtlMoveMemory" (ByRef dest As Any, _
-                                       ByRef source As Any, _
-                                       ByVal byteCount As Long)
 
 'BitMaps Strucures
 Public Type BITMAPFILEHEADER
