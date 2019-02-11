@@ -45,6 +45,7 @@ Public Sub LogError(Numero As Integer, Desc As String, Location As String)
         Print #nfile, "Error: " & Numero
         Print #nfile, "Descripcion: " & Desc
         Print #nfile, "Fuente: " & Location
+        Print #nfile, "Fecha y Hora: " & Date$ & " - " & Time$()
         Print #nfile, vbNullString
     Close #nfile
 
