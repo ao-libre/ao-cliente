@@ -563,13 +563,13 @@ Public Function Compress_Files(ByRef SourcePath As String, _
     If Modo = 0 Then
         OutputFilePath = OutputPath & GRH_RESOURCE_FILE
         'If GraficosPNG = False Then ' GSZAO
-        SourceFileName = Dir(SourcePath & "*" & BMP_SOURCE_FILE_EXT, vbNormal)
+        SourceFileName = Dir$(SourcePath & "*" & BMP_SOURCE_FILE_EXT, vbNormal)
         'Else
-        '   SourceFileName = Dir(SourcePath & "*" & PNG_SOURCE_FILE_EXT, vbNormal)
+        '   SourceFileName = Dir$(SourcePath & "*" & PNG_SOURCE_FILE_EXT, vbNormal)
         'End If
     ElseIf Modo = 1 Then
         OutputFilePath = OutputPath & MAPS_RESOURCE_FILE
-        SourceFileName = Dir(SourcePath & "*" & MAPS_SOURCE_FILE_EXT, vbNormal)
+        SourceFileName = Dir$(SourcePath & "*" & MAPS_SOURCE_FILE_EXT, vbNormal)
 
     End If
     
@@ -582,11 +582,11 @@ Public Function Compress_Files(ByRef SourcePath As String, _
         InfoHead(FileHead.lngNumFiles - 1).strFileName = UCase$(SourceFileName)
         
         'Search new file
-        SourceFileName = Dir()
+        SourceFileName = Dir$()
     Wend
     
     'If Mode = 0 And frmMain.cmdGrhPNG.Value = 1 Then ' Comprimimos tambien los Graficos .PNG
-    SourceFileName = Dir(SourcePath & "*" & PNG_SOURCE_FILE_EXT, vbNormal)
+    SourceFileName = Dir$(SourcePath & "*" & PNG_SOURCE_FILE_EXT, vbNormal)
 
     ' Create list of all files to be compressed
     While LenB(SourceFileName) <> 0
@@ -597,12 +597,12 @@ Public Function Compress_Files(ByRef SourcePath As String, _
         InfoHead(FileHead.lngNumFiles - 1).strFileName = UCase$(SourceFileName)
             
         'Search new file
-        SourceFileName = Dir()
+        SourceFileName = Dir$()
     Wend
     'End If
     
     'If Mode = 1 And frmMain.cmdMiniMap.Value = 1 Then ' agregamos tambien los BMP junto a los mapas
-    SourceFileName = Dir(SourcePath & "*" & BMP_SOURCE_FILE_EXT, vbNormal)  ' GSZAO
+    SourceFileName = Dir$(SourcePath & "*" & BMP_SOURCE_FILE_EXT, vbNormal)  ' GSZAO
 
     ' Create list of all files to be compressed
     While LenB(SourceFileName) <> 0
@@ -613,7 +613,7 @@ Public Function Compress_Files(ByRef SourcePath As String, _
         InfoHead(FileHead.lngNumFiles - 1).strFileName = UCase$(SourceFileName)
             
         'Search new file
-        SourceFileName = Dir()
+        SourceFileName = Dir$()
     Wend
     'End If
     
@@ -634,7 +634,7 @@ Public Function Compress_Files(ByRef SourcePath As String, _
     End If
     
     'Destroy file if it previuosly existed
-    If LenB(Dir(OutputFilePath, vbNormal)) <> 0 Then
+    If LenB(Dir$(OutputFilePath, vbNormal)) <> 0 Then
         Kill OutputFilePath
 
     End If
@@ -1316,7 +1316,7 @@ Public Function Make_Patch(ByRef NewResourcePath As String, _
     End If
             
     'Destroy file if it previuosly existed
-    If LenB(Dir(OutputFilePath, vbNormal)) <> 0 Then Kill OutputFilePath
+    If LenB(Dir$(OutputFilePath, vbNormal)) <> 0 Then Kill OutputFilePath
             
     'Open the patch file
     OutputFile = FreeFile()

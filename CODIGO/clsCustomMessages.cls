@@ -120,7 +120,7 @@ Private Sub Class_Terminate()
     For i = 0 To UBound(directories()) - 1
         path = path & "/" & directories(i)
         
-        If LenB(Dir(path, vbDirectory)) = 0 Then
+        If LenB(Dir$(path, vbDirectory)) = 0 Then
             Call MkDir(path)
 
         End If

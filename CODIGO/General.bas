@@ -1801,7 +1801,7 @@ Private Sub AoUpdate(ByVal UpToDate As Boolean, ByVal NoRes As Boolean)
 
         'No recibe update, ejecutar AU
         'Ejecuto el AoUpdate, sino me voy
-        If LenB(Dir(App.path & "\AoUpdate.exe", vbArchive)) = 0 Then
+        If LenB(Dir$(App.path & "\AoUpdate.exe", vbArchive)) = 0 Then
             MsgBox "No se encuentra el archivo de actualizacion AoUpdate.exe por favor descarguelo y vuelva a intentar", vbCritical
             End
         Else
