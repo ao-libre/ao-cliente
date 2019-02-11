@@ -209,30 +209,28 @@ Attribute VB_Exposed = False
 'Código Postal 1900
 'Pablo Ignacio Márquez
 
-
-
 Option Explicit
 
-Private clsFormulario As clsFormMovementManager
+Private clsFormulario          As clsFormMovementManager
 
-Private cBotonDejarAnuncio As clsGraphicalButton
-Private cBotonDejarMsg As clsGraphicalButton
-Private cBotonCerrar As clsGraphicalButton
-Private cBotonListaMsg As clsGraphicalButton
-Public LastButtonPressed As clsGraphicalButton
+Private cBotonDejarAnuncio     As clsGraphicalButton
+Private cBotonDejarMsg         As clsGraphicalButton
+Private cBotonCerrar           As clsGraphicalButton
+Private cBotonListaMsg         As clsGraphicalButton
+Public LastButtonPressed       As clsGraphicalButton
 
 ' Para controlar las imagenes de fondo y el envio de posteos
-Private ForoActual As eForumType
-Private VerListaMsg As Boolean
-Private Lectura As Boolean
+Private ForoActual             As eForumType
+Private VerListaMsg            As Boolean
+Private Lectura                As Boolean
 
-Public ForoLimpio As Boolean
-Private Sticky As Boolean
+Public ForoLimpio              As Boolean
+Private Sticky                 As Boolean
 
 ' Para restringir la visibilidad de los foros
-Public Privilegios As Byte
-Public ForosVisibles As eForumType
-Public CanPostSticky As Byte
+Public Privilegios             As Byte
+Public ForosVisibles           As eForumType
+Public CanPostSticky           As Byte
 
 ' Imagenes de fondo
 Private FondosDejarMsg(0 To 2) As Picture
@@ -241,6 +239,7 @@ Private FondosListaMsg(0 To 2) As Picture
 Private Sub Form_Unload(Cancel As Integer)
     MirandoForo = False
     Privilegios = 0
+
 End Sub
 
 Private Sub imgDejarAnuncio_Click()
@@ -250,9 +249,11 @@ Private Sub imgDejarAnuncio_Click()
     
     'Switch to proper background
     ToogleScreen
+
 End Sub
 
 Private Sub imgDejarMsg_Click()
+
     If Not cBotonDejarMsg.IsEnabled Then Exit Sub
     
     Dim PostStyle As Byte
@@ -264,6 +265,7 @@ Private Sub imgDejarMsg_Click()
                 PostStyle = GetStickyPost
             Else
                 PostStyle = GetNormalPost
+
             End If
 
             Call WriteForumPost(txtTitulo.Text, txtPost.Text, PostStyle)
@@ -273,27 +275,32 @@ Private Sub imgDejarMsg_Click()
             Call UpdateList
             
             VerListaMsg = True
+
         End If
+
     Else
         VerListaMsg = False
         Sticky = False
+
     End If
     
     Lectura = False
     
     'Switch to proper background
     ToogleScreen
+
 End Sub
 
 Private Sub imgCerrar_Click()
     Unload Me
+
 End Sub
 
 Private Sub imgListaMsg_Click()
     VerListaMsg = True
     ToogleScreen
-End Sub
 
+End Sub
 
 Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
@@ -345,27 +352,19 @@ Private Sub LoadButtons()
     Set LastButtonPressed = New clsGraphicalButton
 
     ' Initialize buttons
-    Call cBotonDejarAnuncio.Initialize(imgDejarAnuncio, GrhPath & "BotonDejarAnuncioForo.jpg", _
-                                            GrhPath & "BotonDejarAnuncioRolloverForo.jpg", _
-                                            GrhPath & "BotonDejarAnuncioClickForo.jpg", Me)
+    Call cBotonDejarAnuncio.Initialize(imgDejarAnuncio, GrhPath & "BotonDejarAnuncioForo.jpg", GrhPath & "BotonDejarAnuncioRolloverForo.jpg", GrhPath & "BotonDejarAnuncioClickForo.jpg", Me)
                                             
-    Call cBotonDejarMsg.Initialize(imgDejarMsg, GrhPath & "BotonDejarMsgForo.jpg", _
-                                            GrhPath & "BotonDejarMsgRolloverForo.jpg", _
-                                            GrhPath & "BotonDejarMsgClickForo.jpg", Me, _
-                                            GrhPath & "BotonDejarMsgDisabledForo.jpg")
+    Call cBotonDejarMsg.Initialize(imgDejarMsg, GrhPath & "BotonDejarMsgForo.jpg", GrhPath & "BotonDejarMsgRolloverForo.jpg", GrhPath & "BotonDejarMsgClickForo.jpg", Me, GrhPath & "BotonDejarMsgDisabledForo.jpg")
                                             
-    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarForo.jpg", _
-                                            GrhPath & "BotonCerrarRolloverForo.jpg", _
-                                            GrhPath & "BotonCerrarClickForo.jpg", Me)
+    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarForo.jpg", GrhPath & "BotonCerrarRolloverForo.jpg", GrhPath & "BotonCerrarClickForo.jpg", Me)
                                             
-    Call cBotonListaMsg.Initialize(imgListaMsg, GrhPath & "BotonListaMsgForo.jpg", _
-                                            GrhPath & "BotonListaMsgRolloverForo.jpg", _
-                                            GrhPath & "BotonListaMsgClickForo.jpg", Me)
+    Call cBotonListaMsg.Initialize(imgListaMsg, GrhPath & "BotonListaMsgForo.jpg", GrhPath & "BotonListaMsgRolloverForo.jpg", GrhPath & "BotonListaMsgClickForo.jpg", Me)
 
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgTab_Click(Index As Integer)
@@ -379,12 +378,16 @@ Private Sub imgTab_Click(Index As Integer)
         UpdateList
         ToogleScreen
     Else
+
         If Not VerListaMsg Then
             VerListaMsg = True
             Lectura = False
             ToogleScreen
+
         End If
+
     End If
+
 End Sub
 
 Private Sub ToogleScreen()
@@ -406,7 +409,9 @@ Private Sub ToogleScreen()
     If VerListaMsg Then
         Me.Picture = FondosListaMsg(ForoActual)
     Else
+
         If Lectura Then
+
             With lstTitulos
                 PostOffset = .ItemData(.ListIndex)
                 
@@ -416,25 +421,30 @@ Private Sub ToogleScreen()
                     txtPost.Text = Foros(ForoActual).GeneralPost(PostOffset)
                     lblAutor.Caption = Foros(ForoActual).GeneralAuthor(PostOffset)
                 
-                ' Sticky post
+                    ' Sticky post
                 Else
                     PostOffset = PostOffset - STICKY_FORUM_OFFSET
                     
                     lblTitulo.Caption = Foros(ForoActual).StickyTitle(PostOffset)
                     txtPost.Text = Foros(ForoActual).StickyPost(PostOffset)
                     lblAutor.Caption = Foros(ForoActual).StickyAuthor(PostOffset)
+
                 End If
+
             End With
+
         Else
             lblAutor.Caption = UserName
             txtTitulo.Text = vbNullString
             txtPost.Text = vbNullString
             
             txtTitulo.SetFocus
+
         End If
         
         txtPost.Locked = Lectura
         Me.Picture = FondosDejarMsg(ForoActual)
+
     End If
     
 End Sub
@@ -445,8 +455,10 @@ Private Function PuedeDejarAnuncios() As Boolean
     If CanPostSticky = 0 Then Exit Function
 
     If ForoActual = eForumType.ieGeneral Then
+
         ' Solo puede dejar en el general si es gm
         If CanPostSticky <> 2 Then Exit Function
+
     End If
     
     PuedeDejarAnuncios = True
@@ -457,26 +469,39 @@ Private Sub lstTitulos_Click()
     VerListaMsg = False
     Lectura = True
     ToogleScreen
+
 End Sub
 
-Private Sub lstTitulos_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub lstTitulos_MouseMove(Button As Integer, _
+                                 Shift As Integer, _
+                                 X As Single, _
+                                 Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Sub txtPost_Change()
+
     If Lectura Then Exit Sub
     
     Call cBotonDejarMsg.EnableButton(Len(txtTitulo.Text) <> 0 And Len(txtPost.Text) <> 0)
+
 End Sub
 
-Private Sub txtPost_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub txtPost_MouseMove(Button As Integer, _
+                              Shift As Integer, _
+                              X As Single, _
+                              Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Sub txtTitulo_Change()
+
     If Lectura Then Exit Sub
     
     Call cBotonDejarMsg.EnableButton(Len(txtTitulo.Text) <> 0 And Len(txtPost.Text) <> 0)
+
 End Sub
 
 Private Sub UpdateList()
@@ -485,6 +510,7 @@ Private Sub UpdateList()
     lstTitulos.Clear
     
     With lstTitulos
+
         ' Sticky first
         For PostIndex = 1 To clsForos.GetNroSticky(ForoActual)
             .AddItem "[ANUNCIO] " & Foros(ForoActual).StickyTitle(PostIndex) & " (" & Foros(ForoActual).StickyAuthor(PostIndex) & ")"
@@ -496,12 +522,15 @@ Private Sub UpdateList()
             .AddItem Foros(ForoActual).GeneralTitle(PostIndex) & " (" & Foros(ForoActual).GeneralAuthor(PostIndex) & ")"
             .ItemData(.NewIndex) = PostIndex
         Next PostIndex
+
     End With
     
 End Sub
 
 Private Function GetStickyPost() As Byte
+
     Select Case ForoActual
+
         Case 0
             GetStickyPost = eForumMsgType.ieGENERAL_STICKY
             
@@ -516,7 +545,9 @@ Private Function GetStickyPost() As Byte
 End Function
 
 Private Function GetNormalPost() As Byte
+
     Select Case ForoActual
+
         Case 0
             GetNormalPost = eForumMsgType.ieGeneral
             

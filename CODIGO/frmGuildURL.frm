@@ -91,9 +91,9 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private clsFormulario As clsFormMovementManager
+Private clsFormulario    As clsFormMovementManager
 
-Private cBotonAceptar As clsGraphicalButton
+Private cBotonAceptar    As clsGraphicalButton
 
 Public LastButtonPressed As clsGraphicalButton
 
@@ -105,6 +105,7 @@ Private Sub Form_Load()
     Me.Picture = LoadPicture(App.path & "\graficos\VentanaUrlClan.jpg")
     
     Call LoadButtons
+
 End Sub
 
 Private Sub LoadButtons()
@@ -116,24 +117,27 @@ Private Sub LoadButtons()
     
     Set LastButtonPressed = New clsGraphicalButton
     
-    
-    Call cBotonAceptar.Initialize(imgAceptar, GrhPath & "BotonAceptarUrl.jpg", _
-                                    GrhPath & "BotonAceptaRolloverrUrl.jpg", _
-                                    GrhPath & "BotonAceptarClickUrl.jpg", Me)
+    Call cBotonAceptar.Initialize(imgAceptar, GrhPath & "BotonAceptarUrl.jpg", GrhPath & "BotonAceptaRolloverrUrl.jpg", GrhPath & "BotonAceptarClickUrl.jpg", Me)
 
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgAceptar_Click()
-    If txtUrl.Text <> "" Then _
-        Call WriteGuildNewWebsite(txtUrl.Text)
+
+    If txtUrl.Text <> "" Then Call WriteGuildNewWebsite(txtUrl.Text)
     
     Unload Me
+
 End Sub
 
-Private Sub txtUrl_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub txtUrl_MouseMove(Button As Integer, _
+                             Shift As Integer, _
+                             X As Single, _
+                             Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub

@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
-Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "msinet.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "Richtx32.ocx"
+Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.ocx"
 Begin VB.Form frmCargando 
    AutoRedraw      =   -1  'True
    BackColor       =   &H80000000&
@@ -32,6 +32,7 @@ Begin VB.Form frmCargando
       _ExtentY        =   3360
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmCargando.frx":0000
@@ -108,18 +109,23 @@ Private Sub Form_Load()
     Me.Analizar
     Me.Picture = LoadPicture(DirGraficos & "VentanaCargando.jpg")
     LOGO.Picture = LoadPicture(DirGraficos & "ImagenCargando.jpg")
+
 End Sub
 
 Private Sub LOGO_KeyPress(KeyAscii As Integer)
     Debug.Print 2
+
 End Sub
 
 Private Sub Status_KeyPress(KeyAscii As Integer)
     Debug.Print 1
+
 End Sub
 
 Function Analizar()
+
     On Error Resume Next
+
     Dim binaryFileToOpen As String
            
     If Not (CheckIfRunningLastVersion = True) Then
@@ -127,13 +133,16 @@ Function Analizar()
             binaryFileToOpen = GetVar(App.path & "\INIT\Config.ini", "Launcher", "fileToOpen")
             Call ShellExecute(Me.hwnd, "open", App.path & binaryFileToOpen, "", "", 1)
             End
+
         End If
+
     End If
+
 End Function
 
 Private Function CheckIfRunningLastVersion() As Boolean
     Dim responseGithub As String, versionNumberMaster As String, versionNumberLocal As String
-    Dim JsonObject As Object
+    Dim JsonObject     As Object
 
     responseGithub = Inet1.OpenURL("https://api.github.com/repos/ao-libre/ao-cliente/releases/latest")
     Set JsonObject = JSON.parse(responseGithub)
@@ -145,5 +154,7 @@ Private Function CheckIfRunningLastVersion() As Boolean
         CheckIfRunningLastVersion = True
     Else
         CheckIfRunningLastVersion = False
+
     End If
+
 End Function

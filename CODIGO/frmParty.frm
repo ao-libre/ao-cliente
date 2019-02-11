@@ -160,28 +160,28 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private clsFormulario As clsFormMovementManager
+Private clsFormulario            As clsFormMovementManager
 
-Private cBotonAgregar As clsGraphicalButton
-Private cBotonCerrar As clsGraphicalButton
-Private cBotonDisolver As clsGraphicalButton
-Private cBotonLiderGrupo As clsGraphicalButton
-Private cBotonExpulsar As clsGraphicalButton
-Private cBotonSalirParty As clsGraphicalButton
+Private cBotonAgregar            As clsGraphicalButton
+Private cBotonCerrar             As clsGraphicalButton
+Private cBotonDisolver           As clsGraphicalButton
+Private cBotonLiderGrupo         As clsGraphicalButton
+Private cBotonExpulsar           As clsGraphicalButton
+Private cBotonSalirParty         As clsGraphicalButton
 
-Public LastButtonPressed As clsGraphicalButton
+Public LastButtonPressed         As clsGraphicalButton
 
-
-Private sPartyChat As String
+Private sPartyChat               As String
 Private Const LEADER_FORM_HEIGHT As Integer = 6015
 Private Const NORMAL_FORM_HEIGHT As Integer = 4455
-Private Const OFFSET_BUTTONS As Integer = 43 ' pixels
-
+Private Const OFFSET_BUTTONS     As Integer = 43 ' pixels
 
 Private Sub Form_Load()
+
         ' Handles Form movement (drag and drop).
         '<EhHeader>
         On Error GoTo Form_Load_Err
+
         '</EhHeader>
 100     Set clsFormulario = New clsFormMovementManager
 102     clsFormulario.Initialize Me
@@ -194,6 +194,7 @@ Private Sub Form_Load()
         Else
 112         Me.Picture = LoadPicture(App.path & "\graficos\VentanaPartyMiembro.jpg")
 114         Me.Height = NORMAL_FORM_HEIGHT
+
         End If
     
 116     Call LoadButtons
@@ -203,11 +204,10 @@ Private Sub Form_Load()
         Exit Sub
 
 Form_Load_Err:
-        MsgBox Err.Description & vbNewLine & _
-               "in ARGENTUM.frmParty.Form_Load " & _
-               "at line " & Erl, _
-               vbExclamation + vbOKOnly, "Application Error"
+        MsgBox Err.Description & vbNewLine & "in ARGENTUM.frmParty.Form_Load " & "at line " & Erl, vbExclamation + vbOKOnly, "Application Error"
+
         Resume Next
+
         '</EhFooter>
 End Sub
 
@@ -225,30 +225,17 @@ Private Sub LoadButtons()
     
     Set LastButtonPressed = New clsGraphicalButton
     
-    
-    Call cBotonAgregar.Initialize(imgAgregar, GrhPath & "BotonAgregarParty.jpg", _
-                                    GrhPath & "BotonAgregarRolloverParty.jpg", _
-                                    GrhPath & "BotonAgregarClickParty.jpg", Me)
+    Call cBotonAgregar.Initialize(imgAgregar, GrhPath & "BotonAgregarParty.jpg", GrhPath & "BotonAgregarRolloverParty.jpg", GrhPath & "BotonAgregarClickParty.jpg", Me)
                                     
-    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarParty.jpg", _
-                                    GrhPath & "BotonCerrarRolloverParty.jpg", _
-                                    GrhPath & "BotonCerrarClickParty.jpg", Me)
+    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarParty.jpg", GrhPath & "BotonCerrarRolloverParty.jpg", GrhPath & "BotonCerrarClickParty.jpg", Me)
                                     
-    Call cBotonDisolver.Initialize(imgDisolver, GrhPath & "BotonDisolverParty.jpg", _
-                                    GrhPath & "BotonDisolverRolloverParty.jpg", _
-                                    GrhPath & "BotonDisolverClickParty.jpg", Me)
+    Call cBotonDisolver.Initialize(imgDisolver, GrhPath & "BotonDisolverParty.jpg", GrhPath & "BotonDisolverRolloverParty.jpg", GrhPath & "BotonDisolverClickParty.jpg", Me)
                                     
-    Call cBotonLiderGrupo.Initialize(imgLiderGrupo, GrhPath & "BotonLiderGrupoParty.jpg", _
-                                    GrhPath & "BotonLiderGrupoRolloverParty.jpg", _
-                                    GrhPath & "BotonLiderGrupoClickParty.jpg", Me)
+    Call cBotonLiderGrupo.Initialize(imgLiderGrupo, GrhPath & "BotonLiderGrupoParty.jpg", GrhPath & "BotonLiderGrupoRolloverParty.jpg", GrhPath & "BotonLiderGrupoClickParty.jpg", Me)
                                     
-    Call cBotonExpulsar.Initialize(imgExpulsar, GrhPath & "BotonExpulsarParty.jpg", _
-                                    GrhPath & "BotonExpulsarRolloverParty.jpg", _
-                                    GrhPath & "BotonExpulsarClickParty.jpg", Me)
+    Call cBotonExpulsar.Initialize(imgExpulsar, GrhPath & "BotonExpulsarParty.jpg", GrhPath & "BotonExpulsarRolloverParty.jpg", GrhPath & "BotonExpulsarClickParty.jpg", Me)
                                     
-    Call cBotonSalirParty.Initialize(imgSalirParty, GrhPath & "BotonSalirGrupoParty.jpg", _
-                                    GrhPath & "BotonSalirGrupoRolloverParty.jpg", _
-                                    GrhPath & "BotonSalirGrupoClickParty.jpg", Me)
+    Call cBotonSalirParty.Initialize(imgSalirParty, GrhPath & "BotonSalirGrupoParty.jpg", GrhPath & "BotonSalirGrupoRolloverParty.jpg", GrhPath & "BotonSalirGrupoClickParty.jpg", Me)
                                     
     ' Botones visibles solo para el lider
     imgExpulsar.Visible = EsPartyLeader
@@ -263,34 +250,41 @@ Private Sub LoadButtons()
     imgDisolver.Top = Me.ScaleHeight - OFFSET_BUTTONS
     imgCerrar.Top = Me.ScaleHeight - OFFSET_BUTTONS
 
-
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
     MirandoParty = False
+
 End Sub
 
 Private Sub imgAgregar_Click()
+
     If Len(txtToAdd) > 0 Then
         If Not IsNumeric(txtToAdd) Then
             Call WritePartyAcceptMember(Trim$(txtToAdd.Text))
             Unload Me
             Call WriteRequestPartyForm
+
         End If
+
     End If
+
 End Sub
 
 Private Sub imgCerrar_Click()
     Unload Me
+
 End Sub
 
 Private Sub imgDisolver_Click()
     Call WritePartyLeave
     Unload Me
+
 End Sub
 
 Private Sub imgExpulsar_Click()
@@ -306,18 +300,20 @@ Private Sub imgExpulsar_Click()
         
         ' Para que no llame al form si disolvió la party
         If UCase$(fName) <> UCase$(UserName) Then Call WriteRequestPartyForm
+
     End If
 
 End Sub
 
 Private Function GetName() As String
-'**************************************************************
-'Author: ZaMa
-'Last Modify Date: 27/12/2009
-'**************************************************************
+    '**************************************************************
+    'Author: ZaMa
+    'Last Modify Date: 27/12/2009
+    '**************************************************************
     Dim sName As String
     
     sName = Trim$(mid$(lstMembers.List(lstMembers.ListIndex), 1, InStr(lstMembers.List(lstMembers.ListIndex), " (")))
+
     If Len(sName) > 0 Then GetName = sName
         
 End Function
@@ -333,59 +329,74 @@ Private Sub imgLiderGrupo_Click()
         Call WritePartySetLeader(sName)
         Unload Me
         Call WriteRequestPartyForm
+
     End If
+
 End Sub
 
 Private Sub imgSalirParty_Click()
     Call WritePartyLeave
     Unload Me
+
 End Sub
 
-Private Sub lstMembers_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub lstMembers_MouseDown(Button As Integer, _
+                                 Shift As Integer, _
+                                 X As Single, _
+                                 Y As Single)
 
     If EsPartyLeader Then
         LastButtonPressed.ToggleToNormal
+
     End If
     
 End Sub
 
 Private Sub SendTxt_Change()
-'**************************************************************
-'Author: Unknown
-'Last Modify Date: 03/10/2009
-'**************************************************************
+
+    '**************************************************************
+    'Author: Unknown
+    'Last Modify Date: 03/10/2009
+    '**************************************************************
     If Len(SendTxt.Text) > 160 Then
         sPartyChat = "Soy un cheater, avisenle a un gm"
     Else
         'Make sure only valid chars are inserted (with Shift + Insert they can paste illegal chars)
-        Dim i As Long
-        Dim tempstr As String
+        Dim i         As Long
+        Dim tempstr   As String
         Dim CharAscii As Integer
         
         For i = 1 To Len(SendTxt.Text)
             CharAscii = Asc(mid$(SendTxt.Text, i, 1))
+
             If CharAscii >= vbKeySpace And CharAscii <= 250 Then
                 tempstr = tempstr & Chr$(CharAscii)
+
             End If
+
         Next i
         
         If tempstr <> SendTxt.Text Then
             'We only set it if it's different, otherwise the event will be raised
             'constantly and the client will crush
             SendTxt.Text = tempstr
+
         End If
         
         sPartyChat = SendTxt.Text
+
     End If
+
 End Sub
 
 Private Sub SendTxt_KeyPress(KeyAscii As Integer)
-    If Not (KeyAscii = vbKeyBack) And _
-       Not (KeyAscii >= vbKeySpace And KeyAscii <= 250) Then _
-        KeyAscii = 0
+
+    If Not (KeyAscii = vbKeyBack) And Not (KeyAscii >= vbKeySpace And KeyAscii <= 250) Then KeyAscii = 0
+
 End Sub
 
 Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
+
     'Send text
     If KeyCode = vbKeyReturn Then
         If LenB(sPartyChat) <> 0 Then Call WritePartyMessage(sPartyChat)
@@ -394,21 +405,28 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
         SendTxt.Text = vbNullString
         KeyCode = 0
         SendTxt.SetFocus
+
     End If
+
 End Sub
 
-Private Sub txtToAdd_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub txtToAdd_MouseMove(Button As Integer, _
+                               Shift As Integer, _
+                               X As Single, _
+                               Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Sub txtToAdd_KeyPress(KeyAscii As Integer)
-    If Not (KeyAscii = vbKeyBack) And _
-       Not (KeyAscii >= vbKeySpace And KeyAscii <= 250) Then _
-        KeyAscii = 0
+
+    If Not (KeyAscii = vbKeyBack) And Not (KeyAscii >= vbKeySpace And KeyAscii <= 250) Then KeyAscii = 0
+
 End Sub
 
 Private Sub txtToAdd_KeyUp(KeyCode As Integer, Shift As Integer)
-    If KeyCode = vbKeyReturn Then imgAgregar_Click
-End Sub
 
+    If KeyCode = vbKeyReturn Then imgAgregar_Click
+
+End Sub
 

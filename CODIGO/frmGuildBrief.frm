@@ -471,20 +471,21 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private clsFormulario As clsFormMovementManager
+Private clsFormulario          As clsFormMovementManager
 
-Private cBotonGuerra As clsGraphicalButton
-Private cBotonAlianza As clsGraphicalButton
-Private cBotonPaz As clsGraphicalButton
+Private cBotonGuerra           As clsGraphicalButton
+Private cBotonAlianza          As clsGraphicalButton
+Private cBotonPaz              As clsGraphicalButton
 Private cBotonSolicitarIngreso As clsGraphicalButton
-Private cBotonCerrar As clsGraphicalButton
+Private cBotonCerrar           As clsGraphicalButton
 
-Public LastButtonPressed As clsGraphicalButton
+Public LastButtonPressed       As clsGraphicalButton
 
-Public EsLeader As Boolean
+Public EsLeader                As Boolean
 
 Private Sub Desc_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Sub Form_Load()
@@ -511,62 +512,57 @@ Private Sub LoadButtons()
     
     Set LastButtonPressed = New clsGraphicalButton
     
-    
-    Call cBotonGuerra.Initialize(imgDeclararGuerra, GrhPath & "BotonDeclararGuerra.jpg", _
-                                    GrhPath & "BotonDeclararGuerraRollover.jpg", _
-                                    GrhPath & "BotonDeclararGuerraClick.jpg", Me)
+    Call cBotonGuerra.Initialize(imgDeclararGuerra, GrhPath & "BotonDeclararGuerra.jpg", GrhPath & "BotonDeclararGuerraRollover.jpg", GrhPath & "BotonDeclararGuerraClick.jpg", Me)
 
-    Call cBotonAlianza.Initialize(imgOfrecerAlianza, GrhPath & "BotonOfrecerAlianza.jpg", _
-                                    GrhPath & "BotonOfrecerAlianzaRollover.jpg", _
-                                    GrhPath & "BotonOfrecerAlianzaClick.jpg", Me)
+    Call cBotonAlianza.Initialize(imgOfrecerAlianza, GrhPath & "BotonOfrecerAlianza.jpg", GrhPath & "BotonOfrecerAlianzaRollover.jpg", GrhPath & "BotonOfrecerAlianzaClick.jpg", Me)
 
-    Call cBotonPaz.Initialize(imgOfrecerPaz, GrhPath & "BotonOfrecerPaz.jpg", _
-                                    GrhPath & "BotonOfrecerPazRollover.jpg", _
-                                    GrhPath & "BotonOfrecerPazClick.jpg", Me)
+    Call cBotonPaz.Initialize(imgOfrecerPaz, GrhPath & "BotonOfrecerPaz.jpg", GrhPath & "BotonOfrecerPazRollover.jpg", GrhPath & "BotonOfrecerPazClick.jpg", Me)
 
-    Call cBotonSolicitarIngreso.Initialize(imgSolicitarIngreso, GrhPath & "BotonSolicitarIngreso.jpg", _
-                                    GrhPath & "BotonSolicitarIngresoRollover.jpg", _
-                                    GrhPath & "BotonSolicitarIngresoClick.jpg", Me)
+    Call cBotonSolicitarIngreso.Initialize(imgSolicitarIngreso, GrhPath & "BotonSolicitarIngreso.jpg", GrhPath & "BotonSolicitarIngresoRollover.jpg", GrhPath & "BotonSolicitarIngresoClick.jpg", Me)
 
-    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarDetallesClan.jpg", _
-                                    GrhPath & "BotonCerrarRolloverDetallesClan.jpg", _
-                                    GrhPath & "BotonCerrarClickDetallesClan.jpg", Me)
-
+    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarDetallesClan.jpg", GrhPath & "BotonCerrarRolloverDetallesClan.jpg", GrhPath & "BotonCerrarClickDetallesClan.jpg", Me)
 
     If Not EsLeader Then
         imgDeclararGuerra.Visible = False
         imgOfrecerAlianza.Visible = False
         imgOfrecerPaz.Visible = False
+
     End If
 
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgCerrar_Click()
     Unload Me
+
 End Sub
 
 Private Sub imgDeclararGuerra_Click()
-    Call WriteGuildDeclareWar(nombre.Caption)
+    Call WriteGuildDeclareWar(Nombre.Caption)
     Unload Me
+
 End Sub
 
 Private Sub imgOfrecerAlianza_Click()
-    frmCommet.nombre = nombre.Caption
+    frmCommet.Nombre = Nombre.Caption
     frmCommet.T = TIPO.ALIANZA
     Call frmCommet.Show(vbModal, frmGuildBrief)
+
 End Sub
 
 Private Sub imgOfrecerPaz_Click()
-    frmCommet.nombre = nombre.Caption
+    frmCommet.Nombre = Nombre.Caption
     frmCommet.T = TIPO.PAZ
     Call frmCommet.Show(vbModal, frmGuildBrief)
+
 End Sub
 
 Private Sub imgSolicitarIngreso_Click()
-    Call frmGuildSol.RecieveSolicitud(nombre.Caption)
+    Call frmGuildSol.RecieveSolicitud(Nombre.Caption)
     Call frmGuildSol.Show(vbModal, frmGuildBrief)
+
 End Sub

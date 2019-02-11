@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmOpciones 
    BackColor       =   &H8000000A&
    BorderStyle     =   0  'None
@@ -253,34 +253,36 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private clsFormulario As clsFormMovementManager
+Private clsFormulario          As clsFormMovementManager
 
-Private cBotonConfigTeclas As clsGraphicalButton
+Private cBotonConfigTeclas     As clsGraphicalButton
 Private cBotonMsgPersonalizado As clsGraphicalButton
-Private cBotonMapa As clsGraphicalButton
-Private cBotonCambiarPasswd As clsGraphicalButton
-Private cBotonManual As clsGraphicalButton
-Private cBotonRadio As clsGraphicalButton
-Private cBotonSoporte As clsGraphicalButton
-Private cBotonTutorial As clsGraphicalButton
-Private cBotonSalir As clsGraphicalButton
+Private cBotonMapa             As clsGraphicalButton
+Private cBotonCambiarPasswd    As clsGraphicalButton
+Private cBotonManual           As clsGraphicalButton
+Private cBotonRadio            As clsGraphicalButton
+Private cBotonSoporte          As clsGraphicalButton
+Private cBotonTutorial         As clsGraphicalButton
+Private cBotonSalir            As clsGraphicalButton
 
-Public LastButtonPressed As clsGraphicalButton
+Public LastButtonPressed       As clsGraphicalButton
 
-Private picCheckBox As Picture
+Private picCheckBox            As Picture
 
-Private bMusicActivated As Boolean
-Private bSoundActivated As Boolean
+Private bMusicActivated        As Boolean
+Private bSoundActivated        As Boolean
 Private bSoundEffectsActivated As Boolean
 
-Private loading As Boolean
+Private loading                As Boolean
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgCambiarPasswd_Click()
     Call frmNewPassword.Show(vbModal, Me)
+
 End Sub
 
 Private Sub imgChkAlMorir_Click()
@@ -290,7 +292,9 @@ Private Sub imgChkAlMorir_Click()
         imgChkAlMorir.Picture = picCheckBox
     Else
         Set imgChkAlMorir.Picture = Nothing
+
     End If
+
 End Sub
 
 Private Sub imgChkDesactivarFragShooter_Click()
@@ -300,7 +304,9 @@ Private Sub imgChkDesactivarFragShooter_Click()
         Set imgChkDesactivarFragShooter.Picture = Nothing
     Else
         imgChkDesactivarFragShooter.Picture = picCheckBox
+
     End If
+
 End Sub
 
 Private Sub imgChkRequiredLvl_Click()
@@ -310,7 +316,9 @@ Private Sub imgChkRequiredLvl_Click()
         imgChkRequiredLvl.Picture = picCheckBox
     Else
         Set imgChkRequiredLvl.Picture = Nothing
+
     End If
+
 End Sub
 
 Private Sub txtCantMensajes_Change()
@@ -320,13 +328,17 @@ Private Sub txtCantMensajes_Change()
         DialogosClanes.CantidadDialogos = txtCantMensajes.Text
     Else
         txtCantMensajes.Text = 5
+
     End If
+
 End Sub
 
 Private Sub txtLevel_Change()
+
     If Not IsNumeric(txtLevel) Then txtLevel = 0
     txtLevel = Trim$(txtLevel)
     ClientSetup.byMurderedLevel = CByte(txtLevel)
+
 End Sub
 
 Private Sub imgChkConsola_Click()
@@ -334,6 +346,7 @@ Private Sub imgChkConsola_Click()
     
     imgChkConsola.Picture = picCheckBox
     Set imgChkPantalla.Picture = Nothing
+
 End Sub
 
 Private Sub imgChkEfectosSonido_Click()
@@ -350,6 +363,7 @@ Private Sub imgChkEfectosSonido_Click()
         imgChkEfectosSonido.Picture = picCheckBox
     Else
         Set imgChkEfectosSonido.Picture = Nothing
+
     End If
             
 End Sub
@@ -359,6 +373,7 @@ Private Sub imgChkMostrarNews_Click()
     
     imgChkMostrarNews.Picture = picCheckBox
     Set imgChkNoMostrarNews.Picture = Nothing
+
 End Sub
 
 Private Sub imgChkMusica_Click()
@@ -374,13 +389,16 @@ Private Sub imgChkMusica_Click()
         Slider1(0).Enabled = False
         Set imgChkMusica.Picture = Nothing
     Else
+
         If Not Audio.MusicActivated Then  'Prevent the music from reloading
             Audio.MusicActivated = True
             Slider1(0).Enabled = True
-            Slider1(0).Value = Audio.MusicVolume
+            Slider1(0).value = Audio.MusicVolume
+
         End If
         
         imgChkMusica.Picture = picCheckBox
+
     End If
 
 End Sub
@@ -390,6 +408,7 @@ Private Sub imgChkNoMostrarNews_Click()
     
     imgChkNoMostrarNews.Picture = picCheckBox
     Set imgChkMostrarNews.Picture = Nothing
+
 End Sub
 
 Private Sub imgChkPantalla_Click()
@@ -397,6 +416,7 @@ Private Sub imgChkPantalla_Click()
     
     imgChkPantalla.Picture = picCheckBox
     Set imgChkConsola.Picture = Nothing
+
 End Sub
 
 Private Sub imgChkSonidos_Click()
@@ -417,54 +437,63 @@ Private Sub imgChkSonidos_Click()
     Else
         Audio.SoundActivated = True
         Slider1(1).Enabled = True
-        Slider1(1).Value = Audio.SoundVolume
+        Slider1(1).value = Audio.SoundVolume
         
         imgChkSonidos.Picture = picCheckBox
+
     End If
+
 End Sub
 
 Private Sub imgConfigTeclas_Click()
-    If Not loading Then _
-        Call Audio.PlayWave(SND_CLICK)
+
+    If Not loading Then Call Audio.PlayWave(SND_CLICK)
     Call frmCustomKeys.Show(vbModal, Me)
+
 End Sub
 
 Private Sub imgManual_Click()
-    If Not loading Then _
-        Call Audio.PlayWave(SND_CLICK)
+
+    If Not loading Then Call Audio.PlayWave(SND_CLICK)
     Call ShellExecute(0, "Open", "http://ao.alkon.com.ar/manual/", "", App.path, SW_SHOWNORMAL)
+
 End Sub
 
 Private Sub imgMapa_Click()
     Call frmMapa.Show(vbModal, Me)
+
 End Sub
 
 Private Sub imgMsgPersonalizado_Click()
     Call frmMessageTxt.Show(vbModeless, Me)
+
 End Sub
 
 Private Sub imgRadio_Click()
-    If Not loading Then _
-        Call Audio.PlayWave(SND_CLICK)
+
+    If Not loading Then Call Audio.PlayWave(SND_CLICK)
 
     Call ShellExecute(0, "Open", "http://www.radioargentum.com/repro.html", "", App.path, SW_SHOWNORMAL)
+
 End Sub
 
 Private Sub imgSalir_Click()
     Unload Me
     frmMain.SetFocus
+
 End Sub
 
 Private Sub imgSoporte_Click()
     
-    If Not loading Then _
-        Call Audio.PlayWave(SND_CLICK)
+    If Not loading Then Call Audio.PlayWave(SND_CLICK)
     
     Call ShellExecute(0, "Open", "http://www.aostaff.com.ar/soporte/", "", App.path, SW_SHOWNORMAL)
+
 End Sub
 
 Private Sub imgTutorial_Click()
     frmTutorial.Show vbModeless
+
 End Sub
 
 Private Sub Form_Load()
@@ -478,6 +507,7 @@ Private Sub Form_Load()
     loading = True      'Prevent sounds when setting check's values
     LoadUserConfig
     loading = False     'Enable sounds when setting check's values
+
 End Sub
 
 Private Sub LoadButtons()
@@ -497,43 +527,26 @@ Private Sub LoadButtons()
     
     Set LastButtonPressed = New clsGraphicalButton
     
-    Call cBotonConfigTeclas.Initialize(imgConfigTeclas, GrhPath & "BotonConfigurarTeclas.jpg", _
-                                    GrhPath & "BotonConfigurarTeclasRollover.jpg", _
-                                    GrhPath & "BotonConfigurarTeclasClick.jpg", Me)
+    Call cBotonConfigTeclas.Initialize(imgConfigTeclas, GrhPath & "BotonConfigurarTeclas.jpg", GrhPath & "BotonConfigurarTeclasRollover.jpg", GrhPath & "BotonConfigurarTeclasClick.jpg", Me)
                                     
-    Call cBotonMsgPersonalizado.Initialize(imgMsgPersonalizado, GrhPath & "BotonMsgPersonalizadoTeclas.jpg", _
-                                    GrhPath & "BotonMsgPersonalizadoRollover.jpg", _
-                                    GrhPath & "BotonMsgPersonalizadoClick.jpg", Me)
+    Call cBotonMsgPersonalizado.Initialize(imgMsgPersonalizado, GrhPath & "BotonMsgPersonalizadoTeclas.jpg", GrhPath & "BotonMsgPersonalizadoRollover.jpg", GrhPath & "BotonMsgPersonalizadoClick.jpg", Me)
                                     
-    Call cBotonMapa.Initialize(imgMapa, GrhPath & "BotonMapaAo.jpg", _
-                                    GrhPath & "BotonMapaAoRollover.jpg", _
-                                    GrhPath & "BotonMapaAoClick.jpg", Me)
+    Call cBotonMapa.Initialize(imgMapa, GrhPath & "BotonMapaAo.jpg", GrhPath & "BotonMapaAoRollover.jpg", GrhPath & "BotonMapaAoClick.jpg", Me)
                                     
-    Call cBotonCambiarPasswd.Initialize(imgCambiarPasswd, GrhPath & "BotonCambiarContrasenia.jpg", _
-                                    GrhPath & "BotonCambiarContraseniaRollover.jpg", _
-                                    GrhPath & "BotonCambiarContraseniaClick.jpg", Me)
+    Call cBotonCambiarPasswd.Initialize(imgCambiarPasswd, GrhPath & "BotonCambiarContrasenia.jpg", GrhPath & "BotonCambiarContraseniaRollover.jpg", GrhPath & "BotonCambiarContraseniaClick.jpg", Me)
                                     
-    Call cBotonManual.Initialize(imgManual, GrhPath & "BotonManualAo.jpg", _
-                                    GrhPath & "BotonManualAoRollover.jpg", _
-                                    GrhPath & "BotonManualAoClick.jpg", Me)
+    Call cBotonManual.Initialize(imgManual, GrhPath & "BotonManualAo.jpg", GrhPath & "BotonManualAoRollover.jpg", GrhPath & "BotonManualAoClick.jpg", Me)
                                     
-    Call cBotonRadio.Initialize(imgRadio, GrhPath & "BotonEscucharRadioAo.jpg", _
-                                    GrhPath & "BotonEscucharRadioAoRollover.jpg", _
-                                    GrhPath & "BotonEscucharRadioAoClick.jpg", Me)
+    Call cBotonRadio.Initialize(imgRadio, GrhPath & "BotonEscucharRadioAo.jpg", GrhPath & "BotonEscucharRadioAoRollover.jpg", GrhPath & "BotonEscucharRadioAoClick.jpg", Me)
                                     
-    Call cBotonSoporte.Initialize(imgSoporte, GrhPath & "BotonSoporte.jpg", _
-                                    GrhPath & "BotonSoporteRollover.jpg", _
-                                    GrhPath & "BotonSoporteClick.jpg", Me)
+    Call cBotonSoporte.Initialize(imgSoporte, GrhPath & "BotonSoporte.jpg", GrhPath & "BotonSoporteRollover.jpg", GrhPath & "BotonSoporteClick.jpg", Me)
                                     
-    Call cBotonTutorial.Initialize(imgTutorial, GrhPath & "BotonTutorial.jpg", _
-                                    GrhPath & "BotonTutorialRollover.jpg", _
-                                    GrhPath & "BotonTutorialClick.jpg", Me)
+    Call cBotonTutorial.Initialize(imgTutorial, GrhPath & "BotonTutorial.jpg", GrhPath & "BotonTutorialRollover.jpg", GrhPath & "BotonTutorialClick.jpg", Me)
                                     
-    Call cBotonSalir.Initialize(imgSalir, GrhPath & "BotonSalirOpciones.jpg", _
-                                    GrhPath & "BotonSalirRolloverOpciones.jpg", _
-                                    GrhPath & "BotonSalirClickOpciones.jpg", Me)
+    Call cBotonSalir.Initialize(imgSalir, GrhPath & "BotonSalirOpciones.jpg", GrhPath & "BotonSalirRolloverOpciones.jpg", GrhPath & "BotonSalirClickOpciones.jpg", Me)
                                     
     Set picCheckBox = LoadPicture(GrhPath & "CheckBoxOpciones.jpg")
+
 End Sub
 
 Private Sub LoadUserConfig()
@@ -545,9 +558,9 @@ Private Sub LoadUserConfig()
     If bMusicActivated Then
         imgChkMusica.Picture = picCheckBox
         
-        Slider1(0).Value = Audio.MusicVolume
+        Slider1(0).value = Audio.MusicVolume
+
     End If
-    
     
     ' Load Sound config
     bSoundActivated = Audio.SoundActivated
@@ -556,12 +569,13 @@ Private Sub LoadUserConfig()
     If bSoundActivated Then
         imgChkSonidos.Picture = picCheckBox
         
-        Slider1(1).Value = Audio.SoundVolume
+        Slider1(1).value = Audio.SoundVolume
+
     End If
-    
     
     ' Load Sound Effects config
     bSoundEffectsActivated = Audio.SoundEffectsActivated
+
     If bSoundEffectsActivated Then imgChkEfectosSonido.Picture = picCheckBox
     
     txtCantMensajes.Text = CStr(DialogosClanes.CantidadDialogos)
@@ -570,12 +584,14 @@ Private Sub LoadUserConfig()
         imgChkPantalla.Picture = picCheckBox
     Else
         imgChkConsola.Picture = picCheckBox
+
     End If
     
     If ClientSetup.bGuildNews Then
         imgChkMostrarNews.Picture = picCheckBox
     Else
         imgChkNoMostrarNews.Picture = picCheckBox
+
     End If
         
     If ClientSetup.bKill Then imgChkRequiredLvl.Picture = picCheckBox
@@ -583,22 +599,33 @@ Private Sub LoadUserConfig()
     If Not ClientSetup.bActive Then imgChkDesactivarFragShooter.Picture = picCheckBox
     
     txtLevel = ClientSetup.byMurderedLevel
+
 End Sub
 
 Private Sub Slider1_Change(Index As Integer)
+
     Select Case Index
+
         Case 0
-            Audio.MusicVolume = Slider1(0).Value
+            Audio.MusicVolume = Slider1(0).value
+
         Case 1
-            Audio.SoundVolume = Slider1(1).Value
+            Audio.SoundVolume = Slider1(1).value
+
     End Select
+
 End Sub
 
 Private Sub Slider1_Scroll(Index As Integer)
+
     Select Case Index
+
         Case 0
-            Audio.MusicVolume = Slider1(0).Value
+            Audio.MusicVolume = Slider1(0).value
+
         Case 1
-            Audio.SoundVolume = Slider1(1).Value
+            Audio.SoundVolume = Slider1(1).value
+
     End Select
+
 End Sub

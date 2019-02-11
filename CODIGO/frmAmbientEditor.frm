@@ -255,34 +255,43 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Check1_Click()
-    If Check1.Value = Checked Then
+
+    If Check1.value = Checked Then
         HScroll1.Enabled = True
     Else
         HScroll1.Enabled = False
+
     End If
+
 End Sub
 
 Private Sub Check2_Click()
-    If Check2.Value = Checked Then
+
+    If Check2.value = Checked Then
         CurMapAmbient.Snow = True
     Else
         CurMapAmbient.Snow = False
+
         If Effect(WeatherEffectIndex).EffectNum = EffectNum_Snow Then Effect_Kill WeatherEffectIndex
+
     End If
 
 End Sub
 
 Private Sub Check3_Click()
-    If Check3.Value = Checked Then
+
+    If Check3.value = Checked Then
         CurMapAmbient.Rain = True
     Else
         CurMapAmbient.Rain = False
+
     End If
 
 End Sub
 
 Private Sub Command1_Click()
     Init_Ambient UserMap
+
 End Sub
 
 Private Sub Command10_Click()
@@ -293,6 +302,7 @@ Private Sub Command10_Click()
     
     Call Delete_Light_To_Map(UserPos.X, UserPos.Y)
     Call LightRenderAll
+
 End Sub
 
 Private Sub Command2_Click()
@@ -300,43 +310,51 @@ Private Sub Command2_Click()
     DoEvents
     
     Init_Ambient UserMap
+
 End Sub
 
 Private Sub Command7_Click()
-    If Option1(0).Value = True Then
+
+    If Option1(0).value = True Then
         CurMapAmbient.UseDayAmbient = True
-            CurMapAmbient.OwnAmbientLight.a = 255
-            CurMapAmbient.OwnAmbientLight.r = 0
-            CurMapAmbient.OwnAmbientLight.g = 0
-            CurMapAmbient.OwnAmbientLight.b = 0
+        CurMapAmbient.OwnAmbientLight.a = 255
+        CurMapAmbient.OwnAmbientLight.r = 0
+        CurMapAmbient.OwnAmbientLight.g = 0
+        CurMapAmbient.OwnAmbientLight.b = 0
     Else
-            CurMapAmbient.UseDayAmbient = False
+        CurMapAmbient.UseDayAmbient = False
             
-            CurMapAmbient.OwnAmbientLight.a = 255
-            CurMapAmbient.OwnAmbientLight.r = Val(Text1(0).Text)
-            CurMapAmbient.OwnAmbientLight.g = Val(Text1(1).Text)
-            CurMapAmbient.OwnAmbientLight.b = Val(Text1(2).Text)
+        CurMapAmbient.OwnAmbientLight.a = 255
+        CurMapAmbient.OwnAmbientLight.r = Val(Text1(0).Text)
+        CurMapAmbient.OwnAmbientLight.g = Val(Text1(1).Text)
+        CurMapAmbient.OwnAmbientLight.b = Val(Text1(2).Text)
+
     End If
     
     DoEvents
     
     Call Apply_OwnAmbient
+
 End Sub
 
 Private Sub Command8_Click()
     CurMapAmbient.MapBlocks(UserPos.X, UserPos.Y).Light.b = Val(Text4.Text)
     CurMapAmbient.MapBlocks(UserPos.X, UserPos.Y).Light.g = Val(Text3.Text)
     CurMapAmbient.MapBlocks(UserPos.X, UserPos.Y).Light.r = Val(Text2.Text)
-    CurMapAmbient.MapBlocks(UserPos.X, UserPos.Y).Light.range = Val(HScroll2.Value)
+    CurMapAmbient.MapBlocks(UserPos.X, UserPos.Y).Light.range = Val(HScroll2.value)
     
-    Create_Light_To_Map UserPos.X, UserPos.Y, Val(HScroll2.Value), Val(Text2.Text), Val(Text3.Text), Val(Text4.Text)
+    Create_Light_To_Map UserPos.X, UserPos.Y, Val(HScroll2.value), Val(Text2.Text), Val(Text3.Text), Val(Text4.Text)
+
 End Sub
 
 Private Sub Command9_Click()
-    If Check1.Value = Unchecked Then
+
+    If Check1.value = Unchecked Then
         CurMapAmbient.Fog = -1
     Else
-        CurMapAmbient.Fog = Val(HScroll1.Value)
+        CurMapAmbient.Fog = Val(HScroll1.value)
+
     End If
+
 End Sub
 

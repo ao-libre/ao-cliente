@@ -236,58 +236,68 @@ Attribute VB_Exposed = False
 'Código Postal 1900
 'Pablo Ignacio Márquez
 
-
-
 Option Explicit
 
-Private clsFormulario As clsFormMovementManager
+Private clsFormulario    As clsFormMovementManager
 
-Public LastIndex1 As Integer
-Public LastIndex2 As Integer
-Public LasActionBuy As Boolean
-Private ClickNpcInv As Boolean
-Private lIndex As Byte
+Public LastIndex1        As Integer
+Public LastIndex2        As Integer
+Public LasActionBuy      As Boolean
+Private ClickNpcInv      As Boolean
+Private lIndex           As Byte
 
-Private cBotonVender As clsGraphicalButton
-Private cBotonComprar As clsGraphicalButton
-Private cBotonCruz As clsGraphicalButton
+Private cBotonVender     As clsGraphicalButton
+Private cBotonComprar    As clsGraphicalButton
+Private cBotonCruz       As clsGraphicalButton
 
 Public LastButtonPressed As clsGraphicalButton
 
 Private Sub cantidad_Change()
+
     If Val(cantidad.Text) < 1 Then
         cantidad.Text = 1
+
     End If
     
     If Val(cantidad.Text) > MAX_INVENTORY_OBJS Then
         cantidad.Text = MAX_INVENTORY_OBJS
+
     End If
     
     If ClickNpcInv Then
         If InvComNpc.SelectedItem <> 0 Then
             'El precio, cuando nos venden algo, lo tenemos que redondear para arriba.
             Label1(1).Caption = "Precio: " & CalculateSellPrice(NPCInventory(InvComNpc.SelectedItem).Valor, Val(cantidad.Text))  'No mostramos numeros reales
+
         End If
+
     Else
+
         If InvComUsu.SelectedItem <> 0 Then
             Label1(1).Caption = "Precio: " & CalculateBuyPrice(Inventario.Valor(InvComUsu.SelectedItem), Val(cantidad.Text))  'No mostramos numeros reales
+
         End If
+
     End If
+
 End Sub
 
 Private Sub cantidad_KeyPress(KeyAscii As Integer)
+
     If (KeyAscii <> 8) Then
         If (KeyAscii <> 6) And (KeyAscii < 48 Or KeyAscii > 57) Then
             KeyAscii = 0
+
         End If
+
     End If
+
 End Sub
 
 Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
-
     
     'Cargamos la interfase
     Me.Picture = LoadPicture(DirGraficos & "ventanacomercio.jpg")
@@ -307,24 +317,17 @@ Private Sub LoadButtons()
     
     Set LastButtonPressed = New clsGraphicalButton
     
-    
-    Call cBotonVender.Initialize(imgVender, GrhPath & "BotonVender.jpg", _
-                                    GrhPath & "BotonVenderRollover.jpg", _
-                                    GrhPath & "BotonVenderClick.jpg", Me)
+    Call cBotonVender.Initialize(imgVender, GrhPath & "BotonVender.jpg", GrhPath & "BotonVenderRollover.jpg", GrhPath & "BotonVenderClick.jpg", Me)
 
-    Call cBotonComprar.Initialize(imgComprar, GrhPath & "BotonComprar.jpg", _
-                                    GrhPath & "BotonComprarRollover.jpg", _
-                                    GrhPath & "BotonComprarClick.jpg", Me)
+    Call cBotonComprar.Initialize(imgComprar, GrhPath & "BotonComprar.jpg", GrhPath & "BotonComprarRollover.jpg", GrhPath & "BotonComprarClick.jpg", Me)
 
-    Call cBotonCruz.Initialize(imgCross, "", _
-                                    GrhPath & "BotonCruzApretadaComercio.jpg", _
-                                    GrhPath & "BotonCruzApretadaComercio.jpg", Me)
-
+    Call cBotonCruz.Initialize(imgCross, "", GrhPath & "BotonCruzApretadaComercio.jpg", GrhPath & "BotonCruzApretadaComercio.jpg", Me)
 
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 
 ''
@@ -334,42 +337,52 @@ End Sub
 ' @param objAmount Specifies amount of items that you want to buy
 ' @return   The price of the item.
 
-Private Function CalculateSellPrice(ByRef objValue As Single, ByVal objAmount As Long) As Long
-'*************************************************
-'Author: Marco Vanotti (MarKoxX)
-'Last modified: 19/08/2008
-'Last modify by: Franco Zeoli (Noich)
-'*************************************************
+Private Function CalculateSellPrice(ByRef objValue As Single, _
+                                    ByVal objAmount As Long) As Long
+
+    '*************************************************
+    'Author: Marco Vanotti (MarKoxX)
+    'Last modified: 19/08/2008
+    'Last modify by: Franco Zeoli (Noich)
+    '*************************************************
     On Error GoTo error
+
     'We get a Single value from the server, when vb uses it, by approaching, it can diff with the server value, so we do (Value * 100000) and get the entire part, to discard the unwanted floating values.
     CalculateSellPrice = CCur(objValue * 1000000) / 1000000 * objAmount + 0.5
     
     Exit Function
 error:
     MsgBox Err.Description, vbExclamation, "Error: " & Err.number
+
 End Function
+
 ''
 ' Calculates the buying price of an item (The price that a merchant will buy you the item)
 '
 ' @param objValue Specifies value of the item.
 ' @param objAmount Specifies amount of items that you want to buy
 ' @return   The price of the item.
-Private Function CalculateBuyPrice(ByRef objValue As Single, ByVal objAmount As Long) As Long
-'*************************************************
-'Author: Marco Vanotti (MarKoxX)
-'Last modified: 19/08/2008
-'Last modify by: Franco Zeoli (Noich)
-'*************************************************
+Private Function CalculateBuyPrice(ByRef objValue As Single, _
+                                   ByVal objAmount As Long) As Long
+
+    '*************************************************
+    'Author: Marco Vanotti (MarKoxX)
+    'Last modified: 19/08/2008
+    'Last modify by: Franco Zeoli (Noich)
+    '*************************************************
     On Error GoTo error
+
     'We get a Single value from the server, when vb uses it, by approaching, it can diff with the server value, so we do (Value * 100000) and get the entire part, to discard the unwanted floating values.
     CalculateBuyPrice = Fix(CCur(objValue * 1000000) / 1000000 * objAmount)
     
     Exit Function
 error:
     MsgBox Err.Description, vbExclamation, "Error: " & Err.number
+
 End Function
 
 Private Sub imgComprar_Click()
+
     ' Debe tener seleccionado un item para comprarlo.
     If InvComNpc.SelectedItem = 0 Then Exit Sub
     
@@ -378,20 +391,24 @@ Private Sub imgComprar_Click()
     Call Audio.PlayWave(SND_CLICK)
     
     LasActionBuy = True
+
     If UserGLD >= CalculateSellPrice(NPCInventory(InvComNpc.SelectedItem).Valor, Val(cantidad.Text)) Then
         Call WriteCommerceBuy(InvComNpc.SelectedItem, Val(cantidad.Text))
     Else
         Call AddtoRichTextBox(frmMain.RecTxt, "No tienes suficiente oro.", 2, 51, 223, 1, 1)
         Exit Sub
+
     End If
     
 End Sub
 
 Private Sub imgCross_Click()
     Call WriteCommerceEnd
+
 End Sub
 
 Private Sub imgVender_Click()
+
     ' Debe tener seleccionado un item para comprarlo.
     If InvComUsu.SelectedItem = 0 Then Exit Sub
 
@@ -402,12 +419,14 @@ Private Sub imgVender_Click()
     LasActionBuy = False
 
     Call WriteCommerceSell(InvComUsu.SelectedItem, Val(cantidad.Text))
+
 End Sub
 
 Private Sub picInvNpc_Click()
     Dim ItemSlot As Byte
     
     ItemSlot = InvComNpc.SelectedItem
+
     If ItemSlot = 0 Then Exit Sub
     
     ClickNpcInv = True
@@ -419,30 +438,40 @@ Private Sub picInvNpc_Click()
     If NPCInventory(ItemSlot).Amount <> 0 Then
     
         Select Case NPCInventory(ItemSlot).OBJType
+
             Case eObjType.otWeapon
                 Label1(2).Caption = "Máx Golpe:" & NPCInventory(ItemSlot).MaxHit
                 Label1(3).Caption = "Mín Golpe:" & NPCInventory(ItemSlot).MinHit
                 Label1(2).Visible = True
                 Label1(3).Visible = True
+
             Case eObjType.otArmadura, eObjType.otcasco, eObjType.otescudo
                 Label1(2).Caption = "Máx Defensa:" & NPCInventory(ItemSlot).MaxDef
                 Label1(3).Caption = "Mín Defensa:" & NPCInventory(ItemSlot).MinDef
                 Label1(2).Visible = True
                 Label1(3).Visible = True
+
             Case Else
                 Label1(2).Visible = False
                 Label1(3).Visible = False
+
         End Select
+
     Else
         Label1(2).Visible = False
         Label1(3).Visible = False
+
     End If
+
 End Sub
 
-Private Sub picInvNpc_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub picInvNpc_MouseMove(Button As Integer, _
+                                Shift As Integer, _
+                                X As Single, _
+                                Y As Single)
     LastButtonPressed.ToggleToNormal
-End Sub
 
+End Sub
 
 Private Sub picInvUser_Click()
     Dim ItemSlot As Byte
@@ -460,26 +489,37 @@ Private Sub picInvUser_Click()
     If Inventario.Amount(ItemSlot) <> 0 Then
     
         Select Case Inventario.OBJType(ItemSlot)
+
             Case eObjType.otWeapon
                 Label1(2).Caption = "Máx Golpe:" & Inventario.MaxHit(ItemSlot)
                 Label1(3).Caption = "Mín Golpe:" & Inventario.MinHit(ItemSlot)
                 Label1(2).Visible = True
                 Label1(3).Visible = True
+
             Case eObjType.otArmadura, eObjType.otcasco, eObjType.otescudo
                 Label1(2).Caption = "Máx Defensa:" & Inventario.MaxDef(ItemSlot)
                 Label1(3).Caption = "Mín Defensa:" & Inventario.MinDef(ItemSlot)
                 Label1(2).Visible = True
                 Label1(3).Visible = True
+
             Case Else
                 Label1(2).Visible = False
                 Label1(3).Visible = False
+
         End Select
+
     Else
         Label1(2).Visible = False
         Label1(3).Visible = False
+
     End If
+
 End Sub
 
-Private Sub picInvUser_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub picInvUser_MouseMove(Button As Integer, _
+                                 Shift As Integer, _
+                                 X As Single, _
+                                 Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub

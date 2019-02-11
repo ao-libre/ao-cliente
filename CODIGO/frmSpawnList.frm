@@ -87,10 +87,10 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private clsFormulario As clsFormMovementManager
+Private clsFormulario    As clsFormMovementManager
 
-Private cBotonInvocar As clsGraphicalButton
-Private cBotonSalir As clsGraphicalButton
+Private cBotonInvocar    As clsGraphicalButton
+Private cBotonSalir      As clsGraphicalButton
 
 Public LastButtonPressed As clsGraphicalButton
 
@@ -102,6 +102,7 @@ Private Sub Form_Load()
     Me.Picture = LoadPicture(App.path & "\graficos\VentanaInvocar.jpg")
     
     Call LoadButtons
+
 End Sub
 
 Private Sub LoadButtons()
@@ -114,28 +115,31 @@ Private Sub LoadButtons()
     
     Set LastButtonPressed = New clsGraphicalButton
     
-    
-    Call cBotonInvocar.Initialize(imgInvocar, GrhPath & "BotonInvocar.jpg", _
-                                    GrhPath & "BotonInvocarRollover.jpg", _
-                                    GrhPath & "BotonInvocarClick.jpg", Me)
+    Call cBotonInvocar.Initialize(imgInvocar, GrhPath & "BotonInvocar.jpg", GrhPath & "BotonInvocarRollover.jpg", GrhPath & "BotonInvocarClick.jpg", Me)
 
-    Call cBotonSalir.Initialize(imgSalir, GrhPath & "BotonSalirInvocar.jpg", _
-                                    GrhPath & "BotonSalirRolloverInvocar.jpg", _
-                                    GrhPath & "BotonSalirClickInvocar.jpg", Me)
+    Call cBotonSalir.Initialize(imgSalir, GrhPath & "BotonSalirInvocar.jpg", GrhPath & "BotonSalirRolloverInvocar.jpg", GrhPath & "BotonSalirClickInvocar.jpg", Me)
+
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgInvocar_Click()
     Call WriteSpawnCreature(lstCriaturas.ListIndex + 1)
+
 End Sub
 
 Private Sub imgSalir_Click()
     Unload Me
+
 End Sub
 
-Private Sub lstCriaturas_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub lstCriaturas_MouseMove(Button As Integer, _
+                                   Shift As Integer, _
+                                   X As Single, _
+                                   Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub

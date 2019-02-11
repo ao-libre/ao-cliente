@@ -31,17 +31,18 @@ Attribute VB_Name = "GameIni"
 'Código Postal 1900
 'Pablo Ignacio Márquez
 
-
-
 Option Explicit
 
 Public Type tCabecera 'Cabecera de los con
+
     Desc As String * 255
     CRC As Long
     MagicWord As Long
+
 End Type
 
 Public Type tGameIni
+
     Puerto As Long
     Musica As Byte
     fX As Byte
@@ -54,9 +55,11 @@ Public Type tGameIni
     DirMapas As String
     NumeroDeBMPs As Long
     NumeroMapas As Integer
+
 End Type
 
 Public Type tSetupMods
+
     bDinamic    As Boolean
     byMemory    As Integer
     bUseVideo   As Boolean
@@ -72,7 +75,6 @@ Public Type tSetupMods
     bGldMsgConsole As Boolean
     bCantMsgs   As Byte
     
-    
     'New dx8
     ProyectileEngine As Boolean
     PartyMembers As Boolean
@@ -82,21 +84,23 @@ Public Type tSetupMods
     vSync As Boolean
     Aceleracion As Byte
     LimiteFPS As Boolean
+
 End Type
 
-Public ClientSetup As tSetupMods
+Public ClientSetup   As tSetupMods
 
-Public MiCabecera As tCabecera
+Public MiCabecera    As tCabecera
 Public Config_Inicio As tGameIni
 
 Public Sub IniciarCabecera(ByRef Cabecera As tCabecera)
     Cabecera.Desc = "Argentum Online by Noland Studios. Copyright Noland-Studios 2001, pablomarquez@noland-studios.com.ar"
     Cabecera.CRC = Rnd * 100
     Cabecera.MagicWord = Rnd * 10
+
 End Sub
 
 Public Function LeerGameIni() As tGameIni
-    Dim N As Integer
+    Dim N       As Integer
     Dim GameIni As tGameIni
     N = FreeFile
     Open App.path & "\init\Inicio.con" For Binary As #N
@@ -106,16 +110,18 @@ Public Function LeerGameIni() As tGameIni
     
     Close #N
     LeerGameIni = GameIni
+
 End Function
 
 Public Sub EscribirGameIni(ByRef GameIniConfiguration As tGameIni)
-On Local Error Resume Next
+    On Local Error Resume Next
 
-Dim N As Integer
-N = FreeFile
-Open App.path & "\init\Inicio.con" For Binary As #N
-Put #N, , MiCabecera
-Put #N, , GameIniConfiguration
-Close #N
+    Dim N As Integer
+    N = FreeFile
+    Open App.path & "\init\Inicio.con" For Binary As #N
+    Put #N, , MiCabecera
+    Put #N, , GameIniConfiguration
+    Close #N
+
 End Sub
 

@@ -97,9 +97,9 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Private clsFormulario As clsFormMovementManager
+Private clsFormulario    As clsFormMovementManager
 
-Private cBotonAceptar As clsGraphicalButton
+Private cBotonAceptar    As clsGraphicalButton
 
 Public LastButtonPressed As clsGraphicalButton
 
@@ -111,6 +111,7 @@ Private Sub Form_Load()
     Me.Picture = LoadPicture(App.path & "\graficos\VentanaCambiarcontrasenia.jpg")
     
     Call LoadButtons
+
 End Sub
 
 Private Sub LoadButtons()
@@ -122,26 +123,29 @@ Private Sub LoadButtons()
     
     Set LastButtonPressed = New clsGraphicalButton
     
-    
-    Call cBotonAceptar.Initialize(imgAceptar, GrhPath & "BotonAceptarCambiarContrasenia.jpg", _
-                                    GrhPath & "BotonAceptarRolloverCambiarContrasenia.jpg", _
-                                    GrhPath & "BotonAceptarClickCambiarContrasenia.jpg", Me)
+    Call cBotonAceptar.Initialize(imgAceptar, GrhPath & "BotonAceptarCambiarContrasenia.jpg", GrhPath & "BotonAceptarRolloverCambiarContrasenia.jpg", GrhPath & "BotonAceptarClickCambiarContrasenia.jpg", Me)
+
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgAceptar_Click()
+
     If Text2.Text <> Text3.Text Then
         Call MsgBox("Las contraseñas no coinciden", vbCritical Or vbOKOnly Or vbApplicationModal Or vbDefaultButton1, "Cambiar Contraseña")
         Exit Sub
+
     End If
     
     Call WriteChangePassword(Text1.Text, Text2.Text)
     Unload Me
+
 End Sub
 
 Private Sub Text3_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub

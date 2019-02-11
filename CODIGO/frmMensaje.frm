@@ -80,14 +80,15 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private clsFormulario As clsFormMovementManager
+Private clsFormulario    As clsFormMovementManager
 
-Private cBotonCerrar As clsGraphicalButton
+Private cBotonCerrar     As clsGraphicalButton
 
 Public LastButtonPressed As clsGraphicalButton
 
 Private Sub Form_Deactivate()
     Me.SetFocus
+
 End Sub
 
 Private Sub Form_Load()
@@ -98,6 +99,7 @@ Private Sub Form_Load()
     Me.Picture = LoadPicture(App.path & "\Graficos\VentanaMsj.jpg")
     
     Call LoadButtons
+
 End Sub
 
 Private Sub LoadButtons()
@@ -109,20 +111,21 @@ Private Sub LoadButtons()
     
     Set LastButtonPressed = New clsGraphicalButton
     
-    
-    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarMsj.jpg", _
-                                    GrhPath & "BotonCerrarRolloverMsj.jpg", _
-                                    GrhPath & "BotonCerrarClickMsj.jpg", Me)
+    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarMsj.jpg", GrhPath & "BotonCerrarRolloverMsj.jpg", GrhPath & "BotonCerrarClickMsj.jpg", Me)
+
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgCerrar_Click()
     Unload Me
+
 End Sub
 
 Private Sub msg_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub

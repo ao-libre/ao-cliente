@@ -180,7 +180,7 @@ Begin VB.Form frmPanelAccount
       Height          =   195
       Index           =   1
       Left            =   1890
-      TabIndex        =   6
+      TabIndex        =   11
       Top             =   3094
       Width           =   1245
    End
@@ -465,7 +465,7 @@ Begin VB.Form frmPanelAccount
       Height          =   195
       Index           =   4
       Left            =   6960
-      TabIndex        =   9
+      TabIndex        =   12
       Top             =   3094
       Width           =   1245
    End
@@ -486,7 +486,7 @@ Begin VB.Form frmPanelAccount
       Height          =   195
       Index           =   3
       Left            =   5310
-      TabIndex        =   8
+      TabIndex        =   13
       Top             =   3094
       Width           =   1245
    End
@@ -507,7 +507,7 @@ Begin VB.Form frmPanelAccount
       Height          =   195
       Index           =   2
       Left            =   3630
-      TabIndex        =   7
+      TabIndex        =   14
       Top             =   3094
       Width           =   1245
    End
@@ -527,7 +527,7 @@ Begin VB.Form frmPanelAccount
       Height          =   375
       Index           =   0
       Left            =   2760
-      TabIndex        =   10
+      TabIndex        =   15
       Top             =   876
       Width           =   6465
    End
@@ -538,8 +538,11 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Public Seleccionado As Byte
+
 Private Sub Form_Load()
-On Error Resume Next
+
+    On Error Resume Next
+
     Unload frmConnect
     
     Me.Picture = LoadPicture(DirGraficos & "VentanaCuenta.jpg")
@@ -559,72 +562,92 @@ On Error Resume Next
     Me.lblAccData(0).Caption = AccountName
 
     If Curper = True Then
-       Call FormParser.Parse_Form(Me)
+        Call FormParser.Parse_Form(Me)
+
     End If
 
 End Sub
+
 Private Sub Image5_Click()
+
     If Not lblAccData(Index + 1).Caption = "" Then
         UserName = lblAccData(Index + 1).Caption
         WriteLoginExistingChar
+
     End If
+
 End Sub
 
 Private Sub lblName_Click(Index As Integer)
     Seleccionado = Index
+
 End Sub
 
 Private Sub imgConectar_Click()
-   If lblAccData(Seleccionado).Caption = vbNullString Then
-       MsgBox "Error: No has seleccionado un personaje."
-       Exit Sub
-   End If
 
-   #If UsarWrench = 1 Then
-      If Not frmMain.Socket1.Connected Then
-   #Else
-      If frmMain.Winsock1.State <> sckConnected Then
-   #End If
-         MsgBox "Error: Se ha perdido la conexion con el server."
-         AccountName = vbNullString
-         AccountHash = vbNullString
-         NumberOfCharacters = 0
-         Unload Me
-      Else
-         UserName = lblAccData(Seleccionado).Caption
-         Call WriteLoginExistingChar
-      End If
-End Sub
+    If lblAccData(Seleccionado).Caption = vbNullString Then
+        MsgBox "Error: No has seleccionado un personaje."
+        Exit Sub
+
+    End If
+
+    #If UsarWrench = 1 Then
+
+        If Not frmMain.Socket1.Connected Then
+        #Else
+
+            If frmMain.Winsock1.State <> sckConnected Then
+            #End If
+            MsgBox "Error: Se ha perdido la conexion con el server."
+            AccountName = vbNullString
+            AccountHash = vbNullString
+            NumberOfCharacters = 0
+            Unload Me
+        Else
+            UserName = lblAccData(Seleccionado).Caption
+            Call WriteLoginExistingChar
+
+        End If
+
+    End Sub
 
 Private Sub imgCrearPersonaje_Click()
-   If NumberOfCharacters >= 10 Then
-       MsgBox "Error: No puedes crear mas de 10 personajes."
-       Exit Sub
-   End If
-   For i = 1 To 10
-     If lblAccData(i).Caption = "" Then
-        frmCrearPersonaje.Show
+
+    If NumberOfCharacters >= 10 Then
+        MsgBox "Error: No puedes crear mas de 10 personajes."
         Exit Sub
-     End If
-   Next i
+
+    End If
+
+    For i = 1 To 10
+
+        If lblAccData(i).Caption = "" Then
+            frmCrearPersonaje.Show
+            Exit Sub
+
+        End If
+
+    Next i
+
 End Sub
 
 Private Sub imgSalir_Click()
-   frmMain.Socket1.Disconnect
-   Unload Me
-   frmConnect.Show
-End Sub
+    frmMain.Socket1.Disconnect
+    Unload Me
+    frmConnect.Show
 
+End Sub
 
 Private Sub picChar_Click(Index As Integer)
     Seleccionado = Index + 1
+
     If cPJ(Seleccionado).Nombre <> "" Then
-       lblCharData(0) = "Nombre: " & cPJ(Seleccionado).Nombre
-       lblCharData(1) = "Clase: " & ListaClases(cPJ(Seleccionado).Class)
-       lblCharData(2) = "Raza: " & ListaRazas(cPJ(Seleccionado).Race)
-       lblCharData(3) = "Nivel: " & cPJ(Seleccionado).Level
-       lblCharData(4) = "Oro: " & cPJ(Seleccionado).Gold
-       lblCharData(5) = "Mapa: " & cPJ(Seleccionado).Map
+        lblCharData(0) = "Nombre: " & cPJ(Seleccionado).Nombre
+        lblCharData(1) = "Clase: " & ListaClases(cPJ(Seleccionado).Class)
+        lblCharData(2) = "Raza: " & ListaRazas(cPJ(Seleccionado).Race)
+        lblCharData(3) = "Nivel: " & cPJ(Seleccionado).Level
+        lblCharData(4) = "Oro: " & cPJ(Seleccionado).Gold
+        lblCharData(5) = "Mapa: " & cPJ(Seleccionado).Map
     Else
         lblCharData(0) = ""
         lblCharData(1) = ""
@@ -632,28 +655,36 @@ Private Sub picChar_Click(Index As Integer)
         lblCharData(3) = ""
         lblCharData(4) = ""
         lblCharData(5) = ""
+
     End If
+
 End Sub
 
 Private Sub picChar_DblClick(Index As Integer)
     Seleccionado = Index + 1
+
     If Not lblAccData(Seleccionado).Caption = "" Then
         UserName = lblAccData(Seleccionado).Caption
         WriteLoginExistingChar
     Else
         frmCrearPersonaje.Show
+
     End If
+
 End Sub
 
 Private Sub tmrRender_Timer()
-On Error GoTo ErrHandler
 
-Dim i As Byte
-For i = 1 To 10
-   mDx8_Engine.DrawPJ i
-Next i
-Me.tmrRender.Enabled = False
-Exit Sub
+    On Error GoTo ErrHandler
+
+    Dim i As Byte
+
+    For i = 1 To 10
+        mDx8_Engine.DrawPJ i
+    Next i
+
+    Me.tmrRender.Enabled = False
+    Exit Sub
 
 ErrHandler:
     Me.tmrRender.Enabled = False

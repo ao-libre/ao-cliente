@@ -483,28 +483,30 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Dim Cargando As Boolean
+Dim Cargando          As Boolean
 Private clsFormulario As clsFormMovementManager
 
 Private Enum ePestania
+
     ieItems
     ieMejorar
+
 End Enum
 
-Private picCheck As Picture
-Private picRecuadroItem As Picture
-Private picRecuadroMaderas As Picture
+Private picCheck                As Picture
+Private picRecuadroItem         As Picture
+Private picRecuadroMaderas      As Picture
 
-Private Pestanias(1) As Picture
-Private UltimaPestania As Byte
+Private Pestanias(1)            As Picture
+Private UltimaPestania          As Byte
 
-Private cBotonCerrar As clsGraphicalButton
+Private cBotonCerrar            As clsGraphicalButton
 Private cBotonConstruir(0 To 4) As clsGraphicalButton
-Private cBotonMejorar(0 To 4) As clsGraphicalButton
+Private cBotonMejorar(0 To 4)   As clsGraphicalButton
 
-Public LastButtonPressed As clsGraphicalButton
+Public LastButtonPressed        As clsGraphicalButton
 
-Private UsarMacro As Boolean
+Private UsarMacro               As Boolean
 
 Private Sub Form_Load()
     
@@ -516,11 +518,12 @@ Private Sub Form_Load()
     
     Me.Picture = LoadPicture(App.path & "\graficos\VentanaCarpinteriaItems.jpg")
     LoadButtons
+
 End Sub
 
 Private Sub LoadButtons()
     Dim GrhPath As String
-    Dim Index As Long
+    Dim Index   As Long
     
     GrhPath = DirGraficos
 
@@ -550,41 +553,23 @@ Private Sub LoadButtons()
 
     Set LastButtonPressed = New clsGraphicalButton
     
-    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarCarpinteria.jpg", _
-                                    GrhPath & "BotonCerrarRolloverCarpinteria.jpg", _
-                                    GrhPath & "BotonCerrarClickCarpinteria.jpg", Me)
+    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarCarpinteria.jpg", GrhPath & "BotonCerrarRolloverCarpinteria.jpg", GrhPath & "BotonCerrarClickCarpinteria.jpg", Me)
                                     
-    Call cBotonConstruir(0).Initialize(imgConstruir0, GrhPath & "BotonConstruirCarpinteria.jpg", _
-                                    GrhPath & "BotonConstruirRolloverCarpinteria.jpg", _
-                                    GrhPath & "BotonConstruirClickCarpinteria.jpg", Me)
+    Call cBotonConstruir(0).Initialize(imgConstruir0, GrhPath & "BotonConstruirCarpinteria.jpg", GrhPath & "BotonConstruirRolloverCarpinteria.jpg", GrhPath & "BotonConstruirClickCarpinteria.jpg", Me)
                                     
-    Call cBotonConstruir(1).Initialize(imgConstruir1, GrhPath & "BotonConstruirCarpinteria.jpg", _
-                                    GrhPath & "BotonConstruirRolloverCarpinteria.jpg", _
-                                    GrhPath & "BotonConstruirClickCarpinteria.jpg", Me)
+    Call cBotonConstruir(1).Initialize(imgConstruir1, GrhPath & "BotonConstruirCarpinteria.jpg", GrhPath & "BotonConstruirRolloverCarpinteria.jpg", GrhPath & "BotonConstruirClickCarpinteria.jpg", Me)
                                     
-    Call cBotonConstruir(2).Initialize(imgConstruir2, GrhPath & "BotonConstruirCarpinteria.jpg", _
-                                    GrhPath & "BotonConstruirRolloverCarpinteria.jpg", _
-                                    GrhPath & "BotonConstruirClickCarpinteria.jpg", Me)
+    Call cBotonConstruir(2).Initialize(imgConstruir2, GrhPath & "BotonConstruirCarpinteria.jpg", GrhPath & "BotonConstruirRolloverCarpinteria.jpg", GrhPath & "BotonConstruirClickCarpinteria.jpg", Me)
                                     
-    Call cBotonConstruir(3).Initialize(imgConstruir3, GrhPath & "BotonConstruirCarpinteria.jpg", _
-                                    GrhPath & "BotonConstruirRolloverCarpinteria.jpg", _
-                                    GrhPath & "BotonConstruirClickCarpinteria.jpg", Me)
+    Call cBotonConstruir(3).Initialize(imgConstruir3, GrhPath & "BotonConstruirCarpinteria.jpg", GrhPath & "BotonConstruirRolloverCarpinteria.jpg", GrhPath & "BotonConstruirClickCarpinteria.jpg", Me)
     
-    Call cBotonMejorar(0).Initialize(imgMejorar0, GrhPath & "BotonMejorarCarpinteria.jpg", _
-                                    GrhPath & "BotonMejorarRolloverCarpinteria.jpg", _
-                                    GrhPath & "BotonMejorarClickCarpinteria.jpg", Me)
+    Call cBotonMejorar(0).Initialize(imgMejorar0, GrhPath & "BotonMejorarCarpinteria.jpg", GrhPath & "BotonMejorarRolloverCarpinteria.jpg", GrhPath & "BotonMejorarClickCarpinteria.jpg", Me)
     
-    Call cBotonMejorar(1).Initialize(imgMejorar1, GrhPath & "BotonMejorarCarpinteria.jpg", _
-                                    GrhPath & "BotonMejorarRolloverCarpinteria.jpg", _
-                                    GrhPath & "BotonMejorarClickCarpinteria.jpg", Me)
+    Call cBotonMejorar(1).Initialize(imgMejorar1, GrhPath & "BotonMejorarCarpinteria.jpg", GrhPath & "BotonMejorarRolloverCarpinteria.jpg", GrhPath & "BotonMejorarClickCarpinteria.jpg", Me)
     
-    Call cBotonMejorar(2).Initialize(imgMejorar2, GrhPath & "BotonMejorarCarpinteria.jpg", _
-                                    GrhPath & "BotonMejorarRolloverCarpinteria.jpg", _
-                                    GrhPath & "BotonMejorarClickCarpinteria.jpg", Me)
+    Call cBotonMejorar(2).Initialize(imgMejorar2, GrhPath & "BotonMejorarCarpinteria.jpg", GrhPath & "BotonMejorarRolloverCarpinteria.jpg", GrhPath & "BotonMejorarClickCarpinteria.jpg", Me)
     
-    Call cBotonMejorar(3).Initialize(imgMejorar3, GrhPath & "BotonMejorarCarpinteria.jpg", _
-                                    GrhPath & "BotonMejorarRolloverCarpinteria.jpg", _
-                                    GrhPath & "BotonMejorarClickCarpinteria.jpg", Me)
+    Call cBotonMejorar(3).Initialize(imgMejorar3, GrhPath & "BotonMejorarCarpinteria.jpg", GrhPath & "BotonMejorarRolloverCarpinteria.jpg", GrhPath & "BotonMejorarClickCarpinteria.jpg", Me)
                                     
     imgCantidadCiclo.Picture = LoadPicture(GrhPath & "ConstruirPorCiclo.jpg")
     
@@ -594,12 +579,13 @@ Private Sub LoadButtons()
     imgPestania(ePestania.ieMejorar).MouseIcon = picMouseIcon
     
     imgChkMacro.MouseIcon = picMouseIcon
+
 End Sub
 
 Private Sub LoadDefaultValues()
     
     Dim MaxConstItem As Integer
-    Dim i As Integer
+    Dim i            As Integer
 
     Cargando = True
     
@@ -613,25 +599,26 @@ Private Sub LoadDefaultValues()
     
     cboItemsCiclo.ListIndex = 0
     
-    Scroll.Value = 0
+    Scroll.value = 0
     
     UsarMacro = True
     
     UltimaPestania = ePestania.ieItems
     
     Cargando = False
-End Sub
 
+End Sub
 
 Private Sub Construir(ByVal Index As Integer)
 
-    Dim ItemIndex As Integer
+    Dim ItemIndex      As Integer
     Dim CantItemsCiclo As Integer
     
-    If Scroll.Visible = True Then ItemIndex = Scroll.Value
+    If Scroll.Visible = True Then ItemIndex = Scroll.value
     ItemIndex = ItemIndex + Index
     
     Select Case UltimaPestania
+
         Case ePestania.ieItems
         
             If UsarMacro Then
@@ -641,6 +628,7 @@ Private Sub Construir(ByVal Index As Integer)
             Else
                 ' Que cosntruya el maximo, total si sobra no importa, valida el server
                 CantItemsCiclo = Val(cboItemsCiclo.List(cboItemsCiclo.ListCount - 1))
+
             End If
             
             Call WriteInitCrafting(Val(txtCantItems.Text), CantItemsCiclo)
@@ -648,13 +636,15 @@ Private Sub Construir(ByVal Index As Integer)
             
         Case ePestania.ieMejorar
             Call WriteItemUpgrade(CarpinteroMejorar(ItemIndex).ObjIndex)
+
     End Select
         
     Unload Me
 
 End Sub
 
-Public Sub HideExtraControls(ByVal NumItems As Integer, Optional ByVal Upgrading As Boolean = False)
+Public Sub HideExtraControls(ByVal NumItems As Integer, _
+                             Optional ByVal Upgrading As Boolean = False)
     Dim i As Integer
     
     picMaderas0.Visible = (NumItems >= 1)
@@ -671,7 +661,6 @@ Public Sub HideExtraControls(ByVal NumItems As Integer, Optional ByVal Upgrading
     imgMejorar1.Visible = (NumItems >= 2 And Upgrading)
     imgMejorar2.Visible = (NumItems >= 3 And Upgrading)
     imgMejorar3.Visible = (NumItems >= 4 And Upgrading)
-
     
     For i = 1 To MAX_LIST_ITEMS
         picItem(i).Visible = (NumItems >= i)
@@ -690,16 +679,19 @@ Public Sub HideExtraControls(ByVal NumItems As Integer, Optional ByVal Upgrading
         Cargando = False
     Else
         Scroll.Visible = False
+
     End If
     
     txtCantItems.Visible = Not Upgrading
     cboItemsCiclo.Visible = Not Upgrading And UsarMacro
     imgChkMacro.Visible = Not Upgrading
     imgCantidadCiclo.Visible = Not Upgrading And UsarMacro
+
 End Sub
 
 Private Sub RenderItem(ByRef Pic As PictureBox, ByVal GrhIndex As Long)
-On Error Resume Next
+
+    On Error Resume Next
 
     Dim SR As RECT
     Dim DR As RECT
@@ -709,6 +701,7 @@ On Error Resume Next
         SR.Top = .SY
         SR.Right = SR.Left + .pixelWidth
         SR.bottom = SR.Top + .pixelHeight
+
     End With
     
     DR.Left = 0
@@ -718,20 +711,23 @@ On Error Resume Next
     
     Call DrawGrhtoHdc(Pic.hdc, GrhIndex, SR, DR)
     Pic.Refresh
+
 End Sub
 
-
 Public Sub RenderList(ByVal Inicio As Integer)
-On Error Resume Next
 
-    Dim i As Long
+    On Error Resume Next
+
+    Dim i        As Long
     Dim NumItems As Integer
     
     NumItems = UBound(ObjCarpintero)
     Inicio = Inicio - 1
     
     For i = 1 To MAX_LIST_ITEMS
+
         If i + Inicio <= NumItems Then
+
             With ObjCarpintero(i + Inicio)
                 ' Agrego el item
                 Call RenderItem(picItem(i), .GrhIndex)
@@ -740,40 +736,49 @@ On Error Resume Next
                 ' Inventario de leños
                 Call InvMaderasCarpinteria(i).SetItem(1, 0, .Madera, 0, MADERA_GRH, 0, 0, 0, 0, 0, 0, "Leña")
                 Call InvMaderasCarpinteria(i).SetItem(2, 0, .MaderaElfica, 0, MADERA_ELFICA_GRH, 0, 0, 0, 0, 0, 0, "Leña élfica")
+
             End With
+
         End If
+
     Next i
     
 End Sub
 
 Public Sub RenderUpgradeList(ByVal Inicio As Integer)
-Dim i As Long
-Dim NumItems As Integer
+    Dim i        As Long
+    Dim NumItems As Integer
 
-NumItems = UBound(CarpinteroMejorar)
-Inicio = Inicio - 1
+    NumItems = UBound(CarpinteroMejorar)
+    Inicio = Inicio - 1
 
-For i = 1 To MAX_LIST_ITEMS
-    If i + Inicio <= NumItems Then
-        With CarpinteroMejorar(i + Inicio)
-            ' Agrego el item
-            Call RenderItem(picItem(i), .GrhIndex)
-            picItem(i).ToolTipText = .Name
+    For i = 1 To MAX_LIST_ITEMS
+
+        If i + Inicio <= NumItems Then
+
+            With CarpinteroMejorar(i + Inicio)
+                ' Agrego el item
+                Call RenderItem(picItem(i), .GrhIndex)
+                picItem(i).ToolTipText = .Name
             
-            Call RenderItem(picUpgrade(i), .UpgradeGrhIndex)
-            picUpgrade(i).ToolTipText = .UpgradeName
+                Call RenderItem(picUpgrade(i), .UpgradeGrhIndex)
+                picUpgrade(i).ToolTipText = .UpgradeName
         
-            ' Inventario de leños
-            Call InvMaderasCarpinteria(i).SetItem(1, 0, .Madera, 0, MADERA_GRH, 0, 0, 0, 0, 0, 0, "Leña")
-            Call InvMaderasCarpinteria(i).SetItem(2, 0, .MaderaElfica, 0, MADERA_ELFICA_GRH, 0, 0, 0, 0, 0, 0, "Leña élfica")
-        End With
-    End If
-Next i
-End Sub
+                ' Inventario de leños
+                Call InvMaderasCarpinteria(i).SetItem(1, 0, .Madera, 0, MADERA_GRH, 0, 0, 0, 0, 0, 0, "Leña")
+                Call InvMaderasCarpinteria(i).SetItem(2, 0, .MaderaElfica, 0, MADERA_ELFICA_GRH, 0, 0, 0, 0, 0, 0, "Leña élfica")
 
+            End With
+
+        End If
+
+    Next i
+
+End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
@@ -784,10 +789,12 @@ Private Sub Form_Unload(Cancel As Integer)
     Next i
 
     MirandoCarpinteria = False
+
 End Sub
 
 Private Sub imgCerrar_Click()
     Unload Me
+
 End Sub
 
 Private Sub imgChkMacro_Click()
@@ -797,54 +804,65 @@ Private Sub imgChkMacro_Click()
         imgChkMacro.Picture = picCheck
     Else
         Set imgChkMacro.Picture = Nothing
+
     End If
     
     cboItemsCiclo.Visible = UsarMacro
     imgCantidadCiclo.Visible = UsarMacro
+
 End Sub
 
 Private Sub imgConstruir0_Click()
     Call Construir(1)
+
 End Sub
 
 Private Sub imgConstruir1_Click()
     Call Construir(2)
+
 End Sub
 
 Private Sub imgConstruir2_Click()
     Call Construir(3)
+
 End Sub
 
 Private Sub imgConstruir3_Click()
     Call Construir(4)
+
 End Sub
 
 Private Sub imgMejorar0_Click()
     Call Construir(1)
+
 End Sub
 
 Private Sub imgMejorar1_Click()
     Call Construir(2)
+
 End Sub
 
 Private Sub imgMejorar2_Click()
     Call Construir(3)
+
 End Sub
 
 Private Sub imgMejorar3_Click()
     Call Construir(4)
+
 End Sub
 
 Private Sub imgPestania_Click(Index As Integer)
-    Dim i As Integer
+    Dim i        As Integer
     Dim NumItems As Integer
     
     If Cargando Then Exit Sub
     If UltimaPestania = Index Then Exit Sub
     
-    Scroll.Value = 0
+    Scroll.value = 0
     
     Select Case Index
+
         Case ePestania.ieItems
             ' Background
             Me.Picture = Pestanias(ePestania.ieItems)
@@ -855,7 +873,6 @@ Private Sub imgPestania_Click(Index As Integer)
             
             ' Cargo inventarios e imagenes
             Call RenderList(1)
-            
 
         Case ePestania.ieMejorar
             ' Background
@@ -866,6 +883,7 @@ Private Sub imgPestania_Click(Index As Integer)
             Call HideExtraControls(NumItems, True)
             
             Call RenderUpgradeList(1)
+
     End Select
 
     UltimaPestania = Index
@@ -877,13 +895,17 @@ Private Sub Scroll_Change()
     
     If Cargando Then Exit Sub
     
-    i = Scroll.Value
+    i = Scroll.value
     ' Cargo inventarios e imagenes
     
     Select Case UltimaPestania
+
         Case ePestania.ieItems
             Call RenderList(i + 1)
+
         Case ePestania.ieMejorar
             Call RenderUpgradeList(i + 1)
+
     End Select
+
 End Sub

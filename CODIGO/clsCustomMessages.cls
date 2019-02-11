@@ -33,44 +33,43 @@ Attribute VB_Exposed = False
 'along with this program; if not, you can find it at http://www.affero.org/oagpl.html
 '**************************************************************************
 
-
 Option Explicit
 Option Base 0
 
 ''
 ' Defines the number of messages that can be created.
-Private Const MESSAGE_COUNT As Byte = 10
+Private Const MESSAGE_COUNT               As Byte = 10
 
 ''
 ' Defines the maximum length allowed for any custom message.
-Private Const MAX_MESSAGE_LENGTH As Byte = 120
+Private Const MAX_MESSAGE_LENGTH          As Byte = 120
 
 ''
 ' The error code thrown when the message being set is invalid.
-Private Const INVALID_MESSAGE As Long = vbObjectError + 123
+Private Const INVALID_MESSAGE             As Long = vbObjectError + 123
 
 ''
 ' Relative path from the application in which custom message are stored.
-Private Const MESSAGE_FILE_PATH As String = "/init/messages.txt"
-
+Private Const MESSAGE_FILE_PATH           As String = "/init/messages.txt"
 
 ''
 'Array of defined messages.
 Private CustomMessages(MESSAGE_COUNT - 1) As String
 
-
 ''
 ' Class constructor. Initializes a new clsCustomMessage
 
 Private Sub Class_Initialize()
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 07/26/07
-'Initializes the messages by loading them from the config file
-'***************************************************
-On Error GoTo ErrHandler
+
+    '***************************************************
+    'Author: Juan Martín Sotuyo Dodero (Maraxus)
+    'Last Modification: 07/26/07
+    'Initializes the messages by loading them from the config file
+    '***************************************************
+    On Error GoTo ErrHandler
+
     Dim handle As Integer
-    Dim i As Long
+    Dim i      As Long
     
     'Load custom messages
     handle = FreeFile()
@@ -83,6 +82,7 @@ On Error GoTo ErrHandler
         'Purge invalid messages
         If Not MessageIsValid(CustomMessages(i)) Then
             CustomMessages(i) = vbNullString
+
         End If
         
         i = i + 1
@@ -93,21 +93,22 @@ On Error GoTo ErrHandler
     'If the file does not exist (only possible error),
     'then we have nothing to worry. All messages will be empty
 ErrHandler:
+
 End Sub
 
 ''
 ' Class desconstructor. Serializes messages to
 
 Private Sub Class_Terminate()
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 07/26/07
-'Stores all messages back into config file for later use.
-'***************************************************
-    Dim handle As Integer
-    Dim i As Long
+    '***************************************************
+    'Author: Juan Martín Sotuyo Dodero (Maraxus)
+    'Last Modification: 07/26/07
+    'Stores all messages back into config file for later use.
+    '***************************************************
+    Dim handle        As Integer
+    Dim i             As Long
     Dim directories() As String
-    Dim path As String
+    Dim path          As String
     
     'Make sure the path exists
     directories = Split(MESSAGE_FILE_PATH, "/")
@@ -118,7 +119,9 @@ Private Sub Class_Terminate()
         
         If LenB(Dir(path, vbDirectory)) = 0 Then
             Call MkDir(path)
+
         End If
+
     Next i
     
     'Serialize custom messages
@@ -131,6 +134,7 @@ Private Sub Class_Terminate()
     Next i
     
     Close handle
+
 End Sub
 
 ''
@@ -140,16 +144,19 @@ End Sub
 ' @return   The message requested.
 
 Public Property Get Message(ByVal Index As Integer) As String
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 07/26/07
-'Retrieves the requested message.
-'***************************************************
+
+    '***************************************************
+    'Author: Juan Martín Sotuyo Dodero (Maraxus)
+    'Last Modification: 07/26/07
+    'Retrieves the requested message.
+    '***************************************************
     If Index < 0 Or Index >= MESSAGE_COUNT Then
         Exit Property
+
     End If
     
     Message = CustomMessages(Index)
+
 End Property
 
 ''
@@ -159,21 +166,25 @@ End Property
 ' @param    nValue  The message to be stored.
 
 Public Property Let Message(ByVal Index As Integer, ByVal nValue As String)
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 07/26/07
-'Sets the given message index with the requested message.
-'***************************************************
+
+    '***************************************************
+    'Author: Juan Martín Sotuyo Dodero (Maraxus)
+    'Last Modification: 07/26/07
+    'Sets the given message index with the requested message.
+    '***************************************************
     If Index < 0 Or Index >= MESSAGE_COUNT Then
         Exit Property
+
     End If
     
     If Not MessageIsValid(nValue) Then
         Call Err.Raise(INVALID_MESSAGE)
         Exit Property
+
     End If
     
     CustomMessages(Index) = nValue
+
 End Property
 
 ''
@@ -182,12 +193,13 @@ End Property
 ' @return   The error code triggered when an invalid message is found.
 
 Public Property Get InvalidMessageErrCode() As Long
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 07/26/07
-'Retrieves the INVALID_MESSAGE error code.
-'***************************************************
+    '***************************************************
+    'Author: Juan Martín Sotuyo Dodero (Maraxus)
+    'Last Modification: 07/26/07
+    'Retrieves the INVALID_MESSAGE error code.
+    '***************************************************
     InvalidMessageErrCode = INVALID_MESSAGE
+
 End Property
 
 ''
@@ -197,17 +209,17 @@ End Property
 ' @return   True if the message is valid, False otherwise.
 
 Private Function MessageIsValid(ByRef msg As String) As Boolean
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 08/07/07
-'Last Modified by: Rapsodius
-'
-'Erased line "msg=StrConv(msg,vbUnicode)", because
-'it was causing problems and detected as many messages
-'as wrong with nothing bad on them
-'***************************************************
-    Dim i As Long
-    Dim Char As String * 1
+    '***************************************************
+    'Author: Juan Martín Sotuyo Dodero (Maraxus)
+    'Last Modification: 08/07/07
+    'Last Modified by: Rapsodius
+    '
+    'Erased line "msg=StrConv(msg,vbUnicode)", because
+    'it was causing problems and detected as many messages
+    'as wrong with nothing bad on them
+    '***************************************************
+    Dim i     As Long
+    Dim Char  As String * 1
     Dim ascii As Byte
     
     'Get rid of spaces
@@ -217,6 +229,7 @@ Private Function MessageIsValid(ByRef msg As String) As Boolean
     If LenB(msg) = 0 Then
         MessageIsValid = True
         Exit Function
+
     End If
     
     For i = 1 To Len(msg)
@@ -226,21 +239,16 @@ Private Function MessageIsValid(ByRef msg As String) As Boolean
         'check for invalid chars...
         If ascii < 31 Then Exit Function
         
-        If ascii > 126 And Char <> "á" And Char <> "Á" And Char <> "ä" And Char <> "Ä" _
-          And Char <> "â" And Char <> "Â" And Char <> "à" And Char <> "À" And Char <> "é" _
-          And Char <> "É" And Char <> "ë" And Char <> "Ë" And Char <> "ê" And Char <> "Ê" _
-          And Char <> "è" And Char <> "È" And Char <> "í" And Char <> "Í" And Char <> "ï" _
-          And Char <> "Ï" And Char <> "î" And Char <> "Î" And Char <> "ì" And Char <> "Ì" _
-          And Char <> "ó" And Char <> "Ó" And Char <> "ö" And Char <> "Ö" And Char <> "ô" _
-          And Char <> "Ô" And Char <> "ò" And Char <> "Ò" And Char <> "ú" And Char <> "Ú" _
-          And Char <> "ü" And Char <> "Ü" And Char <> "û" And Char <> "Û" And Char <> "ù" _
-          And Char <> "Ù" And Char <> "ñ" And Char <> "Ñ" And Char <> "¡" And Char <> "¿" Then
+        If ascii > 126 And Char <> "á" And Char <> "Á" And Char <> "ä" And Char <> "Ä" And Char <> "â" And Char <> "Â" And Char <> "à" And Char <> "À" And Char <> "é" And Char <> "É" And Char <> "ë" And Char <> "Ë" And Char <> "ê" And Char <> "Ê" And Char <> "è" And Char <> "È" And Char <> "í" And Char <> "Í" And Char <> "ï" And Char <> "Ï" And Char <> "î" And Char <> "Î" And Char <> "ì" And Char <> "Ì" And Char <> "ó" And Char <> "Ó" And Char <> "ö" And Char <> "Ö" And Char <> "ô" And Char <> "Ô" And Char <> "ò" And Char <> "Ò" And Char <> "ú" And Char <> "Ú" And Char <> "ü" And Char <> "Ü" And Char <> "û" And Char <> "Û" And Char <> "ù" And Char <> "Ù" And Char <> "ñ" And Char <> "Ñ" And Char <> "¡" And Char <> "¿" Then
             Exit Function
+
         End If
+
     Next i
     
     'Discard extremely long messages
     If Len(msg) > MAX_MESSAGE_LENGTH Then Exit Function
     
     MessageIsValid = True
+
 End Function

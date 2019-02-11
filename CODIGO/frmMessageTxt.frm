@@ -239,10 +239,10 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Private clsFormulario As clsFormMovementManager
+Private clsFormulario    As clsFormMovementManager
 
-Private cBotonGuardar As clsGraphicalButton
-Private cBotonCancelar As clsGraphicalButton
+Private cBotonGuardar    As clsGraphicalButton
+Private cBotonCancelar   As clsGraphicalButton
 
 Public LastButtonPressed As clsGraphicalButton
 
@@ -273,22 +273,25 @@ Private Sub LoadButtons()
     
     Set LastButtonPressed = New clsGraphicalButton
 
-    Call cBotonGuardar.Initialize(imgGuardar, GrhPath & "BotonGuardarCustomMsg.jpg", GrhPath & "BotonGuardarRolloverCustomMsg.jpg", _
-                                    GrhPath & "BotonGuardarClickCustomMsg.jpg", Me)
-    Call cBotonCancelar.Initialize(imgCancelar, GrhPath & "BotonCancelarCustomMsg.jpg", GrhPath & "BotonCancelarRolloverCustomMsg.jpg", _
-                                    GrhPath & "BotonCancelarClickCustomMsg.jpg", Me)
+    Call cBotonGuardar.Initialize(imgGuardar, GrhPath & "BotonGuardarCustomMsg.jpg", GrhPath & "BotonGuardarRolloverCustomMsg.jpg", GrhPath & "BotonGuardarClickCustomMsg.jpg", Me)
+    Call cBotonCancelar.Initialize(imgCancelar, GrhPath & "BotonCancelarCustomMsg.jpg", GrhPath & "BotonCancelarRolloverCustomMsg.jpg", GrhPath & "BotonCancelarClickCustomMsg.jpg", Me)
+
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgCancelar_Click()
     Unload Me
+
 End Sub
 
 Private Sub imgGuardar_Click()
-On Error GoTo ErrHandler
+
+    On Error GoTo ErrHandler
+
     Dim i As Long
     
     For i = 0 To 9
@@ -296,16 +299,23 @@ On Error GoTo ErrHandler
     Next i
     
     Unload Me
-Exit Sub
+    Exit Sub
 
 ErrHandler:
+
     'Did detected an invalid message??
     If Err.number = CustomMessages.InvalidMessageErrCode Then
         Call MsgBox("El Mensaje " & CStr(i + 1) & " es inválido. Modifiquelo por favor.")
+
     End If
 
 End Sub
 
-Private Sub messageTxt_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub messageTxt_MouseMove(Index As Integer, _
+                                 Button As Integer, _
+                                 Shift As Integer, _
+                                 X As Single, _
+                                 Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub

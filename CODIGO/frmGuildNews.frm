@@ -128,14 +128,18 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private clsFormulario As clsFormMovementManager
+Private clsFormulario    As clsFormMovementManager
 
-Private cBotonAceptar As clsGraphicalButton
+Private cBotonAceptar    As clsGraphicalButton
 
 Public LastButtonPressed As clsGraphicalButton
 
-Private Sub aliados_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub aliados_MouseMove(Button As Integer, _
+                              Shift As Integer, _
+                              X As Single, _
+                              Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Sub Form_Load()
@@ -146,6 +150,7 @@ Private Sub Form_Load()
     Me.Picture = LoadPicture(App.path & "\graficos\VentanaGuildNews.jpg")
     
     LoadButtons
+
 End Sub
 
 Private Sub LoadButtons()
@@ -156,26 +161,34 @@ Private Sub LoadButtons()
     Set cBotonAceptar = New clsGraphicalButton
     Set LastButtonPressed = New clsGraphicalButton
     
-    Call cBotonAceptar.Initialize(imgAceptar, GrhPath & "BotonAceptarGuildNews.jpg", GrhPath & "BotonAceptarRolloverGuildNews.jpg", _
-                                    GrhPath & "BotonAceptarClickGuildNews.jpg", Me)
+    Call cBotonAceptar.Initialize(imgAceptar, GrhPath & "BotonAceptarGuildNews.jpg", GrhPath & "BotonAceptarRolloverGuildNews.jpg", GrhPath & "BotonAceptarClickGuildNews.jpg", Me)
    
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
     bShowGuildNews = False
+
 End Sub
 
 Private Sub imgAceptar_Click()
+
     On Error Resume Next
+
     Unload Me
     frmMain.SetFocus
+
 End Sub
 
-Private Sub imgAceptar_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgAceptar_MouseMove(Button As Integer, _
+                                 Shift As Integer, _
+                                 X As Single, _
+                                 Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 

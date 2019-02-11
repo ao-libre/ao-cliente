@@ -118,16 +118,20 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Command1_Click()
-If frmtip.Check1.Value = vbChecked Then
-    tipf = "1"
-Else
-    tipf = "0"
-End If
 
-Unload Me
+    If frmtip.Check1.value = vbChecked Then
+        tipf = "1"
+    Else
+        tipf = "0"
+
+    End If
+
+    Unload Me
+
 End Sub
 
 Private Sub Form_Deactivate()
-Me.SetFocus
+    Me.SetFocus
+
 End Sub
 

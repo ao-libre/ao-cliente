@@ -92,9 +92,9 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 Private cBotonCrearCuenta As clsGraphicalButton
-Private cBotonSalir As clsGraphicalButton
+Private cBotonSalir       As clsGraphicalButton
 
-Public LastButtonPressed As clsGraphicalButton
+Public LastButtonPressed  As clsGraphicalButton
 
 Private Sub Form_Load()
     Me.Picture = LoadPicture(App.path & "\graficos\frmCuentaNueva.jpg")
@@ -102,6 +102,7 @@ Private Sub Form_Load()
     txtCuentaPassword.Text = ""
     txtCuentaRepite.Text = ""
     LoadButtons
+
 End Sub
 
 Private Sub imgCrearCuenta_Click()
@@ -114,31 +115,40 @@ Private Sub imgCrearCuenta_Click()
     AccountPassword = txtCuentaPassword.Text
     
     #If UsarWrench = 1 Then
+
         If frmMain.Socket1.Connected Then
             frmMain.Socket1.Disconnect
             frmMain.Socket1.Cleanup
             DoEvents
+
         End If
-        frmMain.Socket1.HostName = CurServerIp
+
+        frmMain.Socket1.hostname = CurServerIp
         frmMain.Socket1.RemotePort = CurServerPort
         frmMain.Socket1.Connect
     #Else
+
         If frmMain.Winsock1.State <> sckClosed Then
             frmMain.Winsock1.Close
             DoEvents
+
         End If
+
         frmMain.Winsock1.Connect CurServerIp, CurServerPort
     #End If
 
     Unload frmCrearCuenta
+
 End Sub
 
 Private Sub imgSalir_Click()
     Unload Me
+
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Function IsFormValid() As Boolean
@@ -146,29 +156,35 @@ Private Function IsFormValid() As Boolean
     If txtCuentaEmail.Text = "" Then
         MsgBox "Ingrese un e-mail."
         Exit Function
+
     End If
     
     If txtCuentaPassword.Text = "" Then
         MsgBox "Ingrese un password."
         Exit Function
+
     End If
 
     If Not CheckMailString(txtCuentaEmail.Text) Then
         MsgBox "Direccion de e-mail invalida."
         Exit Function
+
     End If
     
     If Len(txtCuentaEmail.Text) > 30 Then
         MsgBox "El e-mail debe tener menos de 30 letras."
         Exit Function
+
     End If
     
     If Not txtCuentaPassword.Text = txtCuentaRepite.Text Then
         MsgBox "Los passwords no coinciden."
         Exit Function
+
     End If
     
     IsFormValid = True
+
 End Function
 
 Private Sub LoadButtons()
@@ -182,11 +198,8 @@ Private Sub LoadButtons()
     
     Set LastButtonPressed = New clsGraphicalButton
 
-    Call cBotonCrearCuenta.Initialize(Me.imgCrearCuenta, GrhPath & "BotonCrearCuenta.jpg", _
-                                    GrhPath & "BotonCrearCuentaRollover.jpg", _
-                                    GrhPath & "BotonCrearCuentaClick.jpg", Me)
+    Call cBotonCrearCuenta.Initialize(Me.imgCrearCuenta, GrhPath & "BotonCrearCuenta.jpg", GrhPath & "BotonCrearCuentaRollover.jpg", GrhPath & "BotonCrearCuentaClick.jpg", Me)
 
-    Call cBotonSalir.Initialize(Me.imgSalir, GrhPath & "BotonSalirConnect.jpg", _
-                                    GrhPath & "BotonBotonSalirRolloverConnect.jpg", _
-                                    GrhPath & "BotonSalirClickConnect.jpg", Me)
+    Call cBotonSalir.Initialize(Me.imgSalir, GrhPath & "BotonSalirConnect.jpg", GrhPath & "BotonBotonSalirRolloverConnect.jpg", GrhPath & "BotonSalirClickConnect.jpg", Me)
+
 End Sub

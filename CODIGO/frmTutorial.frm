@@ -162,23 +162,25 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private clsFormulario As clsFormMovementManager
+Private clsFormulario    As clsFormMovementManager
 
-Private cBotonSiguiente As clsGraphicalButton
-Private cBotonAnterior As clsGraphicalButton
+Private cBotonSiguiente  As clsGraphicalButton
+Private cBotonAnterior   As clsGraphicalButton
 
 Public LastButtonPressed As clsGraphicalButton
 
 Private Type tTutorial
+
     sTitle As String
     sPage As String
+
 End Type
 
-Private picCheck As Picture
-Private picMostrar As Picture
+Private picCheck    As Picture
+Private picMostrar  As Picture
 
-Private Tutorial() As tTutorial
-Private NumPages As Long
+Private Tutorial()  As tTutorial
+Private NumPages    As Long
 Private CurrentPage As Long
 
 Private Sub Form_Load()
@@ -195,6 +197,7 @@ Private Sub Form_Load()
     
     CurrentPage = 1
     Call SelectPage(CurrentPage)
+
 End Sub
 
 Private Sub LoadButtons()
@@ -207,16 +210,9 @@ Private Sub LoadButtons()
     
     Set LastButtonPressed = New clsGraphicalButton
     
-    
-    Call cBotonSiguiente.Initialize(imgSiguiente, GrhPath & "BotonSiguienteTutorial.jpg", _
-                                    GrhPath & "BotonSiguienteRolloverTutorial.jpg", _
-                                    GrhPath & "BotonSiguienteClickTutorial.jpg", Me, _
-                                    GrhPath & "BotonSiguienteGris.jpg")
+    Call cBotonSiguiente.Initialize(imgSiguiente, GrhPath & "BotonSiguienteTutorial.jpg", GrhPath & "BotonSiguienteRolloverTutorial.jpg", GrhPath & "BotonSiguienteClickTutorial.jpg", Me, GrhPath & "BotonSiguienteGris.jpg")
 
-    Call cBotonAnterior.Initialize(imgAnterior, GrhPath & "BotonAnteriorTutorial.jpg", _
-                                    GrhPath & "BotonAnteriorRolloverTutorial.jpg", _
-                                    GrhPath & "BotonAnteriorClickTutorial.jpg", Me, _
-                                    GrhPath & "BotonAnteriorGris.jpg", True)
+    Call cBotonAnterior.Initialize(imgAnterior, GrhPath & "BotonAnteriorTutorial.jpg", GrhPath & "BotonAnteriorRolloverTutorial.jpg", GrhPath & "BotonAnteriorClickTutorial.jpg", Me, GrhPath & "BotonAnteriorGris.jpg", True)
                                     
     Set picCheck = LoadPicture(GrhPath & "CheckTutorial.bmp")
     Set picMostrar = LoadPicture(GrhPath & "NoMostrarTutorial.bmp")
@@ -227,13 +223,16 @@ Private Sub LoadButtons()
         imgCheck.Picture = picCheck
     Else
         Set imgCheck.Picture = Nothing
+
     End If
     
     lblCerrar.MouseIcon = picMouseIcon
+
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgAnterior_Click()
@@ -247,6 +246,7 @@ Private Sub imgAnterior_Click()
     If Not cBotonSiguiente.IsEnabled Then Call cBotonSiguiente.EnableButton(True)
     
     Call SelectPage(CurrentPage)
+
 End Sub
 
 Private Sub imgCheck_Click()
@@ -257,7 +257,9 @@ Private Sub imgCheck_Click()
         imgCheck.Picture = picCheck
     Else
         Set imgCheck.Picture = Nothing
+
     End If
+
 End Sub
 
 Private Sub imgSiguiente_Click()
@@ -273,20 +275,22 @@ Private Sub imgSiguiente_Click()
     If Not cBotonAnterior.IsEnabled Then Call cBotonAnterior.EnableButton(True)
     
     Call SelectPage(CurrentPage)
+
 End Sub
 
 Private Sub lblCerrar_Click()
     bShowTutorial = False 'Mientras no se pueda tildar/destildar para verlo más tarde, esto queda así :P
     Unload Me
+
 End Sub
 
 Private Sub LoadTutorial()
     
     Dim TutorialPath As String
-    Dim lPage As Long
-    Dim NumLines As Long
-    Dim lLine As Long
-    Dim sLine As String
+    Dim lPage        As Long
+    Dim NumLines     As Long
+    Dim lLine        As Long
+    Dim sLine        As String
     
     TutorialPath = DirExtras & "Tutorial.dat"
     NumPages = Val(GetVar(TutorialPath, "INIT", "NumPags"))
@@ -307,20 +311,28 @@ Private Sub LoadTutorial()
                     sLine = GetVar(TutorialPath, "PAG" & lPage, "Line" & lLine)
                     .sPage = .sPage & sLine & vbNewLine
                 Next lLine
+
             End With
             
         Next lPage
+
     End If
     
     lblPagTotal.Caption = NumPages
+
 End Sub
 
 Private Sub SelectPage(ByVal lPage As Long)
     lblTitulo.Caption = Tutorial(lPage).sTitle
     lblMensaje.Caption = Tutorial(lPage).sPage
     lblPagActual.Caption = lPage
+
 End Sub
 
-Private Sub lblMensaje_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub lblMensaje_MouseMove(Button As Integer, _
+                                 Shift As Integer, _
+                                 X As Single, _
+                                 Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub

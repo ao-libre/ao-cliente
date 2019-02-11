@@ -63,33 +63,37 @@ Option Explicit
 Dim puedo As Boolean
 
 Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
+
     If KeyCode = 27 Then If puedo Then Unload Me
+
 End Sub
 
 Private Sub Form_Load()
     Me.Width = 800 * Screen.TwipsPerPixelX
     Me.Height = 600 * Screen.TwipsPerPixelY
     puedo = False
+
 End Sub
 
 Private Sub Timer1_Timer()
-Static ticks As Long
+    Static ticks As Long
 
-Dim PresPath As String
+    Dim PresPath As String
 
-ticks = ticks + 1
+    ticks = ticks + 1
 
-If ticks = 1 Then
-    PresPath = DirGraficos & "HostingAlkon.jpg"
-    Me.Picture = LoadPicture(PresPath)
-    puedo = True
+    If ticks = 1 Then
+        PresPath = DirGraficos & "HostingAlkon.jpg"
+        Me.Picture = LoadPicture(PresPath)
+        puedo = True
 
-ElseIf ticks = 2 Then
-    PresPath = DirGraficos & "Presentacion" & RandomNumber(5, 8) & ".jpg"
-    Me.Picture = LoadPicture(PresPath)
+    ElseIf ticks = 2 Then
+        PresPath = DirGraficos & "Presentacion" & RandomNumber(5, 8) & ".jpg"
+        Me.Picture = LoadPicture(PresPath)
     
-Else
-    Unload Me
-End If
+    Else
+        Unload Me
+
+    End If
 
 End Sub

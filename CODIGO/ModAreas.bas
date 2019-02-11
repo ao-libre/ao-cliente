@@ -58,7 +58,9 @@ Public Sub CambioDeArea(ByVal X As Byte, ByVal Y As Byte)
                 If (CharIndex > 0) Then
                     If (CharIndex <> UserCharIndex) Then
                         Call Char_Erase(CharIndex)
+
                     End If
+
                 End If
                
                 'Erase OBJs
@@ -66,10 +68,14 @@ Public Sub CambioDeArea(ByVal X As Byte, ByVal Y As Byte)
                                 
                 If (ObjIndex > 0) Then
                     Call Map_DestroyObject(loopX, loopY)
+
                 End If
+
             End If
+
         Next loopY
     Next loopX
     
     Call RefreshAllChars
+
 End Sub

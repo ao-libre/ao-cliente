@@ -110,23 +110,23 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private clsFormulario As clsFormMovementManager
+Private clsFormulario    As clsFormMovementManager
 
-Private cBotonAceptar As clsGraphicalButton
-Private cBotonCerrar As clsGraphicalButton
-Private cBotonDetalles As clsGraphicalButton
-Private cBotonRechazar As clsGraphicalButton
+Private cBotonAceptar    As clsGraphicalButton
+Private cBotonCerrar     As clsGraphicalButton
+Private cBotonDetalles   As clsGraphicalButton
+Private cBotonRechazar   As clsGraphicalButton
 
 Public LastButtonPressed As clsGraphicalButton
 
-
-Private TipoProp As TIPO_PROPUESTA
+Private TipoProp         As TIPO_PROPUESTA
 
 Public Enum TIPO_PROPUESTA
+
     ALIANZA = 1
     PAZ = 2
-End Enum
 
+End Enum
 
 Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
@@ -135,6 +135,7 @@ Private Sub Form_Load()
     
     Call LoadBackGround
     Call LoadButtons
+
 End Sub
 
 Private Sub LoadButtons()
@@ -149,36 +150,30 @@ Private Sub LoadButtons()
     
     Set LastButtonPressed = New clsGraphicalButton
     
-    
-    Call cBotonAceptar.Initialize(imgAceptar, GrhPath & "BotonAceptarOferta.jpg", _
-                                    GrhPath & "BotonAceptarRolloverOferta.jpg", _
-                                    GrhPath & "BotonAceptarClickOferta.jpg", Me)
+    Call cBotonAceptar.Initialize(imgAceptar, GrhPath & "BotonAceptarOferta.jpg", GrhPath & "BotonAceptarRolloverOferta.jpg", GrhPath & "BotonAceptarClickOferta.jpg", Me)
 
-    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarOferta.jpg", _
-                                    GrhPath & "BotonCerrarRolloverOferta.jpg", _
-                                    GrhPath & "BotonCerrarClickOferta.jpg", Me)
+    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarOferta.jpg", GrhPath & "BotonCerrarRolloverOferta.jpg", GrhPath & "BotonCerrarClickOferta.jpg", Me)
 
-    Call cBotonDetalles.Initialize(imgDetalle, GrhPath & "BotonDetallesOferta.jpg", _
-                                    GrhPath & "BotonDetallesRolloverOferta.jpg", _
-                                    GrhPath & "BotonDetallesClickOferta.jpg", Me)
+    Call cBotonDetalles.Initialize(imgDetalle, GrhPath & "BotonDetallesOferta.jpg", GrhPath & "BotonDetallesRolloverOferta.jpg", GrhPath & "BotonDetallesClickOferta.jpg", Me)
 
-    Call cBotonRechazar.Initialize(imgRechazar, GrhPath & "BotonRechazarOferta.jpg", _
-                                    GrhPath & "BotonRechazarRolloverOferta.jpg", _
-                                    GrhPath & "BotonRechazarClickOferta.jpg", Me)
-
+    Call cBotonRechazar.Initialize(imgRechazar, GrhPath & "BotonRechazarOferta.jpg", GrhPath & "BotonRechazarRolloverOferta.jpg", GrhPath & "BotonRechazarClickOferta.jpg", Me)
 
 End Sub
 
 Private Sub LoadBackGround()
+
     If TipoProp = TIPO_PROPUESTA.ALIANZA Then
         Me.Picture = LoadPicture(DirGraficos & "VentanaOfertaAlianza.jpg")
     Else
         Me.Picture = LoadPicture(DirGraficos & "VentanaOfertaPaz.jpg")
+
     End If
+
 End Sub
 
 Public Property Let ProposalType(ByVal nValue As TIPO_PROPUESTA)
     TipoProp = nValue
+
 End Property
 
 Private Sub imgAceptar_Click()
@@ -187,6 +182,7 @@ Private Sub imgAceptar_Click()
         Call WriteGuildAcceptPeace(lista.List(lista.ListIndex))
     Else
         Call WriteGuildAcceptAlliance(lista.List(lista.ListIndex))
+
     End If
     
     Me.Hide
@@ -197,14 +193,18 @@ End Sub
 
 Private Sub imgCerrar_Click()
     Unload Me
+
 End Sub
 
 Private Sub imgDetalle_Click()
+
     If TipoProp = PAZ Then
         Call WriteGuildPeaceDetails(lista.List(lista.ListIndex))
     Else
         Call WriteGuildAllianceDetails(lista.List(lista.ListIndex))
+
     End If
+
 End Sub
 
 Private Sub imgRechazar_Click()
@@ -213,10 +213,12 @@ Private Sub imgRechazar_Click()
         Call WriteGuildRejectPeace(lista.List(lista.ListIndex))
     Else
         Call WriteGuildRejectAlliance(lista.List(lista.ListIndex))
+
     End If
     
     Me.Hide
     
     Unload Me
+
 End Sub
 

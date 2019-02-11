@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "Richtx32.ocx"
 Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.ocx"
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.ocx"
 Begin VB.Form frmMain 
@@ -219,7 +219,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2619
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -941,40 +940,41 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Public tX As Byte
-Public tY As Byte
-Public MouseX As Long
-Public MouseY As Long
-Public MouseBoton As Long
-Public MouseShift As Long
-Private clicX As Long
-Private clicY As Long
+Public tX                       As Byte
+Public tY                       As Byte
+Public MouseX                   As Long
+Public MouseY                   As Long
+Public MouseBoton               As Long
+Public MouseShift               As Long
+Private clicX                   As Long
+Private clicY                   As Long
 
-Public IsPlaying As Byte
+Public IsPlaying                As Byte
 
-Private clsFormulario As clsFormMovementManager
+Private clsFormulario           As clsFormMovementManager
 
-Private cBotonDiamArriba As clsGraphicalButton
-Private cBotonDiamAbajo As clsGraphicalButton
-Private cBotonMapa As clsGraphicalButton
-Private cBotonGrupo As clsGraphicalButton
-Private cBotonOpciones As clsGraphicalButton
-Private cBotonEstadisticas As clsGraphicalButton
-Private cBotonClanes As clsGraphicalButton
-Private cBotonAsignarSkill As clsGraphicalButton
+Private cBotonDiamArriba        As clsGraphicalButton
+Private cBotonDiamAbajo         As clsGraphicalButton
+Private cBotonMapa              As clsGraphicalButton
+Private cBotonGrupo             As clsGraphicalButton
+Private cBotonOpciones          As clsGraphicalButton
+Private cBotonEstadisticas      As clsGraphicalButton
+Private cBotonClanes            As clsGraphicalButton
+Private cBotonAsignarSkill      As clsGraphicalButton
 
-Public LastButtonPressed As clsGraphicalButton
+Public LastButtonPressed        As clsGraphicalButton
 
-Public picSkillStar As Picture
+Public picSkillStar             As Picture
 
 Public WithEvents dragInventory As clsGrapchicalInventory
 Attribute dragInventory.VB_VarHelpID = -1
 
 'Usado para controlar que no se dispare el binding de la tecla CTRL cuando se usa CTRL+Tecla.
-Dim CtrlMaskOn As Boolean
+Dim CtrlMaskOn                  As Boolean
 
 Public Sub dragInventory_dragDone(ByVal originalSlot As Integer, ByVal newSlot As Integer)
-Call Protocol.WriteMoveItem(originalSlot, newSlot, eMoveType.Inventory)
+    Call Protocol.WriteMoveItem(originalSlot, newSlot, eMoveType.Inventory)
+
 End Sub
 
 Private Sub Form_Load()
@@ -983,6 +983,7 @@ Private Sub Form_Load()
         ' Handles Form movement (drag and drop).
         Set clsFormulario = New clsFormMovementManager
         clsFormulario.Initialize Me, 120
+
     End If
 
     Me.Picture = LoadPicture(DirGraficos & "VentanaPrincipal.JPG")
@@ -1002,11 +1003,12 @@ Private Sub Form_Load()
     EnableURLDetect RecTxt.hwnd, Me.hwnd
     
     CtrlMaskOn = False
+
 End Sub
 
 Private Sub LoadButtons()
     Dim GrhPath As String
-    Dim i As Integer
+    Dim i       As Integer
     
     GrhPath = DirGraficos
 
@@ -1021,34 +1023,19 @@ Private Sub LoadButtons()
     
     Set LastButtonPressed = New clsGraphicalButton
     
-    
-    Call cBotonDiamArriba.Initialize(imgInvScrollUp, "", _
-                                    GrhPath & "BotonDiamArribaF.bmp", _
-                                    GrhPath & "BotonDiamArribaF.bmp", Me)
+    Call cBotonDiamArriba.Initialize(imgInvScrollUp, "", GrhPath & "BotonDiamArribaF.bmp", GrhPath & "BotonDiamArribaF.bmp", Me)
 
-    Call cBotonDiamAbajo.Initialize(imgInvScrollDown, "", _
-                                    GrhPath & "BotonDiamAbajoF.bmp", _
-                                    GrhPath & "BotonDiamAbajoF.bmp", Me)
+    Call cBotonDiamAbajo.Initialize(imgInvScrollDown, "", GrhPath & "BotonDiamAbajoF.bmp", GrhPath & "BotonDiamAbajoF.bmp", Me)
     
-    Call cBotonMapa.Initialize(imgMapa, "", _
-                                    GrhPath & "BotonMapaRollover.jpg", _
-                                    GrhPath & "BotonMapaClick.jpg", Me)
+    Call cBotonMapa.Initialize(imgMapa, "", GrhPath & "BotonMapaRollover.jpg", GrhPath & "BotonMapaClick.jpg", Me)
                                     
-    Call cBotonGrupo.Initialize(imgGrupo, "", _
-                                    GrhPath & "BotonGrupoRollover.jpg", _
-                                    GrhPath & "BotonGrupoClick.jpg", Me)
+    Call cBotonGrupo.Initialize(imgGrupo, "", GrhPath & "BotonGrupoRollover.jpg", GrhPath & "BotonGrupoClick.jpg", Me)
 
-    Call cBotonOpciones.Initialize(imgOpciones, "", _
-                                    GrhPath & "BotonOpcionesRollover.jpg", _
-                                    GrhPath & "BotonOpcionesClick.jpg", Me)
+    Call cBotonOpciones.Initialize(imgOpciones, "", GrhPath & "BotonOpcionesRollover.jpg", GrhPath & "BotonOpcionesClick.jpg", Me)
 
-    Call cBotonEstadisticas.Initialize(imgEstadisticas, "", _
-                                    GrhPath & "BotonEstadisticasRollover.jpg", _
-                                    GrhPath & "BotonEstadisticasClick.jpg", Me)
+    Call cBotonEstadisticas.Initialize(imgEstadisticas, "", GrhPath & "BotonEstadisticasRollover.jpg", GrhPath & "BotonEstadisticasClick.jpg", Me)
 
-    Call cBotonClanes.Initialize(imgClanes, "", _
-                                    GrhPath & "BotonClanesRollover.jpg", _
-                                    GrhPath & "BotonClanesClick.jpg", Me)
+    Call cBotonClanes.Initialize(imgClanes, "", GrhPath & "BotonClanesRollover.jpg", GrhPath & "BotonClanesClick.jpg", Me)
 
     Set picSkillStar = LoadPicture(GrhPath & "BotonAsignarSkills.bmp")
 
@@ -1062,103 +1049,129 @@ Private Sub LoadButtons()
     For i = 0 To 2
         picSM(i).MouseIcon = picMouseIcon
     Next i
+
 End Sub
 
 Public Sub LightSkillStar(ByVal bTurnOn As Boolean)
+
     If bTurnOn Then
         imgAsignarSkill.Picture = picSkillStar
     Else
         Set imgAsignarSkill.Picture = Nothing
+
     End If
+
 End Sub
 
 Private Sub cmdMoverHechi_Click(Index As Integer)
+
     If hlst.Visible = True Then
         If hlst.ListIndex = -1 Then Exit Sub
         Dim sTemp As String
     
         Select Case Index
+
             Case 1 'subir
+
                 If hlst.ListIndex = 0 Then Exit Sub
+
             Case 0 'bajar
+
                 If hlst.ListIndex = hlst.ListCount - 1 Then Exit Sub
+
         End Select
     
         Call WriteMoveSpell(Index = 1, hlst.ListIndex + 1)
         
         Select Case Index
+
             Case 1 'subir
                 sTemp = hlst.List(hlst.ListIndex - 1)
                 hlst.List(hlst.ListIndex - 1) = hlst.List(hlst.ListIndex)
                 hlst.List(hlst.ListIndex) = sTemp
                 hlst.ListIndex = hlst.ListIndex - 1
+
             Case 0 'bajar
                 sTemp = hlst.List(hlst.ListIndex + 1)
                 hlst.List(hlst.ListIndex + 1) = hlst.List(hlst.ListIndex)
                 hlst.List(hlst.ListIndex) = sTemp
                 hlst.ListIndex = hlst.ListIndex + 1
+
         End Select
+
     End If
+
 End Sub
+
 Public Sub ControlSM(ByVal Index As Byte, ByVal Mostrar As Boolean)
-Dim GrhIndex As Long
-Dim SR As RECT
-Dim DR As RECT
+    Dim GrhIndex As Long
+    Dim SR       As RECT
+    Dim DR       As RECT
 
-GrhIndex = GRH_INI_SM + Index + SM_CANT * (CInt(Mostrar) + 1)
+    GrhIndex = GRH_INI_SM + Index + SM_CANT * (CInt(Mostrar) + 1)
 
-With GrhData(GrhIndex)
-    SR.Left = .SX
-    SR.Right = SR.Left + .pixelWidth
-    SR.Top = .SY
-    SR.bottom = SR.Top + .pixelHeight
+    With GrhData(GrhIndex)
+        SR.Left = .SX
+        SR.Right = SR.Left + .pixelWidth
+        SR.Top = .SY
+        SR.bottom = SR.Top + .pixelHeight
     
-    DR.Left = 0
-    DR.Right = .pixelWidth
-    DR.Top = 0
-    DR.bottom = .pixelHeight
-End With
+        DR.Left = 0
+        DR.Right = .pixelWidth
+        DR.Top = 0
+        DR.bottom = .pixelHeight
 
-Call DrawGrhtoHdc(picSM(Index).hdc, GrhIndex, SR, DR)
-picSM(Index).Refresh
+    End With
 
-Select Case Index
-    Case eSMType.sResucitation
-        If Mostrar Then
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_SEGURO_RESU_ON, 0, 255, 0, True, False, True)
-            picSM(Index).ToolTipText = "Seguro de resucitación activado."
-        Else
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_SEGURO_RESU_OFF, 255, 0, 0, True, False, True)
-            picSM(Index).ToolTipText = "Seguro de resucitación desactivado."
-        End If
+    Call DrawGrhtoHdc(picSM(Index).hdc, GrhIndex, SR, DR)
+    picSM(Index).Refresh
+
+    Select Case Index
+
+        Case eSMType.sResucitation
+
+            If Mostrar Then
+                Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_SEGURO_RESU_ON, 0, 255, 0, True, False, True)
+                picSM(Index).ToolTipText = "Seguro de resucitación activado."
+            Else
+                Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_SEGURO_RESU_OFF, 255, 0, 0, True, False, True)
+                picSM(Index).ToolTipText = "Seguro de resucitación desactivado."
+
+            End If
         
-    Case eSMType.sSafemode
-        If Mostrar Then
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_SEGURO_ACTIVADO, 0, 255, 0, True, False, True)
-            picSM(Index).ToolTipText = "Seguro activado."
-        Else
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_SEGURO_DESACTIVADO, 255, 0, 0, True, False, True)
-            picSM(Index).ToolTipText = "Seguro desactivado."
-        End If
-        
-    Case eSMType.mWork
-        If Mostrar Then
-            picSM(Index).ToolTipText = "Macro de trabajo activado."
-        Else
-            picSM(Index).ToolTipText = "Macro de trabajo desactivado."
-        End If
-End Select
+        Case eSMType.sSafemode
 
-SMStatus(Index) = Mostrar
+            If Mostrar Then
+                Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_SEGURO_ACTIVADO, 0, 255, 0, True, False, True)
+                picSM(Index).ToolTipText = "Seguro activado."
+            Else
+                Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_SEGURO_DESACTIVADO, 255, 0, 0, True, False, True)
+                picSM(Index).ToolTipText = "Seguro desactivado."
+
+            End If
+        
+        Case eSMType.mWork
+
+            If Mostrar Then
+                picSM(Index).ToolTipText = "Macro de trabajo activado."
+            Else
+                picSM(Index).ToolTipText = "Macro de trabajo desactivado."
+
+            End If
+
+    End Select
+
+    SMStatus(Index) = Mostrar
+
 End Sub
 
 Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
-'***************************************************
-'Autor: Unknown
-'Last Modification: 18/11/2010
-'18/11/2009: ZaMa - Ahora se pueden poner comandos en los mensajes personalizados (execpto guildchat y privados)
-'18/11/2010: Amraphen - Agregué el handle correspondiente para las nuevas configuraciones de teclas (CTRL+0..9).
-'***************************************************
+    '***************************************************
+    'Autor: Unknown
+    'Last Modification: 18/11/2010
+    '18/11/2009: ZaMa - Ahora se pueden poner comandos en los mensajes personalizados (execpto guildchat y privados)
+    '18/11/2010: Amraphen - Agregué el handle correspondiente para las nuevas configuraciones de teclas (CTRL+0..9).
+    '***************************************************
     
     If (Not SendTxt.Visible) And (Not SendCMSTXT.Visible) Then
     
@@ -1170,6 +1183,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
                     Call frmCustomKeys.Show(vbModal, Me)
                     
                 ElseIf KeyCode >= vbKey1 And KeyCode <= vbKey9 Then
+
                     'Si es CTRL+1..9 cambio la configuración.
                     If KeyCode - vbKey0 = CustomKeys.CurrentConfig Then Exit Sub
                     
@@ -1178,32 +1192,43 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
                     Dim sMsg As String
                     
                     sMsg = "¡Se ha cargado la configuración "
+
                     If CustomKeys.CurrentConfig = 0 Then
                         sMsg = sMsg & "default"
                     Else
                         sMsg = sMsg & "perzonalizada número " & CStr(CustomKeys.CurrentConfig)
+
                     End If
+
                     sMsg = sMsg & "!"
 
                     Call ShowConsoleMsg(sMsg, 255, 255, 255, True)
+
                 End If
                 
                 CtrlMaskOn = True
                 Exit Sub
+
             End If
+
         End If
         
         If KeyCode = vbKeyControl Then
+
             'Chequeo que no se haya usado un CTRL + tecla antes de disparar las bindings.
             If CtrlMaskOn Then
                 CtrlMaskOn = False
                 Exit Sub
+
             End If
+
         End If
         
         'Checks if the key is valid
         If LenB(CustomKeys.ReadableName(KeyCode)) > 0 Then
+
             Select Case KeyCode
+
                 Case CustomKeys.BindedKey(eKeyType.mKeyToggleMusic)
                     Audio.MusicActivated = Not Audio.MusicActivated
                     
@@ -1223,85 +1248,115 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
                     Nombres = Not Nombres
                 
                 Case CustomKeys.BindedKey(eKeyType.mKeyTamAnimal)
+
                     If UserEstado = 1 Then
+
                         With FontTypes(FontTypeNames.FONTTYPE_INFO)
                             Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
+
                         End With
+
                     Else
                         Call WriteWork(eSkill.Domar)
+
                     End If
                     
                 Case CustomKeys.BindedKey(eKeyType.mKeySteal)
+
                     If UserEstado = 1 Then
+
                         With FontTypes(FontTypeNames.FONTTYPE_INFO)
                             Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
+
                         End With
+
                     Else
                         Call WriteWork(eSkill.Robar)
+
                     End If
                     
                 Case CustomKeys.BindedKey(eKeyType.mKeyHide)
+
                     If UserEstado = 1 Then
+
                         With FontTypes(FontTypeNames.FONTTYPE_INFO)
                             Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
+
                         End With
+
                     Else
                         Call WriteWork(eSkill.Ocultarse)
+
                     End If
                                     
                 Case CustomKeys.BindedKey(eKeyType.mKeyDropObject)
                     Call TirarItem
                 
                 Case CustomKeys.BindedKey(eKeyType.mKeyUseObject)
+
                     If macrotrabajo.Enabled Then Call DesactivarMacroTrabajo
                         
                     If MainTimer.Check(TimersIndex.UseItemWithU) Then
                         Call UsarItem
+
                     End If
                 
                 Case CustomKeys.BindedKey(eKeyType.mKeyRequestRefresh)
+
                     If MainTimer.Check(TimersIndex.SendRPU) Then
                         Call WriteRequestPositionUpdate
                         Beep
+
                     End If
+
                 Case CustomKeys.BindedKey(eKeyType.mKeyToggleSafeMode)
                     Call WriteSafeToggle
 
                 Case CustomKeys.BindedKey(eKeyType.mKeyToggleResuscitationSafe)
                     Call WriteResuscitationToggle
+
             End Select
+
         Else
             
             'Evito que se muestren los mensajes personalizados cuando se cambie una configuración de teclas.
             If Shift = 2 Then Exit Sub
             
             Select Case KeyCode
-                'Custom messages!
+
+                    'Custom messages!
                 Case vbKey0 To vbKey9
                     Dim CustomMessage As String
                     
                     CustomMessage = CustomMessages.Message((KeyCode - 39) Mod 10)
+
                     If LenB(CustomMessage) <> 0 Then
+
                         ' No se pueden mandar mensajes personalizados de clan o privado!
-                        If UCase(Left(CustomMessage, 5)) <> "/CMSG" And _
-                            Left(CustomMessage, 1) <> "\" Then
+                        If UCase(Left(CustomMessage, 5)) <> "/CMSG" And Left(CustomMessage, 1) <> "\" Then
                             
                             Call ParseUserCommand(CustomMessage)
+
                         End If
+
                     End If
+
             End Select
+
         End If
+
     End If
     
     Select Case KeyCode
+
         Case CustomKeys.BindedKey(eKeyType.mKeyTalkWithGuild)
+
             If SendTxt.Visible Then Exit Sub
             
-            If (Not Comerciando) And (Not MirandoAsignarSkills) And _
-              (Not frmMSG.Visible) And (Not MirandoForo) And _
-              (Not frmEstadisticas.Visible) And (Not frmCantidad.Visible) Then
+            If (Not Comerciando) And (Not MirandoAsignarSkills) And (Not frmMSG.Visible) And (Not MirandoForo) And (Not frmEstadisticas.Visible) And (Not frmCantidad.Visible) Then
                 SendCMSTXT.Visible = True
                 SendCMSTXT.SetFocus
+
             End If
         
         Case CustomKeys.BindedKey(eKeyType.mKeyTakeScreenShot)
@@ -1311,46 +1366,60 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
             Call frmOpciones.Show(vbModeless, frmMain)
         
         Case CustomKeys.BindedKey(eKeyType.mKeyMeditate)
+
             If UserMinMAN = UserMaxMAN Then Exit Sub
             
             If UserEstado = 1 Then
+
                 With FontTypes(FontTypeNames.FONTTYPE_INFO)
                     Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
+
                 End With
+
                 Exit Sub
+
             End If
             
             Call WriteMeditate
-
         
         Case CustomKeys.BindedKey(eKeyType.mKeyCastSpellMacro)
         
         Case CustomKeys.BindedKey(eKeyType.mKeyWorkMacro)
+
             If UserEstado = 1 Then
+
                 With FontTypes(FontTypeNames.FONTTYPE_INFO)
                     Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
+
                 End With
+
                 Exit Sub
+
             End If
             
             If macrotrabajo.Enabled Then
                 Call DesactivarMacroTrabajo
             Else
                 Call ActivarMacroTrabajo
+
             End If
         
         Case CustomKeys.BindedKey(eKeyType.mKeyExitGame)
+
             If frmMain.macrotrabajo.Enabled Then Call DesactivarMacroTrabajo
             Call WriteQuit
             
         Case CustomKeys.BindedKey(eKeyType.mKeyAttack)
+
             If Shift <> 0 Then Exit Sub
             
             If Not MainTimer.Check(TimersIndex.Arrows, False) Then Exit Sub 'Check if arrows interval has finished.
             If Not MainTimer.Check(TimersIndex.CastSpell, False) Then 'Check if spells interval has finished.
                 If Not MainTimer.Check(TimersIndex.CastAttack) Then Exit Sub 'Corto intervalo Golpe-Hechizo
             Else
+
                 If Not MainTimer.Check(TimersIndex.Attack) Or UserDescansar Or UserMeditar Then Exit Sub
+
             End If
             
             If macrotrabajo.Enabled Then Call DesactivarMacroTrabajo
@@ -1360,37 +1429,44 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
             Call WriteAttack
             
         Case CustomKeys.BindedKey(eKeyType.mKeyTalk)
+
             If SendCMSTXT.Visible Then Exit Sub
             
-            If (Not Comerciando) And (Not MirandoAsignarSkills) And _
-              (Not frmMSG.Visible) And (Not MirandoForo) And _
-              (Not frmEstadisticas.Visible) And (Not frmCantidad.Visible) Then
+            If (Not Comerciando) And (Not MirandoAsignarSkills) And (Not frmMSG.Visible) And (Not MirandoForo) And (Not frmEstadisticas.Visible) And (Not frmCantidad.Visible) Then
                 SendTxt.Visible = True
                 SendTxt.SetFocus
+
             End If
             
     End Select
+
 End Sub
 
 Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     MouseBoton = Button
     MouseShift = Shift
+
 End Sub
 
 Private Sub Form_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
     clicX = X
     clicY = Y
+
 End Sub
 
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
+
     If prgRun = True Then
         prgRun = False
         Cancel = 1
+
     End If
+
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
     DisableURLDetect
+
 End Sub
 
 Private Sub imgAsignarSkill_Click()
@@ -1416,8 +1492,10 @@ Private Sub imgAsignarSkill_Click()
 End Sub
 
 Private Sub imgClanes_Click()
+
     If frmGuildLeader.Visible Then Unload frmGuildLeader
     Call WriteRequestGuildLeaderInfo
+
 End Sub
 
 Private Sub imgEstadisticas_Click()
@@ -1429,6 +1507,7 @@ Private Sub imgEstadisticas_Click()
     Call WriteRequestMiniStats
     Call WriteRequestFame
     Call FlushBuffer
+
     Do While Not LlegaronSkills Or Not LlegaronAtrib Or Not LlegoFama
         DoEvents 'esperamos a que lleguen y mantenemos la interfaz viva
     Loop
@@ -1437,49 +1516,64 @@ Private Sub imgEstadisticas_Click()
     LlegaronAtrib = False
     LlegaronSkills = False
     LlegoFama = False
+
 End Sub
 
 Private Sub imgGrupo_Click()
     Call WriteRequestPartyForm
+
 End Sub
 
 Private Sub imgInvScrollDown_Click()
     Call Inventario.ScrollInventory(True)
+
 End Sub
 
 Private Sub imgInvScrollUp_Click()
     Call Inventario.ScrollInventory(False)
+
 End Sub
 
 Private Sub imgMapa_Click()
     Call frmMapa.Show(vbModeless, frmMain)
+
 End Sub
 
 Private Sub imgOpciones_Click()
     Call frmOpciones.Show(vbModeless, frmMain)
+
 End Sub
 
-Private Sub InvEqu_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub InvEqu_MouseMove(Button As Integer, _
+                             Shift As Integer, _
+                             X As Single, _
+                             Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Sub lblScroll_Click(Index As Integer)
     Inventario.ScrollInventory (Index = 0)
+
 End Sub
 
 Private Sub lblCerrar_Click()
     Call Audio.PlayWave(SND_CLICK)
     frmCerrar.Show vbModal
+
 End Sub
 
 Private Sub lblMinimizar_Click()
     Me.WindowState = 1
+
 End Sub
 
 Private Sub macrotrabajo_Timer()
+
     If Inventario.SelectedItem = 0 Then
         Call DesactivarMacroTrabajo
         Exit Sub
+
     End If
     
     'Macros are disabled if not using Argentum!
@@ -1488,14 +1582,15 @@ Private Sub macrotrabajo_Timer()
     '    Exit Sub
     'End If
     
-    If UsingSkill = eSkill.Pesca Or UsingSkill = eSkill.Talar Or UsingSkill = eSkill.Mineria Or _
-                UsingSkill = FundirMetal Or (UsingSkill = eSkill.Herreria And Not MirandoHerreria) Then
+    If UsingSkill = eSkill.Pesca Or UsingSkill = eSkill.Talar Or UsingSkill = eSkill.Mineria Or UsingSkill = FundirMetal Or (UsingSkill = eSkill.Herreria And Not MirandoHerreria) Then
         Call WriteWorkLeftClick(tX, tY, UsingSkill)
         UsingSkill = 0
+
     End If
     
     'If Inventario.OBJType(Inventario.SelectedItem) = eObjType.otWeapon Then
-     If Not MirandoCarpinteria Then Call UsarItem
+    If Not MirandoCarpinteria Then Call UsarItem
+
 End Sub
 
 Public Sub ActivarMacroTrabajo()
@@ -1503,6 +1598,7 @@ Public Sub ActivarMacroTrabajo()
     macrotrabajo.Enabled = True
     Call AddtoRichTextBox(frmMain.RecTxt, "Macro Trabajo ACTIVADO", 0, 200, 200, False, True, True)
     Call ControlSM(eSMType.mWork, True)
+
 End Sub
 
 Public Sub DesactivarMacroTrabajo()
@@ -1512,72 +1608,92 @@ Public Sub DesactivarMacroTrabajo()
     MousePointer = vbDefault
     Call AddtoRichTextBox(frmMain.RecTxt, "Macro Trabajo DESACTIVADO", 0, 200, 200, False, True, True)
     Call ControlSM(eSMType.mWork, False)
+
 End Sub
-
-
-
 
 Private Sub mnuEquipar_Click()
     Call EquiparItem
+
 End Sub
 
 Private Sub mnuNPCComerciar_Click()
     Call WriteLeftClick(tX, tY)
     Call WriteCommerceStart
+
 End Sub
 
 Private Sub mnuNpcDesc_Click()
     Call WriteLeftClick(tX, tY)
+
 End Sub
 
 Private Sub mnuTirar_Click()
     Call TirarItem
+
 End Sub
 
 Private Sub mnuUsar_Click()
     Call UsarItem
+
 End Sub
 
 Private Sub PicMH_Click()
     Call AddtoRichTextBox(frmMain.RecTxt, "Auto lanzar hechizos. Utiliza esta habilidad para entrenar únicamente. Para activarlo/desactivarlo utiliza F7.", 255, 255, 255, False, False, True)
+
 End Sub
 
 Private Sub Coord_Click()
     Call AddtoRichTextBox(frmMain.RecTxt, "Estas coordenadas son tu ubicación en el mapa. Utiliza la letra L para corregirla si esta no se corresponde con la del servidor por efecto del Lag.", 255, 255, 255, False, False, True)
+
 End Sub
 
 Private Sub picSM_DblClick(Index As Integer)
-Select Case Index
-    Case eSMType.sResucitation
-        Call WriteResuscitationToggle
+
+    Select Case Index
+
+        Case eSMType.sResucitation
+            Call WriteResuscitationToggle
         
-    Case eSMType.sSafemode
-        Call WriteSafeToggle
+        Case eSMType.sSafemode
+            Call WriteSafeToggle
         
-    Case eSMType.mWork
-        If UserEstado = 1 Then
-            With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
-            End With
-            Exit Sub
-        End If
+        Case eSMType.mWork
+
+            If UserEstado = 1 Then
+
+                With FontTypes(FontTypeNames.FONTTYPE_INFO)
+                    Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
+
+                End With
+
+                Exit Sub
+
+            End If
         
-        If macrotrabajo.Enabled Then
-            Call DesactivarMacroTrabajo
-        Else
-            Call ActivarMacroTrabajo
-        End If
-End Select
+            If macrotrabajo.Enabled Then
+                Call DesactivarMacroTrabajo
+            Else
+                Call ActivarMacroTrabajo
+
+            End If
+
+    End Select
+
 End Sub
 
-Private Sub RecTxt_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub RecTxt_MouseMove(Button As Integer, _
+                             Shift As Integer, _
+                             X As Single, _
+                             Y As Single)
     StartCheckingLinks
+
 End Sub
 
 Private Sub SendTxt_KeyDown(KeyCode As Integer, Shift As Integer)
     
     ' Control + Shift
     If Shift = 3 Then
+
         On Error GoTo ErrHandler
         
         ' Only allow numeric keys
@@ -1592,14 +1708,17 @@ Private Sub SendTxt_KeyDown(KeyCode As Integer, Shift As Integer)
             
             'Como es KeyDown, si mantenes _
              apretado el mensaje llena la consola
+
             If CustomMessages.Message(NroMsg) = SendTxt.Text Then
                 Exit Sub
+
             End If
             
             CustomMessages.Message(NroMsg) = SendTxt.Text
             
             With FontTypes(FontTypeNames.FONTTYPE_INFO)
                 Call ShowConsoleMsg("¡¡""" & SendTxt.Text & """ fue guardado como mensaje personalizado " & NroMsg + 1 & "!!", .Red, .Green, .Blue, .bold, .italic)
+
             End With
             
         End If
@@ -1609,16 +1728,21 @@ Private Sub SendTxt_KeyDown(KeyCode As Integer, Shift As Integer)
     Exit Sub
     
 ErrHandler:
+
     'Did detected an invalid message??
     If Err.number = CustomMessages.InvalidMessageErrCode Then
+
         With FontTypes(FontTypeNames.FONTTYPE_INFO)
             Call ShowConsoleMsg("El Mensaje es inválido. Modifiquelo por favor.", .Red, .Green, .Blue, .bold, .italic)
+
         End With
+
     End If
     
 End Sub
 
 Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
+
     'Send text
     If KeyCode = vbKeyReturn Then
         If LenB(stxtbuffer) <> 0 Then Call ParseUserCommand(stxtbuffer)
@@ -1628,17 +1752,21 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
         SendTxt.Visible = False
         
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
         Else
             hlst.SetFocus
+
         End If
+
     End If
+
 End Sub
 
-
 Private Sub Second_Timer()
+
     If Not DialogosClanes Is Nothing Then DialogosClanes.PassTimer
+
 End Sub
 
 '[END]'
@@ -1648,136 +1776,177 @@ End Sub
 ''''''''''''''''''''''''''''''''''''''
 
 Private Sub TirarItem()
+
     If UserEstado = 1 Then
+
         With FontTypes(FontTypeNames.FONTTYPE_INFO)
             Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
+
         End With
+
     Else
+
         If (Inventario.SelectedItem > 0 And Inventario.SelectedItem < MAX_INVENTORY_SLOTS + 1) Or (Inventario.SelectedItem = FLAGORO) Then
             If Inventario.Amount(Inventario.SelectedItem) = 1 Then
                 Call WriteDrop(Inventario.SelectedItem, 1)
             Else
+
                 If Inventario.Amount(Inventario.SelectedItem) > 1 Then
                     If Not Comerciando Then frmCantidad.Show , frmMain
+
                 End If
+
             End If
+
         End If
+
     End If
+
 End Sub
 
 Private Sub AgarrarItem()
+
     If UserEstado = 1 Then
+
         With FontTypes(FontTypeNames.FONTTYPE_INFO)
             Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
+
         End With
+
     Else
         Call WritePickUp
+
     End If
+
 End Sub
 
 Private Sub UsarItem()
+
     If pausa Then Exit Sub
     
     If Comerciando Then Exit Sub
     
-    If (Inventario.SelectedItem > 0) And (Inventario.SelectedItem < MAX_INVENTORY_SLOTS + 1) Then _
-        Call WriteUseItem(Inventario.SelectedItem)
+    If (Inventario.SelectedItem > 0) And (Inventario.SelectedItem < MAX_INVENTORY_SLOTS + 1) Then Call WriteUseItem(Inventario.SelectedItem)
+
 End Sub
 
 Private Sub EquiparItem()
+
     If UserEstado = 1 Then
+
         With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
+            Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
+
         End With
+
     Else
+
         If Comerciando Then Exit Sub
         
-        If (Inventario.SelectedItem > 0) And (Inventario.SelectedItem < MAX_INVENTORY_SLOTS + 1) Then _
-        Call WriteEquipItem(Inventario.SelectedItem)
+        If (Inventario.SelectedItem > 0) And (Inventario.SelectedItem < MAX_INVENTORY_SLOTS + 1) Then Call WriteEquipItem(Inventario.SelectedItem)
+
     End If
+
 End Sub
 
-
-
-
-
 Private Sub cmdLanzar_Click()
+
     If hlst.List(hlst.ListIndex) <> "(None)" And MainTimer.Check(TimersIndex.Work, False) Then
         If UserEstado = 1 Then
+
             With FontTypes(FontTypeNames.FONTTYPE_INFO)
                 Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
+
             End With
+
         Else
             Call WriteCastSpell(hlst.ListIndex + 1)
             Call WriteWork(eSkill.Magia)
             UsaMacro = True
+
         End If
+
     End If
+
 End Sub
 
-Private Sub CmdLanzar_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub CmdLanzar_MouseMove(Button As Integer, _
+                                Shift As Integer, _
+                                X As Single, _
+                                Y As Single)
     UsaMacro = False
     CnTd = 0
+
 End Sub
 
 Private Sub cmdINFO_Click()
+
     If hlst.ListIndex <> -1 Then
         Dim Index As Integer
         Index = DevolverIndexHechizo(hlst.List(hlst.ListIndex))
         Dim Msj As String
      
-        If Index <> 0 Then _
-            Msj = "%%%%%%%%%%%% INFO DEL HECHIZO %%%%%%%%%%%%" & vbCrLf _
-                                               & "Nombre:" & Hechizos(Index).Nombre & vbCrLf _
-                                               & "Descripción:" & Hechizos(Index).Desc & vbCrLf _
-                                               & "Skill requerido: " & Hechizos(Index).SkillRequerido & " de magia." & vbCrLf _
-                                               & "Maná necesario: " & Hechizos(Index).ManaRequerida & vbCrLf _
-                                               & "Energía necesaria: " & Hechizos(Index).EnergiaRequerida & vbCrLf _
-                                               & "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+        If Index <> 0 Then Msj = "%%%%%%%%%%%% INFO DEL HECHIZO %%%%%%%%%%%%" & vbCrLf & "Nombre:" & Hechizos(Index).Nombre & vbCrLf & "Descripción:" & Hechizos(Index).Desc & vbCrLf & "Skill requerido: " & Hechizos(Index).SkillRequerido & " de magia." & vbCrLf & "Maná necesario: " & Hechizos(Index).ManaRequerida & vbCrLf & "Energía necesaria: " & Hechizos(Index).EnergiaRequerida & vbCrLf & "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
                                              
         Call ShowConsoleMsg(Msj, 210, 220, 220)
         
     End If
+
 End Sub
 
 Private Sub DespInv_Click(Index As Integer)
     Inventario.ScrollInventory (Index = 0)
+
 End Sub
-Private Sub MainViewPic_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+
+Private Sub MainViewPic_MouseDown(Button As Integer, _
+                                  Shift As Integer, _
+                                  X As Single, _
+                                  Y As Single)
     MouseBoton = Button
     MouseShift = Shift
-
     
 End Sub
 
-Private Sub MainViewPic_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub MainViewPic_MouseMove(Button As Integer, _
+                                  Shift As Integer, _
+                                  X As Single, _
+                                  Y As Single)
     MouseX = X
     MouseY = Y
-
-    
     
 End Sub
 
-Private Sub MainViewPic_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub MainViewPic_MouseUp(Button As Integer, _
+                                Shift As Integer, _
+                                X As Single, _
+                                Y As Single)
     clicX = X
     clicY = Y
+
 End Sub
+
 Private Sub MainViewPic_DblClick()
-'**************************************************************
-'Author: Unknown
-'Last Modify Date: 12/27/2007
-'12/28/2007: ByVal - Chequea que la ventana de comercio y boveda no este abierta al hacer doble clic a un comerciante, sobrecarga la lista de items.
-'**************************************************************
+
+    '**************************************************************
+    'Author: Unknown
+    'Last Modify Date: 12/27/2007
+    '12/28/2007: ByVal - Chequea que la ventana de comercio y boveda no este abierta al hacer doble clic a un comerciante, sobrecarga la lista de items.
+    '**************************************************************
     If Not MirandoForo And Not Comerciando Then 'frmComerciar.Visible And Not frmBancoObj.Visible Then
         Call WriteDoubleClick(tX, tY)
+
     End If
+
 End Sub
 
 Private Sub SendTxt_Click()
     SendTxt.Tag = 0 ' GSZAO
+
 End Sub
 
 Private Sub MainViewPic_Click()
+
     If Cartel Then Cartel = False
 
     If Not Comerciando Then
@@ -1787,15 +1956,21 @@ Private Sub MainViewPic_Click()
         
         If MouseShift = 0 Then
             If MouseBoton <> vbRightButton Then
+
                 '[ybarra]
                 If UsaMacro Then
                     CnTd = CnTd + 1
+
                     If CnTd = 3 Then
                         Call WriteUseSpellMacro
                         CnTd = 0
+
                     End If
+
                     UsaMacro = False
+
                 End If
+
                 '[/ybarra]
                 If UsingSkill = 0 Then
                     Call WriteLeftClick(tX, tY)
@@ -1806,10 +1981,14 @@ Private Sub MainViewPic_Click()
                     If Not MainTimer.Check(TimersIndex.Arrows, False) Then 'Check if arrows interval has finished.
                         frmMain.MousePointer = vbDefault
                         UsingSkill = 0
+
                         With FontTypes(FontTypeNames.FONTTYPE_TALK)
                             Call AddtoRichTextBox(frmMain.RecTxt, "No puedes lanzar proyectiles tan rápido.", .Red, .Green, .Blue, .bold, .italic)
+
                         End With
+
                         Exit Sub
+
                     End If
                     
                     'Splitted because VB isn't lazy!
@@ -1817,11 +1996,16 @@ Private Sub MainViewPic_Click()
                         If Not MainTimer.Check(TimersIndex.Arrows) Then
                             frmMain.MousePointer = vbDefault
                             UsingSkill = 0
+
                             With FontTypes(FontTypeNames.FONTTYPE_TALK)
                                 Call AddtoRichTextBox(frmMain.RecTxt, "No puedes lanzar proyectiles tan rápido.", .Red, .Green, .Blue, .bold, .italic)
+
                             End With
+
                             Exit Sub
+
                         End If
+
                     End If
                     
                     'Splitted because VB isn't lazy!
@@ -1830,21 +2014,33 @@ Private Sub MainViewPic_Click()
                             If Not MainTimer.Check(TimersIndex.CastAttack) Then 'Corto intervalo de Golpe-Magia
                                 frmMain.MousePointer = vbDefault
                                 UsingSkill = 0
+
                                 With FontTypes(FontTypeNames.FONTTYPE_TALK)
                                     Call AddtoRichTextBox(frmMain.RecTxt, "No puedes lanzar hechizos tan rápido.", .Red, .Green, .Blue, .bold, .italic)
+
                                 End With
+
                                 Exit Sub
+
                             End If
+
                         Else
+
                             If Not MainTimer.Check(TimersIndex.CastSpell) Then 'Check if spells interval has finished.
                                 frmMain.MousePointer = vbDefault
                                 UsingSkill = 0
+
                                 With FontTypes(FontTypeNames.FONTTYPE_TALK)
                                     Call AddtoRichTextBox(frmMain.RecTxt, "No puedes lanzar hechizos tan rapido.", .Red, .Green, .Blue, .bold, .italic)
+
                                 End With
+
                                 Exit Sub
+
                             End If
+
                         End If
+
                     End If
                     
                     'Splitted because VB isn't lazy!
@@ -1853,7 +2049,9 @@ Private Sub MainViewPic_Click()
                             frmMain.MousePointer = vbDefault
                             UsingSkill = 0
                             Exit Sub
+
                         End If
+
                     End If
                     
                     If frmMain.MousePointer <> 2 Then Exit Sub 'Parcheo porque a veces tira el hechizo sin tener el cursor (NicoNZ)
@@ -1861,30 +2059,43 @@ Private Sub MainViewPic_Click()
                     frmMain.MousePointer = vbDefault
                     Call WriteWorkLeftClick(tX, tY, UsingSkill)
                     UsingSkill = 0
+
                 End If
+
             Else
                 'Call WriteRightClick(tx, tY) 'Proximamnete lo implementaremos..
                 Call AbrirMenuViewPort
+
             End If
+
         ElseIf (MouseShift And 1) = 1 Then
+
             If Not CustomKeys.KeyAssigned(KeyCodeConstants.vbKeyShift) Then
                 If MouseBoton = vbLeftButton Then
                     Call WriteWarpChar("YO", UserMap, tX, tY)
+
                 End If
+
             End If
+
         End If
+
     End If
+
 End Sub
 
 Private Sub Form_DblClick()
-'**************************************************************
-'Author: Unknown
-'Last Modify Date: 12/27/2007
-'12/28/2007: ByVal - Chequea que la ventana de comercio y boveda no este abierta al hacer doble clic a un comerciante, sobrecarga la lista de items.
-'**************************************************************
+
+    '**************************************************************
+    'Author: Unknown
+    'Last Modify Date: 12/27/2007
+    '12/28/2007: ByVal - Chequea que la ventana de comercio y boveda no este abierta al hacer doble clic a un comerciante, sobrecarga la lista de items.
+    '**************************************************************
     If Not MirandoForo And Not Comerciando Then 'frmComerciar.Visible And Not frmBancoObj.Visible Then
         Call WriteDoubleClick(tX, tY)
+
     End If
+
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
@@ -1896,6 +2107,7 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y A
         MouseX = 0
     ElseIf MouseX > MainViewPic.Width Then
         MouseX = MainViewPic.Width
+
     End If
     
     'Trim to fit screen
@@ -1903,6 +2115,7 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y A
         MouseY = 0
     ElseIf MouseY > MainViewPic.Height Then
         MouseY = MainViewPic.Height
+
     End If
     
     LastButtonPressed.ToggleToNormal
@@ -1913,22 +2126,27 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y A
 End Sub
 
 Private Sub hlst_KeyDown(KeyCode As Integer, Shift As Integer)
-       KeyCode = 0
+    KeyCode = 0
+
 End Sub
 
 Private Sub hlst_KeyPress(KeyAscii As Integer)
-       KeyAscii = 0
+    KeyAscii = 0
+
 End Sub
 
 Private Sub hlst_KeyUp(KeyCode As Integer, Shift As Integer)
-        KeyCode = 0
+    KeyCode = 0
+
 End Sub
 
 Private Sub lblDropGold_Click()
 
     Inventario.SelectGold
+
     If UserGLD > 0 Then
         If Not Comerciando Then frmCantidad.Show , frmMain
+
     End If
     
 End Sub
@@ -1939,13 +2157,13 @@ Private Sub Label4_Click()
     InvEqu.Picture = LoadPicture(App.path & "\Graficos\Centroinventario.jpg")
 
     ' Activo controles de inventario
-    picInv.Visible = True
+    PicInv.Visible = True
     imgInvScrollUp.Visible = True
     imgInvScrollDown.Visible = True
 
     ' Desactivo controles de hechizo
     hlst.Visible = False
-    cmdInfo.Visible = False
+    cmdINFO.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = False
@@ -1960,14 +2178,14 @@ Private Sub Label7_Click()
     
     ' Activo controles de hechizos
     hlst.Visible = True
-    cmdInfo.Visible = True
+    cmdINFO.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True
     cmdMoverHechi(1).Visible = True
     
     ' Desactivo controles de inventario
-    picInv.Visible = False
+    PicInv.Visible = False
     imgInvScrollUp.Visible = False
     imgInvScrollDown.Visible = False
 
@@ -1982,83 +2200,101 @@ Private Sub picInv_DblClick()
     If macrotrabajo.Enabled Then Call DesactivarMacroTrabajo
     
     Call UsarItem
+
 End Sub
 
 Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
     Call Audio.PlayWave(SND_CLICK)
+
 End Sub
 
 Private Sub RecTxt_Change()
-On Error Resume Next  'el .SetFocus causaba errores al salir y volver a entrar
+
+    On Error Resume Next  'el .SetFocus causaba errores al salir y volver a entrar
+
     If Not Application.IsAppActive() Then Exit Sub
     
     If SendTxt.Visible Then
         SendTxt.SetFocus
     ElseIf Me.SendCMSTXT.Visible Then
         SendCMSTXT.SetFocus
-    ElseIf (Not Comerciando) And (Not MirandoAsignarSkills) And _
-        (Not frmMSG.Visible) And (Not MirandoForo) And _
-        (Not frmEstadisticas.Visible) And (Not frmCantidad.Visible) And (Not MirandoParty) Then
+    ElseIf (Not Comerciando) And (Not MirandoAsignarSkills) And (Not frmMSG.Visible) And (Not MirandoForo) And (Not frmEstadisticas.Visible) And (Not frmCantidad.Visible) And (Not MirandoParty) Then
          
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
         ElseIf hlst.Visible Then
             hlst.SetFocus
+
         End If
+
     End If
+
 End Sub
 
 Private Sub RecTxt_KeyDown(KeyCode As Integer, Shift As Integer)
-    If picInv.Visible Then
-        picInv.SetFocus
+
+    If PicInv.Visible Then
+        PicInv.SetFocus
     Else
         hlst.SetFocus
+
     End If
+
 End Sub
 
 Private Sub SendTxt_Change()
-'**************************************************************
-'Author: Unknown
-'Last Modify Date: 3/06/2006
-'3/06/2006: Maraxus - impedí se inserten caractéres no imprimibles
-'**************************************************************
+
+    '**************************************************************
+    'Author: Unknown
+    'Last Modify Date: 3/06/2006
+    '3/06/2006: Maraxus - impedí se inserten caractéres no imprimibles
+    '**************************************************************
     If Len(SendTxt.Text) > 160 Then
         stxtbuffer = "Soy un cheater, avisenle a un gm"
     Else
         'Make sure only valid chars are inserted (with Shift + Insert they can paste illegal chars)
-        Dim i As Long
-        Dim tempstr As String
+        Dim i         As Long
+        Dim tempstr   As String
         Dim CharAscii As Integer
         
         For i = 1 To Len(SendTxt.Text)
             CharAscii = Asc(mid$(SendTxt.Text, i, 1))
+
             If CharAscii >= vbKeySpace And CharAscii <= 250 Then
                 tempstr = tempstr & Chr$(CharAscii)
+
             End If
+
         Next i
         
         If tempstr <> SendTxt.Text Then
             'We only set it if it's different, otherwise the event will be raised
             'constantly and the client will crush
             SendTxt.Text = tempstr
+
         End If
         
         stxtbuffer = SendTxt.Text
+
     End If
+
 End Sub
 
 Private Sub SendTxt_KeyPress(KeyAscii As Integer)
-    If Not (KeyAscii = vbKeyBack) And _
-       Not (KeyAscii >= vbKeySpace And KeyAscii <= 250) Then _
-        KeyAscii = 0
+
+    If Not (KeyAscii = vbKeyBack) And Not (KeyAscii >= vbKeySpace And KeyAscii <= 250) Then KeyAscii = 0
+
 End Sub
 
 Private Sub SendCMSTXT_KeyUp(KeyCode As Integer, Shift As Integer)
+
     'Send text
     If KeyCode = vbKeyReturn Then
+
         'Say
         If stxtbuffercmsg <> "" Then
             Call ParseUserCommand("/CMSG " & stxtbuffercmsg)
+
         End If
 
         stxtbuffercmsg = vbNullString
@@ -2066,105 +2302,127 @@ Private Sub SendCMSTXT_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
         Me.SendCMSTXT.Visible = False
         
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
         Else
             hlst.SetFocus
+
         End If
+
     End If
+
 End Sub
 
 Private Sub SendCMSTXT_KeyPress(KeyAscii As Integer)
-    If Not (KeyAscii = vbKeyBack) And _
-       Not (KeyAscii >= vbKeySpace And KeyAscii <= 250) Then _
-        KeyAscii = 0
+
+    If Not (KeyAscii = vbKeyBack) And Not (KeyAscii >= vbKeySpace And KeyAscii <= 250) Then KeyAscii = 0
+
 End Sub
 
 Private Sub SendCMSTXT_Change()
+
     If Len(SendCMSTXT.Text) > 160 Then
         stxtbuffercmsg = "Soy un cheater, avisenle a un GM"
     Else
         'Make sure only valid chars are inserted (with Shift + Insert they can paste illegal chars)
-        Dim i As Long
-        Dim tempstr As String
+        Dim i         As Long
+        Dim tempstr   As String
         Dim CharAscii As Integer
         
         For i = 1 To Len(SendCMSTXT.Text)
             CharAscii = Asc(mid$(SendCMSTXT.Text, i, 1))
+
             If CharAscii >= vbKeySpace And CharAscii <= 250 Then
                 tempstr = tempstr & Chr$(CharAscii)
+
             End If
+
         Next i
         
         If tempstr <> SendCMSTXT.Text Then
             'We only set it if it's different, otherwise the event will be raised
             'constantly and the client will crush
             SendCMSTXT.Text = tempstr
+
         End If
         
         stxtbuffercmsg = SendCMSTXT.Text
-    End If
-End Sub
 
+    End If
+
+End Sub
 
 ''''''''''''''''''''''''''''''''''''''
 '     SOCKET1                        '
 ''''''''''''''''''''''''''''''''''''''
 #If UsarWrench = 1 Then
 
-Private Sub Socket1_Connect()
+    Private Sub Socket1_Connect()
     
-    'Clean input and output buffers
-    Call incomingData.ReadASCIIStringFixed(incomingData.length)
-    Call outgoingData.ReadASCIIStringFixed(outgoingData.length)
+        'Clean input and output buffers
+        Call incomingData.ReadASCIIStringFixed(incomingData.length)
+        Call outgoingData.ReadASCIIStringFixed(outgoingData.length)
     
-    Second.Enabled = True
+        Second.Enabled = True
 
-    Select Case EstadoLogin
-        Case E_MODO.CrearNuevoPj
-            Call Login
+        Select Case EstadoLogin
+
+            Case E_MODO.CrearNuevoPj
+                Call Login
         
-        Case E_MODO.Normal
-            Call Login
+            Case E_MODO.Normal
+                Call Login
         
-        Case E_MODO.Dados
-            Call Audio.PlayMIDI("7.mid")
-            frmCrearPersonaje.Show
+            Case E_MODO.Dados
+                Call Audio.PlayMIDI("7.mid")
+                frmCrearPersonaje.Show
         
-        Case E_MODO.CrearCuenta
-            Call Login
-    End Select
-End Sub
+            Case E_MODO.CrearCuenta
+                Call Login
+
+        End Select
+
+    End Sub
 
 Private Sub Socket1_Disconnect()
     ResetAllInfo
     Socket1.Cleanup
+
 End Sub
 
-Private Sub Socket1_LastError(ErrorCode As Integer, ErrorString As String, Response As Integer)
+Private Sub Socket1_LastError(ErrorCode As Integer, _
+                              ErrorString As String, _
+                              Response As Integer)
+
     '*********************************************
     'Handle socket errors
     '*********************************************
     Select Case ErrorCode
+
         Case TOO_FAST 'jajasAJ CUALQUEIRA AJJAJA
             Call MsgBox("Por favor espere, intentando completar conexion.", vbApplicationModal + vbInformation + vbOKOnly + vbDefaultButton1, "Error")
             Exit Sub
+
         Case REFUSED 'Vivan las negradas
             Call MsgBox("El servidor se encuentra cerrado o no te has podido conectar correctamente.", vbApplicationModal + vbInformation + vbOKOnly + vbDefaultButton1, "Error")
+
         Case TIME_OUT
             Call MsgBox("El tiempo de espera se ha agotado, intenta nuevamente.", vbApplicationModal + vbInformation + vbOKOnly + vbDefaultButton1, "Error")
+
         Case Else
             Call MsgBox(ErrorString, vbApplicationModal + vbInformation + vbOKOnly + vbDefaultButton1, "Error")
+
     End Select
     
     frmConnect.MousePointer = 1
     Response = 0
 
     frmMain.Socket1.Disconnect
+
 End Sub
 
 Private Sub Socket1_Read(dataLength As Integer, IsUrgent As Integer)
-    Dim RD As String
+    Dim RD     As String
     Dim data() As Byte
     
     Call Socket1.Read(RD, dataLength)
@@ -2177,77 +2435,97 @@ Private Sub Socket1_Read(dataLength As Integer, IsUrgent As Integer)
     
     'Send buffer to Handle data
     Call HandleIncomingData
-End Sub
 
+End Sub
 
 #End If
 
 Private Sub AbrirMenuViewPort()
-#If (ConMenuseConextuales = 1) Then
+    #If (ConMenuseConextuales = 1) Then
 
-If tX >= MinXBorder And tY >= MinYBorder And _
-    tY <= MaxYBorder And tX <= MaxXBorder Then
-    If MapData(tX, tY).CharIndex > 0 Then
-        If charlist(MapData(tX, tY).CharIndex).invisible = False Then
+        If tX >= MinXBorder And tY >= MinYBorder And tY <= MaxYBorder And tX <= MaxXBorder Then
+
+            If MapData(tX, tY).CharIndex > 0 Then
+                If charlist(MapData(tX, tY).CharIndex).invisible = False Then
         
-            Dim i As Long
-            Dim m As frmMenuseFashion
-            Set m = New frmMenuseFashion
+                    Dim i As Long
+                    Dim m As frmMenuseFashion
+                    Set m = New frmMenuseFashion
             
-            Load m
-            m.SetCallback Me
-            m.SetMenuId 1
-            m.ListaInit 2, False
+                    Load m
+                    m.SetCallback Me
+                    m.SetMenuId 1
+                    m.ListaInit 2, False
             
-            If charlist(MapData(tX, tY).CharIndex).Nombre <> "" Then
-                m.ListaSetItem 0, charlist(MapData(tX, tY).CharIndex).Nombre, True
-            Else
-                m.ListaSetItem 0, "<NPC>", True
+                    If charlist(MapData(tX, tY).CharIndex).Nombre <> "" Then
+                        m.ListaSetItem 0, charlist(MapData(tX, tY).CharIndex).Nombre, True
+                    Else
+                        m.ListaSetItem 0, "<NPC>", True
+
+                    End If
+
+                    m.ListaSetItem 1, "Comerciar"
+            
+                    m.ListaFin
+                    m.Show , Me
+
+                End If
+
             End If
-            m.ListaSetItem 1, "Comerciar"
-            
-            m.ListaFin
-            m.Show , Me
 
         End If
-    End If
-End If
 
-#End If
+    #End If
+
 End Sub
 
 Public Sub CallbackMenuFashion(ByVal MenuId As Long, ByVal Sel As Long)
-Select Case MenuId
 
-Case 0 'Inventario
-    Select Case Sel
-    Case 0
-    Case 1
-    Case 2 'Tirar
-        Call TirarItem
-    Case 3 'Usar
-        If MainTimer.Check(TimersIndex.UseItemWithDblClick) Then
-            Call UsarItem
-        End If
-    Case 3 'equipar
-        Call EquiparItem
-    End Select
+    Select Case MenuId
+
+        Case 0 'Inventario
+
+            Select Case Sel
+
+                Case 0
+
+                Case 1
+
+                Case 2 'Tirar
+                    Call TirarItem
+
+                Case 3 'Usar
+
+                    If MainTimer.Check(TimersIndex.UseItemWithDblClick) Then
+                        Call UsarItem
+
+                    End If
+
+                Case 3 'equipar
+                    Call EquiparItem
+
+            End Select
     
-Case 1 'Menu del ViewPort del engine
-    Select Case Sel
-    Case 0 'Nombre
-        Call WriteLeftClick(tX, tY)
+        Case 1 'Menu del ViewPort del engine
+
+            Select Case Sel
+
+                Case 0 'Nombre
+                    Call WriteLeftClick(tX, tY)
         
-    Case 1 'Comerciar
-        Call WriteLeftClick(tX, tY)
-        Call WriteCommerceStart
+                Case 1 'Comerciar
+                    Call WriteLeftClick(tX, tY)
+                    Call WriteCommerceStart
+
+            End Select
+
     End Select
-End Select
+
 End Sub
 
-
 Private Sub SonidosMapas_Timer()
-Sonidos.ReproducirSonidosDeMapas
+    Sonidos.ReproducirSonidosDeMapas
+
 End Sub
 
 '
@@ -2371,14 +2649,16 @@ End Sub
 #End If
 
 Private Function InGameArea() As Boolean
-'***************************************************
-'Author: NicoNZ
-'Last Modification: 04/07/08
-'Checks if last click was performed within or outside the game area.
-'***************************************************
+
+    '***************************************************
+    'Author: NicoNZ
+    'Last Modification: 04/07/08
+    'Checks if last click was performed within or outside the game area.
+    '***************************************************
     If clicX < 0 Or clicX > (32 * (Round(frmMain.MainViewPic.Width / 32))) Then Exit Function
     If clicY < 0 Or clicY > (32 * (Round(frmMain.MainViewPic.Height / 32))) Then Exit Function
     
     InGameArea = True
+
 End Function
 

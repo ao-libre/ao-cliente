@@ -31,41 +31,42 @@ Attribute VB_Name = "Mod_TCP"
 'Código Postal 1900
 'Pablo Ignacio Márquez
 
-
 Option Explicit
-Public Warping As Boolean
+Public Warping        As Boolean
 Public LlegaronSkills As Boolean
-Public LlegaronAtrib As Boolean
-Public LlegoFama As Boolean
-
-
+Public LlegaronAtrib  As Boolean
+Public LlegoFama      As Boolean
 
 Public Function PuedoQuitarFoco() As Boolean
-PuedoQuitarFoco = True
-'PuedoQuitarFoco = Not frmEstadisticas.Visible And _
-'                 Not frmGuildAdm.Visible And _
-'                 Not frmGuildDetails.Visible And _
-'                 Not frmGuildBrief.Visible And _
-'                 Not frmGuildFoundation.Visible And _
-'                 Not frmGuildLeader.Visible And _
-'                 Not frmCharInfo.Visible And _
-'                 Not frmGuildNews.Visible And _
-'                 Not frmGuildSol.Visible And _
-'                 Not frmCommet.Visible And _
-'                 Not frmPeaceProp.Visible
-'
+    PuedoQuitarFoco = True
+
+    'PuedoQuitarFoco = Not frmEstadisticas.Visible And _
+    '                 Not frmGuildAdm.Visible And _
+    '                 Not frmGuildDetails.Visible And _
+    '                 Not frmGuildBrief.Visible And _
+    '                 Not frmGuildFoundation.Visible And _
+    '                 Not frmGuildLeader.Visible And _
+    '                 Not frmCharInfo.Visible And _
+    '                 Not frmGuildNews.Visible And _
+    '                 Not frmGuildSol.Visible And _
+    '                 Not frmCommet.Visible And _
+    '                 Not frmPeaceProp.Visible
+    '
 End Function
 
 Sub Login()
+
     If EstadoLogin = E_MODO.Normal Then
         Call WriteLoginExistingAccount
     ElseIf EstadoLogin = E_MODO.CrearNuevoPj Then
         Call WriteLoginNewChar
     ElseIf EstadoLogin = E_MODO.CrearCuenta Then
         Call WriteLoginNewAccount
+
     End If
     
     DoEvents
     
     Call FlushBuffer
+
 End Sub

@@ -1016,54 +1016,55 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private clsFormulario As clsFormMovementManager
+Private clsFormulario      As clsFormMovementManager
 
-Private cBotonCerrar As clsGraphicalButton
-Public LastButtonPressed As clsGraphicalButton
+Private cBotonCerrar       As clsGraphicalButton
+Public LastButtonPressed   As clsGraphicalButton
 
-Private Const ANCHO_BARRA As Byte = 73 'pixeles
+Private Const ANCHO_BARRA  As Byte = 73 'pixeles
 Private Const BAR_LEFT_POS As Integer = 361 'pixeles
 
 Public Sub Iniciar_Labels()
-'Iniciamos los labels con los valores de los atributos y los skills
-Dim i As Integer
-Dim Ancho As Integer
+    'Iniciamos los labels con los valores de los atributos y los skills
+    Dim i     As Integer
+    Dim Ancho As Integer
 
-For i = 1 To NUMATRIBUTOS
-    Atri(i).Caption = UserAtributos(i)
-Next
+    For i = 1 To NUMATRIBUTOS
+        Atri(i).Caption = UserAtributos(i)
+    Next
 
-For i = 1 To NUMSKILLS
-    Skills(i).Caption = UserSkills(i)
-    Ancho = IIf(PorcentajeSkills(i) = 0, ANCHO_BARRA, (100 - PorcentajeSkills(i)) / 100 * ANCHO_BARRA)
-    shpSkillsBar(i).Width = Ancho
-    shpSkillsBar(i).Left = BAR_LEFT_POS + ANCHO_BARRA - Ancho
-Next
+    For i = 1 To NUMSKILLS
+        Skills(i).Caption = UserSkills(i)
+        Ancho = IIf(PorcentajeSkills(i) = 0, ANCHO_BARRA, (100 - PorcentajeSkills(i)) / 100 * ANCHO_BARRA)
+        shpSkillsBar(i).Width = Ancho
+        shpSkillsBar(i).Left = BAR_LEFT_POS + ANCHO_BARRA - Ancho
+    Next
 
+    Label4(1).Caption = UserReputacion.AsesinoRep
+    Label4(2).Caption = UserReputacion.BandidoRep
+    'Label4(3).Caption = "Burgues: " & UserReputacion.BurguesRep
+    Label4(4).Caption = UserReputacion.LadronesRep
+    Label4(5).Caption = UserReputacion.NobleRep
+    Label4(6).Caption = UserReputacion.PlebeRep
 
-Label4(1).Caption = UserReputacion.AsesinoRep
-Label4(2).Caption = UserReputacion.BandidoRep
-'Label4(3).Caption = "Burgues: " & UserReputacion.BurguesRep
-Label4(4).Caption = UserReputacion.LadronesRep
-Label4(5).Caption = UserReputacion.NobleRep
-Label4(6).Caption = UserReputacion.PlebeRep
+    If UserReputacion.Promedio < 0 Then
+        Label4(7).ForeColor = vbRed
+        Label4(7).Caption = "Criminal"
+    Else
+        Label4(7).ForeColor = vbBlue
+        Label4(7).Caption = "Ciudadano"
 
-If UserReputacion.Promedio < 0 Then
-    Label4(7).ForeColor = vbRed
-    Label4(7).Caption = "Criminal"
-Else
-    Label4(7).ForeColor = vbBlue
-    Label4(7).Caption = "Ciudadano"
-End If
+    End If
 
-With UserEstadisticas
-    Label6(0).Caption = .CriminalesMatados
-    Label6(1).Caption = .CiudadanosMatados
-    Label6(2).Caption = .UsuariosMatados
-    Label6(3).Caption = .NpcsMatados
-    Label6(4).Caption = .Clase
-    Label6(5).Caption = .PenaCarcel
-End With
+    With UserEstadisticas
+        Label6(0).Caption = .CriminalesMatados
+        Label6(1).Caption = .CiudadanosMatados
+        Label6(2).Caption = .UsuariosMatados
+        Label6(3).Caption = .NpcsMatados
+        Label6(4).Caption = .Clase
+        Label6(5).Caption = .PenaCarcel
+
+    End With
 
 End Sub
 
@@ -1075,6 +1076,7 @@ Private Sub Form_Load()
     Me.Picture = LoadPicture(App.path & "\graficos\VentanaEstadisticas.jpg")
     
     Call LoadButtons
+
 End Sub
 
 Private Sub LoadButtons()
@@ -1086,28 +1088,34 @@ Private Sub LoadButtons()
     Set cBotonCerrar = New clsGraphicalButton
     Set LastButtonPressed = New clsGraphicalButton
     
-    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarEstadisticas.jpg", _
-                                    GrhPath & "BotonCerrarRolloverEstadisticas.jpg", _
-                                    GrhPath & "BotonCerrarClickEstadisticas.jpg", Me)
+    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarEstadisticas.jpg", GrhPath & "BotonCerrarRolloverEstadisticas.jpg", GrhPath & "BotonCerrarClickEstadisticas.jpg", Me)
 
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
-Unload Me
+    Unload Me
+
 End Sub
 
 Private Sub imgCerrar_Click()
     Unload Me
+
 End Sub
 
-Private Sub imgCerrar_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgCerrar_MouseMove(Button As Integer, _
+                                Shift As Integer, _
+                                X As Single, _
+                                Y As Single)
+
     If imgCerrar.Tag = 1 Then
         imgCerrar.Picture = LoadPicture(App.path & "\graficos\BotonCerrarApretadoEstadisticas.jpg")
         imgCerrar.Tag = 0
+
     End If
 
 End Sub

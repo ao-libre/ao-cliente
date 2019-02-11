@@ -84,8 +84,10 @@ Option Explicit
 Private clsFormulario As clsFormMovementManager
 
 Private Enum eMaps
+
     ieGeneral
     ieDungeon
+
 End Enum
 
 Private picMaps(1) As Picture
@@ -108,17 +110,20 @@ Private CurrentMap As eMaps
 ' @param KeyCode Specifies the key pressed
 ' @param Shift Specifies if Shift Button is pressed
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
-'*************************************************
-'Author: Marco Vanotti (MarKoxX)
-'Last modified: 24/07/08
-'
-'*************************************************
+    '*************************************************
+    'Author: Marco Vanotti (MarKoxX)
+    'Last modified: 24/07/08
+    '
+    '*************************************************
 
     Select Case KeyCode
+
         Case vbKeyDown, vbKeyUp 'Cambiamos el "nivel" del mapa, al estilo Zelda ;D
             ToggleImgMaps
+
         Case Else
             Unload Me
+
     End Select
     
 End Sub
@@ -127,11 +132,11 @@ End Sub
 ' Toggle which image is visible.
 '
 Private Sub ToggleImgMaps()
-'*************************************************
-'Author: Marco Vanotti (MarKoxX)
-'Last modified: 24/07/08
-'
-'*************************************************
+    '*************************************************
+    'Author: Marco Vanotti (MarKoxX)
+    'Last modified: 24/07/08
+    '
+    '*************************************************
 
     imgToogleMap(CurrentMap).Visible = False
     
@@ -141,23 +146,25 @@ Private Sub ToggleImgMaps()
     Else
         imgCerrar.Visible = True
         CurrentMap = eMaps.ieGeneral
+
     End If
     
     imgToogleMap(CurrentMap).Visible = True
     Me.Picture = picMaps(CurrentMap)
+
 End Sub
 
 ''
 ' Load the images. Resizes the form, adjusts image's left and top and set lblTexto's Top and Left.
 '
 Private Sub Form_Load()
-'*************************************************
-'Author: Marco Vanotti (MarKoxX)
-'Last modified: 24/07/08
-'
-'*************************************************
+    '*************************************************
+    'Author: Marco Vanotti (MarKoxX)
+    'Last modified: 24/07/08
+    '
+    '*************************************************
 
-On Error GoTo error
+    On Error GoTo error
     
     ' Handles Form movement (drag and drop).
     Set clsFormulario = New clsFormMovementManager
@@ -179,12 +186,15 @@ On Error GoTo error
 error:
     MsgBox Err.Description, vbInformation, "Error: " & Err.number
     Unload Me
+
 End Sub
 
 Private Sub imgCerrar_Click()
     Unload Me
+
 End Sub
 
 Private Sub imgToogleMap_Click(Index As Integer)
     ToggleImgMaps
+
 End Sub

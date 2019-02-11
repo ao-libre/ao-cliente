@@ -98,15 +98,16 @@ Attribute VB_Exposed = False
 'Pablo Ignacio Márquez
 
 Option Explicit
-Private clsFormulario As clsFormMovementManager
+Private clsFormulario    As clsFormMovementManager
 
-Private cBotonSiguiente As clsGraphicalButton
-Private cBotonCancelar As clsGraphicalButton
+Private cBotonSiguiente  As clsGraphicalButton
+Private cBotonCancelar   As clsGraphicalButton
 
 Public LastButtonPressed As clsGraphicalButton
 
 Private Sub Form_Deactivate()
     Me.SetFocus
+
 End Sub
 
 Private Sub Form_Load()
@@ -122,10 +123,13 @@ Private Sub Form_Load()
         If Not AsciiValidos(txtClanName) Then
             MsgBox "Nombre invalido."
             Exit Sub
+
         End If
+
     Else
         MsgBox "Nombre demasiado extenso."
         Exit Sub
+
     End If
 
 End Sub
@@ -140,24 +144,20 @@ Private Sub LoadButtons()
     
     Set LastButtonPressed = New clsGraphicalButton
     
-    
-    Call cBotonSiguiente.Initialize(imgSiguiente, GrhPath & "BotonSiguienteNombreClan.jpg", _
-                                    GrhPath & "BotonSiguienteRolloverNombreClan.jpg", _
-                                    GrhPath & "BotonSiguienteClickNombreClan.jpg", Me)
+    Call cBotonSiguiente.Initialize(imgSiguiente, GrhPath & "BotonSiguienteNombreClan.jpg", GrhPath & "BotonSiguienteRolloverNombreClan.jpg", GrhPath & "BotonSiguienteClickNombreClan.jpg", Me)
 
-    Call cBotonCancelar.Initialize(imgCancelar, GrhPath & "BotonCancelarNombreClan.jpg", _
-                                    GrhPath & "BotonCancelarRolloverNombreClan.jpg", _
-                                    GrhPath & "BotonCancelarClickNombreClan.jpg", Me)
+    Call cBotonCancelar.Initialize(imgCancelar, GrhPath & "BotonCancelarNombreClan.jpg", GrhPath & "BotonCancelarRolloverNombreClan.jpg", GrhPath & "BotonCancelarClickNombreClan.jpg", Me)
 
 End Sub
 
-
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgCancelar_Click()
     Unload Me
+
 End Sub
 
 Private Sub imgSiguiente_Click()
@@ -165,8 +165,13 @@ Private Sub imgSiguiente_Click()
     Site = txtWeb.Text
     Unload Me
     frmGuildDetails.Show , frmMain
+
 End Sub
 
-Private Sub txtWeb_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub txtWeb_MouseMove(Button As Integer, _
+                             Shift As Integer, _
+                             X As Single, _
+                             Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub

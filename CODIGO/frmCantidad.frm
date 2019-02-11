@@ -91,10 +91,10 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private clsFormulario As clsFormMovementManager
+Private clsFormulario    As clsFormMovementManager
 
-Private cBotonTirar As clsGraphicalButton
-Private cBotonTirarTodo As clsGraphicalButton
+Private cBotonTirar      As clsGraphicalButton
+Private cBotonTirarTodo  As clsGraphicalButton
 Public LastButtonPressed As clsGraphicalButton
 
 Private Sub Form_Load()
@@ -105,6 +105,7 @@ Private Sub Form_Load()
     Me.Picture = LoadPicture(App.path & "\graficos\VentanaTirarOro.jpg")
     
     Call LoadButtons
+
 End Sub
 
 Private Sub LoadButtons()
@@ -118,55 +119,66 @@ Private Sub LoadButtons()
     
     Set LastButtonPressed = New clsGraphicalButton
 
-    Call cBotonTirar.Initialize(imgTirar, GrhPath & "BotonTirar.jpg", GrhPath & "BotonTirarRollover.jpg", _
-                        GrhPath & "BotonTirarClick.jpg", Me)
-    Call cBotonTirarTodo.Initialize(imgTirarTodo, GrhPath & "BotonTirarTodo.jpg", GrhPath & "BotonTirarTodoRollover.jpg", _
-                        GrhPath & "BotonTirarTodoClick.jpg", Me)
+    Call cBotonTirar.Initialize(imgTirar, GrhPath & "BotonTirar.jpg", GrhPath & "BotonTirarRollover.jpg", GrhPath & "BotonTirarClick.jpg", Me)
+    Call cBotonTirarTodo.Initialize(imgTirarTodo, GrhPath & "BotonTirarTodo.jpg", GrhPath & "BotonTirarTodoRollover.jpg", GrhPath & "BotonTirarTodoClick.jpg", Me)
 
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgTirar_Click()
+
     If LenB(txtCantidad.Text) > 0 Then
         If Not IsNumeric(txtCantidad.Text) Then Exit Sub  'Should never happen
         
         Call WriteDrop(Inventario.SelectedItem, frmCantidad.txtCantidad.Text)
         frmCantidad.txtCantidad.Text = vbNullString
+
     End If
     
     Unload Me
+
 End Sub
 
 Private Sub imgTirarTodo_Click()
+
     If Inventario.SelectedItem = 0 Then Exit Sub
     
     If Inventario.SelectedItem <> FLAGORO Then
         Call WriteDrop(Inventario.SelectedItem, Inventario.Amount(Inventario.SelectedItem))
         Unload Me
     Else
+
         If UserGLD > 10000 Then
             Call WriteDrop(Inventario.SelectedItem, 10000)
             Unload Me
         Else
             Call WriteDrop(Inventario.SelectedItem, UserGLD)
             Unload Me
+
         End If
+
     End If
 
     frmCantidad.txtCantidad.Text = vbNullString
+
 End Sub
 
 Private Sub txtCantidad_Change()
-On Error GoTo ErrHandler
+
+    On Error GoTo ErrHandler
+
     If Val(txtCantidad.Text) < 0 Then
         txtCantidad.Text = "1"
+
     End If
     
     If Val(txtCantidad.Text) > MAX_INVENTORY_OBJS Then
         txtCantidad.Text = "10000"
+
     End If
     
     Exit Sub
@@ -174,16 +186,25 @@ On Error GoTo ErrHandler
 ErrHandler:
     'If we got here the user may have pasted (Shift + Insert) a REALLY large number, causing an overflow, so we set amount back to 1
     txtCantidad.Text = "1"
+
 End Sub
 
 Private Sub txtCantidad_KeyPress(KeyAscii As Integer)
+
     If (KeyAscii <> 8) Then
         If (KeyAscii < 48 Or KeyAscii > 57) Then
             KeyAscii = 0
+
         End If
+
     End If
+
 End Sub
 
-Private Sub txtCantidad_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub txtCantidad_MouseMove(Button As Integer, _
+                                  Shift As Integer, _
+                                  X As Single, _
+                                  Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub

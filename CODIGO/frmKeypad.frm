@@ -412,13 +412,15 @@ Option Explicit
 Private clsFormulario As clsFormMovementManager
 
 Private Enum e_modo_keypad
+
     MINUSCULA
     MAYUSCULA
+
 End Enum
 
-Private MinMayBack(1) As Picture
-Private cBotonMin As clsGraphicalButton
-Private cBotonMay As clsGraphicalButton
+Private MinMayBack(1)    As Picture
+Private cBotonMin        As clsGraphicalButton
+Private cBotonMay        As clsGraphicalButton
 
 Public LastButtonPressed As clsGraphicalButton
 
@@ -427,11 +429,11 @@ Private Const MayIndex = "!@#$%^&*()_+|QWERTYUIOP{}ASDFGHJKL:""ZXCVBNM<>?"
 Private Modo As e_modo_keypad
 
 Private Sub Form_Activate()
-Dim i As Integer
-Dim J As Integer
+    Dim i As Integer
+    Dim j As Integer
     i = RandomNumber(-2000, 2000)
-    J = RandomNumber(-350, 350)
-    Me.Top = Me.Top + J
+    j = RandomNumber(-350, 350)
+    Me.Top = Me.Top + j
     Me.Left = Me.Left + i
 
 End Sub
@@ -451,6 +453,7 @@ Private Sub Form_Load()
     Me.Picture = MinMayBack(e_modo_keypad.MINUSCULA)
     
     Modo = MINUSCULA
+
 End Sub
 
 Private Sub LoadButtons()
@@ -463,29 +466,27 @@ Private Sub LoadButtons()
     
     Set LastButtonPressed = New clsGraphicalButton
     
-    
-    Call cBotonMin.Initialize(imgMay, GrhPath & "BotonMay.jpg", _
-                                    GrhPath & "BotonMayRollover.jpg", _
-                                    GrhPath & "BotonMayClick.jpg", Me)
+    Call cBotonMin.Initialize(imgMay, GrhPath & "BotonMay.jpg", GrhPath & "BotonMayRollover.jpg", GrhPath & "BotonMayClick.jpg", Me)
 
-    Call cBotonMay.Initialize(imgMin, GrhPath & "BotonMin.jpg", _
-                                    GrhPath & "BotonMinRollover.jpg", _
-                                    GrhPath & "BotonMinClick.jpg", Me)
+    Call cBotonMay.Initialize(imgMin, GrhPath & "BotonMin.jpg", GrhPath & "BotonMinRollover.jpg", GrhPath & "BotonMinClick.jpg", Me)
 
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgCerrar_Click()
     Unload Me
+
 End Sub
 
 Private Sub imgEspacio_Click()
     Call Audio.PlayWave(SND_CLICK)
     Me.txtPassword.Text = Me.txtPassword.Text & " "
     Me.txtPassword.SetFocus
+
 End Sub
 
 Private Sub imgKeyPad_Click(Index As Integer)
@@ -495,38 +496,52 @@ Private Sub imgKeyPad_Click(Index As Integer)
         Me.txtPassword.Text = Me.txtPassword.Text & mid$(MayIndex, Index + 1, 1)
     Else
         Me.txtPassword.Text = Me.txtPassword.Text & mid$(MinIndex, Index + 1, 1)
+
     End If
     
     Me.txtPassword.SetFocus
+
 End Sub
 
-Private Sub imgKeyPad_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgKeyPad_MouseMove(Index As Integer, _
+                                Button As Integer, _
+                                Shift As Integer, _
+                                X As Single, _
+                                Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgMay_Click()
+
     If Modo = MAYUSCULA Then Exit Sub
     
     'Call Audio.PlayWave(SND_CLICK)
     Me.Picture = MinMayBack(e_modo_keypad.MAYUSCULA)  'LoadPicture(App.path & "\graficos\KeyPadMay.bmp")
     Modo = MAYUSCULA
     Me.txtPassword.SetFocus
+
 End Sub
 
 Private Sub imgMin_Click()
+
     If Modo = MINUSCULA Then Exit Sub
     
     'Call Audio.PlayWave(SND_CLICK)
     Me.Picture = MinMayBack(e_modo_keypad.MINUSCULA) 'LoadPicture(App.path & "\graficos\KeyPadMin.bmp")
     Modo = MINUSCULA
     Me.txtPassword.SetFocus
+
 End Sub
 
 Private Sub txtPassword_KeyPress(KeyAscii As Integer)
+
     If KeyAscii = 13 Then
         frmConnect.txtPasswd.Text = Me.txtPassword.Text
         Unload Me
     Else
         Me.txtPassword.Text = vbNullString
+
     End If
+
 End Sub

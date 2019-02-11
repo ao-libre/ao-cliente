@@ -71,6 +71,7 @@ Private Sub cCancelQuit_Click()
     Call Audio.PlayWave(SND_CLICK)
     Set clsFormulario = Nothing
     Unload Me
+
 End Sub
 
 Private Sub cRegresar_Click()
@@ -79,33 +80,43 @@ Private Sub cRegresar_Click()
     Set clsFormulario = Nothing
     
     If UserParalizado Then 'Inmo
+
         With FontTypes(FontTypeNames.FONTTYPE_WARNING)
             Call ShowConsoleMsg("No puedes salir estando paralizado.", .Red, .Green, .Blue, .bold, .italic)
+
         End With
+
         Exit Sub
+
     End If
     
     If frmMain.macrotrabajo.Enabled Then Call frmMain.DesactivarMacroTrabajo
     
     Call WriteQuit
     Unload Me
+
 End Sub
 
 Private Sub cSalir_Click()
     Call Audio.PlayWave(SND_CLICK)
     Set clsFormulario = Nothing
     Call CloseClient
+
 End Sub
 
 Private Sub Form_Deactivate()
     Me.SetFocus
+
 End Sub
 
 Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
+
     If KeyCode = vbKeyEscape Then
         Set clsFormulario = Nothing
         Unload Me
+
     End If
+
 End Sub
 
 Private Sub Form_Load()
@@ -114,5 +125,6 @@ Private Sub Form_Load()
     clsFormulario.Initialize Me
     
     Me.Picture = LoadPicture(App.path & "\Graficos\frmCerrar.jpg")
+
 End Sub
 

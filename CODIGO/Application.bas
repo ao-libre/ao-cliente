@@ -17,7 +17,6 @@ Attribute VB_Name = "Application"
 'along with this program; if not, you can find it at http://www.affero.org/oagpl.html
 '**************************************************************************
 
-
 Option Explicit
 
 ''
@@ -33,10 +32,11 @@ Private Declare Function GetActiveWindow Lib "user32" () As Long
 ' @return   True if any of the app's windows are the foreground window, false otherwise.
 
 Public Function IsAppActive() As Boolean
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (maraxus)
-'Last Modify Date: 03/03/2007
-'Checks if this is the active application or not
-'***************************************************
+    '***************************************************
+    'Author: Juan Martín Sotuyo Dodero (maraxus)
+    'Last Modify Date: 03/03/2007
+    'Checks if this is the active application or not
+    '***************************************************
     IsAppActive = (GetActiveWindow <> 0)
+
 End Function

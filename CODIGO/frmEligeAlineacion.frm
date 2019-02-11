@@ -83,23 +83,25 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private clsFormulario As clsFormMovementManager
+Private clsFormulario    As clsFormMovementManager
 
-Private cBotonCriminal As clsGraphicalButton
-Private cBotonCaos As clsGraphicalButton
-Private cBotonLegal As clsGraphicalButton
-Private cBotonNeutral As clsGraphicalButton
-Private cBotonReal As clsGraphicalButton
-Private cBotonSalir As clsGraphicalButton
+Private cBotonCriminal   As clsGraphicalButton
+Private cBotonCaos       As clsGraphicalButton
+Private cBotonLegal      As clsGraphicalButton
+Private cBotonNeutral    As clsGraphicalButton
+Private cBotonReal       As clsGraphicalButton
+Private cBotonSalir      As clsGraphicalButton
 
 Public LastButtonPressed As clsGraphicalButton
 
 Private Enum eAlineacion
+
     ieREAL = 0
     ieCAOS = 1
     ieNeutral = 2
     ieLegal = 4
     ieCriminal = 5
+
 End Enum
 
 Private Sub Form_Load()
@@ -110,6 +112,7 @@ Private Sub Form_Load()
     Me.Picture = LoadPicture(App.path & "\graficos\VentanaFundarClan.jpg")
     
     Call LoadButtons
+
 End Sub
 
 Private Sub LoadButtons()
@@ -126,63 +129,56 @@ Private Sub LoadButtons()
     
     Set LastButtonPressed = New clsGraphicalButton
     
-    
-    Call cBotonCriminal.Initialize(imgCriminal, "", _
-                                    GrhPath & "BotonCriminal.jpg", _
-                                    GrhPath & "BotonCriminal.jpg", Me)
+    Call cBotonCriminal.Initialize(imgCriminal, "", GrhPath & "BotonCriminal.jpg", GrhPath & "BotonCriminal.jpg", Me)
 
-    Call cBotonCaos.Initialize(imgCaos, "", _
-                                    GrhPath & "BotonCaos.jpg", _
-                                    GrhPath & "BotonCaos.jpg", Me)
+    Call cBotonCaos.Initialize(imgCaos, "", GrhPath & "BotonCaos.jpg", GrhPath & "BotonCaos.jpg", Me)
 
-    Call cBotonLegal.Initialize(imgLegal, "", _
-                                    GrhPath & "BotonLegal.jpg", _
-                                    GrhPath & "BotonLegal.jpg", Me)
+    Call cBotonLegal.Initialize(imgLegal, "", GrhPath & "BotonLegal.jpg", GrhPath & "BotonLegal.jpg", Me)
 
-    Call cBotonNeutral.Initialize(imgNeutral, "", _
-                                    GrhPath & "BotonNeutral.jpg", _
-                                    GrhPath & "BotonNeutral.jpg", Me)
+    Call cBotonNeutral.Initialize(imgNeutral, "", GrhPath & "BotonNeutral.jpg", GrhPath & "BotonNeutral.jpg", Me)
 
-    Call cBotonReal.Initialize(imgReal, "", _
-                                    GrhPath & "BotonReal.jpg", _
-                                    GrhPath & "BotonReal.jpg", Me)
+    Call cBotonReal.Initialize(imgReal, "", GrhPath & "BotonReal.jpg", GrhPath & "BotonReal.jpg", Me)
                                     
-    Call cBotonSalir.Initialize(imgSalir, GrhPath & "BotonSalirAlineacion.jpg", _
-                                    GrhPath & "BotonSalirRolloverAlineacion.jpg", _
-                                    GrhPath & "BotonSalirClickAlineacion.jpg", Me)
-
+    Call cBotonSalir.Initialize(imgSalir, GrhPath & "BotonSalirAlineacion.jpg", GrhPath & "BotonSalirRolloverAlineacion.jpg", GrhPath & "BotonSalirClickAlineacion.jpg", Me)
 
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgCaos_Click()
     Call WriteGuildFundation(eAlineacion.ieCAOS)
     Unload Me
+
 End Sub
 
 Private Sub imgCriminal_Click()
     Call WriteGuildFundation(eAlineacion.ieCriminal)
     Unload Me
+
 End Sub
 
 Private Sub imgLegal_Click()
     Call WriteGuildFundation(eAlineacion.ieLegal)
     Unload Me
+
 End Sub
 
 Private Sub imgNeutral_Click()
     Call WriteGuildFundation(eAlineacion.ieNeutral)
     Unload Me
+
 End Sub
 
 Private Sub imgReal_Click()
     Call WriteGuildFundation(eAlineacion.ieREAL)
     Unload Me
+
 End Sub
 
 Private Sub imgSalir_Click()
     Unload Me
+
 End Sub

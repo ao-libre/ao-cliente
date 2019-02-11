@@ -259,8 +259,6 @@ Attribute VB_Exposed = False
 'Código Postal 1900
 'Pablo Ignacio Márquez
 
-
-
 Option Explicit
 
 '[CODE]:MatuX
@@ -274,52 +272,64 @@ Option Explicit
 '<-------------------------NUEVO-------------------------->
 '<-------------------------NUEVO-------------------------->
 
-Private clsFormulario As clsFormMovementManager
+Private clsFormulario      As clsFormMovementManager
 
-Private cBotonRetirarOro As clsGraphicalButton
+Private cBotonRetirarOro   As clsGraphicalButton
 Private cBotonDepositarOro As clsGraphicalButton
-Private cBotonCerrar As clsGraphicalButton
+Private cBotonCerrar       As clsGraphicalButton
 
-Public LastButtonPressed As clsGraphicalButton
+Public LastButtonPressed   As clsGraphicalButton
 
-
-Public LasActionBuy As Boolean
-Public LastIndex1 As Integer
-Public LastIndex2 As Integer
-Public NoPuedeMover As Boolean
+Public LasActionBuy        As Boolean
+Public LastIndex1          As Integer
+Public LastIndex2          As Integer
+Public NoPuedeMover        As Boolean
 
 Private Sub cantidad_Change()
 
     If Val(cantidad.Text) < 1 Then
         cantidad.Text = 1
+
     End If
     
     If Val(cantidad.Text) > MAX_INVENTORY_OBJS Then
         cantidad.Text = MAX_INVENTORY_OBJS
+
     End If
 
 End Sub
 
 Private Sub cantidad_KeyPress(KeyAscii As Integer)
+
     If (KeyAscii <> 8) Then
         If (KeyAscii <> 6) And (KeyAscii < 48 Or KeyAscii > 57) Then
             KeyAscii = 0
+
         End If
+
     End If
+
 End Sub
 
 Private Sub CantidadOro_Change()
+
     If Val(CantidadOro.Text) < 1 Then
         cantidad.Text = 1
+
     End If
+
 End Sub
 
 Private Sub CantidadOro_KeyPress(KeyAscii As Integer)
+
     If (KeyAscii <> 8) Then
         If (KeyAscii <> 6) And (KeyAscii < 48 Or KeyAscii > 57) Then
             KeyAscii = 0
+
         End If
+
     End If
+
 End Sub
 
 Private Sub Form_Load()
@@ -348,7 +358,6 @@ Private Sub LoadButtons()
     
     Set LastButtonPressed = New clsGraphicalButton
 
-
     Call cBotonDepositarOro.Initialize(imgDepositarOro, "", GrhPath & "BotonDepositaOroApretado.jpg", GrhPath & "BotonDepositaOroApretado.jpg", Me)
     Call cBotonRetirarOro.Initialize(imgRetirarOro, "", GrhPath & "BotonRetirarOroApretado.jpg", GrhPath & "BotonRetirarOroApretado.jpg", Me)
     Call cBotonCerrar.Initialize(imgCerrar, "", GrhPath & "xPrendida.bmp", GrhPath & "xPrendida.bmp", Me)
@@ -360,6 +369,7 @@ End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     Call LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Sub Image1_Click(Index As Integer)
@@ -371,35 +381,40 @@ Private Sub Image1_Click(Index As Integer)
     If Not IsNumeric(cantidad.Text) Then Exit Sub
     
     Select Case Index
+
         Case 0
             LastIndex1 = InvBanco(0).SelectedItem
             LasActionBuy = True
             Call WriteBankExtractItem(InvBanco(0).SelectedItem, cantidad.Text)
             
-       Case 1
+        Case 1
             LastIndex2 = InvBanco(1).SelectedItem
             LasActionBuy = False
             Call WriteBankDeposit(InvBanco(1).SelectedItem, cantidad.Text)
+
     End Select
 
 End Sub
 
-
 Private Sub imgDepositarOro_Click()
     Call WriteBankDepositGold(Val(CantidadOro.Text))
+
 End Sub
 
 Private Sub imgRetirarOro_Click()
     Call WriteBankExtractGold(Val(CantidadOro.Text))
+
 End Sub
 
 Private Sub PicBancoInv_Click()
 
     If InvBanco(0).SelectedItem <> 0 Then
+
         With UserBancoInventory(InvBanco(0).SelectedItem)
             Label1(0).Caption = .Name
             
             Select Case .OBJType
+
                 Case 2, 32
                     Label1(1).Caption = "Máx Golpe:" & .MaxHit
                     Label1(2).Caption = "Mín Golpe:" & .MinHit
@@ -424,21 +439,28 @@ Private Sub PicBancoInv_Click()
         Label1(0).Caption = vbNullString
         Label1(1).Visible = False
         Label1(2).Visible = False
+
     End If
 
 End Sub
 
-Private Sub PicBancoInv_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub PicBancoInv_MouseMove(Button As Integer, _
+                                  Shift As Integer, _
+                                  X As Single, _
+                                  Y As Single)
     Call LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Sub PicInv_Click()
     
     If InvBanco(1).SelectedItem <> 0 Then
+
         With Inventario
             Label1(0).Caption = .ItemName(InvBanco(1).SelectedItem)
             
             Select Case .OBJType(InvBanco(1).SelectedItem)
+
                 Case eObjType.otWeapon, eObjType.otFlechas
                     Label1(1).Caption = "Máx Golpe:" & .MaxHit(InvBanco(1).SelectedItem)
                     Label1(2).Caption = "Mín Golpe:" & .MinHit(InvBanco(1).SelectedItem)
@@ -458,18 +480,26 @@ Private Sub PicInv_Click()
             End Select
             
         End With
+
     Else
         Label1(0).Caption = vbNullString
         Label1(1).Visible = False
         Label1(2).Visible = False
+
     End If
+
 End Sub
 
-Private Sub PicInv_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub PicInv_MouseMove(Button As Integer, _
+                             Shift As Integer, _
+                             X As Single, _
+                             Y As Single)
     Call LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgCerrar_Click()
     Call WriteBankEnd
     NoPuedeMover = False
+
 End Sub

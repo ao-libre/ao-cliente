@@ -14,24 +14,28 @@ Attribute VB_Exposed = False
 Option Explicit
 
 'Values Stored For Each Particle
-Private mvarused As Boolean
-Private mvarsngX As Single
-Private mvarsngY As Single
-Private mvarsngXSpeed As Single
-Private mvarsngYSpeed As Single
-Private mvarsngXAccel As Single
-Private mvarsngYAccel As Single
-Private mvarsngR As Single
-Private mvarsngG As Single
-Private mvarsngB As Single
-Private mvarsngA As Single
+Private mvarused          As Boolean
+Private mvarsngX          As Single
+Private mvarsngY          As Single
+Private mvarsngXSpeed     As Single
+Private mvarsngYSpeed     As Single
+Private mvarsngXAccel     As Single
+Private mvarsngYAccel     As Single
+Private mvarsngR          As Single
+Private mvarsngG          As Single
+Private mvarsngB          As Single
+Private mvarsngA          As Single
 Private mvarsngAlphaDecay As Single
 
-Public Sub ResetColor(sngRed As Single, sngGreen As Single, sngBlue As Single, sngAlpha As Single, sngDecay As Single)
-'************************************************************
-'Change the particle's color values
-'More info: http://www.vbgore.com/CommonCode.Particle.ResetColor
-'************************************************************
+Public Sub ResetColor(sngRed As Single, _
+                      sngGreen As Single, _
+                      sngBlue As Single, _
+                      sngAlpha As Single, _
+                      sngDecay As Single)
+    '************************************************************
+    'Change the particle's color values
+    'More info: http://www.vbgore.com/CommonCode.Particle.ResetColor
+    '************************************************************
 
     sngR = sngRed
     sngG = sngGreen
@@ -41,11 +45,16 @@ Public Sub ResetColor(sngRed As Single, sngGreen As Single, sngBlue As Single, s
 
 End Sub
 
-Public Sub ResetIt(X As Single, Y As Single, XSpeed As Single, YSpeed As Single, XAcc As Single, YAcc As Single)
-'************************************************************
-'Reset the particle's variables
-'More info: http://www.vbgore.com/CommonCode.Particle.ResetIt
-'************************************************************
+Public Sub ResetIt(X As Single, _
+                   Y As Single, _
+                   XSpeed As Single, _
+                   YSpeed As Single, _
+                   XAcc As Single, _
+                   YAcc As Single)
+    '************************************************************
+    'Reset the particle's variables
+    'More info: http://www.vbgore.com/CommonCode.Particle.ResetIt
+    '************************************************************
 
     sngX = X
     sngY = Y
@@ -189,10 +198,10 @@ Public Property Let sngYSpeed(ByVal vData As Single)
 End Property
 
 Public Sub UpdateParticle(sngTime As Single)
-'************************************************************
-'Update the particle's variables
-'More info: http://www.vbgore.com/CommonCode.Particle.UpdateParticle
-'************************************************************
+    '************************************************************
+    'Update the particle's variables
+    'More info: http://www.vbgore.com/CommonCode.Particle.UpdateParticle
+    '************************************************************
 
     sngX = sngX + (LastOffsetX - ParticleOffsetX) + sngXSpeed * sngTime
     sngY = sngY + (LastOffsetY - ParticleOffsetY) + sngYSpeed * sngTime
@@ -213,8 +222,4 @@ Public Property Let Used(ByVal vData As Boolean)
     mvarused = vData
 
 End Property
-
-
-
-
 

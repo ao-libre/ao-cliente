@@ -100,14 +100,14 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private clsFormulario As clsFormMovementManager
+Private clsFormulario    As clsFormMovementManager
 
-Private cBotonCerrar As clsGraphicalButton
-Private cBotonEnviar As clsGraphicalButton
+Private cBotonCerrar     As clsGraphicalButton
+Private cBotonEnviar     As clsGraphicalButton
 
 Public LastButtonPressed As clsGraphicalButton
 
-Dim CName As String
+Dim CName                As String
 
 Public Sub RecieveSolicitud(ByVal GuildName As String)
 
@@ -123,6 +123,7 @@ Private Sub Form_Load()
     Me.Picture = LoadPicture(App.path & "\graficos\VentanaIngreso.jpg")
     
     Call LoadButtons
+
 End Sub
 
 Private Sub LoadButtons()
@@ -135,30 +136,30 @@ Private Sub LoadButtons()
     
     Set LastButtonPressed = New clsGraphicalButton
     
-    
-    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarIngreso.jpg", _
-                                    GrhPath & "BotonCerrarRolloverIngreso.jpg", _
-                                    GrhPath & "BotonCerrarClickIngreso.jpg", Me)
+    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarIngreso.jpg", GrhPath & "BotonCerrarRolloverIngreso.jpg", GrhPath & "BotonCerrarClickIngreso.jpg", Me)
 
-    Call cBotonEnviar.Initialize(imgEnviar, GrhPath & "BotonEnviarIngreso.jpg", _
-                                    GrhPath & "BotonEnviarRolloverIngreso.jpg", _
-                                    GrhPath & "BotonEnviarClickIngreso.jpg", Me)
+    Call cBotonEnviar.Initialize(imgEnviar, GrhPath & "BotonEnviarIngreso.jpg", GrhPath & "BotonEnviarRolloverIngreso.jpg", GrhPath & "BotonEnviarClickIngreso.jpg", Me)
+
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgCerrar_Click()
     Unload Me
+
 End Sub
 
 Private Sub imgEnviar_Click()
     Call WriteGuildRequestMembership(CName, Replace(Replace(Text1.Text, ",", ";"), vbNewLine, "º"))
 
     Unload Me
+
 End Sub
 
 Private Sub Text1_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub

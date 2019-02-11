@@ -103,28 +103,32 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private clsFormulario As clsFormMovementManager
+Private clsFormulario    As clsFormMovementManager
 
-Private cBotonCerrar As clsGraphicalButton
+Private cBotonCerrar     As clsGraphicalButton
 
 Public LastButtonPressed As clsGraphicalButton
 
 Private Const MAX_GM_MSG = 300
 
 Private MisMSG(0 To MAX_GM_MSG) As String
-Private Apunt(0 To MAX_GM_MSG) As Integer
+Private Apunt(0 To MAX_GM_MSG)  As Integer
 
 Public Sub CrearGMmSg(Nick As String, msg As String)
-If List1.ListCount < MAX_GM_MSG Then
+
+    If List1.ListCount < MAX_GM_MSG Then
         List1.AddItem Nick & "-" & List1.ListCount
         MisMSG(List1.ListCount - 1) = msg
         Apunt(List1.ListCount - 1) = List1.ListCount - 1
-End If
+
+    End If
+
 End Sub
 
 Private Sub Form_Deactivate()
     Me.Visible = False
     List1.Clear
+
 End Sub
 
 Private Sub Form_Load()
@@ -138,6 +142,7 @@ Private Sub Form_Load()
     Me.Picture = LoadPicture(App.path & "\graficos\VentanaShowSos.jpg")
     
     Call LoadButtons
+
 End Sub
 
 Private Sub LoadButtons()
@@ -149,38 +154,43 @@ Private Sub LoadButtons()
     
     Set LastButtonPressed = New clsGraphicalButton
     
-    
-    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarShowSos.jpg", _
-                                    GrhPath & "BotonCerrarRolloverShowSos.jpg", _
-                                    GrhPath & "BotonCerrarClickShowSos.jpg", Me)
+    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarShowSos.jpg", GrhPath & "BotonCerrarRolloverShowSos.jpg", GrhPath & "BotonCerrarClickShowSos.jpg", Me)
+
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgCerrar_Click()
     Me.Visible = False
     List1.Clear
+
 End Sub
 
 Private Sub list1_Click()
     Dim ind As Integer
     ind = Val(ReadField(2, List1.List(List1.ListIndex), Asc("-")))
+
 End Sub
 
 Private Sub List1_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+
     If Button = vbRightButton Then
         PopupMenu menU_usuario
+
     End If
 
 End Sub
 
 Private Sub List1_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Sub mnuBorrar_Click()
+
     If List1.ListIndex < 0 Then Exit Sub
     'Pablo (ToxicWaste)
     Dim aux As String
@@ -190,6 +200,7 @@ Private Sub mnuBorrar_Click()
     'Call WriteSOSRemove(List1.List(List1.listIndex))
     
     List1.RemoveItem List1.ListIndex
+
 End Sub
 
 Private Sub mnuIR_Click()
@@ -207,6 +218,7 @@ Private Sub mnutraer_Click()
     Dim aux As String
     aux = mid$(ReadField(1, List1.List(List1.ListIndex), Asc("-")), 10, Len(ReadField(1, List1.List(List1.ListIndex), Asc("-"))))
     Call WriteSummonChar(aux)
+
     'Pablo (ToxicWaste)
     'Call WriteSummonChar(ReadField(1, List1.List(List1.listIndex), Asc("-")))
 End Sub

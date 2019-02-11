@@ -3,16 +3,17 @@ Option Explicit
 
 Public ParticleTexture(1 To 15) As Direct3DTexture8
 
-Public Const DegreeToRadian As Single = 0.01745329251994 'Pi / 180
+Public Const DegreeToRadian     As Single = 0.01745329251994 'Pi / 180
 
-Public WeatherEffectIndex As Integer
+Public WeatherEffectIndex       As Integer
 
-Public OnRampage As Long
-Public OnRampageImg As Long
-Public OnRampageImgGrh As Integer
-Public LastEffect As Integer
+Public OnRampage                As Long
+Public OnRampageImg             As Long
+Public OnRampageImgGrh          As Integer
+Public LastEffect               As Integer
 
 Private Type Effect
+
     X As Single
     Y As Single
     GoToX As Single
@@ -34,38 +35,42 @@ Private Type Effect
     BindToChar As Integer       'Setting this value will bind the effect to move towards the character
     BindSpeed As Single         'How fast the effect moves towards the character
     BoundToMap As Byte          'If the effect is bound to the map or not (used only by the map editor)
+
 End Type
 
-Public NumEffects As Byte   'Maximum number of effects at once
-Public Effect() As Effect   'List of all the active effects
+Public NumEffects                       As Byte   'Maximum number of effects at once
+Public Effect()                         As Effect   'List of all the active effects
 
-Public Const EffectNum_Fire As Byte = 1             'Burn baby, burn! Flame from a central point that blows in a specified direction
-Public Const EffectNum_Snow As Byte = 2             'Snow that covers the screen - weather effect
-Public Const EffectNum_Heal As Byte = 3             'Healing effect that can bind to a character, ankhs float up and fade
-Public Const EffectNum_Bless As Byte = 4            'Following three effects are same: create a circle around the central point
-Public Const EffectNum_Protection As Byte = 5       '   (often the character) and makes the given particle on the perimeter
-Public Const EffectNum_Strengthen As Byte = 6       '   which float up and fade out
-Public Const EffectNum_Rain As Byte = 7             'Exact same as snow, but moves much faster and more alpha value - weather effect
+Public Const EffectNum_Fire             As Byte = 1             'Burn baby, burn! Flame from a central point that blows in a specified direction
+Public Const EffectNum_Snow             As Byte = 2             'Snow that covers the screen - weather effect
+Public Const EffectNum_Heal             As Byte = 3             'Healing effect that can bind to a character, ankhs float up and fade
+Public Const EffectNum_Bless            As Byte = 4            'Following three effects are same: create a circle around the central point
+Public Const EffectNum_Protection       As Byte = 5       '   (often the character) and makes the given particle on the perimeter
+Public Const EffectNum_Strengthen       As Byte = 6       '   which float up and fade out
+Public Const EffectNum_Rain             As Byte = 7             'Exact same as snow, but moves much faster and more alpha value - weather effect
 Public Const EffectNum_EquationTemplate As Byte = 8 'Template for creating particle effects through equations - a page with some equations can be found here: http://www.vbgore.com/modules.php?name=Forums&file=viewtopic&t=221
-Public Const EffectNum_Waterfall As Byte = 9        'Waterfall effect
-Public Const EffectNum_Summon As Byte = 10          'Summon effect
-Public Const EffectNum_Rayo As Byte = 11
-Public Const EffectNum_Smoke As Byte = 12
+Public Const EffectNum_Waterfall        As Byte = 9        'Waterfall effect
+Public Const EffectNum_Summon           As Byte = 10          'Summon effect
+Public Const EffectNum_Rayo             As Byte = 11
+Public Const EffectNum_Smoke            As Byte = 12
 
 'Effect Spell
-Public SpellGrhIndex As Integer
+Public SpellGrhIndex                    As Integer
 
-Private Declare Sub ZeroMemory Lib "kernel32.dll" Alias "RtlZeroMemory" (ByRef destination As Any, ByVal length As Long)
+Private Declare Sub ZeroMemory _
+                Lib "kernel32.dll" _
+                Alias "RtlZeroMemory" (ByRef destination As Any, _
+                                       ByVal length As Long)
 
 Public Declare Function timeGetTime Lib "winmm.dll" () As Long
 
 Sub Engine_Init_ParticleEngine(Optional ByVal SkipToTextures As Boolean = False)
-'*****************************************************************
-'Loads all particles into memory - unlike normal textures, these stay in memory. This isn't
-'done for any reason in particular, they just use so little memory since they are so small
-'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_Init_ParticleEngine
-'*****************************************************************
-Dim i As Byte
+    '*****************************************************************
+    'Loads all particles into memory - unlike normal textures, these stay in memory. This isn't
+    'done for any reason in particular, they just use so little memory since they are so small
+    'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_Init_ParticleEngine
+    '*****************************************************************
+    Dim i As Byte
 
     If Not SkipToTextures Then
         'Set the particles texture
@@ -75,20 +80,19 @@ Dim i As Byte
     End If
     
     For i = 1 To UBound(ParticleTexture())
+
         If ParticleTexture(i) Is Nothing Then Set ParticleTexture(i) = Nothing
         Set ParticleTexture(i) = DirectD3D8.CreateTextureFromFileEx(DirectDevice, App.path & "\graficos\p" & i & ".png", D3DX_DEFAULT, D3DX_DEFAULT, D3DX_DEFAULT, 0, D3DFMT_UNKNOWN, D3DPOOL_MANAGED, D3DX_FILTER_POINT, D3DX_FILTER_POINT, &HFF000000, ByVal 0, ByVal 0)
     Next i
 
 End Sub
 
-
-
 Private Function Effect_FToDW(f As Single) As Long
-'*****************************************************************
-'Converts a float to a D-Word, or in Visual Basic terms, a Single to a Long
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_FToDW
-'*****************************************************************
-Dim buf As D3DXBuffer
+    '*****************************************************************
+    'Converts a float to a D-Word, or in Visual Basic terms, a Single to a Long
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_FToDW
+    '*****************************************************************
+    Dim buf As D3DXBuffer
 
     'Converts a single into a long (Float to DWORD)
     Set buf = DirectD3D8.CreateBuffer(4)
@@ -97,13 +101,12 @@ Dim buf As D3DXBuffer
 
 End Function
 
-
 Sub Effect_Kill(ByVal EffectIndex As Integer, Optional ByVal KillAll As Boolean = False)
-'*****************************************************************
-'Kills (stops) a single effect or all effects
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Kill
-'*****************************************************************
-Dim LoopC As Long
+    '*****************************************************************
+    'Kills (stops) a single effect or all effects
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Kill
+    '*****************************************************************
+    Dim LoopC As Long
 
     'Check If To Kill All Effects
     If KillAll = True Then
@@ -126,19 +129,22 @@ Dim LoopC As Long
 End Sub
 
 Private Function Effect_NextOpenSlot() As Integer
-'*****************************************************************
-'Finds the next open effects index
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_NextOpenSlot
-'*****************************************************************
-Dim EffectIndex As Integer
+    '*****************************************************************
+    'Finds the next open effects index
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_NextOpenSlot
+    '*****************************************************************
+    Dim EffectIndex As Integer
 
     'Find The Next Open Effect Slot
     Do
         EffectIndex = EffectIndex + 1   'Check The Next Slot
+
         If EffectIndex > NumEffects Then    'Dont Go Over Maximum Amount
             Effect_NextOpenSlot = -1
             Exit Function
+
         End If
+
     Loop While Effect(EffectIndex).Used = True    'Check Next If Effect Is In Use
 
     'Return the next open slot
@@ -153,13 +159,11 @@ Dim EffectIndex As Integer
 
 End Function
 
-
-
-
-Public Sub Effect_Render(ByVal EffectIndex As Integer, Optional ByVal SetRenderStates As Boolean = True)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Render
-'*****************************************************************
+Public Sub Effect_Render(ByVal EffectIndex As Integer, _
+                         Optional ByVal SetRenderStates As Boolean = True)
+    '*****************************************************************
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Render
+    '*****************************************************************
 
     'Check if we have the device
     If DirectDevice.TestCooperativeLevel <> D3D_OK Then Exit Sub
@@ -182,14 +186,15 @@ Public Sub Effect_Render(ByVal EffectIndex As Integer, Optional ByVal SetRenderS
 End Sub
 
 Function Effect_Snow_Begin(ByVal Gfx As Integer, ByVal Particles As Integer) As Integer
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Snow_Begin
-'*****************************************************************
-Dim EffectIndex As Integer
-Dim LoopC As Long
+    '*****************************************************************
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Snow_Begin
+    '*****************************************************************
+    Dim EffectIndex As Integer
+    Dim LoopC       As Long
 
     'Get the next open effect slot
     EffectIndex = Effect_NextOpenSlot
+
     If EffectIndex = -1 Then Exit Function
 
     'Return the index of the used slot
@@ -224,10 +229,12 @@ Dim LoopC As Long
 
 End Function
 
-Private Sub Effect_Snow_Reset(ByVal EffectIndex As Integer, ByVal Index As Long, Optional ByVal FirstReset As Byte = 0)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Snow_Reset
-'*****************************************************************
+Private Sub Effect_Snow_Reset(ByVal EffectIndex As Integer, _
+                              ByVal Index As Long, _
+                              Optional ByVal FirstReset As Byte = 0)
+    '*****************************************************************
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Snow_Reset
+    '*****************************************************************
 
     If FirstReset = 1 Then
 
@@ -238,6 +245,7 @@ Private Sub Effect_Snow_Reset(ByVal EffectIndex As Integer, ByVal Index As Long,
 
         'Any reset after first
         Effect(EffectIndex).Particles(Index).ResetIt -200 + (Rnd * (frmMain.ScaleWidth + 400)), -15 - Rnd * 185, Rnd * 5, 5 + Rnd * 3, 0, 0
+
         If Effect(EffectIndex).Particles(Index).sngX < -20 Then Effect(EffectIndex).Particles(Index).sngY = Rnd * (frmMain.ScaleHeight + 50)
         If Effect(EffectIndex).Particles(Index).sngX > frmMain.ScaleWidth Then Effect(EffectIndex).Particles(Index).sngY = Rnd * (frmMain.ScaleHeight + 50)
         If Effect(EffectIndex).Particles(Index).sngY > frmMain.ScaleHeight Then Effect(EffectIndex).Particles(Index).sngX = Rnd * (frmMain.ScaleWidth + 50)
@@ -250,11 +258,11 @@ Private Sub Effect_Snow_Reset(ByVal EffectIndex As Integer, ByVal Index As Long,
 End Sub
 
 Private Sub Effect_Snow_Update(ByVal EffectIndex As Integer)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Snow_Update
-'*****************************************************************
-Dim ElapsedTime As Single
-Dim LoopC As Long
+    '*****************************************************************
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Snow_Update
+    '*****************************************************************
+    Dim ElapsedTime As Single
+    Dim LoopC       As Long
 
     'Calculate the time difference
     ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
@@ -296,12 +304,13 @@ Dim LoopC As Long
 End Sub
 
 Sub Effect_UpdateAll()
-If ClientSetup.ParticleEngine = False And bRain = False Then Exit Sub
-'*****************************************************************
-'Updates all of the effects and renders them
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_UpdateAll
-'*****************************************************************
-Dim LoopC As Long
+
+    If ClientSetup.ParticleEngine = False And bRain = False Then Exit Sub
+    '*****************************************************************
+    'Updates all of the effects and renders them
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_UpdateAll
+    '*****************************************************************
+    Dim LoopC As Long
 
     'Make sure we have effects
     If NumEffects = 0 Then Exit Sub
@@ -331,6 +340,7 @@ Dim LoopC As Long
                 If Effect(LoopC).EffectNum = EffectNum_Summon Then Effect_Summon_Update LoopC
                 If Effect(LoopC).EffectNum = EffectNum_Rayo Then Effect_Rayo_Update LoopC
                 If Effect(LoopC).EffectNum = EffectNum_Smoke Then Effect_Smoke_Update LoopC
+
             End If
             
             If Effect(LoopC).EffectNum = EffectNum_Rain Then Effect_Rain_Update LoopC
@@ -349,14 +359,15 @@ Dim LoopC As Long
 End Sub
 
 Function Effect_Rain_Begin(ByVal Gfx As Integer, ByVal Particles As Integer) As Integer
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Rain_Begin
-'*****************************************************************
-Dim EffectIndex As Integer
-Dim LoopC As Long
+    '*****************************************************************
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Rain_Begin
+    '*****************************************************************
+    Dim EffectIndex As Integer
+    Dim LoopC       As Long
 
     'Get the next open effect slot
     EffectIndex = Effect_NextOpenSlot
+
     If EffectIndex = -1 Then Exit Function
 
     'Return the index of the used slot
@@ -391,10 +402,12 @@ Dim LoopC As Long
 
 End Function
 
-Private Sub Effect_Rain_Reset(ByVal EffectIndex As Integer, ByVal Index As Long, Optional ByVal FirstReset As Byte = 0)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Rain_Reset
-'*****************************************************************
+Private Sub Effect_Rain_Reset(ByVal EffectIndex As Integer, _
+                              ByVal Index As Long, _
+                              Optional ByVal FirstReset As Byte = 0)
+    '*****************************************************************
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Rain_Reset
+    '*****************************************************************
 
     If FirstReset = 1 Then
 
@@ -405,6 +418,7 @@ Private Sub Effect_Rain_Reset(ByVal EffectIndex As Integer, ByVal Index As Long,
 
         'Any reset after first
         Effect(EffectIndex).Particles(Index).ResetIt -200 + (Rnd * 1200), -15 - Rnd * 185, Rnd * 5, 25 + Rnd * 12, 0, 0
+
         If Effect(EffectIndex).Particles(Index).sngX < -20 Then Effect(EffectIndex).Particles(Index).sngY = Rnd * (frmMain.ScaleHeight + 50)
         If Effect(EffectIndex).Particles(Index).sngX > frmMain.ScaleWidth Then Effect(EffectIndex).Particles(Index).sngY = Rnd * (frmMain.ScaleHeight + 50)
         If Effect(EffectIndex).Particles(Index).sngY > frmMain.ScaleHeight Then Effect(EffectIndex).Particles(Index).sngX = Rnd * (frmMain.ScaleWidth + 50)
@@ -417,11 +431,11 @@ Private Sub Effect_Rain_Reset(ByVal EffectIndex As Integer, ByVal Index As Long,
 End Sub
 
 Private Sub Effect_Rain_Update(ByVal EffectIndex As Integer)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Rain_Update
-'*****************************************************************
-Dim ElapsedTime As Single
-Dim LoopC As Long
+    '*****************************************************************
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Rain_Update
+    '*****************************************************************
+    Dim ElapsedTime As Single
+    Dim LoopC       As Long
 
     'Calculate the time difference
     ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
@@ -462,19 +476,22 @@ Dim LoopC As Long
 
 End Sub
 
-
-
-Function Effect_EquationTemplate_Begin(ByVal X As Single, ByVal Y As Single, ByVal Gfx As Integer, ByVal Particles As Integer, Optional ByVal Progression As Single = 1) As Integer
-'*****************************************************************
-'Particle effect template for effects as described on the
-'wiki page: http://www.vbgore.com/Particle_effect_equations
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_EquationTemplate_Begin
-'*****************************************************************
-Dim EffectIndex As Integer
-Dim LoopC As Long
+Function Effect_EquationTemplate_Begin(ByVal X As Single, _
+                                       ByVal Y As Single, _
+                                       ByVal Gfx As Integer, _
+                                       ByVal Particles As Integer, _
+                                       Optional ByVal Progression As Single = 1) As Integer
+    '*****************************************************************
+    'Particle effect template for effects as described on the
+    'wiki page: http://www.vbgore.com/Particle_effect_equations
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_EquationTemplate_Begin
+    '*****************************************************************
+    Dim EffectIndex As Integer
+    Dim LoopC       As Long
 
     'Get the next open effect slot
     EffectIndex = Effect_NextOpenSlot
+
     If EffectIndex = -1 Then Exit Function
 
     'Return the index of the used slot
@@ -512,13 +529,14 @@ Dim LoopC As Long
 
 End Function
 
-Private Sub Effect_EquationTemplate_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_EquationTemplate_Reset
-'*****************************************************************
-Dim X As Single
-Dim Y As Single
-Dim r As Single
+Private Sub Effect_EquationTemplate_Reset(ByVal EffectIndex As Integer, _
+                                          ByVal Index As Long)
+    '*****************************************************************
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_EquationTemplate_Reset
+    '*****************************************************************
+    Dim X As Single
+    Dim Y As Single
+    Dim r As Single
  
     Effect(EffectIndex).Progression = Effect(EffectIndex).Progression + 0.1
     r = (Index / 20) * Exp(Index / Effect(EffectIndex).Progression Mod 3)
@@ -528,14 +546,15 @@ Dim r As Single
     'Reset the particle
     Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).X + X, Effect(EffectIndex).Y + Y, 0, 0, 0, 0
     Effect(EffectIndex).Particles(Index).ResetColor 1, 1, 1, 1, 0.2 + (Rnd * 0.2)
+
 End Sub
 
 Private Sub Effect_EquationTemplate_Update(ByVal EffectIndex As Integer)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_EquationTemplate_Update
-'*****************************************************************
-Dim ElapsedTime As Single
-Dim LoopC As Long
+    '*****************************************************************
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_EquationTemplate_Update
+    '*****************************************************************
+    Dim ElapsedTime As Single
+    Dim LoopC       As Long
 
     'Calculate The Time Difference
     ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
@@ -590,16 +609,21 @@ Dim LoopC As Long
 
 End Sub
 
-
-Function Effect_Fire_Begin(ByVal X As Single, ByVal Y As Single, ByVal Gfx As Integer, ByVal Particles As Integer, Optional ByVal Direction As Integer = 180, Optional ByVal Progression As Single = 1) As Integer
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Fire_Begin
-'*****************************************************************
-Dim EffectIndex As Integer
-Dim LoopC As Long
+Function Effect_Fire_Begin(ByVal X As Single, _
+                           ByVal Y As Single, _
+                           ByVal Gfx As Integer, _
+                           ByVal Particles As Integer, _
+                           Optional ByVal Direction As Integer = 180, _
+                           Optional ByVal Progression As Single = 1) As Integer
+    '*****************************************************************
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Fire_Begin
+    '*****************************************************************
+    Dim EffectIndex As Integer
+    Dim LoopC       As Long
 
     'Get the next open effect slot
     EffectIndex = Effect_NextOpenSlot
+
     If EffectIndex = -1 Then Exit Function
 
     'Return the index of the used slot
@@ -639,9 +663,9 @@ Dim LoopC As Long
 End Function
 
 Private Sub Effect_Fire_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Fire_Reset
-'*****************************************************************
+    '*****************************************************************
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Fire_Reset
+    '*****************************************************************
 
     'Reset the particle
     Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).X - 10 + Rnd * 20, Effect(EffectIndex).Y - 10 + Rnd * 20, -Sin((Effect(EffectIndex).Direction + (Rnd * 70) - 35) * DegreeToRadian) * 8, Cos((Effect(EffectIndex).Direction + (Rnd * 70) - 35) * DegreeToRadian) * 8, 0, 0
@@ -650,11 +674,11 @@ Private Sub Effect_Fire_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
 End Sub
 
 Private Sub Effect_Fire_Update(ByVal EffectIndex As Integer)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Fire_Update
-'*****************************************************************
-Dim ElapsedTime As Single
-Dim LoopC As Long
+    '*****************************************************************
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Fire_Update
+    '*****************************************************************
+    Dim ElapsedTime As Single
+    Dim LoopC       As Long
 
     'Calculate The Time Difference
     ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
@@ -709,15 +733,21 @@ Dim LoopC As Long
 
 End Sub
 
-Function Effect_Protection_Begin(ByVal X As Single, ByVal Y As Single, ByVal Gfx As Integer, ByVal Particles As Integer, Optional ByVal Size As Byte = 30, Optional ByVal Time As Single = 10) As Integer
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Protection_Begin
-'*****************************************************************
-Dim EffectIndex As Integer
-Dim LoopC As Long
+Function Effect_Protection_Begin(ByVal X As Single, _
+                                 ByVal Y As Single, _
+                                 ByVal Gfx As Integer, _
+                                 ByVal Particles As Integer, _
+                                 Optional ByVal Size As Byte = 30, _
+                                 Optional ByVal Time As Single = 10) As Integer
+    '*****************************************************************
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Protection_Begin
+    '*****************************************************************
+    Dim EffectIndex As Integer
+    Dim LoopC       As Long
 
     'Get the next open effect slot
     EffectIndex = Effect_NextOpenSlot
+
     If EffectIndex = -1 Then Exit Function
 
     'Return the index of the used slot
@@ -757,12 +787,12 @@ Dim LoopC As Long
 End Function
 
 Private Sub Effect_Protection_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Protection_Reset
-'*****************************************************************
-Dim a As Single
-Dim X As Single
-Dim Y As Single
+    '*****************************************************************
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Protection_Reset
+    '*****************************************************************
+    Dim a As Single
+    Dim X As Single
+    Dim Y As Single
 
     'Get the positions
     a = Rnd * 360 * DegreeToRadian
@@ -776,11 +806,11 @@ Dim Y As Single
 End Sub
 
 Private Sub Effect_Protection_Update(ByVal EffectIndex As Integer)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Protection_Update
-'*****************************************************************
-Dim ElapsedTime As Single
-Dim LoopC As Long
+    '*****************************************************************
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Protection_Update
+    '*****************************************************************
+    Dim ElapsedTime As Single
+    Dim LoopC       As Long
 
     'Calculate The Time Difference
     ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
@@ -838,15 +868,19 @@ Dim LoopC As Long
 
 End Sub
 
-Function Effect_Waterfall_Begin(ByVal X As Single, ByVal Y As Single, ByVal Gfx As Integer, ByVal Particles As Integer) As Integer
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Waterfall_Begin
-'*****************************************************************
-Dim EffectIndex As Integer
-Dim LoopC As Long
+Function Effect_Waterfall_Begin(ByVal X As Single, _
+                                ByVal Y As Single, _
+                                ByVal Gfx As Integer, _
+                                ByVal Particles As Integer) As Integer
+    '*****************************************************************
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Waterfall_Begin
+    '*****************************************************************
+    Dim EffectIndex As Integer
+    Dim LoopC       As Long
 
     'Get the next open effect slot
     EffectIndex = Effect_NextOpenSlot
+
     If EffectIndex = -1 Then Exit Function
 
     'Return the index of the used slot
@@ -884,25 +918,27 @@ Dim LoopC As Long
 End Function
 
 Private Sub Effect_Waterfall_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Waterfall_Reset
-'*****************************************************************
+    '*****************************************************************
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Waterfall_Reset
+    '*****************************************************************
 
     If Int(Rnd * 10) = 1 Then
         Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).X + (Rnd * 332), Effect(EffectIndex).Y + (Rnd * 130), 0, 8 + (Rnd * 6), 0, 0
     Else
         Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).X + (Rnd * 332), Effect(EffectIndex).Y + (Rnd * 10), 0, 8 + (Rnd * 6), 0, 0
+
     End If
+
     Effect(EffectIndex).Particles(Index).ResetColor 0.1, 0.1, 0.2, 0.2 + (Rnd * 0.4), 0.1
     
 End Sub
 
 Private Sub Effect_Waterfall_Update(ByVal EffectIndex As Integer)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Waterfall_Update
-'*****************************************************************
-Dim ElapsedTime As Single
-Dim LoopC As Long
+    '*****************************************************************
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Waterfall_Update
+    '*****************************************************************
+    Dim ElapsedTime As Single
+    Dim LoopC       As Long
 
     'Calculate The Time Difference
     ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
@@ -945,15 +981,20 @@ Dim LoopC As Long
 
 End Sub
 
-Function Effect_Summon_Begin(ByVal X As Single, ByVal Y As Single, ByVal Gfx As Integer, ByVal Particles As Integer, Optional ByVal Progression As Single = 0) As Integer
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Summon_Begin
-'*****************************************************************
-Dim EffectIndex As Integer
-Dim LoopC As Long
+Function Effect_Summon_Begin(ByVal X As Single, _
+                             ByVal Y As Single, _
+                             ByVal Gfx As Integer, _
+                             ByVal Particles As Integer, _
+                             Optional ByVal Progression As Single = 0) As Integer
+    '*****************************************************************
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Summon_Begin
+    '*****************************************************************
+    Dim EffectIndex As Integer
+    Dim LoopC       As Long
 
     'Get the next open effect slot
     EffectIndex = Effect_NextOpenSlot
+
     If EffectIndex = -1 Then Exit Function
 
     'Return the index of the used slot
@@ -992,18 +1033,20 @@ Dim LoopC As Long
 End Function
 
 Private Sub Effect_Summon_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Summon_Reset
-'*****************************************************************
-Dim X As Single
-Dim Y As Single
-Dim r As Single
+    '*****************************************************************
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Summon_Reset
+    '*****************************************************************
+    Dim X As Single
+    Dim Y As Single
+    Dim r As Single
     
     If Effect(EffectIndex).Progression > 1000 Then
         Effect(EffectIndex).Progression = Effect(EffectIndex).Progression + 1.4
     Else
         Effect(EffectIndex).Progression = Effect(EffectIndex).Progression + 0.5
+
     End If
+
     r = (Index / 30) * Exp(Index / Effect(EffectIndex).Progression)
     X = r * Cos(Index)
     Y = r * Sin(Index)
@@ -1015,11 +1058,11 @@ Dim r As Single
 End Sub
 
 Private Sub Effect_Summon_Update(ByVal EffectIndex As Integer)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Summon_Update
-'*****************************************************************
-Dim ElapsedTime As Single
-Dim LoopC As Long
+    '*****************************************************************
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Summon_Update
+    '*****************************************************************
+    Dim ElapsedTime As Single
+    Dim LoopC       As Long
 
     'Calculate The Time Difference
     ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
@@ -1073,15 +1116,22 @@ Dim LoopC As Long
     Next LoopC
 
 End Sub
-Function Effect_Bless_Begin(ByVal X As Single, ByVal Y As Single, ByVal Gfx As Integer, ByVal Particles As Integer, Optional ByVal Size As Byte = 30, Optional ByVal Time As Single = 10) As Integer
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Bless_Begin
-'*****************************************************************
-Dim EffectIndex As Integer
-Dim LoopC As Long
+
+Function Effect_Bless_Begin(ByVal X As Single, _
+                            ByVal Y As Single, _
+                            ByVal Gfx As Integer, _
+                            ByVal Particles As Integer, _
+                            Optional ByVal Size As Byte = 30, _
+                            Optional ByVal Time As Single = 10) As Integer
+    '*****************************************************************
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Bless_Begin
+    '*****************************************************************
+    Dim EffectIndex As Integer
+    Dim LoopC       As Long
 
     'Get the next open effect slot
     EffectIndex = Effect_NextOpenSlot
+
     If EffectIndex = -1 Then Exit Function
 
     'Return the index of the used slot
@@ -1121,12 +1171,12 @@ Dim LoopC As Long
 End Function
 
 Private Sub Effect_Bless_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Bless_Reset
-'*****************************************************************
-Dim a As Single
-Dim X As Single
-Dim Y As Single
+    '*****************************************************************
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Bless_Reset
+    '*****************************************************************
+    Dim a As Single
+    Dim X As Single
+    Dim Y As Single
 
     'Get the positions
     a = Rnd * 360 * DegreeToRadian
@@ -1140,11 +1190,11 @@ Dim Y As Single
 End Sub
 
 Private Sub Effect_Bless_Update(ByVal EffectIndex As Integer)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Bless_Update
-'*****************************************************************
-Dim ElapsedTime As Single
-Dim LoopC As Long
+    '*****************************************************************
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Bless_Update
+    '*****************************************************************
+    Dim ElapsedTime As Single
+    Dim LoopC       As Long
 
     'Calculate The Time Difference
     ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
@@ -1202,15 +1252,20 @@ Dim LoopC As Long
 
 End Sub
 
-Function Effect_Heal_Begin(ByVal X As Single, ByVal Y As Single, ByVal Gfx As Integer, ByVal Particles As Integer, Optional ByVal Progression As Single = 1) As Integer
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Heal_Begin
-'*****************************************************************
-Dim EffectIndex As Integer
-Dim LoopC As Long
+Function Effect_Heal_Begin(ByVal X As Single, _
+                           ByVal Y As Single, _
+                           ByVal Gfx As Integer, _
+                           ByVal Particles As Integer, _
+                           Optional ByVal Progression As Single = 1) As Integer
+    '*****************************************************************
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Heal_Begin
+    '*****************************************************************
+    Dim EffectIndex As Integer
+    Dim LoopC       As Long
 
     'Get the next open effect slot
     EffectIndex = Effect_NextOpenSlot
+
     If EffectIndex = -1 Then Exit Function
 
     'Return the index of the used slot
@@ -1251,9 +1306,9 @@ Dim LoopC As Long
 End Function
 
 Private Sub Effect_Heal_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Heal_Reset
-'*****************************************************************
+    '*****************************************************************
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Heal_Reset
+    '*****************************************************************
 
     'Reset the particle
     Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).X - 10 + Rnd * 20, Effect(EffectIndex).Y - 10 + Rnd * 20, -Sin((180 + (Rnd * 90) - 45) * 0.0174533) * 8 + (Rnd * 3), Cos((180 + (Rnd * 90) - 45) * 0.0174533) * 8 + (Rnd * 3), 0, 0
@@ -1262,12 +1317,12 @@ Private Sub Effect_Heal_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
 End Sub
 
 Private Sub Effect_Heal_Update(ByVal EffectIndex As Integer)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Heal_Update
-'*****************************************************************
-Dim ElapsedTime As Single
-Dim LoopC As Long
-Dim i As Integer
+    '*****************************************************************
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Heal_Update
+    '*****************************************************************
+    Dim ElapsedTime As Single
+    Dim LoopC       As Long
+    Dim i           As Integer
 
     'Calculate the time difference
     ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
@@ -1322,15 +1377,21 @@ Dim i As Integer
 
 End Sub
 
-Function Effect_Strengthen_Begin(ByVal X As Single, ByVal Y As Single, ByVal Gfx As Integer, ByVal Particles As Integer, Optional ByVal Size As Byte = 30, Optional ByVal Time As Single = 10) As Integer
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Strengthen_Begin
-'*****************************************************************
-Dim EffectIndex As Integer
-Dim LoopC As Long
+Function Effect_Strengthen_Begin(ByVal X As Single, _
+                                 ByVal Y As Single, _
+                                 ByVal Gfx As Integer, _
+                                 ByVal Particles As Integer, _
+                                 Optional ByVal Size As Byte = 30, _
+                                 Optional ByVal Time As Single = 10) As Integer
+    '*****************************************************************
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Strengthen_Begin
+    '*****************************************************************
+    Dim EffectIndex As Integer
+    Dim LoopC       As Long
 
     'Get the next open effect slot
     EffectIndex = Effect_NextOpenSlot
+
     If EffectIndex = -1 Then Exit Function
 
     'Return the index of the used slot
@@ -1370,12 +1431,12 @@ Dim LoopC As Long
 End Function
 
 Private Sub Effect_Strengthen_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Strengthen_Reset
-'*****************************************************************
-Dim a As Single
-Dim X As Single
-Dim Y As Single
+    '*****************************************************************
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Strengthen_Reset
+    '*****************************************************************
+    Dim a As Single
+    Dim X As Single
+    Dim Y As Single
 
     'Get the positions
     a = Rnd * 360 * DegreeToRadian
@@ -1389,11 +1450,11 @@ Dim Y As Single
 End Sub
 
 Private Sub Effect_Strengthen_Update(ByVal EffectIndex As Integer)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Strengthen_Update
-'*****************************************************************
-Dim ElapsedTime As Single
-Dim LoopC As Long
+    '*****************************************************************
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Strengthen_Update
+    '*****************************************************************
+    Dim ElapsedTime As Single
+    Dim LoopC       As Long
 
     'Calculate the time difference
     ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
@@ -1451,37 +1512,36 @@ Dim LoopC As Long
 
 End Sub
 
-
 Public Sub SetSpellCast()
-        If frmMain.hlst.List(frmMain.hlst.ListIndex) = "Resucitar" Then
-            SpellGrhIndex = 24665
-            Exit Sub
-        ElseIf frmMain.hlst.List(frmMain.hlst.ListIndex) = "Toxina" Then
-            SpellGrhIndex = 24671
-            Exit Sub
-        ElseIf frmMain.hlst.List(frmMain.hlst.ListIndex) = "Paralizar" Or _
-                frmMain.hlst.List(frmMain.hlst.ListIndex) = "Inmovilizar" Then
-            SpellGrhIndex = 24669
-            Exit Sub
-        ElseIf frmMain.hlst.List(frmMain.hlst.ListIndex) = "Antídoto Mágico" Or _
-                frmMain.hlst.List(frmMain.hlst.ListIndex) = "Curar Heridas Leves" Or _
-                frmMain.hlst.List(frmMain.hlst.ListIndex) = "Curar Heridas Graves" Then
-            SpellGrhIndex = 24673
-            Exit Sub
-        Else
-            SpellGrhIndex = 0
-        End If
+
+    If frmMain.hlst.List(frmMain.hlst.ListIndex) = "Resucitar" Then
+        SpellGrhIndex = 24665
+        Exit Sub
+    ElseIf frmMain.hlst.List(frmMain.hlst.ListIndex) = "Toxina" Then
+        SpellGrhIndex = 24671
+        Exit Sub
+    ElseIf frmMain.hlst.List(frmMain.hlst.ListIndex) = "Paralizar" Or frmMain.hlst.List(frmMain.hlst.ListIndex) = "Inmovilizar" Then
+        SpellGrhIndex = 24669
+        Exit Sub
+    ElseIf frmMain.hlst.List(frmMain.hlst.ListIndex) = "Antídoto Mágico" Or frmMain.hlst.List(frmMain.hlst.ListIndex) = "Curar Heridas Leves" Or frmMain.hlst.List(frmMain.hlst.ListIndex) = "Curar Heridas Graves" Then
+        SpellGrhIndex = 24673
+        Exit Sub
+    Else
+        SpellGrhIndex = 0
+
+    End If
+
 End Sub
 
 Private Sub Effect_UpdateBinding(ByVal EffectIndex As Integer)
  
-'***************************************************
-'Updates the binding of a particle effect to a target, if
-'the effect is bound to a character
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_UpdateBinding
-'***************************************************
-Dim TargetI As Integer
-Dim TargetA As Single
+    '***************************************************
+    'Updates the binding of a particle effect to a target, if
+    'the effect is bound to a character
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_UpdateBinding
+    '***************************************************
+    Dim TargetI As Integer
+    Dim TargetA As Single
  
     'Update position through character binding
     If Effect(EffectIndex).BindToChar > 0 Then
@@ -1492,16 +1552,22 @@ Dim TargetA As Single
         'Check for a valid binding index
         If TargetI > LastChar Then
             Effect(EffectIndex).BindToChar = 0
+
             If Effect(EffectIndex).KillWhenTargetLost Then
                 Effect(EffectIndex).Progression = 0
                 Exit Sub
+
             End If
+
         ElseIf charlist(TargetI).active = 0 Then
             Effect(EffectIndex).BindToChar = 0
+
             If Effect(EffectIndex).KillWhenTargetLost Then
                 Effect(EffectIndex).Progression = 0
                 Exit Sub
+
             End If
+
         Else
  
             'Calculate the X and Y positions
@@ -1526,9 +1592,12 @@ Dim TargetA As Single
             'Check if the effect is close enough to the target to just stick it at the target
             If Effect(EffectIndex).GoToX > -30000 Then
                 If Abs(Effect(EffectIndex).X - Effect(EffectIndex).GoToX) < 6 Then Effect(EffectIndex).X = Effect(EffectIndex).GoToX
+
             End If
+
             If Effect(EffectIndex).GoToY > -30000 Then
                 If Abs(Effect(EffectIndex).Y - Effect(EffectIndex).GoToY) < 6 Then Effect(EffectIndex).Y = Effect(EffectIndex).GoToY
+
             End If
  
             'Check if the position of the effect is equal to that of the target
@@ -1541,24 +1610,31 @@ Dim TargetA As Single
                         Effect(EffectIndex).Progression = 0
                         Effect(EffectIndex).GoToX = Effect(EffectIndex).X
                         Effect(EffectIndex).GoToY = Effect(EffectIndex).Y
+
                     End If
+
                     Exit Sub    'The effect is at the right position, don't update
  
                 End If
+
             End If
  
         End If
+
     End If
  
 End Sub
 
-Public Function Engine_GetAngle(ByVal CenterX As Integer, ByVal CenterY As Integer, ByVal TargetX As Integer, ByVal TargetY As Integer) As Single
-'************************************************************
-'Gets the angle between two points in a 2d plane
-'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_GetAngle
-'************************************************************
-Dim SideA As Single
-Dim SideC As Single
+Public Function Engine_GetAngle(ByVal CenterX As Integer, _
+                                ByVal CenterY As Integer, _
+                                ByVal TargetX As Integer, _
+                                ByVal TargetY As Integer) As Single
+    '************************************************************
+    'Gets the angle between two points in a 2d plane
+    'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_GetAngle
+    '************************************************************
+    Dim SideA As Single
+    Dim SideC As Single
 
     On Error GoTo ErrOut
 
@@ -1572,6 +1648,7 @@ Dim SideC As Single
             'Check for going left (270 degrees)
         Else
             Engine_GetAngle = 270
+
         End If
 
         'Exit the function
@@ -1589,6 +1666,7 @@ Dim SideC As Single
             'Check for going down (180 degrees)
         Else
             Engine_GetAngle = 180
+
         End If
 
         'Exit the function
@@ -1613,7 +1691,7 @@ Dim SideC As Single
 
     'Exit function
 
-Exit Function
+    Exit Function
 
     'Check for error
 ErrOut:
@@ -1621,19 +1699,24 @@ ErrOut:
     'Return a 0 saying there was an error
     Engine_GetAngle = 0
 
-Exit Function
+    Exit Function
 
 End Function
 
-Function Effect_Rayo_Begin(ByVal X As Single, ByVal Y As Single, ByVal Gfx As Integer, ByVal Particles As Integer, Optional ByVal Progression As Single = 1) As Integer
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Rayo_Begin
-'*****************************************************************
-Dim EffectIndex As Integer
-Dim LoopC As Long
+Function Effect_Rayo_Begin(ByVal X As Single, _
+                           ByVal Y As Single, _
+                           ByVal Gfx As Integer, _
+                           ByVal Particles As Integer, _
+                           Optional ByVal Progression As Single = 1) As Integer
+    '*****************************************************************
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Rayo_Begin
+    '*****************************************************************
+    Dim EffectIndex As Integer
+    Dim LoopC       As Long
 
     'Get the next open effect slot
     EffectIndex = Effect_NextOpenSlot
+
     If EffectIndex = -1 Then Exit Function
 
     'Return the index of the used slot
@@ -1674,24 +1757,24 @@ Dim LoopC As Long
 End Function
 
 Private Sub Effect_Rayo_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Rayo_Reset
-'*****************************************************************
+    '*****************************************************************
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Rayo_Reset
+    '*****************************************************************
 
     'Reset the particle
     Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).X - 10 + Rnd * 20, Effect(EffectIndex).Y - 10 + Rnd * 20, -Sin((180 + (Rnd * 90) - 45) * 0.0174533) * 8 + (Rnd * 3), Cos((180 + (Rnd * 90) - 45) * 0.0174533) * 8 + (Rnd * 3), 0, 0
     Effect(EffectIndex).Particles(Index).ResetColor 0, 0.8, 0.8, 0.6 + (Rnd * 0.2), 0.001 + (Rnd * 0.5)
-'      Effect(EffectIndex).Particles(Index).ResetColor (Rnd * 0.8), (Rnd * 0.8), (Rnd * 0.8), 0.6 + (Rnd * 0.2), 0.001 + (Rnd * 0.5)
+    '      Effect(EffectIndex).Particles(Index).ResetColor (Rnd * 0.8), (Rnd * 0.8), (Rnd * 0.8), 0.6 + (Rnd * 0.2), 0.001 + (Rnd * 0.5)
 
 End Sub
 
 Private Sub Effect_Rayo_Update(ByVal EffectIndex As Integer)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Rayo_Update
-'*****************************************************************
-Dim ElapsedTime As Single
-Dim LoopC As Long
-Dim i As Integer
+    '*****************************************************************
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Rayo_Update
+    '*****************************************************************
+    Dim ElapsedTime As Single
+    Dim LoopC       As Long
+    Dim i           As Integer
 
     'Calculate the time difference
     ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
@@ -1746,8 +1829,8 @@ Dim i As Integer
 
 End Sub
 
-
 Sub Engine_Weather_Update()
+
     If bRain And bLluvia(UserMap) = 1 And CurMapAmbient.Rain = True Then
         If WeatherEffectIndex <= 0 Then
             WeatherEffectIndex = Effect_Rain_Begin(9, 500)
@@ -1756,7 +1839,9 @@ Sub Engine_Weather_Update()
             WeatherEffectIndex = Effect_Rain_Begin(9, 500)
         ElseIf Not Effect(WeatherEffectIndex).Used Then
             WeatherEffectIndex = Effect_Rain_Begin(9, 500)
+
         End If
+
     End If
 
     If CurMapAmbient.Snow = True Then
@@ -1767,30 +1852,34 @@ Sub Engine_Weather_Update()
             WeatherEffectIndex = Effect_Snow_Begin(14, 200)
         ElseIf Not Effect(WeatherEffectIndex).Used Then
             WeatherEffectIndex = Effect_Snow_Begin(14, 200)
+
         End If
+
     End If
             
     If CurMapAmbient.Fog <> -1 Then
         Engine_Weather_UpdateFog
+
     End If
     
     If OnRampageImgGrh <> 0 Then
         DDrawTransGrhIndextoSurface OnRampageImgGrh, 0, 0, 0, Normal_RGBList(), 0, True
+
     End If
     
 End Sub
 
 Sub Engine_Weather_UpdateFog()
-'*****************************************************************
-'Update the fog effects
-'*****************************************************************
+    '*****************************************************************
+    'Update the fog effects
+    '*****************************************************************
 
-Dim i As Long
-Dim X As Long
-Dim Y As Long
-Dim CC(3) As Long
-Dim ElapsedTime As Single
-ElapsedTime = Engine_ElapsedTime
+    Dim i           As Long
+    Dim X           As Long
+    Dim Y           As Long
+    Dim CC(3)       As Long
+    Dim ElapsedTime As Single
+    ElapsedTime = Engine_ElapsedTime
 
     If WeatherFogCount = 0 Then WeatherFogCount = 13
 
@@ -1800,27 +1889,34 @@ ElapsedTime = Engine_ElapsedTime
     Do While WeatherFogX1 < -512
         WeatherFogX1 = WeatherFogX1 + 512
     Loop
+
     Do While WeatherFogY1 < -512
         WeatherFogY1 = WeatherFogY1 + 512
     Loop
+
     Do While WeatherFogX1 > 0
         WeatherFogX1 = WeatherFogX1 - 512
     Loop
+
     Do While WeatherFogY1 > 0
         WeatherFogY1 = WeatherFogY1 - 512
     Loop
     
     WeatherFogX2 = WeatherFogX2 - (ElapsedTime * (0.037 + Rnd * 0.01)) + (LastOffsetX - ParticleOffsetX)
     WeatherFogY2 = WeatherFogY2 - (ElapsedTime * (0.021 + Rnd * 0.01)) + (LastOffsetY - ParticleOffsetY)
+
     Do While WeatherFogX2 < -512
         WeatherFogX2 = WeatherFogX2 + 512
     Loop
+
     Do While WeatherFogY2 < -512
         WeatherFogY2 = WeatherFogY2 + 512
     Loop
+
     Do While WeatherFogX2 > 0
         WeatherFogX2 = WeatherFogX2 - 512
     Loop
+
     Do While WeatherFogY2 > 0
         WeatherFogY2 = WeatherFogY2 - 512
     Loop
@@ -1833,13 +1929,17 @@ ElapsedTime = Engine_ElapsedTime
     CC(2) = D3DColorARGB(CurMapAmbient.Fog, 255, 255, 255)
     CC(3) = D3DColorARGB(CurMapAmbient.Fog, 255, 255, 255)
     CC(0) = D3DColorARGB(CurMapAmbient.Fog, 255, 255, 255)
+
     For i = 1 To WeatherFogCount
         DDrawTransGrhIndextoSurface 27300, (X * 512) + WeatherFogX2, (Y * 512) + WeatherFogY2, 0, CC(), 0, False
         X = X + 1
+
         If X > (1 + (ScreenWidth \ 512)) Then
             X = 0
             Y = Y + 1
+
         End If
+
     Next i
             
     'Render fog 1
@@ -1849,26 +1949,36 @@ ElapsedTime = Engine_ElapsedTime
     CC(2) = D3DColorARGB(CurMapAmbient.Fog / 2, 255, 255, 255)
     CC(3) = D3DColorARGB(CurMapAmbient.Fog / 2, 255, 255, 255)
     CC(0) = D3DColorARGB(CurMapAmbient.Fog / 2, 255, 255, 255)
+
     For i = 1 To WeatherFogCount
         DDrawTransGrhIndextoSurface 27301, (X * 512) + WeatherFogX1, (Y * 512) + WeatherFogY1, 0, CC(), 0, False
         X = X + 1
+
         If X > (2 + (ScreenWidth \ 512)) Then
             X = 0
             Y = Y + 1
+
         End If
+
     Next i
 
 End Sub
 
-Function Effect_Smoke_Begin(ByVal X As Single, ByVal Y As Single, ByVal Gfx As Integer, ByVal Particles As Integer, Optional ByVal Direction As Integer = 180, Optional ByVal Progression As Single = 1) As Integer
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Smoke_Begin
-'*****************************************************************
-Dim EffectIndex As Integer
-Dim LoopC As Long
+Function Effect_Smoke_Begin(ByVal X As Single, _
+                            ByVal Y As Single, _
+                            ByVal Gfx As Integer, _
+                            ByVal Particles As Integer, _
+                            Optional ByVal Direction As Integer = 180, _
+                            Optional ByVal Progression As Single = 1) As Integer
+    '*****************************************************************
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Smoke_Begin
+    '*****************************************************************
+    Dim EffectIndex As Integer
+    Dim LoopC       As Long
 
     'Get the next open effect slot
     EffectIndex = Effect_NextOpenSlot
+
     If EffectIndex = -1 Then Exit Function
 
     'Return the index of the used slot
@@ -1908,9 +2018,9 @@ Dim LoopC As Long
 End Function
 
 Private Sub Effect_Smoke_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Smoke_Reset
-'*****************************************************************
+    '*****************************************************************
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Smoke_Reset
+    '*****************************************************************
 
     'Reset the particle
     'Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).x - 10 + Rnd * 20, Effect(EffectIndex).Y - 10 + Rnd * 20, -Sin((Effect(EffectIndex).Direction + (Rnd * 70) - 35) * DegreeToRadian) * 8, Cos((Effect(EffectIndex).Direction + (Rnd * 70) - 35) * DegreeToRadian) * 8, 0, 0
@@ -1921,11 +2031,11 @@ Private Sub Effect_Smoke_Reset(ByVal EffectIndex As Integer, ByVal Index As Long
 End Sub
 
 Private Sub Effect_Smoke_Update(ByVal EffectIndex As Integer)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Smoke_Update
-'*****************************************************************
-Dim ElapsedTime As Single
-Dim LoopC As Long
+    '*****************************************************************
+    'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Smoke_Update
+    '*****************************************************************
+    Dim ElapsedTime As Single
+    Dim LoopC       As Long
 
     'Calculate The Time Difference
     ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
@@ -1980,52 +2090,56 @@ Dim LoopC As Long
 
 End Sub
 
-
-Public Sub Engine_CreateEffect(ByVal CharIndex As Integer, ByVal Effect As Byte, ByVal X As Single, ByVal Y As Single, ByVal Loops As Integer)
+Public Sub Engine_CreateEffect(ByVal CharIndex As Integer, _
+                               ByVal Effect As Byte, _
+                               ByVal X As Single, _
+                               ByVal Y As Single, _
+                               ByVal Loops As Integer)
 
     If Not ValidNumber(Effect, eNumber_Types.ent_Byte) Then
-            'Call Log_Engine("Error in Engine_CreateEffect, The effect " & Effect & " is not valid.")
+        'Call Log_Engine("Error in Engine_CreateEffect, The effect " & Effect & " is not valid.")
         Exit Sub
+
     End If
         
     Select Case Effect
+
         Case EffectNum_Fire
-        'Case EffectNum_Snow
+
+            'Case EffectNum_Snow
         Case EffectNum_Heal
+
         Case EffectNum_Bless
+
         Case EffectNum_Protection
         
         Case EffectNum_Strengthen
             charlist(CharIndex).ParticleIndex = Effect_Strengthen_Begin(X, Y, 2, 100, 30, CSng(Loops))
             
-        'Case EffectNum_Rain
+            'Case EffectNum_Rain
         Case EffectNum_EquationTemplate
         
-        'Case EffectNum_Waterfall
+            'Case EffectNum_Waterfall
         
         Case EffectNum_Summon
             charlist(CharIndex).ParticleIndex = Effect_Summon_Begin(X, Y, 1, 500, 0.1)
             
         Case EffectNum_Rayo
             charlist(CharIndex).ParticleIndex = Effect_Rayo_Begin(X, Y, 2, 100, -1)
+
     End Select
 
 End Sub
 
-
 Public Function Speed_Particle() As Single
-'***************************************************
-'Author: Standelf
-'Last Modify Date: 06/01/2011
-'***************************************************
+    '***************************************************
+    'Author: Standelf
+    'Last Modify Date: 06/01/2011
+    '***************************************************
 
     Dim ElapsedTime As Single
-        ElapsedTime = Engine_ElapsedTime
-        Speed_Particle = ElapsedTime * 0.2
+    ElapsedTime = Engine_ElapsedTime
+    Speed_Particle = ElapsedTime * 0.2
 
 End Function
-
-
-
-
 

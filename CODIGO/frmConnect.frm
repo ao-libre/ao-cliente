@@ -304,27 +304,28 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private cBotonCrearCuenta As clsGraphicalButton
+Private cBotonCrearCuenta   As clsGraphicalButton
 Private cBotonRecuperarPass As clsGraphicalButton
-Private cBotonManual As clsGraphicalButton
-Private cBotonReglamento As clsGraphicalButton
-Private cBotonCodigoFuente As clsGraphicalButton
-Private cBotonBorrarPj As clsGraphicalButton
-Private cBotonSalir As clsGraphicalButton
-Private cBotonLeerMas As clsGraphicalButton
-Private cBotonForo As clsGraphicalButton
-Private cBotonConectarse As clsGraphicalButton
-Private cBotonTeclas As clsGraphicalButton
+Private cBotonManual        As clsGraphicalButton
+Private cBotonReglamento    As clsGraphicalButton
+Private cBotonCodigoFuente  As clsGraphicalButton
+Private cBotonBorrarPj      As clsGraphicalButton
+Private cBotonSalir         As clsGraphicalButton
+Private cBotonLeerMas       As clsGraphicalButton
+Private cBotonForo          As clsGraphicalButton
+Private cBotonConectarse    As clsGraphicalButton
+Private cBotonTeclas        As clsGraphicalButton
 
 Private Type tRedditPost
+
     Title As String
     URL As String
+
 End Type
 
-Dim Posts() As tRedditPost
+Dim Posts()              As tRedditPost
 
 Public LastButtonPressed As clsGraphicalButton
-
 
 Private Sub Form_Activate()
     
@@ -334,36 +335,41 @@ Private Sub Form_Activate()
     Else
         IPTxt = IPdelServidor
         PortTxt = PuertoDelServidor
+
     End If
     
     Call GetPostsFromReddit
+
 End Sub
 
-
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
+
     If KeyCode = 27 Then
         prgRun = False
+
     End If
+
 End Sub
 
 Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
 
-'Make Server IP and Port box visible
-If KeyCode = vbKeyI And Shift = vbCtrlMask Then
+    'Make Server IP and Port box visible
+    If KeyCode = vbKeyI And Shift = vbCtrlMask Then
     
-    'Port
-    PortTxt.Visible = True
-    'Label4.Visible = True
+        'Port
+        PortTxt.Visible = True
+        'Label4.Visible = True
     
-    'Server IP
-    PortTxt.Text = "7666"
-    IPTxt.Text = "192.168.0.2"
-    IPTxt.Visible = True
-    'Label5.Visible = True
+        'Server IP
+        PortTxt.Text = "7666"
+        IPTxt.Text = "192.168.0.2"
+        IPTxt.Visible = True
+        'Label5.Visible = True
     
-    KeyCode = 0
-    Exit Sub
-End If
+        KeyCode = 0
+        Exit Sub
+
+    End If
 
 End Sub
 
@@ -382,6 +388,7 @@ Private Sub Form_Load()
     Else
         IPTxt = ServersLst(1).Ip
         PortTxt = ServersLst(1).Puerto
+
     End If
 
     version.Caption = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
@@ -399,14 +406,17 @@ Private Sub CheckLicenseAgreement()
     Dim i As Long
     
     For i = 0 To Me.Controls.Count - 1
+
         If Me.Controls(i).Name = "imgCodigoFuente" Then
             Exit For
+
         End If
+
     Next i
     
     If i = Me.Controls.Count Then
-        MsgBox "No debe eliminarse la posibilidad de bajar el código de sus servidor. Caso contrario estarían violando la licencia Affero GPL y con ella derechos de autor, incurriendo de esta forma en un delito punible por ley." & vbCrLf & vbCrLf & vbCrLf & _
-                "Argentum Online es libre, es de todos. Mantengamoslo así. Si tanto te gusta el juego y querés los cambios que hacemos nosotros, compartí los tuyos. Es un cambio justo. Si no estás de acuerdo, no uses nuestro código, pues nadie te obliga o bien utiliza una versión anterior a la 0.12.0.", vbCritical Or vbApplicationModal
+        MsgBox "No debe eliminarse la posibilidad de bajar el código de sus servidor. Caso contrario estarían violando la licencia Affero GPL y con ella derechos de autor, incurriendo de esta forma en un delito punible por ley." & vbCrLf & vbCrLf & vbCrLf & "Argentum Online es libre, es de todos. Mantengamoslo así. Si tanto te gusta el juego y querés los cambios que hacemos nosotros, compartí los tuyos. Es un cambio justo. Si no estás de acuerdo, no uses nuestro código, pues nadie te obliga o bien utiliza una versión anterior a la 0.12.0.", vbCritical Or vbApplicationModal
+
     End If
 
 End Sub
@@ -430,55 +440,36 @@ Private Sub LoadButtons()
     Set cBotonTeclas = New clsGraphicalButton
     
     Set LastButtonPressed = New clsGraphicalButton
-
         
-    Call cBotonCrearCuenta.Initialize(imgCrearCuenta, GrhPath & "BotonCrearCuenta.jpg", _
-                                    GrhPath & "BotonCrearCuentaRollover.jpg", _
-                                    GrhPath & "BotonCrearCuentaClick.jpg", Me)
+    Call cBotonCrearCuenta.Initialize(imgCrearCuenta, GrhPath & "BotonCrearCuenta.jpg", GrhPath & "BotonCrearCuentaRollover.jpg", GrhPath & "BotonCrearCuentaClick.jpg", Me)
                                     
-    Call cBotonRecuperarPass.Initialize(imgRecuperar, GrhPath & "BotonRecuperarPass.jpg", _
-                                    GrhPath & "BotonRecuperarPassRollover.jpg", _
-                                    GrhPath & "BotonRecuperarPassClick.jpg", Me)
+    Call cBotonRecuperarPass.Initialize(imgRecuperar, GrhPath & "BotonRecuperarPass.jpg", GrhPath & "BotonRecuperarPassRollover.jpg", GrhPath & "BotonRecuperarPassClick.jpg", Me)
                                     
-    Call cBotonManual.Initialize(imgManual, GrhPath & "BotonManual.jpg", _
-                                    GrhPath & "BotonManualRollover.jpg", _
-                                    GrhPath & "BotonManualClick.jpg", Me)
+    Call cBotonManual.Initialize(imgManual, GrhPath & "BotonManual.jpg", GrhPath & "BotonManualRollover.jpg", GrhPath & "BotonManualClick.jpg", Me)
                                     
-    Call cBotonReglamento.Initialize(imgReglamento, GrhPath & "BotonReglamento.jpg", _
-                                    GrhPath & "BotonReglamentoRollover.jpg", _
-                                    GrhPath & "BotonReglamentoClick.jpg", Me)
+    Call cBotonReglamento.Initialize(imgReglamento, GrhPath & "BotonReglamento.jpg", GrhPath & "BotonReglamentoRollover.jpg", GrhPath & "BotonReglamentoClick.jpg", Me)
                                     
-    Call cBotonCodigoFuente.Initialize(imgCodigoFuente, GrhPath & "BotonCodigoFuente.jpg", _
-                                    GrhPath & "BotonCodigoFuenteRollover.jpg", _
-                                    GrhPath & "BotonCodigoFuenteClick.jpg", Me)
+    Call cBotonCodigoFuente.Initialize(imgCodigoFuente, GrhPath & "BotonCodigoFuente.jpg", GrhPath & "BotonCodigoFuenteRollover.jpg", GrhPath & "BotonCodigoFuenteClick.jpg", Me)
                                     
-    Call cBotonBorrarPj.Initialize(imgBorrarPj, GrhPath & "BotonBorrarPersonaje.jpg", _
-                                    GrhPath & "BotonBorrarPersonajeRollover.jpg", _
-                                    GrhPath & "BotonBorrarPersonajeClick.jpg", Me)
+    Call cBotonBorrarPj.Initialize(imgBorrarPj, GrhPath & "BotonBorrarPersonaje.jpg", GrhPath & "BotonBorrarPersonajeRollover.jpg", GrhPath & "BotonBorrarPersonajeClick.jpg", Me)
                                     
-    Call cBotonSalir.Initialize(imgSalir, GrhPath & "BotonSalirConnect.jpg", _
-                                    GrhPath & "BotonBotonSalirRolloverConnect.jpg", _
-                                    GrhPath & "BotonSalirClickConnect.jpg", Me)
+    Call cBotonSalir.Initialize(imgSalir, GrhPath & "BotonSalirConnect.jpg", GrhPath & "BotonBotonSalirRolloverConnect.jpg", GrhPath & "BotonSalirClickConnect.jpg", Me)
                                     
-    Call cBotonForo.Initialize(imgVerForo, GrhPath & "BotonVerForo.jpg", _
-                                    GrhPath & "BotonVerForoRollover.jpg", _
-                                    GrhPath & "BotonVerForoClick.jpg", Me)
+    Call cBotonForo.Initialize(imgVerForo, GrhPath & "BotonVerForo.jpg", GrhPath & "BotonVerForoRollover.jpg", GrhPath & "BotonVerForoClick.jpg", Me)
                                     
-    Call cBotonConectarse.Initialize(imgConectarse, GrhPath & "BotonConectarse.jpg", _
-                                    GrhPath & "BotonConectarseRollover.jpg", _
-                                    GrhPath & "BotonConectarseClick.jpg", Me)
+    Call cBotonConectarse.Initialize(imgConectarse, GrhPath & "BotonConectarse.jpg", GrhPath & "BotonConectarseRollover.jpg", GrhPath & "BotonConectarseClick.jpg", Me)
                                     
-    Call cBotonTeclas.Initialize(imgTeclas, GrhPath & "BotonTeclas.jpg", _
-                                    GrhPath & "BotonTeclasRollover.jpg", _
-                                    GrhPath & "BotonTeclasClick.jpg", Me)
+    Call cBotonTeclas.Initialize(imgTeclas, GrhPath & "BotonTeclas.jpg", GrhPath & "BotonTeclasRollover.jpg", GrhPath & "BotonTeclasClick.jpg", Me)
 
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Sub CheckServers()
+
     If Not IsIp(IPTxt) And CurServer <> 0 Then
         If MsgBox("Atencion, esta intentando conectarse a un servidor no oficial, NoLand Studios no se hace responsable de los posibles problemas que estos servidores presenten. ¿Desea continuar?", vbYesNo) = vbNo Then
             If CurServer <> 0 Then
@@ -487,37 +478,45 @@ Private Sub CheckServers()
             Else
                 IPTxt = IPdelServidor
                 PortTxt = PuertoDelServidor
+
             End If
+
             Exit Sub
+
         End If
+
     End If
+
     IPdelServidor = IPTxt
     PuertoDelServidor = PortTxt
+
 End Sub
 
 Private Sub imgBorrarPj_Click()
 
-On Error GoTo errH
+    On Error GoTo errH
+
     Call Shell(App.path & "\RECUPERAR.EXE", vbNormalFocus)
 
     Exit Sub
 
 errH:
     Call MsgBox("No se encuentra el programa recuperar.exe", vbCritical, "Argentum Online")
+
 End Sub
 
 Private Sub imgCodigoFuente_Click()
-'***********************************
-'IMPORTANTE!
-'
-'No debe eliminarse la posibilidad de bajar el código de sus servidor de esta forma.
-'Caso contrario estarían violando la licencia Affero GPL y con ella derechos de autor,
-'incurriendo de esta forma en un delito punible por ley.
-'
-'Argentum Online es libre, es de todos. Mantengamoslo así. Si tanto te gusta el juego y querés los
-'cambios que hacemos nosotros, compartí los tuyos. Es un cambio justo. Si no estás de acuerdo,
-'no uses nuestro código, pues nadie te obliga o bien utiliza una versión anterior a la 0.12.0.
-'***********************************
+    '***********************************
+    'IMPORTANTE!
+    '
+    'No debe eliminarse la posibilidad de bajar el código de sus servidor de esta forma.
+    'Caso contrario estarían violando la licencia Affero GPL y con ella derechos de autor,
+    'incurriendo de esta forma en un delito punible por ley.
+    '
+    'Argentum Online es libre, es de todos. Mantengamoslo así. Si tanto te gusta el juego y querés los
+    'cambios que hacemos nosotros, compartí los tuyos. Es un cambio justo. Si no estás de acuerdo,
+    'no uses nuestro código, pues nadie te obliga o bien utiliza una versión anterior a la 0.12.0.
+    '***********************************
     Call ShellExecute(0, "Open", "https://github.com/ao-libre", "", App.path, SW_SHOWNORMAL)
 
 End Sub
@@ -525,18 +524,24 @@ End Sub
 Private Sub imgConectarse_Click()
     Call CheckServers
     
-#If UsarWrench = 1 Then
-    If frmMain.Socket1.Connected Then
-        frmMain.Socket1.Disconnect
-        frmMain.Socket1.Cleanup
-        DoEvents
-    End If
-#Else
-    If frmMain.Winsock1.State <> sckClosed Then
-        frmMain.Winsock1.Close
-        DoEvents
-    End If
-#End If
+    #If UsarWrench = 1 Then
+
+        If frmMain.Socket1.Connected Then
+            frmMain.Socket1.Disconnect
+            frmMain.Socket1.Cleanup
+            DoEvents
+
+        End If
+
+    #Else
+
+        If frmMain.Winsock1.State <> sckClosed Then
+            frmMain.Winsock1.Close
+            DoEvents
+
+        End If
+
+    #End If
     
     'update user info
     AccountName = txtNombre.Text
@@ -548,13 +553,13 @@ Private Sub imgConectarse_Click()
     If CheckUserData() = True Then
         EstadoLogin = Normal
         
-#If UsarWrench = 1 Then
-    frmMain.Socket1.HostName = CurServerIp
-    frmMain.Socket1.RemotePort = CurServerPort
-    frmMain.Socket1.Connect
-#Else
-    frmMain.Winsock1.Connect CurServerIp, CurServerPort
-#End If
+        #If UsarWrench = 1 Then
+            frmMain.Socket1.hostname = CurServerIp
+            frmMain.Socket1.RemotePort = CurServerPort
+            frmMain.Socket1.Connect
+        #Else
+            frmMain.Winsock1.Connect CurServerIp, CurServerPort
+        #End If
 
     End If
     
@@ -562,38 +567,46 @@ End Sub
 
 Private Sub imgLeerMas_Click()
     Call ShellExecute(0, "Open", "http://www.argentumonline.org", "", App.path, SW_SHOWNORMAL)
+
 End Sub
 
 Private Sub imgCrearCuenta_Click()
     frmCrearCuenta.Show
+
 End Sub
 
 Private Sub imgManual_Click()
     Call ShellExecute(0, "Open", "http://www.argentumonline.org", "", App.path, SW_SHOWNORMAL)
+
 End Sub
 
 Private Sub imgRecuperar_Click()
-On Error GoTo errH
+
+    On Error GoTo errH
 
     Call Audio.PlayWave(SND_CLICK)
     Call Shell(App.path & "\RECUPERAR.EXE", vbNormalFocus)
     Exit Sub
 errH:
     Call MsgBox("No se encuentra el programa recuperar.exe", vbCritical, "Argentum Online")
+
 End Sub
 
 Private Sub imgReglamento_Click()
     Call ShellExecute(0, "Open", "http://www.argentumonline.org", "", App.path, SW_SHOWNORMAL)
+
 End Sub
 
 Private Sub imgSalir_Click()
     prgRun = False
+
 End Sub
 
 Private Sub imgServArgentina_Click()
     Call Audio.PlayWave(SND_CLICK)
     IPTxt.Text = IPdelServidor
     PortTxt.Text = PuertoDelServidor
+
 End Sub
 
 Private Sub imgTeclas_Click()
@@ -601,32 +614,39 @@ Private Sub imgTeclas_Click()
     frmKeypad.Show vbModal
     Unload frmKeypad
     txtPasswd.SetFocus
+
 End Sub
 
 Private Sub imgVerForo_Click()
     Call ShellExecute(0, "Open", "https://www.reddit.com/r/argentumonlineoficial/", "", App.path, SW_SHOWNORMAL)
+
 End Sub
 
 Private Sub lstRedditPosts_Click()
     Call ShellExecute(0, "Open", Posts(lstRedditPosts.ListIndex + 1).URL, "", App.path, SW_SHOWNORMAL)
+
 End Sub
 
 Private Sub lstServers_Click()
     IPTxt.Text = ServersLst(lstServers.ListIndex + 1).Ip
     PortTxt.Text = ServersLst(lstServers.ListIndex + 1).Puerto
     CurServer = lstServers.ListIndex + 1
+
 End Sub
 
 Private Sub txtPasswd_KeyPress(KeyAscii As Integer)
+
     If KeyAscii = vbKeyReturn Then imgConectarse_Click
+
 End Sub
 
 Private Sub GetPostsFromReddit()
-On Error Resume Next
+
+    On Error Resume Next
 
     Dim ResponseReddit As String
-    Dim JsonObject As Object
-    Dim Endpoint As String
+    Dim JsonObject     As Object
+    Dim Endpoint       As String
     
     Endpoint = GetVar(App.path & "\INIT\Config.ini", "Parameters", "SubRedditEndpoint")
     ResponseReddit = InetReddit.OpenURL(Endpoint)
@@ -641,6 +661,7 @@ On Error Resume Next
     
     Dim i As Integer
     i = 1
+
     Do While i <= qtyPostsOnReddit
         Posts(i).Title = JsonObject.Item("data").Item("children").Item(i).Item("data").Item("title")
         Posts(i).URL = JsonObject.Item("data").Item("children").Item(i).Item("data").Item("url")
@@ -649,6 +670,6 @@ On Error Resume Next
         
         i = i + 1
     Loop
-End Sub
 
+End Sub
 

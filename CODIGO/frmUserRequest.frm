@@ -89,11 +89,11 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private cBotonCerrar As clsGraphicalButton
+Private cBotonCerrar     As clsGraphicalButton
 
 Public LastButtonPressed As clsGraphicalButton
 
-Private clsFormulario As clsFormMovementManager
+Private clsFormulario    As clsFormMovementManager
 
 Public Sub recievePeticion(ByVal p As String)
 
@@ -110,6 +110,7 @@ Private Sub Form_Load()
     Me.Picture = LoadPicture(App.path & "\graficos\VentanaPeticion.jpg")
     
     Call LoadButtons
+
 End Sub
 
 Private Sub LoadButtons()
@@ -121,20 +122,21 @@ Private Sub LoadButtons()
     
     Set LastButtonPressed = New clsGraphicalButton
     
-    
-    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarPeticion.jpg", _
-                                    GrhPath & "BotonCerrarRolloverPeticion.jpg", _
-                                    GrhPath & "BotonCerrarClickPeticion.jpg", Me)
+    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarPeticion.jpg", GrhPath & "BotonCerrarRolloverPeticion.jpg", GrhPath & "BotonCerrarClickPeticion.jpg", Me)
+
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgCerrar_Click()
     Unload Me
+
 End Sub
 
 Private Sub Text1_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub

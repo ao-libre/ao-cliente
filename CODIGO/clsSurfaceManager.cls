@@ -46,18 +46,22 @@ Option Explicit
 'ONLY PUBLIC METHODS ARE INCLUDED SINCE VB WON'T INHERIT PRIVATE ONES
 
 Public Property Get Surface(ByVal fileIndex As Long) As Direct3DTexture8
-'**************************************************************
-'Author: Juan Martín Sotuyo Dodero
-'Last Modify Date: 3/06/2006
-'Used to return a texture
-'**************************************************************
+
+    '**************************************************************
+    'Author: Juan Martín Sotuyo Dodero
+    'Last Modify Date: 3/06/2006
+    'Used to return a texture
+    '**************************************************************
 End Property
 
-Public Sub Initialize(ByRef DD As D3DX8, ByVal graphicPath As String, Optional ByVal maxMemoryUsageInMb As Long = -1)
-'**************************************************************
-'Author: Juan Martín Sotuyo Dodero
-'Last Modify Date: 29/07/2012 - ^[GS]^
-'Initializes the object (the DD object is needed to load surfaces)
-'**************************************************************
+Public Sub Initialize(ByRef DD As D3DX8, _
+                      ByVal graphicPath As String, _
+                      Optional ByVal maxMemoryUsageInMb As Long = -1)
+
+    '**************************************************************
+    'Author: Juan Martín Sotuyo Dodero
+    'Last Modify Date: 29/07/2012 - ^[GS]^
+    'Initializes the object (the DD object is needed to load surfaces)
+    '**************************************************************
 End Sub
 

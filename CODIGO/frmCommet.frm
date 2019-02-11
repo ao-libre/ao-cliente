@@ -97,22 +97,24 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private clsFormulario As clsFormMovementManager
+Private clsFormulario             As clsFormMovementManager
 Private Const MAX_PROPOSAL_LENGTH As Integer = 520
 
-Private cBotonEnviar As clsGraphicalButton
-Private cBotonCerrar As clsGraphicalButton
+Private cBotonEnviar              As clsGraphicalButton
+Private cBotonCerrar              As clsGraphicalButton
 
-Public LastButtonPressed As clsGraphicalButton
+Public LastButtonPressed          As clsGraphicalButton
 
-Public Nombre As String
+Public Nombre                     As String
 
-Public T As TIPO
+Public T                          As TIPO
 
 Public Enum TIPO
+
     ALIANZA = 1
     PAZ = 2
     RECHAZOPJ = 3
+
 End Enum
 
 Private Sub Form_Load()
@@ -122,6 +124,7 @@ Private Sub Form_Load()
 
     Call LoadBackGround
     Call LoadButtons
+
 End Sub
 
 Private Sub LoadButtons()
@@ -134,22 +137,20 @@ Private Sub LoadButtons()
     
     Set LastButtonPressed = New clsGraphicalButton
     
-    
-    Call cBotonEnviar.Initialize(imgEnviar, GrhPath & "BotonEnviarSolicitud.jpg", _
-                                    GrhPath & "BotonEnviarRolloverSolicitud.jpg", _
-                                    GrhPath & "BotonEnviarClickSolicitud.jpg", Me)
+    Call cBotonEnviar.Initialize(imgEnviar, GrhPath & "BotonEnviarSolicitud.jpg", GrhPath & "BotonEnviarRolloverSolicitud.jpg", GrhPath & "BotonEnviarClickSolicitud.jpg", Me)
 
-    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarSolicitud.jpg", _
-                                    GrhPath & "BotonCerrarRolloverSolicitud.jpg", _
-                                    GrhPath & "BotonCerrarClickSolicitud.jpg", Me)
+    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarSolicitud.jpg", GrhPath & "BotonCerrarRolloverSolicitud.jpg", GrhPath & "BotonCerrarClickSolicitud.jpg", Me)
+
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgCerrar_Click()
     Unload Me
+
 End Sub
 
 Private Sub imgEnviar_Click()
@@ -159,9 +160,11 @@ Private Sub imgEnviar_Click()
             MsgBox "Debes redactar un mensaje solicitando la paz o alianza al líder de " & Nombre
         Else
             MsgBox "Debes indicar el motivo por el cual rechazas la membresía de " & Nombre
+
         End If
         
         Exit Sub
+
     End If
     
     If T = PAZ Then
@@ -176,14 +179,18 @@ Private Sub imgEnviar_Click()
         Dim i As Long
         
         For i = 0 To frmGuildLeader.solicitudes.ListCount - 1
+
             If frmGuildLeader.solicitudes.List(i) = Nombre Then
                 frmGuildLeader.solicitudes.RemoveItem i
                 Exit For
+
             End If
+
         Next i
         
         Me.Hide
         Unload frmCharInfo
+
     End If
     
     Unload Me
@@ -191,13 +198,15 @@ Private Sub imgEnviar_Click()
 End Sub
 
 Private Sub Text1_Change()
-    If Len(Text1.Text) > MAX_PROPOSAL_LENGTH Then _
-        Text1.Text = Left$(Text1.Text, MAX_PROPOSAL_LENGTH)
+
+    If Len(Text1.Text) > MAX_PROPOSAL_LENGTH Then Text1.Text = Left$(Text1.Text, MAX_PROPOSAL_LENGTH)
+
 End Sub
 
 Private Sub LoadBackGround()
 
     Select Case T
+
         Case TIPO.ALIANZA
             Me.Picture = LoadPicture(DirGraficos & "VentanaPropuestaAlianza.jpg")
             
@@ -213,4 +222,5 @@ End Sub
 
 Private Sub Text1_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub

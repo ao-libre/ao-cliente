@@ -39,16 +39,17 @@ Attribute VB_Name = "Resolution"
 
 Option Explicit
 
-Private Const CCDEVICENAME As Long = 32
-Private Const CCFORMNAME As Long = 32
-Private Const DM_BITSPERPEL As Long = &H40000
-Private Const DM_PELSWIDTH As Long = &H80000
-Private Const DM_PELSHEIGHT As Long = &H100000
-Private Const DM_DISPLAYFREQUENCY As Long = &H400000
-Private Const CDS_TEST As Long = &H4
+Private Const CCDEVICENAME          As Long = 32
+Private Const CCFORMNAME            As Long = 32
+Private Const DM_BITSPERPEL         As Long = &H40000
+Private Const DM_PELSWIDTH          As Long = &H80000
+Private Const DM_PELSHEIGHT         As Long = &H100000
+Private Const DM_DISPLAYFREQUENCY   As Long = &H400000
+Private Const CDS_TEST              As Long = &H4
 Private Const ENUM_CURRENT_SETTINGS As Long = -1
 
 Private Type typDevMODE
+
     dmDeviceName       As String * CCDEVICENAME
     dmSpecVersion      As Integer
     dmDriverVersion    As Integer
@@ -75,84 +76,93 @@ Private Type typDevMODE
     dmPelsHeight       As Long
     dmDisplayFlags     As Long
     dmDisplayFrequency As Long
+
 End Type
 
 Private oldResHeight As Long
-Private oldResWidth As Long
-Private oldDepth As Integer
+Private oldResWidth  As Long
+Private oldDepth     As Integer
 Private oldFrequency As Long
 Private bNoResChange As Boolean
 
-
-Private Declare Function EnumDisplaySettings Lib "user32" Alias "EnumDisplaySettingsA" (ByVal lpszDeviceName As Long, ByVal iModeNum As Long, lptypDevMode As Any) As Boolean
-Private Declare Function ChangeDisplaySettings Lib "user32" Alias "ChangeDisplaySettingsA" (lptypDevMode As Any, ByVal dwFlags As Long) As Long
-
+Private Declare Function EnumDisplaySettings _
+                Lib "user32" _
+                Alias "EnumDisplaySettingsA" (ByVal lpszDeviceName As Long, _
+                                              ByVal iModeNum As Long, _
+                                              lptypDevMode As Any) As Boolean
+Private Declare Function ChangeDisplaySettings _
+                Lib "user32" _
+                Alias "ChangeDisplaySettingsA" (lptypDevMode As Any, _
+                                                ByVal dwFlags As Long) As Long
 
 'TODO : Change this to not depend on any external public variable using args instead!
 
 Public Sub SetResolution()
-        '***************************************************
-        'Autor: Unknown
-        'Last Modification: 03/29/08
-        'Changes the display resolution if needed.
-        'Last Modified By: Juan Martín Sotuyo Dodero (Maraxus)
-        ' 03/29/2008: Maraxus - Retrieves current settings storing display depth and frequency for proper restoration.
-        '***************************************************
+    '***************************************************
+    'Autor: Unknown
+    'Last Modification: 03/29/08
+    'Changes the display resolution if needed.
+    'Last Modified By: Juan Martín Sotuyo Dodero (Maraxus)
+    ' 03/29/2008: Maraxus - Retrieves current settings storing display depth and frequency for proper restoration.
+    '***************************************************
 
-        Dim lRes              As Long
-        Dim MidevM            As typDevMODE
-        Dim CambiarResolucion As Boolean
+    Dim lRes              As Long
+    Dim MidevM            As typDevMODE
+    Dim CambiarResolucion As Boolean
    
-        lRes = EnumDisplaySettings(0, ENUM_CURRENT_SETTINGS, MidevM)
+    lRes = EnumDisplaySettings(0, ENUM_CURRENT_SETTINGS, MidevM)
    
-        oldResWidth = Screen.Width \ Screen.TwipsPerPixelX
-        oldResHeight = Screen.Height \ Screen.TwipsPerPixelY
+    oldResWidth = Screen.Width \ Screen.TwipsPerPixelX
+    oldResHeight = Screen.Height \ Screen.TwipsPerPixelY
    
-        If oldResWidth <> 800 Or oldResHeight <> 600 Then
-                If MsgBox("Desea jugar en pantalla completa?", vbYesNo, "Cambio de Resolucion") = vbYes Then
-                        frmMain.WindowState = vbMaximized
+    If oldResWidth <> 800 Or oldResHeight <> 600 Then
+        If MsgBox("Desea jugar en pantalla completa?", vbYesNo, "Cambio de Resolucion") = vbYes Then
+            frmMain.WindowState = vbMaximized
 
-                        With MidevM
-                                'oldDepth = .dmBitsPerPel
-                                oldFrequency = .dmDisplayFrequency
+            With MidevM
+                'oldDepth = .dmBitsPerPel
+                oldFrequency = .dmDisplayFrequency
          
-                                .dmFields = DM_PELSWIDTH Or DM_PELSHEIGHT Or DM_BITSPERPEL
-                                .dmPelsWidth = 800
-                                .dmPelsHeight = 600
-                                '.dmBitsPerPel = 16
-                        End With
+                .dmFields = DM_PELSWIDTH Or DM_PELSHEIGHT Or DM_BITSPERPEL
+                .dmPelsWidth = 800
+                .dmPelsHeight = 600
+
+                '.dmBitsPerPel = 16
+            End With
  
-                        lRes = ChangeDisplaySettings(MidevM, CDS_TEST)
+            lRes = ChangeDisplaySettings(MidevM, CDS_TEST)
     
-                        ' En pantalla chica que pueda mover
-                        NoRes = True
+            ' En pantalla chica que pueda mover
+            NoRes = True
                         
-                Else
-                        bNoResChange = True
-                        MidevM.dmFields = DM_BITSPERPEL
-                        'MidevM.dmBitsPerPel = 16
-                        lRes = ChangeDisplaySettings(MidevM, CDS_TEST)
-                        frmMain.WindowState = vbNormal
+        Else
+            bNoResChange = True
+            MidevM.dmFields = DM_BITSPERPEL
+            'MidevM.dmBitsPerPel = 16
+            lRes = ChangeDisplaySettings(MidevM, CDS_TEST)
+            frmMain.WindowState = vbNormal
     
-                        ' En pantalla grande no porque japish runtime
-                        NoRes = False
+            ' En pantalla grande no porque japish runtime
+            NoRes = False
                         
-                End If
         End If
+
+    End If
   
-        CambiarResolucion = (oldResWidth < 800 Or oldResHeight < 600)
+    CambiarResolucion = (oldResWidth < 800 Or oldResHeight < 600)
 
 End Sub
+
 Public Sub ResetResolution()
-'***************************************************
-'Autor: Unknown
-'Last Modification: 03/29/08
-'Changes the display resolution if needed.
-'Last Modified By: Juan Martín Sotuyo Dodero (Maraxus)
-' 03/29/2008: Maraxus - Properly restores display depth and frequency.
-'***************************************************
+    '***************************************************
+    'Autor: Unknown
+    'Last Modification: 03/29/08
+    'Changes the display resolution if needed.
+    'Last Modified By: Juan Martín Sotuyo Dodero (Maraxus)
+    ' 03/29/2008: Maraxus - Properly restores display depth and frequency.
+    '***************************************************
     Dim typDevM As typDevMODE
-    Dim lRes As Long
+    Dim lRes    As Long
     
     If Not bNoResChange Then
     
@@ -164,11 +174,12 @@ Public Sub ResetResolution()
             .dmPelsHeight = oldResHeight
             .dmBitsPerPel = oldDepth
             .dmDisplayFrequency = oldFrequency
+
         End With
         
         lRes = ChangeDisplaySettings(typDevM, CDS_TEST)
+
     End If
+
 End Sub
-
-
 

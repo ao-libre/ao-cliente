@@ -3,24 +3,30 @@ Attribute VB_Name = "mDx8_Luces"
 'Author: Ezequiel Juárez (Standelf)
 'Last Modification: 14/05/10
 'Blisse-AO | Light Engine, Read the _
-    #LightEngine to Set the type of Lights
+ #LightEngine to Set the type of Lights
 '***************************************************
 
 Option Base 0
 
 Private Type tLight
+
     RGBcolor As D3DCOLORVALUE
     active As Boolean
     map_x As Byte
     map_y As Byte
     range As Byte
+
 End Type
  
 Private Light_List() As tLight
-Private NumLights As Byte
+Private NumLights    As Byte
 
-
-Public Function Create_Light_To_Map(ByVal map_x As Byte, ByVal map_y As Byte, Optional range As Byte = 3, Optional ByVal Red As Byte = 255, Optional ByVal Green = 255, Optional ByVal Blue As Byte = 255)
+Public Function Create_Light_To_Map(ByVal map_x As Byte, _
+                                    ByVal map_y As Byte, _
+                                    Optional range As Byte = 3, _
+                                    Optional ByVal Red As Byte = 255, _
+                                    Optional ByVal Green = 255, _
+                                    Optional ByVal Blue As Byte = 255)
     NumLights = NumLights + 1
    
     ReDim Preserve Light_List(1 To NumLights) As tLight
@@ -35,69 +41,77 @@ Public Function Create_Light_To_Map(ByVal map_x As Byte, ByVal map_y As Byte, Op
     Light_List(NumLights).map_y = map_y
    
     Call LightRender(NumLights)
+
 End Function
+
 Public Function Delete_Light_To_Map(ByVal X As Byte, ByVal Y As Byte)
    
     Dim i As Long
    
     For i = 1 To NumLights
+
         If Light_List(i).map_x = X And Light_List(i).map_y = Y Then
             Delete_Light_To_Index i
             Exit Function
+
         End If
+
     Next i
  
 End Function
 
 #If LightEngine = 1 Then '   Luces Radiales
 
-Public Function Delete_Light_To_Index(ByVal light_index As Integer)
+    Public Function Delete_Light_To_Index(ByVal light_index As Integer)
    
-    Dim min_x As Integer
-    Dim min_y As Integer
-    Dim max_x As Integer
-    Dim max_y As Integer
-    Dim Ya As Integer
-    Dim Xa As Integer
+        Dim min_x As Integer
+        Dim min_y As Integer
+        Dim max_x As Integer
+        Dim max_y As Integer
+        Dim Ya    As Integer
+        Dim Xa    As Integer
  
-    Light_List(light_index).active = False
+        Light_List(light_index).active = False
  
-    min_x = Light_List(light_index).map_x - Light_List(light_index).range
-    max_x = Light_List(light_index).map_x + Light_List(light_index).range
-    min_y = Light_List(light_index).map_y - Light_List(light_index).range
-    max_y = Light_List(light_index).map_y + Light_List(light_index).range
+        min_x = Light_List(light_index).map_x - Light_List(light_index).range
+        max_x = Light_List(light_index).map_x + Light_List(light_index).range
+        min_y = Light_List(light_index).map_y - Light_List(light_index).range
+        max_y = Light_List(light_index).map_y + Light_List(light_index).range
        
-    For Ya = min_y To max_y
-        For Xa = min_x To max_x
-            If InMapBounds(Xa, Ya) Then
-                Call Engine_D3DColor_To_RGB_List(MapData(Xa, Ya).Engine_Light(), Estado_Actual)
-            End If
-        Next Xa
-    Next Ya
+        For Ya = min_y To max_y
+            For Xa = min_x To max_x
+
+                If InMapBounds(Xa, Ya) Then
+                    Call Engine_D3DColor_To_RGB_List(MapData(Xa, Ya).Engine_Light(), Estado_Actual)
+
+                End If
+
+            Next Xa
+        Next Ya
    
-End Function
+    End Function
 
 Private Sub LightRender(ByVal light_index As Integer)
  
- On Local Error Resume Next
+    On Local Error Resume Next
  
     If light_index = 0 Then Exit Sub
     If Light_List(light_index).active = False Then Exit Sub
    
-    Dim min_x As Integer
-    Dim min_y As Integer
-    Dim max_x As Integer
-    Dim max_y As Integer
-    Dim Color As Long
-    Dim Ya As Integer
-    Dim Xa As Integer
+    Dim min_x        As Integer
+    Dim min_y        As Integer
+    Dim max_x        As Integer
+    Dim max_y        As Integer
+    Dim Color        As Long
+    Dim Ya           As Integer
+    Dim Xa           As Integer
    
-    Dim TileLight As D3DCOLORVALUE
+    Dim TileLight    As D3DCOLORVALUE
     Dim AmbientColor As D3DCOLORVALUE
-    Dim LightColor As D3DCOLORVALUE
+    Dim LightColor   As D3DCOLORVALUE
    
-    Dim XCoord As Integer
-    Dim YCoord As Integer
+    Dim XCoord       As Integer
+    Dim YCoord       As Integer
    
     AmbientColor.r = Estado_Actual.r
     AmbientColor.g = Estado_Actual.g
@@ -112,6 +126,7 @@ Private Sub LightRender(ByVal light_index As Integer)
        
     For Ya = min_y To max_y
         For Xa = min_x To max_x
+
             If InMapBounds(Xa, Ya) Then
                 XCoord = Xa * 32
                 YCoord = Ya * 32
@@ -130,8 +145,10 @@ Private Sub LightRender(ByVal light_index As Integer)
                 MapData(Xa, Ya).Engine_Light(2) = LightCalculate(Light_List(light_index).range, Light_List(light_index).map_x * 32, Light_List(light_index).map_y * 32, XCoord, YCoord, MapData(Xa, Ya).Engine_Light(2), LightColor, AmbientColor)
                
             End If
+
         Next Xa
     Next Ya
+
 End Sub
 
 Private Function LightCalculate(ByVal cRadio As Integer, ByVal LightX As Integer, ByVal LightY As Integer, ByVal XCoord As Integer, ByVal YCoord As Integer, TileLight As Long, LightColor As D3DCOLORVALUE, AmbientColor As D3DCOLORVALUE) As Long
@@ -348,28 +365,35 @@ Public Sub DeInit_LightEngine()
     
     'Exit, The works is done.
     Exit Sub
+
 End Sub
 
 Public Function LightRenderAll() As Boolean
-On Error GoTo handle
+
+    On Error GoTo handle
+
     Dim i As Long
+
     If UBound(Light_List) < 1 Then Exit Function
     
     For i = 1 To UBound(Light_List)
         LightRender i
     Next i
     
-LightRenderAll = True
-
+    LightRenderAll = True
 
 handle:
     LightRenderAll = False
     Exit Function
+
 End Function
 
 Public Function LightRemoveAll() As Boolean
-On Error GoTo handle
+
+    On Error GoTo handle
+
     Dim i As Long
+
     If UBound(Light_List) < 1 Then Exit Function
     
     For i = 1 To UBound(Light_List)
@@ -381,8 +405,6 @@ On Error GoTo handle
 handle:
     LightRemoveAll = False
     Exit Function
+
 End Function
-
-
-
 

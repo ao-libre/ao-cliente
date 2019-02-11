@@ -37,27 +37,32 @@ Option Explicit
 Private WithEvents ButtonHolder As Image
 Attribute ButtonHolder.VB_VarHelpID = -1
 
-Private RollOverButtonImage As Picture  'img holder
-Private NormalButtonImage As Picture 'img holder
-Private ClickButtonImage As Picture  'img holder
-Private DisabledButtonImage As Picture  'img holder
+Private RollOverButtonImage     As Picture  'img holder
+Private NormalButtonImage       As Picture 'img holder
+Private ClickButtonImage        As Picture  'img holder
+Private DisabledButtonImage     As Picture  'img holder
 
-Private SoundClick As Boolean
+Private SoundClick              As Boolean
 
-Private FormActual As Form ' Form owner
+Private FormActual              As Form ' Form owner
 
-Private OverButton As Boolean 'Indicates wether the mouse is over the button or not
-Private Disabled As Boolean 'Indicates wether it's enabled or not
+Private OverButton              As Boolean 'Indicates wether the mouse is over the button or not
+Private Disabled                As Boolean 'Indicates wether it's enabled or not
 
-Public Sub Initialize(ByRef imgButton As Image, ByVal imgNormalPath As String, _
-            ByVal imgRollOverPath As String, ByVal imgClickPath As String, ByRef Formulario As Form, _
-            Optional ByVal imgDisabledPath As String, Optional ByVal StartDisabled As Boolean = False, _
-            Optional ByVal MakeClickSound As Boolean = True, Optional ByVal ShowHandPointer As Boolean = True)
-'***************************************************
-'Author: ZaMa
-'Last Modify Date: 22/12/09
-'Sets the reference to the image container
-'***************************************************
+Public Sub Initialize(ByRef imgButton As Image, _
+                      ByVal imgNormalPath As String, _
+                      ByVal imgRollOverPath As String, _
+                      ByVal imgClickPath As String, _
+                      ByRef Formulario As Form, _
+                      Optional ByVal imgDisabledPath As String, _
+                      Optional ByVal StartDisabled As Boolean = False, _
+                      Optional ByVal MakeClickSound As Boolean = True, _
+                      Optional ByVal ShowHandPointer As Boolean = True)
+    '***************************************************
+    'Author: ZaMa
+    'Last Modify Date: 22/12/09
+    'Sets the reference to the image container
+    '***************************************************
     Set ButtonHolder = imgButton
     Set FormActual = Formulario
     
@@ -69,9 +74,11 @@ Public Sub Initialize(ByRef imgButton As Image, ByVal imgNormalPath As String, _
     SoundClick = MakeClickSound
     
     With ButtonHolder
+
         If ShowHandPointer Then
             .MousePointer = vbCustom
             .MouseIcon = picMouseIcon
+
         End If
         
         If StartDisabled Then
@@ -79,43 +86,56 @@ Public Sub Initialize(ByRef imgButton As Image, ByVal imgNormalPath As String, _
             .Picture = DisabledButtonImage
         Else
             .Picture = NormalButtonImage
+
         End If
+
     End With
     
 End Sub
 
 Private Sub ButtonHolder_Click()
-'***************************************************
-'Author: ZaMa
-'Last Modify Date: 02/01/2010
-'Implements the mouse click event of the image button.
-'Plays the Click Sound.
-'***************************************************
+
+    '***************************************************
+    'Author: ZaMa
+    'Last Modify Date: 02/01/2010
+    'Implements the mouse click event of the image button.
+    'Plays the Click Sound.
+    '***************************************************
     If Disabled Then Exit Sub
     If Not SoundClick Then Exit Sub
     
     Call Audio.PlayWave(SND_CLICK)
+
 End Sub
 
-Private Sub ButtonHolder_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
-'***************************************************
-'Author: ZaMa
-'Last Modify Date: 29/12/09
-'Implements the mouse down event of the image button.
-'Toggle to Click image button.
-'***************************************************
+Private Sub ButtonHolder_MouseDown(Button As Integer, _
+                                   Shift As Integer, _
+                                   X As Single, _
+                                   Y As Single)
+
+    '***************************************************
+    'Author: ZaMa
+    'Last Modify Date: 29/12/09
+    'Implements the mouse down event of the image button.
+    'Toggle to Click image button.
+    '***************************************************
     If Disabled Then Exit Sub
     
     ButtonHolder.Picture = ClickButtonImage
+
 End Sub
 
-Private Sub ButtonHolder_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-'***************************************************
-'Author: ZaMa
-'Last Modify Date: 22/12/09
-'Implements the mouse move event of the image button.
-'Toggle to pressed image button.
-'***************************************************
+Private Sub ButtonHolder_MouseMove(Button As Integer, _
+                                   Shift As Integer, _
+                                   X As Single, _
+                                   Y As Single)
+
+    '***************************************************
+    'Author: ZaMa
+    'Last Modify Date: 22/12/09
+    'Implements the mouse move event of the image button.
+    'Toggle to pressed image button.
+    '***************************************************
     If Disabled Then Exit Sub
     
     If Not OverButton Then
@@ -127,48 +147,61 @@ Private Sub ButtonHolder_MouseMove(Button As Integer, Shift As Integer, X As Sin
         OverButton = True
         
         Set FormActual.LastButtonPressed = Me
+
     End If
+
 End Sub
 
 Public Sub ToggleToNormal()
-'***************************************************
-'Author: ZaMa
-'Last Modify Date: 22/12/09
-'Toggle to normal image button.
-'***************************************************
+
+    '***************************************************
+    'Author: ZaMa
+    'Last Modify Date: 22/12/09
+    'Toggle to normal image button.
+    '***************************************************
     If Disabled Then Exit Sub
     
     If Not OverButton Then Exit Sub
     
     ButtonHolder.Picture = NormalButtonImage
     OverButton = False
+
 End Sub
 
-Private Sub ButtonHolder_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
-'***************************************************
-'Author: ZaMa
-'Last Modify Date: 29/12/09
-'Implements the mouse up event of the image button.
-'Toggle to RollOver image button.
-'***************************************************
+Private Sub ButtonHolder_MouseUp(Button As Integer, _
+                                 Shift As Integer, _
+                                 X As Single, _
+                                 Y As Single)
+
+    '***************************************************
+    'Author: ZaMa
+    'Last Modify Date: 29/12/09
+    'Implements the mouse up event of the image button.
+    'Toggle to RollOver image button.
+    '***************************************************
     If Disabled Then Exit Sub
     
     ButtonHolder.Picture = RollOverButtonImage
+
 End Sub
 
 Public Sub EnableButton(Optional ByVal ToogleEnable As Boolean = True)
+
     If Disabled = Not ToogleEnable Then Exit Sub
     
     OverButton = False
     Disabled = Not ToogleEnable
+
     If Disabled Then
         ButtonHolder.Picture = DisabledButtonImage
     Else
         ButtonHolder.Picture = NormalButtonImage
+
     End If
     
 End Sub
 
 Public Function IsEnabled() As Boolean
     IsEnabled = Not Disabled
+
 End Function

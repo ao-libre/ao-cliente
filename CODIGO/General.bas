@@ -37,33 +37,38 @@ Option Explicit
     Dim status, Nombre, PicInv, f, obj, j As String
 #End If
 
-Public iplst As String
+Public iplst        As String
 
-Public bFogata As Boolean
+Public bFogata      As Boolean
 
-Public bLluvia() As Byte ' Array para determinar si
+Public bLluvia()    As Byte ' Array para determinar si
 'debemos mostrar la animacion de la lluvia
 
 Private lFrameTimer As Long
 
 Public Function DirGraficos() As String
     DirGraficos = App.path & "\" & Config_Inicio.DirGraficos & "\"
+
 End Function
 
 Public Function DirSound() As String
     DirSound = App.path & "\" & Config_Inicio.DirSonidos & "\"
+
 End Function
 
 Public Function DirMidi() As String
     DirMidi = App.path & "\" & Config_Inicio.DirMusica & "\"
+
 End Function
 
 Public Function DirMapas() As String
     DirMapas = App.path & "\" & Config_Inicio.DirMapas & "\"
+
 End Function
 
 Public Function DirExtras() As String
     DirExtras = App.path & "\EXTRAS\"
+
 End Function
 
 Public Function RandomNumber(ByVal LowerBound As Long, ByVal UpperBound As Long) As Long
@@ -72,15 +77,16 @@ Public Function RandomNumber(ByVal LowerBound As Long, ByVal UpperBound As Long)
     
     'Generate random number
     RandomNumber = (UpperBound - LowerBound) * Rnd + LowerBound
+
 End Function
 
 Public Function GetRawName(ByRef sName As String) As String
-'***************************************************
-'Author: ZaMa
-'Last Modify Date: 13/01/2010
-'Last Modified By: -
-'Returns the char name without the clan name (if it has it).
-'***************************************************
+    '***************************************************
+    'Author: ZaMa
+    'Last Modify Date: 13/01/2010
+    'Last Modified By: -
+    'Returns the char name without the clan name (if it has it).
+    '***************************************************
 
     Dim Pos As Integer
     
@@ -90,15 +96,17 @@ Public Function GetRawName(ByRef sName As String) As String
         GetRawName = Trim(Left(sName, Pos - 1))
     Else
         GetRawName = sName
+
     End If
 
 End Function
 
 Sub CargarAnimArmas()
-On Error Resume Next
+
+    On Error Resume Next
 
     Dim LoopC As Long
-    Dim arch As String
+    Dim arch  As String
     
     arch = App.path & "\init\" & "armas.dat"
     
@@ -112,17 +120,20 @@ On Error Resume Next
         InitGrh WeaponAnimData(LoopC).WeaponWalk(3), Val(GetVar(arch, "ARMA" & LoopC, "Dir3")), 0
         InitGrh WeaponAnimData(LoopC).WeaponWalk(4), Val(GetVar(arch, "ARMA" & LoopC, "Dir4")), 0
     Next LoopC
+
 End Sub
 
-
 Public Sub CargarColores()
-On Error Resume Next
+
+    On Error Resume Next
+
     Dim archivoC As String
     archivoC = App.path & "\init\colores.dat"
     
     If Not FileExist(archivoC, vbArchive) Then
         Call MsgBox("ERROR: no se ha podido cargar los colores. Falta el archivo colores.dat, reinstale el juego", vbCritical + vbOKOnly)
         Exit Sub
+
     End If
     
     Dim i As Long
@@ -142,10 +153,11 @@ On Error Resume Next
 End Sub
 
 Sub CargarAnimEscudos()
-On Error Resume Next
+
+    On Error Resume Next
 
     Dim LoopC As Long
-    Dim arch As String
+    Dim arch  As String
     
     arch = App.path & "\init\" & "escudos.dat"
     
@@ -159,23 +171,34 @@ On Error Resume Next
         InitGrh ShieldAnimData(LoopC).ShieldWalk(3), Val(GetVar(arch, "ESC" & LoopC, "Dir3")), 0
         InitGrh ShieldAnimData(LoopC).ShieldWalk(4), Val(GetVar(arch, "ESC" & LoopC, "Dir4")), 0
     Next LoopC
+
 End Sub
 
-Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, ByVal Text As String, Optional ByVal Red As Integer = -1, Optional ByVal Green As Integer, Optional ByVal Blue As Integer, Optional ByVal bold As Boolean = False, Optional ByVal italic As Boolean = False, Optional ByVal bCrLf As Boolean = True)
-'******************************************
-'Adds text to a Richtext box at the bottom.
-'Automatically scrolls to new text.
-'Text box MUST be multiline and have a 3D
-'apperance!
-'Pablo (ToxicWaste) 01/26/2007 : Now the list refeshes properly.
-'Juan Martin Sotuyo Dodero (Maraxus) 03/29/2007 : Replaced ToxicWaste's code for extra performance.
-'******************************************r
+Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, _
+                     ByVal Text As String, _
+                     Optional ByVal Red As Integer = -1, _
+                     Optional ByVal Green As Integer, _
+                     Optional ByVal Blue As Integer, _
+                     Optional ByVal bold As Boolean = False, _
+                     Optional ByVal italic As Boolean = False, _
+                     Optional ByVal bCrLf As Boolean = True)
+
+    '******************************************
+    'Adds text to a Richtext box at the bottom.
+    'Automatically scrolls to new text.
+    'Text box MUST be multiline and have a 3D
+    'apperance!
+    'Pablo (ToxicWaste) 01/26/2007 : Now the list refeshes properly.
+    'Juan Martin Sotuyo Dodero (Maraxus) 03/29/2007 : Replaced ToxicWaste's code for extra performance.
+    '******************************************r
     With RichTextBox
+
         If Len(.Text) > 1000 Then
             'Get rid of first line
             .SelStart = InStr(1, .Text, vbCrLf) + 1
             .SelLength = Len(.Text) - .SelStart + 2
             .TextRTF = .SelRTF
+
         End If
         
         .SelStart = Len(.Text)
@@ -189,23 +212,29 @@ Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, ByVal Text As String, Opt
         .SelText = Text
         
         RichTextBox.Refresh
+
     End With
+
 End Sub
 
 'TODO : Never was sure this is really necessary....
 'TODO : 08/03/2006 - (AlejoLp) Esto hay que volarlo...
 Public Sub RefreshAllChars()
-'*****************************************************************
-'Goes through the charlist and replots all the characters on the map
-'Used to make sure everyone is visible
-'*****************************************************************
+    '*****************************************************************
+    'Goes through the charlist and replots all the characters on the map
+    'Used to make sure everyone is visible
+    '*****************************************************************
     Dim LoopC As Long
     
     For LoopC = 1 To LastChar
+
         If charlist(LoopC).active = 1 Then
             MapData(charlist(LoopC).Pos.X, charlist(LoopC).Pos.Y).CharIndex = LoopC
+
         End If
+
     Next LoopC
+
 End Sub
 
 Sub SaveGameini()
@@ -215,11 +244,12 @@ Sub SaveGameini()
     Config_Inicio.Puerto = UserPort
     
     Call EscribirGameIni(Config_Inicio)
+
 End Sub
 
 Function AsciiValidos(ByVal cad As String) As Boolean
     Dim car As Byte
-    Dim i As Long
+    Dim i   As Long
     
     cad = LCase$(cad)
     
@@ -228,93 +258,113 @@ Function AsciiValidos(ByVal cad As String) As Boolean
         
         If ((car < 97 Or car > 122) Or car = Asc("¬∫")) And (car <> 255) And (car <> 32) Then
             Exit Function
+
         End If
+
     Next i
     
     AsciiValidos = True
+
 End Function
 
 Function CheckUserData() As Boolean
     'Validamos los datos del user
-    Dim LoopC As Long
+    Dim LoopC     As Long
     Dim CharAscii As Integer
 
     If LenB(AccountPassword) = 0 Then
         MsgBox ("Ingrese un password.")
         Exit Function
+
     End If
     
     For LoopC = 1 To Len(AccountPassword)
         CharAscii = Asc(mid$(AccountPassword, LoopC, 1))
+
         If Not LegalCharacter(CharAscii) Then
             MsgBox ("Password invalido. El caracter " & Chr$(CharAscii) & " no esta permitido.")
             Exit Function
+
         End If
+
     Next LoopC
 
     If Len(AccountName) > 30 Then
         MsgBox "El e-mail debe tener menos de 30 letras."
         Exit Function
+
     End If
     
     For LoopC = 1 To Len(AccountName)
         CharAscii = Asc(mid$(AccountName, LoopC, 1))
+
         If Not LegalCharacter(CharAscii) Then
             MsgBox ("Nombre invalido. El caracter " & Chr$(CharAscii) & " no esta permitido.")
             Exit Function
+
         End If
+
     Next LoopC
     
     CheckUserData = True
+
 End Function
 
 Sub UnloadAllForms()
-On Error Resume Next
+
+    On Error Resume Next
 
     Dim mifrm As Form
     
     For Each mifrm In Forms
+
         Unload mifrm
     Next
+
 End Sub
 
 Function LegalCharacter(ByVal KeyAscii As Integer) As Boolean
-'*****************************************************************
-'Only allow characters that are Win 95 filename compatible
-'*****************************************************************
+
+    '*****************************************************************
+    'Only allow characters that are Win 95 filename compatible
+    '*****************************************************************
     'if backspace allow
     If KeyAscii = 8 Then
         LegalCharacter = True
         Exit Function
+
     End If
     
     'Only allow space, numbers, letters and special characters
     If KeyAscii < 32 Or KeyAscii = 44 Then
         Exit Function
+
     End If
     
     If KeyAscii > 126 Then
         Exit Function
+
     End If
     
     'Check for bad special characters in between
     If KeyAscii = 34 Or KeyAscii = 42 Or KeyAscii = 47 Or KeyAscii = 58 Or KeyAscii = 60 Or KeyAscii = 62 Or KeyAscii = 63 Or KeyAscii = 92 Or KeyAscii = 124 Then
         Exit Function
+
     End If
     
     'else everything is cool
     LegalCharacter = True
+
 End Function
 
 Sub SetConnected()
-'*****************************************************************
-'Sets the client to "Connect" mode
-'*****************************************************************
+    '*****************************************************************
+    'Sets the client to "Connect" mode
+    '*****************************************************************
     'Set Connected
     Connected = True
     
     Call SaveGameini
-    
     
     'Unload the connect form
     Unload frmCrearPersonaje
@@ -336,63 +386,77 @@ Sub CargarTip()
     N = RandomNumber(1, UBound(Tips))
     
     frmtip.tip.Caption = Tips(N)
+
 End Sub
 
 Sub MoveTo(ByVal Direccion As E_Heading)
-'***************************************************
-'Author: Alejandro Santos (AlejoLp)
-'Last Modify Date: 06/28/2008
-'Last Modified By: Lucas Tavolaro Ortiz (Tavo)
-' 06/03/2006: AlejoLp - Elimine las funciones Move[NSWE] y las converti a esta
-' 12/08/2007: Tavo    - Si el usuario esta paralizado no se puede mover.
-' 06/28/2008: NicoNZ - Saque lo que impedia que si el usuario estaba paralizado se ejecute el sub.
-'***************************************************
+    '***************************************************
+    'Author: Alejandro Santos (AlejoLp)
+    'Last Modify Date: 06/28/2008
+    'Last Modified By: Lucas Tavolaro Ortiz (Tavo)
+    ' 06/03/2006: AlejoLp - Elimine las funciones Move[NSWE] y las converti a esta
+    ' 12/08/2007: Tavo    - Si el usuario esta paralizado no se puede mover.
+    ' 06/28/2008: NicoNZ - Saque lo que impedia que si el usuario estaba paralizado se ejecute el sub.
+    '***************************************************
     Dim LegalOk As Boolean
     
     If Cartel Then Cartel = False
     
     Select Case Direccion
+
         Case E_Heading.NORTH
             LegalOk = MoveToLegalPos(UserPos.X, UserPos.Y - 1)
+
         Case E_Heading.EAST
             LegalOk = MoveToLegalPos(UserPos.X + 1, UserPos.Y)
+
         Case E_Heading.SOUTH
             LegalOk = MoveToLegalPos(UserPos.X, UserPos.Y + 1)
+
         Case E_Heading.WEST
             LegalOk = MoveToLegalPos(UserPos.X - 1, UserPos.Y)
+
     End Select
     
     If LegalOk And Not UserParalizado Then
         Call WriteWalk(Direccion)
+
         If Not UserDescansar And Not UserMeditar Then
             MoveCharbyHead UserCharIndex, Direccion
             MoveScreen Direccion
+
         End If
+
     Else
+
         If charlist(UserCharIndex).Heading <> Direccion Then
             Call WriteChangeHeading(Direccion)
+
         End If
+
     End If
     
     If frmMain.macrotrabajo.Enabled Then Call frmMain.DesactivarMacroTrabajo
     
     ' Update 3D sounds!
     Call Audio.MoveListener(UserPos.X, UserPos.Y)
+
 End Sub
 
 Sub RandomMove()
-'***************************************************
-'Author: Alejandro Santos (AlejoLp)
-'Last Modify Date: 06/03/2006
-' 06/03/2006: AlejoLp - Ahora utiliza la funcion MoveTo
-'***************************************************
+    '***************************************************
+    'Author: Alejandro Santos (AlejoLp)
+    'Last Modify Date: 06/03/2006
+    ' 06/03/2006: AlejoLp - Ahora utiliza la funcion MoveTo
+    '***************************************************
     Call Map_MoveTo(RandomNumber(NORTH, WEST))
+
 End Sub
 
 Private Sub CheckKeys()
-'*****************************************************************
-'Checks keys and respond
-'*****************************************************************
+    '*****************************************************************
+    'Checks keys and respond
+    '*****************************************************************
     Static LastMovement As Long
     
     'No input allowed while Argentum is not the active window
@@ -415,16 +479,19 @@ Private Sub CheckKeys()
         LastMovement = GetTickCount
     Else
         Exit Sub
+
     End If
     
     'Don't allow any these keys during movement..
     If UserMoving = 0 Then
         If Not UserEstupido Then
+
             'Move Up
             If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyUp)) < 0 Then
                 Call Map_MoveTo(NORTH)
                 Call Char_UserPos
                 Exit Sub
+
             End If
             
             'Move Right
@@ -433,6 +500,7 @@ Private Sub CheckKeys()
                 'frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.x & "," & UserPos.y & ")"
                 Call Char_UserPos
                 Exit Sub
+
             End If
         
             'Move down
@@ -440,6 +508,7 @@ Private Sub CheckKeys()
                 Call Map_MoveTo(SOUTH)
                 Call Char_UserPos
                 Exit Sub
+
             End If
         
             'Move left
@@ -447,27 +516,29 @@ Private Sub CheckKeys()
                 Call Map_MoveTo(WEST)
                 Call Char_UserPos
                 Exit Sub
+
             End If
             
             ' We haven't moved - Update 3D sounds!
             Call Audio.MoveListener(UserPos.X, UserPos.Y)
         Else
             Dim kp As Boolean
-            kp = (GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyUp)) < 0) Or _
-                GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyRight)) < 0 Or _
-                GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyDown)) < 0 Or _
-                GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyLeft)) < 0
+            kp = (GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyUp)) < 0) Or GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyRight)) < 0 Or GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyDown)) < 0 Or GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyLeft)) < 0
             
             If kp Then
                 Call RandomMove
             Else
                 ' We haven't moved - Update 3D sounds!
                 Call Audio.MoveListener(UserPos.X, UserPos.Y)
+
             End If
             
             Call Char_UserPos
+
         End If
+
     End If
+
 End Sub
 
 Sub SwitchMap(ByVal Map As Integer)
@@ -499,7 +570,7 @@ Sub SwitchMap(ByVal Map As Integer)
     handle = FreeFile()
    
     Open DirMapas & "Mapa" & Map & ".map" For Binary As handle
-        Get handle, , dData
+    Get handle, , dData
     Close handle
      
     fileBuff.initializeReader dData
@@ -510,6 +581,7 @@ Sub SwitchMap(ByVal Map As Integer)
         .Desc = fileBuff.getString(Len(.Desc))
         .CRC = fileBuff.getLong
         .MagicWord = fileBuff.getLong
+
     End With
     
     fileBuff.getDouble
@@ -531,6 +603,7 @@ Sub SwitchMap(ByVal Map As Integer)
                     InitGrh .Graphic(2), .Graphic(2).GrhIndex
                 Else
                     .Graphic(2).GrhIndex = 0
+
                 End If
                
                 'Layer 3 used?
@@ -539,6 +612,7 @@ Sub SwitchMap(ByVal Map As Integer)
                     InitGrh .Graphic(3), .Graphic(3).GrhIndex
                 Else
                     .Graphic(3).GrhIndex = 0
+
                 End If
                
                 'Layer 4 used?
@@ -547,6 +621,7 @@ Sub SwitchMap(ByVal Map As Integer)
                     InitGrh .Graphic(4), .Graphic(4).GrhIndex
                 Else
                     .Graphic(4).GrhIndex = 0
+
                 End If
            
                 'Trigger used?
@@ -554,22 +629,26 @@ Sub SwitchMap(ByVal Map As Integer)
                     .Trigger = fileBuff.getInteger()
                 Else
                     .Trigger = 0
+
                 End If
            
                 'Erase NPCs
                 If .CharIndex > 0 Then
                     .CharIndex = 0
+
                 End If
            
                 'Erase OBJs
                 If .ObjGrh.GrhIndex > 0 Then
                     .ObjGrh.GrhIndex = 0
+
                 End If
             
                 'Erase Lights
                 Call Engine_D3DColor_To_RGB_List(.Engine_Light(), Estado_Actual) 'Standelf, Light & Meteo Engine
             
             End With
+
         Next X
     Next Y
     
@@ -587,18 +666,21 @@ Sub SwitchMap(ByVal Map As Integer)
     CurMap = Map
     
     Init_Ambient Map
+
 End Sub
 
-Function ReadField(ByVal Pos As Integer, ByRef Text As String, ByVal SepASCII As Byte) As String
-'*****************************************************************
-'Gets a field from a delimited string
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
-'Last Modify Date: 11/15/2004
-'*****************************************************************
-    Dim i As Long
-    Dim lastPos As Long
+Function ReadField(ByVal Pos As Integer, _
+                   ByRef Text As String, _
+                   ByVal SepASCII As Byte) As String
+    '*****************************************************************
+    'Gets a field from a delimited string
+    'Author: Juan Martin Sotuyo Dodero (Maraxus)
+    'Last Modify Date: 11/15/2004
+    '*****************************************************************
+    Dim i          As Long
+    Dim lastPos    As Long
     Dim CurrentPos As Long
-    Dim delimiter As String * 1
+    Dim delimiter  As String * 1
     
     delimiter = Chr$(SepASCII)
     
@@ -611,17 +693,19 @@ Function ReadField(ByVal Pos As Integer, ByRef Text As String, ByVal SepASCII As
         ReadField = mid$(Text, lastPos + 1, Len(Text) - lastPos)
     Else
         ReadField = mid$(Text, lastPos + 1, CurrentPos - lastPos - 1)
+
     End If
+
 End Function
 
 Function FieldCount(ByRef Text As String, ByVal SepASCII As Byte) As Long
-'*****************************************************************
-'Gets the number of fields in a delimited string
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
-'Last Modify Date: 07/29/2007
-'*****************************************************************
-    Dim Count As Long
-    Dim curPos As Long
+    '*****************************************************************
+    'Gets the number of fields in a delimited string
+    'Author: Juan Martin Sotuyo Dodero (Maraxus)
+    'Last Modify Date: 07/29/2007
+    '*****************************************************************
+    Dim Count     As Long
+    Dim curPos    As Long
     Dim delimiter As String * 1
     
     If LenB(Text) = 0 Then Exit Function
@@ -636,10 +720,12 @@ Function FieldCount(ByRef Text As String, ByVal SepASCII As Byte) As Long
     Loop While curPos <> 0
     
     FieldCount = Count
+
 End Function
 
 Function FileExist(ByVal File As String, ByVal FileType As VbFileAttribute) As Boolean
     FileExist = (Dir$(File, FileType) <> "")
+
 End Function
 
 Sub WriteClientVer()
@@ -656,30 +742,37 @@ Sub WriteClientVer()
     Put #hFile, , CInt(App.Revision)
     
     Close #hFile
+
 End Sub
 
 Public Function IsIp(ByVal Ip As String) As Boolean
     Dim i As Long
     
     For i = 1 To UBound(ServersLst)
+
         If ServersLst(i).Ip = Ip Then
             IsIp = True
             Exit Function
+
         End If
+
     Next i
+
 End Function
 
 Private Function GetCountryFromIp(ByVal Ip As String) As String
-'********************************
-'Author: Recox
-'Last Modification: 08/12/2018
-'Added endpoint to obtain the country of the server.
-'********************************
-On Error Resume Next
-    Dim URL As String
-    Dim Endpoint As String
+
+    '********************************
+    'Author: Recox
+    'Last Modification: 08/12/2018
+    'Added endpoint to obtain the country of the server.
+    '********************************
+    On Error Resume Next
+
+    Dim URL        As String
+    Dim Endpoint   As String
     Dim JsonObject As Object
-    Dim Response As String
+    Dim Response   As String
     
     URL = GetVar(App.path & "\INIT\Config.ini", "Parameters", "IpApiEndpoint")
     Endpoint = URL & Ip & "/json/"
@@ -688,23 +781,26 @@ On Error Resume Next
     Set JsonObject = JSON.parse(Response)
     
     GetCountryFromIp = JsonObject.Item("country")
+
 End Function
 
 Public Sub CargarServidores()
-'********************************
-'Author: Unknown
-'Last Modification: 21/12/2019
-'Last Modified by: Recox
-'Added Instruction "CloseClient" before End so the mutex is cleared (Rapsodius)
-'Added IP Api to get the country of the IP. (Recox)
-'Get ping from server (Recox)
-'********************************
-On Error GoTo errorH
-    Dim File As String
-    Dim Quantity As Integer
-    Dim i As Integer
-    Dim CountryCode As String
-    Dim IpApiEnabled As Boolean
+
+    '********************************
+    'Author: Unknown
+    'Last Modification: 21/12/2019
+    'Last Modified by: Recox
+    'Added Instruction "CloseClient" before End so the mutex is cleared (Rapsodius)
+    'Added IP Api to get the country of the IP. (Recox)
+    'Get ping from server (Recox)
+    '********************************
+    On Error GoTo errorH
+
+    Dim File           As String
+    Dim Quantity       As Integer
+    Dim i              As Integer
+    Dim CountryCode    As String
+    Dim IpApiEnabled   As Boolean
     Dim DoPingsEnabled As Boolean
     
     File = App.path & "\init\sinfo.dat"
@@ -715,21 +811,24 @@ On Error GoTo errorH
     frmConnect.lstServers.Clear
     
     ReDim ServersLst(1 To Quantity) As tServerInfo
+
     For i = 1 To Quantity
         Dim CurrentIp As String
         CurrentIp = Trim$(GetVar(File, "S" & i, "Ip"))
         
         If IpApiEnabled Then
 
-           'If is not numeric do a url transformation
+            'If is not numeric do a url transformation
             If CheckIfIpIsNumeric(CurrentIp) = False Then
                 CurrentIp = GetIPFromHostName(CurrentIp)
+
             End If
 
             CountryCode = GetCountryCode(CurrentIp)
             ServersLst(i).Desc = CountryCode & " - " & GetVar(File, "S" & i, "Desc")
         Else
             ServersLst(i).Desc = GetVar(File, "S" & i, "Desc")
+
         End If
         
         ServersLst(i).Ip = GetVar(File, "S" & i, "Ip")
@@ -742,6 +841,7 @@ On Error GoTo errorH
         'All this functions are in the CODIGO/modPing.bas
         If DoPingsEnabled Then
             ServersLst(i).Desc = PingAddress(CurrentIp, "SomeRandomText") & " " & ServersLst(i).Desc
+
         End If
 
         frmConnect.lstServers.AddItem (ServersLst(i).Desc)
@@ -749,7 +849,7 @@ On Error GoTo errorH
     
     If CurServer = 0 Then CurServer = 1
 
-Exit Sub
+    Exit Sub
 
 errorH:
     Call MsgBox("Error cargando los servidores, actualicelos de la web", vbCritical + vbOKOnly, "Argentum Online")
@@ -757,13 +857,15 @@ errorH:
     'Call CloseClient
 End Sub
 
-
 Private Function CheckIfIpIsNumeric(CurrentIp As String) As String
+
     If IsNumeric(mid$(CurrentIp, 1, 1)) Then
         CheckIfIpIsNumeric = True
     Else
         CheckIfIpIsNumeric = False
+
     End If
+
 End Function
 
 Private Function GetCountryCode(CurrentIp As String) As String
@@ -774,32 +876,42 @@ Private Function GetCountryCode(CurrentIp As String) As String
         GetCountryCode = CountryCode
     Else
         GetCountryCode = "??"
+
     End If
 
 End Function
 
 Public Function CurServerPasRecPort() As Integer
+
     If CurServer <> 0 Then
         CurServerPasRecPort = 7667
     Else
         CurServerPasRecPort = CInt(frmConnect.PortTxt)
+
     End If
+
 End Function
 
 Public Function CurServerIp() As String
+
     If CurServer <> 0 Then
         CurServerIp = ServersLst(CurServer).Ip
     Else
         CurServerIp = frmConnect.IPTxt
+
     End If
+
 End Function
 
 Public Function CurServerPort() As Integer
+
     If CurServer <> 0 Then
         CurServerPort = ServersLst(CurServer).Puerto
     Else
         CurServerPort = Val(frmConnect.PortTxt)
+
     End If
+
 End Function
 
 Sub Main()
@@ -808,6 +920,7 @@ Sub Main()
     'Load config file
     If FileExist(App.path & "\INIT\Inicio.con", vbNormal) Then
         Config_Inicio = LeerGameIni()
+
     End If
     
     'Load ao.dat config file
@@ -821,6 +934,7 @@ Sub Main()
         Set SurfaceDB = New clsSurfaceManDyn
     Else
         Set SurfaceDB = New clsSurfaceManStatic
+
     End If
  
     ' Map Sounds
@@ -828,10 +942,13 @@ Sub Main()
     Call Sonidos.LoadSoundMapInfo
        
     #If Testeo = 0 Then
+
         If FindPreviousInstance Then
             Call MsgBox("Argentum Online ya esta corriendo! No es posible correr otra instancia del juego. Haga click en Aceptar para salir.", vbApplicationModal + vbInformation + vbOKOnly, "Error al ejecutar")
             End
+
         End If
+
     #End If
 
     'Read command line. Do it AFTER config file is loaded to prevent this from
@@ -895,12 +1012,15 @@ Sub Main()
             Call RenderSounds
             
             Call CheckKeys
+
         End If
+
         'FPS Counter - mostramos las FPS
         If GetTickCount - lFrameTimer >= 1000 Then
             If FPSFLAG Then frmMain.lblFPS.Caption = Mod_TileEngine.FPS
             
             lFrameTimer = GetTickCount
+
         End If
         
         ' If there is anything to be sent, we send it
@@ -911,14 +1031,15 @@ Sub Main()
     Loop
     
     Call CloseClient
+
 End Sub
 
 Private Sub LoadInitialConfig()
-'***************************************************
-'Author: ZaMa
-'Last Modification: 15/03/2011
-'15/03/2011: ZaMa - Initialize classes lazy way.
-'***************************************************
+    '***************************************************
+    'Author: ZaMa
+    'Last Modification: 15/03/2011
+    '15/03/2011: ZaMa - Initialize classes lazy way.
+    '***************************************************
 
     Dim i As Long
 
@@ -944,14 +1065,14 @@ Private Sub LoadInitialConfig()
         .txtNombre = Config_Inicio.Name
         .txtNombre.SelStart = 0
         .txtNombre.SelLength = Len(.txtNombre)
+
     End With
     
     UserMap = 1
     
     ' Mouse Pointer (Loaded before opening any form with buttons in it)
-    If FileExist(DirExtras & "Hand.ico", vbArchive) Then _
-        Set picMouseIcon = LoadPicture(DirExtras & "Hand.ico")
-    Call AddtoRichTextBox(frmCargando.Status, "Hecho", 255, 0, 0, True, False, False)
+    If FileExist(DirExtras & "Hand.ico", vbArchive) Then Set picMouseIcon = LoadPicture(DirExtras & "Hand.ico")
+    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
     
     '#######
     ' CLASES
@@ -966,7 +1087,6 @@ Private Sub LoadInitialConfig()
     Set MainTimer = New clsTimer
     Set clsForos = New clsForum
     
-    
     '##############
     ' MOTOR GRAÅFICO
     Call AddtoRichTextBox(frmCargando.status, "Iniciando motor grafico... ", 255, 255, 255, True, False, True)
@@ -974,11 +1094,13 @@ Private Sub LoadInitialConfig()
     '     Iniciamos el Engine de DirectX 8
     If Not Engine_DirectX8_Init Then
         Call CloseClient
+
     End If
           
     '     Tile Engine
     If Not InitTileEngine(frmMain.hwnd, 32, 32, 8, 8) Then
         Call CloseClient
+
     End If
     
     Engine_DirectX8_Aditional_Init
@@ -1009,7 +1131,6 @@ Private Sub LoadInitialConfig()
     'Call Audio.MusicMP3Play(App.path & "\MP3\" & MP3_Inicio & ".mp3")
     Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
     
-    
     Call AddtoRichTextBox(frmCargando.status, "                    °Bienvenido a Argentum Online!", 255, 255, 255, True, False, True)
 
     'Give the user enough time to read the welcome text
@@ -1020,11 +1141,11 @@ Private Sub LoadInitialConfig()
 End Sub
 
 Private Sub LoadTimerIntervals()
-'***************************************************
-'Author: ZaMa
-'Last Modification: 15/03/2011
-'Set the intervals of timers
-'***************************************************
+    '***************************************************
+    'Author: ZaMa
+    'Last Modification: 15/03/2011
+    'Set the intervals of timers
+    '***************************************************
     
     Call MainTimer.SetInterval(TimersIndex.Attack, INT_ATTACK)
     Call MainTimer.SetInterval(TimersIndex.Work, INT_WORK)
@@ -1038,7 +1159,7 @@ Private Sub LoadTimerIntervals()
     frmMain.macrotrabajo.Interval = INT_MACRO_TRABAJO
     frmMain.macrotrabajo.Enabled = False
     
-   'Init timers
+    'Init timers
     Call MainTimer.Start(TimersIndex.Attack)
     Call MainTimer.Start(TimersIndex.Work)
     Call MainTimer.Start(TimersIndex.UseItemWithU)
@@ -1050,17 +1171,21 @@ Private Sub LoadTimerIntervals()
 
 End Sub
 
-Sub WriteVar(ByVal File As String, ByVal Main As String, ByVal Var As String, ByVal Value As String)
-'*****************************************************************
-'Writes a var to a text file
-'*****************************************************************
-    writeprivateprofilestring Main, Var, Value, File
+Sub WriteVar(ByVal File As String, _
+             ByVal Main As String, _
+             ByVal Var As String, _
+             ByVal value As String)
+    '*****************************************************************
+    'Writes a var to a text file
+    '*****************************************************************
+    writeprivateprofilestring Main, Var, value, File
+
 End Sub
 
 Function GetVar(ByVal File As String, ByVal Main As String, ByVal Var As String) As String
-'*****************************************************************
-'Gets a Var from a text file
-'*****************************************************************
+    '*****************************************************************
+    'Gets a Var from a text file
+    '*****************************************************************
     Dim sSpaces As String ' This will hold the input that the program will retrieve
     
     sSpaces = Space$(500) ' This tells the computer how long the longest string can be. If you want, you can change the number 100 to any number you wish
@@ -1069,6 +1194,7 @@ Function GetVar(ByVal File As String, ByVal Main As String, ByVal Var As String)
     
     GetVar = RTrim$(sSpaces)
     GetVar = Left$(GetVar, Len(GetVar) - 1)
+
 End Function
 
 '[CODE 002]:MatuX
@@ -1077,62 +1203,72 @@ End Function
 '
 '  Corregida por Maraxus para que reconozca como validas casillas con puntos antes de la arroba y evitar un chequeo innecesario
 Public Function CheckMailString(ByVal sString As String) As Boolean
-On Error GoTo errHnd
-    Dim lPos  As Long
-    Dim lX    As Long
-    Dim iAsc  As Integer
+
+    On Error GoTo errHnd
+
+    Dim lPos As Long
+    Dim lX   As Long
+    Dim iAsc As Integer
     
     '1er test: Busca un simbolo @
     lPos = InStr(sString, "@")
+
     If (lPos <> 0) Then
+
         '2do test: Busca un simbolo . despues de @ + 1
-        If Not (InStr(lPos, sString, ".", vbBinaryCompare) > lPos + 1) Then _
-            Exit Function
+        If Not (InStr(lPos, sString, ".", vbBinaryCompare) > lPos + 1) Then Exit Function
         
         '3er test: Recorre todos los caracteres y los valida
         For lX = 0 To Len(sString) - 1
+
             If Not (lX = (lPos - 1)) Then   'No chequeamos la '@'
                 iAsc = Asc(mid$(sString, (lX + 1), 1))
-                If Not CMSValidateChar_(iAsc) Then _
-                    Exit Function
+
+                If Not CMSValidateChar_(iAsc) Then Exit Function
+
             End If
+
         Next lX
         
         'Finale
         CheckMailString = True
+
     End If
+
 errHnd:
+
 End Function
 
 '  Corregida por Maraxus para que reconozca como validas casillas con puntos antes de la arroba
 Private Function CMSValidateChar_(ByVal iAsc As Integer) As Boolean
-    CMSValidateChar_ = (iAsc >= 48 And iAsc <= 57) Or _
-                        (iAsc >= 65 And iAsc <= 90) Or _
-                        (iAsc >= 97 And iAsc <= 122) Or _
-                        (iAsc = 95) Or (iAsc = 45) Or (iAsc = 46)
+    CMSValidateChar_ = (iAsc >= 48 And iAsc <= 57) Or (iAsc >= 65 And iAsc <= 90) Or (iAsc >= 97 And iAsc <= 122) Or (iAsc = 95) Or (iAsc = 45) Or (iAsc = 46)
+
 End Function
 
 'TODO : como todo lo relativo a mapas, no tiene nada que hacer aca....
 Function HayAgua(ByVal X As Integer, ByVal Y As Integer) As Boolean
-    HayAgua = ((MapData(X, Y).Graphic(1).GrhIndex >= 1505 And MapData(X, Y).Graphic(1).GrhIndex <= 1520) Or _
-            (MapData(X, Y).Graphic(1).GrhIndex >= 5665 And MapData(X, Y).Graphic(1).GrhIndex <= 5680) Or _
-            (MapData(X, Y).Graphic(1).GrhIndex >= 13547 And MapData(X, Y).Graphic(1).GrhIndex <= 13562)) And _
-                MapData(X, Y).Graphic(2).GrhIndex = 0
+    HayAgua = ((MapData(X, Y).Graphic(1).GrhIndex >= 1505 And MapData(X, Y).Graphic(1).GrhIndex <= 1520) Or (MapData(X, Y).Graphic(1).GrhIndex >= 5665 And MapData(X, Y).Graphic(1).GrhIndex <= 5680) Or (MapData(X, Y).Graphic(1).GrhIndex >= 13547 And MapData(X, Y).Graphic(1).GrhIndex <= 13562)) And MapData(X, Y).Graphic(2).GrhIndex = 0
                 
 End Function
 
 Public Sub ShowSendTxt()
+
     If Not frmCantidad.Visible Then
         frmMain.SendTxt.Visible = True
         frmMain.SendTxt.SetFocus
+
     End If
+
 End Sub
 
 Public Sub ShowSendCMSGTxt()
+
     If Not frmCantidad.Visible Then
         frmMain.SendCMSTXT.Visible = True
         frmMain.SendCMSTXT.SetFocus
+
     End If
+
 End Sub
 
 ''
@@ -1141,31 +1277,37 @@ End Sub
 '
 
 Public Sub LeerLineaComandos()
-'*************************************************
-'Author: Unknown
-'Last modified: 25/11/2008 (BrianPr)
-'
-'*************************************************
-    Dim T() As String
-    Dim i As Long
+    '*************************************************
+    'Author: Unknown
+    'Last modified: 25/11/2008 (BrianPr)
+    '
+    '*************************************************
+    Dim T()      As String
+    Dim i        As Long
     
     Dim UpToDate As Boolean
-    Dim Patch As String
+    Dim Patch    As String
     
     'Parseo los comandos
     T = Split(Command, " ")
+
     For i = LBound(T) To UBound(T)
+
         Select Case UCase$(T(i))
+
             Case "/NORES" 'no cambiar la resolucion
                 NoRes = True
+
             Case "/UPTODATE"
                 UpToDate = True
+
         End Select
+
     Next i
     
-#If Testeo = 0 Then
-    Call AoUpdate(UpToDate, NoRes)
-#End If
+    #If Testeo = 0 Then
+        Call AoUpdate(UpToDate, NoRes)
+    #End If
 
 End Sub
 
@@ -1176,15 +1318,19 @@ End Sub
 ' @param NoREs Specifies if we have to set nores arg when running the client once again (if the AoUpdate is executed).
 
 Private Sub AoUpdate(ByVal UpToDate As Boolean, ByVal NoRes As Boolean)
-'*************************************************
-'Author: BrianPr
-'Created: 25/11/2008
-'Last modified: 25/11/2008
-'
-'*************************************************
-On Error GoTo error
+
+    '*************************************************
+    'Author: BrianPr
+    'Created: 25/11/2008
+    'Last modified: 25/11/2008
+    '
+    '*************************************************
+    On Error GoTo error
+
     Dim extraArgs As String
+
     If Not UpToDate Then
+
         'No recibe update, ejecutar AU
         'Ejecuto el AoUpdate, sino me voy
         If LenB(Dir(App.path & "\AoUpdate.exe", vbArchive)) = 0 Then
@@ -1195,43 +1341,53 @@ On Error GoTo error
             
             If NoRes Then
                 extraArgs = " /nores"
+
             End If
             
             Call ShellExecute(0, "Open", App.path & "\AoUpdateTMP.exe", App.EXEName & ".exe" & extraArgs, App.path, SW_SHOWNORMAL)
             End
+
         End If
+
     Else
+
         If FileExist(App.path & "\AoUpdateTMP.exe", vbArchive) Then Kill App.path & "\AoUpdateTMP.exe"
+
     End If
-Exit Sub
+
+    Exit Sub
 
 error:
+
     If Err.number = 75 Then 'Si el archivo AoUpdateTMP.exe esta en uso, entonces esperamos 5 ms y volvemos a intentarlo hasta que nos deje.
         Sleep 5
         Resume
     Else
         MsgBox Err.Description & vbCrLf, vbInformation, "[ " & Err.number & " ]" & " Error "
         End
+
     End If
+
 End Sub
 
 Private Sub LoadClientSetup()
-'**************************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
-'Last Modify Date: 11/19/09
-'11/19/09: Pato - Is optional show the frmGuildNews form
-'**************************************************************
+    '**************************************************************
+    'Author: Juan Martin Sotuyo Dodero (Maraxus)
+    'Last Modify Date: 11/19/09
+    '11/19/09: Pato - Is optional show the frmGuildNews form
+    '**************************************************************
     Dim fHandle As Integer
     
     If FileExist(App.path & "\init\ao.dat", vbArchive) Then
         fHandle = FreeFile
         
         Open App.path & "\init\ao.dat" For Binary Access Read Lock Write As fHandle
-            Get fHandle, , ClientSetup
+        Get fHandle, , ClientSetup
         Close fHandle
     Else
         'Use dynamic by default
         ClientSetup.bDinamic = True
+
     End If
     
     NoRes = ClientSetup.bNoRes
@@ -1240,14 +1396,15 @@ Private Sub LoadClientSetup()
     Set DialogosClanes = New clsGuildDlg
     DialogosClanes.Activo = Not ClientSetup.bGldMsgConsole
     DialogosClanes.CantidadDialogos = ClientSetup.bCantMsgs
+
 End Sub
 
 Private Sub SaveClientSetup()
-'**************************************************************
-'Author: Torres Patricio (Pato)
-'Last Modify Date: 03/11/10
-'
-'**************************************************************
+    '**************************************************************
+    'Author: Torres Patricio (Pato)
+    'Last Modify Date: 03/11/10
+    '
+    '**************************************************************
     Dim fHandle As Integer
     
     fHandle = FreeFile
@@ -1260,16 +1417,17 @@ Private Sub SaveClientSetup()
     ClientSetup.bCantMsgs = DialogosClanes.CantidadDialogos
     
     Open App.path & "\init\ao.dat" For Binary As fHandle
-        Put fHandle, , ClientSetup
+    Put fHandle, , ClientSetup
     Close fHandle
+
 End Sub
 
 Private Sub InicializarNombres()
-'**************************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
-'Last Modify Date: 11/27/2005
-'Inicializa los nombres de razas, ciudades, clases, skills, atributos, etc.
-'**************************************************************
+    '**************************************************************
+    'Author: Juan Martin Sotuyo Dodero (Maraxus)
+    'Last Modify Date: 11/27/2005
+    'Inicializa los nombres de razas, ciudades, clases, skills, atributos, etc.
+    '**************************************************************
     Ciudades(eCiudad.cUllathorpe) = "Ullathorpe"
     Ciudades(eCiudad.cNix) = "Nix"
     Ciudades(eCiudad.cBanderbill) = "Banderbill"
@@ -1321,31 +1479,33 @@ Private Sub InicializarNombres()
     AtributosNames(eAtributos.Inteligencia) = "Inteligencia"
     AtributosNames(eAtributos.Carisma) = "Carisma"
     AtributosNames(eAtributos.Constitucion) = "Constitucion"
+
 End Sub
 
 ''
 ' Removes all text from the console and dialogs
 
 Public Sub CleanDialogs()
-'**************************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
-'Last Modify Date: 11/27/2005
-'Removes all text from the console and dialogs
-'**************************************************************
+    '**************************************************************
+    'Author: Juan Martin Sotuyo Dodero (Maraxus)
+    'Last Modify Date: 11/27/2005
+    'Removes all text from the console and dialogs
+    '**************************************************************
     'Clean console and dialogs
     frmMain.RecTxt.Text = vbNullString
     
     Call DialogosClanes.RemoveDialogs
     
     Call Dialogos.RemoveAllDialogs
+
 End Sub
 
 Public Sub CloseClient()
-'**************************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
-'Last Modify Date: 8/14/2007
-'Frees all used resources, cleans up and leaves
-'**************************************************************
+    '**************************************************************
+    'Author: Juan Martin Sotuyo Dodero (Maraxus)
+    'Last Modify Date: 8/14/2007
+    'Frees all used resources, cleans up and leaves
+    '**************************************************************
     ' Allow new instances of the client to be opened
     Call PrevInstance.ReleaseInstance
     
@@ -1376,79 +1536,106 @@ Public Sub CloseClient()
     Config_Inicio.tip = tipf
     Call EscribirGameIni(Config_Inicio)
     End
+
 End Sub
 
-
 Public Function esGM(CharIndex As Integer) As Boolean
-esGM = False
-If charlist(CharIndex).priv >= 1 And charlist(CharIndex).priv <= 5 Or charlist(CharIndex).priv = 25 Then _
-    esGM = True
+    esGM = False
+
+    If charlist(CharIndex).priv >= 1 And charlist(CharIndex).priv <= 5 Or charlist(CharIndex).priv = 25 Then esGM = True
 
 End Function
 
 Public Function getTagPosition(ByVal Nick As String) As Integer
-Dim buf As Integer
-buf = InStr(Nick, "<")
-If buf > 0 Then
-    getTagPosition = buf
-    Exit Function
-End If
-buf = InStr(Nick, "[")
-If buf > 0 Then
-    getTagPosition = buf
-    Exit Function
-End If
-getTagPosition = Len(Nick) + 2
+    Dim buf As Integer
+    buf = InStr(Nick, "<")
+
+    If buf > 0 Then
+        getTagPosition = buf
+        Exit Function
+
+    End If
+
+    buf = InStr(Nick, "[")
+
+    If buf > 0 Then
+        getTagPosition = buf
+        Exit Function
+
+    End If
+
+    getTagPosition = Len(Nick) + 2
+
 End Function
 
 Public Sub checkText(ByVal Text As String)
-Dim Nivel As Integer
-If Right(Text, Len(MENSAJE_FRAGSHOOTER_TE_HA_MATADO)) = MENSAJE_FRAGSHOOTER_TE_HA_MATADO Then
-    Call ScreenCapture(True)
-    Exit Sub
-End If
-If Left(Text, Len(MENSAJE_FRAGSHOOTER_HAS_MATADO)) = MENSAJE_FRAGSHOOTER_HAS_MATADO Then
-    EsperandoLevel = True
-    Exit Sub
-End If
-If EsperandoLevel Then
-    If Right(Text, Len(MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA)) = MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA Then
-        If CInt(mid(Text, Len(MENSAJE_FRAGSHOOTER_HAS_GANADO), (Len(Text) - (Len(MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA) + Len(MENSAJE_FRAGSHOOTER_HAS_GANADO))))) / 2 > ClientSetup.byMurderedLevel Then
-            Call ScreenCapture(True)
-        End If
+    Dim Nivel As Integer
+
+    If Right(Text, Len(MENSAJE_FRAGSHOOTER_TE_HA_MATADO)) = MENSAJE_FRAGSHOOTER_TE_HA_MATADO Then
+        Call ScreenCapture(True)
+        Exit Sub
+
     End If
-End If
-EsperandoLevel = False
+
+    If Left(Text, Len(MENSAJE_FRAGSHOOTER_HAS_MATADO)) = MENSAJE_FRAGSHOOTER_HAS_MATADO Then
+        EsperandoLevel = True
+        Exit Sub
+
+    End If
+
+    If EsperandoLevel Then
+        If Right(Text, Len(MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA)) = MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA Then
+            If CInt(mid(Text, Len(MENSAJE_FRAGSHOOTER_HAS_GANADO), (Len(Text) - (Len(MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA) + Len(MENSAJE_FRAGSHOOTER_HAS_GANADO))))) / 2 > ClientSetup.byMurderedLevel Then
+                Call ScreenCapture(True)
+
+            End If
+
+        End If
+
+    End If
+
+    EsperandoLevel = False
+
 End Sub
 
 Public Function getStrenghtColor() As Long
-Dim m As Long
-m = 255 / MAXATRIBUTOS
-getStrenghtColor = RGB(255 - (m * UserFuerza), (m * UserFuerza), 0)
+    Dim m As Long
+    m = 255 / MAXATRIBUTOS
+    getStrenghtColor = RGB(255 - (m * UserFuerza), (m * UserFuerza), 0)
+
 End Function
+
 Public Function getDexterityColor() As Long
-Dim m As Long
-m = 255 / MAXATRIBUTOS
-getDexterityColor = RGB(255, m * UserAgilidad, 0)
+    Dim m As Long
+    m = 255 / MAXATRIBUTOS
+    getDexterityColor = RGB(255, m * UserAgilidad, 0)
+
 End Function
 
 Public Function getCharIndexByName(ByVal Name As String) As Integer
-Dim i As Long
-For i = 1 To LastChar
-    If charlist(i).Nombre = Name Then
-        getCharIndexByName = i
-        Exit Function
-    End If
-Next i
+    Dim i As Long
+
+    For i = 1 To LastChar
+
+        If charlist(i).Nombre = Name Then
+            getCharIndexByName = i
+            Exit Function
+
+        End If
+
+    Next i
+
 End Function
 
 Public Function EsAnuncio(ByVal ForumType As Byte) As Boolean
-'***************************************************
-'Author: ZaMa
-'Last Modification: 22/02/2010
-'Returns true if the post is sticky.
-'***************************************************
+
+    '***************************************************
+    'Author: ZaMa
+    'Last Modification: 22/02/2010
+    'Returns true if the post is sticky.
+    '***************************************************
     Select Case ForumType
+
         Case eForumMsgType.ieCAOS_STICKY
             EsAnuncio = True
             
@@ -1463,12 +1650,14 @@ Public Function EsAnuncio(ByVal ForumType As Byte) As Boolean
 End Function
 
 Public Function ForumAlignment(ByVal yForumType As Byte) As Byte
-'***************************************************
-'Author: ZaMa
-'Last Modification: 01/03/2010
-'Returns the forum alignment.
-'***************************************************
+
+    '***************************************************
+    'Author: ZaMa
+    'Last Modification: 01/03/2010
+    'Returns the forum alignment.
+    '***************************************************
     Select Case yForumType
+
         Case eForumMsgType.ieCAOS, eForumMsgType.ieCAOS_STICKY
             ForumAlignment = eForumType.ieCAOS
             
@@ -1494,18 +1683,22 @@ Public Sub ResetAllInfo()
     
     'Unload all forms except frmMain, frmConnect and frmCrearPersonaje
     Dim frm As Form
+
     For Each frm In Forms
-        If frm.Name <> frmMain.Name And frm.Name <> frmConnect.Name And _
-            frm.Name <> frmCrearPersonaje.Name Then
+
+        If frm.Name <> frmMain.Name And frm.Name <> frmConnect.Name And frm.Name <> frmCrearPersonaje.Name Then
             
             Unload frm
+
         End If
+
     Next
     
     On Local Error GoTo 0
     
     ' Return to connection screen
     frmConnect.MousePointer = vbNormal
+
     If Not frmCrearPersonaje.Visible Then frmConnect.Visible = True
     frmMain.Visible = False
     
@@ -1540,6 +1733,7 @@ Public Sub ResetAllInfo()
 
     'Reset some char variables...
     Dim i As Long
+
     For i = 1 To LastChar
         charlist(i).invisible = False
     Next i
@@ -1572,40 +1766,54 @@ Public Sub ResetAllInfo()
 End Sub
 
 Public Function DevolverNombreHechizo(ByVal Index As Byte) As String
-Dim i As Long
+    Dim i As Long
  
     For i = 1 To NumHechizos
+
         If i = Index Then
             DevolverNombreHechizo = Hechizos(i).Nombre
             Exit Function
+
         End If
+
     Next i
+
 End Function
+
 Public Function DevolverIndexHechizo(ByVal Nombre As String) As Byte
-Dim i As Long
+    Dim i As Long
  
     For i = 1 To NumHechizos
+
         If Hechizos(i).Nombre = Nombre Then
             DevolverIndexHechizo = i
             Exit Function
+
         End If
+
     Next i
+
 End Function
+
 Public Sub CargarHechizos()
-'********************************
-'Author: Shak
-'Last Modification:
-'Cargamos los hechizos del juego. [Solo datos necesarios]
-'********************************
-On Error GoTo errorH
+
+    '********************************
+    'Author: Shak
+    'Last Modification:
+    'Cargamos los hechizos del juego. [Solo datos necesarios]
+    '********************************
+    On Error GoTo errorH
+
     Dim PathName As String
-    Dim j As Long
+    Dim j        As Long
  
     PathName = App.path & "\init\Hechizos.dat"
     NumHechizos = Val(GetVar(PathName, "INIT", "NumHechizos"))
  
     ReDim Hechizos(1 To NumHechizos) As tHechizos
+
     For j = 1 To NumHechizos
+
         With Hechizos(j)
             .Desc = GetVar(PathName, "HECHIZO" & j, "Desc")
             .PalabrasMagicas = GetVar(PathName, "HECHIZO" & j, "PalabrasMagicas")
@@ -1618,30 +1826,35 @@ On Error GoTo errorH
                 .HechiceroMsg = GetVar(PathName, "HECHIZO" & j, "HechizeroMsg")
                 .ManaRequerida = GetVar(PathName, "HECHIZO" & j, "ManaRequerido")
              
-             
                 .PropioMsg = GetVar(PathName, "HECHIZO" & j, "PropioMsg")
              
                 .TargetMsg = GetVar(PathName, "HECHIZO" & j, "TargetMsg")
+
             End If
+
         End With
+
     Next j
  
-Exit Sub
+    Exit Sub
  
 errorH:
     Call MsgBox("Error critico", vbCritical + vbOKOnly, "Argentum Online")
+
 End Sub
 
 Sub DownloadServersFile(myURL As String)
-'**********************************************************
-'Downloads the sinfo.dat file from a given url
-'Last change: 01/11/2018
-'Implemented by Cucsifae
-'Check content of strData to avoid clean the file sinfo.ini if there is no response from Github by Recox
-'**********************************************************
-On Error GoTo error
+
+    '**********************************************************
+    'Downloads the sinfo.dat file from a given url
+    'Last change: 01/11/2018
+    'Implemented by Cucsifae
+    'Check content of strData to avoid clean the file sinfo.ini if there is no response from Github by Recox
+    '**********************************************************
+    On Error GoTo error
+
     Dim strData As String
-    Dim f As Integer
+    Dim f       As Integer
     
     strData = frmCargando.Inet1.OpenURL(myURL)
     
@@ -1650,8 +1863,9 @@ On Error GoTo error
     
     If LenB(strData) <> 0 Then
         Open App.path & "/init/sinfo.dat" For Output As #f
-            Print #f, strData
+        Print #f, strData
         Close #f
+
     End If
     
     Exit Sub
@@ -1662,4 +1876,5 @@ error:
     Exit Sub
 errorinet:
     Call MsgBox("Error al descargar la lista de servidores: Error de Inet " & frmCargando.Inet1.ResponseCode, vbCritical + vbOKOnly, "Argentum Online")
+
 End Sub

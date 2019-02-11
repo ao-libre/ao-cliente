@@ -145,25 +145,25 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private clsFormulario As clsFormMovementManager
+Private clsFormulario    As clsFormMovementManager
 
-Private cBotonAzul As clsGraphicalButton
-Private cBotonRojo As clsGraphicalButton
-Private cBotonBlanco As clsGraphicalButton
-Private cBotonGris As clsGraphicalButton
-Private cBotonAmarillo As clsGraphicalButton
-Private cBotonMorado As clsGraphicalButton
-Private cBotonVerde As clsGraphicalButton
-Private cBotonMarron As clsGraphicalButton
-Private cBotonAceptar As clsGraphicalButton
+Private cBotonAzul       As clsGraphicalButton
+Private cBotonRojo       As clsGraphicalButton
+Private cBotonBlanco     As clsGraphicalButton
+Private cBotonGris       As clsGraphicalButton
+Private cBotonAmarillo   As clsGraphicalButton
+Private cBotonMorado     As clsGraphicalButton
+Private cBotonVerde      As clsGraphicalButton
+Private cBotonMarron     As clsGraphicalButton
+Private cBotonAceptar    As clsGraphicalButton
 
 Public LastButtonPressed As clsGraphicalButton
 
-Private picNegrita As Picture
-Private picCursiva As Picture
+Private picNegrita       As Picture
+Private picCursiva       As Picture
 
-Private yNegrita As Byte
-Private yCursiva As Byte
+Private yNegrita         As Byte
+Private yCursiva         As Byte
 
 Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
@@ -173,6 +173,7 @@ Private Sub Form_Load()
     Me.Picture = LoadPicture(DirGraficos & "VentanaCambioMOTD.jpg")
     
     Call LoadButtons
+
 End Sub
 
 Private Sub LoadButtons()
@@ -192,57 +193,41 @@ Private Sub LoadButtons()
     
     Set LastButtonPressed = New clsGraphicalButton
     
-    
-    Call cBotonAzul.Initialize(imgAzul, GrhPath & "BotonAzul.jpg", _
-                                    GrhPath & "BotonAzulRollover.jpg", _
-                                    GrhPath & "BotonAzulClick.jpg", Me)
+    Call cBotonAzul.Initialize(imgAzul, GrhPath & "BotonAzul.jpg", GrhPath & "BotonAzulRollover.jpg", GrhPath & "BotonAzulClick.jpg", Me)
 
-    Call cBotonRojo.Initialize(imgRojo, GrhPath & "BotonRojo.jpg", _
-                                    GrhPath & "BotonRojoRollover.jpg", _
-                                    GrhPath & "BotonRojoClick.jpg", Me)
+    Call cBotonRojo.Initialize(imgRojo, GrhPath & "BotonRojo.jpg", GrhPath & "BotonRojoRollover.jpg", GrhPath & "BotonRojoClick.jpg", Me)
 
-    Call cBotonBlanco.Initialize(imgBlanco, GrhPath & "BotonBlanco.jpg", _
-                                    GrhPath & "BotonBlancoRollover.jpg", _
-                                    GrhPath & "BotonBlancoClick.jpg", Me)
+    Call cBotonBlanco.Initialize(imgBlanco, GrhPath & "BotonBlanco.jpg", GrhPath & "BotonBlancoRollover.jpg", GrhPath & "BotonBlancoClick.jpg", Me)
 
-    Call cBotonGris.Initialize(imgGris, GrhPath & "BotonGris.jpg", _
-                                    GrhPath & "BotonGrisRollover.jpg", _
-                                    GrhPath & "BotonGrisClick.jpg", Me)
+    Call cBotonGris.Initialize(imgGris, GrhPath & "BotonGris.jpg", GrhPath & "BotonGrisRollover.jpg", GrhPath & "BotonGrisClick.jpg", Me)
                                     
-    Call cBotonAmarillo.Initialize(imgAmarillo, GrhPath & "BotonAmarillo.jpg", _
-                                    GrhPath & "BotonAmarilloRollover.jpg", _
-                                    GrhPath & "BotonAmarilloClick.jpg", Me)
+    Call cBotonAmarillo.Initialize(imgAmarillo, GrhPath & "BotonAmarillo.jpg", GrhPath & "BotonAmarilloRollover.jpg", GrhPath & "BotonAmarilloClick.jpg", Me)
 
-    Call cBotonMorado.Initialize(imgMorado, GrhPath & "BotonMorado.jpg", _
-                                    GrhPath & "BotonMoradoRollover.jpg", _
-                                    GrhPath & "BotonMoradoClick.jpg", Me)
+    Call cBotonMorado.Initialize(imgMorado, GrhPath & "BotonMorado.jpg", GrhPath & "BotonMoradoRollover.jpg", GrhPath & "BotonMoradoClick.jpg", Me)
 
-    Call cBotonVerde.Initialize(imgVerde, GrhPath & "BotonVerde.jpg", _
-                                    GrhPath & "BotonVerdeRollover.jpg", _
-                                    GrhPath & "BotonVerdeClick.jpg", Me)
+    Call cBotonVerde.Initialize(imgVerde, GrhPath & "BotonVerde.jpg", GrhPath & "BotonVerdeRollover.jpg", GrhPath & "BotonVerdeClick.jpg", Me)
 
-    Call cBotonMarron.Initialize(imgMarron, GrhPath & "BotonMarron.jpg", _
-                                    GrhPath & "BotonMarronRollover.jpg", _
-                                    GrhPath & "BotonMarronClick.jpg", Me)
+    Call cBotonMarron.Initialize(imgMarron, GrhPath & "BotonMarron.jpg", GrhPath & "BotonMarronRollover.jpg", GrhPath & "BotonMarronClick.jpg", Me)
 
-    Call cBotonAceptar.Initialize(imgAceptar, GrhPath & "BotonAceptarMotd.jpg", _
-                                    GrhPath & "BotonAceptarRolloverMotd.jpg", _
-                                    GrhPath & "BotonAceptarClickMotd.jpg", Me)
+    Call cBotonAceptar.Initialize(imgAceptar, GrhPath & "BotonAceptarMotd.jpg", GrhPath & "BotonAceptarRolloverMotd.jpg", GrhPath & "BotonAceptarClickMotd.jpg", Me)
                                     
     Set picNegrita = LoadPicture(DirGraficos & "OpcionPrendidaN.jpg")
     Set picCursiva = LoadPicture(DirGraficos & "OpcionPrendidaC.jpg")
+
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgAceptar_Click()
     Dim T() As String
-    Dim i As Long, N As Long, Pos As Long
+    Dim i   As Long, N As Long, Pos As Long
     
     If Len(txtMotd.Text) >= 2 Then
         If Right$(txtMotd.Text, 2) = vbNewLine Then txtMotd.Text = Left$(txtMotd.Text, Len(txtMotd.Text) - 2)
+
     End If
     
     T = Split(txtMotd.Text, vbNewLine)
@@ -250,14 +235,18 @@ Private Sub imgAceptar_Click()
     For i = LBound(T) To UBound(T)
         N = 0
         Pos = InStr(1, T(i), "~")
+
         Do While Pos > 0 And Pos < Len(T(i))
             N = N + 1
             Pos = InStr(Pos + 1, T(i), "~")
         Loop
+
         If N <> 5 Then
             MsgBox "Error en el formato de la linea " & i + 1 & "."
             Exit Sub
+
         End If
+
     Next i
     
     Call WriteSetMOTD(txtMotd.Text)
@@ -267,26 +256,32 @@ End Sub
 
 Private Sub imgAmarillo_Click()
     txtMotd.Text = txtMotd & "~244~244~0~" & CStr(yNegrita) & "~" & CStr(yCursiva)
+
 End Sub
 
 Private Sub imgAzul_Click()
     txtMotd.Text = txtMotd & "~50~70~250~" & CStr(yNegrita) & "~" & CStr(yCursiva)
+
 End Sub
 
 Private Sub imgBlanco_Click()
     txtMotd.Text = txtMotd & "~255~255~255~" & CStr(yNegrita) & "~" & CStr(yCursiva)
+
 End Sub
 
 Private Sub imgGris_Click()
     txtMotd.Text = txtMotd & "~157~157~157~" & CStr(yNegrita) & "~" & CStr(yCursiva)
+
 End Sub
 
 Private Sub imgMarron_Click()
     txtMotd.Text = txtMotd & "~97~58~31~" & CStr(yNegrita) & "~" & CStr(yCursiva)
+
 End Sub
 
 Private Sub imgMorado_Click()
     txtMotd.Text = txtMotd & "~128~0~128~" & CStr(yNegrita) & "~" & CStr(yCursiva)
+
 End Sub
 
 Private Sub imgOptCursiva_Click(Index As Integer)
@@ -297,12 +292,18 @@ Private Sub imgOptCursiva_Click(Index As Integer)
     Else
         Set imgOptCursiva(0).Picture = Nothing
         yCursiva = 0
+
     End If
 
 End Sub
 
-Private Sub imgOptCursiva_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgOptCursiva_MouseMove(Index As Integer, _
+                                    Button As Integer, _
+                                    Shift As Integer, _
+                                    X As Single, _
+                                    Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgOptNegrita_Click(Index As Integer)
@@ -313,19 +314,27 @@ Private Sub imgOptNegrita_Click(Index As Integer)
     Else
         Set imgOptNegrita(0).Picture = Nothing
         yNegrita = 0
+
     End If
     
 End Sub
 
-Private Sub imgOptNegrita_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgOptNegrita_MouseMove(Index As Integer, _
+                                    Button As Integer, _
+                                    Shift As Integer, _
+                                    X As Single, _
+                                    Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgRojo_Click()
     txtMotd.Text = txtMotd & "~255~0~0~" & CStr(yNegrita) & "~" & CStr(yCursiva)
+
 End Sub
 
 Private Sub imgVerde_Click()
     txtMotd.Text = txtMotd & "~23~104~26~" & CStr(yNegrita) & "~" & CStr(yCursiva)
+
 End Sub
 

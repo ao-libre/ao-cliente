@@ -378,19 +378,21 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private clsFormulario As clsFormMovementManager
+Private clsFormulario    As clsFormMovementManager
 
-Private cBotonCerrar As clsGraphicalButton
-Private cBotonPeticion As clsGraphicalButton
-Private cBotonRechazar As clsGraphicalButton
-Private cBotonEchar As clsGraphicalButton
-Private cBotonAceptar As clsGraphicalButton
+Private cBotonCerrar     As clsGraphicalButton
+Private cBotonPeticion   As clsGraphicalButton
+Private cBotonRechazar   As clsGraphicalButton
+Private cBotonEchar      As clsGraphicalButton
+Private cBotonAceptar    As clsGraphicalButton
 
 Public LastButtonPressed As clsGraphicalButton
 
 Public Enum CharInfoFrmType
+
     frmMembers
     frmMembershipRequests
+
 End Enum
 
 Public frmType As CharInfoFrmType
@@ -419,31 +421,21 @@ Private Sub LoadButtons()
     
     Set LastButtonPressed = New clsGraphicalButton
     
-    
-    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarInfoChar.jpg", _
-                                    GrhPath & "BotonCerrarRolloverInfoChar.jpg", _
-                                    GrhPath & "BotonCerrarClickInfoChar.jpg", Me)
+    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarInfoChar.jpg", GrhPath & "BotonCerrarRolloverInfoChar.jpg", GrhPath & "BotonCerrarClickInfoChar.jpg", Me)
 
-    Call cBotonPeticion.Initialize(imgPeticion, GrhPath & "BotonPeticion.jpg", _
-                                    GrhPath & "BotonPeticionRollover.jpg", _
-                                    GrhPath & "BotonPeticionClick.jpg", Me)
+    Call cBotonPeticion.Initialize(imgPeticion, GrhPath & "BotonPeticion.jpg", GrhPath & "BotonPeticionRollover.jpg", GrhPath & "BotonPeticionClick.jpg", Me)
 
-    Call cBotonRechazar.Initialize(imgRechazar, GrhPath & "BotonRechazar.jpg", _
-                                    GrhPath & "BotonRechazarRollover.jpg", _
-                                    GrhPath & "BotonRechazarClick.jpg", Me)
+    Call cBotonRechazar.Initialize(imgRechazar, GrhPath & "BotonRechazar.jpg", GrhPath & "BotonRechazarRollover.jpg", GrhPath & "BotonRechazarClick.jpg", Me)
 
-    Call cBotonEchar.Initialize(imgEchar, GrhPath & "BotonEchar.jpg", _
-                                    GrhPath & "BotonEcharRollover.jpg", _
-                                    GrhPath & "BotonEcharClick.jpg", Me)
+    Call cBotonEchar.Initialize(imgEchar, GrhPath & "BotonEchar.jpg", GrhPath & "BotonEcharRollover.jpg", GrhPath & "BotonEcharClick.jpg", Me)
                                     
-    Call cBotonAceptar.Initialize(imgAceptar, GrhPath & "BotonAceptarInfoChar.jpg", _
-                                    GrhPath & "BotonAceptarRolloverInfoChar.jpg", _
-                                    GrhPath & "BotonAceptarClickInfoChar.jpg", Me)
+    Call cBotonAceptar.Initialize(imgAceptar, GrhPath & "BotonAceptarInfoChar.jpg", GrhPath & "BotonAceptarRolloverInfoChar.jpg", GrhPath & "BotonAceptarClickInfoChar.jpg", Me)
 
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgAceptar_Click()
@@ -451,10 +443,12 @@ Private Sub imgAceptar_Click()
     Unload frmGuildLeader
     Call WriteRequestGuildLeaderInfo
     Unload Me
+
 End Sub
 
 Private Sub imgCerrar_Click()
     Unload Me
+
 End Sub
 
 Private Sub imgEchar_Click()
@@ -462,19 +456,26 @@ Private Sub imgEchar_Click()
     Unload frmGuildLeader
     Call WriteRequestGuildLeaderInfo
     Unload Me
+
 End Sub
 
 Private Sub imgPeticion_Click()
     Call WriteGuildRequestJoinerInfo(Nombre)
+
 End Sub
 
 Private Sub imgRechazar_Click()
     frmCommet.T = RECHAZOPJ
     frmCommet.Nombre = Nombre.Caption
     frmCommet.Show vbModeless, frmCharInfo
+
 End Sub
 
-Private Sub txtMiembro_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub txtMiembro_MouseMove(Button As Integer, _
+                                 Shift As Integer, _
+                                 X As Single, _
+                                 Y As Single)
     LastButtonPressed.ToggleToNormal
+
 End Sub
 
