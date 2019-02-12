@@ -429,7 +429,7 @@
 		]
 	},
 	"MENSAJE_DAMAGE_NPC":{
-		"TEXTO":"¡¡Le has quitado VAR_DAÑO puntos de vida a la criatura!!",
+		"TEXTO":"¡¡Le has quitado VAR_DANO puntos de vida a la criatura!!",
 		"COLOR":[
 			255,
 			0,

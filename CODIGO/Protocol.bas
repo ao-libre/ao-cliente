@@ -34,7 +34,7 @@ Attribute VB_Name = "Protocol"
 
 Option Explicit
 #If False Then
-    Dim Nombre, PicInv, status, length As Variant
+    Dim Nombre, picInv, status, length As Variant
 #End If
 ''
 ' TODO : /BANIP y /UNBANIP ya no trabajan con nicks. Esto lo puede mentir en forma local el cliente con un paquete a NickToIp
@@ -915,7 +915,7 @@ Public Sub HandleMultiMessage()
             Case eMessages.UserHitNPC
                 Dim MsgHitNpc As String
                     MsgHitNpc = JsonLanguage.Item("MENSAJE_DAMAGE_NPC").Item("TEXTO")
-                    MsgHitNpc = Replace$(MsgHitNpc, "VAR_DAÑO", CStr(incomingData.ReadLong()))
+                    MsgHitNpc = Replace$(MsgHitNpc, "VAR_DANO", CStr(incomingData.ReadLong()))
                     
                 Call AddtoRichTextBox(frmMain.RecTxt, MsgHitNpc, 255, 0, 0, True, False, True)
         
@@ -1362,7 +1362,7 @@ Private Sub HandleBankInit()
     
     BankGold = incomingData.ReadLong
     Call InvBanco(0).Initialize(DirectD3D8, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
-    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.PicInv, Inventario.MaxObjs)
+    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.picInv, Inventario.MaxObjs)
     
     For i = 1 To Inventario.MaxObjs
         With Inventario
