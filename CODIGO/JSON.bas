@@ -687,7 +687,7 @@ Private Function Encode(str) As String
             If a > 31 And a < 127 Then
                 SB.Append c
             ElseIf a > -1 Or a < 65535 Then
-                SB.Append "\u" & String(4 - Len(Hex$(a)), "0") & Hex$(a)
+                SB.Append "\u" & String$(4 - LenB(Hex$(a)), "0") & Hex$(a)
 
             End If
 

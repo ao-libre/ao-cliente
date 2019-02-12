@@ -79,7 +79,7 @@ Public Function ColorToDX8(ByVal long_color As Long) As Long
 
     If Len(temp_color) < 6 Then
         'Give is 6 digits for easy RGB conversion.
-        temp_color = String(6 - Len(temp_color), "0") + temp_color
+        temp_color = String$(6 - Len(temp_color), "0") + temp_color
 
     End If
     
