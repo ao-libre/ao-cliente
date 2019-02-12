@@ -115,8 +115,9 @@ Private Sub Form_Load()
     
     With Me
         .Picture = LoadPicture(App.path & "\Graficos\frmCerrar.jpg")
-        .cRegresar.Caption = JsonLanguage.Item("CERRAR").Item(1)
-        .cSalir.Caption = JsonLanguage.Item("CERRAR").Item(2)
+        .cRegresar.Caption = JsonLanguage.Item("CERRAR").Item("TEXTOS").Item(1)
+        .cSalir.Caption = JsonLanguage.Item("CERRAR").Item("TEXTOS").Item(2)
+        .cCancelQuit.Caption = JsonLanguage.Item("CERRAR").Item("TEXTOS").Item(3)
     End With
     
 End Sub

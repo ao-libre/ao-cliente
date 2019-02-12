@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "Richtx32.ocx"
 Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.ocx"
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.ocx"
 Begin VB.Form frmMain 
@@ -26,6 +26,7 @@ Begin VB.Form frmMain
    MaxButton       =   0   'False
    MinButton       =   0   'False
    PaletteMode     =   1  'UseZOrder
+   Picture         =   "frmMain.frx":030A
    ScaleHeight     =   599
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   800
@@ -222,7 +223,7 @@ Begin VB.Form frmMain
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
-      TextRTF         =   $"frmMain.frx":030A
+      TextRTF         =   $"frmMain.frx":39815
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Tahoma"
          Size            =   8.25
@@ -334,7 +335,7 @@ Begin VB.Form frmMain
       EndProperty
       Height          =   450
       Left            =   10320
-      MouseIcon       =   "frmMain.frx":0388
+      MouseIcon       =   "frmMain.frx":39893
       MousePointer    =   99  'Custom
       TabIndex        =   19
       Top             =   1920
@@ -367,7 +368,7 @@ Begin VB.Form frmMain
    Begin VB.Image cmdInfo 
       Height          =   405
       Left            =   10680
-      MouseIcon       =   "frmMain.frx":04DA
+      MouseIcon       =   "frmMain.frx":399E5
       MousePointer    =   99  'Custom
       Top             =   5280
       Visible         =   0   'False
@@ -397,9 +398,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   0
       Left            =   11430
-      MouseIcon       =   "frmMain.frx":062C
+      MouseIcon       =   "frmMain.frx":39B37
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":077E
+      Picture         =   "frmMain.frx":39C89
       Top             =   3480
       Visible         =   0   'False
       Width           =   225
@@ -408,9 +409,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   1
       Left            =   11430
-      MouseIcon       =   "frmMain.frx":0AC2
+      MouseIcon       =   "frmMain.frx":39FCD
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":0C14
+      Picture         =   "frmMain.frx":3A11F
       Top             =   3225
       Visible         =   0   'False
       Width           =   225
@@ -501,9 +502,9 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H00FFFF00&
       Height          =   225
-      Left            =   9225
+      Left            =   10320
       TabIndex        =   21
-      Top             =   1320
+      Top             =   1140
       Width           =   555
    End
    Begin VB.Label lblExp 
@@ -529,7 +530,7 @@ Begin VB.Form frmMain
    Begin VB.Image CmdLanzar 
       Height          =   375
       Left            =   8760
-      MouseIcon       =   "frmMain.frx":0F58
+      MouseIcon       =   "frmMain.frx":3A463
       MousePointer    =   99  'Custom
       Top             =   5280
       Visible         =   0   'False
@@ -548,7 +549,7 @@ Begin VB.Form frmMain
       EndProperty
       Height          =   435
       Left            =   8880
-      MouseIcon       =   "frmMain.frx":10AA
+      MouseIcon       =   "frmMain.frx":3A5B5
       MousePointer    =   99  'Custom
       TabIndex        =   18
       Top             =   1920
@@ -983,8 +984,6 @@ Private Sub Form_Load()
         Set clsFormulario = New clsFormMovementManager
         clsFormulario.Initialize Me, 120
     End If
-
-    Me.Picture = LoadPicture(DirGraficos & "VentanaPrincipal.JPG")
     
     InvEqu.Picture = LoadPicture(DirGraficos & "CentroInventario.jpg")
     
@@ -992,10 +991,14 @@ Private Sub Form_Load()
     
     Set dragInventory = Inventario
     
-    Me.Left = 0
-    Me.Top = 0
-    Me.Width = 12000
-    Me.Height = 9000
+    With Me
+        .Picture = LoadPicture(DirGraficos & "VentanaPrincipal.JPG")
+        .Left = 0
+        .Top = 0
+        .Width = 12000
+        .Height = 9000
+        .Label6 = JsonLanguage.Item("NIVEL").Item("TEXTO") & ": "
+    End With
     
     ' Detect links in console
     EnableURLDetect RecTxt.hwnd, Me.hwnd
@@ -1142,9 +1145,9 @@ Select Case Index
         
     Case eSMType.mWork
         If Mostrar Then
-            picSM(Index).ToolTipText = JsonLanguage.Item("MENSAJE_MACRO_ACTIVADO").Item("TEXTO").Item(1)
+            picSM(Index).ToolTipText = JsonLanguage.Item("MENSAJE_MACRO_ACTIVADO").Item("TEXTO")
         Else
-            picSM(Index).ToolTipText = JsonLanguage.Item("MENSAJE_MACRO_DESACTIVADO").Item("TEXTO").Item(1)
+            picSM(Index).ToolTipText = JsonLanguage.Item("MENSAJE_MACRO_DESACTIVADO").Item("TEXTO")
         End If
 End Select
 
@@ -1723,12 +1726,12 @@ Private Sub cmdINFO_Click()
         Dim Msj As String
      
         If Index <> 0 Then _
-            Msj = "%%%%%%%%%%%% " & JsonLanguage.Item("MENSAJE_INFO_HECHIZO").Item("TEXTO").Item(1) & " %%%%%%%%%%%%" & vbCrLf _
-             & JsonLanguage.Item("MENSAJE_INFO_HECHIZO").Item("TEXTO").Item(2) & ": " & Hechizos(Index).Nombre & vbCrLf _
-             & JsonLanguage.Item("MENSAJE_INFO_HECHIZO").Item("TEXTO").Item(3) & ": " & Hechizos(Index).Desc & vbCrLf _
-             & JsonLanguage.Item("MENSAJE_INFO_HECHIZO").Item("TEXTO").Item(4) & ": " & Hechizos(Index).SkillRequerido & vbCrLf _
-             & JsonLanguage.Item("MENSAJE_INFO_HECHIZO").Item("TEXTO").Item(5) & ": " & Hechizos(Index).ManaRequerida & vbCrLf _
-             & JsonLanguage.Item("MENSAJE_INFO_HECHIZO").Item("TEXTO").Item(6) & ": " & Hechizos(Index).EnergiaRequerida & vbCrLf _
+            Msj = "%%%%%%%%%%%% " & JsonLanguage.Item("MENSAJE_INFO_HECHIZOS").Item("TEXTO").Item(1) & " %%%%%%%%%%%%" & vbCrLf _
+             & JsonLanguage.Item("MENSAJE_INFO_HECHIZOS").Item("TEXTO").Item(2) & ": " & Hechizos(Index).Nombre & vbCrLf _
+             & JsonLanguage.Item("MENSAJE_INFO_HECHIZOS").Item("TEXTO").Item(3) & ": " & Hechizos(Index).Desc & vbCrLf _
+             & JsonLanguage.Item("MENSAJE_INFO_HECHIZOS").Item("TEXTO").Item(4) & ": " & Hechizos(Index).SkillRequerido & vbCrLf _
+             & JsonLanguage.Item("MENSAJE_INFO_HECHIZOS").Item("TEXTO").Item(5) & ": " & Hechizos(Index).ManaRequerida & vbCrLf _
+             & JsonLanguage.Item("MENSAJE_INFO_HECHIZOS").Item("TEXTO").Item(6) & ": " & Hechizos(Index).EnergiaRequerida & vbCrLf _
              & "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
                                              
         Call ShowConsoleMsg(Msj, 210, 220, 220)

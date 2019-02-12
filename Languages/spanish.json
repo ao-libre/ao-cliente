@@ -1076,6 +1076,7 @@
 		"TEXTOS":[
 			"Regresar a la pantalla de inicio",
 			"Salir del Juego"
+			"Salir [ESC]"
 		]
 	},
 	"PANEL-GM":{

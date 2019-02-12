@@ -1320,15 +1320,15 @@ Private Sub CargarEspecialidades()
 
     ReDim vEspecialidades(1 To NroClases)
     
-    vEspecialidades(eClass.Hunter) = JsonLanguage.Item("OCULTARSE").Item("TEXTO")
-    vEspecialidades(eClass.Thief) = JsonLanguage.Item("ROBAR").Item("TEXTO") & JsonLanguage.Item("LETRA_Y").Item("TEXTO") & JsonLanguage.Item("OCULTARSE").Item("TEXTO")
-    vEspecialidades(eClass.Assasin) = JsonLanguage.Item("APUNALAR").Item("TEXTO")
-    vEspecialidades(eClass.Bandit) = JsonLanguage.Item("COMBATE_CUERPO_A_CUERPO").Item("TEXTO")
-    vEspecialidades(eClass.Druid) = JsonLanguage.Item("DOMAR_ANIMALES").Item("TEXTO")
-    vEspecialidades(eClass.Pirat) = JsonLanguage.Item("NAVEGACION").Item("TEXTO")
-    vEspecialidades(eClass.Worker) = JsonLanguage.Item("MINERIA").Item("TEXTO") & "," _
-                                    & JsonLanguage.Item("CARPINTERIA").Item("TEXTO") & JsonLanguage.Item("LETRA_Y").Item("TEXTO") _
-                                    & JsonLanguage.Item("TALAR").Item("TEXTO")
+    vEspecialidades(eClass.Hunter) = JsonLanguage.Item("HABILIDADES").Item("OCULTARSE").Item("TEXTO")
+    vEspecialidades(eClass.Thief) = JsonLanguage.Item("HABILIDADES").Item("ROBAR").Item("TEXTO") & JsonLanguage.Item("LETRA_Y").Item("TEXTO") & JsonLanguage.Item("HABILIDADES").Item("OCULTARSE").Item("TEXTO")
+    vEspecialidades(eClass.Assasin) = JsonLanguage.Item("HABILIDADES").Item("APUNALAR").Item("TEXTO")
+    vEspecialidades(eClass.Bandit) = JsonLanguage.Item("HABILIDADES").Item("COMBATE_CUERPO_A_CUERPO").Item("TEXTO")
+    vEspecialidades(eClass.Druid) = JsonLanguage.Item("HABILIDADES").Item("DOMAR_ANIMALES").Item("TEXTO")
+    vEspecialidades(eClass.Pirat) = JsonLanguage.Item("HABILIDADES").Item("NAVEGACION").Item("TEXTO")
+    vEspecialidades(eClass.Worker) = JsonLanguage.Item("HABILIDADES").Item("MINERIA").Item("TEXTO") & "," _
+                                    & JsonLanguage.Item("HABILIDADES").Item("CARPINTERIA").Item("TEXTO") & JsonLanguage.Item("LETRA_Y").Item("TEXTO") _
+                                    & JsonLanguage.Item("HABILIDADES").Item("TALAR").Item("TEXTO")
 End Sub
 Private Sub IniciarGraficos()
 

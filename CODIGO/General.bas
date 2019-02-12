@@ -252,7 +252,7 @@ Function CheckUserData() As Boolean
         Exit Function
     End If
     
-    For LoopC = 1 To LenB(AccountPassword)
+    For LoopC = 1 To Len(AccountPassword)
         CharAscii = Asc(mid$(AccountPassword, LoopC, 1))
         If Not LegalCharacter(CharAscii) Then
             MsgBox Replace$(JsonLanguage.Item("VALIDACION_BAD_PASSWORD").Item("TEXTO").Item(2), "VAR_CHAR_INVALIDO", Chr$(CharAscii))
@@ -260,12 +260,12 @@ Function CheckUserData() As Boolean
         End If
     Next LoopC
 
-    If LenB(AccountName) > 30 Then
+    If Len(AccountName) > 30 Then
         MsgBox JsonLanguage.Item("VALIDACION_BAD_EMAIL").Item("TEXTO").Item(2)
         Exit Function
     End If
     
-    For LoopC = 1 To LenB(AccountName)
+    For LoopC = 1 To Len(AccountName)
         CharAscii = Asc(mid$(AccountName, LoopC, 1))
         If Not LegalCharacter(CharAscii) Then
             MsgBox Replace$(JsonLanguage.Item("VALIDACION_BAD_PASSWORD").Item("TEXTO").Item(4), "VAR_CHAR_INVALIDO", Chr$(CharAscii))
