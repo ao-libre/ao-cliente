@@ -432,7 +432,7 @@ Private Function ResampleDib(ByRef cDibTo As cDIBSection) As Boolean
     Dim xScale As Single
     Dim yScale As Single
 
-    Dim X      As Long, Y As Long, xEnd As Long, xOut As Long
+    Dim X      As Long, Y As Long, xEnd As Long, xEndHeight As Long, xOut As Long
 
     Dim fX     As Single, fY As Single
     Dim ifY    As Long, ifX As Long
@@ -447,8 +447,9 @@ Private Function ResampleDib(ByRef cDibTo As cDIBSection) As Boolean
     yScale = (Height - 1) / cDibTo.Height
     
     xEnd = cDibTo.Width - 1
-        
-    For Y = 0 To cDibTo.Height - 1
+    xEndHeight = cDibTo.Height - 1
+    
+    For Y = 0 To xEndHeight
         
         fY = Y * yScale
         ifY = Int(fY)

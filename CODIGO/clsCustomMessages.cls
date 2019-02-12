@@ -111,13 +111,15 @@ Private Sub Class_Terminate()
     Dim handle        As Integer
     Dim i             As Long
     Dim directories() As String
+    Dim Upper_dir     As Long
     Dim path          As String
     
     'Make sure the path exists
     directories = Split(MESSAGE_FILE_PATH, "/")
+    Upper_dir = UBound(directories()) - 1
     path = App.path
     
-    For i = 0 To UBound(directories()) - 1
+    For i = 0 To Upper_dir
         path = path & "/" & directories(i)
         
         If LenB(Dir$(path, vbDirectory)) = 0 Then
@@ -269,12 +271,16 @@ Private Function MessageIsValid(ByRef msg As String) As Boolean
     
     On Error GoTo MessageIsValid_Err
     
-    Dim i     As Long
-    Dim Char  As String * 1
-    Dim ascii As Byte
+    Dim i       As Long
+    Dim Char    As String * 1
+    Dim ascii   As Byte
+    Dim Len_msg As Long
     
     'Get rid of spaces
     msg = Trim$(msg)
+    
+    'Calculate its length beforehand to improve For's performance
+    Len_msg = LenB(msg)
         
     'Empty messages are valid
     If LenB(msg) = 0 Then
@@ -283,7 +289,7 @@ Private Function MessageIsValid(ByRef msg As String) As Boolean
 
     End If
     
-    For i = 1 To Len(msg)
+    For i = 1 To Len_msg
         Char = mid$(msg, i, 1)
         ascii = Asc(Char)
         

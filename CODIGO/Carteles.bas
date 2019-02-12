@@ -84,7 +84,7 @@ Sub DibujarCartel()
     
     On Error GoTo DibujarCartel_Err
     
-    Dim X As Integer, Y As Integer
+    Dim X As Integer, Y As Integer, Upper_LeyendaFormateada As Long
 
     If Not Cartel Then Exit Sub
     
@@ -94,7 +94,9 @@ Sub DibujarCartel()
     Call DDrawTransGrhIndextoSurface(textura, XPosCartel, YPosCartel, 0, Normal_RGBList(), 0, False)
     Dim j As Integer, desp As Integer
     
-    For j = 0 To UBound(LeyendaFormateada)
+    Upper_LeyendaFormateada = UBound(LeyendaFormateada)
+    
+    For j = 0 To Upper_LeyendaFormateada
         'Fonts_Render_String LeyendaFormateada(j), X, Y + desp, -1, Settings.Engine_Font
         DrawText X, Y + desp, LeyendaFormateada(j), -1
         desp = desp + (frmMain.Font.Size) + 5
