@@ -329,8 +329,6 @@ Public Enum eObjType
     otUseOnce = 1
     otWeapon = 2
     otArmadura = 3
-<<<<<<< HEAD
-=======
     otArboles = 4
     otGuita = 5
     otPuertas = 6
@@ -342,7 +340,6 @@ Public Enum eObjType
     otBebidas = 13
     otLeña = 14
     otFogata = 15
->>>>>>> parent of 87c0695... Eliminados valores de emum sin usar.
     otescudo = 16
     otcasco = 17
     otAnillo = 18

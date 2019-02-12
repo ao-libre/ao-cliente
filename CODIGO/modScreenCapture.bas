@@ -79,11 +79,6 @@ Private Enum IJLERR
 End Enum
 
 Private Enum IJLIOTYPE
-<<<<<<< HEAD
-    ''// Write an entire JFIF bit stream.
-    IJL_JFILE_WRITEWHOLEIMAGE = 8&
-=======
-
     IJL_SETUP = -1&
     ''// Read JPEG parameters (i.e., height, width, channels,
     ''// sampling, etc.) from a JPEG bit stream.
@@ -120,7 +115,6 @@ Private Enum IJLIOTYPE
     ''// Reads an embedded thumbnail from a JFIF bit stream.
     IJL_JFILE_READTHUMBNAIL = 20&
     IJL_JBUFF_READTHUMBNAIL = 21&
->>>>>>> parent of 87c0695... Eliminados valores de emum sin usar.
 
 End Enum
 

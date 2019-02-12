@@ -261,7 +261,7 @@ Private Sub imgAceptar_Click()
     
     On Error GoTo imgAceptar_Click_Err
     
-    Dim T() As String
+    Dim T() As String, Upper_t As Long, Lower_t As Long, Len_t As Long
     Dim i   As Long, N As Long, Pos As Long
     
     If Len(txtMotd.Text) >= 2 Then
@@ -270,12 +270,15 @@ Private Sub imgAceptar_Click()
     End If
     
     T = Split(txtMotd.Text, vbNewLine)
+    Lower_t = LBound(T)
+    Upper_t = UBound(T)
+    Len_t = Len(T(i))
     
-    For i = LBound(T) To UBound(T)
+    For i = Lower_t To Upper_t
         N = 0
         Pos = InStr(1, T(i), "~")
 
-        Do While Pos > 0 And Pos < Len(T(i))
+        Do While Pos > 0 And Pos < Len_t
             N = N + 1
             Pos = InStr(Pos + 1, T(i), "~")
         Loop

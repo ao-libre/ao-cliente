@@ -235,21 +235,27 @@ Private Sub MoveArray(ByVal ForumType As eForumType, ByVal Sticky As Boolean)
     
     On Error GoTo MoveArray_Err
     
-    Dim i As Long
+    Dim i       As Long
+    Dim Stickys As Long
+    Dim Posts   As Long
 
     With Foros(ForumType)
 
         If Sticky Then
+            
+            Stickys = CantStickys(ForumType)
 
-            For i = CantStickys(ForumType) To 2 Step -1
+            For i = Stickys To 2 Step -1
                 .StickyTitle(i) = .StickyTitle(i - 1)
                 .StickyPost(i) = .StickyPost(i - 1)
                 .StickyAuthor(i) = .StickyAuthor(i - 1)
             Next i
 
         Else
-
-            For i = CantPosts(ForumType) To 2 Step -1
+            
+            Posts = CantPosts(ForumType)
+            
+            For i = Posts To 2 Step -1
                 .GeneralTitle(i) = .GeneralTitle(i - 1)
                 .GeneralPost(i) = .GeneralPost(i - 1)
                 .GeneralAuthor(i) = .GeneralAuthor(i - 1)

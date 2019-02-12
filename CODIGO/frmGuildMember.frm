@@ -328,10 +328,12 @@ Public Sub FiltrarListaClanes(ByRef sCompare As String)
     
     On Error GoTo FiltrarListaClanes_Err
     
-
     Dim lIndex As Long
+    Dim Upper_guildNames As Long
     
-    If UBound(GuildNames) <> 0 Then
+    Upper_guildNames = UBound(GuildNames)
+    
+    If Upper_guildNames <> 0 Then
 
         With lstClanes
             'Limpio la lista
@@ -340,7 +342,7 @@ Public Sub FiltrarListaClanes(ByRef sCompare As String)
             .Visible = False
             
             ' Recorro los arrays
-            For lIndex = 0 To UBound(GuildNames)
+            For lIndex = 0 To Upper_guildNames
 
                 ' Si coincide con los patrones
                 If InStr(1, UCase$(GuildNames(lIndex)), UCase$(sCompare)) Then

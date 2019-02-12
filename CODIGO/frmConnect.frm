@@ -455,8 +455,10 @@ Private Sub CheckLicenseAgreement()
     On Error GoTo CheckLicenseAgreement_Err
     
     Dim i As Long
-    
-    For i = 0 To Me.Controls.Count - 1
+    Dim Count_controls As Long
+        Count_controls = Me.Controls.Count - 1
+        
+    For i = 0 To Count_controls
 
         If Me.Controls(i).Name = "imgCodigoFuente" Then
             Exit For

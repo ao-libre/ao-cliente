@@ -133,7 +133,8 @@ Public Sub Engine_DirectX8_End()
     '***************************************************
     On Error Resume Next
 
-    Dim i As Byte
+    Dim i                     As Byte
+    Dim Upper_particleTexture As Long
     
     '   DeInit Lights
     Call DeInit_LightEngine
@@ -142,8 +143,9 @@ Public Sub Engine_DirectX8_End()
     Call DeInit_Auras
     
     '   Clean Particles
-    For i = 1 To UBound(ParticleTexture)
-
+    Upper_particleTexture = UBound(ParticleTexture)
+    
+    For i = 1 To Upper_particleTexture
         If Not ParticleTexture(i) Is Nothing Then Set ParticleTexture(i) = Nothing
     Next i
     

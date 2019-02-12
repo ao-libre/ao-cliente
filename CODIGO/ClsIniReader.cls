@@ -66,11 +66,14 @@ Private Sub Class_Terminate()
     On Error GoTo Class_Terminate_Err
     
     Dim i As Long
+    Dim Nodes As Long
     
     'Clean up
     If MainNodes Then
-
-        For i = 1 To MainNodes - 1
+        
+        Nodes = MainNodes - 1
+        
+        For i = 1 To Nodes
             Erase fileData(i).values
         Next i
         
@@ -168,13 +171,16 @@ Public Sub Initialize(ByVal File As String)
     Close handle
     
     Dim i As Long
+    Dim Nodes As Long
     
     If MainNodes Then
+        Nodes = MainNodes - 1
+        
         'Sort main nodes to allow binary search
-        Call SortMainNodes(0, MainNodes - 1)
+        Call SortMainNodes(0, Nodes)
         
         'Sort values of each node to allow binary search
-        For i = 0 To MainNodes - 1
+        For i = 0 To Nodes
 
             If fileData(i).numValues Then Call SortChildNodes(fileData(i), 0, fileData(i).numValues - 1)
         Next i

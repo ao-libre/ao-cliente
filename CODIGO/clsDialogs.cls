@@ -211,7 +211,10 @@ Public Sub CreateDialog(ByRef chat As String, _
     Dim slot As Integer
     Dim i    As Long
     
+    Dim slotAdd As Long
+    
     slot = BinarySearch(CharIndex)
+    slotAdd = slot + 1
     
     If slot < 0 Then
         If dialogCount = MAX_DIALOGS Then Exit Sub  'Out of space! Should never happen....
@@ -219,7 +222,7 @@ Public Sub CreateDialog(ByRef chat As String, _
         'We need to add it. Get insertion index and move list backwards.
         slot = Not slot
         
-        For i = dialogCount To slot + 1 Step -1
+        For i = dialogCount To slotAdd Step -1
             dialogs(i) = dialogs(i - 1)
         Next i
         
@@ -402,8 +405,12 @@ Public Sub Render()
     Dim j              As Long
     Dim offset         As Integer
     Dim removedDialogs As Long
+    Dim To_dialogCount As Long
+    Dim Upper_textLine As Long
     
-    For i = 0 To dialogCount - 1
+    To_dialogCount = dialogCount - 1
+    
+    For i = 0 To To_dialogCount
 
         'Decrease index to prevent jumping over a dialog
         'Crappy VB will cache the limit of the For loop, so even if it changed, it won't matter
@@ -414,10 +421,12 @@ Public Sub Render()
                 
                 removedDialogs = removedDialogs + 1
             ElseIf .renderable Then
+                
                 offset = -(usedFont.Size + 2) * UBound(.textLine())
+                Upper_textLine = UBound(.textLine())
                 
                 'Render it
-                For j = 0 To UBound(.textLine())
+                For j = 0 To Upper_textLine
                     Call DrawText(.X, .Y + offset, .textLine(j), .Color)
                     offset = offset + usedFont.Size + 5
                 Next j
@@ -458,12 +467,14 @@ Public Sub RemoveDialog(ByVal CharIndex As Integer)
     
     Dim slot As Integer
     Dim i    As Long
+    Dim To_dialogs As Long
     
     slot = BinarySearch(CharIndex)
+    To_dialogs = MAX_DIALOGS - 2
     
     If slot < 0 Then Exit Sub
     
-    For i = slot To MAX_DIALOGS - 2
+    For i = slot To To_dialogs
         dialogs(i) = dialogs(i + 1)
     Next i
     

@@ -204,7 +204,6 @@ End Sub
 Private Sub imgEnviar_Click()
     
     On Error GoTo imgEnviar_Click_Err
-    
 
     If LenB(Text1) = 0 Then
         If T = PAZ Or T = ALIANZA Then
@@ -226,10 +225,13 @@ Private Sub imgEnviar_Click()
         
     ElseIf T = RECHAZOPJ Then
         Call WriteGuildRejectNewMember(Nombre, Replace(Replace(Text1.Text, ",", " "), vbNewLine, " "))
+        
         'Sacamos el char de la lista de aspirantes
         Dim i As Long
+        Dim Count_solicitudes As Long
+            Count_solicitudes = frmGuildLeader.solicitudes.ListCount - 1
         
-        For i = 0 To frmGuildLeader.solicitudes.ListCount - 1
+        For i = 0 To Count_solicitudes
 
             If frmGuildLeader.solicitudes.List(i) = Nombre Then
                 frmGuildLeader.solicitudes.RemoveItem i

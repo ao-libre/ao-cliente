@@ -111,12 +111,15 @@ Private Sub Class_Terminate()
     Dim handle        As Integer
     Dim i             As Long
     Dim directories() As String
-    Dim Upper_dir     As Long
     Dim path          As String
+    
+    Dim Upper_dir     As Long
+    Dim Count_message As Long
     
     'Make sure the path exists
     directories = Split(MESSAGE_FILE_PATH, "/")
     Upper_dir = UBound(directories()) - 1
+    
     path = App.path
     
     For i = 0 To Upper_dir
@@ -132,9 +135,12 @@ Private Sub Class_Terminate()
     'Serialize custom messages
     handle = FreeFile()
     
+    'Count and store them
+    Count_message = MESSAGE_COUNT - 1
+    
     Open App.path & MESSAGE_FILE_PATH For Output As handle
     
-    For i = 0 To MESSAGE_COUNT - 1
+    For i = 0 To Count_message
         Print #handle, CustomMessages(i)
     Next i
     

@@ -86,9 +86,12 @@ Private Sub Class_Terminate()
     
     Dim i As Long
     Dim j As Long
+    Dim HashSize As Long
+    
+    HashSize = HASH_TABLE_SIZE - 1
     
     'Destroy every surface in memory
-    For i = 0 To HASH_TABLE_SIZE - 1
+    For i = 0 To HashSize
         For j = 1 To surfaceList(i).sufraceCount
             Set surfaceList(i).SurfaceEntry(j).Surface = Nothing
         Next j

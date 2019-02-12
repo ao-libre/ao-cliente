@@ -113,9 +113,12 @@ Private Sub Class_Terminate()
     
     Dim i As Long
     Dim j As Long
+    Dim HashSize As Long
+    
+    HashSize = HASH_TABLE_SIZE - 1
     
     'Destroy every surface in memory
-    For i = 0 To HASH_TABLE_SIZE - 1
+    For i = 0 To HashSize
 
         With surfaceList(i)
 
@@ -287,17 +290,21 @@ Private Function RemoveLRU() As Boolean
     
     On Error GoTo RemoveLRU_Err
     
-    Dim LRUi    As Long
-    Dim LRUj    As Long
-    Dim LRUtime As Long
-    Dim i       As Long
-    Dim j       As Long
-    Dim ddsd    As D3DSURFACE_DESC
+    Dim LRUi               As Long
+    Dim LRUj               As Long
+    Dim LRUtime            As Long
+    Dim i                  As Long
+    Dim j                  As Long
+    Dim ddsd               As D3DSURFACE_DESC
+    Dim HashSize           As Long
+    Dim Count_surfaceCount As Long
     
     LRUtime = GetTickCount
     
+    HashSize = HASH_TABLE_SIZE - 1
+    
     'Check out through the whole list for the least recently used
-    For i = 0 To HASH_TABLE_SIZE - 1
+    For i = 0 To HashSize
 
         With surfaceList(i)
 
@@ -317,7 +324,9 @@ Private Function RemoveLRU() As Boolean
     Next i
     
     If LRUj Then
+        
         RemoveLRU = True
+        
         'Retrieve the surface desc
         Call surfaceList(LRUi).SurfaceEntry(LRUj).Surface.GetLevelDesc(0, ddsd)
         
@@ -327,8 +336,10 @@ Private Function RemoveLRU() As Boolean
         
         'Move back the list (if necessary)
         With surfaceList(LRUi)
-
-            For j = LRUj To .surfaceCount - 1
+            
+            Count_surfaceCount = .surfaceCount - 1
+            
+            For j = LRUj To Count_surfaceCount
                 .SurfaceEntry(j) = .SurfaceEntry(j + 1)
             Next j
             
@@ -347,15 +358,17 @@ Private Function RemoveLRU() As Boolean
         usedBytes = usedBytes - ddsd.Size
 
     End If
-
     
     Exit Function
 
 RemoveLRU_Err:
+
     If Err.number <> 0 Then
         LogError Err.number, Err.Description, "clsSurfaceManDyn" & "->" & "RemoveLRU"
+
     End If
-Resume Next
+
+    Resume Next
     
 End Function
 

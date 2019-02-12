@@ -433,10 +433,13 @@ Public Function LightRenderAll() As Boolean
     On Error GoTo handle
 
     Dim i As Long
-
-    If UBound(Light_List) < 1 Then Exit Function
+    Dim Upper_lightList As Long
     
-    For i = 1 To UBound(Light_List)
+    Upper_lightList = UBound(Light_List)
+
+    If Upper_lightList < 1 Then Exit Function
+    
+    For i = 1 To Upper_lightList
         LightRender i
     Next i
     
@@ -452,11 +455,14 @@ Public Function LightRemoveAll() As Boolean
 
     On Error GoTo handle
 
-    Dim i As Long
-
-    If UBound(Light_List) < 1 Then Exit Function
+    Dim i               As Long
+    Dim Upper_lightList As Long
     
-    For i = 1 To UBound(Light_List)
+    Upper_lightList = UBound(Light_List)
+
+    If Upper_lightList < 1 Then Exit Function
+    
+    For i = 1 To Upper_lightList
         Delete_Light_To_Index i
     Next i
     

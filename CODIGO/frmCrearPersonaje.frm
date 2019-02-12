@@ -1474,36 +1474,49 @@ Private Sub CargarCombos()
     
     On Error GoTo CargarCombos_Err
     
-    Dim i As Integer
+    Dim i              As Integer
+    Dim Lower_ciudades As Long
+    Dim Upper_ciudades As Long
+    Dim Lower_clases   As Long
+    Dim Lower_razas    As Long
     
     lstProfesion.Clear
     
-    For i = LBound(ListaClases) To NroClases
+    Lower_ciudades = LBound(Ciudades())
+    Upper_ciudades = UBound(Ciudades())
+    
+    Lower_clases = LBound(ListaClases)
+    
+    Lower_razas = LBound(ListaRazas())
+    
+    For i = Lower_clases To NroClases
         lstProfesion.AddItem ListaClases(i)
     Next i
     
     lstHogar.Clear
     
-    For i = LBound(Ciudades()) To UBound(Ciudades())
+    For i = Lower_ciudades To Upper_ciudades
         lstHogar.AddItem Ciudades(i)
     Next i
     
     lstRaza.Clear
     
-    For i = LBound(ListaRazas()) To NroRazas
+    For i = Lower_razas To NroRazas
         lstRaza.AddItem ListaRazas(i)
     Next i
     
     lstProfesion.ListIndex = 1
-
     
     Exit Sub
 
 CargarCombos_Err:
+
     If Err.number <> 0 Then
         LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "CargarCombos"
+
     End If
-Resume Next
+
+    Resume Next
     
 End Sub
 
@@ -2400,25 +2413,29 @@ End Sub
 Private Sub picHead_Click(Index As Integer)
     
     On Error GoTo picHead_Click_Err
-    
 
     ' No se mueve si clickea al medio
     If Index = 2 Then Exit Sub
     
-    Dim Counter As Integer
-    Dim Head    As Integer
+    Dim Counter             As Integer
+    Dim Head                As Integer
+    Dim Count_index         As Long
+    Dim Count_index_reverse As Long
     
     Head = UserHead
     
+    Count_index = Index - 2
+    Count_index_reverse = 2 - Index
+    
     If Index > 2 Then
 
-        For Counter = Index - 2 To 1 Step -1
+        For Counter = Count_index To 1 Step -1
             Head = CheckCabeza(Head + 1)
         Next Counter
 
     Else
 
-        For Counter = 2 - Index To 1 Step -1
+        For Counter = Count_index_reverse To 1 Step -1
             Head = CheckCabeza(Head - 1)
         Next Counter
 
@@ -2428,14 +2445,16 @@ Private Sub picHead_Click(Index As Integer)
     
     Call UpdateHeadSelection
     
-    
     Exit Sub
 
 picHead_Click_Err:
+
     If Err.number <> 0 Then
         LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "picHead_Click"
+
     End If
-Resume Next
+
+    Resume Next
     
 End Sub
 
@@ -3150,9 +3169,10 @@ Private Sub SetStars(ByRef ImgContainer As Object, ByVal NumStars As Integer)
             
             ' Si estan completos los espacios, no borro nada
             If Counter <> 5 Then
-
+                Counter = Counter + 1
+                
                 ' Limpio las que queden vacias
-                For Index = Counter + 1 To 5
+                For Index = Counter To 5
                     Set ImgContainer(Index).Picture = Nothing
                 Next Index
 

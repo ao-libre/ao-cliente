@@ -710,6 +710,9 @@ Private Sub FiltrarListaClanes(ByRef sCompare As String)
     
 
     Dim lIndex As Long
+    Dim Upper_guildNames As Long
+    
+    Upper_guildNames = UBound(GuildNames)
     
     With guildslist
         'Limpio la lista
@@ -718,7 +721,7 @@ Private Sub FiltrarListaClanes(ByRef sCompare As String)
         .Visible = False
         
         ' Recorro los arrays
-        For lIndex = 0 To UBound(GuildNames)
+        For lIndex = 0 To Upper_guildNames
 
             ' Si coincide con los patrones
             If InStr(1, UCase$(GuildNames(lIndex)), UCase$(sCompare)) Then
@@ -789,6 +792,9 @@ Private Sub FiltrarListaMiembros(ByRef sCompare As String)
     
 
     Dim lIndex As Long
+    Dim Upper_guildNames As Long
+    
+    Upper_guildNames = UBound(GuildMembers)
     
     With members
         'Limpio la lista
@@ -797,7 +803,7 @@ Private Sub FiltrarListaMiembros(ByRef sCompare As String)
         .Visible = False
         
         ' Recorro los arrays
-        For lIndex = 0 To UBound(GuildMembers)
+        For lIndex = 0 To Upper_guildNames
 
             ' Si coincide con los patrones
             If InStr(1, UCase$(GuildMembers(lIndex)), UCase$(sCompare)) Then
