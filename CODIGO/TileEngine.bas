@@ -353,13 +353,6 @@ Private llTick                 As Long  'Contador
 
 Public charlist(1 To 10000)    As Char
 
-Private Type Size
-
-    cx As Long
-    cy As Long
-
-End Type
-
 '[CODE 001]:MatuX
 Public Enum PlayLoop
 

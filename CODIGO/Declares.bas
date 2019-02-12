@@ -145,14 +145,6 @@ Public Const GNOMO_M_CUERPO_DESNUDO               As Integer = 260
 
 Public RawServersList                             As String
 
-Public Type tColor
-
-    r As Byte
-    g As Byte
-    b As Byte
-
-End Type
-
 Public ColoresPJ(0 To 50) As Long
 
 Public Type tServerInfo
