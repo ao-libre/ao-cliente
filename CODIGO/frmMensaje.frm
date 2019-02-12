@@ -8,7 +8,9 @@ Begin VB.Form frmMensaje
    ClientWidth     =   3990
    ClipControls    =   0   'False
    ControlBox      =   0   'False
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
+   Picture         =   "frmMensaje.frx":0000
    ScaleHeight     =   212
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   266
@@ -17,6 +19,7 @@ Begin VB.Form frmMensaje
    Begin VB.Image imgCerrar 
       Height          =   375
       Left            =   720
+      Picture         =   "frmMensaje.frx":FD94
       Tag             =   "1"
       Top             =   2685
       Width           =   2655
@@ -197,6 +200,25 @@ Private Sub msg_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As
 msg_MouseMove_Err:
     If Err.number <> 0 Then
         LogError Err.number, Err.Description, "frmMensaje" & "->" & "msg_MouseMove"
+    End If
+Resume Next
+    
+End Sub
+
+Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo Form_KeyUp_Err
+    
+    If KeyCode = vbKeyEscape Then
+        Set clsFormulario = Nothing
+        Unload Me
+    End If
+
+    Exit Sub
+
+Form_KeyUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMensaje" & "->" & "Form_KeyUp"
     End If
 Resume Next
     

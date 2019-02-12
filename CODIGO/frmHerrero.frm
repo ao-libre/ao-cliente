@@ -9,9 +9,11 @@ Begin VB.Form frmHerrero
    ClientWidth     =   6675
    ClipControls    =   0   'False
    ControlBox      =   0   'False
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmHerrero.frx":0000
    ScaleHeight     =   359
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   445
@@ -331,6 +333,7 @@ Begin VB.Form frmHerrero
    Begin VB.Image picMejorar1 
       Height          =   420
       Left            =   3360
+      Picture         =   "frmHerrero.frx":2BA03
       Top             =   2370
       Visible         =   0   'False
       Width           =   1710
@@ -338,6 +341,8 @@ Begin VB.Form frmHerrero
    Begin VB.Image picMejorar2 
       Height          =   420
       Left            =   3360
+      OLEDropMode     =   1  'Manual
+      Picture         =   "frmHerrero.frx":3046B
       Top             =   3180
       Visible         =   0   'False
       Width           =   1710
@@ -345,12 +350,14 @@ Begin VB.Form frmHerrero
    Begin VB.Image imgCerrar 
       Height          =   360
       Left            =   2760
+      Picture         =   "frmHerrero.frx":34ED3
       Top             =   4650
       Width           =   1455
    End
    Begin VB.Image picConstruir3 
       Height          =   420
       Left            =   3360
+      Picture         =   "frmHerrero.frx":38DAC
       Top             =   3960
       Width           =   1710
    End
@@ -423,6 +430,7 @@ Begin VB.Form frmHerrero
    Begin VB.Image picMejorar0 
       Height          =   420
       Left            =   3360
+      Picture         =   "frmHerrero.frx":3D814
       Top             =   1560
       Visible         =   0   'False
       Width           =   1710
@@ -1282,6 +1290,25 @@ Private Sub txtCantItems_KeyPress(KeyAscii As Integer)
 txtCantItems_KeyPress_Err:
     If Err.number <> 0 Then
         LogError Err.number, Err.Description, "frmHerrero" & "->" & "txtCantItems_KeyPress"
+    End If
+Resume Next
+    
+End Sub
+
+Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo Form_KeyUp_Err
+    
+    If KeyCode = vbKeyEscape Then
+        Set clsFormulario = Nothing
+        Unload Me
+    End If
+
+    Exit Sub
+
+Form_KeyUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmHerrero" & "->" & "Form_KeyUp"
     End If
 Resume Next
     

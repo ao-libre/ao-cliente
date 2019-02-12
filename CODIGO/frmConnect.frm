@@ -26,6 +26,7 @@ Begin VB.Form frmConnect
    MaxButton       =   0   'False
    MinButton       =   0   'False
    PaletteMode     =   1  'UseZOrder
+   Picture         =   "frmConnect.frx":000C
    ScaleHeight     =   600
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   800
@@ -78,9 +79,9 @@ Begin VB.Form frmConnect
       EndProperty
       ForeColor       =   &H0000FF00&
       Height          =   4905
-      ItemData        =   "frmConnect.frx":000C
+      ItemData        =   "frmConnect.frx":835CD
       Left            =   8685
-      List            =   "frmConnect.frx":000E
+      List            =   "frmConnect.frx":835CF
       TabIndex        =   6
       Top             =   1680
       Width           =   2775
@@ -184,48 +185,56 @@ Begin VB.Form frmConnect
    Begin VB.Image imgVerForo 
       Height          =   465
       Left            =   450
+      Picture         =   "frmConnect.frx":835D1
       Top             =   6120
       Width           =   2835
    End
    Begin VB.Image imgSalir 
       Height          =   375
       Left            =   9960
+      Picture         =   "frmConnect.frx":892E5
       Top             =   8400
       Width           =   1335
    End
    Begin VB.Image imgBorrarPj 
       Height          =   375
       Left            =   8400
+      Picture         =   "frmConnect.frx":8CE5D
       Top             =   8400
       Width           =   1335
    End
    Begin VB.Image imgCodigoFuente 
       Height          =   375
       Left            =   6840
+      Picture         =   "frmConnect.frx":9070F
       Top             =   8400
       Width           =   1335
    End
    Begin VB.Image imgReglamento 
       Height          =   375
       Left            =   5280
+      Picture         =   "frmConnect.frx":942C1
       Top             =   8400
       Width           =   1335
    End
    Begin VB.Image imgManual 
       Height          =   375
       Left            =   3720
+      Picture         =   "frmConnect.frx":97CC7
       Top             =   8400
       Width           =   1335
    End
    Begin VB.Image imgRecuperar 
       Height          =   375
       Left            =   2160
+      Picture         =   "frmConnect.frx":9B412
       Top             =   8400
       Width           =   1335
    End
    Begin VB.Image imgCrearCuenta 
       Height          =   375
       Left            =   600
+      Picture         =   "frmConnect.frx":9EB95
       Top             =   8400
       Width           =   1335
    End
@@ -380,25 +389,11 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
     On Error GoTo Form_KeyUp_Err
     
 
-    'Make Server IP and Port box visible
-    If KeyCode = vbKeyI And Shift = vbCtrlMask Then
-    
-        'Port
-        PortTxt.Visible = True
-        'Label4.Visible = True
-    
-        'Server IP
-        PortTxt.Text = "7666"
-        IPTxt.Text = "192.168.0.2"
-        IPTxt.Visible = True
-        'Label5.Visible = True
-    
-        KeyCode = 0
-        Exit Sub
-
+    If KeyCode = vbKeyEscape Then
+        Call CloseClient
     End If
 
-    
+
     Exit Sub
 
 Form_KeyUp_Err:
@@ -723,13 +718,7 @@ End Sub
 
 Private Sub imgRecuperar_Click()
 
-    On Error GoTo errH
-
-    Call Audio.PlayWave(SND_CLICK)
-    Call Shell(App.path & "\RECUPERAR.EXE", vbNormalFocus)
-    Exit Sub
-errH:
-    Call MsgBox("No se encuentra el programa recuperar.exe", vbCritical, "Argentum Online")
+    MsgBox "Esta funcion no esta disponible por el momento", vbApplicationModal, "Argentum Online"
 
 End Sub
 

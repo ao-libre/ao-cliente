@@ -11,6 +11,7 @@ Begin VB.Form frmComerciarUsu
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmComerciarUsu.frx":0000
    ScaleHeight     =   590
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   665
@@ -184,10 +185,11 @@ Begin VB.Form frmComerciarUsu
       _ExtentY        =   2858
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
-      TextRTF         =   $"frmComerciarUsu.frx":0000
+      TextRTF         =   $"frmComerciarUsu.frx":4B687
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Tahoma"
          Size            =   8.25
@@ -201,6 +203,7 @@ Begin VB.Form frmComerciarUsu
    Begin VB.Image imgCancelar 
       Height          =   360
       Left            =   480
+      Picture         =   "frmComerciarUsu.frx":4B705
       Tag             =   "1"
       Top             =   4680
       Width           =   1455
@@ -208,6 +211,7 @@ Begin VB.Form frmComerciarUsu
    Begin VB.Image imgRechazar 
       Height          =   360
       Left            =   8220
+      Picture         =   "frmComerciarUsu.frx":4F5F6
       Tag             =   "2"
       Top             =   8160
       Width           =   1455
@@ -215,6 +219,7 @@ Begin VB.Form frmComerciarUsu
    Begin VB.Image imgConfirmar 
       Height          =   360
       Left            =   7440
+      Picture         =   "frmComerciarUsu.frx":536B7
       Tag             =   "2"
       Top             =   4080
       Width           =   1455
@@ -222,6 +227,7 @@ Begin VB.Form frmComerciarUsu
    Begin VB.Image imgAceptar 
       Height          =   360
       Left            =   6750
+      Picture         =   "frmComerciarUsu.frx":5797B
       Tag             =   "2"
       Top             =   8160
       Width           =   1455

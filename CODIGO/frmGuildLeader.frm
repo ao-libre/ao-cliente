@@ -17,9 +17,11 @@ Begin VB.Form frmGuildLeader
       Italic          =   0   'False
       Strikethrough   =   0   'False
    EndProperty
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmGuildLeader.frx":0000
    ScaleHeight     =   494
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   399
@@ -97,9 +99,9 @@ Begin VB.Form frmGuildLeader
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   810
-      ItemData        =   "frmGuildLeader.frx":0000
+      ItemData        =   "frmGuildLeader.frx":2C93C
       Left            =   195
-      List            =   "frmGuildLeader.frx":0002
+      List            =   "frmGuildLeader.frx":2C93E
       TabIndex        =   2
       Top             =   5100
       Width           =   2595
@@ -118,9 +120,9 @@ Begin VB.Form frmGuildLeader
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   1395
-      ItemData        =   "frmGuildLeader.frx":0004
+      ItemData        =   "frmGuildLeader.frx":2C940
       Left            =   3060
-      List            =   "frmGuildLeader.frx":0006
+      List            =   "frmGuildLeader.frx":2C942
       TabIndex        =   1
       Top             =   540
       Width           =   2595
@@ -139,9 +141,9 @@ Begin VB.Form frmGuildLeader
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   1395
-      ItemData        =   "frmGuildLeader.frx":0008
+      ItemData        =   "frmGuildLeader.frx":2C944
       Left            =   180
-      List            =   "frmGuildLeader.frx":000A
+      List            =   "frmGuildLeader.frx":2C946
       TabIndex        =   0
       Top             =   540
       Width           =   2595
@@ -149,6 +151,7 @@ Begin VB.Form frmGuildLeader
    Begin VB.Image imgCerrar 
       Height          =   495
       Left            =   3000
+      Picture         =   "frmGuildLeader.frx":2C948
       Tag             =   "1"
       Top             =   6705
       Width           =   2775
@@ -156,6 +159,7 @@ Begin VB.Form frmGuildLeader
    Begin VB.Image imgPropuestasAlianzas 
       Height          =   495
       Left            =   3000
+      Picture         =   "frmGuildLeader.frx":343D3
       Tag             =   "1"
       Top             =   6195
       Width           =   2775
@@ -163,6 +167,7 @@ Begin VB.Form frmGuildLeader
    Begin VB.Image imgPropuestasPaz 
       Height          =   495
       Left            =   3000
+      Picture         =   "frmGuildLeader.frx":3C363
       Tag             =   "1"
       Top             =   5685
       Width           =   2775
@@ -170,6 +175,7 @@ Begin VB.Form frmGuildLeader
    Begin VB.Image imgEditarURL 
       Height          =   495
       Left            =   3000
+      Picture         =   "frmGuildLeader.frx":44257
       Tag             =   "1"
       Top             =   5175
       Width           =   2775
@@ -177,6 +183,7 @@ Begin VB.Form frmGuildLeader
    Begin VB.Image imgEditarCodex 
       Height          =   495
       Left            =   3000
+      Picture         =   "frmGuildLeader.frx":4C124
       Tag             =   "1"
       Top             =   4665
       Width           =   2775
@@ -184,9 +191,10 @@ Begin VB.Form frmGuildLeader
    Begin VB.Image imgActualizar 
       Height          =   390
       Left            =   150
+      Picture         =   "frmGuildLeader.frx":54161
       Tag             =   "1"
       Top             =   4230
-      Width           =   5550
+      Width           =   5535
    End
    Begin VB.Image imgDetallesSolicitudes 
       Height          =   375
@@ -198,6 +206,7 @@ Begin VB.Form frmGuildLeader
    Begin VB.Image imgDetallesMiembros 
       Height          =   375
       Left            =   3060
+      Picture         =   "frmGuildLeader.frx":5C5D5
       Tag             =   "1"
       Top             =   2700
       Width           =   2655
@@ -205,6 +214,7 @@ Begin VB.Form frmGuildLeader
    Begin VB.Image imgDetallesClan 
       Height          =   375
       Left            =   165
+      Picture         =   "frmGuildLeader.frx":6385F
       Tag             =   "1"
       Top             =   2700
       Width           =   2655
@@ -212,6 +222,7 @@ Begin VB.Form frmGuildLeader
    Begin VB.Image imgElecciones 
       Height          =   375
       Left            =   120
+      Picture         =   "frmGuildLeader.frx":6AAE9
       Tag             =   "1"
       Top             =   6840
       Width           =   2655
@@ -824,6 +835,25 @@ Private Sub FiltrarListaMiembros(ByRef sCompare As String)
 FiltrarListaMiembros_Err:
     If Err.number <> 0 Then
         LogError Err.number, Err.Description, "frmGuildLeader" & "->" & "FiltrarListaMiembros"
+    End If
+Resume Next
+    
+End Sub
+
+Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo Form_KeyUp_Err
+    
+    If KeyCode = vbKeyEscape Then
+        Set clsFormulario = Nothing
+        Unload Me
+    End If
+
+    Exit Sub
+
+Form_KeyUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildLeader" & "->" & "Form_KeyUp"
     End If
 Resume Next
     

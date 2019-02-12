@@ -16,9 +16,11 @@ Begin VB.Form frmMSG
       Italic          =   0   'False
       Strikethrough   =   0   'False
    EndProperty
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmMSG.frx":0000
    ScaleHeight     =   218
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   163
@@ -362,6 +364,25 @@ Private Sub mnutraer_Click()
 mnutraer_Click_Err:
     If Err.number <> 0 Then
         LogError Err.number, Err.Description, "frmMSG" & "->" & "mnutraer_Click"
+    End If
+Resume Next
+    
+End Sub
+
+Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo Form_KeyUp_Err
+    
+    If KeyCode = vbKeyEscape Then
+        Set clsFormulario = Nothing
+        Unload Me
+    End If
+
+    Exit Sub
+
+Form_KeyUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmMSG" & "->" & "Form_KeyUp"
     End If
 Resume Next
     

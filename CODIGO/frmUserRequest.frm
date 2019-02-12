@@ -16,7 +16,9 @@ Begin VB.Form frmUserRequest
       Italic          =   0   'False
       Strikethrough   =   0   'False
    EndProperty
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
+   Picture         =   "frmUserRequest.frx":0000
    ScaleHeight     =   162
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   310
@@ -45,6 +47,7 @@ Begin VB.Form frmUserRequest
    Begin VB.Image imgCerrar 
       Height          =   375
       Left            =   120
+      Picture         =   "frmUserRequest.frx":FEA9
       Tag             =   "1"
       Top             =   1920
       Width           =   4350
@@ -212,3 +215,26 @@ Text1_MouseMove_Err:
 Resume Next
     
 End Sub
+
+Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo Form_KeyUp_Err
+    
+    If KeyCode = vbKeyEscape Then
+        Set clsFormulario = Nothing
+        Unload Me
+    End If
+
+    Exit Sub
+
+Form_KeyUp_Err:
+
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmUserRequest" & "->" & "Form_KeyUp"
+
+    End If
+
+    Resume Next
+    
+End Sub
+

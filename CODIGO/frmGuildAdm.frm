@@ -17,9 +17,11 @@ Begin VB.Form frmGuildAdm
       Italic          =   0   'False
       Strikethrough   =   0   'False
    EndProperty
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmGuildAdm.frx":0000
    ScaleHeight     =   369
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   271
@@ -59,9 +61,9 @@ Begin VB.Form frmGuildAdm
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   3540
-      ItemData        =   "frmGuildAdm.frx":0000
+      ItemData        =   "frmGuildAdm.frx":19A63
       Left            =   495
-      List            =   "frmGuildAdm.frx":0002
+      List            =   "frmGuildAdm.frx":19A65
       TabIndex        =   0
       Top             =   570
       Width           =   3075
@@ -69,6 +71,7 @@ Begin VB.Form frmGuildAdm
    Begin VB.Image imgDetalles 
       Height          =   375
       Left            =   2280
+      Picture         =   "frmGuildAdm.frx":19A67
       Tag             =   "1"
       Top             =   5025
       Width           =   1335
@@ -76,6 +79,7 @@ Begin VB.Form frmGuildAdm
    Begin VB.Image imgCerrar 
       Height          =   375
       Left            =   480
+      Picture         =   "frmGuildAdm.frx":2005F
       Tag             =   "1"
       Top             =   5025
       Width           =   855
@@ -239,7 +243,7 @@ Private Sub imgDetalles_Click()
     
     frmGuildBrief.EsLeader = False
 
-    Call WriteGuildRequestDetails(guildslist.List(guildslist.ListIndex))
+    Call WriteGuildRequestDetails(GuildsList.List(GuildsList.ListIndex))
 
     
     Exit Sub
@@ -303,7 +307,7 @@ Public Sub FiltrarListaClanes(ByRef sCompare As String)
     
     If Upper_guildNames <> 0 Then
 
-        With guildslist
+        With GuildsList
             'Limpio la lista
             .Clear
             
@@ -333,6 +337,25 @@ Public Sub FiltrarListaClanes(ByRef sCompare As String)
 FiltrarListaClanes_Err:
     If Err.number <> 0 Then
         LogError Err.number, Err.Description, "frmGuildAdm" & "->" & "FiltrarListaClanes"
+    End If
+Resume Next
+    
+End Sub
+
+Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo Form_KeyUp_Err
+    
+    If KeyCode = vbKeyEscape Then
+        Set clsFormulario = Nothing
+        Unload Me
+    End If
+
+    Exit Sub
+
+Form_KeyUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildAdm" & "->" & "Form_KeyUp"
     End If
 Resume Next
     

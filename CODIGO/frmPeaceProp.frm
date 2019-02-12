@@ -17,9 +17,11 @@ Begin VB.Form frmPeaceProp
       Italic          =   0   'False
       Strikethrough   =   0   'False
    EndProperty
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmPeaceProp.frx":0000
    ScaleHeight     =   219
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   338
@@ -39,9 +41,9 @@ Begin VB.Form frmPeaceProp
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   1785
-      ItemData        =   "frmPeaceProp.frx":0000
+      ItemData        =   "frmPeaceProp.frx":12517
       Left            =   240
-      List            =   "frmPeaceProp.frx":0002
+      List            =   "frmPeaceProp.frx":12519
       TabIndex        =   0
       Top             =   600
       Width           =   4620
@@ -49,24 +51,28 @@ Begin VB.Form frmPeaceProp
    Begin VB.Image imgRechazar 
       Height          =   480
       Left            =   3840
+      Picture         =   "frmPeaceProp.frx":1251B
       Top             =   2520
       Width           =   960
    End
    Begin VB.Image imgAceptar 
       Height          =   480
       Left            =   2640
+      Picture         =   "frmPeaceProp.frx":16118
       Top             =   2520
       Width           =   960
    End
    Begin VB.Image imgDetalle 
       Height          =   480
       Left            =   1440
+      Picture         =   "frmPeaceProp.frx":19D6A
       Top             =   2520
       Width           =   960
    End
    Begin VB.Image imgCerrar 
       Height          =   480
       Left            =   240
+      Picture         =   "frmPeaceProp.frx":1D992
       Top             =   2520
       Width           =   960
    End
@@ -318,3 +324,24 @@ Resume Next
     
 End Sub
 
+Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo Form_KeyUp_Err
+    
+    If KeyCode = vbKeyEscape Then
+        Set clsFormulario = Nothing
+        Unload Me
+    End If
+
+    Exit Sub
+
+Form_KeyUp_Err:
+
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPeaceProp" & "->" & "Form_KeyUp"
+
+    End If
+
+    Resume Next
+    
+End Sub

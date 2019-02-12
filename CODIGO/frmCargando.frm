@@ -15,6 +15,7 @@ Begin VB.Form frmCargando
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmCargando.frx":0000
    ScaleHeight     =   510
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   668
@@ -32,10 +33,9 @@ Begin VB.Form frmCargando
       _ExtentY        =   3360
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
-      TextRTF         =   $"frmCargando.frx":0000
+      TextRTF         =   $"frmCargando.frx":1569C
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Verdana"
          Size            =   8.25
@@ -51,6 +51,7 @@ Begin VB.Form frmCargando
       BorderStyle     =   0  'None
       Height          =   7200
       Left            =   240
+      Picture         =   "frmCargando.frx":1571B
       ScaleHeight     =   480
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   640

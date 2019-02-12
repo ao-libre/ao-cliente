@@ -8,9 +8,11 @@ Begin VB.Form frmNewPassword
    ClientWidth     =   4755
    ClipControls    =   0   'False
    ControlBox      =   0   'False
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmNewPassword.frx":0000
    ScaleHeight     =   237
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   317
@@ -85,6 +87,7 @@ Begin VB.Form frmNewPassword
    Begin VB.Image imgAceptar 
       Height          =   495
       Left            =   990
+      Picture         =   "frmNewPassword.frx":19156
       Tag             =   "1"
       Top             =   2730
       Width           =   2775
@@ -205,6 +208,25 @@ Private Sub Text3_MouseMove(Button As Integer, Shift As Integer, X As Single, Y 
 Text3_MouseMove_Err:
     If Err.number <> 0 Then
         LogError Err.number, Err.Description, "frmNewPassword" & "->" & "Text3_MouseMove"
+    End If
+Resume Next
+    
+End Sub
+
+Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo Form_KeyUp_Err
+    
+    If KeyCode = vbKeyEscape Then
+        Set clsFormulario = Nothing
+        Unload Me
+    End If
+
+    Exit Sub
+
+Form_KeyUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmNewPassword" & "->" & "Form_KeyUp"
     End If
 Resume Next
     

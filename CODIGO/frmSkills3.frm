@@ -17,9 +17,11 @@ Begin VB.Form frmSkills3
       Italic          =   0   'False
       Strikethrough   =   0   'False
    EndProperty
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmSkills3.frx":0000
    ScaleHeight     =   450
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   600
@@ -166,6 +168,7 @@ Begin VB.Form frmSkills3
    Begin VB.Image imgCancelar 
       Height          =   360
       Left            =   510
+      Picture         =   "frmSkills3.frx":3DDCA
       Top             =   6120
       Width           =   1455
    End
@@ -424,6 +427,7 @@ Begin VB.Form frmSkills3
    Begin VB.Image imgMas1 
       Height          =   300
       Left            =   3960
+      Picture         =   "frmSkills3.frx":41CBB
       Top             =   780
       Width           =   300
    End
@@ -536,16 +540,18 @@ Begin VB.Form frmSkills3
       Width           =   300
    End
    Begin VB.Image imgMas11 
-      Height          =   285
+      Height          =   300
       Left            =   8100
+      Picture         =   "frmSkills3.frx":44CE9
       Top             =   780
-      Width           =   345
+      Width           =   300
    End
    Begin VB.Image imgMenos11 
-      Height          =   285
+      Height          =   300
       Left            =   7260
+      Picture         =   "frmSkills3.frx":47D17
       Top             =   780
-      Width           =   345
+      Width           =   300
    End
    Begin VB.Image imgMas12 
       Height          =   285
@@ -760,6 +766,7 @@ Begin VB.Form frmSkills3
    Begin VB.Image imgMenos1 
       Height          =   300
       Left            =   3120
+      Picture         =   "frmSkills3.frx":4AD1C
       Top             =   780
       Width           =   300
    End
@@ -832,6 +839,7 @@ Begin VB.Form frmSkills3
    Begin VB.Image imgAceptar 
       Height          =   360
       Left            =   6990
+      Picture         =   "frmSkills3.frx":4DD21
       Top             =   6120
       Width           =   1455
    End
@@ -1105,8 +1113,8 @@ Private Sub SumarSkillPoint(ByVal SkillIndex As Integer)
 
     If Alocados > 0 Then
 
-        If Val(Text1(SkillIndex).Caption) < MAXSKILLPOINTS Then
-            Text1(SkillIndex).Caption = Val(Text1(SkillIndex).Caption) + 1
+        If Val(text1(SkillIndex).Caption) < MAXSKILLPOINTS Then
+            text1(SkillIndex).Caption = Val(text1(SkillIndex).Caption) + 1
             Flags(SkillIndex) = Flags(SkillIndex) + 1
             Alocados = Alocados - 1
 
@@ -1134,8 +1142,8 @@ Private Sub RestarSkillPoint(ByVal SkillIndex As Integer)
 
     If Alocados < SkillPoints Then
         
-        If Val(Text1(SkillIndex).Caption) > 0 And Flags(SkillIndex) > 0 Then
-            Text1(SkillIndex).Caption = Val(Text1(SkillIndex).Caption) - 1
+        If Val(text1(SkillIndex).Caption) > 0 And Flags(SkillIndex) > 0 Then
+            text1(SkillIndex).Caption = Val(text1(SkillIndex).Caption) - 1
             Flags(SkillIndex) = Flags(SkillIndex) - 1
             Alocados = Alocados + 1
 
@@ -1199,9 +1207,9 @@ Private Sub imgAceptar_Click()
     Dim i                       As Long
 
     For i = 1 To NUMSKILLS
-        skillChanges(i) = CByte(Text1(i).Caption) - UserSkills(i)
+        skillChanges(i) = CByte(text1(i).Caption) - UserSkills(i)
         'Actualizamos nuestros datos locales
-        UserSkills(i) = Val(Text1(i).Caption)
+        UserSkills(i) = Val(text1(i).Caption)
     Next i
     
     Call WriteModifySkills(skillChanges())
@@ -2486,3 +2494,26 @@ ValidarSkills_Err:
 Resume Next
     
 End Sub
+
+Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo Form_KeyUp_Err
+    
+    If KeyCode = vbKeyEscape Then
+        Set clsFormulario = Nothing
+        Unload Me
+    End If
+
+    Exit Sub
+
+Form_KeyUp_Err:
+
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmSkills3" & "->" & "Form_KeyUp"
+
+    End If
+
+    Resume Next
+    
+End Sub
+

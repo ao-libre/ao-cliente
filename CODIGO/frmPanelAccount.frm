@@ -13,6 +13,7 @@ Begin VB.Form frmPanelAccount
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmPanelAccount.frx":0000
    ScaleHeight     =   770.878
    ScaleMode       =   0  'User
    ScaleWidth      =   808.081
@@ -556,7 +557,7 @@ Private Sub Form_Load()
     Dim CharIndex As Integer
     
     For i = 1 To 10
-        lblAccData(i).Caption = ""
+        lblAccData(i).Caption = vbNullString
     Next i
     
     Me.lblAccData(0).Caption = AccountName
@@ -573,7 +574,7 @@ Private Sub Image5_Click()
     On Error GoTo Image5_Click_Err
     
 
-    If Not lblAccData(Index + 1).Caption = "" Then
+    If Not lblAccData(Index + 1).Caption = vbNullString Then
         UserName = lblAccData(Index + 1).Caption
         WriteLoginExistingChar
 
@@ -704,8 +705,8 @@ Private Sub picChar_Click(Index As Integer)
     
     Seleccionado = Index + 1
 
-    If cPJ(Seleccionado).Nombre <> "" Then
-        lblCharData(0) = "Nombre: " & cPJ(Seleccionado).Nombre
+    If cPJ(Seleccionado).nombre <> "" Then
+        lblCharData(0) = "Nombre: " & cPJ(Seleccionado).nombre
         lblCharData(1) = "Clase: " & ListaClases(cPJ(Seleccionado).Class)
         lblCharData(2) = "Raza: " & ListaRazas(cPJ(Seleccionado).Race)
         lblCharData(3) = "Nivel: " & cPJ(Seleccionado).Level
@@ -774,3 +775,29 @@ ErrHandler:
     Me.tmrRender.Enabled = False
 
 End Sub
+
+Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo Form_KeyUp_Err
+    
+    If KeyCode = vbKeyEscape Then
+        Set clsFormulario = Nothing
+        frmMain.Socket1.Disconnect
+        Unload Me
+        frmConnect.Show
+
+    End If
+
+    Exit Sub
+
+Form_KeyUp_Err:
+
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmPanelAccount" & "->" & "Form_KeyUp"
+
+    End If
+
+    Resume Next
+    
+End Sub
+

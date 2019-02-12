@@ -8,9 +8,11 @@ Begin VB.Form frmForo
    ClientWidth     =   6210
    ClipControls    =   0   'False
    ControlBox      =   0   'False
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmForo.frx":0000
    ScaleHeight     =   457
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   414
@@ -54,7 +56,7 @@ Begin VB.Form frmForo
       Left            =   780
       MultiLine       =   -1  'True
       TabIndex        =   1
-      Text            =   "frmForo.frx":0000
+      Text            =   "frmForo.frx":2BBCD
       Top             =   1935
       Visible         =   0   'False
       Width           =   4770
@@ -106,20 +108,23 @@ Begin VB.Form frmForo
       Width           =   4725
    End
    Begin VB.Image imgCerrar 
-      Height          =   255
+      Height          =   360
       Left            =   4080
+      Picture         =   "frmForo.frx":2BBD3
       Top             =   6060
       Width           =   1455
    End
    Begin VB.Image imgListaMsg 
-      Height          =   255
+      Height          =   360
       Left            =   2400
+      Picture         =   "frmForo.frx":31CBF
       Top             =   6060
       Width           =   1455
    End
    Begin VB.Image imgDejarMsg 
-      Height          =   255
+      Height          =   360
       Left            =   720
+      Picture         =   "frmForo.frx":35ED9
       Top             =   6060
       Width           =   1455
    End
@@ -788,3 +793,22 @@ GetNormalPost_Err:
 Resume Next
     
 End Function
+
+Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo Form_KeyUp_Err
+    
+    If KeyCode = vbKeyEscape Then
+        Set clsFormulario = Nothing
+        Unload Me
+    End If
+
+    Exit Sub
+
+Form_KeyUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmForo" & "->" & "Form_KeyUp"
+    End If
+Resume Next
+    
+End Sub

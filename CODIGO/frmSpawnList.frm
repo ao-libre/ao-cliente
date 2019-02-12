@@ -8,9 +8,11 @@ Begin VB.Form frmSpawnList
    ClientWidth     =   3300
    ClipControls    =   0   'False
    ControlBox      =   0   'False
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmSpawnList.frx":0000
    ScaleHeight     =   231
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   220
@@ -38,12 +40,14 @@ Begin VB.Form frmSpawnList
    Begin VB.Image imgSalir 
       Height          =   375
       Left            =   360
+      Picture         =   "frmSpawnList.frx":11959
       Top             =   2910
       Width           =   855
    End
    Begin VB.Image imgInvocar 
       Height          =   375
       Left            =   1500
+      Picture         =   "frmSpawnList.frx":179DD
       Top             =   2910
       Width           =   1335
    End
@@ -215,3 +219,27 @@ lstCriaturas_MouseMove_Err:
 Resume Next
     
 End Sub
+
+Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo Form_KeyUp_Err
+    
+    If KeyCode = vbKeyEscape Then
+        Set clsFormulario = Nothing
+        Unload Me
+    End If
+
+    Exit Sub
+
+Form_KeyUp_Err:
+
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frnSpawnList" & "->" & "Form_KeyUp"
+
+    End If
+
+    Resume Next
+    
+End Sub
+
+

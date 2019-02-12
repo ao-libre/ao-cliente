@@ -17,9 +17,11 @@ Begin VB.Form frmGuildURL
       Italic          =   0   'False
       Strikethrough   =   0   'False
    EndProperty
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmGuildURL.frx":0000
    ScaleHeight     =   95
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   415
@@ -47,6 +49,7 @@ Begin VB.Form frmGuildURL
    Begin VB.Image imgAceptar 
       Height          =   255
       Left            =   165
+      Picture         =   "frmGuildURL.frx":D5F4
       Tag             =   "1"
       Top             =   960
       Width           =   5880
@@ -167,7 +170,7 @@ Private Sub imgAceptar_Click()
     On Error GoTo imgAceptar_Click_Err
     
 
-    If txtUrl.Text <> "" Then Call WriteGuildNewWebsite(txtUrl.Text)
+    If LenB(txtUrl.Text) <> 0 Then Call WriteGuildNewWebsite(txtUrl.Text)
     
     Unload Me
 
@@ -201,3 +204,23 @@ txtUrl_MouseMove_Err:
 Resume Next
     
 End Sub
+
+Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo Form_KeyUp_Err
+    
+    If KeyCode = vbKeyEscape Then
+        Set clsFormulario = Nothing
+        Unload Me
+    End If
+
+    Exit Sub
+
+Form_KeyUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildURL" & "->" & "Form_KeyUp"
+    End If
+Resume Next
+    
+End Sub
+

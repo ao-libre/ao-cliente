@@ -17,9 +17,11 @@ Begin VB.Form frmGuildSol
       Italic          =   0   'False
       Strikethrough   =   0   'False
    EndProperty
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmSolicitud.frx":0000
    ScaleHeight     =   233
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   312
@@ -49,6 +51,7 @@ Begin VB.Form frmGuildSol
    Begin VB.Image imgEnviar 
       Height          =   525
       Left            =   3360
+      Picture         =   "frmSolicitud.frx":16AF2
       Tag             =   "1"
       Top             =   2760
       Width           =   945
@@ -56,6 +59,7 @@ Begin VB.Form frmGuildSol
    Begin VB.Image imgCerrar 
       Height          =   525
       Left            =   240
+      Picture         =   "frmSolicitud.frx":1CF8D
       Tag             =   "1"
       Top             =   2760
       Width           =   945
@@ -247,3 +251,24 @@ Text1_MouseMove_Err:
 Resume Next
     
 End Sub
+
+Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo Form_KeyUp_Err
+    
+    If KeyCode = vbKeyEscape Then
+        Set clsFormulario = Nothing
+        Unload Me
+    End If
+
+    Exit Sub
+
+Form_KeyUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildSol" & "->" & "Form_KeyUp"
+    End If
+Resume Next
+    
+End Sub
+
+

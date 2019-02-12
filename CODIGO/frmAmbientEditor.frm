@@ -5,6 +5,7 @@ Begin VB.Form frmAmbientEditor
    ClientLeft      =   60
    ClientTop       =   450
    ClientWidth     =   3375
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    ScaleHeight     =   7215
    ScaleWidth      =   3375
@@ -461,6 +462,26 @@ Private Sub Command9_Click()
 Command9_Click_Err:
     If Err.number <> 0 Then
         LogError Err.number, Err.Description, "frmAmbientEditor" & "->" & "Command9_Click"
+    End If
+Resume Next
+    
+End Sub
+
+Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo Form_KeyUp_Err
+    
+    If KeyCode = vbKeyEscape Then
+        Set clsFormulario = Nothing
+        Unload Me
+
+    End If
+
+    Exit Sub
+
+Form_KeyUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmAmbientEditor" & "->" & "Form_KeyUp"
     End If
 Resume Next
     

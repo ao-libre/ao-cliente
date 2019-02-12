@@ -8,9 +8,11 @@ Begin VB.Form frmEligeAlineacion
    ClientWidth     =   6720
    ClipControls    =   0   'False
    ControlBox      =   0   'False
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmEligeAlineacion.frx":0000
    ScaleHeight     =   5265
    ScaleWidth      =   6720
    StartUpPosition =   1  'CenterOwner
@@ -52,6 +54,7 @@ Begin VB.Form frmEligeAlineacion
    Begin VB.Image imgSalir 
       Height          =   315
       Left            =   5520
+      Picture         =   "frmEligeAlineacion.frx":2BF3D
       Tag             =   "1"
       Top             =   4800
       Width           =   930
@@ -286,6 +289,25 @@ Private Sub imgSalir_Click()
 imgSalir_Click_Err:
     If Err.number <> 0 Then
         LogError Err.number, Err.Description, "frmEligeAlineacion" & "->" & "imgSalir_Click"
+    End If
+Resume Next
+    
+End Sub
+
+Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo Form_KeyUp_Err
+    
+    If KeyCode = vbKeyEscape Then
+        Set clsFormulario = Nothing
+        Unload Me
+    End If
+
+    Exit Sub
+
+Form_KeyUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmEligeAlineacion" & "->" & "Form_KeyUp"
     End If
 Resume Next
     

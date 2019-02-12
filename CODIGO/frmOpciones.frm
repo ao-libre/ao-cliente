@@ -19,9 +19,11 @@ Begin VB.Form frmOpciones
       Strikethrough   =   0   'False
    EndProperty
    Icon            =   "frmOpciones.frx":0000
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmOpciones.frx":0152
    ScaleHeight     =   479
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   322
@@ -162,54 +164,63 @@ Begin VB.Form frmOpciones
    Begin VB.Image imgTutorial 
       Height          =   285
       Left            =   2520
+      Picture         =   "frmOpciones.frx":287F2
       Top             =   6240
       Width           =   2010
    End
    Begin VB.Image imgSoporte 
       Height          =   285
       Left            =   360
+      Picture         =   "frmOpciones.frx":2D65F
       Top             =   6240
       Width           =   2010
    End
    Begin VB.Image imgRadio 
       Height          =   285
       Left            =   2520
+      Picture         =   "frmOpciones.frx":32679
       Top             =   5880
       Width           =   2010
    End
    Begin VB.Image imgManual 
       Height          =   285
       Left            =   360
+      Picture         =   "frmOpciones.frx":372E9
       Top             =   5880
       Width           =   2010
    End
    Begin VB.Image imgCambiarPasswd 
       Height          =   285
       Left            =   2520
+      Picture         =   "frmOpciones.frx":3C17F
       Top             =   5520
       Width           =   2010
    End
    Begin VB.Image imgMapa 
       Height          =   285
       Left            =   360
+      Picture         =   "frmOpciones.frx":40CB6
       Top             =   5520
       Width           =   2010
    End
    Begin VB.Image imgMsgPersonalizado 
       Height          =   285
       Left            =   2520
+      Picture         =   "frmOpciones.frx":45A2C
       Top             =   5160
       Width           =   2010
    End
    Begin VB.Image imgConfigTeclas 
       Height          =   285
       Left            =   360
+      Picture         =   "frmOpciones.frx":4ADF4
       Top             =   5160
       Width           =   2010
    End
    Begin VB.Image imgSalir 
       Height          =   285
       Left            =   1440
+      Picture         =   "frmOpciones.frx":4F898
       Top             =   6600
       Width           =   2010
    End
@@ -953,3 +964,23 @@ Slider1_Scroll_Err:
 Resume Next
     
 End Sub
+
+Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo Form_KeyUp_Err
+    
+    If KeyCode = vbKeyEscape Then
+        Set clsFormulario = Nothing
+        Unload Me
+    End If
+
+    Exit Sub
+
+Form_KeyUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmOpciones" & "->" & "Form_KeyUp"
+    End If
+Resume Next
+    
+End Sub
+

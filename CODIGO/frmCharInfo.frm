@@ -17,9 +17,11 @@ Begin VB.Form frmCharInfo
       Italic          =   0   'False
       Strikethrough   =   0   'False
    EndProperty
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmCharInfo.frx":0000
    ScaleHeight     =   439
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   426
@@ -72,6 +74,7 @@ Begin VB.Form frmCharInfo
    Begin VB.Image imgAceptar 
       Height          =   510
       Left            =   5160
+      Picture         =   "frmCharInfo.frx":29C2C
       Tag             =   "1"
       Top             =   5955
       Width           =   1020
@@ -79,6 +82,7 @@ Begin VB.Form frmCharInfo
    Begin VB.Image imgRechazar 
       Height          =   510
       Left            =   3840
+      Picture         =   "frmCharInfo.frx":2DC8E
       Tag             =   "1"
       Top             =   5955
       Width           =   1020
@@ -86,6 +90,7 @@ Begin VB.Form frmCharInfo
    Begin VB.Image imgPeticion 
       Height          =   510
       Left            =   2640
+      Picture         =   "frmCharInfo.frx":31FD5
       Tag             =   "1"
       Top             =   5955
       Width           =   1020
@@ -93,6 +98,7 @@ Begin VB.Form frmCharInfo
    Begin VB.Image imgEchar 
       Height          =   510
       Left            =   1440
+      Picture         =   "frmCharInfo.frx":36204
       Tag             =   "1"
       Top             =   5955
       Width           =   1020
@@ -100,6 +106,7 @@ Begin VB.Form frmCharInfo
    Begin VB.Image imgCerrar 
       Height          =   510
       Left            =   120
+      Picture         =   "frmCharInfo.frx":3C7DD
       Tag             =   "1"
       Top             =   5955
       Width           =   1020
@@ -582,6 +589,25 @@ Private Sub txtMiembro_MouseMove(Button As Integer, _
 txtMiembro_MouseMove_Err:
     If Err.number <> 0 Then
         LogError Err.number, Err.Description, "frmCharInfo" & "->" & "txtMiembro_MouseMove"
+    End If
+Resume Next
+    
+End Sub
+
+Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo Form_KeyUp_Err
+    
+    If KeyCode = vbKeyEscape Then
+        Set clsFormulario = Nothing
+        Unload Me
+    End If
+
+    Exit Sub
+
+Form_KeyUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCharInfo" & "->" & "Form_KeyUp"
     End If
 Resume Next
     

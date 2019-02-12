@@ -17,6 +17,7 @@ Begin VB.Form frmCommet
       Italic          =   0   'False
       Strikethrough   =   0   'False
    EndProperty
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
@@ -48,12 +49,14 @@ Begin VB.Form frmCommet
    Begin VB.Image imgCerrar 
       Height          =   480
       Left            =   2880
+      Picture         =   "frmCommet.frx":0000
       Top             =   2520
       Width           =   960
    End
    Begin VB.Image imgEnviar 
       Height          =   480
       Left            =   1080
+      Picture         =   "frmCommet.frx":3BEC
       Top             =   2520
       Width           =   960
    End
@@ -318,6 +321,25 @@ Private Sub Text1_MouseMove(Button As Integer, Shift As Integer, X As Single, Y 
 Text1_MouseMove_Err:
     If Err.number <> 0 Then
         LogError Err.number, Err.Description, "frmCommet" & "->" & "Text1_MouseMove"
+    End If
+Resume Next
+    
+End Sub
+
+Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo Form_KeyUp_Err
+    
+    If KeyCode = vbKeyEscape Then
+        Set clsFormulario = Nothing
+        Unload Me
+    End If
+
+    Exit Sub
+
+Form_KeyUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCommet" & "->" & "Form_KeyUp"
     End If
 Resume Next
     

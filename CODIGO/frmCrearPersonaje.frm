@@ -8,9 +8,11 @@ Begin VB.Form frmCrearPersonaje
    ClientTop       =   0
    ClientWidth     =   11985
    ClipControls    =   0   'False
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmCrearPersonaje.frx":0000
    ScaleHeight     =   600
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   799
@@ -59,9 +61,9 @@ Begin VB.Form frmCrearPersonaje
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   315
-      ItemData        =   "frmCrearPersonaje.frx":0000
+      ItemData        =   "frmCrearPersonaje.frx":53C8D
       Left            =   6120
-      List            =   "frmCrearPersonaje.frx":000A
+      List            =   "frmCrearPersonaje.frx":53C97
       Style           =   2  'Dropdown List
       TabIndex        =   8
       Top             =   5040
@@ -150,9 +152,9 @@ Begin VB.Form frmCrearPersonaje
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   315
-      ItemData        =   "frmCrearPersonaje.frx":001D
+      ItemData        =   "frmCrearPersonaje.frx":53CAA
       Left            =   6060
-      List            =   "frmCrearPersonaje.frx":001F
+      List            =   "frmCrearPersonaje.frx":53CAC
       Style           =   2  'Dropdown List
       TabIndex        =   6
       Top             =   4035
@@ -171,9 +173,9 @@ Begin VB.Form frmCrearPersonaje
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   315
-      ItemData        =   "frmCrearPersonaje.frx":0021
+      ItemData        =   "frmCrearPersonaje.frx":53CAE
       Left            =   6060
-      List            =   "frmCrearPersonaje.frx":002B
+      List            =   "frmCrearPersonaje.frx":53CB8
       Style           =   2  'Dropdown List
       TabIndex        =   7
       Top             =   4560
@@ -192,9 +194,9 @@ Begin VB.Form frmCrearPersonaje
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   315
-      ItemData        =   "frmCrearPersonaje.frx":003E
+      ItemData        =   "frmCrearPersonaje.frx":53CCB
       Left            =   6060
-      List            =   "frmCrearPersonaje.frx":0040
+      List            =   "frmCrearPersonaje.frx":53CCD
       Style           =   2  'Dropdown List
       TabIndex        =   5
       Top             =   3495
@@ -213,9 +215,9 @@ Begin VB.Form frmCrearPersonaje
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   315
-      ItemData        =   "frmCrearPersonaje.frx":0042
+      ItemData        =   "frmCrearPersonaje.frx":53CCF
       Left            =   6060
-      List            =   "frmCrearPersonaje.frx":0044
+      List            =   "frmCrearPersonaje.frx":53CD1
       Style           =   2  'Dropdown List
       TabIndex        =   4
       Top             =   2985
@@ -990,7 +992,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   225
       Index           =   1
       Left            =   7560
-      Picture         =   "frmCrearPersonaje.frx":0046
+      Picture         =   "frmCrearPersonaje.frx":53CD3
       Top             =   6360
       Visible         =   0   'False
       Width           =   240
@@ -999,7 +1001,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   225
       Index           =   0
       Left            =   6960
-      Picture         =   "frmCrearPersonaje.frx":0358
+      Picture         =   "frmCrearPersonaje.frx":53FE5
       Top             =   6360
       Visible         =   0   'False
       Width           =   240
@@ -1008,7 +1010,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   225
       Index           =   1
       Left            =   8460
-      Picture         =   "frmCrearPersonaje.frx":066A
+      Picture         =   "frmCrearPersonaje.frx":542F7
       Top             =   5925
       Visible         =   0   'False
       Width           =   240
@@ -1017,7 +1019,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   225
       Index           =   0
       Left            =   6075
-      Picture         =   "frmCrearPersonaje.frx":097C
+      Picture         =   "frmCrearPersonaje.frx":54609
       Top             =   5925
       Visible         =   0   'False
       Width           =   240
@@ -1033,7 +1035,7 @@ Begin VB.Form frmCrearPersonaje
    Begin VB.Image imgDados 
       Height          =   885
       Left            =   195
-      MouseIcon       =   "frmCrearPersonaje.frx":0C8E
+      MouseIcon       =   "frmCrearPersonaje.frx":5491B
       MousePointer    =   99  'Custom
       Top             =   2775
       Width           =   900
@@ -3255,6 +3257,28 @@ Private Sub LoadCharInfo()
 LoadCharInfo_Err:
     If Err.number <> 0 Then
         LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "LoadCharInfo"
+    End If
+Resume Next
+    
+End Sub
+
+Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo Form_KeyUp_Err
+    
+
+    If KeyCode = vbKeyEscape Then
+        Call Audio.PlayMIDI("2.mid")
+        bShowTutorial = False
+        Unload Me
+    End If
+
+
+    Exit Sub
+
+Form_KeyUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearPersonaje" & "->" & "Form_KeyUp"
     End If
 Resume Next
     

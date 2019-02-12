@@ -1,12 +1,13 @@
 VERSION 5.00
 Begin VB.Form frmTutorial 
    BorderStyle     =   0  'None
-   Caption         =   "Form1"
    ClientHeight    =   7635
    ClientLeft      =   0
    ClientTop       =   0
    ClientWidth     =   8745
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
+   Picture         =   "frmTutorial.frx":0000
    ScaleHeight     =   509
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   583
@@ -34,6 +35,7 @@ Begin VB.Form frmTutorial
    Begin VB.Image imgCheck 
       Height          =   450
       Left            =   3060
+      Picture         =   "frmTutorial.frx":1B45E
       Top             =   6900
       Visible         =   0   'False
       Width           =   435
@@ -41,6 +43,7 @@ Begin VB.Form frmTutorial
    Begin VB.Image imgMostrar 
       Height          =   570
       Left            =   3000
+      Picture         =   "frmTutorial.frx":1BEF0
       Top             =   6855
       Visible         =   0   'False
       Width           =   2535
@@ -48,12 +51,14 @@ Begin VB.Form frmTutorial
    Begin VB.Image imgSiguiente 
       Height          =   360
       Left            =   6840
+      Picture         =   "frmTutorial.frx":20A9A
       Top             =   6960
       Width           =   1455
    End
    Begin VB.Image imgAnterior 
       Height          =   360
       Left            =   480
+      Picture         =   "frmTutorial.frx":26F77
       Top             =   6960
       Width           =   1455
    End
@@ -456,3 +461,27 @@ lblMensaje_MouseMove_Err:
 Resume Next
     
 End Sub
+
+Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo Form_KeyUp_Err
+    
+    If KeyCode = vbKeyEscape Then
+        Set clsFormulario = Nothing
+        Unload Me
+    End If
+
+    Exit Sub
+
+Form_KeyUp_Err:
+
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmTutorial" & "->" & "Form_KeyUp"
+
+    End If
+
+    Resume Next
+    
+End Sub
+
+

@@ -146,7 +146,6 @@ Private Sub Form_Deactivate()
     
     Me.SetFocus
 
-    
     Exit Sub
 
 Form_Deactivate_Err:
@@ -161,14 +160,12 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
     
     On Error GoTo Form_KeyUp_Err
     
-
     If KeyCode = vbKeyEscape Then
         Set clsFormulario = Nothing
         Unload Me
 
     End If
 
-    
     Exit Sub
 
 Form_KeyUp_Err:

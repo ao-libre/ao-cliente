@@ -8,10 +8,12 @@ Begin VB.Form frmComerciar
    ClientWidth     =   6930
    ClipControls    =   0   'False
    ControlBox      =   0   'False
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
    MousePointer    =   99  'Custom
+   Picture         =   "frmComerciar.frx":0000
    ScaleHeight     =   486
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   462
@@ -92,7 +94,7 @@ Begin VB.Form frmComerciar
    Begin VB.Image imgCross 
       Height          =   450
       Left            =   6075
-      MouseIcon       =   "frmComerciar.frx":0000
+      MouseIcon       =   "frmComerciar.frx":28A9B
       MousePointer    =   99  'Custom
       Tag             =   "1"
       Top             =   360
@@ -101,8 +103,9 @@ Begin VB.Form frmComerciar
    Begin VB.Image imgVender 
       Height          =   465
       Left            =   3840
-      MouseIcon       =   "frmComerciar.frx":030A
+      MouseIcon       =   "frmComerciar.frx":28DA5
       MousePointer    =   99  'Custom
+      Picture         =   "frmComerciar.frx":28EF7
       Tag             =   "1"
       Top             =   6000
       Width           =   2580
@@ -110,8 +113,9 @@ Begin VB.Form frmComerciar
    Begin VB.Image imgComprar 
       Height          =   465
       Left            =   510
-      MouseIcon       =   "frmComerciar.frx":045C
+      MouseIcon       =   "frmComerciar.frx":2E4C7
       MousePointer    =   99  'Custom
+      Picture         =   "frmComerciar.frx":2E619
       Tag             =   "1"
       Top             =   6030
       Width           =   2580
@@ -327,7 +331,7 @@ Private Sub Form_Load()
     clsFormulario.Initialize Me
     
     'Cargamos la interfase
-    Me.Picture = LoadPicture(DirGraficos & "ventanacomercio.jpg")
+    Me.Picture = LoadPicture(DirGraficos & "VentanaComercio.jpg")
     
     Call LoadButtons
     
@@ -667,3 +671,23 @@ picInvUser_MouseMove_Err:
 Resume Next
     
 End Sub
+
+Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo Form_KeyUp_Err
+    
+    If KeyCode = vbKeyEscape Then
+        Set clsFormulario = Nothing
+        Call WriteCommerceEnd
+    End If
+
+    Exit Sub
+
+Form_KeyUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmComerciar" & "->" & "Form_KeyUp"
+    End If
+Resume Next
+    
+End Sub
+

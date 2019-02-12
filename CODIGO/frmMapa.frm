@@ -12,6 +12,7 @@ Begin VB.Form frmMapa
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmMapa.frx":0000
    ScaleHeight     =   8850
    ScaleWidth      =   8595
    ShowInTaskbar   =   0   'False
@@ -42,7 +43,7 @@ Begin VB.Form frmMapa
    Begin VB.Label lblTexto 
       Alignment       =   2  'Center
       BackStyle       =   0  'Transparent
-      Caption         =   $"frmMapa.frx":0000
+      Caption         =   $"frmMapa.frx":6EACD
       BeginProperty Font 
          Name            =   "MS Sans Serif"
          Size            =   12
@@ -246,3 +247,4 @@ imgToogleMap_Click_Err:
 Resume Next
     
 End Sub
+

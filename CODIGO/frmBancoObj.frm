@@ -9,9 +9,11 @@ Begin VB.Form frmBancoObj
    ClipControls    =   0   'False
    ControlBox      =   0   'False
    ForeColor       =   &H8000000F&
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmBancoObj.frx":0000
    ScaleHeight     =   530
    ScaleMode       =   0  'User
    ScaleWidth      =   461
@@ -673,12 +675,31 @@ Private Sub imgCerrar_Click()
     Call WriteBankEnd
     NoPuedeMover = False
 
-    
     Exit Sub
 
 imgCerrar_Click_Err:
     If Err.number <> 0 Then
         LogError Err.number, Err.Description, "frmBancoObj" & "->" & "imgCerrar_Click"
+    End If
+Resume Next
+    
+End Sub
+
+Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo Form_KeyUp_Err
+    
+    If KeyCode = vbKeyEscape Then
+        Set clsFormulario = Nothing
+        Call WriteBankEnd
+        NoPuedeMover = False
+    End If
+
+    Exit Sub
+
+Form_KeyUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmBancoObj" & "->" & "Form_KeyUp"
     End If
 Resume Next
     

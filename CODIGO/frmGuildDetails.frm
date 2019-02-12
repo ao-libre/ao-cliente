@@ -17,9 +17,11 @@ Begin VB.Form frmGuildDetails
       Italic          =   0   'False
       Strikethrough   =   0   'False
    EndProperty
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmGuildDetails.frx":0000
    ScaleHeight     =   454
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   456
@@ -208,6 +210,7 @@ Begin VB.Form frmGuildDetails
    Begin VB.Image imgConfirmar 
       Height          =   360
       Left            =   4920
+      Picture         =   "frmGuildDetails.frx":30E42
       Tag             =   "1"
       Top             =   6360
       Width           =   1455
@@ -215,6 +218,7 @@ Begin VB.Form frmGuildDetails
    Begin VB.Image imgSalir 
       Height          =   360
       Left            =   480
+      Picture         =   "frmGuildDetails.frx":374E7
       Tag             =   "1"
       Top             =   6360
       Width           =   1455
@@ -461,3 +465,23 @@ txtDesc_Change_Err:
 Resume Next
     
 End Sub
+
+Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo Form_KeyUp_Err
+    
+    If KeyCode = vbKeyEscape Then
+        Set clsFormulario = Nothing
+        Unload Me
+    End If
+
+    Exit Sub
+
+Form_KeyUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildDetails" & "->" & "Form_KeyUp"
+    End If
+Resume Next
+    
+End Sub
+

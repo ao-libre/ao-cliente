@@ -6,7 +6,9 @@ Begin VB.Form frmCrearCuenta
    ClientLeft      =   5115
    ClientTop       =   4125
    ClientWidth     =   6600
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
+   Picture         =   "frmCrearCuenta.frx":0000
    ScaleHeight     =   4530
    ScaleWidth      =   6600
    ShowInTaskbar   =   0   'False
@@ -75,12 +77,14 @@ Begin VB.Form frmCrearCuenta
    Begin VB.Image imgSalir 
       Height          =   375
       Left            =   560
+      Picture         =   "frmCrearCuenta.frx":20F13
       Top             =   3800
       Width           =   1335
    End
    Begin VB.Image imgCrearCuenta 
       Height          =   375
       Left            =   4520
+      Picture         =   "frmCrearCuenta.frx":24A8B
       Top             =   3800
       Width           =   1335
    End
@@ -101,11 +105,11 @@ Private Sub Form_Load()
     On Error GoTo Form_Load_Err
     
     Me.Picture = LoadPicture(App.path & "\graficos\frmCuentaNueva.jpg")
-    txtCuentaEmail.Text = ""
-    txtCuentaPassword.Text = ""
-    txtCuentaRepite.Text = ""
+    txtCuentaEmail.Text = vbNullString
+    txtCuentaPassword.Text = vbNullString
+    txtCuentaRepite.Text = vbNullString
+    
     LoadButtons
-
     
     Exit Sub
 
@@ -271,6 +275,25 @@ Private Sub LoadButtons()
 LoadButtons_Err:
     If Err.number <> 0 Then
         LogError Err.number, Err.Description, "frmCrearCuenta" & "->" & "LoadButtons"
+    End If
+Resume Next
+    
+End Sub
+
+Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo Form_KeyUp_Err
+    
+    If KeyCode = vbKeyEscape Then
+        Set clsFormulario = Nothing
+        Unload Me
+    End If
+
+    Exit Sub
+
+Form_KeyUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCrearCuenta" & "->" & "Form_KeyUp"
     End If
 Resume Next
     

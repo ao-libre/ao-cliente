@@ -16,9 +16,11 @@ Begin VB.Form frmGuildBrief
       Italic          =   0   'False
       Strikethrough   =   0   'False
    EndProperty
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmGuildBrief.frx":0000
    ScaleHeight     =   510
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   508
@@ -49,6 +51,7 @@ Begin VB.Form frmGuildBrief
    Begin VB.Image imgSolicitarIngreso 
       Height          =   375
       Left            =   6000
+      Picture         =   "frmGuildBrief.frx":34CBA
       Tag             =   "1"
       Top             =   7170
       Width           =   1335
@@ -56,6 +59,7 @@ Begin VB.Form frmGuildBrief
    Begin VB.Image imgDeclararGuerra 
       Height          =   375
       Left            =   4560
+      Picture         =   "frmGuildBrief.frx":3B2FA
       Tag             =   "1"
       Top             =   7170
       Width           =   1335
@@ -63,6 +67,7 @@ Begin VB.Form frmGuildBrief
    Begin VB.Image imgOfrecerAlianza 
       Height          =   375
       Left            =   3120
+      Picture         =   "frmGuildBrief.frx":4195E
       Tag             =   "1"
       Top             =   7170
       Width           =   1335
@@ -70,16 +75,18 @@ Begin VB.Form frmGuildBrief
    Begin VB.Image imgOfrecerPaz 
       Height          =   375
       Left            =   1680
+      Picture         =   "frmGuildBrief.frx":47F5C
       Tag             =   "1"
       Top             =   7170
       Width           =   1335
    End
    Begin VB.Image imgCerrar 
-      Height          =   360
+      Height          =   375
       Left            =   120
+      Picture         =   "frmGuildBrief.frx":4E156
       Tag             =   "1"
       Top             =   7170
-      Width           =   1455
+      Width           =   1335
    End
    Begin VB.Label Codex 
       BackStyle       =   0  'Transparent
@@ -605,7 +612,7 @@ Private Sub imgDeclararGuerra_Click()
     
     On Error GoTo imgDeclararGuerra_Click_Err
     
-    Call WriteGuildDeclareWar(Nombre.Caption)
+    Call WriteGuildDeclareWar(nombre.Caption)
     Unload Me
 
     
@@ -623,7 +630,7 @@ Private Sub imgOfrecerAlianza_Click()
     
     On Error GoTo imgOfrecerAlianza_Click_Err
     
-    frmCommet.Nombre = Nombre.Caption
+    frmCommet.nombre = nombre.Caption
     frmCommet.T = TIPO.ALIANZA
     Call frmCommet.Show(vbModal, frmGuildBrief)
 
@@ -642,7 +649,7 @@ Private Sub imgOfrecerPaz_Click()
     
     On Error GoTo imgOfrecerPaz_Click_Err
     
-    frmCommet.Nombre = Nombre.Caption
+    frmCommet.nombre = nombre.Caption
     frmCommet.T = TIPO.PAZ
     Call frmCommet.Show(vbModal, frmGuildBrief)
 
@@ -661,7 +668,7 @@ Private Sub imgSolicitarIngreso_Click()
     
     On Error GoTo imgSolicitarIngreso_Click_Err
     
-    Call frmGuildSol.RecieveSolicitud(Nombre.Caption)
+    Call frmGuildSol.RecieveSolicitud(nombre.Caption)
     Call frmGuildSol.Show(vbModal, frmGuildBrief)
 
     
@@ -670,6 +677,25 @@ Private Sub imgSolicitarIngreso_Click()
 imgSolicitarIngreso_Click_Err:
     If Err.number <> 0 Then
         LogError Err.number, Err.Description, "frmGuildBrief" & "->" & "imgSolicitarIngreso_Click"
+    End If
+Resume Next
+    
+End Sub
+
+Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo Form_KeyUp_Err
+    
+    If KeyCode = vbKeyEscape Then
+        Set clsFormulario = Nothing
+        Unload Me
+    End If
+
+    Exit Sub
+
+Form_KeyUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmGuildBrief" & "->" & "Form_KeyUp"
     End If
 Resume Next
     

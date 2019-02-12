@@ -9,9 +9,11 @@ Begin VB.Form frmCarp
    ClientWidth     =   6705
    ClipControls    =   0   'False
    ControlBox      =   0   'False
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmCarp.frx":0000
    ScaleHeight     =   362
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   447
@@ -259,6 +261,7 @@ Begin VB.Form frmCarp
    Begin VB.Image imgCantidadCiclo 
       Height          =   645
       Left            =   5160
+      Picture         =   "frmCarp.frx":2D496
       Top             =   3435
       Width           =   1110
    End
@@ -377,12 +380,14 @@ Begin VB.Form frmCarp
    Begin VB.Image imgCerrar 
       Height          =   360
       Left            =   2760
+      Picture         =   "frmCarp.frx":30BE0
       Top             =   4650
       Width           =   1455
    End
    Begin VB.Image imgConstruir3 
       Height          =   420
       Left            =   3150
+      Picture         =   "frmCarp.frx":34AB9
       Top             =   3960
       Visible         =   0   'False
       Width           =   1710
@@ -390,6 +395,7 @@ Begin VB.Form frmCarp
    Begin VB.Image imgConstruir2 
       Height          =   420
       Left            =   3150
+      Picture         =   "frmCarp.frx":39451
       Top             =   3180
       Visible         =   0   'False
       Width           =   1710
@@ -397,6 +403,7 @@ Begin VB.Form frmCarp
    Begin VB.Image imgConstruir1 
       Height          =   420
       Left            =   3150
+      Picture         =   "frmCarp.frx":3DDE9
       Top             =   2370
       Visible         =   0   'False
       Width           =   1710
@@ -404,6 +411,7 @@ Begin VB.Form frmCarp
    Begin VB.Image imgConstruir0 
       Height          =   420
       Left            =   3150
+      Picture         =   "frmCarp.frx":42781
       Top             =   1560
       Visible         =   0   'False
       Width           =   1710
@@ -1145,6 +1153,25 @@ Private Sub Scroll_Change()
 Scroll_Change_Err:
     If Err.number <> 0 Then
         LogError Err.number, Err.Description, "frmCarp" & "->" & "Scroll_Change"
+    End If
+Resume Next
+    
+End Sub
+
+Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo Form_KeyUp_Err
+    
+    If KeyCode = vbKeyEscape Then
+        Set clsFormulario = Nothing
+        Unload Me
+    End If
+
+    Exit Sub
+
+Form_KeyUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmCarp" & "->" & "Form_KeyUp"
     End If
 Resume Next
     

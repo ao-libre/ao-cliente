@@ -7,9 +7,11 @@ Begin VB.Form frmKeypad
    ClientWidth     =   7350
    ClipControls    =   0   'False
    ControlBox      =   0   'False
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmKeypad.frx":0000
    ScaleHeight     =   262
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   490
@@ -677,3 +679,23 @@ txtPassword_KeyPress_Err:
 Resume Next
     
 End Sub
+
+Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo Form_KeyUp_Err
+    
+    If KeyCode = vbKeyEscape Then
+        Set clsFormulario = Nothing
+        Unload Me
+    End If
+
+    Exit Sub
+
+Form_KeyUp_Err:
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmKeypad" & "->" & "Form_KeyUp"
+    End If
+Resume Next
+    
+End Sub
+

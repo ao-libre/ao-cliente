@@ -5,7 +5,9 @@ Begin VB.Form frmParty
    ClientLeft      =   0
    ClientTop       =   -75
    ClientWidth     =   5640
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
+   Picture         =   "frmParty.frx":0000
    ScaleHeight     =   428
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   376
@@ -95,6 +97,7 @@ Begin VB.Form frmParty
    Begin VB.Image imgCerrar 
       Height          =   360
       Left            =   3840
+      Picture         =   "frmParty.frx":22389
       Tag             =   "1"
       Top             =   5400
       Width           =   1455
@@ -116,13 +119,15 @@ Begin VB.Form frmParty
    Begin VB.Image imgAgregar 
       Height          =   360
       Left            =   2040
+      Picture         =   "frmParty.frx":28475
       Tag             =   "1"
       Top             =   4830
       Width           =   1455
    End
    Begin VB.Image imgSalirParty 
-      Height          =   375
+      Height          =   360
       Left            =   300
+      Picture         =   "frmParty.frx":2C7E2
       Top             =   5400
       Width           =   1455
    End
@@ -630,6 +635,28 @@ txtToAdd_KeyUp_Err:
         LogError Err.number, Err.Description, "frmParty" & "->" & "txtToAdd_KeyUp"
     End If
 Resume Next
+    
+End Sub
+
+Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
+    
+    On Error GoTo Form_KeyUp_Err
+    
+    If KeyCode = vbKeyEscape Then
+        Set clsFormulario = Nothing
+        Unload Me
+    End If
+
+    Exit Sub
+
+Form_KeyUp_Err:
+
+    If Err.number <> 0 Then
+        LogError Err.number, Err.Description, "frmParty" & "->" & "Form_KeyUp"
+
+    End If
+
+    Resume Next
     
 End Sub
 
