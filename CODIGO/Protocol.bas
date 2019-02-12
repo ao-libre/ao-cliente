@@ -3662,8 +3662,11 @@ Private Sub HandleGuildList()
         GuildNames = Split(Buffer.ReadASCIIString(), SEPARATOR)
         
         Dim i As Long
-
-        For i = 0 To UBound(GuildNames())
+        Dim Upper_guildNames As Long
+        
+        Upper_guildNames = UBound(GuildNames())
+    
+        For i = 0 To Upper_guildNames
             Call .guildslist.AddItem(GuildNames(i))
         Next i
         
@@ -5515,11 +5518,13 @@ Private Sub HandleTrainerCreatureList()
     Call Buffer.ReadByte
     
     Dim creatures() As String
+    Dim Upper_creatures As Long
     Dim i           As Long
     
     creatures = Split(Buffer.ReadASCIIString(), SEPARATOR)
+    Upper_creatures = UBound(creatures())
     
-    For i = 0 To UBound(creatures())
+    For i = 0 To Upper_creatures
         Call frmEntrenador.lstCriaturas.AddItem(creatures(i))
     Next i
 
@@ -5566,9 +5571,10 @@ Private Sub HandleGuildNews()
     'Remove packet ID
     Call Buffer.ReadByte
     
-    Dim guildList() As String
-    Dim i           As Long
-    Dim sTemp       As String
+    Dim guildList()     As String
+    Dim Upper_guildList As Long
+    Dim i               As Long
+    Dim sTemp           As String
     
     'Get news' string
     frmGuildNews.news = Buffer.ReadASCIIString()
@@ -5576,7 +5582,10 @@ Private Sub HandleGuildNews()
     'Get Enemy guilds list
     guildList = Split(Buffer.ReadASCIIString(), SEPARATOR)
     
-    For i = 0 To UBound(guildList)
+    'pre-calculate it's upper-bound beforehand to increase performance
+    Upper_guildList = UBound(guildList)
+    
+    For i = 0 To Upper_guildList
         sTemp = frmGuildNews.txtClanesGuerra.Text
         frmGuildNews.txtClanesGuerra.Text = sTemp & guildList(i) & vbCrLf
     Next i
@@ -5584,7 +5593,10 @@ Private Sub HandleGuildNews()
     'Get Allied guilds list
     guildList = Split(Buffer.ReadASCIIString(), SEPARATOR)
     
-    For i = 0 To UBound(guildList)
+    'pre-calculate it's upper-bound beforehand to increase performance
+    Upper_guildList = UBound(guildList)
+    
+    For i = 0 To Upper_guildList
         sTemp = frmGuildNews.txtClanesAliados.Text
         frmGuildNews.txtClanesAliados.Text = sTemp & guildList(i) & vbCrLf
     Next i
@@ -5675,14 +5687,16 @@ Private Sub HandleAlianceProposalsList()
     'Remove packet ID
     Call Buffer.ReadByte
     
-    Dim vsGuildList() As String
-    Dim i             As Long
+    Dim vsGuildList()     As String
+    Dim i                 As Long
+    Dim Upper_vsGuildList As Long
     
     vsGuildList = Split(Buffer.ReadASCIIString(), SEPARATOR)
+    Upper_vsGuildList = UBound(vsGuildList())
     
     Call frmPeaceProp.lista.Clear
 
-    For i = 0 To UBound(vsGuildList())
+    For i = 0 To Upper_vsGuildList
         Call frmPeaceProp.lista.AddItem(vsGuildList(i))
     Next i
     
@@ -5730,14 +5744,17 @@ Private Sub HandlePeaceProposalsList()
     'Remove packet ID
     Call Buffer.ReadByte
     
-    Dim guildList() As String
-    Dim i           As Long
+    Dim guildList()     As String
+    Dim Upper_guildList As Long
+    Dim i               As Long
     
     guildList = Split(Buffer.ReadASCIIString(), SEPARATOR)
     
     Call frmPeaceProp.lista.Clear
-
-    For i = 0 To UBound(guildList())
+    
+    Upper_guildList = UBound(guildList())
+    
+    For i = 0 To Upper_guildList
         Call frmPeaceProp.lista.AddItem(guildList(i))
     Next i
     
@@ -5894,8 +5911,12 @@ Private Sub HandleGuildLeaderInfo()
     'Remove packet ID
     Call Buffer.ReadByte
     
-    Dim i      As Long
-    Dim List() As String
+    Dim i                  As Long
+    Dim List()             As String
+    
+    Dim Upper_guildNames   As Long
+    Dim Upper_guildMembers As Long
+    Dim Upper_list         As Long
     
     With frmGuildLeader
         'Get list of existing guilds
@@ -5904,7 +5925,9 @@ Private Sub HandleGuildLeaderInfo()
         'Empty the list
         Call .guildslist.Clear
         
-        For i = 0 To UBound(GuildNames())
+        Upper_guildNames = UBound(GuildNames())
+        
+        For i = 0 To Upper_guildNames
             Call .guildslist.AddItem(GuildNames(i))
         Next i
         
@@ -5915,7 +5938,9 @@ Private Sub HandleGuildLeaderInfo()
         'Empty the list
         Call .members.Clear
         
-        For i = 0 To UBound(GuildMembers())
+        Upper_guildMembers = UBound(GuildMembers())
+        
+        For i = 0 To Upper_guildMembers
             Call .members.AddItem(GuildMembers(i))
         Next i
         
@@ -5927,7 +5952,9 @@ Private Sub HandleGuildLeaderInfo()
         'Empty the list
         Call .solicitudes.Clear
         
-        For i = 0 To UBound(List())
+        Upper_list = UBound(List())
+        
+        For i = 0 To Upper_list
             Call .solicitudes.AddItem(List(i))
         Next i
         
@@ -6402,11 +6429,13 @@ Private Sub HandleSpawnList()
     Call Buffer.ReadByte
     
     Dim creatureList() As String
+    Dim Upper_creatureList As Long
     Dim i              As Long
     
     creatureList = Split(Buffer.ReadASCIIString(), SEPARATOR)
+    Upper_creatureList = UBound(creatureList())
     
-    For i = 0 To UBound(creatureList())
+    For i = 0 To Upper_creatureList
         Call frmSpawnList.lstCriaturas.AddItem(creatureList(i))
     Next i
 
@@ -6454,11 +6483,13 @@ Private Sub HandleShowSOSForm()
     Call Buffer.ReadByte
     
     Dim sosList() As String
+    Dim Upper_sosList As Long
     Dim i         As Long
     
     sosList = Split(Buffer.ReadASCIIString(), SEPARATOR)
+    Upper_sosList = UBound(sosList())
     
-    For i = 0 To UBound(sosList())
+    For i = 0 To Upper_sosList
         Call frmMSG.List1.AddItem(sosList(i))
     Next i
     
@@ -6506,13 +6537,15 @@ Private Sub HandleShowDenounces()
     Call Buffer.ReadByte
     
     Dim DenounceList() As String
+    Dim Upper_denounceList As Long
     Dim DenounceIndex  As Long
     
     DenounceList = Split(Buffer.ReadASCIIString(), SEPARATOR)
+    Upper_denounceList = UBound(DenounceList())
     
     With FontTypes(FontTypeNames.FONTTYPE_GUILDMSG)
 
-        For DenounceIndex = 0 To UBound(DenounceList())
+        For DenounceIndex = 0 To Upper_denounceList
             Call AddtoRichTextBox(frmMain.RecTxt, DenounceList(DenounceIndex), .Red, .Green, .Blue, .bold, .italic)
         Next DenounceIndex
 
@@ -6560,13 +6593,15 @@ Private Sub HandleShowPartyForm()
     Call Buffer.ReadByte
     
     Dim members() As String
+    Dim Upper_members As Long
     Dim i         As Long
     
     EsPartyLeader = CBool(Buffer.ReadByte())
        
     members = Split(Buffer.ReadASCIIString(), SEPARATOR)
+    Upper_members = UBound(members())
 
-    For i = 0 To UBound(members())
+    For i = 0 To Upper_members
         Call frmParty.lstMembers.AddItem(members(i))
     Next i
     
@@ -6687,14 +6722,17 @@ Private Sub HandleUserNameList()
     Call Buffer.ReadByte
     
     Dim userList() As String
+    Dim Upper_userlist As Long
     Dim i          As Long
     
     userList = Split(Buffer.ReadASCIIString(), SEPARATOR)
     
     If frmPanelGm.Visible Then
         frmPanelGm.cboListaUsus.Clear
-
-        For i = 0 To UBound(userList())
+        
+        Upper_userlist = UBound(userList())
+        
+        For i = 0 To Upper_userlist
             Call frmPanelGm.cboListaUsus.AddItem(userList(i))
         Next i
 
@@ -6778,9 +6816,13 @@ Private Sub HandleGuildMemberInfo()
         
         GuildNames = Split(Buffer.ReadASCIIString(), SEPARATOR)
         
-        Dim i As Long
+        Dim i                  As Long
+        Dim Upper_guildNames   As Long
+        Dim Upper_guildMembers As Long
+        
+        Upper_guildNames = UBound(GuildNames())
 
-        For i = 0 To UBound(GuildNames())
+        For i = 0 To Upper_guildNames
             Call .lstClanes.AddItem(GuildNames(i))
         Next i
         
@@ -6791,7 +6833,10 @@ Private Sub HandleGuildMemberInfo()
         'Empty the list
         Call .lstMiembros.Clear
         
-        For i = 0 To UBound(GuildMembers())
+        'pre-calculate its upper-bound beforehand to increase performance
+        Upper_guildMembers = UBound(GuildMembers())
+        
+        For i = 0 To Upper_guildMembers
             Call .lstMiembros.AddItem(GuildMembers(i))
         Next i
         
@@ -8086,6 +8131,8 @@ Public Sub WriteCreateNewGuild(ByVal Desc As String, _
     
     Dim Temp As String
     Dim i    As Long
+    Dim Lower_codex As Long
+    Dim Upper_codex As Long
     
     With outgoingData
         Call .WriteByte(ClientPacketID.CreateNewGuild)
@@ -8094,7 +8141,10 @@ Public Sub WriteCreateNewGuild(ByVal Desc As String, _
         Call .WriteASCIIString(Name)
         Call .WriteASCIIString(Site)
         
-        For i = LBound(Codex()) To UBound(Codex())
+        Lower_codex = LBound(Codex())
+        Upper_codex = UBound(Codex())
+        
+        For i = Lower_codex To Upper_codex
             Temp = Temp & Codex(i) & SEPARATOR
         Next i
         
@@ -8527,13 +8577,18 @@ Public Sub WriteClanCodexUpdate(ByVal Desc As String, ByRef Codex() As String)
     
     Dim Temp As String
     Dim i    As Long
+    Dim Lower_codex As Long
+    Dim Upper_codex As Long
     
     With outgoingData
         Call .WriteByte(ClientPacketID.ClanCodexUpdate)
         
         Call .WriteASCIIString(Desc)
         
-        For i = LBound(Codex()) To UBound(Codex())
+        Lower_codex = LBound(Codex())
+        Upper_codex = UBound(Codex())
+        
+        For i = Lower_codex To Upper_codex
             Temp = Temp & Codex(i) & SEPARATOR
         Next i
         
@@ -12422,12 +12477,17 @@ Public Sub WriteIPToNick(ByRef Ip() As Byte)
     If UBound(Ip()) - LBound(Ip()) + 1 <> 4 Then Exit Sub   'Invalid IP
     
     Dim i As Long
+    Dim Upper_ip As Long
+    Dim Lower_ip As Long
     
     With outgoingData
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.IPToNick)
         
-        For i = LBound(Ip()) To UBound(Ip())
+        Lower_ip = LBound(Ip())
+        Upper_ip = UBound(Ip())
+        
+        For i = Lower_ip To Upper_ip
             Call .WriteByte(Ip(i))
         Next i
 
@@ -13341,6 +13401,8 @@ Public Sub WriteBanIP(ByVal byIp As Boolean, _
     If byIp And UBound(Ip()) - LBound(Ip()) + 1 <> 4 Then Exit Sub   'Invalid IP
     
     Dim i As Long
+    Dim Lower_ip As Long
+    Dim Upper_ip As Long
     
     With outgoingData
         Call .WriteByte(ClientPacketID.GMCommands)
@@ -13349,8 +13411,11 @@ Public Sub WriteBanIP(ByVal byIp As Boolean, _
         Call .WriteBoolean(byIp)
         
         If byIp Then
-
-            For i = LBound(Ip()) To UBound(Ip())
+            
+            Lower_ip = LBound(Ip())
+            Upper_ip = UBound(Ip())
+            
+            For i = Lower_ip To Upper_ip
                 Call .WriteByte(Ip(i))
             Next i
 
@@ -13393,12 +13458,17 @@ Public Sub WriteUnbanIP(ByRef Ip() As Byte)
     If UBound(Ip()) - LBound(Ip()) + 1 <> 4 Then Exit Sub   'Invalid IP
     
     Dim i As Long
+    Dim Upper_ip As Long
+    Dim Lower_ip As Long
     
     With outgoingData
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.UnbanIP)
         
-        For i = LBound(Ip()) To UBound(Ip())
+        Lower_ip = LBound(Ip())
+        Upper_ip = UBound(Ip())
+        
+        For i = Lower_ip To Upper_ip
             Call .WriteByte(Ip(i))
         Next i
 

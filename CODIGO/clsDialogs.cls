@@ -210,17 +210,16 @@ Public Sub CreateDialog(ByRef chat As String, _
     
     Dim slot As Integer
     Dim i    As Long
-    
     Dim slotAdd As Long
     
     slot = BinarySearch(CharIndex)
-    slotAdd = slot + 1
-    
+
     If slot < 0 Then
         If dialogCount = MAX_DIALOGS Then Exit Sub  'Out of space! Should never happen....
         
         'We need to add it. Get insertion index and move list backwards.
         slot = Not slot
+        slotAdd = slot + 1
         
         For i = dialogCount To slotAdd Step -1
             dialogs(i) = dialogs(i - 1)

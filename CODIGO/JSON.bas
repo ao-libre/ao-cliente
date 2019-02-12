@@ -652,9 +652,8 @@ End Function
 Private Function Encode(str) As String
     
     On Error GoTo Encode_Err
-    
 
-    Dim SB  As New cStringBuilder
+    Dim SB      As New cStringBuilder
     Dim i   As Long
     Dim j   As Long
     Dim aL1 As Variant
@@ -697,15 +696,17 @@ Private Function Encode(str) As String
    
     Encode = SB.toString
     Set SB = Nothing
-   
     
     Exit Function
 
 Encode_Err:
+
     If Err.number <> 0 Then
         LogError Err.number, Err.Description, "JSON" & "->" & "Encode"
+
     End If
-Resume Next
+
+    Resume Next
     
 End Function
 

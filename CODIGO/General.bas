@@ -373,10 +373,12 @@ Function AsciiValidos(ByVal cad As String) As Boolean
     
     Dim car As Byte
     Dim i   As Long
+    Dim Len_cad As Long
     
     cad = LCase$(cad)
+    Len_cad = Len(cad)
     
-    For i = 1 To Len(cad)
+    For i = 1 To Len_cad
         car = Asc(mid$(cad, i, 1))
         
         If ((car < 97 Or car > 122) Or car = Asc("º")) And (car <> 255) And (car <> 32) Then
@@ -406,6 +408,12 @@ Function CheckUserData() As Boolean
     
     Dim LoopC     As Long
     Dim CharAscii As Integer
+    
+    Dim Len_accountPass As Long
+        Len_accountPass = Len(AccountPassword)
+        
+    Dim Len_accountName As Long
+        Len_accountName = Len(AccountName)
 
     If LenB(AccountPassword) = 0 Then
         MsgBox ("Ingrese un password.")
@@ -413,7 +421,7 @@ Function CheckUserData() As Boolean
 
     End If
     
-    For LoopC = 1 To Len(AccountPassword)
+    For LoopC = 1 To Len_accountPass
         CharAscii = Asc(mid$(AccountPassword, LoopC, 1))
 
         If Not LegalCharacter(CharAscii) Then
@@ -430,7 +438,7 @@ Function CheckUserData() As Boolean
 
     End If
     
-    For LoopC = 1 To Len(AccountName)
+    For LoopC = 1 To Len_accountName
         CharAscii = Asc(mid$(AccountName, LoopC, 1))
 
         If Not LegalCharacter(CharAscii) Then
@@ -1027,7 +1035,10 @@ Public Function IsIp(ByVal Ip As String) As Boolean
     
     Dim i As Long
     
-    For i = 1 To UBound(ServersLst)
+    Dim Upper_serversList As Long
+        Upper_serversList = UBound(ServersLst)
+        
+    For i = 1 To Upper_serversList
 
         If ServersLst(i).Ip = Ip Then
             IsIp = True
@@ -1618,6 +1629,8 @@ Public Function CheckMailString(ByVal sString As String) As Boolean
     Dim lX   As Long
     Dim iAsc As Integer
     
+    Dim Len_sString As Long
+    
     '1er test: Busca un simbolo @
     lPos = InStr(sString, "@")
 
@@ -1626,8 +1639,10 @@ Public Function CheckMailString(ByVal sString As String) As Boolean
         '2do test: Busca un simbolo . despues de @ + 1
         If Not (InStr(lPos, sString, ".", vbBinaryCompare) > lPos + 1) Then Exit Function
         
+        Len_sString = Len(sString) - 1
+        
         '3er test: Recorre todos los caracteres y los valida
-        For lX = 0 To Len(sString) - 1
+        For lX = 0 To Len_sString
 
             If Not (lX = (lPos - 1)) Then   'No chequeamos la '@'
                 iAsc = Asc(mid$(sString, (lX + 1), 1))
@@ -1743,14 +1758,18 @@ Public Sub LeerLineaComandos()
     
     Dim T()      As String
     Dim i        As Long
+    Dim Upper_t  As Long
+    Dim Lower_t  As Long
     
     Dim UpToDate As Boolean
     Dim Patch    As String
     
     'Parseo los comandos
     T = Split(Command, " ")
+    Upper_t = UBound(T)
+    Lower_t = LBound(T)
 
-    For i = LBound(T) To UBound(T)
+    For i = Lower_t To Upper_t
 
         Select Case UCase$(T(i))
 

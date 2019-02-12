@@ -183,6 +183,8 @@ Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, _
     Dim v2             As D3DVECTOR2
     Dim v3             As D3DVECTOR2
     Dim YOffset        As Single
+    Dim Len_tempstr    As Long
+    Dim Upper_tempstr  As Long
     
     'Check if we have the device
     If DirectDevice.TestCooperativeLevel <> D3D_OK Then Exit Sub
@@ -196,8 +198,9 @@ Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, _
     tempstr = Split(Text, Chr$(32))
     NewText = Text
     Text = vbNullString
+    Upper_tempstr = UBound(tempstr)
     
-    For i = 0 To UBound(tempstr)
+    For i = 0 To Upper_tempstr
 
         If tempstr(i) = ":)" Or tempstr(i) = "=)" Then
             tempstr(i) = Chr$(129)
@@ -234,8 +237,11 @@ Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, _
 
     End If
     
+    'pre-calculate it's upper-bound beforehand to increase performance
+    Upper_tempstr = UBound(tempstr)
+    
     'Loop through each line if there are line breaks (vbCrLf)
-    For i = 0 To UBound(tempstr)
+    For i = 0 To Upper_tempstr
 
         If Len(tempstr(i)) > 0 Then
             YOffset = i * UseFont.CharHeight
@@ -243,9 +249,12 @@ Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, _
         
             'Convert the characters to the ascii value
             ascii() = StrConv(tempstr(i), vbFromUnicode)
-        
+            
+            'pre-calculate their length to improve performance
+            Len_tempstr = Len(tempstr(i))
+            
             'Loop through the characters
-            For j = 1 To Len(tempstr(i))
+            For j = 1 To Len_tempstr
 
                 'Copy from the cached vertex array to the temp vertex array
                 CopyMemory TempVA(0), UseFont.HeaderInfo.CharVA(ascii(j - 1)).Vertex(0), 32 * 4
@@ -378,12 +387,14 @@ Private Function Engine_GetTextWidth(ByRef UseFont As CustomFont, _
     On Error GoTo Engine_GetTextWidth_Err
     
     Dim i As Integer
+    Dim Len_text As Long
 
     'Make sure we have text
     If LenB(Text) = 0 Then Exit Function
     
+    Len_text = Len(Text)
     'Loop through the text
-    For i = 1 To Len(Text)
+    For i = 1 To Len_text
         
         'Add up the stored character widths
         Engine_GetTextWidth = Engine_GetTextWidth + UseFont.HeaderInfo.CharWidth(Asc(mid$(Text, i, 1)))
