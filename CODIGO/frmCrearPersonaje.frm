@@ -1509,7 +1509,7 @@ Function CheckData() As Boolean
         Exit Function
     End If
     
-    If LenB(AccountHash) = 0 Then
+    If Len(AccountHash) = 0 Then
         MsgBox JsonLanguage.Item("VALIDADION_HASH").Item("TEXTO")
         Exit Function
     End If

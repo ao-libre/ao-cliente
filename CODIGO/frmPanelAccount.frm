@@ -563,8 +563,9 @@ On Error Resume Next
     End If
 
 End Sub
+
 Private Sub Image5_Click()
-    If Not LenB(lblAccData(Index + 1).Caption) = 0 Then
+    If Not Len(lblAccData(Index + 1).Caption) = 0 Then
         UserName = lblAccData(Index + 1).Caption
         WriteLoginExistingChar
     End If
@@ -575,7 +576,7 @@ Private Sub lblName_Click(Index As Integer)
 End Sub
 
 Private Sub imgConectar_Click()
-   If LenB(lblAccData(Seleccionado).Caption) = 0 Then
+   If Len(lblAccData(Seleccionado).Caption) = 0 Then
        MsgBox JsonLanguage.Item("ERROR_PERSONAJE_NO_SELECCIONADO").Item("TEXTO")
        Exit Sub
    End If
@@ -602,7 +603,7 @@ Private Sub imgCrearPersonaje_Click()
        Exit Sub
    End If
    For i = 1 To 10
-     If LenB(lblAccData(i).Caption) = 0 Then
+     If Len(lblAccData(i).Caption) = 0 Then
         frmCrearPersonaje.Show
         Exit Sub
      End If
@@ -621,7 +622,7 @@ Private Sub picChar_Click(Index As Integer)
     
     With cPJ(Seleccionado)
     
-        If LenB(.Nombre) <> 0 Then
+        If Len(.Nombre) <> 0 Then
             lblCharData(0) = JsonLanguage.Item("NOMBRE").Item("TEXTO") & ": " & .Nombre
             lblCharData(1) = JsonLanguage.Item("CLASE").Item("TEXTO") & ": " & ListaClases(.Class)
             lblCharData(2) = JsonLanguage.Item("RAZA").Item("TEXTO") & ": " & ListaRazas(.Race)
@@ -643,7 +644,7 @@ End Sub
 
 Private Sub picChar_DblClick(Index As Integer)
     Seleccionado = Index + 1
-    If Not LenB(lblAccData(Seleccionado).Caption) = 0 Then
+    If Not Len(lblAccData(Seleccionado).Caption) = 0 Then
         UserName = lblAccData(Seleccionado).Caption
         WriteLoginExistingChar
     Else

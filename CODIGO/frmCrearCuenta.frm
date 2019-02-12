@@ -143,12 +143,12 @@ End Sub
 
 Private Function IsFormValid() As Boolean
 
-    If LenB(txtCuentaEmail.Text) = 0 Then
+    If Len(txtCuentaEmail.Text) = 0 Then
         MsgBox JsonLanguage.Item("VALIDACION_EMAIL").Item("TEXTO")
         Exit Function
     End If
     
-    If LenB(txtCuentaPassword.Text) = 0 Then
+    If Len(txtCuentaPassword.Text) = 0 Then
         MsgBox JsonLanguage.Item("VALIDACION_PASSWORD").Item("TEXTO")
         Exit Function
     End If

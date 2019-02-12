@@ -300,7 +300,7 @@ Private Sub imgExpulsar_Click()
     Dim fName As String
     fName = GetName
     
-    If LenB(fName) = 0 Then
+    If Len(fName) = 0 Then
         Call WritePartyKick(fName)
         Unload Me
         
