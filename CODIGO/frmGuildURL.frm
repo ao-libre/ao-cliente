@@ -166,16 +166,11 @@ Resume Next
 End Sub
 
 Private Sub imgAceptar_Click()
-<<<<<<< HEAD
     
     On Error GoTo imgAceptar_Click_Err
     
 
     If LenB(txtUrl.Text) <> 0 Then Call WriteGuildNewWebsite(txtUrl.Text)
-=======
-    If Len(txtUrl.Text) <> 0 Then _
-        Call WriteGuildNewWebsite(txtUrl.Text)
->>>>>>> origin/master
     
     Unload Me
 

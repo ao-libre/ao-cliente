@@ -357,12 +357,8 @@ ErrHandler:
 
     'Did detected an invalid message??
     If Err.number = CustomMessages.InvalidMessageErrCode Then
-<<<<<<< HEAD
         Call MsgBox("El Mensaje " & CStr(i + 1) & " es inválido. Modifiquelo por favor.")
 
-=======
-        Call MsgBox(JsonLanguage.Item("MENSAJE_CUSTOM_INVALIDO").Item("TEXTO"))
->>>>>>> origin/master
     End If
 
 End Sub

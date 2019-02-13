@@ -1,5 +1,8 @@
 Attribute VB_Name = "JSON"
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of f2df0eb... Merge remote-tracking branch 'origin/master' into optimizaciones-codigo
 ' VBJSON is a VB6 adaptation of the VBA JSON project at http://code.google.com/p/vba-json/
 ' Some bugs fixed, speed improvements added for VB6 by Michael Glaser (vbjson@ediy.co.nz)
 ' BSD Licensed
@@ -8,6 +11,9 @@ Option Explicit
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of f2df0eb... Merge remote-tracking branch 'origin/master' into optimizaciones-codigo
 Private psErrors       As String
 
 Public Function GetParserErrors() As String
@@ -121,6 +127,7 @@ Private Function parseObject(ByRef str As String, ByRef Index As Long) As Dictio
 
     Loop
 eh:
+<<<<<<< HEAD
 =======
 ' DECLARACIONES API
 Private Declare Function GetLocaleInfo Lib "kernel32.dll" Alias "GetLocaleInfoA" (ByVal Locale As Long, ByVal LCType As Long, ByVal lpLCData As String, ByVal cchData As Long) As Long
@@ -215,10 +222,18 @@ End Function
  '   parse collection of key/value
  '
 Private Function parseObject(ByRef str As String, ByRef Index As Long) As Dictionary
+=======
+
+End Function
+
+'
+'   parse list
+'
+Private Function parseArray(ByRef str As String, ByRef Index As Long) As Collection
+>>>>>>> parent of f2df0eb... Merge remote-tracking branch 'origin/master' into optimizaciones-codigo
 
 <<<<<<< HEAD
     Set parseArray = New Collection
-<<<<<<< HEAD
 
     ' "["
     Call skipChar(str, Index)
@@ -254,41 +269,6 @@ Private Function parseObject(ByRef str As String, ByRef Index As Long) As Dictio
 
         If Err.number <> 0 Then
             psErrors = psErrors & Err.Description & ": " & mid$(str, Index, 20) & vbNewLine
-=======
-
-    Call skipChar(index)
-
-    If mid$(str, index, 1) <> "[" Then
-        m_parserrors = m_parserrors & "Array invalido en la posicion " & index & " : " + mid$(str, index, 20) & vbCrLf
-        Exit Function
-    End If
-   
-    index = index + 1
-
-    Do
-        Call skipChar(index)
-    
-        charint = m_str(index)
-    
-        If charint = A_SQUARE_BRACKET_CLOSE Then
-            index = index + 1
-            Exit Do
-        ElseIf charint = A_COMMA Then
-            index = index + 1
-            Call skipChar(index)
-        ElseIf index > m_length Then
-            m_parserrors = m_parserrors & "Falta ']': " & Right(str, 20) & vbCrLf
-            Exit Do
-        End If
-    
-        'add value
-        On Error Resume Next
-
-        parseArray.Add parseValue(str, index)
-
-        If Err.number <> 0 Then
-            m_parserrors = m_parserrors & Err.Description & ": " & mid$(str, index, 20) & vbCrLf
->>>>>>> origin/master
             Exit Do
 
         End If
@@ -336,6 +316,9 @@ End Function
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of f2df0eb... Merge remote-tracking branch 'origin/master' into optimizaciones-codigo
 '
 '   parse string / number / object / array / true / false / null
 '
@@ -353,6 +336,7 @@ Private Function parseValue(ByRef str As String, ByRef Index As Long)
 
         Case "["
             Set parseValue = parseArray(str, Index)
+<<<<<<< HEAD
 =======
 Private Function parseValue(ByRef str As String, ByRef index As Long)
 
@@ -413,6 +397,8 @@ End Function
 <<<<<<< HEAD
     End Select
 >>>>>>> origin/master
+=======
+>>>>>>> parent of f2df0eb... Merge remote-tracking branch 'origin/master' into optimizaciones-codigo
 
         Case """", "'"
             parseValue = parseString(str, Index)
@@ -462,7 +448,6 @@ Resume Next
     
 End Function
 
-<<<<<<< HEAD
 '
 '   parse string
 '
@@ -719,6 +704,7 @@ Private Function parseKey(ByRef str As String, ByRef Index As Long) As String
                 End If
 
                 Index = Index + 1
+<<<<<<< HEAD
 =======
 Private Function parseString(ByRef str As String, ByRef index As Long) As String
 =======
@@ -836,11 +822,12 @@ Private Function parseString(ByRef str As String, ByRef Index As Long) As String
                 parseString = parseString & ChrW$(charint)
                 index = index + 1
 >>>>>>> origin/master
+=======
+>>>>>>> parent of f2df0eb... Merge remote-tracking branch 'origin/master' into optimizaciones-codigo
 
         End Select
 
     Loop
-<<<<<<< HEAD
 
     
     Exit Function
@@ -1006,6 +993,7 @@ Public Function toString(ByRef obj As Variant) As String
 
     toString = SB.toString
     Set SB = Nothing
+<<<<<<< HEAD
 =======
 =======
    parseString = SB.toString
@@ -1117,6 +1105,8 @@ Private Function parseKey(ByRef str As String, ByRef Index As Long) As String
 <<<<<<< HEAD
     Loop
 >>>>>>> origin/master
+=======
+>>>>>>> parent of f2df0eb... Merge remote-tracking branch 'origin/master' into optimizaciones-codigo
    
     
     Exit Function
@@ -1129,7 +1119,6 @@ Resume Next
     
 End Function
 
-<<<<<<< HEAD
 Private Function Encode(str) As String
     
     On Error GoTo Encode_Err
@@ -1237,6 +1226,7 @@ Private Function multiArray(aBD, _
     multiArray = SB.toString
    
     Set SB = Nothing
+<<<<<<< HEAD
 =======
 Private Function parseBoolean(ByRef str As String, ByRef index As Long) As Boolean
 
@@ -1469,12 +1459,13 @@ Private Function Encode(str) As String
 
     Loop
 >>>>>>> origin/master
+=======
+>>>>>>> parent of f2df0eb... Merge remote-tracking branch 'origin/master' into optimizaciones-codigo
 
 End Function
 
-Private Sub skipChar(ByRef index As Long)
+' Miscellaneous JSON functions
 
-<<<<<<< HEAD
 Public Function StringToJSON(st As String) As String
     
     On Error GoTo StringToJSON_Err
@@ -1490,6 +1481,7 @@ Public Function StringToJSON(st As String) As String
     Dim fld     As Variant
     Dim rows    As Variant
 
+<<<<<<< HEAD
 =======
     Dim bComment      As Boolean
 
@@ -1721,6 +1713,8 @@ Public Function StringToJSON(st As String) As String
     Dim rows    As Variant
 
 >>>>>>> origin/master
+=======
+>>>>>>> parent of f2df0eb... Merge remote-tracking branch 'origin/master' into optimizaciones-codigo
     lRecCnt = 0
 =======
    Const FIELD_SEP = "~"
@@ -1775,7 +1769,6 @@ Public Function RStoJSON(rs As ADODB.Recordset) As String
             sRecs.Append IIf((Trim$(sRecs.toString) <> ""), "," & vbNewLine, "") & "{" & sFlds & "}"
 <<<<<<< HEAD
         Next 'rec
-<<<<<<< HEAD
 
         StringToJSON = ("( {""Records"": [" & vbNewLine & sRecs.toString & vbNewLine & "], " & """RecordCount"":""" & lRecCnt & """ } )")
 
@@ -1831,18 +1824,53 @@ Public Function RStoJSON(rs As ADODB.Recordset) As String
 
     Exit Function
 ErrHandler:
-=======
-
-        StringToJSON = ("( {""Records"": [" & vbNewLine & sRecs.toString & vbNewLine & "], " & """RecordCount"":""" & lRecCnt & """ } )")
-
-    End If
->>>>>>> origin/master
 
 End Function
 
-Public Function RStoJSON(rs As ADODB.Recordset) As String
+'Public Function JsonRpcCall(url As String, methName As String, args(), Optional user As String, Optional pwd As String) As Object
+'    Dim r As Object
+'    Dim cli As Object
+'    Dim pText As String
+'    Static reqId As Integer
+'
+'    reqId = reqId + 1
+'
+'    Set r = CreateObject("Scripting.Dictionary")
+'    r("jsonrpc") = "2.0"
+'    r("method") = methName
+'    r("params") = args
+'    r("id") = reqId
+'
+'    pText = toString(r)
+'
+'    Set cli = CreateObject("MSXML2.XMLHTTP.6.0")
+'   ' Set cli = New MSXML2.XMLHTTP60
+'    If Len(user) > 0 Then   ' If Not IsMissing(user) Then
+'        cli.Open "POST", url, False, user, pwd
+'    Else
+'        cli.Open "POST", url, False
+'    End If
+'    cli.setRequestHeader "Content-Type", "application/json"
+'    cli.Send pText
+'
+'    If cli.Status <> 200 Then
+'        Err.Raise vbObjectError + INVALID_RPC_CALL + cli.Status, , cli.statusText
+'    End If
+'
+'    Set r = parse(cli.responseText)
+'    Set cli = Nothing
+'
+'    If r("id") <> reqId Then Err.Raise vbObjectError + INVALID_RPC_CALL, , "Bad Response id"
+'
+'    If r.Exists("error") Or Not r.Exists("result") Then
+'        Err.Raise vbObjectError + INVALID_RPC_CALL, , "Json-Rpc Response error: " & r("error")("message")
+'    End If
+'
+'    If Not r.Exists("result") Then Err.Raise vbObjectError + INVALID_RPC_CALL, , "Bad Response, missing result"
+'
+'    Set JsonRpcCall = r("result")
+'End Function
 
-<<<<<<< HEAD
 Public Function toUnicode(str As String) As String
     
     On Error GoTo toUnicode_Err
@@ -1862,6 +1890,7 @@ Public Function toUnicode(str As String) As String
 
             Case 9: ' tab
                 uStr.Append "\t"
+<<<<<<< HEAD
 =======
     On Error GoTo ErrHandler
 
@@ -1913,6 +1942,8 @@ Public Function toUnicode(str As String) As String
 >>>>>>> parent of 2e97656... Merge remote-tracking branch 'origin/nuevo-modulo-JSON'
 ErrHandler:
 >>>>>>> origin/master
+=======
+>>>>>>> parent of f2df0eb... Merge remote-tracking branch 'origin/master' into optimizaciones-codigo
 
             Case 10:  ' line feed
                 uStr.Append "\n"
@@ -1960,6 +1991,9 @@ End Function
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of f2df0eb... Merge remote-tracking branch 'origin/master' into optimizaciones-codigo
 Private Sub Class_Initialize()
     
     On Error GoTo Class_Initialize_Err
@@ -1977,6 +2011,7 @@ Resume Next
     
 End Sub
 
+<<<<<<< HEAD
 =======
 Public Function toUnicode(str As String) As String
 =======
@@ -2076,3 +2111,5 @@ End Function
 >>>>>>> origin/master
 =======
 >>>>>>> parent of 2e97656... Merge remote-tracking branch 'origin/nuevo-modulo-JSON'
+=======
+>>>>>>> parent of f2df0eb... Merge remote-tracking branch 'origin/master' into optimizaciones-codigo

@@ -131,14 +131,6 @@ Resume Next
     
 End Function
 
-Public Function DirLenguajes() As String
-    DirLenguajes = App.path & "\Lenguajes\"
-End Function
-
-Public Function DirInit() As String
-    DirInit = App.path & "\INIT\"
-End Function
-
 Public Function RandomNumber(ByVal LowerBound As Long, ByVal UpperBound As Long) As Long
     'Initialize randomizer
     
@@ -424,7 +416,7 @@ Function CheckUserData() As Boolean
         Len_accountName = Len(AccountName)
 
     If LenB(AccountPassword) = 0 Then
-        MsgBox JsonLanguage.Item("VALIDACION_PASSWORD").Item("TEXTO")
+        MsgBox ("Ingrese un password.")
         Exit Function
 
     End If
@@ -433,7 +425,7 @@ Function CheckUserData() As Boolean
         CharAscii = Asc(mid$(AccountPassword, LoopC, 1))
 
         If Not LegalCharacter(CharAscii) Then
-            MsgBox Replace$(JsonLanguage.Item("VALIDACION_BAD_PASSWORD").Item("TEXTO").Item(2), "VAR_CHAR_INVALIDO", Chr$(CharAscii))
+            MsgBox ("Password invalido. El caracter " & Chr$(CharAscii) & " no esta permitido.")
             Exit Function
 
         End If
@@ -441,7 +433,7 @@ Function CheckUserData() As Boolean
     Next LoopC
 
     If Len(AccountName) > 30 Then
-        MsgBox JsonLanguage.Item("VALIDACION_BAD_EMAIL").Item("TEXTO").Item(2)
+        MsgBox "El e-mail debe tener menos de 30 letras."
         Exit Function
 
     End If
@@ -450,7 +442,7 @@ Function CheckUserData() As Boolean
         CharAscii = Asc(mid$(AccountName, LoopC, 1))
 
         If Not LegalCharacter(CharAscii) Then
-            MsgBox Replace$(JsonLanguage.Item("VALIDACION_BAD_PASSWORD").Item("TEXTO").Item(4), "VAR_CHAR_INVALIDO", Chr$(CharAscii))
+            MsgBox ("Nombre invalido. El caracter " & Chr$(CharAscii) & " no esta permitido.")
             Exit Function
 
         End If
@@ -1287,9 +1279,6 @@ Sub Main()
     
     Call WriteClientVer
     
-    ' Detecta el idioma del sistema (TRUE) y carga las traducciones
-    Call SetLanguageApplication
-    
     'Load config file
     If FileExist(App.path & "\INIT\Inicio.con", vbNormal) Then
         Config_Inicio = LeerGameIni()
@@ -1317,7 +1306,7 @@ Sub Main()
     #If Testeo = 0 Then
 
         If FindPreviousInstance Then
-            Call MsgBox(JsonLanguage.Item("OTRO_CLIENTE_ABIERTO").Item("TEXTO"), vbApplicationModal + vbInformation + vbOKOnly, "Error al ejecutar")
+            Call MsgBox("Argentum Online ya esta corriendo! No es posible correr otra instancia del juego. Haga click en Aceptar para salir.", vbApplicationModal + vbInformation + vbOKOnly, "Error al ejecutar")
             End
 
         End If
@@ -1435,13 +1424,13 @@ Private Sub LoadInitialConfig()
     
     '###########
     ' SERVIDORES
-    Call AddtoRichTextBox(frmCargando.status, JsonLanguage.Item("BUSCA_SERVIDORES").Item("TEXTO"), 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.status, "Buscando servidores... ", 255, 255, 255, True, False, True)
     Call DownloadServersFile("https://raw.githubusercontent.com/ao-libre/ao-cliente/master/INIT/sinfo.dat")
-    Call AddtoRichTextBox(frmCargando.status, " " & JsonLanguage.Item("HECHO").Item("TEXTO"), 255, 0, 0, True, False, False)
+    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
     
     '###########
     ' CONSTANTES
-    Call AddtoRichTextBox(frmCargando.status, JsonLanguage.Item("INICIA_CONSTANTES").Item("TEXTO"), 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.status, "Iniciando constantes... ", 255, 255, 255, True, False, True)
     Call InicializarNombres
     ' Initialize FONTTYPES
     Call Protocol.InitFonts
@@ -1456,18 +1445,12 @@ Private Sub LoadInitialConfig()
     UserMap = 1
     
     ' Mouse Pointer (Loaded before opening any form with buttons in it)
-<<<<<<< HEAD
     If FileExist(DirExtras & "Hand.ico", vbArchive) Then Set picMouseIcon = LoadPicture(DirExtras & "Hand.ico")
     Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
-=======
-    If FileExist(DirExtras & "Hand.ico", vbArchive) Then _
-        Set picMouseIcon = LoadPicture(DirExtras & "Hand.ico")
-    Call AddtoRichTextBox(frmCargando.status, " " & JsonLanguage.Item("HECHO").Item("TEXTO"), 255, 0, 0, True, False, False)
->>>>>>> origin/master
     
     '#######
     ' CLASES
-    Call AddtoRichTextBox(frmCargando.status, JsonLanguage.Item("INICIA_CLASES").Item("TEXTO"), 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.status, "Instanciando clases... ", 255, 255, 255, True, False, True)
     Set Dialogos = New clsDialogs
     Set Audio = New clsAudio
     Set Inventario = New clsGrapchicalInventory
@@ -1478,14 +1461,9 @@ Private Sub LoadInitialConfig()
     Set MainTimer = New clsTimer
     Set clsForos = New clsForum
     
-<<<<<<< HEAD
-=======
-    Call AddtoRichTextBox(frmCargando.status, " " & JsonLanguage.Item("HECHO").Item("TEXTO"), 255, 0, 0, True, False, False)
-    
->>>>>>> origin/master
     '##############
     ' MOTOR GRAÅFICO
-    Call AddtoRichTextBox(frmCargando.status, JsonLanguage.Item("INICIA_MOTOR_GRAFICO").Item("TEXTO"), 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.status, "Iniciando motor grafico... ", 255, 255, 255, True, False, True)
     
     '     Iniciamos el Engine de DirectX 8
     If Not Engine_DirectX8_Init Then
@@ -1501,22 +1479,21 @@ Private Sub LoadInitialConfig()
     
     Engine_DirectX8_Aditional_Init
     
-    Call AddtoRichTextBox(frmCargando.status, " " & JsonLanguage.Item("HECHO").Item("TEXTO"), 255, 0, 0, True, False, False)
+    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
     
     '###################
     ' ANIMACIONES EXTRAS
-    Call AddtoRichTextBox(frmCargando.status, JsonLanguage.Item("INICIA_FXS").Item("TEXTO"), 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.status, "Creando animaciones extra... ", 255, 255, 255, True, False, True)
     Call CargarTips
     Call CargarArrayLluvia
     Call CargarAnimArmas
     Call CargarAnimEscudos
     Call CargarColores
-    
-    Call AddtoRichTextBox(frmCargando.status, " " & JsonLanguage.Item("HECHO").Item("TEXTO"), 255, 0, 0, True, False, False)
+    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
     
     '#############
     ' DIRECT SOUND
-    Call AddtoRichTextBox(frmCargando.status, JsonLanguage.Item("INICIA_SONIDO").Item("TEXTO"), 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.status, "Iniciando DirectSound... ", 255, 255, 255, True, False, True)
     'Inicializamos el sonido
     Call Audio.Initialize(DirectX, frmMain.hwnd, App.path & "\" & Config_Inicio.DirSonidos & "\", App.path & "\" & Config_Inicio.DirMusica & "\")
     'Enable / Disable audio
@@ -1526,15 +1503,9 @@ Private Sub LoadInitialConfig()
     'Inicializamos el inventario grafico
     Call Inventario.Initialize(DirectD3D8, frmMain.PicInv, MAX_INVENTORY_SLOTS)
     'Call Audio.MusicMP3Play(App.path & "\MP3\" & MP3_Inicio & ".mp3")
+    Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
     
-    Call AddtoRichTextBox(frmCargando.status, " " & JsonLanguage.Item("HECHO").Item("TEXTO"), 255, 0, 0, True, False, False)
-    
-<<<<<<< HEAD
     Call AddtoRichTextBox(frmCargando.status, "                    °Bienvenido a Argentum Online!", 255, 255, 255, True, False, True)
-=======
-    
-    Call AddtoRichTextBox(frmCargando.status, "                    " & JsonLanguage.Item("BIENVENIDO").Item("TEXTO"), 255, 255, 255, True, False, True)
->>>>>>> origin/master
 
     'Give the user enough time to read the welcome text
     Call Sleep(500)
@@ -1595,7 +1566,6 @@ Resume Next
     
 End Sub
 
-<<<<<<< HEAD
 Sub WriteVar(ByVal File As String, _
              ByVal Main As String, _
              ByVal Var As String, _
@@ -1617,13 +1587,6 @@ WriteVar_Err:
     End If
 Resume Next
     
-=======
-Sub WriteVar(ByVal File As String, ByVal Main As String, ByVal Var As String, ByVal value As String)
-'*****************************************************************
-'Writes a var to a text file
-'*****************************************************************
-    writeprivateprofilestring Main, Var, value, File
->>>>>>> origin/master
 End Sub
 
 Function GetVar(ByVal File As String, ByVal Main As String, ByVal Var As String) As String
@@ -1985,7 +1948,6 @@ Private Sub InicializarNombres()
     Ciudades(eCiudad.cLindos) = "Lindos"
     Ciudades(eCiudad.cArghal) = "Arghal"
     
-<<<<<<< HEAD
     ListaRazas(eRaza.Humano) = "Humano"
     ListaRazas(eRaza.Elfo) = "Elfo"
     ListaRazas(eRaza.ElfoOscuro) = "Elfo Oscuro"
@@ -2041,53 +2003,6 @@ InicializarNombres_Err:
     End If
 Resume Next
     
-=======
-    ListaRazas(eRaza.Humano) = JsonLanguage.Item("RAZAS").Item("HUMANO")
-    ListaRazas(eRaza.Elfo) = JsonLanguage.Item("RAZAS").Item("ELFO")
-    ListaRazas(eRaza.ElfoOscuro) = JsonLanguage.Item("RAZAS").Item("ELFO_OSCURO")
-    ListaRazas(eRaza.Gnomo) = JsonLanguage.Item("RAZAS").Item("GNOMO")
-    ListaRazas(eRaza.Enano) = JsonLanguage.Item("RAZAS").Item("ENANO")
-
-    ListaClases(eClass.Mage) = JsonLanguage.Item("CLASES").Item("MAGO")
-    ListaClases(eClass.Cleric) = JsonLanguage.Item("CLASES").Item("CLERIGO")
-    ListaClases(eClass.Warrior) = JsonLanguage.Item("CLASES").Item("GUERRERO")
-    ListaClases(eClass.Assasin) = JsonLanguage.Item("CLASES").Item("ASESINO")
-    ListaClases(eClass.Thief) = JsonLanguage.Item("CLASES").Item("LADRON")
-    ListaClases(eClass.Bard) = JsonLanguage.Item("CLASES").Item("BARDO")
-    ListaClases(eClass.Druid) = JsonLanguage.Item("CLASES").Item("DRUIDA")
-    ListaClases(eClass.Bandit) = JsonLanguage.Item("CLASES").Item("BANDIDO")
-    ListaClases(eClass.Paladin) = JsonLanguage.Item("CLASES").Item("PALADIN")
-    ListaClases(eClass.Hunter) = JsonLanguage.Item("CLASES").Item("CAZADOR")
-    ListaClases(eClass.Worker) = JsonLanguage.Item("CLASES").Item("TRABAJADOR")
-    ListaClases(eClass.Pirat) = JsonLanguage.Item("CLASES").Item("PIRATA")
-    
-    SkillsNames(eSkill.Magia) = JsonLanguage.Item("HABILIDADES").Item("MAGIA").Item("TEXTO")
-    SkillsNames(eSkill.Robar) = JsonLanguage.Item("HABILIDADES").Item("ROBAR").Item("TEXTO")
-    SkillsNames(eSkill.Tacticas) = JsonLanguage.Item("HABILIDADES").Item("EVASION_EN_COMBATE").Item("TEXTO")
-    SkillsNames(eSkill.Armas) = JsonLanguage.Item("HABILIDADES").Item("COMBATE_CON_ARMAS").Item("TEXTO")
-    SkillsNames(eSkill.Meditar) = JsonLanguage.Item("HABILIDADES").Item("MEDITAR").Item("TEXTO")
-    SkillsNames(eSkill.ApuÒalar) = JsonLanguage.Item("HABILIDADES").Item("APUNALAR").Item("TEXTO")
-    SkillsNames(eSkill.Ocultarse) = JsonLanguage.Item("HABILIDADES").Item("OCULTARSE").Item("TEXTO")
-    SkillsNames(eSkill.Supervivencia) = JsonLanguage.Item("HABILIDADES").Item("SUPERVIVENCIA").Item("TEXTO")
-    SkillsNames(eSkill.Talar) = JsonLanguage.Item("HABILIDADES").Item("TALAR").Item("TEXTO")
-    SkillsNames(eSkill.Comerciar) = JsonLanguage.Item("HABILIDADES").Item("COMERCIO").Item("TEXTO")
-    SkillsNames(eSkill.Defensa) = JsonLanguage.Item("HABILIDADES").Item("DEFENSA_CON_ESCUDOS").Item("TEXTO")
-    SkillsNames(eSkill.Pesca) = JsonLanguage.Item("HABILIDADES").Item("PESCA").Item("TEXTO")
-    SkillsNames(eSkill.Mineria) = JsonLanguage.Item("HABILIDADES").Item("MINERIA").Item("TEXTO")
-    SkillsNames(eSkill.Carpinteria) = JsonLanguage.Item("HABILIDADES").Item("CARPINTERIA").Item("TEXTO")
-    SkillsNames(eSkill.Herreria) = JsonLanguage.Item("HABILIDADES").Item("HERRERIA").Item("TEXTO")
-    SkillsNames(eSkill.Liderazgo) = JsonLanguage.Item("HABILIDADES").Item("LIDERAZGO").Item("TEXTO")
-    SkillsNames(eSkill.Domar) = JsonLanguage.Item("HABILIDADES").Item("DOMAR_ANIMALES").Item("TEXTO")
-    SkillsNames(eSkill.Proyectiles) = JsonLanguage.Item("HABILIDADES").Item("COMBATE_A_DISTANCIA").Item("TEXTO")
-    SkillsNames(eSkill.Wrestling) = JsonLanguage.Item("HABILIDADES").Item("COMBATE_CUERPO_A_CUERPO").Item("TEXTO")
-    SkillsNames(eSkill.Navegacion) = JsonLanguage.Item("HABILIDADES").Item("NAVEGACION").Item("TEXTO")
-
-    AtributosNames(eAtributos.Fuerza) = JsonLanguage.Item("ATRIBUTOS").Item("FUERZA")
-    AtributosNames(eAtributos.Agilidad) = JsonLanguage.Item("ATRIBUTOS").Item("AGILIDAD")
-    AtributosNames(eAtributos.Inteligencia) = JsonLanguage.Item("ATRIBUTOS").Item("INTELIGENCIA")
-    AtributosNames(eAtributos.Carisma) = JsonLanguage.Item("ATRIBUTOS").Item("CARISMA")
-    AtributosNames(eAtributos.Constitucion) = JsonLanguage.Item("ATRIBUTOS").Item("CONSTITUCION")
->>>>>>> origin/master
 End Sub
 
 ''
@@ -2152,7 +2067,6 @@ Public Sub CloseClient()
     Set MainTimer = Nothing
     Set incomingData = Nothing
     Set outgoingData = Nothing
-    Set JsonLanguage = Nothing
     
     Call UnloadAllForms
     
@@ -2226,7 +2140,6 @@ Resume Next
 End Function
 
 Public Sub checkText(ByVal Text As String)
-<<<<<<< HEAD
     
     On Error GoTo checkText_Err
     
@@ -2251,21 +2164,6 @@ Public Sub checkText(ByVal Text As String)
 
             End If
 
-=======
-Dim Nivel As Integer
-If Right(Text, Len(JsonLanguage.Item("MENSAJE_FRAGSHOOTER_TE_HA_MATADO").Item("TEXTO"))) = JsonLanguage.Item("MENSAJE_FRAGSHOOTER_TE_HA_MATADO").Item("TEXTO") Then
-    Call ScreenCapture(True)
-    Exit Sub
-End If
-If Left(Text, Len(JsonLanguage.Item("MENSAJE_FRAGSHOOTER_HAS_MATADO").Item("TEXTO"))) = JsonLanguage.Item("MENSAJE_FRAGSHOOTER_HAS_MATADO").Item("TEXTO") Then
-    EsperandoLevel = True
-    Exit Sub
-End If
-If EsperandoLevel Then
-    If Right(Text, Len(JsonLanguage.Item("MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA").Item("TEXTO"))) = JsonLanguage.Item("MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA").Item("TEXTO") Then
-        If CInt(mid$(Text, Len(JsonLanguage.Item("MENSAJE_FRAGSHOOTER_HAS_GANADO").Item("TEXTO")), (Len(Text) - (Len(JsonLanguage.Item("MENSAJE_FRAGSHOOTER_HAS_GANADO").Item("TEXTO")))))) / 2 > ClientSetup.byMurderedLevel Then
-            Call ScreenCapture(True)
->>>>>>> origin/master
         End If
 
     End If
@@ -2653,13 +2551,9 @@ Sub DownloadServersFile(myURL As String)
 
 Error:
     Debug.Print Err.number
-    Call MsgBox(JsonLanguage.Item("ERROR_DESCARGA_SERVIDORES").Item("TEXTO") & ": " & Err.Description, vbCritical + vbOKOnly, "Argentum Online")
+    Call MsgBox("Error al descargar la lista de servidores: " & Err.Description, vbCritical + vbOKOnly, "Argentum Online")
     Exit Sub
 errorinet:
-<<<<<<< HEAD
     Call MsgBox("Error al descargar la lista de servidores: Error de Inet " & frmCargando.Inet1.ResponseCode, vbCritical + vbOKOnly, "Argentum Online")
 
-=======
-    Call MsgBox(JsonLanguage.Item("ERROR_DESCARGA_SERVIDORES_INET").Item("TEXTO") & " " & frmCargando.Inet1.ResponseCode, vbCritical + vbOKOnly, "Argentum Online")
->>>>>>> origin/master
 End Sub

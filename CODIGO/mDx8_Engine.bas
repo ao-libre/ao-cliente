@@ -91,7 +91,6 @@ Public Function Engine_DirectX8_Init() As Boolean
     EndTime = GetTickCount
     
     If Err Then
-<<<<<<< HEAD
         MsgBox "No se puede iniciar DirectX. Por favor asegurese de tener la última versión correctamente instalada. Puede descargarla desde: " & Client_Web & "support/directx.zip"
         Engine_DirectX8_Init = False
         Exit Function
@@ -100,16 +99,13 @@ Public Function Engine_DirectX8_Init() As Boolean
     
     If Err Then
         MsgBox "No se puede iniciar DirectD3D. Por favor asegurese de tener la última versión correctamente instalada. Puede descargarla desde: " & Client_Web & "support/directx.zip"
-=======
-        MsgBox JsonLanguage.Item("ERROR_DIRECTX_INIT").Item("TEXTO")
->>>>>>> origin/master
         Engine_DirectX8_Init = False
         Exit Function
 
     End If
     
     If DirectDevice Is Nothing Then
-        MsgBox JsonLanguage.Item("ERROR_DIRECTDEVICE_INIT").Item("TEXTO")
+        MsgBox "No se puede inicializar DirectDevice. Por favor asegurese de tener la última versión correctamente instalada. Puede descargarla desde: " & Client_Web & "support/directx.zip"
         Engine_DirectX8_Init = False
         Exit Function
 
@@ -520,7 +516,6 @@ Resume Next
     
 End Function
 
-<<<<<<< HEAD
 Private Function Engine_Collision_Between(ByVal value As Single, _
                                           ByVal Bound1 As Single, _
                                           ByVal Bound2 As Single) As Byte
@@ -531,34 +526,19 @@ Private Function Engine_Collision_Between(ByVal value As Single, _
     
     On Error GoTo Engine_Collision_Between_Err
     
-=======
-Private Function Engine_Collision_Between(ByVal value As Single, ByVal Bound1 As Single, ByVal Bound2 As Single) As Byte
-'*****************************************************************
-'Find if a value is between two other values (used for line collision)
-'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_Collision_Between
-'*****************************************************************
->>>>>>> origin/master
 
     'Checks if a value lies between two bounds
     If Bound1 > Bound2 Then
         If value >= Bound2 Then
             If value <= Bound1 Then Engine_Collision_Between = 1
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/master
         End If
 
     Else
-<<<<<<< HEAD
 
         If value >= Bound1 Then
             If value <= Bound2 Then Engine_Collision_Between = 1
 
-=======
-        If value >= Bound1 Then
-            If value <= Bound2 Then Engine_Collision_Between = 1
->>>>>>> origin/master
         End If
 
     End If

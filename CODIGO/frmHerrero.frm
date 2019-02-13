@@ -791,18 +791,11 @@ Public Sub RenderList(ByVal Inicio As Integer, ByVal Armas As Boolean)
                 Call RenderItem(picUpgradeItem(i), .UpgradeGrhIndex)
                 picUpgradeItem(i).ToolTipText = .UpgradeName
                 
-<<<<<<< HEAD
                 ' Inventariode lingotes
                 Call InvLingosHerreria(i).SetItem(1, 0, .LinH, 0, LH_GRH, 0, 0, 0, 0, 0, 0, "Lingotes de Hierro")
                 Call InvLingosHerreria(i).SetItem(2, 0, .LinP, 0, LP_GRH, 0, 0, 0, 0, 0, 0, "Lingotes de Plata")
                 Call InvLingosHerreria(i).SetItem(3, 0, .LinO, 0, LO_GRH, 0, 0, 0, 0, 0, 0, "Lingotes de Oro")
 
-=======
-                 ' Inventariode lingotes
-                Call InvLingosHerreria(i).SetItem(1, 0, .LinH, 0, LH_GRH, 0, 0, 0, 0, 0, 0, JsonLanguage.Item("HERRERO").Item("TEXTO").Item(1))
-                Call InvLingosHerreria(i).SetItem(2, 0, .LinP, 0, LP_GRH, 0, 0, 0, 0, 0, 0, JsonLanguage.Item("HERRERO").Item("TEXTO").Item(2))
-                Call InvLingosHerreria(i).SetItem(3, 0, .LinO, 0, LO_GRH, 0, 0, 0, 0, 0, 0, JsonLanguage.Item("HERRERO").Item("TEXTO").Item(3))
->>>>>>> origin/master
             End With
 
         End If
@@ -833,7 +826,6 @@ Public Sub RenderUpgradeList(ByVal Inicio As Integer)
                 Call RenderItem(picUpgradeItem(i), .UpgradeGrhIndex)
                 picUpgradeItem(i).ToolTipText = .UpgradeName
             
-<<<<<<< HEAD
                 ' Inventariode lingotes
                 Call InvLingosHerreria(i).SetItem(1, 0, .LinH, 0, LH_GRH, 0, 0, 0, 0, 0, 0, "Lingotes de Hierro")
                 Call InvLingosHerreria(i).SetItem(2, 0, .LinP, 0, LP_GRH, 0, 0, 0, 0, 0, 0, "Lingotes de Plata")
@@ -851,13 +843,6 @@ Public Sub RenderUpgradeList(ByVal Inicio As Integer)
 RenderUpgradeList_Err:
     If Err.number <> 0 Then
         LogError Err.number, Err.Description, "frmHerrero" & "->" & "RenderUpgradeList"
-=======
-             ' Inventariode lingotes
-            Call InvLingosHerreria(i).SetItem(1, 0, .LinH, 0, LH_GRH, 0, 0, 0, 0, 0, 0, JsonLanguage.Item("HERRERO").Item("TEXTO").Item(1))
-            Call InvLingosHerreria(i).SetItem(2, 0, .LinP, 0, LP_GRH, 0, 0, 0, 0, 0, 0, JsonLanguage.Item("HERRERO").Item("TEXTO").Item(2))
-            Call InvLingosHerreria(i).SetItem(3, 0, .LinO, 0, LO_GRH, 0, 0, 0, 0, 0, 0, JsonLanguage.Item("HERRERO").Item("TEXTO").Item(3))
-        End With
->>>>>>> origin/master
     End If
 Resume Next
     
