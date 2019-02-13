@@ -102,14 +102,14 @@ Public Sub SetResolution()
         Dim lRes              As Long
         Dim MidevM            As typDevMODE
         Dim CambiarResolucion As Boolean
-   
+    
         lRes = EnumDisplaySettings(0, ENUM_CURRENT_SETTINGS, MidevM)
    
         oldResWidth = Screen.Width \ Screen.TwipsPerPixelX
         oldResHeight = Screen.Height \ Screen.TwipsPerPixelY
-   
+        
         If oldResWidth <> 800 Or oldResHeight <> 600 Then
-                If MsgBox("Desea jugar en pantalla completa?", vbYesNo, "Cambio de Resolucion") = vbYes Then
+                If MsgBox(JsonLanguage.Item("PANTALLA_COMPLETA").Item("TEXTO"), vbYesNo, "Argentum Online") = vbYes Then
                         frmMain.WindowState = vbMaximized
 
                         With MidevM
@@ -143,6 +143,7 @@ Public Sub SetResolution()
         CambiarResolucion = (oldResWidth < 800 Or oldResHeight < 600)
 
 End Sub
+
 Public Sub ResetResolution()
 '***************************************************
 'Autor: Unknown

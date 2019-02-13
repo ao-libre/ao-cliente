@@ -401,14 +401,14 @@ Private Sub PicBancoInv_Click()
             
             Select Case .OBJType
                 Case 2, 32
-                    Label1(1).Caption = "Máx Golpe:" & .MaxHit
-                    Label1(2).Caption = "Mín Golpe:" & .MinHit
+                    Label1(1).Caption = "Máx " & JsonLanguage.item("GOLPE").item("TEXTO") & ":" & .MaxHit
+                    Label1(2).Caption = "Min " & JsonLanguage.item("GOLPE").item("TEXTO") & ":" & .MinHit
                     Label1(1).Visible = True
                     Label1(2).Visible = True
                     
                 Case 3, 16, 17
-                    Label1(1).Caption = "Máx Defensa:" & .MaxDef
-                    Label1(2).Caption = "Mín Defensa:" & .MinDef
+                    Label1(1).Caption = "Máx " & JsonLanguage.item("DEFENSA").item("TEXTO") & ":" & .MaxDef
+                    Label1(2).Caption = "Min " & JsonLanguage.item("DEFENSA").item("TEXTO") & ":" & .MinDef
                     Label1(1).Visible = True
                     Label1(2).Visible = True
                     
@@ -440,14 +440,14 @@ Private Sub PicInv_Click()
             
             Select Case .OBJType(InvBanco(1).SelectedItem)
                 Case eObjType.otWeapon, eObjType.otFlechas
-                    Label1(1).Caption = "Máx Golpe:" & .MaxHit(InvBanco(1).SelectedItem)
-                    Label1(2).Caption = "Mín Golpe:" & .MinHit(InvBanco(1).SelectedItem)
+                    Label1(1).Caption = "Máx " & JsonLanguage.item("GOLPE").item("TEXTO") & ":" & .MaxHit(InvBanco(1).SelectedItem)
+                    Label1(2).Caption = "Min " & JsonLanguage.item("GOLPE").item("TEXTO") & ":" & .MinHit(InvBanco(1).SelectedItem)
                     Label1(1).Visible = True
                     Label1(2).Visible = True
                     
                 Case eObjType.otcasco, eObjType.otArmadura, eObjType.otescudo ' 3, 16, 17
-                    Label1(1).Caption = "Máx Defensa:" & .MaxDef(InvBanco(1).SelectedItem)
-                    Label1(2).Caption = "Mín Defensa:" & .MinDef(InvBanco(1).SelectedItem)
+                    Label1(1).Caption = "Máx " & JsonLanguage.item("DEFENSA").item("TEXTO") & ":" & .MaxDef(InvBanco(1).SelectedItem)
+                    Label1(2).Caption = "Min " & JsonLanguage.item("DEFENSA").item("TEXTO") & ":" & .MinDef(InvBanco(1).SelectedItem)
                     Label1(1).Visible = True
                     Label1(2).Visible = True
                     

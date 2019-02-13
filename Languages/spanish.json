@@ -1,0 +1,1098 @@
+{
+	"MENSAJE_CRIATURA_FALLA_GOLPE":{
+		"TEXTO":"¡¡¡La criatura falló el golpe!!!",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_CRIATURA_MATADO":{
+		"TEXTO":"¡¡¡La criatura te ha matado!!!",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_RECHAZO_ATAQUE_ESCUDO":{
+		"TEXTO":"¡¡¡Has rechazado el ataque con el escudo!!!",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_USUARIO_RECHAZO_ATAQUE_ESCUDO":{
+		"TEXTO":"¡¡¡El usuario rechazó el ataque con su escudo!!!",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_FALLADO_GOLPE":{
+		"TEXTO":"¡¡¡Has fallado el golpe!!!",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_SEGURO_ACTIVADO":{
+		"TEXTO":
+			[
+				">>SEGURO ACTIVADO<<",
+				"Seguro activado."
+			]
+	},
+	"MENSAJE_SEGURO_DESACTIVADO":{
+		"TEXTO":
+			[
+				">>SEGURO DESACTIVADO<<",
+				"Seguro desactivado."
+			]
+	},
+	"MENSAJE_MACRO_ACTIVADO":{
+		"TEXTO":"Macro de trabajo activado."
+	},
+	"MENSAJE_MACRO_DESACTIVADO":{
+		"TEXTO":"Macro de trabajo desactivado."
+	},
+	"MENSAJE_MACRO_ADVERTENCIA":{
+		"TEXTO":"No puedes lanzar VAR_LANZADO tan rapido."
+	},
+	"MENSAJE_PIERDE_NOBLEZA":{
+		"TEXTO":"¡¡Has perdido puntaje de nobleza y ganado puntaje de criminalidad!! Si sigues ayudando a criminales te convertirás en uno de ellos y serás perseguido por las tropas de las ciudades.",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_USAR_MEDITANDO":{
+		"TEXTO":"¡Estás meditando! Debes dejar de meditar para usar objetos.",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_SEGURO_RESU_ON":{
+		"TEXTO":"Seguro de Resurrecion activado",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_SEGURO_RESU_OFF":{
+		"TEXTO":"Seguro de Resurrecion desactivado",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_GOLPE_CABEZA":{
+		"TEXTO":"¡¡La criatura te ha pegado en la cabeza por ",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_GOLPE_BRAZO_IZQ":{
+		"TEXTO":"¡¡La criatura te ha pegado el brazo izquierdo por ",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_GOLPE_BRAZO_DER":{
+		"TEXTO":"¡¡La criatura te ha pegado el brazo derecho por ",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_GOLPE_PIERNA_IZQ":{
+		"TEXTO":"¡¡La criatura te ha pegado la pierna izquierda por ",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_GOLPE_PIERNA_DER":{
+		"TEXTO":"¡¡La criatura te ha pegado la pierna derecha por ",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_GOLPE_TORSO":{
+		"TEXTO":"¡¡La criatura te ha pegado en el torso por ",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_GOLPE_CRIATURA_1":{
+		"TEXTO":"¡¡Le has pegado a la criatura por "
+	},
+	"MENSAJE_ATAQUE_FALLO":{
+		"TEXTO":" te atacó y falló!!",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_RECIVE_IMPACTO_CABEZA":{
+		"TEXTO":" te ha pegado en la cabeza por ",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ":{
+		"TEXTO":" te ha pegado el brazo izquierdo por ",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_RECIVE_IMPACTO_BRAZO_DER":{
+		"TEXTO":" te ha pegado el brazo derecho por ",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ":{
+		"TEXTO":" te ha pegado la pierna izquierda por ",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_RECIVE_IMPACTO_PIERNA_DER":{
+		"TEXTO":" te ha pegado la pierna derecha por ",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_RECIVE_IMPACTO_TORSO":{
+		"TEXTO":" te ha pegado en el torso por ",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_PRODUCE_IMPACTO_1":{
+		"TEXTO":"¡¡Le has pegado a ",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_PRODUCE_IMPACTO_CABEZA":{
+		"TEXTO":" en la cabeza por ",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_PRODUCE_IMPACTO_BRAZO_IZQ":{
+		"TEXTO":" en el brazo izquierdo por ",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_PRODUCE_IMPACTO_BRAZO_DER":{
+		"TEXTO":" en el brazo derecho por ",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_PRODUCE_IMPACTO_PIERNA_IZQ":{
+		"TEXTO":" en la pierna izquierda por ",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_PRODUCE_IMPACTO_PIERNA_DER":{
+		"TEXTO":" en la pierna derecha por ",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_PRODUCE_IMPACTO_TORSO":{
+      "TEXTO":" en el torso por ",
+      "COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_TRABAJO_MAGIA":{
+		"TEXTO":"Haz click sobre el objetivo...",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_TRABAJO_PESCA":{
+		"TEXTO":"Haz click sobre el sitio donde quieres pescar...",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_TRABAJO_ROBAR":{
+		"TEXTO":"Haz click sobre la víctima...",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_TRABAJO_TALAR":{
+		"TEXTO":"Haz click sobre el árbol...",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_TRABAJO_MINERIA":{
+		"TEXTO":"Haz click sobre el yacimiento...",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_TRABAJO_FUNDIRMETAL":{
+		"TEXTO":"Haz click sobre la fragua...",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_TRABAJO_PROYECTILES":{
+		"TEXTO":"Haz click sobre la victima...",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_ENTRAR_PARTY_1":{
+		"TEXTO":"Si deseas entrar en una party con ",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_ENTRAR_PARTY_2":{
+		"TEXTO":",}, escribe /entrarparty",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_NENE":{
+		"TEXTO":"Cantidad de NPCs: ",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_FRAGSHOOTER_TE_HA_MATADO":{
+		"TEXTO":"te ha matado!",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_FRAGSHOOTER_HAS_MATADO":{
+		"TEXTO":"Has matado a",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_FRAGSHOOTER_HAS_GANADO":{
+		"TEXTO":"Has ganado ",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA":{
+		"TEXTO":"puntos de experiencia.",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_HAS_MATADO_A":{
+		"TEXTO":"Has matado a ",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_HAS_GANADO_EXP":{
+		"TEXTO":"Has ganado VAR_EXP_GANADA puntos de experiencia.",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_TE_HA_MATADO":{
+		"TEXTO":" te ha matado!",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_HOGAR":{
+		"TEXTO":"Has llegado a tu hogar.",
+		"COLOR":[
+			255,
+			255,
+			255
+      ]
+   },
+	"MENSAJE_HOGAR_CANCEL":{
+		"TEXTO":"No puedes viajar estando en la cárcel.",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_USER_MUERTO":{
+		"TEXTO":[
+			"¡¡¡Estas Muerto!!!",
+			"No puedes realizar esta acción estando muerto."
+		],
+		"COLOR":[
+			255,
+			255,
+			255
+		]
+	},
+	"NPC_INMUNE":{
+		"TEXTO":"El npc es inmune al hechizo.",
+		"COLOR":[
+			210,
+			220,
+			220
+		]
+	},
+	"MENSAJE_DAMAGE_NPC":{
+		"TEXTO":"¡¡Le has quitado VAR_DANO puntos de vida a la criatura!!",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_ESTAS_A_MAPAS_DE_DURACION_VIAJE":{
+		"TEXTO":"Te encuentras a VAR_DISTANCIA_MAPAS mapas de VAR_MAPA_DESTINO, este viaje durará ",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_WORK_FINISHED":{
+		"TEXTO":"¡Has terminado de trabajar!",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_NO_COMM_OBJETO":{
+		"TEXTO":"¡No puedes comerciar ese objeto!",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_PING":{
+		"TEXTO":"El ping es ",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_NO_NOVEDADES":{
+		"TEXTO":"Sin observaciones",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_SIN_ORO_SUFICIENTE":{
+		"TEXTO":"No tienes suficiente oro."
+	},
+	"MENSAJE_SIN_CANTIDAD_SUFICIENTE":{
+		"TEXTO":"¡No tienes esa cantidad!"
+	},
+	"MENSAJE_NO_SELECCIONASTE_NADA":{
+		"TEXTO":"¡No tienes ningún item seleccionado!"
+	},
+	"MENSAJE_COMM_OFERTA_ACEPTA":{
+		"TEXTO":" ha confirmado su oferta!",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_COMM_OFERTA_CAMBIA":{
+		"TEXTO":" ha modificado su oferta.",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
+	},
+	"MENSAJE_COMM_AGREGA":{
+		"TEXTO":"¡Agregaste VAR_CANTIDAD_AGREGA VAR_QUE_AGREGA a tu oferta!!"
+	},
+	"MENSAJE_COMM_SACA":{
+		"TEXTO":"¡¡Quitaste VAR_CANTIDAD_SACA VAR_QUE_SACA de tu oferta!!"
+	},
+	"MENSAJE_COMM_OFERTA_COMFIRMADA":{
+		"TEXTO":"¡Has confirmado tu oferta! Ya no puedes cambiarla."
+	},
+	"MENSAJE_COMM_INFO":{
+		"TEXTO": [
+			"Una vez termines de formar tu oferta, debes presionar en [CONFIRMAR], tras lo cual ya no podrás modificarla.",
+			"Luego que el otro usuario confirme su oferta, podrás aceptarla o rechazarla. Si la rechazas, se terminará el comercio.",
+			"Cuando ambos acepten la oferta del otro, se realizará el intercambio.",
+			"Si se intercambian más ítems de los que pueden entrar en tu inventario, es probable que caigan al suelo, así que presta mucha atención a esto."
+		]
+	},
+	"MENSAJE_AUTO_CAST_SPELL":{
+		"TEXTO":"Auto-lanzar hechizos. Utiliza esta habilidad para entrenar unicamente. Para activarlo/desactivarlo utiliza F7.",
+		"COLOR":[
+			255,
+			255,
+			255
+		]
+	},
+	"MENSAJE_INFO_COORDENADAS":{
+		"TEXTO":"Estas coordenadas son tu ubicacion en el mapa. Utiliza la letra L para corregirla si esta no se corresponde con la del servidor por efecto del Lag."
+	},
+	"MENSAJE_SOY_CHEATER":{
+		"TEXTO":"Soy un cheater, avisenle a un gm"
+	},
+	"MENSAJE_CUSTOM_PERSONALIZADO":{
+		"TEXTO":"¡¡ VAR_MENSAJE fue guardado como mensaje personalizado VAR_MENSAJE_NUMERO !!"
+	},
+	"MENSAJE_CUSTOM_INVALIDO":{
+		"TEXTO":"El Mensaje es invalido. Modifiquelo por favor."
+	},
+	"MENSAJE_INFO_HECHIZOS":{
+		"TEXTO":[
+			"INFO. DEL HECHIZO",
+			"Nombre",
+			"Descripcion",
+			"Habilidad requerida",
+			"Mana requerido",
+			"Energia necesaria"
+		]
+	},
+	"MENSAJE_NO_SALIR":{
+		"TEXTO":"No puedes salir estando paralizado."
+	},
+	"MENSAJE_CENTINELA":{
+		"TEXTO":"Faltan parámetros. Utilice /centinela X, siendo X el código de verificación."
+	},
+	"MENSAJE_INPUT_MSJ":{
+		"TEXTO":"Escriba un mensaje."
+	},
+	"MENSAJE_INPUT_ASK":{
+		"TEXTO":"Escriba una pregunta."
+	},
+	"MENSAJE_INPUT_BUG":{
+		"TEXTO":"Escriba una descripción del bug."
+	},
+	"MENSAJE_INPUT_COMENTARIO":{
+		"TEXTO":"Escriba un comentario."
+	},
+	"MENSAJE_COMERCIANDO":{
+		"TEXTO":"Ya estas comerciando."
+	},
+	"MENSAJE_ENCUESTA":{
+		"TEXTO":"Para votar una opcion, escribe /encuesta NUMERODEOPCION, por ejemplo para votar la opcion 1, escribe /encuesta 1."
+	},
+	"MENSAJE_FALTAN_PARAMETROS":{
+		"TEXTO":"Faltan parámetros. Utilice"
+	},
+	"MENSAJE_CANTIDAD_INCORRECTA":{
+		"TEXTO":"Cantidad incorrecta. Utilice"
+	},
+	"MENSAJE_MAPA_INCORRECTO":{
+		"TEXTO":"Mapa incorrecto. Utilice"
+	},
+	"MENSAJE_VALOR_INCORRECTO":{
+		"TEXTO":"Valor incorrecto. Utilice"
+	},
+	"MENSAJE_TIEMPO_INCORRECTO":{
+		"TEXTO":"Tiempo incorrecto. Utilice"
+	},
+	"MENSAJE_FORMATO_INCORRECTO":{
+		"TEXTO":"Formato incorrecto. Utilice"
+	},
+	"MENSAJE_COMANDO_INCORRECTO":{
+		"TEXTO":"Comando incorrecto."
+	},
+	"MENSAJE_MIDI_INCORRECTO":{
+		"TEXTO":"Midi incorrecto. Utilice"
+	},
+	"MENSAJE_WAV_INCORRECTO":{
+		"TEXTO":"Wav incorrecto. Utilice"
+	},
+	"MENSAJE_NPC_INCORRECTO":{
+		"TEXTO":"NPC incorrecto. Utilice"
+	},
+	"MENSAJE_OBJETO_INCORRECTO":{
+		"TEXTO":"Objeto incorrecto. Utilice"
+	},
+	"MENSAJE_ONCLAN":{
+		"TEXTO":"Utilice /onclan nombre del clan."
+	},
+	"ERROR_MAPAS":{
+		"TEXTO":"Error en los mapas, algún archivo ha sido modificado o esta dañado."
+	},
+	"MENSAJE_FUNDAR_CLAN":{
+		"TEXTO":"Para fundar un clan tenés que ser nivel 25 y tener 90 skills en liderazgo."
+	},
+	"ERROR_CONN_LOST":{
+		"TEXTO":"Error: Se ha perdido la conexion con el servidor."
+	},
+	"ERROR_WINSOCK_TOO-FAST":{
+		"TEXTO":"Por favor espere, intentando completar conexion."
+	},
+	"ERROR_WINSOCK_REFUSED":{
+		"TEXTO":"El servidor se encuentra cerrado o no te has podido conectar correctamente."
+	},
+	"ERROR_WINSOCK_TIME-OUT":{
+		"TEXTO":"El tiempo de espera se ha agotado, intenta nuevamente."
+	},
+	"ERROR_PERSONAJE_NO_SELECCIONADO":{
+		"TEXTO":"No has seleccionado un personaje."
+	},
+	"ERROR_DEMASIADOS_PJS":{
+		"TEXTO":"No puedes crear mas de 10 personajes."
+	},
+	"ERROR_DIRECTX_INIT":{
+		"TEXTO":"No se pudo inicializar el motor gráfico. Por favor, verifique si tiene sus librerías y sus controladores actualizados."
+	},
+	"ERROR_DIRECTDEVICE_INIT":{
+		"TEXTO":"No se puede inicializar DirectDevice. Por favor, verifique si tiene sus librerías y sus controladores actualizados."
+	},
+	"ERROR_DESCARGA_SERVIDORES":{
+		"TEXTO":"Error al descargar la lista de servidores"
+	},
+	"ERROR_DESCARGA_SERVIDORES_INET":{
+		"TEXTO":"Error al descargar la lista de servidores: Error de Inet"
+	},
+	"ERROR_ARCHIVO_CORRUPTO":{
+		"TEXTO":"Archivo de recursos dañado"
+	},
+	"ERROR_LEER_ARCHIVO":{
+		"TEXTO":"Error al intentar leer el archivo: VAR_ARCHIVO\nRazón: VAR_ERROR"
+	},
+	"ERROR_LEER_PARCHE":{
+		"TEXTO":"No se ha podido procesar el parche."
+	},
+	"ERROR_LEER_RECURSO":{
+		"TEXTO":"Un error inesperado ocurrió a intentar cargar el recurso: VAR_ARCHIVO. Error: VAR_ERROR"
+	},
+	"ERROR_EXTRAER_ARCHIVO":{
+		"TEXTO":"No se pudo extraer el archivo"
+	},
+	"ERROR_EXTRAER_BINARIO":{
+		"TEXTO":"No se pudo extraer el archivo binario correctamente. Razón: VAR_ERROR"
+	},
+	"ERROR_EXT_NO_ENCONTRADA":{
+		"TEXTO":"No se encontraron archivos de extensión VAR_EXT en VAR_PATH."
+	},
+	"ERROR_CREAR_BINARIO":{
+		"TEXTO":"No se pudo crear el archivo binario. Razón: VAR_ERROR"
+	},
+	"ERROR_CREAR_PARCHE":{
+		"TEXTO":"No se pudo crear el parche. Razón: VAR_ERROR"
+	},
+	"ERROR_DECODE_RECURSOS":{
+		"TEXTO":"Error al intentar decodificar recursos. Razón: VAR_ERROR"
+	},
+	"ERROR_SIN_ESPACIO":{
+		"TEXTO":"No hay suficiente espacio en el disco para extraer los archivos."
+	},
+	"ERROR_VERSIONES_RECURSOS":{
+		"TEXTO":"Su ha encontrado una incongruencia en las versiones."
+	},
+	"ERROR_404":{
+		"TEXTO":"No se pudo encontrar el recurso"
+	},
+	"ERROR_GUARDAR_SCREENSHOT":{
+		"TEXTO":"No se pudo Guarrdar el JPG"
+	},
+	"ERROR":{
+		"TEXTO":"Error"
+	},
+	"COMERCIAR":{
+		"TEXTO":"Comerciar"
+	},
+	"TIEMPO":{
+		"TEXTO":"tiempo"
+	},
+	"MINUTOS":{
+		"TEXTO":"minutos"
+	},
+	"SEGUNDOS":{
+		"TEXTO":"segundos"
+	},
+	"MILISEGUNDOS":{
+		"TEXTO":"milisegundos"
+	},
+	"ALGUIEN":{
+		"TEXTO":"alguien"
+	},
+	"ABIERTA":{
+		"TEXTO":"abierta"
+	},
+	"CERRADA":{
+		"TEXTO":"cerrada"
+	},
+	"USUARIO":{
+		"TEXTO":"Usuario"
+	},
+	"GOLPE":{
+		"TEXTO":"Golpe"
+	},
+	"DEFENSA":{
+		"TEXTO":"Defensa"
+	},
+	"HECHO":{
+		"TEXTO":"Hecho"
+	},
+	"NADA":{
+		"TEXTO":"Nada"
+	},
+	"LETRA_Y":{
+		"TEXTO":"y"
+	},
+	"ARMADA":{
+		"TEXTO":"Armada Real"
+	},
+	"LEGION":{
+      "TEXTO":"Legion Oscura"
+	},
+	"CIUDADANO":{
+		"TEXTO":"Ciudadano"
+	},
+	"CRIMINAL":{
+		"TEXTO":"Criminal"
+	},
+	"EN_LINEA":{
+		"TEXTO":"En Linea"
+	},
+	"DESCONECTADO":{
+		"TEXTO":"Desconectado"
+	},
+	"PREDETERMINADA":{
+		"TEXTO":"predeterminada"
+	},
+	"PERSONALIZADA":{
+		"TEXTO":"personalizada"
+	},
+	"ANUNCIO":{
+		"TEXTO":"Anuncio"
+	},
+	"PROYECTILES":{
+		"TEXTO":"proyectiles"
+	},
+	"HECHIZOS":{
+		"TEXTO":"hechizos"
+	},
+	"NOMBRE":{
+		"TEXTO":"Nombre"
+	},
+	"CLASE":{
+		"TEXTO":"Clase"
+	},
+	"RAZA":{
+		"TEXTO":"Raza"
+	},
+	"NIVEL":{
+		"TEXTO":"Nivel"
+	},
+	"ORO":{
+		"TEXTO":"Oro"
+	},
+	"MAPA":{
+		"TEXTO":"Mapa"
+	},
+	"ATENCION":{
+		"TEXTO":"Atencion"
+	},
+	"RAZAS":{
+		"HUMANO":"Humano",
+		"ELFO":"Elfo",
+		"ELFO_OSCURO":"Elfo Oscuro",
+		"GNOMO":"Gnomo",
+		"ENANO":"Enano"
+	},
+	"CLASES":{
+		"MAGO":"Mago",
+		"CLERIGO":"Clerigo",
+		"GUERRERO":"Guerrero",
+		"ASESINO":"Asesino",
+		"LADRON":"Ladron",
+		"BARDO":"Bardo",
+		"DRUIDA":"Druida",
+		"BANDIDO":"Bandido",
+		"PALADIN":"Paladin",
+		"CAZADOR":"Cazador",
+		"TRABAJADOR":"Trabajador",
+		"PIRATA":"Pirata"
+	},
+	"ATRIBUTOS":{
+		"FUERZA":"Fuerza",
+		"AGILIDAD":"Agilidad",
+		"INTELIGENCIA":"Inteligencia",
+		"CARISMA":"Carisma",
+		"CONSTITUCION":"Constitucion"
+	},
+	"HABILIDADES":{
+		"MAGIA":{
+			"TEXTO":"Magia",
+			"DESCRIPCION":"- Representa la habilidad de un personaje de las áreas mágica.\n- Indica la variedad de hechizos que es capaz de dominar el personaje."
+		},
+		"ROBAR":{
+			"TEXTO":"Robar",
+			"DESCRIPCION":"- Habilidades de hurto. Nunca por medio de la violencia.\n- Indica la probabilidad de exito del personaje al intentar apoderarse de oro de otro, en caso de ser Ladron, tambien podra apoderarse de items."
+		},
+		"EVASION_EN_COMBATE":{
+			"TEXTO":"Evasion en Combate",
+			"DESCRIPCION":"- Representa la habilidad general para moverse en combate entre golpes enemigos sin morir o tropezar en el intento.\n- Indica la posibilidad de evadir un golpe fisico del personaje."
+		},
+		"COMBATE_CON_ARMAS":{
+			"TEXTO":"Combate con Armas",
+			"DESCRIPCION":"- Representa la habilidad del personaje para manejar armas de combate cuerpo a cuerpo.\n- Indica la probabilidad de impactar al oponente con armas cuerpo a cuerpo."
+		},
+		"MEDITAR":{
+			"TEXTO":"Meditar",
+			"DESCRIPCION":"- Representa la capacidad del personaje de concentrarse para abstrarse dentro de su mente, y asi revitalizar su fuerza espiritual.\n- Indica la velocidad a la que el personaje recupera mana (Solo para clases magicas)."
+		},
+		"APUNALAR":{
+			"TEXTO":"Apuñalar",
+			"DESCRIPCION":"- Representa la destreza para inflingir daño grave con armas cortas.\n- Indica la posibilidad de apuñalar al enemigo en un ataque. El Asesino es la unica clase que no necesita 10 skills para comenzar a entrenar esta habilidad."
+		},
+		"OCULTARSE":{
+			"TEXTO":"Ocultarse",
+			"DESCRIPCION":"- La habilidad propia de un personaje para mimetizarse con el medio y evitar se perciba su presencia.\n- Indica la facilidad con la que uno puede desaparecer de la vista de los demas y por cuanto tiempo."
+		},
+		"SUPERVIVENCIA":{
+			"TEXTO":"Supervivencia",
+			"DESCRIPCION":"- Es el conjunto de habilidades necesarias para sobrevivir fuera de una ciudad en base a lo que la naturaleza ofrece.\n- Permite conocer la salud de las criaturas guiándose exclusivamente por su aspecto, así como encender fogatas junto a las que descansar."
+		},
+		"TALAR":{
+			"TEXTO":"Talar",
+			"DESCRIPCION": "- Es la habilidad en el uso del hacha para evitar desperdiciar leña y maximizar la efectividad de cada golpe dado.\n- Indica la probabilidad de obtener leña por golpe."
+		},
+		"COMERCIO":{
+			"TEXTO":"Comercio",
+			"DESCRIPCION":"- Es la habilidad para regatear los precios exigidos en la compra y evitar ser regateado al vender.\n- Indica que tan caro se compra en el comercio con NPCs."
+		},
+		"DEFENSA_CON_ESCUDOS":{
+			"TEXTO":"Defensa con Escudos",
+			"DESCRIPCION":"- Es la habilidad de interponer correctamente el escudo ante cada embate enemigo para evitar ser impactado sin perder el equilibrio y poder responder rápidamente con la otra mano.\n- Indica las probabilidades de bloquear un impacto con el escudo."
+		},
+		"PESCA":{
+			"TEXTO":"Pesca",
+			"DESCRIPCION":"- Es el conjunto de conocimientos básicos para poder armar un señuelo, poner la carnada en el anzuelo y saber dónde buscar peces.\n- Indica la probabilidad de tener éxito en cada intento de pescar."
+		},
+		"MINERIA":{
+			"TEXTO":"Mineria",
+			"DESCRIPCION":"- Es el conjunto de conocimientos sobre los distintos minerales, el dónde se obtienen, cómo deben ser extraídos y trabajados.\n- Indica la probabilidad de tener éxito en cada intento de minar y la capacidad, o no de convertir estos minerales en lingotes."
+		},
+		"CARPINTERIA":{
+			"TEXTO":"Carpinteria",
+			"DESCRIPCION":"- Es el conjunto de conocimientos para saber serruchar, lijar, encolar y clavar madera con un buen nivel de terminación.\n- Indica la habilidad en el manejo de estas herramientas, el que tan bueno se es en el oficio de carpintero."
+		},
+		"HERRERIA":{
+			"TEXTO":"Mineria",
+			"DESCRIPCION":"- Es el conjunto de conocimientos para saber procesar cada tipo de mineral para fundirlo, forjarlo y crear aleaciones.\n- Indica la habilidad en el manejo de estas técnicas, el que tan bueno se es en el oficio de herrero."
+		},
+		"LIDERAZGO":{
+			"TEXTO":"Liderazgo",
+			"DESCRIPCION":"- Es la habilidad propia del personaje para convencer a otros a seguirlo en batalla.\n- Permite crear clanes y grupos."
+		},
+		"DOMAR_ANIMALES":{
+			"TEXTO":"Domar Animales",
+			"DESCRIPCION":"- Es la habilidad en el trato con animales para que estos te sigan y ayuden en combate.\n- Indica la posibilidad de lograr domar a una criatura y qué clases de criaturas se puede domar."
+		},
+		"COMBATE_A_DISTANCIA":{
+			"TEXTO":"Combate a Distancia",
+			"DESCRIPCION":"- Es el manejo de las armas de largo alcance.\n- Indica la probabilidad de éxito para impactar a un enemigo con este tipo de armas."
+		},
+		"COMBATE_CUERPO_A_CUERPO":{
+			"TEXTO":"Combate Cuerpo a Cuerpo",
+			"DESCRIPCION":"- Es la habilidad del personaje para entrar en combate sin arma alguna salvo sus propios brazos.\n- Indica la probabilidad de éxito para impactar a un enemigo estando desarmado. El Bandido y Ladrón tienen habilidades extras asociadas a esta habilidad."
+		},
+		"NAVEGACION":{
+			"TEXTO":"Navegacion",
+			"DESCRIPCION":"- Es la habilidad para controlar barcos en el mar sin naufragar.\n- Indica que clase de barcos se pueden utilizar."
+		}
+	},
+	"AYUDA_NO_USAR_HABILIDAD":{
+		"TEXTO":"* Habilidad inhabilitada para tu clase."
+	},
+	"ACTUALIZAR_CLIENTE":{
+		"TEXTO":"Tu version no es la actual, ¿Deseas ejecutar el actualizador?."
+	},
+	"OTRO_CLIENTE_ABIERTO":{
+		"TEXTO":"Argentum Online ya esta corriendo! No es posible correr otra instancia del juego. Haga click en Aceptar para salir."
+	},
+	"BUSCA_SERVIDORES":{
+		"TEXTO":"Buscando servidores..."
+	},
+	"INICIA_CONSTANTES":{
+		"TEXTO":"Iniciando constantes..."
+	},
+	"INICIA_MOTOR_GRAFICO":{
+		"TEXTO":"Iniciando motor grafico..."
+	},
+	"INICIA_FXS":{
+		"TEXTO":"Creando animaciones extra..."
+	},
+	"INICIA_SONIDO":{
+		"TEXTO":"Iniciando DirectSound..."
+	},
+	"INICIA_CLASES":{
+		"TEXTO":"Instanciando clases..."
+	},
+	"BIENVENIDO":{
+		"TEXTO":"¡Bienvenido a Argentum Online!"
+	},
+	"PANTALLA_COMPLETA":{
+		"TEXTO":"Desea jugar en pantalla completa?"
+	},
+	"VALIDACION_EMAIL":{
+		"TEXTO":"Ingrese un correo electronico."
+	},
+	"VALIDACION_BAD_EMAIL":{
+		"TEXTO":[
+			"Direccion de correo electronico invalida.",
+			"El correo electronico debe tener menos de 30 letras."
+		]
+	},
+	"VALIDACION_PASSWORD":{
+		"TEXTO":"Ingrese una contraseña."
+	},
+	"VALIDACION_BAD_PASSWORD":{
+		"TEXTO": [
+			"Los contraseñas no coinciden.",
+			"Contraseña invalida. El caracter VAR_CHAR_INVALIDO no esta permitido."
+		]
+	},
+	"VALIDACION_NOMBRE_PJ":{
+		"TEXTO":"Ingresa el nombre de tu nuevo personaje."
+	},
+	"VALIDACION_BAD_NOMBRE_PJ":{
+		"TEXTO":[
+			"El nombre del personaje debe tener menos de 30 letras.",
+			"Nombre invalido, se han removido los espacios al final del nombre",
+			"Nombre invalido.",
+			"Nombre demasiado extenso.",
+			"Nombre inválido.El caracter VAR_CHAR_INVALIDO no esta permitido."
+		]
+	},
+	"VALIDACION_RAZA":{
+		"TEXTO":"Seleccione la raza del personaje."
+	},
+	"VALIDACION_SEXO":{
+		"TEXTO":"Seleccione el sexo del personaje."
+	},
+	"VALIDACION_CLASE":{
+		"TEXTO":"Seleccione la clase del personaje."
+	},
+	"VALIDACION_HOGAR":{
+		"TEXTO":"Seleccione el hogar del personaje."
+	},
+	"VALIDACION_HASH":{
+		"TEXTO":"Ha ocurrido un error en el inicio de sesion, por favor, intente nuevamente."
+	},
+	"VALIDACION_ATRIBUTOS":{
+		"TEXTO":"Los atributos del personaje son invalidos."
+	},
+	"AYUDA_CREARPJ_DADOS":{
+		"TEXTO":"Presionando sobre la Esfera Roja, se modificarán al azar los atributos de tu personaje, de esta manera puedes elegir los que más te parezcan para definir a tu personaje."
+	},
+	"AYUDA_CREARPJ_CORREO":{
+		"TEXTO":"Es sumamente importante que ingreses una dirección de correo electrónico válida, ya que en el caso de perder la contraseña de tu personaje, se te enviará cuando lo requieras, a esa dirección."
+	},
+	"AYUDA_CREARPJ_NOMBREPJ":{
+		"TEXTO":"Sé cuidadoso al seleccionar el nombre de tu personaje. Argentum es un juego de rol, un mundo mágico y fantástico, y si seleccionás un nombre obsceno o con connotación política, los administradores borrarán tu personaje y no habrá ninguna posibilidad de recuperarlo."
+	},
+	"AYUDA_CREARPJ_ATRIBUTOS":{
+		"TEXTO":"Son las cualidades que definen tu personaje. Generalmente se los llama [DADOS]. (Ver Tirar Dados)"
+	},
+	"AYUDA_CREARPJ_IED":{
+		"TEXTO":"Son los atributos que obtuviste al azar. Presioná la esfera roja para volver a tirarlos."
+	},
+	"AYUDA_CREARPJ_IEM":{
+		"TEXTO":"Son los modificadores por raza que influyen en los atributos de tu personaje."
+	},
+	"AYUDA_CREARPJ_IEF":{
+		"TEXTO":"Los atributos finales de tu personaje, de acuerdo a la raza que elegiste."
+	},
+	"AYUDA_CREARPJ_FUERZA":{
+		"TEXTO":"De ella dependerá qué tan potentes serán tus golpes, tanto con armas de cuerpo a cuerpo, a distancia o sin armas."
+	},
+	"AYUDA_CREARPJ_AGILIDAD":{
+		"TEXTO":"Este atributo intervendrá en qué tan bueno seas, tanto evadiendo como acertando golpes, respecto de otros personajes como de las criaturas a las q te enfrentes."
+	},
+	"AYUDA_CREARPJ_INTELIGENCIA":{
+		"TEXTO":"Influirá de manera directa en cuánto maná ganarás por nivel."
+	},
+	"AYUDA_CREARPJ_CARISMA":{
+		"TEXTO":"Será necesario tanto para la relación con otros personajes (entrenamiento en grupos) como con las criaturas (domar animales)."
+	},
+	"AYUDA_CREARPJ_CONSTITUCION":{
+		"TEXTO":"Afectará a la cantidad de vida que podrás ganar por nivel."
+	},
+	"AYUDA_CREARPJ_EVASION":{
+		"TEXTO":"Evalúa la habilidad esquivando ataques físicos."
+	},
+	"AYUDA_CREARPJ_MAGIA":{
+		"TEXTO":"Puntúa la cantidad de maná que se tendrá."
+	},
+	"AYUDA_CREARPJ_VIDA":{
+		"TEXTO":"Valora la cantidad de salud que se podrá llegar a tener."
+	},
+	"AYUDA_CREARPJ_ESCUDOS":{
+		"TEXTO":"Estima la habilidad para rechazar golpes con escudos."
+	},
+	"AYUDA_CREARPJ_ARMAS":{
+		"TEXTO":"Evalúa la habilidad en el combate cuerpo a cuerpo con armas."
+	},
+	"AYUDA_CREARPJ_ARCOS":{
+		"TEXTO":"Evalúa la habilidad en el combate a distancia con arcos. "
+	},
+	"AYUDA_CREARPJ_HOGAR":{
+		"TEXTO":"Define el hogar de tu personaje. Sin embargo, el personaje nacerá en Nemahuak, la ciudad de los novatos."
+	},
+	"AYUDA_CREARPJ_RAZA":{
+		"TEXTO":"De la raza que elijas dependerá cómo se modifiquen los dados que saques. Podés cambiar de raza para poder visualizar cómo se modifican los distintos atributos."
+	},
+	"AYUDA_CREARPJ_CLASE":{
+		"TEXTO":"La clase influirá en las características principales que tenga tu personaje, asi como en las magias e items que podrá utilizar. Las estrellas que ves abajo te mostrarán en qué habilidades se destaca la misma."
+	},
+	"AYUDA_CREARPJ_GENERO":{
+		"TEXTO":"Indica si el personaje será masculino o femenino. Esto influye en los items que podrá equipar."
+	},
+	"AYUDA_CREARPJ_ALINEACION":{
+		"TEXTO":"Indica si el personaje seguirá la senda del mal o del bien. (Actualmente deshabilitado)"
+	},
+	"AMBIENT-EDITOR":{
+		"TEXTOS":[
+			"Editor de Ambientes",
+			"Luz Ambiental",
+			"Usar Luz del Día",
+			"Usar Luz Propia",
+			"Aplicar",
+			"Luces",
+			"Rango: ",
+			"Crear Luz en Posición Actual",
+			"Borrar Luz Actual",
+			"Meteo",
+			"Usar Niebla en el Mapa",
+			"Grado de Niebla",
+			"Nieve",
+			"Llueve",
+			"Recargar Ambiente",
+			"Guardar Ambiente"
+		]
+	},
+	"HERRERO":{
+		"TEXTO":[
+			"Lingotes de Hierro",
+			"Lingotes de Plata",
+			"Lingotes de Oro"
+		]
+	},
+	"CERRAR":{
+		"TEXTOS":[
+			"Regresar a la pantalla de inicio",
+			"Salir del Juego"
+			"Salir [ESC]"
+		]
+	},
+	"PANEL-GM":{
+		"TEXTO":[
+		]
+	},
+	"TIP":{
+		"TEXTO":[
+			"Aceptar",
+			"Mostrar la proxima vez"
+		]
+	},
+	"CUSTOMKEYS_TECLA_INVALIDA":{
+		"TEXTO":"Hay una o más teclas invalidas, por favor verifique."
+	},
+	"CUSTOMKEYS_CONFIG_CARGADA":{
+		"TEXTO":"¡Se ha cargado la configuración VAR_CONFIG_ELEGIDA VAR_CONFIG_CUSTOM_NUMERO !"
+	}
+}

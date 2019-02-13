@@ -34,7 +34,7 @@ Attribute VB_Name = "Protocol"
 
 Option Explicit
 #If False Then
-    Dim nombre, picInv, Status, length As Variant
+    Dim Nombre, picInv, status, length As Variant
 #End If
 ''
 ' TODO : /BANIP y /UNBANIP ya no trabajan con nicks. Esto lo puede mentir en forma local el cliente con un paquete a NickToIp
@@ -833,265 +833,314 @@ On Error Resume Next
 End Sub
 
 Public Sub HandleMultiMessage()
-'***************************************************
-'Author: Unknown
-'Last Modification: 11/16/2010
-' 09/28/2010: C4b3z0n - Ahora se le saco la "," a los minutos de distancia del /hogar, ya que a veces quedaba "12,5 minutos y 30segundos"
-' 09/21/2010: C4b3z0n - Now the fragshooter operates taking the screen after the change of killed charindex to ghost only if target charindex is visible to the client, else it will take screenshot like before.
-' 11/16/2010: Amraphen - Recoded how the FragShooter works.
-'***************************************************
+
+    '***************************************************
+    'Author: Unknown
+    'Last Modification: 11/16/2010
+    ' 09/28/2010: C4b3z0n - Ahora se le saco la "," a los minutos de distancia del /hogar, ya que a veces quedaba "12,5 minutos y 30segundos"
+    ' 09/21/2010: C4b3z0n - Now the fragshooter operates taking the screen after the change of killed charindex to ghost only if target charindex is visible to the client, else it will take screenshot like before.
+    ' 11/16/2010: Amraphen - Recoded how the FragShooter works.
+    ' 04/12/2019: jopiortiz - Carga de mensajes desde JSON.
+    '***************************************************
     Dim BodyPart As Byte
+
     Dim Daño As Integer
+
     Dim SpellIndex As Integer
-    Dim nombre As String
+
+    Dim Nombre     As String
     
-With incomingData
-    Call .ReadByte
+    With incomingData
+        Call .ReadByte
     
-    Select Case .ReadByte
-        Case eMessages.NPCSwing
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_CRIATURA_FALLA_GOLPE, 255, 0, 0, True, False, True)
+        Select Case .ReadByte
+
+            Case eMessages.NPCSwing
+                Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_CRIATURA_FALLA_GOLPE").Item("TEXTO"), 255, 0, 0, True, False, True)
         
-        Case eMessages.NPCKillUser
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_CRIATURA_MATADO, 255, 0, 0, True, False, True)
+            Case eMessages.NPCKillUser
+                Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_CRIATURA_MATADO").Item("TEXTO"), 255, 0, 0, True, False, True)
         
-        Case eMessages.BlockedWithShieldUser
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_RECHAZO_ATAQUE_ESCUDO, 255, 0, 0, True, False, True)
+            Case eMessages.BlockedWithShieldUser
+                Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_RECHAZO_ATAQUE_ESCUDO").Item("TEXTO"), 255, 0, 0, True, False, True)
         
-        Case eMessages.BlockedWithShieldOther
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_USUARIO_RECHAZO_ATAQUE_ESCUDO, 255, 0, 0, True, False, True)
+            Case eMessages.BlockedWithShieldOther
+                Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_USUARIO_RECHAZO_ATAQUE_ESCUDO").Item("TEXTO"), 255, 0, 0, True, False, True)
         
-        Case eMessages.UserSwing
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_FALLADO_GOLPE, 255, 0, 0, True, False, True)
+            Case eMessages.UserSwing
+                Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_FALLADO_GOLPE").Item("TEXTO"), 255, 0, 0, True, False, True)
         
-        Case eMessages.SafeModeOn
-            Call frmMain.ControlSM(eSMType.sSafemode, True)
+            Case eMessages.SafeModeOn
+                Call frmMain.ControlSM(eSMType.sSafemode, True)
         
-        Case eMessages.SafeModeOff
-            Call frmMain.ControlSM(eSMType.sSafemode, False)
+            Case eMessages.SafeModeOff
+                Call frmMain.ControlSM(eSMType.sSafemode, False)
         
-        Case eMessages.ResuscitationSafeOff
-            Call frmMain.ControlSM(eSMType.sResucitation, False)
+            Case eMessages.ResuscitationSafeOff
+                Call frmMain.ControlSM(eSMType.sResucitation, False)
          
-        Case eMessages.ResuscitationSafeOn
-            Call frmMain.ControlSM(eSMType.sResucitation, True)
+            Case eMessages.ResuscitationSafeOn
+                Call frmMain.ControlSM(eSMType.sResucitation, True)
         
-        Case eMessages.NobilityLost
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_PIERDE_NOBLEZA, 255, 0, 0, False, False, True)
+            Case eMessages.NobilityLost
+                Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_PIERDE_NOBLEZA").Item("TEXTO"), 255, 0, 0, False, False, True)
         
-        Case eMessages.CantUseWhileMeditating
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_USAR_MEDITANDO, 255, 0, 0, False, False, True)
+            Case eMessages.CantUseWhileMeditating
+                Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_USAR_MEDITANDO").Item("TEXTO"), 255, 0, 0, False, False, True)
         
-        Case eMessages.NPCHitUser
-            Select Case incomingData.ReadByte()
-                Case bCabeza
-                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_GOLPE_CABEZA & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
-                
-                Case bBrazoIzquierdo
-                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_GOLPE_BRAZO_IZQ & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
-                
-                Case bBrazoDerecho
-                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_GOLPE_BRAZO_DER & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
-                
-                Case bPiernaIzquierda
-                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_GOLPE_PIERNA_IZQ & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
-                
-                Case bPiernaDerecha
-                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_GOLPE_PIERNA_DER & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
-                
-                Case bTorso
-                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_GOLPE_TORSO & CStr(incomingData.ReadInteger() & "!!"), 255, 0, 0, True, False, True)
-            End Select
-        
-        Case eMessages.UserHitNPC
-            Call AddtoRichTextBox(frmMain.RecTxt, "¡¡Le has quitado " & CStr(incomingData.ReadLong()) & " puntos de vida a la criatura!!", 255, 0, 0, True, False, True)
-        
-        Case eMessages.UserAttackedSwing
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & charlist(incomingData.ReadInteger()).nombre & MENSAJE_ATAQUE_FALLO, 255, 0, 0, True, False, True)
-        
-        Case eMessages.UserHittedByUser
-            Dim AttackerName As String
-            
-            AttackerName = GetRawName(charlist(incomingData.ReadInteger()).nombre)
-            BodyPart = incomingData.ReadByte()
-            Daño = incomingData.ReadInteger()
-            
-            Select Case BodyPart
-                Case bCabeza
-                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & MENSAJE_RECIVE_IMPACTO_CABEZA & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
-                
-                Case bBrazoIzquierdo
-                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
-                
-                Case bBrazoDerecho
-                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & MENSAJE_RECIVE_IMPACTO_BRAZO_DER & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
-                
-                Case bPiernaIzquierda
-                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
-                
-                Case bPiernaDerecha
-                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & MENSAJE_RECIVE_IMPACTO_PIERNA_DER & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
-                
-                Case bTorso
-                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & MENSAJE_RECIVE_IMPACTO_TORSO & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
-            End Select
-        
-        Case eMessages.UserHittedUser
+            Case eMessages.NPCHitUser
 
-            Dim VictimName As String
-            
-            VictimName = GetRawName(charlist(incomingData.ReadInteger()).nombre)
-            BodyPart = incomingData.ReadByte()
-            Daño = incomingData.ReadInteger()
-            
-            Select Case BodyPart
-                Case bCabeza
-                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_PRODUCE_IMPACTO_1 & VictimName & MENSAJE_PRODUCE_IMPACTO_CABEZA & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
-                
-                Case bBrazoIzquierdo
-                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_PRODUCE_IMPACTO_1 & VictimName & MENSAJE_PRODUCE_IMPACTO_BRAZO_IZQ & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
-                
-                Case bBrazoDerecho
-                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_PRODUCE_IMPACTO_1 & VictimName & MENSAJE_PRODUCE_IMPACTO_BRAZO_DER & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
-                
-                Case bPiernaIzquierda
-                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_PRODUCE_IMPACTO_1 & VictimName & MENSAJE_PRODUCE_IMPACTO_PIERNA_IZQ & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
-                
-                Case bPiernaDerecha
-                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_PRODUCE_IMPACTO_1 & VictimName & MENSAJE_PRODUCE_IMPACTO_PIERNA_DER & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
-                
-                Case bTorso
-                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_PRODUCE_IMPACTO_1 & VictimName & MENSAJE_PRODUCE_IMPACTO_TORSO & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
-            End Select
-        
-        Case eMessages.WorkRequestTarget
-            UsingSkill = incomingData.ReadByte()
-            
-            frmMain.MousePointer = 2
-            
-            Select Case UsingSkill
-                Case Magia
-                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_TRABAJO_MAGIA, 100, 100, 120, 0, 0)
-                
-                Case Pesca
-                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_TRABAJO_PESCA, 100, 100, 120, 0, 0)
-                
-                Case Robar
-                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_TRABAJO_ROBAR, 100, 100, 120, 0, 0)
-                
-                Case Talar
-                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_TRABAJO_TALAR, 100, 100, 120, 0, 0)
-                
-                Case Mineria
-                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_TRABAJO_MINERIA, 100, 100, 120, 0, 0)
-                
-                Case FundirMetal
-                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_TRABAJO_FUNDIRMETAL, 100, 100, 120, 0, 0)
-                
-                Case Proyectiles
-                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_TRABAJO_PROYECTILES, 100, 100, 120, 0, 0)
-            End Select
+                Select Case incomingData.ReadByte()
 
-        Case eMessages.HaveKilledUser
-            Dim KilledUser As Integer
-            Dim Exp As Long
-            
-            KilledUser = .ReadInteger
-            Exp = .ReadLong
-            
-            Call ShowConsoleMsg(MENSAJE_HAS_MATADO_A & charlist(KilledUser).nombre & MENSAJE_22, 255, 0, 0, True, False)
-            Call ShowConsoleMsg(MENSAJE_HAS_GANADO_EXPE_1 & Exp & MENSAJE_HAS_GANADO_EXPE_2, 255, 0, 0, True, False)
-            
-            'Sacamos un screenshot si está activado el FragShooter:
-            If ClientSetup.bKill And ClientSetup.bActive Then
-                If Exp \ 2 > ClientSetup.byMurderedLevel Then
-                    FragShooterNickname = charlist(KilledUser).nombre
-                    FragShooterKilledSomeone = True
+                    Case bCabeza
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_GOLPE_CABEZA").Item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
+                
+                    Case bBrazoIzquierdo
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_GOLPE_BRAZO_IZQ").Item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
+                
+                    Case bBrazoDerecho
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_GOLPE_BRAZO_DER").Item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
+                
+                    Case bPiernaIzquierda
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_GOLPE_PIERNA_IZQ").Item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
+                
+                    Case bPiernaDerecha
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_GOLPE_PIERNA_DER").Item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
+                
+                    Case bTorso
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_GOLPE_TORSO").Item("TEXTO") & CStr(incomingData.ReadInteger() & "!!"), 255, 0, 0, True, False, True)
+
+                End Select
+        
+            Case eMessages.UserHitNPC
+                Dim MsgHitNpc As String
+                    MsgHitNpc = JsonLanguage.Item("MENSAJE_DAMAGE_NPC").Item("TEXTO")
+                    MsgHitNpc = Replace$(MsgHitNpc, "VAR_DANO", CStr(incomingData.ReadLong()))
                     
-                    FragShooterCapturePending = True
-                End If
-            End If
-            
-        Case eMessages.UserKill
-            Dim KillerUser As Integer
-            
-            KillerUser = .ReadInteger
-            
-            Call ShowConsoleMsg(charlist(KillerUser).nombre & MENSAJE_TE_HA_MATADO, 255, 0, 0, True, False)
-            
-            'Sacamos un screenshot si está activado el FragShooter:
-            If ClientSetup.bDie And ClientSetup.bActive Then
-                FragShooterNickname = charlist(KillerUser).nombre
-                FragShooterKilledSomeone = False
-                
-                FragShooterCapturePending = True
-            End If
-                
-        Case eMessages.EarnExp
-            'Call ShowConsoleMsg(MENSAJE_HAS_GANADO_EXPE_1 & .ReadLong & MENSAJE_HAS_GANADO_EXPE_2, 255, 0, 0, True, False)
+                Call AddtoRichTextBox(frmMain.RecTxt, MsgHitNpc, 255, 0, 0, True, False, True)
         
-        Case eMessages.GoHome
-            Dim Distance As Byte
-            Dim Hogar As String
-            Dim tiempo As Integer
-            Dim msg As String
-            
-            Distance = .ReadByte
-            tiempo = .ReadInteger
-            Hogar = .ReadASCIIString
-            
-            If tiempo >= 60 Then
-                If tiempo Mod 60 = 0 Then
-                    msg = tiempo / 60 & " minutos."
-                Else
-                    msg = CInt(tiempo \ 60) & " minutos y " & tiempo Mod 60 & " segundos."  'Agregado el CInt() asi el número no es con , [C4b3z0n - 09/28/2010]
-                End If
-            Else
-                msg = tiempo & " segundos."
-            End If
-            
-            Call ShowConsoleMsg("Te encuentras a " & Distance & " mapas de la " & Hogar & ", este viaje durará " & msg, 255, 0, 0, True)
-            Traveling = True
+            Case eMessages.UserAttackedSwing
+                Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & charlist(incomingData.ReadInteger()).Nombre & JsonLanguage.Item("MENSAJE_ATAQUE_FALLO").Item("TEXTO"), 255, 0, 0, True, False, True)
+        
+            Case eMessages.UserHittedByUser
 
-        Case eMessages.CancelGoHome
-            Call ShowConsoleMsg(MENSAJE_HOGAR_CANCEL, 255, 0, 0, True)
-            Traveling = False
-                   
-        Case eMessages.FinishHome
-            Call ShowConsoleMsg(MENSAJE_HOGAR, 255, 255, 255)
-            Traveling = False
+                Dim AttackerName As String
             
-        Case eMessages.UserMuerto
-            Call ShowConsoleMsg(MENSAJE_USER_MUERTO, 255, 255, 255)
+                AttackerName = GetRawName(charlist(incomingData.ReadInteger()).Nombre)
+                BodyPart = incomingData.ReadByte()
+                Daño = incomingData.ReadInteger()
+            
+                Select Case BodyPart
+
+                    Case bCabeza
+                        Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_CABEZA").Item("TEXTO") & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
+                
+                    Case bBrazoIzquierdo
+                        Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ").Item("TEXTO") & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
+                
+                    Case bBrazoDerecho
+                        Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_BRAZO_DER").Item("TEXTO") & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
+                
+                    Case bPiernaIzquierda
+                        Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ").Item("TEXTO") & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
+                
+                    Case bPiernaDerecha
+                        Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_PIERNA_DER").Item("TEXTO") & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
+                
+                    Case bTorso
+                        Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_TORSO").Item("TEXTO") & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
+
+                End Select
         
-        Case eMessages.NpcInmune
-            Call ShowConsoleMsg(NPC_INMUNE, 210, 220, 220)
+            Case eMessages.UserHittedUser
+
+                Dim VictimName As String
             
-        Case eMessages.Hechizo_HechiceroMSG_NOMBRE
-            SpellIndex = .ReadByte
-            nombre = .ReadASCIIString
+                VictimName = GetRawName(charlist(incomingData.ReadInteger()).Nombre)
+                BodyPart = incomingData.ReadByte()
+                Daño = incomingData.ReadInteger()
+            
+                Select Case BodyPart
+
+                    Case bCabeza
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_1").Item("TEXTO") & VictimName & JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_CABEZA").Item("TEXTO") & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
+                
+                    Case bBrazoIzquierdo
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_1").Item("TEXTO") & VictimName & JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_BRAZO_IZQ").Item("TEXTO") & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
+                
+                    Case bBrazoDerecho
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_1").Item("TEXTO") & VictimName & JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_BRAZO_DER").Item("TEXTO") & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
+                
+                    Case bPiernaIzquierda
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_1").Item("TEXTO") & VictimName & JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_PIERNA_IZQ").Item("TEXTO") & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
+                
+                    Case bPiernaDerecha
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_1").Item("TEXTO") & VictimName & JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_PIERNA_DER").Item("TEXTO") & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
+                
+                    Case bTorso
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_1").Item("TEXTO") & VictimName & JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_TORSO").Item("TEXTO") & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
+
+                End Select
+        
+            Case eMessages.WorkRequestTarget
+                UsingSkill = incomingData.ReadByte()
+            
+                frmMain.MousePointer = 2
+            
+                Select Case UsingSkill
+
+                    Case Magia
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_TRABAJO_MAGIA").Item("TEXTO"), 100, 100, 120, 0, 0)
+                
+                    Case Pesca
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_TRABAJO_PESCA").Item("TEXTO"), 100, 100, 120, 0, 0)
+                
+                    Case Robar
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_TRABAJO_ROBAR").Item("TEXTO"), 100, 100, 120, 0, 0)
+                
+                    Case Talar
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_TRABAJO_TALAR").Item("TEXTO"), 100, 100, 120, 0, 0)
+                
+                    Case Mineria
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_TRABAJO_MINERIA").Item("TEXTO"), 100, 100, 120, 0, 0)
+                
+                    Case FundirMetal
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_TRABAJO_FUNDIRMETAL").Item("TEXTO"), 100, 100, 120, 0, 0)
+                
+                    Case Proyectiles
+                        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_TRABAJO_PROYECTILES").Item("TEXTO"), 100, 100, 120, 0, 0)
+
+                End Select
+
+            Case eMessages.HaveKilledUser
+
+                Dim KilledUser As Integer
+
+                Dim Exp        As Long
+                
+                Dim MensajeExp As String
+            
+                KilledUser = .ReadInteger
+                Exp = .ReadLong
+            
+                Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_HAS_MATADO_A").Item("TEXTO") & charlist(KilledUser).Nombre & MENSAJE_22, 255, 0, 0, True, False)
+                
+                ' Para mejor lectura
+                MensajeExp = JsonLanguage.Item("MENSAJE_HAS_GANADO_EXP").Item("TEXTO") 'String original
+                MensajeExp = Replace$(MensajeExp, "VAR_EXP_GANADA", Exp) 'Parte a reemplazar
+                
+                Call ShowConsoleMsg(MensajeExp, 255, 0, 0, True, False)
+            
+                'Sacamos un screenshot si está activado el FragShooter:
+                If ClientSetup.bKill And ClientSetup.bActive Then
+                    If Exp \ 2 > ClientSetup.byMurderedLevel Then
+                        FragShooterNickname = charlist(KilledUser).Nombre
+                        FragShooterKilledSomeone = True
+                    
+                        FragShooterCapturePending = True
+
+                    End If
+
+                End If
+            
+            Case eMessages.UserKill
+
+                Dim KillerUser As Integer
+            
+                KillerUser = .ReadInteger
+            
+                Call ShowConsoleMsg(charlist(KillerUser).Nombre & JsonLanguage.Item("MENSAJE_TE_HA_MATADO").Item("TEXTO"), 255, 0, 0, True, False)
+            
+                'Sacamos un screenshot si está activado el FragShooter:
+                If ClientSetup.bDie And ClientSetup.bActive Then
+                    FragShooterNickname = charlist(KillerUser).Nombre
+                    FragShooterKilledSomeone = False
+                
+                    FragShooterCapturePending = True
+
+                End If
+                
+            Case eMessages.EarnExp
+                'Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_HAS_GANADO_EXPE_1").item("TEXTO") & .ReadLong & JsonLanguage.item("MENSAJE_HAS_GANADO_EXPE_2").item("TEXTO"), 255, 0, 0, True, False)
+        
+            Case eMessages.GoHome
+
+                Dim Distance As Byte
+
+                Dim Hogar    As String
+
+                Dim tiempo   As Integer
+
+                Dim msg      As String
+                
+                Dim msgGoHome As String
+            
+                Distance = .ReadByte
+                tiempo = .ReadInteger
+                Hogar = .ReadASCIIString
+            
+                If tiempo >= 60 Then
+                    If tiempo Mod 60 = 0 Then
+                        msg = tiempo / 60 & " " & JsonLanguage.Item("MINUTOS").Item("TEXTO") & "."
+                    Else
+                        msg = CInt(tiempo \ 60) & " " & JsonLanguage.Item("MINUTOS").Item("TEXTO") & " " & JsonLanguage.Item("LETRA_Y").Item("TEXTO") & " " & tiempo Mod 60 & " " & JsonLanguage.Item("SEGUNDOS").Item("TEXTO") & "."  'Agregado el CInt() asi el número no es con , [C4b3z0n - 09/28/2010]
+
+                    End If
+
+                Else
+                    msg = tiempo & " " & JsonLanguage.Item("SEGUNDOS").Item("TEXTO") & "."
+
+                End If
+                
+                msgGoHome = JsonLanguage.Item("MENSAJE_ESTAS_A_MAPAS_DE_DURACION_VIAJE").Item("TEXTO") & msg
+                msgGoHome = Replace$(msgGoHome, "VAR_DISTANCIA_MAPAS", Distance)
+                msgGoHome = Replace$(msgGoHome, "VAR_MAPA_DESTINO", Hogar)
+                
+                Call ShowConsoleMsg(msgGoHome, 255, 0, 0, True)
+                Traveling = True
+
+            Case eMessages.CancelGoHome
+                Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_HOGAR_CANCEL").Item("TEXTO"), 255, 0, 0, True)
+                Traveling = False
+                   
+            Case eMessages.FinishHome
+                Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_HOGAR").Item("TEXTO"), 255, 255, 255)
+                Traveling = False
+            
+            Case eMessages.UserMuerto
+                Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO").Item(2), 255, 255, 255)
+        
+            Case eMessages.NpcInmune
+                Call ShowConsoleMsg(JsonLanguage.Item("NPC_INMUNE").Item("TEXTO"), 210, 220, 220)
+            
+            Case eMessages.Hechizo_HechiceroMSG_NOMBRE
+                SpellIndex = .ReadByte
+                Nombre = .ReadASCIIString
          
-            Call ShowConsoleMsg(Hechizos(SpellIndex).HechiceroMsg & " " & nombre & ".", 210, 220, 220)
+                Call ShowConsoleMsg(Hechizos(SpellIndex).HechiceroMsg & " " & Nombre & ".", 210, 220, 220)
          
-        Case eMessages.Hechizo_HechiceroMSG_ALGUIEN
-            SpellIndex = .ReadByte
+            Case eMessages.Hechizo_HechiceroMSG_ALGUIEN
+                SpellIndex = .ReadByte
          
-            Call ShowConsoleMsg(Hechizos(SpellIndex).HechiceroMsg & " alguien.", 210, 220, 220)
+                Call ShowConsoleMsg(Hechizos(SpellIndex).HechiceroMsg & " " & JsonLanguage.Item("ALGUIEN").Item("TEXTO") & ".", 210, 220, 220)
          
-        Case eMessages.Hechizo_HechiceroMSG_CRIATURA
-            SpellIndex = .ReadByte
-            Call ShowConsoleMsg(Hechizos(SpellIndex).HechiceroMsg & " la criatura.", 210, 220, 220)
+            Case eMessages.Hechizo_HechiceroMSG_CRIATURA
+                SpellIndex = .ReadByte
+                Call ShowConsoleMsg(Hechizos(SpellIndex).HechiceroMsg & " la criatura.", 210, 220, 220)
          
-        Case eMessages.Hechizo_PropioMSG
-            SpellIndex = .ReadByte
-            Call ShowConsoleMsg(Hechizos(SpellIndex).PropioMsg, 210, 220, 220)
+            Case eMessages.Hechizo_PropioMSG
+                SpellIndex = .ReadByte
+                Call ShowConsoleMsg(Hechizos(SpellIndex).PropioMsg, 210, 220, 220)
          
-        Case eMessages.Hechizo_TargetMSG
-            SpellIndex = .ReadByte
-            nombre = .ReadASCIIString
-            Call ShowConsoleMsg(nombre & " " & Hechizos(SpellIndex).TargetMsg, 210, 220, 220)
-    End Select
-End With
+            Case eMessages.Hechizo_TargetMSG
+                SpellIndex = .ReadByte
+                Nombre = .ReadASCIIString
+                Call ShowConsoleMsg(Nombre & " " & Hechizos(SpellIndex).TargetMsg, 210, 220, 220)
+
+        End Select
+
+    End With
+
 End Sub
 
 
@@ -1434,7 +1483,7 @@ Private Sub HandleUserOfferConfirm()
         ' Now he can accept the offer or reject it
         .HabilitarAceptarRechazar True
         
-        .PrintCommerceMsg TradingUserName & " ha confirmado su oferta!", FontTypeNames.FONTTYPE_CONSE
+        .PrintCommerceMsg TradingUserName & JsonLanguage.Item("MENSAJE_COMM_OFERTA_ACEPTA").Item("TEXTO"), FontTypeNames.FONTTYPE_CONSE
     End With
     
 End Sub
@@ -1491,7 +1540,7 @@ Private Sub HandleNPCSwing()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_CRIATURA_FALLA_GOLPE, 255, 0, 0, True, False, True)
+    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_CRIATURA_FALLA_GOLPE").Item("TEXTO"), 255, 0, 0, True, False, True)
 End Sub
 
 ''
@@ -1506,7 +1555,7 @@ Private Sub HandleNPCKillUser()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_CRIATURA_MATADO, 255, 0, 0, True, False, True)
+    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_CRIATURA_MATADO").Item("TEXTO"), 255, 0, 0, True, False, True)
 End Sub
 
 ''
@@ -1521,7 +1570,7 @@ Private Sub HandleBlockedWithShieldUser()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_RECHAZO_ATAQUE_ESCUDO, 255, 0, 0, True, False, True)
+    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_RECHAZO_ATAQUE_ESCUDO").Item("TEXTO"), 255, 0, 0, True, False, True)
 End Sub
 
 ''
@@ -1536,7 +1585,7 @@ Private Sub HandleBlockedWithShieldOther()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_USUARIO_RECHAZO_ATAQUE_ESCUDO, 255, 0, 0, True, False, True)
+    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_RECHAZO_ATAQUE_ESCUDO").Item("TEXTO"), 255, 0, 0, True, False, True)
 End Sub
 
 ''
@@ -1551,7 +1600,7 @@ Private Sub HandleUserSwing()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_FALLADO_GOLPE, 255, 0, 0, True, False, True)
+    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_FALLADO_GOLPE").Item("TEXTO"), 255, 0, 0, True, False, True)
 End Sub
 
 ''
@@ -1624,7 +1673,7 @@ Private Sub HandleNobilityLost()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_PIERDE_NOBLEZA, 255, 0, 0, False, False, True)
+    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_PIERDE_NOBLEZA").Item("TEXTO"), 255, 0, 0, False, False, True)
 End Sub
 
 ''
@@ -1639,7 +1688,7 @@ Private Sub HandleCantUseWhileMeditating()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_USAR_MEDITANDO, 255, 0, 0, False, False, True)
+    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_USAR_MEDITANDO").Item("TEXTO"), 255, 0, 0, False, False, True)
 End Sub
 
 ''
@@ -1932,7 +1981,7 @@ Private Sub HandleChangeMap()
         End If
     Else
         'no encontramos el mapa en el hd
-        MsgBox "Error en los mapas, algún archivo ha sido modificado o esta dañado."
+        MsgBox JsonLanguage.Item("ERROR_MAPAS").Item("TEXTO")
         
         Call CloseClient
     End If
@@ -1983,26 +2032,19 @@ Private Sub HandleNPCHitUser()
     
     Select Case incomingData.ReadByte()
         Case bCabeza
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_GOLPE_CABEZA & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
+            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_GOLPE_CABEZA").Item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
         Case bBrazoIzquierdo
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_GOLPE_BRAZO_IZQ & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
+            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_GOLPE_BRAZO_IZQ").Item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
         Case bBrazoDerecho
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_GOLPE_BRAZO_DER & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
+            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_GOLPE_BRAZO_DER").Item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
         Case bPiernaIzquierda
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_GOLPE_PIERNA_IZQ & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
+            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_GOLPE_PIERNA_IZQ").Item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
         Case bPiernaDerecha
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_GOLPE_PIERNA_DER & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
+            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_GOLPE_BRAZO_DER").Item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
         Case bTorso
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_GOLPE_TORSO & CStr(incomingData.ReadInteger() & "!!"), 255, 0, 0, True, False, True)
+            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_GOLPE_TORSO").Item("TEXTO") & CStr(incomingData.ReadInteger() & "!!"), 255, 0, 0, True, False, True)
     End Select
 End Sub
-
-
-
-
-''
-
-
 
 ''
 ' Handles the ChatOverHead message.
@@ -2427,7 +2469,7 @@ On Error GoTo ErrHandler
     With charlist(CharIndex)
         Call Char_SetFx(CharIndex, Buffer.ReadInteger(), Buffer.ReadInteger())
         
-        .nombre = Buffer.ReadASCIIString()
+        .Nombre = Buffer.ReadASCIIString()
         NickColor = Buffer.ReadByte()
         
         If (NickColor And eNickColor.ieCriminal) <> 0 Then
@@ -2688,14 +2730,14 @@ Private Sub HandleObjectDelete()
     
     Dim X   As Byte
     Dim Y   As Byte
-    Dim Obj As Integer
+    Dim obj As Integer
 
     X = incomingData.ReadByte()
     Y = incomingData.ReadByte()
         
-    Obj = Map_PosExitsObject(X, Y)
+    obj = Map_PosExitsObject(X, Y)
         
-    If (Obj > 0) Then
+    If (obj > 0) Then
         Call Map_DestroyObject(X, Y)
     End If
 End Sub
@@ -3060,19 +3102,19 @@ Private Sub HandleWorkRequestTarget()
     
     Select Case UsingSkill
         Case Magia
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_TRABAJO_MAGIA, 100, 100, 120, 0, 0)
+            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_TRABAJO_MAGIA").Item("TEXTO"), 100, 100, 120, 0, 0)
         Case Pesca
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_TRABAJO_PESCA, 100, 100, 120, 0, 0)
+            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_TRABAJO_PESCA").Item("TEXTO"), 100, 100, 120, 0, 0)
         Case Robar
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_TRABAJO_ROBAR, 100, 100, 120, 0, 0)
+            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_TRABAJO_ROBAR").Item("TEXTO"), 100, 100, 120, 0, 0)
         Case Talar
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_TRABAJO_TALAR, 100, 100, 120, 0, 0)
+            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_TRABAJO_TALAR").Item("TEXTO"), 100, 100, 120, 0, 0)
         Case Mineria
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_TRABAJO_MINERIA, 100, 100, 120, 0, 0)
+            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_TRABAJO_MINERIA").Item("TEXTO"), 100, 100, 120, 0, 0)
         Case FundirMetal
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_TRABAJO_FUNDIRMETAL, 100, 100, 120, 0, 0)
+            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_TRABAJO_FUNDIRMETAL").Item("TEXTO"), 100, 100, 120, 0, 0)
         Case Proyectiles
-            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_TRABAJO_PROYECTILES, 100, 100, 120, 0, 0)
+            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_TRABAJO_PROYECTILES").Item("TEXTO"), 100, 100, 120, 0, 0)
     End Select
 End Sub
 
@@ -3109,7 +3151,7 @@ On Error GoTo ErrHandler
     Dim MinHit As Integer
     Dim MaxDef As Integer
     Dim MinDef As Integer
-    Dim Value As Single
+    Dim value As Single
     
     slot = Buffer.ReadByte()
     ObjIndex = Buffer.ReadInteger()
@@ -3122,7 +3164,7 @@ On Error GoTo ErrHandler
     MinHit = Buffer.ReadInteger()
     MaxDef = Buffer.ReadInteger()
     MinDef = Buffer.ReadInteger
-    Value = Buffer.ReadSingle()
+    value = Buffer.ReadSingle()
     
     If Equipped Then
         Select Case OBJType
@@ -3156,7 +3198,7 @@ On Error GoTo ErrHandler
         End Select
     End If
     
-    Call Inventario.SetItem(slot, ObjIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, Name)
+    Call Inventario.SetItem(slot, ObjIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, value, Name)
 
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
@@ -3197,7 +3239,7 @@ Private Sub HandleStopWorking()
     Call incomingData.ReadByte
     
     With FontTypes(FontTypeNames.FONTTYPE_INFO)
-        Call ShowConsoleMsg("¡Has terminado de trabajar!", .Red, .Green, .Blue, .bold, .italic)
+        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_WORK_FINISHED"), .Red, .Green, .Blue, .bold, .italic)
     End With
     
     If frmMain.macrotrabajo.Enabled Then Call frmMain.DesactivarMacroTrabajo
@@ -3236,7 +3278,7 @@ Private Sub HandleCancelOfferItem()
         Not frmComerciarUsu.HasAnyItem(InvOroComUsu(1)) Then Call frmComerciarUsu.HabilitarConfirmar(False)
     
     With FontTypes(FontTypeNames.FONTTYPE_INFO)
-        Call frmComerciarUsu.PrintCommerceMsg("¡No puedes comerciar ese objeto!", FontTypeNames.FONTTYPE_INFO)
+        Call frmComerciarUsu.PrintCommerceMsg(JsonLanguage.Item("MENSAJE_NO_COMM_OBJETO").Item("TEXTO"), FontTypeNames.FONTTYPE_INFO)
     End With
 End Sub
 
@@ -3415,7 +3457,7 @@ On Error GoTo ErrHandler
     
     Dim Count As Integer
     Dim i As Long
-    Dim J As Long
+    Dim j As Long
     Dim k As Long
     
     Count = Buffer.ReadInteger()
@@ -3455,18 +3497,18 @@ On Error GoTo ErrHandler
             If .Upgrade Then
                 For k = 1 To Count
                     If .Upgrade = ArmasHerrero(k).ObjIndex Then
-                        J = J + 1
+                        j = j + 1
                 
-                        ReDim Preserve HerreroMejorar(J) As tItemsConstruibles
+                        ReDim Preserve HerreroMejorar(j) As tItemsConstruibles
                         
-                        HerreroMejorar(J).Name = .Name
-                        HerreroMejorar(J).GrhIndex = .GrhIndex
-                        HerreroMejorar(J).ObjIndex = .ObjIndex
-                        HerreroMejorar(J).UpgradeName = ArmasHerrero(k).Name
-                        HerreroMejorar(J).UpgradeGrhIndex = ArmasHerrero(k).GrhIndex
-                        HerreroMejorar(J).LinH = ArmasHerrero(k).LinH - .LinH * 0.85
-                        HerreroMejorar(J).LinP = ArmasHerrero(k).LinP - .LinP * 0.85
-                        HerreroMejorar(J).LinO = ArmasHerrero(k).LinO - .LinO * 0.85
+                        HerreroMejorar(j).Name = .Name
+                        HerreroMejorar(j).GrhIndex = .GrhIndex
+                        HerreroMejorar(j).ObjIndex = .ObjIndex
+                        HerreroMejorar(j).UpgradeName = ArmasHerrero(k).Name
+                        HerreroMejorar(j).UpgradeGrhIndex = ArmasHerrero(k).GrhIndex
+                        HerreroMejorar(j).LinH = ArmasHerrero(k).LinH - .LinH * 0.85
+                        HerreroMejorar(j).LinP = ArmasHerrero(k).LinP - .LinP * 0.85
+                        HerreroMejorar(j).LinO = ArmasHerrero(k).LinO - .LinO * 0.85
                         
                         Exit For
                     End If
@@ -3514,7 +3556,7 @@ On Error GoTo ErrHandler
     
     Dim Count As Integer
     Dim i As Long
-    Dim J As Long
+    Dim j As Long
     Dim k As Long
     
     Count = Buffer.ReadInteger()
@@ -3533,25 +3575,25 @@ On Error GoTo ErrHandler
         End With
     Next i
     
-    J = UBound(HerreroMejorar)
+    j = UBound(HerreroMejorar)
     
     For i = 1 To Count
         With ArmadurasHerrero(i)
             If .Upgrade Then
                 For k = 1 To Count
                     If .Upgrade = ArmadurasHerrero(k).ObjIndex Then
-                        J = J + 1
+                        j = j + 1
                 
-                        ReDim Preserve HerreroMejorar(J) As tItemsConstruibles
+                        ReDim Preserve HerreroMejorar(j) As tItemsConstruibles
                         
-                        HerreroMejorar(J).Name = .Name
-                        HerreroMejorar(J).GrhIndex = .GrhIndex
-                        HerreroMejorar(J).ObjIndex = .ObjIndex
-                        HerreroMejorar(J).UpgradeName = ArmadurasHerrero(k).Name
-                        HerreroMejorar(J).UpgradeGrhIndex = ArmadurasHerrero(k).GrhIndex
-                        HerreroMejorar(J).LinH = ArmadurasHerrero(k).LinH - .LinH * 0.85
-                        HerreroMejorar(J).LinP = ArmadurasHerrero(k).LinP - .LinP * 0.85
-                        HerreroMejorar(J).LinO = ArmadurasHerrero(k).LinO - .LinO * 0.85
+                        HerreroMejorar(j).Name = .Name
+                        HerreroMejorar(j).GrhIndex = .GrhIndex
+                        HerreroMejorar(j).ObjIndex = .ObjIndex
+                        HerreroMejorar(j).UpgradeName = ArmadurasHerrero(k).Name
+                        HerreroMejorar(j).UpgradeGrhIndex = ArmadurasHerrero(k).GrhIndex
+                        HerreroMejorar(j).LinH = ArmadurasHerrero(k).LinH - .LinH * 0.85
+                        HerreroMejorar(j).LinP = ArmadurasHerrero(k).LinP - .LinP * 0.85
+                        HerreroMejorar(j).LinO = ArmadurasHerrero(k).LinO - .LinO * 0.85
                         
                         Exit For
                     End If
@@ -3599,7 +3641,7 @@ On Error GoTo ErrHandler
     
     Dim Count As Integer
     Dim i As Long
-    Dim J As Long
+    Dim j As Long
     Dim k As Long
     
     Count = Buffer.ReadInteger()
@@ -3638,17 +3680,17 @@ On Error GoTo ErrHandler
             If .Upgrade Then
                 For k = 1 To Count
                     If .Upgrade = ObjCarpintero(k).ObjIndex Then
-                        J = J + 1
+                        j = j + 1
                 
-                        ReDim Preserve CarpinteroMejorar(J) As tItemsConstruibles
+                        ReDim Preserve CarpinteroMejorar(j) As tItemsConstruibles
                         
-                        CarpinteroMejorar(J).Name = .Name
-                        CarpinteroMejorar(J).GrhIndex = .GrhIndex
-                        CarpinteroMejorar(J).ObjIndex = .ObjIndex
-                        CarpinteroMejorar(J).UpgradeName = ObjCarpintero(k).Name
-                        CarpinteroMejorar(J).UpgradeGrhIndex = ObjCarpintero(k).GrhIndex
-                        CarpinteroMejorar(J).Madera = ObjCarpintero(k).Madera - .Madera * 0.85
-                        CarpinteroMejorar(J).MaderaElfica = ObjCarpintero(k).MaderaElfica - .MaderaElfica * 0.85
+                        CarpinteroMejorar(j).Name = .Name
+                        CarpinteroMejorar(j).GrhIndex = .GrhIndex
+                        CarpinteroMejorar(j).ObjIndex = .ObjIndex
+                        CarpinteroMejorar(j).UpgradeName = ObjCarpintero(k).Name
+                        CarpinteroMejorar(j).UpgradeGrhIndex = ObjCarpintero(k).GrhIndex
+                        CarpinteroMejorar(j).Madera = ObjCarpintero(k).Madera - .Madera * 0.85
+                        CarpinteroMejorar(j).MaderaElfica = ObjCarpintero(k).MaderaElfica - .MaderaElfica * 0.85
                         
                         Exit For
                     End If
@@ -4476,7 +4518,7 @@ On Error GoTo ErrHandler
             .imgPeticion.Visible = True
         End If
         
-        .nombre.Caption = Buffer.ReadASCIIString()
+        .Nombre.Caption = Buffer.ReadASCIIString()
         .Raza.Caption = ListaRazas(Buffer.ReadByte())
         .Clase.Caption = ListaClases(Buffer.ReadByte())
         
@@ -4506,20 +4548,20 @@ On Error GoTo ErrHandler
         caos = Buffer.ReadBoolean()
         
         If armada Then
-            .ejercito.Caption = "Armada Real"
+            .ejercito.Caption = JsonLanguage.Item("ARMADA").Item("TEXTO")
         ElseIf caos Then
-            .ejercito.Caption = "Legión Oscura"
+            .ejercito.Caption = JsonLanguage.Item("LEGION").Item("TEXTO")
         End If
         
         .Ciudadanos.Caption = CStr(Buffer.ReadLong())
         .criminales.Caption = CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .Status.Caption = " Ciudadano"
-            .Status.ForeColor = vbBlue
+            .status.Caption = " " & JsonLanguage.Item("CIUDADANO").Item("TEXTO")
+            .status.ForeColor = vbBlue
         Else
-            .Status.Caption = " Criminal"
-            .Status.ForeColor = vbRed
+            .status.Caption = " " & JsonLanguage.Item("CRIMINAL").Item("TEXTO")
+            .status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)
@@ -4644,7 +4686,7 @@ On Error GoTo ErrHandler
         .imgOfrecerAlianza.Visible = .EsLeader
         .imgOfrecerPaz.Visible = .EsLeader
         
-        .nombre.Caption = Buffer.ReadASCIIString()
+        .Nombre.Caption = Buffer.ReadASCIIString()
         .fundador.Caption = Buffer.ReadASCIIString()
         .creacion.Caption = Buffer.ReadASCIIString()
         .lider.Caption = Buffer.ReadASCIIString()
@@ -4652,9 +4694,9 @@ On Error GoTo ErrHandler
         .Miembros.Caption = Buffer.ReadInteger()
         
         If Buffer.ReadBoolean() Then
-            .eleccion.Caption = "ABIERTA"
+            .eleccion.Caption = UCase$(JsonLanguage.Item("ABIERTA").Item("TEXTO"))
         Else
-            .eleccion.Caption = "CERRADA"
+            .eleccion.Caption = UCase$(JsonLanguage.Item("CERRADA").Item("TEXTO"))
         End If
         
         .lblAlineacion.Caption = Buffer.ReadASCIIString()
@@ -4903,7 +4945,7 @@ On Error GoTo ErrHandler
         End If
     End With
     
-    Call frmComerciarUsu.PrintCommerceMsg(TradingUserName & " ha modificado su oferta.", FontTypeNames.FONTTYPE_VENENO)
+    Call frmComerciarUsu.PrintCommerceMsg(TradingUserName & JsonLanguage.Item("MENSAJE_COMM_OFERTA_CAMBIA").Item("TEXTO"), FontTypeNames.FONTTYPE_VENENO)
     
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
@@ -5252,7 +5294,7 @@ Private Sub HandlePong()
 '***************************************************
     Call incomingData.ReadByte
     
-    Call AddtoRichTextBox(frmMain.RecTxt, "El ping es " & (GetTickCount - pingTime) & " ms.", 255, 0, 0, True, False, True)
+    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_PING").Item("TEXTO") & (GetTickCount - pingTime) & JsonLanguage.Item("MILISEGUNDOS").Item("TEXTO") & ".", 255, 0, 0, True, False, True)
     
     pingTime = 0
 End Sub
@@ -5359,7 +5401,7 @@ On Error GoTo ErrHandler
         
         .Atacable = (NickColor And eNickColor.ieAtacable) <> 0
         
-        .nombre = UserTag
+        .Nombre = UserTag
     End With
     
     'If we got here then packet is complete, copy data back to original queue
@@ -10527,10 +10569,10 @@ On Error GoTo ErrHandler
         'Status del pj
         If Buffer.ReadBoolean Then
             .lblEstado.ForeColor = vbGreen
-            .lblEstado.Caption = "ONLINE"
+            .lblEstado.Caption = UCase$(JsonLanguage.Item("EN_LINEA").Item("TEXTO"))
         Else
             .lblEstado.ForeColor = vbRed
-            .lblEstado.Caption = "OFFLINE"
+            .lblEstado.Caption = UCase$(JsonLanguage.Item("DESCONECTADO").Item("TEXTO"))
         End If
         
         'IP del personaje
@@ -10538,7 +10580,7 @@ On Error GoTo ErrHandler
         If LenB(tmpStr) Then
             .txtIP.Text = tmpStr
         Else
-            .txtIP.Text = "Usuario offline"
+            .txtIP.Text = JsonLanguage.Item("USUARIO").Item("TEXTO") & JsonLanguage.Item("DESCONECTADO").Item("TEXTO")
         End If
         
         'Tiempo online
@@ -10546,7 +10588,7 @@ On Error GoTo ErrHandler
         If LenB(tmpStr) Then
             .txtTimeOn.Text = tmpStr
         Else
-            .txtTimeOn.Text = "Usuario offline"
+            .txtTimeOn.Text = JsonLanguage.Item("USUARIO").Item("TEXTO") & JsonLanguage.Item("DESCONECTADO").Item("TEXTO")
         End If
         
         'Observaciones
@@ -10554,7 +10596,7 @@ On Error GoTo ErrHandler
         If LenB(tmpStr) Then
             .txtObs.Text = tmpStr
         Else
-            .txtObs.Text = "Sin observaciones"
+            .txtObs.Text = JsonLanguage.Item("MENSAJE_NO_NOVEDADES").Item("TEXTO")
         End If
     End With
     
@@ -10671,7 +10713,7 @@ Private Sub HandleAccountLogged()
     
     If NumberOfCharacters > 0 Then
         For i = 1 To NumberOfCharacters
-            cPJ(i).nombre = incomingData.ReadASCIIString
+            cPJ(i).Nombre = incomingData.ReadASCIIString
             cPJ(i).Body = incomingData.ReadInteger
             cPJ(i).Head = incomingData.ReadInteger
             cPJ(i).weapon = incomingData.ReadInteger
