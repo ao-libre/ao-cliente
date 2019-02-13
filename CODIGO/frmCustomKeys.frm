@@ -781,7 +781,7 @@ Resume Next
     
 End Sub
 
-Private Sub Text1_KeyDown(Index As Integer, KeyCode As Integer, Shift As Integer)
+Private Sub Text1_KeyDown(index As Integer, KeyCode As Integer, Shift As Integer)
     
     On Error GoTo Text1_KeyDown_Err
     
@@ -793,14 +793,14 @@ Private Sub Text1_KeyDown(Index As Integer, KeyCode As Integer, Shift As Integer
     If LenB(CustomKeys.ReadableName(KeyCode)) = 0 Then Exit Sub
     'If key is not valid, we exit
     
-    Text1(Index).Text = CustomKeys.ReadableName(KeyCode)
-    Text1(Index).SelStart = Len(Text1(Index).Text)
+    Text1(index).Text = CustomKeys.ReadableName(KeyCode)
+    Text1(index).SelStart = Len(Text1(index).Text)
     
     For i = 1 To CustomKeys.KeyCount
 
-        If i <> Index Then
+        If i <> index Then
             If CustomKeys.BindedKey(i) = KeyCode Then
-                Text1(Index).Text = vbNullString 'If the key is already assigned, simply reject it
+                Text1(index).Text = vbNullString 'If the key is already assigned, simply reject it
                 Call Beep 'Alert the user
                 KeyCode = 0
                 
@@ -812,7 +812,7 @@ Private Sub Text1_KeyDown(Index As Integer, KeyCode As Integer, Shift As Integer
 
     Next i
     
-    CustomKeys.BindedKey(Index) = KeyCode
+    CustomKeys.BindedKey(index) = KeyCode
     
     
     Exit Sub
@@ -825,7 +825,7 @@ Resume Next
     
 End Sub
 
-Private Sub Text1_KeyPress(Index As Integer, KeyAscii As Integer)
+Private Sub Text1_KeyPress(index As Integer, KeyAscii As Integer)
     
     On Error GoTo Text1_KeyPress_Err
     
@@ -842,11 +842,11 @@ Resume Next
     
 End Sub
 
-Private Sub Text1_KeyUp(Index As Integer, KeyCode As Integer, Shift As Integer)
+Private Sub Text1_KeyUp(index As Integer, KeyCode As Integer, Shift As Integer)
     
     On Error GoTo Text1_KeyUp_Err
     
-    Call Text1_KeyDown(Index, KeyCode, Shift)
+    Call Text1_KeyDown(index, KeyCode, Shift)
 
     
     Exit Sub
@@ -859,7 +859,7 @@ Resume Next
     
 End Sub
 
-Private Sub Text1_MouseMove(Index As Integer, _
+Private Sub Text1_MouseMove(index As Integer, _
                             Button As Integer, _
                             Shift As Integer, _
                             X As Single, _
@@ -920,4 +920,5 @@ Form_KeyUp_Err:
         LogError Err.number, Err.Description, "frmCustomKeys" & "->" & "Form_KeyUp"
     End If
 Resume Next
-    
+
+End Sub

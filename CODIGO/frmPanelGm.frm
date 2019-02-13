@@ -3190,7 +3190,7 @@ Private Sub TabStrip_Click()
     
     On Error GoTo TabStrip_Click_Err
     
-    Call showTab(TabStrip.SelectedItem.Index)
+    Call showTab(TabStrip.SelectedItem.index)
 
     
     Exit Sub
@@ -3236,7 +3236,6 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
     On Error GoTo Form_KeyUp_Err
     
     If KeyCode = vbKeyEscape Then
-        Set clsFormulario = Nothing
         Unload Me
     End If
 
