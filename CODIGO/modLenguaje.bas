@@ -64,12 +64,12 @@ Public Sub SetLanguageApplication()
     
     ' Si no se especifica el idioma en el archivo de configuracion, se usa el del sistema
     If LenB(Language) = 0 Then
-        MsgBox "No se pudo cargar el idioma seleccionado. Se usara el idioma que tienes en el sistema.", vbOKOnly, "Carga de Idiomas"
+        MsgBox "No se pudo cargar el idioma seleccionado. Se usara el idioma castellano.", vbOKOnly, "Carga de Idiomas"
         Language = "spanish"
         'Language = LCase$(ObtainOperativeSystemLanguage(LOCALE_SENGLANGUAGE))
     End If
     
-    LangFile = FileToString(DirLenguages & Language & ".json")
+    LangFile = FileToString(DirLenguajes & Language & ".json")
     Set JsonLanguage = JSON.parse(LangFile)
 End Sub
 

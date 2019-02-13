@@ -1484,33 +1484,33 @@ End Sub
 Function CheckData() As Boolean
     
     If LenB(txtNombre.Text) = 0 Then
-        MsgBox JsonLanguage.Item("VALIDADION_NOMBRE_PJ").Item("TEXTO")
+        MsgBox JsonLanguage.Item("VALIDACION_NOMBRE_PJ").Item("TEXTO")
         txtNombre.SetFocus
         Exit Function
     End If
 
     If UserRaza = 0 Then
-        MsgBox JsonLanguage.Item("VALIDADION_RAZA").Item("TEXTO")
+        MsgBox JsonLanguage.Item("VALIDACION_RAZA").Item("TEXTO")
         Exit Function
     End If
     
     If UserSexo = 0 Then
-        MsgBox JsonLanguage.Item("VALIDADION_SEXO").Item("TEXTO")
+        MsgBox JsonLanguage.Item("VALIDACION_SEXO").Item("TEXTO")
         Exit Function
     End If
     
     If UserClase = 0 Then
-        MsgBox JsonLanguage.Item("VALIDADION_CLASE").Item("TEXTO")
+        MsgBox JsonLanguage.Item("VALIDACION_CLASE").Item("TEXTO")
         Exit Function
     End If
     
     If UserHogar = 0 Then
-        MsgBox JsonLanguage.Item("VALIDADION_HOGAR").Item("TEXTO")
+        MsgBox JsonLanguage.Item("VALIDACION_HOGAR").Item("TEXTO")
         Exit Function
     End If
     
     If Len(AccountHash) = 0 Then
-        MsgBox JsonLanguage.Item("VALIDADION_HASH").Item("TEXTO")
+        MsgBox JsonLanguage.Item("VALIDACION_HASH").Item("TEXTO")
         Exit Function
     End If
 
@@ -1518,13 +1518,13 @@ Function CheckData() As Boolean
     Dim i As Integer
     For i = 1 To NUMATRIBUTOS
         If Val(lblAtributos(i).Caption) = 0 Then
-            MsgBox JsonLanguage.Item("VALIDADION_ATRIBUTOS").Item("TEXTO")
+            MsgBox JsonLanguage.Item("VALIDACION_ATRIBUTOS").Item("TEXTO")
             Exit Function
         End If
     Next i
     
     If LenB(UserName) > 30 Then
-        MsgBox JsonLanguage.Item("VALIDADION_BAD_NOMBRE_PJ").Item("TEXTO").Item(1)
+        MsgBox JsonLanguage.Item("VALIDACION_BAD_NOMBRE_PJ").Item("TEXTO").Item(1)
         Exit Function
     End If
     
@@ -1594,7 +1594,7 @@ Private Sub ImgCrear_Click()
             
     If Right$(UserName, 1) = " " Then
         UserName = RTrim$(UserName)
-        MsgBox JsonLanguage.Item("VALIDADION_BAD_NOMBRE_PJ").Item("TEXTO").Item(2)
+        MsgBox JsonLanguage.Item("VALIDACION_BAD_NOMBRE_PJ").Item("TEXTO").Item(2)
     End If
     
     UserRaza = lstRaza.ListIndex + 1

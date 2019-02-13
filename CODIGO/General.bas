@@ -66,8 +66,8 @@ Public Function DirExtras() As String
     DirExtras = App.path & "\EXTRAS\"
 End Function
 
-Public Function DirLenguages() As String
-    DirLenguages = App.path & "\Languages\"
+Public Function DirLenguajes() As String
+    DirLenguajes = App.path & "\Lenguajes\"
 End Function
 
 Public Function DirInit() As String
