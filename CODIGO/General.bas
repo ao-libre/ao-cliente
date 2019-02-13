@@ -1422,6 +1422,34 @@ Private Sub LoadInitialConfig()
 
     frmConnect.version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
     
+    '#######
+    ' CLASES
+    Call AddtoRichTextBox(frmCargando.status, JsonLanguage.Item("INICIA_CLASES").Item("TEXTO"), 255, 255, 255, True, False, True)
+    Set Dialogos = New clsDialogs
+    Set Audio = New clsAudio
+    Set Inventario = New clsGrapchicalInventory
+    Set CustomKeys = New clsCustomKeys
+    Set CustomMessages = New clsCustomMessages
+    Set incomingData = New clsByteQueue
+    Set outgoingData = New clsByteQueue
+    Set MainTimer = New clsTimer
+    Set clsForos = New clsForum
+    
+    Call AddtoRichTextBox(frmCargando.status, " " & JsonLanguage.Item("HECHO").Item("TEXTO"), 255, 0, 0, True, False, False)
+    
+    
+    '#############
+    ' DIRECT SOUND
+    Call AddtoRichTextBox(frmCargando.status, JsonLanguage.Item("INICIA_SONIDO").Item("TEXTO"), 255, 255, 255, True, False, True)
+    'Inicializamos el sonido
+    Call Audio.Initialize(DirectX, frmMain.hwnd, App.path & "\" & Config_Inicio.DirSonidos & "\", App.path & "\" & Config_Inicio.DirMusica & "\")
+    'Enable / Disable audio
+    Audio.MusicActivated = Not ClientSetup.bNoMusic
+    Audio.SoundActivated = Not ClientSetup.bNoSound
+    Audio.SoundEffectsActivated = Not ClientSetup.bNoSoundEffects
+    Call Audio.PlayMIDI("6.mid")
+    
+    
     '###########
     ' SERVIDORES
     Call AddtoRichTextBox(frmCargando.status, "Buscando servidores... ", 255, 255, 255, True, False, True)
@@ -1448,6 +1476,7 @@ Private Sub LoadInitialConfig()
     If FileExist(DirExtras & "Hand.ico", vbArchive) Then Set picMouseIcon = LoadPicture(DirExtras & "Hand.ico")
     Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
     
+<<<<<<< HEAD
     '#######
     ' CLASES
     Call AddtoRichTextBox(frmCargando.status, "Instanciando clases... ", 255, 255, 255, True, False, True)
@@ -1461,6 +1490,9 @@ Private Sub LoadInitialConfig()
     Set MainTimer = New clsTimer
     Set clsForos = New clsForum
     
+=======
+
+>>>>>>> upstream/master
     '##############
     ' MOTOR GRAÅFICO
     Call AddtoRichTextBox(frmCargando.status, "Iniciando motor grafico... ", 255, 255, 255, True, False, True)
@@ -1491,6 +1523,7 @@ Private Sub LoadInitialConfig()
     Call CargarColores
     Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
     
+<<<<<<< HEAD
     '#############
     ' DIRECT SOUND
     Call AddtoRichTextBox(frmCargando.status, "Iniciando DirectSound... ", 255, 255, 255, True, False, True)
@@ -1504,6 +1537,10 @@ Private Sub LoadInitialConfig()
     Call Inventario.Initialize(DirectD3D8, frmMain.PicInv, MAX_INVENTORY_SLOTS)
     'Call Audio.MusicMP3Play(App.path & "\MP3\" & MP3_Inicio & ".mp3")
     Call AddtoRichTextBox(frmCargando.status, "Hecho", 255, 0, 0, True, False, False)
+=======
+    'Inicializamos el inventario grafico
+    Call Inventario.Initialize(DirectD3D8, frmMain.PicInv, MAX_INVENTORY_SLOTS)
+>>>>>>> upstream/master
     
     Call AddtoRichTextBox(frmCargando.status, "                    °Bienvenido a Argentum Online!", 255, 255, 255, True, False, True)
 

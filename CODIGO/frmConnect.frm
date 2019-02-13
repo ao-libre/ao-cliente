@@ -743,8 +743,7 @@ Private Sub imgSalir_Click()
     
     On Error GoTo imgSalir_Click_Err
     
-    prgRun = False
-
+    Call CloseClient
     
     Exit Sub
 

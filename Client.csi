@@ -1,7 +1,10 @@
 [History]
-1=#P0#=mb	#P1#=Form_KeyUp	#P2#=AOLibre/frmAmbientEditor/Form_KeyUp	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20190213171904	#P7#=0	#P8#=3	.
-2=#P0#=mb	#P1#=Form_KeyUp	#P2#=AOLibre/frmCustomKeys/Form_KeyUp	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20190213171827	#P7#=0	#P8#=2	.
-3=#P0#=mb	#P1#=Form_KeyUp	#P2#=AOLibre/frmCrearCuenta/Form_KeyUp	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20190213171810	#P7#=0	#P8#=4	.
-4=#P0#=mb	#P1#=Form_KeyUp	#P2#=AOLibre/frmPanelGm/Form_KeyUp	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20190213171800	#P7#=0	#P8#=4	.
-5=#P0#=mb	#P1#=parse	#P2#=AOLibre/JSON/parse	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20190213171603	#P7#=0	#P8#=155	.
-6=#P0#=mb	#P1#=parseObject	#P2#=AOLibre/JSON/parseObject	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20190213171505	#P7#=0	#P8#=43	.
+1=#P0#=mb	#P1#=CloseClient	#P2#=AOLibre/Mod_General/CloseClient	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20190213173438	#P7#=0	#P8#=12	.
+2=#P0#=mb	#P1#=imgSalir_Click	#P2#=AOLibre/frmConnect/imgSalir_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20190213173310	#P7#=0	#P8#=4	.
+3=#P0#=mb	#P1#=SetResolution	#P2#=AOLibre/Resolution/SetResolution	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20190213173153	#P7#=0	#P8#=55	.
+4=#P0#=mb	#P1#=Form_KeyUp	#P2#=AOLibre/frmAmbientEditor/Form_KeyUp	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20190213171904	#P7#=0	#P8#=3	.
+5=#P0#=mb	#P1#=Form_KeyUp	#P2#=AOLibre/frmCustomKeys/Form_KeyUp	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20190213171827	#P7#=0	#P8#=2	.
+6=#P0#=mb	#P1#=Form_KeyUp	#P2#=AOLibre/frmCrearCuenta/Form_KeyUp	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20190213171810	#P7#=0	#P8#=4	.
+7=#P0#=mb	#P1#=Form_KeyUp	#P2#=AOLibre/frmPanelGm/Form_KeyUp	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20190213171800	#P7#=0	#P8#=4	.
+8=#P0#=mb	#P1#=parse	#P2#=AOLibre/JSON/parse	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20190213171603	#P7#=0	#P8#=21	.
+9=#P0#=mb	#P1#=parseObject	#P2#=AOLibre/JSON/parseObject	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20190213171505	#P7#=0	#P8#=43	.
