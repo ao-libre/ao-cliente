@@ -128,7 +128,7 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y A
 End Sub
 
 Private Sub imgAceptar_Click()
-    If txtUrl.Text <> "" Then _
+    If Len(txtUrl.Text) <> 0 Then _
         Call WriteGuildNewWebsite(txtUrl.Text)
     
     Unload Me

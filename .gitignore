@@ -3,6 +3,8 @@ Codigo/*.log
 .DS_Store
 *.vbw
 *.oca
+*.csi
+*.lvw
 Thumbs.db
 INIT/Inicio.con
 INIT/AO.dat

@@ -487,7 +487,7 @@ Private Sub UpdateList()
     With lstTitulos
         ' Sticky first
         For PostIndex = 1 To clsForos.GetNroSticky(ForoActual)
-            .AddItem "[ANUNCIO] " & Foros(ForoActual).StickyTitle(PostIndex) & " (" & Foros(ForoActual).StickyAuthor(PostIndex) & ")"
+            .AddItem "[" & UCase$(JsonLanguage.Item("ANUNCIO").Item("TEXTO")) & "] " & Foros(ForoActual).StickyTitle(PostIndex) & " (" & Foros(ForoActual).StickyAuthor(PostIndex) & ")"
             .ItemData(.NewIndex) = STICKY_FORUM_OFFSET + PostIndex
         Next PostIndex
     

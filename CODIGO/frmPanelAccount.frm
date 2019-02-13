@@ -180,7 +180,7 @@ Begin VB.Form frmPanelAccount
       Height          =   195
       Index           =   1
       Left            =   1890
-      TabIndex        =   6
+      TabIndex        =   11
       Top             =   3094
       Width           =   1245
    End
@@ -465,7 +465,7 @@ Begin VB.Form frmPanelAccount
       Height          =   195
       Index           =   4
       Left            =   6960
-      TabIndex        =   9
+      TabIndex        =   12
       Top             =   3094
       Width           =   1245
    End
@@ -486,7 +486,7 @@ Begin VB.Form frmPanelAccount
       Height          =   195
       Index           =   3
       Left            =   5310
-      TabIndex        =   8
+      TabIndex        =   13
       Top             =   3094
       Width           =   1245
    End
@@ -507,7 +507,7 @@ Begin VB.Form frmPanelAccount
       Height          =   195
       Index           =   2
       Left            =   3630
-      TabIndex        =   7
+      TabIndex        =   14
       Top             =   3094
       Width           =   1245
    End
@@ -527,7 +527,7 @@ Begin VB.Form frmPanelAccount
       Height          =   375
       Index           =   0
       Left            =   2760
-      TabIndex        =   10
+      TabIndex        =   15
       Top             =   876
       Width           =   6465
    End
@@ -553,7 +553,7 @@ On Error Resume Next
     Dim CharIndex As Integer
     
     For i = 1 To 10
-        lblAccData(i).Caption = ""
+        lblAccData(i).Caption = vbNullString
     Next i
     
     Me.lblAccData(0).Caption = AccountName
@@ -563,8 +563,9 @@ On Error Resume Next
     End If
 
 End Sub
+
 Private Sub Image5_Click()
-    If Not lblAccData(Index + 1).Caption = "" Then
+    If Not Len(lblAccData(Index + 1).Caption) = 0 Then
         UserName = lblAccData(Index + 1).Caption
         WriteLoginExistingChar
     End If
@@ -575,8 +576,8 @@ Private Sub lblName_Click(Index As Integer)
 End Sub
 
 Private Sub imgConectar_Click()
-   If lblAccData(Seleccionado).Caption = vbNullString Then
-       MsgBox "Error: No has seleccionado un personaje."
+   If Len(lblAccData(Seleccionado).Caption) = 0 Then
+       MsgBox JsonLanguage.Item("ERROR_PERSONAJE_NO_SELECCIONADO").Item("TEXTO")
        Exit Sub
    End If
 
@@ -585,7 +586,7 @@ Private Sub imgConectar_Click()
    #Else
       If frmMain.Winsock1.State <> sckConnected Then
    #End If
-         MsgBox "Error: Se ha perdido la conexion con el server."
+         MsgBox JsonLanguage.Item("ERROR_CONN_LOST").Item("TEXTO")
          AccountName = vbNullString
          AccountHash = vbNullString
          NumberOfCharacters = 0
@@ -598,11 +599,11 @@ End Sub
 
 Private Sub imgCrearPersonaje_Click()
    If NumberOfCharacters >= 10 Then
-       MsgBox "Error: No puedes crear mas de 10 personajes."
+       MsgBox JsonLanguage.Item("ERROR_DEMASIADOS_PJS").Item("TEXTO")
        Exit Sub
    End If
    For i = 1 To 10
-     If lblAccData(i).Caption = "" Then
+     If Len(lblAccData(i).Caption) = 0 Then
         frmCrearPersonaje.Show
         Exit Sub
      End If
@@ -618,26 +619,32 @@ End Sub
 
 Private Sub picChar_Click(Index As Integer)
     Seleccionado = Index + 1
-    If cPJ(Seleccionado).Nombre <> "" Then
-       lblCharData(0) = "Nombre: " & cPJ(Seleccionado).Nombre
-       lblCharData(1) = "Clase: " & ListaClases(cPJ(Seleccionado).Class)
-       lblCharData(2) = "Raza: " & ListaRazas(cPJ(Seleccionado).Race)
-       lblCharData(3) = "Nivel: " & cPJ(Seleccionado).Level
-       lblCharData(4) = "Oro: " & cPJ(Seleccionado).Gold
-       lblCharData(5) = "Mapa: " & cPJ(Seleccionado).Map
-    Else
-        lblCharData(0) = ""
-        lblCharData(1) = ""
-        lblCharData(2) = ""
-        lblCharData(3) = ""
-        lblCharData(4) = ""
-        lblCharData(5) = ""
-    End If
+    
+    With cPJ(Seleccionado)
+    
+        If Len(.Nombre) <> 0 Then
+            lblCharData(0) = JsonLanguage.Item("NOMBRE").Item("TEXTO") & ": " & .Nombre
+            lblCharData(1) = JsonLanguage.Item("CLASE").Item("TEXTO") & ": " & ListaClases(.Class)
+            lblCharData(2) = JsonLanguage.Item("RAZA").Item("TEXTO") & ": " & ListaRazas(.Race)
+            lblCharData(3) = JsonLanguage.Item("NIVEL").Item("TEXTO") & ": " & .Level
+            lblCharData(4) = JsonLanguage.Item("ORO").Item("TEXTO") & ": " & .Gold
+            lblCharData(5) = JsonLanguage.Item("MAPA").Item("TEXTO") & ": " & .Map
+        Else
+            lblCharData(0) = vbNullString
+            lblCharData(1) = vbNullString
+            lblCharData(2) = vbNullString
+            lblCharData(3) = vbNullString
+            lblCharData(4) = vbNullString
+            lblCharData(5) = vbNullString
+        End If
+    
+    End With
+    
 End Sub
 
 Private Sub picChar_DblClick(Index As Integer)
     Seleccionado = Index + 1
-    If Not lblAccData(Seleccionado).Caption = "" Then
+    If Not Len(lblAccData(Seleccionado).Caption) = 0 Then
         UserName = lblAccData(Seleccionado).Caption
         WriteLoginExistingChar
     Else

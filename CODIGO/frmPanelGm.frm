@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmPanelGm 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Panel GM"
@@ -1376,7 +1376,7 @@ Private Sub cmdCAOSMSG_Click()
     '/CAOSMSG
     Dim tStr As String
     
-    tStr = InputBox("Escriba un Mensaje.", "Mensaje por consola LegionOscura")
+    tStr = InputBox(JsonLanguage.Item("MENSAJE_INPUT_MSJ").Item("TEXTO"), "Mensaje por consola LegionOscura")
     If LenB(tStr) <> 0 Then _
         Call WriteChaosLegionMessage(tStr)
 End Sub
@@ -1427,7 +1427,7 @@ Private Sub cmdCIUMSG_Click()
     '/CIUMSG
     Dim tStr As String
     
-    tStr = InputBox("Escriba un Mensaje.", "Mensaje por consola Ciudadanos")
+    tStr = InputBox(JsonLanguage.Item("MENSAJE_INPUT_MSJ").Item("TEXTO"), "Mensaje por consola Ciudadanos")
     If LenB(tStr) <> 0 Then _
         Call WriteCitizenMessage(tStr)
 End Sub
@@ -1776,7 +1776,7 @@ Private Sub cmdREALMSG_Click()
     '/REALMSG
     Dim tStr As String
     
-    tStr = InputBox("Escriba un Mensaje.", "Mensaje por consola ArmadaReal")
+    tStr = InputBox(JsonLanguage.Item("MENSAJE_INPUT_MSJ").Item("TEXTO"), "Mensaje por consola ArmadaReal")
     If LenB(tStr) <> 0 Then _
         Call WriteRoyalArmyMessage(tStr)
 End Sub
@@ -1895,7 +1895,7 @@ Private Sub cmdTALKAS_Click()
     '/TALKAS
     Dim tStr As String
     
-    tStr = InputBox("Escriba un Mensaje.", "Hablar por NPC")
+    tStr = InputBox(JsonLanguage.Item("MENSAJE_INPUT_MSJ").Item("TEXTO"), "Hablar por NPC")
     If LenB(tStr) <> 0 Then _
         Call WriteTalkAsNPC(tStr)
 End Sub

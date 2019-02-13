@@ -554,7 +554,7 @@ Private Sub ConstruirItem(ByVal Index As Integer)
     Dim ItemIndex As Integer
     Dim CantItemsCiclo As Integer
     
-    If Scroll.Visible = True Then ItemIndex = Scroll.Value
+    If Scroll.Visible = True Then ItemIndex = Scroll.value
     ItemIndex = ItemIndex + Index
     
     Select Case UltimaPestania
@@ -719,9 +719,9 @@ On Error Resume Next
                 picUpgradeItem(i).ToolTipText = .UpgradeName
                 
                  ' Inventariode lingotes
-                Call InvLingosHerreria(i).SetItem(1, 0, .LinH, 0, LH_GRH, 0, 0, 0, 0, 0, 0, "Lingotes de Hierro")
-                Call InvLingosHerreria(i).SetItem(2, 0, .LinP, 0, LP_GRH, 0, 0, 0, 0, 0, 0, "Lingotes de Plata")
-                Call InvLingosHerreria(i).SetItem(3, 0, .LinO, 0, LO_GRH, 0, 0, 0, 0, 0, 0, "Lingotes de Oro")
+                Call InvLingosHerreria(i).SetItem(1, 0, .LinH, 0, LH_GRH, 0, 0, 0, 0, 0, 0, JsonLanguage.Item("HERRERO").Item("TEXTO").Item(1))
+                Call InvLingosHerreria(i).SetItem(2, 0, .LinP, 0, LP_GRH, 0, 0, 0, 0, 0, 0, JsonLanguage.Item("HERRERO").Item("TEXTO").Item(2))
+                Call InvLingosHerreria(i).SetItem(3, 0, .LinO, 0, LO_GRH, 0, 0, 0, 0, 0, 0, JsonLanguage.Item("HERRERO").Item("TEXTO").Item(3))
             End With
         End If
     Next i
@@ -745,9 +745,9 @@ For i = 1 To MAX_LIST_ITEMS
             picUpgradeItem(i).ToolTipText = .UpgradeName
             
              ' Inventariode lingotes
-            Call InvLingosHerreria(i).SetItem(1, 0, .LinH, 0, LH_GRH, 0, 0, 0, 0, 0, 0, "Lingotes de Hierro")
-            Call InvLingosHerreria(i).SetItem(2, 0, .LinP, 0, LP_GRH, 0, 0, 0, 0, 0, 0, "Lingotes de Plata")
-            Call InvLingosHerreria(i).SetItem(3, 0, .LinO, 0, LO_GRH, 0, 0, 0, 0, 0, 0, "Lingotes de Oro")
+            Call InvLingosHerreria(i).SetItem(1, 0, .LinH, 0, LH_GRH, 0, 0, 0, 0, 0, 0, JsonLanguage.Item("HERRERO").Item("TEXTO").Item(1))
+            Call InvLingosHerreria(i).SetItem(2, 0, .LinP, 0, LP_GRH, 0, 0, 0, 0, 0, 0, JsonLanguage.Item("HERRERO").Item("TEXTO").Item(2))
+            Call InvLingosHerreria(i).SetItem(3, 0, .LinO, 0, LO_GRH, 0, 0, 0, 0, 0, 0, JsonLanguage.Item("HERRERO").Item("TEXTO").Item(3))
         End With
     End If
 Next i
@@ -840,7 +840,7 @@ Private Sub picPestania_Click(Index As Integer)
     If Cargando Then Exit Sub
     If UltimaPestania = Index Then Exit Sub
     
-    Scroll.Value = 0
+    Scroll.value = 0
     
     Select Case Index
         Case ePestania.ieArmas
@@ -888,7 +888,7 @@ Private Sub Scroll_Change()
     
     If Cargando Then Exit Sub
     
-    i = Scroll.Value
+    i = Scroll.value
     ' Cargo inventarios e imagenes
     
     Select Case UltimaPestania

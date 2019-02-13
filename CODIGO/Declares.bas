@@ -34,7 +34,7 @@ Attribute VB_Name = "Mod_Declaraciones"
 Option Explicit
 
 #If False Then 'to fix VB fucking up the var names
-    Dim nombre As String
+    Dim Nombre As String
 #End If
 
 Public Sonidos As clsSoundMapas
@@ -525,33 +525,12 @@ Public Enum eGMCommands
     RecordListRequest
     RecordDetailsRequest
     ExitDestroy
+    ToggleCentinelActivated '/CENTINELAACTIVADO
 End Enum
 
 '
 ' Mensajes
 '
-' MENSAJE_*  --> Mensajes de texto que se muestran en el cuadro de texto
-'
-
-Public Const MENSAJE_CRIATURA_FALLA_GOLPE As String = "¡¡¡La criatura falló el golpe!!!"
-Public Const MENSAJE_CRIATURA_MATADO As String = "¡¡¡La criatura te ha matado!!!"
-Public Const MENSAJE_RECHAZO_ATAQUE_ESCUDO As String = "¡¡¡Has rechazado el ataque con el escudo!!!"
-Public Const MENSAJE_USUARIO_RECHAZO_ATAQUE_ESCUDO  As String = "¡¡¡El usuario rechazó el ataque con su escudo!!!"
-Public Const MENSAJE_FALLADO_GOLPE As String = "¡¡¡Has fallado el golpe!!!"
-Public Const MENSAJE_SEGURO_ACTIVADO As String = ">>SEGURO ACTIVADO<<"
-Public Const MENSAJE_SEGURO_DESACTIVADO As String = ">>SEGURO DESACTIVADO<<"
-Public Const MENSAJE_PIERDE_NOBLEZA As String = "¡¡Has perdido puntaje de nobleza y ganado puntaje de criminalidad!! Si sigues ayudando a criminales te convertirás en uno de ellos y serás perseguido por las tropas de las ciudades."
-Public Const MENSAJE_USAR_MEDITANDO As String = "¡Estás meditando! Debes dejar de meditar para usar objetos."
-
-Public Const MENSAJE_SEGURO_RESU_ON As String = "SEGURO DE RESURRECCION ACTIVADO"
-Public Const MENSAJE_SEGURO_RESU_OFF As String = "SEGURO DE RESURRECCION DESACTIVADO"
-
-Public Const MENSAJE_GOLPE_CABEZA As String = "¡¡La criatura te ha pegado en la cabeza por "
-Public Const MENSAJE_GOLPE_BRAZO_IZQ As String = "¡¡La criatura te ha pegado el brazo izquierdo por "
-Public Const MENSAJE_GOLPE_BRAZO_DER As String = "¡¡La criatura te ha pegado el brazo derecho por "
-Public Const MENSAJE_GOLPE_PIERNA_IZQ As String = "¡¡La criatura te ha pegado la pierna izquierda por "
-Public Const MENSAJE_GOLPE_PIERNA_DER As String = "¡¡La criatura te ha pegado la pierna derecha por "
-Public Const MENSAJE_GOLPE_TORSO  As String = "¡¡La criatura te ha pegado en el torso por "
 
 ' MENSAJE_[12]: Aparecen antes y despues del valor de los mensajes anteriores (MENSAJE_GOLPE_*)
 Public Const MENSAJE_1 As String = "¡¡"
@@ -559,54 +538,6 @@ Public Const MENSAJE_2 As String = "!!"
 Public Const MENSAJE_11 As String = "¡"
 Public Const MENSAJE_22 As String = "!"
 
-Public Const MENSAJE_GOLPE_CRIATURA_1 As String = "¡¡Le has pegado a la criatura por "
-
-Public Const MENSAJE_ATAQUE_FALLO As String = " te atacó y falló!!"
-
-Public Const MENSAJE_RECIVE_IMPACTO_CABEZA As String = " te ha pegado en la cabeza por "
-Public Const MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ As String = " te ha pegado el brazo izquierdo por "
-Public Const MENSAJE_RECIVE_IMPACTO_BRAZO_DER As String = " te ha pegado el brazo derecho por "
-Public Const MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ As String = " te ha pegado la pierna izquierda por "
-Public Const MENSAJE_RECIVE_IMPACTO_PIERNA_DER As String = " te ha pegado la pierna derecha por "
-Public Const MENSAJE_RECIVE_IMPACTO_TORSO As String = " te ha pegado en el torso por "
-
-Public Const MENSAJE_PRODUCE_IMPACTO_1 As String = "¡¡Le has pegado a "
-Public Const MENSAJE_PRODUCE_IMPACTO_CABEZA As String = " en la cabeza por "
-Public Const MENSAJE_PRODUCE_IMPACTO_BRAZO_IZQ As String = " en el brazo izquierdo por "
-Public Const MENSAJE_PRODUCE_IMPACTO_BRAZO_DER As String = " en el brazo derecho por "
-Public Const MENSAJE_PRODUCE_IMPACTO_PIERNA_IZQ As String = " en la pierna izquierda por "
-Public Const MENSAJE_PRODUCE_IMPACTO_PIERNA_DER As String = " en la pierna derecha por "
-Public Const MENSAJE_PRODUCE_IMPACTO_TORSO As String = " en el torso por "
-
-Public Const MENSAJE_TRABAJO_MAGIA As String = "Haz click sobre el objetivo..."
-Public Const MENSAJE_TRABAJO_PESCA As String = "Haz click sobre el sitio donde quieres pescar..."
-Public Const MENSAJE_TRABAJO_ROBAR As String = "Haz click sobre la víctima..."
-Public Const MENSAJE_TRABAJO_TALAR As String = "Haz click sobre el árbol..."
-Public Const MENSAJE_TRABAJO_MINERIA As String = "Haz click sobre el yacimiento..."
-Public Const MENSAJE_TRABAJO_FUNDIRMETAL As String = "Haz click sobre la fragua..."
-Public Const MENSAJE_TRABAJO_PROYECTILES As String = "Haz click sobre la victima..."
-
-Public Const MENSAJE_ENTRAR_PARTY_1 As String = "Si deseas entrar en una party con "
-Public Const MENSAJE_ENTRAR_PARTY_2 As String = ", escribe /entrarparty"
-
-Public Const MENSAJE_NENE As String = "Cantidad de NPCs: "
-
-Public Const MENSAJE_FRAGSHOOTER_TE_HA_MATADO As String = "te ha matado!"
-Public Const MENSAJE_FRAGSHOOTER_HAS_MATADO As String = "Has matado a"
-Public Const MENSAJE_FRAGSHOOTER_HAS_GANADO As String = "Has ganado "
-Public Const MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA As String = "puntos de experiencia."
-
-Public Const MENSAJE_HAS_MATADO_A As String = "Has matado a "
-Public Const MENSAJE_HAS_GANADO_EXPE_1 As String = "Has ganado "
-Public Const MENSAJE_HAS_GANADO_EXPE_2 As String = " puntos de experiencia."
-Public Const MENSAJE_TE_HA_MATADO As String = " te ha matado!"
-
-Public Const MENSAJE_HOGAR As String = "Has llegado a tu hogar. El viaje ha finalizado."
-Public Const MENSAJE_HOGAR_CANCEL As String = "Tu viaje ha sido cancelado."
-
-Public Const MENSAJE_USER_MUERTO As String = "No puedes realizar esta acción estando muerto."
-
-Public Const NPC_INMUNE As String = "El npc es inmune al hechizo."
 Public Enum eMessages
     NPCSwing
     NPCKillUser
@@ -723,7 +654,7 @@ Global OtroInventario(1 To MAX_INVENTORY_SLOTS) As Inventory
 Public UserHechizos(1 To MAXHECHI) As Integer
 
 Public Type PjCuenta
-    nombre      As String
+    Nombre      As String
     Head        As Integer
     Body        As Integer
     shield      As Byte
@@ -822,7 +753,7 @@ Public ListaClases(1 To NUMCLASES) As String
 
 Public SkillPoints As Integer
 Public Alocados As Integer
-Public flags() As Integer
+Public Flags() As Integer
 Public Oscuridad As Integer
 Public logged As Boolean
 
@@ -1054,7 +985,7 @@ Public NumHechizos As Byte
 Public Hechizos() As tHechizos
  
 Public Type tHechizos
-    nombre As String
+    Nombre As String
     Desc As String
     PalabrasMagicas As String
     ManaRequerida As Integer
@@ -1071,7 +1002,7 @@ Public NumNpcs As Integer
 Public Npcs() As tNpcs
  
 Public Type tNpcs
-    nombre As String
+    Nombre As String
     Desc As String
     NroExpresiones As Byte
     Expresiones() As String

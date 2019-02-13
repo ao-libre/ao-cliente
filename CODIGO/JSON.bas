@@ -1,6 +1,8 @@
 Attribute VB_Name = "JSON"
+
 ' VBJSONDeserializer is a VB6 adaptation of the VB-JSON project @
 ' Fuente: https://www.codeproject.com/Articles/720368/VB-JSON-Parser-Improved-Performance
+
 ' BSD Licensed
 
 Option Explicit
@@ -79,7 +81,7 @@ Public Function parse(ByRef str As String) As Object
             Set parse = parseObject(str, index)
 
         Case Else
-            m_parserrors = "JSON Inv�lido"
+            m_parserrors = "JSON Invalido"
 
     End Select
 
@@ -107,7 +109,7 @@ Private Function parseObject(ByRef str As String, ByRef index As Long) As Dictio
     Call skipChar(index)
 
     If m_str(index) <> A_CURLY_BRACKET_OPEN Then
-        m_parserrors = m_parserrors & "Objeto inv�lido en la posici�n " & index & " : " & mid$(str, index) & vbCrLf
+        m_parserrors = m_parserrors & "Objeto invalido en la posicion " & index & " : " & mid$(str, index) & vbCrLf
         Exit Function
 
     End If
@@ -155,7 +157,7 @@ Private Function parseArray(ByRef str As String, ByRef index As Long) As Collect
     Call skipChar(index)
 
     If mid$(str, index, 1) <> "[" Then
-        m_parserrors = m_parserrors & "Array inv�lido en la posici�n " & index & " : " + mid$(str, index, 20) & vbCrLf
+        m_parserrors = m_parserrors & "Array invalido en la posicion " & index & " : " + mid$(str, index, 20) & vbCrLf
         Exit Function
     End If
    
@@ -348,7 +350,7 @@ Private Function parseBoolean(ByRef str As String, ByRef index As Long) As Boole
         parseBoolean = False
         index = index + 5
     Else
-        m_parserrors = m_parserrors & "Boolean inv�lido en la posici�n " & index & " : " & mid$(str, index) & vbCrLf
+        m_parserrors = m_parserrors & "Boolean invalido en la posicion " & index & " : " & mid$(str, index) & vbCrLf
 
     End If
 
@@ -362,7 +364,7 @@ Private Function parseNull(ByRef str As String, ByRef index As Long)
         parseNull = Null
         index = index + 4
     Else
-        m_parserrors = m_parserrors & "Valor nulo inv�lido en la posici�n " & index & " : " & mid$(str, index) & vbCrLf
+        m_parserrors = m_parserrors & "Valor nulo invalido en la posicion " & index & " : " & mid$(str, index) & vbCrLf
 
     End If
 
@@ -393,7 +395,7 @@ Private Function parseKey(ByRef index As Long) As String
                     Call skipChar(index)
                 
                     If m_str(index) <> A_COLON Then
-                        m_parserrors = m_parserrors & "Valor clave inv�lido en la posici�n " & index & " : " & parseKey & vbCrLf
+                        m_parserrors = m_parserrors & "Valor clave invalido en la posicion " & index & " : " & parseKey & vbCrLf
                         Exit Do
 
                     End If
@@ -408,7 +410,7 @@ Private Function parseKey(ByRef index As Long) As String
                     Call skipChar(index)
                 
                     If m_str(index) <> A_COLON Then
-                        m_parserrors = m_parserrors & "Valor clave inv�lido en la posici�n " & index & " : " & parseKey & vbCrLf
+                        m_parserrors = m_parserrors & "Valor clave invalido en la posicion " & index & " : " & parseKey & vbCrLf
                         Exit Do
 
                     End If
@@ -518,7 +520,7 @@ Private Sub skipChar(ByRef index As Long)
 End Sub
 
 Public Function GetRegionalSettings(ByVal regionalsetting As Long) As String
-    ' Devuelve la configuraci�n regional del sistema
+    ' Devuelve la configuracion regional del sistema
 
     On Error GoTo errorHandler
 
@@ -561,7 +563,7 @@ errorHandler:
 End Function
 
 '********************************************************************************************************
-'                   FUNCIONES MISCEL�NEAS DE LA ANTERIOR VERSI�N DEL M�DULO
+'                   FUNCIONES MISCELANEAS DE LA ANTERIOR VERSION DEL MODULO
 '********************************************************************************************************
 
 Private Function Encode(str) As String

@@ -80,7 +80,7 @@ Private Sub cRegresar_Click()
     
     If UserParalizado Then 'Inmo
         With FontTypes(FontTypeNames.FONTTYPE_WARNING)
-            Call ShowConsoleMsg("No puedes salir estando paralizado.", .Red, .Green, .Blue, .bold, .italic)
+            Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_NO_SALIR").Item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
         End With
         Exit Sub
     End If
@@ -113,6 +113,12 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
-    Me.Picture = LoadPicture(App.path & "\Graficos\frmCerrar.jpg")
+    With Me
+        .Picture = LoadPicture(App.path & "\Graficos\frmCerrar.jpg")
+        .cRegresar.Caption = JsonLanguage.Item("CERRAR").Item("TEXTOS").Item(1)
+        .cSalir.Caption = JsonLanguage.Item("CERRAR").Item("TEXTOS").Item(2)
+        .cCancelQuit.Caption = JsonLanguage.Item("CERRAR").Item("TEXTOS").Item(3)
+    End With
+    
 End Sub
 

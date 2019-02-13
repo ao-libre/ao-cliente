@@ -177,7 +177,7 @@ On Error GoTo error
     
     Exit Sub
 error:
-    MsgBox Err.Description, vbInformation, "Error: " & Err.number
+    MsgBox Err.Description, vbInformation, JsonLanguage.Item("ERROR").Item("TEXTO") & ": " & Err.number
     Unload Me
 End Sub
 

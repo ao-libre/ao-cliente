@@ -920,7 +920,7 @@ Private Sub Form_Load()
     clsFormulario.Initialize Me
     
     'Flags para saber que skills se modificaron
-    ReDim flags(1 To NUMSKILLS)
+    ReDim Flags(1 To NUMSKILLS)
     
     Call ValidarSkills
     
@@ -1215,9 +1215,9 @@ End Sub
 Private Sub SumarSkillPoint(ByVal SkillIndex As Integer)
     If Alocados > 0 Then
 
-        If Val(text1(SkillIndex).Caption) < MAXSKILLPOINTS Then
-            text1(SkillIndex).Caption = Val(text1(SkillIndex).Caption) + 1
-            flags(SkillIndex) = flags(SkillIndex) + 1
+        If Val(Text1(SkillIndex).Caption) < MAXSKILLPOINTS Then
+            Text1(SkillIndex).Caption = Val(Text1(SkillIndex).Caption) + 1
+            Flags(SkillIndex) = Flags(SkillIndex) + 1
             Alocados = Alocados - 1
         End If
             
@@ -1229,9 +1229,9 @@ End Sub
 Private Sub RestarSkillPoint(ByVal SkillIndex As Integer)
     If Alocados < SkillPoints Then
         
-        If Val(text1(SkillIndex).Caption) > 0 And flags(SkillIndex) > 0 Then
-            text1(SkillIndex).Caption = Val(text1(SkillIndex).Caption) - 1
-            flags(SkillIndex) = flags(SkillIndex) - 1
+        If Val(Text1(SkillIndex).Caption) > 0 And Flags(SkillIndex) > 0 Then
+            Text1(SkillIndex).Caption = Val(Text1(SkillIndex).Caption) - 1
+            Flags(SkillIndex) = Flags(SkillIndex) - 1
             Alocados = Alocados + 1
         End If
     End If
@@ -1253,9 +1253,9 @@ Private Sub imgAceptar_Click()
     Dim i As Long
 
     For i = 1 To NUMSKILLS
-        skillChanges(i) = CByte(text1(i).Caption) - UserSkills(i)
+        skillChanges(i) = CByte(Text1(i).Caption) - UserSkills(i)
         'Actualizamos nuestros datos locales
-        UserSkills(i) = Val(text1(i).Caption)
+        UserSkills(i) = Val(Text1(i).Caption)
     Next i
     
     Call WriteModifySkills(skillChanges())
@@ -1485,105 +1485,84 @@ End Sub
 
 Private Sub LoadHelp()
     
-    vsHelp(eSkill.Magia) = "Magia:" & vbCrLf & _
-                            "- Representa la habilidad de un personaje de las áreas mágica." & vbCrLf & _
-                            "- Indica la variedad de hechizos que es capaz de dominar el personaje."
+    vsHelp(eSkill.Magia) = JsonLanguage.Item("HABILIDADES").Item("MAGIA").Item("TEXTO") & ":" & vbCrLf & _
+                           JsonLanguage.Item("HABILIDADES").Item("MAGIA").Item("DESCRIPCION")
     If Not bPuedeMagia Then
         vsHelp(eSkill.Magia) = vsHelp(eSkill.Magia) & vbCrLf & _
-                                "* Habilidad inhabilitada para tu clase."
+                               JsonLanguage.Item("AYUDA_NO_USAR_HABILIDAD").Item("TEXTO")
     End If
     
-    vsHelp(eSkill.Robar) = "Robar:" & vbCrLf & _
-                            "- Habilidades de hurto. Nunca por medio de la violencia." & vbCrLf & _
-                            "- Indica la probabilidad de éxito del personaje al intentar apoderarse de oro de otro, en caso de ser Ladrón, tambien podrá apoderarse de items."
+    vsHelp(eSkill.Robar) = JsonLanguage.Item("HABILIDADES").Item("ROBAR").Item("TEXTO") & ":" & vbCrLf & _
+                           JsonLanguage.Item("HABILIDADES").Item("ROBAR").Item("DESCRIPCION")
     
-    vsHelp(eSkill.Tacticas) = "Evasión en Combate:" & vbCrLf & _
-                                "- Representa la habilidad general para moverse en combate entre golpes enemigos sin morir o tropezar en el intento." & vbCrLf & _
-                                "- Indica la posibilidad de evadir un golpe físico del personaje."
+    vsHelp(eSkill.Tacticas) = JsonLanguage.Item("HABILIDADES").Item("EVASION_EN_COMBATE").Item("TEXTO") & ":" & vbCrLf & _
+                              JsonLanguage.Item("HABILIDADES").Item("EVASION_EN_COMBATE").Item("DESCRIPCION")
     
-    vsHelp(eSkill.Armas) = "Combate con Armas:" & vbCrLf & _
-                            "- Representa la habilidad del personaje para manejar armas de combate cuerpo a cuerpo." & vbCrLf & _
-                            "- Indica la probabilidad de impactar al oponente con armas cuerpo a cuerpo."
+    vsHelp(eSkill.Armas) = JsonLanguage.Item("HABILIDADES").Item("COMBATE_CON_ARMAS").Item("TEXTO") & ":" & vbCrLf & _
+                           JsonLanguage.Item("HABILIDADES").Item("COMBATE_CON_ARMAS").Item("DESCRIPCION")
     
-    vsHelp(eSkill.Meditar) = "Meditar:" & vbCrLf & _
-                                "- Representa la capacidad del personaje de concentrarse para abstrarse dentro de su mente, y así revitalizar su fuerza espiritual." & vbCrLf & _
-                                "- Indica la velocidad a la que el personaje recupera maná (Clases mágicas)."
-    
+    vsHelp(eSkill.Meditar) = JsonLanguage.Item("HABILIDADES").Item("MEDITAR").Item("TEXTO") & ":" & vbCrLf & _
+                             JsonLanguage.Item("HABILIDADES").Item("MEDITAR").Item("DESCRIPCION")
     If Not bPuedeMeditar Then
         vsHelp(eSkill.Meditar) = vsHelp(eSkill.Meditar) & vbCrLf & _
-                                "* Habilidad inhabilitada para tu clase."
+                                JsonLanguage.Item("AYUDA_NO_USAR_HABILIDAD").Item("TEXTO")
     End If
 
-    vsHelp(eSkill.Apuñalar) = "Apuñalar:" & vbCrLf & _
-                                "- Representa la destreza para inflingir daño grave con armas cortas." & vbCrLf & _
-                                "- Indica la posibilidad de apuñalar al enemigo en un ataque. El Asesino es la única clase que no necesitará 10 skills para comenzar a entrenar esta habilidad."
+    vsHelp(eSkill.Apuñalar) = JsonLanguage.Item("HABILIDADES").Item("APUNALAR").Item("TEXTO") & ":" & vbCrLf & _
+                              JsonLanguage.Item("HABILIDADES").Item("APUNALAR").Item("DESCRIPCION")
 
-    vsHelp(eSkill.Ocultarse) = "Ocultarse:" & vbCrLf & _
-                                "- La habilidad propia de un personaje para mimetizarse con el medio y evitar se perciba su presencia." & vbCrLf & _
-                                "- Indica la facilidad con la que uno puede desaparecer de la vista de los demás y por cuanto tiempo."
+    vsHelp(eSkill.Ocultarse) = JsonLanguage.Item("HABILIDADES").Item("OCULTARSE").Item("TEXTO") & ":" & vbCrLf & _
+                                JsonLanguage.Item("HABILIDADES").Item("OCULTARSE").Item("DESCRIPCION")
     
-    vsHelp(eSkill.Supervivencia) = "Superivencia:" & vbCrLf & _
-                                    "- Es el conjunto de habilidades necesarias para sobrevivir fuera de una ciudad en base a lo que la naturaleza ofrece." & vbCrLf & _
-                                    "- Permite conocer la salud de las criaturas guiándose exclusivamente por su aspecto, así como encender fogatas junto a las que descansar."
+    vsHelp(eSkill.Supervivencia) = JsonLanguage.Item("HABILIDADES").Item("SUPERVIVENCIA").Item("TEXTO") & ":" & vbCrLf & _
+                                    JsonLanguage.Item("HABILIDADES").Item("SUPERVIVENCIA").Item("DESCRIPCION")
     
-    vsHelp(eSkill.Talar) = "Talar:" & vbCrLf & _
-                            "- Es la habilidad en el uso del hacha para evitar desperdiciar leña y maximizar la efectividad de cada golpe dado." & vbCrLf & _
-                            "- Indica la probabilidad de obtener leña por golpe."
+    vsHelp(eSkill.Talar) = JsonLanguage.Item("HABILIDADES").Item("TALAR").Item("TEXTO") & ":" & vbCrLf & _
+                            JsonLanguage.Item("HABILIDADES").Item("TALAR").Item("DESCRIPCION")
     
-    vsHelp(eSkill.Comerciar) = "Comercio:" & vbCrLf & _
-                                "- Es la habilidad para regatear los precios exigidos en la compra y evitar ser regateado al vender." & vbCrLf & _
-                                "- Indica que tan caro se compra en el comercio con NPCs."
+    vsHelp(eSkill.Comerciar) = JsonLanguage.Item("HABILIDADES").Item("COMERCIO").Item("TEXTO") & ":" & vbCrLf & _
+                                JsonLanguage.Item("HABILIDADES").Item("COMERCIO").Item("DESCRIPCION")
     
-    vsHelp(eSkill.Defensa) = "Defensa con Escudos:" & vbCrLf & _
-                                "- Es la habilidad de interponer correctamente el escudo ante cada embate enemigo para evitar ser impactado sin perder el equilibrio y poder responder rápidamente con la otra mano." & vbCrLf & _
-                                "- Indica las probabilidades de bloquear un impacto con el escudo."
+    vsHelp(eSkill.Defensa) = JsonLanguage.Item("HABILIDADES").Item("DEFENSA_CON_ESCUDOS").Item("TEXTO") & ":" & vbCrLf & _
+                              JsonLanguage.Item("HABILIDADES").Item("DEFENSA_CON_ESCUDOS").Item("DESCRIPCION")
     
     If Not bPuedeEscudo Then
         vsHelp(eSkill.Defensa) = vsHelp(eSkill.Defensa) & vbCrLf & _
-                                "* Habilidad inhabilitada para tu clase."
+                                JsonLanguage.Item("AYUDA_NO_USAR_HABILIDAD").Item("TEXTO")
     End If
 
 
-    vsHelp(eSkill.Pesca) = "Pesca:" & vbCrLf & _
-                            "- Es el conjunto de conocimientos básicos para poder armar un señuelo, poner la carnada en el anzuelo y saber dónde buscar peces." & vbCrLf & _
-                            "- Indica la probabilidad de tener éxito en cada intento de pescar."
+    vsHelp(eSkill.Pesca) = JsonLanguage.Item("HABILIDADES").Item("PESCA").Item("TEXTO") & ":" & vbCrLf & _
+                            JsonLanguage.Item("HABILIDADES").Item("PESCA").Item("DESCRIPCION")
     
-    vsHelp(eSkill.Mineria) = "Minería:" & vbCrLf & _
-                                "- Es el conjunto de conocimientos sobre los distintos minerales, el dónde se obtienen, cómo deben ser extraídos y trabajados." & vbCrLf & _
-                                "- Indica la probabilidad de tener éxito en cada intento de minar y la capacidad, o no de convertir estos minerales en lingotes."
+    vsHelp(eSkill.Mineria) = JsonLanguage.Item("HABILIDADES").Item("MINERIA").Item("TEXTO") & ":" & vbCrLf & _
+                              JsonLanguage.Item("HABILIDADES").Item("MINERIA").Item("DESCRIPCION")
     
-    vsHelp(eSkill.Carpinteria) = "Carpintería:" & vbCrLf & _
-                                    "- Es el conjunto de conocimientos para saber serruchar, lijar, encolar y clavar madera con un buen nivel de terminación." & vbCrLf & _
-                                    "- Indica la habilidad en el manejo de estas herramientas, el que tan bueno se es en el oficio de carpintero."
+    vsHelp(eSkill.Carpinteria) = JsonLanguage.Item("HABILIDADES").Item("CARPINTERIA").Item("TEXTO") & ":" & vbCrLf & _
+                                  JsonLanguage.Item("HABILIDADES").Item("CARPINTERIA").Item("DESCRIPCION")
     
-    vsHelp(eSkill.Herreria) = "Herrería:" & vbCrLf & _
-                                "- Es el conjunto de conocimientos para saber procesar cada tipo de mineral para fundirlo, forjarlo y crear aleaciones." & vbCrLf & _
-                                "- Indica la habilidad en el manejo de estas técnicas, el que tan bueno se es en el oficio de herrero."
+    vsHelp(eSkill.Herreria) = JsonLanguage.Item("HABILIDADES").Item("HERRERIA").Item("TEXTO") & ":" & vbCrLf & _
+                                JsonLanguage.Item("HABILIDADES").Item("HERRERIA").Item("DESCRIPCION")
     
-    vsHelp(eSkill.Liderazgo) = "Liderazgo:" & vbCrLf & _
-                                "- Es la habilidad propia del personaje para convencer a otros a seguirlo en batalla." & vbCrLf & _
-                                "- Permite crear clanes y partys"
+    vsHelp(eSkill.Liderazgo) = JsonLanguage.Item("HABILIDADES").Item("LIDERAZGO").Item("TEXTO") & ":" & vbCrLf & _
+                                JsonLanguage.Item("HABILIDADES").Item("LIDERAZGO").Item("DESCRIPCION")
     
-    vsHelp(eSkill.Domar) = "Domar Animales:" & vbCrLf & _
-                                "- Es la habilidad en el trato con animales para que estos te sigan y ayuden en combate." & vbCrLf & _
-                                "- Indica la posibilidad de lograr domar a una criatura y qué clases de criaturas se puede domar."
+    vsHelp(eSkill.Domar) = JsonLanguage.Item("HABILIDADES").Item("DOMAR_ANIMALES").Item("TEXTO") & ":" & vbCrLf & _
+                                JsonLanguage.Item("HABILIDADES").Item("DOMAR_ANIMALES").Item("DESCRIPCION")
     
-    vsHelp(eSkill.Proyectiles) = "Combate a distancia:" & vbCrLf & _
-                                "- Es el manejo de las armas de largo alcance." & vbCrLf & _
-                                "- Indica la probabilidad de éxito para impactar a un enemigo con este tipo de armas."
+    vsHelp(eSkill.Proyectiles) = JsonLanguage.Item("HABILIDADES").Item("COMBATE_A_DISTANCIA").Item("TEXTO") & ":" & vbCrLf & _
+                                 JsonLanguage.Item("HABILIDADES").Item("COMBATE_A_DISTANCIA").Item("DESCRIPCION")
     
     If Not bPuedeCombateDistancia Then
         vsHelp(eSkill.Proyectiles) = vsHelp(eSkill.Proyectiles) & vbCrLf & _
-                                "* Habilidad inhabilitada para tu clase."
+                                JsonLanguage.Item("AYUDA_NO_USAR_HABILIDAD").Item("TEXTO")
     End If
 
-    vsHelp(eSkill.Wrestling) = "Combate sin armas:" & vbCrLf & _
-                                "- Es la habilidad del personaje para entrar en combate sin arma alguna salvo sus propios brazos." & vbCrLf & _
-                                "- Indica la probabilidad de éxito para impactar a un enemigo estando desarmado. El Bandido y Ladrón tienen habilidades extras asociadas a esta habilidad."
+    vsHelp(eSkill.Wrestling) = JsonLanguage.Item("HABILIDADES").Item("COMBATE_CUERPO_A_CUERPO").Item("TEXTO") & ":" & vbCrLf & _
+                                JsonLanguage.Item("HABILIDADES").Item("COMBATE_CUERPO_A_CUERPO").Item("DESCRIPCION")
     
-    vsHelp(eSkill.Navegacion) = "Navegación:" & vbCrLf & _
-                                "- Es la habilidad para controlar barcos en el mar sin naufragar." & vbCrLf & _
-                                "- Indica que clase de barcos se pueden utilizar."
+    vsHelp(eSkill.Navegacion) = JsonLanguage.Item("HABILIDADES").Item("NAVEGACION").Item("TEXTO") & ":" & vbCrLf & _
+                                JsonLanguage.Item("HABILIDADES").Item("NAVEGACION").Item("DESCRIPCION")
     
 End Sub
 

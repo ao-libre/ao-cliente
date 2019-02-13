@@ -429,7 +429,7 @@ Dim lFileSize As Long
          
       Else
          ' Throw error
-         Err.Raise 26001, "No se pudo Guarrdar el JPG" & lR, vbExclamation
+         Err.Raise 26001, JsonLanguage.Item("ERROR_GUARDAR_SCREENSHOT").Item("TEXTO") & lR, vbExclamation
       End If
       
       ' Ensure we have freed memory:
