@@ -52,7 +52,7 @@ Public Type tGameIni
     DirSonidos As String
     DirMusica As String
     DirMapas As String
-    DirLenguages As String
+    DirLenguajes As String
 End Type
 
 Public Type tSetupMods
