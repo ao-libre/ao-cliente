@@ -938,6 +938,34 @@ Private Sub LoadInitialConfig()
 
     frmConnect.version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
     
+    '#######
+    ' CLASES
+    Call AddtoRichTextBox(frmCargando.status, JsonLanguage.Item("INICIA_CLASES").Item("TEXTO"), 255, 255, 255, True, False, True)
+    Set Dialogos = New clsDialogs
+    Set Audio = New clsAudio
+    Set Inventario = New clsGrapchicalInventory
+    Set CustomKeys = New clsCustomKeys
+    Set CustomMessages = New clsCustomMessages
+    Set incomingData = New clsByteQueue
+    Set outgoingData = New clsByteQueue
+    Set MainTimer = New clsTimer
+    Set clsForos = New clsForum
+    
+    Call AddtoRichTextBox(frmCargando.status, " " & JsonLanguage.Item("HECHO").Item("TEXTO"), 255, 0, 0, True, False, False)
+    
+    
+    '#############
+    ' DIRECT SOUND
+    Call AddtoRichTextBox(frmCargando.status, JsonLanguage.Item("INICIA_SONIDO").Item("TEXTO"), 255, 255, 255, True, False, True)
+    'Inicializamos el sonido
+    Call Audio.Initialize(DirectX, frmMain.hwnd, App.path & "\" & Config_Inicio.DirSonidos & "\", App.path & "\" & Config_Inicio.DirMusica & "\")
+    'Enable / Disable audio
+    Audio.MusicActivated = Not ClientSetup.bNoMusic
+    Audio.SoundActivated = Not ClientSetup.bNoSound
+    Audio.SoundEffectsActivated = Not ClientSetup.bNoSoundEffects
+    Call Audio.PlayMIDI("6.mid")
+    
+    
     '###########
     ' SERVIDORES
     Call AddtoRichTextBox(frmCargando.status, JsonLanguage.Item("BUSCA_SERVIDORES").Item("TEXTO"), 255, 255, 255, True, False, True)
@@ -964,21 +992,7 @@ Private Sub LoadInitialConfig()
         Set picMouseIcon = LoadPicture(DirExtras & "Hand.ico")
     Call AddtoRichTextBox(frmCargando.status, " " & JsonLanguage.Item("HECHO").Item("TEXTO"), 255, 0, 0, True, False, False)
     
-    '#######
-    ' CLASES
-    Call AddtoRichTextBox(frmCargando.status, JsonLanguage.Item("INICIA_CLASES").Item("TEXTO"), 255, 255, 255, True, False, True)
-    Set Dialogos = New clsDialogs
-    Set Audio = New clsAudio
-    Set Inventario = New clsGrapchicalInventory
-    Set CustomKeys = New clsCustomKeys
-    Set CustomMessages = New clsCustomMessages
-    Set incomingData = New clsByteQueue
-    Set outgoingData = New clsByteQueue
-    Set MainTimer = New clsTimer
-    Set clsForos = New clsForum
-    
-    Call AddtoRichTextBox(frmCargando.status, " " & JsonLanguage.Item("HECHO").Item("TEXTO"), 255, 0, 0, True, False, False)
-    
+
     '##############
     ' MOTOR GRAÅFICO
     Call AddtoRichTextBox(frmCargando.status, JsonLanguage.Item("INICIA_MOTOR_GRAFICO").Item("TEXTO"), 255, 255, 255, True, False, True)
@@ -1008,18 +1022,8 @@ Private Sub LoadInitialConfig()
     
     Call AddtoRichTextBox(frmCargando.status, " " & JsonLanguage.Item("HECHO").Item("TEXTO"), 255, 0, 0, True, False, False)
     
-    '#############
-    ' DIRECT SOUND
-    Call AddtoRichTextBox(frmCargando.status, JsonLanguage.Item("INICIA_SONIDO").Item("TEXTO"), 255, 255, 255, True, False, True)
-    'Inicializamos el sonido
-    Call Audio.Initialize(DirectX, frmMain.hwnd, App.path & "\" & Config_Inicio.DirSonidos & "\", App.path & "\" & Config_Inicio.DirMusica & "\")
-    'Enable / Disable audio
-    Audio.MusicActivated = Not ClientSetup.bNoMusic
-    Audio.SoundActivated = Not ClientSetup.bNoSound
-    Audio.SoundEffectsActivated = Not ClientSetup.bNoSoundEffects
     'Inicializamos el inventario grafico
     Call Inventario.Initialize(DirectD3D8, frmMain.PicInv, MAX_INVENTORY_SLOTS)
-    'Call Audio.MusicMP3Play(App.path & "\MP3\" & MP3_Inicio & ".mp3")
     
     Call AddtoRichTextBox(frmCargando.status, " " & JsonLanguage.Item("HECHO").Item("TEXTO"), 255, 0, 0, True, False, False)
     
