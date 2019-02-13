@@ -8,9 +8,7 @@ Attribute VB_Name = "JSON"
 Option Explicit
 
 ' DECLARACIONES API
-Private Declare Sub CopyMemory Lib "kernel32.dll" Alias "RtlMoveMemory" (ByRef Destination As Integer, ByVal Source As Long, ByVal Length As Long)
 Private Declare Function GetLocaleInfo Lib "kernel32.dll" Alias "GetLocaleInfoA" (ByVal Locale As Long, ByVal LCType As Long, ByVal lpLCData As String, ByVal cchData As Long) As Long
-Private Declare Function SetLocaleInfo Lib "kernel32" Alias "SetLocaleInfoA" (ByVal Locale As Long, ByVal LCType As Long, ByVal lpLCData As String) As Boolean
 Private Declare Function GetUserDefaultLCID% Lib "kernel32" ()
 
 ' CONSTANTES LOCALE API
@@ -92,9 +90,14 @@ End Function
 
 Private Sub GenerateStringArray(ByRef str As String)
 
-    m_length = LenB(str)
+    Dim i As Long
+
+    m_length = Len(str)
     ReDim m_str(1 To m_length)
-    CopyMemory m_str(1), StrPtr(str), m_length * 2
+
+    For i = 1 To m_length
+        m_str(i) = AscW(mid$(str, i, 1))
+    Next i
 
 End Sub
 
