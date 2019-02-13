@@ -108,7 +108,10 @@ Private Sub Form_Load()
     txtCuentaEmail.Text = vbNullString
     txtCuentaPassword.Text = vbNullString
     txtCuentaRepite.Text = vbNullString
+<<<<<<< HEAD
     
+=======
+>>>>>>> origin/master
     LoadButtons
     
     Exit Sub
@@ -141,7 +144,10 @@ Private Sub imgCrearCuenta_Click()
             DoEvents
 
         End If
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
         frmMain.Socket1.hostname = CurServerIp
         frmMain.Socket1.RemotePort = CurServerPort
         frmMain.Socket1.Connect
@@ -208,32 +214,32 @@ Private Function IsFormValid() As Boolean
     On Error GoTo IsFormValid_Err
     
 
-    If txtCuentaEmail.Text = "" Then
-        MsgBox "Ingrese un e-mail."
+    If Len(txtCuentaEmail.Text) = 0 Then
+        MsgBox JsonLanguage.Item("VALIDACION_EMAIL").Item("TEXTO")
         Exit Function
 
     End If
     
-    If txtCuentaPassword.Text = "" Then
-        MsgBox "Ingrese un password."
+    If Len(txtCuentaPassword.Text) = 0 Then
+        MsgBox JsonLanguage.Item("VALIDACION_PASSWORD").Item("TEXTO")
         Exit Function
 
     End If
 
     If Not CheckMailString(txtCuentaEmail.Text) Then
-        MsgBox "Direccion de e-mail invalida."
+        MsgBox JsonLanguage.Item("VALIDACION_BAD_EMAIL").Item("TEXTO").Item(1)
         Exit Function
 
     End If
     
     If Len(txtCuentaEmail.Text) > 30 Then
-        MsgBox "El e-mail debe tener menos de 30 letras."
+        MsgBox JsonLanguage.Item("VALIDACION_BAD_EMAIL").Item("TEXTO").Item(2)
         Exit Function
 
     End If
     
     If Not txtCuentaPassword.Text = txtCuentaRepite.Text Then
-        MsgBox "Los passwords no coinciden."
+        MsgBox JsonLanguage.Item("VALIDACION_BAD_PASSWORD").Item("TEXTO").Item(1)
         Exit Function
 
     End If

@@ -118,9 +118,17 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Command1_Click()
+<<<<<<< HEAD
     
     On Error GoTo Command1_Click_Err
     
+=======
+If frmtip.Check1.value = vbChecked Then
+    tipf = "1"
+Else
+    tipf = "0"
+End If
+>>>>>>> origin/master
 
     If frmtip.Check1.value = vbChecked Then
         tipf = "1"
@@ -159,3 +167,11 @@ Resume Next
     
 End Sub
 
+Private Sub Form_Load()
+    
+    With Me
+        .Command1.Caption = JsonLanguage.Item("TIP").Item("TEXTO").Item(1)
+        .Check1.Caption = JsonLanguage.Item("TIP").Item("TEXTO").Item(2)
+    End With
+    
+End Sub

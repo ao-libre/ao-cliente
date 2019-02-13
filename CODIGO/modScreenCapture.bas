@@ -309,7 +309,29 @@ Public Function SaveJPG(ByRef cDib As cDIBSection, _
             ' put the file creation and archive information back again:
             If bFileExisted Then
             
+<<<<<<< HEAD
                 hFile = lopen(sFile, OF_WRITE Or OF_SHARE_DENY_WRITE)
+=======
+         End If
+         
+         lFileSize = tJ.JPGSizeBytes - tJ.JPGBytes
+         
+         ' Success:
+         SaveJPG = True
+         
+      Else
+         ' Throw error
+         Err.Raise 26001, JsonLanguage.Item("ERROR_GUARDAR_SCREENSHOT").Item("TEXTO") & lR, vbExclamation
+      End If
+      
+      ' Ensure we have freed memory:
+      ijlFree tJ
+   Else
+      ' Throw error:
+      Err.Raise 26001, App.EXEName & ".mIntelJPEGLibrary", "No se pudo inicializar la Libreria " & lR
+   End If
+   
+>>>>>>> origin/master
 
                 If hFile = 0 Then
                     ' problem

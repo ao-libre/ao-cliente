@@ -148,8 +148,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 If UserParalizado Then 'Inmo
 
                     With FontTypes(FontTypeNames.FONTTYPE_WARNING)
+<<<<<<< HEAD
                         Call ShowConsoleMsg("No puedes salir estando paralizado.", .Red, .Green, .Blue, .bold, .italic)
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_NO_SALIR").Item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+>>>>>>> origin/master
                     End With
 
                     Exit Sub
@@ -167,8 +171,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 If UserEstado = 1 Then 'Muerto
 
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
+<<<<<<< HEAD
                         Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+>>>>>>> origin/master
                     End With
 
                     Exit Sub
@@ -182,8 +190,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 If UserEstado = 1 Then 'Muerto
 
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
+<<<<<<< HEAD
                         Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+>>>>>>> origin/master
                     End With
 
                     Exit Sub
@@ -197,8 +209,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 If UserEstado = 1 Then 'Muerto
 
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
+<<<<<<< HEAD
                         Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+>>>>>>> origin/master
                     End With
 
                     Exit Sub
@@ -212,8 +228,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 If UserEstado = 1 Then 'Muerto
 
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
+<<<<<<< HEAD
                         Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+>>>>>>> origin/master
                     End With
 
                     Exit Sub
@@ -227,8 +247,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 If UserEstado = 1 Then 'Muerto
 
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
+<<<<<<< HEAD
                         Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+>>>>>>> origin/master
                     End With
 
                     Exit Sub
@@ -242,8 +266,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 If UserEstado = 1 Then 'Muerto
 
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
+<<<<<<< HEAD
                         Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+>>>>>>> origin/master
                     End With
 
                     Exit Sub
@@ -259,8 +287,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 If UserEstado = 1 Then 'Muerto
 
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
+<<<<<<< HEAD
                         Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+>>>>>>> origin/master
                     End With
 
                     Exit Sub
@@ -289,8 +321,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 If UserEstado = 1 Then 'Muerto
 
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
+<<<<<<< HEAD
                         Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+>>>>>>> origin/master
                     End With
 
                     Exit Sub
@@ -298,8 +334,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 ElseIf Comerciando Then 'Comerciando
 
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
+<<<<<<< HEAD
                         Call ShowConsoleMsg("Ya estás comerciando", .Red, .Green, .Blue, .bold, .italic)
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_COMERCIANDO").Item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+>>>>>>> origin/master
                     End With
 
                     Exit Sub
@@ -313,8 +353,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 If UserEstado = 1 Then 'Muerto
 
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
+<<<<<<< HEAD
                         Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+>>>>>>> origin/master
                     End With
 
                     Exit Sub
@@ -346,8 +390,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 If UserEstado = 1 Then 'Muerto
 
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
+<<<<<<< HEAD
                         Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+>>>>>>> origin/master
                     End With
 
                     Exit Sub
@@ -361,8 +409,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 If UserEstado = 1 Then 'Muerto
 
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
+<<<<<<< HEAD
                         Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+>>>>>>> origin/master
                     End With
 
                     Exit Sub
@@ -376,8 +428,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 If UserEstado = 1 Then 'Muerto
 
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
+<<<<<<< HEAD
                         Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+>>>>>>> origin/master
                     End With
 
                     Exit Sub
@@ -391,8 +447,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 If UserEstado = 1 Then 'Muerto
 
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
+<<<<<<< HEAD
                         Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+>>>>>>> origin/master
                     End With
 
                     Exit Sub
@@ -413,8 +473,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         Call WriteInquiryVote(ArgumentosRaw)
                     Else
                         'No es numerico
+<<<<<<< HEAD
                         Call ShowConsoleMsg("Para votar una opcion, escribe /encuesta NUMERODEOPCION, por ejemplo para votar la opcion 1, escribe /encuesta 1.")
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_ENCUESTA").Item("TEXTO"))
+>>>>>>> origin/master
                     End If
 
                 End If
@@ -426,8 +490,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteGuildMessage(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Escriba un mensaje.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_INPUT_MSJ").Item("TEXTO"))
+>>>>>>> origin/master
                 End If
         
             Case "/PMSG"
@@ -437,8 +505,20 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WritePartyMessage(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Escriba un mensaje.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_INPUT_MSJ").Item("TEXTO"))
+                End If
+
+            Case "/CENTINELA"
+                If notNullArguments Then
+                   Call WriteCentinelReport(ArgumentosRaw)
+                Else
+                    'Avisar que falta el parametro
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_CENTINELA").Item("TEXTO"))
+>>>>>>> origin/master
                 End If
         
             Case "/ONLINECLAN"
@@ -453,8 +533,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteCouncilMessage(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Escriba un mensaje.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_INPUT_MSJ").Item("TEXTO"))
+>>>>>>> origin/master
                 End If
                 
             Case "/ROL"
@@ -463,8 +547,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteRoleMasterRequest(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Escriba una pregunta.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_INPUT_ASK").Item("TEXTO"))
+>>>>>>> origin/master
                 End If
                 
             Case "/GM"
@@ -476,8 +564,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteBugReport(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Escriba una descripción del bug.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_INPUT_BUG").Item("TEXTO"))
+>>>>>>> origin/master
                 End If
             
             Case "/DESC"
@@ -485,8 +577,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 If UserEstado = 1 Then 'Muerto
 
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
+<<<<<<< HEAD
                         Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+>>>>>>> origin/master
                     End With
 
                     Exit Sub
@@ -501,8 +597,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteGuildVote(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /voto NICKNAME.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /voto NICKNAME.")
+>>>>>>> origin/master
                 End If
                
             Case "/PENAS"
@@ -511,8 +611,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WritePunishments(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /penas NICKNAME.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /penas NICKNAME.")
+>>>>>>> origin/master
                 End If
                 
             Case "/CONTRASEÑA"
@@ -523,8 +627,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 If UserEstado = 1 Then 'Muerto
 
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
+<<<<<<< HEAD
                         Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+>>>>>>> origin/master
                     End With
 
                     Exit Sub
@@ -536,14 +644,22 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         Call WriteGamble(ArgumentosRaw)
                     Else
                         'No es numerico
+<<<<<<< HEAD
                         Call ShowConsoleMsg("Cantidad incorrecta. Utilice /apostar CANTIDAD.")
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_CANTIDAD_INCORRECTA").Item("TEXTO") & " /apostar CANTIDAD.")
+>>>>>>> origin/master
                     End If
 
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /apostar CANTIDAD.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /apostar CANTIDAD.")
+>>>>>>> origin/master
                 End If
                 
             Case "/RETIRARFACCION"
@@ -551,8 +667,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 If UserEstado = 1 Then 'Muerto
 
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
+<<<<<<< HEAD
                         Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+>>>>>>> origin/master
                     End With
 
                     Exit Sub
@@ -566,8 +686,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 If UserEstado = 1 Then 'Muerto
 
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
+<<<<<<< HEAD
                         Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+>>>>>>> origin/master
                     End With
 
                     Exit Sub
@@ -581,8 +705,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         Call WriteBankExtractGold(ArgumentosRaw)
                     Else
                         'No es numerico
+<<<<<<< HEAD
                         Call ShowConsoleMsg("Cantidad incorrecta. Utilice /retirar CANTIDAD.")
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_CANTIDAD_INCORRECTA").Item("TEXTO") & " /retirar CANTIDAD.")
+>>>>>>> origin/master
                     End If
 
                 End If
@@ -592,8 +720,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 If UserEstado = 1 Then 'Muerto
 
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
+<<<<<<< HEAD
                         Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+>>>>>>> origin/master
                     End With
 
                     Exit Sub
@@ -605,14 +737,22 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         Call WriteBankDepositGold(ArgumentosRaw)
                     Else
                         'No es numerico
+<<<<<<< HEAD
                         Call ShowConsoleMsg("Cantidad incorecta. Utilice /depositar CANTIDAD.")
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_CANTIDAD_INCORRECTA").Item("TEXTO") & " /depositar CANTIDAD.")
+>>>>>>> origin/master
                     End If
 
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan paramtetros. Utilice /depositar CANTIDAD.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /depositar CANTIDAD.")
+>>>>>>> origin/master
                 End If
                 
             Case "/DENUNCIAR"
@@ -630,8 +770,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 If UserLvl >= 25 Then
                     Call WriteGuildFundate
                 Else
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Para fundar un clan tenés que ser nivel 25 y tener 90 skills en liderazgo.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FUNDAR_CLAN").Item("TEXTO"))
+>>>>>>> origin/master
                 End If
             
             Case "/FUNDARCLANGM"
@@ -643,8 +787,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WritePartyKick(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /echarparty NICKNAME.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /echarparty NICKNAME.")
+>>>>>>> origin/master
                 End If
                 
             Case "/PARTYLIDER"
@@ -653,8 +801,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WritePartySetLeader(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /partylider NICKNAME.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /partylider NICKNAME.")
+>>>>>>> origin/master
                 End If
                 
             Case "/ACCEPTPARTY"
@@ -663,8 +815,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WritePartyAcceptMember(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /acceptparty NICKNAME.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /acceptparty NICKNAME.")
+>>>>>>> origin/master
                 End If
                     
                 '
@@ -677,8 +833,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteGMMessage(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Escriba un mensaje.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_INPUT_MSJ").Item("TEXTO"))
+>>>>>>> origin/master
                 End If
                 
             Case "/SHOWNAME"
@@ -696,8 +856,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteGoNearby(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /ircerca NICKNAME.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /ircerca NICKNAME.")
+>>>>>>> origin/master
                 End If
                 
             Case "/REM"
@@ -706,8 +870,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteComment(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Escriba un comentario.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_INPUT_COMENTARIO").Item("TEXTO"))
+>>>>>>> origin/master
                 End If
             
             Case "/HORA"
@@ -719,8 +887,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteWhere(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /donde NICKNAME.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /donde NICKNAME.")
+>>>>>>> origin/master
                 End If
                 
             Case "/NENE"
@@ -730,8 +902,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         Call WriteCreaturesInMap(ArgumentosRaw)
                     Else
                         'No es numerico
+<<<<<<< HEAD
                         Call ShowConsoleMsg("Mapa incorrecto. Utilice /nene MAPA.")
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_MAPA_INCORRECTO").Item("TEXTO") & " /nene MAPA.")
+>>>>>>> origin/master
                     End If
 
                 Else
@@ -750,8 +926,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         Call WriteWarpChar(ArgumentosAll(0), ArgumentosAll(1), ArgumentosAll(2), ArgumentosAll(3))
                     Else
                         'No es numerico
+<<<<<<< HEAD
                         Call ShowConsoleMsg("Valor incorrecto. Utilice /telep NICKNAME MAPA X Y.")
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_VALOR_INCORRECTO").Item("TEXTO") & " /telep NICKNAME MAPA X Y.")
+>>>>>>> origin/master
                     End If
 
                 ElseIf CantidadArgumentos = 3 Then
@@ -764,8 +944,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         Call WriteWarpChar(ArgumentosAll(0), UserMap, ArgumentosAll(1), ArgumentosAll(2))
                     Else
                         'No uso ningun formato por defecto
+<<<<<<< HEAD
                         Call ShowConsoleMsg("Valor incorrecto. Utilice /telep NICKNAME MAPA X Y.")
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_VALOR_INCORRECTO").Item("TEXTO") & " /telep NICKNAME MAPA X Y.")
+>>>>>>> origin/master
                     End If
 
                 ElseIf CantidadArgumentos = 2 Then
@@ -775,14 +959,22 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         Call WriteWarpChar("YO", UserMap, ArgumentosAll(0), ArgumentosAll(1))
                     Else
                         'No uso ningun formato por defecto
+<<<<<<< HEAD
                         Call ShowConsoleMsg("Valor incorrecto. Utilice /telep NICKNAME MAPA X Y.")
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_VALOR_INCORRECTO").Item("TEXTO") & " /telep NICKNAME MAPA X Y.")
+>>>>>>> origin/master
                     End If
 
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /telep NICKNAME MAPA X Y.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /telep NICKNAME MAPA X Y.")
+>>>>>>> origin/master
                 End If
                 
             Case "/SILENCIAR"
@@ -791,8 +983,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteSilence(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /silenciar NICKNAME.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /silenciar NICKNAME.")
+>>>>>>> origin/master
                 End If
                 
             Case "/SHOW"
@@ -823,8 +1019,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteGoToChar(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /ira NICKNAME.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /ira NICKNAME.")
+>>>>>>> origin/master
                 End If
         
             Case "/INVISIBLE"
@@ -849,20 +1049,32 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                             Call WriteJail(tmpArr(0), tmpArr(1), tmpArr(2))
                         Else
                             'No es numerico
+<<<<<<< HEAD
                             Call ShowConsoleMsg("Tiempo incorrecto. Utilice /carcel NICKNAME@MOTIVO@TIEMPO.")
 
+=======
+                            Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_TIEMPO_INCORRECTO").Item("TEXTO") & " /carcel NICKNAME@MOTIVO@TIEMPO.")
+>>>>>>> origin/master
                         End If
 
                     Else
                         'Faltan los parametros con el formato propio
+<<<<<<< HEAD
                         Call ShowConsoleMsg("Formato incorrecto. Utilice /carcel NICKNAME@MOTIVO@TIEMPO.")
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FORMATO_INCORRECTO").Item("TEXTO") & " /carcel NICKNAME@MOTIVO@TIEMPO.")
+>>>>>>> origin/master
                     End If
 
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /carcel NICKNAME@MOTIVO@TIEMPO.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /carcel NICKNAME@MOTIVO@TIEMPO.")
+>>>>>>> origin/master
                 End If
                 
             Case "/RMATA"
@@ -877,14 +1089,22 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         Call WriteWarnUser(tmpArr(0), tmpArr(1))
                     Else
                         'Faltan los parametros con el formato propio
+<<<<<<< HEAD
                         Call ShowConsoleMsg("Formato incorrecto. Utilice /advertencia NICKNAME@MOTIVO.")
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FORMATO_INCORRECTO").Item("TEXTO") & " /advertencia NICKNAME@MOTIVO.")
+>>>>>>> origin/master
                     End If
 
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /advertencia NICKNAME@MOTIVO.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /advertencia NICKNAME@MOTIVO.")
+>>>>>>> origin/master
                 End If
                 
             Case "/MOD"
@@ -952,7 +1172,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     If tmpInt > 0 Then
                         
                         If CantidadArgumentos = 3 Then
-                            Call WriteEditChar(ArgumentosAll(0), tmpInt, ArgumentosAll(2), "")
+                            Call WriteEditChar(ArgumentosAll(0), tmpInt, ArgumentosAll(2), vbNullString)
                         Else
                             Call WriteEditChar(ArgumentosAll(0), tmpInt, ArgumentosAll(2), ArgumentosAll(3))
 
@@ -960,14 +1180,22 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
 
                     Else
                         'Avisar que no exite el comando
+<<<<<<< HEAD
                         Call ShowConsoleMsg("Comando incorrecto.")
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_COMANDO_INCORRECTO").Item("TEXTO"))
+>>>>>>> origin/master
                     End If
 
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO"))
+>>>>>>> origin/master
                 End If
             
             Case "/INFO"
@@ -976,8 +1204,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteRequestCharInfo(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /info NICKNAME.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /info NICKNAME.")
+>>>>>>> origin/master
                 End If
                 
             Case "/STAT"
@@ -986,8 +1218,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteRequestCharStats(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /stat NICKNAME.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /stat NICKNAME.")
+>>>>>>> origin/master
                 End If
                 
             Case "/BAL"
@@ -996,8 +1232,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteRequestCharGold(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /bal NICKNAME.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /bal NICKNAME.")
+>>>>>>> origin/master
                 End If
                 
             Case "/INV"
@@ -1006,8 +1246,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteRequestCharInventory(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /inv NICKNAME.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /inv NICKNAME.")
+>>>>>>> origin/master
                 End If
                 
             Case "/BOV"
@@ -1016,8 +1260,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteRequestCharBank(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /bov NICKNAME.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /bov NICKNAME.")
+>>>>>>> origin/master
                 End If
                 
             Case "/SKILLS"
@@ -1026,8 +1274,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteRequestCharSkills(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /skills NICKNAME.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /skills NICKNAME.")
+>>>>>>> origin/master
                 End If
                 
             Case "/REVIVIR"
@@ -1036,8 +1288,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteReviveChar(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /revivir NICKNAME.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /revivir NICKNAME.")
+>>>>>>> origin/master
                 End If
                 
             Case "/ONLINEGM"
@@ -1049,8 +1305,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     If ValidNumber(ArgumentosAll(0), eNumber_Types.ent_Integer) Then
                         Call WriteOnlineMap(ArgumentosAll(0))
                     Else
+<<<<<<< HEAD
                         Call ShowConsoleMsg("Mapa incorrecto.")
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_MAPA_INCORRECTO").Item("TEXTO") & " /ONLINEMAP")
+>>>>>>> origin/master
                     End If
 
                 Else
@@ -1064,8 +1324,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteForgive(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /perdon NICKNAME.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /perdon NICKNAME.")
+>>>>>>> origin/master
                 End If
                 
             Case "/ECHAR"
@@ -1074,8 +1338,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteKick(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /echar NICKNAME.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /echar NICKNAME.")
+>>>>>>> origin/master
                 End If
                 
             Case "/EJECUTAR"
@@ -1084,8 +1352,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteExecute(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /ejecutar NICKNAME.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /ejecutar NICKNAME.")
+>>>>>>> origin/master
                 End If
                 
             Case "/BAN"
@@ -1097,14 +1369,22 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         Call WriteBanChar(tmpArr(0), tmpArr(1))
                     Else
                         'Faltan los parametros con el formato propio
+<<<<<<< HEAD
                         Call ShowConsoleMsg("Formato incorrecto. Utilice /ban NICKNAME@MOTIVO.")
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FORMATO_INCORRECTO").Item("TEXTO") & " /ban NICKNAME@MOTIVO.")
+>>>>>>> origin/master
                     End If
 
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /ban NICKNAME@MOTIVO.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /ban NICKNAME@MOTIVO.")
+>>>>>>> origin/master
                 End If
                 
             Case "/UNBAN"
@@ -1113,8 +1393,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteUnbanChar(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /unban NICKNAME.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /unban NICKNAME.")
+>>>>>>> origin/master
                 End If
                 
             Case "/SEGUIR"
@@ -1126,8 +1410,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteSummonChar(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /sum NICKNAME.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /sum NICKNAME.")
+>>>>>>> origin/master
                 End If
                 
             Case "/CC"
@@ -1142,8 +1430,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteServerMessage(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Escriba un mensaje.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_INPUT_MSJ").Item("TEXTO"))
+>>>>>>> origin/master
                 End If
             
             Case "/MAPMSG"
@@ -1152,8 +1444,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteMapMessage(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Escriba un mensaje.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_INPUT_MSJ").Item("TEXTO"))
+>>>>>>> origin/master
                 End If
                 
             Case "/NICK2IP"
@@ -1162,8 +1458,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteNickToIP(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /nick2ip NICKNAME.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /nick2ip NICKNAME.")
+>>>>>>> origin/master
                 End If
                 
             Case "/IP2NICK"
@@ -1179,8 +1479,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
 
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /ip2nick IP.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /ip2nick IP.")
+>>>>>>> origin/master
                 End If
                 
             Case "/ONCLAN"
@@ -1189,8 +1493,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteGuildOnlineMembers(ArgumentosRaw)
                 Else
                     'Avisar sintaxis incorrecta
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Utilice /onclan nombre del clan.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_ONCLAN").Item("TEXTO"))
+>>>>>>> origin/master
                 End If
                 
             Case "/CT"
@@ -1206,22 +1514,34 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                                 Call WriteTeleportCreate(ArgumentosAll(0), ArgumentosAll(1), ArgumentosAll(2), ArgumentosAll(3))
                             Else
                                 'No es numerico
+<<<<<<< HEAD
                                 Call ShowConsoleMsg("Valor incorrecto. Utilice /ct MAPA X Y RADIO(Opcional).")
 
+=======
+                                Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_VALOR_INCORRECTO").Item("TEXTO") & " /ct MAPA X Y RADIO(Opcional).")
+>>>>>>> origin/master
                             End If
 
                         End If
 
                     Else
                         'No es numerico
+<<<<<<< HEAD
                         Call ShowConsoleMsg("Valor incorrecto. Utilice /ct MAPA X Y RADIO(Opcional).")
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_VALOR_INCORRECTO").Item("TEXTO") & " /ct MAPA X Y RADIO(Opcional).")
+>>>>>>> origin/master
                     End If
 
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /ct MAPA X Y RADIO(Opcional).")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /ct MAPA X Y RADIO(Opcional).")
+>>>>>>> origin/master
                 End If
                 
             Case "/DT"
@@ -1247,8 +1567,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                             Call WriteForceMIDIToMap(ArgumentosAll(0), 0)
                         Else
                             'No es numerico
+<<<<<<< HEAD
                             Call ShowConsoleMsg("Midi incorrecto. Utilice /forcemidimap MIDI MAPA, siendo el mapa opcional.")
 
+=======
+                            Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_VALOR_INCORRECTO").Item("TEXTO") & " /forcemidimap MIDI MAPA")
+>>>>>>> origin/master
                         End If
 
                     Else
@@ -1257,16 +1581,24 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                             Call WriteForceMIDIToMap(ArgumentosAll(0), ArgumentosAll(1))
                         Else
                             'No es numerico
+<<<<<<< HEAD
                             Call ShowConsoleMsg("Valor incorrecto. Utilice /forcemidimap MIDI MAPA, siendo el mapa opcional.")
 
+=======
+                            Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_VALOR_INCORRECTO").Item("TEXTO") & " /forcemidimap MIDI MAPA")
+>>>>>>> origin/master
                         End If
 
                     End If
 
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Utilice /forcemidimap MIDI MAPA, siendo el mapa opcional.")
 
+=======
+                    Call ShowConsoleMsg("Utilice /forcemidimap MIDI MAPA")
+>>>>>>> origin/master
                 End If
                 
             Case "/FORCEWAVMAP"
@@ -1312,8 +1644,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteRoyalArmyMessage(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Escriba un mensaje.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_INPUT_MSJ").Item("TEXTO"))
+>>>>>>> origin/master
                 End If
                  
             Case "/CAOSMSG"
@@ -1322,8 +1658,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteChaosLegionMessage(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Escriba un mensaje.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_INPUT_MSJ").Item("TEXTO"))
+>>>>>>> origin/master
                 End If
                 
             Case "/CIUMSG"
@@ -1332,8 +1672,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteCitizenMessage(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Escriba un mensaje.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_INPUT_MSJ").Item("TEXTO"))
+>>>>>>> origin/master
                 End If
             
             Case "/CRIMSG"
@@ -1342,8 +1686,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteCriminalMessage(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Escriba un mensaje.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_INPUT_MSJ").Item("TEXTO"))
+>>>>>>> origin/master
                 End If
             
             Case "/TALKAS"
@@ -1352,8 +1700,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteTalkAsNPC(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Escriba un mensaje.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_INPUT_MSJ").Item("TEXTO"))
+>>>>>>> origin/master
                 End If
         
             Case "/MASSDEST"
@@ -1365,8 +1717,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteAcceptRoyalCouncilMember(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /aceptconse NICKNAME.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /aceptconse NICKNAME.")
+>>>>>>> origin/master
                 End If
                 
             Case "/ACEPTCONSECAOS"
@@ -1375,8 +1731,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteAcceptChaosCouncilMember(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /aceptconsecaos NICKNAME.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /aceptconsecaos NICKNAME.")
+>>>>>>> origin/master
                 End If
                 
             Case "/PISO"
@@ -1388,8 +1748,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteMakeDumb(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /estupido NICKNAME.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /estupido NICKNAME.")
+>>>>>>> origin/master
                 End If
                 
             Case "/NOESTUPIDO"
@@ -1398,8 +1762,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteMakeDumbNoMore(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /noestupido NICKNAME.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /noestupido NICKNAME.")
+>>>>>>> origin/master
                 End If
                 
             Case "/DUMPSECURITY"
@@ -1411,8 +1779,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteCouncilKick(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /kickconse NICKNAME.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /kickconse NICKNAME.")
+>>>>>>> origin/master
                 End If
                 
             Case "/TRIGGER"
@@ -1422,8 +1794,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         Call WriteSetTrigger(ArgumentosRaw)
                     Else
                         'No es numerico
+<<<<<<< HEAD
                         Call ShowConsoleMsg("Numero incorrecto. Utilice /trigger NUMERO.")
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_VALOR_INCORRECTO").Item("TEXTO") & " /trigger NUMERO.")
+>>>>>>> origin/master
                     End If
 
                 Else
@@ -1444,8 +1820,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteGuildMemberList(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /miembrosclan GUILDNAME.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /miembrosclan GUILDNAME.")
+>>>>>>> origin/master
                 End If
                 
             Case "/BANCLAN"
@@ -1454,8 +1834,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteGuildBan(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /banclan GUILDNAME.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /banclan GUILDNAME.")
+>>>>>>> origin/master
                 End If
                 
             Case "/BANIP"
@@ -1471,8 +1855,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
 
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /banip IP motivo o /banip nick motivo.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /banip IP motivo o /banip nick motivo.")
+>>>>>>> origin/master
                 End If
                 
             Case "/UNBANIP"
@@ -1482,14 +1870,22 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         Call WriteUnbanIP(str2ipv4l(ArgumentosRaw))
                     Else
                         'No es una IP
+<<<<<<< HEAD
                         Call ShowConsoleMsg("IP incorrecta. Utilice /unbanip IP.")
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_VALOR_INCORRECTO").Item("TEXTO") & " /unbanip IP.")
+>>>>>>> origin/master
                     End If
 
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /unbanip IP.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /unbanip IP.")
+>>>>>>> origin/master
                 End If
                 
             Case "/CI"
@@ -1499,14 +1895,22 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         Call WriteCreateItem(ArgumentosAll(0))
                     Else
                         'No es numerico
+<<<<<<< HEAD
                         Call ShowConsoleMsg("Objeto incorrecto. Utilice /ci OBJETO.")
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_OBJETO_INCORRECTO").Item("TEXTO") & " /ci OBJETO.")
+>>>>>>> origin/master
                     End If
 
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /ci OBJETO.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /ci OBJETO.")
+>>>>>>> origin/master
                 End If
                 
             Case "/DEST"
@@ -1518,8 +1922,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteChaosLegionKick(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /nocaos NICKNAME.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /nocaos NICKNAME.")
+>>>>>>> origin/master
                 End If
     
             Case "/NOREAL"
@@ -1528,8 +1936,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteRoyalArmyKick(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /noreal NICKNAME.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /noreal NICKNAME.")
+>>>>>>> origin/master
                 End If
     
             Case "/FORCEMIDI"
@@ -1539,14 +1951,22 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         Call WriteForceMIDIAll(ArgumentosAll(0))
                     Else
                         'No es numerico
+<<<<<<< HEAD
                         Call ShowConsoleMsg("Midi incorrecto. Utilice /forcemidi MIDI.")
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_MIDI_INCORRECTO").Item("TEXTO") & " /forcemidi MIDI.")
+>>>>>>> origin/master
                     End If
 
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /forcemidi MIDI.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /forcemidi MIDI.")
+>>>>>>> origin/master
                 End If
     
             Case "/FORCEWAV"
@@ -1556,14 +1976,22 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         Call WriteForceWAVEAll(ArgumentosAll(0))
                     Else
                         'No es numerico
+<<<<<<< HEAD
                         Call ShowConsoleMsg("Wav incorrecto. Utilice /forcewav WAV.")
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_WAV_INCORRECTO").Item("TEXTO") & " /forcewav WAV.")
+>>>>>>> origin/master
                     End If
 
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /forcewav WAV.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /forcewav WAV.")
+>>>>>>> origin/master
                 End If
                 
             Case "/MODIFICARPENA"
@@ -1575,14 +2003,22 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         Call WriteRemovePunishment(tmpArr(0), tmpArr(1), tmpArr(2))
                     Else
                         'Faltan los parametros con el formato propio
+<<<<<<< HEAD
                         Call ShowConsoleMsg("Formato incorrecto. Utilice /borrarpena NICK@PENA@NuevaPena.")
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FORMATO_INCORRECTO").Item("TEXTO") & " /borrarpena NICK@PENA@NuevaPena.")
+>>>>>>> origin/master
                     End If
 
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /borrarpena NICK@PENA@NuevaPena.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /borrarpena NICK@PENA@NuevaPena.")
+>>>>>>> origin/master
                 End If
                 
             Case "/BLOQ"
@@ -1600,8 +2036,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteLastIP(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /lastip NICKNAME.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /lastip NICKNAME.")
+>>>>>>> origin/master
                 End If
     
             Case "/MOTDCAMBIA"
@@ -1613,8 +2053,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteSystemMessage(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Escriba un mensaje.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_INPUT_MSJ").Item("TEXTO"))
+>>>>>>> origin/master
                 End If
                 
             Case "/ACC"
@@ -1624,14 +2068,22 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         Call WriteCreateNPC(ArgumentosAll(0))
                     Else
                         'No es numerico
+<<<<<<< HEAD
                         Call ShowConsoleMsg("Npc incorrecto. Utilice /acc NPC.")
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_NPC_INCORRECTO").Item("TEXTO") & " /acc NPC.")
+>>>>>>> origin/master
                     End If
 
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /acc NPC.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /acc NPC.")
+>>>>>>> origin/master
                 End If
                 
             Case "/RACC"
@@ -1641,14 +2093,22 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         Call WriteCreateNPCWithRespawn(ArgumentosAll(0))
                     Else
                         'No es numerico
+<<<<<<< HEAD
                         Call ShowConsoleMsg("Npc incorrecto. Utilice /racc NPC.")
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_NPC_INCORRECTO").Item("TEXTO") & " /racc NPC.")
+>>>>>>> origin/master
                     End If
 
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /racc NPC.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /racc NPC.")
+>>>>>>> origin/master
                 End If
         
             Case "/AI" ' 1 - 4
@@ -1658,14 +2118,22 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         Call WriteImperialArmour(ArgumentosAll(0), ArgumentosAll(1))
                     Else
                         'No es numerico
+<<<<<<< HEAD
                         Call ShowConsoleMsg("Valor incorrecto. Utilice /ai ARMADURA OBJETO.")
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_VALOR_INCORRECTO").Item("TEXTO") & " /ai ARMADURA OBJETO.")
+>>>>>>> origin/master
                     End If
 
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /ai ARMADURA OBJETO.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /ai ARMADURA OBJETO.")
+>>>>>>> origin/master
                 End If
                 
             Case "/AC" ' 1 - 4
@@ -1675,14 +2143,22 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         Call WriteChaosArmour(ArgumentosAll(0), ArgumentosAll(1))
                     Else
                         'No es numerico
+<<<<<<< HEAD
                         Call ShowConsoleMsg("Valor incorrecto. Utilice /ac ARMADURA OBJETO.")
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_VALOR_INCORRECTO").Item("TEXTO") & " /ac ARMADURA OBJETO.")
+>>>>>>> origin/master
                     End If
 
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /ac ARMADURA OBJETO.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /ac ARMADURA OBJETO.")
+>>>>>>> origin/master
                 End If
                 
             Case "/NAVE"
@@ -1700,8 +2176,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteTurnCriminal(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /conden NICKNAME.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /conden NICKNAME.")
+>>>>>>> origin/master
                 End If
                 
             Case "/RAJAR"
@@ -1710,8 +2190,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteResetFactions(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /rajar NICKNAME.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /rajar NICKNAME.")
+>>>>>>> origin/master
                 End If
                 
             Case "/RAJARCLAN"
@@ -1720,8 +2204,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteRemoveCharFromGuild(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /rajarclan NICKNAME.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /rajarclan NICKNAME.")
+>>>>>>> origin/master
                 End If
                 
             Case "/LASTEMAIL"
@@ -1730,8 +2218,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteRequestCharMail(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /lastemail NICKNAME.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /lastemail NICKNAME.")
+>>>>>>> origin/master
                 End If
                 
             Case "/APASS"
@@ -1743,14 +2235,22 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         Call WriteAlterPassword(tmpArr(0), tmpArr(1))
                     Else
                         'Faltan los parametros con el formato propio
+<<<<<<< HEAD
                         Call ShowConsoleMsg("Formato incorrecto. Utilice /apass PJSINPASS@PJCONPASS.")
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FORMATO_INCORRECTO").Item("TEXTO") & " /apass PJSINPASS@PJCONPASS.")
+>>>>>>> origin/master
                     End If
 
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /apass PJSINPASS@PJCONPASS.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /apass PJSINPASS@PJCONPASS.")
+>>>>>>> origin/master
                 End If
                 
             Case "/AEMAIL"
@@ -1760,7 +2260,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
 
                     If LenB(tmpArr(0)) = 0 Then
                         'Faltan los parametros con el formato propio
-                        Call ShowConsoleMsg("Formato incorrecto. Utilice /aemail NICKNAME-NUEVOMAIL.")
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FORMATO_INCORRECTO").Item("TEXTO") & " /aemail NICKNAME-NUEVOMAIL.")
                     Else
                         Call WriteAlterMail(tmpArr(0), tmpArr(1))
 
@@ -1768,8 +2268,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
 
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /aemail NICKNAME-NUEVOMAIL.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /aemail NICKNAME-NUEVOMAIL.")
+>>>>>>> origin/master
                 End If
                 
             Case "/ANAME"
@@ -1781,14 +2285,22 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         Call WriteAlterName(tmpArr(0), tmpArr(1))
                     Else
                         'Faltan los parametros con el formato propio
+<<<<<<< HEAD
                         Call ShowConsoleMsg("Formato incorrecto. Utilice /aname ORIGEN@DESTINO.")
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FORMATO_INCORRECTO").Item("TEXTO") & " /aname ORIGEN@DESTINO.")
+>>>>>>> origin/master
                     End If
 
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /aname ORIGEN@DESTINO.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /aname ORIGEN@DESTINO.")
+>>>>>>> origin/master
                 End If
                 
             Case "/SLOT"
@@ -1801,21 +2313,37 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                             Call WriteCheckSlot(tmpArr(0), tmpArr(1))
                         Else
                             'Faltan o sobran los parametros con el formato propio
+<<<<<<< HEAD
                             Call ShowConsoleMsg("Formato incorrecto. Utilice /slot NICK@SLOT.")
 
+=======
+                            Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FORMATO_INCORRECTO").Item("TEXTO") & " /slot NICK@SLOT.")
+>>>>>>> origin/master
                         End If
 
                     Else
                         'Faltan o sobran los parametros con el formato propio
+<<<<<<< HEAD
                         Call ShowConsoleMsg("Formato incorrecto. Utilice /slot NICK@SLOT.")
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FORMATO_INCORRECTO").Item("TEXTO") & " /slot NICK@SLOT.")
+>>>>>>> origin/master
                     End If
 
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /slot NICK@SLOT.")
 
                 End If
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /slot NICK@SLOT.")
+                End If
+
+            Case "/CENTINELAACTIVADO"
+                Call WriteToggleCentinelActivated
+>>>>>>> origin/master
                 
             Case "/CREARPRETORIANOS"
             
@@ -1826,14 +2354,22 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         Call WriteCreatePretorianClan(Val(ArgumentosAll(0)), Val(ArgumentosAll(1)), Val(ArgumentosAll(2)))
                     Else
                         'Faltan o sobran los parametros con el formato propio
+<<<<<<< HEAD
                         Call ShowConsoleMsg("Formato incorrecto. Utilice /CrearPretorianos MAPA X Y.")
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FORMATO_INCORRECTO").Item("TEXTO") & " /CrearPretorianos MAPA X Y.")
+>>>>>>> origin/master
                     End If
                     
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /CrearPretorianos MAPA X Y.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /CrearPretorianos MAPA X Y.")
+>>>>>>> origin/master
                 End If
                 
             Case "/ELIMINARPRETORIANOS"
@@ -1845,14 +2381,22 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         Call WriteDeletePretorianClan(Val(ArgumentosAll(0)))
                     Else
                         'Faltan o sobran los parametros con el formato propio
+<<<<<<< HEAD
                         Call ShowConsoleMsg("Formato incorrecto. Utilice /EliminarPretorianos MAPA.")
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FORMATO_INCORRECTO").Item("TEXTO") & " /EliminarPretorianos MAPA.")
+>>>>>>> origin/master
                     End If
                     
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /EliminarPretorianos MAPA.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /EliminarPretorianos MAPA.")
+>>>>>>> origin/master
                 End If
             
             Case "/DOBACKUP"
@@ -1864,8 +2408,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteShowGuildMessages(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /showcmsg GUILDNAME.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /showcmsg GUILDNAME.")
+>>>>>>> origin/master
                 End If
                 
             Case "/GUARDAMAPA"
@@ -1914,8 +2462,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
 
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parametros. Opciones: PK, BACKUP, RESTRINGIR, MAGIASINEFECTO, INVISINEFECTO, RESUSINEFECTO, TERRENO, ZONA")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " : PK, BACKUP, RESTRINGIR, MAGIASINEFECTO, INVISINEFECTO, RESUSINEFECTO, TERRENO, ZONA")
+>>>>>>> origin/master
                 End If
                 
             Case "/GRABAR"
@@ -1965,16 +2517,24 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         Call WriteChatColor(ArgumentosAll(0), ArgumentosAll(1), ArgumentosAll(2))
                     Else
                         'No es numerico
+<<<<<<< HEAD
                         Call ShowConsoleMsg("Valor incorrecto. Utilice /chatcolor R G B.")
 
+=======
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_VALOR_INCORRECTO").Item("TEXTO") & " /chatcolor R G B.")
+>>>>>>> origin/master
                     End If
 
                 ElseIf Not notNullArguments Then    'Go back to default!
                     Call WriteChatColor(0, 255, 0)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /chatcolor R G B.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /chatcolor R G B.")
+>>>>>>> origin/master
                 End If
             
             Case "/IGNORADO"
@@ -1989,8 +2549,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     ArgumentosAll(2) = Replace(ArgumentosAll(2), "+", " ")
                     Call WriteSetIniVar(ArgumentosAll(0), ArgumentosAll(1), ArgumentosAll(2))
                 Else
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Prámetros incorrectos. Utilice /SETINIVAR LLAVE CLAVE VALOR")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FORMATO_INCORRECTO").Item("TEXTO") & " /SETINIVAR LLAVE CLAVE VALOR")
+>>>>>>> origin/master
                 End If
             
             Case "/HOGAR"
@@ -2002,8 +2566,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteSetDialog(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
+<<<<<<< HEAD
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /SETDIALOG DIALOGO.")
 
+=======
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /SETDIALOG DIALOGO.")
+>>>>>>> origin/master
                 End If
             
             Case "/IMPERSONAR"
@@ -2013,8 +2581,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 Call WriteImitate
             
             Case Else
+<<<<<<< HEAD
                 Call ShowConsoleMsg("Comando inexistente.")
 
+=======
+                Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_COMANDO_INCORRECTO").Item("TEXTO"))
+>>>>>>> origin/master
         End Select
         
     ElseIf Left$(Comando, 1) = "\" Then
@@ -2022,8 +2594,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
         If UserEstado = 1 Then 'Muerto
 
             With FontTypes(FontTypeNames.FONTTYPE_INFO)
+<<<<<<< HEAD
                 Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
 
+=======
+                Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+>>>>>>> origin/master
             End With
 
             Exit Sub
@@ -2038,8 +2614,12 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
         If UserEstado = 1 Then 'Muerto
 
             With FontTypes(FontTypeNames.FONTTYPE_INFO)
+<<<<<<< HEAD
                 Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
 
+=======
+                Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+>>>>>>> origin/master
             End With
 
             Exit Sub

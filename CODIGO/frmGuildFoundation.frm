@@ -140,13 +140,13 @@ Private Sub Form_Load()
     
     If Len(txtClanName.Text) <= 30 Then
         If Not AsciiValidos(txtClanName) Then
-            MsgBox "Nombre invalido."
+            MsgBox JsonLanguage.Item("VALIDACION_BAD_NOMBRE_PJ").Item("TEXTO").Item(2)
             Exit Sub
 
         End If
 
     Else
-        MsgBox "Nombre demasiado extenso."
+        MsgBox JsonLanguage.Item("VALIDACION_BAD_NOMBRE_PJ").Item("TEXTO").Item(3)
         Exit Sub
 
     End If

@@ -97,8 +97,12 @@ Private Sub cRegresar_Click()
     If UserParalizado Then 'Inmo
 
         With FontTypes(FontTypeNames.FONTTYPE_WARNING)
+<<<<<<< HEAD
             Call ShowConsoleMsg("No puedes salir estando paralizado.", .Red, .Green, .Blue, .bold, .italic)
 
+=======
+            Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_NO_SALIR").Item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+>>>>>>> origin/master
         End With
 
         Exit Sub
@@ -184,6 +188,7 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
+<<<<<<< HEAD
     Me.Picture = LoadPicture(App.path & "\Graficos\frmCerrar.jpg")
 
     
@@ -194,6 +199,14 @@ Form_Load_Err:
         LogError Err.number, Err.Description, "frmCerrar" & "->" & "Form_Load"
     End If
 Resume Next
+=======
+    With Me
+        .Picture = LoadPicture(App.path & "\Graficos\frmCerrar.jpg")
+        .cRegresar.Caption = JsonLanguage.Item("CERRAR").Item("TEXTOS").Item(1)
+        .cSalir.Caption = JsonLanguage.Item("CERRAR").Item("TEXTOS").Item(2)
+        .cCancelQuit.Caption = JsonLanguage.Item("CERRAR").Item("TEXTOS").Item(3)
+    End With
+>>>>>>> origin/master
     
 End Sub
 

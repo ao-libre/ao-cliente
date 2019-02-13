@@ -153,7 +153,7 @@ Begin VB.Form frmAmbientEditor
       End
    End
    Begin VB.Frame Frame1 
-      Caption         =   "Luz Ambiente"
+      Caption         =   "Luz Ambiental"
       Height          =   1695
       Left            =   120
       TabIndex        =   2
@@ -256,10 +256,13 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Check1_Click()
+<<<<<<< HEAD
     
     On Error GoTo Check1_Click_Err
     
 
+=======
+>>>>>>> origin/master
     If Check1.value = Checked Then
         HScroll1.Enabled = True
     Else
@@ -279,10 +282,13 @@ Resume Next
 End Sub
 
 Private Sub Check2_Click()
+<<<<<<< HEAD
     
     On Error GoTo Check2_Click_Err
     
 
+=======
+>>>>>>> origin/master
     If Check2.value = Checked Then
         CurMapAmbient.Snow = True
     Else
@@ -304,10 +310,13 @@ Resume Next
 End Sub
 
 Private Sub Check3_Click()
+<<<<<<< HEAD
     
     On Error GoTo Check3_Click_Err
     
 
+=======
+>>>>>>> origin/master
     If Check3.value = Checked Then
         CurMapAmbient.Rain = True
     Else
@@ -387,10 +396,13 @@ Resume Next
 End Sub
 
 Private Sub Command7_Click()
+<<<<<<< HEAD
     
     On Error GoTo Command7_Click_Err
     
 
+=======
+>>>>>>> origin/master
     If Option1(0).value = True Then
         CurMapAmbient.UseDayAmbient = True
         CurMapAmbient.OwnAmbientLight.a = 255
@@ -430,6 +442,7 @@ Private Sub Command8_Click()
     CurMapAmbient.MapBlocks(UserPos.X, UserPos.Y).Light.g = Val(Text3.Text)
     CurMapAmbient.MapBlocks(UserPos.X, UserPos.Y).Light.r = Val(Text2.Text)
     CurMapAmbient.MapBlocks(UserPos.X, UserPos.Y).Light.range = Val(HScroll2.value)
+<<<<<<< HEAD
     
     Create_Light_To_Map UserPos.X, UserPos.Y, Val(HScroll2.value), Val(Text2.Text), Val(Text3.Text), Val(Text4.Text)
 
@@ -449,10 +462,18 @@ Private Sub Command9_Click()
     On Error GoTo Command9_Click_Err
     
 
+=======
+    
+    Create_Light_To_Map UserPos.X, UserPos.Y, Val(HScroll2.value), Val(Text2.Text), Val(Text3.Text), Val(Text4.Text)
+End Sub
+
+Private Sub Command9_Click()
+>>>>>>> origin/master
     If Check1.value = Unchecked Then
         CurMapAmbient.Fog = -1
     Else
         CurMapAmbient.Fog = Val(HScroll1.value)
+<<<<<<< HEAD
 
     End If
 
@@ -475,6 +496,8 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
         Set clsFormulario = Nothing
         Unload Me
 
+=======
+>>>>>>> origin/master
     End If
 
     Exit Sub
@@ -487,3 +510,24 @@ Resume Next
     
 End Sub
 
+Private Sub Form_Load()
+    With Me
+        .Caption = JsonLanguage.Item("AMBIENT-EDITOR").Item(1)
+        .Frame1.Caption = JsonLanguage.Item("AMBIENT-EDITOR").Item(2)
+        .Option1(0).Caption = JsonLanguage.Item("AMBIENT-EDITOR").Item(3)
+        .Option1(1).Caption = JsonLanguage.Item("AMBIENT-EDITOR").Item(4)
+        .Command7.Caption = JsonLanguage.Item("AMBIENT-EDITOR").Item(5)
+        .Frame3.Caption = JsonLanguage.Item("AMBIENT-EDITOR").Item(6)
+        .Label4.Caption = JsonLanguage.Item("AMBIENT-EDITOR").Item(7)
+        .Command8.Caption = JsonLanguage.Item("AMBIENT-EDITOR").Item(8)
+        .Command10.Caption = JsonLanguage.Item("AMBIENT-EDITOR").Item(9)
+        .Frame2.Caption = JsonLanguage.Item("AMBIENT-EDITOR").Item(10)
+        .Check1.Caption = JsonLanguage.Item("AMBIENT-EDITOR").Item(11)
+        .Label2.Caption = JsonLanguage.Item("AMBIENT-EDITOR").Item(12)
+        .Command9.Caption = JsonLanguage.Item("AMBIENT-EDITOR").Item(13)
+        .Check2.Caption = JsonLanguage.Item("AMBIENT-EDITOR").Item(14)
+        .Check3.Caption = JsonLanguage.Item("AMBIENT-EDITOR").Item(15)
+        .Command1.Caption = JsonLanguage.Item("AMBIENT-EDITOR").Item(16)
+        .Command2.Caption = JsonLanguage.Item("AMBIENT-EDITOR").Item(17)
+    End With
+End Sub

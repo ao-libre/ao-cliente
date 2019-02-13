@@ -1343,6 +1343,7 @@ Private Sub CargarEspecialidades()
 
     ReDim vEspecialidades(1 To NroClases)
     
+<<<<<<< HEAD
     vEspecialidades(eClass.Hunter) = "Ocultarse"
     vEspecialidades(eClass.Thief) = "Robar y Ocultarse"
     vEspecialidades(eClass.Assasin) = "Apuñalar"
@@ -1360,8 +1361,18 @@ CargarEspecialidades_Err:
     End If
 Resume Next
     
+=======
+    vEspecialidades(eClass.Hunter) = JsonLanguage.Item("HABILIDADES").Item("OCULTARSE").Item("TEXTO")
+    vEspecialidades(eClass.Thief) = JsonLanguage.Item("HABILIDADES").Item("ROBAR").Item("TEXTO") & JsonLanguage.Item("LETRA_Y").Item("TEXTO") & JsonLanguage.Item("HABILIDADES").Item("OCULTARSE").Item("TEXTO")
+    vEspecialidades(eClass.Assasin) = JsonLanguage.Item("HABILIDADES").Item("APUNALAR").Item("TEXTO")
+    vEspecialidades(eClass.Bandit) = JsonLanguage.Item("HABILIDADES").Item("COMBATE_CUERPO_A_CUERPO").Item("TEXTO")
+    vEspecialidades(eClass.Druid) = JsonLanguage.Item("HABILIDADES").Item("DOMAR_ANIMALES").Item("TEXTO")
+    vEspecialidades(eClass.Pirat) = JsonLanguage.Item("HABILIDADES").Item("NAVEGACION").Item("TEXTO")
+    vEspecialidades(eClass.Worker) = JsonLanguage.Item("HABILIDADES").Item("MINERIA").Item("TEXTO") & "," _
+                                    & JsonLanguage.Item("HABILIDADES").Item("CARPINTERIA").Item("TEXTO") & JsonLanguage.Item("LETRA_Y").Item("TEXTO") _
+                                    & JsonLanguage.Item("HABILIDADES").Item("TALAR").Item("TEXTO")
+>>>>>>> origin/master
 End Sub
-
 Private Sub IniciarGraficos()
     
     On Error GoTo IniciarGraficos_Err
@@ -1528,11 +1539,12 @@ Function CheckData() As Boolean
     
     
     If LenB(txtNombre.Text) = 0 Then
-        MsgBox "Ingresa el nombre de tu nuevo personaje."
+        MsgBox JsonLanguage.Item("VALIDACION_NOMBRE_PJ").Item("TEXTO")
         txtNombre.SetFocus
         Exit Function
 
     End If
+<<<<<<< HEAD
     
     If LenB(txtPasswd.Text) = 0 Then
         MsgBox "Ingresa una contraseña."
@@ -1540,33 +1552,35 @@ Function CheckData() As Boolean
         Exit Function
 
     End If
+=======
+>>>>>>> origin/master
 
     If UserRaza = 0 Then
-        MsgBox "Seleccione la raza del personaje."
+        MsgBox JsonLanguage.Item("VALIDACION_RAZA").Item("TEXTO")
         Exit Function
 
     End If
     
     If UserSexo = 0 Then
-        MsgBox "Seleccione el sexo del personaje."
+        MsgBox JsonLanguage.Item("VALIDACION_SEXO").Item("TEXTO")
         Exit Function
 
     End If
     
     If UserClase = 0 Then
-        MsgBox "Seleccione la clase del personaje."
+        MsgBox JsonLanguage.Item("VALIDACION_CLASE").Item("TEXTO")
         Exit Function
 
     End If
     
     If UserHogar = 0 Then
-        MsgBox "Seleccione el hogar del personaje."
+        MsgBox JsonLanguage.Item("VALIDACION_HOGAR").Item("TEXTO")
         Exit Function
 
     End If
     
-    If AccountHash = vbNullString Then
-        MsgBox "Error, debe iniciar sesion nuevamente"
+    If Len(AccountHash) = 0 Then
+        MsgBox JsonLanguage.Item("VALIDACION_HASH").Item("TEXTO")
         Exit Function
 
     End If
@@ -1577,15 +1591,15 @@ Function CheckData() As Boolean
     For i = 1 To NUMATRIBUTOS
 
         If Val(lblAtributos(i).Caption) = 0 Then
-            MsgBox "Los atributos del personaje son invalidos."
+            MsgBox JsonLanguage.Item("VALIDACION_ATRIBUTOS").Item("TEXTO")
             Exit Function
 
         End If
 
     Next i
     
-    If Len(UserName) > 30 Then
-        MsgBox ("El nombre debe tener menos de 30 letras.")
+    If LenB(UserName) > 30 Then
+        MsgBox JsonLanguage.Item("VALIDACION_BAD_NOMBRE_PJ").Item("TEXTO").Item(1)
         Exit Function
 
     End If
@@ -1740,8 +1754,12 @@ Private Sub ImgCrear_Click()
             
     If Right$(UserName, 1) = " " Then
         UserName = RTrim$(UserName)
+<<<<<<< HEAD
         MsgBox "Nombre invalido, se han removido los espacios al final del nombre"
 
+=======
+        MsgBox JsonLanguage.Item("VALIDACION_BAD_NOMBRE_PJ").Item("TEXTO").Item(2)
+>>>>>>> origin/master
     End If
     
     UserRaza = lstRaza.ListIndex + 1
@@ -1756,16 +1774,24 @@ Private Sub ImgCrear_Click()
     
     If Not CheckData Then Exit Sub
     
+<<<<<<< HEAD
     #If UsarWrench = 1 Then
         frmMain.Socket1.hostname = CurServerIp
         frmMain.Socket1.RemotePort = CurServerPort
     #End If
+=======
+#If UsarWrench = 1 Then
+    frmMain.Socket1.hostname = CurServerIp
+    frmMain.Socket1.RemotePort = CurServerPort
+#End If
+>>>>>>> origin/master
     
     EstadoLogin = E_MODO.CrearNuevoPj
     
     'Clear spell list
     frmMain.hlst.Clear
     
+<<<<<<< HEAD
     #If UsarWrench = 1 Then
 
         If Not frmMain.Socket1.Connected Then
@@ -1775,6 +1801,15 @@ Private Sub ImgCrear_Click()
             #End If
             MsgBox "Error: Se ha perdido la conexion con el server."
             Unload Me
+=======
+#If UsarWrench = 1 Then
+    If Not frmMain.Socket1.Connected Then
+#Else
+    If frmMain.Winsock1.State <> sckConnected Then
+#End If
+        MsgBox JsonLanguage.Item("ERROR_CONN_LOST").Item("TEXTO")
+        Unload Me
+>>>>>>> origin/master
         
         Else
             Call Login
@@ -2925,6 +2960,7 @@ Resume Next
 End Function
 
 Private Sub LoadHelp()
+<<<<<<< HEAD
     
     On Error GoTo LoadHelp_Err
     
@@ -2964,6 +3000,31 @@ LoadHelp_Err:
     End If
 Resume Next
     
+=======
+    vHelp(eHelp.ieTirarDados) = JsonLanguage.Item("AYUDA_CREARPJ_DADOS").Item("TEXTO")
+    vHelp(eHelp.ieMail) = JsonLanguage.Item("AYUDA_CREARPJ_CORREO").Item("TEXTO")
+    vHelp(eHelp.ieNombre) = JsonLanguage.Item("AYUDA_CREARPJ_NOMBREPJ").Item("TEXTO")
+    vHelp(eHelp.ieAtributos) = JsonLanguage.Item("AYUDA_CREARPJ_ATRIBUTOS").Item("TEXTO")
+    vHelp(eHelp.ieD) = JsonLanguage.Item("AYUDA_CREARPJ_IED").Item("TEXTO")
+    vHelp(eHelp.ieM) = JsonLanguage.Item("AYUDA_CREARPJ_IEM").Item("TEXTO")
+    vHelp(eHelp.ieF) = JsonLanguage.Item("AYUDA_CREARPJ_IEF").Item("TEXTO")
+    vHelp(eHelp.ieFuerza) = JsonLanguage.Item("AYUDA_CREARPJ_FUERZA").Item("TEXTO")
+    vHelp(eHelp.ieAgilidad) = JsonLanguage.Item("AYUDA_CREARPJ_AGILIDAD").Item("TEXTO")
+    vHelp(eHelp.ieInteligencia) = JsonLanguage.Item("AYUDA_CREARPJ_INTELIGENCIA").Item("TEXTO")
+    vHelp(eHelp.ieCarisma) = JsonLanguage.Item("AYUDA_CREARPJ_CARISMA").Item("TEXTO")
+    vHelp(eHelp.ieConstitucion) = JsonLanguage.Item("AYUDA_CREARPJ_CONSTITUCION").Item("TEXTO")
+    vHelp(eHelp.ieEvasion) = JsonLanguage.Item("AYUDA_CREARPJ_EVASION").Item("TEXTO")
+    vHelp(eHelp.ieMagia) = JsonLanguage.Item("AYUDA_CREARPJ_MAGIA").Item("TEXTO")
+    vHelp(eHelp.ieVida) = JsonLanguage.Item("AYUDA_CREARPJ_VIDA").Item("TEXTO")
+    vHelp(eHelp.ieEscudos) = JsonLanguage.Item("AYUDA_CREARPJ_ESCUDOS").Item("TEXTO")
+    vHelp(eHelp.ieArmas) = JsonLanguage.Item("AYUDA_CREARPJ_ARMAS").Item("TEXTO")
+    vHelp(eHelp.ieArcos) = JsonLanguage.Item("AYUDA_CREARPJ_ARCOS").Item("TEXTO")
+    vHelp(eHelp.iePuebloOrigen) = JsonLanguage.Item("AYUDA_CREARPJ_HOGAR").Item("TEXTO")
+    vHelp(eHelp.ieRaza) = JsonLanguage.Item("AYUDA_CREARPJ_RAZA").Item("TEXTO")
+    vHelp(eHelp.ieClase) = JsonLanguage.Item("AYUDA_CREARPJ_CLASE").Item("TEXTO")
+    vHelp(eHelp.ieGenero) = JsonLanguage.Item("AYUDA_CREARPJ_GENERO").Item("TEXTO")
+    vHelp(eHelp.ieAlineacion) = JsonLanguage.Item("AYUDA_CREARPJ_ALINEACION").Item("TEXTO")
+>>>>>>> origin/master
 End Sub
 
 Private Sub ClearLabel()
@@ -3054,12 +3115,16 @@ Private Sub UpdateRazaMod()
         SelRaza = lstRaza.ListIndex + 1
         
         With ModRaza(SelRaza)
-            lblModRaza(eAtributos.Fuerza).Caption = IIf(.Fuerza >= 0, "+", "") & .Fuerza
-            lblModRaza(eAtributos.Agilidad).Caption = IIf(.Agilidad >= 0, "+", "") & .Agilidad
-            lblModRaza(eAtributos.Inteligencia).Caption = IIf(.Inteligencia >= 0, "+", "") & .Inteligencia
+            lblModRaza(eAtributos.Fuerza).Caption = IIf(.Fuerza >= 0, "+", vbNullString) & .Fuerza
+            lblModRaza(eAtributos.Agilidad).Caption = IIf(.Agilidad >= 0, "+", vbNullString) & .Agilidad
+            lblModRaza(eAtributos.Inteligencia).Caption = IIf(.Inteligencia >= 0, "+", vbNullString) & .Inteligencia
             lblModRaza(eAtributos.Carisma).Caption = IIf(.Carisma >= 0, "+", "") & .Carisma
+<<<<<<< HEAD
             lblModRaza(eAtributos.Constitucion).Caption = IIf(.Constitucion >= 0, "+", "") & .Constitucion
 
+=======
+            lblModRaza(eAtributos.Constitucion).Caption = IIf(.Constitucion >= 0, "+", vbNullString) & .Constitucion
+>>>>>>> origin/master
         End With
 
     End If

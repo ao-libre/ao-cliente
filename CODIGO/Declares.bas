@@ -520,12 +520,17 @@ Public Enum eGMCommands
     RecordListRequest
     RecordDetailsRequest
     ExitDestroy
+<<<<<<< HEAD
 
+=======
+    ToggleCentinelActivated '/CENTINELAACTIVADO
+>>>>>>> origin/master
 End Enum
 
 '
 ' Mensajes
 '
+<<<<<<< HEAD
 ' MENSAJE_*  --> Mensajes de texto que se muestran en el cuadro de texto
 '
 
@@ -603,6 +608,14 @@ Public Const MENSAJE_HOGAR_CANCEL                      As String = "Tu viaje ha 
 Public Const MENSAJE_USER_MUERTO                       As String = "No puedes realizar esta acción estando muerto."
 
 Public Const NPC_INMUNE                                As String = "El npc es inmune al hechizo."
+=======
+
+' MENSAJE_[12]: Aparecen antes y despues del valor de los mensajes anteriores (MENSAJE_GOLPE_*)
+Public Const MENSAJE_1 As String = "¡¡"
+Public Const MENSAJE_2 As String = "!!"
+Public Const MENSAJE_11 As String = "¡"
+Public Const MENSAJE_22 As String = "!"
+>>>>>>> origin/master
 
 Public Enum eMessages
 
@@ -732,7 +745,10 @@ Global OtroInventario(1 To MAX_INVENTORY_SLOTS) As Inventory
 Public UserHechizos(1 To MAXHECHI)              As Integer
 
 Public Type PjCuenta
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
     Nombre      As String
     Head        As Integer
     Body        As Integer
@@ -831,11 +847,19 @@ Public Ciudades(1 To NUMCIUDADES)                 As String
 Public ListaRazas(1 To NUMRAZAS)                  As String
 Public ListaClases(1 To NUMCLASES)                As String
 
+<<<<<<< HEAD
 Public SkillPoints                                As Integer
 Public Alocados                                   As Integer
 Public Flags()                                    As Integer
 Public Oscuridad                                  As Integer
 Public logged                                     As Boolean
+=======
+Public SkillPoints As Integer
+Public Alocados As Integer
+Public Flags() As Integer
+Public Oscuridad As Integer
+Public logged As Boolean
+>>>>>>> origin/master
 
 Public UsingSkill                                 As Integer
 
@@ -1106,7 +1130,10 @@ Public NumHechizos             As Byte
 Public Hechizos()              As tHechizos
  
 Public Type tHechizos
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
     Nombre As String
     Desc As String
     PalabrasMagicas As String
@@ -1125,7 +1152,10 @@ Public NumNpcs As Integer
 Public Npcs()  As tNpcs
  
 Public Type tNpcs
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
     Nombre As String
     Desc As String
     NroExpresiones As Byte

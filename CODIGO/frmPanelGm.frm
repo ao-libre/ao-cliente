@@ -1574,6 +1574,7 @@ Private Sub cmdCAOSMSG_Click()
     
     Dim tStr As String
     
+<<<<<<< HEAD
     tStr = InputBox("Escriba un Mensaje.", "Mensaje por consola LegionOscura")
 
     If LenB(tStr) <> 0 Then Call WriteChaosLegionMessage(tStr)
@@ -1587,6 +1588,11 @@ cmdCAOSMSG_Click_Err:
     End If
 Resume Next
     
+=======
+    tStr = InputBox(JsonLanguage.Item("MENSAJE_INPUT_MSJ").Item("TEXTO"), "Mensaje por consola LegionOscura")
+    If LenB(tStr) <> 0 Then _
+        Call WriteChaosLegionMessage(tStr)
+>>>>>>> origin/master
 End Sub
 
 Private Sub cmdCARCEL_Click()
@@ -1691,6 +1697,7 @@ Private Sub cmdCIUMSG_Click()
     
     Dim tStr As String
     
+<<<<<<< HEAD
     tStr = InputBox("Escriba un Mensaje.", "Mensaje por consola Ciudadanos")
 
     If LenB(tStr) <> 0 Then Call WriteCitizenMessage(tStr)
@@ -1704,6 +1711,11 @@ cmdCIUMSG_Click_Err:
     End If
 Resume Next
     
+=======
+    tStr = InputBox(JsonLanguage.Item("MENSAJE_INPUT_MSJ").Item("TEXTO"), "Mensaje por consola Ciudadanos")
+    If LenB(tStr) <> 0 Then _
+        Call WriteCitizenMessage(tStr)
+>>>>>>> origin/master
 End Sub
 
 Private Sub cmdCONDEN_Click()
@@ -2572,6 +2584,7 @@ Private Sub cmdREALMSG_Click()
     
     Dim tStr As String
     
+<<<<<<< HEAD
     tStr = InputBox("Escriba un Mensaje.", "Mensaje por consola ArmadaReal")
 
     If LenB(tStr) <> 0 Then Call WriteRoyalArmyMessage(tStr)
@@ -2585,6 +2598,11 @@ cmdREALMSG_Click_Err:
     End If
 Resume Next
     
+=======
+    tStr = InputBox(JsonLanguage.Item("MENSAJE_INPUT_MSJ").Item("TEXTO"), "Mensaje por consola ArmadaReal")
+    If LenB(tStr) <> 0 Then _
+        Call WriteRoyalArmyMessage(tStr)
+>>>>>>> origin/master
 End Sub
 
 Private Sub cmdRefresh_Click()
@@ -2868,6 +2886,7 @@ Private Sub cmdTALKAS_Click()
     
     Dim tStr As String
     
+<<<<<<< HEAD
     tStr = InputBox("Escriba un Mensaje.", "Hablar por NPC")
 
     If LenB(tStr) <> 0 Then Call WriteTalkAsNPC(tStr)
@@ -2881,6 +2900,11 @@ cmdTALKAS_Click_Err:
     End If
 Resume Next
     
+=======
+    tStr = InputBox(JsonLanguage.Item("MENSAJE_INPUT_MSJ").Item("TEXTO"), "Hablar por NPC")
+    If LenB(tStr) <> 0 Then _
+        Call WriteTalkAsNPC(tStr)
+>>>>>>> origin/master
 End Sub
 
 Private Sub cmdTELEP_Click()

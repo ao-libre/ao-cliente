@@ -208,8 +208,13 @@ Private Sub Form_Load()
     imgToogleMap(1).MouseIcon = picMouseIcon
     
     Exit Sub
+<<<<<<< HEAD
 Error:
     MsgBox Err.Description, vbInformation, "Error: " & Err.number
+=======
+error:
+    MsgBox Err.Description, vbInformation, JsonLanguage.Item("ERROR").Item("TEXTO") & ": " & Err.number
+>>>>>>> origin/master
     Unload Me
 
 End Sub

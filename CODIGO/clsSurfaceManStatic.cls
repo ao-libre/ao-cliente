@@ -86,12 +86,18 @@ Private Sub Class_Terminate()
     
     Dim i As Long
     Dim j As Long
+<<<<<<< HEAD
     Dim HashSize As Long
     
     HashSize = HASH_TABLE_SIZE - 1
     
     'Destroy every surface in memory
     For i = 0 To HashSize
+=======
+    
+    'Destroy every surface in memory
+    For i = 0 To HASH_TABLE_SIZE - 1
+>>>>>>> origin/master
         For j = 1 To surfaceList(i).sufraceCount
             Set surfaceList(i).SurfaceEntry(j).Surface = Nothing
         Next j
@@ -147,6 +153,8 @@ Private Property Get clsSurfaceManager_Surface(ByVal fileIndex As Long) As Direc
 
     Dim i As Long
     
+    Dim ERROR_LEER_RECURSO As String
+    
     ' Search for it and return it
     With surfaceList(fileIndex Mod HASH_TABLE_SIZE)
 
@@ -163,13 +171,25 @@ Private Property Get clsSurfaceManager_Surface(ByVal fileIndex As Long) As Direc
     End With
     
     'We have a missing resource!
+<<<<<<< HEAD
     MsgBox "No se encuentra el recurso " & CStr(fileIndex) & ". Reinstale el juego, " & "y si el problema persiste contactese con los adminsitradores", vbOKOnly Or vbCritical Or vbExclamation, "Error"
+=======
+    MsgBox JsonLanguage.Item("ERROR_404").Item("TEXTO") & ": " & CStr(fileIndex), vbOKOnly Or vbCritical Or vbExclamation, JsonLanguage.Item("Error").Item("TEXTO")
+>>>>>>> origin/master
     
     End
     Exit Property
 
+ERROR_LEER_RECURSO = JsonLanguage.Item("ERROR_LEER_RECURSO").Item("TEXTO")
+ERROR_LEER_RECURSO = Replace$(ERROR_LEER_RECURSO, "VAR_ARCHIVO", CStr(fileIndex))
+ERROR_LEER_RECURSO = Replace$(ERROR_LEER_RECURSO, "VAR_ERROR", CStr(Err.number) & " : " & CStr(Err.Description))
+
 ErrHandler:
+<<<<<<< HEAD
     MsgBox "Un error inesperado ocurrió a intentar cargar el recurso " & CStr(fileIndex) & ". & vbcrlf" & "Error: " & CStr(Err.number), vbOKOnly Or vbCritical Or vbExclamation, "Error"
+=======
+    MsgBox ERROR_LEER_RECURSO, vbOKOnly Or vbCritical Or vbExclamation, JsonLanguage.Item("Error").Item("TEXTO")
+>>>>>>> origin/master
     
     End
 

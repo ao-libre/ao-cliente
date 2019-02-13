@@ -98,6 +98,7 @@ Private Declare Function ChangeDisplaySettings _
 'TODO : Change this to not depend on any external public variable using args instead!
 
 Public Sub SetResolution()
+<<<<<<< HEAD
     '***************************************************
     'Autor: Unknown
     'Last Modification: 03/29/08
@@ -121,6 +122,28 @@ Public Sub SetResolution()
     If oldResWidth <> 800 Or oldResHeight <> 600 Then
         If MsgBox("Desea jugar en pantalla completa?", vbYesNo, "Cambio de Resolucion") = vbYes Then
             frmMain.WindowState = vbMaximized
+=======
+        '***************************************************
+        'Autor: Unknown
+        'Last Modification: 03/29/08
+        'Changes the display resolution if needed.
+        'Last Modified By: Juan Martín Sotuyo Dodero (Maraxus)
+        ' 03/29/2008: Maraxus - Retrieves current settings storing display depth and frequency for proper restoration.
+        '***************************************************
+
+        Dim lRes              As Long
+        Dim MidevM            As typDevMODE
+        Dim CambiarResolucion As Boolean
+    
+        lRes = EnumDisplaySettings(0, ENUM_CURRENT_SETTINGS, MidevM)
+   
+        oldResWidth = Screen.Width \ Screen.TwipsPerPixelX
+        oldResHeight = Screen.Height \ Screen.TwipsPerPixelY
+        
+        If oldResWidth <> 800 Or oldResHeight <> 600 Then
+                If MsgBox(JsonLanguage.Item("PANTALLA_COMPLETA").Item("TEXTO"), vbYesNo, "Argentum Online") = vbYes Then
+                        frmMain.WindowState = vbMaximized
+>>>>>>> origin/master
 
             With MidevM
                 'oldDepth = .dmBitsPerPel

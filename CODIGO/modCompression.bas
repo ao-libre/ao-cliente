@@ -344,7 +344,13 @@ Private Function Get_InfoHeader(ByRef ResourcePath As String, _
     Dim ResourceFilePath As String
     Dim FileHead         As FILEHEADER
     
+<<<<<<< HEAD
     On Local Error GoTo ErrHandler
+=======
+    Dim ERROR_LEER_ARCHIVO As String
+    
+On Local Error GoTo ErrHandler
+>>>>>>> origin/master
 
     If Modo = 0 Then
         ResourceFilePath = ResourcePath & GRH_RESOURCE_FILE
@@ -362,6 +368,7 @@ Private Function Get_InfoHeader(ByRef ResourcePath As String, _
     'Extract the FILEHEADER
     Get ResourceFile, 1, FileHead
         
+<<<<<<< HEAD
     'Check the file for validity
     If LOF(ResourceFile) <> FileHead.lngFileSize Then
         MsgBox "Archivo de recursos dañado. " & ResourceFilePath, , "Error"
@@ -369,6 +376,14 @@ Private Function Get_InfoHeader(ByRef ResourcePath As String, _
         Exit Function
 
     End If
+=======
+        'Check the file for validity
+        If LOF(ResourceFile) <> FileHead.lngFileSize Then
+            MsgBox JsonLanguage.Item("ERROR_ARCHIVO_CORRUPTO").Item("TEXTO") & ": " & ResourceFilePath, , JsonLanguage.Item("Error").Item("TEXTO")
+            Close ResourceFile
+            Exit Function
+        End If
+>>>>>>> origin/master
         
     'Search for it!
     If BinarySearch(ResourceFile, InfoHead, 1, FileHead.lngNumFiles, Len(FileHead), Len(InfoHead)) Then
@@ -382,6 +397,7 @@ Private Function Get_InfoHeader(ByRef ResourcePath As String, _
 ErrHandler:
     Close ResourceFile
     
+<<<<<<< HEAD
     Call MsgBox("Error al intentar leer el archivo " & ResourceFilePath & ". Razón: " & Err.number & " : " & Err.Description, vbOKOnly, "Error")
 
     
@@ -393,6 +409,13 @@ Get_InfoHeader_Err:
     End If
 Resume Next
     
+=======
+    ERROR_LEER_ARCHIVO = JsonLanguage.Item("ERROR_LEER_ARCHIVO").Item("TEXTO")
+    ERROR_LEER_ARCHIVO = Replace$(ERROR_LEER_ARCHIVO, "VAR_ARCHIVO", ResourceFilePath)
+    ERROR_LEER_ARCHIVO = Replace$(ERROR_LEER_ARCHIVO, "VAR_ERROR", Err.number & " : " & Err.Description)
+    
+    Call MsgBox(ERROR_LEER_ARCHIVO)
+>>>>>>> origin/master
 End Function
 
 ''
@@ -575,6 +598,7 @@ Public Function Compress_Files(ByRef SourcePath As String, _
     
     Dim SourceFileName As String
     Dim OutputFilePath As String
+<<<<<<< HEAD
     Dim SourceFile     As Long
     Dim OutputFile     As Long
     Dim SourceData()   As Byte
@@ -584,6 +608,18 @@ Public Function Compress_Files(ByRef SourcePath As String, _
 
     On Local Error GoTo ErrHandler
 
+=======
+    Dim SourceFile As Long
+    Dim OutputFile As Long
+    Dim SourceData() As Byte
+    Dim FileHead As FILEHEADER
+    Dim InfoHead() As INFOHEADER
+    Dim LoopC As Long
+    
+    Dim ERROR_EXT_NO_ENCONTRADA As String
+
+On Local Error GoTo ErrHandler
+>>>>>>> origin/master
     If Modo = 0 Then
         OutputFilePath = OutputPath & GRH_RESOURCE_FILE
         'If GraficosPNG = False Then ' GSZAO
@@ -643,9 +679,17 @@ Public Function Compress_Files(ByRef SourcePath As String, _
     
     If FileHead.lngNumFiles = 0 Then
         'If GraficosPNG = False Then ' GSZAO
+<<<<<<< HEAD
         MsgBox "No se encontraron archivos de extensión " & BMP_SOURCE_FILE_EXT & " en " & SourcePath & ".", , "Error"
+=======
+            ERROR_EXT_NO_ENCONTRADA = JsonLanguage.Item("ERROR_EXT_NO_ENCONTRADA").Item("TEXTO")
+            ERROR_EXT_NO_ENCONTRADA = Replace$(ERROR_EXT_NO_ENCONTRADA, "VAR_EXT", BMP_SOURCE_FILE_EXT)
+            ERROR_EXT_NO_ENCONTRADA = Replace$(ERROR_EXT_NO_ENCONTRADA, "VAR_PATH", SourcePath)
+            
+            MsgBox ERROR_EXT_NO_ENCONTRADA, , JsonLanguage.Item("Error").Item("TEXTO")
+>>>>>>> origin/master
         'Else
-        '    MsgBox "No se encontraron archivos de extensión " & PNG_SOURCE_FILE_EXT & " en " & SourcePath & ".", , "Error"
+        '    MsgBox "No se encontraron archivos de extensión " & PNG_SOURCE_FILE_EXT & " en " & SourcePath & ".", , JsonLanguage.Item("Error").Item("TEXTO")
         'End If
         Exit Function
 
@@ -709,10 +753,17 @@ Public Function Compress_Files(ByRef SourcePath As String, _
             
         Close SourceFile
         
+<<<<<<< HEAD
         'Update progress bar
         If Not prgBar Is Nothing Then prgBar.value = prgBar.value + 1
         DoEvents
     Next LoopC
+=======
+            'Update progress bar
+            If Not prgBar Is Nothing Then prgBar.value = prgBar.value + 1
+            DoEvents
+        Next LoopC
+>>>>>>> origin/master
         
     'Store the headers in the file
     Seek OutputFile, 1
@@ -733,6 +784,7 @@ ErrHandler:
     Erase InfoHead
     Close OutputFile
     
+<<<<<<< HEAD
     Call MsgBox("No se pudo crear el archivo binario. Razón: " & Err.number & " : " & Err.Description, vbOKOnly, "Error")
 
     
@@ -744,6 +796,9 @@ Compress_Files_Err:
     End If
 Resume Next
     
+=======
+    Call MsgBox(Replace$(JsonLanguage.Item("ERROR_CREAR_BINARIO").Item("TEXTO"), "VAR_ERROR", Err.number & " : " & Err.Description), vbOKOnly, JsonLanguage.Item("Error").Item("TEXTO"))
+>>>>>>> origin/master
 End Function
 
 ''
@@ -848,6 +903,7 @@ Public Function Extract_File(ByRef ResourcePath As String, _
     Exit Function
 
 ErrHandler:
+<<<<<<< HEAD
     Call MsgBox("Error al intentar decodificar recursos. Razón: " & Err.number & " : " & Err.Description, vbOKOnly, "Error")
 
     
@@ -859,6 +915,9 @@ Extract_File_Err:
     End If
 Resume Next
     
+=======
+    Call MsgBox(Replace$(JsonLanguage.Item("ERROR_DECODE_RECURSOS").Item("TEXTO"), "VAR_ERROR", Err.number & " : " & Err.Description), vbOKOnly, JsonLanguage.Item("Error").Item("TEXTO"))
+>>>>>>> origin/master
 End Function
 
 ''
@@ -908,6 +967,7 @@ Public Function Extract_Files(ByRef ResourcePath As String, _
     'Extract the FILEHEADER
     Get ResourceFile, 1, FileHead
     
+<<<<<<< HEAD
     'Check the file for validity
     If LOF(ResourceFile) <> FileHead.lngFileSize Then
         Call MsgBox("Archivo de recursos dañado. " & ResourceFilePath, , "Error")
@@ -915,6 +975,14 @@ Public Function Extract_Files(ByRef ResourcePath As String, _
         Exit Function
 
     End If
+=======
+        'Check the file for validity
+        If LOF(ResourceFile) <> FileHead.lngFileSize Then
+            Call MsgBox(JsonLanguage.Item("ERROR_ARCHIVO_CORRUPTO").Item("TEXTO") & ": " & ResourceFilePath, , JsonLanguage.Item("Error").Item("TEXTO"))
+            Close ResourceFile
+            Exit Function
+        End If
+>>>>>>> origin/master
         
     'Size the InfoHead array
     ReDim InfoHead(FileHead.lngNumFiles - 1)
@@ -929,6 +997,7 @@ Public Function Extract_Files(ByRef ResourcePath As String, _
         RequiredSpace = RequiredSpace + InfoHead(LoopC).lngFileSizeUncompressed
     Next LoopC
         
+<<<<<<< HEAD
     If RequiredSpace >= General_Drive_Get_Free_Bytes(Left$(App.path, 3)) Then
         Erase InfoHead
         Close ResourceFile
@@ -937,6 +1006,14 @@ Public Function Extract_Files(ByRef ResourcePath As String, _
 
     End If
 
+=======
+        If RequiredSpace >= General_Drive_Get_Free_Bytes(Left$(App.path, 3)) Then
+            Erase InfoHead
+            Close ResourceFile
+            Call MsgBox(JsonLanguage.Item("ERROR_SIN_ESPACIO").Item("TEXTO"), , JsonLanguage.Item("Error").Item("TEXTO"))
+            Exit Function
+        End If
+>>>>>>> origin/master
     Close ResourceFile
     
     'Update progress bar
@@ -970,7 +1047,7 @@ Public Function Extract_Files(ByRef ResourcePath As String, _
             Erase SourceData
             Erase InfoHead
             
-            Call MsgBox("No se pudo extraer el archivo " & InfoHead(LoopC).strFileName, vbOKOnly, "Error")
+            Call MsgBox(JsonLanguage.Item("ERROR_EXTRAER_ARCHIVO").Item("TEXTO") & ": " & InfoHead(LoopC).strFileName, vbOKOnly, JsonLanguage.Item("Error").Item("TEXTO"))
             Exit Function
 
         End If
@@ -989,6 +1066,7 @@ ErrHandler:
     Erase SourceData
     Erase InfoHead
     
+<<<<<<< HEAD
     Call MsgBox("No se pudo extraer el archivo binario correctamente. Razón: " & Err.number & " : " & Err.Description, vbOKOnly, "Error")
 
     
@@ -1000,6 +1078,9 @@ Extract_Files_Err:
     End If
 Resume Next
     
+=======
+    Call MsgBox(Replace$(JsonLanguage.Item("ERROR_EXTRAER_BINARIO").Item("TEXTO"), "VAR_ERROR", Err.number & " : " & Err.Description), vbOKOnly, JsonLanguage.Item("Error").Item("TEXTO"))
+>>>>>>> origin/master
 End Function
 
 ''
@@ -1032,8 +1113,12 @@ Public Function Get_File_Data(ByRef ResourcePath As String, _
         Get_File_Data = Extract_File(ResourcePath, InfoHead, data, Modo)
     Else
         Get_File_Data = False
+<<<<<<< HEAD
 
         'Call MsgBox("No se se encontro el recurso " & FileName)
+=======
+        'Call MsgBox(JsonLanguage("ERROR_404").Item("TEXTO") & ": " & FileName)
+>>>>>>> origin/master
     End If
 
     
@@ -1097,8 +1182,12 @@ Public Function Get_Image(ByRef ResourcePath As String, _
     If ExistFile = True Then
         If Extract_File(ResourcePath, InfoHead, data, 0) Then Get_Image = True
     Else
+<<<<<<< HEAD
         Call MsgBox("Get_Image::No se encontro el recurso " & FileName)
 
+=======
+        Call MsgBox(JsonLanguage("ERROR_404").Item("TEXTO") & ": " & FileName)
+>>>>>>> origin/master
     End If
 
     
@@ -1316,6 +1405,7 @@ Public Function Make_Patch(ByRef NewResourcePath As String, _
     OldResourceFile = FreeFile
     Open OldResourceFilePath For Binary Access Read Lock Write As OldResourceFile
         
+<<<<<<< HEAD
     'Get the old FileHeader
     Get OldResourceFile, 1, OldFileHead
 
@@ -1326,11 +1416,22 @@ Public Function Make_Patch(ByRef NewResourcePath As String, _
         Exit Function
 
     End If
+=======
+        'Get the old FileHeader
+        Get OldResourceFile, 1, OldFileHead
+        'Check the file for validity
+        If LOF(OldResourceFile) <> OldFileHead.lngFileSize Then
+            Call MsgBox(JsonLanguage.Item("ERROR_ARCHIVO_CORRUPTO").Item("TEXTO") & ": " & OldResourceFilePath, , JsonLanguage.Item("Error").Item("TEXTO"))
+            Close OldResourceFile
+            Exit Function
+        End If
+>>>>>>> origin/master
         
     'Open the new binary file
     NewResourceFile = FreeFile()
     Open NewResourceFilePath For Binary Access Read Lock Write As NewResourceFile
             
+<<<<<<< HEAD
     'Get the new FileHeader
     Get NewResourceFile, 1, NewFileHead
 
@@ -1342,6 +1443,17 @@ Public Function Make_Patch(ByRef NewResourcePath As String, _
         Exit Function
 
     End If
+=======
+            'Get the new FileHeader
+            Get NewResourceFile, 1, NewFileHead
+            'Check the file for validity
+            If LOF(NewResourceFile) <> NewFileHead.lngFileSize Then
+                Call MsgBox(JsonLanguage.Item("ERROR_ARCHIVO_CORRUPTO").Item("TEXTO") & ": " & NewResourceFilePath, , JsonLanguage.Item("Error").Item("TEXTO"))
+                Close NewResourceFile
+                Close OldResourceFile
+                Exit Function
+            End If
+>>>>>>> origin/master
             
     'Destroy file if it previuosly existed
     If LenB(Dir$(OutputFilePath, vbNormal)) <> 0 Then Kill OutputFilePath
@@ -1350,11 +1462,18 @@ Public Function Make_Patch(ByRef NewResourcePath As String, _
     OutputFile = FreeFile()
     Open OutputFilePath For Binary Access Read Write As OutputFile
                 
+<<<<<<< HEAD
     If Not prgBar Is Nothing Then
         prgBar.value = 0
         prgBar.Max = (OldFileHead.lngNumFiles + NewFileHead.lngNumFiles) + 1
 
     End If
+=======
+                If Not prgBar Is Nothing Then
+                    prgBar.value = 0
+                    prgBar.Max = (OldFileHead.lngNumFiles + NewFileHead.lngNumFiles) + 1
+                End If
+>>>>>>> origin/master
                 
     'put previous file version (unencrypted)
     Put OutputFile, , OldFileHead.lngFileVersion
@@ -1365,8 +1484,13 @@ Public Function Make_Patch(ByRef NewResourcePath As String, _
     'Try to read old and new first files
     If ReadNext_InfoHead(OldResourceFile, OldFileHead, OldInfoHead, OldReadFiles) And ReadNext_InfoHead(NewResourceFile, NewFileHead, NewInfoHead, NewReadFiles) Then
                     
+<<<<<<< HEAD
         'Update
         prgBar.value = prgBar.value + 2
+=======
+                    'Update
+                    prgBar.value = prgBar.value + 2
+>>>>>>> origin/master
                     
         Do 'Main loop
 
@@ -1406,8 +1530,13 @@ Public Function Make_Patch(ByRef NewResourcePath As String, _
 
                 End If
                             
+<<<<<<< HEAD
                 'Update
                 If Not prgBar Is Nothing Then prgBar.value = prgBar.value + 2
+=======
+                            'Update
+                            If Not prgBar Is Nothing Then prgBar.value = prgBar.value + 2
+>>>>>>> origin/master
                         
             ElseIf OldInfoHead.strFileName < NewInfoHead.strFileName Then
                             
@@ -1424,8 +1553,13 @@ Public Function Make_Patch(ByRef NewResourcePath As String, _
 
                 End If
                             
+<<<<<<< HEAD
                 'Update
                 If Not prgBar Is Nothing Then prgBar.value = prgBar.value + 1
+=======
+                            'Update
+                            If Not prgBar Is Nothing Then prgBar.value = prgBar.value + 1
+>>>>>>> origin/master
                         
             Else
                             
@@ -1448,10 +1582,16 @@ Public Function Make_Patch(ByRef NewResourcePath As String, _
 
                 End If
                             
+<<<<<<< HEAD
                 'Update
                 If Not prgBar Is Nothing Then prgBar.value = prgBar.value + 1
 
             End If
+=======
+                            'Update
+                            If Not prgBar Is Nothing Then prgBar.value = prgBar.value + 1
+                        End If
+>>>>>>> origin/master
                         
             DoEvents
         Loop
@@ -1471,10 +1611,17 @@ Public Function Make_Patch(ByRef NewResourcePath As String, _
         Put OutputFile, , Instruction
         Put OutputFile, , OldInfoHead
                     
+<<<<<<< HEAD
         'Update
         If Not prgBar Is Nothing Then prgBar.value = prgBar.value + 1
         DoEvents
     Wend
+=======
+                    'Update
+                    If Not prgBar Is Nothing Then prgBar.value = prgBar.value + 1
+                    DoEvents
+                Wend
+>>>>>>> origin/master
                 
     'Read everything?
     While ReadNext_InfoHead(NewResourceFile, NewFileHead, NewInfoHead, NewReadFiles)
@@ -1489,10 +1636,17 @@ Public Function Make_Patch(ByRef NewResourcePath As String, _
         'Write data
         Put OutputFile, , data
                     
+<<<<<<< HEAD
         'Update
         If Not prgBar Is Nothing Then prgBar.value = prgBar.value + 1
         DoEvents
     Wend
+=======
+                    'Update
+                    If Not prgBar Is Nothing Then prgBar.value = prgBar.value + 1
+                    DoEvents
+                Wend
+>>>>>>> origin/master
             
     'Close the patch file
     Close OutputFile
@@ -1511,6 +1665,7 @@ ErrHandler:
     Close NewResourceFile
     Close OldResourceFile
     
+<<<<<<< HEAD
     Call MsgBox("No se pudo terminar de crear el parche. Razón: " & Err.number & " : " & Err.Description, vbOKOnly, "Error")
 
     
@@ -1522,6 +1677,9 @@ Make_Patch_Err:
     End If
 Resume Next
     
+=======
+    Call MsgBox(Replace$(JsonLanguage.Item("ERROR_CREAR_PARCHE").Item("TEXTO"), "VAR_ERROR", Err.number & " : " & Err.Description), vbOKOnly, JsonLanguage.Item("Error").Item("TEXTO"))
+>>>>>>> origin/master
 End Function
 
 ''
@@ -1581,6 +1739,7 @@ Public Function Apply_Patch(ByRef ResourcePath As String, _
     ResourceFile = FreeFile()
     Open ResourceFilePath For Binary Access Read Lock Write As ResourceFile
         
+<<<<<<< HEAD
     'Read the old FileHeader
     Get ResourceFile, , FileHead
 
@@ -1591,6 +1750,16 @@ Public Function Apply_Patch(ByRef ResourcePath As String, _
         Exit Function
 
     End If
+=======
+        'Read the old FileHeader
+        Get ResourceFile, , FileHead
+        'Check the file for validity
+        If LOF(ResourceFile) <> FileHead.lngFileSize Then
+            Call MsgBox(JsonLanguage.Item("ERROR_ARCHIVO_CORRUPTO").Item("TEXTO") & ": " & ResourceFilePath, , JsonLanguage.Item("Error").Item("TEXTO"))
+            Close ResourceFile
+            Exit Function
+        End If
+>>>>>>> origin/master
         
     'Open the patch file
     PatchFile = FreeFile()
@@ -1599,6 +1768,7 @@ Public Function Apply_Patch(ByRef ResourcePath As String, _
     'Get previous file version
     Get PatchFile, , OldResourceVersion
             
+<<<<<<< HEAD
     'Check the file version
     If OldResourceVersion <> FileHead.lngFileVersion Then
         Call MsgBox("Incongruencia en versiones.", , "Error")
@@ -1607,6 +1777,15 @@ Public Function Apply_Patch(ByRef ResourcePath As String, _
         Exit Function
 
     End If
+=======
+            'Check the file version
+            If OldResourceVersion <> FileHead.lngFileVersion Then
+                Call MsgBox(JsonLanguage.Item("ERROR_VERSIONES_RECURSOS").Item("TEXTO"), , JsonLanguage.Item("Error").Item("TEXTO"))
+                Close ResourceFile
+                Close PatchFile
+                Exit Function
+            End If
+>>>>>>> origin/master
             
     'Read the new FileHeader
     Get PatchFile, , PatchFileHead
@@ -1621,11 +1800,18 @@ Public Function Apply_Patch(ByRef ResourcePath As String, _
     'Save the file header
     Put OutputFile, , PatchFileHead
   
+<<<<<<< HEAD
     If Not prgBar Is Nothing Then
         prgBar.value = 0
         prgBar.Max = PatchFileHead.lngNumFiles + 1
 
     End If
+=======
+                If Not prgBar Is Nothing Then
+                    prgBar.value = 0
+                    prgBar.Max = PatchFileHead.lngNumFiles + 1
+                End If
+>>>>>>> origin/master
                 
     'Update
     DataOutputPos = Len(FileHead) + Len(InfoHead) * PatchFileHead.lngNumFiles + 1
@@ -1652,6 +1838,7 @@ Public Function Apply_Patch(ByRef ResourcePath As String, _
                 Put OutputFile, Len(FileHead) + Len(InfoHead) * WrittenFiles + 1, InfoHead
                 Put OutputFile, DataOutputPos, data
                             
+<<<<<<< HEAD
                 'Update
                 DataOutputPos = DataOutputPos + UBound(data) + 1
                 WrittenFiles = WrittenFiles + 1
@@ -1674,6 +1861,24 @@ Public Function Apply_Patch(ByRef ResourcePath As String, _
                     GoTo ErrHandler
 
                 End If
+=======
+                            'Update
+                            DataOutputPos = DataOutputPos + UBound(data) + 1
+                            WrittenFiles = WrittenFiles + 1
+                            If Not prgBar Is Nothing Then prgBar.value = WrittenFiles
+                        Else
+                            Exit Do
+                        End If
+                    Loop
+                    
+                    Select Case Instruction
+                        'Delete
+                        Case PatchInstruction.Delete_File
+                            If InfoHead.strFileName <> PatchInfoHead.strFileName Then
+                                Err.Description = JsonLanguage.Item("ERROR_VERSIONES_RECURSOS").Item("TEXTO")
+                                GoTo ErrHandler
+                            End If
+>>>>>>> origin/master
                         
                 'Create
             Case PatchInstruction.Create_File
@@ -1692,6 +1897,7 @@ Public Function Apply_Patch(ByRef ResourcePath As String, _
                     EOResource = False
                     ResourceReadFiles = ResourceReadFiles - 1
                                 
+<<<<<<< HEAD
                     'Update
                     DataOutputPos = DataOutputPos + UBound(data) + 1
                     WrittenFiles = WrittenFiles + 1
@@ -1702,6 +1908,16 @@ Public Function Apply_Patch(ByRef ResourcePath As String, _
                     GoTo ErrHandler
 
                 End If
+=======
+                                'Update
+                                DataOutputPos = DataOutputPos + UBound(data) + 1
+                                WrittenFiles = WrittenFiles + 1
+                                If Not prgBar Is Nothing Then prgBar.value = WrittenFiles
+                            Else
+                                Err.Description = JsonLanguage.Item("ERROR_VERSIONES_RECURSOS").Item("TEXTO")
+                                GoTo ErrHandler
+                            End If
+>>>>>>> origin/master
                         
                 'Modify
             Case PatchInstruction.Modify_File
@@ -1716,6 +1932,7 @@ Public Function Apply_Patch(ByRef ResourcePath As String, _
                     Put OutputFile, Len(FileHead) + Len(InfoHead) * WrittenFiles + 1, PatchInfoHead
                     Put OutputFile, DataOutputPos, data
                                 
+<<<<<<< HEAD
                     'Update
                     DataOutputPos = DataOutputPos + UBound(data) + 1
                     WrittenFiles = WrittenFiles + 1
@@ -1728,6 +1945,17 @@ Public Function Apply_Patch(ByRef ResourcePath As String, _
                 End If
 
         End Select
+=======
+                                'Update
+                                DataOutputPos = DataOutputPos + UBound(data) + 1
+                                WrittenFiles = WrittenFiles + 1
+                                If Not prgBar Is Nothing Then prgBar.value = WrittenFiles
+                            Else
+                                Err.Description = JsonLanguage.Item("ERROR_VERSIONES_RECURSOS").Item("TEXTO")
+                                GoTo ErrHandler
+                            End If
+                    End Select
+>>>>>>> origin/master
                     
         DoEvents
     Wend
@@ -1743,6 +1971,7 @@ Public Function Apply_Patch(ByRef ResourcePath As String, _
         Put OutputFile, Len(FileHead) + Len(InfoHead) * WrittenFiles + 1, InfoHead
         Put OutputFile, DataOutputPos, data
                     
+<<<<<<< HEAD
         'Update
         DataOutputPos = DataOutputPos + UBound(data) + 1
         WrittenFiles = WrittenFiles + 1
@@ -1750,6 +1979,14 @@ Public Function Apply_Patch(ByRef ResourcePath As String, _
         If Not prgBar Is Nothing Then prgBar.value = WrittenFiles
         DoEvents
     Wend
+=======
+                    'Update
+                    DataOutputPos = DataOutputPos + UBound(data) + 1
+                    WrittenFiles = WrittenFiles + 1
+                    If Not prgBar Is Nothing Then prgBar.value = WrittenFiles
+                    DoEvents
+                Wend
+>>>>>>> origin/master
             
     'Close the patch file
     Close OutputFile
@@ -1768,7 +2005,7 @@ Public Function Apply_Patch(ByRef ResourcePath As String, _
         Name OutputFilePath As ResourceFilePath
 
     Else
-        Err.Description = "Falla al procesar parche"
+        Err.Description = JsonLanguage.Item("ERROR_LEER_PARCHE").Item("TEXTO")
         GoTo ErrHandler
 
     End If
@@ -1784,6 +2021,7 @@ ErrHandler:
     'Destroy file if created
     If FileExist(OutputFilePath, vbNormal) Then Call Kill(OutputFilePath)
     
+<<<<<<< HEAD
     Call MsgBox("No se pudo parchear. Razón: " & Err.number & " : " & Err.Description, vbOKOnly, "Error")
 
     
@@ -1795,6 +2033,9 @@ Apply_Patch_Err:
     End If
 Resume Next
     
+=======
+    Call MsgBox(Replace$(JsonLanguage.Item("ERROR_CREAR_PARCHE").Item("TEXTO"), "VAR_ERROR", Err.number & " : " & Err.Description), vbOKOnly, JsonLanguage.Item("Error").Item("TEXTO"))
+>>>>>>> origin/master
 End Function
 
 Private Function AlignScan(ByVal inWidth As Long, ByVal inDepth As Integer) As Long
