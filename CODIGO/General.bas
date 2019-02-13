@@ -2073,16 +2073,19 @@ Public Sub CloseClient()
     'Actualizar tip
     Config_Inicio.tip = tipf
     Call EscribirGameIni(Config_Inicio)
+    
     End
-
     
     Exit Sub
 
 CloseClient_Err:
+
     If Err.number <> 0 Then
         LogError Err.number, Err.Description, "Mod_General" & "->" & "CloseClient"
+
     End If
-Resume Next
+
+    Resume Next
     
 End Sub
 
@@ -2420,7 +2423,7 @@ Resume Next
     
 End Sub
 
-Public Function DevolverNombreHechizo(ByVal Index As Byte) As String
+Public Function DevolverNombreHechizo(ByVal index As Byte) As String
     
     On Error GoTo DevolverNombreHechizo_Err
     
@@ -2428,7 +2431,7 @@ Public Function DevolverNombreHechizo(ByVal Index As Byte) As String
  
     For i = 1 To NumHechizos
 
-        If i = Index Then
+        If i = index Then
             DevolverNombreHechizo = Hechizos(i).Nombre
             Exit Function
 
