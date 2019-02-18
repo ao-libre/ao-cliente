@@ -108,7 +108,6 @@ Module=mDx8_Dibujado; CODIGO\mDx8_Dibujado.bas
 Class=clsSurfaceManStatic; CODIGO\clsSurfaceManStatic.cls
 Module=JSON; CODIGO\JSON.bas
 Class=cStringBuilder; CODIGO\cStringBuilder.cls
-Class=cJSONScript; CODIGO\cJSONScript.cls
 Class=clsByteBuffer; CODIGO\clsByteBuffer.cls
 Form=CODIGO\frmCerrar.frm
 Module=modPing; CODIGO\modPing.bas
