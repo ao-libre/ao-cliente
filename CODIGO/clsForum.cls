@@ -79,64 +79,64 @@ Public Sub ClearForums()
 '
 '***************************************************
 
-    Dim Index As Long
+    Dim index As Long
     
     If CantPosts(eForumType.ieGeneral) > 0 Then
-        For Index = 1 To CantPosts(eForumType.ieGeneral)
-            Foros(eForumType.ieGeneral).GeneralAuthor(Index) = vbNullString
-            Foros(eForumType.ieGeneral).GeneralTitle(Index) = vbNullString
-            Foros(eForumType.ieGeneral).GeneralPost(Index) = vbNullString
-        Next Index
+        For index = 1 To CantPosts(eForumType.ieGeneral)
+            Foros(eForumType.ieGeneral).GeneralAuthor(index) = vbNullString
+            Foros(eForumType.ieGeneral).GeneralTitle(index) = vbNullString
+            Foros(eForumType.ieGeneral).GeneralPost(index) = vbNullString
+        Next index
         
         CantPosts(eForumType.ieGeneral) = 0
     End If
     
     If CantPosts(eForumType.ieREAL) > 0 Then
-        For Index = 1 To CantPosts(eForumType.ieREAL)
-            Foros(eForumType.ieREAL).GeneralAuthor(Index) = vbNullString
-            Foros(eForumType.ieREAL).GeneralTitle(Index) = vbNullString
-            Foros(eForumType.ieREAL).GeneralPost(Index) = vbNullString
-        Next Index
+        For index = 1 To CantPosts(eForumType.ieREAL)
+            Foros(eForumType.ieREAL).GeneralAuthor(index) = vbNullString
+            Foros(eForumType.ieREAL).GeneralTitle(index) = vbNullString
+            Foros(eForumType.ieREAL).GeneralPost(index) = vbNullString
+        Next index
         
         CantPosts(eForumType.ieREAL) = 0
     End If
     
     If CantPosts(eForumType.ieCAOS) > 0 Then
-        For Index = 1 To CantPosts(eForumType.ieCAOS)
-            Foros(eForumType.ieCAOS).GeneralAuthor(Index) = vbNullString
-            Foros(eForumType.ieCAOS).GeneralTitle(Index) = vbNullString
-            Foros(eForumType.ieCAOS).GeneralPost(Index) = vbNullString
-        Next Index
+        For index = 1 To CantPosts(eForumType.ieCAOS)
+            Foros(eForumType.ieCAOS).GeneralAuthor(index) = vbNullString
+            Foros(eForumType.ieCAOS).GeneralTitle(index) = vbNullString
+            Foros(eForumType.ieCAOS).GeneralPost(index) = vbNullString
+        Next index
         
         CantPosts(eForumType.ieCAOS) = 0
     End If
     
     If CantStickys(eForumType.ieGeneral) > 0 Then
-        For Index = 1 To CantStickys(eForumType.ieGeneral)
-            Foros(eForumType.ieGeneral).StickyAuthor(Index) = vbNullString
-            Foros(eForumType.ieGeneral).StickyTitle(Index) = vbNullString
-            Foros(eForumType.ieGeneral).StickyPost(Index) = vbNullString
-        Next Index
+        For index = 1 To CantStickys(eForumType.ieGeneral)
+            Foros(eForumType.ieGeneral).StickyAuthor(index) = vbNullString
+            Foros(eForumType.ieGeneral).StickyTitle(index) = vbNullString
+            Foros(eForumType.ieGeneral).StickyPost(index) = vbNullString
+        Next index
         
         CantStickys(eForumType.ieGeneral) = 0
     End If
     
     If CantStickys(eForumType.ieREAL) > 0 Then
-        For Index = 1 To CantStickys(eForumType.ieREAL)
-            Foros(eForumType.ieREAL).StickyAuthor(Index) = vbNullString
-            Foros(eForumType.ieREAL).StickyTitle(Index) = vbNullString
-            Foros(eForumType.ieREAL).StickyPost(Index) = vbNullString
-        Next Index
+        For index = 1 To CantStickys(eForumType.ieREAL)
+            Foros(eForumType.ieREAL).StickyAuthor(index) = vbNullString
+            Foros(eForumType.ieREAL).StickyTitle(index) = vbNullString
+            Foros(eForumType.ieREAL).StickyPost(index) = vbNullString
+        Next index
         
         CantStickys(eForumType.ieREAL) = 0
     End If
     
     If CantStickys(eForumType.ieCAOS) > 0 Then
-        For Index = 1 To CantStickys(eForumType.ieCAOS)
-            Foros(eForumType.ieCAOS).StickyAuthor(Index) = vbNullString
-            Foros(eForumType.ieCAOS).StickyTitle(Index) = vbNullString
-            Foros(eForumType.ieCAOS).StickyPost(Index) = vbNullString
-        Next Index
+        For index = 1 To CantStickys(eForumType.ieCAOS)
+            Foros(eForumType.ieCAOS).StickyAuthor(index) = vbNullString
+            Foros(eForumType.ieCAOS).StickyTitle(index) = vbNullString
+            Foros(eForumType.ieCAOS).StickyPost(index) = vbNullString
+        Next index
         
         CantStickys(eForumType.ieCAOS) = 0
     End If
@@ -168,17 +168,24 @@ Dim i As Long
 
 With Foros(ForumType)
     If Sticky Then
-        For i = CantStickys(ForumType) To 2 Step -1
+        Dim Count_stickys As Long
+            Count_stickys = CantStickys(ForumType)
+            
+        For i = Count_stickys To 2 Step -1
             .StickyTitle(i) = .StickyTitle(i - 1)
             .StickyPost(i) = .StickyPost(i - 1)
             .StickyAuthor(i) = .StickyAuthor(i - 1)
         Next i
     Else
-        For i = CantPosts(ForumType) To 2 Step -1
+        Dim Count_posts As Long
+            Count_posts = CantPosts(ForumType)
+            
+        For i = Count_posts To 2 Step -1
             .GeneralTitle(i) = .GeneralTitle(i - 1)
             .GeneralPost(i) = .GeneralPost(i - 1)
             .GeneralAuthor(i) = .GeneralAuthor(i - 1)
         Next i
     End If
 End With
+
 End Sub

@@ -107,13 +107,16 @@ Private Sub Class_Terminate()
     Dim handle As Integer
     Dim i As Long
     Dim directories() As String
+    Dim Upper_directories As Long
+    Dim Count_messages As Long
     Dim path As String
     
     'Make sure the path exists
     directories = Split(MESSAGE_FILE_PATH, "/")
     path = App.path
+    Upper_directories = UBound(directories()) - 1
     
-    For i = 0 To UBound(directories()) - 1
+    For i = 0 To Upper_directories
         path = path & "/" & directories(i)
         
         If LenB(Dir(path, vbDirectory)) = 0 Then
@@ -123,12 +126,14 @@ Private Sub Class_Terminate()
     
     'Serialize custom messages
     handle = FreeFile()
-    
+    Count_messages = MESSAGE_COUNT - 1
     Open App.path & MESSAGE_FILE_PATH For Output As handle
     
-    For i = 0 To MESSAGE_COUNT - 1
+    For i = 0 To Count_messages
         Print #handle, CustomMessages(i)
     Next i
+    
+    Close handle
     
     Close handle
 End Sub
@@ -139,17 +144,17 @@ End Sub
 ' @param    index   The message index to retrieve.
 ' @return   The message requested.
 
-Public Property Get Message(ByVal Index As Integer) As String
+Public Property Get Message(ByVal index As Integer) As String
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 07/26/07
 'Retrieves the requested message.
 '***************************************************
-    If Index < 0 Or Index >= MESSAGE_COUNT Then
+    If index < 0 Or index >= MESSAGE_COUNT Then
         Exit Property
     End If
     
-    Message = CustomMessages(Index)
+    Message = CustomMessages(index)
 End Property
 
 ''
@@ -158,13 +163,13 @@ End Property
 ' @param    index   The message index to be set.
 ' @param    nValue  The message to be stored.
 
-Public Property Let Message(ByVal Index As Integer, ByVal nValue As String)
+Public Property Let Message(ByVal index As Integer, ByVal nValue As String)
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 07/26/07
 'Sets the given message index with the requested message.
 '***************************************************
-    If Index < 0 Or Index >= MESSAGE_COUNT Then
+    If index < 0 Or index >= MESSAGE_COUNT Then
         Exit Property
     End If
     
@@ -173,7 +178,7 @@ Public Property Let Message(ByVal Index As Integer, ByVal nValue As String)
         Exit Property
     End If
     
-    CustomMessages(Index) = nValue
+    CustomMessages(index) = nValue
 End Property
 
 ''
@@ -210,6 +215,8 @@ Private Function MessageIsValid(ByRef msg As String) As Boolean
     Dim Char As String * 1
     Dim ascii As Byte
     
+    Dim Len_msg As Long
+    
     'Get rid of spaces
     msg = Trim$(msg)
         
@@ -219,7 +226,9 @@ Private Function MessageIsValid(ByRef msg As String) As Boolean
         Exit Function
     End If
     
-    For i = 1 To Len(msg)
+    Len_msg = Len(msg)
+    
+    For i = 1 To Len_msg
         Char = mid$(msg, i, 1)
         ascii = Asc(Char)
         

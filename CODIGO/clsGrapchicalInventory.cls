@@ -391,7 +391,9 @@ Private Sub DrawInventory()
 'Last Modify Date: 27/07/04
 'Renders the inventory to the given PictureBox
 '***************************************************
-    Dim LoopC As Long
+        Dim LoopC As Long
+    Dim InventoryDimensions As Long
+    Dim Upper_inventory As Long
 
     Dim destRect As RECT
     Dim Inv_Color(0 To 3) As Long
@@ -406,11 +408,14 @@ Private Sub DrawInventory()
     'Clear the inventory window
     
     Call Engine_BeginScene
-    
-        For LoopC = InventoryOffset * (InventoryWindow.ScaleWidth \ ownTilePixelWidth) + 1 To UBound(Inventory)
+        
+        InventoryDimensions = InventoryOffset * (InventoryWindow.ScaleWidth \ ownTilePixelWidth) + 1
+        Upper_inventory = UBound(Inventory)
+        
+        For LoopC = InventoryDimensions To Upper_inventory
             
-            startdX = ((LoopC - 1) Mod (frmMain.picInv.Width / 32)) * 32
-            startdY = ((LoopC - 1) \ (frmMain.picInv.Width / 32)) * 32
+            startdX = ((LoopC - 1) Mod (frmMain.PicInv.Width / 32)) * 32
+            startdY = ((LoopC - 1) \ (frmMain.PicInv.Width / 32)) * 32
             
             
             Call Engine_Long_To_RGB_List(Inv_Color(), -1)

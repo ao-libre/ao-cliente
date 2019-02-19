@@ -308,7 +308,7 @@ End Function
 
 Private Function parseNumber(ByRef str As String, ByRef index As Long)
 
-    Dim Value As String
+    Dim value As String
 
     Dim Char  As String
 
@@ -318,22 +318,22 @@ Private Function parseNumber(ByRef str As String, ByRef index As Long)
         Char = mid$(str, index, 1)
 
         If InStr("+-0123456789.eE", Char) Then
-            Value = Value & Char
+            value = value & Char
             index = index + 1
         Else
 
             'check what is the grouping seperator
             If Not m_decSep = "." Then
-                Value = Replace(Value, ".", m_decSep)
+                value = Replace(value, ".", m_decSep)
 
             End If
      
             If m_groupSep = "." Then
-                Value = Replace(Value, ".", m_decSep)
+                value = Replace(value, ".", m_decSep)
 
             End If
      
-            parseNumber = CDec(Value)
+            parseNumber = CDec(value)
             Exit Function
 
         End If
@@ -584,11 +584,15 @@ Private Function Encode(str) As String
     Dim c   As String
 
     Dim p   As Boolean
+    
+    Dim Len_str As Long
 
     aL1 = Array(&H22, &H5C, &H2F, &H8, &HC, &HA, &HD, &H9)
     aL2 = Array(&H22, &H5C, &H2F, &H62, &H66, &H6E, &H72, &H74)
-
-    For i = 1 To LenB(str)
+    
+    Len_str = LenB(str)
+    
+    For i = 1 To Len_str
         p = True
         c = mid$(str, i, 1)
 
@@ -642,6 +646,9 @@ Public Function StringToJSON(st As String) As String
     Dim fld     As Variant
 
     Dim rows    As Variant
+    
+    Dim Lower_rows As Long, Upper_rows As Long
+    Dim Lower_fld As Long, Upper_fld As Long
 
     lRecCnt = 0
 
@@ -649,12 +656,18 @@ Public Function StringToJSON(st As String) As String
         StringToJSON = "null"
     Else
         rows = Split(st, RECORD_SEP)
-
-        For lRecCnt = LBound(rows) To UBound(rows)
+        
+        Lower_rows = LBound(rows)
+        Upper_rows = UBound(rows)
+        
+        For lRecCnt = Lower_rows To Upper_rows
             sFlds = vbNullString
             fld = Split(rows(lRecCnt), FIELD_SEP)
-
-            For lFld = LBound(fld) To UBound(fld) Step 2
+            
+            Lower_fld = LBound(fld)
+            Upper_fld = UBound(fld)
+            
+            For lFld = Lower_fld To Upper_fld Step 2
                 sFlds = (sFlds & IIf(sFlds <> "", ",", "") & """" & fld(lFld) & """:""" & toUnicode(fld(lFld + 1) & "") & """")
             Next 'fld
 
@@ -664,7 +677,6 @@ Public Function StringToJSON(st As String) As String
         StringToJSON = ("( {""Records"": [" & vbNewLine & sRecs.toString & vbNewLine & "], " & """RecordCount"":""" & lRecCnt & """ } )")
 
     End If
-
 End Function
 
 Public Function RStoJSON(rs As ADODB.Recordset) As String
@@ -695,7 +707,7 @@ Public Function RStoJSON(rs As ADODB.Recordset) As String
 
                 For Each fld In rs.Fields
 
-                    sFlds = (sFlds & IIf(sFlds <> "", ",", "") & """" & fld.Name & """:""" & toUnicode(fld.Value & "") & """")
+                    sFlds = (sFlds & IIf(sFlds <> "", ",", "") & """" & fld.Name & """:""" & toUnicode(fld.value & "") & """")
                 Next 'fld
 
                 sRecs.Append IIf((Trim$(sRecs.toString) <> ""), "," & vbNewLine, "") & "{" & sFlds & "}"
@@ -719,8 +731,11 @@ Public Function toUnicode(str As String) As String
     Dim uStr     As New cStringBuilder
 
     Dim uChrCode As Integer
+    
+    Dim Len_str As Long
+        Len_str = LenB(str)
 
-    For X = 1 To LenB(str)
+    For X = 1 To Len_str
         uChrCode = Asc(mid$(str, X, 1))
 
         Select Case uChrCode

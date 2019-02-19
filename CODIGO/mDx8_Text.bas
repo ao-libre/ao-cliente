@@ -105,7 +105,7 @@ Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, ByVal Text As String
     Dim u As Single
     Dim v As Single
     Dim i As Long
-    Dim J As Long
+    Dim j As Long
     Dim KeyPhrase As Byte
     Dim TempColor As Long
     Dim ResetColor As Byte
@@ -113,6 +113,8 @@ Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, ByVal Text As String
     Dim v2 As D3DVECTOR2
     Dim v3 As D3DVECTOR2
     Dim YOffset As Single
+    
+    Dim Upper_tempstr As Long, Len_tempstr As Long
     
     'Check if we have the device
     If DirectDevice.TestCooperativeLevel <> D3D_OK Then Exit Sub
@@ -127,7 +129,10 @@ Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, ByVal Text As String
     NewText = Text
     Text = vbNullString
     
-    For i = 0 To UBound(tempstr)
+    'pre-calculate tempstr's upperbound to improve performance
+    Upper_tempstr = UBound(tempstr)
+    
+    For i = 0 To Upper_tempstr
         If tempstr(i) = ":)" Or tempstr(i) = "=)" Then
             tempstr(i) = Chr$(129)
         ElseIf tempstr(i) = ":@" Or tempstr(i) = "=@" Then
@@ -160,20 +165,25 @@ Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, ByVal Text As String
         X = X - Engine_GetTextWidth(cfonts(1), Text) * 0.5
     End If
     
+    'pre-calculate tempstr's upperbound to improve performance
+    Upper_tempstr = UBound(tempstr)
+    
     'Loop through each line if there are line breaks (vbCrLf)
-    For i = 0 To UBound(tempstr)
+    For i = 0 To Upper_tempstr
         If Len(tempstr(i)) > 0 Then
             YOffset = i * UseFont.CharHeight
             Count = 0
         
             'Convert the characters to the ascii value
             ascii() = StrConv(tempstr(i), vbFromUnicode)
-        
+            
+            Len_tempstr = Len(tempstr(i))
+            
             'Loop through the characters
-            For J = 1 To Len(tempstr(i))
+            For j = 1 To Len_tempstr
 
                 'Copy from the cached vertex array to the temp vertex array
-                CopyMemory TempVA(0), UseFont.HeaderInfo.CharVA(ascii(J - 1)).Vertex(0), 32 * 4
+                CopyMemory TempVA(0), UseFont.HeaderInfo.CharVA(ascii(j - 1)).Vertex(0), 32 * 4
                 
                 'Set up the verticies
                 TempVA(0).X = X + Count
@@ -189,12 +199,12 @@ Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, ByVal Text As String
                 TempVA(3).Y = TempVA(2).Y
                 
                 'Set the colors
-                If Es_Emoticon(ascii(J - 1)) Then ' GSZAO los colores no afectan a los emoticones!
+                If Es_Emoticon(ascii(j - 1)) Then ' GSZAO los colores no afectan a los emoticones!
                     TempVA(0).Color = -1
                     TempVA(1).Color = -1
                     TempVA(2).Color = -1
                     TempVA(3).Color = -1
-                    If (ascii(J - 1) <> 157) Then Count = Count + 5   ' Los emoticones tienen tamaño propio (despues hay que cargarlos "correctamente" para evitar hacer esto)
+                    If (ascii(j - 1) <> 157) Then Count = Count + 5   ' Los emoticones tienen tamaño propio (despues hay que cargarlos "correctamente" para evitar hacer esto)
                 Else
                     TempVA(0).Color = TempColor
                     TempVA(1).Color = TempColor
@@ -206,7 +216,7 @@ Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, ByVal Text As String
                 DirectDevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, TempVA(0), Len(TempVA(0))
                 
                 'Shift over the the position to render the next character
-                Count = Count + UseFont.HeaderInfo.CharWidth(ascii(J - 1))
+                Count = Count + UseFont.HeaderInfo.CharWidth(ascii(j - 1))
     
                 'Check to reset the color
                 If ResetColor Then
@@ -214,7 +224,7 @@ Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, ByVal Text As String
                     TempColor = Color
                 End If
                 
-            Next J
+            Next j
             
         End If
     Next i
@@ -257,12 +267,15 @@ Private Function Engine_GetTextWidth(ByRef UseFont As CustomFont, ByVal Text As 
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_GetTextWidth
 '***************************************************
 Dim i As Integer
+Dim Len_text As Long
 
     'Make sure we have text
     If LenB(Text) = 0 Then Exit Function
     
+    Len_text = Len(Text)
+    
     'Loop through the text
-    For i = 1 To Len(Text)
+    For i = 1 To Len_text
         
         'Add up the stored character widths
         Engine_GetTextWidth = Engine_GetTextWidth + UseFont.HeaderInfo.CharWidth(Asc(mid$(Text, i, 1)))

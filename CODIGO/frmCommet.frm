@@ -175,7 +175,11 @@ Private Sub imgEnviar_Click()
         'Sacamos el char de la lista de aspirantes
         Dim i As Long
         
-        For i = 0 To frmGuildLeader.solicitudes.ListCount - 1
+        'Calculamos la cantidad de aspirantes de antemano para mejorar el rendimiento
+        Dim Count_listCount As Long
+            Count_listCount = frmGuildLeader.solicitudes.ListCount - 1
+            
+        For i = 0 To Count_listCount
             If frmGuildLeader.solicitudes.List(i) = Nombre Then
                 frmGuildLeader.solicitudes.RemoveItem i
                 Exit For
