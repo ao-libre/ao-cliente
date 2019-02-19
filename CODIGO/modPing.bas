@@ -212,7 +212,6 @@ Public Function GetIPFromHostName(ByVal strHostName As String) As String
 
    'converts a host name to an IP address.
 
-   Dim nbytes As Long
    Dim ptrHosent As Long  'address of hostent structure
    Dim ptrName As Long    'address of name pointer
    Dim ptrAddress As Long 'address of address pointer

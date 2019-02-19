@@ -500,7 +500,7 @@ Private clsFormulario As clsFormMovementManager
 
 Private Sub CargarImagenes()
     Dim ImgPath As String
-    Dim Index As Integer
+    Dim index As Integer
     
     ImgPath = App.path & "\graficos\"
 
@@ -513,11 +513,11 @@ Private Sub CargarImagenes()
     Set picRecuadroItem = LoadPicture(ImgPath & "RecuadroItemsHerreria.jpg")
     Set picRecuadroLingotes = LoadPicture(ImgPath & "RecuadroLingotes.jpg")
     
-    For Index = 1 To MAX_LIST_ITEMS
-        imgMarcoItem(Index).Picture = picRecuadroItem
-        imgMarcoUpgrade(Index).Picture = picRecuadroItem
-        imgMarcoLingotes(Index).Picture = picRecuadroLingotes
-    Next Index
+    For index = 1 To MAX_LIST_ITEMS
+        imgMarcoItem(index).Picture = picRecuadroItem
+        imgMarcoUpgrade(index).Picture = picRecuadroItem
+        imgMarcoLingotes(index).Picture = picRecuadroLingotes
+    Next index
     
     Set cPicCerrar = New clsGraphicalButton
     Set cPicConstruir(0) = New clsGraphicalButton
@@ -550,12 +550,12 @@ Private Sub CargarImagenes()
     picCheckBox.MouseIcon = picMouseIcon
 End Sub
 
-Private Sub ConstruirItem(ByVal Index As Integer)
+Private Sub ConstruirItem(ByVal index As Integer)
     Dim ItemIndex As Integer
     Dim CantItemsCiclo As Integer
     
     If Scroll.Visible = True Then ItemIndex = Scroll.value
-    ItemIndex = ItemIndex + Index
+    ItemIndex = ItemIndex + index
     
     Select Case UltimaPestania
         Case ePestania.ieArmas
@@ -833,16 +833,15 @@ Private Sub picMejorar3_Click()
     Call ConstruirItem(4)
 End Sub
 
-Private Sub picPestania_Click(Index As Integer)
-    Dim i As Integer
+Private Sub picPestania_Click(index As Integer)
     Dim NumItems As Integer
     
     If Cargando Then Exit Sub
-    If UltimaPestania = Index Then Exit Sub
+    If UltimaPestania = index Then Exit Sub
     
     Scroll.value = 0
     
-    Select Case Index
+    Select Case index
         Case ePestania.ieArmas
             ' Background
             Me.Picture = Pestanias(ePestania.ieArmas)
@@ -880,7 +879,7 @@ Private Sub picPestania_Click(Index As Integer)
             Call RenderUpgradeList(1)
     End Select
 
-    UltimaPestania = Index
+    UltimaPestania = index
 End Sub
 
 Private Sub Scroll_Change()

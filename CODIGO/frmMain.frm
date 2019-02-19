@@ -220,6 +220,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2619
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1074,21 +1075,21 @@ Public Sub LightSkillStar(ByVal bTurnOn As Boolean)
     End If
 End Sub
 
-Private Sub cmdMoverHechi_Click(Index As Integer)
+Private Sub cmdMoverHechi_Click(index As Integer)
     If hlst.Visible = True Then
         If hlst.ListIndex = -1 Then Exit Sub
         Dim sTemp As String
     
-        Select Case Index
+        Select Case index
             Case 1 'subir
                 If hlst.ListIndex = 0 Then Exit Sub
             Case 0 'bajar
                 If hlst.ListIndex = hlst.ListCount - 1 Then Exit Sub
         End Select
     
-        Call WriteMoveSpell(Index = 1, hlst.ListIndex + 1)
+        Call WriteMoveSpell(index = 1, hlst.ListIndex + 1)
         
-        Select Case Index
+        Select Case index
             Case 1 'subir
                 sTemp = hlst.List(hlst.ListIndex - 1)
                 hlst.List(hlst.ListIndex - 1) = hlst.List(hlst.ListIndex)
@@ -1102,12 +1103,12 @@ Private Sub cmdMoverHechi_Click(Index As Integer)
         End Select
     End If
 End Sub
-Public Sub ControlSM(ByVal Index As Byte, ByVal Mostrar As Boolean)
+Public Sub ControlSM(ByVal index As Byte, ByVal Mostrar As Boolean)
 Dim GrhIndex As Long
 Dim SR As RECT
 Dim DR As RECT
 
-GrhIndex = GRH_INI_SM + Index + SM_CANT * (CInt(Mostrar) + 1)
+GrhIndex = GRH_INI_SM + index + SM_CANT * (CInt(Mostrar) + 1)
 
 With GrhData(GrhIndex)
     SR.Left = .SX
@@ -1121,37 +1122,37 @@ With GrhData(GrhIndex)
     DR.bottom = .pixelHeight
 End With
 
-Call DrawGrhtoHdc(picSM(Index).hdc, GrhIndex, SR, DR)
-picSM(Index).Refresh
+Call DrawGrhtoHdc(picSM(index).hdc, GrhIndex, SR, DR)
+picSM(index).Refresh
 
-Select Case Index
+Select Case index
     Case eSMType.sResucitation
         If Mostrar Then
             Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_SEGURO_RESU_ON").Item("TEXTO"), 0, 255, 0, True, False, True)
-            picSM(Index).ToolTipText = JsonLanguage.Item("MENSAJE_SEGURO_RESU_ON").Item("TEXTO")
+            picSM(index).ToolTipText = JsonLanguage.Item("MENSAJE_SEGURO_RESU_ON").Item("TEXTO")
         Else
             Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_SEGURO_RESU_OFF").Item("TEXTO"), 255, 0, 0, True, False, True)
-            picSM(Index).ToolTipText = JsonLanguage.Item("MENSAJE_SEGURO_RESU_ON").Item("TEXTO")
+            picSM(index).ToolTipText = JsonLanguage.Item("MENSAJE_SEGURO_RESU_ON").Item("TEXTO")
         End If
         
     Case eSMType.sSafemode
         If Mostrar Then
             Call AddtoRichTextBox(frmMain.RecTxt, UCase$(JsonLanguage.Item("MENSAJE_SEGURO_ACTIVADO").Item("TEXTO").Item(1)), 0, 255, 0, True, False, True)
-            picSM(Index).ToolTipText = JsonLanguage.Item("MENSAJE_SEGURO_ACTIVADO").Item("TEXTO").Item(2)
+            picSM(index).ToolTipText = JsonLanguage.Item("MENSAJE_SEGURO_ACTIVADO").Item("TEXTO").Item(2)
         Else
             Call AddtoRichTextBox(frmMain.RecTxt, UCase$(JsonLanguage.Item("MENSAJE_SEGURO_DESACTIVADO").Item("TEXTO").Item(1)), 255, 0, 0, True, False, True)
-            picSM(Index).ToolTipText = JsonLanguage.Item("MENSAJE_SEGURO_DESACTIVADO").Item("TEXTO").Item(2)
+            picSM(index).ToolTipText = JsonLanguage.Item("MENSAJE_SEGURO_DESACTIVADO").Item("TEXTO").Item(2)
         End If
         
     Case eSMType.mWork
         If Mostrar Then
-            picSM(Index).ToolTipText = JsonLanguage.Item("MENSAJE_MACRO_ACTIVADO").Item("TEXTO")
+            picSM(index).ToolTipText = JsonLanguage.Item("MENSAJE_MACRO_ACTIVADO").Item("TEXTO")
         Else
-            picSM(Index).ToolTipText = JsonLanguage.Item("MENSAJE_MACRO_DESACTIVADO").Item("TEXTO")
+            picSM(index).ToolTipText = JsonLanguage.Item("MENSAJE_MACRO_DESACTIVADO").Item("TEXTO")
         End If
 End Select
 
-SMStatus(Index) = Mostrar
+SMStatus(index) = Mostrar
 End Sub
 
 Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
@@ -1464,8 +1465,8 @@ Private Sub InvEqu_MouseMove(Button As Integer, Shift As Integer, X As Single, Y
     LastButtonPressed.ToggleToNormal
 End Sub
 
-Private Sub lblScroll_Click(Index As Integer)
-    Inventario.ScrollInventory (Index = 0)
+Private Sub lblScroll_Click(index As Integer)
+    Inventario.ScrollInventory (index = 0)
 End Sub
 
 Private Sub lblCerrar_Click()
@@ -1544,8 +1545,8 @@ Private Sub Coord_Click()
     Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_INFO_COORDENADAS").Item("TEXTO"), 255, 255, 255, False, False, True)
 End Sub
 
-Private Sub picSM_DblClick(Index As Integer)
-Select Case Index
+Private Sub picSM_DblClick(index As Integer)
+Select Case index
     Case eSMType.sResucitation
         Call WriteResuscitationToggle
         
@@ -1631,8 +1632,8 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
         SendTxt.Visible = False
         
-        If PicInv.Visible Then
-            PicInv.SetFocus
+        If picInv.Visible Then
+            picInv.SetFocus
         Else
             hlst.SetFocus
         End If
@@ -1721,17 +1722,17 @@ End Sub
 
 Private Sub cmdINFO_Click()
     If hlst.ListIndex <> -1 Then
-        Dim Index As Integer
-        Index = DevolverIndexHechizo(hlst.List(hlst.ListIndex))
+        Dim index As Integer
+        index = DevolverIndexHechizo(hlst.List(hlst.ListIndex))
         Dim Msj As String
      
-        If Index <> 0 Then _
+        If index <> 0 Then _
             Msj = "%%%%%%%%%%%% " & JsonLanguage.Item("MENSAJE_INFO_HECHIZOS").Item("TEXTO").Item(1) & " %%%%%%%%%%%%" & vbCrLf _
-             & JsonLanguage.Item("MENSAJE_INFO_HECHIZOS").Item("TEXTO").Item(2) & ": " & Hechizos(Index).Nombre & vbCrLf _
-             & JsonLanguage.Item("MENSAJE_INFO_HECHIZOS").Item("TEXTO").Item(3) & ": " & Hechizos(Index).Desc & vbCrLf _
-             & JsonLanguage.Item("MENSAJE_INFO_HECHIZOS").Item("TEXTO").Item(4) & ": " & Hechizos(Index).SkillRequerido & vbCrLf _
-             & JsonLanguage.Item("MENSAJE_INFO_HECHIZOS").Item("TEXTO").Item(5) & ": " & Hechizos(Index).ManaRequerida & vbCrLf _
-             & JsonLanguage.Item("MENSAJE_INFO_HECHIZOS").Item("TEXTO").Item(6) & ": " & Hechizos(Index).EnergiaRequerida & vbCrLf _
+             & JsonLanguage.Item("MENSAJE_INFO_HECHIZOS").Item("TEXTO").Item(2) & ": " & Hechizos(index).Nombre & vbCrLf _
+             & JsonLanguage.Item("MENSAJE_INFO_HECHIZOS").Item("TEXTO").Item(3) & ": " & Hechizos(index).Desc & vbCrLf _
+             & JsonLanguage.Item("MENSAJE_INFO_HECHIZOS").Item("TEXTO").Item(4) & ": " & Hechizos(index).SkillRequerido & vbCrLf _
+             & JsonLanguage.Item("MENSAJE_INFO_HECHIZOS").Item("TEXTO").Item(5) & ": " & Hechizos(index).ManaRequerida & vbCrLf _
+             & JsonLanguage.Item("MENSAJE_INFO_HECHIZOS").Item("TEXTO").Item(6) & ": " & Hechizos(index).EnergiaRequerida & vbCrLf _
              & "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
                                              
         Call ShowConsoleMsg(Msj, 210, 220, 220)
@@ -1739,8 +1740,8 @@ Private Sub cmdINFO_Click()
     End If
 End Sub
 
-Private Sub DespInv_Click(Index As Integer)
-    Inventario.ScrollInventory (Index = 0)
+Private Sub DespInv_Click(index As Integer)
+    Inventario.ScrollInventory (index = 0)
 End Sub
 Private Sub MainViewPic_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     MouseBoton = Button
@@ -1953,13 +1954,13 @@ Private Sub Label4_Click()
     InvEqu.Picture = LoadPicture(App.path & "\Graficos\Centroinventario.jpg")
 
     ' Activo controles de inventario
-    PicInv.Visible = True
+    picInv.Visible = True
     imgInvScrollUp.Visible = True
     imgInvScrollDown.Visible = True
 
     ' Desactivo controles de hechizo
     hlst.Visible = False
-    cmdINFO.Visible = False
+    cmdInfo.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = False
@@ -1974,14 +1975,14 @@ Private Sub Label7_Click()
     
     ' Activo controles de hechizos
     hlst.Visible = True
-    cmdINFO.Visible = True
+    cmdInfo.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True
     cmdMoverHechi(1).Visible = True
     
     ' Desactivo controles de inventario
-    PicInv.Visible = False
+    picInv.Visible = False
     imgInvScrollUp.Visible = False
     imgInvScrollDown.Visible = False
 
@@ -2014,8 +2015,8 @@ On Error Resume Next  'el .SetFocus causaba errores al salir y volver a entrar
         (Not frmMSG.Visible) And (Not MirandoForo) And _
         (Not frmEstadisticas.Visible) And (Not frmCantidad.Visible) And (Not MirandoParty) Then
          
-        If PicInv.Visible Then
-            PicInv.SetFocus
+        If picInv.Visible Then
+            picInv.SetFocus
         ElseIf hlst.Visible Then
             hlst.SetFocus
         End If
@@ -2023,8 +2024,8 @@ On Error Resume Next  'el .SetFocus causaba errores al salir y volver a entrar
 End Sub
 
 Private Sub RecTxt_KeyDown(KeyCode As Integer, Shift As Integer)
-    If PicInv.Visible Then
-        PicInv.SetFocus
+    If picInv.Visible Then
+        picInv.SetFocus
     Else
         hlst.SetFocus
     End If
@@ -2080,8 +2081,8 @@ Private Sub SendCMSTXT_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
         Me.SendCMSTXT.Visible = False
         
-        If PicInv.Visible Then
-            PicInv.SetFocus
+        If picInv.Visible Then
+            picInv.SetFocus
         Else
             hlst.SetFocus
         End If
@@ -2204,7 +2205,6 @@ If tX >= MinXBorder And tY >= MinYBorder And _
     If MapData(tX, tY).CharIndex > 0 Then
         If charlist(MapData(tX, tY).CharIndex).invisible = False Then
         
-            Dim i As Long
             Dim m As frmMenuseFashion
             Set m = New frmMenuseFashion
             

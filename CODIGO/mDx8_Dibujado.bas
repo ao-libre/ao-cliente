@@ -1,10 +1,6 @@
 Attribute VB_Name = "mDx8_Dibujado"
 Option Explicit
 
-Public MinEleccion As Integer
-Public MaxEleccion As Integer
-Public Actual As Integer
-
 Private Declare Function BitBlt Lib "gdi32" (ByVal hDestDC As Long, ByVal X As Long, ByVal Y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, ByVal xSrc As Long, ByVal ySrc As Long, ByVal dwRop As Long) As Long
 Private Declare Function SelectObject Lib "gdi32" (ByVal hdc As Long, ByVal hObject As Long) As Long
 Private Declare Function CreateCompatibleDC Lib "gdi32" (ByVal hdc As Long) As Long
@@ -51,15 +47,12 @@ End Function
 Sub DrawGrhtoHdc(ByVal desthDC As Long, ByVal grh_index As Integer, ByRef SourceRect As RECT, ByRef destRect As RECT)
     On Error Resume Next
     
-    Dim file_path As String
     Dim src_x As Integer
     Dim src_y As Integer
     Dim src_width As Integer
     Dim src_height As Integer
     Dim hdcsrc As Long
-    Dim MaskDC As Long
     Dim PrevObj As Long
-    Dim PrevObj2 As Long
     Dim screen_x As Integer
     Dim screen_y As Integer
     
