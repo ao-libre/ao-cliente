@@ -33,10 +33,6 @@ Attribute VB_Name = "Mod_Declaraciones"
 
 Option Explicit
 
-#If False Then 'to fix VB fucking up the var names
-    Dim Nombre As String
-#End If
-
 Public Sonidos As clsSoundMapas
 
 '//Caminata fluida
@@ -152,8 +148,6 @@ Public Const GNOMO_M_CUERPO_DESNUDO As Integer = 260
 
 'Musica
 Public Const MP3_Inicio As Byte = 101
-
-Public RawServersList As String
 
 Public Type tColor
     r As Byte
@@ -648,9 +642,6 @@ End Type
 
 Public Nombres As Boolean
 
-'User status vars
-Global OtroInventario(1 To MAX_INVENTORY_SLOTS) As Inventory
-
 Public UserHechizos(1 To MAXHECHI) As Integer
 
 Public Type PjCuenta
@@ -679,7 +670,6 @@ Public UserName As String
 Public AccountName As String
 Public AccountPassword As String
 Public AccountHash As String
-Public UserPassword As String
 Public NumberOfCharacters As Byte
 Public UserMaxHP As Integer
 Public UserMinHP As Integer
@@ -694,7 +684,6 @@ Public UserMinHAM As Byte
 Public UserGLD As Long
 Public UserLvl As Integer
 Public UserPort As Integer
-Public UserServerIP As String
 Public UserEstado As Byte '0 = Vivo & 1 = Muerto
 Public UserPasarNivel As Long
 Public UserExp As Long
@@ -754,8 +743,6 @@ Public ListaClases(1 To NUMCLASES) As String
 Public SkillPoints As Integer
 Public Alocados As Integer
 Public Flags() As Integer
-Public Oscuridad As Integer
-Public logged As Boolean
 
 Public UsingSkill As Integer
 
@@ -833,12 +820,9 @@ Public Enum eTrigger
 End Enum
 
 'Server stuff
-Public RequestPosTimer As Integer 'Used in main loop
 Public stxtbuffer As String 'Holds temp raw data from server
 Public stxtbuffercmsg As String 'Holds temp raw data from server
-Public SendNewChar As Boolean 'Used during login
 Public Connected As Boolean 'True when connected to server
-Public DownloadingMap As Boolean 'Currently downloading a map from server
 Public UserMap As Integer
 
 'Control
@@ -997,9 +981,6 @@ Public Type tHechizos
     PropioMsg As String
     TargetMsg As String
 End Type
- 
-Public NumNpcs As Integer
-Public Npcs() As tNpcs
  
 Public Type tNpcs
     Nombre As String

@@ -512,12 +512,9 @@ Public Sub ScreenCapture(Optional ByVal Autofragshooter As Boolean = False)
 '11/16/2010: Amraphen - Now the FragShooter screenshots are stored in different directories.
 '**************************************************************
 On Error GoTo Err:
-    Dim hwnd As Long
     Dim File As String
-    Dim sI As String
     Dim c As cDIBSection
     Set c = New cDIBSection
-    Dim i As Long
     Dim hdcc As Long
     
     Dim dirFile As String

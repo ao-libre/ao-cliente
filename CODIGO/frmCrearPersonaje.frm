@@ -1537,8 +1537,8 @@ Private Sub TirarDados()
     Call FlushBuffer
 End Sub
 
-Private Sub DirPJ_Click(Index As Integer)
-    Select Case Index
+Private Sub DirPJ_Click(index As Integer)
+    Select Case index
         Case 0
             Dir = CheckDir(Dir + 1)
         Case 1
@@ -1552,8 +1552,8 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y A
     ClearLabel
 End Sub
 
-Private Sub HeadPJ_Click(Index As Integer)
-    Select Case Index
+Private Sub HeadPJ_Click(index As Integer)
+    Select Case index
         Case 0
             UserHead = CheckCabeza(UserHead + 1)
         Case 1
@@ -1588,7 +1588,6 @@ End Sub
 Private Sub ImgCrear_Click()
 
     Dim i As Integer
-    Dim CharAscii As Byte
     
     UserName = txtNombre.Text
             
@@ -1777,21 +1776,21 @@ Private Sub lstRaza_Click()
     Call UpdateStats
 End Sub
 
-Private Sub picHead_Click(Index As Integer)
+Private Sub picHead_Click(index As Integer)
     ' No se mueve si clickea al medio
-    If Index = 2 Then Exit Sub
+    If index = 2 Then Exit Sub
     
     Dim Counter As Integer
     Dim Head As Integer
     
     Head = UserHead
     
-    If Index > 2 Then
-        For Counter = Index - 2 To 1 Step -1
+    If index > 2 Then
+        For Counter = index - 2 To 1 Step -1
             Head = CheckCabeza(Head + 1)
         Next Counter
     Else
-        For Counter = 2 - Index To 1 Step -1
+        For Counter = 2 - index To 1 Step -1
             Head = CheckCabeza(Head - 1)
         Next Counter
     End If
@@ -2219,7 +2218,7 @@ End Sub
 Private Sub SetStars(ByRef ImgContainer As Object, ByVal NumStars As Integer)
     Dim FullStars As Integer
     Dim HasHalfStar As Boolean
-    Dim Index As Integer
+    Dim index As Integer
     Dim Counter As Integer
 
     If NumStars > 0 Then
@@ -2230,18 +2229,18 @@ Private Sub SetStars(ByRef ImgContainer As Object, ByVal NumStars As Integer)
         
         ' Tienen brillo extra si estan todas
         If FullStars = 5 Then
-            For Index = 1 To FullStars
-                ImgContainer(Index).Picture = picGlowStar
-            Next Index
+            For index = 1 To FullStars
+                ImgContainer(index).Picture = picGlowStar
+            Next index
         Else
             ' Numero impar? Entonces hay que poner "media estrella"
             If (NumStars Mod 2) > 0 Then HasHalfStar = True
             
             ' Muestro las estrellas enteras
             If FullStars > 0 Then
-                For Index = 1 To FullStars
-                    ImgContainer(Index).Picture = picFullStar
-                Next Index
+                For index = 1 To FullStars
+                    ImgContainer(index).Picture = picFullStar
+                Next index
                 
                 Counter = FullStars
             End If
@@ -2256,17 +2255,17 @@ Private Sub SetStars(ByRef ImgContainer As Object, ByVal NumStars As Integer)
             ' Si estan completos los espacios, no borro nada
             If Counter <> 5 Then
                 ' Limpio las que queden vacias
-                For Index = Counter + 1 To 5
-                    Set ImgContainer(Index).Picture = Nothing
-                Next Index
+                For index = Counter + 1 To 5
+                    Set ImgContainer(index).Picture = Nothing
+                Next index
             End If
             
         End If
     Else
         ' Limpio todo
-        For Index = 1 To 5
-            Set ImgContainer(Index).Picture = Nothing
-        Next Index
+        For index = 1 To 5
+            Set ImgContainer(index).Picture = Nothing
+        Next index
     End If
 
 End Sub

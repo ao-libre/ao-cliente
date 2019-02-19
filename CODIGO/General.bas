@@ -33,12 +33,6 @@ Attribute VB_Name = "Mod_General"
 
 Option Explicit
 
-#If False Then 'to fix VB fucking up the var names
-    Dim status, Nombre, PicInv, f, obj, j As String
-#End If
-
-Public iplst As String
-
 Public bFogata As Boolean
 
 Public bLluvia() As Byte ' Array para determinar si
@@ -931,8 +925,6 @@ Private Sub LoadInitialConfig()
 '15/03/2011: ZaMa - Initialize classes lazy way.
 '***************************************************
 
-    Dim i As Long
-
     frmCargando.Show
     frmCargando.Refresh
 
@@ -1023,7 +1015,7 @@ Private Sub LoadInitialConfig()
     Call AddtoRichTextBox(frmCargando.status, " " & JsonLanguage.Item("HECHO").Item("TEXTO"), 255, 0, 0, True, False, False)
     
     'Inicializamos el inventario grafico
-    Call Inventario.Initialize(DirectD3D8, frmMain.PicInv, MAX_INVENTORY_SLOTS)
+    Call Inventario.Initialize(DirectD3D8, frmMain.picInv, MAX_INVENTORY_SLOTS)
     
     Call AddtoRichTextBox(frmCargando.status, " " & JsonLanguage.Item("HECHO").Item("TEXTO"), 255, 0, 0, True, False, False)
     
@@ -1168,7 +1160,6 @@ Public Sub LeerLineaComandos()
     Dim i As Long
     
     Dim UpToDate As Boolean
-    Dim Patch As String
     
     'Parseo los comandos
     T = Split(Command, " ")
@@ -1590,11 +1581,11 @@ Public Sub ResetAllInfo()
 
 End Sub
 
-Public Function DevolverNombreHechizo(ByVal Index As Byte) As String
+Public Function DevolverNombreHechizo(ByVal index As Byte) As String
 Dim i As Long
  
     For i = 1 To NumHechizos
-        If i = Index Then
+        If i = index Then
             DevolverNombreHechizo = Hechizos(i).Nombre
             Exit Function
         End If

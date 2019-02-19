@@ -7,10 +7,8 @@ Public Const DegreeToRadian As Single = 0.01745329251994 'Pi / 180
 
 Public WeatherEffectIndex As Integer
 
-Public OnRampage As Long
 Public OnRampageImg As Long
 Public OnRampageImgGrh As Integer
-Public LastEffect As Integer
 
 Private Type Effect
     X As Single
@@ -224,7 +222,7 @@ Dim LoopC As Long
 
 End Function
 
-Private Sub Effect_Snow_Reset(ByVal EffectIndex As Integer, ByVal Index As Long, Optional ByVal FirstReset As Byte = 0)
+Private Sub Effect_Snow_Reset(ByVal EffectIndex As Integer, ByVal index As Long, Optional ByVal FirstReset As Byte = 0)
 '*****************************************************************
 'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Snow_Reset
 '*****************************************************************
@@ -232,20 +230,20 @@ Private Sub Effect_Snow_Reset(ByVal EffectIndex As Integer, ByVal Index As Long,
     If FirstReset = 1 Then
 
         'The very first reset
-        Effect(EffectIndex).Particles(Index).ResetIt -200 + (Rnd * (frmMain.ScaleWidth + 400)), Rnd * (frmMain.ScaleHeight + 50), Rnd * 5, 5 + Rnd * 3, 0, 0
+        Effect(EffectIndex).Particles(index).ResetIt -200 + (Rnd * (frmMain.ScaleWidth + 400)), Rnd * (frmMain.ScaleHeight + 50), Rnd * 5, 5 + Rnd * 3, 0, 0
 
     Else
 
         'Any reset after first
-        Effect(EffectIndex).Particles(Index).ResetIt -200 + (Rnd * (frmMain.ScaleWidth + 400)), -15 - Rnd * 185, Rnd * 5, 5 + Rnd * 3, 0, 0
-        If Effect(EffectIndex).Particles(Index).sngX < -20 Then Effect(EffectIndex).Particles(Index).sngY = Rnd * (frmMain.ScaleHeight + 50)
-        If Effect(EffectIndex).Particles(Index).sngX > frmMain.ScaleWidth Then Effect(EffectIndex).Particles(Index).sngY = Rnd * (frmMain.ScaleHeight + 50)
-        If Effect(EffectIndex).Particles(Index).sngY > frmMain.ScaleHeight Then Effect(EffectIndex).Particles(Index).sngX = Rnd * (frmMain.ScaleWidth + 50)
+        Effect(EffectIndex).Particles(index).ResetIt -200 + (Rnd * (frmMain.ScaleWidth + 400)), -15 - Rnd * 185, Rnd * 5, 5 + Rnd * 3, 0, 0
+        If Effect(EffectIndex).Particles(index).sngX < -20 Then Effect(EffectIndex).Particles(index).sngY = Rnd * (frmMain.ScaleHeight + 50)
+        If Effect(EffectIndex).Particles(index).sngX > frmMain.ScaleWidth Then Effect(EffectIndex).Particles(index).sngY = Rnd * (frmMain.ScaleHeight + 50)
+        If Effect(EffectIndex).Particles(index).sngY > frmMain.ScaleHeight Then Effect(EffectIndex).Particles(index).sngX = Rnd * (frmMain.ScaleWidth + 50)
 
     End If
 
     'Set the color
-    Effect(EffectIndex).Particles(Index).ResetColor 1, 1, 1, 0.8, 0
+    Effect(EffectIndex).Particles(index).ResetColor 1, 1, 1, 0.8, 0
 
 End Sub
 
@@ -391,7 +389,7 @@ Dim LoopC As Long
 
 End Function
 
-Private Sub Effect_Rain_Reset(ByVal EffectIndex As Integer, ByVal Index As Long, Optional ByVal FirstReset As Byte = 0)
+Private Sub Effect_Rain_Reset(ByVal EffectIndex As Integer, ByVal index As Long, Optional ByVal FirstReset As Byte = 0)
 '*****************************************************************
 'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Rain_Reset
 '*****************************************************************
@@ -399,20 +397,20 @@ Private Sub Effect_Rain_Reset(ByVal EffectIndex As Integer, ByVal Index As Long,
     If FirstReset = 1 Then
 
         'The very first reset
-        Effect(EffectIndex).Particles(Index).ResetIt -200 + (Rnd * (frmMain.ScaleWidth + 400)), Rnd * (frmMain.ScaleHeight + 50), Rnd * 5, 25 + Rnd * 12, 0, 0
+        Effect(EffectIndex).Particles(index).ResetIt -200 + (Rnd * (frmMain.ScaleWidth + 400)), Rnd * (frmMain.ScaleHeight + 50), Rnd * 5, 25 + Rnd * 12, 0, 0
 
     Else
 
         'Any reset after first
-        Effect(EffectIndex).Particles(Index).ResetIt -200 + (Rnd * 1200), -15 - Rnd * 185, Rnd * 5, 25 + Rnd * 12, 0, 0
-        If Effect(EffectIndex).Particles(Index).sngX < -20 Then Effect(EffectIndex).Particles(Index).sngY = Rnd * (frmMain.ScaleHeight + 50)
-        If Effect(EffectIndex).Particles(Index).sngX > frmMain.ScaleWidth Then Effect(EffectIndex).Particles(Index).sngY = Rnd * (frmMain.ScaleHeight + 50)
-        If Effect(EffectIndex).Particles(Index).sngY > frmMain.ScaleHeight Then Effect(EffectIndex).Particles(Index).sngX = Rnd * (frmMain.ScaleWidth + 50)
+        Effect(EffectIndex).Particles(index).ResetIt -200 + (Rnd * 1200), -15 - Rnd * 185, Rnd * 5, 25 + Rnd * 12, 0, 0
+        If Effect(EffectIndex).Particles(index).sngX < -20 Then Effect(EffectIndex).Particles(index).sngY = Rnd * (frmMain.ScaleHeight + 50)
+        If Effect(EffectIndex).Particles(index).sngX > frmMain.ScaleWidth Then Effect(EffectIndex).Particles(index).sngY = Rnd * (frmMain.ScaleHeight + 50)
+        If Effect(EffectIndex).Particles(index).sngY > frmMain.ScaleHeight Then Effect(EffectIndex).Particles(index).sngX = Rnd * (frmMain.ScaleWidth + 50)
 
     End If
 
     'Set the color
-    Effect(EffectIndex).Particles(Index).ResetColor 1, 1, 1, 0.4, 0
+    Effect(EffectIndex).Particles(index).ResetColor 1, 1, 1, 0.4, 0
 
 End Sub
 
@@ -512,7 +510,7 @@ Dim LoopC As Long
 
 End Function
 
-Private Sub Effect_EquationTemplate_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
+Private Sub Effect_EquationTemplate_Reset(ByVal EffectIndex As Integer, ByVal index As Long)
 '*****************************************************************
 'More info: http://www.vbgore.com/CommonCode.Particles.Effect_EquationTemplate_Reset
 '*****************************************************************
@@ -521,13 +519,13 @@ Dim Y As Single
 Dim r As Single
  
     Effect(EffectIndex).Progression = Effect(EffectIndex).Progression + 0.1
-    r = (Index / 20) * Exp(Index / Effect(EffectIndex).Progression Mod 3)
-    X = r * Cos(Index)
-    Y = r * Sin(Index)
+    r = (index / 20) * Exp(index / Effect(EffectIndex).Progression Mod 3)
+    X = r * Cos(index)
+    Y = r * Sin(index)
  
     'Reset the particle
-    Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).X + X, Effect(EffectIndex).Y + Y, 0, 0, 0, 0
-    Effect(EffectIndex).Particles(Index).ResetColor 1, 1, 1, 1, 0.2 + (Rnd * 0.2)
+    Effect(EffectIndex).Particles(index).ResetIt Effect(EffectIndex).X + X, Effect(EffectIndex).Y + Y, 0, 0, 0, 0
+    Effect(EffectIndex).Particles(index).ResetColor 1, 1, 1, 1, 0.2 + (Rnd * 0.2)
 End Sub
 
 Private Sub Effect_EquationTemplate_Update(ByVal EffectIndex As Integer)
@@ -638,14 +636,14 @@ Dim LoopC As Long
 
 End Function
 
-Private Sub Effect_Fire_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
+Private Sub Effect_Fire_Reset(ByVal EffectIndex As Integer, ByVal index As Long)
 '*****************************************************************
 'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Fire_Reset
 '*****************************************************************
 
     'Reset the particle
-    Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).X - 10 + Rnd * 20, Effect(EffectIndex).Y - 10 + Rnd * 20, -Sin((Effect(EffectIndex).Direction + (Rnd * 70) - 35) * DegreeToRadian) * 8, Cos((Effect(EffectIndex).Direction + (Rnd * 70) - 35) * DegreeToRadian) * 8, 0, 0
-    Effect(EffectIndex).Particles(Index).ResetColor 1, 0.2, 0.2, 0.4 + (Rnd * 0.2), 0.03 + (Rnd * 0.07)
+    Effect(EffectIndex).Particles(index).ResetIt Effect(EffectIndex).X - 10 + Rnd * 20, Effect(EffectIndex).Y - 10 + Rnd * 20, -Sin((Effect(EffectIndex).Direction + (Rnd * 70) - 35) * DegreeToRadian) * 8, Cos((Effect(EffectIndex).Direction + (Rnd * 70) - 35) * DegreeToRadian) * 8, 0, 0
+    Effect(EffectIndex).Particles(index).ResetColor 1, 0.2, 0.2, 0.4 + (Rnd * 0.2), 0.03 + (Rnd * 0.07)
 
 End Sub
 
@@ -756,7 +754,7 @@ Dim LoopC As Long
 
 End Function
 
-Private Sub Effect_Protection_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
+Private Sub Effect_Protection_Reset(ByVal EffectIndex As Integer, ByVal index As Long)
 '*****************************************************************
 'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Protection_Reset
 '*****************************************************************
@@ -770,8 +768,8 @@ Dim Y As Single
     Y = Effect(EffectIndex).Y + (Cos(a) * Effect(EffectIndex).Modifier)
 
     'Reset the particle
-    Effect(EffectIndex).Particles(Index).ResetIt X, Y, 0, Rnd * -1, 0, -2
-    Effect(EffectIndex).Particles(Index).ResetColor 0.1, 0.1, 0.9, 0.6 + (Rnd * 0.4), 0.06 + (Rnd * 0.2)
+    Effect(EffectIndex).Particles(index).ResetIt X, Y, 0, Rnd * -1, 0, -2
+    Effect(EffectIndex).Particles(index).ResetColor 0.1, 0.1, 0.9, 0.6 + (Rnd * 0.4), 0.06 + (Rnd * 0.2)
 
 End Sub
 
@@ -883,17 +881,17 @@ Dim LoopC As Long
 
 End Function
 
-Private Sub Effect_Waterfall_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
+Private Sub Effect_Waterfall_Reset(ByVal EffectIndex As Integer, ByVal index As Long)
 '*****************************************************************
 'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Waterfall_Reset
 '*****************************************************************
 
     If Int(Rnd * 10) = 1 Then
-        Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).X + (Rnd * 332), Effect(EffectIndex).Y + (Rnd * 130), 0, 8 + (Rnd * 6), 0, 0
+        Effect(EffectIndex).Particles(index).ResetIt Effect(EffectIndex).X + (Rnd * 332), Effect(EffectIndex).Y + (Rnd * 130), 0, 8 + (Rnd * 6), 0, 0
     Else
-        Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).X + (Rnd * 332), Effect(EffectIndex).Y + (Rnd * 10), 0, 8 + (Rnd * 6), 0, 0
+        Effect(EffectIndex).Particles(index).ResetIt Effect(EffectIndex).X + (Rnd * 332), Effect(EffectIndex).Y + (Rnd * 10), 0, 8 + (Rnd * 6), 0, 0
     End If
-    Effect(EffectIndex).Particles(Index).ResetColor 0.1, 0.1, 0.2, 0.2 + (Rnd * 0.4), 0.1
+    Effect(EffectIndex).Particles(index).ResetColor 0.1, 0.1, 0.2, 0.2 + (Rnd * 0.4), 0.1
     
 End Sub
 
@@ -991,7 +989,7 @@ Dim LoopC As Long
 
 End Function
 
-Private Sub Effect_Summon_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
+Private Sub Effect_Summon_Reset(ByVal EffectIndex As Integer, ByVal index As Long)
 '*****************************************************************
 'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Summon_Reset
 '*****************************************************************
@@ -1004,13 +1002,13 @@ Dim r As Single
     Else
         Effect(EffectIndex).Progression = Effect(EffectIndex).Progression + 0.5
     End If
-    r = (Index / 30) * Exp(Index / Effect(EffectIndex).Progression)
-    X = r * Cos(Index)
-    Y = r * Sin(Index)
+    r = (index / 30) * Exp(index / Effect(EffectIndex).Progression)
+    X = r * Cos(index)
+    Y = r * Sin(index)
     
     'Reset the particle
-    Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).X + X, Effect(EffectIndex).Y + Y, 0, 0, 0, 0
-    Effect(EffectIndex).Particles(Index).ResetColor 0, Rnd, 0, 0.9, 0.2 + (Rnd * 0.2)
+    Effect(EffectIndex).Particles(index).ResetIt Effect(EffectIndex).X + X, Effect(EffectIndex).Y + Y, 0, 0, 0, 0
+    Effect(EffectIndex).Particles(index).ResetColor 0, Rnd, 0, 0.9, 0.2 + (Rnd * 0.2)
  
 End Sub
 
@@ -1120,7 +1118,7 @@ Dim LoopC As Long
 
 End Function
 
-Private Sub Effect_Bless_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
+Private Sub Effect_Bless_Reset(ByVal EffectIndex As Integer, ByVal index As Long)
 '*****************************************************************
 'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Bless_Reset
 '*****************************************************************
@@ -1134,8 +1132,8 @@ Dim Y As Single
     Y = Effect(EffectIndex).Y + (Cos(a) * Effect(EffectIndex).Modifier)
 
     'Reset the particle
-    Effect(EffectIndex).Particles(Index).ResetIt X, Y, 0, Rnd * -1, 0, -2
-    Effect(EffectIndex).Particles(Index).ResetColor 1, 1, 0.2, 0.6 + (Rnd * 0.4), 0.06 + (Rnd * 0.2)
+    Effect(EffectIndex).Particles(index).ResetIt X, Y, 0, Rnd * -1, 0, -2
+    Effect(EffectIndex).Particles(index).ResetColor 1, 1, 0.2, 0.6 + (Rnd * 0.4), 0.06 + (Rnd * 0.2)
 
 End Sub
 
@@ -1250,14 +1248,14 @@ Dim LoopC As Long
 
 End Function
 
-Private Sub Effect_Heal_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
+Private Sub Effect_Heal_Reset(ByVal EffectIndex As Integer, ByVal index As Long)
 '*****************************************************************
 'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Heal_Reset
 '*****************************************************************
 
     'Reset the particle
-    Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).X - 10 + Rnd * 20, Effect(EffectIndex).Y - 10 + Rnd * 20, -Sin((180 + (Rnd * 90) - 45) * 0.0174533) * 8 + (Rnd * 3), Cos((180 + (Rnd * 90) - 45) * 0.0174533) * 8 + (Rnd * 3), 0, 0
-    Effect(EffectIndex).Particles(Index).ResetColor 0.8, 0.2, 0.2, 0.6 + (Rnd * 0.2), 0.01 + (Rnd * 0.5)
+    Effect(EffectIndex).Particles(index).ResetIt Effect(EffectIndex).X - 10 + Rnd * 20, Effect(EffectIndex).Y - 10 + Rnd * 20, -Sin((180 + (Rnd * 90) - 45) * 0.0174533) * 8 + (Rnd * 3), Cos((180 + (Rnd * 90) - 45) * 0.0174533) * 8 + (Rnd * 3), 0, 0
+    Effect(EffectIndex).Particles(index).ResetColor 0.8, 0.2, 0.2, 0.6 + (Rnd * 0.2), 0.01 + (Rnd * 0.5)
     
 End Sub
 
@@ -1267,7 +1265,6 @@ Private Sub Effect_Heal_Update(ByVal EffectIndex As Integer)
 '*****************************************************************
 Dim ElapsedTime As Single
 Dim LoopC As Long
-Dim i As Integer
 
     'Calculate the time difference
     ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
@@ -1369,7 +1366,7 @@ Dim LoopC As Long
 
 End Function
 
-Private Sub Effect_Strengthen_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
+Private Sub Effect_Strengthen_Reset(ByVal EffectIndex As Integer, ByVal index As Long)
 '*****************************************************************
 'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Strengthen_Reset
 '*****************************************************************
@@ -1383,8 +1380,8 @@ Dim Y As Single
     Y = Effect(EffectIndex).Y + (Cos(a) * Effect(EffectIndex).Modifier)
 
     'Reset the particle
-    Effect(EffectIndex).Particles(Index).ResetIt X, Y, 0, Rnd * -1, 0, -2
-    Effect(EffectIndex).Particles(Index).ResetColor 0.2, 1, 0.2, 0.6 + (Rnd * 0.4), 0.06 + (Rnd * 0.2)
+    Effect(EffectIndex).Particles(index).ResetIt X, Y, 0, Rnd * -1, 0, -2
+    Effect(EffectIndex).Particles(index).ResetColor 0.2, 1, 0.2, 0.6 + (Rnd * 0.4), 0.06 + (Rnd * 0.2)
 
 End Sub
 
@@ -1673,14 +1670,14 @@ Dim LoopC As Long
 
 End Function
 
-Private Sub Effect_Rayo_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
+Private Sub Effect_Rayo_Reset(ByVal EffectIndex As Integer, ByVal index As Long)
 '*****************************************************************
 'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Rayo_Reset
 '*****************************************************************
 
     'Reset the particle
-    Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).X - 10 + Rnd * 20, Effect(EffectIndex).Y - 10 + Rnd * 20, -Sin((180 + (Rnd * 90) - 45) * 0.0174533) * 8 + (Rnd * 3), Cos((180 + (Rnd * 90) - 45) * 0.0174533) * 8 + (Rnd * 3), 0, 0
-    Effect(EffectIndex).Particles(Index).ResetColor 0, 0.8, 0.8, 0.6 + (Rnd * 0.2), 0.001 + (Rnd * 0.5)
+    Effect(EffectIndex).Particles(index).ResetIt Effect(EffectIndex).X - 10 + Rnd * 20, Effect(EffectIndex).Y - 10 + Rnd * 20, -Sin((180 + (Rnd * 90) - 45) * 0.0174533) * 8 + (Rnd * 3), Cos((180 + (Rnd * 90) - 45) * 0.0174533) * 8 + (Rnd * 3), 0, 0
+    Effect(EffectIndex).Particles(index).ResetColor 0, 0.8, 0.8, 0.6 + (Rnd * 0.2), 0.001 + (Rnd * 0.5)
 '      Effect(EffectIndex).Particles(Index).ResetColor (Rnd * 0.8), (Rnd * 0.8), (Rnd * 0.8), 0.6 + (Rnd * 0.2), 0.001 + (Rnd * 0.5)
 
 End Sub
@@ -1691,7 +1688,6 @@ Private Sub Effect_Rayo_Update(ByVal EffectIndex As Integer)
 '*****************************************************************
 Dim ElapsedTime As Single
 Dim LoopC As Long
-Dim i As Integer
 
     'Calculate the time difference
     ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
@@ -1907,7 +1903,7 @@ Dim LoopC As Long
 
 End Function
 
-Private Sub Effect_Smoke_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
+Private Sub Effect_Smoke_Reset(ByVal EffectIndex As Integer, ByVal index As Long)
 '*****************************************************************
 'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Smoke_Reset
 '*****************************************************************
@@ -1915,8 +1911,8 @@ Private Sub Effect_Smoke_Reset(ByVal EffectIndex As Integer, ByVal Index As Long
     'Reset the particle
     'Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).x - 10 + Rnd * 20, Effect(EffectIndex).Y - 10 + Rnd * 20, -Sin((Effect(EffectIndex).Direction + (Rnd * 70) - 35) * DegreeToRadian) * 8, Cos((Effect(EffectIndex).Direction + (Rnd * 70) - 35) * DegreeToRadian) * 8, 0, 0
     'Effect(EffectIndex).Particles(Index).ResetColor 1, 0.2, 0.2, 0.4 + (Rnd * 0.2), 0.03 + (Rnd * 0.07)
-    Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).X - 10 + Rnd * 20, Effect(EffectIndex).Y - 10 + Rnd * 20, -Sin((Effect(EffectIndex).Direction + (Rnd * 70) - 35) * DegreeToRadian) * 5, Cos((Effect(EffectIndex).Direction + (Rnd * 70) - 35) * DegreeToRadian) * 8, 2, 0
-    Effect(EffectIndex).Particles(Index).ResetColor 0.2, 0.2, 0.2, 0.2 + (Rnd * 0.2), 0.03 + (Rnd * 0.01)
+    Effect(EffectIndex).Particles(index).ResetIt Effect(EffectIndex).X - 10 + Rnd * 20, Effect(EffectIndex).Y - 10 + Rnd * 20, -Sin((Effect(EffectIndex).Direction + (Rnd * 70) - 35) * DegreeToRadian) * 5, Cos((Effect(EffectIndex).Direction + (Rnd * 70) - 35) * DegreeToRadian) * 8, 2, 0
+    Effect(EffectIndex).Particles(index).ResetColor 0.2, 0.2, 0.2, 0.2 + (Rnd * 0.2), 0.03 + (Rnd * 0.01)
 
 End Sub
 

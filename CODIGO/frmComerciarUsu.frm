@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "Richtx32.ocx"
 Begin VB.Form frmComerciarUsu 
    BorderStyle     =   0  'None
    ClientHeight    =   8850
@@ -184,7 +184,6 @@ Begin VB.Form frmComerciarUsu
       _ExtentY        =   2858
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -393,7 +392,6 @@ End Sub
 
 Private Sub imgQuitar_Click()
     Dim Amount As Long
-    Dim InvComSlot As Byte
     
     Dim MENSAJE_COMM_SACA As String
         MENSAJE_COMM_SACA = JsonLanguage.Item("MENSAJE_COMM_SACA").Item("TEXTO")

@@ -88,11 +88,9 @@ Private Sub LightRender(ByVal light_index As Integer)
     Dim min_y As Integer
     Dim max_x As Integer
     Dim max_y As Integer
-    Dim Color As Long
     Dim Ya As Integer
     Dim Xa As Integer
    
-    Dim TileLight As D3DCOLORVALUE
     Dim AmbientColor As D3DCOLORVALUE
     Dim LightColor As D3DCOLORVALUE
    

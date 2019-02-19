@@ -242,11 +242,8 @@ Option Explicit
 
 Private clsFormulario As clsFormMovementManager
 
-Public LastIndex1 As Integer
-Public LastIndex2 As Integer
 Public LasActionBuy As Boolean
 Private ClickNpcInv As Boolean
-Private lIndex As Byte
 
 Private cBotonVender As clsGraphicalButton
 Private cBotonComprar As clsGraphicalButton
