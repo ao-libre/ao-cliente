@@ -789,7 +789,10 @@
 		"TEXTO":"Atencion"
 	},
 	"OBJETO":{
-		"TEXTO":"objeto"
+		"TEXTO":"object"
+	},
+	"CANTIDAD":{
+		"TEXTO":"cantidad"
 	},
 	"RAZAS":{
 		"HUMANO":"Humano",

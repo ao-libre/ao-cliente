@@ -1182,7 +1182,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                         Call WriteCreateItem(ArgumentosAll(0), ArgumentosAll(1))
                     Else
                         'No es numerico
-                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_OBJETO_INCORRECTO").Item("TEXTO") & " /ci OBJETO CANTIDAD.")
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_OBJETO_INCORRECTO").Item("TEXTO") & " /CI " & JsonLanguage.Item("OBJETO").Item("TEXTO") & " " & JsonLanguage.Item("CANTIDAD").Item("TEXTO"))
                     End If
                 Else
                     'Avisar que falta el parametro

@@ -653,7 +653,7 @@
 	},
 	"ERROR_EXTRAER_ARCHIVO":{
 		"TEXTO":"Could not extract the file"
-		},
+	},
 	"ERROR_EXTRAER_BINARIO":{
 		"TEXTO":"Could not remove the binary file correctly. Reason: VAR_ERROR"
 	},
@@ -782,6 +782,9 @@
 	},
 	"OBJETO":{
 		"TEXTO":"object"
+	},
+	"CANTIDAD":{
+		"TEXTO":"quantity"
 	},
 	"RAZAS":{
 		"HUMANO":"Human",
