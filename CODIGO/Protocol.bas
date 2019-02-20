@@ -168,6 +168,7 @@ Private Enum ServerPacketID
     PlayAttackAnim
     FXtoMap
     AccountLogged
+    SearchList
 End Enum
 
 Private Enum ClientPacketID
@@ -765,6 +766,9 @@ On Error Resume Next
         'CHOTS | Accounts
         Case ServerPacketID.AccountLogged
             Call HandleAccountLogged
+            
+        Case ServerPacketID.SearchList              '/BUSCAR
+            Call HandleSearchList
 
         '*******************
         'GM messages
@@ -10796,3 +10800,56 @@ Private Sub HandleAccountLogged()
     
     frmPanelAccount.Show
 End Sub
+
+Private Sub HandleSearchList()
+ 
+        Dim num   As Integer
+        Dim Datos As String
+        Dim Obj   As Boolean
+        
+        'Remove packet ID
+        Call incomingData.ReadByte
+   
+        num = incomingData.ReadInteger()
+        Obj = incomingData.ReadBoolean()
+ 
+        If Not num = 0 Then
+                If Obj = True Then
+                        frmBuscar.ListCrearObj.AddItem num
+                Else
+                        frmBuscar.ListCrearNpcs.AddItem num
+                End If
+        End If
+ 
+        Datos = incomingData.ReadASCIIString()
+ 
+        frmBuscar.List1.AddItem Datos
+ 
+End Sub
+
+Public Sub WriteSearchObj(ByVal BuscoObj As String)
+ 
+        With outgoingData
+        
+                Call .WriteByte(ClientPacketID.GMCommands)
+                Call .WriteByte(eGMCommands.SearchObj)
+           
+                Call .WriteASCIIString(BuscoObj)
+                
+        End With
+
+End Sub
+ 
+Public Sub WriteSearchNpc(ByVal BuscoNpc As String)
+ 
+        With outgoingData
+        
+                Call .WriteByte(ClientPacketID.GMCommands)
+                Call .WriteByte(eGMCommands.SearchNpc)
+       
+                Call .WriteASCIIString(BuscoNpc)
+                
+        End With
+
+End Sub
+

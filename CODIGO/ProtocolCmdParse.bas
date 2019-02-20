@@ -511,6 +511,9 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             ' BEGIN GM COMMANDS
             '
             
+            Case "/BUSCAR"
+                frmBuscar.Show vbModeless, frmMain
+            
             Case "/GMSG"
                 If notNullArguments Then
                     Call WriteGMMessage(ArgumentosRaw)

@@ -520,6 +520,8 @@ Public Enum eGMCommands
     RecordDetailsRequest
     ExitDestroy
     ToggleCentinelActivated '/CENTINELAACTIVADO
+    SearchNpc               '/BUSCAR
+    SearchObj               '/BUSCAR
 End Enum
 
 '
