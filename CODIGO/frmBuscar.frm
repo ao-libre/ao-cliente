@@ -231,9 +231,13 @@ Option Explicit
 
 Private Sub Command1_Click()
         
+        ' traduccion de 'objeto'
+        Dim tObjeto As String
+            tObjeto = JsonLanguage.Item("OBJETO").Item("TEXTO")
+        
         ' Seamos un poco mas especificos y evitemos un overflow ^-^
         If Len(Objetos.Text) < 4 Then
-            MsgBox "Debes escribir como minimo 4 letras del objeto deseado.", vbApplicationModal, "Buscador de Objetos"
+            MsgBox Replace$(JsonLanguage.Item("ERROR_BUSCAR_MUY_CORTO").Item("TEXTO"), "VAR_TARGET", tObjeto), vbApplicationModal
             Exit Sub
         End If
         
@@ -247,7 +251,7 @@ Private Sub Command2_Click()
         
         ' Seamos un poco mas especificos y evitemos un overflow ^-^
         If Len(NPCs.Text) < 4 Then
-            MsgBox "Debes escribir como minimo 4 letras del NPC deseado.", vbApplicationModal, "Buscador de Objetos"
+            MsgBox Replace$(JsonLanguage.Item("ERROR_BUSCAR_MUY_CORTO").Item("TEXTO"), "VAR_TARGET", "NPC"), vbApplicationModal
             Exit Sub
         End If
         
