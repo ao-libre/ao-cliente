@@ -10,7 +10,7 @@ Private Type FontInfo
     MainFontDesc As IFont
     MainFontFormat As New StdFont
     Color As Long
-End Type: Private Font() As FontInfo
+End Type
 
 
 Private Type CharVA
@@ -101,17 +101,10 @@ Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, ByVal Text As String
     Dim tempstr() As String
     Dim Count As Integer
     Dim ascii() As Byte
-    Dim Row As Integer
-    Dim u As Single
-    Dim v As Single
     Dim i As Long
     Dim j As Long
-    Dim KeyPhrase As Byte
     Dim TempColor As Long
     Dim ResetColor As Byte
-    Dim SrcRect As RECT
-    Dim v2 As D3DVECTOR2
-    Dim v3 As D3DVECTOR2
     Dim YOffset As Single
     
     Dim Upper_tempstr As Long, Len_tempstr As Long

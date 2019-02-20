@@ -17,8 +17,7 @@ Public Const HeadOffsetAltos As Integer = -8
 Public Const HeadOffsetBajos As Integer = 2
 
 Public MainScreenRect As RECT
-Public ConnectScreenRect As RECT
-'
+
 Public Type TLVERTEX
   X As Single
   Y As Single
@@ -743,12 +742,9 @@ Public Sub DrawPJ(ByVal index As Byte)
 
     frmPanelAccount.lblAccData(index).ForeColor = cColor
 
-    Dim i As Integer
-
     Dim init_x As Integer
     Dim init_y As Integer
     Dim head_offset As Integer
-    Dim grhtemp As Grh
     Static re As RECT
    
     re.Left = 0

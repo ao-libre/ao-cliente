@@ -34,7 +34,7 @@ Attribute VB_Name = "Protocol"
 
 Option Explicit
 #If False Then
-    Dim Nombre, PicInv, status, length As Variant
+    Dim Nombre As Variant
 #End If
 ''
 ' TODO : /BANIP y /UNBANIP ya no trabajan con nicks. Esto lo puede mentir en forma local el cliente con un paquete a NickToIp
@@ -1236,7 +1236,6 @@ Private Sub HandleDisconnect()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    Dim i As Long
     
     'Remove packet ID
     Call incomingData.ReadByte
@@ -2208,9 +2207,6 @@ On Error GoTo ErrHandler
     Dim r As Byte
     Dim g As Byte
     Dim b As Byte
-    Dim tmp As Integer
-    Dim Cont As Integer
-    
     
     chat = Buffer.ReadASCIIString()
     
@@ -2654,8 +2650,6 @@ Private Sub HandleCharacterChange()
     Call incomingData.ReadByte
     
     Dim CharIndex As Integer
-    Dim tempint As Integer
-    Dim HeadIndex As Integer
     
     CharIndex = incomingData.ReadInteger()
     
@@ -4054,8 +4048,6 @@ On Error GoTo ErrHandler
     Dim Title As String
     Dim Message As String
     Dim Author As String
-    Dim bAnuncio As Boolean
-    Dim bSticky As Boolean
     
     ForumType = Buffer.ReadByte
     
@@ -5563,7 +5555,6 @@ Public Sub WriteLoginNewChar()
 'Last Modification: 05/17/06
 'Writes the "LoginNewChar" message to the outgoing data buffer
 '***************************************************
-    Dim i As Long
     
     With outgoingData
         Call .WriteByte(ClientPacketID.LoginNewChar)

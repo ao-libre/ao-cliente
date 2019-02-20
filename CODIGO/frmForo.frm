@@ -231,7 +231,6 @@ Private Sticky As Boolean
 
 ' Para restringir la visibilidad de los foros
 Public Privilegios As Byte
-Public ForosVisibles As eForumType
 Public CanPostSticky As Byte
 
 ' Imagenes de fondo
@@ -368,12 +367,12 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y A
     LastButtonPressed.ToggleToNormal
 End Sub
 
-Private Sub imgTab_Click(Index As Integer)
+Private Sub imgTab_Click(index As Integer)
 
     Call Audio.PlayWave(SND_CLICK)
     
-    If Index <> ForoActual Then
-        ForoActual = Index
+    If index <> ForoActual Then
+        ForoActual = index
         VerListaMsg = True
         Lectura = False
         UpdateList

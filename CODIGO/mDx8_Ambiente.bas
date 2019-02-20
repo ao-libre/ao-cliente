@@ -66,7 +66,7 @@ Public Sub Init_Ambient(ByVal Map As Integer)
         ReDim .MapBlocks(XMinMapSize To XMaxMapSize, YMinMapSize To YMaxMapSize) As MapAmbientBlock
         
         If FileExist(App.path & "\Ambiente\" & Map & ".amb", vbNormal) Then
-            Dim N As Integer, tmp As Integer
+            Dim N As Integer
             N = FreeFile
                 Open App.path & "\Ambiente\" & Map & ".amb" For Binary As #N
                     Get #N, , CurMapAmbient
@@ -94,23 +94,23 @@ Public Sub Init_Ambient(ByVal Map As Integer)
         Call LightRenderAll
             
             If .UseDayAmbient = True Then
-                frmAmbientEditor.Option1(0).Value = True
+                frmAmbientEditor.Option1(0).value = True
             Else
-                frmAmbientEditor.Option1(1).Value = True
+                frmAmbientEditor.Option1(1).value = True
                 frmAmbientEditor.Text1(0).Text = .OwnAmbientLight.r
                 frmAmbientEditor.Text1(1).Text = .OwnAmbientLight.g
                 frmAmbientEditor.Text1(2).Text = .OwnAmbientLight.b
             End If
                                         
             If .Fog <> -1 Then
-                frmAmbientEditor.Check1.Value = Checked
-                frmAmbientEditor.HScroll1.Value = .Fog
+                frmAmbientEditor.Check1.value = Checked
+                frmAmbientEditor.HScroll1.value = .Fog
             Else
-                frmAmbientEditor.Check1.Value = Unchecked
+                frmAmbientEditor.Check1.value = Unchecked
             End If
             
-            If .Rain = True Then frmAmbientEditor.Check3.Value = Checked
-            If .Snow = True Then frmAmbientEditor.Check2.Value = Checked
+            If .Rain = True Then frmAmbientEditor.Check3.value = Checked
+            If .Snow = True Then frmAmbientEditor.Check2.value = Checked
             
             
     End With

@@ -1597,7 +1597,6 @@ End Sub
 Private Sub ImgCrear_Click()
 
     Dim i As Integer
-    Dim CharAscii As Byte
     
     UserName = txtNombre.Text
             
@@ -1796,6 +1795,7 @@ Private Sub picHead_Click(index As Integer)
     Head = UserHead
     
     If index > 2 Then
+
         Count_index = index - 2
         For Counter = Count_index To 1 Step -1
             Head = CheckCabeza(Head + 1)

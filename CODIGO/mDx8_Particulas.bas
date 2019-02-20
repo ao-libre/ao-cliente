@@ -7,10 +7,8 @@ Public Const DegreeToRadian As Single = 0.01745329251994 'Pi / 180
 
 Public WeatherEffectIndex As Integer
 
-Public OnRampage As Long
 Public OnRampageImg As Long
 Public OnRampageImgGrh As Integer
-Public LastEffect As Integer
 
 Private Type Effect
     X As Single
@@ -1271,7 +1269,6 @@ Private Sub Effect_Heal_Update(ByVal EffectIndex As Integer)
 '*****************************************************************
 Dim ElapsedTime As Single
 Dim LoopC As Long
-Dim i As Integer
 
     'Calculate the time difference
     ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
@@ -1695,7 +1692,6 @@ Private Sub Effect_Rayo_Update(ByVal EffectIndex As Integer)
 '*****************************************************************
 Dim ElapsedTime As Single
 Dim LoopC As Long
-Dim i As Integer
 
     'Calculate the time difference
     ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01

@@ -35,10 +35,6 @@ Attribute VB_Name = "Mod_TileEngine"
 
 Option Explicit
 
-#If False Then 'to fix VB fucking up the var names
-    Dim Nombre, PicInv, fX As String
-#End If
-
 Private OffsetCounterX As Single
 Private OffsetCounterY As Single
     
@@ -195,7 +191,7 @@ Public Type Char
 End Type
 
 'Info de un objeto
-Public Type obj
+Public Type Obj
     ObjIndex As Integer
     Amount As Integer
 End Type
@@ -207,7 +203,7 @@ Public Type MapBlock
     ObjGrh As Grh
     
     NPCIndex As Integer
-    OBJInfo As obj
+    OBJInfo As Obj
     TileExit As WorldPos
     Blocked As Byte
     
@@ -227,8 +223,6 @@ Public Type MapInfo
 End Type
 
 Public IniPath As String
-Public MapPath As String
-
 
 'Bordes del mapa
 Public MinXBorder As Byte
@@ -259,17 +253,10 @@ Private WindowTileHeight As Integer
 Private HalfWindowTileWidth As Integer
 Private HalfWindowTileHeight As Integer
 
-'Offset del desde 0,0 del main view
-Private MainViewTop As Integer
-Private MainViewLeft As Integer
-
 'Cuantos tiles el engine mete en el BUFFER cuando
 'dibuja el mapa. Ojo un tamaño muy grande puede
 'volver el engine muy lento
 Public TileBufferSize As Integer
-
-Private TileBufferPixelOffsetX As Integer
-Private TileBufferPixelOffsetY As Integer
 
 'Tamaño de los tiles en pixels
 Public TilePixelHeight As Integer
@@ -281,25 +268,10 @@ Public ScrollPixelsPerFrameY As Integer
 
 Dim timerElapsedTime As Single
 Dim timerTicksPerFrame As Single
-Dim engineBaseSpeed As Single
-
-
-Public NumBodies As Integer
-Public Numheads As Integer
-Public NumFxs As Integer
 
 Public NumChars As Integer
 Public LastChar As Integer
 Public NumWeaponAnims As Integer
-Public NumShieldAnims As Integer
-
-
-Private MainDestRect   As RECT
-Private MainViewRect   As RECT
-Private BackBufferRect As RECT
-
-Private MainViewWidth As Integer
-Private MainViewHeight As Integer
 
 Private MouseTileX As Byte
 Private MouseTileY As Byte
@@ -327,12 +299,7 @@ Public Normal_RGBList(0 To 3) As Long
 '   Control de Lluvia
 Public bRain As Boolean
 Public bTecho       As Boolean 'hay techo?
-Public brstTick     As Long
 Public bFogata       As Boolean
-
-
-Private iFrameIndex As Byte  'Frame actual de la LL
-Private llTick      As Long  'Contador
 
 Public charlist(1 To 10000) As Char
 
@@ -950,7 +917,7 @@ On Error Resume Next
     LoadGrhData = True
 Exit Function
 
-ErrorHandler:
+errorHandler:
     LoadGrhData = False
 End Function
 
@@ -1124,7 +1091,6 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
     Dim minYOffset  As Integer
     Dim PixelOffsetXTemp As Integer 'For centering grhs
     Dim PixelOffsetYTemp As Integer 'For centering grhs
-    Dim ColorTechos(3) As Long
     Dim ElapsedTime As Single
     
     ElapsedTime = Engine_ElapsedTime()
@@ -1521,7 +1487,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Inte
     If frmBancoObj.PicBancoInv.Visible Then _
         Call InvBanco(0).DrawInv
          
-    If frmBancoObj.PicInv.Visible Then _
+    If frmBancoObj.picInv.Visible Then _
         Call InvBanco(1).DrawInv
     
     
@@ -1628,9 +1594,6 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
 '16/09/2010: ZaMa - Ya no se dibujan los bodies cuando estan invisibles.
 '***************************************************
     Dim moved As Boolean
-    Dim Pos As Integer
-    Dim line As String
-    Dim Color As Long
     
     With charlist(CharIndex)
         If .Moving Then
@@ -1715,7 +1678,6 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
         
         Dim ColorFinal(0 To 3) As Long
         Dim RenderSpell As Boolean
-        Dim OffSetName As Integer
         
         If Not .muerto Then
             If Abs(MouseTileX - .Pos.X) < 1 And (Abs(MouseTileY - .Pos.Y)) < 1 And CharIndex <> UserCharIndex And ClientSetup.TonalidadPJ Then

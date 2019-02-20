@@ -44,7 +44,6 @@ Private startdX As Integer
 Private startdY As Integer
 
 Private ShowValue As Boolean
-Private ValueFormated As Boolean
 
 Private ImgContainer As Boolean
 Private InventoryTickCount As Long
@@ -60,9 +59,6 @@ Attribute InventoryWindow.VB_VarHelpID = -1
 
 Public Event dragDone(ByVal originalSlot As Integer, ByVal newSlot As Integer)
 
-#If ConMenuesConextuales = 1 Then
-    Dim ItemMenu As Menu    'Menu to be shown as pop up
-#End If
 
 Private Sub Class_Initialize()
 '***************************************************
@@ -546,7 +542,6 @@ Private Sub InventoryWindow_MouseUp(Button As Integer, Shift As Integer, X As Si
 '***************************************************
     'Store previously selected item
     Dim prevSelItem As Long
-    Dim TempItem As Long
     Dim temp_x As Long
     Dim temp_y As Long
     

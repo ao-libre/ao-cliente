@@ -520,7 +520,7 @@ End Sub
 
 Private Sub LoadButtons()
     Dim GrhPath As String
-    Dim Index As Long
+    Dim index As Long
     
     GrhPath = DirGraficos
 
@@ -532,11 +532,11 @@ Private Sub LoadButtons()
     Set picRecuadroItem = LoadPicture(GrhPath & "RecuadroItemsCarpinteria.jpg")
     Set picRecuadroMaderas = LoadPicture(GrhPath & "RecuadroMadera.jpg")
     
-    For Index = 1 To MAX_LIST_ITEMS
-        imgMarcoItem(Index).Picture = picRecuadroItem
-        imgMarcoUpgrade(Index).Picture = picRecuadroItem
-        imgMarcoMaderas(Index).Picture = picRecuadroMaderas
-    Next Index
+    For index = 1 To MAX_LIST_ITEMS
+        imgMarcoItem(index).Picture = picRecuadroItem
+        imgMarcoUpgrade(index).Picture = picRecuadroItem
+        imgMarcoMaderas(index).Picture = picRecuadroMaderas
+    Next index
     
     Set cBotonCerrar = New clsGraphicalButton
     Set cBotonConstruir(0) = New clsGraphicalButton
@@ -613,7 +613,7 @@ Private Sub LoadDefaultValues()
     
     cboItemsCiclo.ListIndex = 0
     
-    Scroll.Value = 0
+    Scroll.value = 0
     
     UsarMacro = True
     
@@ -623,13 +623,13 @@ Private Sub LoadDefaultValues()
 End Sub
 
 
-Private Sub Construir(ByVal Index As Integer)
+Private Sub Construir(ByVal index As Integer)
 
     Dim ItemIndex As Integer
     Dim CantItemsCiclo As Integer
     
-    If Scroll.Visible = True Then ItemIndex = Scroll.Value
-    ItemIndex = ItemIndex + Index
+    If Scroll.Visible = True Then ItemIndex = Scroll.value
+    ItemIndex = ItemIndex + index
     
     Select Case UltimaPestania
         Case ePestania.ieItems
@@ -835,16 +835,15 @@ Private Sub imgMejorar3_Click()
     Call Construir(4)
 End Sub
 
-Private Sub imgPestania_Click(Index As Integer)
-    Dim i As Integer
+Private Sub imgPestania_Click(index As Integer)
     Dim NumItems As Integer
     
     If Cargando Then Exit Sub
-    If UltimaPestania = Index Then Exit Sub
+    If UltimaPestania = index Then Exit Sub
     
-    Scroll.Value = 0
+    Scroll.value = 0
     
-    Select Case Index
+    Select Case index
         Case ePestania.ieItems
             ' Background
             Me.Picture = Pestanias(ePestania.ieItems)
@@ -868,7 +867,7 @@ Private Sub imgPestania_Click(Index As Integer)
             Call RenderUpgradeList(1)
     End Select
 
-    UltimaPestania = Index
+    UltimaPestania = index
 
 End Sub
 
@@ -877,7 +876,7 @@ Private Sub Scroll_Change()
     
     If Cargando Then Exit Sub
     
-    i = Scroll.Value
+    i = Scroll.value
     ' Cargo inventarios e imagenes
     
     Select Case UltimaPestania

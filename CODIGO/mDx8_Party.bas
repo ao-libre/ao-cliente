@@ -13,7 +13,6 @@ Public Type c_PartyMember
     ExpParty As Long
 End Type
 
-Public Mostrar As Byte
 Public PartyMembers(1 To 5) As c_PartyMember
 
 Public Sub Reset_Party()
