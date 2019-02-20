@@ -680,6 +680,9 @@
 	"ERROR_VERSIONES_RECURSOS":{
 		"TEXTO":"Su ha encontrado una incongruencia en las versiones."
 	},
+	"ERROR_BUSCAR_MUY_CORTO":{
+		"TEXTO":"Debes escribir como minimo 4 letras del VAR_TARGET deseado."
+	},
 	"ERROR_404":{
 		"TEXTO":"No se pudo encontrar el recurso"
 	},
@@ -784,6 +787,12 @@
 	},
 	"ATENCION":{
 		"TEXTO":"Atencion"
+	},
+	"OBJETO":{
+		"TEXTO":"object"
+	},
+	"CANTIDAD":{
+		"TEXTO":"cantidad"
 	},
 	"RAZAS":{
 		"HUMANO":"Humano",

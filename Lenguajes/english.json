@@ -653,7 +653,7 @@
 	},
 	"ERROR_EXTRAER_ARCHIVO":{
 		"TEXTO":"Could not extract the file"
-		},
+	},
 	"ERROR_EXTRAER_BINARIO":{
 		"TEXTO":"Could not remove the binary file correctly. Reason: VAR_ERROR"
 	},
@@ -674,6 +674,9 @@
 	},
 	"ERROR_VERSIONES_RECURSOS":{
 		"TEXTO":"His has found an inconsistency in the versions."
+	},
+	"ERROR_BUSCAR_MUY_CORTO":{
+		"TEXTO":"You must write at least 4 letter of the desired VAR_TARGET."
 	},
 	"ERROR_404":{
 		"TEXTO":"Could not find the resource"
@@ -776,6 +779,12 @@
    },
 	"ATENCION":{
 		"TEXTO":"Attention"
+	},
+	"OBJETO":{
+		"TEXTO":"object"
+	},
+	"CANTIDAD":{
+		"TEXTO":"quantity"
 	},
 	"RAZAS":{
 		"HUMANO":"Human",

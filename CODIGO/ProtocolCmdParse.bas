@@ -511,6 +511,9 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             ' BEGIN GM COMMANDS
             '
             
+            Case "/BUSCAR"
+                frmBuscar.Show vbModeless, frmMain
+            
             Case "/GMSG"
                 If notNullArguments Then
                     Call WriteGMMessage(ArgumentosRaw)
@@ -1174,16 +1177,16 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 End If
                 
             Case "/CI"
-                If notNullArguments Then
-                    If ValidNumber(ArgumentosAll(0), eNumber_Types.ent_Long) Then
-                        Call WriteCreateItem(ArgumentosAll(0))
+                If notNullArguments And CantidadArgumentos = 2 Then
+                    If IsNumeric(ArgumentosAll(0)) And IsNumeric(ArgumentosAll(1)) Then
+                        Call WriteCreateItem(ArgumentosAll(0), ArgumentosAll(1))
                     Else
                         'No es numerico
-                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_OBJETO_INCORRECTO").Item("TEXTO") & " /ci OBJETO.")
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_OBJETO_INCORRECTO").Item("TEXTO") & " /CI " & JsonLanguage.Item("OBJETO").Item("TEXTO") & " " & JsonLanguage.Item("CANTIDAD").Item("TEXTO"))
                     End If
                 Else
                     'Avisar que falta el parametro
-                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /ci OBJETO.")
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /ci OBJETO CANTIDAD.")
                 End If
                 
             Case "/DEST"

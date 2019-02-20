@@ -112,6 +112,7 @@ Class=clsByteBuffer; CODIGO\clsByteBuffer.cls
 Form=CODIGO\frmCerrar.frm
 Module=modPing; CODIGO\modPing.bas
 Module=ModLenguaje; CODIGO\modLenguaje.bas
+Form=CODIGO\frmBuscar.frm
 IconForm="frmMain"
 Startup="Sub Main"
 HelpFile=""

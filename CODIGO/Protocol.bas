@@ -168,6 +168,7 @@ Private Enum ServerPacketID
     PlayAttackAnim
     FXtoMap
     AccountLogged
+    SearchList
 End Enum
 
 Private Enum ClientPacketID
@@ -765,6 +766,9 @@ On Error Resume Next
         'CHOTS | Accounts
         Case ServerPacketID.AccountLogged
             Call HandleAccountLogged
+            
+        Case ServerPacketID.SearchList              '/BUSCAR
+            Call HandleSearchList
 
         '*******************
         'GM messages
@@ -2854,7 +2858,7 @@ On Error GoTo ErrHandler
     
     With frmGuildAdm
         'Clear guild's list
-        .GuildsList.Clear
+        .guildslist.Clear
         
         GuildNames = Split(Buffer.ReadASCIIString(), SEPARATOR)
         
@@ -2863,7 +2867,7 @@ On Error GoTo ErrHandler
             Upper_guildNames = UBound(GuildNames())
             
         For i = 0 To Upper_guildNames
-            Call .GuildsList.AddItem(GuildNames(i))
+            Call .guildslist.AddItem(GuildNames(i))
         Next i
         
         'If we got here then packet is complete, copy data back to original queue
@@ -4627,13 +4631,13 @@ On Error GoTo ErrHandler
         GuildNames = Split(Buffer.ReadASCIIString(), SEPARATOR)
         
         'Empty the list
-        Call .GuildsList.Clear
+        Call .guildslist.Clear
         
         'pre-calculate the amount of guilds that exist
         Upper_guildNames = UBound(GuildNames())
         
         For i = 0 To Upper_guildNames
-            Call .GuildsList.AddItem(GuildNames(i))
+            Call .guildslist.AddItem(GuildNames(i))
         Next i
         
         'Get list of guild's members
@@ -7679,7 +7683,7 @@ End Sub
 ' @param    Cantidad The final aumont of item to craft.
 ' @param    NroPorCiclo The amount of items to craft per cicle.
 
-Public Sub WriteInitCrafting(ByVal cantidad As Long, ByVal NroPorCiclo As Integer)
+Public Sub WriteInitCrafting(ByVal Cantidad As Long, ByVal NroPorCiclo As Integer)
 '***************************************************
 'Author: ZaMa
 'Last Modification: 29/01/2010
@@ -7687,7 +7691,7 @@ Public Sub WriteInitCrafting(ByVal cantidad As Long, ByVal NroPorCiclo As Intege
 '***************************************************
     With outgoingData
         Call .WriteByte(ClientPacketID.InitCrafting)
-        Call .WriteLong(cantidad)
+        Call .WriteLong(Cantidad)
         
         Call .WriteInteger(NroPorCiclo)
     End With
@@ -9174,7 +9178,7 @@ End Sub
 ' @param    itemIndex The index of the item to be created.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCreateItem(ByVal ItemIndex As Long)
+Public Sub WriteCreateItem(ByVal ItemIndex As Long, ByVal Cantidad As Integer)
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -9184,6 +9188,7 @@ Public Sub WriteCreateItem(ByVal ItemIndex As Long)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.CreateItem)
         Call .WriteInteger(ItemIndex)
+        Call .WriteInteger(Cantidad)
     End With
 End Sub
 
@@ -10796,3 +10801,56 @@ Private Sub HandleAccountLogged()
     
     frmPanelAccount.Show
 End Sub
+
+Private Sub HandleSearchList()
+ 
+        Dim num   As Integer
+        Dim Datos As String
+        Dim Obj   As Boolean
+        
+        'Remove packet ID
+        Call incomingData.ReadByte
+   
+        num = incomingData.ReadInteger()
+        Obj = incomingData.ReadBoolean()
+ 
+        If Not num = 0 Then
+                If Obj = True Then
+                        frmBuscar.ListCrearObj.AddItem num
+                Else
+                        frmBuscar.ListCrearNpcs.AddItem num
+                End If
+        End If
+ 
+        Datos = incomingData.ReadASCIIString()
+ 
+        frmBuscar.List1.AddItem Datos
+ 
+End Sub
+
+Public Sub WriteSearchObj(ByVal BuscoObj As String)
+ 
+        With outgoingData
+        
+                Call .WriteByte(ClientPacketID.GMCommands)
+                Call .WriteByte(eGMCommands.SearchObj)
+           
+                Call .WriteASCIIString(BuscoObj)
+                
+        End With
+
+End Sub
+ 
+Public Sub WriteSearchNpc(ByVal BuscoNpc As String)
+ 
+        With outgoingData
+        
+                Call .WriteByte(ClientPacketID.GMCommands)
+                Call .WriteByte(eGMCommands.SearchNpc)
+       
+                Call .WriteASCIIString(BuscoNpc)
+                
+        End With
+
+End Sub
+
