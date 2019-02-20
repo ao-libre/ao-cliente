@@ -123,7 +123,8 @@ On Error Resume Next
     Call DeInit_Auras
     
     '   Clean Particles
-    For i = 1 To UBound(ParticleTexture)
+    Upper_particleTexture = UBound(ParticleTexture)
+    For i = 1 To Upper_particleTexture
         If Not ParticleTexture(i) Is Nothing Then Set ParticleTexture(i) = Nothing
     Next i
     
@@ -740,7 +741,7 @@ Public Sub DrawPJ(ByVal index As Byte)
     End If
 
     frmPanelAccount.lblAccData(index).ForeColor = cColor
-    
+
     Dim init_x As Integer
     Dim init_y As Integer
     Dim head_offset As Integer

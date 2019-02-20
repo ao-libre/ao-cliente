@@ -240,14 +240,17 @@ End Sub
 Private Sub imgAceptar_Click()
     Dim T() As String
     Dim i As Long, N As Long, Pos As Long
+    Dim Upper_t As Long, Lower_t As Long
     
     If Len(txtMotd.Text) >= 2 Then
         If Right$(txtMotd.Text, 2) = vbNewLine Then txtMotd.Text = Left$(txtMotd.Text, Len(txtMotd.Text) - 2)
     End If
     
     T = Split(txtMotd.Text, vbNewLine)
+    Lower_t = LBound(T)
+    Upper_t = UBound(T)
     
-    For i = LBound(T) To UBound(T)
+    For i = Lower_t To Upper_t
         N = 0
         Pos = InStr(1, T(i), "~")
         Do While Pos > 0 And Pos < Len(T(i))
@@ -289,7 +292,7 @@ Private Sub imgMorado_Click()
     txtMotd.Text = txtMotd & "~128~0~128~" & CStr(yNegrita) & "~" & CStr(yCursiva)
 End Sub
 
-Private Sub imgOptCursiva_Click(Index As Integer)
+Private Sub imgOptCursiva_Click(index As Integer)
     
     If yCursiva = 0 Then
         imgOptCursiva(0).Picture = picCursiva
@@ -301,11 +304,11 @@ Private Sub imgOptCursiva_Click(Index As Integer)
 
 End Sub
 
-Private Sub imgOptCursiva_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgOptCursiva_MouseMove(index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
 End Sub
 
-Private Sub imgOptNegrita_Click(Index As Integer)
+Private Sub imgOptNegrita_Click(index As Integer)
     
     If yNegrita = 0 Then
         imgOptNegrita(0).Picture = picNegrita
@@ -317,7 +320,7 @@ Private Sub imgOptNegrita_Click(Index As Integer)
     
 End Sub
 
-Private Sub imgOptNegrita_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgOptNegrita_MouseMove(index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
 End Sub
 

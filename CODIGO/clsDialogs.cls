@@ -173,17 +173,20 @@ Public Sub CreateDialog(ByRef chat As String, ByVal CharIndex As Integer, ByVal 
 'depending on the number of chars
 '**************************************************************
     Dim slot As Integer
-    Dim i As Long
     
     slot = BinarySearch(CharIndex)
     
     If slot < 0 Then
         If dialogCount = MAX_DIALOGS Then Exit Sub  'Out of space! Should never happen....
         
+        Dim i As Long
+        Dim Count_slot As Long
+        
         'We need to add it. Get insertion index and move list backwards.
         slot = Not slot
+        Count_slot = slot + 1
         
-        For i = dialogCount To slot + 1 Step -1
+        For i = dialogCount To Count_slot Step -1
             dialogs(i) = dialogs(i - 1)
         Next i
         
@@ -313,11 +316,14 @@ Public Sub Render()
 'Changed the way it gets rid of older dialogs.
 '**************************************************************
     Dim i As Long
-    Dim J As Long
+    Dim j As Long
     Dim offset As Integer
     Dim removedDialogs As Long
+    Dim Count_dialog As Long
     
-    For i = 0 To dialogCount - 1
+    Count_dialog = dialogCount - 1
+    
+    For i = 0 To Count_dialog
         'Decrease index to prevent jumping over a dialog
         'Crappy VB will cache the limit of the For loop, so even if it changed, it won't matter
         With dialogs(i - removedDialogs)
@@ -326,13 +332,16 @@ Public Sub Render()
                 
                 removedDialogs = removedDialogs + 1
             ElseIf .renderable Then
-                offset = -(usedFont.Size + 2) * UBound(.textLine())
+                Dim Upper_textLine As Long
+                    Upper_textLine = UBound(.textLine())
+                
+                offset = -(usedFont.Size + 2) * Upper_textLine
                 
                 'Render it
-                For J = 0 To UBound(.textLine())
-                    Call DrawText(.X, .Y + offset, .textLine(J), .Color)
+                For j = 0 To Upper_textLine
+                    Call DrawText(.X, .Y + offset, .textLine(j), .Color)
                     offset = offset + usedFont.Size + 5
-                Next J
+                Next j
                 
                 'Won't render it unless it's updated in next frmae
                 .renderable = False
@@ -353,13 +362,17 @@ Public Sub RemoveDialog(ByVal CharIndex As Integer)
 'Removes the dialog from the requested char.
 '**************************************************************
     Dim slot As Integer
-    Dim i As Long
     
     slot = BinarySearch(CharIndex)
     
     If slot < 0 Then Exit Sub
     
-    For i = slot To MAX_DIALOGS - 2
+    Dim i As Long
+    
+    Dim Count_maxDialogs As Long
+        Count_maxDialogs = MAX_DIALOGS - 2
+
+    For i = slot To Count_maxDialogs
         dialogs(i) = dialogs(i + 1)
     Next i
     

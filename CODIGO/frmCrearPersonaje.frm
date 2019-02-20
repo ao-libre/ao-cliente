@@ -1458,23 +1458,32 @@ Private Sub IniciarGraficos()
 End Sub
 
 Private Sub CargarCombos()
-    Dim i As Integer
+Dim i As Integer
+    Dim Lower_ciudades As Long, Lower_listaClases As Long, Lower_listaRazas As Long
+    Dim Upper_ciudades As Long
     
     lstProfesion.Clear
     
-    For i = LBound(ListaClases) To NroClases
+    Lower_listaClases = LBound(ListaClases)
+    
+    For i = Lower_listaClases To NroClases
         lstProfesion.AddItem ListaClases(i)
     Next i
     
     lstHogar.Clear
     
-    For i = LBound(Ciudades()) To UBound(Ciudades())
+    Lower_ciudades = LBound(Ciudades())
+    Upper_ciudades = UBound(Ciudades())
+    
+    For i = Lower_ciudades To Upper_ciudades
         lstHogar.AddItem Ciudades(i)
     Next i
     
     lstRaza.Clear
     
-    For i = LBound(ListaRazas()) To NroRazas
+    Lower_listaRazas = LBound(ListaRazas())
+    
+    For i = Lower_listaRazas To NroRazas
         lstRaza.AddItem ListaRazas(i)
     Next i
     
@@ -1780,17 +1789,20 @@ Private Sub picHead_Click(index As Integer)
     ' No se mueve si clickea al medio
     If index = 2 Then Exit Sub
     
-    Dim Counter As Integer
+    Dim Counter As Integer, Count_index As Long
     Dim Head As Integer
     
     Head = UserHead
     
     If index > 2 Then
-        For Counter = index - 2 To 1 Step -1
+
+        Count_index = index - 2
+        For Counter = Count_index To 1 Step -1
             Head = CheckCabeza(Head + 1)
         Next Counter
     Else
-        For Counter = 2 - index To 1 Step -1
+        Count_index = 2 - index
+        For Counter = Count_index To 1 Step -1
             Head = CheckCabeza(Head - 1)
         Next Counter
     End If
@@ -2254,8 +2266,13 @@ Private Sub SetStars(ByRef ImgContainer As Object, ByVal NumStars As Integer)
             
             ' Si estan completos los espacios, no borro nada
             If Counter <> 5 Then
+                
+                'pre-calculo el index para mejorar el rendimiento
+                Dim Count_index As Long
+                    Count_index = Counter + 1
+                
                 ' Limpio las que queden vacias
-                For index = Counter + 1 To 5
+                For index = Count_index To 5
                     Set ImgContainer(index).Picture = Nothing
                 Next index
             End If

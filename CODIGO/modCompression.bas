@@ -95,6 +95,8 @@ Public Sub GenerateContra(ByVal Contra As String, Optional Modo As Byte = 0)
 On Error Resume Next
 
     Dim LoopC As Byte
+    Dim Upper_grhDatContra As Long, Upper_mapsDatContra As Long
+    
     If Modo = 0 Then
         Erase GrhDatContra
     ElseIf Modo = 1 Then
@@ -104,13 +106,17 @@ On Error Resume Next
     If LenB(Contra) <> 0 Then
         If Modo = 0 Then
             ReDim GrhDatContra(Len(Contra) - 1)
-            For LoopC = 0 To UBound(GrhDatContra)
+            Upper_grhDatContra = UBound(GrhDatContra)
+            
+            For LoopC = 0 To Upper_grhDatContra
                 GrhDatContra(LoopC) = Asc(mid$(Contra, LoopC + 1, 1))
             Next LoopC
             GrhUsaContra = True
         ElseIf Modo = 1 Then
             ReDim MapsDatContra(Len(Contra) - 1)
-            For LoopC = 0 To UBound(MapsDatContra)
+            Upper_mapsDatContra = UBound(MapsDatContra)
+            
+            For LoopC = 0 To Upper_mapsDatContra
                 MapsDatContra(LoopC) = Asc(mid$(Contra, LoopC + 1, 1))
             Next LoopC
             MapsUsaContra = True
@@ -305,6 +311,7 @@ Private Sub Compress_Data(ByRef data() As Byte, Optional Modo As Byte = 0)
     Dim DimBuffer As Long
     Dim BufTemp() As Byte
     Dim LoopC As Long
+    Dim Upper_grhDatContra As Long, Upper_mapsDatContra As Long
     
     Dimensions = UBound(data) + 1
     
@@ -327,13 +334,17 @@ Private Sub Compress_Data(ByRef data() As Byte, Optional Modo As Byte = 0)
     ' GSZAO - Seguridad
     If Modo = 0 And GrhUsaContra = True Then
         If UBound(GrhDatContra) <= UBound(data) And UBound(GrhDatContra) <> 0 Then
-            For LoopC = 0 To UBound(GrhDatContra)
+            Upper_grhDatContra = UBound(GrhDatContra)
+            
+            For LoopC = 0 To Upper_grhDatContra
                 data(LoopC) = data(LoopC) Xor GrhDatContra(LoopC)
             Next LoopC
         End If
     ElseIf Modo = 1 And MapsUsaContra = True Then
         If UBound(MapsDatContra) <= UBound(data) And UBound(MapsDatContra) <> 0 Then
-            For LoopC = 0 To UBound(MapsDatContra)
+            Upper_mapsDatContra = UBound(MapsDatContra)
+            
+            For LoopC = 0 To Upper_mapsDatContra
                 data(LoopC) = data(LoopC) Xor MapsDatContra(LoopC)
             Next LoopC
         End If
@@ -356,19 +367,24 @@ Private Sub Decompress_Data(ByRef data() As Byte, ByVal OrigSize As Long, Option
 '*****************************************************************
     Dim BufTemp() As Byte
     Dim LoopC As Integer
+    Dim Upper_grhDatContra As Long, Upper_mapsDatContra As Long
     
     ReDim BufTemp(OrigSize - 1)
     
     ' GSZAO - Seguridad
     If Modo = 0 And GrhUsaContra = True Then
         If UBound(GrhDatContra) <= UBound(data) And UBound(GrhDatContra) <> 0 Then
-            For LoopC = 0 To UBound(GrhDatContra)
+            Upper_grhDatContra = UBound(GrhDatContra)
+            
+            For LoopC = 0 To Upper_grhDatContra
                 data(LoopC) = data(LoopC) Xor GrhDatContra(LoopC)
             Next LoopC
         End If
     ElseIf Modo = 1 And MapsUsaContra = True Then
         If UBound(MapsDatContra) <= UBound(data) And UBound(MapsDatContra) <> 0 Then
-            For LoopC = 0 To UBound(MapsDatContra)
+            Upper_mapsDatContra = UBound(MapsDatContra)
+            
+            For LoopC = 0 To Upper_mapsDatContra
                 data(LoopC) = data(LoopC) Xor MapsDatContra(LoopC)
             Next LoopC
         End If
@@ -659,6 +675,7 @@ Public Function Extract_Files(ByRef ResourcePath As String, ByRef OutputPath As 
     Dim SourceData() As Byte
     Dim FileHead As FILEHEADER
     Dim InfoHead() As INFOHEADER
+    Dim Upper_infoHead As Long
     Dim RequiredSpace As Currency
     
 On Local Error GoTo ErrHandler
@@ -687,8 +704,11 @@ On Local Error GoTo ErrHandler
         'Extract the INFOHEADER
         Get ResourceFile, , InfoHead
         
+        'Pre-Calculate info head's upperbound to improve performance
+        Upper_infoHead = UBound(InfoHead)
+        
         'Check if there is enough hard drive space to extract all files
-        For LoopC = 0 To UBound(InfoHead)
+        For LoopC = 0 To Upper_infoHead
             
             RequiredSpace = RequiredSpace + InfoHead(LoopC).lngFileSizeUncompressed
         Next LoopC
@@ -707,8 +727,11 @@ On Local Error GoTo ErrHandler
         prgBar.Max = FileHead.lngNumFiles + 1
     End If
     
+    'Pre-Calculate info head's upperbound to improve performance
+    Upper_infoHead = UBound(InfoHead)
+    
     'Extract all of the files from the binary file
-    For LoopC = 0 To UBound(InfoHead)
+    For LoopC = 0 To Upper_infoHead
         'Extract this file
         If Extract_File(ResourcePath, InfoHead(LoopC), SourceData) Then
             'Destroy file if it previuosly existed

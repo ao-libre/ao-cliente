@@ -16,7 +16,7 @@ Option Base 0
 
 Private Type ChildNode
     Key As String
-    Value As String
+    value As String
 End Type
 
 
@@ -60,15 +60,20 @@ Private Sub Class_Terminate()
 '
 '**************************************************************
     Dim i As Long
-    
+
     'Clean up
     If MainNodes Then
-        For i = 1 To MainNodes - 1
+        
+        Dim Count_nodes As Long
+            Count_nodes = MainNodes - 1
+        
+        For i = 1 To Count_nodes
             Erase fileData(i).values
         Next i
         
         Erase fileData
     End If
+    
 End Sub
 
 ''
@@ -120,7 +125,7 @@ Public Sub Initialize(ByVal File As String)
                             'Add it to the main node's value
                             ReDim Preserve .values(.numValues) As ChildNode
                             
-                            .values(.numValues).Value = Right$(Text, Len(Text) - Pos)
+                            .values(.numValues).value = Right$(Text, Len(Text) - Pos)
                             .values(.numValues).Key = UCase$(Left$(Text, Pos - 1))
                             
                             .numValues = .numValues + 1
@@ -139,12 +144,17 @@ Public Sub Initialize(ByVal File As String)
         'Sort main nodes to allow binary search
         Call SortMainNodes(0, MainNodes - 1)
         
+        'Pre-calculate the amount of nodes to improve performance
+        Dim Count_nodes As Long
+            Count_nodes = MainNodes - 1
+            
         'Sort values of each node to allow binary search
-        For i = 0 To MainNodes - 1
+        For i = 0 To Count_nodes
             If fileData(i).numValues Then _
                 Call SortChildNodes(fileData(i), 0, fileData(i).numValues - 1)
         Next i
     End If
+    
 End Sub
 
 ''
@@ -253,17 +263,17 @@ Public Function GetValue(ByVal Main As String, ByVal Key As String) As String
 'Returns a value if the key and main node exist, or a nullstring otherwise
 '**************************************************************
     Dim i As Long
-    Dim J As Long
+    Dim j As Long
     
     'Search for the main node
     i = FindMain(UCase$(Main))
     
     If i >= 0 Then
         'If valid, binary search among keys
-        J = FindKey(fileData(i), UCase$(Key))
+        j = FindKey(fileData(i), UCase$(Key))
         
         'If we found it we return it
-        If J >= 0 Then GetValue = fileData(i).values(J).Value
+        If j >= 0 Then GetValue = fileData(i).values(j).value
     End If
 End Function
 

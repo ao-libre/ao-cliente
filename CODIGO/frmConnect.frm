@@ -398,7 +398,10 @@ Private Sub CheckLicenseAgreement()
     'Recordatorio para cumplir la licencia, por si borrás el Boton sin leer el code...
     Dim i As Long
     
-    For i = 0 To Me.Controls.Count - 1
+    Dim Count_controlsCount As Long
+        Count_controlsCount = Me.Controls.Count - 1
+    
+    For i = 0 To Count_controlsCount
         If Me.Controls(i).Name = "imgCodigoFuente" Then
             Exit For
         End If
@@ -549,7 +552,7 @@ Private Sub imgConectarse_Click()
         EstadoLogin = Normal
         
 #If UsarWrench = 1 Then
-    frmMain.Socket1.HostName = CurServerIp
+    frmMain.Socket1.hostname = CurServerIp
     frmMain.Socket1.RemotePort = CurServerPort
     frmMain.Socket1.Connect
 #Else

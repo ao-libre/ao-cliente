@@ -64,6 +64,7 @@ Sub Engine_Init_ParticleEngine(Optional ByVal SkipToTextures As Boolean = False)
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_Init_ParticleEngine
 '*****************************************************************
 Dim i As Byte
+Dim Upper_particleTexture As Long
 
     If Not SkipToTextures Then
         'Set the particles texture
@@ -72,10 +73,13 @@ Dim i As Byte
     
     End If
     
-    For i = 1 To UBound(ParticleTexture())
+    Upper_particleTexture = UBound(ParticleTexture())
+    
+    For i = 1 To Upper_particleTexture
         If ParticleTexture(i) Is Nothing Then Set ParticleTexture(i) = Nothing
         Set ParticleTexture(i) = DirectD3D8.CreateTextureFromFileEx(DirectDevice, App.path & "\graficos\p" & i & ".png", D3DX_DEFAULT, D3DX_DEFAULT, D3DX_DEFAULT, 0, D3DFMT_UNKNOWN, D3DPOOL_MANAGED, D3DX_FILTER_POINT, D3DX_FILTER_POINT, &HFF000000, ByVal 0, ByVal 0)
     Next i
+
 
 End Sub
 

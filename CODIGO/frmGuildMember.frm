@@ -234,11 +234,14 @@ Public Sub FiltrarListaClanes(ByRef sCompare As String)
         With lstClanes
             'Limpio la lista
             .Clear
-            
             .Visible = False
             
+            'pre-calculo la cantidad de nombres que va a haber en la lista
+            Dim Upper_guildNames As Long
+                Upper_guildNames = UBound(GuildNames)
+            
             ' Recorro los arrays
-            For lIndex = 0 To UBound(GuildNames)
+            For lIndex = 0 To Upper_guildNames
                 ' Si coincide con los patrones
                 If InStr(1, UCase$(GuildNames(lIndex)), UCase$(sCompare)) Then
                     ' Lo agrego a la lista

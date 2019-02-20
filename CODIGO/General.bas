@@ -222,10 +222,12 @@ End Sub
 Function AsciiValidos(ByVal cad As String) As Boolean
     Dim car As Byte
     Dim i As Long
+    Dim Len_cad As Long
     
     cad = LCase$(cad)
+    Len_cad = Len(cad)
     
-    For i = 1 To Len(cad)
+    For i = 1 To Len_cad
         car = Asc(mid$(cad, i, 1))
         
         If ((car < 97 Or car > 122) Or car = Asc("º")) And (car <> 255) And (car <> 32) Then
@@ -237,16 +239,21 @@ Function AsciiValidos(ByVal cad As String) As Boolean
 End Function
 
 Function CheckUserData() As Boolean
+    
     'Validamos los datos del user
+    
     Dim LoopC As Long
     Dim CharAscii As Integer
+    Dim Len_accountName As Long, Len_accountPassword As Long
 
     If LenB(AccountPassword) = 0 Then
         MsgBox JsonLanguage.Item("VALIDACION_PASSWORD").Item("TEXTO")
         Exit Function
     End If
     
-    For LoopC = 1 To Len(AccountPassword)
+    Len_accountPassword = Len(AccountPassword)
+    
+    For LoopC = 1 To Len_accountPassword
         CharAscii = Asc(mid$(AccountPassword, LoopC, 1))
         If Not LegalCharacter(CharAscii) Then
             MsgBox Replace$(JsonLanguage.Item("VALIDACION_BAD_PASSWORD").Item("TEXTO").Item(2), "VAR_CHAR_INVALIDO", Chr$(CharAscii))
@@ -258,8 +265,10 @@ Function CheckUserData() As Boolean
         MsgBox JsonLanguage.Item("VALIDACION_BAD_EMAIL").Item("TEXTO").Item(2)
         Exit Function
     End If
+        
+    Len_accountName = Len(AccountName)
     
-    For LoopC = 1 To Len(AccountName)
+    For LoopC = 1 To Len_accountName
         CharAscii = Asc(mid$(AccountName, LoopC, 1))
         If Not LegalCharacter(CharAscii) Then
             MsgBox Replace$(JsonLanguage.Item("VALIDACION_BAD_PASSWORD").Item("TEXTO").Item(4), "VAR_CHAR_INVALIDO", Chr$(CharAscii))
@@ -662,13 +671,16 @@ End Sub
 
 Public Function IsIp(ByVal Ip As String) As Boolean
     Dim i As Long
+    Dim Upper_serversLst As Long
+        Upper_serversLst = UBound(ServersLst)
     
-    For i = 1 To UBound(ServersLst)
+    For i = 1 To Upper_serversLst
         If ServersLst(i).Ip = Ip Then
             IsIp = True
             Exit Function
         End If
     Next i
+    
 End Function
 
 Private Function GetCountryFromIp(ByVal Ip As String) As String
@@ -1090,6 +1102,7 @@ On Error GoTo errHnd
     Dim lPos  As Long
     Dim lX    As Long
     Dim iAsc  As Integer
+    Dim Len_sString As Long
     
     '1er test: Busca un simbolo @
     lPos = InStr(sString, "@")
@@ -1098,8 +1111,11 @@ On Error GoTo errHnd
         If Not (InStr(lPos, sString, ".", vbBinaryCompare) > lPos + 1) Then _
             Exit Function
         
+        'pre-calculo la cantidad de caracteres para mejorar el rendimiento
+        Len_sString = Len(sString) - 1
+        
         '3er test: Recorre todos los caracteres y los valida
-        For lX = 0 To Len(sString) - 1
+        For lX = 0 To Len_sString
             If Not (lX = (lPos - 1)) Then   'No chequeamos la '@'
                 iAsc = Asc(mid$(sString, (lX + 1), 1))
                 If Not CMSValidateChar_(iAsc) Then _
@@ -1155,14 +1171,17 @@ Public Sub LeerLineaComandos()
 'Last modified: 25/11/2008 (BrianPr)
 '
 '*************************************************
-    Dim T() As String
+    Dim T() As String, Upper_t As Long, Lower_t As Long
     Dim i As Long
     
     Dim UpToDate As Boolean
     
     'Parseo los comandos
     T = Split(Command, " ")
-    For i = LBound(T) To UBound(T)
+    Lower_t = LBound(T)
+    Upper_t = UBound(T)
+    
+    For i = Lower_t To Upper_t
         Select Case UCase$(T(i))
             Case "/NORES" 'no cambiar la resolucion
                 NoRes = True

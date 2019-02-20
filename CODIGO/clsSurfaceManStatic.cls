@@ -87,8 +87,12 @@ Private Sub Class_Terminate()
     Dim i As Long
     Dim j As Long
     
+    'pre-calculate hash table size to improve performance
+    Dim Count_hashTableSize As Long
+        Count_hashTableSize = HASH_TABLE_SIZE - 1
+    
     'Destroy every surface in memory
-    For i = 0 To HASH_TABLE_SIZE - 1
+    For i = 0 To Count_hashTableSize
         For j = 1 To surfaceList(i).sufraceCount
             Set surfaceList(i).SurfaceEntry(j).Surface = Nothing
         Next j

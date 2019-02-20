@@ -277,14 +277,17 @@ End Property
 Public Property Get DIBSectionBitsPtr() As Long
     DIBSectionBitsPtr = m_lPtr
 End Property
+
 Public Sub RandomiseBits( _
         Optional ByVal bGray As Boolean = False _
     )
 Dim bDib() As Byte
-Dim X As Long, Y As Long
-Dim lC As Long
-Dim tSA As SAFEARRAY2D
-Dim xEnd As Long
+    Dim X As Long, Y As Long
+    Dim lC As Long
+    Dim tSA As SAFEARRAY2D
+    Dim xEnd As Long
+    
+    Dim Count_biHeight As Long
     
     ' Get the bits in the from DIB section:
     With tSA
@@ -295,15 +298,21 @@ Dim xEnd As Long
         .Bounds(1).lLbound = 0
         .Bounds(1).cElements = BytesPerScanLine()
         .pvData = m_lPtr
+
     End With
+
     CopyMemory ByVal VarPtrArray(bDib()), VarPtr(tSA), 4
 
     ' random:
     Randomize Timer
     
     xEnd = (Width - 1) * 3
+
     If (bGray) Then
-        For Y = 0 To m_tBI.bmiHeader.biHeight - 1
+        
+        Count_biHeight = m_tBI.bmiHeader.biHeight - 1
+        
+        For Y = 0 To Count_biHeight
             For X = 0 To xEnd Step 3
                 lC = Rnd * 255
                 bDib(X, Y) = lC
@@ -311,14 +320,17 @@ Dim xEnd As Long
                 bDib(X + 2, Y) = lC
             Next X
         Next Y
+
     Else
+
         For X = 0 To xEnd Step 3
-            For Y = 0 To m_tBI.bmiHeader.biHeight - 1
+            For Y = 0 To Count_biHeight
                 bDib(X, Y) = 0
                 bDib(X + 1, Y) = Rnd * 255
                 bDib(X + 2, Y) = Rnd * 255
             Next Y
         Next X
+
     End If
     
     ' Clear the temporary array descriptor

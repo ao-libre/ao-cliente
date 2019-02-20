@@ -100,14 +100,18 @@ Private Sub Class_Terminate()
 'Clean up
 '**************************************************************
     Dim i As Long
-    Dim J As Long
+    Dim j As Long
+    
+    'pre-calculate hash table size beforehand to improve performance
+    Dim Count_hashTableSize As Long
+        Count_hashTableSize = HASH_TABLE_SIZE - 1
     
     'Destroy every surface in memory
-    For i = 0 To HASH_TABLE_SIZE - 1
+    For i = 0 To Count_hashTableSize
         With surfaceList(i)
-            For J = 1 To .surfaceCount
-                Set .SurfaceEntry(J).Surface = Nothing
-            Next J
+            For j = 1 To .surfaceCount
+                Set .SurfaceEntry(j).Surface = Nothing
+            Next j
             
             'Destroy the arrays
             Erase .SurfaceEntry
@@ -225,21 +229,24 @@ Private Function RemoveLRU() As Boolean
     Dim LRUj As Long
     Dim LRUtime As Long
     Dim i As Long
-    Dim J As Long
+    Dim j As Long
     Dim ddsd As D3DSURFACE_DESC
     
     LRUtime = GetTickCount
     
+    Dim Count_hashTableSize As Long
+        Count_hashTableSize = HASH_TABLE_SIZE - 1
+        
     'Check out through the whole list for the least recently used
-    For i = 0 To HASH_TABLE_SIZE - 1
+    For i = 0 To Count_hashTableSize
         With surfaceList(i)
-            For J = 1 To .surfaceCount
-                If LRUtime > .SurfaceEntry(J).lastAccess Then
+            For j = 1 To .surfaceCount
+                If LRUtime > .SurfaceEntry(j).lastAccess Then
                     LRUi = i
-                    LRUj = J
-                    LRUtime = .SurfaceEntry(J).lastAccess
+                    LRUj = j
+                    LRUtime = .SurfaceEntry(j).lastAccess
                 End If
-            Next J
+            Next j
         End With
     Next i
     
@@ -254,9 +261,14 @@ Private Function RemoveLRU() As Boolean
         
         'Move back the list (if necessary)
         With surfaceList(LRUi)
-            For J = LRUj To .surfaceCount - 1
-                .SurfaceEntry(J) = .SurfaceEntry(J + 1)
-            Next J
+            
+            'pre-calculate surface count to improve performance
+            Dim Count_surfaceCount As Long
+                Count_surfaceCount = .surfaceCount - 1
+        
+            For j = LRUj To Count_surfaceCount
+                .SurfaceEntry(j) = .SurfaceEntry(j + 1)
+            Next j
             
             .surfaceCount = .surfaceCount - 1
             If .surfaceCount Then
