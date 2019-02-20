@@ -2858,7 +2858,7 @@ On Error GoTo ErrHandler
     
     With frmGuildAdm
         'Clear guild's list
-        .GuildsList.Clear
+        .guildslist.Clear
         
         GuildNames = Split(Buffer.ReadASCIIString(), SEPARATOR)
         
@@ -2867,7 +2867,7 @@ On Error GoTo ErrHandler
             Upper_guildNames = UBound(GuildNames())
             
         For i = 0 To Upper_guildNames
-            Call .GuildsList.AddItem(GuildNames(i))
+            Call .guildslist.AddItem(GuildNames(i))
         Next i
         
         'If we got here then packet is complete, copy data back to original queue
@@ -4631,13 +4631,13 @@ On Error GoTo ErrHandler
         GuildNames = Split(Buffer.ReadASCIIString(), SEPARATOR)
         
         'Empty the list
-        Call .GuildsList.Clear
+        Call .guildslist.Clear
         
         'pre-calculate the amount of guilds that exist
         Upper_guildNames = UBound(GuildNames())
         
         For i = 0 To Upper_guildNames
-            Call .GuildsList.AddItem(GuildNames(i))
+            Call .guildslist.AddItem(GuildNames(i))
         Next i
         
         'Get list of guild's members
@@ -7683,7 +7683,7 @@ End Sub
 ' @param    Cantidad The final aumont of item to craft.
 ' @param    NroPorCiclo The amount of items to craft per cicle.
 
-Public Sub WriteInitCrafting(ByVal cantidad As Long, ByVal NroPorCiclo As Integer)
+Public Sub WriteInitCrafting(ByVal Cantidad As Long, ByVal NroPorCiclo As Integer)
 '***************************************************
 'Author: ZaMa
 'Last Modification: 29/01/2010
@@ -7691,7 +7691,7 @@ Public Sub WriteInitCrafting(ByVal cantidad As Long, ByVal NroPorCiclo As Intege
 '***************************************************
     With outgoingData
         Call .WriteByte(ClientPacketID.InitCrafting)
-        Call .WriteLong(cantidad)
+        Call .WriteLong(Cantidad)
         
         Call .WriteInteger(NroPorCiclo)
     End With
@@ -9178,7 +9178,7 @@ End Sub
 ' @param    itemIndex The index of the item to be created.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCreateItem(ByVal ItemIndex As Long)
+Public Sub WriteCreateItem(ByVal ItemIndex As Long, ByVal Cantidad As Integer)
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -9188,6 +9188,7 @@ Public Sub WriteCreateItem(ByVal ItemIndex As Long)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.CreateItem)
         Call .WriteInteger(ItemIndex)
+        Call .WriteInteger(Cantidad)
     End With
 End Sub
 

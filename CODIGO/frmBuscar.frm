@@ -11,6 +11,15 @@ Begin VB.Form frmBuscar
    ScaleHeight     =   6855
    ScaleWidth      =   7575
    StartUpPosition =   1  'CenterOwner
+   Begin VB.TextBox txtCantidad 
+      Alignment       =   2  'Center
+      Height          =   375
+      Left            =   6840
+      TabIndex        =   12
+      Text            =   "1"
+      Top             =   1080
+      Width           =   495
+   End
    Begin VB.CommandButton Limpiarlistas 
       Caption         =   "Limpiar Listas"
       BeginProperty Font 
@@ -105,6 +114,25 @@ Begin VB.Form frmBuscar
       TabIndex        =   0
       Top             =   720
       Width           =   7335
+   End
+   Begin VB.Label Label2 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "Cantidad:"
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   9
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   225
+      Left            =   6000
+      TabIndex        =   13
+      Top             =   1155
+      Width           =   795
    End
    Begin VB.Label CrearObjetos 
       Alignment       =   2  'Center
@@ -202,7 +230,13 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Command1_Click()
-
+        
+        ' Seamos un poco mas especificos y evitemos un overflow ^-^
+        If Len(Objetos.Text) < 4 Then
+            MsgBox "Debes escribir como minimo 4 letras del objeto deseado.", vbApplicationModal, "Buscador de Objetos"
+            Exit Sub
+        End If
+        
         If Len(Objetos.Text) <> 0 Then
                 Call WriteSearchObj(Objetos.Text)
         End If
@@ -210,7 +244,13 @@ Private Sub Command1_Click()
 End Sub
 
 Private Sub Command2_Click()
-
+        
+        ' Seamos un poco mas especificos y evitemos un overflow ^-^
+        If Len(NPCs.Text) < 4 Then
+            MsgBox "Debes escribir como minimo 4 letras del NPC deseado.", vbApplicationModal, "Buscador de Objetos"
+            Exit Sub
+        End If
+        
         If Len(NPCs.Text) <> 0 Then
                 Call WriteSearchNpc(NPCs.Text)
         End If
@@ -250,8 +290,8 @@ End Sub
 
 Private Sub mnuCrearObj_Click()
 
-        If ListCrearObj.Visible Then
-                Call ParseUserCommand("/CI " & ListCrearObj.Text)
+        If ListCrearObj.Visible And LenB(txtCantidad.Text) <> 0 Then
+                Call ParseUserCommand("/CI " & ListCrearObj.Text & " " & txtCantidad.Text)
         End If
 
 End Sub
@@ -263,7 +303,8 @@ Private Sub mnuCrearNPC_Click()
         End If
 
 End Sub
-'Parche: Al cerrar el formulario tambien te desconecta hahahaha ^^'
+
+'Parche: Al cerrar el formulario tambien te desconecta hahahaha ^_^'
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
     Unload Me
 End Sub
