@@ -968,9 +968,11 @@ Private Sub LoadInitialConfig()
     
     '###########
     ' SERVIDORES
-    Call AddtoRichTextBox(frmCargando.status, JsonLanguage.Item("BUSCA_SERVIDORES").Item("TEXTO"), 255, 255, 255, True, False, True)
-    Call DownloadServersFile("https://raw.githubusercontent.com/ao-libre/ao-cliente/master/INIT/sinfo.dat")
-    Call AddtoRichTextBox(frmCargando.status, " " & JsonLanguage.Item("HECHO").Item("TEXTO"), 255, 0, 0, True, False, False)
+    If GetVar(DirInit & "Config.ini", "Parameters", "BuscarServidores") = 1 Then
+        Call AddtoRichTextBox(frmCargando.status, JsonLanguage.Item("BUSCA_SERVIDORES").Item("TEXTO"), 255, 255, 255, True, False, True)
+        Call DownloadServersFile("https://raw.githubusercontent.com/ao-libre/ao-cliente/master/INIT/sinfo.dat")
+        Call AddtoRichTextBox(frmCargando.status, " " & JsonLanguage.Item("HECHO").Item("TEXTO"), 255, 0, 0, True, False, False)
+    End If
     
     '###########
     ' CONSTANTES
@@ -1024,9 +1026,6 @@ Private Sub LoadInitialConfig()
     
     'Inicializamos el inventario grafico
     Call Inventario.Initialize(DirectD3D8, frmMain.PicInv, MAX_INVENTORY_SLOTS)
-    
-    Call AddtoRichTextBox(frmCargando.status, " " & JsonLanguage.Item("HECHO").Item("TEXTO"), 255, 0, 0, True, False, False)
-    
     
     Call AddtoRichTextBox(frmCargando.status, "                    " & JsonLanguage.Item("BIENVENIDO").Item("TEXTO"), 255, 255, 255, True, False, True)
 
