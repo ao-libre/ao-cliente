@@ -1591,6 +1591,15 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FORMATO_INCORRECTO").Item("TEXTO") & " /SETINIVAR LLAVE CLAVE VALOR")
                 End If
             
+            Case "/CVC"
+                Call WriteEnviaCvc
+
+            Case "/ACVC"
+                Call WriteAceptarCvc
+
+            Case "/IRCVC"
+                Call WriteIrCvc
+            
             Case "/HOGAR"
                 Call WriteHome
                 
