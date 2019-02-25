@@ -304,6 +304,9 @@ Private Enum ClientPacketID
     LoginExistingAccount = 130
     LoginNewAccount = 131
     CentinelReport = 132         '/CENTINELA
+    Ecvc = 133
+    Acvc = 134
+    IrCvc = 135
 End Enum
 
 Public Enum FontTypeNames
@@ -10854,3 +10857,26 @@ Public Sub WriteSearchNpc(ByVal BuscoNpc As String)
 
 End Sub
 
+Public Sub WriteEnviaCvc()
+
+        With outgoingData
+                Call .WriteByte(ClientPacketID.Ecvc)
+        End With
+
+End Sub
+
+Public Sub WriteAceptarCvc()
+
+        With outgoingData
+                Call .WriteByte(ClientPacketID.Acvc)
+        End With
+
+End Sub
+
+Public Sub WriteIrCvc()
+
+        With outgoingData
+                Call .WriteByte(ClientPacketID.IrCvc)
+        End With
+
+End Sub
