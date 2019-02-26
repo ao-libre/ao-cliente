@@ -43,12 +43,22 @@
 		"TEXTO":[
 			">>SECURITY ENABLED<<",
 			"Insurance activated."
+		],
+		"COLOR":[
+			0,
+			255,
+			0
 		]
 	},
 	"MENSAJE_SEGURO_DESACTIVADO":{
 		"TEXTO":[
 			">>INSURANCE DISABLED<<",
 			"Insurance off."
+		],
+		"COLOR":[
+			255,
+			0,
+			0
 		]
 	},
 	"MENSAJE_MACRO_ACTIVADO":{
@@ -771,9 +781,9 @@
 	"ORO":{
 		"TEXTO":"Gold"
 	},
-   "MAPA":{
-      "TEXTO":"Current Map"
-   },
+	"MAPA":{
+		"TEXTO":"Current Map"
+	},
 	"ATENCION":{
 		"TEXTO":"Attention"
 	},
@@ -903,25 +913,60 @@
 		"TEXTO":"Argentum Online is already running! It is not possible to run another instance of the game. Click Ok to exit."
 	},
 	"BUSCA_SERVIDORES":{
-		"TEXTO":"Looking for servers..."
+		"TEXTO":"Looking for servers...",
+		"COLOR":[
+			255,
+			255,
+			255
+		]
 	},
 	"INICIA_CONSTANTES":{
-		"TEXTO":"Initializing constants..."
+		"TEXTO":"Initializing constants...",
+		"COLOR":[
+			255,
+			255,
+			255
+		]
 	},
 	"INICIA_MOTOR_GRAFICO":{
-		"TEXTO":"Initializing graphic engine..."
+		"TEXTO":"Initializing graphic engine...",
+		"COLOR":[
+			255,
+			255,
+			255
+		]
 	},
 	"INICIA_FXS":{
-		"TEXTO":"Creating extra animations..."
+		"TEXTO":"Creating extra animations...",
+		"COLOR":[
+			255,
+			255,
+			255
+		]
 	},
 	"INICIA_SONIDO":{
-		"TEXTO":"Initializing DirectSound..."
+		"TEXTO":"Initializing DirectSound...",
+		"COLOR":[
+			255,
+			255,
+			255
+		]
 	},
 	"INICIA_CLASES":{
-		"TEXTO":"Instantiating classes..."
+		"TEXTO":"Instantiating classes...",
+		"COLOR":[
+			255,
+			255,
+			255
+		]
 	},
 	"BIENVENIDO":{
-		"TEXTO":"Welcome to Argentum Online!"
+		"TEXTO":"Welcome to Argentum Online!",
+		"COLOR":[
+			255,
+			255,
+			255
+		]
 	},
 	"PANTALLA_COMPLETA":{
 		"TEXTO":"Do you want to play at full screen?"
@@ -1092,6 +1137,11 @@
 		"TEXTO":"There are one or more invalid keys, please check again."
 	},
 	"CUSTOMKEYS_CONFIG_CARGADA":{
-		"TEXTO":"It has loaded the configuration VAR_CONFIG_ELEGIDA VAR_CONFIG_CUSTOM_NUMERO !"
+		"TEXTO":"It has loaded the configuration VAR_CONFIG_ELEGIDA VAR_CONFIG_CUSTOM_NUMERO !",
+		"COLOR":[
+			255,
+			255,
+			255
+		]
 	}
 }
