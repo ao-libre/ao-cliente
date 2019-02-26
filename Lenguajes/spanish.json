@@ -260,57 +260,57 @@
 	"MENSAJE_TRABAJO_MAGIA":{
 		"TEXTO":"Haz click sobre el objetivo...",
 		"COLOR":[
-			255,
-			0,
-			0
+			100,
+			100,
+			120
 		]
 	},
 	"MENSAJE_TRABAJO_PESCA":{
 		"TEXTO":"Haz click sobre el sitio donde quieres pescar...",
 		"COLOR":[
-			255,
-			0,
-			0
+			100,
+			100,
+			120
 		]
 	},
 	"MENSAJE_TRABAJO_ROBAR":{
 		"TEXTO":"Haz click sobre la víctima...",
 		"COLOR":[
-			255,
-			0,
-			0
+			100,
+			100,
+			120
 		]
 	},
 	"MENSAJE_TRABAJO_TALAR":{
 		"TEXTO":"Haz click sobre el árbol...",
 		"COLOR":[
-			255,
-			0,
-			0
+			100,
+			100,
+			120
 		]
 	},
 	"MENSAJE_TRABAJO_MINERIA":{
 		"TEXTO":"Haz click sobre el yacimiento...",
 		"COLOR":[
-			255,
-			0,
-			0
+			100,
+			100,
+			120
 		]
 	},
 	"MENSAJE_TRABAJO_FUNDIRMETAL":{
 		"TEXTO":"Haz click sobre la fragua...",
 		"COLOR":[
-			255,
-			0,
-			0
+			100,
+			100,
+			120
 		]
 	},
 	"MENSAJE_TRABAJO_PROYECTILES":{
 		"TEXTO":"Haz click sobre la victima...",
 		"COLOR":[
-			255,
-			0,
-			0
+			100,
+			100,
+			120
 		]
 	},
 	"MENSAJE_ENTRAR_PARTY_1":{
