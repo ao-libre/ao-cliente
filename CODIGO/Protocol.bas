@@ -10849,3 +10849,44 @@ Public Sub WriteIrCvc()
         End With
 
 End Sub
+
+Public Sub WriteDoEvent(ByVal nEvent As Byte, ByVal Amount_Event As Byte, ByVal Drop As Boolean, ByVal Inscription_Prize As Boolean, ByVal Max_Potions As Integer, ByVal Gold_Inscription As Long, ByVal Gold_Prize As Long)
+
+    With outgoingData
+            Call .WriteByte(ClientPacketID.Do_Event)
+            Call .WriteByte(nEvent)
+            Call .WriteByte(Amount_Event)
+            Call .WriteBoolean(Drop)
+            Call .WriteBoolean(Inscription_Prize)
+            Call .WriteInteger(Max_Potions)
+            Call .WriteLong(Gold_Inscription)
+            Call .WriteLong(Gold_Prize)
+    End With
+
+End Sub
+
+Public Sub WriteSendEvent(ByVal nEvent As Byte, ByRef Players() As String)
+                       
+    With outgoingData
+ 
+        Dim LoopC As Long
+ 
+        Call .WriteByte(ClientPacketID.Send_Event)
+        Call .WriteByte(nEvent)
+
+        For LoopC = 2 To nEvent
+            Call .WriteASCIIString(Players(LoopC))
+        Next LoopC
+    End With
+
+End Sub
+
+Public Sub WriteEnterEvent(ByVal ID_Send As String, ByVal nEvent As Byte)
+                       
+    With outgoingData
+            Call .WriteByte(ClientPacketID.Enter_Event)
+            Call .WriteASCIIString(ID_Send)
+            Call .WriteByte(nEvent)
+    End With
+
+End Sub
