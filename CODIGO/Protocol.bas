@@ -99,7 +99,6 @@ Private Enum ServerPacketID
     RainToggle              ' LLU
     CreateFX                ' CFX
     UpdateUserStats         ' EST
-    WorkRequestTarget       ' T01
     ChangeInventorySlot     ' CSI
     ChangeBankSlot          ' SBO
     ChangeSpellSlot         ' SHS
@@ -624,10 +623,7 @@ On Error Resume Next
         
         Case ServerPacketID.UpdateUserStats         ' EST
             Call HandleUpdateUserStats
-        
-        Case ServerPacketID.WorkRequestTarget       ' T01
-            Call HandleWorkRequestTarget
-        
+
         Case ServerPacketID.ChangeInventorySlot     ' CSI
             Call HandleChangeInventorySlot
         

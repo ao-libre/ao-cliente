@@ -1023,13 +1023,9 @@ Private Sub LoadInitialConfig()
                             True, False, True)
                             
     Call InicializarNombres
+    
     ' Initialize FONTTYPES
     Call Protocol.InitFonts
-    
-    With frmConnect
-        .txtNombre = vbNullString
-        .SetFocus
-    End With
  
     UserMap = 1
     
