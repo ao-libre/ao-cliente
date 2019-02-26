@@ -461,7 +461,7 @@
 		]
 	},
 	"MENSAJE_PING":{
-		"TEXTO":"El ping es ",
+		"TEXTO":"Cuentas con una latencia de VAR_PING mili-segundos.",
 		"COLOR":[
 			255,
 			0,
@@ -703,9 +703,6 @@
 	},
 	"SEGUNDOS":{
 		"TEXTO":"segundos"
-	},
-	"MILISEGUNDOS":{
-		"TEXTO":"milisegundos"
 	},
 	"ALGUIEN":{
 		"TEXTO":"alguien"

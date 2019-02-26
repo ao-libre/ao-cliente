@@ -459,7 +459,7 @@
 		]
 	},
 	"MENSAJE_PING":{
-		"TEXTO":"The current ping is ",
+		"TEXTO":"Your current latency is VAR_PING mili-seconds.",
 		"COLOR":[
 			255,
 			0,
@@ -695,9 +695,6 @@
 	},
 	"SEGUNDOS":{
 		"TEXTO":"seconds"
-	},
-	"MILISEGUNDOS":{
-		"TEXTO":"milliseconds"
 	},
 	"ALGUIEN":{
 		"TEXTO":"someone"

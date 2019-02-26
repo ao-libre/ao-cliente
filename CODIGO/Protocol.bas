@@ -1567,7 +1567,7 @@ Private Sub HandleBankInit()
     
     BankGold = incomingData.ReadLong
     Call InvBanco(0).Initialize(DirectD3D8, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
-    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.picInv, Inventario.MaxObjs)
+    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.PicInv, Inventario.MaxObjs)
     
     For i = 1 To Inventario.MaxObjs
         With Inventario
@@ -1731,179 +1731,6 @@ Private Sub HandleShowCarpenterForm()
         frmCarp.Show , frmMain
         MirandoCarpinteria = True
     End If
-End Sub
-
-''
-' Handles the NPCSwing message.
-
-Private Sub HandleNPCSwing()
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'
-'***************************************************
-    'Remove packet ID
-    Call incomingData.ReadByte
-    
-    Call AddtoRichTextBox(frmMain.RecTxt, _
-                            JsonLanguage.Item("MENSAJE_CRIATURA_FALLA_GOLPE").Item("TEXTO"), _
-                            JsonLanguage.Item("MENSAJE_CRIATURA_FALLA_GOLPE").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("MENSAJE_CRIATURA_FALLA_GOLPE").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("MENSAJE_CRIATURA_FALLA_GOLPE").Item("COLOR").Item(3), _
-                            True, False, True)
-End Sub
-
-''
-' Handles the NPCKillUser message.
-
-Private Sub HandleNPCKillUser()
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'
-'***************************************************
-    'Remove packet ID
-    Call incomingData.ReadByte
-    
-    Call AddtoRichTextBox(frmMain.RecTxt, _
-                            JsonLanguage.Item("MENSAJE_CRIATURA_MATADO").Item("TEXTO"), _
-                            JsonLanguage.Item("MENSAJE_CRIATURA_MATADO").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("MENSAJE_CRIATURA_MATADO").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("MENSAJE_CRIATURA_MATADO").Item("COLOR").Item(3), _
-                            True, False, True)
-End Sub
-
-''
-' Handles the BlockedWithShieldUser message.
-
-Private Sub HandleBlockedWithShieldUser()
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'
-'***************************************************
-    'Remove packet ID
-    Call incomingData.ReadByte
-    
-    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_RECHAZO_ATAQUE_ESCUDO").Item("TEXTO"), 255, 0, 0, True, False, True)
-End Sub
-
-''
-' Handles the BlockedWithShieldOther message.
-
-Private Sub HandleBlockedWithShieldOther()
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'
-'***************************************************
-    'Remove packet ID
-    Call incomingData.ReadByte
-    
-    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_RECHAZO_ATAQUE_ESCUDO").Item("TEXTO"), 255, 0, 0, True, False, True)
-End Sub
-
-''
-' Handles the UserSwing message.
-
-Private Sub HandleUserSwing()
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'
-'***************************************************
-    'Remove packet ID
-    Call incomingData.ReadByte
-    
-    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_FALLADO_GOLPE").Item("TEXTO"), 255, 0, 0, True, False, True)
-End Sub
-
-''
-' Handles the SafeModeOn message.
-
-Private Sub HandleSafeModeOn()
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'
-'***************************************************
-    'Remove packet ID
-    Call incomingData.ReadByte
-    
-    Call frmMain.ControlSM(eSMType.sSafemode, True)
-End Sub
-
-''
-' Handles the SafeModeOff message.
-
-Private Sub HandleSafeModeOff()
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'
-'***************************************************
-    'Remove packet ID
-    Call incomingData.ReadByte
-    
-    Call frmMain.ControlSM(eSMType.sSafemode, False)
-End Sub
-
-''
-' Handles the ResuscitationSafeOff message.
-
-Private Sub HandleResuscitationSafeOff()
-'***************************************************
-'Author: Rapsodius
-'Creation date: 10/10/07
-'***************************************************
-    'Remove packet ID
-    Call incomingData.ReadByte
-    
-    Call frmMain.ControlSM(eSMType.sResucitation, False)
-End Sub
-
-''
-' Handles the ResuscitationSafeOn message.
-
-Private Sub HandleResuscitationSafeOn()
-'***************************************************
-'Author: Rapsodius
-'Creation date: 10/10/07
-'***************************************************
-    'Remove packet ID
-    Call incomingData.ReadByte
-    
-    Call frmMain.ControlSM(eSMType.sResucitation, True)
-End Sub
-
-''
-' Handles the NobilityLost message.
-
-Private Sub HandleNobilityLost()
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'
-'***************************************************
-    'Remove packet ID
-    Call incomingData.ReadByte
-    
-    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_PIERDE_NOBLEZA").Item("TEXTO"), 255, 0, 0, False, False, True)
-End Sub
-
-''
-' Handles the CantUseWhileMeditating message.
-
-Private Sub HandleCantUseWhileMeditating()
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'
-'***************************************************
-    'Remove packet ID
-    Call incomingData.ReadByte
-    
-    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_USAR_MEDITANDO").Item("TEXTO"), 255, 0, 0, False, False, True)
 End Sub
 
 ''
@@ -2226,39 +2053,6 @@ Private Sub HandlePosUpdate()
 
     'Update pos label
     Call Char_UserPos
-End Sub
-
-''
-' Handles the NPCHitUser message.
-
-Private Sub HandleNPCHitUser()
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'
-'***************************************************
-    If incomingData.length < 4 Then
-        Err.Raise incomingData.NotEnoughDataErrCode
-        Exit Sub
-    End If
-    
-    'Remove packet ID
-    Call incomingData.ReadByte
-    
-    Select Case incomingData.ReadByte()
-        Case bCabeza
-            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_GOLPE_CABEZA").Item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
-        Case bBrazoIzquierdo
-            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_GOLPE_BRAZO_IZQ").Item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
-        Case bBrazoDerecho
-            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_GOLPE_BRAZO_DER").Item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
-        Case bPiernaIzquierda
-            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_GOLPE_PIERNA_IZQ").Item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
-        Case bPiernaDerecha
-            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_GOLPE_BRAZO_DER").Item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", 255, 0, 0, True, False, True)
-        Case bTorso
-            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_GOLPE_TORSO").Item("TEXTO") & CStr(incomingData.ReadInteger() & "!!"), 255, 0, 0, True, False, True)
-    End Select
 End Sub
 
 ''
@@ -3290,45 +3084,6 @@ Private Sub HandleUpdateUserStats()
         'Changes color
         frmMain.GldLbl.ForeColor = &HFFFF& 'Yellow
     End If
-End Sub
-
-''
-' Handles the WorkRequestTarget message.
-
-Private Sub HandleWorkRequestTarget()
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'
-'***************************************************
-    If incomingData.length < 2 Then
-        Err.Raise incomingData.NotEnoughDataErrCode
-        Exit Sub
-    End If
-    
-    'Remove packet ID
-    Call incomingData.ReadByte
-    
-    UsingSkill = incomingData.ReadByte()
-
-    frmMain.MousePointer = 2
-    
-    Select Case UsingSkill
-        Case Magia
-            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_TRABAJO_MAGIA").Item("TEXTO"), 100, 100, 120, 0, 0)
-        Case Pesca
-            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_TRABAJO_PESCA").Item("TEXTO"), 100, 100, 120, 0, 0)
-        Case Robar
-            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_TRABAJO_ROBAR").Item("TEXTO"), 100, 100, 120, 0, 0)
-        Case Talar
-            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_TRABAJO_TALAR").Item("TEXTO"), 100, 100, 120, 0, 0)
-        Case Mineria
-            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_TRABAJO_MINERIA").Item("TEXTO"), 100, 100, 120, 0, 0)
-        Case FundirMetal
-            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_TRABAJO_FUNDIRMETAL").Item("TEXTO"), 100, 100, 120, 0, 0)
-        Case Proyectiles
-            Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_TRABAJO_PROYECTILES").Item("TEXTO"), 100, 100, 120, 0, 0)
-    End Select
 End Sub
 
 ''
@@ -5547,7 +5302,16 @@ Private Sub HandlePong()
 '***************************************************
     Call incomingData.ReadByte
     
-    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_PING").Item("TEXTO") & (GetTickCount - pingTime) & JsonLanguage.Item("MILISEGUNDOS").Item("TEXTO") & ".", 255, 0, 0, True, False, True)
+    Dim MENSAJE_PING As String
+        MENSAJE_PING = JsonLanguage.Item("MENSAJE_PING").Item("TEXTO")
+        MENSAJE_PING = Replace$(MENSAJE_PING, "VAR_PING", (GetTickCount - pingTime))
+        
+    Call AddtoRichTextBox(frmMain.RecTxt, _
+                            MENSAJE_PING, _
+                            JsonLanguage.Item("MENSAJE_PING").Item("COLOR").Item(1), _
+                            JsonLanguage.Item("MENSAJE_PING").Item("COLOR").Item(2), _
+                            JsonLanguage.Item("MENSAJE_PING").Item("COLOR").Item(3), _
+                            True, False, True)
     
     pingTime = 0
 End Sub
