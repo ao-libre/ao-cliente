@@ -307,6 +307,9 @@ Private Enum ClientPacketID
     Ecvc = 133
     Acvc = 134
     IrCvc = 135
+    SendEvent = 136
+    DoEvent = 137
+    EnterEvent = 138
 End Enum
 
 Public Enum FontTypeNames
@@ -10851,5 +10854,54 @@ Public Sub WriteIrCvc()
         With outgoingData
                 Call .WriteByte(ClientPacketID.IrCvc)
         End With
+
+End Sub
+
+Public Sub WriteSendEvent(ByVal nEvent As Byte, ByRef Players() As String)
+                       
+    With outgoingData
+ 
+        Dim LoopC As Long
+ 
+        Call .WriteByte(ClientPacketID.SendEvent)
+        Call .WriteByte(nEvent)
+
+        For LoopC = 2 To nEvent
+            Call .WriteASCIIString(Players(LoopC))
+        Next LoopC
+
+    End With
+
+End Sub
+
+Public Sub WriteDoEvent(ByVal nEvent As Byte, _
+                        ByVal Amount_Event As Byte, _
+                        ByVal Drop As Boolean, _
+                        ByVal Inscription_Prize As Boolean, _
+                        ByVal Max_Potions As Integer, _
+                        ByVal Gold_Inscription As Long, _
+                        ByVal Gold_Prize As Long)
+
+    With outgoingData
+        Call .WriteByte(ClientPacketID.DoEvent)
+        Call .WriteByte(nEvent)
+        Call .WriteByte(Amount_Event)
+        Call .WriteBoolean(Drop)
+        Call .WriteBoolean(Inscription_Prize)
+        Call .WriteInteger(Max_Potions)
+        Call .WriteLong(Gold_Inscription)
+        Call .WriteLong(Gold_Prize)
+
+    End With
+
+End Sub
+
+Public Sub WriteEnterEvent(ByVal ID_Send As String, ByVal nEvent As Byte)
+                       
+    With outgoingData
+            Call .WriteByte(ClientPacketID.EnterEvent)
+            Call .WriteASCIIString(ID_Send)
+            Call .WriteByte(nEvent)
+    End With
 
 End Sub
