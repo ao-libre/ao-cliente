@@ -40,18 +40,27 @@
 		]
 	},
 	"MENSAJE_SEGURO_ACTIVADO":{
-		"TEXTO":
-			[
-				">>SEGURO ACTIVADO<<",
-				"Seguro activado."
-			]
+		"TEXTO":[
+			">>SEGURO ACTIVADO<<",
+			"Seguro activado."
+		],
+		"COLOR":[
+			0,
+			255,
+			0
+		]
 	},
 	"MENSAJE_SEGURO_DESACTIVADO":{
 		"TEXTO":
 			[
 				">>SEGURO DESACTIVADO<<",
 				"Seguro desactivado."
-			]
+			],
+		"COLOR":[
+			255,
+			0,
+			0
+		]
 	},
 	"MENSAJE_MACRO_ACTIVADO":{
 		"TEXTO":"Macro de trabajo activado."
@@ -81,8 +90,8 @@
 	"MENSAJE_SEGURO_RESU_ON":{
 		"TEXTO":"Seguro de Resurrecion activado",
 		"COLOR":[
-			255,
 			0,
+			255,
 			0
 		]
 	},
@@ -260,57 +269,57 @@
 	"MENSAJE_TRABAJO_MAGIA":{
 		"TEXTO":"Haz click sobre el objetivo...",
 		"COLOR":[
-			255,
-			0,
-			0
+			100,
+			100,
+			120
 		]
 	},
 	"MENSAJE_TRABAJO_PESCA":{
 		"TEXTO":"Haz click sobre el sitio donde quieres pescar...",
 		"COLOR":[
-			255,
-			0,
-			0
+			100,
+			100,
+			120
 		]
 	},
 	"MENSAJE_TRABAJO_ROBAR":{
 		"TEXTO":"Haz click sobre la víctima...",
 		"COLOR":[
-			255,
-			0,
-			0
+			100,
+			100,
+			120
 		]
 	},
 	"MENSAJE_TRABAJO_TALAR":{
 		"TEXTO":"Haz click sobre el árbol...",
 		"COLOR":[
-			255,
-			0,
-			0
+			100,
+			100,
+			120
 		]
 	},
 	"MENSAJE_TRABAJO_MINERIA":{
 		"TEXTO":"Haz click sobre el yacimiento...",
 		"COLOR":[
-			255,
-			0,
-			0
+			100,
+			100,
+			120
 		]
 	},
 	"MENSAJE_TRABAJO_FUNDIRMETAL":{
 		"TEXTO":"Haz click sobre la fragua...",
 		"COLOR":[
-			255,
-			0,
-			0
+			100,
+			100,
+			120
 		]
 	},
 	"MENSAJE_TRABAJO_PROYECTILES":{
 		"TEXTO":"Haz click sobre la victima...",
 		"COLOR":[
-			255,
-			0,
-			0
+			100,
+			100,
+			120
 		]
 	},
 	"MENSAJE_ENTRAR_PARTY_1":{
@@ -461,7 +470,7 @@
 		]
 	},
 	"MENSAJE_PING":{
-		"TEXTO":"El ping es ",
+		"TEXTO":"Cuentas con una latencia de VAR_PING mili-segundos.",
 		"COLOR":[
 			255,
 			0,
@@ -546,6 +555,11 @@
 			"Habilidad requerida",
 			"Mana requerido",
 			"Energia necesaria"
+		],
+		"COLOR":[
+			210,
+			220,
+			220
 		]
 	},
 	"MENSAJE_NO_SALIR":{
@@ -704,9 +718,6 @@
 	"SEGUNDOS":{
 		"TEXTO":"segundos"
 	},
-	"MILISEGUNDOS":{
-		"TEXTO":"milisegundos"
-	},
 	"ALGUIEN":{
 		"TEXTO":"alguien"
 	},
@@ -726,7 +737,12 @@
 		"TEXTO":"Defensa"
 	},
 	"HECHO":{
-		"TEXTO":"Hecho"
+		"TEXTO":"Hecho",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
 	},
 	"NADA":{
 		"TEXTO":"Nada"
@@ -914,25 +930,60 @@
 		"TEXTO":"Argentum Online ya esta corriendo! No es posible correr otra instancia del juego. Haga click en Aceptar para salir."
 	},
 	"BUSCA_SERVIDORES":{
-		"TEXTO":"Buscando servidores..."
+		"TEXTO":"Buscando servidores...",
+		"COLOR":[
+			255,
+			255,
+			255
+		]
 	},
 	"INICIA_CONSTANTES":{
-		"TEXTO":"Iniciando constantes..."
+		"TEXTO":"Iniciando constantes...",
+		"COLOR":[
+			255,
+			255,
+			255
+		]
 	},
 	"INICIA_MOTOR_GRAFICO":{
-		"TEXTO":"Iniciando motor grafico..."
+		"TEXTO":"Iniciando motor grafico...",
+		"COLOR":[
+			255,
+			255,
+			255
+		]
 	},
 	"INICIA_FXS":{
-		"TEXTO":"Creando animaciones extra..."
+		"TEXTO":"Creando animaciones extra...",
+		"COLOR":[
+			255,
+			255,
+			255
+		]
 	},
 	"INICIA_SONIDO":{
-		"TEXTO":"Iniciando DirectSound..."
+		"TEXTO":"Iniciando DirectSound...",
+		"COLOR":[
+			255,
+			255,
+			255
+		]
 	},
 	"INICIA_CLASES":{
-		"TEXTO":"Instanciando clases..."
+		"TEXTO":"Instanciando clases...",
+		"COLOR":[
+			255,
+			255,
+			255
+		]
 	},
 	"BIENVENIDO":{
-		"TEXTO":"¡Bienvenido a Argentum Online!"
+		"TEXTO":"¡Bienvenido a Argentum Online!",
+		"COLOR":[
+			255,
+			255,
+			255
+		]
 	},
 	"PANTALLA_COMPLETA":{
 		"TEXTO":"¿Desea jugar en pantalla completa?"
@@ -1102,6 +1153,11 @@
 		"TEXTO":"Hay una o más teclas invalidas, por favor verifique."
 	},
 	"CUSTOMKEYS_CONFIG_CARGADA":{
-		"TEXTO":"¡Se ha cargado la configuración VAR_CONFIG_ELEGIDA VAR_CONFIG_CUSTOM_NUMERO !"
+		"TEXTO":"¡Se ha cargado la configuración VAR_CONFIG_ELEGIDA VAR_CONFIG_CUSTOM_NUMERO !",
+		"COLOR":[
+			255,
+			255,
+			255
+		]
 	}
 }

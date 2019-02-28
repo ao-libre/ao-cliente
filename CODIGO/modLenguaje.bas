@@ -72,5 +72,3 @@ Public Sub SetLanguageApplication()
     LangFile = FileToString(DirLenguajes & Language & ".json")
     Set JsonLanguage = JSON.parse(LangFile)
 End Sub
-
-

@@ -944,7 +944,13 @@ Private Sub LoadInitialConfig()
     
     '#######
     ' CLASES
-    Call AddtoRichTextBox(frmCargando.status, JsonLanguage.Item("INICIA_CLASES").Item("TEXTO"), 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.status, _
+                            JsonLanguage.Item("INICIA_CLASES").Item("TEXTO"), _
+                            JsonLanguage.Item("INICIA_CLASES").Item("COLOR").Item(1), _
+                            JsonLanguage.Item("INICIA_CLASES").Item("COLOR").Item(2), _
+                            JsonLanguage.Item("INICIA_CLASES").Item("COLOR").Item(3), _
+                            True, False, True)
+                            
     Set Dialogos = New clsDialogs
     Set Audio = New clsAudio
     Set Inventario = New clsGrapchicalInventory
@@ -955,12 +961,22 @@ Private Sub LoadInitialConfig()
     Set MainTimer = New clsTimer
     Set clsForos = New clsForum
     
-    Call AddtoRichTextBox(frmCargando.status, " " & JsonLanguage.Item("HECHO").Item("TEXTO"), 255, 0, 0, True, False, False)
-    
+    Call AddtoRichTextBox(frmCargando.status, _
+                            " " & JsonLanguage.Item("HECHO").Item("TEXTO"), _
+                            JsonLanguage.Item("HECHO").Item("COLOR").Item(1), _
+                            JsonLanguage.Item("HECHO").Item("COLOR").Item(2), _
+                            JsonLanguage.Item("HECHO").Item("COLOR").Item(3), _
+                            True, False, False)
     
     '#############
     ' DIRECT SOUND
-    Call AddtoRichTextBox(frmCargando.status, JsonLanguage.Item("INICIA_SONIDO").Item("TEXTO"), 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.status, _
+                            JsonLanguage.Item("INICIA_SONIDO").Item("TEXTO"), _
+                            JsonLanguage.Item("INICIA_SONIDO").Item("COLOR").Item(1), _
+                            JsonLanguage.Item("INICIA_SONIDO").Item("COLOR").Item(2), _
+                            JsonLanguage.Item("INICIA_SONIDO").Item("COLOR").Item(3), _
+                            True, False, True)
+                            
     'Inicializamos el sonido
     Call Audio.Initialize(DirectX, frmMain.hwnd, App.path & "\" & Config_Inicio.DirSonidos & "\", App.path & "\" & Config_Inicio.DirMusica & "\")
     'Enable / Disable audio
@@ -969,39 +985,70 @@ Private Sub LoadInitialConfig()
     Audio.SoundEffectsActivated = Not ClientSetup.bNoSoundEffects
     Call Audio.PlayMIDI("6.mid")
     
+    Call AddtoRichTextBox(frmCargando.status, _
+                            " " & JsonLanguage.Item("HECHO").Item("TEXTO"), _
+                            JsonLanguage.Item("HECHO").Item("COLOR").Item(1), _
+                            JsonLanguage.Item("HECHO").Item("COLOR").Item(2), _
+                            JsonLanguage.Item("HECHO").Item("COLOR").Item(3), _
+                            True, False, False)
+    
     
     '###########
     ' SERVIDORES
     If GetVar(DirInit & "Config.ini", "Parameters", "BuscarServidores") = 1 Then
-        Call AddtoRichTextBox(frmCargando.status, JsonLanguage.Item("BUSCA_SERVIDORES").Item("TEXTO"), 255, 255, 255, True, False, True)
+        Call AddtoRichTextBox(frmCargando.status, _
+                                JsonLanguage.Item("BUSCA_SERVIDORES").Item("TEXTO"), _
+                                JsonLanguage.Item("BUSCA_SERVIDORES").Item("COLOR").Item(1), _
+                                JsonLanguage.Item("BUSCA_SERVIDORES").Item("COLOR").Item(2), _
+                                JsonLanguage.Item("BUSCA_SERVIDORES").Item("COLOR").Item(3), _
+                                True, False, True)
+                                
         Call DownloadServersFile("https://raw.githubusercontent.com/ao-libre/ao-cliente/master/INIT/sinfo.dat")
-        Call AddtoRichTextBox(frmCargando.status, " " & JsonLanguage.Item("HECHO").Item("TEXTO"), 255, 0, 0, True, False, False)
+        
+        Call AddtoRichTextBox(frmCargando.status, _
+                            " " & JsonLanguage.Item("HECHO").Item("TEXTO"), _
+                            JsonLanguage.Item("HECHO").Item("COLOR").Item(1), _
+                            JsonLanguage.Item("HECHO").Item("COLOR").Item(2), _
+                            JsonLanguage.Item("HECHO").Item("COLOR").Item(3), _
+                            True, False, False)
     End If
     
     '###########
     ' CONSTANTES
-    Call AddtoRichTextBox(frmCargando.status, JsonLanguage.Item("INICIA_CONSTANTES").Item("TEXTO"), 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.status, _
+                            JsonLanguage.Item("INICIA_CONSTANTES").Item("TEXTO"), _
+                            JsonLanguage.Item("INICIA_CONSTANTES").Item("COLOR").Item(1), _
+                            JsonLanguage.Item("INICIA_CONSTANTES").Item("COLOR").Item(2), _
+                            JsonLanguage.Item("INICIA_CONSTANTES").Item("COLOR").Item(3), _
+                            True, False, True)
+                            
     Call InicializarNombres
+    
     ' Initialize FONTTYPES
     Call Protocol.InitFonts
-    
-    With frmConnect
-        .txtNombre = Config_Inicio.Name
-        .txtNombre.SelStart = 0
-        .txtNombre.SelLength = Len(.txtNombre)
-    End With
-    
+ 
     UserMap = 1
     
     ' Mouse Pointer (Loaded before opening any form with buttons in it)
     If FileExist(DirExtras & "Hand.ico", vbArchive) Then _
         Set picMouseIcon = LoadPicture(DirExtras & "Hand.ico")
-    Call AddtoRichTextBox(frmCargando.status, " " & JsonLanguage.Item("HECHO").Item("TEXTO"), 255, 0, 0, True, False, False)
+    
+    Call AddtoRichTextBox(frmCargando.status, _
+                            " " & JsonLanguage.Item("HECHO").Item("TEXTO"), _
+                            JsonLanguage.Item("HECHO").Item("COLOR").Item(1), _
+                            JsonLanguage.Item("HECHO").Item("COLOR").Item(2), _
+                            JsonLanguage.Item("HECHO").Item("COLOR").Item(3), _
+                            True, False, False)
     
 
     '##############
     ' MOTOR GRAÅFICO
-    Call AddtoRichTextBox(frmCargando.status, JsonLanguage.Item("INICIA_MOTOR_GRAFICO").Item("TEXTO"), 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.status, _
+                            JsonLanguage.Item("INICIA_MOTOR_GRAFICO").Item("TEXTO"), _
+                            JsonLanguage.Item("INICIA_MOTOR_GRAFICO").Item("COLOR").Item(1), _
+                            JsonLanguage.Item("INICIA_MOTOR_GRAFICO").Item("COLOR").Item(2), _
+                            JsonLanguage.Item("INICIA_MOTOR_GRAFICO").Item("COLOR").Item(3), _
+                            True, False, True)
     
     '     Iniciamos el Engine de DirectX 8
     If Not Engine_DirectX8_Init Then
@@ -1015,23 +1062,44 @@ Private Sub LoadInitialConfig()
     
     Engine_DirectX8_Aditional_Init
     
-    Call AddtoRichTextBox(frmCargando.status, " " & JsonLanguage.Item("HECHO").Item("TEXTO"), 255, 0, 0, True, False, False)
+    Call AddtoRichTextBox(frmCargando.status, _
+                            " " & JsonLanguage.Item("HECHO").Item("TEXTO"), _
+                            JsonLanguage.Item("HECHO").Item("COLOR").Item(1), _
+                            JsonLanguage.Item("HECHO").Item("COLOR").Item(2), _
+                            JsonLanguage.Item("HECHO").Item("COLOR").Item(3), _
+                            True, False, False)
     
     '###################
     ' ANIMACIONES EXTRAS
-    Call AddtoRichTextBox(frmCargando.status, JsonLanguage.Item("INICIA_FXS").Item("TEXTO"), 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.status, _
+                            JsonLanguage.Item("INICIA_FXS").Item("TEXTO"), _
+                            JsonLanguage.Item("INICIA_FXS").Item("COLOR").Item(1), _
+                            JsonLanguage.Item("INICIA_FXS").Item("COLOR").Item(2), _
+                            JsonLanguage.Item("INICIA_FXS").Item("COLOR").Item(3), _
+                            True, False, True)
+                            
     Call CargarTips
     Call CargarArrayLluvia
     Call CargarAnimArmas
     Call CargarAnimEscudos
     Call CargarColores
     
-    Call AddtoRichTextBox(frmCargando.status, " " & JsonLanguage.Item("HECHO").Item("TEXTO"), 255, 0, 0, True, False, False)
+    Call AddtoRichTextBox(frmCargando.status, _
+                            " " & JsonLanguage.Item("HECHO").Item("TEXTO"), _
+                            JsonLanguage.Item("HECHO").Item("COLOR").Item(1), _
+                            JsonLanguage.Item("HECHO").Item("COLOR").Item(2), _
+                            JsonLanguage.Item("HECHO").Item("COLOR").Item(3), _
+                            True, False, False)
     
     'Inicializamos el inventario grafico
     Call Inventario.Initialize(DirectD3D8, frmMain.picInv, MAX_INVENTORY_SLOTS)
     
-    Call AddtoRichTextBox(frmCargando.status, "                    " & JsonLanguage.Item("BIENVENIDO").Item("TEXTO"), 255, 255, 255, True, False, True)
+    Call AddtoRichTextBox(frmCargando.status, _
+                            "                    " & JsonLanguage.Item("BIENVENIDO").Item("TEXTO"), _
+                            JsonLanguage.Item("BIENVENIDO").Item("COLOR").Item(1), _
+                            JsonLanguage.Item("BIENVENIDO").Item("COLOR").Item(2), _
+                            JsonLanguage.Item("BIENVENIDO").Item("COLOR").Item(3), _
+                            True, False, True)
 
     'Give the user enough time to read the welcome text
     Call Sleep(500)
