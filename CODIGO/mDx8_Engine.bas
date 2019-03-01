@@ -795,3 +795,44 @@ Public Sub DrawPJ(ByVal index As Byte)
 
     Engine_EndScene re, frmPanelAccount.picChar(index - 1).hwnd
 End Sub
+
+Public Sub Draw_FillBox2(ByVal X As Integer, _
+                         ByVal Y As Integer, _
+                         ByVal Width As Integer, _
+                         ByVal Height As Integer, _
+                         ByRef color As Long, _
+                         Optional ByVal Alpha As Byte = 255)
+
+        'sin outline xD
+        'lo usamos para cuando no necesitemos el outline, y asi evitamos renderizar cosas al pedo jaj
+
+        Static box_rect    As RECT
+        Static rgb_list(3) As Long
+        Static Vertex(3)   As TLVERTEX
+
+        rgb_list(0) = color
+        rgb_list(1) = color
+        rgb_list(2) = color
+        rgb_list(3) = color
+
+        With box_rect
+                .bottom = Y + Height
+                .Left = X
+                .Right = X + Width
+                .Top = Y
+        End With
+
+        Call Geometry_Create_Box(Vertex(), box_rect, box_rect, rgb_list(), 1, 1)
+        
+        With DirectDevice
+                
+                Call .SetTexture(0, Nothing)
+        
+                Call .SetRenderState(D3DRS_TEXTUREFACTOR, D3DColorARGB(Alpha, 0, 0, 0))
+                
+                Call .DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, Vertex(0), Len(Vertex(0)))
+                
+        End With
+
+End Sub
+

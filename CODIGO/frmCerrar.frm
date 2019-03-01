@@ -97,9 +97,6 @@ Private Sub cSalir_Click()
     Call CloseClient
 End Sub
 
-Private Sub Form_Deactivate()
-    Me.SetFocus
-End Sub
 
 Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
     If KeyCode = vbKeyEscape Then

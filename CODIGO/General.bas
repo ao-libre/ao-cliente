@@ -598,6 +598,8 @@ Sub SwitchMap(ByVal Map As Integer)
     CurMap = Map
     
     Init_Ambient Map
+    
+    Call MiniMap_ChangeTex(Map)
 End Sub
 
 Function ReadField(ByVal Pos As Integer, ByRef Text As String, ByVal SepASCII As Byte) As String
@@ -1062,6 +1064,8 @@ Private Sub LoadInitialConfig()
     
     Engine_DirectX8_Aditional_Init
     
+    Call mDx8_Minimap.MiniMap_Init
+    
     Call AddtoRichTextBox(frmCargando.status, _
                             " " & JsonLanguage.Item("HECHO").Item("TEXTO"), _
                             JsonLanguage.Item("HECHO").Item("COLOR").Item(1), _
@@ -1436,17 +1440,26 @@ Public Sub CleanDialogs()
 End Sub
 
 Public Sub CloseClient()
-'**************************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
-'Last Modify Date: 8/14/2007
-'Frees all used resources, cleans up and leaves
-'**************************************************************
+    '**************************************************************
+    'Author: Juan Martin Sotuyo Dodero (Maraxus)
+    'Last Modify Date: 8/14/2007
+    'Frees all used resources, cleans up and leaves
+    '**************************************************************
+    
     ' Allow new instances of the client to be opened
     Call PrevInstance.ReleaseInstance
     
     EngineRun = False
     
     Call Resolution.ResetResolution
+    
+    #If UsarWrench = 1 Then
+            frmMain.Socket1.Disconnect
+            frmMain.Socket1.Flush
+            frmMain.Socket1.Cleanup
+    #Else
+            frmMain.Winsock1.Close
+    #End If
     
     'Stop tile engine
     Call Engine_DirectX8_End
@@ -1471,7 +1484,9 @@ Public Sub CloseClient()
     'Actualizar tip
     Config_Inicio.tip = tipf
     Call EscribirGameIni(Config_Inicio)
+    
     End
+    
 End Sub
 
 

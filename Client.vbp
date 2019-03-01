@@ -113,6 +113,7 @@ Form=CODIGO\frmCerrar.frm
 Module=modPing; CODIGO\modPing.bas
 Module=ModLenguaje; CODIGO\modLenguaje.bas
 Form=CODIGO\frmBuscar.frm
+Module=mDx8_Minimap; CODIGO\mDx8_Minimap.bas
 IconForm="frmMain"
 Startup="Sub Main"
 HelpFile=""
