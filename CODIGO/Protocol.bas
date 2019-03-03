@@ -306,6 +306,9 @@ Private Enum ClientPacketID
     Ecvc = 133
     Acvc = 134
     IrCvc = 135
+    HungerGamesCreate = 136
+    HungerGamesJoin = 137
+    HungerGamesDelete = 138
 End Enum
 
 Public Enum FontTypeNames
@@ -2075,20 +2078,20 @@ On Error GoTo ErrHandler
     
     Dim chat As String
     Dim CharIndex As Integer
-    Dim R As Byte
-    Dim G As Byte
-    Dim B As Byte
+    Dim r As Byte
+    Dim g As Byte
+    Dim b As Byte
     
     chat = Buffer.ReadASCIIString()
     CharIndex = Buffer.ReadInteger()
     
-    R = Buffer.ReadByte()
-    G = Buffer.ReadByte()
-    B = Buffer.ReadByte()
+    r = Buffer.ReadByte()
+    g = Buffer.ReadByte()
+    b = Buffer.ReadByte()
     
     'Only add the chat if the character exists (a CharacterRemove may have been sent to the PC / NPC area before the buffer was flushed)
     If Char_Check(CharIndex) Then _
-        Call Dialogos.CreateDialog(Trim$(chat), CharIndex, RGB(R, G, B))
+        Call Dialogos.CreateDialog(Trim$(chat), CharIndex, RGB(r, g, b))
     
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
@@ -2130,9 +2133,9 @@ On Error GoTo ErrHandler
     Dim chat As String
     Dim FontIndex As Integer
     Dim str As String
-    Dim R As Byte
-    Dim G As Byte
-    Dim B As Byte
+    Dim r As Byte
+    Dim g As Byte
+    Dim b As Byte
     
     chat = Buffer.ReadASCIIString()
     FontIndex = Buffer.ReadByte()
@@ -2140,26 +2143,26 @@ On Error GoTo ErrHandler
     If InStr(1, chat, "~") Then
         str = ReadField(2, chat, 126)
             If Val(str) > 255 Then
-                R = 255
+                r = 255
             Else
-                R = Val(str)
+                r = Val(str)
             End If
             
             str = ReadField(3, chat, 126)
             If Val(str) > 255 Then
-                G = 255
+                g = 255
             Else
-                G = Val(str)
+                g = Val(str)
             End If
             
             str = ReadField(4, chat, 126)
             If Val(str) > 255 Then
-                B = 255
+                b = 255
             Else
-                B = Val(str)
+                b = Val(str)
             End If
             
-        Call AddtoRichTextBox(frmMain.RecTxt, Left$(chat, InStr(1, chat, "~") - 1), R, G, B, Val(ReadField(5, chat, 126)) <> 0, Val(ReadField(6, chat, 126)) <> 0)
+        Call AddtoRichTextBox(frmMain.RecTxt, Left$(chat, InStr(1, chat, "~") - 1), r, g, b, Val(ReadField(5, chat, 126)) <> 0, Val(ReadField(6, chat, 126)) <> 0)
     Else
         With FontTypes(FontIndex)
             Call AddtoRichTextBox(frmMain.RecTxt, chat, .Red, .Green, .Blue, .bold, .italic)
@@ -2210,9 +2213,9 @@ On Error GoTo ErrHandler
     
     Dim chat As String
     Dim str As String
-    Dim R As Byte
-    Dim G As Byte
-    Dim B As Byte
+    Dim r As Byte
+    Dim g As Byte
+    Dim b As Byte
     
     chat = Buffer.ReadASCIIString()
     
@@ -2220,26 +2223,26 @@ On Error GoTo ErrHandler
         If InStr(1, chat, "~") Then
             str = ReadField(2, chat, 126)
             If Val(str) > 255 Then
-                R = 255
+                r = 255
             Else
-                R = Val(str)
+                r = Val(str)
             End If
             
             str = ReadField(3, chat, 126)
             If Val(str) > 255 Then
-                G = 255
+                g = 255
             Else
-                G = Val(str)
+                g = Val(str)
             End If
             
             str = ReadField(4, chat, 126)
             If Val(str) > 255 Then
-                B = 255
+                b = 255
             Else
-                B = Val(str)
+                b = Val(str)
             End If
             
-            Call AddtoRichTextBox(frmMain.RecTxt, Left$(chat, InStr(1, chat, "~") - 1), R, G, B, Val(ReadField(5, chat, 126)) <> 0, Val(ReadField(6, chat, 126)) <> 0)
+            Call AddtoRichTextBox(frmMain.RecTxt, Left$(chat, InStr(1, chat, "~") - 1), r, g, b, Val(ReadField(5, chat, 126)) <> 0, Val(ReadField(6, chat, 126)) <> 0)
         Else
             With FontTypes(FontTypeNames.FONTTYPE_GUILDMSG)
                 Call AddtoRichTextBox(frmMain.RecTxt, chat, .Red, .Green, .Blue, .bold, .italic)
@@ -2289,9 +2292,9 @@ On Error GoTo ErrHandler
     Dim chat As String
     Dim FontIndex As Integer
     Dim str As String
-    Dim R As Byte
-    Dim G As Byte
-    Dim B As Byte
+    Dim r As Byte
+    Dim g As Byte
+    Dim b As Byte
     
     chat = Buffer.ReadASCIIString()
     FontIndex = Buffer.ReadByte()
@@ -2299,26 +2302,26 @@ On Error GoTo ErrHandler
     If InStr(1, chat, "~") Then
         str = ReadField(2, chat, 126)
             If Val(str) > 255 Then
-                R = 255
+                r = 255
             Else
-                R = Val(str)
+                r = Val(str)
             End If
             
             str = ReadField(3, chat, 126)
             If Val(str) > 255 Then
-                G = 255
+                g = 255
             Else
-                G = Val(str)
+                g = Val(str)
             End If
             
             str = ReadField(4, chat, 126)
             If Val(str) > 255 Then
-                B = 255
+                b = 255
             Else
-                B = Val(str)
+                b = Val(str)
             End If
             
-        Call AddtoRichTextBox(frmComerciarUsu.CommerceConsole, Left$(chat, InStr(1, chat, "~") - 1), R, G, B, Val(ReadField(5, chat, 126)) <> 0, Val(ReadField(6, chat, 126)) <> 0)
+        Call AddtoRichTextBox(frmComerciarUsu.CommerceConsole, Left$(chat, InStr(1, chat, "~") - 1), r, g, b, Val(ReadField(5, chat, 126)) <> 0, Val(ReadField(6, chat, 126)) <> 0)
     Else
         With FontTypes(FontIndex)
             Call AddtoRichTextBox(frmComerciarUsu.CommerceConsole, chat, .Red, .Green, .Blue, .bold, .italic)
@@ -10167,7 +10170,7 @@ End Sub
 ' @param    b The blue component of the new chat color.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteChatColor(ByVal R As Byte, ByVal G As Byte, ByVal B As Byte)
+Public Sub WriteChatColor(ByVal r As Byte, ByVal g As Byte, ByVal b As Byte)
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -10177,9 +10180,9 @@ Public Sub WriteChatColor(ByVal R As Byte, ByVal G As Byte, ByVal B As Byte)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.ChatColor)
         
-        Call .WriteByte(R)
-        Call .WriteByte(G)
-        Call .WriteByte(B)
+        Call .WriteByte(r)
+        Call .WriteByte(g)
+        Call .WriteByte(b)
     End With
 End Sub
 
@@ -10849,3 +10852,26 @@ Public Sub WriteIrCvc()
         End With
 
 End Sub
+
+Public Sub WriteHungerGamesCreate(ByVal Cupos As Byte, _
+                                  ByVal Gold As Long, _
+                                  ByVal Drop As Boolean)
+
+    With outgoingData
+        .WriteByte (ClientPacketID.HungerGamesCreate)
+        .WriteByte (Cupos)
+        .WriteLong (Gold)
+        .WriteBoolean Drop
+
+    End With
+
+End Sub
+
+Public Sub WriteHungerGamesDelete()
+outgoingData.WriteByte ClientPacketID.HungerGamesDelete
+End Sub
+
+Public Sub WriteHungerGamesJoin()
+Call outgoingData.WriteByte(ClientPacketID.HungerGamesJoin)
+End Sub
+
