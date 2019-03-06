@@ -267,7 +267,7 @@ Public ScrollPixelsPerFrameX As Integer
 Public ScrollPixelsPerFrameY As Integer
 
 Dim timerElapsedTime As Single
-Dim timerTicksPerFrame As Single
+Public timerTicksPerFrame As Single
 
 Public NumChars As Integer
 Public LastChar As Integer
@@ -1331,6 +1331,10 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
     LastOffsetY = ParticleOffsetY
     
     If ClientSetup.PartyMembers Then Call Draw_Party_Members
+    
+    ' MiniMapa
+    Call MiniMap_Render(Minimap.X, Minimap.Y)
+    
     Call RenderCount
 End Sub
 

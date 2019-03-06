@@ -33,8 +33,8 @@ Begin VB.Form frmMain
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
    Begin SocketWrenchCtrl.Socket Socket1 
-      Left            =   6750
-      Top             =   1920
+      Left            =   6720
+      Top             =   2520
       _Version        =   65536
       _ExtentX        =   741
       _ExtentY        =   741
@@ -191,8 +191,8 @@ Begin VB.Form frmMain
       Width           =   8250
    End
    Begin MSWinsockLib.Winsock Winsock1 
-      Left            =   6240
-      Top             =   1920
+      Left            =   6120
+      Top             =   2520
       _ExtentX        =   741
       _ExtentY        =   741
       _Version        =   393216
@@ -250,13 +250,13 @@ Begin VB.Form frmMain
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
       Height          =   6240
-      Left            =   120
+      Left            =   180
       MousePointer    =   99  'Custom
       ScaleHeight     =   416
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   544
       TabIndex        =   32
-      Top             =   2280
+      Top             =   2220
       Width           =   8160
    End
    Begin VB.Image imgMapa 

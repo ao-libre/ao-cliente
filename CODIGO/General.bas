@@ -4,7 +4,7 @@ Attribute VB_Name = "Mod_General"
 'Copyright (C) 2002 Marquez Pablo Ignacio
 'Copyright (C) 2002 Otto Perez
 'Copyright (C) 2002 Aaron Perkins
-'Copyright (C) 2002 Matias Fernando PequeÒo
+'Copyright (C) 2002 Matias Fernando Peque√±o
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the Affero General Public License;
@@ -230,7 +230,7 @@ Function AsciiValidos(ByVal cad As String) As Boolean
     For i = 1 To Len_cad
         car = Asc(mid$(cad, i, 1))
         
-        If ((car < 97 Or car > 122) Or car = Asc("¬∫")) And (car <> 255) And (car <> 32) Then
+        If ((car < 97 Or car > 122) Or car = Asc("√Ç¬∫")) And (car <> 255) And (car <> 32) Then
             Exit Function
         End If
     Next i
@@ -483,7 +483,7 @@ End Sub
 
 Sub SwitchMap(ByVal Map As Integer)
     '**********************************************************************************
-    'DiseÒado y creado por Juan MartÌn Sotuyo Dodero (Maraxus) (juansotuyo@hotmail.com)
+    'Dise√±ado y creado por Juan Mart√≠n Sotuyo Dodero (Maraxus) (juansotuyo@hotmail.com)
     '**********************************************************************************
     
     '**********************************************************************************
@@ -598,6 +598,8 @@ Sub SwitchMap(ByVal Map As Integer)
     CurMap = Map
     
     Init_Ambient Map
+    
+    Call MiniMap_ChangeTex(Map)
 End Sub
 
 Function ReadField(ByVal Pos As Integer, ByRef Text As String, ByVal SepASCII As Byte) As String
@@ -1042,7 +1044,7 @@ Private Sub LoadInitialConfig()
     
 
     '##############
-    ' MOTOR GRAÅFICO
+    ' MOTOR GRA¬ÅFICO
     Call AddtoRichTextBox(frmCargando.status, _
                             JsonLanguage.Item("INICIA_MOTOR_GRAFICO").Item("TEXTO"), _
                             JsonLanguage.Item("INICIA_MOTOR_GRAFICO").Item("COLOR").Item(1), _
@@ -1061,6 +1063,10 @@ Private Sub LoadInitialConfig()
     End If
     
     Engine_DirectX8_Aditional_Init
+    
+    Call mDx8_Minimap.MiniMap_Init
+    Dx8_Minimap.AlphaMiniMap = 205                                                                                                                
+    
     
     Call AddtoRichTextBox(frmCargando.status, _
                             " " & JsonLanguage.Item("HECHO").Item("TEXTO"), _
@@ -1395,7 +1401,7 @@ Private Sub InicializarNombres()
     SkillsNames(eSkill.Tacticas) = JsonLanguage.Item("HABILIDADES").Item("EVASION_EN_COMBATE").Item("TEXTO")
     SkillsNames(eSkill.Armas) = JsonLanguage.Item("HABILIDADES").Item("COMBATE_CON_ARMAS").Item("TEXTO")
     SkillsNames(eSkill.Meditar) = JsonLanguage.Item("HABILIDADES").Item("MEDITAR").Item("TEXTO")
-    SkillsNames(eSkill.ApuÒalar) = JsonLanguage.Item("HABILIDADES").Item("APUNALAR").Item("TEXTO")
+    SkillsNames(eSkill.Apu√±alar) = JsonLanguage.Item("HABILIDADES").Item("APUNALAR").Item("TEXTO")
     SkillsNames(eSkill.Ocultarse) = JsonLanguage.Item("HABILIDADES").Item("OCULTARSE").Item("TEXTO")
     SkillsNames(eSkill.Supervivencia) = JsonLanguage.Item("HABILIDADES").Item("SUPERVIVENCIA").Item("TEXTO")
     SkillsNames(eSkill.Talar) = JsonLanguage.Item("HABILIDADES").Item("TALAR").Item("TEXTO")
@@ -1436,17 +1442,26 @@ Public Sub CleanDialogs()
 End Sub
 
 Public Sub CloseClient()
-'**************************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
-'Last Modify Date: 8/14/2007
-'Frees all used resources, cleans up and leaves
-'**************************************************************
+    '**************************************************************
+    'Author: Juan Martin Sotuyo Dodero (Maraxus)
+    'Last Modify Date: 8/14/2007
+    'Frees all used resources, cleans up and leaves
+    '**************************************************************
+    
     ' Allow new instances of the client to be opened
     Call PrevInstance.ReleaseInstance
     
     EngineRun = False
     
     Call Resolution.ResetResolution
+    
+    #If UsarWrench = 1 Then
+            frmMain.Socket1.Disconnect
+            frmMain.Socket1.Flush
+            frmMain.Socket1.Cleanup
+    #Else
+            frmMain.Winsock1.Close
+    #End If
     
     'Stop tile engine
     Call Engine_DirectX8_End
@@ -1471,7 +1486,9 @@ Public Sub CloseClient()
     'Actualizar tip
     Config_Inicio.tip = tipf
     Call EscribirGameIni(Config_Inicio)
+    
     End
+    
 End Sub
 
 
