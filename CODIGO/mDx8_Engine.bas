@@ -149,6 +149,8 @@ Public Sub Engine_DirectX8_Aditional_Init()
 
     FPS = 101
     FramesPerSecCounter = 101
+    
+    ColorTecho = 250
 
     Engine_Set_TileBuffer 9
     

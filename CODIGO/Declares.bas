@@ -33,6 +33,10 @@ Attribute VB_Name = "Mod_Declaraciones"
 
 Option Explicit
 
+' Desvanecimiento en Techos
+Public ColorTecho As Byte
+Public temp_rgb(3) As Long
+
 Public Sonidos As clsSoundMapas
 
 '//Caminata fluida
