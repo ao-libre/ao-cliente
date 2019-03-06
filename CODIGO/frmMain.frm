@@ -220,6 +220,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2619
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -969,6 +970,8 @@ Public picSkillStar As Picture
 
 Public WithEvents dragInventory As clsGrapchicalInventory
 Attribute dragInventory.VB_VarHelpID = -1
+
+Private ChangeHechi As Boolean, ChangeHechiNum As Integer
 
 'Usado para controlar que no se dispare el binding de la tecla CTRL cuando se usa CTRL+Tecla.
 Dim CtrlMaskOn As Boolean
@@ -2436,3 +2439,36 @@ Private Function InGameArea() As Boolean
     
     InGameArea = True
 End Function
+
+Private Sub hlst_Click()
+    
+    With hlst
+    
+        If ChangeHechi Then
+    
+            Dim NewLugar As Integer: NewLugar = .ListIndex
+            Dim AntLugar As String: AntLugar = .List(NewLugar)
+            
+            Call WriteDragAndDropHechizos(ChangeHechiNum + 1, NewLugar + 1)
+        
+            .BackColor = vbBlack
+            .List(NewLugar) = .List(ChangeHechiNum)
+            .List(ChangeHechiNum) = AntLugar
+        
+            ChangeHechi = False
+            ChangeHechiNum = 0
+
+        End If
+
+        .BackColor = vbBlack
+
+    End With
+
+End Sub
+
+Private Sub hlst_DblClick()
+    ChangeHechi = True
+    ChangeHechiNum = hlst.ListIndex
+    hlst.BackColor = vbRed
+
+End Sub
