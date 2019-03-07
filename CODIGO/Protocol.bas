@@ -306,9 +306,10 @@ Private Enum ClientPacketID
     Ecvc = 133
     Acvc = 134
     IrCvc = 135
-    HungerGamesCreate = 136
-    HungerGamesJoin = 137
-    HungerGamesDelete = 138
+    DragAndDropHechizos = 136    'HECHIZOS
+    HungerGamesCreate = 137
+    HungerGamesJoin = 138
+    HungerGamesDelete = 139
 End Enum
 
 Public Enum FontTypeNames
@@ -10853,6 +10854,17 @@ Public Sub WriteIrCvc()
 
 End Sub
 
+Public Sub WriteDragAndDropHechizos(ByVal Ant As Integer, ByVal Nov As Integer)
+
+    With outgoingData
+        .WriteByte (ClientPacketID.DragAndDropHechizos)
+        .WriteInteger (Ant)
+        .WriteInteger (Nov)
+
+    End With
+
+End Sub
+
 Public Sub WriteHungerGamesCreate(ByVal Cupos As Byte, _
                                   ByVal Gold As Long, _
                                   ByVal Drop As Boolean)
@@ -10861,17 +10873,20 @@ Public Sub WriteHungerGamesCreate(ByVal Cupos As Byte, _
         .WriteByte (ClientPacketID.HungerGamesCreate)
         .WriteByte (Cupos)
         .WriteLong (Gold)
-        .WriteBoolean Drop
-
+        .WriteBoolean (Drop)
     End With
-
 End Sub
 
 Public Sub WriteHungerGamesDelete()
-outgoingData.WriteByte ClientPacketID.HungerGamesDelete
+
+    Call outgoingData.WriteByte(ClientPacketID.HungerGamesDelete)
+
 End Sub
 
 Public Sub WriteHungerGamesJoin()
-Call outgoingData.WriteByte(ClientPacketID.HungerGamesJoin)
+
+    Call outgoingData.WriteByte(ClientPacketID.HungerGamesJoin)
+    
 End Sub
+
 

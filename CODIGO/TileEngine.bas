@@ -267,7 +267,7 @@ Public ScrollPixelsPerFrameX As Integer
 Public ScrollPixelsPerFrameY As Integer
 
 Dim timerElapsedTime As Single
-Dim timerTicksPerFrame As Single
+Public timerTicksPerFrame As Single
 
 Public NumChars As Integer
 Public LastChar As Integer
@@ -1230,27 +1230,32 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
         ScreenY = ScreenY + 1
     Next Y
     
-    '<----- Layer 4 ----->
+        '<----- Layer 4 ----->
         ScreenY = minYOffset - Engine_Get_TileBuffer
         For Y = minY To maxY
             ScreenX = minXOffset - Engine_Get_TileBuffer
             For X = minX To maxX
-                If Map_InBounds(X, Y) Then
-                    'Layer 4
-                    If Not bTecho Then
-                        If MapData(X, Y).Graphic(4).GrhIndex Then
+                
+                'Layer 4
+                If MapData(X, Y).Graphic(4).GrhIndex Then
+                    If bTecho Then
+                    
+                        Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(4), _
+                            ScreenX * TilePixelWidth + PixelOffsetX, _
+                            ScreenY * TilePixelHeight + PixelOffsetY, _
+                            1, temp_rgb(), 1, X, Y)
+                    
+                    Else
+                        If ColorTecho = 250 Then
                             Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(4), _
                                 ScreenX * TilePixelWidth + PixelOffsetX, _
                                 ScreenY * TilePixelHeight + PixelOffsetY, _
                                 1, MapData(X, Y).Engine_Light(), 1, X, Y)
-                        End If
-                        
-                    Else
-                        If MapData(X, Y).Graphic(4).GrhIndex Then
+                        Else
                             Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(4), _
                                 ScreenX * TilePixelWidth + PixelOffsetX, _
                                 ScreenY * TilePixelHeight + PixelOffsetY, _
-                                1, SetARGB_Alpha(MapData(X, Y).Engine_Light(), 80), 1, X, Y, True)
+                                1, temp_rgb(), 1, X, Y)
                         End If
                     End If
                 End If
@@ -1258,6 +1263,7 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
             Next X
             ScreenY = ScreenY + 1
         Next Y
+ 
 
     'Weather Update & Render
     Call Engine_Weather_Update
@@ -1325,6 +1331,10 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
     LastOffsetY = ParticleOffsetY
     
     If ClientSetup.PartyMembers Then Call Draw_Party_Members
+    
+    ' MiniMapa
+    Call MiniMap_Render(Minimap.X, Minimap.Y)
+    
     Call RenderCount
 End Sub
 
@@ -1434,6 +1444,8 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Inte
 
     If EngineRun Then
         Call Engine_BeginScene
+        
+        Call DesvanecimientoTechos
         
         If UserMoving Then
             '****** Move screen Left and Right if needed ******
@@ -2233,4 +2245,21 @@ Public Sub GrhUninitialize(Grh As Grh)
                 
         End With
 
+End Sub
+
+Public Sub DesvanecimientoTechos()
+ 
+    If bTecho Then
+        If Not Val(ColorTecho) = 150 Then ColorTecho = ColorTecho - 1
+    Else
+
+        If Not Val(ColorTecho) = 250 Then ColorTecho = ColorTecho + 1
+
+    End If
+ 
+    temp_rgb(0) = D3DColorARGB(ColorTecho, ColorTecho, ColorTecho, ColorTecho)
+    temp_rgb(1) = D3DColorARGB(ColorTecho, ColorTecho, ColorTecho, ColorTecho)
+    temp_rgb(2) = D3DColorARGB(ColorTecho, ColorTecho, ColorTecho, ColorTecho)
+    temp_rgb(3) = D3DColorARGB(ColorTecho, ColorTecho, ColorTecho, ColorTecho)
+ 
 End Sub
