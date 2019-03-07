@@ -307,6 +307,9 @@ Private Enum ClientPacketID
     Acvc = 134
     IrCvc = 135
     DragAndDropHechizos = 136    'HECHIZOS
+    HungerGamesCreate = 137
+    HungerGamesJoin = 138
+    HungerGamesDelete = 139
 End Enum
 
 Public Enum FontTypeNames
@@ -1564,7 +1567,7 @@ Private Sub HandleBankInit()
     
     BankGold = incomingData.ReadLong
     Call InvBanco(0).Initialize(DirectD3D8, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
-    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.picInv, Inventario.MaxObjs)
+    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.PicInv, Inventario.MaxObjs)
     
     For i = 1 To Inventario.MaxObjs
         With Inventario
@@ -10861,3 +10864,29 @@ Public Sub WriteDragAndDropHechizos(ByVal Ant As Integer, ByVal Nov As Integer)
     End With
 
 End Sub
+
+Public Sub WriteHungerGamesCreate(ByVal Cupos As Byte, _
+                                  ByVal Gold As Long, _
+                                  ByVal Drop As Boolean)
+
+    With outgoingData
+        .WriteByte (ClientPacketID.HungerGamesCreate)
+        .WriteByte (Cupos)
+        .WriteLong (Gold)
+        .WriteBoolean (Drop)
+    End With
+End Sub
+
+Public Sub WriteHungerGamesDelete()
+
+    Call outgoingData.WriteByte(ClientPacketID.HungerGamesDelete)
+
+End Sub
+
+Public Sub WriteHungerGamesJoin()
+
+    Call outgoingData.WriteByte(ClientPacketID.HungerGamesJoin)
+    
+End Sub
+
+

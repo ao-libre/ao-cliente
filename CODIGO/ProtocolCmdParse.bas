@@ -1602,6 +1602,16 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             
             Case "/HOGAR"
                 Call WriteHome
+            
+            Case "/SURVIVAL"
+                WriteHungerGamesJoin
+                
+            Case "/HUNGER"
+                If CantidadArgumentos = 3 And notNullArguments Then
+                    Call WriteHungerGamesCreate(ArgumentosAll(0), ArgumentosAll(1), IIf(ArgumentosAll(2) = 1, True, False))
+                Else
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FORMATO_INCORRECTO").Item("TEXTO") & " /HUNGER CUPOS ORO [0, 1]")
+                End If
                 
             Case "/SETDIALOG"
                 If notNullArguments Then
