@@ -51,7 +51,9 @@ Public Sub MiniMap_Init()
 End Sub
 
 Public Sub MiniMap_Render(ByVal X As Long, ByVal Y As Long)
-
+    
+    If Not FileExist(App.path & "\Graficos\MiniMapa\" & UserMap & ".bmp", vbArchive) Then Exit Sub
+    
     Dim VertexArray(0 To 3) As TLVERTEX
     Dim SrcWidth            As Integer
     Dim Width               As Integer
@@ -209,15 +211,6 @@ Public Sub MiniMap_ChangeTex(UserMap As Integer)
     End With
 
     Exit Sub
-
-eDebug:
-
-    If Err.number = "-2005529767" Then
-        MsgBox "No se encuentra la textura del mini-mapa correspondiente a este mapa.", vbCritical, "Mini-Mapa"
-               
-    End If
-
-    Call CloseClient
 
 End Sub
 

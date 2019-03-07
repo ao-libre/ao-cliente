@@ -1065,7 +1065,7 @@ Private Sub LoadInitialConfig()
     Engine_DirectX8_Aditional_Init
     
     Call mDx8_Minimap.MiniMap_Init
-    Dx8_Minimap.AlphaMiniMap = 205                                                                                                                
+    mDx8_Minimap.AlphaMiniMap = 205
     
     
     Call AddtoRichTextBox(frmCargando.status, _
