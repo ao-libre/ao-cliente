@@ -190,8 +190,6 @@ End Sub
 
 Public Sub MiniMap_ChangeTex(UserMap As Integer)
 
-    On Error GoTo eDebug:
-
     Dim mapInfo As D3DXIMAGE_INFO_A
 
     'Check if we have the device
