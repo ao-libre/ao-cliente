@@ -2,15 +2,15 @@
 * text eol=crlf
 
 # Declare file types.
-*.msv -text
-*.frx -text
-*.ico -text
-*.png -text
-*.gif -text
-*.jpg -text
-*.gif -text
-*.bmp -text
-*.mcl -text
+*.msv binary
+*.frx binary
+*.ico binary
+*.png binary
+*.gif binary
+*.jpg binary
+*.gif binary
+*.bmp binary
+*.mcl binary
 *.dll binary
 *.ind binary
 *.con binary
