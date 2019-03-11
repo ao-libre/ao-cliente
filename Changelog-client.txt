@@ -362,7 +362,7 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 21/12/2018 : Integration of Accounts (10 charfiles per each) working with MySql Database or Accounts file system with charfiles. (CHOTS)
 * 21/12/2018 : Obtain colours of characteres from the file colores.dat instead of the ones harcoded in frmPanelAccount (Recox)
 
-- Próxima Release
+- 0.13.7
 * 01/02/2019 : #74 Fixed runtime error when someone tries to move the window in fullscreen mode (Juanmz)
 * 01/02/2019 : Deleted unused validations in frmCrearPersonaje and General.bas (Recox)
 * 11/02/2019 : Re-implemented centinela (jopiortiz)
