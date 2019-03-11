@@ -11,7 +11,7 @@
 *.bmp -text
 *.ind binary
 *.con binary
-*.bin -text
+*.bin binary
 *.mcl -text
 *.mid binary
 *.mp3 binary
