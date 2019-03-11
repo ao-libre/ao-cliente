@@ -2,26 +2,27 @@
 * text eol=crlf
 
 # Declare file types.
-*.msv binary
-*.frx binary
-*.ico binary
-*.png binary
-*.gif binary
-*.jpg binary
-*.gif binary
-*.bmp binary
-*.mcl binary
-*.dll binary
-*.ind binary
-*.con binary
-*.bin binary
-*.mid binary
-*.mp3 binary
-*.wav binary
-*.ao binary
-*.ocx binary
-*.OCX binary
-*.map binary
+# The - is a negation symbol, so  -text it means"not" text
+*.msv -text
+*.frx -text
+*.ico -text
+*.png -text
+*.gif -text
+*.jpg -text
+*.gif -text
+*.bmp -text
+*.mcl -text
+*.dll -text
+*.ind -text
+*.con -text
+*.bin -text
+*.mid -text
+*.mp3 -text
+*.wav -text
+*.ao -text
+*.ocx -text
+*.OCX -text
+*.map -text
 
 # Declare encoding of all files for code.
 *.bas encoding=ansi
