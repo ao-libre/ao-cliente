@@ -20,3 +20,10 @@
 *.ocx binary
 *.OCX binary
 *.map binary
+
+# Declare encoding of all files for code.
+*.bas encoding=ansi
+*.cls encoding=ansi
+*.vbp encoding=ansi
+*.frm encoding=ansi
+
