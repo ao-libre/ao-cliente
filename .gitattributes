@@ -16,3 +16,7 @@
 *.mid -text
 *.mp3 -text
 *.wav -text
+*.ao -binary
+*.ocx -binary
+*.OCX -binary
+*.map -binary
