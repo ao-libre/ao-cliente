@@ -1,7 +1,7 @@
 * text eol=crlf
 
 *.msv -text
-*.dll -text
+*.dll binary
 *.frx -text
 *.ico -text
 *.png -text
@@ -9,13 +9,13 @@
 *.jpg -text
 *.gif -text
 *.bmp -text
-*.ind -text
-*.con -text
+*.ind binary
+*.con binary
 *.bin -text
 *.mcl -text
-*.mid -text
-*.mp3 -text
-*.wav -text
+*.mid binary
+*.mp3 binary
+*.wav binary
 *.ao binary
 *.ocx binary
 *.OCX binary
