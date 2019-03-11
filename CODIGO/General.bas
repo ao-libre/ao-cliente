@@ -503,12 +503,28 @@ Sub SwitchMap(ByVal Map As Integer)
     Dim dLen     As Long
    
     Set fileBuff = New clsByteBuffer
-   
+    
+    'Limpieza adicional del mapa. PARCHE: Solucion a bug de clones. [Gracias Yhunja]
+    'EDIT: cambio el rango de valores en x y para solucionar otro bug con respecto al cambio de mapas
+    For X = XMinMapSize To XMaxMapSize
+        For Y = YMinMapSize To YMaxMapSize
+
+            If (MapData(X, Y).CharIndex) Then
+                Call Char_Erase(MapData(X, Y).CharIndex)
+            End If
+
+            If (MapData(X, Y).ObjGrh.GrhIndex) Then
+                Call Map_DestroyObject(X, Y)
+            End If
+
+        Next Y
+    Next X
+    
     dLen = FileLen(DirMapas & "Mapa" & Map & ".map")
     ReDim dData(dLen - 1)
-   
+    
     handle = FreeFile()
-   
+    
     Open DirMapas & "Mapa" & Map & ".map" For Binary As handle
         Get handle, , dData
     Close handle
@@ -862,8 +878,6 @@ Sub Main()
     
     ChDrive App.path
     ChDir App.path
-
-    MD5HushYo = "0123456789abcdef"  'We aren't using a real MD5
     
     tipf = Config_Inicio.tip
     
