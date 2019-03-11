@@ -23,6 +23,7 @@
 *.ocx -text
 *.OCX -text
 *.map -text
+*.exe -text
 
 # Declare encoding of all files for code.
 *.bas encoding=ansi
