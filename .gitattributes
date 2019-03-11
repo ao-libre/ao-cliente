@@ -1,20 +1,18 @@
-# Set the default behavior, in case people don't have core.autocrlf set.
-* autocrlf=input
+* text eol=crlf
 
-# Declare encoding of all files for code.
-*.bas encoding=ansi
-*.cls encoding=ansi
-*.vbp encoding=ansi
-*.frm encoding=ansi
-
-# Declare files that will always have CRLF line endings on checkout.
-*.bas text eol=crlf
-*.cls text eol=crlf
-*.vbp text eol=crlf
-*.frm text eol=crlf
-*.frx text=lf
-
-# Denote all files that are truly binary and should not be modified.
-*.png binary
-*.jpg binary
-*.exe binary
+*.msv -text
+*.dll -text
+*.frx -text
+*.ico -text
+*.png -text
+*.gif -text
+*.jpg -text
+*.gif -text
+*.bmp -text
+*.ind -text
+*.con -text
+*.bin -text
+*.mcl -text
+*.mid -text
+*.mp3 -text
+*.wav -text
