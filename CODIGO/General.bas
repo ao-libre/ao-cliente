@@ -878,8 +878,6 @@ Sub Main()
     
     ChDrive App.path
     ChDir App.path
-
-    MD5HushYo = "0123456789abcdef"  'We aren't using a real MD5
     
     tipf = Config_Inicio.tip
     
