@@ -26,4 +26,4 @@
 *.cls encoding=ansi
 *.vbp encoding=ansi
 *.frm encoding=ansi
-
+*.json encoding=ansi
