@@ -1,7 +1,8 @@
+# Auto-CRLF setting.
 * text eol=crlf
 
+# Declare file types.
 *.msv -text
-*.dll binary
 *.frx -text
 *.ico -text
 *.png -text
@@ -9,10 +10,11 @@
 *.jpg -text
 *.gif -text
 *.bmp -text
+*.mcl -text
+*.dll binary
 *.ind binary
 *.con binary
 *.bin binary
-*.mcl -text
 *.mid binary
 *.mp3 binary
 *.wav binary
