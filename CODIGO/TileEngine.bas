@@ -1,10 +1,10 @@
 Attribute VB_Name = "Mod_TileEngine"
 'Argentum Online 0.11.6
 '
-'Copyright (C) 2002 M√°rquez Pablo Ignacio
+'Copyright (C) 2002 M·rquez Pablo Ignacio
 'Copyright (C) 2002 Otto Perez
 'Copyright (C) 2002 Aaron Perkins
-'Copyright (C) 2002 Mat√≠as Fernando Peque√±o
+'Copyright (C) 2002 MatÌas Fernando PequeÒo
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the Affero General Public License;
@@ -26,10 +26,10 @@ Attribute VB_Name = "Mod_TileEngine"
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 n√∫mero 983 piso 7 dto A
+'Calle 3 n˙mero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'C√≥digo Postal 1900
-'Pablo Ignacio M√°rquez
+'CÛdigo Postal 1900
+'Pablo Ignacio M·rquez
 
 
 
@@ -99,7 +99,7 @@ Public Type WorldPos
     Y As Integer
 End Type
 
-'Contiene info acerca de donde se puede encontrar un grh tama√±o y animacion
+'Contiene info acerca de donde se puede encontrar un grh tamaÒo y animacion
 Public Type GrhData
     SX As Integer
     SY As Integer
@@ -246,7 +246,7 @@ Public FPS As Long
 Public FramesPerSecCounter As Long
 Public FPSLastCheck As Long
 
-'Tama√±o del la vista en Tiles
+'TamaÒo del la vista en Tiles
 Private WindowTileWidth As Integer
 Private WindowTileHeight As Integer
 
@@ -254,11 +254,11 @@ Private HalfWindowTileWidth As Integer
 Private HalfWindowTileHeight As Integer
 
 'Cuantos tiles el engine mete en el BUFFER cuando
-'dibuja el mapa. Ojo un tama√±o muy grande puede
+'dibuja el mapa. Ojo un tamaÒo muy grande puede
 'volver el engine muy lento
 Public TileBufferSize As Integer
 
-'Tama√±o de los tiles en pixels
+'TamaÒo de los tiles en pixels
 Public TilePixelHeight As Integer
 Public TilePixelWidth As Integer
 
@@ -279,7 +279,7 @@ Private MouseTileY As Byte
 
 
 
-'¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬øGraficos¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?
+'ø?ø?ø?ø?ø?ø?ø?ø?ø?øGraficosø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?
 Public GrhData() As GrhData 'Guarda todos los grh
 Public BodyData() As BodyData
 Public HeadData() As HeadData
@@ -287,12 +287,12 @@ Public FxData() As tIndiceFx
 Public WeaponAnimData() As WeaponAnimData
 Public ShieldAnimData() As ShieldAnimData
 Public CascoAnimData() As HeadData
-'¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?
+'ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?
 
-'¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬øMapa?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?
+'ø?ø?ø?ø?ø?ø?ø?ø?ø?øMapa?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?
 Public MapData() As MapBlock ' Mapa
 Public MapInfo As MapInfo ' Info acerca del mapa en uso
-'¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?
+'ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?
 
 Public Normal_RGBList(0 To 3) As Long
 
@@ -318,7 +318,7 @@ End Enum
 '[END]'
 '
 '       [END]
-'¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?¬ø?
+'ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?ø?
 
 
 'Very percise counter 64bit system counter
@@ -936,7 +936,7 @@ Function LegalPos(ByVal X As Integer, ByVal Y As Integer) As Boolean
         Exit Function
     End If
     
-    '¬øHay un personaje?
+    'øHay un personaje?
     If MapData(X, Y).CharIndex > 0 Then
         Exit Function
     End If
@@ -969,7 +969,7 @@ Function MoveToLegalPos(ByVal X As Integer, ByVal Y As Integer) As Boolean
     End If
     
     CharIndex = MapData(X, Y).CharIndex
-    '¬øHay un personaje?
+    'øHay un personaje?
     If CharIndex > 0 Then
     
         If MapData(UserPos.X, UserPos.Y).Blocked = 1 Then
@@ -1072,7 +1072,7 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
 '**************************************************************
 'Author: Aaron Perkins
 'Last Modify Date: 8/14/2007
-'Last modified by: Juan Mart√≠n Sotuyo Dodero (Maraxus)
+'Last modified by: Juan MartÌn Sotuyo Dodero (Maraxus)
 'Renders everything to the viewport
 '**************************************************************
     Dim Y           As Long     'Keeps track of where on map we are
@@ -1340,7 +1340,7 @@ End Sub
 
 Public Function RenderSounds()
 '**************************************************************
-'Author: Juan Mart√≠n Sotuyo Dodero
+'Author: Juan MartÌn Sotuyo Dodero
 'Last Modify Date: 3/30/2008
 'Actualiza todos los sonidos del mapa.
 '**************************************************************
@@ -1395,7 +1395,7 @@ Public Function InitTileEngine(ByVal setDisplayFormhWnd As Long, ByVal setTilePi
 '***************************************************
 'Author: Aaron Perkins
 'Last Modification: 08/14/07
-'Last modified by: Juan Mart√≠n Sotuyo Dodero (Maraxus)
+'Last modified by: Juan MartÌn Sotuyo Dodero (Maraxus)
 'Configures the engine to start running.
 '***************************************************
     TilePixelWidth = setTilePixelWidth
@@ -1600,7 +1600,7 @@ End Function
 
 Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, ByVal PixelOffsetY As Integer)
 '***************************************************
-'Author: Juan Mart√≠n Sotuyo Dodero (Maraxus)
+'Author: Juan MartÌn Sotuyo Dodero (Maraxus)
 'Last Modify Date: 16/09/2010 (Zama)
 'Draw char's to screen without offcentering them
 '16/09/2010: ZaMa - Ya no se dibujan los bodies cuando estan invisibles.
@@ -1853,7 +1853,7 @@ End Sub
 
 Public Sub SetCharacterFx(ByVal CharIndex As Integer, ByVal fX As Integer, ByVal Loops As Integer)
 '***************************************************
-'Author: Juan Mart√≠n Sotuyo Dodero (Maraxus)
+'Author: Juan MartÌn Sotuyo Dodero (Maraxus)
 'Last Modify Date: 12/03/04
 'Sets an FX to the character.
 '***************************************************
@@ -2031,7 +2031,7 @@ error:
         Resume
     Else
         'Call Log_Engine("Error in DDrawGrhtoSurface, " & Err.Description & ", (" & Err.number & ")")
-        MsgBox "Error en el Engine Gr√°fico, Por favor contacte a los adminsitradores enviandoles el archivo Errors.Log que se encuentra el la carpeta del cliente.", vbCritical
+        MsgBox "Error en el Engine Gr·fico, Por favor contacte a los adminsitradores enviandoles el archivo Errors.Log que se encuentra el la carpeta del cliente.", vbCritical
         Call CloseClient
     End If
 End Sub
@@ -2116,7 +2116,7 @@ error:
         Resume
     Else
         'Call Log_Engine("Error in DDrawGrhtoSurface, " & Err.Description & ", (" & Err.number & ")")
-        MsgBox "Error en el Engine Gr√°fico, Por favor contacte a los adminsitradores enviandoles el archivo Errors.Log que se encuentra el la carpeta del cliente.", vbCritical
+        MsgBox "Error en el Engine Gr·fico, Por favor contacte a los adminsitradores enviandoles el archivo Errors.Log que se encuentra el la carpeta del cliente.", vbCritical
         Call CloseClient
     End If
 End Sub
@@ -2206,14 +2206,14 @@ error:
         Resume
     Else
         'Call Log_Engine("Error in DDrawTransGrhtoSurface, " & Err.Description & ", (" & Err.number & ")")
-        MsgBox "Error en el Engine Gr√°fico, Por favor contacte a los adminsitradores enviandoles el archivo Errors.Log que se encuentra el la carpeta del cliente.", vbCritical
+        MsgBox "Error en el Engine Gr·fico, Por favor contacte a los adminsitradores enviandoles el archivo Errors.Log que se encuentra el la carpeta del cliente.", vbCritical
         Call CloseClient
     End If
 End Sub
 
 Public Function GrhCheck(ByVal GrhIndex As Long) As Boolean
         '**************************************************************
-        'Author: Aaron Perkins - Modified by Juan Mart√≠n Sotuyo Dodero
+        'Author: Aaron Perkins - Modified by Juan MartÌn Sotuyo Dodero
         'Last Modify Date: 1/04/2003
         '
         '**************************************************************

@@ -910,10 +910,10 @@ Attribute VB_Exposed = False
 '--------------------------------------------------------------------------------
 'Argentum Online 0.11.6
 '
-'Copyright (C) 2002 MÃ¡rquez Pablo Ignacio
+'Copyright (C) 2002 Márquez Pablo Ignacio
 'Copyright (C) 2002 Otto Perez
 'Copyright (C) 2002 Aaron Perkins
-'Copyright (C) 2002 MatÃ­as Fernando PequeÃ±o
+'Copyright (C) 2002 Matías Fernando Pequeño
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the Affero General Public License;
@@ -935,10 +935,10 @@ Attribute VB_Exposed = False
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 nÃºmero 983 piso 7 dto A
+'Calle 3 número 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'CÃ³digo Postal 1900
-'Pablo Ignacio MÃ¡rquez
+'Código Postal 1900
+'Pablo Ignacio Márquez
 
 Option Explicit
 
@@ -1191,15 +1191,15 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
     
     If (Not SendTxt.Visible) And (Not SendCMSTXT.Visible) Then
     
-        'Verificamos si se estÃ¡ presionando la tecla CTRL.
+        'Verificamos si se está presionando la tecla CTRL.
         If Shift = 2 Then
             If KeyCode >= vbKey0 And KeyCode <= vbKey9 Then
                 If KeyCode = vbKey0 Then
-                    'Si es CTRL+0 muestro la ventana de configuraciÃ³n de teclas.
+                    'Si es CTRL+0 muestro la ventana de configuración de teclas.
                     Call frmCustomKeys.Show(vbModal, Me)
                     
                 ElseIf KeyCode >= vbKey1 And KeyCode <= vbKey9 Then
-                    'Si es CTRL+1..9 cambio la configuraciÃ³n.
+                    'Si es CTRL+1..9 cambio la configuración.
                     If KeyCode - vbKey0 = CustomKeys.CurrentConfig Then Exit Sub
                     
                     CustomKeys.CurrentConfig = KeyCode - vbKey0
@@ -1305,7 +1305,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
             End Select
         Else
             
-            'Evito que se muestren los mensajes personalizados cuando se cambie una configuraciÃ³n de teclas.
+            'Evito que se muestren los mensajes personalizados cuando se cambie una configuración de teclas.
             If Shift = 2 Then Exit Sub
             
             Select Case KeyCode
@@ -1388,7 +1388,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
             
             If macrotrabajo.Enabled Then Call DesactivarMacroTrabajo
             
-            If frmCustomKeys.Visible Then Exit Sub 'Chequeo si estÃ¡ visible la ventana de configuraciÃ³n de teclas.
+            If frmCustomKeys.Visible Then Exit Sub 'Chequeo si está visible la ventana de configuración de teclas.
             
             Call WriteAttack
             
@@ -1516,7 +1516,7 @@ Private Sub macrotrabajo_Timer()
     End If
     
     'Macros are disabled if not using Argentum!
-    'If Not Application.IsAppActive() Then  'Implemento lo propuesto por GD, se puede usar macro aun que se estÃ© en otra ventana
+    'If Not Application.IsAppActive() Then  'Implemento lo propuesto por GD, se puede usar macro aun que se esté en otra ventana
     '    Call DesactivarMacroTrabajo
     '    Exit Sub
     'End If
@@ -2079,7 +2079,7 @@ Private Sub SendTxt_Change()
 '**************************************************************
 'Author: Unknown
 'Last Modify Date: 3/06/2006
-'3/06/2006: Maraxus - impedÃ­ se inserten caractÃ©res no imprimibles
+'3/06/2006: Maraxus - impedí se inserten caractéres no imprimibles
 '**************************************************************
     If Len(SendTxt.Text) > 160 Then
         stxtbuffer = JsonLanguage.Item("MENSAJE_SOY_CHEATER").Item("TEXTO")

@@ -1,11 +1,19 @@
+# Client Files.
 Screenshots/*
 Codigo/*.log
-.DS_Store
 *.vbw
 *.oca
 *.csi
 *.lvw
-Thumbs.db
 INIT/Inicio.con
 INIT/AO.dat
+INIT/messages.txt
 Argentum.exe
+
+# System Files.
+.DS_Store
+Thumbs.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.lnk
+*.stackdump
