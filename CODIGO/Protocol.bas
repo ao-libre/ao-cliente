@@ -10948,7 +10948,7 @@ On Error GoTo ErrHandler
         'Nos fijamos si se trata de una quest empezada, para poder leer los NPCs que se han matado.
         QuestEmpezada = IIf(.ReadByte, True, False)
         
-        tmpStr = "Misi�n: " & .ReadASCIIString & vbCrLf
+        tmpStr = "Mision: " & .ReadASCIIString & vbCrLf
         tmpStr = tmpStr & "Detalles: " & .ReadASCIIString & vbCrLf
         tmpStr = tmpStr & "Nivel requerido: " & .ReadByte & vbCrLf
         
