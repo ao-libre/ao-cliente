@@ -168,6 +168,8 @@ Private Enum ServerPacketID
     FXtoMap
     AccountLogged
     SearchList
+    QuestDetails
+    QuestListSend
 End Enum
 
 Private Enum ClientPacketID
@@ -310,6 +312,11 @@ Private Enum ClientPacketID
     HungerGamesCreate = 137
     HungerGamesJoin = 138
     HungerGamesDelete = 139
+    Quest = 140                   '/QUEST
+    QuestAccept = 141
+    QuestListRequest = 142
+    QuestDetailsRequest = 143
+    QuestAbandon = 144
 End Enum
 
 Public Enum FontTypeNames
@@ -10889,4 +10896,193 @@ Public Sub WriteHungerGamesJoin()
     
 End Sub
 
-
+Public Sub WriteQuest()
+'$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+'Escribe el paquete Quest al servidor.
+'Last modified: 31/01/2010 by Amraphen
+'$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+    Call outgoingData.WriteByte(ClientPacketID.Quest)
+End Sub
+ 
+Public Sub WriteQuestDetailsRequest(ByVal QuestSlot As Byte)
+'$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+'Escribe el paquete QuestDetailsRequest al servidor.
+'Last modified: 31/01/2010 by Amraphen
+'$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+    Call outgoingData.WriteByte(ClientPacketID.QuestDetailsRequest)
+    
+    Call outgoingData.WriteByte(QuestSlot)
+End Sub
+ 
+Public Sub WriteQuestAccept()
+'$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+'Escribe el paquete QuestAccept al servidor.
+'Last modified: 31/01/2010 by Amraphen
+'$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+    Call outgoingData.WriteByte(ClientPacketID.QuestAccept)
+End Sub
+ 
+Private Sub HandleQuestDetails()
+'$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+'Recibe y maneja el paquete QuestDetails del servidor.
+'Last modified: 31/01/2010 by Amraphen
+'$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+    If incomingData.length < 15 Then
+        Err.Raise incomingData.NotEnoughDataErrCode
+        Exit Sub
+    End If
+    
+On Error GoTo ErrHandler
+    Dim Buffer As New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
+    
+    Dim tmpStr As String
+    Dim tmpByte As Byte
+    Dim QuestEmpezada As Boolean
+    Dim i As Integer
+    
+    With Buffer
+        'Leemos el id del paquete
+        Call .ReadByte
+        
+        'Nos fijamos si se trata de una quest empezada, para poder leer los NPCs que se han matado.
+        QuestEmpezada = IIf(.ReadByte, True, False)
+        
+        tmpStr = "Mision: " & .ReadASCIIString & vbCrLf
+        tmpStr = tmpStr & "Detalles: " & .ReadASCIIString & vbCrLf
+        tmpStr = tmpStr & "Nivel requerido: " & .ReadByte & vbCrLf
+        
+        tmpStr = tmpStr & vbCrLf & "OBJETIVOS" & vbCrLf
+        
+        tmpByte = .ReadByte
+        If tmpByte Then 'Hay NPCs
+            For i = 1 To tmpByte
+                tmpStr = tmpStr & "*) Matar " & .ReadInteger & " " & .ReadASCIIString & "."
+                If QuestEmpezada Then
+                    tmpStr = tmpStr & " (Has matado " & .ReadInteger & ")" & vbCrLf
+                Else
+                    tmpStr = tmpStr & vbCrLf
+                End If
+            Next i
+        End If
+        
+        tmpByte = .ReadByte
+        If tmpByte Then 'Hay OBJs
+            For i = 1 To tmpByte
+                tmpStr = tmpStr & "*) Conseguir " & .ReadInteger & " " & .ReadASCIIString & "." & vbCrLf
+            Next i
+        End If
+ 
+        tmpStr = tmpStr & vbCrLf & "RECOMPENSAS" & vbCrLf
+        tmpStr = tmpStr & "*) Oro: " & .ReadLong & " monedas de oro." & vbCrLf
+        tmpStr = tmpStr & "*) Experiencia: " & .ReadLong & " puntos de experiencia." & vbCrLf
+        
+        tmpByte = .ReadByte
+        If tmpByte Then
+            For i = 1 To tmpByte
+                tmpStr = tmpStr & "*) " & .ReadInteger & " " & .ReadASCIIString & vbCrLf
+            Next i
+        End If
+    End With
+    
+    'Determinamos que formulario se muestra, seg�n si recibimos la informaci�n y la quest est� empezada o no.
+    If QuestEmpezada Then
+        frmQuests.txtInfo.Text = tmpStr
+    Else
+        frmQuestInfo.txtInfo.Text = tmpStr
+        frmQuestInfo.Show vbModeless, frmMain
+    End If
+    
+    Call incomingData.CopyBuffer(Buffer)
+    
+ErrHandler:
+    Dim Error As Long
+    Error = Err.number
+On Error GoTo 0
+    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
+ 
+    If Error <> 0 Then _
+        Err.Raise Error
+End Sub
+ 
+Public Sub HandleQuestListSend()
+'$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+'Recibe y maneja el paquete QuestListSend del servidor.
+'Last modified: 31/01/2010 by Amraphen
+'$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+    If incomingData.length < 1 Then
+        Err.Raise incomingData.NotEnoughDataErrCode
+        Exit Sub
+    End If
+    
+On Error GoTo ErrHandler
+    Dim Buffer As New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
+    
+    Dim i As Integer
+    Dim tmpByte As Byte
+    Dim tmpStr As String
+    
+    'Leemos el id del paquete
+    Call Buffer.ReadByte
+     
+    'Leemos la cantidad de quests que tiene el usuario
+    tmpByte = Buffer.ReadByte
+    
+    'Limpiamos el ListBox y el TextBox del formulario
+    frmQuests.lstQuests.Clear
+    frmQuests.txtInfo.Text = vbNullString
+        
+    'Si el usuario tiene quests entonces hacemos el handle
+    If tmpByte Then
+        'Leemos el string
+        tmpStr = Buffer.ReadASCIIString
+        
+        'Agregamos los items
+        For i = 1 To tmpByte
+            frmQuests.lstQuests.AddItem ReadField(i, tmpStr, 45)
+        Next i
+    End If
+    
+    'Mostramos el formulario
+    frmQuests.Show vbModeless, frmMain
+    
+    'Pedimos la informaci�n de la primer quest (si la hay)
+    If tmpByte Then Call Protocol.WriteQuestDetailsRequest(1)
+    
+    'Copiamos de vuelta el buffer
+    Call incomingData.CopyBuffer(Buffer)
+ 
+ErrHandler:
+    Dim Error As Long
+    Error = Err.number
+On Error GoTo 0
+    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
+ 
+    If Error <> 0 Then _
+        Err.Raise Error
+End Sub
+ 
+Public Sub WriteQuestListRequest()
+'$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+'Escribe el paquete QuestListRequest al servidor.
+'Last modified: 31/01/2010 by Amraphen
+'$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+    Call outgoingData.WriteByte(ClientPacketID.QuestListRequest)
+End Sub
+ 
+Public Sub WriteQuestAbandon(ByVal QuestSlot As Byte)
+'$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+'Escribe el paquete QuestAbandon al servidor.
+'Last modified: 31/01/2010 by Amraphen
+'$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+    'Escribe el ID del paquete.
+    Call outgoingData.WriteByte(ClientPacketID.QuestAbandon)
+    
+    'Escribe el Slot de Quest.
+    Call outgoingData.WriteByte(QuestSlot)
+End Sub
