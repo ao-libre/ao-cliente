@@ -222,7 +222,7 @@ Public Function Char_Check(ByVal CharIndex As Integer) As Boolean
    
 End Function
  
-Public Sub Char_SetInvisible(ByVal CharIndex As Integer, ByVal Value As Boolean)
+Public Sub Char_SetInvisible(ByVal CharIndex As Integer, ByVal value As Boolean)
        
         '**************************************************************
         'Author: Aaron Perkins - Modified by Juan Martín Sotuyo Dodero
@@ -234,7 +234,7 @@ Public Sub Char_SetInvisible(ByVal CharIndex As Integer, ByVal Value As Boolean)
  
                 With charlist(CharIndex)
  
-                        .invisible = Value '// User invisible o no ?
+                        .invisible = value '// User invisible o no ?
                         
                         Exit Sub
  
@@ -297,7 +297,7 @@ Public Sub Char_SetHead(ByVal CharIndex As Integer, ByVal HeadIndex As Integer)
                         .Head = HeadData(HeadIndex)
                         .iHead = HeadIndex
                                
-                        .muerto = (HeadIndex = CASPER_HEAD)
+                        .muerto = (HeadIndex = eCabezas.CASPER_HEAD)
                      
                         Exit Sub
  
@@ -349,7 +349,7 @@ Public Sub Char_SetName(ByVal CharIndex As Integer, ByVal Name As String)
  
                 With charlist(CharIndex)
                
-                        .nombre = Name
+                        .Nombre = Name
  
                         Exit Sub
  

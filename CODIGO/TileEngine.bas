@@ -215,7 +215,7 @@ Public Type MapBlock
 End Type
 
 'Info de cada mapa
-Public Type MapInfo
+Public Type mapInfo
     Music As String
     Name As String
     StartPos As WorldPos
@@ -291,7 +291,7 @@ Public CascoAnimData() As HeadData
 
 '¿?¿?¿?¿?¿?¿?¿?¿?¿?¿Mapa?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?
 Public MapData() As MapBlock ' Mapa
-Public MapInfo As MapInfo ' Info acerca del mapa en uso
+Public mapInfo As mapInfo ' Info acerca del mapa en uso
 '¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?
 
 Public Normal_RGBList(0 To 3) As Long
@@ -978,7 +978,7 @@ Function MoveToLegalPos(ByVal X As Integer, ByVal Y As Integer) As Boolean
         
         With charlist(CharIndex)
             ' Si no es casper, no puede pasar
-            If .iHead <> CASPER_HEAD And .iBody <> FRAGATA_FANTASMAL Then
+            If .iHead <> eCabezas.CASPER_HEAD And .iBody <> eCabezas.FRAGATA_FANTASMAL Then
                 Exit Function
             Else
                 ' No puedo intercambiar con un casper que este en la orilla (Lado tierra)
@@ -1043,16 +1043,16 @@ Public Sub DrawTransparentGrhtoHdc(ByVal dsthdc As Long, ByVal srchdc As Long, B
 'Author: Torres Patricio (Pato)
 'Last Modify Date: 27/07/2012 - ^[GS]^
 '*************************************************************
-    Dim Color As Long
+    Dim color As Long
     Dim X As Long
     Dim Y As Long
     
     For X = SourceRect.Left To SourceRect.Right
         For Y = SourceRect.Top To SourceRect.bottom
-            Color = GetPixel(srchdc, X, Y)
+            color = GetPixel(srchdc, X, Y)
             
-            If Color <> TransparentColor Then
-                Call SetPixel(dsthdc, destRect.Left + (X - SourceRect.Left), destRect.Top + (Y - SourceRect.Top), Color)
+            If color <> TransparentColor Then
+                Call SetPixel(dsthdc, destRect.Left + (X - SourceRect.Left), destRect.Top + (Y - SourceRect.Top), color)
             End If
         Next Y
     Next X
@@ -1499,7 +1499,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Inte
     If frmBancoObj.PicBancoInv.Visible Then _
         Call InvBanco(0).DrawInv
          
-    If frmBancoObj.picInv.Visible Then _
+    If frmBancoObj.PicInv.Visible Then _
         Call InvBanco(1).DrawInv
     
     
@@ -1818,36 +1818,36 @@ End Sub
 Private Sub RenderName(ByVal CharIndex As Long, ByVal X As Integer, ByVal Y As Integer, Optional ByVal Invi As Boolean = False)
     Dim Pos As Integer
     Dim line As String
-    Dim Color As Long
+    Dim color As Long
    
     With charlist(CharIndex)
             Pos = getTagPosition(.Nombre)
     
             If .priv = 0 Then
                     If .muerto Then
-                        Color = D3DColorARGB(255, 220, 220, 255)
+                        color = D3DColorARGB(255, 220, 220, 255)
                     Else
                         If .Criminal Then
-                            Color = ColoresPJ(50)
+                            color = ColoresPJ(50)
                         Else
-                            Color = ColoresPJ(49)
+                            color = ColoresPJ(49)
                         End If
                     End If
             Else
-                Color = ColoresPJ(.priv)
+                color = ColoresPJ(.priv)
             End If
     
             If Invi Then
-                Color = D3DColorARGB(180, 150, 180, 220)
+                color = D3DColorARGB(180, 150, 180, 220)
             End If
             
             'Nick
             line = Left$(.Nombre, Pos - 2)
-            Call DrawText(X - (Len(line) * 6 / 2) + 16, Y + 30, line, Color)
+            Call DrawText(X - (Len(line) * 6 / 2) + 16, Y + 30, line, color)
             
             'Clan
             line = mid$(.Nombre, Pos)
-            Call DrawText(X - (Len(line) * 6 / 2) + 16, Y + 45, line, Color)
+            Call DrawText(X - (Len(line) * 6 / 2) + 16, Y + 45, line, color)
     End With
 End Sub
 
@@ -1869,12 +1869,12 @@ Public Sub SetCharacterFx(ByVal CharIndex As Integer, ByVal fX As Integer, ByVal
 End Sub
 
 
-Public Sub Device_Textured_Render(ByVal X As Integer, ByVal Y As Integer, ByVal Texture As Direct3DTexture8, ByRef src_rect As RECT, ByRef Color_List() As Long, Optional alpha As Boolean = False, Optional ByVal Angle As Single = 0, Optional ByVal Shadow As Boolean = False)
+Public Sub Device_Textured_Render(ByVal X As Integer, ByVal Y As Integer, ByVal Texture As Direct3DTexture8, ByRef src_rect As RECT, ByRef Color_List() As Long, Optional Alpha As Boolean = False, Optional ByVal Angle As Single = 0, Optional ByVal Shadow As Boolean = False)
     If Shadow And ClientSetup.UsarSombras = False Then Exit Sub
     
     Dim dest_rect As RECT
     Dim temp_verts(3) As TLVERTEX
-    Dim srdesc As D3DSURFACE_DESC
+    Dim SRDesc As D3DSURFACE_DESC
 
     With dest_rect
         .bottom = Y + (src_rect.bottom - src_rect.Top)
@@ -1884,10 +1884,10 @@ Public Sub Device_Textured_Render(ByVal X As Integer, ByVal Y As Integer, ByVal 
     End With
     
     Dim texwidth As Long, texheight As Long
-    Texture.GetLevelDesc 0, srdesc
+    Texture.GetLevelDesc 0, SRDesc
 
-    texwidth = srdesc.Width
-    texheight = srdesc.Height
+    texwidth = SRDesc.Width
+    texheight = SRDesc.Height
     
     If Shadow Then
         Dim Color_Shadow(3) As Long
@@ -1907,7 +1907,7 @@ Public Sub Device_Textured_Render(ByVal X As Integer, ByVal Y As Integer, ByVal 
         temp_verts(3).Y = temp_verts(3).Y - (src_rect.Right - src_rect.Left) * 0.5
     End If
     
-    If alpha Then
+    If Alpha Then
         DirectDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
         DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
     End If
@@ -1915,18 +1915,18 @@ Public Sub Device_Textured_Render(ByVal X As Integer, ByVal Y As Integer, ByVal 
     ' Medium load.
     DirectDevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, temp_verts(0), Len(temp_verts(0))
 
-    If alpha Then
+    If Alpha Then
         DirectDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
         DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
     End If
 End Sub
 
-Public Sub Device_Textured_Render_Scale(ByVal X As Integer, ByVal Y As Integer, ByVal Texture As Direct3DTexture8, ByRef src_rect As RECT, ByRef Color_List() As Long, Optional alpha As Boolean = False, Optional ByVal Angle As Single = 0, Optional ByVal Shadow As Boolean = False)
+Public Sub Device_Textured_Render_Scale(ByVal X As Integer, ByVal Y As Integer, ByVal Texture As Direct3DTexture8, ByRef src_rect As RECT, ByRef Color_List() As Long, Optional Alpha As Boolean = False, Optional ByVal Angle As Single = 0, Optional ByVal Shadow As Boolean = False)
     If Shadow And ClientSetup.UsarSombras = False Then Exit Sub
     
     Dim dest_rect As RECT
     Dim temp_verts(3) As TLVERTEX
-    Dim srdesc As D3DSURFACE_DESC
+    Dim SRDesc As D3DSURFACE_DESC
 
     With dest_rect
         .bottom = Y + 2 '(src_rect.bottom - src_rect.Top)
@@ -1936,23 +1936,23 @@ Public Sub Device_Textured_Render_Scale(ByVal X As Integer, ByVal Y As Integer, 
     End With
     
     Dim texwidth As Long, texheight As Long
-    Texture.GetLevelDesc 0, srdesc
+    Texture.GetLevelDesc 0, SRDesc
 
-    texwidth = srdesc.Width
-    texheight = srdesc.Height
+    texwidth = SRDesc.Width
+    texheight = SRDesc.Height
     
     Geometry_Create_Box temp_verts(), dest_rect, src_rect, Color_List(), texwidth, texheight, Angle
     
     DirectDevice.SetTexture 0, Texture
     
-    If alpha Then
+    If Alpha Then
         DirectDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_ONE
         DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_ONE
     End If
         
     DirectDevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, temp_verts(0), Len(temp_verts(0))
         
-    If alpha Then
+    If Alpha Then
         DirectDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
         DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
     End If
@@ -2036,7 +2036,7 @@ error:
     End If
 End Sub
 
-Sub DDrawTransGrhIndextoSurface(ByVal GrhIndex As Integer, ByVal X As Integer, ByVal Y As Integer, ByVal Center As Byte, ByRef Color_List() As Long, Optional ByVal Angle As Single = 0, Optional ByVal alpha As Boolean = False)
+Sub DDrawTransGrhIndextoSurface(ByVal GrhIndex As Integer, ByVal X As Integer, ByVal Y As Integer, ByVal Center As Byte, ByRef Color_List() As Long, Optional ByVal Angle As Single = 0, Optional ByVal Alpha As Boolean = False)
     Dim SourceRect As RECT
     
     With GrhData(GrhIndex)
@@ -2057,7 +2057,7 @@ Sub DDrawTransGrhIndextoSurface(ByVal GrhIndex As Integer, ByVal X As Integer, B
         SourceRect.bottom = SourceRect.Top + .pixelHeight
         
         'Draw
-        Call Device_Textured_Render(X, Y, SurfaceDB.Surface(.FileNum), SourceRect, Color_List(), alpha, Angle, False)
+        Call Device_Textured_Render(X, Y, SurfaceDB.Surface(.FileNum), SourceRect, Color_List(), Alpha, Angle, False)
     End With
 End Sub
 
@@ -2122,7 +2122,7 @@ error:
 End Sub
 
 
-Sub DDrawTransGrhIndextoSurfaceScale(ByVal GrhIndex As Integer, ByVal X As Integer, ByVal Y As Integer, ByVal Center As Byte, ByRef Color_List() As Long, Optional ByVal Angle As Single = 0, Optional ByVal alpha As Boolean = False)
+Sub DDrawTransGrhIndextoSurfaceScale(ByVal GrhIndex As Integer, ByVal X As Integer, ByVal Y As Integer, ByVal Center As Byte, ByRef Color_List() As Long, Optional ByVal Angle As Single = 0, Optional ByVal Alpha As Boolean = False)
     Dim SourceRect As RECT
     
     With GrhData(GrhIndex)
@@ -2143,11 +2143,11 @@ Sub DDrawTransGrhIndextoSurfaceScale(ByVal GrhIndex As Integer, ByVal X As Integ
         SourceRect.bottom = SourceRect.Top + .pixelHeight
         
         'Draw
-        Call Device_Textured_Render_Scale(X, Y, SurfaceDB.Surface(.FileNum), SourceRect, Color_List(), alpha, Angle, False)
+        Call Device_Textured_Render_Scale(X, Y, SurfaceDB.Surface(.FileNum), SourceRect, Color_List(), Alpha, Angle, False)
     End With
 End Sub
 
-Sub DDrawTransGrhtoSurface(ByRef Grh As Grh, ByVal X As Integer, ByVal Y As Integer, ByVal Center As Byte, ByRef Color_List() As Long, ByVal Animate As Byte, ByVal posX As Byte, ByVal posY As Byte, Optional ByVal alpha As Boolean = False, Optional ByVal Angle As Single = 0, Optional ByVal Shadow As Boolean = False)
+Sub DDrawTransGrhtoSurface(ByRef Grh As Grh, ByVal X As Integer, ByVal Y As Integer, ByVal Center As Byte, ByRef Color_List() As Long, ByVal Animate As Byte, ByVal posX As Byte, ByVal posY As Byte, Optional ByVal Alpha As Boolean = False, Optional ByVal Angle As Single = 0, Optional ByVal Shadow As Boolean = False)
 '*****************************************************************
 'Draws a GRH transparently to a X and Y position
 '*****************************************************************
@@ -2196,7 +2196,7 @@ On Error GoTo error
         SourceRect.Right = SourceRect.Left + .pixelWidth
         SourceRect.bottom = SourceRect.Top + .pixelHeight
         
-        Call Device_Textured_Render(X, Y, SurfaceDB.Surface(.FileNum), SourceRect, Color_List(), alpha, Angle, False)
+        Call Device_Textured_Render(X, Y, SurfaceDB.Surface(.FileNum), SourceRect, Color_List(), Alpha, Angle, False)
     End With
 Exit Sub
 

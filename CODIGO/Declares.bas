@@ -71,12 +71,12 @@ Public outgoingData As clsByteQueue
 'The main timer of the game.
 Public MainTimer As clsTimer
 
-
 'Error code
-Public Const TOO_FAST As Long = 24036
-Public Const REFUSED As Long = 24061
-Public Const TIME_OUT As Long = 24060
-
+Public Enum eSockError
+   TOO_FAST = 24036
+   REFUSED = 24061
+   TIME_OUT = 24060
+End Enum
 
 'Sonidos
 Public Const SND_CLICK As String = "click.Wav"
@@ -88,73 +88,70 @@ Public Const SND_DICE As String = "cupdice.Wav"
 Public Const SND_LLUVIAINEND As String = "lluviainend.wav"
 Public Const SND_LLUVIAOUTEND As String = "lluviaoutend.wav"
 
-' Head index of the casper. Used to know if a char is killed
-
 ' Constantes de intervalo
-Public Const INT_MACRO_HECHIS As Integer = 2788
-Public Const INT_MACRO_TRABAJO As Integer = 900
-
-Public Const INT_ATTACK As Integer = 1500
-Public Const INT_ARROWS As Integer = 1400
-Public Const INT_CAST_SPELL As Integer = 1400
-Public Const INT_CAST_ATTACK As Integer = 1000
-Public Const INT_WORK As Integer = 700
-Public Const INT_USEITEMU As Integer = 450
-Public Const INT_USEITEMDCK As Integer = 125
-Public Const INT_SENTRPU As Integer = 2000
+Public Enum eIntervalos
+    INT_MACRO_HECHIS = 2788
+    INT_MACRO_TRABAJO = 900
+    INT_ATTACK = 1500
+    INT_ARROWS = 1400
+    INT_CAST_SPELL = 1400
+    INT_CAST_ATTACK = 1000
+    INT_WORK = 700
+    INT_USEITEMU = 450
+    INT_USEITEMDCK = 125
+    INT_SENTRPU = 2000
+End Enum
 
 Public MacroBltIndex As Integer
 
-Public Const CASPER_HEAD As Integer = 500
-Public Const FRAGATA_FANTASMAL As Integer = 87
-
 Public Const NUMATRIBUTES As Byte = 5
 
-Public Const HUMANO_H_PRIMER_CABEZA As Integer = 1
-Public Const HUMANO_H_ULTIMA_CABEZA As Integer = 40 'En verdad es hasta la 51, pero como son muchas estas las dejamos no seleccionables
-Public Const HUMANO_H_CUERPO_DESNUDO As Integer = 21
-
-Public Const ELFO_H_PRIMER_CABEZA As Integer = 101
-Public Const ELFO_H_ULTIMA_CABEZA As Integer = 122
-Public Const ELFO_H_CUERPO_DESNUDO As Integer = 210
-
-Public Const DROW_H_PRIMER_CABEZA As Integer = 201
-Public Const DROW_H_ULTIMA_CABEZA As Integer = 221
-Public Const DROW_H_CUERPO_DESNUDO As Integer = 32
-
-Public Const ENANO_H_PRIMER_CABEZA As Integer = 301
-Public Const ENANO_H_ULTIMA_CABEZA As Integer = 319
-Public Const ENANO_H_CUERPO_DESNUDO As Integer = 53
-
-Public Const GNOMO_H_PRIMER_CABEZA As Integer = 401
-Public Const GNOMO_H_ULTIMA_CABEZA As Integer = 416
-Public Const GNOMO_H_CUERPO_DESNUDO As Integer = 222
-'**************************************************
-Public Const HUMANO_M_PRIMER_CABEZA As Integer = 70
-Public Const HUMANO_M_ULTIMA_CABEZA As Integer = 89
-Public Const HUMANO_M_CUERPO_DESNUDO As Integer = 39
-
-Public Const ELFO_M_PRIMER_CABEZA As Integer = 170
-Public Const ELFO_M_ULTIMA_CABEZA As Integer = 188
-Public Const ELFO_M_CUERPO_DESNUDO As Integer = 259
-
-Public Const DROW_M_PRIMER_CABEZA As Integer = 270
-Public Const DROW_M_ULTIMA_CABEZA As Integer = 288
-Public Const DROW_M_CUERPO_DESNUDO As Integer = 40
-
-Public Const ENANO_M_PRIMER_CABEZA As Integer = 370
-Public Const ENANO_M_ULTIMA_CABEZA As Integer = 384
-Public Const ENANO_M_CUERPO_DESNUDO As Integer = 60
-
-Public Const GNOMO_M_PRIMER_CABEZA As Integer = 470
-Public Const GNOMO_M_ULTIMA_CABEZA As Integer = 484
-Public Const GNOMO_M_CUERPO_DESNUDO As Integer = 260
-
-'Musica
-Public Const MP3_Inicio As Byte = 101
+Public Enum eCabezas
+    CASPER_HEAD = 500
+    FRAGATA_FANTASMAL = 87
+    
+    HUMANO_H_PRIMER_CABEZA = 1
+    HUMANO_H_ULTIMA_CABEZA = 40 'En verdad es hasta la 51, pero como son muchas estas las dejamos no seleccionables
+    HUMANO_H_CUERPO_DESNUDO = 21
+    
+    ELFO_H_PRIMER_CABEZA = 101
+    ELFO_H_ULTIMA_CABEZA = 122
+    ELFO_H_CUERPO_DESNUDO = 210
+    
+    DROW_H_PRIMER_CABEZA = 201
+    DROW_H_ULTIMA_CABEZA = 221
+    DROW_H_CUERPO_DESNUDO = 32
+    
+    ENANO_H_PRIMER_CABEZA = 301
+    ENANO_H_ULTIMA_CABEZA = 319
+    ENANO_H_CUERPO_DESNUDO = 53
+    
+    GNOMO_H_PRIMER_CABEZA = 401
+    GNOMO_H_ULTIMA_CABEZA = 416
+    GNOMO_H_CUERPO_DESNUDO = 222
+    
+    HUMANO_M_PRIMER_CABEZA = 70
+    HUMANO_M_ULTIMA_CABEZA = 89
+    HUMANO_M_CUERPO_DESNUDO = 39
+    
+    ELFO_M_PRIMER_CABEZA = 170
+    ELFO_M_ULTIMA_CABEZA = 188
+    ELFO_M_CUERPO_DESNUDO = 259
+    
+    DROW_M_PRIMER_CABEZA = 270
+    DROW_M_ULTIMA_CABEZA = 288
+    DROW_M_CUERPO_DESNUDO = 40
+    
+    ENANO_M_PRIMER_CABEZA = 370
+    ENANO_M_ULTIMA_CABEZA = 384
+    ENANO_M_CUERPO_DESNUDO = 60
+    
+    GNOMO_M_PRIMER_CABEZA = 470
+    GNOMO_M_ULTIMA_CABEZA = 484
+    GNOMO_M_CUERPO_DESNUDO = 260
+End Enum
 
 Public ColoresPJ(0 To 50) As Long
-
 
 Public Type tServerInfo
     Ip As String
@@ -180,19 +177,14 @@ Public NoRes As Boolean 'no cambiar la resolucion
 Public RainBufferIndex As Long
 Public FogataBufferIndex As Long
 
-Public Const bCabeza = 1
-Public Const bPiernaIzquierda = 2
-Public Const bPiernaDerecha = 3
-Public Const bBrazoDerecho = 4
-Public Const bBrazoIzquierdo = 5
-Public Const bTorso = 6
-
-'Timers de GetTickCount
-Public Const tAt = 2000
-Public Const tUs = 600
-
-Public Const PrimerBodyBarco = 84
-Public Const UltimoBodyBarco = 87
+Public Enum ePartesCuerpo
+    bCabeza = 1
+    bPiernaIzquierda = 2
+    bPiernaDerecha = 3
+    bBrazoDerecho = 4
+    bBrazoIzquierdo = 5
+    bTorso = 6
+End Enum
 
 Public NumEscudosAnims As Integer
 
@@ -204,7 +196,6 @@ Public HerreroMejorar() As tItemsConstruibles
 
 Public UsaMacro As Boolean
 Public CnTd As Byte
-
 
 Public Const MAX_BANCOINVENTORY_SLOTS As Byte = 40
 Public UserBancoInventory(1 To MAX_BANCOINVENTORY_SLOTS) As Inventory
@@ -241,36 +232,35 @@ Public Const GOLD_OFFER_SLOT As Integer = INV_OFFER_SLOTS + 1
 
 Public Const FOgata As Integer = 1521
 
-
 Public Enum eClass
-    Mage = 1    'Mago
-    Cleric      'Clérigo
-    Warrior     'Guerrero
-    Assasin     'Asesino
-    Thief       'Ladrón
-    Bard        'Bardo
-    Druid       'Druida
-    Bandit      'Bandido
-    Paladin     'Paladín
-    Hunter      'Cazador
-    Worker      'Trabajador
-    Pirat       'Pirata
+    Mage = 1      'Mago
+    Cleric = 2    'Clérigo
+    Warrior = 3   'Guerrero
+    Assasin = 4   'Asesino
+    Thief = 5     'Ladrón
+    Bard = 6      'Bardo
+    Druid = 7     'Druida
+    Bandit = 8    'Bandido
+    Paladin = 9   'Paladín
+    Hunter = 10   'Cazador
+    Worker = 11   'Trabajador
+    Pirat = 12    'Pirata
 End Enum
 
 Public Enum eCiudad
     cUllathorpe = 1
-    cNix
-    cBanderbill
-    cLindos
-    cArghal
+    cNix = 2
+    cBanderbill = 3
+    cLindos = 4
+    cArghal = 5
 End Enum
 
 Enum eRaza
     Humano = 1
-    Elfo
-    ElfoOscuro
-    Gnomo
-    Enano
+    Elfo = 2
+    ElfoOscuro = 3
+    Gnomo = 4
+    Enano = 5
 End Enum
 
 Public Enum eSkill
@@ -306,7 +296,7 @@ End Enum
 
 Enum eGenero
     Hombre = 1
-    Mujer
+    Mujer = 2
 End Enum
 
 Public Enum PlayerType
@@ -349,7 +339,6 @@ Public Enum eObjType
     otFlechas = 32
     otBotellaVacia = 33
     otBotellaLlena = 34
-    otManchas = 35          'No se usa
     otArbolElfico = 36
     otMochilas = 37
     otCualquiera = 1000
@@ -372,154 +361,154 @@ Public Enum eNickColor
 End Enum
 
 Public Enum eGMCommands
-    GMMessage = 1           '/GMSG
-    showName                '/SHOWNAME
-    OnlineRoyalArmy         '/ONLINEREAL
-    OnlineChaosLegion       '/ONLINECAOS
-    GoNearby                '/IRCERCA
-    Comment                 '/REM
-    serverTime              '/HORA
-    Where                   '/DONDE
-    CreaturesInMap          '/NENE
-    WarpMeToTarget          '/TELEPLOC
-    WarpChar                '/TELEP
-    Silence                 '/SILENCIAR
-    SOSShowList             '/SHOW SOS
-    SOSRemove               'SOSDONE
-    GoToChar                '/IRA
-    invisible               '/INVISIBLE
-    GMPanel                 '/PANELGM
-    RequestUserList         'LISTUSU
-    Working                 '/TRABAJANDO
-    Hiding                  '/OCULTANDO
-    Jail                    '/CARCEL
-    KillNPC                 '/RMATA
-    WarnUser                '/ADVERTENCIA
-    EditChar                '/MOD
-    RequestCharInfo         '/INFO
-    RequestCharStats        '/STAT
-    RequestCharGold         '/BAL
-    RequestCharInventory    '/INV
-    RequestCharBank         '/BOV
-    RequestCharSkills       '/SKILLS
-    ReviveChar              '/REVIVIR
-    OnlineGM                '/ONLINEGM
-    OnlineMap               '/ONLINEMAP
-    Forgive                 '/PERDON
-    Kick                    '/ECHAR
-    Execute                 '/EJECUTAR
-    banChar                 '/BAN
-    UnbanChar               '/UNBAN
-    NPCFollow               '/SEGUIR
-    SummonChar              '/SUM
-    SpawnListRequest        '/CC
-    SpawnCreature           'SPA
-    ResetNPCInventory       '/RESETINV
-    ServerMessage           '/RMSG
-    nickToIP                '/NICK2IP
-    IPToNick                '/IP2NICK
-    GuildOnlineMembers      '/ONCLAN
-    TeleportCreate          '/CT
-    TeleportDestroy         '/DT
-    RainToggle              '/LLUVIA
-    SetCharDescription      '/SETDESC
-    ForceMIDIToMap          '/FORCEMIDIMAP
-    ForceWAVEToMap          '/FORCEWAVMAP
-    RoyalArmyMessage        '/REALMSG
-    ChaosLegionMessage      '/CAOSMSG
-    CitizenMessage          '/CIUMSG
-    CriminalMessage         '/CRIMSG
-    TalkAsNPC               '/TALKAS
-    DestroyAllItemsInArea   '/MASSDEST
-    AcceptRoyalCouncilMember '/ACEPTCONSE
-    AcceptChaosCouncilMember '/ACEPTCONSECAOS
-    ItemsInTheFloor         '/PISO
-    MakeDumb                '/ESTUPIDO
-    MakeDumbNoMore          '/NOESTUPIDO
-    dumpIPTables            '/DUMPSECURITY
-    CouncilKick             '/KICKCONSE
-    SetTrigger              '/TRIGGER
-    AskTrigger              '/TRIGGER with no args
-    BannedIPList            '/BANIPLIST
-    BannedIPReload          '/BANIPRELOAD
-    GuildMemberList         '/MIEMBROSCLAN
-    GuildBan                '/BANCLAN
-    BanIP                   '/BANIP
-    UnbanIP                 '/UNBANIP
-    CreateItem              '/CI
-    DestroyItems            '/DEST
-    ChaosLegionKick         '/NOCAOS
-    RoyalArmyKick           '/NOREAL
-    ForceMIDIAll            '/FORCEMIDI
-    ForceWAVEAll            '/FORCEWAV
-    RemovePunishment        '/BORRARPENA
-    TileBlockedToggle       '/BLOQ
-    KillNPCNoRespawn        '/MATA
-    KillAllNearbyNPCs       '/MASSKILL
-    LastIP                  '/LASTIP
-    ChangeMOTD              '/MOTDCAMBIA
-    SetMOTD                 'ZMOTD
-    SystemMessage           '/SMSG
-    CreateNPC               '/ACC
-    CreateNPCWithRespawn    '/RACC
-    ImperialArmour          '/AI1 - 4
-    ChaosArmour             '/AC1 - 4
-    NavigateToggle          '/NAVE
-    ServerOpenToUsersToggle '/HABILITAR
-    TurnOffServer           '/APAGAR
-    TurnCriminal            '/CONDEN
-    ResetFactions           '/RAJAR
-    RemoveCharFromGuild     '/RAJARCLAN
-    RequestCharMail         '/LASTEMAIL
-    AlterPassword           '/APASS
-    AlterMail               '/AEMAIL
-    AlterName               '/ANAME
-    DoBackUp                '/DOBACKUP
-    ShowGuildMessages       '/SHOWCMSG
-    SaveMap                 '/GUARDAMAPA
-    ChangeMapInfoPK         '/MODMAPINFO PK
-    ChangeMapInfoBackup     '/MODMAPINFO BACKUP
-    ChangeMapInfoRestricted '/MODMAPINFO RESTRINGIR
-    ChangeMapInfoNoMagic    '/MODMAPINFO MAGIASINEFECTO
-    ChangeMapInfoNoInvi     '/MODMAPINFO INVISINEFECTO
-    ChangeMapInfoNoResu     '/MODMAPINFO RESUSINEFECTO
-    ChangeMapInfoLand       '/MODMAPINFO TERRENO
-    ChangeMapInfoZone       '/MODMAPINFO ZONA
-    ChangeMapInfoStealNpc   '/MODMAPINFO ROBONPCm
-    ChangeMapInfoNoOcultar  '/MODMAPINFO OCULTARSINEFECTO
-    ChangeMapInfoNoInvocar  '/MODMAPINFO INVOCARSINEFECTO
-    SaveChars               '/GRABAR
-    CleanSOS                '/BORRAR SOS
-    ShowServerForm          '/SHOW INT
-    night                   '/NOCHE
-    KickAllChars            '/ECHARTODOSPJS
-    ReloadNPCs              '/RELOADNPCS
-    ReloadServerIni         '/RELOADSINI
-    ReloadSpells            '/RELOADHECHIZOS
-    ReloadObjects           '/RELOADOBJ
-    Restart                 '/REINICIAR
-    ResetAutoUpdate         '/AUTOUPDATE
-    ChatColor               '/CHATCOLOR
-    Ignored                 '/IGNORADO
-    CheckSlot               '/SLOT
-    SetIniVar               '/SETINIVAR LLAVE CLAVE VALOR
-    CreatePretorianClan     '/CREARPRETORIANOS
-    RemovePretorianClan     '/ELIMINARPRETORIANOS
-    EnableDenounces         '/DENUNCIAS
-    ShowDenouncesList       '/SHOW DENUNCIAS
-    MapMessage              '/MAPMSG
-    SetDialog               '/SETDIALOG
-    Impersonate             '/IMPERSONAR
-    Imitate                 '/MIMETIZAR
-    RecordAdd
-    RecordRemove
-    RecordAddObs
-    RecordListRequest
-    RecordDetailsRequest
-    ExitDestroy
-    ToggleCentinelActivated '/CENTINELAACTIVADO
-    SearchNpc               '/BUSCAR
-    SearchObj               '/BUSCAR
+    GMMessage = 1                   '/GMSG
+    showName = 2                    '/SHOWNAME
+    OnlineRoyalArmy = 3             '/ONLINEREAL
+    OnlineChaosLegion = 4           '/ONLINECAOS
+    GoNearby = 5                    '/IRCERCA
+    Comment = 6                     '/REM
+    serverTime = 7                  '/HORA
+    Where = 8                       '/DONDE
+    CreaturesInMap = 9              '/NENE
+    WarpMeToTarget = 10             '/TELEPLOC
+    WarpChar = 11                   '/TELEP
+    Silence = 12                    '/SILENCIAR
+    SOSShowList = 13                '/SHOW SOS
+    SOSRemove = 14                  'SOSDONE
+    GoToChar = 15                   '/IRA
+    invisible = 16                  '/INVISIBLE
+    GMPanel = 17                    '/PANELGM
+    RequestUserList = 18            'LISTUSU
+    Working = 19                    '/TRABAJANDO
+    Hiding = 20                     '/OCULTANDO
+    Jail = 21                       '/CARCEL
+    KillNPC = 22                    '/RMATA
+    WarnUser = 23                   '/ADVERTENCIA
+    EditChar = 24                   '/MOD
+    RequestCharInfo = 25            '/INFO
+    RequestCharStats = 26           '/STAT
+    RequestCharGold = 27            '/BAL
+    RequestCharInventory = 28       '/INV
+    RequestCharBank = 29            '/BOV
+    RequestCharSkills = 30          '/SKILLS
+    ReviveChar = 31                 '/REVIVIR
+    OnlineGM = 32                   '/ONLINEGM
+    OnlineMap = 33                  '/ONLINEMAP
+    Forgive = 34                    '/PERDON
+    Kick = 35                       '/ECHAR
+    Execute = 36                    '/EJECUTAR
+    banChar = 37                    '/BAN
+    UnbanChar = 38                  '/UNBAN
+    NPCFollow = 39                  '/SEGUIR
+    SummonChar = 40                 '/SUM
+    SpawnListRequest = 41           '/CC
+    SpawnCreature = 42              'SPA
+    ResetNPCInventory = 43          '/RESETINV
+    ServerMessage = 44              '/RMSG
+    nickToIP = 45                   '/NICK2IP
+    IPToNick = 46                   '/IP2NICK
+    GuildOnlineMembers = 47         '/ONCLAN
+    TeleportCreate = 48             '/CT
+    TeleportDestroy = 49            '/DT
+    RainToggle = 50                 '/LLUVIA
+    SetCharDescription = 51         '/SETDESC
+    ForceMIDIToMap = 52             '/FORCEMIDIMAP
+    ForceWAVEToMap = 53             '/FORCEWAVMAP
+    RoyalArmyMessage = 54           '/REALMSG
+    ChaosLegionMessage = 55         '/CAOSMSG
+    CitizenMessage = 56             '/CIUMSG
+    CriminalMessage = 57            '/CRIMSG
+    TalkAsNPC = 58                  '/TALKAS
+    DestroyAllItemsInArea = 59      '/MASSDEST
+    AcceptRoyalCouncilMember = 60   '/ACEPTCONSE
+    AcceptChaosCouncilMember = 61   '/ACEPTCONSECAOS
+    ItemsInTheFloor = 62            '/PISO
+    MakeDumb = 63                   '/ESTUPIDO
+    MakeDumbNoMore = 64             '/NOESTUPIDO
+    dumpIPTables = 65               '/DUMPSECURITY
+    CouncilKick = 66                '/KICKCONSE
+    SetTrigger = 67                 '/TRIGGER
+    AskTrigger = 68                 '/TRIGGER with no args
+    BannedIPList = 69               '/BANIPLIST
+    BannedIPReload = 70             '/BANIPRELOAD
+    GuildMemberList = 71            '/MIEMBROSCLAN
+    GuildBan = 72                   '/BANCLAN
+    BanIP = 73                      '/BANIP
+    UnbanIP = 74                    '/UNBANIP
+    CreateItem = 75                 '/CI
+    DestroyItems = 76               '/DEST
+    ChaosLegionKick = 77            '/NOCAOS
+    RoyalArmyKick = 78              '/NOREAL
+    ForceMIDIAll = 79               '/FORCEMIDI
+    ForceWAVEAll = 80               '/FORCEWAV
+    RemovePunishment = 81           '/BORRARPENA
+    TileBlockedToggle = 82          '/BLOQ
+    KillNPCNoRespawn = 83           '/MATA
+    KillAllNearbyNPCs = 84          '/MASSKILL
+    LastIP = 85                     '/LASTIP
+    ChangeMOTD = 86                 '/MOTDCAMBIA
+    SetMOTD = 87                    'ZMOTD
+    SystemMessage = 88              '/SMSG
+    CreateNPC = 89                  '/ACC
+    CreateNPCWithRespawn = 90       '/RACC
+    ImperialArmour = 91             '/AI1 - 4
+    ChaosArmour = 92                '/AC1 - 4
+    NavigateToggle = 93             '/NAVE
+    ServerOpenToUsersToggle = 94    '/HABILITAR
+    TurnOffServer = 95              '/APAGAR
+    TurnCriminal = 96               '/CONDEN
+    ResetFactions = 97              '/RAJAR
+    RemoveCharFromGuild = 98        '/RAJARCLAN
+    RequestCharMail = 99            '/LASTEMAIL
+    AlterPassword = 100             '/APASS
+    AlterMail = 101                 '/AEMAIL
+    AlterName = 102                  '/ANAME
+    DoBackUp = 103                  '/DOBACKUP
+    ShowGuildMessages = 104         '/SHOWCMSG
+    SaveMap = 105                   '/GUARDAMAPA
+    ChangeMapInfoPK = 106           '/MODMAPINFO PK
+    ChangeMapInfoBackup = 107       '/MODMAPINFO BACKUP
+    ChangeMapInfoRestricted = 108   '/MODMAPINFO RESTRINGIR
+    ChangeMapInfoNoMagic = 109      '/MODMAPINFO MAGIASINEFECTO
+    ChangeMapInfoNoInvi = 110       '/MODMAPINFO INVISINEFECTO
+    ChangeMapInfoNoResu = 111       '/MODMAPINFO RESUSINEFECTO
+    ChangeMapInfoLand = 112         '/MODMAPINFO TERRENO
+    ChangeMapInfoZone = 113         '/MODMAPINFO ZONA
+    ChangeMapInfoStealNpc = 114     '/MODMAPINFO ROBONPCm
+    ChangeMapInfoNoOcultar = 115    '/MODMAPINFO OCULTARSINEFECTO
+    ChangeMapInfoNoInvocar = 116    '/MODMAPINFO INVOCARSINEFECTO
+    SaveChars = 117                 '/GRABAR
+    CleanSOS = 118                  '/BORRAR SOS
+    ShowServerForm = 119            '/SHOW INT
+    night = 120                     '/NOCHE
+    KickAllChars = 121              '/ECHARTODOSPJS
+    ReloadNPCs = 122                '/RELOADNPCS
+    ReloadServerIni = 123           '/RELOADSINI
+    ReloadSpells = 124              '/RELOADHECHIZOS
+    ReloadObjects = 125             '/RELOADOBJ
+    Restart = 126                   '/REINICIAR
+    ResetAutoUpdate = 127           '/AUTOUPDATE
+    ChatColor = 128                 '/CHATCOLOR
+    Ignored = 129                   '/IGNORADO
+    CheckSlot = 130                 '/SLOT
+    SetIniVar = 131                 '/SETINIVAR LLAVE CLAVE VALOR
+    CreatePretorianClan = 132       '/CREARPRETORIANOS
+    RemovePretorianClan = 133       '/ELIMINARPRETORIANOS
+    EnableDenounces = 134           '/DENUNCIAS
+    ShowDenouncesList = 135         '/SHOW DENUNCIAS
+    MapMessage = 136                '/MAPMSG
+    SetDialog = 137                 '/SETDIALOG
+    Impersonate = 138               '/IMPERSONAR
+    Imitate = 139                   '/MIMETIZAR
+    RecordAdd = 140
+    RecordRemove = 141
+    RecordAddObs = 142
+    RecordListRequest = 143
+    RecordDetailsRequest = 144
+    ExitDestroy = 145
+    ToggleCentinelActivated = 146   '/CENTINELAACTIVADO
+    SearchNpc = 147                 '/BUSCAR
+    SearchObj = 148                 '/BUSCAR
 End Enum
 
 '
@@ -778,22 +767,22 @@ End Enum
 
 Public Enum eEditOptions
     eo_Gold = 1
-    eo_Experience
-    eo_Body
-    eo_Head
-    eo_CiticensKilled
-    eo_CriminalsKilled
-    eo_Level
-    eo_Class
-    eo_Skills
-    eo_SkillPointsLeft
-    eo_Nobleza
-    eo_Asesino
-    eo_Sex
-    eo_Raza
-    eo_addGold
-    eo_Vida
-    eo_Poss
+    eo_Experience = 2
+    eo_Body = 3
+    eo_Head = 4
+    eo_CiticensKilled = 5
+    eo_CriminalsKilled = 6
+    eo_Level = 7
+    eo_Class = 8
+    eo_Skills = 9
+    eo_SkillPointsLeft = 10
+    eo_Nobleza = 11
+    eo_Asesino = 12
+    eo_Sex = 13
+    eo_Raza = 14
+    eo_addGold = 15
+    eo_Vida = 16
+    eo_Poss = 17
 End Enum
 
 ''

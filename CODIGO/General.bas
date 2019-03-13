@@ -531,7 +531,7 @@ Sub SwitchMap(ByVal Map As Integer)
      
     fileBuff.initializeReader dData
     
-    MapInfo.MapVersion = fileBuff.getInteger
+    mapInfo.MapVersion = fileBuff.getInteger
    
     With MiCabecera
         .Desc = fileBuff.getString(Len(.Desc))
@@ -608,8 +608,8 @@ Sub SwitchMap(ByVal Map As Integer)
     'Limpiamos el buffer
     Set fileBuff = Nothing
    
-    MapInfo.Name = vbNullString
-    MapInfo.Music = vbNullString
+    mapInfo.Name = vbNullString
+    mapInfo.Music = vbNullString
     
     CurMap = Map
     
@@ -1112,7 +1112,7 @@ Private Sub LoadInitialConfig()
                             True, False, False)
     
     'Inicializamos el inventario grafico
-    Call Inventario.Initialize(DirectD3D8, frmMain.picInv, MAX_INVENTORY_SLOTS)
+    Call Inventario.Initialize(DirectD3D8, frmMain.PicInv, MAX_INVENTORY_SLOTS)
     
     Call AddtoRichTextBox(frmCargando.status, _
                             "                    " & JsonLanguage.Item("BIENVENIDO").Item("TEXTO"), _
@@ -1129,33 +1129,41 @@ Private Sub LoadInitialConfig()
 End Sub
 
 Private Sub LoadTimerIntervals()
-'***************************************************
-'Author: ZaMa
-'Last Modification: 15/03/2011
-'Set the intervals of timers
-'***************************************************
+    '***************************************************
+    'Author: ZaMa
+    'Last Modification: 15/03/2011
+    'Set the intervals of timers
+    '***************************************************
     
-    Call MainTimer.SetInterval(TimersIndex.Attack, INT_ATTACK)
-    Call MainTimer.SetInterval(TimersIndex.Work, INT_WORK)
-    Call MainTimer.SetInterval(TimersIndex.UseItemWithU, INT_USEITEMU)
-    Call MainTimer.SetInterval(TimersIndex.UseItemWithDblClick, INT_USEITEMDCK)
-    Call MainTimer.SetInterval(TimersIndex.SendRPU, INT_SENTRPU)
-    Call MainTimer.SetInterval(TimersIndex.CastSpell, INT_CAST_SPELL)
-    Call MainTimer.SetInterval(TimersIndex.Arrows, INT_ARROWS)
-    Call MainTimer.SetInterval(TimersIndex.CastAttack, INT_CAST_ATTACK)
+    With MainTimer
     
-    frmMain.macrotrabajo.Interval = INT_MACRO_TRABAJO
-    frmMain.macrotrabajo.Enabled = False
+        Call .SetInterval(TimersIndex.Attack, eIntervalos.INT_ATTACK)
+        Call .SetInterval(TimersIndex.Work, eIntervalos.INT_WORK)
+        Call .SetInterval(TimersIndex.UseItemWithU, eIntervalos.INT_USEITEMU)
+        Call .SetInterval(TimersIndex.UseItemWithDblClick, eIntervalos.INT_USEITEMDCK)
+        Call .SetInterval(TimersIndex.SendRPU, eIntervalos.INT_SENTRPU)
+        Call .SetInterval(TimersIndex.CastSpell, INT_CAST_SPELL)
+        Call .SetInterval(TimersIndex.Arrows, eIntervalos.INT_ARROWS)
+        Call .SetInterval(TimersIndex.CastAttack, eIntervalos.INT_CAST_ATTACK)
+        
+        With frmMain.macrotrabajo
+            
+            .Interval = eIntervalos.INT_MACRO_TRABAJO
+            .Enabled = False
+        
+        End With
     
-   'Init timers
-    Call MainTimer.Start(TimersIndex.Attack)
-    Call MainTimer.Start(TimersIndex.Work)
-    Call MainTimer.Start(TimersIndex.UseItemWithU)
-    Call MainTimer.Start(TimersIndex.UseItemWithDblClick)
-    Call MainTimer.Start(TimersIndex.SendRPU)
-    Call MainTimer.Start(TimersIndex.CastSpell)
-    Call MainTimer.Start(TimersIndex.Arrows)
-    Call MainTimer.Start(TimersIndex.CastAttack)
+        'Init timers
+        Call .Start(TimersIndex.Attack)
+        Call .Start(TimersIndex.Work)
+        Call .Start(TimersIndex.UseItemWithU)
+        Call .Start(TimersIndex.UseItemWithDblClick)
+        Call .Start(TimersIndex.SendRPU)
+        Call .Start(TimersIndex.CastSpell)
+        Call .Start(TimersIndex.Arrows)
+        Call .Start(TimersIndex.CastAttack)
+    
+    End With
 
 End Sub
 
@@ -1259,10 +1267,8 @@ Public Sub LeerLineaComandos()
 'Last modified: 25/11/2008 (BrianPr)
 '
 '*************************************************
-    Dim T() As String, Upper_t As Long, Lower_t As Long
-    Dim i As Long
     
-    Dim UpToDate As Boolean
+    Dim i As Long, T() As String, Upper_t As Long, Lower_t As Long
     
     'Parseo los comandos
     T = Split(Command, " ")
