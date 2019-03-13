@@ -79,7 +79,7 @@ Private Type dialog
     startTime   As Long
     lifeTime    As Long
     CharIndex   As Integer
-    Color       As Long
+    color       As Long
     renderable  As Boolean
 End Type
 
@@ -110,16 +110,6 @@ Private Sub Class_Initialize()
     dialogCount = 0
 End Sub
 
-''
-' Clean up and release resources
-
-Private Sub Class_Terminate()
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 07/28/07
-'Clean up
-'***************************************************
-End Sub
 
 Private Function BinarySearch(ByVal CharIndex As Integer) As Integer
 '**************************************************************
@@ -165,7 +155,7 @@ End Function
 ' @remarks  If there are no more free slots, and the char didn't have a previous dialog,
 '           the chat is ignored.
 
-Public Sub CreateDialog(ByRef chat As String, ByVal CharIndex As Integer, ByVal Color As Long)
+Public Sub CreateDialog(ByRef chat As String, ByVal CharIndex As Integer, ByVal color As Long)
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
 'Last Modification: 08/29/07 by Rapsodius
@@ -195,7 +185,7 @@ Public Sub CreateDialog(ByRef chat As String, ByVal CharIndex As Integer, ByVal 
     
     With dialogs(slot)
         .CharIndex = CharIndex
-        .Color = ColorToDX8(Color)
+        .color = ColorToDX8(color)
         .renderable = False
         .startTime = GetTickCount()
         .textLine = FormatChat(chat)
@@ -339,7 +329,7 @@ Public Sub Render()
                 
                 'Render it
                 For j = 0 To Upper_textLine
-                    Call DrawText(.X, .Y + offset, .textLine(j), .Color)
+                    Call DrawText(.X, .Y + offset, .textLine(j), .color)
                     offset = offset + usedFont.Size + 5
                 Next j
                 

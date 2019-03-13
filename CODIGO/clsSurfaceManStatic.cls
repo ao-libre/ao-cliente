@@ -70,14 +70,6 @@ Private Declare Function SetDIBitsToDevice Lib "GDI32.dll" _
     ByVal ySrc As Long, ByVal uStartScan As Long, ByVal CScanLine As Long, _
     lpBits As Any, lpbmi As BITMAPINFO, ByVal fuColorUse As Long) As Long
     
-Private Sub Class_Initialize()
-'**************************************************************
-'Author: Juan Martín Sotuyo Dodero
-'Last Modify Date: 3/06/2006
-'
-'**************************************************************
-End Sub
-
 Private Sub Class_Terminate()
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero

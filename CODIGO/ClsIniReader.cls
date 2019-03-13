@@ -38,18 +38,6 @@ Private fileData() As MainNode
 Private MainNodes As Long
 
 ''
-'Default constructor. Does nothing.
-'
-
-Private Sub Class_Initialize()
-'**************************************************************
-'Author: Juan Martín Sotuyo Dodero
-'Last Modify Date: 5/01/2006
-'
-'**************************************************************
-End Sub
-
-''
 'Destroy every array and deallocates al memory.
 '
 

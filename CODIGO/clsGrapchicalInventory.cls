@@ -59,23 +59,6 @@ Attribute InventoryWindow.VB_VarHelpID = -1
 
 Public Event dragDone(ByVal originalSlot As Integer, ByVal newSlot As Integer)
 
-
-Private Sub Class_Initialize()
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modify Date: 27/07/04
-'
-'***************************************************
-End Sub
-
-Private Sub Class_Terminate()
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modify Date: 27/07/04
-'
-'***************************************************
-End Sub
-
 Public Sub ScrollInventory(ByVal Up As Boolean)
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -410,8 +393,8 @@ Private Sub DrawInventory()
         
         For LoopC = InventoryDimensions To Upper_inventory
             
-            startdX = ((LoopC - 1) Mod (frmMain.PicInv.Width / 32)) * 32
-            startdY = ((LoopC - 1) \ (frmMain.PicInv.Width / 32)) * 32
+            startdX = ((LoopC - 1) Mod (frmMain.picInv.Width / 32)) * 32
+            startdY = ((LoopC - 1) \ (frmMain.picInv.Width / 32)) * 32
             
             
             Call Engine_Long_To_RGB_List(Inv_Color(), -1)
