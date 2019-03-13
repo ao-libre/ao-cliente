@@ -54,7 +54,7 @@ Public Function ColorToDX8(ByVal long_color As Long) As Long
     temp_color = Hex$(long_color)
     If Len(temp_color) < 6 Then
         'Give is 6 digits for easy RGB conversion.
-        temp_color = String(6 - Len(temp_color), "0") + temp_color
+        temp_color = String$(6 - Len(temp_color), "0") + temp_color
     End If
     
     Red = CLng("&H" + mid$(temp_color, 1, 2))

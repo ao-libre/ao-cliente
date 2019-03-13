@@ -131,7 +131,7 @@ Private Function parseObject(ByRef str As String, ByRef index As Long) As Dictio
             index = index + 1
             Exit Do
         ElseIf index > m_length Then
-            m_parserrors = m_parserrors & "Falta '}': " & Right(str, 20) & vbCrLf
+            m_parserrors = m_parserrors & "Falta '}': " & Right$(str, 20) & vbCrLf
             Exit Do
         End If
 
@@ -178,7 +178,7 @@ Private Function parseArray(ByRef str As String, ByRef index As Long) As Collect
             index = index + 1
             Call skipChar(index)
         ElseIf index > m_length Then
-            m_parserrors = m_parserrors & "Falta ']': " & Right(str, 20) & vbCrLf
+            m_parserrors = m_parserrors & "Falta ']': " & Right$(str, 20) & vbCrLf
             Exit Do
         End If
     
@@ -616,7 +616,7 @@ Private Function Encode(str) As String
             If a > 31 And a < 127 Then
                 SB.Append c
             ElseIf a > -1 Or a < 65535 Then
-                SB.Append "\u" & String(4 - LenB(Hex$(a)), "0") & Hex$(a)
+                SB.Append "\u" & String$(4 - LenB(Hex$(a)), "0") & Hex$(a)
 
             End If
 

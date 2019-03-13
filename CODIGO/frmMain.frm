@@ -1,7 +1,7 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "Richtx32.ocx"
-Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.ocx"
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.OCX"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.Form frmMain 
    BorderStyle     =   0  'None
    ClientHeight    =   8985
@@ -220,7 +220,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2619
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1316,8 +1315,8 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
                     CustomMessage = CustomMessages.Message((KeyCode - 39) Mod 10)
                     If LenB(CustomMessage) <> 0 Then
                         ' No se pueden mandar mensajes personalizados de clan o privado!
-                        If UCase(Left(CustomMessage, 5)) <> "/CMSG" And _
-                            Left(CustomMessage, 1) <> "\" Then
+                        If UCase$(Left$(CustomMessage, 5)) <> "/CMSG" And _
+                            Left$(CustomMessage, 1) <> "\" Then
                             
                             Call ParseUserCommand(CustomMessage)
                         End If
@@ -1673,8 +1672,8 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
         SendTxt.Visible = False
         
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
         Else
             hlst.SetFocus
         End If
@@ -1998,13 +1997,13 @@ Private Sub Label4_Click()
     InvEqu.Picture = LoadPicture(App.path & "\Graficos\Centroinventario.jpg")
 
     ' Activo controles de inventario
-    picInv.Visible = True
+    PicInv.Visible = True
     imgInvScrollUp.Visible = True
     imgInvScrollDown.Visible = True
 
     ' Desactivo controles de hechizo
     hlst.Visible = False
-    cmdInfo.Visible = False
+    cmdINFO.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = False
@@ -2019,14 +2018,14 @@ Private Sub Label7_Click()
     
     ' Activo controles de hechizos
     hlst.Visible = True
-    cmdInfo.Visible = True
+    cmdINFO.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True
     cmdMoverHechi(1).Visible = True
     
     ' Desactivo controles de inventario
-    picInv.Visible = False
+    PicInv.Visible = False
     imgInvScrollUp.Visible = False
     imgInvScrollDown.Visible = False
 
@@ -2059,8 +2058,8 @@ On Error Resume Next  'el .SetFocus causaba errores al salir y volver a entrar
         (Not frmMSG.Visible) And (Not MirandoForo) And _
         (Not frmEstadisticas.Visible) And (Not frmCantidad.Visible) And (Not MirandoParty) Then
          
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
         ElseIf hlst.Visible Then
             hlst.SetFocus
         End If
@@ -2068,8 +2067,8 @@ On Error Resume Next  'el .SetFocus causaba errores al salir y volver a entrar
 End Sub
 
 Private Sub RecTxt_KeyDown(KeyCode As Integer, Shift As Integer)
-    If picInv.Visible Then
-        picInv.SetFocus
+    If PicInv.Visible Then
+        PicInv.SetFocus
     Else
         hlst.SetFocus
     End If
@@ -2125,8 +2124,8 @@ Private Sub SendCMSTXT_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
         Me.SendCMSTXT.Visible = False
         
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
         Else
             hlst.SetFocus
         End If

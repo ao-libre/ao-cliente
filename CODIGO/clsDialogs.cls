@@ -261,7 +261,7 @@ Private Function FormatChat(ByRef chat As String) As String()
     
     ' If it's only one line, center text
     If curLine = 0 And length < MAX_LENGTH Then
-        chatLines(curLine) = String((MAX_LENGTH - length) \ 2 + 1, " ") & chatLines(curLine)
+        chatLines(curLine) = String$((MAX_LENGTH - length) \ 2 + 1, " ") & chatLines(curLine)
     End If
     
     'Resize array to fit

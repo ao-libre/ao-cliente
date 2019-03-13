@@ -89,7 +89,7 @@ Public Function GetRawName(ByRef sName As String) As String
     Pos = InStr(1, sName, "<")
     
     If Pos > 0 Then
-        GetRawName = Trim(Left(sName, Pos - 1))
+        GetRawName = Trim$(Left$(sName, Pos - 1))
     Else
         GetRawName = sName
     End If
@@ -1530,16 +1530,16 @@ End Function
 
 Public Sub checkText(ByVal Text As String)
 Dim Nivel As Integer
-If Right(Text, Len(JsonLanguage.Item("MENSAJE_FRAGSHOOTER_TE_HA_MATADO").Item("TEXTO"))) = JsonLanguage.Item("MENSAJE_FRAGSHOOTER_TE_HA_MATADO").Item("TEXTO") Then
+If Right$(Text, Len(JsonLanguage.Item("MENSAJE_FRAGSHOOTER_TE_HA_MATADO").Item("TEXTO"))) = JsonLanguage.Item("MENSAJE_FRAGSHOOTER_TE_HA_MATADO").Item("TEXTO") Then
     Call ScreenCapture(True)
     Exit Sub
 End If
-If Left(Text, Len(JsonLanguage.Item("MENSAJE_FRAGSHOOTER_HAS_MATADO").Item("TEXTO"))) = JsonLanguage.Item("MENSAJE_FRAGSHOOTER_HAS_MATADO").Item("TEXTO") Then
+If Left$(Text, Len(JsonLanguage.Item("MENSAJE_FRAGSHOOTER_HAS_MATADO").Item("TEXTO"))) = JsonLanguage.Item("MENSAJE_FRAGSHOOTER_HAS_MATADO").Item("TEXTO") Then
     EsperandoLevel = True
     Exit Sub
 End If
 If EsperandoLevel Then
-    If Right(Text, Len(JsonLanguage.Item("MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA").Item("TEXTO"))) = JsonLanguage.Item("MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA").Item("TEXTO") Then
+    If Right$(Text, Len(JsonLanguage.Item("MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA").Item("TEXTO"))) = JsonLanguage.Item("MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA").Item("TEXTO") Then
         If CInt(mid$(Text, Len(JsonLanguage.Item("MENSAJE_FRAGSHOOTER_HAS_GANADO").Item("TEXTO")), (Len(Text) - (Len(JsonLanguage.Item("MENSAJE_FRAGSHOOTER_HAS_GANADO").Item("TEXTO")))))) / 2 > ClientSetup.byMurderedLevel Then
             Call ScreenCapture(True)
         End If
