@@ -66,14 +66,6 @@ Public Type ICMP_ECHO_REPLY
    data            As String * 250
 End Type
 
-Private Type HOSTENT
-   hName As Long
-   hAliases As Long
-   hAddrType As Integer
-   hLen As Integer
-   hAddrList As Long
-End Type
-
 Private Declare Function gethostbyname Lib "WSOCK32.DLL" _
   (ByVal hostname As String) As Long
 

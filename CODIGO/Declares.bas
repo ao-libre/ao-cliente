@@ -153,12 +153,6 @@ Public Const GNOMO_M_CUERPO_DESNUDO As Integer = 260
 'Musica
 Public Const MP3_Inicio As Byte = 101
 
-Public Type tColor
-    r As Byte
-    g As Byte
-    b As Byte
-End Type
-
 Public ColoresPJ(0 To 50) As Long
 
 
@@ -984,11 +978,4 @@ Public Type tHechizos
     HechiceroMsg As String
     PropioMsg As String
     TargetMsg As String
-End Type
- 
-Public Type tNpcs
-    Nombre As String
-    Desc As String
-    NroExpresiones As Byte
-    Expresiones() As String
 End Type
