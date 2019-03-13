@@ -830,7 +830,6 @@ Public Declare Function getprivateprofilestring Lib "kernel32" Alias "GetPrivate
 
 'Teclado
 Public Declare Function GetKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
-Public Declare Function GetAsyncKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
 
 Public Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
 
