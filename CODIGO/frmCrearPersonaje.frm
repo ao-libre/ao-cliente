@@ -1939,7 +1939,7 @@ Private Sub DarCuerpoYCabeza()
                     
                 Case eRaza.Gnomo
                     UserHead = eCabezas.GNOMO_H_PRIMER_CABEZA
-                    UserBody = eCabezas.GNOMO_H_ULTIMA_CABEZA
+                    UserBody = eCabezas.GNOMO_H_CUERPO_DESNUDO
                     
                 Case Else
                     UserHead = 0
