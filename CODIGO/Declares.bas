@@ -83,10 +83,7 @@ Public Const SND_CLICK As String = "click.Wav"
 Public Const SND_PASOS1 As String = "23.Wav"
 Public Const SND_PASOS2 As String = "24.Wav"
 Public Const SND_NAVEGANDO As String = "50.wav"
-Public Const SND_OVER As String = "click2.Wav"
 Public Const SND_DICE As String = "cupdice.Wav"
-Public Const SND_LLUVIAINEND As String = "lluviainend.wav"
-Public Const SND_LLUVIAOUTEND As String = "lluviaoutend.wav"
 
 ' Constantes de intervalo
 Public Enum eIntervalos
@@ -203,7 +200,6 @@ Public UserBancoInventory(1 To MAX_BANCOINVENTORY_SLOTS) As Inventory
 Public TradingUserName As String
 
 Public Tips() As String * 255
-Public Const LoopAdEternum As Integer = 999
 
 'Direcciones
 Public Enum E_Heading
@@ -216,7 +212,6 @@ End Enum
 'Objetos
 Public Const MAX_INVENTORY_OBJS As Integer = 10000
 Public Const MAX_INVENTORY_SLOTS As Byte = 30
-Public Const MAX_NORMAL_INVENTORY_SLOTS As Byte = 20
 Public Const MAX_NPC_INVENTORY_SLOTS As Byte = 50
 Public Const MAXHECHI As Byte = 35
 
@@ -229,8 +224,6 @@ Public Const MAXATRIBUTOS As Byte = 38
 
 Public Const FLAGORO As Integer = MAX_INVENTORY_SLOTS + 1
 Public Const GOLD_OFFER_SLOT As Integer = INV_OFFER_SLOTS + 1
-
-Public Const FOgata As Integer = 1521
 
 Public Enum eClass
     Mage = 1      'Mago
@@ -518,7 +511,6 @@ End Enum
 ' MENSAJE_[12]: Aparecen antes y despues del valor de los mensajes anteriores (MENSAJE_GOLPE_*)
 Public Const MENSAJE_1 As String = "¡¡"
 Public Const MENSAJE_2 As String = "!!"
-Public Const MENSAJE_11 As String = "¡"
 Public Const MENSAJE_22 As String = "!"
 
 Public Enum eMessages
@@ -929,10 +921,6 @@ Public Const GRH_INI_SM As Integer = 4978
 
 Public Const ORO_INDEX As Integer = 12
 Public Const ORO_GRH As Integer = 511
-
-Public Const GRH_HALF_STAR As Integer = 5357
-Public Const GRH_FULL_STAR As Integer = 5358
-Public Const GRH_GLOW_STAR As Integer = 5359
 
 Public Const LH_GRH As Integer = 724
 Public Const LP_GRH As Integer = 725

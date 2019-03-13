@@ -49,6 +49,7 @@ Public Type BITMAPFILEHEADER
     bfReserved2 As Integer
     bfOffBits As Long
 End Type
+
 Public Type BITMAPINFOHEADER
     biSize As Long
     biWidth As Long
@@ -62,24 +63,18 @@ Public Type BITMAPINFOHEADER
     biClrUsed As Long
     biClrImportant As Long
 End Type
+
 Public Type RGBQUAD
     rgbBlue As Byte
     rgbGreen As Byte
     rgbRed As Byte
     rgbReserved As Byte
 End Type
+
 Public Type BITMAPINFO
     bmiHeader As BITMAPINFOHEADER
     bmiColors(255) As RGBQUAD
 End Type
-
-Private Const BI_RGB As Long = 0
-Private Const BI_RLE8 As Long = 1
-Private Const BI_RLE4 As Long = 2
-Private Const BI_BITFIELDS As Long = 3
-Private Const BI_JPG As Long = 4
-Private Const BI_PNG As Long = 5
-
 
 'To get free bytes in drive
 Private Declare Function GetDiskFreeSpace Lib "kernel32" Alias "GetDiskFreeSpaceExA" (ByVal lpRootPathName As String, FreeBytesToCaller As Currency, bytesTotal As Currency, FreeBytesTotal As Currency) As Long

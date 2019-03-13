@@ -62,9 +62,6 @@ Private surfaceList(HASH_TABLE_SIZE - 1) As HashBucket
 
 Private DirectD3D As D3DX8
 
-Private Const DIB_PAL_COLORS As Long = 1
-Private Const DIB_RGB_COLORS As Long = 0
-
     
 Private Sub Class_Terminate()
 '**************************************************************
