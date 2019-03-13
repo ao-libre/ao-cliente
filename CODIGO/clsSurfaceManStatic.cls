@@ -76,6 +76,8 @@ Private Sub Class_Terminate()
 'Last Modify Date: 3/06/2006
 'Clean up
 '**************************************************************
+On Error Resume Next
+
     Dim i As Long
     Dim j As Long
     

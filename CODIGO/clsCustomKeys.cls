@@ -523,6 +523,8 @@ Private Sub Class_Terminate()
 'Last Modification: 08/04/07
 '
 '***************************************************
+On Error Resume Next
+
     Call SaveCustomKeys
 End Sub
 

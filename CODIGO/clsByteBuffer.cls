@@ -199,6 +199,8 @@ hFile = INVALID_FILE_HANDLER
 End Sub
 
 Private Sub Class_Terminate()
+On Error Resume Next
+
     Erase data()
 End Sub
 

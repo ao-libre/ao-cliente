@@ -104,6 +104,8 @@ Private Sub Class_Terminate()
 'Last Modification: 07/26/07
 'Stores all messages back into config file for later use.
 '***************************************************
+On Error Resume Next
+
     Dim handle As Integer
     Dim i As Long
     Dim directories() As String
