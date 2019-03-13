@@ -1249,7 +1249,7 @@ Public Sub ShowSendCMSGTxt()
 End Sub
 
 ''
-' Checks the command line parameters, if you are running Ao with /nores command and checks the AoUpdate parameters
+' Checks the command line parameters, if you are running Ao with /nores command
 '
 '
 
@@ -1273,61 +1273,9 @@ Public Sub LeerLineaComandos()
         Select Case UCase$(T(i))
             Case "/NORES" 'no cambiar la resolucion
                 NoRes = True
-            Case "/UPTODATE"
-                UpToDate = True
         End Select
     Next i
-    
-#If Testeo = 0 Then
-    Call AoUpdate(UpToDate, NoRes)
-#End If
 
-End Sub
-
-''
-' Runs AoUpdate if we haven't updated yet, patches aoupdate and runs Client normally if we are updated.
-'
-' @param UpToDate Specifies if we have checked for updates or not
-' @param NoREs Specifies if we have to set nores arg when running the client once again (if the AoUpdate is executed).
-
-Private Sub AoUpdate(ByVal UpToDate As Boolean, ByVal NoRes As Boolean)
-'*************************************************
-'Author: BrianPr
-'Created: 25/11/2008
-'Last modified: 25/11/2008
-'
-'*************************************************
-On Error GoTo error
-    Dim extraArgs As String
-    If Not UpToDate Then
-        'No recibe update, ejecutar AU
-        'Ejecuto el AoUpdate, sino me voy
-        If LenB(Dir(App.path & "\AoUpdate.exe", vbArchive)) = 0 Then
-            MsgBox "No se encuentra el archivo de actualizacion AoUpdate.exe por favor descarguelo y vuelva a intentar", vbCritical
-            End
-        Else
-            FileCopy App.path & "\AoUpdate.exe", App.path & "\AoUpdateTMP.exe"
-            
-            If NoRes Then
-                extraArgs = " /nores"
-            End If
-            
-            Call ShellExecute(0, "Open", App.path & "\AoUpdateTMP.exe", App.EXEName & ".exe" & extraArgs, App.path, SW_SHOWNORMAL)
-            End
-        End If
-    Else
-        If FileExist(App.path & "\AoUpdateTMP.exe", vbArchive) Then Kill App.path & "\AoUpdateTMP.exe"
-    End If
-Exit Sub
-
-error:
-    If Err.number = 75 Then 'Si el archivo AoUpdateTMP.exe esta en uso, entonces esperamos 5 ms y volvemos a intentarlo hasta que nos deje.
-        Sleep 5
-        Resume
-    Else
-        MsgBox Err.Description & vbCrLf, vbInformation, "[ " & Err.number & " ]" & " Error "
-        End
-    End If
 End Sub
 
 Private Sub LoadClientSetup()
