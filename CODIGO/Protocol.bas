@@ -33,9 +33,7 @@ Attribute VB_Name = "Protocol"
 ' @date     20060517
 
 Option Explicit
-#If False Then
-    Dim Nombre As Variant
-#End If
+
 ''
 ' TODO : /BANIP y /UNBANIP ya no trabajan con nicks. Esto lo puede mentir en forma local el cliente con un paquete a NickToIp
 

@@ -14,6 +14,7 @@ Private Type POINTAPI
     X As Long
     Y As Long
 End Type
+
 Private Type VFH
     BitmapWidth As Long         'Size of the bitmap itself
     BitmapHeight As Long
