@@ -51,16 +51,6 @@ Dim lastPosY As Integer
 Dim sEffectsActivated As Boolean
 
 
-'Constructor. Performs no action at all.
-
-Private Sub Class_Initialize()
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 16/03/04
-'
-'***************************************************
-End Sub
-
 ''
 'Destructor. Releases all created objects assuring no memory-leaks.
 

@@ -4,10 +4,7 @@ Option Explicit
 'Constantes para el Api GetLocaleInfo
 '************************************
 Const LOCALE_USER_DEFAULT = &H400
-Const LOCALE_SENGCOUNTRY = &H1002
-Const LOCALE_SENGLANGUAGE = &H1001
-Const LOCALE_SNATIVELANGNAME = &H4
-Const LOCALE_SNATIVECTRYNAME = &H8
+'Const LOCALE_SENGLANGUAGE = &H1001
   
 'Declaración de la función Api GetLocaleInfo
 Private Declare Function GetLocaleInfo _

@@ -1,7 +1,6 @@
 Attribute VB_Name = "modPing"
 Option Explicit
 
-Private Const IP_STATUS_BASE As Long = 11000
 Private Const IP_SUCCESS As Long = 0
 Private Const IP_BUF_TOO_SMALL As Long = (11000 + 1)
 Private Const IP_DEST_NET_UNREACHABLE As Long = (11000 + 2)
@@ -27,12 +26,9 @@ Private Const IP_MTU_CHANGE As Long = (11000 + 21)
 Private Const IP_UNLOAD As Long = (11000 + 22)
 Private Const IP_ADDR_ADDED As Long = (11000 + 23)
 Private Const IP_GENERAL_FAILURE As Long = (11000 + 50)
-Private Const MAX_IP_STATUS As Long = (11000 + 50)
 Private Const IP_PENDING As Long = (11000 + 255)
 Private Const PING_TIMEOUT As Long = 500
 Private Const WS_VERSION_REQD As Long = &H101
-Private Const MIN_SOCKETS_REQD As Long = 1
-Private Const SOCKET_ERROR As Long = -1
 Private Const INADDR_NONE As Long = &HFFFFFFFF
 Private Const MAX_WSADescription As Long = 256
 Private Const MAX_WSASYSStatus As Long = 128
@@ -66,14 +62,6 @@ Public Type ICMP_ECHO_REPLY
    data            As String * 250
 End Type
 
-Private Type HOSTENT
-   hName As Long
-   hAliases As Long
-   hAddrType As Integer
-   hLen As Integer
-   hAddrList As Long
-End Type
-
 Private Declare Function gethostbyname Lib "WSOCK32.DLL" _
   (ByVal hostname As String) As Long
 
@@ -82,9 +70,6 @@ Private Declare Sub CopyMemory Lib "kernel32" _
   (XDest As Any, _
    xSource As Any, _
    ByVal nbytes As Long)
-
-Private Declare Function lstrlenA Lib "kernel32" _
-  (lpString As Any) As Long
 
 Private Declare Function WSAStartup Lib "WSOCK32.DLL" _
    (ByVal wVersionRequired As Long, _

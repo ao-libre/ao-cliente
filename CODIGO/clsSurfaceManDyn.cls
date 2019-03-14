@@ -75,14 +75,6 @@ Private ResourcePath As String
 
 Private Declare Function GetTickCount Lib "kernel32" () As Long
 
-Private Const DIB_PAL_COLORS As Long = 1
-Private Const DIB_RGB_COLORS As Long = 0
-Private Declare Function SetDIBitsToDevice Lib "GDI32.dll" _
-    (ByVal hdc As Long, ByVal XDest As Long, ByVal YDest As Long, _
-    ByVal dwWidth As Long, ByVal dwHeight As Long, ByVal xSrc As Long, _
-    ByVal ySrc As Long, ByVal uStartScan As Long, ByVal CScanLine As Long, _
-    lpBits As Any, lpbmi As BITMAPINFO, ByVal fuColorUse As Long) As Long
-
 Private Sub Class_Initialize()
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
@@ -99,6 +91,8 @@ Private Sub Class_Terminate()
 'Last Modify Date: 3/06/2006
 'Clean up
 '**************************************************************
+    On Error Resume Next
+
     Dim i As Long
     Dim j As Long
     

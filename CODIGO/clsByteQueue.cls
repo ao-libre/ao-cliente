@@ -114,6 +114,8 @@ Private Sub Class_Terminate()
 'Last Modification: 04/27/06
 'Clean up
 '***************************************************
+    On Error Resume Next
+    
     Erase data
 End Sub
 

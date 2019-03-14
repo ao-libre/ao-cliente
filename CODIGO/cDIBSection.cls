@@ -471,6 +471,8 @@ Dim ir2 As Long, ig2 As Long, ib2 As Long
 End Function
 
 Private Sub Class_Terminate()
+On Error Resume Next
+    
     ClearUp
 End Sub
 

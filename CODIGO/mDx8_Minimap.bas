@@ -4,7 +4,6 @@ Attribute VB_Name = "mDx8_Minimap"
 '***************************************GoDKeR*****************************************
 Option Explicit
 
-Public MiniMapType  As Byte
 Public AlphaMiniMap As Byte
 
 'Dim MMC_Blocked     As Long

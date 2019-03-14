@@ -195,7 +195,7 @@ Function Map_LegalPos(ByVal X As Integer, ByVal Y As Integer) As Boolean
             With charlist(CharIndex)
                   ' Si no es casper, no puede pasar
 
-                  If .iHead <> CASPER_HEAD And .iBody <> FRAGATA_FANTASMAL Then
+                  If .iHead <> eCabezas.CASPER_HEAD And .iBody <> eCabezas.FRAGATA_FANTASMAL Then
                               
                         Exit Function
 
@@ -263,15 +263,15 @@ End Function
 
 Public Function Map_CheckBonfire(ByRef Location As Position) As Boolean
 
-      Dim J As Long
+      Dim j As Long
       Dim k As Long
     
-      For J = UserPos.X - 8 To UserPos.X + 8
+      For j = UserPos.X - 8 To UserPos.X + 8
             For k = UserPos.Y - 6 To UserPos.Y + 6
 
-                  If Map_InBounds(J, k) Then
-                        If MapData(J, k).ObjGrh.GrhIndex = GrhFogata Then
-                              Location.X = J
+                  If Map_InBounds(j, k) Then
+                        If MapData(j, k).ObjGrh.GrhIndex = GrhFogata Then
+                              Location.X = j
                               Location.Y = k
                     
                               Map_CheckBonfire = True
@@ -282,7 +282,7 @@ Public Function Map_CheckBonfire(ByRef Location As Position) As Boolean
                   End If
 
             Next k
-      Next J
+      Next j
 
 End Function
 

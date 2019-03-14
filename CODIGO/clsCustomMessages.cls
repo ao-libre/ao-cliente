@@ -104,6 +104,8 @@ Private Sub Class_Terminate()
 'Last Modification: 07/26/07
 'Stores all messages back into config file for later use.
 '***************************************************
+On Error Resume Next
+
     Dim handle As Integer
     Dim i As Long
     Dim directories() As String
@@ -119,7 +121,7 @@ Private Sub Class_Terminate()
     For i = 0 To Upper_directories
         path = path & "/" & directories(i)
         
-        If LenB(Dir(path, vbDirectory)) = 0 Then
+        If LenB(Dir$(path, vbDirectory)) = 0 Then
             Call MkDir(path)
         End If
     Next i

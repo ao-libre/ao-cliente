@@ -1,7 +1,7 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "Richtx32.ocx"
-Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.ocx"
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.OCX"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.Form frmMain 
    BorderStyle     =   0  'None
    ClientHeight    =   8985
@@ -1316,8 +1316,8 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
                     CustomMessage = CustomMessages.Message((KeyCode - 39) Mod 10)
                     If LenB(CustomMessage) <> 0 Then
                         ' No se pueden mandar mensajes personalizados de clan o privado!
-                        If UCase(Left(CustomMessage, 5)) <> "/CMSG" And _
-                            Left(CustomMessage, 1) <> "\" Then
+                        If UCase$(Left$(CustomMessage, 5)) <> "/CMSG" And _
+                            Left$(CustomMessage, 1) <> "\" Then
                             
                             Call ParseUserCommand(CustomMessage)
                         End If
@@ -2205,12 +2205,12 @@ Private Sub Socket1_LastError(ErrorCode As Integer, ErrorString As String, Respo
     'Handle socket errors
     '*********************************************
     Select Case ErrorCode
-        Case TOO_FAST 'jajasAJ CUALQUEIRA AJJAJA
+        Case eSockError.TOO_FAST 'jajasAJ CUALQUEIRA AJJAJA
             Call MsgBox(JsonLanguage.Item("ERROR_WINSOCK_TOO-FAST").Item("TEXTO"), vbApplicationModal + vbInformation + vbOKOnly + vbDefaultButton1, JsonLanguage.Item("ERROR").Item("TEXTO"))
             Exit Sub
-        Case REFUSED 'Vivan las negradas
+        Case eSockError.REFUSED 'Vivan las negradas
             Call MsgBox(JsonLanguage.Item("ERROR_WINSOCK_REFUSED").Item("TEXTO"), vbApplicationModal + vbInformation + vbOKOnly + vbDefaultButton1, JsonLanguage.Item("ERROR").Item("TEXTO"))
-        Case TIME_OUT
+        Case eSockError.TIME_OUT
             Call MsgBox(JsonLanguage.Item("ERROR_WINSOCK_TIME-OUT").Item("TEXTO"), vbApplicationModal + vbInformation + vbOKOnly + vbDefaultButton1, JsonLanguage.Item("ERROR").Item("TEXTO"))
         Case Else
             Call MsgBox(ErrorString, vbApplicationModal + vbInformation + vbOKOnly + vbDefaultButton1, JsonLanguage.Item("Error").Item("TEXTO"))

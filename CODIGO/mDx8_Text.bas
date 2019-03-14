@@ -4,14 +4,6 @@ Option Explicit
 Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" _
     (destination As Any, source As Any, ByVal length As Long)
     
-' Directx8 Fonts
-Private Type FontInfo
-    MainFont As DxVBLibA.D3DXFont
-    MainFontDesc As IFont
-    MainFontFormat As New StdFont
-    Color As Long
-End Type
-
 
 Private Type CharVA
     Vertex(0 To 3) As TLVERTEX
@@ -22,6 +14,7 @@ Private Type POINTAPI
     X As Long
     Y As Long
 End Type
+
 Private Type VFH
     BitmapWidth As Long         'Size of the bitmap itself
     BitmapHeight As Long
@@ -52,8 +45,8 @@ Private Type CustomFont
     TextureSize As POINTAPI     'Size of the texture
 End Type
 
-Private Const Font_Default_TextureNum As Long = -1   'The texture number used to represent this font - only used for AlternateRendering - keep negative to prevent interfering with game textures
 Private cfonts(1 To 2) As CustomFont ' _Default2 As CustomFont
+
 Public Function ColorToDX8(ByVal long_color As Long) As Long
     Dim temp_color As String
     Dim Red As Integer, Blue As Integer, Green As Integer
@@ -61,7 +54,7 @@ Public Function ColorToDX8(ByVal long_color As Long) As Long
     temp_color = Hex$(long_color)
     If Len(temp_color) < 6 Then
         'Give is 6 digits for easy RGB conversion.
-        temp_color = String(6 - Len(temp_color), "0") + temp_color
+        temp_color = String$(6 - Len(temp_color), "0") + temp_color
     End If
     
     Red = CLng("&H" + mid$(temp_color, 1, 2))
@@ -93,7 +86,7 @@ Private Function Es_Emoticon(ByVal ascii As Byte) As Boolean ' GSZAO
     End If
 End Function ' GSZAO
 
-Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, ByVal Text As String, ByVal X As Long, ByVal Y As Long, ByVal Color As Long, Optional ByVal Center As Boolean = False, Optional ByVal alpha As Byte = 255)
+Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, ByVal Text As String, ByVal X As Long, ByVal Y As Long, ByVal color As Long, Optional ByVal Center As Boolean = False, Optional ByVal Alpha As Byte = 255)
 '*****************************************************************
 'Render text with a custom font
 '*****************************************************************
@@ -149,7 +142,7 @@ Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, ByVal Text As String
     tempstr = Split(Text, vbCrLf)
     
     'Set the temp color (or else the first character has no color)
-    TempColor = Color
+    TempColor = color
 
     'Set the texture
     DirectDevice.SetTexture 0, UseFont.Texture
@@ -193,16 +186,16 @@ Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, ByVal Text As String
                 
                 'Set the colors
                 If Es_Emoticon(ascii(j - 1)) Then ' GSZAO los colores no afectan a los emoticones!
-                    TempVA(0).Color = -1
-                    TempVA(1).Color = -1
-                    TempVA(2).Color = -1
-                    TempVA(3).Color = -1
+                    TempVA(0).color = -1
+                    TempVA(1).color = -1
+                    TempVA(2).color = -1
+                    TempVA(3).color = -1
                     If (ascii(j - 1) <> 157) Then Count = Count + 5   ' Los emoticones tienen tamaño propio (despues hay que cargarlos "correctamente" para evitar hacer esto)
                 Else
-                    TempVA(0).Color = TempColor
-                    TempVA(1).Color = TempColor
-                    TempVA(2).Color = TempColor
-                    TempVA(3).Color = TempColor
+                    TempVA(0).color = TempColor
+                    TempVA(1).color = TempColor
+                    TempVA(2).color = TempColor
+                    TempVA(3).color = TempColor
                 End If
                 
                 'Draw the verticies
@@ -214,7 +207,7 @@ Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, ByVal Text As String
                 'Check to reset the color
                 If ResetColor Then
                     ResetColor = 0
-                    TempColor = Color
+                    TempColor = color
                 End If
                 
             Next j
@@ -224,13 +217,13 @@ Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, ByVal Text As String
 
 End Sub
 
-Public Function ARGBtoD3DCOLORVALUE(ByVal ARGB As Long, ByRef Color As D3DCOLORVALUE)
+Public Function ARGBtoD3DCOLORVALUE(ByVal ARGB As Long, ByRef color As D3DCOLORVALUE)
 Dim dest(3) As Byte
 CopyMemory dest(0), ARGB, 4
-Color.a = dest(3)
-Color.r = dest(2)
-Color.g = dest(1)
-Color.b = dest(0)
+color.a = dest(3)
+color.r = dest(2)
+color.g = dest(1)
+color.b = dest(0)
 End Function
 
 Public Function ARGB(ByVal r As Long, ByVal g As Long, ByVal b As Long, ByVal a As Long) As Long
@@ -342,7 +335,7 @@ Sub Engine_Init_FontSettings()
 
         'Set the verticies
         With cfonts(1).HeaderInfo.CharVA(LoopChar)
-            .Vertex(0).Color = D3DColorARGB(255, 0, 0, 0)   'Black is the most common color
+            .Vertex(0).color = D3DColorARGB(255, 0, 0, 0)   'Black is the most common color
             .Vertex(0).rhw = 1
             .Vertex(0).tu = u
             .Vertex(0).tv = v
@@ -350,7 +343,7 @@ Sub Engine_Init_FontSettings()
             .Vertex(0).Y = 0
             .Vertex(0).Z = 0
             
-            .Vertex(1).Color = D3DColorARGB(255, 0, 0, 0)
+            .Vertex(1).color = D3DColorARGB(255, 0, 0, 0)
             .Vertex(1).rhw = 1
             .Vertex(1).tu = u + cfonts(1).ColFactor
             .Vertex(1).tv = v
@@ -358,7 +351,7 @@ Sub Engine_Init_FontSettings()
             .Vertex(1).Y = 0
             .Vertex(1).Z = 0
             
-            .Vertex(2).Color = D3DColorARGB(255, 0, 0, 0)
+            .Vertex(2).color = D3DColorARGB(255, 0, 0, 0)
             .Vertex(2).rhw = 1
             .Vertex(2).tu = u
             .Vertex(2).tv = v + cfonts(1).RowFactor
@@ -366,7 +359,7 @@ Sub Engine_Init_FontSettings()
             .Vertex(2).Y = cfonts(1).HeaderInfo.CellHeight
             .Vertex(2).Z = 0
             
-            .Vertex(3).Color = D3DColorARGB(255, 0, 0, 0)
+            .Vertex(3).color = D3DColorARGB(255, 0, 0, 0)
             .Vertex(3).rhw = 1
             .Vertex(3).tu = u + cfonts(1).ColFactor
             .Vertex(3).tv = v + cfonts(1).RowFactor
@@ -379,11 +372,11 @@ Sub Engine_Init_FontSettings()
 
 End Sub
 
-Public Sub DrawText(ByVal X As Integer, ByVal Y As Integer, ByVal Text As String, ByVal Color As Long)
+Public Sub DrawText(ByVal X As Integer, ByVal Y As Integer, ByVal Text As String, ByVal color As Long)
         Dim aux As D3DCOLORVALUE
         'Obtener_RGB Color, r, g, b
-        ARGBtoD3DCOLORVALUE Color, aux
-        Color = D3DColorARGB(255, aux.r, aux.g, aux.b)
-    Engine_Render_Text cfonts(1), Text, X, Y, Color
+        ARGBtoD3DCOLORVALUE color, aux
+        color = D3DColorARGB(255, aux.r, aux.g, aux.b)
+    Engine_Render_Text cfonts(1), Text, X, Y, color
 End Sub
 

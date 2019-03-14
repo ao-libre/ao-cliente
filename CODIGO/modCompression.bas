@@ -40,7 +40,6 @@ End Enum
 
 Private Declare Function compress Lib "zlib.dll" (dest As Any, destlen As Any, src As Any, ByVal srclen As Long) As Long
 Private Declare Function uncompress Lib "zlib.dll" (dest As Any, destlen As Any, src As Any, ByVal srclen As Long) As Long
-Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" (ByRef dest As Any, ByRef source As Any, ByVal byteCount As Long)
 
 'BitMaps Strucures
 Public Type BITMAPFILEHEADER
@@ -50,6 +49,7 @@ Public Type BITMAPFILEHEADER
     bfReserved2 As Integer
     bfOffBits As Long
 End Type
+
 Public Type BITMAPINFOHEADER
     biSize As Long
     biWidth As Long
@@ -63,24 +63,18 @@ Public Type BITMAPINFOHEADER
     biClrUsed As Long
     biClrImportant As Long
 End Type
+
 Public Type RGBQUAD
     rgbBlue As Byte
     rgbGreen As Byte
     rgbRed As Byte
     rgbReserved As Byte
 End Type
+
 Public Type BITMAPINFO
     bmiHeader As BITMAPINFOHEADER
     bmiColors(255) As RGBQUAD
 End Type
-
-Private Const BI_RGB As Long = 0
-Private Const BI_RLE8 As Long = 1
-Private Const BI_RLE4 As Long = 2
-Private Const BI_BITFIELDS As Long = 3
-Private Const BI_JPG As Long = 4
-Private Const BI_PNG As Long = 5
-
 
 'To get free bytes in drive
 Private Declare Function GetDiskFreeSpace Lib "kernel32" Alias "GetDiskFreeSpaceExA" (ByVal lpRootPathName As String, FreeBytesToCaller As Currency, bytesTotal As Currency, FreeBytesTotal As Currency) As Long
@@ -431,13 +425,13 @@ On Local Error GoTo ErrHandler
     If Modo = 0 Then
         OutputFilePath = OutputPath & GRH_RESOURCE_FILE
         'If GraficosPNG = False Then ' GSZAO
-            SourceFileName = Dir(SourcePath & "*" & BMP_SOURCE_FILE_EXT, vbNormal)
+            SourceFileName = Dir$(SourcePath & "*" & BMP_SOURCE_FILE_EXT, vbNormal)
         'Else
-         '   SourceFileName = Dir(SourcePath & "*" & PNG_SOURCE_FILE_EXT, vbNormal)
+         '   SourceFileName = Dir$(SourcePath & "*" & PNG_SOURCE_FILE_EXT, vbNormal)
         'End If
     ElseIf Modo = 1 Then
         OutputFilePath = OutputPath & MAPS_RESOURCE_FILE
-        SourceFileName = Dir(SourcePath & "*" & MAPS_SOURCE_FILE_EXT, vbNormal)
+        SourceFileName = Dir$(SourcePath & "*" & MAPS_SOURCE_FILE_EXT, vbNormal)
     End If
     
     ' Create list of all files to be compressed
@@ -448,11 +442,11 @@ On Local Error GoTo ErrHandler
         InfoHead(FileHead.lngNumFiles - 1).strFileName = UCase$(SourceFileName)
         
         'Search new file
-        SourceFileName = Dir()
+        SourceFileName = Dir$()
     Wend
     
     'If Mode = 0 And frmMain.cmdGrhPNG.Value = 1 Then ' Comprimimos tambien los Graficos .PNG
-        SourceFileName = Dir(SourcePath & "*" & PNG_SOURCE_FILE_EXT, vbNormal)
+        SourceFileName = Dir$(SourcePath & "*" & PNG_SOURCE_FILE_EXT, vbNormal)
         ' Create list of all files to be compressed
         While LenB(SourceFileName) <> 0
             FileHead.lngNumFiles = FileHead.lngNumFiles + 1
@@ -461,12 +455,12 @@ On Local Error GoTo ErrHandler
             InfoHead(FileHead.lngNumFiles - 1).strFileName = UCase$(SourceFileName)
             
             'Search new file
-            SourceFileName = Dir()
+            SourceFileName = Dir$()
         Wend
     'End If
     
     'If Mode = 1 And frmMain.cmdMiniMap.Value = 1 Then ' agregamos tambien los BMP junto a los mapas
-        SourceFileName = Dir(SourcePath & "*" & BMP_SOURCE_FILE_EXT, vbNormal)  ' GSZAO
+        SourceFileName = Dir$(SourcePath & "*" & BMP_SOURCE_FILE_EXT, vbNormal)  ' GSZAO
         ' Create list of all files to be compressed
         While LenB(SourceFileName) <> 0
             FileHead.lngNumFiles = FileHead.lngNumFiles + 1
@@ -475,7 +469,7 @@ On Local Error GoTo ErrHandler
             InfoHead(FileHead.lngNumFiles - 1).strFileName = UCase$(SourceFileName)
             
             'Search new file
-            SourceFileName = Dir()
+            SourceFileName = Dir$()
         Wend
     'End If
     
@@ -498,7 +492,7 @@ On Local Error GoTo ErrHandler
     End If
     
     'Destroy file if it previuosly existed
-    If LenB(Dir(OutputFilePath, vbNormal)) <> 0 Then
+    If LenB(Dir$(OutputFilePath, vbNormal)) <> 0 Then
         Kill OutputFilePath
     End If
     
@@ -1022,7 +1016,7 @@ On Local Error GoTo ErrHandler
             End If
             
             'Destroy file if it previuosly existed
-            If LenB(Dir(OutputFilePath, vbNormal)) <> 0 Then Kill OutputFilePath
+            If LenB(Dir$(OutputFilePath, vbNormal)) <> 0 Then Kill OutputFilePath
             
             'Open the patch file
             OutputFile = FreeFile()

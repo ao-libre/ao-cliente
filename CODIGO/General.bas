@@ -89,7 +89,7 @@ Public Function GetRawName(ByRef sName As String) As String
     Pos = InStr(1, sName, "<")
     
     If Pos > 0 Then
-        GetRawName = Trim(Left(sName, Pos - 1))
+        GetRawName = Trim$(Left$(sName, Pos - 1))
     Else
         GetRawName = sName
     End If
@@ -531,7 +531,7 @@ Sub SwitchMap(ByVal Map As Integer)
      
     fileBuff.initializeReader dData
     
-    MapInfo.MapVersion = fileBuff.getInteger
+    mapInfo.MapVersion = fileBuff.getInteger
    
     With MiCabecera
         .Desc = fileBuff.getString(Len(.Desc))
@@ -608,8 +608,8 @@ Sub SwitchMap(ByVal Map As Integer)
     'Limpiamos el buffer
     Set fileBuff = Nothing
    
-    MapInfo.Name = vbNullString
-    MapInfo.Music = vbNullString
+    mapInfo.Name = vbNullString
+    mapInfo.Music = vbNullString
     
     CurMap = Map
     
@@ -1112,7 +1112,7 @@ Private Sub LoadInitialConfig()
                             True, False, False)
     
     'Inicializamos el inventario grafico
-    Call Inventario.Initialize(DirectD3D8, frmMain.picInv, MAX_INVENTORY_SLOTS)
+    Call Inventario.Initialize(DirectD3D8, frmMain.PicInv, MAX_INVENTORY_SLOTS)
     
     Call AddtoRichTextBox(frmCargando.status, _
                             "                    " & JsonLanguage.Item("BIENVENIDO").Item("TEXTO"), _
@@ -1129,33 +1129,41 @@ Private Sub LoadInitialConfig()
 End Sub
 
 Private Sub LoadTimerIntervals()
-'***************************************************
-'Author: ZaMa
-'Last Modification: 15/03/2011
-'Set the intervals of timers
-'***************************************************
+    '***************************************************
+    'Author: ZaMa
+    'Last Modification: 15/03/2011
+    'Set the intervals of timers
+    '***************************************************
     
-    Call MainTimer.SetInterval(TimersIndex.Attack, INT_ATTACK)
-    Call MainTimer.SetInterval(TimersIndex.Work, INT_WORK)
-    Call MainTimer.SetInterval(TimersIndex.UseItemWithU, INT_USEITEMU)
-    Call MainTimer.SetInterval(TimersIndex.UseItemWithDblClick, INT_USEITEMDCK)
-    Call MainTimer.SetInterval(TimersIndex.SendRPU, INT_SENTRPU)
-    Call MainTimer.SetInterval(TimersIndex.CastSpell, INT_CAST_SPELL)
-    Call MainTimer.SetInterval(TimersIndex.Arrows, INT_ARROWS)
-    Call MainTimer.SetInterval(TimersIndex.CastAttack, INT_CAST_ATTACK)
+    With MainTimer
     
-    frmMain.macrotrabajo.Interval = INT_MACRO_TRABAJO
-    frmMain.macrotrabajo.Enabled = False
+        Call .SetInterval(TimersIndex.Attack, eIntervalos.INT_ATTACK)
+        Call .SetInterval(TimersIndex.Work, eIntervalos.INT_WORK)
+        Call .SetInterval(TimersIndex.UseItemWithU, eIntervalos.INT_USEITEMU)
+        Call .SetInterval(TimersIndex.UseItemWithDblClick, eIntervalos.INT_USEITEMDCK)
+        Call .SetInterval(TimersIndex.SendRPU, eIntervalos.INT_SENTRPU)
+        Call .SetInterval(TimersIndex.CastSpell, INT_CAST_SPELL)
+        Call .SetInterval(TimersIndex.Arrows, eIntervalos.INT_ARROWS)
+        Call .SetInterval(TimersIndex.CastAttack, eIntervalos.INT_CAST_ATTACK)
+        
+        With frmMain.macrotrabajo
+            
+            .Interval = eIntervalos.INT_MACRO_TRABAJO
+            .Enabled = False
+        
+        End With
     
-   'Init timers
-    Call MainTimer.Start(TimersIndex.Attack)
-    Call MainTimer.Start(TimersIndex.Work)
-    Call MainTimer.Start(TimersIndex.UseItemWithU)
-    Call MainTimer.Start(TimersIndex.UseItemWithDblClick)
-    Call MainTimer.Start(TimersIndex.SendRPU)
-    Call MainTimer.Start(TimersIndex.CastSpell)
-    Call MainTimer.Start(TimersIndex.Arrows)
-    Call MainTimer.Start(TimersIndex.CastAttack)
+        'Init timers
+        Call .Start(TimersIndex.Attack)
+        Call .Start(TimersIndex.Work)
+        Call .Start(TimersIndex.UseItemWithU)
+        Call .Start(TimersIndex.UseItemWithDblClick)
+        Call .Start(TimersIndex.SendRPU)
+        Call .Start(TimersIndex.CastSpell)
+        Call .Start(TimersIndex.Arrows)
+        Call .Start(TimersIndex.CastAttack)
+    
+    End With
 
 End Sub
 
@@ -1249,7 +1257,7 @@ Public Sub ShowSendCMSGTxt()
 End Sub
 
 ''
-' Checks the command line parameters, if you are running Ao with /nores command and checks the AoUpdate parameters
+' Checks the command line parameters, if you are running Ao with /nores command
 '
 '
 
@@ -1259,10 +1267,8 @@ Public Sub LeerLineaComandos()
 'Last modified: 25/11/2008 (BrianPr)
 '
 '*************************************************
-    Dim T() As String, Upper_t As Long, Lower_t As Long
-    Dim i As Long
     
-    Dim UpToDate As Boolean
+    Dim i As Long, T() As String, Upper_t As Long, Lower_t As Long
     
     'Parseo los comandos
     T = Split(Command, " ")
@@ -1273,61 +1279,9 @@ Public Sub LeerLineaComandos()
         Select Case UCase$(T(i))
             Case "/NORES" 'no cambiar la resolucion
                 NoRes = True
-            Case "/UPTODATE"
-                UpToDate = True
         End Select
     Next i
-    
-#If Testeo = 0 Then
-    Call AoUpdate(UpToDate, NoRes)
-#End If
 
-End Sub
-
-''
-' Runs AoUpdate if we haven't updated yet, patches aoupdate and runs Client normally if we are updated.
-'
-' @param UpToDate Specifies if we have checked for updates or not
-' @param NoREs Specifies if we have to set nores arg when running the client once again (if the AoUpdate is executed).
-
-Private Sub AoUpdate(ByVal UpToDate As Boolean, ByVal NoRes As Boolean)
-'*************************************************
-'Author: BrianPr
-'Created: 25/11/2008
-'Last modified: 25/11/2008
-'
-'*************************************************
-On Error GoTo error
-    Dim extraArgs As String
-    If Not UpToDate Then
-        'No recibe update, ejecutar AU
-        'Ejecuto el AoUpdate, sino me voy
-        If LenB(Dir(App.path & "\AoUpdate.exe", vbArchive)) = 0 Then
-            MsgBox "No se encuentra el archivo de actualizacion AoUpdate.exe por favor descarguelo y vuelva a intentar", vbCritical
-            End
-        Else
-            FileCopy App.path & "\AoUpdate.exe", App.path & "\AoUpdateTMP.exe"
-            
-            If NoRes Then
-                extraArgs = " /nores"
-            End If
-            
-            Call ShellExecute(0, "Open", App.path & "\AoUpdateTMP.exe", App.EXEName & ".exe" & extraArgs, App.path, SW_SHOWNORMAL)
-            End
-        End If
-    Else
-        If FileExist(App.path & "\AoUpdateTMP.exe", vbArchive) Then Kill App.path & "\AoUpdateTMP.exe"
-    End If
-Exit Sub
-
-error:
-    If Err.number = 75 Then 'Si el archivo AoUpdateTMP.exe esta en uso, entonces esperamos 5 ms y volvemos a intentarlo hasta que nos deje.
-        Sleep 5
-        Resume
-    Else
-        MsgBox Err.Description & vbCrLf, vbInformation, "[ " & Err.number & " ]" & " Error "
-        End
-    End If
 End Sub
 
 Private Sub LoadClientSetup()
@@ -1530,16 +1484,16 @@ End Function
 
 Public Sub checkText(ByVal Text As String)
 Dim Nivel As Integer
-If Right(Text, Len(JsonLanguage.Item("MENSAJE_FRAGSHOOTER_TE_HA_MATADO").Item("TEXTO"))) = JsonLanguage.Item("MENSAJE_FRAGSHOOTER_TE_HA_MATADO").Item("TEXTO") Then
+If Right$(Text, Len(JsonLanguage.Item("MENSAJE_FRAGSHOOTER_TE_HA_MATADO").Item("TEXTO"))) = JsonLanguage.Item("MENSAJE_FRAGSHOOTER_TE_HA_MATADO").Item("TEXTO") Then
     Call ScreenCapture(True)
     Exit Sub
 End If
-If Left(Text, Len(JsonLanguage.Item("MENSAJE_FRAGSHOOTER_HAS_MATADO").Item("TEXTO"))) = JsonLanguage.Item("MENSAJE_FRAGSHOOTER_HAS_MATADO").Item("TEXTO") Then
+If Left$(Text, Len(JsonLanguage.Item("MENSAJE_FRAGSHOOTER_HAS_MATADO").Item("TEXTO"))) = JsonLanguage.Item("MENSAJE_FRAGSHOOTER_HAS_MATADO").Item("TEXTO") Then
     EsperandoLevel = True
     Exit Sub
 End If
 If EsperandoLevel Then
-    If Right(Text, Len(JsonLanguage.Item("MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA").Item("TEXTO"))) = JsonLanguage.Item("MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA").Item("TEXTO") Then
+    If Right$(Text, Len(JsonLanguage.Item("MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA").Item("TEXTO"))) = JsonLanguage.Item("MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA").Item("TEXTO") Then
         If CInt(mid$(Text, Len(JsonLanguage.Item("MENSAJE_FRAGSHOOTER_HAS_GANADO").Item("TEXTO")), (Len(Text) - (Len(JsonLanguage.Item("MENSAJE_FRAGSHOOTER_HAS_GANADO").Item("TEXTO")))))) / 2 > ClientSetup.byMurderedLevel Then
             Call ScreenCapture(True)
         End If

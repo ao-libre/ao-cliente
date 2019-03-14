@@ -23,7 +23,7 @@ Public Type TLVERTEX
   Y As Single
   Z As Single
   rhw As Single
-  Color As Long
+  color As Long
   Specular As Long
   tu As Single
   tv As Single
@@ -170,11 +170,11 @@ Public Sub Engine_DirectX8_Aditional_Init()
     
 End Sub
 
-Public Sub Engine_Draw_Line(X1 As Single, Y1 As Single, X2 As Single, Y2 As Single, Optional Color As Long = -1, Optional Color2 As Long = -1)
+Public Sub Engine_Draw_Line(X1 As Single, Y1 As Single, X2 As Single, Y2 As Single, Optional color As Long = -1, Optional Color2 As Long = -1)
 On Error GoTo error
 Dim Vertex(1) As TLVERTEX
 
-    Vertex(0) = Geometry_Create_TLVertex(X1, Y1, 0, 1, Color, 0, 0)
+    Vertex(0) = Geometry_Create_TLVertex(X1, Y1, 0, 1, color, 0, 0)
     Vertex(1) = Geometry_Create_TLVertex(X2, Y2, 0, 1, Color2, 0, 0)
 
     DirectDevice.SetTexture 0, Nothing
@@ -185,11 +185,11 @@ error:
     'Call Log_Engine("Error in Engine_Draw_Line, " & Err.Description & " (" & Err.number & ")")
 End Sub
 
-Public Sub Engine_Draw_Point(X1 As Single, Y1 As Single, Optional Color As Long = -1)
+Public Sub Engine_Draw_Point(X1 As Single, Y1 As Single, Optional color As Long = -1)
 On Error GoTo error
 Dim Vertex(0) As TLVERTEX
 
-    Vertex(0) = Geometry_Create_TLVertex(X1, Y1, 0, 1, Color, 0, 0)
+    Vertex(0) = Geometry_Create_TLVertex(X1, Y1, 0, 1, color, 0, 0)
 
     DirectDevice.SetTexture 0, Nothing
     DirectDevice.DrawPrimitiveUP D3DPT_POINTLIST, 1, Vertex(0), Len(Vertex(0))
@@ -273,7 +273,7 @@ Dim buf As D3DXBuffer
 
 End Function
 
-Public Sub Engine_Draw_Box(ByVal X As Integer, ByVal Y As Integer, ByVal Width As Integer, ByVal Height As Integer, Color As Long)
+Public Sub Engine_Draw_Box(ByVal X As Integer, ByVal Y As Integer, ByVal Width As Integer, ByVal Height As Integer, color As Long)
 '***************************************************
 'Author: Ezequiel Juárez (Standelf)
 'Last Modification: 29/12/10
@@ -283,7 +283,7 @@ Public Sub Engine_Draw_Box(ByVal X As Integer, ByVal Y As Integer, ByVal Width A
     Dim b_Color(0 To 3) As Long
     Dim b_Vertex(0 To 3) As TLVERTEX
     
-    Engine_Long_To_RGB_List b_Color(), Color
+    Engine_Long_To_RGB_List b_Color(), color
 
     With b_Rect
         .bottom = Y + Height
@@ -298,30 +298,30 @@ Public Sub Engine_Draw_Box(ByVal X As Integer, ByVal Y As Integer, ByVal Width A
     DirectDevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, b_Vertex(0), Len(b_Vertex(0))
 End Sub
 
-Public Sub Engine_D3DColor_To_RGB_List(RGB_List() As Long, Color As D3DCOLORVALUE)
+Public Sub Engine_D3DColor_To_RGB_List(rgb_list() As Long, color As D3DCOLORVALUE)
 '***************************************************
 'Author: Ezequiel Juárez (Standelf)
 'Last Modification: 14/05/10
 'Blisse-AO | Set a D3DColorValue to a RGB List
 '***************************************************
-    RGB_List(0) = D3DColorARGB(Color.a, Color.r, Color.g, Color.b)
-    RGB_List(1) = RGB_List(0)
-    RGB_List(2) = RGB_List(0)
-    RGB_List(3) = RGB_List(0)
+    rgb_list(0) = D3DColorARGB(color.a, color.r, color.g, color.b)
+    rgb_list(1) = rgb_list(0)
+    rgb_list(2) = rgb_list(0)
+    rgb_list(3) = rgb_list(0)
 End Sub
 
-Public Sub Engine_Long_To_RGB_List(RGB_List() As Long, long_color As Long)
+Public Sub Engine_Long_To_RGB_List(rgb_list() As Long, long_color As Long)
 '***************************************************
 'Author: Ezequiel Juárez (Standelf)
 'Last Modification: 16/05/10
 'Blisse-AO | Set a Long Color to a RGB List
 '***************************************************
-    RGB_List(0) = long_color
-    RGB_List(1) = RGB_List(0)
-    RGB_List(2) = RGB_List(0)
-    RGB_List(3) = RGB_List(0)
+    rgb_list(0) = long_color
+    rgb_list(1) = rgb_list(0)
+    rgb_list(2) = rgb_list(0)
+    rgb_list(3) = rgb_list(0)
 End Sub
-Public Function SetARGB_Alpha(RGB_List() As Long, alpha As Byte) As Long()
+Public Function SetARGB_Alpha(rgb_list() As Long, Alpha As Byte) As Long()
 '***************************************************
 'Author: Juan Manuel Couso (Cucsifae)
 'Last Modification: 29/08/18
@@ -330,12 +330,12 @@ Public Function SetARGB_Alpha(RGB_List() As Long, alpha As Byte) As Long()
 Dim TempColor As D3DCOLORVALUE
 Dim tempARGB(0 To 3) As Long
 'convertimos el valor del rgb list a D3DCOLOR
-Call ARGBtoD3DCOLORVALUE(RGB_List(1), TempColor)
+Call ARGBtoD3DCOLORVALUE(rgb_list(1), TempColor)
 'comprobamos ue no se salga del rango permitido
-If alpha > 255 Then alpha = 255
-If alpha < 0 Then alpha = 0
+If Alpha > 255 Then Alpha = 255
+If Alpha < 0 Then Alpha = 0
 'seteamos el alpha
-TempColor.a = alpha
+TempColor.a = Alpha
 'generamos el nuevo RGB_List
 Call Engine_D3DColor_To_RGB_List(tempARGB(), TempColor)
 
@@ -460,7 +460,7 @@ Function Engine_Collision_Rect(ByVal X1 As Integer, ByVal Y1 As Integer, ByVal W
 
 End Function
 
-Public Sub Engine_BeginScene(Optional ByVal Color As Long = 0)
+Public Sub Engine_BeginScene(Optional ByVal color As Long = 0)
 '***************************************************
 'Author: Ezequiel Juárez (Standelf)
 'Last Modification: 29/12/10
@@ -468,7 +468,7 @@ Public Sub Engine_BeginScene(Optional ByVal Color As Long = 0)
 '***************************************************
 
     DirectDevice.BeginScene
-    DirectDevice.Clear 0, ByVal 0, D3DCLEAR_TARGET, Color, 1#, 0
+    DirectDevice.Clear 0, ByVal 0, D3DCLEAR_TARGET, color, 1#, 0
     
 End Sub
 
@@ -489,7 +489,7 @@ Public Sub Engine_EndScene(ByRef destRect As RECT, Optional ByVal hWndDest As Lo
     
 End Sub
 
-Public Sub Geometry_Create_Box(ByRef Verts() As TLVERTEX, ByRef dest As RECT, ByRef src As RECT, ByRef RGB_List() As Long, _
+Public Sub Geometry_Create_Box(ByRef Verts() As TLVERTEX, ByRef dest As RECT, ByRef src As RECT, ByRef rgb_list() As Long, _
                                 Optional ByRef Textures_Width As Long, Optional ByRef Textures_Height As Long, Optional ByVal Angle As Single)
 '**************************************************************
 'Author: Aaron Perkins
@@ -526,9 +526,9 @@ Public Sub Geometry_Create_Box(ByRef Verts() As TLVERTEX, ByRef dest As RECT, By
     End If
 
     If Textures_Width And Textures_Height Then
-        Verts(0) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, RGB_List(0), src.Left / Textures_Width, (src.bottom + 1) / Textures_Height)
+        Verts(0) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(0), src.Left / Textures_Width, (src.bottom + 1) / Textures_Height)
     Else
-        Verts(0) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, RGB_List(0), 0, 0)
+        Verts(0) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(0), 0, 0)
     End If
 
     If Angle = 0 Then
@@ -540,9 +540,9 @@ Public Sub Geometry_Create_Box(ByRef Verts() As TLVERTEX, ByRef dest As RECT, By
     End If
     
     If Textures_Width And Textures_Height Then
-        Verts(1) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, RGB_List(1), src.Left / Textures_Width, src.Top / Textures_Height)
+        Verts(1) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(1), src.Left / Textures_Width, src.Top / Textures_Height)
     Else
-        Verts(1) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, RGB_List(1), 0, 1)
+        Verts(1) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(1), 0, 1)
     End If
 
     If Angle = 0 Then
@@ -554,9 +554,9 @@ Public Sub Geometry_Create_Box(ByRef Verts() As TLVERTEX, ByRef dest As RECT, By
     End If
 
     If Textures_Width And Textures_Height Then
-        Verts(2) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, RGB_List(2), (src.Right + 1) / Textures_Width, (src.bottom + 1) / Textures_Height)
+        Verts(2) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(2), (src.Right + 1) / Textures_Width, (src.bottom + 1) / Textures_Height)
     Else
-        Verts(2) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, RGB_List(2), 1, 0)
+        Verts(2) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(2), 1, 0)
     End If
 
     If Angle = 0 Then
@@ -568,15 +568,15 @@ Public Sub Geometry_Create_Box(ByRef Verts() As TLVERTEX, ByRef dest As RECT, By
     End If
 
     If Textures_Width And Textures_Height Then
-        Verts(3) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, RGB_List(3), (src.Right + 1) / Textures_Width, src.Top / Textures_Height)
+        Verts(3) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(3), (src.Right + 1) / Textures_Width, src.Top / Textures_Height)
     Else
-        Verts(3) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, RGB_List(3), 1, 1)
+        Verts(3) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(3), 1, 1)
     End If
 
 End Sub
 
 Public Function Geometry_Create_TLVertex(ByVal X As Single, ByVal Y As Single, ByVal Z As Single, _
-                                            ByVal rhw As Single, ByVal Color As Long, tu As Single, _
+                                            ByVal rhw As Single, ByVal color As Long, tu As Single, _
                                             ByVal tv As Single) As TLVERTEX
 '**************************************************************
 'Author: Aaron Perkins
@@ -586,7 +586,7 @@ Public Function Geometry_Create_TLVertex(ByVal X As Single, ByVal Y As Single, B
     Geometry_Create_TLVertex.Y = Y
     Geometry_Create_TLVertex.Z = Z
     Geometry_Create_TLVertex.rhw = rhw
-    Geometry_Create_TLVertex.Color = Color
+    Geometry_Create_TLVertex.color = color
     Geometry_Create_TLVertex.tu = tu
     Geometry_Create_TLVertex.tv = tv
 End Function
@@ -776,7 +776,7 @@ Public Sub DrawPJ(ByVal index As Byte)
     End If
 
     If cPJ(index).Dead Then
-        Call DDrawTransGrhtoSurface(HeadData(CASPER_HEAD).Head(3), PixelOffsetX + init_x + 4, PixelOffsetY + init_y + head_offset, 0, Light(), 0, init_x, init_y)
+        Call DDrawTransGrhtoSurface(HeadData(eCabezas.CASPER_HEAD).Head(3), PixelOffsetX + init_x + 4, PixelOffsetY + init_y + head_offset, 0, Light(), 0, init_x, init_y)
     Else
         If cPJ(index).Head <> 0 Then
             Call DDrawTransGrhtoSurface(HeadData(cPJ(index).Head).Head(3), PixelOffsetX + init_x + 4, PixelOffsetY + init_y + head_offset, 0, Light(), 0, init_x, init_y)
