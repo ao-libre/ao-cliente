@@ -1,6 +1,6 @@
 Attribute VB_Name = "mDx8_Luces"
 '***************************************************
-'Author: Ezequiel Juárez (Standelf)
+'Author: Ezequiel Juarez (Standelf)
 'Last Modification: 14/05/10
 'Blisse-AO | Light Engine, Read the _
     #LightEngine to Set the type of Lights
@@ -253,7 +253,7 @@ End Sub
 
 Private Sub Delete_Light_To_Index(ByVal light_index As Integer)
 '***************************************'
-'Author: Juan Martín Sotuyo Dodero
+'Author: Juan Martin Sotuyo Dodero
 'Last modified: 3/31/2003
 'Correctly erases a light
 '***************************************'

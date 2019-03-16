@@ -265,10 +265,10 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 'Argentum Online 0.11.6
 '
-'Copyright (C) 2002 Márquez Pablo Ignacio
+'Copyright (C) 2002 Marquez Pablo Ignacio
 'Copyright (C) 2002 Otto Perez
 'Copyright (C) 2002 Aaron Perkins
-'Copyright (C) 2002 Matías Fernando Pequeño
+'Copyright (C) 2002 Matias Fernando Pequeno
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the Affero General Public License;
@@ -290,17 +290,17 @@ Attribute VB_Exposed = False
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 número 983 piso 7 dto A
+'Calle 3 numero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'Código Postal 1900
-'Pablo Ignacio Márquez
+'Codigo Postal 1900
+'Pablo Ignacio Marquez
 '
-'Matías Fernando Pequeño
+'Matias Fernando Pequeno
 'matux@fibertel.com.ar
 'www.noland-studios.com.ar
 'Acoyte 678 Piso 17 Dto B
 'Capital Federal, Buenos Aires - Republica Argentina
-'Código Postal 1405
+'Codigo Postal 1405
 
 Option Explicit
 
@@ -395,7 +395,7 @@ Private Sub Form_Load()
 End Sub
 
 Private Sub CheckLicenseAgreement()
-    'Recordatorio para cumplir la licencia, por si borrás el Boton sin leer el code...
+    'Recordatorio para cumplir la licencia, por si borras el Boton sin leer el code...
     Dim i As Long
     
     Dim Count_controlsCount As Long
@@ -408,8 +408,8 @@ Private Sub CheckLicenseAgreement()
     Next i
     
     If i = Me.Controls.Count Then
-        MsgBox "No debe eliminarse la posibilidad de bajar el código de sus servidor. Caso contrario estarían violando la licencia Affero GPL y con ella derechos de autor, incurriendo de esta forma en un delito punible por ley." & vbCrLf & vbCrLf & vbCrLf & _
-                "Argentum Online es libre, es de todos. Mantengamoslo así. Si tanto te gusta el juego y querés los cambios que hacemos nosotros, compartí los tuyos. Es un cambio justo. Si no estás de acuerdo, no uses nuestro código, pues nadie te obliga o bien utiliza una versión anterior a la 0.12.0.", vbCritical Or vbApplicationModal
+        MsgBox "No debe eliminarse la posibilidad de bajar el codigo de sus servidor. Caso contrario estarian violando la licencia Affero GPL y con ella derechos de autor, incurriendo de esta forma en un delito punible por ley." & vbCrLf & vbCrLf & vbCrLf & _
+                "Argentum Online es libre, es de todos. Mantengamoslo asi. Si tanto te gusta el juego y queres los cambios que hacemos nosotros, comparti los tuyos. Es un cambio justo. Si no estas de acuerdo, no uses nuestro codigo, pues nadie te obliga o bien utiliza una version anterior a la 0.12.0.", vbCritical Or vbApplicationModal
     End If
 
 End Sub
@@ -513,13 +513,13 @@ Private Sub imgCodigoFuente_Click()
 '***********************************
 'IMPORTANTE!
 '
-'No debe eliminarse la posibilidad de bajar el código de sus servidor de esta forma.
-'Caso contrario estarían violando la licencia Affero GPL y con ella derechos de autor,
+'No debe eliminarse la posibilidad de bajar el codigo de sus servidor de esta forma.
+'Caso contrario estarian violando la licencia Affero GPL y con ella derechos de autor,
 'incurriendo de esta forma en un delito punible por ley.
 '
-'Argentum Online es libre, es de todos. Mantengamoslo así. Si tanto te gusta el juego y querés los
-'cambios que hacemos nosotros, compartí los tuyos. Es un cambio justo. Si no estás de acuerdo,
-'no uses nuestro código, pues nadie te obliga o bien utiliza una versión anterior a la 0.12.0.
+'Argentum Online es libre, es de todos. Mantengamoslo asi. Si tanto te gusta el juego y queres los
+'cambios que hacemos nosotros, comparti los tuyos. Es un cambio justo. Si no estas de acuerdo,
+'no uses nuestro codigo, pues nadie te obliga o bien utiliza una version anterior a la 0.12.0.
 '***********************************
     Call ShellExecute(0, "Open", "https://github.com/ao-libre", "", App.path, SW_SHOWNORMAL)
 

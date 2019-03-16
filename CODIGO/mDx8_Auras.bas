@@ -1,6 +1,6 @@
 Attribute VB_Name = "mDx8_Auras"
 '***************************************************
-'Author: Ezequiel Juárez (Standelf)
+'Author: Ezequiel Juarez (Standelf)
 'Last Modification: 26/05/10
 'Blisse-AO | Sistema de Auras
 '***************************************************
@@ -34,7 +34,7 @@ End Sub
 
 Public Sub Load_Auras()
 '***************************************************
-'Author: Ezequiel Juárez (Standelf)
+'Author: Ezequiel Juarez (Standelf)
 'Last Modification: 26/05/10
 'Load Auras
 '***************************************************
@@ -70,7 +70,7 @@ End Sub
 
 Public Sub DeInit_Auras()
 '***************************************************
-'Author: Ezequiel Juárez (Standelf)
+'Author: Ezequiel Juarez (Standelf)
 'Last Modification: 26/05/10
 'DeInit Auras
 '***************************************************
@@ -83,7 +83,7 @@ End Sub
 
 Public Sub Set_Aura(ByVal CharIndex As Integer, slot As Byte, Aura As Byte)
 '***************************************************
-'Author: Ezequiel Juárez (Standelf)
+'Author: Ezequiel Juarez (Standelf)
 'Last Modification: 26/05/10
 'Set Aura to Char
 '***************************************************
@@ -110,7 +110,7 @@ End Sub
 
 Public Sub Delete_All_Auras(ByVal CharIndex As Integer)
 '***************************************************
-'Author: Ezequiel Juárez (Standelf)
+'Author: Ezequiel Juarez (Standelf)
 'Last Modification: 26/05/10
 'Kill all of aura´s from Char
 '***************************************************
@@ -122,7 +122,7 @@ End Sub
     
 Public Sub Delete_Aura(ByVal CharIndex As Integer, slot As Byte)
 '***************************************************
-'Author: Ezequiel Juárez (Standelf)
+'Author: Ezequiel Juarez (Standelf)
 'Last Modification: 26/05/10
 'Kill Aura from Char
 '***************************************************
@@ -133,7 +133,7 @@ End Sub
 
 Public Sub Update_Aura(ByVal CharIndex As Integer, slot As Byte)
 '***************************************************
-'Author: Ezequiel Juárez (Standelf)
+'Author: Ezequiel Juarez (Standelf)
 'Last Modification: 26/05/10
 'Update Angle of Aura
 '***************************************************
@@ -150,7 +150,7 @@ End Sub
 
 Public Sub Render_Auras(ByVal CharIndex As Integer, X As Integer, Y As Integer)
 '***************************************************
-'Author: Ezequiel Juárez (Standelf)
+'Author: Ezequiel Juarez (Standelf)
 'Last Modification: 26/05/10
 'Render the Auras from a Char
 '***************************************************

@@ -1,6 +1,6 @@
 Attribute VB_Name = "mDx8_Cuenta"
 '***************************************************
-'Author: Ezequiel Juárez (Standelf)
+'Author: Ezequiel Juarez (Standelf)
 'Last Modification: 23/12/10
 'Blisse-AO | Sistema de Cuenta en Screen
 '***************************************************
@@ -27,7 +27,7 @@ Public Sub RenderCount()
         '   Si no es 0 Dibujamos normal
         'Call Fonts_Render_String(DX_Count.min, (ScreenWidth - Fonts_Render_String_Width(DX_Count.min, Count_Font)) / 2, (ScreenHeight - Fuentes(Count_Font).CharactersHeight) / 2, -1, Count_Font)
     Else
-        'Si es 0, Dibujamos el "@" que en la fuente está puesto como el "YA!"
+        'Si es 0, Dibujamos el "@" que en la fuente esta puesto como el "YA!"
         'Call Fonts_Render_String("@", (ScreenWidth - Fonts_Render_String_Width("@", Count_Font)) / 2, (ScreenHeight - Fuentes(Count_Font).CharactersHeight) / 2, -1, Count_Font)
     End If
     
@@ -37,7 +37,7 @@ End Sub
 
 Public Sub CheckCount()
 '***************************************************
-'Author: Ezequiel Juárez (Standelf)
+'Author: Ezequiel Juarez (Standelf)
 'Last Modification: 23/12/10
 'Check the count
 '***************************************************
@@ -61,7 +61,7 @@ End Sub
 
 Public Sub InitCount(ByVal Max As Byte)
 '***************************************************
-'Author: Ezequiel Juárez (Standelf)
+'Author: Ezequiel Juarez (Standelf)
 'Last Modification: 23/12/10
 'Check the count
 '***************************************************

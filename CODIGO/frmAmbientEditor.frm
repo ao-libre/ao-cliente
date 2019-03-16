@@ -59,7 +59,7 @@ Begin VB.Form frmAmbientEditor
          Width           =   495
       End
       Begin VB.CommandButton Command8 
-         Caption         =   "Crear Luz en Posición Actual"
+         Caption         =   "Crear Luz en Posicion Actual"
          Height          =   375
          Left            =   120
          TabIndex        =   15
@@ -203,7 +203,7 @@ Begin VB.Form frmAmbientEditor
          Width           =   1935
       End
       Begin VB.OptionButton Option1 
-         Caption         =   "Usar Luz del Día"
+         Caption         =   "Usar Luz del Dia"
          Height          =   255
          Index           =   0
          Left            =   240

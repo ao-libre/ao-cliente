@@ -78,7 +78,7 @@ End Function
 
 Public Function Map_GetBlocked(ByVal X As Integer, ByVal Y As Integer) As Boolean
       '*****************************************************************
-      'Author: Aaron Perkins - Modified by Juan Martín Sotuyo Dodero
+      'Author: Aaron Perkins - Modified by Juan Martin Sotuyo Dodero
       'Last Modify Date: 10/07/2002
       'Checks to see if a tile position is blocked
       '*****************************************************************
@@ -104,7 +104,7 @@ Sub Map_MoveTo(ByVal Direccion As E_Heading)
       'Last Modified By: Lucas Tavolaro Ortiz (Tavo)
       ' 06/03/2006: AlejoLp - Elimine las funciones Move[NSWE] y las converti a esta
       ' 12/08/2007: Tavo    - Si el usuario esta paralizado no se puede mover.
-      ' 06/28/2008: NicoNZ - Saqué lo que impedía que si el usuario estaba paralizado se ejecute el sub.
+      ' 06/28/2008: NicoNZ - Saque lo que impedia que si el usuario estaba paralizado se ejecute el sub.
       '***************************************************
 
       Dim LegalOk As Boolean

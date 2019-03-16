@@ -16,7 +16,7 @@ Attribute VB_Exposed = False
 ' surfaces at startup, and never deallocating them.
 ' This grants high performance can use a lot of RAM.
 '
-' Developed by Maraxus (Juan Martín Sotuyo Dodero - juansotuyo@hotmail.com)
+' Developed by Maraxus (Juan Martin Sotuyo Dodero - juansotuyo@hotmail.com)
 ' Last Modify Date: 3/06/2006
 '**************************************************************
 
@@ -65,7 +65,7 @@ Private DirectD3D As D3DX8
     
 Private Sub Class_Terminate()
 '**************************************************************
-'Author: Juan Martín Sotuyo Dodero
+'Author: Juan Martin Sotuyo Dodero
 'Last Modify Date: 3/06/2006
 'Clean up
 '**************************************************************
@@ -91,7 +91,7 @@ End Sub
 
 Private Sub clsSurfaceManager_Initialize(ByRef DD As D3DX8, ByVal graphicPath As String, Optional ByVal maxMemoryUsageInMb As Long = -1&)
 '**************************************************************
-'Author: Juan Martín Sotuyo Dodero
+'Author: Juan Martin Sotuyo Dodero
 'Last Modify Date: 29/07/2012 - ^[GS]^
 '**************************************************************
     Set DirectD3D = DD
@@ -101,7 +101,7 @@ End Sub
 
 Private Property Get clsSurfaceManager_Surface(ByVal fileIndex As Long) As Direct3DTexture8
 '**************************************************************
-'Author: Juan Martín Sotuyo Dodero
+'Author: Juan Martin Sotuyo Dodero
 'Last Modify Date: 3/06/2006
 'Retrieves the requested texture
 '**************************************************************

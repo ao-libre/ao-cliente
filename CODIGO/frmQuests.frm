@@ -34,7 +34,7 @@ Begin VB.Form frmQuests
       Width           =   2235
    End
    Begin VB.CommandButton cmdOptions 
-      Caption         =   "&Abandonar misión"
+      Caption         =   "&Abandonar mision"
       Height          =   375
       Index           =   0
       Left            =   60
@@ -79,30 +79,30 @@ Private Sub cmdOptions_Click(index As Integer)
 'Last modified: 31/01/2010 by Amraphen
 '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     Select Case index
-        Case 0 'Botón ABANDONAR MISIÓN
+        Case 0 'Boton ABANDONAR MISIoN
             'Chequeamos si hay items.
             If lstQuests.ListCount = 0 Then
-                MsgBox "¡No tienes ninguna misión!", vbOKOnly + vbExclamation
+                MsgBox "¡No tienes ninguna mision!", vbOKOnly + vbExclamation
                 Exit Sub
             End If
             
             'Chequeamos si tiene algun item seleccionado.
             If lstQuests.ListIndex < 0 Then
-                MsgBox "¡Primero debes seleccionar una misión!", vbOKOnly + vbExclamation
+                MsgBox "¡Primero debes seleccionar una mision!", vbOKOnly + vbExclamation
                 Exit Sub
             End If
             
-            Select Case MsgBox("¿Estás seguro que deseas abandonar la misión?", vbYesNo + vbExclamation)
-                Case vbYes  'Botón SÍ.
+            Select Case MsgBox("¿Estas seguro que deseas abandonar la mision?", vbYesNo + vbExclamation)
+                Case vbYes  'Boton Si.
                     'Enviamos el paquete para abandonar la quest
                     Call WriteQuestAbandon(lstQuests.ListIndex + 1)
                     
-                Case vbNo   'Botón NO.
-                    'Como seleccionó que no, no hace nada.
+                Case vbNo   'Boton NO.
+                    'Como selecciono que no, no hace nada.
                     Exit Sub
             End Select
             
-        Case 1 'Botón VOLVER
+        Case 1 'Boton VOLVER
             Unload Me
     End Select
 End Sub

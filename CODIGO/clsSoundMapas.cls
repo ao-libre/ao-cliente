@@ -66,7 +66,7 @@ Public Sub LoadSoundMapInfo()
 End Sub
  
 Public Sub ReproducirSonidosDeMapas()
-'Nos fijamos el mapa del personaje, sus sonidos y lo aplicamos al mapa. Simple y óptimo
+'Nos fijamos el mapa del personaje, sus sonidos y lo aplicamos al mapa. Simple y optimo
     Dim i As Long
     Dim SonidoMapa As Byte
     Dim posX As Byte

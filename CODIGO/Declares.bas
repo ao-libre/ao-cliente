@@ -1,7 +1,7 @@
 Attribute VB_Name = "Mod_Declaraciones"
 'Argentum Online 0.11.6
 '
-'Copyright (C) 2002 Márquez Pablo Ignacio
+'Copyright (C) 2002 Marquez Pablo Ignacio
 'Copyright (C) 2002 Otto Perez
 'Copyright (C) 2002 Aaron Perkins
 '
@@ -25,10 +25,10 @@ Attribute VB_Name = "Mod_Declaraciones"
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 número 983 piso 7 dto A
+'Calle 3 numero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'Código Postal 1900
-'Pablo Ignacio Márquez
+'Codigo Postal 1900
+'Pablo Ignacio Marquez
 
 
 Option Explicit
@@ -42,7 +42,7 @@ Public Sonidos As clsSoundMapas
 '//Caminata fluida
 Public Movement_Speed As Single
 
-'Objetos públicos
+'Objetos publicos
 Public DialogosClanes As clsGuildDlg
 Public Dialogos As clsDialogs
 Public Audio As clsAudio
@@ -227,14 +227,14 @@ Public Const GOLD_OFFER_SLOT As Integer = INV_OFFER_SLOTS + 1
 
 Public Enum eClass
     Mage = 1      'Mago
-    Cleric = 2    'Clérigo
+    Cleric = 2    'Clerigo
     Warrior = 3   'Guerrero
     Assasin = 4   'Asesino
-    Thief = 5     'Ladrón
+    Thief = 5     'Ladron
     Bard = 6      'Bardo
     Druid = 7     'Druida
     Bandit = 8    'Bandido
-    Paladin = 9   'Paladín
+    Paladin = 9   'Paladin
     Hunter = 10   'Cazador
     Worker = 11   'Trabajador
     Pirat = 12    'Pirata
@@ -262,7 +262,7 @@ Public Enum eSkill
     Tacticas = 3
     Armas = 4
     Meditar = 5
-    Apuñalar = 6
+    Apunalar = 6
     Ocultarse = 7
     Supervivencia = 8
     Talar = 9
@@ -316,7 +316,7 @@ Public Enum eObjType
     otForos = 10
     otPociones = 11
     otBebidas = 13
-    otLeña = 14
+    otLena = 14
     otFogata = 15
     otescudo = 16
     otcasco = 17

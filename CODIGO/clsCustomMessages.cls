@@ -15,7 +15,7 @@ Attribute VB_Exposed = False
 ' clsCustomMessages.cls - User-defined messages with shortcut.
 ' Allows the creation and serialization of user defined messages to be used with shortcuts.
 '
-' Designed and implemented by Juan Martín Sotuyo Dodero (Maraxus)
+' Designed and implemented by Juan Martin Sotuyo Dodero (Maraxus)
 ' (juansotuyo@gmail.com)
 '**************************************************************
 
@@ -64,7 +64,7 @@ Private CustomMessages(MESSAGE_COUNT - 1) As String
 
 Private Sub Class_Initialize()
 '***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan Martin Sotuyo Dodero (Maraxus)
 'Last Modification: 07/26/07
 'Initializes the messages by loading them from the config file
 '***************************************************
@@ -100,7 +100,7 @@ End Sub
 
 Private Sub Class_Terminate()
 '***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan Martin Sotuyo Dodero (Maraxus)
 'Last Modification: 07/26/07
 'Stores all messages back into config file for later use.
 '***************************************************
@@ -148,7 +148,7 @@ End Sub
 
 Public Property Get Message(ByVal index As Integer) As String
 '***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan Martin Sotuyo Dodero (Maraxus)
 'Last Modification: 07/26/07
 'Retrieves the requested message.
 '***************************************************
@@ -167,7 +167,7 @@ End Property
 
 Public Property Let Message(ByVal index As Integer, ByVal nValue As String)
 '***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan Martin Sotuyo Dodero (Maraxus)
 'Last Modification: 07/26/07
 'Sets the given message index with the requested message.
 '***************************************************
@@ -190,7 +190,7 @@ End Property
 
 Public Property Get InvalidMessageErrCode() As Long
 '***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan Martin Sotuyo Dodero (Maraxus)
 'Last Modification: 07/26/07
 'Retrieves the INVALID_MESSAGE error code.
 '***************************************************
@@ -205,7 +205,7 @@ End Property
 
 Private Function MessageIsValid(ByRef msg As String) As Boolean
 '***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan Martin Sotuyo Dodero (Maraxus)
 'Last Modification: 08/07/07
 'Last Modified by: Rapsodius
 '
@@ -237,15 +237,15 @@ Private Function MessageIsValid(ByRef msg As String) As Boolean
         'check for invalid chars...
         If ascii < 31 Then Exit Function
         
-        If ascii > 126 And Char <> "á" And Char <> "Á" And Char <> "ä" And Char <> "Ä" _
-          And Char <> "â" And Char <> "Â" And Char <> "à" And Char <> "À" And Char <> "é" _
-          And Char <> "É" And Char <> "ë" And Char <> "Ë" And Char <> "ê" And Char <> "Ê" _
-          And Char <> "è" And Char <> "È" And Char <> "í" And Char <> "Í" And Char <> "ï" _
+        If ascii > 126 And Char <> "a" And Char <> "a" And Char <> "ä" And Char <> "Ä" _
+          And Char <> "â" And Char <> "Â" And Char <> "à" And Char <> "À" And Char <> "e" _
+          And Char <> "e" And Char <> "ë" And Char <> "Ë" And Char <> "ê" And Char <> "Ê" _
+          And Char <> "è" And Char <> "È" And Char <> "i" And Char <> "i" And Char <> "ï" _
           And Char <> "Ï" And Char <> "î" And Char <> "Î" And Char <> "ì" And Char <> "Ì" _
-          And Char <> "ó" And Char <> "Ó" And Char <> "ö" And Char <> "Ö" And Char <> "ô" _
-          And Char <> "Ô" And Char <> "ò" And Char <> "Ò" And Char <> "ú" And Char <> "Ú" _
+          And Char <> "o" And Char <> "o" And Char <> "ö" And Char <> "Ö" And Char <> "ô" _
+          And Char <> "Ô" And Char <> "ò" And Char <> "Ò" And Char <> "u" And Char <> "u" _
           And Char <> "ü" And Char <> "Ü" And Char <> "û" And Char <> "Û" And Char <> "ù" _
-          And Char <> "Ù" And Char <> "ñ" And Char <> "Ñ" And Char <> "¡" And Char <> "¿" Then
+          And Char <> "Ù" And Char <> "n" And Char <> "n" And Char <> "¡" And Char <> "¿" Then
             Exit Function
         End If
     Next i

@@ -217,11 +217,11 @@ Exit Function
 
 ErrHandler:
     If Err.number = DDERR_OUTOFMEMORY Or Err.number = DDERR_OUTOFVIDEOMEMORY Then
-            MsgBox "No hay memoria disponible! El programa abortará. Cierra algunos programas e intenta de nuevo"
+            MsgBox "No hay memoria disponible! El programa abortara. Cierra algunos programas e intenta de nuevo"
             End
     Else
-        MsgBox "Un error inesperado ocurrió al intentar crear el texto" & ". " & vbCrLf & _
-                "El código de error es " & CStr(Err.number) & " - " & Err.Description & vbCrLf & vbCrLf & "Copia este mensaje y notifica a los administradores.", _
+        MsgBox "Un error inesperado ocurrio al intentar crear el texto" & ". " & vbCrLf & _
+                "El codigo de error es " & CStr(Err.number) & " - " & Err.Description & vbCrLf & vbCrLf & "Copia este mensaje y notifica a los administradores.", _
                 vbOKOnly Or vbCritical Or vbExclamation, "Error"
         End
     End If

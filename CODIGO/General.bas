@@ -4,7 +4,7 @@ Attribute VB_Name = "Mod_General"
 'Copyright (C) 2002 Marquez Pablo Ignacio
 'Copyright (C) 2002 Otto Perez
 'Copyright (C) 2002 Aaron Perkins
-'Copyright (C) 2002 Matias Fernando Pequeño
+'Copyright (C) 2002 Matias Fernando Pequeno
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the Affero General Public License;
@@ -483,7 +483,7 @@ End Sub
 
 Sub SwitchMap(ByVal Map As Integer)
     '**********************************************************************************
-    'Diseñado y creado por Juan Martín Sotuyo Dodero (Maraxus) (juansotuyo@hotmail.com)
+    'Disenado y creado por Juan Martin Sotuyo Dodero (Maraxus) (juansotuyo@hotmail.com)
     '**********************************************************************************
     
     '**********************************************************************************
@@ -1369,7 +1369,7 @@ Private Sub InicializarNombres()
     SkillsNames(eSkill.Tacticas) = JsonLanguage.Item("HABILIDADES").Item("EVASION_EN_COMBATE").Item("TEXTO")
     SkillsNames(eSkill.Armas) = JsonLanguage.Item("HABILIDADES").Item("COMBATE_CON_ARMAS").Item("TEXTO")
     SkillsNames(eSkill.Meditar) = JsonLanguage.Item("HABILIDADES").Item("MEDITAR").Item("TEXTO")
-    SkillsNames(eSkill.Apuñalar) = JsonLanguage.Item("HABILIDADES").Item("APUNALAR").Item("TEXTO")
+    SkillsNames(eSkill.Apunalar) = JsonLanguage.Item("HABILIDADES").Item("APUNALAR").Item("TEXTO")
     SkillsNames(eSkill.Ocultarse) = JsonLanguage.Item("HABILIDADES").Item("OCULTARSE").Item("TEXTO")
     SkillsNames(eSkill.Supervivencia) = JsonLanguage.Item("HABILIDADES").Item("SUPERVIVENCIA").Item("TEXTO")
     SkillsNames(eSkill.Talar) = JsonLanguage.Item("HABILIDADES").Item("TALAR").Item("TEXTO")

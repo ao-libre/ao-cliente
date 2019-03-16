@@ -14,7 +14,7 @@ Option Explicit
 '  Date: 5 February 2007
 '  Description: Added ScreenCapture Method and removed usless things.
 '
-'  Author: Juan Martín Sotuyo Dodero (Maraxus)
+'  Author: Juan Martin Sotuyo Dodero (Maraxus)
 '  Date: 28 Febraury 2007
 '  Description: Changed ScreenCapture to use the Screenshots directory.
 '               Fixed a bug that caused the DC not to be allways released (added INVALID_HANDLE constant)
@@ -540,9 +540,9 @@ On Error GoTo Err:
         If Not FileExist(dirFile, vbDirectory) Then Call MkDir(dirFile)
         
         'Nuevos directorios del FragShooter:
-        If FragShooterKilledSomeone Then 'Si mató a alguien.
+        If FragShooterKilledSomeone Then 'Si mato a alguien.
             dirFile = dirFile & "\Frags"
-        Else 'Si nos mató alguien.
+        Else 'Si nos mato alguien.
             dirFile = dirFile & "\Muertes"
         End If
         If Not FileExist(dirFile, vbDirectory) Then Call MkDir(dirFile)

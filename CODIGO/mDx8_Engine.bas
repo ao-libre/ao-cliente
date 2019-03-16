@@ -275,7 +275,7 @@ End Function
 
 Public Sub Engine_Draw_Box(ByVal X As Integer, ByVal Y As Integer, ByVal Width As Integer, ByVal Height As Integer, color As Long)
 '***************************************************
-'Author: Ezequiel Juárez (Standelf)
+'Author: Ezequiel Juarez (Standelf)
 'Last Modification: 29/12/10
 'Blisse-AO | Render Box
 '***************************************************
@@ -300,7 +300,7 @@ End Sub
 
 Public Sub Engine_D3DColor_To_RGB_List(rgb_list() As Long, color As D3DCOLORVALUE)
 '***************************************************
-'Author: Ezequiel Juárez (Standelf)
+'Author: Ezequiel Juarez (Standelf)
 'Last Modification: 14/05/10
 'Blisse-AO | Set a D3DColorValue to a RGB List
 '***************************************************
@@ -312,7 +312,7 @@ End Sub
 
 Public Sub Engine_Long_To_RGB_List(rgb_list() As Long, long_color As Long)
 '***************************************************
-'Author: Ezequiel Juárez (Standelf)
+'Author: Ezequiel Juarez (Standelf)
 'Last Modification: 16/05/10
 'Blisse-AO | Set a Long Color to a RGB List
 '***************************************************
@@ -462,7 +462,7 @@ End Function
 
 Public Sub Engine_BeginScene(Optional ByVal color As Long = 0)
 '***************************************************
-'Author: Ezequiel Juárez (Standelf)
+'Author: Ezequiel Juarez (Standelf)
 'Last Modification: 29/12/10
 'Blisse-AO | DD Clear & BeginScene
 '***************************************************
@@ -474,7 +474,7 @@ End Sub
 
 Public Sub Engine_EndScene(ByRef destRect As RECT, Optional ByVal hWndDest As Long = 0)
 '***************************************************
-'Author: Ezequiel Juárez (Standelf)
+'Author: Ezequiel Juarez (Standelf)
 'Last Modification: 29/12/10
 'Blisse-AO | DD EndScene & Present
 '***************************************************
@@ -493,7 +493,7 @@ Public Sub Geometry_Create_Box(ByRef Verts() As TLVERTEX, ByRef dest As RECT, By
                                 Optional ByRef Textures_Width As Long, Optional ByRef Textures_Height As Long, Optional ByVal Angle As Single)
 '**************************************************************
 'Author: Aaron Perkins
-'Modified by Juan Martín Sotuyo Dodero
+'Modified by Juan Martin Sotuyo Dodero
 'Last Modify Date: 11/17/2002
 '**************************************************************
 

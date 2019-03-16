@@ -206,10 +206,10 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 'Argentum Online 0.11.6
 '
-'Copyright (C) 2002 Márquez Pablo Ignacio
+'Copyright (C) 2002 Marquez Pablo Ignacio
 'Copyright (C) 2002 Otto Perez
 'Copyright (C) 2002 Aaron Perkins
-'Copyright (C) 2002 Matías Fernando Pequeño
+'Copyright (C) 2002 Matias Fernando Pequeno
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the Affero General Public License;
@@ -231,10 +231,10 @@ Attribute VB_Exposed = False
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 número 983 piso 7 dto A
+'Calle 3 numero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'Código Postal 1900
-'Pablo Ignacio Márquez
+'Codigo Postal 1900
+'Pablo Ignacio Marquez
 
 
 
@@ -417,12 +417,12 @@ Private Sub picInvNpc_Click()
     
         Select Case NPCInventory(ItemSlot).OBJType
             Case eObjType.otWeapon
-                Label1(2).Caption = "Máx " & JsonLanguage.Item("GOLPE").Item("TEXTO") & ":" & NPCInventory(ItemSlot).MaxHit
+                Label1(2).Caption = "Max " & JsonLanguage.Item("GOLPE").Item("TEXTO") & ":" & NPCInventory(ItemSlot).MaxHit
                 Label1(3).Caption = "Min " & JsonLanguage.Item("GOLPE").Item("TEXTO") & ":" & NPCInventory(ItemSlot).MinHit
                 Label1(2).Visible = True
                 Label1(3).Visible = True
             Case eObjType.otArmadura, eObjType.otcasco, eObjType.otescudo
-                Label1(2).Caption = "Máx " & JsonLanguage.Item("DEFENSA").Item("TEXTO") & ":" & NPCInventory(ItemSlot).MaxDef
+                Label1(2).Caption = "Max " & JsonLanguage.Item("DEFENSA").Item("TEXTO") & ":" & NPCInventory(ItemSlot).MaxDef
                 Label1(3).Caption = "Min " & JsonLanguage.Item("DEFENSA").Item("TEXTO") & ":" & NPCInventory(ItemSlot).MinDef
                 Label1(2).Visible = True
                 Label1(3).Visible = True
@@ -458,12 +458,12 @@ Private Sub picInvUser_Click()
     
         Select Case Inventario.OBJType(ItemSlot)
             Case eObjType.otWeapon
-                Label1(2).Caption = "Máx " & JsonLanguage.Item("GOLPE").Item("TEXTO") & ":" & Inventario.MaxHit(ItemSlot)
+                Label1(2).Caption = "Max " & JsonLanguage.Item("GOLPE").Item("TEXTO") & ":" & Inventario.MaxHit(ItemSlot)
                 Label1(3).Caption = "Min " & JsonLanguage.Item("GOLPE").Item("TEXTO") & ":" & Inventario.MinHit(ItemSlot)
                 Label1(2).Visible = True
                 Label1(3).Visible = True
             Case eObjType.otArmadura, eObjType.otcasco, eObjType.otescudo
-                Label1(2).Caption = "Máx " & JsonLanguage.Item("DEFENSA").Item("TEXTO") & ":" & Inventario.MaxDef(ItemSlot)
+                Label1(2).Caption = "Max " & JsonLanguage.Item("DEFENSA").Item("TEXTO") & ":" & Inventario.MaxDef(ItemSlot)
                 Label1(3).Caption = "Min " & JsonLanguage.Item("DEFENSA").Item("TEXTO") & ":" & Inventario.MinDef(ItemSlot)
                 Label1(2).Visible = True
                 Label1(3).Visible = True

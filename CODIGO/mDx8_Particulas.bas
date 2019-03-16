@@ -1464,7 +1464,7 @@ Public Sub SetSpellCast()
                 frmMain.hlst.List(frmMain.hlst.ListIndex) = "Inmovilizar" Then
             SpellGrhIndex = 24669
             Exit Sub
-        ElseIf frmMain.hlst.List(frmMain.hlst.ListIndex) = "Antídoto Mágico" Or _
+        ElseIf frmMain.hlst.List(frmMain.hlst.ListIndex) = "Antidoto Magico" Or _
                 frmMain.hlst.List(frmMain.hlst.ListIndex) = "Curar Heridas Leves" Or _
                 frmMain.hlst.List(frmMain.hlst.ListIndex) = "Curar Heridas Graves" Then
             SpellGrhIndex = 24673

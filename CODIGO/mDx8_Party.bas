@@ -1,6 +1,6 @@
 Attribute VB_Name = "mDx8_Party"
 '***************************************************
-'Author: Ezequiel Juárez (Standelf)
+'Author: Ezequiel Juarez (Standelf)
 'Last Modification: 26/05/10
 'Blisse-AO | Party Engine! Live the Pepa! _
     Show in screen the Party Gays!
@@ -17,7 +17,7 @@ Public PartyMembers(1 To 5) As c_PartyMember
 
 Public Sub Reset_Party()
 '***************************************************
-'Author: Ezequiel Juárez (Standelf)
+'Author: Ezequiel Juarez (Standelf)
 'Last Modification: 27/07/10
 'Reset all of Party Members
 '***************************************************
@@ -32,7 +32,7 @@ End Sub
 
 Public Sub Draw_Party_Members()
 '***************************************************
-'Author: Ezequiel Juárez (Standelf)
+'Author: Ezequiel Juarez (Standelf)
 'Last Modification: 26/05/10
 'Render Party Members
 '***************************************************
@@ -56,7 +56,7 @@ End Sub
 
 Public Sub Set_PartyMember(ByVal Member As Byte, Name As String, ExpParty As Long, Lvl As Byte, Head As Integer)
 '***************************************************
-'Author: Ezequiel Juárez (Standelf)
+'Author: Ezequiel Juarez (Standelf)
 'Last Modification: 28/05/10
 'Add User to Party
 '***************************************************
@@ -71,7 +71,7 @@ End Sub
 
 Public Sub Kick_PartyMember(ByVal Member As Byte)
 '***************************************************
-'Author: Ezequiel Juárez (Standelf)
+'Author: Ezequiel Juarez (Standelf)
 'Last Modification: 27/05/10
 'Kick User From Party
 '***************************************************

@@ -6,7 +6,7 @@ Option Explicit
 Const LOCALE_USER_DEFAULT = &H400
 'Const LOCALE_SENGLANGUAGE = &H1001
   
-'Declaración de la función Api GetLocaleInfo
+'Declaracion de la funcion Api GetLocaleInfo
 Private Declare Function GetLocaleInfo _
                 Lib "kernel32" _
                 Alias "GetLocaleInfoA" (ByVal Locale As Long, _
@@ -30,7 +30,7 @@ End Function
 
 Public Function ObtainOperativeSystemLanguage(ByVal lInfo As Long) As String
     '*******************************************
-    ' Función que obtiene el idioma del sistema
+    ' Funcion que obtiene el idioma del sistema
     '*******************************************
 
     Dim Buffer As String, ret As String
@@ -39,7 +39,7 @@ Public Function ObtainOperativeSystemLanguage(ByVal lInfo As Long) As String
             
     ret = GetLocaleInfo(LOCALE_USER_DEFAULT, lInfo, Buffer, Len(Buffer))
     
-    'Si Ret devuelve 0 es porque falló la llamada al Api
+    'Si Ret devuelve 0 es porque fallo la llamada al Api
     If ret > 0 Then
         ObtainOperativeSystemLanguage = Left$(Buffer, ret - 1)
     Else

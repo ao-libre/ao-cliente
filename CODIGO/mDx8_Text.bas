@@ -190,7 +190,7 @@ Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, ByVal Text As String
                     TempVA(1).color = -1
                     TempVA(2).color = -1
                     TempVA(3).color = -1
-                    If (ascii(j - 1) <> 157) Then Count = Count + 5   ' Los emoticones tienen tamaño propio (despues hay que cargarlos "correctamente" para evitar hacer esto)
+                    If (ascii(j - 1) <> 157) Then Count = Count + 5   ' Los emoticones tienen tamano propio (despues hay que cargarlos "correctamente" para evitar hacer esto)
                 Else
                     TempVA(0).color = TempColor
                     TempVA(1).color = TempColor
