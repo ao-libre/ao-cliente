@@ -154,7 +154,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 End If
                 Call WritePetStand
                 
-            Case "/ACOMPAnAR"
+            Case "/ACOMPANAR"
                 If UserEstado = 1 Then 'Muerto
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
                         Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
@@ -395,7 +395,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /penas NICKNAME.")
                 End If
                 
-            Case "/CONTRASEnA"
+            Case "/CONTRASENA"
                 Call frmNewPassword.Show(vbModal, frmMain)
             
             Case "/APOSTAR"

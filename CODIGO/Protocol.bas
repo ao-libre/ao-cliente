@@ -246,7 +246,7 @@ Private Enum ClientPacketID
     GuildLeave = 73               '/SALIRCLAN
     RequestAccountState = 74      '/BALANCE
     PetStand = 75                 '/QUIETO
-    PetFollow = 76                '/ACOMPAnAR
+    PetFollow = 76                '/ACOMPANAR
     ReleasePet = 77              '/LIBERAR
     TrainList = 78                '/ENTRENAR
     Rest = 79                     '/DESCANSAR
@@ -277,7 +277,7 @@ Private Enum ClientPacketID
     ChangeDescription = 104      '/DESC
     GuildVote = 105              '/VOTO
     Punishments = 106           '/PENAS
-    ChangePassword = 107         '/CONTRASEnA
+    ChangePassword = 107         '/CONTRASENA
     Gamble = 108                '/APOSTAR
     InquiryVote = 109            '/ENCUESTA ( with parameters )
     LeaveFaction = 110          '/RETIRAR ( with no arguments )
