@@ -237,16 +237,16 @@ Private Function MessageIsValid(ByRef msg As String) As Boolean
         'check for invalid chars...
         If ascii < 31 Then Exit Function
         
-        If ascii > 126 And Char <> "a" And Char <> "a" And Char <> "ä" And Char <> "Ä" _
-          And Char <> "â" And Char <> "Â" And Char <> "à" And Char <> "À" And Char <> "e" _
-          And Char <> "e" And Char <> "ë" And Char <> "Ë" And Char <> "ê" And Char <> "Ê" _
-          And Char <> "è" And Char <> "È" And Char <> "i" And Char <> "i" And Char <> "ï" _
+        If ascii > 126 And Char <> "á" And Char <> "Á" And Char <> "ä" And Char <> "Ä" _
+          And Char <> "â" And Char <> "Â" And Char <> "à" And Char <> "À" And Char <> "é" _
+          And Char <> "É" And Char <> "ë" And Char <> "Ë" And Char <> "ê" And Char <> "Ê" _
+          And Char <> "è" And Char <> "È" And Char <> "í" And Char <> "Í" And Char <> "ï" _
           And Char <> "Ï" And Char <> "î" And Char <> "Î" And Char <> "ì" And Char <> "Ì" _
-          And Char <> "o" And Char <> "o" And Char <> "ö" And Char <> "Ö" And Char <> "ô" _
-          And Char <> "Ô" And Char <> "ò" And Char <> "Ò" And Char <> "u" And Char <> "u" _
+          And Char <> "ó" And Char <> "Ó" And Char <> "ö" And Char <> "Ö" And Char <> "ô" _
+          And Char <> "Ô" And Char <> "ò" And Char <> "Ò" And Char <> "ú" And Char <> "Ú" _
           And Char <> "ü" And Char <> "Ü" And Char <> "û" And Char <> "Û" And Char <> "ù" _
-          And Char <> "Ù" And Char <> "n" And Char <> "n" And Char <> "¡" And Char <> "¿" Then
-            Exit Function
+          And Char <> "Ù" And Char <> "ñ" And Char <> "Ñ" And Char <> "¡" And Char <> "¿" Then
+			Exit Function
         End If
     Next i
     
