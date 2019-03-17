@@ -677,7 +677,7 @@ Begin VB.Form frmPanelGm
          Width           =   3735
       End
       Begin VB.CommandButton cmdAddObs 
-         Caption         =   "Agregar Observación"
+         Caption         =   "Agregar Observacion"
          BeginProperty Font 
             Name            =   "MS Sans Serif"
             Size            =   8.25
@@ -764,7 +764,7 @@ Begin VB.Form frmPanelGm
          Width           =   660
       End
       Begin VB.Label Label9 
-         Caption         =   "Descripción"
+         Caption         =   "Descripcion"
          BeginProperty Font 
             Name            =   "MS Sans Serif"
             Size            =   8.25
@@ -821,7 +821,7 @@ Begin VB.Form frmPanelGm
          Width           =   1575
       End
       Begin VB.Label Label6 
-         Caption         =   "Descripción"
+         Caption         =   "Descripcion"
          BeginProperty Font 
             Name            =   "MS Sans Serif"
             Size            =   8.25
@@ -1225,7 +1225,7 @@ Dim i As Long
 
     For i = 0 To lstUsers.ListCount
         If UCase$(lstUsers.List(i)) = UCase$(txtNuevoUsuario.Text) Then
-            Call MsgBox("¡El usuario ya está en la lista!", vbOKOnly + vbExclamation)
+            Call MsgBox("¡El usuario ya esta en la lista!", vbOKOnly + vbExclamation)
             Exit Sub
         End If
     Next i
@@ -1249,10 +1249,10 @@ End Sub
 Private Sub cmdAddObs_Click()
 Dim Obs As String
     
-    Obs = InputBox("Ingrese la observación", "Nueva Observación")
+    Obs = InputBox("Ingrese la observacion", "Nueva Observacion")
     
     If LenB(Obs) = 0 Then
-        Call MsgBox("¡Escribe una observación!", vbOKOnly + vbExclamation)
+        Call MsgBox("¡Escribe una observacion!", vbOKOnly + vbExclamation)
         Exit Sub
     End If
     
@@ -1355,7 +1355,7 @@ Private Sub cmdBORRARPENA_Click()
     Nick = cboListaUsus.Text
     
     If LenB(Nick) <> 0 Then
-        tStr = InputBox("Indique el número de la pena a borrar.", "Borrar pena")
+        tStr = InputBox("Indique el numero de la pena a borrar.", "Borrar pena")
         If LenB(tStr) <> 0 Then _
             If MsgBox("¿Seguro desea borrar la pena " & tStr & " a " & Nick & "?", vbYesNo, "Atencion!") = vbYes Then _
                 Call ParseUserCommand("/BORRARPENA " & Nick & "@" & tStr) 'We use the Parser to control the command format
@@ -1417,7 +1417,7 @@ Private Sub cmdCI_Click()
     '/CI
     Dim tStr As String
     
-    tStr = InputBox("Indique el número del objeto a crear.", "Crear Objeto")
+    tStr = InputBox("Indique el numero del objeto a crear.", "Crear Objeto")
     If LenB(tStr) <> 0 Then _
         If MsgBox("¿Seguro desea crear el objeto " & tStr & "?", vbYesNo, "Atencion!") = vbYes Then _
             Call ParseUserCommand("/CI " & tStr) 'We use the Parser to control the command format
@@ -1451,7 +1451,7 @@ Private Sub cmdCT_Click()
     '/CT
     Dim tStr As String
     
-    tStr = InputBox("Indique la posición donde lleva el portal (MAPA X Y).", "Crear Portal")
+    tStr = InputBox("Indique la posicion donde lleva el portal (MAPA X Y).", "Crear Portal")
     If LenB(tStr) <> 0 Then _
         Call ParseUserCommand("/CT " & tStr) 'We use the Parser to control the command format
 End Sub
@@ -1653,7 +1653,7 @@ Private Sub cmdNENE_Click()
     '/NENE
     Dim tStr As String
     
-    tStr = InputBox("Indique el mapa.", "Número de NPCs enemigos.")
+    tStr = InputBox("Indique el mapa.", "Numero de NPCs enemigos.")
     If LenB(tStr) <> 0 Then _
         Call ParseUserCommand("/NENE " & tStr) 'We use the Parser to control the command format
 End Sub
@@ -1675,7 +1675,7 @@ Private Sub cmdNOCAOS_Click()
     Nick = cboListaUsus.Text
     
     If LenB(Nick) <> 0 Then _
-        If MsgBox("¿Seguro desea expulsar a " & Nick & " de la legión oscura?", vbYesNo, "Atencion!") = vbYes Then _
+        If MsgBox("¿Seguro desea expulsar a " & Nick & " de la legion oscura?", vbYesNo, "Atencion!") = vbYes Then _
             Call WriteChaosLegionKick(Nick)
 End Sub
 
@@ -1757,7 +1757,7 @@ Private Sub cmdRAJAR_Click()
     Nick = cboListaUsus.Text
     
     If LenB(Nick) <> 0 Then _
-        If MsgBox("¿Seguro desea resetear la facción de " & Nick & "?", vbYesNo, "Atencion!") = vbYes Then _
+        If MsgBox("¿Seguro desea resetear la faccion de " & Nick & "?", vbYesNo, "Atencion!") = vbYes Then _
             Call WriteResetFactions(Nick)
 End Sub
 
@@ -1908,7 +1908,7 @@ Private Sub cmdTELEP_Click()
     Nick = cboListaUsus.Text
     
     If LenB(Nick) <> 0 Then
-        tStr = InputBox("Indique la posición (MAPA X Y).", "Transportar a " & Nick)
+        tStr = InputBox("Indique la posicion (MAPA X Y).", "Transportar a " & Nick)
         If LenB(tStr) <> 0 Then _
             Call ParseUserCommand("/TELEP " & Nick & " " & tStr) 'We use the Parser to control the command format
     End If
@@ -1951,7 +1951,7 @@ Private Sub Form_Load()
     'Actualiza los seguimientos
     Call cmdRefresh_Click
     
-    'Oculta el menú usado para el PopUp
+    'Oculta el menu usado para el PopUp
     mnuSeguimientos.Visible = False
 End Sub
 

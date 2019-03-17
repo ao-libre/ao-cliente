@@ -21,7 +21,7 @@ Attribute VB_Name = "PrevInstance"
 ''
 'Prevents multiple instances of the game running on the same computer.
 '
-' @author Fredy Horacio Treboux (liquid) @and Juan Martín Sotuyo Dodero (Maraxus) juansotuyo@gmail.com
+' @author Fredy Horacio Treboux (liquid) @and Juan Martin Sotuyo Dodero (Maraxus) juansotuyo@gmail.com
 ' @version 1.0.0
 ' @date 20070104
 
@@ -51,7 +51,7 @@ Private Function CreateNamedMutex(ByRef mutexName As String) As Boolean
 '***************************************************
 'Author: Fredy Horacio Treboux (liquid)
 'Last Modification: 01/04/07
-'Last Modified by: Juan Martín Sotuyo Dodero (Maraxus) - Changed Security Atributes to make it work in all OS
+'Last Modified by: Juan Martin Sotuyo Dodero (Maraxus) - Changed Security Atributes to make it work in all OS
 '***************************************************
     Dim sa As SECURITY_ATTRIBUTES
     
@@ -90,7 +90,7 @@ End Function
 
 Public Sub ReleaseInstance()
 '***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan Martin Sotuyo Dodero (Maraxus)
 'Last Modification: 01/04/07
 '
 '***************************************************

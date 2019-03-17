@@ -15,7 +15,7 @@ Attribute VB_Exposed = False
 ' clsDialogs.cls - Chats over head manager.
 ' Creates and manipulates chats over heads, rendering and updating them.
 '
-' Designed and implemented by Juan Martín Sotuyo Dodero (Maraxus)
+' Designed and implemented by Juan Martin Sotuyo Dodero (Maraxus)
 ' (juansotuyo@gmail.com)
 '**************************************************************
 
@@ -37,7 +37,7 @@ Attribute VB_Exposed = False
 ' Creates and manipulates chats over heads, rendering and updating them.
 '
 ' @file     clsDialogs.cls
-' @author   Juan Martín Sotuyo Dodero (Maraxus) juansotuyo@gmail.com
+' @author   Juan Martin Sotuyo Dodero (Maraxus) juansotuyo@gmail.com
 ' @version  1.0.0
 ' @date     20070729
 
@@ -103,7 +103,7 @@ Private usedFont As StdFont
 
 Private Sub Class_Initialize()
 '***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan Martin Sotuyo Dodero (Maraxus)
 'Last Modification: 07/28/07
 'Initializes the dialog instance
 '***************************************************
@@ -113,7 +113,7 @@ End Sub
 
 Private Function BinarySearch(ByVal CharIndex As Integer) As Integer
 '**************************************************************
-'Author: Juan Martín Sotuyo Dodero
+'Author: Juan Martin Sotuyo Dodero
 'Last Modify Date: 07/28/07
 'Returns the index of the dialog in the list, or the negation
 'of the position were it should be if not found (for binary insertion)
@@ -157,7 +157,7 @@ End Function
 
 Public Sub CreateDialog(ByRef chat As String, ByVal CharIndex As Integer, ByVal color As Long)
 '**************************************************************
-'Author: Juan Martín Sotuyo Dodero
+'Author: Juan Martin Sotuyo Dodero
 'Last Modification: 08/29/07 by Rapsodius
 'Changed life time of the dialogs to a variable amount,
 'depending on the number of chars
@@ -204,7 +204,7 @@ End Sub
 
 Private Function FormatChat(ByRef chat As String) As String()
 '**************************************************************
-'Author: Juan Martín Sotuyo Dodero
+'Author: Juan Martin Sotuyo Dodero
 'Last Modify Date: 07/28/07
 'Formats a dialog into different text lines.
 '**************************************************************
@@ -279,7 +279,7 @@ End Function
 
 Public Sub UpdateDialogPos(ByVal X As Integer, ByVal Y As Integer, ByVal CharIndex As Integer)
 '**************************************************************
-'Author: Juan Martín Sotuyo Dodero
+'Author: Juan Martin Sotuyo Dodero
 'Last Modify Date: 07/28/07
 'Updates a dialog's position.
 '**************************************************************
@@ -301,7 +301,7 @@ End Sub
 
 Public Sub Render()
 '**************************************************************
-'Author: Juan Martín Sotuyo Dodero
+'Author: Juan Martin Sotuyo Dodero
 'Last Modification: 08/29/07 by Rapsodius
 'Changed the way it gets rid of older dialogs.
 '**************************************************************
@@ -347,7 +347,7 @@ End Sub
 
 Public Sub RemoveDialog(ByVal CharIndex As Integer)
 '**************************************************************
-'Author: Juan Martín Sotuyo Dodero
+'Author: Juan Martin Sotuyo Dodero
 'Last Modify Date: 07/28/07
 'Removes the dialog from the requested char.
 '**************************************************************
@@ -374,7 +374,7 @@ End Sub
 
 Public Sub RemoveAllDialogs()
 '**************************************************************
-'Author: Juan Martín Sotuyo Dodero
+'Author: Juan Martin Sotuyo Dodero
 'Last Modify Date: 07/28/07
 'Removes all dialogs from all chars.
 '**************************************************************
@@ -388,7 +388,7 @@ End Sub
 
 Public Property Get Font() As StdFont
 '**************************************************************
-'Author: Juan Martín Sotuyo Dodero
+'Author: Juan Martin Sotuyo Dodero
 'Last Modify Date: 07/28/07
 'Retrieves the font being used to render dialogs.
 '**************************************************************
@@ -402,7 +402,7 @@ End Property
 
 Public Property Let Font(ByRef nValue As StdFont)
 '**************************************************************
-'Author: Juan Martín Sotuyo Dodero
+'Author: Juan Martin Sotuyo Dodero
 'Last Modify Date: 07/28/07
 'Sets the font being used to render dialogs.
 '**************************************************************

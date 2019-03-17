@@ -1,6 +1,6 @@
 Attribute VB_Name = "mDx8_Ambiente"
 '***************************************************
-'Author: Ezequiel Juárez (Standelf)
+'Author: Ezequiel Juarez (Standelf)
 'Last Modification: ??/??/10
 'Blisse-AO | Sistema de Ambientes
 '***************************************************

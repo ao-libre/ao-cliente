@@ -229,10 +229,10 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 'Argentum Online 0.11.6
 '
-'Copyright (C) 2002 Márquez Pablo Ignacio
+'Copyright (C) 2002 Marquez Pablo Ignacio
 'Copyright (C) 2002 Otto Perez
 'Copyright (C) 2002 Aaron Perkins
-'Copyright (C) 2002 Matías Fernando Pequeño
+'Copyright (C) 2002 Matias Fernando Pequeno
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the Affero General Public License;
@@ -254,10 +254,10 @@ Attribute VB_Exposed = False
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 número 983 piso 7 dto A
+'Calle 3 numero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'Código Postal 1900
-'Pablo Ignacio Márquez
+'Codigo Postal 1900
+'Pablo Ignacio Marquez
 
 
 
@@ -401,13 +401,13 @@ Private Sub PicBancoInv_Click()
             
             Select Case .OBJType
                 Case 2, 32
-                    Label1(1).Caption = "Máx " & JsonLanguage.item("GOLPE").item("TEXTO") & ":" & .MaxHit
+                    Label1(1).Caption = "Max " & JsonLanguage.item("GOLPE").item("TEXTO") & ":" & .MaxHit
                     Label1(2).Caption = "Min " & JsonLanguage.item("GOLPE").item("TEXTO") & ":" & .MinHit
                     Label1(1).Visible = True
                     Label1(2).Visible = True
                     
                 Case 3, 16, 17
-                    Label1(1).Caption = "Máx " & JsonLanguage.item("DEFENSA").item("TEXTO") & ":" & .MaxDef
+                    Label1(1).Caption = "Max " & JsonLanguage.item("DEFENSA").item("TEXTO") & ":" & .MaxDef
                     Label1(2).Caption = "Min " & JsonLanguage.item("DEFENSA").item("TEXTO") & ":" & .MinDef
                     Label1(1).Visible = True
                     Label1(2).Visible = True
@@ -440,13 +440,13 @@ Private Sub PicInv_Click()
             
             Select Case .OBJType(InvBanco(1).SelectedItem)
                 Case eObjType.otWeapon, eObjType.otFlechas
-                    Label1(1).Caption = "Máx " & JsonLanguage.item("GOLPE").item("TEXTO") & ":" & .MaxHit(InvBanco(1).SelectedItem)
+                    Label1(1).Caption = "Max " & JsonLanguage.item("GOLPE").item("TEXTO") & ":" & .MaxHit(InvBanco(1).SelectedItem)
                     Label1(2).Caption = "Min " & JsonLanguage.item("GOLPE").item("TEXTO") & ":" & .MinHit(InvBanco(1).SelectedItem)
                     Label1(1).Visible = True
                     Label1(2).Visible = True
                     
                 Case eObjType.otcasco, eObjType.otArmadura, eObjType.otescudo ' 3, 16, 17
-                    Label1(1).Caption = "Máx " & JsonLanguage.item("DEFENSA").item("TEXTO") & ":" & .MaxDef(InvBanco(1).SelectedItem)
+                    Label1(1).Caption = "Max " & JsonLanguage.item("DEFENSA").item("TEXTO") & ":" & .MaxDef(InvBanco(1).SelectedItem)
                     Label1(2).Caption = "Min " & JsonLanguage.item("DEFENSA").item("TEXTO") & ":" & .MinDef(InvBanco(1).SelectedItem)
                     Label1(1).Visible = True
                     Label1(2).Visible = True

@@ -73,7 +73,7 @@ Begin VB.Form frmPasswd
    Begin VB.Label Label5 
       Alignment       =   2  'Center
       AutoSize        =   -1  'True
-      Caption         =   "Verifiación del password:"
+      Caption         =   "Verifiacion del password:"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   8.25
@@ -110,7 +110,7 @@ Begin VB.Form frmPasswd
    End
    Begin VB.Label Label3 
       Alignment       =   2  'Center
-      Caption         =   "Dirección de correo electronico:"
+      Caption         =   "Direccion de correo electronico:"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   8.25
@@ -172,10 +172,10 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 'Argentum Online 0.11.6
 '
-'Copyright (C) 2002 Márquez Pablo Ignacio
+'Copyright (C) 2002 Marquez Pablo Ignacio
 'Copyright (C) 2002 Otto Perez
 'Copyright (C) 2002 Aaron Perkins
-'Copyright (C) 2002 Matías Fernando Pequeño
+'Copyright (C) 2002 Matias Fernando Pequeno
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the Affero General Public License;
@@ -197,10 +197,10 @@ Attribute VB_Exposed = False
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 número 983 piso 7 dto A
+'Calle 3 numero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'Código Postal 1900
-'Pablo Ignacio Márquez
+'Codigo Postal 1900
+'Pablo Ignacio Marquez
 
 
 Option Explicit

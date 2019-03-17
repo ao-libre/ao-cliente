@@ -1,6 +1,6 @@
 Attribute VB_Name = "mDx8_Clima"
 '***************************************************
-'Author: Ezequiel Juárez (Standelf)
+'Author: Ezequiel Juarez (Standelf)
 'Last Modification: 15/05/10
 'Blisse-AO | Set the Roof Color and Render _
     the Lights.

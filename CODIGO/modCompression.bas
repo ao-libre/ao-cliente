@@ -9,11 +9,11 @@ Public Const MAPS_SOURCE_FILE_EXT As String = ".map"
 Public Const MAPS_RESOURCE_FILE As String = "Mapas.AO"
 Public Const MAPS_PATCH_FILE As String = "Mapas.PATCH"
 
-Public GrhDatContra() As Byte ' Contraseña
-Public GrhUsaContra As Boolean ' Usa Contraseña?
+Public GrhDatContra() As Byte ' Contrasena
+Public GrhUsaContra As Boolean ' Usa Contrasena?
 
-Public MapsDatContra() As Byte ' Contraseña
-Public MapsUsaContra As Boolean  ' Usa Contraseña?
+Public MapsDatContra() As Byte ' Contrasena
+Public MapsUsaContra As Boolean  ' Usa Contrasena?
 
 'This structure will describe our binary file's
 'size, number and version of contained files
@@ -127,7 +127,7 @@ End Sub
 
 Private Function General_Drive_Get_Free_Bytes(ByVal DriveName As String) As Currency
 '**************************************************************
-'Author: Juan Martín Sotuyo Dodero
+'Author: Juan Martin Sotuyo Dodero
 'Last Modify Date: 6/07/2004
 '
 '**************************************************************
@@ -297,7 +297,7 @@ End Function
 
 Private Sub Compress_Data(ByRef data() As Byte, Optional Modo As Byte = 0)
 '*****************************************************************
-'Author: Juan Martín Dotuyo Dodero
+'Author: Juan Martin Dotuyo Dodero
 'Last Modify Date: 17/07/2012 - ^[GS]^
 'Compresses binary data avoiding data loses
 '*****************************************************************
@@ -355,7 +355,7 @@ End Sub
 
 Private Sub Decompress_Data(ByRef data() As Byte, ByVal OrigSize As Long, Optional Modo As Byte = 0)
 '*****************************************************************
-'Author: Juan Martín Dotuyo Dodero
+'Author: Juan Martin Dotuyo Dodero
 'Last Modify Date: 16/07/2012 - ^[GS]^
 'Decompresses binary data
 '*****************************************************************
@@ -481,7 +481,7 @@ On Local Error GoTo ErrHandler
             
             MsgBox ERROR_EXT_NO_ENCONTRADA, , JsonLanguage.Item("Error").Item("TEXTO")
         'Else
-        '    MsgBox "No se encontraron archivos de extensión " & PNG_SOURCE_FILE_EXT & " en " & SourcePath & ".", , JsonLanguage.Item("Error").Item("TEXTO")
+        '    MsgBox "No se encontraron archivos de extension " & PNG_SOURCE_FILE_EXT & " en " & SourcePath & ".", , JsonLanguage.Item("Error").Item("TEXTO")
         'End If
         Exit Function
     End If
@@ -1429,7 +1429,7 @@ End Function
 
 Public Function GetVersion(ByVal ResourceFilePath As String) As Long
 '*****************************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan Martin Sotuyo Dodero (Maraxus)
 'Last Modify Date: 11/23/2008
 '
 '*****************************************************************

@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin VB.Form frmQuestInfo 
    BorderStyle     =   3  'Fixed Dialog
-   Caption         =   "Información de la misión"
+   Caption         =   "Informacion de la mision"
    ClientHeight    =   3795
    ClientLeft      =   45
    ClientTop       =   330

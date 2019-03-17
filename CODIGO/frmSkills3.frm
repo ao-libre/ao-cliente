@@ -862,10 +862,10 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 'Argentum Online 0.11.6
 '
-'Copyright (C) 2002 Márquez Pablo Ignacio
+'Copyright (C) 2002 Marquez Pablo Ignacio
 'Copyright (C) 2002 Otto Perez
 'Copyright (C) 2002 Aaron Perkins
-'Copyright (C) 2002 Matías Fernando Pequeño
+'Copyright (C) 2002 Matias Fernando Pequeno
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the Affero General Public License;
@@ -887,10 +887,10 @@ Attribute VB_Exposed = False
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 número 983 piso 7 dto A
+'Calle 3 numero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'Código Postal 1900
-'Pablo Ignacio Márquez
+'Codigo Postal 1900
+'Pablo Ignacio Marquez
 
 Option Explicit
 
@@ -1148,8 +1148,8 @@ Private Sub LoadButtons()
                                     GrhPath & "MeditarBloqueado.jpg", Not bPuedeMeditar, False, False)
 
     Call cSkillNames(6).Initialize(imgApunialar, "", _
-                                    GrhPath & "ApuñalarRollover.jpg", _
-                                    GrhPath & "ApuñalarRollover.jpg", Me, , , False, False)
+                                    GrhPath & "ApunalarRollover.jpg", _
+                                    GrhPath & "ApunalarRollover.jpg", Me, , , False, False)
 
     Call cSkillNames(7).Initialize(imgOcultarse, "", _
                                     GrhPath & "OcultarseRollover.jpg", _
@@ -1268,7 +1268,7 @@ Private Sub imgAceptar_Click()
 End Sub
 
 Private Sub imgApunialar_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    Call ShowHelp(eSkill.Apuñalar)
+    Call ShowHelp(eSkill.Apunalar)
 End Sub
 
 Private Sub imgCancelar_Click()
@@ -1508,7 +1508,7 @@ Private Sub LoadHelp()
                                 JsonLanguage.Item("AYUDA_NO_USAR_HABILIDAD").Item("TEXTO")
     End If
 
-    vsHelp(eSkill.Apuñalar) = JsonLanguage.Item("HABILIDADES").Item("APUNALAR").Item("TEXTO") & ":" & vbCrLf & _
+    vsHelp(eSkill.Apunalar) = JsonLanguage.Item("HABILIDADES").Item("APUNALAR").Item("TEXTO") & ":" & vbCrLf & _
                               JsonLanguage.Item("HABILIDADES").Item("APUNALAR").Item("DESCRIPCION")
 
     vsHelp(eSkill.Ocultarse) = JsonLanguage.Item("HABILIDADES").Item("OCULTARSE").Item("TEXTO") & ":" & vbCrLf & _

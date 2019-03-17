@@ -124,7 +124,7 @@ End Sub
 
 Public Function GetInterval(ByVal TimerIndex As TimersIndex) As Long
 '*************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan Martin Sotuyo Dodero (Maraxus)
 'Last modified: 13/10/2008
 'Desc: Retrieves the interval of a timer.
 '*************************************************

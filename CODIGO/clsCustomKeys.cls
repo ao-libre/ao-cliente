@@ -42,7 +42,7 @@ Attribute VB_Exposed = False
 '03/08/2007 - Rapsodius
 '   - First Release
 '
-'13/04/2008 - Juan Martín Sotuyo Dodero (Maraxus) - (juansotuyo@gmail.com)
+'13/04/2008 - Juan Martin Sotuyo Dodero (Maraxus) - (juansotuyo@gmail.com)
 '   - Removed lots of unwanted buggy features keeping it clean. Revised documentation and coding standards.
 
 
@@ -151,7 +151,7 @@ Public Function ReadableName(ByVal KeyCode As Integer) As String
             ReadableName = Chr$(KeyCode)
         
         Case KeyCodeConstants.vbKeyNumpad0 To KeyCodeConstants.vbKeyNumpad9
-            ReadableName = KeyCode - KeyCodeConstants.vbKeyNumpad0 & " (teclado numérico)"
+            ReadableName = KeyCode - KeyCodeConstants.vbKeyNumpad0 & " (teclado numerico)"
         
         Case KeyCodeConstants.vbKeyF1 To KeyCodeConstants.vbKeyF16
             ReadableName = "F" & (KeyCode - KeyCodeConstants.vbKeyF1 + 1)
@@ -166,7 +166,7 @@ Public Function ReadableName(ByVal KeyCode As Integer) As String
             'Note: Separator appears in MSDN as the Enter key for
             'the numpad, but MS recognizes it as the normal
             'Enter key
-            ReadableName = "Enter (teclado numérico)"
+            ReadableName = "Enter (teclado numerico)"
         
         Case KeyCodeConstants.vbKeySubtract
             ReadableName = "- (teclado numerico)"
@@ -255,8 +255,8 @@ Public Sub LoadCustomKeys()
 '***************************************************
 'Author: Rapsodius
 'Last Modification: 18/11/2010
-'16/11/2010: Amraphen - Adapté el procedimiento para cargar todas las configuraciones de teclas.
-'18/11/2010: Amraphen - Modifiqué la forma en que se cargan los bindings y ahora carga los del formato viejo.
+'16/11/2010: Amraphen - Adapte el procedimiento para cargar todas las configuraciones de teclas.
+'18/11/2010: Amraphen - Modifique la forma en que se cargan los bindings y ahora carga los del formato viejo.
 '***************************************************
 Dim i As Long
 Dim J As Long
@@ -271,7 +271,7 @@ Dim FileNum As Integer
         ActiveConfig = 1
         
         Call SaveCustomKeys
-    Else 'Existe el archivo, verificamos qué formato tiene:
+    Else 'Existe el archivo, verificamos que formato tiene:
         
         FileNum = FreeFile
     
@@ -314,8 +314,8 @@ Public Sub SaveCustomKeys()
 '***************************************************
 'Author: Rapsodius
 'Last Modification: 18/11/10
-'16/11/2010: Amraphen - Adapté el procedimiento para guardar todas las configuraciones de teclas.
-'18/11/2010: Amraphen - Ahora se guarda la configuración activa.
+'16/11/2010: Amraphen - Adapte el procedimiento para guardar todas las configuraciones de teclas.
+'18/11/2010: Amraphen - Ahora se guarda la configuracion activa.
 '***************************************************
 Dim i As Long
 Dim J As Long
@@ -325,7 +325,7 @@ Dim FileNum As Integer
     
     Open App.path & KEY_CONFIG_FILE For Binary Access Write As FileNum
     
-    'Guardo la configuración activa:
+    'Guardo la configuracion activa:
     Put FileNum, , ActiveConfig
     
     'Guardo las distintas configuraciones:
@@ -348,7 +348,7 @@ Public Property Get BindedKey(ByVal Index As eKeyType) As Integer
 '***************************************************
 'Author: Rapsodius
 'Last Modification: 16/11/2010
-'16/11/2010: Amraphen - Adapté la propiedad para que cargue el bind de la tecla en la configuración activa.
+'16/11/2010: Amraphen - Adapte la propiedad para que cargue el bind de la tecla en la configuracion activa.
 '***************************************************
     If Index < 1 Or Index > NUM_CUSTOM_KEYS Then Exit Property
     
@@ -365,7 +365,7 @@ Public Property Let BindedKey(ByVal Index As eKeyType, ByVal NewVal As Integer)
 '***************************************************
 'Author: Rapsodius
 'Last Modification: 16/11/2010
-'16/11/2010: Amraphen - Adapté la propiedad para que guarde el bind de la tecla en la configuración activa.
+'16/11/2010: Amraphen - Adapte la propiedad para que guarde el bind de la tecla en la configuracion activa.
 '***************************************************
     If Index < 1 Or Index > NUM_CUSTOM_KEYS Then Exit Property
     
@@ -389,7 +389,7 @@ Public Sub LoadDefaults(ByVal KeyConfig As Byte)
 '***************************************************
 'Author: Rapsodius
 'Last Modification: 16/11/2010
-'16/11/2010: Amraphen - Adapté el procedimiento para que cargue los bindings por default en una sola configuración.
+'16/11/2010: Amraphen - Adapte el procedimiento para que cargue los bindings por default en una sola configuracion.
 '***************************************************
     mappedKeys(KeyConfig, eKeyType.mKeyUp) = KeyCodeConstants.vbKeyUp
     mappedKeys(KeyConfig, eKeyType.mKeyDown) = KeyCodeConstants.vbKeyDown
@@ -430,7 +430,7 @@ Public Function KeyAssigned(ByVal KeyCode As Integer) As Boolean
 '***************************************************
 'Author: Rapsodius
 'Last Modification: 16/11/2010
-'16/11/2010: Amraphen - Adapté la función para que trabaje sobre la configuración activa.
+'16/11/2010: Amraphen - Adapte la funcion para que trabaje sobre la configuracion activa.
 '***************************************************
 Dim Counter As Long
     
@@ -453,7 +453,7 @@ Public Property Get KeyCount() As Byte
 '***************************************************
 'Author: Rapsodius
 'Last Modification: 16/11/2010
-'16/11/2010: Amraphen - Cambié el nombre para evitar confusiones.
+'16/11/2010: Amraphen - Cambie el nombre para evitar confusiones.
 '***************************************************
     KeyCount = NUM_CUSTOM_KEYS
 End Property
@@ -507,7 +507,7 @@ Private Sub Class_Initialize()
 '***************************************************
 'Author: Rapsodius
 'Last Modification: 18/11/2010
-'16/11/2010: Amraphen - Adapté el procedimiento para que trabaje sobre las distintas configuraciones de teclas.
+'16/11/2010: Amraphen - Adapte el procedimiento para que trabaje sobre las distintas configuraciones de teclas.
 '18/11/2010: Amraphen - Ahora el manejo de errores se hace desde el sub LoadCustomKeys
 '***************************************************
 

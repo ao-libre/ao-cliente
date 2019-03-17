@@ -1,7 +1,7 @@
 Attribute VB_Name = "ProtocolCmdParse"
 'Argentum Online
 '
-'Copyright (C) 2006 Juan Martín Sotuyo Dodero (Maraxus)
+'Copyright (C) 2006 Juan Martin Sotuyo Dodero (Maraxus)
 'Copyright (C) 2006 Alejandro Santos (AlejoLp)
 
 '
@@ -35,7 +35,7 @@ Public Sub AuxWriteWhisper(ByVal UserName As String, ByVal Mensaje As String)
 '***************************************************
 'Author: Unknown
 'Last Modification: 03/12/2010
-'03/12/2010: Enanoh - Ahora se envía el nick en vez del index del usuario.
+'03/12/2010: Enanoh - Ahora se envia el nick en vez del index del usuario.
 '***************************************************
     If LenB(UserName) = 0 Then Exit Sub
     
@@ -113,7 +113,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
         CantidadArgumentos = 0
     End If
     
-    ' Sacar cartel APESTA!! (y es ilógico, estás diciendo una pausa/espacio  :rolleyes: )
+    ' Sacar cartel APESTA!! (y es ilogico, estas diciendo una pausa/espacio  :rolleyes: )
     If LenB(Comando) = 0 Then Comando = " "
     
     If Left$(Comando, 1) = "/" Then
@@ -154,7 +154,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 End If
                 Call WritePetStand
                 
-            Case "/ACOMPAÑAR"
+            Case "/ACOMPANAR"
                 If UserEstado = 1 Then 'Muerto
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
                         Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
@@ -395,7 +395,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /penas NICKNAME.")
                 End If
                 
-            Case "/CONTRASEÑA"
+            Case "/CONTRASENA"
                 Call frmNewPassword.Show(vbModal, frmMain)
             
             Case "/APOSTAR"
@@ -1008,22 +1008,22 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                             Call WriteForceWAVEToMap(ArgumentosAll(0), 0, 0, 0)
                         Else
                             'No es numerico
-                            Call ShowConsoleMsg("Utilice /forcewavmap WAV MAP X Y, siendo los últimos 3 opcionales.")
+                            Call ShowConsoleMsg("Utilice /forcewavmap WAV MAP X Y, siendo los ultimos 3 opcionales.")
                         End If
                     ElseIf CantidadArgumentos = 4 Then
                         If ValidNumber(ArgumentosAll(0), eNumber_Types.ent_Byte) And ValidNumber(ArgumentosAll(1), eNumber_Types.ent_Integer) And ValidNumber(ArgumentosAll(2), eNumber_Types.ent_Byte) And ValidNumber(ArgumentosAll(3), eNumber_Types.ent_Byte) Then
                             Call WriteForceWAVEToMap(ArgumentosAll(0), ArgumentosAll(1), ArgumentosAll(2), ArgumentosAll(3))
                         Else
                             'No es numerico
-                            Call ShowConsoleMsg("Utilice /forcewavmap WAV MAP X Y, siendo los últimos 3 opcionales.")
+                            Call ShowConsoleMsg("Utilice /forcewavmap WAV MAP X Y, siendo los ultimos 3 opcionales.")
                         End If
                     Else
                         'Avisar que falta el parametro
-                        Call ShowConsoleMsg("Utilice /forcewavmap WAV MAP X Y, siendo los últimos 3 opcionales.")
+                        Call ShowConsoleMsg("Utilice /forcewavmap WAV MAP X Y, siendo los ultimos 3 opcionales.")
                     End If
                 Else
                     'Avisar que falta el parametro
-                    Call ShowConsoleMsg("Utilice /forcewavmap WAV MAP X Y, siendo los últimos 3 opcionales.")
+                    Call ShowConsoleMsg("Utilice /forcewavmap WAV MAP X Y, siendo los ultimos 3 opcionales.")
                 End If
                 
             Case "/REALMSG"

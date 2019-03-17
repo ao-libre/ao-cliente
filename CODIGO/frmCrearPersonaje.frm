@@ -1158,10 +1158,10 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 'Argentum Online 0.11.6
 '
-'Copyright (C) 2002 Márquez Pablo Ignacio
+'Copyright (C) 2002 Marquez Pablo Ignacio
 'Copyright (C) 2002 Otto Perez
 'Copyright (C) 2002 Aaron Perkins
-'Copyright (C) 2002 Matías Fernando Pequeño
+'Copyright (C) 2002 Matias Fernando Pequeno
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the Affero General Public License;
@@ -1183,10 +1183,10 @@ Attribute VB_Exposed = False
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 número 983 piso 7 dto A
+'Calle 3 numero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'Código Postal 1900
-'Pablo Ignacio Márquez
+'Codigo Postal 1900
+'Pablo Ignacio Marquez
 
 Option Explicit
 
@@ -1269,8 +1269,8 @@ Private Type tModClase
     Evasion As Double
     AtaqueArmas As Double
     AtaqueProyectiles As Double
-    DañoArmas As Double
-    DañoProyectiles As Double
+    DanoArmas As Double
+    DanoProyectiles As Double
     Escudo As Double
     Magia As Double
     Vida As Double
@@ -2216,13 +2216,13 @@ Private Sub UpdateStars()
     
     ' Estrellas de armas
     NumStars = (0.509 + 0.01185 * Val(lblAtributoFinal(eAtributos.Fuerza).Caption)) * ModClase(UserClase).Hit * _
-                ModClase(UserClase).DañoArmas + 0.119 * ModClase(UserClase).AtaqueArmas * _
+                ModClase(UserClase).DanoArmas + 0.119 * ModClase(UserClase).AtaqueArmas * _
                 Val(lblAtributoFinal(eAtributos.Agilidad).Caption)
     Call SetStars(imgArmasStar, NumStars * 2)
     
     ' Estrellas de arcos
     NumStars = (0.4915 + 0.01265 * Val(lblAtributoFinal(eAtributos.Fuerza).Caption)) * _
-                ModClase(UserClase).DañoProyectiles * ModClase(UserClase).Hit + 0.119 * ModClase(UserClase).AtaqueProyectiles * _
+                ModClase(UserClase).DanoProyectiles * ModClase(UserClase).Hit + 0.119 * ModClase(UserClase).AtaqueProyectiles * _
                 Val(lblAtributoFinal(eAtributos.Agilidad).Caption)
     Call SetStars(imgArcoStar, NumStars * 2)
 End Sub
@@ -2305,8 +2305,8 @@ Private Sub LoadCharInfo()
             .Evasion = Val(GetVar(IniPath & "CharInfo.dat", "MODEVASION", SearchVar))
             .AtaqueArmas = Val(GetVar(IniPath & "CharInfo.dat", "MODATAQUEARMAS", SearchVar))
             .AtaqueProyectiles = Val(GetVar(IniPath & "CharInfo.dat", "MODATAQUEPROYECTILES", SearchVar))
-            .DañoArmas = Val(GetVar(IniPath & "CharInfo.dat", "MODDAÑOARMAS", SearchVar))
-            .DañoProyectiles = Val(GetVar(IniPath & "CharInfo.dat", "MODDAÑOPROYECTILES", SearchVar))
+            .DanoArmas = Val(GetVar(IniPath & "CharInfo.dat", "MODDANOARMAS", SearchVar))
+            .DanoProyectiles = Val(GetVar(IniPath & "CharInfo.dat", "MODDANOPROYECTILES", SearchVar))
             .Escudo = Val(GetVar(IniPath & "CharInfo.dat", "MODESCUDO", SearchVar))
             .Hit = Val(GetVar(IniPath & "CharInfo.dat", "HIT", SearchVar))
             .Magia = Val(GetVar(IniPath & "CharInfo.dat", "MODMAGIA", SearchVar))
