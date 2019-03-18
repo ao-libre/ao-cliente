@@ -381,3 +381,10 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 07/03/2019 : Implementación: Evento - Juegos del Hambre. (jopiortiz)
 * 11/03/2019 : Solución al bug de clones. (jopiortiz-Yhunja)
 * 11/03/2019 : Eliminada la carga de MD5. (jopiortiz)
+
+- 0.13.8
+* 12/03/2019: Implementación: Sistema de Quests via NPC's. (jopiortiz)
+* 12/03/2019: Optimizaciones varias, limpieza de codigo (jopiortiz)
+* 14/03/2019 : Implementación: Amuleto del Silencio (Recox-jopiortiz)
+* 15/03/2019 : Reemplazados caracteres especiales por normales (à á é í ó ú ñ Ñ) para evitar errores en encodeo y diferencias de codigo no deseadas en pull requests. (Recox)
+
