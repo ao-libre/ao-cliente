@@ -1003,7 +1003,7 @@ Public Sub HandleMultiMessage()
         
             Case eMessages.UserAttackedSwing
                 Call AddtoRichTextBox(frmMain.RecTxt, _
-                    MENSAJE_1 & charlist(incomingData.ReadInteger()).Nombre & JsonLanguage.Item("MENSAJE_ATAQUE_FALLO").Item("TEXTO"), _
+                    charlist(incomingData.ReadInteger()).Nombre & JsonLanguage.Item("MENSAJE_ATAQUE_FALLO").Item("TEXTO"), _
                     JsonLanguage.Item("MENSAJE_ATAQUE_FALLO").Item("COLOR").Item(1), _
                     JsonLanguage.Item("MENSAJE_ATAQUE_FALLO").Item("COLOR").Item(2), _
                     JsonLanguage.Item("MENSAJE_ATAQUE_FALLO").Item("COLOR").Item(3), _
@@ -1021,7 +1021,7 @@ Public Sub HandleMultiMessage()
 
                     Case ePartesCuerpo.bCabeza
                         Call AddtoRichTextBox(frmMain.RecTxt, _
-                            MENSAJE_1 & AttackerName & JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_CABEZA").Item("TEXTO") & Dano & MENSAJE_2, _
+                            AttackerName & JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_CABEZA").Item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_CABEZA").Item("COLOR").Item(1), _
                             JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_CABEZA").Item("COLOR").Item(2), _
                             JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_CABEZA").Item("COLOR").Item(3), _
@@ -1029,7 +1029,7 @@ Public Sub HandleMultiMessage()
                 
                     Case ePartesCuerpo.bBrazoIzquierdo
                         Call AddtoRichTextBox(frmMain.RecTxt, _
-                        MENSAJE_1 & AttackerName & JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ").Item("TEXTO") & Dano & MENSAJE_2, _
+                        AttackerName & JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ").Item("TEXTO") & Dano & MENSAJE_2, _
                         JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ").Item("COLOR").Item(1), _
                         JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ").Item("COLOR").Item(2), _
                         JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ").Item("COLOR").Item(3), _
@@ -1037,7 +1037,7 @@ Public Sub HandleMultiMessage()
                 
                     Case ePartesCuerpo.bBrazoDerecho
                         Call AddtoRichTextBox(frmMain.RecTxt, _
-                            MENSAJE_1 & AttackerName & JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_BRAZO_DER").Item("TEXTO") & Dano & MENSAJE_2, _
+                            AttackerName & JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_BRAZO_DER").Item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_BRAZO_DER").Item("COLOR").Item(1), _
                             JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_BRAZO_DER").Item("COLOR").Item(2), _
                             JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_BRAZO_DER").Item("COLOR").Item(3), _
@@ -1045,7 +1045,7 @@ Public Sub HandleMultiMessage()
                 
                     Case ePartesCuerpo.bPiernaIzquierda
                         Call AddtoRichTextBox(frmMain.RecTxt, _
-                            MENSAJE_1 & AttackerName & JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ").Item("TEXTO") & Dano & MENSAJE_2, _
+                            AttackerName & JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ").Item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ").Item("COLOR").Item(1), _
                             JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ").Item("COLOR").Item(2), _
                             JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ").Item("COLOR").Item(3), _
@@ -1053,7 +1053,7 @@ Public Sub HandleMultiMessage()
                 
                     Case ePartesCuerpo.bPiernaDerecha
                         Call AddtoRichTextBox(frmMain.RecTxt, _
-                            MENSAJE_1 & AttackerName & JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_PIERNA_DER").Item("TEXTO") & Dano & MENSAJE_2, _
+                            AttackerName & JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_PIERNA_DER").Item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_PIERNA_DER").Item("COLOR").Item(1), _
                             JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_PIERNA_DER").Item("COLOR").Item(2), _
                             JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_PIERNA_DER").Item("COLOR").Item(3), _
@@ -1061,7 +1061,7 @@ Public Sub HandleMultiMessage()
                 
                     Case ePartesCuerpo.bTorso
                         Call AddtoRichTextBox(frmMain.RecTxt, _
-                            MENSAJE_1 & AttackerName & JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_TORSO").Item("TEXTO") & Dano & MENSAJE_2, _
+                            AttackerName & JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_TORSO").Item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_TORSO").Item("COLOR").Item(1), _
                             JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_TORSO").Item("COLOR").Item(2), _
                             JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_TORSO").Item("COLOR").Item(3), _

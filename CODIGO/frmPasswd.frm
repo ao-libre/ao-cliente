@@ -147,7 +147,7 @@ Begin VB.Form frmPasswd
    Begin VB.Label Label1 
       Alignment       =   2  'Center
       AutoSize        =   -1  'True
-      Caption         =   "¡CUIDADO!"
+      Caption         =   "CUIDADO!"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   9.75

@@ -509,7 +509,6 @@ End Enum
 '
 
 ' MENSAJE_[12]: Aparecen antes y despues del valor de los mensajes anteriores (MENSAJE_GOLPE_*)
-Public Const MENSAJE_1 As String = "" 'Deleted values as they where false diff in the pull request, think of another way to re-introduce it
 Public Const MENSAJE_2 As String = "!!"
 Public Const MENSAJE_22 As String = "!"
 

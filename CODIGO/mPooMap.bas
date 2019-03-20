@@ -182,7 +182,7 @@ Function Map_LegalPos(ByVal X As Integer, ByVal Y As Integer) As Boolean
     
       CharIndex = (Char_MapPosExits(CByte(X), CByte(Y)))
         
-      '¿Hay un personaje?
+      'Hay un personaje?
 
       If (CharIndex > 0) Then
     

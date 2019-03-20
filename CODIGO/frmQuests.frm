@@ -82,17 +82,17 @@ Private Sub cmdOptions_Click(index As Integer)
         Case 0 'Boton ABANDONAR MISIoN
             'Chequeamos si hay items.
             If lstQuests.ListCount = 0 Then
-                MsgBox "¡No tienes ninguna mision!", vbOKOnly + vbExclamation
+                MsgBox "No tienes ninguna mision!", vbOKOnly + vbExclamation
                 Exit Sub
             End If
             
             'Chequeamos si tiene algun item seleccionado.
             If lstQuests.ListIndex < 0 Then
-                MsgBox "¡Primero debes seleccionar una mision!", vbOKOnly + vbExclamation
+                MsgBox "Primero debes seleccionar una mision!", vbOKOnly + vbExclamation
                 Exit Sub
             End If
             
-            Select Case MsgBox("¿Estas seguro que deseas abandonar la mision?", vbYesNo + vbExclamation)
+            Select Case MsgBox("Estas seguro que deseas abandonar la mision?", vbYesNo + vbExclamation)
                 Case vbYes  'Boton Si.
                     'Enviamos el paquete para abandonar la quest
                     Call WriteQuestAbandon(lstQuests.ListIndex + 1)

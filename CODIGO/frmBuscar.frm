@@ -211,14 +211,14 @@ Begin VB.Form frmBuscar
       Caption         =   "Crear Objeto"
       Visible         =   0   'False
       Begin VB.Menu mnuCrearObj 
-         Caption         =   "¿Crear Objeto?"
+         Caption         =   "Crear Objeto?"
       End
    End
    Begin VB.Menu mnuCrearN 
       Caption         =   "Crear NPC"
       Visible         =   0   'False
       Begin VB.Menu mnuCrearNPC 
-         Caption         =   "¿Crear NPC?"
+         Caption         =   "Crear NPC?"
       End
    End
 End
