@@ -154,7 +154,7 @@ Begin VB.Form frmBuscar
    End
    Begin VB.Label CrearNPCs 
       Alignment       =   2  'Center
-      Caption         =   "NPCS"
+      Caption         =   "NPC's"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   8.25
