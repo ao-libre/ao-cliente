@@ -483,7 +483,7 @@ End Sub
 
 Private Sub CheckServers()
     If Not IsIp(IPTxt) And CurServer <> 0 Then
-        If MsgBox("Atencion, esta intentando conectarse a un servidor no oficial, NoLand Studios no se hace responsable de los posibles problemas que estos servidores presenten. ¿Desea continuar?", vbYesNo) = vbNo Then
+        If MsgBox("Atencion, esta intentando conectarse a un servidor no oficial, NoLand Studios no se hace responsable de los posibles problemas que estos servidores presenten. Desea continuar?", vbYesNo) = vbNo Then
             If CurServer <> 0 Then
                 IPTxt = ServersLst(CurServer).Ip
                 PortTxt = ServersLst(CurServer).Puerto
