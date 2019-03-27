@@ -572,7 +572,7 @@ Private Sub imgCrearCuenta_Click()
 End Sub
 
 Private Sub imgManual_Click()
-    Call ShellExecute(0, "Open", "http://www.argentumonline.org", "", App.path, SW_SHOWNORMAL)
+    Call ShellExecute(0, "Open", "http://wiki.argentumonline.org", "", App.path, SW_SHOWNORMAL)
 End Sub
 
 Private Sub imgRecuperar_Click()
@@ -586,7 +586,7 @@ errH:
 End Sub
 
 Private Sub imgReglamento_Click()
-    Call ShellExecute(0, "Open", "http://www.argentumonline.org", "", App.path, SW_SHOWNORMAL)
+    Call ShellExecute(0, "Open", "http://wiki.argentumonline.org/reglamento", "", App.path, SW_SHOWNORMAL)
 End Sub
 
 Private Sub imgSalir_Click()
