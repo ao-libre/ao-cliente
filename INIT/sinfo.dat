@@ -1,17 +1,23 @@
 [INIT]
-Cant=2
+Cant=3
 
 [S1]
-Desc=Server Oficial - Rol
+Desc=Alkon 0.13.X  - Rol
 IP=120.136.2.168
 PJ=7666
+Mundo=Alkon
 
 [S2]
-Desc=Argentum Online - Localhost
+Desc=Alkon 0.13.X - Localhost
 IP=localhost
 PJ=7666
+Mundo=Alkon
 
-
+[S3]
+Desc=Deathmatch
+IP=localhost
+PJ=7667
+Mundo=Alkon
 
 
 

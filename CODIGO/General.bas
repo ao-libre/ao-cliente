@@ -53,7 +53,7 @@ Public Function DirMidi() As String
 End Function
 
 Public Function DirMapas() As String
-    DirMapas = App.path & "\" & Config_Inicio.DirMapas & "\"
+    DirMapas = App.path & "\" & MundoSeleccionado & "\" & Config_Inicio.DirMapas & "\"  
 End Function
 
 Public Function DirExtras() As String
@@ -1058,7 +1058,7 @@ Private Sub LoadInitialConfig()
     
 
     '##############
-    ' MOTOR GRAÅFICO
+    ' MOTOR GRA?FICO
     Call AddtoRichTextBox(frmCargando.status, _
                             JsonLanguage.Item("INICIA_MOTOR_GRAFICO").Item("TEXTO"), _
                             JsonLanguage.Item("INICIA_MOTOR_GRAFICO").Item("COLOR").Item(1), _
