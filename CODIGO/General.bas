@@ -1059,7 +1059,7 @@ Private Sub LoadInitialConfig()
     
 
     '##############
-    ' MOTOR GRA?FICO
+    ' MOTOR GRAFICO
     Call AddtoRichTextBox(frmCargando.status, _
                             JsonLanguage.Item("INICIA_MOTOR_GRAFICO").Item("TEXTO"), _
                             JsonLanguage.Item("INICIA_MOTOR_GRAFICO").Item("COLOR").Item(1), _
