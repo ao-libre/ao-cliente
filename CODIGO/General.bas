@@ -766,6 +766,7 @@ On Error GoTo errorH
         
         ServersLst(i).Ip = GetVar(File, "S" & i, "Ip")
         ServersLst(i).Puerto = CInt(GetVar(File, "S" & i, "PJ"))
+        ServersLst(i).Mundo = CInt(GetVar(File, "S" & i, "MUNDO"))
         'ServersLst(i).Ping = PingAddress(CurrentIp, "SomeRandomText")
         'ServersLst(i).Country = CountryCode
 

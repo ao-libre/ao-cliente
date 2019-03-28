@@ -528,18 +528,18 @@ End Sub
 Private Sub imgConectarse_Click()
     Call CheckServers
     
-#If UsarWrench = 1 Then
-    If frmMain.Socket1.Connected Then
-        frmMain.Socket1.Disconnect
-        frmMain.Socket1.Cleanup
-        DoEvents
-    End If
-#Else
-    If frmMain.Winsock1.State <> sckClosed Then
-        frmMain.Winsock1.Close
-        DoEvents
-    End If
-#End If
+    #If UsarWrench = 1 Then
+        If frmMain.Socket1.Connected Then
+            frmMain.Socket1.Disconnect
+            frmMain.Socket1.Cleanup
+            DoEvents
+        End If
+    #Else
+        If frmMain.Winsock1.State <> sckClosed Then
+            frmMain.Winsock1.Close
+            DoEvents
+        End If
+    #End If
     
     'update user info
     AccountName = txtNombre.Text
@@ -551,13 +551,13 @@ Private Sub imgConectarse_Click()
     If CheckUserData() = True Then
         EstadoLogin = Normal
         
-#If UsarWrench = 1 Then
-    frmMain.Socket1.hostname = CurServerIp
-    frmMain.Socket1.RemotePort = CurServerPort
-    frmMain.Socket1.Connect
-#Else
-    frmMain.Winsock1.Connect CurServerIp, CurServerPort
-#End If
+        #If UsarWrench = 1 Then
+            frmMain.Socket1.hostname = CurServerIp
+            frmMain.Socket1.RemotePort = CurServerPort
+            frmMain.Socket1.Connect
+        #Else
+            frmMain.Winsock1.Connect CurServerIp, CurServerPort
+        #End If
 
     End If
     
@@ -617,6 +617,10 @@ End Sub
 Private Sub lstServers_Click()
     IPTxt.Text = ServersLst(lstServers.ListIndex + 1).Ip
     PortTxt.Text = ServersLst(lstServers.ListIndex + 1).Puerto
+    
+    'Variable Global declarada en Declares.bas
+    MundoSeleccionado = ServersLst(lstServers.ListIndex + 1).Mundo
+
     CurServer = lstServers.ListIndex + 1
 End Sub
 
