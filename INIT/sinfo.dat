@@ -1,23 +1,40 @@
 [INIT]
-Cant=3
+Cant=6
 
 [S1]
-Desc=Alkon 0.13.X  - Rol
+Desc=Primario|Alkon 0.13.X|Rol
 IP=120.136.2.168
 PJ=7666
 Mundo=Alkon
 
 [S2]
-Desc=Alkon 0.13.X - Localhost
+Desc=Primario|BattleServer
+IP=localhost
+PJ=7667
+Mundo=BattleServer
+
+[S3]
+Desc=Deathmatch
+IP=120.136.2.168
+PJ=7668
+Mundo=Deathmatch
+
+[S4]
+Desc=Alkon 0.13.X|Localhost
 IP=localhost
 PJ=7666
 Mundo=Alkon
 
-[S3]
-Desc=Deathmatch
+[S5]
+Desc=BattleServer|Localhost
+IP=localhost
+PJ=7666
+Mundo=BattleServer
+
+[S6]
+Desc=Deathmatch|Localhost
 IP=localhost
 PJ=7666
 Mundo=Deathmatch
-
 
 
