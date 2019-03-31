@@ -9,7 +9,7 @@ Mundo=Alkon
 
 [S2]
 Desc=Primario|BattleServer
-IP=localhost
+IP=120.136.2.168
 PJ=7667
 Mundo=BattleServer
 
