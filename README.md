@@ -27,10 +27,10 @@ Para mas información sobre este proceso:
 
 [Codigo fuente ao-autoupdate](https://github.com/ao-libre/ao-autoupdate)
 
-#### Revisar/Probar Pull Requests:
+## Revisar/Probar Pull Requests:
 En caso que se quiera probar un PULL REQUEST hay que estar en el branch `master` y luego hacer un pull del Pull Request de la siguiente manera: `git pull origin pull/135/head` donde 135 es el numero de Pull Request
 
-#### Como hacer un release?
+## Como hacer un release?
 Aqui se deja explicado como hacer un release para cualquiera de las aplicaciones de Argentum Online Libre 
 https://github.com/ao-libre/ao-cliente/wiki/How-to-create-and-publish-Releases%3F
 
