@@ -156,6 +156,7 @@ Public Type tServerInfo
     Desc As String
     Ping As String
     Country As String
+    Mundo As String
 End Type
 
 Public ServersLst() As tServerInfo
@@ -954,3 +955,8 @@ Public Type tHechizos
     PropioMsg As String
     TargetMsg As String
 End Type
+
+'MundoSeleccionado desde la propiedad Mundo en sinfo.dat / World selected from sinfo.dat file
+Public MundoSeleccionado As String
+
+

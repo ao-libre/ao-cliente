@@ -53,7 +53,7 @@ Public Function DirMidi() As String
 End Function
 
 Public Function DirMapas() As String
-    DirMapas = App.path & "\" & Config_Inicio.DirMapas & "\"
+    DirMapas = App.path & "\" & Config_Inicio.DirMapas & "\" & MundoSeleccionado & "\"
 End Function
 
 Public Function DirExtras() As String
@@ -766,6 +766,7 @@ On Error GoTo errorH
         
         ServersLst(i).Ip = GetVar(File, "S" & i, "Ip")
         ServersLst(i).Puerto = CInt(GetVar(File, "S" & i, "PJ"))
+        ServersLst(i).Mundo = GetVar(File, "S" & i, "MUNDO")
         'ServersLst(i).Ping = PingAddress(CurrentIp, "SomeRandomText")
         'ServersLst(i).Country = CountryCode
 
@@ -1058,7 +1059,7 @@ Private Sub LoadInitialConfig()
     
 
     '##############
-    ' MOTOR GRAÅFICO
+    ' MOTOR GRAFICO
     Call AddtoRichTextBox(frmCargando.status, _
                             JsonLanguage.Item("INICIA_MOTOR_GRAFICO").Item("TEXTO"), _
                             JsonLanguage.Item("INICIA_MOTOR_GRAFICO").Item("COLOR").Item(1), _
