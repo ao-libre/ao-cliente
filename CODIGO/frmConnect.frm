@@ -371,9 +371,6 @@ Private Sub Form_Load()
     '[CODE 002]:MatuX
     EngineRun = False
     '[END]
-    
-    PortTxt.Text = Config_Inicio.Puerto
-    
     Call CargarServidores
     
     If CurServer <> 0 Then
@@ -384,13 +381,13 @@ Private Sub Form_Load()
         PortTxt = ServersLst(1).Puerto
     End If
 
-    version.Caption = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
+    version.Caption = GetVersionOfTheGame()
 
     Me.Picture = LoadPicture(App.path & "\graficos\VentanaConectar.jpg")
     
     Call LoadButtons
 
-    Call CheckLicenseAgreement
+    'Call CheckLicenseAgreement
         
 End Sub
 
@@ -481,23 +478,6 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y A
     LastButtonPressed.ToggleToNormal
 End Sub
 
-Private Sub CheckServers()
-    If Not IsIp(IPTxt) And CurServer <> 0 Then
-        If MsgBox("Atencion, esta intentando conectarse a un servidor no oficial, NoLand Studios no se hace responsable de los posibles problemas que estos servidores presenten. Desea continuar?", vbYesNo) = vbNo Then
-            If CurServer <> 0 Then
-                IPTxt = ServersLst(CurServer).Ip
-                PortTxt = ServersLst(CurServer).Puerto
-            Else
-                IPTxt = IPdelServidor
-                PortTxt = PuertoDelServidor
-            End If
-            Exit Sub
-        End If
-    End If
-    IPdelServidor = IPTxt
-    PuertoDelServidor = PortTxt
-End Sub
-
 Private Sub imgBorrarPj_Click()
 
 On Error GoTo errH
@@ -526,8 +506,6 @@ Private Sub imgCodigoFuente_Click()
 End Sub
 
 Private Sub imgConectarse_Click()
-    Call CheckServers
-    
     #If UsarWrench = 1 Then
         If frmMain.Socket1.Connected Then
             frmMain.Socket1.Disconnect
