@@ -811,12 +811,28 @@ Private Function GetCountryCode(CurrentIp As String) As String
 
 End Function
 
+Public Function CurServerPasRecPort() As Integer
+    'If CurServer <> 0 Then
+        'CurServerPasRecPort = 7667
+    'Else
+        CurServerPasRecPort = CInt(frmConnect.PortTxt)
+    'End If
+End Function
+
 Public Function CurServerIp() As String
-    CurServerIp = frmConnect.IPTxt
+    'If CurServer <> 0 Then
+    '    CurServerIp = ServersLst(CurServer).Ip
+    'Else
+        CurServerIp = frmConnect.IPTxt
+    'End If
 End Function
 
 Public Function CurServerPort() As Integer
-    CurServerPort = Val(frmConnect.PortTxt)
+    'If CurServer <> 0 Then
+     '   CurServerPort = ServersLst(CurServer).Puerto
+    'Else
+        CurServerPort = Val(frmConnect.PortTxt)
+    'End If
 End Function
 
 Sub Main()

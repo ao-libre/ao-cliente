@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.ocx"
+Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.OCX"
 Begin VB.Form frmConnect 
    BackColor       =   &H00E0E0E0&
    BorderStyle     =   0  'None
@@ -31,6 +31,27 @@ Begin VB.Form frmConnect
    ScaleWidth      =   800
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
+   Begin VB.CommandButton ActualizarListaBoton 
+      Appearance      =   0  'Flat
+      BackColor       =   &H0000FFFF&
+      Caption         =   "Actualizar Lista"
+      BeginProperty Font 
+         Name            =   "Gabriola"
+         Size            =   15.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   510
+      Left            =   9120
+      MaskColor       =   &H0000C0C0&
+      MousePointer    =   3  'I-Beam
+      TabIndex        =   7
+      Top             =   7200
+      Width           =   1935
+   End
    Begin InetCtlsObjects.Inet InetIpApi 
       Left            =   840
       Top             =   1080
@@ -325,6 +346,13 @@ Dim Posts() As tRedditPost
 
 Public LastButtonPressed As clsGraphicalButton
 
+Private Sub ActualizarListaBoton_Click()
+    frmConnect.lstServers.Clear
+    frmConnect.lstServers.AddItem ("Actualizando Servers...")
+    frmConnect.lstServers.AddItem ("Por Favor Espere")
+    Call RefreshServerList
+    MsgBox "Se actualizo con exito la lista de servers"
+End Sub
 
 Private Sub Form_Activate()
     
@@ -601,7 +629,7 @@ Private Sub lstServers_Click()
     
     'En caso que no haya un mundo seleccionado en la propiedad Mundo
     'Seleccionamos Alkon como mundo default
-    If Lenb(MundoSeleccionado) = 0 Then
+    If LenB(MundoSeleccionado) = 0 Then
         MundoSeleccionado = "Alkon"
     End If
 
