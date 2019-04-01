@@ -2,7 +2,7 @@
 Cant=4
 
 [S1]
-Desc=-|| Deathmatch ||-
+Desc={-|| Deathmatch ||-}
 IP=120.136.2.168
 PJ=7666
 Mundo=Deathmatch
