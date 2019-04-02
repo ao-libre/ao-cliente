@@ -939,16 +939,6 @@ Sub Main()
     Call CloseClient
 End Sub
 
-Public Function RefreshServerList() As String
-'***************************************************
-'Author: Recox
-'Last Modification: 01/04/2019
-'01/04/2019: Recox - Descarga y llena el listado de servers
-'***************************************************
-        Call DownloadServersFile("https://raw.githubusercontent.com/ao-libre/ao-cliente/master/INIT/sinfo.dat")
-        Call CargarServidores
-End Function
-
 Public Function GetVersionOfTheGame() As String
     GetVersionOfTheGame = GetVar(App.path & "\INIT\Config.ini", "Cliente", "VersionTagRelease")
 End Function
@@ -1014,27 +1004,6 @@ Private Sub LoadInitialConfig()
                             JsonLanguage.Item("HECHO").Item("COLOR").Item(2), _
                             JsonLanguage.Item("HECHO").Item("COLOR").Item(3), _
                             True, False, False)
-    
-    
-    '###########
-    ' SERVIDORES
-    If CBool(GetVar(DirInit & "Config.ini", "Parameters", "BuscarServidores")) Then
-        Call AddtoRichTextBox(frmCargando.status, _
-                                JsonLanguage.Item("BUSCA_SERVIDORES").Item("TEXTO"), _
-                                JsonLanguage.Item("BUSCA_SERVIDORES").Item("COLOR").Item(1), _
-                                JsonLanguage.Item("BUSCA_SERVIDORES").Item("COLOR").Item(2), _
-                                JsonLanguage.Item("BUSCA_SERVIDORES").Item("COLOR").Item(3), _
-                                True, False, True)
-                                
-        Call RefreshServerList
-        
-        Call AddtoRichTextBox(frmCargando.status, _
-                            " " & JsonLanguage.Item("HECHO").Item("TEXTO"), _
-                            JsonLanguage.Item("HECHO").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("HECHO").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("HECHO").Item("COLOR").Item(3), _
-                            True, False, False)
-    End If
     
     '###########
     ' CONSTANTES

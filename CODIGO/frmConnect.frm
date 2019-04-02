@@ -346,7 +346,22 @@ Dim Posts() As tRedditPost
 
 Public LastButtonPressed As clsGraphicalButton
 
+Private Function RefreshServerList() As String
+'***************************************************
+'Author: Recox
+'Last Modification: 01/04/2019
+'01/04/2019: Recox - Descarga y llena el listado de servers
+'***************************************************
+        Call DownloadServersFile("https://raw.githubusercontent.com/ao-libre/ao-cliente/master/INIT/sinfo.dat")
+        Call CargarServidores
+End Function
+
 Private Sub ActualizarListaBoton_Click()
+'***************************************************
+'Author: Recox
+'Last Modification: 01/04/2019
+'01/04/2019: Recox - Boton para actualizar la lista de servers
+'***************************************************
     frmConnect.lstServers.Clear
     frmConnect.lstServers.AddItem ("Actualizando Servers...")
     frmConnect.lstServers.AddItem ("Por Favor Espere")
@@ -399,6 +414,8 @@ Private Sub Form_Load()
     '[CODE 002]:MatuX
     EngineRun = False
     '[END]
+
+    Call RefreshServerList()
     
     If CurServer <> 0 Then
         IPTxt = ServersLst(CurServer).Ip
