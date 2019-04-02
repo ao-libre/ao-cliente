@@ -219,12 +219,8 @@ End Function
 Private Sub Command1_Click()
 
 If CheckDatos() Then
-#If SeguridadAlkon Then
-    UserPassword = md5.GetMD5String(txtPasswd.Text)
-    Call md5.MD5Reset
-#Else
+
     UserPassword = txtPasswd.Text
-#End If
     UserEmail = txtCorreo.Text
     
     If Not CheckMailString(UserEmail) Then
@@ -232,19 +228,20 @@ If CheckDatos() Then
         Exit Sub
     End If
     
-#If UsarWrench = 1 Then
-    frmMain.Socket1.HostName = CurServerIp
-    frmMain.Socket1.RemotePort = CurServerPort
-#End If
+   #If UsarWrench = 1 Then
+      frmMain.Socket1.HostName = CurServerIp
+      frmMain.Socket1.RemotePort = CurServerPort
+   #End If
     
     EstadoLogin = E_MODO.CrearNuevoPj
     
-#If UsarWrench = 1 Then
-    If Not frmMain.Socket1.Connected Then
-#Else
-    If frmMain.Winsock1.State <> sckConnected Then
-#End If
-        MsgBox "Error: Se ha perdido la conexion con el server."
+   #If UsarWrench = 1 Then
+      If Not frmMain.Socket1.Connected Then
+   #Else
+      If frmMain.Winsock1.State <> sckConnected Then
+   #End If
+
+   MsgBox "Error: Se ha perdido la conexion con el server."
         Unload Me
         
     Else

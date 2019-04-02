@@ -811,28 +811,20 @@ Private Function GetCountryCode(CurrentIp As String) As String
 
 End Function
 
-Public Function CurServerPasRecPort() As Integer
-    If CurServer <> 0 Then
-        CurServerPasRecPort = 7667
-    Else
-        CurServerPasRecPort = CInt(frmConnect.PortTxt)
-    End If
-End Function
-
 Public Function CurServerIp() As String
-    If CurServer <> 0 Then
-        CurServerIp = ServersLst(CurServer).Ip
-    Else
+    'If CurServer <> 0 Then
+    '    CurServerIp = ServersLst(CurServer).Ip
+    'Else
         CurServerIp = frmConnect.IPTxt
-    End If
+    'End If
 End Function
 
 Public Function CurServerPort() As Integer
-    If CurServer <> 0 Then
-        CurServerPort = ServersLst(CurServer).Puerto
-    Else
+    'If CurServer <> 0 Then
+     '   CurServerPort = ServersLst(CurServer).Puerto
+    'Else
         CurServerPort = Val(frmConnect.PortTxt)
-    End If
+    'End If
 End Function
 
 Sub Main()
@@ -947,6 +939,10 @@ Sub Main()
     Call CloseClient
 End Sub
 
+Public Function GetVersionOfTheGame() As String
+    GetVersionOfTheGame = GetVar(App.path & "\INIT\Config.ini", "Cliente", "VersionTagRelease")
+End Function
+
 Private Sub LoadInitialConfig()
 '***************************************************
 'Author: ZaMa
@@ -957,7 +953,7 @@ Private Sub LoadInitialConfig()
     frmCargando.Show
     frmCargando.Refresh
 
-    frmConnect.version = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
+    frmConnect.version = GetVersionOfTheGame()
     
     '#######
     ' CLASES
@@ -1008,27 +1004,6 @@ Private Sub LoadInitialConfig()
                             JsonLanguage.Item("HECHO").Item("COLOR").Item(2), _
                             JsonLanguage.Item("HECHO").Item("COLOR").Item(3), _
                             True, False, False)
-    
-    
-    '###########
-    ' SERVIDORES
-    If GetVar(DirInit & "Config.ini", "Parameters", "BuscarServidores") = 1 Then
-        Call AddtoRichTextBox(frmCargando.status, _
-                                JsonLanguage.Item("BUSCA_SERVIDORES").Item("TEXTO"), _
-                                JsonLanguage.Item("BUSCA_SERVIDORES").Item("COLOR").Item(1), _
-                                JsonLanguage.Item("BUSCA_SERVIDORES").Item("COLOR").Item(2), _
-                                JsonLanguage.Item("BUSCA_SERVIDORES").Item("COLOR").Item(3), _
-                                True, False, True)
-                                
-        Call DownloadServersFile("https://raw.githubusercontent.com/ao-libre/ao-cliente/master/INIT/sinfo.dat")
-        
-        Call AddtoRichTextBox(frmCargando.status, _
-                            " " & JsonLanguage.Item("HECHO").Item("TEXTO"), _
-                            JsonLanguage.Item("HECHO").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("HECHO").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("HECHO").Item("COLOR").Item(3), _
-                            True, False, False)
-    End If
     
     '###########
     ' CONSTANTES

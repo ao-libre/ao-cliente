@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.ocx"
+Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.OCX"
 Begin VB.Form frmConnect 
    BackColor       =   &H00E0E0E0&
    BorderStyle     =   0  'None
@@ -31,6 +31,27 @@ Begin VB.Form frmConnect
    ScaleWidth      =   800
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
+   Begin VB.CommandButton ActualizarListaBoton 
+      Appearance      =   0  'Flat
+      BackColor       =   &H0000FFFF&
+      Caption         =   "Actualizar Lista"
+      BeginProperty Font 
+         Name            =   "Gabriola"
+         Size            =   15.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   510
+      Left            =   9120
+      MaskColor       =   &H0000C0C0&
+      MousePointer    =   3  'I-Beam
+      TabIndex        =   7
+      Top             =   7200
+      Width           =   1935
+   End
    Begin InetCtlsObjects.Inet InetIpApi 
       Left            =   840
       Top             =   1080
@@ -325,6 +346,28 @@ Dim Posts() As tRedditPost
 
 Public LastButtonPressed As clsGraphicalButton
 
+Private Function RefreshServerList() As String
+'***************************************************
+'Author: Recox
+'Last Modification: 01/04/2019
+'01/04/2019: Recox - Descarga y llena el listado de servers
+'***************************************************
+        Call DownloadServersFile("https://raw.githubusercontent.com/ao-libre/ao-cliente/master/INIT/sinfo.dat")
+        Call CargarServidores
+End Function
+
+Private Sub ActualizarListaBoton_Click()
+'***************************************************
+'Author: Recox
+'Last Modification: 01/04/2019
+'01/04/2019: Recox - Boton para actualizar la lista de servers
+'***************************************************
+    frmConnect.lstServers.Clear
+    frmConnect.lstServers.AddItem ("Actualizando Servers...")
+    frmConnect.lstServers.AddItem ("Por Favor Espere")
+    Call RefreshServerList
+    MsgBox "Se actualizo con exito la lista de servers"
+End Sub
 
 Private Sub Form_Activate()
     
@@ -371,10 +414,8 @@ Private Sub Form_Load()
     '[CODE 002]:MatuX
     EngineRun = False
     '[END]
-    
-    PortTxt.Text = Config_Inicio.Puerto
-    
-    Call CargarServidores
+
+    Call RefreshServerList()
     
     If CurServer <> 0 Then
         IPTxt = ServersLst(CurServer).Ip
@@ -384,13 +425,13 @@ Private Sub Form_Load()
         PortTxt = ServersLst(1).Puerto
     End If
 
-    version.Caption = "v" & App.Major & "." & App.Minor & " Build: " & App.Revision
+    version.Caption = GetVersionOfTheGame()
 
     Me.Picture = LoadPicture(App.path & "\graficos\VentanaConectar.jpg")
     
     Call LoadButtons
 
-    Call CheckLicenseAgreement
+    'Call CheckLicenseAgreement
         
 End Sub
 
@@ -481,23 +522,6 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y A
     LastButtonPressed.ToggleToNormal
 End Sub
 
-Private Sub CheckServers()
-    If Not IsIp(IPTxt) And CurServer <> 0 Then
-        If MsgBox("Atencion, esta intentando conectarse a un servidor no oficial, NoLand Studios no se hace responsable de los posibles problemas que estos servidores presenten. Desea continuar?", vbYesNo) = vbNo Then
-            If CurServer <> 0 Then
-                IPTxt = ServersLst(CurServer).Ip
-                PortTxt = ServersLst(CurServer).Puerto
-            Else
-                IPTxt = IPdelServidor
-                PortTxt = PuertoDelServidor
-            End If
-            Exit Sub
-        End If
-    End If
-    IPdelServidor = IPTxt
-    PuertoDelServidor = PortTxt
-End Sub
-
 Private Sub imgBorrarPj_Click()
 
 On Error GoTo errH
@@ -526,8 +550,6 @@ Private Sub imgCodigoFuente_Click()
 End Sub
 
 Private Sub imgConectarse_Click()
-    Call CheckServers
-    
     #If UsarWrench = 1 Then
         If frmMain.Socket1.Connected Then
             frmMain.Socket1.Disconnect
@@ -623,7 +645,7 @@ Private Sub lstServers_Click()
     
     'En caso que no haya un mundo seleccionado en la propiedad Mundo
     'Seleccionamos Alkon como mundo default
-    If Lenb(MundoSeleccionado) = 0 Then
+    If LenB(MundoSeleccionado) = 0 Then
         MundoSeleccionado = "Alkon"
     End If
 

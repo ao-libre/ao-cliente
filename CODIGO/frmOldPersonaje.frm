@@ -192,54 +192,47 @@ End Sub
 Private Sub Image1_Click(Index As Integer)
 
 Call Audio.PlayWave(SND_CLICK)
+    Select Case Index
+        Case 0
+        
+            #If UsarWrench = 1 Then
+                    If frmMain.Socket1.Connected Then
+                        frmMain.Socket1.Disconnect
+                        frmMain.Socket1.Cleanup
+                        DoEvents
+                    End If
+            #Else
+                    If frmMain.Winsock1.State <> sckClosed Then
+                        frmMain.Winsock1.Close
+                        DoEvents
+                    End If
+            #End If
+                    
+            'update user info
+            UserName = NameTxt.Text
+            UserPassword = PasswordTxt.Text
 
-Select Case Index
-    Case 0
-       
-#If UsarWrench = 1 Then
-        If frmMain.Socket1.Connected Then
-            frmMain.Socket1.Disconnect
-            frmMain.Socket1.Cleanup
-            DoEvents
-        End If
-#Else
-        If frmMain.Winsock1.State <> sckClosed Then
-            frmMain.Winsock1.Close
-            DoEvents
-        End If
-#End If
-        
-        'update user info
-        UserName = NameTxt.Text
-        Dim aux As String
-        aux = PasswordTxt.Text
-#If SeguridadAlkon Then
-        UserPassword = md5.GetMD5String(aux)
-        Call md5.MD5Reset
-#Else
-        UserPassword = aux
-#End If
-        If CheckUserData(False) = True Then
-            EstadoLogin = Normal
+            If CheckUserData(False) = True Then
+                EstadoLogin = Normal
+                
+                #If UsarWrench = 1 Then
+                    frmMain.Socket1.HostName = CurServerIp
+                    frmMain.Socket1.RemotePort = CurServerPort
+                    frmMain.Socket1.Connect
+                #Else
+                    frmMain.Winsock1.Connect CurServerIp, CurServerPort
+                #End If
+            End If
             
-#If UsarWrench = 1 Then
-            frmMain.Socket1.HostName = CurServerIp
-            frmMain.Socket1.RemotePort = CurServerPort
-            frmMain.Socket1.Connect
-#Else
-            frmMain.Winsock1.Connect CurServerIp, CurServerPort
-#End If
-        End If
-        
-    Case 1
-        Me.Visible = False
-    Case 2
-        Load frmKeypad
-        frmKeypad.Show vbModal
-        Unload frmKeypad
-        Me.PasswordTxt.SetFocus
-        
-End Select
+        Case 1
+            Me.Visible = False
+        Case 2
+            Load frmKeypad
+            frmKeypad.Show vbModal
+            Unload frmKeypad
+            Me.PasswordTxt.SetFocus
+            
+    End Select
 End Sub
 
 Private Sub Image1_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
