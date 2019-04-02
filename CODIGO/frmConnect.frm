@@ -399,7 +399,6 @@ Private Sub Form_Load()
     '[CODE 002]:MatuX
     EngineRun = False
     '[END]
-    Call CargarServidores
     
     If CurServer <> 0 Then
         IPTxt = ServersLst(CurServer).Ip

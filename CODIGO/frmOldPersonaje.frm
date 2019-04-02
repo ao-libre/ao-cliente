@@ -210,20 +210,18 @@ Call Audio.PlayWave(SND_CLICK)
                     
             'update user info
             UserName = NameTxt.Text
-            Dim aux As String
-            aux = PasswordTxt.Text
-            UserPassword = aux
+            UserPassword = PasswordTxt.Text
 
             If CheckUserData(False) = True Then
                 EstadoLogin = Normal
                 
-            #If UsarWrench = 1 Then
-                        frmMain.Socket1.HostName = CurServerIp
-                        frmMain.Socket1.RemotePort = CurServerPort
-                        frmMain.Socket1.Connect
-            #Else
-                        frmMain.Winsock1.Connect CurServerIp, CurServerPort
-            #End If
+                #If UsarWrench = 1 Then
+                    frmMain.Socket1.HostName = CurServerIp
+                    frmMain.Socket1.RemotePort = CurServerPort
+                    frmMain.Socket1.Connect
+                #Else
+                    frmMain.Winsock1.Connect CurServerIp, CurServerPort
+                #End If
             End If
             
         Case 1
