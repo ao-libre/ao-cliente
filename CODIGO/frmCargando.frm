@@ -148,9 +148,7 @@ On Error GoTo errorinet
 
     responseGithub = Inet1.OpenURL("https://api.github.com/repos/ao-libre/ao-cliente/releases/latest")
 
-    If Inet1.ResponseCode <> 0 Then 
-        GoTo errorinet
-    End If
+    If Inet1.ResponseCode <> 0 Then GoTo errorinet
 
     Set JsonObject = JSON.parse(responseGithub)
     
@@ -161,8 +159,10 @@ On Error GoTo errorinet
     Else
         CheckIfRunningLastVersion = False
     End If
+    
+    Exit Function
 
 errorinet:
-    Call MsgBox(JsonLanguage.Item("ERROR_DESCARGA_SERVIDORES_INET").Item("TEXTO") & " " & frmCargando.Inet1.ResponseCode, vbCritical + vbOKOnly, "Argentum Online")
+    Call MsgBox("Error al comprobar version del launcher/Error verification version of launcher " & frmCargando.Inet1.ResponseCode, vbCritical + vbOKOnly, "Argentum Online")
     frmCargando.NoInternetConnection = True
 End Function
