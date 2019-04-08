@@ -1702,7 +1702,10 @@ On Error GoTo error
     
     strData = frmCargando.Inet1.OpenURL(myURL)
     
-    If frmCargando.Inet1.ResponseCode <> 0 Then GoTo errorinet
+    If frmCargando.Inet1.ResponseCode <> 0 Then 
+        GoTo errorinet
+    End If
+
     f = FreeFile
     
     If LenB(strData) <> 0 Then

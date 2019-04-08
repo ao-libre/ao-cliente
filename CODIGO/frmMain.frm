@@ -2305,7 +2305,7 @@ End Sub
 
 
 Private Sub SonidosMapas_Timer()
-Sonidos.ReproducirSonidosDeMapas
+    Sonidos.ReproducirSonidosDeMapas
 End Sub
 
 '
