@@ -1719,4 +1719,5 @@ error:
     Exit Sub
 errorinet:
     Call MsgBox(JsonLanguage.Item("ERROR_DESCARGA_SERVIDORES_INET").Item("TEXTO") & " " & frmCargando.Inet1.ResponseCode, vbCritical + vbOKOnly, "Argentum Online")
+    frmCargando.NoInternetConnection = True
 End Sub

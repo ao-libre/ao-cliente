@@ -104,6 +104,8 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
+Public NoInternetConnection As Boolean
+
 Private Sub Form_Load()
     Me.Analizar
     Me.Picture = LoadPicture(DirGraficos & "VentanaCargando.jpg")
@@ -119,10 +121,18 @@ Private Sub Status_KeyPress(KeyAscii As Integer)
 End Sub
 
 Function Analizar()
-    On Error Resume Next
+On Error Resume Next
     Dim binaryFileToOpen As String
+    Dim isLastVersion As Boolean
+
+    isLastVersion = CheckIfRunningLastVersion
+    
+    If NoInternetConnection Then
+        MsgBox "No hay conexion a internet, verificar que tengas internet/No Internet connection, please verify"
+        Exit Function
+    End If
            
-    If Not (CheckIfRunningLastVersion = True) Then
+    If Not isLastVersion = True Then
         If MsgBox("Tu version no es la actual, Deseas ejecutar el actualizador?.", vbYesNo) = vbYes Then
             binaryFileToOpen = GetVar(App.path & "\INIT\Config.ini", "Launcher", "fileToOpen")
             Call ShellExecute(Me.hwnd, "open", App.path & binaryFileToOpen, "", "", 1)
@@ -132,18 +142,27 @@ Function Analizar()
 End Function
 
 Private Function CheckIfRunningLastVersion() As Boolean
+On Error GoTo errorinet
     Dim responseGithub As String, versionNumberMaster As String, versionNumberLocal As String
     Dim JsonObject As Object
 
     responseGithub = Inet1.OpenURL("https://api.github.com/repos/ao-libre/ao-cliente/releases/latest")
+
+    If Inet1.ResponseCode <> 0 Then 
+        GoTo errorinet
+    End If
+
     Set JsonObject = JSON.parse(responseGithub)
     
     versionNumberMaster = JsonObject.Item("tag_name")
     versionNumberLocal = GetVar(App.path & "\INIT\Config.ini", "Cliente", "VersionTagRelease")
-    
     If versionNumberMaster = versionNumberLocal Then
         CheckIfRunningLastVersion = True
     Else
         CheckIfRunningLastVersion = False
     End If
+
+errorinet:
+    Call MsgBox(JsonLanguage.Item("ERROR_DESCARGA_SERVIDORES_INET").Item("TEXTO") & " " & frmCargando.Inet1.ResponseCode, vbCritical + vbOKOnly, "Argentum Online")
+    frmCargando.NoInternetConnection = True
 End Function

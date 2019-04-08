@@ -66,6 +66,8 @@ Public Sub LoadSoundMapInfo()
 End Sub
  
 Public Sub ReproducirSonidosDeMapas()
+On Error Resume Next
+
 'Nos fijamos el mapa del personaje, sus sonidos y lo aplicamos al mapa. Simple y optimo
     Dim i As Long
     Dim SonidoMapa As Byte
