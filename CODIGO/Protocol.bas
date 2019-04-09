@@ -2696,22 +2696,32 @@ End Sub
 ' Handles the ObjectCreate message.
 
 Private Sub HandleObjectCreate()
-'***************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'
-'***************************************************
+
+    '***************************************************
+    'Author: Juan Mart�n Sotuyo Dodero (Maraxus)
+    'Last Modification: 05/17/06
+    '
+    '***************************************************
     If incomingData.length < 5 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
+
     End If
     
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Dim X        As Byte
-    Dim Y        As Byte
-    Dim GrhIndex As Integer
+    Dim x As Byte: x = incomingData.ReadByte()
+    Dim y As Byte: y = incomingData.ReadByte()
+
+    With MapData(x, y)
+    
+        .ObjGrh.GrhIndex = incomingData.ReadInteger()
+        .ObjName = incomingData.ReadASCIIString
+    
+        Call Map_CreateObject(x, y, .ObjGrh.GrhIndex)
+    
+    End With
     
     X = incomingData.ReadByte()
     Y = incomingData.ReadByte()

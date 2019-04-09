@@ -54,6 +54,7 @@ Public Sub Map_DestroyObject(ByVal X As Byte, ByVal Y As Byte)
                   '.objgrh.GrhIndex = 0
                   .OBJInfo.ObjIndex = 0
                   .OBJInfo.Amount = 0
+                  .ObjName = vbNullString
                   Call GrhUninitialize(.ObjGrh)
         
             End With

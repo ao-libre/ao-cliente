@@ -204,6 +204,7 @@ Public Type MapBlock
     
     NPCIndex As Integer
     OBJInfo As Obj
+    ObjName As String
     TileExit As WorldPos
     Blocked As Byte
     
@@ -1189,7 +1190,12 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
                 With MapData(X, Y)
                     'Object Layer
                     If .ObjGrh.GrhIndex <> 0 Then
-                        Call DDrawTransGrhtoSurface(.ObjGrh, PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1, X, Y)
+                        If Abs(MouseTileX - x) < 1 And (Abs(MouseTileY - y)) < 1 Then
+                            Call DDrawTransGrhtoSurface(.ObjGrh, PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(x, y).Engine_Light(), 1, x, y)
+                            Call DrawText(PixelOffsetXTemp + 80, PixelOffsetYTemp, .ObjName, vbWhite)
+                        Else
+                            Call DDrawTransGrhtoSurface(.ObjGrh, PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(x, y).Engine_Light(), 1, x, y)
+                        End If
                     End If
                     
                     'Char layer
