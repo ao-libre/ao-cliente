@@ -202,6 +202,8 @@ Public Type MapBlock
     CharIndex As Integer
     ObjGrh As Grh
     
+    Damage As DList
+    
     NPCIndex As Integer
     OBJInfo As Obj
     TileExit As WorldPos
@@ -1195,6 +1197,11 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
                     'Char layer
                     If .CharIndex <> 0 Then
                         Call CharRender(.CharIndex, PixelOffsetXTemp, PixelOffsetYTemp)
+                    End If
+                    
+                    'Dibujamos los daños.
+                    If .Damage.Activated Then
+                        mDx8_Dibujado.Damage_Draw X, Y, PixelOffsetXTemp + 0, PixelOffsetYTemp - 30
                     End If
                     
                     'Layer 3

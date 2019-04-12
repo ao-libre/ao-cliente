@@ -80,5 +80,3 @@ Public Sub InitCount(ByVal Max As Byte)
         .DoIt = True
     End With
 End Sub
-
-

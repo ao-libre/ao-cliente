@@ -15,6 +15,27 @@ Private Declare Sub CopyMemory Lib "kernel32.dll" Alias "RtlMoveMemory" (ByRef d
 
 Private Declare Function SetBitmapBits Lib "gdi32" (ByVal hBitmap As Long, ByVal dwCount As Long, lpBits As Any) As Long
 
+' Dano en Render
+Const DAMAGE_TIME As Integer = 25
+Const DAMAGE_FONT_S As Byte = 12
+ 
+Enum EDType
+     edPuñal = 1                'Apuñalo.
+     edNormal = 2               'Hechizo o golpe común.
+End Enum
+ 
+Private DNormalFont    As New StdFont
+ 
+Type DList
+     DamageVal      As Integer  'Cantidad de daño.
+     ColorRGB       As Long     'Color.
+     DamageType     As EDType   'Tipo, se usa para saber si es apu o no.
+     DamageFont     As New StdFont  'Efecto del apu.
+     TimeRendered   As Integer  'Tiempo transcurrido.
+     Downloading    As Byte     'Contador para la posicion Y.
+     Activated      As Boolean  'Si está activado..
+End Type
+
 Public Sub ArrayToPicturePNG(ByRef byteArray() As Byte, ByRef imgDest As IPicture) ' GSZAO
     Call SetBitmapBits(imgDest.handle, UBound(byteArray), byteArray(0))
 End Sub
@@ -87,3 +108,150 @@ Sub DrawGrhtoHdc(ByVal desthDC As Long, ByVal grh_index As Integer, ByRef Source
     End If
 
 End Sub
+
+Sub Damage_Initialize()
+
+    ' Inicializamos el dano en render
+    With DNormalFont
+        .Size = 20
+        .italic = False
+        .bold = False
+        .Name = "Tahoma"
+    End With
+
+End Sub
+
+Sub Damage_Create(ByVal X As Byte, _
+                  ByVal Y As Byte, _
+                  ByVal ColorRGB As Long, _
+                  ByVal DamageValue As Integer, _
+                  ByVal edMode As Byte)
+ 
+    ' @ Agrega un nuevo daño.
+ 
+    With MapData(X, Y).Damage
+     
+        .Activated = True
+        .ColorRGB = ColorRGB
+        .DamageType = edMode
+        .DamageVal = DamageValue
+        .TimeRendered = 0
+        .Downloading = 0
+     
+        If .DamageType = EDType.edPuñal Then
+
+            With .DamageFont
+                .Size = Val(DAMAGE_FONT_S)
+                .Name = "Tahoma"
+                .bold = False
+                Exit Sub
+
+            End With
+
+        End If
+     
+        .DamageFont = DNormalFont
+        .DamageFont.Size = 14
+     
+    End With
+ 
+End Sub
+ 
+Sub Damage_Draw(ByVal X As Byte, _
+                ByVal Y As Byte, _
+                ByVal PixelX As Integer, _
+                ByVal PixelY As Integer)
+ 
+    ' @ Dibuja un daño
+ 
+    With MapData(X, Y).Damage
+     
+        If (Not .Activated) Or (Not .DamageVal <> 0) Then Exit Sub
+        If .TimeRendered < DAMAGE_TIME Then
+           
+            'Sumo el contador del tiempo.
+            .TimeRendered = .TimeRendered + 1
+           
+            If (.TimeRendered / 2) > 0 Then
+                .Downloading = (.TimeRendered / 2)
+
+            End If
+           
+            .ColorRGB = Damage_ModifyColour(.TimeRendered, .DamageType)
+           
+            'Efectito para el apu
+            If .DamageType = EDType.edPuñal Then
+                .DamageFont.Size = Damage_NewSize(.TimeRendered)
+
+            End If
+               
+            'Dibujo ; D
+            DrawText PixelX, PixelY - .Downloading, "-" & .DamageVal, .ColorRGB
+           
+            'Si llego al tiempo lo limpio
+            If .TimeRendered >= DAMAGE_TIME Then
+                Damage_Clear X, Y
+
+            End If
+           
+        End If
+       
+    End With
+ 
+End Sub
+ 
+Sub Damage_Clear(ByVal X As Byte, ByVal Y As Byte)
+ 
+    ' @ Limpia todo.
+ 
+    With MapData(X, Y).Damage
+        .Activated = False
+        .ColorRGB = 0
+        .DamageVal = 0
+        .TimeRendered = 0
+
+    End With
+ 
+End Sub
+ 
+Function Damage_ModifyColour(ByVal TimeNowRendered As Byte, _
+                             ByVal DamageType As Byte) As Long
+ 
+    ' @ Se usa para el "efecto" de desvanecimiento.
+ 
+    Select Case DamageType
+                   
+        Case EDType.edPuñal
+            Damage_ModifyColour = D3DColorXRGB(255, 255, 255)
+            'Damage_ModifyColour = GetPuñalNewColour()
+                   
+        Case EDType.edNormal
+            Damage_ModifyColour = D3DColorXRGB(200, 200, 11)
+       
+    End Select
+ 
+End Function
+ 
+Function Damage_NewSize(ByVal timeRenderedNow As Byte) As Byte
+ 
+    ' @ Se usa para el "efecto" del apu.
+ 
+    Dim tResult As Byte
+ 
+    Select Case timeRenderedNow
+ 
+        Case 1 To 10
+            Damage_NewSize = 14
+       
+        Case 11 To 20
+            Damage_NewSize = 13
+           
+        Case 21 To 30
+            Damage_NewSize = 12
+           
+        Case 31 To 99
+            Damage_NewSize = 11
+       
+    End Select
+ 
+End Function
