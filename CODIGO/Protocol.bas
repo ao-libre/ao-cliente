@@ -168,6 +168,7 @@ Private Enum ServerPacketID
     SearchList
     QuestDetails
     QuestListSend
+    CreateDamage
 End Enum
 
 Private Enum ClientPacketID
@@ -831,6 +832,9 @@ On Error Resume Next
             
         Case ServerPacketID.CancelOfferItem
             Call HandleCancelOfferItem
+            
+        Case ServerPacketID.CreateDamage            ' CDMG
+            Call HandleCreateDamage
             
         Case Else
             'ERROR : Abort!
@@ -11083,4 +11087,19 @@ Public Sub WriteQuestAbandon(ByVal QuestSlot As Byte)
     
     'Escribe el Slot de Quest.
     Call outgoingData.WriteByte(QuestSlot)
+End Sub
+
+Private Sub HandleCreateDamage()
+ 
+    ' @ Crea daño en pos X é Y.
+ 
+    With incomingData
+        
+        ' Leemos el ID del paquete.
+        .ReadByte
+     
+        Call mDx8_Dibujado.Damage_Create(.ReadByte(), .ReadByte(), 0, .ReadInteger(), .ReadByte())
+     
+    End With
+ 
 End Sub

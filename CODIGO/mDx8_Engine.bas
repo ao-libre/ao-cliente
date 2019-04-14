@@ -161,12 +161,13 @@ Public Sub Engine_DirectX8_Aditional_Init()
         .Right = frmMain.MainViewPic.ScaleWidth
     End With
 
-
     Call Engine_Long_To_RGB_List(Normal_RGBList(), -1)
 
     Load_Auras
     Init_MeteoEngine
     Engine_Init_ParticleEngine
+    
+    mDx8_Dibujado.Damage_Initialize
     
 End Sub
 
