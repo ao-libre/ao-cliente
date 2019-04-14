@@ -1,4 +1,4 @@
----------------------------------------
+﻿---------------------------------------
 ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
 ---------------------------------------
 
@@ -383,8 +383,26 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 11/03/2019 : Eliminada la carga de MD5. (jopiortiz)
 
 - 0.13.8
-* 12/03/2019: Implementación: Sistema de Quests via NPC's. (jopiortiz)
-* 12/03/2019: Optimizaciones varias, limpieza de codigo (jopiortiz)
+* 12/03/2019 : Implementación: Sistema de Quests via NPC's. (jopiortiz)
+* 12/03/2019 : Optimizaciones varias, limpieza de codigo (jopiortiz)
 * 14/03/2019 : Implementación: Amuleto del Silencio (Recox-jopiortiz)
 * 15/03/2019 : Reemplazados caracteres especiales por normales (à á é í ó ú ñ Ñ) para evitar errores en encodeo y diferencias de codigo no deseadas en pull requests. (Recox)
+* 20/03/2019 : Arreglado desde el codigo la obtencion de una propiedad inexistente al json de lenguajes (Recox)
+* 22/03/2019 : Fix: Agregué una validacion (¿sos gm?) antes de abrir el frmBuscar. (jopiortiz)
+* 27/03/2019 : Cambie el link del Manual y de las Reglas (Recox)
+* 01/04/2019 : Se implemento la posibilidad de que cada servidor pueda elegir su propio mundo, el mismo se selecciona desde la propiedad Mundo en el archivo sinfo.dat (Recox)
 
+- 0.13.8.1
+* 04/04/2019 : Se usa el numero de versionTagRelease desde el archivo INIT\Config.ini para mostrar la version de juego en el render (Recox)
+* 04/04/2019 : Se creo un boton para poder refrescar la lista de servidores (Recox)
+* 04/04/2019 : Se simplifico el formulario de conectar borrando codigo innecesario (Recox)
+
+- 0.13.8.2
+* 08/04/2019 : Ahora la aplicacion no crashea al tratar de abrirla sin internet. (Recox)
+* 08/04/2019 : Se agregaron todas las imagenes de minimapa faltantes (Recox)
+* 08/04/2019 : Se modifico un poco el mapa 273 del battleserver y el 198 del deathmatch (Recox)
+* 09/04/2019 : Ahora los sacerdotes de abajo y arriba curan en mapa deathmatch (198) (Recox)
+
+- 0.13.8.3
+* 11/04/2019: Se convirtio el mapa Escondrijo de las ruinas de earost en el mundo deathmatch con todos los npcs necesarios para un agite rapido. (Recox)
+* 14/04/2019: Implementación - daño en render. (jopiortiz)
