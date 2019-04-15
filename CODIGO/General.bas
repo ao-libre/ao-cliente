@@ -53,6 +53,14 @@ Public Function DirMidi() As String
 End Function
 
 Public Function DirMapas() As String
+    'En caso que no haya un mundo seleccionado en la propiedad Mundo
+    'Seleccionamos Alkon como mundo default
+    'Esto hay que eliminarlo de aqui ya que no tiene por que estar aqui, esto es un parche rapido para evitar posibles errores
+    'Cuando hay problemas de conexion
+    If LenB(MundoSeleccionado) = 0 Then
+        MundoSeleccionado = "Alkon"
+    End If
+
     DirMapas = App.path & "\" & Config_Inicio.DirMapas & "\" & MundoSeleccionado & "\"
 End Function
 
