@@ -118,9 +118,10 @@ End Sub
 
 
 Public Sub CargarColores()
+
 On Error Resume Next
-    Dim archivoC As String
-    archivoC = App.path & "\init\colores.dat"
+    
+    Dim archivoC As String: archivoC = App.path & "\init\colores.dat"
     
     If Not FileExist(archivoC, vbArchive) Then
         Call MsgBox("ERROR: no se ha podido cargar los colores. Falta el archivo colores.dat, reinstale el juego", vbCritical + vbOKOnly)
@@ -141,6 +142,11 @@ On Error Resume Next
     
     '   Atacable TODO: hay que implementar un color para los atacables y hacer que funcione.
     'ColoresPJ(48) = D3DColorXRGB(GetVar(archivoC, "AT", "R"), GetVar(archivoC, "AT", "G"), GetVar(archivoC, "AT", "B"))
+    
+    For i = 51 To 56 'Colores reservados para la renderizacion de dano
+        ColoresDano(i) = D3DColorXRGB(GetVar(archivoC, CStr(i), "R"), GetVar(archivoC, CStr(i), "G"), GetVar(archivoC, CStr(i), "B"))
+    Next i
+    
 End Sub
 
 Sub CargarAnimEscudos()

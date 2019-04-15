@@ -281,3 +281,44 @@ B=0
 R=0
 G=0
 B=0
+
+[50]
+R=0
+G=0
+B=0
+
+# Daño - Normal
+[51]
+R=0
+G=179
+B=0
+
+# Daño - Puñal
+[52]
+R=255
+G=51
+B=85
+
+# Daño - Critico
+[53]
+R=0
+G=0
+B=0
+
+# Daño - "Falló"
+[54]
+R=30
+G=179
+B=0
+
+# Render - Curar
+[55]
+R=173
+G=216
+B=230
+
+# Render - Trabajo
+[56]
+R=173
+G=216
+B=230

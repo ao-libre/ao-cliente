@@ -20,10 +20,12 @@ Private Const DAMAGE_TIME As Integer = 40
 Private Const DAMAGE_FONT_S As Byte = 12
  
 Private Enum EDType
-     edPunal = 1                'Apunalo.
-     edNormal = 2               'Hechizo o golpe común.
-     edCritico = 3              'Golpe Critico
-     edFallo = 4                'Fallo el ataque
+     edPunal = 1    'Apunalo.
+     edNormal = 2   'Hechizo o golpe común.
+     edCritico = 3  'Golpe Critico
+     edFallo = 4    'Fallo el ataque
+     edCurar = 5    'Curacion a usuario
+     edTrabajo = 6  'Cantidad de items obtenidas a partir del trabajo realizado
 End Enum
  
 Private DNormalFont    As New StdFont
@@ -195,10 +197,16 @@ Sub Damage_Draw(ByVal X As Byte, _
                 Case EDType.edCritico
                     DrawText PixelX, PixelY - .Downloading, "¡-" & .DamageVal & "!", .ColorRGB
                 
+                Case EDType.edCurar
+                    DrawText PixelX, PixelY - .Downloading, "+" & .DamageVal, .ColorRGB
+                
+                Case EDType.edTrabajo
+                    DrawText PixelX, PixelY - .Downloading, "+" & .DamageVal, .ColorRGB
+                    
                 Case EDType.edFallo
                     DrawText PixelX, PixelY - .Downloading, "Fallo", .ColorRGB
                     
-                Case Else
+                Case Else 'EDType.edNormal
                     DrawText PixelX, PixelY - .Downloading, "-" & .DamageVal, .ColorRGB
                     
             End Select
@@ -237,14 +245,20 @@ Function Damage_ModifyColour(ByVal TimeNowRendered As Byte, _
     Select Case DamageType
                    
         Case EDType.edPunal
-            Damage_ModifyColour = D3DColorXRGB(255, 255, 255)
-                   
-        Case EDType.edNormal
-            Damage_ModifyColour = D3DColorXRGB(200, 200, 11)
+            Damage_ModifyColour = ColoresDano(52)
             
         Case EDType.edFallo
-            Damage_ModifyColour = D3DColorXRGB(200, 0, 0)
-       
+            Damage_ModifyColour = ColoresDano(54)
+            
+        Case EDType.edCurar
+            Damage_ModifyColour = ColoresDano(55)
+        
+        Case EDType.edTrabajo
+            Damage_ModifyColour = ColoresDano(56)
+            
+        Case Else 'EDType.edNormal
+            Damage_ModifyColour = ColoresDano(51)
+            
     End Select
  
 End Function
