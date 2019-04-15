@@ -150,6 +150,8 @@ End Enum
 
 Public ColoresPJ(0 To 50) As Long
 
+Public ColoresDano(51 To 56) As Long
+
 Public Type tServerInfo
     Ip As String
     Puerto As Integer
