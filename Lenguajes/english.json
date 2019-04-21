@@ -535,7 +535,12 @@
 		]
 	},
 	"MENSAJE_INFO_COORDENADAS":{
-		"TEXTO":"These coordinates are your location on the map. Uses the letter L to correct it if this does not match with the server due to the Lag."
+		"TEXTO":"These coordinates are your location on the map. Uses the letter L to correct it if this does not match with the server due to the Lag.",
+		"COLOR":[
+			100,
+			140,
+			055
+		]
 	},
 	"MENSAJE_SOY_CHEATER":{
 		"TEXTO":"I'm a cheater, tell a GM"

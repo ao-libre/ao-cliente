@@ -536,7 +536,12 @@
 		]
 	},
 	"MENSAJE_INFO_COORDENADAS":{
-		"TEXTO":"Estas coordenadas son tu ubicacion en el mapa. Utiliza la letra L para corregirla si esta no se corresponde con la del servidor por efecto del Lag."
+		"TEXTO":"Estas coordenadas son tu ubicacion en el mapa. Utiliza la letra L para corregirla si esta no se corresponde con la del servidor por efecto del Lag.",
+		"COLOR":[
+			100,
+			140,
+			055
+		]
 	},
 	"MENSAJE_SOY_CHEATER":{
 		"TEXTO":"Soy un cheater, avisenle a un gm"
