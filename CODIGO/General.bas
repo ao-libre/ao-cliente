@@ -1411,14 +1411,12 @@ Public Sub CloseClient()
     
     EngineRun = False
     
-    Call Resolution.ResetResolution
-    
     #If UsarWrench = 1 Then
-            frmMain.Socket1.Disconnect
-            frmMain.Socket1.Flush
-            frmMain.Socket1.Cleanup
+        frmMain.Socket1.Disconnect
+        frmMain.Socket1.Flush
+        frmMain.Socket1.Cleanup
     #Else
-            frmMain.Winsock1.Close
+        frmMain.Winsock1.Close
     #End If
     
     'Stop tile engine
@@ -1444,6 +1442,9 @@ Public Sub CloseClient()
     'Actualizar tip
     Config_Inicio.tip = tipf
     Call EscribirGameIni(Config_Inicio)
+    
+    ' Si esta en pantalla completa, volvemos a la resolucion original
+    If Resolution.GetResolutionState Then Call Resolution.ResetResolution
     
     End
     

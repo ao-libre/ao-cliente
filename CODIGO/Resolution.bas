@@ -81,95 +81,110 @@ Private oldResHeight As Long
 Private oldResWidth As Long
 Private oldDepth As Integer
 Private oldFrequency As Long
-Private bNoResChange As Boolean
-
 
 Private Declare Function EnumDisplaySettings Lib "user32" Alias "EnumDisplaySettingsA" (ByVal lpszDeviceName As Long, ByVal iModeNum As Long, lptypDevMode As Any) As Boolean
 Private Declare Function ChangeDisplaySettings Lib "user32" Alias "ChangeDisplaySettingsA" (lptypDevMode As Any, ByVal dwFlags As Long) As Long
 
+Private MiDevM As typDevMODE
 
 'TODO : Change this to not depend on any external public variable using args instead!
 
 Public Sub SetResolution()
-        '***************************************************
-        'Autor: Unknown
-        'Last Modification: 03/29/08
-        'Changes the display resolution if needed.
-        'Last Modified By: Juan Martin Sotuyo Dodero (Maraxus)
-        ' 03/29/2008: Maraxus - Retrieves current settings storing display depth and frequency for proper restoration.
-        '***************************************************
+    '**************************************************************************************************************
+    'Autor: Unknown
+    'Last Modification: 03/29/08
+    'Changes the display resolution if needed.
+    'Last Modified By: Juan Martin Sotuyo Dodero (Maraxus)
+    ' 03/29/2008: Maraxus - Retrieves current settings storing display depth and frequency for proper restoration.
+    ' 22/04/2019: Jopi - Arreglado "cambio" de resolucion al elegir "NO".
+    '***************************************************************************************************************
 
-        Dim lRes              As Long
-        Dim MidevM            As typDevMODE
-        Dim CambiarResolucion As Boolean
+    Dim lRes              As Long
+
+    Dim CambiarResolucion As Boolean
     
-        lRes = EnumDisplaySettings(0, ENUM_CURRENT_SETTINGS, MidevM)
+    lRes = EnumDisplaySettings(0, ENUM_CURRENT_SETTINGS, MiDevM)
    
-        oldResWidth = Screen.Width \ Screen.TwipsPerPixelX
-        oldResHeight = Screen.Height \ Screen.TwipsPerPixelY
+    oldResWidth = Screen.Width \ Screen.TwipsPerPixelX
+    oldResHeight = Screen.Height \ Screen.TwipsPerPixelY
         
-        If oldResWidth <> 800 Or oldResHeight <> 600 Then
-                If MsgBox(JsonLanguage.Item("PANTALLA_COMPLETA").Item("TEXTO"), vbYesNo, "Argentum Online") = vbYes Then
-                        frmMain.WindowState = vbMaximized
+    If MsgBox(JsonLanguage.Item("PANTALLA_COMPLETA").Item("TEXTO"), vbYesNo, "Argentum Online") = vbYes Then
+        frmMain.WindowState = vbMaximized
 
-                        With MidevM
-                                'oldDepth = .dmBitsPerPel
-                                oldFrequency = .dmDisplayFrequency
-         
-                                .dmFields = DM_PELSWIDTH Or DM_PELSHEIGHT Or DM_BITSPERPEL
-                                .dmPelsWidth = 800
-                                .dmPelsHeight = 600
-                                '.dmBitsPerPel = 16
-                        End With
+        With MiDevM
+            .dmBitsPerPel = 32
+            .dmFields = DM_PELSWIDTH Or DM_PELSHEIGHT Or DM_BITSPERPEL
+            .dmPelsWidth = 800
+            .dmPelsHeight = 600
+            oldDepth = .dmBitsPerPel
+            oldFrequency = .dmDisplayFrequency
+
+        End With
  
-                        lRes = ChangeDisplaySettings(MidevM, CDS_TEST)
+        lRes = ChangeDisplaySettings(MiDevM, CDS_TEST)
     
-                        ' En pantalla chica que pueda mover
-                        NoRes = True
+        ' En pantalla chica que pueda mover
+        NoRes = True
                         
-                Else
-                        bNoResChange = True
-                        MidevM.dmFields = DM_BITSPERPEL
-                        'MidevM.dmBitsPerPel = 16
-                        lRes = ChangeDisplaySettings(MidevM, CDS_TEST)
-                        frmMain.WindowState = vbNormal
+    Else
+        frmMain.WindowState = vbNormal
     
-                        ' En pantalla grande no porque japish runtime
-                        NoRes = False
+        ' En pantalla grande no porque japish runtime
+        NoRes = False
                         
-                End If
-        End If
+    End If
   
-        CambiarResolucion = (oldResWidth < 800 Or oldResHeight < 600)
+    CambiarResolucion = (oldResWidth < 800 Or oldResHeight < 600)
 
 End Sub
+
+Public Function GetResolutionState() As Boolean
+    
+    '**************************************************************************************************************
+    'Autor: Jopi
+    'Se fija si hubo algun cambio de resolucion al iniciar el juego.
+    'Se usa en el Sub CloseClient para resetear la  resolucion si devuelve TRUE.
+    '***************************************************************************************************************
+    
+    ' Obtenemos los parametros actuales de la resolucion
+    Dim lRes As Long
+        lRes = EnumDisplaySettings(0, ENUM_CURRENT_SETTINGS, MiDevM)
+    
+    ' Si la resolucion actual es diferente a original significa que la cambiamos, devolvemos TRUE
+    ' Si la resolucion actual es la misma que la original, devolvemos FALSE
+    If MiDevM.dmPelsWidth <> oldResWidth And MiDevM.dmPelsHeight <> oldResHeight Then
+        GetResolutionState = True
+    Else
+        GetResolutionState = False
+
+    End If
+    
+End Function
 
 Public Sub ResetResolution()
-'***************************************************
-'Autor: Unknown
-'Last Modification: 03/29/08
-'Changes the display resolution if needed.
-'Last Modified By: Juan Martin Sotuyo Dodero (Maraxus)
-' 03/29/2008: Maraxus - Properly restores display depth and frequency.
-'***************************************************
-    Dim typDevM As typDevMODE
-    Dim lRes As Long
+
+    '*************************************************************************************************************
+    'Autor: Unknown
+    'Last Modification: 22/04/2019
+    'Changes the display resolution if needed.
+    'Last Modified By: Jopi
+    ' 03/29/2008: Maraxus - Properly restores display depth and frequency.
+    ' 22/04/2019: Jopi - No se cambiaba la resolucion al llamar al Sub CloseClient estando en pantalla completa.
+    '*************************************************************************************************************
     
-    If Not bNoResChange Then
+    Dim lRes    As Long
+        lRes = EnumDisplaySettings(0, ENUM_CURRENT_SETTINGS, MiDevM)
+        
+    With MiDevM
+        .dmFields = DM_PELSWIDTH And DM_PELSHEIGHT And DM_BITSPERPEL And DM_DISPLAYFREQUENCY
+        .dmPelsWidth = oldResWidth
+        .dmPelsHeight = oldResHeight
+        .dmBitsPerPel = oldDepth
+        .dmDisplayFrequency = oldFrequency
+
+    End With
+        
+    lRes = ChangeDisplaySettings(MiDevM, CDS_TEST)
     
-        lRes = EnumDisplaySettings(0, ENUM_CURRENT_SETTINGS, typDevM)
-        
-        With typDevM
-            .dmFields = DM_PELSWIDTH Or DM_PELSHEIGHT Or DM_BITSPERPEL Or DM_DISPLAYFREQUENCY
-            .dmPelsWidth = oldResWidth
-            .dmPelsHeight = oldResHeight
-            .dmBitsPerPel = oldDepth
-            .dmDisplayFrequency = oldFrequency
-        End With
-        
-        lRes = ChangeDisplaySettings(typDevM, CDS_TEST)
-    End If
 End Sub
-
-
 
