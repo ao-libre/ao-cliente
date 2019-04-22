@@ -31,11 +31,14 @@ Attribute VB_Name = "Resolution"
 ' @version  1.1.0
 ' @date     20080329
 
-'**************************************************************************
+'****************************************************************************************************************************************************
 ' - HISTORY
 '       v1.0.0  -   Initial release ( 2007/08/14 - Juan Martin Sotuyo Dodero )
 '       v1.1.0  -   Made it reset original depth and frequency at exit ( 2008/03/29 - Juan Martin Sotuyo Dodero )
-'**************************************************************************
+'       v1.2.0  -   Ya no actualiza la pantalla al elegir "NO" cuando te preguntan de cambiar la resolucion. ( 2019/04/22 - Jopi )
+'                   Al cerrar el cliente mediante el `Sub CloseClient` estando en pantalla completa, se resetea la resolucion. ( 2019/04/22 - Jopi )
+'                   Nueva funcion que chequea si hubo un cambio de resolucion al iniciar el juego. ( 2019/04/22 - Jopi )
+'*****************************************************************************************************************************************************
 
 Option Explicit
 
@@ -47,6 +50,11 @@ Private Const DM_PELSHEIGHT As Long = &H100000
 Private Const DM_DISPLAYFREQUENCY As Long = &H400000
 Private Const CDS_TEST As Long = &H4
 Private Const ENUM_CURRENT_SETTINGS As Long = -1
+
+Private Enum NewGameResolution
+    Height = 600
+    Width = 800
+End Enum
 
 Private Type typDevMODE
     dmDeviceName       As String * CCDEVICENAME
@@ -92,9 +100,9 @@ Private MiDevM As typDevMODE
 Public Sub SetResolution()
     '**************************************************************************************************************
     'Autor: Unknown
-    'Last Modification: 03/29/08
+    'Last Modification: 22/04/2019
     'Changes the display resolution if needed.
-    'Last Modified By: Juan Martin Sotuyo Dodero (Maraxus)
+    'Last Modified By: Jopi
     ' 03/29/2008: Maraxus - Retrieves current settings storing display depth and frequency for proper restoration.
     ' 22/04/2019: Jopi - Arreglado "cambio" de resolucion al elegir "NO".
     '***************************************************************************************************************
@@ -107,31 +115,40 @@ Public Sub SetResolution()
    
     oldResWidth = Screen.Width \ Screen.TwipsPerPixelX
     oldResHeight = Screen.Height \ Screen.TwipsPerPixelY
+    
+    ' Chequeo si la resolucion ya es 800x600.
+    If oldResWidth <> NewGameResolution.Width And oldResHeight <> NewGameResolution.Height Then
         
-    If MsgBox(JsonLanguage.Item("PANTALLA_COMPLETA").Item("TEXTO"), vbYesNo, "Argentum Online") = vbYes Then
-        frmMain.WindowState = vbMaximized
-
-        With MiDevM
-            .dmBitsPerPel = 32
-            .dmFields = DM_PELSWIDTH Or DM_PELSHEIGHT Or DM_BITSPERPEL
-            .dmPelsWidth = 800
-            .dmPelsHeight = 600
-            oldDepth = .dmBitsPerPel
-            oldFrequency = .dmDisplayFrequency
-
-        End With
- 
-        lRes = ChangeDisplaySettings(MiDevM, CDS_TEST)
+        ' Si no esta en 800x600, pregunto si quiere cambiarla.
+        If MsgBox(JsonLanguage.Item("PANTALLA_COMPLETA").Item("TEXTO"), vbYesNo, "Argentum Online") = vbYes Then
+            
+            ' Maximizo la vantana
+            frmMain.WindowState = vbMaximized
+            
+            ' Establezco los parametros para realizar el cambio
+            With MiDevM
+                .dmBitsPerPel = 32
+                .dmFields = DM_PELSWIDTH Or DM_PELSHEIGHT Or DM_BITSPERPEL
+                .dmPelsWidth = NewGameResolution.Width
+                .dmPelsHeight = NewGameResolution.Height
+                oldDepth = .dmBitsPerPel
+                oldFrequency = .dmDisplayFrequency
+            End With
+            
+            ' Cambio la resolucion
+            lRes = ChangeDisplaySettings(MiDevM, CDS_TEST)
     
-        ' En pantalla chica que pueda mover
-        NoRes = True
+            ' En pantalla chica que pueda mover
+            NoRes = True
                         
-    Else
-        frmMain.WindowState = vbNormal
+        Else
+            frmMain.WindowState = vbNormal
     
-        ' En pantalla grande no porque japish runtime
-        NoRes = False
+            ' En pantalla grande no porque japish runtime
+            NoRes = False
                         
+        End If
+
     End If
   
     CambiarResolucion = (oldResWidth < 800 Or oldResHeight < 600)
@@ -142,7 +159,7 @@ Public Function GetResolutionState() As Boolean
     
     '**************************************************************************************************************
     'Autor: Jopi
-    'Se fija si hubo algun cambio de resolucion al iniciar el juego.
+    'Chequeo si hubo algun cambio de resolucion al iniciar el juego.
     'Se usa en el Sub CloseClient para resetear la  resolucion si devuelve TRUE.
     '***************************************************************************************************************
     
@@ -172,9 +189,11 @@ Public Sub ResetResolution()
     ' 22/04/2019: Jopi - No se cambiaba la resolucion al llamar al Sub CloseClient estando en pantalla completa.
     '*************************************************************************************************************
     
+    ' Obtenemos los parametros actuales de la resolucion
     Dim lRes    As Long
         lRes = EnumDisplaySettings(0, ENUM_CURRENT_SETTINGS, MiDevM)
         
+    ' Establezco los parametros para realizar el cambio
     With MiDevM
         .dmFields = DM_PELSWIDTH And DM_PELSHEIGHT And DM_BITSPERPEL And DM_DISPLAYFREQUENCY
         .dmPelsWidth = oldResWidth
@@ -184,6 +203,7 @@ Public Sub ResetResolution()
 
     End With
         
+    ' Cambio la resolucion
     lRes = ChangeDisplaySettings(MiDevM, CDS_TEST)
     
 End Sub
