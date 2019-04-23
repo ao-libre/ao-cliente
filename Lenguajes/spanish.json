@@ -993,6 +993,9 @@
 	"PANTALLA_COMPLETA":{
 		"TEXTO":"¿Desea jugar en pantalla completa?"
 	},
+	"PRIMERA_VEZ_PANTALLA_COMPLETA":{
+		"TEXTO":"¨Parece que esta es la primera vez que juegas, ¿Quieres que te pregunte si deseas jugar en pantalla completa la próxima vez que abras el juego?"
+	},
 	"VALIDACION_EMAIL":{
 		"TEXTO":"Ingrese un correo electronico."
 	},

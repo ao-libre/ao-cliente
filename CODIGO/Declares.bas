@@ -172,8 +172,6 @@ Public Site As String
 Public UserCiego As Boolean
 Public UserEstupido As Boolean
 
-Public NoRes As Boolean 'no cambiar la resolucion
-
 Public RainBufferIndex As Long
 Public FogataBufferIndex As Long
 

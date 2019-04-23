@@ -889,7 +889,7 @@ Sub Main()
     tipf = Config_Inicio.tip
     
     'Set resolution BEFORE the loading form is displayed, therefore it will be centered.
-    Call Resolution.SetResolution(800, 600)
+    Call Resolution.ChangeResolution
 
     ' Load constants, classes, flags, graphics..
     LoadInitialConfig
@@ -1102,7 +1102,7 @@ Private Sub LoadInitialConfig()
                             True, False, False)
     
     'Inicializamos el inventario grafico
-    Call Inventario.Initialize(DirectD3D8, frmMain.PicInv, MAX_INVENTORY_SLOTS)
+    Call Inventario.Initialize(DirectD3D8, frmMain.picInv, MAX_INVENTORY_SLOTS)
     
     Call AddtoRichTextBox(frmCargando.status, _
                             "                    " & JsonLanguage.Item("BIENVENIDO").Item("TEXTO"), _
@@ -1444,7 +1444,7 @@ Public Sub CloseClient()
     Call EscribirGameIni(Config_Inicio)
     
     ' Si esta en pantalla completa, volvemos a la resolucion original
-    If Resolution.GetResolutionState Then Call Resolution.ResetResolution
+    If ResolucionCambiada Then Call Resolution.ResetResolution
     
     End
     

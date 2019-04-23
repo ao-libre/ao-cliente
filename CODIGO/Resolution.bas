@@ -43,6 +43,9 @@ Attribute VB_Name = "Resolution"
 
 Option Explicit
 
+Public ResolucionCambiada As Boolean        ' Se cambio la resolucion?
+Public NoRes As Boolean
+
 Private Const CCDEVICENAME As Long = 32
 Private Const CCFORMNAME As Long = 32
 Private Const DM_BITSPERPEL As Long = &H40000
@@ -101,18 +104,17 @@ Public Sub SetResolution(ByRef newWidth As Integer, ByRef newHeight As Integer)
     ' 22/04/2019: Jopi - Arreglado "cambio" de resolucion al elegir "NO".
     ' 22/04/2019: Jopi - Nuevos parametros newWidth y newHeight para especificar la resolucion a cambiar, evitando el hardcodeo.
     '**********************************************************************************************************************
-
-    Dim lRes              As Long
-    Dim CambiarResolucion As Boolean
     
-    lRes = EnumDisplaySettings(0, ENUM_CURRENT_SETTINGS, MiDevM)
-   
+    ' Obtenemos los parametros actuales de la resolucion
+    Dim lRes As Long: lRes = EnumDisplaySettings(0, ENUM_CURRENT_SETTINGS, MiDevM)
+    
+    ' Obtenemos la resolucion original.
     oldResWidth = Screen.Width \ Screen.TwipsPerPixelX
     oldResHeight = Screen.Height \ Screen.TwipsPerPixelY
     
     ' Chequeo si la resolucion a cambiar es la misma que la original.
     If oldResWidth <> newWidth And oldResHeight <> newHeight Then
-        
+
         ' Si no es igual, pregunto si quiere cambiarla.
         If MsgBox(JsonLanguage.Item("PANTALLA_COMPLETA").Item("TEXTO"), vbYesNo, "Argentum Online") = vbYes Then
             
@@ -131,45 +133,56 @@ Public Sub SetResolution(ByRef newWidth As Integer, ByRef newHeight As Integer)
             
             ' Cambio la resolucion
             lRes = ChangeDisplaySettings(MiDevM, CDS_TEST)
-    
-            ' En pantalla chica que pueda mover
+
+            ' Se cambió la resolución
+            ResolucionCambiada = True
             NoRes = True
-                        
         Else
+            
+            ' Maximizo la vantana
             frmMain.WindowState = vbNormal
-    
-            ' En pantalla grande no porque japish runtime
-            NoRes = False
                         
+            ' No se cambió la resolución
+            ResolucionCambiada = False
+            NoRes = False
         End If
-        
-        CambiarResolucion = (oldResWidth < 800 Or oldResHeight < 600)
         
     End If
   
 End Sub
 
-Public Function GetResolutionState() As Boolean
+Public Sub ChangeResolution()
     
-    '**************************************************************************************************************
+    '**********************************************************************************************************************
     'Autor: Jopi
-    'Chequeo si hubo algun cambio de resolucion al iniciar el juego.
-    'Se usa en el Sub CloseClient para resetear la  resolucion si devuelve TRUE.
-    '***************************************************************************************************************
+    'A diferencia de SetResolution(), este sub evalua las condiciones previas a preguntar por el cambio de resolucion
+    '**********************************************************************************************************************
     
-    ' Obtenemos los parametros actuales de la resolucion
-    Dim lRes As Long: lRes = EnumDisplaySettings(0, ENUM_CURRENT_SETTINGS, MiDevM)
-
-    ' Si la resolucion actual es diferente a original significa que la cambiamos, devolvemos TRUE
-    ' Si la resolucion actual es la misma que la original, devolvemos FALSE
-    If MiDevM.dmPelsWidth <> oldResWidth And MiDevM.dmPelsHeight <> oldResHeight Then
-        GetResolutionState = True
-    Else
-        GetResolutionState = False
+    ' Si es la primera vez que jugamos, preguntamos si queremos mostrar el dialogo de cambio de resolucion la proxima vez que abramos el juego.
+    If PrimeraVez Then
+        If MsgBox(JsonLanguage.Item("PRIMERA_VEZ_PANTALLA_COMPLETA").Item("TEXTO"), vbYesNo, "Argentum Online") = vbYes Then
+            Call WriteVar(DirInit & "Config.ini", "Cliente", "CambiarResolucion", 1)
+            Exit Sub
+        Else
+            Call WriteVar(DirInit & "Config.ini", "Cliente", "CambiarResolucion", 0)
+            Exit Sub
+        End If
 
     End If
     
-End Function
+    If GetVar(DirInit & "Config.ini", "Cliente", "CambiarResolucion") = 1 Then
+        
+        Call SetResolution(800, 600)
+        
+    Else
+        ' Maximizo la vantana
+        frmMain.WindowState = vbNormal
+                        
+        ' No se cambió la resolución
+        ResolucionCambiada = False
+    End If
+    
+End Sub
 
 Public Sub ResetResolution()
 
@@ -197,6 +210,9 @@ Public Sub ResetResolution()
         
     ' Cambio la resolucion
     lRes = ChangeDisplaySettings(MiDevM, CDS_TEST)
+    
+    ' Dejo la variable global en FALSE para evitar errores.
+    ResolucionCambiada = False
     
 End Sub
 

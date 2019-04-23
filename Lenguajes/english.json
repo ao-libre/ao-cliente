@@ -976,6 +976,9 @@
 	"PANTALLA_COMPLETA":{
 		"TEXTO":"Do you want to play at full screen?"
 	},
+	"PRIMERA_VEZ_PANTALLA_COMPLETA":{
+		"TEXTO":"It seems to be the first time you play this game, do you wanna be asked if yo want to play at fullscreen?"
+	},
 	"VALIDACION_EMAIL":{
       "TEXTO":"Enter an e-mail."
    },
