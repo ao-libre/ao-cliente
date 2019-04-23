@@ -981,7 +981,7 @@ End Sub
 
 Private Sub Form_Load()
     
-    If NoRes Then
+    If Not ResolucionCambiada Then
         ' Handles Form movement (drag and drop).
         Set clsFormulario = New clsFormMovementManager
         clsFormulario.Initialize Me, 120
