@@ -1233,6 +1233,16 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
             End If
         End If
         
+        'If KeyCode = vbKeyF11 Then
+            'If Not ResolucionCambiada Then
+            '    Call SetResolution(800, 600)
+            '    Engine_DirectX8_Init
+            'Else
+            '    Call Resolution.ResetResolution
+            '    Engine_DirectX8_Init
+            'End If
+        'End If
+        
         'Checks if the key is valid
         If LenB(CustomKeys.ReadableName(KeyCode)) > 0 Then
             Select Case KeyCode

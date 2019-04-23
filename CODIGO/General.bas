@@ -1267,8 +1267,10 @@ Public Sub LeerLineaComandos()
     
     For i = Lower_t To Upper_t
         Select Case UCase$(T(i))
-            Case "/NORES" 'no cambiar la resolucion
-                NoRes = True
+            Case "/NORES" 'NO cambiar la resolucion
+                PuedeCambiarResolucion = False
+            Case Else     'SI cambiar la resolucion
+                PuedeCambiarResolucion = True
         End Select
     Next i
 
@@ -1292,8 +1294,6 @@ Private Sub LoadClientSetup()
         'Use dynamic by default
         ClientSetup.bDinamic = True
     End If
-    
-    NoRes = ClientSetup.bNoRes
     
     ClientSetup.bGuildNews = Not ClientSetup.bGuildNews
     Set DialogosClanes = New clsGuildDlg

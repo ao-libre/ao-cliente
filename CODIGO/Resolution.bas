@@ -44,7 +44,7 @@ Attribute VB_Name = "Resolution"
 Option Explicit
 
 Public ResolucionCambiada As Boolean        ' Se cambio la resolucion?
-Public NoRes As Boolean
+Public PuedeCambiarResolucion As Boolean
 
 Private Const CCDEVICENAME As Long = 32
 Private Const CCFORMNAME As Long = 32
@@ -136,7 +136,7 @@ Public Sub SetResolution(ByRef newWidth As Integer, ByRef newHeight As Integer)
 
             ' Se cambió la resolución
             ResolucionCambiada = True
-            NoRes = True
+
         Else
             
             ' Maximizo la vantana
@@ -144,7 +144,7 @@ Public Sub SetResolution(ByRef newWidth As Integer, ByRef newHeight As Integer)
                         
             ' No se cambió la resolución
             ResolucionCambiada = False
-            NoRes = False
+
         End If
         
     End If
@@ -156,32 +156,38 @@ Public Sub ChangeResolution()
     '**********************************************************************************************************************
     'Autor: Jopi
     'A diferencia de SetResolution(), este sub evalua las condiciones previas a preguntar por el cambio de resolucion
+    'Le damos prioridad al parametro /NORES del ejecutable del juego
     '**********************************************************************************************************************
     
-    ' Si es la primera vez que jugamos, preguntamos si queremos mostrar el dialogo de cambio de resolucion la proxima vez que abramos el juego.
-    If PrimeraVez Then
-        If MsgBox(JsonLanguage.Item("PRIMERA_VEZ_PANTALLA_COMPLETA").Item("TEXTO"), vbYesNo, "Argentum Online") = vbYes Then
-            Call WriteVar(DirInit & "Config.ini", "Cliente", "CambiarResolucion", 1)
-            Exit Sub
-        Else
-            Call WriteVar(DirInit & "Config.ini", "Cliente", "CambiarResolucion", 0)
-            Exit Sub
-        End If
+    Select Case PuedeCambiarResolucion
+    
+        Case True
 
-    End If
-    
-    If GetVar(DirInit & "Config.ini", "Cliente", "CambiarResolucion") = 1 Then
+            ' Si es la primera vez que jugamos, preguntamos si queremos mostrar el dialogo de cambio de resolucion la proxima vez que abramos el juego.
+            If PrimeraVez Then
         
-        Call SetResolution(800, 600)
-        
-    Else
-        ' Maximizo la vantana
-        frmMain.WindowState = vbNormal
-                        
-        ' No se cambió la resolución
-        ResolucionCambiada = False
-    End If
-    
+                If MsgBox(JsonLanguage.Item("PRIMERA_VEZ_PANTALLA_COMPLETA").Item("TEXTO"), vbYesNo, "Argentum Online") = vbYes Then
+                    Call WriteVar(DirInit & "Config.ini", "Cliente", "CambiarResolucion", 1)
+                Else
+                    Call WriteVar(DirInit & "Config.ini", "Cliente", "CambiarResolucion", 0)
+
+                End If
+
+            End If
+   
+            ' Buscamos en el Config.ini si puede cambiar la resolucion, de ser asi, la cambiamos
+            If GetVar(DirInit & "Config.ini", "Cliente", "CambiarResolucion") = 1 Then Call SetResolution(800, 600)
+            
+        Case False
+
+            ' Maximizo la vantana
+            frmMain.WindowState = vbNormal
+                            
+            ' No se cambió la resolución
+            ResolucionCambiada = False
+
+    End Select
+
 End Sub
 
 Public Sub ResetResolution()
