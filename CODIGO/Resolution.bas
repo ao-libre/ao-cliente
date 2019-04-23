@@ -38,6 +38,7 @@ Attribute VB_Name = "Resolution"
 '       v1.2.0  -   Ya no actualiza la pantalla al elegir "NO" cuando te preguntan de cambiar la resolucion. ( 2019/04/22 - Jopi )
 '                   Al cerrar el cliente mediante el `Sub CloseClient` estando en pantalla completa, se resetea la resolucion. ( 2019/04/22 - Jopi )
 '                   Nueva funcion que chequea si hubo un cambio de resolucion al iniciar el juego. ( 2019/04/22 - Jopi )
+'                   Nuevos parametros newWidth y newHeight para especificar la resolucion a cambiar en el `Sub SetResolution`, evitando el hardcodeo.
 '*****************************************************************************************************************************************************
 
 Option Explicit
@@ -50,11 +51,6 @@ Private Const DM_PELSHEIGHT As Long = &H100000
 Private Const DM_DISPLAYFREQUENCY As Long = &H400000
 Private Const CDS_TEST As Long = &H4
 Private Const ENUM_CURRENT_SETTINGS As Long = -1
-
-Private Enum NewGameResolution
-    Height = 600
-    Width = 800
-End Enum
 
 Private Type typDevMODE
     dmDeviceName       As String * CCDEVICENAME
@@ -85,6 +81,8 @@ Private Type typDevMODE
     dmDisplayFrequency As Long
 End Type
 
+Private MiDevM As typDevMODE
+
 Private oldResHeight As Long
 Private oldResWidth As Long
 Private oldDepth As Integer
@@ -93,22 +91,18 @@ Private oldFrequency As Long
 Private Declare Function EnumDisplaySettings Lib "user32" Alias "EnumDisplaySettingsA" (ByVal lpszDeviceName As Long, ByVal iModeNum As Long, lptypDevMode As Any) As Boolean
 Private Declare Function ChangeDisplaySettings Lib "user32" Alias "ChangeDisplaySettingsA" (lptypDevMode As Any, ByVal dwFlags As Long) As Long
 
-Private MiDevM As typDevMODE
-
-'TODO : Change this to not depend on any external public variable using args instead!
-
-Public Sub SetResolution()
-    '**************************************************************************************************************
+Public Sub SetResolution(ByRef newWidth As Integer, ByRef newHeight As Integer)
+    '**********************************************************************************************************************
     'Autor: Unknown
     'Last Modification: 22/04/2019
     'Changes the display resolution if needed.
     'Last Modified By: Jopi
     ' 03/29/2008: Maraxus - Retrieves current settings storing display depth and frequency for proper restoration.
     ' 22/04/2019: Jopi - Arreglado "cambio" de resolucion al elegir "NO".
-    '***************************************************************************************************************
+    ' 22/04/2019: Jopi - Nuevos parametros newWidth y newHeight para especificar la resolucion a cambiar, evitando el hardcodeo.
+    '**********************************************************************************************************************
 
     Dim lRes              As Long
-
     Dim CambiarResolucion As Boolean
     
     lRes = EnumDisplaySettings(0, ENUM_CURRENT_SETTINGS, MiDevM)
@@ -116,10 +110,10 @@ Public Sub SetResolution()
     oldResWidth = Screen.Width \ Screen.TwipsPerPixelX
     oldResHeight = Screen.Height \ Screen.TwipsPerPixelY
     
-    ' Chequeo si la resolucion ya es 800x600.
-    If oldResWidth <> NewGameResolution.Width And oldResHeight <> NewGameResolution.Height Then
+    ' Chequeo si la resolucion a cambiar es la misma que la original.
+    If oldResWidth <> newWidth And oldResHeight <> newHeight Then
         
-        ' Si no esta en 800x600, pregunto si quiere cambiarla.
+        ' Si no es igual, pregunto si quiere cambiarla.
         If MsgBox(JsonLanguage.Item("PANTALLA_COMPLETA").Item("TEXTO"), vbYesNo, "Argentum Online") = vbYes Then
             
             ' Maximizo la vantana
@@ -129,8 +123,8 @@ Public Sub SetResolution()
             With MiDevM
                 .dmBitsPerPel = 32
                 .dmFields = DM_PELSWIDTH Or DM_PELSHEIGHT Or DM_BITSPERPEL
-                .dmPelsWidth = NewGameResolution.Width
-                .dmPelsHeight = NewGameResolution.Height
+                .dmPelsWidth = newWidth
+                .dmPelsHeight = newHeight
                 oldDepth = .dmBitsPerPel
                 oldFrequency = .dmDisplayFrequency
             End With
@@ -148,11 +142,11 @@ Public Sub SetResolution()
             NoRes = False
                         
         End If
-
+        
+        CambiarResolucion = (oldResWidth < 800 Or oldResHeight < 600)
+        
     End If
   
-    CambiarResolucion = (oldResWidth < 800 Or oldResHeight < 600)
-
 End Sub
 
 Public Function GetResolutionState() As Boolean
@@ -164,9 +158,8 @@ Public Function GetResolutionState() As Boolean
     '***************************************************************************************************************
     
     ' Obtenemos los parametros actuales de la resolucion
-    Dim lRes As Long
-        lRes = EnumDisplaySettings(0, ENUM_CURRENT_SETTINGS, MiDevM)
-    
+    Dim lRes As Long: lRes = EnumDisplaySettings(0, ENUM_CURRENT_SETTINGS, MiDevM)
+
     ' Si la resolucion actual es diferente a original significa que la cambiamos, devolvemos TRUE
     ' Si la resolucion actual es la misma que la original, devolvemos FALSE
     If MiDevM.dmPelsWidth <> oldResWidth And MiDevM.dmPelsHeight <> oldResHeight Then
@@ -190,9 +183,8 @@ Public Sub ResetResolution()
     '*************************************************************************************************************
     
     ' Obtenemos los parametros actuales de la resolucion
-    Dim lRes    As Long
-        lRes = EnumDisplaySettings(0, ENUM_CURRENT_SETTINGS, MiDevM)
-        
+    Dim lRes As Long: lRes = EnumDisplaySettings(0, ENUM_CURRENT_SETTINGS, MiDevM)
+ 
     ' Establezco los parametros para realizar el cambio
     With MiDevM
         .dmFields = DM_PELSWIDTH And DM_PELSHEIGHT And DM_BITSPERPEL And DM_DISPLAYFREQUENCY

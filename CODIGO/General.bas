@@ -889,7 +889,7 @@ Sub Main()
     tipf = Config_Inicio.tip
     
     'Set resolution BEFORE the loading form is displayed, therefore it will be centered.
-    Call Resolution.SetResolution
+    Call Resolution.SetResolution(800, 600)
 
     ' Load constants, classes, flags, graphics..
     LoadInitialConfig
