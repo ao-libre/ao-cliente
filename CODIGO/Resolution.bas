@@ -28,7 +28,7 @@ Attribute VB_Name = "Resolution"
 '
 ' @file     Resolution.bas
 ' @author   Juan Martin Sotuyo Dodero (Maraxus) juansotuyo@gmail.com
-' @version  1.1.0
+' @version  1.2.0
 ' @date     20080329
 
 '****************************************************************************************************************************************************
@@ -134,7 +134,7 @@ Public Sub SetResolution(ByRef newWidth As Integer, ByRef newHeight As Integer)
             ' Cambio la resolucion
             lRes = ChangeDisplaySettings(MiDevM, CDS_TEST)
 
-            ' Se cambió la resolución
+            ' Se cambio la resolucion
             ResolucionCambiada = True
 
         Else
@@ -142,7 +142,7 @@ Public Sub SetResolution(ByRef newWidth As Integer, ByRef newHeight As Integer)
             ' Maximizo la vantana
             frmMain.WindowState = vbNormal
                         
-            ' No se cambió la resolución
+            ' No se cambio la resolucion
             ResolucionCambiada = False
 
         End If
