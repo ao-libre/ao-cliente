@@ -1411,8 +1411,6 @@ Public Sub CloseClient()
     
     EngineRun = False
     
-    Call Resolution.ResetResolution
-    
     #If UsarWrench = 1 Then
         With frmMain.Socket1
             .Disconnect

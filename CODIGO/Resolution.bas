@@ -44,7 +44,6 @@ Attribute VB_Name = "Resolution"
 Option Explicit
 
 Public ResolucionCambiada As Boolean        ' Se cambio la resolucion?
-Public PuedeCambiarResolucion As Boolean
 
 Private Const CCDEVICENAME As Long = 32
 Private Const CCFORMNAME As Long = 32
