@@ -406,3 +406,13 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 - 0.13.8.3
 * 11/04/2019: Se convirtio el mapa Escondrijo de las ruinas de earost en el mundo deathmatch con todos los npcs necesarios para un agite rapido. (Recox)
 * 14/04/2019: Implementación - daño en render. (jopiortiz)
+
+- 0.13.8.4
+* 15/04/2019: Cuando un user ATACA a un NPC y viceversa.
+              Cuando un user CURA a un NPC o User y viceversa.
+              Cuando un elemental ataca a un NPC o user y viceversa.
+              Cuando un user FALLA un ataque a otro user o npc y viceversa.
+              Cuando un user obtiene un objeto al trabajar. Aparece un "+1" arriba de tu cabeza.
+              El mana recuperado al meditar. Aparece un "+valor recuperado" arriba de tu cabeza. (jopiortiz)
+* 17/04/2019: Added Alkon map as default, needs to be improved (Recox)
+* 17/04/2019: Se modifico la fuente para que se vean las coordenadas completas, se agregaron colores en el json de coordeandas para que la aplicacion no arrojase error (Recox)
