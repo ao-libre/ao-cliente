@@ -1164,5 +1164,13 @@
 			255,
 			255
 		]
+	},
+	"CONTADORES":{
+		"PARALISIS":{
+			"TEXTO":"VAR_SEGUNDOS segundos restantes de Paralisis"
+		},
+		"INVISIBILIDAD":{
+			"TEXTO":"VAR_SEGUNDOS segundos restantes de Invisibilidad"
+		}
 	}
 }

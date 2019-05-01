@@ -1380,6 +1380,11 @@ Private Sub InicializarNombres()
     AtributosNames(eAtributos.Inteligencia) = JsonLanguage.Item("ATRIBUTOS").Item("INTELIGENCIA")
     AtributosNames(eAtributos.Carisma) = JsonLanguage.Item("ATRIBUTOS").Item("CARISMA")
     AtributosNames(eAtributos.Constitucion) = JsonLanguage.Item("ATRIBUTOS").Item("CONSTITUCION")
+    
+    'Cargamos los mensajes 1 sola vez
+    MensajeInvisibilidad = JsonLanguage.Item("CONTADORES").Item("INVISIBILIDAD").Item("TEXTO")
+    MensajeParalisis = JsonLanguage.Item("CONTADORES").Item("PARALISIS").Item("TEXTO")
+    
 End Sub
 
 ''

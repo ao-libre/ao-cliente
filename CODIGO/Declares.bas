@@ -33,6 +33,12 @@ Attribute VB_Name = "Mod_Declaraciones"
 
 Option Explicit
 
+'Carteles de Paralisis e Invisibilidad
+Public CartelInvisibilidad As Integer
+Public CartelParalisis As Integer
+Public MensajeInvisibilidad As String
+Public MensajeParalisis As String
+
 ' Desvanecimiento en Techos
 Public ColorTecho As Byte
 Public temp_rgb(3) As Long

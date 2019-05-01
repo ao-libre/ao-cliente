@@ -146,7 +146,7 @@ Public Sub Engine_DirectX8_Aditional_Init()
 'Author: Standelf
 'Last Modify Date: 30/12/2010
 '**************************************************************
-
+    
     FPS = 101
     FramesPerSecCounter = 101
     
@@ -722,6 +722,18 @@ Public Sub Engine_Update_FPS()
             'Fonts_Render_String FPS, 2, 2, -1, Settings.Engine_Font
             'DrawText 2, 2, FPS, -1
        ' End If
+End Sub
+
+Public Sub Engine_Update_Time_remaining()
+    
+    If CartelInvisibilidad > 0 Then
+        DrawText 2, 2, Replace$(MensajeInvisibildad, "VAR_SEGUNDOS", CartelInvisibilidad), -1
+    End If
+    
+    If CartelParalisis > 0 Then
+        DrawText 2, 2, Replace$(MensajeParalisis, "VAR_SEGUNDOS", CartelParalisis), -1
+    End If
+    
 End Sub
 
 Public Sub DrawPJ(ByVal index As Byte)

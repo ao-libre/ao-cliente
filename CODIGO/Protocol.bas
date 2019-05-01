@@ -169,6 +169,8 @@ Private Enum ServerPacketID
     QuestDetails
     QuestListSend
     CreateDamage
+    TimeInvi
+    TimeParal
 End Enum
 
 Private Enum ClientPacketID
@@ -835,7 +837,13 @@ On Error Resume Next
             
         Case ServerPacketID.CreateDamage            ' CDMG
             Call HandleCreateDamage
+        
+        Case ServerPacketID.TimeInvi
+            Call HandleTimeInvi
             
+        Case ServerPacketID.TimeParal
+            Call HandleTimeParal
+        
         Case Else
             'ERROR : Abort!
             Exit Sub
@@ -11103,3 +11111,22 @@ Private Sub HandleCreateDamage()
     End With
  
 End Sub
+
+Private Sub HandleTimeInvi()
+    
+    'Remove packet ID
+    Call incomingData.ReadByte
+    
+    CartelInvisibilidad = incomingData.ReadByte
+
+End Sub
+
+Private Sub HandleTimeParal()
+    
+    'Remove packet ID
+    Call incomingData.ReadByte
+    
+    CartelParalisis = incomingData.ReadByte
+
+End Sub
+
