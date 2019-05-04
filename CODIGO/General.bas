@@ -889,7 +889,7 @@ Sub Main()
     tipf = Config_Inicio.tip
     
     'Set resolution BEFORE the loading form is displayed, therefore it will be centered.
-    Call Resolution.SetResolution
+    Call Resolution.SetResolution(800, 600)
 
     ' Load constants, classes, flags, graphics..
     LoadInitialConfig
@@ -1102,7 +1102,7 @@ Private Sub LoadInitialConfig()
                             True, False, False)
     
     'Inicializamos el inventario grafico
-    Call Inventario.Initialize(DirectD3D8, frmMain.PicInv, MAX_INVENTORY_SLOTS)
+    Call Inventario.Initialize(DirectD3D8, frmMain.picInv, MAX_INVENTORY_SLOTS)
     
     Call AddtoRichTextBox(frmCargando.status, _
                             "                    " & JsonLanguage.Item("BIENVENIDO").Item("TEXTO"), _
@@ -1411,14 +1411,14 @@ Public Sub CloseClient()
     
     EngineRun = False
     
-    Call Resolution.ResetResolution
-    
     #If UsarWrench = 1 Then
-            frmMain.Socket1.Disconnect
-            frmMain.Socket1.Flush
-            frmMain.Socket1.Cleanup
+        With frmMain.Socket1
+            .Disconnect
+            .Flush
+            .Cleanup
+        End With
     #Else
-            frmMain.Winsock1.Close
+        frmMain.Winsock1.Close
     #End If
     
     'Stop tile engine
@@ -1444,6 +1444,9 @@ Public Sub CloseClient()
     'Actualizar tip
     Config_Inicio.tip = tipf
     Call EscribirGameIni(Config_Inicio)
+    
+    'Si se cambio la resolucion, la reseteamos.
+    If ResolucionCambiada Then Resolution.ResetResolution
     
     End
     
