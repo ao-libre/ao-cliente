@@ -432,7 +432,7 @@ End Sub
 Private Sub imgManual_Click()
     If Not loading Then _
         Call Audio.PlayWave(SND_CLICK)
-    Call ShellExecute(0, "Open", "https://github.com/ao-libre/ao-cliente/blob/master/README.md", "", App.path, SW_SHOWNORMAL)
+    Call ShellExecute(0, "Open", "http://wiki.argentumonline.org/", "", App.path, SW_SHOWNORMAL)
 End Sub
 
 Private Sub imgMapa_Click()
