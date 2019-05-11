@@ -9421,7 +9421,7 @@ End Sub
 ' @param    npcIndex The index of the NPC to be created.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCreateNPC(ByVal NPCIndex As Integer)
+Public Sub WriteCreateNPC(ByVal NPCIndex As Integer, ByVal WithRespawn As Boolean)
 '***************************************************
 'Author: Juan Martin Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -9432,26 +9432,8 @@ Public Sub WriteCreateNPC(ByVal NPCIndex As Integer)
         Call .WriteByte(eGMCommands.CreateNPC)
         
         Call .WriteInteger(NPCIndex)
-    End With
-End Sub
-
-''
-' Writes the "CreateNPCWithRespawn" message to the outgoing data buffer.
-'
-' @param    npcIndex The index of the NPC to be created.
-' @remarks  The data is not actually sent until the buffer is properly flushed.
-
-Public Sub WriteCreateNPCWithRespawn(ByVal NPCIndex As Integer)
-'***************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'Writes the "CreateNPCWithRespawn" message to the outgoing data buffer
-'***************************************************
-    With outgoingData
-        Call .WriteByte(ClientPacketID.GMCommands)
-        Call .WriteByte(eGMCommands.CreateNPCWithRespawn)
+        Call .WriteBoolean(WithRespawn)
         
-        Call .WriteInteger(NPCIndex)
     End With
 End Sub
 

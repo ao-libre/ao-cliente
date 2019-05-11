@@ -1,6 +1,7 @@
 VERSION 5.00
 Begin VB.Form frmBuscar 
    BorderStyle     =   1  'Fixed Single
+   Caption         =   "Buscador de Objetos y NPC's"
    ClientHeight    =   6855
    ClientLeft      =   45
    ClientTop       =   435
@@ -11,6 +12,23 @@ Begin VB.Form frmBuscar
    ScaleHeight     =   6855
    ScaleWidth      =   7575
    StartUpPosition =   1  'CenterOwner
+   Begin VB.CheckBox chkRespawn 
+      Caption         =   "Respawn"
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   9
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   255
+      Left            =   6000
+      TabIndex        =   14
+      Top             =   2040
+      Width           =   1095
+   End
    Begin VB.TextBox txtCantidad 
       Alignment       =   2  'Center
       Height          =   375
@@ -230,7 +248,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Command1_Click()
-        
+       
         ' traduccion de 'objeto'
         Dim tObjeto As String
             tObjeto = JsonLanguage.Item("OBJETO").Item("TEXTO")
@@ -241,8 +259,11 @@ Private Sub Command1_Click()
             Exit Sub
         End If
         
+        'Limpiamos las listas antes.
+        Call Limpiarlistas_Click
+        
         If Len(Objetos.Text) <> 0 Then
-                Call WriteSearchObj(Objetos.Text)
+            Call WriteSearchObj(Objetos.Text)
         End If
 
 End Sub
@@ -255,8 +276,11 @@ Private Sub Command2_Click()
             Exit Sub
         End If
         
+        'Limpiamos las listas antes.
+        Call Limpiarlistas_Click
+        
         If Len(NPCs.Text) <> 0 Then
-                Call WriteSearchNpc(NPCs.Text)
+            Call WriteSearchNpc(NPCs.Text)
         End If
 
 End Sub
@@ -276,7 +300,7 @@ Private Sub ListCrearNpcs_MouseDown(Button As Integer, _
                                     Y As Single)
 
         If Button = vbRightButton Then
-                PopupMenu mnuCrearN
+            PopupMenu mnuCrearN
         End If
 
 End Sub
@@ -287,7 +311,7 @@ Private Sub ListCrearObj_MouseDown(Button As Integer, _
                                    Y As Single)
 
         If Button = vbRightButton Then
-                PopupMenu mnuCrearO
+            PopupMenu mnuCrearO
         End If
 
 End Sub
@@ -295,7 +319,7 @@ End Sub
 Private Sub mnuCrearObj_Click()
 
         If ListCrearObj.Visible And LenB(txtCantidad.Text) <> 0 Then
-                Call ParseUserCommand("/CI " & ListCrearObj.Text & " " & txtCantidad.Text)
+            Call WriteCreateItem(ListCrearObj.Text, txtCantidad.Text)
         End If
 
 End Sub
@@ -303,7 +327,7 @@ End Sub
 Private Sub mnuCrearNPC_Click()
 
         If ListCrearNpcs.Visible Then
-                Call ParseUserCommand("/ACC " & ListCrearNpcs.Text)
+            Call WriteCreateNPC(ListCrearNpcs.Text, CBool(chkRespawn.value))
         End If
 
 End Sub
