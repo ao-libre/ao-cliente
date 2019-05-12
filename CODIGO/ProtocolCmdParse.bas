@@ -1279,27 +1279,27 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             Case "/ACC"
                 If notNullArguments Then
                     If ValidNumber(ArgumentosAll(0), eNumber_Types.ent_Integer) Then
-                        Call WriteCreateNPC(ArgumentosAll(0))
+                        Call WriteCreateNPC(ArgumentosAll(0), False)
                     Else
                         'No es numerico
-                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_NPC_INCORRECTO").Item("TEXTO") & " /acc NPC.")
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_NPC_INCORRECTO").Item("TEXTO") & " /ACC NPC.")
                     End If
                 Else
                     'Avisar que falta el parametro
-                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /acc NPC.")
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /ACC NPC.")
                 End If
                 
             Case "/RACC"
                 If notNullArguments Then
                     If ValidNumber(ArgumentosAll(0), eNumber_Types.ent_Integer) Then
-                        Call WriteCreateNPCWithRespawn(ArgumentosAll(0))
+                        Call WriteCreateNPC(ArgumentosAll(0), True)
                     Else
                         'No es numerico
-                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_NPC_INCORRECTO").Item("TEXTO") & " /racc NPC.")
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_NPC_INCORRECTO").Item("TEXTO") & " /RACC NPC.")
                     End If
                 Else
                     'Avisar que falta el parametro
-                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /racc NPC.")
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /RACC NPC.")
                 End If
         
             Case "/AI" ' 1 - 4
