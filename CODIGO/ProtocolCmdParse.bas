@@ -512,7 +512,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             '
             
             Case "/BUSCAR"
-                If esGM(getCharIndexByName(UserName)) Then frmBuscar.Show vbModeless, frmMain
+                frmBuscar.Show vbModeless, frmMain
             
             Case "/GMSG"
                 If notNullArguments Then
