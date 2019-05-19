@@ -10,6 +10,7 @@ Begin VB.Form frmCrearCuenta
    ScaleHeight     =   4530
    ScaleWidth      =   6600
    ShowInTaskbar   =   0   'False
+   StartUpPosition =   1  'CenterOwner
    Begin VB.TextBox txtCuentaRepite 
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
