@@ -598,13 +598,7 @@ Private Sub imgManual_Click()
 End Sub
 
 Private Sub imgRecuperar_Click()
-On Error GoTo errH
-
-    Call Audio.PlayWave(SND_CLICK)
-    Call Shell(App.path & "\RECUPERAR.EXE", vbNormalFocus)
-    Exit Sub
-errH:
-    Call MsgBox("No se encuentra el programa recuperar.exe", vbCritical, "Argentum Online")
+    frmRecuperarCuenta.Show vbModal, Me
 End Sub
 
 Private Sub imgReglamento_Click()
