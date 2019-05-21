@@ -311,13 +311,12 @@ Private Enum ClientPacketID
     HungerGamesCreate = 137
     HungerGamesJoin = 138
     HungerGamesDelete = 139
-    CambiarContrasena = 140
-    Quest = 141                  '/QUEST
-    QuestAccept = 142
-    QuestListRequest = 143
-    QuestDetailsRequest = 144
-    QuestAbandon = 145
-     
+    Quest = 140                  '/QUEST
+    QuestAccept = 141
+    QuestListRequest = 142
+    QuestDetailsRequest = 143
+    QuestAbandon = 144
+    CambiarContrasena = 145
 End Enum
 
 Public Enum FontTypeNames
