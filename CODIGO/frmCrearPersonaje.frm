@@ -1908,10 +1908,6 @@ Private Sub txtNombre_Change()
     txtNombre.Text = LTrim$(txtNombre.Text)
 End Sub
 
-Private Sub txtNombre_KeyPress(KeyAscii As Integer)
-    KeyAscii = Asc(UCase$(Chr$(KeyAscii)))
-End Sub
-
 Private Sub DarCuerpoYCabeza()
 
     Dim bVisible As Boolean
