@@ -71,7 +71,9 @@ Private Const MS_ADD_EXTRA As Integer = 5000
 ' @param    charIndex   The charIndex that created this dialog.
 ' @param    color       The color to be used when rendering the text.
 ' @param    renderable  Set to True if the chat should be rendered this frame, False otherwise
-'                           (used to skip dialogs from people outside render area).
+'                        (used to skip dialogs from people outside render area).
+' @param    Sube        The time it takes for the dialogue to go up
+
 Private Type dialog
     textLine()  As String
     X           As Integer
@@ -81,6 +83,7 @@ Private Type dialog
     CharIndex   As Integer
     color       As Long
     renderable  As Boolean
+    Sube        As Integer
 End Type
 
 ''
@@ -190,6 +193,7 @@ Public Sub CreateDialog(ByRef chat As String, ByVal CharIndex As Integer, ByVal 
         .startTime = GetTickCount()
         .textLine = FormatChat(chat)
         .lifeTime = MS_ADD_EXTRA + (MS_PER_CHAR * Len(chat))
+        .Sube = 10
     End With
 End Sub
 
@@ -326,6 +330,12 @@ Public Sub Render()
                     Upper_textLine = UBound(.textLine())
                 
                 offset = -(usedFont.Size + 2) * Upper_textLine
+                
+                'Letras suben desde la cabeza.
+                If .lifeTime >= 292 Then
+                    .Sube = .Sube - 1
+                    If .Sube > 0 Then .Y = .Y + .Sube
+                End If
                 
                 'Render it
                 For j = 0 To Upper_textLine

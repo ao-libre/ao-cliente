@@ -16,7 +16,7 @@ Private Declare Sub CopyMemory Lib "kernel32.dll" Alias "RtlMoveMemory" (ByRef d
 Private Declare Function SetBitmapBits Lib "gdi32" (ByVal hBitmap As Long, ByVal dwCount As Long, lpBits As Any) As Long
 
 ' Dano en Render
-Private Const DAMAGE_TIME As Integer = 40
+Private Const DAMAGE_TIME As Integer = 43
 Private Const DAMAGE_FONT_S As Byte = 12
  
 Private Enum EDType

@@ -1734,10 +1734,20 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
         
         If Not .invisible Then
             Movement_Speed = 0.5
+            
             'Draw Body
-            If .Body.Walk(.Heading).GrhIndex Then _
+            If .Body.Walk(.Heading).GrhIndex Then
                 Call DDrawTransGrhtoSurface(.Body.Walk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1, .Pos.X, .Pos.Y, False, 0)
-
+            End If
+            
+            'Draw name when navigating
+            If Len(.Nombre) > 0 Then
+                If Nombres Then
+                    If .iHead = 0 And .iBody > 0 Then
+                        Call RenderName(CharIndex, PixelOffsetX, PixelOffsetY)
+                    End If
+                End If
+            End If
             
             'Draw Head
             If .Head.Head(.Heading).GrhIndex Then
