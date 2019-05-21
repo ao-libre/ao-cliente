@@ -11,7 +11,7 @@ Public AlphaMiniMap As Byte
 'Dim MMC_Exit        As Long
 'Dim MMC_Sign        As Long
 
-Dim MMC_Char        As Long
+Private MMC_Char        As Long
 
 'Describes the return from a texture init
 Private Type D3DXIMAGE_INFO_A
@@ -120,12 +120,6 @@ Public Sub MiniMap_Render(ByVal X As Long, ByVal Y As Long)
             'faster
             DirectDevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, VertexArray(0), LenB(VertexArray(0))
 
-            'Correccion del minimap, para que borre el puntito del usuario, se cambio el color del punto ahora es rojo :$
-            If AlphaMiniMap > 50 Then
-                Call mDx8_Engine.Draw_FillBox2(Minimap.X + 50, Minimap.Y + 50, 4, 4, MMC_Char)
-
-            End If
-
             Call MiniMap_ColorSet
 
         End If
@@ -133,6 +127,15 @@ Public Sub MiniMap_Render(ByVal X As Long, ByVal Y As Long)
     End With
 
 End Sub
+
+Public Sub MiniMap_UserPos()
+    
+    If AlphaMiniMap > 50 Then
+        Call mDx8_Engine.Engine_Draw_Box(UserPos.X, UserPos.Y, 4, 4, MMC_Char)
+    End If
+    
+End Sub
+
 
 Private Sub MiniMap_ColorSet()
 

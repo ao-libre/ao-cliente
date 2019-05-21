@@ -1488,9 +1488,12 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Inte
         
         Call DialogosClanes.Draw
         
-        '     Calculamos los FPS y los mostramos
+        ' Calculamos los FPS y los mostramos
         Call Engine_Update_FPS
         
+        ' Actualizamos la posicion del usuario en el Mini-Mapa.
+        Call mDx8_Minimap.MiniMap_UserPos
+    
         'Get timing info
         timerElapsedTime = GetElapsedTime()
         timerTicksPerFrame = timerElapsedTime * Engine_Get_BaseSpeed
