@@ -387,6 +387,8 @@ Public Sub Connect(ByVal Modo As E_MODO)
             .hostname = CurServerIp
             .RemotePort = CurServerPort
             .Connect
+            
+            Debug.Print "Conectandose al servidor mediante: Sockets"
         
         End With
         
@@ -395,6 +397,7 @@ Public Sub Connect(ByVal Modo As E_MODO)
         'Usamos Winsocks
         frmMain.Winsock1.Connect CurServerIp, CurServerPort
         
+        Debug.Print "Conectandose al servidor mediante: Winsocks"
     #End If
 
 End Sub
