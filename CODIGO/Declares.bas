@@ -30,8 +30,11 @@ Attribute VB_Name = "Mod_Declaraciones"
 'Codigo Postal 1900
 'Pablo Ignacio Marquez
 
-
 Option Explicit
+
+'Recuperar Cuenta mediante la API
+Public AccountMailToRecover As String
+Public AccountNewPassword As String
 
 ' Desvanecimiento en Techos
 Public ColorTecho As Byte
@@ -737,6 +740,7 @@ Public Enum E_MODO
     CrearNuevoPj = 2
     Dados = 3
     CrearCuenta = 4
+    CambiarContrasena = 5
 End Enum
 
 Public EstadoLogin As E_MODO

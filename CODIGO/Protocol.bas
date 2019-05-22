@@ -311,11 +311,12 @@ Private Enum ClientPacketID
     HungerGamesCreate = 137
     HungerGamesJoin = 138
     HungerGamesDelete = 139
-    Quest = 140                   '/QUEST
+    Quest = 140                  '/QUEST
     QuestAccept = 141
     QuestListRequest = 142
     QuestDetailsRequest = 143
     QuestAbandon = 144
+    CambiarContrasena = 145
 End Enum
 
 Public Enum FontTypeNames
@@ -11084,4 +11085,19 @@ Private Sub HandleCreateDamage()
      
     End With
  
+End Sub
+
+Public Sub WriteCambiarContrasena()
+    
+    With outgoingData
+    
+        'Mando el ID del paquete
+        Call .WriteByte(ClientPacketID.CambiarContrasena)
+        
+        'Mando los datos de la cuenta a modificar.
+        Call .WriteASCIIString(AccountMailToRecover)
+        Call .WriteASCIIString(AccountNewPassword)
+    
+    End With
+
 End Sub

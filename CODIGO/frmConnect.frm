@@ -385,30 +385,10 @@ End Sub
 
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
     If KeyCode = 27 Then
-        prgRun = False
+        Call CloseClient
     End If
 End Sub
 
-Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
-
-'Make Server IP and Port box visible
-If KeyCode = vbKeyI And Shift = vbCtrlMask Then
-    
-    'Port
-    PortTxt.Visible = True
-    'Label4.Visible = True
-    
-    'Server IP
-    PortTxt.Text = "7666"
-    IPTxt.Text = "192.168.0.2"
-    IPTxt.Visible = True
-    'Label5.Visible = True
-    
-    KeyCode = 0
-    Exit Sub
-End If
-
-End Sub
 
 Private Sub Form_Load()
     '[CODE 002]:MatuX
@@ -523,14 +503,7 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y A
 End Sub
 
 Private Sub imgBorrarPj_Click()
-
-On Error GoTo errH
-    Call Shell(App.path & "\RECUPERAR.EXE", vbNormalFocus)
-
-    Exit Sub
-
-errH:
-    Call MsgBox("No se encuentra el programa recuperar.exe", vbCritical, "Argentum Online")
+    Call MsgBox("Esta funcionalidad no se encuentra disponible actualmente.", vbCritical, "Argentum Online")
 End Sub
 
 Private Sub imgCodigoFuente_Click()
@@ -598,13 +571,36 @@ Private Sub imgManual_Click()
 End Sub
 
 Private Sub imgRecuperar_Click()
-On Error GoTo errH
 
-    Call Audio.PlayWave(SND_CLICK)
-    Call Shell(App.path & "\RECUPERAR.EXE", vbNormalFocus)
-    Exit Sub
-errH:
-    Call MsgBox("No se encuentra el programa recuperar.exe", vbCritical, "Argentum Online")
+    #If UsarWrench = 1 Then
+
+        If frmMain.Socket1.Connected Then
+            frmMain.Socket1.Disconnect
+            frmMain.Socket1.Cleanup
+            DoEvents
+
+        End If
+
+    #Else
+
+        If frmMain.Winsock1.State <> sckClosed Then
+            frmMain.Winsock1.Close
+            DoEvents
+
+        End If
+
+    #End If
+
+    EstadoLogin = E_MODO.CambiarContrasena
+    
+    #If UsarWrench = 1 Then
+        frmMain.Socket1.hostname = CurServerIp
+        frmMain.Socket1.RemotePort = CurServerPort
+        frmMain.Socket1.Connect
+    #Else
+        frmMain.Winsock1.Connect CurServerIp, CurServerPort
+    #End If
+
 End Sub
 
 Private Sub imgReglamento_Click()
@@ -612,13 +608,7 @@ Private Sub imgReglamento_Click()
 End Sub
 
 Private Sub imgSalir_Click()
-    prgRun = False
-End Sub
-
-Private Sub imgServArgentina_Click()
-    Call Audio.PlayWave(SND_CLICK)
-    IPTxt.Text = IPdelServidor
-    PortTxt.Text = PuertoDelServidor
+    Call CloseClient
 End Sub
 
 Private Sub imgTeclas_Click()

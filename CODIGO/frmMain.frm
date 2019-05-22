@@ -2191,6 +2191,11 @@ Private Sub Socket1_Connect()
         
         Case E_MODO.CrearCuenta
             Call Login
+            
+        Case E_MODO.CambiarContrasena
+            Call Audio.PlayMIDI("7.mid")
+            frmRecuperarCuenta.Show
+            
     End Select
 End Sub
 
@@ -2388,6 +2393,11 @@ Private Sub Winsock1_Connect()
         Case E_MODO.Dados
             Call Audio.PlayMIDI("7.mid")
             frmCrearPersonaje.Show
+            
+        Case E_MODO.CambiarContrasena
+            Call Audio.PlayMIDI("7.mid")
+            frmRecuperarCuenta.Show
+        
     End Select
 End Sub
 

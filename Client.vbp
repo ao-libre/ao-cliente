@@ -115,6 +115,7 @@ Form=CODIGO\frmBuscar.frm
 Module=mDx8_Minimap; CODIGO\mDx8_Minimap.bas
 Form=CODIGO\frmQuestInfo.frm
 Form=CODIGO\frmQuests.frm
+Form=CODIGO\frmRecuperarCuenta.frm
 IconForm="frmMain"
 Startup="Sub Main"
 HelpFile=""
