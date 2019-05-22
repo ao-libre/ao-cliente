@@ -395,7 +395,7 @@ Private Sub Form_Load()
     EngineRun = False
     '[END]
 
-    Call RefreshServerList()
+    Call RefreshServerList
     
     If CurServer <> 0 Then
         IPTxt = ServersLst(CurServer).Ip
@@ -523,18 +523,6 @@ Private Sub imgCodigoFuente_Click()
 End Sub
 
 Private Sub imgConectarse_Click()
-    #If UsarWrench = 1 Then
-        If frmMain.Socket1.Connected Then
-            frmMain.Socket1.Disconnect
-            frmMain.Socket1.Cleanup
-            DoEvents
-        End If
-    #Else
-        If frmMain.Winsock1.State <> sckClosed Then
-            frmMain.Winsock1.Close
-            DoEvents
-        End If
-    #End If
     
     'update user info
     AccountName = txtNombre.Text
@@ -544,16 +532,9 @@ Private Sub imgConectarse_Click()
     frmMain.hlst.Clear
 
     If CheckUserData() = True Then
-        EstadoLogin = Normal
-        
-        #If UsarWrench = 1 Then
-            frmMain.Socket1.hostname = CurServerIp
-            frmMain.Socket1.RemotePort = CurServerPort
-            frmMain.Socket1.Connect
-        #Else
-            frmMain.Winsock1.Connect CurServerIp, CurServerPort
-        #End If
-
+    
+        Call Protocol.Connect(E_MODO.Normal)
+    
     End If
     
 End Sub
@@ -563,7 +544,7 @@ Private Sub imgLeerMas_Click()
 End Sub
 
 Private Sub imgCrearCuenta_Click()
-    frmCrearCuenta.Show
+    Call Protocol.Connect(E_MODO.CrearCuenta)
 End Sub
 
 Private Sub imgManual_Click()
@@ -571,36 +552,7 @@ Private Sub imgManual_Click()
 End Sub
 
 Private Sub imgRecuperar_Click()
-
-    #If UsarWrench = 1 Then
-
-        If frmMain.Socket1.Connected Then
-            frmMain.Socket1.Disconnect
-            frmMain.Socket1.Cleanup
-            DoEvents
-
-        End If
-
-    #Else
-
-        If frmMain.Winsock1.State <> sckClosed Then
-            frmMain.Winsock1.Close
-            DoEvents
-
-        End If
-
-    #End If
-
-    EstadoLogin = E_MODO.CambiarContrasena
-    
-    #If UsarWrench = 1 Then
-        frmMain.Socket1.hostname = CurServerIp
-        frmMain.Socket1.RemotePort = CurServerPort
-        frmMain.Socket1.Connect
-    #Else
-        frmMain.Winsock1.Connect CurServerIp, CurServerPort
-    #End If
-
+    Call Protocol.Connect(E_MODO.CambiarContrasena)
 End Sub
 
 Private Sub imgReglamento_Click()

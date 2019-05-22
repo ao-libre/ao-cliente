@@ -108,28 +108,11 @@ End Sub
 Private Sub imgCrearCuenta_Click()
 
     If Not IsFormValid Then Exit Sub
-
-    EstadoLogin = E_MODO.CrearCuenta
     
     AccountName = txtCuentaEmail.Text
     AccountPassword = txtCuentaPassword.Text
     
-    #If UsarWrench = 1 Then
-        If frmMain.Socket1.Connected Then
-            frmMain.Socket1.Disconnect
-            frmMain.Socket1.Cleanup
-            DoEvents
-        End If
-        frmMain.Socket1.hostname = CurServerIp
-        frmMain.Socket1.RemotePort = CurServerPort
-        frmMain.Socket1.Connect
-    #Else
-        If frmMain.Winsock1.State <> sckClosed Then
-            frmMain.Winsock1.Close
-            DoEvents
-        End If
-        frmMain.Winsock1.Connect CurServerIp, CurServerPort
-    #End If
+    Call Login
 
     Unload frmCrearCuenta
 End Sub
