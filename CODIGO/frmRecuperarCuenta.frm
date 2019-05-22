@@ -101,14 +101,18 @@ Attribute VB_Exposed = False
 
 Private Sub cmdProcesar_Click()
     
-    If Len(txtCorreo.Text) <> 0 And Len(txtContrasena.Text) <> 0 Then
+    AccountMailToRecover = txtCorreo.Text
+    AccountNewPassword = txtContrasena.Text
+    
+    If LenB(AccountMailToRecover) <> 0 Then
         
-        If CheckMailString(txtCorreo.Text) Then
+        If LenB(AccountNewPassword) <> 0 Then
         
-            AccountMailToRecover = txtCorreo.Text
-            AccountNewPassword = txtContrasena.Text
-            
-            Call Login
+            If CheckMailString(AccountMailToRecover) Then
+    
+                Call Login
+                
+            End If
             
         End If
         
