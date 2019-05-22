@@ -2388,6 +2388,10 @@ Private Sub Winsock1_Connect()
         Case E_MODO.Dados
             Call Audio.PlayMIDI("7.mid")
             frmCrearPersonaje.Show
+            
+        Case E_MODO.CambiarContrasena
+            Call WriteCambiarContrasena(frmRecuperarCuenta.txtCorreo.Text, frmRecuperarCuenta.txtContrasena.Text)
+        
     End Select
 End Sub
 

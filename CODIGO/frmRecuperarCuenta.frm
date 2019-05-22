@@ -98,16 +98,44 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+
 Private Sub cmdProcesar_Click()
     
-    'Nos fijamos si completo todos los campos.
-    If LenB(txtCorreo.Text) <> 0 And LenB(txtContrasena.Text) <> 0 Then
-        
-        'Nos fijamos si tiene un formato valido.
-        If CheckMailString(txtCorreo.Text) Then
-            Call WriteCambiarContrasena(txtCorreo.Text, txtContrasena.Text)
+    #If UsarWrench = 1 Then
+
+        If frmMain.Socket1.Connected Then
+            frmMain.Socket1.Disconnect
+            frmMain.Socket1.Cleanup
+            DoEvents
+
         End If
+
+    #Else
+
+        If frmMain.Winsock1.State <> sckClosed Then
+            frmMain.Winsock1.Close
+            DoEvents
+
+        End If
+
+    #End If
+    
+    If CheckMailString(txtCorreo.Text) Then
+    
+        EstadoLogin = E_MODO.CambiarContrasena
         
+        #If UsarWrench = 1 Then
+            frmMain.Socket1.hostname = CurServerIp
+            frmMain.Socket1.RemotePort = CurServerPort
+            frmMain.Socket1.Connect
+        #Else
+            frmMain.Winsock1.Connect CurServerIp, CurServerPort
+        #End If
+    
+    Else
+        
+        Call MsgBox("Formato de correo electronico invalido.")
+    
     End If
     
 End Sub

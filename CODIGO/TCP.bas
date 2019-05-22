@@ -54,13 +54,18 @@ PuedoQuitarFoco = True
 End Function
 
 Sub Login()
-    If EstadoLogin = E_MODO.Normal Then
-        Call WriteLoginExistingAccount
-    ElseIf EstadoLogin = E_MODO.CrearNuevoPj Then
-        Call WriteLoginNewChar
-    ElseIf EstadoLogin = E_MODO.CrearCuenta Then
-        Call WriteLoginNewAccount
-    End If
+    Select Case EstadoLogin
+    
+        Case E_MODO.Normal
+            Call WriteLoginExistingAccount
+        
+        Case E_MODO.CrearNuevoPj
+            Call WriteLoginExistingAccount
+            
+        Case E_MODO.CrearCuenta
+            Call WriteLoginNewAccount
+
+    End Select
     
     DoEvents
     
