@@ -571,7 +571,36 @@ Private Sub imgManual_Click()
 End Sub
 
 Private Sub imgRecuperar_Click()
-    frmRecuperarCuenta.Show vbModal, Me
+
+    #If UsarWrench = 1 Then
+
+        If frmMain.Socket1.Connected Then
+            frmMain.Socket1.Disconnect
+            frmMain.Socket1.Cleanup
+            DoEvents
+
+        End If
+
+    #Else
+
+        If frmMain.Winsock1.State <> sckClosed Then
+            frmMain.Winsock1.Close
+            DoEvents
+
+        End If
+
+    #End If
+
+    EstadoLogin = E_MODO.CambiarContrasena
+    
+    #If UsarWrench = 1 Then
+        frmMain.Socket1.hostname = CurServerIp
+        frmMain.Socket1.RemotePort = CurServerPort
+        frmMain.Socket1.Connect
+    #Else
+        frmMain.Winsock1.Connect CurServerIp, CurServerPort
+    #End If
+
 End Sub
 
 Private Sub imgReglamento_Click()

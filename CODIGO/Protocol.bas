@@ -11087,16 +11087,16 @@ Private Sub HandleCreateDamage()
  
 End Sub
 
-Public Sub WriteCambiarContrasena(ByVal CorreoElectronico As String, ByVal NuevaContrasena As String)
+Public Sub WriteCambiarContrasena()
     
     With outgoingData
-        
+    
         'Mando el ID del paquete
         Call .WriteByte(ClientPacketID.CambiarContrasena)
         
         'Mando los datos de la cuenta a modificar.
-        Call .WriteASCIIString(CorreoElectronico)
-        Call .WriteASCIIString(NuevaContrasena)
+        Call .WriteASCIIString(AccountMailToRecover)
+        Call .WriteASCIIString(AccountNewPassword)
     
     End With
 

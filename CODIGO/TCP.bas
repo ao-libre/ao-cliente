@@ -54,6 +54,7 @@ PuedoQuitarFoco = True
 End Function
 
 Sub Login()
+    
     Select Case EstadoLogin
     
         Case E_MODO.Normal
@@ -64,6 +65,9 @@ Sub Login()
             
         Case E_MODO.CrearCuenta
             Call WriteLoginNewAccount
+        
+        Case E_MODO.CambiarContrasena
+            Call WriteCambiarContrasena
 
     End Select
     

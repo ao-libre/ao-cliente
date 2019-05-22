@@ -101,41 +101,17 @@ Attribute VB_Exposed = False
 
 Private Sub cmdProcesar_Click()
     
-    #If UsarWrench = 1 Then
-
-        If frmMain.Socket1.Connected Then
-            frmMain.Socket1.Disconnect
-            frmMain.Socket1.Cleanup
-            DoEvents
-
-        End If
-
-    #Else
-
-        If frmMain.Winsock1.State <> sckClosed Then
-            frmMain.Winsock1.Close
-            DoEvents
-
-        End If
-
-    #End If
-    
-    If CheckMailString(txtCorreo.Text) Then
-    
-        EstadoLogin = E_MODO.CambiarContrasena
+    If Len(txtCorreo.Text) <> 0 And Len(txtContrasena.Text) <> 0 Then
         
-        #If UsarWrench = 1 Then
-            frmMain.Socket1.hostname = CurServerIp
-            frmMain.Socket1.RemotePort = CurServerPort
-            frmMain.Socket1.Connect
-        #Else
-            frmMain.Winsock1.Connect CurServerIp, CurServerPort
-        #End If
-    
-    Else
+        If CheckMailString(txtCorreo.Text) Then
         
-        Call MsgBox("Formato de correo electronico invalido.")
-    
+            AccountMailToRecover = txtCorreo.Text
+            AccountNewPassword = txtContrasena.Text
+            
+            Call Login
+            
+        End If
+        
     End If
-    
+
 End Sub
