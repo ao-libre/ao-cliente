@@ -1603,6 +1603,7 @@ Private Sub ImgCrear_Click()
     If Right$(UserName, 1) = " " Then
         UserName = RTrim$(UserName)
         MsgBox JsonLanguage.Item("VALIDACION_BAD_NOMBRE_PJ").Item("TEXTO").Item(2)
+
     End If
     
     UserRaza = lstRaza.ListIndex + 1
@@ -1617,34 +1618,33 @@ Private Sub ImgCrear_Click()
     
     If Not CheckData Then Exit Sub
     
-#If UsarWrench = 1 Then
-    frmMain.Socket1.hostname = CurServerIp
-    frmMain.Socket1.RemotePort = CurServerPort
-#End If
-    
     EstadoLogin = E_MODO.CrearNuevoPj
     
     'Clear spell list
     frmMain.hlst.Clear
     
-#If UsarWrench = 1 Then
-    If Not frmMain.Socket1.Connected Then
-#Else
-    If frmMain.Winsock1.State <> sckConnected Then
-#End If
-        MsgBox JsonLanguage.Item("ERROR_CONN_LOST").Item("TEXTO")
-        Unload Me
+    #If UsarWrench = 1 Then
+
+        If Not frmMain.Socket1.Connected Then
+        #Else
+
+            If frmMain.Winsock1.State <> sckConnected Then
+            #End If
+            MsgBox JsonLanguage.Item("ERROR_CONN_LOST").Item("TEXTO")
+            Unload Me
         
-    Else
-        Call Login
-    End If
+        Else
+            Call Login
+
+        End If
     
-    bShowTutorial = True
-End Sub
+        bShowTutorial = True
+
+    End Sub
 
 Private Sub imgDados_Click()
     Call Audio.PlayWave(SND_DICE)
-            Call TirarDados
+    Call TirarDados
 End Sub
 
 Private Sub imgEspecialidad_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)

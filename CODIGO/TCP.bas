@@ -61,7 +61,7 @@ Sub Login()
             Call WriteLoginExistingAccount
         
         Case E_MODO.CrearNuevoPj
-            Call WriteLoginExistingAccount
+            Call WriteLoginNewChar
             
         Case E_MODO.CrearCuenta
             Call WriteLoginNewAccount

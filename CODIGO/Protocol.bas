@@ -345,6 +345,63 @@ End Enum
 
 Public FontTypes(20) As tFont
 
+Public Sub Connect(ByVal Modo As E_MODO)
+    '***************************************************
+    'Author: Jopi
+    'Conexion al servidor mediante Sockets o Winsocks.
+    '***************************************************
+        
+    'Primero lo cerramos, para evitar errores.
+    #If UsarWrench = 1 Then
+        
+        'Estamos usando Sockets...
+        With frmMain.Socket1
+            
+            If .Connected Then
+                .Disconnect
+                .Cleanup
+                DoEvents
+
+            End If
+        
+        End With
+
+    #Else
+        
+        'Estamos usando Winsocks...
+        If frmMain.Winsock1.State <> sckClosed Then
+            frmMain.Winsock1.Close
+            DoEvents
+
+        End If
+
+    #End If
+    
+    EstadoLogin = Modo
+
+    #If UsarWrench = 1 Then
+        
+        'Usamos Sockets
+        With frmMain.Socket1
+        
+            .hostname = CurServerIp
+            .RemotePort = CurServerPort
+            .Connect
+            
+            Debug.Print "Conectandose al servidor mediante: Sockets"
+        
+        End With
+        
+    #Else
+        
+        'Usamos Winsocks
+        frmMain.Winsock1.Connect CurServerIp, CurServerPort
+        
+        Debug.Print "Conectandose al servidor mediante: Winsocks"
+    #End If
+
+End Sub
+
 ''
 ' Initializes the fonts array
 
