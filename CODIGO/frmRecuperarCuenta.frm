@@ -56,7 +56,7 @@ Begin VB.Form frmRecuperarCuenta
       Alignment       =   2  'Center
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
-      Caption         =   "Nueva Contraseña"
+      Caption         =   "Nueva Password"
       BeginProperty Font 
          Name            =   "Arial"
          Size            =   14.25
@@ -104,18 +104,11 @@ Private Sub cmdProcesar_Click()
     AccountMailToRecover = txtCorreo.Text
     AccountNewPassword = txtContrasena.Text
     
-    If LenB(AccountMailToRecover) <> 0 Then
-        
-        If LenB(AccountNewPassword) <> 0 Then
-        
-            If CheckMailString(AccountMailToRecover) Then
-    
-                Call Login
-                
-            End If
-            
-        End If
-        
+    If LenB(AccountMailToRecover) <> 0 And LenB(AccountNewPassword) <> 0 Then
+         If CheckMailString(AccountMailToRecover) Then
+               Call Login
+         End If
     End If
 
+    Unload Me
 End Sub
