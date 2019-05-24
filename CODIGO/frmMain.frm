@@ -2204,7 +2204,9 @@ Private Sub Socket1_Connect()
 End Sub
 
 Private Sub Socket1_Disconnect()
-
+    
+    Debug.Print "Cerrando Sockets..."
+    
     ResetAllInfo
     Socket1.Cleanup
     
@@ -2329,7 +2331,7 @@ End Sub
 Private Sub Winsock1_Close()
     Dim i As Long
     
-    Debug.Print "Winsock Close"
+    Debug.Print "Cerrando Winsock..."
     
     Second.Enabled = False
     Connected = False
@@ -2374,12 +2376,11 @@ Private Sub Winsock1_Close()
     SkillPoints = 0
     Alocados = 0
 
-    Dialogos.CantidadDialogos = 0
+    Dialogos.RemoveAllDialogs
 End Sub
 
 Private Sub Winsock1_Connect()
-    Debug.Print "Winsock Connect"
-    
+
     'Clean input and output buffers
     Call incomingData.ReadASCIIStringFixed(incomingData.length)
     Call outgoingData.ReadASCIIStringFixed(outgoingData.length)
@@ -2451,8 +2452,6 @@ End Sub
 ''''''''''''''''''''''''''''''''''''''
 Private Sub Client_Connect()
     
-    Debug.Print "Connectandose usando la API de Windows"
-    
     'Clean input and output buffers
     Call incomingData.ReadASCIIStringFixed(incomingData.Length)
     Call outgoingData.ReadASCIIStringFixed(outgoingData.Length)
@@ -2498,6 +2497,9 @@ Private Sub Client_DataArrival(ByVal bytesTotal As Long)
 End Sub
 
 Private Sub Client_CloseSck()
+    
+    Debug.Print "Cerrando la conexion via API de Windows..."
+
     Dim i As Long
         
     Second.Enabled = False
@@ -2548,7 +2550,7 @@ Private Sub Client_CloseSck()
     SkillPoints = 0
     Alocados = 0
 
-    Dialogos.CantidadDialogos = 0
+    Dialogos.RemoveAllDialogs
     
 End Sub
 
