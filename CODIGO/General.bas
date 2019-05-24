@@ -987,6 +987,7 @@ Private Sub LoadInitialConfig()
     Set outgoingData = New clsByteQueue
     Set MainTimer = New clsTimer
     Set clsForos = New clsForum
+    Set frmMain.Client = New clsSocket
     
     Call AddtoRichTextBox(frmCargando.status, _
                             " " & JsonLanguage.Item("HECHO").Item("TEXTO"), _
@@ -1411,15 +1412,25 @@ Public Sub CloseClient()
     
     EngineRun = False
     
+    'Cerramos Sockets/Winsocks/WindowsAPI
     #If UsarWrench = 1 Then
+    
         With frmMain.Socket1
             .Disconnect
             .Flush
             .Cleanup
         End With
-    #Else
+        
+    #ElseIf UsarWrench = 2 Then
+        
         frmMain.Winsock1.Close
+        
+    #ElseIf UsarWrench = 3 Then
+        
+        frmMain.Client.CloseSck
+      
     #End If
+    
     
     'Stop tile engine
     Call Engine_DirectX8_End
@@ -1438,6 +1449,7 @@ Public Sub CloseClient()
     Set incomingData = Nothing
     Set outgoingData = Nothing
     Set JsonLanguage = Nothing
+    Set frmMain.Client = Nothing
     
     Call UnloadAllForms
     

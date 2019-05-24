@@ -416,3 +416,17 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
               El mana recuperado al meditar. Aparece un "+valor recuperado" arriba de tu cabeza. (jopiortiz)
 * 17/04/2019: Added Alkon map as default, needs to be improved (Recox)
 * 17/04/2019: Se modifico la fuente para que se vean las coordenadas completas, se agregaron colores en el json de coordeandas para que la aplicacion no arrojase error (Recox)
+
+- 0.13.9
+
+* 21/05/2019: Ahora se actualiza el puntito rojo que indica la posición del usuario en el minimapa. (jopiortiz)
+* 21/05/2019: Ahora se muestran los nombres al navegar.  (jopiortiz)
+* 21/05/2019: Las letras de los diálogos suben desde la cabeza. (jopiortiz)
+* 21/05/2019: Extendido el tiempo en el que se renderiza el daño. (jopiortiz)
+* 21/05/2019: Se respetan las mayúsculas/minúsculas al crear un personaje. (jopiortiz)
+* 23/05/2019: Se eliminaron los archivos frmPasswd y frmRecuperar ya que no se usan. (Recox)
+* 23/05/2019: Mejora y Arreglos en la conexion con el servidor. (jopiortiz)
+
+- Próximamente
+
+* 23/05/2019: Uso de la API de Windows para conectarse al servidor. Créditos a Dr. GoDKeR. (jopiortiz)

@@ -116,6 +116,8 @@ Module=mDx8_Minimap; CODIGO\mDx8_Minimap.bas
 Form=CODIGO\frmQuestInfo.frm
 Form=CODIGO\frmQuests.frm
 Form=CODIGO\frmRecuperarCuenta.frm
+Module=modSocket; CODIGO\modSocket.bas
+Class=clsSocket; CODIGO\clsSocket.cls
 IconForm="frmMain"
 Startup="Sub Main"
 HelpFile=""
@@ -135,7 +137,7 @@ VersionCompanyName="Argentum Online Libre"
 VersionLegalCopyright="Argentum idea Pablo Ignacio Marquez - Copyright 2003  -  Code pieces are copyright of their respective authors."
 VersionLegalTrademarks="http://www.ArgentumOnline.org"
 VersionProductName="Argentum Online Libre"
-CondComp="UsarWrench = 1 : ConMenuseConextuales = 0 : ConAlfaB = 0 : Testeo = 1"
+CondComp="UsarWrench = 3 : ConMenuseConextuales = 0 : ConAlfaB = 0 : Testeo = 1"
 CompilationType=0
 OptimizationType=0
 FavorPentiumPro(tm)=0
