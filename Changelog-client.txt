@@ -426,6 +426,7 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 13/05/2019: Mejoras en el frmBuscar y la invocación de NPC's. (jopiortiz)
 
 - 0.13.9
+
 * 21/05/2019: Ahora se actualiza el puntito rojo que indica la posición del usuario en el minimapa. (jopiortiz)
 * 21/05/2019: Ahora se muestran los nombres al navegar. (jopiortiz)
 * 21/05/2019: Las letras de los diálogos suben desde la cabeza. (jopiortiz)
