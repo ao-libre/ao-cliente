@@ -436,8 +436,4 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 23/05/2019: Mejora y Arreglos en la conexion con el servidor. (jopiortiz)
 * 23/05/2019: Implementado sistema cambio de passwords. (jopiortiz/Recox)
 
-- v0.13.9.1
-* 09/06/2019: Las llamadas hechas por xmlHttpRequest ahora sin asincronicas. (Recox)
-
-
 
