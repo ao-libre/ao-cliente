@@ -416,3 +416,25 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
               El mana recuperado al meditar. Aparece un "+valor recuperado" arriba de tu cabeza. (jopiortiz)
 * 17/04/2019: Added Alkon map as default, needs to be improved (Recox)
 * 17/04/2019: Se modifico la fuente para que se vean las coordenadas completas, se agregaron colores en el json de coordeandas para que la aplicacion no arrojase error (Recox)
+
+- 0.13.8.5
+* 05/05/2019: Arreglados algunas faltas de ortografia en el archivo de idiomas spanish.json (neoranger)
+* 05/05/2019: Eliminadas librerias (.dll) sin usar. (jopiortiz)
+* 05/05/2019: Ya no se actualiza la pantalla cuando elegis jugar en modo ventana, Se resetea la resolucion al cerrar desde el Sub CloseClient(). (jopiortiz)
+* 05/05/2019: Encoded JSON lenguaje file to ANSI again (Recox)
+* 10/05/2019: Se cambio la url del manual dentro de la ventana opciones por la guia actual: http://wiki.argentumonline.org/ (Recox)
+* 13/05/2019: Mejoras en el frmBuscar y la invocación de NPC's. (jopiortiz)
+
+- 0.13.9
+* 21/05/2019: Ahora se actualiza el puntito rojo que indica la posición del usuario en el minimapa. (jopiortiz)
+* 21/05/2019: Ahora se muestran los nombres al navegar. (jopiortiz)
+* 21/05/2019: Las letras de los diálogos suben desde la cabeza. (jopiortiz)
+* 21/05/2019: Extendido el tiempo en el que se renderiza el daño. (jopiortiz)
+* 21/05/2019: Se respetan las mayúsculas/minúsculas al crear un personaje. (jopiortiz)
+* 23/05/2019: Se eliminaron los archivos frmPasswd y frmRecuperar ya que no se usan. (Recox)
+* 23/05/2019: Mejora y Arreglos en la conexion con el servidor. (jopiortiz)
+* 23/05/2019: Implementado sistema cambio de passwords. (jopiortiz/Recox)
+
+- 0.13.9.1
+* 22/05/2019: Se encapsulo todo el comportamiento referido a la conexion de los Sockets/Winsocks con el servidor. (jopiortiz)
+* 22/05/2019: Eliminada la reconexion con el servidor del frmCrearPersonaje.(jopiortiz)
