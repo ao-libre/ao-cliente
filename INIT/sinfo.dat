@@ -1,5 +1,5 @@
 [INIT]
-Cant=7
+Cant=6
 
 [S1]
 Desc=Rol - Alkon 0.13.X
@@ -20,24 +20,18 @@ PJ=7667
 Mundo=Deathmatch
 
 [S4]
-Desc=NZ - Deathmatch - La Boda
-IP=120.136.2.168
-PJ=7666
-Mundo=Deathmatch
-
-[S5]
 Desc=Servidor Local | Modo:Alkon 0.13.X
 IP=localhost
 PJ=7666
 Mundo=Alkon
 
-[S6]
+[S5]
 Desc=Servidor Local | Modo:BattleServer
 IP=localhost
 PJ=7666
 Mundo=BattleServer
 
-[S7]
+[S6]
 Desc=Servidor Local | Modo:Deathmatch
 IP=localhost
 PJ=7666
