@@ -24,6 +24,7 @@
 *.OCX -text
 *.map -text
 *.exe -text
+/EXTRAS/font.dat -text
 
 # Declare encoding of all files for code.
 *.bas encoding=ansi
