@@ -1,8 +1,6 @@
 # Auto-CRLF setting.
 * text eol=crlf
 
-/EXTRAS/font.dat eol=cr
-
 # Declare file types.
 # The - is a negation symbol, so  -text it means"not" text
 *.msv -text
@@ -26,6 +24,7 @@
 *.OCX -text
 *.map -text
 *.exe -text
+/EXTRAS/font.dat -text
 
 # Declare encoding of all files for code.
 *.bas encoding=ansi
