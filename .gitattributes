@@ -1,6 +1,6 @@
 # Auto-CRLF setting.
 * text eol=crlf
-EXTRAS/font.dat eol=lf
+EXTRAS/font.dat eol=cr
 
 # Declare file types.
 # The - is a negation symbol, so  -text it means"not" text
