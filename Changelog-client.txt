@@ -436,6 +436,6 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 23/05/2019: Mejora y Arreglos en la conexion con el servidor. (jopiortiz)
 * 23/05/2019: Implementado sistema cambio de passwords. (jopiortiz/Recox)
 
-- 0.13.9.1
-* 22/05/2019: Se encapsulo todo el comportamiento referido a la conexion de los Sockets/Winsocks con el servidor. (jopiortiz)
-* 22/05/2019: Eliminada la reconexion con el servidor del frmCrearPersonaje.(jopiortiz)
+- v0.13.9.1
+
+* 09/07/2019: Se reparo la fuente utilizada en el juego, se elimino el archivo INIT/font.dat ya que no se usa, se cambio la configuracion del archivo EXTRAS/font.dat en el archivo .gitattributes para evitar que el mismo se rompa. (Recox)
