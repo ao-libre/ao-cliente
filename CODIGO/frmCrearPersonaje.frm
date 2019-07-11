@@ -1470,16 +1470,14 @@ Dim i As Integer
         lstProfesion.AddItem ListaClases(i)
     Next i
     
-    'En caso que se quiera volver a tener el dropdown de hogar con todas las ciudades disponibles
-    'Descomentar este codigo, actualmente se utiliza solo Nemahuak, que es una ciudad Newbie utilizada desde la 0.13
-    'Lower_ciudades = LBound(Ciudades())
-    'Upper_ciudades = UBound(Ciudades())
-    
-    'For i = Lower_ciudades To Upper_ciudades
-    '    lstHogar.AddItem Ciudades(i)
-    'Next i
     lstHogar.Clear
-    lstHogar.AddItem Ciudades(eCiudad.cNemahuak)
+    
+    Lower_ciudades = LBound(Ciudades())
+    Upper_ciudades = UBound(Ciudades())
+    
+    For i = Lower_ciudades To Upper_ciudades
+        lstHogar.AddItem Ciudades(i)
+    Next i
     
     lstRaza.Clear
     
