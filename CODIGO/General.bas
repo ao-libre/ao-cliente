@@ -1326,14 +1326,16 @@ End Sub
 Private Sub InicializarNombres()
 '**************************************************************
 'Author: Juan Martin Sotuyo Dodero (Maraxus)
-'Last Modify Date: 11/27/2005
+'Last Modify Date: 10/07/2019
 'Inicializa los nombres de razas, ciudades, clases, skills, atributos, etc.
+'Se agrego Nemahuak al iniciar. (Recox)
 '**************************************************************
     Ciudades(eCiudad.cUllathorpe) = "Ullathorpe"
     Ciudades(eCiudad.cNix) = "Nix"
     Ciudades(eCiudad.cBanderbill) = "Banderbill"
     Ciudades(eCiudad.cLindos) = "Lindos"
     Ciudades(eCiudad.cArghal) = "Arghal"
+    Ciudades(eCiudad.cNemahuak) = "Nemahuak"
     
     ListaRazas(eRaza.Humano) = JsonLanguage.Item("RAZAS").Item("HUMANO")
     ListaRazas(eRaza.Elfo) = JsonLanguage.Item("RAZAS").Item("ELFO")
