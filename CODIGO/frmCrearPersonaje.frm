@@ -326,6 +326,14 @@ Begin VB.Form frmCrearPersonaje
       Visible         =   0   'False
       Width           =   360
    End
+   Begin VB.Image ImgProfesionDibujo 
+      Height          =   885
+      Left            =   240
+      MouseIcon       =   "frmCrearPersonaje.frx":0046
+      MousePointer    =   99  'Custom
+      Top             =   5040
+      Width           =   900
+   End
    Begin VB.Image imgArcoStar 
       Height          =   195
       Index           =   5
@@ -990,7 +998,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   225
       Index           =   1
       Left            =   7560
-      Picture         =   "frmCrearPersonaje.frx":0046
+      Picture         =   "frmCrearPersonaje.frx":0198
       Top             =   6360
       Visible         =   0   'False
       Width           =   240
@@ -999,7 +1007,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   225
       Index           =   0
       Left            =   6960
-      Picture         =   "frmCrearPersonaje.frx":0358
+      Picture         =   "frmCrearPersonaje.frx":04AA
       Top             =   6360
       Visible         =   0   'False
       Width           =   240
@@ -1008,7 +1016,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   225
       Index           =   1
       Left            =   8460
-      Picture         =   "frmCrearPersonaje.frx":066A
+      Picture         =   "frmCrearPersonaje.frx":07BC
       Top             =   5925
       Visible         =   0   'False
       Width           =   240
@@ -1017,7 +1025,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   225
       Index           =   0
       Left            =   6075
-      Picture         =   "frmCrearPersonaje.frx":097C
+      Picture         =   "frmCrearPersonaje.frx":0ACE
       Top             =   5925
       Visible         =   0   'False
       Width           =   240
@@ -1033,7 +1041,7 @@ Begin VB.Form frmCrearPersonaje
    Begin VB.Image imgDados 
       Height          =   885
       Left            =   195
-      MouseIcon       =   "frmCrearPersonaje.frx":0C8E
+      MouseIcon       =   "frmCrearPersonaje.frx":0DE0
       MousePointer    =   99  'Custom
       Top             =   2775
       Width           =   900
@@ -1770,8 +1778,16 @@ End Sub
 
 Private Sub lstProfesion_Click()
 On Error Resume Next
-'    Image1.Picture = LoadPicture(App.path & "\graficos\" & lstProfesion.Text & ".jpg")
-'
+    If lstProfesion.Text = "Trabajador" Then
+        'Agarramos un numero aleatorio del 0 al 5 por que hay 5 imagenes de trabajador
+        ImgProfesionDibujo.Picture = LoadPicture(App.path & "\graficos\" & lstProfesion.Text & (CInt(Rnd * 5)) & ".jpg")
+    Else
+        ImgProfesionDibujo.Picture = LoadPicture(App.path & "\graficos\" & lstProfesion.Text & ".jpg")
+    End If
+    
+
+    
+
     UserClase = lstProfesion.ListIndex + 1
     
     Call UpdateStats
