@@ -440,4 +440,6 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 
 * 09/07/2019: Se reparo la fuente utilizada en el juego, se elimino el archivo INIT/font.dat ya que no se usa, se cambio la configuracion del archivo EXTRAS/font.dat en el archivo .gitattributes para evitar que el mismo se rompa. (Recox)
 
-
+- v0.13.9.2
+* 15/07/2019: Se arreglaron las estrellas en el frmCrearPersonaje para el paladin y el ladron (Recox)
+* 15/07/2019: Se añadieron las clasicas imagenes de las profesiones al crear un personaje en el frmCrearPersonaje (Recox)
