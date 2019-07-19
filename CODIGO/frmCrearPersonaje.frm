@@ -1785,9 +1785,6 @@ On Error Resume Next
         ImgProfesionDibujo.Picture = LoadPicture(App.path & "\graficos\" & lstProfesion.Text & ".jpg")
     End If
     
-
-    
-
     UserClase = lstProfesion.ListIndex + 1
     
     Call UpdateStats

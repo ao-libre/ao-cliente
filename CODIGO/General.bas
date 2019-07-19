@@ -1103,7 +1103,7 @@ Private Sub LoadInitialConfig()
                             True, False, False)
     
     'Inicializamos el inventario grafico
-    Call Inventario.Initialize(DirectD3D8, frmMain.picInv, MAX_INVENTORY_SLOTS)
+    Call Inventario.Initialize(DirectD3D8, frmMain.PicInv, MAX_INVENTORY_SLOTS)
     
     Call AddtoRichTextBox(frmCargando.status, _
                             "                    " & JsonLanguage.Item("BIENVENIDO").Item("TEXTO"), _
@@ -1342,18 +1342,33 @@ Private Sub InicializarNombres()
     ListaRazas(eRaza.Gnomo) = JsonLanguage.Item("RAZAS").Item("GNOMO")
     ListaRazas(eRaza.Enano) = JsonLanguage.Item("RAZAS").Item("ENANO")
 
-    ListaClases(eClass.Mage) = JsonLanguage.Item("CLASES").Item("MAGO")
-    ListaClases(eClass.Cleric) = JsonLanguage.Item("CLASES").Item("CLERIGO")
-    ListaClases(eClass.Warrior) = JsonLanguage.Item("CLASES").Item("GUERRERO")
-    ListaClases(eClass.Assasin) = JsonLanguage.Item("CLASES").Item("ASESINO")
-    ListaClases(eClass.Thief) = JsonLanguage.Item("CLASES").Item("LADRON")
-    ListaClases(eClass.Bard) = JsonLanguage.Item("CLASES").Item("BARDO")
-    ListaClases(eClass.Druid) = JsonLanguage.Item("CLASES").Item("DRUIDA")
-    ListaClases(eClass.Bandit) = JsonLanguage.Item("CLASES").Item("BANDIDO")
-    ListaClases(eClass.Paladin) = JsonLanguage.Item("CLASES").Item("PALADIN")
-    ListaClases(eClass.Hunter) = JsonLanguage.Item("CLASES").Item("CAZADOR")
-    ListaClases(eClass.Worker) = JsonLanguage.Item("CLASES").Item("TRABAJADOR")
-    ListaClases(eClass.Pirat) = JsonLanguage.Item("CLASES").Item("PIRATA")
+
+    ' No uso las traducciones ya que muchas cosas estan hardcodeadas en castellano
+    ' ListaClases(eClass.Mage) = JsonLanguage.Item("CLASES").Item("MAGO")
+    ' ListaClases(eClass.Cleric) = JsonLanguage.Item("CLASES").Item("CLERIGO")
+    ' ListaClases(eClass.Warrior) = JsonLanguage.Item("CLASES").Item("GUERRERO")
+    ' ListaClases(eClass.Assasin) = JsonLanguage.Item("CLASES").Item("ASESINO")
+    ' ListaClases(eClass.Thief) = JsonLanguage.Item("CLASES").Item("LADRON")
+    ' ListaClases(eClass.Bard) = JsonLanguage.Item("CLASES").Item("BARDO")
+    ' ListaClases(eClass.Druid) = JsonLanguage.Item("CLASES").Item("DRUIDA")
+    ' ListaClases(eClass.Bandit) = JsonLanguage.Item("CLASES").Item("BANDIDO")
+    ' ListaClases(eClass.Paladin) = JsonLanguage.Item("CLASES").Item("PALADIN")
+    ' ListaClases(eClass.Hunter) = JsonLanguage.Item("CLASES").Item("CAZADOR")
+    ' ListaClases(eClass.Worker) = JsonLanguage.Item("CLASES").Item("TRABAJADOR")
+    ' ListaClases(eClass.Pirat) = JsonLanguage.Item("CLASES").Item("PIRATA")
+
+    ListaClases(eClass.Mage) = "Mago"
+    ListaClases(eClass.Cleric) = "Clerigo"
+    ListaClases(eClass.Warrior) = "Guerrero"
+    ListaClases(eClass.Assasin) = "Asesino"
+    ListaClases(eClass.Thief) = "Ladron"
+    ListaClases(eClass.Bard) = "Bardo"
+    ListaClases(eClass.Druid) = "Druida"
+    ListaClases(eClass.Bandit) = "Bandido"
+    ListaClases(eClass.Paladin) = "Paladin"
+    ListaClases(eClass.Hunter) = "Cazador"
+    ListaClases(eClass.Worker) = "Trabajador"
+    ListaClases(eClass.Pirat) = "Pirata"
     
     SkillsNames(eSkill.Magia) = JsonLanguage.Item("HABILIDADES").Item("MAGIA").Item("TEXTO")
     SkillsNames(eSkill.Robar) = JsonLanguage.Item("HABILIDADES").Item("ROBAR").Item("TEXTO")
@@ -1750,3 +1765,8 @@ errorinet:
     Call MsgBox(JsonLanguage.Item("ERROR_DESCARGA_SERVIDORES_INET").Item("TEXTO") & " " & frmCargando.Inet1.ResponseCode, vbCritical + vbOKOnly, "Argentum Online")
     frmCargando.NoInternetConnection = True
 End Sub
+
+Function EaseOutCubic(Time As Double)
+    Time = Time - 1
+    EaseOutCubic = Time * Time * Time + 1
+End Function
