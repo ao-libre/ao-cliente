@@ -443,3 +443,6 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 - v0.13.9.2
 * 15/07/2019: Se arreglaron las estrellas en el frmCrearPersonaje para el paladin y el ladron (Recox)
 * 15/07/2019: Se añadieron las clasicas imagenes de las profesiones al crear un personaje en el frmCrearPersonaje (Recox)
+
+- v0.13.10
+* 20/07/2019: Texto del daño deja de depender de los FPS y se suavizó la animación (Wyr0X)
