@@ -1201,7 +1201,7 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
                     
                     'Dibujamos los daños.
                     If .Damage.Activated Then
-                        mDx8_Dibujado.Damage_Draw X, Y, PixelOffsetXTemp + 0, PixelOffsetYTemp - 30
+                        mDx8_Dibujado.Damage_Draw X, Y, PixelOffsetXTemp, PixelOffsetYTemp - 20
                     End If
                     
                     'Layer 3

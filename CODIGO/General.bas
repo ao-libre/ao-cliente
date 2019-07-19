@@ -1102,7 +1102,7 @@ Private Sub LoadInitialConfig()
                             True, False, False)
     
     'Inicializamos el inventario grafico
-    Call Inventario.Initialize(DirectD3D8, frmMain.picInv, MAX_INVENTORY_SLOTS)
+    Call Inventario.Initialize(DirectD3D8, frmMain.PicInv, MAX_INVENTORY_SLOTS)
     
     Call AddtoRichTextBox(frmCargando.status, _
                             "                    " & JsonLanguage.Item("BIENVENIDO").Item("TEXTO"), _
@@ -1342,7 +1342,7 @@ Private Sub InicializarNombres()
     ListaRazas(eRaza.Enano) = JsonLanguage.Item("RAZAS").Item("ENANO")
 
 
-    ' No uso las traducciones ya que muchas cosas estan hardcodeadas en castellano    
+    ' No uso las traducciones ya que muchas cosas estan hardcodeadas en castellano
     ' ListaClases(eClass.Mage) = JsonLanguage.Item("CLASES").Item("MAGO")
     ' ListaClases(eClass.Cleric) = JsonLanguage.Item("CLASES").Item("CLERIGO")
     ' ListaClases(eClass.Warrior) = JsonLanguage.Item("CLASES").Item("GUERRERO")
@@ -1753,3 +1753,8 @@ errorinet:
     Call MsgBox(JsonLanguage.Item("ERROR_DESCARGA_SERVIDORES_INET").Item("TEXTO") & " " & frmCargando.Inet1.ResponseCode, vbCritical + vbOKOnly, "Argentum Online")
     frmCargando.NoInternetConnection = True
 End Sub
+
+Function EaseOutCubic(Time As Double)
+    Time = Time - 1
+    EaseOutCubic = Time * Time * Time + 1
+End Function

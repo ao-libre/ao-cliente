@@ -16,7 +16,8 @@ Private Declare Sub CopyMemory Lib "kernel32.dll" Alias "RtlMoveMemory" (ByRef d
 Private Declare Function SetBitmapBits Lib "gdi32" (ByVal hBitmap As Long, ByVal dwCount As Long, lpBits As Any) As Long
 
 ' Dano en Render
-Private Const DAMAGE_TIME As Integer = 43
+Private Const DAMAGE_TIME As Integer = 500
+Private Const DAMAGE_OFFSET As Integer = 20
 Private Const DAMAGE_FONT_S As Byte = 12
  
 Private Enum EDType
@@ -35,7 +36,7 @@ Type DList
      ColorRGB       As Long         'Color.
      DamageType     As EDType       'Tipo, se usa para saber si es apu o no.
      DamageFont     As New StdFont  'Efecto del apu.
-     TimeRendered   As Integer      'Tiempo transcurrido.
+     StartedTime    As Long         'Cuando fue creado.
      Downloading    As Byte         'Contador para la posicion Y.
      Activated      As Boolean      'Si esta activado..
 End Type
@@ -139,7 +140,7 @@ Sub Damage_Create(ByVal X As Byte, _
         .ColorRGB = ColorRGB
         .DamageType = edMode
         .DamageVal = DamageValue
-        .TimeRendered = 0
+        .StartedTime = GetTickCount
         .Downloading = 0
      
         Select Case .DamageType
@@ -173,21 +174,19 @@ Sub Damage_Draw(ByVal X As Byte, _
     With MapData(X, Y).Damage
      
         If (Not .Activated) Or (Not .DamageVal <> 0) Then Exit Sub
-        If .TimeRendered < DAMAGE_TIME Then
+        
+        Dim ElapsedTime As Long
+        ElapsedTime = GetTickCount - .StartedTime
+        
+        If ElapsedTime < DAMAGE_TIME Then
            
-            'Sumo el contador del tiempo.
-            .TimeRendered = .TimeRendered + 1
+            .Downloading = EaseOutCubic(ElapsedTime / DAMAGE_TIME) * DAMAGE_OFFSET
            
-            If (.TimeRendered / 2) > 0 Then
-                .Downloading = (.TimeRendered / 2)
-
-            End If
-           
-            .ColorRGB = Damage_ModifyColour(.TimeRendered, .DamageType)
+            .ColorRGB = Damage_ModifyColour(.DamageType)
            
             'Efectito para el apu
             If .DamageType = EDType.edPunal Then
-                .DamageFont.Size = Damage_NewSize(.TimeRendered)
+                .DamageFont.Size = Damage_NewSize(ElapsedTime)
 
             End If
                
@@ -211,11 +210,9 @@ Sub Damage_Draw(ByVal X As Byte, _
                     
             End Select
             
-            'Si llego al tiempo lo limpio
-            If .TimeRendered >= DAMAGE_TIME Then
-                Damage_Clear X, Y
-
-            End If
+        'Si llego al tiempo lo limpio
+        Else
+            Damage_Clear X, Y
            
         End If
        
@@ -231,14 +228,13 @@ Sub Damage_Clear(ByVal X As Byte, ByVal Y As Byte)
         .Activated = False
         .ColorRGB = 0
         .DamageVal = 0
-        .TimeRendered = 0
+        .StartedTime = 0
 
     End With
  
 End Sub
  
-Function Damage_ModifyColour(ByVal TimeNowRendered As Byte, _
-                             ByVal DamageType As Byte) As Long
+Function Damage_ModifyColour(ByVal DamageType As Byte) As Long
  
     ' @ Se usa para el "efecto" de desvanecimiento.
  
@@ -263,24 +259,23 @@ Function Damage_ModifyColour(ByVal TimeNowRendered As Byte, _
  
 End Function
  
-Function Damage_NewSize(ByVal timeRenderedNow As Byte) As Byte
+Function Damage_NewSize(ByVal ElapsedTime As Byte) As Byte
  
     ' @ Se usa para el "efecto" del apu.
+
+    ' Nos basamos en la constante DAMAGE_TIME
+    Select Case ElapsedTime
  
-    Dim tResult As Byte
- 
-    Select Case timeRenderedNow
- 
-        Case 1 To 10
+        Case Is <= DAMAGE_TIME / 5
             Damage_NewSize = 14
        
-        Case 11 To 20
+        Case Is <= DAMAGE_TIME * 2 / 5
             Damage_NewSize = 13
            
-        Case 21 To 30
+        Case Is <= DAMAGE_TIME * 3 / 5
             Damage_NewSize = 12
            
-        Case 31 To 99
+        Case Else
             Damage_NewSize = 11
        
     End Select
