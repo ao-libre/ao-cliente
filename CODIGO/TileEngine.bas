@@ -1857,14 +1857,14 @@ Private Sub RenderName(ByVal CharIndex As Long, ByVal X As Integer, ByVal Y As I
             If Invi Then
                 color = D3DColorARGB(180, 150, 180, 220)
             End If
-            
+
             'Nick
             line = Left$(.Nombre, Pos - 2)
-            Call DrawText(X - (Len(line) * 6 / 2) + 16, Y + 30, line, color)
+            Call DrawText(X + 16, Y + 30, line, color, True)
             
             'Clan
             line = mid$(.Nombre, Pos)
-            Call DrawText(X - (Len(line) * 6 / 2) + 16, Y + 45, line, color)
+            Call DrawText(X + 16, Y + 45, line, color, True)
     End With
 End Sub
 

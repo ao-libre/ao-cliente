@@ -86,7 +86,7 @@ Private Function Es_Emoticon(ByVal ascii As Byte) As Boolean ' GSZAO
     End If
 End Function ' GSZAO
 
-Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, ByVal Text As String, ByVal X As Long, ByVal Y As Long, ByVal color As Long, Optional ByVal Center As Boolean = False, Optional ByVal Alpha As Byte = 255)
+Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, ByVal Text As String, ByVal X As Long, ByVal Y As Long, ByVal color As Long, Optional ByVal Center As Boolean = False, Optional ByVal Alpha As Byte = 255, Optional ByVal ParseEmoticons As Boolean = True)
 '*****************************************************************
 'Render text with a custom font
 '*****************************************************************
@@ -108,35 +108,38 @@ Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, ByVal Text As String
     'Check for valid text to render
     If LenB(Text) = 0 Then Exit Sub
     
-    'Analizar mensaje, palabra por palabra... GSZAO
-    Dim NewText As String
-    
-    tempstr = Split(Text, Chr$(32))
-    NewText = Text
-    Text = vbNullString
-    
-    'pre-calculate tempstr's upperbound to improve performance
-    Upper_tempstr = UBound(tempstr)
-    
-    For i = 0 To Upper_tempstr
-        If tempstr(i) = ":)" Or tempstr(i) = "=)" Then
-            tempstr(i) = Chr$(129)
-        ElseIf tempstr(i) = ":@" Or tempstr(i) = "=@" Then
-            tempstr(i) = Chr$(137)
-        ElseIf tempstr(i) = ":(" Or tempstr(i) = "=(" Then
-            tempstr(i) = Chr$(141)
-        ElseIf tempstr(i) = "^^" Or tempstr(i) = "^_^" Then
-            tempstr(i) = Chr$(143)
-        ElseIf tempstr(i) = ":D" Or tempstr(i) = "=D" Then
-            tempstr(i) = Chr$(144)
-        ElseIf tempstr(i) = "xD" Or tempstr(i) = "XD" Then
-            tempstr(i) = Chr$(157)
-        ElseIf tempstr(i) = ":S" Or tempstr(i) = "=S" Then
-            tempstr(i) = Chr$(160)
-        End If
-        Text = Text & Chr$(32) & tempstr(i)
-    Next
-    ' Made by ^[GS]^ for GSZAO
+    'WyroX: Agregado para evitar dibujar emojis en los nombres de los personajes
+    If ParseEmoticons Then
+        'Analizar mensaje, palabra por palabra... GSZAO
+        Dim NewText As String
+        
+        tempstr = Split(Text, Chr$(32))
+        NewText = Text
+        Text = vbNullString
+        
+        'pre-calculate tempstr's upperbound to improve performance
+        Upper_tempstr = UBound(tempstr)
+        
+        For i = 0 To Upper_tempstr
+            If tempstr(i) = ":)" Or tempstr(i) = "=)" Then
+                tempstr(i) = Chr$(129)
+            ElseIf tempstr(i) = ":@" Or tempstr(i) = "=@" Then
+                tempstr(i) = Chr$(137)
+            ElseIf tempstr(i) = ":(" Or tempstr(i) = "=(" Then
+                tempstr(i) = Chr$(141)
+            ElseIf tempstr(i) = "^^" Or tempstr(i) = "^_^" Then
+                tempstr(i) = Chr$(143)
+            ElseIf tempstr(i) = ":D" Or tempstr(i) = "=D" Then
+                tempstr(i) = Chr$(144)
+            ElseIf tempstr(i) = "xD" Or tempstr(i) = "XD" Then
+                tempstr(i) = Chr$(157)
+            ElseIf tempstr(i) = ":S" Or tempstr(i) = "=S" Then
+                tempstr(i) = Chr$(160)
+            End If
+            Text = Text & Chr$(32) & tempstr(i)
+        Next
+        ' Made by ^[GS]^ for GSZAO
+    End If
     
     'Get the text into arrays (split by vbCrLf)
     tempstr = Split(Text, vbCrLf)
@@ -372,11 +375,12 @@ Sub Engine_Init_FontSettings()
 
 End Sub
 
-Public Sub DrawText(ByVal X As Integer, ByVal Y As Integer, ByVal Text As String, ByVal color As Long)
+Public Sub DrawText(ByVal X As Integer, ByVal Y As Integer, ByVal Text As String, ByVal color As Long, Optional ByVal Center As Boolean = False)
         Dim aux As D3DCOLORVALUE
         'Obtener_RGB Color, r, g, b
         ARGBtoD3DCOLORVALUE color, aux
         color = D3DColorARGB(255, aux.r, aux.g, aux.b)
-    Engine_Render_Text cfonts(1), Text, X, Y, color
+        
+        Engine_Render_Text cfonts(1), Text, X, Y, color, Center, 255, False
 End Sub
 
