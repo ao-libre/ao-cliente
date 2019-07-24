@@ -446,3 +446,4 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 
 - v0.13.10
 * 20/07/2019: Texto del daño deja de depender de los FPS y se suavizó la animación (Wyr0X)
+* 24/07/2019: Fix nombres descentrados + fix emojis en nombres (Wyr0X)
