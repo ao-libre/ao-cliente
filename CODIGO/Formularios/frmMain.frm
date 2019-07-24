@@ -970,6 +970,9 @@ Public picSkillStar As Picture
 Public WithEvents dragInventory As clsGrapchicalInventory
 Attribute dragInventory.VB_VarHelpID = -1
 
+Public WithEvents Client As clsSocket
+Attribute Client.VB_VarHelpID = -1
+
 Private ChangeHechi As Boolean, ChangeHechiNum As Integer
 
 'Usado para controlar que no se dispare el binding de la tecla CTRL cuando se usa CTRL+Tecla.
@@ -2201,8 +2204,12 @@ Private Sub Socket1_Connect()
 End Sub
 
 Private Sub Socket1_Disconnect()
+    
+    Debug.Print "Cerrando Sockets..."
+    
     ResetAllInfo
     Socket1.Cleanup
+    
 End Sub
 
 Private Sub Socket1_LastError(ErrorCode As Integer, ErrorString As String, Response As Integer)
@@ -2324,7 +2331,7 @@ End Sub
 Private Sub Winsock1_Close()
     Dim i As Long
     
-    Debug.Print "Winsock Close"
+    Debug.Print "Cerrando Winsock..."
     
     Second.Enabled = False
     Connected = False
@@ -2369,12 +2376,11 @@ Private Sub Winsock1_Close()
     SkillPoints = 0
     Alocados = 0
 
-    Dialogos.CantidadDialogos = 0
+    Dialogos.RemoveAllDialogs
 End Sub
 
 Private Sub Winsock1_Connect()
-    Debug.Print "Winsock Connect"
-    
+
     'Clean input and output buffers
     Call incomingData.ReadASCIIStringFixed(incomingData.length)
     Call outgoingData.ReadASCIIStringFixed(outgoingData.length)
@@ -2436,6 +2442,134 @@ Private Sub Winsock1_Error(ByVal number As Integer, Description As String, ByVal
     Else
         frmCrearPersonaje.MousePointer = 0
     End If
+End Sub
+#End If
+
+#If UsarWrench = 3 Then
+ 
+''''''''''''''''''''''''''''''''''''''
+'     WINDOWS API                            '
+''''''''''''''''''''''''''''''''''''''
+Private Sub Client_Connect()
+    
+    'Clean input and output buffers
+    Call incomingData.ReadASCIIStringFixed(incomingData.Length)
+    Call outgoingData.ReadASCIIStringFixed(outgoingData.Length)
+    
+    Second.Enabled = True
+    
+    Select Case EstadoLogin
+        Case E_MODO.CrearNuevoPj
+            Call Login
+
+        Case E_MODO.Normal
+            Call Login
+        
+        Case E_MODO.CrearCuenta
+            Call Audio.PlayMIDI("7.mid")
+            frmCrearCuenta.Show
+
+        Case E_MODO.Dados
+            Call Audio.PlayMIDI("7.mid")
+            frmCrearPersonaje.Show
+            
+        Case E_MODO.CambiarContrasena
+            Call Audio.PlayMIDI("7.mid")
+            frmRecuperarCuenta.Show
+        
+    End Select
+ 
+End Sub
+
+Private Sub Client_DataArrival(ByVal bytesTotal As Long)
+    Dim RD As String
+    Dim data() As Byte
+    
+    Client.GetData RD, vbByte, bytesTotal
+    data = StrConv(RD, vbFromUnicode)
+    
+    'Set data in the buffer
+    Call incomingData.WriteBlock(data)
+    
+    'Send buffer to Handle data
+    Call HandleIncomingData
+    
+End Sub
+
+Private Sub Client_CloseSck()
+    
+    Debug.Print "Cerrando la conexion via API de Windows..."
+
+    Dim i As Long
+        
+    Second.Enabled = False
+    Connected = False
+    
+    If Client.State <> sckClosed Then Client.CloseSck
+
+    frmConnect.MousePointer = vbNormal
+    
+    Do While i < Forms.Count - 1
+        i = i + 1
+        
+        If Forms(i).name <> Me.name And Forms(i).name <> frmConnect.name And Forms(i).name <> frmCrearPersonaje.name Then
+            Unload Forms(i)
+        End If
+    Loop
+    
+    On Local Error GoTo 0
+    
+    If Not frmCrearPersonaje.Visible Then
+        frmConnect.Visible = True
+    End If
+    
+    frmMain.Visible = False
+ 
+    pausa = False
+    UserMeditar = False
+ 
+    frmMain.Visible = False
+
+    pausa = False
+    UserMeditar = False
+
+    UserClase = 0
+    UserSexo = 0
+    UserRaza = 0
+    UserHogar = 0
+    UserEmail = vbNullString
+    
+    For i = 1 To NUMSKILLS
+        UserSkills(i) = 0
+    Next i
+
+    For i = 1 To NUMATRIBUTOS
+        UserAtributos(i) = 0
+    Next i
+
+    SkillPoints = 0
+    Alocados = 0
+
+    Dialogos.RemoveAllDialogs
+    
+End Sub
+
+Private Sub Client_Error(ByVal number As Integer, Description As String, ByVal sCode As Long, ByVal source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
+    
+    Call MsgBox(Description, vbApplicationModal + vbInformation + vbOKOnly + vbDefaultButton1, "Error")
+    
+    frmConnect.MousePointer = 1
+    
+    Second.Enabled = False
+ 
+    If Client.State <> sckClosed Then Client.CloseSck
+
+    If Not frmCrearPersonaje.Visible Then
+        frmConnect.Show
+    Else
+        frmCrearPersonaje.MousePointer = 0
+    End If
+ 
 End Sub
 #End If
 

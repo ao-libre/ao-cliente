@@ -444,5 +444,6 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 15/07/2019: Se añadieron las clasicas imagenes de las profesiones al crear un personaje en el frmCrearPersonaje (Recox)
 
 - v0.13.10
+* 23/05/2019: Uso de la API de Windows para conectarse al servidor. Créditos a Dr. GoDKeR. (jopiortiz)
 * 20/07/2019: Texto del daño deja de depender de los FPS y se suavizó la animación (Wyr0X)
 * 24/07/2019: Fix nombres descentrados + fix emojis en nombres (Wyr0X)
