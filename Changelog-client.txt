@@ -1,4 +1,4 @@
-﻿---------------------------------------
+---------------------------------------
 ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
 ---------------------------------------
 
@@ -417,7 +417,7 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 17/04/2019: Added Alkon map as default, needs to be improved (Recox)
 * 17/04/2019: Se modifico la fuente para que se vean las coordenadas completas, se agregaron colores en el json de coordeandas para que la aplicacion no arrojase error (Recox)
 
-- v0.13.8.5
+- 0.13.8.5
 * 05/05/2019: Arreglados algunas faltas de ortografia en el archivo de idiomas spanish.json (neoranger)
 * 05/05/2019: Eliminadas librerias (.dll) sin usar. (jopiortiz)
 * 05/05/2019: Ya no se actualiza la pantalla cuando elegis jugar en modo ventana, Se resetea la resolucion al cerrar desde el Sub CloseClient(). (jopiortiz)
@@ -425,7 +425,7 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 10/05/2019: Se cambio la url del manual dentro de la ventana opciones por la guia actual: http://wiki.argentumonline.org/ (Recox)
 * 13/05/2019: Mejoras en el frmBuscar y la invocación de NPC's. (jopiortiz)
 
-- v0.13.9
+- 0.13.9
 
 * 21/05/2019: Ahora se actualiza el puntito rojo que indica la posición del usuario en el minimapa. (jopiortiz)
 * 21/05/2019: Ahora se muestran los nombres al navegar. (jopiortiz)
@@ -437,7 +437,6 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 23/05/2019: Implementado sistema cambio de passwords. (jopiortiz/Recox)
 
 - v0.13.9.1
-
 * 09/07/2019: Se reparo la fuente utilizada en el juego, se elimino el archivo INIT/font.dat ya que no se usa, se cambio la configuracion del archivo EXTRAS/font.dat en el archivo .gitattributes para evitar que el mismo se rompa. (Recox)
 
 - v0.13.9.2
