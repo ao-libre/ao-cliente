@@ -11,6 +11,7 @@ Begin VB.Form frmCrearPersonaje
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmCrearPersonaje.frx":0000
    ScaleHeight     =   600
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   799
@@ -20,12 +21,12 @@ Begin VB.Form frmCrearPersonaje
       AutoRedraw      =   -1  'True
       BackColor       =   &H00000000&
       Height          =   990
-      Left            =   6840
+      Left            =   7080
       ScaleHeight     =   62
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   37
       TabIndex        =   32
-      Top             =   6840
+      Top             =   6720
       Visible         =   0   'False
       Width           =   615
    End
@@ -36,7 +37,7 @@ Begin VB.Form frmCrearPersonaje
       BorderStyle     =   0  'None
       ForeColor       =   &H80000008&
       Height          =   870
-      Left            =   6840
+      Left            =   7080
       ScaleHeight     =   58
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   41
@@ -59,9 +60,9 @@ Begin VB.Form frmCrearPersonaje
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   315
-      ItemData        =   "frmCrearPersonaje.frx":0000
+      ItemData        =   "frmCrearPersonaje.frx":53C8D
       Left            =   6120
-      List            =   "frmCrearPersonaje.frx":000A
+      List            =   "frmCrearPersonaje.frx":53C97
       Style           =   2  'Dropdown List
       TabIndex        =   8
       Top             =   5040
@@ -150,9 +151,9 @@ Begin VB.Form frmCrearPersonaje
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   315
-      ItemData        =   "frmCrearPersonaje.frx":001D
+      ItemData        =   "frmCrearPersonaje.frx":53CAA
       Left            =   6060
-      List            =   "frmCrearPersonaje.frx":001F
+      List            =   "frmCrearPersonaje.frx":53CAC
       Style           =   2  'Dropdown List
       TabIndex        =   6
       Top             =   4035
@@ -171,9 +172,9 @@ Begin VB.Form frmCrearPersonaje
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   315
-      ItemData        =   "frmCrearPersonaje.frx":0021
+      ItemData        =   "frmCrearPersonaje.frx":53CAE
       Left            =   6060
-      List            =   "frmCrearPersonaje.frx":002B
+      List            =   "frmCrearPersonaje.frx":53CB8
       Style           =   2  'Dropdown List
       TabIndex        =   7
       Top             =   4560
@@ -192,9 +193,9 @@ Begin VB.Form frmCrearPersonaje
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   315
-      ItemData        =   "frmCrearPersonaje.frx":003E
+      ItemData        =   "frmCrearPersonaje.frx":53CCB
       Left            =   6060
-      List            =   "frmCrearPersonaje.frx":0040
+      List            =   "frmCrearPersonaje.frx":53CCD
       Style           =   2  'Dropdown List
       TabIndex        =   5
       Top             =   3495
@@ -213,9 +214,9 @@ Begin VB.Form frmCrearPersonaje
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   315
-      ItemData        =   "frmCrearPersonaje.frx":0042
+      ItemData        =   "frmCrearPersonaje.frx":53CCF
       Left            =   6060
-      List            =   "frmCrearPersonaje.frx":0044
+      List            =   "frmCrearPersonaje.frx":53CD1
       Style           =   2  'Dropdown List
       TabIndex        =   4
       Top             =   2985
@@ -326,12 +327,90 @@ Begin VB.Form frmCrearPersonaje
       Visible         =   0   'False
       Width           =   360
    End
+   Begin AOLibre.uAOButton imgVolver 
+      Height          =   495
+      Left            =   1200
+      TabIndex        =   33
+      Top             =   8160
+      Width           =   1455
+      _ExtentX        =   2566
+      _ExtentY        =   873
+      TX              =   "Volver"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmCrearPersonaje.frx":53CD3
+      PICF            =   "frmCrearPersonaje.frx":546FD
+      PICH            =   "frmCrearPersonaje.frx":553BF
+      PICV            =   "frmCrearPersonaje.frx":56351
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton imgCrear 
+      Height          =   495
+      Left            =   9120
+      TabIndex        =   34
+      Top             =   8160
+      Width           =   2535
+      _ExtentX        =   4471
+      _ExtentY        =   873
+      TX              =   "Crear Personaje"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmCrearPersonaje.frx":57253
+      PICF            =   "frmCrearPersonaje.frx":57C7D
+      PICH            =   "frmCrearPersonaje.frx":5893F
+      PICV            =   "frmCrearPersonaje.frx":598D1
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton imgTirarDados 
+      Height          =   975
+      Left            =   1320
+      TabIndex        =   35
+      Top             =   3000
+      Width           =   1335
+      _ExtentX        =   2355
+      _ExtentY        =   1720
+      TX              =   "Tirar Dados"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmCrearPersonaje.frx":5A7D3
+      PICF            =   "frmCrearPersonaje.frx":5B1FD
+      PICH            =   "frmCrearPersonaje.frx":5BEBF
+      PICV            =   "frmCrearPersonaje.frx":5CE51
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
    Begin VB.Image ImgProfesionDibujo 
       Height          =   885
       Left            =   240
-      MouseIcon       =   "frmCrearPersonaje.frx":0046
+      MouseIcon       =   "frmCrearPersonaje.frx":5DD53
       MousePointer    =   99  'Custom
-      Top             =   5040
+      Top             =   4680
       Width           =   900
    End
    Begin VB.Image imgArcoStar 
@@ -831,18 +910,6 @@ Begin VB.Form frmCrearPersonaje
       Top             =   1800
       Width           =   1935
    End
-   Begin VB.Image imgVolver 
-      Height          =   450
-      Left            =   1335
-      Top             =   8190
-      Width           =   1290
-   End
-   Begin VB.Image imgCrear 
-      Height          =   435
-      Left            =   9090
-      Top             =   8190
-      Width           =   2610
-   End
    Begin VB.Image imgalineacion 
       Height          =   240
       Left            =   6855
@@ -988,17 +1055,11 @@ Begin VB.Form frmCrearPersonaje
       Top             =   2055
       Width           =   1395
    End
-   Begin VB.Image imgTirarDados 
-      Height          =   765
-      Left            =   1380
-      Top             =   3105
-      Width           =   1200
-   End
    Begin VB.Image DirPJ 
       Height          =   225
       Index           =   1
       Left            =   7560
-      Picture         =   "frmCrearPersonaje.frx":0198
+      Picture         =   "frmCrearPersonaje.frx":5DEA5
       Top             =   6360
       Visible         =   0   'False
       Width           =   240
@@ -1007,7 +1068,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   225
       Index           =   0
       Left            =   6960
-      Picture         =   "frmCrearPersonaje.frx":04AA
+      Picture         =   "frmCrearPersonaje.frx":5E1B7
       Top             =   6360
       Visible         =   0   'False
       Width           =   240
@@ -1016,7 +1077,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   225
       Index           =   1
       Left            =   8460
-      Picture         =   "frmCrearPersonaje.frx":07BC
+      Picture         =   "frmCrearPersonaje.frx":5E4C9
       Top             =   5925
       Visible         =   0   'False
       Width           =   240
@@ -1025,7 +1086,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   225
       Index           =   0
       Left            =   6075
-      Picture         =   "frmCrearPersonaje.frx":0ACE
+      Picture         =   "frmCrearPersonaje.frx":5E7DB
       Top             =   5925
       Visible         =   0   'False
       Width           =   240
@@ -1041,7 +1102,7 @@ Begin VB.Form frmCrearPersonaje
    Begin VB.Image imgDados 
       Height          =   885
       Left            =   195
-      MouseIcon       =   "frmCrearPersonaje.frx":0DE0
+      MouseIcon       =   "frmCrearPersonaje.frx":5EAED
       MousePointer    =   99  'Custom
       Top             =   2775
       Width           =   900
@@ -1224,8 +1285,6 @@ Private cBotonRaza As clsGraphicalButton
 Private cBotonClase As clsGraphicalButton
 Private cBotonGenero As clsGraphicalButton
 Private cBotonAlineacion As clsGraphicalButton
-Private cBotonVolver As clsGraphicalButton
-Private cBotonCrear As clsGraphicalButton
 
 Public LastButtonPressed As clsGraphicalButton
 
@@ -1298,6 +1357,9 @@ Private Dir As E_Heading
 
 Private Sub Form_Load()
     Me.Picture = LoadPicture(DirGraficos & "VentanaCrearPersonaje.jpg")
+    Me.imgTirarDados.Caption = JsonLanguage.Item("FRM_CREARPERSONAJE_TIRARDADOS").Item("TEXTO")
+    Me.imgCrear.Caption = JsonLanguage.Item("FRM_CREARPERSONAJE_CREAR").Item("TEXTO")
+    Me.imgVolver.Caption = JsonLanguage.Item("FRM_CREARPERSONAJE_VOLVER").Item("TEXTO")
     
     Cargando = True
     Call LoadCharInfo
@@ -1369,8 +1431,6 @@ Private Sub IniciarGraficos()
     Set cBotonClase = New clsGraphicalButton
     Set cBotonGenero = New clsGraphicalButton
     Set cBotonAlineacion = New clsGraphicalButton
-    Set cBotonVolver = New clsGraphicalButton
-    Set cBotonCrear = New clsGraphicalButton
     
     Set LastButtonPressed = New clsGraphicalButton
     
@@ -1378,8 +1438,6 @@ Private Sub IniciarGraficos()
     Call cBotonPasswd.Initialize(imgPasswd, "", GrhPath & "BotonPassword.jpg", _
                                     GrhPath & "BotonPassword.jpg", Me, , , False, False)
                                     
-    Call cBotonTirarDados.Initialize(imgTirarDados, "", GrhPath & "BotonTirarDados.jpg", _
-                                    GrhPath & "BotonTirarDados.jpg", Me, , , False, False)
                                     
     Call cBotonMail.Initialize(imgMail, "", GrhPath & "BotonMailPj.jpg", _
                                     GrhPath & "BotonMailPj.jpg", Me, , , False, False)
@@ -1452,12 +1510,7 @@ Private Sub IniciarGraficos()
                                     
     Call cBotonAlineacion.Initialize(imgalineacion, "", GrhPath & "BotonAlineacion.jpg", _
                                     GrhPath & "BotonAlineacion.jpg", Me, , , False, False)
-                                    
-    Call cBotonVolver.Initialize(imgVolver, "", GrhPath & "BotonVolverRollover.jpg", _
-                                    GrhPath & "BotonVolverClick.jpg", Me)
-                                    
-    Call cBotonCrear.Initialize(imgCrear, "", GrhPath & "BotonCrearPersonajeRollover.jpg", _
-                                    GrhPath & "BotonCrearPersonajeClick.jpg", Me)
+                                                       
 
     Set picFullStar = LoadPicture(GrhPath & "EstrellaSimple.jpg")
     Set picHalfStar = LoadPicture(GrhPath & "EstrellaMitad.jpg")
@@ -1851,12 +1904,12 @@ On Error Resume Next
         SR.Left = .SX
         SR.Top = .SY
         SR.Right = SR.Left + .pixelWidth
-        SR.bottom = SR.Top + .pixelHeight
+        SR.Bottom = SR.Top + .pixelHeight
         
         DR.Left = (picPJ.Width - .pixelWidth) \ 2 - 2
         DR.Top = ((picPJ.Height - .pixelHeight) \ 2) + 5
         DR.Right = DR.Left + .pixelWidth
-        DR.bottom = DR.Top + .pixelHeight
+        DR.Bottom = DR.Top + .pixelHeight
         
         picTemp.BackColor = picTemp.BackColor
         
@@ -1870,12 +1923,12 @@ On Error Resume Next
         SR.Left = .SX
         SR.Top = .SY
         SR.Right = SR.Left + .pixelWidth
-        SR.bottom = SR.Top + .pixelHeight
+        SR.Bottom = SR.Top + .pixelHeight
         
         DR.Left = (picPJ.Width - .pixelWidth) \ 2 - 2
-        DR.Top = DR.bottom + BodyData(UserBody).HeadOffset.Y - .pixelHeight
+        DR.Top = DR.Bottom + BodyData(UserBody).HeadOffset.Y - .pixelHeight
         DR.Right = DR.Left + .pixelWidth
-        DR.bottom = DR.Top + .pixelHeight
+        DR.Bottom = DR.Top + .pixelHeight
         
         picTemp.BackColor = picTemp.BackColor
         
@@ -1898,12 +1951,12 @@ Private Sub DrawHead(ByVal Head As Integer, ByVal PicIndex As Integer)
         SR.Left = .SX
         SR.Top = .SY
         SR.Right = SR.Left + .pixelWidth
-        SR.bottom = SR.Top + .pixelHeight
+        SR.Bottom = SR.Top + .pixelHeight
         
         DR.Left = (picHead(0).Width - .pixelWidth) \ 2 + 1
         DR.Top = 5
         DR.Right = DR.Left + .pixelWidth
-        DR.bottom = DR.Top + .pixelHeight
+        DR.Bottom = DR.Top + .pixelHeight
         
         picTemp.BackColor = picTemp.BackColor
         

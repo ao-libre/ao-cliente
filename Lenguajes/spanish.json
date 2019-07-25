@@ -1269,5 +1269,14 @@
 	},
     "FRN_CREARCUENTA_MENSAJE":{
 		"TEXTO":"Utilize un email real para recibir correctamente los correos"
+	},
+	"FRM_CREARPERSONAJE_TIRARDADOS":{
+		"TEXTO":"Tirar Dados"
+	},
+    "FRM_CREARPERSONAJE_CREAR":{
+		"TEXTO":"Crear Personaje"
+	},
+    "FRM_CREARPERSONAJE_VOLVER":{
+		"TEXTO":"Volver"
 	}
 }
