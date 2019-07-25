@@ -1261,4 +1261,13 @@
     "FRM_COMMET_ENVIAR":{
 		"TEXTO":"Enviar"
 	},
+	"FRN_CREARCUENTA_SALIR":{
+		"TEXTO":"Salir"
+	},
+    "FRN_CREARCUENTA_CREARCUENTA":{
+		"TEXTO":"Crear Cuenta"
+	},
+    "FRN_CREARCUENTA_MENSAJE":{
+		"TEXTO":"Utilize un email real para recibir correctamente los correos"
+	}
 }
