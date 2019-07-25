@@ -1278,5 +1278,11 @@
 	},
     "FRM_CREARPERSONAJE_VOLVER":{
 		"TEXTO":"Volver"
-	}
+	},
+	"FRM_CUSTOMKEYS_DEFAULTKEYS":{
+		"TEXTO":"Cargar teclas por defect"
+	},
+    "FRM_CUSTOMKEYS_GUARDAR":{
+		"TEXTO":"Guardar"
+	},
 }

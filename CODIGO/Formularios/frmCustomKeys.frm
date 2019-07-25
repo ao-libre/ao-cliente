@@ -11,6 +11,7 @@ Begin VB.Form frmCustomKeys
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmCustomKeys.frx":0000
    ScaleHeight     =   500
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   547
@@ -556,17 +557,57 @@ Begin VB.Form frmCustomKeys
       Top             =   1590
       Width           =   1620
    End
-   Begin VB.Image imgDefaultKeys 
+   Begin AOLibre.uAOButton imgDefaultKeys 
       Height          =   375
-      Left            =   960
+      Left            =   480
+      TabIndex        =   27
       Top             =   6720
       Width           =   2655
+      _ExtentX        =   4683
+      _ExtentY        =   661
+      TX              =   "imgDefaultKeys"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmCustomKeys.frx":474E7
+      PICF            =   "frmCustomKeys.frx":47F11
+      PICH            =   "frmCustomKeys.frx":48BD3
+      PICV            =   "frmCustomKeys.frx":49B65
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
-   Begin VB.Image imgGuardar 
+   Begin AOLibre.uAOButton imgGuardar 
       Height          =   375
       Left            =   4680
+      TabIndex        =   28
       Top             =   6720
       Width           =   2655
+      _ExtentX        =   4683
+      _ExtentY        =   661
+      TX              =   "Guardar"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmCustomKeys.frx":4AA67
+      PICF            =   "frmCustomKeys.frx":4B491
+      PICH            =   "frmCustomKeys.frx":4C153
+      PICV            =   "frmCustomKeys.frx":4D0E5
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
 End
 Attribute VB_Name = "frmCustomKeys"
@@ -620,9 +661,6 @@ Option Explicit
 
 Private clsFormulario As clsFormMovementManager
 
-Private cBotonGuardar As clsGraphicalButton
-Private cBotonDefaultKeys As clsGraphicalButton
-
 Public LastButtonPressed As clsGraphicalButton
 
 Private SelectedConfig As Byte
@@ -654,21 +692,11 @@ Private Sub LoadButtons()
     Dim GrhPath As String
     
     GrhPath = DirGraficos
-
-    Set cBotonGuardar = New clsGraphicalButton
-    Set cBotonDefaultKeys = New clsGraphicalButton
     
     Set LastButtonPressed = New clsGraphicalButton
-    
-    
-    Call cBotonGuardar.Initialize(imgGuardar, GrhPath & "BotonGuardarConfigKey.jpg", _
-                                    GrhPath & "BotonGuardarRolloverConfigKey.jpg", _
-                                    GrhPath & "BotonGuardarClickConfigKey.jpg", Me)
 
-    Call cBotonDefaultKeys.Initialize(imgDefaultKeys, GrhPath & "BotonDefaultKeys.jpg", _
-                                    GrhPath & "BotonDefaultKeysRollover.jpg", _
-                                    GrhPath & "BotonDefaultKeysClick.jpg", Me)
-                                    
+    Me.imgDefaultKeys.Caption = JsonLanguage.Item("FRM_CUSTOMKEYS_DEFAULTKEYS").Item("TEXTO")
+    Me.imgGuardar.Caption = JsonLanguage.Item("FRM_CUSTOMKEYS_GUARDAR").Item("TEXTO")
 End Sub
 
 
