@@ -1280,9 +1280,30 @@
 		"TEXTO":"Volver"
 	},
 	"FRM_CUSTOMKEYS_DEFAULTKEYS":{
-		"TEXTO":"Cargar teclas por defect"
+		"TEXTO":"Cargar teclas por defecto"
 	},
     "FRM_CUSTOMKEYS_GUARDAR":{
 		"TEXTO":"Guardar"
 	},
+	"FRM_ELIJEALINEACION_IMGNEUTRAL":{
+		"TEXTO":"Los clanes neutrales son aquellos que no tienen ninguna alineacion manifesta. Solo se aceptaran personajes criminales o ciudadanos que no pertenezcan a ninguna faccion."
+	},
+    "FRM_ELIJEALINEACION_IMGLEGAL":{
+		"TEXTO":"En los clanes de orientacion legal podran coexistir miembros de las fuerzas reales de Banderbill con ciudadanos. Cualquier personaje que se vuelva criminial sera expulsado automaticamente del clan"
+	},
+    "FRM_ELIJEALINEACION_CRIMINAL":{
+		"TEXTO":"Los clanes criminales son aquellos que no se guian por las leyes. Coexisten criminales normales y miembros de la legion oscura. Cualquier personaje que se vuelva ciudadano sera expulsado del clan de forma automatica."
+	},
+    "FRM_ELIJEALINEACION_CAOS":{
+		"TEXTO":"Estos clanes estaran formados unicamente por miembros de la legion oscura y bajo las ordenes del demonio y sus eruditos. Los clanes que le juren lealtad no podran tener miembros que se alejen a sus ejercitos"
+	},
+    "FRM_ENTRENADOR_TITLE":{
+		"TEXTO":"Con que criatura deseas combatir"
+	},
+	"FRM_ENTRENADOR_LUCHAR":{
+		"TEXTO":"Luchar"
+	},
+    "FRM_ENTRENADOR_SALIR":{
+		"TEXTO":"Salir"
+	}
 }

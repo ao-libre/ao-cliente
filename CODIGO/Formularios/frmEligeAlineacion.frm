@@ -160,15 +160,6 @@ Option Explicit
 
 Private clsFormulario As clsFormMovementManager
 
-Private cBotonCriminal As clsGraphicalButton
-Private cBotonCaos As clsGraphicalButton
-Private cBotonLegal As clsGraphicalButton
-Private cBotonNeutral As clsGraphicalButton
-Private cBotonReal As clsGraphicalButton
-Private cBotonSalir As clsGraphicalButton
-
-Public LastButtonPressed As clsGraphicalButton
-
 Private Enum eAlineacion
     ieREAL = 0
     ieCAOS = 1
@@ -182,55 +173,11 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
-    Me.Picture = LoadPicture(App.path & "\graficos\VentanaFundarClan.jpg")
-    
-    Call LoadButtons
-End Sub
-
-Private Sub LoadButtons()
-    Dim GrhPath As String
-    
-    GrhPath = DirGraficos
-
-    Set cBotonCriminal = New clsGraphicalButton
-    Set cBotonCaos = New clsGraphicalButton
-    Set cBotonLegal = New clsGraphicalButton
-    Set cBotonNeutral = New clsGraphicalButton
-    Set cBotonReal = New clsGraphicalButton
-    Set cBotonSalir = New clsGraphicalButton
-    
-    Set LastButtonPressed = New clsGraphicalButton
-    
-    
-    Call cBotonCriminal.Initialize(imgCriminal, "", _
-                                    GrhPath & "BotonCriminal.jpg", _
-                                    GrhPath & "BotonCriminal.jpg", Me)
-
-    Call cBotonCaos.Initialize(imgCaos, "", _
-                                    GrhPath & "BotonCaos.jpg", _
-                                    GrhPath & "BotonCaos.jpg", Me)
-
-    Call cBotonLegal.Initialize(imgLegal, "", _
-                                    GrhPath & "BotonLegal.jpg", _
-                                    GrhPath & "BotonLegal.jpg", Me)
-
-    Call cBotonNeutral.Initialize(imgNeutral, "", _
-                                    GrhPath & "BotonNeutral.jpg", _
-                                    GrhPath & "BotonNeutral.jpg", Me)
-
-    Call cBotonReal.Initialize(imgReal, "", _
-                                    GrhPath & "BotonReal.jpg", _
-                                    GrhPath & "BotonReal.jpg", Me)
-                                    
-    Call cBotonSalir.Initialize(imgSalir, GrhPath & "BotonSalirAlineacion.jpg", _
-                                    GrhPath & "BotonSalirRolloverAlineacion.jpg", _
-                                    GrhPath & "BotonSalirClickAlineacion.jpg", Me)
-
-
-End Sub
-
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastButtonPressed.ToggleToNormal
+    Me.imgNeutral.Caption = JsonLanguage.Item("FRM_ELIJEALINEACION_IMGNEUTRAL").Item("TEXTO")
+    Me.imgLegal.Caption = JsonLanguage.Item("FRM_ELIJEALINEACION_IMGLEGAL").Item("TEXTO")
+    Me.imgCriminal.Caption = JsonLanguage.Item("FRM_ELIJEALINEACION_IMGCRIMINAL").Item("TEXTO")
+    Me.imgCaos.Caption = JsonLanguage.Item("FRM_ELIJEALINEACION_IMGCAOS").Item("TEXTO")
+    Me.imgTitle.Caption = JsonLanguage.Item("FRM_ELIJEALINEACION_IMGTITLE").Item("TEXTO")
 End Sub
 
 Private Sub imgCaos_Click()

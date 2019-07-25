@@ -19,6 +19,7 @@ Begin VB.Form frmEntrenador
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmEntrenador.frx":0000
    ScaleHeight     =   245
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   281
@@ -43,19 +44,74 @@ Begin VB.Form frmEntrenador
       Top             =   675
       Width           =   2355
    End
-   Begin VB.Image imgSalir 
+   Begin AOLibre.uAOButton imgSalir 
       Height          =   375
       Left            =   2160
-      Tag             =   "1"
+      TabIndex        =   3
       Top             =   3120
-      Width           =   1335
+      Width           =   1455
+      _ExtentX        =   2566
+      _ExtentY        =   661
+      TX              =   "Salir"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmEntrenador.frx":15611
+      PICF            =   "frmEntrenador.frx":1603B
+      PICH            =   "frmEntrenador.frx":16CFD
+      PICV            =   "frmEntrenador.frx":17C8F
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   15.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
-   Begin VB.Image imgLuchar 
+   Begin AOLibre.uAOButton imgLuchar 
       Height          =   375
       Left            =   600
-      Tag             =   "1"
+      TabIndex        =   1
       Top             =   3120
-      Width           =   1335
+      Width           =   1455
+      _ExtentX        =   2566
+      _ExtentY        =   661
+      TX              =   "Luchar"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmEntrenador.frx":18B91
+      PICF            =   "frmEntrenador.frx":195BB
+      PICH            =   "frmEntrenador.frx":1A27D
+      PICV            =   "frmEntrenador.frx":1B20F
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   15.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin VB.Label lblTitle 
+      Caption         =   "Con que criatura deseas combatir"
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   12
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   615
+      Left            =   600
+      TabIndex        =   2
+      Top             =   0
+      Width           =   3015
    End
 End
 Attribute VB_Name = "frmEntrenador"
@@ -121,30 +177,11 @@ Private Sub Form_Load()
         
     Me.Picture = LoadPicture(App.path & "\graficos\VentanaEntrenador.jpg")
     
-    Call LoadButtons
-    
+    Me.lblTitle.Caption = JsonLanguage.Item("FRM_ENTRENADOR_TITLE").Item("TEXTO")
+    Me.imgLuchar.Caption = JsonLanguage.Item("FRM_ENTRENADOR_LUCHAR").Item("TEXTO")
+    Me.imgSalir.Caption = JsonLanguage.Item("FRM_ENTRENADOR_SALIR").Item("TEXTO")
 End Sub
 
-Private Sub LoadButtons()
-    Dim GrhPath As String
-    
-    GrhPath = DirGraficos
-
-    Set cBotonLuchar = New clsGraphicalButton
-    Set cBotonSalir = New clsGraphicalButton
-    
-    Set LastButtonPressed = New clsGraphicalButton
-    
-    
-    Call cBotonLuchar.Initialize(imgLuchar, GrhPath & "BotonLuchar.jpg", _
-                                    GrhPath & "BotonLucharRollover.jpg", _
-                                    GrhPath & "BotonLucharClick.jpg", Me)
-
-    Call cBotonSalir.Initialize(imgSalir, GrhPath & "BotonSalirEntrenador.jpg", _
-                                    GrhPath & "BotonSalirRolloverEntrenador.jpg", _
-                                    GrhPath & "BotonSalirClickEntrenador.jpg", Me)
-
-End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
