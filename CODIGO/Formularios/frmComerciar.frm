@@ -279,10 +279,7 @@ Private clsFormulario As clsFormMovementManager
 Public LasActionBuy As Boolean
 Private ClickNpcInv As Boolean
 
-Private cBotonVender As clsGraphicalButton
-Private cBotonComprar As clsGraphicalButton
 Private cBotonCruz As clsGraphicalButton
-
 Public LastButtonPressed As clsGraphicalButton
 
 Private Sub cantidad_Change()
@@ -334,6 +331,7 @@ Private Sub LoadButtons()
 
     Set cBotonCruz = New clsGraphicalButton
     
+    'Lo dejamos solo para que no explote, habria que sacar estos LastButtonPressed
     Set LastButtonPressed = New clsGraphicalButton
     
     Call cBotonCruz.Initialize(imgCross, "", _
@@ -342,10 +340,6 @@ Private Sub LoadButtons()
                                     
     Me.imgComprar.Caption = JsonLanguage.Item("FRMCOMERCIAR_COMPRAR").Item("TEXTO")
     Me.imgVender.Caption = JsonLanguage.Item("FRMCOMERCIAR_VENDER").Item("TEXTO")
-End Sub
-
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastButtonPressed.ToggleToNormal
 End Sub
 
 ''
@@ -460,11 +454,6 @@ Private Sub picInvNpc_Click()
     End If
 End Sub
 
-Private Sub picInvNpc_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastButtonPressed.ToggleToNormal
-End Sub
-
-
 Private Sub picInvUser_Click()
     Dim ItemSlot As Byte
     
@@ -501,6 +490,4 @@ Private Sub picInvUser_Click()
     End If
 End Sub
 
-Private Sub picInvUser_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastButtonPressed.ToggleToNormal
-End Sub
+
