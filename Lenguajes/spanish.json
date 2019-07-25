@@ -1215,5 +1215,11 @@
 	},	
     "FRMBUSCAR_LIMPIARLISTAS":{
 		"TEXTO":"Limpiar Listas"
+	},
+	"FRMCANTIDAD_TIRAR":{
+		"TEXTO":"Tirar"
+	},
+    "FRMCANTIDAD_TIRAR_TODO":{
+		"TEXTO":"Tirar Todo"
 	}
 }
