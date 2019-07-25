@@ -1254,5 +1254,11 @@
 	},
     "FRM_COMERCIARUSU_CANCELAR":{
 		"TEXTO":"Cancelar"
-	}
+	},
+    "FRM_COMMET_CERRAR":{
+		"TEXTO":"Cerrar"
+	},
+    "FRM_COMMET_ENVIAR":{
+		"TEXTO":"Enviar"
+	},
 }

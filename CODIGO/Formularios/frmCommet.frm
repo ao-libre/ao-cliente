@@ -45,17 +45,57 @@ Begin VB.Form frmCommet
       Top             =   480
       Width           =   4575
    End
-   Begin VB.Image imgCerrar 
-      Height          =   480
-      Left            =   2880
-      Top             =   2520
-      Width           =   960
-   End
-   Begin VB.Image imgEnviar 
-      Height          =   480
+   Begin AOLibre.uAOButton imgEnviar 
+      Height          =   495
       Left            =   1080
+      TabIndex        =   1
       Top             =   2520
-      Width           =   960
+      Width           =   975
+      _ExtentX        =   1720
+      _ExtentY        =   873
+      TX              =   "Enviar"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmCommet.frx":0000
+      PICF            =   "frmCommet.frx":0A2A
+      PICH            =   "frmCommet.frx":16EC
+      PICV            =   "frmCommet.frx":267E
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton imgCerrar 
+      Height          =   495
+      Left            =   2880
+      TabIndex        =   2
+      Top             =   2520
+      Width           =   975
+      _ExtentX        =   1720
+      _ExtentY        =   873
+      TX              =   "Cerrar"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmCommet.frx":3580
+      PICF            =   "frmCommet.frx":3FAA
+      PICH            =   "frmCommet.frx":4C6C
+      PICV            =   "frmCommet.frx":5BFE
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
 End
 Attribute VB_Name = "frmCommet"
@@ -100,9 +140,6 @@ Option Explicit
 Private clsFormulario As clsFormMovementManager
 Private Const MAX_PROPOSAL_LENGTH As Integer = 520
 
-Private cBotonEnviar As clsGraphicalButton
-Private cBotonCerrar As clsGraphicalButton
-
 Public LastButtonPressed As clsGraphicalButton
 
 Public Nombre As String
@@ -129,19 +166,10 @@ Private Sub LoadButtons()
     
     GrhPath = DirGraficos
 
-    Set cBotonEnviar = New clsGraphicalButton
-    Set cBotonCerrar = New clsGraphicalButton
-    
     Set LastButtonPressed = New clsGraphicalButton
     
-    
-    Call cBotonEnviar.Initialize(imgEnviar, GrhPath & "BotonEnviarSolicitud.jpg", _
-                                    GrhPath & "BotonEnviarRolloverSolicitud.jpg", _
-                                    GrhPath & "BotonEnviarClickSolicitud.jpg", Me)
-
-    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarSolicitud.jpg", _
-                                    GrhPath & "BotonCerrarRolloverSolicitud.jpg", _
-                                    GrhPath & "BotonCerrarClickSolicitud.jpg", Me)
+    Me.imgEnviar.Caption = JsonLanguage.Item("FRM_COMMET_ENVIAR").Item("TEXTO")
+    Me.imgCerrar.Caption = JsonLanguage.Item("FRM_COMMET_CERRAR").Item("TEXTO")
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
