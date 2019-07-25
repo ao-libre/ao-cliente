@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "Richtx32.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
 Begin VB.Form frmComerciarUsu 
    BorderStyle     =   0  'None
    ClientHeight    =   8850
@@ -184,6 +184,7 @@ Begin VB.Form frmComerciarUsu
       _ExtentY        =   2858
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -198,33 +199,109 @@ Begin VB.Form frmComerciarUsu
          Strikethrough   =   0   'False
       EndProperty
    End
-   Begin VB.Image imgCancelar 
-      Height          =   360
+   Begin AOLibre.uAOButton imgCancelar 
+      Height          =   375
       Left            =   480
-      Tag             =   "1"
+      TabIndex        =   9
       Top             =   4680
       Width           =   1455
+      _ExtentX        =   2566
+      _ExtentY        =   661
+      TX              =   "Cancelar"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmComerciarUsu.frx":007E
+      PICF            =   "frmComerciarUsu.frx":0AA8
+      PICH            =   "frmComerciarUsu.frx":176A
+      PICV            =   "frmComerciarUsu.frx":26FC
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
-   Begin VB.Image imgRechazar 
-      Height          =   360
-      Left            =   8220
-      Tag             =   "2"
-      Top             =   8160
-      Width           =   1455
-   End
-   Begin VB.Image imgConfirmar 
-      Height          =   360
+   Begin AOLibre.uAOButton imgConfirmar 
+      Height          =   375
       Left            =   7440
-      Tag             =   "2"
+      TabIndex        =   10
       Top             =   4080
       Width           =   1455
+      _ExtentX        =   2566
+      _ExtentY        =   661
+      TX              =   "Confirmar"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmComerciarUsu.frx":35FE
+      PICF            =   "frmComerciarUsu.frx":4028
+      PICH            =   "frmComerciarUsu.frx":4CEA
+      PICV            =   "frmComerciarUsu.frx":5C7C
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
-   Begin VB.Image imgAceptar 
-      Height          =   360
-      Left            =   6750
-      Tag             =   "2"
+   Begin AOLibre.uAOButton imgAceptar 
+      Height          =   375
+      Left            =   6720
+      TabIndex        =   11
       Top             =   8160
       Width           =   1455
+      _ExtentX        =   2566
+      _ExtentY        =   661
+      TX              =   "Aceptar"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmComerciarUsu.frx":6B7E
+      PICF            =   "frmComerciarUsu.frx":75A8
+      PICH            =   "frmComerciarUsu.frx":826A
+      PICV            =   "frmComerciarUsu.frx":91FC
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton imgRechazar 
+      Height          =   375
+      Left            =   8280
+      TabIndex        =   12
+      Top             =   8160
+      Width           =   1455
+      _ExtentX        =   2566
+      _ExtentY        =   661
+      TX              =   "Rechazar"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmComerciarUsu.frx":A0FE
+      PICF            =   "frmComerciarUsu.frx":AB28
+      PICH            =   "frmComerciarUsu.frx":B7EA
+      PICV            =   "frmComerciarUsu.frx":C77C
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
    Begin VB.Image imgAgregar 
       Height          =   255
@@ -282,7 +359,7 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y A
 End Sub
 
 Private Sub imgAceptar_Click()
-    If Not cBotonAceptar.IsEnabled Then Exit Sub  ' Deshabilitado
+    If Not cBotonAceptar.isEnabled Then Exit Sub  ' Deshabilitado
     
     Call WriteUserCommerceOk
     HabilitarAceptarRechazar False
@@ -379,7 +456,7 @@ Private Sub imgCancelar_Click()
 End Sub
 
 Private Sub imgConfirmar_Click()
-    If Not cBotonConfirmar.IsEnabled Then Exit Sub  ' Deshabilitado
+    If Not cBotonConfirmar.isEnabled Then Exit Sub  ' Deshabilitado
     
     HabilitarConfirmar False
     imgAgregar.Visible = False
@@ -467,7 +544,7 @@ Private Sub imgQuitar_Click()
 End Sub
 
 Private Sub imgRechazar_Click()
-    If Not cBotonRechazar.IsEnabled Then Exit Sub  ' Deshabilitado
+    If Not cBotonRechazar.isEnabled Then Exit Sub  ' Deshabilitado
     
     Call WriteUserCommerceReject
 End Sub
@@ -489,36 +566,15 @@ Private Sub Form_Load()
 End Sub
 
 Private Sub LoadButtons()
-
     Dim GrhPath As String
     GrhPath = DirGraficos
     
-    Set cBotonAceptar = New clsGraphicalButton
-    Set cBotonConfirmar = New clsGraphicalButton
-    Set cBotonRechazar = New clsGraphicalButton
-    Set cBotonCancelar = New clsGraphicalButton
-    
     Set LastButtonPressed = New clsGraphicalButton
     
-    Call cBotonAceptar.Initialize(imgAceptar, GrhPath & "BotonAceptarComUsu.jpg", _
-                                        GrhPath & "BotonAceptarRolloverComUsu.jpg", _
-                                        GrhPath & "BotonAceptarClickComUsu.jpg", Me, _
-                                        GrhPath & "BotonAceptarGrisComUsu.jpg", True)
-                                    
-    Call cBotonConfirmar.Initialize(imgConfirmar, GrhPath & "BotonConfirmarComUsu.jpg", _
-                                        GrhPath & "BotonConfirmarRolloverComUsu.jpg", _
-                                        GrhPath & "BotonConfirmarClickComUsu.jpg", Me, _
-                                        GrhPath & "BotonConfirmarGrisComUsu.jpg", True)
-                                        
-    Call cBotonRechazar.Initialize(imgRechazar, GrhPath & "BotonRechazarComUsu.jpg", _
-                                        GrhPath & "BotonRechazarRolloverComUsu.jpg", _
-                                        GrhPath & "BotonRechazarClickComUsu.jpg", Me, _
-                                        GrhPath & "BotonRechazarGrisComUsu.jpg", True)
-                                        
-    Call cBotonCancelar.Initialize(imgCancelar, GrhPath & "BotonCancelarComUsu.jpg", _
-                                        GrhPath & "BotonCancelarRolloverComUsu.jpg", _
-                                        GrhPath & "BotonCancelarClickComUsu.jpg", Me)
-    
+    Me.imgRechazar.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_RECHAZAR").Item("TEXTO")
+    Me.imgAceptar.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_ACEPTAR").Item("TEXTO")
+    Me.imgConfirmar.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_CONFIRMAR").Item("TEXTO")
+    Me.imgCancelar.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_CANCELAR").Item("TEXTO")
 End Sub
 
 Private Sub Form_LostFocus()

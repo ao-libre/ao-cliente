@@ -1242,5 +1242,17 @@
 	},
     "FRMCOMERCIAR_VENDER":{
 		"TEXTO":"Vender"
+	},
+	"FRM_COMERCIARUSU_RECHAZAR":{
+		"TEXTO":"Rechazar"
+	},
+    "FRM_COMERCIARUSU_ACEPTAR":{
+		"TEXTO":"Aceptar"
+	},
+    "FRM_COMERCIARUSU_CONFIRMAR":{
+		"TEXTO":"Confirmar"
+	},
+    "FRM_COMERCIARUSU_CANCELAR":{
+		"TEXTO":"Cancelar"
 	}
 }
