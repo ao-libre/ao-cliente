@@ -708,7 +708,7 @@ Private Sub lstServers_Click()
 End Sub
 
 Private Sub txtPasswd_KeyPress(KeyAscii As Integer)
-    If KeyAscii = vbKeyReturn Then imgConectarse_Click
+    If KeyAscii = vbKeyReturn Then btnConectarse_Click
 End Sub
 
 Private Sub GetPostsFromReddit()
