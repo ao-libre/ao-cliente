@@ -497,11 +497,11 @@ Private Sub Form_Load()
     
     Me.Picture = LoadPicture(App.path & "\Graficos\VentanaInfoPj.jpg")
     
-    imgCerrar.Caption = JsonLanguage.Item("FRMCHARINFO_CERRAR").Item("TEXTO")
-    imgEchar.Caption = JsonLanguage.Item("FRMCHARINFO_ECHAR").Item("TEXTO")
-    imgPeticion.Caption = JsonLanguage.Item("FRMCHARINFO_PETICION").Item("TEXTO")
-    imgRechazar.Caption = JsonLanguage.Item("FRMCHARINFO_RECHAZAR").Item("TEXTO")
-    imgAceptar.Caption = JsonLanguage.Item("FRMCHARINFO_ACEPTAR").Item("TEXTO")
+    Me.imgCerrar.Caption = JsonLanguage.Item("FRMCHARINFO_CERRAR").Item("TEXTO")
+    Me.imgEchar.Caption = JsonLanguage.Item("FRMCHARINFO_ECHAR").Item("TEXTO")
+    Me.imgPeticion.Caption = JsonLanguage.Item("FRMCHARINFO_PETICION").Item("TEXTO")
+    Me.imgRechazar.Caption = JsonLanguage.Item("FRMCHARINFO_RECHAZAR").Item("TEXTO")
+    Me.imgAceptar.Caption = JsonLanguage.Item("FRMCHARINFO_ACEPTAR").Item("TEXTO")
 End Sub
 
 Private Sub imgAceptar_Click()

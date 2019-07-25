@@ -1236,5 +1236,11 @@
 	},
     "FRMCHARINFO_ACEPTAR":{
 		"TEXTO":"Aceptar"
+	},
+	"FRMCOMERCIAR_COMPRAR":{
+		"TEXTO":"Comprar"
+	},
+    "FRMCOMERCIAR_VENDER":{
+		"TEXTO":"Vender"
 	}
 }

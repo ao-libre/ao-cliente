@@ -89,32 +89,66 @@ Begin VB.Form frmComerciar
       Top             =   1965
       Width           =   2400
    End
+   Begin AOLibre.uAOButton imgComprar 
+      Height          =   495
+      Left            =   480
+      TabIndex        =   7
+      Top             =   6000
+      Width           =   2655
+      _ExtentX        =   4683
+      _ExtentY        =   873
+      TX              =   "Comprar"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmComerciar.frx":0000
+      PICF            =   "frmComerciar.frx":0A2A
+      PICH            =   "frmComerciar.frx":16EC
+      PICV            =   "frmComerciar.frx":267E
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   14.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton imgVender 
+      Height          =   495
+      Left            =   3840
+      TabIndex        =   8
+      Top             =   6000
+      Width           =   2655
+      _ExtentX        =   4683
+      _ExtentY        =   873
+      TX              =   "Vender"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmComerciar.frx":3580
+      PICF            =   "frmComerciar.frx":3FAA
+      PICH            =   "frmComerciar.frx":4C6C
+      PICV            =   "frmComerciar.frx":5BFE
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   14.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
    Begin VB.Image imgCross 
       Height          =   450
       Left            =   6075
-      MouseIcon       =   "frmComerciar.frx":0000
+      MouseIcon       =   "frmComerciar.frx":6B00
       MousePointer    =   99  'Custom
       Tag             =   "1"
       Top             =   360
       Width           =   450
-   End
-   Begin VB.Image imgVender 
-      Height          =   465
-      Left            =   3840
-      MouseIcon       =   "frmComerciar.frx":030A
-      MousePointer    =   99  'Custom
-      Tag             =   "1"
-      Top             =   6000
-      Width           =   2580
-   End
-   Begin VB.Image imgComprar 
-      Height          =   465
-      Left            =   510
-      MouseIcon       =   "frmComerciar.frx":045C
-      MousePointer    =   99  'Custom
-      Tag             =   "1"
-      Top             =   6030
-      Width           =   2580
    End
    Begin VB.Label Label1 
       AutoSize        =   -1  'True
@@ -298,26 +332,16 @@ Private Sub LoadButtons()
     
     GrhPath = DirGraficos
 
-    Set cBotonVender = New clsGraphicalButton
-    Set cBotonComprar = New clsGraphicalButton
     Set cBotonCruz = New clsGraphicalButton
     
     Set LastButtonPressed = New clsGraphicalButton
     
-    
-    Call cBotonVender.Initialize(imgVender, GrhPath & "BotonVender.jpg", _
-                                    GrhPath & "BotonVenderRollover.jpg", _
-                                    GrhPath & "BotonVenderClick.jpg", Me)
-
-    Call cBotonComprar.Initialize(imgComprar, GrhPath & "BotonComprar.jpg", _
-                                    GrhPath & "BotonComprarRollover.jpg", _
-                                    GrhPath & "BotonComprarClick.jpg", Me)
-
     Call cBotonCruz.Initialize(imgCross, "", _
                                     GrhPath & "BotonCruzApretadaComercio.jpg", _
                                     GrhPath & "BotonCruzApretadaComercio.jpg", Me)
-
-
+                                    
+    Me.imgComprar.Caption = JsonLanguage.Item("FRMCOMERCIAR_COMPRAR").Item("TEXTO")
+    Me.imgVender.Caption = JsonLanguage.Item("FRMCOMERCIAR_VENDER").Item("TEXTO")
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
@@ -410,7 +434,7 @@ Private Sub picInvNpc_Click()
     ClickNpcInv = True
     InvComUsu.DeselectItem
     
-    Label1(0).Caption = NPCInventory(ItemSlot).Name
+    Label1(0).Caption = NPCInventory(ItemSlot).name
     Label1(1).Caption = "Precio: " & CalculateSellPrice(NPCInventory(ItemSlot).Valor, Val(cantidad.Text)) 'No mostramos numeros reales
     
     If NPCInventory(ItemSlot).Amount <> 0 Then
