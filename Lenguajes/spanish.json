@@ -1221,5 +1221,20 @@
 	},
     "FRMCANTIDAD_TIRAR_TODO":{
 		"TEXTO":"Tirar Todo"
+	},
+	"FRMCHARINFO_CERRAR":{
+		"TEXTO":"Cerrar"
+	},
+    "FRMCHARINFO_ECHAR":{
+		"TEXTO":"Echar"
+	},
+    "FRMCHARINFO_PETICION":{
+		"TEXTO":"Peticion"
+	},
+    "FRMCHARINFO_RECHAZAR":{
+		"TEXTO":"Rechazar"
+	},
+    "FRMCHARINFO_ACEPTAR":{
+		"TEXTO":"Aceptar"
 	}
 }

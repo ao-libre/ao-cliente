@@ -69,40 +69,135 @@ Begin VB.Form frmCharInfo
       Top             =   4695
       Width           =   5730
    End
-   Begin VB.Image imgAceptar 
-      Height          =   510
-      Left            =   5160
-      Tag             =   "1"
-      Top             =   5955
-      Width           =   1020
-   End
-   Begin VB.Image imgRechazar 
-      Height          =   510
-      Left            =   3840
-      Tag             =   "1"
-      Top             =   5955
-      Width           =   1020
-   End
-   Begin VB.Image imgPeticion 
-      Height          =   510
-      Left            =   2640
-      Tag             =   "1"
-      Top             =   5955
-      Width           =   1020
-   End
-   Begin VB.Image imgEchar 
-      Height          =   510
-      Left            =   1440
-      Tag             =   "1"
-      Top             =   5955
-      Width           =   1020
-   End
-   Begin VB.Image imgCerrar 
-      Height          =   510
+   Begin AOLibre.uAOButton imgCerrar 
+      Height          =   495
       Left            =   120
-      Tag             =   "1"
-      Top             =   5955
-      Width           =   1020
+      TabIndex        =   15
+      Top             =   6000
+      Width           =   1095
+      _ExtentX        =   1931
+      _ExtentY        =   873
+      TX              =   "Cerrar"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmCharInfo.frx":0000
+      PICF            =   "frmCharInfo.frx":0A2A
+      PICH            =   "frmCharInfo.frx":16EC
+      PICV            =   "frmCharInfo.frx":267E
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton imgEchar 
+      Height          =   495
+      Left            =   1320
+      TabIndex        =   16
+      Top             =   6000
+      Width           =   1095
+      _ExtentX        =   1931
+      _ExtentY        =   873
+      TX              =   "Echar"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmCharInfo.frx":3580
+      PICF            =   "frmCharInfo.frx":3FAA
+      PICH            =   "frmCharInfo.frx":4C6C
+      PICV            =   "frmCharInfo.frx":5BFE
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton imgPeticion 
+      Height          =   495
+      Left            =   2640
+      TabIndex        =   17
+      Top             =   6000
+      Width           =   1095
+      _ExtentX        =   1931
+      _ExtentY        =   873
+      TX              =   "Peticion"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmCharInfo.frx":6B00
+      PICF            =   "frmCharInfo.frx":752A
+      PICH            =   "frmCharInfo.frx":81EC
+      PICV            =   "frmCharInfo.frx":917E
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton imgRechazar 
+      Height          =   495
+      Left            =   3960
+      TabIndex        =   18
+      Top             =   6000
+      Width           =   1095
+      _ExtentX        =   1931
+      _ExtentY        =   873
+      TX              =   "Rechazar"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmCharInfo.frx":A080
+      PICF            =   "frmCharInfo.frx":AAAA
+      PICH            =   "frmCharInfo.frx":B76C
+      PICV            =   "frmCharInfo.frx":C6FE
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton imgAceptar 
+      Height          =   495
+      Left            =   5160
+      TabIndex        =   19
+      Top             =   6000
+      Width           =   1095
+      _ExtentX        =   1931
+      _ExtentY        =   873
+      TX              =   "Aceptar"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmCharInfo.frx":D600
+      PICF            =   "frmCharInfo.frx":E02A
+      PICH            =   "frmCharInfo.frx":ECEC
+      PICV            =   "frmCharInfo.frx":FC7E
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
    Begin VB.Label status 
       BackStyle       =   0  'Transparent
@@ -402,48 +497,11 @@ Private Sub Form_Load()
     
     Me.Picture = LoadPicture(App.path & "\Graficos\VentanaInfoPj.jpg")
     
-    Call LoadButtons
-    
-End Sub
-
-Private Sub LoadButtons()
-    Dim GrhPath As String
-    
-    GrhPath = DirGraficos
-
-    Set cBotonCerrar = New clsGraphicalButton
-    Set cBotonPeticion = New clsGraphicalButton
-    Set cBotonRechazar = New clsGraphicalButton
-    Set cBotonEchar = New clsGraphicalButton
-    Set cBotonAceptar = New clsGraphicalButton
-    
-    Set LastButtonPressed = New clsGraphicalButton
-    
-    
-    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarInfoChar.jpg", _
-                                    GrhPath & "BotonCerrarRolloverInfoChar.jpg", _
-                                    GrhPath & "BotonCerrarClickInfoChar.jpg", Me)
-
-    Call cBotonPeticion.Initialize(imgPeticion, GrhPath & "BotonPeticion.jpg", _
-                                    GrhPath & "BotonPeticionRollover.jpg", _
-                                    GrhPath & "BotonPeticionClick.jpg", Me)
-
-    Call cBotonRechazar.Initialize(imgRechazar, GrhPath & "BotonRechazar.jpg", _
-                                    GrhPath & "BotonRechazarRollover.jpg", _
-                                    GrhPath & "BotonRechazarClick.jpg", Me)
-
-    Call cBotonEchar.Initialize(imgEchar, GrhPath & "BotonEchar.jpg", _
-                                    GrhPath & "BotonEcharRollover.jpg", _
-                                    GrhPath & "BotonEcharClick.jpg", Me)
-                                    
-    Call cBotonAceptar.Initialize(imgAceptar, GrhPath & "BotonAceptarInfoChar.jpg", _
-                                    GrhPath & "BotonAceptarRolloverInfoChar.jpg", _
-                                    GrhPath & "BotonAceptarClickInfoChar.jpg", Me)
-
-End Sub
-
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastButtonPressed.ToggleToNormal
+    imgCerrar.Caption = JsonLanguage.Item("FRMCHARINFO_CERRAR").Item("TEXTO")
+    imgEchar.Caption = JsonLanguage.Item("FRMCHARINFO_ECHAR").Item("TEXTO")
+    imgPeticion.Caption = JsonLanguage.Item("FRMCHARINFO_PETICION").Item("TEXTO")
+    imgRechazar.Caption = JsonLanguage.Item("FRMCHARINFO_RECHAZAR").Item("TEXTO")
+    imgAceptar.Caption = JsonLanguage.Item("FRMCHARINFO_ACEPTAR").Item("TEXTO")
 End Sub
 
 Private Sub imgAceptar_Click()
