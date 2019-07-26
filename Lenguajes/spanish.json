@@ -1258,6 +1258,15 @@
     "FRN_CREARCUENTA_MENSAJE":{
 		"TEXTO":"Utilize un email real para recibir correctamente los correos"
 	},
+	"FRN_CREARCUENTA_EMAIL":{
+		"TEXTO":"Email"
+	},
+	"FRN_CREARCUENTA_PASSWORD":{
+		"TEXTO":"Password"
+	},
+	"FRN_CREARCUENTA_REPETIR_PASSWORD":{
+		"TEXTO":"Repetir Password"
+	},
 	"FRM_CREARPERSONAJE_TIRARDADOS":{
 		"TEXTO":"Tirar Dados"
 	},

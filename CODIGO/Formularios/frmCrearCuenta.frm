@@ -126,6 +126,36 @@ Begin VB.Form frmCrearCuenta
          Strikethrough   =   0   'False
       EndProperty
    End
+   Begin VB.Label lblRepetirPassword 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Repetir Password"
+      ForeColor       =   &H8000000B&
+      Height          =   375
+      Left            =   120
+      TabIndex        =   8
+      Top             =   3120
+      Width           =   1095
+   End
+   Begin VB.Label lblPassword 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Password"
+      ForeColor       =   &H8000000B&
+      Height          =   375
+      Left            =   240
+      TabIndex        =   7
+      Top             =   2520
+      Width           =   1095
+   End
+   Begin VB.Label lblEmail 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Email"
+      ForeColor       =   &H8000000B&
+      Height          =   375
+      Left            =   720
+      TabIndex        =   6
+      Top             =   2040
+      Width           =   1095
+   End
    Begin VB.Label lblMensaje 
       BackStyle       =   0  'Transparent
       Caption         =   "Utilize un email real para recibir correctamente los correos"
@@ -160,7 +190,13 @@ Private Sub Form_Load()
     txtCuentaEmail.Text = vbNullString
     txtCuentaPassword.Text = vbNullString
     txtCuentaRepite.Text = vbNullString
-    LoadButtons
+    
+    Me.imgCrearCuenta.Caption = JsonLanguage.Item("FRN_CREARCUENTA_CREARCUENTA").Item("TEXTO")
+    Me.imgSalir.Caption = JsonLanguage.Item("FRN_CREARCUENTA_SALIR").Item("TEXTO")
+    Me.lblMensaje.Caption = JsonLanguage.Item("FRN_CREARCUENTA_MENSAJE").Item("TEXTO")
+    Me.lblEmail.Caption = JsonLanguage.Item("FRN_CREARCUENTA_EMAIL").Item("TEXTO")
+    Me.lblPassword.Caption = JsonLanguage.Item("FRN_CREARCUENTA_PASSWORD").Item("TEXTO")
+    Me.lblRepetirPassword.Caption = JsonLanguage.Item("FRN_CREARCUENTA_REPETIR_PASSWORD").Item("TEXTO")
 End Sub
 
 Private Sub imgCrearCuenta_Click()
@@ -177,10 +213,6 @@ End Sub
 
 Private Sub imgSalir_Click()
     Unload Me
-End Sub
-
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Function IsFormValid() As Boolean
@@ -212,16 +244,3 @@ Private Function IsFormValid() As Boolean
     
     IsFormValid = True
 End Function
-
-Private Sub LoadButtons()
-    
-    Dim GrhPath As String
-    
-    GrhPath = DirGraficos
-        
-    Set LastButtonPressed = New clsGraphicalButton
-
-    Me.imgCrearCuenta.Caption = JsonLanguage.Item("FRN_CREARCUENTA_CREARCUENTA").Item("TEXTO")
-    Me.imgSalir.Caption = JsonLanguage.Item("FRN_CREARCUENTA_SALIR").Item("TEXTO")
-    Me.lblMensaje.Caption = JsonLanguage.Item("FRN_CREARCUENTA_MENSAJE").Item("TEXTO")
-End Sub
