@@ -12,6 +12,7 @@ Begin VB.Form frmComerciar
    MaxButton       =   0   'False
    MinButton       =   0   'False
    MousePointer    =   99  'Custom
+   Picture         =   "frmComerciar.frx":0000
    ScaleHeight     =   486
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   462
@@ -101,10 +102,10 @@ Begin VB.Form frmComerciar
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmComerciar.frx":0000
-      PICF            =   "frmComerciar.frx":0A2A
-      PICH            =   "frmComerciar.frx":16EC
-      PICV            =   "frmComerciar.frx":267E
+      PICE            =   "frmComerciar.frx":28A9B
+      PICF            =   "frmComerciar.frx":294C5
+      PICH            =   "frmComerciar.frx":2A187
+      PICV            =   "frmComerciar.frx":2B119
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   14.25
@@ -127,10 +128,10 @@ Begin VB.Form frmComerciar
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmComerciar.frx":3580
-      PICF            =   "frmComerciar.frx":3FAA
-      PICH            =   "frmComerciar.frx":4C6C
-      PICV            =   "frmComerciar.frx":5BFE
+      PICE            =   "frmComerciar.frx":2C01B
+      PICF            =   "frmComerciar.frx":2CA45
+      PICH            =   "frmComerciar.frx":2D707
+      PICV            =   "frmComerciar.frx":2E699
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   14.25
@@ -144,7 +145,7 @@ Begin VB.Form frmComerciar
    Begin VB.Image imgCross 
       Height          =   450
       Left            =   6075
-      MouseIcon       =   "frmComerciar.frx":6B00
+      MouseIcon       =   "frmComerciar.frx":2F59B
       MousePointer    =   99  'Custom
       Tag             =   "1"
       Top             =   360
