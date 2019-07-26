@@ -10,6 +10,7 @@ Begin VB.Form frmCambiaMotd
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmCambiaMotd.frx":0000
    ScaleHeight     =   361
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   345
@@ -29,12 +30,262 @@ Begin VB.Form frmCambiaMotd
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   2250
-      Left            =   435
+      Left            =   480
       MultiLine       =   -1  'True
       ScrollBars      =   3  'Both
       TabIndex        =   0
-      Top             =   795
+      Top             =   840
       Width           =   4290
+   End
+   Begin AOLibre.uAOButton imgAceptar 
+      Height          =   375
+      Left            =   480
+      TabIndex        =   2
+      Top             =   4800
+      Width           =   4455
+      _ExtentX        =   7858
+      _ExtentY        =   661
+      TX              =   "Aceptar"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmCambiaMotd.frx":21188
+      PICF            =   "frmCambiaMotd.frx":21BB2
+      PICH            =   "frmCambiaMotd.frx":22874
+      PICV            =   "frmCambiaMotd.frx":23806
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   12
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton imgAzul 
+      Height          =   375
+      Left            =   480
+      TabIndex        =   5
+      Top             =   3240
+      Width           =   855
+      _ExtentX        =   1508
+      _ExtentY        =   661
+      TX              =   "Azul"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmCambiaMotd.frx":24708
+      PICF            =   "frmCambiaMotd.frx":25132
+      PICH            =   "frmCambiaMotd.frx":25DF4
+      PICV            =   "frmCambiaMotd.frx":26D86
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   9
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton imgRojo 
+      Height          =   375
+      Left            =   1560
+      TabIndex        =   6
+      Top             =   3240
+      Width           =   855
+      _ExtentX        =   1508
+      _ExtentY        =   661
+      TX              =   "Rojo"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmCambiaMotd.frx":27C88
+      PICF            =   "frmCambiaMotd.frx":286B2
+      PICH            =   "frmCambiaMotd.frx":29374
+      PICV            =   "frmCambiaMotd.frx":2A306
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   9
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton imgBlanco 
+      Height          =   375
+      Left            =   2640
+      TabIndex        =   7
+      Top             =   3240
+      Width           =   855
+      _ExtentX        =   1508
+      _ExtentY        =   661
+      TX              =   "Blanco"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmCambiaMotd.frx":2B208
+      PICF            =   "frmCambiaMotd.frx":2BC32
+      PICH            =   "frmCambiaMotd.frx":2C8F4
+      PICV            =   "frmCambiaMotd.frx":2D886
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   9
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton imgGris 
+      Height          =   375
+      Left            =   3720
+      TabIndex        =   8
+      Top             =   3240
+      Width           =   855
+      _ExtentX        =   1508
+      _ExtentY        =   661
+      TX              =   "Gris"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmCambiaMotd.frx":2E788
+      PICF            =   "frmCambiaMotd.frx":2F1B2
+      PICH            =   "frmCambiaMotd.frx":2FE74
+      PICV            =   "frmCambiaMotd.frx":30E06
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   9
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton imgMarron 
+      Height          =   375
+      Left            =   3720
+      TabIndex        =   9
+      Top             =   3720
+      Width           =   855
+      _ExtentX        =   1508
+      _ExtentY        =   661
+      TX              =   "Marron"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmCambiaMotd.frx":31D08
+      PICF            =   "frmCambiaMotd.frx":32732
+      PICH            =   "frmCambiaMotd.frx":333F4
+      PICV            =   "frmCambiaMotd.frx":34386
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   9
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton imgVerde 
+      Height          =   375
+      Left            =   2640
+      TabIndex        =   10
+      Top             =   3720
+      Width           =   855
+      _ExtentX        =   1508
+      _ExtentY        =   661
+      TX              =   "Verde"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmCambiaMotd.frx":35288
+      PICF            =   "frmCambiaMotd.frx":35CB2
+      PICH            =   "frmCambiaMotd.frx":36974
+      PICV            =   "frmCambiaMotd.frx":37906
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   9
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton imgMorado 
+      Height          =   375
+      Left            =   1560
+      TabIndex        =   11
+      Top             =   3720
+      Width           =   855
+      _ExtentX        =   1508
+      _ExtentY        =   661
+      TX              =   "Morado"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmCambiaMotd.frx":38808
+      PICF            =   "frmCambiaMotd.frx":39232
+      PICH            =   "frmCambiaMotd.frx":39EF4
+      PICV            =   "frmCambiaMotd.frx":3AE86
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   9
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton imgAmarillo 
+      Height          =   375
+      Left            =   480
+      TabIndex        =   12
+      Top             =   3720
+      Width           =   855
+      _ExtentX        =   1508
+      _ExtentY        =   661
+      TX              =   "Amarillo"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmCambiaMotd.frx":3BD88
+      PICF            =   "frmCambiaMotd.frx":3C7B2
+      PICH            =   "frmCambiaMotd.frx":3D474
+      PICV            =   "frmCambiaMotd.frx":3E406
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   9
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin VB.Label lblNegrita 
+      Caption         =   "Negrita"
+      Height          =   255
+      Left            =   240
+      TabIndex        =   4
+      Top             =   4320
+      Width           =   855
+   End
+   Begin VB.Label lblCursiva 
+      Caption         =   "Cursiva"
+      Height          =   255
+      Left            =   4080
+      TabIndex        =   3
+      Top             =   4320
+      Width           =   855
    End
    Begin VB.Image imgOptCursiva 
       Height          =   255
@@ -42,6 +293,14 @@ Begin VB.Form frmCambiaMotd
       Left            =   3360
       Top             =   4320
       Width           =   615
+   End
+   Begin VB.Label Label1 
+      Caption         =   "No olvides agregar los colores al final de cada linea (Ver tabla de abajo)"
+      Height          =   495
+      Left            =   480
+      TabIndex        =   1
+      Top             =   120
+      Width           =   4335
    End
    Begin VB.Image imgOptNegrita 
       Height          =   255
@@ -63,60 +322,6 @@ Begin VB.Form frmCambiaMotd
       Left            =   1170
       Top             =   4380
       Width           =   180
-   End
-   Begin VB.Image imgAceptar 
-      Height          =   375
-      Left            =   480
-      Top             =   4800
-      Width           =   4350
-   End
-   Begin VB.Image imgMarron 
-      Height          =   375
-      Left            =   3720
-      Top             =   3720
-      Width           =   855
-   End
-   Begin VB.Image imgVerde 
-      Height          =   375
-      Left            =   2640
-      Top             =   3720
-      Width           =   855
-   End
-   Begin VB.Image imgMorado 
-      Height          =   375
-      Left            =   1560
-      Top             =   3720
-      Width           =   855
-   End
-   Begin VB.Image imgAmarillo 
-      Height          =   375
-      Left            =   480
-      Top             =   3720
-      Width           =   855
-   End
-   Begin VB.Image imgGris 
-      Height          =   375
-      Left            =   3720
-      Top             =   3240
-      Width           =   855
-   End
-   Begin VB.Image imgBlanco 
-      Height          =   375
-      Left            =   2640
-      Top             =   3240
-      Width           =   855
-   End
-   Begin VB.Image imgRojo 
-      Height          =   375
-      Left            =   1560
-      Top             =   3240
-      Width           =   855
-   End
-   Begin VB.Image imgAzul 
-      Height          =   375
-      Left            =   480
-      Top             =   3240
-      Width           =   855
    End
 End
 Attribute VB_Name = "frmCambiaMotd"
@@ -328,7 +533,18 @@ Private Sub imgRojo_Click()
     txtMotd.Text = txtMotd & "~255~0~0~" & CStr(yNegrita) & "~" & CStr(yCursiva)
 End Sub
 
+Private Sub imgTirarTodo_Click()
+
+End Sub
+
 Private Sub imgVerde_Click()
     txtMotd.Text = txtMotd & "~23~104~26~" & CStr(yNegrita) & "~" & CStr(yCursiva)
 End Sub
 
+Private Sub txtMotd_Change()
+
+End Sub
+
+Private Sub uAOButton1_Click()
+
+End Sub
