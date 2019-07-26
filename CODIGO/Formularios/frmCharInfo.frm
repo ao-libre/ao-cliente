@@ -792,6 +792,7 @@ Private Sub Form_Load()
     Me.lblReputacion.Caption = JsonLanguage.Item("FRM_CHARINFO_REPUTACION").Item("TEXTO")
     Me.lblClanes.Caption = JsonLanguage.Item("FRM_CHARINFO_LBLCLANES").Item("TEXTO")
     Me.lblClanesParticipo.Caption = JsonLanguage.Item("FRM_CHARINFO_LBLCLANESPARTICIPO").Item("TEXTO")
+    Me.lblUltimasMembresias.Caption = JsonLanguage.Item("FRM_CHARINFO_LBLCLANESMEMBRESIAS").Item("TEXTO")
 End Sub
 
 Private Sub imgAceptar_Click()

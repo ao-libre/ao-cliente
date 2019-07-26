@@ -1369,4 +1369,7 @@
     "FRM_CHARINFO_ACEPTAR":{
 		"TEXTO":"Aceptar"
 	},
+	"FRM_CHARINFO_LBLCLANESMEMBRESIAS":{
+		"TEXTO":"Ultimas Membresias Solicitadas"
+	}
 }
