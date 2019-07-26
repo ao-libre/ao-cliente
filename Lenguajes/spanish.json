@@ -1371,5 +1371,23 @@
 	},
 	"FRM_CHARINFO_LBLCLANESMEMBRESIAS":{
 		"TEXTO":"Ultimas Membresias Solicitadas"
-	}
+	},
+	"FRM_COMERCIARUSU_LBLINVENTARIO":{
+		"TEXTO":"Inventario"
+	},
+	"FRM_COMERCIARUSU_LBLTUOFERTA":{
+		"TEXTO":"Tu Oferta"
+	},
+    "FRM_COMERCIARUSU_AGREGAR":{
+		"TEXTO":"Agregar"
+	},
+    "FRM_COMERCIARUSU_QUITAR":{
+		"TEXTO":"Quitar"
+	},
+    "FRM_COMERCIARUSU_CHAT":{
+		"TEXTO":"Chat"
+   	},
+    "FRM_COMERCIARUSU_LBLSUOFERTA":{
+		"TEXTO":"Su Oferta"
+    }
 }
