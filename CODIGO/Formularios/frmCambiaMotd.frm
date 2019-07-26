@@ -294,7 +294,7 @@ Begin VB.Form frmCambiaMotd
       Top             =   4320
       Width           =   615
    End
-   Begin VB.Label Label1 
+   Begin VB.Label lblTitle 
       Caption         =   "No olvides agregar los colores al final de cada linea (Ver tabla de abajo)"
       Height          =   495
       Left            =   480
@@ -352,16 +352,6 @@ Option Explicit
 
 Private clsFormulario As clsFormMovementManager
 
-Private cBotonAzul As clsGraphicalButton
-Private cBotonRojo As clsGraphicalButton
-Private cBotonBlanco As clsGraphicalButton
-Private cBotonGris As clsGraphicalButton
-Private cBotonAmarillo As clsGraphicalButton
-Private cBotonMorado As clsGraphicalButton
-Private cBotonVerde As clsGraphicalButton
-Private cBotonMarron As clsGraphicalButton
-Private cBotonAceptar As clsGraphicalButton
-
 Public LastButtonPressed As clsGraphicalButton
 
 Private picNegrita As Picture
@@ -377,65 +367,18 @@ Private Sub Form_Load()
     
     Me.Picture = LoadPicture(DirGraficos & "VentanaCambioMOTD.jpg")
     
-    Call LoadButtons
-End Sub
-
-Private Sub LoadButtons()
-    Dim GrhPath As String
-    
-    GrhPath = DirGraficos
-
-    Set cBotonAzul = New clsGraphicalButton
-    Set cBotonRojo = New clsGraphicalButton
-    Set cBotonBlanco = New clsGraphicalButton
-    Set cBotonGris = New clsGraphicalButton
-    Set cBotonAmarillo = New clsGraphicalButton
-    Set cBotonMorado = New clsGraphicalButton
-    Set cBotonVerde = New clsGraphicalButton
-    Set cBotonMarron = New clsGraphicalButton
-    Set cBotonAceptar = New clsGraphicalButton
-    
-    Set LastButtonPressed = New clsGraphicalButton
-    
-    
-    Call cBotonAzul.Initialize(imgAzul, GrhPath & "BotonAzul.jpg", _
-                                    GrhPath & "BotonAzulRollover.jpg", _
-                                    GrhPath & "BotonAzulClick.jpg", Me)
-
-    Call cBotonRojo.Initialize(imgRojo, GrhPath & "BotonRojo.jpg", _
-                                    GrhPath & "BotonRojoRollover.jpg", _
-                                    GrhPath & "BotonRojoClick.jpg", Me)
-
-    Call cBotonBlanco.Initialize(imgBlanco, GrhPath & "BotonBlanco.jpg", _
-                                    GrhPath & "BotonBlancoRollover.jpg", _
-                                    GrhPath & "BotonBlancoClick.jpg", Me)
-
-    Call cBotonGris.Initialize(imgGris, GrhPath & "BotonGris.jpg", _
-                                    GrhPath & "BotonGrisRollover.jpg", _
-                                    GrhPath & "BotonGrisClick.jpg", Me)
-                                    
-    Call cBotonAmarillo.Initialize(imgAmarillo, GrhPath & "BotonAmarillo.jpg", _
-                                    GrhPath & "BotonAmarilloRollover.jpg", _
-                                    GrhPath & "BotonAmarilloClick.jpg", Me)
-
-    Call cBotonMorado.Initialize(imgMorado, GrhPath & "BotonMorado.jpg", _
-                                    GrhPath & "BotonMoradoRollover.jpg", _
-                                    GrhPath & "BotonMoradoClick.jpg", Me)
-
-    Call cBotonVerde.Initialize(imgVerde, GrhPath & "BotonVerde.jpg", _
-                                    GrhPath & "BotonVerdeRollover.jpg", _
-                                    GrhPath & "BotonVerdeClick.jpg", Me)
-
-    Call cBotonMarron.Initialize(imgMarron, GrhPath & "BotonMarron.jpg", _
-                                    GrhPath & "BotonMarronRollover.jpg", _
-                                    GrhPath & "BotonMarronClick.jpg", Me)
-
-    Call cBotonAceptar.Initialize(imgAceptar, GrhPath & "BotonAceptarMotd.jpg", _
-                                    GrhPath & "BotonAceptarRolloverMotd.jpg", _
-                                    GrhPath & "BotonAceptarClickMotd.jpg", Me)
-                                    
-    Set picNegrita = LoadPicture(DirGraficos & "OpcionPrendidaN.jpg")
-    Set picCursiva = LoadPicture(DirGraficos & "OpcionPrendidaC.jpg")
+    Me.lblTitle.Caption = JsonLanguage.Item("FRM_CAMBIAMOTD_TITLE").Item("TEXTO")
+    Me.imgAzul.Caption = JsonLanguage.Item("FRM_CAMBIAMOTD_AZUL").Item("TEXTO")
+    Me.imgRojo.Caption = JsonLanguage.Item("FRM_CAMBIAMOTD_ROJO").Item("TEXTO")
+    Me.imgBlanco.Caption = JsonLanguage.Item("FRM_CAMBIAMOTD_BLANCO").Item("TEXTO")
+    Me.imgGris.Caption = JsonLanguage.Item("FRM_CAMBIAMOTD_GRIS").Item("TEXTO")
+    Me.imgAmarillo.Caption = JsonLanguage.Item("FRM_CAMBIAMOTD_AMARILLO").Item("TEXTO")
+    Me.imgMorado.Caption = JsonLanguage.Item("FRM_CAMBIAMOTD_MORADO").Item("TEXTO")
+    Me.imgVerde.Caption = JsonLanguage.Item("FRM_CAMBIAMOTD_VERDE").Item("TEXTO")
+    Me.imgMarron.Caption = JsonLanguage.Item("FRM_CAMBIAMOTD_MARRON").Item("TEXTO")
+    Me.imgAceptar.Caption = JsonLanguage.Item("FRM_BANCOOBJ_INVENTARIO").Item("TEXTO")
+    Me.lblCursiva.Caption = JsonLanguage.Item("FRM_CAMBIAMOTD_CURSIVA").Item("TEXTO")
+    Me.lblNegrita.Caption = JsonLanguage.Item("FRM_CAMBIAMOTD_NEGRITA").Item("TEXTO")
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
@@ -533,18 +476,8 @@ Private Sub imgRojo_Click()
     txtMotd.Text = txtMotd & "~255~0~0~" & CStr(yNegrita) & "~" & CStr(yCursiva)
 End Sub
 
-Private Sub imgTirarTodo_Click()
-
-End Sub
-
 Private Sub imgVerde_Click()
     txtMotd.Text = txtMotd & "~23~104~26~" & CStr(yNegrita) & "~" & CStr(yCursiva)
 End Sub
 
-Private Sub txtMotd_Change()
 
-End Sub
-
-Private Sub uAOButton1_Click()
-
-End Sub

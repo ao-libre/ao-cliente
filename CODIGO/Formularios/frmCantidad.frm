@@ -12,6 +12,7 @@ Begin VB.Form frmCantidad
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmCantidad.frx":0000
    ScaleHeight     =   98
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   216
@@ -49,10 +50,10 @@ Begin VB.Form frmCantidad
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmCantidad.frx":0000
-      PICF            =   "frmCantidad.frx":0A2A
-      PICH            =   "frmCantidad.frx":16EC
-      PICV            =   "frmCantidad.frx":267E
+      PICE            =   "frmCantidad.frx":87FE
+      PICF            =   "frmCantidad.frx":9228
+      PICH            =   "frmCantidad.frx":9EEA
+      PICV            =   "frmCantidad.frx":AE7C
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   8.25
@@ -75,10 +76,10 @@ Begin VB.Form frmCantidad
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmCantidad.frx":3580
-      PICF            =   "frmCantidad.frx":3FAA
-      PICH            =   "frmCantidad.frx":4C6C
-      PICV            =   "frmCantidad.frx":5BFE
+      PICE            =   "frmCantidad.frx":BD7E
+      PICF            =   "frmCantidad.frx":C7A8
+      PICH            =   "frmCantidad.frx":D46A
+      PICV            =   "frmCantidad.frx":E3FC
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   8.25
@@ -88,6 +89,14 @@ Begin VB.Form frmCantidad
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+   End
+   Begin VB.Label lblTitle 
+      Caption         =   "Escriba la cantidad"
+      Height          =   255
+      Left            =   720
+      TabIndex        =   3
+      Top             =   120
+      Width           =   1935
    End
 End
 Attribute VB_Name = "frmCantidad"
@@ -138,8 +147,9 @@ Private Sub Form_Load()
     
     Me.Picture = LoadPicture(App.path & "\graficos\VentanaTirarOro.jpg")
     
-    imgTirar.Caption = JsonLanguage.Item("FRMCANTIDAD_TIRAR").Item("TEXTO")
-    imgTirarTodo.Caption = JsonLanguage.Item("FRMCANTIDAD_TIRAR_TODO").Item("TEXTO")
+    imgTirar.Caption = JsonLanguage.Item("FRM_CANTIDAD_TIRAR").Item("TEXTO")
+    imgTirarTodo.Caption = JsonLanguage.Item("FRM_CANTIDAD_TIRAR_TODO").Item("TEXTO")
+    lblTitle.Caption = JsonLanguage.Item("FRM_CANTIDAD_TITLE").Item("TEXTO")
 End Sub
 
 Private Sub imgTirar_Click()

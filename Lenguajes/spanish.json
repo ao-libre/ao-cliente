@@ -1216,11 +1216,14 @@
     "FRMBUSCAR_LIMPIARLISTAS":{
 		"TEXTO":"Limpiar Listas"
 	},
-	"FRMCANTIDAD_TIRAR":{
+	"FRM_CANTIDAD_TIRAR":{
 		"TEXTO":"Tirar"
 	},
-    "FRMCANTIDAD_TIRAR_TODO":{
+    "FRM_CANTIDAD_TIRAR_TODO":{
 		"TEXTO":"Tirar Todo"
+	},
+	"FRM_CANTIDAD_TITLE":{
+		"TEXTO":"Escriba la cantidad"
 	},
 	"FRMCHARINFO_CERRAR":{
 		"TEXTO":"Cerrar"
@@ -1326,5 +1329,44 @@
     },
     "FRM_BANCOOBJ_INVENTARIO":{
 		"TEXTO":"Inventario"
+	},
+	"FRM_CAMBIAMOTD_TITLE":{
+		"TEXTO":"No olvides agregar los colores al final de cada linea (Ver tabla de abajo)"
+	},
+    "FRM_CAMBIAMOTD_AZUL":{
+		"TEXTO":"Azul"
+	},
+    "FRM_CAMBIAMOTD_ROJO":{
+		"TEXTO":"Rojo"
+	},
+    "FRM_CAMBIAMOTD_BLANCO":{
+		"TEXTO":"Blanco"
+   	},
+    "FRM_CAMBIAMOTD_GRIS":{
+		"TEXTO":"Gris"
+    },
+    "FRM_CAMBIAMOTD_AMARILLO":{
+		"TEXTO":"Amarillo"
+    },
+    "FRM_CAMBIAMOTD_MORADO":{
+		"TEXTO":"Morado"
+	},
+    "FRM_CAMBIAMOTD_MORADO":{
+		"TEXTO":"Morado"
+	},
+    "FRM_CAMBIAMOTD_VERDE":{
+		"TEXTO":"Verde"
+	},
+    "FRM_CAMBIAMOTD_MARRON":{
+		"TEXTO":"Marron"
+	},
+    "FRM_CAMBIAMOTD_CURSIVA":{
+		"TEXTO":"Marron"
+	},
+    "FRM_CAMBIAMOTD_NEGRITA":{
+		"TEXTO":"Negrita"
+	},
+	"FRM_CAMBIAMOTD_ACEPTAR":{
+		"TEXTO":"Aceptar"
 	}
 }
