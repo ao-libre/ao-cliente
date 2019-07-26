@@ -1225,21 +1225,6 @@
 	"FRM_CANTIDAD_TITLE":{
 		"TEXTO":"Escriba la cantidad"
 	},
-	"FRMCHARINFO_CERRAR":{
-		"TEXTO":"Cerrar"
-	},
-    "FRMCHARINFO_ECHAR":{
-		"TEXTO":"Echar"
-	},
-    "FRMCHARINFO_PETICION":{
-		"TEXTO":"Peticion"
-	},
-    "FRMCHARINFO_RECHAZAR":{
-		"TEXTO":"Rechazar"
-	},
-    "FRMCHARINFO_ACEPTAR":{
-		"TEXTO":"Aceptar"
-	},
 	"FRMCOMERCIAR_COMPRAR":{
 		"TEXTO":"Comprar"
 	},
@@ -1368,5 +1353,20 @@
 	},
 	"FRM_CAMBIAMOTD_ACEPTAR":{
 		"TEXTO":"Aceptar"
-	}
+	},
+	"FRM_CHARINFO_CERRAR":{
+		"TEXTO":"Cerrar"
+	},
+    "FRM_CHARINFO_ECHAR":{
+		"TEXTO":"Echar"
+	},
+    "FRM_CHARINFO_PETICION":{
+		"TEXTO":"Peticion"
+	},
+    "FRM_CHARINFO_RECHAZAR":{
+		"TEXTO":"Rechazar"
+	},
+    "FRM_CHARINFO_ACEPTAR":{
+		"TEXTO":"Aceptar"
+	},
 }
