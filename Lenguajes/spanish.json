@@ -1305,5 +1305,26 @@
 	},
     "FRM_ENTRENADOR_SALIR":{
 		"TEXTO":"Salir"
+	},
+	"FRM_BANCOOBJ_TITLE":{
+		"TEXTO":"Oro"
+	},
+    "FRM_BANCOOBJ_DEPOSITAR":{
+		"TEXTO":"Depositar"
+	},
+    "FRM_BANCOOBJ_DISPONIBLE":{
+		"TEXTO":"Disponible"
+	},
+    "FRM_BANCOOBJ_CANTIDAD":{
+		"TEXTO":"Cantidad"
+   	},
+    "FRM_BANCOOBJ_RETIRAR":{
+		"TEXTO":"Retirar"
+    },
+    "FRM_BANCOOBJ_BOVEDA":{
+		"TEXTO":"Boveda"
+    },
+    "FRM_BANCOOBJ_INVENTARIO":{
+		"TEXTO":"Inventario"
 	}
 }
