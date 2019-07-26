@@ -11,6 +11,7 @@ Begin VB.Form frmComerciarUsu
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmComerciarUsu.frx":0000
    ScaleHeight     =   590
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   665
@@ -184,11 +185,10 @@ Begin VB.Form frmComerciarUsu
       _ExtentY        =   2858
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
-      TextRTF         =   $"frmComerciarUsu.frx":0000
+      TextRTF         =   $"frmComerciarUsu.frx":4B687
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Tahoma"
          Size            =   8.25
@@ -211,10 +211,10 @@ Begin VB.Form frmComerciarUsu
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmComerciarUsu.frx":007E
-      PICF            =   "frmComerciarUsu.frx":0AA8
-      PICH            =   "frmComerciarUsu.frx":176A
-      PICV            =   "frmComerciarUsu.frx":26FC
+      PICE            =   "frmComerciarUsu.frx":4B704
+      PICF            =   "frmComerciarUsu.frx":4C12E
+      PICH            =   "frmComerciarUsu.frx":4CDF0
+      PICV            =   "frmComerciarUsu.frx":4DD82
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   8.25
@@ -237,10 +237,10 @@ Begin VB.Form frmComerciarUsu
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmComerciarUsu.frx":35FE
-      PICF            =   "frmComerciarUsu.frx":4028
-      PICH            =   "frmComerciarUsu.frx":4CEA
-      PICV            =   "frmComerciarUsu.frx":5C7C
+      PICE            =   "frmComerciarUsu.frx":4EC84
+      PICF            =   "frmComerciarUsu.frx":4F6AE
+      PICH            =   "frmComerciarUsu.frx":50370
+      PICV            =   "frmComerciarUsu.frx":51302
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   8.25
@@ -263,10 +263,10 @@ Begin VB.Form frmComerciarUsu
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmComerciarUsu.frx":6B7E
-      PICF            =   "frmComerciarUsu.frx":75A8
-      PICH            =   "frmComerciarUsu.frx":826A
-      PICV            =   "frmComerciarUsu.frx":91FC
+      PICE            =   "frmComerciarUsu.frx":52204
+      PICF            =   "frmComerciarUsu.frx":52C2E
+      PICH            =   "frmComerciarUsu.frx":538F0
+      PICV            =   "frmComerciarUsu.frx":54882
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   8.25
@@ -289,10 +289,10 @@ Begin VB.Form frmComerciarUsu
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmComerciarUsu.frx":A0FE
-      PICF            =   "frmComerciarUsu.frx":AB28
-      PICH            =   "frmComerciarUsu.frx":B7EA
-      PICV            =   "frmComerciarUsu.frx":C77C
+      PICE            =   "frmComerciarUsu.frx":55784
+      PICF            =   "frmComerciarUsu.frx":561AE
+      PICH            =   "frmComerciarUsu.frx":56E70
+      PICV            =   "frmComerciarUsu.frx":57E02
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   8.25
@@ -302,6 +302,90 @@ Begin VB.Form frmComerciarUsu
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+   End
+   Begin VB.Label lblQuitar 
+      Caption         =   "Quitar"
+      Height          =   375
+      Left            =   4680
+      TabIndex        =   18
+      Top             =   3000
+      Width           =   735
+   End
+   Begin VB.Label lblAgregar 
+      Caption         =   "Agregar"
+      Height          =   375
+      Left            =   4680
+      TabIndex        =   17
+      Top             =   1560
+      Width           =   735
+   End
+   Begin VB.Label lblChat 
+      Caption         =   "Chat"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   13.5
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   375
+      Left            =   600
+      TabIndex        =   16
+      Top             =   5520
+      Width           =   855
+   End
+   Begin VB.Label lblSuOferta 
+      Caption         =   "Su Oferta"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   13.5
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   375
+      Left            =   6960
+      TabIndex        =   15
+      Top             =   4560
+      Width           =   1695
+   End
+   Begin VB.Label lblTuOferta 
+      Caption         =   "Tu Oferta"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   13.5
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   375
+      Left            =   6960
+      TabIndex        =   14
+      Top             =   360
+      Width           =   1695
+   End
+   Begin VB.Label lblInventario 
+      Caption         =   "Inventario"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   13.5
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   375
+      Left            =   600
+      TabIndex        =   13
+      Top             =   360
+      Width           =   1695
    End
    Begin VB.Image imgAgregar 
       Height          =   255
@@ -344,10 +428,6 @@ Option Explicit
 
 Private clsFormulario As clsFormMovementManager
 
-Private cBotonAceptar As clsGraphicalButton
-Private cBotonCancelar As clsGraphicalButton
-Private cBotonRechazar As clsGraphicalButton
-Private cBotonConfirmar As clsGraphicalButton
 Public LastButtonPressed As clsGraphicalButton
 
 Private Const GOLD_OFFER_SLOT As Byte = INV_OFFER_SLOTS + 1
@@ -355,11 +435,11 @@ Private Const GOLD_OFFER_SLOT As Byte = INV_OFFER_SLOTS + 1
 Private sCommerceChat As String
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastButtonPressed.ToggleToNormal
+    'LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub imgAceptar_Click()
-    If Not cBotonAceptar.isEnabled Then Exit Sub  ' Deshabilitado
+    If Not Me.imgAceptar.Enabled Then Exit Sub  ' Deshabilitado
     
     Call WriteUserCommerceOk
     HabilitarAceptarRechazar False
@@ -456,7 +536,7 @@ Private Sub imgCancelar_Click()
 End Sub
 
 Private Sub imgConfirmar_Click()
-    If Not cBotonConfirmar.isEnabled Then Exit Sub  ' Deshabilitado
+    If Not Me.imgConfirmar.Enabled Then Exit Sub  ' Deshabilitado
     
     HabilitarConfirmar False
     imgAgregar.Visible = False
@@ -544,7 +624,7 @@ Private Sub imgQuitar_Click()
 End Sub
 
 Private Sub imgRechazar_Click()
-    If Not cBotonRechazar.isEnabled Then Exit Sub  ' Deshabilitado
+    If Not Me.imgRechazar.Enabled Then Exit Sub  ' Deshabilitado
     
     Call WriteUserCommerceReject
 End Sub
@@ -555,26 +635,22 @@ Private Sub Form_Load()
     clsFormulario.Initialize Me
 
     Me.Picture = LoadPicture(DirGraficos & "VentanaComercioUsuario.jpg")
-    
-    LoadButtons
+    Me.lblInventario.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_LBLINVENTARIO").Item("TEXTO")
+    Me.lblTuOferta.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_LBLTUOFERTA").Item("TEXTO")
+    Me.lblAgregar.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_AGREGAR").Item("TEXTO")
+    Me.lblQuitar.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_QUITAR").Item("TEXTO")
+    Me.lblChat.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_CHAT").Item("TEXTO")
+    Me.lblSuOferta.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_LBLSUOFERTA").Item("TEXTO")
+    Me.imgRechazar.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_RECHAZAR").Item("TEXTO")
+    Me.imgAceptar.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_ACEPTAR").Item("TEXTO")
+    Me.imgConfirmar.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_CONFIRMAR").Item("TEXTO")
+    Me.imgCancelar.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_CANCELAR").Item("TEXTO")
     
     Call PrintCommerceMsg("> " & JsonLanguage.Item("MENSAJE_COMM_INFO").Item("TEXTO").Item(1), FontTypeNames.FONTTYPE_GUILDMSG)
     Call PrintCommerceMsg("> " & JsonLanguage.Item("MENSAJE_COMM_INFO").Item("TEXTO").Item(2), FontTypeNames.FONTTYPE_GUILDMSG)
     Call PrintCommerceMsg("> " & JsonLanguage.Item("MENSAJE_COMM_INFO").Item("TEXTO").Item(3), FontTypeNames.FONTTYPE_GUILDMSG)
     Call PrintCommerceMsg("> " & JsonLanguage.Item("MENSAJE_COMM_INFO").Item("TEXTO").Item(4), FontTypeNames.FONTTYPE_GUILDMSG)
     
-End Sub
-
-Private Sub LoadButtons()
-    Dim GrhPath As String
-    GrhPath = DirGraficos
-    
-    Set LastButtonPressed = New clsGraphicalButton
-    
-    Me.imgRechazar.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_RECHAZAR").Item("TEXTO")
-    Me.imgAceptar.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_ACEPTAR").Item("TEXTO")
-    Me.imgConfirmar.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_CONFIRMAR").Item("TEXTO")
-    Me.imgCancelar.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_CANCELAR").Item("TEXTO")
 End Sub
 
 Private Sub Form_LostFocus()
@@ -592,11 +668,11 @@ Private Sub picInvComercio_Click()
 End Sub
 
 Private Sub picInvComercio_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastButtonPressed.ToggleToNormal
+    'LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub picInvOfertaOtro_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastButtonPressed.ToggleToNormal
+    'LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub picInvOfertaProp_Click()
@@ -604,7 +680,7 @@ Private Sub picInvOfertaProp_Click()
 End Sub
 
 Private Sub picInvOfertaProp_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastButtonPressed.ToggleToNormal
+    'LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub picInvOroOfertaOtro_Click()
@@ -784,10 +860,10 @@ Public Function HasAnyItem(ByRef Inventory As clsGrapchicalInventory) As Boolean
 End Function
 
 Public Sub HabilitarConfirmar(ByVal Habilitar As Boolean)
-    Call cBotonConfirmar.EnableButton(Habilitar)
+    Me.imgConfirmar.Enabled = Habilitar
 End Sub
 
 Public Sub HabilitarAceptarRechazar(ByVal Habilitar As Boolean)
-    Call cBotonAceptar.EnableButton(Habilitar)
-    Call cBotonRechazar.EnableButton(Habilitar)
+    Me.imgAceptar.Enabled = Habilitar
+    Me.imgRechazar.Enabled = Habilitar
 End Sub
