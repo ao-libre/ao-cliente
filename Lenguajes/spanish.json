@@ -1386,5 +1386,14 @@
    	},
     "FRM_COMERCIARUSU_LBLSUOFERTA":{
 		"TEXTO":"Su Oferta"
-    }
+	},
+	"FRM_COMMET_ALIANZA":{
+		"TEXTO":"Propuesta de Alianza"
+	},
+	"FRM_COMMET_PAZ":{
+		"TEXTO":"Propuesta de Paz"
+	},
+    "FRM_COMMET_RECHAZOPJ":{
+		"TEXTO":"Motivo de Rechazo"
+	}
 }

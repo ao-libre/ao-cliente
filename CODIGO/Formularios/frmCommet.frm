@@ -20,6 +20,7 @@ Begin VB.Form frmCommet
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmCommet.frx":0000
    ScaleHeight     =   218
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   337
@@ -57,10 +58,10 @@ Begin VB.Form frmCommet
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmCommet.frx":0000
-      PICF            =   "frmCommet.frx":0A2A
-      PICH            =   "frmCommet.frx":16EC
-      PICV            =   "frmCommet.frx":267E
+      PICE            =   "frmCommet.frx":DB91
+      PICF            =   "frmCommet.frx":E5BB
+      PICH            =   "frmCommet.frx":F27D
+      PICV            =   "frmCommet.frx":1020F
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   8.25
@@ -83,10 +84,10 @@ Begin VB.Form frmCommet
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmCommet.frx":3580
-      PICF            =   "frmCommet.frx":3FAA
-      PICH            =   "frmCommet.frx":4C6C
-      PICV            =   "frmCommet.frx":5BFE
+      PICE            =   "frmCommet.frx":11111
+      PICF            =   "frmCommet.frx":11B3B
+      PICH            =   "frmCommet.frx":127FD
+      PICV            =   "frmCommet.frx":1378F
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   8.25
@@ -96,6 +97,25 @@ Begin VB.Form frmCommet
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+   End
+   Begin VB.Label Label1 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Titulo del form ..."
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   12
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H8000000B&
+      Height          =   375
+      Left            =   480
+      TabIndex        =   3
+      Top             =   120
+      Width           =   2415
    End
 End
 Attribute VB_Name = "frmCommet"
@@ -140,8 +160,6 @@ Option Explicit
 Private clsFormulario As clsFormMovementManager
 Private Const MAX_PROPOSAL_LENGTH As Integer = 520
 
-Public LastButtonPressed As clsGraphicalButton
-
 Public Nombre As String
 
 Public T As TIPO
@@ -156,24 +174,12 @@ Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
-
-    Call LoadBackGround
-    Call LoadButtons
-End Sub
-
-Private Sub LoadButtons()
-    Dim GrhPath As String
     
-    GrhPath = DirGraficos
-
-    Set LastButtonPressed = New clsGraphicalButton
+    Me.Picture = LoadPicture(DirGraficos & "VentanaCommet.jpg")
     
     Me.imgEnviar.Caption = JsonLanguage.Item("FRM_COMMET_ENVIAR").Item("TEXTO")
     Me.imgCerrar.Caption = JsonLanguage.Item("FRM_COMMET_CERRAR").Item("TEXTO")
-End Sub
-
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastButtonPressed.ToggleToNormal
+    Call LoadTitle
 End Sub
 
 Private Sub imgCerrar_Click()
@@ -227,22 +233,21 @@ Private Sub Text1_Change()
         Text1.Text = Left$(Text1.Text, MAX_PROPOSAL_LENGTH)
 End Sub
 
-Private Sub LoadBackGround()
+Private Sub LoadTitle()
 
     Select Case T
         Case TIPO.ALIANZA
-            Me.Picture = LoadPicture(DirGraficos & "VentanaPropuestaAlianza.jpg")
+            Me.lblTitle.Caption = JsonLanguage.Item("FRM_COMMET_ALIANZA").Item("TEXTO")
+            'Me.Picture = LoadPicture(DirGraficos & "VentanaPropuestaAlianza.jpg")
             
         Case TIPO.PAZ
-            Me.Picture = LoadPicture(DirGraficos & "VentanaPropuestaPaz.jpg")
+            Me.lblTitle.Caption = JsonLanguage.Item("FRM_COMMET_ALIANZA").Item("TEXTO")
+            'Me.Picture = LoadPicture(DirGraficos & "VentanaPropuestaPaz.jpg")
             
         Case TIPO.RECHAZOPJ
-            Me.Picture = LoadPicture(DirGraficos & "VentanaMotivoRechazo.jpg")
+            Me.lblTitle.Caption = JsonLanguage.Item("FRM_COMMET_ALIANZA").Item("TEXTO")
+            'Me.Picture = LoadPicture(DirGraficos & "VentanaMotivoRechazo.jpg")
             
     End Select
     
-End Sub
-
-Private Sub Text1_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastButtonPressed.ToggleToNormal
 End Sub
