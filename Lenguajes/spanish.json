@@ -1044,9 +1044,6 @@
 	"AYUDA_CREARPJ_DADOS":{
 		"TEXTO":"Presionando sobre la Esfera Roja, se modificar�n al azar los atributos de tu personaje, de �sta manera puedes elegir los que m�s te parezcan para definir a tu personaje."
 	},
-	"AYUDA_CREARPJ_CORREO":{
-		"TEXTO":"Es sumamente importante que ingreses una direcci�n de correo electr�nico v�lida, ya que en el caso de perder la contrase�a de tu personaje, se te enviar� cuando lo requieras, a esa direcci�n."
-	},
 	"AYUDA_CREARPJ_NOMBREPJ":{
 		"TEXTO":"S� cuidadoso al seleccionar el nombre de tu personaje. Argentum es un juego de rol, un mundo m�gico y fant�stico, y si seleccion�s un nombre obsceno o con connotaci�n pol�tica, los administradores borrar�n tu personaje y no habr� ninguna posibilidad de recuperarlo."
 	},
@@ -1106,9 +1103,6 @@
 	},
 	"AYUDA_CREARPJ_GENERO":{
 		"TEXTO":"Indica si el personaje ser� masculino o femenino. Esto influye en los items que podr� equipar."
-	},
-	"AYUDA_CREARPJ_ALINEACION":{
-		"TEXTO":"Indica si el personaje seguir� la senda del mal o del bien. (Actualmente deshabilitado)"
 	},
 	"AMBIENT-EDITOR":{
 		"TEXTOS":[
@@ -1276,6 +1270,63 @@
     "FRM_CREARPERSONAJE_VOLVER":{
 		"TEXTO":"Volver"
 	},
+	"FRM_CREARPERSONAJE_ESPECIALIDAD":{
+		"TEXTO":"Especialidad"
+	},
+    "FRM_CREARPERSONAJE_NOMBRE":{
+		"TEXTO":"Nombre"
+   	},
+    "FRM_CREARPERSONAJE_ATRIBUTOS":{
+		"TEXTO":"Atributos"
+    },
+	"FRM_CREARPERSONAJE_FUERZA":{
+		"TEXTO":"Fuerza"
+   	},
+    "FRM_CREARPERSONAJE_AGILIDAD":{
+		"TEXTO":"Agilidad"
+	},
+	"FRM_CREARPERSONAJE_INTELIGENCIA":{
+		"TEXTO":"Inteligencia"
+    },
+	"FRM_CREARPERSONAJE_CARISMA":{
+		"TEXTO":"Carisma"
+   	},
+    "FRM_CREARPERSONAJE_CONSTITUCION":{
+		"TEXTO":"Constitucion"
+    },
+	"FRM_CREARPERSONAJE_ARCOS":{
+		"TEXTO":"Arcos"
+   	},
+    "FRM_CREARPERSONAJE_ARMAS":{
+		"TEXTO":"Armas"
+    },
+	"FRM_CREARPERSONAJE_ESCUDOS":{
+		"TEXTO":"Escudos"
+   	},
+    "FRM_CREARPERSONAJE_EVASION":{
+		"TEXTO":"Evasion"
+    },
+	"FRM_CREARPERSONAJE_MAGIA":{
+		"TEXTO":"Magia"
+   	},
+    "FRM_CREARPERSONAJE_VIDA":{
+		"TEXTO":"VIDA"
+    },
+	"FRM_CREARPERSONAJE_TIRAR_DADOS":{
+		"TEXTO":"Tirar Dados"
+    },
+	"FRM_CREARPERSONAJE_PUEBLO_ORIGEN":{
+		"TEXTO":"Pueblo de Origen"
+    },
+	"FRM_CREARPERSONAJE_RAZA":{
+		"TEXTO":"Raza"
+    },
+	"FRM_CREARPERSONAJE_CLASE":{
+		"TEXTO":"Clase"
+    },
+	"FRM_CREARPERSONAJE_GENERO":{
+		"TEXTO":"Genero"
+    },
 	"FRM_CUSTOMKEYS_DEFAULTKEYS":{
 		"TEXTO":"Cargar teclas por defecto"
 	},
