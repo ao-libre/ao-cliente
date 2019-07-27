@@ -17,6 +17,7 @@ Begin VB.Form frmUserRequest
       Strikethrough   =   0   'False
    EndProperty
    LinkTopic       =   "Form1"
+   Picture         =   "frmUserRequest.frx":0000
    ScaleHeight     =   162
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   310
@@ -42,12 +43,50 @@ Begin VB.Form frmUserRequest
       Top             =   405
       Width           =   4185
    End
-   Begin VB.Image imgCerrar 
+   Begin AOLibre.uAOButton imgCerrar 
       Height          =   375
-      Left            =   120
-      Tag             =   "1"
+      Left            =   960
+      TabIndex        =   1
       Top             =   1920
-      Width           =   4350
+      Width           =   2655
+      _ExtentX        =   4683
+      _ExtentY        =   661
+      TX              =   "Cerrar"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmUserRequest.frx":FEA9
+      PICF            =   "frmUserRequest.frx":108D3
+      PICH            =   "frmUserRequest.frx":11595
+      PICV            =   "frmUserRequest.frx":12527
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   14.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin VB.Label lblTitle 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Peticion"
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   12
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   255
+      Left            =   1080
+      TabIndex        =   2
+      Top             =   0
+      Width           =   2175
    End
 End
 Attribute VB_Name = "frmUserRequest"
@@ -89,10 +128,6 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private cBotonCerrar As clsGraphicalButton
-
-Public LastButtonPressed As clsGraphicalButton
-
 Private clsFormulario As clsFormMovementManager
 
 Public Sub recievePeticion(ByVal p As String)
@@ -108,33 +143,10 @@ Private Sub Form_Load()
     clsFormulario.Initialize Me
     
     Me.Picture = LoadPicture(App.path & "\graficos\VentanaPeticion.jpg")
-    
-    Call LoadButtons
-End Sub
-
-Private Sub LoadButtons()
-    Dim GrhPath As String
-    
-    GrhPath = DirGraficos
-
-    Set cBotonCerrar = New clsGraphicalButton
-    
-    Set LastButtonPressed = New clsGraphicalButton
-    
-    
-    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarPeticion.jpg", _
-                                    GrhPath & "BotonCerrarRolloverPeticion.jpg", _
-                                    GrhPath & "BotonCerrarClickPeticion.jpg", Me)
-End Sub
-
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastButtonPressed.ToggleToNormal
+    Me.imgCerrar.Caption = JsonLanguage.Item("FRM_USER_REQUEST_IMGCERRAR").Item("TEXTO")
+    Me.lblTitle.Caption = JsonLanguage.Item("FRM_USER_REQUEST_LBLTITLE").Item("TEXTO")
 End Sub
 
 Private Sub imgCerrar_Click()
     Unload Me
-End Sub
-
-Private Sub Text1_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastButtonPressed.ToggleToNormal
 End Sub

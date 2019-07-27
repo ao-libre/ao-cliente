@@ -1455,5 +1455,11 @@
 	},
     "FRM_COMMET_RECHAZOPJ":{
 		"TEXTO":"Motivo de Rechazo"
-	}
+	},
+	"FRM_USER_REQUEST_IMGCERRAR":{
+		"TEXTO":"Cerrar"
+	},
+    "FRM_USER_REQUEST_LBLTITLE":{
+		"TEXTO":"Peticion"
+   	}
 }
