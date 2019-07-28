@@ -291,7 +291,7 @@ Begin VB.Form frmCrearPersonaje
          Strikethrough   =   0   'False
       EndProperty
    End
-   Begin AOLibre.uAOButton imgTirarDados 
+   Begin AOLibre.uAOButton imgDados 
       Height          =   975
       Left            =   1320
       TabIndex        =   31
@@ -1176,14 +1176,6 @@ Begin VB.Form frmCrearPersonaje
       Visible         =   0   'False
       Width           =   2475
    End
-   Begin VB.Image imgDados 
-      Height          =   885
-      Left            =   195
-      MouseIcon       =   "frmCrearPersonaje.frx":5EAD0
-      MousePointer    =   99  'Custom
-      Top             =   2775
-      Width           =   900
-   End
    Begin VB.Image imgHogar 
       Height          =   2850
       Left            =   5640
@@ -1408,7 +1400,7 @@ Private Sub Form_Load()
     Cargando = True
     
     Me.Picture = LoadPicture(DirGraficos & "VentanaCrearPersonaje.jpg")
-    Me.imgTirarDados.Caption = JsonLanguage.Item("FRM_CREARPERSONAJE_TIRARDADOS").Item("TEXTO")
+    Me.imgDados.Caption = JsonLanguage.Item("FRM_CREARPERSONAJE_TIRAR_DADOS").Item("TEXTO")
     Me.imgCrear.Caption = JsonLanguage.Item("FRM_CREARPERSONAJE_CREAR").Item("TEXTO")
     Me.imgVolver.Caption = JsonLanguage.Item("FRM_CREARPERSONAJE_VOLVER").Item("TEXTO")
     
@@ -1426,7 +1418,6 @@ Private Sub Form_Load()
     Me.imgEvasion.Caption = JsonLanguage.Item("FRM_CREARPERSONAJE_EVASION").Item("TEXTO")
     Me.imgMagia.Caption = JsonLanguage.Item("FRM_CREARPERSONAJE_MAGIA").Item("TEXTO")
     Me.imgVida.Caption = JsonLanguage.Item("FRM_CREARPERSONAJE_VIDA").Item("TEXTO")
-    Me.imgTirarDados.Caption = JsonLanguage.Item("FRM_CREARPERSONAJE_TIRAR_DADOS").Item("TEXTO")
     Me.imgPuebloOrigen.Caption = JsonLanguage.Item("FRM_CREARPERSONAJE_PUEBLO_ORIGEN").Item("TEXTO")
     Me.imgRaza.Caption = JsonLanguage.Item("FRM_CREARPERSONAJE_RAZA").Item("TEXTO")
     Me.imgClase.Caption = JsonLanguage.Item("FRM_CREARPERSONAJE_CLASE").Item("TEXTO")
@@ -1683,7 +1674,6 @@ Private Sub imgNombre_MouseMove(Button As Integer, Shift As Integer, X As Single
     lblHelp.Caption = vHelp(eHelp.ieNombre)
 End Sub
 
-
 Private Sub imgAtributos_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     lblHelp.Caption = vHelp(eHelp.ieAtributos)
 End Sub
@@ -1744,7 +1734,7 @@ Private Sub imgVida_MouseMove(Button As Integer, Shift As Integer, X As Single, 
     lblHelp.Caption = vHelp(eHelp.ieVida)
 End Sub
 
-Private Sub imgTirarDados_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgDados_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     lblHelp.Caption = vHelp(eHelp.ieTirarDados)
 End Sub
 

@@ -7,11 +7,64 @@ Begin VB.Form frmTutorial
    ClientTop       =   0
    ClientWidth     =   8745
    LinkTopic       =   "Form1"
+   Picture         =   "frmTutorial.frx":0000
    ScaleHeight     =   509
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   583
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
+   Begin AOLibre.uAOButton imgSiguiente 
+      Height          =   375
+      Left            =   6840
+      TabIndex        =   5
+      Top             =   6960
+      Width           =   1455
+      _ExtentX        =   2566
+      _ExtentY        =   661
+      TX              =   "Siguiente"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmTutorial.frx":1B45E
+      PICF            =   "frmTutorial.frx":1BE88
+      PICH            =   "frmTutorial.frx":1CB4A
+      PICV            =   "frmTutorial.frx":1DADC
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   14.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton imgAnterior 
+      Height          =   375
+      Left            =   600
+      TabIndex        =   6
+      Top             =   6960
+      Width           =   1455
+      _ExtentX        =   2566
+      _ExtentY        =   661
+      TX              =   "Anterior"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmTutorial.frx":1E9DE
+      PICF            =   "frmTutorial.frx":1F408
+      PICH            =   "frmTutorial.frx":200CA
+      PICV            =   "frmTutorial.frx":2105C
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   14.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
    Begin VB.Label lblTitulo 
       Alignment       =   2  'Center
       BackStyle       =   0  'Transparent
@@ -30,32 +83,6 @@ Begin VB.Form frmTutorial
       TabIndex        =   4
       Top             =   435
       Width           =   7725
-   End
-   Begin VB.Image imgCheck 
-      Height          =   450
-      Left            =   3060
-      Top             =   6900
-      Visible         =   0   'False
-      Width           =   435
-   End
-   Begin VB.Image imgMostrar 
-      Height          =   570
-      Left            =   3000
-      Top             =   6855
-      Visible         =   0   'False
-      Width           =   2535
-   End
-   Begin VB.Image imgSiguiente 
-      Height          =   360
-      Left            =   6840
-      Top             =   6960
-      Width           =   1455
-   End
-   Begin VB.Image imgAnterior 
-      Height          =   360
-      Left            =   480
-      Top             =   6960
-      Width           =   1455
    End
    Begin VB.Label lblMensaje 
       BackStyle       =   0  'Transparent
@@ -78,6 +105,7 @@ Begin VB.Form frmTutorial
    Begin VB.Label lblPagTotal 
       Alignment       =   2  'Center
       BackStyle       =   0  'Transparent
+      Caption         =   "3"
       BeginProperty Font 
          Name            =   "MS Sans Serif"
          Size            =   8.25
@@ -97,6 +125,7 @@ Begin VB.Form frmTutorial
    Begin VB.Label lblPagActual 
       Alignment       =   2  'Center
       BackStyle       =   0  'Transparent
+      Caption         =   "1"
       BeginProperty Font 
          Name            =   "MS Sans Serif"
          Size            =   8.25
@@ -164,18 +193,10 @@ Option Explicit
 
 Private clsFormulario As clsFormMovementManager
 
-Private cBotonSiguiente As clsGraphicalButton
-Private cBotonAnterior As clsGraphicalButton
-
-Public LastButtonPressed As clsGraphicalButton
-
 Private Type tTutorial
     sTitle As String
     sPage As String
 End Type
-
-Private picCheck As Picture
-Private picMostrar As Picture
 
 Private Tutorial() As tTutorial
 Private NumPages As Long
@@ -201,76 +222,37 @@ Private Sub LoadButtons()
     Dim GrhPath As String
     
     GrhPath = DirGraficos
-
-    Set cBotonSiguiente = New clsGraphicalButton
-    Set cBotonAnterior = New clsGraphicalButton
     
-    Set LastButtonPressed = New clsGraphicalButton
-    
-    
-    Call cBotonSiguiente.Initialize(imgSiguiente, GrhPath & "BotonSiguienteTutorial.jpg", _
-                                    GrhPath & "BotonSiguienteRolloverTutorial.jpg", _
-                                    GrhPath & "BotonSiguienteClickTutorial.jpg", Me, _
-                                    GrhPath & "BotonSiguienteGris.jpg")
-
-    Call cBotonAnterior.Initialize(imgAnterior, GrhPath & "BotonAnteriorTutorial.jpg", _
-                                    GrhPath & "BotonAnteriorRolloverTutorial.jpg", _
-                                    GrhPath & "BotonAnteriorClickTutorial.jpg", Me, _
-                                    GrhPath & "BotonAnteriorGris.jpg", True)
-                                    
-    Set picCheck = LoadPicture(GrhPath & "CheckTutorial.bmp")
-    Set picMostrar = LoadPicture(GrhPath & "NoMostrarTutorial.bmp")
-    
-    imgMostrar.Picture = picMostrar
-    
-    If Not bShowTutorial Then
-        imgCheck.Picture = picCheck
-    Else
-        Set imgCheck.Picture = Nothing
-    End If
+    Me.imgAnterior.Enabled = False
     
     lblCerrar.MouseIcon = picMouseIcon
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastButtonPressed.ToggleToNormal
-End Sub
 
 Private Sub imgAnterior_Click()
 
-    If Not cBotonAnterior.IsEnabled Then Exit Sub
+    If Not Me.imgAnterior.Enabled Then Exit Sub
     
     CurrentPage = CurrentPage - 1
     
-    If CurrentPage = 1 Then Call cBotonAnterior.EnableButton(False)
+    If CurrentPage = 1 Then Me.imgAnterior.Enabled = False
     
-    If Not cBotonSiguiente.IsEnabled Then Call cBotonSiguiente.EnableButton(True)
+    If Not Me.imgSiguiente.Enabled Then Me.imgSiguiente.Enabled = True
     
     Call SelectPage(CurrentPage)
 End Sub
 
-Private Sub imgCheck_Click()
-    
-    bShowTutorial = Not bShowTutorial
-    
-    If Not bShowTutorial Then
-        imgCheck.Picture = picCheck
-    Else
-        Set imgCheck.Picture = Nothing
-    End If
-End Sub
-
 Private Sub imgSiguiente_Click()
     
-    If Not cBotonSiguiente.IsEnabled Then Exit Sub
+    If Not Me.imgSiguiente.Enabled Then Exit Sub
     
     CurrentPage = CurrentPage + 1
     
     ' DEshabilita el boton siguiente si esta en la ultima pagina
-    If CurrentPage = NumPages Then Call cBotonSiguiente.EnableButton(False)
+    If CurrentPage = NumPages Then Me.imgSiguiente.Enabled = False
     
     ' Habilita el boton anterior
-    If Not cBotonAnterior.IsEnabled Then Call cBotonAnterior.EnableButton(True)
+    If Not Me.imgAnterior.Enabled Then Me.imgAnterior.Enabled = True
     
     Call SelectPage(CurrentPage)
 End Sub
@@ -321,6 +303,3 @@ Private Sub SelectPage(ByVal lPage As Long)
     lblPagActual.Caption = lPage
 End Sub
 
-Private Sub lblMensaje_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastButtonPressed.ToggleToNormal
-End Sub
