@@ -1178,7 +1178,7 @@
 		"TEXTO":"Manual"
 	},
 	"BTN_RECUPERAR":{
-		"TEXTO":"Recuparar Pass"
+		"TEXTO":"Cambiar Pass"
 	},
 	"BTN_REGLAMENTO":{
 		"TEXTO":"Reglamento"
@@ -1473,5 +1473,14 @@
    	},
 	"FRM_SPAWN_LIST_LBLTITLE":{
 		"TEXTO":"Seleccione Criatura"
-	}
+	},
+	"FRM_RECUPERAR_CUENTA_LBLCORREO":{
+		"TEXTO":"Correo electronico"
+	},
+    "FRM_RECUPERAR_CUENTA_LBLPASS":{
+		"TEXTO":"Nueva Password"
+   	},
+	"FRM_RECUPERAR_CUENTA_CMDENVIAR":{
+		"TEXTO":"Cambiar Password"
+	},
 }
