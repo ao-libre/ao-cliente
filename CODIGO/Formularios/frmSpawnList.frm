@@ -11,6 +11,7 @@ Begin VB.Form frmSpawnList
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmSpawnList.frx":0000
    ScaleHeight     =   231
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   220
@@ -29,23 +30,80 @@ Begin VB.Form frmSpawnList
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H00FFFFFF&
-      Height          =   2175
-      Left            =   420
+      Height          =   2370
+      Left            =   360
       TabIndex        =   0
-      Top             =   495
-      Width           =   2355
+      Top             =   480
+      Width           =   2475
    End
-   Begin VB.Image imgSalir 
+   Begin AOLibre.uAOButton imgSalir 
       Height          =   375
       Left            =   360
-      Top             =   2910
-      Width           =   855
+      TabIndex        =   2
+      Top             =   3000
+      Width           =   1095
+      _ExtentX        =   1931
+      _ExtentY        =   661
+      TX              =   "Salir"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmSpawnList.frx":11959
+      PICF            =   "frmSpawnList.frx":12383
+      PICH            =   "frmSpawnList.frx":13045
+      PICV            =   "frmSpawnList.frx":13FD7
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   14.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
-   Begin VB.Image imgInvocar 
+   Begin AOLibre.uAOButton imgInvocar 
       Height          =   375
-      Left            =   1500
-      Top             =   2910
-      Width           =   1335
+      Left            =   1800
+      TabIndex        =   3
+      Top             =   3000
+      Width           =   1095
+      _ExtentX        =   1931
+      _ExtentY        =   661
+      TX              =   "Invocar"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmSpawnList.frx":14ED9
+      PICF            =   "frmSpawnList.frx":15903
+      PICH            =   "frmSpawnList.frx":165C5
+      PICV            =   "frmSpawnList.frx":17557
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   14.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin VB.Label lblTitle 
+      Caption         =   "Seleccione Criatura"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   255
+      Left            =   480
+      TabIndex        =   1
+      Top             =   120
+      Width           =   2295
    End
 End
 Attribute VB_Name = "frmSpawnList"
@@ -89,43 +147,15 @@ Option Explicit
 
 Private clsFormulario As clsFormMovementManager
 
-Private cBotonInvocar As clsGraphicalButton
-Private cBotonSalir As clsGraphicalButton
-
-Public LastButtonPressed As clsGraphicalButton
-
 Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
     Me.Picture = LoadPicture(App.path & "\graficos\VentanaInvocar.jpg")
-    
-    Call LoadButtons
-End Sub
-
-Private Sub LoadButtons()
-    Dim GrhPath As String
-    
-    GrhPath = DirGraficos
-
-    Set cBotonInvocar = New clsGraphicalButton
-    Set cBotonSalir = New clsGraphicalButton
-    
-    Set LastButtonPressed = New clsGraphicalButton
-    
-    
-    Call cBotonInvocar.Initialize(imgInvocar, GrhPath & "BotonInvocar.jpg", _
-                                    GrhPath & "BotonInvocarRollover.jpg", _
-                                    GrhPath & "BotonInvocarClick.jpg", Me)
-
-    Call cBotonSalir.Initialize(imgSalir, GrhPath & "BotonSalirInvocar.jpg", _
-                                    GrhPath & "BotonSalirRolloverInvocar.jpg", _
-                                    GrhPath & "BotonSalirClickInvocar.jpg", Me)
-End Sub
-
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastButtonPressed.ToggleToNormal
+    Me.imgSalir.Caption = JsonLanguage.Item("FRM_SPAWN_LIST_IMGSALIR").Item("TEXTO")
+    Me.imgInvocar.Caption = JsonLanguage.Item("FRM_SPAWN_LIST_IMGINVOCAR").Item("TEXTO")
+    Me.imgTitle.Caption = JsonLanguage.Item("FRM_SPAWN_LIST_LBLTITLE").Item("TEXTO")
 End Sub
 
 Private Sub imgInvocar_Click()
@@ -134,8 +164,4 @@ End Sub
 
 Private Sub imgSalir_Click()
     Unload Me
-End Sub
-
-Private Sub lstCriaturas_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastButtonPressed.ToggleToNormal
 End Sub

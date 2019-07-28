@@ -1464,5 +1464,14 @@
 	},
     "FRM_TUTORIAL_SIGUIENTE":{
 		"TEXTO":"Siguiente"
-   	}
+	},
+	"FRM_SPAWN_LIST_IMGSALIR":{
+		"TEXTO":"Salir"
+	},
+    "FRM_SPAWN_LIST_IMGINVOCAR":{
+		"TEXTO":"Invocar"
+   	},
+	"FRM_SPAWN_LIST_LBLTITLE":{
+		"TEXTO":"Seleccione Criatura"
+	}
 }
