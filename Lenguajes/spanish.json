@@ -1483,4 +1483,22 @@
 	"FRM_RECUPERAR_CUENTA_CMDENVIAR":{
 		"TEXTO":"Cambiar Password"
 	},
+	"FRM_PEACE_PROP_LBLTITLE_ALIANZA":{
+		"TEXTO":"Oferta de alianza"
+	},
+    "FRM_PEACE_PROP_LBLTITLE_PAZ":{
+		"TEXTO":"Oferta de Paz"
+   	},
+	"FRM_PEACE_PROP_IMGCERRAR":{
+		"TEXTO":"Cerrar"
+	},
+	"FRM_PEACE_PROP_IMGDETALLE":{
+		"TEXTO":"Detalle"
+   	},
+	"FRM_PEACE_PROP_IMGACEPTAR":{
+		"TEXTO":"Aceptar"
+   	},
+	"FRM_PEACE_PROP_IMGRECHAZAR":{
+		"TEXTO":"Rechazar"
+   	}
 }

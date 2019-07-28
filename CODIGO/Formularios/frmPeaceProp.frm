@@ -20,6 +20,7 @@ Begin VB.Form frmPeaceProp
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmPeaceProp.frx":0000
    ScaleHeight     =   219
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   338
@@ -39,36 +40,139 @@ Begin VB.Form frmPeaceProp
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   1785
-      ItemData        =   "frmPeaceProp.frx":0000
+      ItemData        =   "frmPeaceProp.frx":DCD5
       Left            =   240
-      List            =   "frmPeaceProp.frx":0002
+      List            =   "frmPeaceProp.frx":DCD7
       TabIndex        =   0
       Top             =   600
       Width           =   4620
    End
-   Begin VB.Image imgRechazar 
-      Height          =   480
-      Left            =   3840
-      Top             =   2520
-      Width           =   960
-   End
-   Begin VB.Image imgAceptar 
-      Height          =   480
-      Left            =   2640
-      Top             =   2520
-      Width           =   960
-   End
-   Begin VB.Image imgDetalle 
-      Height          =   480
-      Left            =   1440
-      Top             =   2520
-      Width           =   960
-   End
-   Begin VB.Image imgCerrar 
-      Height          =   480
+   Begin AOLibre.uAOButton imgCerrar 
+      CausesValidation=   0   'False
+      Height          =   375
       Left            =   240
-      Top             =   2520
-      Width           =   960
+      TabIndex        =   2
+      Top             =   2640
+      Width           =   975
+      _ExtentX        =   1720
+      _ExtentY        =   661
+      TX              =   "Cerrar"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmPeaceProp.frx":DCD9
+      PICF            =   "frmPeaceProp.frx":E703
+      PICH            =   "frmPeaceProp.frx":F3C5
+      PICV            =   "frmPeaceProp.frx":10357
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton imgDetalle 
+      CausesValidation=   0   'False
+      Height          =   375
+      Left            =   1440
+      TabIndex        =   3
+      Top             =   2640
+      Width           =   975
+      _ExtentX        =   1720
+      _ExtentY        =   661
+      TX              =   "Detalle"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmPeaceProp.frx":11259
+      PICF            =   "frmPeaceProp.frx":11C83
+      PICH            =   "frmPeaceProp.frx":12945
+      PICV            =   "frmPeaceProp.frx":138D7
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton imgAceptar 
+      CausesValidation=   0   'False
+      Height          =   375
+      Left            =   2640
+      TabIndex        =   4
+      Top             =   2640
+      Width           =   975
+      _ExtentX        =   1720
+      _ExtentY        =   661
+      TX              =   "Aceptar"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmPeaceProp.frx":147D9
+      PICF            =   "frmPeaceProp.frx":15203
+      PICH            =   "frmPeaceProp.frx":15EC5
+      PICV            =   "frmPeaceProp.frx":16E57
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton imgRechazar 
+      CausesValidation=   0   'False
+      Height          =   375
+      Left            =   3840
+      TabIndex        =   5
+      Top             =   2640
+      Width           =   975
+      _ExtentX        =   1720
+      _ExtentY        =   661
+      TX              =   "Rechazar"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmPeaceProp.frx":17D59
+      PICF            =   "frmPeaceProp.frx":18783
+      PICH            =   "frmPeaceProp.frx":19445
+      PICV            =   "frmPeaceProp.frx":1A3D7
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin VB.Label lblTitle 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Label1"
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   11.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H8000000B&
+      Height          =   375
+      Left            =   360
+      TabIndex        =   1
+      Top             =   240
+      Width           =   1935
    End
 End
 Attribute VB_Name = "frmPeaceProp"
@@ -112,13 +216,7 @@ Option Explicit
 
 Private clsFormulario As clsFormMovementManager
 
-Private cBotonAceptar As clsGraphicalButton
-Private cBotonCerrar As clsGraphicalButton
-Private cBotonDetalles As clsGraphicalButton
-Private cBotonRechazar As clsGraphicalButton
-
 Public LastButtonPressed As clsGraphicalButton
-
 
 Private TipoProp As TIPO_PROPUESTA
 
@@ -133,48 +231,19 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
-    Call LoadBackGround
-    Call LoadButtons
-End Sub
-
-Private Sub LoadButtons()
-    Dim GrhPath As String
+    Me.Picture = LoadPicture(DirGraficos & "VentanaPeacePropForm.jpg")
     
-    GrhPath = DirGraficos
-
-    Set cBotonAceptar = New clsGraphicalButton
-    Set cBotonCerrar = New clsGraphicalButton
-    Set cBotonDetalles = New clsGraphicalButton
-    Set cBotonRechazar = New clsGraphicalButton
-    
-    Set LastButtonPressed = New clsGraphicalButton
-    
-    
-    Call cBotonAceptar.Initialize(imgAceptar, GrhPath & "BotonAceptarOferta.jpg", _
-                                    GrhPath & "BotonAceptarRolloverOferta.jpg", _
-                                    GrhPath & "BotonAceptarClickOferta.jpg", Me)
-
-    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarOferta.jpg", _
-                                    GrhPath & "BotonCerrarRolloverOferta.jpg", _
-                                    GrhPath & "BotonCerrarClickOferta.jpg", Me)
-
-    Call cBotonDetalles.Initialize(imgDetalle, GrhPath & "BotonDetallesOferta.jpg", _
-                                    GrhPath & "BotonDetallesRolloverOferta.jpg", _
-                                    GrhPath & "BotonDetallesClickOferta.jpg", Me)
-
-    Call cBotonRechazar.Initialize(imgRechazar, GrhPath & "BotonRechazarOferta.jpg", _
-                                    GrhPath & "BotonRechazarRolloverOferta.jpg", _
-                                    GrhPath & "BotonRechazarClickOferta.jpg", Me)
-
-
-End Sub
-
-Private Sub LoadBackGround()
     If TipoProp = TIPO_PROPUESTA.ALIANZA Then
-        Me.Picture = LoadPicture(DirGraficos & "VentanaOfertaAlianza.jpg")
+        Me.lblTitle.Caption = JsonLanguage.Item("FRM_PEACE_PROP_LBLTITLE_ALIANZA").Item("TEXTO")
     Else
-        Me.Picture = LoadPicture(DirGraficos & "VentanaOfertaPaz.jpg")
+        Me.lblTitle.Caption = JsonLanguage.Item("FRM_PEACE_PROP_LBLTITLE_ALIANZA").Item("TEXTO")
     End If
+
+    Me.imgCerrar.Caption = JsonLanguage.Item("FRM_PEACE_PROP_IMGCERRAR").Item("TEXTO")
+    Me.imgAceptar.Caption = JsonLanguage.Item("FRM_PEACE_PROP_IMGACEPTAR").Item("TEXTO")
+    Me.imgDetalle.Caption = JsonLanguage.Item("FRM_PEACE_PROP_IMGDETALLE").Item("TEXTO")
+    Me.imgRechazar.Caption = JsonLanguage.Item("FRM_PEACE_PROP_IMGRECHAZAR").Item("TEXTO")
+
 End Sub
 
 Public Property Let ProposalType(ByVal nValue As TIPO_PROPUESTA)
