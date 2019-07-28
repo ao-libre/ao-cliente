@@ -203,12 +203,13 @@ Private NumPages As Long
 Private CurrentPage As Long
 
 Private Sub Form_Load()
-
     ' Handles Form movement (drag and drop).
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
     Me.Picture = LoadPicture(DirGraficos & "VentanaTutorial.jpg")
+    Me.imgSiguiente.Caption = JsonLanguage.Item("FRM_TUTORIAL_SIGUIENTE").Item("TEXTO")
+    Me.imgAnterior.Caption = JsonLanguage.Item("FRM_TUTORIAL_ANTERIOR").Item("TEXTO")
     
     Call LoadButtons
     

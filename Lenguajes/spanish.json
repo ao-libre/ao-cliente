@@ -1261,9 +1261,6 @@
 	"FRN_CREARCUENTA_REPETIR_PASSWORD":{
 		"TEXTO":"Repetir Password"
 	},
-	"FRM_CREARPERSONAJE_TIRARDADOS":{
-		"TEXTO":"Tirar Dados"
-	},
     "FRM_CREARPERSONAJE_CREAR":{
 		"TEXTO":"Crear Personaje"
 	},
@@ -1461,5 +1458,11 @@
 	},
     "FRM_USER_REQUEST_LBLTITLE":{
 		"TEXTO":"Peticion"
+	},
+	"FRM_TUTORIAL_ANTERIOR":{
+		"TEXTO":"Anterior"
+	},
+    "FRM_TUTORIAL_SIGUIENTE":{
+		"TEXTO":"Siguiente"
    	}
 }
