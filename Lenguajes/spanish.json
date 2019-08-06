@@ -1201,37 +1201,37 @@
 	"FRM_RECUPERAR_CUENTA_LBLCORREO":{
 		"TEXTO":"Correo electronico"
 	},
-    "FRM_RECUPERAR_CUENTA_LBLPASS":{
+	"FRM_RECUPERAR_CUENTA_LBLPASS":{
 		"TEXTO":"Nueva Password"
-   	},
+	},
 	"FRM_RECUPERAR_CUENTA_CMDENVIAR":{
 		"TEXTO":"Cambiar Password"
 	},
 	"FRMBUSCAR_TITLE":{
 		"TEXTO":"Buscador"
 	},	
-    "FRMBUSCAR_CREAR":{
+	"FRMBUSCAR_CREAR":{
 		"TEXTO":"Crear"
 	},	
-    "FRMBUSCAR_CREARNPCS":{
+	"FRMBUSCAR_CREARNPCS":{
 		"TEXTO":"Npcs"
 	},	
-    "FRMBUSCAR_CREAROBJETOS":{
+	"FRMBUSCAR_CREAROBJETOS":{
 		"TEXTO":"Objetos"
 	},	
-    "FRMBUSCAR_CANTIDAD":{
+	"FRMBUSCAR_CANTIDAD":{
 		"TEXTO":"Cantidad"
 	},	
-    "FRMBUSCAR_RESPAWN":{
+	"FRMBUSCAR_RESPAWN":{
 		"TEXTO":"Respawn"
 	},	
-    "FRMBUSCAR_BUSCAROBJETO":{
+	"FRMBUSCAR_BUSCAROBJETO":{
 		"TEXTO":"Buscar Objeto"
 	},	
-    "FRMBUSCAR_BUSCARNPCS":{
+	"FRMBUSCAR_BUSCARNPCS":{
 		"TEXTO":"Buscar Npcs"
 	},	
-    "FRMBUSCAR_LIMPIARLISTAS":{
+	"FRMBUSCAR_LIMPIARLISTAS":{
 		"TEXTO":"Limpiar Listas"
-	},
+	}
 }

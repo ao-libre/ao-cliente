@@ -1149,4 +1149,73 @@
 			255
 		]
 	}
+	"BTN_ACTUALIZAR_LISTA":{
+		"TEXTO":"Update List"
+	},
+	"BTN_CODIGO_FUENTE":{
+		"TEXTO":"Source Code"
+	},
+	"BTN_CONECTARSE":{
+		"TEXTO":"Connect"
+	},
+	"BTN_CREAR_CUENTA":{
+		"TEXTO":"Create Account"
+	},
+	"BTN_CREAR_SERVER":{
+		"TEXTO":"Create Server"
+	},
+	"BTN_MANUAL":{
+		"TEXTO":"Manual"
+	},
+	"BTN_RECUPERAR":{
+		"TEXTO":"Change Pass"
+	},
+	"BTN_REGLAMENTO":{
+		"TEXTO":"Rules"
+	},
+	"FRM_CREARCUENTA_SALIR":{
+		"TEXTO":"Quit"
+	},
+    "FRM_CREARCUENTA_CREARCUENTA":{
+		"TEXTO":"Create Account"
+	},
+    "FRM_CREARCUENTA_MENSAJE":{
+		"TEXTO":"Use a real email to receive the emails"
+	},
+	"FRM_RECUPERAR_CUENTA_LBLCORREO":{
+		"TEXTO":"E-mail"
+	},
+	"FRM_RECUPERAR_CUENTA_LBLPASS":{
+		"TEXTO":"New Password"
+	},
+	"FRM_RECUPERAR_CUENTA_CMDENVIAR":{
+		"TEXTO":"Change Password"
+	},
+	"FRMBUSCAR_TITLE":{
+		"TEXTO":"Searcher"
+	},	
+	"FRMBUSCAR_CREAR":{
+		"TEXTO":"Create"
+	},	
+	"FRMBUSCAR_CREARNPCS":{
+		"TEXTO":"Npcs"
+	},	
+	"FRMBUSCAR_CREAROBJETOS":{
+		"TEXTO":"Objects"
+	},	
+	"FRMBUSCAR_CANTIDAD":{
+		"TEXTO":"Quantity"
+	},	
+	"FRMBUSCAR_RESPAWN":{
+		"TEXTO":"Respawn"
+	},	
+	"FRMBUSCAR_BUSCAROBJETO":{
+		"TEXTO":"Search Object"
+	},	
+	"FRMBUSCAR_BUSCARNPCS":{
+		"TEXTO":"Search Npcs"
+	},	
+	"FRMBUSCAR_LIMPIARLISTAS":{
+		"TEXTO":"Clean list"
+	}
 }
