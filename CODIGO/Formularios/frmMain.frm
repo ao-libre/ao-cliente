@@ -1,7 +1,7 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "richtx32.ocx"
 Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.ocx"
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.ocx"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.Form frmMain 
    BorderStyle     =   0  'None
    ClientHeight    =   8985
@@ -220,6 +220,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2619
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -990,14 +991,14 @@ Private Sub Form_Load()
         clsFormulario.Initialize Me, 120
     End If
     
-    InvEqu.Picture = LoadPicture(DirGraficos & "CentroInventario.jpg")
+    InvEqu.Picture = LoadPicture(DirGraficos & "Skins\CentroInventario.jpg")
     
     Call LoadButtons
     
     Set dragInventory = Inventario
     
     With Me
-        .Picture = LoadPicture(DirGraficos & "VentanaPrincipal.JPG")
+        .Picture = LoadPicture(DirGraficos & "Skins\VentanaPrincipal.JPG")
         .Left = 0
         .Top = 0
         .Width = 12000
@@ -1006,16 +1007,13 @@ Private Sub Form_Load()
     End With
     
     ' Detect links in console
-    EnableURLDetect RecTxt.hwnd, Me.hwnd
+    EnableURLDetect RecTxt.hWnd, Me.hWnd
     
     CtrlMaskOn = False
 End Sub
 
 Private Sub LoadButtons()
-    Dim GrhPath As String
     Dim i As Integer
-    
-    GrhPath = DirGraficos
 
     Set cBotonDiamArriba = New clsGraphicalButton
     Set cBotonDiamAbajo = New clsGraphicalButton
@@ -1030,34 +1028,34 @@ Private Sub LoadButtons()
     
     
     Call cBotonDiamArriba.Initialize(imgInvScrollUp, "", _
-                                    GrhPath & "BotonDiamArribaF.bmp", _
-                                    GrhPath & "BotonDiamArribaF.bmp", Me)
+                                    DirGraficos & "Skins\BotonDiamArribaF.bmp", _
+                                    DirGraficos & "Skins\BotonDiamArribaF.bmp", Me)
 
     Call cBotonDiamAbajo.Initialize(imgInvScrollDown, "", _
-                                    GrhPath & "BotonDiamAbajoF.bmp", _
-                                    GrhPath & "BotonDiamAbajoF.bmp", Me)
+                                    DirGraficos & "Skins\BotonDiamAbajoF.bmp", _
+                                    DirGraficos & "Skins\BotonDiamAbajoF.bmp", Me)
     
     Call cBotonMapa.Initialize(imgMapa, "", _
-                                    GrhPath & "BotonMapaRollover.jpg", _
-                                    GrhPath & "BotonMapaClick.jpg", Me)
+                                    DirGraficos & "Skins\BotonMapaRollover.jpg", _
+                                    DirGraficos & "Skins\BotonMapaClick.jpg", Me)
                                     
     Call cBotonGrupo.Initialize(imgGrupo, "", _
-                                    GrhPath & "BotonGrupoRollover.jpg", _
-                                    GrhPath & "BotonGrupoClick.jpg", Me)
+                                    DirGraficos & "Skins\BotonGrupoRollover.jpg", _
+                                    DirGraficos & "Skins\BotonGrupoClick.jpg", Me)
 
     Call cBotonOpciones.Initialize(imgOpciones, "", _
-                                    GrhPath & "BotonOpcionesRollover.jpg", _
-                                    GrhPath & "BotonOpcionesClick.jpg", Me)
+                                    DirGraficos & "Skins\BotonOpcionesRollover.jpg", _
+                                    DirGraficos & "Skins\BotonOpcionesClick.jpg", Me)
 
     Call cBotonEstadisticas.Initialize(imgEstadisticas, "", _
-                                    GrhPath & "BotonEstadisticasRollover.jpg", _
-                                    GrhPath & "BotonEstadisticasClick.jpg", Me)
+                                    DirGraficos & "Skins\BotonEstadisticasRollover.jpg", _
+                                    DirGraficos & "Skins\BotonEstadisticasClick.jpg", Me)
 
     Call cBotonClanes.Initialize(imgClanes, "", _
-                                    GrhPath & "BotonClanesRollover.jpg", _
-                                    GrhPath & "BotonClanesClick.jpg", Me)
+                                    DirGraficos & "Skins\BotonClanesRollover.jpg", _
+                                    DirGraficos & "Skins\BotonClanesClick.jpg", Me)
 
-    Set picSkillStar = LoadPicture(GrhPath & "BotonAsignarSkills.bmp")
+    Set picSkillStar = LoadPicture(DirGraficos & "Skins\BotonAsignarSkills.bmp")
 
     If SkillPoints > 0 Then imgAsignarSkill.Picture = picSkillStar
     
@@ -1118,12 +1116,12 @@ With GrhData(GrhIndex)
     SR.Left = .SX
     SR.Right = SR.Left + .pixelWidth
     SR.Top = .SY
-    SR.bottom = SR.Top + .pixelHeight
+    SR.Bottom = SR.Top + .pixelHeight
     
     DR.Left = 0
     DR.Right = .pixelWidth
     DR.Top = 0
-    DR.bottom = .pixelHeight
+    DR.Bottom = .pixelHeight
 End With
 
 Call DrawGrhtoHdc(picSM(index).hdc, GrhIndex, SR, DR)
@@ -2176,8 +2174,8 @@ End Sub
 Private Sub Socket1_Connect()
     
     'Clean input and output buffers
-    Call incomingData.ReadASCIIStringFixed(incomingData.length)
-    Call outgoingData.ReadASCIIStringFixed(outgoingData.length)
+    Call incomingData.ReadASCIIStringFixed(incomingData.Length)
+    Call outgoingData.ReadASCIIStringFixed(outgoingData.Length)
     
     Second.Enabled = True
 
@@ -2344,7 +2342,7 @@ Private Sub Winsock1_Close()
     Do While i < Forms.Count - 1
         i = i + 1
         
-        If Forms(i).Name <> Me.Name And Forms(i).Name <> frmConnect.Name And Forms(i).Name <> frmCrearPersonaje.Name Then
+        If Forms(i).name <> Me.name And Forms(i).name <> frmConnect.name And Forms(i).name <> frmCrearPersonaje.name Then
             Unload Forms(i)
         End If
     Loop
@@ -2382,8 +2380,8 @@ End Sub
 Private Sub Winsock1_Connect()
 
     'Clean input and output buffers
-    Call incomingData.ReadASCIIStringFixed(incomingData.length)
-    Call outgoingData.ReadASCIIStringFixed(outgoingData.length)
+    Call incomingData.ReadASCIIStringFixed(incomingData.Length)
+    Call outgoingData.ReadASCIIStringFixed(outgoingData.Length)
     
     Second.Enabled = True
     
@@ -2425,7 +2423,7 @@ Private Sub Winsock1_DataArrival(ByVal bytesTotal As Long)
     Call HandleIncomingData
 End Sub
 
-Private Sub Winsock1_Error(ByVal number As Integer, Description As String, ByVal Scode As Long, ByVal source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
+Private Sub Winsock1_Error(ByVal number As Integer, Description As String, ByVal sCode As Long, ByVal source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
     '*********************************************
     'Handle socket errors
     '*********************************************
