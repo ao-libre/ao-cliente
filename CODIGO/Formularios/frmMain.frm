@@ -220,6 +220,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2619
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1996,7 +1997,7 @@ End Sub
 Private Sub Label4_Click()
     Call Audio.PlayWave(SND_CLICK)
 
-    InvEqu.Picture = LoadPicture(App.path & "\Graficos\Centroinventario.jpg")
+    InvEqu.Picture = LoadPicture(DirGraficos & "Skins\" & SkinSeleccionado & "\Centroinventario.jpg")
 
     ' Activo controles de inventario
     picInv.Visible = True
@@ -2016,7 +2017,7 @@ End Sub
 Private Sub Label7_Click()
     Call Audio.PlayWave(SND_CLICK)
 
-    InvEqu.Picture = LoadPicture(App.path & "\Graficos\Centrohechizos.jpg")
+    InvEqu.Picture = LoadPicture(DirGraficos & "Skins\" & SkinSeleccionado & "\Centrohechizos.jpg")
     
     ' Activo controles de hechizos
     hlst.Visible = True
