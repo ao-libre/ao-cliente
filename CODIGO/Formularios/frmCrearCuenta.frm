@@ -7,6 +7,7 @@ Begin VB.Form frmCrearCuenta
    ClientTop       =   4125
    ClientWidth     =   6600
    LinkTopic       =   "Form1"
+   Picture         =   "frmCrearCuenta.frx":0000
    ScaleHeight     =   4530
    ScaleWidth      =   6600
    ShowInTaskbar   =   0   'False
@@ -73,17 +74,76 @@ Begin VB.Form frmCrearCuenta
       Top             =   2020
       Width           =   2480
    End
-   Begin VB.Image imgSalir 
-      Height          =   375
-      Left            =   560
-      Top             =   3800
-      Width           =   1335
+   Begin AOLibre.uAOButton imgSalir 
+      Height          =   495
+      Left            =   480
+      TabIndex        =   3
+      Top             =   3720
+      Width           =   1455
+      _ExtentX        =   2566
+      _ExtentY        =   873
+      TX              =   "Salir"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmCrearCuenta.frx":20F13
+      PICF            =   "frmCrearCuenta.frx":2193D
+      PICH            =   "frmCrearCuenta.frx":225FF
+      PICV            =   "frmCrearCuenta.frx":23591
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
-   Begin VB.Image imgCrearCuenta 
-      Height          =   375
-      Left            =   4520
-      Top             =   3800
-      Width           =   1335
+   Begin AOLibre.uAOButton imgCrearCuenta 
+      Height          =   495
+      Left            =   4440
+      TabIndex        =   4
+      Top             =   3720
+      Width           =   1455
+      _ExtentX        =   2566
+      _ExtentY        =   873
+      TX              =   "Crear Cuenta"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmCrearCuenta.frx":24493
+      PICF            =   "frmCrearCuenta.frx":24EBD
+      PICH            =   "frmCrearCuenta.frx":25B7F
+      PICV            =   "frmCrearCuenta.frx":26B11
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin VB.Label lblMensaje 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Utilize un email real para recibir correctamente los correos"
+      BeginProperty Font 
+         Name            =   "MS UI Gothic"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H8000000B&
+      Height          =   615
+      Left            =   1200
+      TabIndex        =   5
+      Top             =   1440
+      Width           =   3495
    End
 End
 Attribute VB_Name = "frmCrearCuenta"
@@ -92,8 +152,6 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
-Private cBotonCrearCuenta As clsGraphicalButton
-Private cBotonSalir As clsGraphicalButton
 
 Public LastButtonPressed As clsGraphicalButton
 
@@ -102,7 +160,10 @@ Private Sub Form_Load()
     txtCuentaEmail.Text = vbNullString
     txtCuentaPassword.Text = vbNullString
     txtCuentaRepite.Text = vbNullString
-    LoadButtons
+    
+    Me.imgCrearCuenta.Caption = JsonLanguage.Item("FRM_CREARCUENTA_CREARCUENTA").Item("TEXTO")
+    Me.imgSalir.Caption = JsonLanguage.Item("FRM_CREARCUENTA_SALIR").Item("TEXTO")
+    Me.lblMensaje.Caption = JsonLanguage.Item("FRM_CREARCUENTA_MENSAJE").Item("TEXTO")
 End Sub
 
 Private Sub imgCrearCuenta_Click()
@@ -119,10 +180,6 @@ End Sub
 
 Private Sub imgSalir_Click()
     Unload Me
-End Sub
-
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Function IsFormValid() As Boolean
@@ -154,23 +211,3 @@ Private Function IsFormValid() As Boolean
     
     IsFormValid = True
 End Function
-
-Private Sub LoadButtons()
-    
-    Dim GrhPath As String
-    
-    GrhPath = DirGraficos
-    
-    Set cBotonCrearCuenta = New clsGraphicalButton
-    Set cBotonSalir = New clsGraphicalButton
-    
-    Set LastButtonPressed = New clsGraphicalButton
-
-    Call cBotonCrearCuenta.Initialize(Me.imgCrearCuenta, GrhPath & "BotonCrearCuenta.jpg", _
-                                    GrhPath & "BotonCrearCuentaRollover.jpg", _
-                                    GrhPath & "BotonCrearCuentaClick.jpg", Me)
-
-    Call cBotonSalir.Initialize(Me.imgSalir, GrhPath & "BotonSalirConnect.jpg", _
-                                    GrhPath & "BotonBotonSalirRolloverConnect.jpg", _
-                                    GrhPath & "BotonSalirClickConnect.jpg", Me)
-End Sub
