@@ -206,7 +206,7 @@ Begin VB.Form frmBuscar
       Top             =   1920
       Width           =   615
    End
-   Begin VB.Label Label1 
+   Begin VB.Label lblTitle 
       Alignment       =   2  'Center
       Caption         =   "Buscador"
       BeginProperty Font 
@@ -246,6 +246,18 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
+
+Private Sub Form_Load()
+    lblTitle.Caption = JsonLanguage.Item("FRMBUSCAR_TITLE").Item("TEXTO")
+    Crear.Caption = JsonLanguage.Item("FRMBUSCAR_CREAR").Item("TEXTO")
+    CrearNPCs.Caption = JsonLanguage.Item("FRMBUSCAR_CREARNPCS").Item("TEXTO")
+    CrearObjetos.Caption = JsonLanguage.Item("FRMBUSCAR_CREAROBJETOS").Item("TEXTO")
+    Label2.Caption = JsonLanguage.Item("FRMBUSCAR_CANTIDAD").Item("TEXTO")
+    chkRespawn.Caption = JsonLanguage.Item("FRMBUSCAR_RESPAWN").Item("TEXTO")
+    Command1.Caption = JsonLanguage.Item("FRMBUSCAR_BUSCAROBJETO").Item("TEXTO")
+    Command2.Caption = JsonLanguage.Item("FRMBUSCAR_BUSCARNPCS").Item("TEXTO")
+    Limpiarlistas.Caption = JsonLanguage.Item("FRMBUSCAR_LIMPIARLISTAS").Item("TEXTO")
+End Sub
 
 Private Sub Command1_Click()
        
@@ -327,7 +339,7 @@ End Sub
 Private Sub mnuCrearNPC_Click()
 
         If ListCrearNpcs.Visible Then
-            Call WriteCreateNPC(ListCrearNpcs.Text, CBool(chkRespawn.value))
+            Call WriteCreateNPC(ListCrearNpcs.Text, CBool(chkRespawn.Value))
         End If
 
 End Sub

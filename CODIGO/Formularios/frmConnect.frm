@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.OCX"
+Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.ocx"
 Begin VB.Form frmConnect 
    BackColor       =   &H00E0E0E0&
    BorderStyle     =   0  'None
@@ -31,26 +31,31 @@ Begin VB.Form frmConnect
    ScaleWidth      =   800
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
-   Begin VB.CommandButton ActualizarListaBoton 
-      Appearance      =   0  'Flat
-      BackColor       =   &H0000FFFF&
-      Caption         =   "Actualizar Lista"
-      BeginProperty Font 
-         Name            =   "Gabriola"
-         Size            =   15.75
+   Begin AOLibre.uAOButton btnActualizarLista 
+      Height          =   495
+      Left            =   9120
+      TabIndex        =   7
+      Top             =   6840
+      Width           =   1935
+      _ExtentX        =   3413
+      _ExtentY        =   873
+      TX              =   "Actualizar Lista"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmConnect.frx":000C
+      PICF            =   "frmConnect.frx":0A36
+      PICH            =   "frmConnect.frx":16F8
+      PICV            =   "frmConnect.frx":268A
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   12
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   510
-      Left            =   9120
-      MaskColor       =   &H0000C0C0&
-      MousePointer    =   3  'I-Beam
-      TabIndex        =   7
-      Top             =   7200
-      Width           =   1935
    End
    Begin InetCtlsObjects.Inet InetIpApi 
       Left            =   840
@@ -99,9 +104,9 @@ Begin VB.Form frmConnect
       EndProperty
       ForeColor       =   &H0000FF00&
       Height          =   4905
-      ItemData        =   "frmConnect.frx":000C
+      ItemData        =   "frmConnect.frx":358C
       Left            =   8685
-      List            =   "frmConnect.frx":000E
+      List            =   "frmConnect.frx":358E
       TabIndex        =   6
       Top             =   1680
       Width           =   2775
@@ -190,65 +195,265 @@ Begin VB.Form frmConnect
       Top             =   2760
       Width           =   1575
    End
-   Begin VB.Image imgTeclas 
-      Height          =   375
-      Left            =   6120
-      Top             =   3960
-      Width           =   1335
-   End
-   Begin VB.Image imgConectarse 
-      Height          =   375
-      Left            =   4800
-      Top             =   3960
-      Width           =   1335
-   End
-   Begin VB.Image imgVerForo 
-      Height          =   465
-      Left            =   450
-      Top             =   6120
-      Width           =   2835
-   End
-   Begin VB.Image imgSalir 
-      Height          =   375
-      Left            =   9960
-      Top             =   8400
-      Width           =   1335
-   End
-   Begin VB.Image imgBorrarPj 
-      Height          =   375
-      Left            =   8400
-      Top             =   8400
-      Width           =   1335
-   End
-   Begin VB.Image imgCodigoFuente 
-      Height          =   375
-      Left            =   6840
-      Top             =   8400
-      Width           =   1335
-   End
-   Begin VB.Image imgReglamento 
-      Height          =   375
-      Left            =   5280
-      Top             =   8400
-      Width           =   1335
-   End
-   Begin VB.Image imgManual 
-      Height          =   375
-      Left            =   3720
-      Top             =   8400
-      Width           =   1335
-   End
-   Begin VB.Image imgRecuperar 
-      Height          =   375
-      Left            =   2160
-      Top             =   8400
-      Width           =   1335
-   End
-   Begin VB.Image imgCrearCuenta 
+   Begin AOLibre.uAOButton btnCrearCuenta 
       Height          =   375
       Left            =   600
+      TabIndex        =   8
       Top             =   8400
       Width           =   1335
+      _ExtentX        =   2355
+      _ExtentY        =   661
+      TX              =   "Crear Cuenta"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmConnect.frx":3590
+      PICF            =   "frmConnect.frx":3FBA
+      PICH            =   "frmConnect.frx":4C7C
+      PICV            =   "frmConnect.frx":5C0E
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton btnRecuperar 
+      Height          =   375
+      Left            =   2160
+      TabIndex        =   9
+      Top             =   8400
+      Width           =   1335
+      _ExtentX        =   2355
+      _ExtentY        =   661
+      TX              =   "Recuperar Pass"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmConnect.frx":6B10
+      PICF            =   "frmConnect.frx":753A
+      PICH            =   "frmConnect.frx":81FC
+      PICV            =   "frmConnect.frx":918E
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton btnManual 
+      Height          =   375
+      Left            =   3720
+      TabIndex        =   10
+      Top             =   8400
+      Width           =   1335
+      _ExtentX        =   2355
+      _ExtentY        =   661
+      TX              =   "Manual"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmConnect.frx":A090
+      PICF            =   "frmConnect.frx":AABA
+      PICH            =   "frmConnect.frx":B77C
+      PICV            =   "frmConnect.frx":C70E
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton btnReglamento 
+      Height          =   375
+      Left            =   5280
+      TabIndex        =   11
+      Top             =   8400
+      Width           =   1335
+      _ExtentX        =   2355
+      _ExtentY        =   661
+      TX              =   "Reglamento"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmConnect.frx":D610
+      PICF            =   "frmConnect.frx":E03A
+      PICH            =   "frmConnect.frx":ECFC
+      PICV            =   "frmConnect.frx":FC8E
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton btnCodigoFuente 
+      Height          =   375
+      Left            =   6840
+      TabIndex        =   12
+      Top             =   8400
+      Width           =   1335
+      _ExtentX        =   2355
+      _ExtentY        =   661
+      TX              =   "Codigo Fuente"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmConnect.frx":10B90
+      PICF            =   "frmConnect.frx":115BA
+      PICH            =   "frmConnect.frx":1227C
+      PICV            =   "frmConnect.frx":1320E
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton btnCrearServer 
+      Height          =   375
+      Left            =   8400
+      TabIndex        =   13
+      Top             =   8400
+      Width           =   1335
+      _ExtentX        =   2355
+      _ExtentY        =   661
+      TX              =   "Crear Server"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmConnect.frx":14110
+      PICF            =   "frmConnect.frx":14B3A
+      PICH            =   "frmConnect.frx":157FC
+      PICV            =   "frmConnect.frx":1678E
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton btnSalir 
+      Height          =   375
+      Left            =   9960
+      TabIndex        =   14
+      Top             =   8400
+      Width           =   1335
+      _ExtentX        =   2355
+      _ExtentY        =   661
+      TX              =   "Salir"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmConnect.frx":17690
+      PICF            =   "frmConnect.frx":180BA
+      PICH            =   "frmConnect.frx":18D7C
+      PICV            =   "frmConnect.frx":19D0E
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton btnConectarse 
+      Height          =   375
+      Left            =   4800
+      TabIndex        =   15
+      Top             =   3960
+      Width           =   1335
+      _ExtentX        =   2355
+      _ExtentY        =   661
+      TX              =   "Conectarse"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmConnect.frx":1AC10
+      PICF            =   "frmConnect.frx":1B63A
+      PICH            =   "frmConnect.frx":1C2FC
+      PICV            =   "frmConnect.frx":1D28E
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton btnTeclas 
+      Height          =   375
+      Left            =   6120
+      TabIndex        =   16
+      Top             =   3960
+      Width           =   1335
+      _ExtentX        =   2355
+      _ExtentY        =   661
+      TX              =   "Teclas"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmConnect.frx":1E190
+      PICF            =   "frmConnect.frx":1EBBA
+      PICH            =   "frmConnect.frx":1F87C
+      PICV            =   "frmConnect.frx":2080E
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton btnVerForo 
+      Height          =   495
+      Left            =   480
+      TabIndex        =   17
+      Top             =   6075
+      Width           =   2775
+      _ExtentX        =   4895
+      _ExtentY        =   873
+      TX              =   "Ver Foro"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmConnect.frx":21710
+      PICF            =   "frmConnect.frx":2213A
+      PICH            =   "frmConnect.frx":22DFC
+      PICV            =   "frmConnect.frx":23D8E
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   15.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
    Begin VB.Image imgServArgentina 
       Height          =   795
@@ -356,7 +561,7 @@ Private Function RefreshServerList() As String
         Call CargarServidores
 End Function
 
-Private Sub ActualizarListaBoton_Click()
+Private Sub btnActualizarLista_Click()
 '***************************************************
 'Author: Recox
 'Last Modification: 01/04/2019
@@ -367,6 +572,65 @@ Private Sub ActualizarListaBoton_Click()
     frmConnect.lstServers.AddItem ("Por Favor Espere")
     Call RefreshServerList
     MsgBox "Se actualizo con exito la lista de servers"
+End Sub
+
+Private Sub btnCodigoFuente_Click()
+'***********************************
+'IMPORTANTE!
+'
+'No debe eliminarse la posibilidad de bajar el codigo de sus servidor de esta forma.
+'Caso contrario estarian violando la licencia Affero GPL y con ella derechos de autor,
+'incurriendo de esta forma en un delito punible por ley.
+'
+'Argentum Online es libre, es de todos. Mantengamoslo asi. Si tanto te gusta el juego y queres los
+'cambios que hacemos nosotros, comparti los tuyos. Es un cambio justo. Si no estas de acuerdo,
+'no uses nuestro codigo, pues nadie te obliga o bien utiliza una version anterior a la 0.12.0.
+'***********************************
+    Call ShellExecute(0, "Open", "https://github.com/ao-libre", "", App.path, SW_SHOWNORMAL)
+End Sub
+
+Private Sub btnConectarse_Click()
+    'update user info
+    AccountName = txtNombre.Text
+    AccountPassword = txtPasswd.Text
+
+    'Clear spell list
+    frmMain.hlst.Clear
+
+    If CheckUserData() = True Then
+        Call Protocol.Connect(E_MODO.Normal)
+    End If
+End Sub
+
+Private Sub btnCrearServer_Click()
+    Call ShellExecute(0, "Open", "https://www.reddit.com/r/argentumonlineoficial/comments/9dow3q/como_montar_mi_propio_servidor/", "", App.path, SW_SHOWNORMAL)
+End Sub
+
+Private Sub btnManual_Click()
+    Call ShellExecute(0, "Open", "http://wiki.argentumonline.org", "", App.path, SW_SHOWNORMAL)
+End Sub
+
+Private Sub btnRecuperar_Click()
+    Call Protocol.Connect(E_MODO.CambiarContrasena)
+End Sub
+
+Private Sub btnReglamento_Click()
+    Call ShellExecute(0, "Open", "http://wiki.argentumonline.org/reglamento", "", App.path, SW_SHOWNORMAL)
+End Sub
+
+Private Sub btnSalir_Click()
+    Call CloseClient
+End Sub
+
+Private Sub btnTeclas_Click()
+    Load frmKeypad
+    frmKeypad.Show vbModal
+    Unload frmKeypad
+    txtPasswd.SetFocus
+End Sub
+
+Private Sub btnVerForo_Click()
+    Call ShellExecute(0, "Open", "https://www.reddit.com/r/argentumonlineoficial/", "", App.path, SW_SHOWNORMAL)
 End Sub
 
 Private Sub Form_Activate()
@@ -410,168 +674,17 @@ Private Sub Form_Load()
     Me.Picture = LoadPicture(App.path & "\graficos\VentanaConectar.jpg")
     
     Call LoadButtons
-
-    'Call CheckLicenseAgreement
-        
-End Sub
-
-Private Sub CheckLicenseAgreement()
-    'Recordatorio para cumplir la licencia, por si borras el Boton sin leer el code...
-    Dim i As Long
-    
-    Dim Count_controlsCount As Long
-        Count_controlsCount = Me.Controls.Count - 1
-    
-    For i = 0 To Count_controlsCount
-        If Me.Controls(i).Name = "imgCodigoFuente" Then
-            Exit For
-        End If
-    Next i
-    
-    If i = Me.Controls.Count Then
-        MsgBox "No debe eliminarse la posibilidad de bajar el codigo de sus servidor. Caso contrario estarian violando la licencia Affero GPL y con ella derechos de autor, incurriendo de esta forma en un delito punible por ley." & vbCrLf & vbCrLf & vbCrLf & _
-                "Argentum Online es libre, es de todos. Mantengamoslo asi. Si tanto te gusta el juego y queres los cambios que hacemos nosotros, comparti los tuyos. Es un cambio justo. Si no estas de acuerdo, no uses nuestro codigo, pues nadie te obliga o bien utiliza una version anterior a la 0.12.0.", vbCritical Or vbApplicationModal
-    End If
-
 End Sub
 
 Private Sub LoadButtons()
-    
-    Dim GrhPath As String
-    
-    GrhPath = DirGraficos
-    
-    Set cBotonCrearCuenta = New clsGraphicalButton
-    Set cBotonRecuperarPass = New clsGraphicalButton
-    Set cBotonManual = New clsGraphicalButton
-    Set cBotonReglamento = New clsGraphicalButton
-    Set cBotonCodigoFuente = New clsGraphicalButton
-    Set cBotonBorrarPj = New clsGraphicalButton
-    Set cBotonSalir = New clsGraphicalButton
-    Set cBotonLeerMas = New clsGraphicalButton
-    Set cBotonForo = New clsGraphicalButton
-    Set cBotonConectarse = New clsGraphicalButton
-    Set cBotonTeclas = New clsGraphicalButton
-    
-    Set LastButtonPressed = New clsGraphicalButton
-
-        
-    Call cBotonCrearCuenta.Initialize(imgCrearCuenta, GrhPath & "BotonCrearCuenta.jpg", _
-                                    GrhPath & "BotonCrearCuentaRollover.jpg", _
-                                    GrhPath & "BotonCrearCuentaClick.jpg", Me)
-                                    
-    Call cBotonRecuperarPass.Initialize(imgRecuperar, GrhPath & "BotonRecuperarPass.jpg", _
-                                    GrhPath & "BotonRecuperarPassRollover.jpg", _
-                                    GrhPath & "BotonRecuperarPassClick.jpg", Me)
-                                    
-    Call cBotonManual.Initialize(imgManual, GrhPath & "BotonManual.jpg", _
-                                    GrhPath & "BotonManualRollover.jpg", _
-                                    GrhPath & "BotonManualClick.jpg", Me)
-                                    
-    Call cBotonReglamento.Initialize(imgReglamento, GrhPath & "BotonReglamento.jpg", _
-                                    GrhPath & "BotonReglamentoRollover.jpg", _
-                                    GrhPath & "BotonReglamentoClick.jpg", Me)
-                                    
-    Call cBotonCodigoFuente.Initialize(imgCodigoFuente, GrhPath & "BotonCodigoFuente.jpg", _
-                                    GrhPath & "BotonCodigoFuenteRollover.jpg", _
-                                    GrhPath & "BotonCodigoFuenteClick.jpg", Me)
-                                    
-    Call cBotonBorrarPj.Initialize(imgBorrarPj, GrhPath & "BotonBorrarPersonaje.jpg", _
-                                    GrhPath & "BotonBorrarPersonajeRollover.jpg", _
-                                    GrhPath & "BotonBorrarPersonajeClick.jpg", Me)
-                                    
-    Call cBotonSalir.Initialize(imgSalir, GrhPath & "BotonSalirConnect.jpg", _
-                                    GrhPath & "BotonBotonSalirRolloverConnect.jpg", _
-                                    GrhPath & "BotonSalirClickConnect.jpg", Me)
-                                    
-    Call cBotonForo.Initialize(imgVerForo, GrhPath & "BotonVerForo.jpg", _
-                                    GrhPath & "BotonVerForoRollover.jpg", _
-                                    GrhPath & "BotonVerForoClick.jpg", Me)
-                                    
-    Call cBotonConectarse.Initialize(imgConectarse, GrhPath & "BotonConectarse.jpg", _
-                                    GrhPath & "BotonConectarseRollover.jpg", _
-                                    GrhPath & "BotonConectarseClick.jpg", Me)
-                                    
-    Call cBotonTeclas.Initialize(imgTeclas, GrhPath & "BotonTeclas.jpg", _
-                                    GrhPath & "BotonTeclasRollover.jpg", _
-                                    GrhPath & "BotonTeclasClick.jpg", Me)
-
-End Sub
-
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastButtonPressed.ToggleToNormal
-End Sub
-
-Private Sub imgBorrarPj_Click()
-    Call MsgBox("Esta funcionalidad no se encuentra disponible actualmente.", vbCritical, "Argentum Online")
-End Sub
-
-Private Sub imgCodigoFuente_Click()
-'***********************************
-'IMPORTANTE!
-'
-'No debe eliminarse la posibilidad de bajar el codigo de sus servidor de esta forma.
-'Caso contrario estarian violando la licencia Affero GPL y con ella derechos de autor,
-'incurriendo de esta forma en un delito punible por ley.
-'
-'Argentum Online es libre, es de todos. Mantengamoslo asi. Si tanto te gusta el juego y queres los
-'cambios que hacemos nosotros, comparti los tuyos. Es un cambio justo. Si no estas de acuerdo,
-'no uses nuestro codigo, pues nadie te obliga o bien utiliza una version anterior a la 0.12.0.
-'***********************************
-    Call ShellExecute(0, "Open", "https://github.com/ao-libre", "", App.path, SW_SHOWNORMAL)
-
-End Sub
-
-Private Sub imgConectarse_Click()
-    
-    'update user info
-    AccountName = txtNombre.Text
-    AccountPassword = txtPasswd.Text
-
-    'Clear spell list
-    frmMain.hlst.Clear
-
-    If CheckUserData() = True Then
-    
-        Call Protocol.Connect(E_MODO.Normal)
-    
-    End If
-    
-End Sub
-
-Private Sub imgLeerMas_Click()
-    Call ShellExecute(0, "Open", "http://www.argentumonline.org", "", App.path, SW_SHOWNORMAL)
-End Sub
-
-Private Sub imgCrearCuenta_Click()
-    Call Protocol.Connect(E_MODO.CrearCuenta)
-End Sub
-
-Private Sub imgManual_Click()
-    Call ShellExecute(0, "Open", "http://wiki.argentumonline.org", "", App.path, SW_SHOWNORMAL)
-End Sub
-
-Private Sub imgRecuperar_Click()
-    Call Protocol.Connect(E_MODO.CambiarContrasena)
-End Sub
-
-Private Sub imgReglamento_Click()
-    Call ShellExecute(0, "Open", "http://wiki.argentumonline.org/reglamento", "", App.path, SW_SHOWNORMAL)
-End Sub
-
-Private Sub imgSalir_Click()
-    Call CloseClient
-End Sub
-
-Private Sub imgTeclas_Click()
-    Load frmKeypad
-    frmKeypad.Show vbModal
-    Unload frmKeypad
-    txtPasswd.SetFocus
-End Sub
-
-Private Sub imgVerForo_Click()
-    Call ShellExecute(0, "Open", "https://www.reddit.com/r/argentumonlineoficial/", "", App.path, SW_SHOWNORMAL)
+    btnActualizarLista.Caption = JsonLanguage.Item("BTN_ACTUALIZAR_LISTA").Item("TEXTO")
+    btnCodigoFuente.Caption = JsonLanguage.Item("BTN_CODIGO_FUENTE").Item("TEXTO")
+    btnConectarse.Caption = JsonLanguage.Item("BTN_CONECTARSE").Item("TEXTO")
+    btnCrearCuenta.Caption = JsonLanguage.Item("BTN_CREAR_CUENTA").Item("TEXTO")
+    btnCrearServer.Caption = JsonLanguage.Item("BTN_CREAR_SERVER").Item("TEXTO")
+    btnManual.Caption = JsonLanguage.Item("BTN_MANUAL").Item("TEXTO")
+    btnRecuperar.Caption = JsonLanguage.Item("BTN_RECUPERAR").Item("TEXTO")
+    btnReglamento.Caption = JsonLanguage.Item("BTN_REGLAMENTO").Item("TEXTO")
 End Sub
 
 Private Sub lstRedditPosts_Click()
@@ -595,7 +708,7 @@ Private Sub lstServers_Click()
 End Sub
 
 Private Sub txtPasswd_KeyPress(KeyAscii As Integer)
-    If KeyAscii = vbKeyReturn Then imgConectarse_Click
+    If KeyAscii = vbKeyReturn Then btnConectarse_Click
 End Sub
 
 Private Sub GetPostsFromReddit()
@@ -628,4 +741,6 @@ On Error Resume Next
     Loop
 End Sub
 
-
+Private Sub btnCrearCuenta_Click()
+    Call Protocol.Connect(E_MODO.CrearCuenta)
+End Sub

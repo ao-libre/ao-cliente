@@ -15,47 +15,85 @@ Begin VB.Form frmCerrar
    ScaleWidth      =   335
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
-   Begin VB.CommandButton cCancelQuit 
-      Caption         =   "Salir (ESC)"
-      Height          =   315
-      Left            =   3600
-      TabIndex        =   2
-      Top             =   2760
-      Width           =   1140
-   End
-   Begin VB.CommandButton cSalir 
-      Caption         =   "Salir del Juego"
-      BeginProperty Font 
-         Name            =   "Tahoma"
+   Begin AOLibre.uAOButton cRegresar 
+      Height          =   615
+      Left            =   360
+      TabIndex        =   0
+      Top             =   840
+      Width           =   4215
+      _ExtentX        =   7435
+      _ExtentY        =   1085
+      TX              =   "Regresar Pantalla de Inicio"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmCerrar.frx":9B51
+      PICF            =   "frmCerrar.frx":A57B
+      PICH            =   "frmCerrar.frx":B23D
+      PICV            =   "frmCerrar.frx":C1CF
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
          Size            =   14.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   585
-      Left            =   480
-      TabIndex        =   1
-      Top             =   1800
-      Width           =   4170
-   End
-   Begin VB.CommandButton cRegresar 
-      Caption         =   "Regresar a la pantalla de inicio"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   12
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   585
-      Left            =   480
-      TabIndex        =   0
-      Top             =   840
-      Width           =   4170
+   End
+   Begin AOLibre.uAOButton cSalir 
+      CausesValidation=   0   'False
+      Height          =   615
+      Left            =   360
+      TabIndex        =   1
+      Top             =   1800
+      Width           =   4215
+      _ExtentX        =   7435
+      _ExtentY        =   1085
+      TX              =   "Salir del Juego"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmCerrar.frx":D0D1
+      PICF            =   "frmCerrar.frx":DAFB
+      PICH            =   "frmCerrar.frx":E7BD
+      PICV            =   "frmCerrar.frx":F74F
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   14.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton cCancelQuit 
+      CausesValidation=   0   'False
+      Height          =   375
+      Left            =   3600
+      TabIndex        =   2
+      Top             =   2760
+      Width           =   1215
+      _ExtentX        =   2143
+      _ExtentY        =   661
+      TX              =   "Cancelar"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmCerrar.frx":10651
+      PICF            =   "frmCerrar.frx":1107B
+      PICH            =   "frmCerrar.frx":11D3D
+      PICV            =   "frmCerrar.frx":12CCF
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
 End
 Attribute VB_Name = "frmCerrar"

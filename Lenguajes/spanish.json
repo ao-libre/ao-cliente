@@ -1164,5 +1164,74 @@
 			255,
 			255
 		]
-	}
+	},
+	"BTN_ACTUALIZAR_LISTA":{
+		"TEXTO":"Actualizar Lista"
+	},
+	"BTN_CODIGO_FUENTE":{
+		"TEXTO":"Codigo Fuente"
+	},
+	"BTN_CONECTARSE":{
+		"TEXTO":"Conectarse"
+	},
+	"BTN_CREAR_CUENTA":{
+		"TEXTO":"Crear Cuenta"
+	},
+	"BTN_CREAR_SERVER":{
+		"TEXTO":"Crear Server"
+	},
+	"BTN_MANUAL":{
+		"TEXTO":"Manual"
+	},
+	"BTN_RECUPERAR":{
+		"TEXTO":"Cambiar Pass"
+	},
+	"BTN_REGLAMENTO":{
+		"TEXTO":"Reglamento"
+	},
+	"FRM_CREARCUENTA_SALIR":{
+		"TEXTO":"Salir"
+	},
+    "FRM_CREARCUENTA_CREARCUENTA":{
+		"TEXTO":"Crear Cuenta"
+	},
+    "FRM_CREARCUENTA_MENSAJE":{
+		"TEXTO":"Utilize un email real para recibir correctamente los correos"
+	},
+	"FRM_RECUPERAR_CUENTA_LBLCORREO":{
+		"TEXTO":"Correo electronico"
+	},
+    "FRM_RECUPERAR_CUENTA_LBLPASS":{
+		"TEXTO":"Nueva Password"
+   	},
+	"FRM_RECUPERAR_CUENTA_CMDENVIAR":{
+		"TEXTO":"Cambiar Password"
+	},
+	"FRMBUSCAR_TITLE":{
+		"TEXTO":"Buscador"
+	},	
+    "FRMBUSCAR_CREAR":{
+		"TEXTO":"Crear"
+	},	
+    "FRMBUSCAR_CREARNPCS":{
+		"TEXTO":"Npcs"
+	},	
+    "FRMBUSCAR_CREAROBJETOS":{
+		"TEXTO":"Objetos"
+	},	
+    "FRMBUSCAR_CANTIDAD":{
+		"TEXTO":"Cantidad"
+	},	
+    "FRMBUSCAR_RESPAWN":{
+		"TEXTO":"Respawn"
+	},	
+    "FRMBUSCAR_BUSCAROBJETO":{
+		"TEXTO":"Buscar Objeto"
+	},	
+    "FRMBUSCAR_BUSCARNPCS":{
+		"TEXTO":"Buscar Npcs"
+	},	
+    "FRMBUSCAR_LIMPIARLISTAS":{
+		"TEXTO":"Limpiar Listas"
+	},
 }
