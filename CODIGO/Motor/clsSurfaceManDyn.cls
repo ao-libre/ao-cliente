@@ -156,12 +156,11 @@ Private Property Get clsSurfaceManager_Surface(ByVal fileIndex As Long) As Direc
 End Property
 
 Private Function LoadSurface(ByVal fileIndex As Long) As Direct3DTexture8
-'**************************************************************
+'********************************************************************************************************
 'Author: Nicolas Matias Gonzalez (NIGO)
-'Last Modify Date: 09/10/2012 - ^[GS]^
-'Loads the surface named fileIndex + ".bmp" and inserts it to the
-'surface list in the listIndex position
-'**************************************************************
+'Last Modify Date: 06/05/2019 - Jopi
+'Loads the surface named fileIndex + ".bmp" and inserts it to the surface list in the listIndex position
+'********************************************************************************************************
 On Error GoTo ErrHandler
 
     Dim newSurface As SURFACE_ENTRY_DYN
@@ -169,19 +168,30 @@ On Error GoTo ErrHandler
     Dim texture_info As D3DXIMAGE_INFO
     Dim data() As Byte
     
-    'get Bitmap
-    Call Get_Image(ResourcePath, CStr(fileIndex), data)
     With newSurface
         .fileIndex = fileIndex
         
         'Set last access time (if we didn't we would reckon this texture as the one lru)
         .lastAccess = GetTickCount
         
-        Set .Surface = DirectD3D.CreateTextureFromFileInMemoryEx( _
-                DirectDevice, data(0), UBound(data) + 1, _
-                D3DX_DEFAULT, D3DX_DEFAULT, 3, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, D3DX_FILTER_NONE, _
-                D3DX_FILTER_NONE, &HFF000000, texture_info, ByVal 0)
-
+        #If Compression = 0 Then
+            If FileExist(DirGraficos & CStr(fileIndex) & ".bmp", vbNormal) Then
+                Set .Surface = DirectD3D.CreateTextureFromFileEx(DirectDevice, DirGraficos & CStr(fileIndex) & ".BMP", D3DX_DEFAULT, D3DX_DEFAULT, 0, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, &HFF000000, ByVal 0, ByVal 0)
+            ElseIf FileExist(DirGraficos & CStr(fileIndex) & ".png", vbNormal) Then
+                Set .Surface = DirectD3D.CreateTextureFromFileEx(DirectDevice, DirGraficos & CStr(fileIndex) & ".PNG", D3DX_DEFAULT, D3DX_DEFAULT, 0, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, &HFF000000, ByVal 0, ByVal 0)
+            Else
+                MsgBox "No se ha podido cargar el grafico con indice: " & fileIndex
+                Call CloseClient
+            End If
+        #Else
+            'Get .BMP from compressed file.
+            Call Get_Image(ResourcePath, CStr(fileIndex), data)
+            
+            'Create the texture.
+            Set .Surface = DirectD3D.CreateTextureFromFileInMemoryEx(DirectDevice, data(0), UBound(data) + 1, D3DX_DEFAULT, D3DX_DEFAULT, 3, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, &HFF000000, texture_info, ByVal 0)
+            Debug.Print "Cargando graficos comprimidos."
+        #End If
+        
         newSurface.Surface.GetLevelDesc 0, surface_desc
         
     End With
@@ -198,7 +208,7 @@ On Error GoTo ErrHandler
     End With
     
     'Update used bytes
-    usedBytes = usedBytes + surface_desc.Size
+    usedBytes = usedBytes + surface_desc.size
     
     'Check if we have exceeded our allowed share of memory usage
     Do While usedBytes > maxBytesToUse
@@ -273,7 +283,7 @@ Private Function RemoveLRU() As Boolean
         End With
         
         'Update the used bytes
-        usedBytes = usedBytes - ddsd.Size
+        usedBytes = usedBytes - ddsd.size
     End If
 End Function
 
