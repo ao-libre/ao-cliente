@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmOpciones 
    BackColor       =   &H8000000A&
    BorderStyle     =   0  'None
@@ -22,11 +22,22 @@ Begin VB.Form frmOpciones
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmOpciones.frx":0152
    ScaleHeight     =   479
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   322
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
+   Begin VB.ComboBox cmdSkinsComboBox 
+      BackColor       =   &H00004080&
+      ForeColor       =   &H80000018&
+      Height          =   315
+      Left            =   3000
+      TabIndex        =   4
+      Text            =   "Seleccione skin"
+      Top             =   480
+      Width           =   1575
+   End
    Begin VB.TextBox txtCantMensajes 
       Alignment       =   2  'Center
       BackColor       =   &H00000000&
@@ -275,6 +286,16 @@ Private bSoundEffectsActivated As Boolean
 
 Private loading As Boolean
 
+Private Sub cmdSkinsComboBox_Click()
+'***************************************************
+'Author: Recox
+'Last Modification: 01/04/2019
+'08/11/2019: Recox - Cargamos lista de skins
+'***************************************************
+    Call WriteVar(App.path & "\INIT\Config.ini", "Parameters", "SkinSelected", cmdSkinsComboBox.Text)
+    MsgBox ("Debe reiniciar el juego aplicar el cambio de skin. Skin Seleccionado: " & cmdSkinsComboBox.Text)
+End Sub
+
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
 End Sub
@@ -467,10 +488,25 @@ Private Sub Form_Load()
     
     Me.Picture = LoadPicture(App.path & "\graficos\VentanaOpciones.jpg")
     LoadButtons
+    LoadSkinsInComboBox
     
     loading = True      'Prevent sounds when setting check's values
     LoadUserConfig
     loading = False     'Enable sounds when setting check's values
+End Sub
+
+Private Sub LoadSkinsInComboBox()
+    Dim sFileName As String
+    sFileName = Dir(DirGraficos & "\Skins\", vbDirectory)
+    
+    Do While sFileName > ""
+        cmdSkinsComboBox.AddItem (sFileName)
+        sFileName = Dir()
+    Loop
+    
+    'Boorramos los 2 primeros items por que son . y ..
+    cmdSkinsComboBox.RemoveItem (0)
+    cmdSkinsComboBox.RemoveItem (0)
 End Sub
 
 Private Sub LoadButtons()
@@ -578,8 +614,8 @@ Private Sub LoadUserConfig()
     txtLevel = ClientSetup.byMurderedLevel
 End Sub
 
-Private Sub Slider1_Change(Index As Integer)
-    Select Case Index
+Private Sub Slider1_Change(index As Integer)
+    Select Case index
         Case 0
             Audio.MusicVolume = Slider1(0).Value
         Case 1
@@ -587,8 +623,8 @@ Private Sub Slider1_Change(Index As Integer)
     End Select
 End Sub
 
-Private Sub Slider1_Scroll(Index As Integer)
-    Select Case Index
+Private Sub Slider1_Scroll(index As Integer)
+    Select Case index
         Case 0
             Audio.MusicVolume = Slider1(0).Value
         Case 1
