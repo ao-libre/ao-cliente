@@ -1,7 +1,7 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "richtx32.ocx"
 Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.ocx"
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.ocx"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.Form frmMain 
    BorderStyle     =   0  'None
    ClientHeight    =   8985
@@ -220,6 +220,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2619
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -977,12 +978,14 @@ Private ChangeHechi As Boolean, ChangeHechiNum As Integer
 
 'Usado para controlar que no se dispare el binding de la tecla CTRL cuando se usa CTRL+Tecla.
 Dim CtrlMaskOn As Boolean
+Dim SkinSeleccionado As String
 
 Public Sub dragInventory_dragDone(ByVal originalSlot As Integer, ByVal newSlot As Integer)
 Call Protocol.WriteMoveItem(originalSlot, newSlot, eMoveType.Inventory)
 End Sub
 
 Private Sub Form_Load()
+    SkinSeleccionado = GetVar(App.path & "\INIT\Config.ini", "Parameters", "SkinSelected")
     
     If NoRes Then
         ' Handles Form movement (drag and drop).
@@ -990,14 +993,14 @@ Private Sub Form_Load()
         clsFormulario.Initialize Me, 120
     End If
     
-    InvEqu.Picture = LoadPicture(DirGraficos & "CentroInventario.jpg")
+    InvEqu.Picture = LoadPicture(DirGraficos & "Skins\" & SkinSeleccionado & "\CentroInventario.jpg")
     
     Call LoadButtons
     
     Set dragInventory = Inventario
     
     With Me
-        .Picture = LoadPicture(DirGraficos & "VentanaPrincipal.JPG")
+        .Picture = LoadPicture(DirGraficos & "Skins\" & SkinSeleccionado & "\VentanaPrincipal.JPG")
         .Left = 0
         .Top = 0
         .Width = 12000
@@ -1006,16 +1009,13 @@ Private Sub Form_Load()
     End With
     
     ' Detect links in console
-    EnableURLDetect RecTxt.hwnd, Me.hwnd
+    EnableURLDetect RecTxt.hWnd, Me.hWnd
     
     CtrlMaskOn = False
 End Sub
 
 Private Sub LoadButtons()
-    Dim GrhPath As String
     Dim i As Integer
-    
-    GrhPath = DirGraficos
 
     Set cBotonDiamArriba = New clsGraphicalButton
     Set cBotonDiamAbajo = New clsGraphicalButton
@@ -1030,34 +1030,34 @@ Private Sub LoadButtons()
     
     
     Call cBotonDiamArriba.Initialize(imgInvScrollUp, "", _
-                                    GrhPath & "BotonDiamArribaF.bmp", _
-                                    GrhPath & "BotonDiamArribaF.bmp", Me)
+                                    DirGraficos & "Skins\" & SkinSeleccionado & "\BotonDiamArribaF.bmp", _
+                                    DirGraficos & "Skins\" & SkinSeleccionado & "\BotonDiamArribaF.bmp", Me)
 
     Call cBotonDiamAbajo.Initialize(imgInvScrollDown, "", _
-                                    GrhPath & "BotonDiamAbajoF.bmp", _
-                                    GrhPath & "BotonDiamAbajoF.bmp", Me)
+                                    DirGraficos & "Skins\" & SkinSeleccionado & "\BotonDiamAbajoF.bmp", _
+                                    DirGraficos & "Skins\" & SkinSeleccionado & "\BotonDiamAbajoF.bmp", Me)
     
     Call cBotonMapa.Initialize(imgMapa, "", _
-                                    GrhPath & "BotonMapaRollover.jpg", _
-                                    GrhPath & "BotonMapaClick.jpg", Me)
+                                    DirGraficos & "Skins\" & SkinSeleccionado & "\BotonMapaRollover.jpg", _
+                                    DirGraficos & "Skins\" & SkinSeleccionado & "\BotonMapaClick.jpg", Me)
                                     
     Call cBotonGrupo.Initialize(imgGrupo, "", _
-                                    GrhPath & "BotonGrupoRollover.jpg", _
-                                    GrhPath & "BotonGrupoClick.jpg", Me)
+                                    DirGraficos & "Skins\" & SkinSeleccionado & "\BotonGrupoRollover.jpg", _
+                                    DirGraficos & "Skins\" & SkinSeleccionado & "\BotonGrupoClick.jpg", Me)
 
     Call cBotonOpciones.Initialize(imgOpciones, "", _
-                                    GrhPath & "BotonOpcionesRollover.jpg", _
-                                    GrhPath & "BotonOpcionesClick.jpg", Me)
+                                    DirGraficos & "Skins\" & SkinSeleccionado & "\BotonOpcionesRollover.jpg", _
+                                    DirGraficos & "Skins\" & SkinSeleccionado & "\BotonOpcionesClick.jpg", Me)
 
     Call cBotonEstadisticas.Initialize(imgEstadisticas, "", _
-                                    GrhPath & "BotonEstadisticasRollover.jpg", _
-                                    GrhPath & "BotonEstadisticasClick.jpg", Me)
+                                    DirGraficos & "Skins\" & SkinSeleccionado & "\BotonEstadisticasRollover.jpg", _
+                                    DirGraficos & "Skins\" & SkinSeleccionado & "\BotonEstadisticasClick.jpg", Me)
 
     Call cBotonClanes.Initialize(imgClanes, "", _
-                                    GrhPath & "BotonClanesRollover.jpg", _
-                                    GrhPath & "BotonClanesClick.jpg", Me)
+                                    DirGraficos & "Skins\" & SkinSeleccionado & "\BotonClanesRollover.jpg", _
+                                    DirGraficos & "Skins\" & SkinSeleccionado & "\BotonClanesClick.jpg", Me)
 
-    Set picSkillStar = LoadPicture(GrhPath & "BotonAsignarSkills.bmp")
+    Set picSkillStar = LoadPicture(DirGraficos & "Skins\" & SkinSeleccionado & "\BotonAsignarSkills.bmp")
 
     If SkillPoints > 0 Then imgAsignarSkill.Picture = picSkillStar
     
@@ -1118,12 +1118,12 @@ With GrhData(GrhIndex)
     SR.Left = .SX
     SR.Right = SR.Left + .pixelWidth
     SR.Top = .SY
-    SR.bottom = SR.Top + .pixelHeight
+    SR.Bottom = SR.Top + .pixelHeight
     
     DR.Left = 0
     DR.Right = .pixelWidth
     DR.Top = 0
-    DR.bottom = .pixelHeight
+    DR.Bottom = .pixelHeight
 End With
 
 Call DrawGrhtoHdc(picSM(index).hdc, GrhIndex, SR, DR)
@@ -1675,8 +1675,8 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
         SendTxt.Visible = False
         
-        If PicInv.Visible Then
-            PicInv.SetFocus
+        If picInv.Visible Then
+            picInv.SetFocus
         Else
             hlst.SetFocus
         End If
@@ -1997,16 +1997,16 @@ End Sub
 Private Sub Label4_Click()
     Call Audio.PlayWave(SND_CLICK)
 
-    InvEqu.Picture = LoadPicture(App.path & "\Graficos\Centroinventario.jpg")
+    InvEqu.Picture = LoadPicture(DirGraficos & "Skins\" & SkinSeleccionado & "\Centroinventario.jpg")
 
     ' Activo controles de inventario
-    PicInv.Visible = True
+    picInv.Visible = True
     imgInvScrollUp.Visible = True
     imgInvScrollDown.Visible = True
 
     ' Desactivo controles de hechizo
     hlst.Visible = False
-    cmdINFO.Visible = False
+    cmdInfo.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = False
@@ -2017,18 +2017,18 @@ End Sub
 Private Sub Label7_Click()
     Call Audio.PlayWave(SND_CLICK)
 
-    InvEqu.Picture = LoadPicture(App.path & "\Graficos\Centrohechizos.jpg")
+    InvEqu.Picture = LoadPicture(DirGraficos & "Skins\" & SkinSeleccionado & "\Centrohechizos.jpg")
     
     ' Activo controles de hechizos
     hlst.Visible = True
-    cmdINFO.Visible = True
+    cmdInfo.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True
     cmdMoverHechi(1).Visible = True
     
     ' Desactivo controles de inventario
-    PicInv.Visible = False
+    picInv.Visible = False
     imgInvScrollUp.Visible = False
     imgInvScrollDown.Visible = False
 
@@ -2061,8 +2061,8 @@ On Error Resume Next  'el .SetFocus causaba errores al salir y volver a entrar
         (Not frmMSG.Visible) And (Not MirandoForo) And _
         (Not frmEstadisticas.Visible) And (Not frmCantidad.Visible) And (Not MirandoParty) Then
          
-        If PicInv.Visible Then
-            PicInv.SetFocus
+        If picInv.Visible Then
+            picInv.SetFocus
         ElseIf hlst.Visible Then
             hlst.SetFocus
         End If
@@ -2070,8 +2070,8 @@ On Error Resume Next  'el .SetFocus causaba errores al salir y volver a entrar
 End Sub
 
 Private Sub RecTxt_KeyDown(KeyCode As Integer, Shift As Integer)
-    If PicInv.Visible Then
-        PicInv.SetFocus
+    If picInv.Visible Then
+        picInv.SetFocus
     Else
         hlst.SetFocus
     End If
@@ -2127,8 +2127,8 @@ Private Sub SendCMSTXT_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
         Me.SendCMSTXT.Visible = False
         
-        If PicInv.Visible Then
-            PicInv.SetFocus
+        If picInv.Visible Then
+            picInv.SetFocus
         Else
             hlst.SetFocus
         End If
@@ -2176,8 +2176,8 @@ End Sub
 Private Sub Socket1_Connect()
     
     'Clean input and output buffers
-    Call incomingData.ReadASCIIStringFixed(incomingData.length)
-    Call outgoingData.ReadASCIIStringFixed(outgoingData.length)
+    Call incomingData.ReadASCIIStringFixed(incomingData.Length)
+    Call outgoingData.ReadASCIIStringFixed(outgoingData.Length)
     
     Second.Enabled = True
 
@@ -2344,7 +2344,7 @@ Private Sub Winsock1_Close()
     Do While i < Forms.Count - 1
         i = i + 1
         
-        If Forms(i).Name <> Me.Name And Forms(i).Name <> frmConnect.Name And Forms(i).Name <> frmCrearPersonaje.Name Then
+        If Forms(i).name <> Me.name And Forms(i).name <> frmConnect.name And Forms(i).name <> frmCrearPersonaje.name Then
             Unload Forms(i)
         End If
     Loop
@@ -2382,8 +2382,8 @@ End Sub
 Private Sub Winsock1_Connect()
 
     'Clean input and output buffers
-    Call incomingData.ReadASCIIStringFixed(incomingData.length)
-    Call outgoingData.ReadASCIIStringFixed(outgoingData.length)
+    Call incomingData.ReadASCIIStringFixed(incomingData.Length)
+    Call outgoingData.ReadASCIIStringFixed(outgoingData.Length)
     
     Second.Enabled = True
     
@@ -2425,7 +2425,7 @@ Private Sub Winsock1_DataArrival(ByVal bytesTotal As Long)
     Call HandleIncomingData
 End Sub
 
-Private Sub Winsock1_Error(ByVal number As Integer, Description As String, ByVal Scode As Long, ByVal source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
+Private Sub Winsock1_Error(ByVal number As Integer, Description As String, ByVal sCode As Long, ByVal source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
     '*********************************************
     'Handle socket errors
     '*********************************************
@@ -2617,3 +2617,5 @@ Private Sub hlst_DblClick()
     hlst.BackColor = vbRed
 
 End Sub
+
+
