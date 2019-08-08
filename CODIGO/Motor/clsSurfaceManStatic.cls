@@ -154,12 +154,11 @@ On Error Resume Next
 End Sub
 
 Private Sub LoadSurface(ByRef bmpInfo As BITMAPINFO, ByRef data() As Byte, ByVal fileIndex As Long)
-'**************************************************************
+'********************************************************************************************************
 'Author: Nicolas Matias Gonzalez (NIGO)
-'Last Modify Date: 11/30/2007
-'Loads the surface named fileIndex + ".bmp" and inserts it to the
-'surface list in the listIndex position
-'**************************************************************
+'Last Modify Date: 06/05/2019 - Jopi
+'Loads the surface named fileIndex + ".bmp" and inserts it to the surface list in the listIndex position
+'********************************************************************************************************
 On Error GoTo ErrHandler
 
     Dim newSurface As SURFACE_ENTRY_STATIC
@@ -169,10 +168,17 @@ On Error GoTo ErrHandler
     With newSurface
         .fileIndex = fileIndex
         
-        Set newSurface.Surface = DirectD3D.CreateTextureFromFileInMemoryEx(DirectDevice, data(0), UBound(data) + 1, _
-                D3DX_DEFAULT, D3DX_DEFAULT, 3, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, D3DX_FILTER_NONE, _
-                D3DX_FILTER_NONE, &HFF000000, texture_info, ByVal 0)
-        
+        #If Compression = 0 Then
+            If FileExist(DirGraficos & CStr(fileIndex) & ".bmp", vbNormal) Then
+                Set .Surface = DirectD3D.CreateTextureFromFileEx(DirectDevice, DirGraficos & CStr(fileIndex) & ".BMP", D3DX_DEFAULT, D3DX_DEFAULT, 0, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, &HFF000000, ByVal 0, ByVal 0)
+            ElseIf FileExist(DirGraficos & CStr(fileIndex) & ".png", vbNormal) Then
+                Set .Surface = DirectD3D.CreateTextureFromFileEx(DirectDevice, DirGraficos & CStr(fileIndex) & ".PNG", D3DX_DEFAULT, D3DX_DEFAULT, 0, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, &HFF000000, ByVal 0, ByVal 0)
+            Else
+                MsgBox "No se ha podido cargar el grafico con indice: " & fileIndex
+            End If
+        #Else
+            Set newSurface.Surface = DirectD3D.CreateTextureFromFileInMemoryEx(DirectDevice, data(0), UBound(data) + 1, D3DX_DEFAULT, D3DX_DEFAULT, 3, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, &HFF000000, texture_info, ByVal 0)
+        #End If
         
         newSurface.Surface.GetLevelDesc 0, surface_desc
         
