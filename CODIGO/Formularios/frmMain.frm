@@ -76,7 +76,7 @@ Begin VB.Form frmMain
       MousePointer    =   99  'Custom
       ScaleHeight     =   450
       ScaleWidth      =   420
-      TabIndex        =   33
+      TabIndex        =   31
       Top             =   8445
       Width           =   420
    End
@@ -92,7 +92,7 @@ Begin VB.Form frmMain
       MousePointer    =   99  'Custom
       ScaleHeight     =   450
       ScaleWidth      =   420
-      TabIndex        =   28
+      TabIndex        =   26
       Top             =   8445
       Width           =   420
    End
@@ -109,7 +109,7 @@ Begin VB.Form frmMain
       ScaleHeight     =   30
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   28
-      TabIndex        =   27
+      TabIndex        =   25
       Top             =   8445
       Width           =   420
    End
@@ -130,14 +130,14 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H80000008&
-      Height          =   1920
-      Left            =   9000
-      ScaleHeight     =   128
+      Height          =   2385
+      Left            =   8880
+      ScaleHeight     =   159
       ScaleMode       =   3  'Pixel
-      ScaleWidth      =   160
+      ScaleWidth      =   168
       TabIndex        =   16
-      Top             =   2400
-      Width           =   2400
+      Top             =   2760
+      Width           =   2520
    End
    Begin VB.TextBox SendTxt 
       BackColor       =   &H00000000&
@@ -220,11 +220,10 @@ Begin VB.Form frmMain
       _ExtentY        =   2619
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
-      TextRTF         =   $"frmMain.frx":39815
+      TextRTF         =   $"frmMain.frx":3B069
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Tahoma"
          Size            =   8.25
@@ -238,11 +237,11 @@ Begin VB.Form frmMain
    Begin VB.ListBox hlst 
       BackColor       =   &H00000000&
       ForeColor       =   &H00FFFFFF&
-      Height          =   2790
+      Height          =   2595
       Left            =   8880
       TabIndex        =   17
       TabStop         =   0   'False
-      Top             =   2400
+      Top             =   2520
       Visible         =   0   'False
       Width           =   2565
    End
@@ -250,44 +249,248 @@ Begin VB.Form frmMain
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
       Height          =   6240
-      Left            =   180
+      Left            =   120
       MousePointer    =   99  'Custom
       ScaleHeight     =   416
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   544
-      TabIndex        =   32
-      Top             =   2220
+      TabIndex        =   30
+      Top             =   2280
       Width           =   8160
    End
-   Begin VB.Image imgMapa 
-      Height          =   300
-      Left            =   10230
-      Top             =   6675
-      Width           =   1395
+   Begin AOLibre.uAOButton imgMapa 
+      Height          =   255
+      Left            =   10320
+      TabIndex        =   32
+      Top             =   6600
+      Width           =   1335
+      _ExtentX        =   2355
+      _ExtentY        =   450
+      TX              =   "Mapa"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmMain.frx":3B0E6
+      PICF            =   "frmMain.frx":3BB10
+      PICH            =   "frmMain.frx":3C7D2
+      PICV            =   "frmMain.frx":3D764
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   12
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
-   Begin VB.Image imgClanes 
-      Height          =   390
-      Left            =   10245
-      Top             =   7980
-      Width           =   1380
+   Begin AOLibre.uAOButton imgGrupo 
+      Height          =   255
+      Left            =   10320
+      TabIndex        =   33
+      Top             =   6960
+      Width           =   1335
+      _ExtentX        =   2355
+      _ExtentY        =   450
+      TX              =   "Grupo"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmMain.frx":3E666
+      PICF            =   "frmMain.frx":3F090
+      PICH            =   "frmMain.frx":3FD52
+      PICV            =   "frmMain.frx":40CE4
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   12
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
-   Begin VB.Image imgEstadisticas 
-      Height          =   360
-      Left            =   10215
-      Top             =   7605
-      Width           =   1425
+   Begin AOLibre.uAOButton imgOpciones 
+      Height          =   255
+      Left            =   10320
+      TabIndex        =   34
+      Top             =   7320
+      Width           =   1335
+      _ExtentX        =   2355
+      _ExtentY        =   450
+      TX              =   "Opciones"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmMain.frx":41BE6
+      PICF            =   "frmMain.frx":42610
+      PICH            =   "frmMain.frx":432D2
+      PICV            =   "frmMain.frx":44264
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   12
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
-   Begin VB.Image imgOpciones 
-      Height          =   330
-      Left            =   10215
-      Top             =   7275
-      Width           =   1425
+   Begin AOLibre.uAOButton imgEstadisticas 
+      Height          =   255
+      Left            =   10320
+      TabIndex        =   35
+      Top             =   7680
+      Width           =   1335
+      _ExtentX        =   2355
+      _ExtentY        =   450
+      TX              =   "Estadisticas"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmMain.frx":45166
+      PICF            =   "frmMain.frx":45B90
+      PICH            =   "frmMain.frx":46852
+      PICV            =   "frmMain.frx":477E4
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   12
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
-   Begin VB.Image imgGrupo 
-      Height          =   315
-      Left            =   10215
-      Top             =   6990
-      Width           =   1410
+   Begin AOLibre.uAOButton imgClanes 
+      Height          =   255
+      Left            =   10320
+      TabIndex        =   36
+      Top             =   8040
+      Width           =   1335
+      _ExtentX        =   2355
+      _ExtentY        =   450
+      TX              =   "Clanes"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmMain.frx":486E6
+      PICF            =   "frmMain.frx":49110
+      PICH            =   "frmMain.frx":49DD2
+      PICV            =   "frmMain.frx":4AD64
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   12
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton Label4 
+      Height          =   375
+      Left            =   8880
+      TabIndex        =   37
+      Top             =   2040
+      Width           =   1215
+      _ExtentX        =   2143
+      _ExtentY        =   661
+      TX              =   "Inventario"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmMain.frx":4BC66
+      PICF            =   "frmMain.frx":4C690
+      PICH            =   "frmMain.frx":4D352
+      PICV            =   "frmMain.frx":4E2E4
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   12
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton Label7 
+      Height          =   375
+      Left            =   10200
+      TabIndex        =   38
+      Top             =   2040
+      Width           =   1215
+      _ExtentX        =   2143
+      _ExtentY        =   661
+      TX              =   "Hechizos"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmMain.frx":4F1E6
+      PICF            =   "frmMain.frx":4FC10
+      PICH            =   "frmMain.frx":508D2
+      PICV            =   "frmMain.frx":51864
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   12
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton CmdLanzar 
+      Height          =   495
+      Left            =   8760
+      TabIndex        =   39
+      Top             =   5280
+      Width           =   1215
+      _ExtentX        =   2143
+      _ExtentY        =   873
+      TX              =   "Lanzar"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmMain.frx":52766
+      PICF            =   "frmMain.frx":53190
+      PICH            =   "frmMain.frx":53E52
+      PICV            =   "frmMain.frx":54DE4
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   15.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton cmdInfo 
+      Height          =   495
+      Left            =   10560
+      TabIndex        =   40
+      Top             =   5280
+      Width           =   1215
+      _ExtentX        =   2143
+      _ExtentY        =   873
+      TX              =   "Info"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmMain.frx":55CE6
+      PICF            =   "frmMain.frx":56710
+      PICH            =   "frmMain.frx":573D2
+      PICV            =   "frmMain.frx":58364
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   15.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
    Begin VB.Image imgAsignarSkill 
       Height          =   450
@@ -301,7 +504,7 @@ Begin VB.Form frmMain
       Height          =   255
       Left            =   10560
       MousePointer    =   99  'Custom
-      TabIndex        =   31
+      TabIndex        =   29
       Top             =   6240
       Width           =   255
    End
@@ -310,7 +513,7 @@ Begin VB.Form frmMain
       Height          =   255
       Left            =   11280
       MousePointer    =   99  'Custom
-      TabIndex        =   30
+      TabIndex        =   28
       Top             =   60
       Width           =   255
    End
@@ -319,28 +522,9 @@ Begin VB.Form frmMain
       Height          =   255
       Left            =   11550
       MousePointer    =   99  'Custom
-      TabIndex        =   29
+      TabIndex        =   27
       Top             =   60
       Width           =   255
-   End
-   Begin VB.Label Label7 
-      BackStyle       =   0  'Transparent
-      BeginProperty Font 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   450
-      Left            =   10320
-      MouseIcon       =   "frmMain.frx":39892
-      MousePointer    =   99  'Custom
-      TabIndex        =   19
-      Top             =   1920
-      Width           =   1125
    End
    Begin VB.Label lblFPS 
       BackStyle       =   0  'Transparent
@@ -348,7 +532,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H00FFFFFF&
       Height          =   180
       Left            =   6660
-      TabIndex        =   26
+      TabIndex        =   24
       Top             =   60
       Width           =   555
    End
@@ -360,20 +544,11 @@ Begin VB.Form frmMain
       Width           =   420
    End
    Begin VB.Image imgInvScrollUp 
-      Height          =   1065
+      Height          =   585
       Left            =   10005
-      Top             =   4545
+      Top             =   5040
       Visible         =   0   'False
       Width           =   420
-   End
-   Begin VB.Image cmdInfo 
-      Height          =   405
-      Left            =   10680
-      MouseIcon       =   "frmMain.frx":399E4
-      MousePointer    =   99  'Custom
-      Top             =   5280
-      Visible         =   0   'False
-      Width           =   855
    End
    Begin VB.Label lblMapName 
       BackStyle       =   0  'Transparent
@@ -390,7 +565,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H0000FFFF&
       Height          =   255
       Left            =   8700
-      TabIndex        =   25
+      TabIndex        =   23
       Top             =   8445
       Visible         =   0   'False
       Width           =   1935
@@ -399,9 +574,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   0
       Left            =   11430
-      MouseIcon       =   "frmMain.frx":39B36
+      MouseIcon       =   "frmMain.frx":59266
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":39C88
+      Picture         =   "frmMain.frx":593B8
       Top             =   3480
       Visible         =   0   'False
       Width           =   225
@@ -410,9 +585,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   1
       Left            =   11430
-      MouseIcon       =   "frmMain.frx":39FCC
+      MouseIcon       =   "frmMain.frx":596FC
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":3A11E
+      Picture         =   "frmMain.frx":5984E
       Top             =   3225
       Visible         =   0   'False
       Width           =   225
@@ -445,7 +620,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H000000FF&
       Height          =   195
       Left            =   8760
-      TabIndex        =   24
+      TabIndex        =   22
       Top             =   360
       Width           =   2625
    End
@@ -465,7 +640,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H00FFFFFF&
       Height          =   225
       Left            =   9825
-      TabIndex        =   23
+      TabIndex        =   21
       Top             =   1140
       Width           =   270
    End
@@ -484,7 +659,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H00FFFFFF&
       Height          =   225
       Left            =   9225
-      TabIndex        =   22
+      TabIndex        =   20
       Top             =   1140
       Width           =   465
    End
@@ -504,7 +679,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H00FFFF00&
       Height          =   225
       Left            =   10320
-      TabIndex        =   21
+      TabIndex        =   19
       Top             =   1140
       Width           =   555
    End
@@ -524,37 +699,9 @@ Begin VB.Form frmMain
       ForeColor       =   &H00FFFFFF&
       Height          =   225
       Left            =   9225
-      TabIndex        =   20
+      TabIndex        =   18
       Top             =   1500
       Width           =   2010
-   End
-   Begin VB.Image CmdLanzar 
-      Height          =   375
-      Left            =   8760
-      MouseIcon       =   "frmMain.frx":3A462
-      MousePointer    =   99  'Custom
-      Top             =   5280
-      Visible         =   0   'False
-      Width           =   1155
-   End
-   Begin VB.Label Label4 
-      BackStyle       =   0  'Transparent
-      BeginProperty Font 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   435
-      Left            =   8880
-      MouseIcon       =   "frmMain.frx":3A5B4
-      MousePointer    =   99  'Custom
-      TabIndex        =   18
-      Top             =   1920
-      Width           =   1395
    End
    Begin VB.Label GldLbl 
       AutoSize        =   -1  'True
@@ -957,11 +1104,6 @@ Private clsFormulario As clsFormMovementManager
 
 Private cBotonDiamArriba As clsGraphicalButton
 Private cBotonDiamAbajo As clsGraphicalButton
-Private cBotonMapa As clsGraphicalButton
-Private cBotonGrupo As clsGraphicalButton
-Private cBotonOpciones As clsGraphicalButton
-Private cBotonEstadisticas As clsGraphicalButton
-Private cBotonClanes As clsGraphicalButton
 Private cBotonAsignarSkill As clsGraphicalButton
 
 Public LastButtonPressed As clsGraphicalButton
@@ -1019,13 +1161,8 @@ Private Sub LoadButtons()
 
     Set cBotonDiamArriba = New clsGraphicalButton
     Set cBotonDiamAbajo = New clsGraphicalButton
-    Set cBotonGrupo = New clsGraphicalButton
-    Set cBotonOpciones = New clsGraphicalButton
-    Set cBotonEstadisticas = New clsGraphicalButton
-    Set cBotonClanes = New clsGraphicalButton
     Set cBotonAsignarSkill = New clsGraphicalButton
-    Set cBotonMapa = New clsGraphicalButton
-    
+
     Set LastButtonPressed = New clsGraphicalButton
     
     
@@ -1036,26 +1173,6 @@ Private Sub LoadButtons()
     Call cBotonDiamAbajo.Initialize(imgInvScrollDown, "", _
                                     DirGraficos & "Skins\" & SkinSeleccionado & "\BotonDiamAbajoF.bmp", _
                                     DirGraficos & "Skins\" & SkinSeleccionado & "\BotonDiamAbajoF.bmp", Me)
-    
-    Call cBotonMapa.Initialize(imgMapa, "", _
-                                    DirGraficos & "Skins\" & SkinSeleccionado & "\BotonMapaRollover.jpg", _
-                                    DirGraficos & "Skins\" & SkinSeleccionado & "\BotonMapaClick.jpg", Me)
-                                    
-    Call cBotonGrupo.Initialize(imgGrupo, "", _
-                                    DirGraficos & "Skins\" & SkinSeleccionado & "\BotonGrupoRollover.jpg", _
-                                    DirGraficos & "Skins\" & SkinSeleccionado & "\BotonGrupoClick.jpg", Me)
-
-    Call cBotonOpciones.Initialize(imgOpciones, "", _
-                                    DirGraficos & "Skins\" & SkinSeleccionado & "\BotonOpcionesRollover.jpg", _
-                                    DirGraficos & "Skins\" & SkinSeleccionado & "\BotonOpcionesClick.jpg", Me)
-
-    Call cBotonEstadisticas.Initialize(imgEstadisticas, "", _
-                                    DirGraficos & "Skins\" & SkinSeleccionado & "\BotonEstadisticasRollover.jpg", _
-                                    DirGraficos & "Skins\" & SkinSeleccionado & "\BotonEstadisticasClick.jpg", Me)
-
-    Call cBotonClanes.Initialize(imgClanes, "", _
-                                    DirGraficos & "Skins\" & SkinSeleccionado & "\BotonClanesRollover.jpg", _
-                                    DirGraficos & "Skins\" & SkinSeleccionado & "\BotonClanesClick.jpg", Me)
 
     Set picSkillStar = LoadPicture(DirGraficos & "Skins\" & SkinSeleccionado & "\BotonAsignarSkills.bmp")
 
