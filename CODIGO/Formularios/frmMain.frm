@@ -130,13 +130,13 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H80000008&
-      Height          =   2385
+      Height          =   2025
       Left            =   8880
-      ScaleHeight     =   159
+      ScaleHeight     =   135
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   168
       TabIndex        =   16
-      Top             =   2760
+      Top             =   2640
       Width           =   2520
    End
    Begin VB.TextBox SendTxt 
@@ -220,6 +220,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2619
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -241,7 +242,7 @@ Begin VB.Form frmMain
       Left            =   8880
       TabIndex        =   17
       TabStop         =   0   'False
-      Top             =   2520
+      Top             =   2400
       Visible         =   0   'False
       Width           =   2565
    End
@@ -249,19 +250,19 @@ Begin VB.Form frmMain
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
       Height          =   6240
-      Left            =   120
+      Left            =   180
       MousePointer    =   99  'Custom
       ScaleHeight     =   416
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   544
-      TabIndex        =   30
-      Top             =   2280
+      TabIndex        =   32
+      Top             =   2220
       Width           =   8160
    End
    Begin AOLibre.uAOButton imgMapa 
       Height          =   255
       Left            =   10320
-      TabIndex        =   32
+      TabIndex        =   30
       Top             =   6600
       Width           =   1335
       _ExtentX        =   2355
@@ -544,9 +545,9 @@ Begin VB.Form frmMain
       Width           =   420
    End
    Begin VB.Image imgInvScrollUp 
-      Height          =   585
+      Height          =   825
       Left            =   10005
-      Top             =   5040
+      Top             =   4560
       Visible         =   0   'False
       Width           =   420
    End
@@ -1792,8 +1793,8 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
         SendTxt.Visible = False
         
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
         Else
             hlst.SetFocus
         End If
@@ -2117,13 +2118,13 @@ Private Sub Label4_Click()
     InvEqu.Picture = LoadPicture(DirGraficos & "Skins\" & SkinSeleccionado & "\Centroinventario.jpg")
 
     ' Activo controles de inventario
-    picInv.Visible = True
+    PicInv.Visible = True
     imgInvScrollUp.Visible = True
     imgInvScrollDown.Visible = True
 
     ' Desactivo controles de hechizo
     hlst.Visible = False
-    cmdInfo.Visible = False
+    cmdINFO.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = False
@@ -2138,14 +2139,14 @@ Private Sub Label7_Click()
     
     ' Activo controles de hechizos
     hlst.Visible = True
-    cmdInfo.Visible = True
+    cmdINFO.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True
     cmdMoverHechi(1).Visible = True
     
     ' Desactivo controles de inventario
-    picInv.Visible = False
+    PicInv.Visible = False
     imgInvScrollUp.Visible = False
     imgInvScrollDown.Visible = False
 
@@ -2178,8 +2179,8 @@ On Error Resume Next  'el .SetFocus causaba errores al salir y volver a entrar
         (Not frmMSG.Visible) And (Not MirandoForo) And _
         (Not frmEstadisticas.Visible) And (Not frmCantidad.Visible) And (Not MirandoParty) Then
          
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
         ElseIf hlst.Visible Then
             hlst.SetFocus
         End If
@@ -2187,8 +2188,8 @@ On Error Resume Next  'el .SetFocus causaba errores al salir y volver a entrar
 End Sub
 
 Private Sub RecTxt_KeyDown(KeyCode As Integer, Shift As Integer)
-    If picInv.Visible Then
-        picInv.SetFocus
+    If PicInv.Visible Then
+        PicInv.SetFocus
     Else
         hlst.SetFocus
     End If
@@ -2244,8 +2245,8 @@ Private Sub SendCMSTXT_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
         Me.SendCMSTXT.Visible = False
         
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
         Else
             hlst.SetFocus
         End If
