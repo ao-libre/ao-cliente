@@ -66,7 +66,7 @@ Public MiCabecera As tCabecera
 Public Config_Inicio As tGameIni
 
 Private Lector As clsIniManager
-Private Const CLIENT_FILE As String = "Client.ini"
+Private Const CLIENT_FILE As String = "Config.ini"
 
 Public Sub IniciarCabecera()
 

@@ -854,6 +854,14 @@ Sub Main()
     ' Load constants, classes, flags, graphics..
     Call LoadInitialConfig
     
+    #If Testeo <> 1 Then
+        Dim PresPath As String
+        PresPath = DirGraficos & "Presentacion" & RandomNumber(1, 4) & ".jpg"
+        
+        frmPres.Picture = LoadPicture(PresPath)
+        frmPres.Show vbModal    'Es modal, asi que se detiene la ejecucionn de Main hasta que se desaparece
+    #End If
+    
     #If UsarWrench = 1 Then
         frmMain.Socket1.Startup
     #End If
