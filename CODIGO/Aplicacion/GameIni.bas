@@ -99,18 +99,18 @@ Public Sub IniciarCabecera()
     
 End Sub
 
-Public Function path(ByVal PathType As ePath) As String
+Public Function Path(ByVal PathType As ePath) As String
 
     Select Case PathType
         
         Case ePath.INIT
-            path = App.path & "\INIT\"
+            Path = App.Path & "\INIT\"
         
         Case ePath.Graficos
-            path = App.path & "\Graficos\"
+            Path = App.Path & "\Graficos\"
             
         Case ePath.Lenguajes
-            path = App.path & "\Lenguajes\"
+            Path = App.Path & "\Lenguajes\"
             
         Case ePath.Mapas
             'En caso que no haya un mundo seleccionado en la propiedad Mundo
@@ -121,16 +121,16 @@ Public Function path(ByVal PathType As ePath) As String
                 MundoSeleccionado = "Alkon"
             End If
             
-            path = App.path & "\Mapas\" & "\" & MundoSeleccionado & "\"
+            Path = App.Path & "\Mapas\" & "\" & MundoSeleccionado & "\"
             
         Case ePath.Musica
-            path = App.path & "\MIDI\"
+            Path = App.Path & "\MIDI\"
             
         Case ePath.Sounds
-            path = App.path & "\WAV\"
+            Path = App.Path & "\WAV\"
             
         Case ePath.Extras
-            path = App.path & "\Extras\"
+            Path = App.Path & "\Extras\"
     
     End Select
 
@@ -142,7 +142,7 @@ Public Sub LeerConfiguracion()
     Call IniciarCabecera
     
     Set Lector = New ClsIniReader
-    Lector.Initialize (path(INIT) & "Client.DAT")
+    Lector.Initialize (Path(INIT) & "Client.DAT")
     
     With ClientSetup
         

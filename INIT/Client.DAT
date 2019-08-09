@@ -9,7 +9,7 @@ DynamicLoad=1
 DinamicMemory=0
 
 ## Activar/Desactivar dialogo de cambio de resolucion.
-DisableResolutionChange=1
+DisableResolutionChange=0
 
 ## Activar/Desactivar sincronizacion vertical.
 vSync=0
