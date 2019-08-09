@@ -451,6 +451,6 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 08/05/2019: Nuevo mini-mapa mas simple. (jopiortiz)
 * 08/05/2019: Mejoras en el sistema de skins. (RecoX)
 * 09/05/2019: Carga y guardado de las configuraciones del cliente mediante clsIniManger. (jopiortiz)
-			  Eliminados Inicio.con, AO.dat y Ver.bin (jopiortiz)
-	          Recordar contraseña con encriptacion. (jopiortiz)
+	      Eliminados Inicio.con, AO.dat y Ver.bin (jopiortiz)
+	      Recordar contraseña con encriptacion. (jopiortiz)
               Nueva funcion que devuelve los paths del cliente [Path(PathType)]. DEJEN DE USAR App.path & "\BLA-BLA-BLA\"
