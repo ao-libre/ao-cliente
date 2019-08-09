@@ -312,7 +312,7 @@ Private Sub cmdSkinsComboBox_Click()
 'Last Modification: 01/04/2019
 '08/11/2019: Recox - Seteamos el skin
 '***************************************************
-    Call WriteVar(Path(INIT) & "Config.ini", "Parameters", "SkinSelected", cmdSkinsComboBox.Text)
+    Call WriteVar(path(INIT) & "Config.ini", "Parameters", "SkinSelected", cmdSkinsComboBox.Text)
     MsgBox ("Debe reiniciar el juego aplicar el cambio de skin. Skin Seleccionado: " & cmdSkinsComboBox.Text)
 End Sub
 
@@ -473,7 +473,7 @@ End Sub
 Private Sub imgManual_Click()
     If Not loading Then _
         Call Audio.PlayWave(SND_CLICK)
-    Call ShellExecute(0, "Open", "http://wiki.argentumonline.org/", "", App.Path, SW_SHOWNORMAL)
+    Call ShellExecute(0, "Open", "http://wiki.argentumonline.org/", "", App.path, SW_SHOWNORMAL)
 End Sub
 
 Private Sub imgMapa_Click()
@@ -485,6 +485,7 @@ Private Sub imgMsgPersonalizado_Click()
 End Sub
 
 Private Sub imgSalir_Click()
+    Call Game.GuardarConfiguracion
     Unload Me
     frmMain.SetFocus
 End Sub
@@ -494,7 +495,7 @@ Private Sub imgSoporte_Click()
     If Not loading Then _
         Call Audio.PlayWave(SND_CLICK)
     
-    Call ShellExecute(0, "Open", "https://github.com/ao-libre/ao-cliente/issues", "", App.Path, SW_SHOWNORMAL)
+    Call ShellExecute(0, "Open", "https://github.com/ao-libre/ao-cliente/issues", "", App.path, SW_SHOWNORMAL)
 End Sub
 
 Private Sub imgTutorial_Click()
@@ -506,7 +507,7 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
-    Me.Picture = LoadPicture(App.Path & "\graficos\VentanaOpciones.jpg")
+    Me.Picture = LoadPicture(path(Graficos) & "VentanaOpciones.jpg")
     LoadButtons
     LoadSkinsInComboBox
     LoadLenguajesInComboBox
@@ -518,7 +519,7 @@ End Sub
 
 Private Sub LoadSkinsInComboBox()
     Dim sFileName As String
-    sFileName = Dir(Path(Graficos) & "\Skins\", vbDirectory)
+    sFileName = Dir(path(Graficos) & "\Skins\", vbDirectory)
     
     Do While sFileName > ""
         cmdSkinsComboBox.AddItem (sFileName)
@@ -546,7 +547,7 @@ End Sub
 Private Sub LoadButtons()
     Dim GrhPath As String
     
-    GrhPath = Path(Graficos)
+    GrhPath = path(Graficos)
 
     Set cBotonConfigTeclas = New clsGraphicalButton
     Set cBotonMsgPersonalizado = New clsGraphicalButton

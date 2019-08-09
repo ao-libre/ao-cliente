@@ -1,41 +1,13 @@
 Attribute VB_Name = "Game"
-'Argentum Online 0.11.6
-'
-'Copyright (C) 2002 Marquez Pablo Ignacio
-'Copyright (C) 2002 Otto Perez
-'Copyright (C) 2002 Aaron Perkins
-'Copyright (C) 2002 Matias Fernando Pequeno
-'
-'This program is free software; you can redistribute it and/or modify
-'it under the terms of the Affero General Public License;
-'either version 1 of the License, or any later version.
-'
-'This program is distributed in the hope that it will be useful,
-'but WITHOUT ANY WARRANTY; without even the implied warranty of
-'MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-'Affero General Public License for more details.
-'
-'You should have received a copy of the Affero General Public License
-'along with this program; if not, you can find it at http://www.affero.org/oagpl.html
-'
-'Argentum Online is based on Baronsoft's VB6 Online RPG
-'You can contact the original creator of ORE at aaron@baronsoft.com
-'for more information about ORE please visit http://www.baronsoft.com/
-'
-'
-'You can contact me at:
-'morgolock@speedy.com.ar
-'www.geocities.com/gmorgolock
-'Calle 3 numero 983 piso 7 dto A
-'La Plata - Pcia, Buenos Aires - Republica Argentina
-'Codigo Postal 1900
-'Pablo Ignacio Marquez
+'Argentum Online 0.13.9.2
 
-
+' ***********************************************
+'   Nueva carga de configuracion mediante .INI
+' ***********************************************
 
 Option Explicit
 
-Public Type tCabecera 'Cabecera de los con
+Public Type tCabecera
     Desc As String * 255
     CRC As Long
     MagicWord As Long
@@ -56,22 +28,10 @@ Public Type tGameIni
 End Type
 
 Public Type tSetupMods
+    
+    ' VIDEO
     bDinamic    As Boolean
     byMemory    As Integer
-    bNoMusic    As Boolean
-    bNoSound    As Boolean
-    bNoRes      As Boolean ' 24/06/2006 - ^[GS]^
-    bNoSoundEffects As Boolean
-    bGuildNews  As Boolean ' 11/19/09
-    bDie        As Boolean ' 11/23/09 - FragShooter
-    bKill       As Boolean ' 11/23/09 - FragShooter
-    byMurderedLevel As Byte ' 11/23/09 - FragShooter
-    bActive     As Boolean
-    bGldMsgConsole As Boolean
-    bCantMsgs   As Byte
-    
-    
-    'New dx8
     ProyectileEngine As Boolean
     PartyMembers As Boolean
     TonalidadPJ As Boolean
@@ -80,6 +40,24 @@ Public Type tSetupMods
     vSync As Boolean
     Aceleracion As Byte
     LimiteFPS As Boolean
+    bNoRes      As Boolean
+    
+    ' AUDIO
+    bMusic    As Boolean
+    bSound    As Boolean
+    bSoundEffects As Boolean
+    
+    ' GUILDS
+    bGuildNews  As Boolean
+    bGldMsgConsole As Boolean
+    bCantMsgs   As Byte
+    
+    ' FRAGSHOOTER
+    bActive     As Boolean
+    bDie        As Boolean
+    bKill       As Boolean
+    byMurderedLevel As Byte
+
 End Type
 
 Public ClientSetup As tSetupMods
@@ -87,7 +65,8 @@ Public ClientSetup As tSetupMods
 Public MiCabecera As tCabecera
 Public Config_Inicio As tGameIni
 
-Private Lector As ClsIniReader
+Private Lector As clsIniManager
+Private Const CLIENT_FILE As String = "Client.ini"
 
 Public Sub IniciarCabecera()
 
@@ -99,18 +78,18 @@ Public Sub IniciarCabecera()
     
 End Sub
 
-Public Function Path(ByVal PathType As ePath) As String
+Public Function path(ByVal PathType As ePath) As String
 
     Select Case PathType
         
         Case ePath.INIT
-            Path = App.Path & "\INIT\"
+            path = App.path & "\INIT\"
         
         Case ePath.Graficos
-            Path = App.Path & "\Graficos\"
+            path = App.path & "\Graficos\"
             
         Case ePath.Lenguajes
-            Path = App.Path & "\Lenguajes\"
+            path = App.path & "\Lenguajes\"
             
         Case ePath.Mapas
             'En caso que no haya un mundo seleccionado en la propiedad Mundo
@@ -121,16 +100,16 @@ Public Function Path(ByVal PathType As ePath) As String
                 MundoSeleccionado = "Alkon"
             End If
             
-            Path = App.Path & "\Mapas\" & "\" & MundoSeleccionado & "\"
+            path = App.path & "\Mapas\" & "\" & MundoSeleccionado & "\"
             
         Case ePath.Musica
-            Path = App.Path & "\MIDI\"
+            path = App.path & "\MIDI\"
             
         Case ePath.Sounds
-            Path = App.Path & "\WAV\"
+            path = App.path & "\WAV\"
             
         Case ePath.Extras
-            Path = App.Path & "\Extras\"
+            path = App.path & "\Extras\"
     
     End Select
 
@@ -141,35 +120,40 @@ Public Sub LeerConfiguracion()
     
     Call IniciarCabecera
     
-    Set Lector = New ClsIniReader
-    Lector.Initialize (Path(INIT) & "Client.DAT")
+    Set Lector = New clsIniManager
+    Lector.Initialize (path(INIT) & CLIENT_FILE)
     
     With ClientSetup
         
-        .bDinamic = CBool(Lector.GetValue("VIDEO", "DynamicLoad"))
-        .byMemory = CInt(Lector.GetValue("VIDEO", "DinamicMemory"))
-        .bNoMusic = CBool(Lector.GetValue("AUDIO", "DisableMIDI"))
-        .bNoSound = CBool(Lector.GetValue("AUDIO", "DisableWAV"))
-        .bNoRes = CBool(Lector.GetValue("VIDEO", "DisableResolutionChange"))
-        .bNoSoundEffects = CBool(Lector.GetValue("AUDIO", "DisableSoundEffects"))
-        .bGuildNews = CBool(Lector.GetValue("GUILD", "GuildNews"))
-        .bDie = CBool(Lector.GetValue("FRAGSHOOTER", "Die"))
-        .bKill = CBool(Lector.GetValue("FRAGSHOOTER", "Kill"))
-        .byMurderedLevel = CBool(Lector.GetValue("FRAGSHOOTER", "MurderedLevel"))
-        .bActive = CBool(Lector.GetValue("FRAGSHOOTER", "Active"))
-        .bGldMsgConsole = CBool(Lector.GetValue("GUILD", "GuildMessages"))
-        .bCantMsgs = CByte(Lector.GetValue("GUILD", "MaxGuildMessages"))
+        ' VIDEO
+        .bDinamic = CBool(Lector.GetValue("VIDEO", "DYNAMIC_LOAD"))
+        .byMemory = CInt(Lector.GetValue("VIDEO", "DINAMIC_MEMORY"))
+        .bNoRes = CBool(Lector.GetValue("VIDEO", "DISABLE_RESOLUTION_CHANGE"))
+        .ProyectileEngine = CBool(Lector.GetValue("VIDEO", "PROYECTILE_ENGINE"))
+        .PartyMembers = CBool(Lector.GetValue("VIDEO", "PARTY_MEMBERS"))
+        .TonalidadPJ = CBool(Lector.GetValue("VIDEO", "TONALIDAD_PJ"))
+        .UsarSombras = CBool(Lector.GetValue("VIDEO", "SOMBRAS"))
+        .ParticleEngine = CBool(Lector.GetValue("VIDEO", "PARTICLE_ENGINE"))
+        .vSync = CBool(Lector.GetValue("VIDEO", "VSYNC"))
+        .Aceleracion = CByte(Lector.GetValue("VIDEO", "RENDER_MODE"))
+        .LimiteFPS = CBool(Lector.GetValue("VIDEO", "LIMIT_FPS"))
         
-        ' Nuevos motores vbGORE
-        .ProyectileEngine = CBool(Lector.GetValue("VIDEO", "ProyectileEngine"))
-        .PartyMembers = CBool(Lector.GetValue("VIDEO", "PartyMembers"))
-        .TonalidadPJ = CBool(Lector.GetValue("VIDEO", "TonalidadPJ"))
-        .UsarSombras = CBool(Lector.GetValue("VIDEO", "Sombras"))
-        .ParticleEngine = CBool(Lector.GetValue("VIDEO", "ParticleEngine"))
-        .vSync = CBool(Lector.GetValue("VIDEO", "vSync"))
-        .Aceleracion = CByte(Lector.GetValue("VIDEO", "RenderMode"))
-        .LimiteFPS = CBool(Lector.GetValue("VIDEO", "LimitFPS"))
-
+        ' AUDIO
+        .bMusic = CBool(Lector.GetValue("AUDIO", "MIDI"))
+        .bSound = CBool(Lector.GetValue("AUDIO", "WAV"))
+        .bSoundEffects = CBool(Lector.GetValue("AUDIO", "SOUND_EFFECTS"))
+        
+        ' GUILD
+        .bGuildNews = CBool(Lector.GetValue("GUILD", "NEWS"))
+        .bGldMsgConsole = CBool(Lector.GetValue("GUILD", "MESSAGES"))
+        .bCantMsgs = CByte(Lector.GetValue("GUILD", "MAX_MESSAGES"))
+        
+        ' FRAGSHOOTER
+        .bDie = CBool(Lector.GetValue("FRAGSHOOTER", "DIE"))
+        .bKill = CBool(Lector.GetValue("FRAGSHOOTER", "KILL"))
+        .byMurderedLevel = CBool(Lector.GetValue("FRAGSHOOTER", "MURDERED_LEVEL"))
+        .bActive = CBool(Lector.GetValue("FRAGSHOOTER", "ACTIVE"))
+        
     End With
 
 fileErr:
@@ -180,3 +164,49 @@ fileErr:
     End If
 End Sub
 
+Public Sub GuardarConfiguracion()
+    On Local Error GoTo fileErr:
+    
+    Set Lector = New clsIniManager
+    Call Lector.Initialize(path(INIT) & CLIENT_FILE)
+    
+    With ClientSetup
+        
+        ' VIDEO
+        Call Lector.ChangeValue("VIDEO", "DYNAMIC_LOAD", CByte(.bDinamic))
+        Call Lector.ChangeValue("VIDEO", "DINAMIC_MEMORY", CInt(.byMemory))
+        Call Lector.ChangeValue("VIDEO", "DISABLE_RESOLUTION_CHANGE", CByte(.bNoRes))
+        Call Lector.ChangeValue("VIDEO", "PROYECTILE_ENGINE", CByte(.ProyectileEngine))
+        Call Lector.ChangeValue("VIDEO", "PARTY_MEMBERS", CByte(.PartyMembers))
+        Call Lector.ChangeValue("VIDEO", "TONALIDAD_PJ", CByte(.TonalidadPJ))
+        Call Lector.ChangeValue("VIDEO", "SOMBRAS", CByte(.UsarSombras))
+        Call Lector.ChangeValue("VIDEO", "PARTICLE_ENGINE", CByte(.ParticleEngine))
+        Call Lector.ChangeValue("VIDEO", "VSYNC", CByte(.vSync))
+        Call Lector.ChangeValue("VIDEO", "RENDER_MODE", .Aceleracion)
+        Call Lector.ChangeValue("VIDEO", "LIMIT_FPS", CByte(.LimiteFPS))
+        
+        ' AUDIO
+        Call Lector.ChangeValue("AUDIO", "MIDI", CByte(.bMusic))
+        Call Lector.ChangeValue("AUDIO", "WAV", CByte(.bSound))
+        Call Lector.ChangeValue("AUDIO", "SOUND_EFFECTS", CByte(.bSoundEffects))
+        
+        ' GUILD
+        Call Lector.ChangeValue("GUILD", "NEWS", CByte(.bGuildNews))
+        Call Lector.ChangeValue("GUILD", "MESSAGES", CByte(.bGldMsgConsole))
+        Call Lector.ChangeValue("GUILD", "MAX_MESSAGES", CByte(.bCantMsgs))
+        
+        ' FRAGSHOOTER
+        Call Lector.ChangeValue("FRAGSHOOTER", "DIE", CByte(.bDie))
+        Call Lector.ChangeValue("FRAGSHOOTER", "KILL", CByte(.bKill))
+        Call Lector.ChangeValue("FRAGSHOOTER", "MURDERED_LEVEL", CByte(.byMurderedLevel))
+        Call Lector.ChangeValue("FRAGSHOOTER", "ACTIVE", CByte(.bActive))
+    End With
+    
+    Call Lector.DumpFile(path(INIT) & CLIENT_FILE)
+fileErr:
+
+    'If Err.number <> 0 Then
+    '    MsgBox ("Ha ocurrido un error al cargar la configuracion del cliente. Error " & Err.number & " : " & Err.Description)
+    '    End 'Usar "End" en vez del Sub CloseClient() ya que todavia no se inicializa nada.
+    'End If
+End Sub

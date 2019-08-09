@@ -38,8 +38,8 @@ Public Sub Load_Auras()
 'Last Modification: 26/05/10
 'Load Auras
 '***************************************************
-    Dim i As Integer, AurasTotales As Integer, Leer As New ClsIniReader
-    Leer.Initialize Path(INIT) & "auras.ini"
+    Dim i As Integer, AurasTotales As Integer, Leer As New clsIniManager
+    Leer.Initialize path(INIT) & "auras.ini"
 
     AurasTotales = Val(Leer.GetValue("Auras", "NumAuras"))
     

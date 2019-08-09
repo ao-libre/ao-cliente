@@ -74,7 +74,7 @@ On Error Resume Next
     Dim LoopC As Long
     Dim arch As String
     
-    arch = Path(INIT) & "armas.dat"
+    arch = path(INIT) & "armas.dat"
     
     NumWeaponAnims = Val(GetVar(arch, "INIT", "NumArmas"))
     
@@ -93,7 +93,7 @@ Public Sub CargarColores()
 
 On Error Resume Next
     
-    Dim archivoC As String: archivoC = Path(INIT) & "colores.dat"
+    Dim archivoC As String: archivoC = path(INIT) & "colores.dat"
     
     If Not FileExist(archivoC, vbArchive) Then
         Call MsgBox("ERROR: no se ha podido cargar los colores. Falta el archivo colores.dat, reinstale el juego", vbCritical + vbOKOnly)
@@ -127,7 +127,7 @@ On Error Resume Next
     Dim LoopC As Long
     Dim arch As String
     
-    arch = Path(INIT) & "escudos.dat"
+    arch = path(INIT) & "escudos.dat"
     
     NumEscudosAnims = Val(GetVar(arch, "INIT", "NumEscudos"))
     
@@ -516,12 +516,12 @@ Sub SwitchMap(ByVal Map As Integer)
         Next Y
     Next X
     
-    dLen = FileLen(Path(Mapas) & "Mapa" & Map & ".map")
+    dLen = FileLen(path(Mapas) & "Mapa" & Map & ".map")
     ReDim dData(dLen - 1)
     
     handle = FreeFile()
     
-    Open Path(Mapas) & "Mapa" & Map & ".map" For Binary As handle
+    Open path(Mapas) & "Mapa" & Map & ".map" For Binary As handle
         Get handle, , dData
     Close handle
      
@@ -605,13 +605,13 @@ Sub SwitchMap(ByVal Map As Integer)
     Set fileBuff = Nothing
     
     With mapInfo
-        .name = vbNullString
+        .Name = vbNullString
         .Music = vbNullString
     End With
     
     'Dibujamos el Mini-Mapa
-    If FileExist(Path(Graficos) & "MiniMapa\" & Map & ".bmp", vbArchive) Then
-        frmMain.MiniMapa.Picture = LoadPicture(Path(Graficos) & "MiniMapa\" & Map & ".bmp")
+    If FileExist(path(Graficos) & "MiniMapa\" & Map & ".bmp", vbArchive) Then
+        frmMain.MiniMapa.Picture = LoadPicture(path(Graficos) & "MiniMapa\" & Map & ".bmp")
     Else
         frmMain.MiniMapa.Visible = False
         frmMain.RecTxt.Width = frmMain.RecTxt.Width + 100
@@ -702,7 +702,7 @@ On Error Resume Next
     Dim JsonObject As Object
     Dim Response As String
     
-    URL = GetVar(Path(INIT) & "Config.ini", "Parameters", "IpApiEndpoint")
+    URL = GetVar(path(INIT) & "Config.ini", "Parameters", "IpApiEndpoint")
     Endpoint = URL & Ip & "/json/"
     
     Response = frmConnect.InetIpApi.OpenURL(Endpoint)
@@ -728,10 +728,10 @@ On Error GoTo errorH
     Dim IpApiEnabled As Boolean
     Dim DoPingsEnabled As Boolean
     
-    File = Path(INIT) & "sinfo.dat"
+    File = path(INIT) & "sinfo.dat"
     Quantity = Val(GetVar(File, "INIT", "Cant"))
-    IpApiEnabled = GetVar(Path(INIT) & "Config.ini", "Parameters", "IpApiEnabled")
-    DoPingsEnabled = GetVar(Path(INIT) & "Config.ini", "Parameters", "DoPingsEnabled")
+    IpApiEnabled = GetVar(path(INIT) & "Config.ini", "Parameters", "IpApiEnabled")
+    DoPingsEnabled = GetVar(path(INIT) & "Config.ini", "Parameters", "DoPingsEnabled")
     
     frmConnect.lstServers.Clear
     
@@ -841,10 +841,10 @@ Sub Main()
     Call LeerLineaComandos
     
     'usaremos esto para ayudar en los parches
-    Call SaveSetting("ArgentumOnlineCliente", "Init", "Path", App.Path & "\")
+    Call SaveSetting("ArgentumOnlineCliente", "Init", "Path", App.path & "\")
     
-    ChDrive App.Path
-    ChDir App.Path
+    ChDrive App.path
+    ChDir App.path
     
     tipf = Config_Inicio.tip
     
@@ -869,13 +869,11 @@ Sub Main()
     LoadTimerIntervals
         
     'Set the dialog's font
-    If ClientSetup.bGuildNews Then
-        Set DialogosClanes = New clsGuildDlg
-        DialogosClanes.Activo = ClientSetup.bGldMsgConsole
-        DialogosClanes.CantidadDialogos = ClientSetup.bCantMsgs
-        Dialogos.Font = frmMain.Font
-        DialogosClanes.Font = frmMain.Font
-    End If
+    Set DialogosClanes = New clsGuildDlg
+    DialogosClanes.Activo = ClientSetup.bGldMsgConsole
+    DialogosClanes.CantidadDialogos = ClientSetup.bCantMsgs
+    Dialogos.Font = frmMain.Font
+    DialogosClanes.Font = frmMain.Font
     
     lFrameTimer = GetTickCount
     
@@ -911,7 +909,7 @@ Sub Main()
 End Sub
 
 Public Function GetVersionOfTheGame() As String
-    GetVersionOfTheGame = GetVar(Path(INIT) & "Config.ini", "Cliente", "VersionTagRelease")
+    GetVersionOfTheGame = GetVar(path(INIT) & "Config.ini", "Cliente", "VersionTagRelease")
 End Function
 
 Private Sub LoadInitialConfig()
@@ -963,12 +961,12 @@ Private Sub LoadInitialConfig()
                             True, False, True)
                             
     'Inicializamos el sonido
-    Call Audio.Initialize(DirectX, frmMain.hWnd, Path(Sounds), Path(Musica))
+    Call Audio.Initialize(DirectX, frmMain.hWnd, path(Sounds), path(Musica))
 
     'Enable / Disable audio
-    Audio.MusicActivated = Not ClientSetup.bNoMusic
-    Audio.SoundActivated = Not ClientSetup.bNoSound
-    Audio.SoundEffectsActivated = Not ClientSetup.bNoSoundEffects
+    Audio.MusicActivated = ClientSetup.bMusic
+    Audio.SoundActivated = ClientSetup.bSound
+    Audio.SoundEffectsActivated = ClientSetup.bSoundEffects
     Call Audio.PlayMIDI("6.mid")
     
     Call AddtoRichTextBox(frmCargando.status, _
@@ -995,8 +993,8 @@ Private Sub LoadInitialConfig()
     UserMap = 1
     
     ' Mouse Pointer (Loaded before opening any form with buttons in it)
-    If FileExist(Path(Extras) & "Hand.ico", vbArchive) Then _
-        Set picMouseIcon = LoadPicture(Path(Extras) & "Hand.ico")
+    If FileExist(path(Extras) & "Hand.ico", vbArchive) Then _
+        Set picMouseIcon = LoadPicture(path(Extras) & "Hand.ico")
     
     Call AddtoRichTextBox(frmCargando.status, _
                             " " & JsonLanguage.Item("HECHO").Item("TEXTO"), _
@@ -1435,10 +1433,10 @@ m = 255 / MAXATRIBUTOS
 getDexterityColor = RGB(255, m * UserAgilidad, 0)
 End Function
 
-Public Function getCharIndexByName(ByVal name As String) As Integer
+Public Function getCharIndexByName(ByVal Name As String) As Integer
 Dim i As Long
 For i = 1 To LastChar
-    If charlist(i).Nombre = name Then
+    If charlist(i).Nombre = Name Then
         getCharIndexByName = i
         Exit Function
     End If
@@ -1495,8 +1493,8 @@ Public Sub ResetAllInfo()
     'Unload all forms except frmMain, frmConnect and frmCrearPersonaje
     Dim frm As Form
     For Each frm In Forms
-        If frm.name <> frmMain.name And frm.name <> frmConnect.name And _
-            frm.name <> frmCrearPersonaje.name Then
+        If frm.Name <> frmMain.Name And frm.Name <> frmConnect.Name And _
+            frm.Name <> frmCrearPersonaje.Name Then
             
             Unload frm
         End If
@@ -1601,7 +1599,7 @@ On Error GoTo errorH
     Dim PathName As String
     Dim j As Long
  
-    PathName = Path(INIT) & "Hechizos.dat"
+    PathName = path(INIT) & "Hechizos.dat"
     NumHechizos = Val(GetVar(PathName, "INIT", "NumHechizos"))
  
     ReDim Hechizos(1 To NumHechizos) As tHechizos
@@ -1649,7 +1647,7 @@ On Error GoTo Error
     f = FreeFile
     
     If LenB(strData) <> 0 Then
-        Open App.Path & "/init/sinfo.dat" For Output As #f
+        Open App.path & "/init/sinfo.dat" For Output As #f
             Print #f, strData
         Close #f
     End If
