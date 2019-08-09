@@ -327,13 +327,8 @@ End Enum
 Private Declare Function QueryPerformanceFrequency Lib "kernel32" (lpFrequency As Currency) As Long
 Private Declare Function QueryPerformanceCounter Lib "kernel32" (lpPerformanceCount As Currency) As Long
 
-<<<<<<< Updated upstream
-Private Declare Function SetPixel Lib "gdi32" (ByVal hdc As Long, ByVal X As Long, ByVal Y As Long, ByVal crColor As Long) As Long
-Private Declare Function GetPixel Lib "gdi32" (ByVal hdc As Long, ByVal X As Long, ByVal Y As Long) As Long
-=======
 Public Declare Function SetPixel Lib "gdi32" (ByVal hdc As Long, ByVal X As Long, ByVal Y As Long, ByVal crColor As Long) As Long
 Public Declare Function GetPixel Lib "gdi32" (ByVal hdc As Long, ByVal X As Long, ByVal Y As Long) As Long
->>>>>>> Stashed changes
 
 Sub CargarCabezas()
     Dim N As Integer
@@ -1047,28 +1042,17 @@ Public Sub DrawTransparentGrhtoHdc(ByVal dsthdc As Long, ByVal srchdc As Long, B
 'Author: Torres Patricio (Pato)
 'Last Modify Date: 27/07/2012 - ^[GS]^
 '*************************************************************
-<<<<<<< Updated upstream
-    Dim color As Long
-=======
+
     Dim Color As Long
->>>>>>> Stashed changes
     Dim X As Long
     Dim Y As Long
     
     For X = SourceRect.Left To SourceRect.Right
-<<<<<<< Updated upstream
         For Y = SourceRect.Top To SourceRect.bottom
             color = GetPixel(srchdc, X, Y)
             
             If color <> TransparentColor Then
                 Call SetPixel(dsthdc, destRect.Left + (X - SourceRect.Left), destRect.Top + (Y - SourceRect.Top), color)
-=======
-        For Y = SourceRect.Top To SourceRect.Bottom
-            Color = GetPixel(srchdc, X, Y)
-            
-            If Color <> TransparentColor Then
-                Call SetPixel(dsthdc, destRect.Left + (X - SourceRect.Left), destRect.Top + (Y - SourceRect.Top), Color)
->>>>>>> Stashed changes
             End If
         Next Y
     Next X
@@ -1503,14 +1487,9 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Inte
         
         Call Dialogos.Render
         Call DibujarCartel
-        
-<<<<<<< Updated upstream
-        Call DialogosClanes.Draw
-        
-=======
+
         If ClientSetup.bGuildNews Then Call DialogosClanes.Draw
-      
->>>>>>> Stashed changes
+
         ' Calculamos los FPS y los mostramos
         Call Engine_Update_FPS
         
@@ -1883,19 +1862,11 @@ Private Sub RenderName(ByVal CharIndex As Long, ByVal X As Integer, ByVal Y As I
 
             'Nick
             line = Left$(.Nombre, Pos - 2)
-<<<<<<< Updated upstream
-            Call DrawText(X + 16, Y + 30, line, color, True)
-            
-            'Clan
-            line = mid$(.Nombre, Pos)
-            Call DrawText(X + 16, Y + 45, line, color, True)
-=======
             Call DrawText(X + 16, Y + 30, line, Color, True)
             
             'Clan
             line = mid$(.Nombre, Pos)
             Call DrawText(X + 16, Y + 45, line, Color, True)
->>>>>>> Stashed changes
     End With
 End Sub
 
@@ -1925,11 +1896,7 @@ Public Sub Device_Textured_Render(ByVal X As Integer, ByVal Y As Integer, ByVal 
     Dim SRDesc As D3DSURFACE_DESC
 
     With dest_rect
-<<<<<<< Updated upstream
-        .bottom = Y + (src_rect.bottom - src_rect.Top)
-=======
         .Bottom = Y + (src_rect.Bottom - src_rect.Top)
->>>>>>> Stashed changes
         .Left = X
         .Right = X + (src_rect.Right - src_rect.Left)
         .Top = Y
@@ -1952,11 +1919,7 @@ Public Sub Device_Textured_Render(ByVal X As Integer, ByVal Y As Integer, ByVal 
     DirectDevice.SetTexture 0, Texture
 
     If Shadow Then
-<<<<<<< Updated upstream
-        temp_verts(1).X = temp_verts(1).X + (src_rect.bottom - src_rect.Top) * 0.5
-=======
         temp_verts(1).X = temp_verts(1).X + (src_rect.Bottom - src_rect.Top) * 0.5
->>>>>>> Stashed changes
         temp_verts(1).Y = temp_verts(1).Y - (src_rect.Right - src_rect.Left) * 0.5
        
         temp_verts(3).X = temp_verts(3).X + (src_rect.Right - src_rect.Left)
@@ -1985,11 +1948,7 @@ Public Sub Device_Textured_Render_Scale(ByVal X As Integer, ByVal Y As Integer, 
     Dim SRDesc As D3DSURFACE_DESC
 
     With dest_rect
-<<<<<<< Updated upstream
-        .bottom = Y + 2 '(src_rect.bottom - src_rect.Top)
-=======
         .Bottom = Y + 2 '(src_rect.bottom - src_rect.Top)
->>>>>>> Stashed changes
         .Left = X
         .Right = X + 2 '(src_rect.Right - src_rect.Left)
         .Top = Y

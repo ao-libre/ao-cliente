@@ -188,18 +188,6 @@ Public Sub RefreshAllChars()
     Next LoopC
 End Sub
 
-<<<<<<< Updated upstream
-Sub SaveGameini()
-    'Grabamos los datos del usuario en el Game.ini
-    Config_Inicio.Name = "BetaTester"
-    Config_Inicio.Password = "DammLamers"
-    Config_Inicio.Puerto = UserPort
-    
-    Call EscribirGameIni(Config_Inicio)
-End Sub
-
-=======
->>>>>>> Stashed changes
 Function AsciiValidos(ByVal cad As String) As Boolean
     Dim car As Byte
     Dim i As Long
@@ -405,9 +393,7 @@ Private Sub CheckKeys()
     Else
         Exit Sub
     End If
-    
-<<<<<<< Updated upstream
-=======
+
     With frmMain.MiniMapa
         ' Guardamos el color del punto en el minimapa.
         Dim Minimap_Color As Long: Minimap_Color = vbYellow
@@ -437,8 +423,7 @@ Private Sub CheckKeys()
         Call SetPixel(.hdc, Anterior_Pos.X, Anterior_Pos.Y - 1, Color_Mapa)
         Call SetPixel(.hdc, Anterior_Pos.X, Anterior_Pos.Y + 1, Color_Mapa)
     End With
-    
->>>>>>> Stashed changes
+
     'Don't allow any these keys during movement..
     If UserMoving = 0 Then
         If Not UserEstupido Then
@@ -618,12 +603,7 @@ Sub SwitchMap(ByVal Map As Integer)
     
     'Limpiamos el buffer
     Set fileBuff = Nothing
-<<<<<<< Updated upstream
-   
-    mapInfo.Name = vbNullString
-    mapInfo.Music = vbNullString
-=======
-    
+
     With mapInfo
         .Name = vbNullString
         .Music = vbNullString
@@ -636,7 +616,7 @@ Sub SwitchMap(ByVal Map As Integer)
         frmMain.MiniMapa.Visible = False
         frmMain.RecTxt.Width = frmMain.RecTxt.Width + 100
     End If
->>>>>>> Stashed changes
+
     
     CurMap = Map
     
@@ -985,11 +965,8 @@ Private Sub LoadInitialConfig()
                             True, False, True)
                             
     'Inicializamos el sonido
-<<<<<<< Updated upstream
-    Call Audio.Initialize(DirectX, frmMain.hwnd, App.path & "\" & Config_Inicio.DirSonidos & "\", App.path & "\" & Config_Inicio.DirMusica & "\")
-=======
     Call Audio.Initialize(DirectX, frmMain.hWnd, App.Path & "\" & Path(Sounds) & "\", App.Path & "\" & Path(Musica) & "\")
->>>>>>> Stashed changes
+	
     'Enable / Disable audio
     Audio.MusicActivated = Not ClientSetup.bNoMusic
     Audio.SoundActivated = Not ClientSetup.bNoSound
