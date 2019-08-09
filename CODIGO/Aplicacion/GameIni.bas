@@ -173,33 +173,33 @@ Public Sub GuardarConfiguracion()
     With ClientSetup
         
         ' VIDEO
-        Call Lector.ChangeValue("VIDEO", "DYNAMIC_LOAD", CByte(.bDinamic))
+        Call Lector.ChangeValue("VIDEO", "DYNAMIC_LOAD", CInt(.bDinamic))
         Call Lector.ChangeValue("VIDEO", "DINAMIC_MEMORY", CInt(.byMemory))
-        Call Lector.ChangeValue("VIDEO", "DISABLE_RESOLUTION_CHANGE", CByte(.bNoRes))
-        Call Lector.ChangeValue("VIDEO", "PROYECTILE_ENGINE", CByte(.ProyectileEngine))
-        Call Lector.ChangeValue("VIDEO", "PARTY_MEMBERS", CByte(.PartyMembers))
-        Call Lector.ChangeValue("VIDEO", "TONALIDAD_PJ", CByte(.TonalidadPJ))
-        Call Lector.ChangeValue("VIDEO", "SOMBRAS", CByte(.UsarSombras))
-        Call Lector.ChangeValue("VIDEO", "PARTICLE_ENGINE", CByte(.ParticleEngine))
-        Call Lector.ChangeValue("VIDEO", "VSYNC", CByte(.vSync))
+        Call Lector.ChangeValue("VIDEO", "DISABLE_RESOLUTION_CHANGE", CInt(.bNoRes))
+        Call Lector.ChangeValue("VIDEO", "PROYECTILE_ENGINE", CInt(.ProyectileEngine))
+        Call Lector.ChangeValue("VIDEO", "PARTY_MEMBERS", CInt(.PartyMembers))
+        Call Lector.ChangeValue("VIDEO", "TONALIDAD_PJ", CInt(.TonalidadPJ))
+        Call Lector.ChangeValue("VIDEO", "SOMBRAS", CInt(.UsarSombras))
+        Call Lector.ChangeValue("VIDEO", "PARTICLE_ENGINE", CInt(.ParticleEngine))
+        Call Lector.ChangeValue("VIDEO", "VSYNC", CInt(.vSync))
         Call Lector.ChangeValue("VIDEO", "RENDER_MODE", .Aceleracion)
-        Call Lector.ChangeValue("VIDEO", "LIMIT_FPS", CByte(.LimiteFPS))
+        Call Lector.ChangeValue("VIDEO", "LIMIT_FPS", CInt(.LimiteFPS))
         
         ' AUDIO
-        Call Lector.ChangeValue("AUDIO", "MIDI", CByte(.bMusic))
-        Call Lector.ChangeValue("AUDIO", "WAV", CByte(.bSound))
-        Call Lector.ChangeValue("AUDIO", "SOUND_EFFECTS", CByte(.bSoundEffects))
+        Call Lector.ChangeValue("AUDIO", "MIDI", CInt(.bMusic))
+        Call Lector.ChangeValue("AUDIO", "WAV", CInt(.bSound))
+        Call Lector.ChangeValue("AUDIO", "SOUND_EFFECTS", CInt(.bSoundEffects))
         
         ' GUILD
-        Call Lector.ChangeValue("GUILD", "NEWS", CByte(.bGuildNews))
-        Call Lector.ChangeValue("GUILD", "MESSAGES", CByte(.bGldMsgConsole))
-        Call Lector.ChangeValue("GUILD", "MAX_MESSAGES", CByte(.bCantMsgs))
+        Call Lector.ChangeValue("GUILD", "NEWS", CInt(.bGuildNews))
+        Call Lector.ChangeValue("GUILD", "MESSAGES", CInt(.bGldMsgConsole))
+        Call Lector.ChangeValue("GUILD", "MAX_MESSAGES", CInt(.bCantMsgs))
         
         ' FRAGSHOOTER
-        Call Lector.ChangeValue("FRAGSHOOTER", "DIE", CByte(.bDie))
-        Call Lector.ChangeValue("FRAGSHOOTER", "KILL", CByte(.bKill))
-        Call Lector.ChangeValue("FRAGSHOOTER", "MURDERED_LEVEL", CByte(.byMurderedLevel))
-        Call Lector.ChangeValue("FRAGSHOOTER", "ACTIVE", CByte(.bActive))
+        Call Lector.ChangeValue("FRAGSHOOTER", "DIE", CInt(.bDie))
+        Call Lector.ChangeValue("FRAGSHOOTER", "KILL", CInt(.bKill))
+        Call Lector.ChangeValue("FRAGSHOOTER", "MURDERED_LEVEL", CInt(.byMurderedLevel))
+        Call Lector.ChangeValue("FRAGSHOOTER", "ACTIVE", CInt(.bActive))
     End With
     
     Call Lector.DumpFile(path(INIT) & CLIENT_FILE)
