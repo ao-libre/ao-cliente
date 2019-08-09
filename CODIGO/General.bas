@@ -367,9 +367,9 @@ Sub RandomMove()
 End Sub
 
 Private Sub CheckKeys()
-'*****************************************************************
-'Checks keys and respond
-'*****************************************************************
+    '*****************************************************************
+    'Checks keys and respond
+    '*****************************************************************
     Static LastMovement As Long
     
     'No input allowed while Argentum is not the active window
@@ -394,39 +394,10 @@ Private Sub CheckKeys()
         Exit Sub
     End If
 
-    With frmMain.MiniMapa
-        ' Guardamos el color del punto en el minimapa.
-        Dim Minimap_Color As Long: Minimap_Color = vbYellow
-        
-        ' Guargamos la posicion anterior del usuario.
-        Dim Anterior_Pos As Position
-            Anterior_Pos.X = UserPos.X
-            Anterior_Pos.Y = UserPos.Y
-        
-        ' Guardamos la informacion del pixel en la posicion anterior.
-        Dim Color_Mapa As Long: Color_Mapa = GetPixel(.hdc, Anterior_Pos.X, Anterior_Pos.Y)
-        
-        ' Dibujamos el punto.
-        Call SetPixel(.hdc, UserPos.X, UserPos.Y, Minimap_Color)
-        Call SetPixel(.hdc, UserPos.X + 1, UserPos.Y, Minimap_Color)
-        Call SetPixel(.hdc, UserPos.X - 1, UserPos.Y, Minimap_Color)
-        Call SetPixel(.hdc, UserPos.X, UserPos.Y - 1, Minimap_Color)
-        Call SetPixel(.hdc, UserPos.X, UserPos.Y + 1, Minimap_Color)
-        
-        ' Actualizamos el PictureBox
-        .Refresh
-        
-        ' Devolvemos el color a los pixeles de la posicion anterior.
-        Call SetPixel(.hdc, Anterior_Pos.X, Anterior_Pos.Y, Color_Mapa)
-        Call SetPixel(.hdc, Anterior_Pos.X + 1, Anterior_Pos.Y, Color_Mapa)
-        Call SetPixel(.hdc, Anterior_Pos.X - 1, Anterior_Pos.Y, Color_Mapa)
-        Call SetPixel(.hdc, Anterior_Pos.X, Anterior_Pos.Y - 1, Color_Mapa)
-        Call SetPixel(.hdc, Anterior_Pos.X, Anterior_Pos.Y + 1, Color_Mapa)
-    End With
-    
     'Don't allow any these keys during movement..
     If UserMoving = 0 Then
         If Not UserEstupido Then
+
             'Move Up
             If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyUp)) < 0 Then
                 Call Map_MoveTo(NORTH)
@@ -460,10 +431,7 @@ Private Sub CheckKeys()
             Call Audio.MoveListener(UserPos.X, UserPos.Y)
         Else
             Dim kp As Boolean
-            kp = (GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyUp)) < 0) Or _
-                GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyRight)) < 0 Or _
-                GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyDown)) < 0 Or _
-                GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyLeft)) < 0
+            kp = (GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyUp)) < 0) Or GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyRight)) < 0 Or GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyDown)) < 0 Or GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyLeft)) < 0
             
             If kp Then
                 Call RandomMove
@@ -474,6 +442,39 @@ Private Sub CheckKeys()
 
             Call Char_UserPos
         End If
+    Else
+        
+        'Actualizamos el punto en el mini-mapa.
+        With frmMain.MiniMapa
+            ' Guardamos el color del punto en el minimapa.
+            Dim Minimap_Color As Long: Minimap_Color = vbYellow
+        
+            ' Guargamos la posicion anterior del usuario.
+            Dim Anterior_Pos  As Position
+                Anterior_Pos.X = UserPos.X
+                Anterior_Pos.Y = UserPos.Y
+        
+            ' Guardamos la informacion del pixel en la posicion anterior.
+            Dim Color_Mapa As Long: Color_Mapa = GetPixel(.hdc, Anterior_Pos.X, Anterior_Pos.Y)
+        
+            ' Dibujamos el punto.
+            Call SetPixel(.hdc, UserPos.X, UserPos.Y, Minimap_Color)
+            Call SetPixel(.hdc, UserPos.X + 1, UserPos.Y, Minimap_Color)
+            Call SetPixel(.hdc, UserPos.X - 1, UserPos.Y, Minimap_Color)
+            Call SetPixel(.hdc, UserPos.X, UserPos.Y - 1, Minimap_Color)
+            Call SetPixel(.hdc, UserPos.X, UserPos.Y + 1, Minimap_Color)
+        
+            ' Actualizamos el PictureBox
+            .Refresh
+        
+            ' Devolvemos el color a los pixeles de la posicion anterior.
+            Call SetPixel(.hdc, Anterior_Pos.X, Anterior_Pos.Y, Color_Mapa)
+            Call SetPixel(.hdc, Anterior_Pos.X + 1, Anterior_Pos.Y, Color_Mapa)
+            Call SetPixel(.hdc, Anterior_Pos.X - 1, Anterior_Pos.Y, Color_Mapa)
+            Call SetPixel(.hdc, Anterior_Pos.X, Anterior_Pos.Y - 1, Color_Mapa)
+            Call SetPixel(.hdc, Anterior_Pos.X, Anterior_Pos.Y + 1, Color_Mapa)
+        End With
+        
     End If
 End Sub
 
