@@ -158,8 +158,8 @@ Private Type JPEG_CORE_PROPERTIES_VB ' Sadly, due to a limitation in VB (UDT var
 End Type
 
 '
-Private Declare Function GetDC Lib "user32" (ByVal hwnd As Long) As Long
-Private Declare Function ReleaseDC Lib "user32" (ByVal hwnd As Long, ByVal hdc As Long) As Long
+Private Declare Function GetDC Lib "user32" (ByVal hWnd As Long) As Long
+Private Declare Function ReleaseDC Lib "user32" (ByVal hWnd As Long, ByVal hdc As Long) As Long
 Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" (ByRef dest As Any, ByRef source As Any, ByVal byteCount As Long)
 
 '
@@ -519,14 +519,14 @@ On Error GoTo Err:
     
     Dim dirFile As String
     
-    hdcc = GetDC(frmMain.hwnd)
+    hdcc = GetDC(frmMain.hWnd)
     
     frmScreenshots.Picture1.AutoRedraw = True
     frmScreenshots.Picture1.Width = 12090
     frmScreenshots.Picture1.Height = 9075
 
     Call BitBlt(frmScreenshots.Picture1.hdc, 0, 0, 800, 600, hdcc, 0, 0, SRCCOPY)
-    Call ReleaseDC(frmMain.hwnd, hdcc)
+    Call ReleaseDC(frmMain.hWnd, hdcc)
     
     hdcc = INVALID_HANDLE
     
@@ -568,7 +568,7 @@ Err:
     Call AddtoRichTextBox(frmMain.RecTxt, Err.number & "-" & Err.Description, 200, 200, 200, False, False, True)
     
     If hdcc <> INVALID_HANDLE Then _
-        Call ReleaseDC(frmMain.hwnd, hdcc)
+        Call ReleaseDC(frmMain.hWnd, hdcc)
 End Sub
 
 Public Function FullScreenCapture(ByVal File As String) As Boolean
@@ -582,7 +582,7 @@ Public Function FullScreenCapture(ByVal File As String) As Boolean
     
     frmScreenshots.Picture1.AutoRedraw = True
     
-    If NoRes Then
+    If Not ResolucionCambiada Then
         frmScreenshots.Picture1.Width = Screen.Width
         frmScreenshots.Picture1.Height = Screen.Height
         

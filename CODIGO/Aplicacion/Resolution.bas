@@ -107,6 +107,8 @@ Public Sub SetResolution(ByRef newWidth As Integer, ByRef newHeight As Integer)
     ' Obtenemos los parametros actuales de la resolucion
     Dim lRes As Long: lRes = EnumDisplaySettings(0, ENUM_CURRENT_SETTINGS, MiDevM)
     
+    If ClientSetup.bNoRes Then Exit Sub
+    
     ' Obtenemos la resolucion original.
     oldResWidth = Screen.Width \ Screen.TwipsPerPixelX
     oldResHeight = Screen.Height \ Screen.TwipsPerPixelY

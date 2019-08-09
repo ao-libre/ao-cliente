@@ -189,10 +189,10 @@ Private Sub Form_Load()
 104     lstMembers.Clear
         
 106     If EsPartyLeader Then
-108         Me.Picture = LoadPicture(App.path & "\graficos\VentanaPartyLider.jpg")
+108         Me.Picture = LoadPicture(App.Path & "\graficos\VentanaPartyLider.jpg")
 110         Me.Height = LEADER_FORM_HEIGHT
         Else
-112         Me.Picture = LoadPicture(App.path & "\graficos\VentanaPartyMiembro.jpg")
+112         Me.Picture = LoadPicture(App.Path & "\graficos\VentanaPartyMiembro.jpg")
 114         Me.Height = NORMAL_FORM_HEIGHT
         End If
     
@@ -214,7 +214,7 @@ End Sub
 Private Sub LoadButtons()
     Dim GrhPath As String
     
-    GrhPath = DirGraficos
+    GrhPath = Path(Graficos)
 
     Set cBotonAgregar = New clsGraphicalButton
     Set cBotonCerrar = New clsGraphicalButton

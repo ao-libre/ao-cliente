@@ -428,10 +428,10 @@ Private Modo As e_modo_keypad
 
 Private Sub Form_Activate()
 Dim i As Integer
-Dim J As Integer
+Dim j As Integer
     i = RandomNumber(-2000, 2000)
-    J = RandomNumber(-350, 350)
-    Me.Top = Me.Top + J
+    j = RandomNumber(-350, 350)
+    Me.Top = Me.Top + j
     Me.Left = Me.Left + i
 
 End Sub
@@ -442,7 +442,7 @@ Private Sub Form_Load()
     clsFormulario.Initialize Me
     
     Dim GrhPath As String
-    GrhPath = DirGraficos
+    GrhPath = Path(Graficos)
     Set MinMayBack(0) = LoadPicture(GrhPath & "TecladoMinuscula.jpg")
     Set MinMayBack(1) = LoadPicture(GrhPath & "TecladoMayuscula.jpg")
     
@@ -456,7 +456,7 @@ End Sub
 Private Sub LoadButtons()
     Dim GrhPath As String
     
-    GrhPath = DirGraficos
+    GrhPath = Path(Graficos)
 
     Set cBotonMin = New clsGraphicalButton
     Set cBotonMay = New clsGraphicalButton
@@ -488,19 +488,19 @@ Private Sub imgEspacio_Click()
     Me.txtPassword.SetFocus
 End Sub
 
-Private Sub imgKeyPad_Click(Index As Integer)
+Private Sub imgKeyPad_Click(index As Integer)
     Call Audio.PlayWave(SND_CLICK)
     
     If Modo = MAYUSCULA Then
-        Me.txtPassword.Text = Me.txtPassword.Text & mid$(MayIndex, Index + 1, 1)
+        Me.txtPassword.Text = Me.txtPassword.Text & mid$(MayIndex, index + 1, 1)
     Else
-        Me.txtPassword.Text = Me.txtPassword.Text & mid$(MinIndex, Index + 1, 1)
+        Me.txtPassword.Text = Me.txtPassword.Text & mid$(MinIndex, index + 1, 1)
     End If
     
     Me.txtPassword.SetFocus
 End Sub
 
-Private Sub imgKeyPad_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgKeyPad_MouseMove(index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
 End Sub
 

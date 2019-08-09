@@ -1297,7 +1297,7 @@ Private currentGrh As Long
 Private Dir As E_Heading
 
 Private Sub Form_Load()
-    Me.Picture = LoadPicture(DirGraficos & "VentanaCrearPersonaje.jpg")
+    Me.Picture = LoadPicture(path(Graficos) & "VentanaCrearPersonaje.jpg")
     
     Cargando = True
     Call LoadCharInfo
@@ -1341,7 +1341,7 @@ End Sub
 Private Sub IniciarGraficos()
 
     Dim GrhPath As String
-    GrhPath = DirGraficos
+    GrhPath = path(Graficos)
     
     Set cBotonPasswd = New clsGraphicalButton
     Set cBotonTirarDados = New clsGraphicalButton
@@ -1780,9 +1780,9 @@ Private Sub lstProfesion_Click()
 On Error Resume Next
     If lstProfesion.Text = "Trabajador" Then
         'Agarramos un numero aleatorio del 0 al 5 por que hay 5 imagenes de trabajador
-        ImgProfesionDibujo.Picture = LoadPicture(App.path & "\graficos\" & lstProfesion.Text & (CInt(Rnd * 5)) & ".jpg")
+        ImgProfesionDibujo.Picture = LoadPicture(path(Graficos) & lstProfesion.Text & (CInt(Rnd * 5)) & ".jpg")
     Else
-        ImgProfesionDibujo.Picture = LoadPicture(App.path & "\graficos\" & lstProfesion.Text & ".jpg")
+        ImgProfesionDibujo.Picture = LoadPicture(path(Graficos) & lstProfesion.Text & ".jpg")
     End If
     
     UserClase = lstProfesion.ListIndex + 1
@@ -1851,12 +1851,12 @@ On Error Resume Next
         SR.Left = .SX
         SR.Top = .SY
         SR.Right = SR.Left + .pixelWidth
-        SR.bottom = SR.Top + .pixelHeight
+        SR.Bottom = SR.Top + .pixelHeight
         
         DR.Left = (picPJ.Width - .pixelWidth) \ 2 - 2
         DR.Top = ((picPJ.Height - .pixelHeight) \ 2) + 5
         DR.Right = DR.Left + .pixelWidth
-        DR.bottom = DR.Top + .pixelHeight
+        DR.Bottom = DR.Top + .pixelHeight
         
         picTemp.BackColor = picTemp.BackColor
         
@@ -1870,12 +1870,12 @@ On Error Resume Next
         SR.Left = .SX
         SR.Top = .SY
         SR.Right = SR.Left + .pixelWidth
-        SR.bottom = SR.Top + .pixelHeight
+        SR.Bottom = SR.Top + .pixelHeight
         
         DR.Left = (picPJ.Width - .pixelWidth) \ 2 - 2
-        DR.Top = DR.bottom + BodyData(UserBody).HeadOffset.Y - .pixelHeight
+        DR.Top = DR.Bottom + BodyData(UserBody).HeadOffset.Y - .pixelHeight
         DR.Right = DR.Left + .pixelWidth
-        DR.bottom = DR.Top + .pixelHeight
+        DR.Bottom = DR.Top + .pixelHeight
         
         picTemp.BackColor = picTemp.BackColor
         
@@ -1898,12 +1898,12 @@ Private Sub DrawHead(ByVal Head As Integer, ByVal PicIndex As Integer)
         SR.Left = .SX
         SR.Top = .SY
         SR.Right = SR.Left + .pixelWidth
-        SR.bottom = SR.Top + .pixelHeight
+        SR.Bottom = SR.Top + .pixelHeight
         
         DR.Left = (picHead(0).Width - .pixelWidth) \ 2 + 1
         DR.Top = 5
         DR.Right = DR.Left + .pixelWidth
-        DR.bottom = DR.Top + .pixelHeight
+        DR.Bottom = DR.Top + .pixelHeight
         
         picTemp.BackColor = picTemp.BackColor
         

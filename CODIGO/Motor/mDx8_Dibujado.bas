@@ -11,7 +11,7 @@ Private Declare Function GlobalAlloc Lib "kernel32" (ByVal uFlags As Long, ByVal
 Private Declare Function GlobalLock Lib "kernel32" (ByVal hMem As Long) As Long
 Private Declare Function GlobalUnlock Lib "kernel32" (ByVal hMem As Long) As Long
 Private Declare Function OleLoadPicture Lib "olepro32" (pStream As Any, ByVal lSize As Long, ByVal fRunmode As Long, riid As Any, ppvObj As Any) As Long
-Private Declare Sub CopyMemory Lib "kernel32.dll" Alias "RtlMoveMemory" (ByRef destination As Any, ByRef source As Any, ByVal length As Long)
+Private Declare Sub CopyMemory Lib "kernel32.dll" Alias "RtlMoveMemory" (ByRef Destination As Any, ByRef source As Any, ByVal Length As Long)
 
 Private Declare Function SetBitmapBits Lib "gdi32" (ByVal hBitmap As Long, ByVal dwCount As Long, lpBits As Any) As Long
 
@@ -45,7 +45,7 @@ Public Sub ArrayToPicturePNG(ByRef byteArray() As Byte, ByRef imgDest As IPictur
     Call SetBitmapBits(imgDest.handle, UBound(byteArray), byteArray(0))
 End Sub
 
-Public Function ArrayToPicture(inArray() As Byte, offset As Long, Size As Long) As IPicture
+Public Function ArrayToPicture(inArray() As Byte, offset As Long, size As Long) As IPicture
     
     Dim o_hMem  As Long
     Dim o_lpMem  As Long
@@ -57,11 +57,11 @@ Public Function ArrayToPicture(inArray() As Byte, offset As Long, Size As Long) 
     aGUID(2) = &HAA00BB8B
     aGUID(3) = &HAB0C3000
     
-    o_hMem = GlobalAlloc(&H2&, Size)
+    o_hMem = GlobalAlloc(&H2&, size)
     If Not o_hMem = 0& Then
         o_lpMem = GlobalLock(o_hMem)
         If Not o_lpMem = 0& Then
-            CopyMemory ByVal o_lpMem, inArray(offset), Size
+            CopyMemory ByVal o_lpMem, inArray(offset), size
             Call GlobalUnlock(o_hMem)
             If CreateStreamOnHGlobal(o_hMem, 1&, IIStream) = 0& Then
                   Call OleLoadPicture(ByVal ObjPtr(IIStream), 0&, 0&, aGUID(0), ArrayToPicture)
@@ -95,7 +95,7 @@ Sub DrawGrhtoHdc(ByVal desthDC As Long, ByVal grh_index As Integer, ByRef Source
     Dim bmpData As StdPicture
     
     'get Picture
-    If Get_Image(DirGraficos, CStr(GrhData(grh_index).FileNum), data, True) Then  ' GSZAO
+    If Get_Image(Path(Graficos), CStr(GrhData(grh_index).FileNum), data, True) Then  ' GSZAO
         Set bmpData = ArrayToPicture(data(), 0, UBound(data) + 1)
         
         src_x = GrhData(grh_index).SX
@@ -118,10 +118,10 @@ Sub Damage_Initialize()
 
     ' Inicializamos el dano en render
     With DNormalFont
-        .Size = 20
+        .size = 20
         .italic = False
         .bold = False
-        .Name = "Tahoma"
+        .name = "Tahoma"
     End With
 
 End Sub
@@ -148,8 +148,8 @@ Sub Damage_Create(ByVal X As Byte, _
             Case EDType.edPunal
 
                 With .DamageFont
-                    .Size = Val(DAMAGE_FONT_S)
-                    .Name = "Tahoma"
+                    .size = Val(DAMAGE_FONT_S)
+                    .name = "Tahoma"
                     .bold = False
                     Exit Sub
 
@@ -158,7 +158,7 @@ Sub Damage_Create(ByVal X As Byte, _
         End Select
      
         .DamageFont = DNormalFont
-        .DamageFont.Size = 14
+        .DamageFont.size = 14
      
     End With
  
@@ -186,7 +186,7 @@ Sub Damage_Draw(ByVal X As Byte, _
            
             'Efectito para el apu
             If .DamageType = EDType.edPunal Then
-                .DamageFont.Size = Damage_NewSize(ElapsedTime)
+                .DamageFont.size = Damage_NewSize(ElapsedTime)
 
             End If
                

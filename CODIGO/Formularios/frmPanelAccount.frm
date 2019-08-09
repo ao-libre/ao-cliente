@@ -542,7 +542,7 @@ Private Sub Form_Load()
 On Error Resume Next
     Unload frmConnect
     
-    Me.Picture = LoadPicture(DirGraficos & "VentanaCuenta.jpg")
+    Me.Picture = LoadPicture(Path(Graficos) & "VentanaCuenta.jpg")
 
     Me.tmrRender.Enabled = True
     

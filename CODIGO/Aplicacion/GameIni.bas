@@ -1,4 +1,4 @@
-Attribute VB_Name = "GameIni"
+Attribute VB_Name = "Game"
 'Argentum Online 0.11.6
 '
 'Copyright (C) 2002 Marquez Pablo Ignacio
@@ -41,24 +41,23 @@ Public Type tCabecera 'Cabecera de los con
     MagicWord As Long
 End Type
 
+Public Enum ePath
+    INIT
+    Graficos
+    Sounds
+    Musica
+    Mapas
+    Lenguajes
+    Extras
+End Enum
+
 Public Type tGameIni
-    Puerto As Long
-    Musica As Byte
-    fX As Byte
     tip As Byte
-    Password As String
-    Name As String
-    DirGraficos As String
-    DirSonidos As String
-    DirMusica As String
-    DirMapas As String
-    DirLenguajes As String
 End Type
 
 Public Type tSetupMods
     bDinamic    As Boolean
     byMemory    As Integer
-    bUseVideo   As Boolean
     bNoMusic    As Boolean
     bNoSound    As Boolean
     bNoRes      As Boolean ' 24/06/2006 - ^[GS]^
@@ -88,33 +87,96 @@ Public ClientSetup As tSetupMods
 Public MiCabecera As tCabecera
 Public Config_Inicio As tGameIni
 
-Public Sub IniciarCabecera(ByRef Cabecera As tCabecera)
-    Cabecera.Desc = "Argentum Online by Noland Studios. Copyright Noland-Studios 2001, pablomarquez@noland-studios.com.ar"
-    Cabecera.CRC = Rnd * 100
-    Cabecera.MagicWord = Rnd * 10
+Private Lector As ClsIniReader
+
+Public Sub IniciarCabecera()
+
+    With MiCabecera
+        .Desc = "Argentum Online by Noland Studios. Copyright Noland-Studios 2001, pablomarquez@noland-studios.com.ar"
+        .CRC = Rnd * 100
+        .MagicWord = Rnd * 10
+    End With
+    
 End Sub
 
-Public Function LeerGameIni() As tGameIni
-    Dim N As Integer
-    Dim GameIni As tGameIni
-    N = FreeFile
-    Open App.path & "\init\Inicio.con" For Binary As #N
-    Get #N, , MiCabecera
+Public Function path(ByVal PathType As ePath) As String
+
+    Select Case PathType
+        
+        Case ePath.INIT
+            path = App.path & "\INIT\"
+        
+        Case ePath.Graficos
+            path = App.path & "\Graficos\"
+            
+        Case ePath.Lenguajes
+            path = App.path & "\Lenguajes\"
+            
+        Case ePath.Mapas
+            'En caso que no haya un mundo seleccionado en la propiedad Mundo
+            'Seleccionamos Alkon como mundo default
+            'Esto hay que eliminarlo de aqui ya que no tiene por que estar aqui, esto es un parche rapido para evitar posibles errores
+            'Cuando hay problemas de conexion
+            If LenB(MundoSeleccionado) = 0 Then
+                MundoSeleccionado = "Alkon"
+            End If
+            
+            path = App.path & "\Mapas\" & "\" & MundoSeleccionado & "\"
+            
+        Case ePath.Musica
+            path = App.path & "\MIDI\"
+            
+        Case ePath.Sounds
+            path = App.path & "\WAV\"
+            
+        Case ePath.Extras
+            path = App.path & "\Extras\"
     
-    Get #N, , GameIni
-    
-    Close #N
-    LeerGameIni = GameIni
+    End Select
+
 End Function
 
-Public Sub EscribirGameIni(ByRef GameIniConfiguration As tGameIni)
-    On Local Error Resume Next
+Public Sub LeerConfiguracion()
+    On Local Error GoTo fileErr:
     
-    Dim N As Integer
-    N = FreeFile
-    Open App.path & "\init\Inicio.con" For Binary As #N
-    Put #N, , MiCabecera
-    Put #N, , GameIniConfiguration
-    Close #N
+    Call IniciarCabecera
+    
+    Set Lector = New ClsIniReader
+    Lector.Initialize (path(INIT) & "Client.DAT")
+    
+    With ClientSetup
+        
+        .bDinamic = CBool(Lector.GetValue("VIDEO", "DynamicLoad"))
+        .byMemory = CInt(Lector.GetValue("VIDEO", "DinamicMemory"))
+        .bNoMusic = CBool(Lector.GetValue("AUDIO", "DisableMIDI"))
+        .bNoSound = CBool(Lector.GetValue("AUDIO", "DisableWAV"))
+        .bNoRes = CBool(Lector.GetValue("VIDEO", "DisableResolutionChange"))
+        .bNoSoundEffects = CBool(Lector.GetValue("AUDIO", "DisableSoundEffects"))
+        .bGuildNews = CBool(Lector.GetValue("GUILD", "GuildNews"))
+        .bDie = CBool(Lector.GetValue("FRAGSHOOTER", "Die"))
+        .bKill = CBool(Lector.GetValue("FRAGSHOOTER", "Kill"))
+        .byMurderedLevel = CBool(Lector.GetValue("FRAGSHOOTER", "MurderedLevel"))
+        .bActive = CBool(Lector.GetValue("FRAGSHOOTER", "Active"))
+        .bGldMsgConsole = CBool(Lector.GetValue("GUILD", "GuildMessages"))
+        .bCantMsgs = CByte(Lector.GetValue("GUILD", "MaxGuildMessages"))
+        
+        ' Nuevos motores vbGORE
+        .ProyectileEngine = CBool(Lector.GetValue("VIDEO", "ProyectileEngine"))
+        .PartyMembers = CBool(Lector.GetValue("VIDEO", "PartyMembers"))
+        .TonalidadPJ = CBool(Lector.GetValue("VIDEO", "TonalidadPJ"))
+        .UsarSombras = CBool(Lector.GetValue("VIDEO", "Sombras"))
+        .ParticleEngine = CBool(Lector.GetValue("VIDEO", "ParticleEngine"))
+        .vSync = CBool(Lector.GetValue("VIDEO", "vSync"))
+        .Aceleracion = CByte(Lector.GetValue("VIDEO", "RenderMode"))
+        .LimiteFPS = CBool(Lector.GetValue("VIDEO", "LimitFPS"))
+
+    End With
+
+fileErr:
+
+    If Err.number <> 0 Then
+        MsgBox ("Ha ocurrido un error al cargar la configuracion del cliente. Error " & Err.number & " : " & Err.Description)
+        End 'Usar "End" en vez del Sub CloseClient() ya que todavia no se inicializa nada.
+    End If
 End Sub
 

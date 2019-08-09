@@ -40,42 +40,6 @@ Public bLluvia() As Byte ' Array para determinar si
 
 Private lFrameTimer As Long
 
-Public Function DirGraficos() As String
-    DirGraficos = App.path & "\" & Config_Inicio.DirGraficos & "\"
-End Function
-
-Public Function DirSound() As String
-    DirSound = App.path & "\" & Config_Inicio.DirSonidos & "\"
-End Function
-
-Public Function DirMidi() As String
-    DirMidi = App.path & "\" & Config_Inicio.DirMusica & "\"
-End Function
-
-Public Function DirMapas() As String
-    'En caso que no haya un mundo seleccionado en la propiedad Mundo
-    'Seleccionamos Alkon como mundo default
-    'Esto hay que eliminarlo de aqui ya que no tiene por que estar aqui, esto es un parche rapido para evitar posibles errores
-    'Cuando hay problemas de conexion
-    If LenB(MundoSeleccionado) = 0 Then
-        MundoSeleccionado = "Alkon"
-    End If
-
-    DirMapas = App.path & "\" & Config_Inicio.DirMapas & "\" & MundoSeleccionado & "\"
-End Function
-
-Public Function DirExtras() As String
-    DirExtras = App.path & "\EXTRAS\"
-End Function
-
-Public Function DirLenguajes() As String
-    DirLenguajes = App.path & "\Lenguajes\"
-End Function
-
-Public Function DirInit() As String
-    DirInit = App.path & "\INIT\"
-End Function
-
 Public Function RandomNumber(ByVal LowerBound As Long, ByVal UpperBound As Long) As Long
     'Initialize randomizer
     Randomize Timer
@@ -110,7 +74,7 @@ On Error Resume Next
     Dim LoopC As Long
     Dim arch As String
     
-    arch = App.path & "\init\" & "armas.dat"
+    arch = Path(INIT) & "armas.dat"
     
     NumWeaponAnims = Val(GetVar(arch, "INIT", "NumArmas"))
     
@@ -129,7 +93,7 @@ Public Sub CargarColores()
 
 On Error Resume Next
     
-    Dim archivoC As String: archivoC = App.path & "\init\colores.dat"
+    Dim archivoC As String: archivoC = Path(INIT) & "colores.dat"
     
     If Not FileExist(archivoC, vbArchive) Then
         Call MsgBox("ERROR: no se ha podido cargar los colores. Falta el archivo colores.dat, reinstale el juego", vbCritical + vbOKOnly)
@@ -163,7 +127,7 @@ On Error Resume Next
     Dim LoopC As Long
     Dim arch As String
     
-    arch = App.path & "\init\" & "escudos.dat"
+    arch = Path(INIT) & "escudos.dat"
     
     NumEscudosAnims = Val(GetVar(arch, "INIT", "NumEscudos"))
     
@@ -224,6 +188,7 @@ Public Sub RefreshAllChars()
     Next LoopC
 End Sub
 
+<<<<<<< Updated upstream
 Sub SaveGameini()
     'Grabamos los datos del usuario en el Game.ini
     Config_Inicio.Name = "BetaTester"
@@ -233,6 +198,8 @@ Sub SaveGameini()
     Call EscribirGameIni(Config_Inicio)
 End Sub
 
+=======
+>>>>>>> Stashed changes
 Function AsciiValidos(ByVal cad As String) As Boolean
     Dim car As Byte
     Dim i As Long
@@ -337,10 +304,7 @@ Sub SetConnected()
 '*****************************************************************
     'Set Connected
     Connected = True
-    
-    Call SaveGameini
-    
-    
+
     'Unload the connect form
     Unload frmCrearPersonaje
     Unload frmConnect
@@ -442,6 +406,39 @@ Private Sub CheckKeys()
         Exit Sub
     End If
     
+<<<<<<< Updated upstream
+=======
+    With frmMain.MiniMapa
+        ' Guardamos el color del punto en el minimapa.
+        Dim Minimap_Color As Long: Minimap_Color = vbYellow
+        
+        ' Guargamos la posicion anterior del usuario.
+        Dim Anterior_Pos As Position
+            Anterior_Pos.X = UserPos.X
+            Anterior_Pos.Y = UserPos.Y
+        
+        ' Guardamos la informacion del pixel en la posicion anterior.
+        Dim Color_Mapa As Long: Color_Mapa = GetPixel(.hdc, Anterior_Pos.X, Anterior_Pos.Y)
+        
+        ' Dibujamos el punto.
+        Call SetPixel(.hdc, UserPos.X, UserPos.Y, Minimap_Color)
+        Call SetPixel(.hdc, UserPos.X + 1, UserPos.Y, Minimap_Color)
+        Call SetPixel(.hdc, UserPos.X - 1, UserPos.Y, Minimap_Color)
+        Call SetPixel(.hdc, UserPos.X, UserPos.Y - 1, Minimap_Color)
+        Call SetPixel(.hdc, UserPos.X, UserPos.Y + 1, Minimap_Color)
+        
+        ' Actualizamos el PictureBox
+        .Refresh
+        
+        ' Devolvemos el color a los pixeles de la posicion anterior.
+        Call SetPixel(.hdc, Anterior_Pos.X, Anterior_Pos.Y, Color_Mapa)
+        Call SetPixel(.hdc, Anterior_Pos.X + 1, Anterior_Pos.Y, Color_Mapa)
+        Call SetPixel(.hdc, Anterior_Pos.X - 1, Anterior_Pos.Y, Color_Mapa)
+        Call SetPixel(.hdc, Anterior_Pos.X, Anterior_Pos.Y - 1, Color_Mapa)
+        Call SetPixel(.hdc, Anterior_Pos.X, Anterior_Pos.Y + 1, Color_Mapa)
+    End With
+    
+>>>>>>> Stashed changes
     'Don't allow any these keys during movement..
     If UserMoving = 0 Then
         If Not UserEstupido Then
@@ -534,12 +531,12 @@ Sub SwitchMap(ByVal Map As Integer)
         Next Y
     Next X
     
-    dLen = FileLen(DirMapas & "Mapa" & Map & ".map")
+    dLen = FileLen(Path(Mapas) & "Mapa" & Map & ".map")
     ReDim dData(dLen - 1)
     
     handle = FreeFile()
     
-    Open DirMapas & "Mapa" & Map & ".map" For Binary As handle
+    Open Path(Mapas) & "Mapa" & Map & ".map" For Binary As handle
         Get handle, , dData
     Close handle
      
@@ -621,9 +618,25 @@ Sub SwitchMap(ByVal Map As Integer)
     
     'Limpiamos el buffer
     Set fileBuff = Nothing
+<<<<<<< Updated upstream
    
     mapInfo.Name = vbNullString
     mapInfo.Music = vbNullString
+=======
+    
+    With mapInfo
+        .Name = vbNullString
+        .Music = vbNullString
+    End With
+    
+    'Dibujamos el Mini-Mapa
+    If FileExist(Path(Graficos) & "MiniMapa\" & Map & ".bmp", vbArchive) Then
+        frmMain.MiniMapa.Picture = LoadPicture(Path(Graficos) & "MiniMapa\" & Map & ".bmp")
+    Else
+        frmMain.MiniMapa.Visible = False
+        frmMain.RecTxt.Width = frmMain.RecTxt.Width + 100
+    End If
+>>>>>>> Stashed changes
     
     CurMap = Map
     
@@ -685,22 +698,6 @@ Function FileExist(ByVal File As String, ByVal FileType As VbFileAttribute) As B
     FileExist = (Dir$(File, FileType) <> "")
 End Function
 
-Sub WriteClientVer()
-    Dim hFile As Integer
-        
-    hFile = FreeFile()
-    Open App.path & "\init\Ver.bin" For Binary Access Write Lock Read As #hFile
-    Put #hFile, , CLng(777)
-    Put #hFile, , CLng(777)
-    Put #hFile, , CLng(777)
-    
-    Put #hFile, , CInt(App.Major)
-    Put #hFile, , CInt(App.Minor)
-    Put #hFile, , CInt(App.Revision)
-    
-    Close #hFile
-End Sub
-
 Public Function IsIp(ByVal Ip As String) As Boolean
     Dim i As Long
     Dim Upper_serversLst As Long
@@ -727,7 +724,7 @@ On Error Resume Next
     Dim JsonObject As Object
     Dim Response As String
     
-    URL = GetVar(App.path & "\INIT\Config.ini", "Parameters", "IpApiEndpoint")
+    URL = GetVar(Path(INIT) & "Config.ini", "Parameters", "IpApiEndpoint")
     Endpoint = URL & Ip & "/json/"
     
     Response = frmConnect.InetIpApi.OpenURL(Endpoint)
@@ -753,10 +750,10 @@ On Error GoTo errorH
     Dim IpApiEnabled As Boolean
     Dim DoPingsEnabled As Boolean
     
-    File = App.path & "\init\sinfo.dat"
+    File = Path(INIT) & "sinfo.dat"
     Quantity = Val(GetVar(File, "INIT", "Cant"))
-    IpApiEnabled = GetVar(App.path & "\INIT\Config.ini", "Parameters", "IpApiEnabled")
-    DoPingsEnabled = GetVar(App.path & "\INIT\Config.ini", "Parameters", "DoPingsEnabled")
+    IpApiEnabled = GetVar(Path(INIT) & "Config.ini", "Parameters", "IpApiEnabled")
+    DoPingsEnabled = GetVar(Path(INIT) & "Config.ini", "Parameters", "DoPingsEnabled")
     
     frmConnect.lstServers.Clear
     
@@ -826,35 +823,20 @@ Private Function GetCountryCode(CurrentIp As String) As String
 End Function
 
 Public Function CurServerIp() As String
-    'If CurServer <> 0 Then
-    '    CurServerIp = ServersLst(CurServer).Ip
-    'Else
-        CurServerIp = frmConnect.IPTxt
-    'End If
+    CurServerIp = frmConnect.IPTxt
 End Function
 
 Public Function CurServerPort() As Integer
-    'If CurServer <> 0 Then
-     '   CurServerPort = ServersLst(CurServer).Puerto
-    'Else
-        CurServerPort = Val(frmConnect.PortTxt)
-    'End If
+    CurServerPort = Val(frmConnect.PortTxt)
 End Function
 
 Sub Main()
-    Call WriteClientVer
-    
     ' Detecta el idioma del sistema (TRUE) y carga las traducciones
     Call SetLanguageApplication
     
-    'Load config file
-    If FileExist(App.path & "\INIT\Inicio.con", vbNormal) Then
-        Config_Inicio = LeerGameIni()
-    End If
-    
-    'Load ao.dat config file
-    Call LoadClientSetup
-    
+    'Load client configurations.
+    Call Game.LeerConfiguracion
+
     Call modCompression.GenerateContra(vbNullString, 0) ' 0 = Graficos.AO
     
     CargarHechizos
@@ -881,10 +863,10 @@ Sub Main()
     Call LeerLineaComandos
     
     'usaremos esto para ayudar en los parches
-    Call SaveSetting("ArgentumOnlineCliente", "Init", "Path", App.path & "\")
+    Call SaveSetting("ArgentumOnlineCliente", "Init", "Path", App.Path & "\")
     
-    ChDrive App.path
-    ChDir App.path
+    ChDrive App.Path
+    ChDir App.Path
     
     tipf = Config_Inicio.tip
     
@@ -892,15 +874,7 @@ Sub Main()
     Call Resolution.SetResolution(800, 600)
 
     ' Load constants, classes, flags, graphics..
-    LoadInitialConfig
-
-    #If Testeo <> 1 Then
-        Dim PresPath As String
-        PresPath = DirGraficos & "Presentacion" & RandomNumber(1, 4) & ".jpg"
-        
-        frmPres.Picture = LoadPicture(PresPath)
-        frmPres.Show vbModal    'Es modal, asi que se detiene la ejecucionn de Main hasta que se desaparece
-    #End If
+    Call LoadInitialConfig
     
     #If UsarWrench = 1 Then
         frmMain.Socket1.Startup
@@ -917,8 +891,13 @@ Sub Main()
     LoadTimerIntervals
         
     'Set the dialog's font
-    Dialogos.Font = frmMain.Font
-    DialogosClanes.Font = frmMain.Font
+    If ClientSetup.bGuildNews Then
+        Set DialogosClanes = New clsGuildDlg
+        DialogosClanes.Activo = ClientSetup.bGldMsgConsole
+        DialogosClanes.CantidadDialogos = ClientSetup.bCantMsgs
+        Dialogos.Font = frmMain.Font
+        DialogosClanes.Font = frmMain.Font
+    End If
     
     lFrameTimer = GetTickCount
     
@@ -954,7 +933,7 @@ Sub Main()
 End Sub
 
 Public Function GetVersionOfTheGame() As String
-    GetVersionOfTheGame = GetVar(App.path & "\INIT\Config.ini", "Cliente", "VersionTagRelease")
+    GetVersionOfTheGame = GetVar(Path(INIT) & "Config.ini", "Cliente", "VersionTagRelease")
 End Function
 
 Private Sub LoadInitialConfig()
@@ -1006,7 +985,11 @@ Private Sub LoadInitialConfig()
                             True, False, True)
                             
     'Inicializamos el sonido
+<<<<<<< Updated upstream
     Call Audio.Initialize(DirectX, frmMain.hwnd, App.path & "\" & Config_Inicio.DirSonidos & "\", App.path & "\" & Config_Inicio.DirMusica & "\")
+=======
+    Call Audio.Initialize(DirectX, frmMain.hWnd, App.Path & "\" & Path(Sounds) & "\", App.Path & "\" & Path(Musica) & "\")
+>>>>>>> Stashed changes
     'Enable / Disable audio
     Audio.MusicActivated = Not ClientSetup.bNoMusic
     Audio.SoundActivated = Not ClientSetup.bNoSound
@@ -1037,8 +1020,8 @@ Private Sub LoadInitialConfig()
     UserMap = 1
     
     ' Mouse Pointer (Loaded before opening any form with buttons in it)
-    If FileExist(DirExtras & "Hand.ico", vbArchive) Then _
-        Set picMouseIcon = LoadPicture(DirExtras & "Hand.ico")
+    If FileExist(Path(Extras) & "Hand.ico", vbArchive) Then _
+        Set picMouseIcon = LoadPicture(Path(Extras) & "Hand.ico")
     
     Call AddtoRichTextBox(frmCargando.status, _
                             " " & JsonLanguage.Item("HECHO").Item("TEXTO"), _
@@ -1275,55 +1258,6 @@ Public Sub LeerLineaComandos()
 
 End Sub
 
-Private Sub LoadClientSetup()
-'**************************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
-'Last Modify Date: 11/19/09
-'11/19/09: Pato - Is optional show the frmGuildNews form
-'**************************************************************
-    Dim fHandle As Integer
-    
-    If FileExist(App.path & "\init\ao.dat", vbArchive) Then
-        fHandle = FreeFile
-        
-        Open App.path & "\init\ao.dat" For Binary Access Read Lock Write As fHandle
-            Get fHandle, , ClientSetup
-        Close fHandle
-    Else
-        'Use dynamic by default
-        ClientSetup.bDinamic = True
-    End If
-    
-    NoRes = ClientSetup.bNoRes
-    
-    ClientSetup.bGuildNews = Not ClientSetup.bGuildNews
-    Set DialogosClanes = New clsGuildDlg
-    DialogosClanes.Activo = Not ClientSetup.bGldMsgConsole
-    DialogosClanes.CantidadDialogos = ClientSetup.bCantMsgs
-End Sub
-
-Private Sub SaveClientSetup()
-'**************************************************************
-'Author: Torres Patricio (Pato)
-'Last Modify Date: 03/11/10
-'
-'**************************************************************
-    Dim fHandle As Integer
-    
-    fHandle = FreeFile
-    
-    ClientSetup.bNoMusic = Not Audio.MusicActivated
-    ClientSetup.bNoSound = Not Audio.SoundActivated
-    ClientSetup.bNoSoundEffects = Not Audio.SoundEffectsActivated
-    ClientSetup.bGuildNews = Not ClientSetup.bGuildNews
-    ClientSetup.bGldMsgConsole = Not DialogosClanes.Activo
-    ClientSetup.bCantMsgs = DialogosClanes.CantidadDialogos
-    
-    Open App.path & "\init\ao.dat" For Binary As fHandle
-        Put fHandle, , ClientSetup
-    Close fHandle
-End Sub
-
 Private Sub InicializarNombres()
 '**************************************************************
 'Author: Juan Martin Sotuyo Dodero (Maraxus)
@@ -1449,9 +1383,7 @@ Public Sub CloseClient()
     
     'Stop tile engine
     Call Engine_DirectX8_End
-    
-    Call SaveClientSetup
-    
+
     'Destruimos los objetos publicos creados
     Set CustomMessages = Nothing
     Set CustomKeys = Nothing
@@ -1470,7 +1402,6 @@ Public Sub CloseClient()
     
     'Actualizar tip
     Config_Inicio.tip = tipf
-    Call EscribirGameIni(Config_Inicio)
     
     'Si se cambio la resolucion, la reseteamos.
     If ResolucionCambiada Then Resolution.ResetResolution
@@ -1584,10 +1515,7 @@ Public Function ForumAlignment(ByVal yForumType As Byte) As Byte
 End Function
 
 Public Sub ResetAllInfo()
-    
-    ' Save config.ini
-    SaveGameini
-    
+
     ' Disable timers
     frmMain.Second.Enabled = False
     frmMain.macrotrabajo.Enabled = False
@@ -1702,7 +1630,7 @@ On Error GoTo errorH
     Dim PathName As String
     Dim j As Long
  
-    PathName = App.path & "\init\Hechizos.dat"
+    PathName = Path(INIT) & "Hechizos.dat"
     NumHechizos = Val(GetVar(PathName, "INIT", "NumHechizos"))
  
     ReDim Hechizos(1 To NumHechizos) As tHechizos
@@ -1750,7 +1678,7 @@ On Error GoTo error
     f = FreeFile
     
     If LenB(strData) <> 0 Then
-        Open App.path & "/init/sinfo.dat" For Output As #f
+        Open App.Path & "/init/sinfo.dat" For Output As #f
             Print #f, strData
         Close #f
     End If

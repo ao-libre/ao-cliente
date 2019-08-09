@@ -127,7 +127,7 @@ End Sub
 Private Sub LoadButtons()
     Dim GrhPath As String
     
-    GrhPath = DirGraficos
+    GrhPath = Path(Graficos)
 
     Set cBotonEnviar = New clsGraphicalButton
     Set cBotonCerrar = New clsGraphicalButton
@@ -203,13 +203,13 @@ Private Sub LoadBackGround()
 
     Select Case T
         Case TIPO.ALIANZA
-            Me.Picture = LoadPicture(DirGraficos & "VentanaPropuestaAlianza.jpg")
+            Me.Picture = LoadPicture(Path(Graficos) & "VentanaPropuestaAlianza.jpg")
             
         Case TIPO.PAZ
-            Me.Picture = LoadPicture(DirGraficos & "VentanaPropuestaPaz.jpg")
+            Me.Picture = LoadPicture(Path(Graficos) & "VentanaPropuestaPaz.jpg")
             
         Case TIPO.RECHAZOPJ
-            Me.Picture = LoadPicture(DirGraficos & "VentanaMotivoRechazo.jpg")
+            Me.Picture = LoadPicture(Path(Graficos) & "VentanaMotivoRechazo.jpg")
             
     End Select
     

@@ -132,7 +132,7 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
         
-    Me.Picture = LoadPicture(App.path & "\graficos\VentanaListaClanes.jpg")
+    Me.Picture = LoadPicture(App.Path & "\graficos\VentanaListaClanes.jpg")
     
     Call LoadButtons
     
@@ -141,7 +141,7 @@ End Sub
 Private Sub LoadButtons()
     Dim GrhPath As String
     
-    GrhPath = DirGraficos
+    GrhPath = Path(Graficos)
 
     Set cBotonCerrar = New clsGraphicalButton
     Set cBotonDetalles = New clsGraphicalButton
@@ -175,7 +175,7 @@ End Sub
 Private Sub imgDetalles_Click()
     frmGuildBrief.EsLeader = False
 
-    Call WriteGuildRequestDetails(GuildsList.List(GuildsList.ListIndex))
+    Call WriteGuildRequestDetails(guildslist.List(guildslist.ListIndex))
 End Sub
 
 Private Sub txtBuscar_Change()
@@ -196,7 +196,7 @@ Public Sub FiltrarListaClanes(ByRef sCompare As String)
     
     If UBound(GuildNames) <> 0 Then
 
-        With GuildsList
+        With guildslist
             'Limpio la lista
             .Clear
             .Visible = False

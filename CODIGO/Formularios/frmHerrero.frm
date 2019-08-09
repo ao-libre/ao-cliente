@@ -502,7 +502,7 @@ Private Sub CargarImagenes()
     Dim ImgPath As String
     Dim index As Integer
     
-    ImgPath = App.path & "\graficos\"
+    ImgPath = path(Graficos)
 
     Set Pestanias(ePestania.ieArmas) = LoadPicture(ImgPath & "VentanaHerreriaArmas.jpg")
     Set Pestanias(ePestania.ieArmaduras) = LoadPicture(ImgPath & "VentanaHerreriaArmaduras.jpg")
@@ -554,7 +554,7 @@ Private Sub ConstruirItem(ByVal index As Integer)
     Dim ItemIndex As Integer
     Dim CantItemsCiclo As Integer
     
-    If Scroll.Visible = True Then ItemIndex = Scroll.value
+    If Scroll.Visible = True Then ItemIndex = Scroll.Value
     ItemIndex = ItemIndex + index
     
     Select Case UltimaPestania
@@ -679,13 +679,13 @@ On Error Resume Next
         SR.Left = .SX
         SR.Top = .SY
         SR.Right = SR.Left + .pixelWidth
-        SR.bottom = SR.Top + .pixelHeight
+        SR.Bottom = SR.Top + .pixelHeight
     End With
     
     DR.Left = 0
     DR.Top = 0
     DR.Right = 32
-    DR.bottom = 32
+    DR.Bottom = 32
     
     Call DrawGrhtoHdc(Pic.hdc, GrhIndex, SR, DR)
     Pic.Refresh
@@ -713,7 +713,7 @@ On Error Resume Next
             With ObjHerrero(i + Inicio)
                 ' Agrego el item
                 Call RenderItem(picItem(i), .GrhIndex)
-                picItem(i).ToolTipText = .Name
+                picItem(i).ToolTipText = .name
      
                 Call RenderItem(picUpgradeItem(i), .UpgradeGrhIndex)
                 picUpgradeItem(i).ToolTipText = .UpgradeName
@@ -739,7 +739,7 @@ For i = 1 To MAX_LIST_ITEMS
         With HerreroMejorar(i + Inicio)
             ' Agrego el item
             Call RenderItem(picItem(i), .GrhIndex)
-            picItem(i).ToolTipText = .Name
+            picItem(i).ToolTipText = .name
             
             Call RenderItem(picUpgradeItem(i), .UpgradeGrhIndex)
             picUpgradeItem(i).ToolTipText = .UpgradeName
@@ -839,7 +839,7 @@ Private Sub picPestania_Click(index As Integer)
     If Cargando Then Exit Sub
     If UltimaPestania = index Then Exit Sub
     
-    Scroll.value = 0
+    Scroll.Value = 0
     
     Select Case index
         Case ePestania.ieArmas
@@ -887,7 +887,7 @@ Private Sub Scroll_Change()
     
     If Cargando Then Exit Sub
     
-    i = Scroll.value
+    i = Scroll.Value
     ' Cargo inventarios e imagenes
     
     Select Case UltimaPestania

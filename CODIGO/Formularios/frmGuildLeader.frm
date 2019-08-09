@@ -295,7 +295,7 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
-    Me.Picture = LoadPicture(App.path & "\graficos\VentanaAdministrarClan.jpg")
+    Me.Picture = LoadPicture(App.Path & "\graficos\VentanaAdministrarClan.jpg")
     
     Call LoadButtons
 End Sub
@@ -303,7 +303,7 @@ End Sub
 Private Sub LoadButtons()
     Dim GrhPath As String
     
-    GrhPath = DirGraficos
+    GrhPath = Path(Graficos)
 
     Set cBotonElecciones = New clsGraphicalButton
     Set cBotonActualizar = New clsGraphicalButton
@@ -385,7 +385,7 @@ End Sub
 
 Private Sub imgDetallesClan_Click()
     frmGuildBrief.EsLeader = True
-    Call WriteGuildRequestDetails(GuildsList.List(GuildsList.ListIndex))
+    Call WriteGuildRequestDetails(guildslist.List(guildslist.ListIndex))
 End Sub
 
 Private Sub imgDetallesMiembros_Click()
