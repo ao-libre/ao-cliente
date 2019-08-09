@@ -183,7 +183,7 @@ Public Sub RefreshAllChars()
     
     For LoopC = 1 To LastChar
         If charlist(LoopC).active = 1 Then
-            MapData(charlist(LoopC).Pos.X, charlist(LoopC).Pos.Y).CharIndex = LoopC
+            MapData(charlist(LoopC).Pos.x, charlist(LoopC).Pos.y).CharIndex = LoopC
         End If
     Next LoopC
 End Sub
@@ -330,13 +330,13 @@ Sub MoveTo(ByVal Direccion As E_Heading)
     
     Select Case Direccion
         Case E_Heading.NORTH
-            LegalOk = MoveToLegalPos(UserPos.X, UserPos.Y - 1)
+            LegalOk = MoveToLegalPos(UserPos.x, UserPos.y - 1)
         Case E_Heading.EAST
-            LegalOk = MoveToLegalPos(UserPos.X + 1, UserPos.Y)
+            LegalOk = MoveToLegalPos(UserPos.x + 1, UserPos.y)
         Case E_Heading.SOUTH
-            LegalOk = MoveToLegalPos(UserPos.X, UserPos.Y + 1)
+            LegalOk = MoveToLegalPos(UserPos.x, UserPos.y + 1)
         Case E_Heading.WEST
-            LegalOk = MoveToLegalPos(UserPos.X - 1, UserPos.Y)
+            LegalOk = MoveToLegalPos(UserPos.x - 1, UserPos.y)
     End Select
     
     If LegalOk And Not UserParalizado Then
@@ -354,7 +354,7 @@ Sub MoveTo(ByVal Direccion As E_Heading)
     If frmMain.macrotrabajo.Enabled Then Call frmMain.DesactivarMacroTrabajo
     
     ' Update 3D sounds!
-    Call Audio.MoveListener(UserPos.X, UserPos.Y)
+    Call Audio.MoveListener(UserPos.x, UserPos.y)
 End Sub
 
 Sub RandomMove()
@@ -417,13 +417,13 @@ Private Sub CheckKeys()
         .Refresh
         
         ' Devolvemos el color a los pixeles de la posicion anterior.
-        Call SetPixel(.hdc, Anterior_Pos.X, Anterior_Pos.Y, Color_Mapa)
-        Call SetPixel(.hdc, Anterior_Pos.X + 1, Anterior_Pos.Y, Color_Mapa)
-        Call SetPixel(.hdc, Anterior_Pos.X - 1, Anterior_Pos.Y, Color_Mapa)
-        Call SetPixel(.hdc, Anterior_Pos.X, Anterior_Pos.Y - 1, Color_Mapa)
-        Call SetPixel(.hdc, Anterior_Pos.X, Anterior_Pos.Y + 1, Color_Mapa)
+        Call SetPixel(.hDC, Anterior_Pos.x, Anterior_Pos.y, Color_Mapa)
+        Call SetPixel(.hDC, Anterior_Pos.x + 1, Anterior_Pos.y, Color_Mapa)
+        Call SetPixel(.hDC, Anterior_Pos.x - 1, Anterior_Pos.y, Color_Mapa)
+        Call SetPixel(.hDC, Anterior_Pos.x, Anterior_Pos.y - 1, Color_Mapa)
+        Call SetPixel(.hDC, Anterior_Pos.x, Anterior_Pos.y + 1, Color_Mapa)
     End With
-
+    
     'Don't allow any these keys during movement..
     If UserMoving = 0 Then
         If Not UserEstupido Then
@@ -457,7 +457,7 @@ Private Sub CheckKeys()
             End If
             
             ' We haven't moved - Update 3D sounds!
-            Call Audio.MoveListener(UserPos.X, UserPos.Y)
+            Call Audio.MoveListener(UserPos.x, UserPos.y)
         Else
             Dim kp As Boolean
             kp = (GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyUp)) < 0) Or _
@@ -469,9 +469,9 @@ Private Sub CheckKeys()
                 Call RandomMove
             Else
                 ' We haven't moved - Update 3D sounds!
-                Call Audio.MoveListener(UserPos.X, UserPos.Y)
+                Call Audio.MoveListener(UserPos.x, UserPos.y)
             End If
-            
+
             Call Char_UserPos
         End If
     End If
@@ -488,8 +488,8 @@ Sub SwitchMap(ByVal Map As Integer)
     '[ https://www.gs-zone.org/temas/carga-de-mapas-desde-la-memoria-cliente.91444/ ]
     '**********************************************************************************
 
-    Dim Y        As Long
-    Dim X        As Long
+    Dim y        As Long
+    Dim x        As Long
     
     Dim ByFlags  As Byte
     Dim handle   As Integer
@@ -502,19 +502,19 @@ Sub SwitchMap(ByVal Map As Integer)
     
     'Limpieza adicional del mapa. PARCHE: Solucion a bug de clones. [Gracias Yhunja]
     'EDIT: cambio el rango de valores en x y para solucionar otro bug con respecto al cambio de mapas
-    For X = XMinMapSize To XMaxMapSize
-        For Y = YMinMapSize To YMaxMapSize
+    For x = XMinMapSize To XMaxMapSize
+        For y = YMinMapSize To YMaxMapSize
 
-            If (MapData(X, Y).CharIndex) Then
-                Call Char_Erase(MapData(X, Y).CharIndex)
+            If (MapData(x, y).CharIndex) Then
+                Call Char_Erase(MapData(x, y).CharIndex)
             End If
 
-            If (MapData(X, Y).ObjGrh.GrhIndex) Then
-                Call Map_DestroyObject(X, Y)
+            If (MapData(x, y).ObjGrh.GrhIndex) Then
+                Call Map_DestroyObject(x, y)
             End If
 
-        Next Y
-    Next X
+        Next y
+    Next x
     
     dLen = FileLen(Path(Mapas) & "Mapa" & Map & ".map")
     ReDim dData(dLen - 1)
@@ -538,11 +538,11 @@ Sub SwitchMap(ByVal Map As Integer)
     fileBuff.getDouble
    
     'Load arrays
-    For Y = YMinMapSize To YMaxMapSize
-        For X = XMinMapSize To XMaxMapSize
+    For y = YMinMapSize To YMaxMapSize
+        For x = XMinMapSize To XMaxMapSize
             ByFlags = fileBuff.getByte()
 
-            With MapData(X, Y)
+            With MapData(x, y)
             
                 .Blocked = (ByFlags And 1)
                 .Graphic(1).GrhIndex = fileBuff.getInteger()
@@ -593,8 +593,8 @@ Sub SwitchMap(ByVal Map As Integer)
                 Call Engine_D3DColor_To_RGB_List(.Engine_Light(), Estado_Actual) 'Standelf, Light & Meteo Engine
             
             End With
-        Next X
-    Next Y
+        Next x
+    Next y
     
     Call LightRemoveAll
     
@@ -603,9 +603,9 @@ Sub SwitchMap(ByVal Map As Integer)
     
     'Limpiamos el buffer
     Set fileBuff = Nothing
-
+    
     With mapInfo
-        .Name = vbNullString
+        .name = vbNullString
         .Music = vbNullString
     End With
     
@@ -616,13 +616,11 @@ Sub SwitchMap(ByVal Map As Integer)
         frmMain.MiniMapa.Visible = False
         frmMain.RecTxt.Width = frmMain.RecTxt.Width + 100
     End If
-
     
     CurMap = Map
     
     Init_Ambient Map
     
-    Call MiniMap_ChangeTex(Map)
 End Sub
 
 Function ReadField(ByVal Pos As Integer, ByRef Text As String, ByVal SepASCII As Byte) As String
@@ -966,7 +964,7 @@ Private Sub LoadInitialConfig()
                             
     'Inicializamos el sonido
     Call Audio.Initialize(DirectX, frmMain.hWnd, App.Path & "\" & Path(Sounds) & "\", App.Path & "\" & Path(Musica) & "\")
-	
+
     'Enable / Disable audio
     Audio.MusicActivated = Not ClientSetup.bNoMusic
     Audio.SoundActivated = Not ClientSetup.bNoSound
@@ -1023,16 +1021,12 @@ Private Sub LoadInitialConfig()
     End If
           
     '     Tile Engine
-    If Not InitTileEngine(frmMain.hwnd, 32, 32, 8, 8) Then
+    If Not InitTileEngine(frmMain.hWnd, 32, 32, 8, 8) Then
         Call CloseClient
     End If
     
     Engine_DirectX8_Aditional_Init
-    
-    Call mDx8_Minimap.MiniMap_Init
-    mDx8_Minimap.AlphaMiniMap = 205
-    
-    
+
     Call AddtoRichTextBox(frmCargando.status, _
                             " " & JsonLanguage.Item("HECHO").Item("TEXTO"), _
                             JsonLanguage.Item("HECHO").Item("COLOR").Item(1), _
@@ -1118,11 +1112,11 @@ Private Sub LoadTimerIntervals()
 
 End Sub
 
-Sub WriteVar(ByVal File As String, ByVal Main As String, ByVal Var As String, ByVal value As String)
+Sub WriteVar(ByVal File As String, ByVal Main As String, ByVal Var As String, ByVal Value As String)
 '*****************************************************************
 'Writes a var to a text file
 '*****************************************************************
-    writeprivateprofilestring Main, Var, value, File
+    writeprivateprofilestring Main, Var, Value, File
 End Sub
 
 Function GetVar(ByVal File As String, ByVal Main As String, ByVal Var As String) As String
@@ -1185,11 +1179,11 @@ Private Function CMSValidateChar_(ByVal iAsc As Integer) As Boolean
 End Function
 
 'TODO : como todo lo relativo a mapas, no tiene nada que hacer aca....
-Function HayAgua(ByVal X As Integer, ByVal Y As Integer) As Boolean
-    HayAgua = ((MapData(X, Y).Graphic(1).GrhIndex >= 1505 And MapData(X, Y).Graphic(1).GrhIndex <= 1520) Or _
-            (MapData(X, Y).Graphic(1).GrhIndex >= 5665 And MapData(X, Y).Graphic(1).GrhIndex <= 5680) Or _
-            (MapData(X, Y).Graphic(1).GrhIndex >= 13547 And MapData(X, Y).Graphic(1).GrhIndex <= 13562)) And _
-                MapData(X, Y).Graphic(2).GrhIndex = 0
+Function HayAgua(ByVal x As Integer, ByVal y As Integer) As Boolean
+    HayAgua = ((MapData(x, y).Graphic(1).GrhIndex >= 1505 And MapData(x, y).Graphic(1).GrhIndex <= 1520) Or _
+            (MapData(x, y).Graphic(1).GrhIndex >= 5665 And MapData(x, y).Graphic(1).GrhIndex <= 5680) Or _
+            (MapData(x, y).Graphic(1).GrhIndex >= 13547 And MapData(x, y).Graphic(1).GrhIndex <= 13562)) And _
+                MapData(x, y).Graphic(2).GrhIndex = 0
                 
 End Function
 
@@ -1441,10 +1435,10 @@ m = 255 / MAXATRIBUTOS
 getDexterityColor = RGB(255, m * UserAgilidad, 0)
 End Function
 
-Public Function getCharIndexByName(ByVal Name As String) As Integer
+Public Function getCharIndexByName(ByVal name As String) As Integer
 Dim i As Long
 For i = 1 To LastChar
-    If charlist(i).Nombre = Name Then
+    If charlist(i).Nombre = name Then
         getCharIndexByName = i
         Exit Function
     End If
@@ -1501,8 +1495,8 @@ Public Sub ResetAllInfo()
     'Unload all forms except frmMain, frmConnect and frmCrearPersonaje
     Dim frm As Form
     For Each frm In Forms
-        If frm.Name <> frmMain.Name And frm.Name <> frmConnect.Name And _
-            frm.Name <> frmCrearPersonaje.Name Then
+        If frm.name <> frmMain.name And frm.name <> frmConnect.name And _
+            frm.name <> frmCrearPersonaje.name Then
             
             Unload frm
         End If

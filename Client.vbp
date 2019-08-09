@@ -112,7 +112,6 @@ Form=CODIGO\Formularios\frmCerrar.frm
 Module=modPing; CODIGO\Red\modPing.bas
 Module=ModLenguaje; CODIGO\IO\modLenguaje.bas
 Form=CODIGO\Formularios\frmBuscar.frm
-Module=mDx8_Minimap; CODIGO\Motor\mDx8_Minimap.bas
 Form=CODIGO\Formularios\frmQuestInfo.frm
 Form=CODIGO\Formularios\frmQuests.frm
 Form=CODIGO\Formularios\frmRecuperarCuenta.frm

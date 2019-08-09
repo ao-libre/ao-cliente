@@ -28,6 +28,16 @@ Begin VB.Form frmOpciones
    ScaleWidth      =   322
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
+   Begin VB.ComboBox cmdLenguajesComboBox 
+      BackColor       =   &H00004080&
+      ForeColor       =   &H80000018&
+      Height          =   315
+      Left            =   3000
+      TabIndex        =   5
+      Text            =   "Lenguaje"
+      Top             =   4680
+      Width           =   1575
+   End
    Begin VB.ComboBox cmdSkinsComboBox 
       BackColor       =   &H00004080&
       ForeColor       =   &H80000018&
@@ -286,11 +296,21 @@ Private bSoundEffectsActivated As Boolean
 
 Private loading As Boolean
 
+Private Sub cmdLenguajesComboBox_Click()
+'***************************************************
+'Author: Recox
+'Last Modification: 01/04/2019
+'10/11/2019: Recox - Seteamos el lenguaje del juego
+'***************************************************
+    Call WriteVar(App.path & "\INIT\Config.ini", "Parameters", "Language", cmdLenguajesComboBox.Text)
+    MsgBox ("Debe reiniciar el juego aplicar el cambio de idioma. Idioma Seleccionado: " & cmdLenguajesComboBox.Text)
+End Sub
+
 Private Sub cmdSkinsComboBox_Click()
 '***************************************************
 'Author: Recox
 'Last Modification: 01/04/2019
-'08/11/2019: Recox - Cargamos lista de skins
+'08/11/2019: Recox - Seteamos el skin
 '***************************************************
     Call WriteVar(Path(INIT) & "Config.ini", "Parameters", "SkinSelected", cmdSkinsComboBox.Text)
     MsgBox ("Debe reiniciar el juego aplicar el cambio de skin. Skin Seleccionado: " & cmdSkinsComboBox.Text)
@@ -489,6 +509,7 @@ Private Sub Form_Load()
     Me.Picture = LoadPicture(App.Path & "\graficos\VentanaOpciones.jpg")
     LoadButtons
     LoadSkinsInComboBox
+    LoadLenguajesInComboBox
     
     loading = True      'Prevent sounds when setting check's values
     LoadUserConfig
@@ -508,6 +529,19 @@ Private Sub LoadSkinsInComboBox()
     cmdSkinsComboBox.RemoveItem (0)
     cmdSkinsComboBox.RemoveItem (0)
 End Sub
+
+Private Sub LoadLenguajesInComboBox()
+    Dim sFileName As String
+    sFileName = Dir(App.path & "\Lenguajes\", vbArchive)
+    
+    Do While sFileName > ""
+        sFileName = Replace(sFileName, ".json", "")
+        cmdLenguajesComboBox.AddItem (sFileName)
+        sFileName = Dir()
+    Loop
+
+End Sub
+
 
 Private Sub LoadButtons()
     Dim GrhPath As String
