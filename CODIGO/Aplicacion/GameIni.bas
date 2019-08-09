@@ -23,12 +23,8 @@ Public Enum ePath
     Extras
 End Enum
 
-Public Type tGameIni
-    tip As Byte
-End Type
-
 Public Type tSetupMods
-    
+
     ' VIDEO
     bDinamic    As Boolean
     byMemory    As Integer
@@ -57,13 +53,13 @@ Public Type tSetupMods
     bDie        As Boolean
     bKill       As Boolean
     byMurderedLevel As Byte
-
+    
+    ' OTHER
+    MostrarTips As Byte
 End Type
 
 Public ClientSetup As tSetupMods
-
 Public MiCabecera As tCabecera
-Public Config_Inicio As tGameIni
 
 Private Lector As clsIniManager
 Private Const CLIENT_FILE As String = "Config.ini"
@@ -154,6 +150,8 @@ Public Sub LeerConfiguracion()
         .byMurderedLevel = CBool(Lector.GetValue("FRAGSHOOTER", "MURDERED_LEVEL"))
         .bActive = CBool(Lector.GetValue("FRAGSHOOTER", "ACTIVE"))
         
+        ' OTHER
+        .MostrarTips = CBool(Lector.GetValue("OTHER", "MOSTRAR_TIPS"))
     End With
 
 fileErr:
@@ -200,6 +198,9 @@ Public Sub GuardarConfiguracion()
         Call Lector.ChangeValue("FRAGSHOOTER", "KILL", CInt(.bKill))
         Call Lector.ChangeValue("FRAGSHOOTER", "MURDERED_LEVEL", CInt(.byMurderedLevel))
         Call Lector.ChangeValue("FRAGSHOOTER", "ACTIVE", CInt(.bActive))
+        
+        ' OTHER
+        Call Lector.ChangeValue("OTHER", "MOSTRAR_TIPS", CInt(.MostrarTips))
     End With
     
     Call Lector.DumpFile(path(INIT) & CLIENT_FILE)
