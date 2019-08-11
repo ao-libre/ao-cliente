@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.ocx"
+Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.OCX"
 Begin VB.Form frmConnect 
    BackColor       =   &H00E0E0E0&
    BorderStyle     =   0  'None
@@ -31,23 +31,17 @@ Begin VB.Form frmConnect
    ScaleWidth      =   800
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
-   Begin VB.CheckBox chkRecordar 
-      BackColor       =   &H80000000&
-      Caption         =   "Recordar Cuenta"
-      BeginProperty Font 
-         Name            =   "Times New Roman"
-         Size            =   12
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   255
-      Left            =   5040
+   Begin AOLibre.uAOCheckbox chkRecordar 
+      Height          =   345
+      Left            =   4920
       TabIndex        =   18
-      Top             =   4440
-      Width           =   2055
+      Top             =   4800
+      Width           =   345
+      _ExtentX        =   609
+      _ExtentY        =   609
+      CHCK            =   0   'False
+      ENAB            =   -1  'True
+      PICC            =   "frmConnect.frx":000C
    End
    Begin VB.Timer tEfectos 
       Left            =   1680
@@ -65,10 +59,10 @@ Begin VB.Form frmConnect
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmConnect.frx":000C
-      PICF            =   "frmConnect.frx":0A36
-      PICH            =   "frmConnect.frx":16F8
-      PICV            =   "frmConnect.frx":268A
+      PICE            =   "frmConnect.frx":10F2
+      PICF            =   "frmConnect.frx":1B1C
+      PICH            =   "frmConnect.frx":27DE
+      PICV            =   "frmConnect.frx":3770
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -126,9 +120,9 @@ Begin VB.Form frmConnect
       EndProperty
       ForeColor       =   &H0000FF00&
       Height          =   4905
-      ItemData        =   "frmConnect.frx":358C
+      ItemData        =   "frmConnect.frx":4672
       Left            =   8685
-      List            =   "frmConnect.frx":358E
+      List            =   "frmConnect.frx":4674
       TabIndex        =   6
       Top             =   1680
       Width           =   2775
@@ -229,10 +223,10 @@ Begin VB.Form frmConnect
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmConnect.frx":3590
-      PICF            =   "frmConnect.frx":3FBA
-      PICH            =   "frmConnect.frx":4C7C
-      PICV            =   "frmConnect.frx":5C0E
+      PICE            =   "frmConnect.frx":4676
+      PICF            =   "frmConnect.frx":50A0
+      PICH            =   "frmConnect.frx":5D62
+      PICV            =   "frmConnect.frx":6CF4
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   9.75
@@ -255,10 +249,10 @@ Begin VB.Form frmConnect
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmConnect.frx":6B10
-      PICF            =   "frmConnect.frx":753A
-      PICH            =   "frmConnect.frx":81FC
-      PICV            =   "frmConnect.frx":918E
+      PICE            =   "frmConnect.frx":7BF6
+      PICF            =   "frmConnect.frx":8620
+      PICH            =   "frmConnect.frx":92E2
+      PICV            =   "frmConnect.frx":A274
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   8.25
@@ -281,10 +275,10 @@ Begin VB.Form frmConnect
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmConnect.frx":A090
-      PICF            =   "frmConnect.frx":AABA
-      PICH            =   "frmConnect.frx":B77C
-      PICV            =   "frmConnect.frx":C70E
+      PICE            =   "frmConnect.frx":B176
+      PICF            =   "frmConnect.frx":BBA0
+      PICH            =   "frmConnect.frx":C862
+      PICV            =   "frmConnect.frx":D7F4
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   8.25
@@ -307,10 +301,10 @@ Begin VB.Form frmConnect
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmConnect.frx":D610
-      PICF            =   "frmConnect.frx":E03A
-      PICH            =   "frmConnect.frx":ECFC
-      PICV            =   "frmConnect.frx":FC8E
+      PICE            =   "frmConnect.frx":E6F6
+      PICF            =   "frmConnect.frx":F120
+      PICH            =   "frmConnect.frx":FDE2
+      PICV            =   "frmConnect.frx":10D74
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   8.25
@@ -333,10 +327,10 @@ Begin VB.Form frmConnect
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmConnect.frx":10B90
-      PICF            =   "frmConnect.frx":115BA
-      PICH            =   "frmConnect.frx":1227C
-      PICV            =   "frmConnect.frx":1320E
+      PICE            =   "frmConnect.frx":11C76
+      PICF            =   "frmConnect.frx":126A0
+      PICH            =   "frmConnect.frx":13362
+      PICV            =   "frmConnect.frx":142F4
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   8.25
@@ -359,10 +353,10 @@ Begin VB.Form frmConnect
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmConnect.frx":14110
-      PICF            =   "frmConnect.frx":14B3A
-      PICH            =   "frmConnect.frx":157FC
-      PICV            =   "frmConnect.frx":1678E
+      PICE            =   "frmConnect.frx":151F6
+      PICF            =   "frmConnect.frx":15C20
+      PICH            =   "frmConnect.frx":168E2
+      PICV            =   "frmConnect.frx":17874
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   8.25
@@ -385,10 +379,10 @@ Begin VB.Form frmConnect
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmConnect.frx":17690
-      PICF            =   "frmConnect.frx":180BA
-      PICH            =   "frmConnect.frx":18D7C
-      PICV            =   "frmConnect.frx":19D0E
+      PICE            =   "frmConnect.frx":18776
+      PICF            =   "frmConnect.frx":191A0
+      PICH            =   "frmConnect.frx":19E62
+      PICV            =   "frmConnect.frx":1ADF4
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   8.25
@@ -411,10 +405,10 @@ Begin VB.Form frmConnect
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmConnect.frx":1AC10
-      PICF            =   "frmConnect.frx":1B63A
-      PICH            =   "frmConnect.frx":1C2FC
-      PICV            =   "frmConnect.frx":1D28E
+      PICE            =   "frmConnect.frx":1BCF6
+      PICF            =   "frmConnect.frx":1C720
+      PICH            =   "frmConnect.frx":1D3E2
+      PICV            =   "frmConnect.frx":1E374
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   8.25
@@ -437,10 +431,10 @@ Begin VB.Form frmConnect
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmConnect.frx":1E190
-      PICF            =   "frmConnect.frx":1EBBA
-      PICH            =   "frmConnect.frx":1F87C
-      PICV            =   "frmConnect.frx":2080E
+      PICE            =   "frmConnect.frx":1F276
+      PICF            =   "frmConnect.frx":1FCA0
+      PICH            =   "frmConnect.frx":20962
+      PICV            =   "frmConnect.frx":218F4
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   8.25
@@ -463,10 +457,10 @@ Begin VB.Form frmConnect
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmConnect.frx":21710
-      PICF            =   "frmConnect.frx":2213A
-      PICH            =   "frmConnect.frx":22DFC
-      PICV            =   "frmConnect.frx":23D8E
+      PICE            =   "frmConnect.frx":227F6
+      PICF            =   "frmConnect.frx":23220
+      PICH            =   "frmConnect.frx":23EE2
+      PICV            =   "frmConnect.frx":24E74
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   15.75
@@ -476,6 +470,24 @@ Begin VB.Form frmConnect
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+   End
+   Begin VB.Label Label1 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Recordarme"
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   12
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   375
+      Left            =   5400
+      TabIndex        =   19
+      Top             =   4800
+      Width           =   2055
    End
    Begin VB.Image imgServArgentina 
       Height          =   795
@@ -657,7 +669,7 @@ Private Sub btnVerForo_Click()
 End Sub
 
 Private Sub chkRecordar_Click()
-    If Me.chkRecordar.Value = vbUnchecked Then
+    If Me.chkRecordar.Checked = False Then
         Call WriteVar(path(INIT) & "Config.ini", "Login", "Remember", 0)
         Call WriteVar(path(INIT) & "Config.ini", "Login", "UserName", vbNullString)
         Call WriteVar(path(INIT) & "Config.ini", "Login", "Password", vbNullString)
@@ -684,7 +696,7 @@ Private Sub Form_Activate()
     If Lector.GetValue("LOGIN", "Remember") = 1 Then
         Me.txtNombre = Lector.GetValue("LOGIN", "UserName")
         Me.txtPasswd = Cripto.AesDecryptString(Lector.GetValue("LOGIN", "Password"), AES_PASSWD)
-        Me.chkRecordar.Value = 1
+        Me.chkRecordar.Checked = True
     End If
     
     Call GetPostsFromReddit
