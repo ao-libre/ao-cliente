@@ -33,9 +33,9 @@ Begin VB.Form frmConnect
    Visible         =   0   'False
    Begin AOLibre.uAOCheckbox chkRecordar 
       Height          =   345
-      Left            =   4920
+      Left            =   5280
       TabIndex        =   18
-      Top             =   4800
+      Top             =   4440
       Width           =   345
       _ExtentX        =   609
       _ExtentY        =   609
@@ -471,7 +471,7 @@ Begin VB.Form frmConnect
          Strikethrough   =   0   'False
       EndProperty
    End
-   Begin VB.Label Label1 
+   Begin VB.Label lblRecordarme 
       BackStyle       =   0  'Transparent
       Caption         =   "Recordarme"
       BeginProperty Font 
@@ -484,9 +484,9 @@ Begin VB.Form frmConnect
          Strikethrough   =   0   'False
       EndProperty
       Height          =   375
-      Left            =   5400
+      Left            =   5760
       TabIndex        =   19
-      Top             =   4800
+      Top             =   4560
       Width           =   2055
    End
    Begin VB.Image imgServArgentina 
@@ -728,7 +728,15 @@ Private Sub Form_Load()
 
     Me.Picture = LoadPicture(App.path & "\graficos\VentanaConectar.jpg")
     
-    Call LoadButtons
+    btnActualizarLista.Caption = JsonLanguage.Item("BTN_ACTUALIZAR_LISTA").Item("TEXTO")
+    btnCodigoFuente.Caption = JsonLanguage.Item("BTN_CODIGO_FUENTE").Item("TEXTO")
+    btnConectarse.Caption = JsonLanguage.Item("BTN_CONECTARSE").Item("TEXTO")
+    btnCrearCuenta.Caption = JsonLanguage.Item("BTN_CREAR_CUENTA").Item("TEXTO")
+    btnCrearServer.Caption = JsonLanguage.Item("BTN_CREAR_SERVER").Item("TEXTO")
+    btnManual.Caption = JsonLanguage.Item("BTN_MANUAL").Item("TEXTO")
+    btnRecuperar.Caption = JsonLanguage.Item("BTN_RECUPERAR").Item("TEXTO")
+    btnReglamento.Caption = JsonLanguage.Item("BTN_REGLAMENTO").Item("TEXTO")
+    lblRecordarme.Caption = JsonLanguage.Item("LBL_RECORDARME").Item("TEXTO")
 
     ' GSZAO - Animación...
     
@@ -873,17 +881,6 @@ Private Sub tEfectos_Timer()
         btnVerForo.Top = AnimControl(11).Top
     End If
     
-End Sub
-
-Private Sub LoadButtons()
-    btnActualizarLista.Caption = JsonLanguage.Item("BTN_ACTUALIZAR_LISTA").Item("TEXTO")
-    btnCodigoFuente.Caption = JsonLanguage.Item("BTN_CODIGO_FUENTE").Item("TEXTO")
-    btnConectarse.Caption = JsonLanguage.Item("BTN_CONECTARSE").Item("TEXTO")
-    btnCrearCuenta.Caption = JsonLanguage.Item("BTN_CREAR_CUENTA").Item("TEXTO")
-    btnCrearServer.Caption = JsonLanguage.Item("BTN_CREAR_SERVER").Item("TEXTO")
-    btnManual.Caption = JsonLanguage.Item("BTN_MANUAL").Item("TEXTO")
-    btnRecuperar.Caption = JsonLanguage.Item("BTN_RECUPERAR").Item("TEXTO")
-    btnReglamento.Caption = JsonLanguage.Item("BTN_REGLAMENTO").Item("TEXTO")
 End Sub
 
 Private Sub lstRedditPosts_Click()

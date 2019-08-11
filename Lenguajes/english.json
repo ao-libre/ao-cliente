@@ -1173,6 +1173,9 @@
 	"BTN_REGLAMENTO":{
 		"TEXTO":"Rules"
 	},
+	"LBL_RECORDARME": {
+		"TEXT":"Remember Me"
+	},
 	"FRM_CREARCUENTA_SALIR":{
 		"TEXTO":"Quit"
 	},
