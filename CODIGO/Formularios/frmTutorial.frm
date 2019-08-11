@@ -187,7 +187,7 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
-    Me.Picture = LoadPicture(DirGraficos & "VentanaTutorial.jpg")
+    Me.Picture = LoadPicture(Path(Graficos) & "VentanaTutorial.jpg")
     
     Call LoadButtons
     
@@ -200,7 +200,7 @@ End Sub
 Private Sub LoadButtons()
     Dim GrhPath As String
     
-    GrhPath = DirGraficos
+    GrhPath = Path(Graficos)
 
     Set cBotonSiguiente = New clsGraphicalButton
     Set cBotonAnterior = New clsGraphicalButton
@@ -238,13 +238,13 @@ End Sub
 
 Private Sub imgAnterior_Click()
 
-    If Not cBotonAnterior.IsEnabled Then Exit Sub
+    If Not cBotonAnterior.isEnabled Then Exit Sub
     
     CurrentPage = CurrentPage - 1
     
     If CurrentPage = 1 Then Call cBotonAnterior.EnableButton(False)
     
-    If Not cBotonSiguiente.IsEnabled Then Call cBotonSiguiente.EnableButton(True)
+    If Not cBotonSiguiente.isEnabled Then Call cBotonSiguiente.EnableButton(True)
     
     Call SelectPage(CurrentPage)
 End Sub
@@ -262,7 +262,7 @@ End Sub
 
 Private Sub imgSiguiente_Click()
     
-    If Not cBotonSiguiente.IsEnabled Then Exit Sub
+    If Not cBotonSiguiente.isEnabled Then Exit Sub
     
     CurrentPage = CurrentPage + 1
     
@@ -270,7 +270,7 @@ Private Sub imgSiguiente_Click()
     If CurrentPage = NumPages Then Call cBotonSiguiente.EnableButton(False)
     
     ' Habilita el boton anterior
-    If Not cBotonAnterior.IsEnabled Then Call cBotonAnterior.EnableButton(True)
+    If Not cBotonAnterior.isEnabled Then Call cBotonAnterior.EnableButton(True)
     
     Call SelectPage(CurrentPage)
 End Sub
@@ -288,7 +288,7 @@ Private Sub LoadTutorial()
     Dim lLine As Long
     Dim sLine As String
     
-    TutorialPath = DirExtras & "Tutorial.dat"
+    TutorialPath = Path(Extras) & "Tutorial.dat"
     NumPages = Val(GetVar(TutorialPath, "INIT", "NumPags"))
     
     If NumPages > 0 Then

@@ -57,7 +57,7 @@ Public Sub SetLanguageApplication()
     Dim LangFile As String
     Dim Language As String
     
-    Language = GetVar(DirInit & "Config.ini", "Parameters", "Language")
+    Language = GetVar(Path(INIT) & "Config.ini", "Parameters", "Language")
     
     ' Si no se especifica el idioma en el archivo de configuracion, se usa el del sistema
     If LenB(Language) = 0 Then
@@ -66,6 +66,6 @@ Public Sub SetLanguageApplication()
         'Language = LCase$(ObtainOperativeSystemLanguage(LOCALE_SENGLANGUAGE))
     End If
     
-    LangFile = FileToString(DirLenguajes & Language & ".json")
+    LangFile = FileToString(Path(Lenguajes) & Language & ".json")
     Set JsonLanguage = JSON.parse(LangFile)
 End Sub

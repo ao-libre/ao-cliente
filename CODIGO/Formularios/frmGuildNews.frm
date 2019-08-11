@@ -143,7 +143,7 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
-    Me.Picture = LoadPicture(App.path & "\graficos\VentanaGuildNews.jpg")
+    Me.Picture = LoadPicture(App.Path & "\graficos\VentanaGuildNews.jpg")
     
     LoadButtons
 End Sub
@@ -151,7 +151,7 @@ End Sub
 Private Sub LoadButtons()
     Dim GrhPath As String
     
-    GrhPath = DirGraficos
+    GrhPath = Path(Graficos)
 
     Set cBotonAceptar = New clsGraphicalButton
     Set LastButtonPressed = New clsGraphicalButton

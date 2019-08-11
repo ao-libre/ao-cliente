@@ -257,7 +257,7 @@ Private Sub Form_Load()
         messageTxt(i) = CustomMessages.Message(i)
     Next i
 
-    Me.Picture = LoadPicture(App.path & "\graficos\VentanaMensajesPersonalizados.jpg")
+    Me.Picture = LoadPicture(App.Path & "\graficos\VentanaMensajesPersonalizados.jpg")
     
     LoadButtons
     
@@ -266,7 +266,7 @@ End Sub
 Private Sub LoadButtons()
     Dim GrhPath As String
     
-    GrhPath = DirGraficos
+    GrhPath = Path(Graficos)
     
     Set cBotonGuardar = New clsGraphicalButton
     Set cBotonCancelar = New clsGraphicalButton
@@ -306,6 +306,6 @@ ErrHandler:
 
 End Sub
 
-Private Sub messageTxt_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub messageTxt_MouseMove(index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
 End Sub

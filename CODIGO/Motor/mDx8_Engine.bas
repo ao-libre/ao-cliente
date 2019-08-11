@@ -21,9 +21,9 @@ Public MainScreenRect As RECT
 Public Type TLVERTEX
   X As Single
   Y As Single
-  Z As Single
+  z As Single
   rhw As Single
-  color As Long
+  Color As Long
   Specular As Long
   tu As Single
   tv As Single
@@ -48,31 +48,31 @@ Public Function Engine_DirectX8_Init() As Boolean
         .BackBufferFormat = DispMode.Format
         .BackBufferWidth = frmMain.MainViewPic.ScaleWidth
         .BackBufferHeight = frmMain.MainViewPic.ScaleHeight
-        .hDeviceWindow = frmMain.MainViewPic.hwnd
+        .hDeviceWindow = frmMain.MainViewPic.hWnd
     End With
 
     Select Case ClientSetup.Aceleracion
         Case 0 '   Software
             Set DirectDevice = DirectD3D.CreateDevice( _
                                 D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, _
-                                frmMain.MainViewPic.hwnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING, _
+                                frmMain.MainViewPic.hWnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING, _
                                 D3DWindow)
         Case 1 '   Hardware
             Set DirectDevice = DirectD3D.CreateDevice( _
                                 D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, _
-                                frmMain.MainViewPic.hwnd, _
+                                frmMain.MainViewPic.hWnd, _
                                 D3DCREATE_HARDWARE_VERTEXPROCESSING, _
                                 D3DWindow)
         Case 2 '   Mixed
             Set DirectDevice = DirectD3D.CreateDevice( _
                                 D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, _
-                                frmMain.MainViewPic.hwnd, _
+                                frmMain.MainViewPic.hWnd, _
                                 D3DCREATE_MIXED_VERTEXPROCESSING, _
                                 D3DWindow)
         Case Else '   Si no hay opcion entramos en Software para asegurarnos que funcione el cliente
             Set DirectDevice = DirectD3D.CreateDevice( _
                                 D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, _
-                                frmMain.MainViewPic.hwnd, _
+                                frmMain.MainViewPic.hWnd, _
                                 D3DCREATE_SOFTWARE_VERTEXPROCESSING, _
                                 D3DWindow)
     End Select
@@ -157,7 +157,7 @@ Public Sub Engine_DirectX8_Aditional_Init()
     Engine_Set_BaseSpeed 0.018
     
     With MainScreenRect
-        .bottom = frmMain.MainViewPic.ScaleHeight
+        .Bottom = frmMain.MainViewPic.ScaleHeight
         .Right = frmMain.MainViewPic.ScaleWidth
     End With
 
@@ -171,11 +171,11 @@ Public Sub Engine_DirectX8_Aditional_Init()
     
 End Sub
 
-Public Sub Engine_Draw_Line(X1 As Single, Y1 As Single, X2 As Single, Y2 As Single, Optional color As Long = -1, Optional Color2 As Long = -1)
+Public Sub Engine_Draw_Line(X1 As Single, Y1 As Single, X2 As Single, Y2 As Single, Optional Color As Long = -1, Optional Color2 As Long = -1)
 On Error GoTo error
 Dim Vertex(1) As TLVERTEX
 
-    Vertex(0) = Geometry_Create_TLVertex(X1, Y1, 0, 1, color, 0, 0)
+    Vertex(0) = Geometry_Create_TLVertex(X1, Y1, 0, 1, Color, 0, 0)
     Vertex(1) = Geometry_Create_TLVertex(X2, Y2, 0, 1, Color2, 0, 0)
 
     DirectDevice.SetTexture 0, Nothing
@@ -186,11 +186,11 @@ error:
     'Call Log_Engine("Error in Engine_Draw_Line, " & Err.Description & " (" & Err.number & ")")
 End Sub
 
-Public Sub Engine_Draw_Point(X1 As Single, Y1 As Single, Optional color As Long = -1)
+Public Sub Engine_Draw_Point(X1 As Single, Y1 As Single, Optional Color As Long = -1)
 On Error GoTo error
 Dim Vertex(0) As TLVERTEX
 
-    Vertex(0) = Geometry_Create_TLVertex(X1, Y1, 0, 1, color, 0, 0)
+    Vertex(0) = Geometry_Create_TLVertex(X1, Y1, 0, 1, Color, 0, 0)
 
     DirectDevice.SetTexture 0, Nothing
     DirectDevice.DrawPrimitiveUP D3DPT_POINTLIST, 1, Vertex(0), Len(Vertex(0))
@@ -274,7 +274,7 @@ Dim buf As D3DXBuffer
 
 End Function
 
-Public Sub Engine_Draw_Box(ByVal X As Integer, ByVal Y As Integer, ByVal Width As Integer, ByVal Height As Integer, color As Long)
+Public Sub Engine_Draw_Box(ByVal X As Integer, ByVal Y As Integer, ByVal Width As Integer, ByVal Height As Integer, Color As Long)
 '***************************************************
 'Author: Ezequiel Juarez (Standelf)
 'Last Modification: 29/12/10
@@ -284,10 +284,10 @@ Public Sub Engine_Draw_Box(ByVal X As Integer, ByVal Y As Integer, ByVal Width A
     Dim b_Color(0 To 3) As Long
     Dim b_Vertex(0 To 3) As TLVERTEX
     
-    Engine_Long_To_RGB_List b_Color(), color
+    Engine_Long_To_RGB_List b_Color(), Color
 
     With b_Rect
-        .bottom = Y + Height
+        .Bottom = Y + Height
         .Left = X
         .Right = X + Width
         .Top = Y
@@ -299,13 +299,13 @@ Public Sub Engine_Draw_Box(ByVal X As Integer, ByVal Y As Integer, ByVal Width A
     DirectDevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, b_Vertex(0), Len(b_Vertex(0))
 End Sub
 
-Public Sub Engine_D3DColor_To_RGB_List(rgb_list() As Long, color As D3DCOLORVALUE)
+Public Sub Engine_D3DColor_To_RGB_List(rgb_list() As Long, Color As D3DCOLORVALUE)
 '***************************************************
 'Author: Ezequiel Juarez (Standelf)
 'Last Modification: 14/05/10
 'Blisse-AO | Set a D3DColorValue to a RGB List
 '***************************************************
-    rgb_list(0) = D3DColorARGB(color.a, color.r, color.g, color.b)
+    rgb_list(0) = D3DColorARGB(Color.a, Color.r, Color.g, Color.B)
     rgb_list(1) = rgb_list(0)
     rgb_list(2) = rgb_list(0)
     rgb_list(3) = rgb_list(0)
@@ -343,7 +343,7 @@ Call Engine_D3DColor_To_RGB_List(tempARGB(), TempColor)
 SetARGB_Alpha = tempARGB()
 End Function
 
-Private Function Engine_Collision_Between(ByVal value As Single, ByVal Bound1 As Single, ByVal Bound2 As Single) As Byte
+Private Function Engine_Collision_Between(ByVal Value As Single, ByVal Bound1 As Single, ByVal Bound2 As Single) As Byte
 '*****************************************************************
 'Find if a value is between two other values (used for line collision)
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_Collision_Between
@@ -351,12 +351,12 @@ Private Function Engine_Collision_Between(ByVal value As Single, ByVal Bound1 As
 
     'Checks if a value lies between two bounds
     If Bound1 > Bound2 Then
-        If value >= Bound2 Then
-            If value <= Bound1 Then Engine_Collision_Between = 1
+        If Value >= Bound2 Then
+            If Value <= Bound1 Then Engine_Collision_Between = 1
         End If
     Else
-        If value >= Bound1 Then
-            If value <= Bound2 Then Engine_Collision_Between = 1
+        If Value >= Bound1 Then
+            If Value <= Bound2 Then Engine_Collision_Between = 1
         End If
     End If
     
@@ -461,7 +461,7 @@ Function Engine_Collision_Rect(ByVal X1 As Integer, ByVal Y1 As Integer, ByVal W
 
 End Function
 
-Public Sub Engine_BeginScene(Optional ByVal color As Long = 0)
+Public Sub Engine_BeginScene(Optional ByVal Color As Long = 0)
 '***************************************************
 'Author: Ezequiel Juarez (Standelf)
 'Last Modification: 29/12/10
@@ -469,7 +469,7 @@ Public Sub Engine_BeginScene(Optional ByVal color As Long = 0)
 '***************************************************
 
     DirectDevice.BeginScene
-    DirectDevice.Clear 0, ByVal 0, D3DCLEAR_TARGET, color, 1#, 0
+    DirectDevice.Clear 0, ByVal 0, D3DCLEAR_TARGET, Color, 1#, 0
     
 End Sub
 
@@ -509,9 +509,9 @@ Public Sub Geometry_Create_Box(ByRef Verts() As TLVERTEX, ByRef dest As RECT, By
     
     If Angle > 0 Then
         x_center = dest.Left + (dest.Right - dest.Left) / 2
-        y_center = dest.Top + (dest.bottom - dest.Top) / 2
+        y_center = dest.Top + (dest.Bottom - dest.Top) / 2
         
-        radius = Sqr((dest.Right - x_center) ^ 2 + (dest.bottom - y_center) ^ 2)
+        radius = Sqr((dest.Right - x_center) ^ 2 + (dest.Bottom - y_center) ^ 2)
         
         Temp = (dest.Right - x_center) / radius
         right_point = Atn(Temp / Sqr(-Temp * Temp + 1))
@@ -520,14 +520,14 @@ Public Sub Geometry_Create_Box(ByRef Verts() As TLVERTEX, ByRef dest As RECT, By
     
     If Angle = 0 Then
         x_Cor = dest.Left
-        y_Cor = dest.bottom
+        y_Cor = dest.Bottom
     Else
         x_Cor = x_center + Cos(-left_point - Angle) * radius
         y_Cor = y_center - Sin(-left_point - Angle) * radius
     End If
 
     If Textures_Width And Textures_Height Then
-        Verts(0) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(0), src.Left / Textures_Width, (src.bottom + 1) / Textures_Height)
+        Verts(0) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(0), src.Left / Textures_Width, (src.Bottom + 1) / Textures_Height)
     Else
         Verts(0) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(0), 0, 0)
     End If
@@ -548,14 +548,14 @@ Public Sub Geometry_Create_Box(ByRef Verts() As TLVERTEX, ByRef dest As RECT, By
 
     If Angle = 0 Then
         x_Cor = dest.Right
-        y_Cor = dest.bottom
+        y_Cor = dest.Bottom
     Else
         x_Cor = x_center + Cos(-right_point - Angle) * radius
         y_Cor = y_center - Sin(-right_point - Angle) * radius
     End If
 
     If Textures_Width And Textures_Height Then
-        Verts(2) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(2), (src.Right + 1) / Textures_Width, (src.bottom + 1) / Textures_Height)
+        Verts(2) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(2), (src.Right + 1) / Textures_Width, (src.Bottom + 1) / Textures_Height)
     Else
         Verts(2) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(2), 1, 0)
     End If
@@ -576,8 +576,8 @@ Public Sub Geometry_Create_Box(ByRef Verts() As TLVERTEX, ByRef dest As RECT, By
 
 End Sub
 
-Public Function Geometry_Create_TLVertex(ByVal X As Single, ByVal Y As Single, ByVal Z As Single, _
-                                            ByVal rhw As Single, ByVal color As Long, tu As Single, _
+Public Function Geometry_Create_TLVertex(ByVal X As Single, ByVal Y As Single, ByVal z As Single, _
+                                            ByVal rhw As Single, ByVal Color As Long, tu As Single, _
                                             ByVal tv As Single) As TLVERTEX
 '**************************************************************
 'Author: Aaron Perkins
@@ -585,9 +585,9 @@ Public Function Geometry_Create_TLVertex(ByVal X As Single, ByVal Y As Single, B
 '**************************************************************
     Geometry_Create_TLVertex.X = X
     Geometry_Create_TLVertex.Y = Y
-    Geometry_Create_TLVertex.Z = Z
+    Geometry_Create_TLVertex.z = z
     Geometry_Create_TLVertex.rhw = rhw
-    Geometry_Create_TLVertex.color = color
+    Geometry_Create_TLVertex.Color = Color
     Geometry_Create_TLVertex.tu = tu
     Geometry_Create_TLVertex.tv = tv
 End Function
@@ -601,7 +601,7 @@ Public Sub Engine_ZoomIn()
     With MainScreenRect
         .Top = 0
         .Left = 0
-        .bottom = IIf(.bottom - 1 <= 367, .bottom, .bottom - 1)
+        .Bottom = IIf(.Bottom - 1 <= 367, .Bottom, .Bottom - 1)
         .Right = IIf(.Right - 1 <= 491, .Right, .Right - 1)
     End With
     
@@ -616,7 +616,7 @@ Public Sub Engine_ZoomOut()
     With MainScreenRect
         .Top = 0
         .Left = 0
-        .bottom = IIf(.bottom + 1 >= 459, .bottom, .bottom + 1)
+        .Bottom = IIf(.Bottom + 1 >= 459, .Bottom, .Bottom + 1)
         .Right = IIf(.Right + 1 >= 583, .Right, .Right + 1)
     End With
     
@@ -631,7 +631,7 @@ Public Sub Engine_ZoomNormal()
     With MainScreenRect
         .Top = 0
         .Left = 0
-        .bottom = ScreenHeight
+        .Bottom = ScreenHeight
         .Right = ScreenWidth
     End With
     
@@ -643,7 +643,7 @@ Public Function ZoomOffset(ByVal offset As Byte) As Single
 'Last Modify Date: 30/01/2011
 '**************************************************************
 
-    ZoomOffset = IIf((offset = 1), (ScreenHeight - MainScreenRect.bottom) / 2, (ScreenWidth - MainScreenRect.Right) / 2)
+    ZoomOffset = IIf((offset = 1), (ScreenHeight - MainScreenRect.Bottom) / 2, (ScreenWidth - MainScreenRect.Right) / 2)
     
 End Function
 
@@ -730,7 +730,7 @@ Public Sub DrawPJ(ByVal index As Byte)
     Dim cColor As Long
     frmPanelAccount.lblAccData(index).Caption = cPJ(index).Nombre
     
-    ColoresFile = App.path & "\init\colores.dat"
+    ColoresFile = Path(INIT) & "colores.dat"
 
     If cPJ(index).GameMaster Then
         '1 is Consejeros in Colores.dat
@@ -752,7 +752,7 @@ Public Sub DrawPJ(ByVal index As Byte)
    
     re.Left = 0
     re.Top = 0
-    re.bottom = 80
+    re.Bottom = 80
     re.Right = 76
 
     init_x = 25
@@ -796,5 +796,5 @@ Public Sub DrawPJ(ByVal index As Byte)
         Call DDrawTransGrhtoSurface(ShieldAnimData(cPJ(index).shield).ShieldWalk(3), PixelOffsetX + init_x, PixelOffsetY + init_y, 0, Light(), 0, init_x, init_y)
     End If
 
-    Engine_EndScene re, frmPanelAccount.picChar(index - 1).hwnd
+    Engine_EndScene re, frmPanelAccount.picChar(index - 1).hWnd
 End Sub

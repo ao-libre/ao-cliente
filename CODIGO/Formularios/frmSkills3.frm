@@ -920,11 +920,11 @@ Private Sub Form_Load()
     clsFormulario.Initialize Me
     
     'Flags para saber que skills se modificaron
-    ReDim Flags(1 To NUMSKILLS)
+    ReDim flags(1 To NUMSKILLS)
     
     Call ValidarSkills
     
-    Me.Picture = LoadPicture(DirGraficos & "VentanaSkills.jpg")
+    Me.Picture = LoadPicture(Path(Graficos) & "VentanaSkills.jpg")
     Call LoadButtons
     
     Call LoadHelp
@@ -934,7 +934,7 @@ Private Sub LoadButtons()
     Dim GrhPath As String
     Dim i As Long
     
-    GrhPath = DirGraficos
+    GrhPath = Path(Graficos)
 
 
     For i = 1 To NUMSKILLS
@@ -1217,7 +1217,7 @@ Private Sub SumarSkillPoint(ByVal SkillIndex As Integer)
 
         If Val(Text1(SkillIndex).Caption) < MAXSKILLPOINTS Then
             Text1(SkillIndex).Caption = Val(Text1(SkillIndex).Caption) + 1
-            Flags(SkillIndex) = Flags(SkillIndex) + 1
+            flags(SkillIndex) = flags(SkillIndex) + 1
             Alocados = Alocados - 1
         End If
             
@@ -1229,9 +1229,9 @@ End Sub
 Private Sub RestarSkillPoint(ByVal SkillIndex As Integer)
     If Alocados < SkillPoints Then
         
-        If Val(Text1(SkillIndex).Caption) > 0 And Flags(SkillIndex) > 0 Then
+        If Val(Text1(SkillIndex).Caption) > 0 And flags(SkillIndex) > 0 Then
             Text1(SkillIndex).Caption = Val(Text1(SkillIndex).Caption) - 1
-            Flags(SkillIndex) = Flags(SkillIndex) - 1
+            flags(SkillIndex) = flags(SkillIndex) - 1
             Alocados = Alocados + 1
         End If
     End If

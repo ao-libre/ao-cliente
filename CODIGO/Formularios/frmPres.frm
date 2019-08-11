@@ -80,12 +80,12 @@ Dim PresPath As String
 ticks = ticks + 1
 
 If ticks = 1 Then
-    PresPath = DirGraficos & "HostingAlkon.jpg"
+    PresPath = Path(Graficos) & "HostingAlkon.jpg"
     Me.Picture = LoadPicture(PresPath)
     puedo = True
 
 ElseIf ticks = 2 Then
-    PresPath = DirGraficos & "Presentacion" & RandomNumber(5, 8) & ".jpg"
+    PresPath = Path(Graficos) & "Presentacion" & RandomNumber(5, 8) & ".jpg"
     Me.Picture = LoadPicture(PresPath)
     
 Else

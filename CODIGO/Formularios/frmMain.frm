@@ -1138,22 +1138,22 @@ Call Protocol.WriteMoveItem(originalSlot, newSlot, eMoveType.Inventory)
 End Sub
 
 Private Sub Form_Load()
-    SkinSeleccionado = GetVar(App.path & "\INIT\Config.ini", "Parameters", "SkinSelected")
+    SkinSeleccionado = GetVar(path(INIT) & "Config.ini", "Parameters", "SkinSelected")
     
-    If NoRes Then
+    If Not ResolucionCambiada Then
         ' Handles Form movement (drag and drop).
         Set clsFormulario = New clsFormMovementManager
         clsFormulario.Initialize Me, 120
     End If
     
-    InvEqu.Picture = LoadPicture(DirGraficos & "Skins\" & SkinSeleccionado & "\CentroInventario.jpg")
+    InvEqu.Picture = LoadPicture(path(Graficos) & "Skins\" & SkinSeleccionado & "\CentroInventario.jpg")
     
     Call LoadButtons
     
     Set dragInventory = Inventario
     
     With Me
-        .Picture = LoadPicture(DirGraficos & "Skins\" & SkinSeleccionado & "\VentanaPrincipal.JPG")
+        .Picture = LoadPicture(path(Graficos) & "Skins\" & SkinSeleccionado & "\VentanaPrincipal.JPG")
         .Left = 0
         .Top = 0
         .Width = 12000
@@ -1178,14 +1178,14 @@ Private Sub LoadButtons()
     
     
     Call cBotonDiamArriba.Initialize(imgInvScrollUp, "", _
-                                    DirGraficos & "Skins\" & SkinSeleccionado & "\BotonDiamArribaF.bmp", _
-                                    DirGraficos & "Skins\" & SkinSeleccionado & "\BotonDiamArribaF.bmp", Me)
+                                    path(Graficos) & "Skins\" & SkinSeleccionado & "\BotonDiamArribaF.bmp", _
+                                    path(Graficos) & "Skins\" & SkinSeleccionado & "\BotonDiamArribaF.bmp", Me)
 
     Call cBotonDiamAbajo.Initialize(imgInvScrollDown, "", _
-                                    DirGraficos & "Skins\" & SkinSeleccionado & "\BotonDiamAbajoF.bmp", _
-                                    DirGraficos & "Skins\" & SkinSeleccionado & "\BotonDiamAbajoF.bmp", Me)
+                                    path(Graficos) & "Skins\" & SkinSeleccionado & "\BotonDiamAbajoF.bmp", _
+                                    path(Graficos) & "Skins\" & SkinSeleccionado & "\BotonDiamAbajoF.bmp", Me)
 
-    Set picSkillStar = LoadPicture(DirGraficos & "Skins\" & SkinSeleccionado & "\BotonAsignarSkills.bmp")
+    Set picSkillStar = LoadPicture(path(Graficos) & "Skins\" & SkinSeleccionado & "\BotonAsignarSkills.bmp")
 
     If SkillPoints > 0 Then imgAsignarSkill.Picture = picSkillStar
     
@@ -2125,7 +2125,7 @@ End Sub
 Private Sub Label4_Click()
     Call Audio.PlayWave(SND_CLICK)
 
-    InvEqu.Picture = LoadPicture(DirGraficos & "Skins\" & SkinSeleccionado & "\Centroinventario.jpg")
+    InvEqu.Picture = LoadPicture(path(Graficos) & "Skins\" & SkinSeleccionado & "\Centroinventario.jpg")
 
     ' Activo controles de inventario
     PicInv.Visible = True
@@ -2145,7 +2145,7 @@ End Sub
 Private Sub Label7_Click()
     Call Audio.PlayWave(SND_CLICK)
 
-    InvEqu.Picture = LoadPicture(DirGraficos & "Skins\" & SkinSeleccionado & "\Centrohechizos.jpg")
+    InvEqu.Picture = LoadPicture(path(Graficos) & "Skins\" & SkinSeleccionado & "\Centrohechizos.jpg")
     
     ' Activo controles de hechizos
     hlst.Visible = True

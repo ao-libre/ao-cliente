@@ -31,6 +31,24 @@ Begin VB.Form frmConnect
    ScaleWidth      =   800
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
+   Begin VB.CheckBox chkRecordar 
+      BackColor       =   &H80000000&
+      Caption         =   "Recordar Cuenta"
+      BeginProperty Font 
+         Name            =   "Times New Roman"
+         Size            =   12
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   255
+      Left            =   5040
+      TabIndex        =   18
+      Top             =   4440
+      Width           =   2055
+   End
    Begin VB.Timer tEfectos 
       Left            =   1680
       Top             =   1080
@@ -552,6 +570,10 @@ Private Fuerza As Double
 
 Public LastButtonPressed As clsGraphicalButton
 
+Private Lector As clsIniManager
+
+Private Const AES_PASSWD As String = "tumamaentanga"
+
 Private Function RefreshServerList() As String
 '***************************************************
 'Author: Recox
@@ -631,7 +653,19 @@ Private Sub btnTeclas_Click()
 End Sub
 
 Private Sub btnVerForo_Click()
-    Call ShellExecute(0, "Open", "https://www.reddit.com/r/argentumonlineoficial/", "", App.path, SW_SHOWNORMAL)
+    Call ShellExecute(0, "Open", "https://www.reddit.com/r/argentumonlineoficial/", vbNullString, App.path, SW_SHOWNORMAL)
+End Sub
+
+Private Sub chkRecordar_Click()
+    If Me.chkRecordar.Value = vbUnchecked Then
+        Call WriteVar(path(INIT) & "Config.ini", "Login", "Remember", 0)
+        Call WriteVar(path(INIT) & "Config.ini", "Login", "UserName", vbNullString)
+        Call WriteVar(path(INIT) & "Config.ini", "Login", "Password", vbNullString)
+    Else
+        Call WriteVar(path(INIT) & "Config.ini", "Login", "UserName", Me.txtNombre)
+        Call WriteVar(path(INIT) & "Config.ini", "Login", "Password", Cripto.AesEncryptString(Me.txtPasswd, AES_PASSWD))
+        Call WriteVar(path(INIT) & "Config.ini", "Login", "Remember", 1)
+    End If
 End Sub
 
 Private Sub Form_Activate()
@@ -644,9 +678,17 @@ Private Sub Form_Activate()
         PortTxt = PuertoDelServidor
     End If
     
+    Set Lector = New clsIniManager
+    Lector.Initialize (path(INIT) & "Config.ini")
+    
+    If Lector.GetValue("LOGIN", "Remember") = 1 Then
+        Me.txtNombre = Lector.GetValue("LOGIN", "UserName")
+        Me.txtPasswd = Cripto.AesDecryptString(Lector.GetValue("LOGIN", "Password"), AES_PASSWD)
+        Me.chkRecordar.Value = 1
+    End If
+    
     Call GetPostsFromReddit
 End Sub
-
 
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
     If KeyCode = 27 Then
@@ -863,7 +905,7 @@ On Error Resume Next
     Dim JsonObject As Object
     Dim Endpoint As String
     
-    Endpoint = GetVar(App.path & "\INIT\Config.ini", "Parameters", "SubRedditEndpoint")
+    Endpoint = GetVar(path(INIT) & "Config.ini", "Parameters", "SubRedditEndpoint")
     ResponseReddit = InetReddit.OpenURL(Endpoint)
     Set JsonObject = JSON.parse(ResponseReddit)
     

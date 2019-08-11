@@ -287,7 +287,7 @@ Private Sub Form_Load()
 
     
     'Cargamos la interfase
-    Me.Picture = LoadPicture(DirGraficos & "ventanacomercio.jpg")
+    Me.Picture = LoadPicture(Path(Graficos) & "ventanacomercio.jpg")
     
     Call LoadButtons
     
@@ -296,7 +296,7 @@ End Sub
 Private Sub LoadButtons()
     Dim GrhPath As String
     
-    GrhPath = DirGraficos
+    GrhPath = Path(Graficos)
 
     Set cBotonVender = New clsGraphicalButton
     Set cBotonComprar = New clsGraphicalButton
@@ -410,7 +410,7 @@ Private Sub picInvNpc_Click()
     ClickNpcInv = True
     InvComUsu.DeselectItem
     
-    Label1(0).Caption = NPCInventory(ItemSlot).Name
+    Label1(0).Caption = NPCInventory(ItemSlot).name
     Label1(1).Caption = "Precio: " & CalculateSellPrice(NPCInventory(ItemSlot).Valor, Val(cantidad.Text)) 'No mostramos numeros reales
     
     If NPCInventory(ItemSlot).Amount <> 0 Then

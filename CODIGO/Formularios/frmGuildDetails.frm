@@ -274,7 +274,7 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
-    Me.Picture = LoadPicture(App.path & "\graficos\VentanaCodex.jpg")
+    Me.Picture = LoadPicture(App.Path & "\graficos\VentanaCodex.jpg")
     
     Call LoadButtons
 End Sub
@@ -282,7 +282,7 @@ End Sub
 Private Sub LoadButtons()
     Dim GrhPath As String
     
-    GrhPath = DirGraficos
+    GrhPath = Path(Graficos)
 
     Set cBotonConfirmar = New clsGraphicalButton
     Set cBotonSalir = New clsGraphicalButton
@@ -341,12 +341,12 @@ Private Sub imgSalir_Click()
     Unload Me
 End Sub
 
-Private Sub txtCodex1_Change(Index As Integer)
-    If Len(txtCodex1.Item(Index).Text) > MAX_CODEX_LENGTH Then _
-        txtCodex1.Item(Index).Text = Left$(txtCodex1.Item(Index).Text, MAX_CODEX_LENGTH)
+Private Sub txtCodex1_Change(index As Integer)
+    If Len(txtCodex1.Item(index).Text) > MAX_CODEX_LENGTH Then _
+        txtCodex1.Item(index).Text = Left$(txtCodex1.Item(index).Text, MAX_CODEX_LENGTH)
 End Sub
 
-Private Sub txtCodex1_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub txtCodex1_MouseMove(index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
 End Sub
 

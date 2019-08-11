@@ -492,7 +492,7 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
-    Me.Picture = LoadPicture(App.path & "\graficos\VentanaDetallesClan.jpg")
+    Me.Picture = LoadPicture(App.Path & "\graficos\VentanaDetallesClan.jpg")
     
     Call LoadButtons
     
@@ -501,7 +501,7 @@ End Sub
 Private Sub LoadButtons()
     Dim GrhPath As String
     
-    GrhPath = DirGraficos
+    GrhPath = Path(Graficos)
 
     Set cBotonGuerra = New clsGraphicalButton
     Set cBotonAlianza = New clsGraphicalButton
@@ -550,23 +550,23 @@ Private Sub imgCerrar_Click()
 End Sub
 
 Private Sub imgDeclararGuerra_Click()
-    Call WriteGuildDeclareWar(nombre.Caption)
+    Call WriteGuildDeclareWar(Nombre.Caption)
     Unload Me
 End Sub
 
 Private Sub imgOfrecerAlianza_Click()
-    frmCommet.nombre = nombre.Caption
+    frmCommet.Nombre = Nombre.Caption
     frmCommet.T = TIPO.ALIANZA
     Call frmCommet.Show(vbModal, frmGuildBrief)
 End Sub
 
 Private Sub imgOfrecerPaz_Click()
-    frmCommet.nombre = nombre.Caption
+    frmCommet.Nombre = Nombre.Caption
     frmCommet.T = TIPO.PAZ
     Call frmCommet.Show(vbModal, frmGuildBrief)
 End Sub
 
 Private Sub imgSolicitarIngreso_Click()
-    Call frmGuildSol.RecieveSolicitud(nombre.Caption)
+    Call frmGuildSol.RecieveSolicitud(Nombre.Caption)
     Call frmGuildSol.Show(vbModal, frmGuildBrief)
 End Sub

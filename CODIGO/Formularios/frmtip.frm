@@ -118,8 +118,8 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Command1_Click()
-If frmtip.Check1.value = vbChecked Then
-    tipf = "1"
+If frmtip.Check1.Value = vbChecked Then
+    tipf = "-1"
 Else
     tipf = "0"
 End If

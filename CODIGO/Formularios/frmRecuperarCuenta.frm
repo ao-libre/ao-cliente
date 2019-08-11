@@ -111,7 +111,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Private Sub Form_Load()
-    Me.Picture = LoadPicture(DirGraficos & "VentanaRecuperarCuenta.jpg")
+    Me.Picture = LoadPicture(Path(Graficos) & "VentanaRecuperarCuenta.jpg")
     Me.lblCorreo.Caption = JsonLanguage.Item("FRM_RECUPERAR_CUENTA_LBLCORREO").Item("TEXTO")
     Me.lblPass.Caption = JsonLanguage.Item("FRM_RECUPERAR_CUENTA_LBLPASS").Item("TEXTO")
     Me.cmdProcesar.Caption = JsonLanguage.Item("FRM_RECUPERAR_CUENTA_CMDENVIAR").Item("TEXTO")

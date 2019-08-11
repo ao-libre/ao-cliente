@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "Richtx32.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
 Begin VB.Form frmComerciarUsu 
    BorderStyle     =   0  'None
    ClientHeight    =   8850
@@ -282,7 +282,7 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y A
 End Sub
 
 Private Sub imgAceptar_Click()
-    If Not cBotonAceptar.IsEnabled Then Exit Sub  ' Deshabilitado
+    If Not cBotonAceptar.isEnabled Then Exit Sub  ' Deshabilitado
     
     Call WriteUserCommerceOk
     HabilitarAceptarRechazar False
@@ -379,7 +379,7 @@ Private Sub imgCancelar_Click()
 End Sub
 
 Private Sub imgConfirmar_Click()
-    If Not cBotonConfirmar.IsEnabled Then Exit Sub  ' Deshabilitado
+    If Not cBotonConfirmar.isEnabled Then Exit Sub  ' Deshabilitado
     
     HabilitarConfirmar False
     imgAgregar.Visible = False
@@ -467,7 +467,7 @@ Private Sub imgQuitar_Click()
 End Sub
 
 Private Sub imgRechazar_Click()
-    If Not cBotonRechazar.IsEnabled Then Exit Sub  ' Deshabilitado
+    If Not cBotonRechazar.isEnabled Then Exit Sub  ' Deshabilitado
     
     Call WriteUserCommerceReject
 End Sub
@@ -477,7 +477,7 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
 
-    Me.Picture = LoadPicture(DirGraficos & "VentanaComercioUsuario.jpg")
+    Me.Picture = LoadPicture(Path(Graficos) & "VentanaComercioUsuario.jpg")
     
     LoadButtons
     
@@ -491,7 +491,7 @@ End Sub
 Private Sub LoadButtons()
 
     Dim GrhPath As String
-    GrhPath = DirGraficos
+    GrhPath = Path(Graficos)
     
     Set cBotonAceptar = New clsGraphicalButton
     Set cBotonConfirmar = New clsGraphicalButton

@@ -328,7 +328,7 @@ Private Sub Form_Load()
     clsFormulario.Initialize Me
 
     'Cargamos la interfase
-    Me.Picture = LoadPicture(App.path & "\Graficos\Boveda.jpg")
+    Me.Picture = LoadPicture(App.Path & "\Graficos\Boveda.jpg")
     
     Call LoadButtons
     
@@ -338,7 +338,7 @@ Private Sub LoadButtons()
 
     Dim GrhPath As String
     
-    GrhPath = DirGraficos
+    GrhPath = Path(Graficos)
     'CmdMoverBov(1).Picture = LoadPicture(App.path & "\Graficos\FlechaSubirObjeto.jpg")
     'CmdMoverBov(0).Picture = LoadPicture(App.path & "\Graficos\FlechaBajarObjeto.jpg")
     
@@ -362,15 +362,15 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y A
     Call LastButtonPressed.ToggleToNormal
 End Sub
 
-Private Sub Image1_Click(Index As Integer)
+Private Sub Image1_Click(index As Integer)
     
     Call Audio.PlayWave(SND_CLICK)
     
-    If InvBanco(Index).SelectedItem = 0 Then Exit Sub
+    If InvBanco(index).SelectedItem = 0 Then Exit Sub
     
     If Not IsNumeric(cantidad.Text) Then Exit Sub
     
-    Select Case Index
+    Select Case index
         Case 0
             LastIndex1 = InvBanco(0).SelectedItem
             LasActionBuy = True
@@ -397,18 +397,18 @@ Private Sub PicBancoInv_Click()
 
     If InvBanco(0).SelectedItem <> 0 Then
         With UserBancoInventory(InvBanco(0).SelectedItem)
-            Label1(0).Caption = .Name
+            Label1(0).Caption = .name
             
             Select Case .OBJType
                 Case 2, 32
-                    Label1(1).Caption = "Max " & JsonLanguage.item("GOLPE").item("TEXTO") & ":" & .MaxHit
-                    Label1(2).Caption = "Min " & JsonLanguage.item("GOLPE").item("TEXTO") & ":" & .MinHit
+                    Label1(1).Caption = "Max " & JsonLanguage.Item("GOLPE").Item("TEXTO") & ":" & .MaxHit
+                    Label1(2).Caption = "Min " & JsonLanguage.Item("GOLPE").Item("TEXTO") & ":" & .MinHit
                     Label1(1).Visible = True
                     Label1(2).Visible = True
                     
                 Case 3, 16, 17
-                    Label1(1).Caption = "Max " & JsonLanguage.item("DEFENSA").item("TEXTO") & ":" & .MaxDef
-                    Label1(2).Caption = "Min " & JsonLanguage.item("DEFENSA").item("TEXTO") & ":" & .MinDef
+                    Label1(1).Caption = "Max " & JsonLanguage.Item("DEFENSA").Item("TEXTO") & ":" & .MaxDef
+                    Label1(2).Caption = "Min " & JsonLanguage.Item("DEFENSA").Item("TEXTO") & ":" & .MinDef
                     Label1(1).Visible = True
                     Label1(2).Visible = True
                     
@@ -440,14 +440,14 @@ Private Sub PicInv_Click()
             
             Select Case .OBJType(InvBanco(1).SelectedItem)
                 Case eObjType.otWeapon, eObjType.otFlechas
-                    Label1(1).Caption = "Max " & JsonLanguage.item("GOLPE").item("TEXTO") & ":" & .MaxHit(InvBanco(1).SelectedItem)
-                    Label1(2).Caption = "Min " & JsonLanguage.item("GOLPE").item("TEXTO") & ":" & .MinHit(InvBanco(1).SelectedItem)
+                    Label1(1).Caption = "Max " & JsonLanguage.Item("GOLPE").Item("TEXTO") & ":" & .MaxHit(InvBanco(1).SelectedItem)
+                    Label1(2).Caption = "Min " & JsonLanguage.Item("GOLPE").Item("TEXTO") & ":" & .MinHit(InvBanco(1).SelectedItem)
                     Label1(1).Visible = True
                     Label1(2).Visible = True
                     
                 Case eObjType.otcasco, eObjType.otArmadura, eObjType.otescudo ' 3, 16, 17
-                    Label1(1).Caption = "Max " & JsonLanguage.item("DEFENSA").item("TEXTO") & ":" & .MaxDef(InvBanco(1).SelectedItem)
-                    Label1(2).Caption = "Min " & JsonLanguage.item("DEFENSA").item("TEXTO") & ":" & .MinDef(InvBanco(1).SelectedItem)
+                    Label1(1).Caption = "Max " & JsonLanguage.Item("DEFENSA").Item("TEXTO") & ":" & .MaxDef(InvBanco(1).SelectedItem)
+                    Label1(2).Caption = "Min " & JsonLanguage.Item("DEFENSA").Item("TEXTO") & ":" & .MinDef(InvBanco(1).SelectedItem)
                     Label1(1).Visible = True
                     Label1(2).Visible = True
                     

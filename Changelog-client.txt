@@ -1,4 +1,4 @@
----------------------------------------
+﻿---------------------------------------
 ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
 ---------------------------------------
 
@@ -447,3 +447,10 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 23/05/2019: Uso de la API de Windows para conectarse al servidor. Créditos a Dr. GoDKeR. (jopiortiz)
 * 20/07/2019: Texto del daño deja de depender de los FPS y se suavizó la animación (Wyr0X)
 * 24/07/2019: Fix nombres descentrados + fix emojis en nombres (Wyr0X)
+* 07/05/2019: Ahora se puede elegir entre cargar los graficos comprimidos [Graphics.AO] o descomprimidos [*.bmp/*.png] mediante Properties -> Compiler Flags-> Compression = 0/1 (jopiortiz)
+* 08/05/2019: Nuevo mini-mapa mas simple. (jopiortiz)
+* 08/05/2019: Mejoras en el sistema de skins. (RecoX)
+* 09/05/2019: Carga y guardado de las configuraciones del cliente mediante clsIniManger. (jopiortiz)
+	      Eliminados Inicio.con, AO.dat y Ver.bin (jopiortiz)
+	      Recordar contraseña con encriptacion. (jopiortiz)
+              Nueva funcion que devuelve los paths del cliente [Path(PathType)]. DEJEN DE USAR App.path & "\BLA-BLA-BLA\"

@@ -312,7 +312,7 @@ Private Sub cmdSkinsComboBox_Click()
 'Last Modification: 01/04/2019
 '08/11/2019: Recox - Seteamos el skin
 '***************************************************
-    Call WriteVar(App.path & "\INIT\Config.ini", "Parameters", "SkinSelected", cmdSkinsComboBox.Text)
+    Call WriteVar(path(INIT) & "Config.ini", "Parameters", "SkinSelected", cmdSkinsComboBox.Text)
     MsgBox ("Debe reiniciar el juego aplicar el cambio de skin. Skin Seleccionado: " & cmdSkinsComboBox.Text)
 End Sub
 
@@ -485,6 +485,7 @@ Private Sub imgMsgPersonalizado_Click()
 End Sub
 
 Private Sub imgSalir_Click()
+    Call Game.GuardarConfiguracion
     Unload Me
     frmMain.SetFocus
 End Sub
@@ -506,7 +507,7 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
-    Me.Picture = LoadPicture(App.path & "\graficos\VentanaOpciones.jpg")
+    Me.Picture = LoadPicture(path(Graficos) & "VentanaOpciones.jpg")
     LoadButtons
     LoadSkinsInComboBox
     LoadLenguajesInComboBox
@@ -518,7 +519,7 @@ End Sub
 
 Private Sub LoadSkinsInComboBox()
     Dim sFileName As String
-    sFileName = Dir(DirGraficos & "\Skins\", vbDirectory)
+    sFileName = Dir(path(Graficos) & "\Skins\", vbDirectory)
     
     Do While sFileName > ""
         cmdSkinsComboBox.AddItem (sFileName)
@@ -546,7 +547,7 @@ End Sub
 Private Sub LoadButtons()
     Dim GrhPath As String
     
-    GrhPath = DirGraficos
+    GrhPath = path(Graficos)
 
     Set cBotonConfigTeclas = New clsGraphicalButton
     Set cBotonMsgPersonalizado = New clsGraphicalButton

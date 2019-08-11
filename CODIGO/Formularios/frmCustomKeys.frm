@@ -636,7 +636,7 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
-    Me.Picture = LoadPicture(App.path & "\graficos\VentanaConfigurarTeclas.jpg")
+    Me.Picture = LoadPicture(App.Path & "\graficos\VentanaConfigurarTeclas.jpg")
     
     Call LoadButtons
     
@@ -653,7 +653,7 @@ End Sub
 Private Sub LoadButtons()
     Dim GrhPath As String
     
-    GrhPath = DirGraficos
+    GrhPath = Path(Graficos)
 
     Set cBotonGuardar = New clsGraphicalButton
     Set cBotonDefaultKeys = New clsGraphicalButton

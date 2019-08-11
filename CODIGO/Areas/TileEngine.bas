@@ -337,7 +337,7 @@ Sub CargarCabezas()
     Dim Miscabezas() As tIndiceCabeza
     
     N = FreeFile()
-    Open App.path & "\init\Cabezas.ind" For Binary Access Read As #N
+    Open Path(INIT) & "Cabezas.ind" For Binary Access Read As #N
     
     'cabecera
     Get #N, , MiCabecera
@@ -371,7 +371,7 @@ Sub CargarCascos()
     Dim Miscabezas() As tIndiceCabeza
     
     N = FreeFile()
-    Open App.path & "\init\Cascos.ind" For Binary Access Read As #N
+    Open Path(INIT) & "Cascos.ind" For Binary Access Read As #N
     
     'cabecera
     Get #N, , MiCabecera
@@ -404,7 +404,7 @@ Sub CargarCuerpos()
     Dim MisCuerpos() As tIndiceCuerpo
     
     N = FreeFile()
-    Open App.path & "\init\Personajes.ind" For Binary Access Read As #N
+    Open Path(INIT) & "Personajes.ind" For Binary Access Read As #N
     
     'cabecera
     Get #N, , MiCabecera
@@ -439,7 +439,7 @@ Sub CargarFxs()
     Dim NumFxs As Integer
     
     N = FreeFile()
-    Open App.path & "\init\Fxs.ind" For Binary Access Read As #N
+    Open Path(INIT) & "Fxs.ind" For Binary Access Read As #N
     
     'cabecera
     Get #N, , MiCabecera
@@ -464,7 +464,7 @@ Sub CargarTips()
     Dim NumTips As Integer
     
     N = FreeFile
-    Open App.path & "\init\Tips.ayu" For Binary Access Read As #N
+    Open Path(INIT) & "Tips.ayu" For Binary Access Read As #N
     
     'cabecera
     Get #N, , MiCabecera
@@ -488,7 +488,7 @@ Sub CargarArrayLluvia()
     Dim Nu As Integer
     
     N = FreeFile()
-    Open App.path & "\init\fk.ind" For Binary Access Read As #N
+    Open Path(INIT) & "fk.ind" For Binary Access Read As #N
     
     'cabecera
     Get #N, , MiCabecera
@@ -1404,7 +1404,7 @@ Public Function InitTileEngine(ByVal setDisplayFormhWnd As Long, ByVal setTilePi
     WindowTileHeight = Round(frmMain.MainViewPic.Height / 32, 0)
     WindowTileWidth = Round(frmMain.MainViewPic.Width / 32, 0)
     
-    IniPath = App.path & "\Init\"
+    IniPath = Path(INIT)
     HalfWindowTileHeight = WindowTileHeight \ 2
     HalfWindowTileWidth = WindowTileWidth \ 2
 
@@ -1436,8 +1436,9 @@ On Error GoTo 0
 
     InitTileEngine = True
 End Function
+
 Public Sub LoadGraphics()
-    Call SurfaceDB.Initialize(DirectD3D8, App.path & "\graficos\", ClientSetup.byMemory)
+    Call SurfaceDB.Initialize(DirectD3D8, Path(Graficos), ClientSetup.byMemory)
 End Sub
 
 
@@ -1482,9 +1483,9 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Inte
         
         Call Dialogos.Render
         Call DibujarCartel
-        
-        Call DialogosClanes.Draw
-      
+
+        If ClientSetup.bGuildNews Then Call DialogosClanes.Draw
+
         ' Calculamos los FPS y los mostramos
         Call Engine_Update_FPS
 
@@ -1829,27 +1830,27 @@ End Sub
 Private Sub RenderName(ByVal CharIndex As Long, ByVal x As Integer, ByVal y As Integer, Optional ByVal Invi As Boolean = False)
     Dim Pos As Integer
     Dim line As String
-    Dim color As Long
+    Dim Color As Long
    
     With charlist(CharIndex)
             Pos = getTagPosition(.Nombre)
     
             If .priv = 0 Then
                     If .muerto Then
-                        color = D3DColorARGB(255, 220, 220, 255)
+                        Color = D3DColorARGB(255, 220, 220, 255)
                     Else
                         If .Criminal Then
-                            color = ColoresPJ(50)
+                            Color = ColoresPJ(50)
                         Else
-                            color = ColoresPJ(49)
+                            Color = ColoresPJ(49)
                         End If
                     End If
             Else
-                color = ColoresPJ(.priv)
+                Color = ColoresPJ(.priv)
             End If
     
             If Invi Then
-                color = D3DColorARGB(180, 150, 180, 220)
+                Color = D3DColorARGB(180, 150, 180, 220)
             End If
 
             'Nick
@@ -1859,6 +1860,7 @@ Private Sub RenderName(ByVal CharIndex As Long, ByVal x As Integer, ByVal y As I
             'Clan
             line = mid$(.Nombre, Pos)
             Call DrawText(x + 16, y + 45, line, color, True)
+
     End With
 End Sub
 
@@ -1911,6 +1913,7 @@ Public Sub Device_Textured_Render(ByVal x As Integer, ByVal y As Integer, ByVal 
     DirectDevice.SetTexture 0, Texture
 
     If Shadow Then
+
         temp_verts(1).x = temp_verts(1).x + (src_rect.Bottom - src_rect.Top) * 0.5
         temp_verts(1).y = temp_verts(1).y - (src_rect.Right - src_rect.Left) * 0.5
        

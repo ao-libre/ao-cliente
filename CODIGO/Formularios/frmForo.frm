@@ -252,7 +252,7 @@ Private Sub imgDejarAnuncio_Click()
 End Sub
 
 Private Sub imgDejarMsg_Click()
-    If Not cBotonDejarMsg.IsEnabled Then Exit Sub
+    If Not cBotonDejarMsg.isEnabled Then Exit Sub
     
     Dim PostStyle As Byte
     
@@ -323,7 +323,7 @@ End Sub
 Private Sub LoadButtons()
 
     Dim GrhPath As String
-    GrhPath = DirGraficos
+    GrhPath = Path(Graficos)
     
     ' Load pictures
     Set FondosListaMsg(eForumType.ieGeneral) = LoadPicture(GrhPath & "ForoGeneral.jpg")

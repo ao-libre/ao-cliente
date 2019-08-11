@@ -107,7 +107,7 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
-    Me.Picture = LoadPicture(App.path & "\graficos\VentanaFundarClan.jpg")
+    Me.Picture = LoadPicture(App.Path & "\graficos\VentanaFundarClan.jpg")
     
     Call LoadButtons
 End Sub
@@ -115,7 +115,7 @@ End Sub
 Private Sub LoadButtons()
     Dim GrhPath As String
     
-    GrhPath = DirGraficos
+    GrhPath = Path(Graficos)
 
     Set cBotonCriminal = New clsGraphicalButton
     Set cBotonCaos = New clsGraphicalButton
