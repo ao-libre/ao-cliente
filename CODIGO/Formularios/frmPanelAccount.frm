@@ -574,25 +574,22 @@ Private Sub lblName_Click(index As Integer)
 End Sub
 
 Private Sub imgConectar_Click()
-   If Len(lblAccData(Seleccionado).Caption) = 0 Then
-       MsgBox JsonLanguage.Item("ERROR_PERSONAJE_NO_SELECCIONADO").Item("TEXTO")
-       Exit Sub
-   End If
 
-   #If UsarWrench = 1 Then
-      If Not frmMain.Socket1.Connected Then
-   #Else
-      If frmMain.Winsock1.State <> sckConnected Then
-   #End If
-         MsgBox JsonLanguage.Item("ERROR_CONN_LOST").Item("TEXTO")
-         AccountName = vbNullString
-         AccountHash = vbNullString
-         NumberOfCharacters = 0
-         Unload Me
-      Else
-         UserName = lblAccData(Seleccionado).Caption
-         Call WriteLoginExistingChar
-      End If
+    If Len(lblAccData(Seleccionado).Caption) = 0 Then
+        MsgBox JsonLanguage.Item("ERROR_PERSONAJE_NO_SELECCIONADO").Item("TEXTO")
+        Exit Sub
+    End If
+
+    If Not frmMain.Client.State = sckConnected Then
+        MsgBox JsonLanguage.Item("ERROR_CONN_LOST").Item("TEXTO")
+        AccountName = vbNullString
+        AccountHash = vbNullString
+        NumberOfCharacters = 0
+        Unload Me
+    Else
+        UserName = lblAccData(Seleccionado).Caption
+        Call WriteLoginExistingChar
+    End If
 End Sub
 
 Private Sub imgCrearPersonaje_Click()

@@ -1630,25 +1630,13 @@ Private Sub ImgCrear_Click()
     
     'Clear spell list
     frmMain.hlst.Clear
-    
-    #If UsarWrench = 1 Then
-        If Not frmMain.Socket1.Connected Then
         
-    #ElseIf UsarWrench = 2 Then
-        If frmMain.Winsock1.State <> sckConnected Then
-        
-    #ElseIf UsarWrench = 3 Then
-        If Not frmMain.Client.State = sckConnected Then
-        
-    #End If
-            
-            MsgBox JsonLanguage.Item("ERROR_CONN_LOST").Item("TEXTO")
-            Unload Me
-        
-        Else
-            Call Login
-
-        End If
+    If Not frmMain.Client.State = sckConnected Then
+        MsgBox JsonLanguage.Item("ERROR_CONN_LOST").Item("TEXTO")
+        Unload Me
+    Else
+        Call Login
+    End If
     
         bShowTutorial = True
 

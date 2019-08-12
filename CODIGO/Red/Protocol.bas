@@ -348,72 +348,19 @@ Public FontTypes(20) As tFont
 Public Sub Connect(ByVal Modo As E_MODO)
     '*********************************************************************
     'Author: Jopi
-    'Conexion al servidor mediante Sockets, Winsocks o la API de Windows.
+    'Conexion al servidor mediante la API de Windows.
     '*********************************************************************
         
     'Primero lo cerramos, para evitar errores.
-    #If UsarWrench = 1 Then
-        
-        'Estamos usando Sockets...
-        With frmMain.Socket1
-            
-            If .Connected Then
-                .Disconnect
-                .Cleanup
-                DoEvents
-
-            End If
-        
-        End With
-
-    #ElseIf UsarWrench = 2 Then
-        
-        'Estamos usando Winsocks...
-        If frmMain.Winsock1.State <> sckClosed Then
-            frmMain.Winsock1.Close
-            DoEvents
-
-        End If
-    
-    #ElseIf UsarWrench = 3 Then
-        
-        'Estamos usando la API de Windows...
-        If frmMain.Client.State <> (sckClosed Or sckConnecting) Then
-            frmMain.Client.CloseSck
-            DoEvents
-        End If
-        
-    #End If
+    If frmMain.Client.State <> (sckClosed Or sckConnecting) Then
+        frmMain.Client.CloseSck
+        DoEvents
+    End If
     
     EstadoLogin = Modo
 
-    #If UsarWrench = 1 Then
-        
-        'Usamos Sockets
-        With frmMain.Socket1
-        
-            .hostname = CurServerIp
-            .RemotePort = CurServerPort
-            .Connect
-            
-            Debug.Print "Conectandose al servidor mediante: Sockets"
-        
-        End With
-        
-    #ElseIf UsarWrench = 2 Then
-        
-        'Usamos Winsocks
-        frmMain.Winsock1.Connect CurServerIp, CurServerPort
-        
-        Debug.Print "Conectandose al servidor mediante: Winsocks"
-    
-    #ElseIf UsarWrench = 3 Then
-        
-        'Usamos la API de Windows
-        frmMain.Client.Connect CurServerIp, CurServerPort
-        
-        Debug.Print "Conectandose al servidor mediante: Windows API"
-    #End If
+    'Usamos la API de Windows
+    frmMain.Client.Connect CurServerIp, CurServerPort
 
 End Sub
 
@@ -1529,17 +1476,7 @@ Private Sub HandleDisconnect()
     Call incomingData.ReadByte
     
     'Close connection
-    #If UsarWrench = 1 Then
-        frmMain.Socket1.Disconnect
-        
-    #ElseIf UsarWrench = 2 Then
-        If frmMain.Winsock1.State <> sckClosed Then _
-            frmMain.Winsock1.Close
-    
-    #ElseIf UsarWrench = 3 Then
-        If frmMain.Client.State <> sckClosed Then _
-            frmMain.Client.CloseSck
-    #End If
+    If frmMain.Client.State <> sckClosed Then frmMain.Client.CloseSck
 
     ResetAllInfo
 End Sub
@@ -3810,13 +3747,7 @@ On Error GoTo ErrHandler
     Call MsgBox(Buffer.ReadASCIIString())
     
     If frmConnect.Visible And (Not frmCrearPersonaje.Visible) Then
-#If UsarWrench = 1 Then
-        frmMain.Socket1.Disconnect
-        frmMain.Socket1.Cleanup
-#Else
-        If frmMain.Winsock1.State <> sckClosed Then _
-            frmMain.Winsock1.Close
-#End If
+        frmMain.Client.CloseSck
     End If
     
     'If we got here then packet is complete, copy data back to original queue
@@ -10441,37 +10372,10 @@ End Sub
 Private Sub SendData(ByRef sdData As String)
     
     'No enviamos nada si no estamos conectados
-    #If UsarWrench = 1 Then
-    
-        If Not frmMain.Socket1.IsWritable Then
-            'Put data back in the bytequeue
-            Call outgoingData.WriteASCIIStringFixed(sdData)
-            
-            Exit Sub
-        End If
-        
-        If Not frmMain.Socket1.Connected Then Exit Sub
-        
-    #ElseIf UsarWrench = 2 Then
-        If frmMain.Winsock1.State <> sckConnected Then Exit Sub
-        
-    #ElseIf UsarWrench = 3 Then
-        If Not frmMain.Client.State = sckConnected Then Exit Sub
-        
-    #End If
+    If Not frmMain.Client.State = sckConnected Then Exit Sub
     
     'Send data!
-    #If UsarWrench = 1 Then
-        Call frmMain.Socket1.Write(sdData, Len(sdData))
-        
-    #ElseIf UsarWrench = 2 Then
-        Call frmMain.Winsock1.SendData(sdData)
-        
-    #ElseIf UsarWrench = 3 Then
-        Call frmMain.Client.SendData(sdData)
-
-    #End If
-
+    Call frmMain.Client.SendData(sdData)
 End Sub
 
 ''

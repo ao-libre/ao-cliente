@@ -869,10 +869,6 @@ Sub Main()
         frmPres.Picture = LoadPicture(PresPath)
         frmPres.Show vbModal    'Es modal, asi que se detiene la ejecucionn de Main hasta que se desaparece
     #End If
-    
-    #If UsarWrench = 1 Then
-        frmMain.Socket1.Startup
-    #End If
 
     frmConnect.Visible = True
     
@@ -1348,24 +1344,7 @@ Public Sub CloseClient()
     EngineRun = False
     
     'Cerramos Sockets/Winsocks/WindowsAPI
-    #If UsarWrench = 1 Then
-    
-        With frmMain.Socket1
-            .Disconnect
-            .Flush
-            .Cleanup
-        End With
-        
-    #ElseIf UsarWrench = 2 Then
-        
-        frmMain.Winsock1.Close
-        
-    #ElseIf UsarWrench = 3 Then
-        
-        frmMain.Client.CloseSck
-      
-    #End If
-    
+    frmMain.Client.CloseSck
     
     'Stop tile engine
     Call Engine_DirectX8_End

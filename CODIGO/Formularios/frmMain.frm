@@ -1,7 +1,5 @@
 VERSION 5.00
 Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
-Object = "{33101C00-75C3-11CF-A8A0-444553540000}#1.0#0"; "CSWSK32.ocx"
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.ocx"
 Begin VB.Form frmMain 
    BorderStyle     =   0  'None
    ClientHeight    =   8985
@@ -32,38 +30,6 @@ Begin VB.Form frmMain
    ScaleWidth      =   800
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
-   Begin SocketWrenchCtrl.Socket Socket1 
-      Left            =   6720
-      Top             =   2520
-      _Version        =   65536
-      _ExtentX        =   741
-      _ExtentY        =   741
-      _StockProps     =   0
-      AutoResolve     =   0   'False
-      Backlog         =   1
-      Binary          =   -1  'True
-      Blocking        =   0   'False
-      Broadcast       =   0   'False
-      BufferSize      =   10240
-      HostAddress     =   ""
-      HostFile        =   ""
-      HostName        =   ""
-      InLine          =   0   'False
-      Interval        =   0
-      KeepAlive       =   0   'False
-      Library         =   ""
-      Linger          =   0
-      LocalPort       =   0
-      LocalService    =   ""
-      Protocol        =   0
-      RemotePort      =   0
-      RemoteService   =   ""
-      ReuseAddress    =   0   'False
-      Route           =   -1  'True
-      Timeout         =   10000
-      Type            =   1
-      Urgent          =   0   'False
-   End
    Begin VB.PictureBox MiniMapa 
       AutoRedraw      =   -1  'True
       Height          =   1500
@@ -200,13 +166,6 @@ Begin VB.Form frmMain
       Top             =   8520
       Visible         =   0   'False
       Width           =   8250
-   End
-   Begin MSWinsockLib.Winsock Winsock1 
-      Left            =   6120
-      Top             =   2520
-      _ExtentX        =   741
-      _ExtentY        =   741
-      _Version        =   393216
    End
    Begin VB.Timer Second 
       Enabled         =   0   'False
@@ -2295,92 +2254,6 @@ Private Sub SendCMSTXT_Change()
     End If
 End Sub
 
-
-''''''''''''''''''''''''''''''''''''''
-'     SOCKET1                        '
-''''''''''''''''''''''''''''''''''''''
-#If UsarWrench = 1 Then
-
-Private Sub Socket1_Connect()
-    
-    'Clean input and output buffers
-    Call incomingData.ReadASCIIStringFixed(incomingData.Length)
-    Call outgoingData.ReadASCIIStringFixed(outgoingData.Length)
-    
-    Second.Enabled = True
-
-    Select Case EstadoLogin
-        Case E_MODO.CrearNuevoPj
-            Call Login
-        
-        Case E_MODO.Normal
-            Call Login
-        
-        Case E_MODO.Dados
-            Call Audio.PlayMIDI("7.mid")
-            frmCrearPersonaje.Show
-        
-        Case E_MODO.CrearCuenta
-            Call Audio.PlayMIDI("7.mid")
-            frmCrearCuenta.Show
-            
-        Case E_MODO.CambiarContrasena
-            Call Audio.PlayMIDI("7.mid")
-            frmRecuperarCuenta.Show
-            
-    End Select
-End Sub
-
-Private Sub Socket1_Disconnect()
-    
-    Debug.Print "Cerrando Sockets..."
-    
-    ResetAllInfo
-    Socket1.Cleanup
-    
-End Sub
-
-Private Sub Socket1_LastError(ErrorCode As Integer, ErrorString As String, Response As Integer)
-    '*********************************************
-    'Handle socket errors
-    '*********************************************
-    Select Case ErrorCode
-        Case eSockError.TOO_FAST 'jajasAJ CUALQUEIRA AJJAJA
-            Call MsgBox(JsonLanguage.Item("ERROR_WINSOCK_TOO-FAST").Item("TEXTO"), vbApplicationModal + vbInformation + vbOKOnly + vbDefaultButton1, JsonLanguage.Item("ERROR").Item("TEXTO"))
-            Exit Sub
-        Case eSockError.REFUSED 'Vivan las negradas
-            Call MsgBox(JsonLanguage.Item("ERROR_WINSOCK_REFUSED").Item("TEXTO"), vbApplicationModal + vbInformation + vbOKOnly + vbDefaultButton1, JsonLanguage.Item("ERROR").Item("TEXTO"))
-        Case eSockError.TIME_OUT
-            Call MsgBox(JsonLanguage.Item("ERROR_WINSOCK_TIME-OUT").Item("TEXTO"), vbApplicationModal + vbInformation + vbOKOnly + vbDefaultButton1, JsonLanguage.Item("ERROR").Item("TEXTO"))
-        Case Else
-            Call MsgBox(ErrorString, vbApplicationModal + vbInformation + vbOKOnly + vbDefaultButton1, JsonLanguage.Item("ERROR").Item("TEXTO"))
-    End Select
-    
-    frmConnect.MousePointer = 1
-    Response = 0
-
-    frmMain.Socket1.Disconnect
-End Sub
-
-Private Sub Socket1_Read(dataLength As Integer, IsUrgent As Integer)
-    Dim RD As String
-    Dim data() As Byte
-    
-    Call Socket1.Read(RD, dataLength)
-    data = StrConv(RD, vbFromUnicode)
-    
-    If LenB(RD) = 0 Then Exit Sub
-    
-    'Put data in the buffer
-    Call incomingData.WriteBlock(data)
-    
-    'Send buffer to Handle data
-    Call HandleIncomingData
-End Sub
-
-
-#End If
-
 Private Sub AbrirMenuViewPort()
 #If (ConMenuseConextuales = 1) Then
 
@@ -2443,137 +2316,9 @@ Case 1 'Menu del ViewPort del engine
 End Select
 End Sub
 
-
 Private Sub SonidosMapas_Timer()
     Sonidos.ReproducirSonidosDeMapas
 End Sub
-
-'
-' -------------------
-'    W I N S O C K
-' -------------------
-'
-
-#If UsarWrench <> 1 Then
-
-Private Sub Winsock1_Close()
-    Dim i As Long
-    
-    Debug.Print "Cerrando Winsock..."
-    
-    Second.Enabled = False
-    Connected = False
-    
-    If Winsock1.State <> sckClosed Then _
-        Winsock1.Close
-    
-    frmConnect.MousePointer = vbNormal
-    
-    Do While i < Forms.Count - 1
-        i = i + 1
-        
-        If Forms(i).name <> Me.name And Forms(i).name <> frmConnect.name And Forms(i).name <> frmCrearPersonaje.name Then
-            Unload Forms(i)
-        End If
-    Loop
-    On Local Error GoTo 0
-    
-    If Not frmCrearPersonaje.Visible Then
-        frmConnect.Visible = True
-    End If
-    
-    frmMain.Visible = False
-
-    pausa = False
-    UserMeditar = False
-
-    UserClase = 0
-    UserSexo = 0
-    UserRaza = 0
-    UserHogar = 0
-    UserEmail = vbNullString
-    
-    For i = 1 To NUMSKILLS
-        UserSkills(i) = 0
-    Next i
-
-    For i = 1 To NUMATRIBUTOS
-        UserAtributos(i) = 0
-    Next i
-
-    SkillPoints = 0
-    Alocados = 0
-
-    Dialogos.RemoveAllDialogs
-End Sub
-
-Private Sub Winsock1_Connect()
-
-    'Clean input and output buffers
-    Call incomingData.ReadASCIIStringFixed(incomingData.Length)
-    Call outgoingData.ReadASCIIStringFixed(outgoingData.Length)
-    
-    Second.Enabled = True
-    
-    Select Case EstadoLogin
-        Case E_MODO.CrearNuevoPj
-            Call Login
-
-        Case E_MODO.Normal
-            Call Login
-        
-        Case E_MODO.CrearCuenta
-            Call Audio.PlayMIDI("7.mid")
-            frmCrearCuenta.Show
-
-        Case E_MODO.Dados
-            Call Audio.PlayMIDI("7.mid")
-            frmCrearPersonaje.Show
-            
-        Case E_MODO.CambiarContrasena
-            Call Audio.PlayMIDI("7.mid")
-            frmRecuperarCuenta.Show
-        
-    End Select
-End Sub
-
-Private Sub Winsock1_DataArrival(ByVal bytesTotal As Long)
-    Dim RD As String
-    Dim data() As Byte
-    
-    'Socket1.Read RD, DataLength
-    Winsock1.GetData RD
-    
-    data = StrConv(RD, vbFromUnicode)
-    
-    'Set data in the buffer
-    Call incomingData.WriteBlock(data)
-    
-    'Send buffer to Handle data
-    Call HandleIncomingData
-End Sub
-
-Private Sub Winsock1_Error(ByVal number As Integer, Description As String, ByVal sCode As Long, ByVal source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
-    '*********************************************
-    'Handle socket errors
-    '*********************************************
-    
-    Call MsgBox(Description, vbApplicationModal + vbInformation + vbOKOnly + vbDefaultButton1, JsonLanguage.Item("Error").Item("TEXTO"))
-    frmConnect.MousePointer = 1
-    Second.Enabled = False
-
-    If Winsock1.State <> sckClosed Then _
-        Winsock1.Close
-
-    If Not frmCrearPersonaje.Visible Then
-        frmConnect.Show
-    Else
-        frmCrearPersonaje.MousePointer = 0
-    End If
-End Sub
-#End If
-
-#If UsarWrench = 3 Then
  
 ''''''''''''''''''''''''''''''''''''''
 '     WINDOWS API                            '
