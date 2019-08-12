@@ -1591,7 +1591,7 @@ End Sub
 
 Private Sub lblCerrar_Click()
     Call Audio.PlayWave(SND_CLICK)
-    frmCerrar.Show vbModal
+    frmCerrar.Show vbModal, Me
 End Sub
 
 Private Sub lblMinimizar_Click()
