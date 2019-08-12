@@ -703,13 +703,20 @@ On Error Resume Next
     Dim JsonObject As Object
     Dim Response As String
     
+    Set Inet = New clsInet
+    
     URL = GetVar(path(INIT) & "Config.ini", "Parameters", "IpApiEndpoint")
     Endpoint = URL & Ip & "/json/"
     
-    Response = frmConnect.InetIpApi.OpenURL(Endpoint)
+    Response = Inet.OpenRequest(Endpoint, "GET")
+    Response = Inet.Execute
+    Response = Inet.GetResponseAsString
+    
     Set JsonObject = JSON.parse(Response)
     
     GetCountryFromIp = JsonObject.Item("country")
+    
+    Set Inet = Nothing
 End Function
 
 Public Sub CargarServidores()
@@ -1072,10 +1079,11 @@ Private Sub LoadInitialConfig()
                             JsonLanguage.Item("BIENVENIDO").Item("COLOR").Item(2), _
                             JsonLanguage.Item("BIENVENIDO").Item("COLOR").Item(3), _
                             True, False, True)
+                            
+    '###################
+    ' PETICIONES API
+    Call GetPostsFromReddit
 
-    'Give the user enough time to read the welcome text
-    Call Sleep(500)
-    
     Unload frmCargando
     
 End Sub
@@ -1676,3 +1684,41 @@ Function EaseOutCubic(Time As Double)
     Time = Time - 1
     EaseOutCubic = Time * Time * Time + 1
 End Function
+
+Private Sub GetPostsFromReddit()
+On Error Resume Next
+    
+    Set Inet = New clsInet
+    
+    Dim ResponseReddit As String
+    Dim JsonObject As Object
+    Dim Endpoint As String
+    
+    Endpoint = GetVar(path(INIT) & "Config.ini", "Parameters", "SubRedditEndpoint")
+    ResponseReddit = Inet.OpenRequest(Endpoint, "GET")
+    ResponseReddit = Inet.Execute
+    ResponseReddit = Inet.GetResponseAsString
+    
+    Set JsonObject = JSON.parse(ResponseReddit)
+    
+    Dim qtyPostsOnReddit As Integer: qtyPostsOnReddit = JsonObject.Item("data").Item("children").Count
+    
+    ReDim Posts(qtyPostsOnReddit)
+    
+    'Clear lstRedditPosts before populate it again to prevent repeated values.
+    frmConnect.lstRedditPosts.Clear
+    
+    'Long funciona mas rapido en los loops que Integer
+    Dim i As Long
+    i = 1
+    Do While i <= qtyPostsOnReddit
+        Posts(i).Title = JsonObject.Item("data").Item("children").Item(i).Item("data").Item("title")
+        Posts(i).URL = JsonObject.Item("data").Item("children").Item(i).Item("data").Item("url")
+        
+        frmConnect.lstRedditPosts.AddItem JsonObject.Item("data").Item("children").Item(i).Item("data").Item("title")
+        
+        i = i + 1
+    Loop
+    
+    Set Inet = Nothing
+End Sub

@@ -1,7 +1,6 @@
 Type=Exe
 Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#..\..\..\..\..\Windows\SysWOW64\stdole2.tlb#OLE Automation
 Reference=*\G{00025E01-0000-0000-C000-000000000046}#4.0#0#..\..\..\..\..\Program Files (x86)\Common Files\Microsoft Shared\DAO\DAO350.DLL#Microsoft DAO 3.51 Object Library
-Object={EAB22AC0-30C1-11CF-A7EB-0000C05BAE0B}#1.1#0; ieframe.dll
 Reference=*\G{E1211242-8E94-11D1-8808-00C04FC2C603}#1.0#0#..\..\..\..\..\Windows\SysWow64\DX8VB.DLL#DirectX 8 for Visual Basic Type Library
 Reference=*\G{00000205-0000-0010-8000-00AA006D2EA4}#2.5#0#..\..\..\..\..\Program Files (x86)\Common Files\System\ado\msado25.tlb#Microsoft ActiveX Data Objects 2.5 Library
 Reference=*\G{7C0FFAB0-CD84-11D0-949A-00A0C91110ED}#1.0#0#..\..\..\..\..\Windows\SysWOW64\msdatsrc.tlb#Microsoft Data Source Interfaces for ActiveX Data Binding Type Library
@@ -121,6 +120,7 @@ UserControl=CODIGO\uControls\uAOProgress\uAOProgress.ctl
 UserControl=CODIGO\uControls\uAOCheckbox\uAOCheckbox.ctl
 Module=Cripto; CODIGO\Aplicacion\Cripto.bas
 Class=clsIniManager; CODIGO\IO\clsIniManager.cls
+Class=clsInet; CODIGO\Red\clsInet.cls
 IconForm="frmMain"
 Startup="Sub Main"
 HelpFile=""

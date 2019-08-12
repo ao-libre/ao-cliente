@@ -1,5 +1,4 @@
 VERSION 5.00
-Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.OCX"
 Begin VB.Form frmConnect 
    BackColor       =   &H00E0E0E0&
    BorderStyle     =   0  'None
@@ -72,20 +71,6 @@ Begin VB.Form frmConnect
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-   End
-   Begin InetCtlsObjects.Inet InetIpApi 
-      Left            =   840
-      Top             =   1080
-      _ExtentX        =   1005
-      _ExtentY        =   1005
-      _Version        =   393216
-   End
-   Begin InetCtlsObjects.Inet InetReddit 
-      Left            =   120
-      Top             =   1080
-      _ExtentX        =   1005
-      _ExtentY        =   1005
-      _Version        =   393216
    End
    Begin VB.ListBox lstRedditPosts 
       Appearance      =   0  'Flat
@@ -698,8 +683,6 @@ Private Sub Form_Activate()
         Me.txtPasswd = Cripto.AesDecryptString(Lector.GetValue("LOGIN", "Password"), AES_PASSWD)
         Me.chkRecordar.Checked = True
     End If
-    
-    Call GetPostsFromReddit
 End Sub
 
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
@@ -905,37 +888,6 @@ End Sub
 
 Private Sub txtPasswd_KeyPress(KeyAscii As Integer)
     If KeyAscii = vbKeyReturn Then btnConectarse_Click
-End Sub
-
-Private Sub GetPostsFromReddit()
-On Error Resume Next
-
-    Dim ResponseReddit As String
-    Dim JsonObject As Object
-    Dim Endpoint As String
-    
-    Endpoint = GetVar(path(INIT) & "Config.ini", "Parameters", "SubRedditEndpoint")
-    ResponseReddit = InetReddit.OpenURL(Endpoint)
-    Set JsonObject = JSON.parse(ResponseReddit)
-    
-    Dim qtyPostsOnReddit As Integer
-    qtyPostsOnReddit = JsonObject.Item("data").Item("children").Count
-    ReDim Posts(qtyPostsOnReddit)
-    
-    'Clear lstRedditPosts before populate it again to prevent repeated values.
-    lstRedditPosts.Clear
-    
-    'Long funciona mas rapido en los loops que Integer
-    Dim i As Long
-    i = 1
-    Do While i <= qtyPostsOnReddit
-        Posts(i).Title = JsonObject.Item("data").Item("children").Item(i).Item("data").Item("title")
-        Posts(i).URL = JsonObject.Item("data").Item("children").Item(i).Item("data").Item("url")
-        
-        lstRedditPosts.AddItem JsonObject.Item("data").Item("children").Item(i).Item("data").Item("title")
-        
-        i = i + 1
-    Loop
 End Sub
 
 Private Sub btnCrearCuenta_Click()
