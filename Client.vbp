@@ -6,7 +6,6 @@ Reference=*\G{00000205-0000-0010-8000-00AA006D2EA4}#2.5#0#..\..\..\..\..\Program
 Reference=*\G{7C0FFAB0-CD84-11D0-949A-00A0C91110ED}#1.0#0#..\..\..\..\..\Windows\SysWOW64\msdatsrc.tlb#Microsoft Data Source Interfaces for ActiveX Data Binding Type Library
 Reference=*\G{420B2830-E718-11CF-893D-00A0C9054228}#1.0#0#..\..\..\..\..\Windows\SysWOW64\scrrun.dll#Microsoft Scripting Runtime
 Object={3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0; RICHTX32.OCX
-Object={48E59290-9880-11CF-9754-00AA00C00908}#1.0#0; MSINET.ocx
 Object={831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0; MSCOMCTL.OCX
 Form=CODIGO\Formularios\frmCantidad.frm
 Form=CODIGO\Formularios\frmCargando.frm
