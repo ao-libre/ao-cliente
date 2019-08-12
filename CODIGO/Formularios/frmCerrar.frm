@@ -14,7 +14,7 @@ Begin VB.Form frmCerrar
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   335
    ShowInTaskbar   =   0   'False
-   StartUpPosition =   2  'CenterScreen
+   StartUpPosition =   1  'CenterOwner
    Begin AOLibre.uAOButton cRegresar 
       Height          =   615
       Left            =   360
