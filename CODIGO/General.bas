@@ -1637,9 +1637,14 @@ On Error GoTo Error
     Dim strData As String
     Dim f As Integer
     
-    strData = frmCargando.Inet1.OpenURL(myURL)
+    Set Inet = New clsInet
     
-    If frmCargando.Inet1.ResponseCode <> 0 Then GoTo errorinet
+    strData = Inet.OpenRequest(myURL, "GET")
+    strData = Inet.Execute
+    strData = Inet.GetResponseAsString
+    
+    If strData = "False" Then GoTo errorinet
+    
     f = FreeFile
     
     If LenB(strData) <> 0 Then
@@ -1655,7 +1660,7 @@ Error:
     Call MsgBox(JsonLanguage.Item("ERROR_DESCARGA_SERVIDORES").Item("TEXTO") & ": " & Err.Description, vbCritical + vbOKOnly, "Argentum Online")
     Exit Sub
 errorinet:
-    Call MsgBox(JsonLanguage.Item("ERROR_DESCARGA_SERVIDORES_INET").Item("TEXTO") & " " & frmCargando.Inet1.ResponseCode, vbCritical + vbOKOnly, "Argentum Online")
+    Call MsgBox(JsonLanguage.Item("ERROR_DESCARGA_SERVIDORES_INET").Item("TEXTO") & " " & Err.Description, vbCritical + vbOKOnly, "Argentum Online")
     frmCargando.NoInternetConnection = True
 End Sub
 
@@ -1664,7 +1669,7 @@ Function EaseOutCubic(Time As Double)
     EaseOutCubic = Time * Time * Time + 1
 End Function
 
-Private Sub GetPostsFromReddit()
+Public Sub GetPostsFromReddit()
 On Error Resume Next
     
     Set Inet = New clsInet

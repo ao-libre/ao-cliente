@@ -1,6 +1,5 @@
 VERSION 5.00
 Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
-Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.ocx"
 Begin VB.Form frmCargando 
    AutoRedraw      =   -1  'True
    BackColor       =   &H80000000&
@@ -32,7 +31,6 @@ Begin VB.Form frmCargando
       _ExtentY        =   3360
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmCargando.frx":0000
@@ -57,13 +55,6 @@ Begin VB.Form frmCargando
       TabIndex        =   0
       Top             =   240
       Width           =   9600
-      Begin InetCtlsObjects.Inet Inet1 
-         Left            =   3000
-         Top             =   2640
-         _ExtentX        =   1005
-         _ExtentY        =   1005
-         _Version        =   393216
-      End
    End
 End
 Attribute VB_Name = "frmCargando"
@@ -109,8 +100,8 @@ Public NoInternetConnection As Boolean
 
 Private Sub Form_Load()
     Me.Analizar
-    Me.Picture = LoadPicture(Path(Graficos) & "VentanaCargando.jpg")
-    LOGO.Picture = LoadPicture(Path(Graficos) & "ImagenCargando.jpg")
+    Me.Picture = LoadPicture(path(Graficos) & "VentanaCargando.jpg")
+    LOGO.Picture = LoadPicture(path(Graficos) & "ImagenCargando.jpg")
 End Sub
 
 Private Sub LOGO_KeyPress(KeyAscii As Integer)
@@ -135,26 +126,31 @@ On Error Resume Next
            
     If Not isLastVersion = True Then
         If MsgBox("Tu version no es la actual, Deseas ejecutar el actualizador?.", vbYesNo) = vbYes Then
-            binaryFileToOpen = GetVar(Path(INIT) & "Config.ini", "Launcher", "fileToOpen")
-            Call ShellExecute(Me.hWnd, "open", App.Path & binaryFileToOpen, "", "", 1)
+            binaryFileToOpen = GetVar(path(INIT) & "Config.ini", "Launcher", "fileToOpen")
+            Call ShellExecute(Me.hWnd, "open", App.path & binaryFileToOpen, "", "", 1)
             End
         End If
     End If
 End Function
 
 Private Function CheckIfRunningLastVersion() As Boolean
-On Error GoTo errorinet
+    On Error GoTo errorinet
     Dim responseGithub As String, versionNumberMaster As String, versionNumberLocal As String
-    Dim JsonObject As Object
-
-    responseGithub = Inet1.OpenURL("https://api.github.com/repos/ao-libre/ao-cliente/releases/latest")
-
-    If Inet1.ResponseCode <> 0 Then GoTo errorinet
-
+    Dim JsonObject     As Object
+    
+    Set Inet = New clsInet
+    
+    responseGithub = Inet.OpenRequest("https://api.github.com/repos/ao-libre/ao-cliente/releases/latest", "GET")
+    responseGithub = Inet.Execute
+    responseGithub = Inet.GetResponseAsString
+    
+    If responseGithub = "False" Then GoTo errorinet
+    
     Set JsonObject = JSON.parse(responseGithub)
     
     versionNumberMaster = JsonObject.Item("tag_name")
-    versionNumberLocal = GetVar(Path(INIT) & "Config.ini", "Cliente", "VersionTagRelease")
+    versionNumberLocal = GetVar(path(INIT) & "Config.ini", "Cliente", "VersionTagRelease")
+
     If versionNumberMaster = versionNumberLocal Then
         CheckIfRunningLastVersion = True
     Else
@@ -164,6 +160,6 @@ On Error GoTo errorinet
     Exit Function
 
 errorinet:
-    Call MsgBox("Error al comprobar version del launcher/Error verification version of launcher " & frmCargando.Inet1.ResponseCode, vbCritical + vbOKOnly, "Argentum Online")
+    Call MsgBox("Error al comprobar version del launcher/Error verification version of launcher", vbCritical + vbOKOnly, "Argentum Online")
     frmCargando.NoInternetConnection = True
 End Function

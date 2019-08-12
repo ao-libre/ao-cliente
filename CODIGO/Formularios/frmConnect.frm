@@ -675,6 +675,10 @@ Private Sub Form_Activate()
         PortTxt = PuertoDelServidor
     End If
     
+    If Me.lstRedditPosts.ListCount = 0 Then
+        Call GetPostsFromReddit
+    End If
+    
     Set Lector = New clsIniManager
     Lector.Initialize (path(INIT) & "Config.ini")
     

@@ -606,7 +606,7 @@ Private Sub imgCrearPersonaje_Click()
 End Sub
 
 Private Sub imgSalir_Click()
-   frmMain.Socket1.Disconnect
+   frmMain.Client.CloseSck
    Unload Me
    frmConnect.Show
 End Sub
