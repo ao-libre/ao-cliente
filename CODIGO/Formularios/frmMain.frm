@@ -2444,7 +2444,6 @@ Private Sub Client_Error(ByVal number As Integer, Description As String, ByVal s
     End If
  
 End Sub
-#End If
 
 Private Function InGameArea() As Boolean
 '***************************************************
