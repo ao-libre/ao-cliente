@@ -1582,7 +1582,18 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             
             Case "/PING"
                 Call WritePing
-            
+                
+            Case "/RETOS"
+                Call FrmRetos.Show(vbModeless, frmMain)
+                
+            Case "/ACEPTAR"
+                If notNullArguments Then
+                    Call WriteFightAccept(ArgumentosRaw)
+                Else
+                    'Avisar que falta el parametro
+                    Call ShowConsoleMsg("Faltan parámetros. Utilice /ACEPTAR NICKNAME.")
+                End If
+                
             Case "/QUEST"
                 Call WriteQuest
  

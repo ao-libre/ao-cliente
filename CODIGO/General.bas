@@ -1516,6 +1516,7 @@ Public Sub ResetAllInfo()
     UserParalizado = False
     Traveling = False
     UserNavegando = False
+    UserEvento = False
     bFogata = False
     bRain = False
     bFogata = False
@@ -1565,11 +1566,11 @@ Public Sub ResetAllInfo()
 
 End Sub
 
-Public Function DevolverNombreHechizo(ByVal index As Byte) As String
+Public Function DevolverNombreHechizo(ByVal Index As Byte) As String
 Dim i As Long
  
     For i = 1 To NumHechizos
-        If i = index Then
+        If i = Index Then
             DevolverNombreHechizo = Hechizos(i).Nombre
             Exit Function
         End If

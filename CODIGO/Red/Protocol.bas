@@ -169,6 +169,7 @@ Private Enum ServerPacketID
     QuestDetails
     QuestListSend
     CreateDamage
+    UserInEvent
 End Enum
 
 Private Enum ClientPacketID
@@ -317,6 +318,8 @@ Private Enum ClientPacketID
     QuestDetailsRequest = 143
     QuestAbandon = 144
     CambiarContrasena = 145
+    FightSend = 146
+    FightAccept = 147
 End Enum
 
 Public Enum FontTypeNames
@@ -516,6 +519,8 @@ On Error Resume Next
     Debug.Print Packet
     
     Select Case Packet
+
+            
         Case ServerPacketID.logged                  ' LOGGED
             Call HandleLogged
         
@@ -855,7 +860,9 @@ On Error Resume Next
             
         Case ServerPacketID.CreateDamage            ' CDMG
             Call HandleCreateDamage
-            
+    
+        Case ServerPacketID.UserInEvent
+            Call HandleUserInEvent
         Case Else
             'ERROR : Abort!
             Exit Sub
@@ -1562,7 +1569,7 @@ Private Sub HandleCommerceInit()
                 Call InvComNpc.SetItem(i, .ObjIndex, _
                 .Amount, 0, .GrhIndex, _
                 .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, _
-                .Valor, .name)
+                .Valor, .Name)
             End With
         End If
     Next i
@@ -1608,7 +1615,7 @@ Private Sub HandleBankInit()
             Call InvBanco(0).SetItem(i, .ObjIndex, _
                 .Amount, .Equipped, .GrhIndex, _
                 .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, _
-                .Valor, .name)
+                .Valor, .Name)
         End With
     Next i
     
@@ -2039,7 +2046,7 @@ Private Sub HandleChangeMap()
 'For now we just drop it
     Call incomingData.ReadInteger
     
-    If FileExist(Path(Mapas) & "Mapa" & UserMap & ".map", vbNormal) Then
+    If FileExist(path(Mapas) & "Mapa" & UserMap & ".map", vbNormal) Then
         Call SwitchMap(UserMap)
         If bRain And bLluvia(UserMap) = 0 Then
                 Call Audio.StopWave(RainBufferIndex)
@@ -2123,15 +2130,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
 
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
     
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
 
 ''
@@ -2204,15 +2211,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
 
 ''
@@ -2282,15 +2289,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
 
 ''
@@ -2358,15 +2365,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
 
 ''
@@ -2398,15 +2405,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
 
 ''
@@ -2543,15 +2550,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
 
 Private Sub HandleCharacterChangeNick()
@@ -2908,15 +2915,15 @@ On Error GoTo ErrHandler
     End With
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
 
 ''
@@ -3135,7 +3142,7 @@ On Error GoTo ErrHandler
     
     Dim slot As Byte
     Dim ObjIndex As Integer
-    Dim name As String
+    Dim Name As String
     Dim Amount As Integer
     Dim Equipped As Boolean
     Dim GrhIndex As Integer
@@ -3148,7 +3155,7 @@ On Error GoTo ErrHandler
     
     slot = Buffer.ReadByte()
     ObjIndex = Buffer.ReadInteger()
-    name = Buffer.ReadASCIIString()
+    Name = Buffer.ReadASCIIString()
     Amount = Buffer.ReadInteger()
     Equipped = Buffer.ReadBoolean()
     GrhIndex = Buffer.ReadInteger()
@@ -3191,21 +3198,21 @@ On Error GoTo ErrHandler
         End Select
     End If
     
-    Call Inventario.SetItem(slot, ObjIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, name)
+    Call Inventario.SetItem(slot, ObjIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, Name)
 
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
 
 ' Handles the AddSlots message.
@@ -3302,7 +3309,7 @@ On Error GoTo ErrHandler
     
     With UserBancoInventory(slot)
         .ObjIndex = Buffer.ReadInteger()
-        .name = Buffer.ReadASCIIString()
+        .Name = Buffer.ReadASCIIString()
         .Amount = Buffer.ReadInteger()
         .GrhIndex = Buffer.ReadInteger()
         .OBJType = Buffer.ReadByte()
@@ -3315,7 +3322,7 @@ On Error GoTo ErrHandler
         If Comerciando Then
             Call InvBanco(0).SetItem(slot, .ObjIndex, .Amount, _
                 .Equipped, .GrhIndex, .OBJType, .MaxHit, _
-                .MinHit, .MaxDef, .MinDef, .Valor, .name)
+                .MinHit, .MaxDef, .MinDef, .Valor, .Name)
         End If
     End With
     
@@ -3323,15 +3330,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
 
 ''
@@ -3376,15 +3383,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
  
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
  
     'Destroy auxiliar buffer
     Set Buffer = Nothing
  
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
 
 ''
@@ -3460,7 +3467,7 @@ On Error GoTo ErrHandler
     
     For i = 1 To Count
         With ArmasHerrero(i)
-            .name = Buffer.ReadASCIIString()    'Get the object's name
+            .Name = Buffer.ReadASCIIString()    'Get the object's name
             .GrhIndex = Buffer.ReadInteger()
             .LinH = Buffer.ReadInteger()        'The iron needed
             .LinP = Buffer.ReadInteger()        'The silver needed
@@ -3494,10 +3501,10 @@ On Error GoTo ErrHandler
                 
                         ReDim Preserve HerreroMejorar(j) As tItemsConstruibles
                         
-                        HerreroMejorar(j).name = .name
+                        HerreroMejorar(j).Name = .Name
                         HerreroMejorar(j).GrhIndex = .GrhIndex
                         HerreroMejorar(j).ObjIndex = .ObjIndex
-                        HerreroMejorar(j).UpgradeName = ArmasHerrero(k).name
+                        HerreroMejorar(j).UpgradeName = ArmasHerrero(k).Name
                         HerreroMejorar(j).UpgradeGrhIndex = ArmasHerrero(k).GrhIndex
                         HerreroMejorar(j).LinH = ArmasHerrero(k).LinH - .LinH * 0.85
                         HerreroMejorar(j).LinP = ArmasHerrero(k).LinP - .LinP * 0.85
@@ -3514,15 +3521,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
 
 ''
@@ -3558,7 +3565,7 @@ On Error GoTo ErrHandler
     
     For i = 1 To Count
         With ArmadurasHerrero(i)
-            .name = Buffer.ReadASCIIString()    'Get the object's name
+            .Name = Buffer.ReadASCIIString()    'Get the object's name
             .GrhIndex = Buffer.ReadInteger()
             .LinH = Buffer.ReadInteger()        'The iron needed
             .LinP = Buffer.ReadInteger()        'The silver needed
@@ -3579,10 +3586,10 @@ On Error GoTo ErrHandler
                 
                         ReDim Preserve HerreroMejorar(j) As tItemsConstruibles
                         
-                        HerreroMejorar(j).name = .name
+                        HerreroMejorar(j).Name = .Name
                         HerreroMejorar(j).GrhIndex = .GrhIndex
                         HerreroMejorar(j).ObjIndex = .ObjIndex
-                        HerreroMejorar(j).UpgradeName = ArmadurasHerrero(k).name
+                        HerreroMejorar(j).UpgradeName = ArmadurasHerrero(k).Name
                         HerreroMejorar(j).UpgradeGrhIndex = ArmadurasHerrero(k).GrhIndex
                         HerreroMejorar(j).LinH = ArmadurasHerrero(k).LinH - .LinH * 0.85
                         HerreroMejorar(j).LinP = ArmadurasHerrero(k).LinP - .LinP * 0.85
@@ -3599,15 +3606,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
 
 ''
@@ -3644,7 +3651,7 @@ On Error GoTo ErrHandler
     
     For i = 1 To Count
         With ObjCarpintero(i)
-            .name = Buffer.ReadASCIIString()        'Get the object's name
+            .Name = Buffer.ReadASCIIString()        'Get the object's name
             .GrhIndex = Buffer.ReadInteger()
             .Madera = Buffer.ReadInteger()          'The wood needed
             .MaderaElfica = Buffer.ReadInteger()    'The elfic wood needed
@@ -3677,10 +3684,10 @@ On Error GoTo ErrHandler
                 
                         ReDim Preserve CarpinteroMejorar(j) As tItemsConstruibles
                         
-                        CarpinteroMejorar(j).name = .name
+                        CarpinteroMejorar(j).Name = .Name
                         CarpinteroMejorar(j).GrhIndex = .GrhIndex
                         CarpinteroMejorar(j).ObjIndex = .ObjIndex
-                        CarpinteroMejorar(j).UpgradeName = ObjCarpintero(k).name
+                        CarpinteroMejorar(j).UpgradeName = ObjCarpintero(k).Name
                         CarpinteroMejorar(j).UpgradeGrhIndex = ObjCarpintero(k).GrhIndex
                         CarpinteroMejorar(j).Madera = ObjCarpintero(k).Madera - .Madera * 0.85
                         CarpinteroMejorar(j).MaderaElfica = ObjCarpintero(k).MaderaElfica - .MaderaElfica * 0.85
@@ -3696,15 +3703,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
 
 ''
@@ -3754,15 +3761,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
 
 ''
@@ -3826,15 +3833,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
 
 ''
@@ -3863,7 +3870,7 @@ On Error GoTo ErrHandler
     slot = Buffer.ReadByte()
     
     With NPCInventory(slot)
-        .name = Buffer.ReadASCIIString()
+        .Name = Buffer.ReadASCIIString()
         .Amount = Buffer.ReadInteger()
         .Valor = Buffer.ReadSingle()
         .GrhIndex = Buffer.ReadInteger()
@@ -3879,15 +3886,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
 
 ''
@@ -4056,15 +4063,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
 
 ''
@@ -4258,15 +4265,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
 
 ''
@@ -4323,15 +4330,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
 
 ''
@@ -4362,15 +4369,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
 
 ''
@@ -4413,15 +4420,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
 
 ''
@@ -4474,15 +4481,15 @@ Private Sub HandlePeaceProposalsList()
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 
     On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
@@ -4574,15 +4581,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
 
 ''
@@ -4662,15 +4669,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
 
 ''
@@ -4736,15 +4743,15 @@ On Error GoTo ErrHandler
     frmGuildBrief.Show vbModeless, frmMain
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
 
 ''
@@ -4822,15 +4829,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
 
 ''
@@ -4872,7 +4879,7 @@ Private Sub HandleTradeOK()
                     Call InvComNpc.SetItem(i, .ObjIndex, _
                     .Amount, 0, .GrhIndex, _
                     .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, _
-                    .Valor, .name)
+                    .Valor, .Name)
                 End With
             ' Compraron o vendieron cierta cantidad (no su totalidad)
             ElseIf NPCInventory(i).Amount <> InvComNpc.Amount(i) Then
@@ -4965,15 +4972,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
 
 ''
@@ -5035,15 +5042,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
 
 ''
@@ -5085,15 +5092,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
 
 ''
@@ -5135,15 +5142,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
 
 ''
@@ -5188,15 +5195,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
 
 
@@ -5230,15 +5237,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
 
 ''
@@ -5299,15 +5306,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
 
 ''
@@ -5392,15 +5399,15 @@ On Error GoTo ErrHandler
     End With
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
 
 ''
@@ -5450,15 +5457,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
 
 ''
@@ -6126,13 +6133,13 @@ End Sub
 ' @param    codex   Array of all rules of the guild.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCreateNewGuild(ByVal Desc As String, ByVal name As String, ByVal Site As String, ByRef Codex() As String)
+Public Sub WriteCreateNewGuild(ByVal Desc As String, ByVal Name As String, ByVal Site As String, ByRef Codex() As String)
 '***************************************************
 'Author: Juan Martin Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
 'Writes the "CreateNewGuild" message to the outgoing data buffer
 '***************************************************
-    Dim Temp As String
+    Dim temp As String
     Dim i As Long
     Dim Lower_codex As Long, Upper_codex As Long
     
@@ -6140,20 +6147,20 @@ Public Sub WriteCreateNewGuild(ByVal Desc As String, ByVal name As String, ByVal
         Call .WriteByte(ClientPacketID.CreateNewGuild)
         
         Call .WriteASCIIString(Desc)
-        Call .WriteASCIIString(name)
+        Call .WriteASCIIString(Name)
         Call .WriteASCIIString(Site)
         
         Lower_codex = LBound(Codex())
         Upper_codex = UBound(Codex())
         
         For i = Lower_codex To Upper_codex
-            Temp = Temp & Codex(i) & SEPARATOR
+            temp = temp & Codex(i) & SEPARATOR
         Next i
         
-        If Len(Temp) Then _
-            Temp = Left$(Temp, Len(Temp) - 1)
+        If Len(temp) Then _
+            temp = Left$(temp, Len(temp) - 1)
         
-        Call .WriteASCIIString(Temp)
+        Call .WriteASCIIString(temp)
     End With
 End Sub
 
@@ -6399,7 +6406,7 @@ Public Sub WriteClanCodexUpdate(ByVal Desc As String, ByRef Codex() As String)
 'Last Modification: 05/17/06
 'Writes the "ClanCodexUpdate" message to the outgoing data buffer
 '***************************************************
-    Dim Temp As String
+    Dim temp As String
     Dim i As Long
     Dim Lower_codex As Long, Upper_codex As Long
     
@@ -6412,13 +6419,13 @@ Public Sub WriteClanCodexUpdate(ByVal Desc As String, ByRef Codex() As String)
         Upper_codex = UBound(Codex())
         
         For i = Lower_codex To Upper_codex
-            Temp = Temp & Codex(i) & SEPARATOR
+            temp = temp & Codex(i) & SEPARATOR
         Next i
         
-        If Len(Temp) Then _
-            Temp = Left$(Temp, Len(Temp) - 1)
+        If Len(temp) Then _
+            temp = Left$(temp, Len(temp) - 1)
         
-        Call .WriteASCIIString(Temp)
+        Call .WriteASCIIString(temp)
     End With
 End Sub
 
@@ -10558,15 +10565,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
 
 ''
@@ -10634,15 +10641,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
 
 
@@ -10974,15 +10981,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
     
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
  
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
  
 Public Sub HandleQuestListSend()
@@ -11034,15 +11041,15 @@ On Error GoTo ErrHandler
     Call incomingData.CopyBuffer(Buffer)
  
 ErrHandler:
-    Dim error As Long
-    error = Err.number
+    Dim Error As Long
+    Error = Err.number
 On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
  
-    If error <> 0 Then _
-        Err.Raise error
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
  
 Public Sub WriteQuestListRequest()
@@ -11094,3 +11101,29 @@ Public Sub WriteCambiarContrasena()
     End With
 
 End Sub
+Private Sub HandleUserInEvent()
+    Call incomingData.ReadByte
+    
+    UserEvento = Not UserEvento
+End Sub
+
+
+Public Sub WriteFightSend(ByVal ListUser As String, ByVal GldRequired As Long)
+    
+    With outgoingData
+        Call .WriteByte(ClientPacketID.FightSend)
+        Call .WriteASCIIString(ListUser)
+        Call .WriteLong(GldRequired)
+    End With
+    
+End Sub
+
+Public Sub WriteFightAccept(ByVal UserName As String)
+    
+    With outgoingData
+        Call .WriteByte(ClientPacketID.FightAccept)
+        Call .WriteASCIIString(UserName)
+    End With
+    
+End Sub
+
