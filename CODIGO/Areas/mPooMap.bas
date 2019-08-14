@@ -242,6 +242,9 @@ Function Map_LegalPos(ByVal X As Integer, ByVal Y As Integer) As Boolean
             Exit Function
 
       End If
+      
+      If UserEvento Then Exit Function
+      
     
       Map_LegalPos = True
 End Function
