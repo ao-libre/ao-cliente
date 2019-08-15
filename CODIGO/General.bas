@@ -703,13 +703,20 @@ On Error Resume Next
     Dim JsonObject As Object
     Dim Response As String
     
+    Set Inet = New clsInet
+    
     URL = GetVar(path(INIT) & "Config.ini", "Parameters", "IpApiEndpoint")
     Endpoint = URL & Ip & "/json/"
     
-    Response = frmConnect.InetIpApi.OpenURL(Endpoint)
+    Response = Inet.OpenRequest(Endpoint, "GET")
+    Response = Inet.Execute
+    Response = Inet.GetResponseAsString
+    
     Set JsonObject = JSON.parse(Response)
     
     GetCountryFromIp = JsonObject.Item("country")
+    
+    Set Inet = Nothing
 End Function
 
 Public Sub CargarServidores()
@@ -861,10 +868,6 @@ Sub Main()
         
         frmPres.Picture = LoadPicture(PresPath)
         frmPres.Show vbModal    'Es modal, asi que se detiene la ejecucionn de Main hasta que se desaparece
-    #End If
-    
-    #If UsarWrench = 1 Then
-        frmMain.Socket1.Startup
     #End If
 
     frmConnect.Visible = True
@@ -1072,10 +1075,11 @@ Private Sub LoadInitialConfig()
                             JsonLanguage.Item("BIENVENIDO").Item("COLOR").Item(2), _
                             JsonLanguage.Item("BIENVENIDO").Item("COLOR").Item(3), _
                             True, False, True)
+                            
+    '###################
+    ' PETICIONES API
+    Call GetPostsFromReddit
 
-    'Give the user enough time to read the welcome text
-    Call Sleep(500)
-    
     Unload frmCargando
     
 End Sub
@@ -1340,24 +1344,7 @@ Public Sub CloseClient()
     EngineRun = False
     
     'Cerramos Sockets/Winsocks/WindowsAPI
-    #If UsarWrench = 1 Then
-    
-        With frmMain.Socket1
-            .Disconnect
-            .Flush
-            .Cleanup
-        End With
-        
-    #ElseIf UsarWrench = 2 Then
-        
-        frmMain.Winsock1.Close
-        
-    #ElseIf UsarWrench = 3 Then
-        
-        frmMain.Client.CloseSck
-      
-    #End If
-    
+    frmMain.Client.CloseSck
     
     'Stop tile engine
     Call Engine_DirectX8_End
@@ -1651,9 +1638,14 @@ On Error GoTo Error
     Dim strData As String
     Dim f As Integer
     
-    strData = frmCargando.Inet1.OpenURL(myURL)
+    Set Inet = New clsInet
     
-    If frmCargando.Inet1.ResponseCode <> 0 Then GoTo errorinet
+    strData = Inet.OpenRequest(myURL, "GET")
+    strData = Inet.Execute
+    strData = Inet.GetResponseAsString
+    
+    If strData = "False" Then GoTo errorinet
+    
     f = FreeFile
     
     If LenB(strData) <> 0 Then
@@ -1669,7 +1661,7 @@ Error:
     Call MsgBox(JsonLanguage.Item("ERROR_DESCARGA_SERVIDORES").Item("TEXTO") & ": " & Err.Description, vbCritical + vbOKOnly, "Argentum Online")
     Exit Sub
 errorinet:
-    Call MsgBox(JsonLanguage.Item("ERROR_DESCARGA_SERVIDORES_INET").Item("TEXTO") & " " & frmCargando.Inet1.ResponseCode, vbCritical + vbOKOnly, "Argentum Online")
+    Call MsgBox(JsonLanguage.Item("ERROR_DESCARGA_SERVIDORES_INET").Item("TEXTO") & " " & Err.Description, vbCritical + vbOKOnly, "Argentum Online")
     frmCargando.NoInternetConnection = True
 End Sub
 
@@ -1677,3 +1669,41 @@ Function EaseOutCubic(Time As Double)
     Time = Time - 1
     EaseOutCubic = Time * Time * Time + 1
 End Function
+
+Public Sub GetPostsFromReddit()
+On Error Resume Next
+    
+    Set Inet = New clsInet
+    
+    Dim ResponseReddit As String
+    Dim JsonObject As Object
+    Dim Endpoint As String
+    
+    Endpoint = GetVar(path(INIT) & "Config.ini", "Parameters", "SubRedditEndpoint")
+    ResponseReddit = Inet.OpenRequest(Endpoint, "GET")
+    ResponseReddit = Inet.Execute
+    ResponseReddit = Inet.GetResponseAsString
+    
+    Set JsonObject = JSON.parse(ResponseReddit)
+    
+    Dim qtyPostsOnReddit As Integer: qtyPostsOnReddit = JsonObject.Item("data").Item("children").Count
+    
+    ReDim Posts(qtyPostsOnReddit)
+    
+    'Clear lstRedditPosts before populate it again to prevent repeated values.
+    frmConnect.lstRedditPosts.Clear
+    
+    'Long funciona mas rapido en los loops que Integer
+    Dim i As Long
+    i = 1
+    Do While i <= qtyPostsOnReddit
+        Posts(i).Title = JsonObject.Item("data").Item("children").Item(i).Item("data").Item("title")
+        Posts(i).URL = JsonObject.Item("data").Item("children").Item(i).Item("data").Item("url")
+        
+        frmConnect.lstRedditPosts.AddItem JsonObject.Item("data").Item("children").Item(i).Item("data").Item("title")
+        
+        i = i + 1
+    Loop
+    
+    Set Inet = Nothing
+End Sub

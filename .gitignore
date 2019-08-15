@@ -5,6 +5,7 @@ Codigo/*.log
 *.oca
 *.csi
 *.lvw
+*.OBJ
 INIT/Inicio.con
 INIT/AO.dat
 INIT/messages.txt

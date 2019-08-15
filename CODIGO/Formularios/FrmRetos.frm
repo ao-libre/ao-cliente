@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin VB.Form FrmRetos 
    BackColor       =   &H80000008&
-   Caption         =   "Panel Retos"
+   Caption         =   "Retos"
    ClientHeight    =   4800
    ClientLeft      =   120
    ClientTop       =   465
@@ -9,8 +9,9 @@ Begin VB.Form FrmRetos
    LinkTopic       =   "Form1"
    ScaleHeight     =   4800
    ScaleWidth      =   4425
-   StartUpPosition =   2  'CenterScreen
+   StartUpPosition =   1  'CenterOwner
    Begin VB.TextBox txtCompa 
+      Alignment       =   2  'Center
       BorderStyle     =   0  'None
       BeginProperty Font 
          Name            =   "Tahoma"
@@ -30,6 +31,7 @@ Begin VB.Form FrmRetos
       Width           =   1935
    End
    Begin VB.TextBox txtCompa 
+      Alignment       =   2  'Center
       BorderStyle     =   0  'None
       BeginProperty Font 
          Name            =   "Tahoma"
@@ -49,6 +51,7 @@ Begin VB.Form FrmRetos
       Width           =   1935
    End
    Begin VB.TextBox txtOponente 
+      Alignment       =   2  'Center
       BorderStyle     =   0  'None
       BeginProperty Font 
          Name            =   "Tahoma"
@@ -68,6 +71,7 @@ Begin VB.Form FrmRetos
       Width           =   1935
    End
    Begin VB.TextBox txtOponente 
+      Alignment       =   2  'Center
       BorderStyle     =   0  'None
       BeginProperty Font 
          Name            =   "Tahoma"
@@ -87,6 +91,7 @@ Begin VB.Form FrmRetos
       Width           =   1935
    End
    Begin VB.TextBox txtGld 
+      Alignment       =   2  'Center
       BorderStyle     =   0  'None
       BeginProperty Font 
          Name            =   "Tahoma"
@@ -105,6 +110,7 @@ Begin VB.Form FrmRetos
       Width           =   1935
    End
    Begin VB.TextBox txtOponente 
+      Alignment       =   2  'Center
       BorderStyle     =   0  'None
       BeginProperty Font 
          Name            =   "Tahoma"

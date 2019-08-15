@@ -32,6 +32,8 @@ Attribute VB_Name = "Mod_Declaraciones"
 
 Option Explicit
 
+Public Inet As clsInet
+
 'Recuperar Cuenta mediante la API
 Public AccountMailToRecover As String
 Public AccountNewPassword As String
