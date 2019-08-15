@@ -836,13 +836,18 @@ Sub Main()
     ' Map Sounds
     Set Sonidos = New clsSoundMapas
     Call Sonidos.LoadSoundMapInfo
-       
-    #If Testeo = 0 Then
-        If FindPreviousInstance Then
-            Call MsgBox(JsonLanguage.Item("OTRO_CLIENTE_ABIERTO").Item("TEXTO"), vbApplicationModal + vbInformation + vbOKOnly, "Error al ejecutar")
-            End
-        End If
-    #End If
+    
+    
+    'Comento esto ya que nosotros si permitimos abrir mas de un cliente a la ves.
+    'Dim Testeo As String
+    'Testeo = SkinSeleccionado = GetVar(path(INIT) & "Config.ini", "Parameters", "TestMode")
+    
+    '#If Testeo = 0 Then
+    '    If FindPreviousInstance Then
+    '        Call MsgBox(JsonLanguage.Item("OTRO_CLIENTE_ABIERTO").Item("TEXTO"), vbApplicationModal + vbInformation + vbOKOnly, "Error al ejecutar")
+    '        End
+    '    End If
+    '#End If
 
     'Read command line. Do it AFTER config file is loaded to prevent this from
     'canceling the effects of "/nores" option.
@@ -862,9 +867,12 @@ Sub Main()
     ' Load constants, classes, flags, graphics..
     Call LoadInitialConfig
     
+    Dim Testeo As String
+    Testeo = GetVar(path(INIT) & "Config.ini", "Parameters", "TestMode")
+    
     #If Testeo <> 1 Then
         Dim PresPath As String
-        PresPath = DirGraficos & "Presentacion" & RandomNumber(1, 4) & ".jpg"
+        PresPath = path(Graficos) & "ImagenPresentacion.jpg"
         
         frmPres.Picture = LoadPicture(PresPath)
         frmPres.Show vbModal    'Es modal, asi que se detiene la ejecucionn de Main hasta que se desaparece

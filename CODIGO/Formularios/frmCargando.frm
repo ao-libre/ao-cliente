@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "richtx32.ocx"
 Begin VB.Form frmCargando 
    AutoRedraw      =   -1  'True
    BackColor       =   &H80000000&
@@ -31,6 +31,7 @@ Begin VB.Form frmCargando
       _ExtentY        =   3360
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmCargando.frx":0000
@@ -101,7 +102,9 @@ Public NoInternetConnection As Boolean
 Private Sub Form_Load()
     Me.Analizar
     Me.Picture = LoadPicture(path(Graficos) & "VentanaCargando.jpg")
-    LOGO.Picture = LoadPicture(path(Graficos) & "ImagenCargando.jpg")
+
+    'Solo hay 3 imagenes de cargando, cambiar 3 por el numero maximo si se quiere cambiar
+    LOGO.Picture = LoadPicture(path(Graficos) & "ImagenCargando" & RandomNumber(1, 3) & ".jpg")
 End Sub
 
 Private Sub LOGO_KeyPress(KeyAscii As Integer)

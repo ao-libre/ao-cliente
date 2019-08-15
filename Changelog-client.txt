@@ -456,3 +456,7 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 09/08/2019: Nueva funcion que devuelve los paths del cliente [Path(PathType)]. DEJEN DE USAR App.path & "\BLA-BLA-BLA\"
 * 11/08/2019: Agregada opcion de elegir idioma del juego en la ventana opciones (Recox)
 * 11/08/2019: Se cambio el checkbox de recordar password por un control de usuario de gsz-ao y se le coloco traduccion a su respectivo label. (Recox)
+* 13/08/2019: Retos 1vs1,2vs2,3vs3,nVSn (MarinoLautaro)
+		- /RETOS
+		- /ACEPTAR NICK
+* 15/08/2019: Se agrego el skin de cucsifae, se agregaron ventanas de cargando viejas y se agrego imagen de presentacion (Recox)

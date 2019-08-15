@@ -19,7 +19,7 @@ Begin VB.Form frmPres
    Begin VB.Timer Timer1 
       Interval        =   3400
       Left            =   1125
-      Top             =   1230
+      Top             =   1200
    End
 End
 Attribute VB_Name = "frmPres"
@@ -80,14 +80,9 @@ Dim PresPath As String
 ticks = ticks + 1
 
 If ticks = 1 Then
-    PresPath = Path(Graficos) & "HostingAlkon.jpg"
+    PresPath = path(Graficos) & "ImagenPresentacion.jpg"
     Me.Picture = LoadPicture(PresPath)
     puedo = True
-
-ElseIf ticks = 2 Then
-    PresPath = Path(Graficos) & "Presentacion" & RandomNumber(5, 8) & ".jpg"
-    Me.Picture = LoadPicture(PresPath)
-    
 Else
     Unload Me
 End If
