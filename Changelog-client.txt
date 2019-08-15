@@ -460,3 +460,4 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 		- /RETOS
 		- /ACEPTAR NICK
 * 15/08/2019: Se agrego el skin de cucsifae, se agregaron ventanas de cargando viejas y se agrego imagen de presentacion (Recox)
+* 16/08/2019: Se arreglo skin de AO-Libre, se puso como default el mismo (Recox)
