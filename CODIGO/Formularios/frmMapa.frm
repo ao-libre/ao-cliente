@@ -157,15 +157,15 @@ Private Sub Form_Load()
 '
 '*************************************************
 
-On Error GoTo error
+On Error GoTo Error
     
     ' Handles Form movement (drag and drop).
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
         
     'Cargamos las imagenes de los mapas
-    Set picMaps(eMaps.ieGeneral) = LoadPicture(Path(Graficos) & "mapa1.jpg")
-    Set picMaps(eMaps.ieDungeon) = LoadPicture(Path(Graficos) & "mapa2.jpg")
+    Set picMaps(eMaps.ieGeneral) = LoadPicture(Game.path(Interfaces) & "mapa1.jpg")
+    Set picMaps(eMaps.ieDungeon) = LoadPicture(Game.path(Interfaces) & "mapa2.jpg")
     
     ' Imagen de fondo
     CurrentMap = eMaps.ieGeneral
@@ -176,7 +176,7 @@ On Error GoTo error
     imgToogleMap(1).MouseIcon = picMouseIcon
     
     Exit Sub
-error:
+Error:
     MsgBox Err.Description, vbInformation, JsonLanguage.Item("ERROR").Item("TEXTO") & ": " & Err.number
     Unload Me
 End Sub
@@ -185,6 +185,6 @@ Private Sub imgCerrar_Click()
     Unload Me
 End Sub
 
-Private Sub imgToogleMap_Click(index As Integer)
+Private Sub imgToogleMap_Click(Index As Integer)
     ToggleImgMaps
 End Sub

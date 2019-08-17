@@ -167,6 +167,7 @@ On Error GoTo ErrHandler
     Dim surface_desc As D3DSURFACE_DESC
     Dim texture_info As D3DXIMAGE_INFO
     Dim data() As Byte
+    Dim Graphic As String
     
     With newSurface
         .fileIndex = fileIndex
@@ -174,11 +175,13 @@ On Error GoTo ErrHandler
         'Set last access time (if we didn't we would reckon this texture as the one lru)
         .lastAccess = GetTickCount
         
+        Graphic = Game.path(Graficos) & CStr(fileIndex)
+        
         #If Compression = 0 Then
-            If FileExist(Path(Graficos) & CStr(fileIndex) & ".bmp", vbNormal) Then
-                Set .Surface = DirectD3D.CreateTextureFromFileEx(DirectDevice, Path(Graficos) & CStr(fileIndex) & ".BMP", D3DX_DEFAULT, D3DX_DEFAULT, 0, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, &HFF000000, ByVal 0, ByVal 0)
-            ElseIf FileExist(Path(Graficos) & CStr(fileIndex) & ".png", vbNormal) Then
-                Set .Surface = DirectD3D.CreateTextureFromFileEx(DirectDevice, Path(Graficos) & CStr(fileIndex) & ".PNG", D3DX_DEFAULT, D3DX_DEFAULT, 0, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, &HFF000000, ByVal 0, ByVal 0)
+            If FileExist(Graphic & ".bmp", vbNormal) Then
+                Set .Surface = DirectD3D.CreateTextureFromFileEx(DirectDevice, Graphic & ".BMP", D3DX_DEFAULT, D3DX_DEFAULT, 0, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, &HFF000000, ByVal 0, ByVal 0)
+            ElseIf FileExist(Graphic & ".png", vbNormal) Then
+                Set .Surface = DirectD3D.CreateTextureFromFileEx(DirectDevice, Graphic & ".PNG", D3DX_DEFAULT, D3DX_DEFAULT, 0, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, &HFF000000, ByVal 0, ByVal 0)
             Else
                 MsgBox "No se ha podido cargar el grafico con indice: " & fileIndex
                 Call CloseClient
@@ -207,7 +210,7 @@ On Error GoTo ErrHandler
     End With
     
     'Update used bytes
-    usedBytes = usedBytes + surface_desc.size
+    usedBytes = usedBytes + surface_desc.Size
     
     'Check if we have exceeded our allowed share of memory usage
     Do While usedBytes > maxBytesToUse
@@ -282,7 +285,7 @@ Private Function RemoveLRU() As Boolean
         End With
         
         'Update the used bytes
-        usedBytes = usedBytes - ddsd.size
+        usedBytes = usedBytes - ddsd.Size
     End If
 End Function
 

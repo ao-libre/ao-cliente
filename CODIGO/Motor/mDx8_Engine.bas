@@ -172,7 +172,7 @@ Public Sub Engine_DirectX8_Aditional_Init()
 End Sub
 
 Public Sub Engine_Draw_Line(X1 As Single, Y1 As Single, X2 As Single, Y2 As Single, Optional Color As Long = -1, Optional Color2 As Long = -1)
-On Error GoTo error
+On Error GoTo Error
 Dim Vertex(1) As TLVERTEX
 
     Vertex(0) = Geometry_Create_TLVertex(X1, Y1, 0, 1, Color, 0, 0)
@@ -182,12 +182,12 @@ Dim Vertex(1) As TLVERTEX
     DirectDevice.DrawPrimitiveUP D3DPT_LINELIST, 1, Vertex(0), Len(Vertex(0))
 Exit Sub
 
-error:
+Error:
     'Call Log_Engine("Error in Engine_Draw_Line, " & Err.Description & " (" & Err.number & ")")
 End Sub
 
 Public Sub Engine_Draw_Point(X1 As Single, Y1 As Single, Optional Color As Long = -1)
-On Error GoTo error
+On Error GoTo Error
 Dim Vertex(0) As TLVERTEX
 
     Vertex(0) = Geometry_Create_TLVertex(X1, Y1, 0, 1, Color, 0, 0)
@@ -196,7 +196,7 @@ Dim Vertex(0) As TLVERTEX
     DirectDevice.DrawPrimitiveUP D3DPT_POINTLIST, 1, Vertex(0), Len(Vertex(0))
 Exit Sub
 
-error:
+Error:
     'Call Log_Engine("Error in Engine_Draw_Point, " & Err.Description & " (" & Err.number & ")")
 End Sub
 
@@ -305,7 +305,7 @@ Public Sub Engine_D3DColor_To_RGB_List(rgb_list() As Long, Color As D3DCOLORVALU
 'Last Modification: 14/05/10
 'Blisse-AO | Set a D3DColorValue to a RGB List
 '***************************************************
-    rgb_list(0) = D3DColorARGB(Color.a, Color.r, Color.g, Color.B)
+    rgb_list(0) = D3DColorARGB(Color.A, Color.r, Color.g, Color.B)
     rgb_list(1) = rgb_list(0)
     rgb_list(2) = rgb_list(0)
     rgb_list(3) = rgb_list(0)
@@ -336,7 +336,7 @@ Call ARGBtoD3DCOLORVALUE(rgb_list(1), TempColor)
 If Alpha > 255 Then Alpha = 255
 If Alpha < 0 Then Alpha = 0
 'seteamos el alpha
-TempColor.a = Alpha
+TempColor.A = Alpha
 'generamos el nuevo RGB_List
 Call Engine_D3DColor_To_RGB_List(tempARGB(), TempColor)
 
@@ -505,7 +505,7 @@ Public Sub Geometry_Create_Box(ByRef Verts() As TLVERTEX, ByRef dest As RECT, By
     Dim y_Cor As Single
     Dim left_point As Single
     Dim right_point As Single
-    Dim Temp As Single
+    Dim temp As Single
     
     If Angle > 0 Then
         x_center = dest.Left + (dest.Right - dest.Left) / 2
@@ -513,8 +513,8 @@ Public Sub Geometry_Create_Box(ByRef Verts() As TLVERTEX, ByRef dest As RECT, By
         
         radius = Sqr((dest.Right - x_center) ^ 2 + (dest.Bottom - y_center) ^ 2)
         
-        Temp = (dest.Right - x_center) / radius
-        right_point = Atn(Temp / Sqr(-Temp * Temp + 1))
+        temp = (dest.Right - x_center) / radius
+        right_point = Atn(temp / Sqr(-temp * temp + 1))
         left_point = 3.1459 - right_point
     End If
     
@@ -637,13 +637,13 @@ Public Sub Engine_ZoomNormal()
     
 End Sub
 
-Public Function ZoomOffset(ByVal offset As Byte) As Single
+Public Function ZoomOffset(ByVal Offset As Byte) As Single
 '**************************************************************
 'Author: Standelf
 'Last Modify Date: 30/01/2011
 '**************************************************************
 
-    ZoomOffset = IIf((offset = 1), (ScreenHeight - MainScreenRect.Bottom) / 2, (ScreenWidth - MainScreenRect.Right) / 2)
+    ZoomOffset = IIf((Offset = 1), (ScreenHeight - MainScreenRect.Bottom) / 2, (ScreenWidth - MainScreenRect.Right) / 2)
     
 End Function
 
@@ -724,26 +724,26 @@ Public Sub Engine_Update_FPS()
        ' End If
 End Sub
 
-Public Sub DrawPJ(ByVal index As Byte)
+Public Sub DrawPJ(ByVal Index As Byte)
 
-    If LenB(cPJ(index).Nombre) = 0 Then Exit Sub
+    If LenB(cPJ(Index).Nombre) = 0 Then Exit Sub
     Dim cColor As Long
-    frmPanelAccount.lblAccData(index).Caption = cPJ(index).Nombre
+    frmPanelAccount.lblAccData(Index).Caption = cPJ(Index).Nombre
     
-    ColoresFile = Path(INIT) & "colores.dat"
+    ColoresFile = Game.path(INIT) & "colores.dat"
 
-    If cPJ(index).GameMaster Then
+    If cPJ(Index).GameMaster Then
         '1 is Consejeros in Colores.dat
         cColor = RGB(GetVar(ColoresFile, "1", "R"), GetVar(ColoresFile, "1", "G"), GetVar(ColoresFile, "1", "B"))
     Else
-        If cPJ(index).Criminal Then
+        If cPJ(Index).Criminal Then
             cColor = RGB(GetVar(ColoresFile, "CR", "R"), GetVar(ColoresFile, "CR", "G"), GetVar(ColoresFile, "CR", "B"))
         Else
             cColor = RGB(GetVar(ColoresFile, "CI", "R"), GetVar(ColoresFile, "CI", "G"), GetVar(ColoresFile, "CI", "B"))
         End If
     End If
 
-    frmPanelAccount.lblAccData(index).ForeColor = cColor
+    frmPanelAccount.lblAccData(Index).ForeColor = cColor
 
     Dim init_x As Integer
     Dim init_y As Integer
@@ -764,7 +764,7 @@ Public Sub DrawPJ(ByVal index As Byte)
     Light(2) = D3DColorXRGB(255, 255, 255)
     Light(3) = D3DColorXRGB(255, 255, 255)
 
-    If cPJ(index).Race = eRaza.Humano Or cPJ(index).Race = eRaza.Elfo Or cPJ(index).Race = eRaza.ElfoOscuro Then
+    If cPJ(Index).Race = eRaza.Humano Or cPJ(Index).Race = eRaza.Elfo Or cPJ(Index).Race = eRaza.ElfoOscuro Then
         head_offset = HeadOffsetAltos
     Else
         head_offset = HeadOffsetBajos
@@ -772,29 +772,29 @@ Public Sub DrawPJ(ByVal index As Byte)
 
     Call Engine_BeginScene
 
-    If cPJ(index).Body <> 0 Then
-        Call DDrawTransGrhtoSurface(BodyData(cPJ(index).Body).Walk(3), PixelOffsetX + init_x, PixelOffsetY + init_y, 0, Light(), 0, init_x, init_y)
+    If cPJ(Index).Body <> 0 Then
+        Call DDrawTransGrhtoSurface(BodyData(cPJ(Index).Body).Walk(3), PixelOffsetX + init_x, PixelOffsetY + init_y, 0, Light(), 0, init_x, init_y)
     End If
 
-    If cPJ(index).Dead Then
+    If cPJ(Index).Dead Then
         Call DDrawTransGrhtoSurface(HeadData(eCabezas.CASPER_HEAD).Head(3), PixelOffsetX + init_x + 4, PixelOffsetY + init_y + head_offset, 0, Light(), 0, init_x, init_y)
     Else
-        If cPJ(index).Head <> 0 Then
-            Call DDrawTransGrhtoSurface(HeadData(cPJ(index).Head).Head(3), PixelOffsetX + init_x + 4, PixelOffsetY + init_y + head_offset, 0, Light(), 0, init_x, init_y)
+        If cPJ(Index).Head <> 0 Then
+            Call DDrawTransGrhtoSurface(HeadData(cPJ(Index).Head).Head(3), PixelOffsetX + init_x + 4, PixelOffsetY + init_y + head_offset, 0, Light(), 0, init_x, init_y)
         End If
     End If
 
-    If cPJ(index).helmet <> 0 Then
-        Call DDrawTransGrhtoSurface(CascoAnimData(cPJ(index).helmet).Head(3), PixelOffsetX + init_x + 4, PixelOffsetY + init_y + head_offset, 0, Light(), 0, init_x, init_y)
+    If cPJ(Index).helmet <> 0 Then
+        Call DDrawTransGrhtoSurface(CascoAnimData(cPJ(Index).helmet).Head(3), PixelOffsetX + init_x + 4, PixelOffsetY + init_y + head_offset, 0, Light(), 0, init_x, init_y)
     End If
      
-    If cPJ(index).weapon <> 0 Then
-        Call DDrawTransGrhtoSurface(WeaponAnimData(cPJ(index).weapon).WeaponWalk(3), PixelOffsetX + init_x, PixelOffsetY + init_y, 0, Light(), 0, init_x, init_y)
+    If cPJ(Index).weapon <> 0 Then
+        Call DDrawTransGrhtoSurface(WeaponAnimData(cPJ(Index).weapon).WeaponWalk(3), PixelOffsetX + init_x, PixelOffsetY + init_y, 0, Light(), 0, init_x, init_y)
     End If
      
-    If cPJ(index).shield <> 0 Then
-        Call DDrawTransGrhtoSurface(ShieldAnimData(cPJ(index).shield).ShieldWalk(3), PixelOffsetX + init_x, PixelOffsetY + init_y, 0, Light(), 0, init_x, init_y)
+    If cPJ(Index).shield <> 0 Then
+        Call DDrawTransGrhtoSurface(ShieldAnimData(cPJ(Index).shield).ShieldWalk(3), PixelOffsetX + init_x, PixelOffsetY + init_y, 0, Light(), 0, init_x, init_y)
     End If
 
-    Engine_EndScene re, frmPanelAccount.picChar(index - 1).hWnd
+    Engine_EndScene re, frmPanelAccount.picChar(Index - 1).hWnd
 End Sub

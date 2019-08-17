@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "Richtx32.ocx"
 Begin VB.Form frmMain 
    BorderStyle     =   0  'None
    ClientHeight    =   8985
@@ -190,6 +190,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2619
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -240,10 +241,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":3B0E9
-      PICF            =   "frmMain.frx":3BB13
-      PICH            =   "frmMain.frx":3C7D5
-      PICV            =   "frmMain.frx":3D767
+      PICE            =   "frmMain.frx":3B0E7
+      PICF            =   "frmMain.frx":3BB11
+      PICH            =   "frmMain.frx":3C7D3
+      PICV            =   "frmMain.frx":3D765
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -266,10 +267,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":3E669
-      PICF            =   "frmMain.frx":3F093
-      PICH            =   "frmMain.frx":3FD55
-      PICV            =   "frmMain.frx":40CE7
+      PICE            =   "frmMain.frx":3E667
+      PICF            =   "frmMain.frx":3F091
+      PICH            =   "frmMain.frx":3FD53
+      PICV            =   "frmMain.frx":40CE5
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -292,10 +293,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":41BE9
-      PICF            =   "frmMain.frx":42613
-      PICH            =   "frmMain.frx":432D5
-      PICV            =   "frmMain.frx":44267
+      PICE            =   "frmMain.frx":41BE7
+      PICF            =   "frmMain.frx":42611
+      PICH            =   "frmMain.frx":432D3
+      PICV            =   "frmMain.frx":44265
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -318,10 +319,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":45169
-      PICF            =   "frmMain.frx":45B93
-      PICH            =   "frmMain.frx":46855
-      PICV            =   "frmMain.frx":477E7
+      PICE            =   "frmMain.frx":45167
+      PICF            =   "frmMain.frx":45B91
+      PICH            =   "frmMain.frx":46853
+      PICV            =   "frmMain.frx":477E5
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -344,10 +345,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":486E9
-      PICF            =   "frmMain.frx":49113
-      PICH            =   "frmMain.frx":49DD5
-      PICV            =   "frmMain.frx":4AD67
+      PICE            =   "frmMain.frx":486E7
+      PICF            =   "frmMain.frx":49111
+      PICH            =   "frmMain.frx":49DD3
+      PICV            =   "frmMain.frx":4AD65
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -370,10 +371,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":4BC69
-      PICF            =   "frmMain.frx":4C693
-      PICH            =   "frmMain.frx":4D355
-      PICV            =   "frmMain.frx":4E2E7
+      PICE            =   "frmMain.frx":4BC67
+      PICF            =   "frmMain.frx":4C691
+      PICH            =   "frmMain.frx":4D353
+      PICV            =   "frmMain.frx":4E2E5
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -396,10 +397,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":4F1E9
-      PICF            =   "frmMain.frx":4FC13
-      PICH            =   "frmMain.frx":508D5
-      PICV            =   "frmMain.frx":51867
+      PICE            =   "frmMain.frx":4F1E7
+      PICF            =   "frmMain.frx":4FC11
+      PICH            =   "frmMain.frx":508D3
+      PICV            =   "frmMain.frx":51865
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -422,10 +423,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":52769
-      PICF            =   "frmMain.frx":53193
-      PICH            =   "frmMain.frx":53E55
-      PICV            =   "frmMain.frx":54DE7
+      PICE            =   "frmMain.frx":52767
+      PICF            =   "frmMain.frx":53191
+      PICH            =   "frmMain.frx":53E53
+      PICV            =   "frmMain.frx":54DE5
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   15.75
@@ -448,10 +449,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":55CE9
-      PICF            =   "frmMain.frx":56713
-      PICH            =   "frmMain.frx":573D5
-      PICV            =   "frmMain.frx":58367
+      PICE            =   "frmMain.frx":55CE7
+      PICF            =   "frmMain.frx":56711
+      PICH            =   "frmMain.frx":573D3
+      PICV            =   "frmMain.frx":58365
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   15.75
@@ -544,9 +545,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   0
       Left            =   11430
-      MouseIcon       =   "frmMain.frx":59269
+      MouseIcon       =   "frmMain.frx":59267
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":593BB
+      Picture         =   "frmMain.frx":593B9
       Top             =   3480
       Visible         =   0   'False
       Width           =   225
@@ -555,9 +556,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   1
       Left            =   11430
-      MouseIcon       =   "frmMain.frx":596FF
+      MouseIcon       =   "frmMain.frx":596FD
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":59851
+      Picture         =   "frmMain.frx":5984F
       Top             =   3225
       Visible         =   0   'False
       Width           =   225
@@ -1097,7 +1098,7 @@ Call Protocol.WriteMoveItem(originalSlot, newSlot, eMoveType.Inventory)
 End Sub
 
 Private Sub Form_Load()
-    SkinSeleccionado = GetVar(path(INIT) & "Config.ini", "Parameters", "SkinSelected")
+    SkinSeleccionado = GetVar(Game.path(INIT) & "Config.ini", "Parameters", "SkinSelected")
     
     If Not ResolucionCambiada Then
         ' Handles Form movement (drag and drop).
@@ -1105,14 +1106,14 @@ Private Sub Form_Load()
         clsFormulario.Initialize Me, 120
     End If
     
-    InvEqu.Picture = LoadPicture(path(Graficos) & "Skins\" & SkinSeleccionado & "\CentroInventario.jpg")
+    InvEqu.Picture = LoadPicture(Game.path(Skins) & SkinSeleccionado & "\CentroInventario.jpg")
     
     Call LoadButtons
     
     Set dragInventory = Inventario
     
     With Me
-        .Picture = LoadPicture(path(Graficos) & "Skins\" & SkinSeleccionado & "\VentanaPrincipal.JPG")
+        .Picture = LoadPicture(Game.path(Skins) & SkinSeleccionado & "\VentanaPrincipal.JPG")
         .Left = 0
         .Top = 0
         .Width = 12000
@@ -1137,14 +1138,14 @@ Private Sub LoadButtons()
     
     
     Call cBotonDiamArriba.Initialize(imgInvScrollUp, "", _
-                                    path(Graficos) & "Skins\" & SkinSeleccionado & "\BotonDiamArribaF.bmp", _
-                                    path(Graficos) & "Skins\" & SkinSeleccionado & "\BotonDiamArribaF.bmp", Me)
+                                    Game.path(Skins) & SkinSeleccionado & "\BotonDiamArribaF.bmp", _
+                                    Game.path(Skins) & SkinSeleccionado & "\BotonDiamArribaF.bmp", Me)
 
     Call cBotonDiamAbajo.Initialize(imgInvScrollDown, "", _
-                                    path(Graficos) & "Skins\" & SkinSeleccionado & "\BotonDiamAbajoF.bmp", _
-                                    path(Graficos) & "Skins\" & SkinSeleccionado & "\BotonDiamAbajoF.bmp", Me)
+                                    Game.path(Skins) & SkinSeleccionado & "\BotonDiamAbajoF.bmp", _
+                                    Game.path(Skins) & SkinSeleccionado & "\BotonDiamAbajoF.bmp", Me)
 
-    Set picSkillStar = LoadPicture(path(Graficos) & "Skins\" & SkinSeleccionado & "\BotonAsignarSkills.bmp")
+    Set picSkillStar = LoadPicture(Game.path(Skins) & SkinSeleccionado & "\BotonAsignarSkills.bmp")
 
     If SkillPoints > 0 Then imgAsignarSkill.Picture = picSkillStar
     
@@ -1166,21 +1167,21 @@ Public Sub LightSkillStar(ByVal bTurnOn As Boolean)
     End If
 End Sub
 
-Private Sub cmdMoverHechi_Click(index As Integer)
+Private Sub cmdMoverHechi_Click(Index As Integer)
     If hlst.Visible = True Then
         If hlst.ListIndex = -1 Then Exit Sub
         Dim sTemp As String
     
-        Select Case index
+        Select Case Index
             Case 1 'subir
                 If hlst.ListIndex = 0 Then Exit Sub
             Case 0 'bajar
                 If hlst.ListIndex = hlst.ListCount - 1 Then Exit Sub
         End Select
     
-        Call WriteMoveSpell(index = 1, hlst.ListIndex + 1)
+        Call WriteMoveSpell(Index = 1, hlst.ListIndex + 1)
         
-        Select Case index
+        Select Case Index
             Case 1 'subir
                 sTemp = hlst.List(hlst.ListIndex - 1)
                 hlst.List(hlst.ListIndex - 1) = hlst.List(hlst.ListIndex)
@@ -1194,12 +1195,12 @@ Private Sub cmdMoverHechi_Click(index As Integer)
         End Select
     End If
 End Sub
-Public Sub ControlSM(ByVal index As Byte, ByVal Mostrar As Boolean)
+Public Sub ControlSM(ByVal Index As Byte, ByVal Mostrar As Boolean)
 Dim GrhIndex As Long
 Dim SR As RECT
 Dim DR As RECT
 
-GrhIndex = GRH_INI_SM + index + SM_CANT * (CInt(Mostrar) + 1)
+GrhIndex = GRH_INI_SM + Index + SM_CANT * (CInt(Mostrar) + 1)
 
 With GrhData(GrhIndex)
     SR.Left = .SX
@@ -1213,10 +1214,10 @@ With GrhData(GrhIndex)
     DR.Bottom = .pixelHeight
 End With
 
-Call DrawGrhtoHdc(picSM(index).hDC, GrhIndex, SR, DR)
-picSM(index).Refresh
+Call DrawGrhtoHdc(picSM(Index).hdc, GrhIndex, SR, DR)
+picSM(Index).Refresh
 
-Select Case index
+Select Case Index
     Case eSMType.sResucitation
         If Mostrar Then
             Call AddtoRichTextBox(frmMain.RecTxt, _
@@ -1226,7 +1227,7 @@ Select Case index
                                     JsonLanguage.Item("MENSAJE_SEGURO_RESU_ON").Item("COLOR").Item(1), _
                                     True, False, True)
                                     
-            picSM(index).ToolTipText = JsonLanguage.Item("MENSAJE_SEGURO_RESU_ON").Item("TEXTO")
+            picSM(Index).ToolTipText = JsonLanguage.Item("MENSAJE_SEGURO_RESU_ON").Item("TEXTO")
         Else
             Call AddtoRichTextBox(frmMain.RecTxt, _
                                     JsonLanguage.Item("MENSAJE_SEGURO_RESU_OFF").Item("TEXTO"), _
@@ -1235,7 +1236,7 @@ Select Case index
                                     JsonLanguage.Item("MENSAJE_SEGURO_RESU_OFF").Item("COLOR").Item(3), _
                                     True, False, True)
                                     
-            picSM(index).ToolTipText = JsonLanguage.Item("MENSAJE_SEGURO_RESU_ON").Item("TEXTO")
+            picSM(Index).ToolTipText = JsonLanguage.Item("MENSAJE_SEGURO_RESU_ON").Item("TEXTO")
         End If
         
     Case eSMType.sSafemode
@@ -1247,7 +1248,7 @@ Select Case index
                                     JsonLanguage.Item("MENSAJE_SEGURO_ACTIVADO").Item("COLOR").Item(3), _
                                     True, False, True)
                                     
-            picSM(index).ToolTipText = JsonLanguage.Item("MENSAJE_SEGURO_ACTIVADO").Item("TEXTO").Item(2)
+            picSM(Index).ToolTipText = JsonLanguage.Item("MENSAJE_SEGURO_ACTIVADO").Item("TEXTO").Item(2)
         Else
             Call AddtoRichTextBox(frmMain.RecTxt, _
                                     UCase$(JsonLanguage.Item("MENSAJE_SEGURO_DESACTIVADO").Item("TEXTO").Item(1)), _
@@ -1256,18 +1257,18 @@ Select Case index
                                     JsonLanguage.Item("MENSAJE_SEGURO_DESACTIVADO").Item("COLOR").Item(3), _
                                     True, False, True)
                                     
-            picSM(index).ToolTipText = JsonLanguage.Item("MENSAJE_SEGURO_DESACTIVADO").Item("TEXTO").Item(2)
+            picSM(Index).ToolTipText = JsonLanguage.Item("MENSAJE_SEGURO_DESACTIVADO").Item("TEXTO").Item(2)
         End If
         
     Case eSMType.mWork
         If Mostrar Then
-            picSM(index).ToolTipText = JsonLanguage.Item("MENSAJE_MACRO_ACTIVADO").Item("TEXTO")
+            picSM(Index).ToolTipText = JsonLanguage.Item("MENSAJE_MACRO_ACTIVADO").Item("TEXTO")
         Else
-            picSM(index).ToolTipText = JsonLanguage.Item("MENSAJE_MACRO_DESACTIVADO").Item("TEXTO")
+            picSM(Index).ToolTipText = JsonLanguage.Item("MENSAJE_MACRO_DESACTIVADO").Item("TEXTO")
         End If
 End Select
 
-SMStatus(index) = Mostrar
+SMStatus(Index) = Mostrar
 End Sub
 
 Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
@@ -1494,14 +1495,14 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
     End Select
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     MouseBoton = Button
     MouseShift = Shift
 End Sub
 
-Private Sub Form_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
-    clicX = x
-    clicY = y
+Private Sub Form_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    clicX = X
+    clicY = Y
 End Sub
 
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
@@ -1581,12 +1582,12 @@ Private Sub imgOpciones_Click()
     Call frmOpciones.Show(vbModeless, frmMain)
 End Sub
 
-Private Sub InvEqu_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub InvEqu_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
 End Sub
 
-Private Sub lblScroll_Click(index As Integer)
-    Inventario.ScrollInventory (index = 0)
+Private Sub lblScroll_Click(Index As Integer)
+    Inventario.ScrollInventory (Index = 0)
 End Sub
 
 Private Sub lblCerrar_Click()
@@ -1675,8 +1676,8 @@ Private Sub Coord_Click()
                             False, False, True)
 End Sub
 
-Private Sub picSM_DblClick(index As Integer)
-Select Case index
+Private Sub picSM_DblClick(Index As Integer)
+Select Case Index
     Case eSMType.sResucitation
         Call WriteResuscitationToggle
         
@@ -1699,7 +1700,7 @@ Select Case index
 End Select
 End Sub
 
-Private Sub RecTxt_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub RecTxt_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     StartCheckingLinks
 End Sub
 
@@ -1845,24 +1846,24 @@ Private Sub cmdLanzar_Click()
     End If
 End Sub
 
-Private Sub CmdLanzar_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub CmdLanzar_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     UsaMacro = False
     CnTd = 0
 End Sub
 
 Private Sub cmdINFO_Click()
     If hlst.ListIndex <> -1 Then
-        Dim index As Integer
-        index = DevolverIndexHechizo(hlst.List(hlst.ListIndex))
+        Dim Index As Integer
+        Index = DevolverIndexHechizo(hlst.List(hlst.ListIndex))
         Dim Msj As String
      
-        If index <> 0 Then _
+        If Index <> 0 Then _
             Msj = "%%%%%%%%%%%% " & JsonLanguage.Item("MENSAJE_INFO_HECHIZOS").Item("TEXTO").Item(1) & " %%%%%%%%%%%%" & vbCrLf _
-             & JsonLanguage.Item("MENSAJE_INFO_HECHIZOS").Item("TEXTO").Item(2) & ": " & Hechizos(index).Nombre & vbCrLf _
-             & JsonLanguage.Item("MENSAJE_INFO_HECHIZOS").Item("TEXTO").Item(3) & ": " & Hechizos(index).Desc & vbCrLf _
-             & JsonLanguage.Item("MENSAJE_INFO_HECHIZOS").Item("TEXTO").Item(4) & ": " & Hechizos(index).SkillRequerido & vbCrLf _
-             & JsonLanguage.Item("MENSAJE_INFO_HECHIZOS").Item("TEXTO").Item(5) & ": " & Hechizos(index).ManaRequerida & vbCrLf _
-             & JsonLanguage.Item("MENSAJE_INFO_HECHIZOS").Item("TEXTO").Item(6) & ": " & Hechizos(index).EnergiaRequerida & vbCrLf _
+             & JsonLanguage.Item("MENSAJE_INFO_HECHIZOS").Item("TEXTO").Item(2) & ": " & Hechizos(Index).Nombre & vbCrLf _
+             & JsonLanguage.Item("MENSAJE_INFO_HECHIZOS").Item("TEXTO").Item(3) & ": " & Hechizos(Index).Desc & vbCrLf _
+             & JsonLanguage.Item("MENSAJE_INFO_HECHIZOS").Item("TEXTO").Item(4) & ": " & Hechizos(Index).SkillRequerido & vbCrLf _
+             & JsonLanguage.Item("MENSAJE_INFO_HECHIZOS").Item("TEXTO").Item(5) & ": " & Hechizos(Index).ManaRequerida & vbCrLf _
+             & JsonLanguage.Item("MENSAJE_INFO_HECHIZOS").Item("TEXTO").Item(6) & ": " & Hechizos(Index).EnergiaRequerida & vbCrLf _
              & "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
                                              
         Call ShowConsoleMsg(Msj, _
@@ -1873,22 +1874,22 @@ Private Sub cmdINFO_Click()
     End If
 End Sub
 
-Private Sub DespInv_Click(index As Integer)
-    Inventario.ScrollInventory (index = 0)
+Private Sub DespInv_Click(Index As Integer)
+    Inventario.ScrollInventory (Index = 0)
 End Sub
-Private Sub MainViewPic_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub MainViewPic_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     MouseBoton = Button
     MouseShift = Shift
 End Sub
 
-Private Sub MainViewPic_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
-    MouseX = x
-    MouseY = y
+Private Sub MainViewPic_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    MouseX = X
+    MouseY = Y
 End Sub
 
-Private Sub MainViewPic_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
-    clicX = x
-    clicY = y
+Private Sub MainViewPic_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    clicX = X
+    clicY = Y
 End Sub
 
 Private Sub MainViewPic_DblClick()
@@ -2035,9 +2036,9 @@ Private Sub Form_DblClick()
     End If
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
-    MouseX = x - MainViewPic.Left
-    MouseY = y - MainViewPic.Top
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    MouseX = X - MainViewPic.Left
+    MouseY = Y - MainViewPic.Top
     
     'Trim to fit screen
     If MouseX < 0 Then
@@ -2084,7 +2085,7 @@ End Sub
 Private Sub Label4_Click()
     Call Audio.PlayWave(SND_CLICK)
 
-    InvEqu.Picture = LoadPicture(path(Graficos) & "Skins\" & SkinSeleccionado & "\Centroinventario.jpg")
+    InvEqu.Picture = LoadPicture(Game.path(Skins) & SkinSeleccionado & "\Centroinventario.jpg")
 
     ' Activo controles de inventario
     PicInv.Visible = True
@@ -2093,7 +2094,7 @@ Private Sub Label4_Click()
 
     ' Desactivo controles de hechizo
     hlst.Visible = False
-    cmdINFO.Visible = False
+    cmdInfo.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = False
@@ -2104,11 +2105,11 @@ End Sub
 Private Sub Label7_Click()
     Call Audio.PlayWave(SND_CLICK)
 
-    InvEqu.Picture = LoadPicture(path(Graficos) & "Skins\" & SkinSeleccionado & "\Centrohechizos.jpg")
+    InvEqu.Picture = LoadPicture(Game.path(Skins) & SkinSeleccionado & "\Centrohechizos.jpg")
     
     ' Activo controles de hechizos
     hlst.Visible = True
-    cmdINFO.Visible = True
+    cmdInfo.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True
@@ -2132,7 +2133,7 @@ Private Sub picInv_DblClick()
     Call UsarItem
 End Sub
 
-Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
     Call Audio.PlayWave(SND_CLICK)
 End Sub
 
@@ -2385,7 +2386,7 @@ Private Sub Client_CloseSck()
     Do While i < Forms.Count - 1
         i = i + 1
         
-        If Forms(i).name <> Me.name And Forms(i).name <> frmConnect.name And Forms(i).name <> frmCrearPersonaje.name Then
+        If Forms(i).Name <> Me.Name And Forms(i).Name <> frmConnect.Name And Forms(i).Name <> frmCrearPersonaje.Name Then
             Unload Forms(i)
         End If
     Loop

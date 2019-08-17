@@ -328,7 +328,7 @@ Private Sub Form_Load()
     clsFormulario.Initialize Me
 
     'Cargamos la interfase
-    Me.Picture = LoadPicture(App.Path & "\Graficos\Boveda.jpg")
+    Me.Picture = LoadPicture(Game.path(Interfaces) & "Boveda.jpg")
     
     Call LoadButtons
     
@@ -338,9 +338,9 @@ Private Sub LoadButtons()
 
     Dim GrhPath As String
     
-    GrhPath = Path(Graficos)
-    'CmdMoverBov(1).Picture = LoadPicture(App.path & "\Graficos\FlechaSubirObjeto.jpg")
-    'CmdMoverBov(0).Picture = LoadPicture(App.path & "\Graficos\FlechaBajarObjeto.jpg")
+    GrhPath = Game.path(Interfaces)
+    'CmdMoverBov(1).Picture = LoadPicture(Game.path(Interfaces) & "FlechaSubirObjeto.jpg")
+    'CmdMoverBov(0).Picture = LoadPicture(Game.path(Interfaces) & "FlechaBajarObjeto.jpg")
     
     Set cBotonRetirarOro = New clsGraphicalButton
     Set cBotonDepositarOro = New clsGraphicalButton
@@ -362,15 +362,15 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y A
     Call LastButtonPressed.ToggleToNormal
 End Sub
 
-Private Sub Image1_Click(index As Integer)
+Private Sub Image1_Click(Index As Integer)
     
     Call Audio.PlayWave(SND_CLICK)
     
-    If InvBanco(index).SelectedItem = 0 Then Exit Sub
+    If InvBanco(Index).SelectedItem = 0 Then Exit Sub
     
     If Not IsNumeric(cantidad.Text) Then Exit Sub
     
-    Select Case index
+    Select Case Index
         Case 0
             LastIndex1 = InvBanco(0).SelectedItem
             LasActionBuy = True
@@ -397,7 +397,7 @@ Private Sub PicBancoInv_Click()
 
     If InvBanco(0).SelectedItem <> 0 Then
         With UserBancoInventory(InvBanco(0).SelectedItem)
-            Label1(0).Caption = .name
+            Label1(0).Caption = .Name
             
             Select Case .OBJType
                 Case 2, 32

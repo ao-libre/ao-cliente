@@ -287,7 +287,7 @@ Private Sub Form_Load()
 
     
     'Cargamos la interfase
-    Me.Picture = LoadPicture(Path(Graficos) & "ventanacomercio.jpg")
+    Me.Picture = LoadPicture(Game.path(Interfaces) & "ventanacomercio.jpg")
     
     Call LoadButtons
     
@@ -296,7 +296,7 @@ End Sub
 Private Sub LoadButtons()
     Dim GrhPath As String
     
-    GrhPath = Path(Graficos)
+    GrhPath = Game.path(Interfaces)
 
     Set cBotonVender = New clsGraphicalButton
     Set cBotonComprar = New clsGraphicalButton
@@ -337,12 +337,12 @@ Private Function CalculateSellPrice(ByRef objValue As Single, ByVal objAmount As
 'Last modified: 19/08/2008
 'Last modify by: Franco Zeoli (Noich)
 '*************************************************
-    On Error GoTo error
+    On Error GoTo Error
     'We get a Single value from the server, when vb uses it, by approaching, it can diff with the server value, so we do (Value * 100000) and get the entire part, to discard the unwanted floating values.
     CalculateSellPrice = CCur(objValue * 1000000) / 1000000 * objAmount + 0.5
     
     Exit Function
-error:
+Error:
     MsgBox Err.Description, vbExclamation, "Error: " & Err.number
 End Function
 ''
@@ -357,12 +357,12 @@ Private Function CalculateBuyPrice(ByRef objValue As Single, ByVal objAmount As 
 'Last modified: 19/08/2008
 'Last modify by: Franco Zeoli (Noich)
 '*************************************************
-    On Error GoTo error
+    On Error GoTo Error
     'We get a Single value from the server, when vb uses it, by approaching, it can diff with the server value, so we do (Value * 100000) and get the entire part, to discard the unwanted floating values.
     CalculateBuyPrice = Fix(CCur(objValue * 1000000) / 1000000 * objAmount)
     
     Exit Function
-error:
+Error:
     MsgBox Err.Description, vbExclamation, "Error: " & Err.number
 End Function
 
@@ -410,7 +410,7 @@ Private Sub picInvNpc_Click()
     ClickNpcInv = True
     InvComUsu.DeselectItem
     
-    Label1(0).Caption = NPCInventory(ItemSlot).name
+    Label1(0).Caption = NPCInventory(ItemSlot).Name
     Label1(1).Caption = "Precio: " & CalculateSellPrice(NPCInventory(ItemSlot).Valor, Val(cantidad.Text)) 'No mostramos numeros reales
     
     If NPCInventory(ItemSlot).Amount <> 0 Then

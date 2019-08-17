@@ -542,7 +542,7 @@ Private Sub Form_Load()
 On Error Resume Next
     Unload frmConnect
     
-    Me.Picture = LoadPicture(Path(Graficos) & "VentanaCuenta.jpg")
+    Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaCuenta.jpg")
 
     Me.tmrRender.Enabled = True
     
@@ -563,14 +563,14 @@ On Error Resume Next
 End Sub
 
 Private Sub Image5_Click()
-    If Not Len(lblAccData(index + 1).Caption) = 0 Then
-        UserName = lblAccData(index + 1).Caption
+    If Not Len(lblAccData(Index + 1).Caption) = 0 Then
+        UserName = lblAccData(Index + 1).Caption
         WriteLoginExistingChar
     End If
 End Sub
 
-Private Sub lblName_Click(index As Integer)
-    Seleccionado = index
+Private Sub lblName_Click(Index As Integer)
+    Seleccionado = Index
 End Sub
 
 Private Sub imgConectar_Click()
@@ -612,8 +612,8 @@ Private Sub imgSalir_Click()
 End Sub
 
 
-Private Sub picChar_Click(index As Integer)
-    Seleccionado = index + 1
+Private Sub picChar_Click(Index As Integer)
+    Seleccionado = Index + 1
     
     With cPJ(Seleccionado)
     
@@ -637,8 +637,8 @@ Private Sub picChar_Click(index As Integer)
     
 End Sub
 
-Private Sub picChar_DblClick(index As Integer)
-    Seleccionado = index + 1
+Private Sub picChar_DblClick(Index As Integer)
+    Seleccionado = Index + 1
     If Not Len(lblAccData(Seleccionado).Caption) = 0 Then
         UserName = lblAccData(Seleccionado).Caption
         WriteLoginExistingChar

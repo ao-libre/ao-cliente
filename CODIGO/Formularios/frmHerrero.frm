@@ -500,9 +500,9 @@ Private clsFormulario As clsFormMovementManager
 
 Private Sub CargarImagenes()
     Dim ImgPath As String
-    Dim index As Integer
+    Dim Index As Integer
     
-    ImgPath = path(Graficos)
+    ImgPath = Game.path(Interfaces)
 
     Set Pestanias(ePestania.ieArmas) = LoadPicture(ImgPath & "VentanaHerreriaArmas.jpg")
     Set Pestanias(ePestania.ieArmaduras) = LoadPicture(ImgPath & "VentanaHerreriaArmaduras.jpg")
@@ -513,11 +513,11 @@ Private Sub CargarImagenes()
     Set picRecuadroItem = LoadPicture(ImgPath & "RecuadroItemsHerreria.jpg")
     Set picRecuadroLingotes = LoadPicture(ImgPath & "RecuadroLingotes.jpg")
     
-    For index = 1 To MAX_LIST_ITEMS
-        imgMarcoItem(index).Picture = picRecuadroItem
-        imgMarcoUpgrade(index).Picture = picRecuadroItem
-        imgMarcoLingotes(index).Picture = picRecuadroLingotes
-    Next index
+    For Index = 1 To MAX_LIST_ITEMS
+        imgMarcoItem(Index).Picture = picRecuadroItem
+        imgMarcoUpgrade(Index).Picture = picRecuadroItem
+        imgMarcoLingotes(Index).Picture = picRecuadroLingotes
+    Next Index
     
     Set cPicCerrar = New clsGraphicalButton
     Set cPicConstruir(0) = New clsGraphicalButton
@@ -550,12 +550,12 @@ Private Sub CargarImagenes()
     picCheckBox.MouseIcon = picMouseIcon
 End Sub
 
-Private Sub ConstruirItem(ByVal index As Integer)
+Private Sub ConstruirItem(ByVal Index As Integer)
     Dim ItemIndex As Integer
     Dim CantItemsCiclo As Integer
     
     If Scroll.Visible = True Then ItemIndex = Scroll.Value
-    ItemIndex = ItemIndex + index
+    ItemIndex = ItemIndex + Index
     
     Select Case UltimaPestania
         Case ePestania.ieArmas
@@ -662,7 +662,7 @@ Public Sub HideExtraControls(ByVal NumItems As Integer, Optional ByVal Upgrading
     If NumItems > MAX_LIST_ITEMS Then
         Scroll.Visible = True
         Cargando = True
-        Scroll.Max = NumItems - MAX_LIST_ITEMS
+        Scroll.max = NumItems - MAX_LIST_ITEMS
         Cargando = False
     Else
         Scroll.Visible = False
@@ -713,7 +713,7 @@ On Error Resume Next
             With ObjHerrero(i + Inicio)
                 ' Agrego el item
                 Call RenderItem(picItem(i), .GrhIndex)
-                picItem(i).ToolTipText = .name
+                picItem(i).ToolTipText = .Name
      
                 Call RenderItem(picUpgradeItem(i), .UpgradeGrhIndex)
                 picUpgradeItem(i).ToolTipText = .UpgradeName
@@ -739,7 +739,7 @@ For i = 1 To MAX_LIST_ITEMS
         With HerreroMejorar(i + Inicio)
             ' Agrego el item
             Call RenderItem(picItem(i), .GrhIndex)
-            picItem(i).ToolTipText = .name
+            picItem(i).ToolTipText = .Name
             
             Call RenderItem(picUpgradeItem(i), .UpgradeGrhIndex)
             picUpgradeItem(i).ToolTipText = .UpgradeName
@@ -833,15 +833,15 @@ Private Sub picMejorar3_Click()
     Call ConstruirItem(4)
 End Sub
 
-Private Sub picPestania_Click(index As Integer)
+Private Sub picPestania_Click(Index As Integer)
     Dim NumItems As Integer
     
     If Cargando Then Exit Sub
-    If UltimaPestania = index Then Exit Sub
+    If UltimaPestania = Index Then Exit Sub
     
     Scroll.Value = 0
     
-    Select Case index
+    Select Case Index
         Case ePestania.ieArmas
             ' Background
             Me.Picture = Pestanias(ePestania.ieArmas)
@@ -879,7 +879,7 @@ Private Sub picPestania_Click(index As Integer)
             Call RenderUpgradeList(1)
     End Select
 
-    UltimaPestania = index
+    UltimaPestania = Index
 End Sub
 
 Private Sub Scroll_Change()

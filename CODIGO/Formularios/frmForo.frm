@@ -323,7 +323,7 @@ End Sub
 Private Sub LoadButtons()
 
     Dim GrhPath As String
-    GrhPath = Path(Graficos)
+    GrhPath = Game.path(Interfaces)
     
     ' Load pictures
     Set FondosListaMsg(eForumType.ieGeneral) = LoadPicture(GrhPath & "ForoGeneral.jpg")
@@ -367,12 +367,12 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y A
     LastButtonPressed.ToggleToNormal
 End Sub
 
-Private Sub imgTab_Click(index As Integer)
+Private Sub imgTab_Click(Index As Integer)
 
     Call Audio.PlayWave(SND_CLICK)
     
-    If index <> ForoActual Then
-        ForoActual = index
+    If Index <> ForoActual Then
+        ForoActual = Index
         VerListaMsg = True
         Lectura = False
         UpdateList

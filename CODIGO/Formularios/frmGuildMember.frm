@@ -162,7 +162,7 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
 
-    Me.Picture = LoadPicture(Path(Graficos) & "VentanaMiembroClan.jpg")
+    Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaMiembroClan.jpg")
     
     Call LoadButtons
     
@@ -171,7 +171,7 @@ End Sub
 Private Sub LoadButtons()
     Dim GrhPath As String
     
-    GrhPath = Path(Graficos)
+    GrhPath = Game.path(Interfaces)
 
     Set cBotonNoticias = New clsGraphicalButton
     Set cBotonDetalles = New clsGraphicalButton

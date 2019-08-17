@@ -127,7 +127,7 @@ End Sub
 Private Sub LoadButtons()
     Dim GrhPath As String
     
-    GrhPath = Path(Graficos)
+    GrhPath = Game.path(Interfaces)
 
     Set cBotonEnviar = New clsGraphicalButton
     Set cBotonCerrar = New clsGraphicalButton
@@ -203,13 +203,13 @@ Private Sub LoadBackGround()
 
     Select Case T
         Case TIPO.ALIANZA
-            Me.Picture = LoadPicture(Path(Graficos) & "VentanaPropuestaAlianza.jpg")
+            Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaPropuestaAlianza.jpg")
             
         Case TIPO.PAZ
-            Me.Picture = LoadPicture(Path(Graficos) & "VentanaPropuestaPaz.jpg")
+            Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaPropuestaPaz.jpg")
             
         Case TIPO.RECHAZOPJ
-            Me.Picture = LoadPicture(Path(Graficos) & "VentanaMotivoRechazo.jpg")
+            Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaMotivoRechazo.jpg")
             
     End Select
     

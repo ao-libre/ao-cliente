@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "richtx32.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "Richtx32.ocx"
 Begin VB.Form frmCargando 
    AutoRedraw      =   -1  'True
    BackColor       =   &H80000000&
@@ -31,7 +31,6 @@ Begin VB.Form frmCargando
       _ExtentY        =   3360
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"frmCargando.frx":0000
@@ -101,10 +100,10 @@ Public NoInternetConnection As Boolean
 
 Private Sub Form_Load()
     Me.Analizar
-    Me.Picture = LoadPicture(path(Graficos) & "VentanaCargando.jpg")
+    Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaCargando.jpg")
 
     'Solo hay 3 imagenes de cargando, cambiar 3 por el numero maximo si se quiere cambiar
-    LOGO.Picture = LoadPicture(path(Graficos) & "ImagenCargando" & RandomNumber(1, 3) & ".jpg")
+    LOGO.Picture = LoadPicture(Game.path(Interfaces) & "ImagenCargando" & RandomNumber(1, 3) & ".jpg")
 End Sub
 
 Private Sub LOGO_KeyPress(KeyAscii As Integer)
@@ -129,7 +128,7 @@ On Error Resume Next
            
     If Not isLastVersion = True Then
         If MsgBox("Tu version no es la actual, Deseas ejecutar el actualizador?.", vbYesNo) = vbYes Then
-            binaryFileToOpen = GetVar(path(INIT) & "Config.ini", "Launcher", "fileToOpen")
+            binaryFileToOpen = GetVar(Game.path(INIT) & "Config.ini", "Launcher", "fileToOpen")
             Call ShellExecute(Me.hWnd, "open", App.path & binaryFileToOpen, "", "", 1)
             End
         End If
@@ -151,7 +150,7 @@ On Error Resume Next
     Set JsonObject = JSON.parse(responseGithub)
     
     versionNumberMaster = JsonObject.Item("tag_name")
-    versionNumberLocal = GetVar(path(INIT) & "Config.ini", "Cliente", "VersionTagRelease")
+    versionNumberLocal = GetVar(Game.path(INIT) & "Config.ini", "Cliente", "VersionTagRelease")
 
     If versionNumberMaster = versionNumberLocal Then
         CheckIfRunningLastVersion = True

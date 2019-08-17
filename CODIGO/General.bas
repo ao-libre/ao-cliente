@@ -74,7 +74,7 @@ On Error Resume Next
     Dim LoopC As Long
     Dim arch As String
     
-    arch = path(INIT) & "armas.dat"
+    arch = Game.path(INIT) & "armas.dat"
     
     NumWeaponAnims = Val(GetVar(arch, "INIT", "NumArmas"))
     
@@ -93,7 +93,7 @@ Public Sub CargarColores()
 
 On Error Resume Next
     
-    Dim archivoC As String: archivoC = path(INIT) & "colores.dat"
+    Dim archivoC As String: archivoC = Game.path(INIT) & "colores.dat"
     
     If Not FileExist(archivoC, vbArchive) Then
         Call MsgBox("ERROR: no se ha podido cargar los colores. Falta el archivo colores.dat, reinstale el juego", vbCritical + vbOKOnly)
@@ -127,7 +127,7 @@ On Error Resume Next
     Dim LoopC As Long
     Dim arch As String
     
-    arch = path(INIT) & "escudos.dat"
+    arch = Game.path(INIT) & "escudos.dat"
     
     NumEscudosAnims = Val(GetVar(arch, "INIT", "NumEscudos"))
     
@@ -517,12 +517,12 @@ Sub SwitchMap(ByVal Map As Integer)
         Next Y
     Next X
     
-    dLen = FileLen(path(Mapas) & "Mapa" & Map & ".map")
+    dLen = FileLen(Game.path(Mapas) & "Mapa" & Map & ".map")
     ReDim dData(dLen - 1)
     
     handle = FreeFile()
     
-    Open path(Mapas) & "Mapa" & Map & ".map" For Binary As handle
+    Open Game.path(Mapas) & "Mapa" & Map & ".map" For Binary As handle
         Get handle, , dData
     Close handle
      
@@ -611,8 +611,8 @@ Sub SwitchMap(ByVal Map As Integer)
     End With
     
     'Dibujamos el Mini-Mapa
-    If FileExist(path(Graficos) & "MiniMapa\" & Map & ".bmp", vbArchive) Then
-        frmMain.MiniMapa.Picture = LoadPicture(path(Graficos) & "MiniMapa\" & Map & ".bmp")
+    If FileExist(Game.path(Graficos) & "MiniMapa\" & Map & ".bmp", vbArchive) Then
+        frmMain.MiniMapa.Picture = LoadPicture(Game.path(Graficos) & "MiniMapa\" & Map & ".bmp")
     Else
         frmMain.MiniMapa.Visible = False
         frmMain.RecTxt.Width = frmMain.RecTxt.Width + 100
@@ -705,7 +705,7 @@ On Error Resume Next
     
     Set Inet = New clsInet
     
-    URL = GetVar(path(INIT) & "Config.ini", "Parameters", "IpApiEndpoint")
+    URL = GetVar(Game.path(INIT) & "Config.ini", "Parameters", "IpApiEndpoint")
     Endpoint = URL & Ip & "/json/"
     
     Response = Inet.OpenRequest(Endpoint, "GET")
@@ -736,10 +736,10 @@ On Error GoTo errorH
     Dim IpApiEnabled As Boolean
     Dim DoPingsEnabled As Boolean
     
-    File = path(INIT) & "sinfo.dat"
+    File = Game.path(INIT) & "sinfo.dat"
     Quantity = Val(GetVar(File, "INIT", "Cant"))
-    IpApiEnabled = GetVar(path(INIT) & "Config.ini", "Parameters", "IpApiEnabled")
-    DoPingsEnabled = GetVar(path(INIT) & "Config.ini", "Parameters", "DoPingsEnabled")
+    IpApiEnabled = GetVar(Game.path(INIT) & "Config.ini", "Parameters", "IpApiEnabled")
+    DoPingsEnabled = GetVar(Game.path(INIT) & "Config.ini", "Parameters", "DoPingsEnabled")
     
     frmConnect.lstServers.Clear
     
@@ -864,9 +864,9 @@ Sub Main()
     ' Load constants, classes, flags, graphics..
     Call LoadInitialConfig
     
-    If GetVar(path(INIT) & "Config.ini", "Parameters", "TestMode") <> 1 Then
+    If GetVar(Game.path(INIT) & "Config.ini", "Parameters", "TestMode") <> 1 Then
         With frmPres
-            .Picture = LoadPicture(path(Graficos) & "ImagenPresentacion.jpg")
+            .Picture = LoadPicture(Game.path(Interfaces) & "ImagenPresentacion.jpg")
             .Show vbModal    'Es modal, asi que se detiene la ejecucionn de Main hasta que se desaparece
         End With
     End If
@@ -922,7 +922,7 @@ Sub Main()
 End Sub
 
 Public Function GetVersionOfTheGame() As String
-    GetVersionOfTheGame = GetVar(path(INIT) & "Config.ini", "Cliente", "VersionTagRelease")
+    GetVersionOfTheGame = GetVar(Game.path(INIT) & "Config.ini", "Cliente", "VersionTagRelease")
 End Function
 
 Private Sub LoadInitialConfig()
@@ -974,7 +974,7 @@ Private Sub LoadInitialConfig()
                             True, False, True)
                             
     'Inicializamos el sonido
-    Call Audio.Initialize(DirectX, frmMain.hWnd, path(Sounds), path(Musica))
+    Call Audio.Initialize(DirectX, frmMain.hWnd, Game.path(Sounds), Game.path(Musica))
 
     'Enable / Disable audio
     Audio.MusicActivated = ClientSetup.bMusic
@@ -1006,8 +1006,8 @@ Private Sub LoadInitialConfig()
     UserMap = 1
     
     ' Mouse Pointer (Loaded before opening any form with buttons in it)
-    If FileExist(path(Extras) & "Hand.ico", vbArchive) Then _
-        Set picMouseIcon = LoadPicture(path(Extras) & "Hand.ico")
+    If FileExist(Game.path(Extras) & "Hand.ico", vbArchive) Then _
+        Set picMouseIcon = LoadPicture(Game.path(Extras) & "Hand.ico")
     
     Call AddtoRichTextBox(frmCargando.status, _
                             " " & JsonLanguage.Item("HECHO").Item("TEXTO"), _
@@ -1597,7 +1597,7 @@ On Error GoTo errorH
     Dim PathName As String
     Dim j As Long
  
-    PathName = path(INIT) & "Hechizos.dat"
+    PathName = Game.path(INIT) & "Hechizos.dat"
     NumHechizos = Val(GetVar(PathName, "INIT", "NumHechizos"))
  
     ReDim Hechizos(1 To NumHechizos) As tHechizos
@@ -1648,7 +1648,7 @@ On Error Resume Next
     f = FreeFile
     
     If LenB(strData) <> 0 Then
-        Open App.path & "/init/sinfo.dat" For Output As #f
+        Open Game.path(INIT) & "sinfo.dat" For Output As #f
             Print #f, strData
         Close #f
     End If
@@ -1670,7 +1670,7 @@ On Error Resume Next
     Dim JsonObject As Object
     Dim Endpoint As String
     
-    Endpoint = GetVar(path(INIT) & "Config.ini", "Parameters", "SubRedditEndpoint")
+    Endpoint = GetVar(Game.path(INIT) & "Config.ini", "Parameters", "SubRedditEndpoint")
     ResponseReddit = Inet.OpenRequest(Endpoint, "GET")
     ResponseReddit = Inet.Execute
     ResponseReddit = Inet.GetResponseAsString

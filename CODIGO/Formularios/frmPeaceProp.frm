@@ -140,7 +140,7 @@ End Sub
 Private Sub LoadButtons()
     Dim GrhPath As String
     
-    GrhPath = Path(Graficos)
+    GrhPath = Game.path(Interfaces)
 
     Set cBotonAceptar = New clsGraphicalButton
     Set cBotonCerrar = New clsGraphicalButton
@@ -171,9 +171,9 @@ End Sub
 
 Private Sub LoadBackGround()
     If TipoProp = TIPO_PROPUESTA.ALIANZA Then
-        Me.Picture = LoadPicture(Path(Graficos) & "VentanaOfertaAlianza.jpg")
+        Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaOfertaAlianza.jpg")
     Else
-        Me.Picture = LoadPicture(Path(Graficos) & "VentanaOfertaPaz.jpg")
+        Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaOfertaPaz.jpg")
     End If
 End Sub
 

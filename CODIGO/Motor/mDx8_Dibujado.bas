@@ -45,7 +45,7 @@ Public Sub ArrayToPicturePNG(ByRef byteArray() As Byte, ByRef imgDest As IPictur
     Call SetBitmapBits(imgDest.handle, UBound(byteArray), byteArray(0))
 End Sub
 
-Public Function ArrayToPicture(inArray() As Byte, offset As Long, size As Long) As IPicture
+Public Function ArrayToPicture(inArray() As Byte, Offset As Long, Size As Long) As IPicture
     
     Dim o_hMem  As Long
     Dim o_lpMem  As Long
@@ -57,11 +57,11 @@ Public Function ArrayToPicture(inArray() As Byte, offset As Long, size As Long) 
     aGUID(2) = &HAA00BB8B
     aGUID(3) = &HAB0C3000
     
-    o_hMem = GlobalAlloc(&H2&, size)
+    o_hMem = GlobalAlloc(&H2&, Size)
     If Not o_hMem = 0& Then
         o_lpMem = GlobalLock(o_hMem)
         If Not o_lpMem = 0& Then
-            CopyMemory ByVal o_lpMem, inArray(offset), size
+            CopyMemory ByVal o_lpMem, inArray(Offset), Size
             Call GlobalUnlock(o_hMem)
             If CreateStreamOnHGlobal(o_hMem, 1&, IIStream) = 0& Then
                   Call OleLoadPicture(ByVal ObjPtr(IIStream), 0&, 0&, aGUID(0), ArrayToPicture)
@@ -95,7 +95,7 @@ Sub DrawGrhtoHdc(ByVal desthDC As Long, ByVal grh_index As Integer, ByRef Source
     Dim bmpData As StdPicture
     
     'get Picture
-    If Get_Image(Path(Graficos), CStr(GrhData(grh_index).FileNum), data, True) Then  ' GSZAO
+    If Get_Image(Game.path(Graficos), CStr(GrhData(grh_index).FileNum), data, True) Then  ' GSZAO
         Set bmpData = ArrayToPicture(data(), 0, UBound(data) + 1)
         
         src_x = GrhData(grh_index).SX
@@ -118,10 +118,10 @@ Sub Damage_Initialize()
 
     ' Inicializamos el dano en render
     With DNormalFont
-        .size = 20
+        .Size = 20
         .italic = False
         .bold = False
-        .name = "Tahoma"
+        .Name = "Tahoma"
     End With
 
 End Sub
@@ -148,8 +148,8 @@ Sub Damage_Create(ByVal X As Byte, _
             Case EDType.edPunal
 
                 With .DamageFont
-                    .size = Val(DAMAGE_FONT_S)
-                    .name = "Tahoma"
+                    .Size = Val(DAMAGE_FONT_S)
+                    .Name = "Tahoma"
                     .bold = False
                     Exit Sub
 
@@ -158,7 +158,7 @@ Sub Damage_Create(ByVal X As Byte, _
         End Select
      
         .DamageFont = DNormalFont
-        .DamageFont.size = 14
+        .DamageFont.Size = 14
      
     End With
  
@@ -186,7 +186,7 @@ Sub Damage_Draw(ByVal X As Byte, _
            
             'Efectito para el apu
             If .DamageType = EDType.edPunal Then
-                .DamageFont.size = Damage_NewSize(ElapsedTime)
+                .DamageFont.Size = Damage_NewSize(ElapsedTime)
 
             End If
                
