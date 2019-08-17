@@ -839,9 +839,6 @@ Sub Main()
     
     
     'Comento esto ya que nosotros si permitimos abrir mas de un cliente a la ves.
-    'Dim Testeo As String
-    'Testeo = SkinSeleccionado = GetVar(path(INIT) & "Config.ini", "Parameters", "TestMode")
-    
     '#If Testeo = 0 Then
     '    If FindPreviousInstance Then
     '        Call MsgBox(JsonLanguage.Item("OTRO_CLIENTE_ABIERTO").Item("TEXTO"), vbApplicationModal + vbInformation + vbOKOnly, "Error al ejecutar")
@@ -867,16 +864,12 @@ Sub Main()
     ' Load constants, classes, flags, graphics..
     Call LoadInitialConfig
     
-    Dim Testeo As String
-    Testeo = GetVar(path(INIT) & "Config.ini", "Parameters", "TestMode")
-    
-    #If Testeo <> 1 Then
-        Dim PresPath As String
-        PresPath = path(Graficos) & "ImagenPresentacion.jpg"
-        
-        frmPres.Picture = LoadPicture(PresPath)
-        frmPres.Show vbModal    'Es modal, asi que se detiene la ejecucionn de Main hasta que se desaparece
-    #End If
+    If GetVar(path(INIT) & "Config.ini", "Parameters", "TestMode") <> 1 Then
+        With frmPres
+            .Picture = LoadPicture(path(Graficos) & "ImagenPresentacion.jpg")
+            .Show vbModal    'Es modal, asi que se detiene la ejecucionn de Main hasta que se desaparece
+        End With
+    End If
 
     frmConnect.Visible = True
     
@@ -1642,7 +1635,7 @@ Sub DownloadServersFile(myURL As String)
 'Implemented by Cucsifae
 'Check content of strData to avoid clean the file sinfo.ini if there is no response from Github by Recox
 '**********************************************************
-On Error GoTo Error
+On Error Resume Next
     Dim strData As String
     Dim f As Integer
     
@@ -1651,8 +1644,6 @@ On Error GoTo Error
     strData = Inet.OpenRequest(myURL, "GET")
     strData = Inet.Execute
     strData = Inet.GetResponseAsString
-    
-    If strData = "False" Then GoTo errorinet
     
     f = FreeFile
     
@@ -1663,14 +1654,6 @@ On Error GoTo Error
     End If
     
     Exit Sub
-
-Error:
-    Debug.Print Err.number
-    Call MsgBox(JsonLanguage.Item("ERROR_DESCARGA_SERVIDORES").Item("TEXTO") & ": " & Err.Description, vbCritical + vbOKOnly, "Argentum Online")
-    Exit Sub
-errorinet:
-    Call MsgBox(JsonLanguage.Item("ERROR_DESCARGA_SERVIDORES_INET").Item("TEXTO") & " " & Err.Description, vbCritical + vbOKOnly, "Argentum Online")
-    frmCargando.NoInternetConnection = True
 End Sub
 
 Function EaseOutCubic(Time As Double)
