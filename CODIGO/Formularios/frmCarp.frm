@@ -514,15 +514,15 @@ Private Sub Form_Load()
     
     Call LoadDefaultValues
     
-    Me.Picture = LoadPicture(App.Path & "\graficos\VentanaCarpinteriaItems.jpg")
+    Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaCarpinteriaItems.jpg")
     LoadButtons
 End Sub
 
 Private Sub LoadButtons()
     Dim GrhPath As String
-    Dim index As Long
+    Dim Index As Long
     
-    GrhPath = Path(Graficos)
+    GrhPath = Game.path(Interfaces)
 
     Set Pestanias(ePestania.ieItems) = LoadPicture(GrhPath & "VentanaCarpinteriaItems.jpg")
     Set Pestanias(ePestania.ieMejorar) = LoadPicture(GrhPath & "VentanaCarpinteriaMejorar.jpg")
@@ -532,11 +532,11 @@ Private Sub LoadButtons()
     Set picRecuadroItem = LoadPicture(GrhPath & "RecuadroItemsCarpinteria.jpg")
     Set picRecuadroMaderas = LoadPicture(GrhPath & "RecuadroMadera.jpg")
     
-    For index = 1 To MAX_LIST_ITEMS
-        imgMarcoItem(index).Picture = picRecuadroItem
-        imgMarcoUpgrade(index).Picture = picRecuadroItem
-        imgMarcoMaderas(index).Picture = picRecuadroMaderas
-    Next index
+    For Index = 1 To MAX_LIST_ITEMS
+        imgMarcoItem(Index).Picture = picRecuadroItem
+        imgMarcoUpgrade(Index).Picture = picRecuadroItem
+        imgMarcoMaderas(Index).Picture = picRecuadroMaderas
+    Next Index
     
     Set cBotonCerrar = New clsGraphicalButton
     Set cBotonConstruir(0) = New clsGraphicalButton
@@ -623,13 +623,13 @@ Private Sub LoadDefaultValues()
 End Sub
 
 
-Private Sub Construir(ByVal index As Integer)
+Private Sub Construir(ByVal Index As Integer)
 
     Dim ItemIndex As Integer
     Dim CantItemsCiclo As Integer
     
     If Scroll.Visible = True Then ItemIndex = Scroll.Value
-    ItemIndex = ItemIndex + index
+    ItemIndex = ItemIndex + Index
     
     Select Case UltimaPestania
         Case ePestania.ieItems
@@ -686,7 +686,7 @@ Public Sub HideExtraControls(ByVal NumItems As Integer, Optional ByVal Upgrading
     If NumItems > MAX_LIST_ITEMS Then
         Scroll.Visible = True
         Cargando = True
-        Scroll.Max = NumItems - MAX_LIST_ITEMS
+        Scroll.max = NumItems - MAX_LIST_ITEMS
         Cargando = False
     Else
         Scroll.Visible = False
@@ -735,7 +735,7 @@ On Error Resume Next
             With ObjCarpintero(i + Inicio)
                 ' Agrego el item
                 Call RenderItem(picItem(i), .GrhIndex)
-                picItem(i).ToolTipText = .name
+                picItem(i).ToolTipText = .Name
             
                 ' Inventario de lenos
                 Call InvMaderasCarpinteria(i).SetItem(1, 0, .Madera, 0, MADERA_GRH, 0, 0, 0, 0, 0, 0, "Lena")
@@ -758,7 +758,7 @@ For i = 1 To MAX_LIST_ITEMS
         With CarpinteroMejorar(i + Inicio)
             ' Agrego el item
             Call RenderItem(picItem(i), .GrhIndex)
-            picItem(i).ToolTipText = .name
+            picItem(i).ToolTipText = .Name
             
             Call RenderItem(picUpgrade(i), .UpgradeGrhIndex)
             picUpgrade(i).ToolTipText = .UpgradeName
@@ -835,15 +835,15 @@ Private Sub imgMejorar3_Click()
     Call Construir(4)
 End Sub
 
-Private Sub imgPestania_Click(index As Integer)
+Private Sub imgPestania_Click(Index As Integer)
     Dim NumItems As Integer
     
     If Cargando Then Exit Sub
-    If UltimaPestania = index Then Exit Sub
+    If UltimaPestania = Index Then Exit Sub
     
     Scroll.Value = 0
     
-    Select Case index
+    Select Case Index
         Case ePestania.ieItems
             ' Background
             Me.Picture = Pestanias(ePestania.ieItems)
@@ -867,7 +867,7 @@ Private Sub imgPestania_Click(index As Integer)
             Call RenderUpgradeList(1)
     End Select
 
-    UltimaPestania = index
+    UltimaPestania = Index
 
 End Sub
 

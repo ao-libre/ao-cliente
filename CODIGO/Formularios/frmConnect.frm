@@ -655,13 +655,13 @@ End Sub
 
 Private Sub chkRecordar_Click()
     If Me.chkRecordar.Checked = False Then
-        Call WriteVar(path(INIT) & "Config.ini", "Login", "Remember", 0)
-        Call WriteVar(path(INIT) & "Config.ini", "Login", "UserName", vbNullString)
-        Call WriteVar(path(INIT) & "Config.ini", "Login", "Password", vbNullString)
+        Call WriteVar(Game.path(INIT) & "Config.ini", "Login", "Remember", 0)
+        Call WriteVar(Game.path(INIT) & "Config.ini", "Login", "UserName", vbNullString)
+        Call WriteVar(Game.path(INIT) & "Config.ini", "Login", "Password", vbNullString)
     Else
-        Call WriteVar(path(INIT) & "Config.ini", "Login", "UserName", Me.txtNombre)
-        Call WriteVar(path(INIT) & "Config.ini", "Login", "Password", Cripto.AesEncryptString(Me.txtPasswd, AES_PASSWD))
-        Call WriteVar(path(INIT) & "Config.ini", "Login", "Remember", 1)
+        Call WriteVar(Game.path(INIT) & "Config.ini", "Login", "UserName", Me.txtNombre)
+        Call WriteVar(Game.path(INIT) & "Config.ini", "Login", "Password", Cripto.AesEncryptString(Me.txtPasswd, AES_PASSWD))
+        Call WriteVar(Game.path(INIT) & "Config.ini", "Login", "Remember", 1)
     End If
 End Sub
 
@@ -680,7 +680,7 @@ Private Sub Form_Activate()
     End If
     
     Set Lector = New clsIniManager
-    Lector.Initialize (path(INIT) & "Config.ini")
+    Lector.Initialize (Game.path(INIT) & "Config.ini")
     
     If Lector.GetValue("LOGIN", "Remember") = 1 Then
         Me.txtNombre = Lector.GetValue("LOGIN", "UserName")
@@ -713,7 +713,7 @@ Private Sub Form_Load()
 
     version.Caption = GetVersionOfTheGame()
 
-    Me.Picture = LoadPicture(App.path & "\graficos\VentanaConectar.jpg")
+    Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaConectar.jpg")
     
     btnActualizarLista.Caption = JsonLanguage.Item("BTN_ACTUALIZAR_LISTA").Item("TEXTO")
     btnCodigoFuente.Caption = JsonLanguage.Item("BTN_CODIGO_FUENTE").Item("TEXTO")

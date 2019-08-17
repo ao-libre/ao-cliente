@@ -156,7 +156,7 @@ Option Explicit
 Public LastButtonPressed As clsGraphicalButton
 
 Private Sub Form_Load()
-    Me.Picture = LoadPicture(App.path & "\graficos\frmCuentaNueva.jpg")
+    Me.Picture = LoadPicture(Game.path(Interfaces) & "frmCuentaNueva.jpg")
     txtCuentaEmail.Text = vbNullString
     txtCuentaPassword.Text = vbNullString
     txtCuentaRepite.Text = vbNullString

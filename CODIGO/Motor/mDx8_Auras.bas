@@ -39,7 +39,7 @@ Public Sub Load_Auras()
 'Load Auras
 '***************************************************
     Dim i As Integer, AurasTotales As Integer, Leer As New clsIniManager
-    Leer.Initialize path(INIT) & "auras.ini"
+    Leer.Initialize Game.path(INIT) & "auras.ini"
 
     AurasTotales = Val(Leer.GetValue("Auras", "NumAuras"))
     

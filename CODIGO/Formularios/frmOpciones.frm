@@ -312,7 +312,7 @@ Private Sub cmdSkinsComboBox_Click()
 'Last Modification: 01/04/2019
 '08/11/2019: Recox - Seteamos el skin
 '***************************************************
-    Call WriteVar(path(INIT) & "Config.ini", "Parameters", "SkinSelected", cmdSkinsComboBox.Text)
+    Call WriteVar(Game.path(INIT) & "Config.ini", "Parameters", "SkinSelected", cmdSkinsComboBox.Text)
     MsgBox ("Debe reiniciar el juego aplicar el cambio de skin. Skin Seleccionado: " & cmdSkinsComboBox.Text)
 End Sub
 
@@ -507,7 +507,7 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
-    Me.Picture = LoadPicture(path(Graficos) & "VentanaOpciones.jpg")
+    Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaOpciones.jpg")
     LoadButtons
     LoadSkinsInComboBox
     LoadLenguajesInComboBox
@@ -519,7 +519,7 @@ End Sub
 
 Private Sub LoadSkinsInComboBox()
     Dim sFileName As String
-    sFileName = Dir(path(Graficos) & "\Skins\", vbDirectory)
+    sFileName = Dir(Game.path(Graficos) & "\Skins\", vbDirectory)
     
     Do While sFileName > ""
         cmdSkinsComboBox.AddItem (sFileName)
@@ -547,7 +547,7 @@ End Sub
 Private Sub LoadButtons()
     Dim GrhPath As String
     
-    GrhPath = path(Graficos)
+    GrhPath = Game.path(Interfaces)
 
     Set cBotonConfigTeclas = New clsGraphicalButton
     Set cBotonMsgPersonalizado = New clsGraphicalButton
@@ -649,8 +649,8 @@ Private Sub LoadUserConfig()
     txtLevel = ClientSetup.byMurderedLevel
 End Sub
 
-Private Sub Slider1_Change(index As Integer)
-    Select Case index
+Private Sub Slider1_Change(Index As Integer)
+    Select Case Index
         Case 0
             Audio.MusicVolume = Slider1(0).Value
         Case 1
@@ -658,8 +658,8 @@ Private Sub Slider1_Change(index As Integer)
     End Select
 End Sub
 
-Private Sub Slider1_Scroll(index As Integer)
-    Select Case index
+Private Sub Slider1_Scroll(Index As Integer)
+    Select Case Index
         Case 0
             Audio.MusicVolume = Slider1(0).Value
         Case 1

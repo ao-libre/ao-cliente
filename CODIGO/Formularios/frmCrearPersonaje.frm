@@ -1297,7 +1297,7 @@ Private currentGrh As Long
 Private Dir As E_Heading
 
 Private Sub Form_Load()
-    Me.Picture = LoadPicture(path(Graficos) & "VentanaCrearPersonaje.jpg")
+    Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaCrearPersonaje.jpg")
     
     Cargando = True
     Call LoadCharInfo
@@ -1341,7 +1341,7 @@ End Sub
 Private Sub IniciarGraficos()
 
     Dim GrhPath As String
-    GrhPath = path(Graficos)
+    GrhPath = Game.path(Interfaces)
     
     Set cBotonPasswd = New clsGraphicalButton
     Set cBotonTirarDados = New clsGraphicalButton
@@ -1554,8 +1554,8 @@ Private Sub TirarDados()
     Call FlushBuffer
 End Sub
 
-Private Sub DirPJ_Click(index As Integer)
-    Select Case index
+Private Sub DirPJ_Click(Index As Integer)
+    Select Case Index
         Case 0
             Dir = CheckDir(Dir + 1)
         Case 1
@@ -1569,8 +1569,8 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y A
     ClearLabel
 End Sub
 
-Private Sub HeadPJ_Click(index As Integer)
-    Select Case index
+Private Sub HeadPJ_Click(Index As Integer)
+    Select Case Index
         Case 0
             UserHead = CheckCabeza(UserHead + 1)
         Case 1
@@ -1768,9 +1768,9 @@ Private Sub lstProfesion_Click()
 On Error Resume Next
     If lstProfesion.Text = "Trabajador" Then
         'Agarramos un numero aleatorio del 0 al 5 por que hay 5 imagenes de trabajador
-        ImgProfesionDibujo.Picture = LoadPicture(path(Graficos) & lstProfesion.Text & (CInt(Rnd * 5)) & ".jpg")
+        ImgProfesionDibujo.Picture = LoadPicture(Game.path(Interfaces) & lstProfesion.Text & (CInt(Rnd * 5)) & ".jpg")
     Else
-        ImgProfesionDibujo.Picture = LoadPicture(path(Graficos) & lstProfesion.Text & ".jpg")
+        ImgProfesionDibujo.Picture = LoadPicture(Game.path(Interfaces) & lstProfesion.Text & ".jpg")
     End If
     
     UserClase = lstProfesion.ListIndex + 1
@@ -1790,23 +1790,23 @@ Private Sub lstRaza_Click()
     Call UpdateStats
 End Sub
 
-Private Sub picHead_Click(index As Integer)
+Private Sub picHead_Click(Index As Integer)
     ' No se mueve si clickea al medio
-    If index = 2 Then Exit Sub
+    If Index = 2 Then Exit Sub
     
     Dim Counter As Integer, Count_index As Long
     Dim Head As Integer
     
     Head = UserHead
     
-    If index > 2 Then
+    If Index > 2 Then
 
-        Count_index = index - 2
+        Count_index = Index - 2
         For Counter = Count_index To 1 Step -1
             Head = CheckCabeza(Head + 1)
         Next Counter
     Else
-        Count_index = 2 - index
+        Count_index = 2 - Index
         For Counter = Count_index To 1 Step -1
             Head = CheckCabeza(Head - 1)
         Next Counter
@@ -2231,7 +2231,7 @@ End Sub
 Private Sub SetStars(ByRef ImgContainer As Object, ByVal NumStars As Integer)
     Dim FullStars As Integer
     Dim HasHalfStar As Boolean
-    Dim index As Integer
+    Dim Index As Integer
     Dim Counter As Integer
 
     If NumStars > 0 Then
@@ -2242,18 +2242,18 @@ Private Sub SetStars(ByRef ImgContainer As Object, ByVal NumStars As Integer)
         
         ' Tienen brillo extra si estan todas
         If FullStars = 5 Then
-            For index = 1 To FullStars
-                ImgContainer(index).Picture = picGlowStar
-            Next index
+            For Index = 1 To FullStars
+                ImgContainer(Index).Picture = picGlowStar
+            Next Index
         Else
             ' Numero impar? Entonces hay que poner "media estrella"
             If (NumStars Mod 2) > 0 Then HasHalfStar = True
             
             ' Muestro las estrellas enteras
             If FullStars > 0 Then
-                For index = 1 To FullStars
-                    ImgContainer(index).Picture = picFullStar
-                Next index
+                For Index = 1 To FullStars
+                    ImgContainer(Index).Picture = picFullStar
+                Next Index
                 
                 Counter = FullStars
             End If
@@ -2273,17 +2273,17 @@ Private Sub SetStars(ByRef ImgContainer As Object, ByVal NumStars As Integer)
                     Count_index = Counter + 1
                 
                 ' Limpio las que queden vacias
-                For index = Count_index To 5
-                    Set ImgContainer(index).Picture = Nothing
-                Next index
+                For Index = Count_index To 5
+                    Set ImgContainer(Index).Picture = Nothing
+                Next Index
             End If
             
         End If
     Else
         ' Limpio todo
-        For index = 1 To 5
-            Set ImgContainer(index).Picture = Nothing
-        Next index
+        For Index = 1 To 5
+            Set ImgContainer(Index).Picture = Nothing
+        Next Index
     End If
 
 End Sub

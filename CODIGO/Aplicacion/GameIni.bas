@@ -16,6 +16,8 @@ End Type
 Public Enum ePath
     INIT
     Graficos
+    Interfaces
+    Skins
     Sounds
     Musica
     Mapas
@@ -83,6 +85,12 @@ Public Function path(ByVal PathType As ePath) As String
         
         Case ePath.Graficos
             path = App.path & "\Graficos\"
+        
+        Case ePath.Skins
+            path = App.path & "\Graficos\Skins\"
+            
+        Case ePath.Interfaces
+            path = App.path & "\Graficos\Interfaces\"
             
         Case ePath.Lenguajes
             path = App.path & "\Lenguajes\"
@@ -99,13 +107,13 @@ Public Function path(ByVal PathType As ePath) As String
             path = App.path & "\Mapas\" & "\" & MundoSeleccionado & "\"
             
         Case ePath.Musica
-            path = App.path & "\MIDI\"
+            path = App.path & "\AUDIO\MIDI\"
             
         Case ePath.Sounds
-            path = App.path & "\WAV\"
+            path = App.path & "\AUDIO\WAV\"
             
         Case ePath.Extras
-            path = App.path & "\Extras\"
+            path = App.path & "\AUDIO\Extras\"
     
     End Select
 
@@ -117,7 +125,7 @@ Public Sub LeerConfiguracion()
     Call IniciarCabecera
     
     Set Lector = New clsIniManager
-    Lector.Initialize (path(INIT) & CLIENT_FILE)
+    Lector.Initialize (Game.path(INIT) & CLIENT_FILE)
     
     With ClientSetup
         
@@ -166,7 +174,7 @@ Public Sub GuardarConfiguracion()
     On Local Error GoTo fileErr:
     
     Set Lector = New clsIniManager
-    Call Lector.Initialize(path(INIT) & CLIENT_FILE)
+    Call Lector.Initialize(Game.path(INIT) & CLIENT_FILE)
     
     With ClientSetup
         
@@ -203,7 +211,7 @@ Public Sub GuardarConfiguracion()
         Call Lector.ChangeValue("OTHER", "MOSTRAR_TIPS", CInt(.MostrarTips))
     End With
     
-    Call Lector.DumpFile(path(INIT) & CLIENT_FILE)
+    Call Lector.DumpFile(Game.path(INIT) & CLIENT_FILE)
 fileErr:
 
     'If Err.number <> 0 Then

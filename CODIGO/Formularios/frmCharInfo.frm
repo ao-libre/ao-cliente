@@ -400,7 +400,7 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
-    Me.Picture = LoadPicture(App.Path & "\Graficos\VentanaInfoPj.jpg")
+    Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaInfoPj.jpg")
     
     Call LoadButtons
     
@@ -409,7 +409,7 @@ End Sub
 Private Sub LoadButtons()
     Dim GrhPath As String
     
-    GrhPath = Path(Graficos)
+    GrhPath = Game.path(Interfaces)
 
     Set cBotonCerrar = New clsGraphicalButton
     Set cBotonPeticion = New clsGraphicalButton

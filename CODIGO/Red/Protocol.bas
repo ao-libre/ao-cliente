@@ -2046,7 +2046,7 @@ Private Sub HandleChangeMap()
 'For now we just drop it
     Call incomingData.ReadInteger
     
-    If FileExist(path(Mapas) & "Mapa" & UserMap & ".map", vbNormal) Then
+    If FileExist(Game.path(Mapas) & "Mapa" & UserMap & ".map", vbNormal) Then
         Call SwitchMap(UserMap)
         If bRain And bLluvia(UserMap) = 0 Then
                 Call Audio.StopWave(RainBufferIndex)

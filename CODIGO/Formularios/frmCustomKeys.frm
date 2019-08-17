@@ -636,7 +636,7 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
-    Me.Picture = LoadPicture(App.Path & "\graficos\VentanaConfigurarTeclas.jpg")
+    Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaConfigurarTeclas.jpg")
     
     Call LoadButtons
     
@@ -653,7 +653,7 @@ End Sub
 Private Sub LoadButtons()
     Dim GrhPath As String
     
-    GrhPath = Path(Graficos)
+    GrhPath = Game.path(Interfaces)
 
     Set cBotonGuardar = New clsGraphicalButton
     Set cBotonDefaultKeys = New clsGraphicalButton
@@ -719,7 +719,7 @@ Private Sub imgGuardar_Click()
 End Sub
 
 
-Private Sub Text1_KeyDown(index As Integer, KeyCode As Integer, Shift As Integer)
+Private Sub Text1_KeyDown(Index As Integer, KeyCode As Integer, Shift As Integer)
     Dim i As Long
     
     ' Can't change default combination
@@ -728,13 +728,13 @@ Private Sub Text1_KeyDown(index As Integer, KeyCode As Integer, Shift As Integer
     If LenB(CustomKeys.ReadableName(KeyCode)) = 0 Then Exit Sub
     'If key is not valid, we exit
     
-    Text1(index).Text = CustomKeys.ReadableName(KeyCode)
-    Text1(index).SelStart = Len(Text1(index).Text)
+    Text1(Index).Text = CustomKeys.ReadableName(KeyCode)
+    Text1(Index).SelStart = Len(Text1(Index).Text)
     
     For i = 1 To CustomKeys.KeyCount
-        If i <> index Then
+        If i <> Index Then
             If CustomKeys.BindedKey(i) = KeyCode Then
-                Text1(index).Text = vbNullString 'If the key is already assigned, simply reject it
+                Text1(Index).Text = vbNullString 'If the key is already assigned, simply reject it
                 Call Beep 'Alert the user
                 KeyCode = 0
                 
@@ -743,19 +743,19 @@ Private Sub Text1_KeyDown(index As Integer, KeyCode As Integer, Shift As Integer
         End If
     Next i
     
-    CustomKeys.BindedKey(index) = KeyCode
+    CustomKeys.BindedKey(Index) = KeyCode
     
 End Sub
 
-Private Sub Text1_KeyPress(index As Integer, KeyAscii As Integer)
+Private Sub Text1_KeyPress(Index As Integer, KeyAscii As Integer)
     KeyAscii = 0
 End Sub
 
-Private Sub Text1_KeyUp(index As Integer, KeyCode As Integer, Shift As Integer)
-    Call Text1_KeyDown(index, KeyCode, Shift)
+Private Sub Text1_KeyUp(Index As Integer, KeyCode As Integer, Shift As Integer)
+    Call Text1_KeyDown(Index, KeyCode, Shift)
 End Sub
 
-Private Sub Text1_MouseMove(index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Text1_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
 End Sub
 Private Sub ShowConfig()

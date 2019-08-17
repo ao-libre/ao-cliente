@@ -149,7 +149,7 @@ Private Sub Form_Load()
     clsFormulario.Initialize Me
     
     With Me
-        .Picture = LoadPicture(App.path & "\Graficos\frmCerrar.jpg")
+        .Picture = LoadPicture(Game.path(Interfaces) & "frmCerrar.jpg")
         .cRegresar.Caption = JsonLanguage.Item("CERRAR").Item("TEXTOS").Item(1)
         .cSalir.Caption = JsonLanguage.Item("CERRAR").Item("TEXTOS").Item(2)
         .cCancelQuit.Caption = JsonLanguage.Item("CERRAR").Item("TEXTOS").Item(3)

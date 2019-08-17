@@ -170,7 +170,7 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
-    Me.Picture = LoadPicture(path(Graficos) & "VentanaCambioMOTD.jpg")
+    Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaCambioMOTD.jpg")
     
     Call LoadButtons
 End Sub
@@ -178,7 +178,7 @@ End Sub
 Private Sub LoadButtons()
     Dim GrhPath As String
     
-    GrhPath = path(Graficos)
+    GrhPath = Game.path(Interfaces)
 
     Set cBotonAzul = New clsGraphicalButton
     Set cBotonRojo = New clsGraphicalButton
@@ -292,7 +292,7 @@ Private Sub imgMorado_Click()
     txtMotd.Text = txtMotd & "~128~0~128~" & CStr(yNegrita) & "~" & CStr(yCursiva)
 End Sub
 
-Private Sub imgOptCursiva_Click(index As Integer)
+Private Sub imgOptCursiva_Click(Index As Integer)
     
     If yCursiva = 0 Then
         imgOptCursiva(0).Picture = picCursiva
@@ -304,11 +304,11 @@ Private Sub imgOptCursiva_Click(index As Integer)
 
 End Sub
 
-Private Sub imgOptCursiva_MouseMove(index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgOptCursiva_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
 End Sub
 
-Private Sub imgOptNegrita_Click(index As Integer)
+Private Sub imgOptNegrita_Click(Index As Integer)
     
     If yNegrita = 0 Then
         imgOptNegrita(0).Picture = picNegrita
@@ -320,7 +320,7 @@ Private Sub imgOptNegrita_Click(index As Integer)
     
 End Sub
 
-Private Sub imgOptNegrita_MouseMove(index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgOptNegrita_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
 End Sub
 

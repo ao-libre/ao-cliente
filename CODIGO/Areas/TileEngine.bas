@@ -337,7 +337,7 @@ Sub CargarCabezas()
     Dim Miscabezas() As tIndiceCabeza
     
     N = FreeFile()
-    Open path(INIT) & "Cabezas.ind" For Binary Access Read As #N
+    Open Game.path(INIT) & "Cabezas.ind" For Binary Access Read As #N
     
     'cabecera
     Get #N, , MiCabecera
@@ -371,7 +371,7 @@ Sub CargarCascos()
     Dim Miscabezas() As tIndiceCabeza
     
     N = FreeFile()
-    Open path(INIT) & "Cascos.ind" For Binary Access Read As #N
+    Open Game.path(INIT) & "Cascos.ind" For Binary Access Read As #N
     
     'cabecera
     Get #N, , MiCabecera
@@ -404,7 +404,7 @@ Sub CargarCuerpos()
     Dim MisCuerpos() As tIndiceCuerpo
     
     N = FreeFile()
-    Open path(INIT) & "Personajes.ind" For Binary Access Read As #N
+    Open Game.path(INIT) & "Personajes.ind" For Binary Access Read As #N
     
     'cabecera
     Get #N, , MiCabecera
@@ -439,7 +439,7 @@ Sub CargarFxs()
     Dim NumFxs As Integer
     
     N = FreeFile()
-    Open path(INIT) & "Fxs.ind" For Binary Access Read As #N
+    Open Game.path(INIT) & "Fxs.ind" For Binary Access Read As #N
     
     'cabecera
     Get #N, , MiCabecera
@@ -464,7 +464,7 @@ Sub CargarTips()
     Dim NumTips As Integer
     
     N = FreeFile
-    Open path(INIT) & "Tips.ayu" For Binary Access Read As #N
+    Open Game.path(INIT) & "Tips.ayu" For Binary Access Read As #N
     
     'cabecera
     Get #N, , MiCabecera
@@ -488,7 +488,7 @@ Sub CargarArrayLluvia()
     Dim Nu As Integer
     
     N = FreeFile()
-    Open path(INIT) & "fk.ind" For Binary Access Read As #N
+    Open Game.path(INIT) & "fk.ind" For Binary Access Read As #N
     
     'cabecera
     Get #N, , MiCabecera
@@ -1408,7 +1408,7 @@ Public Function InitTileEngine(ByVal setDisplayFormhWnd As Long, ByVal setTilePi
     WindowTileHeight = Round(frmMain.MainViewPic.Height / 32, 0)
     WindowTileWidth = Round(frmMain.MainViewPic.Width / 32, 0)
     
-    IniPath = path(INIT)
+    IniPath = Game.path(INIT)
     HalfWindowTileHeight = WindowTileHeight \ 2
     HalfWindowTileWidth = WindowTileWidth \ 2
 
@@ -1442,7 +1442,7 @@ On Error GoTo 0
 End Function
 
 Public Sub LoadGraphics()
-    Call SurfaceDB.Initialize(DirectD3D8, path(Graficos), ClientSetup.byMemory)
+    Call SurfaceDB.Initialize(DirectD3D8, Game.path(Graficos), ClientSetup.byMemory)
 End Sub
 
 

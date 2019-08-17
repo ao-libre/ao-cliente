@@ -223,24 +223,24 @@ End Sub
 Public Function ARGBtoD3DCOLORVALUE(ByVal ARGB As Long, ByRef Color As D3DCOLORVALUE)
 Dim dest(3) As Byte
 CopyMemory dest(0), ARGB, 4
-Color.a = dest(3)
+Color.A = dest(3)
 Color.r = dest(2)
 Color.g = dest(1)
 Color.B = dest(0)
 End Function
 
-Public Function ARGB(ByVal r As Long, ByVal g As Long, ByVal B As Long, ByVal a As Long) As Long
+Public Function ARGB(ByVal r As Long, ByVal g As Long, ByVal B As Long, ByVal A As Long) As Long
         
     Dim c As Long
         
-    If a > 127 Then
-        a = a - 128
-        c = a * 2 ^ 24 Or &H80000000
+    If A > 127 Then
+        A = A - 128
+        c = A * 2 ^ 24 Or &H80000000
         c = c Or r * 2 ^ 16
         c = c Or g * 2 ^ 8
         c = c Or B
     Else
-        c = a * 2 ^ 24
+        c = A * 2 ^ 24
         c = c Or r * 2 ^ 16
         c = c Or g * 2 ^ 8
         c = c Or B
@@ -287,7 +287,7 @@ On Error GoTo eDebug:
     '*** Default font ***
     
     'Set the texture
-    Set cfonts(1).Texture = DirectD3D8.CreateTextureFromFileEx(DirectDevice, Path(Graficos) & "Font.png", D3DX_DEFAULT, D3DX_DEFAULT, 0, 0, D3DFMT_UNKNOWN, D3DPOOL_MANAGED, D3DX_FILTER_POINT, D3DX_FILTER_NONE, 0, TexInfo, ByVal 0)
+    Set cfonts(1).Texture = DirectD3D8.CreateTextureFromFileEx(DirectDevice, Game.path(Graficos) & "Font.png", D3DX_DEFAULT, D3DX_DEFAULT, 0, 0, D3DFMT_UNKNOWN, D3DPOOL_MANAGED, D3DX_FILTER_POINT, D3DX_FILTER_NONE, 0, TexInfo, ByVal 0)
     
     'Store the size of the texture
     cfonts(1).TextureSize.X = TexInfo.Width
@@ -296,7 +296,7 @@ On Error GoTo eDebug:
     Exit Sub
 eDebug:
     If Err.number = "-2005529767" Then
-        MsgBox "Error en la textura de fuente utilizada " & Path(Graficos) & "Font.png.", vbCritical
+        MsgBox "Error en la textura de fuente utilizada " & Game.path(Graficos) & "Font.png.", vbCritical
         End
     End If
     End
@@ -318,7 +318,7 @@ Sub Engine_Init_FontSettings()
 
     'Load the header information
     FileNum = FreeFile
-    Open App.Path & "\Extras\" & "Font.dat" For Binary As #FileNum
+    Open App.path & "\Extras\" & "Font.dat" For Binary As #FileNum
         Get #FileNum, , cfonts(1).HeaderInfo
     Close #FileNum
     
@@ -344,7 +344,7 @@ Sub Engine_Init_FontSettings()
             .Vertex(0).tv = v
             .Vertex(0).X = 0
             .Vertex(0).Y = 0
-            .Vertex(0).Z = 0
+            .Vertex(0).z = 0
             
             .Vertex(1).Color = D3DColorARGB(255, 0, 0, 0)
             .Vertex(1).rhw = 1
@@ -352,7 +352,7 @@ Sub Engine_Init_FontSettings()
             .Vertex(1).tv = v
             .Vertex(1).X = cfonts(1).HeaderInfo.CellWidth
             .Vertex(1).Y = 0
-            .Vertex(1).Z = 0
+            .Vertex(1).z = 0
             
             .Vertex(2).Color = D3DColorARGB(255, 0, 0, 0)
             .Vertex(2).rhw = 1
@@ -360,7 +360,7 @@ Sub Engine_Init_FontSettings()
             .Vertex(2).tv = v + cfonts(1).RowFactor
             .Vertex(2).X = 0
             .Vertex(2).Y = cfonts(1).HeaderInfo.CellHeight
-            .Vertex(2).Z = 0
+            .Vertex(2).z = 0
             
             .Vertex(3).Color = D3DColorARGB(255, 0, 0, 0)
             .Vertex(3).rhw = 1
@@ -368,7 +368,7 @@ Sub Engine_Init_FontSettings()
             .Vertex(3).tv = v + cfonts(1).RowFactor
             .Vertex(3).X = cfonts(1).HeaderInfo.CellWidth
             .Vertex(3).Y = cfonts(1).HeaderInfo.CellHeight
-            .Vertex(3).Z = 0
+            .Vertex(3).z = 0
         End With
         
     Next LoopChar

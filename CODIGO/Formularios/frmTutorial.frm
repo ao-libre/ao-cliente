@@ -187,7 +187,7 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
-    Me.Picture = LoadPicture(Path(Graficos) & "VentanaTutorial.jpg")
+    Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaTutorial.jpg")
     
     Call LoadButtons
     
@@ -200,7 +200,7 @@ End Sub
 Private Sub LoadButtons()
     Dim GrhPath As String
     
-    GrhPath = Path(Graficos)
+    GrhPath = Game.path(Interfaces)
 
     Set cBotonSiguiente = New clsGraphicalButton
     Set cBotonAnterior = New clsGraphicalButton
@@ -288,7 +288,7 @@ Private Sub LoadTutorial()
     Dim lLine As Long
     Dim sLine As String
     
-    TutorialPath = Path(Extras) & "Tutorial.dat"
+    TutorialPath = Game.path(Extras) & "Tutorial.dat"
     NumPages = Val(GetVar(TutorialPath, "INIT", "NumPags"))
     
     If NumPages > 0 Then

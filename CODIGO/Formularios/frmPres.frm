@@ -80,7 +80,7 @@ Dim PresPath As String
 ticks = ticks + 1
 
 If ticks = 1 Then
-    PresPath = path(Graficos) & "ImagenPresentacion.jpg"
+    PresPath = Game.path(Interfaces) & "ImagenPresentacion.jpg"
     Me.Picture = LoadPicture(PresPath)
     puedo = True
 Else

@@ -164,15 +164,17 @@ On Error GoTo ErrHandler
     Dim newSurface As SURFACE_ENTRY_STATIC
     Dim surface_desc As D3DSURFACE_DESC
     Dim texture_info As D3DXIMAGE_INFO
+    Dim Graphic As String
 
     With newSurface
         .fileIndex = fileIndex
+        Graphic = Game.path(Graficos) & CStr(fileIndex)
         
         #If Compression = 0 Then
-            If FileExist(Path(Graficos) & CStr(fileIndex) & ".bmp", vbNormal) Then
-                Set .Surface = DirectD3D.CreateTextureFromFileEx(DirectDevice, Path(Graficos) & CStr(fileIndex) & ".BMP", D3DX_DEFAULT, D3DX_DEFAULT, 0, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, &HFF000000, ByVal 0, ByVal 0)
-            ElseIf FileExist(Path(Graficos) & CStr(fileIndex) & ".png", vbNormal) Then
-                Set .Surface = DirectD3D.CreateTextureFromFileEx(DirectDevice, Path(Graficos) & CStr(fileIndex) & ".PNG", D3DX_DEFAULT, D3DX_DEFAULT, 0, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, &HFF000000, ByVal 0, ByVal 0)
+            If FileExist(Graphic & ".bmp", vbNormal) Then
+                Set .Surface = DirectD3D.CreateTextureFromFileEx(DirectDevice, Graphic & ".BMP", D3DX_DEFAULT, D3DX_DEFAULT, 0, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, &HFF000000, ByVal 0, ByVal 0)
+            ElseIf FileExist(Graphic & ".png", vbNormal) Then
+                Set .Surface = DirectD3D.CreateTextureFromFileEx(DirectDevice, Graphic & ".PNG", D3DX_DEFAULT, D3DX_DEFAULT, 0, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, &HFF000000, ByVal 0, ByVal 0)
             Else
                 MsgBox "No se ha podido cargar el grafico con indice: " & fileIndex
             End If
