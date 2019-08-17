@@ -137,7 +137,8 @@ On Error Resume Next
 End Function
 
 Private Function CheckIfRunningLastVersion() As Boolean
-    On Error GoTo errorinet
+On Error Resume Next
+
     Dim responseGithub As String, versionNumberMaster As String, versionNumberLocal As String
     Dim JsonObject     As Object
     
@@ -146,8 +147,6 @@ Private Function CheckIfRunningLastVersion() As Boolean
     responseGithub = Inet.OpenRequest("https://api.github.com/repos/ao-libre/ao-cliente/releases/latest", "GET")
     responseGithub = Inet.Execute
     responseGithub = Inet.GetResponseAsString
-    
-    If responseGithub = "False" Then GoTo errorinet
     
     Set JsonObject = JSON.parse(responseGithub)
     
@@ -159,10 +158,4 @@ Private Function CheckIfRunningLastVersion() As Boolean
     Else
         CheckIfRunningLastVersion = False
     End If
-    
-    Exit Function
-
-errorinet:
-    Call MsgBox("Error al comprobar version del launcher/Error verification version of launcher", vbCritical + vbOKOnly, "Argentum Online")
-    frmCargando.NoInternetConnection = True
 End Function
