@@ -141,7 +141,16 @@ On Error Resume Next
     Next LoopC
 End Sub
 
-Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, ByVal Text As String, Optional ByVal Red As Integer = -1, Optional ByVal Green As Integer, Optional ByVal Blue As Integer, Optional ByVal bold As Boolean = False, Optional ByVal italic As Boolean = False, Optional ByVal bCrLf As Boolean = True)
+Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, _
+                    ByVal Text As String, _
+                    Optional ByVal Red As Integer = -1, _
+                    Optional ByVal Green As Integer, _
+                    Optional ByVal Blue As Integer, _
+                    Optional ByVal bold As Boolean = False, _
+                    Optional ByVal italic As Boolean = False, _
+                    Optional ByVal bCrLf As Boolean = True, _
+                    Optional ByVal Alignment As Byte = rtfLeft)
+    
 '****************************************************
 'Adds text to a Richtext box at the bottom.
 'Automatically scrolls to new text.
@@ -150,8 +159,10 @@ Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, ByVal Text As String, Opt
 'Pablo (ToxicWaste) 01/26/2007 : Now the list refeshes properly.
 'Juan Martin Sotuyo Dodero (Maraxus) 03/29/2007 : Replaced ToxicWaste's code for extra performance.
 'Jopi 17/08/2019 : Consola transparente.
+'Jopi 17/08/2019 : Ahora podes especificar el alineamiento del texto.
 '****************************************************
     With RichTextBox
+        
         If Len(.Text) > 1000 Then
             'Get rid of first line
             .SelStart = InStr(1, .Text, vbCrLf) + 1
@@ -164,15 +175,20 @@ Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, ByVal Text As String, Opt
         .SelBold = bold
         .SelItalic = italic
         
+        ' 0 = Left
+        ' 1 = Center
+        ' 2 = Right
+        .SelAlignment = Alignment
+
         If Not Red = -1 Then .SelColor = RGB(Red, Green, Blue)
         
         If bCrLf And Len(.Text) > 0 Then Text = vbCrLf & Text
         
         .SelText = Text
-        
+
         ' Esto arregla el bug de las letras superponiendose la consola del frmMain
         If Not RichTextBox = frmMain.RecTxt Then RichTextBox.Refresh
-        
+
     End With
 End Sub
 
@@ -948,7 +964,7 @@ Private Sub LoadInitialConfig()
                             JsonLanguage.Item("INICIA_CLASES").Item("COLOR").Item(1), _
                             JsonLanguage.Item("INICIA_CLASES").Item("COLOR").Item(2), _
                             JsonLanguage.Item("INICIA_CLASES").Item("COLOR").Item(3), _
-                            True, False, True)
+                            True, False, True, rtfCenter)
                             
     Set Dialogos = New clsDialogs
     Set Audio = New clsAudio
@@ -962,11 +978,11 @@ Private Sub LoadInitialConfig()
     Set frmMain.Client = New clsSocket
     
     Call AddtoRichTextBox(frmCargando.status, _
-                            " " & JsonLanguage.Item("HECHO").Item("TEXTO"), _
+                            "   " & JsonLanguage.Item("HECHO").Item("TEXTO"), _
                             JsonLanguage.Item("HECHO").Item("COLOR").Item(1), _
                             JsonLanguage.Item("HECHO").Item("COLOR").Item(2), _
                             JsonLanguage.Item("HECHO").Item("COLOR").Item(3), _
-                            True, False, False)
+                            True, False, False, rtfLeft)
     
     '#############
     ' DIRECT SOUND
@@ -975,7 +991,7 @@ Private Sub LoadInitialConfig()
                             JsonLanguage.Item("INICIA_SONIDO").Item("COLOR").Item(1), _
                             JsonLanguage.Item("INICIA_SONIDO").Item("COLOR").Item(2), _
                             JsonLanguage.Item("INICIA_SONIDO").Item("COLOR").Item(3), _
-                            True, False, True)
+                            True, False, True, rtfCenter)
                             
     'Inicializamos el sonido
     Call Audio.Initialize(DirectX, frmMain.hWnd, Game.path(Sounds), Game.path(Musica))
@@ -987,11 +1003,11 @@ Private Sub LoadInitialConfig()
     Call Audio.PlayMIDI("6.mid")
     
     Call AddtoRichTextBox(frmCargando.status, _
-                            " " & JsonLanguage.Item("HECHO").Item("TEXTO"), _
+                            "   " & JsonLanguage.Item("HECHO").Item("TEXTO"), _
                             JsonLanguage.Item("HECHO").Item("COLOR").Item(1), _
                             JsonLanguage.Item("HECHO").Item("COLOR").Item(2), _
                             JsonLanguage.Item("HECHO").Item("COLOR").Item(3), _
-                            True, False, False)
+                            True, False, False, rtfLeft)
     
     '###########
     ' CONSTANTES
@@ -1000,7 +1016,7 @@ Private Sub LoadInitialConfig()
                             JsonLanguage.Item("INICIA_CONSTANTES").Item("COLOR").Item(1), _
                             JsonLanguage.Item("INICIA_CONSTANTES").Item("COLOR").Item(2), _
                             JsonLanguage.Item("INICIA_CONSTANTES").Item("COLOR").Item(3), _
-                            True, False, True)
+                            True, False, True, rtfCenter)
                             
     Call InicializarNombres
     
@@ -1014,11 +1030,11 @@ Private Sub LoadInitialConfig()
         Set picMouseIcon = LoadPicture(Game.path(Extras) & "Hand.ico")
     
     Call AddtoRichTextBox(frmCargando.status, _
-                            " " & JsonLanguage.Item("HECHO").Item("TEXTO"), _
+                            "   " & JsonLanguage.Item("HECHO").Item("TEXTO"), _
                             JsonLanguage.Item("HECHO").Item("COLOR").Item(1), _
                             JsonLanguage.Item("HECHO").Item("COLOR").Item(2), _
                             JsonLanguage.Item("HECHO").Item("COLOR").Item(3), _
-                            True, False, False)
+                            True, False, False, rtfLeft)
     
 
     '##############
@@ -1028,7 +1044,7 @@ Private Sub LoadInitialConfig()
                             JsonLanguage.Item("INICIA_MOTOR_GRAFICO").Item("COLOR").Item(1), _
                             JsonLanguage.Item("INICIA_MOTOR_GRAFICO").Item("COLOR").Item(2), _
                             JsonLanguage.Item("INICIA_MOTOR_GRAFICO").Item("COLOR").Item(3), _
-                            True, False, True)
+                            True, False, True, rtfCenter)
     
     '     Iniciamos el Engine de DirectX 8
     If Not Engine_DirectX8_Init Then
@@ -1043,11 +1059,11 @@ Private Sub LoadInitialConfig()
     Engine_DirectX8_Aditional_Init
 
     Call AddtoRichTextBox(frmCargando.status, _
-                            " " & JsonLanguage.Item("HECHO").Item("TEXTO"), _
+                            "   " & JsonLanguage.Item("HECHO").Item("TEXTO"), _
                             JsonLanguage.Item("HECHO").Item("COLOR").Item(1), _
                             JsonLanguage.Item("HECHO").Item("COLOR").Item(2), _
                             JsonLanguage.Item("HECHO").Item("COLOR").Item(3), _
-                            True, False, False)
+                            True, False, False, rtfLeft)
     
     '###################
     ' ANIMACIONES EXTRAS
@@ -1056,7 +1072,7 @@ Private Sub LoadInitialConfig()
                             JsonLanguage.Item("INICIA_FXS").Item("COLOR").Item(1), _
                             JsonLanguage.Item("INICIA_FXS").Item("COLOR").Item(2), _
                             JsonLanguage.Item("INICIA_FXS").Item("COLOR").Item(3), _
-                            True, False, True)
+                            True, False, True, rtfCenter)
                             
     Call CargarTips
     Call CargarArrayLluvia
@@ -1065,21 +1081,21 @@ Private Sub LoadInitialConfig()
     Call CargarColores
     
     Call AddtoRichTextBox(frmCargando.status, _
-                            " " & JsonLanguage.Item("HECHO").Item("TEXTO"), _
+                            "   " & JsonLanguage.Item("HECHO").Item("TEXTO"), _
                             JsonLanguage.Item("HECHO").Item("COLOR").Item(1), _
                             JsonLanguage.Item("HECHO").Item("COLOR").Item(2), _
                             JsonLanguage.Item("HECHO").Item("COLOR").Item(3), _
-                            True, False, False)
+                            True, False, False, rtfLeft)
     
     'Inicializamos el inventario grafico
     Call Inventario.Initialize(DirectD3D8, frmMain.PicInv, MAX_INVENTORY_SLOTS)
     
     Call AddtoRichTextBox(frmCargando.status, _
-                            "                    " & JsonLanguage.Item("BIENVENIDO").Item("TEXTO"), _
+                            JsonLanguage.Item("BIENVENIDO").Item("TEXTO"), _
                             JsonLanguage.Item("BIENVENIDO").Item("COLOR").Item(1), _
                             JsonLanguage.Item("BIENVENIDO").Item("COLOR").Item(2), _
                             JsonLanguage.Item("BIENVENIDO").Item("COLOR").Item(3), _
-                            True, False, True)
+                            True, False, True, rtfCenter)
                             
     '###################
     ' PETICIONES API
