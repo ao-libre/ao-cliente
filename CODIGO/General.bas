@@ -142,14 +142,15 @@ On Error Resume Next
 End Sub
 
 Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, ByVal Text As String, Optional ByVal Red As Integer = -1, Optional ByVal Green As Integer, Optional ByVal Blue As Integer, Optional ByVal bold As Boolean = False, Optional ByVal italic As Boolean = False, Optional ByVal bCrLf As Boolean = True)
-'******************************************
+'****************************************************
 'Adds text to a Richtext box at the bottom.
 'Automatically scrolls to new text.
-'Text box MUST be multiline and have a 3D
-'apperance!
+'Text box MUST be multiline and have a 3D apperance!
+'****************************************************
 'Pablo (ToxicWaste) 01/26/2007 : Now the list refeshes properly.
 'Juan Martin Sotuyo Dodero (Maraxus) 03/29/2007 : Replaced ToxicWaste's code for extra performance.
-'******************************************r
+'Jopi 17/08/2019 : Consola transparente.
+'****************************************************
     With RichTextBox
         If Len(.Text) > 1000 Then
             'Get rid of first line
@@ -166,9 +167,12 @@ Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, ByVal Text As String, Opt
         If Not Red = -1 Then .SelColor = RGB(Red, Green, Blue)
         
         If bCrLf And Len(.Text) > 0 Then Text = vbCrLf & Text
+        
         .SelText = Text
         
-        RichTextBox.Refresh
+        ' Esto arregla el bug de las letras superponiendose la consola del frmMain
+        If Not RichTextBox = frmMain.RecTxt Then RichTextBox.Refresh
+        
     End With
 End Sub
 

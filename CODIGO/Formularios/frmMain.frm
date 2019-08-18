@@ -190,7 +190,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2619
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -578,6 +577,7 @@ Begin VB.Form frmMain
       Width           =   225
    End
    Begin VB.Label lblName 
+      Alignment       =   2  'Center
       BackStyle       =   0  'Transparent
       BeginProperty Font 
          Name            =   "MS Sans Serif"
@@ -588,12 +588,12 @@ Begin VB.Form frmMain
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H000000FF&
-      Height          =   195
-      Left            =   8760
+      ForeColor       =   &H00FFC0C0&
+      Height          =   255
+      Left            =   8715
       TabIndex        =   22
-      Top             =   360
-      Width           =   2625
+      Top             =   315
+      Width           =   2985
    End
    Begin VB.Label lblLvl 
       AutoSize        =   -1  'True
@@ -1093,6 +1093,8 @@ Private ChangeHechi As Boolean, ChangeHechiNum As Integer
 Dim CtrlMaskOn As Boolean
 Dim SkinSeleccionado As String
 
+Private Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVal hWnd As Long, ByVal nIndex As Long, ByVal dwNewLong As Long) As Long
+
 Public Sub dragInventory_dragDone(ByVal originalSlot As Integer, ByVal newSlot As Integer)
 Call Protocol.WriteMoveItem(originalSlot, newSlot, eMoveType.Inventory)
 End Sub
@@ -1123,6 +1125,9 @@ Private Sub Form_Load()
     
     ' Detect links in console
     EnableURLDetect RecTxt.hWnd, Me.hWnd
+    
+    ' Make the console transparent
+    Call SetWindowLong(RecTxt.hWnd, -20, &H20&)
     
     CtrlMaskOn = False
 End Sub
