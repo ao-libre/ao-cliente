@@ -456,8 +456,13 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 09/08/2019: Nueva funcion que devuelve los paths del cliente [Path(PathType)]. DEJEN DE USAR App.path & "\BLA-BLA-BLA\"
 * 11/08/2019: Agregada opcion de elegir idioma del juego en la ventana opciones (Recox)
 * 11/08/2019: Se cambio el checkbox de recordar password por un control de usuario de gsz-ao y se le coloco traduccion a su respectivo label. (Recox)
+
+- v0.13.11
 * 13/08/2019: Retos 1vs1,2vs2,3vs3,nVSn (MarinoLautaro)
 		- /RETOS
 		- /ACEPTAR NICK
 * 15/08/2019: Se agrego el skin de cucsifae, se agregaron ventanas de cargando viejas y se agrego imagen de presentacion (Recox)
 * 16/08/2019: Se arreglo skin de AO-Libre, se puso como default el mismo (Recox)
+* 16/08/2019: Se eliminaron las referencias a los Controles ActiveX inutilizados. (jopiortiz)
+* 16/08/2019: Se eliminó todo el codigo referente a Sockets y Winsocks, ahora se usa la API ws2_32.dll por defecto. (jopiortiz)
+* 16/08/2019: Se reemplazó el Control ActiveX MSINET.OCX por la API nativa WinInet. (jopiortiz)
