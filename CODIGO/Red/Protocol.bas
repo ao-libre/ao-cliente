@@ -354,6 +354,9 @@ Public Sub Connect(ByVal Modo As E_MODO)
     'Conexion al servidor mediante la API de Windows.
     '*********************************************************************
         
+    'Evitamos enviar multiples peticiones de conexion al servidor.
+    frmConnect.btnConectarse.Enabled = False
+        
     'Primero lo cerramos, para evitar errores.
     If frmMain.Client.State <> (sckClosed Or sckConnecting) Then
         frmMain.Client.CloseSck
@@ -364,7 +367,9 @@ Public Sub Connect(ByVal Modo As E_MODO)
 
     'Usamos la API de Windows
     frmMain.Client.Connect CurServerIp, CurServerPort
-
+    
+    'Vuelvo a activar el boton.
+    frmConnect.btnConectarse.Enabled = True
 End Sub
 
 ''
