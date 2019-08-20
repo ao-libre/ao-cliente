@@ -1635,7 +1635,9 @@ Private Sub ImgCrear_Click()
         MsgBox JsonLanguage.Item("ERROR_CONN_LOST").Item("TEXTO")
         Unload Me
     Else
+        Me.imgCrear.Enabled = False
         Call Login
+        Me.imgCrear.Enabled = True
     End If
     
         bShowTutorial = True

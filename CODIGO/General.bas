@@ -875,9 +875,7 @@ Sub Main()
     
     ChDrive App.path
     ChDir App.path
-    
-    tipf = ClientSetup.MostrarTips
-    
+
     'Set resolution BEFORE the loading form is displayed, therefore it will be centered.
     Call Resolution.SetResolution(800, 600)
 
@@ -1385,9 +1383,6 @@ Public Sub CloseClient()
     Set frmMain.Client = Nothing
     
     Call UnloadAllForms
-    
-    'Actualizar tip
-    ClientSetup.MostrarTips = tipf
     
     'Si se cambio la resolucion, la reseteamos.
     If ResolucionCambiada Then Resolution.ResetResolution

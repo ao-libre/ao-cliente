@@ -1445,8 +1445,10 @@ Public Sub LoadGraphics()
     Call SurfaceDB.Initialize(DirectD3D8, Game.path(Graficos), ClientSetup.byMemory)
 End Sub
 
-
-Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Integer, ByVal MouseViewX As Integer, ByVal MouseViewY As Integer)
+Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
+                  ByVal DisplayFormLeft As Integer, _
+                  ByVal MouseViewX As Integer, _
+                  ByVal MouseViewY As Integer)
 
     If EngineRun Then
         Call Engine_BeginScene
@@ -1454,23 +1456,28 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Inte
         Call DesvanecimientoTechos
         
         If UserMoving Then
+        
             '****** Move screen Left and Right if needed ******
             If AddtoUserPos.X <> 0 Then
                 OffsetCounterX = OffsetCounterX - ScrollPixelsPerFrameX * AddtoUserPos.X * timerTicksPerFrame
+
                 If Abs(OffsetCounterX) >= Abs(TilePixelWidth * AddtoUserPos.X) Then
                     OffsetCounterX = 0
                     AddtoUserPos.X = 0
                     UserMoving = False
                 End If
+                
             End If
             
             '****** Move screen Up and Down if needed ******
             If AddtoUserPos.Y <> 0 Then
                 OffsetCounterY = OffsetCounterY - ScrollPixelsPerFrameY * AddtoUserPos.Y * timerTicksPerFrame
+
                 If Abs(OffsetCounterY) >= Abs(TilePixelHeight * AddtoUserPos.Y) Then
                     OffsetCounterY = 0
                     AddtoUserPos.Y = 0
                     UserMoving = False
+                    
                 End If
             End If
         End If
@@ -1500,80 +1507,54 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Inte
         Call Engine_EndScene(MainScreenRect, 0)
     End If
     
-    
-          '//Banco
-    If frmBancoObj.PicBancoInv.Visible Then _
-        Call InvBanco(0).DrawInv
-         
-    If frmBancoObj.PicInv.Visible Then _
-        Call InvBanco(1).DrawInv
-    
+    '//Banco
+    If frmBancoObj.Visible Then
+        With frmBancoObj
+            If .PicBancoInv.Visible Then Call InvBanco(0).DrawInv
+            If .PicInv.Visible Then Call InvBanco(1).DrawInv
+        End With
+    End If
     
     '//Comercio
-    If frmComerciar.picInvNpc.Visible Then _
-        Call InvComNpc.DrawInv
-        
-    If frmComerciar.picInvUser.Visible Then _
-        Call InvComUsu.DrawInv
-        
+    If frmComerciar.Visible Then
+        With frmComerciar
+            If .picInvNpc.Visible Then Call InvComNpc.DrawInv
+            If .picInvUser.Visible Then Call InvComUsu.DrawInv
+        End With
+    End If
     
     '//Comercio entre usuarios
-    If frmComerciarUsu.picInvComercio.Visible Then _
-        InvComUsu.DrawInv (1)
-            
-    If frmComerciarUsu.picInvOfertaProp.Visible Then _
-        InvOfferComUsu(0).DrawInv (1)
-            
-    If frmComerciarUsu.picInvOfertaOtro Then _
-        InvOfferComUsu(1).DrawInv (1)
-            
-    If frmComerciarUsu.picInvOroProp.Visible Then _
-        InvOroComUsu(0).DrawInv (1)
-            
-    If frmComerciarUsu.picInvOroOfertaProp.Visible Then _
-        InvOroComUsu(1).DrawInv (1)
-                
-    If frmComerciarUsu.picInvOroOfertaOtro.Visible Then _
-        InvOroComUsu(2).DrawInv (1)
-        
-        
-        
+    If frmComerciarUsu.Visible Then
+        With frmComerciarUsu
+            If .picInvComercio.Visible Then InvComUsu.DrawInv (1)
+            If .picInvOfertaProp.Visible Then InvOfferComUsu(0).DrawInv (1)
+            If .picInvOfertaOtro Then InvOfferComUsu(1).DrawInv (1)
+            If .picInvOroProp.Visible Then InvOroComUsu(0).DrawInv (1)
+            If .picInvOroOfertaProp.Visible Then InvOroComUsu(1).DrawInv (1)
+            If .picInvOroOfertaOtro.Visible Then InvOroComUsu(2).DrawInv (1)
+        End With
+    End If
+    
     '//Herrero
     If frmHerrero.Visible Then
         With frmHerrero
-        If .picLingotes0.Visible Or .picMejorar0.Visible Then _
-            InvLingosHerreria(1).DrawInv (1)
-            
-        If .picLingotes1.Visible Or .picMejorar1.Visible Then _
-            InvLingosHerreria(2).DrawInv (1)
-            
-        If .picLingotes2.Visible Or .picMejorar2.Visible Then _
-            InvLingosHerreria(3).DrawInv (1)
-            
-        If .picLingotes3.Visible Or .picMejorar3.Visible Then _
-            InvLingosHerreria(4).DrawInv (1)
+            If .picLingotes0.Visible Or .picMejorar0.Visible Then InvLingosHerreria(1).DrawInv (1)
+            If .picLingotes1.Visible Or .picMejorar1.Visible Then InvLingosHerreria(2).DrawInv (1)
+            If .picLingotes2.Visible Or .picMejorar2.Visible Then InvLingosHerreria(3).DrawInv (1)
+            If .picLingotes3.Visible Or .picMejorar3.Visible Then InvLingosHerreria(4).DrawInv (1)
         End With
     End If
-        
-    '//FIN HERRERO
     
     '//Carpintero
     If frmCarp.Visible Then
         With frmCarp
-            If .picMaderas0.Visible Or .imgMejorar0.Visible Then _
-                InvMaderasCarpinteria(1).DrawInv (1)
-                
-            If .picMaderas1.Visible Or .imgMejorar1.Visible Then _
-            InvMaderasCarpinteria(2).DrawInv (1)
-            
-            If .picMaderas2.Visible Or .imgMejorar2.Visible Then _
-            InvMaderasCarpinteria(3).DrawInv (1)
-            
-            If .picMaderas3.Visible Or .imgMejorar3.Visible Then _
-            InvMaderasCarpinteria(4).DrawInv (1)
+            If .picMaderas0.Visible Or .imgMejorar0.Visible Then InvMaderasCarpinteria(1).DrawInv (1)
+            If .picMaderas1.Visible Or .imgMejorar1.Visible Then InvMaderasCarpinteria(2).DrawInv (1)
+            If .picMaderas2.Visible Or .imgMejorar2.Visible Then InvMaderasCarpinteria(3).DrawInv (1)
+            If .picMaderas3.Visible Or .imgMejorar3.Visible Then InvMaderasCarpinteria(4).DrawInv (1)
         End With
     End If
-
+    
     '//Inventario
     If frmMain.Visible Then Call Inventario.DrawInv
 
