@@ -21,11 +21,11 @@ Begin VB.Form frmCargando
    StartUpPosition =   2  'CenterScreen
    Begin RichTextLib.RichTextBox Status 
       Height          =   1905
-      Left            =   2400
+      Left            =   2640
       TabIndex        =   1
       TabStop         =   0   'False
       ToolTipText     =   "Mensajes del servidor"
-      Top             =   4200
+      Top             =   3360
       Width           =   5160
       _ExtentX        =   9102
       _ExtentY        =   3360
