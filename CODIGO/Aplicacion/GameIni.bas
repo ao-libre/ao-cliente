@@ -113,7 +113,7 @@ Public Function path(ByVal PathType As ePath) As String
             path = App.path & "\AUDIO\WAV\"
             
         Case ePath.Extras
-            path = App.path & "\AUDIO\Extras\"
+            path = App.path & "\Extras\"
     
     End Select
 

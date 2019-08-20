@@ -677,7 +677,6 @@ Public UserExp As Long
 Public UserReputacion As tReputacion
 Public UserEstadisticas As tEstadisticasUsu
 Public UserDescansar As Boolean
-Public tipf As String
 Public PrimeraVez As Boolean
 Public bShowTutorial As Boolean
 Public FPSFLAG As Boolean
