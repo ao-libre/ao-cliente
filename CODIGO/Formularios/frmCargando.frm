@@ -20,19 +20,21 @@ Begin VB.Form frmCargando
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
    Begin RichTextLib.RichTextBox Status 
-      Height          =   1905
-      Left            =   2640
+      Height          =   2385
+      Left            =   2610
       TabIndex        =   1
       TabStop         =   0   'False
       ToolTipText     =   "Mensajes del servidor"
-      Top             =   3360
-      Width           =   5160
-      _ExtentX        =   9102
-      _ExtentY        =   3360
+      Top             =   3210
+      Width           =   5190
+      _ExtentX        =   9155
+      _ExtentY        =   4207
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
+      Appearance      =   0
       TextRTF         =   $"frmCargando.frx":0000
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Verdana"
