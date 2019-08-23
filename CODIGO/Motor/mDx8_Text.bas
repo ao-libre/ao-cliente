@@ -404,9 +404,9 @@ Public Sub DrawText(ByVal X As Integer, ByVal Y As Integer, ByVal Text As String
         Color = D3DColorARGB(255, aux.r, aux.g, aux.B)
         
         #If SpriteBatch = 1 Then
-            Call Engine_Render_Text(cfonts(1), Text, X, Y, Color, Center, 255, False)
-        #Else
             Call Engine_Render_Text(cfonts(1), Text, X, Y, Color, Center, 255, False, SpriteBatch)
+        #Else
+            Call Engine_Render_Text(cfonts(1), Text, X, Y, Color, Center, 255, False)
         #End If
 End Sub
 
