@@ -1440,6 +1440,7 @@ On Error GoTo 0
 End Function
 
 Public Sub LoadGraphics()
+
     Call SurfaceDB.Initialize(DirectD3D8, Game.path(Graficos), ClientSetup.byMemory)
     
     #If SpriteBatch = 1 Then
@@ -1880,9 +1881,9 @@ Public Sub Device_Textured_Render(ByVal X As Integer, _
 
     If Shadow And ClientSetup.UsarSombras = False Then Exit Sub
     
-    Dim dest_rect As RECT
+    Dim dest_rect     As RECT
     Dim temp_verts(3) As TLVERTEX
-    Dim SRDesc As D3DSURFACE_DESC
+    Dim SRDesc        As D3DSURFACE_DESC
 
     With dest_rect
         .Bottom = Y + (src_rect.Bottom - src_rect.Top)
@@ -1891,11 +1892,11 @@ Public Sub Device_Textured_Render(ByVal X As Integer, _
         .Top = Y
     End With
     
-    Dim texwidth As Long, texheight As Long
+    Dim TexWidth As Long, TexHeight As Long
     Texture.GetLevelDesc 0, SRDesc
 
-    texwidth = SRDesc.Width
-    texheight = SRDesc.Height
+    TexWidth = SRDesc.Width
+    TexHeight = SRDesc.Height
     
     If Shadow Then
         Dim Color_Shadow(3) As Long
@@ -1968,7 +1969,19 @@ Public Sub Device_Batched_Render(ByVal X As Integer, _
     Else
         Geometry_Create_Box temp_verts(), dest_rect, src_rect, Color_List(), TexWidth, TexHeight, Angle
     End If
-
+    
+    With SpriteBatch
+        '// Seteamos la textura
+        Call .SetTexture(Texture)
+                
+        If TexWidth <> 0 And TexHeight <> 0 Then
+            Call .Draw(X, Y, Width, Height, Color_List(), src_rect.Left / TexWidth, src_rect.Top / TexHeight, (src_rect.Left + Width) / TexWidth, (src_rect.Top + Height) / TexHeight)
+        Else
+            Call .Draw(X, Y, TexWidth, TexHeight, Color_List())
+        End If
+        
+    End With
+    
     If Shadow Then
         temp_verts(1).X = temp_verts(1).X + (src_rect.Bottom - src_rect.Top) * 0.5
         temp_verts(1).Y = temp_verts(1).Y - (src_rect.Right - src_rect.Left) * 0.5
@@ -1989,19 +2002,7 @@ Public Sub Device_Batched_Render(ByVal X As Integer, _
         DirectDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
         DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
     End If
-    
-    With SpriteBatch
-        '// Seteamos la textura
-        Call .SetTexture(Texture)
-                
-        If TexWidth <> 0 And TexHeight <> 0 Then
-            Call .Draw(X, Y, Width, Height, Color_List(), src_rect.Left / TexWidth, src_rect.Top / TexHeight, (src_rect.Left + Width) / TexWidth, (src_rect.Top + Height) / TexHeight)
-        Else
-            Call .Draw(X, Y, TexWidth, TexHeight, Color_List())
-        End If
-        
-    End With
-    
+
 End Sub
 
 Public Sub Device_Textured_Render_Scale(ByVal X As Integer, _
@@ -2026,13 +2027,13 @@ Public Sub Device_Textured_Render_Scale(ByVal X As Integer, _
         .Top = Y
     End With
     
-    Dim texwidth As Long, texheight As Long
+    Dim TexWidth As Long, TexHeight As Long
     Texture.GetLevelDesc 0, SRDesc
 
     texwidth = SRDesc.Width
     texheight = SRDesc.Height
     
-    Geometry_Create_Box temp_verts(), dest_rect, src_rect, Color_List(), texwidth, texheight, Angle
+    Geometry_Create_Box temp_verts(), dest_rect, src_rect, Color_List(), TexWidth, TexHeight, Angle
     
     DirectDevice.SetTexture 0, Texture
     
