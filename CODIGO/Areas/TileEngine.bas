@@ -2016,9 +2016,9 @@ Public Sub Device_Textured_Render_Scale(ByVal X As Integer, _
 
     If Shadow And ClientSetup.UsarSombras = False Then Exit Sub
     
-    Dim dest_rect As RECT
+    Dim dest_rect     As RECT
     Dim temp_verts(3) As TLVERTEX
-    Dim SRDesc As D3DSURFACE_DESC
+    Dim SRDesc        As D3DSURFACE_DESC
 
     With dest_rect
         .Bottom = Y + 2 '(src_rect.bottom - src_rect.Top)
@@ -2066,6 +2066,64 @@ Public Sub RenderItem(ByVal hWndDest As Long, ByVal GrhIndex As Long)
         
     Call Engine_EndScene(DR, hWndDest)
     
+End Sub
+
+Public Sub Device_Batched_Render_Scale(ByVal X As Integer, _
+                                        ByVal Y As Integer, _
+                                        ByVal Width As Integer, ByVal Height As Integer, _
+                                        ByVal TextureIndex As Long, _
+                                        ByRef src_rect As RECT, _
+                                        ByRef Color_List() As Long, _
+                                        Optional Alpha As Boolean = False, _
+                                        Optional ByVal Angle As Single = 0, _
+                                        Optional ByVal Shadow As Boolean = False)
+
+    If Shadow And ClientSetup.UsarSombras = False Then Exit Sub
+    
+    Dim Texture       As Direct3DTexture8
+    Dim dest_rect     As RECT
+    Dim temp_verts(3) As TLVERTEX
+    Dim SRDesc        As D3DSURFACE_DESC
+
+    With dest_rect
+        .Bottom = Y + 2 '(src_rect.bottom - src_rect.Top)
+        .Left = X
+        .Right = X + 2 '(src_rect.Right - src_rect.Left)
+        .Top = Y
+    End With
+    
+    Set Texture = SurfaceDB.Surface(TextureIndex)
+    
+    Dim texwidth As Long, texheight As Long
+    Texture.GetLevelDesc 0, SRDesc
+    texwidth = SRDesc.Width
+    texheight = SRDesc.Height
+    
+    Geometry_Create_Box temp_verts(), dest_rect, src_rect, Color_List(), texwidth, texheight, Angle
+    
+    With SpriteBatch
+        '// Seteamos la textura
+        Call .SetTexture(Texture)
+                
+        If texwidth <> 0 And texheight <> 0 Then
+            Call .Draw(X, Y, Width, Height, Color_List(), src_rect.Left / texwidth, src_rect.Top / texheight, (src_rect.Left + Width) / texwidth, (src_rect.Top + Height) / texheight)
+        Else
+            Call .Draw(X, Y, texwidth, texheight, Color_List())
+        End If
+        
+    End With
+    
+    If Alpha Then
+        DirectDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_ONE
+        DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_ONE
+    End If
+        
+    DirectDevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, temp_verts(0), Len(temp_verts(0))
+        
+    If Alpha Then
+        DirectDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
+        DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
+    End If
 End Sub
 
 Private Sub DDrawGrhtoSurface(ByRef Grh As Grh, ByVal X As Integer, ByVal Y As Integer, ByVal Center As Byte, ByVal Animate As Byte, ByVal posX As Byte, ByVal posY As Byte)
@@ -2155,7 +2213,7 @@ Sub DDrawTransGrhIndextoSurface(ByVal GrhIndex As Integer, ByVal X As Integer, B
         
         'Draw
         #If SpriteBatch = 1 Then
-            Call Device_Batched_Render(X, Y, .pixelWidth, .pixelHeight, .FileNum, SourceRect, Color_List(), True, Angle, False)
+            Call Device_Batched_Render(X, Y, .pixelWidth, .pixelHeight, .FileNum, SourceRect, Color_List(), Alpha, Angle, False)
         #Else
             Call Device_Textured_Render(X, Y, SurfaceDB.Surface(.FileNum), SourceRect, Color_List(), Alpha, Angle, False)
         #End If
@@ -2208,7 +2266,12 @@ On Error GoTo Error
         SourceRect.Bottom = SourceRect.Top + .pixelHeight
         
         'Draw
-        Call Device_Textured_Render_Scale(X, Y, SurfaceDB.Surface(.FileNum), SourceRect, MapData(posX, posY).Engine_Light(), False, 0, False)
+        #If SpriteBatch = 1 Then
+            Call Device_Batched_Render_Scale(X, Y, .pixelWidth, .pixelHeight, .FileNum, SourceRect, MapData(posX, posY).Engine_Light(), False, 0, False)
+        #Else
+            Call Device_Textured_Render_Scale(X, Y, SurfaceDB.Surface(.FileNum), SourceRect, MapData(posX, posY).Engine_Light(), False, 0, False)
+        #End If
+        
     End With
 Exit Sub
 
