@@ -31,8 +31,6 @@ Attribute VB_Name = "Mod_TileEngine"
 'Codigo Postal 1900
 'Pablo Ignacio Marquez
 
-
-
 Option Explicit
 
 Private OffsetCounterX As Single
@@ -1443,6 +1441,11 @@ End Function
 
 Public Sub LoadGraphics()
     Call SurfaceDB.Initialize(DirectD3D8, Game.path(Graficos), ClientSetup.byMemory)
+    
+    #If SpriteBatch = 1 Then
+        Call SpriteBatch.Initialise(2000)
+    #End If
+    
 End Sub
 
 Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
@@ -1866,8 +1869,15 @@ Public Sub SetCharacterFx(ByVal CharIndex As Integer, ByVal fX As Integer, ByVal
     End With
 End Sub
 
+Public Sub Device_Textured_Render(ByVal X As Integer, _
+                                  ByVal Y As Integer, _
+                                  ByVal Texture As Direct3DTexture8, _
+                                  ByRef src_rect As RECT, _
+                                  ByRef Color_List() As Long, _
+                                  Optional Alpha As Boolean = False, _
+                                  Optional ByVal Angle As Single = 0, _
+                                  Optional ByVal Shadow As Boolean = False)
 
-Public Sub Device_Textured_Render(ByVal X As Integer, ByVal Y As Integer, ByVal Texture As Direct3DTexture8, ByRef src_rect As RECT, ByRef Color_List() As Long, Optional Alpha As Boolean = False, Optional ByVal Angle As Single = 0, Optional ByVal Shadow As Boolean = False)
     If Shadow And ClientSetup.UsarSombras = False Then Exit Sub
     
     Dim dest_rect As RECT
@@ -1920,7 +1930,89 @@ Public Sub Device_Textured_Render(ByVal X As Integer, ByVal Y As Integer, ByVal 
     End If
 End Sub
 
-Public Sub Device_Textured_Render_Scale(ByVal X As Integer, ByVal Y As Integer, ByVal Texture As Direct3DTexture8, ByRef src_rect As RECT, ByRef Color_List() As Long, Optional Alpha As Boolean = False, Optional ByVal Angle As Single = 0, Optional ByVal Shadow As Boolean = False)
+Public Sub Device_Batched_Render(ByVal X As Integer, _
+                                  ByVal Y As Integer, _
+                                  ByVal Width As Integer, ByVal Height As Integer, _
+                                  ByVal TextureIndex As Long, _
+                                  ByRef src_rect As RECT, _
+                                  ByRef Color_List() As Long, _
+                                  Optional Alpha As Boolean = False, _
+                                  Optional ByVal Angle As Single = 0, _
+                                  Optional ByVal Shadow As Boolean = False)
+
+    If Shadow And ClientSetup.UsarSombras = False Then Exit Sub
+    
+    Dim Texture       As Direct3DTexture8
+    Dim dest_rect     As RECT
+    Dim temp_verts(3) As TLVERTEX
+    Dim SRDesc        As D3DSURFACE_DESC
+
+    With dest_rect
+        .Bottom = Y + (src_rect.Bottom - src_rect.Top)
+        .Left = X
+        .Right = X + (src_rect.Right - src_rect.Left)
+        .Top = Y
+    End With
+    
+    Set Texture = SurfaceDB.Surface(TextureIndex)
+    
+    Dim TexWidth As Long, TexHeight As Long
+    Texture.GetLevelDesc 0, SRDesc
+    TexWidth = SRDesc.Width
+    TexHeight = SRDesc.Height
+      
+    If Shadow Then
+        Dim Color_Shadow(3) As Long
+        Engine_Long_To_RGB_List Color_Shadow(), D3DColorARGB(50, 0, 0, 0)
+        Geometry_Create_Box temp_verts(), dest_rect, src_rect, Color_Shadow(), TexWidth, TexHeight, Angle
+    Else
+        Geometry_Create_Box temp_verts(), dest_rect, src_rect, Color_List(), TexWidth, TexHeight, Angle
+    End If
+
+    If Shadow Then
+        temp_verts(1).X = temp_verts(1).X + (src_rect.Bottom - src_rect.Top) * 0.5
+        temp_verts(1).Y = temp_verts(1).Y - (src_rect.Right - src_rect.Left) * 0.5
+       
+        temp_verts(3).X = temp_verts(3).X + (src_rect.Right - src_rect.Left)
+        temp_verts(3).Y = temp_verts(3).Y - (src_rect.Right - src_rect.Left) * 0.5
+    End If
+    
+    If Alpha Then
+        DirectDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
+        DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
+    End If
+    
+    ' Medium load.
+    DirectDevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, temp_verts(0), Len(temp_verts(0))
+
+    If Alpha Then
+        DirectDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
+        DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
+    End If
+    
+    With SpriteBatch
+        '// Seteamos la textura
+        Call .SetTexture(Texture)
+                
+        If TexWidth <> 0 And TexHeight <> 0 Then
+            Call .Draw(X, Y, Width, Height, Color_List(), src_rect.Left / TexWidth, src_rect.Top / TexHeight, (src_rect.Left + Width) / TexWidth, (src_rect.Top + Height) / TexHeight)
+        Else
+            Call .Draw(X, Y, TexWidth, TexHeight, Color_List())
+        End If
+        
+    End With
+    
+End Sub
+
+Public Sub Device_Textured_Render_Scale(ByVal X As Integer, _
+                                        ByVal Y As Integer, _
+                                        ByVal Texture As Direct3DTexture8, _
+                                        ByRef src_rect As RECT, _
+                                        ByRef Color_List() As Long, _
+                                        Optional Alpha As Boolean = False, _
+                                        Optional ByVal Angle As Single = 0, _
+                                        Optional ByVal Shadow As Boolean = False)
+
     If Shadow And ClientSetup.UsarSombras = False Then Exit Sub
     
     Dim dest_rect As RECT
@@ -2020,7 +2112,12 @@ On Error GoTo Error
         SourceRect.Bottom = SourceRect.Top + .pixelHeight
         
         'Draw
-        Call Device_Textured_Render(X, Y, SurfaceDB.Surface(.FileNum), SourceRect, MapData(posX, posY).Engine_Light(), False, 0, False)
+        #If SpriteBatch = 1 Then
+            Call Device_Batched_Render(X, Y, .pixelWidth, .pixelHeight, .FileNum, SourceRect, MapData(posX, posY).Engine_Light(), False, 0, False)
+        #Else
+            Call Device_Textured_Render(X, Y, SurfaceDB.Surface(.FileNum), SourceRect, MapData(posX, posY).Engine_Light(), False, 0, False)
+        #End If
+        
     End With
 Exit Sub
 
@@ -2056,7 +2153,12 @@ Sub DDrawTransGrhIndextoSurface(ByVal GrhIndex As Integer, ByVal X As Integer, B
         SourceRect.Bottom = SourceRect.Top + .pixelHeight
         
         'Draw
-        Call Device_Textured_Render(X, Y, SurfaceDB.Surface(.FileNum), SourceRect, Color_List(), Alpha, Angle, False)
+        #If SpriteBatch = 1 Then
+            Call Device_Batched_Render(X, Y, .pixelWidth, .pixelHeight, .FileNum, SourceRect, Color_List(), True, Angle, False)
+        #Else
+            Call Device_Textured_Render(X, Y, SurfaceDB.Surface(.FileNum), SourceRect, Color_List(), Alpha, Angle, False)
+        #End If
+        
     End With
 End Sub
 
@@ -2195,7 +2297,12 @@ On Error GoTo Error
         SourceRect.Right = SourceRect.Left + .pixelWidth
         SourceRect.Bottom = SourceRect.Top + .pixelHeight
         
-        Call Device_Textured_Render(X, Y, SurfaceDB.Surface(.FileNum), SourceRect, Color_List(), Alpha, Angle, False)
+        #If SpriteBatch = 1 Then
+            Call Device_Batched_Render(X, Y, .pixelWidth, .pixelHeight, .FileNum, SourceRect, Color_List(), Alpha, Angle, False)
+        #Else
+            Call Device_Textured_Render(X, Y, SurfaceDB.Surface(.FileNum), SourceRect, Color_List(), Alpha, Angle, False)
+        #End If
+        
     End With
 Exit Sub
 

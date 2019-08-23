@@ -1372,6 +1372,7 @@ Public Sub CloseClient()
     Set CustomMessages = Nothing
     Set CustomKeys = Nothing
     Set SurfaceDB = Nothing
+    Set SpriteBatch = Nothing
     Set Dialogos = Nothing
     Set DialogosClanes = Nothing
     Set Audio = Nothing

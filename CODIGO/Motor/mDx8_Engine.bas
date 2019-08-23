@@ -6,6 +6,7 @@ Public DirectD3D As Direct3D8
 Public DirectDevice As Direct3DDevice8
 
 Public SurfaceDB As New clsSurfaceManager
+Public SpriteBatch As clsBatch
 
 Public Engine_BaseSpeed As Single
 Public TileBufferSize As Integer
@@ -89,6 +90,8 @@ Public Function Engine_DirectX8_Init() As Boolean
     DirectDevice.SetTextureStageState 0, D3DTSS_ALPHAOP, D3DTOP_MODULATE
     DirectDevice.SetRenderState D3DRS_POINTSPRITE_ENABLE, 1
     DirectDevice.SetRenderState D3DRS_POINTSCALE_ENABLE, 0
+    
+    Set SpriteBatch = New clsBatch
     
     EndTime = GetTickCount
     
@@ -295,8 +298,14 @@ Public Sub Engine_Draw_Box(ByVal X As Integer, ByVal Y As Integer, ByVal Width A
 
     Geometry_Create_Box b_Vertex(), b_Rect, b_Rect, b_Color(), 0, 0
     
-    DirectDevice.SetTexture 0, Nothing
-    DirectDevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, b_Vertex(0), Len(b_Vertex(0))
+    #If SpriteBatch = 1 Then
+        Call SpriteBatch.SetTexture(Nothing)
+        Call SpriteBatch.Draw(X, Y, b_Rect.Left, b_Rect.Top, b_Color())
+    #Else
+        DirectDevice.SetTexture 0, Nothing
+        DirectDevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, b_Vertex(0), Len(b_Vertex(0))
+    #End If
+    
 End Sub
 
 Public Sub Engine_D3DColor_To_RGB_List(rgb_list() As Long, Color As D3DCOLORVALUE)
@@ -468,8 +477,9 @@ Public Sub Engine_BeginScene(Optional ByVal Color As Long = 0)
 'Blisse-AO | DD Clear & BeginScene
 '***************************************************
 
-    DirectDevice.BeginScene
-    DirectDevice.Clear 0, ByVal 0, D3DCLEAR_TARGET, Color, 1#, 0
+    Call DirectDevice.BeginScene
+    Call DirectDevice.Clear(0, ByVal 0, D3DCLEAR_TARGET, Color, 1#, 0)
+    Call SpriteBatch.Begin
     
 End Sub
 
@@ -480,7 +490,9 @@ Public Sub Engine_EndScene(ByRef destRect As RECT, Optional ByVal hWndDest As Lo
 'Blisse-AO | DD EndScene & Present
 '***************************************************
     
-    DirectDevice.EndScene
+    Call SpriteBatch.Flush
+    
+    Call DirectDevice.EndScene
         
     If hWndDest = 0 Then
         DirectDevice.Present destRect, ByVal 0&, ByVal 0&, ByVal 0&

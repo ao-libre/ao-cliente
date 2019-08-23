@@ -64,6 +64,7 @@ Public Function ColorToDX8(ByVal long_color As Long) As Long
     ColorToDX8 = D3DColorXRGB(Red, Green, Blue)
 
 End Function
+
 Public Sub Text_Render_Special(ByVal intX As Integer, ByVal intY As Integer, ByRef strText As String, ByVal lngColor As Long, Optional bolCentred As Boolean = False)  ' GSZAO
 '*****************************************************************
 'Text_Render_Special by ^[GS]^
@@ -71,7 +72,13 @@ Public Sub Text_Render_Special(ByVal intX As Integer, ByVal intY As Integer, ByR
     
     If LenB(strText) <> 0 Then
         lngColor = ColorToDX8(lngColor)
-        Call Engine_Render_Text(cfonts(1), strText, intX, intY, lngColor, bolCentred)
+        
+        #If SpriteBatch = 1 Then
+            Call Engine_Render_Text(cfonts(1), strText, intX, intY, lngColor, bolCentred)
+        #Else
+            Call Engine_Render_Text(cfonts(1), strText, intX, intY, lngColor, bolCentred, , , SpriteBatch)
+        #End If
+        
     End If
     
 End Sub ' GSZAO
@@ -86,21 +93,29 @@ Private Function Es_Emoticon(ByVal ascii As Byte) As Boolean ' GSZAO
     End If
 End Function ' GSZAO
 
-Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, ByVal Text As String, ByVal X As Long, ByVal Y As Long, ByVal Color As Long, Optional ByVal Center As Boolean = False, Optional ByVal Alpha As Byte = 255, Optional ByVal ParseEmoticons As Boolean = True)
-'*****************************************************************
-'Render text with a custom font
-'*****************************************************************
+Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, _
+                               ByVal Text As String, _
+                               ByVal X As Long, _
+                               ByVal Y As Long, _
+                               ByVal Color As Long, _
+                               Optional ByVal Center As Boolean = False, _
+                               Optional ByVal Alpha As Byte = 255, _
+                               Optional ByVal ParseEmoticons As Boolean = True, _
+                               Optional ByRef Batch As clsBatch)
+    '*****************************************************************
+    'Render text with a custom font
+    '*****************************************************************
     Dim TempVA(0 To 3) As TLVERTEX
-    Dim tempstr() As String
-    Dim Count As Integer
-    Dim ascii() As Byte
-    Dim i As Long
-    Dim j As Long
-    Dim TempColor As Long
-    Dim ResetColor As Byte
-    Dim YOffset As Single
+    Dim tempstr()      As String
+    Dim Count          As Integer
+    Dim ascii()        As Byte
+    Dim i              As Long
+    Dim J              As Long
+    Dim TempColor      As Long
+    Dim ResetColor     As Byte
+    Dim YOffset        As Single
     
-    Dim Upper_tempstr As Long, Len_tempstr As Long
+    Dim Upper_tempstr  As Long, Len_tempstr As Long
     
     'Check if we have the device
     If DirectDevice.TestCooperativeLevel <> D3D_OK Then Exit Sub
@@ -121,6 +136,7 @@ Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, ByVal Text As String
         Upper_tempstr = UBound(tempstr)
         
         For i = 0 To Upper_tempstr
+
             If tempstr(i) = ":)" Or tempstr(i) = "=)" Then
                 tempstr(i) = Chr$(129)
             ElseIf tempstr(i) = ":@" Or tempstr(i) = "=@" Then
@@ -148,7 +164,11 @@ Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, ByVal Text As String
     TempColor = Color
 
     'Set the texture
-    DirectDevice.SetTexture 0, UseFont.Texture
+    #If SpriteBatch = 1 Then
+        Call Batch.SetTexture(UseFont.Texture)
+    #Else
+        DirectDevice.SetTexture 0, UseFont.Texture
+    #End If
     
     If Center Then
         X = X - Engine_GetTextWidth(cfonts(1), Text) * 0.5
@@ -159,6 +179,7 @@ Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, ByVal Text As String
     
     'Loop through each line if there are line breaks (vbCrLf)
     For i = 0 To Upper_tempstr
+
         If Len(tempstr(i)) > 0 Then
             YOffset = i * UseFont.CharHeight
             Count = 0
@@ -169,10 +190,10 @@ Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, ByVal Text As String
             Len_tempstr = Len(tempstr(i))
             
             'Loop through the characters
-            For j = 1 To Len_tempstr
+            For J = 1 To Len_tempstr
 
                 'Copy from the cached vertex array to the temp vertex array
-                CopyMemory TempVA(0), UseFont.HeaderInfo.CharVA(ascii(j - 1)).Vertex(0), 32 * 4
+                CopyMemory TempVA(0), UseFont.HeaderInfo.CharVA(ascii(J - 1)).Vertex(0), 32 * 4
                 
                 'Set up the verticies
                 TempVA(0).X = X + Count
@@ -188,12 +209,13 @@ Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, ByVal Text As String
                 TempVA(3).Y = TempVA(2).Y
                 
                 'Set the colors
-                If Es_Emoticon(ascii(j - 1)) Then ' GSZAO los colores no afectan a los emoticones!
+                If Es_Emoticon(ascii(J - 1)) Then ' GSZAO los colores no afectan a los emoticones!
                     TempVA(0).Color = -1
                     TempVA(1).Color = -1
                     TempVA(2).Color = -1
                     TempVA(3).Color = -1
-                    If (ascii(j - 1) <> 157) Then Count = Count + 5   ' Los emoticones tienen tamano propio (despues hay que cargarlos "correctamente" para evitar hacer esto)
+
+                    If (ascii(J - 1) <> 157) Then Count = Count + 5   ' Los emoticones tienen tamano propio (despues hay que cargarlos "correctamente" para evitar hacer esto)
                 Else
                     TempVA(0).Color = TempColor
                     TempVA(1).Color = TempColor
@@ -205,7 +227,7 @@ Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, ByVal Text As String
                 DirectDevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, TempVA(0), Len(TempVA(0))
                 
                 'Shift over the the position to render the next character
-                Count = Count + UseFont.HeaderInfo.CharWidth(ascii(j - 1))
+                Count = Count + UseFont.HeaderInfo.CharWidth(ascii(J - 1))
     
                 'Check to reset the color
                 If ResetColor Then
@@ -213,7 +235,7 @@ Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, ByVal Text As String
                     TempColor = Color
                 End If
                 
-            Next j
+            Next J
             
         End If
     Next i
@@ -344,7 +366,7 @@ Sub Engine_Init_FontSettings()
             .Vertex(0).tv = v
             .Vertex(0).X = 0
             .Vertex(0).Y = 0
-            .Vertex(0).z = 0
+            .Vertex(0).Z = 0
             
             .Vertex(1).Color = D3DColorARGB(255, 0, 0, 0)
             .Vertex(1).rhw = 1
@@ -352,7 +374,7 @@ Sub Engine_Init_FontSettings()
             .Vertex(1).tv = v
             .Vertex(1).X = cfonts(1).HeaderInfo.CellWidth
             .Vertex(1).Y = 0
-            .Vertex(1).z = 0
+            .Vertex(1).Z = 0
             
             .Vertex(2).Color = D3DColorARGB(255, 0, 0, 0)
             .Vertex(2).rhw = 1
@@ -360,7 +382,7 @@ Sub Engine_Init_FontSettings()
             .Vertex(2).tv = v + cfonts(1).RowFactor
             .Vertex(2).X = 0
             .Vertex(2).Y = cfonts(1).HeaderInfo.CellHeight
-            .Vertex(2).z = 0
+            .Vertex(2).Z = 0
             
             .Vertex(3).Color = D3DColorARGB(255, 0, 0, 0)
             .Vertex(3).rhw = 1
@@ -368,7 +390,7 @@ Sub Engine_Init_FontSettings()
             .Vertex(3).tv = v + cfonts(1).RowFactor
             .Vertex(3).X = cfonts(1).HeaderInfo.CellWidth
             .Vertex(3).Y = cfonts(1).HeaderInfo.CellHeight
-            .Vertex(3).z = 0
+            .Vertex(3).Z = 0
         End With
         
     Next LoopChar
@@ -381,6 +403,10 @@ Public Sub DrawText(ByVal X As Integer, ByVal Y As Integer, ByVal Text As String
         ARGBtoD3DCOLORVALUE Color, aux
         Color = D3DColorARGB(255, aux.r, aux.g, aux.B)
         
-        Engine_Render_Text cfonts(1), Text, X, Y, Color, Center, 255, False
+        #If SpriteBatch = 1 Then
+            Call Engine_Render_Text(cfonts(1), Text, X, Y, Color, Center, 255, False)
+        #Else
+            Call Engine_Render_Text(cfonts(1), Text, X, Y, Color, Center, 255, False, SpriteBatch)
+        #End If
 End Sub
 
