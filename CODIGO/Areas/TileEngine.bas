@@ -1932,14 +1932,15 @@ Public Sub Device_Textured_Render(ByVal X As Integer, _
 End Sub
 
 Public Sub Device_Batched_Render(ByVal X As Integer, _
-                                  ByVal Y As Integer, _
-                                  ByVal Width As Integer, ByVal Height As Integer, _
-                                  ByVal TextureIndex As Long, _
-                                  ByRef src_rect As RECT, _
-                                  ByRef Color_List() As Long, _
-                                  Optional Alpha As Boolean = False, _
-                                  Optional ByVal Angle As Single = 0, _
-                                  Optional ByVal Shadow As Boolean = False)
+                                 ByVal Y As Integer, _
+                                 ByVal Width As Integer, _
+                                 ByVal Height As Integer, _
+                                 ByVal TextureIndex As Long, _
+                                 ByRef src_rect As RECT, _
+                                 ByRef Color_List() As Long, _
+                                 Optional Alpha As Boolean = False, _
+                                 Optional ByVal Angle As Single = 0, _
+                                 Optional ByVal Shadow As Boolean = False)
 
     If Shadow And ClientSetup.UsarSombras = False Then Exit Sub
     
@@ -1962,47 +1963,47 @@ Public Sub Device_Batched_Render(ByVal X As Integer, _
     TexWidth = SRDesc.Width
     TexHeight = SRDesc.Height
       
-    If Shadow Then
-        Dim Color_Shadow(3) As Long
-        Engine_Long_To_RGB_List Color_Shadow(), D3DColorARGB(50, 0, 0, 0)
-        Geometry_Create_Box temp_verts(), dest_rect, src_rect, Color_Shadow(), TexWidth, TexHeight, Angle
-    Else
-        Geometry_Create_Box temp_verts(), dest_rect, src_rect, Color_List(), TexWidth, TexHeight, Angle
-    End If
-    
     With SpriteBatch
+      
+        If Shadow Then
+            Dim Color_Shadow(3) As Long
+            Engine_Long_To_RGB_List Color_Shadow(), D3DColorARGB(50, 0, 0, 0)
+            Geometry_Create_Box temp_verts(), dest_rect, src_rect, Color_Shadow(), texwidth, texheight, Angle
+        Else
+            Geometry_Create_Box temp_verts(), dest_rect, src_rect, Color_List(), texwidth, texheight, Angle
+        End If
+    
         '// Seteamos la textura
         Call .SetTexture(Texture)
-                
-        If TexWidth <> 0 And TexHeight <> 0 Then
-            Call .Draw(X, Y, Width, Height, Color_List(), src_rect.Left / TexWidth, src_rect.Top / TexHeight, (src_rect.Left + Width) / TexWidth, (src_rect.Top + Height) / TexHeight)
+
+        If Shadow Then
+            temp_verts(1).X = temp_verts(1).X + (src_rect.Bottom - src_rect.Top) * 0.5
+            temp_verts(1).Y = temp_verts(1).Y - (src_rect.Right - src_rect.Left) * 0.5
+       
+            temp_verts(3).X = temp_verts(3).X + (src_rect.Right - src_rect.Left)
+            temp_verts(3).Y = temp_verts(3).Y - (src_rect.Right - src_rect.Left) * 0.5
+        End If
+    
+        If Alpha Then
+            DirectDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
+            DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
+        End If
+    
+        ' Medium load.
+        'DirectDevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, temp_verts(0), Len(temp_verts(0))
+        If texwidth <> 0 And texheight <> 0 Then
+            Call .Draw(X, Y, Width, Height, Color_List(), src_rect.Left / texwidth, src_rect.Top / texheight, (src_rect.Left + Width) / texwidth, (src_rect.Top + Height) / texheight)
         Else
             Call .Draw(X, Y, TexWidth, TexHeight, Color_List())
         End If
         
+        If Alpha Then
+            DirectDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
+            DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
+        End If
+    
     End With
     
-    If Shadow Then
-        temp_verts(1).X = temp_verts(1).X + (src_rect.Bottom - src_rect.Top) * 0.5
-        temp_verts(1).Y = temp_verts(1).Y - (src_rect.Right - src_rect.Left) * 0.5
-       
-        temp_verts(3).X = temp_verts(3).X + (src_rect.Right - src_rect.Left)
-        temp_verts(3).Y = temp_verts(3).Y - (src_rect.Right - src_rect.Left) * 0.5
-    End If
-    
-    If Alpha Then
-        DirectDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
-        DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
-    End If
-    
-    ' Medium load.
-    DirectDevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, temp_verts(0), Len(temp_verts(0))
-
-    If Alpha Then
-        DirectDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
-        DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
-    End If
-
 End Sub
 
 Public Sub Device_Textured_Render_Scale(ByVal X As Integer, _
