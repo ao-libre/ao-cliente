@@ -160,7 +160,7 @@ On Error GoTo handle
             With charlist(CharIndex).Aura(i)
                 If .Grh <> 0 Then
                     If .Rotation = 1 Then Update_Aura CharIndex, i
-                    Call DDrawTransGrhIndextoSurface(.Grh, X + .OffsetX, Y + .OffsetY, 1, .Color(), .Angle, True)
+                    Call Draw_GrhIndex(.Grh, X + .OffsetX, Y + .OffsetY, 1, .Color())
                 End If
             End With
         Next i

@@ -45,7 +45,7 @@ Option Explicit
 
 'ONLY PUBLIC METHODS ARE INCLUDED SINCE VB WON'T INHERIT PRIVATE ONES
 
-Public Property Get Surface(ByVal fileIndex As Long) As Direct3DTexture8
+Public Property Get Surface(ByVal fileIndex As Long, ByRef Width As Integer, ByRef Height As Integer) As Direct3DTexture8
 '**************************************************************
 'Author: Juan Martin Sotuyo Dodero
 'Last Modify Date: 3/06/2006

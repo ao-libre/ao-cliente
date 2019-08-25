@@ -57,6 +57,8 @@ Private Type SURFACE_ENTRY_DYN
     fileIndex As Long
     lastAccess As Long
     Surface As Direct3DTexture8
+    Width As Integer
+    Height As Integer
 End Type
 
 Private Type HashNode
@@ -94,7 +96,7 @@ Private Sub Class_Terminate()
     On Error Resume Next
 
     Dim i As Long
-    Dim j As Long
+    Dim J As Long
     
     'pre-calculate hash table size beforehand to improve performance
     Dim Count_hashTableSize As Long
@@ -103,9 +105,9 @@ Private Sub Class_Terminate()
     'Destroy every surface in memory
     For i = 0 To Count_hashTableSize
         With surfaceList(i)
-            For j = 1 To .surfaceCount
-                Set .SurfaceEntry(j).Surface = Nothing
-            Next j
+            For J = 1 To .surfaceCount
+                Set .SurfaceEntry(J).Surface = Nothing
+            Next J
             
             'Destroy the arrays
             Erase .SurfaceEntry
@@ -132,7 +134,7 @@ Private Sub clsSurfaceManager_Initialize(ByRef DD As D3DX8, ByVal graphicPath As
     End If
 End Sub
 
-Private Property Get clsSurfaceManager_Surface(ByVal fileIndex As Long) As Direct3DTexture8
+Private Property Get clsSurfaceManager_Surface(ByVal fileIndex As Long, ByRef Width As Integer, ByRef Height As Integer) As Direct3DTexture8
 '**************************************************************
 'Author: Juan Martin Sotuyo Dodero
 'Last Modify Date: 3/06/2006
@@ -145,6 +147,8 @@ Private Property Get clsSurfaceManager_Surface(ByVal fileIndex As Long) As Direc
         For i = 1 To .surfaceCount
             If .SurfaceEntry(i).fileIndex = fileIndex Then
                 .SurfaceEntry(i).lastAccess = GetTickCount
+                Width = .SurfaceEntry(i).Width
+                Height = .SurfaceEntry(i).Height
                 Set clsSurfaceManager_Surface = .SurfaceEntry(i).Surface
                 Exit Property
             End If
@@ -152,10 +156,10 @@ Private Property Get clsSurfaceManager_Surface(ByVal fileIndex As Long) As Direc
     End With
     
     'Not in memory, load it!
-    Set clsSurfaceManager_Surface = LoadSurface(fileIndex)
+    Set clsSurfaceManager_Surface = LoadSurface(fileIndex, Width, Height)
 End Property
 
-Private Function LoadSurface(ByVal fileIndex As Long) As Direct3DTexture8
+Private Function LoadSurface(ByVal fileIndex As Long, ByRef Width As Integer, ByRef Height As Integer) As Direct3DTexture8
 '********************************************************************************************************
 'Author: Nicolas Matias Gonzalez (NIGO)
 'Last Modify Date: 06/05/2019 - Jopi
@@ -179,9 +183,11 @@ On Error GoTo ErrHandler
         
         #If Compression = 0 Then
             If FileExist(Graphic & ".bmp", vbNormal) Then
-                Set .Surface = DirectD3D.CreateTextureFromFileEx(DirectDevice, Graphic & ".BMP", D3DX_DEFAULT, D3DX_DEFAULT, 0, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, &HFF000000, ByVal 0, ByVal 0)
+                Set .Surface = DirectD3D.CreateTextureFromFileEx(DirectDevice, Graphic & ".BMP", D3DX_DEFAULT, D3DX_DEFAULT, 0, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, &HFF000000, texture_info, ByVal 0)
+            
             ElseIf FileExist(Graphic & ".png", vbNormal) Then
-                Set .Surface = DirectD3D.CreateTextureFromFileEx(DirectDevice, Graphic & ".PNG", D3DX_DEFAULT, D3DX_DEFAULT, 0, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, &HFF000000, ByVal 0, ByVal 0)
+                Set .Surface = DirectD3D.CreateTextureFromFileEx(DirectDevice, Graphic & ".PNG", D3DX_DEFAULT, D3DX_DEFAULT, 0, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, &HFF000000, texture_info, ByVal 0)
+            
             Else
                 MsgBox "No se ha podido cargar el grafico con indice: " & fileIndex
                 Call CloseClient
@@ -203,6 +209,12 @@ On Error GoTo ErrHandler
         .surfaceCount = .surfaceCount + 1
         
         ReDim Preserve .SurfaceEntry(1 To .surfaceCount) As SURFACE_ENTRY_DYN
+        
+        Width = texture_info.Width
+        Height = texture_info.Height
+        
+        newSurface.Width = Width
+        newSurface.Height = Height
         
         .SurfaceEntry(.surfaceCount) = newSurface
         
@@ -235,7 +247,7 @@ Private Function RemoveLRU() As Boolean
     Dim LRUj As Long
     Dim LRUtime As Long
     Dim i As Long
-    Dim j As Long
+    Dim J As Long
     Dim ddsd As D3DSURFACE_DESC
     
     LRUtime = GetTickCount
@@ -246,13 +258,13 @@ Private Function RemoveLRU() As Boolean
     'Check out through the whole list for the least recently used
     For i = 0 To Count_hashTableSize
         With surfaceList(i)
-            For j = 1 To .surfaceCount
-                If LRUtime > .SurfaceEntry(j).lastAccess Then
+            For J = 1 To .surfaceCount
+                If LRUtime > .SurfaceEntry(J).lastAccess Then
                     LRUi = i
-                    LRUj = j
-                    LRUtime = .SurfaceEntry(j).lastAccess
+                    LRUj = J
+                    LRUtime = .SurfaceEntry(J).lastAccess
                 End If
-            Next j
+            Next J
         End With
     Next i
     
@@ -272,9 +284,9 @@ Private Function RemoveLRU() As Boolean
             Dim Count_surfaceCount As Long
                 Count_surfaceCount = .surfaceCount - 1
         
-            For j = LRUj To Count_surfaceCount
-                .SurfaceEntry(j) = .SurfaceEntry(j + 1)
-            Next j
+            For J = LRUj To Count_surfaceCount
+                .SurfaceEntry(J) = .SurfaceEntry(J + 1)
+            Next J
             
             .surfaceCount = .surfaceCount - 1
             If .surfaceCount Then

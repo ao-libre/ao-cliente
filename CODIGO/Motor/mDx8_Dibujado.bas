@@ -33,7 +33,7 @@ Private DNormalFont    As New StdFont
  
 Type DList
      DamageVal      As Integer      'Cantidad de daño.
-     ColorRGB       As Long         'Color.
+     ColorRGB()     As Long         'Color.
      DamageType     As EDType       'Tipo, se usa para saber si es apu o no.
      DamageFont     As New StdFont  'Efecto del apu.
      StartedTime    As Long         'Cuando fue creado.
@@ -128,7 +128,7 @@ End Sub
 
 Sub Damage_Create(ByVal X As Byte, _
                   ByVal Y As Byte, _
-                  ByVal ColorRGB As Long, _
+                  ByRef ColorRGB() As Long, _
                   ByVal DamageValue As Integer, _
                   ByVal edMode As Byte)
  
@@ -182,8 +182,11 @@ Sub Damage_Draw(ByVal X As Byte, _
            
             .Downloading = EaseOutCubic(ElapsedTime / DAMAGE_TIME) * DAMAGE_OFFSET
            
-            .ColorRGB = Damage_ModifyColour(.DamageType)
-           
+            .ColorRGB(0) = Damage_ModifyColour(.DamageType)
+            .ColorRGB(1) = Damage_ModifyColour(.DamageType)
+            .ColorRGB(2) = Damage_ModifyColour(.DamageType)
+            .ColorRGB(3) = Damage_ModifyColour(.DamageType)
+            
             'Efectito para el apu
             If .DamageType = EDType.edPunal Then
                 .DamageFont.Size = Damage_NewSize(ElapsedTime)
@@ -226,7 +229,10 @@ Sub Damage_Clear(ByVal X As Byte, ByVal Y As Byte)
  
     With MapData(X, Y).Damage
         .Activated = False
-        .ColorRGB = 0
+        .ColorRGB(0) = 0
+        .ColorRGB(1) = 0
+        .ColorRGB(2) = 0
+        .ColorRGB(3) = 0
         .DamageVal = 0
         .StartedTime = 0
 

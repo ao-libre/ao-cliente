@@ -72,7 +72,7 @@ Private Sub Class_Terminate()
 On Error Resume Next
 
     Dim i As Long
-    Dim j As Long
+    Dim J As Long
     
     'pre-calculate hash table size to improve performance
     Dim Count_hashTableSize As Long
@@ -80,9 +80,9 @@ On Error Resume Next
     
     'Destroy every surface in memory
     For i = 0 To Count_hashTableSize
-        For j = 1 To surfaceList(i).sufraceCount
-            Set surfaceList(i).SurfaceEntry(j).Surface = Nothing
-        Next j
+        For J = 1 To surfaceList(i).sufraceCount
+            Set surfaceList(i).SurfaceEntry(J).Surface = Nothing
+        Next J
         
         'Destroy the array
         Erase surfaceList(i).SurfaceEntry
@@ -99,7 +99,7 @@ Private Sub clsSurfaceManager_Initialize(ByRef DD As D3DX8, ByVal graphicPath As
     Call LoadSurfaces(graphicPath)
 End Sub
 
-Private Property Get clsSurfaceManager_Surface(ByVal fileIndex As Long) As Direct3DTexture8
+Private Property Get clsSurfaceManager_Surface(ByVal fileIndex As Long, ByRef Width As Integer, ByRef Height As Integer) As Direct3DTexture8
 '**************************************************************
 'Author: Juan Martin Sotuyo Dodero
 'Last Modify Date: 3/06/2006

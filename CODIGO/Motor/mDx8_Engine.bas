@@ -4,6 +4,9 @@ Public DirectX As New DirectX8
 Public DirectD3D8 As D3DX8
 Public DirectD3D As Direct3D8
 Public DirectDevice As Direct3DDevice8
+Private Viewport As D3DVIEWPORT8
+Private Projection As D3DMATRIX
+Private View As D3DMATRIX
 
 Public SurfaceDB As New clsSurfaceManager
 Public SpriteBatch As clsBatch
@@ -22,7 +25,7 @@ Public MainScreenRect As RECT
 Public Type TLVERTEX
   X As Single
   Y As Single
-  z As Single
+  Z As Single
   rhw As Single
   Color As Long
   Specular As Long
@@ -77,6 +80,11 @@ Public Function Engine_DirectX8_Init() As Boolean
                                 D3DCREATE_SOFTWARE_VERTEXPROCESSING, _
                                 D3DWindow)
     End Select
+    
+    Call D3DXMatrixOrthoOffCenterLH(Projection, 0, 800, 600, 0, -1#, 1#)
+    Call D3DXMatrixIdentity(View)
+    Call DirectDevice.SetTransform(D3DTS_PROJECTION, Projection)
+    Call DirectDevice.SetTransform(D3DTS_VIEW, View)
 
     Engine_Init_FontTextures
     Engine_Init_FontSettings
@@ -163,44 +171,17 @@ Public Sub Engine_DirectX8_Aditional_Init()
         .Bottom = frmMain.MainViewPic.ScaleHeight
         .Right = frmMain.MainViewPic.ScaleWidth
     End With
-
+    
+    'Pre-calculo los colores
     Call Engine_Long_To_RGB_List(Normal_RGBList(), -1)
-
+    Call Engine_Long_To_RGB_List(Color_Shadow(), D3DColorARGB(50, 0, 0, 0))
+    
     Load_Auras
     Init_MeteoEngine
     Engine_Init_ParticleEngine
     
     mDx8_Dibujado.Damage_Initialize
     
-End Sub
-
-Public Sub Engine_Draw_Line(X1 As Single, Y1 As Single, X2 As Single, Y2 As Single, Optional Color As Long = -1, Optional Color2 As Long = -1)
-On Error GoTo Error
-Dim Vertex(1) As TLVERTEX
-
-    Vertex(0) = Geometry_Create_TLVertex(X1, Y1, 0, 1, Color, 0, 0)
-    Vertex(1) = Geometry_Create_TLVertex(X2, Y2, 0, 1, Color2, 0, 0)
-
-    DirectDevice.SetTexture 0, Nothing
-    DirectDevice.DrawPrimitiveUP D3DPT_LINELIST, 1, Vertex(0), Len(Vertex(0))
-Exit Sub
-
-Error:
-    'Call Log_Engine("Error in Engine_Draw_Line, " & Err.Description & " (" & Err.number & ")")
-End Sub
-
-Public Sub Engine_Draw_Point(X1 As Single, Y1 As Single, Optional Color As Long = -1)
-On Error GoTo Error
-Dim Vertex(0) As TLVERTEX
-
-    Vertex(0) = Geometry_Create_TLVertex(X1, Y1, 0, 1, Color, 0, 0)
-
-    DirectDevice.SetTexture 0, Nothing
-    DirectDevice.DrawPrimitiveUP D3DPT_POINTLIST, 1, Vertex(0), Len(Vertex(0))
-Exit Sub
-
-Error:
-    'Call Log_Engine("Error in Engine_Draw_Point, " & Err.Description & " (" & Err.number & ")")
 End Sub
 
 Public Function Engine_ElapsedTime() As Long
@@ -298,13 +279,8 @@ Public Sub Engine_Draw_Box(ByVal X As Integer, ByVal Y As Integer, ByVal Width A
 
     Geometry_Create_Box b_Vertex(), b_Rect, b_Rect, b_Color(), 0, 0
     
-    #If SpriteBatch = 1 Then
-        Call SpriteBatch.SetTexture(Nothing)
-        Call SpriteBatch.Draw(X, Y, b_Rect.Left, b_Rect.Top, b_Color())
-    #Else
-        DirectDevice.SetTexture 0, Nothing
-        DirectDevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, b_Vertex(0), Len(b_Vertex(0))
-    #End If
+    Call SpriteBatch.SetTexture(Nothing)
+    Call SpriteBatch.Draw(X, Y, b_Rect.Left, b_Rect.Top, b_Color())
     
 End Sub
 
@@ -420,32 +396,32 @@ Dim IX As Single
     
 End Function
 
-Public Function Engine_Collision_LineRect(ByVal SX As Long, ByVal SY As Long, ByVal SW As Long, ByVal SH As Long, ByVal X1 As Long, ByVal Y1 As Long, ByVal X2 As Long, ByVal Y2 As Long) As Byte
+Public Function Engine_Collision_LineRect(ByVal sX As Long, ByVal sY As Long, ByVal SW As Long, ByVal SH As Long, ByVal X1 As Long, ByVal Y1 As Long, ByVal X2 As Long, ByVal Y2 As Long) As Byte
 '*****************************************************************
 'Check if a line intersects with a rectangle (returns 1 if true)
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_Collision_LineRect
 '*****************************************************************
 
     'Top line
-    If Engine_Collision_Line(SX, SY, SX + SW, SY, X1, Y1, X2, Y2) Then
+    If Engine_Collision_Line(sX, sY, sX + SW, sY, X1, Y1, X2, Y2) Then
         Engine_Collision_LineRect = 1
         Exit Function
     End If
     
     'Right line
-    If Engine_Collision_Line(SX + SW, SY, SX + SW, SY + SH, X1, Y1, X2, Y2) Then
+    If Engine_Collision_Line(sX + SW, sY, sX + SW, sY + SH, X1, Y1, X2, Y2) Then
         Engine_Collision_LineRect = 1
         Exit Function
     End If
 
     'Bottom line
-    If Engine_Collision_Line(SX, SY + SH, SX + SW, SY + SH, X1, Y1, X2, Y2) Then
+    If Engine_Collision_Line(sX, sY + SH, sX + SW, sY + SH, X1, Y1, X2, Y2) Then
         Engine_Collision_LineRect = 1
         Exit Function
     End If
 
     'Left line
-    If Engine_Collision_Line(SX, SY, SX, SY + SW, X1, Y1, X2, Y2) Then
+    If Engine_Collision_Line(sX, sY, sX, sY + SW, X1, Y1, X2, Y2) Then
         Engine_Collision_LineRect = 1
         Exit Function
     End If
@@ -588,7 +564,7 @@ Public Sub Geometry_Create_Box(ByRef Verts() As TLVERTEX, ByRef dest As RECT, By
 
 End Sub
 
-Public Function Geometry_Create_TLVertex(ByVal X As Single, ByVal Y As Single, ByVal z As Single, _
+Public Function Geometry_Create_TLVertex(ByVal X As Single, ByVal Y As Single, ByVal Z As Single, _
                                             ByVal rhw As Single, ByVal Color As Long, tu As Single, _
                                             ByVal tv As Single) As TLVERTEX
 '**************************************************************
@@ -597,7 +573,7 @@ Public Function Geometry_Create_TLVertex(ByVal X As Single, ByVal Y As Single, B
 '**************************************************************
     Geometry_Create_TLVertex.X = X
     Geometry_Create_TLVertex.Y = Y
-    Geometry_Create_TLVertex.z = z
+    Geometry_Create_TLVertex.Z = Z
     Geometry_Create_TLVertex.rhw = rhw
     Geometry_Create_TLVertex.Color = Color
     Geometry_Create_TLVertex.tu = tu
@@ -785,27 +761,27 @@ Public Sub DrawPJ(ByVal Index As Byte)
     Call Engine_BeginScene
 
     If cPJ(Index).Body <> 0 Then
-        Call DDrawTransGrhtoSurface(BodyData(cPJ(Index).Body).Walk(3), PixelOffsetX + init_x, PixelOffsetY + init_y, 0, Light(), 0, init_x, init_y)
+        Call Draw_Grh(BodyData(cPJ(Index).Body).Walk(3), PixelOffsetX + init_x, PixelOffsetY + init_y, 0, 0, Light())
     End If
 
     If cPJ(Index).Dead Then
-        Call DDrawTransGrhtoSurface(HeadData(eCabezas.CASPER_HEAD).Head(3), PixelOffsetX + init_x + 4, PixelOffsetY + init_y + head_offset, 0, Light(), 0, init_x, init_y)
+        Call Draw_Grh(HeadData(eCabezas.CASPER_HEAD).Head(3), PixelOffsetX + init_x + 4, PixelOffsetY + init_y + head_offset, 0, 0, Light())
     Else
         If cPJ(Index).Head <> 0 Then
-            Call DDrawTransGrhtoSurface(HeadData(cPJ(Index).Head).Head(3), PixelOffsetX + init_x + 4, PixelOffsetY + init_y + head_offset, 0, Light(), 0, init_x, init_y)
+            Call Draw_Grh(HeadData(cPJ(Index).Head).Head(3), PixelOffsetX + init_x + 4, PixelOffsetY + init_y + head_offset, 0, 0, Light())
         End If
     End If
 
     If cPJ(Index).helmet <> 0 Then
-        Call DDrawTransGrhtoSurface(CascoAnimData(cPJ(Index).helmet).Head(3), PixelOffsetX + init_x + 4, PixelOffsetY + init_y + head_offset, 0, Light(), 0, init_x, init_y)
+        Call Draw_Grh(CascoAnimData(cPJ(Index).helmet).Head(3), PixelOffsetX + init_x + 4, PixelOffsetY + init_y + head_offset, 0, 0, Light())
     End If
      
     If cPJ(Index).weapon <> 0 Then
-        Call DDrawTransGrhtoSurface(WeaponAnimData(cPJ(Index).weapon).WeaponWalk(3), PixelOffsetX + init_x, PixelOffsetY + init_y, 0, Light(), 0, init_x, init_y)
+        Call Draw_Grh(WeaponAnimData(cPJ(Index).weapon).WeaponWalk(3), PixelOffsetX + init_x, PixelOffsetY + init_y, 0, 0, Light())
     End If
      
     If cPJ(Index).shield <> 0 Then
-        Call DDrawTransGrhtoSurface(ShieldAnimData(cPJ(Index).shield).ShieldWalk(3), PixelOffsetX + init_x, PixelOffsetY + init_y, 0, Light(), 0, init_x, init_y)
+        Call Draw_Grh(ShieldAnimData(cPJ(Index).shield).ShieldWalk(3), PixelOffsetX + init_x, PixelOffsetY + init_y, 0, 0, Light())
     End If
 
     Engine_EndScene re, frmPanelAccount.picChar(Index - 1).hWnd

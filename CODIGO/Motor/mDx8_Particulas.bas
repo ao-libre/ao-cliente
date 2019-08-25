@@ -1775,7 +1775,7 @@ Sub Engine_Weather_Update()
     End If
     
     If OnRampageImgGrh <> 0 Then
-        DDrawTransGrhIndextoSurface OnRampageImgGrh, 0, 0, 0, Normal_RGBList(), 0, True
+        Draw_GrhIndex OnRampageImgGrh, 0, 0, 0, Normal_RGBList()
     End If
     
 End Sub
@@ -1834,7 +1834,7 @@ ElapsedTime = Engine_ElapsedTime
     CC(3) = D3DColorARGB(CurMapAmbient.Fog, 255, 255, 255)
     CC(0) = D3DColorARGB(CurMapAmbient.Fog, 255, 255, 255)
     For i = 1 To WeatherFogCount
-        DDrawTransGrhIndextoSurface 27300, (X * 512) + WeatherFogX2, (Y * 512) + WeatherFogY2, 0, CC(), 0, False
+        Draw_GrhIndex 27300, (X * 512) + WeatherFogX2, (Y * 512) + WeatherFogY2, 0, CC()
         X = X + 1
         If X > (1 + (ScreenWidth \ 512)) Then
             X = 0
@@ -1850,7 +1850,7 @@ ElapsedTime = Engine_ElapsedTime
     CC(3) = D3DColorARGB(CurMapAmbient.Fog / 2, 255, 255, 255)
     CC(0) = D3DColorARGB(CurMapAmbient.Fog / 2, 255, 255, 255)
     For i = 1 To WeatherFogCount
-        DDrawTransGrhIndextoSurface 27301, (X * 512) + WeatherFogX1, (Y * 512) + WeatherFogY1, 0, CC(), 0, False
+        Draw_GrhIndex 27301, (X * 512) + WeatherFogX1, (Y * 512) + WeatherFogY1, 0, CC()
         X = X + 1
         If X > (2 + (ScreenWidth \ 512)) Then
             X = 0

@@ -54,14 +54,14 @@ Dim X As Integer, Y As Integer
     X = XPosCartel + 20
     Y = YPosCartel + 20
     
-    Call DDrawTransGrhIndextoSurface(textura, XPosCartel, YPosCartel, 0, Normal_RGBList(), 0, False)
-    Dim j As Integer, desp As Integer, Upper_leyendaFormateada As Long
+    Call Draw_GrhIndex(textura, XPosCartel, YPosCartel, 0, Normal_RGBList())
+    Dim J As Integer, desp As Integer, Upper_leyendaFormateada As Long
     
     Upper_leyendaFormateada = UBound(LeyendaFormateada)
     
-    For j = 0 To Upper_leyendaFormateada
+    For J = 0 To Upper_leyendaFormateada
         'Fonts_Render_String LeyendaFormateada(j), X, Y + desp, -1, Settings.Engine_Font
-        DrawText X, Y + desp, LeyendaFormateada(j), -1
+        DrawText X, Y + desp, LeyendaFormateada(J), Normal_RGBList()
         desp = desp + (frmMain.Font.Size) + 5
     Next
 End Sub

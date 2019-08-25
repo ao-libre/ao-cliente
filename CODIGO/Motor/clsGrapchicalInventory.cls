@@ -379,7 +379,7 @@ Private Sub DrawInventory()
     Dim Sel_Color(0 To 3) As Long
     
     With destRect
-        .bottom = InventoryWindow.Height
+        .Bottom = InventoryWindow.Height
         .Right = InventoryWindow.Width
     End With
 
@@ -393,37 +393,37 @@ Private Sub DrawInventory()
         
         For LoopC = InventoryDimensions To Upper_inventory
             
-            startdX = ((LoopC - 1) Mod (frmMain.picInv.Width / 32)) * 32
-            startdY = ((LoopC - 1) \ (frmMain.picInv.Width / 32)) * 32
+            startdX = ((LoopC - 1) Mod (frmMain.PicInv.Width / 32)) * 32
+            startdY = ((LoopC - 1) \ (frmMain.PicInv.Width / 32)) * 32
             
             
             Call Engine_Long_To_RGB_List(Inv_Color(), -1)
             
             Call Engine_Long_To_RGB_List(Sel_Color(), D3DColorARGB(100, 255, 128, 0))
             
-            'Call DDrawTransGrhIndextoSurface(24664, startdX, startdY, 0, Inv_Color(), 0, False)
+            'Call Draw_GrhIndex(24664, startdX, startdY, 0, Inv_Color(), 0, False)
             
             If Inventory(LoopC).GrhIndex Then
                 
-                Call DDrawTransGrhIndextoSurface(Inventory(LoopC).GrhIndex, startdX, startdY, 0, Inv_Color())
+                Call Draw_GrhIndex(Inventory(LoopC).GrhIndex, startdX, startdY, 0, Inv_Color())
                 
                 If LoopC = SelectedItem Then
-                    Call DDrawTransGrhIndextoSurface(2, startdX, startdY, 0, Sel_Color())
+                    Call Draw_GrhIndex(2, startdX, startdY, 0, Sel_Color())
                 End If
             
                 'If equipped we render "E"
                 If Inventory(LoopC).Equipped Then
                     'Fonts_Render_String "E", startdX + 20, startdY + 20, -1, 2
-                    DrawText startdX + 20, startdY + 20, "E", -1
+                    Call DrawText(startdX + 20, startdY + 20, "E", Normal_RGBList())
                 End If
                 
                 'Render the item grh and the amount
                 'Fonts_Render_String Inventory(LoopC).Amount, startdX, startdY, -1, 2
-                DrawText startdX, startdY, Inventory(LoopC).Amount, -1
+                Call DrawText(startdX, startdY, Inventory(LoopC).Amount, Normal_RGBList())
             End If
         Next LoopC
         
-    Call Engine_EndScene(destRect, InventoryWindow.hwnd)
+    Call Engine_EndScene(destRect, InventoryWindow.hWnd)
     
 End Sub
 
