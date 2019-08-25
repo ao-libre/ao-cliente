@@ -23,7 +23,6 @@ Public Sub Char_Erase(ByVal CharIndex As Integer)
                 End If
        
                 'Update lastchar
- 
                 If CharIndex = LastChar Then
  
                         Do Until charlist(LastChar).Heading > 0
@@ -47,6 +46,9 @@ Public Sub Char_Erase(ByVal CharIndex As Integer)
                 'Remove char's dialog
                 Call Dialogos.RemoveDialog(CharIndex)
                 
+                'Remove particles
+                Call Char_Particle_Group_Remove_All(CharIndex)
+                
                 'Update NumChars
                 NumChars = NumChars - 1
  
@@ -65,7 +67,8 @@ Private Sub Char_ResetInfo(ByVal CharIndex As Integer)
         '*****************************************************************
 
         With charlist(CharIndex)
-            Delete_All_Auras CharIndex
+            Call Delete_All_Auras(CharIndex)
+            Call Char_Particle_Group_Remove_All(CharIndex)
             
             .active = 0
             .Criminal = 0

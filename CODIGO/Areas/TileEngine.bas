@@ -126,6 +126,7 @@ Public Type Grh
     Speed As Single
     Started As Byte
     Loops As Integer
+    Angle As Single
 End Type
 
 'Lista de cuerpos
@@ -188,7 +189,10 @@ Public Type Char
     attacking As Boolean
     
     Aura(1 To 4) As Aura
+    
     ParticleIndex As Integer
+    Particle_Count As Integer
+    Particle_Group() As Long
 End Type
 
 'Info de un objeto
@@ -212,6 +216,7 @@ Public Type MapBlock
     
     Trigger As Integer
     Engine_Light(0 To 3) As Long 'Standelf, Light Engine.
+    Particle_Group_Index As Long 'Particle Engine
     
     fX As Grh
     FxIndex As Integer
@@ -1245,6 +1250,12 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
             ScreenX = minXOffset - Engine_Get_TileBuffer
             For X = minX To maxX
                 
+                'Particulas**************************************
+                If MapData(X, Y).Particle_Group_Index Then
+                    Call Particle_Group_Render(MapData(X, Y).Particle_Group_Index, ScreenX * 32 + PixelOffsetX, ScreenY * 32 + PixelOffsetY)
+                End If
+                '************************************************
+                
                 'Layer 4
                 If MapData(X, Y).Graphic(4).GrhIndex Then
                     If bTecho Then
@@ -1431,6 +1442,7 @@ On Error GoTo 0
     Call CargarCascos
     Call CargarFxs
     Call LoadGraphics
+    Call CargarParticulas
 
     InitTileEngine = True
 End Function
@@ -1746,7 +1758,16 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
                     If Nombres Then
                         Call RenderName(CharIndex, PixelOffsetX, PixelOffsetY)
                     End If
-            End If
+                End If
+                
+                '************Particulas************
+                Dim i As Integer
+                If .Particle_Count > 0 Then
+                    For i = 1 To .Particle_Count
+                        If .Particle_Group(i) > 0 Then _
+                            Call Particle_Group_Render(.Particle_Group(i), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY)
+                    Next i
+                End If
             
         Else 'Usuario invisible
         
