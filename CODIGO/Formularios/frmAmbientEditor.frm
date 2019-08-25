@@ -255,7 +255,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Check1_Click()
-    If Check1.value = Checked Then
+    If Check1.Value = Checked Then
         HScroll1.Enabled = True
     Else
         HScroll1.Enabled = False
@@ -263,17 +263,17 @@ Private Sub Check1_Click()
 End Sub
 
 Private Sub Check2_Click()
-    If Check2.value = Checked Then
+    If Check2.Value = Checked Then
         CurMapAmbient.Snow = True
     Else
         CurMapAmbient.Snow = False
-        If Effect(WeatherEffectIndex).EffectNum = EffectNum_Snow Then Effect_Kill WeatherEffectIndex
+        'If Effect(WeatherEffectIndex).EffectNum = EffectNum_Snow Then Effect_Kill WeatherEffectIndex
     End If
 
 End Sub
 
 Private Sub Check3_Click()
-    If Check3.value = Checked Then
+    If Check3.Value = Checked Then
         CurMapAmbient.Rain = True
     Else
         CurMapAmbient.Rain = False
@@ -286,7 +286,7 @@ Private Sub Command1_Click()
 End Sub
 
 Private Sub Command10_Click()
-    CurMapAmbient.MapBlocks(UserPos.X, UserPos.Y).Light.b = 0
+    CurMapAmbient.MapBlocks(UserPos.X, UserPos.Y).Light.B = 0
     CurMapAmbient.MapBlocks(UserPos.X, UserPos.Y).Light.g = 0
     CurMapAmbient.MapBlocks(UserPos.X, UserPos.Y).Light.r = 0
     CurMapAmbient.MapBlocks(UserPos.X, UserPos.Y).Light.range = 0
@@ -303,19 +303,19 @@ Private Sub Command2_Click()
 End Sub
 
 Private Sub Command7_Click()
-    If Option1(0).value = True Then
+    If Option1(0).Value = True Then
         CurMapAmbient.UseDayAmbient = True
-            CurMapAmbient.OwnAmbientLight.a = 255
+            CurMapAmbient.OwnAmbientLight.A = 255
             CurMapAmbient.OwnAmbientLight.r = 0
             CurMapAmbient.OwnAmbientLight.g = 0
-            CurMapAmbient.OwnAmbientLight.b = 0
+            CurMapAmbient.OwnAmbientLight.B = 0
     Else
             CurMapAmbient.UseDayAmbient = False
             
-            CurMapAmbient.OwnAmbientLight.a = 255
+            CurMapAmbient.OwnAmbientLight.A = 255
             CurMapAmbient.OwnAmbientLight.r = Val(Text1(0).Text)
             CurMapAmbient.OwnAmbientLight.g = Val(Text1(1).Text)
-            CurMapAmbient.OwnAmbientLight.b = Val(Text1(2).Text)
+            CurMapAmbient.OwnAmbientLight.B = Val(Text1(2).Text)
     End If
     
     DoEvents
@@ -324,40 +324,18 @@ Private Sub Command7_Click()
 End Sub
 
 Private Sub Command8_Click()
-    CurMapAmbient.MapBlocks(UserPos.X, UserPos.Y).Light.b = Val(Text4.Text)
+    CurMapAmbient.MapBlocks(UserPos.X, UserPos.Y).Light.B = Val(Text4.Text)
     CurMapAmbient.MapBlocks(UserPos.X, UserPos.Y).Light.g = Val(Text3.Text)
     CurMapAmbient.MapBlocks(UserPos.X, UserPos.Y).Light.r = Val(Text2.Text)
-    CurMapAmbient.MapBlocks(UserPos.X, UserPos.Y).Light.range = Val(HScroll2.value)
+    CurMapAmbient.MapBlocks(UserPos.X, UserPos.Y).Light.range = Val(HScroll2.Value)
     
-    Create_Light_To_Map UserPos.X, UserPos.Y, Val(HScroll2.value), Val(Text2.Text), Val(Text3.Text), Val(Text4.Text)
+    Create_Light_To_Map UserPos.X, UserPos.Y, Val(HScroll2.Value), Val(Text2.Text), Val(Text3.Text), Val(Text4.Text)
 End Sub
 
 Private Sub Command9_Click()
-    If Check1.value = Unchecked Then
+    If Check1.Value = Unchecked Then
         CurMapAmbient.Fog = -1
     Else
-        CurMapAmbient.Fog = Val(HScroll1.value)
+        CurMapAmbient.Fog = Val(HScroll1.Value)
     End If
-End Sub
-
-Private Sub Form_Load()
-    With Me
-        .Caption = JsonLanguage.Item("AMBIENT-EDITOR").Item(1)
-        .Frame1.Caption = JsonLanguage.Item("AMBIENT-EDITOR").Item(2)
-        .Option1(0).Caption = JsonLanguage.Item("AMBIENT-EDITOR").Item(3)
-        .Option1(1).Caption = JsonLanguage.Item("AMBIENT-EDITOR").Item(4)
-        .Command7.Caption = JsonLanguage.Item("AMBIENT-EDITOR").Item(5)
-        .Frame3.Caption = JsonLanguage.Item("AMBIENT-EDITOR").Item(6)
-        .Label4.Caption = JsonLanguage.Item("AMBIENT-EDITOR").Item(7)
-        .Command8.Caption = JsonLanguage.Item("AMBIENT-EDITOR").Item(8)
-        .Command10.Caption = JsonLanguage.Item("AMBIENT-EDITOR").Item(9)
-        .Frame2.Caption = JsonLanguage.Item("AMBIENT-EDITOR").Item(10)
-        .Check1.Caption = JsonLanguage.Item("AMBIENT-EDITOR").Item(11)
-        .Label2.Caption = JsonLanguage.Item("AMBIENT-EDITOR").Item(12)
-        .Command9.Caption = JsonLanguage.Item("AMBIENT-EDITOR").Item(13)
-        .Check2.Caption = JsonLanguage.Item("AMBIENT-EDITOR").Item(14)
-        .Check3.Caption = JsonLanguage.Item("AMBIENT-EDITOR").Item(15)
-        .Command1.Caption = JsonLanguage.Item("AMBIENT-EDITOR").Item(16)
-        .Command2.Caption = JsonLanguage.Item("AMBIENT-EDITOR").Item(17)
-    End With
 End Sub

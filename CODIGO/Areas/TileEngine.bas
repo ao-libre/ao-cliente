@@ -61,6 +61,7 @@ Private Const GrhFogata As Integer = 1521
 'Sets a Grh animation to loop indefinitely.
 Private Const INFINITE_LOOPS As Integer = -1
 
+Public Const DegreeToRadian As Single = 0.01745329251994 'Pi / 180
 
 'Encabezado bmp
 Type BITMAPFILEHEADER
@@ -1271,14 +1272,7 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
             Next X
             ScreenY = ScreenY + 1
         Next Y
- 
 
-    'Weather Update & Render
-    Call Engine_Weather_Update
-    
-    'Effects Update
-    Call Effect_UpdateAll
-    
     If ClientSetup.ProyectileEngine Then
                             
         If LastProjectile > 0 Then

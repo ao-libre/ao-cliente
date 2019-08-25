@@ -165,8 +165,7 @@ Public Sub Engine_DirectX8_Aditional_Init()
 
     Load_Auras
     Init_MeteoEngine
-    Engine_Init_ParticleEngine
-    
+
     mDx8_Dibujado.Damage_Initialize
     
 End Sub
@@ -798,3 +797,76 @@ Public Sub DrawPJ(ByVal Index As Byte)
 
     Engine_EndScene re, frmPanelAccount.picChar(Index - 1).hWnd
 End Sub
+
+Public Function Engine_GetAngle(ByVal CenterX As Integer, ByVal CenterY As Integer, ByVal TargetX As Integer, ByVal TargetY As Integer) As Single
+'************************************************************
+'Gets the angle between two points in a 2d plane
+'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_GetAngle
+'************************************************************
+Dim SideA As Single
+Dim SideC As Single
+
+    On Error GoTo ErrOut
+
+    'Check for horizontal lines (90 or 270 degrees)
+    If CenterY = TargetY Then
+
+        'Check for going right (90 degrees)
+        If CenterX < TargetX Then
+            Engine_GetAngle = 90
+
+            'Check for going left (270 degrees)
+        Else
+            Engine_GetAngle = 270
+        End If
+
+        'Exit the function
+        Exit Function
+
+    End If
+
+    'Check for horizontal lines (360 or 180 degrees)
+    If CenterX = TargetX Then
+
+        'Check for going up (360 degrees)
+        If CenterY > TargetY Then
+            Engine_GetAngle = 360
+
+            'Check for going down (180 degrees)
+        Else
+            Engine_GetAngle = 180
+        End If
+
+        'Exit the function
+        Exit Function
+
+    End If
+
+    'Calculate Side C
+    SideC = Sqr(Abs(TargetX - CenterX) ^ 2 + Abs(TargetY - CenterY) ^ 2)
+
+    'Side B = CenterY
+
+    'Calculate Side A
+    SideA = Sqr(Abs(TargetX - CenterX) ^ 2 + TargetY ^ 2)
+
+    'Calculate the angle
+    Engine_GetAngle = (SideA ^ 2 - CenterY ^ 2 - SideC ^ 2) / (CenterY * SideC * -2)
+    Engine_GetAngle = (Atn(-Engine_GetAngle / Sqr(-Engine_GetAngle * Engine_GetAngle + 1)) + 1.5708) * 57.29583
+
+    'If the angle is >180, subtract from 360
+    If TargetX < CenterX Then Engine_GetAngle = 360 - Engine_GetAngle
+
+    'Exit function
+
+Exit Function
+
+    'Check for error
+ErrOut:
+
+    'Return a 0 saying there was an error
+    Engine_GetAngle = 0
+
+Exit Function
+
+End Function

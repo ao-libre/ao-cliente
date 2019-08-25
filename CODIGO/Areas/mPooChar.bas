@@ -18,8 +18,8 @@ Public Sub Char_Erase(ByVal CharIndex As Integer)
                 If (CharIndex = 0) Then Exit Sub
                 If (CharIndex > LastChar) Then Exit Sub
                 
-                If Map_InBounds(.Pos.x, .Pos.y) Then  '// Posicion valida
-                        MapData(.Pos.x, .Pos.y).CharIndex = 0  '// Borramos el user
+                If Map_InBounds(.Pos.X, .Pos.Y) Then  '// Posicion valida
+                        MapData(.Pos.X, .Pos.Y).CharIndex = 0  '// Borramos el user
                 End If
        
                 'Update lastchar
@@ -76,20 +76,16 @@ Private Sub Char_ResetInfo(ByVal CharIndex As Integer)
             .muerto = False
             .Nombre = vbNullString
             .pie = False
-            .Pos.x = 0
-            .Pos.y = 0
+            .Pos.X = 0
+            .Pos.Y = 0
             .UsandoArma = False
             .attacking = False
             
-            If .ParticleIndex <> 0 Then
-                Call Effect_Kill(.ParticleIndex, False)
-                .ParticleIndex = 0
-            End If
         End With
  
 End Sub
  
-Private Sub Char_MapPosGet(ByVal CharIndex As Long, ByRef x As Byte, ByRef y As Byte)
+Private Sub Char_MapPosGet(ByVal CharIndex As Long, ByRef X As Byte, ByRef Y As Byte)
                                 
         '*****************************************************************
         'Author: Aaron Perkins
@@ -103,24 +99,24 @@ Private Sub Char_MapPosGet(ByVal CharIndex As Long, ByRef x As Byte, ByRef y As 
         With charlist(CharIndex)
                   
                 'Get map pos
-                x = .Pos.x
-                y = .Pos.y
+                X = .Pos.X
+                Y = .Pos.Y
         
         End With
  
 End Sub
  
-Public Sub Char_MapPosSet(ByVal x As Byte, ByVal y As Byte)
+Public Sub Char_MapPosSet(ByVal X As Byte, ByVal Y As Byte)
 
         'Sets the user postion
 
-        If (Map_InBounds(x, y)) Then  '// Posicion valida
+        If (Map_InBounds(X, Y)) Then  '// Posicion valida
         
-                UserPos.x = x
-                UserPos.y = y
+                UserPos.X = X
+                UserPos.Y = Y
                         
                 'Set char
-                MapData(UserPos.x, UserPos.y).CharIndex = UserCharIndex
+                MapData(UserPos.X, UserPos.Y).CharIndex = UserCharIndex
                 charlist(UserCharIndex).Pos = UserPos
         
                 Exit Sub
@@ -138,9 +134,9 @@ Public Function Char_Techo() As Boolean
  
         With charlist(UserCharIndex)
       
-                If (Map_InBounds(.Pos.x, .Pos.y)) Then '// Posicion valida
+                If (Map_InBounds(.Pos.X, .Pos.Y)) Then '// Posicion valida
                        
-                        If (MapData(.Pos.x, .Pos.y).Trigger = eTrigger.BAJOTECHO) Then
+                        If (MapData(.Pos.X, .Pos.Y).Trigger = eTrigger.BAJOTECHO) Then
                                 Char_Techo = True
                         End If
                                
@@ -150,14 +146,14 @@ Public Function Char_Techo() As Boolean
 
 End Function
  
-Public Function Char_MapPosExits(ByVal x As Byte, ByVal y As Byte) As Integer
+Public Function Char_MapPosExits(ByVal X As Byte, ByVal Y As Byte) As Integer
  
         '*****************************************************************
         'Checks to see if a tile position has a char_index and return it
         '*****************************************************************
    
-        If (Map_InBounds(x, y)) Then
-                Char_MapPosExits = MapData(x, y).CharIndex
+        If (Map_InBounds(X, Y)) Then
+                Char_MapPosExits = MapData(X, Y).CharIndex
         Else
                 Char_MapPosExits = 0
         End If
@@ -169,17 +165,17 @@ Public Sub Char_UserPos()
         '// Author Miqueas
         '// Actualizamo el lbl de la posicion del usuario
  
-        Dim x As Byte
-        Dim y As Byte
+        Dim X As Byte
+        Dim Y As Byte
      
         If Char_Check(UserCharIndex) Then
         
                 '// Damos valor a las variables asi sacamos la pos del usuario.
-                Call Char_MapPosGet(UserCharIndex, x, y)
+                Call Char_MapPosGet(UserCharIndex, X, Y)
                 
                 bTecho = Char_Techo '// Pos : Techo :P
                
-                frmMain.Coord.Caption = "Map:" & UserMap & " X:" & x & " Y:" & y
+                frmMain.Coord.Caption = "Map:" & UserMap & " X:" & X & " Y:" & Y
  
                 Exit Sub
  
@@ -331,7 +327,7 @@ Public Sub Char_SetHeading(ByVal CharIndex As Long, ByVal Heading As Byte)
  
 End Sub
 
-Public Sub Char_SetName(ByVal CharIndex As Integer, ByVal name As String)
+Public Sub Char_SetName(ByVal CharIndex As Integer, ByVal Name As String)
  
         '**************************************************************
         'Author: Miqueas150
@@ -339,7 +335,7 @@ Public Sub Char_SetName(ByVal CharIndex As Integer, ByVal name As String)
         '
         '**************************************************************
  
-        If (Len(name) = 0) Then
+        If (Len(Name) = 0) Then
 
                 Exit Sub
 
@@ -349,7 +345,7 @@ Public Sub Char_SetName(ByVal CharIndex As Integer, ByVal name As String)
  
                 With charlist(CharIndex)
                
-                        .Nombre = name
+                        .Nombre = Name
  
                         Exit Sub
  
@@ -476,8 +472,8 @@ Public Sub Char_Make(ByVal CharIndex As Integer, _
                      ByVal Body As Integer, _
                      ByVal Head As Integer, _
                      ByVal Heading As Byte, _
-                     ByVal x As Integer, _
-                     ByVal y As Integer, _
+                     ByVal X As Integer, _
+                     ByVal Y As Integer, _
                      ByVal Arma As Integer, _
                      ByVal Escudo As Integer, _
                      ByVal Casco As Integer)
@@ -519,13 +515,13 @@ Public Sub Char_Make(ByVal CharIndex As Integer, _
                 .attacking = False
        
                 'Update position
-                .Pos.x = x
-                .Pos.y = y
+                .Pos.X = X
+                .Pos.Y = Y
            
         End With
    
         'Plot on map
-        MapData(x, y).CharIndex = CharIndex
+        MapData(X, Y).CharIndex = CharIndex
        
 End Sub
 
@@ -543,8 +539,8 @@ Public Sub Char_RefreshAll()
 
                         With charlist(LoopC)
 
-                                If (Map_InBounds(.Pos.x, .Pos.y)) Then
-                                        MapData(.Pos.x, .Pos.y).CharIndex = LoopC  '// Ahora si refrescamos sin error alguno :3
+                                If (Map_InBounds(.Pos.X, .Pos.Y)) Then
+                                        MapData(.Pos.X, .Pos.Y).CharIndex = LoopC  '// Ahora si refrescamos sin error alguno :3
                                 End If
 
                         End With
@@ -557,8 +553,8 @@ End Sub
 
 Sub Char_MovebyPos(ByVal CharIndex As Integer, ByVal nX As Integer, ByVal nY As Integer)
 
-        Dim x        As Integer
-        Dim y        As Integer
+        Dim X        As Integer
+        Dim Y        As Integer
         
         Dim addx     As Integer
         Dim addy     As Integer
@@ -571,19 +567,19 @@ Sub Char_MovebyPos(ByVal CharIndex As Integer, ByVal nX As Integer, ByVal nY As 
         End If
     
         With charlist(CharIndex)
-                x = .Pos.x
-                y = .Pos.y
+                X = .Pos.X
+                Y = .Pos.Y
                 
                 '// Miqueas : Agrego este parchesito para evitar un run time
                 
-                If Not (Map_InBounds(x, y)) Then
+                If Not (Map_InBounds(X, Y)) Then
                         Exit Sub
                 End If
 
-                MapData(x, y).CharIndex = 0
+                MapData(X, Y).CharIndex = 0
         
-                addx = nX - x
-                addy = nY - y
+                addx = nX - X
+                addy = nY - Y
         
                 If Sgn(addx) = 1 Then
                         nHeading = E_Heading.EAST
@@ -597,8 +593,8 @@ Sub Char_MovebyPos(ByVal CharIndex As Integer, ByVal nX As Integer, ByVal nY As 
         
                 MapData(nX, nY).CharIndex = CharIndex
         
-                .Pos.x = nX
-                .Pos.y = nY
+                .Pos.X = nX
+                .Pos.Y = nY
         
                 .MoveOffsetX = -1 * (TilePixelWidth * addx)
                 .MoveOffsetY = -1 * (TilePixelHeight * addy)
@@ -630,8 +626,8 @@ Sub Char_MoveScreen(ByVal nHeading As E_Heading)
         'Starts the screen moving in a direction
         '******************************************
 
-        Dim x  As Integer
-        Dim y  As Integer
+        Dim X  As Integer
+        Dim Y  As Integer
         
         Dim tX As Integer
         Dim tY As Integer
@@ -641,21 +637,21 @@ Sub Char_MoveScreen(ByVal nHeading As E_Heading)
         Select Case nHeading
 
                 Case E_Heading.NORTH
-                        y = -1
+                        Y = -1
         
                 Case E_Heading.EAST
-                        x = 1
+                        X = 1
         
                 Case E_Heading.SOUTH
-                        y = 1
+                        Y = 1
         
                 Case E_Heading.WEST
-                        x = -1
+                        X = -1
         End Select
     
         'Fill temp pos
-        tX = UserPos.x + x
-        tY = UserPos.y + y
+        tX = UserPos.X + X
+        tY = UserPos.Y + Y
 
         'Check to see if its out of bounds
 
@@ -665,10 +661,10 @@ Sub Char_MoveScreen(ByVal nHeading As E_Heading)
 
         Else
                 'Start moving... MainLoop does the rest
-                AddtoUserPos.x = x
-                UserPos.x = tX
-                AddtoUserPos.y = y
-                UserPos.y = tY
+                AddtoUserPos.X = X
+                UserPos.X = tX
+                AddtoUserPos.Y = Y
+                UserPos.Y = tY
                 UserMoving = 1
                 
                 bTecho = Char_Techo
@@ -685,8 +681,8 @@ Sub Char_MovebyHead(ByVal CharIndex As Integer, ByVal nHeading As E_Heading)
         Dim addx As Integer
         Dim addy As Integer
         
-        Dim x    As Integer
-        Dim y    As Integer
+        Dim X    As Integer
+        Dim Y    As Integer
         
         Dim nX   As Integer
         Dim nY   As Integer
@@ -697,8 +693,8 @@ Sub Char_MovebyHead(ByVal CharIndex As Integer, ByVal nHeading As E_Heading)
         End If
 
         With charlist(CharIndex)
-                x = .Pos.x
-                y = .Pos.y
+                X = .Pos.X
+                Y = .Pos.Y
         
                 'Figure out which way to move
 
@@ -718,8 +714,8 @@ Sub Char_MovebyHead(ByVal CharIndex As Integer, ByVal nHeading As E_Heading)
                                 
                 End Select
         
-                nX = x + addx
-                nY = y + addy
+                nX = X + addx
+                nY = Y + addy
                 
                 '// Miqueas : Agrego este parchesito para evitar un run time
                
@@ -729,9 +725,9 @@ Sub Char_MovebyHead(ByVal CharIndex As Integer, ByVal nHeading As E_Heading)
                 End If
 
                 MapData(nX, nY).CharIndex = CharIndex
-                .Pos.x = nX
-                .Pos.y = nY
-                MapData(x, y).CharIndex = 0
+                .Pos.X = nX
+                .Pos.Y = nY
+                MapData(X, Y).CharIndex = 0
          
                 .MoveOffsetX = -1 * (TilePixelWidth * addx)
                 .MoveOffsetY = -1 * (TilePixelHeight * addy)
@@ -760,28 +756,28 @@ End Sub
 Sub Char_CleanAll()
         '// Borramos los obj y char que esten
 
-        Dim x         As Long, y As Long
+        Dim X         As Long, Y As Long
         Dim CharIndex As Integer, Obj As Integer
     
-        For x = XMinMapSize To XMaxMapSize
-                For y = YMinMapSize To YMaxMapSize
+        For X = XMinMapSize To XMaxMapSize
+                For Y = YMinMapSize To YMaxMapSize
           
                         'Erase NPCs
-                        CharIndex = Char_MapPosExits(CByte(x), CByte(y))
+                        CharIndex = Char_MapPosExits(CByte(X), CByte(Y))
  
                         If (CharIndex > 0) Then
                                 Call Char_Erase(CharIndex)
                         End If
                         
                         'Erase OBJs
-                        Obj = Map_PosExitsObject(CByte(x), CByte(y))
+                        Obj = Map_PosExitsObject(CByte(X), CByte(Y))
 
                         If (Obj > 0) Then
-                                Call Map_DestroyObject(CByte(x), CByte(y))
+                                Call Map_DestroyObject(CByte(X), CByte(Y))
                         End If
 
-                Next y
-        Next x
+                Next Y
+        Next X
 
 End Sub
 
