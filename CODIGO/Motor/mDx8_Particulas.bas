@@ -16,10 +16,10 @@ Public Type Particle
     Angle As Single
     Grh As Grh
     alive_counter As Long
-    x1 As Long
-    x2 As Long
-    y1 As Long
-    y2 As Long
+    X1 As Long
+    X2 As Long
+    Y1 As Long
+    Y2 As Long
     vecx1 As Long
     vecx2 As Long
     vecy1 As Long
@@ -48,10 +48,10 @@ Public Type Stream
     NumOfParticles As Long
     NumGrhs As Long
     ID As Long
-    x1 As Long
-    y1 As Long
-    x2 As Long
-    y2 As Long
+    X1 As Long
+    Y1 As Long
+    X2 As Long
+    Y2 As Long
     Angle As Long
     vecx1 As Long
     vecx2 As Long
@@ -107,10 +107,10 @@ Public Type Particle_Group
     liv1 As Integer
     liveend As Long
     
-    x1 As Long
-    x2 As Long
-    y1 As Long
-    y2 As Long
+    X1 As Long
+    X2 As Long
+    Y1 As Long
+    Y2 As Long
     Angle As Long
     vecx1 As Long
     vecx2 As Long
@@ -153,7 +153,7 @@ Public Sub CargarParticulas()
     '*********************************
     'Carga de particulas.
     '*********************************
-    Dim loopc      As Long
+    Dim LoopC      As Long
     Dim i          As Long
     Dim GrhListing As String
     Dim TempSet    As String
@@ -168,44 +168,44 @@ Public Sub CargarParticulas()
     ReDim StreamData(1 To TotalStreams) As Stream
      
     'fill StreamData array with info from Particles.ini
-    For loopc = 1 To TotalStreams
+    For LoopC = 1 To TotalStreams
     
-        With StreamData(loopc)
+        With StreamData(LoopC)
         
-            .Name = Leer.GetValue(Val(loopc), "Name")
-            .NumOfParticles = Leer.GetValue(Val(loopc), "NumOfParticles")
-            .x1 = Leer.GetValue(Val(loopc), "X1")
-            .y1 = Leer.GetValue(Val(loopc), "Y1")
-            .x2 = Leer.GetValue(Val(loopc), "X2")
-            .y2 = Leer.GetValue(Val(loopc), "Y2")
-            .Angle = Leer.GetValue(Val(loopc), "Angle")
-            .vecx1 = Leer.GetValue(Val(loopc), "VecX1")
-            .vecx2 = Leer.GetValue(Val(loopc), "VecX2")
-            .vecy1 = Leer.GetValue(Val(loopc), "VecY1")
-            .vecy2 = Leer.GetValue(Val(loopc), "VecY2")
-            .life1 = Leer.GetValue(Val(loopc), "Life1")
-            .life2 = Leer.GetValue(Val(loopc), "Life2")
-            .friction = Leer.GetValue(Val(loopc), "Friction")
-            .spin = Leer.GetValue(Val(loopc), "Spin")
-            .spin_speedL = Leer.GetValue(Val(loopc), "Spin_SpeedL")
-            .spin_speedH = Leer.GetValue(Val(loopc), "Spin_SpeedH")
-            .AlphaBlend = Leer.GetValue(Val(loopc), "AlphaBlend")
-            .gravity = Leer.GetValue(Val(loopc), "Gravity")
-            .grav_strength = Leer.GetValue(Val(loopc), "Grav_Strength")
-            .bounce_strength = Leer.GetValue(Val(loopc), "Bounce_Strength")
-            .XMove = Leer.GetValue(Val(loopc), "XMove")
-            .YMove = Leer.GetValue(Val(loopc), "YMove")
-            .move_x1 = Leer.GetValue(Val(loopc), "move_x1")
-            .move_x2 = Leer.GetValue(Val(loopc), "move_x2")
-            .move_y1 = Leer.GetValue(Val(loopc), "move_y1")
-            .move_y2 = Leer.GetValue(Val(loopc), "move_y2")
-            .Radio = Val(Leer.GetValue(Val(loopc), "Radio"))
-            .life_counter = Leer.GetValue(Val(loopc), "life_counter")
-            .Speed = Val(Leer.GetValue(Val(loopc), "Speed"))
-            .NumGrhs = Leer.GetValue(Val(loopc), "NumGrhs")
+            .Name = Leer.GetValue(Val(LoopC), "Name")
+            .NumOfParticles = Leer.GetValue(Val(LoopC), "NumOfParticles")
+            .X1 = Leer.GetValue(Val(LoopC), "X1")
+            .Y1 = Leer.GetValue(Val(LoopC), "Y1")
+            .X2 = Leer.GetValue(Val(LoopC), "X2")
+            .Y2 = Leer.GetValue(Val(LoopC), "Y2")
+            .Angle = Leer.GetValue(Val(LoopC), "Angle")
+            .vecx1 = Leer.GetValue(Val(LoopC), "VecX1")
+            .vecx2 = Leer.GetValue(Val(LoopC), "VecX2")
+            .vecy1 = Leer.GetValue(Val(LoopC), "VecY1")
+            .vecy2 = Leer.GetValue(Val(LoopC), "VecY2")
+            .life1 = Leer.GetValue(Val(LoopC), "Life1")
+            .life2 = Leer.GetValue(Val(LoopC), "Life2")
+            .friction = Leer.GetValue(Val(LoopC), "Friction")
+            .spin = Leer.GetValue(Val(LoopC), "Spin")
+            .spin_speedL = Leer.GetValue(Val(LoopC), "Spin_SpeedL")
+            .spin_speedH = Leer.GetValue(Val(LoopC), "Spin_SpeedH")
+            .AlphaBlend = Leer.GetValue(Val(LoopC), "AlphaBlend")
+            .gravity = Leer.GetValue(Val(LoopC), "Gravity")
+            .grav_strength = Leer.GetValue(Val(LoopC), "Grav_Strength")
+            .bounce_strength = Leer.GetValue(Val(LoopC), "Bounce_Strength")
+            .XMove = Leer.GetValue(Val(LoopC), "XMove")
+            .YMove = Leer.GetValue(Val(LoopC), "YMove")
+            .move_x1 = Leer.GetValue(Val(LoopC), "move_x1")
+            .move_x2 = Leer.GetValue(Val(LoopC), "move_x2")
+            .move_y1 = Leer.GetValue(Val(LoopC), "move_y1")
+            .move_y2 = Leer.GetValue(Val(LoopC), "move_y2")
+            .Radio = Val(Leer.GetValue(Val(LoopC), "Radio"))
+            .life_counter = Leer.GetValue(Val(LoopC), "life_counter")
+            .Speed = Val(Leer.GetValue(Val(LoopC), "Speed"))
+            .NumGrhs = Leer.GetValue(Val(LoopC), "NumGrhs")
            
             ReDim .grh_list(1 To .NumGrhs)
-            GrhListing = Leer.GetValue(Val(loopc), "Grh_List")
+            GrhListing = Leer.GetValue(Val(LoopC), "Grh_List")
            
             For i = 1 To .NumGrhs
                 .grh_list(i) = ReadField(str(i), GrhListing, 44)
@@ -214,7 +214,7 @@ Public Sub CargarParticulas()
             .grh_list(i - 1) = .grh_list(i - 1)
 
             For ColorSet = 1 To 4
-                TempSet = Leer.GetValue(Val(loopc), "ColorSet" & ColorSet)
+                TempSet = Leer.GetValue(Val(LoopC), "ColorSet" & ColorSet)
                 .colortint(ColorSet - 1).r = ReadField(1, TempSet, 44)
                 .colortint(ColorSet - 1).g = ReadField(2, TempSet, 44)
                 .colortint(ColorSet - 1).B = ReadField(3, TempSet, 44)
@@ -222,7 +222,7 @@ Public Sub CargarParticulas()
         
         End With
         
-    Next loopc
+    Next LoopC
     
     Set Leer = Nothing
  
@@ -247,11 +247,11 @@ Public Function General_Char_Particle_Create(ByVal ParticulaInd As Long, _
         rgb_list(3) = RGB(.colortint(3).r, .colortint(3).g, .colortint(3).B)
 
         General_Char_Particle_Create = Char_Particle_Group_Create(char_index, .grh_list, rgb_list(), .NumOfParticles, ParticulaInd, _
-           .AlphaBlend, IIf(particle_life = 0, .life_counter, particle_life), .Speed, , .x1, .y1, .Angle, _
+           .AlphaBlend, IIf(particle_life = 0, .life_counter, particle_life), .Speed, , .X1, .Y1, .Angle, _
            .vecx1, .vecx2, .vecy1, .vecy2, _
            .life1, .life2, .friction, .spin_speedL, _
-           .gravity, .grav_strength, .bounce_strength, .x2, _
-           .y2, .XMove, .move_x1, .move_x2, .move_y1, _
+           .gravity, .grav_strength, .bounce_strength, .X2, _
+           .Y2, .XMove, .move_x1, .move_x2, .move_y1, _
            .move_y2, .YMove, .spin_speedH, .spin, _
            .Radio)
     
@@ -276,11 +276,11 @@ Public Function General_Particle_Create(ByVal ParticulaInd As Long, _
         rgb_list(3) = RGB(.colortint(3).r, .colortint(3).g, .colortint(3).B)
  
         General_Particle_Create = Particle_Group_Create(X, Y, .grh_list, rgb_list(), .NumOfParticles, ParticulaInd, _
-           .AlphaBlend, IIf(particle_life = 0, .life_counter, particle_life), .Speed, , .x1, .y1, .Angle, _
+           .AlphaBlend, IIf(particle_life = 0, .life_counter, particle_life), .Speed, , .X1, .Y1, .Angle, _
            .vecx1, .vecx2, .vecy1, .vecy2, _
            .life1, .life2, .friction, .spin_speedL, _
-           .gravity, .grav_strength, .bounce_strength, .x2, _
-           .y2, .XMove, .move_x1, .move_x2, .move_y1, _
+           .gravity, .grav_strength, .bounce_strength, .X2, _
+           .Y2, .XMove, .move_x1, .move_x2, .move_y1, _
            .move_y2, .YMove, .spin_speedH, .spin, , , , _
            .Radio)
     
@@ -299,8 +299,8 @@ Public Function Particle_Group_Create(ByVal map_x As Integer, _
                                       Optional ByVal alive_counter As Long = -1, _
                                       Optional ByVal frame_speed As Single = 0.5, _
                                       Optional ByVal ID As Long, _
-                                      Optional ByVal x1 As Integer, _
-                                      Optional ByVal y1 As Integer, _
+                                      Optional ByVal X1 As Integer, _
+                                      Optional ByVal Y1 As Integer, _
                                       Optional ByVal Angle As Integer, _
                                       Optional ByVal vecx1 As Integer, _
                                       Optional ByVal vecx2 As Integer, _
@@ -313,7 +313,7 @@ Public Function Particle_Group_Create(ByVal map_x As Integer, _
                                       Optional ByVal gravity As Boolean, _
                                       Optional grav_strength As Long, _
                                       Optional bounce_strength As Long, _
-                                      Optional ByVal x2 As Integer, Optional ByVal y2 As Integer, Optional ByVal XMove As Boolean, Optional ByVal move_x1 As Integer, Optional ByVal move_x2 As Integer, Optional ByVal move_y1 As Integer, Optional ByVal move_y2 As Integer, Optional ByVal YMove As Boolean, Optional ByVal spin_speedH As Single, Optional ByVal spin As Boolean, Optional grh_resize As Boolean, Optional grh_resizex As Integer, Optional grh_resizey As Integer, Optional ByVal Radio As Integer) As Long
+                                      Optional ByVal X2 As Integer, Optional ByVal Y2 As Integer, Optional ByVal XMove As Boolean, Optional ByVal move_x1 As Integer, Optional ByVal move_x2 As Integer, Optional ByVal move_y1 As Integer, Optional ByVal move_y2 As Integer, Optional ByVal YMove As Boolean, Optional ByVal spin_speedH As Single, Optional ByVal spin As Boolean, Optional grh_resize As Boolean, Optional grh_resizex As Integer, Optional grh_resizey As Integer, Optional ByVal Radio As Integer) As Long
                                         
     '**************************************************************
     'Author: Aaron Perkins
@@ -324,10 +324,10 @@ Public Function Particle_Group_Create(ByVal map_x As Integer, _
     If (map_x <> -1) And (map_y <> -1) Then
         If Map_Particle_Group_Get(map_x, map_y) = 0 Then
             Particle_Group_Create = Particle_Group_Next_Open
-            Particle_Group_Make Particle_Group_Create, map_x, map_y, Particle_Count, stream_type, grh_index_list(), rgb_list(), alpha_blend, alive_counter, frame_speed, ID, x1, y1, Angle, vecx1, vecx2, vecy1, vecy2, life1, life2, fric, spin_speedL, gravity, grav_strength, bounce_strength, x2, y2, XMove, move_x1, move_x2, move_y1, move_y2, YMove, spin_speedH, spin, grh_resize, grh_resizex, grh_resizey, Radio
+            Particle_Group_Make Particle_Group_Create, map_x, map_y, Particle_Count, stream_type, grh_index_list(), rgb_list(), alpha_blend, alive_counter, frame_speed, ID, X1, Y1, Angle, vecx1, vecx2, vecy1, vecy2, life1, life2, fric, spin_speedL, gravity, grav_strength, bounce_strength, X2, Y2, XMove, move_x1, move_x2, move_y1, move_y2, YMove, spin_speedH, spin, grh_resize, grh_resizex, grh_resizey, Radio
         Else
             Particle_Group_Create = Particle_Group_Next_Open
-            Particle_Group_Make Particle_Group_Create, map_x, map_y, Particle_Count, stream_type, grh_index_list(), rgb_list(), alpha_blend, alive_counter, frame_speed, ID, x1, y1, Angle, vecx1, vecx2, vecy1, vecy2, life1, life2, fric, spin_speedL, gravity, grav_strength, bounce_strength, x2, y2, XMove, move_x1, move_x2, move_y1, move_y2, YMove, spin_speedH, spin, grh_resize, grh_resizex, grh_resizey, Radio
+            Particle_Group_Make Particle_Group_Create, map_x, map_y, Particle_Count, stream_type, grh_index_list(), rgb_list(), alpha_blend, alive_counter, frame_speed, ID, X1, Y1, Angle, vecx1, vecx2, vecy1, vecy2, life1, life2, fric, spin_speedL, gravity, grav_strength, bounce_strength, X2, Y2, XMove, move_x1, move_x2, move_y1, move_y2, YMove, spin_speedH, spin, grh_resize, grh_resizex, grh_resizey, Radio
         End If
     End If
 
@@ -342,8 +342,8 @@ Public Function Char_Particle_Group_Create(ByVal char_index As Integer, _
                                            Optional ByVal alive_counter As Long = -1, _
                                            Optional ByVal frame_speed As Single = 0.5, _
                                            Optional ByVal ID As Long, _
-                                           Optional ByVal x1 As Integer, _
-                                           Optional ByVal y1 As Integer, _
+                                           Optional ByVal X1 As Integer, _
+                                           Optional ByVal Y1 As Integer, _
                                            Optional ByVal Angle As Integer, _
                                            Optional ByVal vecx1 As Integer, _
                                            Optional ByVal vecx2 As Integer, _
@@ -356,8 +356,8 @@ Public Function Char_Particle_Group_Create(ByVal char_index As Integer, _
                                            Optional ByVal gravity As Boolean, _
                                            Optional grav_strength As Long, _
                                            Optional bounce_strength As Long, _
-                                           Optional ByVal x2 As Integer, _
-                                           Optional ByVal y2 As Integer, Optional ByVal XMove As Boolean, Optional ByVal move_x1 As Integer, Optional ByVal move_x2 As Integer, Optional ByVal move_y1 As Integer, Optional ByVal move_y2 As Integer, Optional ByVal YMove As Boolean, Optional ByVal spin_speedH As Single, Optional ByVal spin As Boolean, Optional Radio As Integer)
+                                           Optional ByVal X2 As Integer, _
+                                           Optional ByVal Y2 As Integer, Optional ByVal XMove As Boolean, Optional ByVal move_x1 As Integer, Optional ByVal move_x2 As Integer, Optional ByVal move_y1 As Integer, Optional ByVal move_y2 As Integer, Optional ByVal YMove As Boolean, Optional ByVal spin_speedH As Single, Optional ByVal spin As Boolean, Optional Radio As Integer)
     '**************************************************************
     'Author: Augusto José Rando
     '**************************************************************
@@ -369,7 +369,7 @@ Public Function Char_Particle_Group_Create(ByVal char_index As Integer, _
     
     If char_part_free_index > 0 Then
         Char_Particle_Group_Create = Particle_Group_Next_Open
-        Char_Particle_Group_Make Char_Particle_Group_Create, char_index, char_part_free_index, Particle_Count, stream_type, grh_index_list(), rgb_list(), alpha_blend, alive_counter, frame_speed, ID, x1, y1, Angle, vecx1, vecx2, vecy1, vecy2, life1, life2, fric, spin_speedL, gravity, grav_strength, bounce_strength, x2, y2, XMove, move_x1, move_x2, move_y1, move_y2, YMove, spin_speedH, spin, Radio
+        Char_Particle_Group_Make Char_Particle_Group_Create, char_index, char_part_free_index, Particle_Count, stream_type, grh_index_list(), rgb_list(), alpha_blend, alive_counter, frame_speed, ID, X1, Y1, Angle, vecx1, vecx2, vecy1, vecy2, life1, life2, fric, spin_speedL, gravity, grav_strength, bounce_strength, X2, Y2, XMove, move_x1, move_x2, move_y1, move_y2, YMove, spin_speedH, spin, Radio
     End If
 
 End Function
@@ -449,20 +449,20 @@ Public Function Particle_Group_Find(ByVal ID As Long) As Long
     'Find the index related to the handle
     '*****************************************************************
     On Error GoTo errorHandler:
-    Dim loopc As Long
+    Dim LoopC As Long
     
-    loopc = 1
+    LoopC = 1
 
-    Do Until particle_group_list(loopc).ID = ID
+    Do Until particle_group_list(LoopC).ID = ID
 
-        If loopc = particle_group_last Then
+        If LoopC = particle_group_last Then
             Particle_Group_Find = 0
             Exit Function
         End If
-        loopc = loopc + 1
+        LoopC = LoopC + 1
     Loop
     
-    Particle_Group_Find = loopc
+    Particle_Group_Find = LoopC
     Exit Function
 
 errorHandler:
@@ -561,8 +561,8 @@ Private Sub Particle_Group_Make(ByVal Particle_Group_Index As Long, _
                                 Optional ByVal alive_counter As Long = -1, _
                                 Optional ByVal frame_speed As Single = 0.5, _
                                 Optional ByVal ID As Long, _
-                                Optional ByVal x1 As Integer, _
-                                Optional ByVal y1 As Integer, _
+                                Optional ByVal X1 As Integer, _
+                                Optional ByVal Y1 As Integer, _
                                 Optional ByVal Angle As Integer, _
                                 Optional ByVal vecx1 As Integer, _
                                 Optional ByVal vecx2 As Integer, _
@@ -574,7 +574,7 @@ Private Sub Particle_Group_Make(ByVal Particle_Group_Index As Long, _
                                 Optional ByVal spin_speedL As Single, _
                                 Optional ByVal gravity As Boolean, _
                                 Optional grav_strength As Long, _
-                                Optional bounce_strength As Long, Optional ByVal x2 As Integer, Optional ByVal y2 As Integer, Optional ByVal XMove As Boolean, Optional ByVal move_x1 As Integer, Optional ByVal move_x2 As Integer, Optional ByVal move_y1 As Integer, Optional ByVal move_y2 As Integer, Optional ByVal YMove As Boolean, Optional ByVal spin_speedH As Single, Optional ByVal spin As Boolean, Optional grh_resize As Boolean, Optional grh_resizex As Integer, Optional grh_resizey As Integer, Optional Radio As Integer)
+                                Optional bounce_strength As Long, Optional ByVal X2 As Integer, Optional ByVal Y2 As Integer, Optional ByVal XMove As Boolean, Optional ByVal move_x1 As Integer, Optional ByVal move_x2 As Integer, Optional ByVal move_y1 As Integer, Optional ByVal move_y2 As Integer, Optional ByVal YMove As Boolean, Optional ByVal spin_speedH As Single, Optional ByVal spin As Boolean, Optional grh_resize As Boolean, Optional grh_resizex As Integer, Optional grh_resizey As Integer, Optional Radio As Integer)
                                
     '*****************************************************************
     'Author: Aaron Perkins
@@ -583,15 +583,16 @@ Private Sub Particle_Group_Make(ByVal Particle_Group_Index As Long, _
     'Makes a new particle effect
     'Modified by Juan Martín Sotuyo Dodero
     '*****************************************************************
-    With particle_group_list(Particle_Group_Index)
     
-        'Update array size
-        If Particle_Group_Index > particle_group_last Then
-            particle_group_last = Particle_Group_Index
-            ReDim Preserve particle_group_list(1 To particle_group_last)
-        End If
-        particle_group_count = particle_group_count + 1
-   
+    'Update array size
+    If Particle_Group_Index > particle_group_last Then
+        particle_group_last = Particle_Group_Index
+        ReDim Preserve particle_group_list(1 To particle_group_last)
+    End If
+    particle_group_count = particle_group_count + 1
+
+    With particle_group_list(Particle_Group_Index)
+        
         'Make active
         .active = True
    
@@ -626,10 +627,10 @@ Private Sub Particle_Group_Make(ByVal Particle_Group_Index As Long, _
         'speed
         .frame_speed = frame_speed
    
-        .x1 = x1
-        .y1 = y1
-        .x2 = x2
-        .y2 = y2
+        .X1 = X1
+        .Y1 = Y1
+        .X2 = X2
+        .Y2 = Y2
         .Angle = Angle
         .vecx1 = vecx1
         .vecx2 = vecx2
@@ -683,8 +684,8 @@ Private Sub Char_Particle_Group_Make(ByVal Particle_Group_Index As Long, _
                                      Optional ByVal alive_counter As Long = -1, _
                                      Optional ByVal frame_speed As Single = 0.5, _
                                      Optional ByVal ID As Long, _
-                                     Optional ByVal x1 As Integer, _
-                                     Optional ByVal y1 As Integer, _
+                                     Optional ByVal X1 As Integer, _
+                                     Optional ByVal Y1 As Integer, _
                                      Optional ByVal Angle As Integer, _
                                      Optional ByVal vecx1 As Integer, _
                                      Optional ByVal vecx2 As Integer, _
@@ -696,7 +697,7 @@ Private Sub Char_Particle_Group_Make(ByVal Particle_Group_Index As Long, _
                                      Optional ByVal spin_speedL As Single, _
                                      Optional ByVal gravity As Boolean, _
                                      Optional grav_strength As Long, _
-                                     Optional bounce_strength As Long, Optional ByVal x2 As Integer, Optional ByVal y2 As Integer, Optional ByVal XMove As Boolean, Optional ByVal move_x1 As Integer, Optional ByVal move_x2 As Integer, Optional ByVal move_y1 As Integer, Optional ByVal move_y2 As Integer, Optional ByVal YMove As Boolean, Optional ByVal spin_speedH As Single, Optional ByVal spin As Boolean, Optional Radio As Integer)
+                                     Optional bounce_strength As Long, Optional ByVal X2 As Integer, Optional ByVal Y2 As Integer, Optional ByVal XMove As Boolean, Optional ByVal move_x1 As Integer, Optional ByVal move_x2 As Integer, Optional ByVal move_y1 As Integer, Optional ByVal move_y2 As Integer, Optional ByVal YMove As Boolean, Optional ByVal spin_speedH As Single, Optional ByVal spin As Boolean, Optional Radio As Integer)
                                 
     '*****************************************************************
     'Author: Aaron Perkins
@@ -705,15 +706,15 @@ Private Sub Char_Particle_Group_Make(ByVal Particle_Group_Index As Long, _
     'Makes a new particle effect
     'Modified by Juan Martín Sotuyo Dodero
     '*****************************************************************
+
+    'Update array size
+    If Particle_Group_Index > particle_group_last Then
+        particle_group_last = Particle_Group_Index
+        ReDim Preserve particle_group_list(1 To particle_group_last)
+    End If
+    particle_group_count = particle_group_count + 1
     
     With particle_group_list(Particle_Group_Index)
-
-        'Update array size
-        If Particle_Group_Index > particle_group_last Then
-            particle_group_last = Particle_Group_Index
-            ReDim Preserve particle_group_list(1 To particle_group_last)
-        End If
-        particle_group_count = particle_group_count + 1
     
         'Make active
         .active = True
@@ -746,10 +747,10 @@ Private Sub Char_Particle_Group_Make(ByVal Particle_Group_Index As Long, _
         'speed
         .frame_speed = frame_speed
    
-        .x1 = x1
-        .y1 = y1
-        .x2 = x2
-        .y2 = y2
+        .X1 = X1
+        .Y1 = Y1
+        .X2 = X2
+        .Y2 = Y2
         .Angle = Angle
         .vecx1 = vecx1
         .vecx2 = vecx2
@@ -813,7 +814,7 @@ Public Sub Particle_Group_Render(ByVal Particle_Group_Index As Long, _
     'Renders a particle stream at a paticular screen point
     '*****************************************************************
 
-    Dim loopc            As Long
+    Dim LoopC            As Long
     Dim temp_rgb(0 To 3) As Long
     Dim no_move          As Boolean
     
@@ -845,28 +846,28 @@ Public Sub Particle_Group_Render(ByVal Particle_Group_Index As Long, _
         End If
     
         'If it's still alive render all the particles inside
-        For loopc = 1 To .Particle_Count
+        For LoopC = 1 To .Particle_Count
                 
             'Render particle
-            Particle_Render .particle_stream(loopc), _
+            Particle_Render .particle_stream(LoopC), _
                screen_x, screen_y, _
                .grh_index_list(Round(RandomNumber(1, .grh_index_count), 0)), _
                temp_rgb(), _
                .alpha_blend, no_move, _
-               .x1, .y1, .Angle, _
+               .X1, .Y1, .Angle, _
                .vecx1, .vecx2, _
                .vecy1, .vecy2, _
                .life1, .life2, _
                .fric, .spin_speedL, _
                .gravity, .grav_strength, _
-               .bounce_strength, .x2, _
-               .y2, .XMove, _
+               .bounce_strength, .X2, _
+               .Y2, .XMove, _
                .move_x1, .move_x2, _
                .move_y1, .move_y2, _
                .YMove, .spin_speedH, _
                .spin, .Radio, _
-               .Particle_Count, loopc
-        Next loopc
+               .Particle_Count, LoopC
+        Next LoopC
         
         If no_move = False Then
 
@@ -891,8 +892,8 @@ Public Sub Particle_Render(ByRef temp_particle As Particle, _
                            ByRef rgb_list() As Long, _
                            Optional ByVal alpha_blend As Boolean, _
                            Optional ByVal no_move As Boolean, _
-                           Optional ByVal x1 As Integer, _
-                           Optional ByVal y1 As Integer, _
+                           Optional ByVal X1 As Integer, _
+                           Optional ByVal Y1 As Integer, _
                            Optional ByVal Angle As Integer, _
                            Optional ByVal vecx1 As Integer, _
                            Optional ByVal vecx2 As Integer, _
@@ -905,8 +906,8 @@ Public Sub Particle_Render(ByRef temp_particle As Particle, _
                            Optional ByVal gravity As Boolean, _
                            Optional grav_strength As Long, _
                            Optional ByVal bounce_strength As Long, _
-                           Optional ByVal x2 As Integer, _
-                           Optional ByVal y2 As Integer, _
+                           Optional ByVal X2 As Integer, _
+                           Optional ByVal Y2 As Integer, _
                            Optional ByVal XMove As Boolean, _
                            Optional ByVal move_x1 As Integer, Optional ByVal move_x2 As Integer, Optional ByVal move_y1 As Integer, Optional ByVal move_y2 As Integer, Optional ByVal YMove As Boolean, Optional ByVal spin_speedH As Single, Optional ByVal spin As Boolean, Optional ByVal Radio As Integer, Optional ByVal Count As Integer, Optional ByVal Index As Integer)
 
@@ -924,14 +925,14 @@ Public Sub Particle_Render(ByRef temp_particle As Particle, _
                 InitGrh .Grh, grh_index, alpha_blend
 
                 If Radio = 0 Then
-                    .X = RandomNumber(x1, x2)
-                    .Y = RandomNumber(y1, y2)
+                    .X = RandomNumber(X1, X2)
+                    .Y = RandomNumber(Y1, Y2)
                 Else
-                    .X = (RandomNumber(x1, x2) + Radio) + Radio * Cos(PI * 2 * Index / Count)
-                    .Y = (RandomNumber(y1, y2) + Radio) + Radio * Sin(PI * 2 * Index / Count)
+                    .X = (RandomNumber(X1, X2) + Radio) + Radio * Cos(PI * 2 * Index / Count)
+                    .Y = (RandomNumber(Y1, Y2) + Radio) + Radio * Sin(PI * 2 * Index / Count)
                 End If
-                .X = RandomNumber(x1, x2) - (base_tile_size \ 2)
-                .Y = RandomNumber(y1, y2) - (base_tile_size \ 2)
+                .X = RandomNumber(X1, X2) - (base_tile_size \ 2)
+                .Y = RandomNumber(Y1, Y2) - (base_tile_size \ 2)
                 .vector_x = RandomNumber(vecx1, vecx2)
                 .vector_y = RandomNumber(vecy1, vecy2)
                 .Angle = Angle
@@ -952,7 +953,7 @@ Public Sub Particle_Render(ByRef temp_particle As Particle, _
 
                 'Do rotation
                 If spin = True Then
-                    .Grh.Angle = .Grh.Angle + (RandomNumber(spin_speedL, spin_speedH) / 100)
+                    .Angle = .Angle + (RandomNumber(spin_speedL, spin_speedH) / 100)
                 End If
             
                 If .Angle >= 360 Then
@@ -973,7 +974,7 @@ Public Sub Particle_Render(ByRef temp_particle As Particle, _
     
         'Draw it
         If .Grh.GrhIndex Then
-            Call DDrawTransGrhtoSurface(.Grh, .X + screen_x, .Y + screen_y, 1, rgb_list(), 1, 255, alpha_blend, .Grh.Angle)
+            Call DDrawTransGrhtoSurface(.Grh, .X + screen_x, .Y + screen_y, 1, rgb_list(), 1, 255, alpha_blend, .Angle)
         End If
     
     End With
@@ -987,25 +988,25 @@ Public Function Particle_Group_Next_Open() As Long
     '
     '*****************************************************************
     On Error GoTo errorHandler:
-    Dim loopc As Long
+    Dim LoopC As Long
     
     If particle_group_last = 0 Then
         Particle_Group_Next_Open = 1
         Exit Function
     End If
     
-    loopc = 1
+    LoopC = 1
 
-    Do Until particle_group_list(loopc).active = False
+    Do Until particle_group_list(LoopC).active = False
 
-        If loopc = particle_group_last Then
+        If LoopC = particle_group_last Then
             Particle_Group_Next_Open = particle_group_last + 1
             Exit Function
         End If
-        loopc = loopc + 1
+        LoopC = LoopC + 1
     Loop
     
-    Particle_Group_Next_Open = loopc
+    Particle_Group_Next_Open = LoopC
 
     Exit Function
 
@@ -1018,7 +1019,7 @@ Public Function Char_Particle_Group_Next_Open(ByVal char_index As Integer) As In
     'Author: Augusto José Rando
     '*****************************************************************
     On Error GoTo errorHandler:
-    Dim loopc As Long
+    Dim LoopC As Long
     
     If charlist(char_index).Particle_Count = 0 Then
         Char_Particle_Group_Next_Open = charlist(char_index).Particle_Count + 1
@@ -1027,20 +1028,20 @@ Public Function Char_Particle_Group_Next_Open(ByVal char_index As Integer) As In
         Exit Function
     End If
     
-    loopc = 1
+    LoopC = 1
 
-    Do Until charlist(char_index).Particle_Group(loopc) = 0
+    Do Until charlist(char_index).Particle_Group(LoopC) = 0
 
-        If loopc = charlist(char_index).Particle_Count Then
+        If LoopC = charlist(char_index).Particle_Count Then
             Char_Particle_Group_Next_Open = charlist(char_index).Particle_Count + 1
             charlist(char_index).Particle_Count = Char_Particle_Group_Next_Open
             ReDim Preserve charlist(char_index).Particle_Group(1 To Char_Particle_Group_Next_Open) As Long
             Exit Function
         End If
-        loopc = loopc + 1
+        LoopC = LoopC + 1
     Loop
     
-    Char_Particle_Group_Next_Open = loopc
+    Char_Particle_Group_Next_Open = LoopC
 
     Exit Function
 
