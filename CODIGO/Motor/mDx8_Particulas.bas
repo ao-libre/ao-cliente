@@ -150,6 +150,9 @@ Private base_tile_size As Integer
 Public Const PI As Single = 3.14159265358979
 
 Public Sub CargarParticulas()
+    
+    If Not ClientSetup.ParticleEngine Then Exit Sub
+    
     '*********************************
     'Carga de particulas.
     '*********************************
@@ -234,7 +237,9 @@ Public Function General_Char_Particle_Create(ByVal ParticulaInd As Long, _
                                              ByVal char_index As Integer, _
                                              Optional ByVal particle_life As Long = 0) As Long
     On Error Resume Next
-
+    
+    If Not ClientSetup.ParticleEngine Then Exit Function
+    
     If ParticulaInd <= 0 Then Exit Function
 
     Dim rgb_list(0 To 3) As Long
@@ -265,7 +270,9 @@ Public Function General_Particle_Create(ByVal ParticulaInd As Long, _
                                         ByVal X As Integer, _
                                         ByVal Y As Integer, _
                                         Optional ByVal particle_life As Long = 0) As Long
-   
+    
+    If Not ClientSetup.ParticleEngine Then Exit Function
+    
     Dim rgb_list(0 To 3) As Long
 
     With StreamData(ParticulaInd)
@@ -321,6 +328,8 @@ Public Function Particle_Group_Create(ByVal map_x As Integer, _
     'Returns the particle_group_index if successful, else 0
     '**************************************************************
     
+    If Not ClientSetup.ParticleEngine Then Exit Function
+    
     If (map_x <> -1) And (map_y <> -1) Then
         If Map_Particle_Group_Get(map_x, map_y) = 0 Then
             Particle_Group_Create = Particle_Group_Next_Open
@@ -361,6 +370,8 @@ Public Function Char_Particle_Group_Create(ByVal char_index As Integer, _
     '**************************************************************
     'Author: Augusto José Rando
     '**************************************************************
+    If Not ClientSetup.ParticleEngine Then Exit Function
+    
     Dim char_part_free_index As Integer
     
     'If Char_Particle_Group_Find(char_index, stream_type) Then Exit Function ' hay que ver si dejar o sacar esto...
@@ -375,17 +386,20 @@ Public Function Char_Particle_Group_Create(ByVal char_index As Integer, _
 End Function
  
 Public Function Particle_Group_Remove(ByVal Particle_Group_Index As Long) As Boolean
-
     '*****************************************************************
     'Author: Aaron Perkins
     'Last Modify Date: 1/04/2003
     '
     '*****************************************************************
+    
+    If Not ClientSetup.ParticleEngine Then Exit Function
+    
     'Make sure it's a legal index
     If Particle_Group_Check(Particle_Group_Index) Then
         Particle_Group_Destroy Particle_Group_Index
         Particle_Group_Remove = True
     End If
+    
 End Function
  
 Public Function Char_Particle_Group_Remove(ByVal char_index As Integer, _
@@ -393,6 +407,8 @@ Public Function Char_Particle_Group_Remove(ByVal char_index As Integer, _
     '**************************************************************
     'Author: Augusto José Rando
     '**************************************************************
+    If Not ClientSetup.ParticleEngine Then Exit Function
+    
     Dim char_part_index As Integer
     
     If Char_Check(char_index) Then
@@ -410,6 +426,8 @@ Public Function Particle_Group_Remove_All() As Boolean
     'Last Modify Date: 1/04/2003
     '
     '*****************************************************************
+    If Not ClientSetup.ParticleEngine Then Exit Function
+    
     Dim Index As Long
     
     For Index = 1 To particle_group_last
@@ -427,6 +445,8 @@ Public Function Char_Particle_Group_Remove_All(ByVal char_index As Integer)
     '**************************************************************
     'Author: Augusto José Rando
     '**************************************************************
+    If Not ClientSetup.ParticleEngine Then Exit Function
+    
     Dim i As Integer
     
     If Char_Check(char_index) And Not charlist(char_index).Particle_Count = 0 Then
@@ -449,9 +469,10 @@ Public Function Particle_Group_Find(ByVal ID As Long) As Long
     'Find the index related to the handle
     '*****************************************************************
     On Error GoTo errorHandler:
-    Dim LoopC As Long
     
-    LoopC = 1
+    If Not ClientSetup.ParticleEngine Then Exit Function
+    
+    Dim LoopC As Long: LoopC = 1
 
     Do Until particle_group_list(LoopC).ID = ID
 
@@ -475,7 +496,6 @@ Private Function Char_Particle_Group_Find(ByVal char_index As Integer, _
     'Author: Augusto José Rando
     'Modified: returns slot or -1
     '*****************************************************************
-
     Dim i As Integer
 
     For i = 1 To charlist(char_index).Particle_Count
@@ -490,10 +510,13 @@ Private Function Char_Particle_Group_Find(ByVal char_index As Integer, _
 
 End Function
 
-Public Function Particle_Get_Type(ByVal Particle_Group_Index As Long) As Byte
-    On Error GoTo errorHandler:
+Private Function Particle_Get_Type(ByVal Particle_Group_Index As Long) As Byte
+On Error GoTo errorHandler:
+    
     Particle_Get_Type = particle_group_list(Particle_Group_Index).stream_type
+    
     Exit Function
+
 errorHandler:
     Particle_Get_Type = 0
 End Function
@@ -505,6 +528,7 @@ Private Sub Particle_Group_Destroy(ByVal Particle_Group_Index As Long)
     '
     '**************************************************************
     On Error Resume Next
+
     Dim temp As Particle_Group
     Dim i    As Integer
     
@@ -550,7 +574,7 @@ Private Sub Particle_Group_Destroy(ByVal Particle_Group_Index As Long)
     
 End Sub
  
-Private Sub Particle_Group_Make(ByVal Particle_Group_Index As Long, _
+Public Sub Particle_Group_Make(ByVal Particle_Group_Index As Long, _
                                 ByVal map_x As Integer, _
                                 ByVal map_y As Integer, _
                                 ByVal Particle_Count As Long, _
@@ -584,11 +608,14 @@ Private Sub Particle_Group_Make(ByVal Particle_Group_Index As Long, _
     'Modified by Juan Martín Sotuyo Dodero
     '*****************************************************************
     
+    If Not ClientSetup.ParticleEngine Then Exit Sub
+    
     'Update array size
     If Particle_Group_Index > particle_group_last Then
         particle_group_last = Particle_Group_Index
         ReDim Preserve particle_group_list(1 To particle_group_last)
     End If
+    
     particle_group_count = particle_group_count + 1
 
     With particle_group_list(Particle_Group_Index)
@@ -673,7 +700,7 @@ Private Sub Particle_Group_Make(ByVal Particle_Group_Index As Long, _
  
 End Sub
 
-Private Sub Char_Particle_Group_Make(ByVal Particle_Group_Index As Long, _
+Public Sub Char_Particle_Group_Make(ByVal Particle_Group_Index As Long, _
                                      ByVal char_index As Integer, _
                                      ByVal particle_char_index As Integer, _
                                      ByVal Particle_Count As Long, _
@@ -706,7 +733,9 @@ Private Sub Char_Particle_Group_Make(ByVal Particle_Group_Index As Long, _
     'Makes a new particle effect
     'Modified by Juan Martín Sotuyo Dodero
     '*****************************************************************
-
+    
+    If Not ClientSetup.ParticleEngine Then Exit Sub
+    
     'Update array size
     If Particle_Group_Index > particle_group_last Then
         particle_group_last = Particle_Group_Index
@@ -789,7 +818,7 @@ Private Sub Char_Particle_Group_Make(ByVal Particle_Group_Index As Long, _
     End With
 End Sub
 
-Public Function Particle_Type_Get(ByVal particle_index As Long) As Long
+Private Function Particle_Type_Get(ByVal particle_index As Long) As Long
 
     '*****************************************************************
     'Author: Juan Martín Sotuyo Dodero (juansotuyo@hotmail.com)
@@ -804,8 +833,8 @@ Public Function Particle_Type_Get(ByVal particle_index As Long) As Long
 End Function
 
 Public Sub Particle_Group_Render(ByVal Particle_Group_Index As Long, _
-                                  ByVal screen_x As Long, _
-                                  ByVal screen_y As Long)
+                                 ByVal screen_x As Long, _
+                                 ByVal screen_y As Long)
     '*****************************************************************
     'Author: Aaron Perkins
     'Modified by: Ryan Cain (Onezero)
@@ -813,74 +842,80 @@ Public Sub Particle_Group_Render(ByVal Particle_Group_Index As Long, _
     'Last Modify Date: 5/15/2003
     'Renders a particle stream at a paticular screen point
     '*****************************************************************
-
+    
+    If Not ClientSetup.ParticleEngine Then Exit Sub
+    
     Dim LoopC            As Long
     Dim temp_rgb(0 To 3) As Long
     Dim no_move          As Boolean
     
     With particle_group_list(Particle_Group_Index)
     
-    'Set colors
-    If UserMinHP = 0 Then
-        temp_rgb(0) = D3DColorARGB(.alpha_blend, 255, 255, 255)
-        temp_rgb(1) = D3DColorARGB(.alpha_blend, 255, 255, 255)
-        temp_rgb(2) = D3DColorARGB(.alpha_blend, 255, 255, 255)
-        temp_rgb(3) = D3DColorARGB(.alpha_blend, 255, 255, 255)
-    Else
-        temp_rgb(0) = .rgb_list(0)
-        temp_rgb(1) = .rgb_list(1)
-        temp_rgb(2) = .rgb_list(2)
-        temp_rgb(3) = .rgb_list(3)
-    End If
-    
-    If .alive_counter Then
-    
-        'See if it is time to move a particle
-        .frame_counter = .frame_counter + timerTicksPerFrame
-
-        If .frame_counter > .frame_speed Then
-            .frame_counter = 0
-            no_move = False
+        'Set colors
+        If UserMinHP = 0 Then
+            temp_rgb(0) = D3DColorARGB(.alpha_blend, 255, 255, 255)
+            temp_rgb(1) = D3DColorARGB(.alpha_blend, 255, 255, 255)
+            temp_rgb(2) = D3DColorARGB(.alpha_blend, 255, 255, 255)
+            temp_rgb(3) = D3DColorARGB(.alpha_blend, 255, 255, 255)
         Else
-            no_move = True
+            temp_rgb(0) = .rgb_list(0)
+            temp_rgb(1) = .rgb_list(1)
+            temp_rgb(2) = .rgb_list(2)
+            temp_rgb(3) = .rgb_list(3)
         End If
     
-        'If it's still alive render all the particles inside
-        For LoopC = 1 To .Particle_Count
-                
-            'Render particle
-            Particle_Render .particle_stream(LoopC), _
-               screen_x, screen_y, _
-               .grh_index_list(Round(RandomNumber(1, .grh_index_count), 0)), _
-               temp_rgb(), _
-               .alpha_blend, no_move, _
-               .X1, .Y1, .Angle, _
-               .vecx1, .vecx2, _
-               .vecy1, .vecy2, _
-               .life1, .life2, _
-               .fric, .spin_speedL, _
-               .gravity, .grav_strength, _
-               .bounce_strength, .X2, _
-               .Y2, .XMove, _
-               .move_x1, .move_x2, _
-               .move_y1, .move_y2, _
-               .YMove, .spin_speedH, _
-               .spin, .Radio, _
-               .Particle_Count, LoopC
-        Next LoopC
-        
-        If no_move = False Then
+        If .alive_counter Then
+    
+            'See if it is time to move a particle
+            .frame_counter = .frame_counter + timerTicksPerFrame
 
-            'Update the group alive counter
-            If .never_die = False Then
-                .alive_counter = .alive_counter - 1
+            If .frame_counter > .frame_speed Then
+                .frame_counter = 0
+                no_move = False
+            Else
+                no_move = True
             End If
-        End If
     
-    Else
-        'If it's dead destroy it
-        Particle_Group_Destroy Particle_Group_Index
-    End If
+            'If it's still alive render all the particles inside
+            For LoopC = 1 To .Particle_Count
+                
+                'Render particle
+                Particle_Render .particle_stream(LoopC), _
+                                screen_x, screen_y, _
+                                .grh_index_list(Round(RandomNumber(1, .grh_index_count), 0)), _
+                                temp_rgb(), _
+                                .alpha_blend, _
+                                no_move, _
+                                .X1, .Y1, _
+                                .Angle, _
+                                .vecx1, .vecx2, .vecy1, .vecy2, _
+                                .life1, .life2, _
+                                .fric, _
+                                .spin_speedL, _
+                                .gravity, .grav_strength, .bounce_strength, _
+                                .X2, .Y2, .XMove, _
+                                .move_x1, .move_x2, .move_y1, .move_y2, .YMove, _
+                                .spin_speedH, _
+                                .spin, _
+                                .Radio, _
+                                .Particle_Count, _
+                                LoopC
+            Next LoopC
+        
+            If no_move = False Then
+
+                'Update the group alive counter
+                If .never_die = False Then
+                    .alive_counter = .alive_counter - 1
+                End If
+            End If
+    
+        Else
+        
+            'If it's dead destroy it
+            Call Particle_Group_Destroy(Particle_Group_Index)
+            
+        End If
     
     End With
 End Sub
@@ -917,6 +952,9 @@ Public Sub Particle_Render(ByRef temp_particle As Particle, _
     'Modified by: Juan Martín Sotuyo Dodero
     'Last Modify Date: 5/15/2003
     '**************************************************************
+    
+    If Not ClientSetup.ParticleEngine Then Exit Sub
+    
     With temp_particle
     
         If no_move = False Then
@@ -988,6 +1026,9 @@ Public Function Particle_Group_Next_Open() As Long
     '
     '*****************************************************************
     On Error GoTo errorHandler:
+    
+    If Not ClientSetup.ParticleEngine Then Exit Function
+    
     Dim LoopC As Long
     
     If particle_group_last = 0 Then
@@ -1019,6 +1060,9 @@ Public Function Char_Particle_Group_Next_Open(ByVal char_index As Integer) As In
     'Author: Augusto José Rando
     '*****************************************************************
     On Error GoTo errorHandler:
+    
+    If Not ClientSetup.ParticleEngine Then Exit Function
+    
     Dim LoopC As Long
     
     If charlist(char_index).Particle_Count = 0 Then
@@ -1059,12 +1103,16 @@ Public Function Particle_Group_Check(ByVal Particle_Group_Index As Long) As Bool
     'Last Modify Date: 1/04/2003
     '
     '**************************************************************
+    
+    If Not ClientSetup.ParticleEngine Then Exit Function
+    
     'check index
     If Particle_Group_Index > 0 And Particle_Group_Index <= particle_group_last Then
         If particle_group_list(Particle_Group_Index).active Then
             Particle_Group_Check = True
         End If
     End If
+
 End Function
 
 Public Function Map_Particle_Group_Get(ByVal map_x As Long, ByVal map_y As Long) As Long
@@ -1074,6 +1122,8 @@ Public Function Map_Particle_Group_Get(ByVal map_x As Long, ByVal map_y As Long)
     'Last Modify Date: 2/20/2003
     'Checks to see if a tile position has a particle_group_index and return it
     '*****************************************************************
+    
+    If Not ClientSetup.ParticleEngine Then Exit Function
     
     If Map_InBounds(map_x, map_y) Then
         Map_Particle_Group_Get = MapData(map_x, map_y).Particle_Group_Index
