@@ -191,7 +191,7 @@ Public Type Char
     Aura(1 To 4) As Aura
     
     ParticleIndex As Integer
-    Particle_Count As Integer
+    Particle_Count As Long
     Particle_Group() As Long
 End Type
 

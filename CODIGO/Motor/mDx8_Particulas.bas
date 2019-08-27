@@ -1012,7 +1012,7 @@ Public Sub Particle_Render(ByRef temp_particle As Particle, _
     
         'Draw it
         If .Grh.GrhIndex Then
-            Call DDrawTransGrhtoSurface(.Grh, .X + screen_x, .Y + screen_y, 1, rgb_list(), 1, 255, alpha_blend, .Angle)
+            Call DDrawTransGrhtoSurface(.Grh, .X + screen_x, .Y + screen_y, 1, rgb_list(), 255, 255, 1, alpha_blend, .Angle)
         End If
     
     End With
