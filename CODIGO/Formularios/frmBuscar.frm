@@ -257,10 +257,6 @@ Private Sub Form_Load()
     Command1.Caption = JsonLanguage.Item("FRMBUSCAR_BUSCAROBJETO").Item("TEXTO")
     Command2.Caption = JsonLanguage.Item("FRMBUSCAR_BUSCARNPCS").Item("TEXTO")
     Limpiarlistas.Caption = JsonLanguage.Item("FRMBUSCAR_LIMPIARLISTAS").Item("TEXTO")
-    
-    'Fix: Missing args. Select an option by default.
-    ListCrearObj.SelCount = 0
-    ListCrearNpcs.SelCount = 0
 End Sub
 
 Private Sub Command1_Click()
@@ -295,7 +291,7 @@ Private Sub Command2_Click()
         'Limpiamos las listas antes.
         Call Limpiarlistas_Click
         
-        If Len(NPCs.Text) > 0 Then
+        If Len(NPCs.Text) <> 0 Then
             Call WriteSearchNpc(NPCs.Text)
         End If
 
@@ -315,8 +311,8 @@ Private Sub ListCrearNpcs_MouseDown(Button As Integer, _
                                     X As Single, _
                                     Y As Single)
 
-        If Button = vbLeftButton Then
-            Call PopupMenu(mnuCrearN)
+        If Button = vbRightButton Then
+            PopupMenu mnuCrearN
         End If
 
 End Sub
@@ -326,15 +322,15 @@ Private Sub ListCrearObj_MouseDown(Button As Integer, _
                                    X As Single, _
                                    Y As Single)
 
-        If Button = vbLeftButton Then
-            Call PopupMenu(mnuCrearO)
+        If Button = vbRightButton Then
+            PopupMenu mnuCrearO
         End If
 
 End Sub
 
 Private Sub mnuCrearObj_Click()
 
-        If ListCrearObj.Visible And LenB(ListCrearObj.Text) > 0 And LenB(txtCantidad.Text) > 0 Then
+        If ListCrearObj.Visible And LenB(txtCantidad.Text) <> 0 Then
             Call WriteCreateItem(ListCrearObj.Text, txtCantidad.Text)
         End If
 
@@ -342,7 +338,7 @@ End Sub
 
 Private Sub mnuCrearNPC_Click()
 
-        If ListCrearNpcs.Visible And LenB(ListCrearNpcs.Text) > 0 Then
+        If ListCrearNpcs.Visible Then
             Call WriteCreateNPC(ListCrearNpcs.Text, CBool(chkRespawn.Value))
         End If
 
