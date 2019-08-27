@@ -150,7 +150,8 @@ Private base_tile_size As Integer
 Public Const PI As Single = 3.14159265358979
 
 Public Sub CargarParticulas()
-    
+On Error GoTo ErrHandler:
+
     If Not ClientSetup.ParticleEngine Then Exit Sub
     
     '*********************************
@@ -163,7 +164,7 @@ Public Sub CargarParticulas()
     Dim ColorSet   As Long
     Dim Leer       As New clsIniManager
 
-    Call Leer.Initialize(Game.path(INIT) & "particles.ini")
+    Call Leer.Initialize(Game.path(INIT) & "particulas.ini")
 
     TotalStreams = Val(Leer.GetValue("INIT", "Total"))
      
@@ -228,7 +229,25 @@ Public Sub CargarParticulas()
     Next LoopC
     
     Set Leer = Nothing
- 
+
+ErrHandler:
+    
+    If Err.number <> 0 Then
+        
+        If Err.number = 53 Then
+            Call MsgBox("No se ha encontrado el archivo particles.ini.", vbCritical, "Argentum Online Libre")
+            ClientSetup.ParticleEngine = False
+            Exit Sub
+        End If
+        
+        If Err.number = 9 Then
+            Call MsgBox("Se han detectado valores invalidos en la configuracion de algunas particulas." & vbNewLine & "Por favor, reporte este problema a el administrador del servidor.", vbCritical, "Argentum Online Libre")
+            ClientSetup.ParticleEngine = False
+            Exit Sub
+        End If
+              
+    End If
+    
 End Sub
 
 '*****************************************************************
