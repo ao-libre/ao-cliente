@@ -465,35 +465,36 @@ Private Sub CheckKeys()
     Else
         
         'Actualizamos el punto en el mini-mapa.
-        With frmMain.MiniMapa
-            ' Guardamos el color del punto en el minimapa.
-            Dim Minimap_Color As Long: Minimap_Color = vbYellow
+'        With frmMain.MiniMapa
+'            ' Guardamos el color del punto en el minimapa.
+'            Dim Minimap_Color As Long: Minimap_Color = vbYellow
         
             ' Guargamos la posicion anterior del usuario.
-            Dim Anterior_Pos  As Position
-                Anterior_Pos.X = UserPos.X
-                Anterior_Pos.Y = UserPos.Y
+'            Dim Anterior_Pos  As Position
+'                Anterior_Pos.X = UserPos.X
+'                Anterior_Pos.Y = UserPos.Y
         
             ' Guardamos la informacion del pixel en la posicion anterior.
-            Dim Color_Mapa As Long: Color_Mapa = GetPixel(.hdc, Anterior_Pos.X, Anterior_Pos.Y)
+'            Dim Color_Mapa As Long: Color_Mapa = GetPixel(.hdc, Anterior_Pos.X, Anterior_Pos.Y)
         
             ' Dibujamos el punto.
-            Call SetPixel(.hdc, UserPos.X, UserPos.Y, Minimap_Color)
-            Call SetPixel(.hdc, UserPos.X + 1, UserPos.Y, Minimap_Color)
-            Call SetPixel(.hdc, UserPos.X - 1, UserPos.Y, Minimap_Color)
-            Call SetPixel(.hdc, UserPos.X, UserPos.Y - 1, Minimap_Color)
-            Call SetPixel(.hdc, UserPos.X, UserPos.Y + 1, Minimap_Color)
+'            Call SetPixel(.hdc, UserPos.X, UserPos.Y, Minimap_Color)
+'            Call SetPixel(.hdc, UserPos.X + 1, UserPos.Y, Minimap_Color)
+'            Call SetPixel(.hdc, UserPos.X - 1, UserPos.Y, Minimap_Color)
+'            Call SetPixel(.hdc, UserPos.X, UserPos.Y - 1, Minimap_Color)
+'            Call SetPixel(.hdc, UserPos.X, UserPos.Y + 1, Minimap_Color)
         
             ' Actualizamos el PictureBox
-            .Refresh
+'            .Refresh
         
             ' Devolvemos el color a los pixeles de la posicion anterior.
-            Call SetPixel(.hdc, Anterior_Pos.X, Anterior_Pos.Y, Color_Mapa)
-            Call SetPixel(.hdc, Anterior_Pos.X + 1, Anterior_Pos.Y, Color_Mapa)
-            Call SetPixel(.hdc, Anterior_Pos.X - 1, Anterior_Pos.Y, Color_Mapa)
-            Call SetPixel(.hdc, Anterior_Pos.X, Anterior_Pos.Y - 1, Color_Mapa)
-            Call SetPixel(.hdc, Anterior_Pos.X, Anterior_Pos.Y + 1, Color_Mapa)
-        End With
+'            Call SetPixel(.hdc, Anterior_Pos.X, Anterior_Pos.Y, Color_Mapa)
+'            Call SetPixel(.hdc, Anterior_Pos.X + 1, Anterior_Pos.Y, Color_Mapa)
+'            Call SetPixel(.hdc, Anterior_Pos.X - 1, Anterior_Pos.Y, Color_Mapa)
+'            Call SetPixel(.hdc, Anterior_Pos.X, Anterior_Pos.Y - 1, Color_Mapa)
+'            Call SetPixel(.hdc, Anterior_Pos.X, Anterior_Pos.Y + 1, Color_Mapa)
+'        End With
+        Call ActualizarMiniMapa(0) 'integrado por ReyarB
         
     End If
 End Sub
