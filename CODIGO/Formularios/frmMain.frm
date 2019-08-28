@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "Richtx32.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
 Begin VB.Form frmMain 
    BorderStyle     =   0  'None
    ClientHeight    =   8985
@@ -1081,9 +1081,6 @@ Public LastButtonPressed As clsGraphicalButton
 
 Public picSkillStar As Picture
 
-Public WithEvents dragInventory As clsGrapchicalInventory
-Attribute dragInventory.VB_VarHelpID = -1
-
 Public WithEvents Client As clsSocket
 Attribute Client.VB_VarHelpID = -1
 
@@ -1111,8 +1108,6 @@ Private Sub Form_Load()
     InvEqu.Picture = LoadPicture(Game.path(Skins) & SkinSeleccionado & "\CentroInventario.jpg")
     
     Call LoadButtons
-    
-    Set dragInventory = Inventario
     
     With Me
         .Picture = LoadPicture(Game.path(Skins) & SkinSeleccionado & "\VentanaPrincipal.JPG")
@@ -2099,7 +2094,7 @@ Private Sub Label4_Click()
 
     ' Desactivo controles de hechizo
     hlst.Visible = False
-    cmdInfo.Visible = False
+    cmdINFO.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = False
@@ -2114,7 +2109,7 @@ Private Sub Label7_Click()
     
     ' Activo controles de hechizos
     hlst.Visible = True
-    cmdInfo.Visible = True
+    cmdINFO.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True

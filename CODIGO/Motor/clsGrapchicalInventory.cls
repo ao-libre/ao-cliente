@@ -6,14 +6,14 @@ BEGIN
   DataSourceBehavior  = 0  'vbNone
   MTSTransactionMode  = 0  'NotAnMTSObject
 END
-Attribute VB_Name = "clsGrapchicalInventory"
+Attribute VB_Name = "clsGraphicalInventory"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = True
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 '*****************************************************
 'Graphical inventory for ORE 0.4.1
-'Designed and implemented by Juan Martin Sotuyo Dodero (Maraxus)
+'Designed and implemented by Juan Martín Sotuyo Dodero (Maraxus)
 'juansotuyo@hotmail.com
 '*****************************************************
 
@@ -37,31 +37,56 @@ Option Explicit
 
 Private InventoryOffset As Long             'Number of lines we scrolled down from topmost
 Private InvSelectedItem As Long             'Currently selected item
-
+Private MouseDownSelectedItem As Long
 Private ownTilePixelWidth As Integer
 Private ownTilePixelHeight As Integer
 Private startdX As Integer
 Private startdY As Integer
-
+Private prevSelItem As Long
 Private ShowValue As Boolean
+Private ValueFormated As Boolean
 
 Private ImgContainer As Boolean
 Private InventoryTickCount As Long
-Private slotDragged As Integer
+' Variables drag drop
+Private TempItem As Integer
+Private TempSlot As Integer
 
-Private dragAndDropOn As Boolean
+Private MouseX As Integer
+Private MouseY As Integer
+Private DragItem As Byte
+Private Drag As Byte
 
+Private isInventory As Boolean ' Para separar al inventario del main, de los otros
 
 Private Inventory() As Inventory    'User's inventory
 
 Private WithEvents InventoryWindow As PictureBox    'Placeholder where to render the inventory
 Attribute InventoryWindow.VB_VarHelpID = -1
 
-Public Event dragDone(ByVal originalSlot As Integer, ByVal newSlot As Integer)
+#If ConMenuesConextuales = 1 Then
+    Dim ItemMenu As Menu    'Menu to be shown as pop up
+#End If
+
+Private Sub Class_Initialize()
+'***************************************************
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Last Modify Date: 27/07/04
+'
+'***************************************************
+End Sub
+
+Private Sub Class_Terminate()
+'***************************************************
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Last Modify Date: 27/07/04
+'
+'***************************************************
+End Sub
 
 Public Sub ScrollInventory(ByVal Up As Boolean)
 '***************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modify Date: 14/01/2010
 'Scrolls the graphical inventory up / down
 '14/01/2010: ZaMa - Now redraws inventory only if needed
@@ -94,7 +119,7 @@ End Function
 
 Public Sub SelectGold()
 '***************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04
 'Sets the gold as the currently selected item
 '***************************************************
@@ -149,7 +174,7 @@ End Sub
 
 Public Property Get SelectedItem() As Long
 '***************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04
 'Retrieves the selected item index
 '***************************************************
@@ -158,7 +183,7 @@ End Property
 
 Public Property Get MaxHit(ByVal slot As Byte) As Integer
 '***************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04
 'Retrieves the max hit of the selected item
 '***************************************************
@@ -167,7 +192,7 @@ End Property
 
 Public Property Get MinHit(ByVal slot As Byte) As Integer
 '***************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04
 'Retrieves the min hit of the selected item
 '***************************************************
@@ -176,7 +201,7 @@ End Property
 
 Public Property Get MaxDef(ByVal slot As Byte) As Integer
 '***************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04
 'Retrieves the defense of the selected item
 '***************************************************
@@ -194,7 +219,7 @@ End Property
 
 Public Property Get GrhIndex(ByVal slot As Byte) As Integer
 '***************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04
 'Retrieves the grh index of the selected item
 '***************************************************
@@ -203,7 +228,7 @@ End Property
 
 Public Property Get Valor(ByVal slot As Byte) As Single
 '***************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04
 'Retrieves the value of the selected item
 '***************************************************
@@ -212,7 +237,7 @@ End Property
 
 Public Property Get Amount(ByVal slot As Byte) As Long
 '***************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04
 'Retrieves the selected item's amount
 '***************************************************
@@ -225,7 +250,7 @@ End Property
 
 Public Property Get ObjIndex(ByVal slot As Byte) As Integer
 '***************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04
 'Retrieves the selected item's object index
 '***************************************************
@@ -234,7 +259,7 @@ End Property
 
 Public Property Get OBJType(ByVal slot As Byte) As Integer
 '***************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04
 'Retrieves the selected item's object type
 '***************************************************
@@ -243,7 +268,7 @@ End Property
 
 Public Property Get ItemName(ByVal slot As Byte) As String
 '***************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04
 'Retrieves the selected item's name
 '***************************************************
@@ -252,7 +277,7 @@ End Property
 
 Public Property Get Equipped(ByVal slot As Byte) As Boolean
 '***************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04
 'Retrieves True if the item at the given pos is eqiupped
 '***************************************************
@@ -312,7 +337,7 @@ Public Sub SetItem(ByVal slot As Byte, ByVal eOBJIndex As Integer, ByVal eAmount
                         ByVal eGrhIndex As Integer, ByVal eObjType As Integer, ByVal eMaxHit As Integer, ByVal eMinHit As Integer, _
                         ByVal MaxDef As Integer, ByVal MinDef As Integer, ByVal eValor As Single, ByVal eName As String)
 '***************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modify Date: 12/04/06
 'Sets all data for a given inventory slot
 '***************************************************
@@ -340,7 +365,7 @@ End Sub
 
 Private Function ClickItem(ByVal X As Long, ByVal Y As Long) As Long
 '***************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04
 'Selects the item clicked if it's valid and return's it's index
 '***************************************************
@@ -352,7 +377,7 @@ Private Function ClickItem(ByVal X As Long, ByVal Y As Long) As Long
     temp_y = Y \ ownTilePixelHeight
     
     TempItem = temp_x + (temp_y + InventoryOffset) * (InventoryWindow.ScaleWidth \ ownTilePixelWidth) + 1
-    
+    TempSlot = TempItem
     'Make sure it's within limits
     If TempItem <= UBound(Inventory) Then
         'Make sure slot isn't empty
@@ -366,70 +391,62 @@ End Function
 
 Private Sub DrawInventory()
 '***************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04
 'Renders the inventory to the given PictureBox
 '***************************************************
-        Dim LoopC As Long
-    Dim InventoryDimensions As Long
-    Dim Upper_inventory As Long
-
+    Dim LoopC As Long
+    Dim X As Integer
+    Dim Y As Integer
     Dim destRect As RECT
     Dim Inv_Color(0 To 3) As Long
     Dim Sel_Color(0 To 3) As Long
     
     With destRect
-        .bottom = InventoryWindow.Height
+        .Bottom = InventoryWindow.Height
         .Right = InventoryWindow.Width
     End With
 
     
     'Clear the inventory window
-    
-    Call Engine_BeginScene
-        
-        InventoryDimensions = InventoryOffset * (InventoryWindow.ScaleWidth \ ownTilePixelWidth) + 1
-        Upper_inventory = UBound(Inventory)
-        
-        For LoopC = InventoryDimensions To Upper_inventory
+    Engine_BeginScene
+        For LoopC = InventoryOffset * (InventoryWindow.ScaleWidth \ ownTilePixelWidth) + 1 To UBound(Inventory)
             
-            startdX = ((LoopC - 1) Mod (frmMain.picInv.Width / 32)) * 32
-            startdY = ((LoopC - 1) \ (frmMain.picInv.Width / 32)) * 32
+            startdX = ((LoopC - 1) Mod (frmMain.PicInv.Width / 32)) * 32
+            startdY = ((LoopC - 1) \ (frmMain.PicInv.Width / 32)) * 32
             
             
             Call Engine_Long_To_RGB_List(Inv_Color(), -1)
             
             Call Engine_Long_To_RGB_List(Sel_Color(), D3DColorARGB(100, 255, 128, 0))
             
-            'Call DDrawTransGrhIndextoSurface(24664, startdX, startdY, 0, Inv_Color(), 0, False)
+            'Call DDrawTransGrhIndextoSurface(23651, startdX, startdY, 0, Inv_Color(), 0, False) 'Dibuja el fondo
             
             If Inventory(LoopC).GrhIndex Then
-                
-                Call DDrawTransGrhIndextoSurface(Inventory(LoopC).GrhIndex, startdX, startdY, 0, Inv_Color())
-                
-                If LoopC = SelectedItem Then
-                    Call DDrawTransGrhIndextoSurface(2, startdX, startdY, 0, Sel_Color())
+                ' Draw Item
+                If LoopC <> DragItem Then
+                    
+                    If LoopC = SelectedItem Then
+                        Call DDrawTransGrhIndextoSurface(2, startdX, startdY, 0, Inv_Color()) 'Dibuja el fondo cuando lo seleccionamos
+                    End If
+                    Call DDrawTransGrhIndextoSurface(Inventory(LoopC).GrhIndex, startdX, startdY, 0, Inv_Color())
+                    'If equipped we render "E"
+                    If Inventory(LoopC).Equipped Then
+                        DrawText startdX + 20, startdY + 20, "E", -1
+                    End If
+                    
+                    DrawText startdX, startdY, Inventory(LoopC).Amount, -1
                 End If
-            
-                'If equipped we render "E"
-                If Inventory(LoopC).Equipped Then
-                    'Fonts_Render_String "E", startdX + 20, startdY + 20, -1, 2
-                    DrawText startdX + 20, startdY + 20, "E", -1
-                End If
-                
-                'Render the item grh and the amount
-                'Fonts_Render_String Inventory(LoopC).Amount, startdX, startdY, -1, 2
-                DrawText startdX, startdY, Inventory(LoopC).Amount, -1
             End If
         Next LoopC
-        
-    Call Engine_EndScene(destRect, InventoryWindow.hwnd)
-    
+        If DragItem <> 0 And Drag = 1 And isInventory Then _
+            Call DDrawTransGrhIndextoSurface(Inventory(DragItem).GrhIndex, MouseX - 16, MouseY - 16, 0, Inv_Color())
+    Engine_EndScene destRect, InventoryWindow.hWnd
 End Sub
 
 Private Sub InventoryWindow_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
 '***************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04
 'Implements the mouse move event of the inventory picture box
 'Displays a ToolTip of the item under the mouse
@@ -444,37 +461,55 @@ Private Sub InventoryWindow_MouseMove(Button As Integer, Shift As Integer, X As 
     
         temp_x = X \ ownTilePixelWidth
         temp_y = Y \ ownTilePixelHeight
-        
-        TempItem = temp_x + (temp_y + InventoryOffset) * (InventoryWindow.ScaleWidth \ ownTilePixelWidth) + 1
     
+        TempItem = temp_x + (temp_y + InventoryOffset) * (InventoryWindow.ScaleWidth \ 32) + 1
+        TempSlot = TempItem
+        
         If TempItem <= UBound(Inventory) Then
             InventoryWindow.ToolTipText = Inventory(TempItem).Name
         End If
+        
+    If Button = vbRightButton And isInventory Then ' And DragItem <> 0 Then
+        Drag = 1
+    Else
+        Drag = 0
+    End If
+    
+    MouseX = CInt(X)
+    MouseY = CInt(Y)
 End Sub
 
 Private Sub InventoryWindow_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    Dim temp_x As Integer
-    Dim temp_y As Integer
-    Dim TempItem As Integer
-    
-    If dragAndDropOn Then
-        'Exit if it got outside the control's area
+
+   If Button = vbRightButton And isInventory Then
         If X < 0 Or Y < 0 Or X > InventoryWindow.Width Or Y > InventoryWindow.Height Then Exit Sub
-        
-        If Button = vbRightButton Then
-            temp_x = X \ ownTilePixelWidth
-            temp_y = Y \ ownTilePixelHeight
-        
-            TempItem = temp_x + (temp_y + InventoryOffset) * (InventoryWindow.ScaleWidth \ ownTilePixelWidth) + 1
-            
-            slotDragged = TempItem
+        Dim temp_x As Integer
+        Dim temp_y As Integer
+    
+        temp_x = X \ 32
+        temp_y = Y \ 32
+    
+        'Get the currently clickced item
+        DragItem = temp_x + (temp_y + InventoryOffset) * (InventoryWindow.ScaleWidth \ 32) + 1
+        If Not (DragItem <= 25 And DragItem >= 1) Then
+            DragItem = 0
+            Exit Sub
+        Else
+            If Inventory(DragItem).GrhIndex = 0 Then
+                DragItem = 0
+                Exit Sub
+            End If
         End If
+        If isInventory Then _
+            Drag = 1
+        
     End If
+
 End Sub
 
 
 Public Sub DrawInv(Optional ByVal r As Boolean = False)
-    If GetTickCount - InventoryTickCount > 100 Then
+    If (GetTickCount - InventoryTickCount > 10) Or (DragItem <> 0 And Drag = 1) Then
         Call DrawInventory
         InventoryTickCount = GetTickCount
     End If
@@ -483,15 +518,15 @@ Public Sub Initialize(ByRef DirectD3D As D3DX8, ByRef InvPic As PictureBox, ByVa
                             Optional ByVal FontSize As Integer = 7, Optional ByVal TileWidth As Integer = 32, _
                             Optional ByVal TileHeight As Integer = 32, Optional ByVal startX As Integer = 0, _
                             Optional ByVal startY As Integer = 0, Optional ByVal bImgContainer As Boolean = True, _
-                            Optional ByVal bShowText As Boolean = True)
+                            Optional ByVal bShowText As Boolean = True, Optional thisInventory As Boolean = False)
 '***************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modify Date: 03/12/09
 'Sets the reference to the picture box on which to render the inventory
 '03/12/09: I added the optionals args FontSize, TileWidth, TileHeight, startX and startY. (Budi)
 '***************************************************
     Set InventoryWindow = InvPic
-    
+    isInventory = thisInventory
     'Make sure auto-redraw is set to true
     InventoryWindow.AutoRedraw = True
     
@@ -502,7 +537,6 @@ Public Sub Initialize(ByRef DirectD3D As D3DX8, ByRef InvPic As PictureBox, ByVa
     
     'Make sure DirectD3D was correctly initialized
     If DirectD3D Is Nothing Then Exit Sub
-
     ownTilePixelHeight = TileHeight
     ownTilePixelWidth = TileWidth
     startdX = startX
@@ -513,48 +547,45 @@ Public Sub Initialize(ByRef DirectD3D As D3DX8, ByRef InvPic As PictureBox, ByVa
     
     If ImgContainer Then _
         InvSelectedItem = ClickItem(1, 1)   'If there is anything there we select the top left item
+        
 
 End Sub
 
 Private Sub InventoryWindow_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
 '***************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04
 'Implements the mouse up event of the inventory picture box
 'Check outs which item was clicked
 '***************************************************
     'Store previously selected item
     Dim prevSelItem As Long
-    Dim temp_x As Long
-    Dim temp_y As Long
     
     'Exit if it got outside the control's area
     If X < 0 Or Y < 0 Or X > InventoryWindow.Width Or Y > InventoryWindow.Height Then _
         Exit Sub
     
     prevSelItem = InvSelectedItem
+
+    'Get the currently clickced item
+    InvSelectedItem = ClickItem(CInt(X), CInt(Y))
     
-    If Button = vbRightButton Then
-        If dragAndDropOn Then
-            temp_x = X \ ownTilePixelWidth
-            temp_y = Y \ ownTilePixelHeight
-        
-            InvSelectedItem = temp_x + (temp_y + InventoryOffset) * (InventoryWindow.ScaleWidth \ ownTilePixelWidth) + 1
-            
-            Call DrawInventory
-            
-            If InvSelectedItem <> slotDragged Then
-                'RaiseEvent dragDone(slotDragged, InvSelectedItem)
-            End If
+    If Drag Then
+        If Not DragItem = TempSlot And Not (TempSlot < 1 Or DragItem < 1) Then
+            Call Protocol.WriteMoveItem(DragItem, TempSlot, eMoveType.Inventory)
+            InvSelectedItem = TempSlot
         End If
-    Else
-        'Get the currently clickced item
-        InvSelectedItem = ClickItem(CInt(X), CInt(Y))
-    
-        'Update needed inventory slots
-        If prevSelItem <> InvSelectedItem Then
-            'If prevSelItem <> 0 And prevSelItem <> FLAGORO Then Call DrawInventorySlot(prevSelItem)
-            'If InvSelectedItem Then Call DrawInventorySlot(InvSelectedItem)
-        End If
+        DragItem = 0
+        Drag = 0
     End If
 End Sub
+Public Function GetPos(ByVal X As Integer, ByVal Y As Integer) As Byte
+    Dim temp_x As Integer
+    Dim temp_y As Integer
+    
+    temp_x = X \ 32
+    temp_y = Y \ 32
+    
+    GetPos = temp_x + (temp_y + InventoryOffset) * (InventoryWindow.ScaleWidth \ 32) + 1
+End Function
+

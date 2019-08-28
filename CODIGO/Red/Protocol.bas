@@ -1548,8 +1548,8 @@ Private Sub HandleCommerceInit()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Set InvComUsu = New clsGrapchicalInventory
-    Set InvComNpc = New clsGrapchicalInventory
+    Set InvComUsu = New clsGraphicalInventory
+    Set InvComNpc = New clsGraphicalInventory
     
     ' Initialize commerce inventories
     Call InvComUsu.Initialize(DirectD3D8, frmComerciar.picInvUser, Inventario.MaxObjs)
@@ -1599,12 +1599,12 @@ Private Sub HandleBankInit()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Set InvBanco(0) = New clsGrapchicalInventory
-    Set InvBanco(1) = New clsGrapchicalInventory
+    Set InvBanco(0) = New clsGraphicalInventory
+    Set InvBanco(1) = New clsGraphicalInventory
     
     BankGold = incomingData.ReadLong
     Call InvBanco(0).Initialize(DirectD3D8, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
-    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.PicInv, Inventario.MaxObjs)
+    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.picInv, Inventario.MaxObjs)
     
     For i = 1 To Inventario.MaxObjs
         With Inventario
@@ -1648,12 +1648,12 @@ Private Sub HandleUserCommerceInit()
     
     TradingUserName = incomingData.ReadASCIIString
     
-    Set InvComUsu = New clsGrapchicalInventory
-    Set InvOfferComUsu(0) = New clsGrapchicalInventory
-    Set InvOfferComUsu(1) = New clsGrapchicalInventory
-    Set InvOroComUsu(0) = New clsGrapchicalInventory
-    Set InvOroComUsu(1) = New clsGrapchicalInventory
-    Set InvOroComUsu(2) = New clsGrapchicalInventory
+    Set InvComUsu = New clsGraphicalInventory
+    Set InvOfferComUsu(0) = New clsGraphicalInventory
+    Set InvOfferComUsu(1) = New clsGraphicalInventory
+    Set InvOroComUsu(0) = New clsGraphicalInventory
+    Set InvOroComUsu(1) = New clsGraphicalInventory
+    Set InvOroComUsu(2) = New clsGraphicalInventory
     
     ' Initialize commerce inventories
     Call InvComUsu.Initialize(DirectD3D8, frmComerciarUsu.picInvComercio, Inventario.MaxObjs)
@@ -3483,7 +3483,7 @@ On Error GoTo ErrHandler
     Next i
     
     For i = 1 To MAX_LIST_ITEMS
-        Set InvLingosHerreria(i) = New clsGrapchicalInventory
+        Set InvLingosHerreria(i) = New clsGraphicalInventory
     Next i
     
     With frmHerrero
@@ -3666,7 +3666,7 @@ On Error GoTo ErrHandler
     Next i
     
     For i = 1 To MAX_LIST_ITEMS
-        Set InvMaderasCarpinteria(i) = New clsGrapchicalInventory
+        Set InvMaderasCarpinteria(i) = New clsGraphicalInventory
     Next i
     
     With frmCarp
@@ -4572,11 +4572,11 @@ On Error GoTo ErrHandler
         .criminales.Caption = CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .status.Caption = " " & JsonLanguage.Item("CIUDADANO").Item("TEXTO")
-            .status.ForeColor = vbBlue
+            .Status.Caption = " " & JsonLanguage.Item("CIUDADANO").Item("TEXTO")
+            .Status.ForeColor = vbBlue
         Else
-            .status.Caption = " " & JsonLanguage.Item("CRIMINAL").Item("TEXTO")
-            .status.ForeColor = vbRed
+            .Status.Caption = " " & JsonLanguage.Item("CRIMINAL").Item("TEXTO")
+            .Status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)

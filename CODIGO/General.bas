@@ -970,7 +970,7 @@ Private Sub LoadInitialConfig()
                             
     Set Dialogos = New clsDialogs
     Set Audio = New clsAudio
-    Set Inventario = New clsGrapchicalInventory
+    Set Inventario = New clsGraphicalInventory
     Set CustomKeys = New clsCustomKeys
     Set CustomMessages = New clsCustomMessages
     Set incomingData = New clsByteQueue
@@ -1090,7 +1090,7 @@ Private Sub LoadInitialConfig()
                             True, False, False, rtfLeft)
     
     'Inicializamos el inventario grafico
-    Call Inventario.Initialize(DirectD3D8, frmMain.PicInv, MAX_INVENTORY_SLOTS)
+    Call Inventario.Initialize(DirectD3D8, frmMain.PicInv, MAX_INVENTORY_SLOTS, , , , , , , , True)
     
     Call AddtoRichTextBox(frmCargando.status, _
                             JsonLanguage.Item("BIENVENIDO").Item("TEXTO"), _
