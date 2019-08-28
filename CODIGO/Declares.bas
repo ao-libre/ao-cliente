@@ -51,20 +51,20 @@ Public Movement_Speed As Single
 Public DialogosClanes As clsGuildDlg
 Public Dialogos As clsDialogs
 Public Audio As clsAudio
-Public Inventario As clsGrapchicalInventory
-Public InvBanco(1) As clsGrapchicalInventory
+Public Inventario As clsGraphicalInventory
+Public InvBanco(1) As clsGraphicalInventory
 
 'Inventarios de comercio con usuario
-Public InvComUsu As clsGrapchicalInventory  ' Inventario del usuario visible en el comercio
-Public InvOroComUsu(2) As clsGrapchicalInventory  ' Inventarios de oro (ambos usuarios)
-Public InvOfferComUsu(1) As clsGrapchicalInventory  ' Inventarios de ofertas (ambos usuarios)
+Public InvComUsu As clsGraphicalInventory  ' Inventario del usuario visible en el comercio
+Public InvOroComUsu(2) As clsGraphicalInventory  ' Inventarios de oro (ambos usuarios)
+Public InvOfferComUsu(1) As clsGraphicalInventory  ' Inventarios de ofertas (ambos usuarios)
 
-Public InvComNpc As clsGrapchicalInventory  ' Inventario con los items que ofrece el npc
+Public InvComNpc As clsGraphicalInventory  ' Inventario con los items que ofrece el npc
 
 'Inventarios de herreria
 Public Const MAX_LIST_ITEMS As Byte = 4
-Public InvLingosHerreria(1 To MAX_LIST_ITEMS) As clsGrapchicalInventory
-Public InvMaderasCarpinteria(1 To MAX_LIST_ITEMS) As clsGrapchicalInventory
+Public InvLingosHerreria(1 To MAX_LIST_ITEMS) As clsGraphicalInventory
+Public InvMaderasCarpinteria(1 To MAX_LIST_ITEMS) As clsGraphicalInventory
                 
 Public CustomKeys As clsCustomKeys
 Public CustomMessages As clsCustomMessages
