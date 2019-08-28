@@ -621,6 +621,7 @@ Sub SwitchMap(ByVal Map As Integer)
     
     'Erase particle effects
     'ReDim Effect(1 To NumEffects)
+    Call Particle_Group_Remove_All
     
     'Limpiamos el buffer
     Set fileBuff = Nothing
@@ -640,7 +641,10 @@ Sub SwitchMap(ByVal Map As Integer)
     
     CurMap = Map
     
-    Init_Ambient Map
+    Call Init_Ambient(Map)
+    
+    'Carga las particulas especificas del mapa.
+    Call Load_Map_Particles(Map)
     
 End Sub
 

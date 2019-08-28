@@ -35,6 +35,11 @@ Attribute VB_Name = "Mod_TileEngine"
 
 Option Explicit
 
+Public indexList(0 To 5) As Integer
+Public ibQuad As DxVBLibA.Direct3DIndexBuffer8
+Public vbQuadIdx As DxVBLibA.Direct3DVertexBuffer8
+Dim temp_verts(3) As TLVERTEX
+
 Private OffsetCounterX As Single
 Private OffsetCounterY As Single
     
@@ -1024,10 +1029,6 @@ Function InMapBounds(ByVal X As Integer, ByVal Y As Integer) As Boolean
     InMapBounds = True
 End Function
 
-
-
-
-
 Function GetBitmapDimensions(ByVal BmpFile As String, ByRef bmWidth As Long, ByRef bmHeight As Long)
 '*****************************************************************
 'Gets the dimensions of a bmp
@@ -1045,7 +1046,6 @@ Function GetBitmapDimensions(ByVal BmpFile As String, ByRef bmWidth As Long, ByR
     bmWidth = BINFOHeader.biWidth
     bmHeight = BINFOHeader.biHeight
 End Function
-
 
 Public Sub DrawTransparentGrhtoHdc(ByVal dsthdc As Long, ByVal srchdc As Long, ByRef SourceRect As RECT, ByRef destRect As RECT, ByVal TransparentColor As Long)
 '**************************************************************
@@ -1066,6 +1066,7 @@ Public Sub DrawTransparentGrhtoHdc(ByVal dsthdc As Long, ByVal srchdc As Long, B
         Next Y
     Next X
 End Sub
+
 Public Sub DrawImageInPicture(ByRef PictureBox As PictureBox, ByRef Picture As StdPicture, ByVal X1 As Single, ByVal Y1 As Single, Optional Width1, Optional Height1, Optional X2, Optional Y2, Optional Width2, Optional Height2)
 '**************************************************************
 'Author: Torres Patricio (Pato)
@@ -1074,8 +1075,8 @@ Public Sub DrawImageInPicture(ByRef PictureBox As PictureBox, ByRef Picture As S
 '*************************************************************
 
 Call PictureBox.PaintPicture(Picture, X1, Y1, Width1, Height1, X2, Y2, Width2, Height2)
-End Sub
 
+End Sub
 
 Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffsetX As Integer, ByVal PixelOffsetY As Integer)
 '**************************************************************
@@ -1443,7 +1444,16 @@ On Error GoTo 0
     Call CargarFxs
     Call LoadGraphics
     Call CargarParticulas
-
+    
+    indexList(0) = 0: indexList(1) = 1: indexList(2) = 2
+    indexList(3) = 3: indexList(4) = 4: indexList(5) = 5
+    
+    Set ibQuad = DirectDevice.CreateIndexBuffer(Len(indexList(0)) * 4, 0, D3DFMT_INDEX16, D3DPOOL_MANAGED)
+    
+    Call D3DIndexBuffer8SetData(ibQuad, 0, Len(indexList(0)) * 4, 0, indexList(0))
+    
+    Set vbQuadIdx = DirectDevice.CreateVertexBuffer(Len(temp_verts(0)) * 4, 0, D3DFVF_XYZ Or D3DFVF_DIFFUSE Or D3DFVF_SPECULAR Or D3DFVF_TEX1, D3DPOOL_MANAGED)
+    
     InitTileEngine = True
 End Function
 
@@ -1913,7 +1923,6 @@ Public Sub Device_Textured_Render(ByVal X As Integer, ByVal Y As Integer, ByVal 
     DirectDevice.SetTexture 0, Texture
 
     If Shadow Then
-
         temp_verts(1).X = temp_verts(1).X + (src_rect.Bottom - src_rect.Top) * 0.5
         temp_verts(1).Y = temp_verts(1).Y - (src_rect.Right - src_rect.Left) * 0.5
        
@@ -1922,17 +1931,20 @@ Public Sub Device_Textured_Render(ByVal X As Integer, ByVal Y As Integer, ByVal 
     End If
     
     If Alpha Then
-        DirectDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
-        DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
+        DirectDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_ONE
+        DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_ONE
     End If
     
-    ' Medium load.
-    DirectDevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, temp_verts(0), Len(temp_verts(0))
+    ' Faster load.
+    DirectDevice.DrawIndexedPrimitiveUP D3DPT_TRIANGLESTRIP, 0, 4, 2, _
+                indexList(0), D3DFMT_INDEX16, _
+                temp_verts(0), Len(temp_verts(0))
 
     If Alpha Then
         DirectDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
         DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
     End If
+    
 End Sub
 
 Public Sub Device_Textured_Render_Scale(ByVal X As Integer, ByVal Y As Integer, ByVal Texture As Direct3DTexture8, ByRef src_rect As RECT, ByRef Color_List() As Long, Optional Alpha As Boolean = False, Optional ByVal Angle As Single = 0, Optional ByVal Shadow As Boolean = False)

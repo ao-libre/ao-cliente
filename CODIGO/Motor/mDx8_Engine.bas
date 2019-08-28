@@ -33,7 +33,7 @@ Private EndTime As Long
 
 Public Function Engine_DirectX8_Init() As Boolean
 
-    Dim DispMode As D3DDISPLAYMODE
+    Dim DispMode  As D3DDISPLAYMODE
     Dim D3DWindow As D3DPRESENT_PARAMETERS
     
     Set DirectX = New DirectX8
@@ -52,43 +52,38 @@ Public Function Engine_DirectX8_Init() As Boolean
     End With
 
     Select Case ClientSetup.Aceleracion
+
         Case 0 '   Software
-            Set DirectDevice = DirectD3D.CreateDevice( _
-                                D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, _
-                                frmMain.MainViewPic.hWnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING, _
-                                D3DWindow)
+            Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, frmMain.MainViewPic.hWnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING, D3DWindow)
+
         Case 1 '   Hardware
-            Set DirectDevice = DirectD3D.CreateDevice( _
-                                D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, _
-                                frmMain.MainViewPic.hWnd, _
-                                D3DCREATE_HARDWARE_VERTEXPROCESSING, _
-                                D3DWindow)
+            Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, frmMain.MainViewPic.hWnd, D3DCREATE_HARDWARE_VERTEXPROCESSING, D3DWindow)
+
         Case 2 '   Mixed
-            Set DirectDevice = DirectD3D.CreateDevice( _
-                                D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, _
-                                frmMain.MainViewPic.hWnd, _
-                                D3DCREATE_MIXED_VERTEXPROCESSING, _
-                                D3DWindow)
+            Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, frmMain.MainViewPic.hWnd, D3DCREATE_MIXED_VERTEXPROCESSING, D3DWindow)
+
         Case Else '   Si no hay opcion entramos en Software para asegurarnos que funcione el cliente
-            Set DirectDevice = DirectD3D.CreateDevice( _
-                                D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, _
-                                frmMain.MainViewPic.hWnd, _
-                                D3DCREATE_SOFTWARE_VERTEXPROCESSING, _
-                                D3DWindow)
+            Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, frmMain.MainViewPic.hWnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING, D3DWindow)
     End Select
 
     Engine_Init_FontTextures
     Engine_Init_FontSettings
     
-    DirectDevice.SetVertexShader D3DFVF_XYZRHW Or D3DFVF_DIFFUSE Or D3DFVF_TEX1 Or D3DFVF_SPECULAR
-    DirectDevice.SetRenderState D3DRS_LIGHTING, False
-    DirectDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
-    DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
-    DirectDevice.SetRenderState D3DRS_ALPHABLENDENABLE, True
-    DirectDevice.SetRenderState D3DRS_POINTSIZE, Engine_FToDW(2)
-    DirectDevice.SetTextureStageState 0, D3DTSS_ALPHAOP, D3DTOP_MODULATE
-    DirectDevice.SetRenderState D3DRS_POINTSPRITE_ENABLE, 1
-    DirectDevice.SetRenderState D3DRS_POINTSCALE_ENABLE, 0
+    With DirectDevice
+    
+        .SetVertexShader D3DFVF_XYZRHW Or D3DFVF_DIFFUSE Or D3DFVF_TEX1 Or D3DFVF_SPECULAR
+        .SetRenderState D3DRS_LIGHTING, False
+        .SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
+        .SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
+        .SetRenderState D3DRS_ALPHABLENDENABLE, True
+    
+        'Partículas
+        .SetRenderState D3DRS_POINTSIZE, Engine_FToDW(2)
+        .SetTextureStageState 0, D3DTSS_ALPHAOP, D3DTOP_MODULATE
+        .SetRenderState D3DRS_POINTSPRITE_ENABLE, 1
+        .SetRenderState D3DRS_POINTSCALE_ENABLE, 0
+    
+    End With
     
     EndTime = GetTickCount
     

@@ -1151,3 +1151,21 @@ Public Function Map_Particle_Group_Get(ByVal map_x As Long, ByVal map_y As Long)
     End If
     
 End Function
+
+Public Sub Load_Map_Particles(ByVal Map As Integer)
+'*****************************************************************
+'Author: Jopi
+'Para los que no tienen un World Editor con sistema de particulas
+'Crea las particulas al entrar en un mapa.
+'*****************************************************************
+    
+    ' Crea las particulas especificas para el mapa actual.
+    Select Case Map
+    
+        Case 1
+            Call General_Particle_Create(1, 45, 46)
+            
+    End Select
+    
+End Sub
+
