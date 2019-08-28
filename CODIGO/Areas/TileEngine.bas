@@ -1211,7 +1211,9 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
                     'Layer 3
                     If .Graphic(3).GrhIndex <> 0 Then
                     
-                        If .Graphic(3).GrhIndex = 735 Or .Graphic(3).GrhIndex >= 6994 And .Graphic(3).GrhIndex <= 7002 Then
+                        'If .Graphic(3).GrhIndex = 735 Or .Graphic(3).GrhIndex >= 7000 And .Graphic(3).GrhIndex <= 7002 Then
+                        If .Graphic(3).GrhIndex = 735 Or .Graphic(3).GrhIndex = 641 Or .Graphic(3).GrhIndex = 644 Or .Graphic(3).GrhIndex = 647 Or .Graphic(3).GrhIndex >= 7000 And .Graphic(3).GrhIndex <= 7002 Or .Graphic(3).GrhIndex >= 1529 And .Graphic(3).GrhIndex <= 1536 Or .Graphic(3).GrhIndex >= 7222 And .Graphic(3).GrhIndex <= 7226 Or .Graphic(3).GrhIndex >= 12305 And .Graphic(3).GrhIndex <= 12310 Or .Graphic(3).GrhIndex >= 18478 And .Graphic(3).GrhIndex <= 18481 Or .Graphic(3).GrhIndex >= 18802 And .Graphic(3).GrhIndex <= 18804 Then    'Integrado por ReyarB
+
                             If Abs(UserPos.X - X) < 4 And (Abs(UserPos.Y - Y)) < 4 Then
                                 Call DDrawTransGrhtoSurface(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, SetARGB_Alpha(MapData(X, Y).Engine_Light(), 150), 1, X, Y, True)
                             Else 'NORMAL
@@ -2261,4 +2263,15 @@ Public Sub DesvanecimientoTechos()
     temp_rgb(2) = D3DColorARGB(ColorTecho, ColorTecho, ColorTecho, ColorTecho)
     temp_rgb(3) = D3DColorARGB(ColorTecho, ColorTecho, ColorTecho, ColorTecho)
  
+End Sub
+
+Public Sub ActualizarMiniMapa(ByVal tHeading As E_Heading)
+'***************************************************
+'Author: Martín Gomez (Samke)
+'Last Modify Date: 07/12/2011
+'Integrado por Reyarb
+'***************************************************
+        frmMain.UserM.Left = UserPos.X
+        frmMain.UserM.Top = UserPos.Y
+        frmMain.MiniMapa.Refresh
 End Sub
