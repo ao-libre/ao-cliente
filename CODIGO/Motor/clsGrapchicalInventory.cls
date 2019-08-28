@@ -97,7 +97,7 @@ Public Sub ScrollInventory(ByVal Up As Boolean)
         InventoryOffset = InventoryOffset + IIf(Up, 1, -1)
         
         'Redraw the inventory if needed
-        'DrawInventory
+        DrawInventory
     End If
 
 End Sub
@@ -135,6 +135,7 @@ Public Sub SelectGold()
     If prevSelectedItem <> FLAGORO Then
         'Call DrawInventorySlot(prevSelectedItem)
     End If
+    Call DrawInventory
 End Sub
 
 Public Sub DeselectItem()
@@ -153,7 +154,7 @@ Public Sub DeselectItem()
     InvSelectedItem = 0
     
     'Redraw old item to deselect it
-    'Call DrawInventorySlot(ClearSlot)
+    Call DrawInventory
 
 End Sub
 
@@ -168,8 +169,7 @@ Public Sub ChangeSlotItemAmount(ByVal slot As Byte, ByVal Amount As Long)
     Inventory(slot).Amount = Amount
     
     'Update Amount
-    'Call DrawInventorySlot(slot)
-
+    Call DrawInventory
 End Sub
 
 Public Property Get SelectedItem() As Long
@@ -314,9 +314,7 @@ Public Sub ToggleShowValue(ByVal bShow As Boolean)
     
     Dim slot As Integer
     ' Update Inventory
-    'For slot = 1 To Me.MaxObjs
-        'DrawInventorySlot (slot)
-    'Next slot
+        Call DrawInventory
 End Sub
 
 Public Sub ClearAllSlots()
@@ -360,7 +358,7 @@ Public Sub SetItem(ByVal slot As Byte, ByVal eOBJIndex As Integer, ByVal eAmount
     'If InventoryWindow.Visible = False Then InventoryWindow.Visible = True
     
     'Render inventory slot (we don't need to render the whole inventory)
-    'Call DrawInventorySlot(slot)
+    Call DrawInventory
 End Sub
 
 Private Function ClickItem(ByVal X As Long, ByVal Y As Long) As Long
@@ -387,9 +385,10 @@ Private Function ClickItem(ByVal X As Long, ByVal Y As Long) As Long
             ClickItem = 0
         End If
     End If
+    Call DrawInventory
 End Function
 
-Private Sub DrawInventory()
+Public Sub DrawInventory()
 '***************************************************
 'Author: Juan Martín Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04
@@ -477,6 +476,7 @@ Private Sub InventoryWindow_MouseMove(Button As Integer, Shift As Integer, X As 
     
     MouseX = CInt(X)
     MouseY = CInt(Y)
+    Call DrawInventory
 End Sub
 
 Private Sub InventoryWindow_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
@@ -504,12 +504,11 @@ Private Sub InventoryWindow_MouseDown(Button As Integer, Shift As Integer, X As 
             Drag = 1
         
     End If
-
 End Sub
 
 
 Public Sub DrawInv(Optional ByVal r As Boolean = False)
-    If (GetTickCount - InventoryTickCount > 10) Or (DragItem <> 0 And Drag = 1) Then
+    If (GetTickCount - InventoryTickCount > 300) Or ((DragItem <> 0 And Drag = 1) And (GetTickCount - InventoryTickCount > 40)) Then
         Call DrawInventory
         InventoryTickCount = GetTickCount
     End If
@@ -547,7 +546,6 @@ Public Sub Initialize(ByRef DirectD3D As D3DX8, ByRef InvPic As PictureBox, ByVa
     
     If ImgContainer Then _
         InvSelectedItem = ClickItem(1, 1)   'If there is anything there we select the top left item
-        
 
 End Sub
 
@@ -578,6 +576,7 @@ Private Sub InventoryWindow_MouseUp(Button As Integer, Shift As Integer, X As Si
         DragItem = 0
         Drag = 0
     End If
+    Call DrawInventory
 End Sub
 Public Function GetPos(ByVal X As Integer, ByVal Y As Integer) As Byte
     Dim temp_x As Integer

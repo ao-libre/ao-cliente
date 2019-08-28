@@ -1243,8 +1243,8 @@ Sub RenderScreen(ByVal tilex As Integer, _
                 If MapData(X, Y).Graphic(3).GrhIndex <> 0 Then
                     
                     If MapData(X, Y).Graphic(3).GrhIndex = 735 Or MapData(X, Y).Graphic(3).GrhIndex >= 6994 And MapData(X, Y).Graphic(3).GrhIndex <= 7002 Then
-                        If Abs(UserPos.X - X) < 4 And (Abs(UserPos.Y - Y)) < 4 Then
-                            Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, SetARGB_Alpha(MapData(X, Y).Engine_Light(), 150), 1, X, Y, True)
+                            If Abs(UserPos.X - X) < 3 And (Abs(UserPos.Y - Y)) < 8 And (Abs(UserPos.Y) < Y) Then
+                                Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, DesvanecerArbol(ColorArbol), 1, X, Y)
                         Else 'NORMAL
                             Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1, X, Y)
     
@@ -2303,3 +2303,18 @@ Public Sub DesvanecimientoTechos()
     temp_rgb(3) = D3DColorARGB(ColorTecho, ColorTecho, ColorTecho, ColorTecho)
  
 End Sub
+Public Function DesvanecerArbol(ByVal Color As Byte) As Long()
+'*****************************************************************
+                        'Author: FrankoH
+                        'Last Modify Date: 28/08/2019
+                        'DESVANECE LOS ARBOLES
+'*****************************************************************
+Dim temp_rgb(3) As Long
+
+temp_rgb(0) = D3DColorARGB(ColorArbol, ColorArbol, ColorArbol, ColorArbol)
+temp_rgb(1) = D3DColorARGB(ColorArbol, ColorArbol, ColorArbol, ColorArbol)
+temp_rgb(2) = D3DColorARGB(ColorArbol, ColorArbol, ColorArbol, ColorArbol)
+temp_rgb(3) = D3DColorARGB(ColorArbol, ColorArbol, ColorArbol, ColorArbol)
+
+DesvanecerArbol = temp_rgb
+End Function
