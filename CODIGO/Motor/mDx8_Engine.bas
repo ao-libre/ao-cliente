@@ -33,7 +33,7 @@ Private EndTime As Long
 
 Public Function Engine_DirectX8_Init() As Boolean
 
-    Dim DispMode As D3DDISPLAYMODE
+    Dim DispMode  As D3DDISPLAYMODE
     Dim D3DWindow As D3DPRESENT_PARAMETERS
     
     Set DirectX = New DirectX8
@@ -52,43 +52,38 @@ Public Function Engine_DirectX8_Init() As Boolean
     End With
 
     Select Case ClientSetup.Aceleracion
+
         Case 0 '   Software
-            Set DirectDevice = DirectD3D.CreateDevice( _
-                                D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, _
-                                frmMain.MainViewPic.hWnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING, _
-                                D3DWindow)
+            Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, frmMain.MainViewPic.hWnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING, D3DWindow)
+
         Case 1 '   Hardware
-            Set DirectDevice = DirectD3D.CreateDevice( _
-                                D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, _
-                                frmMain.MainViewPic.hWnd, _
-                                D3DCREATE_HARDWARE_VERTEXPROCESSING, _
-                                D3DWindow)
+            Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, frmMain.MainViewPic.hWnd, D3DCREATE_HARDWARE_VERTEXPROCESSING, D3DWindow)
+
         Case 2 '   Mixed
-            Set DirectDevice = DirectD3D.CreateDevice( _
-                                D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, _
-                                frmMain.MainViewPic.hWnd, _
-                                D3DCREATE_MIXED_VERTEXPROCESSING, _
-                                D3DWindow)
+            Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, frmMain.MainViewPic.hWnd, D3DCREATE_MIXED_VERTEXPROCESSING, D3DWindow)
+
         Case Else '   Si no hay opcion entramos en Software para asegurarnos que funcione el cliente
-            Set DirectDevice = DirectD3D.CreateDevice( _
-                                D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, _
-                                frmMain.MainViewPic.hWnd, _
-                                D3DCREATE_SOFTWARE_VERTEXPROCESSING, _
-                                D3DWindow)
+            Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, frmMain.MainViewPic.hWnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING, D3DWindow)
     End Select
 
     Engine_Init_FontTextures
     Engine_Init_FontSettings
     
-    DirectDevice.SetVertexShader D3DFVF_XYZRHW Or D3DFVF_DIFFUSE Or D3DFVF_TEX1 Or D3DFVF_SPECULAR
-    DirectDevice.SetRenderState D3DRS_LIGHTING, False
-    DirectDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
-    DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
-    DirectDevice.SetRenderState D3DRS_ALPHABLENDENABLE, True
-    DirectDevice.SetRenderState D3DRS_POINTSIZE, Engine_FToDW(2)
-    DirectDevice.SetTextureStageState 0, D3DTSS_ALPHAOP, D3DTOP_MODULATE
-    DirectDevice.SetRenderState D3DRS_POINTSPRITE_ENABLE, 1
-    DirectDevice.SetRenderState D3DRS_POINTSCALE_ENABLE, 0
+    With DirectDevice
+    
+        .SetVertexShader D3DFVF_XYZRHW Or D3DFVF_DIFFUSE Or D3DFVF_TEX1 Or D3DFVF_SPECULAR
+        .SetRenderState D3DRS_LIGHTING, False
+        .SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
+        .SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
+        .SetRenderState D3DRS_ALPHABLENDENABLE, True
+    
+        'Partículas
+        .SetRenderState D3DRS_POINTSIZE, Engine_FToDW(2)
+        .SetTextureStageState 0, D3DTSS_ALPHAOP, D3DTOP_MODULATE
+        .SetRenderState D3DRS_POINTSPRITE_ENABLE, 1
+        .SetRenderState D3DRS_POINTSCALE_ENABLE, 0
+    
+    End With
     
     EndTime = GetTickCount
     
@@ -165,8 +160,7 @@ Public Sub Engine_DirectX8_Aditional_Init()
 
     Load_Auras
     Init_MeteoEngine
-    Engine_Init_ParticleEngine
-    
+
     mDx8_Dibujado.Damage_Initialize
     
 End Sub
@@ -798,3 +792,76 @@ Public Sub DrawPJ(ByVal Index As Byte)
 
     Engine_EndScene re, frmPanelAccount.picChar(Index - 1).hWnd
 End Sub
+
+Public Function Engine_GetAngle(ByVal CenterX As Integer, ByVal CenterY As Integer, ByVal TargetX As Integer, ByVal TargetY As Integer) As Single
+'************************************************************
+'Gets the angle between two points in a 2d plane
+'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_GetAngle
+'************************************************************
+Dim SideA As Single
+Dim SideC As Single
+
+    On Error GoTo ErrOut
+
+    'Check for horizontal lines (90 or 270 degrees)
+    If CenterY = TargetY Then
+
+        'Check for going right (90 degrees)
+        If CenterX < TargetX Then
+            Engine_GetAngle = 90
+
+            'Check for going left (270 degrees)
+        Else
+            Engine_GetAngle = 270
+        End If
+
+        'Exit the function
+        Exit Function
+
+    End If
+
+    'Check for horizontal lines (360 or 180 degrees)
+    If CenterX = TargetX Then
+
+        'Check for going up (360 degrees)
+        If CenterY > TargetY Then
+            Engine_GetAngle = 360
+
+            'Check for going down (180 degrees)
+        Else
+            Engine_GetAngle = 180
+        End If
+
+        'Exit the function
+        Exit Function
+
+    End If
+
+    'Calculate Side C
+    SideC = Sqr(Abs(TargetX - CenterX) ^ 2 + Abs(TargetY - CenterY) ^ 2)
+
+    'Side B = CenterY
+
+    'Calculate Side A
+    SideA = Sqr(Abs(TargetX - CenterX) ^ 2 + TargetY ^ 2)
+
+    'Calculate the angle
+    Engine_GetAngle = (SideA ^ 2 - CenterY ^ 2 - SideC ^ 2) / (CenterY * SideC * -2)
+    Engine_GetAngle = (Atn(-Engine_GetAngle / Sqr(-Engine_GetAngle * Engine_GetAngle + 1)) + 1.5708) * 57.29583
+
+    'If the angle is >180, subtract from 360
+    If TargetX < CenterX Then Engine_GetAngle = 360 - Engine_GetAngle
+
+    'Exit function
+
+Exit Function
+
+    'Check for error
+ErrOut:
+
+    'Return a 0 saying there was an error
+    Engine_GetAngle = 0
+
+Exit Function
+
+End Function

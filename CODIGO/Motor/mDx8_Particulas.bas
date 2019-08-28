@@ -1,2031 +1,1171 @@
 Attribute VB_Name = "mDx8_Particulas"
 Option Explicit
 
-Public ParticleTexture(1 To 15) As Direct3DTexture8
-
-Public Const DegreeToRadian As Single = 0.01745329251994 'Pi / 180
-
-Public WeatherEffectIndex As Integer
-
-Public OnRampageImg As Long
-Public OnRampageImgGrh As Integer
-
-Private Type Effect
-    X As Single
-    Y As Single
-    GoToX As Single
-    GoToY As Single
-    KillWhenAtTarget As Boolean     'If the effect is at its target (GoToX/Y), then Progression is set to 0
-    KillWhenTargetLost As Boolean   'Kill the effect if the target is lost (sets progression = 0)
-    Gfx As Byte                 'Particle texture used
-    Used As Boolean             'If the effect is in use
-    EffectNum As Byte           'What number of effect that is used
-    Modifier As Integer         'Misc variable (depends on the effect)
-    FloatSize As Long           'The size of the particles
-    Direction As Integer        'Misc variable (depends on the effect)
-    Particles() As Particle     'Information on each particle
-    Progression As Single       'Progression state, best to design where 0 = effect ends
-    PartVertex() As TLVERTEX    'Used to point render particles
-    PreviousFrame As Long       'Tick time of the last frame
-    ParticleCount As Integer    'Number of particles total
-    ParticlesLeft As Integer    'Number of particles left - only for non-repetitive effects
-    BindToChar As Integer       'Setting this value will bind the effect to move towards the character
-    BindSpeed As Single         'How fast the effect moves towards the character
-    BoundToMap As Byte          'If the effect is bound to the map or not (used only by the map editor)
+Public Type RGB
+        r As Long
+        g As Long
+        B As Long
 End Type
 
-Public NumEffects As Byte   'Maximum number of effects at once
-Public Effect() As Effect   'List of all the active effects
+Public Type Particle
+    friction As Single
+    X As Single
+    Y As Single
+    vector_x As Single
+    vector_y As Single
+    Angle As Single
+    Grh As Grh
+    alive_counter As Long
+    X1 As Long
+    X2 As Long
+    Y1 As Long
+    Y2 As Long
+    vecx1 As Long
+    vecx2 As Long
+    vecy1 As Long
+    vecy2 As Long
+    life1 As Long
+    life2 As Long
+    fric As Long
+    spin_speedL As Single
+    spin_speedH As Single
+    gravity As Boolean
+    grav_strength As Long
+    bounce_strength As Long
+    spin As Boolean
+    XMove As Boolean
+    YMove As Boolean
+    move_x1 As Integer
+    move_x2 As Integer
+    move_y1 As Integer
+    move_y2 As Integer
+    Radio As Integer
+    rgb_list(0 To 3) As Long
+End Type
 
-Public Const EffectNum_Fire As Byte = 1             'Burn baby, burn! Flame from a central point that blows in a specified direction
-Public Const EffectNum_Snow As Byte = 2             'Snow that covers the screen - weather effect
-Public Const EffectNum_Heal As Byte = 3             'Healing effect that can bind to a character, ankhs float up and fade
-Public Const EffectNum_Bless As Byte = 4            'Following three effects are same: create a circle around the central point
-Public Const EffectNum_Protection As Byte = 5       '   (often the character) and makes the given particle on the perimeter
-Public Const EffectNum_Strengthen As Byte = 6       '   which float up and fade out
-Public Const EffectNum_Rain As Byte = 7             'Exact same as snow, but moves much faster and more alpha value - weather effect
-Public Const EffectNum_EquationTemplate As Byte = 8 'Template for creating particle effects through equations - a page with some equations can be found here: http://www.vbgore.com/modules.php?name=Forums&file=viewtopic&t=221
-Public Const EffectNum_Waterfall As Byte = 9        'Waterfall effect
-Public Const EffectNum_Summon As Byte = 10          'Summon effect
-Public Const EffectNum_Rayo As Byte = 11
-Public Const EffectNum_Smoke As Byte = 12
+Public Type Stream
+    Name As String
+    NumOfParticles As Long
+    NumGrhs As Long
+    ID As Long
+    X1 As Long
+    Y1 As Long
+    X2 As Long
+    Y2 As Long
+    Angle As Long
+    vecx1 As Long
+    vecx2 As Long
+    vecy1 As Long
+    vecy2 As Long
+    life1 As Long
+    life2 As Long
+    friction As Long
+    spin As Byte
+    spin_speedL As Single
+    spin_speedH As Single
+    AlphaBlend As Byte
+    gravity As Byte
+    grav_strength As Long
+    bounce_strength As Long
+    XMove As Byte
+    YMove As Byte
+    move_x1 As Long
+    move_x2 As Long
+    move_y1 As Long
+    move_y2 As Long
+    grh_list() As Long
+    colortint(0 To 3) As RGB
+    Radio As Integer
+    Speed As Single
+    life_counter As Long
+End Type
 
-'Effect Spell
-Public SpellGrhIndex As Integer
+Public Type Particle_Group
+    active As Boolean
+    ID As Long
+    map_x As Long
+    map_y As Long
+    char_index As Long
 
-Private Declare Sub ZeroMemory Lib "kernel32.dll" Alias "RtlZeroMemory" (ByRef Destination As Any, ByVal Length As Long)
-
-Public Declare Function timeGetTime Lib "winmm.dll" () As Long
-
-Sub Engine_Init_ParticleEngine(Optional ByVal SkipToTextures As Boolean = False)
-'*****************************************************************
-'Loads all particles into memory - unlike normal textures, these stay in memory. This isn't
-'done for any reason in particular, they just use so little memory since they are so small
-'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_Init_ParticleEngine
-'*****************************************************************
-Dim i As Byte
-Dim Upper_particleTexture As Long
-
-    If Not SkipToTextures Then
-        'Set the particles texture
-        NumEffects = 25
-        ReDim Effect(1 To NumEffects)
+    frame_counter As Single
+    frame_speed As Single
     
+    stream_type As Byte
+
+    particle_stream() As Particle
+    Particle_Count As Long
+    
+    grh_index_list() As Long
+    grh_index_count As Long
+    
+    alpha_blend As Boolean
+    
+    alive_counter As Long
+    never_die As Boolean
+    
+    live As Long
+    liv1 As Integer
+    liveend As Long
+    
+    X1 As Long
+    X2 As Long
+    Y1 As Long
+    Y2 As Long
+    Angle As Long
+    vecx1 As Long
+    vecx2 As Long
+    vecy1 As Long
+    vecy2 As Long
+    life1 As Long
+    life2 As Long
+    fric As Long
+    spin_speedL As Single
+    spin_speedH As Single
+    gravity As Boolean
+    grav_strength As Long
+    bounce_strength As Long
+    spin As Boolean
+    XMove As Boolean
+    YMove As Boolean
+    move_x1 As Long
+    move_x2 As Long
+    move_y1 As Long
+    move_y2 As Long
+    rgb_list(0 To 3) As Long
+    
+    Speed As Single
+    life_counter As Long
+    
+    Radio As Integer
+End Type
+ 
+Public StreamData() As Stream
+Public TotalStreams          As Long
+Public particle_group_list() As Particle_Group
+Public particle_group_count  As Long
+Public particle_group_last   As Long
+
+Private base_tile_size As Integer
+
+Public Const PI As Single = 3.14159265358979
+
+Public Sub CargarParticulas()
+On Error GoTo ErrHandler:
+
+    If Not ClientSetup.ParticleEngine Then Exit Sub
+    
+    '*********************************
+    'Carga de particulas.
+    '*********************************
+    Dim LoopC      As Long
+    Dim i          As Long
+    Dim GrhListing As String
+    Dim TempSet    As String
+    Dim ColorSet   As Long
+    Dim Leer       As New clsIniManager
+
+    Call Leer.Initialize(Game.path(INIT) & "particulas.ini")
+
+    TotalStreams = Val(Leer.GetValue("INIT", "Total"))
+     
+    'resize StreamData array
+    ReDim StreamData(1 To TotalStreams) As Stream
+     
+    'fill StreamData array with info from Particles.ini
+    For LoopC = 1 To TotalStreams
+    
+        With StreamData(LoopC)
+        
+            .Name = Leer.GetValue(Val(LoopC), "Name")
+            .NumOfParticles = Leer.GetValue(Val(LoopC), "NumOfParticles")
+            .X1 = Leer.GetValue(Val(LoopC), "X1")
+            .Y1 = Leer.GetValue(Val(LoopC), "Y1")
+            .X2 = Leer.GetValue(Val(LoopC), "X2")
+            .Y2 = Leer.GetValue(Val(LoopC), "Y2")
+            .Angle = Leer.GetValue(Val(LoopC), "Angle")
+            .vecx1 = Leer.GetValue(Val(LoopC), "VecX1")
+            .vecx2 = Leer.GetValue(Val(LoopC), "VecX2")
+            .vecy1 = Leer.GetValue(Val(LoopC), "VecY1")
+            .vecy2 = Leer.GetValue(Val(LoopC), "VecY2")
+            .life1 = Leer.GetValue(Val(LoopC), "Life1")
+            .life2 = Leer.GetValue(Val(LoopC), "Life2")
+            .friction = Leer.GetValue(Val(LoopC), "Friction")
+            .spin = Leer.GetValue(Val(LoopC), "Spin")
+            .spin_speedL = Leer.GetValue(Val(LoopC), "Spin_SpeedL")
+            .spin_speedH = Leer.GetValue(Val(LoopC), "Spin_SpeedH")
+            .AlphaBlend = Leer.GetValue(Val(LoopC), "AlphaBlend")
+            .gravity = Leer.GetValue(Val(LoopC), "Gravity")
+            .grav_strength = Leer.GetValue(Val(LoopC), "Grav_Strength")
+            .bounce_strength = Leer.GetValue(Val(LoopC), "Bounce_Strength")
+            .XMove = Leer.GetValue(Val(LoopC), "XMove")
+            .YMove = Leer.GetValue(Val(LoopC), "YMove")
+            .move_x1 = Leer.GetValue(Val(LoopC), "move_x1")
+            .move_x2 = Leer.GetValue(Val(LoopC), "move_x2")
+            .move_y1 = Leer.GetValue(Val(LoopC), "move_y1")
+            .move_y2 = Leer.GetValue(Val(LoopC), "move_y2")
+            .Radio = Val(Leer.GetValue(Val(LoopC), "Radio"))
+            .life_counter = Leer.GetValue(Val(LoopC), "life_counter")
+            .Speed = Val(Leer.GetValue(Val(LoopC), "Speed"))
+            .NumGrhs = Leer.GetValue(Val(LoopC), "NumGrhs")
+           
+            ReDim .grh_list(1 To .NumGrhs)
+            GrhListing = Leer.GetValue(Val(LoopC), "Grh_List")
+           
+            For i = 1 To .NumGrhs
+                .grh_list(i) = ReadField(str(i), GrhListing, 44)
+            Next i
+
+            .grh_list(i - 1) = .grh_list(i - 1)
+
+            For ColorSet = 1 To 4
+                TempSet = Leer.GetValue(Val(LoopC), "ColorSet" & ColorSet)
+                .colortint(ColorSet - 1).r = ReadField(1, TempSet, 44)
+                .colortint(ColorSet - 1).g = ReadField(2, TempSet, 44)
+                .colortint(ColorSet - 1).B = ReadField(3, TempSet, 44)
+            Next ColorSet
+        
+        End With
+        
+    Next LoopC
+    
+    Set Leer = Nothing
+
+ErrHandler:
+    
+    If Err.number <> 0 Then
+        
+        If Err.number = 53 Then
+            Call MsgBox("No se ha encontrado el archivo particles.ini.", vbCritical, "Argentum Online Libre")
+            ClientSetup.ParticleEngine = False
+            Exit Sub
+        End If
+        
+        If Err.number = 9 Then
+            Call MsgBox("Se han detectado valores invalidos en la configuracion de algunas particulas." & vbNewLine & "Por favor, reporte este problema a el administrador del servidor.", vbCritical, "Argentum Online Libre")
+            ClientSetup.ParticleEngine = False
+            Exit Sub
+        End If
+              
     End If
     
-    Upper_particleTexture = UBound(ParticleTexture())
-    
-    For i = 1 To Upper_particleTexture
-        If ParticleTexture(i) Is Nothing Then Set ParticleTexture(i) = Nothing
-        Set ParticleTexture(i) = DirectD3D8.CreateTextureFromFileEx(DirectDevice, Game.path(Graficos) & "p" & i & ".png", D3DX_DEFAULT, D3DX_DEFAULT, D3DX_DEFAULT, 0, D3DFMT_UNKNOWN, D3DPOOL_MANAGED, D3DX_FILTER_POINT, D3DX_FILTER_POINT, &HFF000000, ByVal 0, ByVal 0)
-    Next i
-
-
 End Sub
 
-
-
-Private Function Effect_FToDW(f As Single) As Long
 '*****************************************************************
-'Converts a float to a D-Word, or in Visual Basic terms, a Single to a Long
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_FToDW
-'*****************************************************************
-Dim buf As D3DXBuffer
+'************************Generar particulas en Cuerpos************
+Public Function General_Char_Particle_Create(ByVal ParticulaInd As Long, _
+                                             ByVal char_index As Integer, _
+                                             Optional ByVal particle_life As Long = 0) As Long
+    On Error Resume Next
+    
+    If Not ClientSetup.ParticleEngine Then Exit Function
+    
+    If ParticulaInd <= 0 Then Exit Function
 
-    'Converts a single into a long (Float to DWORD)
-    Set buf = DirectD3D8.CreateBuffer(4)
-    DirectD3D8.BufferSetData buf, 0, 4, 1, f
-    DirectD3D8.BufferGetData buf, 0, 4, 1, Effect_FToDW
+    Dim rgb_list(0 To 3) As Long
+    
+    With StreamData(ParticulaInd)
+    
+        rgb_list(0) = RGB(.colortint(0).r, .colortint(0).g, .colortint(0).B)
+        rgb_list(1) = RGB(.colortint(1).r, .colortint(1).g, .colortint(1).B)
+        rgb_list(2) = RGB(.colortint(2).r, .colortint(2).g, .colortint(2).B)
+        rgb_list(3) = RGB(.colortint(3).r, .colortint(3).g, .colortint(3).B)
+
+        General_Char_Particle_Create = Char_Particle_Group_Create(char_index, .grh_list, rgb_list(), .NumOfParticles, ParticulaInd, _
+           .AlphaBlend, IIf(particle_life = 0, .life_counter, particle_life), .Speed, , .X1, .Y1, .Angle, _
+           .vecx1, .vecx2, .vecy1, .vecy2, _
+           .life1, .life2, .friction, .spin_speedL, _
+           .gravity, .grav_strength, .bounce_strength, .X2, _
+           .Y2, .XMove, .move_x1, .move_x2, .move_y1, _
+           .move_y2, .YMove, .spin_speedH, .spin, _
+           .Radio)
+    
+    End With
 
 End Function
 
+'*******************************************************************
+'******************Generar particulas en el mapa********************
+Public Function General_Particle_Create(ByVal ParticulaInd As Long, _
+                                        ByVal X As Integer, _
+                                        ByVal Y As Integer, _
+                                        Optional ByVal particle_life As Long = 0) As Long
+    
+    If Not ClientSetup.ParticleEngine Then Exit Function
+    
+    Dim rgb_list(0 To 3) As Long
 
-Sub Effect_Kill(ByVal EffectIndex As Integer, Optional ByVal KillAll As Boolean = False)
-'*****************************************************************
-'Kills (stops) a single effect or all effects
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Kill
-'*****************************************************************
-Dim LoopC As Long
-
-    'Check If To Kill All Effects
-    If KillAll = True Then
-
-        'Loop Through Every Effect
-        For LoopC = 1 To NumEffects
-
-            'Stop The Effect
-            Effect(LoopC).Used = False
-
-        Next
+    With StreamData(ParticulaInd)
         
-    Else
+        rgb_list(0) = RGB(.colortint(0).r, .colortint(0).g, .colortint(0).B)
+        rgb_list(1) = RGB(.colortint(1).r, .colortint(1).g, .colortint(1).B)
+        rgb_list(2) = RGB(.colortint(2).r, .colortint(2).g, .colortint(2).B)
+        rgb_list(3) = RGB(.colortint(3).r, .colortint(3).g, .colortint(3).B)
+ 
+        General_Particle_Create = Particle_Group_Create(X, Y, .grh_list, rgb_list(), .NumOfParticles, ParticulaInd, _
+           .AlphaBlend, IIf(particle_life = 0, .life_counter, particle_life), .Speed, , .X1, .Y1, .Angle, _
+           .vecx1, .vecx2, .vecy1, .vecy2, _
+           .life1, .life2, .friction, .spin_speedL, _
+           .gravity, .grav_strength, .bounce_strength, .X2, _
+           .Y2, .XMove, .move_x1, .move_x2, .move_y1, _
+           .move_y2, .YMove, .spin_speedH, .spin, , , , _
+           .Radio)
+    
+    End With
+    
+End Function
+'*******************************************************************
 
-        'Stop The Selected Effect
-        Effect(EffectIndex).Used = False
-        
+Public Function Particle_Group_Create(ByVal map_x As Integer, _
+                                      ByVal map_y As Integer, _
+                                      ByRef grh_index_list() As Long, _
+                                      ByRef rgb_list() As Long, _
+                                      Optional ByVal Particle_Count As Long = 20, _
+                                      Optional ByVal stream_type As Long = 1, _
+                                      Optional ByVal alpha_blend As Boolean, _
+                                      Optional ByVal alive_counter As Long = -1, _
+                                      Optional ByVal frame_speed As Single = 0.5, _
+                                      Optional ByVal ID As Long, _
+                                      Optional ByVal X1 As Integer, _
+                                      Optional ByVal Y1 As Integer, _
+                                      Optional ByVal Angle As Integer, _
+                                      Optional ByVal vecx1 As Integer, _
+                                      Optional ByVal vecx2 As Integer, _
+                                      Optional ByVal vecy1 As Integer, _
+                                      Optional ByVal vecy2 As Integer, _
+                                      Optional ByVal life1 As Integer, _
+                                      Optional ByVal life2 As Integer, _
+                                      Optional ByVal fric As Integer, _
+                                      Optional ByVal spin_speedL As Single, _
+                                      Optional ByVal gravity As Boolean, _
+                                      Optional grav_strength As Long, _
+                                      Optional bounce_strength As Long, _
+                                      Optional ByVal X2 As Integer, Optional ByVal Y2 As Integer, Optional ByVal XMove As Boolean, Optional ByVal move_x1 As Integer, Optional ByVal move_x2 As Integer, Optional ByVal move_y1 As Integer, Optional ByVal move_y2 As Integer, Optional ByVal YMove As Boolean, Optional ByVal spin_speedH As Single, Optional ByVal spin As Boolean, Optional grh_resize As Boolean, Optional grh_resizex As Integer, Optional grh_resizey As Integer, Optional ByVal Radio As Integer) As Long
+                                        
+    '**************************************************************
+    'Author: Aaron Perkins
+    'Last Modify Date: 12/15/2002
+    'Returns the particle_group_index if successful, else 0
+    '**************************************************************
+    
+    If Not ClientSetup.ParticleEngine Then Exit Function
+    
+    If (map_x <> -1) And (map_y <> -1) Then
+        If Map_Particle_Group_Get(map_x, map_y) = 0 Then
+            Particle_Group_Create = Particle_Group_Next_Open
+            Particle_Group_Make Particle_Group_Create, map_x, map_y, Particle_Count, stream_type, grh_index_list(), rgb_list(), alpha_blend, alive_counter, frame_speed, ID, X1, Y1, Angle, vecx1, vecx2, vecy1, vecy2, life1, life2, fric, spin_speedL, gravity, grav_strength, bounce_strength, X2, Y2, XMove, move_x1, move_x2, move_y1, move_y2, YMove, spin_speedH, spin, grh_resize, grh_resizex, grh_resizey, Radio
+        Else
+            Particle_Group_Create = Particle_Group_Next_Open
+            Particle_Group_Make Particle_Group_Create, map_x, map_y, Particle_Count, stream_type, grh_index_list(), rgb_list(), alpha_blend, alive_counter, frame_speed, ID, X1, Y1, Angle, vecx1, vecx2, vecy1, vecy2, life1, life2, fric, spin_speedL, gravity, grav_strength, bounce_strength, X2, Y2, XMove, move_x1, move_x2, move_y1, move_y2, YMove, spin_speedH, spin, grh_resize, grh_resizex, grh_resizey, Radio
+        End If
     End If
 
-End Sub
+End Function
 
-Private Function Effect_NextOpenSlot() As Integer
-'*****************************************************************
-'Finds the next open effects index
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_NextOpenSlot
-'*****************************************************************
-Dim EffectIndex As Integer
+Public Function Char_Particle_Group_Create(ByVal char_index As Integer, _
+                                           ByRef grh_index_list() As Long, _
+                                           ByRef rgb_list() As Long, _
+                                           Optional ByVal Particle_Count As Long = 20, _
+                                           Optional ByVal stream_type As Long = 1, _
+                                           Optional ByVal alpha_blend As Boolean, _
+                                           Optional ByVal alive_counter As Long = -1, _
+                                           Optional ByVal frame_speed As Single = 0.5, _
+                                           Optional ByVal ID As Long, _
+                                           Optional ByVal X1 As Integer, _
+                                           Optional ByVal Y1 As Integer, _
+                                           Optional ByVal Angle As Integer, _
+                                           Optional ByVal vecx1 As Integer, _
+                                           Optional ByVal vecx2 As Integer, _
+                                           Optional ByVal vecy1 As Integer, _
+                                           Optional ByVal vecy2 As Integer, _
+                                           Optional ByVal life1 As Integer, _
+                                           Optional ByVal life2 As Integer, _
+                                           Optional ByVal fric As Integer, _
+                                           Optional ByVal spin_speedL As Single, _
+                                           Optional ByVal gravity As Boolean, _
+                                           Optional grav_strength As Long, _
+                                           Optional bounce_strength As Long, _
+                                           Optional ByVal X2 As Integer, _
+                                           Optional ByVal Y2 As Integer, Optional ByVal XMove As Boolean, Optional ByVal move_x1 As Integer, Optional ByVal move_x2 As Integer, Optional ByVal move_y1 As Integer, Optional ByVal move_y2 As Integer, Optional ByVal YMove As Boolean, Optional ByVal spin_speedH As Single, Optional ByVal spin As Boolean, Optional Radio As Integer)
+    '**************************************************************
+    'Author: Augusto José Rando
+    '**************************************************************
+    If Not ClientSetup.ParticleEngine Then Exit Function
+    
+    Dim char_part_free_index As Integer
+    
+    'If Char_Particle_Group_Find(char_index, stream_type) Then Exit Function ' hay que ver si dejar o sacar esto...
+    If Not Char_Check(char_index) Then Exit Function
+    char_part_free_index = Char_Particle_Group_Next_Open(char_index)
+    
+    If char_part_free_index > 0 Then
+        Char_Particle_Group_Create = Particle_Group_Next_Open
+        Char_Particle_Group_Make Char_Particle_Group_Create, char_index, char_part_free_index, Particle_Count, stream_type, grh_index_list(), rgb_list(), alpha_blend, alive_counter, frame_speed, ID, X1, Y1, Angle, vecx1, vecx2, vecy1, vecy2, life1, life2, fric, spin_speedL, gravity, grav_strength, bounce_strength, X2, Y2, XMove, move_x1, move_x2, move_y1, move_y2, YMove, spin_speedH, spin, Radio
+    End If
 
-    'Find The Next Open Effect Slot
-    Do
-        EffectIndex = EffectIndex + 1   'Check The Next Slot
-        If EffectIndex > NumEffects Then    'Dont Go Over Maximum Amount
-            Effect_NextOpenSlot = -1
+End Function
+ 
+Public Function Particle_Group_Remove(ByVal Particle_Group_Index As Long) As Boolean
+    '*****************************************************************
+    'Author: Aaron Perkins
+    'Last Modify Date: 1/04/2003
+    '
+    '*****************************************************************
+    
+    If Not ClientSetup.ParticleEngine Then Exit Function
+    
+    'Make sure it's a legal index
+    If Particle_Group_Check(Particle_Group_Index) Then
+        Particle_Group_Destroy Particle_Group_Index
+        Particle_Group_Remove = True
+    End If
+    
+End Function
+ 
+Public Function Char_Particle_Group_Remove(ByVal char_index As Integer, _
+                                           ByVal stream_type As Long)
+    '**************************************************************
+    'Author: Augusto José Rando
+    '**************************************************************
+    If Not ClientSetup.ParticleEngine Then Exit Function
+    
+    Dim char_part_index As Integer
+    
+    If Char_Check(char_index) Then
+        char_part_index = Char_Particle_Group_Find(char_index, stream_type)
+
+        If char_part_index = -1 Then Exit Function
+        Call Particle_Group_Remove(char_part_index)
+    End If
+
+End Function
+ 
+Public Function Particle_Group_Remove_All() As Boolean
+    '*****************************************************************
+    'Author: Aaron Perkins
+    'Last Modify Date: 1/04/2003
+    '
+    '*****************************************************************
+    If Not ClientSetup.ParticleEngine Then Exit Function
+    
+    Dim Index As Long
+    
+    For Index = 1 To particle_group_last
+
+        'Make sure it's a legal index
+        If Particle_Group_Check(Index) Then
+            Particle_Group_Destroy Index
+        End If
+    Next Index
+    
+    Particle_Group_Remove_All = True
+End Function
+
+Public Function Char_Particle_Group_Remove_All(ByVal char_index As Integer)
+    '**************************************************************
+    'Author: Augusto José Rando
+    '**************************************************************
+    If Not ClientSetup.ParticleEngine Then Exit Function
+    
+    Dim i As Integer
+    
+    If Char_Check(char_index) And Not charlist(char_index).Particle_Count = 0 Then
+
+        For i = 1 To UBound(charlist(char_index).Particle_Group)
+
+            If charlist(char_index).Particle_Group(i) <> 0 Then Call Particle_Group_Remove(charlist(char_index).Particle_Group(i))
+        Next i
+
+        Erase charlist(char_index).Particle_Group
+        charlist(char_index).Particle_Count = 0
+    End If
+    
+End Function
+ 
+Public Function Particle_Group_Find(ByVal ID As Long) As Long
+    '*****************************************************************
+    'Author: Aaron Perkins
+    'Last Modify Date: 1/04/2003
+    'Find the index related to the handle
+    '*****************************************************************
+    On Error GoTo errorHandler:
+    
+    If Not ClientSetup.ParticleEngine Then Exit Function
+    
+    Dim LoopC As Long: LoopC = 1
+
+    Do Until particle_group_list(LoopC).ID = ID
+
+        If LoopC = particle_group_last Then
+            Particle_Group_Find = 0
             Exit Function
         End If
-    Loop While Effect(EffectIndex).Used = True    'Check Next If Effect Is In Use
+        LoopC = LoopC + 1
+    Loop
+    
+    Particle_Group_Find = LoopC
+    Exit Function
 
-    'Return the next open slot
-    Effect_NextOpenSlot = EffectIndex
+errorHandler:
+    Particle_Group_Find = 0
+End Function
+ 
+Private Function Char_Particle_Group_Find(ByVal char_index As Integer, _
+                                          ByVal stream_type As Long) As Integer
+    '*****************************************************************
+    'Author: Augusto José Rando
+    'Modified: returns slot or -1
+    '*****************************************************************
+    Dim i As Integer
 
-    'Clear the old information from the effect
-    Erase Effect(EffectIndex).Particles()
-    Erase Effect(EffectIndex).PartVertex()
-    ZeroMemory Effect(EffectIndex), LenB(Effect(EffectIndex))
-    Effect(EffectIndex).GoToX = -30000
-    Effect(EffectIndex).GoToY = -30000
+    For i = 1 To charlist(char_index).Particle_Count
+
+        If particle_group_list(charlist(char_index).Particle_Group(i)).stream_type = stream_type Then
+            Char_Particle_Group_Find = charlist(char_index).Particle_Group(i)
+            Exit Function
+        End If
+    Next i
+
+    Char_Particle_Group_Find = -1
 
 End Function
 
-
-
-
-Public Sub Effect_Render(ByVal EffectIndex As Integer, Optional ByVal SetRenderStates As Boolean = True)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Render
-'*****************************************************************
-
-    'Check if we have the device
-    If DirectDevice.TestCooperativeLevel <> D3D_OK Then Exit Sub
-
-    'Set the render state for the size of the particle
-    DirectDevice.SetRenderState D3DRS_POINTSIZE, Effect(EffectIndex).FloatSize
+Private Function Particle_Get_Type(ByVal Particle_Group_Index As Long) As Byte
+On Error GoTo errorHandler:
     
-    'Set the render state to point blitting
-    If SetRenderStates Then DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_ONE
+    Particle_Get_Type = particle_group_list(Particle_Group_Index).stream_type
+    
+    Exit Function
 
-    'Set the texture
-    DirectDevice.SetTexture 0, ParticleTexture(Effect(EffectIndex).Gfx)
-
-    'Draw all the particles at once
-    DirectDevice.DrawPrimitiveUP D3DPT_POINTLIST, Effect(EffectIndex).ParticleCount, Effect(EffectIndex).PartVertex(0), Len(Effect(EffectIndex).PartVertex(0))
-
-    'Reset the render state back to normal
-    If SetRenderStates Then DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
-
-End Sub
-
-Function Effect_Snow_Begin(ByVal Gfx As Integer, ByVal Particles As Integer) As Integer
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Snow_Begin
-'*****************************************************************
-Dim EffectIndex As Integer
-Dim LoopC As Long
-
-    'Get the next open effect slot
-    EffectIndex = Effect_NextOpenSlot
-    If EffectIndex = -1 Then Exit Function
-
-    'Return the index of the used slot
-    Effect_Snow_Begin = EffectIndex
-
-    'Set The Effect's Variables
-    Effect(EffectIndex).EffectNum = EffectNum_Snow      'Set the effect number
-    Effect(EffectIndex).ParticleCount = Particles       'Set the number of particles
-    Effect(EffectIndex).Used = True     'Enabled the effect
-    Effect(EffectIndex).Gfx = Gfx       'Set the graphic
-
-    'Set the number of particles left to the total avaliable
-    Effect(EffectIndex).ParticlesLeft = Effect(EffectIndex).ParticleCount
-
-    'Set the float variables
-    Effect(EffectIndex).FloatSize = Effect_FToDW(10)    'Size of the particles
-
-    'Redim the number of particles
-    ReDim Effect(EffectIndex).Particles(0 To Effect(EffectIndex).ParticleCount)
-    ReDim Effect(EffectIndex).PartVertex(0 To Effect(EffectIndex).ParticleCount)
-
-    'Create the particles
-    For LoopC = 0 To Effect(EffectIndex).ParticleCount
-        Set Effect(EffectIndex).Particles(LoopC) = New Particle
-        Effect(EffectIndex).Particles(LoopC).Used = True
-        Effect(EffectIndex).PartVertex(LoopC).rhw = 1
-        Effect_Snow_Reset EffectIndex, LoopC, 1
-    Next LoopC
-
-    'Set the initial time
-    Effect(EffectIndex).PreviousFrame = timeGetTime
-
+errorHandler:
+    Particle_Get_Type = 0
 End Function
 
-Private Sub Effect_Snow_Reset(ByVal EffectIndex As Integer, ByVal Index As Long, Optional ByVal FirstReset As Byte = 0)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Snow_Reset
-'*****************************************************************
+Private Sub Particle_Group_Destroy(ByVal Particle_Group_Index As Long)
+    '**************************************************************
+    'Author: Aaron Perkins
+    'Last Modify Date: 10/07/2002
+    '
+    '**************************************************************
+    On Error Resume Next
 
-    If FirstReset = 1 Then
-
-        'The very first reset
-        Effect(EffectIndex).Particles(Index).ResetIt -200 + (Rnd * (frmMain.ScaleWidth + 400)), Rnd * (frmMain.ScaleHeight + 50), Rnd * 5, 5 + Rnd * 3, 0, 0
-
-    Else
-
-        'Any reset after first
-        Effect(EffectIndex).Particles(Index).ResetIt -200 + (Rnd * (frmMain.ScaleWidth + 400)), -15 - Rnd * 185, Rnd * 5, 5 + Rnd * 3, 0, 0
-        If Effect(EffectIndex).Particles(Index).sngX < -20 Then Effect(EffectIndex).Particles(Index).sngY = Rnd * (frmMain.ScaleHeight + 50)
-        If Effect(EffectIndex).Particles(Index).sngX > frmMain.ScaleWidth Then Effect(EffectIndex).Particles(Index).sngY = Rnd * (frmMain.ScaleHeight + 50)
-        If Effect(EffectIndex).Particles(Index).sngY > frmMain.ScaleHeight Then Effect(EffectIndex).Particles(Index).sngX = Rnd * (frmMain.ScaleWidth + 50)
-
-    End If
-
-    'Set the color
-    Effect(EffectIndex).Particles(Index).ResetColor 1, 1, 1, 0.8, 0
-
-End Sub
-
-Private Sub Effect_Snow_Update(ByVal EffectIndex As Integer)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Snow_Update
-'*****************************************************************
-Dim ElapsedTime As Single
-Dim LoopC As Long
-
-    'Calculate the time difference
-    ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
-    Effect(EffectIndex).PreviousFrame = timeGetTime
-
-    'Go through the particle loop
-    For LoopC = 0 To Effect(EffectIndex).ParticleCount
-
-        'Check if particle is in use
-        If Effect(EffectIndex).Particles(LoopC).Used Then
-
-            'Update The Particle
-            Effect(EffectIndex).Particles(LoopC).UpdateParticle ElapsedTime
-
-            'Check if to reset the particle
-            If Effect(EffectIndex).Particles(LoopC).sngX < -200 Then Effect(EffectIndex).Particles(LoopC).sngA = 0
-            If Effect(EffectIndex).Particles(LoopC).sngX > (frmMain.ScaleWidth + 200) Then Effect(EffectIndex).Particles(LoopC).sngA = 0
-            If Effect(EffectIndex).Particles(LoopC).sngY > (frmMain.ScaleHeight + 200) Then Effect(EffectIndex).Particles(LoopC).sngA = 0
-
-            'Time for a reset, baby!
-            If Effect(EffectIndex).Particles(LoopC).sngA <= 0 Then
-
-                'Reset the particle
-                Effect_Snow_Reset EffectIndex, LoopC
-
-            Else
-
-                'Set the particle information on the particle vertex
-                Effect(EffectIndex).PartVertex(LoopC).Color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
-                Effect(EffectIndex).PartVertex(LoopC).X = Effect(EffectIndex).Particles(LoopC).sngX
-                Effect(EffectIndex).PartVertex(LoopC).Y = Effect(EffectIndex).Particles(LoopC).sngY
-
-            End If
-
-        End If
-
-    Next LoopC
-
-End Sub
-
-Sub Effect_UpdateAll()
-If ClientSetup.ParticleEngine = False And bRain = False Then Exit Sub
-'*****************************************************************
-'Updates all of the effects and renders them
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_UpdateAll
-'*****************************************************************
-Dim LoopC As Long
-
-    'Make sure we have effects
-    If NumEffects = 0 Then Exit Sub
-
-    'Set the render state for the particle effects
-    DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_ONE
-
-    'Update every effect in use
-    For LoopC = 1 To NumEffects
-
-        'Make sure the effect is in use
-        If Effect(LoopC).Used Then
-        
-            'Update the effect position if it is binded
-            Effect_UpdateBinding LoopC
-            
-            'Find out which effect is selected, then update it
-            
-            If ClientSetup.ParticleEngine = True Then
-                If Effect(LoopC).EffectNum = EffectNum_Fire Then Effect_Fire_Update LoopC
-                If Effect(LoopC).EffectNum = EffectNum_Heal Then Effect_Heal_Update LoopC
-                If Effect(LoopC).EffectNum = EffectNum_Bless Then Effect_Bless_Update LoopC
-                If Effect(LoopC).EffectNum = EffectNum_Protection Then Effect_Protection_Update LoopC
-                If Effect(LoopC).EffectNum = EffectNum_Strengthen Then Effect_Strengthen_Update LoopC
-                If Effect(LoopC).EffectNum = EffectNum_EquationTemplate Then Effect_EquationTemplate_Update LoopC
-                If Effect(LoopC).EffectNum = EffectNum_Waterfall Then Effect_Waterfall_Update LoopC
-                If Effect(LoopC).EffectNum = EffectNum_Summon Then Effect_Summon_Update LoopC
-                If Effect(LoopC).EffectNum = EffectNum_Rayo Then Effect_Rayo_Update LoopC
-                If Effect(LoopC).EffectNum = EffectNum_Smoke Then Effect_Smoke_Update LoopC
-            End If
-            
-            If Effect(LoopC).EffectNum = EffectNum_Rain Then Effect_Rain_Update LoopC
-            If Effect(LoopC).EffectNum = EffectNum_Snow Then Effect_Snow_Update LoopC
-            
-            'Render the effect
-            Effect_Render LoopC, False
-
-        End If
-
-    Next
+    Dim temp As Particle_Group
+    Dim i    As Integer
     
-    'Set the render state back for normal rendering
-    DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
-
-End Sub
-
-Function Effect_Rain_Begin(ByVal Gfx As Integer, ByVal Particles As Integer) As Integer
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Rain_Begin
-'*****************************************************************
-Dim EffectIndex As Integer
-Dim LoopC As Long
-
-    'Get the next open effect slot
-    EffectIndex = Effect_NextOpenSlot
-    If EffectIndex = -1 Then Exit Function
-
-    'Return the index of the used slot
-    Effect_Rain_Begin = EffectIndex
-
-    'Set the effect's variables
-    Effect(EffectIndex).EffectNum = EffectNum_Rain      'Set the effect number
-    Effect(EffectIndex).ParticleCount = Particles       'Set the number of particles
-    Effect(EffectIndex).Used = True     'Enabled the effect
-    Effect(EffectIndex).Gfx = Gfx       'Set the graphic
-
-    'Set the number of particles left to the total avaliable
-    Effect(EffectIndex).ParticlesLeft = Effect(EffectIndex).ParticleCount
-
-    'Set the float variables
-    Effect(EffectIndex).FloatSize = Effect_FToDW(10)    'Size of the particles
-
-    'Redim the number of particles
-    ReDim Effect(EffectIndex).Particles(0 To Effect(EffectIndex).ParticleCount)
-    ReDim Effect(EffectIndex).PartVertex(0 To Effect(EffectIndex).ParticleCount)
-
-    'Create the particles
-    For LoopC = 0 To Effect(EffectIndex).ParticleCount
-        Set Effect(EffectIndex).Particles(LoopC) = New Particle
-        Effect(EffectIndex).Particles(LoopC).Used = True
-        Effect(EffectIndex).PartVertex(LoopC).rhw = 1
-        Effect_Rain_Reset EffectIndex, LoopC, 1
-    Next LoopC
-
-    'Set The Initial Time
-    Effect(EffectIndex).PreviousFrame = timeGetTime
-
-End Function
-
-Private Sub Effect_Rain_Reset(ByVal EffectIndex As Integer, ByVal Index As Long, Optional ByVal FirstReset As Byte = 0)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Rain_Reset
-'*****************************************************************
-
-    If FirstReset = 1 Then
-
-        'The very first reset
-        Effect(EffectIndex).Particles(Index).ResetIt -200 + (Rnd * (frmMain.ScaleWidth + 400)), Rnd * (frmMain.ScaleHeight + 50), Rnd * 5, 25 + Rnd * 12, 0, 0
-
-    Else
-
-        'Any reset after first
-        Effect(EffectIndex).Particles(Index).ResetIt -200 + (Rnd * 1200), -15 - Rnd * 185, Rnd * 5, 25 + Rnd * 12, 0, 0
-        If Effect(EffectIndex).Particles(Index).sngX < -20 Then Effect(EffectIndex).Particles(Index).sngY = Rnd * (frmMain.ScaleHeight + 50)
-        If Effect(EffectIndex).Particles(Index).sngX > frmMain.ScaleWidth Then Effect(EffectIndex).Particles(Index).sngY = Rnd * (frmMain.ScaleHeight + 50)
-        If Effect(EffectIndex).Particles(Index).sngY > frmMain.ScaleHeight Then Effect(EffectIndex).Particles(Index).sngX = Rnd * (frmMain.ScaleWidth + 50)
-
-    End If
-
-    'Set the color
-    Effect(EffectIndex).Particles(Index).ResetColor 1, 1, 1, 0.4, 0
-
-End Sub
-
-Private Sub Effect_Rain_Update(ByVal EffectIndex As Integer)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Rain_Update
-'*****************************************************************
-Dim ElapsedTime As Single
-Dim LoopC As Long
-
-    'Calculate the time difference
-    ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
-    Effect(EffectIndex).PreviousFrame = timeGetTime
-
-    'Go through the particle loop
-    For LoopC = 0 To Effect(EffectIndex).ParticleCount
-
-        'Check if the particle is in use
-        If Effect(EffectIndex).Particles(LoopC).Used Then
-
-            'Update the particle
-            Effect(EffectIndex).Particles(LoopC).UpdateParticle ElapsedTime
-
-            'Check if to reset the particle
-            If Effect(EffectIndex).Particles(LoopC).sngX < -200 Then Effect(EffectIndex).Particles(LoopC).sngA = 0
-            If Effect(EffectIndex).Particles(LoopC).sngX > (frmMain.ScaleWidth + 200) Then Effect(EffectIndex).Particles(LoopC).sngA = 0
-            If Effect(EffectIndex).Particles(LoopC).sngY > (frmMain.ScaleHeight + 200) Then Effect(EffectIndex).Particles(LoopC).sngA = 0
-
-            'Time for a reset, baby!
-            If Effect(EffectIndex).Particles(LoopC).sngA <= 0 Then
-
-                'Reset the particle
-                Effect_Rain_Reset EffectIndex, LoopC
-
-            Else
-
-                'Set the particle information on the particle vertex
-                Effect(EffectIndex).PartVertex(LoopC).Color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
-                Effect(EffectIndex).PartVertex(LoopC).X = Effect(EffectIndex).Particles(LoopC).sngX
-                Effect(EffectIndex).PartVertex(LoopC).Y = Effect(EffectIndex).Particles(LoopC).sngY
-
-            End If
-
-        End If
-
-    Next LoopC
-
-End Sub
-
-
-
-Function Effect_EquationTemplate_Begin(ByVal X As Single, ByVal Y As Single, ByVal Gfx As Integer, ByVal Particles As Integer, Optional ByVal Progression As Single = 1) As Integer
-'*****************************************************************
-'Particle effect template for effects as described on the
-'wiki page: http://www.vbgore.com/Particle_effect_equations
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_EquationTemplate_Begin
-'*****************************************************************
-Dim EffectIndex As Integer
-Dim LoopC As Long
-
-    'Get the next open effect slot
-    EffectIndex = Effect_NextOpenSlot
-    If EffectIndex = -1 Then Exit Function
-
-    'Return the index of the used slot
-    Effect_EquationTemplate_Begin = EffectIndex
-
-    'Set The Effect's Variables
-    Effect(EffectIndex).EffectNum = EffectNum_EquationTemplate  'Set the effect number
-    Effect(EffectIndex).ParticleCount = Particles       'Set the number of particles
-    Effect(EffectIndex).Used = True                     'Enable the effect
-    Effect(EffectIndex).X = X                           'Set the effect's X coordinate
-    Effect(EffectIndex).Y = Y                           'Set the effect's Y coordinate
-    Effect(EffectIndex).Gfx = Gfx                       'Set the graphic
-    Effect(EffectIndex).Progression = Progression       'If we loop the effect
-
-    'Set the number of particles left to the total avaliable
-    Effect(EffectIndex).ParticlesLeft = Effect(EffectIndex).ParticleCount
-
-    'Set the float variables
-    Effect(EffectIndex).FloatSize = Effect_FToDW(8)    'Size of the particles
-
-    'Redim the number of particles
-    ReDim Effect(EffectIndex).Particles(0 To Effect(EffectIndex).ParticleCount)
-    ReDim Effect(EffectIndex).PartVertex(0 To Effect(EffectIndex).ParticleCount)
-
-    'Create the particles
-    For LoopC = 0 To Effect(EffectIndex).ParticleCount
-        Set Effect(EffectIndex).Particles(LoopC) = New Particle
-        Effect(EffectIndex).Particles(LoopC).Used = True
-        Effect(EffectIndex).PartVertex(LoopC).rhw = 1
-        Effect_EquationTemplate_Reset EffectIndex, LoopC
-    Next LoopC
-
-    'Set The Initial Time
-    Effect(EffectIndex).PreviousFrame = timeGetTime
-
-End Function
-
-Private Sub Effect_EquationTemplate_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_EquationTemplate_Reset
-'*****************************************************************
-Dim X As Single
-Dim Y As Single
-Dim r As Single
- 
-    Effect(EffectIndex).Progression = Effect(EffectIndex).Progression + 0.1
-    r = (Index / 20) * Exp(Index / Effect(EffectIndex).Progression Mod 3)
-    X = r * Cos(Index)
-    Y = r * Sin(Index)
- 
-    'Reset the particle
-    Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).X + X, Effect(EffectIndex).Y + Y, 0, 0, 0, 0
-    Effect(EffectIndex).Particles(Index).ResetColor 1, 1, 1, 1, 0.2 + (Rnd * 0.2)
-End Sub
-
-Private Sub Effect_EquationTemplate_Update(ByVal EffectIndex As Integer)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_EquationTemplate_Update
-'*****************************************************************
-Dim ElapsedTime As Single
-Dim LoopC As Long
-
-    'Calculate The Time Difference
-    ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
-    Effect(EffectIndex).PreviousFrame = timeGetTime
-
-    'Go Through The Particle Loop
-    For LoopC = 0 To Effect(EffectIndex).ParticleCount
-
-        'Check If Particle Is In Use
-        If Effect(EffectIndex).Particles(LoopC).Used Then
-
-            'Update The Particle
-            Effect(EffectIndex).Particles(LoopC).UpdateParticle ElapsedTime
-
-            'Check if the particle is ready to die
-            If Effect(EffectIndex).Particles(LoopC).sngA <= 0 Then
-
-                'Check if the effect is ending
-                If Effect(EffectIndex).Progression > 0 Then
-
-                    'Reset the particle
-                    Effect_EquationTemplate_Reset EffectIndex, LoopC
-
-                Else
-
-                    'Disable the particle
-                    Effect(EffectIndex).Particles(LoopC).Used = False
-
-                    'Subtract from the total particle count
-                    Effect(EffectIndex).ParticlesLeft = Effect(EffectIndex).ParticlesLeft - 1
-
-                    'Check if the effect is out of particles
-                    If Effect(EffectIndex).ParticlesLeft = 0 Then Effect(EffectIndex).Used = False
-
-                    'Clear the color (dont leave behind any artifacts)
-                    Effect(EffectIndex).PartVertex(LoopC).Color = 0
-
-                End If
-
-            Else
-
-                'Set the particle information on the particle vertex
-                Effect(EffectIndex).PartVertex(LoopC).Color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
-                Effect(EffectIndex).PartVertex(LoopC).X = Effect(EffectIndex).Particles(LoopC).sngX
-                Effect(EffectIndex).PartVertex(LoopC).Y = Effect(EffectIndex).Particles(LoopC).sngY
-
-            End If
-
-        End If
-
-    Next LoopC
-
-End Sub
-
-
-Function Effect_Fire_Begin(ByVal X As Single, ByVal Y As Single, ByVal Gfx As Integer, ByVal Particles As Integer, Optional ByVal Direction As Integer = 180, Optional ByVal Progression As Single = 1) As Integer
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Fire_Begin
-'*****************************************************************
-Dim EffectIndex As Integer
-Dim LoopC As Long
-
-    'Get the next open effect slot
-    EffectIndex = Effect_NextOpenSlot
-    If EffectIndex = -1 Then Exit Function
-
-    'Return the index of the used slot
-    Effect_Fire_Begin = EffectIndex
-
-    'Set The Effect's Variables
-    Effect(EffectIndex).EffectNum = EffectNum_Fire      'Set the effect number
-    Effect(EffectIndex).ParticleCount = Particles       'Set the number of particles
-    Effect(EffectIndex).Used = True     'Enabled the effect
-    Effect(EffectIndex).X = X           'Set the effect's X coordinate
-    Effect(EffectIndex).Y = Y           'Set the effect's Y coordinate
-    Effect(EffectIndex).Gfx = Gfx       'Set the graphic
-    Effect(EffectIndex).Direction = Direction       'The direction the effect is animat
-    Effect(EffectIndex).Progression = Progression   'Loop the effect
-
-    'Set the number of particles left to the total avaliable
-    Effect(EffectIndex).ParticlesLeft = Effect(EffectIndex).ParticleCount
-
-    'Set the float variables
-    Effect(EffectIndex).FloatSize = Effect_FToDW(15)    'Size of the particles
-
-    'Redim the number of particles
-    ReDim Effect(EffectIndex).Particles(0 To Effect(EffectIndex).ParticleCount)
-    ReDim Effect(EffectIndex).PartVertex(0 To Effect(EffectIndex).ParticleCount)
-
-    'Create the particles
-    For LoopC = 0 To Effect(EffectIndex).ParticleCount
-        Set Effect(EffectIndex).Particles(LoopC) = New Particle
-        Effect(EffectIndex).Particles(LoopC).Used = True
-        Effect(EffectIndex).PartVertex(LoopC).rhw = 1
-        Effect_Fire_Reset EffectIndex, LoopC
-    Next LoopC
-
-    'Set The Initial Time
-    Effect(EffectIndex).PreviousFrame = timeGetTime
-
-End Function
-
-Private Sub Effect_Fire_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Fire_Reset
-'*****************************************************************
-
-    'Reset the particle
-    Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).X - 10 + Rnd * 20, Effect(EffectIndex).Y - 10 + Rnd * 20, -Sin((Effect(EffectIndex).Direction + (Rnd * 70) - 35) * DegreeToRadian) * 8, Cos((Effect(EffectIndex).Direction + (Rnd * 70) - 35) * DegreeToRadian) * 8, 0, 0
-    Effect(EffectIndex).Particles(Index).ResetColor 1, 0.2, 0.2, 0.4 + (Rnd * 0.2), 0.03 + (Rnd * 0.07)
-
-End Sub
-
-Private Sub Effect_Fire_Update(ByVal EffectIndex As Integer)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Fire_Update
-'*****************************************************************
-Dim ElapsedTime As Single
-Dim LoopC As Long
-
-    'Calculate The Time Difference
-    ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
-    Effect(EffectIndex).PreviousFrame = timeGetTime
-
-    'Go Through The Particle Loop
-    For LoopC = 0 To Effect(EffectIndex).ParticleCount
-
-        'Check If Particle Is In Use
-        If Effect(EffectIndex).Particles(LoopC).Used Then
-
-            'Update The Particle
-            Effect(EffectIndex).Particles(LoopC).UpdateParticle ElapsedTime
-
-            'Check if the particle is ready to die
-            If Effect(EffectIndex).Particles(LoopC).sngA <= 0 Then
-
-                'Check if the effect is ending
-                If Effect(EffectIndex).Progression <> 0 Then
-
-                    'Reset the particle
-                    Effect_Fire_Reset EffectIndex, LoopC
-
-                Else
-
-                    'Disable the particle
-                    Effect(EffectIndex).Particles(LoopC).Used = False
-
-                    'Subtract from the total particle count
-                    Effect(EffectIndex).ParticlesLeft = Effect(EffectIndex).ParticlesLeft - 1
-
-                    'Check if the effect is out of particles
-                    If Effect(EffectIndex).ParticlesLeft = 0 Then Effect(EffectIndex).Used = False
-
-                    'Clear the color (dont leave behind any artifacts)
-                    Effect(EffectIndex).PartVertex(LoopC).Color = 0
-
-                End If
-
-            Else
-
-                'Set the particle information on the particle vertex
-                Effect(EffectIndex).PartVertex(LoopC).Color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
-                Effect(EffectIndex).PartVertex(LoopC).X = Effect(EffectIndex).Particles(LoopC).sngX
-                Effect(EffectIndex).PartVertex(LoopC).Y = Effect(EffectIndex).Particles(LoopC).sngY
-
-            End If
-
-        End If
-
-    Next LoopC
-
-End Sub
-
-Function Effect_Protection_Begin(ByVal X As Single, ByVal Y As Single, ByVal Gfx As Integer, ByVal Particles As Integer, Optional ByVal Size As Byte = 30, Optional ByVal Time As Single = 10) As Integer
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Protection_Begin
-'*****************************************************************
-Dim EffectIndex As Integer
-Dim LoopC As Long
-
-    'Get the next open effect slot
-    EffectIndex = Effect_NextOpenSlot
-    If EffectIndex = -1 Then Exit Function
-
-    'Return the index of the used slot
-    Effect_Protection_Begin = EffectIndex
-
-    'Set The Effect's Variables
-    Effect(EffectIndex).EffectNum = EffectNum_Protection    'Set the effect number
-    Effect(EffectIndex).ParticleCount = Particles           'Set the number of particles
-    Effect(EffectIndex).Used = True             'Enabled the effect
-    Effect(EffectIndex).X = X                   'Set the effect's X coordinate
-    Effect(EffectIndex).Y = Y                   'Set the effect's Y coordinate
-    Effect(EffectIndex).Gfx = Gfx               'Set the graphic
-    Effect(EffectIndex).Modifier = Size         'How large the circle is
-    Effect(EffectIndex).Progression = Time      'How long the effect will last
-
-    'Set the number of particles left to the total avaliable
-    Effect(EffectIndex).ParticlesLeft = Effect(EffectIndex).ParticleCount
-
-    'Set the float variables
-    Effect(EffectIndex).FloatSize = Effect_FToDW(20)    'Size of the particles
-
-    'Redim the number of particles
-    ReDim Effect(EffectIndex).Particles(0 To Effect(EffectIndex).ParticleCount)
-    ReDim Effect(EffectIndex).PartVertex(0 To Effect(EffectIndex).ParticleCount)
-
-    'Create the particles
-    For LoopC = 0 To Effect(EffectIndex).ParticleCount
-        Set Effect(EffectIndex).Particles(LoopC) = New Particle
-        Effect(EffectIndex).Particles(LoopC).Used = True
-        Effect(EffectIndex).PartVertex(LoopC).rhw = 1
-        Effect_Protection_Reset EffectIndex, LoopC
-    Next LoopC
-
-    'Set The Initial Time
-    Effect(EffectIndex).PreviousFrame = timeGetTime
-
-End Function
-
-Private Sub Effect_Protection_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Protection_Reset
-'*****************************************************************
-Dim A As Single
-Dim X As Single
-Dim Y As Single
-
-    'Get the positions
-    A = Rnd * 360 * DegreeToRadian
-    X = Effect(EffectIndex).X - (Sin(A) * Effect(EffectIndex).Modifier)
-    Y = Effect(EffectIndex).Y + (Cos(A) * Effect(EffectIndex).Modifier)
-
-    'Reset the particle
-    Effect(EffectIndex).Particles(Index).ResetIt X, Y, 0, Rnd * -1, 0, -2
-    Effect(EffectIndex).Particles(Index).ResetColor 0.1, 0.1, 0.9, 0.6 + (Rnd * 0.4), 0.06 + (Rnd * 0.2)
-
-End Sub
-
-Private Sub Effect_Protection_Update(ByVal EffectIndex As Integer)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Protection_Update
-'*****************************************************************
-Dim ElapsedTime As Single
-Dim LoopC As Long
-
-    'Calculate The Time Difference
-    ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
-    Effect(EffectIndex).PreviousFrame = timeGetTime
-
-    'Update the life span
-    If Effect(EffectIndex).Progression > 0 Then Effect(EffectIndex).Progression = Effect(EffectIndex).Progression - ElapsedTime
-
-    'Go through the particle loop
-    For LoopC = 0 To Effect(EffectIndex).ParticleCount
-
-        'Check If Particle Is In Use
-        If Effect(EffectIndex).Particles(LoopC).Used Then
-
-            'Update The Particle
-            Effect(EffectIndex).Particles(LoopC).UpdateParticle ElapsedTime
-
-            'Check if the particle is ready to die
-            If Effect(EffectIndex).Particles(LoopC).sngA <= 0 Then
-
-                'Check if the effect is ending
-                If Effect(EffectIndex).Progression > 0 Then
-
-                    'Reset the particle
-                    Effect_Protection_Reset EffectIndex, LoopC
-
-                Else
-
-                    'Disable the particle
-                    Effect(EffectIndex).Particles(LoopC).Used = False
-
-                    'Subtract from the total particle count
-                    Effect(EffectIndex).ParticlesLeft = Effect(EffectIndex).ParticlesLeft - 1
-
-                    'Check if the effect is out of particles
-                    If Effect(EffectIndex).ParticlesLeft = 0 Then Effect(EffectIndex).Used = False
-
-                    'Clear the color (dont leave behind any artifacts)
-                    Effect(EffectIndex).PartVertex(LoopC).Color = 0
-
-                End If
-
-            Else
-
-                'Set the particle information on the particle vertex
-                Effect(EffectIndex).PartVertex(LoopC).Color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
-                Effect(EffectIndex).PartVertex(LoopC).X = Effect(EffectIndex).Particles(LoopC).sngX
-                Effect(EffectIndex).PartVertex(LoopC).Y = Effect(EffectIndex).Particles(LoopC).sngY
-
-            End If
-
-        End If
-
-    Next LoopC
-
-End Sub
-
-Function Effect_Waterfall_Begin(ByVal X As Single, ByVal Y As Single, ByVal Gfx As Integer, ByVal Particles As Integer) As Integer
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Waterfall_Begin
-'*****************************************************************
-Dim EffectIndex As Integer
-Dim LoopC As Long
-
-    'Get the next open effect slot
-    EffectIndex = Effect_NextOpenSlot
-    If EffectIndex = -1 Then Exit Function
-
-    'Return the index of the used slot
-    Effect_Waterfall_Begin = EffectIndex
-
-    'Set the effect's variables
-    Effect(EffectIndex).EffectNum = EffectNum_Waterfall     'Set the effect number
-    Effect(EffectIndex).ParticleCount = Particles           'Set the number of particles
-    Effect(EffectIndex).Used = True             'Enabled the effect
-    Effect(EffectIndex).X = X                   'Set the effect's X coordinate
-    Effect(EffectIndex).Y = Y                   'Set the effect's Y coordinate
-    Effect(EffectIndex).Gfx = Gfx               'Set the graphic
-
-    'Set the number of particles left to the total avaliable
-    Effect(EffectIndex).ParticlesLeft = Effect(EffectIndex).ParticleCount
-
-    'Set the float variables
-    Effect(EffectIndex).FloatSize = Effect_FToDW(32)    'Size of the particles
-
-    'Redim the number of particles
-    ReDim Effect(EffectIndex).Particles(0 To Effect(EffectIndex).ParticleCount)
-    ReDim Effect(EffectIndex).PartVertex(0 To Effect(EffectIndex).ParticleCount)
-
-    'Create the particles
-    For LoopC = 0 To Effect(EffectIndex).ParticleCount
-        Set Effect(EffectIndex).Particles(LoopC) = New Particle
-        Effect(EffectIndex).Particles(LoopC).Used = True
-        Effect(EffectIndex).PartVertex(LoopC).rhw = 1
-        Effect_Waterfall_Reset EffectIndex, LoopC
-    Next LoopC
-
-    'Set The Initial Time
-    Effect(EffectIndex).PreviousFrame = timeGetTime
-
-End Function
-
-Private Sub Effect_Waterfall_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Waterfall_Reset
-'*****************************************************************
-
-    If Int(Rnd * 10) = 1 Then
-        Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).X + (Rnd * 332), Effect(EffectIndex).Y + (Rnd * 130), 0, 8 + (Rnd * 6), 0, 0
-    Else
-        Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).X + (Rnd * 332), Effect(EffectIndex).Y + (Rnd * 10), 0, 8 + (Rnd * 6), 0, 0
-    End If
-    Effect(EffectIndex).Particles(Index).ResetColor 0.1, 0.1, 0.2, 0.2 + (Rnd * 0.4), 0.1
+    With particle_group_list(Particle_Group_Index)
     
-End Sub
+        If .map_x > 0 And .map_y > 0 Then
+            MapData(.map_x, .map_y).Particle_Group_Index = 0
+        ElseIf .char_index Then
 
-Private Sub Effect_Waterfall_Update(ByVal EffectIndex As Integer)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Waterfall_Update
-'*****************************************************************
-Dim ElapsedTime As Single
-Dim LoopC As Long
+            If Char_Check(.char_index) Then
 
-    'Calculate The Time Difference
-    ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
-    Effect(EffectIndex).PreviousFrame = timeGetTime
+                For i = 1 To charlist(.char_index).Particle_Count
 
-    'Update the life span
-    If Effect(EffectIndex).Progression > 0 Then Effect(EffectIndex).Progression = Effect(EffectIndex).Progression - ElapsedTime
-
-    'Go through the particle loop
-    For LoopC = 0 To Effect(EffectIndex).ParticleCount
-    
-        With Effect(EffectIndex).Particles(LoopC)
-    
-            'Check if the particle is in use
-            If .Used Then
-    
-                'Update The Particle
-                .UpdateParticle ElapsedTime
-
-                'Check if the particle is ready to die
-                If (.sngY > Effect(EffectIndex).Y + 140) Or (.sngA = 0) Then
-    
-                    'Reset the particle
-                    Effect_Waterfall_Reset EffectIndex, LoopC
-    
-                Else
-
-                    'Set the particle information on the particle vertex
-                    Effect(EffectIndex).PartVertex(LoopC).Color = D3DColorMake(.sngR, .sngG, .sngB, .sngA)
-                    Effect(EffectIndex).PartVertex(LoopC).X = .sngX
-                    Effect(EffectIndex).PartVertex(LoopC).Y = .sngY
-    
-                End If
-    
-            End If
-            
-        End With
-
-    Next LoopC
-
-End Sub
-
-Function Effect_Summon_Begin(ByVal X As Single, ByVal Y As Single, ByVal Gfx As Integer, ByVal Particles As Integer, Optional ByVal Progression As Single = 0) As Integer
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Summon_Begin
-'*****************************************************************
-Dim EffectIndex As Integer
-Dim LoopC As Long
-
-    'Get the next open effect slot
-    EffectIndex = Effect_NextOpenSlot
-    If EffectIndex = -1 Then Exit Function
-
-    'Return the index of the used slot
-    Effect_Summon_Begin = EffectIndex
-
-    'Set The Effect's Variables
-    Effect(EffectIndex).EffectNum = EffectNum_Summon    'Set the effect number
-    Effect(EffectIndex).ParticleCount = Particles       'Set the number of particles
-    Effect(EffectIndex).Used = True                     'Enable the effect
-    Effect(EffectIndex).X = X                           'Set the effect's X coordinate
-    Effect(EffectIndex).Y = Y                           'Set the effect's Y coordinate
-    Effect(EffectIndex).Gfx = Gfx                       'Set the graphic
-    Effect(EffectIndex).Progression = Progression       'If we loop the effect
-
-    'Set the number of particles left to the total avaliable
-    Effect(EffectIndex).ParticlesLeft = Effect(EffectIndex).ParticleCount
-
-    'Set the float variables
-    Effect(EffectIndex).FloatSize = Effect_FToDW(8)    'Size of the particles
-
-    'Redim the number of particles
-    ReDim Effect(EffectIndex).Particles(0 To Effect(EffectIndex).ParticleCount)
-    ReDim Effect(EffectIndex).PartVertex(0 To Effect(EffectIndex).ParticleCount)
-
-    'Create the particles
-    For LoopC = 0 To Effect(EffectIndex).ParticleCount
-        Set Effect(EffectIndex).Particles(LoopC) = New Particle
-        Effect(EffectIndex).Particles(LoopC).Used = True
-        Effect(EffectIndex).PartVertex(LoopC).rhw = 1
-        Effect_Summon_Reset EffectIndex, LoopC
-    Next LoopC
-
-    'Set The Initial Time
-    Effect(EffectIndex).PreviousFrame = timeGetTime
-
-End Function
-
-Private Sub Effect_Summon_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Summon_Reset
-'*****************************************************************
-Dim X As Single
-Dim Y As Single
-Dim r As Single
-    
-    If Effect(EffectIndex).Progression > 1000 Then
-        Effect(EffectIndex).Progression = Effect(EffectIndex).Progression + 1.4
-    Else
-        Effect(EffectIndex).Progression = Effect(EffectIndex).Progression + 0.5
-    End If
-    r = (Index / 30) * Exp(Index / Effect(EffectIndex).Progression)
-    X = r * Cos(Index)
-    Y = r * Sin(Index)
-    
-    'Reset the particle
-    Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).X + X, Effect(EffectIndex).Y + Y, 0, 0, 0, 0
-    Effect(EffectIndex).Particles(Index).ResetColor 0, Rnd, 0, 0.9, 0.2 + (Rnd * 0.2)
- 
-End Sub
-
-Private Sub Effect_Summon_Update(ByVal EffectIndex As Integer)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Summon_Update
-'*****************************************************************
-Dim ElapsedTime As Single
-Dim LoopC As Long
-
-    'Calculate The Time Difference
-    ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
-    Effect(EffectIndex).PreviousFrame = timeGetTime
-
-    'Go Through The Particle Loop
-    For LoopC = 0 To Effect(EffectIndex).ParticleCount
-
-        'Check If Particle Is In Use
-        If Effect(EffectIndex).Particles(LoopC).Used Then
-
-            'Update The Particle
-            Effect(EffectIndex).Particles(LoopC).UpdateParticle ElapsedTime
-
-            'Check if the particle is ready to die
-            If Effect(EffectIndex).Particles(LoopC).sngA <= 0 Then
-
-                'Check if the effect is ending
-                If Effect(EffectIndex).Progression < 1800 Then
-
-                    'Reset the particle
-                    Effect_Summon_Reset EffectIndex, LoopC
-
-                Else
-
-                    'Disable the particle
-                    Effect(EffectIndex).Particles(LoopC).Used = False
-
-                    'Subtract from the total particle count
-                    Effect(EffectIndex).ParticlesLeft = Effect(EffectIndex).ParticlesLeft - 1
-
-                    'Check if the effect is out of particles
-                    If Effect(EffectIndex).ParticlesLeft = 0 Then Effect(EffectIndex).Used = False
-
-                    'Clear the color (dont leave behind any artifacts)
-                    Effect(EffectIndex).PartVertex(LoopC).Color = 0
-
-                End If
-
-            Else
-            
-                'Set the particle information on the particle vertex
-                Effect(EffectIndex).PartVertex(LoopC).Color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
-                Effect(EffectIndex).PartVertex(LoopC).X = Effect(EffectIndex).Particles(LoopC).sngX
-                Effect(EffectIndex).PartVertex(LoopC).Y = Effect(EffectIndex).Particles(LoopC).sngY
-
-            End If
-
-        End If
-
-    Next LoopC
-
-End Sub
-Function Effect_Bless_Begin(ByVal X As Single, ByVal Y As Single, ByVal Gfx As Integer, ByVal Particles As Integer, Optional ByVal Size As Byte = 30, Optional ByVal Time As Single = 10) As Integer
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Bless_Begin
-'*****************************************************************
-Dim EffectIndex As Integer
-Dim LoopC As Long
-
-    'Get the next open effect slot
-    EffectIndex = Effect_NextOpenSlot
-    If EffectIndex = -1 Then Exit Function
-
-    'Return the index of the used slot
-    Effect_Bless_Begin = EffectIndex
-
-    'Set The Effect's Variables
-    Effect(EffectIndex).EffectNum = EffectNum_Bless     'Set the effect number
-    Effect(EffectIndex).ParticleCount = Particles       'Set the number of particles
-    Effect(EffectIndex).Used = True             'Enabled the effect
-    Effect(EffectIndex).X = X                   'Set the effect's X coordinate
-    Effect(EffectIndex).Y = Y                   'Set the effect's Y coordinate
-    Effect(EffectIndex).Gfx = Gfx               'Set the graphic
-    Effect(EffectIndex).Modifier = Size         'How large the circle is
-    Effect(EffectIndex).Progression = Time      'How long the effect will last
-
-    'Set the number of particles left to the total avaliable
-    Effect(EffectIndex).ParticlesLeft = Effect(EffectIndex).ParticleCount
-
-    'Set the float variables
-    Effect(EffectIndex).FloatSize = Effect_FToDW(20)    'Size of the particles
-
-    'Redim the number of particles
-    ReDim Effect(EffectIndex).Particles(0 To Effect(EffectIndex).ParticleCount)
-    ReDim Effect(EffectIndex).PartVertex(0 To Effect(EffectIndex).ParticleCount)
-
-    'Create the particles
-    For LoopC = 0 To Effect(EffectIndex).ParticleCount
-        Set Effect(EffectIndex).Particles(LoopC) = New Particle
-        Effect(EffectIndex).Particles(LoopC).Used = True
-        Effect(EffectIndex).PartVertex(LoopC).rhw = 1
-        Effect_Bless_Reset EffectIndex, LoopC
-    Next LoopC
-
-    'Set The Initial Time
-    Effect(EffectIndex).PreviousFrame = timeGetTime
-
-End Function
-
-Private Sub Effect_Bless_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Bless_Reset
-'*****************************************************************
-Dim A As Single
-Dim X As Single
-Dim Y As Single
-
-    'Get the positions
-    A = Rnd * 360 * DegreeToRadian
-    X = Effect(EffectIndex).X - (Sin(A) * Effect(EffectIndex).Modifier)
-    Y = Effect(EffectIndex).Y + (Cos(A) * Effect(EffectIndex).Modifier)
-
-    'Reset the particle
-    Effect(EffectIndex).Particles(Index).ResetIt X, Y, 0, Rnd * -1, 0, -2
-    Effect(EffectIndex).Particles(Index).ResetColor 1, 1, 0.2, 0.6 + (Rnd * 0.4), 0.06 + (Rnd * 0.2)
-
-End Sub
-
-Private Sub Effect_Bless_Update(ByVal EffectIndex As Integer)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Bless_Update
-'*****************************************************************
-Dim ElapsedTime As Single
-Dim LoopC As Long
-
-    'Calculate The Time Difference
-    ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
-    Effect(EffectIndex).PreviousFrame = timeGetTime
-
-    'Update the life span
-    If Effect(EffectIndex).Progression > 0 Then Effect(EffectIndex).Progression = Effect(EffectIndex).Progression - ElapsedTime
-
-    'Go Through The Particle Loop
-    For LoopC = 0 To Effect(EffectIndex).ParticleCount
-
-        'Check If Particle Is In Use
-        If Effect(EffectIndex).Particles(LoopC).Used Then
-
-            'Update The Particle
-            Effect(EffectIndex).Particles(LoopC).UpdateParticle ElapsedTime
-
-            'Check if the particle is ready to die
-            If Effect(EffectIndex).Particles(LoopC).sngA <= 0 Then
-
-                'Check if the effect is ending
-                If Effect(EffectIndex).Progression > 0 Then
-
-                    'Reset the particle
-                    Effect_Bless_Reset EffectIndex, LoopC
-
-                Else
-
-                    'Disable the particle
-                    Effect(EffectIndex).Particles(LoopC).Used = False
-
-                    'Subtract from the total particle count
-                    Effect(EffectIndex).ParticlesLeft = Effect(EffectIndex).ParticlesLeft - 1
-
-                    'Check if the effect is out of particles
-                    If Effect(EffectIndex).ParticlesLeft = 0 Then Effect(EffectIndex).Used = False
-
-                    'Clear the color (dont leave behind any artifacts)
-                    Effect(EffectIndex).PartVertex(LoopC).Color = 0
-
-                End If
-
-            Else
-
-                'Set the particle information on the particle vertex
-                Effect(EffectIndex).PartVertex(LoopC).Color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
-                Effect(EffectIndex).PartVertex(LoopC).X = Effect(EffectIndex).Particles(LoopC).sngX
-                Effect(EffectIndex).PartVertex(LoopC).Y = Effect(EffectIndex).Particles(LoopC).sngY
-
-            End If
-
-        End If
-
-    Next LoopC
-
-End Sub
-
-Function Effect_Heal_Begin(ByVal X As Single, ByVal Y As Single, ByVal Gfx As Integer, ByVal Particles As Integer, Optional ByVal Progression As Single = 1) As Integer
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Heal_Begin
-'*****************************************************************
-Dim EffectIndex As Integer
-Dim LoopC As Long
-
-    'Get the next open effect slot
-    EffectIndex = Effect_NextOpenSlot
-    If EffectIndex = -1 Then Exit Function
-
-    'Return the index of the used slot
-    Effect_Heal_Begin = EffectIndex
-
-    'Set The Effect's Variables
-    Effect(EffectIndex).EffectNum = EffectNum_Heal      'Set the effect number
-    Effect(EffectIndex).ParticleCount = Particles       'Set the number of particles
-    Effect(EffectIndex).Used = True     'Enabled the effect
-    Effect(EffectIndex).X = X           'Set the effect's X coordinate
-    Effect(EffectIndex).Y = Y           'Set the effect's Y coordinate
-    Effect(EffectIndex).Gfx = Gfx       'Set the graphic
-    Effect(EffectIndex).Progression = Progression   'Loop the effect
-    Effect(EffectIndex).KillWhenAtTarget = True     'End the effect when it reaches the target (progression = 0)
-    Effect(EffectIndex).KillWhenTargetLost = True   'End the effect if the target is lost (progression = 0)
-    
-    'Set the number of particles left to the total avaliable
-    Effect(EffectIndex).ParticlesLeft = Effect(EffectIndex).ParticleCount
-
-    'Set the float variables
-    Effect(EffectIndex).FloatSize = Effect_FToDW(16)    'Size of the particles
-
-    'Redim the number of particles
-    ReDim Effect(EffectIndex).Particles(0 To Effect(EffectIndex).ParticleCount)
-    ReDim Effect(EffectIndex).PartVertex(0 To Effect(EffectIndex).ParticleCount)
-
-    'Create the particles
-    For LoopC = 0 To Effect(EffectIndex).ParticleCount
-        Set Effect(EffectIndex).Particles(LoopC) = New Particle
-        Effect(EffectIndex).Particles(LoopC).Used = True
-        Effect(EffectIndex).PartVertex(LoopC).rhw = 1
-        Effect_Heal_Reset EffectIndex, LoopC
-    Next LoopC
-
-    'Set The Initial Time
-    Effect(EffectIndex).PreviousFrame = timeGetTime
-
-End Function
-
-Private Sub Effect_Heal_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Heal_Reset
-'*****************************************************************
-
-    'Reset the particle
-    Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).X - 10 + Rnd * 20, Effect(EffectIndex).Y - 10 + Rnd * 20, -Sin((180 + (Rnd * 90) - 45) * 0.0174533) * 8 + (Rnd * 3), Cos((180 + (Rnd * 90) - 45) * 0.0174533) * 8 + (Rnd * 3), 0, 0
-    Effect(EffectIndex).Particles(Index).ResetColor 0.8, 0.2, 0.2, 0.6 + (Rnd * 0.2), 0.01 + (Rnd * 0.5)
-    
-End Sub
-
-Private Sub Effect_Heal_Update(ByVal EffectIndex As Integer)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Heal_Update
-'*****************************************************************
-Dim ElapsedTime As Single
-Dim LoopC As Long
-
-    'Calculate the time difference
-    ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
-    Effect(EffectIndex).PreviousFrame = timeGetTime
-    
-    'Go through the particle loop
-    For LoopC = 0 To Effect(EffectIndex).ParticleCount
-
-        'Check If Particle Is In Use
-        If Effect(EffectIndex).Particles(LoopC).Used Then
-
-            'Update The Particle
-            Effect(EffectIndex).Particles(LoopC).UpdateParticle ElapsedTime
-
-            'Check if the particle is ready to die
-            If Effect(EffectIndex).Particles(LoopC).sngA <= 0 Then
-
-                'Check if the effect is ending
-                If Effect(EffectIndex).Progression <> 0 Then
-
-                    'Reset the particle
-                    Effect_Heal_Reset EffectIndex, LoopC
-
-                Else
-
-                    'Disable the particle
-                    Effect(EffectIndex).Particles(LoopC).Used = False
-
-                    'Subtract from the total particle count
-                    Effect(EffectIndex).ParticlesLeft = Effect(EffectIndex).ParticlesLeft - 1
-
-                    'Check if the effect is out of particles
-                    If Effect(EffectIndex).ParticlesLeft = 0 Then Effect(EffectIndex).Used = False
-
-                    'Clear the color (dont leave behind any artifacts)
-                    Effect(EffectIndex).PartVertex(LoopC).Color = 0
-
-                End If
-
-            Else
-                
-                'Set the particle information on the particle vertex
-                Effect(EffectIndex).PartVertex(LoopC).Color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
-                Effect(EffectIndex).PartVertex(LoopC).X = Effect(EffectIndex).Particles(LoopC).sngX
-                Effect(EffectIndex).PartVertex(LoopC).Y = Effect(EffectIndex).Particles(LoopC).sngY
-
-            End If
-
-        End If
-
-    Next LoopC
-
-End Sub
-
-Function Effect_Strengthen_Begin(ByVal X As Single, ByVal Y As Single, ByVal Gfx As Integer, ByVal Particles As Integer, Optional ByVal Size As Byte = 30, Optional ByVal Time As Single = 10) As Integer
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Strengthen_Begin
-'*****************************************************************
-Dim EffectIndex As Integer
-Dim LoopC As Long
-
-    'Get the next open effect slot
-    EffectIndex = Effect_NextOpenSlot
-    If EffectIndex = -1 Then Exit Function
-
-    'Return the index of the used slot
-    Effect_Strengthen_Begin = EffectIndex
-
-    'Set the effect's variables
-    Effect(EffectIndex).EffectNum = EffectNum_Strengthen    'Set the effect number
-    Effect(EffectIndex).ParticleCount = Particles           'Set the number of particles
-    Effect(EffectIndex).Used = True             'Enabled the effect
-    Effect(EffectIndex).X = X                   'Set the effect's X coordinate
-    Effect(EffectIndex).Y = Y                   'Set the effect's Y coordinate
-    Effect(EffectIndex).Gfx = Gfx               'Set the graphic
-    Effect(EffectIndex).Modifier = Size         'How large the circle is
-    Effect(EffectIndex).Progression = Time      'How long the effect will last
-
-    'Set the number of particles left to the total avaliable
-    Effect(EffectIndex).ParticlesLeft = Effect(EffectIndex).ParticleCount
-
-    'Set the float variables
-    Effect(EffectIndex).FloatSize = Effect_FToDW(20)    'Size of the particles
-
-    'Redim the number of particles
-    ReDim Effect(EffectIndex).Particles(0 To Effect(EffectIndex).ParticleCount)
-    ReDim Effect(EffectIndex).PartVertex(0 To Effect(EffectIndex).ParticleCount)
-
-    'Create the particles
-    For LoopC = 0 To Effect(EffectIndex).ParticleCount
-        Set Effect(EffectIndex).Particles(LoopC) = New Particle
-        Effect(EffectIndex).Particles(LoopC).Used = True
-        Effect(EffectIndex).PartVertex(LoopC).rhw = 1
-        Effect_Strengthen_Reset EffectIndex, LoopC
-    Next LoopC
-
-    'Set The Initial Time
-    Effect(EffectIndex).PreviousFrame = timeGetTime
-
-End Function
-
-Private Sub Effect_Strengthen_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Strengthen_Reset
-'*****************************************************************
-Dim A As Single
-Dim X As Single
-Dim Y As Single
-
-    'Get the positions
-    A = Rnd * 360 * DegreeToRadian
-    X = Effect(EffectIndex).X - (Sin(A) * Effect(EffectIndex).Modifier)
-    Y = Effect(EffectIndex).Y + (Cos(A) * Effect(EffectIndex).Modifier)
-
-    'Reset the particle
-    Effect(EffectIndex).Particles(Index).ResetIt X, Y, 0, Rnd * -1, 0, -2
-    Effect(EffectIndex).Particles(Index).ResetColor 0.2, 1, 0.2, 0.6 + (Rnd * 0.4), 0.06 + (Rnd * 0.2)
-
-End Sub
-
-Private Sub Effect_Strengthen_Update(ByVal EffectIndex As Integer)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Strengthen_Update
-'*****************************************************************
-Dim ElapsedTime As Single
-Dim LoopC As Long
-
-    'Calculate the time difference
-    ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
-    Effect(EffectIndex).PreviousFrame = timeGetTime
-
-    'Update the life span
-    If Effect(EffectIndex).Progression > 0 Then Effect(EffectIndex).Progression = Effect(EffectIndex).Progression - ElapsedTime
-
-    'Go through the particle loop
-    For LoopC = 0 To Effect(EffectIndex).ParticleCount
-
-        'Check if particle is in use
-        If Effect(EffectIndex).Particles(LoopC).Used Then
-
-            'Update the particle
-            Effect(EffectIndex).Particles(LoopC).UpdateParticle ElapsedTime
-
-            'Check if the particle is ready to die
-            If Effect(EffectIndex).Particles(LoopC).sngA <= 0 Then
-
-                'Check if the effect is ending
-                If Effect(EffectIndex).Progression > 0 Then
-
-                    'Reset the particle
-                    Effect_Strengthen_Reset EffectIndex, LoopC
-
-                Else
-
-                    'Disable the particle
-                    Effect(EffectIndex).Particles(LoopC).Used = False
-
-                    'Subtract from the total particle count
-                    Effect(EffectIndex).ParticlesLeft = Effect(EffectIndex).ParticlesLeft - 1
-
-                    'Check if the effect is out of particles
-                    If Effect(EffectIndex).ParticlesLeft = 0 Then Effect(EffectIndex).Used = False
-
-                    'Clear the color (dont leave behind any artifacts)
-                    Effect(EffectIndex).PartVertex(LoopC).Color = 0
-
-                End If
-
-            Else
-
-                'Set the particle information on the particle vertex
-                Effect(EffectIndex).PartVertex(LoopC).Color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
-                Effect(EffectIndex).PartVertex(LoopC).X = Effect(EffectIndex).Particles(LoopC).sngX
-                Effect(EffectIndex).PartVertex(LoopC).Y = Effect(EffectIndex).Particles(LoopC).sngY
-
-            End If
-
-        End If
-
-    Next LoopC
-
-End Sub
-
-
-Public Sub SetSpellCast()
-        If frmMain.hlst.List(frmMain.hlst.ListIndex) = "Resucitar" Then
-            SpellGrhIndex = 24665
-            Exit Sub
-        ElseIf frmMain.hlst.List(frmMain.hlst.ListIndex) = "Toxina" Then
-            SpellGrhIndex = 24671
-            Exit Sub
-        ElseIf frmMain.hlst.List(frmMain.hlst.ListIndex) = "Paralizar" Or _
-                frmMain.hlst.List(frmMain.hlst.ListIndex) = "Inmovilizar" Then
-            SpellGrhIndex = 24669
-            Exit Sub
-        ElseIf frmMain.hlst.List(frmMain.hlst.ListIndex) = "Antidoto Magico" Or _
-                frmMain.hlst.List(frmMain.hlst.ListIndex) = "Curar Heridas Leves" Or _
-                frmMain.hlst.List(frmMain.hlst.ListIndex) = "Curar Heridas Graves" Then
-            SpellGrhIndex = 24673
-            Exit Sub
-        Else
-            SpellGrhIndex = 0
-        End If
-End Sub
-
-Private Sub Effect_UpdateBinding(ByVal EffectIndex As Integer)
- 
-'***************************************************
-'Updates the binding of a particle effect to a target, if
-'the effect is bound to a character
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_UpdateBinding
-'***************************************************
-Dim TargetI As Integer
-Dim TargetA As Single
- 
-    'Update position through character binding
-    If Effect(EffectIndex).BindToChar > 0 Then
- 
-        'Store the character index
-        TargetI = Effect(EffectIndex).BindToChar
- 
-        'Check for a valid binding index
-        If TargetI > LastChar Then
-            Effect(EffectIndex).BindToChar = 0
-            If Effect(EffectIndex).KillWhenTargetLost Then
-                Effect(EffectIndex).Progression = 0
-                Exit Sub
-            End If
-        ElseIf charlist(TargetI).active = 0 Then
-            Effect(EffectIndex).BindToChar = 0
-            If Effect(EffectIndex).KillWhenTargetLost Then
-                Effect(EffectIndex).Progression = 0
-                Exit Sub
-            End If
-        Else
- 
-            'Calculate the X and Y positions
-            Effect(EffectIndex).GoToX = Engine_TPtoSPX(charlist(Effect(EffectIndex).BindToChar).Pos.X)
-            Effect(EffectIndex).GoToY = Engine_TPtoSPY(charlist(Effect(EffectIndex).BindToChar).Pos.Y)
- 
-        End If
- 
-    End If
- 
-    'Move to the new position if needed
-    If Effect(EffectIndex).GoToX > -30000 Or Effect(EffectIndex).GoToY > -30000 Then
-        If Effect(EffectIndex).GoToX <> Effect(EffectIndex).X Or Effect(EffectIndex).GoToY <> Effect(EffectIndex).Y Then
- 
-            'Calculate the angle
-            TargetA = Engine_GetAngle(Effect(EffectIndex).X, Effect(EffectIndex).Y, Effect(EffectIndex).GoToX, Effect(EffectIndex).GoToY) + 180
- 
-            'Update the position of the effect
-            Effect(EffectIndex).X = Effect(EffectIndex).X - Sin(TargetA * DegreeToRadian) * Effect(EffectIndex).BindSpeed
-            Effect(EffectIndex).Y = Effect(EffectIndex).Y + Cos(TargetA * DegreeToRadian) * Effect(EffectIndex).BindSpeed
- 
-            'Check if the effect is close enough to the target to just stick it at the target
-            If Effect(EffectIndex).GoToX > -30000 Then
-                If Abs(Effect(EffectIndex).X - Effect(EffectIndex).GoToX) < 6 Then Effect(EffectIndex).X = Effect(EffectIndex).GoToX
-            End If
-            If Effect(EffectIndex).GoToY > -30000 Then
-                If Abs(Effect(EffectIndex).Y - Effect(EffectIndex).GoToY) < 6 Then Effect(EffectIndex).Y = Effect(EffectIndex).GoToY
-            End If
- 
-            'Check if the position of the effect is equal to that of the target
-            If Effect(EffectIndex).X = Effect(EffectIndex).GoToX Then
-                If Effect(EffectIndex).Y = Effect(EffectIndex).GoToY Then
- 
-                    'For some effects, if the position is reached, we want to end the effect
-                    If Effect(EffectIndex).KillWhenAtTarget Then
-                        Effect(EffectIndex).BindToChar = 0
-                        Effect(EffectIndex).Progression = 0
-                        Effect(EffectIndex).GoToX = Effect(EffectIndex).X
-                        Effect(EffectIndex).GoToY = Effect(EffectIndex).Y
+                    If charlist(.char_index).Particle_Group(i) = Particle_Group_Index Then
+                        charlist(.char_index).Particle_Group(i) = 0
+                        Exit For
                     End If
-                    Exit Sub    'The effect is at the right position, don't update
- 
-                End If
+                Next i
+
             End If
- 
         End If
-    End If
- 
-End Sub
-
-Public Function Engine_GetAngle(ByVal CenterX As Integer, ByVal CenterY As Integer, ByVal TargetX As Integer, ByVal TargetY As Integer) As Single
-'************************************************************
-'Gets the angle between two points in a 2d plane
-'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_GetAngle
-'************************************************************
-Dim SideA As Single
-Dim SideC As Single
-
-    On Error GoTo ErrOut
-
-    'Check for horizontal lines (90 or 270 degrees)
-    If CenterY = TargetY Then
-
-        'Check for going right (90 degrees)
-        If CenterX < TargetX Then
-            Engine_GetAngle = 90
-
-            'Check for going left (270 degrees)
-        Else
-            Engine_GetAngle = 270
-        End If
-
-        'Exit the function
-        Exit Function
-
-    End If
-
-    'Check for horizontal lines (360 or 180 degrees)
-    If CenterX = TargetX Then
-
-        'Check for going up (360 degrees)
-        If CenterY > TargetY Then
-            Engine_GetAngle = 360
-
-            'Check for going down (180 degrees)
-        Else
-            Engine_GetAngle = 180
-        End If
-
-        'Exit the function
-        Exit Function
-
-    End If
-
-    'Calculate Side C
-    SideC = Sqr(Abs(TargetX - CenterX) ^ 2 + Abs(TargetY - CenterY) ^ 2)
-
-    'Side B = CenterY
-
-    'Calculate Side A
-    SideA = Sqr(Abs(TargetX - CenterX) ^ 2 + TargetY ^ 2)
-
-    'Calculate the angle
-    Engine_GetAngle = (SideA ^ 2 - CenterY ^ 2 - SideC ^ 2) / (CenterY * SideC * -2)
-    Engine_GetAngle = (Atn(-Engine_GetAngle / Sqr(-Engine_GetAngle * Engine_GetAngle + 1)) + 1.5708) * 57.29583
-
-    'If the angle is >180, subtract from 360
-    If TargetX < CenterX Then Engine_GetAngle = 360 - Engine_GetAngle
-
-    'Exit function
-
-Exit Function
-
-    'Check for error
-ErrOut:
-
-    'Return a 0 saying there was an error
-    Engine_GetAngle = 0
-
-Exit Function
-
-End Function
-
-Function Effect_Rayo_Begin(ByVal X As Single, ByVal Y As Single, ByVal Gfx As Integer, ByVal Particles As Integer, Optional ByVal Progression As Single = 1) As Integer
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Rayo_Begin
-'*****************************************************************
-Dim EffectIndex As Integer
-Dim LoopC As Long
-
-    'Get the next open effect slot
-    EffectIndex = Effect_NextOpenSlot
-    If EffectIndex = -1 Then Exit Function
-
-    'Return the index of the used slot
-    Effect_Rayo_Begin = EffectIndex
-
-    'Set The Effect's Variables
-    Effect(EffectIndex).EffectNum = EffectNum_Rayo      'Set the effect number
-    Effect(EffectIndex).ParticleCount = Particles       'Set the number of particles
-    Effect(EffectIndex).Used = True     'Enabled the effect
-    Effect(EffectIndex).X = X           'Set the effect's X coordinate
-    Effect(EffectIndex).Y = Y           'Set the effect's Y coordinate
-    Effect(EffectIndex).Gfx = Gfx       'Set the graphic
-    Effect(EffectIndex).Progression = Progression   'Loop the effect
-    Effect(EffectIndex).KillWhenAtTarget = True     'End the effect when it reaches the target (progression = 0)
-    Effect(EffectIndex).KillWhenTargetLost = True   'End the effect if the target is lost (progression = 0)
     
-    'Set the number of particles left to the total avaliable
-    Effect(EffectIndex).ParticlesLeft = Effect(EffectIndex).ParticleCount
-
-    'Set the float variables
-    Effect(EffectIndex).FloatSize = Effect_FToDW(16)    'Size of the particles
-
-    'Redim the number of particles
-    ReDim Effect(EffectIndex).Particles(0 To Effect(EffectIndex).ParticleCount)
-    ReDim Effect(EffectIndex).PartVertex(0 To Effect(EffectIndex).ParticleCount)
-
-    'Create the particles
-    For LoopC = 0 To Effect(EffectIndex).ParticleCount
-        Set Effect(EffectIndex).Particles(LoopC) = New Particle
-        Effect(EffectIndex).Particles(LoopC).Used = True
-        Effect(EffectIndex).PartVertex(LoopC).rhw = 1
-        Effect_Rayo_Reset EffectIndex, LoopC
-    Next LoopC
-
-    'Set The Initial Time
-    Effect(EffectIndex).PreviousFrame = timeGetTime
-
-End Function
-
-Private Sub Effect_Rayo_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Rayo_Reset
-'*****************************************************************
-
-    'Reset the particle
-    Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).X - 10 + Rnd * 20, Effect(EffectIndex).Y - 10 + Rnd * 20, -Sin((180 + (Rnd * 90) - 45) * 0.0174533) * 8 + (Rnd * 3), Cos((180 + (Rnd * 90) - 45) * 0.0174533) * 8 + (Rnd * 3), 0, 0
-    Effect(EffectIndex).Particles(Index).ResetColor 0, 0.8, 0.8, 0.6 + (Rnd * 0.2), 0.001 + (Rnd * 0.5)
-'      Effect(EffectIndex).Particles(Index).ResetColor (Rnd * 0.8), (Rnd * 0.8), (Rnd * 0.8), 0.6 + (Rnd * 0.2), 0.001 + (Rnd * 0.5)
-
-End Sub
-
-Private Sub Effect_Rayo_Update(ByVal EffectIndex As Integer)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Rayo_Update
-'*****************************************************************
-Dim ElapsedTime As Single
-Dim LoopC As Long
-
-    'Calculate the time difference
-    ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
-    Effect(EffectIndex).PreviousFrame = timeGetTime
+        particle_group_list(Particle_Group_Index) = temp
     
-    'Go through the particle loop
-    For LoopC = 0 To Effect(EffectIndex).ParticleCount
+        'Update array size
+        If Particle_Group_Index = particle_group_last Then
 
-        'Check If Particle Is In Use
-        If Effect(EffectIndex).Particles(LoopC).Used Then
+            Do Until .active
+                particle_group_last = particle_group_last - 1
 
-            'Update The Particle
-            Effect(EffectIndex).Particles(LoopC).UpdateParticle ElapsedTime
-
-            'Check if the particle is ready to die
-            If Effect(EffectIndex).Particles(LoopC).sngA <= 0 Then
-
-                'Check if the effect is ending
-                If Effect(EffectIndex).Progression <> 0 Then
-
-                    'Reset the particle
-                    Effect_Rayo_Reset EffectIndex, LoopC
-
-                Else
-
-                    'Disable the particle
-                    Effect(EffectIndex).Particles(LoopC).Used = False
-
-                    'Subtract from the total particle count
-                    Effect(EffectIndex).ParticlesLeft = Effect(EffectIndex).ParticlesLeft - 1
-
-                    'Check if the effect is out of particles
-                    If Effect(EffectIndex).ParticlesLeft = 0 Then Effect(EffectIndex).Used = False
-
-                    'Clear the color (dont leave behind any artifacts)
-                    Effect(EffectIndex).PartVertex(LoopC).Color = 0
-
+                If particle_group_last = 0 Then
+                    particle_group_count = 0
+                    Exit Sub
                 End If
+            Loop
+            Debug.Print particle_group_last & "," & UBound(particle_group_list)
+            ReDim Preserve particle_group_list(1 To particle_group_last) As Particle_Group
+        End If
+        
+        particle_group_count = particle_group_count - 1
+    
+    End With
+    
+End Sub
+ 
+Public Sub Particle_Group_Make(ByVal Particle_Group_Index As Long, _
+                                ByVal map_x As Integer, _
+                                ByVal map_y As Integer, _
+                                ByVal Particle_Count As Long, _
+                                ByVal stream_type As Long, _
+                                ByRef grh_index_list() As Long, _
+                                ByRef rgb_list() As Long, _
+                                Optional ByVal alpha_blend As Boolean, _
+                                Optional ByVal alive_counter As Long = -1, _
+                                Optional ByVal frame_speed As Single = 0.5, _
+                                Optional ByVal ID As Long, _
+                                Optional ByVal X1 As Integer, _
+                                Optional ByVal Y1 As Integer, _
+                                Optional ByVal Angle As Integer, _
+                                Optional ByVal vecx1 As Integer, _
+                                Optional ByVal vecx2 As Integer, _
+                                Optional ByVal vecy1 As Integer, _
+                                Optional ByVal vecy2 As Integer, _
+                                Optional ByVal life1 As Integer, _
+                                Optional ByVal life2 As Integer, _
+                                Optional ByVal fric As Integer, _
+                                Optional ByVal spin_speedL As Single, _
+                                Optional ByVal gravity As Boolean, _
+                                Optional grav_strength As Long, _
+                                Optional bounce_strength As Long, Optional ByVal X2 As Integer, Optional ByVal Y2 As Integer, Optional ByVal XMove As Boolean, Optional ByVal move_x1 As Integer, Optional ByVal move_x2 As Integer, Optional ByVal move_y1 As Integer, Optional ByVal move_y2 As Integer, Optional ByVal YMove As Boolean, Optional ByVal spin_speedH As Single, Optional ByVal spin As Boolean, Optional grh_resize As Boolean, Optional grh_resizex As Integer, Optional grh_resizey As Integer, Optional Radio As Integer)
+                               
+    '*****************************************************************
+    'Author: Aaron Perkins
+    'Modified by: Ryan Cain (Onezero)
+    'Last Modify Date: 5/15/2003
+    'Makes a new particle effect
+    'Modified by Juan Martín Sotuyo Dodero
+    '*****************************************************************
+    
+    If Not ClientSetup.ParticleEngine Then Exit Sub
+    
+    'Update array size
+    If Particle_Group_Index > particle_group_last Then
+        particle_group_last = Particle_Group_Index
+        ReDim Preserve particle_group_list(1 To particle_group_last)
+    End If
+    
+    particle_group_count = particle_group_count + 1
 
+    With particle_group_list(Particle_Group_Index)
+        
+        'Make active
+        .active = True
+   
+        'Map pos
+        If (map_x <> -1) And (map_y <> -1) Then
+            .map_x = map_x
+            .map_y = map_y
+        End If
+   
+        'Grh list
+        ReDim .grh_index_list(1 To UBound(grh_index_list))
+        .grh_index_list() = grh_index_list()
+        .grh_index_count = UBound(grh_index_list)
+    
+        .Radio = Radio
+   
+        'Sets alive vars
+        If alive_counter = -1 Then
+            .alive_counter = -1
+            .never_die = True
+        Else
+            .alive_counter = alive_counter
+            .never_die = False
+        End If
+   
+        'alpha blending
+        .alpha_blend = alpha_blend
+   
+        'stream type
+        .stream_type = stream_type
+   
+        'speed
+        .frame_speed = frame_speed
+   
+        .X1 = X1
+        .Y1 = Y1
+        .X2 = X2
+        .Y2 = Y2
+        .Angle = Angle
+        .vecx1 = vecx1
+        .vecx2 = vecx2
+        .vecy1 = vecy1
+        .vecy2 = vecy2
+        .life1 = life1
+        .life2 = life2
+        .fric = fric
+        .spin = spin
+        .spin_speedL = spin_speedL
+        .spin_speedH = spin_speedH
+        .gravity = gravity
+        .grav_strength = grav_strength
+        .bounce_strength = bounce_strength
+        .XMove = XMove
+        .YMove = YMove
+        .move_x1 = move_x1
+        .move_x2 = move_x2
+        .move_y1 = move_y1
+        .move_y2 = move_y2
+   
+        .rgb_list(0) = rgb_list(0)
+        .rgb_list(1) = rgb_list(1)
+        .rgb_list(2) = rgb_list(2)
+        .rgb_list(3) = rgb_list(3)
+   
+        'handle
+        .ID = ID
+   
+        'create particle stream
+        .Particle_Count = Particle_Count
+        ReDim .particle_stream(1 To Particle_Count)
+   
+        'plot particle group on map
+        If (map_x <> -1) And (map_y <> -1) Then
+            MapData(map_x, map_y).Particle_Group_Index = Particle_Group_Index
+        End If
+    
+    End With
+ 
+End Sub
+
+Public Sub Char_Particle_Group_Make(ByVal Particle_Group_Index As Long, _
+                                     ByVal char_index As Integer, _
+                                     ByVal particle_char_index As Integer, _
+                                     ByVal Particle_Count As Long, _
+                                     ByVal stream_type As Long, _
+                                     ByRef grh_index_list() As Long, _
+                                     ByRef rgb_list() As Long, _
+                                     Optional ByVal alpha_blend As Boolean, _
+                                     Optional ByVal alive_counter As Long = -1, _
+                                     Optional ByVal frame_speed As Single = 0.5, _
+                                     Optional ByVal ID As Long, _
+                                     Optional ByVal X1 As Integer, _
+                                     Optional ByVal Y1 As Integer, _
+                                     Optional ByVal Angle As Integer, _
+                                     Optional ByVal vecx1 As Integer, _
+                                     Optional ByVal vecx2 As Integer, _
+                                     Optional ByVal vecy1 As Integer, _
+                                     Optional ByVal vecy2 As Integer, _
+                                     Optional ByVal life1 As Integer, _
+                                     Optional ByVal life2 As Integer, _
+                                     Optional ByVal fric As Integer, _
+                                     Optional ByVal spin_speedL As Single, _
+                                     Optional ByVal gravity As Boolean, _
+                                     Optional grav_strength As Long, _
+                                     Optional bounce_strength As Long, Optional ByVal X2 As Integer, Optional ByVal Y2 As Integer, Optional ByVal XMove As Boolean, Optional ByVal move_x1 As Integer, Optional ByVal move_x2 As Integer, Optional ByVal move_y1 As Integer, Optional ByVal move_y2 As Integer, Optional ByVal YMove As Boolean, Optional ByVal spin_speedH As Single, Optional ByVal spin As Boolean, Optional Radio As Integer)
+                                
+    '*****************************************************************
+    'Author: Aaron Perkins
+    'Modified by: Ryan Cain (Onezero)
+    'Last Modify Date: 5/15/2003
+    'Makes a new particle effect
+    'Modified by Juan Martín Sotuyo Dodero
+    '*****************************************************************
+    
+    If Not ClientSetup.ParticleEngine Then Exit Sub
+    
+    'Update array size
+    If Particle_Group_Index > particle_group_last Then
+        particle_group_last = Particle_Group_Index
+        ReDim Preserve particle_group_list(1 To particle_group_last)
+    End If
+    particle_group_count = particle_group_count + 1
+    
+    With particle_group_list(Particle_Group_Index)
+    
+        'Make active
+        .active = True
+    
+        'Char index
+        .char_index = char_index
+    
+        'Grh list
+        ReDim .grh_index_list(1 To UBound(grh_index_list))
+        .grh_index_list() = grh_index_list()
+        .grh_index_count = UBound(grh_index_list)
+    
+        .Radio = Radio
+   
+        'Sets alive vars
+        If alive_counter = -1 Then
+            .alive_counter = -1
+            .never_die = True
+        Else
+            .alive_counter = alive_counter
+            .never_die = False
+        End If
+   
+        'alpha blending
+        .alpha_blend = alpha_blend
+   
+        'stream type
+        .stream_type = stream_type
+   
+        'speed
+        .frame_speed = frame_speed
+   
+        .X1 = X1
+        .Y1 = Y1
+        .X2 = X2
+        .Y2 = Y2
+        .Angle = Angle
+        .vecx1 = vecx1
+        .vecx2 = vecx2
+        .vecy1 = vecy1
+        .vecy2 = vecy2
+        .life1 = life1
+        .life2 = life2
+        .fric = fric
+        .spin = spin
+        .spin_speedL = spin_speedL
+        .spin_speedH = spin_speedH
+        .gravity = gravity
+        .grav_strength = grav_strength
+        .bounce_strength = bounce_strength
+        .XMove = XMove
+        .YMove = YMove
+        .move_x1 = move_x1
+        .move_x2 = move_x2
+        .move_y1 = move_y1
+        .move_y2 = move_y2
+   
+        .rgb_list(0) = rgb_list(0)
+        .rgb_list(1) = rgb_list(1)
+        .rgb_list(2) = rgb_list(2)
+        .rgb_list(3) = rgb_list(3)
+   
+        'handle
+        .ID = ID
+   
+        'create particle stream
+        .Particle_Count = Particle_Count
+        ReDim .particle_stream(1 To Particle_Count)
+    
+        'plot particle group on char
+        charlist(char_index).Particle_Group(particle_char_index) = Particle_Group_Index
+    End With
+End Sub
+
+Private Function Particle_Type_Get(ByVal particle_index As Long) As Long
+
+    '*****************************************************************
+    'Author: Juan Martín Sotuyo Dodero (juansotuyo@hotmail.com)
+    'Last Modify Date: 8/27/2003
+    'Returns the stream type of a particle stream
+    '*****************************************************************
+    If Particle_Group_Check(particle_index) Then
+        Particle_Type_Get = particle_group_list(particle_index).stream_type
+    Else
+        Particle_Type_Get = 0
+    End If
+End Function
+
+Public Sub Particle_Group_Render(ByVal Particle_Group_Index As Long, _
+                                 ByVal screen_x As Long, _
+                                 ByVal screen_y As Long)
+    '*****************************************************************
+    'Author: Aaron Perkins
+    'Modified by: Ryan Cain (Onezero)
+    'Modified by: Juan Martín Sotuyo Dodero
+    'Last Modify Date: 5/15/2003
+    'Renders a particle stream at a paticular screen point
+    '*****************************************************************
+    
+    If Not ClientSetup.ParticleEngine Then Exit Sub
+    
+    Dim LoopC            As Long
+    Dim temp_rgb(0 To 3) As Long
+    Dim no_move          As Boolean
+    
+    With particle_group_list(Particle_Group_Index)
+    
+        'Set colors
+        If UserMinHP = 0 Then
+            temp_rgb(0) = D3DColorARGB(.alpha_blend, 255, 255, 255)
+            temp_rgb(1) = D3DColorARGB(.alpha_blend, 255, 255, 255)
+            temp_rgb(2) = D3DColorARGB(.alpha_blend, 255, 255, 255)
+            temp_rgb(3) = D3DColorARGB(.alpha_blend, 255, 255, 255)
+        Else
+            temp_rgb(0) = .rgb_list(0)
+            temp_rgb(1) = .rgb_list(1)
+            temp_rgb(2) = .rgb_list(2)
+            temp_rgb(3) = .rgb_list(3)
+        End If
+    
+        If .alive_counter Then
+    
+            'See if it is time to move a particle
+            .frame_counter = .frame_counter + timerTicksPerFrame
+
+            If .frame_counter > .frame_speed Then
+                .frame_counter = 0
+                no_move = False
             Else
+                no_move = True
+            End If
+    
+            'If it's still alive render all the particles inside
+            For LoopC = 1 To .Particle_Count
                 
-                'Set the particle information on the particle vertex
-                Effect(EffectIndex).PartVertex(LoopC).Color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
-                Effect(EffectIndex).PartVertex(LoopC).X = Effect(EffectIndex).Particles(LoopC).sngX
-                Effect(EffectIndex).PartVertex(LoopC).Y = Effect(EffectIndex).Particles(LoopC).sngY
+                'Render particle
+                Particle_Render .particle_stream(LoopC), _
+                                screen_x, screen_y, _
+                                .grh_index_list(Round(RandomNumber(1, .grh_index_count), 0)), _
+                                temp_rgb(), _
+                                .alpha_blend, _
+                                no_move, _
+                                .X1, .Y1, _
+                                .Angle, _
+                                .vecx1, .vecx2, .vecy1, .vecy2, _
+                                .life1, .life2, _
+                                .fric, _
+                                .spin_speedL, _
+                                .gravity, .grav_strength, .bounce_strength, _
+                                .X2, .Y2, .XMove, _
+                                .move_x1, .move_x2, .move_y1, .move_y2, .YMove, _
+                                .spin_speedH, _
+                                .spin, _
+                                .Radio, _
+                                .Particle_Count, _
+                                LoopC
+            Next LoopC
+        
+            If no_move = False Then
 
-            End If
-
-        End If
-
-    Next LoopC
-
-End Sub
-
-
-Sub Engine_Weather_Update()
-    If bRain And bLluvia(UserMap) = 1 And CurMapAmbient.Rain = True Then
-        If WeatherEffectIndex <= 0 Then
-            WeatherEffectIndex = Effect_Rain_Begin(9, 500)
-        ElseIf Effect(WeatherEffectIndex).EffectNum <> EffectNum_Rain Then
-            Effect_Kill WeatherEffectIndex
-            WeatherEffectIndex = Effect_Rain_Begin(9, 500)
-        ElseIf Not Effect(WeatherEffectIndex).Used Then
-            WeatherEffectIndex = Effect_Rain_Begin(9, 500)
-        End If
-    End If
-
-    If CurMapAmbient.Snow = True Then
-        If WeatherEffectIndex <= 0 Then
-            WeatherEffectIndex = Effect_Snow_Begin(14, 200)
-        ElseIf Effect(WeatherEffectIndex).EffectNum <> EffectNum_Snow Then
-            Effect_Kill WeatherEffectIndex
-            WeatherEffectIndex = Effect_Snow_Begin(14, 200)
-        ElseIf Not Effect(WeatherEffectIndex).Used Then
-            WeatherEffectIndex = Effect_Snow_Begin(14, 200)
-        End If
-    End If
-            
-    If CurMapAmbient.Fog <> -1 Then
-        Engine_Weather_UpdateFog
-    End If
-    
-    If OnRampageImgGrh <> 0 Then
-        DDrawTransGrhIndextoSurface OnRampageImgGrh, 0, 0, 0, Normal_RGBList(), 0, True
-    End If
-    
-End Sub
-
-Sub Engine_Weather_UpdateFog()
-'*****************************************************************
-'Update the fog effects
-'*****************************************************************
-
-Dim i As Long
-Dim X As Long
-Dim Y As Long
-Dim CC(3) As Long
-Dim ElapsedTime As Single
-ElapsedTime = Engine_ElapsedTime
-
-    If WeatherFogCount = 0 Then WeatherFogCount = 13
-
-    WeatherFogX1 = WeatherFogX1 + (ElapsedTime * (0.018 + Rnd * 0.01)) + (LastOffsetX - ParticleOffsetX)
-    WeatherFogY1 = WeatherFogY1 + (ElapsedTime * (0.013 + Rnd * 0.01)) + (LastOffsetY - ParticleOffsetY)
-    
-    Do While WeatherFogX1 < -512
-        WeatherFogX1 = WeatherFogX1 + 512
-    Loop
-    Do While WeatherFogY1 < -512
-        WeatherFogY1 = WeatherFogY1 + 512
-    Loop
-    Do While WeatherFogX1 > 0
-        WeatherFogX1 = WeatherFogX1 - 512
-    Loop
-    Do While WeatherFogY1 > 0
-        WeatherFogY1 = WeatherFogY1 - 512
-    Loop
-    
-    WeatherFogX2 = WeatherFogX2 - (ElapsedTime * (0.037 + Rnd * 0.01)) + (LastOffsetX - ParticleOffsetX)
-    WeatherFogY2 = WeatherFogY2 - (ElapsedTime * (0.021 + Rnd * 0.01)) + (LastOffsetY - ParticleOffsetY)
-    Do While WeatherFogX2 < -512
-        WeatherFogX2 = WeatherFogX2 + 512
-    Loop
-    Do While WeatherFogY2 < -512
-        WeatherFogY2 = WeatherFogY2 + 512
-    Loop
-    Do While WeatherFogX2 > 0
-        WeatherFogX2 = WeatherFogX2 - 512
-    Loop
-    Do While WeatherFogY2 > 0
-        WeatherFogY2 = WeatherFogY2 - 512
-    Loop
-    
-    'Render fog 2
-    X = 2
-    Y = -1
-
-    CC(1) = D3DColorARGB(CurMapAmbient.Fog, 255, 255, 255)
-    CC(2) = D3DColorARGB(CurMapAmbient.Fog, 255, 255, 255)
-    CC(3) = D3DColorARGB(CurMapAmbient.Fog, 255, 255, 255)
-    CC(0) = D3DColorARGB(CurMapAmbient.Fog, 255, 255, 255)
-    For i = 1 To WeatherFogCount
-        DDrawTransGrhIndextoSurface 27300, (X * 512) + WeatherFogX2, (Y * 512) + WeatherFogY2, 0, CC(), 0, False
-        X = X + 1
-        If X > (1 + (ScreenWidth \ 512)) Then
-            X = 0
-            Y = Y + 1
-        End If
-    Next i
-            
-    'Render fog 1
-    X = 0
-    Y = 0
-    CC(1) = D3DColorARGB(CurMapAmbient.Fog / 2, 255, 255, 255)
-    CC(2) = D3DColorARGB(CurMapAmbient.Fog / 2, 255, 255, 255)
-    CC(3) = D3DColorARGB(CurMapAmbient.Fog / 2, 255, 255, 255)
-    CC(0) = D3DColorARGB(CurMapAmbient.Fog / 2, 255, 255, 255)
-    For i = 1 To WeatherFogCount
-        DDrawTransGrhIndextoSurface 27301, (X * 512) + WeatherFogX1, (Y * 512) + WeatherFogY1, 0, CC(), 0, False
-        X = X + 1
-        If X > (2 + (ScreenWidth \ 512)) Then
-            X = 0
-            Y = Y + 1
-        End If
-    Next i
-
-End Sub
-
-Function Effect_Smoke_Begin(ByVal X As Single, ByVal Y As Single, ByVal Gfx As Integer, ByVal Particles As Integer, Optional ByVal Direction As Integer = 180, Optional ByVal Progression As Single = 1) As Integer
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Smoke_Begin
-'*****************************************************************
-Dim EffectIndex As Integer
-Dim LoopC As Long
-
-    'Get the next open effect slot
-    EffectIndex = Effect_NextOpenSlot
-    If EffectIndex = -1 Then Exit Function
-
-    'Return the index of the used slot
-    Effect_Smoke_Begin = EffectIndex
-
-    'Set The Effect's Variables
-    Effect(EffectIndex).EffectNum = EffectNum_Smoke      'Set the effect number
-    Effect(EffectIndex).ParticleCount = Particles       'Set the number of particles
-    Effect(EffectIndex).Used = True     'Enabled the effect
-    Effect(EffectIndex).X = X           'Set the effect's X coordinate
-    Effect(EffectIndex).Y = Y           'Set the effect's Y coordinate
-    Effect(EffectIndex).Gfx = Gfx       'Set the graphic
-    Effect(EffectIndex).Direction = Direction       'The direction the effect is animat
-    Effect(EffectIndex).Progression = Progression   'Loop the effect
-
-    'Set the number of particles left to the total avaliable
-    Effect(EffectIndex).ParticlesLeft = Effect(EffectIndex).ParticleCount
-
-    'Set the float variables
-    Effect(EffectIndex).FloatSize = Effect_FToDW(30)    'Size of the particles
-
-    'Redim the number of particles
-    ReDim Effect(EffectIndex).Particles(0 To Effect(EffectIndex).ParticleCount)
-    ReDim Effect(EffectIndex).PartVertex(0 To Effect(EffectIndex).ParticleCount)
-
-    'Create the particles
-    For LoopC = 0 To Effect(EffectIndex).ParticleCount
-        Set Effect(EffectIndex).Particles(LoopC) = New Particle
-        Effect(EffectIndex).Particles(LoopC).Used = True
-        Effect(EffectIndex).PartVertex(LoopC).rhw = 1
-        Effect_Smoke_Reset EffectIndex, LoopC
-    Next LoopC
-
-    'Set The Initial Time
-    Effect(EffectIndex).PreviousFrame = timeGetTime
-
-End Function
-
-Private Sub Effect_Smoke_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Smoke_Reset
-'*****************************************************************
-
-    'Reset the particle
-    'Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).x - 10 + Rnd * 20, Effect(EffectIndex).Y - 10 + Rnd * 20, -Sin((Effect(EffectIndex).Direction + (Rnd * 70) - 35) * DegreeToRadian) * 8, Cos((Effect(EffectIndex).Direction + (Rnd * 70) - 35) * DegreeToRadian) * 8, 0, 0
-    'Effect(EffectIndex).Particles(Index).ResetColor 1, 0.2, 0.2, 0.4 + (Rnd * 0.2), 0.03 + (Rnd * 0.07)
-    Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).X - 10 + Rnd * 20, Effect(EffectIndex).Y - 10 + Rnd * 20, -Sin((Effect(EffectIndex).Direction + (Rnd * 70) - 35) * DegreeToRadian) * 5, Cos((Effect(EffectIndex).Direction + (Rnd * 70) - 35) * DegreeToRadian) * 8, 2, 0
-    Effect(EffectIndex).Particles(Index).ResetColor 0.2, 0.2, 0.2, 0.2 + (Rnd * 0.2), 0.03 + (Rnd * 0.01)
-
-End Sub
-
-Private Sub Effect_Smoke_Update(ByVal EffectIndex As Integer)
-'*****************************************************************
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Smoke_Update
-'*****************************************************************
-Dim ElapsedTime As Single
-Dim LoopC As Long
-
-    'Calculate The Time Difference
-    ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
-    Effect(EffectIndex).PreviousFrame = timeGetTime
-
-    'Go Through The Particle Loop
-    For LoopC = 0 To Effect(EffectIndex).ParticleCount
-
-        'Check If Particle Is In Use
-        If Effect(EffectIndex).Particles(LoopC).Used Then
-
-            'Update The Particle
-            Effect(EffectIndex).Particles(LoopC).UpdateParticle ElapsedTime
-
-            'Check if the particle is ready to die
-            If Effect(EffectIndex).Particles(LoopC).sngA <= 0 Then
-
-                'Check if the effect is ending
-                If Effect(EffectIndex).Progression <> 0 Then
-
-                    'Reset the particle
-                    Effect_Smoke_Reset EffectIndex, LoopC
-
-                Else
-
-                    'Disable the particle
-                    Effect(EffectIndex).Particles(LoopC).Used = False
-
-                    'Subtract from the total particle count
-                    Effect(EffectIndex).ParticlesLeft = Effect(EffectIndex).ParticlesLeft - 1
-
-                    'Check if the effect is out of particles
-                    If Effect(EffectIndex).ParticlesLeft = 0 Then Effect(EffectIndex).Used = False
-
-                    'Clear the color (dont leave behind any artifacts)
-                    Effect(EffectIndex).PartVertex(LoopC).Color = 0
-
+                'Update the group alive counter
+                If .never_die = False Then
+                    .alive_counter = .alive_counter - 1
                 End If
+            End If
+    
+        Else
+        
+            'If it's dead destroy it
+            Call Particle_Group_Destroy(Particle_Group_Index)
+            
+        End If
+    
+    End With
+End Sub
+ 
+Public Sub Particle_Render(ByRef temp_particle As Particle, _
+                           ByVal screen_x As Long, _
+                           ByVal screen_y As Long, _
+                           ByVal grh_index As Long, _
+                           ByRef rgb_list() As Long, _
+                           Optional ByVal alpha_blend As Boolean, _
+                           Optional ByVal no_move As Boolean, _
+                           Optional ByVal X1 As Integer, _
+                           Optional ByVal Y1 As Integer, _
+                           Optional ByVal Angle As Integer, _
+                           Optional ByVal vecx1 As Integer, _
+                           Optional ByVal vecx2 As Integer, _
+                           Optional ByVal vecy1 As Integer, _
+                           Optional ByVal vecy2 As Integer, _
+                           Optional ByVal life1 As Integer, _
+                           Optional ByVal life2 As Integer, _
+                           Optional ByVal fric As Integer, _
+                           Optional ByVal spin_speedL As Single, _
+                           Optional ByVal gravity As Boolean, _
+                           Optional grav_strength As Long, _
+                           Optional ByVal bounce_strength As Long, _
+                           Optional ByVal X2 As Integer, _
+                           Optional ByVal Y2 As Integer, _
+                           Optional ByVal XMove As Boolean, _
+                           Optional ByVal move_x1 As Integer, Optional ByVal move_x2 As Integer, Optional ByVal move_y1 As Integer, Optional ByVal move_y2 As Integer, Optional ByVal YMove As Boolean, Optional ByVal spin_speedH As Single, Optional ByVal spin As Boolean, Optional ByVal Radio As Integer, Optional ByVal Count As Integer, Optional ByVal Index As Integer)
 
+    '**************************************************************
+    'Author: Aaron Perkins
+    'Modified by: Ryan Cain (Onezero)
+    'Modified by: Juan Martín Sotuyo Dodero
+    'Last Modify Date: 5/15/2003
+    '**************************************************************
+    
+    If Not ClientSetup.ParticleEngine Then Exit Sub
+    
+    With temp_particle
+    
+        If no_move = False Then
+            If .alive_counter = 0 Then
+                'Start new particle
+                InitGrh .Grh, grh_index, alpha_blend
+
+                If Radio = 0 Then
+                    .X = RandomNumber(X1, X2)
+                    .Y = RandomNumber(Y1, Y2)
+                Else
+                    .X = (RandomNumber(X1, X2) + Radio) + Radio * Cos(PI * 2 * Index / Count)
+                    .Y = (RandomNumber(Y1, Y2) + Radio) + Radio * Sin(PI * 2 * Index / Count)
+                End If
+                .X = RandomNumber(X1, X2) - (base_tile_size \ 2)
+                .Y = RandomNumber(Y1, Y2) - (base_tile_size \ 2)
+                .vector_x = RandomNumber(vecx1, vecx2)
+                .vector_y = RandomNumber(vecy1, vecy2)
+                .Angle = Angle
+                .alive_counter = RandomNumber(life1, life2)
+                .friction = fric
             Else
 
-                'Set the particle information on the particle vertex
-                Effect(EffectIndex).PartVertex(LoopC).Color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
-                Effect(EffectIndex).PartVertex(LoopC).X = Effect(EffectIndex).Particles(LoopC).sngX
-                Effect(EffectIndex).PartVertex(LoopC).Y = Effect(EffectIndex).Particles(LoopC).sngY
+                'Continue old particle
+                'Do gravity
+                If gravity = True Then
+                    .vector_y = .vector_y + grav_strength
 
+                    If .Y > 0 Then
+                        'bounce
+                        .vector_y = bounce_strength
+                    End If
+                End If
+
+                'Do rotation
+                If spin = True Then
+                    .Angle = .Angle + (RandomNumber(spin_speedL, spin_speedH) / 100)
+                End If
+            
+                If .Angle >= 360 Then
+                    .Angle = 0
+                End If
+            
+                If XMove = True Then .vector_x = RandomNumber(move_x1, move_x2)
+                If YMove = True Then .vector_y = RandomNumber(move_y1, move_y2)
             End If
-
+        
+            'Add in vector
+            .X = .X + (.vector_x \ .friction)
+            .Y = .Y + (.vector_y \ .friction)
+    
+            'decrement counter
+            .alive_counter = .alive_counter - 1
         End If
-
-    Next LoopC
-
+    
+        'Draw it
+        If .Grh.GrhIndex Then
+            Call DDrawTransGrhtoSurface(.Grh, .X + screen_x, .Y + screen_y, 1, rgb_list(), 255, 255, 1, alpha_blend, .Angle)
+        End If
+    
+    End With
+    
 End Sub
 
-
-Public Sub Engine_CreateEffect(ByVal CharIndex As Integer, ByVal Effect As Byte, ByVal X As Single, ByVal Y As Single, ByVal Loops As Integer)
-
-    If Not ValidNumber(Effect, eNumber_Types.ent_Byte) Then
-            'Call Log_Engine("Error in Engine_CreateEffect, The effect " & Effect & " is not valid.")
-        Exit Sub
+Public Function Particle_Group_Next_Open() As Long
+    '*****************************************************************
+    'Author: Aaron Perkins
+    'Last Modify Date: 10/07/2002
+    '
+    '*****************************************************************
+    On Error GoTo errorHandler:
+    
+    If Not ClientSetup.ParticleEngine Then Exit Function
+    
+    Dim LoopC As Long
+    
+    If particle_group_last = 0 Then
+        Particle_Group_Next_Open = 1
+        Exit Function
     End If
-        
-    Select Case Effect
-        Case EffectNum_Fire
-        'Case EffectNum_Snow
-        Case EffectNum_Heal
-        Case EffectNum_Bless
-        Case EffectNum_Protection
-        
-        Case EffectNum_Strengthen
-            charlist(CharIndex).ParticleIndex = Effect_Strengthen_Begin(X, Y, 2, 100, 30, CSng(Loops))
-            
-        'Case EffectNum_Rain
-        Case EffectNum_EquationTemplate
-        
-        'Case EffectNum_Waterfall
-        
-        Case EffectNum_Summon
-            charlist(CharIndex).ParticleIndex = Effect_Summon_Begin(X, Y, 1, 500, 0.1)
-            
-        Case EffectNum_Rayo
-            charlist(CharIndex).ParticleIndex = Effect_Rayo_Begin(X, Y, 2, 100, -1)
-    End Select
+    
+    LoopC = 1
 
-End Sub
+    Do Until particle_group_list(LoopC).active = False
 
+        If LoopC = particle_group_last Then
+            Particle_Group_Next_Open = particle_group_last + 1
+            Exit Function
+        End If
+        LoopC = LoopC + 1
+    Loop
+    
+    Particle_Group_Next_Open = LoopC
 
-Public Function Speed_Particle() As Single
-'***************************************************
-'Author: Standelf
-'Last Modify Date: 06/01/2011
-'***************************************************
+    Exit Function
 
-    Dim ElapsedTime As Single
-        ElapsedTime = Engine_ElapsedTime
-        Speed_Particle = ElapsedTime * 0.2
+errorHandler:
+
+End Function
+ 
+Public Function Char_Particle_Group_Next_Open(ByVal char_index As Integer) As Integer
+    '*****************************************************************
+    'Author: Augusto José Rando
+    '*****************************************************************
+    On Error GoTo errorHandler:
+    
+    If Not ClientSetup.ParticleEngine Then Exit Function
+    
+    Dim LoopC As Long
+    
+    If charlist(char_index).Particle_Count = 0 Then
+        Char_Particle_Group_Next_Open = charlist(char_index).Particle_Count + 1
+        charlist(char_index).Particle_Count = Char_Particle_Group_Next_Open
+        ReDim Preserve charlist(char_index).Particle_Group(1 To Char_Particle_Group_Next_Open) As Long
+        Exit Function
+    End If
+    
+    LoopC = 1
+
+    Do Until charlist(char_index).Particle_Group(LoopC) = 0
+
+        If LoopC = charlist(char_index).Particle_Count Then
+            Char_Particle_Group_Next_Open = charlist(char_index).Particle_Count + 1
+            charlist(char_index).Particle_Count = Char_Particle_Group_Next_Open
+            ReDim Preserve charlist(char_index).Particle_Group(1 To Char_Particle_Group_Next_Open) As Long
+            Exit Function
+        End If
+        LoopC = LoopC + 1
+    Loop
+    
+    Char_Particle_Group_Next_Open = LoopC
+
+    Exit Function
+
+errorHandler:
+    charlist(char_index).Particle_Count = 1
+    ReDim charlist(char_index).Particle_Group(1 To 1) As Long
+    Char_Particle_Group_Next_Open = 1
+
+End Function
+ 
+Public Function Particle_Group_Check(ByVal Particle_Group_Index As Long) As Boolean
+
+    '**************************************************************
+    'Author: Aaron Perkins
+    'Last Modify Date: 1/04/2003
+    '
+    '**************************************************************
+    
+    If Not ClientSetup.ParticleEngine Then Exit Function
+    
+    'check index
+    If Particle_Group_Index > 0 And Particle_Group_Index <= particle_group_last Then
+        If particle_group_list(Particle_Group_Index).active Then
+            Particle_Group_Check = True
+        End If
+    End If
 
 End Function
 
+Public Function Map_Particle_Group_Get(ByVal map_x As Long, ByVal map_y As Long) As Long
 
+    '*****************************************************************
+    'Author: Aaron Perkins
+    'Last Modify Date: 2/20/2003
+    'Checks to see if a tile position has a particle_group_index and return it
+    '*****************************************************************
+    
+    If Not ClientSetup.ParticleEngine Then Exit Function
+    
+    If Map_InBounds(map_x, map_y) Then
+        Map_Particle_Group_Get = MapData(map_x, map_y).Particle_Group_Index
+    Else
+        Map_Particle_Group_Get = 0
+    End If
+    
+End Function
 
-
+Public Sub Load_Map_Particles(ByVal Map As Integer)
+'*****************************************************************
+'Author: Jopi
+'Para los que no tienen un World Editor con sistema de particulas
+'Crea las particulas al entrar en un mapa.
+'*****************************************************************
+    
+    ' Crea las particulas especificas para el mapa actual.
+    Select Case Map
+    
+        Case 1
+            Call General_Particle_Create(1, 45, 46)
+            
+    End Select
+    
+End Sub
 
