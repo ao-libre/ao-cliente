@@ -757,31 +757,30 @@ Sub Char_MovebyHead(ByVal CharIndex As Integer, ByVal nHeading As E_Heading)
 End Sub
 
 Sub Char_CleanAll()
-        '// Borramos los obj y char que esten
+    '// Borramos los obj y char que esten
 
-        Dim X         As Long, Y As Long
-        Dim CharIndex As Integer, Obj As Integer
+    Dim X         As Long, Y As Long
+    Dim CharIndex As Integer, Obj As Integer
     
-        For X = XMinMapSize To XMaxMapSize
-                For Y = YMinMapSize To YMaxMapSize
+    For X = XMinMapSize To XMaxMapSize
+        For Y = YMinMapSize To YMaxMapSize
           
-                        'Erase NPCs
-                        CharIndex = Char_MapPosExits(CByte(X), CByte(Y))
+            'Erase NPCs
+            CharIndex = Char_MapPosExits(CByte(X), CByte(Y))
  
-                        If (CharIndex > 0) Then
-                                Call Char_Erase(CharIndex)
-                        End If
+            If (CharIndex > 0) Then
+                Call Char_Erase(CharIndex)
+            End If
                         
-                        'Erase OBJs
-                        Obj = Map_PosExitsObject(CByte(X), CByte(Y))
+            'Erase OBJs
+            Obj = Map_PosExitsObject(CByte(X), CByte(Y))
 
-                        If (Obj > 0) Then
-                                Call Map_DestroyObject(CByte(X), CByte(Y))
-                        End If
+            If (Obj > 0) Then
+                Call Map_DestroyObject(CByte(X), CByte(Y))
+            End If
 
-                Next Y
-        Next X
+        Next Y
+    Next X
 
 End Sub
-
 

@@ -685,9 +685,15 @@ Public Function EstaPCarea(ByVal CharIndex As Integer) As Boolean
 'Last Modification: 09/21/2010
 ' 09/21/2010: C4b3z0n - Changed from Private Funtion tu Public Function.
 '***************************************************
+    
     With charlist(CharIndex).Pos
-        EstaPCarea = .X > UserPos.X - MinXBorder And .X < UserPos.X + MinXBorder And .Y > UserPos.Y - MinYBorder And .Y < UserPos.Y + MinYBorder
+    
+        EstaPCarea = .X > UserPos.X - MinXBorder And _
+                     .X < UserPos.X + MinXBorder And _
+                     .Y > UserPos.Y - MinYBorder And _
+                     .Y < UserPos.Y + MinYBorder
     End With
+    
 End Function
 
 Sub DoPasosFx(ByVal CharIndex As Integer)
@@ -1078,30 +1084,39 @@ Call PictureBox.PaintPicture(Picture, X1, Y1, Width1, Height1, X2, Y2, Width2, H
 
 End Sub
 
-Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffsetX As Integer, ByVal PixelOffsetY As Integer)
-'**************************************************************
-'Author: Aaron Perkins
-'Last Modify Date: 8/14/2007
-'Last modified by: Juan Martin Sotuyo Dodero (Maraxus)
-'Renders everything to the viewport
-'**************************************************************
-    Dim Y           As Long     'Keeps track of where on map we are
-    Dim X           As Long     'Keeps track of where on map we are
-    Dim screenminY  As Integer  'Start Y pos on current screen
-    Dim screenmaxY  As Integer  'End Y pos on current screen
-    Dim screenminX  As Integer  'Start X pos on current screen
-    Dim screenmaxX  As Integer  'End X pos on current screen
-    Dim minY        As Integer  'Start Y pos on current map
-    Dim maxY        As Integer  'End Y pos on current map
-    Dim minX        As Integer  'Start X pos on current map
-    Dim maxX        As Integer  'End X pos on current map
-    Dim ScreenX     As Integer  'Keeps track of where to place tile on screen
-    Dim ScreenY     As Integer  'Keeps track of where to place tile on screen
-    Dim minXOffset  As Integer
-    Dim minYOffset  As Integer
+Sub RenderScreen(ByVal tilex As Integer, _
+                 ByVal tiley As Integer, _
+                 ByVal PixelOffsetX As Integer, _
+                 ByVal PixelOffsetY As Integer)
+    '**************************************************************
+    'Author: Aaron Perkins
+    'Last Modify Date: 8/14/2007
+    'Last modified by: Juan Martin Sotuyo Dodero (Maraxus)
+    'Renders everything to the viewport
+    '**************************************************************
+    Dim Y                As Long     'Keeps track of where on map we are
+    Dim X                As Long     'Keeps track of where on map we are
+    
+    Dim screenminY       As Integer  'Start Y pos on current screen
+    Dim screenmaxY       As Integer  'End Y pos on current screen
+    Dim screenminX       As Integer  'Start X pos on current screen
+    Dim screenmaxX       As Integer  'End X pos on current screen
+    
+    Dim minY             As Integer  'Start Y pos on current map
+    Dim maxY             As Integer  'End Y pos on current map
+    Dim minX             As Integer  'Start X pos on current map
+    Dim maxX             As Integer  'End X pos on current map
+    
+    Dim ScreenX          As Integer  'Keeps track of where to place tile on screen
+    Dim ScreenY          As Integer  'Keeps track of where to place tile on screen
+    
+    Dim minXOffset       As Integer
+    Dim minYOffset       As Integer
+    
     Dim PixelOffsetXTemp As Integer 'For centering grhs
     Dim PixelOffsetYTemp As Integer 'For centering grhs
-    Dim ElapsedTime As Single
+    
+    Dim ElapsedTime      As Single
     
     ElapsedTime = Engine_ElapsedTime()
     
@@ -1159,31 +1174,33 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
         
             If Map_InBounds(X, Y) Then
                 'Layer 1
-                Call DDrawGrhtoSurface(MapData(X, Y).Graphic(1), _
-                    (ScreenX - 1) * TilePixelWidth + PixelOffsetX, _
-                    (ScreenY - 1) * TilePixelHeight + PixelOffsetY, _
-                    0, 1, X, Y)
+                Call DDrawGrhtoSurface(MapData(X, Y).Graphic(1), (ScreenX - 1) * TilePixelWidth + PixelOffsetX, (ScreenY - 1) * TilePixelHeight + PixelOffsetY, 0, 1, X, Y)
             End If
             
             ScreenX = ScreenX + 1
         Next X
+
         ScreenX = ScreenX - X + screenminX
         ScreenY = ScreenY + 1
     Next Y
     
     '<----- Layer 2 ----->
     ScreenY = minYOffset - Engine_Get_TileBuffer
+
     For Y = minY To maxY
         ScreenX = minXOffset - Engine_Get_TileBuffer
+
         For X = minX To maxX
-        If Map_InBounds(X, Y) Then
-            PixelOffsetXTemp = ScreenX * TilePixelWidth + PixelOffsetX
-            PixelOffsetYTemp = ScreenY * TilePixelHeight + PixelOffsetY
-            'Layer 2
-            If MapData(X, Y).Graphic(2).GrhIndex <> 0 Then
-                Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(2), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1, X, Y)
+
+            If Map_InBounds(X, Y) Then
+                PixelOffsetXTemp = ScreenX * TilePixelWidth + PixelOffsetX
+                PixelOffsetYTemp = ScreenY * TilePixelHeight + PixelOffsetY
+
+                'Layer 2
+                If MapData(X, Y).Graphic(2).GrhIndex <> 0 Then
+                    Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(2), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1, X, Y)
+                End If
             End If
-        End If
             ScreenX = ScreenX + 1
         Next X
 
@@ -1192,98 +1209,96 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
     
     '<----- Layer Obj, Char, 3 ----->
     ScreenY = minYOffset - Engine_Get_TileBuffer
+
     For Y = minY To maxY
         ScreenX = minXOffset - Engine_Get_TileBuffer
+
         For X = minX To maxX
             PixelOffsetXTemp = ScreenX * TilePixelWidth + PixelOffsetX
             PixelOffsetYTemp = ScreenY * TilePixelHeight + PixelOffsetY
             
             If Map_InBounds(X, Y) Then
-                With MapData(X, Y)
-                    'Object Layer
-                    If .ObjGrh.GrhIndex <> 0 Then
-                        Call DDrawTransGrhtoSurface(.ObjGrh, PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1, X, Y)
-                    End If
+
+                'Object Layer
+                If MapData(X, Y).ObjGrh.GrhIndex <> 0 Then
+                    Call DDrawTransGrhtoSurface(MapData(X, Y).ObjGrh, PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1, X, Y)
+                End If
                     
-                    'Char layer
-                    If .CharIndex <> 0 Then
-                        Call CharRender(.CharIndex, PixelOffsetXTemp, PixelOffsetYTemp)
-                    End If
+                'Char layer
+                If MapData(X, Y).CharIndex <> 0 Then
+                    Call CharRender(MapData(X, Y).CharIndex, PixelOffsetXTemp, PixelOffsetYTemp)
+                End If
                     
-                    'Dibujamos los daños.
-                    If .Damage.Activated Then
-                        mDx8_Dibujado.Damage_Draw X, Y, PixelOffsetXTemp, PixelOffsetYTemp - 20
-                    End If
+                'Dibujamos los danos.
+                If MapData(X, Y).Damage.Activated Then
+                    Call mDx8_Dibujado.Damage_Draw(X, Y, PixelOffsetXTemp, PixelOffsetYTemp - 20)
+                End If
+                
+                'Particulas
+                If MapData(X, Y).Particle_Group_Index Then
+                    Call Particle_Group_Render(MapData(X, Y).Particle_Group_Index, PixelOffsetXTemp, PixelOffsetYTemp)
+                End If
+                
+                'Layer 3
+                If MapData(X, Y).Graphic(3).GrhIndex <> 0 Then
                     
-                    'Layer 3
-                    If .Graphic(3).GrhIndex <> 0 Then
-                    
-                        If .Graphic(3).GrhIndex = 735 Or .Graphic(3).GrhIndex >= 6994 And .Graphic(3).GrhIndex <= 7002 Then
-                            If Abs(UserPos.X - X) < 4 And (Abs(UserPos.Y - Y)) < 4 Then
-                                Call DDrawTransGrhtoSurface(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, SetARGB_Alpha(MapData(X, Y).Engine_Light(), 150), 1, X, Y, True)
-                            Else 'NORMAL
-                                Call DDrawTransGrhtoSurface(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1, X, Y)
-    
-                            End If
+                    If MapData(X, Y).Graphic(3).GrhIndex = 735 Or MapData(X, Y).Graphic(3).GrhIndex >= 6994 And MapData(X, Y).Graphic(3).GrhIndex <= 7002 Then
+                        If Abs(UserPos.X - X) < 4 And (Abs(UserPos.Y - Y)) < 4 Then
+                            Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, SetARGB_Alpha(MapData(X, Y).Engine_Light(), 150), 1, X, Y, True)
                         Else 'NORMAL
-                            Call DDrawTransGrhtoSurface(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1, X, Y)
+                            Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1, X, Y)
+    
                         End If
+                    Else 'NORMAL
+                        Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1, X, Y)
                     End If
+                End If
                     
-                    If MapData(X, Y).FxIndex <> 0 Then
+                If MapData(X, Y).FxIndex <> 0 Then
                         
-                        Call DDrawTransGrhtoSurface(MapData(X, Y).fX, PixelOffsetXTemp + FxData(.FxIndex).OffsetX, PixelOffsetYTemp + FxData(.FxIndex).OffsetY, 1, MapData(X, Y).Engine_Light(), 1, X, Y, True)
+                    Call DDrawTransGrhtoSurface(MapData(X, Y).fX, PixelOffsetXTemp + FxData(MapData(X, Y).FxIndex).OffsetX, PixelOffsetYTemp + FxData(MapData(X, Y).FxIndex).OffsetY, 1, MapData(X, Y).Engine_Light(), 1, X, Y, True)
                         
-                        If MapData(X, Y).fX.Started = 0 Then _
-                            MapData(X, Y).FxIndex = 0
-                    End If
-                End With
+                    If MapData(X, Y).fX.Started = 0 Then MapData(X, Y).FxIndex = 0
+                    
+                End If
             End If
             
             ScreenX = ScreenX + 1
         Next X
+
         ScreenY = ScreenY + 1
     Next Y
     
-        '<----- Layer 4 ----->
-        ScreenY = minYOffset - Engine_Get_TileBuffer
-        For Y = minY To maxY
-            ScreenX = minXOffset - Engine_Get_TileBuffer
-            For X = minX To maxX
-                
-                'Particulas**************************************
-                If MapData(X, Y).Particle_Group_Index Then
-                    Call Particle_Group_Render(MapData(X, Y).Particle_Group_Index, ScreenX * 32 + PixelOffsetX, ScreenY * 32 + PixelOffsetY)
-                End If
-                '************************************************
-                
-                'Layer 4
-                If MapData(X, Y).Graphic(4).GrhIndex Then
-                    If bTecho Then
+    '<----- Layer 4 ----->
+    ScreenY = minYOffset - Engine_Get_TileBuffer
+
+    For Y = minY To maxY
+        ScreenX = minXOffset - Engine_Get_TileBuffer
+
+        For X = minX To maxX
+   
+            'Layer 4
+            If MapData(X, Y).Graphic(4).GrhIndex Then
+                If bTecho Then
                     
-                        Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(4), _
-                            ScreenX * TilePixelWidth + PixelOffsetX, _
-                            ScreenY * TilePixelHeight + PixelOffsetY, _
-                            1, temp_rgb(), 1, X, Y)
+                    Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(4), ScreenX * TilePixelWidth + PixelOffsetX, ScreenY * TilePixelHeight + PixelOffsetY, 1, temp_rgb(), 1, X, Y)
                     
+                Else
+
+                    If ColorTecho = 250 Then
+                        Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(4), ScreenX * TilePixelWidth + PixelOffsetX, ScreenY * TilePixelHeight + PixelOffsetY, 1, MapData(X, Y).Engine_Light(), 1, X, Y)
                     Else
-                        If ColorTecho = 250 Then
-                            Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(4), _
-                                ScreenX * TilePixelWidth + PixelOffsetX, _
-                                ScreenY * TilePixelHeight + PixelOffsetY, _
-                                1, MapData(X, Y).Engine_Light(), 1, X, Y)
-                        Else
-                            Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(4), _
-                                ScreenX * TilePixelWidth + PixelOffsetX, _
-                                ScreenY * TilePixelHeight + PixelOffsetY, _
-                                1, temp_rgb(), 1, X, Y)
-                        End If
+                        Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(4), ScreenX * TilePixelWidth + PixelOffsetX, ScreenY * TilePixelHeight + PixelOffsetY, 1, temp_rgb(), 1, X, Y)
                     End If
+                    
                 End If
-                ScreenX = ScreenX + 1
-            Next X
-            ScreenY = ScreenY + 1
-        Next Y
+            End If
+            
+            ScreenX = ScreenX + 1
+        Next X
+
+        ScreenY = ScreenY + 1
+    Next Y
 
     If ClientSetup.ProyectileEngine Then
                             
@@ -1291,8 +1306,10 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
             Dim j As Long ' Long siempre en los bucles es mucho mas rapido
                                 
             For j = 1 To LastProjectile
+
                 If ProjectileList(j).Grh.GrhIndex Then
                     Dim Angle As Single
+                    
                     'Update the position
                     Angle = DegreeToRadian * Engine_GetAngle(ProjectileList(j).X, ProjectileList(j).Y, ProjectileList(j).tX, ProjectileList(j).tY)
                     ProjectileList(j).X = ProjectileList(j).X + (Sin(Angle) * ElapsedTime * 0.63)
@@ -1301,6 +1318,7 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
                     'Update the rotation
                     If ProjectileList(j).RotateSpeed > 0 Then
                         ProjectileList(j).Rotate = ProjectileList(j).Rotate + (ProjectileList(j).RotateSpeed * ElapsedTime * 0.01)
+
                         Do While ProjectileList(j).Rotate > 360
                             ProjectileList(j).Rotate = ProjectileList(j).Rotate - 360
                         Loop
@@ -1309,14 +1327,15 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
                     'Draw if within range
                     X = ((-minX - 1) * 32) + ProjectileList(j).X + PixelOffsetX + ((10 - TileBufferSize) * 32) - 288 + ProjectileList(j).OffsetX
                     Y = ((-minY - 1) * 32) + ProjectileList(j).Y + PixelOffsetY + ((10 - TileBufferSize) * 32) - 288 + ProjectileList(j).OffsetY
+
                     If Y >= -32 Then
                         If Y <= (ScreenHeight + 32) Then
                             If X >= -32 Then
                                 If X <= (ScreenWidth + 32) Then
                                     If ProjectileList(j).Rotate = 0 Then
-                                        DDrawTransGrhtoSurface ProjectileList(j).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, 50, 50, True, 0
+                                        Call DDrawTransGrhtoSurface(ProjectileList(j).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, 50, 50, True, 0)
                                     Else
-                                        DDrawTransGrhtoSurface ProjectileList(j).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, 50, 50, True, ProjectileList(j).Rotate
+                                        Call DDrawTransGrhtoSurface(ProjectileList(j).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, 50, 50, True, ProjectileList(j).Rotate)
                                     End If
                                 End If
                             End If
@@ -1328,10 +1347,11 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
             
             'Check if it is close enough to the target to remove
             For j = 1 To LastProjectile
+
                 If ProjectileList(j).Grh.GrhIndex Then
                     If Abs(ProjectileList(j).X - ProjectileList(j).tX) < 20 Then
                         If Abs(ProjectileList(j).Y - ProjectileList(j).tY) < 20 Then
-                            Engine_Projectile_Erase j
+                            Call Engine_Projectile_Erase(j)
                         End If
                     End If
                 End If
@@ -1525,55 +1545,49 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
     
     '//Banco
     If frmBancoObj.Visible Then
-        With frmBancoObj
-            If .PicBancoInv.Visible Then Call InvBanco(0).DrawInv
-            If .PicInv.Visible Then Call InvBanco(1).DrawInv
-        End With
+        If frmBancoObj.PicBancoInv.Visible Then Call InvBanco(0).DrawInv
+        If frmBancoObj.PicInv.Visible Then Call InvBanco(1).DrawInv
     End If
     
     '//Comercio
     If frmComerciar.Visible Then
-        With frmComerciar
-            If .picInvNpc.Visible Then Call InvComNpc.DrawInv
-            If .picInvUser.Visible Then Call InvComUsu.DrawInv
-        End With
+        If frmComerciar.picInvNpc.Visible Then Call InvComNpc.DrawInv
+        If frmComerciar.picInvUser.Visible Then Call InvComUsu.DrawInv
     End If
     
     '//Comercio entre usuarios
     If frmComerciarUsu.Visible Then
-        With frmComerciarUsu
-            If .picInvComercio.Visible Then InvComUsu.DrawInv (1)
-            If .picInvOfertaProp.Visible Then InvOfferComUsu(0).DrawInv (1)
-            If .picInvOfertaOtro Then InvOfferComUsu(1).DrawInv (1)
-            If .picInvOroProp.Visible Then InvOroComUsu(0).DrawInv (1)
-            If .picInvOroOfertaProp.Visible Then InvOroComUsu(1).DrawInv (1)
-            If .picInvOroOfertaOtro.Visible Then InvOroComUsu(2).DrawInv (1)
-        End With
+        If frmComerciarUsu.picInvComercio.Visible Then InvComUsu.DrawInv (1)
+        If frmComerciarUsu.picInvOfertaProp.Visible Then InvOfferComUsu(0).DrawInv (1)
+        If frmComerciarUsu.picInvOfertaOtro Then InvOfferComUsu(1).DrawInv (1)
+        If frmComerciarUsu.picInvOroProp.Visible Then InvOroComUsu(0).DrawInv (1)
+        If frmComerciarUsu.picInvOroOfertaProp.Visible Then InvOroComUsu(1).DrawInv (1)
+        If frmComerciarUsu.picInvOroOfertaOtro.Visible Then InvOroComUsu(2).DrawInv (1)
     End If
     
     '//Herrero
     If frmHerrero.Visible Then
-        With frmHerrero
-            If .picLingotes0.Visible Or .picMejorar0.Visible Then InvLingosHerreria(1).DrawInv (1)
-            If .picLingotes1.Visible Or .picMejorar1.Visible Then InvLingosHerreria(2).DrawInv (1)
-            If .picLingotes2.Visible Or .picMejorar2.Visible Then InvLingosHerreria(3).DrawInv (1)
-            If .picLingotes3.Visible Or .picMejorar3.Visible Then InvLingosHerreria(4).DrawInv (1)
-        End With
+        If frmHerrero.picLingotes0.Visible Or frmHerrero.picMejorar0.Visible Then InvLingosHerreria(1).DrawInv (1)
+        If frmHerrero.picLingotes1.Visible Or frmHerrero.picMejorar1.Visible Then InvLingosHerreria(2).DrawInv (1)
+        If frmHerrero.picLingotes2.Visible Or frmHerrero.picMejorar2.Visible Then InvLingosHerreria(3).DrawInv (1)
+        If frmHerrero.picLingotes3.Visible Or frmHerrero.picMejorar3.Visible Then InvLingosHerreria(4).DrawInv (1)
     End If
     
     '//Carpintero
     If frmCarp.Visible Then
-        With frmCarp
-            If .picMaderas0.Visible Or .imgMejorar0.Visible Then InvMaderasCarpinteria(1).DrawInv (1)
-            If .picMaderas1.Visible Or .imgMejorar1.Visible Then InvMaderasCarpinteria(2).DrawInv (1)
-            If .picMaderas2.Visible Or .imgMejorar2.Visible Then InvMaderasCarpinteria(3).DrawInv (1)
-            If .picMaderas3.Visible Or .imgMejorar3.Visible Then InvMaderasCarpinteria(4).DrawInv (1)
-        End With
+        If frmCarp.picMaderas0.Visible Or frmCarp.imgMejorar0.Visible Then InvMaderasCarpinteria(1).DrawInv (1)
+        If frmCarp.picMaderas1.Visible Or frmCarp.imgMejorar1.Visible Then InvMaderasCarpinteria(2).DrawInv (1)
+        If frmCarp.picMaderas2.Visible Or frmCarp.imgMejorar2.Visible Then InvMaderasCarpinteria(3).DrawInv (1)
+        If frmCarp.picMaderas3.Visible Or frmCarp.imgMejorar3.Visible Then InvMaderasCarpinteria(4).DrawInv (1)
     End If
     
     '//Inventario
-    If frmMain.Visible Then Call Inventario.DrawInv
-
+    If frmMain.Visible Then
+        If frmMain.PicInv.Visible Then
+            Call Inventario.DrawInv
+        End If
+    End If
+    
 End Sub
 
 Private Function GetElapsedTime() As Single

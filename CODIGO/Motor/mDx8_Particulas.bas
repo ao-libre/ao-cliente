@@ -1163,7 +1163,7 @@ Public Sub Load_Map_Particles(ByVal Map As Integer)
     Select Case Map
     
         Case 1
-            Call General_Particle_Create(1, 45, 46)
+            Call General_Particle_Create(1, 45, 45)
             
     End Select
     
