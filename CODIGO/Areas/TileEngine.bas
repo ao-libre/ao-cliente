@@ -1168,101 +1168,87 @@ Sub RenderScreen(ByVal tilex As Integer, _
     ParticleOffsetX = (Engine_PixelPosX(screenminX) - PixelOffsetX)
     ParticleOffsetY = (Engine_PixelPosY(screenminY) - PixelOffsetY)
 
-    '<----- Layer 1, 2 ----->
+'Draw floor layer
     For Y = screenminY To screenmaxY
         For X = screenminX To screenmaxX
-        
-            If Map_InBounds(X, Y) Then
-                'Layer 1
-                Call DDrawGrhtoSurface(MapData(X, Y).Graphic(1), (ScreenX - 1) * TilePixelWidth + PixelOffsetX, (ScreenY - 1) * TilePixelHeight + PixelOffsetY, 0, 1, X, Y)
+            
+            PixelOffsetXTemp = (ScreenX - 1) * TilePixelWidth + PixelOffsetX
+            PixelOffsetYTemp = (ScreenY - 1) * TilePixelHeight + PixelOffsetY
+            'Layer 1 **********************************
+                Call DDrawGrhtoSurface(MapData(X, Y).Graphic(1), PixelOffsetXTemp, PixelOffsetYTemp, 0, 1, X, Y)
+           
+            '******************************************
+
+            'Layer 2 **********************************
+            If MapData(X, Y).Graphic(2).GrhIndex <> 0 Then
+                Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(2), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1, X, Y)
             End If
+            '******************************************
             
             ScreenX = ScreenX + 1
-        Next X
-
+        Next
+    
+        'Reset ScreenX to original value and increment ScreenY
         ScreenX = ScreenX - X + screenminX
         ScreenY = ScreenY + 1
-    Next Y
-    
-    '<----- Layer 2 ----->
-    ScreenY = minYOffset - Engine_Get_TileBuffer
-
-    For Y = minY To maxY
-        ScreenX = minXOffset - Engine_Get_TileBuffer
-
-        For X = minX To maxX
-
-            If Map_InBounds(X, Y) Then
-                PixelOffsetXTemp = ScreenX * TilePixelWidth + PixelOffsetX
-                PixelOffsetYTemp = ScreenY * TilePixelHeight + PixelOffsetY
-
-                'Layer 2
-                If MapData(X, Y).Graphic(2).GrhIndex <> 0 Then
-                    Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(2), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1, X, Y)
-                End If
-            End If
-            ScreenX = ScreenX + 1
-        Next X
-
-        ScreenY = ScreenY + 1
-    Next Y
+    Next
+   
     
     '<----- Layer Obj, Char, 3 ----->
     ScreenY = minYOffset - Engine_Get_TileBuffer
 
     For Y = minY To maxY
+        
         ScreenX = minXOffset - Engine_Get_TileBuffer
 
         For X = minX To maxX
-            PixelOffsetXTemp = ScreenX * TilePixelWidth + PixelOffsetX
-            PixelOffsetYTemp = ScreenY * TilePixelHeight + PixelOffsetY
-            
             If Map_InBounds(X, Y) Then
-
-                'Object Layer
-                If MapData(X, Y).ObjGrh.GrhIndex <> 0 Then
-                    Call DDrawTransGrhtoSurface(MapData(X, Y).ObjGrh, PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1, X, Y)
-                End If
-                    
-                'Char layer
-                If MapData(X, Y).CharIndex <> 0 Then
-                    Call CharRender(MapData(X, Y).CharIndex, PixelOffsetXTemp, PixelOffsetYTemp)
-                End If
-                    
-                'Dibujamos los danos.
-                If MapData(X, Y).Damage.Activated Then
-                    Call mDx8_Dibujado.Damage_Draw(X, Y, PixelOffsetXTemp, PixelOffsetYTemp - 20)
-                End If
-                
-                'Particulas
-                If MapData(X, Y).Particle_Group_Index Then
-                    Call Particle_Group_Render(MapData(X, Y).Particle_Group_Index, PixelOffsetXTemp, PixelOffsetYTemp)
-                End If
-                
-                'Layer 3
-                If MapData(X, Y).Graphic(3).GrhIndex <> 0 Then
-                    
-                    If MapData(X, Y).Graphic(3).GrhIndex = 735 Or MapData(X, Y).Graphic(3).GrhIndex >= 6994 And MapData(X, Y).Graphic(3).GrhIndex <= 7002 Then
-                            If Abs(UserPos.X - X) < 3 And (Abs(UserPos.Y - Y)) < 8 And (Abs(UserPos.Y) < Y) Then
-                                Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, DesvanecerArbol(ColorArbol), 1, X, Y)
-                        Else 'NORMAL
-                            Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1, X, Y)
-    
-                        End If
-                    Else 'NORMAL
-                        Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1, X, Y)
+                PixelOffsetXTemp = ScreenX * TilePixelWidth + PixelOffsetX
+                PixelOffsetYTemp = ScreenY * TilePixelHeight + PixelOffsetY
+                With MapData(X, Y)
+                    'Object Layer **********************************
+                    If .ObjGrh.GrhIndex <> 0 Then
+                        Call DDrawTransGrhtoSurface(.ObjGrh, PixelOffsetXTemp, PixelOffsetYTemp, 1, .Engine_Light(), 1, X, Y)
                     End If
-                End If
+                    '***********************************************
+        
+        
+                    'Char layer********************************
+                    If .CharIndex <> 0 Then
+                        Call CharRender(.CharIndex, PixelOffsetXTemp, PixelOffsetYTemp)
+                    End If
+                    '*************************************************
+        
                     
-                If MapData(X, Y).FxIndex <> 0 Then
-                        
-                    Call DDrawTransGrhtoSurface(MapData(X, Y).fX, PixelOffsetXTemp + FxData(MapData(X, Y).FxIndex).OffsetX, PixelOffsetYTemp + FxData(MapData(X, Y).FxIndex).OffsetY, 1, MapData(X, Y).Engine_Light(), 1, X, Y, True)
-                        
-                    If MapData(X, Y).fX.Started = 0 Then MapData(X, Y).FxIndex = 0
-                    
-                End If
+                    'Layer 3 *****************************************
+                    If .Graphic(3).GrhIndex <> 0 Then
+                        If .Graphic(3).GrhIndex = 735 Or .Graphic(3).GrhIndex >= 6994 And .Graphic(3).GrhIndex <= 7002 Then
+                            If Abs(UserPos.X - X) < 3 And (Abs(UserPos.Y - Y)) < 8 And (Abs(UserPos.Y) < Y) Then
+                                Call DDrawTransGrhtoSurface(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, DesvanecerArbol(ColorArbol), 1, X, Y)
+                            Else 'NORMAL
+                                Call DDrawTransGrhtoSurface(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, .Engine_Light(), 1, X, Y)
+                            End If
+                        Else 'NORMAL
+                            Call DDrawTransGrhtoSurface(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, .Engine_Light(), 1, X, Y)
+                        End If
+                    End If
+                    '************************************************
+                    'Dibujamos los danos.
+                    If .Damage.Activated Then _
+                        Call mDx8_Dibujado.Damage_Draw(X, Y, PixelOffsetXTemp, PixelOffsetYTemp - 20)
+                
+                    'Particulas
+                    If .Particle_Group_Index Then
+                        If Abs(UserPos.X - X) < Engine_Get_TileBuffer + 3 And (Abs(UserPos.Y - Y)) < Engine_Get_TileBuffer + 3 Then _
+                            Call Particle_Group_Render(.Particle_Group_Index, PixelOffsetXTemp, PixelOffsetYTemp)
+                    End If
+
+                    If Not .FxIndex = 0 Then
+                        Call DDrawTransGrhtoSurface(.fX, PixelOffsetXTemp + FxData(MapData(X, Y).FxIndex).OffsetX, PixelOffsetYTemp + FxData(.FxIndex).OffsetY, 1, .Engine_Light(), 1, X, Y, True)
+                        If .fX.Started = 0 Then .FxIndex = 0
+                    End If
+                End With
             End If
-            
             ScreenX = ScreenX + 1
         Next X
 
@@ -1280,20 +1266,15 @@ Sub RenderScreen(ByVal tilex As Integer, _
             'Layer 4
             If MapData(X, Y).Graphic(4).GrhIndex Then
                 If bTecho Then
-                    
                     Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(4), ScreenX * TilePixelWidth + PixelOffsetX, ScreenY * TilePixelHeight + PixelOffsetY, 1, temp_rgb(), 1, X, Y)
-                    
                 Else
-
                     If ColorTecho = 250 Then
                         Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(4), ScreenX * TilePixelWidth + PixelOffsetX, ScreenY * TilePixelHeight + PixelOffsetY, 1, MapData(X, Y).Engine_Light(), 1, X, Y)
                     Else
                         Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(4), ScreenX * TilePixelWidth + PixelOffsetX, ScreenY * TilePixelHeight + PixelOffsetY, 1, temp_rgb(), 1, X, Y)
                     End If
-                    
                 End If
             End If
-            
             ScreenX = ScreenX + 1
         Next X
 
@@ -2296,12 +2277,12 @@ Public Sub DesvanecimientoTechos()
         If Not Val(ColorTecho) = 250 Then ColorTecho = ColorTecho + 1
 
     End If
- 
-    temp_rgb(0) = D3DColorARGB(ColorTecho, ColorTecho, ColorTecho, ColorTecho)
-    temp_rgb(1) = D3DColorARGB(ColorTecho, ColorTecho, ColorTecho, ColorTecho)
-    temp_rgb(2) = D3DColorARGB(ColorTecho, ColorTecho, ColorTecho, ColorTecho)
-    temp_rgb(3) = D3DColorARGB(ColorTecho, ColorTecho, ColorTecho, ColorTecho)
- 
+    If Not Val(ColorTecho) = 250 Then
+        temp_rgb(0) = D3DColorARGB(ColorTecho, ColorTecho, ColorTecho, ColorTecho)
+        temp_rgb(1) = D3DColorARGB(ColorTecho, ColorTecho, ColorTecho, ColorTecho)
+        temp_rgb(2) = D3DColorARGB(ColorTecho, ColorTecho, ColorTecho, ColorTecho)
+        temp_rgb(3) = D3DColorARGB(ColorTecho, ColorTecho, ColorTecho, ColorTecho)
+    End If
 End Sub
 Public Function DesvanecerArbol(ByVal Color As Byte) As Long()
 '*****************************************************************

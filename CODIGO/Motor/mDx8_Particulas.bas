@@ -979,7 +979,7 @@ Public Sub Particle_Render(ByRef temp_particle As Particle, _
         If no_move = False Then
             If .alive_counter = 0 Then
                 'Start new particle
-                InitGrh .Grh, grh_index, alpha_blend
+                InitGrh .Grh, grh_index
 
                 If Radio = 0 Then
                     .X = RandomNumber(X1, X2)
