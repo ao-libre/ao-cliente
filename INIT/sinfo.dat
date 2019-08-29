@@ -20,18 +20,24 @@ PJ=7667
 Mundo=Deathmatch
 
 [S4]
+Desc=ReyarB Server -est:Alkon
+IP=18.231.37.189
+PJ=7666
+Mundo=Alkon
+
+[S5]
 Desc=Servidor Local | Modo:Alkon 0.13.X
 IP=localhost
 PJ=7666
 Mundo=Alkon
 
-[S5]
+[S6]
 Desc=Servidor Local | Modo:BattleServer
 IP=localhost
 PJ=7666
 Mundo=BattleServer
 
-[S6]
+[S7]
 Desc=Servidor Local | Modo:Deathmatch
 IP=localhost
 PJ=7666
