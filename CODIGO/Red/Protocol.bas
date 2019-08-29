@@ -1604,7 +1604,7 @@ Private Sub HandleBankInit()
     
     BankGold = incomingData.ReadLong
     Call InvBanco(0).Initialize(DirectD3D8, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
-    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.picInv, Inventario.MaxObjs)
+    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.PicInv, Inventario.MaxObjs)
     
     For i = 1 To Inventario.MaxObjs
         With Inventario
@@ -3231,7 +3231,7 @@ Private Sub HandleAddSlots()
     Call incomingData.ReadByte
     
     MaxInventorySlots = incomingData.ReadByte
-    Call DrawInventory
+    Call Inventario.DrawInventory
 End Sub
 
 ' Handles the StopWorking message.
