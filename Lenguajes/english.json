@@ -437,7 +437,7 @@
 		]
 	},
 	"MENSAJE_DAMAGE_NPC":{
-		"TEXTO":"You've taken VAR_DA�O health points of the creature!!",
+		"TEXTO":"You've taken VAR_DAÑO health points of the creature!!",
 		"COLOR":[
 			255,
 			0,
