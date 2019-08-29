@@ -1604,7 +1604,7 @@ Private Sub HandleBankInit()
     
     BankGold = incomingData.ReadLong
     Call InvBanco(0).Initialize(DirectD3D8, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
-    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.PicInv, Inventario.MaxObjs)
+    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.picInv, Inventario.MaxObjs)
     
     For i = 1 To Inventario.MaxObjs
         With Inventario
@@ -3377,12 +3377,18 @@ On Error GoTo ErrHandler
  
     If slot <= frmMain.hlst.ListCount Then
          str = DevolverNombreHechizo(UserHechizos(slot))
-        If str <> vbNullString Then _
+        If str <> vbNullString Then
             frmMain.hlst.List(slot - 1) = str
+        Else
+            Call frmMain.hlst.AddItem(JsonLanguage.Item("NADA").Item("TEXTO"))
+        End If
     Else
         str = DevolverNombreHechizo(UserHechizos(slot))
-        If str <> vbNullString Then Call frmMain.hlst.AddItem(str)
-     
+        If str <> vbNullString Then
+            Call frmMain.hlst.AddItem(str)
+        Else
+            Call frmMain.hlst.AddItem(JsonLanguage.Item("NADA").Item("TEXTO"))
+        End If
     End If
  
     'If we got here then packet is complete, copy data back to original queue
