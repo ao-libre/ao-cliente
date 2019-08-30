@@ -437,7 +437,7 @@
 		]
 	},
 	"MENSAJE_DAMAGE_NPC":{
-		"TEXTO":"You've taken VAR_DAÑO health points of the creature!!",
+		"TEXTO":"You've taken VAR_DAÃ‘O health points of the creature!!",
 		"COLOR":[
 			255,
 			0,
@@ -730,7 +730,12 @@
 		"TEXTO":"Defense"
 	},
 	"HECHO":{
-		"TEXTO":"Done"
+		"TEXTO":"Done",
+		"COLOR":[
+			255,
+			0,
+			0
+		]
 	},
 	"NADA":{
 		"TEXTO":"Nothing"
@@ -1031,7 +1036,7 @@
 		"TEXTO":"It is extremely important that you enter a valid e-mail address, as in the case of losing the password of your character, will be sent to you when you need it, to that address."
 	},
 	"AYUDA_CREARPJ_NOMBREPJ":{
-		"TEXTO":"Be careful when you select the name of your character. Argentum is a role-playing game, a world that is magical and fantastic, and if seleccionás a name that is obscene or with political connotation, the administrators deleted your character and there will be no possibility to recover it."
+		"TEXTO":"Be careful when you select the name of your character. Argentum is a role-playing game, a world that is magical and fantastic, and if you select a name that is obscene or with political connotation, the administrators deleted your character and there will be no possibility to recover it."
 	},
 	"AYUDA_CREARPJ_ATRIBUTOS":{
 		"TEXTO":"Are the qualities that define your character. Usually called the [DICE]. (See Roll)"

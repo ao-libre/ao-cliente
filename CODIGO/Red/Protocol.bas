@@ -1604,7 +1604,7 @@ Private Sub HandleBankInit()
     
     BankGold = incomingData.ReadLong
     Call InvBanco(0).Initialize(DirectD3D8, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
-    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.picInv, Inventario.MaxObjs)
+    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.PicInv, Inventario.MaxObjs)
     
     For i = 1 To Inventario.MaxObjs
         With Inventario
@@ -3204,7 +3204,7 @@ On Error GoTo ErrHandler
     End If
     
     Call Inventario.SetItem(slot, ObjIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, Name)
-
+    Call Inventario.DrawInventory
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
@@ -3231,6 +3231,7 @@ Private Sub HandleAddSlots()
     Call incomingData.ReadByte
     
     MaxInventorySlots = incomingData.ReadByte
+    Call Inventario.DrawInventory
 End Sub
 
 ' Handles the StopWorking message.
@@ -3376,12 +3377,18 @@ On Error GoTo ErrHandler
  
     If slot <= frmMain.hlst.ListCount Then
          str = DevolverNombreHechizo(UserHechizos(slot))
-        If str <> vbNullString Then _
+        If str <> vbNullString Then
             frmMain.hlst.List(slot - 1) = str
+        Else
+            Call frmMain.hlst.AddItem(JsonLanguage.Item("NADA").Item("TEXTO"))
+        End If
     Else
         str = DevolverNombreHechizo(UserHechizos(slot))
-        If str <> vbNullString Then Call frmMain.hlst.AddItem(str)
-     
+        If str <> vbNullString Then
+            Call frmMain.hlst.AddItem(str)
+        Else
+            Call frmMain.hlst.AddItem(JsonLanguage.Item("NADA").Item("TEXTO"))
+        End If
     End If
  
     'If we got here then packet is complete, copy data back to original queue
@@ -4572,11 +4579,11 @@ On Error GoTo ErrHandler
         .criminales.Caption = CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .Status.Caption = " " & JsonLanguage.Item("CIUDADANO").Item("TEXTO")
-            .Status.ForeColor = vbBlue
+            .status.Caption = " " & JsonLanguage.Item("CIUDADANO").Item("TEXTO")
+            .status.ForeColor = vbBlue
         Else
-            .Status.Caption = " " & JsonLanguage.Item("CRIMINAL").Item("TEXTO")
-            .Status.ForeColor = vbRed
+            .status.Caption = " " & JsonLanguage.Item("CRIMINAL").Item("TEXTO")
+            .status.ForeColor = vbRed
         End If
         
         Call .Show(vbModeless, frmMain)
