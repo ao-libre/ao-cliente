@@ -479,3 +479,5 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 20/08/2019: Fix - Error al apretar muchas veces el boton "Conectar" o "Crear Personaje", te cerraba la conexion.
 * 27/08/2019: Sistema de Partículas ORE configurable desde Particles.ini, extraido de Winter AO. (jopiortiz-FrancoH)
 * 27/08/2019: Drag & Drop de items. (FrancoH)
+* 30/08/2019: Deleted cucsifae loading image, added better season 1 image (Recox)
+
