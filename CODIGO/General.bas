@@ -68,79 +68,6 @@ Public Function GetRawName(ByRef sName As String) As String
 
 End Function
 
-Sub CargarAnimArmas()
-On Error Resume Next
-
-    Dim LoopC As Long
-    Dim arch As String
-    
-    arch = Game.path(INIT) & "armas.dat"
-    
-    NumWeaponAnims = Val(GetVar(arch, "INIT", "NumArmas"))
-    
-    ReDim WeaponAnimData(1 To NumWeaponAnims) As WeaponAnimData
-    
-    For LoopC = 1 To NumWeaponAnims
-        InitGrh WeaponAnimData(LoopC).WeaponWalk(1), Val(GetVar(arch, "ARMA" & LoopC, "Dir1")), 0
-        InitGrh WeaponAnimData(LoopC).WeaponWalk(2), Val(GetVar(arch, "ARMA" & LoopC, "Dir2")), 0
-        InitGrh WeaponAnimData(LoopC).WeaponWalk(3), Val(GetVar(arch, "ARMA" & LoopC, "Dir3")), 0
-        InitGrh WeaponAnimData(LoopC).WeaponWalk(4), Val(GetVar(arch, "ARMA" & LoopC, "Dir4")), 0
-    Next LoopC
-End Sub
-
-
-Public Sub CargarColores()
-
-On Error Resume Next
-    
-    Dim archivoC As String: archivoC = Game.path(INIT) & "colores.dat"
-    
-    If Not FileExist(archivoC, vbArchive) Then
-        Call MsgBox("ERROR: no se ha podido cargar los colores. Falta el archivo colores.dat, reinstale el juego", vbCritical + vbOKOnly)
-        Exit Sub
-    End If
-    
-    Dim i As Long
-    
-    For i = 0 To 47 '48, 49 y 50 reservados para atacables, ciudadano y criminal
-        ColoresPJ(i) = D3DColorXRGB(GetVar(archivoC, CStr(i), "R"), GetVar(archivoC, CStr(i), "G"), GetVar(archivoC, CStr(i), "B"))
-    Next i
-    
-    '   Crimi
-    ColoresPJ(50) = D3DColorXRGB(GetVar(archivoC, "CR", "R"), GetVar(archivoC, "CR", "G"), GetVar(archivoC, "CR", "B"))
-
-    '   Ciuda
-    ColoresPJ(49) = D3DColorXRGB(GetVar(archivoC, "CI", "R"), GetVar(archivoC, "CI", "G"), GetVar(archivoC, "CI", "B"))
-    
-    '   Atacable TODO: hay que implementar un color para los atacables y hacer que funcione.
-    'ColoresPJ(48) = D3DColorXRGB(GetVar(archivoC, "AT", "R"), GetVar(archivoC, "AT", "G"), GetVar(archivoC, "AT", "B"))
-    
-    For i = 51 To 56 'Colores reservados para la renderizacion de dano
-        ColoresDano(i) = D3DColorXRGB(GetVar(archivoC, CStr(i), "R"), GetVar(archivoC, CStr(i), "G"), GetVar(archivoC, CStr(i), "B"))
-    Next i
-    
-End Sub
-
-Sub CargarAnimEscudos()
-On Error Resume Next
-
-    Dim LoopC As Long
-    Dim arch As String
-    
-    arch = Game.path(INIT) & "escudos.dat"
-    
-    NumEscudosAnims = Val(GetVar(arch, "INIT", "NumEscudos"))
-    
-    ReDim ShieldAnimData(1 To NumEscudosAnims) As ShieldAnimData
-    
-    For LoopC = 1 To NumEscudosAnims
-        InitGrh ShieldAnimData(LoopC).ShieldWalk(1), Val(GetVar(arch, "ESC" & LoopC, "Dir1")), 0
-        InitGrh ShieldAnimData(LoopC).ShieldWalk(2), Val(GetVar(arch, "ESC" & LoopC, "Dir2")), 0
-        InitGrh ShieldAnimData(LoopC).ShieldWalk(3), Val(GetVar(arch, "ESC" & LoopC, "Dir3")), 0
-        InitGrh ShieldAnimData(LoopC).ShieldWalk(4), Val(GetVar(arch, "ESC" & LoopC, "Dir4")), 0
-    Next LoopC
-End Sub
-
 Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, _
                     ByVal Text As String, _
                     Optional ByVal Red As Integer = -1, _
@@ -1594,46 +1521,6 @@ Dim i As Long
         End If
     Next i
 End Function
-Public Sub CargarHechizos()
-'********************************
-'Author: Shak
-'Last Modification:
-'Cargamos los hechizos del juego. [Solo datos necesarios]
-'********************************
-On Error GoTo errorH
-    Dim PathName As String
-    Dim j As Long
- 
-    PathName = Game.path(INIT) & "Hechizos.dat"
-    NumHechizos = Val(GetVar(PathName, "INIT", "NumHechizos"))
- 
-    ReDim Hechizos(1 To NumHechizos) As tHechizos
-    For j = 1 To NumHechizos
-        With Hechizos(j)
-            .Desc = GetVar(PathName, "HECHIZO" & j, "Desc")
-            .PalabrasMagicas = GetVar(PathName, "HECHIZO" & j, "PalabrasMagicas")
-            .Nombre = GetVar(PathName, "HECHIZO" & j, "Nombre")
-            .SkillRequerido = GetVar(PathName, "HECHIZO" & j, "MinSkill")
-         
-            If j <> 38 And j <> 39 Then
-                .EnergiaRequerida = GetVar(PathName, "HECHIZO" & j, "StaRequerido")
-                 
-                .HechiceroMsg = GetVar(PathName, "HECHIZO" & j, "HechizeroMsg")
-                .ManaRequerida = GetVar(PathName, "HECHIZO" & j, "ManaRequerido")
-             
-             
-                .PropioMsg = GetVar(PathName, "HECHIZO" & j, "PropioMsg")
-             
-                .TargetMsg = GetVar(PathName, "HECHIZO" & j, "TargetMsg")
-            End If
-        End With
-    Next j
- 
-Exit Sub
- 
-errorH:
-    Call MsgBox("Error critico", vbCritical + vbOKOnly, "Argentum Online")
-End Sub
 
 Sub DownloadServersFile(myURL As String)
 '**********************************************************
