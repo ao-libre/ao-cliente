@@ -30,14 +30,6 @@ Begin VB.Form frmConnect
    ScaleWidth      =   800
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
-   Begin VB.CommandButton cmdcolor 
-      Caption         =   "Command1"
-      Height          =   540
-      Left            =   4680
-      TabIndex        =   20
-      Top             =   5640
-      Width           =   2340
-   End
    Begin AOLibre.uAOCheckbox chkRecordar 
       Height          =   345
       Left            =   5280

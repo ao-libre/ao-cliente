@@ -1057,7 +1057,6 @@ Sub RenderScreen(ByVal tilex As Integer, _
                     'Object Layer **********************************
                     If .ObjGrh.GrhIndex <> 0 Then
                         Call DDrawTransGrhtoSurface(.ObjGrh, PixelOffsetXTemp, PixelOffsetYTemp, 1, .Engine_Light(), 1, X, Y)
-
                     End If
 
                     '***********************************************
@@ -1065,7 +1064,6 @@ Sub RenderScreen(ByVal tilex As Integer, _
                     'Char layer********************************
                     If .CharIndex <> 0 Then
                         Call CharRender(.CharIndex, PixelOffsetXTemp, PixelOffsetYTemp)
-
                     End If
 
                     '*************************************************
@@ -1073,6 +1071,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
                     'Layer 3 *****************************************
                     If .Graphic(3).GrhIndex <> 0 Then
                         If .Graphic(3).GrhIndex = 735 Or .Graphic(3).GrhIndex >= 6994 And .Graphic(3).GrhIndex <= 7002 Then
+                            
                             If Abs(UserPos.X - X) < 3 And (Abs(UserPos.Y - Y)) < 8 And (Abs(UserPos.Y) < Y) Then
                                 Call DDrawTransGrhtoSurface(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, Color_Arbol(), 1, X, Y)
                             Else 'NORMAL
@@ -1093,15 +1092,14 @@ Sub RenderScreen(ByVal tilex As Integer, _
                 
                     'Particulas
                     If .Particle_Group_Index Then
-                        If Abs(UserPos.X - X) < Engine_Get_TileBuffer + 3 And (Abs(UserPos.Y - Y)) < Engine_Get_TileBuffer + 3 Then Call Particle_Group_Render(.Particle_Group_Index, PixelOffsetXTemp, PixelOffsetYTemp)
-
+                        If Abs(UserPos.X - X) < Engine_Get_TileBuffer + 3 And (Abs(UserPos.Y - Y)) < Engine_Get_TileBuffer + 3 Then
+                            Call Particle_Group_Render(.Particle_Group_Index, PixelOffsetXTemp, PixelOffsetYTemp)
+                        End If
                     End If
 
                     If Not .FxIndex = 0 Then
                         Call DDrawTransGrhtoSurface(.fX, PixelOffsetXTemp + FxData(MapData(X, Y).FxIndex).OffsetX, PixelOffsetYTemp + FxData(.FxIndex).OffsetY, 1, .Engine_Light(), 1, X, Y, True)
-
                         If .fX.Started = 0 Then .FxIndex = 0
-
                     End If
 
                 End With
@@ -1125,11 +1123,10 @@ Sub RenderScreen(ByVal tilex As Integer, _
             'Layer 4
             If MapData(X, Y).Graphic(4).GrhIndex Then
 
-                If bTecho Then
+                If Not bTecho Then
                     Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(4), ScreenX * TilePixelWidth + PixelOffsetX, ScreenY * TilePixelHeight + PixelOffsetY, 1, MapData(X, Y).Engine_Light(), 1, X, Y)
                 Else
                     Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(4), ScreenX * TilePixelWidth + PixelOffsetX, ScreenY * TilePixelHeight + PixelOffsetY, 1, Color_TechoTransarente(), 1, X, Y)
-
                 End If
 
             End If
