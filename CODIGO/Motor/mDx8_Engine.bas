@@ -161,6 +161,12 @@ Public Sub Engine_DirectX8_Aditional_Init()
 End Sub
 
 Private Sub Engine_InitColours()
+'**************************************************************
+'Author: Jopi
+'Last Modify Date: 31/08/2019
+'Evitemos usar la funcion D3DColorARGB que es BASTANTE lenta y hardcodiemos los colores.
+'Para convertirlos manualmente a Long, les dejo el frmColors.
+'**************************************************************
 
     Call Engine_Long_To_RGB_List(Normal_RGBList(), -1)
     Call Engine_Long_To_RGB_List(Color_Shadow(), 838860800)
