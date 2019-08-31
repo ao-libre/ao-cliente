@@ -30,6 +30,14 @@ Begin VB.Form frmConnect
    ScaleWidth      =   800
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
+   Begin VB.CommandButton cmdcolor 
+      Caption         =   "Command1"
+      Height          =   540
+      Left            =   4680
+      TabIndex        =   20
+      Top             =   5640
+      Width           =   2340
+   End
    Begin AOLibre.uAOCheckbox chkRecordar 
       Height          =   345
       Left            =   5280
@@ -663,6 +671,10 @@ Private Sub chkRecordar_Click()
         Call WriteVar(Game.path(INIT) & "Config.ini", "Login", "Password", Cripto.AesEncryptString(Me.txtPasswd, AES_PASSWD))
         Call WriteVar(Game.path(INIT) & "Config.ini", "Login", "Remember", 1)
     End If
+End Sub
+
+Private Sub cmdcolor_Click()
+frmColor.Show
 End Sub
 
 Private Sub Form_Activate()

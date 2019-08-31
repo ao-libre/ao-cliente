@@ -416,8 +416,7 @@ Public Sub DrawInventory()
             
             
             Call Engine_Long_To_RGB_List(Inv_Color(), -1)
-            
-            Call Engine_Long_To_RGB_List(Sel_Color(), D3DColorARGB(100, 255, 128, 0))
+            Call Engine_Long_To_RGB_List(Sel_Color(), 1694466048)
             
             'Call DDrawTransGrhIndextoSurface(23651, startdX, startdY, 0, Inv_Color(), 0, False) 'Dibuja el fondo
             

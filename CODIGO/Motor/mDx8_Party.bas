@@ -41,11 +41,11 @@ Public Sub Draw_Party_Members()
             For i = 1 To 5
                 If PartyMembers(i).Name <> "" Then
                     Count = Count + 1
-                    Engine_Draw_Box 410, 20 + (Count - 1) * 50 + 5, 120, 40, D3DColorARGB(100, 0, 0, 0)
-                    DDrawTransGrhIndextoSurface HeadData(PartyMembers(i).Head).Head(3).GrhIndex, 410, 20 + (Count - 1) * 50 + 35, 1, Normal_RGBList(), 0, True
-                    'Fonts_Render_String PartyMembers(i).Name, 440, 20 + (Count - 1) * 50 + 10, D3DColorARGB(150, 255, 255, 255), 2
-                    'Fonts_Render_String "Nivel: " & PartyMembers(i).Lvl, 440, 20 + (Count - 1) * 50 + 20, D3DColorARGB(150, 255, 255, 255), 2
-                    'Fonts_Render_String "Exp: " & PartyMembers(i).ExpParty, 440, 20 + (Count - 1) * 50 + 30, D3DColorARGB(150, 255, 255, 255), 2
+                    Call Engine_Draw_Box(410, 20 + (Count - 1) * 50 + 5, 120, 40, 1677721600)
+                    Call DDrawTransGrhIndextoSurface(HeadData(PartyMembers(i).Head).Head(3).GrhIndex, 410, 20 + (Count - 1) * 50 + 35, 1, Normal_RGBList(), 0, True)
+                    'Call Fonts_Render_String(PartyMembers(i).Name, 440, 20 + (Count - 1) * 50 + 10, -1761607681, 2)
+                    'Fonts_Render_String "Nivel: " & PartyMembers(i).Lvl, 440, 20 + (Count - 1) * 50 + 20, -1761607681), 2
+                    'Fonts_Render_String "Exp: " & PartyMembers(i).ExpParty, 440, 20 + (Count - 1) * 50 + 30, -1761607681, 2
                 End If
             Next i
             

@@ -307,7 +307,12 @@ Public MapData() As MapBlock ' Mapa
 Public mapInfo As mapInfo ' Info acerca del mapa en uso
 '?????????????????????????
 
+' Colores Hardcodeados......
 Public Normal_RGBList(0 To 3) As Long
+Public Color_Shadow(3) As Long
+Public Color_Arbol(0 To 3) As Long
+Public Color_TechoTransarente(0 To 3) As Long
+Public temp_rgb(3) As Long
 
 '   Control de Lluvia
 Public bRain As Boolean
@@ -912,6 +917,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
                  ByVal tiley As Integer, _
                  ByVal PixelOffsetX As Integer, _
                  ByVal PixelOffsetY As Integer)
+
     '**************************************************************
     'Author: Aaron Perkins
     'Last Modify Date: 8/14/2007
@@ -919,25 +925,35 @@ Sub RenderScreen(ByVal tilex As Integer, _
     'Renders everything to the viewport
     '**************************************************************
     Dim Y                As Long     'Keeps track of where on map we are
+
     Dim X                As Long     'Keeps track of where on map we are
     
     Dim screenminY       As Integer  'Start Y pos on current screen
+
     Dim screenmaxY       As Integer  'End Y pos on current screen
+
     Dim screenminX       As Integer  'Start X pos on current screen
+
     Dim screenmaxX       As Integer  'End X pos on current screen
     
     Dim minY             As Integer  'Start Y pos on current map
+
     Dim maxY             As Integer  'End Y pos on current map
+
     Dim minX             As Integer  'Start X pos on current map
+
     Dim maxX             As Integer  'End X pos on current map
     
     Dim ScreenX          As Integer  'Keeps track of where to place tile on screen
+
     Dim ScreenY          As Integer  'Keeps track of where to place tile on screen
     
     Dim minXOffset       As Integer
+
     Dim minYOffset       As Integer
     
     Dim PixelOffsetXTemp As Integer 'For centering grhs
+
     Dim PixelOffsetYTemp As Integer 'For centering grhs
     
     Dim ElapsedTime      As Single
@@ -959,6 +975,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
     If minY < XMinMapSize Then
         minYOffset = YMinMapSize - minY
         minY = YMinMapSize
+
     End If
     
     If maxY > YMaxMapSize Then maxY = YMaxMapSize
@@ -966,6 +983,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
     If minX < XMinMapSize Then
         minXOffset = XMinMapSize - minX
         minX = XMinMapSize
+
     End If
     
     If maxX > XMaxMapSize Then maxX = XMaxMapSize
@@ -976,6 +994,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
     Else
         screenminY = 1
         ScreenY = 1
+
     End If
     
     If screenmaxY < YMaxMapSize Then screenmaxY = screenmaxY + 1
@@ -985,6 +1004,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
     Else
         screenminX = 1
         ScreenX = 1
+
     End If
     
     If screenmaxX < XMaxMapSize Then screenmaxX = screenmaxX + 1
@@ -992,21 +1012,23 @@ Sub RenderScreen(ByVal tilex As Integer, _
     ParticleOffsetX = (Engine_PixelPosX(screenminX) - PixelOffsetX)
     ParticleOffsetY = (Engine_PixelPosY(screenminY) - PixelOffsetY)
 
-'Draw floor layer
+    'Draw floor layer
     For Y = screenminY To screenmaxY
         For X = screenminX To screenmaxX
             
             PixelOffsetXTemp = (ScreenX - 1) * TilePixelWidth + PixelOffsetX
             PixelOffsetYTemp = (ScreenY - 1) * TilePixelHeight + PixelOffsetY
             'Layer 1 **********************************
-                Call DDrawGrhtoSurface(MapData(X, Y).Graphic(1), PixelOffsetXTemp, PixelOffsetYTemp, 0, 1, X, Y)
+            Call DDrawGrhtoSurface(MapData(X, Y).Graphic(1), PixelOffsetXTemp, PixelOffsetYTemp, 0, 1, X, Y)
            
             '******************************************
 
             'Layer 2 **********************************
             If MapData(X, Y).Graphic(2).GrhIndex <> 0 Then
                 Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(2), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1, X, Y)
+
             End If
+
             '******************************************
             
             ScreenX = ScreenX + 1
@@ -1016,7 +1038,6 @@ Sub RenderScreen(ByVal tilex As Integer, _
         ScreenX = ScreenX - X + screenminX
         ScreenY = ScreenY + 1
     Next
-   
     
     '<----- Layer Obj, Char, 3 ----->
     ScreenY = minYOffset - Engine_Get_TileBuffer
@@ -1026,53 +1047,67 @@ Sub RenderScreen(ByVal tilex As Integer, _
         ScreenX = minXOffset - Engine_Get_TileBuffer
 
         For X = minX To maxX
+
             If Map_InBounds(X, Y) Then
                 PixelOffsetXTemp = ScreenX * TilePixelWidth + PixelOffsetX
                 PixelOffsetYTemp = ScreenY * TilePixelHeight + PixelOffsetY
+
                 With MapData(X, Y)
+
                     'Object Layer **********************************
                     If .ObjGrh.GrhIndex <> 0 Then
                         Call DDrawTransGrhtoSurface(.ObjGrh, PixelOffsetXTemp, PixelOffsetYTemp, 1, .Engine_Light(), 1, X, Y)
+
                     End If
+
                     '***********************************************
-        
         
                     'Char layer********************************
                     If .CharIndex <> 0 Then
                         Call CharRender(.CharIndex, PixelOffsetXTemp, PixelOffsetYTemp)
+
                     End If
+
                     '*************************************************
-        
                     
                     'Layer 3 *****************************************
                     If .Graphic(3).GrhIndex <> 0 Then
                         If .Graphic(3).GrhIndex = 735 Or .Graphic(3).GrhIndex >= 6994 And .Graphic(3).GrhIndex <= 7002 Then
                             If Abs(UserPos.X - X) < 3 And (Abs(UserPos.Y - Y)) < 8 And (Abs(UserPos.Y) < Y) Then
-                                Call DDrawTransGrhtoSurface(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, DesvanecerArbol(ColorArbol), 1, X, Y)
+                                Call DDrawTransGrhtoSurface(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, Color_Arbol(), 1, X, Y)
                             Else 'NORMAL
                                 Call DDrawTransGrhtoSurface(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, .Engine_Light(), 1, X, Y)
+
                             End If
+
                         Else 'NORMAL
                             Call DDrawTransGrhtoSurface(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, .Engine_Light(), 1, X, Y)
+
                         End If
+
                     End If
+
                     '************************************************
                     'Dibujamos los danos.
-                    If .Damage.Activated Then _
-                        Call mDx8_Dibujado.Damage_Draw(X, Y, PixelOffsetXTemp, PixelOffsetYTemp - 20)
+                    If .Damage.Activated Then Call mDx8_Dibujado.Damage_Draw(X, Y, PixelOffsetXTemp, PixelOffsetYTemp - 20)
                 
                     'Particulas
                     If .Particle_Group_Index Then
-                        If Abs(UserPos.X - X) < Engine_Get_TileBuffer + 3 And (Abs(UserPos.Y - Y)) < Engine_Get_TileBuffer + 3 Then _
-                            Call Particle_Group_Render(.Particle_Group_Index, PixelOffsetXTemp, PixelOffsetYTemp)
+                        If Abs(UserPos.X - X) < Engine_Get_TileBuffer + 3 And (Abs(UserPos.Y - Y)) < Engine_Get_TileBuffer + 3 Then Call Particle_Group_Render(.Particle_Group_Index, PixelOffsetXTemp, PixelOffsetYTemp)
+
                     End If
 
                     If Not .FxIndex = 0 Then
                         Call DDrawTransGrhtoSurface(.fX, PixelOffsetXTemp + FxData(MapData(X, Y).FxIndex).OffsetX, PixelOffsetYTemp + FxData(.FxIndex).OffsetY, 1, .Engine_Light(), 1, X, Y, True)
+
                         If .fX.Started = 0 Then .FxIndex = 0
+
                     End If
+
                 End With
+
             End If
+
             ScreenX = ScreenX + 1
         Next X
 
@@ -1089,16 +1124,16 @@ Sub RenderScreen(ByVal tilex As Integer, _
    
             'Layer 4
             If MapData(X, Y).Graphic(4).GrhIndex Then
+
                 If bTecho Then
-                    Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(4), ScreenX * TilePixelWidth + PixelOffsetX, ScreenY * TilePixelHeight + PixelOffsetY, 1, temp_rgb(), 1, X, Y)
+                    Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(4), ScreenX * TilePixelWidth + PixelOffsetX, ScreenY * TilePixelHeight + PixelOffsetY, 1, MapData(X, Y).Engine_Light(), 1, X, Y)
                 Else
-                    If ColorTecho = 250 Then
-                        Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(4), ScreenX * TilePixelWidth + PixelOffsetX, ScreenY * TilePixelHeight + PixelOffsetY, 1, MapData(X, Y).Engine_Light(), 1, X, Y)
-                    Else
-                        Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(4), ScreenX * TilePixelWidth + PixelOffsetX, ScreenY * TilePixelHeight + PixelOffsetY, 1, temp_rgb(), 1, X, Y)
-                    End If
+                    Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(4), ScreenX * TilePixelWidth + PixelOffsetX, ScreenY * TilePixelHeight + PixelOffsetY, 1, Color_TechoTransarente(), 1, X, Y)
+
                 End If
+
             End If
+
             ScreenX = ScreenX + 1
         Next X
 
@@ -1108,11 +1143,13 @@ Sub RenderScreen(ByVal tilex As Integer, _
     If ClientSetup.ProyectileEngine Then
                             
         If LastProjectile > 0 Then
+
             Dim j As Long ' Long siempre en los bucles es mucho mas rapido
                                 
             For j = 1 To LastProjectile
 
                 If ProjectileList(j).Grh.GrhIndex Then
+
                     Dim Angle As Single
                     
                     'Update the position
@@ -1127,6 +1164,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
                         Do While ProjectileList(j).Rotate > 360
                             ProjectileList(j).Rotate = ProjectileList(j).Rotate - 360
                         Loop
+
                     End If
     
                     'Draw if within range
@@ -1141,13 +1179,19 @@ Sub RenderScreen(ByVal tilex As Integer, _
                                         Call DDrawTransGrhtoSurface(ProjectileList(j).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, 50, 50, True, 0)
                                     Else
                                         Call DDrawTransGrhtoSurface(ProjectileList(j).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, 50, 50, True, ProjectileList(j).Rotate)
+
                                     End If
+
                                 End If
+
                             End If
+
                         End If
+
                     End If
                     
                 End If
+
             Next j
             
             'Check if it is close enough to the target to remove
@@ -1157,12 +1201,17 @@ Sub RenderScreen(ByVal tilex As Integer, _
                     If Abs(ProjectileList(j).X - ProjectileList(j).tX) < 20 Then
                         If Abs(ProjectileList(j).Y - ProjectileList(j).tY) < 20 Then
                             Call Engine_Projectile_Erase(j)
+
                         End If
+
                     End If
+
                 End If
+
             Next j
             
         End If
+
     End If
     
     '   Set Offsets
@@ -1172,6 +1221,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
     If ClientSetup.PartyMembers Then Call Draw_Party_Members
 
     Call RenderCount
+
 End Sub
 
 Public Function RenderSounds()
@@ -1515,11 +1565,11 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
         
         If Not .muerto Then
             If Abs(MouseTileX - .Pos.X) < 1 And (Abs(MouseTileY - .Pos.Y)) < 1 And CharIndex <> UserCharIndex And ClientSetup.TonalidadPJ Then
-                If .Nombre <> "" Then
+                If LenB(.Nombre) <> 0 Then
                     If .Criminal Then
-                        Call Engine_Long_To_RGB_List(ColorFinal(), D3DColorXRGB(204, 100, 100))
+                        Call Engine_Long_To_RGB_List(ColorFinal(), -3382172)
                     Else
-                        Call Engine_Long_To_RGB_List(ColorFinal(), D3DColorXRGB(100, 100, 255))
+                        Call Engine_Long_To_RGB_List(ColorFinal(), -10197761)
                     End If
                     
                 Else
@@ -1537,12 +1587,12 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
             End If
         Else
             If esGM(Val(CharIndex)) Then
-                Call Engine_Long_To_RGB_List(ColorFinal(), D3DColorARGB(150, 200, 200, 0))
+                Call Engine_Long_To_RGB_List(ColorFinal(), -1765226496)
             Else
                 If .Criminal Then
-                    Call Engine_Long_To_RGB_List(ColorFinal(), D3DColorARGB(100, 255, 100, 100))
+                    Call Engine_Long_To_RGB_List(ColorFinal(), -1765226496)
                 Else
-                    Call Engine_Long_To_RGB_List(ColorFinal(), D3DColorARGB(100, 128, 255, 255))
+                    Call Engine_Long_To_RGB_List(ColorFinal(), 1686175743)
                 End If
             End If
         End If
@@ -1656,6 +1706,7 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
         
     End With
 End Sub
+
 Private Sub RenderName(ByVal CharIndex As Long, ByVal X As Integer, ByVal Y As Integer, Optional ByVal Invi As Boolean = False)
     Dim Pos As Integer
     Dim line As String
@@ -1666,7 +1717,7 @@ Private Sub RenderName(ByVal CharIndex As Long, ByVal X As Integer, ByVal Y As I
     
             If .priv = 0 Then
                     If .muerto Then
-                        Color = D3DColorARGB(255, 220, 220, 255)
+                        Color = -2302721
                     Else
                         If .Criminal Then
                             Color = ColoresPJ(50)
@@ -1679,7 +1730,7 @@ Private Sub RenderName(ByVal CharIndex As Long, ByVal X As Integer, ByVal Y As I
             End If
     
             If Invi Then
-                Color = D3DColorARGB(180, 150, 180, 220)
+                Color = -1265191716
             End If
 
             'Nick
@@ -1732,11 +1783,9 @@ Public Sub Device_Textured_Render(ByVal X As Integer, ByVal Y As Integer, ByVal 
     texheight = SRDesc.Height
     
     If Shadow Then
-        Dim Color_Shadow(3) As Long
-        Engine_Long_To_RGB_List Color_Shadow(), D3DColorARGB(50, 0, 0, 0)
-        Geometry_Create_Box temp_verts(), dest_rect, src_rect, Color_Shadow(), texwidth, texheight, Angle
+        Call Geometry_Create_Box(temp_verts(), dest_rect, src_rect, Color_Shadow(), texwidth, texheight, Angle)
     Else
-        Geometry_Create_Box temp_verts(), dest_rect, src_rect, Color_List(), texwidth, texheight, Angle
+        Call Geometry_Create_Box(temp_verts(), dest_rect, src_rect, Color_List(), texwidth, texheight, Angle)
     End If
     
     DirectDevice.SetTexture 0, Texture
@@ -2095,31 +2144,15 @@ End Sub
 Public Sub DesvanecimientoTechos()
  
     If bTecho Then
-        If Not Val(ColorTecho) = 150 Then ColorTecho = ColorTecho - 1
+        temp_rgb(0) = -1768515946
+        temp_rgb(1) = -1768515946
+        temp_rgb(2) = -1768515946
+        temp_rgb(3) = -1768515946
     Else
-
-        If Not Val(ColorTecho) = 250 Then ColorTecho = ColorTecho + 1
-
+        temp_rgb(0) = -84215046
+        temp_rgb(1) = -84215046
+        temp_rgb(2) = -84215046
+        temp_rgb(3) = -84215046
     End If
-    If Not Val(ColorTecho) = 250 Then
-        temp_rgb(0) = D3DColorARGB(ColorTecho, ColorTecho, ColorTecho, ColorTecho)
-        temp_rgb(1) = D3DColorARGB(ColorTecho, ColorTecho, ColorTecho, ColorTecho)
-        temp_rgb(2) = D3DColorARGB(ColorTecho, ColorTecho, ColorTecho, ColorTecho)
-        temp_rgb(3) = D3DColorARGB(ColorTecho, ColorTecho, ColorTecho, ColorTecho)
-    End If
+
 End Sub
-Public Function DesvanecerArbol(ByVal Color As Byte) As Long()
-'*****************************************************************
-                        'Author: FrankoH
-                        'Last Modify Date: 28/08/2019
-                        'DESVANECE LOS ARBOLES
-'*****************************************************************
-Dim temp_rgb(3) As Long
-
-temp_rgb(0) = D3DColorARGB(ColorArbol, ColorArbol, ColorArbol, ColorArbol)
-temp_rgb(1) = D3DColorARGB(ColorArbol, ColorArbol, ColorArbol, ColorArbol)
-temp_rgb(2) = D3DColorARGB(ColorArbol, ColorArbol, ColorArbol, ColorArbol)
-temp_rgb(3) = D3DColorARGB(ColorArbol, ColorArbol, ColorArbol, ColorArbol)
-
-DesvanecerArbol = temp_rgb
-End Function
