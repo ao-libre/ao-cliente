@@ -118,6 +118,7 @@ Class=clsInet; CODIGO\Red\clsInet.cls
 Form=CODIGO\Formularios\FrmRetos.frm
 Module=mDx8_Particulas; CODIGO\Motor\mDx8_Particulas.bas
 Module=Carga; CODIGO\IO\modCarga.bas
+Form=CODIGO\Formularios\frmColor.frm
 IconForm="frmMain"
 Startup="Sub Main"
 HelpFile=""

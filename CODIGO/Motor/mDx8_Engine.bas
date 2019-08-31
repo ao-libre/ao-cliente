@@ -144,25 +144,35 @@ Public Sub Engine_DirectX8_Aditional_Init()
 
     FPS = 101
     FramesPerSecCounter = 101
-    
-    ColorTecho = 250
-    ColorArbol = 100
-    Engine_Set_TileBuffer 9
-    
-    Engine_Set_BaseSpeed 0.018
+
+    Call Engine_Set_TileBuffer(9)
+    Call Engine_Set_BaseSpeed(0.018)
     
     With MainScreenRect
         .Bottom = frmMain.MainViewPic.ScaleHeight
         .Right = frmMain.MainViewPic.ScaleWidth
     End With
 
-    Call Engine_Long_To_RGB_List(Normal_RGBList(), -1)
-
-    Load_Auras
-    Init_MeteoEngine
-
-    mDx8_Dibujado.Damage_Initialize
+    Call Engine_InitColours
+    Call Load_Auras
+    Call Init_MeteoEngine
+    Call mDx8_Dibujado.Damage_Initialize
     
+End Sub
+
+Private Sub Engine_InitColours()
+'**************************************************************
+'Author: Jopi
+'Last Modify Date: 31/08/2019
+'Evitemos usar la funcion D3DColorARGB que es BASTANTE lenta y hardcodiemos los colores.
+'Para convertirlos manualmente a Long, les dejo el frmColors.
+'**************************************************************
+
+    Call Engine_Long_To_RGB_List(Normal_RGBList(), -1)
+    Call Engine_Long_To_RGB_List(Color_Shadow(), 838860800)
+    Call Engine_Long_To_RGB_List(Color_Arbol(), 1684300900)
+    Call Engine_Long_To_RGB_List(Color_TechoTransarente(), -1768515946)
+
 End Sub
 
 Public Sub Engine_Draw_Line(X1 As Single, Y1 As Single, X2 As Single, Y2 As Single, Optional Color As Long = -1, Optional Color2 As Long = -1)
