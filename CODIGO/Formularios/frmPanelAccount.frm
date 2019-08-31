@@ -17,11 +17,6 @@ Begin VB.Form frmPanelAccount
    ScaleMode       =   0  'User
    ScaleWidth      =   808.081
    StartUpPosition =   2  'CenterScreen
-   Begin VB.Timer tmrRender 
-      Interval        =   500
-      Left            =   600
-      Top             =   1320
-   End
    Begin VB.PictureBox picChar 
       Appearance      =   0  'Flat
       BackColor       =   &H00000000&
@@ -537,36 +532,39 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Option Explicit
+
 Public Seleccionado As Byte
+
 Private Sub Form_Load()
-On Error Resume Next
+
     Unload frmConnect
-    
+
     Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaCuenta.jpg")
 
-    Me.tmrRender.Enabled = True
-    
-    Dim i As Byte
+    Dim i As Long
 
     Me.Icon = frmMain.Icon
-        
+
     For i = 1 To 10
         lblAccData(i).Caption = vbNullString
     Next i
-    
+
     Me.lblAccData(0).Caption = AccountName
 
-    If Curper = True Then
-       Call FormParser.Parse_Form(Me)
-    End If
+    'If Curper Then
+        'Call FormParser.Parse_Form(Me)
+    'End If
 
 End Sub
 
 Private Sub Image5_Click()
-    If Not Len(lblAccData(Index + 1).Caption) = 0 Then
-        UserName = lblAccData(Index + 1).Caption
-        WriteLoginExistingChar
+
+    If LenB(lblAccData(Seleccionado + 1).Caption) <> 0 Then
+        UserName = lblAccData(Seleccionado + 1).Caption
+        Call WriteLoginExistingChar
     End If
+
 End Sub
 
 Private Sub lblName_Click(Index As Integer)
@@ -575,7 +573,7 @@ End Sub
 
 Private Sub imgConectar_Click()
 
-    If Len(lblAccData(Seleccionado).Caption) = 0 Then
+    If LenB(lblAccData(Seleccionado).Caption) = 0 Then
         MsgBox JsonLanguage.Item("ERROR_PERSONAJE_NO_SELECCIONADO").Item("TEXTO")
         Exit Sub
     End If
@@ -590,34 +588,42 @@ Private Sub imgConectar_Click()
         UserName = lblAccData(Seleccionado).Caption
         Call WriteLoginExistingChar
     End If
+
 End Sub
 
 Private Sub imgCrearPersonaje_Click()
-   If NumberOfCharacters >= 10 Then
-       MsgBox JsonLanguage.Item("ERROR_DEMASIADOS_PJS").Item("TEXTO")
-       Exit Sub
-   End If
-   For i = 1 To 10
-     If Len(lblAccData(i).Caption) = 0 Then
-        frmCrearPersonaje.Show
+
+    If NumberOfCharacters > 9 Then
+        MsgBox JsonLanguage.Item("ERROR_DEMASIADOS_PJS").Item("TEXTO")
         Exit Sub
-     End If
-   Next i
+    End If
+    
+    Dim LoopC As Long
+
+    For LoopC = 1 To 10
+        If LenB(lblAccData(LoopC).Caption) = 0 Then
+            frmCrearPersonaje.Show
+            Exit Sub
+        End If
+    Next LoopC
+
 End Sub
 
 Private Sub imgSalir_Click()
-   frmMain.Client.CloseSck
-   Unload Me
-   frmConnect.Show
+    frmMain.Client.CloseSck
+    Unload Me
+    frmConnect.Show
 End Sub
 
-
 Private Sub picChar_Click(Index As Integer)
+
     Seleccionado = Index + 1
     
+    If Seleccionado > NumberOfCharacters Then Exit Sub
+
     With cPJ(Seleccionado)
-    
-        If Len(.Nombre) <> 0 Then
+
+        If LenB(.Nombre) <> 0 Then
             lblCharData(0) = JsonLanguage.Item("NOMBRE").Item("TEXTO") & ": " & .Nombre
             lblCharData(1) = JsonLanguage.Item("CLASE").Item("TEXTO") & ": " & ListaClases(.Class)
             lblCharData(2) = JsonLanguage.Item("RAZA").Item("TEXTO") & ": " & ListaRazas(.Race)
@@ -632,32 +638,21 @@ Private Sub picChar_Click(Index As Integer)
             lblCharData(4) = vbNullString
             lblCharData(5) = vbNullString
         End If
-    
+
     End With
-    
+
 End Sub
 
 Private Sub picChar_DblClick(Index As Integer)
+
     Seleccionado = Index + 1
-    If Not Len(lblAccData(Seleccionado).Caption) = 0 Then
+    
+    If LenB(lblAccData(Seleccionado).Caption) <> 0 Then
         UserName = lblAccData(Seleccionado).Caption
-        WriteLoginExistingChar
+        Call WriteLoginExistingChar
     Else
         frmCrearPersonaje.Show
     End If
-End Sub
-
-Private Sub tmrRender_Timer()
-On Error GoTo ErrHandler
-
-Dim i As Byte
-For i = 1 To 10
-   mDx8_Engine.DrawPJ i
-Next i
-Me.tmrRender.Enabled = False
-Exit Sub
-
-ErrHandler:
-    Me.tmrRender.Enabled = False
 
 End Sub
+

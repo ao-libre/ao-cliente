@@ -10745,41 +10745,80 @@ Private Sub HandleFXtoMap()
 End Sub
 
 Private Sub HandleAccountLogged()
-    If incomingData.Length < 32 Then
+
+    If incomingData.Length < 6 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
+
+    On Error GoTo ErrHandler
     
-    Dim i As Byte
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue
+    Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
 
     'Remove packet ID
-    Call incomingData.ReadByte
-    AccountName = incomingData.ReadASCIIString
-    AccountHash = incomingData.ReadASCIIString
-    NumberOfCharacters = incomingData.ReadByte
+    Call Buffer.ReadByte
 
-    ReDim cPJ(1 To 10) As PjCuenta
-    
-    If NumberOfCharacters > 0 Then
-        For i = 1 To NumberOfCharacters
-            cPJ(i).Nombre = incomingData.ReadASCIIString
-            cPJ(i).Body = incomingData.ReadInteger
-            cPJ(i).Head = incomingData.ReadInteger
-            cPJ(i).weapon = incomingData.ReadInteger
-            cPJ(i).shield = incomingData.ReadInteger
-            cPJ(i).helmet = incomingData.ReadInteger
-            cPJ(i).Class = incomingData.ReadByte
-            cPJ(i).Race = incomingData.ReadByte
-            cPJ(i).Map = incomingData.ReadInteger
-            cPJ(i).Level = incomingData.ReadByte
-            cPJ(i).Gold = incomingData.ReadLong
-            cPJ(i).Criminal = incomingData.ReadBoolean
-            cPJ(i).Dead = incomingData.ReadBoolean
-            cPJ(i).GameMaster = incomingData.ReadBoolean
-        Next i
-    End If
-    
+    AccountName = Buffer.ReadASCIIString
+    AccountHash = Buffer.ReadASCIIString
+    NumberOfCharacters = Buffer.ReadByte
+
     frmPanelAccount.Show
+
+    If NumberOfCharacters > 0 Then
+    
+        ReDim cPJ(1 To NumberOfCharacters) As PjCuenta
+        
+        Dim LoopC As Long
+        
+        For LoopC = 1 To NumberOfCharacters
+        
+            With cPJ(LoopC)
+                .Nombre = Buffer.ReadASCIIString
+                .Body = Buffer.ReadInteger
+                .Head = Buffer.ReadInteger
+                .weapon = Buffer.ReadInteger
+                .shield = Buffer.ReadInteger
+                .helmet = Buffer.ReadInteger
+                .Class = Buffer.ReadByte
+                .Race = Buffer.ReadByte
+                .Map = Buffer.ReadInteger
+                .Level = Buffer.ReadByte
+                .Gold = Buffer.ReadLong
+                .Criminal = Buffer.ReadBoolean
+                .Dead = Buffer.ReadBoolean
+                
+                If .Dead Then
+                    .Head = eCabezas.CASPER_HEAD
+                End If
+
+                .GameMaster = Buffer.ReadBoolean
+            End With
+            
+            Call mDx8_Engine.DrawPJ(LoopC)
+            
+        Next LoopC
+        
+    End If
+
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
+
+ErrHandler:
+
+    Dim Error As Long
+
+    Error = Err.number
+
+    On Error GoTo 0
+
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
+
+    If Error <> 0 Then Err.Raise Error
+
 End Sub
 
 Private Sub HandleSearchList()

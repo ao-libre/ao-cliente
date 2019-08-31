@@ -721,76 +721,59 @@ End Sub
 Public Sub DrawPJ(ByVal Index As Byte)
 
     If LenB(cPJ(Index).Nombre) = 0 Then Exit Sub
-    Dim cColor As Long
-    frmPanelAccount.lblAccData(Index).Caption = cPJ(Index).Nombre
+    DoEvents
     
-    ColoresFile = Game.path(INIT) & "colores.dat"
-
+    Dim cColor As Long
+    
     If cPJ(Index).GameMaster Then
-        '1 is Consejeros in Colores.dat
-        cColor = RGB(GetVar(ColoresFile, "1", "R"), GetVar(ColoresFile, "1", "G"), GetVar(ColoresFile, "1", "B"))
+        cColor = 2004510
     Else
-        If cPJ(Index).Criminal Then
-            cColor = RGB(GetVar(ColoresFile, "CR", "R"), GetVar(ColoresFile, "CR", "G"), GetVar(ColoresFile, "CR", "B"))
-        Else
-            cColor = RGB(GetVar(ColoresFile, "CI", "R"), GetVar(ColoresFile, "CI", "G"), GetVar(ColoresFile, "CI", "B"))
-        End If
+        cColor = IIf(cPJ(Index).Criminal, 255, 16744448)
     End If
 
+    frmPanelAccount.lblAccData(Index).Caption = cPJ(Index).Nombre
     frmPanelAccount.lblAccData(Index).ForeColor = cColor
+    
+    Dim Init_X As Integer, Init_Y As Integer, Head_OffSet As Integer, RE As RECT
 
-    Dim init_x As Integer
-    Dim init_y As Integer
-    Dim head_offset As Integer
-    Static re As RECT
-   
-    re.Left = 0
-    re.Top = 0
-    re.Bottom = 80
-    re.Right = 76
+    RE.Left = 0
+    RE.Top = 0
+    RE.Bottom = 80
+    RE.Right = 76
 
-    init_x = 25
-    init_y = 20
-
-    Dim Light(3) As Long
-    Light(0) = D3DColorXRGB(255, 255, 255)
-    Light(1) = D3DColorXRGB(255, 255, 255)
-    Light(2) = D3DColorXRGB(255, 255, 255)
-    Light(3) = D3DColorXRGB(255, 255, 255)
-
-    If cPJ(Index).Race = eRaza.Humano Or cPJ(Index).Race = eRaza.Elfo Or cPJ(Index).Race = eRaza.ElfoOscuro Then
-        head_offset = HeadOffsetAltos
-    Else
-        head_offset = HeadOffsetBajos
-    End If
-
+    Init_X = 25
+    Init_Y = 20
+    
     Call Engine_BeginScene
 
     If cPJ(Index).Body <> 0 Then
-        Call DDrawTransGrhtoSurface(BodyData(cPJ(Index).Body).Walk(3), PixelOffsetX + init_x, PixelOffsetY + init_y, 0, Light(), 0, init_x, init_y)
-    End If
+        If cPJ(Index).Race <> eRaza.Gnomo Or cPJ(Index).Race <> eRaza.Enano Then
+            Head_OffSet = HeadOffsetAltos
+        Else
+            Head_OffSet = HeadOffsetBajos
+        End If
+    
+        Call DDrawTransGrhtoSurface(BodyData(cPJ(Index).Body).Walk(3), PixelOffsetX + Init_X, PixelOffsetY + Init_Y, 0, Normal_RGBList(), 0, Init_X, Init_Y)
 
-    If cPJ(Index).Dead Then
-        Call DDrawTransGrhtoSurface(HeadData(eCabezas.CASPER_HEAD).Head(3), PixelOffsetX + init_x + 4, PixelOffsetY + init_y + head_offset, 0, Light(), 0, init_x, init_y)
-    Else
         If cPJ(Index).Head <> 0 Then
-            Call DDrawTransGrhtoSurface(HeadData(cPJ(Index).Head).Head(3), PixelOffsetX + init_x + 4, PixelOffsetY + init_y + head_offset, 0, Light(), 0, init_x, init_y)
+            Call DDrawTransGrhtoSurface(HeadData(cPJ(Index).Head).Head(3), PixelOffsetX + Init_X + 4, PixelOffsetY + Init_Y + Head_OffSet, 0, Normal_RGBList(), 0, Init_X, Init_Y)
+        End If
+
+        If cPJ(Index).helmet <> 0 Then
+            Call DDrawTransGrhtoSurface(CascoAnimData(cPJ(Index).helmet).Head(3), PixelOffsetX + Init_X + 4, PixelOffsetY + Init_Y + Head_OffSet, 0, Normal_RGBList(), 0, Init_X, Init_Y)
+        End If
+
+        If cPJ(Index).weapon <> 0 Then
+            Call DDrawTransGrhtoSurface(WeaponAnimData(cPJ(Index).weapon).WeaponWalk(3), PixelOffsetX + Init_X, PixelOffsetY + Init_Y, 0, Normal_RGBList(), 0, Init_X, Init_Y)
+        End If
+
+        If cPJ(Index).shield <> 0 Then
+            Call DDrawTransGrhtoSurface(ShieldAnimData(cPJ(Index).shield).ShieldWalk(3), PixelOffsetX + Init_X, PixelOffsetY + Init_Y, 0, Normal_RGBList(), 0, Init_X, Init_Y)
         End If
     End If
 
-    If cPJ(Index).helmet <> 0 Then
-        Call DDrawTransGrhtoSurface(CascoAnimData(cPJ(Index).helmet).Head(3), PixelOffsetX + init_x + 4, PixelOffsetY + init_y + head_offset, 0, Light(), 0, init_x, init_y)
-    End If
-     
-    If cPJ(Index).weapon <> 0 Then
-        Call DDrawTransGrhtoSurface(WeaponAnimData(cPJ(Index).weapon).WeaponWalk(3), PixelOffsetX + init_x, PixelOffsetY + init_y, 0, Light(), 0, init_x, init_y)
-    End If
-     
-    If cPJ(Index).shield <> 0 Then
-        Call DDrawTransGrhtoSurface(ShieldAnimData(cPJ(Index).shield).ShieldWalk(3), PixelOffsetX + init_x, PixelOffsetY + init_y, 0, Light(), 0, init_x, init_y)
-    End If
-
-    Engine_EndScene re, frmPanelAccount.picChar(Index - 1).hWnd
+    Call Engine_EndScene(RE, frmPanelAccount.picChar(Index - 1).hWnd)
+    
 End Sub
 
 Public Function Engine_GetAngle(ByVal CenterX As Integer, ByVal CenterY As Integer, ByVal TargetX As Integer, ByVal TargetY As Integer) As Single

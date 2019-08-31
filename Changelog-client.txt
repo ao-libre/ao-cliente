@@ -481,3 +481,9 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 27/08/2019: Drag & Drop de items. (FrancoH)
 * 30/08/2019: Deleted cucsifae loading image, added better season 1 image (Recox)
 
+- v0.13.13
+
+* 30/08/2019: Se arreglaron todos los problemas de renderizado del frmPanelAccount. (JuanMz)
+	      Se optimizó todo el comportamiento del frmPanelAccount. (JuanMz)
+	      Se arregló el HandleAccountLogged(). (JuanMz)
+
