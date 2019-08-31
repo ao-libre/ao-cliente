@@ -925,35 +925,25 @@ Sub RenderScreen(ByVal tilex As Integer, _
     'Renders everything to the viewport
     '**************************************************************
     Dim Y                As Long     'Keeps track of where on map we are
-
     Dim X                As Long     'Keeps track of where on map we are
     
     Dim screenminY       As Integer  'Start Y pos on current screen
-
     Dim screenmaxY       As Integer  'End Y pos on current screen
-
     Dim screenminX       As Integer  'Start X pos on current screen
-
     Dim screenmaxX       As Integer  'End X pos on current screen
     
     Dim minY             As Integer  'Start Y pos on current map
-
     Dim maxY             As Integer  'End Y pos on current map
-
     Dim minX             As Integer  'Start X pos on current map
-
     Dim maxX             As Integer  'End X pos on current map
     
     Dim ScreenX          As Integer  'Keeps track of where to place tile on screen
-
     Dim ScreenY          As Integer  'Keeps track of where to place tile on screen
     
     Dim minXOffset       As Integer
-
     Dim minYOffset       As Integer
     
     Dim PixelOffsetXTemp As Integer 'For centering grhs
-
     Dim PixelOffsetYTemp As Integer 'For centering grhs
     
     Dim ElapsedTime      As Single
@@ -1122,11 +1112,14 @@ Sub RenderScreen(ByVal tilex As Integer, _
    
             'Layer 4
             If MapData(X, Y).Graphic(4).GrhIndex Then
-
+                
+                PixelOffsetXTemp = ScreenX * TilePixelWidth + PixelOffsetX
+                PixelOffsetYTemp = ScreenY * TilePixelHeight + PixelOffsetY
+                
                 If Not bTecho Then
-                    Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(4), ScreenX * TilePixelWidth + PixelOffsetX, ScreenY * TilePixelHeight + PixelOffsetY, 1, MapData(X, Y).Engine_Light(), 1, X, Y)
+                    Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(4), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1, X, Y)
                 Else
-                    Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(4), ScreenX * TilePixelWidth + PixelOffsetX, ScreenY * TilePixelHeight + PixelOffsetY, 1, Color_TechoTransarente(), 1, X, Y)
+                    Call DDrawTransGrhtoSurface(MapData(X, Y).Graphic(4), PixelOffsetXTemp, PixelOffsetYTemp, 1, Color_TechoTransarente(), 1, X, Y)
                 End If
 
             End If
