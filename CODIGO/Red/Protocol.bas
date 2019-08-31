@@ -10746,7 +10746,7 @@ End Sub
 
 Private Sub HandleAccountLogged()
 
-    If incomingData.Length < 6 Then
+    If incomingData.Length < 30 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
