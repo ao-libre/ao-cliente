@@ -61,7 +61,6 @@ Class=clsByteQueue; CODIGO\IO\clsByteQueue.cls
 Class=clsTimer; CODIGO\Aplicacion\MainTimer.cls
 Module=Protocol; CODIGO\Red\Protocol.bas
 Module=ProtocolCmdParse; CODIGO\Aplicacion\ProtocolCmdParse.bas
-Module=PrevInstance; CODIGO\Aplicacion\PrevInstance.bas
 Module=modScreenCapture; CODIGO\Aplicacion\modScreenCapture.bas
 Class=cDIBSection; CODIGO\cDIBSection.cls
 Form=CODIGO\Formularios\frmScreenshots.frm

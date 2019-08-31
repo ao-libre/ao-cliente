@@ -852,7 +852,7 @@ Sub Main()
     
     'Comento esto ya que nosotros si permitimos abrir mas de un cliente a la ves.
     '#If Testeo = 0 Then
-    '    If FindPreviousInstance Then
+    '    If Application.FindPreviousInstance Then
     '        Call MsgBox(JsonLanguage.Item("OTRO_CLIENTE_ABIERTO").Item("TEXTO"), vbApplicationModal + vbInformation + vbOKOnly, "Error al ejecutar")
     '        End
     '    End If
@@ -1350,7 +1350,7 @@ Public Sub CloseClient()
     '**************************************************************
     
     ' Allow new instances of the client to be opened
-    Call PrevInstance.ReleaseInstance
+    Call Application.ReleaseInstance
     
     EngineRun = False
     
