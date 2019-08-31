@@ -160,8 +160,31 @@ Public Sub LeerConfiguracion()
         
         ' OTHER
         .MostrarTips = CBool(Lector.GetValue("OTHER", "MOSTRAR_TIPS"))
+        
+        Debug.Print "bDinamic: " & .bDinamic
+        Debug.Print "byMemory: " & .byMemory
+        Debug.Print "bNoRes: " & .bNoRes
+        Debug.Print "ProyectileEngine: " & .ProyectileEngine
+        Debug.Print "PartyMembers: " & .PartyMembers
+        Debug.Print "TonalidadPJ: " & .TonalidadPJ
+        Debug.Print "UsarSombras: " & .UsarSombras
+        Debug.Print "ParticleEngine: " & .ParticleEngine
+        Debug.Print "vSync: " & .vSync
+        Debug.Print "Aceleracion: " & .Aceleracion
+        Debug.Print "LimiteFPS: "; .LimiteFPS
+        Debug.Print "bMusic: " & .bMusic
+        Debug.Print "bSound: " & .bSound
+        Debug.Print "bSoundEffects: " & .bSoundEffects
+        Debug.Print "bGuildNews: " & .bGuildNews
+        Debug.Print "bGldMsgConsole: " & .bGldMsgConsole
+        Debug.Print "bCantMsgs: " & .bCantMsgs
+        Debug.Print "bDie: " & .bDie
+        Debug.Print "bKill: " & .byMurderedLevel
+        Debug.Print "bActive: " & .bActive
+        Debug.Print "MostrarTips: " & .MostrarTips
+        
     End With
-
+  
 fileErr:
 
     If Err.number <> 0 Then
