@@ -765,9 +765,6 @@ Sub Main()
     Call modCompression.GenerateContra(vbNullString, 0) ' 0 = Graficos.AO
     
     Call CargarHechizos
-    
-    'Carga dinamica de texturas por defecto.
-    Set SurfaceDB = New clsTextureManager
  
     ' Map Sounds
     Set Sonidos = New clsSoundMapas
