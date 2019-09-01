@@ -94,8 +94,8 @@ Public Function GetTexture(ByVal filename As Integer, _
 
         For i = 1 To .surfaceCount
 
-            If .SurfaceEntry(i).filename = filename Then
-                .SurfaceEntry(i).UltimoAcceso = GetTickCount
+            If .SurfaceEntry(i).FileName = FileName Then
+                .SurfaceEntry(i).UltimoAcceso = timeGetTime
                 TextureWidth = .SurfaceEntry(i).texture_width
                 TextureHeight = .SurfaceEntry(i).texture_height
                 Set GetTexture = .SurfaceEntry(i).Texture
@@ -231,7 +231,7 @@ Private Function RemoveLRU() As Boolean
     Dim j            As Long
     Dim surface_desc As D3DSURFACE_DESC
    
-    LRUtime = GetTickCount
+    LRUtime = timeGetTime
    
     'Check out through the whole list for the least recently used
     For i = 0 To HASH_TABLE_SIZE - 1
