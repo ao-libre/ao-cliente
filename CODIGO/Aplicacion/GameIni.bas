@@ -28,7 +28,6 @@ End Enum
 Public Type tSetupMods
 
     ' VIDEO
-    bDinamic    As Boolean
     byMemory    As Integer
     ProyectileEngine As Boolean
     PartyMembers As Boolean
@@ -130,7 +129,6 @@ Public Sub LeerConfiguracion()
     With ClientSetup
         
         ' VIDEO
-        .bDinamic = CBool(Lector.GetValue("VIDEO", "DYNAMIC_LOAD"))
         .byMemory = CInt(Lector.GetValue("VIDEO", "DINAMIC_MEMORY"))
         .bNoRes = CBool(Lector.GetValue("VIDEO", "DISABLE_RESOLUTION_CHANGE"))
         .ProyectileEngine = CBool(Lector.GetValue("VIDEO", "PROYECTILE_ENGINE"))
@@ -161,7 +159,6 @@ Public Sub LeerConfiguracion()
         ' OTHER
         .MostrarTips = CBool(Lector.GetValue("OTHER", "MOSTRAR_TIPS"))
         
-        Debug.Print "bDinamic: " & .bDinamic
         Debug.Print "byMemory: " & .byMemory
         Debug.Print "bNoRes: " & .bNoRes
         Debug.Print "ProyectileEngine: " & .ProyectileEngine
@@ -202,7 +199,6 @@ Public Sub GuardarConfiguracion()
     With ClientSetup
         
         ' VIDEO
-        Call Lector.ChangeValue("VIDEO", "DYNAMIC_LOAD", CInt(.bDinamic))
         Call Lector.ChangeValue("VIDEO", "DINAMIC_MEMORY", CInt(.byMemory))
         Call Lector.ChangeValue("VIDEO", "DISABLE_RESOLUTION_CHANGE", CInt(.bNoRes))
         Call Lector.ChangeValue("VIDEO", "PROYECTILE_ENGINE", CInt(.ProyectileEngine))
@@ -237,8 +233,8 @@ Public Sub GuardarConfiguracion()
     Call Lector.DumpFile(Game.path(INIT) & CLIENT_FILE)
 fileErr:
 
-    'If Err.number <> 0 Then
-    '    MsgBox ("Ha ocurrido un error al cargar la configuracion del cliente. Error " & Err.number & " : " & Err.Description)
-    '    End 'Usar "End" en vez del Sub CloseClient() ya que todavia no se inicializa nada.
-    'End If
+    If Err.number <> 0 Then
+        MsgBox ("Ha ocurrido un error al cargar la configuracion del cliente. Error " & Err.number & " : " & Err.Description)
+        End 'Usar "End" en vez del Sub CloseClient() ya que todavia no se inicializa nada.
+    End If
 End Sub
