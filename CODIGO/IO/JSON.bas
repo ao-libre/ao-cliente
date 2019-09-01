@@ -58,9 +58,9 @@ Public Function parse(ByRef str As String) As Object
     m_decSep = GetRegionalSettings(LOCALE_SDECIMAL)
     m_groupSep = GetRegionalSettings(LOCALE_SGROUPING)
 
-    Dim index As Long
+    Dim Index As Long
 
-    index = 1
+    Index = 1
 
     GenerateStringArray str
 
@@ -68,15 +68,15 @@ Public Function parse(ByRef str As String) As Object
 
     On Error Resume Next
 
-    Call skipChar(index)
+    Call skipChar(Index)
 
-    Select Case m_str(index)
+    Select Case m_str(Index)
 
         Case A_SQUARE_BRACKET_OPEN
-            Set parse = parseArray(str, index)
+            Set parse = parseArray(str, Index)
 
         Case A_CURLY_BRACKET_OPEN
-            Set parse = parseObject(str, index)
+            Set parse = parseObject(str, Index)
 
         Case Else
             m_parserrors = "JSON Invalido"
@@ -101,7 +101,7 @@ Private Sub GenerateStringArray(ByRef str As String)
 
 End Sub
 
-Private Function parseObject(ByRef str As String, ByRef index As Long) As Dictionary
+Private Function parseObject(ByRef str As String, ByRef Index As Long) As Dictionary
 
     Set parseObject = New Dictionary
 
@@ -109,38 +109,38 @@ Private Function parseObject(ByRef str As String, ByRef index As Long) As Dictio
 
     Dim charint As Integer
 
-    Call skipChar(index)
+    Call skipChar(Index)
 
-    If m_str(index) <> A_CURLY_BRACKET_OPEN Then
-        m_parserrors = m_parserrors & "Objeto invalido en la posicion " & index & " : " & mid$(str, index) & vbCrLf
+    If m_str(Index) <> A_CURLY_BRACKET_OPEN Then
+        m_parserrors = m_parserrors & "Objeto invalido en la posicion " & Index & " : " & mid$(str, Index) & vbCrLf
         Exit Function
 
     End If
 
-    index = index + 1
+    Index = Index + 1
 
     Do
-        Call skipChar(index)
+        Call skipChar(Index)
     
-        charint = m_str(index)
+        charint = m_str(Index)
     
         If charint = A_COMMA Then
-            index = index + 1
-            Call skipChar(index)
+            Index = Index + 1
+            Call skipChar(Index)
         ElseIf charint = A_CURLY_BRACKET_CLOSE Then
-            index = index + 1
+            Index = Index + 1
             Exit Do
-        ElseIf index > m_length Then
+        ElseIf Index > m_length Then
             m_parserrors = m_parserrors & "Falta '}': " & Right$(str, 20) & vbCrLf
             Exit Do
         End If
 
         ' add key/value pair
-        sKey = parseKey(index)
+        sKey = parseKey(Index)
 
         On Error Resume Next
 
-        parseObject.Add sKey, parseValue(str, index)
+        parseObject.Add sKey, parseValue(str, Index)
 
         If Err.number <> 0 Then
             m_parserrors = m_parserrors & Err.Description & ": " & sKey & vbCrLf
@@ -151,33 +151,33 @@ Private Function parseObject(ByRef str As String, ByRef index As Long) As Dictio
 
 End Function
 
-Private Function parseArray(ByRef str As String, ByRef index As Long) As Collection
+Private Function parseArray(ByRef str As String, ByRef Index As Long) As Collection
 
     Dim charint As Integer
 
     Set parseArray = New Collection
 
-    Call skipChar(index)
+    Call skipChar(Index)
 
-    If mid$(str, index, 1) <> "[" Then
-        m_parserrors = m_parserrors & "Array invalido en la posicion " & index & " : " + mid$(str, index, 20) & vbCrLf
+    If mid$(str, Index, 1) <> "[" Then
+        m_parserrors = m_parserrors & "Array invalido en la posicion " & Index & " : " + mid$(str, Index, 20) & vbCrLf
         Exit Function
     End If
    
-    index = index + 1
+    Index = Index + 1
 
     Do
-        Call skipChar(index)
+        Call skipChar(Index)
     
-        charint = m_str(index)
+        charint = m_str(Index)
     
         If charint = A_SQUARE_BRACKET_CLOSE Then
-            index = index + 1
+            Index = Index + 1
             Exit Do
         ElseIf charint = A_COMMA Then
-            index = index + 1
-            Call skipChar(index)
-        ElseIf index > m_length Then
+            Index = Index + 1
+            Call skipChar(Index)
+        ElseIf Index > m_length Then
             m_parserrors = m_parserrors & "Falta ']': " & Right$(str, 20) & vbCrLf
             Exit Do
         End If
@@ -185,10 +185,10 @@ Private Function parseArray(ByRef str As String, ByRef index As Long) As Collect
         'add value
         On Error Resume Next
 
-        parseArray.Add parseValue(str, index)
+        parseArray.Add parseValue(str, Index)
 
         If Err.number <> 0 Then
-            m_parserrors = m_parserrors & Err.Description & ": " & mid$(str, index, 20) & vbCrLf
+            m_parserrors = m_parserrors & Err.Description & ": " & mid$(str, Index, 20) & vbCrLf
             Exit Do
 
         End If
@@ -197,41 +197,41 @@ Private Function parseArray(ByRef str As String, ByRef index As Long) As Collect
 
 End Function
 
-Private Function parseValue(ByRef str As String, ByRef index As Long)
+Private Function parseValue(ByRef str As String, ByRef Index As Long)
 
-    Call skipChar(index)
+    Call skipChar(Index)
 
-    Select Case m_str(index)
+    Select Case m_str(Index)
 
         Case A_DOUBLE_QUOTE, A_SINGLE_QUOTE
-            parseValue = parseString(str, index)
+            parseValue = parseString(str, Index)
             Exit Function
 
         Case A_SQUARE_BRACKET_OPEN
-            Set parseValue = parseArray(str, index)
+            Set parseValue = parseArray(str, Index)
             Exit Function
 
         Case A_t, A_f
-            parseValue = parseBoolean(str, index)
+            parseValue = parseBoolean(str, Index)
             Exit Function
 
         Case A_n
-            parseValue = parseNull(str, index)
+            parseValue = parseNull(str, Index)
             Exit Function
 
         Case A_CURLY_BRACKET_OPEN
-            Set parseValue = parseObject(str, index)
+            Set parseValue = parseObject(str, Index)
             Exit Function
 
         Case Else
-            parseValue = parseNumber(str, index)
+            parseValue = parseNumber(str, Index)
             Exit Function
 
     End Select
 
 End Function
 
-Private Function parseString(ByRef str As String, ByRef index As Long) As String
+Private Function parseString(ByRef str As String, ByRef Index As Long) As String
 
     Dim quoteint As Integer
 
@@ -239,66 +239,66 @@ Private Function parseString(ByRef str As String, ByRef index As Long) As String
 
     Dim Code     As String
    
-    Call skipChar(index)
+    Call skipChar(Index)
    
-    quoteint = m_str(index)
+    quoteint = m_str(Index)
    
-    index = index + 1
+    Index = Index + 1
    
-    Do While index > 0 And index <= m_length
+    Do While Index > 0 And Index <= m_length
    
-        charint = m_str(index)
+        charint = m_str(Index)
       
         Select Case charint
 
             Case A_BACKSLASH
 
-                index = index + 1
-                charint = m_str(index)
+                Index = Index + 1
+                charint = m_str(Index)
 
                 Select Case charint
 
                     Case A_DOUBLE_QUOTE, A_BACKSLASH, A_FORWARDSLASH, A_SINGLE_QUOTE
                         parseString = parseString & ChrW$(charint)
-                        index = index + 1
+                        Index = Index + 1
 
                     Case A_b
                         parseString = parseString & vbBack
-                        index = index + 1
+                        Index = Index + 1
 
                     Case A_f
                         parseString = parseString & vbFormFeed
-                        index = index + 1
+                        Index = Index + 1
 
                     Case A_n
                         parseString = parseString & vbLf
-                        index = index + 1
+                        Index = Index + 1
 
                     Case A_r
                         parseString = parseString & vbCr
-                        index = index + 1
+                        Index = Index + 1
 
                     Case A_t
                         parseString = parseString & vbTab
-                        index = index + 1
+                        Index = Index + 1
 
                     Case A_u
-                        index = index + 1
-                        Code = mid$(str, index, 4)
+                        Index = Index + 1
+                        Code = mid$(str, Index, 4)
 
                         parseString = parseString & ChrW$(Val("&h" + Code))
-                        index = index + 4
+                        Index = Index + 4
 
                 End Select
 
             Case quoteint
         
-                index = index + 1
+                Index = Index + 1
                 Exit Function
 
             Case Else
                 parseString = parseString & ChrW$(charint)
-                index = index + 1
+                Index = Index + 1
 
         End Select
 
@@ -306,34 +306,34 @@ Private Function parseString(ByRef str As String, ByRef index As Long) As String
    
 End Function
 
-Private Function parseNumber(ByRef str As String, ByRef index As Long)
+Private Function parseNumber(ByRef str As String, ByRef Index As Long)
 
-    Dim value As String
+    Dim Value As String
 
     Dim Char  As String
 
-    Call skipChar(index)
+    Call skipChar(Index)
 
-    Do While index > 0 And index <= m_length
-        Char = mid$(str, index, 1)
+    Do While Index > 0 And Index <= m_length
+        Char = mid$(str, Index, 1)
 
         If InStr("+-0123456789.eE", Char) Then
-            value = value & Char
-            index = index + 1
+            Value = Value & Char
+            Index = Index + 1
         Else
 
             'check what is the grouping seperator
             If Not m_decSep = "." Then
-                value = Replace(value, ".", m_decSep)
+                Value = Replace(Value, ".", m_decSep)
 
             End If
      
             If m_groupSep = "." Then
-                value = Replace(value, ".", m_decSep)
+                Value = Replace(Value, ".", m_decSep)
 
             End If
      
-            parseNumber = CDec(value)
+            parseNumber = CDec(Value)
             Exit Function
 
         End If
@@ -342,38 +342,38 @@ Private Function parseNumber(ByRef str As String, ByRef index As Long)
    
 End Function
 
-Private Function parseBoolean(ByRef str As String, ByRef index As Long) As Boolean
+Private Function parseBoolean(ByRef str As String, ByRef Index As Long) As Boolean
 
-    Call skipChar(index)
+    Call skipChar(Index)
    
-    If mid$(str, index, 4) = "true" Then
+    If mid$(str, Index, 4) = "true" Then
         parseBoolean = True
-        index = index + 4
-    ElseIf mid$(str, index, 5) = "false" Then
+        Index = Index + 4
+    ElseIf mid$(str, Index, 5) = "false" Then
         parseBoolean = False
-        index = index + 5
+        Index = Index + 5
     Else
-        m_parserrors = m_parserrors & "Boolean invalido en la posicion " & index & " : " & mid$(str, index) & vbCrLf
+        m_parserrors = m_parserrors & "Boolean invalido en la posicion " & Index & " : " & mid$(str, Index) & vbCrLf
 
     End If
 
 End Function
 
-Private Function parseNull(ByRef str As String, ByRef index As Long)
+Private Function parseNull(ByRef str As String, ByRef Index As Long)
 
-    Call skipChar(index)
+    Call skipChar(Index)
    
-    If mid$(str, index, 4) = "null" Then
+    If mid$(str, Index, 4) = "null" Then
         parseNull = Null
-        index = index + 4
+        Index = Index + 4
     Else
-        m_parserrors = m_parserrors & "Valor nulo invalido en la posicion " & index & " : " & mid$(str, index) & vbCrLf
+        m_parserrors = m_parserrors & "Valor nulo invalido en la posicion " & Index & " : " & mid$(str, Index) & vbCrLf
 
     End If
 
 End Function
 
-Private Function parseKey(ByRef index As Long) As String
+Private Function parseKey(ByRef Index As Long) As String
 
     Dim dquote  As Boolean
 
@@ -381,24 +381,24 @@ Private Function parseKey(ByRef index As Long) As String
 
     Dim charint As Integer
    
-    Call skipChar(index)
+    Call skipChar(Index)
    
-    Do While index > 0 And index <= m_length
+    Do While Index > 0 And Index <= m_length
     
-        charint = m_str(index)
+        charint = m_str(Index)
         
         Select Case charint
 
             Case A_DOUBLE_QUOTE
                 dquote = Not dquote
-                index = index + 1
+                Index = Index + 1
 
                 If Not dquote Then
             
-                    Call skipChar(index)
+                    Call skipChar(Index)
                 
-                    If m_str(index) <> A_COLON Then
-                        m_parserrors = m_parserrors & "Valor clave invalido en la posicion " & index & " : " & parseKey & vbCrLf
+                    If m_str(Index) <> A_COLON Then
+                        m_parserrors = m_parserrors & "Valor clave invalido en la posicion " & Index & " : " & parseKey & vbCrLf
                         Exit Do
 
                     End If
@@ -407,13 +407,13 @@ Private Function parseKey(ByRef index As Long) As String
 
             Case A_SINGLE_QUOTE
                 squote = Not squote
-                index = index + 1
+                Index = Index + 1
 
                 If Not squote Then
-                    Call skipChar(index)
+                    Call skipChar(Index)
                 
-                    If m_str(index) <> A_COLON Then
-                        m_parserrors = m_parserrors & "Valor clave invalido en la posicion " & index & " : " & parseKey & vbCrLf
+                    If m_str(Index) <> A_COLON Then
+                        m_parserrors = m_parserrors & "Valor clave invalido en la posicion " & Index & " : " & parseKey & vbCrLf
                         Exit Do
 
                     End If
@@ -421,7 +421,7 @@ Private Function parseKey(ByRef index As Long) As String
                 End If
         
             Case A_COLON
-                index = index + 1
+                Index = Index + 1
 
                 If Not dquote And Not squote Then
                     Exit Do
@@ -442,7 +442,7 @@ Private Function parseKey(ByRef index As Long) As String
 
                 End If
 
-                index = index + 1
+                Index = Index + 1
 
         End Select
 
@@ -450,7 +450,7 @@ Private Function parseKey(ByRef index As Long) As String
 
 End Function
 
-Private Sub skipChar(ByRef index As Long)
+Private Sub skipChar(ByRef Index As Long)
 
     Dim bComment      As Boolean
 
@@ -458,9 +458,9 @@ Private Sub skipChar(ByRef index As Long)
 
     Dim bLongComment  As Boolean
 
-    Do While index > 0 And index <= m_length
+    Do While Index > 0 And Index <= m_length
     
-        Select Case m_str(index)
+        Select Case m_str(Index)
 
             Case A_VBCR, A_VBLF
 
@@ -517,7 +517,7 @@ Private Sub skipChar(ByRef index As Long)
 
         End Select
 
-        index = index + 1
+        Index = Index + 1
     Loop
 
 End Sub
@@ -569,22 +569,15 @@ End Function
 '                   FUNCIONES MISCELANEAS DE LA ANTERIOR VERSION DEL MODULO
 '********************************************************************************************************
 
-Private Function Encode(str) As String
+Private Function Encode(ByVal str As String) As String
 
     Dim SB  As New cStringBuilder
-
     Dim i   As Long
-
     Dim j   As Long
-
     Dim aL1 As Variant
-
     Dim aL2 As Variant
-
     Dim c   As String
-
     Dim p   As Boolean
-    
     Dim Len_str As Long
 
     aL1 = Array(&H22, &H5C, &H2F, &H8, &HC, &HA, &HD, &H9)
@@ -609,14 +602,12 @@ Private Function Encode(str) As String
 
         If p Then
 
-            Dim a
+            Dim A As Integer: A = AscW(c)
 
-            a = AscW(c)
-
-            If a > 31 And a < 127 Then
+            If A > 31 And A < 127 Then
                 SB.Append c
-            ElseIf a > -1 Or a < 65535 Then
-                SB.Append "\u" & String$(4 - LenB(Hex$(a)), "0") & Hex$(a)
+            ElseIf A > -1 Or A < 65535 Then
+                SB.Append "\u" & String$(4 - LenB(Hex$(A)), "0") & Hex$(A)
 
             End If
 
@@ -681,7 +672,7 @@ End Function
 
 Public Function RStoJSON(rs As ADODB.Recordset) As String
 
-    On Error GoTo ErrHandler
+    On Error GoTo errhandler
 
     Dim sFlds   As String
 
@@ -707,7 +698,7 @@ Public Function RStoJSON(rs As ADODB.Recordset) As String
 
                 For Each fld In rs.Fields
 
-                    sFlds = (sFlds & IIf(sFlds <> "", ",", "") & """" & fld.Name & """:""" & toUnicode(fld.value & "") & """")
+                    sFlds = (sFlds & IIf(sFlds <> "", ",", "") & """" & fld.Name & """:""" & toUnicode(fld.Value & "") & """")
                 Next 'fld
 
                 sRecs.Append IIf((Trim$(sRecs.toString) <> ""), "," & vbNewLine, "") & "{" & sFlds & "}"
@@ -720,7 +711,7 @@ Public Function RStoJSON(rs As ADODB.Recordset) As String
     End If
 
     Exit Function
-ErrHandler:
+errhandler:
 
 End Function
 

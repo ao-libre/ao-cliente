@@ -1,4 +1,8 @@
 Attribute VB_Name = "mDx8_Engine"
+Option Explicit
+
+Public Declare Function timeGetTime Lib "winmm.dll" () As Long
+
 'DX8 Objects
 Public DirectX As New DirectX8
 Public DirectD3D8 As D3DX8
@@ -78,7 +82,7 @@ Public Function Engine_DirectX8_Init() As Boolean
         .SetRenderState D3DRS_ALPHABLENDENABLE, True
     
         'Partículas
-        .SetRenderState D3DRS_POINTSIZE, Engine_FToDW(2)
+        .SetRenderState D3DRS_POINTSIZE, CLng(2)
         .SetTextureStageState 0, D3DTSS_ALPHAOP, D3DTOP_MODULATE
         .SetRenderState D3DRS_POINTSPRITE_ENABLE, 1
         .SetRenderState D3DRS_POINTSCALE_ENABLE, 0
@@ -118,13 +122,10 @@ On Error Resume Next
     Call DeInit_Auras
     
     '   Clean Particles
-    Upper_particleTexture = UBound(ParticleTexture)
-    For i = 1 To Upper_particleTexture
-        If Not ParticleTexture(i) Is Nothing Then Set ParticleTexture(i) = Nothing
-    Next i
+    Call Particle_Group_Remove_All
     
     '   Clean Texture
-    DirectDevice.SetTexture 0, Nothing
+    Call DirectDevice.SetTexture(0, Nothing)
 
     '   Erase Data
     Erase MapData()
@@ -262,20 +263,6 @@ Public Function Engine_TPtoSPY(ByVal Y As Byte) As Long
 
     Engine_TPtoSPY = Engine_PixelPosY(Y - ((UserPos.Y - HalfWindowTileHeight) - Engine_Get_TileBuffer)) + OffsetCounterY - 272 + ((10 - TileBufferSize) * 32)
     
-End Function
-
-Private Function Engine_FToDW(f As Single) As Long
-'*****************************************************************
-'Converts a float to a D-Word, or in Visual Basic terms, a Single to a Long
-'More info: http://www.vbgore.com/CommonCode.Particles.Effect_FToDW
-'*****************************************************************
-Dim buf As D3DXBuffer
-
-    'Converts a single into a long (Float to DWORD)
-    Set buf = DirectD3D8.CreateBuffer(4)
-    DirectD3D8.BufferSetData buf, 0, 4, 1, f
-    DirectD3D8.BufferGetData buf, 0, 4, 1, Effect_FToDW
-
 End Function
 
 Public Sub Engine_Draw_Box(ByVal X As Integer, ByVal Y As Integer, ByVal Width As Integer, ByVal Height As Integer, Color As Long)
@@ -744,7 +731,12 @@ Public Sub DrawPJ(ByVal Index As Byte)
     frmPanelAccount.lblAccData(Index).Caption = cPJ(Index).Nombre
     frmPanelAccount.lblAccData(Index).ForeColor = cColor
     
-    Dim Init_X As Integer, Init_Y As Integer, Head_OffSet As Integer, RE As RECT
+    Dim Init_X As Integer
+    Dim Init_Y As Integer
+    Dim Head_OffSet As Integer
+    Dim PixelOffsetX As Integer
+    Dim PixelOffsetY As Integer
+    Dim RE As RECT
 
     RE.Left = 0
     RE.Top = 0

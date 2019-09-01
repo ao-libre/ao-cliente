@@ -11,7 +11,7 @@ Type A_Light
     range As Byte
     r As Integer
     g As Integer
-    b As Integer
+    B As Integer
 End Type
 
 Type MapAmbientBlock
@@ -55,10 +55,10 @@ Public Sub Init_Ambient(ByVal Map As Integer)
     With CurMapAmbient
         .Fog = -1
         .UseDayAmbient = True
-        .OwnAmbientLight.a = 255
+        .OwnAmbientLight.A = 255
         .OwnAmbientLight.r = 0
         .OwnAmbientLight.g = 0
-        .OwnAmbientLight.b = 0
+        .OwnAmbientLight.B = 0
         
         .Rain = True
         .Snow = False
@@ -86,7 +86,7 @@ Public Sub Init_Ambient(ByVal Map As Integer)
                     If .UseDayAmbient = False Then Call Engine_D3DColor_To_RGB_List(MapData(Xx, Yy).Engine_Light(), .OwnAmbientLight)
                     
                     If .MapBlocks(Xx, Yy).Light.range <> 0 Then
-                        Create_Light_To_Map Xx, Yy, .MapBlocks(Xx, Yy).Light.range, .MapBlocks(Xx, Yy).Light.r, .MapBlocks(Xx, Yy).Light.g, .MapBlocks(Xx, Yy).Light.b
+                        Create_Light_To_Map Xx, Yy, .MapBlocks(Xx, Yy).Light.range, .MapBlocks(Xx, Yy).Light.r, .MapBlocks(Xx, Yy).Light.g, .MapBlocks(Xx, Yy).Light.B
                     End If
                 Next Yy
             Next Xx
@@ -94,40 +94,40 @@ Public Sub Init_Ambient(ByVal Map As Integer)
         Call LightRenderAll
             
             If .UseDayAmbient = True Then
-                frmAmbientEditor.Option1(0).value = True
+                frmAmbientEditor.Option1(0).Value = True
             Else
-                frmAmbientEditor.Option1(1).value = True
+                frmAmbientEditor.Option1(1).Value = True
                 frmAmbientEditor.Text1(0).Text = .OwnAmbientLight.r
                 frmAmbientEditor.Text1(1).Text = .OwnAmbientLight.g
-                frmAmbientEditor.Text1(2).Text = .OwnAmbientLight.b
+                frmAmbientEditor.Text1(2).Text = .OwnAmbientLight.B
             End If
                                         
             If .Fog <> -1 Then
-                frmAmbientEditor.Check1.value = Checked
-                frmAmbientEditor.HScroll1.value = .Fog
+                frmAmbientEditor.Check1.Value = Checked
+                frmAmbientEditor.HScroll1.Value = .Fog
             Else
-                frmAmbientEditor.Check1.value = Unchecked
+                frmAmbientEditor.Check1.Value = Unchecked
             End If
             
-            If .Rain = True Then frmAmbientEditor.Check3.value = Checked
-            If .Snow = True Then frmAmbientEditor.Check2.value = Checked
+            If .Rain = True Then frmAmbientEditor.Check3.Value = Checked
+            If .Snow = True Then frmAmbientEditor.Check2.Value = Checked
             
             
     End With
 End Sub
 
 Public Sub Save_Ambient(ByVal Map As Integer)
-'***************************************************
-'Author: Standelf
-'Last Modification: 15/10/10
-'***************************************************
+    '***************************************************
+    'Author: Standelf
+    'Last Modification: 15/10/10
+    '***************************************************
     Debug.Print CurMapAmbient.UseDayAmbient
     
-Dim File
-File = FreeFile
+    Dim File As Integer: File = FreeFile
+
     Open App.path & "\Ambiente\" & Map & ".amb" For Binary Access Write As File
         Put File, , CurMapAmbient
     Close #File
-End Sub
 
+End Sub
 

@@ -40,8 +40,8 @@ Public ibQuad As DxVBLibA.Direct3DIndexBuffer8
 Public vbQuadIdx As DxVBLibA.Direct3DVertexBuffer8
 Dim temp_verts(3) As TLVERTEX
 
-Private OffsetCounterX As Single
-Private OffsetCounterY As Single
+Public OffsetCounterX As Single
+Public OffsetCounterY As Single
     
 Public WeatherFogX1 As Single
 Public WeatherFogY1 As Single
@@ -263,8 +263,8 @@ Public FPSLastCheck As Long
 Private WindowTileWidth As Integer
 Private WindowTileHeight As Integer
 
-Private HalfWindowTileWidth As Integer
-Private HalfWindowTileHeight As Integer
+Public HalfWindowTileWidth As Integer
+Public HalfWindowTileHeight As Integer
 
 'Cuantos tiles el engine mete en el BUFFER cuando
 'dibuja el mapa. Ojo un tamano muy grande puede
@@ -902,7 +902,7 @@ Public Sub DrawTransparentGrhtoHdc(ByVal dsthdc As Long, ByVal srchdc As Long, B
     Next X
 End Sub
 
-Public Sub DrawImageInPicture(ByRef PictureBox As PictureBox, ByRef Picture As StdPicture, ByVal X1 As Single, ByVal Y1 As Single, Optional Width1, Optional Height1, Optional X2, Optional Y2, Optional Width2, Optional Height2)
+Public Sub DrawImageInPicture(ByRef PictureBox As PictureBox, ByRef Picture As StdPicture, ByVal X1 As Single, ByVal Y1 As Single, Optional Width1 As Integer, Optional Height1 As Integer, Optional X2 As Single, Optional Y2 As Single, Optional Width2 As Integer, Optional Height2 As Integer)
 '**************************************************************
 'Author: Torres Patricio (Pato)
 'Last Modify Date: 12/28/2009

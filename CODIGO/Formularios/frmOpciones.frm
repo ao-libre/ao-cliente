@@ -519,26 +519,26 @@ End Sub
 
 Private Sub LoadSkinsInComboBox()
     Dim sFileName As String
-    sFileName = Dir(Game.path(Graficos) & "\Skins\", vbDirectory)
+    sFileName = Dir$(Game.path(Graficos) & "\Skins\", vbDirectory)
     
-    Do While sFileName > ""
-        cmdSkinsComboBox.AddItem (sFileName)
-        sFileName = Dir()
+    Do While sFileName > vbNullString
+        Call cmdSkinsComboBox.AddItem(sFileName)
+        sFileName = Dir$()
     Loop
     
     'Boorramos los 2 primeros items por que son . y ..
-    cmdSkinsComboBox.RemoveItem (0)
-    cmdSkinsComboBox.RemoveItem (0)
+    Call cmdSkinsComboBox.RemoveItem(0)
+    Call cmdSkinsComboBox.RemoveItem(0)
 End Sub
 
 Private Sub LoadLenguajesInComboBox()
     Dim sFileName As String
-    sFileName = Dir(App.path & "\Lenguajes\", vbArchive)
+    sFileName = Dir$(App.path & "\Lenguajes\", vbArchive)
     
-    Do While sFileName > ""
-        sFileName = Replace(sFileName, ".json", "")
-        cmdLenguajesComboBox.AddItem (sFileName)
-        sFileName = Dir()
+    Do While sFileName > vbNullString
+        sFileName = Replace(sFileName, ".json", vbNullString)
+        Call cmdLenguajesComboBox.AddItem(sFileName)
+        sFileName = Dir$()
     Loop
 
 End Sub

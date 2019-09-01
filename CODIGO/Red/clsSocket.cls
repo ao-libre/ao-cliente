@@ -22,19 +22,19 @@ Private Declare Function api_GlobalLock Lib "kernel32" Alias "GlobalLock" (ByVal
 Private Declare Function api_GlobalUnlock Lib "kernel32" Alias "GlobalUnlock" (ByVal hMem As Long) As Long
 Private Declare Function api_htons Lib "ws2_32.dll" Alias "htons" (ByVal hostshort As Integer) As Integer
 Private Declare Function api_ntohs Lib "ws2_32.dll" Alias "ntohs" (ByVal netshort As Integer) As Integer
-Private Declare Function api_connect Lib "ws2_32.dll" Alias "connect" (ByVal s As Long, ByRef name As sockaddr_in, ByVal namelen As Long) As Long
+Private Declare Function api_connect Lib "ws2_32.dll" Alias "connect" (ByVal s As Long, ByRef Name As sockaddr_in, ByVal namelen As Long) As Long
 Private Declare Function api_gethostname Lib "ws2_32.dll" Alias "gethostname" (ByVal host_name As String, ByVal namelen As Long) As Long
 Private Declare Function api_gethostbyname Lib "ws2_32.dll" Alias "gethostbyname" (ByVal host_name As String) As Long
-Private Declare Function api_bind Lib "ws2_32.dll" Alias "bind" (ByVal s As Long, ByRef name As sockaddr_in, ByVal namelen As Long) As Long
-Private Declare Function api_getsockname Lib "ws2_32.dll" Alias "getsockname" (ByVal s As Long, ByRef name As sockaddr_in, ByRef namelen As Long) As Long
-Private Declare Function api_getpeername Lib "ws2_32.dll" Alias "getpeername" (ByVal s As Long, ByRef name As sockaddr_in, ByRef namelen As Long) As Long
+Private Declare Function api_bind Lib "ws2_32.dll" Alias "bind" (ByVal s As Long, ByRef Name As sockaddr_in, ByVal namelen As Long) As Long
+Private Declare Function api_getsockname Lib "ws2_32.dll" Alias "getsockname" (ByVal s As Long, ByRef Name As sockaddr_in, ByRef namelen As Long) As Long
+Private Declare Function api_getpeername Lib "ws2_32.dll" Alias "getpeername" (ByVal s As Long, ByRef Name As sockaddr_in, ByRef namelen As Long) As Long
 Private Declare Function api_inet_addr Lib "ws2_32.dll" Alias "inet_addr" (ByVal cp As String) As Long
 Private Declare Function api_send Lib "ws2_32.dll" Alias "send" (ByVal s As Long, ByRef buf As Any, ByVal buflen As Long, ByVal flags As Long) As Long
 Private Declare Function api_sendto Lib "ws2_32.dll" Alias "sendto" (ByVal s As Long, ByRef buf As Any, ByVal buflen As Long, ByVal flags As Long, ByRef toaddr As sockaddr_in, ByVal tolen As Long) As Long
 Private Declare Function api_getsockopt Lib "ws2_32.dll" Alias "getsockopt" (ByVal s As Long, ByVal Level As Long, ByVal optname As Long, optval As Any, optlen As Long) As Long
 Private Declare Function api_setsockopt Lib "ws2_32.dll" Alias "setsockopt" (ByVal s As Long, ByVal Level As Long, ByVal optname As Long, optval As Any, ByVal optlen As Long) As Long
 Private Declare Function api_recv Lib "ws2_32.dll" Alias "recv" (ByVal s As Long, ByRef buf As Any, ByVal buflen As Long, ByVal flags As Long) As Long
-Private Declare Function api_recvfrom Lib "ws2_32.dll" Alias "recvfrom" (ByVal s As Long, ByRef buf As Any, ByVal buflen As Long, ByVal flags As Long, ByRef from As sockaddr_in, ByRef fromlen As Long) As Long
+Private Declare Function api_recvfrom Lib "ws2_32.dll" Alias "recvfrom" (ByVal s As Long, ByRef buf As Any, ByVal buflen As Long, ByVal flags As Long, ByRef From As sockaddr_in, ByRef fromlen As Long) As Long
 Private Declare Function api_WSACancelAsyncRequest Lib "ws2_32.dll" Alias "WSACancelAsyncRequest" (ByVal hAsyncTaskHandle As Long) As Long
 Private Declare Function api_listen Lib "ws2_32.dll" Alias "listen" (ByVal s As Long, ByVal backlog As Long) As Long
 Private Declare Function api_accept Lib "ws2_32.dll" Alias "accept" (ByVal s As Long, ByRef Addr As sockaddr_in, ByRef addrlen As Long) As Long
@@ -76,7 +76,7 @@ Public Event CloseSck()
 Public Event Connect()
 Public Event ConnectionRequest(ByVal requestID As Long)
 Public Event DataArrival(ByVal bytesTotal As Long)
-Public Event error(ByVal number As Integer, Description As String, ByVal sCode As Long, ByVal source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
+Public Event Error(ByVal number As Integer, Description As String, ByVal sCode As Long, ByVal source As String, ByVal HelpFile As String, ByVal HelpContext As Long, CancelDisplay As Boolean)
 Public Event SendComplete()
 Public Event SendProgress(ByVal bytesSent As Long, ByVal bytesRemaining As Long)
  
@@ -367,7 +367,7 @@ Private Function SocketExists() As Boolean
             Dim blnCancelDisplay As Boolean
 
             blnCancelDisplay = True
-            RaiseEvent error(lngErrorCode, GetErrorDescription(lngErrorCode), 0, "Socket.SocketExists", "", 0, blnCancelDisplay)
+            RaiseEvent Error(lngErrorCode, GetErrorDescription(lngErrorCode), 0, "Socket.SocketExists", "", 0, blnCancelDisplay)
 
             If blnCancelDisplay = False Then MsgBox GetErrorDescription(lngErrorCode), vbOKOnly, "Socket.SocketExists"
         Else
@@ -479,7 +479,7 @@ Private Sub PostResolution(ByVal lngAsynHandle As Long, ByVal lngErrorCode As Lo
 
         Dim lngRemoteHostAddress As Long
 
-        Dim Count                As Integer
+        Dim count                As Integer
 
         Dim strIpAddress         As String
     
@@ -494,8 +494,8 @@ Private Sub PostResolution(ByVal lngAsynHandle As Long, ByVal lngErrorCode As Lo
         'We turn the 32 bits long into a readable string.
         'Note: we don't need this string. I put this here just
         'in case you need it.
-        For Count = 1 To 4
-            strIpAddress = strIpAddress & arrIpAddress(Count) & "."
+        For count = 1 To 4
+            strIpAddress = strIpAddress & arrIpAddress(count) & "."
         Next
         
         strIpAddress = Left$(strIpAddress, Len(strIpAddress) - 1)
@@ -526,7 +526,7 @@ Private Sub PostSocket(ByVal lngEventID As Long, ByVal lngErrorCode As Long)
     If lngErrorCode <> 0 Then
         m_enmState = sckError
         blnCancelDisplay = True
-        RaiseEvent error(lngErrorCode, GetErrorDescription(lngErrorCode), 0, "Socket.PostSocket", "", 0, blnCancelDisplay)
+        RaiseEvent Error(lngErrorCode, GetErrorDescription(lngErrorCode), 0, "Socket.PostSocket", "", 0, blnCancelDisplay)
 
         If blnCancelDisplay = False Then MsgBox GetErrorDescription(lngErrorCode), vbOKOnly, "Socket.PostSocket"
         Exit Sub
@@ -650,7 +650,7 @@ Private Sub PostSocket(ByVal lngEventID As Long, ByVal lngErrorCode As Long)
                 lngErrorCode = Err.LastDllError
                 m_enmState = sckError
                 blnCancelDisplay = True
-                RaiseEvent error(lngErrorCode, GetErrorDescription(lngErrorCode), 0, "Socket.PostSocket", "", 0, blnCancelDisplay)
+                RaiseEvent Error(lngErrorCode, GetErrorDescription(lngErrorCode), 0, "Socket.PostSocket", "", 0, blnCancelDisplay)
 
                 If blnCancelDisplay = False Then MsgBox GetErrorDescription(lngErrorCode), vbOKOnly, "Socket.PostSocket"
             Else
@@ -725,7 +725,7 @@ Private Sub ConnectToIP(ByVal lngRemoteHostAddress As Long, ByVal lngErrorCode A
     If lngErrorCode <> 0 Then
         m_enmState = sckError
         blnCancelDisplay = True
-        RaiseEvent error(lngErrorCode, GetErrorDescription(lngErrorCode), 0, "Socket.ConnectToIP", "", 0, blnCancelDisplay)
+        RaiseEvent Error(lngErrorCode, GetErrorDescription(lngErrorCode), 0, "Socket.ConnectToIP", "", 0, blnCancelDisplay)
 
         If blnCancelDisplay = False Then MsgBox GetErrorDescription(lngErrorCode), vbOKOnly, "Socket.ConnectToIP"
         Exit Sub
@@ -760,7 +760,7 @@ Private Sub ConnectToIP(ByVal lngRemoteHostAddress As Long, ByVal lngErrorCode A
             Else
                 m_enmState = sckError
                 blnCancelDisplay = True
-                RaiseEvent error(lngErrorCode, GetErrorDescription(lngErrorCode), 0, "Socket.ConnectToIP", "", 0, blnCancelDisplay)
+                RaiseEvent Error(lngErrorCode, GetErrorDescription(lngErrorCode), 0, "Socket.ConnectToIP", "", 0, blnCancelDisplay)
 
                 If blnCancelDisplay = False Then MsgBox GetErrorDescription(lngErrorCode), vbOKOnly, "Socket.ConnectToIP"
 
@@ -954,7 +954,7 @@ Private Function GetLocalHostName() As String
         lngErrorCode = Err.LastDllError
         Exit Function
     Else
-        GetLocalHostName = Left(strHostNameBuf, InStr(1, strHostNameBuf, vbNullChar) - 1)
+        GetLocalHostName = Left$(strHostNameBuf, InStr(1, strHostNameBuf, vbNullChar) - 1)
 
     End If
 
@@ -971,7 +971,7 @@ Private Function GetLocalIP() As String
 
     Dim arrIpAddress(1 To 4) As Byte
 
-    Dim Count                As Integer
+    Dim count                As Integer
 
     Dim udtHostent           As HOSTENT
 
@@ -993,8 +993,8 @@ Private Function GetLocalIP() As String
         api_CopyMemory lngPtrToIP, ByVal udtHostent.hAddrList, 4
         api_CopyMemory arrIpAddress(1), ByVal lngPtrToIP, 4
    
-        For Count = 1 To 4
-            strIpAddress = strIpAddress & arrIpAddress(Count) & "."
+        For count = 1 To 4
+            strIpAddress = strIpAddress & arrIpAddress(count) & "."
         Next
    
         strIpAddress = Left$(strIpAddress, Len(strIpAddress) - 1)
@@ -1036,7 +1036,7 @@ Private Function ResolveIfHostname(ByVal Host As String) As Long
                 Dim blnCancelDisplay As Boolean
 
                 blnCancelDisplay = True
-                RaiseEvent error(lngErrorCode, GetErrorDescription(lngErrorCode), 0, "Socket.ResolveIfHostname", "", 0, blnCancelDisplay)
+                RaiseEvent Error(lngErrorCode, GetErrorDescription(lngErrorCode), 0, "Socket.ResolveIfHostname", "", 0, blnCancelDisplay)
 
                 If blnCancelDisplay = False Then MsgBox GetErrorDescription(lngErrorCode), vbOKOnly, "Socket.ResolveIfHostname"
             Else
@@ -1078,7 +1078,7 @@ Private Function ResolveIfHostnameSync(ByVal Host As String, _
 
     Dim arrIpAddress(1 To 4) As Byte
 
-    Dim Count                As Integer
+    Dim count                As Integer
  
     lngAddress = api_inet_addr(Host)
  
@@ -1096,8 +1096,8 @@ Private Function ResolveIfHostnameSync(ByVal Host As String, _
             api_CopyMemory arrIpAddress(1), ByVal lngPtrToIP, 4
             api_CopyMemory lngAddress, ByVal lngPtrToIP, 4
         
-            For Count = 1 To 4
-                strHostIP = strHostIP & arrIpAddress(Count) & "."
+            For count = 1 To 4
+                strHostIP = strHostIP & arrIpAddress(count) & "."
             Next
         
             strHostIP = Left$(strHostIP, Len(strHostIP) - 1)
@@ -1333,7 +1333,7 @@ Private Sub SendBufferedDataUDP()
             Dim blnCancelDisplay As Boolean
 
             blnCancelDisplay = True
-            RaiseEvent error(lngErrorCode, GetErrorDescription(lngErrorCode), 0, "Socket.SendBufferedDataUDP", "", 0, blnCancelDisplay)
+            RaiseEvent Error(lngErrorCode, GetErrorDescription(lngErrorCode), 0, "Socket.SendBufferedDataUDP", "", 0, blnCancelDisplay)
 
             If blnCancelDisplay = False Then MsgBox GetErrorDescription(lngErrorCode), vbOKOnly, "Socket.SendBufferedDataUDP"
 
@@ -1382,7 +1382,7 @@ Private Sub SendBufferedDataTCP()
                 Dim blnCancelDisplay As Boolean
 
                 blnCancelDisplay = True
-                RaiseEvent error(lngErrorCode, GetErrorDescription(lngErrorCode), 0, "Socket.SendBufferedData", "", 0, blnCancelDisplay)
+                RaiseEvent Error(lngErrorCode, GetErrorDescription(lngErrorCode), 0, "Socket.SendBufferedData", "", 0, blnCancelDisplay)
 
                 If blnCancelDisplay = False Then MsgBox GetErrorDescription(lngErrorCode), vbOKOnly, "Socket.SendBufferedData"
 
@@ -1801,7 +1801,7 @@ Private Function RecvData(ByRef data As Variant, _
 End Function
  
 'Returns a byte array of Size bytes filled with incoming buffer data.
-Private Sub BuildArray(ByVal size As Long, _
+Private Sub BuildArray(ByVal Size As Long, _
                        ByVal blnPeek As Boolean, _
                        ByRef lngErrorCode As Long, _
                        ByRef bytArray() As Byte)
@@ -1810,11 +1810,11 @@ Private Sub BuildArray(ByVal size As Long, _
  
     If m_enmProtocol = sckTCPProtocol Then
         
-        strData = Left$(m_strRecvBuffer, CLng(size))
+        strData = Left$(m_strRecvBuffer, CLng(Size))
         bytArray = StrConv(strData, vbFromUnicode)
                 
         If Not blnPeek Then
-            m_strRecvBuffer = mid$(m_strRecvBuffer, size + 1)
+            m_strRecvBuffer = mid$(m_strRecvBuffer, Size + 1)
 
         End If
  
@@ -1830,9 +1830,9 @@ Private Sub BuildArray(ByVal size As Long, _
     
         If blnPeek Then lngFlags = MSG_PEEK
     
-        ReDim arrBuffer(size - 1)
+        ReDim arrBuffer(Size - 1)
     
-        lngResult = api_recvfrom(m_lngSocketHandle, arrBuffer(0), size, lngFlags, udtSockAddr, LenB(udtSockAddr))
+        lngResult = api_recvfrom(m_lngSocketHandle, arrBuffer(0), Size, lngFlags, udtSockAddr, LenB(udtSockAddr))
     
         If lngResult = Socket_Error Then
             lngErrorCode = Err.LastDllError
