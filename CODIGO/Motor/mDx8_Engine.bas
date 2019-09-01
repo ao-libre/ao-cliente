@@ -91,6 +91,9 @@ Public Function Engine_DirectX8_Init() As Boolean
     
     EndTime = GetTickCount
     
+    'Carga dinamica de texturas por defecto.
+    Set SurfaceDB = New clsTextureManager
+    
     If Err Then
         MsgBox JsonLanguage.Item("ERROR_DIRECTX_INIT").Item("TEXTO")
         Engine_DirectX8_Init = False
