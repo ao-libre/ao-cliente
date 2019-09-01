@@ -171,7 +171,7 @@ Public Sub LeerConfiguracion()
         Debug.Print "ParticleEngine: " & .ParticleEngine
         Debug.Print "vSync: " & .vSync
         Debug.Print "Aceleracion: " & .Aceleracion
-        Debug.Print "LimiteFPS: "; .LimiteFPS
+        Debug.Print "LimiteFPS: " & .LimiteFPS
         Debug.Print "bMusic: " & .bMusic
         Debug.Print "bSound: " & .bSound
         Debug.Print "bSoundEffects: " & .bSoundEffects
