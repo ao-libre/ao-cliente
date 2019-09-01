@@ -237,7 +237,7 @@ End Function
 Public Function AddHeader(ByVal sName As String, ByVal sValue As String) As Boolean
     Dim sHeaderFmt As String
     
-    sHeaderFmt = Trim(sName) & ": " & Trim(sValue) & vbCrLf
+    sHeaderFmt = Trim$(sName) & ": " & Trim$(sValue) & vbCrLf
     AddHeader = CBool(HttpAddRequestHeaders(m_hInetRequest, sHeaderFmt, Len(sHeaderFmt), HTTP_ADDREQ_FLAG_ADD Or HTTP_ADDREQ_FLAG_REPLACE))
     
 End Function
@@ -246,8 +246,8 @@ Public Function AddPOSTParameter(ByVal Name As String, ByVal Value As String) As
 
     Dim sParam As String
 
-    Name = Trim(Name)
-    Value = Trim(Value)
+    Name = Trim$(Name)
+    Value = Trim$(Value)
 
     If m_sHttpMethod = "POST" Then Value = UrlEncode(Value)
 
@@ -303,7 +303,7 @@ Public Function GetResponseHeader(ByVal lHeaderType As enumPostHeader) As String
     Dim lHeaderIndex As Long
     Dim bSuccess     As Boolean
     
-    sValue = String(2000, Chr$(0))
+    sValue = String$(2000, Chr$(0))
     lBytesRead = Len(sValue)
     bSuccess = CBool(HttpQueryInfo(m_hInetRequest, lHeaderType, ByVal sValue, lBytesRead, lHeaderIndex))
 
@@ -319,9 +319,9 @@ Private Function CrackURL(ByVal strURL As String) As Boolean
     Dim intPos      As Integer
     Dim strProtocol As String
  
-    m_sURLDomain = ""
-    m_sURLPort = ""
-    m_sURLPath = ""
+    m_sURLDomain = vbNullString
+    m_sURLPort = vbNullString
+    m_sURLPath = vbNullString
     m_bURLSSL = False
  
     ' search for double forward slash and remove protocol prefix
@@ -332,7 +332,7 @@ Private Function CrackURL(ByVal strURL As String) As Boolean
         strURL = mid$(strURL, intPos + 2)
     End If
  
-    m_bURLSSL = (InStr(LCase(strProtocol), "https") > 0)
+    m_bURLSSL = (InStr(LCase$(strProtocol), "https") > 0)
  
     ' split the URL into domain and path using the first forward slash found
     ' If no slash is found, then the url is the domain only
@@ -385,7 +385,7 @@ Private Function UrlEncode(sText As String) As String
         ElseIf sChar = vbCr Or sChar = vbLf Or sChar = vbCrLf Then
         
         Else
-            sResult = sResult & "%" & Hex(Asc(sChar))
+            sResult = sResult & "%" & Hex$(Asc(sChar))
 
         End If
 

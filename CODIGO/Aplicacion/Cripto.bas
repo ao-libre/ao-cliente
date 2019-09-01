@@ -225,7 +225,7 @@ QH:
     If Err.LastDllError <> 0 Then
         uCrypto.LastError = GetSystemMessage(Err.LastDllError)
     Else
-        uCrypto.LastError = "[" & Hex(hResult) & "] Error in " & sApiSource
+        uCrypto.LastError = "[" & Hex$(hResult) & "] Error in " & sApiSource
     End If
     Exit Function
 EH_Unsupported:
@@ -362,7 +362,7 @@ QH:
     If Err.LastDllError <> 0 Then
         uCrypto.LastError = GetSystemMessage(Err.LastDllError)
     Else
-        uCrypto.LastError = "[" & Hex(hResult) & "] Error in " & sApiSource
+        uCrypto.LastError = "[" & Hex$(hResult) & "] Error in " & sApiSource
 
     End If
 
