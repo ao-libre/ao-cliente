@@ -21,8 +21,7 @@ End Type
 Private Light_List() As tLight
 Private NumLights As Byte
 
-
-Public Function Create_Light_To_Map(ByVal map_x As Byte, ByVal map_y As Byte, Optional range As Byte = 3, Optional ByVal Red As Byte = 255, Optional ByVal Green = 255, Optional ByVal Blue As Byte = 255)
+Public Function Create_Light_To_Map(ByVal map_x As Byte, ByVal map_y As Byte, Optional range As Byte = 3, Optional ByVal Red As Byte = 255, Optional ByVal Green As Byte = 255, Optional ByVal Blue As Byte = 255)
     NumLights = NumLights + 1
    
     ReDim Preserve Light_List(1 To NumLights) As tLight

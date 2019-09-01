@@ -2106,7 +2106,7 @@ Private Sub HandleChatOverHead()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -2134,7 +2134,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
 
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -2160,7 +2160,7 @@ Private Sub HandleConsoleMessage()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -2215,7 +2215,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -2241,7 +2241,7 @@ Private Sub HandleGuildChat()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -2293,7 +2293,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -2319,7 +2319,7 @@ Private Sub HandleCommerceChat()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -2369,7 +2369,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -2395,7 +2395,7 @@ Private Sub HandleShowMessageBox()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -2409,7 +2409,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -2478,7 +2478,7 @@ Private Sub HandleCharacterCreate()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -2554,7 +2554,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -2891,7 +2891,7 @@ Private Sub HandleGuildList()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -2919,7 +2919,7 @@ On Error GoTo ErrHandler
         .Show vbModeless, frmMain
     End With
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -3137,7 +3137,7 @@ Private Sub HandleChangeInventorySlot()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -3208,7 +3208,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -3302,7 +3302,7 @@ Private Sub HandleChangeBankSlot()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -3335,7 +3335,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -3361,7 +3361,7 @@ Private Sub HandleChangeSpellSlot()
         Exit Sub
     End If
  
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -3394,7 +3394,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
  
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -3459,7 +3459,7 @@ Private Sub HandleBlacksmithWeapons()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -3467,17 +3467,17 @@ On Error GoTo ErrHandler
     'Remove packet ID
     Call Buffer.ReadByte
     
-    Dim Count As Integer
+    Dim count As Integer
     Dim i As Long
     Dim j As Long
     Dim k As Long
     
-    Count = Buffer.ReadInteger()
+    count = Buffer.ReadInteger()
     
-    ReDim ArmasHerrero(Count) As tItemsConstruibles
+    ReDim ArmasHerrero(count) As tItemsConstruibles
     ReDim HerreroMejorar(0) As tItemsConstruibles
     
-    For i = 1 To Count
+    For i = 1 To count
         With ArmasHerrero(i)
             .Name = Buffer.ReadASCIIString()    'Get the object's name
             .GrhIndex = Buffer.ReadInteger()
@@ -3500,14 +3500,14 @@ On Error GoTo ErrHandler
         Call InvLingosHerreria(3).Initialize(DirectD3D8, .picLingotes2, 3, , , , , , False)
         Call InvLingosHerreria(4).Initialize(DirectD3D8, .picLingotes3, 3, , , , , , False)
         
-        Call .HideExtraControls(Count)
+        Call .HideExtraControls(count)
         Call .RenderList(1, True)
     End With
     
-    For i = 1 To Count
+    For i = 1 To count
         With ArmasHerrero(i)
             If .Upgrade Then
-                For k = 1 To Count
+                For k = 1 To count
                     If .Upgrade = ArmasHerrero(k).ObjIndex Then
                         j = j + 1
                 
@@ -3532,7 +3532,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -3558,7 +3558,7 @@ Private Sub HandleBlacksmithArmors()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -3566,16 +3566,16 @@ On Error GoTo ErrHandler
     'Remove packet ID
     Call Buffer.ReadByte
     
-    Dim Count As Integer
+    Dim count As Integer
     Dim i As Long
     Dim j As Long
     Dim k As Long
     
-    Count = Buffer.ReadInteger()
+    count = Buffer.ReadInteger()
     
-    ReDim ArmadurasHerrero(Count) As tItemsConstruibles
+    ReDim ArmadurasHerrero(count) As tItemsConstruibles
     
-    For i = 1 To Count
+    For i = 1 To count
         With ArmadurasHerrero(i)
             .Name = Buffer.ReadASCIIString()    'Get the object's name
             .GrhIndex = Buffer.ReadInteger()
@@ -3589,10 +3589,10 @@ On Error GoTo ErrHandler
     
     j = UBound(HerreroMejorar)
     
-    For i = 1 To Count
+    For i = 1 To count
         With ArmadurasHerrero(i)
             If .Upgrade Then
-                For k = 1 To Count
+                For k = 1 To count
                     If .Upgrade = ArmadurasHerrero(k).ObjIndex Then
                         j = j + 1
                 
@@ -3617,7 +3617,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -3643,7 +3643,7 @@ Private Sub HandleCarpenterObjects()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -3651,17 +3651,17 @@ On Error GoTo ErrHandler
     'Remove packet ID
     Call Buffer.ReadByte
     
-    Dim Count As Integer
+    Dim count As Integer
     Dim i As Long
     Dim j As Long
     Dim k As Long
     
-    Count = Buffer.ReadInteger()
+    count = Buffer.ReadInteger()
     
-    ReDim ObjCarpintero(Count) As tItemsConstruibles
+    ReDim ObjCarpintero(count) As tItemsConstruibles
     ReDim CarpinteroMejorar(0) As tItemsConstruibles
     
-    For i = 1 To Count
+    For i = 1 To count
         With ObjCarpintero(i)
             .Name = Buffer.ReadASCIIString()        'Get the object's name
             .GrhIndex = Buffer.ReadInteger()
@@ -3683,14 +3683,14 @@ On Error GoTo ErrHandler
         Call InvMaderasCarpinteria(3).Initialize(DirectD3D8, .picMaderas2, 2, , , , , , False)
         Call InvMaderasCarpinteria(4).Initialize(DirectD3D8, .picMaderas3, 2, , , , , , False)
         
-        Call .HideExtraControls(Count)
+        Call .HideExtraControls(count)
         Call .RenderList(1)
     End With
     
-    For i = 1 To Count
+    For i = 1 To count
         With ObjCarpintero(i)
             If .Upgrade Then
-                For k = 1 To Count
+                For k = 1 To count
                     If .Upgrade = ObjCarpintero(k).ObjIndex Then
                         j = j + 1
                 
@@ -3714,7 +3714,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -3755,7 +3755,7 @@ Private Sub HandleErrorMessage()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -3772,7 +3772,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -3828,7 +3828,7 @@ Private Sub HandleShowSignal()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -3844,7 +3844,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -3870,7 +3870,7 @@ Private Sub HandleChangeNPCInventorySlot()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -3897,7 +3897,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -4045,7 +4045,7 @@ Private Sub HandleAddForumMessage()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -4074,7 +4074,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -4253,7 +4253,7 @@ Private Sub HandleTrainerCreatureList()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -4276,7 +4276,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -4302,7 +4302,7 @@ Private Sub HandleGuildNews()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -4341,7 +4341,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -4367,7 +4367,7 @@ Private Sub HandleOfferDetails()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -4380,7 +4380,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -4406,7 +4406,7 @@ Private Sub HandleAlianceProposalsList()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -4431,7 +4431,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -4459,7 +4459,7 @@ Private Sub HandlePeaceProposalsList()
 
     End If
     
-    On Error GoTo ErrHandler
+    On Error GoTo errhandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
@@ -4492,7 +4492,7 @@ Private Sub HandlePeaceProposalsList()
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 
@@ -4519,7 +4519,7 @@ Private Sub HandleCharacterInfo()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -4592,7 +4592,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -4618,7 +4618,7 @@ Private Sub HandleGuildLeaderInfo()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -4680,7 +4680,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -4706,7 +4706,7 @@ Private Sub HandleGuildDetails()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -4754,7 +4754,7 @@ On Error GoTo ErrHandler
     
     frmGuildBrief.Show vbModeless, frmMain
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -4826,7 +4826,7 @@ Private Sub HandleShowUserRequest()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -4840,7 +4840,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -4954,7 +4954,7 @@ Private Sub HandleChangeUserTradeSlot()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -4983,7 +4983,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -5030,7 +5030,7 @@ Private Sub HandleSpawnList()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -5053,7 +5053,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -5079,7 +5079,7 @@ Private Sub HandleShowSOSForm()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -5103,7 +5103,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -5129,7 +5129,7 @@ Private Sub HandleShowDenounces()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -5153,7 +5153,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -5179,7 +5179,7 @@ Private Sub HandleShowPartyForm()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -5206,7 +5206,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -5234,7 +5234,7 @@ Private Sub HandleShowMOTDEditionForm()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -5248,7 +5248,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -5289,7 +5289,7 @@ Private Sub HandleUserNameList()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -5317,7 +5317,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -5368,7 +5368,7 @@ Private Sub HandleGuildMemberInfo()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -5410,7 +5410,7 @@ On Error GoTo ErrHandler
         .Show vbModeless, frmMain
     End With
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -5436,7 +5436,7 @@ Private Sub HandleUpdateTagAndStatus()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -5468,7 +5468,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -10554,7 +10554,7 @@ Private Sub HandleRecordList()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -10576,7 +10576,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -10602,7 +10602,7 @@ Private Sub HandleRecordDetails()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Dim tmpStr As String
@@ -10652,7 +10652,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -10718,30 +10718,38 @@ Private Sub HandleAttackAnim()
     'Set the animation trigger on true
     charlist(CharIndex).attacking = True 'should be done in separated sub?
 End Sub
+
 Private Sub HandleFXtoMap()
+
     If incomingData.Length < 8 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
+
     End If
     
-    Dim X, Y, FxIndex, Loops As Integer
+    Dim X As Integer, Y As Integer, FxIndex As Integer, Loops As Integer
     
     'Remove packet ID
     Call incomingData.ReadByte
+    
     Loops = incomingData.ReadByte
     X = incomingData.ReadInteger
     Y = incomingData.ReadInteger
     FxIndex = incomingData.ReadInteger
+
     'Set the fx on the map
     With MapData(X, Y) 'TODO: hay que hacer una funcion separada que haga esto
         .FxIndex = FxIndex
     
         If .FxIndex > 0 Then
                         
-        Call InitGrh(.fX, FxData(.FxIndex).Animacion)
+            Call InitGrh(.fX, FxData(.FxIndex).Animacion)
             .fX.Loops = Loops
+
         End If
+
     End With
+
 End Sub
 
 Private Sub HandleAccountLogged()
@@ -10751,7 +10759,7 @@ Private Sub HandleAccountLogged()
         Exit Sub
     End If
 
-    On Error GoTo ErrHandler
+    On Error GoTo errhandler
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue
@@ -10806,7 +10814,7 @@ Private Sub HandleAccountLogged()
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
 
-ErrHandler:
+errhandler:
 
     Dim Error As Long
 
@@ -10968,7 +10976,7 @@ Private Sub HandleQuestDetails()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     Dim Buffer As New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
@@ -11031,7 +11039,7 @@ On Error GoTo ErrHandler
     
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -11053,7 +11061,7 @@ Public Sub HandleQuestListSend()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     Dim Buffer As New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
@@ -11091,7 +11099,7 @@ On Error GoTo ErrHandler
     'Copiamos de vuelta el buffer
     Call incomingData.CopyBuffer(Buffer)
  
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
