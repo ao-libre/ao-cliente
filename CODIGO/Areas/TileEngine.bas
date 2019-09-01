@@ -317,7 +317,7 @@ Public bFogata       As Boolean
 Public charlist(1 To 10000) As Char
 
 ' Used by GetTextExtentPoint32
-Private Type size
+Private Type Size
     cx As Long
     cy As Long
 End Type
@@ -1239,7 +1239,7 @@ Public Function InitTileEngine(ByVal setDisplayFormhWnd As Long, ByVal setTilePi
     WindowTileHeight = Round(frmMain.MainViewPic.Height / 32, 0)
     WindowTileWidth = Round(frmMain.MainViewPic.Width / 32, 0)
     
-    IniPath = Game.path(Init)
+    IniPath = Game.path(INIT)
     HalfWindowTileHeight = WindowTileHeight \ 2
     HalfWindowTileWidth = WindowTileWidth \ 2
 
@@ -1283,7 +1283,7 @@ On Error GoTo 0
 End Function
 
 Public Sub LoadGraphics()
-    Call SurfaceDB.Initialize(DirectD3D8, Game.path(Graficos), ClientSetup.byMemory)
+    Call SurfaceDB.Initialize(DirectD3D8, ClientSetup.byMemory)
 End Sub
 
 Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _

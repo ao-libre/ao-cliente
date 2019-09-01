@@ -18,10 +18,10 @@ Private Const DEFAULT_MEMORY_TO_USE As Long = 64 ' In MB
 Private Const HASH_TABLE_SIZE       As Long = 337
 
 Private Type SURFACE_ENTRY_DYN
-    filename As Integer
+    FileName As Integer
     UltimoAcceso As Long
     Texture As Direct3DTexture8
-    size As Long
+    Size As Long
     texture_width As Integer
     texture_height As Integer
 End Type
@@ -77,11 +77,11 @@ Public Property Get Surface(ByVal fileIndex As Long) As Direct3DTexture8
     
 End Property
  
-Public Function GetTexture(ByVal filename As Integer, _
+Public Function GetTexture(ByVal FileName As Integer, _
                            ByRef TextureWidth As Long, _
                            ByRef TextureHeight As Long) As Direct3DTexture8
 
-    If filename = 0 Then
+    If FileName = 0 Then
         Debug.Print "0 GRH ATTEMPT TO BE LOADED"
         Exit Function
 
@@ -90,12 +90,12 @@ Public Function GetTexture(ByVal filename As Integer, _
     Dim i As Long
 
     ' Search the index on the list
-    With TexList(filename Mod HASH_TABLE_SIZE)
+    With TexList(FileName Mod HASH_TABLE_SIZE)
 
         For i = 1 To .surfaceCount
 
             If .SurfaceEntry(i).FileName = FileName Then
-                .SurfaceEntry(i).UltimoAcceso = timeGetTime
+                .SurfaceEntry(i).UltimoAcceso = GetTickCount
                 TextureWidth = .SurfaceEntry(i).texture_width
                 TextureHeight = .SurfaceEntry(i).texture_height
                 Set GetTexture = .SurfaceEntry(i).Texture
@@ -108,11 +108,11 @@ Public Function GetTexture(ByVal filename As Integer, _
     End With
  
     'Not in memory, load it!
-    Set GetTexture = CrearGrafico(filename, TextureWidth, TextureHeight)
+    Set GetTexture = CrearGrafico(FileName, TextureWidth, TextureHeight)
 
 End Function
  
-Public Sub Initialize(ByRef DD As D3DX8, ByVal graphicPath As String, Optional ByVal maxMemoryUsageInMb As Long = -1)
+Public Sub Initialize(ByRef DD As D3DX8, Optional ByVal maxMemoryUsageInMb As Long = -1)
     '**************************************************************
     'Author: Juan Martín Sotuyo Dodero
     'Last Modify Date: 5/04/2005
@@ -133,12 +133,12 @@ Private Function CrearGrafico(ByVal Archivo As Integer, _
                               ByRef TextureWidth As Long, _
                               ByRef TextureHeight As Long) As Direct3DTexture8
 
-    On Error GoTo ErrHandler
+    On Error GoTo errhandler
 
     Dim surface_desc As D3DSURFACE_DESC
     Dim texture_info As D3DXIMAGE_INFO
     Dim Index        As Integer
-    Dim buffer()     As Byte
+    Dim Buffer()     As Byte
     
     Index = Archivo Mod HASH_TABLE_SIZE
 
@@ -149,20 +149,20 @@ Private Function CrearGrafico(ByVal Archivo As Integer, _
 
         With .SurfaceEntry(.surfaceCount)
             'Nombre
-            .filename = Archivo
+            .FileName = Archivo
            
             'Ultimo acceso
-            .UltimoAcceso = timeGetTime
+            .UltimoAcceso = GetTickCount
 
             #If Compression = 1 Then
             
                 'Obtenemos el .bmp del archivo en Graphics.AO
-                Call modCompression.Get_Image(Game.path(Graficos), CStr(Archivo), buffer())
+                Call modCompression.Get_Image(Game.path(Graficos), CStr(Archivo), Buffer())
                 
                 'Seteamos la textura.
-                Set .Texture = DirectD3D.CreateTextureFromFileInMemoryEx(DirectDevice, buffer(0), UBound(buffer()) + 1, D3DX_DEFAULT, D3DX_DEFAULT, 0, 0, D3DFMT_A8R8G8B8, _
+                Set .Texture = DirectD3D.CreateTextureFromFileInMemoryEx(DirectDevice, Buffer(0), UBound(Buffer()) + 1, D3DX_DEFAULT, D3DX_DEFAULT, 0, 0, D3DFMT_A8R8G8B8, _
                                                                          D3DPOOL_MANAGED, D3DX_FILTER_POINT, D3DX_FILTER_NONE, &HFF000000, texture_info, ByVal 0)
-                Erase buffer
+                Erase Buffer
                 
             #Else
                 
@@ -186,7 +186,7 @@ Private Function CrearGrafico(ByVal Archivo As Integer, _
             
             .texture_width = texture_info.Width
             .texture_height = texture_info.Height
-            .size = surface_desc.size
+            .Size = surface_desc.Size
             
             TextureWidth = .texture_width
             TextureHeight = .texture_height
@@ -195,7 +195,7 @@ Private Function CrearGrafico(ByVal Archivo As Integer, _
 
             ' Parra is back (;
             mGraphicsNumber = mGraphicsNumber + 1
-            mCurrentMemoryBytes = mCurrentMemoryBytes + surface_desc.size
+            mCurrentMemoryBytes = mCurrentMemoryBytes + surface_desc.Size
 
         End With
 
@@ -212,7 +212,7 @@ Private Function CrearGrafico(ByVal Archivo As Integer, _
     
     Exit Function
     
-ErrHandler:
+errhandler:
     Debug.Print "ERROR AL CARGAR EL GRAFICO> " & Archivo & ".bmp"
 
 End Function
@@ -231,7 +231,7 @@ Private Function RemoveLRU() As Boolean
     Dim j            As Long
     Dim surface_desc As D3DSURFACE_DESC
    
-    LRUtime = timeGetTime
+    LRUtime = GetTickCount
    
     'Check out through the whole list for the least recently used
     For i = 0 To HASH_TABLE_SIZE - 1
@@ -257,11 +257,11 @@ Private Function RemoveLRU() As Boolean
     Call TexList(LRUi).SurfaceEntry(LRUj).Texture.GetLevelDesc(0, surface_desc)
    
     ' Parra is back (;
-    mCurrentMemoryBytes = mCurrentMemoryBytes - surface_desc.size
+    mCurrentMemoryBytes = mCurrentMemoryBytes - surface_desc.Size
    
     'Remove it
     Set TexList(LRUi).SurfaceEntry(LRUj).Texture = Nothing
-    TexList(LRUi).SurfaceEntry(LRUj).filename = 0
+    TexList(LRUi).SurfaceEntry(LRUj).FileName = 0
    
     ' Parra is back (;
     mGraphicsNumber = mGraphicsNumber - 1

@@ -124,12 +124,12 @@ Public Sub LeerConfiguracion()
     Call IniciarCabecera
     
     Set Lector = New clsIniManager
-    Lector.Initialize (Game.path(INIT) & CLIENT_FILE)
+    Call Lector.Initialize(Game.path(INIT) & CLIENT_FILE)
     
     With ClientSetup
         
         ' VIDEO
-        .byMemory = CInt(Lector.GetValue("VIDEO", "DINAMIC_MEMORY"))
+        .byMemory = Lector.GetValue("VIDEO", "DINAMIC_MEMORY")
         .bNoRes = CBool(Lector.GetValue("VIDEO", "DISABLE_RESOLUTION_CHANGE"))
         .ProyectileEngine = CBool(Lector.GetValue("VIDEO", "PROYECTILE_ENGINE"))
         .PartyMembers = CBool(Lector.GetValue("VIDEO", "PARTY_MEMBERS"))
@@ -199,7 +199,7 @@ Public Sub GuardarConfiguracion()
     With ClientSetup
         
         ' VIDEO
-        Call Lector.ChangeValue("VIDEO", "DINAMIC_MEMORY", CInt(.byMemory))
+        Call Lector.ChangeValue("VIDEO", "DINAMIC_MEMORY", .byMemory)
         Call Lector.ChangeValue("VIDEO", "DISABLE_RESOLUTION_CHANGE", CInt(.bNoRes))
         Call Lector.ChangeValue("VIDEO", "PROYECTILE_ENGINE", CInt(.ProyectileEngine))
         Call Lector.ChangeValue("VIDEO", "PARTY_MEMBERS", CInt(.PartyMembers))
