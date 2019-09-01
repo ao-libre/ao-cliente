@@ -1,4 +1,6 @@
 Attribute VB_Name = "mDx8_Party"
+Option Explicit
+
 '***************************************************
 'Author: Ezequiel Juarez (Standelf)
 'Last Modification: 26/05/10
@@ -36,20 +38,20 @@ Public Sub Draw_Party_Members()
 'Last Modification: 26/05/10
 'Render Party Members
 '***************************************************
-        Dim i As Byte, Count As Byte
-        Count = 0
+        Dim i As Byte, count As Byte
+        count = 0
             For i = 1 To 5
                 If PartyMembers(i).Name <> "" Then
-                    Count = Count + 1
-                    Call Engine_Draw_Box(410, 20 + (Count - 1) * 50 + 5, 120, 40, 1677721600)
-                    Call DDrawTransGrhIndextoSurface(HeadData(PartyMembers(i).Head).Head(3).GrhIndex, 410, 20 + (Count - 1) * 50 + 35, 1, Normal_RGBList(), 0, True)
+                    count = count + 1
+                    Call Engine_Draw_Box(410, 20 + (count - 1) * 50 + 5, 120, 40, 1677721600)
+                    Call DDrawTransGrhIndextoSurface(HeadData(PartyMembers(i).Head).Head(3).GrhIndex, 410, 20 + (count - 1) * 50 + 35, 1, Normal_RGBList(), 0, True)
                     'Call Fonts_Render_String(PartyMembers(i).Name, 440, 20 + (Count - 1) * 50 + 10, -1761607681, 2)
                     'Fonts_Render_String "Nivel: " & PartyMembers(i).Lvl, 440, 20 + (Count - 1) * 50 + 20, -1761607681), 2
                     'Fonts_Render_String "Exp: " & PartyMembers(i).ExpParty, 440, 20 + (Count - 1) * 50 + 30, -1761607681, 2
                 End If
             Next i
             
-            If Count <> 0 Then
+            If count <> 0 Then
                 'Fonts_Render_String "Miembros de Party", 405, 5, D3DColorARGB(100, 255, 128, 0), 3
             End If
 End Sub

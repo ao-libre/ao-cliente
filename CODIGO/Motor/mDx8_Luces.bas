@@ -1,4 +1,6 @@
 Attribute VB_Name = "mDx8_Luces"
+Option Explicit
+
 '***************************************************
 'Author: Ezequiel Juarez (Standelf)
 'Last Modification: 14/05/10
@@ -27,8 +29,8 @@ Public Function Create_Light_To_Map(ByVal map_x As Byte, ByVal map_y As Byte, Op
    
     Light_List(NumLights).RGBcolor.r = Red
     Light_List(NumLights).RGBcolor.g = Green
-    Light_List(NumLights).RGBcolor.b = Blue
-    Light_List(NumLights).RGBcolor.a = 255
+    Light_List(NumLights).RGBcolor.B = Blue
+    Light_List(NumLights).RGBcolor.A = 255
     Light_List(NumLights).range = range
     Light_List(NumLights).active = True
     Light_List(NumLights).map_x = map_x
@@ -99,7 +101,7 @@ Private Sub LightRender(ByVal light_index As Integer)
    
     AmbientColor.r = Estado_Actual.r
     AmbientColor.g = Estado_Actual.g
-    AmbientColor.b = Estado_Actual.b
+    AmbientColor.B = Estado_Actual.B
 
     LightColor = Light_List(light_index).RGBcolor
        
@@ -149,7 +151,7 @@ Private Function LightCalculate(ByVal cRadio As Integer, ByVal LightX As Integer
    
     If VertexDist <= pRadio Then
         Call D3DXColorLerp(CurrentColor, LightColor, AmbientColor, VertexDist / pRadio) 'aca hay algo mal ;) Ambient color ;)
-        LightCalculate = D3DColorXRGB(Round(CurrentColor.r), Round(CurrentColor.g), Round(CurrentColor.b))
+        LightCalculate = D3DColorXRGB(Round(CurrentColor.r), Round(CurrentColor.g), Round(CurrentColor.B))
     Else
         LightCalculate = TileLight
     End If
@@ -175,7 +177,7 @@ Private Sub LightRender(ByVal light_index As Integer)
     Dim XCoord As Integer
     Dim YCoord As Integer
     
-    Color(0) = D3DColorARGB(255, Light_List(light_index).RGBcolor.r, Light_List(light_index).RGBcolor.g, Light_List(light_index).RGBcolor.b)
+    Color(0) = D3DColorARGB(255, Light_List(light_index).RGBcolor.r, Light_List(light_index).RGBcolor.g, Light_List(light_index).RGBcolor.B)
     Color(1) = Color(0)
     Color(2) = Color(0)
     Color(3) = Color(0)
@@ -265,7 +267,7 @@ Private Sub Delete_Light_To_Index(ByVal light_index As Integer)
     Dim Y As Integer
     Dim colorz As Long
 
-    colorz = D3DColorARGB(Estado_Actual.a, Estado_Actual.r, Estado_Actual.g, Estado_Actual.b)
+    colorz = D3DColorARGB(Estado_Actual.A, Estado_Actual.r, Estado_Actual.g, Estado_Actual.B)
     
     'Set up light borders
     min_x = Light_List(light_index).map_x - Light_List(light_index).range

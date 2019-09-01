@@ -40,8 +40,8 @@ Public ibQuad As DxVBLibA.Direct3DIndexBuffer8
 Public vbQuadIdx As DxVBLibA.Direct3DVertexBuffer8
 Dim temp_verts(3) As TLVERTEX
 
-Private OffsetCounterX As Single
-Private OffsetCounterY As Single
+Public OffsetCounterX As Single
+Public OffsetCounterY As Single
     
 Public WeatherFogX1 As Single
 Public WeatherFogY1 As Single
@@ -263,8 +263,8 @@ Public FPSLastCheck As Long
 Private WindowTileWidth As Integer
 Private WindowTileHeight As Integer
 
-Private HalfWindowTileWidth As Integer
-Private HalfWindowTileHeight As Integer
+Public HalfWindowTileWidth As Integer
+Public HalfWindowTileHeight As Integer
 
 'Cuantos tiles el engine mete en el BUFFER cuando
 'dibuja el mapa. Ojo un tamano muy grande puede

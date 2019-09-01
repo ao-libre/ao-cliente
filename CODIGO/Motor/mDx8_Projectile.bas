@@ -1,4 +1,6 @@
 Attribute VB_Name = "mDx8_Projectile"
+Option Explicit
+
 Public LastProjectile As Integer    'Last projectile index used
 
 'Projectile information

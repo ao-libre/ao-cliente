@@ -110,6 +110,8 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Option Explicit
+
 Private Sub Form_Load()
     Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaRecuperarCuenta.jpg")
     Me.lblCorreo.Caption = JsonLanguage.Item("FRM_RECUPERAR_CUENTA_LBLCORREO").Item("TEXTO")
