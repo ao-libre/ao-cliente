@@ -121,12 +121,14 @@ Private Sub Class_Terminate()
     'Last Modify Date: 5/01/2006
     '
     '**************************************************************
-    Dim i As Long
+    Dim i As Long, Total_MainNodes As Long
+    
+    Total_MainNodes = MainNodes - 1
     
     'Clean up
     If MainNodes Then
 
-        For i = 1 To MainNodes - 1
+        For i = 1 To Total_MainNodes
             Erase fileData(i).values
         Next i
         
@@ -219,13 +221,17 @@ Public Sub Initialize(ByVal File As String)
     Close handle
     
     Dim i As Long
+    Dim Total_MainNodes As Long
     
     If MainNodes Then
         'Sort main nodes to allow binary search
         Call SortMainNodes(0, MainNodes - 1)
         
+        'Precalculate all MainNodes
+        Total_MainNodes = MainNodes - 1
+        
         'Sort values of each node to allow binary search
-        For i = 0 To MainNodes - 1
+        For i = 0 To Total_MainNodes
 
             If fileData(i).numValues Then Call SortChildNodes(fileData(i), 0, fileData(i).numValues - 1)
         Next i
@@ -613,16 +619,16 @@ Public Sub DumpFile(ByRef File As String)
     '
     '**************************************************************
     Dim hFile As Integer
-
     Dim i     As Long
-
     Dim j     As Long
-
+    Dim Total_MainNodes As Long
+    
     hFile = FreeFile()
-
+    Total_MainNodes = MainNodes - 1
+    
     Open File For Output As hFile
 
-    For i = 0 To MainNodes - 1
+    For i = 0 To Total_MainNodes
 
         With fileData(i)
             Print #hFile, "[" & .Name & "]"
@@ -631,7 +637,7 @@ Public Sub DumpFile(ByRef File As String)
                 Print #hFile, .values(j).key & "=" & .values(j).Value
             Next j
             
-            Print #hFile, ""
+            Print #hFile, vbNullString
 
         End With
 

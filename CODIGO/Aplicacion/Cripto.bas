@@ -255,82 +255,117 @@ Private Sub pvCryptoAesTerminate(uCrypto As UcsZipCryptoType)
     End If
 End Sub
  
-Private Function pvCryptoAesCrypt( _
-            uCrypto As UcsZipCryptoType, _
-            baData() As Byte, _
-            Optional ByVal Offset As Long, _
-            Optional ByVal Size As Long, _
-            Optional ByVal HashBefore As Boolean, _
-            Optional ByVal HashAfter As Boolean) As Boolean
-    Dim lIdx            As Long
-    Dim lJdx            As Long
-    Dim lPadSize        As Long
-    Dim hResult         As Long
-    Dim sApiSource      As String
+Private Function pvCryptoAesCrypt(uCrypto As UcsZipCryptoType, _
+                                  baData() As Byte, _
+                                  Optional ByVal Offset As Long, _
+                                  Optional ByVal Size As Long, _
+                                  Optional ByVal HashBefore As Boolean, _
+                                  Optional ByVal HashAfter As Boolean) As Boolean
+
+    Dim lIdx       As Long
+    Dim lJdx       As Long
+    Dim lPadSize   As Long
+    Dim hResult    As Long
+    Dim sApiSource As String
+    Dim Loop_To As Long
     
     If Size < 0 Then
         Size = UBound(baData) + 1 - Offset
     End If
+
     If HashBefore Then
         hResult = BCryptHashData(uCrypto.hHmacHash, baData(Offset), Size, 0)
+
         If hResult <> 0 Then
             sApiSource = "BCryptHashData"
             GoTo QH
+
         End If
+
     End If
+
     With uCrypto
+
         '--- reuse EncrData from prev call until next AES_BLOCK_SIZE boundary
-        For lIdx = Offset To Offset + Size - 1
+        Loop_To = Offset + Size - 1
+        
+        For lIdx = Offset To Loop_To
             If (.EncrPos And (AES_BLOCK_SIZE - 1)) = 0 Then
                 Exit For
+
             End If
+
             baData(lIdx) = baData(lIdx) Xor .EncrData(.EncrPos)
             .EncrPos = .EncrPos + 1
         Next
+
         If lIdx < Offset + Size Then
             '--- pad remaining input size to AES_BLOCK_SIZE
             lPadSize = (Offset + Size - lIdx + AES_BLOCK_SIZE - 1) And -AES_BLOCK_SIZE
+
             If UBound(.EncrData) + 1 < lPadSize Then
                 ReDim .EncrData(0 To lPadSize - 1) As Byte
+
             End If
+
             '--- encrypt incremental nonces in EncrData
-            For lJdx = 0 To lPadSize - 1 Step 16
+            Loop_To = lPadSize - 1
+            
+            For lJdx = 0 To Loop_To Step 16
+
                 If .Nonce(0) <> -1 Then
                     .Nonce(0) = (.Nonce(0) Xor &H80000000) + 1 Xor &H80000000
                 Else
                     .Nonce(0) = 0
                     .Nonce(1) = (.Nonce(1) Xor &H80000000) + 1 Xor &H80000000
+
                 End If
+
                 Call CopyMemory(.EncrData(lJdx), .Nonce(0), 8)
             Next
             hResult = BCryptEncrypt(.hAesKey, .EncrData(0), lPadSize, 0, 0, 0, .EncrData(0), lPadSize, lJdx, 0)
+
             If hResult <> 0 Then
                 sApiSource = "BCryptEncrypt"
                 GoTo QH
+
             End If
+
             '--- xor remaining input and leave anything extra of EncrData for reuse
-            For .EncrPos = 0 To Offset + Size - lIdx - 1
+            Loop_To = Offset + Size - lIdx - 1
+            
+            For .EncrPos = 0 To Loop_To
                 baData(lIdx) = baData(lIdx) Xor .EncrData(.EncrPos)
                 lIdx = lIdx + 1
             Next
+
         End If
+
     End With
+
     If HashAfter Then
         hResult = BCryptHashData(uCrypto.hHmacHash, baData(Offset), Size, 0)
+
         If hResult <> 0 Then
             sApiSource = "BCryptHashData"
             GoTo QH
+
         End If
+
     End If
+
     '--- success
     pvCryptoAesCrypt = True
     Exit Function
 QH:
+
     If Err.LastDllError <> 0 Then
         uCrypto.LastError = GetSystemMessage(Err.LastDllError)
     Else
         uCrypto.LastError = "[" & Hex(hResult) & "] Error in " & sApiSource
+
     End If
+
 End Function
  
 Private Function pvCryptoAesGetFinalHash(uCrypto As UcsZipCryptoType, ByVal lSize As Long) As Byte()
