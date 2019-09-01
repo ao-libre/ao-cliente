@@ -9,7 +9,7 @@ Public DirectD3D8 As D3DX8
 Public DirectD3D As Direct3D8
 Public DirectDevice As Direct3DDevice8
 
-Public SurfaceDB As New clsSurfaceManager
+Public SurfaceDB As New clsTextureManager
 
 Public Engine_BaseSpeed As Single
 Public TileBufferSize As Integer

@@ -317,7 +317,7 @@ Public bFogata       As Boolean
 Public charlist(1 To 10000) As Char
 
 ' Used by GetTextExtentPoint32
-Private Type Size
+Private Type size
     cx As Long
     cy As Long
 End Type
@@ -1239,7 +1239,7 @@ Public Function InitTileEngine(ByVal setDisplayFormhWnd As Long, ByVal setTilePi
     WindowTileHeight = Round(frmMain.MainViewPic.Height / 32, 0)
     WindowTileWidth = Round(frmMain.MainViewPic.Width / 32, 0)
     
-    IniPath = Game.path(INIT)
+    IniPath = Game.path(Init)
     HalfWindowTileHeight = WindowTileHeight \ 2
     HalfWindowTileWidth = WindowTileWidth \ 2
 
@@ -1710,13 +1710,13 @@ Public Sub SetCharacterFx(ByVal CharIndex As Integer, ByVal fX As Integer, ByVal
     End With
 End Sub
 
-
-Public Sub Device_Textured_Render(ByVal X As Integer, ByVal Y As Integer, ByVal Texture As Direct3DTexture8, ByRef src_rect As RECT, ByRef Color_List() As Long, Optional Alpha As Boolean = False, Optional ByVal Angle As Single = 0, Optional ByVal Shadow As Boolean = False)
+Public Sub Device_Textured_Render(ByVal X As Integer, ByVal Y As Integer, ByVal Archivo As Integer, ByRef src_rect As RECT, ByRef Color_List() As Long, Optional Alpha As Boolean = False, Optional ByVal Angle As Single = 0, Optional ByVal Shadow As Boolean = False)
+    
     If Shadow And ClientSetup.UsarSombras = False Then Exit Sub
     
+    Dim Texture As Direct3DTexture8
     Dim dest_rect As RECT
     Dim temp_verts(3) As TLVERTEX
-    Dim SRDesc As D3DSURFACE_DESC
 
     With dest_rect
         .Bottom = Y + (src_rect.Bottom - src_rect.Top)
@@ -1725,11 +1725,9 @@ Public Sub Device_Textured_Render(ByVal X As Integer, ByVal Y As Integer, ByVal 
         .Top = Y
     End With
     
-    Dim texwidth As Long, texheight As Long
-    Texture.GetLevelDesc 0, SRDesc
-
-    texwidth = SRDesc.Width
-    texheight = SRDesc.Height
+    'Seteamos la textura
+    Dim TextureWidth As Long, TextureHeight As Long
+    Set Texture = SurfaceDB.GetTexture(Archivo, TextureWidth, TextureHeight)
     
     If Shadow Then
         Dim Color_Shadow(3) As Long
@@ -1739,7 +1737,7 @@ Public Sub Device_Textured_Render(ByVal X As Integer, ByVal Y As Integer, ByVal 
         Geometry_Create_Box temp_verts(), dest_rect, src_rect, Color_List(), texwidth, texheight, Angle
     End If
     
-    DirectDevice.SetTexture 0, Texture
+    Call DirectDevice.SetTexture(0, Texture)
 
     If Shadow Then
         temp_verts(1).X = temp_verts(1).X + (src_rect.Bottom - src_rect.Top) * 0.5
@@ -1766,12 +1764,13 @@ Public Sub Device_Textured_Render(ByVal X As Integer, ByVal Y As Integer, ByVal 
     
 End Sub
 
-Public Sub Device_Textured_Render_Scale(ByVal X As Integer, ByVal Y As Integer, ByVal Texture As Direct3DTexture8, ByRef src_rect As RECT, ByRef Color_List() As Long, Optional Alpha As Boolean = False, Optional ByVal Angle As Single = 0, Optional ByVal Shadow As Boolean = False)
+Public Sub Device_Textured_Render_Scale(ByVal X As Integer, ByVal Y As Integer, ByVal Archivo As Integer, ByRef src_rect As RECT, ByRef Color_List() As Long, Optional Alpha As Boolean = False, Optional ByVal Angle As Single = 0, Optional ByVal Shadow As Boolean = False)
+    
     If Shadow And ClientSetup.UsarSombras = False Then Exit Sub
     
+    Dim Texture As Direct3DTexture8
     Dim dest_rect As RECT
     Dim temp_verts(3) As TLVERTEX
-    Dim SRDesc As D3DSURFACE_DESC
 
     With dest_rect
         .Bottom = Y + 2 '(src_rect.bottom - src_rect.Top)
@@ -1780,22 +1779,20 @@ Public Sub Device_Textured_Render_Scale(ByVal X As Integer, ByVal Y As Integer, 
         .Top = Y
     End With
     
-    Dim texwidth As Long, texheight As Long
-    Texture.GetLevelDesc 0, SRDesc
-
-    texwidth = SRDesc.Width
-    texheight = SRDesc.Height
+    'Seteamos la textura
+    Dim TextureWidth As Long, TextureHeight As Long
+    Set Texture = SurfaceDB.GetTexture(Archivo, TextureWidth, TextureHeight)
     
-    Geometry_Create_Box temp_verts(), dest_rect, src_rect, Color_List(), texwidth, texheight, Angle
+    Call Geometry_Create_Box(temp_verts(), dest_rect, src_rect, Color_List(), TextureWidth, TextureHeight, Angle)
     
-    DirectDevice.SetTexture 0, Texture
+    Call DirectDevice.SetTexture(0, Texture)
     
     If Alpha Then
         DirectDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_ONE
         DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_ONE
     End If
         
-    DirectDevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, temp_verts(0), Len(temp_verts(0))
+    Call DirectDevice.DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, temp_verts(0), Len(temp_verts(0)))
         
     If Alpha Then
         DirectDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
@@ -1866,7 +1863,7 @@ On Error GoTo Error
         SourceRect.Bottom = SourceRect.Top + .pixelHeight
         
         'Draw
-        Call Device_Textured_Render(X, Y, SurfaceDB.Surface(.FileNum), SourceRect, MapData(posX, posY).Engine_Light(), False, 0, False)
+        Call Device_Textured_Render(X, Y, .FileNum, SourceRect, MapData(posX, posY).Engine_Light(), False, 0, False)
     End With
 Exit Sub
 
@@ -1902,7 +1899,7 @@ Sub DDrawTransGrhIndextoSurface(ByVal GrhIndex As Integer, ByVal X As Integer, B
         SourceRect.Bottom = SourceRect.Top + .pixelHeight
         
         'Draw
-        Call Device_Textured_Render(X, Y, SurfaceDB.Surface(.FileNum), SourceRect, Color_List(), Alpha, Angle, False)
+        Call Device_Textured_Render(X, Y, .FileNum, SourceRect, Color_List(), Alpha, Angle, False)
     End With
 End Sub
 
@@ -1951,7 +1948,7 @@ On Error GoTo Error
         SourceRect.Bottom = SourceRect.Top + .pixelHeight
         
         'Draw
-        Call Device_Textured_Render_Scale(X, Y, SurfaceDB.Surface(.FileNum), SourceRect, MapData(posX, posY).Engine_Light(), False, 0, False)
+        Call Device_Textured_Render_Scale(X, Y, .FileNum, SourceRect, MapData(posX, posY).Engine_Light(), False, 0, False)
     End With
 Exit Sub
 
@@ -1988,7 +1985,7 @@ Sub DDrawTransGrhIndextoSurfaceScale(ByVal GrhIndex As Integer, ByVal X As Integ
         SourceRect.Bottom = SourceRect.Top + .pixelHeight
         
         'Draw
-        Call Device_Textured_Render_Scale(X, Y, SurfaceDB.Surface(.FileNum), SourceRect, Color_List(), Alpha, Angle, False)
+        Call Device_Textured_Render_Scale(X, Y, .FileNum, SourceRect, Color_List(), Alpha, Angle, False)
     End With
 End Sub
 
@@ -2041,7 +2038,7 @@ On Error GoTo Error
         SourceRect.Right = SourceRect.Left + .pixelWidth
         SourceRect.Bottom = SourceRect.Top + .pixelHeight
         
-        Call Device_Textured_Render(X, Y, SurfaceDB.Surface(.FileNum), SourceRect, Color_List(), Alpha, Angle, False)
+        Call Device_Textured_Render(X, Y, .FileNum, SourceRect, Color_List(), Alpha, Angle, False)
     End With
 Exit Sub
 
