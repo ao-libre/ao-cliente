@@ -2505,7 +2505,8 @@ End Sub
 'Incorporado por ReyarB
 Private Sub Minimapa_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If Button = vbRightButton Then
-        Call ParseUserCommand("/TELEP YO " & UserMap & " " & CByte(X) & " " & CByte(Y))
+        Call WriteWarpChar("YO", UserMap, CByte(X), CByte(Y))
+        Call ActualizarMiniMapa
     End If
 End Sub
 'fin Incorporado ReyarB
