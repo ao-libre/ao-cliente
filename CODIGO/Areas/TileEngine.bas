@@ -1555,7 +1555,7 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
         
         If Not .muerto Then
             If Abs(MouseTileX - .Pos.X) < 1 And (Abs(MouseTileY - .Pos.Y)) < 1 And CharIndex <> UserCharIndex And ClientSetup.TonalidadPJ Then
-                If LenB(.Nombre) <> 0 Then
+                If Len(.Nombre) > 0 Then
                     If .Criminal Then
                         Call Engine_Long_To_RGB_List(ColorFinal(), -3382172)
                     Else
