@@ -549,7 +549,6 @@ Private Sub Particle_Group_Destroy(ByVal Particle_Group_Index As Long)
     On Error Resume Next
 
     Dim temp As Particle_Group
-    Dim count As Long
     Dim i    As Integer
     
     With particle_group_list(Particle_Group_Index)
@@ -559,10 +558,8 @@ Private Sub Particle_Group_Destroy(ByVal Particle_Group_Index As Long)
         ElseIf .char_index Then
 
             If Char_Check(.char_index) Then
-                
-                count = charlist(.char_index).Particle_Count
-                
-                For i = 1 To count
+
+                For i = 1 To charlist(.char_index).Particle_Count
 
                     If charlist(.char_index).Particle_Group(i) = Particle_Group_Index Then
                         charlist(.char_index).Particle_Group(i) = 0
@@ -586,10 +583,8 @@ Private Sub Particle_Group_Destroy(ByVal Particle_Group_Index As Long)
                     Exit Sub
                 End If
             Loop
-            
             Debug.Print particle_group_last & "," & UBound(particle_group_list)
             ReDim Preserve particle_group_list(1 To particle_group_last) As Particle_Group
-            
         End If
         
         particle_group_count = particle_group_count - 1
