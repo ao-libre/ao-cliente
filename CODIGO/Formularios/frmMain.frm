@@ -2511,9 +2511,9 @@ End Sub
 'fin Incorporado ReyarB
 
 
-Public Sub ActualizarMiniMapa(ByVal tHeading As E_Heading)
+Public Sub ActualizarMiniMapa()
 '***************************************************
-'Author: Martín Gomez (Samke)
+'Author: MartÃ­n Gomez (Samke)
 'Last Modify Date: 07/12/2011
 'Integrado por Reyarb
 '***************************************************
