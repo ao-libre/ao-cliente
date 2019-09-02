@@ -112,7 +112,7 @@ Public Function GetTexture(ByVal FileName As Integer, _
 
 End Function
  
-Public Sub Initialize(ByRef DD As D3DX8, Optional ByVal maxMemoryUsageInMb As Long = -1)
+Public Sub Initialize(ByRef DD As D3DX8, Optional ByVal maxMemoryUsageInMb As Long = DEFAULT_MEMORY_TO_USE)
     '**************************************************************
     'Author: Juan Martín Sotuyo Dodero
     'Last Modify Date: 5/04/2005
@@ -168,11 +168,11 @@ Private Function CrearGrafico(ByVal Archivo As Integer, _
                 
                 If FileExist(Graphic & ".bmp", vbNormal) Then
                     Set .Texture = DirectD3D.CreateTextureFromFileEx(DirectDevice, Graphic & ".BMP", D3DX_DEFAULT, D3DX_DEFAULT, 0, 0, D3DFMT_A8R8G8B8, _
-                                                                     D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, &HFF000000, ByVal 0, ByVal 0)
+                                                                     D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, &HFF000000, texture_info, ByVal 0)
                 
                 ElseIf FileExist(Graphic & ".png", vbNormal) Then
                     Set .Texture = DirectD3D.CreateTextureFromFileEx(DirectDevice, Graphic & ".PNG", D3DX_DEFAULT, D3DX_DEFAULT, 0, 0, D3DFMT_A8R8G8B8, _
-                                                                     D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, &HFF000000, ByVal 0, ByVal 0)
+                                                                     D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, &HFF000000, texture_info, ByVal 0)
                 
                 Else
                     MsgBox "No se ha podido cargar el grafico con indice: " & fileIndex
