@@ -38,6 +38,12 @@ Public Inet As clsInet
 Public AccountMailToRecover As String
 Public AccountNewPassword As String
 
+' Desvanecimiento en Techos
+Public ColorTecho As Byte
+Public ColorArbol As Byte
+Public temp_rgb(3) As Long
+
+
 Public Sonidos As clsSoundMapas
 
 '//Caminata fluida

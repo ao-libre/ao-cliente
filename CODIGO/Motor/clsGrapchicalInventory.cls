@@ -416,9 +416,22 @@ Public Sub DrawInventory()
     Upper_Inventory = UBound(Inventory)
     
     'Clear the inventory window
+<<<<<<< HEAD
     Call Engine_BeginScene
     
     For LoopC = Lower_Inventory To Upper_Inventory
+=======
+    Engine_BeginScene
+        For LoopC = InventoryOffset * (InventoryWindow.ScaleWidth \ ownTilePixelWidth) + 1 To UBound(Inventory)
+            
+            startdX = ((LoopC - 1) Mod (frmMain.PicInv.Width / 32)) * 32
+            startdY = ((LoopC - 1) \ (frmMain.PicInv.Width / 32)) * 32
+            
+            
+            Call Engine_Long_To_RGB_List(Inv_Color(), -1)
+            
+            Call Engine_Long_To_RGB_List(Sel_Color(), D3DColorARGB(100, 255, 128, 0))
+>>>>>>> parent of 42202c0... Hardcodeo de colores, evitamos la funcion D3DColorARGB() (#272)
             
         startdX = ((LoopC - 1) Mod (frmMain.PicInv.Width / 32)) * 32
         startdY = ((LoopC - 1) \ (frmMain.PicInv.Width / 32)) * 32
