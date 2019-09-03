@@ -338,7 +338,7 @@ Sub Engine_Init_FontSettings()
 
         'Set the verticies
         With cfonts(1).HeaderInfo.CharVA(LoopChar)
-            .Vertex(0).Color = -16777216   'Black is the most common color
+            .Vertex(0).Color = D3DColorARGB(255, 0, 0, 0)   'Black is the most common color
             .Vertex(0).rhw = 1
             .Vertex(0).tu = u
             .Vertex(0).tv = v
@@ -346,7 +346,7 @@ Sub Engine_Init_FontSettings()
             .Vertex(0).Y = 0
             .Vertex(0).z = 0
             
-            .Vertex(1).Color = -16777216
+            .Vertex(1).Color = D3DColorARGB(255, 0, 0, 0)
             .Vertex(1).rhw = 1
             .Vertex(1).tu = u + cfonts(1).ColFactor
             .Vertex(1).tv = v
@@ -354,7 +354,7 @@ Sub Engine_Init_FontSettings()
             .Vertex(1).Y = 0
             .Vertex(1).z = 0
             
-            .Vertex(2).Color = -16777216
+            .Vertex(2).Color = D3DColorARGB(255, 0, 0, 0)
             .Vertex(2).rhw = 1
             .Vertex(2).tu = u
             .Vertex(2).tv = v + cfonts(1).RowFactor
@@ -362,7 +362,7 @@ Sub Engine_Init_FontSettings()
             .Vertex(2).Y = cfonts(1).HeaderInfo.CellHeight
             .Vertex(2).z = 0
             
-            .Vertex(3).Color = -16777216
+            .Vertex(3).Color = D3DColorARGB(255, 0, 0, 0)
             .Vertex(3).rhw = 1
             .Vertex(3).tu = u + cfonts(1).ColFactor
             .Vertex(3).tv = v + cfonts(1).RowFactor
@@ -384,7 +384,8 @@ Public Sub DrawText(ByVal X As Integer, _
     Dim aux As D3DCOLORVALUE
 
     'Obtener_RGB Color, r, g, b
-    ARGBtoD3DCOLORVALUE Color, aux
+    Call ARGBtoD3DCOLORVALUE(Color, aux)
+    
     Color = D3DColorARGB(255, aux.r, aux.g, aux.B)
         
     Call Engine_Render_Text(cfonts(1), Text, X, Y, Color, Center, 255, False)
