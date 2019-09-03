@@ -95,7 +95,6 @@ Public Function GetTexture(ByVal FileName As Integer, _
         For i = 1 To .surfaceCount
 
             If .SurfaceEntry(i).FileName = FileName Then
-                .SurfaceEntry(i).UltimoAcceso = GetTickCount
                 TextureWidth = .SurfaceEntry(i).texture_width
                 TextureHeight = .SurfaceEntry(i).texture_height
                 Set GetTexture = .SurfaceEntry(i).Texture
@@ -152,9 +151,6 @@ Private Function CrearGrafico(ByVal Archivo As Integer, _
         
             'Nombre
             .FileName = Archivo
-           
-            'Ultimo acceso
-            .UltimoAcceso = GetTickCount
 
             #If Compression = 1 Then
             
