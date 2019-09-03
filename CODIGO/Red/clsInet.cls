@@ -362,43 +362,32 @@ Private Function TrimString(ByVal s As String) As String
 End Function
  
 Private Function UrlEncode(sText As String) As String
-
     Dim sResult As String
     Dim sFinal  As String
     Dim sChar   As String
-    Dim i       As Long, Len_sText As Long
+    Dim i       As Long
  
-    sResult = vbNullString
-    sFinal = vbNullString
-    Len_sText = Len(sText)
+    sResult = ""
+    sFinal = ""
 
-    For i = 1 To Len_sText
-        
+    For i = 1 To Len(sText)
         sChar = mid$(sText, i, 1)
 
         If InStr(1, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", sChar) <> 0 Then
             sResult = sResult & sChar
-        
         ElseIf sChar = " " Then
             sResult = sResult & "+"
-        
         ElseIf sChar = vbCr Or sChar = vbLf Or sChar = vbCrLf Then
-        
         Else
             sResult = sResult & "%" & Hex$(Asc(sChar))
-
         End If
 
         If Len(sResult) >= 1000 Then
             sFinal = sFinal & sResult
-            sResult = vbNullString
-
+            sResult = ""
         End If
-
     Next
-    
     UrlEncode = sFinal & sResult
-
 End Function
  
 Public Sub CloseConnection()
@@ -410,12 +399,11 @@ Public Sub CloseConnection()
     m_hInetRequest = 0
     m_hInetConnect = 0
     m_hInetSession = 0
-    m_sPOSTData = vbNullString
-    m_sURLDomain = vbNullString
-    m_sURLPort = vbNullString
-    m_sURLPath = vbNullString
+    m_sPOSTData = ""
+    m_sURLDomain = ""
+    m_sURLPort = ""
+    m_sURLPath = ""
     m_bURLSSL = False
-    
 ERROR_HANDLER:
 End Sub
  

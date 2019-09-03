@@ -665,10 +665,6 @@ Private Sub chkRecordar_Click()
     End If
 End Sub
 
-Private Sub cmdcolor_Click()
-frmColor.Show
-End Sub
-
 Private Sub Form_Activate()
     
     If CurServer <> 0 Then
