@@ -44,7 +44,7 @@ Public Function Engine_DirectX8_Init() As Boolean
     Set DirectD3D = DirectX.Direct3DCreate
     Set DirectD3D8 = New D3DX8
 
-    DirectD3D.GetAdapterDisplayMode D3DADAPTER_DEFAULT, DispMode
+    Call DirectD3D.GetAdapterDisplayMode(D3DADAPTER_DEFAULT, DispMode)
     
     With D3DWindow
         .Windowed = True
@@ -136,9 +136,9 @@ Public Sub Engine_DirectX8_Aditional_Init()
     
     ColorTecho = 250
     ColorArbol = 100
-    Engine_Set_TileBuffer 9
     
-    Engine_Set_BaseSpeed 0.018
+    Call Engine_Set_TileBuffer(9)
+    Call Engine_Set_BaseSpeed(0.018)
     
     With MainScreenRect
         .Bottom = frmMain.MainViewPic.ScaleHeight
@@ -146,11 +146,11 @@ Public Sub Engine_DirectX8_Aditional_Init()
     End With
 
     Call Engine_Long_To_RGB_List(Normal_RGBList(), -1)
+    Call Engine_Long_To_RGB_List(Color_Shadow(), D3DColorARGB(50, 0, 0, 0))
 
-    Load_Auras
-    Init_MeteoEngine
-
-    mDx8_Dibujado.Damage_Initialize
+    Call Load_Auras
+    Call Init_MeteoEngine
+    Call mDx8_Dibujado.Damage_Initialize
     
 End Sub
 

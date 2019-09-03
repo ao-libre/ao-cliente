@@ -145,9 +145,11 @@ Private Function CrearGrafico(ByVal Archivo As Integer, _
     With TexList(Index)
     
         .surfaceCount = .surfaceCount + 1
+        
         ReDim Preserve .SurfaceEntry(1 To .surfaceCount) As SURFACE_ENTRY_DYN
 
         With .SurfaceEntry(.surfaceCount)
+        
             'Nombre
             .FileName = Archivo
            
@@ -200,15 +202,6 @@ Private Function CrearGrafico(ByVal Archivo As Integer, _
         End With
 
     End With
-   
-    Do While mGraphicsNumber > 0 And mCurrentMemoryBytes > mMaxMemoryBytes
-
-        If Not RemoveLRU() Then
-            Exit Do
-
-        End If
-
-    Loop
     
     Exit Function
     
@@ -216,78 +209,3 @@ errhandler:
     Debug.Print "ERROR AL CARGAR EL GRAFICO> " & Archivo & ".bmp"
 
 End Function
-
-Private Function RemoveLRU() As Boolean
-
-    '**************************************************************
-    'Author: Juan Mart?n Sotuyo Dodero
-    'Last Modify Date: 3/06/2006
-    'Removes the Least Recently Used surface to make some room for new ones
-    '**************************************************************
-    Dim LRUi         As Long
-    Dim LRUj         As Long
-    Dim LRUtime      As Long
-    Dim i            As Long
-    Dim j            As Long
-    Dim surface_desc As D3DSURFACE_DESC
-   
-    LRUtime = GetTickCount
-   
-    'Check out through the whole list for the least recently used
-    For i = 0 To HASH_TABLE_SIZE - 1
-
-        With TexList(i)
-
-            For j = 1 To .surfaceCount
-
-                If LRUtime > .SurfaceEntry(j).UltimoAcceso Then
-                    LRUi = i
-                    LRUj = j
-                    LRUtime = .SurfaceEntry(j).UltimoAcceso
-
-                End If
-
-            Next j
-
-        End With
-
-    Next i
-   
-    'Retrieve the surface desc
-    Call TexList(LRUi).SurfaceEntry(LRUj).Texture.GetLevelDesc(0, surface_desc)
-   
-    ' Parra is back (;
-    mCurrentMemoryBytes = mCurrentMemoryBytes - surface_desc.Size
-   
-    'Remove it
-    Set TexList(LRUi).SurfaceEntry(LRUj).Texture = Nothing
-    TexList(LRUi).SurfaceEntry(LRUj).FileName = 0
-   
-    ' Parra is back (;
-    mGraphicsNumber = mGraphicsNumber - 1
-   
-    'Move back the list (if necessary)
-    If LRUj Then
-        RemoveLRU = True
-       
-        With TexList(LRUi)
-
-            For j = LRUj To .surfaceCount - 1
-                .SurfaceEntry(j) = .SurfaceEntry(j + 1)
-            Next j
-           
-            .surfaceCount = .surfaceCount - 1
-
-            If .surfaceCount Then
-                ReDim Preserve .SurfaceEntry(1 To .surfaceCount) As SURFACE_ENTRY_DYN
-            Else
-                Erase .SurfaceEntry
-
-            End If
-
-        End With
-
-    End If
-
-End Function
-

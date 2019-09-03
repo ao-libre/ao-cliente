@@ -307,7 +307,8 @@ Public MapData() As MapBlock ' Mapa
 Public mapInfo As mapInfo ' Info acerca del mapa en uso
 '?????????????????????????
 
-Public Normal_RGBList(0 To 3) As Long
+Public Normal_RGBList(3) As Long
+Public Color_Shadow(3) As Long
 
 '   Control de Lluvia
 Public bRain As Boolean
@@ -1730,11 +1731,9 @@ Public Sub Device_Textured_Render(ByVal X As Integer, ByVal Y As Integer, ByVal 
     Set Texture = SurfaceDB.GetTexture(Archivo, TextureWidth, TextureHeight)
     
     If Shadow Then
-        Dim Color_Shadow(3) As Long
-        Engine_Long_To_RGB_List Color_Shadow(), D3DColorARGB(50, 0, 0, 0)
-        Geometry_Create_Box temp_verts(), dest_rect, src_rect, Color_Shadow(), texwidth, texheight, Angle
+        Call Geometry_Create_Box(temp_verts(), dest_rect, src_rect, Color_Shadow(), TextureWidth, TextureHeight, Angle)
     Else
-        Geometry_Create_Box temp_verts(), dest_rect, src_rect, Color_List(), texwidth, texheight, Angle
+        Call Geometry_Create_Box(temp_verts(), dest_rect, src_rect, Color_List(), TextureWidth, TextureHeight, Angle)
     End If
     
     Call DirectDevice.SetTexture(0, Texture)
