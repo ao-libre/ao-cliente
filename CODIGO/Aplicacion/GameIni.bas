@@ -35,7 +35,6 @@ Public Type tSetupMods
     UsarSombras As Boolean
     ParticleEngine As Boolean
     vSync As Boolean
-    Aceleracion As Byte
     LimiteFPS As Boolean
     bNoRes      As Boolean
     
@@ -137,7 +136,6 @@ Public Sub LeerConfiguracion()
         .UsarSombras = CBool(Lector.GetValue("VIDEO", "SOMBRAS"))
         .ParticleEngine = CBool(Lector.GetValue("VIDEO", "PARTICLE_ENGINE"))
         .vSync = CBool(Lector.GetValue("VIDEO", "VSYNC"))
-        .Aceleracion = CByte(Lector.GetValue("VIDEO", "RENDER_MODE"))
         .LimiteFPS = CBool(Lector.GetValue("VIDEO", "LIMIT_FPS"))
         
         ' AUDIO
@@ -167,7 +165,6 @@ Public Sub LeerConfiguracion()
         Debug.Print "UsarSombras: " & .UsarSombras
         Debug.Print "ParticleEngine: " & .ParticleEngine
         Debug.Print "vSync: " & .vSync
-        Debug.Print "Aceleracion: " & .Aceleracion
         Debug.Print "LimiteFPS: " & .LimiteFPS
         Debug.Print "bMusic: " & .bMusic
         Debug.Print "bSound: " & .bSound
@@ -207,7 +204,6 @@ Public Sub GuardarConfiguracion()
         Call Lector.ChangeValue("VIDEO", "SOMBRAS", CInt(.UsarSombras))
         Call Lector.ChangeValue("VIDEO", "PARTICLE_ENGINE", CInt(.ParticleEngine))
         Call Lector.ChangeValue("VIDEO", "VSYNC", CInt(.vSync))
-        Call Lector.ChangeValue("VIDEO", "RENDER_MODE", .Aceleracion)
         Call Lector.ChangeValue("VIDEO", "LIMIT_FPS", CInt(.LimiteFPS))
         
         ' AUDIO
