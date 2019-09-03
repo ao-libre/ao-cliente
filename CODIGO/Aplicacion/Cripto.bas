@@ -329,12 +329,7 @@ QH:
     If Err.LastDllError <> 0 Then
         uCrypto.LastError = GetSystemMessage(Err.LastDllError)
     Else
-<<<<<<< HEAD
         uCrypto.LastError = "[" & Hex$(hResult) & "] Error in " & sApiSource
-
-=======
-        uCrypto.LastError = "[" & Hex(hResult) & "] Error in " & sApiSource
->>>>>>> parent of 5ba9595... Precalculo los valores de algunos For.
     End If
 End Function
  

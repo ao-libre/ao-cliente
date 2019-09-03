@@ -375,12 +375,20 @@ Sub Engine_Init_FontSettings()
 
 End Sub
 
-Public Sub DrawText(ByVal X As Integer, ByVal Y As Integer, ByVal Text As String, ByVal Color As Long, Optional ByVal Center As Boolean = False)
-        Dim aux As D3DCOLORVALUE
-        'Obtener_RGB Color, r, g, b
-        ARGBtoD3DCOLORVALUE Color, aux
-        Color = D3DColorARGB(255, aux.r, aux.g, aux.B)
+Public Sub DrawText(ByVal X As Integer, _
+                    ByVal Y As Integer, _
+                    ByVal Text As String, _
+                    ByVal Color As Long, _
+                    Optional ByVal Center As Boolean = False)
+
+    Dim aux As D3DCOLORVALUE
+
+    'Obtener_RGB Color, r, g, b
+    Call ARGBtoD3DCOLORVALUE(Color, aux)
+    
+    Color = D3DColorARGB(255, aux.r, aux.g, aux.B)
         
-        Engine_Render_Text cfonts(1), Text, X, Y, Color, Center, 255, False
+    Call Engine_Render_Text(cfonts(1), Text, X, Y, Color, Center, 255, False)
+
 End Sub
 

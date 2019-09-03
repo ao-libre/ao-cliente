@@ -277,7 +277,7 @@ Public Function Execute() As Boolean
 End Function
  
 Public Function GetResponseAsString() As String
-    On Error GoTo ErrHandler
+    On Error GoTo errhandler
     Dim sBody      As String
     Dim sBuffer    As String
     Dim lBytesRead As Long
@@ -291,13 +291,13 @@ Public Function GetResponseAsString() As String
     GetResponseAsString = sBody
     Exit Function
 
-ErrHandler:
+errhandler:
 
     GetResponseAsString = ""
 End Function
 
 Public Function GetResponseHeader(ByVal lHeaderType As enumPostHeader) As String
-    On Error GoTo ErrHandler
+    On Error GoTo errhandler
     Dim sValue       As String
     Dim lBytesRead   As Long
     Dim lHeaderIndex As Long
@@ -312,7 +312,7 @@ Public Function GetResponseHeader(ByVal lHeaderType As enumPostHeader) As String
     End If
     Exit Function
  
-ErrHandler:
+errhandler:
 End Function
  
 Private Function CrackURL(ByVal strURL As String) As Boolean
@@ -379,12 +379,7 @@ Private Function UrlEncode(sText As String) As String
             sResult = sResult & "+"
         ElseIf sChar = vbCr Or sChar = vbLf Or sChar = vbCrLf Then
         Else
-<<<<<<< HEAD
             sResult = sResult & "%" & Hex$(Asc(sChar))
-
-=======
-            sResult = sResult & "%" & Hex(Asc(sChar))
->>>>>>> parent of 5ba9595... Precalculo los valores de algunos For.
         End If
 
         If Len(sResult) >= 1000 Then

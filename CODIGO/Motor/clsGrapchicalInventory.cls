@@ -389,76 +389,68 @@ Private Function ClickItem(ByVal X As Long, ByVal Y As Long) As Long
 End Function
 
 Public Sub DrawInventory()
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modify Date: 27/07/04
-'Renders the inventory to the given PictureBox
-'***************************************************
-    Dim LoopC As Long
-    Dim X As Integer
-    Dim Y As Integer
-    Dim destRect As RECT
-    Dim Inv_Color(0 To 3) As Long
-    Dim Sel_Color(0 To 3) As Long
+
+    '***************************************************
+    'Author: Juan Martín Sotuyo Dodero (Maraxus)
+    'Last Modify Date: 27/07/04
+    'Renders the inventory to the given PictureBox
+    '***************************************************
+    Dim LoopC             As Long
+    Dim X                 As Integer
+    Dim Y                 As Integer
+    Dim destRect          As RECT
+    Dim Inv_Color(3)      As Long
+    Dim Sel_Color(3)      As Long
     
     With destRect
         .Bottom = InventoryWindow.Height
         .Right = InventoryWindow.Width
     End With
-
+    
+    Call Engine_Long_To_RGB_List(Inv_Color(), -1)
+    Call Engine_Long_To_RGB_List(Sel_Color(), D3DColorARGB(100, 255, 128, 0))
     
     'Clear the inventory window
-<<<<<<< HEAD
-<<<<<<< HEAD
     Call Engine_BeginScene
-    
-    For LoopC = Lower_Inventory To Upper_Inventory
-=======
-    Engine_BeginScene
-        For LoopC = InventoryOffset * (InventoryWindow.ScaleWidth \ ownTilePixelWidth) + 1 To UBound(Inventory)
+
+    For LoopC = InventoryOffset * (InventoryWindow.ScaleWidth \ ownTilePixelWidth) + 1 To UBound(Inventory)
             
-            startdX = ((LoopC - 1) Mod (frmMain.PicInv.Width / 32)) * 32
-            startdY = ((LoopC - 1) \ (frmMain.PicInv.Width / 32)) * 32
+        startdX = ((LoopC - 1) Mod (frmMain.PicInv.Width / 32)) * 32
+        startdY = ((LoopC - 1) \ (frmMain.PicInv.Width / 32)) * 32
+
+        'Call DDrawTransGrhIndextoSurface(23651, startdX, startdY, 0, Inv_Color(), 0, False) 'Dibuja el fondo
             
-            
-            Call Engine_Long_To_RGB_List(Inv_Color(), -1)
-            
-            Call Engine_Long_To_RGB_List(Sel_Color(), D3DColorARGB(100, 255, 128, 0))
->>>>>>> parent of 42202c0... Hardcodeo de colores, evitamos la funcion D3DColorARGB() (#272)
-=======
-    Engine_BeginScene
-        For LoopC = InventoryOffset * (InventoryWindow.ScaleWidth \ ownTilePixelWidth) + 1 To UBound(Inventory)
->>>>>>> parent of 5ba9595... Precalculo los valores de algunos For.
-            
-            startdX = ((LoopC - 1) Mod (frmMain.PicInv.Width / 32)) * 32
-            startdY = ((LoopC - 1) \ (frmMain.PicInv.Width / 32)) * 32
-            
-            
-            Call Engine_Long_To_RGB_List(Inv_Color(), -1)
-            Call Engine_Long_To_RGB_List(Sel_Color(), 1694466048)
-            
-            'Call DDrawTransGrhIndextoSurface(23651, startdX, startdY, 0, Inv_Color(), 0, False) 'Dibuja el fondo
-            
-            If Inventory(LoopC).GrhIndex Then
-                ' Draw Item
-                If LoopC <> DragItem Then
+        If Inventory(LoopC).GrhIndex Then
+
+            ' Draw Item
+            If LoopC <> DragItem Then
                     
-                    If LoopC = SelectedItem Then
-                        Call DDrawTransGrhIndextoSurface(2, startdX, startdY, 0, Inv_Color()) 'Dibuja el fondo cuando lo seleccionamos
-                    End If
-                    Call DDrawTransGrhIndextoSurface(Inventory(LoopC).GrhIndex, startdX, startdY, 0, Inv_Color())
-                    'If equipped we render "E"
-                    If Inventory(LoopC).Equipped Then
-                        DrawText startdX + 20, startdY + 20, "E", -1
-                    End If
-                    
-                    DrawText startdX, startdY, Inventory(LoopC).Amount, -1
+                If LoopC = SelectedItem Then
+                    Call DDrawTransGrhIndextoSurface(2, startdX, startdY, 0, Inv_Color()) 'Dibuja el fondo cuando lo seleccionamos
                 End If
+
+                Call DDrawTransGrhIndextoSurface(Inventory(LoopC).GrhIndex, startdX, startdY, 0, Inv_Color())
+
+                'If equipped we render "E"
+                If Inventory(LoopC).Equipped Then
+                    Call DrawText(startdX + 20, startdY + 20, "E", -1)
+                End If
+                    
+                Call DrawText(startdX, startdY, Inventory(LoopC).Amount, -1)
+
             End If
-        Next LoopC
-        If DragItem <> 0 And Drag = 1 And isInventory Then _
-            Call DDrawTransGrhIndextoSurface(Inventory(DragItem).GrhIndex, MouseX - 16, MouseY - 16, 0, Inv_Color())
-    Engine_EndScene destRect, InventoryWindow.hWnd
+
+        End If
+
+    Next LoopC
+
+    If DragItem <> 0 And Drag = 1 And isInventory Then
+        Call DDrawTransGrhIndextoSurface(Inventory(DragItem).GrhIndex, MouseX - 16, MouseY - 16, 0, Inv_Color())
+
+    End If
+            
+    Call Engine_EndScene(destRect, InventoryWindow.hWnd)
+
 End Sub
 
 Private Sub InventoryWindow_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
