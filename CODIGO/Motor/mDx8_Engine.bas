@@ -55,23 +55,11 @@ Public Function Engine_DirectX8_Init() As Boolean
         .hDeviceWindow = frmMain.MainViewPic.hWnd
     End With
 
-    Select Case ClientSetup.Aceleracion
+    'Renderizado de graficos mediante Hardware por defecto.
+    Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, frmMain.MainViewPic.hWnd, D3DCREATE_HARDWARE_VERTEXPROCESSING, D3DWindow)
 
-        Case 0 '   Software
-            Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, frmMain.MainViewPic.hWnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING, D3DWindow)
-
-        Case 1 '   Hardware
-            Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, frmMain.MainViewPic.hWnd, D3DCREATE_HARDWARE_VERTEXPROCESSING, D3DWindow)
-
-        Case 2 '   Mixed
-            Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, frmMain.MainViewPic.hWnd, D3DCREATE_MIXED_VERTEXPROCESSING, D3DWindow)
-
-        Case Else '   Si no hay opcion entramos en Software para asegurarnos que funcione el cliente
-            Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, frmMain.MainViewPic.hWnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING, D3DWindow)
-    End Select
-
-    Engine_Init_FontTextures
-    Engine_Init_FontSettings
+    Call Engine_Init_FontTextures
+    Call Engine_Init_FontSettings
     
     With DirectDevice
     
