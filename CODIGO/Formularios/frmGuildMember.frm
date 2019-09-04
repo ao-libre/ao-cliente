@@ -206,8 +206,11 @@ Private Sub imgDetalles_Click()
     If lstClanes.ListIndex = -1 Then Exit Sub
     
     frmGuildBrief.EsLeader = False
-
-    Call WriteGuildRequestDetails(lstClanes.List(lstClanes.ListIndex))
+    
+    If LenB(lstClanes.List(lstClanes.ListIndex)) <> 0 Then
+        Call WriteGuildRequestDetails(lstClanes.List(lstClanes.ListIndex))
+    End If
+    
 End Sub
 
 Private Sub imgNoticias_Click()

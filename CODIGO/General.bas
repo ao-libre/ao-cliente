@@ -390,8 +390,8 @@ Private Sub CheckKeys()
             Call Char_UserPos
         End If
     Else
-        
-        Call frmMain.ActualizarMiniMapa   'integrado por ReyarB
+
+    Call frmMain.ActualizarMiniMapa   'integrado por ReyarB
         
     End If
 End Sub
@@ -735,14 +735,8 @@ Sub Main()
 
     Call modCompression.GenerateContra(vbNullString, 0) ' 0 = Graficos.AO
     
-    CargarHechizos
-    
-    If ClientSetup.bDinamic Then
-        Set SurfaceDB = New clsSurfaceManDyn
-    Else
-        Set SurfaceDB = New clsSurfaceManStatic
-    End If
- 
+    Call CargarHechizos
+
     ' Map Sounds
     Set Sonidos = New clsSoundMapas
     Call Sonidos.LoadSoundMapInfo

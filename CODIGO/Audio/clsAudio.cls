@@ -67,7 +67,9 @@ On Local Error Resume Next
    
     'Stop every channel being used and destroy the buffer
     For LoopC = 1 To NumSoundBuffers
-        Call DSBuffers(LoopC).Buffer.Stop
+        If LenB(DSBuffers(LoopC).FileName) <> 0 Then
+            Call DSBuffers(LoopC).Buffer.Stop
+        End If
         Set DSBuffers(LoopC).Buffer = Nothing
     Next LoopC
    
@@ -98,24 +100,24 @@ End Sub
 '
 '   @return   True if no errors occured, false otherwise.
 
-Public Function Initialize(ByRef dX As DirectX8, ByVal hwnd As Long, ByVal sound_path As String, ByVal music_path As String) As Boolean
+Public Function Initialize(ByRef dX As DirectX8, ByVal hWnd As Long, ByVal sound_path As String, ByVal music_path As String) As Boolean
 '***************************************************
 'Author: Juan Martin Sotuyo Dodero (Maraxus)
 'Last Modification: 16/03/04
 'Creates all DS and DM objects
 '***************************************************
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     
     '   Prevent multiple creations
     If inited Then Exit Function
     
     'Validate DX object
-    If dX Is Nothing Then GoTo ErrHandler
+    If dX Is Nothing Then GoTo errhandler
     
     'Initialize DirectSound
     Set DirectSound = dX.DirectSoundCreate("")
     
-    Call DirectSound.SetCooperativeLevel(hwnd, DSSCL_PRIORITY)
+    Call DirectSound.SetCooperativeLevel(hWnd, DSSCL_PRIORITY)
     
     'Set sound path
     SoundPath = sound_path
@@ -124,7 +126,7 @@ On Error GoTo ErrHandler
     SndVolume = 0
     
     'Initialize DirectMusic
-    Music = InitializedirectMusic(dX, hwnd)
+    Music = InitializedirectMusic(dX, hWnd)
     
     'Set music path
     MusicPath = music_path
@@ -143,7 +145,7 @@ On Error GoTo ErrHandler
     Initialize = True
 Exit Function
 
-ErrHandler:
+errhandler:
     'Call Log_Engine("Error in Sound Engine Initializate, " & Err.Description & "(" & Err.number & ")")
 End Function
 
@@ -155,18 +157,18 @@ End Function
 '
 '   @return   True if no errors occured, false otherwise.
 
-Private Function InitializedirectMusic(ByRef dX As DirectX8, ByVal hwnd As Long) As Boolean
+Private Function InitializedirectMusic(ByRef dX As DirectX8, ByVal hWnd As Long) As Boolean
 '***************************************************
 'Author: Juan Martin Sotuyo Dodero (Maraxus)
 'Last Modification: 16/03/04
 'Initialize DM. Returns false if music isn't supported by HW
 '***************************************************
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     Dim mus_Params As DMUS_AUDIOPARAMS
     Set Loader = DirectX.DirectMusicLoaderCreate()
     
     Set Performance = dX.DirectMusicPerformanceCreate()
-    Call Performance.InitAudio(hwnd, DMUS_AUDIOF_ALL, mus_Params, Nothing, DMUS_APATH_DYNAMIC_STEREO, 128)
+    Call Performance.InitAudio(hWnd, DMUS_AUDIOF_ALL, mus_Params, Nothing, DMUS_APATH_DYNAMIC_STEREO, 128)
     Call Performance.SetMasterAutoDownload(True)        'Enable auto download of instruments
     
     'Set to port default, 1 channel group is enough for MIDIs
@@ -176,7 +178,7 @@ On Error GoTo ErrHandler
     InitializedirectMusic = True
 Exit Function
 
-ErrHandler:
+errhandler:
     'Call Log_Engine("Error in Sound Engine. Function InitializedirectMusic, " & Err.Description & "(" & Err.number & ")")
 End Function
 
@@ -197,7 +199,7 @@ Public Function PlayWave(ByVal FileName As String, Optional ByVal srcX As Byte =
 'Last Modified by: Franco Zeoli (Noich)
 'Added support for 3D sound effects.
 '***************************************************
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     Dim bufferIndex As Long
    
     If Not SoundActivated Then Exit Function
@@ -236,7 +238,7 @@ On Error GoTo ErrHandler
     End If
 Exit Function
 
-ErrHandler:
+errhandler:
     'Call Log_Engine("Error in Sound Engine. Function PlayWave, " & Err.Description & "(" & Err.number & ")")
 End Function
 
@@ -369,7 +371,7 @@ Private Function LoadWave(ByVal FileName As String, ByVal looping As LoopStyle) 
 'Loads a new wave into memory (if it's not already loaded) and returns
 'the buffer index
 '***************************************************
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     Dim bufferDesc As DSBUFFERDESC
     Dim waveFormat As WAVEFORMATEX
     Dim i As Long
@@ -451,7 +453,7 @@ On Error GoTo ErrHandler
     LoadWave = i
 Exit Function
 
-ErrHandler:
+errhandler:
     'Call Log_Engine("Error in Sound Engine. Function LoadWave, " & Err.Description & "(" & Err.number & ")")
 End Function
 
@@ -561,7 +563,7 @@ Public Function PlayMIDI(Optional ByVal File As String = vbNullString, Optional 
 'Last Modification: 16/03/04
 'Loads a midi and start to play it
 '***************************************************
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     If LenB(File) > 0 Then _
         CurrentMusicFile = File
     
@@ -586,7 +588,7 @@ On Error GoTo ErrHandler
     PlayMIDI = True
 Exit Function
 
-ErrHandler:
+errhandler:
     'Call Log_Engine("Error in Sound Engine. Function PlayMIDI, " & Err.Description & "(" & Err.number & ")")
 End Function
 
@@ -603,7 +605,7 @@ Private Function LoadMidi(ByVal File As String) As Boolean
 'Last Modification: 16/03/04
 'Loads a midi to memory
 '***************************************************
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     If Not FileExist(MusicPath & File, vbArchive) Then Exit Function
     
     Call StopMidi
@@ -622,7 +624,7 @@ On Error GoTo ErrHandler
     LoadMidi = True
 Exit Function
 
-ErrHandler:
+errhandler:
     'Call Log_Engine("Error in Sound Engine. Function LoadMidi, " & Err.Description & "(" & Err.number & ")")
 End Function
 
@@ -635,13 +637,13 @@ Public Sub StopMidi()
 'Last Modification: 16/03/04
 'Stops playing a midi
 '***************************************************
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     If PlayingMusic Then
         Call Performance.StopEx(Segment, 0, DMUS_SEGF_DEFAULT)
     End If
 Exit Sub
 
-ErrHandler:
+errhandler:
     'Call Log_Engine("Error in Sound Engine. Function StopMidi, " & Err.Description & "(" & Err.number & ")")
 End Sub
 

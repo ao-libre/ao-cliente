@@ -28,7 +28,7 @@ End Enum
 Public Type tSetupMods
 
     ' VIDEO
-    bDinamic    As Boolean
+    Aceleracion As Byte
     byMemory    As Integer
     ProyectileEngine As Boolean
     PartyMembers As Boolean
@@ -36,7 +36,6 @@ Public Type tSetupMods
     UsarSombras As Boolean
     ParticleEngine As Boolean
     vSync As Boolean
-    Aceleracion As Byte
     LimiteFPS As Boolean
     bNoRes      As Boolean
     
@@ -125,13 +124,13 @@ Public Sub LeerConfiguracion()
     Call IniciarCabecera
     
     Set Lector = New clsIniManager
-    Lector.Initialize (Game.path(INIT) & CLIENT_FILE)
+    Call Lector.Initialize(Game.path(INIT) & CLIENT_FILE)
     
     With ClientSetup
         
         ' VIDEO
-        .bDinamic = CBool(Lector.GetValue("VIDEO", "DYNAMIC_LOAD"))
-        .byMemory = CInt(Lector.GetValue("VIDEO", "DINAMIC_MEMORY"))
+        .Aceleracion = Lector.GetValue("VIDEO", "RENDER_MODE")
+        .byMemory = Lector.GetValue("VIDEO", "DINAMIC_MEMORY")
         .bNoRes = CBool(Lector.GetValue("VIDEO", "DISABLE_RESOLUTION_CHANGE"))
         .ProyectileEngine = CBool(Lector.GetValue("VIDEO", "PROYECTILE_ENGINE"))
         .PartyMembers = CBool(Lector.GetValue("VIDEO", "PARTY_MEMBERS"))
@@ -139,8 +138,6 @@ Public Sub LeerConfiguracion()
         .UsarSombras = CBool(Lector.GetValue("VIDEO", "SOMBRAS"))
         .ParticleEngine = CBool(Lector.GetValue("VIDEO", "PARTICLE_ENGINE"))
         .vSync = CBool(Lector.GetValue("VIDEO", "VSYNC"))
-        .Aceleracion = CByte(Lector.GetValue("VIDEO", "RENDER_MODE"))
-        .LimiteFPS = CBool(Lector.GetValue("VIDEO", "LIMIT_FPS"))
         
         ' AUDIO
         .bMusic = CBool(Lector.GetValue("AUDIO", "MIDI"))
@@ -161,7 +158,7 @@ Public Sub LeerConfiguracion()
         ' OTHER
         .MostrarTips = CBool(Lector.GetValue("OTHER", "MOSTRAR_TIPS"))
         
-        Debug.Print "bDinamic: " & .bDinamic
+        Debug.Print "Modo de Renderizado: " & IIf(.Aceleracion = 1, "Mixto (Hardware + Software)", "Hardware")
         Debug.Print "byMemory: " & .byMemory
         Debug.Print "bNoRes: " & .bNoRes
         Debug.Print "ProyectileEngine: " & .ProyectileEngine
@@ -170,8 +167,6 @@ Public Sub LeerConfiguracion()
         Debug.Print "UsarSombras: " & .UsarSombras
         Debug.Print "ParticleEngine: " & .ParticleEngine
         Debug.Print "vSync: " & .vSync
-        Debug.Print "Aceleracion: " & .Aceleracion
-        Debug.Print "LimiteFPS: " & .LimiteFPS
         Debug.Print "bMusic: " & .bMusic
         Debug.Print "bSound: " & .bSound
         Debug.Print "bSoundEffects: " & .bSoundEffects
@@ -182,15 +177,16 @@ Public Sub LeerConfiguracion()
         Debug.Print "bKill: " & .byMurderedLevel
         Debug.Print "bActive: " & .bActive
         Debug.Print "MostrarTips: " & .MostrarTips
+        Debug.Print vbNullString
         
     End With
   
 fileErr:
 
-    If Err.number <> 0 Then
-        MsgBox ("Ha ocurrido un error al cargar la configuracion del cliente. Error " & Err.number & " : " & Err.Description)
-        End 'Usar "End" en vez del Sub CloseClient() ya que todavia no se inicializa nada.
-    End If
+    'If Err.number <> 0 Then
+    '    MsgBox ("Ha ocurrido un error al cargar la configuracion del cliente. Error " & Err.number & " : " & Err.Description)
+    '    End 'Usar "End" en vez del Sub CloseClient() ya que todavia no se inicializa nada.
+    'End If
 End Sub
 
 Public Sub GuardarConfiguracion()
@@ -202,8 +198,8 @@ Public Sub GuardarConfiguracion()
     With ClientSetup
         
         ' VIDEO
-        Call Lector.ChangeValue("VIDEO", "DYNAMIC_LOAD", CInt(.bDinamic))
-        Call Lector.ChangeValue("VIDEO", "DINAMIC_MEMORY", CInt(.byMemory))
+        Call Lector.ChangeValue("VIDEO", "RENDER_MODE", .Aceleracion)
+        Call Lector.ChangeValue("VIDEO", "DINAMIC_MEMORY", .byMemory)
         Call Lector.ChangeValue("VIDEO", "DISABLE_RESOLUTION_CHANGE", CInt(.bNoRes))
         Call Lector.ChangeValue("VIDEO", "PROYECTILE_ENGINE", CInt(.ProyectileEngine))
         Call Lector.ChangeValue("VIDEO", "PARTY_MEMBERS", CInt(.PartyMembers))
@@ -211,8 +207,6 @@ Public Sub GuardarConfiguracion()
         Call Lector.ChangeValue("VIDEO", "SOMBRAS", CInt(.UsarSombras))
         Call Lector.ChangeValue("VIDEO", "PARTICLE_ENGINE", CInt(.ParticleEngine))
         Call Lector.ChangeValue("VIDEO", "VSYNC", CInt(.vSync))
-        Call Lector.ChangeValue("VIDEO", "RENDER_MODE", .Aceleracion)
-        Call Lector.ChangeValue("VIDEO", "LIMIT_FPS", CInt(.LimiteFPS))
         
         ' AUDIO
         Call Lector.ChangeValue("AUDIO", "MIDI", CInt(.bMusic))
@@ -237,8 +231,8 @@ Public Sub GuardarConfiguracion()
     Call Lector.DumpFile(Game.path(INIT) & CLIENT_FILE)
 fileErr:
 
-    'If Err.number <> 0 Then
-    '    MsgBox ("Ha ocurrido un error al cargar la configuracion del cliente. Error " & Err.number & " : " & Err.Description)
-    '    End 'Usar "End" en vez del Sub CloseClient() ya que todavia no se inicializa nada.
-    'End If
+    If Err.number <> 0 Then
+        MsgBox ("Ha ocurrido un error al cargar la configuracion del cliente. Error " & Err.number & " : " & Err.Description)
+        End 'Usar "End" en vez del Sub CloseClient() ya que todavia no se inicializa nada.
+    End If
 End Sub

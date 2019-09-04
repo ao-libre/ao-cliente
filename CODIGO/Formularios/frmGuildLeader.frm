@@ -385,7 +385,11 @@ End Sub
 
 Private Sub imgDetallesClan_Click()
     frmGuildBrief.EsLeader = True
-    Call WriteGuildRequestDetails(guildslist.List(guildslist.ListIndex))
+    
+    If LenB(GuildsList.List(GuildsList.ListIndex)) <> 0 Then
+        Call WriteGuildRequestDetails(GuildsList.List(GuildsList.ListIndex))
+    End If
+    
 End Sub
 
 Private Sub imgDetallesMiembros_Click()

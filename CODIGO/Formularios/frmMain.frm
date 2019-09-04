@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "Richtx32.ocx"
 Begin VB.Form frmMain 
    BorderStyle     =   0  'None
    ClientHeight    =   8985
@@ -200,7 +200,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2619
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1071,8 +1070,8 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Public tX As Byte
-Public tY As Byte
+Public TX As Byte
+Public TY As Byte
 Public MouseX As Long
 Public MouseY As Long
 Public MouseBoton As Long
@@ -1214,9 +1213,9 @@ Dim DR As RECT
 GrhIndex = GRH_INI_SM + Index + SM_CANT * (CInt(Mostrar) + 1)
 
 With GrhData(GrhIndex)
-    SR.Left = .SX
+    SR.Left = .sX
     SR.Right = SR.Left + .pixelWidth
-    SR.Top = .SY
+    SR.Top = .sY
     SR.Bottom = SR.Top + .pixelHeight
     
     DR.Left = 0
@@ -1624,7 +1623,7 @@ Private Sub macrotrabajo_Timer()
     
     If UsingSkill = eSkill.Pesca Or UsingSkill = eSkill.Talar Or UsingSkill = eSkill.Mineria Or _
                 UsingSkill = FundirMetal Or (UsingSkill = eSkill.Herreria And Not MirandoHerreria) Then
-        Call WriteWorkLeftClick(tX, tY, UsingSkill)
+        Call WriteWorkLeftClick(TX, TY, UsingSkill)
         UsingSkill = 0
     End If
     
@@ -1653,12 +1652,12 @@ Private Sub mnuEquipar_Click()
 End Sub
 
 Private Sub mnuNPCComerciar_Click()
-    Call WriteLeftClick(tX, tY)
+    Call WriteLeftClick(TX, TY)
     Call WriteCommerceStart
 End Sub
 
 Private Sub mnuNpcDesc_Click()
-    Call WriteLeftClick(tX, tY)
+    Call WriteLeftClick(TX, TY)
 End Sub
 
 Private Sub mnuTirar_Click()
@@ -1719,7 +1718,7 @@ Private Sub SendTxt_KeyDown(KeyCode As Integer, Shift As Integer)
     
     ' Control + Shift
     If Shift = 3 Then
-        On Error GoTo ErrHandler
+        On Error GoTo errhandler
         
         ' Only allow numeric keys
         If KeyCode >= vbKey0 And KeyCode <= vbKey9 Then
@@ -1754,7 +1753,7 @@ Private Sub SendTxt_KeyDown(KeyCode As Integer, Shift As Integer)
     
     Exit Sub
     
-ErrHandler:
+errhandler:
     'Did detected an invalid message??
     If Err.number = CustomMessages.InvalidMessageErrCode Then
         With FontTypes(FontTypeNames.FONTTYPE_INFO)
@@ -1774,8 +1773,8 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
         SendTxt.Visible = False
         
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
         Else
             hlst.SetFocus
         End If
@@ -1910,7 +1909,7 @@ Private Sub MainViewPic_DblClick()
 '12/28/2007: ByVal - Chequea que la ventana de comercio y boveda no este abierta al hacer doble clic a un comerciante, sobrecarga la lista de items.
 '**************************************************************
     If Not MirandoForo And Not Comerciando Then 'frmComerciar.Visible And Not frmBancoObj.Visible Then
-        Call WriteDoubleClick(tX, tY)
+        Call WriteDoubleClick(TX, TY)
     End If
 End Sub
 
@@ -1925,7 +1924,7 @@ Private Sub MainViewPic_Click()
     Dim VAR_LANZANDO As String
     
     If Not Comerciando Then
-        Call ConvertCPtoTP(MouseX, MouseY, tX, tY)
+        Call ConvertCPtoTP(MouseX, MouseY, TX, TY)
         
         If Not InGameArea() Then Exit Sub
         
@@ -1942,7 +1941,7 @@ Private Sub MainViewPic_Click()
                 End If
                 '[/ybarra]
                 If UsingSkill = 0 Then
-                    Call WriteLeftClick(tX, tY)
+                    Call WriteLeftClick(TX, TY)
                 Else
                 
                     If macrotrabajo.Enabled Then Call DesactivarMacroTrabajo
@@ -2019,7 +2018,7 @@ Private Sub MainViewPic_Click()
                     If frmMain.MousePointer <> 2 Then Exit Sub 'Parcheo porque a veces tira el hechizo sin tener el cursor (NicoNZ)
                     
                     frmMain.MousePointer = vbDefault
-                    Call WriteWorkLeftClick(tX, tY, UsingSkill)
+                    Call WriteWorkLeftClick(TX, TY, UsingSkill)
                     UsingSkill = 0
                 End If
             Else
@@ -2029,7 +2028,7 @@ Private Sub MainViewPic_Click()
         ElseIf (MouseShift And 1) = 1 Then
             If Not CustomKeys.KeyAssigned(KeyCodeConstants.vbKeyShift) Then
                 If MouseBoton = vbLeftButton Then
-                    Call WriteWarpChar("YO", UserMap, tX, tY)
+                    Call WriteWarpChar("YO", UserMap, TX, TY)
                 End If
             End If
         End If
@@ -2043,7 +2042,7 @@ Private Sub Form_DblClick()
 '12/28/2007: ByVal - Chequea que la ventana de comercio y boveda no este abierta al hacer doble clic a un comerciante, sobrecarga la lista de items.
 '**************************************************************
     If Not MirandoForo And Not Comerciando Then 'frmComerciar.Visible And Not frmBancoObj.Visible Then
-        Call WriteDoubleClick(tX, tY)
+        Call WriteDoubleClick(TX, TY)
     End If
 End Sub
 
@@ -2099,7 +2098,7 @@ Private Sub Label4_Click()
     InvEqu.Picture = LoadPicture(Game.path(Skins) & SkinSeleccionado & "\Centroinventario.jpg")
 
     ' Activo controles de inventario
-    picInv.Visible = True
+    PicInv.Visible = True
     imgInvScrollUp.Visible = True
     imgInvScrollDown.Visible = True
 
@@ -2127,7 +2126,7 @@ Private Sub Label7_Click()
     cmdMoverHechi(1).Visible = True
     
     ' Desactivo controles de inventario
-    picInv.Visible = False
+    PicInv.Visible = False
     imgInvScrollUp.Visible = False
     imgInvScrollDown.Visible = False
 
@@ -2160,8 +2159,8 @@ On Error Resume Next  'el .SetFocus causaba errores al salir y volver a entrar
         (Not frmMSG.Visible) And (Not MirandoForo) And _
         (Not frmEstadisticas.Visible) And (Not frmCantidad.Visible) And (Not MirandoParty) Then
          
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
         ElseIf hlst.Visible Then
             hlst.SetFocus
         End If
@@ -2169,8 +2168,8 @@ On Error Resume Next  'el .SetFocus causaba errores al salir y volver a entrar
 End Sub
 
 Private Sub RecTxt_KeyDown(KeyCode As Integer, Shift As Integer)
-    If picInv.Visible Then
-        picInv.SetFocus
+    If PicInv.Visible Then
+        PicInv.SetFocus
     Else
         hlst.SetFocus
     End If
@@ -2226,8 +2225,8 @@ Private Sub SendCMSTXT_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
         Me.SendCMSTXT.Visible = False
         
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
         Else
             hlst.SetFocus
         End If
@@ -2269,10 +2268,10 @@ End Sub
 Private Sub AbrirMenuViewPort()
 #If (ConMenuseConextuales = 1) Then
 
-If tX >= MinXBorder And tY >= MinYBorder And _
-    tY <= MaxYBorder And tX <= MaxXBorder Then
-    If MapData(tX, tY).CharIndex > 0 Then
-        If charlist(MapData(tX, tY).CharIndex).invisible = False Then
+If TX >= MinXBorder And TY >= MinYBorder And _
+    TY <= MaxYBorder And TX <= MaxXBorder Then
+    If MapData(TX, TY).CharIndex > 0 Then
+        If charlist(MapData(TX, TY).CharIndex).invisible = False Then
         
             Dim m As frmMenuseFashion
             Set m = New frmMenuseFashion
@@ -2282,8 +2281,8 @@ If tX >= MinXBorder And tY >= MinYBorder And _
             m.SetMenuId 1
             m.ListaInit 2, False
             
-            If LenB(charlist(MapData(tX, tY).CharIndex).Nombre) <> 0 Then
-                m.ListaSetItem 0, charlist(MapData(tX, tY).CharIndex).Nombre, True
+            If LenB(charlist(MapData(TX, TY).CharIndex).Nombre) <> 0 Then
+                m.ListaSetItem 0, charlist(MapData(TX, TY).CharIndex).Nombre, True
             Else
                 m.ListaSetItem 0, "<NPC>", True
             End If
@@ -2319,10 +2318,10 @@ Case 0 'Inventario
 Case 1 'Menu del ViewPort del engine
     Select Case Sel
     Case 0 'Nombre
-        Call WriteLeftClick(tX, tY)
+        Call WriteLeftClick(TX, TY)
         
     Case 1 'Comerciar
-        Call WriteLeftClick(tX, tY)
+        Call WriteLeftClick(TX, TY)
         Call WriteCommerceStart
     End Select
 End Select

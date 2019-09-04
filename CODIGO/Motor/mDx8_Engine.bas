@@ -9,13 +9,18 @@ Public DirectD3D8 As D3DX8
 Public DirectD3D As Direct3D8
 Public DirectDevice As Direct3DDevice8
 
-Public SurfaceDB As New clsSurfaceManager
+Public SurfaceDB As New clsTextureManager
+Public SpriteBatch As New clsBatch
+
+Private Viewport As D3DVIEWPORT8
+Private Projection As D3DMATRIX
+Private View As D3DMATRIX
 
 Public Engine_BaseSpeed As Single
 Public TileBufferSize As Integer
 
-Public Const ScreenWidth As Long = 536
-Public Const ScreenHeight As Long = 412
+Public ScreenWidth As Long
+Public ScreenHeight As Long
 
 Public Const HeadOffsetAltos As Integer = -8
 Public Const HeadOffsetBajos As Integer = 2
@@ -23,20 +28,24 @@ Public Const HeadOffsetBajos As Integer = 2
 Public MainScreenRect As RECT
 
 Public Type TLVERTEX
-  X As Single
-  Y As Single
-  z As Single
-  rhw As Single
-  Color As Long
-  Specular As Long
-  tu As Single
-  tv As Single
+    X As Single
+    Y As Single
+    Z As Single
+    rhw As Single
+    Color As Long
+    Specular As Long
+    tu As Single
+    tv As Single
 End Type
 
 Private EndTime As Long
 
 Public Function Engine_DirectX8_Init() As Boolean
-
+    
+    'Establecemos cual va a ser el tamano del render.
+    ScreenWidth = frmMain.MainViewPic.ScaleWidth
+    ScreenHeight = frmMain.MainViewPic.ScaleHeight
+    
     Dim DispMode  As D3DDISPLAYMODE
     Dim D3DWindow As D3DPRESENT_PARAMETERS
     
@@ -44,53 +53,50 @@ Public Function Engine_DirectX8_Init() As Boolean
     Set DirectD3D = DirectX.Direct3DCreate
     Set DirectD3D8 = New D3DX8
 
-    DirectD3D.GetAdapterDisplayMode D3DADAPTER_DEFAULT, DispMode
+    Call DirectD3D.GetAdapterDisplayMode(D3DADAPTER_DEFAULT, DispMode)
     
     With D3DWindow
         .Windowed = True
         .SwapEffect = IIf((ClientSetup.vSync) = True, D3DSWAPEFFECT_COPY_VSYNC, D3DSWAPEFFECT_DISCARD)
         .BackBufferFormat = DispMode.Format
-        .BackBufferWidth = frmMain.MainViewPic.ScaleWidth
-        .BackBufferHeight = frmMain.MainViewPic.ScaleHeight
+        .BackBufferWidth = ScreenWidth
+        .BackBufferHeight = ScreenHeight
         .hDeviceWindow = frmMain.MainViewPic.hWnd
     End With
 
     Select Case ClientSetup.Aceleracion
 
-        Case 0 '   Software
-            Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, frmMain.MainViewPic.hWnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING, D3DWindow)
+        Case 0 '   Hardware
+            Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, D3DWindow.hDeviceWindow, D3DCREATE_HARDWARE_VERTEXPROCESSING, D3DWindow)
 
-        Case 1 '   Hardware
-            Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, frmMain.MainViewPic.hWnd, D3DCREATE_HARDWARE_VERTEXPROCESSING, D3DWindow)
+        Case 1 '   Mixed
+            Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, D3DWindow.hDeviceWindow, D3DCREATE_MIXED_VERTEXPROCESSING, D3DWindow)
 
-        Case 2 '   Mixed
-            Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, frmMain.MainViewPic.hWnd, D3DCREATE_MIXED_VERTEXPROCESSING, D3DWindow)
-
-        Case Else '   Si no hay opcion entramos en Software para asegurarnos que funcione el cliente
-            Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, frmMain.MainViewPic.hWnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING, D3DWindow)
+        Case Else 'Si no hay opcion entramos en Hardware para asegurarnos que funcione el cliente.
+            Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, D3DWindow.hDeviceWindow, D3DCREATE_HARDWARE_VERTEXPROCESSING, D3DWindow)
+            
     End Select
-
-    Engine_Init_FontTextures
-    Engine_Init_FontSettings
     
-    With DirectDevice
+    'Seteamos la matriz de proyeccion.
+    Call D3DXMatrixOrthoOffCenterLH(Projection, 0, ScreenWidth, ScreenHeight, 0, -1#, 1#)
+    Call D3DXMatrixIdentity(View)
+    Call DirectDevice.SetTransform(D3DTS_PROJECTION, Projection)
+    Call DirectDevice.SetTransform(D3DTS_VIEW, View)
     
-        .SetVertexShader D3DFVF_XYZRHW Or D3DFVF_DIFFUSE Or D3DFVF_TEX1 Or D3DFVF_SPECULAR
-        .SetRenderState D3DRS_LIGHTING, False
-        .SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
-        .SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
-        .SetRenderState D3DRS_ALPHABLENDENABLE, True
+    Call Engine_Init_FontTextures
+    Call Engine_Init_FontSettings
     
-        'Partículas
-        .SetRenderState D3DRS_POINTSIZE, CLng(2)
-        .SetTextureStageState 0, D3DTSS_ALPHAOP, D3DTOP_MODULATE
-        .SetRenderState D3DRS_POINTSPRITE_ENABLE, 1
-        .SetRenderState D3DRS_POINTSCALE_ENABLE, 0
+    Call Engine_Init_RenderStates
     
-    End With
+    'Carga dinamica de texturas por defecto.
+    Set SurfaceDB = New clsTextureManager
+    
+    'Sprite batching.
+    Set SpriteBatch = New clsBatch
+    Call SpriteBatch.Initialise(2000)
     
     EndTime = GetTickCount
-    
+
     If Err Then
         MsgBox JsonLanguage.Item("ERROR_DIRECTX_INIT").Item("TEXTO")
         Engine_DirectX8_Init = False
@@ -105,6 +111,24 @@ Public Function Engine_DirectX8_Init() As Boolean
     
     Engine_DirectX8_Init = True
 End Function
+
+Private Sub Engine_Init_RenderStates()
+
+    'Set the render states
+    With DirectDevice
+    
+        Call .SetVertexShader(D3DFVF_XYZ Or D3DFVF_DIFFUSE Or D3DFVF_TEX1)
+        Call .SetRenderState(D3DRS_LIGHTING, False)
+        Call .SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA)
+        Call .SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA)
+        Call .SetRenderState(D3DRS_ALPHABLENDENABLE, True)
+        Call .SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID)
+        Call .SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE)
+        Call .SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE)
+        
+    End With
+    
+End Sub
 
 Public Sub Engine_DirectX8_End()
 '***************************************************
@@ -135,6 +159,7 @@ On Error Resume Next
     Set DirectD3D = Nothing
     Set DirectX = Nothing
     Set DirectDevice = Nothing
+    Set SpriteBatch = Nothing
 End Sub
 
 Public Sub Engine_DirectX8_Aditional_Init()
@@ -148,33 +173,33 @@ Public Sub Engine_DirectX8_Aditional_Init()
     
     ColorTecho = 250
     ColorArbol = 100
-    Engine_Set_TileBuffer 9
     
-    Engine_Set_BaseSpeed 0.018
+    Call Engine_Set_TileBuffer(9)
+    Call Engine_Set_BaseSpeed(0.018)
     
     With MainScreenRect
-        .Bottom = frmMain.MainViewPic.ScaleHeight
-        .Right = frmMain.MainViewPic.ScaleWidth
+        .Bottom = ScreenHeight
+        .Right = ScreenWidth
     End With
 
     Call Engine_Long_To_RGB_List(Normal_RGBList(), -1)
+    Call Engine_Long_To_RGB_List(Color_Shadow(), D3DColorARGB(50, 0, 0, 0))
 
-    Load_Auras
-    Init_MeteoEngine
-
-    mDx8_Dibujado.Damage_Initialize
+    Call Load_Auras
+    Call Init_MeteoEngine
+    Call mDx8_Dibujado.Damage_Initialize
     
 End Sub
 
 Public Sub Engine_Draw_Line(X1 As Single, Y1 As Single, X2 As Single, Y2 As Single, Optional Color As Long = -1, Optional Color2 As Long = -1)
 On Error GoTo Error
-Dim Vertex(1) As TLVERTEX
-
-    Vertex(0) = Geometry_Create_TLVertex(X1, Y1, 0, 1, Color, 0, 0)
-    Vertex(1) = Geometry_Create_TLVertex(X2, Y2, 0, 1, Color2, 0, 0)
-
-    DirectDevice.SetTexture 0, Nothing
-    DirectDevice.DrawPrimitiveUP D3DPT_LINELIST, 1, Vertex(0), Len(Vertex(0))
+    
+    Dim temp_color(3) As Long
+    Call Engine_Long_To_RGB_List(temp_color(), Color)
+    
+    Call SpriteBatch.SetTexture(Nothing)
+    Call SpriteBatch.Draw(X1, Y1, X2, Y2, temp_color())
+    
 Exit Sub
 
 Error:
@@ -183,12 +208,13 @@ End Sub
 
 Public Sub Engine_Draw_Point(X1 As Single, Y1 As Single, Optional Color As Long = -1)
 On Error GoTo Error
-Dim Vertex(0) As TLVERTEX
-
-    Vertex(0) = Geometry_Create_TLVertex(X1, Y1, 0, 1, Color, 0, 0)
-
-    DirectDevice.SetTexture 0, Nothing
-    DirectDevice.DrawPrimitiveUP D3DPT_POINTLIST, 1, Vertex(0), Len(Vertex(0))
+    
+    Dim temp_color(3) As Long
+    Call Engine_Long_To_RGB_List(temp_color(), Color)
+    
+    Call SpriteBatch.SetTexture(Nothing)
+    Call SpriteBatch.Draw(X1, Y1, 0, 1, temp_color(), 0, 0)
+    
 Exit Sub
 
 Error:
@@ -261,23 +287,13 @@ Public Sub Engine_Draw_Box(ByVal X As Integer, ByVal Y As Integer, ByVal Width A
 'Last Modification: 29/12/10
 'Blisse-AO | Render Box
 '***************************************************
-    Dim b_Rect As RECT
-    Dim b_Color(0 To 3) As Long
-    Dim b_Vertex(0 To 3) As TLVERTEX
     
-    Engine_Long_To_RGB_List b_Color(), Color
+    Dim temp_color(3) As Long
+    Call Engine_Long_To_RGB_List(temp_color(), Color)
 
-    With b_Rect
-        .Bottom = Y + Height
-        .Left = X
-        .Right = X + Width
-        .Top = Y
-    End With
-
-    Geometry_Create_Box b_Vertex(), b_Rect, b_Rect, b_Color(), 0, 0
+    Call SpriteBatch.SetTexture(Nothing)
+    Call SpriteBatch.Draw(X, Y, Width, ByVal Height, temp_color())
     
-    DirectDevice.SetTexture 0, Nothing
-    DirectDevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, b_Vertex(0), Len(b_Vertex(0))
 End Sub
 
 Public Sub Engine_D3DColor_To_RGB_List(rgb_list() As Long, Color As D3DCOLORVALUE)
@@ -392,32 +408,32 @@ Dim IX As Single
     
 End Function
 
-Public Function Engine_Collision_LineRect(ByVal SX As Long, ByVal SY As Long, ByVal SW As Long, ByVal SH As Long, ByVal X1 As Long, ByVal Y1 As Long, ByVal X2 As Long, ByVal Y2 As Long) As Byte
+Public Function Engine_Collision_LineRect(ByVal sX As Long, ByVal sY As Long, ByVal SW As Long, ByVal SH As Long, ByVal X1 As Long, ByVal Y1 As Long, ByVal X2 As Long, ByVal Y2 As Long) As Byte
 '*****************************************************************
 'Check if a line intersects with a rectangle (returns 1 if true)
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_Collision_LineRect
 '*****************************************************************
 
     'Top line
-    If Engine_Collision_Line(SX, SY, SX + SW, SY, X1, Y1, X2, Y2) Then
+    If Engine_Collision_Line(sX, sY, sX + SW, sY, X1, Y1, X2, Y2) Then
         Engine_Collision_LineRect = 1
         Exit Function
     End If
     
     'Right line
-    If Engine_Collision_Line(SX + SW, SY, SX + SW, SY + SH, X1, Y1, X2, Y2) Then
+    If Engine_Collision_Line(sX + SW, sY, sX + SW, sY + SH, X1, Y1, X2, Y2) Then
         Engine_Collision_LineRect = 1
         Exit Function
     End If
 
     'Bottom line
-    If Engine_Collision_Line(SX, SY + SH, SX + SW, SY + SH, X1, Y1, X2, Y2) Then
+    If Engine_Collision_Line(sX, sY + SH, sX + SW, sY + SH, X1, Y1, X2, Y2) Then
         Engine_Collision_LineRect = 1
         Exit Function
     End If
 
     'Left line
-    If Engine_Collision_Line(SX, SY, SX, SY + SW, X1, Y1, X2, Y2) Then
+    If Engine_Collision_Line(sX, sY, sX, sY + SW, X1, Y1, X2, Y2) Then
         Engine_Collision_LineRect = 1
         Exit Function
     End If
@@ -449,8 +465,9 @@ Public Sub Engine_BeginScene(Optional ByVal Color As Long = 0)
 'Blisse-AO | DD Clear & BeginScene
 '***************************************************
 
-    DirectDevice.BeginScene
-    DirectDevice.Clear 0, ByVal 0, D3DCLEAR_TARGET, Color, 1#, 0
+    Call DirectDevice.BeginScene
+    Call DirectDevice.Clear(0, ByVal 0, D3DCLEAR_TARGET, Color, 1#, 0)
+    Call SpriteBatch.Begin
     
 End Sub
 
@@ -461,117 +478,17 @@ Public Sub Engine_EndScene(ByRef destRect As RECT, Optional ByVal hWndDest As Lo
 'Blisse-AO | DD EndScene & Present
 '***************************************************
     
-    DirectDevice.EndScene
+    Call SpriteBatch.Flush
+    
+    Call DirectDevice.EndScene
         
     If hWndDest = 0 Then
-        DirectDevice.Present destRect, ByVal 0&, ByVal 0&, ByVal 0&
+        Call DirectDevice.Present(destRect, ByVal 0&, ByVal 0&, ByVal 0&)
     Else
-        DirectDevice.Present destRect, ByVal 0, hWndDest, ByVal 0
+        Call DirectDevice.Present(destRect, ByVal 0, hWndDest, ByVal 0)
     End If
     
 End Sub
-
-Public Sub Geometry_Create_Box(ByRef Verts() As TLVERTEX, ByRef dest As RECT, ByRef src As RECT, ByRef rgb_list() As Long, _
-                                Optional ByRef Textures_Width As Long, Optional ByRef Textures_Height As Long, Optional ByVal Angle As Single)
-'**************************************************************
-'Author: Aaron Perkins
-'Modified by Juan Martin Sotuyo Dodero
-'Last Modify Date: 11/17/2002
-'**************************************************************
-
-    Dim x_center As Single
-    Dim y_center As Single
-    Dim radius As Single
-    Dim x_Cor As Single
-    Dim y_Cor As Single
-    Dim left_point As Single
-    Dim right_point As Single
-    Dim temp As Single
-    
-    If Angle > 0 Then
-        x_center = dest.Left + (dest.Right - dest.Left) / 2
-        y_center = dest.Top + (dest.Bottom - dest.Top) / 2
-        
-        radius = Sqr((dest.Right - x_center) ^ 2 + (dest.Bottom - y_center) ^ 2)
-        
-        temp = (dest.Right - x_center) / radius
-        right_point = Atn(temp / Sqr(-temp * temp + 1))
-        left_point = 3.1459 - right_point
-    End If
-    
-    If Angle = 0 Then
-        x_Cor = dest.Left
-        y_Cor = dest.Bottom
-    Else
-        x_Cor = x_center + Cos(-left_point - Angle) * radius
-        y_Cor = y_center - Sin(-left_point - Angle) * radius
-    End If
-
-    If Textures_Width And Textures_Height Then
-        Verts(0) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(0), src.Left / Textures_Width, (src.Bottom + 1) / Textures_Height)
-    Else
-        Verts(0) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(0), 0, 0)
-    End If
-
-    If Angle = 0 Then
-        x_Cor = dest.Left
-        y_Cor = dest.Top
-    Else
-        x_Cor = x_center + Cos(left_point - Angle) * radius
-        y_Cor = y_center - Sin(left_point - Angle) * radius
-    End If
-    
-    If Textures_Width And Textures_Height Then
-        Verts(1) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(1), src.Left / Textures_Width, src.Top / Textures_Height)
-    Else
-        Verts(1) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(1), 0, 1)
-    End If
-
-    If Angle = 0 Then
-        x_Cor = dest.Right
-        y_Cor = dest.Bottom
-    Else
-        x_Cor = x_center + Cos(-right_point - Angle) * radius
-        y_Cor = y_center - Sin(-right_point - Angle) * radius
-    End If
-
-    If Textures_Width And Textures_Height Then
-        Verts(2) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(2), (src.Right + 1) / Textures_Width, (src.Bottom + 1) / Textures_Height)
-    Else
-        Verts(2) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(2), 1, 0)
-    End If
-
-    If Angle = 0 Then
-        x_Cor = dest.Right
-        y_Cor = dest.Top
-    Else
-        x_Cor = x_center + Cos(right_point - Angle) * radius
-        y_Cor = y_center - Sin(right_point - Angle) * radius
-    End If
-
-    If Textures_Width And Textures_Height Then
-        Verts(3) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(3), (src.Right + 1) / Textures_Width, src.Top / Textures_Height)
-    Else
-        Verts(3) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(3), 1, 1)
-    End If
-
-End Sub
-
-Public Function Geometry_Create_TLVertex(ByVal X As Single, ByVal Y As Single, ByVal z As Single, _
-                                            ByVal rhw As Single, ByVal Color As Long, tu As Single, _
-                                            ByVal tv As Single) As TLVERTEX
-'**************************************************************
-'Author: Aaron Perkins
-'Last Modify Date: 10/07/2002
-'**************************************************************
-    Geometry_Create_TLVertex.X = X
-    Geometry_Create_TLVertex.Y = Y
-    Geometry_Create_TLVertex.z = z
-    Geometry_Create_TLVertex.rhw = rhw
-    Geometry_Create_TLVertex.Color = Color
-    Geometry_Create_TLVertex.tu = tu
-    Geometry_Create_TLVertex.tv = tv
-End Function
 
 Public Sub Engine_ZoomIn()
 '**************************************************************
@@ -679,30 +596,27 @@ Function Engine_Distance(ByVal X1 As Integer, ByVal Y1 As Integer, ByVal X2 As I
 End Function
 
 Public Sub Engine_Update_FPS()
-'***************************************************
-'Author: Standelf
-'Last Modification: 10/01/2011
-'Limit FPS & Calculate later
-'***************************************************
+    '***************************************************
+    'Author: Standelf
+    'Last Modification: 10/01/2011
+    'Limit FPS & Calculate later
+    '***************************************************
 
-        If ClientSetup.LimiteFPS And Not ClientSetup.vSync Then
-            While (GetTickCount - FPSLastCheck) \ 10 < FramesPerSecCounter
-                Sleep 5
-            Wend
-        End If
-        
-        If FPSLastCheck + 1000 < GetTickCount Then
-            FPS = FramesPerSecCounter
-            FramesPerSecCounter = 1
-            FPSLastCheck = GetTickCount
-        Else
-            FramesPerSecCounter = FramesPerSecCounter + 1
-        End If
+    If ClientSetup.vSync Then
+        While (GetTickCount - FPSLastCheck) \ 10 < FramesPerSecCounter
+            Call Sleep(5)
+        Wend
+    End If
 
-        'If Settings.MostrarFPS = True Then
-            'Fonts_Render_String FPS, 2, 2, -1, Settings.Engine_Font
-            'DrawText 2, 2, FPS, -1
-       ' End If
+    If FPSLastCheck + 1000 < GetTickCount Then
+        FPS = FramesPerSecCounter
+        FramesPerSecCounter = 1
+        FPSLastCheck = GetTickCount
+    Else
+        FramesPerSecCounter = FramesPerSecCounter + 1
+
+    End If
+
 End Sub
 
 Public Sub DrawPJ(ByVal Index As Byte)
@@ -745,22 +659,22 @@ Public Sub DrawPJ(ByVal Index As Byte)
             Head_OffSet = HeadOffsetBajos
         End If
     
-        Call DDrawTransGrhtoSurface(BodyData(cPJ(Index).Body).Walk(3), PixelOffsetX + Init_X, PixelOffsetY + Init_Y, 0, Normal_RGBList(), 0, Init_X, Init_Y)
+        Call Draw_Grh(BodyData(cPJ(Index).Body).Walk(3), PixelOffsetX + Init_X, PixelOffsetY + Init_Y, 0, Normal_RGBList(), 0, Init_X, Init_Y)
 
         If cPJ(Index).Head <> 0 Then
-            Call DDrawTransGrhtoSurface(HeadData(cPJ(Index).Head).Head(3), PixelOffsetX + Init_X + 4, PixelOffsetY + Init_Y + Head_OffSet, 0, Normal_RGBList(), 0, Init_X, Init_Y)
+            Call Draw_Grh(HeadData(cPJ(Index).Head).Head(3), PixelOffsetX + Init_X + 4, PixelOffsetY + Init_Y + Head_OffSet, 0, Normal_RGBList(), 0, Init_X, Init_Y)
         End If
 
         If cPJ(Index).helmet <> 0 Then
-            Call DDrawTransGrhtoSurface(CascoAnimData(cPJ(Index).helmet).Head(3), PixelOffsetX + Init_X + 4, PixelOffsetY + Init_Y + Head_OffSet, 0, Normal_RGBList(), 0, Init_X, Init_Y)
+            Call Draw_Grh(CascoAnimData(cPJ(Index).helmet).Head(3), PixelOffsetX + Init_X + 4, PixelOffsetY + Init_Y + Head_OffSet, 0, Normal_RGBList(), 0, Init_X, Init_Y)
         End If
 
         If cPJ(Index).weapon <> 0 Then
-            Call DDrawTransGrhtoSurface(WeaponAnimData(cPJ(Index).weapon).WeaponWalk(3), PixelOffsetX + Init_X, PixelOffsetY + Init_Y, 0, Normal_RGBList(), 0, Init_X, Init_Y)
+            Call Draw_Grh(WeaponAnimData(cPJ(Index).weapon).WeaponWalk(3), PixelOffsetX + Init_X, PixelOffsetY + Init_Y, 0, Normal_RGBList(), 0, Init_X, Init_Y)
         End If
 
         If cPJ(Index).shield <> 0 Then
-            Call DDrawTransGrhtoSurface(ShieldAnimData(cPJ(Index).shield).ShieldWalk(3), PixelOffsetX + Init_X, PixelOffsetY + Init_Y, 0, Normal_RGBList(), 0, Init_X, Init_Y)
+            Call Draw_Grh(ShieldAnimData(cPJ(Index).shield).ShieldWalk(3), PixelOffsetX + Init_X, PixelOffsetY + Init_Y, 0, Normal_RGBList(), 0, Init_X, Init_Y)
         End If
     End If
 
