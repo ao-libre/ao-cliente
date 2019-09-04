@@ -174,8 +174,10 @@ End Sub
 
 Private Sub imgDetalles_Click()
     frmGuildBrief.EsLeader = False
-
-    Call WriteGuildRequestDetails(guildslist.List(guildslist.ListIndex))
+    
+    If LenB(guildslist.List(guildslist.ListIndex)) <> 0 Then
+        Call WriteGuildRequestDetails(guildslist.List(guildslist.ListIndex))
+    End If
 End Sub
 
 Private Sub txtBuscar_Change()
