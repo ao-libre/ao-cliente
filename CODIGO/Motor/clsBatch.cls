@@ -44,6 +44,7 @@ Public Sub Begin()
 End Sub
 
 Public Sub SetTexture(ByRef Texture As Direct3DTexture8)
+    
     If ObjPtr(m_Texture) <> ObjPtr(Texture) Then 'te cabe vb6
         '
         ' Flush the batch since we're using a diferent texture
@@ -54,7 +55,7 @@ Public Sub SetTexture(ByRef Texture As Direct3DTexture8)
        
         '
         ' Update the new texture of the batch
-        '
+    
         Call DirectDevice.SetTexture(0, Texture)
     End If
 End Sub
