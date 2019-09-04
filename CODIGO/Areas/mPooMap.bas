@@ -130,7 +130,7 @@ Sub Map_MoveTo(ByVal Direccion As E_Heading)
       If LegalOk And Not UserParalizado Then
         
             Call WriteWalk(Direccion)
-            Call frmMain.ActualizarMiniMapa(Direccion) 'integrado por ReyarB
+            Call frmMain.ActualizarMiniMapa() 'integrado por ReyarB
             
             If Not UserDescansar And Not UserMeditar Then
                   Call Char_MovebyHead(UserCharIndex, Direccion)
