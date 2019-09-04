@@ -81,7 +81,7 @@ Public Sub Text_Render_Special(ByVal intX As Integer, ByVal intY As Integer, ByR
         Dim temp_color(3) As Long
         Call Engine_Long_To_RGB_List(temp_color(), lngColor)
         
-        Call Engine_Render_Text(SpriteBatch, cfonts(1), strText, intX, intY, temp_color())
+        Call Engine_Render_Text(SpriteBatch, cfonts(1), strText, intX, intY, temp_color(), bolCentred)
     End If
     
 End Sub ' GSZAO
@@ -96,7 +96,16 @@ Private Function Es_Emoticon(ByVal ascii As Byte) As Boolean ' GSZAO
     End If
 End Function ' GSZAO
 
-Private Sub Engine_Render_Text(ByRef Batch As clsBatch, ByRef UseFont As CustomFont, ByVal Text As String, ByVal X As Long, ByVal Y As Long, Color() As Long)
+Private Sub Engine_Render_Text(ByRef Batch As clsBatch, _
+                                ByRef UseFont As CustomFont, _
+                                ByVal Text As String, _
+                                ByVal X As Long, _
+                                ByVal Y As Long, _
+                                ByRef Color() As Long, _
+                                Optional ByVal Center As Boolean = False, _
+                                Optional ByVal Alpha As Byte = 255, _
+                                Optional ByVal ParseEmoticons As Boolean = True)
+                                
 '*****************************************************************
 'Render text with a custom font
 '*****************************************************************
@@ -106,8 +115,9 @@ Private Sub Engine_Render_Text(ByRef Batch As clsBatch, ByRef UseFont As CustomF
     Dim ascii() As Byte
     Dim i As Long
     Dim J As Long
-
     Dim yOffset As Single
+    Dim TempColor As Long
+    Dim ResetColor As Byte
     
     'Check if we have the device
     If DirectDevice.TestCooperativeLevel <> D3D_OK Then Exit Sub
@@ -115,11 +125,45 @@ Private Sub Engine_Render_Text(ByRef Batch As clsBatch, ByRef UseFont As CustomF
     'Check for valid text to render
     If LenB(Text) = 0 Then Exit Sub
     
+     'WyroX: Agregado para evitar dibujar emojis en los nombres de los personajes
+    If ParseEmoticons Then
+        'Analizar mensaje, palabra por palabra... GSZAO
+        Dim NewText As String
+        
+        tempstr = Split(Text, Chr$(32))
+        NewText = Text
+        Text = vbNullString
+
+        For i = 0 To UBound(tempstr)
+            If tempstr(i) = ":)" Or tempstr(i) = "=)" Then
+                tempstr(i) = Chr$(129)
+            ElseIf tempstr(i) = ":@" Or tempstr(i) = "=@" Then
+                tempstr(i) = Chr$(137)
+            ElseIf tempstr(i) = ":(" Or tempstr(i) = "=(" Then
+                tempstr(i) = Chr$(141)
+            ElseIf tempstr(i) = "^^" Or tempstr(i) = "^_^" Then
+                tempstr(i) = Chr$(143)
+            ElseIf tempstr(i) = ":D" Or tempstr(i) = "=D" Then
+                tempstr(i) = Chr$(144)
+            ElseIf tempstr(i) = "xD" Or tempstr(i) = "XD" Then
+                tempstr(i) = Chr$(157)
+            ElseIf tempstr(i) = ":S" Or tempstr(i) = "=S" Then
+                tempstr(i) = Chr$(160)
+            End If
+            Text = Text & Chr$(32) & tempstr(i)
+        Next
+        ' Made by ^[GS]^ for GSZAO
+    End If
+    
     'Get the text into arrays (split by vbCrLf)
     tempstr = Split(Text, vbCrLf)
 
     'Set the texture
     Call Batch.SetTexture(UseFont.Texture)
+    
+    If Center Then
+        X = X - Engine_GetTextWidth(cfonts(1), Text) * 0.5
+    End If
     
     'Loop through each line if there are line breaks (vbCrLf)
     For i = 0 To UBound(tempstr)
@@ -137,6 +181,15 @@ Private Sub Engine_Render_Text(ByRef Batch As clsBatch, ByRef UseFont As CustomF
                 
                 TempVA.X = X + Count
                 TempVA.Y = Y + yOffset
+                
+                'Set the colors
+                If Es_Emoticon(ascii(J - 1)) Then ' GSZAO los colores no afectan a los emoticones!
+                    
+                    If (ascii(J - 1) <> 157) Then
+                        Count = Count + 5   ' Los emoticones tienen tamano propio (despues hay que cargarlos "correctamente" para evitar hacer esto)
+                    End If
+                    
+                End If
             
                 Call Batch.Draw(TempVA.X, TempVA.Y, TempVA.W, TempVA.H, Color, TempVA.Tx1, TempVA.Ty1, TempVA.Tx2, TempVA.Ty2)
 
@@ -292,7 +345,7 @@ Public Sub DrawText(ByVal X As Integer, _
 
     Call Engine_Long_To_RGB_List(aux(), Color)
         
-    Call Engine_Render_Text(SpriteBatch, cfonts(1), Text, X, Y, aux())
+    Call Engine_Render_Text(SpriteBatch, cfonts(1), Text, X, Y, aux(), Center)
 
 End Sub
 
