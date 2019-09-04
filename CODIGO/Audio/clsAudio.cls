@@ -67,7 +67,9 @@ On Local Error Resume Next
    
     'Stop every channel being used and destroy the buffer
     For LoopC = 1 To NumSoundBuffers
-        Call DSBuffers(LoopC).Buffer.Stop
+        If LenB(DSBuffers(LoopC).FileName) <> 0 Then
+            Call DSBuffers(LoopC).Buffer.Stop
+        End If
         Set DSBuffers(LoopC).Buffer = Nothing
     Next LoopC
    

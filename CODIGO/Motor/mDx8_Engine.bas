@@ -19,8 +19,8 @@ Private View As D3DMATRIX
 Public Engine_BaseSpeed As Single
 Public TileBufferSize As Integer
 
-Public Const ScreenWidth As Long = 536
-Public Const ScreenHeight As Long = 412
+Public ScreenWidth As Long
+Public ScreenHeight As Long
 
 Public Const HeadOffsetAltos As Integer = -8
 Public Const HeadOffsetBajos As Integer = 2
@@ -28,20 +28,24 @@ Public Const HeadOffsetBajos As Integer = 2
 Public MainScreenRect As RECT
 
 Public Type TLVERTEX
-  X As Single
-  Y As Single
-  Z As Single
-  rhw As Single
-  Color As Long
-  Specular As Long
-  tu As Single
-  tv As Single
+    X As Single
+    Y As Single
+    Z As Single
+    rhw As Single
+    Color As Long
+    Specular As Long
+    tu As Single
+    tv As Single
 End Type
 
 Private EndTime As Long
 
 Public Function Engine_DirectX8_Init() As Boolean
-
+    
+    'Establecemos cual va a ser el tamano del render.
+    ScreenWidth = frmMain.MainViewPic.ScaleWidth
+    ScreenHeight = frmMain.MainViewPic.ScaleHeight
+    
     Dim DispMode  As D3DDISPLAYMODE
     Dim D3DWindow As D3DPRESENT_PARAMETERS
     
@@ -55,16 +59,26 @@ Public Function Engine_DirectX8_Init() As Boolean
         .Windowed = True
         .SwapEffect = IIf((ClientSetup.vSync) = True, D3DSWAPEFFECT_COPY_VSYNC, D3DSWAPEFFECT_DISCARD)
         .BackBufferFormat = DispMode.Format
-        .BackBufferWidth = frmMain.MainViewPic.ScaleWidth
-        .BackBufferHeight = frmMain.MainViewPic.ScaleHeight
+        .BackBufferWidth = ScreenWidth
+        .BackBufferHeight = ScreenHeight
         .hDeviceWindow = frmMain.MainViewPic.hWnd
     End With
 
-    'Renderizado de graficos mediante Hardware por defecto.
-    Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, frmMain.MainViewPic.hWnd, D3DCREATE_HARDWARE_VERTEXPROCESSING, D3DWindow)
+    Select Case ClientSetup.Aceleracion
+
+        Case 0 '   Hardware
+            Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, D3DWindow.hDeviceWindow, D3DCREATE_HARDWARE_VERTEXPROCESSING, D3DWindow)
+
+        Case 1 '   Mixed
+            Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, D3DWindow.hDeviceWindow, D3DCREATE_MIXED_VERTEXPROCESSING, D3DWindow)
+
+        Case Else 'Si no hay opcion entramos en Hardware para asegurarnos que funcione el cliente.
+            Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, D3DWindow.hDeviceWindow, D3DCREATE_HARDWARE_VERTEXPROCESSING, D3DWindow)
+            
+    End Select
     
     'Seteamos la matriz de proyeccion.
-    Call D3DXMatrixOrthoOffCenterLH(Projection, 0, 800, 600, 0, -1#, 1#)
+    Call D3DXMatrixOrthoOffCenterLH(Projection, 0, ScreenWidth, ScreenHeight, 0, -1#, 1#)
     Call D3DXMatrixIdentity(View)
     Call DirectDevice.SetTransform(D3DTS_PROJECTION, Projection)
     Call DirectDevice.SetTransform(D3DTS_VIEW, View)
@@ -164,8 +178,8 @@ Public Sub Engine_DirectX8_Aditional_Init()
     Call Engine_Set_BaseSpeed(0.018)
     
     With MainScreenRect
-        .Bottom = frmMain.MainViewPic.ScaleHeight
-        .Right = frmMain.MainViewPic.ScaleWidth
+        .Bottom = ScreenHeight
+        .Right = ScreenWidth
     End With
 
     Call Engine_Long_To_RGB_List(Normal_RGBList(), -1)
@@ -582,30 +596,30 @@ Function Engine_Distance(ByVal X1 As Integer, ByVal Y1 As Integer, ByVal X2 As I
 End Function
 
 Public Sub Engine_Update_FPS()
-'***************************************************
-'Author: Standelf
-'Last Modification: 10/01/2011
-'Limit FPS & Calculate later
-'***************************************************
+    '***************************************************
+    'Author: Standelf
+    'Last Modification: 10/01/2011
+    'Limit FPS & Calculate later
+    '***************************************************
 
-        If ClientSetup.LimiteFPS And Not ClientSetup.vSync Then
-            While (GetTickCount - FPSLastCheck) \ 10 < FramesPerSecCounter
-                Sleep 5
-            Wend
-        End If
-        
-        If FPSLastCheck + 1000 < GetTickCount Then
-            FPS = FramesPerSecCounter
-            FramesPerSecCounter = 1
-            FPSLastCheck = GetTickCount
-        Else
-            FramesPerSecCounter = FramesPerSecCounter + 1
-        End If
+    If ClientSetup.LimiteFPS And Not ClientSetup.vSync Then
 
-        'If Settings.MostrarFPS = True Then
-            'Fonts_Render_String FPS, 2, 2, -1, Settings.Engine_Font
-            'DrawText 2, 2, FPS, -1
-       ' End If
+        While (GetTickCount - FPSLastCheck) \ 10 < FramesPerSecCounter
+
+            Sleep 5
+        Wend
+
+    End If
+
+    If FPSLastCheck + 1000 < GetTickCount Then
+        FPS = FramesPerSecCounter
+        FramesPerSecCounter = 1
+        FPSLastCheck = GetTickCount
+    Else
+        FramesPerSecCounter = FramesPerSecCounter + 1
+
+    End If
+
 End Sub
 
 Public Sub DrawPJ(ByVal Index As Byte)

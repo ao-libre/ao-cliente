@@ -28,6 +28,7 @@ End Enum
 Public Type tSetupMods
 
     ' VIDEO
+    Aceleracion As Byte
     byMemory    As Integer
     ProyectileEngine As Boolean
     PartyMembers As Boolean
@@ -128,6 +129,7 @@ Public Sub LeerConfiguracion()
     With ClientSetup
         
         ' VIDEO
+        .Aceleracion = Lector.GetValue("VIDEO", "RENDER_MODE")
         .byMemory = Lector.GetValue("VIDEO", "DINAMIC_MEMORY")
         .bNoRes = CBool(Lector.GetValue("VIDEO", "DISABLE_RESOLUTION_CHANGE"))
         .ProyectileEngine = CBool(Lector.GetValue("VIDEO", "PROYECTILE_ENGINE"))
@@ -136,7 +138,6 @@ Public Sub LeerConfiguracion()
         .UsarSombras = CBool(Lector.GetValue("VIDEO", "SOMBRAS"))
         .ParticleEngine = CBool(Lector.GetValue("VIDEO", "PARTICLE_ENGINE"))
         .vSync = CBool(Lector.GetValue("VIDEO", "VSYNC"))
-        .LimiteFPS = CBool(Lector.GetValue("VIDEO", "LIMIT_FPS"))
         
         ' AUDIO
         .bMusic = CBool(Lector.GetValue("AUDIO", "MIDI"))
@@ -157,6 +158,7 @@ Public Sub LeerConfiguracion()
         ' OTHER
         .MostrarTips = CBool(Lector.GetValue("OTHER", "MOSTRAR_TIPS"))
         
+        Debug.Print "Modo de Renderizado: " & IIf(.Aceleracion = 1, "Mixto (Hardware + Software)", "Hardware")
         Debug.Print "byMemory: " & .byMemory
         Debug.Print "bNoRes: " & .bNoRes
         Debug.Print "ProyectileEngine: " & .ProyectileEngine
@@ -165,7 +167,6 @@ Public Sub LeerConfiguracion()
         Debug.Print "UsarSombras: " & .UsarSombras
         Debug.Print "ParticleEngine: " & .ParticleEngine
         Debug.Print "vSync: " & .vSync
-        Debug.Print "LimiteFPS: " & .LimiteFPS
         Debug.Print "bMusic: " & .bMusic
         Debug.Print "bSound: " & .bSound
         Debug.Print "bSoundEffects: " & .bSoundEffects
@@ -176,6 +177,7 @@ Public Sub LeerConfiguracion()
         Debug.Print "bKill: " & .byMurderedLevel
         Debug.Print "bActive: " & .bActive
         Debug.Print "MostrarTips: " & .MostrarTips
+        Debug.Print vbNullString
         
     End With
   
@@ -196,6 +198,7 @@ Public Sub GuardarConfiguracion()
     With ClientSetup
         
         ' VIDEO
+        Call Lector.ChangeValue("VIDEO", "RENDER_MODE", .Aceleracion)
         Call Lector.ChangeValue("VIDEO", "DINAMIC_MEMORY", .byMemory)
         Call Lector.ChangeValue("VIDEO", "DISABLE_RESOLUTION_CHANGE", CInt(.bNoRes))
         Call Lector.ChangeValue("VIDEO", "PROYECTILE_ENGINE", CInt(.ProyectileEngine))
@@ -204,7 +207,6 @@ Public Sub GuardarConfiguracion()
         Call Lector.ChangeValue("VIDEO", "SOMBRAS", CInt(.UsarSombras))
         Call Lector.ChangeValue("VIDEO", "PARTICLE_ENGINE", CInt(.ParticleEngine))
         Call Lector.ChangeValue("VIDEO", "VSYNC", CInt(.vSync))
-        Call Lector.ChangeValue("VIDEO", "LIMIT_FPS", CInt(.LimiteFPS))
         
         ' AUDIO
         Call Lector.ChangeValue("AUDIO", "MIDI", CInt(.bMusic))

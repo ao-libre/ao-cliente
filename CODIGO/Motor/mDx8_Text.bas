@@ -119,7 +119,7 @@ Private Sub Engine_Render_Text(ByRef Batch As clsBatch, ByRef UseFont As CustomF
     tempstr = Split(Text, vbCrLf)
 
     'Set the texture
-    Batch.SetTexture UseFont.Texture
+    Call Batch.SetTexture(UseFont.Texture)
     
     'Loop through each line if there are line breaks (vbCrLf)
     For i = 0 To UBound(tempstr)
@@ -133,13 +133,12 @@ Private Sub Engine_Render_Text(ByRef Batch As clsBatch, ByRef UseFont As CustomF
             'Loop through the characters
             For J = 1 To Len(tempstr(i))
 
-                CopyMemory TempVA, UseFont.HeaderInfo.CharVA(ascii(J - 1)), 24 'this number represents the size of "CharVA" struct
+                Call CopyMemory(TempVA, UseFont.HeaderInfo.CharVA(ascii(J - 1)), 24) 'this number represents the size of "CharVA" struct
                 
                 TempVA.X = X + Count
                 TempVA.Y = Y + yOffset
             
-                Call Batch.Draw(TempVA.X, TempVA.Y, TempVA.W, TempVA.H, Color, _
-                            TempVA.Tx1, TempVA.Ty1, TempVA.Tx2, TempVA.Ty2)
+                Call Batch.Draw(TempVA.X, TempVA.Y, TempVA.W, TempVA.H, Color, TempVA.Tx1, TempVA.Ty1, TempVA.Tx2, TempVA.Ty2)
 
                 'Shift over the the position to render the next character
                 Count = Count + UseFont.HeaderInfo.CharWidth(ascii(J - 1))

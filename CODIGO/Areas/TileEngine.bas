@@ -1307,6 +1307,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
                     OffsetCounterX = 0
                     AddtoUserPos.X = 0
                     UserMoving = False
+
                 End If
                 
             End If
@@ -1321,7 +1322,9 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
                     UserMoving = False
                     
                 End If
+
             End If
+
         End If
         
         'Update mouse position within view area
@@ -1332,6 +1335,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
             DirectDevice.Clear 0, ByVal 0, D3DCLEAR_TARGET, 0, 1#, 0
         Else
             Call RenderScreen(UserPos.X - AddtoUserPos.X, UserPos.Y - AddtoUserPos.Y, OffsetCounterX, OffsetCounterY)
+
         End If
         
         Call Dialogos.Render
@@ -1347,53 +1351,55 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
         timerTicksPerFrame = timerElapsedTime * Engine_Get_BaseSpeed
         
         Call Engine_EndScene(MainScreenRect, 0)
-    End If
-    
-    '//Banco
-    If frmBancoObj.Visible Then
-        If frmBancoObj.PicBancoInv.Visible Then Call InvBanco(0).DrawInv
-        If frmBancoObj.PicInv.Visible Then Call InvBanco(1).DrawInv
-    End If
-    
-    '//Comercio
-    If frmComerciar.Visible Then
-        If frmComerciar.picInvNpc.Visible Then Call InvComNpc.DrawInv
-        If frmComerciar.picInvUser.Visible Then Call InvComUsu.DrawInv
-    End If
-    
-    '//Comercio entre usuarios
-    If frmComerciarUsu.Visible Then
-        If frmComerciarUsu.picInvComercio.Visible Then InvComUsu.DrawInv (1)
-        If frmComerciarUsu.picInvOfertaProp.Visible Then InvOfferComUsu(0).DrawInv (1)
-        If frmComerciarUsu.picInvOfertaOtro Then InvOfferComUsu(1).DrawInv (1)
-        If frmComerciarUsu.picInvOroProp.Visible Then InvOroComUsu(0).DrawInv (1)
-        If frmComerciarUsu.picInvOroOfertaProp.Visible Then InvOroComUsu(1).DrawInv (1)
-        If frmComerciarUsu.picInvOroOfertaOtro.Visible Then InvOroComUsu(2).DrawInv (1)
-    End If
-    
-    '//Herrero
-    If frmHerrero.Visible Then
-        If frmHerrero.picLingotes0.Visible Or frmHerrero.picMejorar0.Visible Then InvLingosHerreria(1).DrawInv (1)
-        If frmHerrero.picLingotes1.Visible Or frmHerrero.picMejorar1.Visible Then InvLingosHerreria(2).DrawInv (1)
-        If frmHerrero.picLingotes2.Visible Or frmHerrero.picMejorar2.Visible Then InvLingosHerreria(3).DrawInv (1)
-        If frmHerrero.picLingotes3.Visible Or frmHerrero.picMejorar3.Visible Then InvLingosHerreria(4).DrawInv (1)
-    End If
-    
-    '//Carpintero
-    If frmCarp.Visible Then
-        If frmCarp.picMaderas0.Visible Or frmCarp.imgMejorar0.Visible Then InvMaderasCarpinteria(1).DrawInv (1)
-        If frmCarp.picMaderas1.Visible Or frmCarp.imgMejorar1.Visible Then InvMaderasCarpinteria(2).DrawInv (1)
-        If frmCarp.picMaderas2.Visible Or frmCarp.imgMejorar2.Visible Then InvMaderasCarpinteria(3).DrawInv (1)
-        If frmCarp.picMaderas3.Visible Or frmCarp.imgMejorar3.Visible Then InvMaderasCarpinteria(4).DrawInv (1)
-    End If
-    
-    '//Inventario
-    If frmMain.Visible Then
-        If frmMain.PicInv.Visible Then
-            Call Inventario.DrawInv
+        
+        '//Banco
+        If frmBancoObj.Visible Then
+            If frmBancoObj.PicBancoInv.Visible Then Call InvBanco(0).DrawInv
+            If frmBancoObj.PicInv.Visible Then Call InvBanco(1).DrawInv
         End If
-    End If
     
+        '//Comercio
+        If frmComerciar.Visible Then
+            If frmComerciar.picInvNpc.Visible Then Call InvComNpc.DrawInv
+            If frmComerciar.picInvUser.Visible Then Call InvComUsu.DrawInv
+        End If
+    
+        '//Comercio entre usuarios
+        If frmComerciarUsu.Visible Then
+            If frmComerciarUsu.picInvComercio.Visible Then InvComUsu.DrawInv (1)
+            If frmComerciarUsu.picInvOfertaProp.Visible Then InvOfferComUsu(0).DrawInv (1)
+            If frmComerciarUsu.picInvOfertaOtro Then InvOfferComUsu(1).DrawInv (1)
+            If frmComerciarUsu.picInvOroProp.Visible Then InvOroComUsu(0).DrawInv (1)
+            If frmComerciarUsu.picInvOroOfertaProp.Visible Then InvOroComUsu(1).DrawInv (1)
+            If frmComerciarUsu.picInvOroOfertaOtro.Visible Then InvOroComUsu(2).DrawInv (1)
+        End If
+    
+        '//Herrero
+        If frmHerrero.Visible Then
+            If frmHerrero.picLingotes0.Visible Or frmHerrero.picMejorar0.Visible Then InvLingosHerreria(1).DrawInv (1)
+            If frmHerrero.picLingotes1.Visible Or frmHerrero.picMejorar1.Visible Then InvLingosHerreria(2).DrawInv (1)
+            If frmHerrero.picLingotes2.Visible Or frmHerrero.picMejorar2.Visible Then InvLingosHerreria(3).DrawInv (1)
+            If frmHerrero.picLingotes3.Visible Or frmHerrero.picMejorar3.Visible Then InvLingosHerreria(4).DrawInv (1)
+        End If
+    
+        '//Carpintero
+        If frmCarp.Visible Then
+            If frmCarp.picMaderas0.Visible Or frmCarp.imgMejorar0.Visible Then InvMaderasCarpinteria(1).DrawInv (1)
+            If frmCarp.picMaderas1.Visible Or frmCarp.imgMejorar1.Visible Then InvMaderasCarpinteria(2).DrawInv (1)
+            If frmCarp.picMaderas2.Visible Or frmCarp.imgMejorar2.Visible Then InvMaderasCarpinteria(3).DrawInv (1)
+            If frmCarp.picMaderas3.Visible Or frmCarp.imgMejorar3.Visible Then InvMaderasCarpinteria(4).DrawInv (1)
+        End If
+    
+        '//Inventario
+        If frmMain.Visible Then
+            If frmMain.PicInv.Visible Then
+                Call Inventario.DrawInv
+            End If
+        End If
+        
+
+    End If
+  
 End Sub
 
 Private Function GetElapsedTime() As Single
@@ -1723,9 +1729,9 @@ Public Sub Device_Textured_Render(ByVal X As Single, ByVal Y As Single, _
         Set Texture = SurfaceDB.GetTexture(tex, TextureWidth, TextureHeight)
         
         With SpriteBatch
-                '// Seteamos la textura
+
                 Call .SetTexture(Texture)
-                
+                    
                 If TextureWidth <> 0 And TextureHeight <> 0 Then
                     Call .Draw(X, Y, Width, Height, Color, sX / TextureWidth, sY / TextureHeight, (sX + Width) / TextureWidth, (sY + Height) / TextureHeight)
                 Else
@@ -1759,7 +1765,7 @@ Private Sub DDrawGrhtoSurface(ByRef Grh As Grh, ByVal X As Integer, ByVal Y As I
     Dim SourceRect As RECT
     
     If Grh.GrhIndex = 0 Then Exit Sub
-On Error GoTo error
+On Error GoTo Error
         
     If Animate Then
         If Grh.Started = 1 Then
@@ -1799,7 +1805,7 @@ On Error GoTo error
     End With
 Exit Sub
 
-error:
+Error:
     If Err.number = 9 And Grh.FrameCounter < 1 Then
         Grh.FrameCounter = 1
         Resume
@@ -1836,7 +1842,7 @@ Public Sub DDrawGrhtoSurfaceScale(ByRef Grh As Grh, ByVal X As Integer, ByVal Y 
     Dim SourceRect As RECT
     
     If Grh.GrhIndex = 0 Then Exit Sub
-On Error GoTo error
+On Error GoTo Error
         
     If Animate Then
         If Grh.Started = 1 Then
@@ -1876,7 +1882,7 @@ On Error GoTo error
     End With
 Exit Sub
 
-error:
+Error:
     If Err.number = 9 And Grh.FrameCounter < 1 Then
         Grh.FrameCounter = 1
         Resume
@@ -1917,7 +1923,7 @@ Sub DDrawTransGrhtoSurface(ByRef Grh As Grh, ByVal X As Integer, ByVal Y As Inte
     
     If Grh.GrhIndex = 0 Then Exit Sub
     
-On Error GoTo error
+On Error GoTo Error
     
     If Animate Then
         If Grh.Started = 1 Then
@@ -1958,7 +1964,7 @@ On Error GoTo error
     
 Exit Sub
 
-error:
+Error:
     If Err.number = 9 And Grh.FrameCounter < 1 Then
         Grh.FrameCounter = 1
         Resume
