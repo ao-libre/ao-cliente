@@ -391,7 +391,7 @@ Private Sub CheckKeys()
         End If
     Else
         
-        Call frmMain.ActualizarMiniMapa(0) 'integrado por ReyarB
+        Call frmMain.ActualizarMiniMapa   'integrado por ReyarB
         
     End If
 End Sub
@@ -1472,11 +1472,11 @@ Public Sub ResetAllInfo()
 
 End Sub
 
-Public Function DevolverNombreHechizo(ByVal Index As Byte) As String
+Public Function DevolverNombreHechizo(ByVal index As Byte) As String
 Dim i As Long
  
     For i = 1 To NumHechizos
-        If i = Index Then
+        If i = index Then
             DevolverNombreHechizo = Hechizos(i).Nombre
             Exit Function
         End If
