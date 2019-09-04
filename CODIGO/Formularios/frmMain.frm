@@ -2506,7 +2506,7 @@ End Sub
 Private Sub Minimapa_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If Button = vbRightButton Then
         Call WriteWarpChar("YO", UserMap, CByte(X), CByte(Y))
-        Call ActualizarMiniMapa
+        Call ActualizarMiniMapa()
     End If
 End Sub
 'fin Incorporado ReyarB
