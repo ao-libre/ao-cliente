@@ -391,7 +391,7 @@ Private Sub CheckKeys()
         End If
     Else
         
-        Call frmMain.ActualizarMiniMapa(0) 'integrado por ReyarB
+        Call frmMain.ActualizarMiniMapa 'integrado por ReyarB
         
     End If
 End Sub

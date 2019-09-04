@@ -602,13 +602,10 @@ Public Sub Engine_Update_FPS()
     'Limit FPS & Calculate later
     '***************************************************
 
-    If ClientSetup.LimiteFPS And Not ClientSetup.vSync Then
-
+    If ClientSetup.vSync Then
         While (GetTickCount - FPSLastCheck) \ 10 < FramesPerSecCounter
-
-            Sleep 5
+            Call Sleep(5)
         Wend
-
     End If
 
     If FPSLastCheck + 1000 < GetTickCount Then
