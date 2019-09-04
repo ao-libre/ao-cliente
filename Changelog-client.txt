@@ -486,6 +486,6 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 30/08/2019: Se arreglaron todos los problemas de renderizado del frmPanelAccount. (JuanMz)
 	      Se optimizó todo el comportamiento del frmPanelAccount. (JuanMz)
 	      Se arregló el HandleAccountLogged(). (JuanMz)
-* 30/08/2019: Se eliminó la carga estática de texturas. 
+* 30/08/2019: Se eliminó la carga estática de texturas. (jopiortiz)
 	      Se usa la carga de texturas dinamica aportada por Parra. (jopiortiz)
 	      Se implementó el Sprite Batching. (jopiortiz-JuanMz-Wolftein)
