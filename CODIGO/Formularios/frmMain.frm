@@ -34,12 +34,22 @@ Begin VB.Form frmMain
       AutoRedraw      =   -1  'True
       Height          =   1500
       Left            =   6825
-      ScaleHeight     =   1440
-      ScaleWidth      =   1440
+      ScaleHeight     =   96
+      ScaleMode       =   3  'Pixel
+      ScaleWidth      =   96
       TabIndex        =   41
       TabStop         =   0   'False
       Top             =   300
       Width           =   1500
+      Begin VB.Shape UserM 
+         BackColor       =   &H000000FF&
+         BackStyle       =   1  'Opaque
+         BorderColor     =   &H000000FF&
+         Height          =   45
+         Left            =   750
+         Top             =   750
+         Width           =   45
+      End
    End
    Begin VB.PictureBox picSM 
       Appearance      =   0  'Flat
@@ -2491,4 +2501,23 @@ Private Sub hlst_DblClick()
 
 End Sub
 
+'Incorporado por ReyarB
+Private Sub Minimapa_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    If Button = vbRightButton Then
+        Call WriteWarpChar("YO", UserMap, CByte(X), CByte(Y))
+        Call ActualizarMiniMapa()
+    End If
+End Sub
+'fin Incorporado ReyarB
 
+
+Public Sub ActualizarMiniMapa()
+'***************************************************
+'Author: Martín Gomez (Samke)
+'Last Modify Date: 07/12/2011
+'Integrado por Reyarb
+'***************************************************
+    Me.UserM.Left = UserPos.X
+    Me.UserM.Top = UserPos.Y
+    Me.MiniMapa.Refresh
+End Sub
