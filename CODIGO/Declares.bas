@@ -41,8 +41,10 @@ Public AccountNewPassword As String
 ' Desvanecimiento en Techos
 Public ColorTecho As Byte
 Public temp_rgb(3) As Long
-
-
+Public renderText As String
+Public renderFont As Integer
+Public colorRender As Byte
+Public render_msg(3) As Long
 Public Sonidos As clsSoundMapas
 
 '//Caminata fluida
@@ -811,6 +813,7 @@ Public stxtbuffer As String 'Holds temp raw data from server
 Public stxtbuffercmsg As String 'Holds temp raw data from server
 Public Connected As Boolean 'True when connected to server
 Public UserMap As Integer
+Public nameMap As String
 
 'Control
 Public prgRun As Boolean 'When true the program ends

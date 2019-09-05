@@ -170,6 +170,7 @@ Private Enum ServerPacketID
     QuestListSend
     CreateDamage
     UserInEvent
+    renderMsg
 End Enum
 
 Private Enum ClientPacketID
@@ -868,6 +869,9 @@ On Error Resume Next
     
         Case ServerPacketID.UserInEvent
             Call HandleUserInEvent
+            
+        Case ServerPacketID.renderMsg
+            Call HandleRenderMsg
         Case Else
             'ERROR : Abort!
             Exit Sub
@@ -2046,7 +2050,7 @@ Private Sub HandleChangeMap()
     Call incomingData.ReadByte
     
     UserMap = incomingData.ReadInteger()
-    
+    nameMap = incomingData.ReadASCIIString
 'TODO: Once on-the-fly editor is implemented check for map version before loading....
 'For now we just drop it
     Call incomingData.ReadInteger
@@ -3467,17 +3471,17 @@ On Error GoTo errhandler
     'Remove packet ID
     Call Buffer.ReadByte
     
-    Dim count As Integer
+    Dim Count As Integer
     Dim i As Long
     Dim j As Long
     Dim k As Long
     
-    count = Buffer.ReadInteger()
+    Count = Buffer.ReadInteger()
     
-    ReDim ArmasHerrero(count) As tItemsConstruibles
+    ReDim ArmasHerrero(Count) As tItemsConstruibles
     ReDim HerreroMejorar(0) As tItemsConstruibles
     
-    For i = 1 To count
+    For i = 1 To Count
         With ArmasHerrero(i)
             .Name = Buffer.ReadASCIIString()    'Get the object's name
             .GrhIndex = Buffer.ReadInteger()
@@ -3500,14 +3504,14 @@ On Error GoTo errhandler
         Call InvLingosHerreria(3).Initialize(DirectD3D8, .picLingotes2, 3, , , , , , False)
         Call InvLingosHerreria(4).Initialize(DirectD3D8, .picLingotes3, 3, , , , , , False)
         
-        Call .HideExtraControls(count)
+        Call .HideExtraControls(Count)
         Call .RenderList(1, True)
     End With
     
-    For i = 1 To count
+    For i = 1 To Count
         With ArmasHerrero(i)
             If .Upgrade Then
-                For k = 1 To count
+                For k = 1 To Count
                     If .Upgrade = ArmasHerrero(k).ObjIndex Then
                         j = j + 1
                 
@@ -3566,16 +3570,16 @@ On Error GoTo errhandler
     'Remove packet ID
     Call Buffer.ReadByte
     
-    Dim count As Integer
+    Dim Count As Integer
     Dim i As Long
     Dim j As Long
     Dim k As Long
     
-    count = Buffer.ReadInteger()
+    Count = Buffer.ReadInteger()
     
-    ReDim ArmadurasHerrero(count) As tItemsConstruibles
+    ReDim ArmadurasHerrero(Count) As tItemsConstruibles
     
-    For i = 1 To count
+    For i = 1 To Count
         With ArmadurasHerrero(i)
             .Name = Buffer.ReadASCIIString()    'Get the object's name
             .GrhIndex = Buffer.ReadInteger()
@@ -3589,10 +3593,10 @@ On Error GoTo errhandler
     
     j = UBound(HerreroMejorar)
     
-    For i = 1 To count
+    For i = 1 To Count
         With ArmadurasHerrero(i)
             If .Upgrade Then
-                For k = 1 To count
+                For k = 1 To Count
                     If .Upgrade = ArmadurasHerrero(k).ObjIndex Then
                         j = j + 1
                 
@@ -3651,17 +3655,17 @@ On Error GoTo errhandler
     'Remove packet ID
     Call Buffer.ReadByte
     
-    Dim count As Integer
+    Dim Count As Integer
     Dim i As Long
     Dim j As Long
     Dim k As Long
     
-    count = Buffer.ReadInteger()
+    Count = Buffer.ReadInteger()
     
-    ReDim ObjCarpintero(count) As tItemsConstruibles
+    ReDim ObjCarpintero(Count) As tItemsConstruibles
     ReDim CarpinteroMejorar(0) As tItemsConstruibles
     
-    For i = 1 To count
+    For i = 1 To Count
         With ObjCarpintero(i)
             .Name = Buffer.ReadASCIIString()        'Get the object's name
             .GrhIndex = Buffer.ReadInteger()
@@ -3683,14 +3687,14 @@ On Error GoTo errhandler
         Call InvMaderasCarpinteria(3).Initialize(DirectD3D8, .picMaderas2, 2, , , , , , False)
         Call InvMaderasCarpinteria(4).Initialize(DirectD3D8, .picMaderas3, 2, , , , , , False)
         
-        Call .HideExtraControls(count)
+        Call .HideExtraControls(Count)
         Call .RenderList(1)
     End With
     
-    For i = 1 To count
+    For i = 1 To Count
         With ObjCarpintero(i)
             If .Upgrade Then
-                For k = 1 To count
+                For k = 1 To Count
                     If .Upgrade = ObjCarpintero(k).ObjIndex Then
                         j = j + 1
                 
@@ -4324,16 +4328,16 @@ On Error GoTo errhandler
     Upper_guildList = UBound(guildList)
     
     For i = 0 To Upper_guildList
-        sTemp = frmGuildNews.txtClanesGuerra.Text
-        frmGuildNews.txtClanesGuerra.Text = sTemp & guildList(i) & vbCrLf
+        sTemp = frmGuildNews.txtClanesGuerra.text
+        frmGuildNews.txtClanesGuerra.text = sTemp & guildList(i) & vbCrLf
     Next i
     
     'Get Allied guilds list
     guildList = Split(Buffer.ReadASCIIString(), SEPARATOR)
     
     For i = 0 To Upper_guildList
-        sTemp = frmGuildNews.txtClanesAliados.Text
-        frmGuildNews.txtClanesAliados.Text = sTemp & guildList(i) & vbCrLf
+        sTemp = frmGuildNews.txtClanesAliados.text
+        frmGuildNews.txtClanesAliados.text = sTemp & guildList(i) & vbCrLf
     Next i
     
     If ClientSetup.bGuildNews Or bShowGuildNews Then frmGuildNews.Show vbModeless, frmMain
@@ -4559,9 +4563,9 @@ On Error GoTo errhandler
         
         .reputacion.Caption = reputation
         
-        .txtPeticiones.Text = Buffer.ReadASCIIString()
+        .txtPeticiones.text = Buffer.ReadASCIIString()
         .guildactual.Caption = Buffer.ReadASCIIString()
-        .txtMiembro.Text = Buffer.ReadASCIIString()
+        .txtMiembro.text = Buffer.ReadASCIIString()
         
         Dim armada As Boolean
         Dim caos As Boolean
@@ -4746,7 +4750,7 @@ On Error GoTo errhandler
             .Codex(i).Caption = codexStr(i)
         Next i
         
-        .Desc.Text = Buffer.ReadASCIIString()
+        .Desc.text = Buffer.ReadASCIIString()
     End With
     
     'If we got here then packet is complete, copy data back to original queue
@@ -5242,7 +5246,7 @@ On Error GoTo errhandler
     'Remove packet ID
     Call Buffer.ReadByte
     
-    frmCambiaMotd.txtMotd.Text = Buffer.ReadASCIIString()
+    frmCambiaMotd.txtMotd.text = Buffer.ReadASCIIString()
     frmCambiaMotd.Show , frmMain
     
     'If we got here then packet is complete, copy data back to original queue
@@ -5327,6 +5331,13 @@ On Error GoTo 0
 
     If Error <> 0 Then _
         Err.Raise Error
+End Sub
+Public Sub HandleRenderMsg()
+    Call incomingData.ReadByte
+    renderMsgReset
+    renderText = incomingData.ReadASCIIString
+    renderFont = incomingData.ReadInteger
+    colorRender = 240
 End Sub
 
 ''
@@ -10612,8 +10623,8 @@ On Error GoTo errhandler
     Call Buffer.ReadByte
        
     With frmPanelGm
-        .txtCreador.Text = Buffer.ReadASCIIString
-        .txtDescrip.Text = Buffer.ReadASCIIString
+        .txtCreador.text = Buffer.ReadASCIIString
+        .txtDescrip.text = Buffer.ReadASCIIString
         
         'Status del pj
         If Buffer.ReadBoolean Then
@@ -10627,25 +10638,25 @@ On Error GoTo errhandler
         'IP del personaje
         tmpStr = Buffer.ReadASCIIString
         If LenB(tmpStr) Then
-            .txtIP.Text = tmpStr
+            .txtIP.text = tmpStr
         Else
-            .txtIP.Text = JsonLanguage.Item("USUARIO").Item("TEXTO") & JsonLanguage.Item("DESCONECTADO").Item("TEXTO")
+            .txtIP.text = JsonLanguage.Item("USUARIO").Item("TEXTO") & JsonLanguage.Item("DESCONECTADO").Item("TEXTO")
         End If
         
         'Tiempo online
         tmpStr = Buffer.ReadASCIIString
         If LenB(tmpStr) Then
-            .txtTimeOn.Text = tmpStr
+            .txtTimeOn.text = tmpStr
         Else
-            .txtTimeOn.Text = JsonLanguage.Item("USUARIO").Item("TEXTO") & JsonLanguage.Item("DESCONECTADO").Item("TEXTO")
+            .txtTimeOn.text = JsonLanguage.Item("USUARIO").Item("TEXTO") & JsonLanguage.Item("DESCONECTADO").Item("TEXTO")
         End If
         
         'Observaciones
         tmpStr = Buffer.ReadASCIIString
         If LenB(tmpStr) Then
-            .txtObs.Text = tmpStr
+            .txtObs.text = tmpStr
         Else
-            .txtObs.Text = JsonLanguage.Item("MENSAJE_NO_NOVEDADES").Item("TEXTO")
+            .txtObs.text = JsonLanguage.Item("MENSAJE_NO_NOVEDADES").Item("TEXTO")
         End If
     End With
     
@@ -11031,9 +11042,9 @@ On Error GoTo errhandler
     
     'Determinamos que formulario se muestra, seg�n si recibimos la informaci�n y la quest est� empezada o no.
     If QuestEmpezada Then
-        frmQuests.txtInfo.Text = tmpStr
+        frmQuests.txtInfo.text = tmpStr
     Else
-        frmQuestInfo.txtInfo.Text = tmpStr
+        frmQuestInfo.txtInfo.text = tmpStr
         frmQuestInfo.Show vbModeless, frmMain
     End If
     
@@ -11077,7 +11088,7 @@ On Error GoTo errhandler
     
     'Limpiamos el ListBox y el TextBox del formulario
     frmQuests.lstQuests.Clear
-    frmQuests.txtInfo.Text = vbNullString
+    frmQuests.txtInfo.text = vbNullString
         
     'Si el usuario tiene quests entonces hacemos el handle
     If tmpByte Then

@@ -1793,7 +1793,7 @@ End Function
 ' @param text All the comand without the /aemail
 ' @return An bidimensional array with user and mail
 
-Private Function AEMAILSplit(ByRef Text As String) As String()
+Private Function AEMAILSplit(ByRef text As String) As String()
 '***************************************************
 'Author: Lucas Tavolaro Ortuz (Tavo)
 'Useful for AEMAIL BUG FIX
@@ -1806,11 +1806,11 @@ Private Function AEMAILSplit(ByRef Text As String) As String()
     Dim tmpArr(0 To 1) As String
     Dim Pos As Byte
     
-    Pos = InStr(1, Text, "-")
+    Pos = InStr(1, text, "-")
     
     If Pos <> 0 Then
-        tmpArr(0) = mid$(Text, 1, Pos - 1)
-        tmpArr(1) = mid$(Text, Pos + 1)
+        tmpArr(0) = mid$(text, 1, Pos - 1)
+        tmpArr(1) = mid$(text, Pos + 1)
     Else
         tmpArr(0) = vbNullString
     End If

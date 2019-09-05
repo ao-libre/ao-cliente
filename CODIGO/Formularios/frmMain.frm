@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "Richtx32.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "richtx32.ocx"
 Begin VB.Form frmMain 
    BorderStyle     =   0  'None
    ClientHeight    =   8985
@@ -244,235 +244,172 @@ Begin VB.Form frmMain
       Height          =   255
       Left            =   10320
       TabIndex        =   30
+      TabStop         =   0   'False
       Top             =   6600
       Width           =   1335
-      _ExtentX        =   2355
-      _ExtentY        =   450
-      TX              =   "Mapa"
-      ENAB            =   -1  'True
-      FCOL            =   7314354
-      OCOL            =   16777215
-      PICE            =   "frmMain.frx":3B0E7
-      PICF            =   "frmMain.frx":3BB11
-      PICH            =   "frmMain.frx":3C7D3
-      PICV            =   "frmMain.frx":3D765
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Calibri"
-         Size            =   12
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   2355
+      _extenty        =   450
+      tx              =   "Mapa"
+      enab            =   -1  'True
+      fcol            =   7314354
+      ocol            =   16777215
+      pice            =   "frmMain.frx":3B0E7
+      picf            =   "frmMain.frx":3BB13
+      pich            =   "frmMain.frx":3C7D7
+      picv            =   "frmMain.frx":3D76B
+      font            =   "frmMain.frx":3E66F
    End
    Begin AOLibre.uAOButton imgGrupo 
       Height          =   255
       Left            =   10320
       TabIndex        =   33
+      TabStop         =   0   'False
       Top             =   6960
       Width           =   1335
-      _ExtentX        =   2355
-      _ExtentY        =   450
-      TX              =   "Grupo"
-      ENAB            =   -1  'True
-      FCOL            =   7314354
-      OCOL            =   16777215
-      PICE            =   "frmMain.frx":3E667
-      PICF            =   "frmMain.frx":3F091
-      PICH            =   "frmMain.frx":3FD53
-      PICV            =   "frmMain.frx":40CE5
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Calibri"
-         Size            =   12
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   2355
+      _extenty        =   450
+      tx              =   "Grupo"
+      enab            =   -1  'True
+      fcol            =   7314354
+      ocol            =   16777215
+      pice            =   "frmMain.frx":3E697
+      picf            =   "frmMain.frx":3F0C3
+      pich            =   "frmMain.frx":3FD87
+      picv            =   "frmMain.frx":40D1B
+      font            =   "frmMain.frx":41C1F
    End
    Begin AOLibre.uAOButton imgOpciones 
       Height          =   255
       Left            =   10320
       TabIndex        =   34
+      TabStop         =   0   'False
       Top             =   7320
       Width           =   1335
-      _ExtentX        =   2355
-      _ExtentY        =   450
-      TX              =   "Opciones"
-      ENAB            =   -1  'True
-      FCOL            =   7314354
-      OCOL            =   16777215
-      PICE            =   "frmMain.frx":41BE7
-      PICF            =   "frmMain.frx":42611
-      PICH            =   "frmMain.frx":432D3
-      PICV            =   "frmMain.frx":44265
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Calibri"
-         Size            =   12
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   2355
+      _extenty        =   450
+      tx              =   "Opciones"
+      enab            =   -1  'True
+      fcol            =   7314354
+      ocol            =   16777215
+      pice            =   "frmMain.frx":41C47
+      picf            =   "frmMain.frx":42673
+      pich            =   "frmMain.frx":43337
+      picv            =   "frmMain.frx":442CB
+      font            =   "frmMain.frx":451CF
    End
    Begin AOLibre.uAOButton imgEstadisticas 
       Height          =   255
       Left            =   10320
       TabIndex        =   35
+      TabStop         =   0   'False
       Top             =   7680
       Width           =   1335
-      _ExtentX        =   2355
-      _ExtentY        =   450
-      TX              =   "Estadisticas"
-      ENAB            =   -1  'True
-      FCOL            =   7314354
-      OCOL            =   16777215
-      PICE            =   "frmMain.frx":45167
-      PICF            =   "frmMain.frx":45B91
-      PICH            =   "frmMain.frx":46853
-      PICV            =   "frmMain.frx":477E5
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Calibri"
-         Size            =   12
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   2355
+      _extenty        =   450
+      tx              =   "Estadisticas"
+      enab            =   -1  'True
+      fcol            =   7314354
+      ocol            =   16777215
+      pice            =   "frmMain.frx":451F7
+      picf            =   "frmMain.frx":45C23
+      pich            =   "frmMain.frx":468E7
+      picv            =   "frmMain.frx":4787B
+      font            =   "frmMain.frx":4877F
    End
    Begin AOLibre.uAOButton imgClanes 
       Height          =   255
       Left            =   10320
       TabIndex        =   36
+      TabStop         =   0   'False
       Top             =   8040
       Width           =   1335
-      _ExtentX        =   2355
-      _ExtentY        =   450
-      TX              =   "Clanes"
-      ENAB            =   -1  'True
-      FCOL            =   7314354
-      OCOL            =   16777215
-      PICE            =   "frmMain.frx":486E7
-      PICF            =   "frmMain.frx":49111
-      PICH            =   "frmMain.frx":49DD3
-      PICV            =   "frmMain.frx":4AD65
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Calibri"
-         Size            =   12
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   2355
+      _extenty        =   450
+      tx              =   "Clanes"
+      enab            =   -1  'True
+      fcol            =   7314354
+      ocol            =   16777215
+      pice            =   "frmMain.frx":487A7
+      picf            =   "frmMain.frx":491D3
+      pich            =   "frmMain.frx":49E97
+      picv            =   "frmMain.frx":4AE2B
+      font            =   "frmMain.frx":4BD2F
    End
    Begin AOLibre.uAOButton Label4 
       Height          =   375
       Left            =   8880
       TabIndex        =   37
+      TabStop         =   0   'False
       Top             =   2040
       Width           =   1215
-      _ExtentX        =   2143
-      _ExtentY        =   661
-      TX              =   "Inventario"
-      ENAB            =   -1  'True
-      FCOL            =   7314354
-      OCOL            =   16777215
-      PICE            =   "frmMain.frx":4BC67
-      PICF            =   "frmMain.frx":4C691
-      PICH            =   "frmMain.frx":4D353
-      PICV            =   "frmMain.frx":4E2E5
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Calibri"
-         Size            =   12
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   2143
+      _extenty        =   661
+      tx              =   "Inventario"
+      enab            =   -1  'True
+      fcol            =   7314354
+      ocol            =   16777215
+      pice            =   "frmMain.frx":4BD57
+      picf            =   "frmMain.frx":4C783
+      pich            =   "frmMain.frx":4D447
+      picv            =   "frmMain.frx":4E3DB
+      font            =   "frmMain.frx":4F2DF
    End
    Begin AOLibre.uAOButton Label7 
       Height          =   375
       Left            =   10200
       TabIndex        =   38
+      TabStop         =   0   'False
       Top             =   2040
       Width           =   1215
-      _ExtentX        =   2143
-      _ExtentY        =   661
-      TX              =   "Hechizos"
-      ENAB            =   -1  'True
-      FCOL            =   7314354
-      OCOL            =   16777215
-      PICE            =   "frmMain.frx":4F1E7
-      PICF            =   "frmMain.frx":4FC11
-      PICH            =   "frmMain.frx":508D3
-      PICV            =   "frmMain.frx":51865
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Calibri"
-         Size            =   12
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   2143
+      _extenty        =   661
+      tx              =   "Hechizos"
+      enab            =   -1  'True
+      fcol            =   7314354
+      ocol            =   16777215
+      pice            =   "frmMain.frx":4F307
+      picf            =   "frmMain.frx":4FD33
+      pich            =   "frmMain.frx":509F7
+      picv            =   "frmMain.frx":5198B
+      font            =   "frmMain.frx":5288F
    End
    Begin AOLibre.uAOButton CmdLanzar 
       Height          =   495
       Left            =   8760
       TabIndex        =   39
+      TabStop         =   0   'False
       Top             =   5280
       Width           =   1215
-      _ExtentX        =   2143
-      _ExtentY        =   873
-      TX              =   "Lanzar"
-      ENAB            =   -1  'True
-      FCOL            =   7314354
-      OCOL            =   16777215
-      PICE            =   "frmMain.frx":52767
-      PICF            =   "frmMain.frx":53191
-      PICH            =   "frmMain.frx":53E53
-      PICV            =   "frmMain.frx":54DE5
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Calibri"
-         Size            =   15.75
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   2143
+      _extenty        =   873
+      tx              =   "Lanzar"
+      enab            =   -1  'True
+      fcol            =   7314354
+      ocol            =   16777215
+      pice            =   "frmMain.frx":528B7
+      picf            =   "frmMain.frx":532E3
+      pich            =   "frmMain.frx":53FA7
+      picv            =   "frmMain.frx":54F3B
+      font            =   "frmMain.frx":55E3F
    End
    Begin AOLibre.uAOButton cmdInfo 
       Height          =   495
       Left            =   10560
       TabIndex        =   40
+      TabStop         =   0   'False
       Top             =   5280
       Width           =   1215
-      _ExtentX        =   2143
-      _ExtentY        =   873
-      TX              =   "Info"
-      ENAB            =   -1  'True
-      FCOL            =   7314354
-      OCOL            =   16777215
-      PICE            =   "frmMain.frx":55CE7
-      PICF            =   "frmMain.frx":56711
-      PICH            =   "frmMain.frx":573D3
-      PICV            =   "frmMain.frx":58365
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Calibri"
-         Size            =   15.75
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   2143
+      _extenty        =   873
+      tx              =   "Info"
+      enab            =   -1  'True
+      fcol            =   7314354
+      ocol            =   16777215
+      pice            =   "frmMain.frx":55E67
+      picf            =   "frmMain.frx":56893
+      pich            =   "frmMain.frx":57557
+      picv            =   "frmMain.frx":584EB
+      font            =   "frmMain.frx":593EF
    End
    Begin VB.Image imgAsignarSkill 
       Height          =   450
@@ -556,9 +493,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   0
       Left            =   11430
-      MouseIcon       =   "frmMain.frx":59267
+      MouseIcon       =   "frmMain.frx":59417
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":593B9
+      Picture         =   "frmMain.frx":59569
       Top             =   3480
       Visible         =   0   'False
       Width           =   225
@@ -567,9 +504,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   1
       Left            =   11430
-      MouseIcon       =   "frmMain.frx":596FD
+      MouseIcon       =   "frmMain.frx":598AD
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":5984F
+      Picture         =   "frmMain.frx":599FF
       Top             =   3225
       Visible         =   0   'False
       Width           =   225
@@ -1102,7 +1039,7 @@ Private ChangeHechi As Boolean, ChangeHechiNum As Integer
 Dim CtrlMaskOn As Boolean
 Dim SkinSeleccionado As String
 
-Private Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVal hWnd As Long, ByVal nIndex As Long, ByVal dwNewLong As Long) As Long
+Private Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVal hwnd As Long, ByVal nIndex As Long, ByVal dwNewLong As Long) As Long
 
 Public Sub dragInventory_dragDone(ByVal originalSlot As Integer, ByVal newSlot As Integer)
 Call Protocol.WriteMoveItem(originalSlot, newSlot, eMoveType.Inventory)
@@ -1131,10 +1068,10 @@ Private Sub Form_Load()
     End With
     
     ' Detect links in console
-    EnableURLDetect RecTxt.hWnd, Me.hWnd
+    EnableURLDetect RecTxt.hwnd, Me.hwnd
     
     ' Make the console transparent
-    Call SetWindowLong(RecTxt.hWnd, -20, &H20&)
+    Call SetWindowLong(RecTxt.hwnd, -20, &H20&)
     
     CtrlMaskOn = False
 End Sub
@@ -1775,8 +1712,8 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
         SendTxt.Visible = False
         
-        If PicInv.Visible Then
-            PicInv.SetFocus
+        If picInv.Visible Then
+            picInv.SetFocus
         Else
             hlst.SetFocus
         End If
@@ -2100,7 +2037,7 @@ Private Sub Label4_Click()
     InvEqu.Picture = LoadPicture(Game.path(Skins) & SkinSeleccionado & "\Centroinventario.jpg")
 
     ' Activo controles de inventario
-    PicInv.Visible = True
+    picInv.Visible = True
     imgInvScrollUp.Visible = True
     imgInvScrollDown.Visible = True
 
@@ -2128,7 +2065,7 @@ Private Sub Label7_Click()
     cmdMoverHechi(1).Visible = True
     
     ' Desactivo controles de inventario
-    PicInv.Visible = False
+    picInv.Visible = False
     imgInvScrollUp.Visible = False
     imgInvScrollDown.Visible = False
 
@@ -2161,8 +2098,8 @@ On Error Resume Next  'el .SetFocus causaba errores al salir y volver a entrar
         (Not frmMSG.Visible) And (Not MirandoForo) And _
         (Not frmEstadisticas.Visible) And (Not frmCantidad.Visible) And (Not MirandoParty) Then
          
-        If PicInv.Visible Then
-            PicInv.SetFocus
+        If picInv.Visible Then
+            picInv.SetFocus
         ElseIf hlst.Visible Then
             hlst.SetFocus
         End If
@@ -2170,8 +2107,8 @@ On Error Resume Next  'el .SetFocus causaba errores al salir y volver a entrar
 End Sub
 
 Private Sub RecTxt_KeyDown(KeyCode As Integer, Shift As Integer)
-    If PicInv.Visible Then
-        PicInv.SetFocus
+    If picInv.Visible Then
+        picInv.SetFocus
     Else
         hlst.SetFocus
     End If
@@ -2227,8 +2164,8 @@ Private Sub SendCMSTXT_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
         Me.SendCMSTXT.Visible = False
         
-        If PicInv.Visible Then
-            PicInv.SetFocus
+        If picInv.Visible Then
+            picInv.SetFocus
         Else
             hlst.SetFocus
         End If
@@ -2339,8 +2276,8 @@ End Sub
 Private Sub Client_Connect()
     
     'Clean input and output buffers
-    Call incomingData.ReadASCIIStringFixed(incomingData.Length)
-    Call outgoingData.ReadASCIIStringFixed(outgoingData.Length)
+    Call incomingData.ReadASCIIStringFixed(incomingData.length)
+    Call outgoingData.ReadASCIIStringFixed(outgoingData.length)
     
     Second.Enabled = True
     
@@ -2507,7 +2444,7 @@ End Sub
 Private Sub Minimapa_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If Button = vbRightButton Then
         Call WriteWarpChar("YO", UserMap, CByte(X), CByte(Y))
-        Call ActualizarMiniMapa()
+        Call ActualizarMiniMapa
     End If
 End Sub
 'fin Incorporado ReyarB

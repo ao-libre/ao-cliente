@@ -61,7 +61,7 @@ Public Function Engine_DirectX8_Init() As Boolean
         .BackBufferFormat = DispMode.Format
         .BackBufferWidth = ScreenWidth
         .BackBufferHeight = ScreenHeight
-        .hDeviceWindow = frmMain.MainViewPic.hWnd
+        .hDeviceWindow = frmMain.MainViewPic.hwnd
     End With
 
     Select Case ClientSetup.Aceleracion
@@ -172,6 +172,7 @@ Public Sub Engine_DirectX8_Aditional_Init()
     FramesPerSecCounter = 101
     
     ColorTecho = 250
+    colorRender = 240
     
     Call Engine_Set_TileBuffer(9)
     Call Engine_Set_BaseSpeed(0.018)
@@ -675,7 +676,7 @@ Public Sub DrawPJ(ByVal Index As Byte)
         End If
     End If
 
-    Call Engine_EndScene(RE, frmPanelAccount.picChar(Index - 1).hWnd)
+    Call Engine_EndScene(RE, frmPanelAccount.picChar(Index - 1).hwnd)
     
 End Sub
 

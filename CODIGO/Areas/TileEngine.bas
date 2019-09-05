@@ -343,12 +343,12 @@ Private Declare Function QueryPerformanceCounter Lib "kernel32" (lpPerformanceCo
 Public Declare Function SetPixel Lib "gdi32" (ByVal hdc As Long, ByVal X As Long, ByVal Y As Long, ByVal crColor As Long) As Long
 Public Declare Function GetPixel Lib "gdi32" (ByVal hdc As Long, ByVal X As Long, ByVal Y As Long) As Long
 
-Sub ConvertCPtoTP(ByVal viewPortX As Integer, ByVal viewPortY As Integer, ByRef TX As Byte, ByRef TY As Byte)
+Sub ConvertCPtoTP(ByVal viewPortX As Integer, ByVal viewPortY As Integer, ByRef tX As Byte, ByRef tY As Byte)
 '******************************************
 'Converts where the mouse is in the main window to a tile position. MUST be called eveytime the mouse moves.
 '******************************************
-    TX = UserPos.X + viewPortX \ TilePixelWidth - WindowTileWidth \ 2
-    TY = UserPos.Y + viewPortY \ TilePixelHeight - WindowTileHeight \ 2
+    tX = UserPos.X + viewPortX \ TilePixelWidth - WindowTileWidth \ 2
+    tY = UserPos.Y + viewPortY \ TilePixelHeight - WindowTileHeight \ 2
 End Sub
 
 Sub MakeChar(ByVal CharIndex As Integer, ByVal Body As Integer, ByVal Head As Integer, ByVal Heading As Byte, ByVal X As Integer, ByVal Y As Integer, ByVal Arma As Integer, ByVal Escudo As Integer, ByVal Casco As Integer)
@@ -601,8 +601,8 @@ Sub MoveScreen(ByVal nHeading As E_Heading)
 '******************************************
     Dim X As Integer
     Dim Y As Integer
-    Dim TX As Integer
-    Dim TY As Integer
+    Dim tX As Integer
+    Dim tY As Integer
     
     'Figure out which way to move
     Select Case nHeading
@@ -620,18 +620,18 @@ Sub MoveScreen(ByVal nHeading As E_Heading)
     End Select
     
     'Fill temp pos
-    TX = UserPos.X + X
-    TY = UserPos.Y + Y
+    tX = UserPos.X + X
+    tY = UserPos.Y + Y
     
     'Check to see if its out of bounds
-    If TX < MinXBorder Or TX > MaxXBorder Or TY < MinYBorder Or TY > MaxYBorder Then
+    If tX < MinXBorder Or tX > MaxXBorder Or tY < MinYBorder Or tY > MaxYBorder Then
         Exit Sub
     Else
         'Start moving... MainLoop does the rest
         AddtoUserPos.X = X
-        UserPos.X = TX
+        UserPos.X = tX
         AddtoUserPos.Y = Y
-        UserPos.Y = TY
+        UserPos.Y = tY
         UserMoving = 1
         
         bTecho = IIf(MapData(UserPos.X, UserPos.Y).Trigger = 1 Or _
@@ -641,14 +641,14 @@ Sub MoveScreen(ByVal nHeading As E_Heading)
 End Sub
 
 Private Function HayFogata(ByRef Location As Position) As Boolean
-    Dim J As Long
+    Dim j As Long
     Dim k As Long
     
-    For J = UserPos.X - 8 To UserPos.X + 8
+    For j = UserPos.X - 8 To UserPos.X + 8
         For k = UserPos.Y - 6 To UserPos.Y + 6
-            If InMapBounds(J, k) Then
-                If MapData(J, k).ObjGrh.GrhIndex = GrhFogata Then
-                    Location.X = J
+            If InMapBounds(j, k) Then
+                If MapData(j, k).ObjGrh.GrhIndex = GrhFogata Then
+                    Location.X = j
                     Location.Y = k
                     
                     HayFogata = True
@@ -656,7 +656,7 @@ Private Function HayFogata(ByRef Location As Position) As Boolean
                 End If
             End If
         Next k
-    Next J
+    Next j
 End Function
 
 Function NextOpenChar() As Integer
@@ -1050,6 +1050,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
                     '*************************************************
         
                     
+                    
                     'Layer 3 *****************************************
                     If .Graphic(3).GrhIndex <> 0 Then
                         If .Graphic(3).GrhIndex = 735 Or .Graphic(3).GrhIndex >= 6994 And .Graphic(3).GrhIndex <= 7002 Then
@@ -1078,6 +1079,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
                         Call Draw_Grh(.fX, PixelOffsetXTemp + FxData(MapData(X, Y).FxIndex).OffsetX, PixelOffsetYTemp + FxData(.FxIndex).OffsetY, 1, .Engine_Light(), 1, X, Y, True)
                         If .fX.Started = 0 Then .FxIndex = 0
                     End If
+                    
                     
                 End With
                 
@@ -1118,39 +1120,39 @@ Sub RenderScreen(ByVal tilex As Integer, _
     If ClientSetup.ProyectileEngine Then
                             
         If LastProjectile > 0 Then
-            Dim J As Long ' Long siempre en los bucles es mucho mas rapido
+            Dim j As Long ' Long siempre en los bucles es mucho mas rapido
                                 
-            For J = 1 To LastProjectile
+            For j = 1 To LastProjectile
 
-                If ProjectileList(J).Grh.GrhIndex Then
+                If ProjectileList(j).Grh.GrhIndex Then
                     Dim Angle As Single
                     
                     'Update the position
-                    Angle = DegreeToRadian * Engine_GetAngle(ProjectileList(J).X, ProjectileList(J).Y, ProjectileList(J).TX, ProjectileList(J).TY)
-                    ProjectileList(J).X = ProjectileList(J).X + (Sin(Angle) * ElapsedTime * 0.63)
-                    ProjectileList(J).Y = ProjectileList(J).Y - (Cos(Angle) * ElapsedTime * 0.63)
+                    Angle = DegreeToRadian * Engine_GetAngle(ProjectileList(j).X, ProjectileList(j).Y, ProjectileList(j).tX, ProjectileList(j).tY)
+                    ProjectileList(j).X = ProjectileList(j).X + (Sin(Angle) * ElapsedTime * 0.63)
+                    ProjectileList(j).Y = ProjectileList(j).Y - (Cos(Angle) * ElapsedTime * 0.63)
                     
                     'Update the rotation
-                    If ProjectileList(J).RotateSpeed > 0 Then
-                        ProjectileList(J).Rotate = ProjectileList(J).Rotate + (ProjectileList(J).RotateSpeed * ElapsedTime * 0.01)
+                    If ProjectileList(j).RotateSpeed > 0 Then
+                        ProjectileList(j).Rotate = ProjectileList(j).Rotate + (ProjectileList(j).RotateSpeed * ElapsedTime * 0.01)
 
-                        Do While ProjectileList(J).Rotate > 360
-                            ProjectileList(J).Rotate = ProjectileList(J).Rotate - 360
+                        Do While ProjectileList(j).Rotate > 360
+                            ProjectileList(j).Rotate = ProjectileList(j).Rotate - 360
                         Loop
                     End If
     
                     'Draw if within range
-                    X = ((-minX - 1) * 32) + ProjectileList(J).X + PixelOffsetX + ((10 - TileBufferSize) * 32) - 288 + ProjectileList(J).OffsetX
-                    Y = ((-minY - 1) * 32) + ProjectileList(J).Y + PixelOffsetY + ((10 - TileBufferSize) * 32) - 288 + ProjectileList(J).OffsetY
+                    X = ((-minX - 1) * 32) + ProjectileList(j).X + PixelOffsetX + ((10 - TileBufferSize) * 32) - 288 + ProjectileList(j).OffsetX
+                    Y = ((-minY - 1) * 32) + ProjectileList(j).Y + PixelOffsetY + ((10 - TileBufferSize) * 32) - 288 + ProjectileList(j).OffsetY
 
                     If Y >= -32 Then
                         If Y <= (ScreenHeight + 32) Then
                             If X >= -32 Then
                                 If X <= (ScreenWidth + 32) Then
-                                    If ProjectileList(J).Rotate = 0 Then
-                                        Call Draw_Grh(ProjectileList(J).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, 50, 50, True, 0)
+                                    If ProjectileList(j).Rotate = 0 Then
+                                        Call Draw_Grh(ProjectileList(j).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, 50, 50, True, 0)
                                     Else
-                                        Call Draw_Grh(ProjectileList(J).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, 50, 50, True, ProjectileList(J).Rotate)
+                                        Call Draw_Grh(ProjectileList(j).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, 50, 50, True, ProjectileList(j).Rotate)
                                     End If
                                 End If
                             End If
@@ -1158,22 +1160,24 @@ Sub RenderScreen(ByVal tilex As Integer, _
                     End If
                     
                 End If
-            Next J
+            Next j
             
             'Check if it is close enough to the target to remove
-            For J = 1 To LastProjectile
+            For j = 1 To LastProjectile
 
-                If ProjectileList(J).Grh.GrhIndex Then
-                    If Abs(ProjectileList(J).X - ProjectileList(J).TX) < 20 Then
-                        If Abs(ProjectileList(J).Y - ProjectileList(J).TY) < 20 Then
-                            Call Engine_Projectile_Erase(J)
+                If ProjectileList(j).Grh.GrhIndex Then
+                    If Abs(ProjectileList(j).X - ProjectileList(j).tX) < 20 Then
+                        If Abs(ProjectileList(j).Y - ProjectileList(j).tY) < 20 Then
+                            Call Engine_Projectile_Erase(j)
                         End If
                     End If
                 End If
-            Next J
+            Next j
             
         End If
     End If
+    If colorRender <> 240 Then _
+    Call DrawText(272, 50, renderText, render_msg(0), True, 2)
     
     '   Set Offsets
     LastOffsetX = ParticleOffsetX
@@ -1305,6 +1309,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
         Call Engine_BeginScene
         
         Call DesvanecimientoTechos
+        Call DesvanecimientoMsg
         
         If UserMoving Then
         
@@ -1650,7 +1655,6 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
                              Call RenderName(CharIndex, PixelOffsetX, PixelOffsetY, True)
                         End If
                     End If
-                    
                     'OffSetName = 35
 
                 End If
@@ -1703,6 +1707,7 @@ Private Sub RenderName(ByVal CharIndex As Long, ByVal X As Integer, ByVal Y As I
             'Nick
             line = Left$(.Nombre, Pos - 2)
             Call DrawText(X + 16, Y + 30, line, Color, True)
+            'Call DrawText(X, Y, line, Color, True, 2)
             
             'Clan
             line = mid$(.Nombre, Pos)
@@ -1901,3 +1906,45 @@ Public Sub DesvanecimientoTechos()
     End If
     
 End Sub
+Public Sub DesvanecimientoMsg()
+'*****************************************************************
+                        'Author: FrankoH
+                        'Last Modify Date: 04/09/2019
+                        'DESVANECIMIENTO DE LOS TEXTOS DEL RENDER
+'*****************************************************************
+    Static lastmovement As Long
+    If GetTickCount - lastmovement > 1 Then
+        lastmovement = GetTickCount
+    Else
+        Exit Sub
+    End If
+    If LenB(renderText) Then
+        If Not Val(colorRender) = 0 Then colorRender = colorRender - 1
+    ElseIf LenB(renderText) = 0 Then
+        Exit Sub
+    Else
+        If Not Val(colorRender) = 240 Then colorRender = colorRender + 1
+    End If
+    
+    If Not Val(colorRender) = 240 Then
+        Call Engine_Long_To_RGB_List(render_msg(), ARGB(255, 255, 255, ColorRender))
+    End If
+    If colorRender = 0 Then renderMsgReset
+End Sub
+Public Sub renderMsgReset()
+renderFont = 1
+renderText = vbNullString
+nameMap = vbNullString
+End Sub
+Public Function DesvanecerArbol(ByVal Color As Byte) As Long()
+'*****************************************************************
+                        'Author: FrankoH
+                        'Last Modify Date: 28/08/2019
+                        'DESVANECE LOS ARBOLES
+'*****************************************************************
+Dim temp_rgb(3) As Long
+
+Call Engine_Long_To_RGB_List(temp_rgb(), ARGB(ColorTecho, ColorTecho, ColorTecho, ColorTecho))
+
+DesvanecerArbol = temp_rgb
+End Function

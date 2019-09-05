@@ -108,7 +108,7 @@ Sub Map_MoveTo(ByVal Direccion As E_Heading)
       '***************************************************
 
       Dim LegalOk As Boolean
-    
+        Static lastmovement As Long
       If Cartel Then Cartel = False
     
       Select Case Direccion
@@ -126,17 +126,15 @@ Sub Map_MoveTo(ByVal Direccion As E_Heading)
                   LegalOk = Map_LegalPos(UserPos.X - 1, UserPos.Y)
                         
       End Select
-    
-      If LegalOk And Not UserParalizado Then
-        
-            Call WriteWalk(Direccion)
-            Call frmMain.ActualizarMiniMapa() 'integrado por ReyarB
-            
-            If Not UserDescansar And Not UserMeditar Then
-                  Call Char_MovebyHead(UserCharIndex, Direccion)
-                  Call Char_MoveScreen(Direccion)
-            End If
+        If LegalOk And Not UserDescansar Then
+            Call Char_MovebyHead(UserCharIndex, Direccion)
+            Call Char_MoveScreen(Direccion)
+        End If
 
+      If LegalOk And (GetTickCount - lastmovement > 56) Then
+            Call WriteWalk(Direccion)
+            Call frmMain.ActualizarMiniMapa   'integrado por ReyarB
+            lastmovement = GetTickCount
       Else
 
             If (charlist(UserCharIndex).Heading <> Direccion) Then
