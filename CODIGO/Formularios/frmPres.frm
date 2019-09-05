@@ -60,16 +60,13 @@ Attribute VB_Exposed = False
 'Pablo Ignacio Marquez
 Option Explicit
 
-Dim puedo As Boolean
-
 Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
-    If KeyCode = 27 Then If puedo Then Unload Me
+    If KeyCode = 27 Then Unload Me
 End Sub
 
 Private Sub Form_Load()
     Me.Width = 800 * Screen.TwipsPerPixelX
     Me.Height = 600 * Screen.TwipsPerPixelY
-    puedo = False
 End Sub
 
 Private Sub Timer1_Timer()
@@ -82,7 +79,6 @@ ticks = ticks + 1
 If ticks = 1 Then
     PresPath = Game.path(Interfaces) & "ImagenPresentacion.jpg"
     Me.Picture = LoadPicture(PresPath)
-    puedo = True
 Else
     Unload Me
 End If

@@ -173,6 +173,7 @@ Public Sub Engine_DirectX8_Aditional_Init()
     
     ColorTecho = 250
     ColorArbol = 100
+    colorRender = 240
     
     Call Engine_Set_TileBuffer(9)
     Call Engine_Set_BaseSpeed(0.018)

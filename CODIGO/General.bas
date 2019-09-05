@@ -69,7 +69,7 @@ Public Function GetRawName(ByRef sName As String) As String
 End Function
 
 Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, _
-                    ByVal Text As String, _
+                    ByVal text As String, _
                     Optional ByVal Red As Integer = -1, _
                     Optional ByVal Green As Integer, _
                     Optional ByVal Blue As Integer, _
@@ -90,14 +90,14 @@ Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, _
 '****************************************************
     With RichTextBox
         
-        If Len(.Text) > 1000 Then
+        If Len(.text) > 1000 Then
             'Get rid of first line
-            .SelStart = InStr(1, .Text, vbCrLf) + 1
-            .SelLength = Len(.Text) - .SelStart + 2
+            .SelStart = InStr(1, .text, vbCrLf) + 1
+            .SelLength = Len(.text) - .SelStart + 2
             .TextRTF = .SelRTF
         End If
         
-        .SelStart = Len(.Text)
+        .SelStart = Len(.text)
         .SelLength = 0
         .SelBold = bold
         .SelItalic = italic
@@ -109,9 +109,9 @@ Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, _
 
         If Not Red = -1 Then .SelColor = RGB(Red, Green, Blue)
         
-        If bCrLf And Len(.Text) > 0 Then Text = vbCrLf & Text
+        If bCrLf And Len(.text) > 0 Then text = vbCrLf & text
         
-        .SelText = Text
+        .SelText = text
 
         ' Esto arregla el bug de las letras superponiendose la consola del frmMain
         If Not RichTextBox = frmMain.RecTxt Then RichTextBox.Refresh
@@ -317,7 +317,7 @@ Private Sub CheckKeys()
     '*****************************************************************
     'Checks keys and respond
     '*****************************************************************
-    Static LastMovement As Long
+    Static lastmovement As Long
     
     'No input allowed while Argentum is not the active window
     If Not Application.IsAppActive() Then Exit Sub
@@ -335,8 +335,8 @@ Private Sub CheckKeys()
     If Traveling Then Exit Sub
 
     'Control movement interval (this enforces the 1 step loss when meditating / resting client-side)
-    If GetTickCount - LastMovement > 56 Then
-        LastMovement = GetTickCount
+    If GetTickCount - lastmovement > 56 Then
+        lastmovement = GetTickCount
     Else
         Exit Sub
     End If
@@ -531,10 +531,13 @@ Sub SwitchMap(ByVal Map As Integer)
     
     'Carga las particulas especificas del mapa.
     Call Load_Map_Particles(Map)
-    
+    'renderMsgReset
+    renderText = nameMap
+    renderFont = 2
+    colorRender = 240
 End Sub
 
-Function ReadField(ByVal Pos As Integer, ByRef Text As String, ByVal SepASCII As Byte) As String
+Function ReadField(ByVal Pos As Integer, ByRef text As String, ByVal SepASCII As Byte) As String
 '*****************************************************************
 'Gets a field from a delimited string
 'Author: Juan Martin Sotuyo Dodero (Maraxus)
@@ -549,17 +552,17 @@ Function ReadField(ByVal Pos As Integer, ByRef Text As String, ByVal SepASCII As
     
     For i = 1 To Pos
         lastPos = CurrentPos
-        CurrentPos = InStr(lastPos + 1, Text, delimiter, vbBinaryCompare)
+        CurrentPos = InStr(lastPos + 1, text, delimiter, vbBinaryCompare)
     Next i
     
     If CurrentPos = 0 Then
-        ReadField = mid$(Text, lastPos + 1, Len(Text) - lastPos)
+        ReadField = mid$(text, lastPos + 1, Len(text) - lastPos)
     Else
-        ReadField = mid$(Text, lastPos + 1, CurrentPos - lastPos - 1)
+        ReadField = mid$(text, lastPos + 1, CurrentPos - lastPos - 1)
     End If
 End Function
 
-Function FieldCount(ByRef Text As String, ByVal SepASCII As Byte) As Long
+Function FieldCount(ByRef text As String, ByVal SepASCII As Byte) As Long
 '*****************************************************************
 'Gets the number of fields in a delimited string
 'Author: Juan Martin Sotuyo Dodero (Maraxus)
@@ -569,14 +572,14 @@ Function FieldCount(ByRef Text As String, ByVal SepASCII As Byte) As Long
     Dim curPos As Long
     Dim delimiter As String * 1
     
-    If LenB(Text) = 0 Then Exit Function
+    If LenB(text) = 0 Then Exit Function
     
     delimiter = Chr$(SepASCII)
     
     curPos = 0
     
     Do
-        curPos = InStr(curPos + 1, Text, delimiter)
+        curPos = InStr(curPos + 1, text, delimiter)
         Count = Count + 1
     Loop While curPos <> 0
     
@@ -787,8 +790,8 @@ Sub Main()
     Set DialogosClanes = New clsGuildDlg
     DialogosClanes.Activo = ClientSetup.bGldMsgConsole
     DialogosClanes.CantidadDialogos = ClientSetup.bCantMsgs
-    Dialogos.Font = frmMain.Font
-    DialogosClanes.Font = frmMain.Font
+    Dialogos.font = frmMain.font
+    DialogosClanes.font = frmMain.font
     
     lFrameTimer = GetTickCount
     
@@ -1227,7 +1230,7 @@ Public Sub CleanDialogs()
 'Removes all text from the console and dialogs
 '**************************************************************
     'Clean console and dialogs
-    frmMain.RecTxt.Text = vbNullString
+    frmMain.RecTxt.text = vbNullString
     
     Call DialogosClanes.RemoveDialogs
     
@@ -1298,19 +1301,19 @@ End If
 getTagPosition = Len(Nick) + 2
 End Function
 
-Public Sub checkText(ByVal Text As String)
+Public Sub checkText(ByVal text As String)
 Dim Nivel As Integer
-If Right$(Text, Len(JsonLanguage.Item("MENSAJE_FRAGSHOOTER_TE_HA_MATADO").Item("TEXTO"))) = JsonLanguage.Item("MENSAJE_FRAGSHOOTER_TE_HA_MATADO").Item("TEXTO") Then
+If Right$(text, Len(JsonLanguage.Item("MENSAJE_FRAGSHOOTER_TE_HA_MATADO").Item("TEXTO"))) = JsonLanguage.Item("MENSAJE_FRAGSHOOTER_TE_HA_MATADO").Item("TEXTO") Then
     Call ScreenCapture(True)
     Exit Sub
 End If
-If Left$(Text, Len(JsonLanguage.Item("MENSAJE_FRAGSHOOTER_HAS_MATADO").Item("TEXTO"))) = JsonLanguage.Item("MENSAJE_FRAGSHOOTER_HAS_MATADO").Item("TEXTO") Then
+If Left$(text, Len(JsonLanguage.Item("MENSAJE_FRAGSHOOTER_HAS_MATADO").Item("TEXTO"))) = JsonLanguage.Item("MENSAJE_FRAGSHOOTER_HAS_MATADO").Item("TEXTO") Then
     EsperandoLevel = True
     Exit Sub
 End If
 If EsperandoLevel Then
-    If Right$(Text, Len(JsonLanguage.Item("MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA").Item("TEXTO"))) = JsonLanguage.Item("MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA").Item("TEXTO") Then
-        If CInt(mid$(Text, Len(JsonLanguage.Item("MENSAJE_FRAGSHOOTER_HAS_GANADO").Item("TEXTO")), (Len(Text) - (Len(JsonLanguage.Item("MENSAJE_FRAGSHOOTER_HAS_GANADO").Item("TEXTO")))))) / 2 > ClientSetup.byMurderedLevel Then
+    If Right$(text, Len(JsonLanguage.Item("MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA").Item("TEXTO"))) = JsonLanguage.Item("MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA").Item("TEXTO") Then
+        If CInt(mid$(text, Len(JsonLanguage.Item("MENSAJE_FRAGSHOOTER_HAS_GANADO").Item("TEXTO")), (Len(text) - (Len(JsonLanguage.Item("MENSAJE_FRAGSHOOTER_HAS_GANADO").Item("TEXTO")))))) / 2 > ClientSetup.byMurderedLevel Then
             Call ScreenCapture(True)
         End If
     End If
@@ -1466,11 +1469,11 @@ Public Sub ResetAllInfo()
 
 End Sub
 
-Public Function DevolverNombreHechizo(ByVal index As Byte) As String
+Public Function DevolverNombreHechizo(ByVal Index As Byte) As String
 Dim i As Long
  
     For i = 1 To NumHechizos
-        If i = index Then
+        If i = Index Then
             DevolverNombreHechizo = Hechizos(i).Nombre
             Exit Function
         End If
