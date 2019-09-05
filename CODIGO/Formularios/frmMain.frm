@@ -32,6 +32,7 @@ Begin VB.Form frmMain
    Visible         =   0   'False
    Begin VB.PictureBox MiniMapa 
       AutoRedraw      =   -1  'True
+      BackColor       =   &H80000007&
       Height          =   1500
       Left            =   6825
       ScaleHeight     =   96
@@ -42,9 +43,10 @@ Begin VB.Form frmMain
       Top             =   300
       Width           =   1500
       Begin VB.Shape UserM 
-         BackColor       =   &H000000FF&
+         BackColor       =   &H0000FFFF&
          BackStyle       =   1  'Opaque
-         BorderColor     =   &H000000FF&
+         BorderColor     =   &H0000FFFF&
+         FillColor       =   &H0000FFFF&
          Height          =   45
          Left            =   750
          Top             =   750
