@@ -80,7 +80,7 @@ Private lastButton  As Byte
 Private lastKeyDown As Byte
 Private isFocus     As Boolean
 
-Private isEnabled   As Boolean
+Private IsEnabled   As Boolean
 Private isChecked   As Boolean
 
 Private Type POINTAPI
@@ -110,7 +110,7 @@ Private Sub bCheckbox_Click()
 
 On Error Resume Next
     
-    If isEnabled Then
+    If IsEnabled Then
         isChecked = Not isChecked
         Call Redraw(True)
         RaiseEvent Click
@@ -125,7 +125,7 @@ Private Sub bCheckbox_DblClick()
 
 On Error Resume Next
     
-    If isEnabled Then
+    If IsEnabled Then
         Call bCheckbox_MouseDown(1, 0, 0, 0)
         RaiseEvent DblClick
     End If
@@ -139,7 +139,7 @@ Private Sub bCheckbox_GotFocus()
 
 On Error Resume Next
     
-    If isOver = False And isEnabled Then
+    If isOver = False And IsEnabled Then
         isFocus = True
         Call Redraw(True)
         'Debug.Print "bCheckbox_GotFocus"
@@ -156,15 +156,7 @@ On Error Resume Next
     
     RaiseEvent KeyDown(KeyCode, Shift)
     lastKeyDown = KeyCode
-    Select Case KeyCode
-    Case 32
-        Call Redraw(False)
-        'Debug.Print "bCheckbox_KeyDown"
-    Case 39, 40
-        SendKeys "{Tab}"
-    Case 37, 38
-        SendKeys "+{Tab}"
-    End Select
+    Call Redraw(False)
 End Sub
 
 Private Sub bCheckbox_KeyPress(KeyAscii As Integer)
@@ -204,7 +196,7 @@ Private Sub bCheckbox_LostFocus()
 
 On Error Resume Next
     
-    If isOver = False And isEnabled Then
+    If isOver = False And IsEnabled Then
         isFocus = False
         Call Redraw(True)
         'Debug.Print "bCheckbox_LostFocus"
@@ -221,7 +213,7 @@ On Error Resume Next
     
     RaiseEvent MouseDown(Button, Shift, X, Y)
     lastButton = Button
-    If lastButton <> 2 And isEnabled Then
+    If lastButton <> 2 And IsEnabled Then
         Call Redraw(False)
         'Debug.Print "bCheckbox_MouseDown"
     End If
@@ -236,8 +228,7 @@ Private Sub bCheckbox_MouseMove(Button As Integer, Shift As Integer, X As Single
 On Error Resume Next
     
     RaiseEvent MouseMove(Button, Shift, X, Y)
-    bCheckbox.SetFocus
-    If lastButton < 2 And isEnabled Then
+    If lastButton < 2 And IsEnabled Then
         lastHwnd = bCheckbox.hwnd
         If Not isMouseOver Then
             Call Redraw(False)
@@ -263,7 +254,7 @@ Private Sub bCheckbox_MouseUp(Button As Integer, Shift As Integer, X As Single, 
 On Error Resume Next
     
     RaiseEvent MouseUp(Button, Shift, X, Y)
-    If lastButton <> 2 And isEnabled Then
+    If lastButton <> 2 And IsEnabled Then
         Call Redraw(False)
         'Debug.Print "bCheckbox_MouseUp"
     End If
@@ -335,7 +326,7 @@ On Error Resume Next
     Dim rI          As Integer
     Dim rY          As Integer
     
-    If isEnabled = False Then
+    If IsEnabled = False Then
         If isChecked = True Then
             If iCheckBoxLoaded = False Then
                 bCheckbox.BackColor = RGB(10, 64, 10)
@@ -460,7 +451,7 @@ Private Sub UserControl_Initialize()
 On Error Resume Next
     
     Call ReloadTextures
-    isEnabled = True
+    IsEnabled = True
     'Debug.Print "UserControl_Initialize"
     
 End Sub
@@ -474,7 +465,7 @@ Private Sub UserControl_InitProperties()
 On Error Resume Next
     
     lastStat = 0
-    isEnabled = True
+    IsEnabled = True
     iCheckBoxLoaded = False
     bCheckbox.BackColor = RGB(32, 32, 32)
     
@@ -610,12 +601,12 @@ Private Sub UserControl_ReadProperties(PropBag As PropertyBag)
 On Error Resume Next
 
     With PropBag
-        isEnabled = .ReadProperty("ENAB", True)
+        IsEnabled = .ReadProperty("ENAB", True)
         isChecked = .ReadProperty("CHCK", False)
         iCHK.Picture = .ReadProperty("PICC", iCHK.Picture)
     End With
 
-    UserControl.Enabled = isEnabled
+    UserControl.Enabled = IsEnabled
     Call ReloadTextures
     Call Redraw(True)
 End Sub
@@ -630,7 +621,7 @@ On Error Resume Next
     
     With PropBag
         Call .WriteProperty("CHCK", isChecked)
-        Call .WriteProperty("ENAB", isEnabled)
+        Call .WriteProperty("ENAB", IsEnabled)
         Call .WriteProperty("PICC", iCHK.Picture)
     End With
 End Sub
@@ -643,7 +634,7 @@ Public Property Get Enabled() As Boolean
 
 On Error Resume Next
     
-    Enabled = isEnabled
+    Enabled = IsEnabled
 End Property
 
 Public Property Let Enabled(ByVal NewValue As Boolean)
@@ -654,10 +645,10 @@ Public Property Let Enabled(ByVal NewValue As Boolean)
 
 On Error Resume Next
     
-    isEnabled = NewValue
+    IsEnabled = NewValue
     isOver = False
     Call Redraw(False)
-    UserControl.Enabled = isEnabled
+    UserControl.Enabled = IsEnabled
     PropertyChanged "ENAB"
 End Property
 

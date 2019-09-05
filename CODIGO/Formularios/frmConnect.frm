@@ -33,14 +33,15 @@ Begin VB.Form frmConnect
    Begin AOLibre.uAOCheckbox chkRecordar 
       Height          =   345
       Left            =   5280
-      TabIndex        =   18
+      TabIndex        =   16
+      TabStop         =   0   'False
       Top             =   4440
       Width           =   345
-      _ExtentX        =   609
-      _ExtentY        =   609
-      CHCK            =   0   'False
-      ENAB            =   -1  'True
-      PICC            =   "frmConnect.frx":000C
+      _extentx        =   609
+      _extenty        =   609
+      enab            =   -1
+      chck            =   0
+      picc            =   "frmConnect.frx":000C
    End
    Begin VB.Timer tEfectos 
       Left            =   1680
@@ -50,27 +51,20 @@ Begin VB.Form frmConnect
       Height          =   495
       Left            =   9120
       TabIndex        =   7
+      TabStop         =   0   'False
       Top             =   6840
       Width           =   1935
-      _ExtentX        =   3413
-      _ExtentY        =   873
-      TX              =   "Actualizar Lista"
-      ENAB            =   -1  'True
-      FCOL            =   7314354
-      OCOL            =   16777215
-      PICE            =   "frmConnect.frx":10F2
-      PICF            =   "frmConnect.frx":1B1C
-      PICH            =   "frmConnect.frx":27DE
-      PICV            =   "frmConnect.frx":3770
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Calibri"
-         Size            =   12
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   3413
+      _extenty        =   873
+      tx              =   "Actualizar Lista"
+      enab            =   -1
+      fcol            =   7314354
+      ocol            =   16777215
+      pice            =   "frmConnect.frx":10F4
+      picf            =   "frmConnect.frx":1B20
+      pich            =   "frmConnect.frx":27E4
+      picv            =   "frmConnect.frx":3778
+      font            =   "frmConnect.frx":467C
    End
    Begin VB.ListBox lstRedditPosts 
       Appearance      =   0  'Flat
@@ -87,7 +81,7 @@ Begin VB.Form frmConnect
       ForeColor       =   &H80000018&
       Height          =   4320
       Left            =   480
-      TabIndex        =   1
+      TabIndex        =   2
       Top             =   1680
       Width           =   2775
    End
@@ -105,10 +99,10 @@ Begin VB.Form frmConnect
       EndProperty
       ForeColor       =   &H0000FF00&
       Height          =   4905
-      ItemData        =   "frmConnect.frx":4672
+      ItemData        =   "frmConnect.frx":46A4
       Left            =   8685
-      List            =   "frmConnect.frx":4674
-      TabIndex        =   6
+      List            =   "frmConnect.frx":46A6
+      TabIndex        =   3
       Top             =   1680
       Width           =   2775
    End
@@ -129,7 +123,7 @@ Begin VB.Form frmConnect
       IMEMode         =   3  'DISABLE
       Left            =   4920
       PasswordChar    =   "*"
-      TabIndex        =   5
+      TabIndex        =   1
       Top             =   3720
       Width           =   2460
    End
@@ -148,7 +142,7 @@ Begin VB.Form frmConnect
       ForeColor       =   &H00FFFFFF&
       Height          =   225
       Left            =   4905
-      TabIndex        =   4
+      TabIndex        =   0
       Top             =   3210
       Width           =   2460
    End
@@ -169,7 +163,7 @@ Begin VB.Form frmConnect
       ForeColor       =   &H0000FF00&
       Height          =   195
       Left            =   4890
-      TabIndex        =   2
+      TabIndex        =   5
       Text            =   "7666"
       Top             =   2760
       Width           =   825
@@ -191,7 +185,7 @@ Begin VB.Form frmConnect
       ForeColor       =   &H0000FF00&
       Height          =   195
       Left            =   5760
-      TabIndex        =   3
+      TabIndex        =   6
       Text            =   "localhost"
       Top             =   2760
       Width           =   1575
@@ -200,261 +194,191 @@ Begin VB.Form frmConnect
       Height          =   375
       Left            =   600
       TabIndex        =   8
+      TabStop         =   0   'False
       Top             =   8400
       Width           =   1335
-      _ExtentX        =   2355
-      _ExtentY        =   661
-      TX              =   "Crear Cuenta"
-      ENAB            =   -1  'True
-      FCOL            =   7314354
-      OCOL            =   16777215
-      PICE            =   "frmConnect.frx":4676
-      PICF            =   "frmConnect.frx":50A0
-      PICH            =   "frmConnect.frx":5D62
-      PICV            =   "frmConnect.frx":6CF4
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Calibri"
-         Size            =   9.75
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   2355
+      _extenty        =   661
+      tx              =   "Crear Cuenta"
+      enab            =   -1
+      fcol            =   7314354
+      ocol            =   16777215
+      pice            =   "frmConnect.frx":46A8
+      picf            =   "frmConnect.frx":50D4
+      pich            =   "frmConnect.frx":5D98
+      picv            =   "frmConnect.frx":6D2C
+      font            =   "frmConnect.frx":7C30
    End
    Begin AOLibre.uAOButton btnRecuperar 
       Height          =   375
       Left            =   2160
       TabIndex        =   9
+      TabStop         =   0   'False
       Top             =   8400
       Width           =   1335
-      _ExtentX        =   2355
-      _ExtentY        =   661
-      TX              =   "Recuperar Pass"
-      ENAB            =   -1  'True
-      FCOL            =   7314354
-      OCOL            =   16777215
-      PICE            =   "frmConnect.frx":7BF6
-      PICF            =   "frmConnect.frx":8620
-      PICH            =   "frmConnect.frx":92E2
-      PICV            =   "frmConnect.frx":A274
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Calibri"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   2355
+      _extenty        =   661
+      tx              =   "Recuperar Pass"
+      enab            =   -1
+      fcol            =   7314354
+      ocol            =   16777215
+      pice            =   "frmConnect.frx":7C58
+      picf            =   "frmConnect.frx":8684
+      pich            =   "frmConnect.frx":9348
+      picv            =   "frmConnect.frx":A2DC
+      font            =   "frmConnect.frx":B1E0
    End
    Begin AOLibre.uAOButton btnManual 
       Height          =   375
       Left            =   3720
       TabIndex        =   10
+      TabStop         =   0   'False
       Top             =   8400
       Width           =   1335
-      _ExtentX        =   2355
-      _ExtentY        =   661
-      TX              =   "Manual"
-      ENAB            =   -1  'True
-      FCOL            =   7314354
-      OCOL            =   16777215
-      PICE            =   "frmConnect.frx":B176
-      PICF            =   "frmConnect.frx":BBA0
-      PICH            =   "frmConnect.frx":C862
-      PICV            =   "frmConnect.frx":D7F4
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Calibri"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   2355
+      _extenty        =   661
+      tx              =   "Manual"
+      enab            =   -1
+      fcol            =   7314354
+      ocol            =   16777215
+      pice            =   "frmConnect.frx":B208
+      picf            =   "frmConnect.frx":BC34
+      pich            =   "frmConnect.frx":C8F8
+      picv            =   "frmConnect.frx":D88C
+      font            =   "frmConnect.frx":E790
    End
    Begin AOLibre.uAOButton btnReglamento 
       Height          =   375
       Left            =   5280
       TabIndex        =   11
+      TabStop         =   0   'False
       Top             =   8400
       Width           =   1335
-      _ExtentX        =   2355
-      _ExtentY        =   661
-      TX              =   "Reglamento"
-      ENAB            =   -1  'True
-      FCOL            =   7314354
-      OCOL            =   16777215
-      PICE            =   "frmConnect.frx":E6F6
-      PICF            =   "frmConnect.frx":F120
-      PICH            =   "frmConnect.frx":FDE2
-      PICV            =   "frmConnect.frx":10D74
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Calibri"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   2355
+      _extenty        =   661
+      tx              =   "Reglamento"
+      enab            =   -1
+      fcol            =   7314354
+      ocol            =   16777215
+      pice            =   "frmConnect.frx":E7B8
+      picf            =   "frmConnect.frx":F1E4
+      pich            =   "frmConnect.frx":FEA8
+      picv            =   "frmConnect.frx":10E3C
+      font            =   "frmConnect.frx":11D40
    End
    Begin AOLibre.uAOButton btnCodigoFuente 
       Height          =   375
       Left            =   6840
       TabIndex        =   12
+      TabStop         =   0   'False
       Top             =   8400
       Width           =   1335
-      _ExtentX        =   2355
-      _ExtentY        =   661
-      TX              =   "Codigo Fuente"
-      ENAB            =   -1  'True
-      FCOL            =   7314354
-      OCOL            =   16777215
-      PICE            =   "frmConnect.frx":11C76
-      PICF            =   "frmConnect.frx":126A0
-      PICH            =   "frmConnect.frx":13362
-      PICV            =   "frmConnect.frx":142F4
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Calibri"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   2355
+      _extenty        =   661
+      tx              =   "Codigo Fuente"
+      enab            =   -1
+      fcol            =   7314354
+      ocol            =   16777215
+      pice            =   "frmConnect.frx":11D68
+      picf            =   "frmConnect.frx":12794
+      pich            =   "frmConnect.frx":13458
+      picv            =   "frmConnect.frx":143EC
+      font            =   "frmConnect.frx":152F0
    End
    Begin AOLibre.uAOButton btnCrearServer 
       Height          =   375
       Left            =   8400
       TabIndex        =   13
+      TabStop         =   0   'False
       Top             =   8400
       Width           =   1335
-      _ExtentX        =   2355
-      _ExtentY        =   661
-      TX              =   "Crear Server"
-      ENAB            =   -1  'True
-      FCOL            =   7314354
-      OCOL            =   16777215
-      PICE            =   "frmConnect.frx":151F6
-      PICF            =   "frmConnect.frx":15C20
-      PICH            =   "frmConnect.frx":168E2
-      PICV            =   "frmConnect.frx":17874
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Calibri"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   2355
+      _extenty        =   661
+      tx              =   "Crear Server"
+      enab            =   -1
+      fcol            =   7314354
+      ocol            =   16777215
+      pice            =   "frmConnect.frx":15318
+      picf            =   "frmConnect.frx":15D44
+      pich            =   "frmConnect.frx":16A08
+      picv            =   "frmConnect.frx":1799C
+      font            =   "frmConnect.frx":188A0
    End
    Begin AOLibre.uAOButton btnSalir 
       Height          =   375
       Left            =   9960
       TabIndex        =   14
+      TabStop         =   0   'False
       Top             =   8400
       Width           =   1335
-      _ExtentX        =   2355
-      _ExtentY        =   661
-      TX              =   "Salir"
-      ENAB            =   -1  'True
-      FCOL            =   7314354
-      OCOL            =   16777215
-      PICE            =   "frmConnect.frx":18776
-      PICF            =   "frmConnect.frx":191A0
-      PICH            =   "frmConnect.frx":19E62
-      PICV            =   "frmConnect.frx":1ADF4
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Calibri"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   2355
+      _extenty        =   661
+      tx              =   "Salir"
+      enab            =   -1
+      fcol            =   7314354
+      ocol            =   16777215
+      pice            =   "frmConnect.frx":188C8
+      picf            =   "frmConnect.frx":192F4
+      pich            =   "frmConnect.frx":19FB8
+      picv            =   "frmConnect.frx":1AF4C
+      font            =   "frmConnect.frx":1BE50
    End
    Begin AOLibre.uAOButton btnConectarse 
       Height          =   375
       Left            =   4800
       TabIndex        =   15
+      TabStop         =   0   'False
       Top             =   3960
       Width           =   1335
-      _ExtentX        =   2355
-      _ExtentY        =   661
-      TX              =   "Conectarse"
-      ENAB            =   -1  'True
-      FCOL            =   7314354
-      OCOL            =   16777215
-      PICE            =   "frmConnect.frx":1BCF6
-      PICF            =   "frmConnect.frx":1C720
-      PICH            =   "frmConnect.frx":1D3E2
-      PICV            =   "frmConnect.frx":1E374
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Calibri"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   2355
+      _extenty        =   661
+      tx              =   "Conectarse"
+      enab            =   -1
+      fcol            =   7314354
+      ocol            =   16777215
+      pice            =   "frmConnect.frx":1BE78
+      picf            =   "frmConnect.frx":1C8A4
+      pich            =   "frmConnect.frx":1D568
+      picv            =   "frmConnect.frx":1E4FC
+      font            =   "frmConnect.frx":1F400
    End
    Begin AOLibre.uAOButton btnTeclas 
       Height          =   375
       Left            =   6120
-      TabIndex        =   16
+      TabIndex        =   17
+      TabStop         =   0   'False
       Top             =   3960
       Width           =   1335
-      _ExtentX        =   2355
-      _ExtentY        =   661
-      TX              =   "Teclas"
-      ENAB            =   -1  'True
-      FCOL            =   7314354
-      OCOL            =   16777215
-      PICE            =   "frmConnect.frx":1F276
-      PICF            =   "frmConnect.frx":1FCA0
-      PICH            =   "frmConnect.frx":20962
-      PICV            =   "frmConnect.frx":218F4
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Calibri"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   2355
+      _extenty        =   661
+      tx              =   "Teclas"
+      enab            =   -1
+      fcol            =   7314354
+      ocol            =   16777215
+      pice            =   "frmConnect.frx":1F428
+      picf            =   "frmConnect.frx":1FE54
+      pich            =   "frmConnect.frx":20B18
+      picv            =   "frmConnect.frx":21AAC
+      font            =   "frmConnect.frx":229B0
    End
    Begin AOLibre.uAOButton btnVerForo 
       Height          =   495
       Left            =   480
-      TabIndex        =   17
+      TabIndex        =   18
+      TabStop         =   0   'False
       Top             =   6075
       Width           =   2775
-      _ExtentX        =   4895
-      _ExtentY        =   873
-      TX              =   "Ver Foro"
-      ENAB            =   -1  'True
-      FCOL            =   7314354
-      OCOL            =   16777215
-      PICE            =   "frmConnect.frx":227F6
-      PICF            =   "frmConnect.frx":23220
-      PICH            =   "frmConnect.frx":23EE2
-      PICV            =   "frmConnect.frx":24E74
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Calibri"
-         Size            =   15.75
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   4895
+      _extenty        =   873
+      tx              =   "Ver Foro"
+      enab            =   -1
+      fcol            =   7314354
+      ocol            =   16777215
+      pice            =   "frmConnect.frx":229D8
+      picf            =   "frmConnect.frx":23404
+      pich            =   "frmConnect.frx":240C8
+      picv            =   "frmConnect.frx":2505C
+      font            =   "frmConnect.frx":25F60
    End
    Begin VB.Label lblRecordarme 
       BackStyle       =   0  'Transparent
@@ -498,7 +422,7 @@ Begin VB.Form frmConnect
       ForeColor       =   &H000000FF&
       Height          =   195
       Left            =   240
-      TabIndex        =   0
+      TabIndex        =   4
       Top             =   240
       Width           =   555
    End

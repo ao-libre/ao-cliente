@@ -148,7 +148,7 @@ Private isFocus     As Boolean
 Private CaptionButton As String
 Private ForeC       As Long
 Private ForeCo      As Long
-Private isEnabled   As Boolean
+Private IsEnabled   As Boolean
 Private rc          As RECT
 
 Private Type POINTAPI
@@ -196,7 +196,7 @@ Private Sub bButton_Click()
 
 On Error Resume Next
     
-    If isEnabled Then
+    If IsEnabled Then
         RaiseEvent Click
     End If
 End Sub
@@ -209,7 +209,7 @@ Private Sub bButton_DblClick()
 
 On Error Resume Next
     
-    If isEnabled Then
+    If IsEnabled Then
         Call bButton_MouseDown(1, 0, 0, 0)
         RaiseEvent DblClick
     End If
@@ -223,7 +223,7 @@ Private Sub bButton_GotFocus()
 
 On Error Resume Next
     
-    If isOver = False And isEnabled Then
+    If isOver = False And IsEnabled Then
         isFocus = True
         Call Redraw(1)
         'Debug.Print "bButton_GotFocus1"
@@ -240,15 +240,8 @@ On Error Resume Next
     
     RaiseEvent KeyDown(KeyCode, Shift)
     lastKeyDown = KeyCode
-    Select Case KeyCode
-    Case 32
-        Call Redraw(2)
-        'Debug.Print "bButton_KeyDown2"
-    Case 39, 40
-        SendKeys "{Tab}"
-    Case 37, 38
-        SendKeys "+{Tab}"
-    End Select
+    Call Redraw(2)
+    'Debug.Print "bButton_KeyDown2"
 End Sub
 
 Private Sub bButton_KeyPress(KeyAscii As Integer)
@@ -287,7 +280,7 @@ Private Sub bButton_LostFocus()
 
 On Error Resume Next
     
-    If isOver = False And isEnabled Then
+    If isOver = False And IsEnabled Then
         isFocus = False
         Call Redraw(0)
         'Debug.Print "bButton_LostFocus0"
@@ -304,7 +297,7 @@ On Error Resume Next
     
     RaiseEvent MouseDown(Button, Shift, X, Y)
     lastButton = Button
-    If lastButton <> 2 And isEnabled Then
+    If lastButton <> 2 And IsEnabled Then
         Call Redraw(2)
         'Debug.Print "bButton_MouseDown2"
     End If
@@ -319,8 +312,8 @@ Private Sub bButton_MouseMove(Button As Integer, Shift As Integer, X As Single, 
 On Error Resume Next
     
     RaiseEvent MouseMove(Button, Shift, X, Y)
-    If lastButton < 2 And isEnabled Then
-        lastHwnd = bButton.hWnd
+    If lastButton < 2 And IsEnabled Then
+        lastHwnd = bButton.hwnd
         If Not isMouseOver Then
             Call Redraw(0)
             'Debug.Print "bButton_MouseMove0"
@@ -345,7 +338,7 @@ Private Sub bButton_MouseUp(Button As Integer, Shift As Integer, X As Single, Y 
 On Error Resume Next
     
     RaiseEvent MouseUp(Button, Shift, X, Y)
-    If lastButton <> 2 And isEnabled Then
+    If lastButton <> 2 And IsEnabled Then
         If isOver = True Then
             Call Redraw(1)
             'Debug.Print "bButton_MouseUp1"
@@ -533,7 +526,7 @@ On Error Resume Next
     With bButton
         Dim TempC As Long
         TempC = .ForeColor
-        If (isEnabled = False) Then
+        If (IsEnabled = False) Then
             .ForeColor = RGB(128, 128, 128)
         Else
             ' Efectos
@@ -657,7 +650,7 @@ Private Sub UserControl_Initialize()
 On Error Resume Next
     
     Call ReloadTextures
-    isEnabled = True
+    IsEnabled = True
     'Debug.Print "UserControl_Initialize"
     
 End Sub
@@ -673,7 +666,7 @@ On Error Resume Next
     lastStat = 0
     ForeC = RGB(178, 155, 111)
     ForeCo = vbWhite
-    isEnabled = True
+    IsEnabled = True
     
     Set iESQ.Picture = Nothing
     Set iFON.Picture = Nothing
@@ -800,7 +793,7 @@ On Error Resume Next
 
     With PropBag
         CaptionButton = .ReadProperty("TX", "")
-        isEnabled = .ReadProperty("ENAB", True)
+        IsEnabled = .ReadProperty("ENAB", True)
         ForeC = .ReadProperty("FCOL", vbWhite)
         ForeCo = .ReadProperty("OCOL", vbWhite)
         iESQ.Picture = .ReadProperty("PICE", iESQ.Picture)
@@ -810,7 +803,7 @@ On Error Resume Next
         Set UserControl.Font = .ReadProperty("FONT", UserControl.Font)
     End With
 
-    UserControl.Enabled = isEnabled
+    UserControl.Enabled = IsEnabled
     Call ReloadTextures
     Call UpdateCaption
 End Sub
@@ -825,7 +818,7 @@ On Error Resume Next
     
     With PropBag
         Call .WriteProperty("TX", CaptionButton)
-        Call .WriteProperty("ENAB", isEnabled)
+        Call .WriteProperty("ENAB", IsEnabled)
         Call .WriteProperty("FCOL", ForeC)
         Call .WriteProperty("OCOL", ForeCo)
         Call .WriteProperty("PICE", iESQ.Picture)
@@ -844,7 +837,7 @@ Public Property Get Enabled() As Boolean
 
 On Error Resume Next
     
-    Enabled = isEnabled
+    Enabled = IsEnabled
 End Property
 
 Public Property Let Enabled(ByVal NewValue As Boolean)
@@ -855,10 +848,10 @@ Public Property Let Enabled(ByVal NewValue As Boolean)
 
 On Error Resume Next
     
-    isEnabled = NewValue
+    IsEnabled = NewValue
     isOver = False
     Call Redraw(0, True)
-    UserControl.Enabled = isEnabled
+    UserControl.Enabled = IsEnabled
     PropertyChanged "ENAB"
 End Property
 
