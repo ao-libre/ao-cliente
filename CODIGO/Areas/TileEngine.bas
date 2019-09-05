@@ -309,6 +309,7 @@ Public mapInfo As mapInfo ' Info acerca del mapa en uso
 
 Public Normal_RGBList(3) As Long
 Public Color_Shadow(3) As Long
+Public Color_Arbol(3) As Long
 
 '   Control de Lluvia
 Public bRain As Boolean
@@ -1053,7 +1054,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
                     If .Graphic(3).GrhIndex <> 0 Then
                         If .Graphic(3).GrhIndex = 735 Or .Graphic(3).GrhIndex >= 6994 And .Graphic(3).GrhIndex <= 7002 Then
                             If Abs(UserPos.X - X) < 3 And (Abs(UserPos.Y - Y)) < 8 And (Abs(UserPos.Y) < Y) Then
-                                Call Draw_Grh(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, DesvanecerArbol(ColorArbol), 1, X, Y)
+                                Call Draw_Grh(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, Color_Arbol(), 1, X, Y)
                             Else 'NORMAL
                                 Call Draw_Grh(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, .Engine_Light(), 1, X, Y)
                             End If
@@ -1451,7 +1452,7 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
                 .MoveOffsetX = .MoveOffsetX + ScrollPixelsPerFrameX * Sgn(.scrollDirectionX) * timerTicksPerFrame
                 
                 'Start animations
-'TODO : Este parche es para evita los uncornos exploten al moverse!! REVER!!!
+                'TODO : Este parche es para evita los uncornos exploten al moverse!! REVER!!!
                 If .Body.Walk(.Heading).Speed > 0 Then _
                     .Body.Walk(.Heading).Started = 1
                 .Arma.WeaponWalk(.Heading).Started = 1
@@ -1473,7 +1474,7 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
                 .MoveOffsetY = .MoveOffsetY + ScrollPixelsPerFrameY * Sgn(.scrollDirectionY) * timerTicksPerFrame
                 
                 'Start animations
-'TODO : Este parche es para evita los uncornos exploten al moverse!! REVER!!!
+                'TODO : Este parche es para evita los uncornos exploten al moverse!! REVER!!!
                 If .Body.Walk(.Heading).Speed > 0 Then _
                     .Body.Walk(.Heading).Started = 1
                 .Arma.WeaponWalk(.Heading).Started = 1
@@ -1495,6 +1496,7 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
         If .attacking And .Arma.WeaponWalk(.Heading).Started = 0 Then
             .Arma.WeaponWalk(.Heading).Started = 1
             .Arma.WeaponWalk(.Heading).FrameCounter = 1
+        
         'if the anim has ended or we are no longer attacking end the animation
         ElseIf .Arma.WeaponWalk(.Heading).FrameCounter > 4 And .attacking Then
             .attacking = False 'this is just for testing, it shouldnt be done here
@@ -1671,6 +1673,7 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
         
     End With
 End Sub
+
 Private Sub RenderName(ByVal CharIndex As Long, ByVal X As Integer, ByVal Y As Integer, Optional ByVal Invi As Boolean = False)
     Dim Pos As Integer
     Dim line As String
@@ -1890,29 +1893,11 @@ Public Sub DesvanecimientoTechos()
     If bTecho Then
         If Not Val(ColorTecho) = 150 Then ColorTecho = ColorTecho - 1
     Else
-
         If Not Val(ColorTecho) = 250 Then ColorTecho = ColorTecho + 1
-
     End If
+    
     If Not Val(ColorTecho) = 250 Then
-        temp_rgb(0) = D3DColorARGB(ColorTecho, ColorTecho, ColorTecho, ColorTecho)
-        temp_rgb(1) = D3DColorARGB(ColorTecho, ColorTecho, ColorTecho, ColorTecho)
-        temp_rgb(2) = D3DColorARGB(ColorTecho, ColorTecho, ColorTecho, ColorTecho)
-        temp_rgb(3) = D3DColorARGB(ColorTecho, ColorTecho, ColorTecho, ColorTecho)
+        Call Engine_Long_To_RGB_List(temp_rgb(), D3DColorARGB(ColorTecho, ColorTecho, ColorTecho, ColorTecho))
     End If
+    
 End Sub
-Public Function DesvanecerArbol(ByVal Color As Byte) As Long()
-'*****************************************************************
-                        'Author: FrankoH
-                        'Last Modify Date: 28/08/2019
-                        'DESVANECE LOS ARBOLES
-'*****************************************************************
-Dim temp_rgb(3) As Long
-
-temp_rgb(0) = D3DColorARGB(ColorArbol, ColorArbol, ColorArbol, ColorArbol)
-temp_rgb(1) = D3DColorARGB(ColorArbol, ColorArbol, ColorArbol, ColorArbol)
-temp_rgb(2) = D3DColorARGB(ColorArbol, ColorArbol, ColorArbol, ColorArbol)
-temp_rgb(3) = D3DColorARGB(ColorArbol, ColorArbol, ColorArbol, ColorArbol)
-
-DesvanecerArbol = temp_rgb
-End Function

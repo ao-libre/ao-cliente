@@ -40,7 +40,6 @@ Public AccountNewPassword As String
 
 ' Desvanecimiento en Techos
 Public ColorTecho As Byte
-Public ColorArbol As Byte
 Public temp_rgb(3) As Long
 
 

@@ -77,11 +77,10 @@ Public Sub Text_Render_Special(ByVal intX As Integer, ByVal intY As Integer, ByR
 '*****************************************************************
     
     If LenB(strText) <> 0 Then
+
+        Call Engine_Long_To_RGB_List(temp_rgb(), lngColor)
         
-        Dim temp_color(3) As Long
-        Call Engine_Long_To_RGB_List(temp_color(), lngColor)
-        
-        Call Engine_Render_Text(SpriteBatch, cfonts(1), strText, intX, intY, temp_color(), bolCentred)
+        Call Engine_Render_Text(SpriteBatch, cfonts(1), strText, intX, intY, temp_rgb(), bolCentred)
     End If
     
 End Sub ' GSZAO
