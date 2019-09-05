@@ -588,6 +588,7 @@ Private Sub InventoryWindow_MouseUp(Button As Integer, Shift As Integer, X As Si
     End If
     Call DrawInventory
 End Sub
+
 Public Function GetPos(ByVal X As Integer, ByVal Y As Integer) As Byte
     Dim temp_x As Integer
     Dim temp_y As Integer

@@ -391,7 +391,7 @@ Private Sub CheckKeys()
         End If
     Else
 
-    Call frmMain.ActualizarMiniMapa   'integrado por ReyarB
+        Call frmMain.ActualizarMiniMapa   'integrado por ReyarB
         
     End If
 End Sub
@@ -941,7 +941,7 @@ Private Sub LoadInitialConfig()
         Call CloseClient
     End If
     
-    Engine_DirectX8_Aditional_Init
+    Call Engine_DirectX8_Aditional_Init
 
     Call AddtoRichTextBox(frmCargando.status, _
                             "   " & JsonLanguage.Item("HECHO").Item("TEXTO"), _
@@ -1009,10 +1009,8 @@ Private Sub LoadTimerIntervals()
         Call .SetInterval(TimersIndex.CastAttack, eIntervalos.INT_CAST_ATTACK)
         
         With frmMain.macrotrabajo
-            
             .Interval = eIntervalos.INT_MACRO_TRABAJO
             .Enabled = False
-        
         End With
     
         'Init timers

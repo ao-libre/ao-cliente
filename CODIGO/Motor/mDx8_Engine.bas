@@ -185,7 +185,8 @@ Public Sub Engine_DirectX8_Aditional_Init()
 
     Call Engine_Long_To_RGB_List(Normal_RGBList(), -1)
     Call Engine_Long_To_RGB_List(Color_Shadow(), D3DColorARGB(50, 0, 0, 0))
-
+    Call Engine_Long_To_RGB_List(Color_Arbol(), D3DColorARGB(100, 100, 100, 100))
+    
     Call Load_Auras
     Call Init_MeteoEngine
     Call mDx8_Dibujado.Damage_Initialize
@@ -195,11 +196,10 @@ End Sub
 Public Sub Engine_Draw_Line(X1 As Single, Y1 As Single, X2 As Single, Y2 As Single, Optional Color As Long = -1, Optional Color2 As Long = -1)
 On Error GoTo Error
     
-    Dim temp_color(3) As Long
-    Call Engine_Long_To_RGB_List(temp_color(), Color)
+    Call Engine_Long_To_RGB_List(temp_rgb(), Color)
     
     Call SpriteBatch.SetTexture(Nothing)
-    Call SpriteBatch.Draw(X1, Y1, X2, Y2, temp_color())
+    Call SpriteBatch.Draw(X1, Y1, X2, Y2, temp_rgb())
     
 Exit Sub
 
@@ -210,11 +210,10 @@ End Sub
 Public Sub Engine_Draw_Point(X1 As Single, Y1 As Single, Optional Color As Long = -1)
 On Error GoTo Error
     
-    Dim temp_color(3) As Long
-    Call Engine_Long_To_RGB_List(temp_color(), Color)
+    Call Engine_Long_To_RGB_List(temp_rgb(), Color)
     
     Call SpriteBatch.SetTexture(Nothing)
-    Call SpriteBatch.Draw(X1, Y1, 0, 1, temp_color(), 0, 0)
+    Call SpriteBatch.Draw(X1, Y1, 0, 1, temp_rgb(), 0, 0)
     
 Exit Sub
 
@@ -288,12 +287,11 @@ Public Sub Engine_Draw_Box(ByVal X As Integer, ByVal Y As Integer, ByVal Width A
 'Last Modification: 29/12/10
 'Blisse-AO | Render Box
 '***************************************************
-    
-    Dim temp_color(3) As Long
-    Call Engine_Long_To_RGB_List(temp_color(), Color)
+
+    Call Engine_Long_To_RGB_List(temp_rgb(), Color)
 
     Call SpriteBatch.SetTexture(Nothing)
-    Call SpriteBatch.Draw(X, Y, Width, ByVal Height, temp_color())
+    Call SpriteBatch.Draw(X, Y, Width, ByVal Height, temp_rgb())
     
 End Sub
 

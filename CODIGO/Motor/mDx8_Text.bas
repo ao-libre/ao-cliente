@@ -77,6 +77,8 @@ Public Sub Text_Render_Special(ByVal intX As Integer, ByVal intY As Integer, ByR
 '*****************************************************************
     Dim i As Long
     If LenB(strText) <> 0 Then
+
+        Call Engine_Long_To_RGB_List(temp_rgb(), lngColor)
         
         Dim temp_color(3) As Long
         Call Engine_Long_To_RGB_List(temp_color(), lngColor)

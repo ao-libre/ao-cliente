@@ -865,7 +865,6 @@ Public Sub Particle_Group_Render(ByVal Particle_Group_Index As Long, _
     If Not ClientSetup.ParticleEngine Then Exit Sub
     
     Dim LoopC            As Long
-    Dim temp_rgb(0 To 3) As Long
     Dim no_move          As Boolean
     
     With particle_group_list(Particle_Group_Index)
