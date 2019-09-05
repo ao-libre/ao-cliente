@@ -549,13 +549,6 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private Type tRedditPost
-    Title As String
-    URL As String
-End Type
-
-Dim Posts() As tRedditPost
-
 ' Animación de los Controles...
 Private Type tAnimControl
     Activo As Boolean

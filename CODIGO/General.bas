@@ -35,6 +35,13 @@ Option Explicit
 
 Public bFogata As Boolean
 
+Public Type tRedditPost
+    Title As String
+    URL As String
+End Type
+
+Public Posts() As tRedditPost
+
 Public bLluvia() As Byte ' Array para determinar si
 'debemos mostrar la animacion de la lluvia
 
@@ -872,7 +879,7 @@ Private Sub LoadInitialConfig()
                             True, False, True, rtfCenter)
                             
     'Inicializamos el sonido
-    Call Audio.Initialize(DirectX, frmMain.hWnd, Game.path(Sounds), Game.path(Musica))
+    Call Audio.Initialize(DirectX, frmMain.hwnd, Game.path(Sounds), Game.path(Musica))
 
     'Enable / Disable audio
     Audio.MusicActivated = ClientSetup.bMusic
@@ -930,7 +937,7 @@ Private Sub LoadInitialConfig()
     End If
           
     '     Tile Engine
-    If Not InitTileEngine(frmMain.hWnd, 32, 32, 8, 8) Then
+    If Not InitTileEngine(frmMain.hwnd, 32, 32, 8, 8) Then
         Call CloseClient
     End If
     
@@ -1518,38 +1525,46 @@ End Function
 
 Public Sub GetPostsFromReddit()
 On Error Resume Next
-    
-    Set Inet = New clsInet
-    
-    Dim ResponseReddit As String
-    Dim JsonObject As Object
-    Dim Endpoint As String
-    
-    Endpoint = GetVar(Game.path(INIT) & "Config.ini", "Parameters", "SubRedditEndpoint")
-    ResponseReddit = Inet.OpenRequest(Endpoint, "GET")
-    ResponseReddit = Inet.Execute
-    ResponseReddit = Inet.GetResponseAsString
-    
-    Set JsonObject = JSON.parse(ResponseReddit)
-    
-    Dim qtyPostsOnReddit As Integer: qtyPostsOnReddit = JsonObject.Item("data").Item("children").Count
-    
-    ReDim Posts(qtyPostsOnReddit)
-    
-    'Clear lstRedditPosts before populate it again to prevent repeated values.
-    frmConnect.lstRedditPosts.Clear
-    
-    'Long funciona mas rapido en los loops que Integer
-    Dim i As Long
-    i = 1
-    Do While i <= qtyPostsOnReddit
-        Posts(i).Title = JsonObject.Item("data").Item("children").Item(i).Item("data").Item("title")
-        Posts(i).URL = JsonObject.Item("data").Item("children").Item(i).Item("data").Item("url")
+    If UBound(Posts) = 0 Then
+        Set Inet = New clsInet
         
-        frmConnect.lstRedditPosts.AddItem JsonObject.Item("data").Item("children").Item(i).Item("data").Item("title")
+        Dim ResponseReddit As String
+        Dim JsonObject As Object
+        Dim Endpoint As String
         
-        i = i + 1
-    Loop
+        Endpoint = GetVar(Game.path(INIT) & "Config.ini", "Parameters", "SubRedditEndpoint")
     
-    Set Inet = Nothing
+        ResponseReddit = Inet.OpenRequest(Endpoint, "GET")
+        ResponseReddit = Inet.Execute
+        ResponseReddit = Inet.GetResponseAsString
+        
+        
+        Set JsonObject = JSON.parse(ResponseReddit)
+        
+        Dim qtyPostsOnReddit As Integer: qtyPostsOnReddit = JsonObject.Item("data").Item("children").Count
+        
+        ReDim Preserve Posts(qtyPostsOnReddit)
+        
+        'Clear lstRedditPosts before populate it again to prevent repeated values.
+        frmConnect.lstRedditPosts.Clear
+        'Long funciona mas rapido en los loops que Integer
+        Dim i As Long
+        i = 1
+        Do While i <= qtyPostsOnReddit
+            Posts(i).Title = JsonObject.Item("data").Item("children").Item(i).Item("data").Item("title")
+            Posts(i).URL = JsonObject.Item("data").Item("children").Item(i).Item("data").Item("url")
+            
+            frmConnect.lstRedditPosts.AddItem JsonObject.Item("data").Item("children").Item(i).Item("data").Item("title")
+            
+            i = i + 1
+        Loop
+        
+        Set Inet = Nothing
+    Else
+        Dim ia As Long
+        For ia = 1 To UBound(Posts)
+            frmConnect.lstRedditPosts.AddItem Posts(ia).Title
+        Next ia
+    End If
+    
 End Sub
