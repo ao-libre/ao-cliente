@@ -293,6 +293,8 @@ Public Function General_Particle_Create(ByVal ParticulaInd As Long, _
 
     With StreamData(ParticulaInd)
         
+        Dim i As Long
+        
         For i = 0 To UBound(temp_rgb())
             Call Engine_Long_To_RGB_List(temp_rgb(), RGB(.colortint(i).r, .colortint(i).g, .colortint(i).B))
         Next

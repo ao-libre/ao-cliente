@@ -1938,9 +1938,9 @@ End Sub
 
 Public Sub DesvanecimientoMsg()
 '*****************************************************************
-                        'Author: FrankoH
-                        'Last Modify Date: 04/09/2019
-                        'DESVANECIMIENTO DE LOS TEXTOS DEL RENDER
+'Author: FrankoH
+'Last Modify Date: 04/09/2019
+'DESVANECIMIENTO DE LOS TEXTOS DEL RENDER
 '*****************************************************************
     Static lastmovement As Long
     
@@ -1973,16 +1973,3 @@ Public Sub renderMsgReset()
     nameMap = vbNullString
 
 End Sub
-
-Public Function DesvanecerArbol(ByVal Color As Byte) As Long()
-'*****************************************************************
-                        'Author: FrankoH
-                        'Last Modify Date: 28/08/2019
-                        'DESVANECE LOS ARBOLES
-'*****************************************************************
-
-Call Engine_Long_To_RGB_List(temp_rgb(), ARGB(ColorTecho, ColorTecho, ColorTecho, ColorTecho))
-
-DesvanecerArbol = temp_rgb
-
-End Function
