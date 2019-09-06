@@ -71,7 +71,7 @@ Public Function ColorToDX8(ByVal long_color As Long) As Long
 
 End Function
 
-Public Sub Text_Render_Special(ByVal intX As Integer, ByVal intY As Integer, ByRef strText As String, ByVal lngColor As Long, Optional bolCentred As Boolean = False, Optional font As Integer = 1)  ' GSZAO
+Public Sub Text_Render_Special(ByVal intX As Integer, ByVal intY As Integer, ByRef strText As String, ByVal lngColor As Long, Optional bolCentred As Boolean = False, Optional Font As Integer = 1)  ' GSZAO
 '*****************************************************************
 'Text_Render_Special by ^[GS]^
 '*****************************************************************
@@ -79,10 +79,8 @@ Public Sub Text_Render_Special(ByVal intX As Integer, ByVal intY As Integer, ByR
     If LenB(strText) <> 0 Then
 
         Call Engine_Long_To_RGB_List(temp_rgb(), lngColor)
-        
-        Dim temp_color(3) As Long
-        Call Engine_Long_To_RGB_List(temp_color(), lngColor)
-        Call Engine_Render_Text(SpriteBatch, cfonts(font), strText, intX, intY, temp_color(), bolCentred, , , font)
+
+        Call Engine_Render_Text(SpriteBatch, cfonts(Font), strText, intX, intY, temp_rgb(), bolCentred, , , Font)
         
     End If
     
@@ -100,14 +98,14 @@ End Function ' GSZAO
 
 Private Sub Engine_Render_Text(ByRef Batch As clsBatch, _
                                 ByRef UseFont As CustomFont, _
-                                ByVal text As String, _
+                                ByVal Text As String, _
                                 ByVal X As Long, _
                                 ByVal Y As Long, _
                                 ByRef Color() As Long, _
                                 Optional ByVal Center As Boolean = False, _
                                 Optional ByVal Alpha As Byte = 255, _
                                 Optional ByVal ParseEmoticons As Boolean = True, _
-                                Optional font As Integer = 1)
+                                Optional Font As Integer = 1)
                                 
 '*****************************************************************
 'Render text with a custom font
@@ -117,7 +115,7 @@ Private Sub Engine_Render_Text(ByRef Batch As clsBatch, _
     Dim Count As Integer
     Dim ascii() As Byte
     Dim i As Long
-    Dim j As Long
+    Dim J As Long
     Dim yOffset As Single
     Dim TempColor As Long
     Dim ResetColor As Byte
@@ -126,16 +124,16 @@ Private Sub Engine_Render_Text(ByRef Batch As clsBatch, _
     If DirectDevice.TestCooperativeLevel <> D3D_OK Then Exit Sub
 
     'Check for valid text to render
-    If LenB(text) = 0 Then Exit Sub
+    If LenB(Text) = 0 Then Exit Sub
     
      'WyroX: Agregado para evitar dibujar emojis en los nombres de los personajes
     If ParseEmoticons Then
         'Analizar mensaje, palabra por palabra... GSZAO
         Dim NewText As String
         
-        tempstr = Split(text, Chr$(32))
-        NewText = text
-        text = vbNullString
+        tempstr = Split(Text, Chr$(32))
+        NewText = Text
+        Text = vbNullString
 
         For i = 0 To UBound(tempstr)
             If tempstr(i) = ":)" Or tempstr(i) = "=)" Then
@@ -153,19 +151,19 @@ Private Sub Engine_Render_Text(ByRef Batch As clsBatch, _
             ElseIf tempstr(i) = ":S" Or tempstr(i) = "=S" Then
                 tempstr(i) = Chr$(160)
             End If
-            text = text & Chr$(32) & tempstr(i)
+            Text = Text & Chr$(32) & tempstr(i)
         Next
         ' Made by ^[GS]^ for GSZAO
     End If
     
     'Get the text into arrays (split by vbCrLf)
-    tempstr = Split(text, vbCrLf)
+    tempstr = Split(Text, vbCrLf)
 
     'Set the texture
     Call Batch.SetTexture(UseFont.Texture)
     
     If Center Then
-        X = X - Engine_GetTextWidth(cfonts(font), text) * 0.5
+        X = X - Engine_GetTextWidth(cfonts(Font), Text) * 0.5
     End If
     
     'Loop through each line if there are line breaks (vbCrLf)
@@ -178,17 +176,17 @@ Private Sub Engine_Render_Text(ByRef Batch As clsBatch, _
             ascii() = StrConv(tempstr(i), vbFromUnicode)
         
             'Loop through the characters
-            For j = 1 To Len(tempstr(i))
+            For J = 1 To Len(tempstr(i))
 
-                Call CopyMemory(TempVA, UseFont.HeaderInfo.CharVA(ascii(j - 1)), 24) 'this number represents the size of "CharVA" struct
+                Call CopyMemory(TempVA, UseFont.HeaderInfo.CharVA(ascii(J - 1)), 24) 'this number represents the size of "CharVA" struct
                 
                 TempVA.X = X + Count
                 TempVA.Y = Y + yOffset
                 
                 'Set the colors
-                If Es_Emoticon(ascii(j - 1)) Then ' GSZAO los colores no afectan a los emoticones!
+                If Es_Emoticon(ascii(J - 1)) Then ' GSZAO los colores no afectan a los emoticones!
                     
-                    If (ascii(j - 1) <> 157) Then
+                    If (ascii(J - 1) <> 157) Then
                         Count = Count + 5   ' Los emoticones tienen tamano propio (despues hay que cargarlos "correctamente" para evitar hacer esto)
                     End If
                     
@@ -197,9 +195,9 @@ Private Sub Engine_Render_Text(ByRef Batch As clsBatch, _
                 Call Batch.Draw(TempVA.X, TempVA.Y, TempVA.W, TempVA.H, Color, TempVA.Tx1, TempVA.Ty1, TempVA.Tx2, TempVA.Ty2)
 
                 'Shift over the the position to render the next character
-                Count = Count + UseFont.HeaderInfo.CharWidth(ascii(j - 1))
+                Count = Count + UseFont.HeaderInfo.CharWidth(ascii(J - 1))
                 
-            Next j
+            Next J
             
         End If
     Next i
@@ -236,7 +234,7 @@ Public Function ARGB(ByVal r As Long, ByVal g As Long, ByVal B As Long, ByVal A 
 
 End Function
 
-Private Function Engine_GetTextWidth(ByRef UseFont As CustomFont, ByVal text As String) As Integer
+Private Function Engine_GetTextWidth(ByRef UseFont As CustomFont, ByVal Text As String) As Integer
 '***************************************************
 'Returns the width of text
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_GetTextWidth
@@ -245,15 +243,15 @@ Dim i As Integer
 Dim Len_text As Long
 
     'Make sure we have text
-    If LenB(text) = 0 Then Exit Function
+    If LenB(Text) = 0 Then Exit Function
     
-    Len_text = Len(text)
+    Len_text = Len(Text)
     
     'Loop through the text
     For i = 1 To Len_text
         
         'Add up the stored character widths
-        Engine_GetTextWidth = Engine_GetTextWidth + UseFont.HeaderInfo.CharWidth(Asc(mid$(text, i, 1)))
+        Engine_GetTextWidth = Engine_GetTextWidth + UseFont.HeaderInfo.CharWidth(Asc(mid$(Text, i, 1)))
         
     Next i
 
@@ -342,14 +340,14 @@ End Sub
 
 Public Sub DrawText(ByVal X As Integer, _
                     ByVal Y As Integer, _
-                    ByVal text As String, _
+                    ByVal Text As String, _
                     ByVal Color As Long, _
-                    Optional Center As Boolean = False, Optional font As Integer = 1)
+                    Optional Center As Boolean = False, Optional Font As Integer = 1)
 
     Dim aux(3) As Long
 
     Call Engine_Long_To_RGB_List(aux(), Color)
-    Call Engine_Render_Text(SpriteBatch, cfonts(font), text, X, Y, aux(), Center, , , font)
+    Call Engine_Render_Text(SpriteBatch, cfonts(Font), Text, X, Y, aux(), Center, , , Font)
 
 End Sub
 

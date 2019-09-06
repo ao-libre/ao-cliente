@@ -260,17 +260,16 @@ Public Function General_Char_Particle_Create(ByVal ParticulaInd As Long, _
     If Not ClientSetup.ParticleEngine Then Exit Function
     
     If ParticulaInd <= 0 Then Exit Function
-
-    Dim rgb_list(0 To 3) As Long
+    
+    Dim i As Long
     
     With StreamData(ParticulaInd)
-    
-        rgb_list(0) = RGB(.colortint(0).r, .colortint(0).g, .colortint(0).B)
-        rgb_list(1) = RGB(.colortint(1).r, .colortint(1).g, .colortint(1).B)
-        rgb_list(2) = RGB(.colortint(2).r, .colortint(2).g, .colortint(2).B)
-        rgb_list(3) = RGB(.colortint(3).r, .colortint(3).g, .colortint(3).B)
+        
+        For i = 0 To UBound(temp_rgb())
+            Call Engine_Long_To_RGB_List(temp_rgb(), RGB(.colortint(i).r, .colortint(i).g, .colortint(i).B))
+        Next
 
-        General_Char_Particle_Create = Char_Particle_Group_Create(char_index, .grh_list, rgb_list(), .NumOfParticles, ParticulaInd, _
+        General_Char_Particle_Create = Char_Particle_Group_Create(char_index, .grh_list, temp_rgb(), .NumOfParticles, ParticulaInd, _
            .AlphaBlend, IIf(particle_life = 0, .life_counter, particle_life), .Speed, , .X1, .Y1, .Angle, _
            .vecx1, .vecx2, .vecy1, .vecy2, _
            .life1, .life2, .friction, .spin_speedL, _
@@ -291,17 +290,14 @@ Public Function General_Particle_Create(ByVal ParticulaInd As Long, _
                                         Optional ByVal particle_life As Long = 0) As Long
     
     If Not ClientSetup.ParticleEngine Then Exit Function
-    
-    Dim rgb_list(0 To 3) As Long
 
     With StreamData(ParticulaInd)
         
-        rgb_list(0) = RGB(.colortint(0).r, .colortint(0).g, .colortint(0).B)
-        rgb_list(1) = RGB(.colortint(1).r, .colortint(1).g, .colortint(1).B)
-        rgb_list(2) = RGB(.colortint(2).r, .colortint(2).g, .colortint(2).B)
-        rgb_list(3) = RGB(.colortint(3).r, .colortint(3).g, .colortint(3).B)
+        For i = 0 To UBound(temp_rgb())
+            Call Engine_Long_To_RGB_List(temp_rgb(), RGB(.colortint(i).r, .colortint(i).g, .colortint(i).B))
+        Next
  
-        General_Particle_Create = Particle_Group_Create(X, Y, .grh_list, rgb_list(), .NumOfParticles, ParticulaInd, _
+        General_Particle_Create = Particle_Group_Create(X, Y, .grh_list, temp_rgb(), .NumOfParticles, ParticulaInd, _
            .AlphaBlend, IIf(particle_life = 0, .life_counter, particle_life), .Speed, , .X1, .Y1, .Angle, _
            .vecx1, .vecx2, .vecy1, .vecy2, _
            .life1, .life2, .friction, .spin_speedL, _
@@ -871,10 +867,7 @@ Public Sub Particle_Group_Render(ByVal Particle_Group_Index As Long, _
     
         'Set colors
         If UserMinHP = 0 Then
-            temp_rgb(0) = D3DColorARGB(.alpha_blend, 255, 255, 255)
-            temp_rgb(1) = D3DColorARGB(.alpha_blend, 255, 255, 255)
-            temp_rgb(2) = D3DColorARGB(.alpha_blend, 255, 255, 255)
-            temp_rgb(3) = D3DColorARGB(.alpha_blend, 255, 255, 255)
+            Call Engine_Long_To_RGB_List(temp_rgb(), D3DColorARGB(.alpha_blend, 255, 255, 255))
         Else
             temp_rgb(0) = .rgb_list(0)
             temp_rgb(1) = .rgb_list(1)

@@ -5332,8 +5332,11 @@ On Error GoTo 0
     If Error <> 0 Then _
         Err.Raise Error
 End Sub
+
 Public Sub HandleRenderMsg()
+
     Call incomingData.ReadByte
+    
     renderMsgReset
     renderText = incomingData.ReadASCIIString
     renderFont = incomingData.ReadInteger

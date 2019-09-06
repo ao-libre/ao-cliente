@@ -343,12 +343,12 @@ Private Declare Function QueryPerformanceCounter Lib "kernel32" (lpPerformanceCo
 Public Declare Function SetPixel Lib "gdi32" (ByVal hdc As Long, ByVal X As Long, ByVal Y As Long, ByVal crColor As Long) As Long
 Public Declare Function GetPixel Lib "gdi32" (ByVal hdc As Long, ByVal X As Long, ByVal Y As Long) As Long
 
-Sub ConvertCPtoTP(ByVal viewPortX As Integer, ByVal viewPortY As Integer, ByRef tX As Byte, ByRef tY As Byte)
+Sub ConvertCPtoTP(ByVal viewPortX As Integer, ByVal viewPortY As Integer, ByRef TX As Byte, ByRef TY As Byte)
 '******************************************
 'Converts where the mouse is in the main window to a tile position. MUST be called eveytime the mouse moves.
 '******************************************
-    tX = UserPos.X + viewPortX \ TilePixelWidth - WindowTileWidth \ 2
-    tY = UserPos.Y + viewPortY \ TilePixelHeight - WindowTileHeight \ 2
+    TX = UserPos.X + viewPortX \ TilePixelWidth - WindowTileWidth \ 2
+    TY = UserPos.Y + viewPortY \ TilePixelHeight - WindowTileHeight \ 2
 End Sub
 
 Sub MakeChar(ByVal CharIndex As Integer, ByVal Body As Integer, ByVal Head As Integer, ByVal Heading As Byte, ByVal X As Integer, ByVal Y As Integer, ByVal Arma As Integer, ByVal Escudo As Integer, ByVal Casco As Integer)
@@ -601,8 +601,8 @@ Sub MoveScreen(ByVal nHeading As E_Heading)
 '******************************************
     Dim X As Integer
     Dim Y As Integer
-    Dim tX As Integer
-    Dim tY As Integer
+    Dim TX As Integer
+    Dim TY As Integer
     
     'Figure out which way to move
     Select Case nHeading
@@ -620,18 +620,18 @@ Sub MoveScreen(ByVal nHeading As E_Heading)
     End Select
     
     'Fill temp pos
-    tX = UserPos.X + X
-    tY = UserPos.Y + Y
+    TX = UserPos.X + X
+    TY = UserPos.Y + Y
     
     'Check to see if its out of bounds
-    If tX < MinXBorder Or tX > MaxXBorder Or tY < MinYBorder Or tY > MaxYBorder Then
+    If TX < MinXBorder Or TX > MaxXBorder Or TY < MinYBorder Or TY > MaxYBorder Then
         Exit Sub
     Else
         'Start moving... MainLoop does the rest
         AddtoUserPos.X = X
-        UserPos.X = tX
+        UserPos.X = TX
         AddtoUserPos.Y = Y
-        UserPos.Y = tY
+        UserPos.Y = TY
         UserMoving = 1
         
         bTecho = IIf(MapData(UserPos.X, UserPos.Y).Trigger = 1 Or _
@@ -641,14 +641,14 @@ Sub MoveScreen(ByVal nHeading As E_Heading)
 End Sub
 
 Private Function HayFogata(ByRef Location As Position) As Boolean
-    Dim j As Long
+    Dim J As Long
     Dim k As Long
     
-    For j = UserPos.X - 8 To UserPos.X + 8
+    For J = UserPos.X - 8 To UserPos.X + 8
         For k = UserPos.Y - 6 To UserPos.Y + 6
-            If InMapBounds(j, k) Then
-                If MapData(j, k).ObjGrh.GrhIndex = GrhFogata Then
-                    Location.X = j
+            If InMapBounds(J, k) Then
+                If MapData(J, k).ObjGrh.GrhIndex = GrhFogata Then
+                    Location.X = J
                     Location.Y = k
                     
                     HayFogata = True
@@ -656,7 +656,7 @@ Private Function HayFogata(ByRef Location As Position) As Boolean
                 End If
             End If
         Next k
-    Next j
+    Next J
 End Function
 
 Function NextOpenChar() As Integer
@@ -1120,39 +1120,39 @@ Sub RenderScreen(ByVal tilex As Integer, _
     If ClientSetup.ProyectileEngine Then
                             
         If LastProjectile > 0 Then
-            Dim j As Long ' Long siempre en los bucles es mucho mas rapido
+            Dim J As Long ' Long siempre en los bucles es mucho mas rapido
                                 
-            For j = 1 To LastProjectile
+            For J = 1 To LastProjectile
 
-                If ProjectileList(j).Grh.GrhIndex Then
+                If ProjectileList(J).Grh.GrhIndex Then
                     Dim Angle As Single
                     
                     'Update the position
-                    Angle = DegreeToRadian * Engine_GetAngle(ProjectileList(j).X, ProjectileList(j).Y, ProjectileList(j).tX, ProjectileList(j).tY)
-                    ProjectileList(j).X = ProjectileList(j).X + (Sin(Angle) * ElapsedTime * 0.63)
-                    ProjectileList(j).Y = ProjectileList(j).Y - (Cos(Angle) * ElapsedTime * 0.63)
+                    Angle = DegreeToRadian * Engine_GetAngle(ProjectileList(J).X, ProjectileList(J).Y, ProjectileList(J).TX, ProjectileList(J).TY)
+                    ProjectileList(J).X = ProjectileList(J).X + (Sin(Angle) * ElapsedTime * 0.63)
+                    ProjectileList(J).Y = ProjectileList(J).Y - (Cos(Angle) * ElapsedTime * 0.63)
                     
                     'Update the rotation
-                    If ProjectileList(j).RotateSpeed > 0 Then
-                        ProjectileList(j).Rotate = ProjectileList(j).Rotate + (ProjectileList(j).RotateSpeed * ElapsedTime * 0.01)
+                    If ProjectileList(J).RotateSpeed > 0 Then
+                        ProjectileList(J).Rotate = ProjectileList(J).Rotate + (ProjectileList(J).RotateSpeed * ElapsedTime * 0.01)
 
-                        Do While ProjectileList(j).Rotate > 360
-                            ProjectileList(j).Rotate = ProjectileList(j).Rotate - 360
+                        Do While ProjectileList(J).Rotate > 360
+                            ProjectileList(J).Rotate = ProjectileList(J).Rotate - 360
                         Loop
                     End If
     
                     'Draw if within range
-                    X = ((-minX - 1) * 32) + ProjectileList(j).X + PixelOffsetX + ((10 - TileBufferSize) * 32) - 288 + ProjectileList(j).OffsetX
-                    Y = ((-minY - 1) * 32) + ProjectileList(j).Y + PixelOffsetY + ((10 - TileBufferSize) * 32) - 288 + ProjectileList(j).OffsetY
+                    X = ((-minX - 1) * 32) + ProjectileList(J).X + PixelOffsetX + ((10 - TileBufferSize) * 32) - 288 + ProjectileList(J).OffsetX
+                    Y = ((-minY - 1) * 32) + ProjectileList(J).Y + PixelOffsetY + ((10 - TileBufferSize) * 32) - 288 + ProjectileList(J).OffsetY
 
                     If Y >= -32 Then
                         If Y <= (ScreenHeight + 32) Then
                             If X >= -32 Then
                                 If X <= (ScreenWidth + 32) Then
-                                    If ProjectileList(j).Rotate = 0 Then
-                                        Call Draw_Grh(ProjectileList(j).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, 50, 50, True, 0)
+                                    If ProjectileList(J).Rotate = 0 Then
+                                        Call Draw_Grh(ProjectileList(J).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, 50, 50, True, 0)
                                     Else
-                                        Call Draw_Grh(ProjectileList(j).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, 50, 50, True, ProjectileList(j).Rotate)
+                                        Call Draw_Grh(ProjectileList(J).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, 50, 50, True, ProjectileList(J).Rotate)
                                     End If
                                 End If
                             End If
@@ -1160,19 +1160,19 @@ Sub RenderScreen(ByVal tilex As Integer, _
                     End If
                     
                 End If
-            Next j
+            Next J
             
             'Check if it is close enough to the target to remove
-            For j = 1 To LastProjectile
+            For J = 1 To LastProjectile
 
-                If ProjectileList(j).Grh.GrhIndex Then
-                    If Abs(ProjectileList(j).X - ProjectileList(j).tX) < 20 Then
-                        If Abs(ProjectileList(j).Y - ProjectileList(j).tY) < 20 Then
-                            Call Engine_Projectile_Erase(j)
+                If ProjectileList(J).Grh.GrhIndex Then
+                    If Abs(ProjectileList(J).X - ProjectileList(J).TX) < 20 Then
+                        If Abs(ProjectileList(J).Y - ProjectileList(J).TY) < 20 Then
+                            Call Engine_Projectile_Erase(J)
                         End If
                     End If
                 End If
-            Next j
+            Next J
             
         End If
     End If
@@ -1441,25 +1441,29 @@ Private Function GetElapsedTime() As Single
     Call QueryPerformanceCounter(end_time)
 End Function
 
-Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, ByVal PixelOffsetY As Integer)
-'***************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
-'Last Modify Date: 16/09/2010 (Zama)
-'Draw char's to screen without offcentering them
-'16/09/2010: ZaMa - Ya no se dibujan los bodies cuando estan invisibles.
-'***************************************************
+Private Sub CharRender(ByVal CharIndex As Long, _
+                       ByVal PixelOffsetX As Integer, _
+                       ByVal PixelOffsetY As Integer)
+
+    '***************************************************
+    'Author: Juan Martin Sotuyo Dodero (Maraxus)
+    'Last Modify Date: 16/09/2010 (Zama)
+    'Draw char's to screen without offcentering them
+    '16/09/2010: ZaMa - Ya no se dibujan los bodies cuando estan invisibles.
+    '***************************************************
     Dim moved As Boolean
     
     With charlist(CharIndex)
+
         If .Moving Then
+
             'If needed, move left and right
             If .scrollDirectionX <> 0 Then
                 .MoveOffsetX = .MoveOffsetX + ScrollPixelsPerFrameX * Sgn(.scrollDirectionX) * timerTicksPerFrame
                 
                 'Start animations
                 'TODO : Este parche es para evita los uncornos exploten al moverse!! REVER!!!
-                If .Body.Walk(.Heading).Speed > 0 Then _
-                    .Body.Walk(.Heading).Started = 1
+                If .Body.Walk(.Heading).Speed > 0 Then .Body.Walk(.Heading).Started = 1
                 .Arma.WeaponWalk(.Heading).Started = 1
                 .Escudo.ShieldWalk(.Heading).Started = 1
                 
@@ -1467,11 +1471,12 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
                 moved = True
                 
                 'Check if we already got there
-                If (Sgn(.scrollDirectionX) = 1 And .MoveOffsetX >= 0) Or _
-                        (Sgn(.scrollDirectionX) = -1 And .MoveOffsetX <= 0) Then
+                If (Sgn(.scrollDirectionX) = 1 And .MoveOffsetX >= 0) Or (Sgn(.scrollDirectionX) = -1 And .MoveOffsetX <= 0) Then
                     .MoveOffsetX = 0
                     .scrollDirectionX = 0
+
                 End If
+
             End If
             
             'If needed, move up and down
@@ -1480,8 +1485,7 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
                 
                 'Start animations
                 'TODO : Este parche es para evita los uncornos exploten al moverse!! REVER!!!
-                If .Body.Walk(.Heading).Speed > 0 Then _
-                    .Body.Walk(.Heading).Started = 1
+                If .Body.Walk(.Heading).Speed > 0 Then .Body.Walk(.Heading).Started = 1
                 .Arma.WeaponWalk(.Heading).Started = 1
                 .Escudo.ShieldWalk(.Heading).Started = 1
                 
@@ -1489,12 +1493,14 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
                 moved = True
                 
                 'Check if we already got there
-                If (Sgn(.scrollDirectionY) = 1 And .MoveOffsetY >= 0) Or _
-                        (Sgn(.scrollDirectionY) = -1 And .MoveOffsetY <= 0) Then
+                If (Sgn(.scrollDirectionY) = 1 And .MoveOffsetY >= 0) Or (Sgn(.scrollDirectionY) = -1 And .MoveOffsetY <= 0) Then
                     .MoveOffsetY = 0
                     .scrollDirectionY = 0
+
                 End If
+
             End If
+
         End If
         
         'if is attacking we set the attack anim
@@ -1502,9 +1508,10 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
             .Arma.WeaponWalk(.Heading).Started = 1
             .Arma.WeaponWalk(.Heading).FrameCounter = 1
         
-        'if the anim has ended or we are no longer attacking end the animation
+            'if the anim has ended or we are no longer attacking end the animation
         ElseIf .Arma.WeaponWalk(.Heading).FrameCounter > 4 And .attacking Then
             .attacking = False 'this is just for testing, it shouldnt be done here
+
         End If
         
         'If done moving stop animation
@@ -1519,29 +1526,35 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
             
             '//Movimiento del arma y el escudo
             If Not .Movement And Not .attacking Then
-                 .Arma.WeaponWalk(.Heading).Started = 0
-                 .Arma.WeaponWalk(.Heading).FrameCounter = 1
+                .Arma.WeaponWalk(.Heading).Started = 0
+                .Arma.WeaponWalk(.Heading).FrameCounter = 1
                 
-                 .Escudo.ShieldWalk(.Heading).Started = 0
-                 .Escudo.ShieldWalk(.Heading).FrameCounter = 1
+                .Escudo.ShieldWalk(.Heading).Started = 0
+                .Escudo.ShieldWalk(.Heading).FrameCounter = 1
+
             End If
             
             .Moving = False
+
         End If
         
         PixelOffsetX = PixelOffsetX + .MoveOffsetX
         PixelOffsetY = PixelOffsetY + .MoveOffsetY
         
         Dim ColorFinal(0 To 3) As Long
-        Dim RenderSpell As Boolean
+        Dim RenderSpell        As Boolean
         
         If Not .muerto Then
+        
             If Abs(MouseTileX - .Pos.X) < 1 And (Abs(MouseTileY - .Pos.Y)) < 1 And CharIndex <> UserCharIndex And ClientSetup.TonalidadPJ Then
+                
                 If Len(.Nombre) > 0 Then
+                    
                     If .Criminal Then
                         Call Engine_Long_To_RGB_List(ColorFinal(), D3DColorXRGB(204, 100, 100))
                     Else
                         Call Engine_Long_To_RGB_List(ColorFinal(), D3DColorXRGB(100, 100, 255))
+
                     End If
                     
                 Else
@@ -1549,24 +1562,33 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
                     ColorFinal(1) = MapData(.Pos.X, .Pos.Y).Engine_Light(1)
                     ColorFinal(2) = MapData(.Pos.X, .Pos.Y).Engine_Light(2)
                     ColorFinal(3) = MapData(.Pos.X, .Pos.Y).Engine_Light(3)
+
                 End If
+
                 RenderSpell = True
+            
             Else
                 ColorFinal(0) = MapData(.Pos.X, .Pos.Y).Engine_Light(0)
                 ColorFinal(1) = MapData(.Pos.X, .Pos.Y).Engine_Light(1)
                 ColorFinal(2) = MapData(.Pos.X, .Pos.Y).Engine_Light(2)
                 ColorFinal(3) = MapData(.Pos.X, .Pos.Y).Engine_Light(3)
+
             End If
+
         Else
+
             If esGM(Val(CharIndex)) Then
                 Call Engine_Long_To_RGB_List(ColorFinal(), D3DColorARGB(150, 200, 200, 0))
             Else
+
                 If .Criminal Then
                     Call Engine_Long_To_RGB_List(ColorFinal(), D3DColorARGB(100, 255, 100, 100))
                 Else
                     Call Engine_Long_To_RGB_List(ColorFinal(), D3DColorARGB(100, 128, 255, 255))
                 End If
+
             End If
+
         End If
         
         If Not .invisible Then
@@ -1591,8 +1613,9 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
                 Call Draw_Grh(.Head.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y, 1, ColorFinal(), 0, .Pos.X, .Pos.Y)
                 
                 'Draw Helmet
-                If .Casco.Head(.Heading).GrhIndex Then _
+                If .Casco.Head(.Heading).GrhIndex Then
                     Call Draw_Grh(.Casco.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y + OFFSET_HEAD, 1, ColorFinal(), 0, .Pos.X, .Pos.Y)
+                End If
                 
                 'Draw Weapon
                 If .Arma.WeaponWalk(.Heading).GrhIndex Then
@@ -1614,68 +1637,73 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
                 '************Particulas************
                 Dim i As Integer
                 If .Particle_Count > 0 Then
+
                     For i = 1 To .Particle_Count
-                        If .Particle_Group(i) > 0 Then _
+                    
+                        If .Particle_Group(i) > 0 Then
                             Call Particle_Group_Render(.Particle_Group(i), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY)
-                    Next i
-                End If
-            
-        Else 'Usuario invisible
-        
-            If CharIndex = UserCharIndex Or mid$(charlist(CharIndex).Nombre, _
-                getTagPosition(.Nombre)) = mid$(charlist(UserCharIndex).Nombre, getTagPosition(charlist(UserCharIndex).Nombre)) And _
-                    Len(mid$(charlist(CharIndex).Nombre, getTagPosition(.Nombre))) > 0 Then
-                
-                Movement_Speed = 0.5
-                
-                'Draw Body
-                If .Body.Walk(.Heading).GrhIndex Then _
-                    Call Draw_Grh(.Body.Walk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1, .Pos.X, .Pos.Y, True, 0)
-                
-                'Draw Head
-                If .Head.Head(.Heading).GrhIndex Then
-                    Call Draw_Grh(.Head.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y, 1, ColorFinal(), 0, .Pos.X, .Pos.Y, True)
-                    
-                    'Draw Helmet
-                    If .Casco.Head(.Heading).GrhIndex Then _
-                        Call Draw_Grh(.Casco.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y + OFFSET_HEAD, 1, ColorFinal(), 0, .Pos.X, .Pos.Y, True)
-                    
-                    'Draw Weapon
-                    If .Arma.WeaponWalk(.Heading).GrhIndex Then _
-                        Call Draw_Grh(.Arma.WeaponWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1, .Pos.X, .Pos.Y, True)
-                    
-                    'Draw Shield
-                    If .Escudo.ShieldWalk(.Heading).GrhIndex Then _
-                        Call Draw_Grh(.Escudo.ShieldWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1, .Pos.X, .Pos.Y, True)
-                
-                
-                    'Draw name over head
-                    If LenB(.Nombre) > 0 Then
-                        If Nombres Then
-                             Call RenderName(CharIndex, PixelOffsetX, PixelOffsetY, True)
                         End If
-                    End If
-                    'OffSetName = 35
+                        
+                    Next i
 
                 End If
+            
+            Else 'Usuario invisible
+        
+                If CharIndex = UserCharIndex Or mid$(charlist(CharIndex).Nombre, getTagPosition(.Nombre)) = mid$(charlist(UserCharIndex).Nombre, getTagPosition(charlist(UserCharIndex).Nombre)) And Len(mid$(charlist(CharIndex).Nombre, getTagPosition(.Nombre))) > 0 Then
+                
+                    Movement_Speed = 0.5
+                
+                    'Draw Body
+                    If .Body.Walk(.Heading).GrhIndex Then
+                        Call Draw_Grh(.Body.Walk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1, .Pos.X, .Pos.Y, True, 0)
+                    End If
+                
+                    'Draw Head
+                    If .Head.Head(.Heading).GrhIndex Then
+                        Call Draw_Grh(.Head.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y, 1, ColorFinal(), 0, .Pos.X, .Pos.Y, True)
+                        
+                        'Draw Helmet
+                        If .Casco.Head(.Heading).GrhIndex Then Call Draw_Grh(.Casco.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y + OFFSET_HEAD, 1, ColorFinal(), 0, .Pos.X, .Pos.Y, True)
+                    
+                        'Draw Weapon
+                        If .Arma.WeaponWalk(.Heading).GrhIndex Then Call Draw_Grh(.Arma.WeaponWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1, .Pos.X, .Pos.Y, True)
+                    
+                        'Draw Shield
+                        If .Escudo.ShieldWalk(.Heading).GrhIndex Then Call Draw_Grh(.Escudo.ShieldWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1, .Pos.X, .Pos.Y, True)
+                
+                        'Draw name over head
+                        If LenB(.Nombre) > 0 Then
+                            If Nombres Then
+                                Call RenderName(CharIndex, PixelOffsetX, PixelOffsetY, True)
+                            End If
+
+                        End If
+
+                    End If
+
+                End If
+            
             End If
-        End If
+
         End If
         
         'Update dialogs
         Call Dialogos.UpdateDialogPos(PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y + OFFSET_HEAD, CharIndex) '34 son los pixeles del grh de la cabeza que quedan superpuestos al cuerpo
         
         Movement_Speed = 1
+        
         'Draw FX
         If .FxIndex <> 0 Then
             Call Draw_Grh(.fX, PixelOffsetX + FxData(.FxIndex).OffsetX, PixelOffsetY + FxData(.FxIndex).OffsetY, 1, SetARGB_Alpha(MapData(.Pos.X, .Pos.Y).Engine_Light(), 180), 1, .Pos.X, .Pos.Y, True)
             
             'Check if animation is over
-            If .fX.Started = 0 Then _
-                .FxIndex = 0
+            If .fX.Started = 0 Then .FxIndex = 0
+            
         End If
         
     End With
+    
 End Sub
 
 Private Sub RenderName(ByVal CharIndex As Long, ByVal X As Integer, ByVal Y As Integer, Optional ByVal Invi As Boolean = False)
@@ -1707,7 +1735,6 @@ Private Sub RenderName(ByVal CharIndex As Long, ByVal X As Integer, ByVal Y As I
             'Nick
             line = Left$(.Nombre, Pos - 2)
             Call DrawText(X + 16, Y + 30, line, Color, True)
-            'Call DrawText(X, Y, line, Color, True, 2)
             
             'Clan
             line = mid$(.Nombre, Pos)
@@ -1722,15 +1749,17 @@ Public Sub SetCharacterFx(ByVal CharIndex As Integer, ByVal fX As Integer, ByVal
 'Last Modify Date: 12/03/04
 'Sets an FX to the character.
 '***************************************************
+    
     With charlist(CharIndex)
         .FxIndex = fX
         
         If .FxIndex > 0 Then
             Call InitGrh(.fX, FxData(fX).Animacion)
-        
             .fX.Loops = Loops
         End If
+        
     End With
+    
 End Sub
 
 Public Sub Device_Textured_Render(ByVal X As Single, ByVal Y As Single, _
@@ -1906,6 +1935,7 @@ Public Sub DesvanecimientoTechos()
     End If
     
 End Sub
+
 Public Sub DesvanecimientoMsg()
 '*****************************************************************
                         'Author: FrankoH
@@ -1913,11 +1943,13 @@ Public Sub DesvanecimientoMsg()
                         'DESVANECIMIENTO DE LOS TEXTOS DEL RENDER
 '*****************************************************************
     Static lastmovement As Long
+    
     If GetTickCount - lastmovement > 1 Then
         lastmovement = GetTickCount
     Else
         Exit Sub
     End If
+
     If LenB(renderText) Then
         If Not Val(colorRender) = 0 Then colorRender = colorRender - 1
     ElseIf LenB(renderText) = 0 Then
@@ -1927,24 +1959,30 @@ Public Sub DesvanecimientoMsg()
     End If
     
     If Not Val(colorRender) = 240 Then
-        Call Engine_Long_To_RGB_List(render_msg(), ARGB(255, 255, 255, ColorRender))
+        Call Engine_Long_To_RGB_List(render_msg(), ARGB(255, 255, 255, colorRender))
     End If
+    
     If colorRender = 0 Then renderMsgReset
+    
 End Sub
+
 Public Sub renderMsgReset()
-renderFont = 1
-renderText = vbNullString
-nameMap = vbNullString
+
+    renderFont = 1
+    renderText = vbNullString
+    nameMap = vbNullString
+
 End Sub
+
 Public Function DesvanecerArbol(ByVal Color As Byte) As Long()
 '*****************************************************************
                         'Author: FrankoH
                         'Last Modify Date: 28/08/2019
                         'DESVANECE LOS ARBOLES
 '*****************************************************************
-Dim temp_rgb(3) As Long
 
 Call Engine_Long_To_RGB_List(temp_rgb(), ARGB(ColorTecho, ColorTecho, ColorTecho, ColorTecho))
 
 DesvanecerArbol = temp_rgb
+
 End Function
