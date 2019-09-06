@@ -494,3 +494,13 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 04/09/2019: Con click derecho ahora me puedo transportar con el minimapa, se simplifico codigo del minimapa (RecoX - ReyarB)
 * 04/09/2019: Fix - Se arregló un error al solicitar los detalles de un clan de un item vacio en los formularios relacionados con el sistema de clanes. (jopiortiz)
 * 04/09/2019: Se reactivaron los emoticones. (jopiortiz)
+
+- v0.13.14
+
+* 05/09/2019: Se arreglaron posts de reddit y se carga solo cuando se abre el cliente. (FrankoH)
+* 05/09/2019: Se quitaron trabas al caminar. (FrankoH)
+* 05/09/2019: Se mejoro el sistema de fuentes, y se agregaron fuentes nuevas (FrankoH)
+* 05/09/2019: Ahora al pasar de mapa, te muestra el nombre del mapa en el Render. (FrankoH)
+* 05/09/2019: Simplifiqué un poco el código de los colores. (Jopi)
+* 05/09/2019: Se arreglo error que no permitia ver el arma. (FrankoH)
+* 05/09/2019: Se agrego macro hechizos. (FrankoH)
