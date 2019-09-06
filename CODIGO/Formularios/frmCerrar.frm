@@ -122,7 +122,7 @@ Private Sub cRegresar_Click()
         End With
         Exit Sub
     End If
-    
+    If frmMain.trainingMacro.Enabled Then Call frmMain.DesactivarMacroHechizos
     If frmMain.macrotrabajo.Enabled Then Call frmMain.DesactivarMacroTrabajo
     
     Call WriteQuit

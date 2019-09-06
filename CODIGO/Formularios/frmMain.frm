@@ -30,6 +30,22 @@ Begin VB.Form frmMain
    ScaleWidth      =   800
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
+   Begin VB.PictureBox picSM 
+      Appearance      =   0  'Flat
+      AutoRedraw      =   -1  'True
+      BackColor       =   &H80000005&
+      BorderStyle     =   0  'None
+      ForeColor       =   &H80000008&
+      Height          =   450
+      Index           =   3
+      Left            =   11280
+      MousePointer    =   99  'Custom
+      ScaleHeight     =   450
+      ScaleWidth      =   420
+      TabIndex        =   42
+      Top             =   8445
+      Width           =   420
+   End
    Begin VB.PictureBox MiniMapa 
       AutoRedraw      =   -1  'True
       BackColor       =   &H80000007&
@@ -239,6 +255,12 @@ Begin VB.Form frmMain
       TabIndex        =   32
       Top             =   2220
       Width           =   8160
+      Begin VB.Timer trainingMacro 
+         Enabled         =   0   'False
+         Interval        =   3200
+         Left            =   6000
+         Top             =   360
+      End
    End
    Begin AOLibre.uAOButton imgMapa 
       Height          =   255
@@ -247,17 +269,25 @@ Begin VB.Form frmMain
       TabStop         =   0   'False
       Top             =   6600
       Width           =   1335
-      _extentx        =   2355
-      _extenty        =   450
-      tx              =   "Mapa"
-      enab            =   -1  'True
-      fcol            =   7314354
-      ocol            =   16777215
-      pice            =   "frmMain.frx":3B0E7
-      picf            =   "frmMain.frx":3BB13
-      pich            =   "frmMain.frx":3C7D7
-      picv            =   "frmMain.frx":3D76B
-      font            =   "frmMain.frx":3E66F
+      _ExtentX        =   2355
+      _ExtentY        =   450
+      TX              =   "Mapa"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmMain.frx":3B0E7
+      PICF            =   "frmMain.frx":3BB11
+      PICH            =   "frmMain.frx":3C7D3
+      PICV            =   "frmMain.frx":3D765
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   12
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
    Begin AOLibre.uAOButton imgGrupo 
       Height          =   255
@@ -266,17 +296,25 @@ Begin VB.Form frmMain
       TabStop         =   0   'False
       Top             =   6960
       Width           =   1335
-      _extentx        =   2355
-      _extenty        =   450
-      tx              =   "Grupo"
-      enab            =   -1  'True
-      fcol            =   7314354
-      ocol            =   16777215
-      pice            =   "frmMain.frx":3E697
-      picf            =   "frmMain.frx":3F0C3
-      pich            =   "frmMain.frx":3FD87
-      picv            =   "frmMain.frx":40D1B
-      font            =   "frmMain.frx":41C1F
+      _ExtentX        =   2355
+      _ExtentY        =   450
+      TX              =   "Grupo"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmMain.frx":3E667
+      PICF            =   "frmMain.frx":3F091
+      PICH            =   "frmMain.frx":3FD53
+      PICV            =   "frmMain.frx":40CE5
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   12
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
    Begin AOLibre.uAOButton imgOpciones 
       Height          =   255
@@ -285,17 +323,25 @@ Begin VB.Form frmMain
       TabStop         =   0   'False
       Top             =   7320
       Width           =   1335
-      _extentx        =   2355
-      _extenty        =   450
-      tx              =   "Opciones"
-      enab            =   -1  'True
-      fcol            =   7314354
-      ocol            =   16777215
-      pice            =   "frmMain.frx":41C47
-      picf            =   "frmMain.frx":42673
-      pich            =   "frmMain.frx":43337
-      picv            =   "frmMain.frx":442CB
-      font            =   "frmMain.frx":451CF
+      _ExtentX        =   2355
+      _ExtentY        =   450
+      TX              =   "Opciones"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmMain.frx":41BE7
+      PICF            =   "frmMain.frx":42611
+      PICH            =   "frmMain.frx":432D3
+      PICV            =   "frmMain.frx":44265
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   12
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
    Begin AOLibre.uAOButton imgEstadisticas 
       Height          =   255
@@ -304,17 +350,25 @@ Begin VB.Form frmMain
       TabStop         =   0   'False
       Top             =   7680
       Width           =   1335
-      _extentx        =   2355
-      _extenty        =   450
-      tx              =   "Estadisticas"
-      enab            =   -1  'True
-      fcol            =   7314354
-      ocol            =   16777215
-      pice            =   "frmMain.frx":451F7
-      picf            =   "frmMain.frx":45C23
-      pich            =   "frmMain.frx":468E7
-      picv            =   "frmMain.frx":4787B
-      font            =   "frmMain.frx":4877F
+      _ExtentX        =   2355
+      _ExtentY        =   450
+      TX              =   "Estadisticas"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmMain.frx":45167
+      PICF            =   "frmMain.frx":45B91
+      PICH            =   "frmMain.frx":46853
+      PICV            =   "frmMain.frx":477E5
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   12
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
    Begin AOLibre.uAOButton imgClanes 
       Height          =   255
@@ -323,17 +377,25 @@ Begin VB.Form frmMain
       TabStop         =   0   'False
       Top             =   8040
       Width           =   1335
-      _extentx        =   2355
-      _extenty        =   450
-      tx              =   "Clanes"
-      enab            =   -1  'True
-      fcol            =   7314354
-      ocol            =   16777215
-      pice            =   "frmMain.frx":487A7
-      picf            =   "frmMain.frx":491D3
-      pich            =   "frmMain.frx":49E97
-      picv            =   "frmMain.frx":4AE2B
-      font            =   "frmMain.frx":4BD2F
+      _ExtentX        =   2355
+      _ExtentY        =   450
+      TX              =   "Clanes"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmMain.frx":486E7
+      PICF            =   "frmMain.frx":49111
+      PICH            =   "frmMain.frx":49DD3
+      PICV            =   "frmMain.frx":4AD65
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   12
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
    Begin AOLibre.uAOButton Label4 
       Height          =   375
@@ -342,17 +404,25 @@ Begin VB.Form frmMain
       TabStop         =   0   'False
       Top             =   2040
       Width           =   1215
-      _extentx        =   2143
-      _extenty        =   661
-      tx              =   "Inventario"
-      enab            =   -1  'True
-      fcol            =   7314354
-      ocol            =   16777215
-      pice            =   "frmMain.frx":4BD57
-      picf            =   "frmMain.frx":4C783
-      pich            =   "frmMain.frx":4D447
-      picv            =   "frmMain.frx":4E3DB
-      font            =   "frmMain.frx":4F2DF
+      _ExtentX        =   2143
+      _ExtentY        =   661
+      TX              =   "Inventario"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmMain.frx":4BC67
+      PICF            =   "frmMain.frx":4C691
+      PICH            =   "frmMain.frx":4D353
+      PICV            =   "frmMain.frx":4E2E5
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   12
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
    Begin AOLibre.uAOButton Label7 
       Height          =   375
@@ -361,17 +431,25 @@ Begin VB.Form frmMain
       TabStop         =   0   'False
       Top             =   2040
       Width           =   1215
-      _extentx        =   2143
-      _extenty        =   661
-      tx              =   "Hechizos"
-      enab            =   -1  'True
-      fcol            =   7314354
-      ocol            =   16777215
-      pice            =   "frmMain.frx":4F307
-      picf            =   "frmMain.frx":4FD33
-      pich            =   "frmMain.frx":509F7
-      picv            =   "frmMain.frx":5198B
-      font            =   "frmMain.frx":5288F
+      _ExtentX        =   2143
+      _ExtentY        =   661
+      TX              =   "Hechizos"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmMain.frx":4F1E7
+      PICF            =   "frmMain.frx":4FC11
+      PICH            =   "frmMain.frx":508D3
+      PICV            =   "frmMain.frx":51865
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   12
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
    Begin AOLibre.uAOButton CmdLanzar 
       Height          =   495
@@ -380,17 +458,25 @@ Begin VB.Form frmMain
       TabStop         =   0   'False
       Top             =   5280
       Width           =   1215
-      _extentx        =   2143
-      _extenty        =   873
-      tx              =   "Lanzar"
-      enab            =   -1  'True
-      fcol            =   7314354
-      ocol            =   16777215
-      pice            =   "frmMain.frx":528B7
-      picf            =   "frmMain.frx":532E3
-      pich            =   "frmMain.frx":53FA7
-      picv            =   "frmMain.frx":54F3B
-      font            =   "frmMain.frx":55E3F
+      _ExtentX        =   2143
+      _ExtentY        =   873
+      TX              =   "Lanzar"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmMain.frx":52767
+      PICF            =   "frmMain.frx":53191
+      PICH            =   "frmMain.frx":53E53
+      PICV            =   "frmMain.frx":54DE5
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   15.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
    Begin AOLibre.uAOButton cmdInfo 
       Height          =   495
@@ -399,17 +485,25 @@ Begin VB.Form frmMain
       TabStop         =   0   'False
       Top             =   5280
       Width           =   1215
-      _extentx        =   2143
-      _extenty        =   873
-      tx              =   "Info"
-      enab            =   -1  'True
-      fcol            =   7314354
-      ocol            =   16777215
-      pice            =   "frmMain.frx":55E67
-      picf            =   "frmMain.frx":56893
-      pich            =   "frmMain.frx":57557
-      picv            =   "frmMain.frx":584EB
-      font            =   "frmMain.frx":593EF
+      _ExtentX        =   2143
+      _ExtentY        =   873
+      TX              =   "Info"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmMain.frx":55CE7
+      PICF            =   "frmMain.frx":56711
+      PICH            =   "frmMain.frx":573D3
+      PICV            =   "frmMain.frx":58365
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   15.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
    Begin VB.Image imgAsignarSkill 
       Height          =   450
@@ -493,9 +587,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   0
       Left            =   11430
-      MouseIcon       =   "frmMain.frx":59417
+      MouseIcon       =   "frmMain.frx":59267
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":59569
+      Picture         =   "frmMain.frx":593B9
       Top             =   3480
       Visible         =   0   'False
       Width           =   225
@@ -504,9 +598,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   1
       Left            =   11430
-      MouseIcon       =   "frmMain.frx":598AD
+      MouseIcon       =   "frmMain.frx":596FD
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":599FF
+      Picture         =   "frmMain.frx":5984F
       Top             =   3225
       Visible         =   0   'False
       Width           =   225
@@ -1039,7 +1133,7 @@ Private ChangeHechi As Boolean, ChangeHechiNum As Integer
 Dim CtrlMaskOn As Boolean
 Dim SkinSeleccionado As String
 
-Private Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVal hwnd As Long, ByVal nIndex As Long, ByVal dwNewLong As Long) As Long
+Private Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVal hWnd As Long, ByVal nIndex As Long, ByVal dwNewLong As Long) As Long
 
 Public Sub dragInventory_dragDone(ByVal originalSlot As Integer, ByVal newSlot As Integer)
 Call Protocol.WriteMoveItem(originalSlot, newSlot, eMoveType.Inventory)
@@ -1068,10 +1162,10 @@ Private Sub Form_Load()
     End With
     
     ' Detect links in console
-    EnableURLDetect RecTxt.hwnd, Me.hwnd
+    EnableURLDetect RecTxt.hWnd, Me.hWnd
     
     ' Make the console transparent
-    Call SetWindowLong(RecTxt.hwnd, -20, &H20&)
+    Call SetWindowLong(RecTxt.hWnd, -20, &H20&)
     
     CtrlMaskOn = False
 End Sub
@@ -1325,6 +1419,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
                     Call TirarItem
                 
                 Case CustomKeys.BindedKey(eKeyType.mKeyUseObject)
+                    If trainingMacro.Enabled Then Call DesactivarMacroHechizos
                     If macrotrabajo.Enabled Then Call DesactivarMacroTrabajo
                         
                     If MainTimer.Check(TimersIndex.UseItemWithU) Then
@@ -1396,7 +1491,18 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
 
         
         Case CustomKeys.BindedKey(eKeyType.mKeyCastSpellMacro)
-        
+            If UserEstado = 1 Then
+                With FontTypes(FontTypeNames.FONTTYPE_INFO)
+                    Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
+                End With
+                Exit Sub
+            End If
+            
+            If trainingMacro.Enabled Then
+                DesactivarMacroHechizos
+            Else
+                ActivarMacroHechizos
+            End If
         Case CustomKeys.BindedKey(eKeyType.mKeyWorkMacro)
             If UserEstado = 1 Then
                 With FontTypes(FontTypeNames.FONTTYPE_INFO)
@@ -1425,6 +1531,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
                 If Not MainTimer.Check(TimersIndex.Attack) Or UserDescansar Or UserMeditar Then Exit Sub
             End If
             
+            If trainingMacro.Enabled Then Call DesactivarMacroHechizos
             If macrotrabajo.Enabled Then Call DesactivarMacroTrabajo
             
             If frmCustomKeys.Visible Then Exit Sub 'Chequeo si esta visible la ventana de configuracion de teclas.
@@ -1640,11 +1747,23 @@ Select Case Index
             End With
             Exit Sub
         End If
-        
         If macrotrabajo.Enabled Then
             Call DesactivarMacroTrabajo
         Else
             Call ActivarMacroTrabajo
+        End If
+    Case eSMType.mSpells
+        If UserEstado = 1 Then
+            With FontTypes(FontTypeNames.FONTTYPE_INFO)
+                Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
+            End With
+            Exit Sub
+        End If
+        
+        If trainingMacro.Enabled Then
+            Call DesactivarMacroHechizos
+        Else
+            Call ActivarMacroHechizos
         End If
 End Select
 End Sub
@@ -1712,8 +1831,8 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
         SendTxt.Visible = False
         
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
         Else
             hlst.SetFocus
         End If
@@ -1882,7 +2001,7 @@ Private Sub MainViewPic_Click()
                 If UsingSkill = 0 Then
                     Call WriteLeftClick(TX, TY)
                 Else
-                
+                    If trainingMacro.Enabled Then Call DesactivarMacroHechizos
                     If macrotrabajo.Enabled Then Call DesactivarMacroTrabajo
                     
                     If Not MainTimer.Check(TimersIndex.Arrows, False) Then 'Check if arrows interval has finished.
@@ -2037,13 +2156,13 @@ Private Sub Label4_Click()
     InvEqu.Picture = LoadPicture(Game.path(Skins) & SkinSeleccionado & "\Centroinventario.jpg")
 
     ' Activo controles de inventario
-    picInv.Visible = True
+    PicInv.Visible = True
     imgInvScrollUp.Visible = True
     imgInvScrollDown.Visible = True
 
     ' Desactivo controles de hechizo
     hlst.Visible = False
-    cmdInfo.Visible = False
+    cmdINFO.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = False
@@ -2058,14 +2177,14 @@ Private Sub Label7_Click()
     
     ' Activo controles de hechizos
     hlst.Visible = True
-    cmdInfo.Visible = True
+    cmdINFO.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True
     cmdMoverHechi(1).Visible = True
     
     ' Desactivo controles de inventario
-    picInv.Visible = False
+    PicInv.Visible = False
     imgInvScrollUp.Visible = False
     imgInvScrollDown.Visible = False
 
@@ -2076,7 +2195,7 @@ Private Sub picInv_DblClick()
     If MirandoCarpinteria Or MirandoHerreria Then Exit Sub
     
     If Not MainTimer.Check(TimersIndex.UseItemWithDblClick) Then Exit Sub
-    
+    If trainingMacro.Enabled Then Call DesactivarMacroHechizos
     If macrotrabajo.Enabled Then Call DesactivarMacroTrabajo
     
     Call UsarItem
@@ -2098,8 +2217,8 @@ On Error Resume Next  'el .SetFocus causaba errores al salir y volver a entrar
         (Not frmMSG.Visible) And (Not MirandoForo) And _
         (Not frmEstadisticas.Visible) And (Not frmCantidad.Visible) And (Not MirandoParty) Then
          
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
         ElseIf hlst.Visible Then
             hlst.SetFocus
         End If
@@ -2107,8 +2226,8 @@ On Error Resume Next  'el .SetFocus causaba errores al salir y volver a entrar
 End Sub
 
 Private Sub RecTxt_KeyDown(KeyCode As Integer, Shift As Integer)
-    If picInv.Visible Then
-        picInv.SetFocus
+    If PicInv.Visible Then
+        PicInv.SetFocus
     Else
         hlst.SetFocus
     End If
@@ -2164,8 +2283,8 @@ Private Sub SendCMSTXT_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
         Me.SendCMSTXT.Visible = False
         
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
         Else
             hlst.SetFocus
         End If
@@ -2276,8 +2395,8 @@ End Sub
 Private Sub Client_Connect()
     
     'Clean input and output buffers
-    Call incomingData.ReadASCIIStringFixed(incomingData.length)
-    Call outgoingData.ReadASCIIStringFixed(outgoingData.length)
+    Call incomingData.ReadASCIIStringFixed(incomingData.Length)
+    Call outgoingData.ReadASCIIStringFixed(outgoingData.Length)
     
     Second.Enabled = True
     
@@ -2459,4 +2578,49 @@ Public Sub ActualizarMiniMapa()
     Me.UserM.Left = UserPos.X
     Me.UserM.Top = UserPos.Y
     Me.MiniMapa.Refresh
+End Sub
+Public Sub ActivarMacroHechizos()
+    If Not hlst.Visible Then
+        Call AddtoRichTextBox(frmMain.RecTxt, "Debes tener seleccionado el hechizo para activar el auto-lanzar", 0, 200, 200, False, True, True)
+        Exit Sub
+    End If
+    
+    trainingMacro.Interval = INT_MACRO_HECHIS
+    trainingMacro.Enabled = True
+    Call AddtoRichTextBox(frmMain.RecTxt, "Auto lanzar hechizos activado", 0, 200, 200, False, True, True)
+    Call ControlSM(eSMType.mSpells, True)
+End Sub
+
+Public Sub DesactivarMacroHechizos()
+    trainingMacro.Enabled = False
+    Call AddtoRichTextBox(frmMain.RecTxt, "Auto lanzar hechizos desactivado", 0, 150, 150, False, True, True)
+    Call ControlSM(eSMType.mSpells, False)
+End Sub
+Private Sub trainingMacro_Timer()
+    If Not hlst.Visible Then
+        DesactivarMacroHechizos
+        Exit Sub
+    End If
+    
+    'Macros are disabled if focus is not on Argentum!
+    If Not Application.IsAppActive() Then
+        DesactivarMacroHechizos
+        Exit Sub
+    End If
+    
+    If Comerciando Then Exit Sub
+    
+    If hlst.List(hlst.ListIndex) <> "(None)" And MainTimer.Check(TimersIndex.CastSpell, False) Then
+        Call WriteCastSpell(hlst.ListIndex + 1)
+        Call WriteWork(eSkill.Magia)
+    End If
+    
+    Call ConvertCPtoTP(MouseX, MouseY, TX, TY)
+    
+    If UsingSkill = Magia And Not MainTimer.Check(TimersIndex.CastSpell) Then Exit Sub
+    
+    If UsingSkill = Proyectiles And Not MainTimer.Check(TimersIndex.Attack) Then Exit Sub
+    
+    Call WriteWorkLeftClick(TX, TY, UsingSkill)
+    UsingSkill = 0
 End Sub

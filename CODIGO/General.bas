@@ -304,7 +304,7 @@ Sub MoveTo(ByVal Direccion As E_Heading)
             Call WriteChangeHeading(Direccion)
         End If
     End If
-    
+    If frmMain.trainingMacro.Enabled Then Call frmMain.DesactivarMacroHechizos
     If frmMain.macrotrabajo.Enabled Then Call frmMain.DesactivarMacroTrabajo
     
     ' Update 3D sounds!
@@ -879,7 +879,7 @@ Private Sub LoadInitialConfig()
                             True, False, True, rtfCenter)
                             
     'Inicializamos el sonido
-    Call Audio.Initialize(DirectX, frmMain.hwnd, Game.path(Sounds), Game.path(Musica))
+    Call Audio.Initialize(DirectX, frmMain.hWnd, Game.path(Sounds), Game.path(Musica))
 
     'Enable / Disable audio
     Audio.MusicActivated = ClientSetup.bMusic
@@ -937,7 +937,7 @@ Private Sub LoadInitialConfig()
     End If
           
     '     Tile Engine
-    If Not InitTileEngine(frmMain.hwnd, 32, 32, 8, 8) Then
+    If Not InitTileEngine(frmMain.hWnd, 32, 32, 8, 8) Then
         Call CloseClient
     End If
     
