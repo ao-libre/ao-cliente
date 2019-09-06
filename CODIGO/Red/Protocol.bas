@@ -3251,7 +3251,7 @@ Private Sub HandleStopWorking()
     With FontTypes(FontTypeNames.FONTTYPE_INFO)
         Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_WORK_FINISHED"), .Red, .Green, .Blue, .bold, .italic)
     End With
-    
+    If frmMain.trainingMacro.Enabled Then Call frmMain.DesactivarMacroHechizos
     If frmMain.macrotrabajo.Enabled Then Call frmMain.DesactivarMacroTrabajo
 End Sub
 
@@ -3473,7 +3473,7 @@ On Error GoTo errhandler
     
     Dim Count As Integer
     Dim i As Long
-    Dim j As Long
+    Dim J As Long
     Dim k As Long
     
     Count = Buffer.ReadInteger()
@@ -3513,18 +3513,18 @@ On Error GoTo errhandler
             If .Upgrade Then
                 For k = 1 To Count
                     If .Upgrade = ArmasHerrero(k).ObjIndex Then
-                        j = j + 1
+                        J = J + 1
                 
-                        ReDim Preserve HerreroMejorar(j) As tItemsConstruibles
+                        ReDim Preserve HerreroMejorar(J) As tItemsConstruibles
                         
-                        HerreroMejorar(j).Name = .Name
-                        HerreroMejorar(j).GrhIndex = .GrhIndex
-                        HerreroMejorar(j).ObjIndex = .ObjIndex
-                        HerreroMejorar(j).UpgradeName = ArmasHerrero(k).Name
-                        HerreroMejorar(j).UpgradeGrhIndex = ArmasHerrero(k).GrhIndex
-                        HerreroMejorar(j).LinH = ArmasHerrero(k).LinH - .LinH * 0.85
-                        HerreroMejorar(j).LinP = ArmasHerrero(k).LinP - .LinP * 0.85
-                        HerreroMejorar(j).LinO = ArmasHerrero(k).LinO - .LinO * 0.85
+                        HerreroMejorar(J).Name = .Name
+                        HerreroMejorar(J).GrhIndex = .GrhIndex
+                        HerreroMejorar(J).ObjIndex = .ObjIndex
+                        HerreroMejorar(J).UpgradeName = ArmasHerrero(k).Name
+                        HerreroMejorar(J).UpgradeGrhIndex = ArmasHerrero(k).GrhIndex
+                        HerreroMejorar(J).LinH = ArmasHerrero(k).LinH - .LinH * 0.85
+                        HerreroMejorar(J).LinP = ArmasHerrero(k).LinP - .LinP * 0.85
+                        HerreroMejorar(J).LinO = ArmasHerrero(k).LinO - .LinO * 0.85
                         
                         Exit For
                     End If
@@ -3572,7 +3572,7 @@ On Error GoTo errhandler
     
     Dim Count As Integer
     Dim i As Long
-    Dim j As Long
+    Dim J As Long
     Dim k As Long
     
     Count = Buffer.ReadInteger()
@@ -3591,25 +3591,25 @@ On Error GoTo errhandler
         End With
     Next i
     
-    j = UBound(HerreroMejorar)
+    J = UBound(HerreroMejorar)
     
     For i = 1 To Count
         With ArmadurasHerrero(i)
             If .Upgrade Then
                 For k = 1 To Count
                     If .Upgrade = ArmadurasHerrero(k).ObjIndex Then
-                        j = j + 1
+                        J = J + 1
                 
-                        ReDim Preserve HerreroMejorar(j) As tItemsConstruibles
+                        ReDim Preserve HerreroMejorar(J) As tItemsConstruibles
                         
-                        HerreroMejorar(j).Name = .Name
-                        HerreroMejorar(j).GrhIndex = .GrhIndex
-                        HerreroMejorar(j).ObjIndex = .ObjIndex
-                        HerreroMejorar(j).UpgradeName = ArmadurasHerrero(k).Name
-                        HerreroMejorar(j).UpgradeGrhIndex = ArmadurasHerrero(k).GrhIndex
-                        HerreroMejorar(j).LinH = ArmadurasHerrero(k).LinH - .LinH * 0.85
-                        HerreroMejorar(j).LinP = ArmadurasHerrero(k).LinP - .LinP * 0.85
-                        HerreroMejorar(j).LinO = ArmadurasHerrero(k).LinO - .LinO * 0.85
+                        HerreroMejorar(J).Name = .Name
+                        HerreroMejorar(J).GrhIndex = .GrhIndex
+                        HerreroMejorar(J).ObjIndex = .ObjIndex
+                        HerreroMejorar(J).UpgradeName = ArmadurasHerrero(k).Name
+                        HerreroMejorar(J).UpgradeGrhIndex = ArmadurasHerrero(k).GrhIndex
+                        HerreroMejorar(J).LinH = ArmadurasHerrero(k).LinH - .LinH * 0.85
+                        HerreroMejorar(J).LinP = ArmadurasHerrero(k).LinP - .LinP * 0.85
+                        HerreroMejorar(J).LinO = ArmadurasHerrero(k).LinO - .LinO * 0.85
                         
                         Exit For
                     End If
@@ -3657,7 +3657,7 @@ On Error GoTo errhandler
     
     Dim Count As Integer
     Dim i As Long
-    Dim j As Long
+    Dim J As Long
     Dim k As Long
     
     Count = Buffer.ReadInteger()
@@ -3696,17 +3696,17 @@ On Error GoTo errhandler
             If .Upgrade Then
                 For k = 1 To Count
                     If .Upgrade = ObjCarpintero(k).ObjIndex Then
-                        j = j + 1
+                        J = J + 1
                 
-                        ReDim Preserve CarpinteroMejorar(j) As tItemsConstruibles
+                        ReDim Preserve CarpinteroMejorar(J) As tItemsConstruibles
                         
-                        CarpinteroMejorar(j).Name = .Name
-                        CarpinteroMejorar(j).GrhIndex = .GrhIndex
-                        CarpinteroMejorar(j).ObjIndex = .ObjIndex
-                        CarpinteroMejorar(j).UpgradeName = ObjCarpintero(k).Name
-                        CarpinteroMejorar(j).UpgradeGrhIndex = ObjCarpintero(k).GrhIndex
-                        CarpinteroMejorar(j).Madera = ObjCarpintero(k).Madera - .Madera * 0.85
-                        CarpinteroMejorar(j).MaderaElfica = ObjCarpintero(k).MaderaElfica - .MaderaElfica * 0.85
+                        CarpinteroMejorar(J).Name = .Name
+                        CarpinteroMejorar(J).GrhIndex = .GrhIndex
+                        CarpinteroMejorar(J).ObjIndex = .ObjIndex
+                        CarpinteroMejorar(J).UpgradeName = ObjCarpintero(k).Name
+                        CarpinteroMejorar(J).UpgradeGrhIndex = ObjCarpintero(k).GrhIndex
+                        CarpinteroMejorar(J).Madera = ObjCarpintero(k).Madera - .Madera * 0.85
+                        CarpinteroMejorar(J).MaderaElfica = ObjCarpintero(k).MaderaElfica - .MaderaElfica * 0.85
                         
                         Exit For
                     End If
@@ -4328,16 +4328,16 @@ On Error GoTo errhandler
     Upper_guildList = UBound(guildList)
     
     For i = 0 To Upper_guildList
-        sTemp = frmGuildNews.txtClanesGuerra.text
-        frmGuildNews.txtClanesGuerra.text = sTemp & guildList(i) & vbCrLf
+        sTemp = frmGuildNews.txtClanesGuerra.Text
+        frmGuildNews.txtClanesGuerra.Text = sTemp & guildList(i) & vbCrLf
     Next i
     
     'Get Allied guilds list
     guildList = Split(Buffer.ReadASCIIString(), SEPARATOR)
     
     For i = 0 To Upper_guildList
-        sTemp = frmGuildNews.txtClanesAliados.text
-        frmGuildNews.txtClanesAliados.text = sTemp & guildList(i) & vbCrLf
+        sTemp = frmGuildNews.txtClanesAliados.Text
+        frmGuildNews.txtClanesAliados.Text = sTemp & guildList(i) & vbCrLf
     Next i
     
     If ClientSetup.bGuildNews Or bShowGuildNews Then frmGuildNews.Show vbModeless, frmMain
@@ -4563,9 +4563,9 @@ On Error GoTo errhandler
         
         .reputacion.Caption = reputation
         
-        .txtPeticiones.text = Buffer.ReadASCIIString()
+        .txtPeticiones.Text = Buffer.ReadASCIIString()
         .guildactual.Caption = Buffer.ReadASCIIString()
-        .txtMiembro.text = Buffer.ReadASCIIString()
+        .txtMiembro.Text = Buffer.ReadASCIIString()
         
         Dim armada As Boolean
         Dim caos As Boolean
@@ -4750,7 +4750,7 @@ On Error GoTo errhandler
             .Codex(i).Caption = codexStr(i)
         Next i
         
-        .Desc.text = Buffer.ReadASCIIString()
+        .Desc.Text = Buffer.ReadASCIIString()
     End With
     
     'If we got here then packet is complete, copy data back to original queue
@@ -5246,7 +5246,7 @@ On Error GoTo errhandler
     'Remove packet ID
     Call Buffer.ReadByte
     
-    frmCambiaMotd.txtMotd.text = Buffer.ReadASCIIString()
+    frmCambiaMotd.txtMotd.Text = Buffer.ReadASCIIString()
     frmCambiaMotd.Show , frmMain
     
     'If we got here then packet is complete, copy data back to original queue
@@ -10623,8 +10623,8 @@ On Error GoTo errhandler
     Call Buffer.ReadByte
        
     With frmPanelGm
-        .txtCreador.text = Buffer.ReadASCIIString
-        .txtDescrip.text = Buffer.ReadASCIIString
+        .txtCreador.Text = Buffer.ReadASCIIString
+        .txtDescrip.Text = Buffer.ReadASCIIString
         
         'Status del pj
         If Buffer.ReadBoolean Then
@@ -10638,25 +10638,25 @@ On Error GoTo errhandler
         'IP del personaje
         tmpStr = Buffer.ReadASCIIString
         If LenB(tmpStr) Then
-            .txtIP.text = tmpStr
+            .txtIP.Text = tmpStr
         Else
-            .txtIP.text = JsonLanguage.Item("USUARIO").Item("TEXTO") & JsonLanguage.Item("DESCONECTADO").Item("TEXTO")
+            .txtIP.Text = JsonLanguage.Item("USUARIO").Item("TEXTO") & JsonLanguage.Item("DESCONECTADO").Item("TEXTO")
         End If
         
         'Tiempo online
         tmpStr = Buffer.ReadASCIIString
         If LenB(tmpStr) Then
-            .txtTimeOn.text = tmpStr
+            .txtTimeOn.Text = tmpStr
         Else
-            .txtTimeOn.text = JsonLanguage.Item("USUARIO").Item("TEXTO") & JsonLanguage.Item("DESCONECTADO").Item("TEXTO")
+            .txtTimeOn.Text = JsonLanguage.Item("USUARIO").Item("TEXTO") & JsonLanguage.Item("DESCONECTADO").Item("TEXTO")
         End If
         
         'Observaciones
         tmpStr = Buffer.ReadASCIIString
         If LenB(tmpStr) Then
-            .txtObs.text = tmpStr
+            .txtObs.Text = tmpStr
         Else
-            .txtObs.text = JsonLanguage.Item("MENSAJE_NO_NOVEDADES").Item("TEXTO")
+            .txtObs.Text = JsonLanguage.Item("MENSAJE_NO_NOVEDADES").Item("TEXTO")
         End If
     End With
     
@@ -11042,9 +11042,9 @@ On Error GoTo errhandler
     
     'Determinamos que formulario se muestra, seg�n si recibimos la informaci�n y la quest est� empezada o no.
     If QuestEmpezada Then
-        frmQuests.txtInfo.text = tmpStr
+        frmQuests.txtInfo.Text = tmpStr
     Else
-        frmQuestInfo.txtInfo.text = tmpStr
+        frmQuestInfo.txtInfo.Text = tmpStr
         frmQuestInfo.Show vbModeless, frmMain
     End If
     
@@ -11088,7 +11088,7 @@ On Error GoTo errhandler
     
     'Limpiamos el ListBox y el TextBox del formulario
     frmQuests.lstQuests.Clear
-    frmQuests.txtInfo.text = vbNullString
+    frmQuests.txtInfo.Text = vbNullString
         
     'Si el usuario tiene quests entonces hacemos el handle
     If tmpByte Then

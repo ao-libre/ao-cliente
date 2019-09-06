@@ -183,7 +183,6 @@ Public Sub Char_UserPos()
                 Exit Sub
  
         End If
- 
 End Sub
  
 Public Sub Char_UserIndexSet(ByVal CharIndex As Integer)
@@ -632,8 +631,8 @@ Sub Char_MoveScreen(ByVal nHeading As E_Heading)
         Dim X  As Integer
         Dim Y  As Integer
         
-        Dim tX As Integer
-        Dim tY As Integer
+        Dim TX As Integer
+        Dim TY As Integer
     
         'Figure out which way to move
 
@@ -653,21 +652,21 @@ Sub Char_MoveScreen(ByVal nHeading As E_Heading)
         End Select
     
         'Fill temp pos
-        tX = UserPos.X + X
-        tY = UserPos.Y + Y
+        TX = UserPos.X + X
+        TY = UserPos.Y + Y
 
         'Check to see if its out of bounds
 
-        If (tX < MinXBorder) Or (tX > MaxXBorder) Or (tY < MinYBorder) Or (tY > MaxYBorder) Then
+        If (TX < MinXBorder) Or (TX > MaxXBorder) Or (TY < MinYBorder) Or (TY > MaxYBorder) Then
 
                 Exit Sub
 
         Else
                 'Start moving... MainLoop does the rest
                 AddtoUserPos.X = X
-                UserPos.X = tX
+                UserPos.X = TX
                 AddtoUserPos.Y = Y
-                UserPos.Y = tY
+                UserPos.Y = TY
                 UserMoving = 1
                 
                 bTecho = Char_Techo

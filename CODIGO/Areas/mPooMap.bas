@@ -143,10 +143,8 @@ Sub Map_MoveTo(ByVal Direccion As E_Heading)
                 
       End If
     
-      If (frmMain.macrotrabajo.Enabled) Then
-            Call frmMain.DesactivarMacroTrabajo
-      End If
-
+      If frmMain.macrotrabajo.Enabled Then Call frmMain.DesactivarMacroTrabajo
+      If frmMain.trainingMacro.Enabled Then Call frmMain.DesactivarMacroHechizos
       ' Update 3D sounds!
       Call Audio.MoveListener(UserPos.X, UserPos.Y)
         
@@ -265,15 +263,15 @@ End Function
 
 Public Function Map_CheckBonfire(ByRef Location As Position) As Boolean
 
-      Dim j As Long
+      Dim J As Long
       Dim k As Long
     
-      For j = UserPos.X - 8 To UserPos.X + 8
+      For J = UserPos.X - 8 To UserPos.X + 8
             For k = UserPos.Y - 6 To UserPos.Y + 6
 
-                  If Map_InBounds(j, k) Then
-                        If MapData(j, k).ObjGrh.GrhIndex = GrhFogata Then
-                              Location.X = j
+                  If Map_InBounds(J, k) Then
+                        If MapData(J, k).ObjGrh.GrhIndex = GrhFogata Then
+                              Location.X = J
                               Location.Y = k
                     
                               Map_CheckBonfire = True
@@ -284,7 +282,7 @@ Public Function Map_CheckBonfire(ByRef Location As Position) As Boolean
                   End If
 
             Next k
-      Next j
+      Next J
 
 End Function
 
