@@ -270,8 +270,8 @@ On Error GoTo errhandler:
 
     Set FileManager = New clsIniManager
     Call FileManager.Initialize(Game.path(INIT) & "armas.dat")
-    
-    ReDim WeaponAnimData(1 To Val(FileManager.GetValue("INIT", "NumArmas"))) As WeaponAnimData
+    NumWeaponAnims = Val(FileManager.GetValue("INIT", "NumArmas"))
+    ReDim WeaponAnimData(1 To NumWeaponAnims) As WeaponAnimData
     
     For LoopC = 1 To NumWeaponAnims
         Call InitGrh(WeaponAnimData(LoopC).WeaponWalk(1), Val(FileManager.GetValue("ARMA" & LoopC, "Dir1")), 0)
@@ -379,7 +379,7 @@ Public Sub CargarHechizos()
 '********************************
 On Error GoTo errorH
 
-    Dim j As Long
+    Dim J As Long
     
     Set FileManager = New clsIniManager
     Call FileManager.Initialize(Game.path(INIT) & "Hechizos.dat")
@@ -387,24 +387,24 @@ On Error GoTo errorH
     NumHechizos = Val(FileManager.GetValue("INIT", "NumHechizos"))
  
     ReDim Hechizos(1 To NumHechizos) As tHechizos
-    For j = 1 To NumHechizos
-        With Hechizos(j)
-            .Desc = FileManager.GetValue("HECHIZO" & j, "Desc")
-            .PalabrasMagicas = FileManager.GetValue("HECHIZO" & j, "PalabrasMagicas")
-            .Nombre = FileManager.GetValue("HECHIZO" & j, "Nombre")
-            .SkillRequerido = FileManager.GetValue("HECHIZO" & j, "MinSkill")
+    For J = 1 To NumHechizos
+        With Hechizos(J)
+            .Desc = FileManager.GetValue("HECHIZO" & J, "Desc")
+            .PalabrasMagicas = FileManager.GetValue("HECHIZO" & J, "PalabrasMagicas")
+            .Nombre = FileManager.GetValue("HECHIZO" & J, "Nombre")
+            .SkillRequerido = FileManager.GetValue("HECHIZO" & J, "MinSkill")
          
-            If j <> 38 And j <> 39 Then
-                .EnergiaRequerida = FileManager.GetValue("HECHIZO" & j, "StaRequerido")
+            If J <> 38 And J <> 39 Then
+                .EnergiaRequerida = FileManager.GetValue("HECHIZO" & J, "StaRequerido")
                  
-                .HechiceroMsg = FileManager.GetValue("HECHIZO" & j, "HechizeroMsg")
-                .ManaRequerida = FileManager.GetValue("HECHIZO" & j, "ManaRequerido")
+                .HechiceroMsg = FileManager.GetValue("HECHIZO" & J, "HechizeroMsg")
+                .ManaRequerida = FileManager.GetValue("HECHIZO" & J, "ManaRequerido")
              
-                .PropioMsg = FileManager.GetValue("HECHIZO" & j, "PropioMsg")
-                .TargetMsg = FileManager.GetValue("HECHIZO" & j, "TargetMsg")
+                .PropioMsg = FileManager.GetValue("HECHIZO" & J, "PropioMsg")
+                .TargetMsg = FileManager.GetValue("HECHIZO" & J, "TargetMsg")
             End If
         End With
-    Next j
+    Next J
     
     Set FileManager = Nothing
     
