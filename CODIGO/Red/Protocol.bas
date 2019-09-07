@@ -2905,7 +2905,7 @@ On Error GoTo errhandler
     
     With frmGuildAdm
         'Clear guild's list
-        .guildslist.Clear
+        .GuildsList.Clear
         
         GuildNames = Split(Buffer.ReadASCIIString(), SEPARATOR)
         
@@ -2914,7 +2914,7 @@ On Error GoTo errhandler
             Upper_guildNames = UBound(GuildNames())
             
         For i = 0 To Upper_guildNames
-            Call .guildslist.AddItem(GuildNames(i))
+            Call .GuildsList.AddItem(GuildNames(i))
         Next i
         
         'If we got here then packet is complete, copy data back to original queue
@@ -4640,13 +4640,13 @@ On Error GoTo errhandler
         GuildNames = Split(Buffer.ReadASCIIString(), SEPARATOR)
         
         'Empty the list
-        Call .guildslist.Clear
+        Call .GuildsList.Clear
         
         'pre-calculate the amount of guilds that exist
         Upper_guildNames = UBound(GuildNames())
         
         For i = 0 To Upper_guildNames
-            Call .guildslist.AddItem(GuildNames(i))
+            Call .GuildsList.AddItem(GuildNames(i))
         Next i
         
         'Get list of guild's members
@@ -6227,6 +6227,7 @@ Public Sub WriteChangeHeading(ByVal Heading As E_Heading)
         
         Call .WriteByte(Heading)
     End With
+    
 End Sub
 
 ''

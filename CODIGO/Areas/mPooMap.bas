@@ -126,20 +126,20 @@ Sub Map_MoveTo(ByVal Direccion As E_Heading)
                   LegalOk = Map_LegalPos(UserPos.X - 1, UserPos.Y)
                         
       End Select
-        If LegalOk And Not UserDescansar Then
+        If LegalOk And Not UserDescansar And Not UserParalizado Then
             Call Char_MovebyHead(UserCharIndex, Direccion)
             Call Char_MoveScreen(Direccion)
         End If
 
-      If LegalOk And (GetTickCount - lastmovement > 56) Then
+      If LegalOk And Not UserParalizado Then
             Call WriteWalk(Direccion)
             Call frmMain.ActualizarMiniMapa   'integrado por ReyarB
-            lastmovement = GetTickCount
       Else
-
-            If (charlist(UserCharIndex).Heading <> Direccion) Then
-                  Call WriteChangeHeading(Direccion)
-            End If
+        If (charlist(UserCharIndex).Heading <> Direccion) And (GetTickCount - lastmovement > 72) Then
+              Call WriteChangeHeading(Direccion)
+              Call Char_SetHeading(UserCharIndex, Direccion)
+              lastmovement = GetTickCount
+        End If
                 
       End If
     

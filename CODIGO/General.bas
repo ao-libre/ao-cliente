@@ -269,7 +269,7 @@ Sub CargarTip()
     frmtip.tip.Caption = Tips(N)
 End Sub
 
-Sub MoveTo(ByVal Direccion As E_Heading)
+Sub MoveTo(ByVal direccion As E_Heading)
 '***************************************************
 'Author: Alejandro Santos (AlejoLp)
 'Last Modify Date: 06/28/2008
@@ -282,26 +282,26 @@ Sub MoveTo(ByVal Direccion As E_Heading)
     
     If Cartel Then Cartel = False
     
-    Select Case Direccion
-        Case E_Heading.NORTH
+    Select Case direccion
+        Case E_Heading.north
             LegalOk = MoveToLegalPos(UserPos.X, UserPos.Y - 1)
-        Case E_Heading.EAST
+        Case E_Heading.east
             LegalOk = MoveToLegalPos(UserPos.X + 1, UserPos.Y)
-        Case E_Heading.SOUTH
+        Case E_Heading.south
             LegalOk = MoveToLegalPos(UserPos.X, UserPos.Y + 1)
-        Case E_Heading.WEST
+        Case E_Heading.west
             LegalOk = MoveToLegalPos(UserPos.X - 1, UserPos.Y)
     End Select
     
     If LegalOk And Not UserParalizado Then
-        Call WriteWalk(Direccion)
+        Call WriteWalk(direccion)
         If Not UserDescansar And Not UserMeditar Then
-            MoveCharbyHead UserCharIndex, Direccion
-            MoveScreen Direccion
+            MoveCharbyHead UserCharIndex, direccion
+            MoveScreen direccion
         End If
     Else
-        If charlist(UserCharIndex).Heading <> Direccion Then
-            Call WriteChangeHeading(Direccion)
+        If charlist(UserCharIndex).Heading <> direccion Then
+            Call WriteChangeHeading(direccion)
         End If
     End If
     If frmMain.trainingMacro.Enabled Then Call frmMain.DesactivarMacroHechizos
@@ -317,7 +317,7 @@ Sub RandomMove()
 'Last Modify Date: 06/03/2006
 ' 06/03/2006: AlejoLp - Ahora utiliza la funcion MoveTo
 '***************************************************
-    Call Map_MoveTo(RandomNumber(NORTH, WEST))
+    Call Map_MoveTo(RandomNumber(north, west))
 End Sub
 
 Private Sub CheckKeys()
@@ -347,33 +347,28 @@ Private Sub CheckKeys()
 
             'Move Up
             If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyUp)) < 0 Then
-                Call Map_MoveTo(NORTH)
+                Call Map_MoveTo(north)
                 Call Char_UserPos
                 Exit Sub
             End If
-            
             'Move Right
             If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyRight)) < 0 Then
-                Call Map_MoveTo(EAST)
-                'frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.x & "," & UserPos.y & ")"
+                Call Map_MoveTo(east)
                 Call Char_UserPos
                 Exit Sub
             End If
-        
             'Move down
             If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyDown)) < 0 Then
-                Call Map_MoveTo(SOUTH)
+                Call Map_MoveTo(south)
                 Call Char_UserPos
                 Exit Sub
             End If
-        
             'Move left
             If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyLeft)) < 0 Then
-                Call Map_MoveTo(WEST)
+                Call Map_MoveTo(west)
                 Call Char_UserPos
                 Exit Sub
             End If
-            
             ' We haven't moved - Update 3D sounds!
             Call Audio.MoveListener(UserPos.X, UserPos.Y)
         Else
