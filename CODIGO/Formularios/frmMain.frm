@@ -135,14 +135,14 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H80000008&
-      Height          =   2025
+      Height          =   1920
       Left            =   8880
-      ScaleHeight     =   135
+      ScaleHeight     =   128
       ScaleMode       =   3  'Pixel
-      ScaleWidth      =   168
+      ScaleWidth      =   160
       TabIndex        =   16
       Top             =   2640
-      Width           =   2520
+      Width           =   2400
    End
    Begin VB.TextBox SendTxt 
       BackColor       =   &H00000000&
@@ -218,6 +218,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2619
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
