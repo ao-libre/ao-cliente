@@ -135,7 +135,7 @@ Sub Map_MoveTo(ByVal Direccion As E_Heading)
             Call WriteWalk(Direccion)
             Call frmMain.ActualizarMiniMapa   'integrado por ReyarB
       Else
-        If (charlist(UserCharIndex).Heading <> Direccion) And (GetTickCount - lastmovement > 72) Then
+        If (charlist(UserCharIndex).Heading <> Direccion) And (GetTickCount - lastmovement > 96) Then
               Call WriteChangeHeading(Direccion)
               Call Char_SetHeading(UserCharIndex, Direccion)
               lastmovement = GetTickCount

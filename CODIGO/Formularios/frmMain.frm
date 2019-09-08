@@ -135,9 +135,9 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H80000008&
-      Height          =   1920
+      Height          =   2400
       Left            =   8880
-      ScaleHeight     =   128
+      ScaleHeight     =   160
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   160
       TabIndex        =   16
@@ -458,6 +458,7 @@ Begin VB.Form frmMain
       TabIndex        =   39
       TabStop         =   0   'False
       Top             =   5280
+      Visible         =   0   'False
       Width           =   1215
       _ExtentX        =   2143
       _ExtentY        =   873
@@ -485,6 +486,7 @@ Begin VB.Form frmMain
       TabIndex        =   40
       TabStop         =   0   'False
       Top             =   5280
+      Visible         =   0   'False
       Width           =   1215
       _ExtentX        =   2143
       _ExtentY        =   873
@@ -549,20 +551,6 @@ Begin VB.Form frmMain
       TabIndex        =   24
       Top             =   60
       Width           =   555
-   End
-   Begin VB.Image imgInvScrollDown 
-      Height          =   795
-      Left            =   10020
-      Top             =   5595
-      Visible         =   0   'False
-      Width           =   420
-   End
-   Begin VB.Image imgInvScrollUp 
-      Height          =   825
-      Left            =   10005
-      Top             =   4560
-      Visible         =   0   'False
-      Width           =   420
    End
    Begin VB.Label lblMapName 
       BackStyle       =   0  'Transparent
@@ -1159,7 +1147,7 @@ Private Sub Form_Load()
         .Top = 0
         .Width = 12000
         .Height = 9000
-        .Label6 = JsonLanguage.Item("NIVEL").Item("TEXTO") & ": "
+        .Label6 = JsonLanguage.item("NIVEL").item("TEXTO") & ": "
     End With
     
     ' Detect links in console
@@ -1179,15 +1167,6 @@ Private Sub LoadButtons()
     Set cBotonAsignarSkill = New clsGraphicalButton
 
     Set LastButtonPressed = New clsGraphicalButton
-    
-    
-    Call cBotonDiamArriba.Initialize(imgInvScrollUp, "", _
-                                    Game.path(Skins) & SkinSeleccionado & "\BotonDiamArribaF.bmp", _
-                                    Game.path(Skins) & SkinSeleccionado & "\BotonDiamArribaF.bmp", Me)
-
-    Call cBotonDiamAbajo.Initialize(imgInvScrollDown, "", _
-                                    Game.path(Skins) & SkinSeleccionado & "\BotonDiamAbajoF.bmp", _
-                                    Game.path(Skins) & SkinSeleccionado & "\BotonDiamAbajoF.bmp", Me)
 
     Set picSkillStar = LoadPicture(Game.path(Skins) & SkinSeleccionado & "\BotonAsignarSkills.bmp")
 
@@ -1265,56 +1244,59 @@ Select Case Index
     Case eSMType.sResucitation
         If Mostrar Then
             Call AddtoRichTextBox(frmMain.RecTxt, _
-                                    JsonLanguage.Item("MENSAJE_SEGURO_RESU_ON").Item("TEXTO"), _
-                                    JsonLanguage.Item("MENSAJE_SEGURO_RESU_ON").Item("COLOR").Item(1), _
-                                    JsonLanguage.Item("MENSAJE_SEGURO_RESU_ON").Item("COLOR").Item(1), _
-                                    JsonLanguage.Item("MENSAJE_SEGURO_RESU_ON").Item("COLOR").Item(1), _
+                                    JsonLanguage.item("MENSAJE_SEGURO_RESU_ON").item("TEXTO"), _
+                                    JsonLanguage.item("MENSAJE_SEGURO_RESU_ON").item("COLOR").item(1), _
+                                    JsonLanguage.item("MENSAJE_SEGURO_RESU_ON").item("COLOR").item(1), _
+                                    JsonLanguage.item("MENSAJE_SEGURO_RESU_ON").item("COLOR").item(1), _
                                     True, False, True)
                                     
-            picSM(Index).ToolTipText = JsonLanguage.Item("MENSAJE_SEGURO_RESU_ON").Item("TEXTO")
+            picSM(Index).ToolTipText = JsonLanguage.item("MENSAJE_SEGURO_RESU_ON").item("TEXTO")
         Else
             Call AddtoRichTextBox(frmMain.RecTxt, _
-                                    JsonLanguage.Item("MENSAJE_SEGURO_RESU_OFF").Item("TEXTO"), _
-                                    JsonLanguage.Item("MENSAJE_SEGURO_RESU_OFF").Item("COLOR").Item(1), _
-                                    JsonLanguage.Item("MENSAJE_SEGURO_RESU_OFF").Item("COLOR").Item(2), _
-                                    JsonLanguage.Item("MENSAJE_SEGURO_RESU_OFF").Item("COLOR").Item(3), _
+                                    JsonLanguage.item("MENSAJE_SEGURO_RESU_OFF").item("TEXTO"), _
+                                    JsonLanguage.item("MENSAJE_SEGURO_RESU_OFF").item("COLOR").item(1), _
+                                    JsonLanguage.item("MENSAJE_SEGURO_RESU_OFF").item("COLOR").item(2), _
+                                    JsonLanguage.item("MENSAJE_SEGURO_RESU_OFF").item("COLOR").item(3), _
                                     True, False, True)
                                     
-            picSM(Index).ToolTipText = JsonLanguage.Item("MENSAJE_SEGURO_RESU_ON").Item("TEXTO")
+            picSM(Index).ToolTipText = JsonLanguage.item("MENSAJE_SEGURO_RESU_ON").item("TEXTO")
         End If
         
     Case eSMType.sSafemode
         If Mostrar Then
             Call AddtoRichTextBox(frmMain.RecTxt, _
-                                    UCase$(JsonLanguage.Item("MENSAJE_SEGURO_ACTIVADO").Item("TEXTO").Item(1)), _
-                                    JsonLanguage.Item("MENSAJE_SEGURO_ACTIVADO").Item("COLOR").Item(1), _
-                                    JsonLanguage.Item("MENSAJE_SEGURO_ACTIVADO").Item("COLOR").Item(2), _
-                                    JsonLanguage.Item("MENSAJE_SEGURO_ACTIVADO").Item("COLOR").Item(3), _
+                                    UCase$(JsonLanguage.item("MENSAJE_SEGURO_ACTIVADO").item("TEXTO").item(1)), _
+                                    JsonLanguage.item("MENSAJE_SEGURO_ACTIVADO").item("COLOR").item(1), _
+                                    JsonLanguage.item("MENSAJE_SEGURO_ACTIVADO").item("COLOR").item(2), _
+                                    JsonLanguage.item("MENSAJE_SEGURO_ACTIVADO").item("COLOR").item(3), _
                                     True, False, True)
                                     
-            picSM(Index).ToolTipText = JsonLanguage.Item("MENSAJE_SEGURO_ACTIVADO").Item("TEXTO").Item(2)
+            picSM(Index).ToolTipText = JsonLanguage.item("MENSAJE_SEGURO_ACTIVADO").item("TEXTO").item(2)
         Else
             Call AddtoRichTextBox(frmMain.RecTxt, _
-                                    UCase$(JsonLanguage.Item("MENSAJE_SEGURO_DESACTIVADO").Item("TEXTO").Item(1)), _
-                                    JsonLanguage.Item("MENSAJE_SEGURO_DESACTIVADO").Item("COLOR").Item(1), _
-                                    JsonLanguage.Item("MENSAJE_SEGURO_DESACTIVADO").Item("COLOR").Item(2), _
-                                    JsonLanguage.Item("MENSAJE_SEGURO_DESACTIVADO").Item("COLOR").Item(3), _
+                                    UCase$(JsonLanguage.item("MENSAJE_SEGURO_DESACTIVADO").item("TEXTO").item(1)), _
+                                    JsonLanguage.item("MENSAJE_SEGURO_DESACTIVADO").item("COLOR").item(1), _
+                                    JsonLanguage.item("MENSAJE_SEGURO_DESACTIVADO").item("COLOR").item(2), _
+                                    JsonLanguage.item("MENSAJE_SEGURO_DESACTIVADO").item("COLOR").item(3), _
                                     True, False, True)
                                     
-            picSM(Index).ToolTipText = JsonLanguage.Item("MENSAJE_SEGURO_DESACTIVADO").Item("TEXTO").Item(2)
+            picSM(Index).ToolTipText = JsonLanguage.item("MENSAJE_SEGURO_DESACTIVADO").item("TEXTO").item(2)
         End If
         
     Case eSMType.mWork
         If Mostrar Then
-            picSM(Index).ToolTipText = JsonLanguage.Item("MENSAJE_MACRO_ACTIVADO").Item("TEXTO")
+            picSM(Index).ToolTipText = JsonLanguage.item("MENSAJE_MACRO_ACTIVADO").item("TEXTO")
         Else
-            picSM(Index).ToolTipText = JsonLanguage.Item("MENSAJE_MACRO_DESACTIVADO").Item("TEXTO")
+            picSM(Index).ToolTipText = JsonLanguage.item("MENSAJE_MACRO_DESACTIVADO").item("TEXTO")
         End If
 End Select
 
 SMStatus(Index) = Mostrar
 End Sub
-
+Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
+If KeyCode = 37 Or KeyCode = 38 Or KeyCode = 39 Or KeyCode = 40 Then _
+    If lastKeys.itemExist(KeyCode) = False Then lastKeys.Add (KeyCode) ' Agrega la tecla a un array
+End Sub
 Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
 '***************************************************
 'Autor: Unknown
@@ -1322,7 +1304,8 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
 '18/11/2009: ZaMa - Ahora se pueden poner comandos en los mensajes personalizados (execpto guildchat y privados)
 '18/11/2010: Amraphen - Agregue el handle correspondiente para las nuevas configuraciones de teclas (CTRL+0..9).
 '***************************************************
-    
+    If KeyCode = 37 Or KeyCode = 38 Or KeyCode = 39 Or KeyCode = 40 Then _
+        If lastKeys.itemExist(KeyCode) Then lastKeys.Remove (KeyCode) ' Remueve la tecla que teniamos presionada
     If (Not SendTxt.Visible) And (Not SendCMSTXT.Visible) Then
     
         'Verificamos si se esta presionando la tecla CTRL.
@@ -1339,19 +1322,19 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
                     CustomKeys.CurrentConfig = KeyCode - vbKey0
                     
                     Dim sMsg As String
-                        sMsg = JsonLanguage.Item("CUSTOMKEYS_CONFIG_CARGADA").Item("TEXTO")
+                        sMsg = JsonLanguage.item("CUSTOMKEYS_CONFIG_CARGADA").item("TEXTO")
                         
                     If CustomKeys.CurrentConfig = 0 Then
-                        sMsg = Replace$(sMsg, "VAR_CONFIG_ELEGIDA", JsonLanguage.Item("PREDETERMINADA").Item("TEXTO"))
+                        sMsg = Replace$(sMsg, "VAR_CONFIG_ELEGIDA", JsonLanguage.item("PREDETERMINADA").item("TEXTO"))
                     Else
-                        sMsg = Replace$(sMsg, "VAR_CONFIG_ELEGIDA", JsonLanguage.Item("PERSONALIZADA").Item("TEXTO"))
+                        sMsg = Replace$(sMsg, "VAR_CONFIG_ELEGIDA", JsonLanguage.item("PERSONALIZADA").item("TEXTO"))
                         sMsg = Replace$(sMsg, "VAR_CONFIG_CUSTOM_NUMERO", CStr(CustomKeys.CurrentConfig))
                     End If
 
                     Call ShowConsoleMsg(sMsg, _
-                                        JsonLanguage.Item("CUSTOMKEYS_CONFIG_CARGADA").Item("COLOR").Item(1), _
-                                        JsonLanguage.Item("CUSTOMKEYS_CONFIG_CARGADA").Item("COLOR").Item(2), _
-                                        JsonLanguage.Item("CUSTOMKEYS_CONFIG_CARGADA").Item("COLOR").Item(3), _
+                                        JsonLanguage.item("CUSTOMKEYS_CONFIG_CARGADA").item("COLOR").item(1), _
+                                        JsonLanguage.item("CUSTOMKEYS_CONFIG_CARGADA").item("COLOR").item(2), _
+                                        JsonLanguage.item("CUSTOMKEYS_CONFIG_CARGADA").item("COLOR").item(3), _
                                         True)
                 End If
                 
@@ -1392,7 +1375,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
                 Case CustomKeys.BindedKey(eKeyType.mKeyTamAnimal)
                     If UserEstado = 1 Then
                         With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                            Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO").Item(1), .Red, .Green, .Blue, .bold, .italic)
+                            Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO").item(1), .Red, .Green, .Blue, .bold, .italic)
                         End With
                     Else
                         Call WriteWork(eSkill.Domar)
@@ -1401,7 +1384,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
                 Case CustomKeys.BindedKey(eKeyType.mKeySteal)
                     If UserEstado = 1 Then
                         With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                            Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO").Item(1), .Red, .Green, .Blue, .bold, .italic)
+                            Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO").item(1), .Red, .Green, .Blue, .bold, .italic)
                         End With
                     Else
                         Call WriteWork(eSkill.Robar)
@@ -1410,7 +1393,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
                 Case CustomKeys.BindedKey(eKeyType.mKeyHide)
                     If UserEstado = 1 Then
                         With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                            Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO").Item(1), .Red, .Green, .Blue, .bold, .italic)
+                            Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO").item(1), .Red, .Green, .Blue, .bold, .italic)
                         End With
                     Else
                         Call WriteWork(eSkill.Ocultarse)
@@ -1483,7 +1466,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
             
             If UserEstado = 1 Then
                 With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO").Item(1), .Red, .Green, .Blue, .bold, .italic)
+                    Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO").item(1), .Red, .Green, .Blue, .bold, .italic)
                 End With
                 Exit Sub
             End If
@@ -1507,7 +1490,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
         Case CustomKeys.BindedKey(eKeyType.mKeyWorkMacro)
             If UserEstado = 1 Then
                 With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO").Item(1), .Red, .Green, .Blue, .bold, .italic)
+                    Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO").item(1), .Red, .Green, .Blue, .bold, .italic)
                 End With
                 Exit Sub
             End If
@@ -1623,14 +1606,6 @@ Private Sub imgGrupo_Click()
     Call WriteRequestPartyForm
 End Sub
 
-Private Sub imgInvScrollDown_Click()
-    Call Inventario.ScrollInventory(True)
-End Sub
-
-Private Sub imgInvScrollUp_Click()
-    Call Inventario.ScrollInventory(False)
-End Sub
-
 Private Sub imgMapa_Click()
     Call frmMapa.Show(vbModeless, frmMain)
 End Sub
@@ -1681,7 +1656,7 @@ End Sub
 Public Sub ActivarMacroTrabajo()
     macrotrabajo.Interval = INT_MACRO_TRABAJO
     macrotrabajo.Enabled = True
-    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_MACRO_ACTIVADO").Item("TEXTO"), 0, 200, 200, False, True, True)
+    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_MACRO_ACTIVADO").item("TEXTO"), 0, 200, 200, False, True, True)
     Call ControlSM(eSMType.mWork, True)
 End Sub
 
@@ -1690,7 +1665,7 @@ Public Sub DesactivarMacroTrabajo()
     MacroBltIndex = 0
     UsingSkill = 0
     MousePointer = vbDefault
-    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_MACRO_DESACTIVADO").Item("TEXTO"), 0, 200, 200, False, True, True)
+    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_MACRO_DESACTIVADO").item("TEXTO"), 0, 200, 200, False, True, True)
     Call ControlSM(eSMType.mWork, False)
 End Sub
 
@@ -1717,19 +1692,19 @@ End Sub
 
 Private Sub PicMH_Click()
     Call AddtoRichTextBox(frmMain.RecTxt, _
-                            JsonLanguage.Item("MENSAJE_AUTO_CAST_SPELL").Item("TEXTO"), _
-                            JsonLanguage.Item("MENSAJE_AUTO_CAST_SPELL").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("MENSAJE_AUTO_CAST_SPELL").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("MENSAJE_AUTO_CAST_SPELL").Item("COLOR").Item(3), _
+                            JsonLanguage.item("MENSAJE_AUTO_CAST_SPELL").item("TEXTO"), _
+                            JsonLanguage.item("MENSAJE_AUTO_CAST_SPELL").item("COLOR").item(1), _
+                            JsonLanguage.item("MENSAJE_AUTO_CAST_SPELL").item("COLOR").item(2), _
+                            JsonLanguage.item("MENSAJE_AUTO_CAST_SPELL").item("COLOR").item(3), _
                             False, False, True)
 End Sub
 
 Private Sub Coord_Click()
     Call AddtoRichTextBox(frmMain.RecTxt, _
-                            JsonLanguage.Item("MENSAJE_INFO_COORDENADAS").Item("TEXTO"), _
-                            JsonLanguage.Item("MENSAJE_INFO_COORDENADAS").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("MENSAJE_INFO_COORDENADAS").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("MENSAJE_INFO_COORDENADAS").Item("COLOR").Item(3), _
+                            JsonLanguage.item("MENSAJE_INFO_COORDENADAS").item("TEXTO"), _
+                            JsonLanguage.item("MENSAJE_INFO_COORDENADAS").item("COLOR").item(1), _
+                            JsonLanguage.item("MENSAJE_INFO_COORDENADAS").item("COLOR").item(2), _
+                            JsonLanguage.item("MENSAJE_INFO_COORDENADAS").item("COLOR").item(3), _
                             False, False, True)
 End Sub
 
@@ -1744,7 +1719,7 @@ Select Case Index
     Case eSMType.mWork
         If UserEstado = 1 Then
             With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO").Item(1), .Red, .Green, .Blue, .bold, .italic)
+                Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO").item(1), .Red, .Green, .Blue, .bold, .italic)
             End With
             Exit Sub
         End If
@@ -1798,7 +1773,7 @@ Private Sub SendTxt_KeyDown(KeyCode As Integer, Shift As Integer)
             CustomMessages.Message(NroMsg) = SendTxt.Text
             
             Dim MENSAJE_PERSONALIZADO As String
-                MENSAJE_PERSONALIZADO = JsonLanguage.Item("MENSAJE_PERSONALIZADO").Item("TEXTO")
+                MENSAJE_PERSONALIZADO = JsonLanguage.item("MENSAJE_PERSONALIZADO").item("TEXTO")
                 MENSAJE_PERSONALIZADO = Replace$(MENSAJE_PERSONALIZADO, "VAR_MENSAJE", SendTxt.Text)
                 MENSAJE_PERSONALIZADO = Replace$(MENSAJE_PERSONALIZADO, "VAR_MENSAJE_NUMERO", NroMsg + 1)
             
@@ -1816,7 +1791,7 @@ errhandler:
     'Did detected an invalid message??
     If Err.number = CustomMessages.InvalidMessageErrCode Then
         With FontTypes(FontTypeNames.FONTTYPE_INFO)
-            Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_CUSTOM_INVALIDO").Item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+            Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_CUSTOM_INVALIDO").item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
         End With
     End If
     
@@ -1854,7 +1829,7 @@ End Sub
 Private Sub TirarItem()
     If UserEstado = 1 Then
         With FontTypes(FontTypeNames.FONTTYPE_INFO)
-            Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO").Item(1), .Red, .Green, .Blue, .bold, .italic)
+            Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO").item(1), .Red, .Green, .Blue, .bold, .italic)
         End With
     Else
         If (Inventario.SelectedItem > 0 And Inventario.SelectedItem < MAX_INVENTORY_SLOTS + 1) Or (Inventario.SelectedItem = FLAGORO) Then
@@ -1872,7 +1847,7 @@ End Sub
 Private Sub AgarrarItem()
     If UserEstado = 1 Then
         With FontTypes(FontTypeNames.FONTTYPE_INFO)
-            Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO").Item(1), .Red, .Green, .Blue, .bold, .italic)
+            Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO").item(1), .Red, .Green, .Blue, .bold, .italic)
         End With
     Else
         Call WritePickUp
@@ -1891,7 +1866,7 @@ End Sub
 Private Sub EquiparItem()
     If UserEstado = 1 Then
         With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO").Item(1), .Red, .Green, .Blue, .bold, .italic)
+                Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO").item(1), .Red, .Green, .Blue, .bold, .italic)
         End With
     Else
         If Comerciando Then Exit Sub
@@ -1902,10 +1877,10 @@ Private Sub EquiparItem()
 End Sub
 
 Private Sub cmdLanzar_Click()
-    If hlst.List(hlst.ListIndex) <> JsonLanguage.Item("NADA").Item("TEXTO") And MainTimer.Check(TimersIndex.Work, False) Then
+    If hlst.List(hlst.ListIndex) <> JsonLanguage.item("NADA").item("TEXTO") And MainTimer.Check(TimersIndex.Work, False) Then
         If UserEstado = 1 Then
             With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO").Item(1), .Red, .Green, .Blue, .bold, .italic)
+                Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO").item(1), .Red, .Green, .Blue, .bold, .italic)
             End With
         Else
             Call WriteCastSpell(hlst.ListIndex + 1)
@@ -1927,18 +1902,18 @@ Private Sub cmdINFO_Click()
         Dim Msj As String
      
         If Index <> 0 Then _
-            Msj = "%%%%%%%%%%%% " & JsonLanguage.Item("MENSAJE_INFO_HECHIZOS").Item("TEXTO").Item(1) & " %%%%%%%%%%%%" & vbCrLf _
-             & JsonLanguage.Item("MENSAJE_INFO_HECHIZOS").Item("TEXTO").Item(2) & ": " & Hechizos(Index).Nombre & vbCrLf _
-             & JsonLanguage.Item("MENSAJE_INFO_HECHIZOS").Item("TEXTO").Item(3) & ": " & Hechizos(Index).Desc & vbCrLf _
-             & JsonLanguage.Item("MENSAJE_INFO_HECHIZOS").Item("TEXTO").Item(4) & ": " & Hechizos(Index).SkillRequerido & vbCrLf _
-             & JsonLanguage.Item("MENSAJE_INFO_HECHIZOS").Item("TEXTO").Item(5) & ": " & Hechizos(Index).ManaRequerida & vbCrLf _
-             & JsonLanguage.Item("MENSAJE_INFO_HECHIZOS").Item("TEXTO").Item(6) & ": " & Hechizos(Index).EnergiaRequerida & vbCrLf _
+            Msj = "%%%%%%%%%%%% " & JsonLanguage.item("MENSAJE_INFO_HECHIZOS").item("TEXTO").item(1) & " %%%%%%%%%%%%" & vbCrLf _
+             & JsonLanguage.item("MENSAJE_INFO_HECHIZOS").item("TEXTO").item(2) & ": " & Hechizos(Index).Nombre & vbCrLf _
+             & JsonLanguage.item("MENSAJE_INFO_HECHIZOS").item("TEXTO").item(3) & ": " & Hechizos(Index).Desc & vbCrLf _
+             & JsonLanguage.item("MENSAJE_INFO_HECHIZOS").item("TEXTO").item(4) & ": " & Hechizos(Index).SkillRequerido & vbCrLf _
+             & JsonLanguage.item("MENSAJE_INFO_HECHIZOS").item("TEXTO").item(5) & ": " & Hechizos(Index).ManaRequerida & vbCrLf _
+             & JsonLanguage.item("MENSAJE_INFO_HECHIZOS").item("TEXTO").item(6) & ": " & Hechizos(Index).EnergiaRequerida & vbCrLf _
              & "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
                                              
         Call ShowConsoleMsg(Msj, _
-                            JsonLanguage.Item("MENSAJE_INFO_HECHIZOS").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("MENSAJE_INFO_HECHIZOS").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("MENSAJE_INFO_HECHIZOS").Item("COLOR").Item(3))
+                            JsonLanguage.item("MENSAJE_INFO_HECHIZOS").item("COLOR").item(1), _
+                            JsonLanguage.item("MENSAJE_INFO_HECHIZOS").item("COLOR").item(2), _
+                            JsonLanguage.item("MENSAJE_INFO_HECHIZOS").item("COLOR").item(3))
         
     End If
 End Sub
@@ -2009,8 +1984,8 @@ Private Sub MainViewPic_Click()
                         frmMain.MousePointer = vbDefault
                         UsingSkill = 0
                         With FontTypes(FontTypeNames.FONTTYPE_TALK)
-                            VAR_LANZANDO = JsonLanguage.Item("PROYECTILES").Item("TEXTO")
-                            MENSAJE_ADVERTENCIA = JsonLanguage.Item("MENSAJE_MACRO_ADVERTENCIA").Item("TEXTO")
+                            VAR_LANZANDO = JsonLanguage.item("PROYECTILES").item("TEXTO")
+                            MENSAJE_ADVERTENCIA = JsonLanguage.item("MENSAJE_MACRO_ADVERTENCIA").item("TEXTO")
                             MENSAJE_ADVERTENCIA = Replace$(MENSAJE_ADVERTENCIA, "VAR_LANZADO", VAR_LANZANDO)
                             
                             Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_ADVERTENCIA, .Red, .Green, .Blue, .bold, .italic)
@@ -2024,8 +1999,8 @@ Private Sub MainViewPic_Click()
                             frmMain.MousePointer = vbDefault
                             UsingSkill = 0
                             With FontTypes(FontTypeNames.FONTTYPE_TALK)
-                                VAR_LANZANDO = JsonLanguage.Item("PROYECTILES").Item("TEXTO")
-                                MENSAJE_ADVERTENCIA = JsonLanguage.Item("MENSAJE_MACRO_ADVERTENCIA").Item("TEXTO")
+                                VAR_LANZANDO = JsonLanguage.item("PROYECTILES").item("TEXTO")
+                                MENSAJE_ADVERTENCIA = JsonLanguage.item("MENSAJE_MACRO_ADVERTENCIA").item("TEXTO")
                                 MENSAJE_ADVERTENCIA = Replace$(MENSAJE_ADVERTENCIA, "VAR_LANZADO", VAR_LANZANDO)
                                 
                                 Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_ADVERTENCIA, .Red, .Green, .Blue, .bold, .italic)
@@ -2041,8 +2016,8 @@ Private Sub MainViewPic_Click()
                                 frmMain.MousePointer = vbDefault
                                 UsingSkill = 0
                                 With FontTypes(FontTypeNames.FONTTYPE_TALK)
-                                    VAR_LANZANDO = JsonLanguage.Item("HECHIZOS").Item("TEXTO")
-                                    MENSAJE_ADVERTENCIA = JsonLanguage.Item("MENSAJE_MACRO_ADVERTENCIA").Item("TEXTO")
+                                    VAR_LANZANDO = JsonLanguage.item("HECHIZOS").item("TEXTO")
+                                    MENSAJE_ADVERTENCIA = JsonLanguage.item("MENSAJE_MACRO_ADVERTENCIA").item("TEXTO")
                                     MENSAJE_ADVERTENCIA = Replace$(MENSAJE_ADVERTENCIA, "VAR_LANZADO", VAR_LANZANDO)
                                     
                                     Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_ADVERTENCIA, .Red, .Green, .Blue, .bold, .italic)
@@ -2054,8 +2029,8 @@ Private Sub MainViewPic_Click()
                                 frmMain.MousePointer = vbDefault
                                 UsingSkill = 0
                                 With FontTypes(FontTypeNames.FONTTYPE_TALK)
-                                    VAR_LANZANDO = JsonLanguage.Item("HECHIZOS").Item("TEXTO")
-                                    MENSAJE_ADVERTENCIA = JsonLanguage.Item("MENSAJE_MACRO_ADVERTENCIA").Item("TEXTO")
+                                    VAR_LANZANDO = JsonLanguage.item("HECHIZOS").item("TEXTO")
+                                    MENSAJE_ADVERTENCIA = JsonLanguage.item("MENSAJE_MACRO_ADVERTENCIA").item("TEXTO")
                                     MENSAJE_ADVERTENCIA = Replace$(MENSAJE_ADVERTENCIA, "VAR_LANZADO", VAR_LANZANDO)
                                     
                                     Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_ADVERTENCIA, .Red, .Green, .Blue, .bold, .italic)
@@ -2158,8 +2133,6 @@ Private Sub Label4_Click()
 
     ' Activo controles de inventario
     PicInv.Visible = True
-    imgInvScrollUp.Visible = True
-    imgInvScrollDown.Visible = True
 
     ' Desactivo controles de hechizo
     hlst.Visible = False
@@ -2186,8 +2159,6 @@ Private Sub Label7_Click()
     
     ' Desactivo controles de inventario
     PicInv.Visible = False
-    imgInvScrollUp.Visible = False
-    imgInvScrollDown.Visible = False
 
 End Sub
 
@@ -2241,7 +2212,7 @@ Private Sub SendTxt_Change()
 '3/06/2006: Maraxus - impedi se inserten caracteres no imprimibles
 '**************************************************************
     If Len(SendTxt.Text) > 160 Then
-        stxtbuffer = JsonLanguage.Item("MENSAJE_SOY_CHEATER").Item("TEXTO")
+        stxtbuffer = JsonLanguage.item("MENSAJE_SOY_CHEATER").item("TEXTO")
     Else
         'Make sure only valid chars are inserted (with Shift + Insert they can paste illegal chars)
         Dim i As Long
@@ -2300,7 +2271,7 @@ End Sub
 
 Private Sub SendCMSTXT_Change()
     If Len(SendCMSTXT.Text) > 160 Then
-        stxtbuffercmsg = JsonLanguage.Item("MENSAJE_SOY_CHEATER").Item("TEXTO")
+        stxtbuffercmsg = JsonLanguage.item("MENSAJE_SOY_CHEATER").item("TEXTO")
     Else
         'Make sure only valid chars are inserted (with Shift + Insert they can paste illegal chars)
         Dim i As Long
@@ -2345,7 +2316,7 @@ If TX >= MinXBorder And TY >= MinYBorder And _
             Else
                 m.ListaSetItem 0, "<NPC>", True
             End If
-            m.ListaSetItem 1, JsonLanguage.Item("COMERCIAR").Item("TEXTO")
+            m.ListaSetItem 1, JsonLanguage.item("COMERCIAR").item("TEXTO")
             
             m.ListaFin
             m.Show , Me
