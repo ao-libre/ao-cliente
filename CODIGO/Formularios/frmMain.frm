@@ -218,7 +218,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2619
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1293,10 +1292,6 @@ End Select
 
 SMStatus(Index) = Mostrar
 End Sub
-Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
-If KeyCode = 37 Or KeyCode = 38 Or KeyCode = 39 Or KeyCode = 40 Then _
-    If lastKeys.itemExist(KeyCode) = False Then lastKeys.Add (KeyCode) ' Agrega la tecla a un array
-End Sub
 Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
 '***************************************************
 'Autor: Unknown
@@ -1304,8 +1299,6 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
 '18/11/2009: ZaMa - Ahora se pueden poner comandos en los mensajes personalizados (execpto guildchat y privados)
 '18/11/2010: Amraphen - Agregue el handle correspondiente para las nuevas configuraciones de teclas (CTRL+0..9).
 '***************************************************
-    If KeyCode = 37 Or KeyCode = 38 Or KeyCode = 39 Or KeyCode = 40 Then _
-        If lastKeys.itemExist(KeyCode) Then lastKeys.Remove (KeyCode) ' Remueve la tecla que teniamos presionada
     If (Not SendTxt.Visible) And (Not SendCMSTXT.Visible) Then
     
         'Verificamos si se esta presionando la tecla CTRL.
@@ -1579,11 +1572,13 @@ Private Sub imgAsignarSkill_Click()
 End Sub
 
 Private Sub imgClanes_Click()
+    
     If frmGuildLeader.Visible Then Unload frmGuildLeader
     Call WriteRequestGuildLeaderInfo
 End Sub
 
 Private Sub imgEstadisticas_Click()
+
     LlegaronAtrib = False
     LlegaronSkills = False
     LlegoFama = False
@@ -1603,14 +1598,17 @@ Private Sub imgEstadisticas_Click()
 End Sub
 
 Private Sub imgGrupo_Click()
+    
     Call WriteRequestPartyForm
 End Sub
 
 Private Sub imgMapa_Click()
+    
     Call frmMapa.Show(vbModeless, frmMain)
 End Sub
 
 Private Sub imgOpciones_Click()
+    
     Call frmOpciones.Show(vbModeless, frmMain)
 End Sub
 
@@ -1752,7 +1750,7 @@ Private Sub SendTxt_KeyDown(KeyCode As Integer, Shift As Integer)
     
     ' Control + Shift
     If Shift = 3 Then
-        On Error GoTo errhandler
+        On Error GoTo ErrHandler
         
         ' Only allow numeric keys
         If KeyCode >= vbKey0 And KeyCode <= vbKey9 Then
@@ -1787,7 +1785,7 @@ Private Sub SendTxt_KeyDown(KeyCode As Integer, Shift As Integer)
     
     Exit Sub
     
-errhandler:
+ErrHandler:
     'Did detected an invalid message??
     If Err.number = CustomMessages.InvalidMessageErrCode Then
         With FontTypes(FontTypeNames.FONTTYPE_INFO)
@@ -1877,6 +1875,7 @@ Private Sub EquiparItem()
 End Sub
 
 Private Sub cmdLanzar_Click()
+    
     If hlst.List(hlst.ListIndex) <> JsonLanguage.item("NADA").item("TEXTO") And MainTimer.Check(TimersIndex.Work, False) Then
         If UserEstado = 1 Then
             With FontTypes(FontTypeNames.FONTTYPE_INFO)
@@ -1896,6 +1895,7 @@ Private Sub CmdLanzar_MouseMove(Button As Integer, Shift As Integer, X As Single
 End Sub
 
 Private Sub cmdINFO_Click()
+    
     If hlst.ListIndex <> -1 Then
         Dim Index As Integer
         Index = DevolverIndexHechizo(hlst.List(hlst.ListIndex))
@@ -2145,6 +2145,7 @@ Private Sub Label4_Click()
 End Sub
 
 Private Sub Label7_Click()
+    
     Call Audio.PlayWave(SND_CLICK)
 
     InvEqu.Picture = LoadPicture(Game.path(Skins) & SkinSeleccionado & "\Centrohechizos.jpg")

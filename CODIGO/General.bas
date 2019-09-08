@@ -257,7 +257,7 @@ Sub SetConnected()
     frmMain.Visible = True
     lastKeys.Clear
     Call frmMain.ControlSM(eSMType.mWork, False)
-    
+    Call frmMain.ControlSM(eSMType.mSpells, False)
     FPSFLAG = True
 
 End Sub
@@ -321,7 +321,7 @@ Sub RandomMove()
 End Sub
 
 Private Sub CheckKeys()
-    '*****************************************************************
+     '*****************************************************************
     'Checks keys and respond
     '*****************************************************************
     'No input allowed while Argentum is not the active window
@@ -339,41 +339,56 @@ Private Sub CheckKeys()
     
     If UserMoving = 0 Then
         If Not UserEstupido Then
-            'Move Up
             If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyUp)) < 0 Then
-                If lastKeys.Count() = 38 Then
-                    'Debug.Print ("[" + CStr(lastKeys.item(1)) + "," + CStr(lastKeys.item(2)) + "," + CStr(lastKeys.item(3)) + "," + CStr(lastKeys.item(4)) + "]")
-                    Call Map_MoveTo(NORTH)
-                    Call Char_UserPos
-                    Exit Sub
-                End If
+                If lastKeys.itemExist(CustomKeys.BindedKey(eKeyType.mKeyUp)) = False Then lastKeys.Add (CustomKeys.BindedKey(eKeyType.mKeyUp)) ' Agrega la tecla al arraylist
+            Else
+                If lastKeys.itemExist(CustomKeys.BindedKey(eKeyType.mKeyUp)) Then lastKeys.Remove (CustomKeys.BindedKey(eKeyType.mKeyUp)) ' Remueve la tecla que teniamos presionada
+            End If
+            
+            If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyDown)) < 0 Then
+                If lastKeys.itemExist(CustomKeys.BindedKey(eKeyType.mKeyDown)) = False Then lastKeys.Add (CustomKeys.BindedKey(eKeyType.mKeyDown)) ' Agrega la tecla al arraylist
+            Else
+                If lastKeys.itemExist(CustomKeys.BindedKey(eKeyType.mKeyDown)) Then lastKeys.Remove (CustomKeys.BindedKey(eKeyType.mKeyDown)) ' Remueve la tecla que teniamos presionada
+            End If
+            
+            If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyLeft)) < 0 Then
+                If lastKeys.itemExist(CustomKeys.BindedKey(eKeyType.mKeyLeft)) = False Then lastKeys.Add (CustomKeys.BindedKey(eKeyType.mKeyLeft)) ' Agrega la tecla al arraylist
+            Else
+                If lastKeys.itemExist(CustomKeys.BindedKey(eKeyType.mKeyLeft)) Then lastKeys.Remove (CustomKeys.BindedKey(eKeyType.mKeyLeft)) ' Remueve la tecla que teniamos presionada
+            End If
+            
+            If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyRight)) < 0 Then
+                If lastKeys.itemExist(CustomKeys.BindedKey(eKeyType.mKeyRight)) = False Then lastKeys.Add (CustomKeys.BindedKey(eKeyType.mKeyRight)) ' Agrega la tecla al arraylist
+            Else
+                If lastKeys.itemExist(CustomKeys.BindedKey(eKeyType.mKeyRight)) Then lastKeys.Remove (CustomKeys.BindedKey(eKeyType.mKeyRight)) ' Remueve la tecla que teniamos presionada
+            End If
+            'Move Up
+            If lastKeys.Count() = 38 Then
+                Debug.Print ("[" + CStr(lastKeys.item(1)) + "," + CStr(lastKeys.item(2)) + "," + CStr(lastKeys.item(3)) + "," + CStr(lastKeys.item(4)) + "]")
+                Call Map_MoveTo(NORTH)
+                Call Char_UserPos
+                Exit Sub
             End If
             'Move Right
-            If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyRight)) < 0 Then
-                If lastKeys.Count = 39 Then
-                    'Debug.Print ("[" + CStr(lastKeys.item(1)) + "," + CStr(lastKeys.item(2)) + "," + CStr(lastKeys.item(3)) + "," + CStr(lastKeys.item(4)) + "]")
-                    Call Map_MoveTo(EAST)
-                    Call Char_UserPos
-                    Exit Sub
-                End If
+            If lastKeys.Count = 39 Then
+                Debug.Print ("[" + CStr(lastKeys.item(1)) + "," + CStr(lastKeys.item(2)) + "," + CStr(lastKeys.item(3)) + "," + CStr(lastKeys.item(4)) + "]")
+                Call Map_MoveTo(EAST)
+                Call Char_UserPos
+                Exit Sub
             End If
             'Move down
-            If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyDown)) < 0 Then
-                If lastKeys.Count = 40 Then
-                    'Debug.Print ("[" + CStr(lastKeys.item(1)) + "," + CStr(lastKeys.item(2)) + "," + CStr(lastKeys.item(3)) + "," + CStr(lastKeys.item(4)) + "]")
-                    Call Map_MoveTo(SOUTH)
-                    Call Char_UserPos
-                    Exit Sub
-                End If
+            If lastKeys.Count = 40 Then
+                Debug.Print ("[" + CStr(lastKeys.item(1)) + "," + CStr(lastKeys.item(2)) + "," + CStr(lastKeys.item(3)) + "," + CStr(lastKeys.item(4)) + "]")
+                Call Map_MoveTo(SOUTH)
+                Call Char_UserPos
+                Exit Sub
             End If
             'Move left
-            If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyLeft)) < 0 Then
-                If lastKeys.Count = 37 Then
-                    'Debug.Print ("[" + CStr(lastKeys.item(1)) + "," + CStr(lastKeys.item(2)) + "," + CStr(lastKeys.item(3)) + "," + CStr(lastKeys.item(4)) + "]")
-                    Call Map_MoveTo(WEST)
-                    Call Char_UserPos
-                    Exit Sub
-                End If
+            If lastKeys.Count = 37 Then
+                Debug.Print ("[" + CStr(lastKeys.item(1)) + "," + CStr(lastKeys.item(2)) + "," + CStr(lastKeys.item(3)) + "," + CStr(lastKeys.item(4)) + "]")
+                Call Map_MoveTo(WEST)
+                Call Char_UserPos
+                Exit Sub
             End If
             ' We haven't moved - Update 3D sounds!
             Call Audio.MoveListener(UserPos.X, UserPos.Y)
@@ -975,7 +990,7 @@ Private Sub LoadInitialConfig()
                             True, False, False, rtfLeft)
     
     'Inicializamos el inventario grafico
-    Call Inventario.Initialize(DirectD3D8, frmMain.picInv, MAX_INVENTORY_SLOTS, , , , , , , , True)
+    Call Inventario.Initialize(DirectD3D8, frmMain.PicInv, MAX_INVENTORY_SLOTS, , , , , , , , True)
     'Set cKeys = New Collection
     Call AddtoRichTextBox(frmCargando.status, _
                             JsonLanguage.item("BIENVENIDO").item("TEXTO"), _
