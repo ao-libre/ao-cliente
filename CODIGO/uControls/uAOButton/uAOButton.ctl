@@ -183,6 +183,7 @@ Public Event MouseMove(Button As Integer, shift As Integer, X As Single, Y As Si
 Public Event MouseUp(Button As Integer, shift As Integer, X As Single, Y As Single)
 Public Event MouseOver()
 Public Event MouseOut()
+Public Event KeyPress(KeyAscii As Integer)
 
 Private Sub bButton_Click()
 '*************************************************
