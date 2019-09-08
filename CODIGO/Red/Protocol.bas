@@ -2911,11 +2911,10 @@ On Error GoTo errhandler
         GuildNames = Split(Buffer.ReadASCIIString(), SEPARATOR)
         
         Dim i As Long
-        Dim Upper_guildNames As Long
-            Upper_guildNames = UBound(GuildNames())
-            
-        For i = 0 To Upper_guildNames
-            Call .guildslist.AddItem(GuildNames(i))
+        For i = 0 To UBound(GuildNames())
+            If LenB(GuildNames(i)) <> 0 Then
+                Call .guildslist.AddItem(GuildNames(i))
+            End If
         Next i
         
         'If we got here then packet is complete, copy data back to original queue
@@ -4633,9 +4632,7 @@ On Error GoTo errhandler
     
     Dim i As Long
     Dim List() As String
-    
-    Dim Upper_guildNames As Long, Upper_guildMembers As Long, Upper_list As Long
-    
+
     With frmGuildLeader
         'Get list of existing guilds
         GuildNames = Split(Buffer.ReadASCIIString(), SEPARATOR)
@@ -4643,11 +4640,10 @@ On Error GoTo errhandler
         'Empty the list
         Call .guildslist.Clear
         
-        'pre-calculate the amount of guilds that exist
-        Upper_guildNames = UBound(GuildNames())
-        
-        For i = 0 To Upper_guildNames
-            Call .guildslist.AddItem(GuildNames(i))
+        For i = 0 To UBound(GuildNames())
+            If LenB(GuildNames(i)) <> 0 Then
+                Call .guildslist.AddItem(GuildNames(i))
+            End If
         Next i
         
         'Get list of guild's members
@@ -4656,11 +4652,8 @@ On Error GoTo errhandler
         
         'Empty the list
         Call .members.Clear
-        
-        'pre-calculate the amount of guild members from the guild
-        Upper_guildMembers = UBound(GuildMembers())
-        
-        For i = 0 To Upper_guildMembers
+
+        For i = 0 To UBound(GuildMembers())
             Call .members.AddItem(GuildMembers(i))
         Next i
         
@@ -4671,11 +4664,8 @@ On Error GoTo errhandler
         
         'Empty the list
         Call .solicitudes.Clear
-        
-        'pre-calculate the amount of items that will be on the list
-        Upper_list = UBound(List())
-        
-        For i = 0 To Upper_list
+
+        For i = 0 To UBound(List())
             Call .solicitudes.AddItem(List(i))
         Next i
         
@@ -5398,12 +5388,11 @@ On Error GoTo errhandler
         GuildNames = Split(Buffer.ReadASCIIString(), SEPARATOR)
         
         Dim i As Long
-        Dim Upper_guildNames As Long, Upper_guildMembers As Long
-        
-        Upper_guildNames = UBound(GuildNames())
-       
-        For i = 0 To Upper_guildNames
-            Call .lstClanes.AddItem(GuildNames(i))
+
+        For i = 0 To UBound(GuildNames())
+            If LenB(GuildNames(i)) <> 0 Then
+                Call .lstClanes.AddItem(GuildNames(i))
+            End If
         Next i
         
         'Get list of guild's members
@@ -5412,10 +5401,8 @@ On Error GoTo errhandler
         
         'Empty the list
         Call .lstMiembros.Clear
-        
-        Upper_guildMembers = UBound(GuildMembers())
-        
-        For i = 0 To Upper_guildMembers
+
+        For i = 0 To UBound(GuildMembers())
             Call .lstMiembros.AddItem(GuildMembers(i))
         Next i
         
