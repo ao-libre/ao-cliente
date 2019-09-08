@@ -178,9 +178,9 @@ Private Const DT_SINGLELINE = &H20
 
 Public Event Click()
 Public Event DblClick()
-Public Event MouseDown(Button As Integer, shift As Integer, X As Single, Y As Single)
-Public Event MouseMove(Button As Integer, shift As Integer, X As Single, Y As Single)
-Public Event MouseUp(Button As Integer, shift As Integer, X As Single, Y As Single)
+Public Event MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Public Event MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Public Event MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
 Public Event MouseOver()
 Public Event MouseOut()
 Public Event KeyPress(KeyAscii As Integer)
@@ -242,7 +242,7 @@ On Error Resume Next
     End If
 End Sub
 
-Private Sub bButton_MouseDown(Button As Integer, shift As Integer, X As Single, Y As Single)
+Private Sub bButton_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
 '*************************************************
 'Author: ^[GS]^
 'Last modified: 15/07/2012
@@ -250,7 +250,7 @@ Private Sub bButton_MouseDown(Button As Integer, shift As Integer, X As Single, 
 
 On Error Resume Next
     
-    RaiseEvent MouseDown(Button, shift, X, Y)
+    RaiseEvent MouseDown(Button, Shift, X, Y)
     lastButton = Button
     If lastButton <> 2 And IsEnabled Then
         Call Redraw(2)
@@ -258,7 +258,7 @@ On Error Resume Next
     End If
 End Sub
 
-Private Sub bButton_MouseMove(Button As Integer, shift As Integer, X As Single, Y As Single)
+Private Sub bButton_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
 '*************************************************
 'Author: ^[GS]^
 'Last modified: 20/10/2012
@@ -266,7 +266,7 @@ Private Sub bButton_MouseMove(Button As Integer, shift As Integer, X As Single, 
 
 On Error Resume Next
     
-    RaiseEvent MouseMove(Button, shift, X, Y)
+    RaiseEvent MouseMove(Button, Shift, X, Y)
     If lastButton < 2 And IsEnabled Then
         lastHwnd = bButton.hWnd
         If Not isMouseOver Then
@@ -284,7 +284,7 @@ On Error Resume Next
     End If
 End Sub
 
-Private Sub bButton_MouseUp(Button As Integer, shift As Integer, X As Single, Y As Single)
+Private Sub bButton_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
 '*************************************************
 'Author: ^[GS]^
 'Last modified: 15/07/2012
@@ -292,7 +292,7 @@ Private Sub bButton_MouseUp(Button As Integer, shift As Integer, X As Single, Y 
 
 On Error Resume Next
     
-    RaiseEvent MouseUp(Button, shift, X, Y)
+    RaiseEvent MouseUp(Button, Shift, X, Y)
     If lastButton <> 2 And IsEnabled Then
         If isOver = True Then
             Call Redraw(1)
@@ -585,17 +585,6 @@ On Error Resume Next
     RaiseEvent DblClick
 End Sub
 
-Private Sub UserControl_KeyPress(KeyAscii As Integer)
-'*************************************************
-'Author: ^[GS]^
-'Last modified: 15/07/2012
-'*************************************************
-
-On Error Resume Next
-    
-    RaiseEvent KeyPress(KeyAscii)
-End Sub
-
 Private Sub UserControl_Initialize()
 '*************************************************
 'Author: ^[GS]^
@@ -640,7 +629,7 @@ On Error Resume Next
 
 End Sub
 
-Private Sub UserControl_MouseDown(Button As Integer, shift As Integer, X As Single, Y As Single)
+Private Sub UserControl_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
 '*************************************************
 'Author: ^[GS]^
 'Last modified: 15/07/2012
@@ -648,10 +637,10 @@ Private Sub UserControl_MouseDown(Button As Integer, shift As Integer, X As Sing
 
 On Error Resume Next
     
-    RaiseEvent MouseDown(Button, shift, X, Y)
+    RaiseEvent MouseDown(Button, Shift, X, Y)
 End Sub
 
-Private Sub UserControl_MouseMove(Button As Integer, shift As Integer, X As Single, Y As Single)
+Private Sub UserControl_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
 '*************************************************
 'Author: ^[GS]^
 'Last modified: 15/07/2012
@@ -659,10 +648,10 @@ Private Sub UserControl_MouseMove(Button As Integer, shift As Integer, X As Sing
 
 On Error Resume Next
     
-    RaiseEvent MouseMove(Button, shift, X, Y)
+    RaiseEvent MouseMove(Button, Shift, X, Y)
 End Sub
 
-Private Sub UserControl_MouseUp(Button As Integer, shift As Integer, X As Single, Y As Single)
+Private Sub UserControl_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
 '*************************************************
 'Author: ^[GS]^
 'Last modified: 15/07/2012
@@ -670,7 +659,7 @@ Private Sub UserControl_MouseUp(Button As Integer, shift As Integer, X As Single
 
 On Error Resume Next
     
-    RaiseEvent MouseUp(Button, shift, X, Y)
+    RaiseEvent MouseUp(Button, Shift, X, Y)
 End Sub
 
 Private Sub UserControl_Paint()
