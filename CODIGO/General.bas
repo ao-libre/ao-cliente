@@ -256,6 +256,7 @@ Sub SetConnected()
     'Load main form
     frmMain.Visible = True
     
+    Call frmMain.ControlSM(eSMType.mSpells, False)
     Call frmMain.ControlSM(eSMType.mWork, False)
     
     FPSFLAG = True
