@@ -54,6 +54,7 @@ Public Movement_Speed As Single
 Public DialogosClanes As clsGuildDlg
 Public Dialogos As clsDialogs
 Public Audio As clsAudio
+Public lastKeys As clsArrayList
 Public Inventario As clsGraphicalInventory
 Public InvBanco(1) As clsGraphicalInventory
 
@@ -214,6 +215,7 @@ Public Tips() As String * 255
 
 'Direcciones
 Public Enum E_Heading
+    nada = 0
     NORTH = 1
     EAST = 2
     SOUTH = 3
@@ -222,7 +224,7 @@ End Enum
 
 'Objetos
 Public Const MAX_INVENTORY_OBJS As Integer = 10000
-Public Const MAX_INVENTORY_SLOTS As Byte = 30
+Public Const MAX_INVENTORY_SLOTS As Byte = 25
 Public Const MAX_NPC_INVENTORY_SLOTS As Byte = 50
 Public Const MAXHECHI As Byte = 35
 
@@ -732,7 +734,7 @@ Public ListaClases(1 To NUMCLASES) As String
 
 Public SkillPoints As Integer
 Public Alocados As Integer
-Public flags() As Integer
+Public Flags() As Integer
 
 Public UsingSkill As Integer
 
@@ -799,7 +801,7 @@ End Enum
 ' @param ZONAPELEA al pelear en este trigger no se caen las cosas y no cambia el estado de ciuda o crimi
 '
 Public Enum eTrigger
-    NADA = 0
+    nada = 0
     BAJOTECHO = 1
     trigger_2 = 2
     POSINVALIDA = 3
