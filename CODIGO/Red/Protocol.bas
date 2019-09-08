@@ -321,6 +321,7 @@ Private Enum ClientPacketID
     CambiarContrasena = 145
     FightSend = 146
     FightAccept = 147
+    CloseGuild = 148            '/CERRARCLAN
 End Enum
 
 Public Enum FontTypeNames
@@ -11199,4 +11200,14 @@ Public Sub WriteFightAccept(ByVal UserName As String)
     End With
     
 End Sub
+
+Public Sub WriteCloseGuild()
+'***************************************************
+'Author: Matías ezequiel (maTih.-)
+'***************************************************
+
+    Call outgoingData.WriteByte(ClientPacketID.CloseGuild)
+
+End Sub
+
 

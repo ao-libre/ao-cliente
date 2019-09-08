@@ -1586,6 +1586,9 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 
             Case "/RETOS"
                 Call FrmRetos.Show(vbModeless, frmMain)
+            
+            Case "/CERRARCLAN"
+                Call WriteCloseGuild
                 
             Case "/ACEPTAR"
                 If notNullArguments Then
