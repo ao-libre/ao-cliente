@@ -35,6 +35,13 @@ Option Explicit
 
 Public bFogata As Boolean
 
+Public Type tRedditPost
+    Title As String
+    URL As String
+End Type
+
+Public Posts() As tRedditPost
+
 Public bLluvia() As Byte ' Array para determinar si
 'debemos mostrar la animacion de la lluvia
 
@@ -249,6 +256,7 @@ Sub SetConnected()
     'Load main form
     frmMain.Visible = True
     
+    Call frmMain.ControlSM(eSMType.mSpells, False)
     Call frmMain.ControlSM(eSMType.mWork, False)
     
     FPSFLAG = True
@@ -297,7 +305,7 @@ Sub MoveTo(ByVal Direccion As E_Heading)
             Call WriteChangeHeading(Direccion)
         End If
     End If
-    
+    If frmMain.trainingMacro.Enabled Then Call frmMain.DesactivarMacroHechizos
     If frmMain.macrotrabajo.Enabled Then Call frmMain.DesactivarMacroTrabajo
     
     ' Update 3D sounds!
@@ -317,7 +325,7 @@ Private Sub CheckKeys()
     '*****************************************************************
     'Checks keys and respond
     '*****************************************************************
-    Static LastMovement As Long
+    Static lastmovement As Long
     
     'No input allowed while Argentum is not the active window
     If Not Application.IsAppActive() Then Exit Sub
@@ -333,13 +341,6 @@ Private Sub CheckKeys()
     
     'TODO: Deberia informarle por consola?
     If Traveling Then Exit Sub
-
-    'Control movement interval (this enforces the 1 step loss when meditating / resting client-side)
-    If GetTickCount - LastMovement > 56 Then
-        LastMovement = GetTickCount
-    Else
-        Exit Sub
-    End If
 
     'Don't allow any these keys during movement..
     If UserMoving = 0 Then
@@ -391,7 +392,7 @@ Private Sub CheckKeys()
         End If
     Else
 
-    Call frmMain.ActualizarMiniMapa   'integrado por ReyarB
+        Call frmMain.ActualizarMiniMapa   'integrado por ReyarB
         
     End If
 End Sub
@@ -531,7 +532,10 @@ Sub SwitchMap(ByVal Map As Integer)
     
     'Carga las particulas especificas del mapa.
     Call Load_Map_Particles(Map)
-    
+    'renderMsgReset
+    renderText = nameMap
+    renderFont = 2
+    colorRender = 240
 End Sub
 
 Function ReadField(ByVal Pos As Integer, ByRef Text As String, ByVal SepASCII As Byte) As String
@@ -938,7 +942,7 @@ Private Sub LoadInitialConfig()
         Call CloseClient
     End If
     
-    Engine_DirectX8_Aditional_Init
+    Call Engine_DirectX8_Aditional_Init
 
     Call AddtoRichTextBox(frmCargando.status, _
                             "   " & JsonLanguage.Item("HECHO").Item("TEXTO"), _
@@ -970,7 +974,7 @@ Private Sub LoadInitialConfig()
                             True, False, False, rtfLeft)
     
     'Inicializamos el inventario grafico
-    Call Inventario.Initialize(DirectD3D8, frmMain.PicInv, MAX_INVENTORY_SLOTS, , , , , , , , True)
+    Call Inventario.Initialize(DirectD3D8, frmMain.picInv, MAX_INVENTORY_SLOTS, , , , , , , , True)
     
     Call AddtoRichTextBox(frmCargando.status, _
                             JsonLanguage.Item("BIENVENIDO").Item("TEXTO"), _
@@ -1006,10 +1010,8 @@ Private Sub LoadTimerIntervals()
         Call .SetInterval(TimersIndex.CastAttack, eIntervalos.INT_CAST_ATTACK)
         
         With frmMain.macrotrabajo
-            
             .Interval = eIntervalos.INT_MACRO_TRABAJO
             .Enabled = False
-        
         End With
     
         'Init timers
@@ -1466,11 +1468,11 @@ Public Sub ResetAllInfo()
 
 End Sub
 
-Public Function DevolverNombreHechizo(ByVal index As Byte) As String
+Public Function DevolverNombreHechizo(ByVal Index As Byte) As String
 Dim i As Long
  
     For i = 1 To NumHechizos
-        If i = index Then
+        If i = Index Then
             DevolverNombreHechizo = Hechizos(i).Nombre
             Exit Function
         End If
@@ -1522,38 +1524,46 @@ End Function
 
 Public Sub GetPostsFromReddit()
 On Error Resume Next
-    
-    Set Inet = New clsInet
-    
-    Dim ResponseReddit As String
-    Dim JsonObject As Object
-    Dim Endpoint As String
-    
-    Endpoint = GetVar(Game.path(INIT) & "Config.ini", "Parameters", "SubRedditEndpoint")
-    ResponseReddit = Inet.OpenRequest(Endpoint, "GET")
-    ResponseReddit = Inet.Execute
-    ResponseReddit = Inet.GetResponseAsString
-    
-    Set JsonObject = JSON.parse(ResponseReddit)
-    
-    Dim qtyPostsOnReddit As Integer: qtyPostsOnReddit = JsonObject.Item("data").Item("children").Count
-    
-    ReDim Posts(qtyPostsOnReddit)
-    
-    'Clear lstRedditPosts before populate it again to prevent repeated values.
-    frmConnect.lstRedditPosts.Clear
-    
-    'Long funciona mas rapido en los loops que Integer
-    Dim i As Long
-    i = 1
-    Do While i <= qtyPostsOnReddit
-        Posts(i).Title = JsonObject.Item("data").Item("children").Item(i).Item("data").Item("title")
-        Posts(i).URL = JsonObject.Item("data").Item("children").Item(i).Item("data").Item("url")
+    If UBound(Posts) = 0 Then
+        Set Inet = New clsInet
         
-        frmConnect.lstRedditPosts.AddItem JsonObject.Item("data").Item("children").Item(i).Item("data").Item("title")
+        Dim ResponseReddit As String
+        Dim JsonObject As Object
+        Dim Endpoint As String
         
-        i = i + 1
-    Loop
+        Endpoint = GetVar(Game.path(INIT) & "Config.ini", "Parameters", "SubRedditEndpoint")
     
-    Set Inet = Nothing
+        ResponseReddit = Inet.OpenRequest(Endpoint, "GET")
+        ResponseReddit = Inet.Execute
+        ResponseReddit = Inet.GetResponseAsString
+        
+        
+        Set JsonObject = JSON.parse(ResponseReddit)
+        
+        Dim qtyPostsOnReddit As Integer: qtyPostsOnReddit = JsonObject.Item("data").Item("children").Count
+        
+        ReDim Preserve Posts(qtyPostsOnReddit)
+        
+        'Clear lstRedditPosts before populate it again to prevent repeated values.
+        frmConnect.lstRedditPosts.Clear
+        'Long funciona mas rapido en los loops que Integer
+        Dim i As Long
+        i = 1
+        Do While i <= qtyPostsOnReddit
+            Posts(i).Title = JsonObject.Item("data").Item("children").Item(i).Item("data").Item("title")
+            Posts(i).URL = JsonObject.Item("data").Item("children").Item(i).Item("data").Item("url")
+            
+            frmConnect.lstRedditPosts.AddItem JsonObject.Item("data").Item("children").Item(i).Item("data").Item("title")
+            
+            i = i + 1
+        Loop
+        
+        Set Inet = Nothing
+    Else
+        Dim ia As Long
+        For ia = 1 To UBound(Posts)
+            frmConnect.lstRedditPosts.AddItem Posts(ia).Title
+        Next ia
+    End If
+    
 End Sub
