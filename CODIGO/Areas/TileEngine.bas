@@ -994,7 +994,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
     ParticleOffsetX = (Engine_PixelPosX(screenminX) - PixelOffsetX)
     ParticleOffsetY = (Engine_PixelPosY(screenminY) - PixelOffsetY)
 
-'Draw floor layer
+    'Draw floor layer
     For Y = screenminY To screenmaxY
         For X = screenminX To screenmaxX
             
@@ -1041,15 +1041,12 @@ Sub RenderScreen(ByVal tilex As Integer, _
                         Call Draw_Grh(.ObjGrh, PixelOffsetXTemp, PixelOffsetYTemp, 1, .Engine_Light(), 1, X, Y)
                     End If
                     '***********************************************
-        
-        
+    
                     'Char layer********************************
                     If .CharIndex <> 0 Then
                         Call CharRender(.CharIndex, PixelOffsetXTemp, PixelOffsetYTemp)
                     End If
                     '*************************************************
-        
-                    
                     
                     'Layer 3 *****************************************
                     If .Graphic(3).GrhIndex <> 0 Then
@@ -1186,6 +1183,9 @@ Sub RenderScreen(ByVal tilex As Integer, _
     If ClientSetup.PartyMembers Then Call Draw_Party_Members
 
     Call RenderCount
+    
+    ' Renderizamos el clima.
+    Call Render_Clima
 End Sub
 
 Public Function RenderSounds()

@@ -131,3 +131,25 @@ Public Sub End_Rampage()
 
 End Sub
 
+Public Sub Render_Clima()
+
+    Select Case Hour(Now)
+        
+        Case Is >= 5
+            Call Actualizar_Estado(e_estados.AMANECER)
+        
+        Case Is >= 12
+            Call Actualizar_Estado(e_estados.MEDIODIA)
+            
+        Case Is >= 13
+            Call Actualizar_Estado(e_estados.DIA)
+            
+        Case Is >= 18
+            Call Actualizar_Estado(e_estados.ATARDECER)
+            
+        Case Is >= 21
+            Call Actualizar_Estado(e_estados.NOCHE)
+            
+    End Select
+
+End Sub
