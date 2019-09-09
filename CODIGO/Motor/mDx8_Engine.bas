@@ -233,10 +233,10 @@ Public Sub Engine_DirectX8_Aditional_Init()
     Call Engine_Long_To_RGB_List(Color_Arbol(), D3DColorARGB(100, 100, 100, 100))
     
     ' Inicializamos otros sistemas.
-    Call Engine_Init_FontTextures
-    Call Engine_Init_FontSettings
-    Call Load_Auras
-    Call Init_MeteoEngine
+    Call mDx8_Text.Engine_Init_FontTextures
+    Call mDx8_Text.Engine_Init_FontSettings
+    Call mDx8_Auras.Load_Auras
+    Call mDx8_Clima.Init_MeteoEngine
     Call mDx8_Dibujado.Damage_Initialize
     
 End Sub
@@ -366,25 +366,32 @@ Public Sub Engine_Long_To_RGB_List(rgb_list() As Long, long_color As Long)
     rgb_list(2) = rgb_list(0)
     rgb_list(3) = rgb_list(0)
 End Sub
-Public Function SetARGB_Alpha(rgb_list() As Long, Alpha As Byte) As Long()
-'***************************************************
-'Author: Juan Manuel Couso (Cucsifae)
-'Last Modification: 29/08/18
-'Obtiene un ARGB list le modifica el alpha y devuelve una copia
-'***************************************************
-Dim TempColor As D3DCOLORVALUE
-Dim tempARGB(0 To 3) As Long
-'convertimos el valor del rgb list a D3DCOLOR
-Call ARGBtoD3DCOLORVALUE(rgb_list(1), TempColor)
-'comprobamos ue no se salga del rango permitido
-If Alpha > 255 Then Alpha = 255
-If Alpha < 0 Then Alpha = 0
-'seteamos el alpha
-TempColor.a = Alpha
-'generamos el nuevo RGB_List
-Call Engine_D3DColor_To_RGB_List(tempARGB(), TempColor)
 
-SetARGB_Alpha = tempARGB()
+Public Function SetARGB_Alpha(rgb_list() As Long, Alpha As Byte) As Long()
+
+    '***************************************************
+    'Author: Juan Manuel Couso (Cucsifae)
+    'Last Modification: 29/08/18
+    'Obtiene un ARGB list le modifica el alpha y devuelve una copia
+    '***************************************************
+    Dim TempColor        As D3DCOLORVALUE
+    Dim tempARGB(0 To 3) As Long
+
+    'convertimos el valor del rgb list a D3DCOLOR
+    Call ARGBtoD3DCOLORVALUE(rgb_list(1), TempColor)
+
+    'comprobamos ue no se salga del rango permitido
+    If Alpha > 255 Then Alpha = 255
+    If Alpha < 0 Then Alpha = 0
+    
+    'seteamos el alpha
+    TempColor.a = Alpha
+    
+    'generamos el nuevo RGB_List
+    Call Engine_D3DColor_To_RGB_List(tempARGB(), TempColor)
+
+    SetARGB_Alpha = tempARGB()
+
 End Function
 
 Private Function Engine_Collision_Between(ByVal Value As Single, ByVal Bound1 As Single, ByVal Bound2 As Single) As Byte
