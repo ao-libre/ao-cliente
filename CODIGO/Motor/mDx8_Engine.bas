@@ -596,15 +596,9 @@ End Function
 Public Sub Engine_Update_FPS()
     '***************************************************
     'Author: Standelf
-    'Last Modification: 10/01/2011
-    'Limit FPS & Calculate later
+    'Last Modification: 09/09/2019
+    'Calculate FPS
     '***************************************************
-
-    If ClientSetup.vSync Then
-        While (GetTickCount - FPSLastCheck) \ 10 < FramesPerSecCounter
-            Call Sleep(5)
-        Wend
-    End If
 
     If FPSLastCheck + 1000 < GetTickCount Then
         FPS = FramesPerSecCounter
