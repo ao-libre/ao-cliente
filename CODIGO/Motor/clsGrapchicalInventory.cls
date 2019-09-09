@@ -415,8 +415,8 @@ Public Sub DrawInventory()
 
     For LoopC = InventoryOffset * (InventoryWindow.ScaleWidth \ ownTilePixelWidth) + 1 To UBound(Inventory)
             
-        startdX = ((LoopC - 1) Mod (frmMain.PicInv.Width / 32)) * 32
-        startdY = ((LoopC - 1) \ (frmMain.PicInv.Width / 32)) * 32
+        startdX = ((LoopC - 1) Mod (frmMain.picInv.Width / 32)) * 32
+        startdY = ((LoopC - 1) \ (frmMain.picInv.Width / 32)) * 32
 
         'Call Draw_GrhIndex(23651, startdX, startdY, 0, Inv_Color(), 0, False) 'Dibuja el fondo
             
@@ -473,11 +473,22 @@ Private Sub InventoryWindow_MouseMove(Button As Integer, Shift As Integer, X As 
     
         TempItem = temp_x + (temp_y + InventoryOffset) * (InventoryWindow.ScaleWidth \ 32) + 1
         TempSlot = TempItem
-        
+        'Incorporado por ReyarB
         If TempItem <= UBound(Inventory) Then
-            InventoryWindow.ToolTipText = Inventory(TempItem).Name
+            If Inventory(TempItem).OBJType = 2 Then
+                InventoryWindow.ToolTipText = Inventory(TempItem).Name & ", Ataque: " & Inventory(TempItem).MaxHit & "/" & Inventory(TempItem).MinHit
+                Else
+                If Inventory(TempItem).OBJType = 3 Then
+                    InventoryWindow.ToolTipText = Inventory(TempItem).Name & ", Defensa: " & Inventory(TempItem).MaxDef & "/" & Inventory(TempItem).MinDef
+                    Else
+                    If Inventory(TempItem).OBJType = 16 Then
+                        InventoryWindow.ToolTipText = Inventory(TempItem).Name & ", Defensa: " & Inventory(TempItem).MaxDef & "/" & Inventory(TempItem).MinDef
+                        Else
+                        InventoryWindow.ToolTipText = Inventory(TempItem).Name
+                    End If
+                End If
+            End If
         End If
-        
     If Button = vbRightButton And isInventory Then ' And DragItem <> 0 Then
         Drag = 1
     Else
