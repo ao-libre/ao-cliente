@@ -21,21 +21,6 @@ Public DirectD3D As Direct3D8
 ' use the same object no matter what it is
 Public DirectDevice As Direct3DDevice8
 
-' The DirectInput8 object is used to get data from input devices
-' such as the mouse and keyboard.
-' Notice how we don't create a new instance of the object, rather
-' DirectX does that for us and we just get a pointer to it.
-Public DirectInput As DirectInput8
-Public Keyboard As DirectInputDevice8
-Public Mouse As DirectInputDevice8
-
-' Now we need 2 devices - keyboard and mouse
-' and a structure (type) to hold the data from each device. DI
-' provides us a custom keyboard and mouse type, since they are
-' commonly used.
-Public KeyboardState As DIKEYBOARDSTATE
-Public MouseState As DIMOUSESTATE
-
 Public SurfaceDB As New clsTextureManager
 Public SpriteBatch As New clsBatch
 
@@ -55,9 +40,9 @@ Public Const HeadOffsetBajos As Integer = 2
 Public MainScreenRect As RECT
 
 Public Type TLVERTEX
-    x As Single
-    y As Single
-    z As Single
+    X As Single
+    Y As Single
+    Z As Single
     rhw As Single
     Color As Long
     Specular As Long
@@ -219,7 +204,6 @@ On Error Resume Next
     Set DirectD3D = Nothing
     Set DirectX = Nothing
     Set DirectDevice = Nothing
-    Set DirectInput = Nothing
     Set SpriteBatch = Nothing
 End Sub
 
@@ -303,49 +287,49 @@ Dim Start_Time As Long
 
 End Function
 
-Public Function Engine_PixelPosX(ByVal x As Integer) As Integer
+Public Function Engine_PixelPosX(ByVal X As Integer) As Integer
 '*****************************************************************
 'Converts a tile position to a screen position
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_PixelPosX
 '*****************************************************************
 
-    Engine_PixelPosX = (x - 1) * 32
+    Engine_PixelPosX = (X - 1) * 32
     
 End Function
 
-Public Function Engine_PixelPosY(ByVal y As Integer) As Integer
+Public Function Engine_PixelPosY(ByVal Y As Integer) As Integer
 '*****************************************************************
 'Converts a tile position to a screen position
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_PixelPosY
 '*****************************************************************
 
-    Engine_PixelPosY = (y - 1) * 32
+    Engine_PixelPosY = (Y - 1) * 32
     
 End Function
 
-Public Function Engine_TPtoSPX(ByVal x As Byte) As Long
+Public Function Engine_TPtoSPX(ByVal X As Byte) As Long
 '************************************************************
 'Tile Position to Screen Position
 'Takes the tile position and returns the pixel location on the screen
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_TPtoSPX
 '************************************************************
 
-    Engine_TPtoSPX = Engine_PixelPosX(x - ((UserPos.x - HalfWindowTileWidth) - Engine_Get_TileBuffer)) + OffsetCounterX - 272 + ((10 - TileBufferSize) * 32)
+    Engine_TPtoSPX = Engine_PixelPosX(X - ((UserPos.X - HalfWindowTileWidth) - Engine_Get_TileBuffer)) + OffsetCounterX - 272 + ((10 - TileBufferSize) * 32)
     
 End Function
 
-Public Function Engine_TPtoSPY(ByVal y As Byte) As Long
+Public Function Engine_TPtoSPY(ByVal Y As Byte) As Long
 '************************************************************
 'Tile Position to Screen Position
 'Takes the tile position and returns the pixel location on the screen
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_TPtoSPY
 '************************************************************
 
-    Engine_TPtoSPY = Engine_PixelPosY(y - ((UserPos.y - HalfWindowTileHeight) - Engine_Get_TileBuffer)) + OffsetCounterY - 272 + ((10 - TileBufferSize) * 32)
+    Engine_TPtoSPY = Engine_PixelPosY(Y - ((UserPos.Y - HalfWindowTileHeight) - Engine_Get_TileBuffer)) + OffsetCounterY - 272 + ((10 - TileBufferSize) * 32)
     
 End Function
 
-Public Sub Engine_Draw_Box(ByVal x As Integer, ByVal y As Integer, ByVal Width As Integer, ByVal Height As Integer, Color As Long)
+Public Sub Engine_Draw_Box(ByVal X As Integer, ByVal Y As Integer, ByVal Width As Integer, ByVal Height As Integer, Color As Long)
 '***************************************************
 'Author: Ezequiel Juarez (Standelf)
 'Last Modification: 29/12/10
@@ -355,7 +339,7 @@ Public Sub Engine_Draw_Box(ByVal x As Integer, ByVal y As Integer, ByVal Width A
     Call Engine_Long_To_RGB_List(temp_rgb(), Color)
 
     Call SpriteBatch.SetTexture(Nothing)
-    Call SpriteBatch.Draw(x, y, Width, ByVal Height, temp_rgb())
+    Call SpriteBatch.Draw(X, Y, Width, ByVal Height, temp_rgb())
     
 End Sub
 
