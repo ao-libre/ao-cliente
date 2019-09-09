@@ -13,7 +13,7 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 '*****************************************************
 'Graphical inventory for ORE 0.4.1
-'Designed and implemented by Juan Martín Sotuyo Dodero (Maraxus)
+'Designed and implemented by Juan MartÃ­n Sotuyo Dodero (Maraxus)
 'juansotuyo@hotmail.com
 '*****************************************************
 
@@ -70,7 +70,7 @@ Attribute InventoryWindow.VB_VarHelpID = -1
 
 Private Sub Class_Initialize()
 '***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan MartÃ­n Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04
 '
 '***************************************************
@@ -78,7 +78,7 @@ End Sub
 
 Private Sub Class_Terminate()
 '***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan MartÃ­n Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04
 '
 '***************************************************
@@ -86,7 +86,7 @@ End Sub
 
 Public Sub ScrollInventory(ByVal Up As Boolean)
 '***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan MartÃ­n Sotuyo Dodero (Maraxus)
 'Last Modify Date: 14/01/2010
 'Scrolls the graphical inventory up / down
 '14/01/2010: ZaMa - Now redraws inventory only if needed
@@ -119,7 +119,7 @@ End Function
 
 Public Sub SelectGold()
 '***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan MartÃ­n Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04
 'Sets the gold as the currently selected item
 '***************************************************
@@ -174,7 +174,7 @@ End Sub
 
 Public Property Get SelectedItem() As Long
 '***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan MartÃ­n Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04
 'Retrieves the selected item index
 '***************************************************
@@ -183,7 +183,7 @@ End Property
 
 Public Property Get MaxHit(ByVal slot As Byte) As Integer
 '***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan MartÃ­n Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04
 'Retrieves the max hit of the selected item
 '***************************************************
@@ -192,7 +192,7 @@ End Property
 
 Public Property Get MinHit(ByVal slot As Byte) As Integer
 '***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan MartÃ­n Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04
 'Retrieves the min hit of the selected item
 '***************************************************
@@ -201,7 +201,7 @@ End Property
 
 Public Property Get MaxDef(ByVal slot As Byte) As Integer
 '***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan MartÃ­n Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04
 'Retrieves the defense of the selected item
 '***************************************************
@@ -219,7 +219,7 @@ End Property
 
 Public Property Get GrhIndex(ByVal slot As Byte) As Integer
 '***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan MartÃ­n Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04
 'Retrieves the grh index of the selected item
 '***************************************************
@@ -228,7 +228,7 @@ End Property
 
 Public Property Get Valor(ByVal slot As Byte) As Single
 '***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan MartÃ­n Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04
 'Retrieves the value of the selected item
 '***************************************************
@@ -237,7 +237,7 @@ End Property
 
 Public Property Get Amount(ByVal slot As Byte) As Long
 '***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan MartÃ­n Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04
 'Retrieves the selected item's amount
 '***************************************************
@@ -250,7 +250,7 @@ End Property
 
 Public Property Get ObjIndex(ByVal slot As Byte) As Integer
 '***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan MartÃ­n Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04
 'Retrieves the selected item's object index
 '***************************************************
@@ -259,7 +259,7 @@ End Property
 
 Public Property Get OBJType(ByVal slot As Byte) As Integer
 '***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan MartÃ­n Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04
 'Retrieves the selected item's object type
 '***************************************************
@@ -268,7 +268,7 @@ End Property
 
 Public Property Get ItemName(ByVal slot As Byte) As String
 '***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan MartÃ­n Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04
 'Retrieves the selected item's name
 '***************************************************
@@ -277,7 +277,7 @@ End Property
 
 Public Property Get Equipped(ByVal slot As Byte) As Boolean
 '***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan MartÃ­n Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04
 'Retrieves True if the item at the given pos is eqiupped
 '***************************************************
@@ -335,7 +335,7 @@ Public Sub SetItem(ByVal slot As Byte, ByVal eOBJIndex As Integer, ByVal eAmount
                         ByVal eGrhIndex As Integer, ByVal eObjType As Integer, ByVal eMaxHit As Integer, ByVal eMinHit As Integer, _
                         ByVal MaxDef As Integer, ByVal MinDef As Integer, ByVal eValor As Single, ByVal eName As String)
 '***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan MartÃ­n Sotuyo Dodero (Maraxus)
 'Last Modify Date: 12/04/06
 'Sets all data for a given inventory slot
 '***************************************************
@@ -363,7 +363,7 @@ End Sub
 
 Private Function ClickItem(ByVal X As Long, ByVal Y As Long) As Long
 '***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan MartÃ­n Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04
 'Selects the item clicked if it's valid and return's it's index
 '***************************************************
@@ -391,7 +391,7 @@ End Function
 Public Sub DrawInventory()
 
     '***************************************************
-    'Author: Juan Martín Sotuyo Dodero (Maraxus)
+    'Author: Juan MartÃ­n Sotuyo Dodero (Maraxus)
     'Last Modify Date: 27/07/04
     'Renders the inventory to the given PictureBox
     '***************************************************
@@ -455,7 +455,7 @@ End Sub
 
 Private Sub InventoryWindow_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
 '***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan MartÃ­n Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04
 'Implements the mouse move event of the inventory picture box
 'Displays a ToolTip of the item under the mouse
@@ -489,6 +489,7 @@ Private Sub InventoryWindow_MouseMove(Button As Integer, Shift As Integer, X As 
                 End If
             End If
         End If
+  'Fin Incorporado por ReyarB
     If Button = vbRightButton And isInventory Then ' And DragItem <> 0 Then
         Drag = 1
     Else
@@ -540,7 +541,7 @@ Public Sub Initialize(ByRef DirectD3D As D3DX8, ByRef InvPic As PictureBox, ByVa
                             Optional ByVal startY As Integer = 0, Optional ByVal bImgContainer As Boolean = True, _
                             Optional ByVal bShowText As Boolean = True, Optional thisInventory As Boolean = False)
 '***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan MartÃ­n Sotuyo Dodero (Maraxus)
 'Last Modify Date: 03/12/09
 'Sets the reference to the picture box on which to render the inventory
 '03/12/09: I added the optionals args FontSize, TileWidth, TileHeight, startX and startY. (Budi)
@@ -572,7 +573,7 @@ End Sub
 
 Private Sub InventoryWindow_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
 '***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan MartÃ­n Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04
 'Implements the mouse up event of the inventory picture box
 'Check outs which item was clicked
