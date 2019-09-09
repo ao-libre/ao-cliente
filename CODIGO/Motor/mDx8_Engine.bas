@@ -3,11 +3,38 @@ Option Explicit
 
 Public Declare Function timeGetTime Lib "winmm.dll" () As Long
 
-'DX8 Objects
+' No matter what you do with DirectX8, you will need to start with
+' the DirectX8 object. You will need to create a new instance of
+' the object, using the New keyword, rather than just getting a
+' pointer to it, since there's nowhere to get a pointer from yet (duh!).
+
 Public DirectX As New DirectX8
+
+' The D3DX8 object contains lots of helper functions, mostly math
+' to make Direct3D alot easier to use. Notice we create a new
+' instance of the object using the New keyword.
 Public DirectD3D8 As D3DX8
 Public DirectD3D As Direct3D8
+
+' The Direct3DDevice8 represents our rendering device, which could
+' be a hardware or a software device. The great thing is we still
+' use the same object no matter what it is
 Public DirectDevice As Direct3DDevice8
+
+' The DirectInput8 object is used to get data from input devices
+' such as the mouse and keyboard.
+' Notice how we don't create a new instance of the object, rather
+' DirectX does that for us and we just get a pointer to it.
+Public DirectInput As DirectInput8
+Public Keyboard As DirectInputDevice8
+Public Mouse As DirectInputDevice8
+
+' Now we need 2 devices - keyboard and mouse
+' and a structure (type) to hold the data from each device. DI
+' provides us a custom keyboard and mouse type, since they are
+' commonly used.
+Public KeyboardState As DIKEYBOARDSTATE
+Public MouseState As DIMOUSESTATE
 
 Public SurfaceDB As New clsTextureManager
 Public SpriteBatch As New clsBatch
@@ -28,9 +55,9 @@ Public Const HeadOffsetBajos As Integer = 2
 Public MainScreenRect As RECT
 
 Public Type TLVERTEX
-    X As Single
-    Y As Single
-    Z As Single
+    x As Single
+    y As Single
+    z As Single
     rhw As Single
     Color As Long
     Specular As Long
@@ -46,34 +73,68 @@ Public Function Engine_DirectX8_Init() As Boolean
     ScreenWidth = frmMain.MainViewPic.ScaleWidth
     ScreenHeight = frmMain.MainViewPic.ScaleHeight
     
+    ' The D3DDISPLAYMODE type structure that holds
+    ' the information about your current display adapter.
     Dim DispMode  As D3DDISPLAYMODE
+    
+    ' The D3DPRESENT_PARAMETERS type holds a description of the way
+    ' in which DirectX will display it's rendering.
     Dim D3DWindow As D3DPRESENT_PARAMETERS
     
+    ' Initialize all DirectX objects.
     Set DirectX = New DirectX8
     Set DirectD3D = DirectX.Direct3DCreate
     Set DirectD3D8 = New D3DX8
 
+    ' Retrieve the information about your current display adapter.
     Call DirectD3D.GetAdapterDisplayMode(D3DADAPTER_DEFAULT, DispMode)
     
+    ' Fill the D3DPRESENT_PARAMETERS type, describing how DirectX should
+    ' display it's renders.
     With D3DWindow
         .Windowed = True
+        
+        ' The swap effect determines how the graphics get from the backbuffer to the screen.
+        ' D3DSWAPEFFECT_DISCARD:
+        '   Means that every time the render is presented, the backbuffer
+        '   image is destroyed, so everything must be rendered again.
         .SwapEffect = IIf((ClientSetup.vSync) = True, D3DSWAPEFFECT_COPY_VSYNC, D3DSWAPEFFECT_DISCARD)
+        
         .BackBufferFormat = DispMode.Format
         .BackBufferWidth = ScreenWidth
         .BackBufferHeight = ScreenHeight
-        .hDeviceWindow = frmMain.MainViewPic.hwnd
+        .hDeviceWindow = frmMain.MainViewPic.hWnd
     End With
-
+    
+    ' Create the rendering device.
+    ' Here we request a Hardware or Mixed rasterization.
+    ' If your computer does not have this, the request may fail, so use
+    ' D3DDEVTYPE_REF instead of D3DDEVTYPE_HAL if this happens. A real
+    ' program would be able to detect an error and automatically switch device.
+    ' We also request software vertex processing, which means the CPU has to
+    ' transform and light our geometry.
     Select Case ClientSetup.Aceleracion
 
         Case 0 '   Hardware
-            Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, D3DWindow.hDeviceWindow, D3DCREATE_HARDWARE_VERTEXPROCESSING, D3DWindow)
+            Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, _
+                                                      D3DDEVTYPE_HAL, _
+                                                      D3DWindow.hDeviceWindow, _
+                                                      D3DCREATE_HARDWARE_VERTEXPROCESSING, _
+                                                      D3DWindow)
 
         Case 1 '   Mixed
-            Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, D3DWindow.hDeviceWindow, D3DCREATE_MIXED_VERTEXPROCESSING, D3DWindow)
+            Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, _
+                                                      D3DDEVTYPE_HAL, _
+                                                      D3DWindow.hDeviceWindow, _
+                                                      D3DCREATE_MIXED_VERTEXPROCESSING, _
+                                                      D3DWindow)
 
         Case Else 'Si no hay opcion entramos en Hardware para asegurarnos que funcione el cliente.
-            Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, D3DWindow.hDeviceWindow, D3DCREATE_HARDWARE_VERTEXPROCESSING, D3DWindow)
+            Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, _
+                                                      D3DDEVTYPE_HAL, _
+                                                      D3DWindow.hDeviceWindow, _
+                                                      D3DCREATE_HARDWARE_VERTEXPROCESSING, _
+                                                      D3DWindow)
             
     End Select
     
@@ -82,10 +143,8 @@ Public Function Engine_DirectX8_Init() As Boolean
     Call D3DXMatrixIdentity(View)
     Call DirectDevice.SetTransform(D3DTS_PROJECTION, Projection)
     Call DirectDevice.SetTransform(D3DTS_VIEW, View)
-    
-    Call Engine_Init_FontTextures
-    Call Engine_Init_FontSettings
-    
+
+    ' Set rendering options
     Call Engine_Init_RenderStates
     
     'Carga dinamica de texturas por defecto.
@@ -95,21 +154,22 @@ Public Function Engine_DirectX8_Init() As Boolean
     Set SpriteBatch = New clsBatch
     Call SpriteBatch.Initialise(2000)
     
-    EndTime = GetTickCount
+    EndTime = timeGetTime
 
     If Err Then
-        MsgBox JsonLanguage.Item("ERROR_DIRECTX_INIT").Item("TEXTO")
+        MsgBox JsonLanguage.item("ERROR_DIRECTX_INIT").item("TEXTO")
         Engine_DirectX8_Init = False
         Exit Function
     End If
     
     If DirectDevice Is Nothing Then
-        MsgBox JsonLanguage.Item("ERROR_DIRECTDEVICE_INIT").Item("TEXTO")
+        MsgBox JsonLanguage.item("ERROR_DIRECTDEVICE_INIT").item("TEXTO")
         Engine_DirectX8_Init = False
         Exit Function
     End If
     
     Engine_DirectX8_Init = True
+    
 End Function
 
 Private Sub Engine_Init_RenderStates()
@@ -159,6 +219,7 @@ On Error Resume Next
     Set DirectD3D = Nothing
     Set DirectX = Nothing
     Set DirectDevice = Nothing
+    Set DirectInput = Nothing
     Set SpriteBatch = Nothing
 End Sub
 
@@ -173,7 +234,7 @@ Public Sub Engine_DirectX8_Aditional_Init()
     
     ColorTecho = 250
     colorRender = 240
-    
+
     Call Engine_Set_TileBuffer(9)
     Call Engine_Set_BaseSpeed(0.018)
     
@@ -181,11 +242,15 @@ Public Sub Engine_DirectX8_Aditional_Init()
         .Bottom = ScreenHeight
         .Right = ScreenWidth
     End With
-
+    
+    ' Seteamos algunos colores por adelantado y unica vez.
     Call Engine_Long_To_RGB_List(Normal_RGBList(), -1)
     Call Engine_Long_To_RGB_List(Color_Shadow(), D3DColorARGB(50, 0, 0, 0))
     Call Engine_Long_To_RGB_List(Color_Arbol(), D3DColorARGB(100, 100, 100, 100))
     
+    ' Inicializamos otros sistemas.
+    Call Engine_Init_FontTextures
+    Call Engine_Init_FontSettings
     Call Load_Auras
     Call Init_MeteoEngine
     Call mDx8_Dibujado.Damage_Initialize
@@ -238,49 +303,49 @@ Dim Start_Time As Long
 
 End Function
 
-Public Function Engine_PixelPosX(ByVal X As Integer) As Integer
+Public Function Engine_PixelPosX(ByVal x As Integer) As Integer
 '*****************************************************************
 'Converts a tile position to a screen position
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_PixelPosX
 '*****************************************************************
 
-    Engine_PixelPosX = (X - 1) * 32
+    Engine_PixelPosX = (x - 1) * 32
     
 End Function
 
-Public Function Engine_PixelPosY(ByVal Y As Integer) As Integer
+Public Function Engine_PixelPosY(ByVal y As Integer) As Integer
 '*****************************************************************
 'Converts a tile position to a screen position
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_PixelPosY
 '*****************************************************************
 
-    Engine_PixelPosY = (Y - 1) * 32
+    Engine_PixelPosY = (y - 1) * 32
     
 End Function
 
-Public Function Engine_TPtoSPX(ByVal X As Byte) As Long
+Public Function Engine_TPtoSPX(ByVal x As Byte) As Long
 '************************************************************
 'Tile Position to Screen Position
 'Takes the tile position and returns the pixel location on the screen
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_TPtoSPX
 '************************************************************
 
-    Engine_TPtoSPX = Engine_PixelPosX(X - ((UserPos.X - HalfWindowTileWidth) - Engine_Get_TileBuffer)) + OffsetCounterX - 272 + ((10 - TileBufferSize) * 32)
+    Engine_TPtoSPX = Engine_PixelPosX(x - ((UserPos.x - HalfWindowTileWidth) - Engine_Get_TileBuffer)) + OffsetCounterX - 272 + ((10 - TileBufferSize) * 32)
     
 End Function
 
-Public Function Engine_TPtoSPY(ByVal Y As Byte) As Long
+Public Function Engine_TPtoSPY(ByVal y As Byte) As Long
 '************************************************************
 'Tile Position to Screen Position
 'Takes the tile position and returns the pixel location on the screen
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_TPtoSPY
 '************************************************************
 
-    Engine_TPtoSPY = Engine_PixelPosY(Y - ((UserPos.Y - HalfWindowTileHeight) - Engine_Get_TileBuffer)) + OffsetCounterY - 272 + ((10 - TileBufferSize) * 32)
+    Engine_TPtoSPY = Engine_PixelPosY(y - ((UserPos.y - HalfWindowTileHeight) - Engine_Get_TileBuffer)) + OffsetCounterY - 272 + ((10 - TileBufferSize) * 32)
     
 End Function
 
-Public Sub Engine_Draw_Box(ByVal X As Integer, ByVal Y As Integer, ByVal Width As Integer, ByVal Height As Integer, Color As Long)
+Public Sub Engine_Draw_Box(ByVal x As Integer, ByVal y As Integer, ByVal Width As Integer, ByVal Height As Integer, Color As Long)
 '***************************************************
 'Author: Ezequiel Juarez (Standelf)
 'Last Modification: 29/12/10
@@ -290,7 +355,7 @@ Public Sub Engine_Draw_Box(ByVal X As Integer, ByVal Y As Integer, ByVal Width A
     Call Engine_Long_To_RGB_List(temp_rgb(), Color)
 
     Call SpriteBatch.SetTexture(Nothing)
-    Call SpriteBatch.Draw(X, Y, Width, ByVal Height, temp_rgb())
+    Call SpriteBatch.Draw(x, y, Width, ByVal Height, temp_rgb())
     
 End Sub
 
@@ -300,7 +365,7 @@ Public Sub Engine_D3DColor_To_RGB_List(rgb_list() As Long, Color As D3DCOLORVALU
 'Last Modification: 14/05/10
 'Blisse-AO | Set a D3DColorValue to a RGB List
 '***************************************************
-    rgb_list(0) = D3DColorARGB(Color.A, Color.r, Color.g, Color.B)
+    rgb_list(0) = D3DColorARGB(Color.a, Color.r, Color.g, Color.B)
     rgb_list(1) = rgb_list(0)
     rgb_list(2) = rgb_list(0)
     rgb_list(3) = rgb_list(0)
@@ -331,7 +396,7 @@ Call ARGBtoD3DCOLORVALUE(rgb_list(1), TempColor)
 If Alpha > 255 Then Alpha = 255
 If Alpha < 0 Then Alpha = 0
 'seteamos el alpha
-TempColor.A = Alpha
+TempColor.a = Alpha
 'generamos el nuevo RGB_List
 Call Engine_D3DColor_To_RGB_List(tempARGB(), TempColor)
 
@@ -676,7 +741,7 @@ Public Sub DrawPJ(ByVal Index As Byte)
         End If
     End If
 
-    Call Engine_EndScene(RE, frmPanelAccount.picChar(Index - 1).hwnd)
+    Call Engine_EndScene(RE, frmPanelAccount.picChar(Index - 1).hWnd)
     
 End Sub
 
