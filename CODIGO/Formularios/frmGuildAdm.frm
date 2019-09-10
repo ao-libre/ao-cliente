@@ -194,7 +194,6 @@ End Sub
 Public Sub FiltrarListaClanes(ByRef sCompare As String)
 
     Dim lIndex           As Long
-    Dim Upper_guildNames As Long
     
     If UBound(GuildNames) <> 0 Then
 
@@ -203,19 +202,18 @@ Public Sub FiltrarListaClanes(ByRef sCompare As String)
             .Clear
             .Visible = False
             
-            'pre-calculo la cantidad de nombres que va a haber en la lista
-            Upper_guildNames = UBound(GuildNames)
-            
             ' Recorro los arrays
-            For lIndex = 0 To Upper_guildNames
-
+            For lIndex = 0 To UBound(GuildNames)
+    
                 ' Si coincide con los patrones
                 If InStr(1, UCase$(GuildNames(lIndex)), UCase$(sCompare)) Then
+
                     ' Lo agrego a la lista
-                    .AddItem GuildNames(lIndex)
+                    Call .AddItem(GuildNames(lIndex))
 
+                    
                 End If
-
+    
             Next lIndex
             
             .Visible = True
