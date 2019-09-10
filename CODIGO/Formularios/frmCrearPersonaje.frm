@@ -17,15 +17,17 @@ Begin VB.Form frmCrearPersonaje
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
    Begin VB.PictureBox picTemp 
+      Appearance      =   0  'Flat
       AutoRedraw      =   -1  'True
       BackColor       =   &H00000000&
+      ForeColor       =   &H80000008&
       Height          =   990
-      Left            =   6840
-      ScaleHeight     =   62
+      Left            =   7080
+      ScaleHeight     =   64
       ScaleMode       =   3  'Pixel
-      ScaleWidth      =   37
+      ScaleWidth      =   39
       TabIndex        =   32
-      Top             =   6840
+      Top             =   6360
       Visible         =   0   'False
       Width           =   615
    End
@@ -35,14 +37,13 @@ Begin VB.Form frmCrearPersonaje
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
       ForeColor       =   &H80000008&
-      Height          =   870
-      Left            =   6840
-      ScaleHeight     =   58
+      Height          =   975
+      Left            =   7080
+      ScaleHeight     =   65
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   41
       TabIndex        =   31
-      Top             =   6840
-      Visible         =   0   'False
+      Top             =   6360
       Width           =   615
    End
    Begin VB.ComboBox lstAlienacion 
@@ -134,6 +135,7 @@ Begin VB.Form frmCrearPersonaje
       Width           =   2415
    End
    Begin VB.Timer tAnimacion 
+      Interval        =   100
       Left            =   840
       Top             =   1080
    End
@@ -326,10 +328,28 @@ Begin VB.Form frmCrearPersonaje
       Visible         =   0   'False
       Width           =   360
    End
+   Begin VB.Image DirPJ 
+      Height          =   225
+      Index           =   0
+      Left            =   6960
+      Picture         =   "frmCrearPersonaje.frx":0046
+      Top             =   7320
+      Visible         =   0   'False
+      Width           =   240
+   End
+   Begin VB.Image DirPJ 
+      Height          =   225
+      Index           =   1
+      Left            =   7560
+      Picture         =   "frmCrearPersonaje.frx":0358
+      Top             =   7320
+      Visible         =   0   'False
+      Width           =   240
+   End
    Begin VB.Image ImgProfesionDibujo 
       Height          =   885
       Left            =   240
-      MouseIcon       =   "frmCrearPersonaje.frx":0046
+      MouseIcon       =   "frmCrearPersonaje.frx":066A
       MousePointer    =   99  'Custom
       Top             =   5040
       Width           =   900
@@ -994,24 +1014,6 @@ Begin VB.Form frmCrearPersonaje
       Top             =   3105
       Width           =   1200
    End
-   Begin VB.Image DirPJ 
-      Height          =   225
-      Index           =   1
-      Left            =   7560
-      Picture         =   "frmCrearPersonaje.frx":0198
-      Top             =   6360
-      Visible         =   0   'False
-      Width           =   240
-   End
-   Begin VB.Image DirPJ 
-      Height          =   225
-      Index           =   0
-      Left            =   6960
-      Picture         =   "frmCrearPersonaje.frx":04AA
-      Top             =   6360
-      Visible         =   0   'False
-      Width           =   240
-   End
    Begin VB.Image HeadPJ 
       Height          =   225
       Index           =   1
@@ -1328,15 +1330,15 @@ Private Sub CargarEspecialidades()
 
     ReDim vEspecialidades(1 To NroClases)
     
-    vEspecialidades(eClass.Hunter) = JsonLanguage.Item("HABILIDADES").Item("OCULTARSE").Item("TEXTO")
-    vEspecialidades(eClass.Thief) = JsonLanguage.Item("HABILIDADES").Item("ROBAR").Item("TEXTO") & JsonLanguage.Item("LETRA_Y").Item("TEXTO") & JsonLanguage.Item("HABILIDADES").Item("OCULTARSE").Item("TEXTO")
-    vEspecialidades(eClass.Assasin) = JsonLanguage.Item("HABILIDADES").Item("APUNALAR").Item("TEXTO")
-    vEspecialidades(eClass.Bandit) = JsonLanguage.Item("HABILIDADES").Item("COMBATE_CUERPO_A_CUERPO").Item("TEXTO")
-    vEspecialidades(eClass.Druid) = JsonLanguage.Item("HABILIDADES").Item("DOMAR_ANIMALES").Item("TEXTO")
-    vEspecialidades(eClass.Pirat) = JsonLanguage.Item("HABILIDADES").Item("NAVEGACION").Item("TEXTO")
-    vEspecialidades(eClass.Worker) = JsonLanguage.Item("HABILIDADES").Item("MINERIA").Item("TEXTO") & "," _
-                                    & JsonLanguage.Item("HABILIDADES").Item("CARPINTERIA").Item("TEXTO") & JsonLanguage.Item("LETRA_Y").Item("TEXTO") _
-                                    & JsonLanguage.Item("HABILIDADES").Item("TALAR").Item("TEXTO")
+    vEspecialidades(eClass.Hunter) = JsonLanguage.item("HABILIDADES").item("OCULTARSE").item("TEXTO")
+    vEspecialidades(eClass.Thief) = JsonLanguage.item("HABILIDADES").item("ROBAR").item("TEXTO") & JsonLanguage.item("LETRA_Y").item("TEXTO") & JsonLanguage.item("HABILIDADES").item("OCULTARSE").item("TEXTO")
+    vEspecialidades(eClass.Assasin) = JsonLanguage.item("HABILIDADES").item("APUNALAR").item("TEXTO")
+    vEspecialidades(eClass.Bandit) = JsonLanguage.item("HABILIDADES").item("COMBATE_CUERPO_A_CUERPO").item("TEXTO")
+    vEspecialidades(eClass.Druid) = JsonLanguage.item("HABILIDADES").item("DOMAR_ANIMALES").item("TEXTO")
+    vEspecialidades(eClass.Pirat) = JsonLanguage.item("HABILIDADES").item("NAVEGACION").item("TEXTO")
+    vEspecialidades(eClass.Worker) = JsonLanguage.item("HABILIDADES").item("MINERIA").item("TEXTO") & "," _
+                                    & JsonLanguage.item("HABILIDADES").item("CARPINTERIA").item("TEXTO") & JsonLanguage.item("LETRA_Y").item("TEXTO") _
+                                    & JsonLanguage.item("HABILIDADES").item("TALAR").item("TEXTO")
 End Sub
 Private Sub IniciarGraficos()
 
@@ -1501,33 +1503,33 @@ End Sub
 Function CheckData() As Boolean
     
     If LenB(txtNombre.Text) = 0 Then
-        MsgBox JsonLanguage.Item("VALIDACION_NOMBRE_PJ").Item("TEXTO")
+        MsgBox JsonLanguage.item("VALIDACION_NOMBRE_PJ").item("TEXTO")
         txtNombre.SetFocus
         Exit Function
     End If
 
     If UserRaza = 0 Then
-        MsgBox JsonLanguage.Item("VALIDACION_RAZA").Item("TEXTO")
+        MsgBox JsonLanguage.item("VALIDACION_RAZA").item("TEXTO")
         Exit Function
     End If
     
     If UserSexo = 0 Then
-        MsgBox JsonLanguage.Item("VALIDACION_SEXO").Item("TEXTO")
+        MsgBox JsonLanguage.item("VALIDACION_SEXO").item("TEXTO")
         Exit Function
     End If
     
     If UserClase = 0 Then
-        MsgBox JsonLanguage.Item("VALIDACION_CLASE").Item("TEXTO")
+        MsgBox JsonLanguage.item("VALIDACION_CLASE").item("TEXTO")
         Exit Function
     End If
     
     If UserHogar = 0 Then
-        MsgBox JsonLanguage.Item("VALIDACION_HOGAR").Item("TEXTO")
+        MsgBox JsonLanguage.item("VALIDACION_HOGAR").item("TEXTO")
         Exit Function
     End If
     
     If Len(AccountHash) = 0 Then
-        MsgBox JsonLanguage.Item("VALIDACION_HASH").Item("TEXTO")
+        MsgBox JsonLanguage.item("VALIDACION_HASH").item("TEXTO")
         Exit Function
     End If
 
@@ -1535,13 +1537,13 @@ Function CheckData() As Boolean
     Dim i As Integer
     For i = 1 To NUMATRIBUTOS
         If Val(lblAtributos(i).Caption) = 0 Then
-            MsgBox JsonLanguage.Item("VALIDACION_ATRIBUTOS").Item("TEXTO")
+            MsgBox JsonLanguage.item("VALIDACION_ATRIBUTOS").item("TEXTO")
             Exit Function
         End If
     Next i
     
     If LenB(UserName) > 30 Then
-        MsgBox JsonLanguage.Item("VALIDACION_BAD_NOMBRE_PJ").Item("TEXTO").Item(1)
+        MsgBox JsonLanguage.item("VALIDACION_BAD_NOMBRE_PJ").item("TEXTO").item(1)
         Exit Function
     End If
     
@@ -1610,7 +1612,7 @@ Private Sub ImgCrear_Click()
             
     If Right$(UserName, 1) = " " Then
         UserName = RTrim$(UserName)
-        MsgBox JsonLanguage.Item("VALIDACION_BAD_NOMBRE_PJ").Item("TEXTO").Item(2)
+        MsgBox JsonLanguage.item("VALIDACION_BAD_NOMBRE_PJ").item("TEXTO").item(2)
 
     End If
     
@@ -1632,7 +1634,7 @@ Private Sub ImgCrear_Click()
     frmMain.hlst.Clear
         
     If Not frmMain.Client.State = sckConnected Then
-        MsgBox JsonLanguage.Item("ERROR_CONN_LOST").Item("TEXTO")
+        MsgBox JsonLanguage.item("ERROR_CONN_LOST").item("TEXTO")
         Unload Me
     Else
         Me.imgCrear.Enabled = False
@@ -1827,7 +1829,6 @@ On Error Resume Next
     Dim Grh As Long
     Static Frame As Byte
     
-    If frmMain.Visible = False Then Exit Sub
     If currentGrh = 0 Then Exit Sub
     UserHead = CheckCabeza(UserHead)
     
@@ -1838,13 +1839,13 @@ On Error Resume Next
     Grh = GrhData(currentGrh).Frames(Frame)
     
     With GrhData(Grh)
-        SR.Left = .SX
-        SR.Top = .SY
+        SR.Left = .sX
+        SR.Top = .sY
         SR.Right = SR.Left + .pixelWidth
         SR.Bottom = SR.Top + .pixelHeight
         
         DR.Left = (picPJ.Width - .pixelWidth) \ 2 - 2
-        DR.Top = ((picPJ.Height - .pixelHeight) \ 2) + 5
+        DR.Top = (picPJ.Height - .pixelHeight) \ 2 - 2
         DR.Right = DR.Left + .pixelWidth
         DR.Bottom = DR.Top + .pixelHeight
         
@@ -1857,8 +1858,8 @@ On Error Resume Next
     Grh = HeadData(UserHead).Head(Dir).GrhIndex
     
     With GrhData(Grh)
-        SR.Left = .SX
-        SR.Top = .SY
+        SR.Left = .sX
+        SR.Top = .sY
         SR.Right = SR.Left + .pixelWidth
         SR.Bottom = SR.Top + .pixelHeight
         
@@ -1885,8 +1886,8 @@ Private Sub DrawHead(ByVal Head As Integer, ByVal PicIndex As Integer)
     Grh = HeadData(Head).Head(Dir).GrhIndex
 
     With GrhData(Grh)
-        SR.Left = .SX
-        SR.Top = .SY
+        SR.Left = .sX
+        SR.Top = .sY
         SR.Right = SR.Left + .pixelWidth
         SR.Bottom = SR.Top + .pixelHeight
         
@@ -2128,29 +2129,29 @@ Private Function CheckDir(ByRef Dir As E_Heading) As E_Heading
 End Function
 
 Private Sub LoadHelp()
-    vHelp(eHelp.ieTirarDados) = JsonLanguage.Item("AYUDA_CREARPJ_DADOS").Item("TEXTO")
-    vHelp(eHelp.ieMail) = JsonLanguage.Item("AYUDA_CREARPJ_CORREO").Item("TEXTO")
-    vHelp(eHelp.ieNombre) = JsonLanguage.Item("AYUDA_CREARPJ_NOMBREPJ").Item("TEXTO")
-    vHelp(eHelp.ieAtributos) = JsonLanguage.Item("AYUDA_CREARPJ_ATRIBUTOS").Item("TEXTO")
-    vHelp(eHelp.ieD) = JsonLanguage.Item("AYUDA_CREARPJ_IED").Item("TEXTO")
-    vHelp(eHelp.ieM) = JsonLanguage.Item("AYUDA_CREARPJ_IEM").Item("TEXTO")
-    vHelp(eHelp.ieF) = JsonLanguage.Item("AYUDA_CREARPJ_IEF").Item("TEXTO")
-    vHelp(eHelp.ieFuerza) = JsonLanguage.Item("AYUDA_CREARPJ_FUERZA").Item("TEXTO")
-    vHelp(eHelp.ieAgilidad) = JsonLanguage.Item("AYUDA_CREARPJ_AGILIDAD").Item("TEXTO")
-    vHelp(eHelp.ieInteligencia) = JsonLanguage.Item("AYUDA_CREARPJ_INTELIGENCIA").Item("TEXTO")
-    vHelp(eHelp.ieCarisma) = JsonLanguage.Item("AYUDA_CREARPJ_CARISMA").Item("TEXTO")
-    vHelp(eHelp.ieConstitucion) = JsonLanguage.Item("AYUDA_CREARPJ_CONSTITUCION").Item("TEXTO")
-    vHelp(eHelp.ieEvasion) = JsonLanguage.Item("AYUDA_CREARPJ_EVASION").Item("TEXTO")
-    vHelp(eHelp.ieMagia) = JsonLanguage.Item("AYUDA_CREARPJ_MAGIA").Item("TEXTO")
-    vHelp(eHelp.ieVida) = JsonLanguage.Item("AYUDA_CREARPJ_VIDA").Item("TEXTO")
-    vHelp(eHelp.ieEscudos) = JsonLanguage.Item("AYUDA_CREARPJ_ESCUDOS").Item("TEXTO")
-    vHelp(eHelp.ieArmas) = JsonLanguage.Item("AYUDA_CREARPJ_ARMAS").Item("TEXTO")
-    vHelp(eHelp.ieArcos) = JsonLanguage.Item("AYUDA_CREARPJ_ARCOS").Item("TEXTO")
-    vHelp(eHelp.iePuebloOrigen) = JsonLanguage.Item("AYUDA_CREARPJ_HOGAR").Item("TEXTO")
-    vHelp(eHelp.ieRaza) = JsonLanguage.Item("AYUDA_CREARPJ_RAZA").Item("TEXTO")
-    vHelp(eHelp.ieClase) = JsonLanguage.Item("AYUDA_CREARPJ_CLASE").Item("TEXTO")
-    vHelp(eHelp.ieGenero) = JsonLanguage.Item("AYUDA_CREARPJ_GENERO").Item("TEXTO")
-    vHelp(eHelp.ieAlineacion) = JsonLanguage.Item("AYUDA_CREARPJ_ALINEACION").Item("TEXTO")
+    vHelp(eHelp.ieTirarDados) = JsonLanguage.item("AYUDA_CREARPJ_DADOS").item("TEXTO")
+    vHelp(eHelp.ieMail) = JsonLanguage.item("AYUDA_CREARPJ_CORREO").item("TEXTO")
+    vHelp(eHelp.ieNombre) = JsonLanguage.item("AYUDA_CREARPJ_NOMBREPJ").item("TEXTO")
+    vHelp(eHelp.ieAtributos) = JsonLanguage.item("AYUDA_CREARPJ_ATRIBUTOS").item("TEXTO")
+    vHelp(eHelp.ieD) = JsonLanguage.item("AYUDA_CREARPJ_IED").item("TEXTO")
+    vHelp(eHelp.ieM) = JsonLanguage.item("AYUDA_CREARPJ_IEM").item("TEXTO")
+    vHelp(eHelp.ieF) = JsonLanguage.item("AYUDA_CREARPJ_IEF").item("TEXTO")
+    vHelp(eHelp.ieFuerza) = JsonLanguage.item("AYUDA_CREARPJ_FUERZA").item("TEXTO")
+    vHelp(eHelp.ieAgilidad) = JsonLanguage.item("AYUDA_CREARPJ_AGILIDAD").item("TEXTO")
+    vHelp(eHelp.ieInteligencia) = JsonLanguage.item("AYUDA_CREARPJ_INTELIGENCIA").item("TEXTO")
+    vHelp(eHelp.ieCarisma) = JsonLanguage.item("AYUDA_CREARPJ_CARISMA").item("TEXTO")
+    vHelp(eHelp.ieConstitucion) = JsonLanguage.item("AYUDA_CREARPJ_CONSTITUCION").item("TEXTO")
+    vHelp(eHelp.ieEvasion) = JsonLanguage.item("AYUDA_CREARPJ_EVASION").item("TEXTO")
+    vHelp(eHelp.ieMagia) = JsonLanguage.item("AYUDA_CREARPJ_MAGIA").item("TEXTO")
+    vHelp(eHelp.ieVida) = JsonLanguage.item("AYUDA_CREARPJ_VIDA").item("TEXTO")
+    vHelp(eHelp.ieEscudos) = JsonLanguage.item("AYUDA_CREARPJ_ESCUDOS").item("TEXTO")
+    vHelp(eHelp.ieArmas) = JsonLanguage.item("AYUDA_CREARPJ_ARMAS").item("TEXTO")
+    vHelp(eHelp.ieArcos) = JsonLanguage.item("AYUDA_CREARPJ_ARCOS").item("TEXTO")
+    vHelp(eHelp.iePuebloOrigen) = JsonLanguage.item("AYUDA_CREARPJ_HOGAR").item("TEXTO")
+    vHelp(eHelp.ieRaza) = JsonLanguage.item("AYUDA_CREARPJ_RAZA").item("TEXTO")
+    vHelp(eHelp.ieClase) = JsonLanguage.item("AYUDA_CREARPJ_CLASE").item("TEXTO")
+    vHelp(eHelp.ieGenero) = JsonLanguage.item("AYUDA_CREARPJ_GENERO").item("TEXTO")
+    vHelp(eHelp.ieAlineacion) = JsonLanguage.item("AYUDA_CREARPJ_ALINEACION").item("TEXTO")
 End Sub
 
 Private Sub ClearLabel()

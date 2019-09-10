@@ -910,42 +910,42 @@ Public Sub HandleMultiMessage()
 
             Case eMessages.NPCSwing
                 Call AddtoRichTextBox(frmMain.RecTxt, _
-                        JsonLanguage.Item("MENSAJE_CRIATURA_FALLA_GOLPE").Item("TEXTO"), _
-                        JsonLanguage.Item("MENSAJE_CRIATURA_FALLA_GOLPE").Item("COLOR").Item(1), _
-                        JsonLanguage.Item("MENSAJE_CRIATURA_FALLA_GOLPE").Item("COLOR").Item(2), _
-                        JsonLanguage.Item("MENSAJE_CRIATURA_FALLA_GOLPE").Item("COLOR").Item(3), _
+                        JsonLanguage.item("MENSAJE_CRIATURA_FALLA_GOLPE").item("TEXTO"), _
+                        JsonLanguage.item("MENSAJE_CRIATURA_FALLA_GOLPE").item("COLOR").item(1), _
+                        JsonLanguage.item("MENSAJE_CRIATURA_FALLA_GOLPE").item("COLOR").item(2), _
+                        JsonLanguage.item("MENSAJE_CRIATURA_FALLA_GOLPE").item("COLOR").item(3), _
                         True, False, True)
         
             Case eMessages.NPCKillUser
                 Call AddtoRichTextBox(frmMain.RecTxt, _
-                    JsonLanguage.Item("MENSAJE_CRIATURA_MATADO").Item("TEXTO"), _
-                    JsonLanguage.Item("MENSAJE_CRIATURA_MATADO").Item("COLOR").Item(1), _
-                    JsonLanguage.Item("MENSAJE_CRIATURA_MATADO").Item("COLOR").Item(2), _
-                    JsonLanguage.Item("MENSAJE_CRIATURA_MATADO").Item("COLOR").Item(3), _
+                    JsonLanguage.item("MENSAJE_CRIATURA_MATADO").item("TEXTO"), _
+                    JsonLanguage.item("MENSAJE_CRIATURA_MATADO").item("COLOR").item(1), _
+                    JsonLanguage.item("MENSAJE_CRIATURA_MATADO").item("COLOR").item(2), _
+                    JsonLanguage.item("MENSAJE_CRIATURA_MATADO").item("COLOR").item(3), _
                     True, False, True)
         
             Case eMessages.BlockedWithShieldUser
                 Call AddtoRichTextBox(frmMain.RecTxt, _
-                    JsonLanguage.Item("MENSAJE_RECHAZO_ATAQUE_ESCUDO").Item("TEXTO"), _
-                    JsonLanguage.Item("MENSAJE_RECHAZO_ATAQUE_ESCUDO").Item("COLOR").Item(1), _
-                    JsonLanguage.Item("MENSAJE_RECHAZO_ATAQUE_ESCUDO").Item("COLOR").Item(2), _
-                    JsonLanguage.Item("MENSAJE_RECHAZO_ATAQUE_ESCUDO").Item("COLOR").Item(3), _
+                    JsonLanguage.item("MENSAJE_RECHAZO_ATAQUE_ESCUDO").item("TEXTO"), _
+                    JsonLanguage.item("MENSAJE_RECHAZO_ATAQUE_ESCUDO").item("COLOR").item(1), _
+                    JsonLanguage.item("MENSAJE_RECHAZO_ATAQUE_ESCUDO").item("COLOR").item(2), _
+                    JsonLanguage.item("MENSAJE_RECHAZO_ATAQUE_ESCUDO").item("COLOR").item(3), _
                     True, False, True)
         
             Case eMessages.BlockedWithShieldOther
                 Call AddtoRichTextBox(frmMain.RecTxt, _
-                    JsonLanguage.Item("MENSAJE_USUARIO_RECHAZO_ATAQUE_ESCUDO").Item("TEXTO"), _
-                    JsonLanguage.Item("MENSAJE_USUARIO_RECHAZO_ATAQUE_ESCUDO").Item("COLOR").Item(1), _
-                    JsonLanguage.Item("MENSAJE_USUARIO_RECHAZO_ATAQUE_ESCUDO").Item("COLOR").Item(2), _
-                    JsonLanguage.Item("MENSAJE_USUARIO_RECHAZO_ATAQUE_ESCUDO").Item("COLOR").Item(3), _
+                    JsonLanguage.item("MENSAJE_USUARIO_RECHAZO_ATAQUE_ESCUDO").item("TEXTO"), _
+                    JsonLanguage.item("MENSAJE_USUARIO_RECHAZO_ATAQUE_ESCUDO").item("COLOR").item(1), _
+                    JsonLanguage.item("MENSAJE_USUARIO_RECHAZO_ATAQUE_ESCUDO").item("COLOR").item(2), _
+                    JsonLanguage.item("MENSAJE_USUARIO_RECHAZO_ATAQUE_ESCUDO").item("COLOR").item(3), _
                     True, False, True)
         
             Case eMessages.UserSwing
                 Call AddtoRichTextBox(frmMain.RecTxt, _
-                    JsonLanguage.Item("MENSAJE_FALLADO_GOLPE").Item("TEXTO"), _
-                    JsonLanguage.Item("MENSAJE_FALLADO_GOLPE").Item("COLOR").Item(1), _
-                    JsonLanguage.Item("MENSAJE_FALLADO_GOLPE").Item("COLOR").Item(2), _
-                    JsonLanguage.Item("MENSAJE_FALLADO_GOLPE").Item("COLOR").Item(3), _
+                    JsonLanguage.item("MENSAJE_FALLADO_GOLPE").item("TEXTO"), _
+                    JsonLanguage.item("MENSAJE_FALLADO_GOLPE").item("COLOR").item(1), _
+                    JsonLanguage.item("MENSAJE_FALLADO_GOLPE").item("COLOR").item(2), _
+                    JsonLanguage.item("MENSAJE_FALLADO_GOLPE").item("COLOR").item(3), _
                     True, False, True)
         
             Case eMessages.SafeModeOn
@@ -962,18 +962,18 @@ Public Sub HandleMultiMessage()
         
             Case eMessages.NobilityLost
                 Call AddtoRichTextBox(frmMain.RecTxt, _
-                    JsonLanguage.Item("MENSAJE_PIERDE_NOBLEZA").Item("TEXTO"), _
-                    JsonLanguage.Item("MENSAJE_PIERDE_NOBLEZA").Item("COLOR").Item(1), _
-                    JsonLanguage.Item("MENSAJE_PIERDE_NOBLEZA").Item("COLOR").Item(2), _
-                    JsonLanguage.Item("MENSAJE_PIERDE_NOBLEZA").Item("COLOR").Item(3), _
+                    JsonLanguage.item("MENSAJE_PIERDE_NOBLEZA").item("TEXTO"), _
+                    JsonLanguage.item("MENSAJE_PIERDE_NOBLEZA").item("COLOR").item(1), _
+                    JsonLanguage.item("MENSAJE_PIERDE_NOBLEZA").item("COLOR").item(2), _
+                    JsonLanguage.item("MENSAJE_PIERDE_NOBLEZA").item("COLOR").item(3), _
                     False, False, True)
         
             Case eMessages.CantUseWhileMeditating
                 Call AddtoRichTextBox(frmMain.RecTxt, _
-                    JsonLanguage.Item("MENSAJE_USAR_MEDITANDO").Item("TEXTO"), _
-                    JsonLanguage.Item("MENSAJE_USAR_MEDITANDO").Item("COLOR").Item(1), _
-                    JsonLanguage.Item("MENSAJE_USAR_MEDITANDO").Item("COLOR").Item(2), _
-                    JsonLanguage.Item("MENSAJE_USAR_MEDITANDO").Item("COLOR").Item(3), _
+                    JsonLanguage.item("MENSAJE_USAR_MEDITANDO").item("TEXTO"), _
+                    JsonLanguage.item("MENSAJE_USAR_MEDITANDO").item("COLOR").item(1), _
+                    JsonLanguage.item("MENSAJE_USAR_MEDITANDO").item("COLOR").item(2), _
+                    JsonLanguage.item("MENSAJE_USAR_MEDITANDO").item("COLOR").item(3), _
                     False, False, True)
         
             Case eMessages.NPCHitUser
@@ -982,72 +982,72 @@ Public Sub HandleMultiMessage()
 
                     Case ePartesCuerpo.bCabeza
                         Call AddtoRichTextBox(frmMain.RecTxt, _
-                            JsonLanguage.Item("MENSAJE_GOLPE_CABEZA").Item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", _
-                            JsonLanguage.Item("MENSAJE_GOLPE_CABEZA").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("MENSAJE_GOLPE_CABEZA").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("MENSAJE_GOLPE_CABEZA").Item("COLOR").Item(3), _
+                            JsonLanguage.item("MENSAJE_GOLPE_CABEZA").item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", _
+                            JsonLanguage.item("MENSAJE_GOLPE_CABEZA").item("COLOR").item(1), _
+                            JsonLanguage.item("MENSAJE_GOLPE_CABEZA").item("COLOR").item(2), _
+                            JsonLanguage.item("MENSAJE_GOLPE_CABEZA").item("COLOR").item(3), _
                             True, False, True)
                 
                     Case ePartesCuerpo.bBrazoIzquierdo
                         Call AddtoRichTextBox(frmMain.RecTxt, _
-                            JsonLanguage.Item("MENSAJE_GOLPE_BRAZO_IZQ").Item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", _
-                            JsonLanguage.Item("MENSAJE_GOLPE_BRAZO_IZQ").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("MENSAJE_GOLPE_BRAZO_IZQ").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("MENSAJE_GOLPE_BRAZO_IZQ").Item("COLOR").Item(3), _
+                            JsonLanguage.item("MENSAJE_GOLPE_BRAZO_IZQ").item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", _
+                            JsonLanguage.item("MENSAJE_GOLPE_BRAZO_IZQ").item("COLOR").item(1), _
+                            JsonLanguage.item("MENSAJE_GOLPE_BRAZO_IZQ").item("COLOR").item(2), _
+                            JsonLanguage.item("MENSAJE_GOLPE_BRAZO_IZQ").item("COLOR").item(3), _
                             True, False, True)
                 
                     Case ePartesCuerpo.bBrazoDerecho
                         Call AddtoRichTextBox(frmMain.RecTxt, _
-                            JsonLanguage.Item("MENSAJE_GOLPE_BRAZO_DER").Item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", _
-                            JsonLanguage.Item("MENSAJE_GOLPE_BRAZO_DER").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("MENSAJE_GOLPE_BRAZO_DER").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("MENSAJE_GOLPE_BRAZO_DER").Item("COLOR").Item(3), _
+                            JsonLanguage.item("MENSAJE_GOLPE_BRAZO_DER").item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", _
+                            JsonLanguage.item("MENSAJE_GOLPE_BRAZO_DER").item("COLOR").item(1), _
+                            JsonLanguage.item("MENSAJE_GOLPE_BRAZO_DER").item("COLOR").item(2), _
+                            JsonLanguage.item("MENSAJE_GOLPE_BRAZO_DER").item("COLOR").item(3), _
                             True, False, True)
                 
                     Case ePartesCuerpo.bPiernaIzquierda
                         Call AddtoRichTextBox(frmMain.RecTxt, _
-                            JsonLanguage.Item("MENSAJE_GOLPE_PIERNA_IZQ").Item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", _
-                            JsonLanguage.Item("MENSAJE_GOLPE_PIERNA_IZQ").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("MENSAJE_GOLPE_PIERNA_IZQ").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("MENSAJE_GOLPE_PIERNA_IZQ").Item("COLOR").Item(3), _
+                            JsonLanguage.item("MENSAJE_GOLPE_PIERNA_IZQ").item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", _
+                            JsonLanguage.item("MENSAJE_GOLPE_PIERNA_IZQ").item("COLOR").item(1), _
+                            JsonLanguage.item("MENSAJE_GOLPE_PIERNA_IZQ").item("COLOR").item(2), _
+                            JsonLanguage.item("MENSAJE_GOLPE_PIERNA_IZQ").item("COLOR").item(3), _
                             True, False, True)
                 
                     Case ePartesCuerpo.bPiernaDerecha
                         Call AddtoRichTextBox(frmMain.RecTxt, _
-                            JsonLanguage.Item("MENSAJE_GOLPE_PIERNA_DER").Item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", _
-                            JsonLanguage.Item("MENSAJE_GOLPE_PIERNA_DER").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("MENSAJE_GOLPE_PIERNA_DER").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("MENSAJE_GOLPE_PIERNA_DER").Item("COLOR").Item(3), _
+                            JsonLanguage.item("MENSAJE_GOLPE_PIERNA_DER").item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", _
+                            JsonLanguage.item("MENSAJE_GOLPE_PIERNA_DER").item("COLOR").item(1), _
+                            JsonLanguage.item("MENSAJE_GOLPE_PIERNA_DER").item("COLOR").item(2), _
+                            JsonLanguage.item("MENSAJE_GOLPE_PIERNA_DER").item("COLOR").item(3), _
                             True, False, True)
                 
                     Case ePartesCuerpo.bTorso
                         Call AddtoRichTextBox(frmMain.RecTxt, _
-                            JsonLanguage.Item("MENSAJE_GOLPE_TORSO").Item("TEXTO") & CStr(incomingData.ReadInteger() & "!!"), _
-                            JsonLanguage.Item("MENSAJE_GOLPE_TORSO").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("MENSAJE_GOLPE_TORSO").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("MENSAJE_GOLPE_TORSO").Item("COLOR").Item(3), _
+                            JsonLanguage.item("MENSAJE_GOLPE_TORSO").item("TEXTO") & CStr(incomingData.ReadInteger() & "!!"), _
+                            JsonLanguage.item("MENSAJE_GOLPE_TORSO").item("COLOR").item(1), _
+                            JsonLanguage.item("MENSAJE_GOLPE_TORSO").item("COLOR").item(2), _
+                            JsonLanguage.item("MENSAJE_GOLPE_TORSO").item("COLOR").item(3), _
                             True, False, True)
 
                 End Select
         
             Case eMessages.UserHitNPC
                 Dim MsgHitNpc As String
-                    MsgHitNpc = JsonLanguage.Item("MENSAJE_DAMAGE_NPC").Item("TEXTO")
+                    MsgHitNpc = JsonLanguage.item("MENSAJE_DAMAGE_NPC").item("TEXTO")
                     MsgHitNpc = Replace$(MsgHitNpc, "VAR_DANO", CStr(incomingData.ReadLong()))
                     
                 Call AddtoRichTextBox(frmMain.RecTxt, _
                     MsgHitNpc, _
-                    JsonLanguage.Item("MENSAJE_DAMAGE_NPC").Item("COLOR").Item(1), _
-                    JsonLanguage.Item("MENSAJE_DAMAGE_NPC").Item("COLOR").Item(2), _
-                    JsonLanguage.Item("MENSAJE_DAMAGE_NPC").Item("COLOR").Item(3), _
+                    JsonLanguage.item("MENSAJE_DAMAGE_NPC").item("COLOR").item(1), _
+                    JsonLanguage.item("MENSAJE_DAMAGE_NPC").item("COLOR").item(2), _
+                    JsonLanguage.item("MENSAJE_DAMAGE_NPC").item("COLOR").item(3), _
                     True, False, True)
         
             Case eMessages.UserAttackedSwing
                 Call AddtoRichTextBox(frmMain.RecTxt, _
-                    charlist(incomingData.ReadInteger()).Nombre & JsonLanguage.Item("MENSAJE_ATAQUE_FALLO").Item("TEXTO"), _
-                    JsonLanguage.Item("MENSAJE_ATAQUE_FALLO").Item("COLOR").Item(1), _
-                    JsonLanguage.Item("MENSAJE_ATAQUE_FALLO").Item("COLOR").Item(2), _
-                    JsonLanguage.Item("MENSAJE_ATAQUE_FALLO").Item("COLOR").Item(3), _
+                    charlist(incomingData.ReadInteger()).Nombre & JsonLanguage.item("MENSAJE_ATAQUE_FALLO").item("TEXTO"), _
+                    JsonLanguage.item("MENSAJE_ATAQUE_FALLO").item("COLOR").item(1), _
+                    JsonLanguage.item("MENSAJE_ATAQUE_FALLO").item("COLOR").item(2), _
+                    JsonLanguage.item("MENSAJE_ATAQUE_FALLO").item("COLOR").item(3), _
                     True, False, True)
         
             Case eMessages.UserHittedByUser
@@ -1062,50 +1062,50 @@ Public Sub HandleMultiMessage()
 
                     Case ePartesCuerpo.bCabeza
                         Call AddtoRichTextBox(frmMain.RecTxt, _
-                            AttackerName & JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_CABEZA").Item("TEXTO") & Dano & MENSAJE_2, _
-                            JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_CABEZA").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_CABEZA").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_CABEZA").Item("COLOR").Item(3), _
+                            AttackerName & JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_CABEZA").item("TEXTO") & Dano & MENSAJE_2, _
+                            JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_CABEZA").item("COLOR").item(1), _
+                            JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_CABEZA").item("COLOR").item(2), _
+                            JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_CABEZA").item("COLOR").item(3), _
                             True, False, True)
                 
                     Case ePartesCuerpo.bBrazoIzquierdo
                         Call AddtoRichTextBox(frmMain.RecTxt, _
-                        AttackerName & JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ").Item("TEXTO") & Dano & MENSAJE_2, _
-                        JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ").Item("COLOR").Item(1), _
-                        JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ").Item("COLOR").Item(2), _
-                        JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ").Item("COLOR").Item(3), _
+                        AttackerName & JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ").item("TEXTO") & Dano & MENSAJE_2, _
+                        JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ").item("COLOR").item(1), _
+                        JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ").item("COLOR").item(2), _
+                        JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ").item("COLOR").item(3), _
                         True, False, True)
                 
                     Case ePartesCuerpo.bBrazoDerecho
                         Call AddtoRichTextBox(frmMain.RecTxt, _
-                            AttackerName & JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_BRAZO_DER").Item("TEXTO") & Dano & MENSAJE_2, _
-                            JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_BRAZO_DER").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_BRAZO_DER").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_BRAZO_DER").Item("COLOR").Item(3), _
+                            AttackerName & JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_BRAZO_DER").item("TEXTO") & Dano & MENSAJE_2, _
+                            JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_BRAZO_DER").item("COLOR").item(1), _
+                            JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_BRAZO_DER").item("COLOR").item(2), _
+                            JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_BRAZO_DER").item("COLOR").item(3), _
                             True, False, True)
                 
                     Case ePartesCuerpo.bPiernaIzquierda
                         Call AddtoRichTextBox(frmMain.RecTxt, _
-                            AttackerName & JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ").Item("TEXTO") & Dano & MENSAJE_2, _
-                            JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ").Item("COLOR").Item(3), _
+                            AttackerName & JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ").item("TEXTO") & Dano & MENSAJE_2, _
+                            JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ").item("COLOR").item(1), _
+                            JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ").item("COLOR").item(2), _
+                            JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ").item("COLOR").item(3), _
                             True, False, True)
                 
                     Case ePartesCuerpo.bPiernaDerecha
                         Call AddtoRichTextBox(frmMain.RecTxt, _
-                            AttackerName & JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_PIERNA_DER").Item("TEXTO") & Dano & MENSAJE_2, _
-                            JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_PIERNA_DER").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_PIERNA_DER").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_PIERNA_DER").Item("COLOR").Item(3), _
+                            AttackerName & JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_PIERNA_DER").item("TEXTO") & Dano & MENSAJE_2, _
+                            JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_PIERNA_DER").item("COLOR").item(1), _
+                            JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_PIERNA_DER").item("COLOR").item(2), _
+                            JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_PIERNA_DER").item("COLOR").item(3), _
                             True, False, True)
                 
                     Case ePartesCuerpo.bTorso
                         Call AddtoRichTextBox(frmMain.RecTxt, _
-                            AttackerName & JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_TORSO").Item("TEXTO") & Dano & MENSAJE_2, _
-                            JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_TORSO").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_TORSO").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("MENSAJE_RECIVE_IMPACTO_TORSO").Item("COLOR").Item(3), _
+                            AttackerName & JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_TORSO").item("TEXTO") & Dano & MENSAJE_2, _
+                            JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_TORSO").item("COLOR").item(1), _
+                            JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_TORSO").item("COLOR").item(2), _
+                            JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_TORSO").item("COLOR").item(3), _
                             True, False, True)
 
                 End Select
@@ -1122,50 +1122,50 @@ Public Sub HandleMultiMessage()
 
                     Case ePartesCuerpo.bCabeza
                         Call AddtoRichTextBox(frmMain.RecTxt, _
-                            JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_1").Item("TEXTO") & VictimName & JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_CABEZA").Item("TEXTO") & Dano & MENSAJE_2, _
-                            JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_CABEZA").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_CABEZA").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_CABEZA").Item("COLOR").Item(3), _
+                            JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_1").item("TEXTO") & VictimName & JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_CABEZA").item("TEXTO") & Dano & MENSAJE_2, _
+                            JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_CABEZA").item("COLOR").item(1), _
+                            JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_CABEZA").item("COLOR").item(2), _
+                            JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_CABEZA").item("COLOR").item(3), _
                             True, False, True)
                 
                     Case ePartesCuerpo.bBrazoIzquierdo
                         Call AddtoRichTextBox(frmMain.RecTxt, _
-                            JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_1").Item("TEXTO") & VictimName & JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_BRAZO_IZQ").Item("TEXTO") & Dano & MENSAJE_2, _
-                            JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_BRAZO_IZQ").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_BRAZO_IZQ").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_BRAZO_IZQ").Item("COLOR").Item(3), _
+                            JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_1").item("TEXTO") & VictimName & JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_BRAZO_IZQ").item("TEXTO") & Dano & MENSAJE_2, _
+                            JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_BRAZO_IZQ").item("COLOR").item(1), _
+                            JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_BRAZO_IZQ").item("COLOR").item(2), _
+                            JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_BRAZO_IZQ").item("COLOR").item(3), _
                             True, False, True)
                 
                     Case ePartesCuerpo.bBrazoDerecho
                         Call AddtoRichTextBox(frmMain.RecTxt, _
-                            JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_1").Item("TEXTO") & VictimName & JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_BRAZO_DER").Item("TEXTO") & Dano & MENSAJE_2, _
-                            JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_BRAZO_DER").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_BRAZO_DER").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_BRAZO_DER").Item("COLOR").Item(3), _
+                            JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_1").item("TEXTO") & VictimName & JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_BRAZO_DER").item("TEXTO") & Dano & MENSAJE_2, _
+                            JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_BRAZO_DER").item("COLOR").item(1), _
+                            JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_BRAZO_DER").item("COLOR").item(2), _
+                            JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_BRAZO_DER").item("COLOR").item(3), _
                             True, False, True)
                 
                     Case ePartesCuerpo.bPiernaIzquierda
                         Call AddtoRichTextBox(frmMain.RecTxt, _
-                            JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_1").Item("TEXTO") & VictimName & JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_PIERNA_IZQ").Item("TEXTO") & Dano & MENSAJE_2, _
-                            JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_PIERNA_IZQ").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_PIERNA_IZQ").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_PIERNA_IZQ").Item("COLOR").Item(3), _
+                            JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_1").item("TEXTO") & VictimName & JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_PIERNA_IZQ").item("TEXTO") & Dano & MENSAJE_2, _
+                            JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_PIERNA_IZQ").item("COLOR").item(1), _
+                            JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_PIERNA_IZQ").item("COLOR").item(2), _
+                            JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_PIERNA_IZQ").item("COLOR").item(3), _
                             True, False, True)
                 
                     Case ePartesCuerpo.bPiernaDerecha
                         Call AddtoRichTextBox(frmMain.RecTxt, _
-                            JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_1").Item("TEXTO") & VictimName & JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_PIERNA_DER").Item("TEXTO") & Dano & MENSAJE_2, _
-                            JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_PIERNA_DER").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_PIERNA_DER").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_PIERNA_DER").Item("COLOR").Item(3), _
+                            JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_1").item("TEXTO") & VictimName & JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_PIERNA_DER").item("TEXTO") & Dano & MENSAJE_2, _
+                            JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_PIERNA_DER").item("COLOR").item(1), _
+                            JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_PIERNA_DER").item("COLOR").item(2), _
+                            JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_PIERNA_DER").item("COLOR").item(3), _
                             True, False, True)
                 
                     Case ePartesCuerpo.bTorso
                         Call AddtoRichTextBox(frmMain.RecTxt, _
-                            JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_1").Item("TEXTO") & VictimName & JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_TORSO").Item("TEXTO") & Dano & MENSAJE_2, _
-                            JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_TORSO").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_TORSO").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("MENSAJE_PRODUCE_IMPACTO_TORSO").Item("COLOR").Item(3), _
+                            JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_1").item("TEXTO") & VictimName & JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_TORSO").item("TEXTO") & Dano & MENSAJE_2, _
+                            JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_TORSO").item("COLOR").item(1), _
+                            JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_TORSO").item("COLOR").item(2), _
+                            JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_TORSO").item("COLOR").item(3), _
                             True, False, True)
 
                 End Select
@@ -1179,52 +1179,52 @@ Public Sub HandleMultiMessage()
 
                     Case Magia
                         Call AddtoRichTextBox(frmMain.RecTxt, _
-                            JsonLanguage.Item("MENSAJE_TRABAJO_MAGIA").Item("TEXTO"), _
-                            JsonLanguage.Item("MENSAJE_TRABAJO_MAGIA").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("MENSAJE_TRABAJO_MAGIA").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("MENSAJE_TRABAJO_MAGIA").Item("COLOR").Item(3))
+                            JsonLanguage.item("MENSAJE_TRABAJO_MAGIA").item("TEXTO"), _
+                            JsonLanguage.item("MENSAJE_TRABAJO_MAGIA").item("COLOR").item(1), _
+                            JsonLanguage.item("MENSAJE_TRABAJO_MAGIA").item("COLOR").item(2), _
+                            JsonLanguage.item("MENSAJE_TRABAJO_MAGIA").item("COLOR").item(3))
                 
                     Case Pesca
                         Call AddtoRichTextBox(frmMain.RecTxt, _
-                            JsonLanguage.Item("MENSAJE_TRABAJO_PESCA").Item("TEXTO"), _
-                            JsonLanguage.Item("MENSAJE_TRABAJO_PESCA").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("MENSAJE_TRABAJO_PESCA").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("MENSAJE_TRABAJO_PESCA").Item("COLOR").Item(3))
+                            JsonLanguage.item("MENSAJE_TRABAJO_PESCA").item("TEXTO"), _
+                            JsonLanguage.item("MENSAJE_TRABAJO_PESCA").item("COLOR").item(1), _
+                            JsonLanguage.item("MENSAJE_TRABAJO_PESCA").item("COLOR").item(2), _
+                            JsonLanguage.item("MENSAJE_TRABAJO_PESCA").item("COLOR").item(3))
                 
                     Case Robar
                         Call AddtoRichTextBox(frmMain.RecTxt, _
-                            JsonLanguage.Item("MENSAJE_TRABAJO_ROBAR").Item("TEXTO"), _
-                            JsonLanguage.Item("MENSAJE_TRABAJO_ROBAR").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("MENSAJE_TRABAJO_ROBAR").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("MENSAJE_TRABAJO_ROBAR").Item("COLOR").Item(3))
+                            JsonLanguage.item("MENSAJE_TRABAJO_ROBAR").item("TEXTO"), _
+                            JsonLanguage.item("MENSAJE_TRABAJO_ROBAR").item("COLOR").item(1), _
+                            JsonLanguage.item("MENSAJE_TRABAJO_ROBAR").item("COLOR").item(2), _
+                            JsonLanguage.item("MENSAJE_TRABAJO_ROBAR").item("COLOR").item(3))
                 
                     Case Talar
                         Call AddtoRichTextBox(frmMain.RecTxt, _
-                            JsonLanguage.Item("MENSAJE_TRABAJO_TALAR").Item("TEXTO"), _
-                            JsonLanguage.Item("MENSAJE_TRABAJO_TALAR").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("MENSAJE_TRABAJO_TALAR").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("MENSAJE_TRABAJO_TALAR").Item("COLOR").Item(3))
+                            JsonLanguage.item("MENSAJE_TRABAJO_TALAR").item("TEXTO"), _
+                            JsonLanguage.item("MENSAJE_TRABAJO_TALAR").item("COLOR").item(1), _
+                            JsonLanguage.item("MENSAJE_TRABAJO_TALAR").item("COLOR").item(2), _
+                            JsonLanguage.item("MENSAJE_TRABAJO_TALAR").item("COLOR").item(3))
                 
                     Case Mineria
                         Call AddtoRichTextBox(frmMain.RecTxt, _
-                            JsonLanguage.Item("MENSAJE_TRABAJO_MINERIA").Item("TEXTO"), _
-                            JsonLanguage.Item("MENSAJE_TRABAJO_MINERIA").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("MENSAJE_TRABAJO_MINERIA").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("MENSAJE_TRABAJO_MINERIA").Item("COLOR").Item(3))
+                            JsonLanguage.item("MENSAJE_TRABAJO_MINERIA").item("TEXTO"), _
+                            JsonLanguage.item("MENSAJE_TRABAJO_MINERIA").item("COLOR").item(1), _
+                            JsonLanguage.item("MENSAJE_TRABAJO_MINERIA").item("COLOR").item(2), _
+                            JsonLanguage.item("MENSAJE_TRABAJO_MINERIA").item("COLOR").item(3))
                 
                     Case FundirMetal
                         Call AddtoRichTextBox(frmMain.RecTxt, _
-                            JsonLanguage.Item("MENSAJE_TRABAJO_FUNDIRMETAL").Item("TEXTO"), _
-                            JsonLanguage.Item("MENSAJE_TRABAJO_FUNDIRMETAL").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("MENSAJE_TRABAJO_FUNDIRMETAL").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("MENSAJE_TRABAJO_FUNDIRMETAL").Item("COLOR").Item(3))
+                            JsonLanguage.item("MENSAJE_TRABAJO_FUNDIRMETAL").item("TEXTO"), _
+                            JsonLanguage.item("MENSAJE_TRABAJO_FUNDIRMETAL").item("COLOR").item(1), _
+                            JsonLanguage.item("MENSAJE_TRABAJO_FUNDIRMETAL").item("COLOR").item(2), _
+                            JsonLanguage.item("MENSAJE_TRABAJO_FUNDIRMETAL").item("COLOR").item(3))
                 
                     Case Proyectiles
                         Call AddtoRichTextBox(frmMain.RecTxt, _
-                            JsonLanguage.Item("MENSAJE_TRABAJO_TALAR").Item("TEXTO"), _
-                            JsonLanguage.Item("MENSAJE_TRABAJO_PROYECTILES").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("MENSAJE_TRABAJO_PROYECTILES").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("MENSAJE_TRABAJO_PROYECTILES").Item("COLOR").Item(3))
+                            JsonLanguage.item("MENSAJE_TRABAJO_TALAR").item("TEXTO"), _
+                            JsonLanguage.item("MENSAJE_TRABAJO_PROYECTILES").item("COLOR").item(1), _
+                            JsonLanguage.item("MENSAJE_TRABAJO_PROYECTILES").item("COLOR").item(2), _
+                            JsonLanguage.item("MENSAJE_TRABAJO_PROYECTILES").item("COLOR").item(3))
 
                 End Select
 
@@ -1240,20 +1240,20 @@ Public Sub HandleMultiMessage()
                 Exp = .ReadLong
             
                 Call ShowConsoleMsg( _
-                    JsonLanguage.Item("MENSAJE_HAS_MATADO_A").Item("TEXTO") & charlist(KilledUser).Nombre & MENSAJE_22, _
-                    JsonLanguage.Item("MENSAJE_HAS_MATADO_A").Item("COLOR").Item(1), _
-                    JsonLanguage.Item("MENSAJE_HAS_MATADO_A").Item("COLOR").Item(2), _
-                    JsonLanguage.Item("MENSAJE_HAS_MATADO_A").Item("COLOR").Item(3), _
+                    JsonLanguage.item("MENSAJE_HAS_MATADO_A").item("TEXTO") & charlist(KilledUser).Nombre & MENSAJE_22, _
+                    JsonLanguage.item("MENSAJE_HAS_MATADO_A").item("COLOR").item(1), _
+                    JsonLanguage.item("MENSAJE_HAS_MATADO_A").item("COLOR").item(2), _
+                    JsonLanguage.item("MENSAJE_HAS_MATADO_A").item("COLOR").item(3), _
                     True, False)
                 
                 ' Para mejor lectura
-                MensajeExp = JsonLanguage.Item("MENSAJE_HAS_GANADO_EXP").Item("TEXTO") 'String original
+                MensajeExp = JsonLanguage.item("MENSAJE_HAS_GANADO_EXP").item("TEXTO") 'String original
                 MensajeExp = Replace$(MensajeExp, "VAR_EXP_GANADA", Exp) 'Parte a reemplazar
                 
                 Call ShowConsoleMsg(MensajeExp, _
-                                    JsonLanguage.Item("MENSAJE_HAS_GANADO_EXP").Item("COLOR").Item(1), _
-                                    JsonLanguage.Item("MENSAJE_HAS_GANADO_EXP").Item("COLOR").Item(2), _
-                                    JsonLanguage.Item("MENSAJE_HAS_GANADO_EXP").Item("COLOR").Item(3), _
+                                    JsonLanguage.item("MENSAJE_HAS_GANADO_EXP").item("COLOR").item(1), _
+                                    JsonLanguage.item("MENSAJE_HAS_GANADO_EXP").item("COLOR").item(2), _
+                                    JsonLanguage.item("MENSAJE_HAS_GANADO_EXP").item("COLOR").item(3), _
                                     True, False)
             
                 'Sacamos un screenshot si esta activado el FragShooter:
@@ -1274,10 +1274,10 @@ Public Sub HandleMultiMessage()
             
                 KillerUser = .ReadInteger
             
-                Call ShowConsoleMsg(charlist(KillerUser).Nombre & JsonLanguage.Item("MENSAJE_TE_HA_MATADO").Item("TEXTO"), _
-                                    JsonLanguage.Item("MENSAJE_TE_HA_MATADO").Item("COLOR").Item(1), _
-                                    JsonLanguage.Item("MENSAJE_TE_HA_MATADO").Item("COLOR").Item(2), _
-                                    JsonLanguage.Item("MENSAJE_TE_HA_MATADO").Item("COLOR").Item(3), _
+                Call ShowConsoleMsg(charlist(KillerUser).Nombre & JsonLanguage.item("MENSAJE_TE_HA_MATADO").item("TEXTO"), _
+                                    JsonLanguage.item("MENSAJE_TE_HA_MATADO").item("COLOR").item(1), _
+                                    JsonLanguage.item("MENSAJE_TE_HA_MATADO").item("COLOR").item(2), _
+                                    JsonLanguage.item("MENSAJE_TE_HA_MATADO").item("COLOR").item(3), _
                                     True, False)
             
                 'Sacamos un screenshot si esta activado el FragShooter:
@@ -1318,54 +1318,54 @@ Public Sub HandleMultiMessage()
             
                 If tiempo >= 60 Then
                     If tiempo Mod 60 = 0 Then
-                        msg = tiempo / 60 & " " & JsonLanguage.Item("MINUTOS").Item("TEXTO") & "."
+                        msg = tiempo / 60 & " " & JsonLanguage.item("MINUTOS").item("TEXTO") & "."
                     Else
-                        msg = CInt(tiempo \ 60) & " " & JsonLanguage.Item("MINUTOS").Item("TEXTO") & " " & JsonLanguage.Item("LETRA_Y").Item("TEXTO") & " " & tiempo Mod 60 & " " & JsonLanguage.Item("SEGUNDOS").Item("TEXTO") & "."  'Agregado el CInt() asi el numero no es con , [C4b3z0n - 09/28/2010]
+                        msg = CInt(tiempo \ 60) & " " & JsonLanguage.item("MINUTOS").item("TEXTO") & " " & JsonLanguage.item("LETRA_Y").item("TEXTO") & " " & tiempo Mod 60 & " " & JsonLanguage.item("SEGUNDOS").item("TEXTO") & "."  'Agregado el CInt() asi el numero no es con , [C4b3z0n - 09/28/2010]
 
                     End If
 
                 Else
-                    msg = tiempo & " " & JsonLanguage.Item("SEGUNDOS").Item("TEXTO") & "."
+                    msg = tiempo & " " & JsonLanguage.item("SEGUNDOS").item("TEXTO") & "."
 
                 End If
                 
-                msgGoHome = JsonLanguage.Item("MENSAJE_ESTAS_A_MAPAS_DE_DURACION_VIAJE").Item("TEXTO") & msg
+                msgGoHome = JsonLanguage.item("MENSAJE_ESTAS_A_MAPAS_DE_DURACION_VIAJE").item("TEXTO") & msg
                 msgGoHome = Replace$(msgGoHome, "VAR_DISTANCIA_MAPAS", Distance)
                 msgGoHome = Replace$(msgGoHome, "VAR_MAPA_DESTINO", Hogar)
                 
                 Call ShowConsoleMsg(msgGoHome, _
-                                    JsonLanguage.Item("MENSAJE_ESTAS_A_MAPAS_DE_DURACION_VIAJE").Item("COLOR").Item(1), _
-                                    JsonLanguage.Item("MENSAJE_ESTAS_A_MAPAS_DE_DURACION_VIAJE").Item("COLOR").Item(2), _
-                                    JsonLanguage.Item("MENSAJE_ESTAS_A_MAPAS_DE_DURACION_VIAJE").Item("COLOR").Item(3), _
+                                    JsonLanguage.item("MENSAJE_ESTAS_A_MAPAS_DE_DURACION_VIAJE").item("COLOR").item(1), _
+                                    JsonLanguage.item("MENSAJE_ESTAS_A_MAPAS_DE_DURACION_VIAJE").item("COLOR").item(2), _
+                                    JsonLanguage.item("MENSAJE_ESTAS_A_MAPAS_DE_DURACION_VIAJE").item("COLOR").item(3), _
                                     True)
                 Traveling = True
 
             Case eMessages.CancelGoHome
-                Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_HOGAR_CANCEL").Item("TEXTO"), _
-                                    JsonLanguage.Item("MENSAJE_HOGAR_CANCEL").Item("COLOR").Item(1), _
-                                    JsonLanguage.Item("MENSAJE_HOGAR_CANCEL").Item("COLOR").Item(2), _
-                                    JsonLanguage.Item("MENSAJE_HOGAR_CANCEL").Item("COLOR").Item(3), _
+                Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_HOGAR_CANCEL").item("TEXTO"), _
+                                    JsonLanguage.item("MENSAJE_HOGAR_CANCEL").item("COLOR").item(1), _
+                                    JsonLanguage.item("MENSAJE_HOGAR_CANCEL").item("COLOR").item(2), _
+                                    JsonLanguage.item("MENSAJE_HOGAR_CANCEL").item("COLOR").item(3), _
                                     True)
                 Traveling = False
                    
             Case eMessages.FinishHome
-                Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_HOGAR").Item("TEXTO"), _
-                                    JsonLanguage.Item("MENSAJE_HOGAR").Item("COLOR").Item(1), _
-                                    JsonLanguage.Item("MENSAJE_HOGAR").Item("COLOR").Item(2), _
-                                    JsonLanguage.Item("MENSAJE_HOGAR").Item("COLOR").Item(3))
+                Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_HOGAR").item("TEXTO"), _
+                                    JsonLanguage.item("MENSAJE_HOGAR").item("COLOR").item(1), _
+                                    JsonLanguage.item("MENSAJE_HOGAR").item("COLOR").item(2), _
+                                    JsonLanguage.item("MENSAJE_HOGAR").item("COLOR").item(3))
                 Traveling = False
             
             Case eMessages.UserMuerto
-                Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("TEXTO").Item(2), _
-                                    JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("COLOR").Item(1), _
-                                    JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("COLOR").Item(2), _
-                                    JsonLanguage.Item("MENSAJE_USER_MUERTO").Item("COLOR").Item(3))
+                Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO").item(2), _
+                                    JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(1), _
+                                    JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(2), _
+                                    JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(3))
         
             Case eMessages.NpcInmune
-                Call ShowConsoleMsg(JsonLanguage.Item("NPC_INMUNE").Item("TEXTO"), _
-                                    JsonLanguage.Item("NPC_INMUNE").Item("COLOR").Item(1), _
-                                    JsonLanguage.Item("NPC_INMUNE").Item("COLOR").Item(2), _
-                                    JsonLanguage.Item("NPC_INMUNE").Item("COLOR").Item(3))
+                Call ShowConsoleMsg(JsonLanguage.item("NPC_INMUNE").item("TEXTO"), _
+                                    JsonLanguage.item("NPC_INMUNE").item("COLOR").item(1), _
+                                    JsonLanguage.item("NPC_INMUNE").item("COLOR").item(2), _
+                                    JsonLanguage.item("NPC_INMUNE").item("COLOR").item(3))
             
             Case eMessages.Hechizo_HechiceroMSG_NOMBRE
                 SpellIndex = .ReadByte
@@ -1376,7 +1376,7 @@ Public Sub HandleMultiMessage()
             Case eMessages.Hechizo_HechiceroMSG_ALGUIEN
                 SpellIndex = .ReadByte
          
-                Call ShowConsoleMsg(Hechizos(SpellIndex).HechiceroMsg & " " & JsonLanguage.Item("ALGUIEN").Item("TEXTO") & ".", 210, 220, 220)
+                Call ShowConsoleMsg(Hechizos(SpellIndex).HechiceroMsg & " " & JsonLanguage.item("ALGUIEN").item("TEXTO") & ".", 210, 220, 220)
          
             Case eMessages.Hechizo_HechiceroMSG_CRIATURA
                 SpellIndex = .ReadByte
@@ -1609,7 +1609,7 @@ Private Sub HandleBankInit()
     
     BankGold = incomingData.ReadLong
     Call InvBanco(0).Initialize(DirectD3D8, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
-    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.PicInv, Inventario.MaxObjs)
+    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.picInv, Inventario.MaxObjs)
     
     For i = 1 To Inventario.MaxObjs
         With Inventario
@@ -1730,7 +1730,7 @@ Private Sub HandleUserOfferConfirm()
         ' Now he can accept the offer or reject it
         .HabilitarAceptarRechazar True
         
-        .PrintCommerceMsg TradingUserName & JsonLanguage.Item("MENSAJE_COMM_OFERTA_ACEPTA").Item("TEXTO"), FontTypeNames.FONTTYPE_CONSE
+        .PrintCommerceMsg TradingUserName & JsonLanguage.item("MENSAJE_COMM_OFERTA_ACEPTA").item("TEXTO"), FontTypeNames.FONTTYPE_CONSE
     End With
     
 End Sub
@@ -2065,7 +2065,7 @@ Private Sub HandleChangeMap()
         End If
     Else
         'no encontramos el mapa en el hd
-        MsgBox JsonLanguage.Item("ERROR_MAPAS").Item("TEXTO")
+        MsgBox JsonLanguage.item("ERROR_MAPAS").item("TEXTO")
         
         Call CloseClient
     End If
@@ -2111,7 +2111,7 @@ Private Sub HandleChatOverHead()
         Exit Sub
     End If
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -2139,7 +2139,7 @@ On Error GoTo errhandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
 
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -2165,7 +2165,7 @@ Private Sub HandleConsoleMessage()
         Exit Sub
     End If
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -2220,7 +2220,7 @@ On Error GoTo errhandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -2246,7 +2246,7 @@ Private Sub HandleGuildChat()
         Exit Sub
     End If
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -2298,7 +2298,7 @@ On Error GoTo errhandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -2324,7 +2324,7 @@ Private Sub HandleCommerceChat()
         Exit Sub
     End If
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -2374,7 +2374,7 @@ On Error GoTo errhandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -2400,7 +2400,7 @@ Private Sub HandleShowMessageBox()
         Exit Sub
     End If
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -2414,7 +2414,7 @@ On Error GoTo errhandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -2483,7 +2483,7 @@ Private Sub HandleCharacterCreate()
         Exit Sub
     End If
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -2559,7 +2559,7 @@ On Error GoTo errhandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -2896,7 +2896,7 @@ Private Sub HandleGuildList()
         Exit Sub
     End If
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -2906,7 +2906,7 @@ On Error GoTo errhandler
     
     With frmGuildAdm
         'Clear guild's list
-        .guildslist.Clear
+        .GuildsList.Clear
         
         GuildNames = Split(Buffer.ReadASCIIString(), SEPARATOR)
         
@@ -2923,7 +2923,7 @@ On Error GoTo errhandler
         .Show vbModeless, frmMain
     End With
     
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -3141,7 +3141,7 @@ Private Sub HandleChangeInventorySlot()
         Exit Sub
     End If
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -3212,7 +3212,7 @@ On Error GoTo errhandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -3249,7 +3249,7 @@ Private Sub HandleStopWorking()
     Call incomingData.ReadByte
     
     With FontTypes(FontTypeNames.FONTTYPE_INFO)
-        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_WORK_FINISHED"), .Red, .Green, .Blue, .bold, .italic)
+        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_WORK_FINISHED"), .Red, .Green, .Blue, .bold, .italic)
     End With
     If frmMain.trainingMacro.Enabled Then Call frmMain.DesactivarMacroHechizos
     If frmMain.macrotrabajo.Enabled Then Call frmMain.DesactivarMacroTrabajo
@@ -3288,7 +3288,7 @@ Private Sub HandleCancelOfferItem()
         Not frmComerciarUsu.HasAnyItem(InvOroComUsu(1)) Then Call frmComerciarUsu.HabilitarConfirmar(False)
     
     With FontTypes(FontTypeNames.FONTTYPE_INFO)
-        Call frmComerciarUsu.PrintCommerceMsg(JsonLanguage.Item("MENSAJE_NO_COMM_OBJETO").Item("TEXTO"), FontTypeNames.FONTTYPE_INFO)
+        Call frmComerciarUsu.PrintCommerceMsg(JsonLanguage.item("MENSAJE_NO_COMM_OBJETO").item("TEXTO"), FontTypeNames.FONTTYPE_INFO)
     End With
 End Sub
 
@@ -3306,7 +3306,7 @@ Private Sub HandleChangeBankSlot()
         Exit Sub
     End If
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -3339,7 +3339,7 @@ On Error GoTo errhandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -3365,7 +3365,7 @@ Private Sub HandleChangeSpellSlot()
         Exit Sub
     End If
  
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -3384,21 +3384,21 @@ On Error GoTo errhandler
         If str <> vbNullString Then
             frmMain.hlst.List(slot - 1) = str
         Else
-            Call frmMain.hlst.AddItem(JsonLanguage.Item("NADA").Item("TEXTO"))
+            Call frmMain.hlst.AddItem(JsonLanguage.item("NADA").item("TEXTO"))
         End If
     Else
         str = DevolverNombreHechizo(UserHechizos(slot))
         If str <> vbNullString Then
             Call frmMain.hlst.AddItem(str)
         Else
-            Call frmMain.hlst.AddItem(JsonLanguage.Item("NADA").Item("TEXTO"))
+            Call frmMain.hlst.AddItem(JsonLanguage.item("NADA").item("TEXTO"))
         End If
     End If
  
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
  
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -3463,7 +3463,7 @@ Private Sub HandleBlacksmithWeapons()
         Exit Sub
     End If
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -3536,7 +3536,7 @@ On Error GoTo errhandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -3562,7 +3562,7 @@ Private Sub HandleBlacksmithArmors()
         Exit Sub
     End If
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -3621,7 +3621,7 @@ On Error GoTo errhandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -3647,7 +3647,7 @@ Private Sub HandleCarpenterObjects()
         Exit Sub
     End If
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -3718,7 +3718,7 @@ On Error GoTo errhandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -3759,7 +3759,7 @@ Private Sub HandleErrorMessage()
         Exit Sub
     End If
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -3776,7 +3776,7 @@ On Error GoTo errhandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -3832,7 +3832,7 @@ Private Sub HandleShowSignal()
         Exit Sub
     End If
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -3848,7 +3848,7 @@ On Error GoTo errhandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -3874,7 +3874,7 @@ Private Sub HandleChangeNPCInventorySlot()
         Exit Sub
     End If
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -3901,7 +3901,7 @@ On Error GoTo errhandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -4049,7 +4049,7 @@ Private Sub HandleAddForumMessage()
         Exit Sub
     End If
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -4078,7 +4078,7 @@ On Error GoTo errhandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -4257,7 +4257,7 @@ Private Sub HandleTrainerCreatureList()
         Exit Sub
     End If
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -4280,7 +4280,7 @@ On Error GoTo errhandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -4306,7 +4306,7 @@ Private Sub HandleGuildNews()
         Exit Sub
     End If
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -4345,7 +4345,7 @@ On Error GoTo errhandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -4371,7 +4371,7 @@ Private Sub HandleOfferDetails()
         Exit Sub
     End If
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -4384,7 +4384,7 @@ On Error GoTo errhandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -4410,7 +4410,7 @@ Private Sub HandleAlianceProposalsList()
         Exit Sub
     End If
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -4435,7 +4435,7 @@ On Error GoTo errhandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -4463,7 +4463,7 @@ Private Sub HandlePeaceProposalsList()
 
     End If
     
-    On Error GoTo errhandler
+    On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
@@ -4496,7 +4496,7 @@ Private Sub HandlePeaceProposalsList()
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 
@@ -4523,7 +4523,7 @@ Private Sub HandleCharacterInfo()
         Exit Sub
     End If
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -4574,19 +4574,19 @@ On Error GoTo errhandler
         caos = Buffer.ReadBoolean()
         
         If armada Then
-            .ejercito.Caption = JsonLanguage.Item("ARMADA").Item("TEXTO")
+            .ejercito.Caption = JsonLanguage.item("ARMADA").item("TEXTO")
         ElseIf caos Then
-            .ejercito.Caption = JsonLanguage.Item("LEGION").Item("TEXTO")
+            .ejercito.Caption = JsonLanguage.item("LEGION").item("TEXTO")
         End If
         
         .Ciudadanos.Caption = CStr(Buffer.ReadLong())
         .criminales.Caption = CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
-            .status.Caption = " " & JsonLanguage.Item("CIUDADANO").Item("TEXTO")
+            .status.Caption = " " & JsonLanguage.item("CIUDADANO").item("TEXTO")
             .status.ForeColor = vbBlue
         Else
-            .status.Caption = " " & JsonLanguage.Item("CRIMINAL").Item("TEXTO")
+            .status.Caption = " " & JsonLanguage.item("CRIMINAL").item("TEXTO")
             .status.ForeColor = vbRed
         End If
         
@@ -4596,7 +4596,7 @@ On Error GoTo errhandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -4622,7 +4622,7 @@ Private Sub HandleGuildLeaderInfo()
         Exit Sub
     End If
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -4638,7 +4638,7 @@ On Error GoTo errhandler
         GuildNames = Split(Buffer.ReadASCIIString(), SEPARATOR)
         
         'Empty the list
-        Call .guildslist.Clear
+        Call .GuildsList.Clear
         
         For i = 0 To UBound(GuildNames())
             If LenB(GuildNames(i)) <> 0 Then
@@ -4675,7 +4675,7 @@ On Error GoTo errhandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -4701,7 +4701,7 @@ Private Sub HandleGuildDetails()
         Exit Sub
     End If
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -4722,9 +4722,9 @@ On Error GoTo errhandler
         .Miembros.Caption = Buffer.ReadInteger()
         
         If Buffer.ReadBoolean() Then
-            .eleccion.Caption = UCase$(JsonLanguage.Item("ABIERTA").Item("TEXTO"))
+            .eleccion.Caption = UCase$(JsonLanguage.item("ABIERTA").item("TEXTO"))
         Else
-            .eleccion.Caption = UCase$(JsonLanguage.Item("CERRADA").Item("TEXTO"))
+            .eleccion.Caption = UCase$(JsonLanguage.item("CERRADA").item("TEXTO"))
         End If
         
         .lblAlineacion.Caption = Buffer.ReadASCIIString()
@@ -4749,7 +4749,7 @@ On Error GoTo errhandler
     
     frmGuildBrief.Show vbModeless, frmMain
     
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -4821,7 +4821,7 @@ Private Sub HandleShowUserRequest()
         Exit Sub
     End If
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -4835,7 +4835,7 @@ On Error GoTo errhandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -4949,7 +4949,7 @@ Private Sub HandleChangeUserTradeSlot()
         Exit Sub
     End If
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -4973,12 +4973,12 @@ On Error GoTo errhandler
         End If
     End With
     
-    Call frmComerciarUsu.PrintCommerceMsg(TradingUserName & JsonLanguage.Item("MENSAJE_COMM_OFERTA_CAMBIA").Item("TEXTO"), FontTypeNames.FONTTYPE_VENENO)
+    Call frmComerciarUsu.PrintCommerceMsg(TradingUserName & JsonLanguage.item("MENSAJE_COMM_OFERTA_CAMBIA").item("TEXTO"), FontTypeNames.FONTTYPE_VENENO)
     
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -5025,7 +5025,7 @@ Private Sub HandleSpawnList()
         Exit Sub
     End If
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -5048,7 +5048,7 @@ On Error GoTo errhandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -5074,7 +5074,7 @@ Private Sub HandleShowSOSForm()
         Exit Sub
     End If
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -5098,7 +5098,7 @@ On Error GoTo errhandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -5124,7 +5124,7 @@ Private Sub HandleShowDenounces()
         Exit Sub
     End If
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -5148,7 +5148,7 @@ On Error GoTo errhandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -5174,7 +5174,7 @@ Private Sub HandleShowPartyForm()
         Exit Sub
     End If
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -5201,7 +5201,7 @@ On Error GoTo errhandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -5229,7 +5229,7 @@ Private Sub HandleShowMOTDEditionForm()
         Exit Sub
     End If
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -5243,7 +5243,7 @@ On Error GoTo errhandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -5284,7 +5284,7 @@ Private Sub HandleUserNameList()
         Exit Sub
     End If
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -5312,7 +5312,7 @@ On Error GoTo errhandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -5346,14 +5346,14 @@ Private Sub HandlePong()
     Call incomingData.ReadByte
     
     Dim MENSAJE_PING As String
-        MENSAJE_PING = JsonLanguage.Item("MENSAJE_PING").Item("TEXTO")
+        MENSAJE_PING = JsonLanguage.item("MENSAJE_PING").item("TEXTO")
         MENSAJE_PING = Replace$(MENSAJE_PING, "VAR_PING", (GetTickCount - pingTime))
         
     Call AddtoRichTextBox(frmMain.RecTxt, _
                             MENSAJE_PING, _
-                            JsonLanguage.Item("MENSAJE_PING").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("MENSAJE_PING").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("MENSAJE_PING").Item("COLOR").Item(3), _
+                            JsonLanguage.item("MENSAJE_PING").item("COLOR").item(1), _
+                            JsonLanguage.item("MENSAJE_PING").item("COLOR").item(2), _
+                            JsonLanguage.item("MENSAJE_PING").item("COLOR").item(3), _
                             True, False, True)
     
     pingTime = 0
@@ -5373,7 +5373,7 @@ Private Sub HandleGuildMemberInfo()
         Exit Sub
     End If
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -5412,7 +5412,7 @@ On Error GoTo errhandler
         .Show vbModeless, frmMain
     End With
     
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -5438,7 +5438,7 @@ Private Sub HandleUpdateTagAndStatus()
         Exit Sub
     End If
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -5470,7 +5470,7 @@ On Error GoTo errhandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -6067,7 +6067,7 @@ End Sub
 ' @param    item Index of the item to craft in the list sent by the server.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCraftBlacksmith(ByVal Item As Integer)
+Public Sub WriteCraftBlacksmith(ByVal item As Integer)
 '***************************************************
 'Author: Juan Martin Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6076,7 +6076,7 @@ Public Sub WriteCraftBlacksmith(ByVal Item As Integer)
     With outgoingData
         Call .WriteByte(ClientPacketID.CraftBlacksmith)
         
-        Call .WriteInteger(Item)
+        Call .WriteInteger(item)
     End With
 End Sub
 
@@ -6086,7 +6086,7 @@ End Sub
 ' @param    item Index of the item to craft in the list sent by the server.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCraftCarpenter(ByVal Item As Integer)
+Public Sub WriteCraftCarpenter(ByVal item As Integer)
 '***************************************************
 'Author: Juan Martin Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6095,7 +6095,7 @@ Public Sub WriteCraftCarpenter(ByVal Item As Integer)
     With outgoingData
         Call .WriteByte(ClientPacketID.CraftCarpenter)
         
-        Call .WriteInteger(Item)
+        Call .WriteInteger(item)
     End With
 End Sub
 
@@ -6215,6 +6215,7 @@ Public Sub WriteChangeHeading(ByVal Heading As E_Heading)
         
         Call .WriteByte(Heading)
     End With
+    
 End Sub
 
 ''
@@ -10556,7 +10557,7 @@ Private Sub HandleRecordList()
         Exit Sub
     End If
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -10578,7 +10579,7 @@ On Error GoTo errhandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -10604,7 +10605,7 @@ Private Sub HandleRecordDetails()
         Exit Sub
     End If
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Dim tmpStr As String
@@ -10620,10 +10621,10 @@ On Error GoTo errhandler
         'Status del pj
         If Buffer.ReadBoolean Then
             .lblEstado.ForeColor = vbGreen
-            .lblEstado.Caption = UCase$(JsonLanguage.Item("EN_LINEA").Item("TEXTO"))
+            .lblEstado.Caption = UCase$(JsonLanguage.item("EN_LINEA").item("TEXTO"))
         Else
             .lblEstado.ForeColor = vbRed
-            .lblEstado.Caption = UCase$(JsonLanguage.Item("DESCONECTADO").Item("TEXTO"))
+            .lblEstado.Caption = UCase$(JsonLanguage.item("DESCONECTADO").item("TEXTO"))
         End If
         
         'IP del personaje
@@ -10631,7 +10632,7 @@ On Error GoTo errhandler
         If LenB(tmpStr) Then
             .txtIP.Text = tmpStr
         Else
-            .txtIP.Text = JsonLanguage.Item("USUARIO").Item("TEXTO") & JsonLanguage.Item("DESCONECTADO").Item("TEXTO")
+            .txtIP.Text = JsonLanguage.item("USUARIO").item("TEXTO") & JsonLanguage.item("DESCONECTADO").item("TEXTO")
         End If
         
         'Tiempo online
@@ -10639,7 +10640,7 @@ On Error GoTo errhandler
         If LenB(tmpStr) Then
             .txtTimeOn.Text = tmpStr
         Else
-            .txtTimeOn.Text = JsonLanguage.Item("USUARIO").Item("TEXTO") & JsonLanguage.Item("DESCONECTADO").Item("TEXTO")
+            .txtTimeOn.Text = JsonLanguage.item("USUARIO").item("TEXTO") & JsonLanguage.item("DESCONECTADO").item("TEXTO")
         End If
         
         'Observaciones
@@ -10647,14 +10648,14 @@ On Error GoTo errhandler
         If LenB(tmpStr) Then
             .txtObs.Text = tmpStr
         Else
-            .txtObs.Text = JsonLanguage.Item("MENSAJE_NO_NOVEDADES").Item("TEXTO")
+            .txtObs.Text = JsonLanguage.item("MENSAJE_NO_NOVEDADES").item("TEXTO")
         End If
     End With
     
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -10761,7 +10762,7 @@ Private Sub HandleAccountLogged()
         Exit Sub
     End If
 
-    On Error GoTo errhandler
+    On Error GoTo ErrHandler
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue
@@ -10816,7 +10817,7 @@ Private Sub HandleAccountLogged()
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
 
-errhandler:
+ErrHandler:
 
     Dim Error As Long
 
@@ -10978,7 +10979,7 @@ Private Sub HandleQuestDetails()
         Exit Sub
     End If
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     Dim Buffer As New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
@@ -11041,7 +11042,7 @@ On Error GoTo errhandler
     
     Call incomingData.CopyBuffer(Buffer)
     
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -11063,7 +11064,7 @@ Public Sub HandleQuestListSend()
         Exit Sub
     End If
     
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     Dim Buffer As New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
@@ -11101,7 +11102,7 @@ On Error GoTo errhandler
     'Copiamos de vuelta el buffer
     Call incomingData.CopyBuffer(Buffer)
  
-errhandler:
+ErrHandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0

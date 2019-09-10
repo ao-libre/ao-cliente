@@ -504,3 +504,11 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 05/09/2019: Simplifiqué un poco el código de los colores. (Jopi)
 * 05/09/2019: Se arreglo error que no permitia ver el arma. (FrankoH)
 * 05/09/2019: Se agrego macro hechizos. (FrankoH)
+
+- v0.13.14.2
+
+* 08/09/2019: Modificado inventario y agregados graficos de fondo. (FrankoH)
+* 08/09/2019: Optimizaciones en el cambio de heading. (FrankoH)
+* 08/09/2019: Se creó una clase que simula un arraylist de java y la utilice para guardar los ultimas teclas del personaje y mover siempre la ultima tecla presionada. (FrankoH)
+* 08/09/2019: Se modificó el sistema de entrada de teclas para el movimiento. (FrankoH)
+* 08/09/2019: Se agregó la animacion del personaje en el frmCrearPersonaje. (FrankoH)

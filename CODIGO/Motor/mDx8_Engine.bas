@@ -3,10 +3,22 @@ Option Explicit
 
 Public Declare Function timeGetTime Lib "winmm.dll" () As Long
 
-'DX8 Objects
+' No matter what you do with DirectX8, you will need to start with
+' the DirectX8 object. You will need to create a new instance of
+' the object, using the New keyword, rather than just getting a
+' pointer to it, since there's nowhere to get a pointer from yet (duh!).
+
 Public DirectX As New DirectX8
+
+' The D3DX8 object contains lots of helper functions, mostly math
+' to make Direct3D alot easier to use. Notice we create a new
+' instance of the object using the New keyword.
 Public DirectD3D8 As D3DX8
 Public DirectD3D As Direct3D8
+
+' The Direct3DDevice8 represents our rendering device, which could
+' be a hardware or a software device. The great thing is we still
+' use the same object no matter what it is
 Public DirectDevice As Direct3DDevice8
 
 Public SurfaceDB As New clsTextureManager
@@ -46,34 +58,68 @@ Public Function Engine_DirectX8_Init() As Boolean
     ScreenWidth = frmMain.MainViewPic.ScaleWidth
     ScreenHeight = frmMain.MainViewPic.ScaleHeight
     
+    ' The D3DDISPLAYMODE type structure that holds
+    ' the information about your current display adapter.
     Dim DispMode  As D3DDISPLAYMODE
+    
+    ' The D3DPRESENT_PARAMETERS type holds a description of the way
+    ' in which DirectX will display it's rendering.
     Dim D3DWindow As D3DPRESENT_PARAMETERS
     
+    ' Initialize all DirectX objects.
     Set DirectX = New DirectX8
     Set DirectD3D = DirectX.Direct3DCreate
     Set DirectD3D8 = New D3DX8
 
+    ' Retrieve the information about your current display adapter.
     Call DirectD3D.GetAdapterDisplayMode(D3DADAPTER_DEFAULT, DispMode)
     
+    ' Fill the D3DPRESENT_PARAMETERS type, describing how DirectX should
+    ' display it's renders.
     With D3DWindow
         .Windowed = True
+        
+        ' The swap effect determines how the graphics get from the backbuffer to the screen.
+        ' D3DSWAPEFFECT_DISCARD:
+        '   Means that every time the render is presented, the backbuffer
+        '   image is destroyed, so everything must be rendered again.
         .SwapEffect = IIf((ClientSetup.vSync) = True, D3DSWAPEFFECT_COPY_VSYNC, D3DSWAPEFFECT_DISCARD)
+        
         .BackBufferFormat = DispMode.Format
         .BackBufferWidth = ScreenWidth
         .BackBufferHeight = ScreenHeight
-        .hDeviceWindow = frmMain.MainViewPic.hwnd
+        .hDeviceWindow = frmMain.MainViewPic.hWnd
     End With
-
+    
+    ' Create the rendering device.
+    ' Here we request a Hardware or Mixed rasterization.
+    ' If your computer does not have this, the request may fail, so use
+    ' D3DDEVTYPE_REF instead of D3DDEVTYPE_HAL if this happens. A real
+    ' program would be able to detect an error and automatically switch device.
+    ' We also request software vertex processing, which means the CPU has to
+    ' transform and light our geometry.
     Select Case ClientSetup.Aceleracion
 
         Case 0 '   Hardware
-            Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, D3DWindow.hDeviceWindow, D3DCREATE_HARDWARE_VERTEXPROCESSING, D3DWindow)
+            Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, _
+                                                      D3DDEVTYPE_HAL, _
+                                                      D3DWindow.hDeviceWindow, _
+                                                      D3DCREATE_HARDWARE_VERTEXPROCESSING, _
+                                                      D3DWindow)
 
         Case 1 '   Mixed
-            Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, D3DWindow.hDeviceWindow, D3DCREATE_MIXED_VERTEXPROCESSING, D3DWindow)
+            Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, _
+                                                      D3DDEVTYPE_HAL, _
+                                                      D3DWindow.hDeviceWindow, _
+                                                      D3DCREATE_MIXED_VERTEXPROCESSING, _
+                                                      D3DWindow)
 
         Case Else 'Si no hay opcion entramos en Hardware para asegurarnos que funcione el cliente.
-            Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, D3DWindow.hDeviceWindow, D3DCREATE_HARDWARE_VERTEXPROCESSING, D3DWindow)
+            Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, _
+                                                      D3DDEVTYPE_HAL, _
+                                                      D3DWindow.hDeviceWindow, _
+                                                      D3DCREATE_HARDWARE_VERTEXPROCESSING, _
+                                                      D3DWindow)
             
     End Select
     
@@ -82,10 +128,8 @@ Public Function Engine_DirectX8_Init() As Boolean
     Call D3DXMatrixIdentity(View)
     Call DirectDevice.SetTransform(D3DTS_PROJECTION, Projection)
     Call DirectDevice.SetTransform(D3DTS_VIEW, View)
-    
-    Call Engine_Init_FontTextures
-    Call Engine_Init_FontSettings
-    
+
+    ' Set rendering options
     Call Engine_Init_RenderStates
     
     'Carga dinamica de texturas por defecto.
@@ -95,21 +139,22 @@ Public Function Engine_DirectX8_Init() As Boolean
     Set SpriteBatch = New clsBatch
     Call SpriteBatch.Initialise(2000)
     
-    EndTime = GetTickCount
+    EndTime = timeGetTime
 
     If Err Then
-        MsgBox JsonLanguage.Item("ERROR_DIRECTX_INIT").Item("TEXTO")
+        MsgBox JsonLanguage.item("ERROR_DIRECTX_INIT").item("TEXTO")
         Engine_DirectX8_Init = False
         Exit Function
     End If
     
     If DirectDevice Is Nothing Then
-        MsgBox JsonLanguage.Item("ERROR_DIRECTDEVICE_INIT").Item("TEXTO")
+        MsgBox JsonLanguage.item("ERROR_DIRECTDEVICE_INIT").item("TEXTO")
         Engine_DirectX8_Init = False
         Exit Function
     End If
     
     Engine_DirectX8_Init = True
+    
 End Function
 
 Private Sub Engine_Init_RenderStates()
@@ -173,7 +218,7 @@ Public Sub Engine_DirectX8_Aditional_Init()
     
     ColorTecho = 250
     colorRender = 240
-    
+
     Call Engine_Set_TileBuffer(9)
     Call Engine_Set_BaseSpeed(0.018)
     
@@ -181,13 +226,17 @@ Public Sub Engine_DirectX8_Aditional_Init()
         .Bottom = ScreenHeight
         .Right = ScreenWidth
     End With
-
+    
+    ' Seteamos algunos colores por adelantado y unica vez.
     Call Engine_Long_To_RGB_List(Normal_RGBList(), -1)
     Call Engine_Long_To_RGB_List(Color_Shadow(), D3DColorARGB(50, 0, 0, 0))
     Call Engine_Long_To_RGB_List(Color_Arbol(), D3DColorARGB(100, 100, 100, 100))
     
-    Call Load_Auras
-    Call Init_MeteoEngine
+    ' Inicializamos otros sistemas.
+    Call mDx8_Text.Engine_Init_FontTextures
+    Call mDx8_Text.Engine_Init_FontSettings
+    Call mDx8_Auras.Load_Auras
+    Call mDx8_Clima.Init_MeteoEngine
     Call mDx8_Dibujado.Damage_Initialize
     
 End Sub
@@ -300,7 +349,7 @@ Public Sub Engine_D3DColor_To_RGB_List(rgb_list() As Long, Color As D3DCOLORVALU
 'Last Modification: 14/05/10
 'Blisse-AO | Set a D3DColorValue to a RGB List
 '***************************************************
-    rgb_list(0) = D3DColorARGB(Color.A, Color.r, Color.g, Color.B)
+    rgb_list(0) = D3DColorARGB(Color.a, Color.r, Color.g, Color.B)
     rgb_list(1) = rgb_list(0)
     rgb_list(2) = rgb_list(0)
     rgb_list(3) = rgb_list(0)
@@ -317,25 +366,32 @@ Public Sub Engine_Long_To_RGB_List(rgb_list() As Long, long_color As Long)
     rgb_list(2) = rgb_list(0)
     rgb_list(3) = rgb_list(0)
 End Sub
-Public Function SetARGB_Alpha(rgb_list() As Long, Alpha As Byte) As Long()
-'***************************************************
-'Author: Juan Manuel Couso (Cucsifae)
-'Last Modification: 29/08/18
-'Obtiene un ARGB list le modifica el alpha y devuelve una copia
-'***************************************************
-Dim TempColor As D3DCOLORVALUE
-Dim tempARGB(0 To 3) As Long
-'convertimos el valor del rgb list a D3DCOLOR
-Call ARGBtoD3DCOLORVALUE(rgb_list(1), TempColor)
-'comprobamos ue no se salga del rango permitido
-If Alpha > 255 Then Alpha = 255
-If Alpha < 0 Then Alpha = 0
-'seteamos el alpha
-TempColor.A = Alpha
-'generamos el nuevo RGB_List
-Call Engine_D3DColor_To_RGB_List(tempARGB(), TempColor)
 
-SetARGB_Alpha = tempARGB()
+Public Function SetARGB_Alpha(rgb_list() As Long, Alpha As Byte) As Long()
+
+    '***************************************************
+    'Author: Juan Manuel Couso (Cucsifae)
+    'Last Modification: 29/08/18
+    'Obtiene un ARGB list le modifica el alpha y devuelve una copia
+    '***************************************************
+    Dim TempColor        As D3DCOLORVALUE
+    Dim tempARGB(0 To 3) As Long
+
+    'convertimos el valor del rgb list a D3DCOLOR
+    Call ARGBtoD3DCOLORVALUE(rgb_list(1), TempColor)
+
+    'comprobamos ue no se salga del rango permitido
+    If Alpha > 255 Then Alpha = 255
+    If Alpha < 0 Then Alpha = 0
+    
+    'seteamos el alpha
+    TempColor.a = Alpha
+    
+    'generamos el nuevo RGB_List
+    Call Engine_D3DColor_To_RGB_List(tempARGB(), TempColor)
+
+    SetARGB_Alpha = tempARGB()
+
 End Function
 
 Private Function Engine_Collision_Between(ByVal Value As Single, ByVal Bound1 As Single, ByVal Bound2 As Single) As Byte
@@ -596,15 +652,9 @@ End Function
 Public Sub Engine_Update_FPS()
     '***************************************************
     'Author: Standelf
-    'Last Modification: 10/01/2011
-    'Limit FPS & Calculate later
+    'Last Modification: 09/09/2019
+    'Calculate FPS
     '***************************************************
-
-    If ClientSetup.vSync Then
-        While (GetTickCount - FPSLastCheck) \ 10 < FramesPerSecCounter
-            Call Sleep(5)
-        Wend
-    End If
 
     If FPSLastCheck + 1000 < GetTickCount Then
         FPS = FramesPerSecCounter
@@ -676,7 +726,7 @@ Public Sub DrawPJ(ByVal Index As Byte)
         End If
     End If
 
-    Call Engine_EndScene(RE, frmPanelAccount.picChar(Index - 1).hwnd)
+    Call Engine_EndScene(RE, frmPanelAccount.picChar(Index - 1).hWnd)
     
 End Sub
 

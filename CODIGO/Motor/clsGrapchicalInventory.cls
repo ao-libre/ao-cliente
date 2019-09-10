@@ -418,7 +418,7 @@ Public Sub DrawInventory()
         startdX = ((LoopC - 1) Mod (frmMain.PicInv.Width / 32)) * 32
         startdY = ((LoopC - 1) \ (frmMain.PicInv.Width / 32)) * 32
 
-        'Call Draw_GrhIndex(23651, startdX, startdY, 0, Inv_Color(), 0, False) 'Dibuja el fondo
+        Call Draw_GrhIndex(26095, startdX, startdY, 0, Inv_Color(), 0, False) 'Dibuja el fondo
             
         If Inventory(LoopC).GrhIndex Then
 
@@ -426,7 +426,7 @@ Public Sub DrawInventory()
             If LoopC <> DragItem Then
                     
                 If LoopC = SelectedItem Then
-                    Call Draw_GrhIndex(2, startdX, startdY, 0, Inv_Color()) 'Dibuja el fondo cuando lo seleccionamos
+                    Call Draw_GrhIndex(26096, startdX, startdY, 0, Inv_Color(), 0, False) 'Dibuja el fondo cuando lo seleccionamos
                 End If
 
                 Call Draw_GrhIndex(Inventory(LoopC).GrhIndex, startdX, startdY, 0, Inv_Color())
@@ -465,9 +465,11 @@ Private Sub InventoryWindow_MouseMove(Button As Integer, Shift As Integer, X As 
     Dim TempItem As Integer
     
     'Exit if it got outside the control's areanv
-    If X < 0 Or Y < 0 Or X > InventoryWindow.Width Or Y > InventoryWindow.Height Then _
-        Exit Sub
-    
+    If X < 16 Then X = 16
+    If Y < 16 Then Y = 16
+    If X > InventoryWindow.Width - 16 Then X = InventoryWindow.Width - 16
+    If Y > InventoryWindow.Height - 16 Then Y = InventoryWindow.Height - 16
+        
         temp_x = X \ ownTilePixelWidth
         temp_y = Y \ ownTilePixelHeight
     
