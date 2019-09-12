@@ -481,9 +481,7 @@ Private Sub InventoryWindow_MouseMove(Button As Integer, Shift As Integer, X As 
         If TempItem <= UBound(Inventory) Then
             If Inventory(TempItem).OBJType = eObjType.otUseOnce Then
                 InventoryWindow.ToolTipText = Inventory(TempItem).Name & ", Ataque: " & Inventory(TempItem).MaxHit & "/" & Inventory(TempItem).MinHit
-            ElseIf Inventory(TempItem).OBJType = eObjType.otArmadura Then
-                InventoryWindow.ToolTipText = Inventory(TempItem).Name & ", Defensa: " & Inventory(TempItem).MaxDef & "/" & Inventory(TempItem).MinDef
-            ElseIf Inventory(TempItem).OBJType = eObjType.otescudo Then
+            ElseIf Inventory(TempItem).OBJType = eObjType.otArmadura Or Inventory(TempItem).OBJType = eObjType.otEscudo Then
                 InventoryWindow.ToolTipText = Inventory(TempItem).Name & ", Defensa: " & Inventory(TempItem).MaxDef & "/" & Inventory(TempItem).MinDef
             Else
                 InventoryWindow.ToolTipText = Inventory(TempItem).Name
@@ -500,6 +498,35 @@ Private Sub InventoryWindow_MouseMove(Button As Integer, Shift As Integer, X As 
     MouseX = CInt(X)
     MouseY = CInt(Y)
     Call DrawInventory
+End Sub
+
+Private Sub InventoryWindow_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+
+   If Button = vbRightButton And isInventory Then
+        If X < 0 Or Y < 0 Or X > InventoryWindow.Width Or Y > InventoryWindow.Height Then Exit Sub
+        Dim temp_x As Integer
+        Dim temp_y As Integer
+
+        temp_x = X \ 32
+        temp_y = Y \ 32
+
+        'Get the currently clickced item
+        DragItem = temp_x + (temp_y + InventoryOffset) * (InventoryWindow.ScaleWidth \ 32) + 1
+        If Not (DragItem <= 25 And DragItem >= 1) Then
+            DragItem = 0
+            Exit Sub
+        Else
+            If Inventory(DragItem).GrhIndex = 0 Then
+                DragItem = 0
+                Exit Sub
+            End If
+        End If
+
+        If isInventory Then
+            Drag = 1
+        End If
+
+    End If
 End Sub
 
 Public Sub DrawInv(Optional ByVal r As Boolean = False)
