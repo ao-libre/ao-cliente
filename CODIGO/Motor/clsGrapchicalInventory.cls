@@ -477,9 +477,9 @@ Private Sub InventoryWindow_MouseMove(Button As Integer, Shift As Integer, X As 
         TempItem = temp_x + (temp_y + InventoryOffset) * (InventoryWindow.ScaleWidth \ 32) + 1
         TempSlot = TempItem
         
-        'Incorporado por ReyarB
+        'Incorporado por ReyarB, arreglado por Recox
         If TempItem <= UBound(Inventory) Then
-            If Inventory(TempItem).OBJType = eObjType.otUseOnce Then
+            If Inventory(TempItem).OBJType = eObjType.otWeapon Then
                 InventoryWindow.ToolTipText = Inventory(TempItem).Name & ", Ataque: " & Inventory(TempItem).MaxHit & "/" & Inventory(TempItem).MinHit
             ElseIf Inventory(TempItem).OBJType = eObjType.otArmadura Or Inventory(TempItem).OBJType = eObjType.otEscudo Then
                 InventoryWindow.ToolTipText = Inventory(TempItem).Name & ", Defensa: " & Inventory(TempItem).MaxDef & "/" & Inventory(TempItem).MinDef
