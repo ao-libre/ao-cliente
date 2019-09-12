@@ -456,9 +456,10 @@ End Sub
 Private Sub InventoryWindow_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
 '***************************************************
 'Author: Juan Martin Sotuyo Dodero (Maraxus)
-'Last Modify Date: 27/07/04
+'Last Modify Date: 13/09/19
 'Implements the mouse move event of the inventory picture box
 'Displays a ToolTip of the item under the mouse
+'Now we show more information about certain items (Recox)
 '***************************************************
     Dim temp_x As Integer
     Dim temp_y As Integer
@@ -476,17 +477,13 @@ Private Sub InventoryWindow_MouseMove(Button As Integer, Shift As Integer, X As 
         TempItem = temp_x + (temp_y + InventoryOffset) * (InventoryWindow.ScaleWidth \ 32) + 1
         TempSlot = TempItem
         
-        If TempItem <= UBound(Inventory) Then
-            InventoryWindow.ToolTipText = Inventory(TempItem).Name
-        End If
-
         'Incorporado por ReyarB
         If TempItem <= UBound(Inventory) Then
             If Inventory(TempItem).OBJType = eObjType.otUseOnce Then
                 InventoryWindow.ToolTipText = Inventory(TempItem).Name & ", Ataque: " & Inventory(TempItem).MaxHit & "/" & Inventory(TempItem).MinHit
             ElseIf Inventory(TempItem).OBJType = eObjType.otArmadura Then
                 InventoryWindow.ToolTipText = Inventory(TempItem).Name & ", Defensa: " & Inventory(TempItem).MaxDef & "/" & Inventory(TempItem).MinDef
-            ElseIf Inventory(TempItem).OBJType = eObjType.otEscudo Then
+            ElseIf Inventory(TempItem).OBJType = eObjType.otescudo Then
                 InventoryWindow.ToolTipText = Inventory(TempItem).Name & ", Defensa: " & Inventory(TempItem).MaxDef & "/" & Inventory(TempItem).MinDef
             Else
                 InventoryWindow.ToolTipText = Inventory(TempItem).Name
