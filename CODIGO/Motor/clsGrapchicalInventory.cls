@@ -479,7 +479,7 @@ Private Sub InventoryWindow_MouseMove(Button As Integer, Shift As Integer, X As 
         
         'Incorporado por ReyarB, arreglado por Recox
         If TempItem <= UBound(Inventory) Then
-            If Inventory(TempItem).OBJType = eObjType.otWeapon Then
+            If Inventory(TempItem).OBJType = eObjType.otWeapon Or Inventory(TempItem).OBJType = eObjType.otFlechas Then
                 InventoryWindow.ToolTipText = Inventory(TempItem).Name & ", Ataque: " & Inventory(TempItem).MaxHit & "/" & Inventory(TempItem).MinHit
             ElseIf Inventory(TempItem).OBJType = eObjType.otArmadura Or Inventory(TempItem).OBJType = eObjType.otEscudo Then
                 InventoryWindow.ToolTipText = Inventory(TempItem).Name & ", Defensa: " & Inventory(TempItem).MaxDef & "/" & Inventory(TempItem).MinDef
