@@ -4,8 +4,6 @@ Attribute VB_Name = "mDx8_Particulas"
 
 Option Explicit
 
-'******Particulas******
-'RGB Type
 Public Type RGB
     r As Long
     g As Long
@@ -145,25 +143,21 @@ End Type
 Dim particle_group_list() As Particle_Group
 Dim particle_group_count As Long
 Dim particle_group_last As Long
+
 Public TotalStreams As Integer
 Public StreamData() As Stream
 
 Public Const PI As Single = 3.14159265358979
-'******Particulas******
 
 Public Sub CargarParticulas()
-    Dim loopc As Long
+    Dim LoopC As Long
     Dim i As Long
     Dim GrhListing As String
     Dim TempSet As String
     Dim ColorSet As Long
     Dim Leer As New clsIniManager
 
-    Dim StreamFile As String
-
-    StreamFile = path(INIT) & "particulas.ini"
-
-    Leer.Initialize StreamFile
+    Call Leer.Initialize(path(INIT) & "particulas.ini")
 
     TotalStreams = Val(Leer.GetValue("INIT", "Total"))
     
@@ -171,42 +165,42 @@ Public Sub CargarParticulas()
     ReDim StreamData(1 To TotalStreams) As Stream
     
     'fill StreamData array with info from Particles.ini
-    For loopc = 1 To TotalStreams
-        With StreamData(loopc)
-            .name = Leer.GetValue(Val(loopc), "Name")
-            .NumOfParticles = Leer.GetValue(Val(loopc), "NumOfParticles")
-            .x1 = Leer.GetValue(Val(loopc), "X1")
-            .y1 = Leer.GetValue(Val(loopc), "Y1")
-            .x2 = Leer.GetValue(Val(loopc), "X2")
-            .y2 = Leer.GetValue(Val(loopc), "Y2")
-            .angle = Leer.GetValue(Val(loopc), "Angle")
-            .vecx1 = Leer.GetValue(Val(loopc), "VecX1")
-            .vecx2 = Leer.GetValue(Val(loopc), "VecX2")
-            .vecy1 = Leer.GetValue(Val(loopc), "VecY1")
-            .vecy2 = Leer.GetValue(Val(loopc), "VecY2")
-            .life1 = Leer.GetValue(Val(loopc), "Life1")
-            .life2 = Leer.GetValue(Val(loopc), "Life2")
-            .friction = Leer.GetValue(Val(loopc), "Friction")
-            .spin = Leer.GetValue(Val(loopc), "Spin")
-            .spin_speedL = Leer.GetValue(Val(loopc), "Spin_SpeedL")
-            .spin_speedH = Leer.GetValue(Val(loopc), "Spin_SpeedH")
-            .alphaBlend = Leer.GetValue(Val(loopc), "AlphaBlend")
-            .gravity = Leer.GetValue(Val(loopc), "Gravity")
-            .grav_strength = Leer.GetValue(Val(loopc), "Grav_Strength")
-            .bounce_strength = Leer.GetValue(Val(loopc), "Bounce_Strength")
-            .XMove = Leer.GetValue(Val(loopc), "XMove")
-            .YMove = Leer.GetValue(Val(loopc), "YMove")
-            .move_x1 = Leer.GetValue(Val(loopc), "move_x1")
-            .move_x2 = Leer.GetValue(Val(loopc), "move_x2")
-            .move_y1 = Leer.GetValue(Val(loopc), "move_y1")
-            .move_y2 = Leer.GetValue(Val(loopc), "move_y2")
-            .life_counter = Leer.GetValue(Val(loopc), "life_counter")
-            .speed = Val(Leer.GetValue(Val(loopc), "Speed"))
+    For LoopC = 1 To TotalStreams
+        With StreamData(LoopC)
+            .name = Leer.GetValue(Val(LoopC), "Name")
+            .NumOfParticles = Leer.GetValue(Val(LoopC), "NumOfParticles")
+            .x1 = Leer.GetValue(Val(LoopC), "X1")
+            .y1 = Leer.GetValue(Val(LoopC), "Y1")
+            .x2 = Leer.GetValue(Val(LoopC), "X2")
+            .y2 = Leer.GetValue(Val(LoopC), "Y2")
+            .angle = Leer.GetValue(Val(LoopC), "Angle")
+            .vecx1 = Leer.GetValue(Val(LoopC), "VecX1")
+            .vecx2 = Leer.GetValue(Val(LoopC), "VecX2")
+            .vecy1 = Leer.GetValue(Val(LoopC), "VecY1")
+            .vecy2 = Leer.GetValue(Val(LoopC), "VecY2")
+            .life1 = Leer.GetValue(Val(LoopC), "Life1")
+            .life2 = Leer.GetValue(Val(LoopC), "Life2")
+            .friction = Leer.GetValue(Val(LoopC), "Friction")
+            .spin = Leer.GetValue(Val(LoopC), "Spin")
+            .spin_speedL = Leer.GetValue(Val(LoopC), "Spin_SpeedL")
+            .spin_speedH = Leer.GetValue(Val(LoopC), "Spin_SpeedH")
+            .alphaBlend = Leer.GetValue(Val(LoopC), "AlphaBlend")
+            .gravity = Leer.GetValue(Val(LoopC), "Gravity")
+            .grav_strength = Leer.GetValue(Val(LoopC), "Grav_Strength")
+            .bounce_strength = Leer.GetValue(Val(LoopC), "Bounce_Strength")
+            .XMove = Leer.GetValue(Val(LoopC), "XMove")
+            .YMove = Leer.GetValue(Val(LoopC), "YMove")
+            .move_x1 = Leer.GetValue(Val(LoopC), "move_x1")
+            .move_x2 = Leer.GetValue(Val(LoopC), "move_x2")
+            .move_y1 = Leer.GetValue(Val(LoopC), "move_y1")
+            .move_y2 = Leer.GetValue(Val(LoopC), "move_y2")
+            .life_counter = Leer.GetValue(Val(LoopC), "life_counter")
+            .speed = Val(Leer.GetValue(Val(LoopC), "Speed"))
             
-            .NumGrhs = Leer.GetValue(Val(loopc), "NumGrhs")
+            .NumGrhs = Leer.GetValue(Val(LoopC), "NumGrhs")
             
             ReDim .grh_list(1 To .NumGrhs)
-            GrhListing = Leer.GetValue(Val(loopc), "Grh_List")
+            GrhListing = Leer.GetValue(Val(LoopC), "Grh_List")
             
             For i = 1 To .NumGrhs
                 .grh_list(i) = ReadField(i, GrhListing, Asc(","))
@@ -215,68 +209,72 @@ Public Sub CargarParticulas()
             .grh_list(i - 1) = .grh_list(i - 1)
             
             For ColorSet = 1 To 4
-                TempSet = Leer.GetValue(Val(loopc), "ColorSet" & ColorSet)
+                TempSet = Leer.GetValue(Val(LoopC), "ColorSet" & ColorSet)
                 .colortint(ColorSet - 1).r = ReadField(1, TempSet, Asc(","))
                 .colortint(ColorSet - 1).g = ReadField(2, TempSet, Asc(","))
                 .colortint(ColorSet - 1).b = ReadField(3, TempSet, Asc(","))
             Next ColorSet
 
         End With
-    Next loopc
+    Next LoopC
     
     Set Leer = Nothing
 
 End Sub
-Public Function General_Char_Particle_Create(ByVal ParticulaInd As Long, ByVal char_index As Integer, Optional ByVal particle_life As Long = 0) As Long
 
-Dim rgb_list(0 To 3) As Long
-With StreamData(ParticulaInd)
-rgb_list(0) = RGB(.colortint(0).r, .colortint(0).g, .colortint(0).b)
-rgb_list(1) = RGB(.colortint(1).r, .colortint(1).g, .colortint(1).b)
-rgb_list(2) = RGB(.colortint(2).r, .colortint(2).g, .colortint(2).b)
-rgb_list(3) = RGB(.colortint(3).r, .colortint(3).g, .colortint(3).b)
+Public Function General_Char_Particle_Create(ByVal ParticulaInd As Long, _
+                                             ByVal char_index As Integer, _
+                                             Optional ByVal particle_life As Long = 0) As Long
 
-General_Char_Particle_Create = Char_Particle_Group_Create(char_index, .grh_list, rgb_list(), .NumOfParticles, ParticulaInd, _
-    .alphaBlend, IIf(particle_life = 0, .life_counter, particle_life), .speed, , .x1, .y1, .angle, _
-    .vecx1, .vecx2, .vecy1, .vecy2, _
-    .life1, .life2, .friction, .spin_speedL, _
-    .gravity, .grav_strength, .bounce_strength, .x2, _
-    .y2, .XMove, .move_x1, .move_x2, .move_y1, _
-    .move_y2, .YMove, .spin_speedH, .spin)
-End With
+    Dim rgb_list(0 To 3) As Long
+
+    With StreamData(ParticulaInd)
+        rgb_list(0) = RGB(.colortint(0).r, .colortint(0).g, .colortint(0).b)
+        rgb_list(1) = RGB(.colortint(1).r, .colortint(1).g, .colortint(1).b)
+        rgb_list(2) = RGB(.colortint(2).r, .colortint(2).g, .colortint(2).b)
+        rgb_list(3) = RGB(.colortint(3).r, .colortint(3).g, .colortint(3).b)
+
+        General_Char_Particle_Create = Char_Particle_Group_Create(char_index, .grh_list, rgb_list(), .NumOfParticles, ParticulaInd, .alphaBlend, IIf(particle_life = 0, .life_counter, particle_life), .speed, , .x1, .y1, .angle, .vecx1, .vecx2, .vecy1, .vecy2, .life1, .life2, .friction, .spin_speedL, .gravity, .grav_strength, .bounce_strength, .x2, .y2, .XMove, .move_x1, .move_x2, .move_y1, .move_y2, .YMove, .spin_speedH, .spin)
+
+    End With
 
 End Function
 
-Public Function General_Particle_Create(ByVal ParticulaInd As Long, ByVal X As Integer, ByVal Y As Integer, Optional ByVal particle_life As Long = 0) As Long
+Public Function General_Particle_Create(ByVal ParticulaInd As Long, _
+                                        ByVal X As Integer, _
+                                        ByVal Y As Integer, _
+                                        Optional ByVal particle_life As Long = 0) As Long
 
-Dim rgb_list(0 To 3) As Long
-With StreamData(ParticulaInd)
-    rgb_list(0) = RGB(.colortint(0).r, .colortint(0).g, .colortint(0).b)
-    rgb_list(1) = RGB(.colortint(1).r, .colortint(1).g, .colortint(1).b)
-    rgb_list(2) = RGB(.colortint(2).r, .colortint(2).g, .colortint(2).b)
-    rgb_list(3) = RGB(.colortint(3).r, .colortint(3).g, .colortint(3).b)
+    Dim rgb_list(0 To 3) As Long
+
+    With StreamData(ParticulaInd)
+        rgb_list(0) = RGB(.colortint(0).r, .colortint(0).g, .colortint(0).b)
+        rgb_list(1) = RGB(.colortint(1).r, .colortint(1).g, .colortint(1).b)
+        rgb_list(2) = RGB(.colortint(2).r, .colortint(2).g, .colortint(2).b)
+        rgb_list(3) = RGB(.colortint(3).r, .colortint(3).g, .colortint(3).b)
     
-    General_Particle_Create = Particle_Group_Create(X, Y, .grh_list, rgb_list(), .NumOfParticles, ParticulaInd, _
-        .alphaBlend, IIf(particle_life = 0, .life_counter, particle_life), .speed, , .x1, .y1, .angle, _
-        .vecx1, .vecx2, .vecy1, .vecy2, _
-        .life1, .life2, .friction, .spin_speedL, _
-        .gravity, .grav_strength, .bounce_strength, .x2, _
-        .y2, .XMove, .move_x1, .move_x2, .move_y1, _
-        .move_y2, .YMove, .spin_speedH, .spin)
-End With
+        General_Particle_Create = Particle_Group_Create(X, Y, .grh_list, rgb_list(), .NumOfParticles, ParticulaInd, .alphaBlend, IIf(particle_life = 0, .life_counter, particle_life), .speed, , .x1, .y1, .angle, .vecx1, .vecx2, .vecy1, .vecy2, .life1, .life2, .friction, .spin_speedL, .gravity, .grav_strength, .bounce_strength, .x2, .y2, .XMove, .move_x1, .move_x2, .move_y1, .move_y2, .YMove, .spin_speedH, .spin)
+
+    End With
 
 End Function
 
-Public Function Char_Particle_Group_Remove(ByVal char_index As Integer, ByVal stream_type As Long)
-'**************************************************************
-'Author: Augusto José Rando
-'**************************************************************
+Public Function Char_Particle_Group_Remove(ByVal char_index As Integer, _
+                                           ByVal stream_type As Long)
+
+    '**************************************************************
+    'Author: Augusto José Rando
+    '**************************************************************
     Dim char_part_index As Integer
 
     If Char_Check(char_index) Then
+    
         char_part_index = Char_Particle_Group_Find(char_index, stream_type)
+
         If char_part_index = -1 Then Exit Function
+        
         Call Particle_Group_Remove(char_part_index)
+
     End If
 
 End Function
@@ -336,18 +334,19 @@ Public Sub Particle_Group_Render(ByVal Particle_Group_Index As Long, ByVal scree
 'Last Modify Date: 5/15/2003
 'Renders a particle stream at a paticular screen point
 '*****************************************************************
-    Dim loopc As Long
+    Dim LoopC As Long
     Dim temp_rgb(0 To 3) As Long
     Dim no_move As Boolean
     
     If Particle_Group_Index > UBound(particle_group_list) Then Exit Sub
     
     If GetTickCount - particle_group_list(Particle_Group_Index).live > (particle_group_list(Particle_Group_Index).liv1 * 25) And Not particle_group_list(Particle_Group_Index).liv1 = -1 Then
-        Particle_Group_Destroy Particle_Group_Index
+        Call Particle_Group_Destroy(Particle_Group_Index)
         Exit Sub
     End If
         
     With particle_group_list(Particle_Group_Index)
+    
         'Set colors
         temp_rgb(0) = .rgb_list(0)
         temp_rgb(1) = .rgb_list(1)
@@ -364,10 +363,10 @@ Public Sub Particle_Group_Render(ByVal Particle_Group_Index As Long, ByVal scree
         End If
             
         'If it's still alive render all the particles inside
-        For loopc = 1 To .Particle_Count
+        For LoopC = 1 To .Particle_Count
                 
         'Render particle
-            Particle_Render .particle_stream(loopc), _
+            Particle_Render .particle_stream(LoopC), _
                         screen_x, screen_y, _
                         .grh_index_list(Round(RandomNumber(1, .grh_index_count), 0)), _
                         temp_rgb(), _
@@ -384,7 +383,7 @@ Public Sub Particle_Group_Render(ByVal Particle_Group_Index As Long, ByVal scree
                         .move_y1, .move_y2, _
                         .YMove, .spin_speedH, _
                         .spin
-        Next loopc
+        Next LoopC
                 
         If no_move = False Then
             'Update the group alive counter
@@ -392,7 +391,9 @@ Public Sub Particle_Group_Render(ByVal Particle_Group_Index As Long, ByVal scree
                 .alive_counter = .alive_counter - 1
             End If
         End If
+        
     End With
+    
 End Sub
 
 Private Sub Particle_Render(ByRef temp_particle As Particle, ByVal screen_x As Integer, ByVal screen_y As Integer, _
@@ -414,27 +415,37 @@ Private Sub Particle_Render(ByRef temp_particle As Particle, ByVal screen_x As I
 'Modified by: Juan Martín Sotuyo Dodero
 'Last Modify Date: 5/15/2003
 '**************************************************************
+
     With temp_particle
+    
         If no_move = False Then
+        
             If .alive_counter = 0 Then
+            
                 'Start new particle
-                InitGrh .Grh, grh_index
+                Call InitGrh(.Grh, grh_index)
                 .X = RandomNumber(x1, x2) - 16
                 .Y = RandomNumber(y1, y2) - 16
                 .vector_x = RandomNumber(vecx1, vecx2)
                 .vector_y = RandomNumber(vecy1, vecy2)
                 .alive_counter = RandomNumber(life1, life2)
                 .friction = fric
+                
             Else
+                
                 'Continue old particle
                 'Do gravity
                 If gravity = True Then
+                    
                     .vector_y = .vector_y + grav_strength
+                    
                     If .Y > 0 Then
                         'bounce
                         .vector_y = bounce_strength
                     End If
+                    
                 End If
+                
                 'Do rotation
                 If spin Then .angle = .angle + (RandomNumber(spin_speedL, spin_speedH) / 100)
                 If .angle >= 360 Then
@@ -455,52 +466,65 @@ Private Sub Particle_Render(ByRef temp_particle As Particle, ByVal screen_x As I
         
         'Draw it
         If .Grh.GrhIndex Then
-            Draw_Grh .Grh, .X + screen_x, .Y + screen_y, 1, rgb_list(), 1, True, .angle
+            Call Draw_Grh(.Grh, .X + screen_x, .Y + screen_y, 1, rgb_list(), 1, True, .angle)
         End If
+        
     End With
+    
 End Sub
 
 Private Function Particle_Group_Next_Open() As Long
-'*****************************************************************
-'Author: Aaron Perkins
-'Last Modify Date: 10/07/2002
-'
-'*****************************************************************
-On Error GoTo ErrorHandler:
-    Dim loopc As Long
+
+    '*****************************************************************
+    'Author: Aaron Perkins
+    'Last Modify Date: 10/07/2002
+    '
+    '*****************************************************************
+    On Error GoTo ErrorHandler:
+
+    Dim LoopC As Long
     
     If particle_group_last = 0 Then
         Particle_Group_Next_Open = 1
         Exit Function
     End If
     
-    loopc = 1
-    Do Until particle_group_list(loopc).active = False
-        If loopc = particle_group_last Then
+    LoopC = 1
+
+    Do Until particle_group_list(LoopC).active = False
+
+        If LoopC = particle_group_last Then
             Particle_Group_Next_Open = particle_group_last + 1
             Exit Function
         End If
-        loopc = loopc + 1
+
+        LoopC = LoopC + 1
     Loop
     
-    Particle_Group_Next_Open = loopc
-Exit Function
+    Particle_Group_Next_Open = LoopC
+    
+    Exit Function
+    
 ErrorHandler:
     Particle_Group_Next_Open = 1
+
 End Function
 
 Private Function Particle_Group_Check(ByVal Particle_Group_Index As Long) As Boolean
-'**************************************************************
-'Author: Aaron Perkins
-'Last Modify Date: 1/04/2003
-'
-'**************************************************************
+
+    '**************************************************************
+    'Author: Aaron Perkins
+    'Last Modify Date: 1/04/2003
+    '
+    '**************************************************************
+    
     'check index
     If Particle_Group_Index > 0 And Particle_Group_Index <= particle_group_last Then
         If particle_group_list(Particle_Group_Index).active Then
             Particle_Group_Check = True
         End If
     End If
+
 End Function
 
 Private Function Particle_Group_Create(ByVal map_x As Integer, ByVal map_y As Integer, ByRef grh_index_list() As Long, ByRef rgb_list() As Long, _
@@ -529,83 +553,118 @@ Private Function Particle_Group_Create(ByVal map_x As Integer, ByVal map_y As In
     If (map_x <> -1) And (map_y <> -1) Then
         If Map_Particle_Group_Get(map_x, map_y) = 0 Then
             Particle_Group_Create = Particle_Group_Next_Open
-            Particle_Group_Make Particle_Group_Create, map_x, map_y, Particle_Count, stream_type, grh_index_list(), rgb_list(), alphaBlend, alive_counter, frame_speed, id, x1, y1, angle, vecx1, vecx2, vecy1, vecy2, life1, life2, fric, spin_speedL, gravity, grav_strength, bounce_strength, x2, y2, XMove, move_x1, move_x2, move_y1, move_y2, YMove, spin_speedH, spin
+            Call Particle_Group_Make(Particle_Group_Create, map_x, map_y, Particle_Count, stream_type, grh_index_list(), rgb_list(), alphaBlend, alive_counter, frame_speed, id, x1, y1, angle, vecx1, vecx2, vecy1, vecy2, life1, life2, fric, spin_speedL, gravity, grav_strength, bounce_strength, x2, y2, XMove, move_x1, move_x2, move_y1, move_y2, YMove, spin_speedH, spin)
         End If
     Else
         Particle_Group_Create = Particle_Group_Next_Open
-        Particle_Group_Make Particle_Group_Create, map_x, map_y, Particle_Count, stream_type, grh_index_list(), rgb_list(), alphaBlend, alive_counter, frame_speed, id, x1, y1, angle, vecx1, vecx2, vecy1, vecy2, life1, life2, fric, spin_speedL, gravity, grav_strength, bounce_strength, x2, y2, XMove, move_x1, move_x2, move_y1, move_y2, YMove, spin_speedH, spin
+        Call Particle_Group_Make(Particle_Group_Create, map_x, map_y, Particle_Count, stream_type, grh_index_list(), rgb_list(), alphaBlend, alive_counter, frame_speed, id, x1, y1, angle, vecx1, vecx2, vecy1, vecy2, life1, life2, fric, spin_speedL, gravity, grav_strength, bounce_strength, x2, y2, XMove, move_x1, move_x2, move_y1, move_y2, YMove, spin_speedH, spin)
     End If
 
 End Function
 
-
 Private Function Particle_Group_Find(ByVal id As Long) As Long
-'*****************************************************************
-'Author: Aaron Perkins
-'Last Modify Date: 1/04/2003
-'Find the index related to the handle
-'*****************************************************************
-On Error GoTo ErrorHandler:
-    Dim loopc As Long
-    
-    loopc = 1
-    Do Until particle_group_list(loopc).id = id
-        If loopc = particle_group_last Then
+
+    '*****************************************************************
+    'Author: Aaron Perkins
+    'Last Modify Date: 1/04/2003
+    'Find the index related to the handle
+    '*****************************************************************
+    On Error GoTo ErrorHandler:
+
+    Dim LoopC As Long
+        LoopC = 1
+
+    Do Until particle_group_list(LoopC).id = id
+
+        If LoopC = particle_group_last Then
             Particle_Group_Find = 0
             Exit Function
         End If
-        loopc = loopc + 1
+
+        LoopC = LoopC + 1
+        
     Loop
     
-    Particle_Group_Find = loopc
-Exit Function
+    Particle_Group_Find = LoopC
+    
+    Exit Function
+    
 ErrorHandler:
     Particle_Group_Find = 0
+
 End Function
+
 Private Function Particle_Get_Type(ByVal Particle_Group_Index As Long) As Byte
-On Error GoTo ErrorHandler:
+
+    On Error GoTo ErrorHandler:
+    
     Particle_Get_Type = particle_group_list(Particle_Group_Index).stream_type
-Exit Function
+    
+    Exit Function
+    
 ErrorHandler:
     Particle_Get_Type = 0
+
 End Function
+
 Private Sub Particle_Group_Destroy(ByVal Particle_Group_Index As Long)
-'**************************************************************
-'Author: Aaron Perkins
-'Last Modify Date: 10/07/2002
-'
-'**************************************************************
-On Error Resume Next
+
+    '**************************************************************
+    'Author: Aaron Perkins
+    'Last Modify Date: 10/07/2002
+    '
+    '**************************************************************
+    On Error Resume Next
+
     Dim temp As Particle_Group
-    Dim i As Integer
+    Dim i    As Integer
+
     With particle_group_list(Particle_Group_Index)
+
         If .map_x > 0 And .map_y > 0 Then
             MapData(.map_x, .map_y).Particle_Group_Index = 0
         ElseIf .char_index Then
+
             If Char_Check(.char_index) Then
+
                 For i = 1 To charlist(.char_index).Particle_Count
+
                     If charlist(.char_index).Particle_Group(i) = Particle_Group_Index Then
                         charlist(.char_index).Particle_Group(i) = 0
                         Exit For
+
                     End If
+
                 Next i
+
             End If
+
         End If
+
     End With
+
     particle_group_list(Particle_Group_Index) = temp
     
     'Update array size
     If Particle_Group_Index = particle_group_last Then
+
         Do Until particle_group_list(particle_group_last).active
             particle_group_last = particle_group_last - 1
+
             If particle_group_last = 0 Then
                 particle_group_count = 0
                 Exit Sub
+
             End If
+
         Loop
+        
         ReDim Preserve particle_group_list(1 To particle_group_last) As Particle_Group
+
     End If
+
     particle_group_count = particle_group_count - 1
+
 End Sub
 
 Private Sub Particle_Group_Make(ByVal Particle_Group_Index As Long, ByVal map_x As Integer, ByVal map_y As Integer, _
@@ -760,55 +819,66 @@ Private Function Char_Particle_Group_Create(ByVal char_index As Integer, ByRef g
 
 End Function
 
+Private Function Char_Particle_Group_Find(ByVal char_index As Integer, _
+                                          ByVal stream_type As Long) As Integer
 
+    '*****************************************************************
+    'Author: Augusto José Rando
+    'Modified: returns slot or -1
+    '*****************************************************************
+    On Error Resume Next
 
-Private Function Char_Particle_Group_Find(ByVal char_index As Integer, ByVal stream_type As Long) As Integer
-'*****************************************************************
-'Author: Augusto José Rando
-'Modified: returns slot or -1
-'*****************************************************************
-On Error Resume Next
-Dim i As Integer
+    Dim i As Integer
 
-For i = 1 To charlist(char_index).Particle_Count
-    If particle_group_list(charlist(char_index).Particle_Group(i)).stream_type = stream_type Then
-        Char_Particle_Group_Find = charlist(char_index).Particle_Group(i)
-        Exit Function
-    End If
-Next i
+    For i = 1 To charlist(char_index).Particle_Count
 
-Char_Particle_Group_Find = -1
+        If particle_group_list(charlist(char_index).Particle_Group(i)).stream_type = stream_type Then
+            Char_Particle_Group_Find = charlist(char_index).Particle_Group(i)
+            Exit Function
+
+        End If
+
+    Next i
+
+    Char_Particle_Group_Find = -1
 
 End Function
 
 Private Function Char_Particle_Group_Next_Open(ByVal char_index As Integer) As Integer
-'*****************************************************************
-'Author: Augusto José Rando
-'*****************************************************************
-On Error GoTo ErrorHandler:
-    Dim loopc As Long
+
+    '*****************************************************************
+    'Author: Augusto José Rando
+    '*****************************************************************
+    On Error GoTo ErrorHandler:
+
+    Dim LoopC As Long
     
     If charlist(char_index).Particle_Count = 0 Then
         Char_Particle_Group_Next_Open = charlist(char_index).Particle_Count + 1
         charlist(char_index).Particle_Count = Char_Particle_Group_Next_Open
         ReDim Preserve charlist(char_index).Particle_Group(1 To Char_Particle_Group_Next_Open) As Long
         Exit Function
+
     End If
     
-    loopc = 1
-    Do Until charlist(char_index).Particle_Group(loopc) = 0
-        If loopc = charlist(char_index).Particle_Count Then
+    LoopC = 1
+
+    Do Until charlist(char_index).Particle_Group(LoopC) = 0
+
+        If LoopC = charlist(char_index).Particle_Count Then
             Char_Particle_Group_Next_Open = charlist(char_index).Particle_Count + 1
             charlist(char_index).Particle_Count = Char_Particle_Group_Next_Open
             ReDim Preserve charlist(char_index).Particle_Group(1 To Char_Particle_Group_Next_Open) As Long
             Exit Function
+
         End If
-        loopc = loopc + 1
+
+        LoopC = LoopC + 1
     Loop
     
-    Char_Particle_Group_Next_Open = loopc
+    Char_Particle_Group_Next_Open = LoopC
 
-Exit Function
+    Exit Function
 
 ErrorHandler:
     charlist(char_index).Particle_Count = 1
@@ -816,18 +886,22 @@ ErrorHandler:
     Char_Particle_Group_Next_Open = 1
 
 End Function
+
 Private Function Char_Check(ByVal char_index As Integer) As Boolean
-'**************************************************************
-'Author: Aaron Perkins - Modified by Juan Martín Sotuyo Dodero
-'Last Modify Date: 1/04/2003
-'
-'**************************************************************
+
+    '**************************************************************
+    'Author: Aaron Perkins - Modified by Juan Martín Sotuyo Dodero
+    'Last Modify Date: 1/04/2003
+    '
+    '**************************************************************
+    
     'check char_index
     If char_index > 0 And char_index <= LastChar Then
         Char_Check = (charlist(char_index).Heading > 0)
     End If
     
 End Function
+
 Private Sub Char_Particle_Group_Make(ByVal Particle_Group_Index As Long, ByVal char_index As Integer, ByVal particle_char_index As Integer, _
                                 ByVal Particle_Count As Long, ByVal stream_type As Long, ByRef grh_index_list() As Long, ByRef rgb_list() As Long, _
                                 Optional ByVal alphaBlend As Boolean, Optional ByVal alive_counter As Long = -1, _
