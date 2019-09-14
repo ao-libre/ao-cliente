@@ -1,6 +1,10 @@
 Attribute VB_Name = "mDx8_Particulas"
+'*************************************************************
 'ImperiumAO 1.4.6
-'Modulo Particles
+'*************************************************************
+'Este modulo contiene TODOS los procedimientos que conforma
+'el Sistema de Particulas ORE.
+'*************************************************************
 
 Option Explicit
 
@@ -157,7 +161,7 @@ Public Sub CargarParticulas()
     Dim ColorSet As Long
     Dim Leer As New clsIniManager
 
-    Call Leer.Initialize(path(INIT) & "particulas.ini")
+    Call Leer.Initialize(path(INIT) & "Particulas.ini")
 
     TotalStreams = Val(Leer.GetValue("INIT", "Total"))
     
