@@ -133,13 +133,13 @@ Public Sub RefreshAllChars()
 'Goes through the charlist and replots all the characters on the map
 'Used to make sure everyone is visible
 '*****************************************************************
-    Dim LoopC As Long
+    Dim loopc As Long
     
-    For LoopC = 1 To LastChar
-        If charlist(LoopC).active = 1 Then
-            MapData(charlist(LoopC).Pos.X, charlist(LoopC).Pos.Y).CharIndex = LoopC
+    For loopc = 1 To LastChar
+        If charlist(loopc).active = 1 Then
+            MapData(charlist(loopc).Pos.X, charlist(loopc).Pos.Y).CharIndex = loopc
         End If
-    Next LoopC
+    Next loopc
 End Sub
 
 Function AsciiValidos(ByVal cad As String) As Boolean
@@ -165,7 +165,7 @@ Function CheckUserData() As Boolean
     
     'Validamos los datos del user
     
-    Dim LoopC As Long
+    Dim loopc As Long
     Dim CharAscii As Integer
     Dim Len_accountName As Long, Len_accountPassword As Long
 
@@ -176,13 +176,13 @@ Function CheckUserData() As Boolean
     
     Len_accountPassword = Len(AccountPassword)
     
-    For LoopC = 1 To Len_accountPassword
-        CharAscii = Asc(mid$(AccountPassword, LoopC, 1))
+    For loopc = 1 To Len_accountPassword
+        CharAscii = Asc(mid$(AccountPassword, loopc, 1))
         If Not LegalCharacter(CharAscii) Then
             MsgBox Replace$(JsonLanguage.item("VALIDACION_BAD_PASSWORD").item("TEXTO").item(2), "VAR_CHAR_INVALIDO", Chr$(CharAscii))
             Exit Function
         End If
-    Next LoopC
+    Next loopc
 
     If Len(AccountName) > 30 Then
         MsgBox JsonLanguage.item("VALIDACION_BAD_EMAIL").item("TEXTO").item(2)
@@ -191,13 +191,13 @@ Function CheckUserData() As Boolean
         
     Len_accountName = Len(AccountName)
     
-    For LoopC = 1 To Len_accountName
-        CharAscii = Asc(mid$(AccountName, LoopC, 1))
+    For loopc = 1 To Len_accountName
+        CharAscii = Asc(mid$(AccountName, loopc, 1))
         If Not LegalCharacter(CharAscii) Then
             MsgBox Replace$(JsonLanguage.item("VALIDACION_BAD_PASSWORD").item("TEXTO").item(4), "VAR_CHAR_INVALIDO", Chr$(CharAscii))
             Exit Function
         End If
-    Next LoopC
+    Next loopc
     
     CheckUserData = True
 End Function
@@ -529,7 +529,7 @@ Sub SwitchMap(ByVal Map As Integer)
     Set fileBuff = Nothing
     
     With mapInfo
-        .Name = vbNullString
+        .name = vbNullString
         .Music = vbNullString
     End With
     
@@ -546,7 +546,7 @@ Sub SwitchMap(ByVal Map As Integer)
     Call Init_Ambient(Map)
     
     'Carga las particulas especificas del mapa.
-    Call Load_Map_Particles(Map)
+    Call General_Particle_Create(1, 45, 45)
     'renderMsgReset
     renderText = nameMap
     renderFont = 2
@@ -1347,10 +1347,10 @@ m = 255 / MAXATRIBUTOS
 getDexterityColor = RGB(255, m * UserAgilidad, 0)
 End Function
 
-Public Function getCharIndexByName(ByVal Name As String) As Integer
+Public Function getCharIndexByName(ByVal name As String) As Integer
 Dim i As Long
 For i = 1 To LastChar
-    If charlist(i).Nombre = Name Then
+    If charlist(i).Nombre = name Then
         getCharIndexByName = i
         Exit Function
     End If
@@ -1407,8 +1407,8 @@ Public Sub ResetAllInfo()
     'Unload all forms except frmMain, frmConnect and frmCrearPersonaje
     Dim frm As Form
     For Each frm In Forms
-        If frm.Name <> frmMain.Name And frm.Name <> frmConnect.Name And _
-            frm.Name <> frmCrearPersonaje.Name Then
+        If frm.name <> frmMain.name And frm.name <> frmConnect.name And _
+            frm.name <> frmCrearPersonaje.name Then
             
             Unload frm
         End If

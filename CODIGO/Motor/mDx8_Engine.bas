@@ -349,7 +349,7 @@ Public Sub Engine_D3DColor_To_RGB_List(rgb_list() As Long, Color As D3DCOLORVALU
 'Last Modification: 14/05/10
 'Blisse-AO | Set a D3DColorValue to a RGB List
 '***************************************************
-    rgb_list(0) = D3DColorARGB(Color.a, Color.r, Color.g, Color.B)
+    rgb_list(0) = D3DColorARGB(Color.A, Color.r, Color.g, Color.B)
     rgb_list(1) = rgb_list(0)
     rgb_list(2) = rgb_list(0)
     rgb_list(3) = rgb_list(0)
@@ -385,7 +385,7 @@ Public Function SetARGB_Alpha(rgb_list() As Long, Alpha As Byte) As Long()
     If Alpha < 0 Then Alpha = 0
     
     'seteamos el alpha
-    TempColor.a = Alpha
+    TempColor.A = Alpha
     
     'generamos el nuevo RGB_List
     Call Engine_D3DColor_To_RGB_List(tempARGB(), TempColor)
@@ -707,22 +707,22 @@ Public Sub DrawPJ(ByVal Index As Byte)
             Head_OffSet = HeadOffsetBajos
         End If
     
-        Call Draw_Grh(BodyData(cPJ(Index).Body).Walk(3), PixelOffsetX + Init_X, PixelOffsetY + Init_Y, 0, Normal_RGBList(), 0, Init_X, Init_Y)
+        Call Draw_Grh(BodyData(cPJ(Index).Body).Walk(3), PixelOffsetX + Init_X, PixelOffsetY + Init_Y, 0, Normal_RGBList(), 0)
 
         If cPJ(Index).Head <> 0 Then
-            Call Draw_Grh(HeadData(cPJ(Index).Head).Head(3), PixelOffsetX + Init_X + 4, PixelOffsetY + Init_Y + Head_OffSet, 0, Normal_RGBList(), 0, Init_X, Init_Y)
+            Call Draw_Grh(HeadData(cPJ(Index).Head).Head(3), PixelOffsetX + Init_X + 4, PixelOffsetY + Init_Y + Head_OffSet, 0, Normal_RGBList(), 0)
         End If
 
         If cPJ(Index).helmet <> 0 Then
-            Call Draw_Grh(CascoAnimData(cPJ(Index).helmet).Head(3), PixelOffsetX + Init_X + 4, PixelOffsetY + Init_Y + Head_OffSet, 0, Normal_RGBList(), 0, Init_X, Init_Y)
+            Call Draw_Grh(CascoAnimData(cPJ(Index).helmet).Head(3), PixelOffsetX + Init_X + 4, PixelOffsetY + Init_Y + Head_OffSet, 0, Normal_RGBList(), 0)
         End If
 
         If cPJ(Index).weapon <> 0 Then
-            Call Draw_Grh(WeaponAnimData(cPJ(Index).weapon).WeaponWalk(3), PixelOffsetX + Init_X, PixelOffsetY + Init_Y, 0, Normal_RGBList(), 0, Init_X, Init_Y)
+            Call Draw_Grh(WeaponAnimData(cPJ(Index).weapon).WeaponWalk(3), PixelOffsetX + Init_X, PixelOffsetY + Init_Y, 0, Normal_RGBList(), 0)
         End If
 
         If cPJ(Index).shield <> 0 Then
-            Call Draw_Grh(ShieldAnimData(cPJ(Index).shield).ShieldWalk(3), PixelOffsetX + Init_X, PixelOffsetY + Init_Y, 0, Normal_RGBList(), 0, Init_X, Init_Y)
+            Call Draw_Grh(ShieldAnimData(cPJ(Index).shield).ShieldWalk(3), PixelOffsetX + Init_X, PixelOffsetY + Init_Y, 0, Normal_RGBList(), 0)
         End If
     End If
 
