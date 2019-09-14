@@ -419,7 +419,7 @@ Sub SwitchMap(ByVal Map As Integer)
     
     '**********************************************************************************
     'Formato de mapas optimizado para reducir el espacio que ocupan.
-    'Nueva carga de mapas desde la memoria (clsByteBuffer)
+    'Nueva carga de mapas desde la memoria (CsBuffer)
     '[ https://www.gs-zone.org/temas/carga-de-mapas-desde-la-memoria-cliente.91444/ ]
     '**********************************************************************************
 

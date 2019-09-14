@@ -520,14 +520,16 @@ Public Sub HandleIncomingData()
 '
 '***************************************************
 On Error Resume Next
-
+    
+    Call incomingData.Mark
+    
     Dim Packet As Byte
-
-    Packet = incomingData.PeekByte()
+        Packet = incomingData.PeekByte()
+        
+    'Lo imprimimos en la ventana Inmediato.
     Debug.Print Packet
     
     Select Case Packet
-
             
         Case ServerPacketID.logged                  ' LOGGED
             Call HandleLogged
@@ -886,6 +888,8 @@ On Error Resume Next
     If incomingData.Length > 0 And Err.number <> incomingData.NotEnoughDataErrCode Then
         Err.Clear
         Call HandleIncomingData
+    Else
+        Call incomingData.Reset
     End If
 End Sub
 
@@ -10400,10 +10404,13 @@ Public Sub FlushBuffer()
     Dim sndData As String
     
     With outgoingData
-        If .Length = 0 Then _
-            Exit Sub
+        If .Position = 0 Then Exit Sub
         
-        sndData = .ReadASCIIStringFixed(.Length)
+        Call .Flip
+
+        sndData = .ReadString(.Limit)
+
+        Call .Clear
         
         Call SendData(sndData)
     End With
