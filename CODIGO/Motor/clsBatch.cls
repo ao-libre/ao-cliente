@@ -22,14 +22,15 @@ Private Type TYPE_VERTEX
     Y       As Single
     Z       As Single
     Colour  As Long
-    TX      As Single
-    TY      As Single
+    tX      As Single
+    tY      As Single
 End Type
 
 
 '
 ' Represent the dynamic data of the batch
-'
+
+Private m_DataAlpha() As Boolean
 Private m_Data()   As TYPE_VERTEX
 Private m_Position As Long
  
@@ -68,43 +69,133 @@ Public Sub Draw(ByVal X As Single, _
                 Optional ByVal Tx1 As Single = 0, _
                 Optional ByVal Ty1 As Single = 0, _
                 Optional ByVal Tx2 As Single = 1, _
-                Optional ByVal Ty2 As Single = 1)
+                Optional ByVal Ty2 As Single = 1, _
+                Optional ByVal Alpha As Boolean = False, _
+                Optional ByVal angle As Single = 0)
+    Dim dest As RECT
+    dest.Left = X
+    dest.Right = X + Width
+    dest.Top = Y + Height
+    dest.Bottom = Y
+    
+    If angle > 0 Then
+        Dim x_center As Single
+        Dim y_center As Single
+        Dim radius As Single
+        Dim x_Cor As Single
+        Dim y_Cor As Single
+        Dim left_point As Single
+        Dim right_point As Single
+        Dim temp As Single
+        x_center = dest.Left + (dest.Right - dest.Left) / 2
+        y_center = dest.Bottom + (dest.Top - dest.Bottom) / 2
+        
+        'Calculate radius
+        radius = Sqr((dest.Right - x_center) ^ 2 + (dest.Top - y_center) ^ 2)
+        
+        'Calculate left and right points
+        temp = (dest.Right - x_center) / radius
+        right_point = Atn(temp / Sqr(-temp * temp + 1))
+        left_point = PI - right_point
 
-    m_Data(m_Position).X = X
-    m_Data(m_Position).Y = Y
-    m_Data(m_Position).Z = 0
-    m_Data(m_Position).Colour = Color(0)
-    m_Data(m_Position).TX = Tx1
-    m_Data(m_Position).TY = Ty1
-    
-    m_Position = m_Position + 1
-    
-    m_Data(m_Position).X = X
-    m_Data(m_Position).Y = Y + Height
-    m_Data(m_Position).Z = 0
-    m_Data(m_Position).Colour = Color(1)
-    m_Data(m_Position).TX = Tx1
-    m_Data(m_Position).TY = Ty2
-    
-    m_Position = m_Position + 1
-    
-    m_Data(m_Position).X = X + Width
-    m_Data(m_Position).Y = Y + Height
-    m_Data(m_Position).Z = 0
-    m_Data(m_Position).Colour = Color(2)
-    m_Data(m_Position).TX = Tx2
-    m_Data(m_Position).TY = Ty2
-    
-    m_Position = m_Position + 1
-    
-    m_Data(m_Position).X = X + Width
-    m_Data(m_Position).Y = Y
-    m_Data(m_Position).Z = 0
-    m_Data(m_Position).Colour = Color(3)
-    m_Data(m_Position).TX = Tx2
-    m_Data(m_Position).TY = Ty1
-    
-    m_Position = m_Position + 1
+'***********************************************************************************************'
+'***********************************************************************************************'
+'***********************************************************************************************'
+'***********************************************************************************************'
+
+        x_Cor = x_center + Cos(left_point - angle) * radius
+        y_Cor = y_center - Sin(left_point - angle) * radius
+        m_Data(m_Position).X = x_Cor
+        m_Data(m_Position).Y = y_Cor
+        m_Data(m_Position).Z = 0
+        m_Data(m_Position).Colour = Color(0)
+        m_Data(m_Position).tX = Tx1
+        m_Data(m_Position).tY = Ty1
+        m_DataAlpha(m_Position) = Alpha
+        
+        m_Position = m_Position + 1
+
+        x_Cor = x_center + Cos(-left_point - angle) * radius
+        y_Cor = y_center - Sin(-left_point - angle) * radius
+        m_Data(m_Position).X = x_Cor
+        m_Data(m_Position).Y = y_Cor
+        m_Data(m_Position).Z = 0
+        m_Data(m_Position).Colour = Color(1)
+        m_Data(m_Position).tX = Tx1
+        m_Data(m_Position).tY = Ty2
+        m_DataAlpha(m_Position) = Alpha
+        
+        m_Position = m_Position + 1
+
+        x_Cor = x_center + Cos(-right_point - angle) * radius
+        y_Cor = y_center - Sin(-right_point - angle) * radius
+        m_Data(m_Position).X = x_Cor
+        m_Data(m_Position).Y = y_Cor
+        m_Data(m_Position).Z = 0
+        m_Data(m_Position).Colour = Color(2)
+        m_Data(m_Position).tX = Tx2
+        m_Data(m_Position).tY = Ty2
+        m_DataAlpha(m_Position) = Alpha
+        
+        m_Position = m_Position + 1
+        
+        x_Cor = x_center + Cos(right_point - angle) * radius
+        y_Cor = y_center - Sin(right_point - angle) * radius
+        m_Data(m_Position).X = x_Cor
+        m_Data(m_Position).Y = y_Cor
+        m_Data(m_Position).Z = 0
+        m_Data(m_Position).Colour = Color(3)
+        m_Data(m_Position).tX = Tx2
+        m_Data(m_Position).tY = Ty1
+        m_DataAlpha(m_Position) = Alpha
+        
+        m_Position = m_Position + 1
+'***********************************************************************************************'
+'***********************************************************************************************'
+'***********************************************************************************************'
+'***********************************************************************************************'
+'***********************************************************************************************'
+    Else
+        m_Data(m_Position).X = dest.Left
+        m_Data(m_Position).Y = dest.Bottom
+        m_Data(m_Position).Z = 0
+        m_Data(m_Position).Colour = Color(0)
+        m_Data(m_Position).tX = Tx1
+        m_Data(m_Position).tY = Ty1
+        m_DataAlpha(m_Position) = Alpha
+        
+        m_Position = m_Position + 1
+
+        m_Data(m_Position).X = dest.Left
+        m_Data(m_Position).Y = dest.Top
+        m_Data(m_Position).Z = 0
+        m_Data(m_Position).Colour = Color(1)
+        m_Data(m_Position).tX = Tx1
+        m_Data(m_Position).tY = Ty2
+        m_DataAlpha(m_Position) = Alpha
+        
+        m_Position = m_Position + 1
+
+        m_Data(m_Position).X = dest.Right
+        m_Data(m_Position).Y = dest.Top
+        m_Data(m_Position).Z = 0
+        m_Data(m_Position).Colour = Color(2)
+        m_Data(m_Position).tX = Tx2
+        m_Data(m_Position).tY = Ty2
+        m_DataAlpha(m_Position) = Alpha
+        
+        m_Position = m_Position + 1
+
+        m_Data(m_Position).X = dest.Right
+        m_Data(m_Position).Y = dest.Bottom
+        m_Data(m_Position).Z = 0
+        m_Data(m_Position).Colour = Color(3)
+        m_Data(m_Position).tX = Tx2
+        m_Data(m_Position).tY = Ty1
+        m_DataAlpha(m_Position) = Alpha
+        
+        m_Position = m_Position + 1
+    End If
     
     If (m_Position = UBound(m_Data) + 1) Then
         Call Flush
@@ -128,10 +219,19 @@ Public Sub Flush()
         '
         ' Set the new data of the vertex buffer
         '
+        If m_DataAlpha((m_Position / 4) * 2) Then
+            Call DirectDevice.SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ONE)
+            Call DirectDevice.SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE)
+        End If
+        
         Call D3DVertexBuffer8SetData(m_VBuffer, 0, m_Position * LenB(m_Data(0)), D3DLOCK_DISCARD, m_Data(0))
     
         Call DirectDevice.DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, (m_Position / 4) * 6, 0, (m_Position / 4) * 2)
-    
+        
+        If m_DataAlpha((m_Position / 4) * 2) Then
+            Call DirectDevice.SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA)
+            Call DirectDevice.SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA)
+        End If
         '
         ' We start all over again
         '
@@ -141,6 +241,7 @@ End Sub
  
 Public Sub Initialise(ByVal Capacity As Long)
     ReDim m_Data(4 * Capacity) As TYPE_VERTEX
+    ReDim m_DataAlpha(4 * Capacity) As Boolean
    
     '
     '  Create the vertice buffer

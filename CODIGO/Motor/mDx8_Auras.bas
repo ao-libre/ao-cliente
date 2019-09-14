@@ -11,7 +11,7 @@ Public Type Aura
     Grh As Integer '   GrhIndex
     
     Rotation As Byte '   Rotate or Not
-    Angle As Single '   Angle
+    angle As Single '   Angle
     Speed As Single '   Speed
     TickCount As Long '   TickCount from Speed Controls
     
@@ -49,7 +49,7 @@ Public Sub Load_Auras()
                 Auras(i).Grh = Val(Leer.GetValue(i, "GrhIndex"))
                 
                 Auras(i).Rotation = Val(Leer.GetValue(i, "Rotate"))
-                Auras(i).Angle = 0
+                Auras(i).angle = 0
                 Auras(i).Speed = Leer.GetValue(i, "Speed")
                 
                 Auras(i).OffsetX = Val(Leer.GetValue(i, "OffsetX"))
@@ -92,7 +92,7 @@ Public Sub Set_Aura(ByVal CharIndex As Integer, slot As Byte, Aura As Byte)
     With charlist(CharIndex).Aura(slot)
         .Grh = Auras(Aura).Grh
             
-        .Angle = Auras(Aura).Angle
+        .angle = Auras(Aura).angle
         .Rotation = Auras(Aura).Rotation
         .Speed = Auras(Aura).Speed
         
@@ -141,8 +141,8 @@ Public Sub Update_Aura(ByVal CharIndex As Integer, slot As Byte)
     
     With charlist(CharIndex).Aura(slot)
         If GetTickCount - .TickCount > FPS Then
-            .Angle = .Angle + .Speed
-            If .Angle >= 360 Then .Angle = 0
+            .angle = .angle + .Speed
+            If .angle >= 360 Then .angle = 0
             .TickCount = GetTickCount
         End If
     End With
@@ -160,7 +160,7 @@ On Error GoTo handle
             With charlist(CharIndex).Aura(i)
                 If .Grh <> 0 Then
                     If .Rotation = 1 Then Update_Aura CharIndex, i
-                    Call Draw_GrhIndex(.Grh, X + .OffsetX, Y + .OffsetY, 1, .Color(), .Angle, True)
+                    Call Draw_GrhIndex(.Grh, X + .OffsetX, Y + .OffsetY, 1, .Color(), .angle, True)
                 End If
             End With
         Next i
