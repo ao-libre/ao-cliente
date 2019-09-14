@@ -428,12 +428,11 @@ Sub SwitchMap(ByVal Map As Integer)
     
     Dim ByFlags  As Byte
     Dim handle   As Integer
-    Dim fileBuff As clsByteBuffer
    
     Dim dData()  As Byte
     Dim dLen     As Long
    
-    Set fileBuff = New clsByteBuffer
+    Set fileBuff = New CsBuffer
     
     'Limpieza adicional del mapa. PARCHE: Solucion a bug de clones. [Gracias Yhunja]
     'EDIT: cambio el rango de valores en x y para solucionar otro bug con respecto al cambio de mapas
@@ -448,56 +447,56 @@ Sub SwitchMap(ByVal Map As Integer)
         Get handle, , dData
     Close handle
      
-    fileBuff.initializeReader dData
+    Call fileBuff.Wrap(dData)
     
-    mapInfo.MapVersion = fileBuff.getInteger
+    mapInfo.MapVersion = fileBuff.ReadInteger
    
     With MiCabecera
-        .Desc = fileBuff.getString(Len(.Desc))
-        .CRC = fileBuff.getLong
-        .MagicWord = fileBuff.getLong
+        .Desc = fileBuff.ReadString(Len(.Desc))
+        .CRC = fileBuff.ReadLong
+        .MagicWord = fileBuff.ReadLong
     End With
     
-    fileBuff.getDouble
+    Call fileBuff.ReadDouble
    
     'Load arrays
     For Y = YMinMapSize To YMaxMapSize
         For X = XMinMapSize To XMaxMapSize
-            ByFlags = fileBuff.getByte()
+            ByFlags = fileBuff.ReadByte
 
             With MapData(X, Y)
             
                 .Blocked = (ByFlags And 1)
-                .Graphic(1).GrhIndex = fileBuff.getInteger()
-                InitGrh .Graphic(1), .Graphic(1).GrhIndex
+                .Graphic(1).GrhIndex = fileBuff.ReadInteger
+                Call InitGrh(.Graphic(1), .Graphic(1).GrhIndex)
            
                 'Layer 2 used?
                 If ByFlags And 2 Then
-                    .Graphic(2).GrhIndex = fileBuff.getInteger()
-                    InitGrh .Graphic(2), .Graphic(2).GrhIndex
+                    .Graphic(2).GrhIndex = fileBuff.ReadInteger
+                    Call InitGrh(.Graphic(2), .Graphic(2).GrhIndex)
                 Else
                     .Graphic(2).GrhIndex = 0
                 End If
                
                 'Layer 3 used?
                 If ByFlags And 4 Then
-                    .Graphic(3).GrhIndex = fileBuff.getInteger()
-                    InitGrh .Graphic(3), .Graphic(3).GrhIndex
+                    .Graphic(3).GrhIndex = fileBuff.ReadInteger
+                    Call InitGrh(.Graphic(3), .Graphic(3).GrhIndex)
                 Else
                     .Graphic(3).GrhIndex = 0
                 End If
                
                 'Layer 4 used?
                 If ByFlags And 8 Then
-                    .Graphic(4).GrhIndex = fileBuff.getInteger()
-                    InitGrh .Graphic(4), .Graphic(4).GrhIndex
+                    .Graphic(4).GrhIndex = fileBuff.ReadInteger
+                    Call InitGrh(.Graphic(4), .Graphic(4).GrhIndex)
                 Else
                     .Graphic(4).GrhIndex = 0
                 End If
            
                 'Trigger used?
                 If ByFlags And 16 Then
-                    .Trigger = fileBuff.getInteger()
+                    .Trigger = fileBuff.ReadInteger
                 Else
                     .Trigger = 0
                 End If
@@ -548,7 +547,7 @@ Sub SwitchMap(ByVal Map As Integer)
     'Carga las particulas especificas del mapa.
     Call Load_Map_Particles(Map)
     
-    'Resetear el mensaje en render con el nombre del mapa.
+    'Resetear el mensaje en render con el nombre del mapa..
     renderText = nameMap
     renderFont = 2
     colorRender = 240
