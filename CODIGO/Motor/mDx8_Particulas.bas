@@ -783,17 +783,21 @@ Private Sub Particle_Group_Make(ByVal Particle_Group_Index As Long, ByVal map_x 
     End If
     
 End Sub
-Private Function Map_Particle_Group_Get(ByVal map_x As Integer, ByVal map_y As Integer) As Long
-'*****************************************************************
-'Author: Aaron Perkins
-'Last Modify Date: 2/20/2003
-'Checks to see if a tile position has a particle_group_index and return it
-'*****************************************************************
+
+Private Function Map_Particle_Group_Get(ByVal map_x As Integer, _
+                                        ByVal map_y As Integer) As Long
+
+    '*****************************************************************
+    'Author: Aaron Perkins
+    'Last Modify Date: 2/20/2003
+    'Checks to see if a tile position has a particle_group_index and return it
+    '*****************************************************************
     If InMapBounds(map_x, map_y) Then
         Map_Particle_Group_Get = MapData(map_x, map_y).Particle_Group_Index
     Else
         Map_Particle_Group_Get = 0
     End If
+
 End Function
 
 Private Function Char_Particle_Group_Create(ByVal char_index As Integer, ByRef grh_index_list() As Long, ByRef rgb_list() As Long, _
@@ -818,7 +822,7 @@ Private Function Char_Particle_Group_Create(ByVal char_index As Integer, ByRef g
     
     If char_part_free_index > 0 Then
         Char_Particle_Group_Create = Particle_Group_Next_Open
-        Char_Particle_Group_Make Char_Particle_Group_Create, char_index, char_part_free_index, Particle_Count, stream_type, grh_index_list(), rgb_list(), alphaBlend, alive_counter, frame_speed, id, x1, y1, angle, vecx1, vecx2, vecy1, vecy2, life1, life2, fric, spin_speedL, gravity, grav_strength, bounce_strength, x2, y2, XMove, move_x1, move_x2, move_y1, move_y2, YMove, spin_speedH, spin
+        Call Char_Particle_Group_Make(har_Particle_Group_Create, char_index, char_part_free_index, Particle_Count, stream_type, grh_index_list(), rgb_list(), alphaBlend, alive_counter, frame_speed, id, x1, y1, angle, vecx1, vecx2, vecy1, vecy2, life1, life2, fric, spin_speedL, gravity, grav_strength, bounce_strength, x2, y2, XMove, move_x1, move_x2, move_y1, move_y2, YMove, spin_speedH, spin)
     End If
 
 End Function
@@ -928,6 +932,7 @@ Private Sub Char_Particle_Group_Make(ByVal Particle_Group_Index As Long, ByVal c
 'Makes a new particle effect
 'Modified by Juan Martín Sotuyo Dodero
 '*****************************************************************
+    
     'Update array size
     If Particle_Group_Index > particle_group_last Then
         particle_group_last = Particle_Group_Index
