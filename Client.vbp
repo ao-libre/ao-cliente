@@ -118,6 +118,7 @@ Module=mDx8_Particulas; CODIGO\Motor\mDx8_Particulas.bas
 Module=Carga; CODIGO\IO\modCarga.bas
 Class=clsBatch; CODIGO\Motor\clsBatch.cls
 Class=clsArrayList; CODIGO\clsArrayList.cls
+Class=CsBuffer; CODIGO\IO\csBuffer.cls
 IconForm="frmMain"
 Startup="Sub Main"
 HelpFile=""
