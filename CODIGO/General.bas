@@ -546,11 +546,13 @@ Sub SwitchMap(ByVal Map As Integer)
     Call Init_Ambient(Map)
     
     'Carga las particulas especificas del mapa.
-    Call General_Particle_Create(1, 45, 45)
-    'renderMsgReset
+    Call Load_Map_Particles(Map)
+    
+    'Resetear el mensaje en render con el nombre del mapa.
     renderText = nameMap
     renderFont = 2
     colorRender = 240
+    
 End Sub
 
 Function ReadField(ByVal Pos As Integer, ByRef Text As String, ByVal SepASCII As Byte) As String
