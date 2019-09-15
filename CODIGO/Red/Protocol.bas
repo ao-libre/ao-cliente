@@ -2105,7 +2105,9 @@ Private Sub HandleChatOverHead()
     End If
     
 On Error GoTo errhandler
-    
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
     
     
     
@@ -2115,25 +2117,27 @@ On Error GoTo errhandler
     Dim g As Byte
     Dim b As Byte
     
-    chat = incomingData.ReadString()
-    CharIndex = incomingData.ReadInteger()
+    chat = Buffer.ReadString()
+    CharIndex = Buffer.ReadInteger()
     
-    r = incomingData.ReadByte()
-    g = incomingData.ReadByte()
-    b = incomingData.ReadByte()
+    r = Buffer.ReadByte()
+    g = Buffer.ReadByte()
+    b = Buffer.ReadByte()
     
     'Only add the chat if the character exists (a CharacterRemove may have been sent to the PC / NPC area before the buffer was flushed)
     If Char_Check(CharIndex) Then _
         Call Dialogos.CreateDialog(Trim$(chat), CharIndex, RGB(r, g, b))
     
-    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
 
 errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
     
     If Error <> 0 Then _
         Err.Raise Error
@@ -2154,7 +2158,9 @@ Private Sub HandleConsoleMessage()
     End If
     
 On Error GoTo errhandler
-    
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
     
     
     
@@ -2165,8 +2171,8 @@ On Error GoTo errhandler
     Dim g As Byte
     Dim b As Byte
     
-    chat = incomingData.ReadString()
-    FontIndex = incomingData.ReadByte()
+    chat = Buffer.ReadString()
+    FontIndex = Buffer.ReadByte()
 
     If InStr(1, chat, "~") Then
         str = ReadField(2, chat, 126)
@@ -2202,14 +2208,16 @@ On Error GoTo errhandler
         End If
     End If
 '    Call checkText(chat)
-    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
     
 errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
 
     If Error <> 0 Then _
         Err.Raise Error
@@ -2230,7 +2238,9 @@ Private Sub HandleGuildChat()
     End If
     
 On Error GoTo errhandler
-    
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
     
     
     
@@ -2240,7 +2250,7 @@ On Error GoTo errhandler
     Dim g As Byte
     Dim b As Byte
     
-    chat = incomingData.ReadString()
+    chat = Buffer.ReadString()
     
     If Not DialogosClanes.Activo Then
         If InStr(1, chat, "~") Then
@@ -2275,14 +2285,16 @@ On Error GoTo errhandler
         Call DialogosClanes.PushBackText(ReadField(1, chat, 126))
     End If
     
-    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
     
 errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
 
     If Error <> 0 Then _
         Err.Raise Error
@@ -2303,7 +2315,9 @@ Private Sub HandleCommerceChat()
     End If
     
 On Error GoTo errhandler
-    
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
     
     
     
@@ -2314,8 +2328,8 @@ On Error GoTo errhandler
     Dim g As Byte
     Dim b As Byte
     
-    chat = incomingData.ReadString()
-    FontIndex = incomingData.ReadByte()
+    chat = Buffer.ReadString()
+    FontIndex = Buffer.ReadByte()
     
     If InStr(1, chat, "~") Then
         str = ReadField(2, chat, 126)
@@ -2346,14 +2360,16 @@ On Error GoTo errhandler
         End With
     End If
     
-    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
     
 errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
 
     If Error <> 0 Then _
         Err.Raise Error
@@ -2374,21 +2390,25 @@ Private Sub HandleShowMessageBox()
     End If
     
 On Error GoTo errhandler
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
     
     
     
-    
-    frmMensaje.msg.Caption = incomingData.ReadString()
+    frmMensaje.msg.Caption = Buffer.ReadString()
     frmMensaje.Show
     
-    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
     
 errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
 
     If Error <> 0 Then _
         Err.Raise Error
@@ -2450,7 +2470,9 @@ Private Sub HandleCharacterCreate()
     End If
     
 On Error GoTo errhandler
-    
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
     
     
     
@@ -2466,22 +2488,22 @@ On Error GoTo errhandler
     Dim privs As Integer
     Dim NickColor As Byte
     
-    CharIndex = incomingData.ReadInteger()
-    Body = incomingData.ReadInteger()
-    Head = incomingData.ReadInteger()
-    Heading = incomingData.ReadByte()
-    X = incomingData.ReadByte()
-    Y = incomingData.ReadByte()
-    weapon = incomingData.ReadInteger()
-    shield = incomingData.ReadInteger()
-    helmet = incomingData.ReadInteger()
+    CharIndex = Buffer.ReadInteger()
+    Body = Buffer.ReadInteger()
+    Head = Buffer.ReadInteger()
+    Heading = Buffer.ReadByte()
+    X = Buffer.ReadByte()
+    Y = Buffer.ReadByte()
+    weapon = Buffer.ReadInteger()
+    shield = Buffer.ReadInteger()
+    helmet = Buffer.ReadInteger()
     
     
     With charlist(CharIndex)
-        Call Char_SetFx(CharIndex, incomingData.ReadInteger(), incomingData.ReadInteger())
+        Call Char_SetFx(CharIndex, Buffer.ReadInteger(), Buffer.ReadInteger())
         
-        .Nombre = incomingData.ReadString()
-        NickColor = incomingData.ReadByte()
+        .Nombre = Buffer.ReadString()
+        NickColor = Buffer.ReadByte()
         
         If (NickColor And eNickColor.ieCriminal) <> 0 Then
             .Criminal = 1
@@ -2491,7 +2513,7 @@ On Error GoTo errhandler
         
         .Atacable = (NickColor And eNickColor.ieAtacable) <> 0
         
-        privs = incomingData.ReadByte()
+        privs = Buffer.ReadByte()
         
         If privs <> 0 Then
             'If the player belongs to a council AND is an admin, only whos as an admin
@@ -2519,14 +2541,16 @@ On Error GoTo errhandler
     
     Call Char_RefreshAll
     
-    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
     
 errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
 
     If Error <> 0 Then _
         Err.Raise Error
@@ -2866,7 +2890,9 @@ Private Sub HandleGuildList()
     End If
     
 On Error GoTo errhandler
-    
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
     
     
     
@@ -2874,7 +2900,7 @@ On Error GoTo errhandler
         'Clear guild's list
         .guildslist.Clear
         
-        GuildNames = Split(incomingData.ReadString(), SEPARATOR)
+        GuildNames = Split(Buffer.ReadString(), SEPARATOR)
         
         Dim i As Long
         For i = 0 To UBound(GuildNames())
@@ -2891,7 +2917,8 @@ errhandler:
     Error = Err.number
 On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
 
     If Error <> 0 Then _
         Err.Raise Error
@@ -3099,7 +3126,9 @@ Private Sub HandleChangeInventorySlot()
     End If
     
 On Error GoTo errhandler
-    
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
     
     
     
@@ -3116,18 +3145,18 @@ On Error GoTo errhandler
     Dim MinDef As Integer
     Dim Value As Single
     
-    slot = incomingData.ReadByte()
-    ObjIndex = incomingData.ReadInteger()
-    name = incomingData.ReadString()
-    Amount = incomingData.ReadInteger()
-    Equipped = incomingData.ReadBoolean()
-    GrhIndex = incomingData.ReadInteger()
-    OBJType = incomingData.ReadByte()
-    MaxHit = incomingData.ReadInteger()
-    MinHit = incomingData.ReadInteger()
-    MaxDef = incomingData.ReadInteger()
-    MinDef = incomingData.ReadInteger
-    Value = incomingData.ReadSingle()
+    slot = Buffer.ReadByte()
+    ObjIndex = Buffer.ReadInteger()
+    name = Buffer.ReadString()
+    Amount = Buffer.ReadInteger()
+    Equipped = Buffer.ReadBoolean()
+    GrhIndex = Buffer.ReadInteger()
+    OBJType = Buffer.ReadByte()
+    MaxHit = Buffer.ReadInteger()
+    MinHit = Buffer.ReadInteger()
+    MaxDef = Buffer.ReadInteger()
+    MinDef = Buffer.ReadInteger
+    Value = Buffer.ReadSingle()
     
     If Equipped Then
         Select Case OBJType
@@ -3163,14 +3192,16 @@ On Error GoTo errhandler
     
     Call Inventario.SetItem(slot, ObjIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, name)
     Call Inventario.DrawInventory
-    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
     
 errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
 
     If Error <> 0 Then _
         Err.Raise Error
@@ -3259,24 +3290,26 @@ Private Sub HandleChangeBankSlot()
     End If
     
 On Error GoTo errhandler
-    
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
     
     
     
      Dim slot As Byte
-    slot = incomingData.ReadByte()
+    slot = Buffer.ReadByte()
     
     With UserBancoInventory(slot)
-        .ObjIndex = incomingData.ReadInteger()
-        .name = incomingData.ReadString()
-        .Amount = incomingData.ReadInteger()
-        .GrhIndex = incomingData.ReadInteger()
-        .OBJType = incomingData.ReadByte()
-        .MaxHit = incomingData.ReadInteger()
-        .MinHit = incomingData.ReadInteger()
-        .MaxDef = incomingData.ReadInteger()
-        .MinDef = incomingData.ReadInteger
-        .Valor = incomingData.ReadLong()
+        .ObjIndex = Buffer.ReadInteger()
+        .name = Buffer.ReadString()
+        .Amount = Buffer.ReadInteger()
+        .GrhIndex = Buffer.ReadInteger()
+        .OBJType = Buffer.ReadByte()
+        .MaxHit = Buffer.ReadInteger()
+        .MinHit = Buffer.ReadInteger()
+        .MaxDef = Buffer.ReadInteger()
+        .MinDef = Buffer.ReadInteger
+        .Valor = Buffer.ReadLong()
         
         If Comerciando Then
             Call InvBanco(0).SetItem(slot, .ObjIndex, .Amount, _
@@ -3285,14 +3318,16 @@ On Error GoTo errhandler
         End If
     End With
     
-    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
     
 errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
 
     If Error <> 0 Then _
         Err.Raise Error
@@ -3313,15 +3348,17 @@ Private Sub HandleChangeSpellSlot()
     End If
  
 On Error GoTo errhandler
-    
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
  
     
  
     Dim slot As Byte
-    slot = incomingData.ReadByte()
+    slot = Buffer.ReadByte()
     Dim str As String
  
-    UserHechizos(slot) = incomingData.ReadInteger()
+    UserHechizos(slot) = Buffer.ReadInteger()
  
     If slot <= frmMain.hlst.ListCount Then
          str = DevolverNombreHechizo(UserHechizos(slot))
@@ -3339,14 +3376,16 @@ On Error GoTo errhandler
         End If
     End If
  
-    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
  
 errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
  
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
  
     If Error <> 0 Then _
         Err.Raise Error
@@ -3405,7 +3444,9 @@ Private Sub HandleBlacksmithWeapons()
     End If
     
 On Error GoTo errhandler
-    
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
     
     
     
@@ -3414,20 +3455,20 @@ On Error GoTo errhandler
     Dim J As Long
     Dim k As Long
     
-    Count = incomingData.ReadInteger()
+    Count = Buffer.ReadInteger()
     
     ReDim ArmasHerrero(Count) As tItemsConstruibles
     ReDim HerreroMejorar(0) As tItemsConstruibles
     
     For i = 1 To Count
         With ArmasHerrero(i)
-            .name = incomingData.ReadString()    'Get the object's name
-            .GrhIndex = incomingData.ReadInteger()
-            .LinH = incomingData.ReadInteger()        'The iron needed
-            .LinP = incomingData.ReadInteger()        'The silver needed
-            .LinO = incomingData.ReadInteger()        'The gold needed
-            .ObjIndex = incomingData.ReadInteger()
-            .Upgrade = incomingData.ReadInteger()
+            .name = Buffer.ReadString()    'Get the object's name
+            .GrhIndex = Buffer.ReadInteger()
+            .LinH = Buffer.ReadInteger()        'The iron needed
+            .LinP = Buffer.ReadInteger()        'The silver needed
+            .LinO = Buffer.ReadInteger()        'The gold needed
+            .ObjIndex = Buffer.ReadInteger()
+            .Upgrade = Buffer.ReadInteger()
         End With
     Next i
     
@@ -3471,14 +3512,16 @@ On Error GoTo errhandler
         End With
     Next i
     
-    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
     
 errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
 
     If Error <> 0 Then _
         Err.Raise Error
@@ -3499,7 +3542,9 @@ Private Sub HandleBlacksmithArmors()
     End If
     
 On Error GoTo errhandler
-    
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
     
     
     
@@ -3508,19 +3553,19 @@ On Error GoTo errhandler
     Dim J As Long
     Dim k As Long
     
-    Count = incomingData.ReadInteger()
+    Count = Buffer.ReadInteger()
     
     ReDim ArmadurasHerrero(Count) As tItemsConstruibles
     
     For i = 1 To Count
         With ArmadurasHerrero(i)
-            .name = incomingData.ReadString()    'Get the object's name
-            .GrhIndex = incomingData.ReadInteger()
-            .LinH = incomingData.ReadInteger()        'The iron needed
-            .LinP = incomingData.ReadInteger()        'The silver needed
-            .LinO = incomingData.ReadInteger()        'The gold needed
-            .ObjIndex = incomingData.ReadInteger()
-            .Upgrade = incomingData.ReadInteger()
+            .name = Buffer.ReadString()    'Get the object's name
+            .GrhIndex = Buffer.ReadInteger()
+            .LinH = Buffer.ReadInteger()        'The iron needed
+            .LinP = Buffer.ReadInteger()        'The silver needed
+            .LinO = Buffer.ReadInteger()        'The gold needed
+            .ObjIndex = Buffer.ReadInteger()
+            .Upgrade = Buffer.ReadInteger()
         End With
     Next i
     
@@ -3551,14 +3596,16 @@ On Error GoTo errhandler
         End With
     Next i
     
-    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
     
 errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
 
     If Error <> 0 Then _
         Err.Raise Error
@@ -3579,7 +3626,9 @@ Private Sub HandleCarpenterObjects()
     End If
     
 On Error GoTo errhandler
-    
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
     
     
     
@@ -3588,19 +3637,19 @@ On Error GoTo errhandler
     Dim J As Long
     Dim k As Long
     
-    Count = incomingData.ReadInteger()
+    Count = Buffer.ReadInteger()
     
     ReDim ObjCarpintero(Count) As tItemsConstruibles
     ReDim CarpinteroMejorar(0) As tItemsConstruibles
     
     For i = 1 To Count
         With ObjCarpintero(i)
-            .name = incomingData.ReadString()        'Get the object's name
-            .GrhIndex = incomingData.ReadInteger()
-            .Madera = incomingData.ReadInteger()          'The wood needed
-            .MaderaElfica = incomingData.ReadInteger()    'The elfic wood needed
-            .ObjIndex = incomingData.ReadInteger()
-            .Upgrade = incomingData.ReadInteger()
+            .name = Buffer.ReadString()        'Get the object's name
+            .GrhIndex = Buffer.ReadInteger()
+            .Madera = Buffer.ReadInteger()          'The wood needed
+            .MaderaElfica = Buffer.ReadInteger()    'The elfic wood needed
+            .ObjIndex = Buffer.ReadInteger()
+            .Upgrade = Buffer.ReadInteger()
         End With
     Next i
     
@@ -3643,14 +3692,16 @@ On Error GoTo errhandler
         End With
     Next i
     
-    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
     
 errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
 
     If Error <> 0 Then _
         Err.Raise Error
@@ -3685,24 +3736,28 @@ Private Sub HandleErrorMessage()
     End If
     
 On Error GoTo errhandler
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
     
     
     
-    
-    Call MsgBox(incomingData.ReadString())
+    Call MsgBox(Buffer.ReadString())
     
     If frmConnect.Visible And (Not frmCrearPersonaje.Visible) Then
         frmMain.Client.CloseSck
     End If
     
-    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
     
 errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
 
     If Error <> 0 Then _
         Err.Raise Error
@@ -3751,23 +3806,27 @@ Private Sub HandleShowSignal()
     End If
     
 On Error GoTo errhandler
-    
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
     
     
     
     Dim tmp As String
-    tmp = incomingData.ReadString()
+    tmp = Buffer.ReadString()
     
-    Call InitCartel(tmp, incomingData.ReadInteger())
+    Call InitCartel(tmp, Buffer.ReadInteger())
     
-    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
     
 errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
 
     If Error <> 0 Then _
         Err.Raise Error
@@ -3788,34 +3847,38 @@ Private Sub HandleChangeNPCInventorySlot()
     End If
     
 On Error GoTo errhandler
-    
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
     
     
     
     Dim slot As Byte
-    slot = incomingData.ReadByte()
+    slot = Buffer.ReadByte()
     
     With NPCInventory(slot)
-        .name = incomingData.ReadString()
-        .Amount = incomingData.ReadInteger()
-        .Valor = incomingData.ReadSingle()
-        .GrhIndex = incomingData.ReadInteger()
-        .ObjIndex = incomingData.ReadInteger()
-        .OBJType = incomingData.ReadByte()
-        .MaxHit = incomingData.ReadInteger()
-        .MinHit = incomingData.ReadInteger()
-        .MaxDef = incomingData.ReadInteger()
-        .MinDef = incomingData.ReadInteger
+        .name = Buffer.ReadString()
+        .Amount = Buffer.ReadInteger()
+        .Valor = Buffer.ReadSingle()
+        .GrhIndex = Buffer.ReadInteger()
+        .ObjIndex = Buffer.ReadInteger()
+        .OBJType = Buffer.ReadByte()
+        .MaxHit = Buffer.ReadInteger()
+        .MinHit = Buffer.ReadInteger()
+        .MaxDef = Buffer.ReadInteger()
+        .MinDef = Buffer.ReadInteger
     End With
         
-    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
     
 errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
 
     If Error <> 0 Then _
         Err.Raise Error
@@ -3954,7 +4017,9 @@ Private Sub HandleAddForumMessage()
     End If
     
 On Error GoTo errhandler
-    
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
     
     
     
@@ -3963,11 +4028,11 @@ On Error GoTo errhandler
     Dim Message As String
     Dim Author As String
     
-    ForumType = incomingData.ReadByte
+    ForumType = Buffer.ReadByte
     
-    Title = incomingData.ReadString()
-    Author = incomingData.ReadString()
-    Message = incomingData.ReadString()
+    Title = Buffer.ReadString()
+    Author = Buffer.ReadString()
+    Message = Buffer.ReadString()
     
     If Not frmForo.ForoLimpio Then
         clsForos.ClearForums
@@ -3976,14 +4041,16 @@ On Error GoTo errhandler
 
     Call clsForos.AddPost(ForumAlignment(ForumType), Title, Author, Message, EsAnuncio(ForumType))
     
-    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
     
 errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
 
     If Error <> 0 Then _
         Err.Raise Error
@@ -4150,7 +4217,9 @@ Private Sub HandleTrainerCreatureList()
     End If
     
 On Error GoTo errhandler
-    
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
     
     
     
@@ -4158,7 +4227,7 @@ On Error GoTo errhandler
     Dim i As Long
     Dim Upper_creatures As Long
     
-    creatures = Split(incomingData.ReadString(), SEPARATOR)
+    creatures = Split(Buffer.ReadString(), SEPARATOR)
     Upper_creatures = UBound(creatures())
     
     For i = 0 To Upper_creatures
@@ -4166,14 +4235,16 @@ On Error GoTo errhandler
     Next i
     frmEntrenador.Show , frmMain
     
-    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
     
 errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
 
     If Error <> 0 Then _
         Err.Raise Error
@@ -4194,7 +4265,9 @@ Private Sub HandleGuildNews()
     End If
     
 On Error GoTo errhandler
-    
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
     
     
     
@@ -4204,10 +4277,10 @@ On Error GoTo errhandler
     Dim sTemp As String
     
     'Get news' string
-    frmGuildNews.news = incomingData.ReadString()
+    frmGuildNews.news = Buffer.ReadString()
     
     'Get Enemy guilds list
-    guildList = Split(incomingData.ReadString(), SEPARATOR)
+    guildList = Split(Buffer.ReadString(), SEPARATOR)
     
     Upper_guildList = UBound(guildList)
     
@@ -4217,7 +4290,7 @@ On Error GoTo errhandler
     Next i
     
     'Get Allied guilds list
-    guildList = Split(incomingData.ReadString(), SEPARATOR)
+    guildList = Split(Buffer.ReadString(), SEPARATOR)
     
     For i = 0 To Upper_guildList
         sTemp = frmGuildNews.txtClanesAliados.Text
@@ -4226,14 +4299,16 @@ On Error GoTo errhandler
     
     If ClientSetup.bGuildNews Or bShowGuildNews Then frmGuildNews.Show vbModeless, frmMain
     
-    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
     
 errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
 
     If Error <> 0 Then _
         Err.Raise Error
@@ -4254,20 +4329,24 @@ Private Sub HandleOfferDetails()
     End If
     
 On Error GoTo errhandler
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
     
     
     
+    Call frmUserRequest.recievePeticion(Buffer.ReadString())
     
-    Call frmUserRequest.recievePeticion(incomingData.ReadString())
-    
-    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
     
 errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
 
     If Error <> 0 Then _
         Err.Raise Error
@@ -4288,14 +4367,16 @@ Private Sub HandleAlianceProposalsList()
     End If
     
 On Error GoTo errhandler
-    
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
     
     
     
     Dim vsGuildList() As String, Upper_vsGuildList As Long
     Dim i As Long
     
-    vsGuildList = Split(incomingData.ReadString(), SEPARATOR)
+    vsGuildList = Split(Buffer.ReadString(), SEPARATOR)
     Upper_vsGuildList = UBound(vsGuildList())
     
     Call frmPeaceProp.lista.Clear
@@ -4306,14 +4387,16 @@ On Error GoTo errhandler
     frmPeaceProp.ProposalType = TIPO_PROPUESTA.ALIANZA
     Call frmPeaceProp.Show(vbModeless, frmMain)
     
-    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
     
 errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
 
     If Error <> 0 Then _
         Err.Raise Error
@@ -4337,7 +4420,9 @@ Private Sub HandlePeaceProposalsList()
     
     On Error GoTo errhandler
 
-    
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
     
     
     
@@ -4345,7 +4430,7 @@ Private Sub HandlePeaceProposalsList()
     Dim Upper_guildList As Long
     Dim i               As Long
     
-    guildList = Split(incomingData.ReadString(), SEPARATOR)
+    guildList = Split(Buffer.ReadString(), SEPARATOR)
     
     With frmPeaceProp
     
@@ -4362,7 +4447,8 @@ Private Sub HandlePeaceProposalsList()
     
     End With
     
-    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
     
 errhandler:
     Dim Error As Long
@@ -4370,7 +4456,8 @@ errhandler:
 
     On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
 
     If Error <> 0 Then Err.Raise Error
 
@@ -4391,7 +4478,9 @@ Private Sub HandleCharacterInfo()
     End If
     
 On Error GoTo errhandler
-    
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
     
     
     
@@ -4408,34 +4497,34 @@ On Error GoTo errhandler
             .imgPeticion.Visible = True
         End If
         
-        .Nombre.Caption = incomingData.ReadString()
-        .Raza.Caption = ListaRazas(incomingData.ReadByte())
-        .Clase.Caption = ListaClases(incomingData.ReadByte())
+        .Nombre.Caption = Buffer.ReadString()
+        .Raza.Caption = ListaRazas(Buffer.ReadByte())
+        .Clase.Caption = ListaClases(Buffer.ReadByte())
         
-        If incomingData.ReadByte() = 1 Then
+        If Buffer.ReadByte() = 1 Then
             .Genero.Caption = "Hombre"
         Else
             .Genero.Caption = "Mujer"
         End If
         
-        .Nivel.Caption = incomingData.ReadByte()
-        .Oro.Caption = incomingData.ReadLong()
-        .Banco.Caption = incomingData.ReadLong()
+        .Nivel.Caption = Buffer.ReadByte()
+        .Oro.Caption = Buffer.ReadLong()
+        .Banco.Caption = Buffer.ReadLong()
         
         Dim reputation As Long
-        reputation = incomingData.ReadLong()
+        reputation = Buffer.ReadLong()
         
         .reputacion.Caption = reputation
         
-        .txtPeticiones.Text = incomingData.ReadString()
-        .guildactual.Caption = incomingData.ReadString()
-        .txtMiembro.Text = incomingData.ReadString()
+        .txtPeticiones.Text = Buffer.ReadString()
+        .guildactual.Caption = Buffer.ReadString()
+        .txtMiembro.Text = Buffer.ReadString()
         
         Dim armada As Boolean
         Dim caos As Boolean
         
-        armada = incomingData.ReadBoolean()
-        caos = incomingData.ReadBoolean()
+        armada = Buffer.ReadBoolean()
+        caos = Buffer.ReadBoolean()
         
         If armada Then
             .ejercito.Caption = JsonLanguage.item("ARMADA").item("TEXTO")
@@ -4443,8 +4532,8 @@ On Error GoTo errhandler
             .ejercito.Caption = JsonLanguage.item("LEGION").item("TEXTO")
         End If
         
-        .Ciudadanos.Caption = CStr(incomingData.ReadLong())
-        .criminales.Caption = CStr(incomingData.ReadLong())
+        .Ciudadanos.Caption = CStr(Buffer.ReadLong())
+        .criminales.Caption = CStr(Buffer.ReadLong())
         
         If reputation > 0 Then
             .status.Caption = " " & JsonLanguage.item("CIUDADANO").item("TEXTO")
@@ -4457,14 +4546,16 @@ On Error GoTo errhandler
         Call .Show(vbModeless, frmMain)
     End With
     
-    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
     
 errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
 
     If Error <> 0 Then _
         Err.Raise Error
@@ -4485,7 +4576,9 @@ Private Sub HandleGuildLeaderInfo()
     End If
     
 On Error GoTo errhandler
-    
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
     
     
     
@@ -4494,7 +4587,7 @@ On Error GoTo errhandler
 
     With frmGuildLeader
         'Get list of existing guilds
-        GuildNames = Split(incomingData.ReadString(), SEPARATOR)
+        GuildNames = Split(Buffer.ReadString(), SEPARATOR)
         
         'Empty the list
         Call .guildslist.Clear
@@ -4506,7 +4599,7 @@ On Error GoTo errhandler
         Next i
         
         'Get list of guild's members
-        GuildMembers = Split(incomingData.ReadString(), SEPARATOR)
+        GuildMembers = Split(Buffer.ReadString(), SEPARATOR)
         .Miembros.Caption = CStr(UBound(GuildMembers()) + 1)
         
         'Empty the list
@@ -4516,10 +4609,10 @@ On Error GoTo errhandler
             Call .members.AddItem(GuildMembers(i))
         Next i
         
-        .txtguildnews = incomingData.ReadString()
+        .txtguildnews = Buffer.ReadString()
         
         'Get list of join requests
-        List = Split(incomingData.ReadString(), SEPARATOR)
+        List = Split(Buffer.ReadString(), SEPARATOR)
         
         'Empty the list
         Call .solicitudes.Clear
@@ -4531,14 +4624,16 @@ On Error GoTo errhandler
         .Show , frmMain
     End With
 
-    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
     
 errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
 
     If Error <> 0 Then _
         Err.Raise Error
@@ -4559,7 +4654,9 @@ Private Sub HandleGuildDetails()
     End If
     
 On Error GoTo errhandler
-    
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
     
     
     
@@ -4568,37 +4665,38 @@ On Error GoTo errhandler
         .imgOfrecerAlianza.Visible = .EsLeader
         .imgOfrecerPaz.Visible = .EsLeader
         
-        .Nombre.Caption = incomingData.ReadString()
-        .fundador.Caption = incomingData.ReadString()
-        .creacion.Caption = incomingData.ReadString()
-        .lider.Caption = incomingData.ReadString()
-        .web.Caption = incomingData.ReadString()
-        .Miembros.Caption = incomingData.ReadInteger()
+        .Nombre.Caption = Buffer.ReadString()
+        .fundador.Caption = Buffer.ReadString()
+        .creacion.Caption = Buffer.ReadString()
+        .lider.Caption = Buffer.ReadString()
+        .web.Caption = Buffer.ReadString()
+        .Miembros.Caption = Buffer.ReadInteger()
         
-        If incomingData.ReadBoolean() Then
+        If Buffer.ReadBoolean() Then
             .eleccion.Caption = UCase$(JsonLanguage.item("ABIERTA").item("TEXTO"))
         Else
             .eleccion.Caption = UCase$(JsonLanguage.item("CERRADA").item("TEXTO"))
         End If
         
-        .lblAlineacion.Caption = incomingData.ReadString()
-        .Enemigos.Caption = incomingData.ReadInteger()
-        .Aliados.Caption = incomingData.ReadInteger()
-        .antifaccion.Caption = incomingData.ReadString()
+        .lblAlineacion.Caption = Buffer.ReadString()
+        .Enemigos.Caption = Buffer.ReadInteger()
+        .Aliados.Caption = Buffer.ReadInteger()
+        .antifaccion.Caption = Buffer.ReadString()
         
         Dim codexStr() As String
         Dim i As Long
         
-        codexStr = Split(incomingData.ReadString(), SEPARATOR)
+        codexStr = Split(Buffer.ReadString(), SEPARATOR)
         
         For i = 0 To 7
             .Codex(i).Caption = codexStr(i)
         Next i
         
-        .Desc.Text = incomingData.ReadString()
+        .Desc.Text = Buffer.ReadString()
     End With
     
-    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
     
     frmGuildBrief.Show vbModeless, frmMain
     
@@ -4607,7 +4705,8 @@ errhandler:
     Error = Err.number
 On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
 
     If Error <> 0 Then _
         Err.Raise Error
@@ -4671,21 +4770,25 @@ Private Sub HandleShowUserRequest()
     End If
     
 On Error GoTo errhandler
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
     
     
     
-    
-    Call frmUserRequest.recievePeticion(incomingData.ReadString())
+    Call frmUserRequest.recievePeticion(Buffer.ReadString())
     Call frmUserRequest.Show(vbModeless, frmMain)
     
-    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
     
 errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
 
     If Error <> 0 Then _
         Err.Raise Error
@@ -4792,13 +4895,15 @@ Private Sub HandleChangeUserTradeSlot()
     End If
     
 On Error GoTo errhandler
-    
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
     
     Dim OfferSlot As Byte
     
     
     
-    OfferSlot = incomingData.ReadByte
+    OfferSlot = Buffer.ReadByte
     
     With incomingData
         If OfferSlot = GOLD_OFFER_SLOT Then
@@ -4814,14 +4919,16 @@ On Error GoTo errhandler
     
     Call frmComerciarUsu.PrintCommerceMsg(TradingUserName & JsonLanguage.item("MENSAJE_COMM_OFERTA_CAMBIA").item("TEXTO"), FontTypeNames.FONTTYPE_VENENO)
     
-    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
     
 errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
 
     If Error <> 0 Then _
         Err.Raise Error
@@ -4862,7 +4969,9 @@ Private Sub HandleSpawnList()
     End If
     
 On Error GoTo errhandler
-    
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
     
     
     
@@ -4870,7 +4979,7 @@ On Error GoTo errhandler
     Dim i As Long
     Dim Upper_creatureList As Long
     
-    creatureList = Split(incomingData.ReadString(), SEPARATOR)
+    creatureList = Split(Buffer.ReadString(), SEPARATOR)
     Upper_creatureList = UBound(creatureList())
     
     For i = 0 To Upper_creatureList
@@ -4878,14 +4987,16 @@ On Error GoTo errhandler
     Next i
     frmSpawnList.Show , frmMain
     
-    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
     
 errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
 
     If Error <> 0 Then _
         Err.Raise Error
@@ -4906,7 +5017,9 @@ Private Sub HandleShowSOSForm()
     End If
     
 On Error GoTo errhandler
-    
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
     
     
     
@@ -4914,7 +5027,7 @@ On Error GoTo errhandler
     Dim i As Long
     Dim Upper_sosList As Long
     
-    sosList = Split(incomingData.ReadString(), SEPARATOR)
+    sosList = Split(Buffer.ReadString(), SEPARATOR)
     Upper_sosList = UBound(sosList())
     
     For i = 0 To Upper_sosList
@@ -4923,14 +5036,16 @@ On Error GoTo errhandler
     
     frmMSG.Show , frmMain
     
-    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
     
 errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
 
     If Error <> 0 Then _
         Err.Raise Error
@@ -4951,7 +5066,9 @@ Private Sub HandleShowDenounces()
     End If
     
 On Error GoTo errhandler
-    
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
     
     
     
@@ -4959,7 +5076,7 @@ On Error GoTo errhandler
     Dim Upper_denounceList As Long
     Dim DenounceIndex As Long
     
-    DenounceList = Split(incomingData.ReadString(), SEPARATOR)
+    DenounceList = Split(Buffer.ReadString(), SEPARATOR)
     Upper_denounceList = UBound(DenounceList())
     
     With FontTypes(FontTypeNames.FONTTYPE_GUILDMSG)
@@ -4968,14 +5085,16 @@ On Error GoTo errhandler
         Next DenounceIndex
     End With
     
-    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
     
 errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
 
     If Error <> 0 Then _
         Err.Raise Error
@@ -4996,7 +5115,9 @@ Private Sub HandleShowPartyForm()
     End If
     
 On Error GoTo errhandler
-    
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
     
     
     
@@ -5004,26 +5125,28 @@ On Error GoTo errhandler
     Dim Upper_members As Long
     Dim i As Long
     
-    EsPartyLeader = CBool(incomingData.ReadByte())
+    EsPartyLeader = CBool(Buffer.ReadByte())
        
-    members = Split(incomingData.ReadString(), SEPARATOR)
+    members = Split(Buffer.ReadString(), SEPARATOR)
     Upper_members = UBound(members())
     
     For i = 0 To Upper_members
         Call frmParty.lstMembers.AddItem(members(i))
     Next i
     
-    frmParty.lblTotalExp.Caption = incomingData.ReadLong
+    frmParty.lblTotalExp.Caption = Buffer.ReadLong
     frmParty.Show , frmMain
     
-    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
     
 errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
 
     If Error <> 0 Then _
         Err.Raise Error
@@ -5046,21 +5169,25 @@ Private Sub HandleShowMOTDEditionForm()
     End If
     
 On Error GoTo errhandler
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
     
     
     
-    
-    frmCambiaMotd.txtMotd.Text = incomingData.ReadString()
+    frmCambiaMotd.txtMotd.Text = Buffer.ReadString()
     frmCambiaMotd.Show , frmMain
     
-    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
     
 errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
 
     If Error <> 0 Then _
         Err.Raise Error
@@ -5095,13 +5222,15 @@ Private Sub HandleUserNameList()
     End If
     
 On Error GoTo errhandler
-    
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
     
     
     
     Dim userList() As String
     
-    userList = Split(incomingData.ReadString(), SEPARATOR)
+    userList = Split(Buffer.ReadString(), SEPARATOR)
     
     If frmPanelGm.Visible Then
         frmPanelGm.cboListaUsus.Clear
@@ -5116,14 +5245,16 @@ On Error GoTo errhandler
         If frmPanelGm.cboListaUsus.ListCount > 0 Then frmPanelGm.cboListaUsus.ListIndex = 0
     End If
     
-    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
     
 errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
 
     If Error <> 0 Then _
         Err.Raise Error
@@ -5179,7 +5310,9 @@ Private Sub HandleGuildMemberInfo()
     End If
     
 On Error GoTo errhandler
-    
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
     
     
     
@@ -5187,7 +5320,7 @@ On Error GoTo errhandler
         'Clear guild's list
         .lstClanes.Clear
         
-        GuildNames = Split(incomingData.ReadString(), SEPARATOR)
+        GuildNames = Split(Buffer.ReadString(), SEPARATOR)
         
         Dim i As Long
 
@@ -5198,7 +5331,7 @@ On Error GoTo errhandler
         Next i
         
         'Get list of guild's members
-        GuildMembers = Split(incomingData.ReadString(), SEPARATOR)
+        GuildMembers = Split(Buffer.ReadString(), SEPARATOR)
         .lblCantMiembros.Caption = CStr(UBound(GuildMembers()) + 1)
         
         'Empty the list
@@ -5216,7 +5349,8 @@ errhandler:
     Error = Err.number
 On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
 
     If Error <> 0 Then _
         Err.Raise Error
@@ -5237,7 +5371,9 @@ Private Sub HandleUpdateTagAndStatus()
     End If
     
 On Error GoTo errhandler
-    
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
     
     
     
@@ -5245,9 +5381,9 @@ On Error GoTo errhandler
     Dim NickColor As Byte
     Dim UserTag As String
     
-    CharIndex = incomingData.ReadInteger()
-    NickColor = incomingData.ReadByte()
-    UserTag = incomingData.ReadString()
+    CharIndex = Buffer.ReadInteger()
+    NickColor = Buffer.ReadByte()
+    UserTag = Buffer.ReadString()
     
     'Update char status adn tag!
     With charlist(CharIndex)
@@ -5262,21 +5398,23 @@ On Error GoTo errhandler
         .Nombre = UserTag
     End With
     
-    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
     
 errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
 
     If Error <> 0 Then _
         Err.Raise Error
 End Sub
 
 ''
-' Writes the "LoginExistingAccount" message to the outgoing data incomingData.
+' Writes the "LoginExistingAccount" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -5300,7 +5438,7 @@ Public Sub WriteLoginExistingAccount()
     End With
 End Sub
 ''
-' Writes the "LoginExistingChar" message to the outgoing data incomingData.
+' Writes the "LoginExistingChar" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -5344,7 +5482,7 @@ Public Sub WriteLoginNewAccount()
 End Sub
 
 ''
-' Writes the "ThrowDices" message to the outgoing data incomingData.
+' Writes the "ThrowDices" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -5358,7 +5496,7 @@ Public Sub WriteThrowDices()
 End Sub
 
 ''
-' Writes the "LoginNewChar" message to the outgoing data incomingData.
+' Writes the "LoginNewChar" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -5389,7 +5527,7 @@ Public Sub WriteLoginNewChar()
 End Sub
 
 ''
-' Writes the "Talk" message to the outgoing data incomingData.
+' Writes the "Talk" message to the outgoing data buffer.
 '
 ' @param    chat The chat text to be sent.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -5408,7 +5546,7 @@ Public Sub WriteTalk(ByVal chat As String)
 End Sub
 
 ''
-' Writes the "Yell" message to the outgoing data incomingData.
+' Writes the "Yell" message to the outgoing data buffer.
 '
 ' @param    chat The chat text to be sent.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -5427,7 +5565,7 @@ Public Sub WriteYell(ByVal chat As String)
 End Sub
 
 ''
-' Writes the "Whisper" message to the outgoing data incomingData.
+' Writes the "Whisper" message to the outgoing data buffer.
 '
 ' @param    charIndex The index of the char to whom to whisper.
 ' @param    chat The chat text to be sent to the user.
@@ -5450,7 +5588,7 @@ Public Sub WriteWhisper(ByVal CharName As String, ByVal chat As String)
 End Sub
 
 ''
-' Writes the "Walk" message to the outgoing data incomingData.
+' Writes the "Walk" message to the outgoing data buffer.
 '
 ' @param    heading The direction in wich the user is moving.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -5469,7 +5607,7 @@ Public Sub WriteWalk(ByVal Heading As E_Heading)
 End Sub
 
 ''
-' Writes the "RequestPositionUpdate" message to the outgoing data incomingData.
+' Writes the "RequestPositionUpdate" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -5483,7 +5621,7 @@ Public Sub WriteRequestPositionUpdate()
 End Sub
 
 ''
-' Writes the "Attack" message to the outgoing data incomingData.
+' Writes the "Attack" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -5499,7 +5637,7 @@ Public Sub WriteAttack()
 End Sub
 
 ''
-' Writes the "PickUp" message to the outgoing data incomingData.
+' Writes the "PickUp" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -5513,7 +5651,7 @@ Public Sub WritePickUp()
 End Sub
 
 ''
-' Writes the "SafeToggle" message to the outgoing data incomingData.
+' Writes the "SafeToggle" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -5527,7 +5665,7 @@ Public Sub WriteSafeToggle()
 End Sub
 
 ''
-' Writes the "ResuscitationSafeToggle" message to the outgoing data incomingData.
+' Writes the "ResuscitationSafeToggle" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -5535,13 +5673,13 @@ Public Sub WriteResuscitationToggle()
 '**************************************************************
 'Author: Rapsodius
 'Creation Date: 10/10/07
-'Writes the Resuscitation safe toggle packet to the outgoing data incomingData.
+'Writes the Resuscitation safe toggle packet to the outgoing data buffer.
 '**************************************************************
     Call outgoingData.WriteByte(ClientPacketID.ResuscitationSafeToggle)
 End Sub
 
 ''
-' Writes the "RequestGuildLeaderInfo" message to the outgoing data incomingData.
+' Writes the "RequestGuildLeaderInfo" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -5565,7 +5703,7 @@ Public Sub WriteRequestPartyForm()
 End Sub
 
 ''
-' Writes the "ItemUpgrade" message to the outgoing data incomingData.
+' Writes the "ItemUpgrade" message to the outgoing data buffer.
 '
 ' @param    ItemIndex The index to the item to upgrade.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -5581,7 +5719,7 @@ Public Sub WriteItemUpgrade(ByVal ItemIndex As Integer)
 End Sub
 
 ''
-' Writes the "RequestAtributes" message to the outgoing data incomingData.
+' Writes the "RequestAtributes" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -5595,7 +5733,7 @@ Public Sub WriteRequestAtributes()
 End Sub
 
 ''
-' Writes the "RequestFame" message to the outgoing data incomingData.
+' Writes the "RequestFame" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -5609,7 +5747,7 @@ Public Sub WriteRequestFame()
 End Sub
 
 ''
-' Writes the "RequestSkills" message to the outgoing data incomingData.
+' Writes the "RequestSkills" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -5623,7 +5761,7 @@ Public Sub WriteRequestSkills()
 End Sub
 
 ''
-' Writes the "RequestMiniStats" message to the outgoing data incomingData.
+' Writes the "RequestMiniStats" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -5637,7 +5775,7 @@ Public Sub WriteRequestMiniStats()
 End Sub
 
 ''
-' Writes the "CommerceEnd" message to the outgoing data incomingData.
+' Writes the "CommerceEnd" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -5651,7 +5789,7 @@ Public Sub WriteCommerceEnd()
 End Sub
 
 ''
-' Writes the "UserCommerceEnd" message to the outgoing data incomingData.
+' Writes the "UserCommerceEnd" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -5665,7 +5803,7 @@ Public Sub WriteUserCommerceEnd()
 End Sub
 
 ''
-' Writes the "UserCommerceConfirm" message to the outgoing data incomingData.
+' Writes the "UserCommerceConfirm" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -5679,7 +5817,7 @@ Public Sub WriteUserCommerceConfirm()
 End Sub
 
 ''
-' Writes the "BankEnd" message to the outgoing data incomingData.
+' Writes the "BankEnd" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -5693,7 +5831,7 @@ Public Sub WriteBankEnd()
 End Sub
 
 ''
-' Writes the "UserCommerceOk" message to the outgoing data incomingData.
+' Writes the "UserCommerceOk" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -5707,7 +5845,7 @@ Public Sub WriteUserCommerceOk()
 End Sub
 
 ''
-' Writes the "UserCommerceReject" message to the outgoing data incomingData.
+' Writes the "UserCommerceReject" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -5721,7 +5859,7 @@ Public Sub WriteUserCommerceReject()
 End Sub
 
 ''
-' Writes the "Drop" message to the outgoing data incomingData.
+' Writes the "Drop" message to the outgoing data buffer.
 '
 ' @param    slot Inventory slot where the item to drop is.
 ' @param    amount Number of items to drop.
@@ -5742,7 +5880,7 @@ Public Sub WriteDrop(ByVal slot As Byte, ByVal Amount As Integer)
 End Sub
 
 ''
-' Writes the "CastSpell" message to the outgoing data incomingData.
+' Writes the "CastSpell" message to the outgoing data buffer.
 '
 ' @param    slot Spell List slot where the spell to cast is.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -5761,7 +5899,7 @@ Public Sub WriteCastSpell(ByVal slot As Byte)
 End Sub
 
 ''
-' Writes the "LeftClick" message to the outgoing data incomingData.
+' Writes the "LeftClick" message to the outgoing data buffer.
 '
 ' @param    x Tile coord in the x-axis in which the user clicked.
 ' @param    y Tile coord in the y-axis in which the user clicked.
@@ -5782,7 +5920,7 @@ Public Sub WriteLeftClick(ByVal X As Byte, ByVal Y As Byte)
 End Sub
 
 ''
-' Writes the "DoubleClick" message to the outgoing data incomingData.
+' Writes the "DoubleClick" message to the outgoing data buffer.
 '
 ' @param    x Tile coord in the x-axis in which the user clicked.
 ' @param    y Tile coord in the y-axis in which the user clicked.
@@ -5803,7 +5941,7 @@ Public Sub WriteDoubleClick(ByVal X As Byte, ByVal Y As Byte)
 End Sub
 
 ''
-' Writes the "Work" message to the outgoing data incomingData.
+' Writes the "Work" message to the outgoing data buffer.
 '
 ' @param    skill The skill which the user attempts to use.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -5822,7 +5960,7 @@ Public Sub WriteWork(ByVal Skill As eSkill)
 End Sub
 
 ''
-' Writes the "UseSpellMacro" message to the outgoing data incomingData.
+' Writes the "UseSpellMacro" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -5836,7 +5974,7 @@ Public Sub WriteUseSpellMacro()
 End Sub
 
 ''
-' Writes the "UseItem" message to the outgoing data incomingData.
+' Writes the "UseItem" message to the outgoing data buffer.
 '
 ' @param    slot Invetory slot where the item to use is.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -5855,7 +5993,7 @@ Public Sub WriteUseItem(ByVal slot As Byte)
 End Sub
 
 ''
-' Writes the "CraftBlacksmith" message to the outgoing data incomingData.
+' Writes the "CraftBlacksmith" message to the outgoing data buffer.
 '
 ' @param    item Index of the item to craft in the list sent by the server.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -5874,7 +6012,7 @@ Public Sub WriteCraftBlacksmith(ByVal item As Integer)
 End Sub
 
 ''
-' Writes the "CraftCarpenter" message to the outgoing data incomingData.
+' Writes the "CraftCarpenter" message to the outgoing data buffer.
 '
 ' @param    item Index of the item to craft in the list sent by the server.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -5893,7 +6031,7 @@ Public Sub WriteCraftCarpenter(ByVal item As Integer)
 End Sub
 
 ''
-' Writes the "ShowGuildNews" message to the outgoing data incomingData.
+' Writes the "ShowGuildNews" message to the outgoing data buffer.
 '
 
 Public Sub WriteShowGuildNews()
@@ -5908,7 +6046,7 @@ End Sub
 
 
 ''
-' Writes the "WorkLeftClick" message to the outgoing data incomingData.
+' Writes the "WorkLeftClick" message to the outgoing data buffer.
 '
 ' @param    x Tile coord in the x-axis in which the user clicked.
 ' @param    y Tile coord in the y-axis in which the user clicked.
@@ -5932,7 +6070,7 @@ Public Sub WriteWorkLeftClick(ByVal X As Byte, ByVal Y As Byte, ByVal Skill As e
 End Sub
 
 ''
-' Writes the "CreateNewGuild" message to the outgoing data incomingData.
+' Writes the "CreateNewGuild" message to the outgoing data buffer.
 '
 ' @param    desc    The guild's description
 ' @param    name    The guild's name
@@ -5973,7 +6111,7 @@ End Sub
 
 
 ''
-' Writes the "EquipItem" message to the outgoing data incomingData.
+' Writes the "EquipItem" message to the outgoing data buffer.
 '
 ' @param    slot Invetory slot where the item to equip is.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -5992,7 +6130,7 @@ Public Sub WriteEquipItem(ByVal slot As Byte)
 End Sub
 
 ''
-' Writes the "ChangeHeading" message to the outgoing data incomingData.
+' Writes the "ChangeHeading" message to the outgoing data buffer.
 '
 ' @param    heading The direction in wich the user is moving.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -6012,7 +6150,7 @@ Public Sub WriteChangeHeading(ByVal Heading As E_Heading)
 End Sub
 
 ''
-' Writes the "ModifySkills" message to the outgoing data incomingData.
+' Writes the "ModifySkills" message to the outgoing data buffer.
 '
 ' @param    skillEdt a-based array containing for each skill the number of points to add to it.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -6035,7 +6173,7 @@ Public Sub WriteModifySkills(ByRef skillEdt() As Byte)
 End Sub
 
 ''
-' Writes the "Train" message to the outgoing data incomingData.
+' Writes the "Train" message to the outgoing data buffer.
 '
 ' @param    creature Position within the list provided by the server of the creature to train against.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -6054,7 +6192,7 @@ Public Sub WriteTrain(ByVal creature As Byte)
 End Sub
 
 ''
-' Writes the "CommerceBuy" message to the outgoing data incomingData.
+' Writes the "CommerceBuy" message to the outgoing data buffer.
 '
 ' @param    slot Position within the NPC's inventory in which the desired item is.
 ' @param    amount Number of items to buy.
@@ -6075,7 +6213,7 @@ Public Sub WriteCommerceBuy(ByVal slot As Byte, ByVal Amount As Integer)
 End Sub
 
 ''
-' Writes the "BankExtractItem" message to the outgoing data incomingData.
+' Writes the "BankExtractItem" message to the outgoing data buffer.
 '
 ' @param    slot Position within the bank in which the desired item is.
 ' @param    amount Number of items to extract.
@@ -6096,7 +6234,7 @@ Public Sub WriteBankExtractItem(ByVal slot As Byte, ByVal Amount As Integer)
 End Sub
 
 ''
-' Writes the "CommerceSell" message to the outgoing data incomingData.
+' Writes the "CommerceSell" message to the outgoing data buffer.
 '
 ' @param    slot Position within user inventory in which the desired item is.
 ' @param    amount Number of items to sell.
@@ -6117,7 +6255,7 @@ Public Sub WriteCommerceSell(ByVal slot As Byte, ByVal Amount As Integer)
 End Sub
 
 ''
-' Writes the "BankDeposit" message to the outgoing data incomingData.
+' Writes the "BankDeposit" message to the outgoing data buffer.
 '
 ' @param    slot Position within the user inventory in which the desired item is.
 ' @param    amount Number of items to deposit.
@@ -6138,7 +6276,7 @@ Public Sub WriteBankDeposit(ByVal slot As Byte, ByVal Amount As Integer)
 End Sub
 
 ''
-' Writes the "ForumPost" message to the outgoing data incomingData.
+' Writes the "ForumPost" message to the outgoing data buffer.
 '
 ' @param    title The message's title.
 ' @param    message The body of the message.
@@ -6160,7 +6298,7 @@ Public Sub WriteForumPost(ByVal Title As String, ByVal Message As String, ByVal 
 End Sub
 
 ''
-' Writes the "MoveSpell" message to the outgoing data incomingData.
+' Writes the "MoveSpell" message to the outgoing data buffer.
 '
 ' @param    upwards True if the spell will be moved up in the list, False if it will be moved downwards.
 ' @param    slot Spell List slot where the spell which's info is requested is.
@@ -6181,7 +6319,7 @@ Public Sub WriteMoveSpell(ByVal upwards As Boolean, ByVal slot As Byte)
 End Sub
 
 ''
-' Writes the "MoveBank" message to the outgoing data incomingData.
+' Writes the "MoveBank" message to the outgoing data buffer.
 '
 ' @param    upwards True if the item will be moved up in the list, False if it will be moved downwards.
 ' @param    slot Bank List slot where the item which's info is requested is.
@@ -6202,7 +6340,7 @@ Public Sub WriteMoveBank(ByVal upwards As Boolean, ByVal slot As Byte)
 End Sub
 
 ''
-' Writes the "ClanCodexUpdate" message to the outgoing data incomingData.
+' Writes the "ClanCodexUpdate" message to the outgoing data buffer.
 '
 ' @param    desc New description of the clan.
 ' @param    codex New codex of the clan.
@@ -6238,7 +6376,7 @@ Public Sub WriteClanCodexUpdate(ByVal Desc As String, ByRef Codex() As String)
 End Sub
 
 ''
-' Writes the "UserCommerceOffer" message to the outgoing data incomingData.
+' Writes the "UserCommerceOffer" message to the outgoing data buffer.
 '
 ' @param    slot Position within user inventory in which the desired item is.
 ' @param    amount Number of items to offer.
@@ -6274,7 +6412,7 @@ End Sub
 
 
 ''
-' Writes the "GuildAcceptPeace" message to the outgoing data incomingData.
+' Writes the "GuildAcceptPeace" message to the outgoing data buffer.
 '
 ' @param    guild The guild whose peace offer is accepted.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -6293,7 +6431,7 @@ Public Sub WriteGuildAcceptPeace(ByVal guild As String)
 End Sub
 
 ''
-' Writes the "GuildRejectAlliance" message to the outgoing data incomingData.
+' Writes the "GuildRejectAlliance" message to the outgoing data buffer.
 '
 ' @param    guild The guild whose aliance offer is rejected.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -6312,7 +6450,7 @@ Public Sub WriteGuildRejectAlliance(ByVal guild As String)
 End Sub
 
 ''
-' Writes the "GuildRejectPeace" message to the outgoing data incomingData.
+' Writes the "GuildRejectPeace" message to the outgoing data buffer.
 '
 ' @param    guild The guild whose peace offer is rejected.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -6331,7 +6469,7 @@ Public Sub WriteGuildRejectPeace(ByVal guild As String)
 End Sub
 
 ''
-' Writes the "GuildAcceptAlliance" message to the outgoing data incomingData.
+' Writes the "GuildAcceptAlliance" message to the outgoing data buffer.
 '
 ' @param    guild The guild whose aliance offer is accepted.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -6350,7 +6488,7 @@ Public Sub WriteGuildAcceptAlliance(ByVal guild As String)
 End Sub
 
 ''
-' Writes the "GuildOfferPeace" message to the outgoing data incomingData.
+' Writes the "GuildOfferPeace" message to the outgoing data buffer.
 '
 ' @param    guild The guild to whom peace is offered.
 ' @param    proposal The text to send with the proposal.
@@ -6371,7 +6509,7 @@ Public Sub WriteGuildOfferPeace(ByVal guild As String, ByVal proposal As String)
 End Sub
 
 ''
-' Writes the "GuildOfferAlliance" message to the outgoing data incomingData.
+' Writes the "GuildOfferAlliance" message to the outgoing data buffer.
 '
 ' @param    guild The guild to whom an aliance is offered.
 ' @param    proposal The text to send with the proposal.
@@ -6392,7 +6530,7 @@ Public Sub WriteGuildOfferAlliance(ByVal guild As String, ByVal proposal As Stri
 End Sub
 
 ''
-' Writes the "GuildAllianceDetails" message to the outgoing data incomingData.
+' Writes the "GuildAllianceDetails" message to the outgoing data buffer.
 '
 ' @param    guild The guild whose aliance proposal's details are requested.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -6411,7 +6549,7 @@ Public Sub WriteGuildAllianceDetails(ByVal guild As String)
 End Sub
 
 ''
-' Writes the "GuildPeaceDetails" message to the outgoing data incomingData.
+' Writes the "GuildPeaceDetails" message to the outgoing data buffer.
 '
 ' @param    guild The guild whose peace proposal's details are requested.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -6430,7 +6568,7 @@ Public Sub WriteGuildPeaceDetails(ByVal guild As String)
 End Sub
 
 ''
-' Writes the "GuildRequestJoinerInfo" message to the outgoing data incomingData.
+' Writes the "GuildRequestJoinerInfo" message to the outgoing data buffer.
 '
 ' @param    username The user who wants to join the guild whose info is requested.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -6449,7 +6587,7 @@ Public Sub WriteGuildRequestJoinerInfo(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "GuildAlliancePropList" message to the outgoing data incomingData.
+' Writes the "GuildAlliancePropList" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -6463,7 +6601,7 @@ Public Sub WriteGuildAlliancePropList()
 End Sub
 
 ''
-' Writes the "GuildPeacePropList" message to the outgoing data incomingData.
+' Writes the "GuildPeacePropList" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -6477,7 +6615,7 @@ Public Sub WriteGuildPeacePropList()
 End Sub
 
 ''
-' Writes the "GuildDeclareWar" message to the outgoing data incomingData.
+' Writes the "GuildDeclareWar" message to the outgoing data buffer.
 '
 ' @param    guild The guild to which to declare war.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -6496,7 +6634,7 @@ Public Sub WriteGuildDeclareWar(ByVal guild As String)
 End Sub
 
 ''
-' Writes the "GuildNewWebsite" message to the outgoing data incomingData.
+' Writes the "GuildNewWebsite" message to the outgoing data buffer.
 '
 ' @param    url The guild's new website's URL.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -6515,7 +6653,7 @@ Public Sub WriteGuildNewWebsite(ByVal URL As String)
 End Sub
 
 ''
-' Writes the "GuildAcceptNewMember" message to the outgoing data incomingData.
+' Writes the "GuildAcceptNewMember" message to the outgoing data buffer.
 '
 ' @param    username The name of the accepted player.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -6534,7 +6672,7 @@ Public Sub WriteGuildAcceptNewMember(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "GuildRejectNewMember" message to the outgoing data incomingData.
+' Writes the "GuildRejectNewMember" message to the outgoing data buffer.
 '
 ' @param    username The name of the rejected player.
 ' @param    reason The reason for which the player was rejected.
@@ -6555,7 +6693,7 @@ Public Sub WriteGuildRejectNewMember(ByVal UserName As String, ByVal Reason As S
 End Sub
 
 ''
-' Writes the "GuildKickMember" message to the outgoing data incomingData.
+' Writes the "GuildKickMember" message to the outgoing data buffer.
 '
 ' @param    username The name of the kicked player.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -6574,7 +6712,7 @@ Public Sub WriteGuildKickMember(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "GuildUpdateNews" message to the outgoing data incomingData.
+' Writes the "GuildUpdateNews" message to the outgoing data buffer.
 '
 ' @param    news The news to be posted.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -6593,7 +6731,7 @@ Public Sub WriteGuildUpdateNews(ByVal news As String)
 End Sub
 
 ''
-' Writes the "GuildMemberInfo" message to the outgoing data incomingData.
+' Writes the "GuildMemberInfo" message to the outgoing data buffer.
 '
 ' @param    username The user whose info is requested.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -6612,7 +6750,7 @@ Public Sub WriteGuildMemberInfo(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "GuildOpenElections" message to the outgoing data incomingData.
+' Writes the "GuildOpenElections" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -6626,7 +6764,7 @@ Public Sub WriteGuildOpenElections()
 End Sub
 
 ''
-' Writes the "GuildRequestMembership" message to the outgoing data incomingData.
+' Writes the "GuildRequestMembership" message to the outgoing data buffer.
 '
 ' @param    guild The guild to which to request membership.
 ' @param    application The user's application sheet.
@@ -6647,7 +6785,7 @@ Public Sub WriteGuildRequestMembership(ByVal guild As String, ByVal Application 
 End Sub
 
 ''
-' Writes the "GuildRequestDetails" message to the outgoing data incomingData.
+' Writes the "GuildRequestDetails" message to the outgoing data buffer.
 '
 ' @param    guild The guild whose details are requested.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -6666,7 +6804,7 @@ Public Sub WriteGuildRequestDetails(ByVal guild As String)
 End Sub
 
 ''
-' Writes the "Online" message to the outgoing data incomingData.
+' Writes the "Online" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -6680,7 +6818,7 @@ Public Sub WriteOnline()
 End Sub
 
 ''
-' Writes the "Quit" message to the outgoing data incomingData.
+' Writes the "Quit" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -6694,7 +6832,7 @@ Public Sub WriteQuit()
 End Sub
 
 ''
-' Writes the "GuildLeave" message to the outgoing data incomingData.
+' Writes the "GuildLeave" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -6708,7 +6846,7 @@ Public Sub WriteGuildLeave()
 End Sub
 
 ''
-' Writes the "RequestAccountState" message to the outgoing data incomingData.
+' Writes the "RequestAccountState" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -6722,7 +6860,7 @@ Public Sub WriteRequestAccountState()
 End Sub
 
 ''
-' Writes the "PetStand" message to the outgoing data incomingData.
+' Writes the "PetStand" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -6736,7 +6874,7 @@ Public Sub WritePetStand()
 End Sub
 
 ''
-' Writes the "PetFollow" message to the outgoing data incomingData.
+' Writes the "PetFollow" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -6750,7 +6888,7 @@ Public Sub WritePetFollow()
 End Sub
 
 ''
-' Writes the "ReleasePet" message to the outgoing data incomingData.
+' Writes the "ReleasePet" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -6765,7 +6903,7 @@ End Sub
 
 
 ''
-' Writes the "TrainList" message to the outgoing data incomingData.
+' Writes the "TrainList" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -6779,7 +6917,7 @@ Public Sub WriteTrainList()
 End Sub
 
 ''
-' Writes the "Rest" message to the outgoing data incomingData.
+' Writes the "Rest" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -6793,7 +6931,7 @@ Public Sub WriteRest()
 End Sub
 
 ''
-' Writes the "Meditate" message to the outgoing data incomingData.
+' Writes the "Meditate" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -6807,7 +6945,7 @@ Public Sub WriteMeditate()
 End Sub
 
 ''
-' Writes the "Resucitate" message to the outgoing data incomingData.
+' Writes the "Resucitate" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -6821,7 +6959,7 @@ Public Sub WriteResucitate()
 End Sub
 
 ''
-' Writes the "Consultation" message to the outgoing data incomingData.
+' Writes the "Consultation" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -6836,7 +6974,7 @@ Public Sub WriteConsultation()
 End Sub
 
 ''
-' Writes the "Heal" message to the outgoing data incomingData.
+' Writes the "Heal" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -6850,7 +6988,7 @@ Public Sub WriteHeal()
 End Sub
 
 ''
-' Writes the "Help" message to the outgoing data incomingData.
+' Writes the "Help" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -6864,7 +7002,7 @@ Public Sub WriteHelp()
 End Sub
 
 ''
-' Writes the "RequestStats" message to the outgoing data incomingData.
+' Writes the "RequestStats" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -6878,7 +7016,7 @@ Public Sub WriteRequestStats()
 End Sub
 
 ''
-' Writes the "CommerceStart" message to the outgoing data incomingData.
+' Writes the "CommerceStart" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -6892,7 +7030,7 @@ Public Sub WriteCommerceStart()
 End Sub
 
 ''
-' Writes the "BankStart" message to the outgoing data incomingData.
+' Writes the "BankStart" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -6906,7 +7044,7 @@ Public Sub WriteBankStart()
 End Sub
 
 ''
-' Writes the "Enlist" message to the outgoing data incomingData.
+' Writes the "Enlist" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -6920,7 +7058,7 @@ Public Sub WriteEnlist()
 End Sub
 
 ''
-' Writes the "Information" message to the outgoing data incomingData.
+' Writes the "Information" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -6934,7 +7072,7 @@ Public Sub WriteInformation()
 End Sub
 
 ''
-' Writes the "Reward" message to the outgoing data incomingData.
+' Writes the "Reward" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -6948,7 +7086,7 @@ Public Sub WriteReward()
 End Sub
 
 ''
-' Writes the "RequestMOTD" message to the outgoing data incomingData.
+' Writes the "RequestMOTD" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -6962,7 +7100,7 @@ Public Sub WriteRequestMOTD()
 End Sub
 
 ''
-' Writes the "UpTime" message to the outgoing data incomingData.
+' Writes the "UpTime" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -6976,7 +7114,7 @@ Public Sub WriteUpTime()
 End Sub
 
 ''
-' Writes the "PartyLeave" message to the outgoing data incomingData.
+' Writes the "PartyLeave" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -6990,7 +7128,7 @@ Public Sub WritePartyLeave()
 End Sub
 
 ''
-' Writes the "PartyCreate" message to the outgoing data incomingData.
+' Writes the "PartyCreate" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -7004,7 +7142,7 @@ Public Sub WritePartyCreate()
 End Sub
 
 ''
-' Writes the "PartyJoin" message to the outgoing data incomingData.
+' Writes the "PartyJoin" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -7018,7 +7156,7 @@ Public Sub WritePartyJoin()
 End Sub
 
 ''
-' Writes the "Inquiry" message to the outgoing data incomingData.
+' Writes the "Inquiry" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -7032,7 +7170,7 @@ Public Sub WriteInquiry()
 End Sub
 
 ''
-' Writes the "GuildMessage" message to the outgoing data incomingData.
+' Writes the "GuildMessage" message to the outgoing data buffer.
 '
 ' @param    message The message to send to the guild.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -7051,7 +7189,7 @@ Public Sub WriteGuildMessage(ByVal Message As String)
 End Sub
 
 ''
-' Writes the "PartyMessage" message to the outgoing data incomingData.
+' Writes the "PartyMessage" message to the outgoing data buffer.
 '
 ' @param    message The message to send to the party.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -7070,7 +7208,7 @@ Public Sub WritePartyMessage(ByVal Message As String)
 End Sub
 
 ''
-' Writes the "CentinelReport" message to the outgoing data incomingData.
+' Writes the "CentinelReport" message to the outgoing data buffer.
 '
 ' @param    number The number to report to the centinel.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -7090,7 +7228,7 @@ Public Sub WriteCentinelReport(ByVal Clave As String)
 End Sub
 
 ''
-' Writes the "GuildOnline" message to the outgoing data incomingData.
+' Writes the "GuildOnline" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -7104,7 +7242,7 @@ Public Sub WriteGuildOnline()
 End Sub
 
 ''
-' Writes the "PartyOnline" message to the outgoing data incomingData.
+' Writes the "PartyOnline" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -7118,7 +7256,7 @@ Public Sub WritePartyOnline()
 End Sub
 
 ''
-' Writes the "CouncilMessage" message to the outgoing data incomingData.
+' Writes the "CouncilMessage" message to the outgoing data buffer.
 '
 ' @param    message The message to send to the other council members.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -7137,7 +7275,7 @@ Public Sub WriteCouncilMessage(ByVal Message As String)
 End Sub
 
 ''
-' Writes the "RoleMasterRequest" message to the outgoing data incomingData.
+' Writes the "RoleMasterRequest" message to the outgoing data buffer.
 '
 ' @param    message The message to send to the role masters.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -7156,7 +7294,7 @@ Public Sub WriteRoleMasterRequest(ByVal Message As String)
 End Sub
 
 ''
-' Writes the "GMRequest" message to the outgoing data incomingData.
+' Writes the "GMRequest" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -7170,7 +7308,7 @@ Public Sub WriteGMRequest()
 End Sub
 
 ''
-' Writes the "BugReport" message to the outgoing data incomingData.
+' Writes the "BugReport" message to the outgoing data buffer.
 '
 ' @param    message The message explaining the reported bug.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -7189,7 +7327,7 @@ Public Sub WriteBugReport(ByVal Message As String)
 End Sub
 
 ''
-' Writes the "ChangeDescription" message to the outgoing data incomingData.
+' Writes the "ChangeDescription" message to the outgoing data buffer.
 '
 ' @param    desc The new description of the user's character.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -7208,7 +7346,7 @@ Public Sub WriteChangeDescription(ByVal Desc As String)
 End Sub
 
 ''
-' Writes the "GuildVote" message to the outgoing data incomingData.
+' Writes the "GuildVote" message to the outgoing data buffer.
 '
 ' @param    username The user to vote for clan leader.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -7227,7 +7365,7 @@ Public Sub WriteGuildVote(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "Punishments" message to the outgoing data incomingData.
+' Writes the "Punishments" message to the outgoing data buffer.
 '
 ' @param    username The user whose's  punishments are requested.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -7246,7 +7384,7 @@ Public Sub WritePunishments(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "ChangePassword" message to the outgoing data incomingData.
+' Writes the "ChangePassword" message to the outgoing data buffer.
 '
 ' @param    oldPass Previous password.
 ' @param    newPass New password.
@@ -7267,7 +7405,7 @@ Public Sub WriteChangePassword(ByRef oldPass As String, ByRef newPass As String)
 End Sub
 
 ''
-' Writes the "Gamble" message to the outgoing data incomingData.
+' Writes the "Gamble" message to the outgoing data buffer.
 '
 ' @param    amount The amount to gamble.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -7286,7 +7424,7 @@ Public Sub WriteGamble(ByVal Amount As Integer)
 End Sub
 
 ''
-' Writes the "InquiryVote" message to the outgoing data incomingData.
+' Writes the "InquiryVote" message to the outgoing data buffer.
 '
 ' @param    opt The chosen option to vote for.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -7305,7 +7443,7 @@ Public Sub WriteInquiryVote(ByVal opt As Byte)
 End Sub
 
 ''
-' Writes the "LeaveFaction" message to the outgoing data incomingData.
+' Writes the "LeaveFaction" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -7319,7 +7457,7 @@ Public Sub WriteLeaveFaction()
 End Sub
 
 ''
-' Writes the "BankExtractGold" message to the outgoing data incomingData.
+' Writes the "BankExtractGold" message to the outgoing data buffer.
 '
 ' @param    amount The amount of money to extract from the bank.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -7338,7 +7476,7 @@ Public Sub WriteBankExtractGold(ByVal Amount As Long)
 End Sub
 
 ''
-' Writes the "BankDepositGold" message to the outgoing data incomingData.
+' Writes the "BankDepositGold" message to the outgoing data buffer.
 '
 ' @param    amount The amount of money to deposit in the bank.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -7357,7 +7495,7 @@ Public Sub WriteBankDepositGold(ByVal Amount As Long)
 End Sub
 
 ''
-' Writes the "Denounce" message to the outgoing data incomingData.
+' Writes the "Denounce" message to the outgoing data buffer.
 '
 ' @param    message The message to send with the denounce.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -7376,7 +7514,7 @@ Public Sub WriteDenounce(ByVal Message As String)
 End Sub
 
 ''
-' Writes the "GuildFundate" message to the outgoing data incomingData.
+' Writes the "GuildFundate" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -7392,7 +7530,7 @@ Public Sub WriteGuildFundate()
 End Sub
 
 ''
-' Writes the "GuildFundation" message to the outgoing data incomingData.
+' Writes the "GuildFundation" message to the outgoing data buffer.
 '
 ' @param    clanType The alignment of the clan to be founded.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -7411,7 +7549,7 @@ Public Sub WriteGuildFundation(ByVal clanType As eClanType)
 End Sub
 
 ''
-' Writes the "PartyKick" message to the outgoing data incomingData.
+' Writes the "PartyKick" message to the outgoing data buffer.
 '
 ' @param    username The user to kick fro mthe party.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -7430,7 +7568,7 @@ Public Sub WritePartyKick(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "PartySetLeader" message to the outgoing data incomingData.
+' Writes the "PartySetLeader" message to the outgoing data buffer.
 '
 ' @param    username The user to set as the party's leader.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -7449,7 +7587,7 @@ Public Sub WritePartySetLeader(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "PartyAcceptMember" message to the outgoing data incomingData.
+' Writes the "PartyAcceptMember" message to the outgoing data buffer.
 '
 ' @param    username The user to accept into the party.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -7468,7 +7606,7 @@ Public Sub WritePartyAcceptMember(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "GuildMemberList" message to the outgoing data incomingData.
+' Writes the "GuildMemberList" message to the outgoing data buffer.
 '
 ' @param    guild The guild whose member list is requested.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -7488,7 +7626,7 @@ Public Sub WriteGuildMemberList(ByVal guild As String)
 End Sub
 
 ''
-' Writes the "InitCrafting" message to the outgoing data incomingData.
+' Writes the "InitCrafting" message to the outgoing data buffer.
 '
 ' @param    Cantidad The final aumont of item to craft.
 ' @param    NroPorCiclo The amount of items to craft per cicle.
@@ -7508,7 +7646,7 @@ Public Sub WriteInitCrafting(ByVal cantidad As Long, ByVal NroPorCiclo As Intege
 End Sub
 
 ''
-' Writes the "Home" message to the outgoing data incomingData.
+' Writes the "Home" message to the outgoing data buffer.
 '
 Public Sub WriteHome()
 '***************************************************
@@ -7524,7 +7662,7 @@ End Sub
 
 
 ''
-' Writes the "GMMessage" message to the outgoing data incomingData.
+' Writes the "GMMessage" message to the outgoing data buffer.
 '
 ' @param    message The message to be sent to the other GMs online.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -7543,7 +7681,7 @@ Public Sub WriteGMMessage(ByVal Message As String)
 End Sub
 
 ''
-' Writes the "ShowName" message to the outgoing data incomingData.
+' Writes the "ShowName" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -7558,7 +7696,7 @@ Public Sub WriteShowName()
 End Sub
 
 ''
-' Writes the "OnlineRoyalArmy" message to the outgoing data incomingData.
+' Writes the "OnlineRoyalArmy" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -7573,7 +7711,7 @@ Public Sub WriteOnlineRoyalArmy()
 End Sub
 
 ''
-' Writes the "OnlineChaosLegion" message to the outgoing data incomingData.
+' Writes the "OnlineChaosLegion" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -7588,7 +7726,7 @@ Public Sub WriteOnlineChaosLegion()
 End Sub
 
 ''
-' Writes the "GoNearby" message to the outgoing data incomingData.
+' Writes the "GoNearby" message to the outgoing data buffer.
 '
 ' @param    username The suer to approach.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -7608,7 +7746,7 @@ Public Sub WriteGoNearby(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "Comment" message to the outgoing data incomingData.
+' Writes the "Comment" message to the outgoing data buffer.
 '
 ' @param    message The message to leave in the log as a comment.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -7628,7 +7766,7 @@ Public Sub WriteComment(ByVal Message As String)
 End Sub
 
 ''
-' Writes the "ServerTime" message to the outgoing data incomingData.
+' Writes the "ServerTime" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -7643,7 +7781,7 @@ Public Sub WriteServerTime()
 End Sub
 
 ''
-' Writes the "Where" message to the outgoing data incomingData.
+' Writes the "Where" message to the outgoing data buffer.
 '
 ' @param    username The user whose position is requested.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -7663,7 +7801,7 @@ Public Sub WriteWhere(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "CreaturesInMap" message to the outgoing data incomingData.
+' Writes the "CreaturesInMap" message to the outgoing data buffer.
 '
 ' @param    map The map in which to check for the existing creatures.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -7683,7 +7821,7 @@ Public Sub WriteCreaturesInMap(ByVal Map As Integer)
 End Sub
 
 ''
-' Writes the "WarpMeToTarget" message to the outgoing data incomingData.
+' Writes the "WarpMeToTarget" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -7698,7 +7836,7 @@ Public Sub WriteWarpMeToTarget()
 End Sub
 
 ''
-' Writes the "WarpChar" message to the outgoing data incomingData.
+' Writes the "WarpChar" message to the outgoing data buffer.
 '
 ' @param    username The user to be warped. "YO" represent's the user's char.
 ' @param    map The map to which to warp the character.
@@ -7726,7 +7864,7 @@ Public Sub WriteWarpChar(ByVal UserName As String, ByVal Map As Integer, ByVal X
 End Sub
 
 ''
-' Writes the "Silence" message to the outgoing data incomingData.
+' Writes the "Silence" message to the outgoing data buffer.
 '
 ' @param    username The user to silence.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -7746,7 +7884,7 @@ Public Sub WriteSilence(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "SOSShowList" message to the outgoing data incomingData.
+' Writes the "SOSShowList" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -7761,7 +7899,7 @@ Public Sub WriteSOSShowList()
 End Sub
 
 ''
-' Writes the "SOSRemove" message to the outgoing data incomingData.
+' Writes the "SOSRemove" message to the outgoing data buffer.
 '
 ' @param    username The user whose SOS call has been already attended.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -7781,7 +7919,7 @@ Public Sub WriteSOSRemove(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "GoToChar" message to the outgoing data incomingData.
+' Writes the "GoToChar" message to the outgoing data buffer.
 '
 ' @param    username The user to be approached.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -7801,7 +7939,7 @@ Public Sub WriteGoToChar(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "invisible" message to the outgoing data incomingData.
+' Writes the "invisible" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -7816,7 +7954,7 @@ Public Sub WriteInvisible()
 End Sub
 
 ''
-' Writes the "GMPanel" message to the outgoing data incomingData.
+' Writes the "GMPanel" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -7831,7 +7969,7 @@ Public Sub WriteGMPanel()
 End Sub
 
 ''
-' Writes the "RequestUserList" message to the outgoing data incomingData.
+' Writes the "RequestUserList" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -7846,7 +7984,7 @@ Public Sub WriteRequestUserList()
 End Sub
 
 ''
-' Writes the "Working" message to the outgoing data incomingData.
+' Writes the "Working" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -7861,7 +7999,7 @@ Public Sub WriteWorking()
 End Sub
 
 ''
-' Writes the "Hiding" message to the outgoing data incomingData.
+' Writes the "Hiding" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -7876,7 +8014,7 @@ Public Sub WriteHiding()
 End Sub
 
 ''
-' Writes the "Jail" message to the outgoing data incomingData.
+' Writes the "Jail" message to the outgoing data buffer.
 '
 ' @param    username The user to be sent to jail.
 ' @param    reason The reason for which to send him to jail.
@@ -7901,7 +8039,7 @@ Public Sub WriteJail(ByVal UserName As String, ByVal Reason As String, ByVal Tim
 End Sub
 
 ''
-' Writes the "KillNPC" message to the outgoing data incomingData.
+' Writes the "KillNPC" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -7916,7 +8054,7 @@ Public Sub WriteKillNPC()
 End Sub
 
 ''
-' Writes the "WarnUser" message to the outgoing data incomingData.
+' Writes the "WarnUser" message to the outgoing data buffer.
 '
 ' @param    username The user to be warned.
 ' @param    reason Reason for the warning.
@@ -7938,7 +8076,7 @@ Public Sub WriteWarnUser(ByVal UserName As String, ByVal Reason As String)
 End Sub
 
 ''
-' Writes the "EditChar" message to the outgoing data incomingData.
+' Writes the "EditChar" message to the outgoing data buffer.
 '
 ' @param    UserName    The user to be edited.
 ' @param    editOption  Indicates what to edit in the char.
@@ -7966,7 +8104,7 @@ Public Sub WriteEditChar(ByVal UserName As String, ByVal EditOption As eEditOpti
 End Sub
 
 ''
-' Writes the "RequestCharInfo" message to the outgoing data incomingData.
+' Writes the "RequestCharInfo" message to the outgoing data buffer.
 '
 ' @param    username The user whose information is requested.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -7986,7 +8124,7 @@ Public Sub WriteRequestCharInfo(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "RequestCharStats" message to the outgoing data incomingData.
+' Writes the "RequestCharStats" message to the outgoing data buffer.
 '
 ' @param    username The user whose stats are requested.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -8006,7 +8144,7 @@ Public Sub WriteRequestCharStats(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "RequestCharGold" message to the outgoing data incomingData.
+' Writes the "RequestCharGold" message to the outgoing data buffer.
 '
 ' @param    username The user whose gold is requested.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -8026,7 +8164,7 @@ Public Sub WriteRequestCharGold(ByVal UserName As String)
 End Sub
     
 ''
-' Writes the "RequestCharInventory" message to the outgoing data incomingData.
+' Writes the "RequestCharInventory" message to the outgoing data buffer.
 '
 ' @param    username The user whose inventory is requested.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -8046,7 +8184,7 @@ Public Sub WriteRequestCharInventory(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "RequestCharBank" message to the outgoing data incomingData.
+' Writes the "RequestCharBank" message to the outgoing data buffer.
 '
 ' @param    username The user whose banking information is requested.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -8066,7 +8204,7 @@ Public Sub WriteRequestCharBank(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "RequestCharSkills" message to the outgoing data incomingData.
+' Writes the "RequestCharSkills" message to the outgoing data buffer.
 '
 ' @param    username The user whose skills are requested.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -8086,7 +8224,7 @@ Public Sub WriteRequestCharSkills(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "ReviveChar" message to the outgoing data incomingData.
+' Writes the "ReviveChar" message to the outgoing data buffer.
 '
 ' @param    username The user to eb revived.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -8106,7 +8244,7 @@ Public Sub WriteReviveChar(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "OnlineGM" message to the outgoing data incomingData.
+' Writes the "OnlineGM" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -8121,7 +8259,7 @@ Public Sub WriteOnlineGM()
 End Sub
 
 ''
-' Writes the "OnlineMap" message to the outgoing data incomingData.
+' Writes the "OnlineMap" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -8141,7 +8279,7 @@ Public Sub WriteOnlineMap(ByVal Map As Integer)
 End Sub
 
 ''
-' Writes the "Forgive" message to the outgoing data incomingData.
+' Writes the "Forgive" message to the outgoing data buffer.
 '
 ' @param    username The user to be forgiven.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -8161,7 +8299,7 @@ Public Sub WriteForgive(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "Kick" message to the outgoing data incomingData.
+' Writes the "Kick" message to the outgoing data buffer.
 '
 ' @param    username The user to be kicked.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -8181,7 +8319,7 @@ Public Sub WriteKick(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "Execute" message to the outgoing data incomingData.
+' Writes the "Execute" message to the outgoing data buffer.
 '
 ' @param    username The user to be executed.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -8201,7 +8339,7 @@ Public Sub WriteExecute(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "BanChar" message to the outgoing data incomingData.
+' Writes the "BanChar" message to the outgoing data buffer.
 '
 ' @param    username The user to be banned.
 ' @param    reason The reson for which the user is to be banned.
@@ -8224,7 +8362,7 @@ Public Sub WriteBanChar(ByVal UserName As String, ByVal Reason As String)
 End Sub
 
 ''
-' Writes the "UnbanChar" message to the outgoing data incomingData.
+' Writes the "UnbanChar" message to the outgoing data buffer.
 '
 ' @param    username The user to be unbanned.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -8244,7 +8382,7 @@ Public Sub WriteUnbanChar(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "NPCFollow" message to the outgoing data incomingData.
+' Writes the "NPCFollow" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -8259,7 +8397,7 @@ Public Sub WriteNPCFollow()
 End Sub
 
 ''
-' Writes the "SummonChar" message to the outgoing data incomingData.
+' Writes the "SummonChar" message to the outgoing data buffer.
 '
 ' @param    username The user to be summoned.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -8279,7 +8417,7 @@ Public Sub WriteSummonChar(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "SpawnListRequest" message to the outgoing data incomingData.
+' Writes the "SpawnListRequest" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -8294,7 +8432,7 @@ Public Sub WriteSpawnListRequest()
 End Sub
 
 ''
-' Writes the "SpawnCreature" message to the outgoing data incomingData.
+' Writes the "SpawnCreature" message to the outgoing data buffer.
 '
 ' @param    creatureIndex The index of the creature in the spawn list to be spawned.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -8314,7 +8452,7 @@ Public Sub WriteSpawnCreature(ByVal creatureIndex As Integer)
 End Sub
 
 ''
-' Writes the "ResetNPCInventory" message to the outgoing data incomingData.
+' Writes the "ResetNPCInventory" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -8329,7 +8467,7 @@ Public Sub WriteResetNPCInventory()
 End Sub
 
 ''
-' Writes the "ServerMessage" message to the outgoing data incomingData.
+' Writes the "ServerMessage" message to the outgoing data buffer.
 '
 ' @param    message The message to be sent to players.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -8348,7 +8486,7 @@ Public Sub WriteServerMessage(ByVal Message As String)
     End With
 End Sub
 ''
-' Writes the "MapMessage" message to the outgoing data incomingData.
+' Writes the "MapMessage" message to the outgoing data buffer.
 '
 ' @param    message The message to be sent to players.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -8368,7 +8506,7 @@ Public Sub WriteMapMessage(ByVal Message As String)
 End Sub
 
 ''
-' Writes the "NickToIP" message to the outgoing data incomingData.
+' Writes the "NickToIP" message to the outgoing data buffer.
 '
 ' @param    username The user whose IP is requested.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -8388,7 +8526,7 @@ Public Sub WriteNickToIP(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "IPToNick" message to the outgoing data incomingData.
+' Writes the "IPToNick" message to the outgoing data buffer.
 '
 ' @param    IP The IP for which to search for players. Must be an array of 4 elements with the 4 components of the IP.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -8419,7 +8557,7 @@ Public Sub WriteIPToNick(ByRef Ip() As Byte)
 End Sub
 
 ''
-' Writes the "GuildOnlineMembers" message to the outgoing data incomingData.
+' Writes the "GuildOnlineMembers" message to the outgoing data buffer.
 '
 ' @param    guild The guild whose online player list is requested.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -8439,7 +8577,7 @@ Public Sub WriteGuildOnlineMembers(ByVal guild As String)
 End Sub
 
 ''
-' Writes the "TeleportCreate" message to the outgoing data incomingData.
+' Writes the "TeleportCreate" message to the outgoing data buffer.
 '
 ' @param    map the map to which the teleport will lead.
 ' @param    x The position in the x axis to which the teleport will lead.
@@ -8466,7 +8604,7 @@ Public Sub WriteTeleportCreate(ByVal Map As Integer, ByVal X As Byte, ByVal Y As
 End Sub
 
 ''
-' Writes the "TeleportDestroy" message to the outgoing data incomingData.
+' Writes the "TeleportDestroy" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -8480,7 +8618,7 @@ Public Sub WriteTeleportDestroy()
     Call outgoingData.WriteByte(eGMCommands.TeleportDestroy)
 End Sub
 ''
-' Writes the "TeleportDestroy" message to the outgoing data incomingData.
+' Writes the "TeleportDestroy" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -8494,7 +8632,7 @@ Public Sub WriteExitDestroy()
     Call outgoingData.WriteByte(eGMCommands.ExitDestroy)
 End Sub
 ''
-' Writes the "RainToggle" message to the outgoing data incomingData.
+' Writes the "RainToggle" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -8509,7 +8647,7 @@ Public Sub WriteRainToggle()
 End Sub
 
 ''
-' Writes the "SetCharDescription" message to the outgoing data incomingData.
+' Writes the "SetCharDescription" message to the outgoing data buffer.
 '
 ' @param    desc The description to set to players.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -8529,7 +8667,7 @@ Public Sub WriteSetCharDescription(ByVal Desc As String)
 End Sub
 
 ''
-' Writes the "ForceMIDIToMap" message to the outgoing data incomingData.
+' Writes the "ForceMIDIToMap" message to the outgoing data buffer.
 '
 ' @param    midiID The ID of the midi file to play.
 ' @param    map The map in which to play the given midi.
@@ -8552,7 +8690,7 @@ Public Sub WriteForceMIDIToMap(ByVal midiID As Byte, ByVal Map As Integer)
 End Sub
 
 ''
-' Writes the "ForceWAVEToMap" message to the outgoing data incomingData.
+' Writes the "ForceWAVEToMap" message to the outgoing data buffer.
 '
 ' @param    waveID  The ID of the wave file to play.
 ' @param    Map     The map into which to play the given wave.
@@ -8580,7 +8718,7 @@ Public Sub WriteForceWAVEToMap(ByVal waveID As Byte, ByVal Map As Integer, ByVal
 End Sub
 
 ''
-' Writes the "RoyalArmyMessage" message to the outgoing data incomingData.
+' Writes the "RoyalArmyMessage" message to the outgoing data buffer.
 '
 ' @param    message The message to send to the royal army members.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -8600,7 +8738,7 @@ Public Sub WriteRoyalArmyMessage(ByVal Message As String)
 End Sub
 
 ''
-' Writes the "ChaosLegionMessage" message to the outgoing data incomingData.
+' Writes the "ChaosLegionMessage" message to the outgoing data buffer.
 '
 ' @param    message The message to send to the chaos legion member.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -8620,7 +8758,7 @@ Public Sub WriteChaosLegionMessage(ByVal Message As String)
 End Sub
 
 ''
-' Writes the "CitizenMessage" message to the outgoing data incomingData.
+' Writes the "CitizenMessage" message to the outgoing data buffer.
 '
 ' @param    message The message to send to citizens.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -8640,7 +8778,7 @@ Public Sub WriteCitizenMessage(ByVal Message As String)
 End Sub
 
 ''
-' Writes the "CriminalMessage" message to the outgoing data incomingData.
+' Writes the "CriminalMessage" message to the outgoing data buffer.
 '
 ' @param    message The message to send to criminals.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -8660,7 +8798,7 @@ Public Sub WriteCriminalMessage(ByVal Message As String)
 End Sub
 
 ''
-' Writes the "TalkAsNPC" message to the outgoing data incomingData.
+' Writes the "TalkAsNPC" message to the outgoing data buffer.
 '
 ' @param    message The message to send to the royal army members.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -8680,7 +8818,7 @@ Public Sub WriteTalkAsNPC(ByVal Message As String)
 End Sub
 
 ''
-' Writes the "DestroyAllItemsInArea" message to the outgoing data incomingData.
+' Writes the "DestroyAllItemsInArea" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -8695,7 +8833,7 @@ Public Sub WriteDestroyAllItemsInArea()
 End Sub
 
 ''
-' Writes the "AcceptRoyalCouncilMember" message to the outgoing data incomingData.
+' Writes the "AcceptRoyalCouncilMember" message to the outgoing data buffer.
 '
 ' @param    username The name of the user to be accepted into the royal army council.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -8715,7 +8853,7 @@ Public Sub WriteAcceptRoyalCouncilMember(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "AcceptChaosCouncilMember" message to the outgoing data incomingData.
+' Writes the "AcceptChaosCouncilMember" message to the outgoing data buffer.
 '
 ' @param    username The name of the user to be accepted as a chaos council member.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -8735,7 +8873,7 @@ Public Sub WriteAcceptChaosCouncilMember(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "ItemsInTheFloor" message to the outgoing data incomingData.
+' Writes the "ItemsInTheFloor" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -8750,7 +8888,7 @@ Public Sub WriteItemsInTheFloor()
 End Sub
 
 ''
-' Writes the "MakeDumb" message to the outgoing data incomingData.
+' Writes the "MakeDumb" message to the outgoing data buffer.
 '
 ' @param    username The name of the user to be made dumb.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -8770,7 +8908,7 @@ Public Sub WriteMakeDumb(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "MakeDumbNoMore" message to the outgoing data incomingData.
+' Writes the "MakeDumbNoMore" message to the outgoing data buffer.
 '
 ' @param    username The name of the user who will no longer be dumb.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -8790,7 +8928,7 @@ Public Sub WriteMakeDumbNoMore(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "DumpIPTables" message to the outgoing data incomingData.
+' Writes the "DumpIPTables" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -8805,7 +8943,7 @@ Public Sub WriteDumpIPTables()
 End Sub
 
 ''
-' Writes the "CouncilKick" message to the outgoing data incomingData.
+' Writes the "CouncilKick" message to the outgoing data buffer.
 '
 ' @param    username The name of the user to be kicked from the council.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -8825,7 +8963,7 @@ Public Sub WriteCouncilKick(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "SetTrigger" message to the outgoing data incomingData.
+' Writes the "SetTrigger" message to the outgoing data buffer.
 '
 ' @param    trigger The type of trigger to be set to the tile.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -8845,7 +8983,7 @@ Public Sub WriteSetTrigger(ByVal Trigger As eTrigger)
 End Sub
 
 ''
-' Writes the "AskTrigger" message to the outgoing data incomingData.
+' Writes the "AskTrigger" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -8860,7 +8998,7 @@ Public Sub WriteAskTrigger()
 End Sub
 
 ''
-' Writes the "BannedIPList" message to the outgoing data incomingData.
+' Writes the "BannedIPList" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -8875,7 +9013,7 @@ Public Sub WriteBannedIPList()
 End Sub
 
 ''
-' Writes the "BannedIPReload" message to the outgoing data incomingData.
+' Writes the "BannedIPReload" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -8890,7 +9028,7 @@ Public Sub WriteBannedIPReload()
 End Sub
 
 ''
-' Writes the "GuildBan" message to the outgoing data incomingData.
+' Writes the "GuildBan" message to the outgoing data buffer.
 '
 ' @param    guild The guild whose members will be banned.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -8910,7 +9048,7 @@ Public Sub WriteGuildBan(ByVal guild As String)
 End Sub
 
 ''
-' Writes the "BanIP" message to the outgoing data incomingData.
+' Writes the "BanIP" message to the outgoing data buffer.
 '
 ' @param    byIp    If set to true, we are banning by IP, otherwise the ip of a given character.
 ' @param    IP      The IP for which to search for players. Must be an array of 4 elements with the 4 components of the IP.
@@ -8952,7 +9090,7 @@ Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal Nick As S
 End Sub
 
 ''
-' Writes the "UnbanIP" message to the outgoing data incomingData.
+' Writes the "UnbanIP" message to the outgoing data buffer.
 '
 ' @param    IP The IP for which to search for players. Must be an array of 4 elements with the 4 components of the IP.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -8983,7 +9121,7 @@ Public Sub WriteUnbanIP(ByRef Ip() As Byte)
 End Sub
 
 ''
-' Writes the "CreateItem" message to the outgoing data incomingData.
+' Writes the "CreateItem" message to the outgoing data buffer.
 '
 ' @param    itemIndex The index of the item to be created.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -9003,7 +9141,7 @@ Public Sub WriteCreateItem(ByVal ItemIndex As Long, ByVal cantidad As Integer)
 End Sub
 
 ''
-' Writes the "DestroyItems" message to the outgoing data incomingData.
+' Writes the "DestroyItems" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -9018,7 +9156,7 @@ Public Sub WriteDestroyItems()
 End Sub
 
 ''
-' Writes the "ChaosLegionKick" message to the outgoing data incomingData.
+' Writes the "ChaosLegionKick" message to the outgoing data buffer.
 '
 ' @param    username The name of the user to be kicked from the Chaos Legion.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -9038,7 +9176,7 @@ Public Sub WriteChaosLegionKick(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "RoyalArmyKick" message to the outgoing data incomingData.
+' Writes the "RoyalArmyKick" message to the outgoing data buffer.
 '
 ' @param    username The name of the user to be kicked from the Royal Army.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -9058,7 +9196,7 @@ Public Sub WriteRoyalArmyKick(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "ForceMIDIAll" message to the outgoing data incomingData.
+' Writes the "ForceMIDIAll" message to the outgoing data buffer.
 '
 ' @param    midiID The id of the midi file to play.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -9078,7 +9216,7 @@ Public Sub WriteForceMIDIAll(ByVal midiID As Byte)
 End Sub
 
 ''
-' Writes the "ForceWAVEAll" message to the outgoing data incomingData.
+' Writes the "ForceWAVEAll" message to the outgoing data buffer.
 '
 ' @param    waveID The id of the wave file to play.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -9098,7 +9236,7 @@ Public Sub WriteForceWAVEAll(ByVal waveID As Byte)
 End Sub
 
 ''
-' Writes the "RemovePunishment" message to the outgoing data incomingData.
+' Writes the "RemovePunishment" message to the outgoing data buffer.
 '
 ' @param    username The user whose punishments will be altered.
 ' @param    punishment The id of the punishment to be removed.
@@ -9121,7 +9259,7 @@ Public Sub WriteRemovePunishment(ByVal UserName As String, ByVal punishment As B
 End Sub
 
 ''
-' Writes the "TileBlockedToggle" message to the outgoing data incomingData.
+' Writes the "TileBlockedToggle" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -9136,7 +9274,7 @@ Public Sub WriteTileBlockedToggle()
 End Sub
 
 ''
-' Writes the "KillNPCNoRespawn" message to the outgoing data incomingData.
+' Writes the "KillNPCNoRespawn" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -9151,7 +9289,7 @@ Public Sub WriteKillNPCNoRespawn()
 End Sub
 
 ''
-' Writes the "KillAllNearbyNPCs" message to the outgoing data incomingData.
+' Writes the "KillAllNearbyNPCs" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -9166,7 +9304,7 @@ Public Sub WriteKillAllNearbyNPCs()
 End Sub
 
 ''
-' Writes the "LastIP" message to the outgoing data incomingData.
+' Writes the "LastIP" message to the outgoing data buffer.
 '
 ' @param    username The user whose last IPs are requested.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -9186,7 +9324,7 @@ Public Sub WriteLastIP(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "ChangeMOTD" message to the outgoing data incomingData.
+' Writes the "ChangeMOTD" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -9201,7 +9339,7 @@ Public Sub WriteChangeMOTD()
 End Sub
 
 ''
-' Writes the "SetMOTD" message to the outgoing data incomingData.
+' Writes the "SetMOTD" message to the outgoing data buffer.
 '
 ' @param    message The message to be set as the new MOTD.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -9221,7 +9359,7 @@ Public Sub WriteSetMOTD(ByVal Message As String)
 End Sub
 
 ''
-' Writes the "SystemMessage" message to the outgoing data incomingData.
+' Writes the "SystemMessage" message to the outgoing data buffer.
 '
 ' @param    message The message to be sent to all players.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -9241,7 +9379,7 @@ Public Sub WriteSystemMessage(ByVal Message As String)
 End Sub
 
 ''
-' Writes the "CreateNPC" message to the outgoing data incomingData.
+' Writes the "CreateNPC" message to the outgoing data buffer.
 '
 ' @param    npcIndex The index of the NPC to be created.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -9263,7 +9401,7 @@ Public Sub WriteCreateNPC(ByVal NPCIndex As Integer, ByVal WithRespawn As Boolea
 End Sub
 
 ''
-' Writes the "ImperialArmour" message to the outgoing data incomingData.
+' Writes the "ImperialArmour" message to the outgoing data buffer.
 '
 ' @param    armourIndex The index of imperial armour to be altered.
 ' @param    objectIndex The index of the new object to be set as the imperial armour.
@@ -9286,7 +9424,7 @@ Public Sub WriteImperialArmour(ByVal armourIndex As Byte, ByVal objectIndex As I
 End Sub
 
 ''
-' Writes the "ChaosArmour" message to the outgoing data incomingData.
+' Writes the "ChaosArmour" message to the outgoing data buffer.
 '
 ' @param    armourIndex The index of chaos armour to be altered.
 ' @param    objectIndex The index of the new object to be set as the chaos armour.
@@ -9309,7 +9447,7 @@ Public Sub WriteChaosArmour(ByVal armourIndex As Byte, ByVal objectIndex As Inte
 End Sub
 
 ''
-' Writes the "NavigateToggle" message to the outgoing data incomingData.
+' Writes the "NavigateToggle" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -9324,7 +9462,7 @@ Public Sub WriteNavigateToggle()
 End Sub
 
 ''
-' Writes the "ServerOpenToUsersToggle" message to the outgoing data incomingData.
+' Writes the "ServerOpenToUsersToggle" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -9339,7 +9477,7 @@ Public Sub WriteServerOpenToUsersToggle()
 End Sub
 
 ''
-' Writes the "TurnOffServer" message to the outgoing data incomingData.
+' Writes the "TurnOffServer" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -9354,7 +9492,7 @@ Public Sub WriteTurnOffServer()
 End Sub
 
 ''
-' Writes the "TurnCriminal" message to the outgoing data incomingData.
+' Writes the "TurnCriminal" message to the outgoing data buffer.
 '
 ' @param    username The name of the user to turn into criminal.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -9374,7 +9512,7 @@ Public Sub WriteTurnCriminal(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "ResetFactions" message to the outgoing data incomingData.
+' Writes the "ResetFactions" message to the outgoing data buffer.
 '
 ' @param    username The name of the user who will be removed from any faction.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -9394,7 +9532,7 @@ Public Sub WriteResetFactions(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "RemoveCharFromGuild" message to the outgoing data incomingData.
+' Writes the "RemoveCharFromGuild" message to the outgoing data buffer.
 '
 ' @param    username The name of the user who will be removed from any guild.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -9414,7 +9552,7 @@ Public Sub WriteRemoveCharFromGuild(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "RequestCharMail" message to the outgoing data incomingData.
+' Writes the "RequestCharMail" message to the outgoing data buffer.
 '
 ' @param    username The name of the user whose mail is requested.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -9434,7 +9572,7 @@ Public Sub WriteRequestCharMail(ByVal UserName As String)
 End Sub
 
 ''
-' Writes the "AlterPassword" message to the outgoing data incomingData.
+' Writes the "AlterPassword" message to the outgoing data buffer.
 '
 ' @param    username The name of the user whose mail is requested.
 ' @param    copyFrom The name of the user from which to copy the password.
@@ -9456,7 +9594,7 @@ Public Sub WriteAlterPassword(ByVal UserName As String, ByVal CopyFrom As String
 End Sub
 
 ''
-' Writes the "AlterMail" message to the outgoing data incomingData.
+' Writes the "AlterMail" message to the outgoing data buffer.
 '
 ' @param    username The name of the user whose mail is requested.
 ' @param    newMail The new email of the player.
@@ -9478,7 +9616,7 @@ Public Sub WriteAlterMail(ByVal UserName As String, ByVal newMail As String)
 End Sub
 
 ''
-' Writes the "AlterName" message to the outgoing data incomingData.
+' Writes the "AlterName" message to the outgoing data buffer.
 '
 ' @param    username The name of the user whose mail is requested.
 ' @param    newName The new user name.
@@ -9500,7 +9638,7 @@ Public Sub WriteAlterName(ByVal UserName As String, ByVal newName As String)
 End Sub
 
 ''
-' Writes the "ToggleCentinelActivated" message to the outgoing data incomingData.
+' Writes the "ToggleCentinelActivated" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -9515,7 +9653,7 @@ Public Sub WriteToggleCentinelActivated()
 End Sub
 
 ''
-' Writes the "DoBackup" message to the outgoing data incomingData.
+' Writes the "DoBackup" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -9530,7 +9668,7 @@ Public Sub WriteDoBackup()
 End Sub
 
 ''
-' Writes the "ShowGuildMessages" message to the outgoing data incomingData.
+' Writes the "ShowGuildMessages" message to the outgoing data buffer.
 '
 ' @param    guild The guild to listen to.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -9550,7 +9688,7 @@ Public Sub WriteShowGuildMessages(ByVal guild As String)
 End Sub
 
 ''
-' Writes the "SaveMap" message to the outgoing data incomingData.
+' Writes the "SaveMap" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -9565,7 +9703,7 @@ Public Sub WriteSaveMap()
 End Sub
 
 ''
-' Writes the "ChangeMapInfoPK" message to the outgoing data incomingData.
+' Writes the "ChangeMapInfoPK" message to the outgoing data buffer.
 '
 ' @param    isPK True if the map is PK, False otherwise.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -9585,7 +9723,7 @@ Public Sub WriteChangeMapInfoPK(ByVal isPK As Boolean)
 End Sub
 
 ''
-' Writes the "ChangeMapInfoNoOcultar" message to the outgoing data incomingData.
+' Writes the "ChangeMapInfoNoOcultar" message to the outgoing data buffer.
 '
 ' @param    PermitirOcultar True if the map permits to hide, False otherwise.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -9605,7 +9743,7 @@ Public Sub WriteChangeMapInfoNoOcultar(ByVal PermitirOcultar As Boolean)
 End Sub
 
 ''
-' Writes the "ChangeMapInfoNoInvocar" message to the outgoing data incomingData.
+' Writes the "ChangeMapInfoNoInvocar" message to the outgoing data buffer.
 '
 ' @param    PermitirInvocar True if the map permits to invoke, False otherwise.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -9625,7 +9763,7 @@ Public Sub WriteChangeMapInfoNoInvocar(ByVal PermitirInvocar As Boolean)
 End Sub
 
 ''
-' Writes the "ChangeMapInfoBackup" message to the outgoing data incomingData.
+' Writes the "ChangeMapInfoBackup" message to the outgoing data buffer.
 '
 ' @param    backup True if the map is to be backuped, False otherwise.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -9645,7 +9783,7 @@ Public Sub WriteChangeMapInfoBackup(ByVal backup As Boolean)
 End Sub
 
 ''
-' Writes the "ChangeMapInfoRestricted" message to the outgoing data incomingData.
+' Writes the "ChangeMapInfoRestricted" message to the outgoing data buffer.
 '
 ' @param    restrict NEWBIES (only newbies), NO (everyone), ARMADA (just Armadas), CAOS (just caos) or FACCION (Armadas & caos only)
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -9665,7 +9803,7 @@ Public Sub WriteChangeMapInfoRestricted(ByVal restrict As String)
 End Sub
 
 ''
-' Writes the "ChangeMapInfoNoMagic" message to the outgoing data incomingData.
+' Writes the "ChangeMapInfoNoMagic" message to the outgoing data buffer.
 '
 ' @param    nomagic TRUE if no magic is to be allowed in the map.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -9685,7 +9823,7 @@ Public Sub WriteChangeMapInfoNoMagic(ByVal nomagic As Boolean)
 End Sub
 
 ''
-' Writes the "ChangeMapInfoNoInvi" message to the outgoing data incomingData.
+' Writes the "ChangeMapInfoNoInvi" message to the outgoing data buffer.
 '
 ' @param    noinvi TRUE if invisibility is not to be allowed in the map.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -9705,7 +9843,7 @@ Public Sub WriteChangeMapInfoNoInvi(ByVal noinvi As Boolean)
 End Sub
                             
 ''
-' Writes the "ChangeMapInfoNoResu" message to the outgoing data incomingData.
+' Writes the "ChangeMapInfoNoResu" message to the outgoing data buffer.
 '
 ' @param    noresu TRUE if resurection is not to be allowed in the map.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -9725,7 +9863,7 @@ Public Sub WriteChangeMapInfoNoResu(ByVal noresu As Boolean)
 End Sub
                         
 ''
-' Writes the "ChangeMapInfoLand" message to the outgoing data incomingData.
+' Writes the "ChangeMapInfoLand" message to the outgoing data buffer.
 '
 ' @param    land options: "BOSQUE", "NIEVE", "DESIERTO", "CIUDAD", "CAMPO", "DUNGEON".
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -9745,7 +9883,7 @@ Public Sub WriteChangeMapInfoLand(ByVal land As String)
 End Sub
                         
 ''
-' Writes the "ChangeMapInfoZone" message to the outgoing data incomingData.
+' Writes the "ChangeMapInfoZone" message to the outgoing data buffer.
 '
 ' @param    zone options: "BOSQUE", "NIEVE", "DESIERTO", "CIUDAD", "CAMPO", "DUNGEON".
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -9765,7 +9903,7 @@ Public Sub WriteChangeMapInfoZone(ByVal zone As String)
 End Sub
 
 ''
-' Writes the "ChangeMapInfoStealNpc" message to the outgoing data incomingData.
+' Writes the "ChangeMapInfoStealNpc" message to the outgoing data buffer.
 '
 ' @param    forbid TRUE if stealNpc forbiden.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -9785,7 +9923,7 @@ Public Sub WriteChangeMapInfoStealNpc(ByVal forbid As Boolean)
 End Sub
 
 ''
-' Writes the "SaveChars" message to the outgoing data incomingData.
+' Writes the "SaveChars" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -9800,7 +9938,7 @@ Public Sub WriteSaveChars()
 End Sub
 
 ''
-' Writes the "CleanSOS" message to the outgoing data incomingData.
+' Writes the "CleanSOS" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -9815,7 +9953,7 @@ Public Sub WriteCleanSOS()
 End Sub
 
 ''
-' Writes the "ShowServerForm" message to the outgoing data incomingData.
+' Writes the "ShowServerForm" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -9830,7 +9968,7 @@ Public Sub WriteShowServerForm()
 End Sub
 
 ''
-' Writes the "ShowDenouncesList" message to the outgoing data incomingData.
+' Writes the "ShowDenouncesList" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -9845,7 +9983,7 @@ Public Sub WriteShowDenouncesList()
 End Sub
 
 ''
-' Writes the "EnableDenounces" message to the outgoing data incomingData.
+' Writes the "EnableDenounces" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -9860,7 +9998,7 @@ Public Sub WriteEnableDenounces()
 End Sub
 
 ''
-' Writes the "Night" message to the outgoing data incomingData.
+' Writes the "Night" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -9875,7 +10013,7 @@ Public Sub WriteNight()
 End Sub
 
 ''
-' Writes the "KickAllChars" message to the outgoing data incomingData.
+' Writes the "KickAllChars" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -9890,7 +10028,7 @@ Public Sub WriteKickAllChars()
 End Sub
 
 ''
-' Writes the "ReloadNPCs" message to the outgoing data incomingData.
+' Writes the "ReloadNPCs" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -9905,7 +10043,7 @@ Public Sub WriteReloadNPCs()
 End Sub
 
 ''
-' Writes the "ReloadServerIni" message to the outgoing data incomingData.
+' Writes the "ReloadServerIni" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -9920,7 +10058,7 @@ Public Sub WriteReloadServerIni()
 End Sub
 
 ''
-' Writes the "ReloadSpells" message to the outgoing data incomingData.
+' Writes the "ReloadSpells" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -9935,7 +10073,7 @@ Public Sub WriteReloadSpells()
 End Sub
 
 ''
-' Writes the "ReloadObjects" message to the outgoing data incomingData.
+' Writes the "ReloadObjects" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -9950,7 +10088,7 @@ Public Sub WriteReloadObjects()
 End Sub
 
 ''
-' Writes the "Restart" message to the outgoing data incomingData.
+' Writes the "Restart" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -9965,7 +10103,7 @@ Public Sub WriteRestart()
 End Sub
 
 ''
-' Writes the "ResetAutoUpdate" message to the outgoing data incomingData.
+' Writes the "ResetAutoUpdate" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -9980,7 +10118,7 @@ Public Sub WriteResetAutoUpdate()
 End Sub
 
 ''
-' Writes the "ChatColor" message to the outgoing data incomingData.
+' Writes the "ChatColor" message to the outgoing data buffer.
 '
 ' @param    r The red component of the new chat color.
 ' @param    g The green component of the new chat color.
@@ -10004,7 +10142,7 @@ Public Sub WriteChatColor(ByVal r As Byte, ByVal g As Byte, ByVal b As Byte)
 End Sub
 
 ''
-' Writes the "Ignored" message to the outgoing data incomingData.
+' Writes the "Ignored" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -10019,7 +10157,7 @@ Public Sub WriteIgnored()
 End Sub
 
 ''
-' Writes the "CheckSlot" message to the outgoing data incomingData.
+' Writes the "CheckSlot" message to the outgoing data buffer.
 '
 ' @param    UserName    The name of the char whose slot will be checked.
 ' @param    slot        The slot to be checked.
@@ -10040,7 +10178,7 @@ Public Sub WriteCheckSlot(ByVal UserName As String, ByVal slot As Byte)
 End Sub
 
 ''
-' Writes the "Ping" message to the outgoing data incomingData.
+' Writes the "Ping" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -10063,7 +10201,7 @@ Public Sub WritePing()
 End Sub
 
 ''
-' Writes the "ShareNpc" message to the outgoing data incomingData.
+' Writes the "ShareNpc" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -10077,7 +10215,7 @@ Public Sub WriteShareNpc()
 End Sub
 
 ''
-' Writes the "StopSharingNpc" message to the outgoing data incomingData.
+' Writes the "StopSharingNpc" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -10091,7 +10229,7 @@ Public Sub WriteStopSharingNpc()
 End Sub
 
 ''
-' Writes the "SetIniVar" message to the outgoing data incomingData.
+' Writes the "SetIniVar" message to the outgoing data buffer.
 '
 ' @param    sLlave the name of the key which contains the value to edit
 ' @param    sClave the name of the value to edit
@@ -10115,7 +10253,7 @@ Public Sub WriteSetIniVar(ByRef sLlave As String, ByRef sClave As String, ByRef 
 End Sub
 
 ''
-' Writes the "CreatePretorianClan" message to the outgoing data incomingData.
+' Writes the "CreatePretorianClan" message to the outgoing data buffer.
 '
 ' @param    Map         The map in which create the pretorian clan.
 ' @param    X           The x pos where the king is settled.
@@ -10138,7 +10276,7 @@ Public Sub WriteCreatePretorianClan(ByVal Map As Integer, ByVal X As Byte, ByVal
 End Sub
 
 ''
-' Writes the "DeletePretorianClan" message to the outgoing data incomingData.
+' Writes the "DeletePretorianClan" message to the outgoing data buffer.
 '
 ' @param    Map         The map which contains the pretorian clan to be removed.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -10197,7 +10335,7 @@ Private Sub SendData(ByRef sdData As String)
 End Sub
 
 ''
-' Writes the "MapMessage" message to the outgoing data incomingData.
+' Writes the "MapMessage" message to the outgoing data buffer.
 '
 ' @param    Dialog The new dialog of the NPC.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
@@ -10217,7 +10355,7 @@ Public Sub WriteSetDialog(ByVal dialog As String)
 End Sub
 
 ''
-' Writes the "Impersonate" message to the outgoing data incomingData.
+' Writes the "Impersonate" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -10232,7 +10370,7 @@ Public Sub WriteImpersonate()
 End Sub
 
 ''
-' Writes the "Imitate" message to the outgoing data incomingData.
+' Writes the "Imitate" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -10247,7 +10385,7 @@ Public Sub WriteImitate()
 End Sub
 
 ''
-' Writes the "RecordAddObs" message to the outgoing data incomingData.
+' Writes the "RecordAddObs" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -10267,7 +10405,7 @@ Public Sub WriteRecordAddObs(ByVal RecordIndex As Byte, ByVal Observation As Str
 End Sub
 
 ''
-' Writes the "RecordAdd" message to the outgoing data incomingData.
+' Writes the "RecordAdd" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -10287,7 +10425,7 @@ Public Sub WriteRecordAdd(ByVal Nickname As String, ByVal Reason As String)
 End Sub
 
 ''
-' Writes the "RecordRemove" message to the outgoing data incomingData.
+' Writes the "RecordRemove" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -10306,7 +10444,7 @@ Public Sub WriteRecordRemove(ByVal RecordIndex As Byte)
 End Sub
 
 ''
-' Writes the "RecordListRequest" message to the outgoing data incomingData.
+' Writes the "RecordListRequest" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -10321,7 +10459,7 @@ Public Sub WriteRecordListRequest()
 End Sub
 
 ''
-' Writes the "RecordDetailsRequest" message to the outgoing data incomingData.
+' Writes the "RecordDetailsRequest" message to the outgoing data buffer.
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
@@ -10354,29 +10492,33 @@ Private Sub HandleRecordList()
     End If
     
 On Error GoTo errhandler
-    
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
     
     
     
     Dim NumRecords As Byte
     Dim i As Long
     
-    NumRecords = incomingData.ReadByte
+    NumRecords = Buffer.ReadByte
     
     'Se limpia el ListBox y se agregan los usuarios
     frmPanelGm.lstUsers.Clear
     For i = 1 To NumRecords
-        frmPanelGm.lstUsers.AddItem incomingData.ReadString
+        frmPanelGm.lstUsers.AddItem Buffer.ReadString
     Next i
     
-    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
     
 errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
 
     If Error <> 0 Then _
         Err.Raise Error
@@ -10397,15 +10539,22 @@ Private Sub HandleRecordDetails()
     End If
     
 On Error GoTo errhandler
+<<<<<<< HEAD
+=======
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Dim tmpStr As String
+    Call Buffer.CopyBuffer(incomingData)
+>>>>>>> parent of f42d96e... Saco el CopyBuffer.
     
     Dim tmpstr As String
     
     With frmPanelGm
-        .txtCreador.Text = incomingData.ReadString
-        .txtDescrip.Text = incomingData.ReadString
+        .txtCreador.Text = Buffer.ReadString
+        .txtDescrip.Text = Buffer.ReadString
         
         'Status del pj
-        If incomingData.ReadBoolean Then
+        If Buffer.ReadBoolean Then
             .lblEstado.ForeColor = vbGreen
             .lblEstado.Caption = UCase$(JsonLanguage.item("EN_LINEA").item("TEXTO"))
         Else
@@ -10414,38 +10563,58 @@ On Error GoTo errhandler
         End If
         
         'IP del personaje
+<<<<<<< HEAD
         tmpstr = incomingData.ReadString
         If LenB(tmpstr) Then
             .txtIP.Text = tmpstr
+=======
+        tmpStr = Buffer.ReadString
+        If LenB(tmpStr) Then
+            .txtIP.Text = tmpStr
+>>>>>>> parent of f42d96e... Saco el CopyBuffer.
         Else
             .txtIP.Text = JsonLanguage.item("USUARIO").item("TEXTO") & JsonLanguage.item("DESCONECTADO").item("TEXTO")
         End If
         
         'Tiempo online
+<<<<<<< HEAD
         tmpstr = incomingData.ReadString
         If LenB(tmpstr) Then
             .txtTimeOn.Text = tmpstr
+=======
+        tmpStr = Buffer.ReadString
+        If LenB(tmpStr) Then
+            .txtTimeOn.Text = tmpStr
+>>>>>>> parent of f42d96e... Saco el CopyBuffer.
         Else
             .txtTimeOn.Text = JsonLanguage.item("USUARIO").item("TEXTO") & JsonLanguage.item("DESCONECTADO").item("TEXTO")
         End If
         
         'Observaciones
+<<<<<<< HEAD
         tmpstr = incomingData.ReadString
         If LenB(tmpstr) Then
             .txtObs.Text = tmpstr
+=======
+        tmpStr = Buffer.ReadString
+        If LenB(tmpStr) Then
+            .txtObs.Text = tmpStr
+>>>>>>> parent of f42d96e... Saco el CopyBuffer.
         Else
             .txtObs.Text = JsonLanguage.item("MENSAJE_NO_NOVEDADES").item("TEXTO")
         End If
     End With
     
-    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
     
 errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
 
     If Error <> 0 Then _
         Err.Raise Error
@@ -10453,7 +10622,7 @@ End Sub
 
 
 ''
-' Writes the "Moveitem" message to the outgoing data incomingData.
+' Writes the "Moveitem" message to the outgoing data buffer.
 '
 Public Sub WriteMoveItem(ByVal originalSlot As Integer, ByVal newSlot As Integer, ByVal moveType As eMoveType)
 '***************************************************
@@ -10545,9 +10714,22 @@ Private Sub HandleAccountLogged()
 
     On Error GoTo errhandler
     
+<<<<<<< HEAD
     AccountName = incomingData.ReadString
     AccountHash = incomingData.ReadString
     NumberOfCharacters = incomingData.ReadByte
+=======
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue
+    Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
+
+    
+
+    AccountName = Buffer.ReadString
+    AccountHash = Buffer.ReadString
+    NumberOfCharacters = Buffer.ReadByte
+>>>>>>> parent of f42d96e... Saco el CopyBuffer.
 
     frmPanelAccount.Show
 
@@ -10560,25 +10742,25 @@ Private Sub HandleAccountLogged()
         For LoopC = 1 To NumberOfCharacters
         
             With cPJ(LoopC)
-                .Nombre = incomingData.ReadString
-                .Body = incomingData.ReadInteger
-                .Head = incomingData.ReadInteger
-                .weapon = incomingData.ReadInteger
-                .shield = incomingData.ReadInteger
-                .helmet = incomingData.ReadInteger
-                .Class = incomingData.ReadByte
-                .Race = incomingData.ReadByte
-                .Map = incomingData.ReadInteger
-                .Level = incomingData.ReadByte
-                .Gold = incomingData.ReadLong
-                .Criminal = incomingData.ReadBoolean
-                .Dead = incomingData.ReadBoolean
+                .Nombre = Buffer.ReadString
+                .Body = Buffer.ReadInteger
+                .Head = Buffer.ReadInteger
+                .weapon = Buffer.ReadInteger
+                .shield = Buffer.ReadInteger
+                .helmet = Buffer.ReadInteger
+                .Class = Buffer.ReadByte
+                .Race = Buffer.ReadByte
+                .Map = Buffer.ReadInteger
+                .Level = Buffer.ReadByte
+                .Gold = Buffer.ReadLong
+                .Criminal = Buffer.ReadBoolean
+                .Dead = Buffer.ReadBoolean
                 
                 If .Dead Then
                     .Head = eCabezas.CASPER_HEAD
                 End If
 
-                .GameMaster = incomingData.ReadBoolean
+                .GameMaster = Buffer.ReadBoolean
             End With
             
             Call mDx8_Engine.DrawPJ(LoopC)
@@ -10587,7 +10769,8 @@ Private Sub HandleAccountLogged()
         
     End If
 
-    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
 
 errhandler:
 
@@ -10597,7 +10780,8 @@ errhandler:
 
     On Error GoTo 0
 
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
 
     If Error <> 0 Then Err.Raise Error
 
@@ -10751,6 +10935,11 @@ Private Sub HandleQuestDetails()
     End If
     
 On Error GoTo errhandler
+<<<<<<< HEAD
+=======
+    Dim Buffer As New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
+>>>>>>> parent of f42d96e... Saco el CopyBuffer.
     
     Dim tmpstr As String
     Dim tmpByte As Byte
@@ -10814,7 +11003,8 @@ errhandler:
     Error = Err.number
 On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
  
     If Error <> 0 Then _
         Err.Raise Error
@@ -10831,16 +11021,21 @@ Public Sub HandleQuestListSend()
     End If
     
 On Error GoTo errhandler
+<<<<<<< HEAD
+=======
+    Dim Buffer As New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
+>>>>>>> parent of f42d96e... Saco el CopyBuffer.
     
     Dim i As Integer
     Dim tmpByte As Byte
     Dim tmpstr As String
     
     'Leemos el id del paquete
-    Call incomingData.ReadByte
+    Call Buffer.ReadByte
      
     'Leemos la cantidad de quests que tiene el usuario
-    tmpByte = incomingData.ReadByte
+    tmpByte = Buffer.ReadByte
     
     'Limpiamos el ListBox y el TextBox del formulario
     frmQuests.lstQuests.Clear
@@ -10849,7 +11044,11 @@ On Error GoTo errhandler
     'Si el usuario tiene quests entonces hacemos el handle
     If tmpByte Then
         'Leemos el string
+<<<<<<< HEAD
         tmpstr = incomingData.ReadString
+=======
+        tmpStr = Buffer.ReadString
+>>>>>>> parent of f42d96e... Saco el CopyBuffer.
         
         'Agregamos los items
         For i = 1 To tmpByte
@@ -10868,7 +11067,8 @@ errhandler:
     Error = Err.number
 On Error GoTo 0
     
-    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
  
     If Error <> 0 Then _
         Err.Raise Error
