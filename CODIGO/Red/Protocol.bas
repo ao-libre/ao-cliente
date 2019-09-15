@@ -5534,9 +5534,9 @@ Public Sub WriteLoginExistingAccount()
     With outgoingData
         Call .WriteByte(ClientPacketID.LoginExistingAccount)
         
-        Call .WriteASCIIString(AccountName)
+        Call .WriteString(AccountName)
         
-        Call .WriteASCIIString(AccountPassword)
+        Call .WriteString(AccountPassword)
         
         Call .WriteByte(App.Major)
         Call .WriteByte(App.Minor)
@@ -5558,9 +5558,9 @@ Public Sub WriteLoginExistingChar()
     With outgoingData
         Call .WriteByte(ClientPacketID.LoginExistingChar)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
         
-        Call .WriteASCIIString(AccountHash)
+        Call .WriteString(AccountHash)
         
         Call .WriteByte(App.Major)
         Call .WriteByte(App.Minor)
@@ -5577,9 +5577,9 @@ Public Sub WriteLoginNewAccount()
     With outgoingData
         Call .WriteByte(ClientPacketID.LoginNewAccount)
         
-        Call .WriteASCIIString(AccountName)
+        Call .WriteString(AccountName)
         
-        Call .WriteASCIIString(AccountPassword)
+        Call .WriteString(AccountPassword)
         
         Call .WriteByte(App.Major)
         Call .WriteByte(App.Minor)
@@ -5616,8 +5616,8 @@ Public Sub WriteLoginNewChar()
     With outgoingData
         Call .WriteByte(ClientPacketID.LoginNewChar)
         
-        Call .WriteASCIIString(UserName)
-        Call .WriteASCIIString(AccountHash)
+        Call .WriteString(UserName)
+        Call .WriteString(AccountHash)
         
         Call .WriteByte(App.Major)
         Call .WriteByte(App.Minor)
@@ -5647,7 +5647,7 @@ Public Sub WriteTalk(ByVal chat As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.Talk)
         
-        Call .WriteASCIIString(chat)
+        Call .WriteString(chat)
     End With
 End Sub
 
@@ -5666,7 +5666,7 @@ Public Sub WriteYell(ByVal chat As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.Yell)
         
-        Call .WriteASCIIString(chat)
+        Call .WriteString(chat)
     End With
 End Sub
 
@@ -5687,9 +5687,9 @@ Public Sub WriteWhisper(ByVal CharName As String, ByVal chat As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.Whisper)
         
-        Call .WriteASCIIString(CharName)
+        Call .WriteString(CharName)
         
-        Call .WriteASCIIString(chat)
+        Call .WriteString(chat)
     End With
 End Sub
 
@@ -6197,9 +6197,9 @@ Public Sub WriteCreateNewGuild(ByVal Desc As String, ByVal name As String, ByVal
     With outgoingData
         Call .WriteByte(ClientPacketID.CreateNewGuild)
         
-        Call .WriteASCIIString(Desc)
-        Call .WriteASCIIString(name)
-        Call .WriteASCIIString(Site)
+        Call .WriteString(Desc)
+        Call .WriteString(name)
+        Call .WriteString(Site)
         
         Lower_codex = LBound(Codex())
         Upper_codex = UBound(Codex())
@@ -6211,7 +6211,7 @@ Public Sub WriteCreateNewGuild(ByVal Desc As String, ByVal name As String, ByVal
         If Len(temp) Then _
             temp = Left$(temp, Len(temp) - 1)
         
-        Call .WriteASCIIString(temp)
+        Call .WriteString(temp)
     End With
 End Sub
 
@@ -6398,8 +6398,8 @@ Public Sub WriteForumPost(ByVal Title As String, ByVal Message As String, ByVal 
         Call .WriteByte(ClientPacketID.ForumPost)
         
         Call .WriteByte(ForumMsgType)
-        Call .WriteASCIIString(Title)
-        Call .WriteASCIIString(Message)
+        Call .WriteString(Title)
+        Call .WriteString(Message)
     End With
 End Sub
 
@@ -6465,7 +6465,7 @@ Public Sub WriteClanCodexUpdate(ByVal Desc As String, ByRef Codex() As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.ClanCodexUpdate)
         
-        Call .WriteASCIIString(Desc)
+        Call .WriteString(Desc)
         
         Lower_codex = LBound(Codex())
         Upper_codex = UBound(Codex())
@@ -6477,7 +6477,7 @@ Public Sub WriteClanCodexUpdate(ByVal Desc As String, ByRef Codex() As String)
         If Len(temp) Then _
             temp = Left$(temp, Len(temp) - 1)
         
-        Call .WriteASCIIString(temp)
+        Call .WriteString(temp)
     End With
 End Sub
 
@@ -6512,7 +6512,7 @@ Public Sub WriteCommerceChat(ByVal chat As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.CommerceChat)
         
-        Call .WriteASCIIString(chat)
+        Call .WriteString(chat)
     End With
 End Sub
 
@@ -6532,7 +6532,7 @@ Public Sub WriteGuildAcceptPeace(ByVal guild As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.GuildAcceptPeace)
         
-        Call .WriteASCIIString(guild)
+        Call .WriteString(guild)
     End With
 End Sub
 
@@ -6551,7 +6551,7 @@ Public Sub WriteGuildRejectAlliance(ByVal guild As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.GuildRejectAlliance)
         
-        Call .WriteASCIIString(guild)
+        Call .WriteString(guild)
     End With
 End Sub
 
@@ -6570,7 +6570,7 @@ Public Sub WriteGuildRejectPeace(ByVal guild As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.GuildRejectPeace)
         
-        Call .WriteASCIIString(guild)
+        Call .WriteString(guild)
     End With
 End Sub
 
@@ -6589,7 +6589,7 @@ Public Sub WriteGuildAcceptAlliance(ByVal guild As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.GuildAcceptAlliance)
         
-        Call .WriteASCIIString(guild)
+        Call .WriteString(guild)
     End With
 End Sub
 
@@ -6609,8 +6609,8 @@ Public Sub WriteGuildOfferPeace(ByVal guild As String, ByVal proposal As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.GuildOfferPeace)
         
-        Call .WriteASCIIString(guild)
-        Call .WriteASCIIString(proposal)
+        Call .WriteString(guild)
+        Call .WriteString(proposal)
     End With
 End Sub
 
@@ -6630,8 +6630,8 @@ Public Sub WriteGuildOfferAlliance(ByVal guild As String, ByVal proposal As Stri
     With outgoingData
         Call .WriteByte(ClientPacketID.GuildOfferAlliance)
         
-        Call .WriteASCIIString(guild)
-        Call .WriteASCIIString(proposal)
+        Call .WriteString(guild)
+        Call .WriteString(proposal)
     End With
 End Sub
 
@@ -6650,7 +6650,7 @@ Public Sub WriteGuildAllianceDetails(ByVal guild As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.GuildAllianceDetails)
         
-        Call .WriteASCIIString(guild)
+        Call .WriteString(guild)
     End With
 End Sub
 
@@ -6669,7 +6669,7 @@ Public Sub WriteGuildPeaceDetails(ByVal guild As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.GuildPeaceDetails)
         
-        Call .WriteASCIIString(guild)
+        Call .WriteString(guild)
     End With
 End Sub
 
@@ -6688,7 +6688,7 @@ Public Sub WriteGuildRequestJoinerInfo(ByVal UserName As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.GuildRequestJoinerInfo)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -6735,7 +6735,7 @@ Public Sub WriteGuildDeclareWar(ByVal guild As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.GuildDeclareWar)
         
-        Call .WriteASCIIString(guild)
+        Call .WriteString(guild)
     End With
 End Sub
 
@@ -6754,7 +6754,7 @@ Public Sub WriteGuildNewWebsite(ByVal URL As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.GuildNewWebsite)
         
-        Call .WriteASCIIString(URL)
+        Call .WriteString(URL)
     End With
 End Sub
 
@@ -6773,7 +6773,7 @@ Public Sub WriteGuildAcceptNewMember(ByVal UserName As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.GuildAcceptNewMember)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -6793,8 +6793,8 @@ Public Sub WriteGuildRejectNewMember(ByVal UserName As String, ByVal Reason As S
     With outgoingData
         Call .WriteByte(ClientPacketID.GuildRejectNewMember)
         
-        Call .WriteASCIIString(UserName)
-        Call .WriteASCIIString(Reason)
+        Call .WriteString(UserName)
+        Call .WriteString(Reason)
     End With
 End Sub
 
@@ -6813,7 +6813,7 @@ Public Sub WriteGuildKickMember(ByVal UserName As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.GuildKickMember)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -6832,7 +6832,7 @@ Public Sub WriteGuildUpdateNews(ByVal news As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.GuildUpdateNews)
         
-        Call .WriteASCIIString(news)
+        Call .WriteString(news)
     End With
 End Sub
 
@@ -6851,7 +6851,7 @@ Public Sub WriteGuildMemberInfo(ByVal UserName As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.GuildMemberInfo)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -6885,8 +6885,8 @@ Public Sub WriteGuildRequestMembership(ByVal guild As String, ByVal Application 
     With outgoingData
         Call .WriteByte(ClientPacketID.GuildRequestMembership)
         
-        Call .WriteASCIIString(guild)
-        Call .WriteASCIIString(Application)
+        Call .WriteString(guild)
+        Call .WriteString(Application)
     End With
 End Sub
 
@@ -6905,7 +6905,7 @@ Public Sub WriteGuildRequestDetails(ByVal guild As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.GuildRequestDetails)
         
-        Call .WriteASCIIString(guild)
+        Call .WriteString(guild)
     End With
 End Sub
 
@@ -7290,7 +7290,7 @@ Public Sub WriteGuildMessage(ByVal Message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.GuildMessage)
         
-        Call .WriteASCIIString(Message)
+        Call .WriteString(Message)
     End With
 End Sub
 
@@ -7309,7 +7309,7 @@ Public Sub WritePartyMessage(ByVal Message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.PartyMessage)
         
-        Call .WriteASCIIString(Message)
+        Call .WriteString(Message)
     End With
 End Sub
 
@@ -7329,7 +7329,7 @@ Public Sub WriteCentinelReport(ByVal Clave As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.CentinelReport)
         
-        Call .WriteASCIIString(Clave)
+        Call .WriteString(Clave)
     End With
 End Sub
 
@@ -7376,7 +7376,7 @@ Public Sub WriteCouncilMessage(ByVal Message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.CouncilMessage)
         
-        Call .WriteASCIIString(Message)
+        Call .WriteString(Message)
     End With
 End Sub
 
@@ -7395,7 +7395,7 @@ Public Sub WriteRoleMasterRequest(ByVal Message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.RoleMasterRequest)
         
-        Call .WriteASCIIString(Message)
+        Call .WriteString(Message)
     End With
 End Sub
 
@@ -7428,7 +7428,7 @@ Public Sub WriteBugReport(ByVal Message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.bugReport)
         
-        Call .WriteASCIIString(Message)
+        Call .WriteString(Message)
     End With
 End Sub
 
@@ -7447,7 +7447,7 @@ Public Sub WriteChangeDescription(ByVal Desc As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.ChangeDescription)
         
-        Call .WriteASCIIString(Desc)
+        Call .WriteString(Desc)
     End With
 End Sub
 
@@ -7466,7 +7466,7 @@ Public Sub WriteGuildVote(ByVal UserName As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.GuildVote)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -7485,7 +7485,7 @@ Public Sub WritePunishments(ByVal UserName As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.Punishments)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -7505,8 +7505,8 @@ Public Sub WriteChangePassword(ByRef oldPass As String, ByRef newPass As String)
 '***************************************************
     With outgoingData
         Call .WriteByte(ClientPacketID.ChangePassword)
-        Call .WriteASCIIString(oldPass)
-        Call .WriteASCIIString(newPass)
+        Call .WriteString(oldPass)
+        Call .WriteString(newPass)
     End With
 End Sub
 
@@ -7615,7 +7615,7 @@ Public Sub WriteDenounce(ByVal Message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.Denounce)
         
-        Call .WriteASCIIString(Message)
+        Call .WriteString(Message)
     End With
 End Sub
 
@@ -7669,7 +7669,7 @@ Public Sub WritePartyKick(ByVal UserName As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.PartyKick)
             
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -7688,7 +7688,7 @@ Public Sub WritePartySetLeader(ByVal UserName As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.PartySetLeader)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -7707,7 +7707,7 @@ Public Sub WritePartyAcceptMember(ByVal UserName As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.PartyAcceptMember)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -7727,7 +7727,7 @@ Public Sub WriteGuildMemberList(ByVal guild As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.GuildMemberList)
         
-        Call .WriteASCIIString(guild)
+        Call .WriteString(guild)
     End With
 End Sub
 
@@ -7782,7 +7782,7 @@ Public Sub WriteGMMessage(ByVal Message As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.GMMessage)
-        Call .WriteASCIIString(Message)
+        Call .WriteString(Message)
     End With
 End Sub
 
@@ -7847,7 +7847,7 @@ Public Sub WriteGoNearby(ByVal UserName As String)
         Call outgoingData.WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.GoNearby)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -7867,7 +7867,7 @@ Public Sub WriteComment(ByVal Message As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.Comment)
         
-        Call .WriteASCIIString(Message)
+        Call .WriteString(Message)
     End With
 End Sub
 
@@ -7902,7 +7902,7 @@ Public Sub WriteWhere(ByVal UserName As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.Where)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -7960,7 +7960,7 @@ Public Sub WriteWarpChar(ByVal UserName As String, ByVal Map As Integer, ByVal X
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.WarpChar)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
         
         Call .WriteInteger(Map)
         
@@ -7985,7 +7985,7 @@ Public Sub WriteSilence(ByVal UserName As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.Silence)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -8020,7 +8020,7 @@ Public Sub WriteSOSRemove(ByVal UserName As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.SOSRemove)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -8040,7 +8040,7 @@ Public Sub WriteGoToChar(ByVal UserName As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.GoToChar)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -8137,8 +8137,8 @@ Public Sub WriteJail(ByVal UserName As String, ByVal Reason As String, ByVal Tim
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.Jail)
         
-        Call .WriteASCIIString(UserName)
-        Call .WriteASCIIString(Reason)
+        Call .WriteString(UserName)
+        Call .WriteString(Reason)
         
         Call .WriteByte(Time)
     End With
@@ -8176,8 +8176,8 @@ Public Sub WriteWarnUser(ByVal UserName As String, ByVal Reason As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.WarnUser)
         
-        Call .WriteASCIIString(UserName)
-        Call .WriteASCIIString(Reason)
+        Call .WriteString(UserName)
+        Call .WriteString(Reason)
     End With
 End Sub
 
@@ -8200,12 +8200,12 @@ Public Sub WriteEditChar(ByVal UserName As String, ByVal EditOption As eEditOpti
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.EditChar)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
         
         Call .WriteByte(EditOption)
         
-        Call .WriteASCIIString(arg1)
-        Call .WriteASCIIString(arg2)
+        Call .WriteString(arg1)
+        Call .WriteString(arg2)
     End With
 End Sub
 
@@ -8225,7 +8225,7 @@ Public Sub WriteRequestCharInfo(ByVal UserName As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.RequestCharInfo)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -8245,7 +8245,7 @@ Public Sub WriteRequestCharStats(ByVal UserName As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.RequestCharStats)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -8265,7 +8265,7 @@ Public Sub WriteRequestCharGold(ByVal UserName As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.RequestCharGold)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
     
@@ -8285,7 +8285,7 @@ Public Sub WriteRequestCharInventory(ByVal UserName As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.RequestCharInventory)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -8305,7 +8305,7 @@ Public Sub WriteRequestCharBank(ByVal UserName As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.RequestCharBank)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -8325,7 +8325,7 @@ Public Sub WriteRequestCharSkills(ByVal UserName As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.RequestCharSkills)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -8345,7 +8345,7 @@ Public Sub WriteReviveChar(ByVal UserName As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.ReviveChar)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -8400,7 +8400,7 @@ Public Sub WriteForgive(ByVal UserName As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.Forgive)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -8420,7 +8420,7 @@ Public Sub WriteKick(ByVal UserName As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.Kick)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -8440,7 +8440,7 @@ Public Sub WriteExecute(ByVal UserName As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.Execute)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -8461,9 +8461,9 @@ Public Sub WriteBanChar(ByVal UserName As String, ByVal Reason As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.banChar)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
         
-        Call .WriteASCIIString(Reason)
+        Call .WriteString(Reason)
     End With
 End Sub
 
@@ -8483,7 +8483,7 @@ Public Sub WriteUnbanChar(ByVal UserName As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.UnbanChar)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -8518,7 +8518,7 @@ Public Sub WriteSummonChar(ByVal UserName As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.SummonChar)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -8588,7 +8588,7 @@ Public Sub WriteServerMessage(ByVal Message As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.ServerMessage)
         
-        Call .WriteASCIIString(Message)
+        Call .WriteString(Message)
     End With
 End Sub
 ''
@@ -8607,7 +8607,7 @@ Public Sub WriteMapMessage(ByVal Message As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.MapMessage)
         
-        Call .WriteASCIIString(Message)
+        Call .WriteString(Message)
     End With
 End Sub
 
@@ -8627,7 +8627,7 @@ Public Sub WriteNickToIP(ByVal UserName As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.nickToIP)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -8678,7 +8678,7 @@ Public Sub WriteGuildOnlineMembers(ByVal guild As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.GuildOnlineMembers)
         
-        Call .WriteASCIIString(guild)
+        Call .WriteString(guild)
     End With
 End Sub
 
@@ -8768,7 +8768,7 @@ Public Sub WriteSetCharDescription(ByVal Desc As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.SetCharDescription)
         
-        Call .WriteASCIIString(Desc)
+        Call .WriteString(Desc)
     End With
 End Sub
 
@@ -8839,7 +8839,7 @@ Public Sub WriteRoyalArmyMessage(ByVal Message As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.RoyalArmyMessage)
         
-        Call .WriteASCIIString(Message)
+        Call .WriteString(Message)
     End With
 End Sub
 
@@ -8859,7 +8859,7 @@ Public Sub WriteChaosLegionMessage(ByVal Message As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.ChaosLegionMessage)
         
-        Call .WriteASCIIString(Message)
+        Call .WriteString(Message)
     End With
 End Sub
 
@@ -8879,7 +8879,7 @@ Public Sub WriteCitizenMessage(ByVal Message As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.CitizenMessage)
         
-        Call .WriteASCIIString(Message)
+        Call .WriteString(Message)
     End With
 End Sub
 
@@ -8899,7 +8899,7 @@ Public Sub WriteCriminalMessage(ByVal Message As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.CriminalMessage)
         
-        Call .WriteASCIIString(Message)
+        Call .WriteString(Message)
     End With
 End Sub
 
@@ -8919,7 +8919,7 @@ Public Sub WriteTalkAsNPC(ByVal Message As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.TalkAsNPC)
         
-        Call .WriteASCIIString(Message)
+        Call .WriteString(Message)
     End With
 End Sub
 
@@ -8954,7 +8954,7 @@ Public Sub WriteAcceptRoyalCouncilMember(ByVal UserName As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.AcceptRoyalCouncilMember)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -8974,7 +8974,7 @@ Public Sub WriteAcceptChaosCouncilMember(ByVal UserName As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.AcceptChaosCouncilMember)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -9009,7 +9009,7 @@ Public Sub WriteMakeDumb(ByVal UserName As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.MakeDumb)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -9029,7 +9029,7 @@ Public Sub WriteMakeDumbNoMore(ByVal UserName As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.MakeDumbNoMore)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -9064,7 +9064,7 @@ Public Sub WriteCouncilKick(ByVal UserName As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.CouncilKick)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -9149,7 +9149,7 @@ Public Sub WriteGuildBan(ByVal guild As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.GuildBan)
         
-        Call .WriteASCIIString(guild)
+        Call .WriteString(guild)
     End With
 End Sub
 
@@ -9188,10 +9188,10 @@ Public Sub WriteBanIP(ByVal byIp As Boolean, ByRef Ip() As Byte, ByVal Nick As S
                 Call .WriteByte(Ip(i))
             Next i
         Else
-            Call .WriteASCIIString(Nick)
+            Call .WriteString(Nick)
         End If
         
-        Call .WriteASCIIString(Reason)
+        Call .WriteString(Reason)
     End With
 End Sub
 
@@ -9277,7 +9277,7 @@ Public Sub WriteChaosLegionKick(ByVal UserName As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.ChaosLegionKick)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -9297,7 +9297,7 @@ Public Sub WriteRoyalArmyKick(ByVal UserName As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.RoyalArmyKick)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -9358,9 +9358,9 @@ Public Sub WriteRemovePunishment(ByVal UserName As String, ByVal punishment As B
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.RemovePunishment)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
         Call .WriteByte(punishment)
-        Call .WriteASCIIString(NewText)
+        Call .WriteString(NewText)
     End With
 End Sub
 
@@ -9425,7 +9425,7 @@ Public Sub WriteLastIP(ByVal UserName As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.LastIP)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -9460,7 +9460,7 @@ Public Sub WriteSetMOTD(ByVal Message As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.SetMOTD)
         
-        Call .WriteASCIIString(Message)
+        Call .WriteString(Message)
     End With
 End Sub
 
@@ -9480,7 +9480,7 @@ Public Sub WriteSystemMessage(ByVal Message As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.SystemMessage)
         
-        Call .WriteASCIIString(Message)
+        Call .WriteString(Message)
     End With
 End Sub
 
@@ -9613,7 +9613,7 @@ Public Sub WriteTurnCriminal(ByVal UserName As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.TurnCriminal)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -9633,7 +9633,7 @@ Public Sub WriteResetFactions(ByVal UserName As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.ResetFactions)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -9653,7 +9653,7 @@ Public Sub WriteRemoveCharFromGuild(ByVal UserName As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.RemoveCharFromGuild)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -9673,7 +9673,7 @@ Public Sub WriteRequestCharMail(ByVal UserName As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.RequestCharMail)
         
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
 End Sub
 
@@ -9694,8 +9694,8 @@ Public Sub WriteAlterPassword(ByVal UserName As String, ByVal CopyFrom As String
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.AlterPassword)
         
-        Call .WriteASCIIString(UserName)
-        Call .WriteASCIIString(CopyFrom)
+        Call .WriteString(UserName)
+        Call .WriteString(CopyFrom)
     End With
 End Sub
 
@@ -9716,8 +9716,8 @@ Public Sub WriteAlterMail(ByVal UserName As String, ByVal newMail As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.AlterMail)
         
-        Call .WriteASCIIString(UserName)
-        Call .WriteASCIIString(newMail)
+        Call .WriteString(UserName)
+        Call .WriteString(newMail)
     End With
 End Sub
 
@@ -9738,8 +9738,8 @@ Public Sub WriteAlterName(ByVal UserName As String, ByVal newName As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.AlterName)
         
-        Call .WriteASCIIString(UserName)
-        Call .WriteASCIIString(newName)
+        Call .WriteString(UserName)
+        Call .WriteString(newName)
     End With
 End Sub
 
@@ -9789,7 +9789,7 @@ Public Sub WriteShowGuildMessages(ByVal guild As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.ShowGuildMessages)
         
-        Call .WriteASCIIString(guild)
+        Call .WriteString(guild)
     End With
 End Sub
 
@@ -9904,7 +9904,7 @@ Public Sub WriteChangeMapInfoRestricted(ByVal restrict As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.ChangeMapInfoRestricted)
         
-        Call .WriteASCIIString(restrict)
+        Call .WriteString(restrict)
     End With
 End Sub
 
@@ -9984,7 +9984,7 @@ Public Sub WriteChangeMapInfoLand(ByVal land As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.ChangeMapInfoLand)
         
-        Call .WriteASCIIString(land)
+        Call .WriteString(land)
     End With
 End Sub
                         
@@ -10004,7 +10004,7 @@ Public Sub WriteChangeMapInfoZone(ByVal zone As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.ChangeMapInfoZone)
         
-        Call .WriteASCIIString(zone)
+        Call .WriteString(zone)
     End With
 End Sub
 
@@ -10278,7 +10278,7 @@ Public Sub WriteCheckSlot(ByVal UserName As String, ByVal slot As Byte)
     With outgoingData
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.CheckSlot)
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
         Call .WriteByte(slot)
     End With
 End Sub
@@ -10352,9 +10352,9 @@ Public Sub WriteSetIniVar(ByRef sLlave As String, ByRef sClave As String, ByRef 
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.SetIniVar)
         
-        Call .WriteASCIIString(sLlave)
-        Call .WriteASCIIString(sClave)
-        Call .WriteASCIIString(sValor)
+        Call .WriteString(sLlave)
+        Call .WriteString(sClave)
+        Call .WriteString(sValor)
     End With
 End Sub
 
@@ -10456,7 +10456,7 @@ Public Sub WriteSetDialog(ByVal dialog As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.SetDialog)
         
-        Call .WriteASCIIString(dialog)
+        Call .WriteString(dialog)
     End With
 End Sub
 
@@ -10506,7 +10506,7 @@ Public Sub WriteRecordAddObs(ByVal RecordIndex As Byte, ByVal Observation As Str
         Call .WriteByte(eGMCommands.RecordAddObs)
         
         Call .WriteByte(RecordIndex)
-        Call .WriteASCIIString(Observation)
+        Call .WriteString(Observation)
     End With
 End Sub
 
@@ -10525,8 +10525,8 @@ Public Sub WriteRecordAdd(ByVal Nickname As String, ByVal Reason As String)
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.RecordAdd)
         
-        Call .WriteASCIIString(Nickname)
-        Call .WriteASCIIString(Reason)
+        Call .WriteString(Nickname)
+        Call .WriteString(Reason)
     End With
 End Sub
 
@@ -10905,7 +10905,7 @@ Public Sub WriteSearchObj(ByVal BuscoObj As String)
                 Call .WriteByte(ClientPacketID.GMCommands)
                 Call .WriteByte(eGMCommands.SearchObj)
            
-                Call .WriteASCIIString(BuscoObj)
+                Call .WriteString(BuscoObj)
                 
         End With
 
@@ -10918,7 +10918,7 @@ Public Sub WriteSearchNpc(ByVal BuscoNpc As String)
                 Call .WriteByte(ClientPacketID.GMCommands)
                 Call .WriteByte(eGMCommands.SearchNpc)
        
-                Call .WriteASCIIString(BuscoNpc)
+                Call .WriteString(BuscoNpc)
                 
         End With
 
@@ -11197,8 +11197,8 @@ Public Sub WriteCambiarContrasena()
         Call .WriteByte(ClientPacketID.CambiarContrasena)
         
         'Mando los datos de la cuenta a modificar.
-        Call .WriteASCIIString(AccountMailToRecover)
-        Call .WriteASCIIString(AccountNewPassword)
+        Call .WriteString(AccountMailToRecover)
+        Call .WriteString(AccountNewPassword)
     
     End With
 
@@ -11214,7 +11214,7 @@ Public Sub WriteFightSend(ByVal ListUser As String, ByVal GldRequired As Long)
     
     With outgoingData
         Call .WriteByte(ClientPacketID.FightSend)
-        Call .WriteASCIIString(ListUser)
+        Call .WriteString(ListUser)
         Call .WriteLong(GldRequired)
     End With
     
@@ -11224,7 +11224,7 @@ Public Sub WriteFightAccept(ByVal UserName As String)
     
     With outgoingData
         Call .WriteByte(ClientPacketID.FightAccept)
-        Call .WriteASCIIString(UserName)
+        Call .WriteString(UserName)
     End With
     
 End Sub
