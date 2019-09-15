@@ -3354,55 +3354,64 @@ End Sub
 ' Handles the ChangeSpellSlot message.
 
 Private Sub HandleChangeSpellSlot()
-'***************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'
-'***************************************************
+
+    '***************************************************
+    'Author: Juan Martin Sotuyo Dodero (Maraxus)
+    'Last Modification: 05/17/06
+    '
+    '***************************************************
     If incomingData.Remaining < 4 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
  
-On Error GoTo errhandler
+    On Error GoTo errhandler
     
- 
     'Remove packet ID
     Call incomingData.ReadByte
- 
-    Dim slot As Byte
-    slot = incomingData.ReadByte()
-    Dim str As String
- 
-    UserHechizos(slot) = incomingData.ReadInteger()
- 
-    If slot <= frmMain.hlst.ListCount Then
-         str = DevolverNombreHechizo(UserHechizos(slot))
-        If str <> vbNullString Then
-            frmMain.hlst.List(slot - 1) = str
-        Else
-            Call frmMain.hlst.AddItem(JsonLanguage.item("NADA").item("TEXTO"))
-        End If
-    Else
-        str = DevolverNombreHechizo(UserHechizos(slot))
-        If str <> vbNullString Then
-            Call frmMain.hlst.AddItem(str)
-        Else
-            Call frmMain.hlst.AddItem(JsonLanguage.item("NADA").item("TEXTO"))
-        End If
-    End If
- 
     
+    Dim str  As String
+    Dim slot As Byte
+
+    slot = incomingData.ReadByte()
+
+    UserHechizos(slot) = incomingData.ReadInteger()
+
+    With frmMain.hlst
+        
+        If slot <= .ListCount Then
+            str = DevolverNombreHechizo(UserHechizos(slot))
+
+            If Len(str) <> 0 Then
+                .List(slot - 1) = str
+            Else
+                Call .AddItem(JsonLanguage.item("NADA").item("TEXTO"))
+
+            End If
+
+        Else
+            str = DevolverNombreHechizo(UserHechizos(slot))
+
+            If Len(str) <> 0 Then
+                Call .AddItem(str)
+            Else
+                Call .AddItem(JsonLanguage.item("NADA").item("TEXTO"))
+
+            End If
+
+        End If
+    
+    End With
  
 errhandler:
+
     Dim Error As Long
-    Error = Err.number
-On Error GoTo 0
+        Error = Err.number
+
+    On Error GoTo 0
  
-    
- 
-    If Error <> 0 Then _
-        Err.Raise Error
+    If Error <> 0 Then Err.Raise Error
+
 End Sub
 
 ''

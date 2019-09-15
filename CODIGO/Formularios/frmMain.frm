@@ -218,6 +218,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2619
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -275,10 +276,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":39CC4
-      PICF            =   "frmMain.frx":3A6EE
-      PICH            =   "frmMain.frx":3B3B0
-      PICV            =   "frmMain.frx":3C342
+      PICE            =   "frmMain.frx":39CC5
+      PICF            =   "frmMain.frx":3A6EF
+      PICH            =   "frmMain.frx":3B3B1
+      PICV            =   "frmMain.frx":3C343
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -302,10 +303,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":3D244
-      PICF            =   "frmMain.frx":3DC6E
-      PICH            =   "frmMain.frx":3E930
-      PICV            =   "frmMain.frx":3F8C2
+      PICE            =   "frmMain.frx":3D245
+      PICF            =   "frmMain.frx":3DC6F
+      PICH            =   "frmMain.frx":3E931
+      PICV            =   "frmMain.frx":3F8C3
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -329,10 +330,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":407C4
-      PICF            =   "frmMain.frx":411EE
-      PICH            =   "frmMain.frx":41EB0
-      PICV            =   "frmMain.frx":42E42
+      PICE            =   "frmMain.frx":407C5
+      PICF            =   "frmMain.frx":411EF
+      PICH            =   "frmMain.frx":41EB1
+      PICV            =   "frmMain.frx":42E43
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -356,10 +357,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":43D44
-      PICF            =   "frmMain.frx":4476E
-      PICH            =   "frmMain.frx":45430
-      PICV            =   "frmMain.frx":463C2
+      PICE            =   "frmMain.frx":43D45
+      PICF            =   "frmMain.frx":4476F
+      PICH            =   "frmMain.frx":45431
+      PICV            =   "frmMain.frx":463C3
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -383,10 +384,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":472C4
-      PICF            =   "frmMain.frx":47CEE
-      PICH            =   "frmMain.frx":489B0
-      PICV            =   "frmMain.frx":49942
+      PICE            =   "frmMain.frx":472C5
+      PICF            =   "frmMain.frx":47CEF
+      PICH            =   "frmMain.frx":489B1
+      PICV            =   "frmMain.frx":49943
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -410,10 +411,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":4A844
-      PICF            =   "frmMain.frx":4B26E
-      PICH            =   "frmMain.frx":4BF30
-      PICV            =   "frmMain.frx":4CEC2
+      PICE            =   "frmMain.frx":4A845
+      PICF            =   "frmMain.frx":4B26F
+      PICH            =   "frmMain.frx":4BF31
+      PICV            =   "frmMain.frx":4CEC3
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -437,10 +438,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":4DDC4
-      PICF            =   "frmMain.frx":4E7EE
-      PICH            =   "frmMain.frx":4F4B0
-      PICV            =   "frmMain.frx":50442
+      PICE            =   "frmMain.frx":4DDC5
+      PICF            =   "frmMain.frx":4E7EF
+      PICH            =   "frmMain.frx":4F4B1
+      PICV            =   "frmMain.frx":50443
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -465,10 +466,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":51344
-      PICF            =   "frmMain.frx":51D6E
-      PICH            =   "frmMain.frx":52A30
-      PICV            =   "frmMain.frx":539C2
+      PICE            =   "frmMain.frx":51345
+      PICF            =   "frmMain.frx":51D6F
+      PICH            =   "frmMain.frx":52A31
+      PICV            =   "frmMain.frx":539C3
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   15.75
@@ -493,10 +494,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":548C4
-      PICF            =   "frmMain.frx":552EE
-      PICH            =   "frmMain.frx":55FB0
-      PICV            =   "frmMain.frx":56F42
+      PICE            =   "frmMain.frx":548C5
+      PICF            =   "frmMain.frx":552EF
+      PICH            =   "frmMain.frx":55FB1
+      PICV            =   "frmMain.frx":56F43
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   15.75
@@ -2138,8 +2139,11 @@ Private Sub cmdInventario_Click()
     cmdInfo.Visible = False
     CmdLanzar.Visible = False
     
-    cmdMoverHechi(0).Visible = False
-    cmdMoverHechi(1).Visible = False
+    ' Botones que modifican los slots de los hechizos.
+    ' Los desactivo porque ya est� el Drag/Drop de hechizos implementado.
+    ' TO-DO: Si alguien quiere que los re-implemente.
+    'cmdMoverHechi(0).Visible = False
+    'cmdMoverHechi(1).Visible = False
     
 End Sub
 
@@ -2154,8 +2158,11 @@ Private Sub CmdHechizos_Click()
     cmdInfo.Visible = True
     CmdLanzar.Visible = True
     
-    cmdMoverHechi(0).Visible = True
-    cmdMoverHechi(1).Visible = True
+    ' Botones que modifican los slots de los hechizos.
+    ' Los desactivo porque ya est� el Drag/Drop de hechizos implementado.
+    ' TO-DO: Si alguien quiere que los re-implemente.
+    'cmdMoverHechi(0).Visible = True
+    'cmdMoverHechi(1).Visible = True
     
     ' Desactivo controles de inventario
     picInv.Visible = False
