@@ -1332,7 +1332,7 @@ Public Sub HandleMultiMessage()
             
                 Distance = .ReadByte
                 tiempo = .ReadInteger
-                Hogar = .ReadASCIIString
+                Hogar = .ReadString
             
                 If tiempo >= 60 Then
                     If tiempo Mod 60 = 0 Then
@@ -1387,7 +1387,7 @@ Public Sub HandleMultiMessage()
             
             Case eMessages.Hechizo_HechiceroMSG_NOMBRE
                 SpellIndex = .ReadByte
-                Nombre = .ReadASCIIString
+                Nombre = .ReadString
          
                 Call ShowConsoleMsg(Hechizos(SpellIndex).HechiceroMsg & " " & Nombre & ".", 210, 220, 220)
          
@@ -1406,7 +1406,7 @@ Public Sub HandleMultiMessage()
          
             Case eMessages.Hechizo_TargetMSG
                 SpellIndex = .ReadByte
-                Nombre = .ReadASCIIString
+                Nombre = .ReadString
                 Call ShowConsoleMsg(Nombre & " " & Hechizos(SpellIndex).TargetMsg, 210, 220, 220)
 
         End Select
@@ -1597,7 +1597,7 @@ Private Sub HandleCommerceInit()
                 Call InvComNpc.SetItem(i, .ObjIndex, _
                 .Amount, 0, .GrhIndex, _
                 .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, _
-                .Valor, .Name)
+                .Valor, .name)
             End With
         End If
     Next i
@@ -1669,7 +1669,7 @@ Private Sub HandleUserCommerceInit()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    TradingUserName = incomingData.ReadASCIIString
+    TradingUserName = incomingData.ReadString
     
     Set InvComUsu = New clsGraphicalInventory
     Set InvOfferComUsu(0) = New clsGraphicalInventory
@@ -2069,7 +2069,7 @@ Private Sub HandleChangeMap()
     Call incomingData.ReadByte
     
     UserMap = incomingData.ReadInteger()
-    nameMap = incomingData.ReadASCIIString
+    nameMap = incomingData.ReadString
 'TODO: Once on-the-fly editor is implemented check for map version before loading....
 'For now we just drop it
     Call incomingData.ReadInteger
@@ -2143,7 +2143,7 @@ On Error GoTo errhandler
     Dim g As Byte
     Dim b As Byte
     
-    chat = Buffer.ReadASCIIString()
+    chat = Buffer.ReadString()
     CharIndex = Buffer.ReadInteger()
     
     r = Buffer.ReadByte()
@@ -2198,7 +2198,7 @@ On Error GoTo errhandler
     Dim g As Byte
     Dim b As Byte
     
-    chat = Buffer.ReadASCIIString()
+    chat = Buffer.ReadString()
     FontIndex = Buffer.ReadByte()
 
     If InStr(1, chat, "~") Then
@@ -2278,7 +2278,7 @@ On Error GoTo errhandler
     Dim g As Byte
     Dim b As Byte
     
-    chat = Buffer.ReadASCIIString()
+    chat = Buffer.ReadString()
     
     If Not DialogosClanes.Activo Then
         If InStr(1, chat, "~") Then
@@ -2357,7 +2357,7 @@ On Error GoTo errhandler
     Dim g As Byte
     Dim b As Byte
     
-    chat = Buffer.ReadASCIIString()
+    chat = Buffer.ReadString()
     FontIndex = Buffer.ReadByte()
     
     If InStr(1, chat, "~") Then
@@ -2426,7 +2426,7 @@ On Error GoTo errhandler
     'Remove packet ID
     Call Buffer.ReadByte
     
-    frmMensaje.msg.Caption = Buffer.ReadASCIIString()
+    frmMensaje.msg.Caption = Buffer.ReadString()
     frmMensaje.Show
     
     'If we got here then packet is complete, copy data back to original queue
@@ -2535,7 +2535,7 @@ On Error GoTo errhandler
     With charlist(CharIndex)
         Call Char_SetFx(CharIndex, Buffer.ReadInteger(), Buffer.ReadInteger())
         
-        .Nombre = Buffer.ReadASCIIString()
+        .Nombre = Buffer.ReadString()
         NickColor = Buffer.ReadByte()
         
         If (NickColor And eNickColor.ieCriminal) <> 0 Then
@@ -2605,7 +2605,7 @@ Private Sub HandleCharacterChangeNick()
     Dim CharIndex As Integer
     CharIndex = incomingData.ReadInteger
     
-    Call Char_SetName(CharIndex, incomingData.ReadASCIIString)
+    Call Char_SetName(CharIndex, incomingData.ReadString)
     
 End Sub
 
@@ -2945,7 +2945,7 @@ On Error GoTo errhandler
         'Clear guild's list
         .guildslist.Clear
         
-        GuildNames = Split(Buffer.ReadASCIIString(), SEPARATOR)
+        GuildNames = Split(Buffer.ReadString(), SEPARATOR)
         
         Dim i As Long
         For i = 0 To UBound(GuildNames())
@@ -3201,7 +3201,7 @@ On Error GoTo errhandler
     
     slot = Buffer.ReadByte()
     ObjIndex = Buffer.ReadInteger()
-    name = Buffer.ReadASCIIString()
+    name = Buffer.ReadString()
     Amount = Buffer.ReadInteger()
     Equipped = Buffer.ReadBoolean()
     GrhIndex = Buffer.ReadInteger()
@@ -3356,7 +3356,7 @@ On Error GoTo errhandler
     
     With UserBancoInventory(slot)
         .ObjIndex = Buffer.ReadInteger()
-        .name = Buffer.ReadASCIIString()
+        .name = Buffer.ReadString()
         .Amount = Buffer.ReadInteger()
         .GrhIndex = Buffer.ReadInteger()
         .OBJType = Buffer.ReadByte()
@@ -3520,7 +3520,7 @@ On Error GoTo errhandler
     
     For i = 1 To Count
         With ArmasHerrero(i)
-            .name = Buffer.ReadASCIIString()    'Get the object's name
+            .name = Buffer.ReadString()    'Get the object's name
             .GrhIndex = Buffer.ReadInteger()
             .LinH = Buffer.ReadInteger()        'The iron needed
             .LinP = Buffer.ReadInteger()        'The silver needed
@@ -3618,7 +3618,7 @@ On Error GoTo errhandler
     
     For i = 1 To Count
         With ArmadurasHerrero(i)
-            .name = Buffer.ReadASCIIString()    'Get the object's name
+            .name = Buffer.ReadString()    'Get the object's name
             .GrhIndex = Buffer.ReadInteger()
             .LinH = Buffer.ReadInteger()        'The iron needed
             .LinP = Buffer.ReadInteger()        'The silver needed
@@ -3704,7 +3704,7 @@ On Error GoTo errhandler
     
     For i = 1 To Count
         With ObjCarpintero(i)
-            .name = Buffer.ReadASCIIString()        'Get the object's name
+            .name = Buffer.ReadString()        'Get the object's name
             .GrhIndex = Buffer.ReadInteger()
             .Madera = Buffer.ReadInteger()          'The wood needed
             .MaderaElfica = Buffer.ReadInteger()    'The elfic wood needed
@@ -3804,7 +3804,7 @@ On Error GoTo errhandler
     'Remove packet ID
     Call Buffer.ReadByte
     
-    Call MsgBox(Buffer.ReadASCIIString())
+    Call MsgBox(Buffer.ReadString())
     
     If frmConnect.Visible And (Not frmCrearPersonaje.Visible) Then
         frmMain.Client.CloseSck
@@ -3878,7 +3878,7 @@ On Error GoTo errhandler
     Call Buffer.ReadByte
     
     Dim tmp As String
-    tmp = Buffer.ReadASCIIString()
+    tmp = Buffer.ReadString()
     
     Call InitCartel(tmp, Buffer.ReadInteger())
     
@@ -3923,7 +3923,7 @@ On Error GoTo errhandler
     slot = Buffer.ReadByte()
     
     With NPCInventory(slot)
-        .name = Buffer.ReadASCIIString()
+        .name = Buffer.ReadString()
         .Amount = Buffer.ReadInteger()
         .Valor = Buffer.ReadSingle()
         .GrhIndex = Buffer.ReadInteger()
@@ -4101,9 +4101,9 @@ On Error GoTo errhandler
     
     ForumType = Buffer.ReadByte
     
-    Title = Buffer.ReadASCIIString()
-    Author = Buffer.ReadASCIIString()
-    Message = Buffer.ReadASCIIString()
+    Title = Buffer.ReadString()
+    Author = Buffer.ReadString()
+    Message = Buffer.ReadString()
     
     If Not frmForo.ForoLimpio Then
         clsForos.ClearForums
@@ -4306,7 +4306,7 @@ On Error GoTo errhandler
     Dim i As Long
     Dim Upper_creatures As Long
     
-    creatures = Split(Buffer.ReadASCIIString(), SEPARATOR)
+    creatures = Split(Buffer.ReadString(), SEPARATOR)
     Upper_creatures = UBound(creatures())
     
     For i = 0 To Upper_creatures
@@ -4357,10 +4357,10 @@ On Error GoTo errhandler
     Dim sTemp As String
     
     'Get news' string
-    frmGuildNews.news = Buffer.ReadASCIIString()
+    frmGuildNews.news = Buffer.ReadString()
     
     'Get Enemy guilds list
-    guildList = Split(Buffer.ReadASCIIString(), SEPARATOR)
+    guildList = Split(Buffer.ReadString(), SEPARATOR)
     
     Upper_guildList = UBound(guildList)
     
@@ -4370,7 +4370,7 @@ On Error GoTo errhandler
     Next i
     
     'Get Allied guilds list
-    guildList = Split(Buffer.ReadASCIIString(), SEPARATOR)
+    guildList = Split(Buffer.ReadString(), SEPARATOR)
     
     For i = 0 To Upper_guildList
         sTemp = frmGuildNews.txtClanesAliados.Text
@@ -4416,7 +4416,7 @@ On Error GoTo errhandler
     'Remove packet ID
     Call Buffer.ReadByte
     
-    Call frmUserRequest.recievePeticion(Buffer.ReadASCIIString())
+    Call frmUserRequest.recievePeticion(Buffer.ReadString())
     
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
@@ -4458,7 +4458,7 @@ On Error GoTo errhandler
     Dim vsGuildList() As String, Upper_vsGuildList As Long
     Dim i As Long
     
-    vsGuildList = Split(Buffer.ReadASCIIString(), SEPARATOR)
+    vsGuildList = Split(Buffer.ReadString(), SEPARATOR)
     Upper_vsGuildList = UBound(vsGuildList())
     
     Call frmPeaceProp.lista.Clear
@@ -4513,7 +4513,7 @@ Private Sub HandlePeaceProposalsList()
     Dim Upper_guildList As Long
     Dim i               As Long
     
-    guildList = Split(Buffer.ReadASCIIString(), SEPARATOR)
+    guildList = Split(Buffer.ReadString(), SEPARATOR)
     
     With frmPeaceProp
     
@@ -4581,7 +4581,7 @@ On Error GoTo errhandler
             .imgPeticion.Visible = True
         End If
         
-        .Nombre.Caption = Buffer.ReadASCIIString()
+        .Nombre.Caption = Buffer.ReadString()
         .Raza.Caption = ListaRazas(Buffer.ReadByte())
         .Clase.Caption = ListaClases(Buffer.ReadByte())
         
@@ -4600,9 +4600,9 @@ On Error GoTo errhandler
         
         .reputacion.Caption = reputation
         
-        .txtPeticiones.Text = Buffer.ReadASCIIString()
-        .guildactual.Caption = Buffer.ReadASCIIString()
-        .txtMiembro.Text = Buffer.ReadASCIIString()
+        .txtPeticiones.Text = Buffer.ReadString()
+        .guildactual.Caption = Buffer.ReadString()
+        .txtMiembro.Text = Buffer.ReadString()
         
         Dim armada As Boolean
         Dim caos As Boolean
@@ -4672,7 +4672,7 @@ On Error GoTo errhandler
 
     With frmGuildLeader
         'Get list of existing guilds
-        GuildNames = Split(Buffer.ReadASCIIString(), SEPARATOR)
+        GuildNames = Split(Buffer.ReadString(), SEPARATOR)
         
         'Empty the list
         Call .guildslist.Clear
@@ -4684,7 +4684,7 @@ On Error GoTo errhandler
         Next i
         
         'Get list of guild's members
-        GuildMembers = Split(Buffer.ReadASCIIString(), SEPARATOR)
+        GuildMembers = Split(Buffer.ReadString(), SEPARATOR)
         .Miembros.Caption = CStr(UBound(GuildMembers()) + 1)
         
         'Empty the list
@@ -4694,10 +4694,10 @@ On Error GoTo errhandler
             Call .members.AddItem(GuildMembers(i))
         Next i
         
-        .txtguildnews = Buffer.ReadASCIIString()
+        .txtguildnews = Buffer.ReadString()
         
         'Get list of join requests
-        List = Split(Buffer.ReadASCIIString(), SEPARATOR)
+        List = Split(Buffer.ReadString(), SEPARATOR)
         
         'Empty the list
         Call .solicitudes.Clear
@@ -4751,11 +4751,11 @@ On Error GoTo errhandler
         .imgOfrecerAlianza.Visible = .EsLeader
         .imgOfrecerPaz.Visible = .EsLeader
         
-        .Nombre.Caption = Buffer.ReadASCIIString()
-        .fundador.Caption = Buffer.ReadASCIIString()
-        .creacion.Caption = Buffer.ReadASCIIString()
-        .lider.Caption = Buffer.ReadASCIIString()
-        .web.Caption = Buffer.ReadASCIIString()
+        .Nombre.Caption = Buffer.ReadString()
+        .fundador.Caption = Buffer.ReadString()
+        .creacion.Caption = Buffer.ReadString()
+        .lider.Caption = Buffer.ReadString()
+        .web.Caption = Buffer.ReadString()
         .Miembros.Caption = Buffer.ReadInteger()
         
         If Buffer.ReadBoolean() Then
@@ -4764,21 +4764,21 @@ On Error GoTo errhandler
             .eleccion.Caption = UCase$(JsonLanguage.item("CERRADA").item("TEXTO"))
         End If
         
-        .lblAlineacion.Caption = Buffer.ReadASCIIString()
+        .lblAlineacion.Caption = Buffer.ReadString()
         .Enemigos.Caption = Buffer.ReadInteger()
         .Aliados.Caption = Buffer.ReadInteger()
-        .antifaccion.Caption = Buffer.ReadASCIIString()
+        .antifaccion.Caption = Buffer.ReadString()
         
         Dim codexStr() As String
         Dim i As Long
         
-        codexStr = Split(Buffer.ReadASCIIString(), SEPARATOR)
+        codexStr = Split(Buffer.ReadString(), SEPARATOR)
         
         For i = 0 To 7
             .Codex(i).Caption = codexStr(i)
         Next i
         
-        .Desc.Text = Buffer.ReadASCIIString()
+        .Desc.Text = Buffer.ReadString()
     End With
     
     'If we got here then packet is complete, copy data back to original queue
@@ -4866,7 +4866,7 @@ On Error GoTo errhandler
     'Remove packet ID
     Call Buffer.ReadByte
     
-    Call frmUserRequest.recievePeticion(Buffer.ReadASCIIString())
+    Call frmUserRequest.recievePeticion(Buffer.ReadString())
     Call frmUserRequest.Show(vbModeless, frmMain)
     
     'If we got here then packet is complete, copy data back to original queue
@@ -5002,11 +5002,11 @@ On Error GoTo errhandler
         If OfferSlot = GOLD_OFFER_SLOT Then
             Call InvOroComUsu(2).SetItem(1, .ReadInteger(), .ReadLong(), 0, _
                                             .ReadInteger(), .ReadByte(), .ReadInteger(), _
-                                            .ReadInteger(), .ReadInteger(), .ReadInteger(), .ReadLong(), .ReadASCIIString())
+                                            .ReadInteger(), .ReadInteger(), .ReadInteger(), .ReadLong(), .ReadString())
         Else
             Call InvOfferComUsu(1).SetItem(OfferSlot, .ReadInteger(), .ReadLong(), 0, _
                                             .ReadInteger(), .ReadByte(), .ReadInteger(), _
-                                            .ReadInteger(), .ReadInteger(), .ReadInteger(), .ReadLong(), .ReadASCIIString())
+                                            .ReadInteger(), .ReadInteger(), .ReadInteger(), .ReadLong(), .ReadString())
         End If
     End With
     
@@ -5074,7 +5074,7 @@ On Error GoTo errhandler
     Dim i As Long
     Dim Upper_creatureList As Long
     
-    creatureList = Split(Buffer.ReadASCIIString(), SEPARATOR)
+    creatureList = Split(Buffer.ReadString(), SEPARATOR)
     Upper_creatureList = UBound(creatureList())
     
     For i = 0 To Upper_creatureList
@@ -5123,7 +5123,7 @@ On Error GoTo errhandler
     Dim i As Long
     Dim Upper_sosList As Long
     
-    sosList = Split(Buffer.ReadASCIIString(), SEPARATOR)
+    sosList = Split(Buffer.ReadString(), SEPARATOR)
     Upper_sosList = UBound(sosList())
     
     For i = 0 To Upper_sosList
@@ -5173,7 +5173,7 @@ On Error GoTo errhandler
     Dim Upper_denounceList As Long
     Dim DenounceIndex As Long
     
-    DenounceList = Split(Buffer.ReadASCIIString(), SEPARATOR)
+    DenounceList = Split(Buffer.ReadString(), SEPARATOR)
     Upper_denounceList = UBound(DenounceList())
     
     With FontTypes(FontTypeNames.FONTTYPE_GUILDMSG)
@@ -5225,7 +5225,7 @@ On Error GoTo errhandler
     
     EsPartyLeader = CBool(Buffer.ReadByte())
        
-    members = Split(Buffer.ReadASCIIString(), SEPARATOR)
+    members = Split(Buffer.ReadString(), SEPARATOR)
     Upper_members = UBound(members())
     
     For i = 0 To Upper_members
@@ -5274,7 +5274,7 @@ On Error GoTo errhandler
     'Remove packet ID
     Call Buffer.ReadByte
     
-    frmCambiaMotd.txtMotd.Text = Buffer.ReadASCIIString()
+    frmCambiaMotd.txtMotd.Text = Buffer.ReadString()
     frmCambiaMotd.Show , frmMain
     
     'If we got here then packet is complete, copy data back to original queue
@@ -5331,7 +5331,7 @@ On Error GoTo errhandler
     
     Dim userList() As String
     
-    userList = Split(Buffer.ReadASCIIString(), SEPARATOR)
+    userList = Split(Buffer.ReadString(), SEPARATOR)
     
     If frmPanelGm.Visible Then
         frmPanelGm.cboListaUsus.Clear
@@ -5366,7 +5366,7 @@ Public Sub HandleRenderMsg()
     Call incomingData.ReadByte
     
     renderMsgReset
-    renderText = incomingData.ReadASCIIString
+    renderText = incomingData.ReadString
     renderFont = incomingData.ReadInteger
     colorRender = 240
 End Sub
@@ -5422,7 +5422,7 @@ On Error GoTo errhandler
         'Clear guild's list
         .lstClanes.Clear
         
-        GuildNames = Split(Buffer.ReadASCIIString(), SEPARATOR)
+        GuildNames = Split(Buffer.ReadString(), SEPARATOR)
         
         Dim i As Long
 
@@ -5433,7 +5433,7 @@ On Error GoTo errhandler
         Next i
         
         'Get list of guild's members
-        GuildMembers = Split(Buffer.ReadASCIIString(), SEPARATOR)
+        GuildMembers = Split(Buffer.ReadString(), SEPARATOR)
         .lblCantMiembros.Caption = CStr(UBound(GuildMembers()) + 1)
         
         'Empty the list
@@ -5489,7 +5489,7 @@ On Error GoTo errhandler
     
     CharIndex = Buffer.ReadInteger()
     NickColor = Buffer.ReadByte()
-    UserTag = Buffer.ReadASCIIString()
+    UserTag = Buffer.ReadString()
     
     'Update char status adn tag!
     With charlist(CharIndex)
@@ -10613,7 +10613,7 @@ On Error GoTo errhandler
     'Se limpia el ListBox y se agregan los usuarios
     frmPanelGm.lstUsers.Clear
     For i = 1 To NumRecords
-        frmPanelGm.lstUsers.AddItem Buffer.ReadASCIIString
+        frmPanelGm.lstUsers.AddItem Buffer.ReadString
     Next i
     
     'If we got here then packet is complete, copy data back to original queue
@@ -10655,8 +10655,8 @@ On Error GoTo errhandler
     Call Buffer.ReadByte
        
     With frmPanelGm
-        .txtCreador.Text = Buffer.ReadASCIIString
-        .txtDescrip.Text = Buffer.ReadASCIIString
+        .txtCreador.Text = Buffer.ReadString
+        .txtDescrip.Text = Buffer.ReadString
         
         'Status del pj
         If Buffer.ReadBoolean Then
@@ -10668,7 +10668,7 @@ On Error GoTo errhandler
         End If
         
         'IP del personaje
-        tmpStr = Buffer.ReadASCIIString
+        tmpStr = Buffer.ReadString
         If LenB(tmpStr) Then
             .txtIP.Text = tmpStr
         Else
@@ -10676,7 +10676,7 @@ On Error GoTo errhandler
         End If
         
         'Tiempo online
-        tmpStr = Buffer.ReadASCIIString
+        tmpStr = Buffer.ReadString
         If LenB(tmpStr) Then
             .txtTimeOn.Text = tmpStr
         Else
@@ -10684,7 +10684,7 @@ On Error GoTo errhandler
         End If
         
         'Observaciones
-        tmpStr = Buffer.ReadASCIIString
+        tmpStr = Buffer.ReadString
         If LenB(tmpStr) Then
             .txtObs.Text = tmpStr
         Else
@@ -10812,8 +10812,8 @@ Private Sub HandleAccountLogged()
     'Remove packet ID
     Call Buffer.ReadByte
 
-    AccountName = Buffer.ReadASCIIString
-    AccountHash = Buffer.ReadASCIIString
+    AccountName = Buffer.ReadString
+    AccountHash = Buffer.ReadString
     NumberOfCharacters = Buffer.ReadByte
 
     frmPanelAccount.Show
@@ -10827,7 +10827,7 @@ Private Sub HandleAccountLogged()
         For LoopC = 1 To NumberOfCharacters
         
             With cPJ(LoopC)
-                .Nombre = Buffer.ReadASCIIString
+                .Nombre = Buffer.ReadString
                 .Body = Buffer.ReadInteger
                 .Head = Buffer.ReadInteger
                 .weapon = Buffer.ReadInteger
@@ -10892,7 +10892,7 @@ Private Sub HandleSearchList()
                 End If
         End If
  
-        Datos = incomingData.ReadASCIIString()
+        Datos = incomingData.ReadString()
  
         frmBuscar.List1.AddItem Datos
  
@@ -11035,8 +11035,8 @@ On Error GoTo errhandler
         'Nos fijamos si se trata de una quest empezada, para poder leer los NPCs que se han matado.
         QuestEmpezada = IIf(.ReadByte, True, False)
         
-        tmpStr = "Mision: " & .ReadASCIIString & vbCrLf
-        tmpStr = tmpStr & "Detalles: " & .ReadASCIIString & vbCrLf
+        tmpStr = "Mision: " & .ReadString & vbCrLf
+        tmpStr = tmpStr & "Detalles: " & .ReadString & vbCrLf
         tmpStr = tmpStr & "Nivel requerido: " & .ReadByte & vbCrLf
         
         tmpStr = tmpStr & vbCrLf & "OBJETIVOS" & vbCrLf
@@ -11044,7 +11044,7 @@ On Error GoTo errhandler
         tmpByte = .ReadByte
         If tmpByte Then 'Hay NPCs
             For i = 1 To tmpByte
-                tmpStr = tmpStr & "*) Matar " & .ReadInteger & " " & .ReadASCIIString & "."
+                tmpStr = tmpStr & "*) Matar " & .ReadInteger & " " & .ReadString & "."
                 If QuestEmpezada Then
                     tmpStr = tmpStr & " (Has matado " & .ReadInteger & ")" & vbCrLf
                 Else
@@ -11056,7 +11056,7 @@ On Error GoTo errhandler
         tmpByte = .ReadByte
         If tmpByte Then 'Hay OBJs
             For i = 1 To tmpByte
-                tmpStr = tmpStr & "*) Conseguir " & .ReadInteger & " " & .ReadASCIIString & "." & vbCrLf
+                tmpStr = tmpStr & "*) Conseguir " & .ReadInteger & " " & .ReadString & "." & vbCrLf
             Next i
         End If
  
@@ -11067,7 +11067,7 @@ On Error GoTo errhandler
         tmpByte = .ReadByte
         If tmpByte Then
             For i = 1 To tmpByte
-                tmpStr = tmpStr & "*) " & .ReadInteger & " " & .ReadASCIIString & vbCrLf
+                tmpStr = tmpStr & "*) " & .ReadInteger & " " & .ReadString & vbCrLf
             Next i
         End If
     End With
@@ -11125,7 +11125,7 @@ On Error GoTo errhandler
     'Si el usuario tiene quests entonces hacemos el handle
     If tmpByte Then
         'Leemos el string
-        tmpStr = Buffer.ReadASCIIString
+        tmpStr = Buffer.ReadString
         
         'Agregamos los items
         For i = 1 To tmpByte
