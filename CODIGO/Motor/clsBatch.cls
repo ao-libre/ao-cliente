@@ -108,7 +108,7 @@ Public Sub Draw(ByVal X As Single, _
         m_Data(m_Position).X = x_Cor
         m_Data(m_Position).Y = y_Cor
         m_Data(m_Position).Z = 0
-        m_Data(m_Position).Colour = Color(0)
+        m_Data(m_Position).Colour = Color(1)
         m_Data(m_Position).tX = Tx1
         m_Data(m_Position).tY = Ty1
         m_DataAlpha(m_Position) = Alpha
@@ -120,7 +120,7 @@ Public Sub Draw(ByVal X As Single, _
         m_Data(m_Position).X = x_Cor
         m_Data(m_Position).Y = y_Cor
         m_Data(m_Position).Z = 0
-        m_Data(m_Position).Colour = Color(1)
+        m_Data(m_Position).Colour = Color(0)
         m_Data(m_Position).tX = Tx1
         m_Data(m_Position).tY = Ty2
         m_DataAlpha(m_Position) = Alpha
@@ -159,7 +159,7 @@ Public Sub Draw(ByVal X As Single, _
         m_Data(m_Position).X = dest.Left
         m_Data(m_Position).Y = dest.Bottom
         m_Data(m_Position).Z = 0
-        m_Data(m_Position).Colour = Color(0)
+        m_Data(m_Position).Colour = Color(1)
         m_Data(m_Position).tX = Tx1
         m_Data(m_Position).tY = Ty1
         m_DataAlpha(m_Position) = Alpha
@@ -169,7 +169,7 @@ Public Sub Draw(ByVal X As Single, _
         m_Data(m_Position).X = dest.Left
         m_Data(m_Position).Y = dest.Top
         m_Data(m_Position).Z = 0
-        m_Data(m_Position).Colour = Color(1)
+        m_Data(m_Position).Colour = Color(0)
         m_Data(m_Position).tX = Tx1
         m_Data(m_Position).tY = Ty2
         m_DataAlpha(m_Position) = Alpha
@@ -202,7 +202,6 @@ Public Sub Draw(ByVal X As Single, _
     End If
     
 End Sub
-
 Public Sub Finish()
     '
     ' Flush the batch since we're finished

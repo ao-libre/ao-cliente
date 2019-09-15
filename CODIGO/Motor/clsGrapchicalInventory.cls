@@ -272,7 +272,15 @@ Public Property Get ItemName(ByVal slot As Byte) As String
 'Last Modify Date: 27/07/04
 'Retrieves the selected item's name
 '***************************************************
-    ItemName = Inventory(slot).Name
+    ItemName = Inventory(slot).name
+End Property
+Public Property Get LoUsa(ByVal slot As Byte) As Boolean
+'***************************************************
+'Author: Juan Martin Sotuyo Dodero (Maraxus)
+'Last Modify Date: 27/07/04
+'Devuelve si lo usa o no
+'***************************************************
+    LoUsa = Inventory(slot).LoUsa
 End Property
 
 Public Property Get Equipped(ByVal slot As Byte) As Boolean
@@ -333,7 +341,7 @@ End Sub
 
 Public Sub SetItem(ByVal slot As Byte, ByVal eOBJIndex As Integer, ByVal eAmount As Long, ByVal eEquipped As Byte, _
                         ByVal eGrhIndex As Integer, ByVal eObjType As Integer, ByVal eMaxHit As Integer, ByVal eMinHit As Integer, _
-                        ByVal MaxDef As Integer, ByVal MinDef As Integer, ByVal eValor As Single, ByVal eName As String)
+                        ByVal MaxDef As Integer, ByVal MinDef As Integer, ByVal eValor As Single, ByVal eName As String, ByVal LoUsa As Boolean)
 '***************************************************
 'Author: Juan Martin Sotuyo Dodero (Maraxus)
 'Last Modify Date: 12/04/06
@@ -349,10 +357,11 @@ Public Sub SetItem(ByVal slot As Byte, ByVal eOBJIndex As Integer, ByVal eAmount
         .GrhIndex = eGrhIndex
         .MaxHit = eMaxHit
         .MinHit = eMinHit
-        .Name = eName
+        .name = eName
         .ObjIndex = eOBJIndex
         .OBJType = eObjType
         .Valor = eValor
+        .LoUsa = LoUsa
     End With
     
     'If InventoryWindow.Visible = False Then InventoryWindow.Visible = True
@@ -401,7 +410,7 @@ Public Sub DrawInventory()
     Dim destRect          As RECT
     Dim Inv_Color(3)      As Long
     Dim Sel_Color(3)      As Long
-    
+    Dim redColor(3) As Long
     With destRect
         .Bottom = InventoryWindow.Height
         .Right = InventoryWindow.Width
@@ -409,6 +418,7 @@ Public Sub DrawInventory()
     
     Call Engine_Long_To_RGB_List(Inv_Color(), -1)
     Call Engine_Long_To_RGB_List(Sel_Color(), D3DColorARGB(100, 255, 128, 0))
+    Call Engine_Long_To_RGB_List(redColor(), D3DColorARGB(255, 255, 0, 0))
     
     'Clear the inventory window
     Call Engine_BeginScene
@@ -428,8 +438,11 @@ Public Sub DrawInventory()
                 If LoopC = SelectedItem Then
                     Call Draw_GrhIndex(26096, startdX, startdY, 0, Inv_Color(), 0, False) 'Dibuja el fondo cuando lo seleccionamos
                 End If
-
-                Call Draw_GrhIndex(Inventory(LoopC).GrhIndex, startdX, startdY, 0, Inv_Color())
+                If Inventory(LoopC).LoUsa Then
+                    Call Draw_GrhIndex(Inventory(LoopC).GrhIndex, startdX, startdY, 0, Inv_Color)
+                Else
+                    Call Draw_GrhIndex(Inventory(LoopC).GrhIndex, startdX, startdY, 0, redColor)
+                End If
 
                 'If equipped we render "E"
                 If Inventory(LoopC).Equipped Then
@@ -480,11 +493,11 @@ Private Sub InventoryWindow_MouseMove(Button As Integer, Shift As Integer, X As 
         'Incorporado por ReyarB, arreglado por Recox
         If TempItem <= UBound(Inventory) Then
             If Inventory(TempItem).OBJType = eObjType.otWeapon Or Inventory(TempItem).OBJType = eObjType.otFlechas Then
-                InventoryWindow.ToolTipText = Inventory(TempItem).Name & ", Ataque: " & Inventory(TempItem).MaxHit & "/" & Inventory(TempItem).MinHit
-            ElseIf Inventory(TempItem).OBJType = eObjType.otArmadura Or Inventory(TempItem).OBJType = eObjType.otEscudo Then
-                InventoryWindow.ToolTipText = Inventory(TempItem).Name & ", Defensa: " & Inventory(TempItem).MaxDef & "/" & Inventory(TempItem).MinDef
+                InventoryWindow.ToolTipText = Inventory(TempItem).name & ", Ataque: " & Inventory(TempItem).MaxHit & "/" & Inventory(TempItem).MinHit
+            ElseIf Inventory(TempItem).OBJType = eObjType.otArmadura Or Inventory(TempItem).OBJType = eObjType.otescudo Then
+                InventoryWindow.ToolTipText = Inventory(TempItem).name & ", Defensa: " & Inventory(TempItem).MaxDef & "/" & Inventory(TempItem).MinDef
             Else
-                InventoryWindow.ToolTipText = Inventory(TempItem).Name
+                InventoryWindow.ToolTipText = Inventory(TempItem).name
             End If
         End If
 

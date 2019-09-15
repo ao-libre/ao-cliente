@@ -331,7 +331,7 @@ Public Enum eObjType
     otBebidas = 13
     otLena = 14
     otFogata = 15
-    otEscudo = 16
+    otescudo = 16
     otcasco = 17
     otAnillo = 18
     otTeleport = 19
@@ -564,7 +564,7 @@ End Enum
 'Inventario
 Type Inventory
     ObjIndex As Integer
-    Name As String
+    name As String
     GrhIndex As Integer
     '[Alejo]: tipo de datos ahora es Long
     Amount As Long
@@ -576,11 +576,12 @@ Type Inventory
     MinDef As Integer 'Budi
     MaxHit As Integer
     MinHit As Integer
+    LoUsa As Boolean
 End Type
 
 Type NpCinV
     ObjIndex As Integer
-    Name As String
+    name As String
     GrhIndex As Integer
     Amount As Integer
     Valor As Single
@@ -589,6 +590,7 @@ Type NpCinV
     MinDef As Integer
     MaxHit As Integer
     MinHit As Integer
+    LoUsa As Boolean
     C1 As String
     C2 As String
     C3 As String
@@ -619,7 +621,7 @@ Type tEstadisticasUsu
 End Type
 
 Type tItemsConstruibles
-    Name As String
+    name As String
     ObjIndex As Integer
     GrhIndex As Integer
     LinH As Integer
@@ -734,7 +736,7 @@ Public ListaClases(1 To NUMCLASES) As String
 
 Public SkillPoints As Integer
 Public Alocados As Integer
-Public Flags() As Integer
+Public flags() As Integer
 
 Public UsingSkill As Integer
 
