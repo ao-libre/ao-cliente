@@ -875,8 +875,8 @@ Private Sub LoadInitialConfig()
     Set Inventario = New clsGraphicalInventory
     Set CustomKeys = New clsCustomKeys
     Set CustomMessages = New clsCustomMessages
-    Set incomingData = New clsByteQueue
-    Set outgoingData = New clsByteQueue
+    Set incomingData = New CsBuffer
+    Set outgoingData = New CsBuffer
     Set MainTimer = New clsTimer
     Set clsForos = New clsForum
     Set frmMain.Client = New clsSocket
@@ -993,6 +993,7 @@ Private Sub LoadInitialConfig()
     
     'Inicializamos el inventario grafico
     Call Inventario.Initialize(DirectD3D8, frmMain.PicInv, MAX_INVENTORY_SLOTS, , , , , , , , True)
+    
     'Set cKeys = New Collection
     Call AddtoRichTextBox(frmCargando.status, _
                             JsonLanguage.item("BIENVENIDO").item("TEXTO"), _
