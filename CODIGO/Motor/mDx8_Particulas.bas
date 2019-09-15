@@ -822,7 +822,7 @@ Private Function Char_Particle_Group_Create(ByVal char_index As Integer, ByRef g
     
     If char_part_free_index > 0 Then
         Char_Particle_Group_Create = Particle_Group_Next_Open
-        Call Char_Particle_Group_Make(har_Particle_Group_Create, char_index, char_part_free_index, Particle_Count, stream_type, grh_index_list(), rgb_list(), alphaBlend, alive_counter, frame_speed, id, x1, y1, angle, vecx1, vecx2, vecy1, vecy2, life1, life2, fric, spin_speedL, gravity, grav_strength, bounce_strength, x2, y2, XMove, move_x1, move_x2, move_y1, move_y2, YMove, spin_speedH, spin)
+        Call Char_Particle_Group_Make(Char_Particle_Group_Create, char_index, char_part_free_index, Particle_Count, stream_type, grh_index_list(), rgb_list(), alphaBlend, alive_counter, frame_speed, id, x1, y1, angle, vecx1, vecx2, vecy1, vecy2, life1, life2, fric, spin_speedL, gravity, grav_strength, bounce_strength, x2, y2, XMove, move_x1, move_x2, move_y1, move_y2, YMove, spin_speedH, spin)
     End If
 
 End Function

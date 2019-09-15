@@ -4800,7 +4800,7 @@ On Error GoTo errhandler
     
     OfferSlot = incomingData.ReadByte
     
-    With Buffer
+    With incomingData
         If OfferSlot = GOLD_OFFER_SLOT Then
             Call InvOroComUsu(2).SetItem(1, .ReadInteger(), .ReadLong(), 0, _
                                             .ReadInteger(), .ReadByte(), .ReadInteger(), _
@@ -10397,13 +10397,9 @@ Private Sub HandleRecordDetails()
     End If
     
 On Error GoTo errhandler
-    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
-    Dim tmpStr As String
-    Call incomingData.CopyBuffer(incomingData)
     
+    Dim tmpstr As String
     
-       
     With frmPanelGm
         .txtCreador.Text = incomingData.ReadString
         .txtDescrip.Text = incomingData.ReadString
@@ -10418,25 +10414,25 @@ On Error GoTo errhandler
         End If
         
         'IP del personaje
-        tmpStr = incomingData.ReadString
-        If LenB(tmpStr) Then
-            .txtIP.Text = tmpStr
+        tmpstr = incomingData.ReadString
+        If LenB(tmpstr) Then
+            .txtIP.Text = tmpstr
         Else
             .txtIP.Text = JsonLanguage.item("USUARIO").item("TEXTO") & JsonLanguage.item("DESCONECTADO").item("TEXTO")
         End If
         
         'Tiempo online
-        tmpStr = incomingData.ReadString
-        If LenB(tmpStr) Then
-            .txtTimeOn.Text = tmpStr
+        tmpstr = incomingData.ReadString
+        If LenB(tmpstr) Then
+            .txtTimeOn.Text = tmpstr
         Else
             .txtTimeOn.Text = JsonLanguage.item("USUARIO").item("TEXTO") & JsonLanguage.item("DESCONECTADO").item("TEXTO")
         End If
         
         'Observaciones
-        tmpStr = incomingData.ReadString
-        If LenB(tmpStr) Then
-            .txtObs.Text = tmpStr
+        tmpstr = incomingData.ReadString
+        If LenB(tmpstr) Then
+            .txtObs.Text = tmpstr
         Else
             .txtObs.Text = JsonLanguage.item("MENSAJE_NO_NOVEDADES").item("TEXTO")
         End If
@@ -10549,13 +10545,6 @@ Private Sub HandleAccountLogged()
 
     On Error GoTo errhandler
     
-    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As clsByteQueue
-    Set Buffer = New clsByteQueue
-    Call incomingData.CopyBuffer(incomingData)
-
-    
-
     AccountName = incomingData.ReadString
     AccountHash = incomingData.ReadString
     NumberOfCharacters = incomingData.ReadByte
@@ -10762,35 +10751,33 @@ Private Sub HandleQuestDetails()
     End If
     
 On Error GoTo errhandler
-    Dim Buffer As New clsByteQueue
-    Call incomingData.CopyBuffer(incomingData)
     
-    Dim tmpStr As String
+    Dim tmpstr As String
     Dim tmpByte As Byte
     Dim QuestEmpezada As Boolean
     Dim i As Integer
     
-    With Buffer
+    With incomingData
         'Leemos el id del paquete
         Call .ReadByte
         
         'Nos fijamos si se trata de una quest empezada, para poder leer los NPCs que se han matado.
         QuestEmpezada = IIf(.ReadByte, True, False)
         
-        tmpStr = "Mision: " & .ReadString & vbCrLf
-        tmpStr = tmpStr & "Detalles: " & .ReadString & vbCrLf
-        tmpStr = tmpStr & "Nivel requerido: " & .ReadByte & vbCrLf
+        tmpstr = "Mision: " & .ReadString & vbCrLf
+        tmpstr = tmpstr & "Detalles: " & .ReadString & vbCrLf
+        tmpstr = tmpstr & "Nivel requerido: " & .ReadByte & vbCrLf
         
-        tmpStr = tmpStr & vbCrLf & "OBJETIVOS" & vbCrLf
+        tmpstr = tmpstr & vbCrLf & "OBJETIVOS" & vbCrLf
         
         tmpByte = .ReadByte
         If tmpByte Then 'Hay NPCs
             For i = 1 To tmpByte
-                tmpStr = tmpStr & "*) Matar " & .ReadInteger & " " & .ReadString & "."
+                tmpstr = tmpstr & "*) Matar " & .ReadInteger & " " & .ReadString & "."
                 If QuestEmpezada Then
-                    tmpStr = tmpStr & " (Has matado " & .ReadInteger & ")" & vbCrLf
+                    tmpstr = tmpstr & " (Has matado " & .ReadInteger & ")" & vbCrLf
                 Else
-                    tmpStr = tmpStr & vbCrLf
+                    tmpstr = tmpstr & vbCrLf
                 End If
             Next i
         End If
@@ -10798,27 +10785,27 @@ On Error GoTo errhandler
         tmpByte = .ReadByte
         If tmpByte Then 'Hay OBJs
             For i = 1 To tmpByte
-                tmpStr = tmpStr & "*) Conseguir " & .ReadInteger & " " & .ReadString & "." & vbCrLf
+                tmpstr = tmpstr & "*) Conseguir " & .ReadInteger & " " & .ReadString & "." & vbCrLf
             Next i
         End If
  
-        tmpStr = tmpStr & vbCrLf & "RECOMPENSAS" & vbCrLf
-        tmpStr = tmpStr & "*) Oro: " & .ReadLong & " monedas de oro." & vbCrLf
-        tmpStr = tmpStr & "*) Experiencia: " & .ReadLong & " puntos de experiencia." & vbCrLf
+        tmpstr = tmpstr & vbCrLf & "RECOMPENSAS" & vbCrLf
+        tmpstr = tmpstr & "*) Oro: " & .ReadLong & " monedas de oro." & vbCrLf
+        tmpstr = tmpstr & "*) Experiencia: " & .ReadLong & " puntos de experiencia." & vbCrLf
         
         tmpByte = .ReadByte
         If tmpByte Then
             For i = 1 To tmpByte
-                tmpStr = tmpStr & "*) " & .ReadInteger & " " & .ReadString & vbCrLf
+                tmpstr = tmpstr & "*) " & .ReadInteger & " " & .ReadString & vbCrLf
             Next i
         End If
     End With
     
     'Determinamos que formulario se muestra, seg�n si recibimos la informaci�n y la quest est� empezada o no.
     If QuestEmpezada Then
-        frmQuests.txtInfo.Text = tmpStr
+        frmQuests.txtInfo.Text = tmpstr
     Else
-        frmQuestInfo.txtInfo.Text = tmpStr
+        frmQuestInfo.txtInfo.Text = tmpstr
         frmQuestInfo.Show vbModeless, frmMain
     End If
     
@@ -10844,12 +10831,10 @@ Public Sub HandleQuestListSend()
     End If
     
 On Error GoTo errhandler
-    Dim Buffer As New clsByteQueue
-    Call incomingData.CopyBuffer(incomingData)
     
     Dim i As Integer
     Dim tmpByte As Byte
-    Dim tmpStr As String
+    Dim tmpstr As String
     
     'Leemos el id del paquete
     Call incomingData.ReadByte
@@ -10864,11 +10849,11 @@ On Error GoTo errhandler
     'Si el usuario tiene quests entonces hacemos el handle
     If tmpByte Then
         'Leemos el string
-        tmpStr = incomingData.ReadString
+        tmpstr = incomingData.ReadString
         
         'Agregamos los items
         For i = 1 To tmpByte
-            frmQuests.lstQuests.AddItem ReadField(i, tmpStr, 45)
+            frmQuests.lstQuests.AddItem ReadField(i, tmpstr, 45)
         Next i
     End If
     
