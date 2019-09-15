@@ -1728,7 +1728,7 @@ Select Case Index
     Case eSMType.mSpells
         If UserEstado = 1 Then
             With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                Call ShowConsoleMsg("��Est�s muerto!!", .Red, .Green, .Blue, .bold, .italic)
+                Call ShowConsoleMsg("Estas muerto!!", .Red, .Green, .Blue, .bold, .italic)
             End With
             Exit Sub
         End If
