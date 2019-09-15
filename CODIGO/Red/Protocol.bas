@@ -1424,7 +1424,8 @@ Private Sub HandleLogged()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     ' Variable initialization
     UserClase = incomingData.ReadByte
@@ -1454,7 +1455,8 @@ Private Sub HandleRemoveDialogs()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     Call Dialogos.RemoveAllDialogs
 End Sub
@@ -1474,7 +1476,8 @@ Private Sub HandleRemoveCharDialog()
         Exit Sub
     End If
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     Call Dialogos.RemoveDialog(incomingData.ReadInteger())
 End Sub
@@ -1488,7 +1491,8 @@ Private Sub HandleNavigateToggle()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     UserNavegando = Not UserNavegando
 End Sub
@@ -1503,7 +1507,8 @@ Private Sub HandleDisconnect()
 '
 '***************************************************
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     'Close connection
     If frmMain.Client.State <> sckClosed Then frmMain.Client.CloseSck
@@ -1520,7 +1525,8 @@ Private Sub HandleCommerceEnd()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     Set InvComUsu = Nothing
     Set InvComNpc = Nothing
@@ -1541,7 +1547,8 @@ Private Sub HandleBankEnd()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     Set InvBanco(0) = Nothing
     Set InvBanco(1) = Nothing
@@ -1561,7 +1568,8 @@ Private Sub HandleCommerceInit()
 '***************************************************
     Dim i As Long
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     Set InvComUsu = New clsGraphicalInventory
     Set InvComNpc = New clsGraphicalInventory
@@ -1611,7 +1619,8 @@ Private Sub HandleBankInit()
     Dim i As Long
     Dim BankGold As Long
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     Set InvBanco(0) = New clsGraphicalInventory
     Set InvBanco(1) = New clsGraphicalInventory
@@ -1657,7 +1666,8 @@ Private Sub HandleUserCommerceInit()
 '***************************************************
     Dim i As Long
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     TradingUserName = incomingData.ReadString
     
@@ -1708,7 +1718,8 @@ Private Sub HandleUserCommerceEnd()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     Set InvComUsu = Nothing
     Set InvOroComUsu(0) = Nothing
@@ -1730,7 +1741,8 @@ Private Sub HandleUserOfferConfirm()
 'Last Modification: 14/12/2009
 '
 '***************************************************
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     With frmComerciarUsu
         ' Now he can accept the offer or reject it
@@ -1750,7 +1762,8 @@ Private Sub HandleShowBlacksmithForm()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     If frmMain.macrotrabajo.Enabled And (MacroBltIndex > 0) Then
         Call WriteCraftBlacksmith(MacroBltIndex)
@@ -1769,7 +1782,8 @@ Private Sub HandleShowCarpenterForm()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     If frmMain.macrotrabajo.Enabled And (MacroBltIndex > 0) Then
         Call WriteCraftCarpenter(MacroBltIndex)
@@ -1794,7 +1808,8 @@ Private Sub HandleUpdateSta()
         Exit Sub
     End If
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     'Get data and update form
     UserMinSTA = incomingData.ReadInteger()
@@ -1827,7 +1842,8 @@ Private Sub HandleUpdateMana()
         Exit Sub
     End If
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     'Get data and update form
     UserMinMAN = incomingData.ReadInteger()
@@ -1860,7 +1876,8 @@ Private Sub HandleUpdateHP()
         Exit Sub
     End If
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     'Get data and update form
     UserMinHP = incomingData.ReadInteger()
@@ -1902,7 +1919,8 @@ Private Sub HandleUpdateGold()
         Exit Sub
     End If
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     'Get data and update form
     UserGLD = incomingData.ReadLong()
@@ -1933,7 +1951,8 @@ Private Sub HandleUpdateBankGold()
         Exit Sub
     End If
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     frmBancoObj.lblUserGld.Caption = incomingData.ReadLong
     
@@ -1954,7 +1973,8 @@ Private Sub HandleUpdateExp()
         Exit Sub
     End If
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     'Get data and update form
     UserExp = incomingData.ReadLong()
@@ -1976,7 +1996,8 @@ Private Sub HandleUpdateStrenghtAndDexterity()
         Exit Sub
     End If
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     'Get data and update form
     UserFuerza = incomingData.ReadByte
@@ -2000,7 +2021,8 @@ Private Sub HandleUpdateStrenght()
         Exit Sub
     End If
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     'Get data and update form
     UserFuerza = incomingData.ReadByte
@@ -2021,7 +2043,8 @@ Private Sub HandleUpdateDexterity()
         Exit Sub
     End If
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     'Get data and update form
     UserAgilidad = incomingData.ReadByte
@@ -2042,7 +2065,8 @@ Private Sub HandleChangeMap()
         Exit Sub
     End If
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     UserMap = incomingData.ReadInteger()
     nameMap = incomingData.ReadString
@@ -2079,7 +2103,8 @@ Private Sub HandlePosUpdate()
         Exit Sub
     End If
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     Call Map_RemoveOldUser
     
@@ -2109,7 +2134,8 @@ On Error GoTo errhandler
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
-    
+    'Remove packet ID
+    Call Buffer.ReadByte
     
     Dim chat As String
     Dim CharIndex As Integer
@@ -2162,7 +2188,8 @@ On Error GoTo errhandler
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
-    
+    'Remove packet ID
+    Call Buffer.ReadByte
     
     Dim chat As String
     Dim FontIndex As Integer
@@ -2242,7 +2269,8 @@ On Error GoTo errhandler
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
-    
+    'Remove packet ID
+    Call Buffer.ReadByte
     
     Dim chat As String
     Dim str As String
@@ -2319,7 +2347,8 @@ On Error GoTo errhandler
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
-    
+    'Remove packet ID
+    Call Buffer.ReadByte
     
     Dim chat As String
     Dim FontIndex As Integer
@@ -2394,7 +2423,8 @@ On Error GoTo errhandler
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
-    
+    'Remove packet ID
+    Call Buffer.ReadByte
     
     frmMensaje.msg.Caption = Buffer.ReadString()
     frmMensaje.Show
@@ -2428,7 +2458,8 @@ Private Sub HandleUserIndexInServer()
         Exit Sub
     End If
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     UserIndex = incomingData.ReadInteger()
 End Sub
@@ -2447,7 +2478,8 @@ Private Sub HandleUserCharIndexInServer()
         Exit Sub
     End If
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     Call Char_UserIndexSet(incomingData.ReadInteger())
                      
@@ -2474,7 +2506,8 @@ On Error GoTo errhandler
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
-    
+    'Remove packet ID
+    Call Buffer.ReadByte
     
     Dim CharIndex As Integer
     Dim Body As Integer
@@ -2567,7 +2600,8 @@ Private Sub HandleCharacterChangeNick()
         Exit Sub
     End If
     
-    
+    'Remove packet id
+    Call incomingData.ReadByte
     Dim CharIndex As Integer
     CharIndex = incomingData.ReadInteger
     
@@ -2589,7 +2623,8 @@ Private Sub HandleCharacterRemove()
         Exit Sub
     End If
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     Dim CharIndex As Integer
     
@@ -2613,7 +2648,8 @@ Private Sub HandleCharacterMove()
         Exit Sub
     End If
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     Dim CharIndex As Integer
     Dim X As Byte
@@ -2651,7 +2687,8 @@ Private Sub HandleForceCharMove()
         Exit Sub
     End If
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     Dim Direccion As Byte
     
@@ -2679,7 +2716,8 @@ Private Sub HandleCharacterChange()
         Exit Sub
     End If
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     Dim CharIndex As Integer
     
@@ -2717,7 +2755,8 @@ Private Sub HandleHeadingChange()
         Exit Sub
     End If
 
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
 
     Dim CharIndex As Integer
 
@@ -2741,7 +2780,8 @@ Private Sub HandleObjectCreate()
         Exit Sub
     End If
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     Dim X        As Byte
     Dim Y        As Byte
@@ -2768,7 +2808,8 @@ Private Sub HandleObjectDelete()
         Exit Sub
     End If
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     Dim X   As Byte
     Dim Y   As Byte
@@ -2798,7 +2839,8 @@ Private Sub HandleBlockPosition()
         Exit Sub
     End If
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     Dim X As Byte
     Dim Y As Byte
@@ -2832,7 +2874,8 @@ Private Sub HandlePlayMIDI()
     Dim currentMidi As Integer
     Dim Loops As Integer
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     currentMidi = incomingData.ReadInteger()
     Loops = incomingData.ReadInteger()
@@ -2862,7 +2905,8 @@ Private Sub HandlePlayWave()
         Exit Sub
     End If
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
         
     Dim wave As Byte
     Dim srcX As Byte
@@ -2894,7 +2938,8 @@ On Error GoTo errhandler
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
-    
+    'Remove packet ID
+    Call Buffer.ReadByte
     
     With frmGuildAdm
         'Clear guild's list
@@ -2938,7 +2983,8 @@ Private Sub HandleAreaChanged()
         Exit Sub
     End If
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     Dim X As Byte
     Dim Y As Byte
@@ -2958,7 +3004,8 @@ Private Sub HandlePauseToggle()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     pausa = Not pausa
 End Sub
@@ -2972,7 +3019,8 @@ Private Sub HandleRainToggle()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     If Not InMapBounds(UserPos.X, UserPos.Y) Then Exit Sub
     
@@ -3011,7 +3059,8 @@ Private Sub HandleCreateFX()
         Exit Sub
     End If
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     Dim CharIndex As Integer
     Dim fX As Integer
@@ -3038,7 +3087,8 @@ Private Sub HandleUpdateUserStats()
         Exit Sub
     End If
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     UserMaxHP = incomingData.ReadInteger()
     UserMinHP = incomingData.ReadInteger()
@@ -3130,7 +3180,8 @@ On Error GoTo errhandler
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
-    
+    'Remove packet ID
+    Call Buffer.ReadByte
     
     Dim slot As Byte
     Dim ObjIndex As Integer
@@ -3294,7 +3345,8 @@ On Error GoTo errhandler
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
-    
+    'Remove packet ID
+    Call Buffer.ReadByte
     
      Dim slot As Byte
     slot = Buffer.ReadByte()
@@ -3352,7 +3404,8 @@ On Error GoTo errhandler
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
  
-    
+    'Remove packet ID
+    Call Buffer.ReadByte
  
     Dim slot As Byte
     slot = Buffer.ReadByte()
@@ -3405,7 +3458,8 @@ Private Sub HandleAtributes()
         Exit Sub
     End If
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     Dim i As Long
     
@@ -3448,7 +3502,8 @@ On Error GoTo errhandler
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
-    
+    'Remove packet ID
+    Call Buffer.ReadByte
     
     Dim Count As Integer
     Dim i As Long
@@ -3546,7 +3601,8 @@ On Error GoTo errhandler
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
-    
+    'Remove packet ID
+    Call Buffer.ReadByte
     
     Dim Count As Integer
     Dim i As Long
@@ -3630,7 +3686,8 @@ On Error GoTo errhandler
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
-    
+    'Remove packet ID
+    Call Buffer.ReadByte
     
     Dim Count As Integer
     Dim i As Long
@@ -3716,7 +3773,8 @@ Private Sub HandleRestOK()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     UserDescansar = Not UserDescansar
 End Sub
@@ -3740,7 +3798,8 @@ On Error GoTo errhandler
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
-    
+    'Remove packet ID
+    Call Buffer.ReadByte
     
     Call MsgBox(Buffer.ReadString())
     
@@ -3772,7 +3831,8 @@ Private Sub HandleBlind()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     UserCiego = True
 End Sub
@@ -3786,7 +3846,8 @@ Private Sub HandleDumb()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     UserEstupido = True
 End Sub
@@ -3810,7 +3871,8 @@ On Error GoTo errhandler
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
-    
+    'Remove packet ID
+    Call Buffer.ReadByte
     
     Dim tmp As String
     tmp = Buffer.ReadString()
@@ -3851,7 +3913,8 @@ On Error GoTo errhandler
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
-    
+    'Remove packet ID
+    Call Buffer.ReadByte
     
     Dim slot As Byte
     slot = Buffer.ReadByte()
@@ -3898,7 +3961,8 @@ Private Sub HandleUpdateHungerAndThirst()
         Exit Sub
     End If
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     UserMaxAGU = incomingData.ReadByte()
     UserMinAGU = incomingData.ReadByte()
@@ -3940,7 +4004,8 @@ Private Sub HandleFame()
         Exit Sub
     End If
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     With UserReputacion
         .AsesinoRep = incomingData.ReadLong()
@@ -3969,7 +4034,8 @@ Private Sub HandleMiniStats()
         Exit Sub
     End If
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     With UserEstadisticas
         .CiudadanosMatados = incomingData.ReadLong()
@@ -3995,7 +4061,8 @@ Private Sub HandleLevelUp()
         Exit Sub
     End If
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     SkillPoints = SkillPoints + incomingData.ReadInteger()
     
@@ -4021,7 +4088,8 @@ On Error GoTo errhandler
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
-    
+    'Remove packet ID
+    Call Buffer.ReadByte
     
     Dim ForumType As eForumMsgType
     Dim Title As String
@@ -4065,7 +4133,8 @@ Private Sub HandleShowForumForm()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     frmForo.Privilegios = incomingData.ReadByte
     frmForo.CanPostSticky = incomingData.ReadByte
@@ -4089,7 +4158,8 @@ Private Sub HandleSetInvisible()
         Exit Sub
     End If
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     Dim CharIndex As Integer
     
@@ -4113,7 +4183,8 @@ Private Sub HandleDiceRoll()
         Exit Sub
     End If
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     UserAtributos(eAtributos.Fuerza) = incomingData.ReadByte()
     UserAtributos(eAtributos.Agilidad) = incomingData.ReadByte()
@@ -4141,7 +4212,8 @@ Private Sub HandleMeditateToggle()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     UserMeditar = Not UserMeditar
 End Sub
@@ -4155,7 +4227,8 @@ Private Sub HandleBlindNoMore()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     UserCiego = False
 End Sub
@@ -4169,7 +4242,8 @@ Private Sub HandleDumbNoMore()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     UserEstupido = False
 End Sub
@@ -4188,7 +4262,8 @@ Private Sub HandleSendSkills()
         Exit Sub
     End If
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
 
     UserClase = incomingData.ReadByte
     
@@ -4221,7 +4296,8 @@ On Error GoTo errhandler
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
-    
+    'Remove packet ID
+    Call Buffer.ReadByte
     
     Dim creatures() As String
     Dim i As Long
@@ -4269,7 +4345,8 @@ On Error GoTo errhandler
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
-    
+    'Remove packet ID
+    Call Buffer.ReadByte
     
     Dim guildList() As String
     Dim Upper_guildList As Long
@@ -4333,7 +4410,8 @@ On Error GoTo errhandler
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
-    
+    'Remove packet ID
+    Call Buffer.ReadByte
     
     Call frmUserRequest.recievePeticion(Buffer.ReadString())
     
@@ -4371,7 +4449,8 @@ On Error GoTo errhandler
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
-    
+    'Remove packet ID
+    Call Buffer.ReadByte
     
     Dim vsGuildList() As String, Upper_vsGuildList As Long
     Dim i As Long
@@ -4424,7 +4503,8 @@ Private Sub HandlePeaceProposalsList()
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
-    
+    'Remove packet ID
+    Call Buffer.ReadByte
     
     Dim guildList()     As String
     Dim Upper_guildList As Long
@@ -4482,7 +4562,8 @@ On Error GoTo errhandler
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
-    
+    'Remove packet ID
+    Call Buffer.ReadByte
     
     With frmCharInfo
         If .frmType = CharInfoFrmType.frmMembers Then
@@ -4580,7 +4661,8 @@ On Error GoTo errhandler
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
-    
+    'Remove packet ID
+    Call Buffer.ReadByte
     
     Dim i As Long
     Dim List() As String
@@ -4658,7 +4740,8 @@ On Error GoTo errhandler
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
-    
+    'Remove packet ID
+    Call Buffer.ReadByte
     
     With frmGuildBrief
         .imgDeclararGuerra.Visible = .EsLeader
@@ -4721,7 +4804,8 @@ Private Sub HandleShowGuildAlign()
 'Last Modification: 14/12/2009
 '
 '***************************************************
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     frmEligeAlineacion.Show vbModeless, frmMain
 End Sub
@@ -4735,7 +4819,8 @@ Private Sub HandleShowGuildFundationForm()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     CreandoClan = True
     frmGuildFoundation.Show , frmMain
@@ -4750,7 +4835,8 @@ Private Sub HandleParalizeOK()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     UserParalizado = Not UserParalizado
 End Sub
@@ -4774,7 +4860,8 @@ On Error GoTo errhandler
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
-    
+    'Remove packet ID
+    Call Buffer.ReadByte
     
     Call frmUserRequest.recievePeticion(Buffer.ReadString())
     Call frmUserRequest.Show(vbModeless, frmMain)
@@ -4803,7 +4890,8 @@ Private Sub HandleTradeOK()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     If frmComerciar.Visible Then
         Dim i As Long
@@ -4852,7 +4940,8 @@ Private Sub HandleBankOK()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     Dim i As Long
     
@@ -4901,7 +4990,8 @@ On Error GoTo errhandler
     
     Dim OfferSlot As Byte
     
-    
+    'Remove packet ID
+    Call Buffer.ReadByte
     
     OfferSlot = Buffer.ReadByte
     
@@ -4948,7 +5038,8 @@ Private Sub HandleSendNight()
         Exit Sub
     End If
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     Dim tBool As Boolean 'CHECK, este handle no hace nada con lo que recibe.. porque, ehmm.. no hay noche?.. o si?
     tBool = incomingData.ReadBoolean()
@@ -4973,7 +5064,8 @@ On Error GoTo errhandler
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
-    
+    'Remove packet ID
+    Call Buffer.ReadByte
     
     Dim creatureList() As String
     Dim i As Long
@@ -5021,7 +5113,8 @@ On Error GoTo errhandler
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
-    
+    'Remove packet ID
+    Call Buffer.ReadByte
     
     Dim sosList() As String
     Dim i As Long
@@ -5070,7 +5163,8 @@ On Error GoTo errhandler
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
-    
+    'Remove packet ID
+    Call Buffer.ReadByte
     
     Dim DenounceList() As String
     Dim Upper_denounceList As Long
@@ -5119,7 +5213,8 @@ On Error GoTo errhandler
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
-    
+    'Remove packet ID
+    Call Buffer.ReadByte
     
     Dim members() As String
     Dim Upper_members As Long
@@ -5173,7 +5268,8 @@ On Error GoTo errhandler
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
-    
+    'Remove packet ID
+    Call Buffer.ReadByte
     
     frmCambiaMotd.txtMotd.Text = Buffer.ReadString()
     frmCambiaMotd.Show , frmMain
@@ -5202,7 +5298,8 @@ Private Sub HandleShowGMPanelForm()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     frmPanelGm.Show vbModeless, frmMain
 End Sub
@@ -5226,7 +5323,8 @@ On Error GoTo errhandler
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
-    
+    'Remove packet ID
+    Call Buffer.ReadByte
     
     Dim userList() As String
     
@@ -5314,7 +5412,8 @@ On Error GoTo errhandler
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
-    
+    'Remove packet ID
+    Call Buffer.ReadByte
     
     With frmGuildMember
         'Clear guild's list
@@ -5375,7 +5474,8 @@ On Error GoTo errhandler
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
-    
+    'Remove packet ID
+    Call Buffer.ReadByte
     
     Dim CharIndex As Integer
     Dim NickColor As Byte
@@ -10496,7 +10596,8 @@ On Error GoTo errhandler
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
-    
+    'Remove packet ID
+    Call Buffer.ReadByte
     
     Dim NumRecords As Byte
     Dim i As Long
@@ -10547,8 +10648,14 @@ On Error GoTo errhandler
     Call Buffer.CopyBuffer(incomingData)
 >>>>>>> parent of f42d96e... Saco el CopyBuffer.
     
+<<<<<<< HEAD
     Dim tmpstr As String
     
+=======
+    'Remove packet ID
+    Call Buffer.ReadByte
+       
+>>>>>>> parent of ecae16a... Chau byte de cabecera.
     With frmPanelGm
         .txtCreador.Text = Buffer.ReadString
         .txtDescrip.Text = Buffer.ReadString
@@ -10645,7 +10752,8 @@ Private Sub HandleDecirPalabrasMagicas()
     End If
     
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     Dim Spell As Integer
     Dim CharIndex As Integer
@@ -10667,7 +10775,8 @@ Private Sub HandleAttackAnim()
     
     Dim CharIndex As Integer
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     CharIndex = incomingData.ReadInteger
     'Set the animation trigger on true
     charlist(CharIndex).attacking = True 'should be done in separated sub?
@@ -10683,7 +10792,8 @@ Private Sub HandleFXtoMap()
     
     Dim X As Integer, Y As Integer, FxIndex As Integer, Loops As Integer
     
-    
+    'Remove packet ID
+    Call incomingData.ReadByte
     
     Loops = incomingData.ReadByte
     X = incomingData.ReadInteger
@@ -10724,7 +10834,8 @@ Private Sub HandleAccountLogged()
     Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
 
-    
+    'Remove packet ID
+    Call Buffer.ReadByte
 
     AccountName = Buffer.ReadString
     AccountHash = Buffer.ReadString
