@@ -2378,8 +2378,8 @@ End Sub
 Private Sub Client_Connect()
     
     'Clean input and output buffers
-    Call incomingData.ReadASCIIStringFixed(incomingData.Length)
-    Call outgoingData.ReadASCIIStringFixed(outgoingData.Length)
+    Call incomingData.Clear
+    Call outgoingData.Clear
     
     Second.Enabled = True
     
@@ -2414,7 +2414,7 @@ Private Sub Client_DataArrival(ByVal bytesTotal As Long)
     data = StrConv(RD, vbFromUnicode)
     
     'Set data in the buffer
-    Call incomingData.WriteBlock(data)
+    Call incomingData.Wrap(data)
     
     'Send buffer to Handle data
     Call HandleIncomingData
