@@ -428,7 +428,8 @@ Sub SwitchMap(ByVal Map As Integer)
     
     Dim ByFlags  As Byte
     Dim handle   As Integer
-   
+    Dim fileBuff As CsBuffer
+    
     Dim dData()  As Byte
     Dim dLen     As Long
    

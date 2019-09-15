@@ -2883,9 +2883,6 @@ On Error GoTo errhandler
             End If
         Next i
         
-        'If we got here then packet is complete, copy data back to original queue
-        Call incomingData.CopyBuffer(Buffer)
-        
         .Show vbModeless, frmMain
     End With
     
@@ -5210,9 +5207,6 @@ On Error GoTo errhandler
         For i = 0 To UBound(GuildMembers())
             Call .lstMiembros.AddItem(GuildMembers(i))
         Next i
-        
-        'If we got here then packet is complete, copy data back to original queue
-        Call incomingData.CopyBuffer(Buffer)
         
         .Show vbModeless, frmMain
     End With
@@ -10828,8 +10822,6 @@ On Error GoTo errhandler
         frmQuestInfo.Show vbModeless, frmMain
     End If
     
-    Call incomingData.CopyBuffer(Buffer)
-    
 errhandler:
     Dim Error As Long
     Error = Err.number
@@ -10885,9 +10877,6 @@ On Error GoTo errhandler
     
     'Pedimos la informaci�n de la primer quest (si la hay)
     If tmpByte Then Call Protocol.WriteQuestDetailsRequest(1)
-    
-    'Copiamos de vuelta el buffer
-    Call incomingData.CopyBuffer(Buffer)
  
 errhandler:
     Dim Error As Long
