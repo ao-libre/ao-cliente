@@ -1012,4 +1012,19 @@ Private Sub Char_Particle_Group_Make(ByVal Particle_Group_Index As Long, ByVal c
     charlist(char_index).Particle_Group(particle_char_index) = Particle_Group_Index
 End Sub
 
-
+Public Sub Load_Map_Particles(ByVal Map As Integer)
+'*****************************************************************
+'Author: Jopi
+'Para los que no tienen un World Editor con sistema de particulas
+'Crea las particulas al entrar en un mapa.
+'*****************************************************************
+    
+    ' Crea las particulas especificas para el mapa actual.
+    Select Case Map
+    
+        Case 1
+            Call General_Particle_Create(1, 45, 45)
+            
+    End Select
+    
+End Sub
