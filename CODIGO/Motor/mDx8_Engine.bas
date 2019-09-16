@@ -238,6 +238,7 @@ Public Sub Engine_DirectX8_Aditional_Init()
     Call mDx8_Auras.Load_Auras
     Call mDx8_Clima.Init_MeteoEngine
     Call mDx8_Dibujado.Damage_Initialize
+    Call mDx8_ParticulasVBGORE.Engine_Init_ParticleEngine
     
 End Sub
 

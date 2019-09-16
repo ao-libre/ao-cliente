@@ -1,4 +1,4 @@
-Attribute VB_Name = "mDx8_Particulas"
+Attribute VB_Name = "mDx8_ParticulasORE"
 '*************************************************************
 'ImperiumAO 1.4.6
 '*************************************************************

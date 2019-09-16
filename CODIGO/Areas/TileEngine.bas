@@ -994,7 +994,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
     ParticleOffsetX = (Engine_PixelPosX(screenminX) - PixelOffsetX)
     ParticleOffsetY = (Engine_PixelPosY(screenminY) - PixelOffsetY)
 
-'Draw floor layer
+    'Draw floor layer
     For Y = screenminY To screenmaxY
         For X = screenminX To screenmaxX
             
@@ -1069,12 +1069,15 @@ Sub RenderScreen(ByVal tilex As Integer, _
                     If .Damage.Activated Then _
                         Call mDx8_Dibujado.Damage_Draw(X, Y, PixelOffsetXTemp, PixelOffsetYTemp - 20)
                 
-                    'Particulas
+                    'Particulas ORE
                     If .Particle_Group_Index Then
                         If Abs(UserPos.X - X) < Engine_Get_TileBuffer + 3 And (Abs(UserPos.Y - Y)) < Engine_Get_TileBuffer + 3 Then _
                             Call Particle_Group_Render(.Particle_Group_Index, PixelOffsetXTemp + 16, PixelOffsetYTemp + 16)
                     End If
-
+                    
+                    'Particulas vbGORE
+                    Call Effect_UpdateAll
+                    
                     If Not .FxIndex = 0 Then
                         Call Draw_Grh(.fX, PixelOffsetXTemp + FxData(MapData(X, Y).FxIndex).OffsetX, PixelOffsetYTemp + FxData(.FxIndex).OffsetY, 1, .Engine_Light(), 1, True)
                         If .fX.Started = 0 Then .FxIndex = 0

@@ -522,7 +522,7 @@ Sub SwitchMap(ByVal Map As Integer)
     Call LightRemoveAll
     
     'Erase particle effects
-    'ReDim Effect(1 To NumEffects)
+    ReDim Effect(1 To NumEffects)
     Call Particle_Group_Remove_All
     
     'Limpiamos el buffer

@@ -33,6 +33,7 @@ End Type
 Private m_DataAlpha() As Boolean
 Private m_Data()   As TYPE_VERTEX
 Private m_Position As Long
+Private m_PrimitiveType As DxVBLibA.CONST_D3DPRIMITIVETYPE
  
 Public Sub Begin()
     '
@@ -71,7 +72,9 @@ Public Sub Draw(ByVal X As Single, _
                 Optional ByVal Tx2 As Single = 1, _
                 Optional ByVal Ty2 As Single = 1, _
                 Optional ByVal Alpha As Boolean = False, _
-                Optional ByVal angle As Single = 0)
+                Optional ByVal angle As Single = 0, _
+                Optional ByRef PrimitiveType As DxVBLibA.CONST_D3DPRIMITIVETYPE = D3DPT_TRIANGLELIST)
+                
     Dim dest As RECT
     dest.Left = X
     dest.Right = X + Width
@@ -195,6 +198,8 @@ Public Sub Draw(ByVal X As Single, _
         m_DataAlpha(m_Position) = Alpha
         
         m_Position = m_Position + 1
+        
+        m_PrimitiveType = PrimitiveType
     End If
     
     If (m_Position = UBound(m_Data) + 1) Then
@@ -216,6 +221,7 @@ Public Sub Flush()
     ' Only draw if there is any data in the buffer
     '
     If m_Position > 0 Then
+        
         '
         ' Set the new data of the vertex buffer
         '
@@ -226,16 +232,18 @@ Public Sub Flush()
         
         Call D3DVertexBuffer8SetData(m_VBuffer, 0, m_Position * LenB(m_Data(0)), D3DLOCK_DISCARD, m_Data(0))
     
-        Call DirectDevice.DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, (m_Position / 4) * 6, 0, (m_Position / 4) * 2)
+        Call DirectDevice.DrawIndexedPrimitive(m_PrimitiveType, 0, (m_Position / 4) * 6, 0, (m_Position / 4) * 2)
         
         If m_DataAlpha((m_Position / 4) * 2) Then
             Call DirectDevice.SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA)
             Call DirectDevice.SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA)
         End If
+        
         '
         ' We start all over again
         '
         m_Position = 0
+        
     End If
 End Sub
  

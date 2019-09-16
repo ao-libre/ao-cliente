@@ -274,9 +274,11 @@ On Error GoTo eDebug:
     'Set the texture
     Set cfonts(i).Texture = DirectD3D8.CreateTextureFromFileEx(DirectDevice, Game.path(Graficos) & "font" & i & ".bmp", D3DX_DEFAULT, D3DX_DEFAULT, 0, 0, D3DFMT_UNKNOWN, D3DPOOL_MANAGED, D3DX_FILTER_POINT, D3DX_FILTER_POINT, _
             &HFF000000, ByVal 0, ByVal 0)
+            
     'Store the size of the texture
     cfonts(i).TextureSize.X = TexInfo.Width
     cfonts(i).TextureSize.Y = TexInfo.Height
+    
     Next
     Exit Sub
 eDebug:
