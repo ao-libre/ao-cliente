@@ -377,6 +377,7 @@ Private Sub lblSelected_Click(Index As Integer)
             End If
             
             Call Protocol.WriteFightSend(ListUser, Val(txtGld.Text))
+            Unload Me
     End Select
 End Sub
 
