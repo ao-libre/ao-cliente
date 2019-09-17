@@ -729,6 +729,8 @@ Private Sub Form_Load()
     btnRecuperar.Caption = JsonLanguage.item("BTN_RECUPERAR").item("TEXTO")
     btnReglamento.Caption = JsonLanguage.item("BTN_REGLAMENTO").item("TEXTO")
     lblRecordarme.Caption = JsonLanguage.item("LBL_RECORDARME").item("TEXTO")
+    btnVerForo.Caption = JsonLanguage.item("LBL_FORO").item("TEXTO")
+    btnSalir.Caption = JsonLanguage.item("LBL_SALIR").item("TEXTO")
 
     ' GSZAO - Animación...
     

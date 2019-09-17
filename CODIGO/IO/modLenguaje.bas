@@ -59,10 +59,16 @@ Public Sub SetLanguageApplication()
     
     Language = GetVar(Game.path(INIT) & "Config.ini", "Parameters", "Language")
     
-    ' Si no se especifica el idioma en el archivo de configuracion, se usa el del sistema
+    ' Si no se especifica el idioma en el archivo de configuracion, se le pregunta si quiere usar castellano
+    ' y escribimos el archivo de configuracion con el idioma seleccionado
     If LenB(Language) = 0 Then
-        MsgBox "No se pudo cargar el idioma seleccionado. Se usara el idioma castellano.", vbOKOnly, "Carga de Idiomas"
-        Language = "spanish"
+        If MsgBox("Iniciar con idioma Castellano? // Start with Spanish, if you want the game in English press No", vbYesNo, "Argentum Online") = vbYes Then
+            Language = "spanish"
+        Else
+            Language = "english"
+        End If
+
+        Call WriteVar(App.path & "\INIT\Config.ini", "Parameters", "Language", Language)
         'Language = LCase$(ObtainOperativeSystemLanguage(LOCALE_SENGLANGUAGE))
     End If
     

@@ -559,6 +559,11 @@
 			"Skill required",
 			"Mana required",
 			"Energy needed"
+		],
+		"COLOR":[
+			170,
+			138,
+			198
 		]
 	},
 	"MENSAJE_NO_SALIR":{
@@ -1179,8 +1184,41 @@
 		"TEXTO":"Rules"
 	},
 	"LBL_RECORDARME": {
-		"TEXT":"Remember Me"
+		"TEXTO":"Remember Me"
 	},
+	"LBL_FORO": {
+		"TEXTO":"See Forum"
+	},
+	"LBL_SALIR": {
+		"TEXTO":"Exit"
+	},
+	"LBL_LANZAR": {
+		"TEXTO":"Shoot"
+	},
+	"LBL_INVENTARIO": {
+		"TEXTO":"Inventory"
+	},
+	"LBL_HECHIZOS": {
+		"TEXTO":"Spells"
+	},
+	"LBL_MAPA": {
+		"TEXTO":"Map"
+	},
+	"LBL_GRUPO": {
+		"TEXTO":"Group"
+	},
+	"LBL_ESTADISTICAS": {
+		"TEXTO":"Statistics"
+	},
+	"LBL_CLANES": {
+		"TEXTO":"Guilds"
+	},
+	"LBL_OPCIONES": {
+		"TEXTO":"Options"
+	},
+	"LBL_INFO": {
+		"TEXTO":"Info"
+	},	
 	"FRM_CREARCUENTA_SALIR":{
 		"TEXTO":"Quit"
 	},

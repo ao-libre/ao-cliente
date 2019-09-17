@@ -562,9 +562,9 @@
 			"Energia necesaria"
 		],
 		"COLOR":[
-			210,
-			220,
-			220
+			170,
+			138,
+			198
 		]
 	},
 	"MENSAJE_NO_SALIR":{
@@ -1192,6 +1192,39 @@
 	"LBL_RECORDARME": {
 		"TEXTO":"Recordarme"
 	},
+	"LBL_FORO": {
+		"TEXTO":"Ver Foro"
+	},
+	"LBL_SALIR": {
+		"TEXTO":"Salir"
+	},
+	"LBL_LANZAR": {
+		"TEXTO":"Lanzar"
+	},
+	"LBL_INVENTARIO": {
+		"TEXTO":"Inventario"
+	},
+	"LBL_HECHIZOS": {
+		"TEXTO":"Hechizos"
+	},
+	"LBL_MAPA": {
+		"TEXTO":"Mapa"
+	},
+	"LBL_GRUPO": {
+		"TEXTO":"Grupo"
+	},
+	"LBL_ESTADISTICAS": {
+		"TEXTO":"Estadisticas"
+	},
+	"LBL_CLANES": {
+		"TEXTO":"Clanes"
+	},
+	"LBL_OPCIONES": {
+		"TEXTO":"Opciones"
+	},
+	"LBL_INFO": {
+		"TEXTO":"Info"
+	},	
 	"FRM_CREARCUENTA_SALIR":{
 		"TEXTO":"Salir"
 	},

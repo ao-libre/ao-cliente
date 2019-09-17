@@ -218,7 +218,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2619
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -398,7 +397,7 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
    End
-   Begin AOLibre.uAOButton Label4 
+   Begin AOLibre.uAOButton CmdInventario 
       Height          =   375
       Left            =   8880
       TabIndex        =   37
@@ -425,7 +424,7 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
    End
-   Begin AOLibre.uAOButton Label7 
+   Begin AOLibre.uAOButton CmdHechizos 
       Height          =   375
       Left            =   10200
       TabIndex        =   38
@@ -1092,8 +1091,8 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Public TX As Byte
-Public TY As Byte
+Public tX As Byte
+Public tY As Byte
 Public MouseX As Long
 Public MouseY As Long
 Public MouseBoton As Long
@@ -1149,6 +1148,16 @@ Private Sub Form_Load()
         .Height = 9000
         .Label6 = JsonLanguage.item("NIVEL").item("TEXTO") & ": "
     End With
+    
+    CmdLanzar.Caption = JsonLanguage.item("LBL_LANZAR").item("TEXTO")
+    CmdInventario.Caption = JsonLanguage.item("LBL_INVENTARIO").item("TEXTO")
+    CmdHechizos.Caption = JsonLanguage.item("LBL_HECHIZOS").item("TEXTO")
+    cmdInfo.Caption = JsonLanguage.item("LBL_INFO").item("TEXTO")
+    imgMapa.Caption = JsonLanguage.item("LBL_MAPA").item("TEXTO")
+    imgGrupo.Caption = JsonLanguage.item("LBL_GRUPO").item("TEXTO")
+    imgOpciones.Caption = JsonLanguage.item("LBL_OPCIONES").item("TEXTO")
+    imgEstadisticas.Caption = JsonLanguage.item("LBL_ESTADISTICAS").item("TEXTO")
+    imgClanes.Caption = JsonLanguage.item("LBL_CLANES").item("TEXTO")
     
     ' Detect links in console
     EnableURLDetect RecTxt.hWnd, Me.hWnd
@@ -1644,7 +1653,7 @@ Private Sub macrotrabajo_Timer()
     
     If UsingSkill = eSkill.Pesca Or UsingSkill = eSkill.Talar Or UsingSkill = eSkill.Mineria Or _
                 UsingSkill = FundirMetal Or (UsingSkill = eSkill.Herreria And Not MirandoHerreria) Then
-        Call WriteWorkLeftClick(TX, TY, UsingSkill)
+        Call WriteWorkLeftClick(tX, tY, UsingSkill)
         UsingSkill = 0
     End If
     
@@ -1673,12 +1682,12 @@ Private Sub mnuEquipar_Click()
 End Sub
 
 Private Sub mnuNPCComerciar_Click()
-    Call WriteLeftClick(TX, TY)
+    Call WriteLeftClick(tX, tY)
     Call WriteCommerceStart
 End Sub
 
 Private Sub mnuNpcDesc_Click()
-    Call WriteLeftClick(TX, TY)
+    Call WriteLeftClick(tX, tY)
 End Sub
 
 Private Sub mnuTirar_Click()
@@ -1806,8 +1815,8 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
         SendTxt.Visible = False
         
-        If PicInv.Visible Then
-            PicInv.SetFocus
+        If picInv.Visible Then
+            picInv.SetFocus
         Else
             hlst.SetFocus
         End If
@@ -1944,7 +1953,7 @@ Private Sub MainViewPic_DblClick()
 '12/28/2007: ByVal - Chequea que la ventana de comercio y boveda no este abierta al hacer doble clic a un comerciante, sobrecarga la lista de items.
 '**************************************************************
     If Not MirandoForo And Not Comerciando Then 'frmComerciar.Visible And Not frmBancoObj.Visible Then
-        Call WriteDoubleClick(TX, TY)
+        Call WriteDoubleClick(tX, tY)
     End If
 End Sub
 
@@ -1959,7 +1968,7 @@ Private Sub MainViewPic_Click()
     Dim VAR_LANZANDO As String
     
     If Not Comerciando Then
-        Call ConvertCPtoTP(MouseX, MouseY, TX, TY)
+        Call ConvertCPtoTP(MouseX, MouseY, tX, tY)
         
         If Not InGameArea() Then Exit Sub
         
@@ -1976,7 +1985,7 @@ Private Sub MainViewPic_Click()
                 End If
                 '[/ybarra]
                 If UsingSkill = 0 Then
-                    Call WriteLeftClick(TX, TY)
+                    Call WriteLeftClick(tX, tY)
                 Else
                     If trainingMacro.Enabled Then Call DesactivarMacroHechizos
                     If macrotrabajo.Enabled Then Call DesactivarMacroTrabajo
@@ -2053,7 +2062,7 @@ Private Sub MainViewPic_Click()
                     If frmMain.MousePointer <> 2 Then Exit Sub 'Parcheo porque a veces tira el hechizo sin tener el cursor (NicoNZ)
                     
                     frmMain.MousePointer = vbDefault
-                    Call WriteWorkLeftClick(TX, TY, UsingSkill)
+                    Call WriteWorkLeftClick(tX, tY, UsingSkill)
                     UsingSkill = 0
                 End If
             Else
@@ -2063,7 +2072,7 @@ Private Sub MainViewPic_Click()
         ElseIf (MouseShift And 1) = 1 Then
             If Not CustomKeys.KeyAssigned(KeyCodeConstants.vbKeyShift) Then
                 If MouseBoton = vbLeftButton Then
-                    Call WriteWarpChar("YO", UserMap, TX, TY)
+                    Call WriteWarpChar("YO", UserMap, tX, tY)
                 End If
             End If
         End If
@@ -2077,7 +2086,7 @@ Private Sub Form_DblClick()
 '12/28/2007: ByVal - Chequea que la ventana de comercio y boveda no este abierta al hacer doble clic a un comerciante, sobrecarga la lista de items.
 '**************************************************************
     If Not MirandoForo And Not Comerciando Then 'frmComerciar.Visible And Not frmBancoObj.Visible Then
-        Call WriteDoubleClick(TX, TY)
+        Call WriteDoubleClick(tX, tY)
     End If
 End Sub
 
@@ -2127,17 +2136,17 @@ Private Sub lblDropGold_Click()
     
 End Sub
 
-Private Sub Label4_Click()
+Private Sub cmdInventario_Click()
     Call Audio.PlayWave(SND_CLICK)
 
     InvEqu.Picture = LoadPicture(Game.path(Skins) & SkinSeleccionado & "\Centroinventario.jpg")
 
     ' Activo controles de inventario
-    PicInv.Visible = True
+    picInv.Visible = True
 
     ' Desactivo controles de hechizo
     hlst.Visible = False
-    cmdINFO.Visible = False
+    cmdInfo.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = False
@@ -2145,7 +2154,7 @@ Private Sub Label4_Click()
     
 End Sub
 
-Private Sub Label7_Click()
+Private Sub CmdHechizos_Click()
     
     Call Audio.PlayWave(SND_CLICK)
 
@@ -2153,14 +2162,14 @@ Private Sub Label7_Click()
     
     ' Activo controles de hechizos
     hlst.Visible = True
-    cmdINFO.Visible = True
+    cmdInfo.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True
     cmdMoverHechi(1).Visible = True
     
     ' Desactivo controles de inventario
-    PicInv.Visible = False
+    picInv.Visible = False
 
 End Sub
 
@@ -2191,8 +2200,8 @@ On Error Resume Next  'el .SetFocus causaba errores al salir y volver a entrar
         (Not frmMSG.Visible) And (Not MirandoForo) And _
         (Not frmEstadisticas.Visible) And (Not frmCantidad.Visible) And (Not MirandoParty) Then
          
-        If PicInv.Visible Then
-            PicInv.SetFocus
+        If picInv.Visible Then
+            picInv.SetFocus
         ElseIf hlst.Visible Then
             hlst.SetFocus
         End If
@@ -2200,8 +2209,8 @@ On Error Resume Next  'el .SetFocus causaba errores al salir y volver a entrar
 End Sub
 
 Private Sub RecTxt_KeyDown(KeyCode As Integer, Shift As Integer)
-    If PicInv.Visible Then
-        PicInv.SetFocus
+    If picInv.Visible Then
+        picInv.SetFocus
     Else
         hlst.SetFocus
     End If
@@ -2257,8 +2266,8 @@ Private Sub SendCMSTXT_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
         Me.SendCMSTXT.Visible = False
         
-        If PicInv.Visible Then
-            PicInv.SetFocus
+        If picInv.Visible Then
+            picInv.SetFocus
         Else
             hlst.SetFocus
         End If
@@ -2300,10 +2309,10 @@ End Sub
 Private Sub AbrirMenuViewPort()
 #If (ConMenuseConextuales = 1) Then
 
-If TX >= MinXBorder And TY >= MinYBorder And _
-    TY <= MaxYBorder And TX <= MaxXBorder Then
-    If MapData(TX, TY).CharIndex > 0 Then
-        If charlist(MapData(TX, TY).CharIndex).invisible = False Then
+If tX >= MinXBorder And tY >= MinYBorder And _
+    tY <= MaxYBorder And tX <= MaxXBorder Then
+    If MapData(tX, tY).CharIndex > 0 Then
+        If charlist(MapData(tX, tY).CharIndex).invisible = False Then
         
             Dim m As frmMenuseFashion
             Set m = New frmMenuseFashion
@@ -2313,8 +2322,8 @@ If TX >= MinXBorder And TY >= MinYBorder And _
             m.SetMenuId 1
             m.ListaInit 2, False
             
-            If LenB(charlist(MapData(TX, TY).CharIndex).Nombre) <> 0 Then
-                m.ListaSetItem 0, charlist(MapData(TX, TY).CharIndex).Nombre, True
+            If LenB(charlist(MapData(tX, tY).CharIndex).Nombre) <> 0 Then
+                m.ListaSetItem 0, charlist(MapData(tX, tY).CharIndex).Nombre, True
             Else
                 m.ListaSetItem 0, "<NPC>", True
             End If
@@ -2350,10 +2359,10 @@ Case 0 'Inventario
 Case 1 'Menu del ViewPort del engine
     Select Case Sel
     Case 0 'Nombre
-        Call WriteLeftClick(TX, TY)
+        Call WriteLeftClick(tX, tY)
         
     Case 1 'Comerciar
-        Call WriteLeftClick(TX, TY)
+        Call WriteLeftClick(tX, tY)
         Call WriteCommerceStart
     End Select
 End Select
@@ -2545,7 +2554,7 @@ End Sub
 
 Public Sub ActualizarMiniMapa()
 '***************************************************
-'Author: Martín Gomez (Samke)
+'Author: Martin Gomez (Samke)
 'Last Modify Date: 07/12/2011
 'Integrado por Reyarb
 '***************************************************
@@ -2589,12 +2598,12 @@ Private Sub trainingMacro_Timer()
         Call WriteWork(eSkill.Magia)
     End If
     
-    Call ConvertCPtoTP(MouseX, MouseY, TX, TY)
+    Call ConvertCPtoTP(MouseX, MouseY, tX, tY)
     
     If UsingSkill = Magia And Not MainTimer.Check(TimersIndex.CastSpell) Then Exit Sub
     
     If UsingSkill = Proyectiles And Not MainTimer.Check(TimersIndex.Attack) Then Exit Sub
     
-    Call WriteWorkLeftClick(TX, TY, UsingSkill)
+    Call WriteWorkLeftClick(tX, tY, UsingSkill)
     UsingSkill = 0
 End Sub
