@@ -559,6 +559,11 @@
 			"Skill required",
 			"Mana required",
 			"Energy needed"
+		],
+		"COLOR":[
+			170,
+			138,
+			198
 		]
 	},
 	"MENSAJE_NO_SALIR":{
