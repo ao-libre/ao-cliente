@@ -1,5 +1,5 @@
 [INIT]
-NumArmas=76
+NumArmas=77
 
 [Arma1]
 Dir1=4719 'norte
@@ -524,3 +524,9 @@ Dir3=23647
 Dir1=23648
 Dir4=23649
 Dir2=23650
+[ARMA77]
+Nombre=Antorcha Roja
+Dir3=26985
+Dir1=26987
+Dir4=26984
+Dir2=26986
