@@ -49,6 +49,11 @@ IP=localhost
 PJ=7666
 Mundo=Deathmatch
 
+[S8]
+Desc=AoSpain | Modo:BattleServer
+IP=79.152.165.167
+PJ=7666
+Mundo=BattleServer
 
 
 
