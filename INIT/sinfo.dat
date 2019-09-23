@@ -1,5 +1,5 @@
 [INIT]
-Cant=8
+Cant=9
 
 [S1]
 Desc=Rol - Alkon 0.13.X
@@ -26,34 +26,34 @@ PJ=7666
 Mundo=Alkon
 
 [S5]
+Desc=AoSpain | Modo:BattleServer
+IP=79.152.165.167
+PJ=7666
+Mundo=BattleServer
+
+[S6]
 Desc=LUKIH - Testing
 IP=190.14.33.245
 PJ=7666
 Mundo=Alkon
 
-[S6]
+[S7]
 Desc=Servidor Local | Modo:Alkon 0.13.X
 IP=localhost
 PJ=7666
 Mundo=Alkon
 
-[S7]
+[S8]
 Desc=Servidor Local | Modo:BattleServer
 IP=localhost
 PJ=7666
 Mundo=BattleServer
 
-[S8]
+[S9]
 Desc=Servidor Local | Modo:Deathmatch
 IP=localhost
 PJ=7666
 Mundo=Deathmatch
-
-[S8]
-Desc=AoSpain | Modo:BattleServer
-IP=79.152.165.167
-PJ=7666
-Mundo=BattleServer
 
 
 
