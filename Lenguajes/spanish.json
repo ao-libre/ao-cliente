@@ -1198,6 +1198,9 @@
 	"LBL_SALIR": {
 		"TEXTO":"Salir"
 	},
+	"LBL_TECLAS": {
+		"TEXTO":"Teclas"
+	},
 	"LBL_LANZAR": {
 		"TEXTO":"Lanzar"
 	},

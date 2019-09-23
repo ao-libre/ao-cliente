@@ -1192,6 +1192,9 @@
 	"LBL_SALIR": {
 		"TEXTO":"Exit"
 	},
+	"LBL_TECLAS": {
+		"TEXTO":"Keyboard"
+	},
 	"LBL_LANZAR": {
 		"TEXTO":"Shoot"
 	},
