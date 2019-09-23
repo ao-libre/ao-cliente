@@ -330,7 +330,7 @@ Begin VB.Form frmConnect
       Left            =   5280
       TabIndex        =   16
       TabStop         =   0   'False
-      Top             =   4440
+      Top             =   4680
       Width           =   345
       _ExtentX        =   609
       _ExtentY        =   609
@@ -511,7 +511,7 @@ Begin VB.Form frmConnect
       Height          =   375
       Left            =   5760
       TabIndex        =   19
-      Top             =   4560
+      Top             =   4800
       Width           =   2055
    End
 End
@@ -732,6 +732,7 @@ Private Sub Form_Load()
     lblRecordarme.Caption = JsonLanguage.item("LBL_RECORDARME").item("TEXTO")
     btnVerForo.Caption = JsonLanguage.item("LBL_FORO").item("TEXTO")
     btnSalir.Caption = JsonLanguage.item("LBL_SALIR").item("TEXTO")
+    btnTeclas.Caption = JsonLanguage.item("LBL_TECLAS").item("TEXTO")
 
     ' GSZAO - Animaci�n...
     
