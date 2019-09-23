@@ -1,0 +1,15 @@
+# ProBot Request Info (https://probot.github.io/apps/request-info/)
+
+requestInfoReplyComment: >
+  👋 Apreciariamos que nos des mas informacion acerca de este problema // We would appreciate it if you could provide us with more information about this
+  issue. <br><br> ![](https://i.pinimg.com/originals/23/6d/18/236d1877a97cc0741b4af485e2024d38.jpg)
+requestInfoLabelToAdd: 'mas info'
+
+# ProBot Welcome (https://probot.github.io/apps/welcome/)
+
+newPRWelcomeComment: >
+  🙌 Gracias por mandar este Pull Request!! Gracias a vos el AO sigue vivo // Thanks for opening this pull request! You're awesome.
+  <br><br> ![](http://www.bathmatecouponcodes.com/wp-content/uploads/2016/04/Bathmate-Guide-For-Newbies.png)
+firstPRMergeComment: >
+  🎉 Felicitaciones por tu primer PR mergeado a master // Congrats on getting your first pull request landed! <br><br>
+  ![](https://d.newsweek.com/en/full/516403/11-11-beerwars-01.jpg)
