@@ -561,7 +561,7 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-' Animaci�n de los Controles...
+' Animacion de los Controles...
 Private Type tAnimControl
     Activo As Boolean
     Velocidad As Double
@@ -734,7 +734,7 @@ Private Sub Form_Load()
     btnSalir.Caption = JsonLanguage.item("LBL_SALIR").item("TEXTO")
     btnTeclas.Caption = JsonLanguage.item("LBL_TECLAS").item("TEXTO")
 
-    ' GSZAO - Animaci�n...
+    ' GSZAO - Animacion...
     
     'TODO: Agregar los movimientos faltantes, me aburri (Recox)
     'btnConectarse.Top = 10
@@ -868,7 +868,7 @@ Private Sub tEfectos_Timer()
     If AnimControl(1).Activo = False And AnimControl(2).Activo = False And AnimControl(3).Activo = False And AnimControl(4).Activo = False And AnimControl(5).Activo = False And AnimControl(6).Activo = False And AnimControl(7).Activo = False And AnimControl(8).Activo = False And AnimControl(9).Activo = False And AnimControl(10).Activo = False And AnimControl(11).Activo = False Then
         tEfectos.Enabled = False
         
-        ' GSZAO - Animaci�n...
+        ' GSZAO - Animacion...
         btnConectarse.Top = AnimControl(1).Top
         btnActualizarLista.Top = AnimControl(2).Top
         btnCodigoFuente.Top = AnimControl(3).Top
