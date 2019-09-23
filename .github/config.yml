@@ -8,8 +8,8 @@ requestInfoLabelToAdd: 'mas info'
 # ProBot Welcome (https://probot.github.io/apps/welcome/)
 
 newPRWelcomeComment: >
-  🙌 Gracias por mandar este Pull Request!! Gracias a vos el AO sigue vivo/ Thanks for opening this pull request! You're awesome.
+  🙌 Gracias por mandar este Pull Request!! Gracias a vos el AO sigue vivo // Thanks for opening this pull request! You're awesome.
   <br><br> ![](https://d.newsweek.com/en/full/516403/11-11-beerwars-01.jpg)
 firstPRMergeComment: >
-  🎉 Felicitaciones por mandar tu primer PR // Congrats on getting your first pull request landed! <br><br>
+  🎉 Felicitaciones por tu primer PR mergeado a master // Congrats on getting your first pull request landed! <br><br>
   ![](http://www.bathmatecouponcodes.com/wp-content/uploads/2016/04/Bathmate-Guide-For-Newbies.png)
