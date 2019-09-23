@@ -561,7 +561,7 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-' Animación de los Controles...
+' Animaciï¿½n de los Controles...
 Private Type tAnimControl
     Activo As Boolean
     Velocidad As Double
@@ -718,7 +718,8 @@ Private Sub Form_Load()
 
     version.Caption = GetVersionOfTheGame()
 
-    Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaConectar.jpg")
+    'Solo hay 2 imagenes de cargando, cambiar 2 por el numero maximo si se quiere cambiar
+    Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaConectar" & RandomNumber(1, 2) & ".jpg")
     
     btnActualizarLista.Caption = JsonLanguage.item("BTN_ACTUALIZAR_LISTA").item("TEXTO")
     btnCodigoFuente.Caption = JsonLanguage.item("BTN_CODIGO_FUENTE").item("TEXTO")
@@ -732,7 +733,7 @@ Private Sub Form_Load()
     btnVerForo.Caption = JsonLanguage.item("LBL_FORO").item("TEXTO")
     btnSalir.Caption = JsonLanguage.item("LBL_SALIR").item("TEXTO")
 
-    ' GSZAO - Animación...
+    ' GSZAO - Animaciï¿½n...
     
     'TODO: Agregar los movimientos faltantes, me aburri (Recox)
     'btnConectarse.Top = 10
