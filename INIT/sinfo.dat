@@ -44,11 +44,10 @@ PJ=7666
 Mundo=Deathmatch
 
 [S8]
-Desc=agonzgom - Europa
+Desc=AoSpain | Modo:BattleServer
 IP=79.152.165.167
 PJ=7666
-Mundo=Alkon
-
+Mundo=BattleServer
 
 
 
