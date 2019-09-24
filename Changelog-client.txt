@@ -525,5 +525,6 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 24/09/2019: Se agregaron archivos en .github para usar bot con respuestas automaticas y template para postear issues (Recox)
 * 24/09/2019: Arenas modificadas, fix frmRetos. (jopiortiz)
 * 24/09/2019: Fix carga de particulas por mapa. (jopiortiz)
+* 24/09/2019: Modificados mapas, agregados npcs y modificado mapa del mundo con las nuevas catacumbas. (Recox-Reyarb)
 
 
