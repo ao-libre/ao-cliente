@@ -104,7 +104,7 @@ Private Sub Engine_Render_Text(ByRef Batch As clsBatch, _
                                 ByRef Color() As Long, _
                                 Optional ByVal Center As Boolean = False, _
                                 Optional ByVal Alpha As Byte = 255, _
-                                Optional ByVal ParseEmoticons As Boolean = True, _
+                                Optional ByVal ParseEmoticons As Boolean = False, _
                                 Optional Font As Integer = 1)
                                 
 '*****************************************************************

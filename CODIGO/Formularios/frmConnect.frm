@@ -330,7 +330,7 @@ Begin VB.Form frmConnect
       Left            =   5280
       TabIndex        =   16
       TabStop         =   0   'False
-      Top             =   4440
+      Top             =   4680
       Width           =   345
       _ExtentX        =   609
       _ExtentY        =   609
@@ -511,7 +511,7 @@ Begin VB.Form frmConnect
       Height          =   375
       Left            =   5760
       TabIndex        =   19
-      Top             =   4560
+      Top             =   4800
       Width           =   2055
    End
 End
@@ -561,7 +561,7 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-' Animación de los Controles...
+' Animacion de los Controles...
 Private Type tAnimControl
     Activo As Boolean
     Velocidad As Double
@@ -718,7 +718,8 @@ Private Sub Form_Load()
 
     version.Caption = GetVersionOfTheGame()
 
-    Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaConectar.jpg")
+    'Solo hay 2 imagenes de cargando, cambiar 2 por el numero maximo si se quiere cambiar
+    Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaConectar" & RandomNumber(1, 2) & ".jpg")
     
     btnActualizarLista.Caption = JsonLanguage.item("BTN_ACTUALIZAR_LISTA").item("TEXTO")
     btnCodigoFuente.Caption = JsonLanguage.item("BTN_CODIGO_FUENTE").item("TEXTO")
@@ -731,8 +732,9 @@ Private Sub Form_Load()
     lblRecordarme.Caption = JsonLanguage.item("LBL_RECORDARME").item("TEXTO")
     btnVerForo.Caption = JsonLanguage.item("LBL_FORO").item("TEXTO")
     btnSalir.Caption = JsonLanguage.item("LBL_SALIR").item("TEXTO")
+    btnTeclas.Caption = JsonLanguage.item("LBL_TECLAS").item("TEXTO")
 
-    ' GSZAO - Animación...
+    ' GSZAO - Animacion...
     
     'TODO: Agregar los movimientos faltantes, me aburri (Recox)
     'btnConectarse.Top = 10
@@ -866,7 +868,7 @@ Private Sub tEfectos_Timer()
     If AnimControl(1).Activo = False And AnimControl(2).Activo = False And AnimControl(3).Activo = False And AnimControl(4).Activo = False And AnimControl(5).Activo = False And AnimControl(6).Activo = False And AnimControl(7).Activo = False And AnimControl(8).Activo = False And AnimControl(9).Activo = False And AnimControl(10).Activo = False And AnimControl(11).Activo = False Then
         tEfectos.Enabled = False
         
-        ' GSZAO - Animaciï¿½n...
+        ' GSZAO - Animacion...
         btnConectarse.Top = AnimControl(1).Top
         btnActualizarLista.Top = AnimControl(2).Top
         btnCodigoFuente.Top = AnimControl(3).Top
