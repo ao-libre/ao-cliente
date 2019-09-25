@@ -4,7 +4,7 @@ Option Explicit
 Private Declare Sub ZeroMemory Lib "kernel32.dll" Alias "RtlZeroMemory" (ByRef Destination As Any, ByVal Length As Long)
 
 'Texture for particle effects - this is handled differently then the rest of the graphics
-Public ParticleTexture(1 To 20) As tParticleTexture
+Public ParticleTexture(1 To 15) As tParticleTexture
 
 Private Type Effect
 
@@ -81,7 +81,7 @@ Public Sub Engine_Init_ParticleEngine()
 
     For i = 1 To UBound(ParticleTexture())
 
-        If Not ParticleTexture(i) Is Nothing Then
+        If Not ParticleTexture(i).Texture Is Nothing Then
             Set ParticleTexture(i) = Nothing
         End If
         
