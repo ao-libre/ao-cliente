@@ -3,8 +3,39 @@ Option Explicit
 
 Private Declare Sub ZeroMemory Lib "kernel32.dll" Alias "RtlZeroMemory" (ByRef Destination As Any, ByVal Length As Long)
 
+Private Type D3DXIMAGE_INFO_A
+    Width As Long
+    Height As Long
+    Depth As Long
+    MipLevels As Long
+    Format As CONST_D3DFORMAT
+    ResourceType As CONST_D3DRESOURCETYPE
+    ImageFileFormat As Long
+End Type
+
+Public Type tParticleTexture
+    Texture As Direct3DTexture8 'Holds the texture of the text
+    TextureWidth As Integer
+    TextureHeight As Integer
+End Type
+
 'Texture for particle effects - this is handled differently then the rest of the graphics
 Public ParticleTexture(1 To 15) As tParticleTexture
+<<<<<<< HEAD
+=======
+
+Private Type ParticleVA
+    X As Integer
+    Y As Integer
+    W As Integer
+    H As Integer
+    
+    Tx1 As Single
+    Tx2 As Single
+    Ty1 As Single
+    Ty2 As Single
+End Type
+>>>>>>> Refactored and fixed Vgore Particle code
 
 Private Type Effect
 
@@ -37,24 +68,6 @@ Private Type Effect
 
 End Type
 
-Private Type tParticleTexture
-    Texture As Direct3DTexture8 'Holds the texture of the text
-    TextureWidth As Integer
-    TextureHeight As Integer
-End Type
-
-Private Type ParticleVA
-    X As Integer
-    Y As Integer
-    W As Integer
-    H As Integer
-    
-    Tx1 As Single
-    Tx2 As Single
-    Ty1 As Single
-    Ty2 As Single
-End Type
-
 Public NumEffects                       As Byte   'Maximum number of effects at once
 Public Effect()                         As Effect   'List of all the active effects
 
@@ -79,14 +92,19 @@ Public Sub Engine_Init_ParticleEngine()
     NumEffects = 25
     ReDim Effect(1 To NumEffects)
 
-    For i = 1 To UBound(ParticleTexture())
+    For i = 1 To UBound(ParticleTexture()) - 1
 
         If Not ParticleTexture(i).Texture Is Nothing Then
+<<<<<<< HEAD
             Set ParticleTexture(i) = Nothing
+=======
+            Dim ClearVar As tParticleTexture
+            ParticleTexture(i) = ClearVar
+>>>>>>> Refactored and fixed Vgore Particle code
         End If
-        
+
         Set ParticleTexture(i).Texture = DirectD3D8.CreateTextureFromFileEx(DirectDevice, _
-                                                                    Game.path(Graficos) & "p" & i & ".png", _
+                                                                    Game.Path(Graficos) & "p" & i & ".png", _
                                                                     D3DX_DEFAULT, _
                                                                     D3DX_DEFAULT, _
                                                                     D3DX_DEFAULT, _
