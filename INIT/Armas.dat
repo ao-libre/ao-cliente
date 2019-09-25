@@ -1,5 +1,5 @@
 [INIT]
-NumArmas=77
+NumArmas=100
 
 [Arma1]
 Dir1=4719 'norte
@@ -524,9 +524,143 @@ Dir3=23647
 Dir1=23648
 Dir4=23649
 Dir2=23650
-[ARMA77]
-Nombre=Antorcha Roja
-Dir3=26985
-Dir1=26987
-Dir4=26984
-Dir2=26986
+
+
+[ARMA78]
+Nombre=Arma Asesino
+Dir3=28411
+Dir1=28413
+Dir4=28410
+Dir2=28412
+[ARMA79]
+Nombre=Arma Asesino
+Dir3=28437
+Dir1=28439
+Dir4=28436
+Dir2=28438
+[ARMA80]
+Nombre=Arma Asesino
+Dir3=28463
+Dir1=28465
+Dir4=28462
+Dir2=28464
+[ARMA81]
+Nombre=Arma Bardp
+Dir3=28489
+Dir1=28491
+Dir4=28488
+Dir2=28490
+[ARMA82]
+Nombre=Arco Cazador
+Dir3=28515
+Dir1=28517
+Dir4=28514
+Dir2=28516
+[ARMA83]
+Nombre=Arco Cazador
+Dir3=28541
+Dir1=28543
+Dir4=28540
+Dir2=28542
+[ARMA84]
+Nombre=Flechas Cazador
+Dir3=28567
+Dir1=28569
+Dir4=28566
+Dir2=28568
+[ARMA85]
+Nombre=Flechas Cazador
+Dir3=28593
+Dir1=28595
+Dir4=28592
+Dir2=28594
+[ARMA86]
+Nombre=Arma Cazador
+Dir3=28619
+Dir1=28621
+Dir4=28618
+Dir2=28620
+[ARMA87]
+Nombre=Arma Cazador
+Dir3=28645
+Dir1=28647
+Dir4=28644
+Dir2=28646
+[ARMA88]
+Nombre=Arma Clerigo
+Dir3=28671
+Dir1=28673
+Dir4=28670
+Dir2=28672
+[ARMA89]
+Nombre=Arma Clerigo
+Dir3=28697
+Dir1=28699
+Dir4=28696
+Dir2=28698
+[ARMA90]
+Nombre=Baston Druida
+Dir3=28723
+Dir1=28725
+Dir4=28722
+Dir2=28724
+[ARMA91]
+Nombre=Baston Druida
+Dir3=28749
+Dir1=28751
+Dir4=28748
+Dir2=28750
+[ARMA92]
+Nombre=Arma Druida
+Dir3=28775
+Dir1=28777
+Dir4=28774
+Dir2=28776
+[ARMA93]
+Nombre=Arma Druida
+Dir3=28801
+Dir1=28803
+Dir4=28800
+Dir2=28802
+[ARMA94]
+Nombre=Arco Guerrero
+Dir3=28827
+Dir1=28829
+Dir4=28826
+Dir2=28828
+[ARMA95]
+Nombre=Arco Guerrero
+Dir3=28853
+Dir1=28855
+Dir4=28852
+Dir2=28854
+[ARMA96]
+Nombre=Flechas Guerrero
+Dir3=28879
+Dir1=28881
+Dir4=28878
+Dir2=28880
+[ARMA97]
+Nombre=Flechas Guerrero
+Dir3=28905
+Dir1=28907
+Dir4=28904
+Dir2=28906
+[ARMA98]
+Nombre=Arma Guerrero
+Dir3=28931
+Dir1=28933
+Dir4=28930
+Dir2=28932
+[ARMA99]
+Nombre=Baston Mago
+Dir3=28957
+Dir1=28959
+Dir4=28956
+Dir2=28958
+[ARMA100]
+Nombre=Baston Mago
+Dir3=28983
+Dir1=28985
+Dir4=28982
+Dir2=28984
