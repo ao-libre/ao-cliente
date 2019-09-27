@@ -3,6 +3,107 @@ Option Explicit
 
 Private FileManager As clsIniManager
 
+
+''
+' Loads grh data using the new file format.
+'
+
+Public Sub LoadGrhData()
+On Error GoTo errorHandler:
+
+    Dim Grh As Long
+    Dim Frame As Long
+    Dim grhCount As Long
+    Dim handle As Integer
+    Dim fileVersion As Long
+    
+    'Open files
+    handle = FreeFile()
+    Open IniPath & "Graficos.ind" For Binary Access Read As handle
+    
+        Get handle, , fileVersion
+        
+        Get handle, , grhCount
+        
+        ReDim GrhData(0 To grhCount) As GrhData
+        
+        While Not EOF(handle)
+            Get handle, , Grh
+            
+            With GrhData(Grh)
+            
+               ' GrhData(Grh).active = True
+                Get handle, , .NumFrames
+                If .NumFrames <= 0 Then Resume Next
+                
+                ReDim .Frames(1 To GrhData(Grh).NumFrames)
+                
+                If .NumFrames > 1 Then
+                    For Frame = 1 To .NumFrames
+                        Get handle, , .Frames(Frame)
+                        If .Frames(Frame) <= 0 Or .Frames(Frame) > grhCount Then
+                            Resume Next
+                        End If
+                    Next Frame
+                    
+                    Get handle, , .Speed
+                    
+                    If .Speed <= 0 Then Resume Next
+                    
+                    .pixelHeight = GrhData(.Frames(1)).pixelHeight
+                    If .pixelHeight <= 0 Then Resume Next
+                    
+                    .pixelWidth = GrhData(.Frames(1)).pixelWidth
+                    If .pixelWidth <= 0 Then Resume Next
+                    
+                    .TileWidth = GrhData(.Frames(1)).TileWidth
+                    If .TileWidth <= 0 Then Resume Next
+                    
+                    .TileHeight = GrhData(.Frames(1)).TileHeight
+                    If .TileHeight <= 0 Then Resume Next
+                Else
+                    Get handle, , .FileNum
+                    If .FileNum <= 0 Then Resume Next
+                    
+                    Get handle, , GrhData(Grh).sX
+                    If .sX < 0 Then Resume Next
+                    
+                    Get handle, , .sY
+                    If .sY < 0 Then Resume Next
+                    
+                    Get handle, , .pixelWidth
+                    If .pixelWidth <= 0 Then Resume Next
+                    
+                    Get handle, , .pixelHeight
+                    If .pixelHeight <= 0 Then Resume Next
+                    
+                    .TileWidth = .pixelWidth / TilePixelHeight
+                    .TileHeight = .pixelHeight / TilePixelWidth
+                    
+                    .Frames(1) = Grh
+                End If
+                
+            End With
+            
+        Wend
+    
+    Close handle
+    
+Exit Sub
+
+errorHandler:
+    
+    If Err.number <> 0 Then
+        
+        If Err.number = 53 Then
+            Call MsgBox("El archivo Graficos.ind no existe. Por favor, reinstale el juego.", , "Argentum Online")
+            Call CloseClient
+        End If
+        
+    End If
+    
+End Sub
+
 Public Sub CargarCabezas()
 On Error GoTo errhandler:
 
