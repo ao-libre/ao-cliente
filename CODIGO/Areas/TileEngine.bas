@@ -35,9 +35,6 @@ Attribute VB_Name = "Mod_TileEngine"
 
 Option Explicit
 
-Public indexList(0 To 5) As Integer
-Public ibQuad As DxVBLibA.Direct3DIndexBuffer8
-Public vbQuadIdx As DxVBLibA.Direct3DVertexBuffer8
 Dim temp_verts(3) As TLVERTEX
 
 Public OffsetCounterX As Single
@@ -831,6 +828,9 @@ Sub RenderScreen(ByVal tilex As Integer, _
     'Last modified by: Juan Martin Sotuyo Dodero (Maraxus)
     'Renders everything to the viewport
     '**************************************************************
+    
+    On Error GoTo RenderScreen_Err
+    
     Dim Y                As Long     'Keeps track of where on map we are
     Dim X                As Long     'Keeps track of where on map we are
     
@@ -905,7 +905,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
     ParticleOffsetX = (Engine_PixelPosX(screenminX) - PixelOffsetX)
     ParticleOffsetY = (Engine_PixelPosY(screenminY) - PixelOffsetY)
 
-'Draw floor layer
+    'Draw floor layer
     For Y = screenminY To screenmaxY
         For X = screenminX To screenmaxX
             
@@ -947,43 +947,53 @@ Sub RenderScreen(ByVal tilex As Integer, _
                 PixelOffsetYTemp = ScreenY * TilePixelHeight + PixelOffsetY
                 
                 With MapData(X, Y)
+                
                     'Object Layer **********************************
                     If .ObjGrh.GrhIndex <> 0 Then
                         Call Draw_Grh(.ObjGrh, PixelOffsetXTemp, PixelOffsetYTemp, 1, .Engine_Light(), 1)
                     End If
                     '***********************************************
-        
-        
+
                     'Char layer********************************
                     If .CharIndex <> 0 Then
                         Call CharRender(.CharIndex, PixelOffsetXTemp, PixelOffsetYTemp)
                     End If
                     '*************************************************
-        
-                    
-                    
+
                     'Layer 3 *****************************************
                     If .Graphic(3).GrhIndex <> 0 Then
+                    
                         If .Graphic(3).GrhIndex = 735 Or .Graphic(3).GrhIndex >= 6994 And .Graphic(3).GrhIndex <= 7002 Then
+                            
+                            ' Transparencia de Arboles
                             If Abs(UserPos.X - X) < 3 And (Abs(UserPos.Y - Y)) < 8 And (Abs(UserPos.Y) < Y) Then
                                 Call Draw_Grh(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, Color_Arbol(), 1)
                             Else 'NORMAL
                                 Call Draw_Grh(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, .Engine_Light(), 1)
                             End If
+                            
                         Else 'NORMAL
+                        
                             Call Draw_Grh(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, .Engine_Light(), 1)
+                            
                         End If
+                        
                     End If
                     '************************************************
                     
                     'Dibujamos los danos.
-                    If .Damage.Activated Then _
+                    If .Damage.Activated Then
                         Call mDx8_Dibujado.Damage_Draw(X, Y, PixelOffsetXTemp, PixelOffsetYTemp - 20)
-                
+                    End If
+                    
                     'Particulas
                     If .Particle_Group_Index Then
-                        If Abs(UserPos.X - X) < Engine_Get_TileBuffer + 3 And (Abs(UserPos.Y - Y)) < Engine_Get_TileBuffer + 3 Then _
+                    
+                        'Solo las renderizamos si estan cerca del area de vision.
+                        If Abs(UserPos.X - X) < Engine_Get_TileBuffer + 3 And (Abs(UserPos.Y - Y)) < Engine_Get_TileBuffer + 3 Then
                             Call Particle_Group_Render(.Particle_Group_Index, PixelOffsetXTemp + 16, PixelOffsetYTemp + 16)
+                        End If
+                        
                     End If
 
                     If Not .FxIndex = 0 Then
@@ -1006,23 +1016,33 @@ Sub RenderScreen(ByVal tilex As Integer, _
     ScreenY = minYOffset - Engine_Get_TileBuffer
 
     For Y = minY To maxY
+
         ScreenX = minXOffset - Engine_Get_TileBuffer
 
         For X = minX To maxX
-   
+            
+            PixelOffsetXTemp = ScreenX * TilePixelWidth + PixelOffsetX
+            PixelOffsetYTemp = ScreenY * TilePixelHeight + PixelOffsetY
+            
             'Layer 4
             If MapData(X, Y).Graphic(4).GrhIndex Then
+            
                 If bTecho Then
-                    Call Draw_Grh(MapData(X, Y).Graphic(4), ScreenX * TilePixelWidth + PixelOffsetX, ScreenY * TilePixelHeight + PixelOffsetY, 1, temp_rgb(), 1)
+                    Call Draw_Grh(MapData(X, Y).Graphic(4), PixelOffsetXTemp, PixelOffsetYTemp, 1, temp_rgb(), 1)
                 Else
+                
                     If ColorTecho = 250 Then
-                        Call Draw_Grh(MapData(X, Y).Graphic(4), ScreenX * TilePixelWidth + PixelOffsetX, ScreenY * TilePixelHeight + PixelOffsetY, 1, MapData(X, Y).Engine_Light(), 1)
+                        Call Draw_Grh(MapData(X, Y).Graphic(4), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1)
                     Else
-                        Call Draw_Grh(MapData(X, Y).Graphic(4), ScreenX * TilePixelWidth + PixelOffsetX, ScreenY * TilePixelHeight + PixelOffsetY, 1, temp_rgb(), 1)
+                        Call Draw_Grh(MapData(X, Y).Graphic(4), PixelOffsetXTemp, PixelOffsetYTemp, 1, temp_rgb(), 1)
                     End If
+                    
                 End If
+                
             End If
+            
             ScreenX = ScreenX + 1
+            
         Next X
 
         ScreenY = ScreenY + 1
@@ -1087,8 +1107,10 @@ Sub RenderScreen(ByVal tilex As Integer, _
             
         End If
     End If
-    If colorRender <> 240 Then _
-    Call DrawText(272, 50, renderText, render_msg(0), True, 2)
+    
+    If colorRender <> 240 Then
+        Call DrawText(272, 50, renderText, render_msg(0), True, 2)
+    End If
     
     '   Set Offsets
     LastOffsetX = ParticleOffsetX
@@ -1097,6 +1119,13 @@ Sub RenderScreen(ByVal tilex As Integer, _
     If ClientSetup.PartyMembers Then Call Draw_Party_Members
 
     Call RenderCount
+
+RenderScreen_Err:
+
+    If Err.number Then
+        Call LogError(Err.number, Err.Description, "Mod_TileEngine.RenderScreen")
+    End If
+    
 End Sub
 
 Public Function RenderSounds()
@@ -1195,16 +1224,8 @@ On Error GoTo 0
     Call LoadGraphics
     Call CargarParticulas
     
-    indexList(0) = 0: indexList(1) = 1: indexList(2) = 2
-    indexList(3) = 3: indexList(4) = 4: indexList(5) = 5
-    
-    Set ibQuad = DirectDevice.CreateIndexBuffer(Len(indexList(0)) * 4, 0, D3DFMT_INDEX16, D3DPOOL_MANAGED)
-    
-    Call D3DIndexBuffer8SetData(ibQuad, 0, Len(indexList(0)) * 4, 0, indexList(0))
-    
-    Set vbQuadIdx = DirectDevice.CreateVertexBuffer(Len(temp_verts(0)) * 4, 0, D3DFVF_XYZ Or D3DFVF_DIFFUSE Or D3DFVF_SPECULAR Or D3DFVF_TEX1, D3DPOOL_MANAGED)
-    
     InitTileEngine = True
+    
 End Function
 
 Public Sub LoadGraphics()

@@ -121,3 +121,32 @@ Public Sub ReleaseInstance()
     Call CloseHandle(mutexHID)
 End Sub
 
+Public Sub LogError(ByVal Numero As Long, ByVal Descripcion As String, ByVal Componente As String, Optional ByVal Linea As Integer)
+'**********************************************************
+'Author: Jopi
+'Guarda una descripcion detallada del error en Errores.log
+'**********************************************************
+    Dim file As Integer
+        file = FreeFile
+        
+    Open App.path & "\Errores.log" For Append As #file
+    
+        Print #file, "Error: " & Numero
+        Print #file, "Descripcion: " & Descripcion
+        
+        If LenB(Linea) <> 0 Then
+            Print #file, "Linea: " & Linea
+        End If
+        
+        Print #file, "Componente: " & Componente
+        Print #file, "Fecha y Hora: " & Date$ & "-" & Time$
+        Print #file, vbNullString
+        
+    Close #file
+    
+    Debug.Print "Error: " & Numero & vbNewLine & _
+                "Descripcion: " & Descripcion & vbNewLine & _
+                "Componente: " & Componente & vbNewLine & _
+                "Fecha y Hora: " & Date$ & "-" & Time$ & vbNewLine
+                
+End Sub
