@@ -514,11 +514,13 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 08/09/2019: Se agregó la animacion del personaje en el frmCrearPersonaje. (FrankoH)
 
 - v0.13.15
+
 * 03/09/2019: Se le agrego mas info a los items del inventario. (Recox-Reyarb)
 * 16/09/2019: Se modifico el mapa 294, se modificaron algunos graficos. (Reyarb)
 * 16/09/2019: Se arreglo la interface, ahora se ve mejor. (Reyarb-Recox)
 
 - v0.13.16
+
 * 24/09/2019: Se agregaron algunas traducciones faltantes en el frmConnectar. (Recox)
 * 24/09/2019: Se tradujo todo el frmMain (Recox)
 * 24/09/2019: Se agrego una nueva imagen en el frmConnectar y se agrego funcion para agarrar una imagen random cada vez. (Recox)
@@ -526,5 +528,4 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 24/09/2019: Arenas modificadas, fix frmRetos. (jopiortiz)
 * 24/09/2019: Fix carga de particulas por mapa. (jopiortiz)
 * 24/09/2019: Modificados mapas, agregados npcs y modificado mapa del mundo con las nuevas catacumbas. (Recox-Reyarb)
-
-
+* 27/09/2019: Carga de Fxs via clsIniManager. [Fxs.ind -> Fxs.ini] (jopiortiz)
