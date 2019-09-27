@@ -151,35 +151,30 @@ End Sub
 Sub CargarFxs()
 On Error GoTo errhandler:
 
-    Dim N As Integer
     Dim i As Long
-    Dim NumFxs As Integer
     
-    N = FreeFile()
-    Open Game.path(INIT) & "Fxs.ind" For Binary Access Read As #N
-    
-    'cabecera
-    Get #N, , MiCabecera
-    
-    'num de cabezas
-    Get #N, , NumFxs
+    Set FileManager = New clsIniManager
+    Call FileManager.Initialize(Game.path(INIT) & "Fxs.ini")
     
     'Resize array
-    ReDim FxData(0 To NumFxs) As tIndiceFx
+    ReDim FxData(0 To FileManager.GetValue("INIT", "NumFxs")) As tIndiceFx
     
-    For i = 1 To NumFxs
-        Get #N, , FxData(i)
-        'MsgBox FxData(i).Animacion & FxData(i).OffsetX
-    Next i
+    For i = 1 To UBound(FxData())
+        
+        With FxData(i)
+            .Animacion = FileManager.GetValue("FX" & CStr(i), "Animacion")
+            .OffsetX = FileManager.GetValue("FX" & CStr(i), "OffsetX")
+            .OffsetY = FileManager.GetValue("FX" & CStr(i), "OffsetY")
+        End With
     
-    Close #N
-
+    Next
+        
 errhandler:
     
     If Err.number <> 0 Then
         
         If Err.number = 53 Then
-            Call MsgBox("El archivo Fxs.ind no existe. Por favor, reinstale el juego.", , "Argentum Online")
+            Call MsgBox("El archivo Fxs.ini no existe. Por favor, reinstale el juego.", , "Argentum Online")
             Call CloseClient
         End If
         
@@ -270,6 +265,7 @@ On Error GoTo errhandler:
 
     Set FileManager = New clsIniManager
     Call FileManager.Initialize(Game.path(INIT) & "armas.dat")
+    
     NumWeaponAnims = Val(FileManager.GetValue("INIT", "NumArmas"))
     ReDim WeaponAnimData(1 To NumWeaponAnims) As WeaponAnimData
     
