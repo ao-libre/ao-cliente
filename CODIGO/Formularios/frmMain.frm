@@ -4,7 +4,7 @@ Begin VB.Form frmMain
    Appearance      =   0  'Flat
    BackColor       =   &H80000005&
    BorderStyle     =   0  'None
-   ClientHeight    =   11490
+   ClientHeight    =   11205
    ClientLeft      =   360
    ClientTop       =   -3300
    ClientWidth     =   15345
@@ -29,7 +29,7 @@ Begin VB.Form frmMain
    LinkTopic       =   "Form1"
    PaletteMode     =   1  'UseZOrder
    Picture         =   "frmMain.frx":030A
-   ScaleHeight     =   766
+   ScaleHeight     =   747
    ScaleMode       =   0  'User
    ScaleWidth      =   1023
    ShowInTaskbar   =   0   'False
@@ -262,7 +262,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2619
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
