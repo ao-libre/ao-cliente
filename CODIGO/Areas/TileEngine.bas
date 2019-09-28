@@ -660,16 +660,16 @@ Function NextOpenChar() As Integer
 '*****************************************************************
 'Finds next open char slot in CharList
 '*****************************************************************
-    Dim loopc As Long
+    Dim LoopC As Long
     Dim Dale As Boolean
     
-    loopc = 1
-    Do While charlist(loopc).active And Dale
-        loopc = loopc + 1
-        Dale = (loopc <= UBound(charlist))
+    LoopC = 1
+    Do While charlist(LoopC).active And Dale
+        LoopC = LoopC + 1
+        Dale = (LoopC <= UBound(charlist))
     Loop
     
-    NextOpenChar = loopc
+    NextOpenChar = LoopC
 End Function
 
 Function LegalPos(ByVal X As Integer, ByVal Y As Integer) As Boolean
@@ -902,9 +902,19 @@ Sub RenderScreen(ByVal tilex As Integer, _
     
     If screenmaxX < XMaxMapSize Then screenmaxX = screenmaxX + 1
     
+    If screenminY < 1 Then screenminY = 1
+    If screenminX < 1 Then screenminX = 1
+    If screenmaxY > 100 Then screenmaxY = 100
+    If screenmaxX > 100 Then screenmaxX = 100
+
+    If minY < 1 Then minY = 1
+    If minX < 1 Then minX = 1
+    If maxY > 100 Then maxY = 100
+    If maxX > 100 Then maxX = 100
+    
     ParticleOffsetX = (Engine_PixelPosX(screenminX) - PixelOffsetX)
     ParticleOffsetY = (Engine_PixelPosY(screenminY) - PixelOffsetY)
-
+    
     'Draw floor layer
     For Y = screenminY To screenmaxY
         For X = screenminX To screenmaxX
@@ -1301,7 +1311,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
         '//Banco
         If frmBancoObj.Visible Then
             If frmBancoObj.PicBancoInv.Visible Then Call InvBanco(0).DrawInv
-            If frmBancoObj.PicInv.Visible Then Call InvBanco(1).DrawInv
+            If frmBancoObj.picInv.Visible Then Call InvBanco(1).DrawInv
         End If
     
         '//Comercio
@@ -1338,7 +1348,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
     
         '//Inventario
         If frmMain.Visible Then
-            If frmMain.PicInv.Visible Then
+            If frmMain.picInv.Visible Then
                 Call Inventario.DrawInv
             End If
         End If

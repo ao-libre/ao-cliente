@@ -33,25 +33,26 @@ Attribute VB_Name = "ModAreas"
 
 Option Explicit
 
-'LAS GUARDAMOS PARA PROCESAR LOS MPs y sabes si borrar personajes
 Public MinLimiteX As Integer
 Public MaxLimiteX As Integer
 Public MinLimiteY As Integer
 Public MaxLimiteY As Integer
 
 Public Sub CambioDeArea(ByVal X As Byte, ByVal Y As Byte)
+
     Dim loopX As Long, loopY As Long, CharIndex As Integer, ObjIndex As Integer
-    
-    MinLimiteX = (X \ 9 - 1) * 9
-    MaxLimiteX = MinLimiteX + 26
-    
-    MinLimiteY = (Y \ 9 - 1) * 9
-    MaxLimiteY = MinLimiteY + 26
-    
+
+    MinLimiteX = (X \ 11 - 1) * 11
+    MaxLimiteX = MinLimiteX + 32
+
+    MinLimiteY = (Y \ 11 - 1) * 11
+    MaxLimiteY = MinLimiteY + 32
+
     For loopX = 1 To 100
         For loopY = 1 To 100
-            
+      
             If (loopY < MinLimiteY) Or (loopY > MaxLimiteY) Or (loopX < MinLimiteX) Or (loopX > MaxLimiteX) Then
+                
                 'Erase NPCs
                 CharIndex = Char_MapPosExits(loopX, loopY)
  
@@ -67,9 +68,11 @@ Public Sub CambioDeArea(ByVal X As Byte, ByVal Y As Byte)
                 If (ObjIndex > 0) Then
                     Call Map_DestroyObject(loopX, loopY)
                 End If
+                
             End If
         Next loopY
     Next loopX
-    
+
     Call RefreshAllChars
+
 End Sub
