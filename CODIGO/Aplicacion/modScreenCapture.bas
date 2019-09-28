@@ -242,7 +242,7 @@ Public Function LoadJPG(ByRef cDib As cDIBSection, ByVal sFile As String) As Boo
             
             ' Get the JPGWidth ...
             lJPGWidth = tJ.JPGWidth
-            
+
             ' .. & JPGHeight member values:
             lJPGHeight = tJ.JPGHeight
       
@@ -647,7 +647,7 @@ Public Function FullScreenCapture(ByVal File As String) As Boolean
     hdcc = GetDC(handle)
     
     With frmScreenshots.Picture1
-    
+
         .AutoRedraw = True
     
         If Not ResolucionCambiada Then
