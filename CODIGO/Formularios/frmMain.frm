@@ -2190,7 +2190,28 @@ Private Sub picInv_DblClick()
     If trainingMacro.Enabled Then Call DesactivarMacroHechizos
     If macrotrabajo.Enabled Then Call DesactivarMacroTrabajo
     
-    Call UsarItem
+    Select Case Inventario.OBJType(Inventario.SelectedItem)
+        
+        Case eObjType.otcasco
+            Call EquiparItem
+    
+        Case eObjType.otArmadura
+            Call EquiparItem
+
+        Case eObjType.otescudo
+            Call EquiparItem
+        
+        Case eObjType.otWeapon
+            Call EquiparItem
+        
+        Case eObjType.otAnillo
+            Call EquiparItem
+        
+        Case Else
+            Call UsarItem
+            
+    End Select
+    
 End Sub
 
 Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
