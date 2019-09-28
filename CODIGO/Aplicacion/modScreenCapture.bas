@@ -203,344 +203,397 @@ Private Const SRCCOPY = &HCC0020 ' (DWORD) dest = source
 'Good old bitblt
 Private Declare Function BitBlt Lib "gdi32" (ByVal hDestDC As Long, ByVal X As Long, ByVal Y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, ByVal xSrc As Long, ByVal ySrc As Long, ByVal dwRop As Long) As Long
 
-Public Function LoadJPG( _
-      ByRef cDib As cDIBSection, _
-      ByVal sFile As String _
-   ) As Boolean
-Dim tJ As JPEG_CORE_PROPERTIES_VB
-Dim bFile() As Byte
-Dim lR As Long
-Dim lPtr As Long
-Dim lJPGWidth As Long, lJPGHeight As Long
+Public Function LoadJPG(ByRef cDib As cDIBSection, ByVal sFile As String) As Boolean
 
-   lR = ijlInit(tJ)
-   If lR = IJL_OK Then
+    Dim tJ        As JPEG_CORE_PROPERTIES_VB
+    Dim bFile()   As Byte
+    Dim lR        As Long
+    Dim lPtr      As Long
+    Dim lJPGWidth As Long, lJPGHeight As Long
+
+    lR = ijlInit(tJ)
+
+    If lR = IJL_OK Then
       
-      ' Write the filename to the jcprops.JPGFile member:
-      bFile = StrConv(sFile, vbFromUnicode)
-      ReDim Preserve bFile(0 To UBound(bFile) + 1) As Byte
-      bFile(UBound(bFile)) = 0
-      lPtr = VarPtr(bFile(0))
-      CopyMemory tJ.JPGFile, lPtr, 4
+        ' Write the filename to the jcprops.JPGFile member:
+        bFile = StrConv(sFile, vbFromUnicode)
+        ReDim Preserve bFile(0 To UBound(bFile) + 1) As Byte
+        bFile(UBound(bFile)) = 0
+        lPtr = VarPtr(bFile(0))
+        Call CopyMemory(tJ.JPGFile, lPtr, 4)
       
-      ' Read the JPEG file parameters:
-      lR = ijlRead(tJ, IJL_JFILE_READPARAMS)
-      If lR <> IJL_OK Then
-         ' Throw error
-         MsgBox "Failed to read JPG", vbExclamation
-      Else
-        ' set JPG color
-         If tJ.JPGChannels = 1 Then
-            tJ.JPGColor = 4& ' IJL_G
-         Else
-            tJ.JPGColor = 3& ' IJL_YCBCR
-         End If
+        ' Read the JPEG file parameters:
+        lR = ijlRead(tJ, IJL_JFILE_READPARAMS)
+
+        If lR <> IJL_OK Then
             
-         ' Get the JPGWidth ...
-         lJPGWidth = tJ.JPGWidth
-         ' .. & JPGHeight member values:
-         lJPGHeight = tJ.JPGHeight
-      
-         ' Create a buffer of sufficient size to hold the image:
-         If cDib.Create(lJPGWidth, lJPGHeight) Then
-            ' Store DIBWidth:
-            tJ.DIBWidth = lJPGWidth
-            ' Very important: tell IJL how many bytes extra there
-            ' are on each DIB scan line to pad to 32 bit boundaries:
-            tJ.DIBPadBytes = cDib.BytesPerScanLine - lJPGWidth * 3
-            ' Store DIBHeight:
-            tJ.DIBHeight = -lJPGHeight
-            ' Store Channels:
-            tJ.DIBChannels = 3&
-            ' Store DIBBytes (pointer to uncompressed JPG data):
-            tJ.DIBBytes = cDib.DIBSectionBitsPtr
-            
-            ' Now decompress the JPG into the DIBSection:
-            lR = ijlRead(tJ, IJL_JFILE_READWHOLEIMAGE)
-            If lR = IJL_OK Then
-               ' That's it!  cDib now contains the uncompressed JPG.
-               LoadJPG = True
+            ' Throw error
+            Call MsgBox("Failed to read JPG", vbExclamation)
+        
+        Else
+
+            ' set JPG color
+            If tJ.JPGChannels = 1 Then
+                tJ.JPGColor = 4& ' IJL_G
             Else
-               ' Throw error:
-               MsgBox "Cannot read Image Data from file.", vbExclamation
+                tJ.JPGColor = 3& ' IJL_YCBCR
+
             End If
-         Else
-            ' failed to create the DIB...
-         End If
-      End If
+            
+            ' Get the JPGWidth ...
+            lJPGWidth = tJ.JPGWidth
+            
+            ' .. & JPGHeight member values:
+            lJPGHeight = tJ.JPGHeight
+      
+            ' Create a buffer of sufficient size to hold the image:
+            If cDib.Create(lJPGWidth, lJPGHeight) Then
+                
+                ' Store DIBWidth:
+                tJ.DIBWidth = lJPGWidth
+                
+                ' Very important: tell IJL how many bytes extra there
+                ' are on each DIB scan line to pad to 32 bit boundaries:
+                tJ.DIBPadBytes = cDib.BytesPerScanLine - lJPGWidth * 3
+                
+                ' Store DIBHeight:
+                tJ.DIBHeight = -lJPGHeight
+                
+                ' Store Channels:
+                tJ.DIBChannels = 3&
+                
+                ' Store DIBBytes (pointer to uncompressed JPG data):
+                tJ.DIBBytes = cDib.DIBSectionBitsPtr
+            
+                ' Now decompress the JPG into the DIBSection:
+                lR = ijlRead(tJ, IJL_JFILE_READWHOLEIMAGE)
+
+                If lR = IJL_OK Then
+                    
+                    ' That's it!  cDib now contains the uncompressed JPG.
+                    LoadJPG = True
+                    
+                Else
+                    
+                    ' Throw error:
+                    Call MsgBox("Cannot read Image Data from file.", vbExclamation)
+
+                End If
+
+            Else
+
+                ' failed to create the DIB...
+            End If
+
+        End If
                         
-      ' Ensure we have freed memory:
-      ijlFree tJ
-   Else
-      ' Throw error:
-      MsgBox "Failed to initialise the IJL library: " & lR, vbExclamation
-   End If
-   
+        ' Ensure we have freed memory:
+        Call ijlFree(tJ)
+    Else
+        ' Throw error:
+        Call MsgBox("Failed to initialise the IJL library: " & lR, vbExclamation)
+
+    End If
    
 End Function
-Public Function LoadJPGFromPtr( _
-      ByRef cDib As cDIBSection, _
-      ByVal lPtr As Long, _
-      ByVal lSize As Long _
-   ) As Boolean
-Dim tJ As JPEG_CORE_PROPERTIES_VB
-Dim lR As Long
-Dim lJPGWidth As Long, lJPGHeight As Long
 
-   lR = ijlInit(tJ)
-   If lR = IJL_OK Then
+Public Function LoadJPGFromPtr(ByRef cDib As cDIBSection, ByVal lPtr As Long, ByVal lSize As Long) As Boolean
+
+    Dim tJ        As JPEG_CORE_PROPERTIES_VB
+    Dim lR        As Long
+    Dim lJPGWidth As Long, lJPGHeight As Long
+
+    lR = ijlInit(tJ)
+
+    If lR = IJL_OK Then
             
-      ' set JPEG buffer
-      tJ.JPGBytes = lPtr
-      tJ.JPGSizeBytes = lSize
+        ' set JPEG buffer
+        tJ.JPGBytes = lPtr
+        tJ.JPGSizeBytes = lSize
             
-      ' Read the JPEG parameters:
-      lR = ijlRead(tJ, IJL_JBUFF_READPARAMS)
-      If lR <> IJL_OK Then
-         ' Throw error
-         MsgBox "Failed to read JPG", vbExclamation
-      Else
-        ' set JPG color
-         If tJ.JPGChannels = 1 Then
-            tJ.JPGColor = 4& ' IJL_G
-         Else
-            tJ.JPGColor = 3& ' IJL_YCBCR
-         End If
-      
-         ' Get the JPGWidth ...
-         lJPGWidth = tJ.JPGWidth
-         ' .. & JPGHeight member values:
-         lJPGHeight = tJ.JPGHeight
-      
-         ' Create a buffer of sufficient size to hold the image:
-         If cDib.Create(lJPGWidth, lJPGHeight) Then
-            ' Store DIBWidth:
-            tJ.DIBWidth = lJPGWidth
-            ' Very important: tell IJL how many bytes extra there
-            ' are on each DIB scan line to pad to 32 bit boundaries:
-            tJ.DIBPadBytes = cDib.BytesPerScanLine - lJPGWidth * 3
-            ' Store DIBHeight:
-            tJ.DIBHeight = -lJPGHeight
-            ' Store Channels:
-            tJ.DIBChannels = 3&
-            ' Store DIBBytes (pointer to uncompressed JPG data):
-            tJ.DIBBytes = cDib.DIBSectionBitsPtr
-            
-            ' Now decompress the JPG into the DIBSection:
-            lR = ijlRead(tJ, IJL_JBUFF_READWHOLEIMAGE)
-            If lR = IJL_OK Then
-               ' That's it!  cDib now contains the uncompressed JPG.
-               LoadJPGFromPtr = True
+        ' Read the JPEG parameters:
+        lR = ijlRead(tJ, IJL_JBUFF_READPARAMS)
+
+        If lR <> IJL_OK Then
+            ' Throw error
+            MsgBox "Failed to read JPG", vbExclamation
+        Else
+
+            ' set JPG color
+            If tJ.JPGChannels = 1 Then
+                tJ.JPGColor = 4& ' IJL_G
             Else
-               ' Throw error:
-               MsgBox "Cannot read Image Data from file.", vbExclamation
+                tJ.JPGColor = 3& ' IJL_YCBCR
+
             End If
-         Else
-            ' failed to create the DIB...
-         End If
-      End If
+      
+            ' Get the JPGWidth ...
+            lJPGWidth = tJ.JPGWidth
+            
+            ' .. & JPGHeight member values:
+            lJPGHeight = tJ.JPGHeight
+      
+            ' Create a buffer of sufficient size to hold the image:
+            If cDib.Create(lJPGWidth, lJPGHeight) Then
+                
+                ' Store DIBWidth:
+                tJ.DIBWidth = lJPGWidth
+                
+                ' Very important: tell IJL how many bytes extra there
+                ' are on each DIB scan line to pad to 32 bit boundaries:
+                tJ.DIBPadBytes = cDib.BytesPerScanLine - lJPGWidth * 3
+                
+                ' Store DIBHeight:
+                tJ.DIBHeight = -lJPGHeight
+                
+                ' Store Channels:
+                tJ.DIBChannels = 3&
+                
+                ' Store DIBBytes (pointer to uncompressed JPG data):
+                tJ.DIBBytes = cDib.DIBSectionBitsPtr
+            
+                ' Now decompress the JPG into the DIBSection:
+                lR = ijlRead(tJ, IJL_JBUFF_READWHOLEIMAGE)
+
+                If lR = IJL_OK Then
+                    ' That's it!  cDib now contains the uncompressed JPG.
+                    LoadJPGFromPtr = True
+                Else
+                    ' Throw error:
+                    Call MsgBox("Cannot read Image Data from file.", vbExclamation)
+
+                End If
+
+            Else
+
+                ' failed to create the DIB...
+            End If
+
+        End If
                         
-      ' Ensure we have freed memory:
-      ijlFree tJ
-   Else
-      ' Throw error:
-      MsgBox "Failed to initialise the IJL library: " & lR, vbExclamation
-   End If
+        ' Ensure we have freed memory:
+        Call ijlFree(tJ)
+    Else
+        ' Throw error:
+        Call MsgBox("Failed to initialise the IJL library: " & lR, vbExclamation)
+
+    End If
    
 End Function
 
-Public Function SaveJPG( _
-      ByRef cDib As cDIBSection, _
-      ByVal sFile As String, _
-      Optional ByVal lQuality As Long = 90 _
-   ) As Boolean
-Dim tJ As JPEG_CORE_PROPERTIES_VB
-Dim bFile() As Byte
-Dim lPtr As Long
-Dim lR As Long
-Dim tFnd As WIN32_FIND_DATA
-Dim hFile As Long
-Dim bFileExisted As Boolean
-Dim lFileSize As Long
+Public Function SaveJPG(ByRef cDib As cDIBSection, ByVal sFile As String, Optional ByVal lQuality As Long = 90) As Boolean
+
+    Dim tJ           As JPEG_CORE_PROPERTIES_VB
+    Dim bFile()      As Byte
+    Dim lPtr         As Long
+    Dim lR           As Long
+    Dim tFnd         As WIN32_FIND_DATA
+    Dim hFile        As Long
+    Dim bFileExisted As Boolean
+    Dim lFileSize    As Long
    
-   hFile = -1
+    hFile = -1
    
-   lR = ijlInit(tJ)
-   If lR = IJL_OK Then
+    lR = ijlInit(tJ)
+
+    If lR = IJL_OK Then
       
-      ' Check if we're attempting to overwrite an existing file.
-      ' If so hFile <> INVALID_FILE_HANDLE:
-      bFileExisted = (FindFirstFile(sFile, tFnd) <> -1)
-      If bFileExisted Then
-         Kill sFile
-      End If
+        ' Check if we're attempting to overwrite an existing file.
+        ' If so hFile <> INVALID_FILE_HANDLE:
+        bFileExisted = (FindFirstFile(sFile, tFnd) <> -1)
+
+        If bFileExisted Then
+            Kill sFile
+
+        End If
       
-      ' Set up the DIB information:
-      ' Store DIBWidth:
-      tJ.DIBWidth = cDib.Width
-      ' Store DIBHeight:
-      tJ.DIBHeight = -cDib.Height
-      ' Store DIBBytes (pointer to uncompressed JPG data):
-      tJ.DIBBytes = cDib.DIBSectionBitsPtr
-      ' Very important: tell IJL how many bytes extra there
-      ' are on each DIB scan line to pad to 32 bit boundaries:
-      tJ.DIBPadBytes = cDib.BytesPerScanLine - cDib.Width * 3
+    ' Set up the DIB information:
+        
+        ' Store DIBWidth:
+        tJ.DIBWidth = cDib.Width
+        
+        ' Store DIBHeight:
+        tJ.DIBHeight = -cDib.Height
+        
+        ' Store DIBBytes (pointer to uncompressed JPG data):
+        tJ.DIBBytes = cDib.DIBSectionBitsPtr
+        
+        ' Very important: tell IJL how many bytes extra there
+        ' are on each DIB scan line to pad to 32 bit boundaries:
+        tJ.DIBPadBytes = cDib.BytesPerScanLine - cDib.Width * 3
       
-      ' Set up the JPEG information:
+    ' Set up the JPEG information:
       
-      ' Store JPGFile:
-      bFile = StrConv(sFile, vbFromUnicode)
-      ReDim Preserve bFile(0 To UBound(bFile) + 1) As Byte
-      bFile(UBound(bFile)) = 0
-      lPtr = VarPtr(bFile(0))
-      CopyMemory tJ.JPGFile, lPtr, 4
-      ' Store JPGWidth:
-      tJ.JPGWidth = cDib.Width
-      ' .. & JPGHeight member values:
-      tJ.JPGHeight = cDib.Height
-      ' Set the quality/compression to save:
-      tJ.jquality = lQuality
+        ' Store JPGFile:
+        bFile = StrConv(sFile, vbFromUnicode)
+        ReDim Preserve bFile(0 To UBound(bFile) + 1) As Byte
+        bFile(UBound(bFile)) = 0
+        lPtr = VarPtr(bFile(0))
+        Call CopyMemory(tJ.JPGFile, lPtr, 4)
+        
+        ' Store JPGWidth:
+        tJ.JPGWidth = cDib.Width
+        
+        ' .. & JPGHeight member values:
+        tJ.JPGHeight = cDib.Height
+        
+        ' Set the quality/compression to save:
+        tJ.jquality = lQuality
             
-      ' Write the image:
-      lR = ijlWrite(tJ, IJL_JFILE_WRITEWHOLEIMAGE)
+        ' Write the image:
+        lR = ijlWrite(tJ, IJL_JFILE_WRITEWHOLEIMAGE)
       
-      ' Check for success:
-      If lR = IJL_OK Then
+        ' Check for success:
+        If lR = IJL_OK Then
       
-         ' Now if we are replacing an existing file, then we want to
-         ' put the file creation and archive information back again:
-         If bFileExisted Then
+            ' Now if we are replacing an existing file, then we want to
+            ' put the file creation and archive information back again:
+            If bFileExisted Then
             
-            hFile = lopen(sFile, OF_WRITE Or OF_SHARE_DENY_WRITE)
-            If hFile = 0 Then
-               ' problem
-            Else
-               SetFileTime hFile, tFnd.ftCreationTime, tFnd.ftLastAccessTime, tFnd.ftLastWriteTime
-               lclose hFile
-               SetFileAttributes sFile, tFnd.dwFileAttributes
+                hFile = lopen(sFile, OF_WRITE Or OF_SHARE_DENY_WRITE)
+
+                If hFile = 0 Then
+                    ' problem
+                Else
+                    Call SetFileTime(hFile, tFnd.ftCreationTime, tFnd.ftLastAccessTime, tFnd.ftLastWriteTime)
+                    Call lclose(hFile)
+                    Call SetFileAttributes(bFile, tFnd.dwFileAttributes)
+
+                End If
+            
             End If
-            
-         End If
          
-         lFileSize = tJ.JPGSizeBytes - tJ.JPGBytes
+            lFileSize = tJ.JPGSizeBytes - tJ.JPGBytes
          
-         ' Success:
-         SaveJPG = True
+            ' Success:
+            SaveJPG = True
          
-      Else
-         ' Throw error
-         Err.Raise 26001, JsonLanguage.Item("ERROR_GUARDAR_SCREENSHOT").Item("TEXTO") & lR, vbExclamation
-      End If
+        Else
+            ' Throw error
+            Call Err.Raise(26001, JsonLanguage.item("ERROR_GUARDAR_SCREENSHOT").item("TEXTO") & lR, vbExclamation)
+
+        End If
       
-      ' Ensure we have freed memory:
-      ijlFree tJ
-   Else
-      ' Throw error:
-      Err.Raise 26001, App.EXEName & ".mIntelJPEGLibrary", "No se pudo inicializar la Libreria " & lR
-   End If
-   
+        ' Ensure we have freed memory:
+        Call ijlFree(tJ)
+    Else
+        ' Throw error:
+        Call Err.Rais(26001, App.EXEName & ".mIntelJPEGLibrary", "No se pudo inicializar la Libreria " & lR)
+
+    End If
 
 End Function
 
-Public Function SaveJPGToPtr( _
-      ByRef cDib As cDIBSection, _
-      ByVal lPtr As Long, _
-      ByRef lBufSize As Long, _
-      Optional ByVal lQuality As Long = 90 _
-   ) As Boolean
-Dim tJ As JPEG_CORE_PROPERTIES_VB
-Dim lR As Long
-Dim hFile As Long
+Public Function SaveJPGToPtr(ByRef cDib As cDIBSection, ByVal lPtr As Long, ByRef lBufSize As Long, Optional ByVal lQuality As Long = 90) As Boolean
+
+    Dim tJ    As JPEG_CORE_PROPERTIES_VB
+    Dim lR    As Long
+    Dim hFile As Long
    
-   hFile = -1
+    hFile = -1
    
-   lR = ijlInit(tJ)
-   If lR = IJL_OK Then
+    lR = ijlInit(tJ)
+
+    If lR = IJL_OK Then
       
-      ' Set up the DIB information:
-      ' Store DIBWidth:
-      tJ.DIBWidth = cDib.Width
-      ' Store DIBHeight:
-      tJ.DIBHeight = -cDib.Height
-      ' Store DIBBytes (pointer to uncompressed JPG data):
-      tJ.DIBBytes = cDib.DIBSectionBitsPtr
-      ' Very important: tell IJL how many bytes extra there
-      ' are on each DIB scan line to pad to 32 bit boundaries:
-      tJ.DIBPadBytes = cDib.BytesPerScanLine - cDib.Width * 3
+    ' Set up the DIB information:
+        ' Store DIBWidth:
+        tJ.DIBWidth = cDib.Width
+        
+        ' Store DIBHeight:
+        tJ.DIBHeight = -cDib.Height
+        
+        ' Store DIBBytes (pointer to uncompressed JPG data):
+        tJ.DIBBytes = cDib.DIBSectionBitsPtr
+        
+        ' Very important: tell IJL how many bytes extra there
+        ' are on each DIB scan line to pad to 32 bit boundaries:
+        tJ.DIBPadBytes = cDib.BytesPerScanLine - cDib.Width * 3
       
-      ' Set up the JPEG information:
-      ' Store JPGWidth:
-      tJ.JPGWidth = cDib.Width
-      ' .. & JPGHeight member values:
-      tJ.JPGHeight = cDib.Height
-      ' Set the quality/compression to save:
-      tJ.jquality = lQuality
-      ' set JPEG buffer
-      tJ.JPGBytes = lPtr
-      tJ.JPGSizeBytes = lBufSize
+        ' Set up the JPEG information:
+        ' Store JPGWidth:
+        tJ.JPGWidth = cDib.Width
+        
+        ' .. & JPGHeight member values:
+        tJ.JPGHeight = cDib.Height
+        
+        ' Set the quality/compression to save:
+        tJ.jquality = lQuality
+        
+        ' set JPEG buffer
+        tJ.JPGBytes = lPtr
+        tJ.JPGSizeBytes = lBufSize
             
-      ' Write the image:
-      lR = ijlWrite(tJ, IJL_JBUFF_WRITEWHOLEIMAGE)
+        ' Write the image:
+        lR = ijlWrite(tJ, IJL_JBUFF_WRITEWHOLEIMAGE)
             
-      ' Check for success:
-      If lR = IJL_OK Then
+        ' Check for success:
+        If lR = IJL_OK Then
          
-         lBufSize = tJ.JPGSizeBytes
+            lBufSize = tJ.JPGSizeBytes
          
-         ' Success:
-         SaveJPGToPtr = True
+            ' Success:
+            SaveJPGToPtr = True
          
-      Else
-         ' Throw error
-         Err.Raise 26001, App.EXEName & ".mIntelJPEGLibrary", "Failed to save to JPG " & lR, vbExclamation
-      End If
+        Else
+            ' Throw error
+            Call Err.Raise(26001, App.EXEName & ".mIntelJPEGLibrary", "Failed to save to JPG " & lR, vbExclamation)
+
+        End If
       
-      ' Ensure we have freed memory:
-      ijlFree tJ
-   Else
-      ' Throw error:
-      Err.Raise 26001, App.EXEName & ".mIntelJPEGLibrary", "Failed to initialise the IJL library: " & lR
-   End If
-   
+        ' Ensure we have freed memory:
+        Call ijlFree(tJ)
+    Else
+        
+        ' Throw error:
+        Call Err.Raise(26001, App.EXEName & ".mIntelJPEGLibrary", "Failed to initialise the IJL library: " & lR)
+
+    End If
 
 End Function
 
 Public Sub ScreenCapture(Optional ByVal Autofragshooter As Boolean = False)
-'**************************************************************
-'Author: Unknown
-'Last Modify Date: 11/16/2006
-'11/16/2010: Amraphen - Now the FragShooter screenshots are stored in different directories.
-'**************************************************************
-On Error GoTo Err:
+
+    '**************************************************************
+    'Author: Unknown
+    'Last Modify Date: 11/16/2006
+    '11/16/2010: Amraphen - Now the FragShooter screenshots are stored in different directories.
+    '**************************************************************
+    On Error GoTo Err:
+
     Dim File As String
-    Dim c As cDIBSection
+    Dim c    As cDIBSection
     Set c = New cDIBSection
-    Dim hdcc As Long
-    
+    Dim hdcc    As Long
     Dim dirFile As String
     
     hdcc = GetDC(frmMain.hWnd)
-    
-    frmScreenshots.Picture1.AutoRedraw = True
-    frmScreenshots.Picture1.Width = 12090
-    frmScreenshots.Picture1.Height = 9075
-
-    Call BitBlt(frmScreenshots.Picture1.hdc, 0, 0, 800, 600, hdcc, 0, 0, SRCCOPY)
-    Call ReleaseDC(frmMain.hWnd, hdcc)
-    
-    hdcc = INVALID_HANDLE
 
     Dim FileName as String
-    FileName = Format$(Now, "DD-MM-YYYY hh-mm-ss") & ".jpg"
+		FileName = Format$(Now, "DD-MM-YYYY hh-mm-ss") & ".jpg"
     
-    ' Primero chequea si existe la carpeta Screenshots
-    dirFile = App.path & "\Screenshots"
-    If Not FileExist(dirFile, vbDirectory) Then Call MkDir(dirFile)
+	With frmScreenshots.Picture1
+        
+        .AutoRedraw = True
+        .Width = frmMain.Width
+        .Height = frmMain.Height
+
+        Call BitBlt(.hdc, 0, 0, frmMain.Width, frmMain.Height, hdcc, 0, 0, SRCCOPY)
+        Call ReleaseDC(frmMain.hWnd, hdcc)
     
-    ' Si es una imagen de Autofragshooter, se fija si existe la carpeta.
-    If Autofragshooter Then
-        dirFile = dirFile & "\FragShooter"
+        hdcc = INVALID_HANDLE
+    
+        ' Primero chequea si existe la carpeta Screenshots
+        dirFile = App.path & "\Screenshots"
+
         If Not FileExist(dirFile, vbDirectory) Then Call MkDir(dirFile)
+    
+        ' Si es una imagen de Autofragshooter, se fija si existe la carpeta.
+        If Autofragshooter Then
+            
+            dirFile = dirFile & "\FragShooter"
+
+            If Not FileExist(dirFile, vbDirectory) Then Call MkDir(dirFile)
         
         'Nuevos directorios del FragShooter:
         If FragShooterKilledSomeone Then 'Si mato a alguien.
@@ -558,12 +611,18 @@ On Error GoTo Err:
         File = dirFile & "\" & FileName
     End If
     
-    frmScreenshots.Picture1.Refresh
-    frmScreenshots.Picture1.Picture = frmScreenshots.Picture1.Image
+        Call .Refresh
+        .Picture = .Image
     
-    c.CreateFromPicture frmScreenshots.Picture1.Picture
+        Call c.CreateFromPicture(.Picture)
     
-    SaveJPG c, File
+        Call SaveJPG(c, File)
+    
+        Call AddtoRichTextBox(frmMain.RecTxt, "Screen Capturada!", 200, 200, 200, False, False, True)
+        
+        Exit Sub
+    
+    End With
     
     AddtoRichTextBox frmMain.RecTxt, JsonLanguage.item("MOD_SCREENCAPTURE").item("TEXTO") & File, 100, 30, 20, False, False, True
 Exit Sub
@@ -571,45 +630,53 @@ Exit Sub
 Err:
     Call AddtoRichTextBox(frmMain.RecTxt, Err.number & "-" & Err.Description, 200, 200, 200, False, False, True)
     
-    If hdcc <> INVALID_HANDLE Then _
-        Call ReleaseDC(frmMain.hWnd, hdcc)
+    If hdcc <> INVALID_HANDLE Then Call ReleaseDC(frmMain.hWnd, hdcc)
+
 End Sub
 
 Public Function FullScreenCapture(ByVal File As String) As Boolean
-'Medio desprolijo donde pongo la pic, pero es lo que hay por ahora
+    'Medio desprolijo donde pongo la pic, pero es lo que hay por ahora
+    
     Dim c As cDIBSection
     Set c = New cDIBSection
-    Dim hdcc As Long
+
+    Dim hdcc   As Long
     Dim handle As Long
     
     hdcc = GetDC(handle)
     
-    frmScreenshots.Picture1.AutoRedraw = True
+    With frmScreenshots.Picture1
     
-    If Not ResolucionCambiada Then
-        frmScreenshots.Picture1.Width = Screen.Width
-        frmScreenshots.Picture1.Height = Screen.Height
+        .AutoRedraw = True
+    
+        If Not ResolucionCambiada Then
+            .Width = Screen.Width
+            .Height = Screen.Height
         
-        Call BitBlt(frmScreenshots.Picture1.hdc, 0, 0, Screen.Width / Screen.TwipsPerPixelX, Screen.Height / Screen.TwipsPerPixelY, hdcc, 0, 0, SRCCOPY)
-    Else
-        frmScreenshots.Picture1.Width = 12000
-        frmScreenshots.Picture1.Height = 9000
+            Call BitBlt(frmScreenshots.Picture1.hdc, 0, 0, Screen.Width / Screen.TwipsPerPixelX, Screen.Height / Screen.TwipsPerPixelY, hdcc, 0, 0, SRCCOPY)
+        Else
+            .Width = frmMain.Width
+            .Height = frmMain.Height
         
-        Call BitBlt(frmScreenshots.Picture1.hdc, 0, 0, 800, 600, hdcc, 0, 0, SRCCOPY)
-    End If
+            Call BitBlt(.hdc, 0, 0, frmMain.Width, frmMain.Height, hdcc, 0, 0, SRCCOPY)
+
+        End If
     
-    Call ReleaseDC(handle, hdcc)
+        Call ReleaseDC(handle, hdcc)
     
-    hdcc = INVALID_HANDLE
+        hdcc = INVALID_HANDLE
     
-    If Not FileExist(App.path & "\TEMP", vbDirectory) Then MkDir (App.path & "\TEMP")
+        If Not FileExist(App.path & "\TEMP", vbDirectory) Then MkDir (App.path & "\TEMP")
     
-    frmScreenshots.Picture1.Refresh
-    frmScreenshots.Picture1.Picture = frmScreenshots.Picture1.Image
+        .Refresh
+        .Picture = .Image
     
-    c.CreateFromPicture frmScreenshots.Picture1.Picture
+        Call c.CreateFromPicture(.Picture)
     
-    SaveJPG c, File
+        Call SaveJPG(c, File)
     
-    FullScreenCapture = True
+        FullScreenCapture = True
+    
+    End With
+    
 End Function
