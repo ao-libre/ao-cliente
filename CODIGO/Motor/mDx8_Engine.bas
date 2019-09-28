@@ -219,7 +219,7 @@ Public Sub Engine_DirectX8_Aditional_Init()
     ColorTecho = 250
     colorRender = 240
 
-    Call Engine_Set_TileBuffer(9)
+    Call Engine_Set_TileBuffer(11)
     Call Engine_Set_BaseSpeed(0.018)
     
     With MainScreenRect
@@ -241,13 +241,13 @@ Public Sub Engine_DirectX8_Aditional_Init()
     
 End Sub
 
-Public Sub Engine_Draw_Line(X1 As Single, Y1 As Single, X2 As Single, Y2 As Single, Optional Color As Long = -1, Optional Color2 As Long = -1)
+Public Sub Engine_Draw_Line(x1 As Single, y1 As Single, x2 As Single, y2 As Single, Optional Color As Long = -1, Optional Color2 As Long = -1)
 On Error GoTo Error
     
     Call Engine_Long_To_RGB_List(temp_rgb(), Color)
     
     Call SpriteBatch.SetTexture(Nothing)
-    Call SpriteBatch.Draw(X1, Y1, X2, Y2, temp_rgb())
+    Call SpriteBatch.Draw(x1, y1, x2, y2, temp_rgb())
     
 Exit Sub
 
@@ -255,13 +255,13 @@ Error:
     'Call Log_Engine("Error in Engine_Draw_Line, " & Err.Description & " (" & Err.number & ")")
 End Sub
 
-Public Sub Engine_Draw_Point(X1 As Single, Y1 As Single, Optional Color As Long = -1)
+Public Sub Engine_Draw_Point(x1 As Single, y1 As Single, Optional Color As Long = -1)
 On Error GoTo Error
     
     Call Engine_Long_To_RGB_List(temp_rgb(), Color)
     
     Call SpriteBatch.SetTexture(Nothing)
-    Call SpriteBatch.Draw(X1, Y1, 0, 1, temp_rgb(), 0, 0)
+    Call SpriteBatch.Draw(x1, y1, 0, 1, temp_rgb(), 0, 0)
     
 Exit Sub
 
@@ -349,7 +349,7 @@ Public Sub Engine_D3DColor_To_RGB_List(rgb_list() As Long, Color As D3DCOLORVALU
 'Last Modification: 14/05/10
 'Blisse-AO | Set a D3DColorValue to a RGB List
 '***************************************************
-    rgb_list(0) = D3DColorARGB(Color.A, Color.r, Color.g, Color.B)
+    rgb_list(0) = D3DColorARGB(Color.a, Color.r, Color.g, Color.b)
     rgb_list(1) = rgb_list(0)
     rgb_list(2) = rgb_list(0)
     rgb_list(3) = rgb_list(0)
@@ -385,7 +385,7 @@ Public Function SetARGB_Alpha(rgb_list() As Long, Alpha As Byte) As Long()
     If Alpha < 0 Then Alpha = 0
     
     'seteamos el alpha
-    TempColor.A = Alpha
+    TempColor.a = Alpha
     
     'generamos el nuevo RGB_List
     Call Engine_D3DColor_To_RGB_List(tempARGB(), TempColor)
@@ -462,48 +462,48 @@ Dim IX As Single
     
 End Function
 
-Public Function Engine_Collision_LineRect(ByVal sX As Long, ByVal sY As Long, ByVal SW As Long, ByVal SH As Long, ByVal X1 As Long, ByVal Y1 As Long, ByVal X2 As Long, ByVal Y2 As Long) As Byte
+Public Function Engine_Collision_LineRect(ByVal sX As Long, ByVal sY As Long, ByVal SW As Long, ByVal SH As Long, ByVal x1 As Long, ByVal y1 As Long, ByVal x2 As Long, ByVal y2 As Long) As Byte
 '*****************************************************************
 'Check if a line intersects with a rectangle (returns 1 if true)
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_Collision_LineRect
 '*****************************************************************
 
     'Top line
-    If Engine_Collision_Line(sX, sY, sX + SW, sY, X1, Y1, X2, Y2) Then
+    If Engine_Collision_Line(sX, sY, sX + SW, sY, x1, y1, x2, y2) Then
         Engine_Collision_LineRect = 1
         Exit Function
     End If
     
     'Right line
-    If Engine_Collision_Line(sX + SW, sY, sX + SW, sY + SH, X1, Y1, X2, Y2) Then
+    If Engine_Collision_Line(sX + SW, sY, sX + SW, sY + SH, x1, y1, x2, y2) Then
         Engine_Collision_LineRect = 1
         Exit Function
     End If
 
     'Bottom line
-    If Engine_Collision_Line(sX, sY + SH, sX + SW, sY + SH, X1, Y1, X2, Y2) Then
+    If Engine_Collision_Line(sX, sY + SH, sX + SW, sY + SH, x1, y1, x2, y2) Then
         Engine_Collision_LineRect = 1
         Exit Function
     End If
 
     'Left line
-    If Engine_Collision_Line(sX, sY, sX, sY + SW, X1, Y1, X2, Y2) Then
+    If Engine_Collision_Line(sX, sY, sX, sY + SW, x1, y1, x2, y2) Then
         Engine_Collision_LineRect = 1
         Exit Function
     End If
 
 End Function
 
-Function Engine_Collision_Rect(ByVal X1 As Integer, ByVal Y1 As Integer, ByVal Width1 As Integer, ByVal Height1 As Integer, ByVal X2 As Integer, ByVal Y2 As Integer, ByVal Width2 As Integer, ByVal Height2 As Integer) As Boolean
+Function Engine_Collision_Rect(ByVal x1 As Integer, ByVal y1 As Integer, ByVal Width1 As Integer, ByVal Height1 As Integer, ByVal x2 As Integer, ByVal y2 As Integer, ByVal Width2 As Integer, ByVal Height2 As Integer) As Boolean
 '*****************************************************************
 'Check for collision between two rectangles
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_Collision_Rect
 '*****************************************************************
 
-    If X1 + Width1 >= X2 Then
-        If X1 <= X2 + Width2 Then
-            If Y1 + Height1 >= Y2 Then
-                If Y1 <= Y2 + Height2 Then
+    If x1 + Width1 >= x2 Then
+        If x1 <= x2 + Width2 Then
+            If y1 + Height1 >= y2 Then
+                If y1 <= y2 + Height2 Then
                     Engine_Collision_Rect = True
                 End If
             End If
@@ -639,13 +639,13 @@ Public Function Engine_Get_TileBuffer() As Single
     
 End Function
 
-Function Engine_Distance(ByVal X1 As Integer, ByVal Y1 As Integer, ByVal X2 As Integer, ByVal Y2 As Integer) As Long
+Function Engine_Distance(ByVal x1 As Integer, ByVal y1 As Integer, ByVal x2 As Integer, ByVal y2 As Integer) As Long
 '***************************************************
 'Author: Standelf
 'Last Modification: -
 '***************************************************
 
-    Engine_Distance = Abs(X1 - X2) + Abs(Y1 - Y2)
+    Engine_Distance = Abs(x1 - x2) + Abs(y1 - y2)
     
 End Function
 
