@@ -1124,7 +1124,7 @@ Dim SkinSeleccionado As String
 Private Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVal hWnd As Long, ByVal nIndex As Long, ByVal dwNewLong As Long) As Long
 
 Public Sub dragInventory_dragDone(ByVal originalSlot As Integer, ByVal newSlot As Integer)
-Call Protocol.WriteMoveItem(originalSlot, newSlot, eMoveType.Inventory)
+    Call Protocol.WriteMoveItem(originalSlot, newSlot, eMoveType.Inventory)
 End Sub
 
 Private Sub Form_Load()
@@ -1863,24 +1863,33 @@ Private Sub AgarrarItem()
 End Sub
 
 Private Sub UsarItem()
+
     If pausa Then Exit Sub
     
     If Comerciando Then Exit Sub
     
-    If (Inventario.SelectedItem > 0) And (Inventario.SelectedItem < MAX_INVENTORY_SLOTS + 1) Then _
+    If (Inventario.SelectedItem > 0) And (Inventario.SelectedItem < MAX_INVENTORY_SLOTS + 1) Then
         Call WriteUseItem(Inventario.SelectedItem)
+    End If
+    
 End Sub
 
 Private Sub EquiparItem()
+
     If UserEstado = 1 Then
+    
         With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO").item(1), .Red, .Green, .Blue, .bold, .italic)
+            Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO").item(1), .Red, .Green, .Blue, .bold, .italic)
         End With
+        
     Else
+    
         If Comerciando Then Exit Sub
         
-        If (Inventario.SelectedItem > 0) And (Inventario.SelectedItem < MAX_INVENTORY_SLOTS + 1) Then _
-        Call WriteEquipItem(Inventario.SelectedItem)
+        If (Inventario.SelectedItem > 0) And (Inventario.SelectedItem < MAX_INVENTORY_SLOTS + 1) Then
+            Call WriteEquipItem(Inventario.SelectedItem)
+        End If
+        
     End If
 End Sub
 
