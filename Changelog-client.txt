@@ -529,3 +529,7 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 24/09/2019: Fix carga de particulas por mapa. (jopiortiz)
 * 24/09/2019: Modificados mapas, agregados npcs y modificado mapa del mundo con las nuevas catacumbas. (Recox-Reyarb)
 * 27/09/2019: Carga de Fxs via clsIniManager. [Fxs.ind -> Fxs.ini] (jopiortiz)
+
+- v0.13.17
+
+* 27/09/2019: Equipar/Usar un item del inventario dependiendo del tipo de objeto. (jopiortiz)

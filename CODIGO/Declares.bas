@@ -332,7 +332,7 @@ Public Enum eObjType
     otLena = 14
     otFogata = 15
     otEscudo = 16
-    otcasco = 17
+    otCasco = 17
     otAnillo = 18
     otTeleport = 19
     otYacimiento = 22
