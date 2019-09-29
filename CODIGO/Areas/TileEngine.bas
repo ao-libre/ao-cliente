@@ -1207,10 +1207,11 @@ Public Function InitTileEngine(ByVal setDisplayFormhWnd As Long, ByVal setTilePi
 'Last modified by: Juan Martin Sotuyo Dodero (Maraxus)
 'Configures the engine to start running.
 '***************************************************
+    
     TilePixelWidth = setTilePixelWidth
     TilePixelHeight = setTilePixelHeight
-    WindowTileHeight = Round(frmMain.MainViewPic.Height / 32, 0)
-    WindowTileWidth = Round(frmMain.MainViewPic.Width / 32, 0)
+    WindowTileHeight = Round(ScreenHeight / 32, 0)
+    WindowTileWidth = Round(ScreenWidth / 32, 0)
     
     IniPath = Game.path(INIT)
     HalfWindowTileHeight = WindowTileHeight \ 2
@@ -1220,7 +1221,6 @@ Public Function InitTileEngine(ByVal setDisplayFormhWnd As Long, ByVal setTilePi
     MaxXBorder = XMaxMapSize - (WindowTileWidth \ 2)
     MinYBorder = YMinMapSize + (WindowTileHeight \ 2)
     MaxYBorder = YMaxMapSize - (WindowTileHeight \ 2)
-    
 
     'Resize mapdata array
     ReDim MapData(XMinMapSize To XMaxMapSize, YMinMapSize To YMaxMapSize) As MapBlock
@@ -1356,7 +1356,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
     
         '//Inventario
         If frmMain.Visible Then
-            If frmMain.picInv.Visible Then
+            If frmMain.PicInv.Visible Then
                 Call Inventario.DrawInv
             End If
         End If
