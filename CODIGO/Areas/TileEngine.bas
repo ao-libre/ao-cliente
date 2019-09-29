@@ -257,8 +257,8 @@ Public FramesPerSecCounter As Long
 Public FPSLastCheck As Long
 
 'Tamano del la vista en Tiles
-Private WindowTileWidth As Integer
-Private WindowTileHeight As Integer
+Public WindowTileWidth As Integer
+Public WindowTileHeight As Integer
 
 Public HalfWindowTileWidth As Integer
 Public HalfWindowTileHeight As Integer

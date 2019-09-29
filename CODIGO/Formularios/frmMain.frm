@@ -2542,8 +2542,8 @@ Private Function InGameArea() As Boolean
 'Last Modification: 04/07/08
 'Checks if last click was performed within or outside the game area.
 '***************************************************
-    If clicX < 0 Or clicX > (32 * (Round(frmMain.MainViewPic.Width / 32))) Then Exit Function
-    If clicY < 0 Or clicY > (32 * (Round(frmMain.MainViewPic.Height / 32))) Then Exit Function
+    If clicX < 0 Or clicX > (32 * WindowTileWidth) Then Exit Function
+    If clicY < 0 Or clicY > (32 * WindowTileHeight) Then Exit Function
     
     InGameArea = True
 End Function
