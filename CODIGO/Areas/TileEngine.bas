@@ -1210,18 +1210,20 @@ Public Function InitTileEngine(ByVal setDisplayFormhWnd As Long, ByVal setTilePi
     
     TilePixelWidth = setTilePixelWidth
     TilePixelHeight = setTilePixelHeight
+    
     WindowTileHeight = Round(ScreenHeight / 32, 0)
     WindowTileWidth = Round(ScreenWidth / 32, 0)
     
     IniPath = Game.path(INIT)
+    
     HalfWindowTileHeight = WindowTileHeight \ 2
     HalfWindowTileWidth = WindowTileWidth \ 2
-
-    MinXBorder = XMinMapSize + (WindowTileWidth \ 2)
-    MaxXBorder = XMaxMapSize - (WindowTileWidth \ 2)
-    MinYBorder = YMinMapSize + (WindowTileHeight \ 2)
-    MaxYBorder = YMaxMapSize - (WindowTileHeight \ 2)
-
+    
+    MinXBorder = XMinMapSize + HalfWindowTileWidth
+    MaxXBorder = XMaxMapSize - HalfWindowTileWidth
+    MinYBorder = YMinMapSize + HalfWindowTileHeight
+    MaxYBorder = YMaxMapSize - HalfWindowTileHeight
+    
     'Resize mapdata array
     ReDim MapData(XMinMapSize To XMaxMapSize, YMinMapSize To YMaxMapSize) As MapBlock
     
