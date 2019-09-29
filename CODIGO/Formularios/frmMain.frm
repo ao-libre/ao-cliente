@@ -2728,13 +2728,13 @@ Private Sub Client_Error(ByVal number As Integer, _
 End Sub
 
 Private Function InGameArea() As Boolean
-'***************************************************
+'********************************************************************
 'Author: NicoNZ
 'Last Modification: 04/07/08
 'Checks if last click was performed within or outside the game area.
-'***************************************************
-    If clicX < 0 Or clicX > (32 * WindowTileWidth) Then Exit Function
-    If clicY < 0 Or clicY > (32 * WindowTileHeight) Then Exit Function
+'********************************************************************
+    If clicX < frmMain.MainViewPic.Left Or clicX > frmMain.MainViewPic.Left + (TilePixelWidth * WindowTileWidth) Then Exit Function
+    If clicY < frmMain.MainViewPic.Top Or clicY > frmMain.MainViewPic.Top + (TilePixelHeight * WindowTileHeight) Then Exit Function
     
     InGameArea = True
 End Function
