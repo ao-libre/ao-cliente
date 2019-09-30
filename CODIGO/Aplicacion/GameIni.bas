@@ -55,6 +55,9 @@ Public Type tSetupMods
     bKill       As Boolean
     byMurderedLevel As Byte
     
+    ' PARAMETERS
+    BuscarServidores As Boolean
+    
     ' OTHER
     MostrarTips As Byte
 End Type
@@ -157,7 +160,8 @@ Public Sub LeerConfiguracion()
         
         ' OTHER
         .MostrarTips = CBool(Lector.GetValue("OTHER", "MOSTRAR_TIPS"))
-        
+        .BuscarServidores = CBool(Lector.GetValue("PARAMETERS", "BUSCAR_SERVIDORES"))
+
         Debug.Print "Modo de Renderizado: " & IIf(.Aceleracion = 1, "Mixto (Hardware + Software)", "Hardware")
         Debug.Print "byMemory: " & .byMemory
         Debug.Print "bNoRes: " & .bNoRes
@@ -177,6 +181,7 @@ Public Sub LeerConfiguracion()
         Debug.Print "bKill: " & .byMurderedLevel
         Debug.Print "bActive: " & .bActive
         Debug.Print "MostrarTips: " & .MostrarTips
+        Debug.Print "BuscarServidores: " & .BuscarServidores
         Debug.Print vbNullString
         
     End With
@@ -226,6 +231,8 @@ Public Sub GuardarConfiguracion()
         
         ' OTHER
         Call Lector.ChangeValue("OTHER", "MOSTRAR_TIPS", CInt(.MostrarTips))
+        Call Lector.ChangeValue("PARAMETERS", "BUSCAR_SERVIRORES", CInt(.BuscarServidores))
+        
     End With
     
     Call Lector.DumpFile(Game.path(INIT) & CLIENT_FILE)

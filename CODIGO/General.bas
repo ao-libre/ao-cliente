@@ -1515,6 +1515,9 @@ Sub DownloadServersFile(myURL As String)
 'Check content of strData to avoid clean the file sinfo.ini if there is no response from Github by Recox
 '**********************************************************
 On Error Resume Next
+    
+    If Not ClientSetup.BuscarServidores Then Exit Sub
+    
     Dim strData As String
     Dim f As Integer
     
