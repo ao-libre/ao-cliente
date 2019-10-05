@@ -533,3 +533,4 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 - v0.13.17
 
 * 27/09/2019: Equipar/Usar un item del inventario dependiendo del tipo de objeto. (jopiortiz)
+* 10/10/2019: Se cambio la imagen de VentanaConectar2.jpg para que se lea la url. (Reyarb)
