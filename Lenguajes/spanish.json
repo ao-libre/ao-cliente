@@ -929,7 +929,7 @@
 		"TEXTO":"* Habilidad inhabilitada para tu clase."
 	},
 	"ACTUALIZAR_CLIENTE":{
-		"TEXTO":"Tu version no es la actual, ¿Deseas ejecutar el actualizador?."
+		"TEXTO":"Tu version no es la actual, Deseas ejecutar el actualizador?."
 	},
 	"OTRO_CLIENTE_ABIERTO":{
 		"TEXTO":"Argentum Online ya esta ejecutandose! No es posible ejecutar otra instancia del juego. Haga click en Aceptar para salir."
@@ -991,7 +991,7 @@
 		]
 	},
 	"PANTALLA_COMPLETA":{
-		"TEXTO":"¿Desea jugar en pantalla completa?"
+		"TEXTO":"Desea jugar en pantalla completa?"
 	},
 	"VALIDACION_EMAIL":{
 		"TEXTO":"Ingrese un correo electronico."
