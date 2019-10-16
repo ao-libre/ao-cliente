@@ -460,7 +460,12 @@ Private Sub Form_Load()
 
     'Cargamos la interfase
     Me.Picture = LoadPicture(Game.path(Interfaces) & "Boveda.jpg")
-    
+        
+    Call LoadTextsForm
+    Call LoadButtons
+End Sub
+
+Private Sub LoadTextsForm()
     Me.lblTitle.Caption = JsonLanguage.Item("FRM_BANCOOBJ_TITLE").Item("TEXTO")
     Me.lblDepositar.Caption = JsonLanguage.Item("FRM_BANCOOBJ_DEPOSITAR").Item("TEXTO")
     Me.lblDisponible.Caption = JsonLanguage.Item("FRM_BANCOOBJ_DISPONIBLE").Item("TEXTO")
@@ -468,9 +473,6 @@ Private Sub Form_Load()
     Me.lblRetirar.Caption = JsonLanguage.Item("FRM_BANCOOBJ_RETIRAR").Item("TEXTO")
     Me.lblBoveda.Caption = JsonLanguage.Item("FRM_BANCOOBJ_BOVEDA").Item("TEXTO")
     Me.lblInventario.Caption = JsonLanguage.Item("FRM_BANCOOBJ_INVENTARIO").Item("TEXTO")
-    
-    Call LoadButtons
-    
 End Sub
 
 Private Sub LoadButtons()
