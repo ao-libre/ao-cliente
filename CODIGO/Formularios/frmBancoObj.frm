@@ -86,6 +86,137 @@ Begin VB.Form frmBancoObj
       Top             =   2400
       Width           =   2430
    End
+   Begin VB.Label lblInventario 
+      Caption         =   "Inventario"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00C00000&
+      Height          =   255
+      Left            =   4320
+      TabIndex        =   14
+      Top             =   1920
+      Width           =   1815
+   End
+   Begin VB.Label lblBoveda 
+      Caption         =   "Boveda"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00C00000&
+      Height          =   255
+      Left            =   1080
+      TabIndex        =   13
+      Top             =   1920
+      Width           =   1215
+   End
+   Begin VB.Label lblRetirar 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Cantidad"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H0000FF00&
+      Height          =   375
+      Left            =   5760
+      TabIndex        =   12
+      Top             =   1560
+      Width           =   975
+   End
+   Begin VB.Label lblCantidad 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Cantidad"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H0000FF00&
+      Height          =   375
+      Left            =   2520
+      TabIndex        =   11
+      Top             =   1800
+      Width           =   975
+   End
+   Begin VB.Label lblDisponible 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Disponible"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H0000FF00&
+      Height          =   375
+      Left            =   2520
+      TabIndex        =   10
+      Top             =   1200
+      Width           =   975
+   End
+   Begin VB.Label lblDepositar 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Depositar"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H0000FF00&
+      Height          =   375
+      Left            =   600
+      TabIndex        =   9
+      Top             =   1560
+      Width           =   975
+   End
+   Begin VB.Label lblTitle 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Oro"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   15
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H0000C0C0&
+      Height          =   375
+      Left            =   3720
+      TabIndex        =   8
+      Top             =   480
+      Width           =   975
+   End
    Begin VB.Label lblUserGld 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
@@ -107,11 +238,11 @@ Begin VB.Form frmBancoObj
       Width           =   135
    End
    Begin VB.Image imgDepositarOro 
-      Height          =   930
+      Height          =   705
       Left            =   1560
       Tag             =   "0"
-      Top             =   945
-      Width           =   1050
+      Top             =   1050
+      Width           =   810
    End
    Begin VB.Image imgRetirarOro 
       Height          =   765
@@ -329,9 +460,19 @@ Private Sub Form_Load()
 
     'Cargamos la interfase
     Me.Picture = LoadPicture(Game.path(Interfaces) & "Boveda.jpg")
-    
+        
+    Call LoadTextsForm
     Call LoadButtons
-    
+End Sub
+
+Private Sub LoadTextsForm()
+    Me.lblTitle.Caption = JsonLanguage.Item("FRM_BANCOOBJ_TITLE").Item("TEXTO")
+    Me.lblDepositar.Caption = JsonLanguage.Item("FRM_BANCOOBJ_DEPOSITAR").Item("TEXTO")
+    Me.lblDisponible.Caption = JsonLanguage.Item("FRM_BANCOOBJ_DISPONIBLE").Item("TEXTO")
+    Me.lblCantidad.Caption = JsonLanguage.Item("FRM_BANCOOBJ_CANTIDAD").Item("TEXTO")
+    Me.lblRetirar.Caption = JsonLanguage.Item("FRM_BANCOOBJ_RETIRAR").Item("TEXTO")
+    Me.lblBoveda.Caption = JsonLanguage.Item("FRM_BANCOOBJ_BOVEDA").Item("TEXTO")
+    Me.lblInventario.Caption = JsonLanguage.Item("FRM_BANCOOBJ_INVENTARIO").Item("TEXTO")
 End Sub
 
 Private Sub LoadButtons()
@@ -355,7 +496,6 @@ Private Sub LoadButtons()
     
     Image1(0).MouseIcon = picMouseIcon
     Image1(1).MouseIcon = picMouseIcon
-    
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
