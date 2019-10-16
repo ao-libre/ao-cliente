@@ -1771,8 +1771,8 @@ End Sub
 Private Sub lstProfesion_Click()
 On Error Resume Next
     If lstProfesion.Text = "Trabajador" Then
-        'Agarramos un numero aleatorio del 0 al 5 por que hay 5 imagenes de trabajador
-        ImgProfesionDibujo.Picture = LoadPicture(Game.path(Interfaces) & lstProfesion.Text & (CInt(Rnd * 5)) & ".jpg")
+        'Agarramos un numero aleatorio del 0 al 6 por que hay 6 imagenes de trabajador
+        ImgProfesionDibujo.Picture = LoadPicture(Game.path(Interfaces) & lstProfesion.Text & (CInt(Rnd * 6)) & ".jpg")
     Else
         ImgProfesionDibujo.Picture = LoadPicture(Game.path(Interfaces) & lstProfesion.Text & ".jpg")
     End If
