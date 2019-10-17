@@ -248,15 +248,19 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Form_Load()
-    lblTitle.Caption = JsonLanguage.Item("FRMBUSCAR_TITLE").Item("TEXTO")
-    Crear.Caption = JsonLanguage.Item("FRMBUSCAR_CREAR").Item("TEXTO")
-    CrearNPCs.Caption = JsonLanguage.Item("FRMBUSCAR_CREARNPCS").Item("TEXTO")
-    CrearObjetos.Caption = JsonLanguage.Item("FRMBUSCAR_CREAROBJETOS").Item("TEXTO")
-    Label2.Caption = JsonLanguage.Item("FRMBUSCAR_CANTIDAD").Item("TEXTO")
-    chkRespawn.Caption = JsonLanguage.Item("FRMBUSCAR_RESPAWN").Item("TEXTO")
-    Command1.Caption = JsonLanguage.Item("FRMBUSCAR_BUSCAROBJETO").Item("TEXTO")
-    Command2.Caption = JsonLanguage.Item("FRMBUSCAR_BUSCARNPCS").Item("TEXTO")
-    Limpiarlistas.Caption = JsonLanguage.Item("FRMBUSCAR_LIMPIARLISTAS").Item("TEXTO")
+   Call LoadTextsForm
+End Sub
+
+Private Sub LoadTextsForm()
+   lblTitle.Caption = JsonLanguage.Item("FRMBUSCAR_TITLE").Item("TEXTO")
+   Crear.Caption = JsonLanguage.Item("FRMBUSCAR_CREAR").Item("TEXTO")
+   CrearNPCs.Caption = JsonLanguage.Item("FRMBUSCAR_CREARNPCS").Item("TEXTO")
+   CrearObjetos.Caption = JsonLanguage.Item("FRMBUSCAR_CREAROBJETOS").Item("TEXTO")
+   Label2.Caption = JsonLanguage.Item("FRMBUSCAR_CANTIDAD").Item("TEXTO")
+   chkRespawn.Caption = JsonLanguage.Item("FRMBUSCAR_RESPAWN").Item("TEXTO")
+   Command1.Caption = JsonLanguage.Item("FRMBUSCAR_BUSCAROBJETO").Item("TEXTO")
+   Command2.Caption = JsonLanguage.Item("FRMBUSCAR_BUSCARNPCS").Item("TEXTO")
+   Limpiarlistas.Caption = JsonLanguage.Item("FRMBUSCAR_LIMPIARLISTAS").Item("TEXTO")
 End Sub
 
 Private Sub Command1_Click()

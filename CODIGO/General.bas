@@ -1585,3 +1585,44 @@ On Error Resume Next
     End If
     
 End Sub
+
+Function ImgRequest(ByVal sFile As String) As String
+'***************************************************
+'Author: RecoX
+'Last Modify Date: 17/10/2019
+'Funcion para cargar imagenes de forma segura, ya que si no existe el programa no explota, extraido de gs-ao
+'***************************************************
+    Dim RespondMsgBox As Byte
+    If LenB(Dir(sFile, vbArchive)) = 0 Then
+        RespondMsgBox = MsgBox("ERROR: Imagen no encontrada..." & vbCrLf & sFile, vbCritical + vbRetryCancel)
+        If RespondMsgBox = vbRetry Then
+            sFile = ImgRequest(sFile)
+        Else
+            Call MsgBox("ADVERTENCIA: El juego seguira funcionando sin alguna imagen!", vbInformation + vbOKOnly)
+            sFile = Game.path(Interfaces) & "blank.bmp"
+        End If
+    End If
+    ImgRequest = sFile
+End Function
+
+Public Sub LoadAOCustomControlsPictures(ByRef tForm As Form)
+'***************************************************
+'Author: RecoX
+'Last Modify Date: 17/10/2019
+'Cargamos las imagenes de los uAOControls en los formularios.
+'***************************************************
+    Dim DirButtons As String
+    DirButtons = Game.path(Graficos) & "\Botones\"
+
+    Dim cControl As Control
+    For Each cControl In tForm.Controls
+        If TypeOf cControl Is uAOButton Then
+            cControl.PictureEsquina = LoadPicture(ImgRequest(DirButtons & uAOButton_bEsquina))
+            cControl.PictureFondo = LoadPicture(ImgRequest(DirButtons & uAOButton_bFondo))
+            cControl.PictureHorizontal = LoadPicture(ImgRequest(DirButtons & uAOButton_bHorizontal))
+            cControl.PictureVertical = LoadPicture(ImgRequest(DirButtons & uAOButton_bVertical))
+        ElseIf TypeOf cControl Is uAOCheckbox Then
+            cControl.Picture = LoadPicture(ImgRequest(DirButtons & uAOButton_cCheckboxSmall))
+        End If
+    Next
+End Sub

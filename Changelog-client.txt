@@ -534,3 +534,9 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 
 * 27/09/2019: Equipar/Usar un item del inventario dependiendo del tipo de objeto. (jopiortiz)
 * 10/10/2019: Se cambio la imagen de VentanaConectar2.jpg para que se lea la url. (Reyarb)
+* 16/10/2019: Se agrego una nueva imagen de trabajador (carpintero) en el formulario de crear personaje. (Recox)
+* 17/10/2019: Se normalizaron los archivos english.json y spanish.json ahora ambos tienen la misma cantidad de valores y son json compilantes. (Recox)
+* 17/10/2019: Se agrego funcion LoadAOCustomControlsPictures en General.bas para cargar las imagenes de los controles uAO en todos los formularios, se crearon un par de funciones y variables para evitar cargar las imagenes de estos nuevos botones mediante frx y hacerlo mediante codigo para que sea mas facil leer lo que pasa (todo: los formularios que ya tienen el frx puesto como frmConectar o frmMain deberian cambiarse por este metodo para mantener coherencia) (Recox).
+* 17/10/2019: Se tradujo el formulario frmCambiaMotd. (Recox)
+* 17/10/2019: Se tradujo el formulario frmBancoObj. (Recox)
+

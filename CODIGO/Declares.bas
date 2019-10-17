@@ -973,4 +973,14 @@ End Type
 'MundoSeleccionado desde la propiedad Mundo en sinfo.dat / World selected from sinfo.dat file
 Public MundoSeleccionado As String
 
+' * Configuracion de estilos de controles
+Public Const uAOButton_bEsquina As String = "bEsquina.bmp"
+Public Const uAOButton_bFondo As String = "bFondo.bmp"
+Public Const uAOButton_bHorizontal As String = "bHorizontal.bmp"
+Public Const uAOButton_bVertical As String = "bVertical.bmp"
+Public Const uAOButton_cCheckbox As String = "cCheckbox.bmp" ' Grande
+Public Const uAOButton_cCheckboxSmall As String = "cCheckboxSmall.bmp" ' Chico
+' * Configuracion de estilo de controles
+
+
 
