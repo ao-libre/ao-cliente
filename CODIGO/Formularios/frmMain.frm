@@ -1487,7 +1487,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
         Case CustomKeys.BindedKey(eKeyType.mKeyCastSpellMacro)
             If UserEstado = 1 Then
                 With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                    Call ShowConsoleMsg("��Est�s muerto!!", .Red, .Green, .Blue, .bold, .italic)
+                    Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO").item(1), .Red, .Green, .Blue, .bold, .italic)
                 End With
                 Exit Sub
             End If
@@ -1743,10 +1743,11 @@ Select Case Index
         Else
             Call ActivarMacroTrabajo
         End If
+        
     Case eSMType.mSpells
         If UserEstado = 1 Then
             With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                Call ShowConsoleMsg("��Est�s muerto!!", .Red, .Green, .Blue, .bold, .italic)
+                Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO").item(1), .Red, .Green, .Blue, .bold, .italic)
             End With
             Exit Sub
         End If
