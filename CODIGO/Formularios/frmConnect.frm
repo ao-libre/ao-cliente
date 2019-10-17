@@ -719,6 +719,9 @@ Private Sub Form_Load()
     
     Call LoadTextsForm
     Call LoadButtonsAnimations
+        '    Call LoadAOCustomControlsPictures(Me) 
+    'Todo: Poner la carga de botones como en el frmCambiaMotd.frm para mantener coherencia con el resto de la aplicacion
+    'y poder borrar los frx de este archivo
 
 End Sub
 
