@@ -362,7 +362,7 @@ Private Sub Form_Load()
     Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaCambioMOTD.jpg")
     
     Call LoadTextsForm
-    Call LoadButtonsPictures
+    Call LoadAOCustomControlsPictures(Me)
 
     Set picNegrita = LoadPicture(Game.path(Interfaces) & "OpcionPrendidaN.jpg")
     Set picCursiva = LoadPicture(Game.path(Interfaces) & "OpcionPrendidaC.jpg")
@@ -381,23 +381,6 @@ Private Sub LoadTextsForm()
     Me.imgAceptar.Caption = JsonLanguage.Item("FRM_CAMBIAMOTD_ACEPTAR").Item("TEXTO")
     Me.lblCursiva.Caption = JsonLanguage.Item("FRM_CAMBIAMOTD_CURSIVA").Item("TEXTO")
     Me.lblNegrita.Caption = JsonLanguage.Item("FRM_CAMBIAMOTD_NEGRITA").Item("TEXTO")
-End Sub
-
-Private Sub LoadButtonsPictures()
-    Dim DirButtons As String
-    DirButtons = Game.path(Graficos) & "\Botones\"
-
-    Dim cControl As Control
-    For Each cControl In Me.Controls
-        If TypeOf cControl Is uAOButton Then
-            cControl.PictureEsquina = LoadPicture(ImgRequest(DirButtons & uAOButton_bEsquina))
-            cControl.PictureFondo = LoadPicture(ImgRequest(DirButtons & uAOButton_bFondo))
-            cControl.PictureHorizontal = LoadPicture(ImgRequest(DirButtons & uAOButton_bHorizontal))
-            cControl.PictureVertical = LoadPicture(ImgRequest(DirButtons & uAOButton_bVertical))
-        ElseIf TypeOf cControl Is uAOCheckbox Then
-            cControl.Picture = LoadPicture(ImgRequest(DirButtons & uAOButton_cCheckboxSmall))
-        End If
-    Next
 End Sub
 
 Private Sub imgAceptar_Click()
