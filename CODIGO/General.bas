@@ -1585,3 +1585,18 @@ On Error Resume Next
     End If
     
 End Sub
+
+Function ImgRequest(ByVal sFile As String) As String
+    Dim RespondMsgBox As Byte
+    If LenB(Dir(sFile, vbArchive)) = 0 Then
+        RespondMsgBox = MsgBox("ERROR: Imagen no encontrada..." & vbCrLf & sFile, vbCritical + vbRetryCancel)
+        If RespondMsgBox = vbRetry Then
+            sFile = ImgRequest(sFile)
+        Else
+            Call MsgBox("ADVERTENCIA: El juego seguira funcionando sin alguna imagen!", vbInformation + vbOKOnly)
+            sFile = Game.path(Interfaces) & "blank.bmp"
+        End If
+    End If
+    ImgRequest = sFile
+End Function
+
