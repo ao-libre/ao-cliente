@@ -570,8 +570,6 @@ End Type
 Private AnimControl(1 To 11) As tAnimControl
 Private Fuerza As Double
 
-Public LastButtonPressed As clsGraphicalButton
-
 Private Lector As clsIniManager
 
 Private Const AES_PASSWD As String = "tumamaentanga"
@@ -622,6 +620,16 @@ Private Sub btnConectarse_Click()
     'Clear spell list
     frmMain.hlst.Clear
 
+    If Me.chkRecordar.Checked = False Then
+        Call WriteVar(Game.path(INIT) & "Config.ini", "Login", "Remember", 0)
+        Call WriteVar(Game.path(INIT) & "Config.ini", "Login", "UserName", vbNullString)
+        Call WriteVar(Game.path(INIT) & "Config.ini", "Login", "Password", vbNullString)
+    Else
+        Call WriteVar(Game.path(INIT) & "Config.ini", "Login", "UserName", AccountName)
+        Call WriteVar(Game.path(INIT) & "Config.ini", "Login", "Password", Cripto.AesEncryptString(AccountPassword, AES_PASSWD))
+        Call WriteVar(Game.path(INIT) & "Config.ini", "Login", "Remember", 1)
+    End If
+
     If CheckUserData() = True Then
         Call Protocol.Connect(E_MODO.Normal)
     End If
@@ -656,18 +664,6 @@ End Sub
 
 Private Sub btnVerForo_Click()
     Call ShellExecute(0, "Open", "https://www.reddit.com/r/argentumonlineoficial/", vbNullString, App.path, SW_SHOWNORMAL)
-End Sub
-
-Private Sub chkRecordar_Click()
-    If Me.chkRecordar.Checked = False Then
-        Call WriteVar(Game.path(INIT) & "Config.ini", "Login", "Remember", 0)
-        Call WriteVar(Game.path(INIT) & "Config.ini", "Login", "UserName", vbNullString)
-        Call WriteVar(Game.path(INIT) & "Config.ini", "Login", "Password", vbNullString)
-    Else
-        Call WriteVar(Game.path(INIT) & "Config.ini", "Login", "UserName", Me.txtNombre)
-        Call WriteVar(Game.path(INIT) & "Config.ini", "Login", "Password", Cripto.AesEncryptString(Me.txtPasswd, AES_PASSWD))
-        Call WriteVar(Game.path(INIT) & "Config.ini", "Login", "Remember", 1)
-    End If
 End Sub
 
 Private Sub Form_Activate()
@@ -721,6 +717,12 @@ Private Sub Form_Load()
     'Solo hay 2 imagenes de cargando, cambiar 2 por el numero maximo si se quiere cambiar
     Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaConectar" & RandomNumber(1, 2) & ".jpg")
     
+    Call LoadTextsForm
+    Call LoadButtonsAnimations
+
+End Sub
+
+Private Sub LoadTextsForm()
     btnActualizarLista.Caption = JsonLanguage.item("BTN_ACTUALIZAR_LISTA").item("TEXTO")
     btnCodigoFuente.Caption = JsonLanguage.item("BTN_CODIGO_FUENTE").item("TEXTO")
     btnConectarse.Caption = JsonLanguage.item("BTN_CONECTARSE").item("TEXTO")
@@ -733,7 +735,9 @@ Private Sub Form_Load()
     btnVerForo.Caption = JsonLanguage.item("LBL_FORO").item("TEXTO")
     btnSalir.Caption = JsonLanguage.item("LBL_SALIR").item("TEXTO")
     btnTeclas.Caption = JsonLanguage.item("LBL_TECLAS").item("TEXTO")
+End Sub
 
+Private Sub LoadButtonsAnimations()
     ' GSZAO - Animacion...
     
     'TODO: Agregar los movimientos faltantes, me aburri (Recox)
@@ -790,7 +794,6 @@ Private Sub Form_Load()
     Fuerza = 1.7 ' Gravedad... 1.7
     tEfectos.Interval = 10
     tEfectos.Enabled = True
-
 End Sub
 
 Private Sub tEfectos_Timer()
