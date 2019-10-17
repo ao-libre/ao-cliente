@@ -539,4 +539,5 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 17/10/2019: Se agrego funcion LoadAOCustomControlsPictures en General.bas para cargar las imagenes de los controles uAO en todos los formularios, se crearon un par de funciones y variables para evitar cargar las imagenes de estos nuevos botones mediante frx y hacerlo mediante codigo para que sea mas facil leer lo que pasa (todo: los formularios que ya tienen el frx puesto como frmConectar o frmMain deberian cambiarse por este metodo para mantener coherencia) (Recox).
 * 17/10/2019: Se tradujo el formulario frmCambiaMotd. (Recox)
 * 17/10/2019: Se tradujo el formulario frmBancoObj. (Recox)
+* 18/10/2019: Se arreglo el checkbox de recordar usuario y password, ahora funciona siempre. Se aprolijo el frmConnect. (Recox)
 
