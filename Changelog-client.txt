@@ -318,6 +318,7 @@ ARGENTUM ONLINE - CHANGELOG DEL CLIENTE
  * 28/12/2016 : Strings de hechizos manejados desde el cliente (Shak)
 
  - 0.13.6
+
 * 11/08/2018 : Arreglado error de tiempo de la carcel y auto-transportacion hacia fuera de la misma (Recox)
 * 12/08/2018 : Arreglado alpha blending, ahora los colores se ven mejor (Cucsifae)
 * 13/08/2018 : Implementado auto-update en el repositorio del cliente y tambien se creo el repositorio del auto-update con su respectivo codigo. (Recox)
@@ -363,6 +364,7 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 21/12/2018 : Obtain colours of characteres from the file colores.dat instead of the ones harcoded in frmPanelAccount (Recox)
 
 - 0.13.7
+
 * 01/02/2019 : #74 Fixed runtime error when someone tries to move the window in fullscreen mode (Juanmz)
 * 01/02/2019 : Deleted unused validations in frmCrearPersonaje and General.bas (Recox)
 * 11/02/2019 : Re-implemented centinela (jopiortiz)
@@ -383,6 +385,7 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 11/03/2019 : Eliminada la carga de MD5. (jopiortiz)
 
 - 0.13.8
+
 * 12/03/2019 : Implementación: Sistema de Quests via NPC's. (jopiortiz)
 * 12/03/2019 : Optimizaciones varias, limpieza de codigo (jopiortiz)
 * 14/03/2019 : Implementación: Amuleto del Silencio (Recox-jopiortiz)
@@ -393,21 +396,25 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 01/04/2019 : Se implemento la posibilidad de que cada servidor pueda elegir su propio mundo, el mismo se selecciona desde la propiedad Mundo en el archivo sinfo.dat (Recox)
 
 - 0.13.8.1
+
 * 04/04/2019 : Se usa el numero de versionTagRelease desde el archivo INIT\Config.ini para mostrar la version de juego en el render (Recox)
 * 04/04/2019 : Se creo un boton para poder refrescar la lista de servidores (Recox)
 * 04/04/2019 : Se simplifico el formulario de conectar borrando codigo innecesario (Recox)
 
 - 0.13.8.2
+
 * 08/04/2019 : Ahora la aplicacion no crashea al tratar de abrirla sin internet. (Recox)
 * 08/04/2019 : Se agregaron todas las imagenes de minimapa faltantes (Recox)
 * 08/04/2019 : Se modifico un poco el mapa 273 del battleserver y el 198 del deathmatch (Recox)
 * 09/04/2019 : Ahora los sacerdotes de abajo y arriba curan en mapa deathmatch (198) (Recox)
 
 - 0.13.8.3
+
 * 11/04/2019: Se convirtio el mapa Escondrijo de las ruinas de earost en el mundo deathmatch con todos los npcs necesarios para un agite rapido. (Recox)
 * 14/04/2019: Implementación - daño en render. (jopiortiz)
 
 - 0.13.8.4
+
 * 15/04/2019: Cuando un user ATACA a un NPC y viceversa.
               Cuando un user CURA a un NPC o User y viceversa.
               Cuando un elemental ataca a un NPC o user y viceversa.
@@ -418,6 +425,7 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 17/04/2019: Se modifico la fuente para que se vean las coordenadas completas, se agregaron colores en el json de coordeandas para que la aplicacion no arrojase error (Recox)
 
 - 0.13.8.5
+
 * 05/05/2019: Arreglados algunas faltas de ortografia en el archivo de idiomas spanish.json (neoranger)
 * 05/05/2019: Eliminadas librerias (.dll) sin usar. (jopiortiz)
 * 05/05/2019: Ya no se actualiza la pantalla cuando elegis jugar en modo ventana, Se resetea la resolucion al cerrar desde el Sub CloseClient(). (jopiortiz)
@@ -539,4 +547,5 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 17/10/2019: Se agrego funcion LoadAOCustomControlsPictures en General.bas para cargar las imagenes de los controles uAO en todos los formularios, se crearon un par de funciones y variables para evitar cargar las imagenes de estos nuevos botones mediante frx y hacerlo mediante codigo para que sea mas facil leer lo que pasa (todo: los formularios que ya tienen el frx puesto como frmConectar o frmMain deberian cambiarse por este metodo para mantener coherencia) (Recox).
 * 17/10/2019: Se tradujo el formulario frmCambiaMotd. (Recox)
 * 17/10/2019: Se tradujo el formulario frmBancoObj. (Recox)
+* 18/10/2019: Se arreglo el checkbox de recordar usuario y password, ahora funciona siempre. Se aprolijo el frmConnect. (Recox)
 
