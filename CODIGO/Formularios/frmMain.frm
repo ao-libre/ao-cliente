@@ -1148,7 +1148,22 @@ Private Sub Form_Load()
         .Height = 9000
         .Label6 = JsonLanguage.item("NIVEL").item("TEXTO") & ": "
     End With
+
+    Call LoadTextsForm
+    '    Call LoadAOCustomControlsPictures(Me) 
+    'Todo: Poner la carga de botones como en el frmCambiaMotd.frm para mantener coherencia con el resto de la aplicacion
+    'y poder borrar los frx de este archivo
+        
+    ' Detect links in console
+    EnableURLDetect RecTxt.hWnd, Me.hWnd
     
+    ' Make the console transparent
+    Call SetWindowLong(RecTxt.hWnd, -20, &H20&)
+    
+    CtrlMaskOn = False
+End Sub
+
+Private Sub LoadTextsForm()
     CmdLanzar.Caption = JsonLanguage.item("LBL_LANZAR").item("TEXTO")
     CmdInventario.Caption = JsonLanguage.item("LBL_INVENTARIO").item("TEXTO")
     CmdHechizos.Caption = JsonLanguage.item("LBL_HECHIZOS").item("TEXTO")
@@ -1158,14 +1173,6 @@ Private Sub Form_Load()
     imgOpciones.Caption = JsonLanguage.item("LBL_OPCIONES").item("TEXTO")
     imgEstadisticas.Caption = JsonLanguage.item("LBL_ESTADISTICAS").item("TEXTO")
     imgClanes.Caption = JsonLanguage.item("LBL_CLANES").item("TEXTO")
-    
-    ' Detect links in console
-    EnableURLDetect RecTxt.hWnd, Me.hWnd
-    
-    ' Make the console transparent
-    Call SetWindowLong(RecTxt.hWnd, -20, &H20&)
-    
-    CtrlMaskOn = False
 End Sub
 
 Private Sub LoadButtons()
@@ -1480,7 +1487,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
         Case CustomKeys.BindedKey(eKeyType.mKeyCastSpellMacro)
             If UserEstado = 1 Then
                 With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                    Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
+                    Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO").item(1), .Red, .Green, .Blue, .bold, .italic)
                 End With
                 Exit Sub
             End If
@@ -1736,10 +1743,11 @@ Select Case Index
         Else
             Call ActivarMacroTrabajo
         End If
+        
     Case eSMType.mSpells
         If UserEstado = 1 Then
             With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                Call ShowConsoleMsg("¡¡Estás muerto!!", .Red, .Green, .Blue, .bold, .italic)
+                Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO").item(1), .Red, .Green, .Blue, .bold, .italic)
             End With
             Exit Sub
         End If
