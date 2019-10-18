@@ -48,6 +48,10 @@ Begin VB.Form frmCambiaMotd
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
+      PICE            =   "frmCambiaMotd.frx":0000
+      PICF            =   "frmCambiaMotd.frx":001C
+      PICH            =   "frmCambiaMotd.frx":0038
+      PICV            =   "frmCambiaMotd.frx":0054
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -70,6 +74,10 @@ Begin VB.Form frmCambiaMotd
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
+      PICE            =   "frmCambiaMotd.frx":0070
+      PICF            =   "frmCambiaMotd.frx":008C
+      PICH            =   "frmCambiaMotd.frx":00A8
+      PICV            =   "frmCambiaMotd.frx":00C4
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   9
@@ -92,6 +100,10 @@ Begin VB.Form frmCambiaMotd
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
+      PICE            =   "frmCambiaMotd.frx":00E0
+      PICF            =   "frmCambiaMotd.frx":00FC
+      PICH            =   "frmCambiaMotd.frx":0118
+      PICV            =   "frmCambiaMotd.frx":0134
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   9
@@ -114,6 +126,10 @@ Begin VB.Form frmCambiaMotd
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
+      PICE            =   "frmCambiaMotd.frx":0150
+      PICF            =   "frmCambiaMotd.frx":016C
+      PICH            =   "frmCambiaMotd.frx":0188
+      PICV            =   "frmCambiaMotd.frx":01A4
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   9
@@ -136,6 +152,10 @@ Begin VB.Form frmCambiaMotd
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
+      PICE            =   "frmCambiaMotd.frx":01C0
+      PICF            =   "frmCambiaMotd.frx":01DC
+      PICH            =   "frmCambiaMotd.frx":01F8
+      PICV            =   "frmCambiaMotd.frx":0214
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   9
@@ -158,6 +178,10 @@ Begin VB.Form frmCambiaMotd
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
+      PICE            =   "frmCambiaMotd.frx":0230
+      PICF            =   "frmCambiaMotd.frx":024C
+      PICH            =   "frmCambiaMotd.frx":0268
+      PICV            =   "frmCambiaMotd.frx":0284
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   9
@@ -180,6 +204,10 @@ Begin VB.Form frmCambiaMotd
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
+      PICE            =   "frmCambiaMotd.frx":02A0
+      PICF            =   "frmCambiaMotd.frx":02BC
+      PICH            =   "frmCambiaMotd.frx":02D8
+      PICV            =   "frmCambiaMotd.frx":02F4
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   9
@@ -202,6 +230,10 @@ Begin VB.Form frmCambiaMotd
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
+      PICE            =   "frmCambiaMotd.frx":0310
+      PICF            =   "frmCambiaMotd.frx":032C
+      PICH            =   "frmCambiaMotd.frx":0348
+      PICV            =   "frmCambiaMotd.frx":0364
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   9
@@ -224,6 +256,10 @@ Begin VB.Form frmCambiaMotd
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
+      PICE            =   "frmCambiaMotd.frx":0380
+      PICF            =   "frmCambiaMotd.frx":039C
+      PICH            =   "frmCambiaMotd.frx":03B8
+      PICV            =   "frmCambiaMotd.frx":03D4
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   9
@@ -236,41 +272,41 @@ Begin VB.Form frmCambiaMotd
    End
    Begin VB.Label lblNegrita 
       BackStyle       =   0  'Transparent
-      ForeColor       =   &H00FFFFFF&
       Caption         =   "Negrita"
+      BeginProperty Font 
+         Name            =   "Lucida Sans Unicode"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
       Height          =   255
-      Left            =   240
+      Left            =   1320
       TabIndex        =   4
       Top             =   4320
       Width           =   855
-      BeginProperty Font 
-         Name            =   "Lucida Sans Unicode"
-         Size            =   12
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
    End
    Begin VB.Label lblCursiva 
       BackStyle       =   0  'Transparent
-      ForeColor       =   &H00FFFFFF&
       Caption         =   "Cursiva"
-      Height          =   255
-      Left            =   4080
-      TabIndex        =   3
-      Top             =   4320
-      Width           =   855
       BeginProperty Font 
          Name            =   "Lucida Sans Unicode"
-         Size            =   12
+         Size            =   9.75
          Charset         =   0
          Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   255
+      Left            =   3240
+      TabIndex        =   3
+      Top             =   4320
+      Width           =   855
    End
    Begin VB.Image imgOptCursiva 
       Height          =   255
@@ -281,22 +317,22 @@ Begin VB.Form frmCambiaMotd
    End
    Begin VB.Label lblTitle 
       BackStyle       =   0  'Transparent
-      ForeColor       =   &H00FFFFFF&
       Caption         =   "No olvides agregar los colores al final de cada linea (Ver tabla de abajo)"
-      Height          =   495
-      Left            =   480
-      TabIndex        =   1
-      Top             =   120
-      Width           =   4335
       BeginProperty Font 
          Name            =   "Lucida Sans Unicode"
-         Size            =   10
+         Size            =   9.75
          Charset         =   0
          Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   495
+      Left            =   480
+      TabIndex        =   1
+      Top             =   120
+      Width           =   4335
    End
    Begin VB.Image imgOptNegrita 
       Height          =   255
@@ -369,18 +405,18 @@ Private Sub Form_Load()
 End Sub
 
 Private Sub LoadTextsForm()
-    Me.lblTitle.Caption = JsonLanguage.Item("FRM_CAMBIAMOTD_TITLE").Item("TEXTO")
-    Me.imgAzul.Caption = JsonLanguage.Item("FRM_CAMBIAMOTD_AZUL").Item("TEXTO")
-    Me.imgRojo.Caption = JsonLanguage.Item("FRM_CAMBIAMOTD_ROJO").Item("TEXTO")
-    Me.imgBlanco.Caption = JsonLanguage.Item("FRM_CAMBIAMOTD_BLANCO").Item("TEXTO")
-    Me.imgGris.Caption = JsonLanguage.Item("FRM_CAMBIAMOTD_GRIS").Item("TEXTO")
-    Me.imgAmarillo.Caption = JsonLanguage.Item("FRM_CAMBIAMOTD_AMARILLO").Item("TEXTO")
-    Me.imgMorado.Caption = JsonLanguage.Item("FRM_CAMBIAMOTD_MORADO").Item("TEXTO")
-    Me.imgVerde.Caption = JsonLanguage.Item("FRM_CAMBIAMOTD_VERDE").Item("TEXTO")
-    Me.imgMarron.Caption = JsonLanguage.Item("FRM_CAMBIAMOTD_MARRON").Item("TEXTO")
-    Me.imgAceptar.Caption = JsonLanguage.Item("FRM_CAMBIAMOTD_ACEPTAR").Item("TEXTO")
-    Me.lblCursiva.Caption = JsonLanguage.Item("FRM_CAMBIAMOTD_CURSIVA").Item("TEXTO")
-    Me.lblNegrita.Caption = JsonLanguage.Item("FRM_CAMBIAMOTD_NEGRITA").Item("TEXTO")
+    Me.lblTitle.Caption = JsonLanguage.item("FRM_CAMBIAMOTD_TITLE").item("TEXTO")
+    Me.imgAzul.Caption = JsonLanguage.item("FRM_CAMBIAMOTD_AZUL").item("TEXTO")
+    Me.imgRojo.Caption = JsonLanguage.item("FRM_CAMBIAMOTD_ROJO").item("TEXTO")
+    Me.imgBlanco.Caption = JsonLanguage.item("FRM_CAMBIAMOTD_BLANCO").item("TEXTO")
+    Me.imgGris.Caption = JsonLanguage.item("FRM_CAMBIAMOTD_GRIS").item("TEXTO")
+    Me.imgAmarillo.Caption = JsonLanguage.item("FRM_CAMBIAMOTD_AMARILLO").item("TEXTO")
+    Me.imgMorado.Caption = JsonLanguage.item("FRM_CAMBIAMOTD_MORADO").item("TEXTO")
+    Me.imgVerde.Caption = JsonLanguage.item("FRM_CAMBIAMOTD_VERDE").item("TEXTO")
+    Me.imgMarron.Caption = JsonLanguage.item("FRM_CAMBIAMOTD_MARRON").item("TEXTO")
+    Me.imgAceptar.Caption = JsonLanguage.item("FRM_CAMBIAMOTD_ACEPTAR").item("TEXTO")
+    Me.lblCursiva.Caption = JsonLanguage.item("FRM_CAMBIAMOTD_CURSIVA").item("TEXTO")
+    Me.lblNegrita.Caption = JsonLanguage.item("FRM_CAMBIAMOTD_NEGRITA").item("TEXTO")
 End Sub
 
 Private Sub imgAceptar_Click()
