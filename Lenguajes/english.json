@@ -905,7 +905,7 @@
 	  },
 	  "LIDERAZGO": {
 		"TEXTO": "Leadership",
-		"DESCRIPCION": "- Is the ability of the character to convince others to follow him in battle.\n- Allows you to create clans and groups."
+		"DESCRIPCION": "- Is the ability of the character to convince others to follow him in battle.\n- Allows you to create guilds and groups."
 	  },
 	  "DOMAR_ANIMALES": {
 		"TEXTO": "Tame Animals",
@@ -1398,7 +1398,7 @@
 	  "TEXTO": "The neutral clans are those who do not have any align manifesta. Only accept characters, criminals, or citizens who do not belong to any faction."
 	},
 	"FRM_ELIJEALINEACION_IMGLEGAL": {
-	  "TEXTO": "In the clans of position legal will be able to coexist with members of the real forces of Banderbill with citizens. Any character that is re-criminial will be removed automatically from the clan"
+	  "TEXTO": "In the guilds of position legal will be able to coexist with members of the real forces of Banderbill with citizens. Any character that is re-criminial will be removed automatically from the clan"
 	},
 	"FRM_ELIJEALINEACION_IMGCRIMINAL": {
 	  "TEXTO": "The worst criminals are those who do not follow the laws. Coexisting criminal and normal members of the legion dark. Any character who becomes a citizen will be removed from the clan automatically."
@@ -1494,19 +1494,64 @@
 	  "TEXTO": "Close"
 	},
 	"FRM_CHARINFO_ECHAR": {
-	  "TEXTO": "Take"
+	  "TEXTO": "Expel"
 	},
 	"FRM_CHARINFO_PETICION": {
-	  "TEXTO": "Request"
+	  "TEXTO": "Petition"
 	},
 	"FRM_CHARINFO_RECHAZAR": {
 	  "TEXTO": "Reject"
 	},
 	"FRM_CHARINFO_ACEPTAR": {
-	  "TEXTO": "Ok"
+	  "TEXTO": "Accept"
 	},
 	"FRM_CHARINFO_LBLCLANESMEMBRESIAS": {
-	  "TEXTO": "Latest Membership Requested"
+	  "TEXTO": "Last Memberships Requested"
+	},
+	"FRM_CHARINFO_LBLPERSONAJE": {
+	  "TEXTO": "Character"
+	},
+	"FRM_CHARINFO_NOMBRE": {
+	  "TEXTO": "Name"
+	},
+	"FRM_CHARINFO_RAZA": {
+	  "TEXTO": "Race"
+	},
+	"FRM_CHARINFO_CLASE": {
+	  "TEXTO": "Class"
+	},
+	"FRM_CHARINFO_GENERO": {
+	  "TEXTO": "Gender"
+	},
+	"FRM_CHARINFO_NIVEL": {
+	  "TEXTO": "Level"
+	},
+	"FRM_CHARINFO_ORO": {
+	  "TEXTO": "Gold"
+	},
+	"FRM_CHARINFO_BANCO": {
+	  "TEXTO": "Bank"
+	},
+	"FRM_CHARINFO_CLAN": {
+	  "TEXTO": "Guild"
+	},
+	"FRM_CHARINFO_FACCIONES": {
+	  "TEXTO": "Faction"
+	},
+	"FRM_CHARINFO_CIUDADANOSASESINADOS": {
+	  "TEXTO": "Murdered Citizens"
+	},
+	"FRM_CHARINFO_CRIMINALESASESINADOS": {
+	  "TEXTO": "Murdered Criminals"
+	},
+	"FRM_CHARINFO_REPUTACION": {
+	  "TEXTO": "Reputation"
+	},
+	"FRM_CHARINFO_LBLCLANES": {
+	  "TEXTO": "Guilds"
+	},
+	"FRM_CHARINFO_LBLCLANESPARTICIPO": {
+	  "TEXTO": "Last guilds in which participate"
 	},
 	"FRM_COMERCIARUSU_LBLINVENTARIO": {
 	  "TEXTO": "Inventory"

@@ -1595,7 +1595,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteFightAccept(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
-                    Call ShowConsoleMsg("Faltan parámetros. Utilice /ACEPTAR NICKNAME.")
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /ACEPTAR NICKNAME.")
                 End If
                 
             Case "/QUEST"

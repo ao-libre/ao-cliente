@@ -1491,22 +1491,67 @@
 	  "TEXTO": "Aceptar"
 	},
 	"FRM_CHARINFO_CERRAR": {
-	  "TEXTO": "Cerrar"
+		"TEXTO": "Cerrar"
+  },
+  "FRM_CHARINFO_ECHAR": {
+		"TEXTO": "Echar"
+  },
+  "FRM_CHARINFO_PETICION": {
+		"TEXTO": "Peticion"
+  },
+  "FRM_CHARINFO_RECHAZAR": {
+		"TEXTO": "Rechazar"
+  },
+  "FRM_CHARINFO_ACEPTAR": {
+		"TEXTO": "Aceptar"
+  },
+  "FRM_CHARINFO_LBLCLANESMEMBRESIAS": {
+		"TEXTO": "Ultimas Membresias Solicitadas"
+  },
+	"FRM_CHARINFO_LBLPERSONAJE": {
+	  "TEXTO": "Personaje"
 	},
-	"FRM_CHARINFO_ECHAR": {
-	  "TEXTO": "Echar"
+	"FRM_CHARINFO_NOMBRE": {
+	  "TEXTO": "Nombre"
 	},
-	"FRM_CHARINFO_PETICION": {
-	  "TEXTO": "Peticion"
+	"FRM_CHARINFO_RAZA": {
+	  "TEXTO": "Raza"
 	},
-	"FRM_CHARINFO_RECHAZAR": {
-	  "TEXTO": "Rechazar"
+	"FRM_CHARINFO_CLASE": {
+	  "TEXTO": "Clase"
 	},
-	"FRM_CHARINFO_ACEPTAR": {
-	  "TEXTO": "Aceptar"
+	"FRM_CHARINFO_GENERO": {
+	  "TEXTO": "Genero"
 	},
-	"FRM_CHARINFO_LBLCLANESMEMBRESIAS": {
-	  "TEXTO": "Ultimas Membresias Solicitadas"
+	"FRM_CHARINFO_NIVEL": {
+	  "TEXTO": "Nivel"
+	},
+	"FRM_CHARINFO_ORO": {
+	  "TEXTO": "Oro"
+	},
+	"FRM_CHARINFO_BANCO": {
+	  "TEXTO": "Banco"
+	},
+	"FRM_CHARINFO_CLAN": {
+	  "TEXTO": "Clan"
+	},
+	"FRM_CHARINFO_FACCIONES": {
+	  "TEXTO": "Faccion"
+	},
+	"FRM_CHARINFO_CIUDADANOSASESINADOS": {
+	  "TEXTO": "Ciudadanos Asesinados"
+	},
+	"FRM_CHARINFO_CRIMINALESASESINADOS": {
+	  "TEXTO": "Criminales Asesinados"
+	},
+	"FRM_CHARINFO_REPUTACION": {
+	  "TEXTO": "Reputacion"
+	},
+	"FRM_CHARINFO_LBLCLANES": {
+	  "TEXTO": "Clanes"
+	},
+	"FRM_CHARINFO_LBLCLANESPARTICIPO": {
+	  "TEXTO": "Ultimos clanes en los que participo"
 	},
 	"FRM_COMERCIARUSU_LBLINVENTARIO": {
 	  "TEXTO": "Inventario"
