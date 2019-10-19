@@ -53,7 +53,7 @@ Begin VB.Form frmEligeAlineacion
       Left            =   840
       TabIndex        =   10
       Top             =   3960
-      Width           =   1575
+      Width           =   2175
    End
    Begin VB.Label lblTitleCriminal 
       BackStyle       =   0  'Transparent
