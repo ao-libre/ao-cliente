@@ -1272,7 +1272,7 @@
 	  "TEXTO": "Clean list"
 	},
 	"FRM_CANTIDAD_TIRAR": {
-	  "TEXTO": "Pull"
+	  "TEXTO": "Throw"
 	},
 	"FRM_CANTIDAD_TIRAR_TODO": {
 	  "TEXTO": "Throw It All"
@@ -1326,7 +1326,7 @@
 	  "TEXTO": "Create Character"
 	},
 	"FRM_CREARPERSONAJE_VOLVER": {
-	  "TEXTO": "Re"
+	  "TEXTO": "Return"
 	},
 	"FRM_CREARPERSONAJE_ESPECIALIDAD": {
 	  "TEXTO": "Specialty"
