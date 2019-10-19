@@ -548,4 +548,5 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 17/10/2019: Se tradujo el formulario frmCambiaMotd. (Recox)
 * 17/10/2019: Se tradujo el formulario frmBancoObj. (Recox)
 * 18/10/2019: Se arreglo el checkbox de recordar usuario y password, ahora funciona siempre. Se aprolijo el frmConnect. (Recox)
-
+* 19/10/2019: Se tradujo el formulario frmCantidad. (Recox)
+* 19/10/2019: Se normalizo con LoadTextsForm los formularios frmCerrar, FrmMain y FrmConnect. (Recox)
