@@ -36,19 +36,114 @@ Begin VB.Form frmEligeAlineacion
          Strikethrough   =   0   'False
       EndProperty
    End
-   Begin VB.Label imgCaos 
+   Begin VB.Label lblTitleCaos 
       BackStyle       =   0  'Transparent
-      Caption         =   "Texto del caos"
+      Caption         =   "Titulo Caos"
       BeginProperty Font 
-         Name            =   "Arial"
-         Size            =   7
+         Name            =   "MS Sans Serif"
+         Size            =   9.75
          Charset         =   0
          Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H000000C0&
+      ForeColor       =   &H000000FF&
+      Height          =   255
+      Left            =   840
+      TabIndex        =   10
+      Top             =   3960
+      Width           =   1575
+   End
+   Begin VB.Label lblTitleCriminal 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Titulo Criminal"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00C0C0FF&
+      Height          =   255
+      Left            =   840
+      TabIndex        =   9
+      Top             =   3000
+      Width           =   2055
+   End
+   Begin VB.Label lblTitleNeutral 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Titulo Neutral"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   255
+      Left            =   840
+      TabIndex        =   8
+      Top             =   2040
+      Width           =   2175
+   End
+   Begin VB.Label lblTitleLegal 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Titulo Legal"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFF00&
+      Height          =   255
+      Left            =   840
+      TabIndex        =   7
+      Top             =   1080
+      Width           =   2295
+   End
+   Begin VB.Label lblTitleReal 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Titulo Real"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H8000000D&
+      Height          =   255
+      Left            =   840
+      TabIndex        =   6
+      Top             =   120
+      Width           =   1935
+   End
+   Begin VB.Label imgCaos 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Texto del caos"
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   6.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H000000FF&
       Height          =   615
       Left            =   840
       TabIndex        =   5
@@ -60,14 +155,14 @@ Begin VB.Form frmEligeAlineacion
       Caption         =   "Texto del CRIMINAL"
       BeginProperty Font 
          Name            =   "Arial"
-         Size            =   7
+         Size            =   6.75
          Charset         =   0
          Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H000000C0&
+      ForeColor       =   &H00C0C0FF&
       Height          =   615
       Left            =   840
       TabIndex        =   4
@@ -79,7 +174,7 @@ Begin VB.Form frmEligeAlineacion
       Caption         =   "Texto del Neutral"
       BeginProperty Font 
          Name            =   "Arial"
-         Size            =   7
+         Size            =   6.75
          Charset         =   0
          Weight          =   700
          Underline       =   0   'False
@@ -98,14 +193,14 @@ Begin VB.Form frmEligeAlineacion
       Caption         =   "Texto del Legal"
       BeginProperty Font 
          Name            =   "Arial"
-         Size            =   7
+         Size            =   6.75
          Charset         =   0
          Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00C00000&
+      ForeColor       =   &H00FFFF00&
       Height          =   615
       Left            =   840
       TabIndex        =   2
@@ -117,7 +212,7 @@ Begin VB.Form frmEligeAlineacion
       Caption         =   "Texto del Real"
       BeginProperty Font 
          Name            =   "Arial"
-         Size            =   7
+         Size            =   6.75
          Charset         =   0
          Weight          =   700
          Underline       =   0   'False
@@ -185,6 +280,11 @@ Private Sub LoadTextsForm()
     imgCriminal.Caption = JsonLanguage.item("FRM_ELIJEALINEACION_IMGCRIMINAL").item("TEXTO")
     imgCaos.Caption = JsonLanguage.item("FRM_ELIJEALINEACION_IMGCAOS").item("TEXTO")
     imgReal.Caption = JsonLanguage.item("FRM_ELIJEALINEACION_IMGREAL").item("TEXTO")
+    lblTitleNeutral.Caption = JsonLanguage.item("FRM_ELIJEALINEACION_IMGNEUTRAL_TITLE").item("TEXTO")
+    lblTitleLegal.Caption = JsonLanguage.item("FRM_ELIJEALINEACION_IMGLEGAL_TITLE").item("TEXTO")
+    lblTitleCriminal.Caption = JsonLanguage.item("FRM_ELIJEALINEACION_IMGCRIMINAL_TITLE").item("TEXTO")
+    lblTitleCaos.Caption = JsonLanguage.item("FRM_ELIJEALINEACION_IMGCAOS_TITLE").item("TEXTO")
+    lblTitleReal.Caption = JsonLanguage.item("FRM_ELIJEALINEACION_IMGREAL_TITLE").item("TEXTO")
     imgSalir.Caption = JsonLanguage.item("FRM_ELIJEALINEACION_IMGSALIR").item("TEXTO")
 End Sub
 

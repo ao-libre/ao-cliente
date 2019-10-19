@@ -1405,6 +1405,21 @@
 	},
 	"FRM_ELIJEALINEACION_IMGCAOS": {
 	  "TEXTO": "Estos clanes estaran formados unicamente por miembros de la legion oscura y bajo las ordenes del demonio y sus eruditos. Los clanes que le juren lealtad no podran tener miembros que se alejen a sus ejercitos"
+  	},
+ 	"FRM_ELIJEALINEACION_IMGREAL_TITLE": {
+	  "TEXTO": "Alineacion Real"
+	},
+	"FRM_ELIJEALINEACION_IMGNEUTRAL_TITLE": {
+	  "TEXTO": "Alineacion Neutral"
+	},
+	"FRM_ELIJEALINEACION_IMGLEGAL_TITLE": {
+	  "TEXTO": "Alineacion Legal"
+	},
+	"FRM_ELIJEALINEACION_IMGCRIMINAL_TITLE": {
+	  "TEXTO": "Alineacion Criminal"
+	},
+	"FRM_ELIJEALINEACION_IMGCAOS_TITLE": {
+	  "TEXTO": "Alineacion Caos"
 	},
 	"FRM_ELIJEALINEACION_IMGSALIR": {
 	  "TEXTO": "Salir"
