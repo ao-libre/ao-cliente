@@ -1391,17 +1391,23 @@
 	"FRM_CUSTOMKEYS_GUARDAR": {
 	  "TEXTO": "Save"
 	},
+	"FRM_ELIJEALINEACION_IMGREAL": {
+	  "TEXTO": "In the royal alignment clans only members of the Banderbill Royal exercise are admitted. They will fight against all the criminals of these lands always with the king and under the orders of the Banderbil council. Characters that move away from the army cannot belong to a royal clan"
+	},
 	"FRM_ELIJEALINEACION_IMGNEUTRAL": {
-	  "TEXTO": "The clans are neutral are those who do not have any align manifesta. Only accept characters, criminals, or citizens who do not belong to any faction."
+	  "TEXTO": "The neutral clans are those who do not have any align manifesta. Only accept characters, criminals, or citizens who do not belong to any faction."
 	},
 	"FRM_ELIJEALINEACION_IMGLEGAL": {
 	  "TEXTO": "In the clans of position legal will be able to coexist with members of the real forces of Banderbill with citizens. Any character that is re-criminial will be removed automatically from the clan"
 	},
-	"FRM_ELIJEALINEACION_CRIMINAL": {
+	"FRM_ELIJEALINEACION_IMGCRIMINAL": {
 	  "TEXTO": "The worst criminals are those who do not follow the laws. Coexisting criminal and normal members of the legion dark. Any character who becomes a citizen will be removed from the clan automatically."
 	},
-	"FRM_ELIJEALINEACION_CAOS": {
+	"FRM_ELIJEALINEACION_IMGCAOS": {
 	  "TEXTO": "These clans will be formed only by members of the legion and dark under the orders of the devil and his scholars. The clans that swear loyalty may not have members who turn their armies"
+	},
+	"FRM_ELIJEALINEACION_IMGSALIR": {
+	  "TEXTO": "Exit"
 	},
 	"FRM_ENTRENADOR_TITLE": {
 	  "TEXTO": "With that creature you want to fight"
