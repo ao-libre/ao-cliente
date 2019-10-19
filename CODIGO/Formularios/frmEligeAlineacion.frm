@@ -14,47 +14,217 @@ Begin VB.Form frmEligeAlineacion
    ScaleHeight     =   5265
    ScaleWidth      =   6720
    StartUpPosition =   1  'CenterOwner
-   Begin VB.Image imgReal 
-      Height          =   765
-      Left            =   795
-      Tag             =   "1"
-      Top             =   300
-      Width           =   5745
-   End
-   Begin VB.Image imgNeutral 
-      Height          =   570
-      Left            =   810
-      Tag             =   "1"
-      Top             =   2220
-      Width           =   5730
-   End
-   Begin VB.Image imgLegal 
-      Height          =   705
-      Left            =   810
-      Tag             =   "1"
-      Top             =   1320
-      Width           =   5715
-   End
-   Begin VB.Image imgCaos 
-      Height          =   675
-      Left            =   822
-      Tag             =   "1"
-      Top             =   4117
-      Width           =   5700
-   End
-   Begin VB.Image imgCriminal 
-      Height          =   705
-      Left            =   818
-      Tag             =   "1"
-      Top             =   3150
-      Width           =   5865
-   End
-   Begin VB.Image imgSalir 
-      Height          =   315
-      Left            =   5520
-      Tag             =   "1"
+   Begin AOLibre.uAOButton imgSalir 
+      Height          =   375
+      Left            =   5640
+      TabIndex        =   0
       Top             =   4800
-      Width           =   930
+      Width           =   975
+      _ExtentX        =   1720
+      _ExtentY        =   661
+      TX              =   "Salir"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin VB.Label lblTitleCaos 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Titulo Caos"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H000000FF&
+      Height          =   255
+      Left            =   840
+      TabIndex        =   10
+      Top             =   3960
+      Width           =   2175
+   End
+   Begin VB.Label lblTitleCriminal 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Titulo Criminal"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00C0C0FF&
+      Height          =   255
+      Left            =   840
+      TabIndex        =   9
+      Top             =   3000
+      Width           =   2055
+   End
+   Begin VB.Label lblTitleNeutral 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Titulo Neutral"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   255
+      Left            =   840
+      TabIndex        =   8
+      Top             =   2040
+      Width           =   2175
+   End
+   Begin VB.Label lblTitleLegal 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Titulo Legal"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFF00&
+      Height          =   255
+      Left            =   840
+      TabIndex        =   7
+      Top             =   1080
+      Width           =   2295
+   End
+   Begin VB.Label lblTitleReal 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Titulo Real"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H8000000D&
+      Height          =   255
+      Left            =   840
+      TabIndex        =   6
+      Top             =   120
+      Width           =   1935
+   End
+   Begin VB.Label imgCaos 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Texto del caos"
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   6.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H000000FF&
+      Height          =   615
+      Left            =   840
+      TabIndex        =   5
+      Top             =   4200
+      Width           =   5655
+   End
+   Begin VB.Label imgCriminal 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Texto del CRIMINAL"
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   6.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00C0C0FF&
+      Height          =   615
+      Left            =   840
+      TabIndex        =   4
+      Top             =   3240
+      Width           =   5655
+   End
+   Begin VB.Label imgNeutral 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Texto del Neutral"
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   6.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   495
+      Left            =   840
+      TabIndex        =   3
+      Top             =   2280
+      Width           =   5655
+   End
+   Begin VB.Label imgLegal 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Texto del Legal"
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   6.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFF00&
+      Height          =   615
+      Left            =   840
+      TabIndex        =   2
+      Top             =   1320
+      Width           =   5655
+   End
+   Begin VB.Label imgReal 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Texto del Real"
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   6.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H8000000D&
+      Height          =   735
+      Left            =   840
+      TabIndex        =   1
+      Top             =   360
+      Width           =   5655
    End
 End
 Attribute VB_Name = "frmEligeAlineacion"
@@ -85,15 +255,6 @@ Option Explicit
 
 Private clsFormulario As clsFormMovementManager
 
-Private cBotonCriminal As clsGraphicalButton
-Private cBotonCaos As clsGraphicalButton
-Private cBotonLegal As clsGraphicalButton
-Private cBotonNeutral As clsGraphicalButton
-Private cBotonReal As clsGraphicalButton
-Private cBotonSalir As clsGraphicalButton
-
-Public LastButtonPressed As clsGraphicalButton
-
 Private Enum eAlineacion
     ieREAL = 0
     ieCAOS = 1
@@ -106,56 +267,25 @@ Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
-    
+
     Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaFundarClan.jpg")
     
-    Call LoadButtons
+    Call LoadTextsForm
+    Call LoadAOCustomControlsPictures(Me)
 End Sub
 
-Private Sub LoadButtons()
-    Dim GrhPath As String
-    
-    GrhPath = Game.path(Interfaces)
-
-    Set cBotonCriminal = New clsGraphicalButton
-    Set cBotonCaos = New clsGraphicalButton
-    Set cBotonLegal = New clsGraphicalButton
-    Set cBotonNeutral = New clsGraphicalButton
-    Set cBotonReal = New clsGraphicalButton
-    Set cBotonSalir = New clsGraphicalButton
-    
-    Set LastButtonPressed = New clsGraphicalButton
-    
-    
-    Call cBotonCriminal.Initialize(imgCriminal, "", _
-                                    GrhPath & "BotonCriminal.jpg", _
-                                    GrhPath & "BotonCriminal.jpg", Me)
-
-    Call cBotonCaos.Initialize(imgCaos, "", _
-                                    GrhPath & "BotonCaos.jpg", _
-                                    GrhPath & "BotonCaos.jpg", Me)
-
-    Call cBotonLegal.Initialize(imgLegal, "", _
-                                    GrhPath & "BotonLegal.jpg", _
-                                    GrhPath & "BotonLegal.jpg", Me)
-
-    Call cBotonNeutral.Initialize(imgNeutral, "", _
-                                    GrhPath & "BotonNeutral.jpg", _
-                                    GrhPath & "BotonNeutral.jpg", Me)
-
-    Call cBotonReal.Initialize(imgReal, "", _
-                                    GrhPath & "BotonReal.jpg", _
-                                    GrhPath & "BotonReal.jpg", Me)
-                                    
-    Call cBotonSalir.Initialize(imgSalir, GrhPath & "BotonSalirAlineacion.jpg", _
-                                    GrhPath & "BotonSalirRolloverAlineacion.jpg", _
-                                    GrhPath & "BotonSalirClickAlineacion.jpg", Me)
-
-
-End Sub
-
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastButtonPressed.ToggleToNormal
+Private Sub LoadTextsForm()
+    imgNeutral.Caption = JsonLanguage.item("FRM_ELIJEALINEACION_IMGNEUTRAL").item("TEXTO")
+    imgLegal.Caption = JsonLanguage.item("FRM_ELIJEALINEACION_IMGLEGAL").item("TEXTO")
+    imgCriminal.Caption = JsonLanguage.item("FRM_ELIJEALINEACION_IMGCRIMINAL").item("TEXTO")
+    imgCaos.Caption = JsonLanguage.item("FRM_ELIJEALINEACION_IMGCAOS").item("TEXTO")
+    imgReal.Caption = JsonLanguage.item("FRM_ELIJEALINEACION_IMGREAL").item("TEXTO")
+    lblTitleNeutral.Caption = JsonLanguage.item("FRM_ELIJEALINEACION_IMGNEUTRAL_TITLE").item("TEXTO")
+    lblTitleLegal.Caption = JsonLanguage.item("FRM_ELIJEALINEACION_IMGLEGAL_TITLE").item("TEXTO")
+    lblTitleCriminal.Caption = JsonLanguage.item("FRM_ELIJEALINEACION_IMGCRIMINAL_TITLE").item("TEXTO")
+    lblTitleCaos.Caption = JsonLanguage.item("FRM_ELIJEALINEACION_IMGCAOS_TITLE").item("TEXTO")
+    lblTitleReal.Caption = JsonLanguage.item("FRM_ELIJEALINEACION_IMGREAL_TITLE").item("TEXTO")
+    imgSalir.Caption = JsonLanguage.item("FRM_ELIJEALINEACION_IMGSALIR").item("TEXTO")
 End Sub
 
 Private Sub imgCaos_Click()
