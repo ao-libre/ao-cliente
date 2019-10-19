@@ -37,19 +37,68 @@ Begin VB.Form frmCantidad
       Top             =   450
       Width           =   2250
    End
-   Begin VB.Image imgTirarTodo 
+   Begin AOLibre.uAOButton imgTirar 
+      Height          =   375
+      Left            =   240
+      TabIndex        =   1
+      Top             =   960
+      Width           =   1335
+      _ExtentX        =   2355
+      _ExtentY        =   661
+      TX              =   "Tirar"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton imgTirarTodo 
       Height          =   375
       Left            =   1680
-      Tag             =   "1"
-      Top             =   975
+      TabIndex        =   2
+      Top             =   960
       Width           =   1335
+      _ExtentX        =   2355
+      _ExtentY        =   661
+      TX              =   "Tirar Todo"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
-   Begin VB.Image imgTirar 
-      Height          =   375
-      Left            =   210
-      Tag             =   "1"
-      Top             =   975
-      Width           =   1335
+   Begin VB.Label lblTitle 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Escriba la cantidad"
+      Height          =   255
+      Left            =   720
+      TabIndex        =   3
+      Top             =   120
+      Width           =   1935
+      ForeColor       =   &H00FFFFFF&
+       BeginProperty Font 
+         Name            =   "Lucida Sans Unicode"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
 End
 Attribute VB_Name = "frmCantidad"
@@ -93,10 +142,6 @@ Option Explicit
 
 Private clsFormulario As clsFormMovementManager
 
-Private cBotonTirar As clsGraphicalButton
-Private cBotonTirarTodo As clsGraphicalButton
-Public LastButtonPressed As clsGraphicalButton
-
 Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
     Set clsFormulario = New clsFormMovementManager
@@ -104,29 +149,14 @@ Private Sub Form_Load()
     
     Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaTirarOro.jpg")
     
-    Call LoadButtons
+    Call LoadTextsForm
+    Call LoadAOCustomControlsPictures(Me)
 End Sub
 
-Private Sub LoadButtons()
-
-    Dim GrhPath As String
-    
-    GrhPath = Game.path(Interfaces)
-    
-    Set cBotonTirar = New clsGraphicalButton
-    Set cBotonTirarTodo = New clsGraphicalButton
-    
-    Set LastButtonPressed = New clsGraphicalButton
-
-    Call cBotonTirar.Initialize(imgTirar, GrhPath & "BotonTirar.jpg", GrhPath & "BotonTirarRollover.jpg", _
-                        GrhPath & "BotonTirarClick.jpg", Me)
-    Call cBotonTirarTodo.Initialize(imgTirarTodo, GrhPath & "BotonTirarTodo.jpg", GrhPath & "BotonTirarTodoRollover.jpg", _
-                        GrhPath & "BotonTirarTodoClick.jpg", Me)
-
-End Sub
-
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastButtonPressed.ToggleToNormal
+Private Sub LoadTextsForm()
+    imgTirar.Caption = JsonLanguage.Item("FRM_CANTIDAD_TIRAR").Item("TEXTO")
+    imgTirarTodo.Caption = JsonLanguage.Item("FRM_CANTIDAD_TIRAR_TODO").Item("TEXTO")
+    lblTitle.Caption = JsonLanguage.Item("FRM_CANTIDAD_TITLE").Item("TEXTO")
 End Sub
 
 Private Sub imgTirar_Click()
@@ -182,8 +212,4 @@ Private Sub txtCantidad_KeyPress(KeyAscii As Integer)
             KeyAscii = 0
         End If
     End If
-End Sub
-
-Private Sub txtCantidad_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastButtonPressed.ToggleToNormal
 End Sub
