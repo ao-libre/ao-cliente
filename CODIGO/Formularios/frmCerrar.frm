@@ -148,12 +148,17 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
-    With Me
-        .Picture = LoadPicture(Game.path(Interfaces) & "frmCerrar.jpg")
-        .cRegresar.Caption = JsonLanguage.Item("CERRAR").Item("TEXTOS").Item(1)
-        .cSalir.Caption = JsonLanguage.Item("CERRAR").Item("TEXTOS").Item(2)
-        .cCancelQuit.Caption = JsonLanguage.Item("CERRAR").Item("TEXTOS").Item(3)
-    End With
-    
+    Me.Picture = LoadPicture(Game.path(Interfaces) & "frmCerrar.jpg")
+        '    Call LoadAOCustomControlsPictures(Me) 
+    'Todo: Poner la carga de botones como en el frmCambiaMotd.frm para mantener coherencia con el resto de la aplicacion
+    'y poder borrar los frx de este archivo
+
+    Call LoadFormTexts
+End Sub
+
+Private Sub LoadFormTexts()
+    cRegresar.Caption = JsonLanguage.Item("CERRAR").Item("TEXTOS").Item(1)
+    cSalir.Caption = JsonLanguage.Item("CERRAR").Item("TEXTOS").Item(2)
+    cCancelQuit.Caption = JsonLanguage.Item("CERRAR").Item("TEXTOS").Item(3)
 End Sub
 
