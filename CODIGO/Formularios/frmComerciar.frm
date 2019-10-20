@@ -466,7 +466,7 @@ Private Sub picInvUser_Click()
     If Inventario.Amount(ItemSlot) <> 0 Then
     
         Select Case Inventario.OBJType(ItemSlot)
-            Case eObjType.otWeapon
+            Case eObjType.otWeapon, eObjType.otFlechas
                 Label1(2).Caption = "Max " & JsonLanguage.Item("GOLPE").Item("TEXTO") & ":" & Inventario.MaxHit(ItemSlot)
                 Label1(3).Caption = "Min " & JsonLanguage.Item("GOLPE").Item("TEXTO") & ":" & Inventario.MinHit(ItemSlot)
                 Label1(2).Visible = True
