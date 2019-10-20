@@ -1047,7 +1047,7 @@
 	  "TEXTO": "It is extremely important that you enter a valid e-mail address, as in the case of losing the password of your character, will be sent to you when you need it, to that address."
 	},
 	"AYUDA_CREARPJ_NOMBREPJ": {
-	  "TEXTO": "Be careful when you select the name of your character. Argentum is a role-playing game, a world that is magical and fantastic, and if you select a name that is obscene or with political connotation, the administrators deleted your character and there will be no possibility to recover it."
+	  "TEXTO": "Argentum is a role-playing game, a world that is magical and fantastic, if you select a name that is obscene or with political connotation, the administrators can delete your character."
 	},
 	"AYUDA_CREARPJ_ATRIBUTOS": {
 	  "TEXTO": "Are the qualities that define your character. Usually called the [DICE]. (See Roll)"
@@ -1374,7 +1374,7 @@
 	  "TEXTO": "Throw Dice"
 	},
 	"FRM_CREARPERSONAJE_PUEBLO_ORIGEN": {
-	  "TEXTO": "Village of Origin"
+	  "TEXTO": "Homeland"
 	},
 	"FRM_CREARPERSONAJE_RAZA": {
 	  "TEXTO": "Race"

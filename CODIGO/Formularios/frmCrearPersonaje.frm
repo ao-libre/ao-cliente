@@ -130,7 +130,7 @@ Begin VB.Form frmCrearPersonaje
       BorderStyle     =   0  'None
       BeginProperty Font 
          Name            =   "MS Sans Serif"
-         Size            =   13.5
+         Size            =   17.25
          Charset         =   0
          Weight          =   700
          Underline       =   0   'False
@@ -142,7 +142,7 @@ Begin VB.Form frmCrearPersonaje
       Left            =   3480
       MaxLength       =   30
       TabIndex        =   0
-      Top             =   1560
+      Top             =   1800
       Width           =   5055
    End
    Begin VB.PictureBox picHead 
@@ -388,7 +388,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   255
       Left            =   3360
       TabIndex        =   45
-      Top             =   6360
+      Top             =   6240
       Width           =   735
    End
    Begin VB.Label imgMagia 
@@ -491,7 +491,7 @@ Begin VB.Form frmCrearPersonaje
       EndProperty
       ForeColor       =   &H8000000B&
       Height          =   255
-      Left            =   6480
+      Left            =   6240
       TabIndex        =   39
       Top             =   3240
       Width           =   855
@@ -570,7 +570,7 @@ Begin VB.Form frmCrearPersonaje
       EndProperty
       ForeColor       =   &H8000000B&
       Height          =   255
-      Left            =   6480
+      Left            =   6240
       TabIndex        =   33
       Top             =   2760
       Width           =   1815
@@ -588,11 +588,11 @@ Begin VB.Form frmCrearPersonaje
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H80000018&
-      Height          =   255
-      Left            =   3360
+      Height          =   615
+      Left            =   3480
       TabIndex        =   32
-      Top             =   960
-      Width           =   4095
+      Top             =   1080
+      Width           =   4815
    End
    Begin VB.Image ImgProfesionDibujo 
       Height          =   885
@@ -823,11 +823,11 @@ Begin VB.Form frmCrearPersonaje
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H00FFFFFF&
-      Height          =   375
+      Height          =   1215
       Left            =   4440
       TabIndex        =   26
       Top             =   7395
-      Width           =   1455
+      Width           =   1815
    End
    Begin VB.Line Line1 
       BorderColor     =   &H000000FF&
@@ -1385,8 +1385,9 @@ Private Sub Form_Load()
     Call DrawImageInPicture(picPJ, Me.Picture, 0, 0, , , picPJ.Left, picPJ.Top)
     Dir = SOUTH
     
-    'Call TirarDados
+    Call TirarDados
     
+    Cargando = False
     
     'UserClase = 0
     UserSexo = 0
@@ -1395,7 +1396,6 @@ Private Sub Form_Load()
     UserEmail = vbNullString
     UserHead = 0
 
-    Cargando = False
 End Sub
 
 Private Sub LoadTextsForm()
@@ -1447,7 +1447,7 @@ Private Sub IniciarGraficos()
 End Sub
 
 Private Sub CargarCombos()
-Dim i As Integer
+    Dim i As Integer
     Dim Lower_ciudades As Long, Lower_listaClases As Long, Lower_listaRazas As Long
     Dim Upper_ciudades As Long
     
