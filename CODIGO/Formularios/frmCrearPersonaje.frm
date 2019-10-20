@@ -244,6 +244,10 @@ Begin VB.Form frmCrearPersonaje
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
+      PICE            =   "frmCrearPersonaje.frx":0000
+      PICF            =   "frmCrearPersonaje.frx":001C
+      PICH            =   "frmCrearPersonaje.frx":0038
+      PICV            =   "frmCrearPersonaje.frx":0054
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   9.75
@@ -266,6 +270,10 @@ Begin VB.Form frmCrearPersonaje
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
+      PICE            =   "frmCrearPersonaje.frx":0070
+      PICF            =   "frmCrearPersonaje.frx":008C
+      PICH            =   "frmCrearPersonaje.frx":00A8
+      PICV            =   "frmCrearPersonaje.frx":00C4
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   9.75
@@ -279,7 +287,7 @@ Begin VB.Form frmCrearPersonaje
    Begin AOLibre.uAOButton imgDados 
       Height          =   975
       Left            =   1320
-      TabIndex        =   31
+      TabIndex        =   27
       Top             =   3000
       Width           =   1335
       _ExtentX        =   2355
@@ -288,6 +296,10 @@ Begin VB.Form frmCrearPersonaje
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
+      PICE            =   "frmCrearPersonaje.frx":00E0
+      PICF            =   "frmCrearPersonaje.frx":00FC
+      PICH            =   "frmCrearPersonaje.frx":0118
+      PICV            =   "frmCrearPersonaje.frx":0134
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   9.75
@@ -592,7 +604,7 @@ Begin VB.Form frmCrearPersonaje
       ForeColor       =   &H80000018&
       Height          =   615
       Left            =   3480
-      TabIndex        =   32
+      TabIndex        =   28
       Top             =   1080
       Width           =   4815
    End
@@ -815,6 +827,7 @@ Begin VB.Form frmCrearPersonaje
    End
    Begin VB.Label lblEspecialidad 
       BackStyle       =   0  'Transparent
+      Caption         =   "Capinteria, Pesca, Mineria y Algo mas que va aqui"
       BeginProperty Font 
          Name            =   "MS Sans Serif"
          Size            =   8.25
@@ -1116,7 +1129,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   225
       Index           =   0
       Left            =   6960
-      Picture         =   "frmCrearPersonaje.frx":0046
+      Picture         =   "frmCrearPersonaje.frx":0150
       Top             =   7320
       Visible         =   0   'False
       Width           =   240
@@ -1125,7 +1138,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   225
       Index           =   1
       Left            =   7560
-      Picture         =   "frmCrearPersonaje.frx":0358
+      Picture         =   "frmCrearPersonaje.frx":0462
       Top             =   7320
       Visible         =   0   'False
       Width           =   240
@@ -1134,7 +1147,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   225
       Index           =   1
       Left            =   8460
-      Picture         =   "frmCrearPersonaje.frx":07BC
+      Picture         =   "frmCrearPersonaje.frx":0774
       Top             =   5925
       Visible         =   0   'False
       Width           =   240
@@ -1143,7 +1156,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   225
       Index           =   0
       Left            =   6075
-      Picture         =   "frmCrearPersonaje.frx":0ACE
+      Picture         =   "frmCrearPersonaje.frx":0A86
       Top             =   5925
       Visible         =   0   'False
       Width           =   240
@@ -1377,7 +1390,7 @@ Private Dir As E_Heading
 Private Sub Form_Load()
     Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaCrearPersonaje.jpg")
     
-	Cargando = True
+        Cargando = True
     
     Call LoadCharInfo
     Call CargarEspecialidades
@@ -1439,9 +1452,7 @@ Private Sub CargarEspecialidades()
     vEspecialidades(eClass.Bandit) = JsonLanguage.item("HABILIDADES").item("COMBATE_CUERPO_A_CUERPO").item("TEXTO")
     vEspecialidades(eClass.Druid) = JsonLanguage.item("HABILIDADES").item("DOMAR_ANIMALES").item("TEXTO")
     vEspecialidades(eClass.Pirat) = JsonLanguage.item("HABILIDADES").item("NAVEGACION").item("TEXTO")
-    vEspecialidades(eClass.Worker) = JsonLanguage.item("HABILIDADES").item("MINERIA").item("TEXTO") & "," _
-                                    & JsonLanguage.item("HABILIDADES").item("CARPINTERIA").item("TEXTO") & JsonLanguage.item("LETRA_Y").item("TEXTO") _
-                                    & JsonLanguage.item("HABILIDADES").item("TALAR").item("TEXTO")
+    vEspecialidades(eClass.Worker) = JsonLanguage.item("HABILIDADES").item("MINERIA").item("TEXTO") & ", " & JsonLanguage.item("HABILIDADES").item("PESCA").item("TEXTO") & ", " & JsonLanguage.item("HABILIDADES").item("CARPINTERIA").item("TEXTO") & " " & JsonLanguage.item("LETRA_Y").item("TEXTO") & " " & JsonLanguage.item("HABILIDADES").item("TALAR").item("TEXTO")
 End Sub
 
 Private Sub IniciarGraficos()
@@ -1974,7 +1985,7 @@ Private Sub DarCuerpoYCabeza()
     
     currentGrh = BodyData(UserBody).Walk(Dir).GrhIndex
     If currentGrh > 0 Then _
-        tAnimacion.Interval = Round(GrhData(currentGrh).Speed / GrhData(currentGrh).NumFrames)
+        tAnimacion.Interval = Round(GrhData(currentGrh).speed / GrhData(currentGrh).NumFrames)
 End Sub
 
 Private Function CheckCabeza(ByVal Head As Integer) As Integer

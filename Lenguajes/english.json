@@ -896,7 +896,7 @@
 		"DESCRIPCION": "- Is the set of knowledge about the different minerals, where to get, how they should be extracted and worked.\n- Indicates the probability of success in each attempt to undermine and the ability, or not to convert these minerals into ingots."
 	  },
 	  "CARPINTERIA": {
-		"TEXTO": "Carpinteria",
+		"TEXTO": "Carpentry",
 		"DESCRIPCION": "- Is the set of knowledge to learn sawing, sanding, gluing and nailing wood with a good level of completion.\n- Indicates skill in the handling of these tools, the how good is the work of a carpenter."
 	  },
 	  "HERRERIA": {
