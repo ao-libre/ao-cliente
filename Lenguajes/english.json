@@ -1040,6 +1040,12 @@
 	"VALIDACION_ATRIBUTOS": {
 	  "TEXTO": "The character attributes are invalid."
 	},
+	"FRM_CREARPJ_HOMBRE": {
+	  "TEXTO": "Male"
+	},
+	"FRM_CREARPJ_MUJER": {
+	  "TEXTO": "Female"
+	},
 	"AYUDA_CREARPJ_DADOS": {
 	  "TEXTO": "By pressing on the Red Sphere, it will change randomly the attributes of your character, this way you can choose the ones you seem to define your character."
 	},

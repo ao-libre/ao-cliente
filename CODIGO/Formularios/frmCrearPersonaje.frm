@@ -17,15 +17,17 @@ Begin VB.Form frmCrearPersonaje
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
    Begin VB.PictureBox picTemp 
+      Appearance      =   0  'Flat
       AutoRedraw      =   -1  'True
       BackColor       =   &H00000000&
+      ForeColor       =   &H80000008&
       Height          =   990
       Left            =   7080
-      ScaleHeight     =   62
+      ScaleHeight     =   64
       ScaleMode       =   3  'Pixel
-      ScaleWidth      =   37
-      TabIndex        =   28
-      Top             =   6720
+      ScaleWidth      =   39
+      TabIndex        =   32
+      Top             =   6360
       Visible         =   0   'False
       Width           =   615
    End
@@ -35,17 +37,17 @@ Begin VB.Form frmCrearPersonaje
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
       ForeColor       =   &H80000008&
-      Height          =   870
+      Height          =   975
       Left            =   7080
-      ScaleHeight     =   58
+      ScaleHeight     =   65
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   41
-      TabIndex        =   27
-      Top             =   6840
-      Visible         =   0   'False
+      TabIndex        =   31
+      Top             =   6360
       Width           =   615
    End
    Begin VB.Timer tAnimacion 
+      Interval        =   100
       Left            =   840
       Top             =   1080
    End
@@ -1112,17 +1114,19 @@ Begin VB.Form frmCrearPersonaje
    End
    Begin VB.Image DirPJ 
       Height          =   225
-      Index           =   1
-      Left            =   7560
-      Top             =   6360
+      Index           =   0
+      Left            =   6960
+      Picture         =   "frmCrearPersonaje.frx":0046
+      Top             =   7320
       Visible         =   0   'False
       Width           =   240
    End
    Begin VB.Image DirPJ 
       Height          =   225
-      Index           =   0
-      Left            =   6960
-      Top             =   6360
+      Index           =   1
+      Left            =   7560
+      Picture         =   "frmCrearPersonaje.frx":0358
+      Top             =   7320
       Visible         =   0   'False
       Width           =   240
    End
@@ -1130,6 +1134,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   225
       Index           =   1
       Left            =   8460
+      Picture         =   "frmCrearPersonaje.frx":07BC
       Top             =   5925
       Visible         =   0   'False
       Width           =   240
@@ -1138,6 +1143,7 @@ Begin VB.Form frmCrearPersonaje
       Height          =   225
       Index           =   0
       Left            =   6075
+      Picture         =   "frmCrearPersonaje.frx":0ACE
       Top             =   5925
       Visible         =   0   'False
       Width           =   240
@@ -1369,13 +1375,14 @@ Private currentGrh As Long
 Private Dir As E_Heading
 
 Private Sub Form_Load()
-    Cargando = True
-    
     Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaCrearPersonaje.jpg")
+    
+	Cargando = True
     
     Call LoadCharInfo
     Call CargarEspecialidades
     Call LoadTextsForm
+    Call LoadAOCustomControlsPictures(Me)
     
     Call IniciarGraficos
     Call CargarCombos
@@ -1385,7 +1392,7 @@ Private Sub Form_Load()
     Call DrawImageInPicture(picPJ, Me.Picture, 0, 0, , , picPJ.Left, picPJ.Top)
     Dir = SOUTH
     
-    Call TirarDados
+    'Call TirarDados
     
     Cargando = False
     
@@ -1447,8 +1454,10 @@ Private Sub IniciarGraficos()
 End Sub
 
 Private Sub CargarCombos()
-    Dim i As Integer
-    Dim Lower_ciudades As Long, Lower_listaClases As Long, Lower_listaRazas As Long
+    Dim i As Long
+    Dim Lower_ciudades As Long
+    Dim Lower_listaClases As Long
+    Dim Lower_listaRazas As Long
     Dim Upper_ciudades As Long
     
     lstProfesion.Clear
@@ -1458,9 +1467,11 @@ Private Sub CargarCombos()
     For i = Lower_listaClases To NroClases
         lstProfesion.AddItem ListaClases(i)
     Next i
+
+    lstProfesion.ListIndex = 1
     
     lstHogar.Clear
-    
+
     Lower_ciudades = LBound(Ciudades())
     Upper_ciudades = UBound(Ciudades())
     
@@ -1475,8 +1486,12 @@ Private Sub CargarCombos()
     For i = Lower_listaRazas To NroRazas
         lstRaza.AddItem ListaRazas(i)
     Next i
-    
-    lstProfesion.ListIndex = 1
+
+    ' Puse esto aca asi por que antes los valores se cargaban del FRX que la verdad es un asco por que es una cosa invisible que no se sabe que hay ahi adentro
+    ' Idealmente esto se tendria que hacer como el resto de cosas en el en estos combos, pero por ahora esto funciona.
+    ' El objetivo aqui es la traduccion (Recox)
+    lstGenero.AddItem JsonLanguage.item("FRM_CREARPJ_HOMBRE").item("TEXTO")
+    lstGenero.AddItem JsonLanguage.item("FRM_CREARPJ_MUJER").item("TEXTO")
 End Sub
 
 Function CheckData() As Boolean
@@ -1959,7 +1974,7 @@ Private Sub DarCuerpoYCabeza()
     
     currentGrh = BodyData(UserBody).Walk(Dir).GrhIndex
     If currentGrh > 0 Then _
-        tAnimacion.Interval = Round(GrhData(currentGrh).speed / GrhData(currentGrh).NumFrames)
+        tAnimacion.Interval = Round(GrhData(currentGrh).Speed / GrhData(currentGrh).NumFrames)
 End Sub
 
 Private Function CheckCabeza(ByVal Head As Integer) As Integer

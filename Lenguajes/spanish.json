@@ -1040,6 +1040,12 @@
 	"VALIDACION_ATRIBUTOS": {
 	  "TEXTO": "Los atributos del personaje son invalidos."
 	},
+	"FRM_CREARPJ_HOMBRE": {
+	  "TEXTO": "Hombre"
+	},
+	"FRM_CREARPJ_MUJER": {
+	  "TEXTO": "Mujer"
+	},
 	"AYUDA_CREARPJ_DADOS": {
 	  "TEXTO": "Presionando sobre la Esfera Roja, se modificaran al azar los atributos de tu personaje, de esta manera puedes elegir los que mas te parezcan para definir a tu personaje."
 	},
