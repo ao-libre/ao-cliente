@@ -1332,7 +1332,7 @@
 	  "TEXTO": "Specialty"
 	},
 	"FRM_CREARPERSONAJE_NOMBRE": {
-	  "TEXTO": "Name"
+	  "TEXTO": "Character's Name"
 	},
 	"FRM_CREARPERSONAJE_ATRIBUTOS": {
 	  "TEXTO": "Attributes"
@@ -1368,7 +1368,7 @@
 	  "TEXTO": "Magic"
 	},
 	"FRM_CREARPERSONAJE_VIDA": {
-	  "TEXTO": "LIFE"
+	  "TEXTO": "Health"
 	},
 	"FRM_CREARPERSONAJE_TIRAR_DADOS": {
 	  "TEXTO": "Throw Dice"
