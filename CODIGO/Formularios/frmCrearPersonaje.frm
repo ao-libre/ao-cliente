@@ -1,4 +1,4 @@
-ERSION 5.00
+VERSION 5.00
 Begin VB.Form frmCrearPersonaje 
    BackColor       =   &H8000000A&
    BorderStyle     =   0  'None
