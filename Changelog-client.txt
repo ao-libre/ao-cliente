@@ -558,3 +558,7 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 - v0.13.18
 
 * 20/10/2019: Ahora mostramos informacion de defensa de los casos en el inventario. (Recox)
+* 21/10/2019: Se tradujo el formulario frmCrearPersonaje. (Recox)
+* 21/10/2019: Se tradujo el formulario frmComerciarUsu. (Recox)
+* 21/10/2019: Se tradujo el formulario frmComerciar. (Recox)
+* 21/10/2019: frmCrearCuenta Added LoadTextForms to maintain coherence between forms. (Recox)
