@@ -556,17 +556,49 @@ Begin VB.Form frmCustomKeys
       Top             =   1590
       Width           =   1620
    End
-   Begin VB.Image imgDefaultKeys 
+   Begin AOLibre.uAOButton imgDefaultKeys 
       Height          =   375
-      Left            =   960
+      Left            =   480
+      TabIndex        =   27
       Top             =   6720
       Width           =   2655
+      _ExtentX        =   4683
+      _ExtentY        =   661
+      TX              =   "imgDefaultKeys"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
-   Begin VB.Image imgGuardar 
+   Begin AOLibre.uAOButton imgGuardar 
       Height          =   375
       Left            =   4680
+      TabIndex        =   28
       Top             =   6720
       Width           =   2655
+      _ExtentX        =   4683
+      _ExtentY        =   661
+      TX              =   "Guardar"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
 End
 Attribute VB_Name = "frmCustomKeys"
@@ -620,11 +652,6 @@ Option Explicit
 
 Private clsFormulario As clsFormMovementManager
 
-Private cBotonGuardar As clsGraphicalButton
-Private cBotonDefaultKeys As clsGraphicalButton
-
-Public LastButtonPressed As clsGraphicalButton
-
 Private SelectedConfig As Byte
 Private InitialConfig As Byte
 Private CurrentTab As Integer
@@ -635,10 +662,17 @@ Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
+
+    ' TODO: Traducir los textos de las imagenes via labels en visual basic, para que en el futuro si se quiere se pueda traducir a mas idiomas
+    ' No ando con mas ganas/tiempo para hacer eso asi que se traducen las imagenes asi tenemos el juego en ingles.
+    If Language = "spanish" Then
+      Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaConfigurarTeclas_spanish.jpg")
+    Else
+      Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaConfigurarTeclas_english.jpg")
+    End If
     
-    Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaConfigurarTeclas.jpg")
-    
-    Call LoadButtons
+    Call LoadTextsForm
+    Call LoadAOCustomControlsPictures(Me)
     
     SelectedConfig = CustomKeys.CurrentConfig
     InitialConfig = SelectedConfig
@@ -650,36 +684,13 @@ Private Sub Form_Load()
     Next i
 End Sub
 
-Private Sub LoadButtons()
-    Dim GrhPath As String
-    
-    GrhPath = Game.path(Interfaces)
-
-    Set cBotonGuardar = New clsGraphicalButton
-    Set cBotonDefaultKeys = New clsGraphicalButton
-    
-    Set LastButtonPressed = New clsGraphicalButton
-    
-    
-    Call cBotonGuardar.Initialize(imgGuardar, GrhPath & "BotonGuardarConfigKey.jpg", _
-                                    GrhPath & "BotonGuardarRolloverConfigKey.jpg", _
-                                    GrhPath & "BotonGuardarClickConfigKey.jpg", Me)
-
-    Call cBotonDefaultKeys.Initialize(imgDefaultKeys, GrhPath & "BotonDefaultKeys.jpg", _
-                                    GrhPath & "BotonDefaultKeysRollover.jpg", _
-                                    GrhPath & "BotonDefaultKeysClick.jpg", Me)
-                                    
-End Sub
-
-
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastButtonPressed.ToggleToNormal
+Private Sub LoadTextsForm()
+    imgDefaultKeys.Caption = JsonLanguage.Item("FRM_CUSTOMKEYS_DEFAULTKEYS").Item("TEXTO")
+    imgGuardar.Caption = JsonLanguage.Item("FRM_CUSTOMKEYS_GUARDAR").Item("TEXTO")
 End Sub
 
 Private Sub imgDefaultKeys_Click()
-
     Call CustomKeys.LoadDefaults(CustomKeys.CurrentConfig)
-
     Call ShowConfig
 End Sub
 
@@ -755,9 +766,6 @@ Private Sub Text1_KeyUp(Index As Integer, KeyCode As Integer, Shift As Integer)
     Call Text1_KeyDown(Index, KeyCode, Shift)
 End Sub
 
-Private Sub Text1_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastButtonPressed.ToggleToNormal
-End Sub
 Private Sub ShowConfig()
 
     Dim i As Long
