@@ -45,17 +45,68 @@ Begin VB.Form frmCommet
       Top             =   480
       Width           =   4575
    End
-   Begin VB.Image imgCerrar 
-      Height          =   480
-      Left            =   2880
-      Top             =   2520
-      Width           =   960
-   End
-   Begin VB.Image imgEnviar 
-      Height          =   480
+   Begin AOLibre.uAOButton imgEnviar 
+      Height          =   495
       Left            =   1080
+      TabIndex        =   1
       Top             =   2520
-      Width           =   960
+      Width           =   975
+      _ExtentX        =   1720
+      _ExtentY        =   873
+      TX              =   "Enviar"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton imgCerrar 
+      Height          =   495
+      Left            =   2880
+      TabIndex        =   2
+      Top             =   2520
+      Width           =   975
+      _ExtentX        =   1720
+      _ExtentY        =   873
+      TX              =   "Cerrar"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin VB.Label lblTitle 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Titulo del form ..."
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   12
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H8000000B&
+      Height          =   375
+      Left            =   360
+      TabIndex        =   3
+      Top             =   120
+      Width           =   3855
    End
 End
 Attribute VB_Name = "frmCommet"
@@ -100,11 +151,6 @@ Option Explicit
 Private clsFormulario As clsFormMovementManager
 Private Const MAX_PROPOSAL_LENGTH As Integer = 520
 
-Private cBotonEnviar As clsGraphicalButton
-Private cBotonCerrar As clsGraphicalButton
-
-Public LastButtonPressed As clsGraphicalButton
-
 Public Nombre As String
 
 Public T As TIPO
@@ -119,33 +165,29 @@ Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
-
-    Call LoadBackGround
-    Call LoadButtons
+    
+    Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaCommet.jpg")
+    
+    Call LoadTextsForm
+    Call LoadAOCustomControlsPictures(Me)
 End Sub
 
-Private Sub LoadButtons()
-    Dim GrhPath As String
+Private Sub LoadTextsForm()
+    imgEnviar.Caption = JsonLanguage.item("FRM_COMMET_ENVIAR").item("TEXTO")
+    imgCerrar.Caption = JsonLanguage.item("FRM_COMMET_CERRAR").item("TEXTO")
     
-    GrhPath = Game.path(Interfaces)
-
-    Set cBotonEnviar = New clsGraphicalButton
-    Set cBotonCerrar = New clsGraphicalButton
-    
-    Set LastButtonPressed = New clsGraphicalButton
-    
-    
-    Call cBotonEnviar.Initialize(imgEnviar, GrhPath & "BotonEnviarSolicitud.jpg", _
-                                    GrhPath & "BotonEnviarRolloverSolicitud.jpg", _
-                                    GrhPath & "BotonEnviarClickSolicitud.jpg", Me)
-
-    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarSolicitud.jpg", _
-                                    GrhPath & "BotonCerrarRolloverSolicitud.jpg", _
-                                    GrhPath & "BotonCerrarClickSolicitud.jpg", Me)
-End Sub
-
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastButtonPressed.ToggleToNormal
+    ' Depende del tipo de form que abramos cargamos un diferente titulo
+    Select Case T
+        Case TIPO.ALIANZA
+            lblTitle.Caption = JsonLanguage.item("FRM_COMMET_ALIANZA").item("TEXTO")
+            
+        Case TIPO.PAZ
+            lblTitle.Caption = JsonLanguage.item("FRM_COMMET_PAZ").item("TEXTO")
+            
+        Case TIPO.RECHAZOPJ
+            lblTitle.Caption = JsonLanguage.item("FRM_COMMET_RECHAZOPJ").item("TEXTO")
+            
+    End Select
 End Sub
 
 Private Sub imgCerrar_Click()
@@ -165,17 +207,21 @@ Private Sub imgEnviar_Click()
     End If
     
     If T = PAZ Then
-        Call WriteGuildOfferPeace(Nombre, Replace(Text1, vbNewLine, "บ"))
+        Call WriteGuildOfferPeace(Nombre, Replace(Text1, vbNewLine, "ยบ"))
         
     ElseIf T = ALIANZA Then
-        Call WriteGuildOfferAlliance(Nombre, Replace(Text1, vbNewLine, "บ"))
+        Call WriteGuildOfferAlliance(Nombre, Replace(Text1, vbNewLine, "ยบ"))
         
     ElseIf T = RECHAZOPJ Then
         Call WriteGuildRejectNewMember(Nombre, Replace(Replace(Text1.Text, ",", " "), vbNewLine, " "))
         'Sacamos el char de la lista de aspirantes
         Dim i As Long
-
-        For i = 0 To frmGuildLeader.solicitudes.ListCount - 1
+        
+        'Calculamos la cantidad de aspirantes de antemano para mejorar el rendimiento
+        Dim Count_listCount As Long
+        Count_listCount = frmGuildLeader.solicitudes.ListCount - 1
+            
+        For i = 0 To Count_listCount
             If frmGuildLeader.solicitudes.List(i) = Nombre Then
                 frmGuildLeader.solicitudes.RemoveItem i
                 Exit For
@@ -191,26 +237,7 @@ Private Sub imgEnviar_Click()
 End Sub
 
 Private Sub Text1_Change()
-    If Len(Text1.Text) > MAX_PROPOSAL_LENGTH Then _
+    If Len(Text1.Text) > MAX_PROPOSAL_LENGTH Then
         Text1.Text = Left$(Text1.Text, MAX_PROPOSAL_LENGTH)
-End Sub
-
-Private Sub LoadBackGround()
-
-    Select Case T
-        Case TIPO.ALIANZA
-            Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaPropuestaAlianza.jpg")
-            
-        Case TIPO.PAZ
-            Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaPropuestaPaz.jpg")
-            
-        Case TIPO.RECHAZOPJ
-            Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaMotivoRechazo.jpg")
-            
-    End Select
-    
-End Sub
-
-Private Sub Text1_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastButtonPressed.ToggleToNormal
+    End If
 End Sub
