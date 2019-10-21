@@ -148,7 +148,7 @@ Begin VB.Form frmPeaceProp
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H8000000B&
+      ForeColor       =   &H00FFFFFF&
       Height          =   375
       Left            =   360
       TabIndex        =   1
