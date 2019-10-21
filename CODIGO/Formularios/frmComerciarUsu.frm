@@ -187,7 +187,6 @@ Begin VB.Form frmComerciarUsu
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
-      TextRTF         =   $"frmComerciarUsu.frx":0000
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Tahoma"
          Size            =   8.25
@@ -198,33 +197,207 @@ Begin VB.Form frmComerciarUsu
          Strikethrough   =   0   'False
       EndProperty
    End
-   Begin VB.Image imgCancelar 
-      Height          =   360
+   Begin AOLibre.uAOButton imgCancelar 
+      Height          =   375
       Left            =   480
-      Tag             =   "1"
+      TabIndex        =   9
       Top             =   4680
       Width           =   1455
+      _ExtentX        =   2566
+      _ExtentY        =   661
+      TX              =   "Cancelar"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
-   Begin VB.Image imgRechazar 
-      Height          =   360
-      Left            =   8220
-      Tag             =   "2"
-      Top             =   8160
-      Width           =   1455
-   End
-   Begin VB.Image imgConfirmar 
-      Height          =   360
+   Begin AOLibre.uAOButton imgConfirmar 
+      Height          =   375
       Left            =   7440
-      Tag             =   "2"
+      TabIndex        =   10
       Top             =   4080
       Width           =   1455
+      _ExtentX        =   2566
+      _ExtentY        =   661
+      TX              =   "Confirmar"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
-   Begin VB.Image imgAceptar 
-      Height          =   360
-      Left            =   6750
-      Tag             =   "2"
+   Begin AOLibre.uAOButton imgAceptar 
+      Height          =   375
+      Left            =   6720
+      TabIndex        =   11
       Top             =   8160
       Width           =   1455
+      _ExtentX        =   2566
+      _ExtentY        =   661
+      TX              =   "Aceptar"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton imgRechazar 
+      Height          =   375
+      Left            =   8280
+      TabIndex        =   12
+      Top             =   8160
+      Width           =   1455
+      _ExtentX        =   2566
+      _ExtentY        =   661
+      TX              =   "Rechazar"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin VB.Label lblQuitar 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Quitar"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H0080FFFF&
+      Height          =   375
+      Left            =   4680
+      TabIndex        =   18
+      Top             =   3000
+      Width           =   1095
+   End
+   Begin VB.Label lblAgregar 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Agregar"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H0080FFFF&
+      Height          =   375
+      Left            =   4680
+      TabIndex        =   17
+      Top             =   1560
+      Width           =   735
+   End
+   Begin VB.Label lblChat 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Chat"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   13.5
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFC0&
+      Height          =   375
+      Left            =   600
+      TabIndex        =   16
+      Top             =   5520
+      Width           =   855
+   End
+   Begin VB.Label lblSuOferta 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Su Oferta"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   13.5
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFC0&
+      Height          =   375
+      Left            =   6960
+      TabIndex        =   15
+      Top             =   4560
+      Width           =   1695
+   End
+   Begin VB.Label lblTuOferta 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Tu Oferta"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   13.5
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFC0&
+      Height          =   375
+      Left            =   6960
+      TabIndex        =   14
+      Top             =   360
+      Width           =   1695
+   End
+   Begin VB.Label lblInventario 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Inventario"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   13.5
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFC0&
+      Height          =   375
+      Left            =   600
+      TabIndex        =   13
+      Top             =   360
+      Width           =   1695
    End
    Begin VB.Image imgAgregar 
       Height          =   255
@@ -267,22 +440,13 @@ Option Explicit
 
 Private clsFormulario As clsFormMovementManager
 
-Private cBotonAceptar As clsGraphicalButton
-Private cBotonCancelar As clsGraphicalButton
-Private cBotonRechazar As clsGraphicalButton
-Private cBotonConfirmar As clsGraphicalButton
-Public LastButtonPressed As clsGraphicalButton
 
 Private Const GOLD_OFFER_SLOT As Byte = INV_OFFER_SLOTS + 1
 
 Private sCommerceChat As String
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastButtonPressed.ToggleToNormal
-End Sub
-
 Private Sub imgAceptar_Click()
-    If Not cBotonAceptar.isEnabled Then Exit Sub  ' Deshabilitado
+    If Not imgAceptar.Enabled Then Exit Sub  ' Deshabilitado
     
     Call WriteUserCommerceOk
     HabilitarAceptarRechazar False
@@ -379,7 +543,7 @@ Private Sub imgCancelar_Click()
 End Sub
 
 Private Sub imgConfirmar_Click()
-    If Not cBotonConfirmar.isEnabled Then Exit Sub  ' Deshabilitado
+    If Not imgConfirmar.Enabled Then Exit Sub  ' Deshabilitado
     
     HabilitarConfirmar False
     imgAgregar.Visible = False
@@ -394,7 +558,7 @@ Private Sub imgQuitar_Click()
     Dim Amount As Long
     
     Dim MENSAJE_COMM_SACA As String
-        MENSAJE_COMM_SACA = JsonLanguage.Item("MENSAJE_COMM_SACA").Item("TEXTO")
+    MENSAJE_COMM_SACA = JsonLanguage.Item("MENSAJE_COMM_SACA").Item("TEXTO")
 
     ' No tiene seleccionado ningun item
     If InvOfferComUsu(0).SelectedItem = 0 Then
@@ -467,7 +631,7 @@ Private Sub imgQuitar_Click()
 End Sub
 
 Private Sub imgRechazar_Click()
-    If Not cBotonRechazar.isEnabled Then Exit Sub  ' Deshabilitado
+    If Not imgRechazar.Enabled Then Exit Sub  ' Deshabilitado
     
     Call WriteUserCommerceReject
 End Sub
@@ -479,7 +643,8 @@ Private Sub Form_Load()
 
     Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaComercioUsuario.jpg")
     
-    LoadButtons
+    Call LoadTextsForm
+    Call LoadAOCustomControlsPictures(Me)
     
     Call PrintCommerceMsg("> " & JsonLanguage.Item("MENSAJE_COMM_INFO").Item("TEXTO").Item(1), FontTypeNames.FONTTYPE_GUILDMSG)
     Call PrintCommerceMsg("> " & JsonLanguage.Item("MENSAJE_COMM_INFO").Item("TEXTO").Item(2), FontTypeNames.FONTTYPE_GUILDMSG)
@@ -488,37 +653,17 @@ Private Sub Form_Load()
     
 End Sub
 
-Private Sub LoadButtons()
-
-    Dim GrhPath As String
-    GrhPath = Game.path(Interfaces)
-    
-    Set cBotonAceptar = New clsGraphicalButton
-    Set cBotonConfirmar = New clsGraphicalButton
-    Set cBotonRechazar = New clsGraphicalButton
-    Set cBotonCancelar = New clsGraphicalButton
-    
-    Set LastButtonPressed = New clsGraphicalButton
-    
-    Call cBotonAceptar.Initialize(imgAceptar, GrhPath & "BotonAceptarComUsu.jpg", _
-                                        GrhPath & "BotonAceptarRolloverComUsu.jpg", _
-                                        GrhPath & "BotonAceptarClickComUsu.jpg", Me, _
-                                        GrhPath & "BotonAceptarGrisComUsu.jpg", True)
-                                    
-    Call cBotonConfirmar.Initialize(imgConfirmar, GrhPath & "BotonConfirmarComUsu.jpg", _
-                                        GrhPath & "BotonConfirmarRolloverComUsu.jpg", _
-                                        GrhPath & "BotonConfirmarClickComUsu.jpg", Me, _
-                                        GrhPath & "BotonConfirmarGrisComUsu.jpg", True)
-                                        
-    Call cBotonRechazar.Initialize(imgRechazar, GrhPath & "BotonRechazarComUsu.jpg", _
-                                        GrhPath & "BotonRechazarRolloverComUsu.jpg", _
-                                        GrhPath & "BotonRechazarClickComUsu.jpg", Me, _
-                                        GrhPath & "BotonRechazarGrisComUsu.jpg", True)
-                                        
-    Call cBotonCancelar.Initialize(imgCancelar, GrhPath & "BotonCancelarComUsu.jpg", _
-                                        GrhPath & "BotonCancelarRolloverComUsu.jpg", _
-                                        GrhPath & "BotonCancelarClickComUsu.jpg", Me)
-    
+Private Sub LoadTextsForm()
+    lblInventario.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_LBLINVENTARIO").item("TEXTO")
+    lblTuOferta.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_LBLTUOFERTA").item("TEXTO")
+    lblAgregar.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_AGREGAR").item("TEXTO")
+    lblQuitar.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_QUITAR").item("TEXTO")
+    lblChat.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_CHAT").item("TEXTO")
+    lblSuOferta.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_LBLSUOFERTA").item("TEXTO")
+    imgRechazar.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_RECHAZAR").item("TEXTO")
+    imgAceptar.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_ACEPTAR").item("TEXTO")
+    imgConfirmar.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_CONFIRMAR").item("TEXTO")
+    imgCancelar.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_CANCELAR").item("TEXTO")
 End Sub
 
 Private Sub Form_LostFocus()
@@ -535,20 +680,8 @@ Private Sub picInvComercio_Click()
     Call InvOroComUsu(0).DeselectItem
 End Sub
 
-Private Sub picInvComercio_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastButtonPressed.ToggleToNormal
-End Sub
-
-Private Sub picInvOfertaOtro_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastButtonPressed.ToggleToNormal
-End Sub
-
 Private Sub picInvOfertaProp_Click()
     InvOroComUsu(1).DeselectItem
-End Sub
-
-Private Sub picInvOfertaProp_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastButtonPressed.ToggleToNormal
 End Sub
 
 Private Sub picInvOroOfertaOtro_Click()
@@ -728,10 +861,10 @@ Public Function HasAnyItem(ByRef Inventory As clsGraphicalInventory) As Boolean
 End Function
 
 Public Sub HabilitarConfirmar(ByVal Habilitar As Boolean)
-    Call cBotonConfirmar.EnableButton(Habilitar)
+    imgConfirmar.Enabled = Habilitar
 End Sub
 
 Public Sub HabilitarAceptarRechazar(ByVal Habilitar As Boolean)
-    Call cBotonAceptar.EnableButton(Habilitar)
-    Call cBotonRechazar.EnableButton(Habilitar)
+    imgAceptar.Enabled = Habilitar
+    imgRechazar.Enabled = Habilitar
 End Sub
