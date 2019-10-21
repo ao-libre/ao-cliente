@@ -43,19 +43,68 @@ Begin VB.Form frmEntrenador
       Top             =   675
       Width           =   2355
    End
-   Begin VB.Image imgSalir 
+   Begin AOLibre.uAOButton imgSalir 
       Height          =   375
       Left            =   2160
-      Tag             =   "1"
+      TabIndex        =   3
       Top             =   3120
-      Width           =   1335
+      Width           =   1455
+      _ExtentX        =   2566
+      _ExtentY        =   661
+      TX              =   "Salir"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   15.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
    End
-   Begin VB.Image imgLuchar 
+   Begin AOLibre.uAOButton imgLuchar 
       Height          =   375
       Left            =   600
-      Tag             =   "1"
+      TabIndex        =   1
       Top             =   3120
-      Width           =   1335
+      Width           =   1455
+      _ExtentX        =   2566
+      _ExtentY        =   661
+      TX              =   "Luchar"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   15.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin VB.Label lblTitle 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Con que criatura deseas combatir"
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   11.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H0080C0FF&
+      Height          =   615
+      Left            =   600
+      TabIndex        =   2
+      Top             =   120
+      Width           =   3015
    End
 End
 Attribute VB_Name = "frmEntrenador"
@@ -109,45 +158,21 @@ Option Explicit
 
 Private clsFormulario As clsFormMovementManager
 
-Private cBotonLuchar As clsGraphicalButton
-Private cBotonSalir As clsGraphicalButton
-
-Public LastButtonPressed As clsGraphicalButton
-
 Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
         
     Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaEntrenador.jpg")
-    
-    Call LoadButtons
-    
+
+    Call LoadTextsForm
+    Call LoadAOCustomControlsPictures(Me)
 End Sub
 
-Private Sub LoadButtons()
-    Dim GrhPath As String
-    
-    GrhPath = Game.path(Interfaces)
-
-    Set cBotonLuchar = New clsGraphicalButton
-    Set cBotonSalir = New clsGraphicalButton
-    
-    Set LastButtonPressed = New clsGraphicalButton
-    
-    
-    Call cBotonLuchar.Initialize(imgLuchar, GrhPath & "BotonLuchar.jpg", _
-                                    GrhPath & "BotonLucharRollover.jpg", _
-                                    GrhPath & "BotonLucharClick.jpg", Me)
-
-    Call cBotonSalir.Initialize(imgSalir, GrhPath & "BotonSalirEntrenador.jpg", _
-                                    GrhPath & "BotonSalirRolloverEntrenador.jpg", _
-                                    GrhPath & "BotonSalirClickEntrenador.jpg", Me)
-
-End Sub
-
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastButtonPressed.ToggleToNormal
+Private Sub LoadTextsForm()
+    lblTitle.Caption = JsonLanguage.item("FRM_ENTRENADOR_TITLE").item("TEXTO")
+    imgLuchar.Caption = JsonLanguage.item("FRM_ENTRENADOR_LUCHAR").item("TEXTO")
+    imgSalir.Caption = JsonLanguage.item("FRM_ENTRENADOR_SALIR").item("TEXTO")
 End Sub
 
 Private Sub imgLuchar_Click()
@@ -157,8 +182,4 @@ End Sub
 
 Private Sub imgSalir_Click()
     Unload Me
-End Sub
-
-Private Sub lstCriaturas_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastButtonPressed.ToggleToNormal
 End Sub
