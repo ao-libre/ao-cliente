@@ -160,10 +160,14 @@ Private Sub Form_Load()
     txtCuentaEmail.Text = vbNullString
     txtCuentaPassword.Text = vbNullString
     txtCuentaRepite.Text = vbNullString
-    
-    Me.imgCrearCuenta.Caption = JsonLanguage.Item("FRM_CREARCUENTA_CREARCUENTA").Item("TEXTO")
-    Me.imgSalir.Caption = JsonLanguage.Item("FRM_CREARCUENTA_SALIR").Item("TEXTO")
-    Me.lblMensaje.Caption = JsonLanguage.Item("FRM_CREARCUENTA_MENSAJE").Item("TEXTO")
+
+   Call LoadTextsForm
+End Sub
+
+Private Sub LoadTextsForm()
+    imgCrearCuenta.Caption = JsonLanguage.Item("FRM_CREARCUENTA_CREARCUENTA").Item("TEXTO")
+    imgSalir.Caption = JsonLanguage.Item("FRM_CREARCUENTA_SALIR").Item("TEXTO")
+    lblMensaje.Caption = JsonLanguage.Item("FRM_CREARCUENTA_MENSAJE").Item("TEXTO")
 End Sub
 
 Private Sub imgCrearCuenta_Click()
