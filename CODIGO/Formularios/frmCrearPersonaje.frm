@@ -124,7 +124,7 @@ Begin VB.Form frmCrearPersonaje
       Left            =   6060
       Style           =   2  'Dropdown List
       TabIndex        =   1
-      Top             =   2985
+      Top             =   3000
       Width           =   2625
    End
    Begin VB.TextBox txtNombre 
@@ -132,7 +132,7 @@ Begin VB.Form frmCrearPersonaje
       BorderStyle     =   0  'None
       BeginProperty Font 
          Name            =   "MS Sans Serif"
-         Size            =   17.25
+         Size            =   16.5
          Charset         =   0
          Weight          =   700
          Underline       =   0   'False
@@ -324,7 +324,7 @@ Begin VB.Form frmCrearPersonaje
       EndProperty
       ForeColor       =   &H8000000B&
       Height          =   255
-      Left            =   3360
+      Left            =   3300
       TabIndex        =   49
       Top             =   7440
       Width           =   1335
@@ -343,9 +343,9 @@ Begin VB.Form frmCrearPersonaje
       EndProperty
       ForeColor       =   &H8000000B&
       Height          =   255
-      Left            =   3360
+      Left            =   3300
       TabIndex        =   48
-      Top             =   7080
+      Top             =   7125
       Width           =   735
    End
    Begin VB.Label imgArmas 
@@ -362,9 +362,9 @@ Begin VB.Form frmCrearPersonaje
       EndProperty
       ForeColor       =   &H8000000B&
       Height          =   255
-      Left            =   3360
+      Left            =   3300
       TabIndex        =   47
-      Top             =   6840
+      Top             =   6825
       Width           =   735
    End
    Begin VB.Label imgEscudos 
@@ -381,9 +381,9 @@ Begin VB.Form frmCrearPersonaje
       EndProperty
       ForeColor       =   &H8000000B&
       Height          =   255
-      Left            =   3360
+      Left            =   3300
       TabIndex        =   46
-      Top             =   6600
+      Top             =   6525
       Width           =   735
    End
    Begin VB.Label imgVida 
@@ -400,9 +400,9 @@ Begin VB.Form frmCrearPersonaje
       EndProperty
       ForeColor       =   &H8000000B&
       Height          =   255
-      Left            =   3360
+      Left            =   3300
       TabIndex        =   45
-      Top             =   6240
+      Top             =   6225
       Width           =   735
    End
    Begin VB.Label imgMagia 
@@ -419,9 +419,9 @@ Begin VB.Form frmCrearPersonaje
       EndProperty
       ForeColor       =   &H8000000B&
       Height          =   255
-      Left            =   3360
+      Left            =   3300
       TabIndex        =   44
-      Top             =   6000
+      Top             =   5925
       Width           =   735
    End
    Begin VB.Label imgEvasion 
@@ -438,9 +438,9 @@ Begin VB.Form frmCrearPersonaje
       EndProperty
       ForeColor       =   &H8000000B&
       Height          =   255
-      Left            =   3360
+      Left            =   3300
       TabIndex        =   43
-      Top             =   5640
+      Top             =   5625
       Width           =   735
    End
    Begin VB.Label imgConstitucion 
@@ -448,7 +448,7 @@ Begin VB.Form frmCrearPersonaje
       Caption         =   "Carisma"
       ForeColor       =   &H8000000B&
       Height          =   255
-      Left            =   3480
+      Left            =   3300
       TabIndex        =   42
       Top             =   4800
       Width           =   855
@@ -467,9 +467,9 @@ Begin VB.Form frmCrearPersonaje
       EndProperty
       ForeColor       =   &H8000000B&
       Height          =   255
-      Left            =   6120
+      Left            =   6075
       TabIndex        =   41
-      Top             =   4320
+      Top             =   4350
       Width           =   1095
    End
    Begin VB.Label imgClase 
@@ -486,7 +486,7 @@ Begin VB.Form frmCrearPersonaje
       EndProperty
       ForeColor       =   &H8000000B&
       Height          =   255
-      Left            =   6240
+      Left            =   6075
       TabIndex        =   40
       Top             =   3840
       Width           =   855
@@ -505,9 +505,9 @@ Begin VB.Form frmCrearPersonaje
       EndProperty
       ForeColor       =   &H8000000B&
       Height          =   255
-      Left            =   6240
+      Left            =   6075
       TabIndex        =   39
-      Top             =   3240
+      Top             =   3300
       Width           =   855
    End
    Begin VB.Label imgCarisma 
@@ -515,7 +515,7 @@ Begin VB.Form frmCrearPersonaje
       Caption         =   "Carisma"
       ForeColor       =   &H8000000B&
       Height          =   255
-      Left            =   3480
+      Left            =   3300
       TabIndex        =   38
       Top             =   4440
       Width           =   855
@@ -526,7 +526,7 @@ Begin VB.Form frmCrearPersonaje
       Caption         =   "Inteligencia"
       ForeColor       =   &H8000000B&
       Height          =   255
-      Left            =   3360
+      Left            =   3300
       TabIndex        =   37
       Top             =   4080
       Width           =   855
@@ -536,7 +536,7 @@ Begin VB.Form frmCrearPersonaje
       Caption         =   "Agilidad"
       ForeColor       =   &H8000000B&
       Height          =   255
-      Left            =   3480
+      Left            =   3300
       TabIndex        =   36
       Top             =   3720
       Width           =   735
@@ -546,7 +546,7 @@ Begin VB.Form frmCrearPersonaje
       Caption         =   "Fuerza"
       ForeColor       =   &H8000000B&
       Height          =   255
-      Left            =   3480
+      Left            =   3300
       TabIndex        =   35
       Top             =   3360
       Width           =   735
@@ -584,7 +584,7 @@ Begin VB.Form frmCrearPersonaje
       EndProperty
       ForeColor       =   &H8000000B&
       Height          =   255
-      Left            =   6240
+      Left            =   6075
       TabIndex        =   33
       Top             =   2760
       Width           =   1815
@@ -594,7 +594,7 @@ Begin VB.Form frmCrearPersonaje
       Caption         =   "Nombre del Personaje"
       BeginProperty Font 
          Name            =   "MS Sans Serif"
-         Size            =   15
+         Size            =   13.5
          Charset         =   0
          Weight          =   700
          Underline       =   0   'False
@@ -603,9 +603,9 @@ Begin VB.Form frmCrearPersonaje
       EndProperty
       ForeColor       =   &H80000018&
       Height          =   615
-      Left            =   3480
+      Left            =   3525
       TabIndex        =   28
-      Top             =   1080
+      Top             =   1200
       Width           =   4815
    End
    Begin VB.Image ImgProfesionDibujo 
