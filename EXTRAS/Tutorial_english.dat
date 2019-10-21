@@ -1,0 +1,90 @@
+[INIT]
+NumPags=11
+
+[PAG1]
+NumLines=4
+Title=Welcome 
+Line1=Have traveler. Accept these clothes, these drinks and apples. The time has come to embark on a long journey, where a new world is waiting for you. In it, you will be able to make friends or enemies... Whatever your choice, you will live a new adventure in the fantastic Lands of this World called...
+Line2=Argentum Online
+Line3=In the following pages you will be able to access some basic tips that will help you in your stay in these Lands. 
+Line4=You will be able to access this Tutorial again from the Options Button located at the bottom right of the screen. 
+
+[PAG2]
+Title=Skills
+NumLines=12
+Line1=Each class stands out in the use of certain abilities or skills, which vary from 0 at the beginning to 100 when the master is reached.
+Line2=For each level, you can improve between 2 and 3 points each skill, just by using it. 
+Line3=However, not everyone can be increased that way, such is the case of leadership or navigation, as there are others who need to have some points assigned before they can climb naturally, such as magic, stabbing (except for killers), carpentry and blacksmithing.
+Line4=With each new level reached, you will be rewarded with 5 SkillsPoints, which you can assign by clicking on the star in the upper right corner of the screen.
+Line5=It is very important to know that you will have to make an initial assignment of 10 skills in any skill, so that you will be allowed to naturally raise the others.
+Line6=Keep in mind, Skills are very important when shaping your Character, as they define your skill and ability at the time of the confrontation.
+Line7=
+Line8=If you don't understand the system very well, it is recommended that before you start, you visit the Game Manual and review the various assignment guides, although each user designs their own assignment strategy to obtain mastery in the most relevant skills for their class, in the least amount of possible levels.
+Line9=
+Line10=Think carefully before assigning!
+Line11=
+Line12=Lots of Adventurous Luck! 
+Line13=
+Line14=Manual link:
+Line15=http://wiki.argentumonline.org/
+
+[PAG3]
+NumLines=3
+Title=Options
+Line1=When you feel lost, don't despair. To your right, by simply clicking on the Options button or pressing the F5 key, you can get to the Game Manual to satiate all your doubts, or simply take a look at the World Map, to know where you stand.
+Line2=In addition to this, you can configure the keys when playing, as well as change your password or access this same Tutorial.
+Line3=Y, if you're bored, wanting to listen to some music while you're having fun, don't hesitate to tune in to Radio Ao! You'll enjoy music and fun at full volume!
+
+[PAG4]
+NumLines=2
+Title=Insurance
+Line1=Be careful when unlocking! This will prevent you from becoming a Criminal. If your intention is to sell your soul to the Devil, you will only have to try to steal or attack some Citizen or Royal Army. 
+Line2=Remember that in this way, your training will have to be more exhaustive, as adversity will present itself at all times.
+
+[PAG5]
+NumLines=1
+Title=Death and Resurrection
+Line1=In case you fall in Battle, or a creature has wounded you lethally, you will have to go to the nearest City, to find the Priest of the town, who will give you instructions of how to cure you and/or to return to the life.
+
+[PAG6]
+NumLines=10
+Title=Combat System
+Line1=There are 3 ways to attack: using magic, close combat or projectiles.
+Line2=
+Line3=The spells can be found next to the inventory tab, located on the right side of the screen. You can adjust them to your liking, using the arrows on the tab.
+Line4=To use them, it's as simple as selecting the desired one, clicking on launch and finally throwing it on the victim.
+Line5=How to get them? You must either get it through the Wizardry Merchant, located in each of the Cities, or, if chance is on your side, when you finish with a fearsome creature could give it to you as a reward for your effort.
+Line6=For more information on the effect and requirement of each spell, just select it and press the "info" button.
+Line7=
+Line8=To attack body to body, simply press the "Ctrl" key when you are next to the victim. The damage will depend on the weapon equipped, although it is not necessary to have one, since it is possible to attack with the fists (specialty of some classes).
+Line9=
+Line10=Finally, to attack with projectiles you must get a bow and arrows or knives (only in the case of the pirate). After having equipped them by pressing the "E", all that remains is to press "U" on the bow or knives and select the target to attack.
+
+
+[PAG7]
+NumLines=2
+Title=Gold and Storage
+Line1=You can only load the value of your level, multiplied by 10,000 coins. In case you carry a larger amount, and die, the surplus of that money will be scattered next to your items, as long as you are not a newbie. So that this doesn't happen, you can deposit them at the City Banker.
+Line2=You can get the necessary gold either by killing creatures that reward you for your effort, or by selling those objects that you don't need, both to users and merchants.
+
+[PAG8]
+NumLines=1
+Title=Items and Inventory
+Line1=The items will be very helpful, but be careful, if you die you will lose them, with the exception of the newbies items. You can keep them in the City Banker or sell it to a merchant interested in it.
+
+[PAG9]
+NumLines=1
+Title=Work and Macros
+Line1=Remember to have enough food not to waste time, because without energy it is impossible to perform the task in question. A Sentinel can appear at any time, and require you to type a command on your screen, to make sure the work is being supervised by you.
+
+[PAG10]
+NumLines=3
+Title=Training and Membership of Npcs
+Line1=When hitting a creature you will become the owner of it. Remember that in case someone else hurts it, you can attack him without becoming a Criminal as long as you notice that his nick has turned violet. 
+Line2= By attacking him, you will allow him to defend himself too, and if he defeats you, he won't become a Criminal either... 
+Line3=Beware also of abusing yourself by hitting creatures of other Citizens, in the long run you could become a Criminal.
+
+[PAG11]
+NumLines=1
+Title=Unsafe Zones
+Line1= Be careful when leaving the Cities. Outside of them, any character can attack you and keep all your belongings. 

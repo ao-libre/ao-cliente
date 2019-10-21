@@ -1,0 +1,89 @@
+[INIT]
+NumPags=11
+
+[PAG1]
+NumLines=4
+Title=Bienvenida 
+Line1=Ten viajero. Acepta este ropaje, estas bebidas y manzanas. Ha llegado la hora de emprender un largo viaje, en donde un nuevo mundo te est� esperando. En �l, podr�s hacerte de amigos o bien de enemigos... Sea cual fuera tu elecci�n, vivir�s una nueva aventura en las fant�sticas Tierras de este Mundo llamado...
+Line2=Argentum Online
+Line3=En las p�ginas siguientes podr�s acceder a algunos consejos b�sicos que te ayudar�n en tu estad�a en estas Tierras. 
+Line4=Podr�s volver a acceder a este Tutorial desde el Bot�n de Opciones ubicado abajo a la derecha de la pantalla. 
+
+[PAG2]
+Title=Skills
+NumLines=12
+Line1=Cada clase se destaca en la utilizaci�n de ciertas habilidades o skills, los mismos var�an de 0, al comenzar, hasta 100 cuando se alcanza la maestr�a.
+Line2=Por cada nivel, se puede mejorar entre 2 y 3 puntos cada skill, con tan s�lo utilizarlo. 
+Line3=Sin embargo, no todos pueden aumentarse de esa manera, tal es el caso de liderazgo o navegaci�n, como tambi�n hay otros que necesitan tener algunos puntos asignados antes de poder subirse naturalmente, como lo son magia, apu�alar (excepto para asesinos), carpinter�a y herrer�a.
+Line4=Con cada nuevo nivel alcanzado, se te recompensar� con 5 SkillsPoints, los cuales podr�s asignar presionando en la estrella ubicada en la esquina superior derecha de la pantalla.
+Line5=Es muy importante saber que deber�s realizar una asignaci�n inicial de 10 skills en cualquier habilidad, para que se te permita subir naturalmente las dem�s.
+Line6=Ten en cuenta, que los Skills son muy importantes a la hora de moldear tu Personaje, ya que definen tu destreza y habilidad a la hora del enfrentamiento.
+Line7=
+Line8=Si no comprendes muy bien el sistema, es recomendable que antes de empezar, visites el Manual del Juego y revises las variadas gu�as de asignaci�n, aunque cada usuario dise�a su propia estrategia de c�mo asignar para obtener la maestr�a en los skills m�s relevantes para su clase, en la menor cantidad de niveles posibles.
+Line9=
+Line10=�Piensa con cuidado antes de asignar!
+Line11=
+Line12=�Mucha Suerte Aventurero! 
+Line13=
+Line14=Link del Manual:
+Line15=http://wiki.argentumonline.org/
+
+[PAG3]
+NumLines=3
+Title=Opciones
+Line1=Cuando te sientas perdido, no desesperes. A tu derecha, haciendo un simple clic en el bot�n Opciones o presionando la tecla F5, podr�s llegar hasta el Manual del Juego para saciar todas tus dudas, o simplemente dar un vistazo al Mapa del mundo, para saber d�nde est�s parado.
+Line2=Adem�s de ello, podr�s configurar las teclas a la hora de jugar, como tambi�n as� cambiar tu contrase�a o acceder a este mismo Tutorial.
+Line3=Y, si est�s aburrido, con ganas de escuchar algo de m�sica mientras te diviertes, �no dudes en sintonizar Radio Ao! �Disfrutar�s de m�sica y diversi�n a todo volumen!
+
+[PAG4]
+NumLines=2
+Title=Seguro
+Line1=�Ten cuidado al sacar el seguro! Este mismo te impedir� convertirte en Criminal. Si tu intenci�n es venderle el alma al Demonio, s�lo tendr�s que intentar robar o atacar a alg�n Ciudadano o Ej�rcito Real. 
+Line2=Recuerda que de esta manera, tu entrenamiento tendr� que ser m�s exhaustivo, ya que las adversidades se te presentar�n en todo momento.
+
+[PAG5]
+NumLines=1
+Title=Muerte y Resurrecci�n
+Line1=En caso de que caigas en Batalla, o una criatura te haya herido letalmente, deber�s dirigirte a la Ciudad m�s cercana, para encontrar al Sacerdote del pueblo, qui�n te dar� instrucciones de c�mo curarte y/o volverte a la vida.
+
+[PAG6]
+NumLines=10
+Title=Sistema de Combate
+Line1=Existen 3 formas de atacar: utilizando la magia, el combate cuerpo a cuerpo o con proyectiles.
+Line2=
+Line3=Los hechizos los podr�s encontrar junto a la pesta�a del inventario, ubicada a la derecha de la pantalla. Podr�s acomodarlos a tu gusto, utilizando las flechitas de la pesta�a.
+Line4=Para utilizarlos, es tan sencillo como seleccionar el deseado, presionar en lanzar y finalmente lanzarlo sobre la v�ctima.
+Line5=�C�mo conseguirlos? Deber�s, o conseguirlo mediante el Comerciante de Hechicer�a, ubicados en cada una de las Ciudades, o bien, si el azar est� de tu lado, al acabar con una temible criatura podr�a brind�rtelo como recompensa por tu esfuerzo.
+Line6=Para m�s informaci�n sobre el efecto y requerimiento de cada hechizo, s�lo selecci�nalo y presiona el bot�n "info".
+Line7=
+Line8=Para atacar cuerpo a cuerpo, simplemente se debe presionar la tecla "Ctrl" cuando te encuentres a un lado de la victima. El da�o depender� del arma equipada, aunque no es necesario tener una, ya que es posible atacar con los pu�os (especialidad de algunas clases).
+Line9=
+Line10=Finalmente, para atacar con proyectiles se debe conseguir un arco y flechas o cuchillas (solo en el caso del pirata). Tras haberlos equipado presionando la "E", solo resta presionar "U" sobre el arco o cuchillas y seleccionar el objetivo a atacar.
+
+[PAG7]
+NumLines=2
+Title=Oro y Almacenamiento
+Line1=S�lo podr�s cargar el valor de tu nivel, multiplicado por 10.000 monedas. En caso de que lleves una mayor cantidad, y mueras, el sobrante de ese dinero se esparcir� junto a tus �tems, siempre y cuando no seas newbie. Para que esto no pase, puedes depositarlas en el Banquero de la Ciudad.
+Line2=Podr�s conseguir el oro necesario ya sea matando criaturas que te premien por tu esfuerzo, o bien vendiendo aquellos objetos que no necesites, tanto a usuarios como a comerciantes.
+
+[PAG8]
+NumLines=1
+Title=�tems e Inventario
+Line1=Los �tems te ser�n de mucha ayuda, pero ten cuidado, si mueres los perder�s, a excepci�n de los �tems newbies. Puedes guardarlos en el Banquero de la Ciudad o venderlo a alg�n comerciante interesado en �l.
+
+[PAG9]
+NumLines=1
+Title=Trabajo y Macros
+Line1=Recuerda tener los suficientes v�veres como para no perder tiempo, ya que sin energ�a se hace imposible realizar la tarea en cuesti�n. Eso s�, estate atento, un Centinela puede aparecer en cualquier momento, y requerirte que escribas un comando en tu pantalla, para asegurarse que el trabajo est� siendo supervisado por ti.
+
+[PAG10]
+NumLines=3
+Title=Entrenamiento y Pertenencia de Npcs
+Line1=Al golpear a una criatura te har�s poseedor de la misma. Recuerda que en caso de que alguien m�s le haga da�o a la misma, podr�s atacarlo sin convertirte en Criminal siempre y cuando notes que su nick se ha vuelto violeta. 
+Line2=Al atacarlo, permitir�s que �l pueda defenderse tambi�n, y si te vence, tampoco se convertir� en Criminal... 
+Line3=Ten cuidado tambi�n con abusarte de pegarle a criaturas de otros Ciudadanos, a la larga podr�s convertirte en Criminal.
+
+[PAG11]
+NumLines=1
+Title=Zonas Inseguras
+Line1= Ten cuidado al salir de las Ciudades. Fuera de ellas, cualquier Personaje podr� atacarte y quedarse con todas tus pertenencias. 
