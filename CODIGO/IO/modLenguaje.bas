@@ -15,6 +15,7 @@ Private Declare Function GetLocaleInfo _
                                         ByVal cchData As Long) As Long
 
 Public JsonLanguage As Object
+Public Language As String
 
 Public Function FileToString(strFileName As String) As String
     '###################################################################################
@@ -55,7 +56,6 @@ Public Sub SetLanguageApplication()
     '************************************************************************************
 
     Dim LangFile As String
-    Dim Language As String
     
     Language = GetVar(Game.path(INIT) & "Config.ini", "Parameters", "Language")
     
