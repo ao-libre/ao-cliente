@@ -896,7 +896,7 @@
 		"DESCRIPCION": "- Is the set of knowledge about the different minerals, where to get, how they should be extracted and worked.\n- Indicates the probability of success in each attempt to undermine and the ability, or not to convert these minerals into ingots."
 	  },
 	  "CARPINTERIA": {
-		"TEXTO": "Carpinteria",
+		"TEXTO": "Carpentry",
 		"DESCRIPCION": "- Is the set of knowledge to learn sawing, sanding, gluing and nailing wood with a good level of completion.\n- Indicates skill in the handling of these tools, the how good is the work of a carpenter."
 	  },
 	  "HERRERIA": {
@@ -1040,6 +1040,12 @@
 	"VALIDACION_ATRIBUTOS": {
 	  "TEXTO": "The character attributes are invalid."
 	},
+	"FRM_CREARPJ_HOMBRE": {
+	  "TEXTO": "Male"
+	},
+	"FRM_CREARPJ_MUJER": {
+	  "TEXTO": "Female"
+	},
 	"AYUDA_CREARPJ_DADOS": {
 	  "TEXTO": "By pressing on the Red Sphere, it will change randomly the attributes of your character, this way you can choose the ones you seem to define your character."
 	},
@@ -1047,7 +1053,7 @@
 	  "TEXTO": "It is extremely important that you enter a valid e-mail address, as in the case of losing the password of your character, will be sent to you when you need it, to that address."
 	},
 	"AYUDA_CREARPJ_NOMBREPJ": {
-	  "TEXTO": "Be careful when you select the name of your character. Argentum is a role-playing game, a world that is magical and fantastic, and if you select a name that is obscene or with political connotation, the administrators deleted your character and there will be no possibility to recover it."
+	  "TEXTO": "Argentum is a role-playing game, a world that is magical and fantastic, if you select a name that is obscene or with political connotation, the administrators can delete your character."
 	},
 	"AYUDA_CREARPJ_ATRIBUTOS": {
 	  "TEXTO": "Are the qualities that define your character. Usually called the [DICE]. (See Roll)"
@@ -1332,13 +1338,13 @@
 	  "TEXTO": "Specialty"
 	},
 	"FRM_CREARPERSONAJE_NOMBRE": {
-	  "TEXTO": "Name"
+	  "TEXTO": "Character's Name"
 	},
 	"FRM_CREARPERSONAJE_ATRIBUTOS": {
 	  "TEXTO": "Attributes"
 	},
 	"FRM_CREARPERSONAJE_FUERZA": {
-	  "TEXTO": "Force"
+	  "TEXTO": "Strength"
 	},
 	"FRM_CREARPERSONAJE_AGILIDAD": {
 	  "TEXTO": "Agility"
@@ -1368,13 +1374,13 @@
 	  "TEXTO": "Magic"
 	},
 	"FRM_CREARPERSONAJE_VIDA": {
-	  "TEXTO": "LIFE"
+	  "TEXTO": "Health"
 	},
 	"FRM_CREARPERSONAJE_TIRAR_DADOS": {
 	  "TEXTO": "Throw Dice"
 	},
 	"FRM_CREARPERSONAJE_PUEBLO_ORIGEN": {
-	  "TEXTO": "Village of Origin"
+	  "TEXTO": "Homeland"
 	},
 	"FRM_CREARPERSONAJE_RAZA": {
 	  "TEXTO": "Race"

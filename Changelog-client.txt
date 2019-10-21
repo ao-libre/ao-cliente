@@ -554,4 +554,12 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 19/10/2019: Se tradujo el formulario frmEligeAlineacion. (Recox)
 * 20/10/2019: Rename frmSolicitud to frmGuildSol as is the same name in vb, clean a bit the code. (Recox)
 * 20/10/2019: frmCerrar.frm / LoadFormTexts method created to maintain coherence with the rest of the forms (Recox)
-* 20/10/2019: Se tradujo el formulario frmComerciar. (Recox)
+
+- v0.13.18
+
+* 20/10/2019: Ahora mostramos informacion de defensa de los cascos en el inventario. (Recox)
+* 20/10/2019: Ahora mostramos informacion de ataque de las flechas al tratar de venderlas. (Recox)
+* 21/10/2019: Se tradujo el formulario frmCrearPersonaje. (Recox)
+* 21/10/2019: Se tradujo el formulario frmComerciarUsu. (Recox)
+* 21/10/2019: Se tradujo el formulario frmComerciar. (Recox)
+* 21/10/2019: frmCrearCuenta Added LoadTextForms to maintain coherence between forms. (Recox)
