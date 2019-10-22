@@ -42,12 +42,46 @@ Begin VB.Form frmUserRequest
       Top             =   405
       Width           =   4185
    End
-   Begin VB.Image imgCerrar 
+   Begin AOLibre.uAOButton imgCerrar 
       Height          =   375
-      Left            =   120
-      Tag             =   "1"
+      Left            =   960
+      TabIndex        =   1
       Top             =   1920
-      Width           =   4350
+      Width           =   2655
+      _ExtentX        =   4683
+      _ExtentY        =   661
+      TX              =   "Cerrar"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   14.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin VB.Label lblTitle 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Peticion"
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   11.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   495
+      Left            =   360
+      TabIndex        =   2
+      Top             =   120
+      Width           =   2175
    End
 End
 Attribute VB_Name = "frmUserRequest"
@@ -89,15 +123,11 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private cBotonCerrar As clsGraphicalButton
-
-Public LastButtonPressed As clsGraphicalButton
-
 Private clsFormulario As clsFormMovementManager
 
 Public Sub recievePeticion(ByVal p As String)
 
-    Text1 = Replace$(p, "º", vbNewLine)
+    Text1 = Replace$(p, "ï¿½", vbNewLine)
     Me.Show vbModeless, frmMain
 
 End Sub
@@ -108,33 +138,17 @@ Private Sub Form_Load()
     clsFormulario.Initialize Me
     
     Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaPeticion.jpg")
-    
-    Call LoadButtons
+
+    Call LoadTextsForm
+    Call LoadAOCustomControlsPictures(Me)
+
 End Sub
 
-Private Sub LoadButtons()
-    Dim GrhPath As String
-    
-    GrhPath = Game.path(Interfaces)
-
-    Set cBotonCerrar = New clsGraphicalButton
-    
-    Set LastButtonPressed = New clsGraphicalButton
-    
-    
-    Call cBotonCerrar.Initialize(imgCerrar, GrhPath & "BotonCerrarPeticion.jpg", _
-                                    GrhPath & "BotonCerrarRolloverPeticion.jpg", _
-                                    GrhPath & "BotonCerrarClickPeticion.jpg", Me)
-End Sub
-
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastButtonPressed.ToggleToNormal
+Private Sub LoadTextsForm()
+    imgCerrar.Caption = JsonLanguage.item("FRM_USER_REQUEST_IMGCERRAR").item("TEXTO")
+    lblTitle.Caption = JsonLanguage.item("FRM_USER_REQUEST_LBLTITLE").item("TEXTO")
 End Sub
 
 Private Sub imgCerrar_Click()
     Unload Me
-End Sub
-
-Private Sub Text1_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    LastButtonPressed.ToggleToNormal
 End Sub
