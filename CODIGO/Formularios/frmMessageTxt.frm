@@ -257,8 +257,15 @@ Private Sub Form_Load()
         messageTxt(i) = CustomMessages.Message(i)
     Next i
 
-    Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaMensajesPersonalizados.jpg")
-    
+    ' TODO: Traducir los textos de las imagenes via labels en visual basic, para que en el futuro si se quiere se pueda traducir a mas idiomas
+    ' No ando con mas ganas/tiempo para hacer eso asi que se traducen las imagenes asi tenemos el juego en ingles.
+    ' Tambien usar los controles uAObuttons para los botones, usar de ejemplo frmCambiaMotd.frm
+    If Language = "spanish" Then
+      Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaMensajesPersonalizados_spanish.jpg")
+    Else
+      Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaMensajesPersonalizados_english.jpg")
+    End If
+
     LoadButtons
     
 End Sub
