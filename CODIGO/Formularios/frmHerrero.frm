@@ -504,10 +504,19 @@ Private Sub CargarImagenes()
     
     ImgPath = Game.path(Interfaces)
 
-    Set Pestanias(ePestania.ieArmas) = LoadPicture(ImgPath & "VentanaHerreriaArmas.jpg")
-    Set Pestanias(ePestania.ieArmaduras) = LoadPicture(ImgPath & "VentanaHerreriaArmaduras.jpg")
-    Set Pestanias(ePestania.ieMejorar) = LoadPicture(ImgPath & "VentanaHerreriaMejorar.jpg")
-    
+    ' TODO: Traducir los textos de las imagenes via labels en visual basic, para que en el futuro si se quiere se pueda traducir a mas idiomas
+    ' No ando con mas ganas/tiempo para hacer eso asi que se traducen las imagenes asi tenemos el juego en ingles.
+    ' Tambien usar los controles uAObuttons para los botones, usar de ejemplo frmCambiaMotd.frm
+    If Language = "spanish" Then
+      Set Pestanias(ePestania.ieArmas) = LoadPicture(ImgPath & "VentanaHerreriaArmas_spanish.jpg")
+      Set Pestanias(ePestania.ieArmaduras) = LoadPicture(ImgPath & "VentanaHerreriaArmaduras_spanish.jpg")
+      Set Pestanias(ePestania.ieMejorar) = LoadPicture(ImgPath & "VentanaHerreriaMejorar_spanish.jpg")
+    Else
+      Set Pestanias(ePestania.ieArmas) = LoadPicture(ImgPath & "VentanaHerreriaArmas_english.jpg")
+      Set Pestanias(ePestania.ieArmaduras) = LoadPicture(ImgPath & "VentanaHerreriaArmaduras_english.jpg")
+      Set Pestanias(ePestania.ieMejorar) = LoadPicture(ImgPath & "VentanaHerreriaMejorar_english.jpg")
+    End If
+
     Set picCheck = LoadPicture(ImgPath & "CheckBoxHerreria.jpg")
     
     Set picRecuadroItem = LoadPicture(ImgPath & "RecuadroItemsHerreria.jpg")
