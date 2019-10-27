@@ -161,7 +161,7 @@ Private Sub imgCerrar_Click()
 End Sub
 
 Private Sub imgEnviar_Click()
-    Call WriteGuildRequestMembership(CName, Replace(Replace(Text1.Text, ",", ";"), vbNewLine, "�"))
+    Call WriteGuildRequestMembership(CName, Replace(Replace(Text1.Text, ",", ";"), vbNewLine, "º"))
 
     Unload Me
 End Sub
