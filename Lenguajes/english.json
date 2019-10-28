@@ -1623,6 +1623,12 @@
 	  "TEXTO": "Ok"
 	},
 	"FRM_PEACE_PROP_IMGRECHAZAR": {
-	  "TEXTO": "Reject"
-	}
+    "TEXTO": "Reject"
+  },
+  "FRM_PRES_LBL_TITLE": {
+    "TEXTO": "Episode 2"
+  },
+  "FRM_PRES_LBL_SUBTITLE": {
+    "TEXTO": "The Power of Speech for Good or Evil "
   }
+}
