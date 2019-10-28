@@ -582,6 +582,7 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 28/10/2019: Se tradujo solo la imagen de fondo del formulario frmSkills3. TODO: Traducir Botones. (Recox-Reyarb)
 * 28/10/2019: Se tradujo solo la imagen de fondo del formulario frmMSG. TODO: Traducir Botones. (Recox-Reyarb)
 * 28/10/2019: Se tradujo solo la imagen de fondo del formulario frmGuildUrl. TODO: Traducir Botones. (Recox-Reyarb)
+* 28/10/2019: Se tradujo solo la imagen de fondo del formulario frmOpciones. TODO: Traducir Botones. (Recox-Reyarb)
 
 
 
