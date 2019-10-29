@@ -507,7 +507,15 @@ Private Sub Form_Load()
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
     
-    Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaOpciones.jpg")
+    ' TODO: Traducir los textos de las imagenes via labels en visual basic, para que en el futuro si se quiere se pueda traducir a mas idiomas
+    ' No ando con mas ganas/tiempo para hacer eso asi que se traducen las imagenes asi tenemos el juego en ingles.
+    ' Tambien usar los controles uAObuttons para los botones, usar de ejemplo frmCambiaMotd.frm
+    If Language = "spanish" Then
+      Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaOpciones_spanish.jpg")
+    Else
+      Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaOpciones_english.jpg")
+    End If
+
     LoadButtons
     LoadSkinsInComboBox
     LoadLenguajesInComboBox
