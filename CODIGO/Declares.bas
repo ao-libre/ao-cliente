@@ -827,6 +827,16 @@ Public PuertoDelServidor As String
 '********** FUNCIONES API ***********
 '
 
+'******Mouse Cursor*********
+'Esto es para poder usar iconos de mouse .ani
+'https://www.gs-zone.org/temas/cursor-ani.45555/#post-375757
+Public Declare Function SetClassLong Lib "user32" Alias "SetClassLongA" (ByVal hwnd As Long, ByVal nIndex As Long, ByVal dwNewLong As Long) As Long
+ 
+Public Const GLC_HCURSOR = (-12)
+Public hSwapCursor As Long
+Public Declare Function LoadCursorFromFile Lib "user32" Alias "LoadCursorFromFileA" (ByVal lpfilename As String) As Long
+'******End Mouse Cursor****
+
 Public Declare Function GetTickCount Lib "kernel32" () As Long
 
 'para escribir y leer variables
