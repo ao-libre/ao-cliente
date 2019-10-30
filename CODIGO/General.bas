@@ -1618,14 +1618,7 @@ Public Sub LoadAOCustomControlsPictures(ByRef tForm As Form)
 'Author: RecoX
 'Last Modify Date: 17/10/2019
 'Cargamos las imagenes de los uAOControls en los formularios.
-'Cargamos el puntero del mouse en los formularios.
 '***************************************************
-    'picMouse icon es el icono que se carga en el al inicio de la aplicacion
-    'MousePointer es la propiedad de VB6 que dice que tipo de icono se quiere poner
-    '99 Significa custom/personalizado
-    tForm.MouseIcon = picMouseGeneral
-    tForm.MousePointer = vbCustom
-
     Dim DirButtons As String
     DirButtons = Game.path(Graficos) & "\Botones\"
 
