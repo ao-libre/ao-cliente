@@ -583,7 +583,7 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 28/10/2019: Se tradujo solo la imagen de fondo del formulario frmMSG. TODO: Traducir Botones. (Recox-Reyarb)
 * 28/10/2019: Se tradujo solo la imagen de fondo del formulario frmGuildUrl. TODO: Traducir Botones. (Recox-Reyarb)
 * 28/10/2019: Se tradujo solo la imagen de fondo del formulario frmOpciones. TODO: Traducir Botones. (Recox-Reyarb)
-
+* 30/10/2019: Se cambiaron los iconos del mouse tanto para clickear botones como el resto del juego. (Recox)
 
 
 
