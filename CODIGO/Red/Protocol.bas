@@ -11159,7 +11159,7 @@ End Sub
 
 Private Sub HandleCreateDamage()
  
-    ' @ Crea da�o en pos X � Y.
+    ' @ Crea dano en pos X e Y.
  
     With incomingData
         
@@ -11214,7 +11214,7 @@ End Sub
 
 Public Sub WriteCloseGuild()
 '***************************************************
-'Author: Mat�as ezequiel (maTih.-)
+'Author: Matias ezequiel (maTih.-)
 '***************************************************
 
     Call outgoingData.WriteByte(ClientPacketID.CloseGuild)
