@@ -850,11 +850,24 @@ End Function
 
 Private Sub LoadInitialConfig()
 '***************************************************
-'Author: ZaMa
-'Last Modification: 15/03/2011
+'Author: Recox
+'Last Modification: 30/10/2019
 '15/03/2011: ZaMa - Initialize classes lazy way.
+'30/10/2019: Recox - Initialize Mouse icons
 '***************************************************
+    ' Mouse Pointer and Mouse Icon (Loaded before opening any form with buttons in it)
+    Set picMouseIcon = LoadPicture(Game.path(Graficos) & "MouseIcons\Baston.ico")
 
+    ' Mouse Icon to use in the rest of the game this one is animated
+    ' We load it in frmMain but for some reason is loaded in the rest of the game
+    ' Better for us :(
+    Dim CursorAniDir As String
+    Dim Cursor As Long
+    CursorAniDir = Game.path(Graficos) & "MouseIcons\General.ani"
+    hSwapCursor = SetClassLong(frmMain.hwnd, GLC_HCURSOR, LoadCursorFromFile(CursorAniDir))
+    hSwapCursor = SetClassLong(frmMain.MainViewPic.hwnd, GLC_HCURSOR, LoadCursorFromFile(CursorAniDir))
+    hSwapCursor = SetClassLong(frmMain.hlst.hwnd, GLC_HCURSOR, LoadCursorFromFile(CursorAniDir))
+   
     frmCargando.Show
     frmCargando.Refresh
 
@@ -928,10 +941,6 @@ Private Sub LoadInitialConfig()
     Call Protocol.InitFonts
  
     UserMap = 1
-    
-    ' Mouse Pointer (Loaded before opening any form with buttons in it)
-    If FileExist(Game.path(Extras) & "Hand.ico", vbArchive) Then _
-        Set picMouseIcon = LoadPicture(Game.path(Extras) & "Hand.ico")
     
     Call AddtoRichTextBox(frmCargando.status, _
                             "   " & JsonLanguage.item("HECHO").item("TEXTO"), _
@@ -1419,7 +1428,6 @@ Public Sub ResetAllInfo()
     On Local Error GoTo 0
     
     ' Return to connection screen
-    frmConnect.MousePointer = vbNormal
     If Not frmCrearPersonaje.Visible Then frmConnect.Visible = True
     frmMain.Visible = False
     

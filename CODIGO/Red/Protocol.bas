@@ -1177,7 +1177,7 @@ Public Sub HandleMultiMessage()
             Case eMessages.WorkRequestTarget
                 UsingSkill = incomingData.ReadByte()
             
-                frmMain.MousePointer = 2
+                frmMain.MousePointer = 2 'vbCrosshair
             
                 Select Case UsingSkill
 
@@ -11159,7 +11159,7 @@ End Sub
 
 Private Sub HandleCreateDamage()
  
-    ' @ Crea daño en pos X é Y.
+    ' @ Crea dano en pos X e Y.
  
     With incomingData
         
@@ -11214,7 +11214,7 @@ End Sub
 
 Public Sub WriteCloseGuild()
 '***************************************************
-'Author: Matías ezequiel (maTih.-)
+'Author: Matias ezequiel (maTih.-)
 '***************************************************
 
     Call outgoingData.WriteByte(ClientPacketID.CloseGuild)
