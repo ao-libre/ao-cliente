@@ -1606,5 +1606,8 @@
 	},
 	"FRM_PEACE_PROP_IMGRECHAZAR": {
 	  "TEXTO": "Rechazar"
+	},
+	"MOD_SCREENCAPTURE": {
+	  "TEXTO": "Screenshot Capturada! Carpeta donde esta la imagen: "
 	}
 }

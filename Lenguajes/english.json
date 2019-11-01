@@ -437,7 +437,7 @@
 	  ]
 	},
 	"MENSAJE_DAMAGE_NPC": {
-	  "TEXTO": "You've taken VAR_DAÑO health points of the creature!!",
+	  "TEXTO": "You've taken VAR_DANO health points of the creature!!",
 	  "COLOR": [
 		255,
 		0,
@@ -1606,5 +1606,8 @@
 	},
 	"FRM_PEACE_PROP_IMGRECHAZAR": {
 	  "TEXTO": "Reject"
+	},
+	"MOD_SCREENCAPTURE": {
+    "TEXTO": "Screenshot! Image path location: "
 	}
 }
