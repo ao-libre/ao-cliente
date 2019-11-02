@@ -323,6 +323,7 @@ Private Enum ClientPacketID
     FightSend = 146
     FightAccept = 147
     CloseGuild = 148            '/CERRARCLAN
+    Discord = 149            '/DISCORD
 End Enum
 
 Public Enum FontTypeNames
@@ -6907,6 +6908,19 @@ Public Sub WriteOnline()
 'Writes the "Online" message to the outgoing data buffer
 '***************************************************
     Call outgoingData.WriteByte(ClientPacketID.Online)
+End Sub
+
+Public Sub WriteDiscord(ByVal Chat as String)
+'***************************************************
+'Author: Lucas Daniel Recoaro (Recox)
+'Last Modification: 05/17/06
+'Writes the "Discord" message to the outgoing data buffer
+'***************************************************
+    With outgoingData
+        Call .WriteByte(ClientPacketID.Discord)
+        
+        Call .WriteASCIIString(chat)
+    End With
 End Sub
 
 ''
