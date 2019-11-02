@@ -118,18 +118,19 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Command1_Click()
-If frmtip.Check1.Value = vbChecked Then
-    ClientSetup.MostrarTips = True
-    Call WriteVar(Game.path(INIT) & "Config.ini", "OTHER", "MostrarTips", 0)
-Else
-    ClientSetup.MostrarTips = False
-End If
+   If frmtip.Check1.Value = vbChecked Then
+      ClientSetup.MostrarTips = True
+      Call WriteVar(Game.path(INIT) & "Config.ini", "OTHER", "MOSTRAR_TIPS", True)
+   Else
+      ClientSetup.MostrarTips = False
+      Call WriteVar(Game.path(INIT) & "Config.ini", "OTHER", "MOSTRAR_TIPS", False)
+   End If
 
-Unload Me
+   Unload Me
 End Sub
 
 Private Sub Form_Deactivate()
-Me.SetFocus
+   Me.SetFocus
 End Sub
 
 Private Sub Form_Load()
