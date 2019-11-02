@@ -122,6 +122,15 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
         Select Case Comando
             Case "/ONLINE"
                 Call WriteOnline
+            
+            Case "/DISCORD"
+                'Ojo, no usar notNullArguments porque se usa el string vacio para borrar cartel.
+                If CantidadArgumentos > 0 Then
+                    Call WriteDiscord(ArgumentosRaw)
+                Else
+                    'Avisar que falta el parametro
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_INPUT_MSJ").Item("TEXTO"))
+                End If
                 
             Case "/SALIR"
                 If UserParalizado Then 'Inmo

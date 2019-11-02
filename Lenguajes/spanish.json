@@ -1310,24 +1310,6 @@
 	"FRM_COMMET_ENVIAR": {
 	  "TEXTO": "Enviar"
 	},
-	"FRN_CREARCUENTA_SALIR": {
-	  "TEXTO": "Salir"
-	},
-	"FRN_CREARCUENTA_CREARCUENTA": {
-	  "TEXTO": "Crear Cuenta"
-	},
-	"FRN_CREARCUENTA_MENSAJE": {
-	  "TEXTO": "Utilize un email real para recibir correctamente los correos"
-	},
-	"FRN_CREARCUENTA_EMAIL": {
-	  "TEXTO": "Email"
-	},
-	"FRN_CREARCUENTA_PASSWORD": {
-	  "TEXTO": "Password"
-	},
-	"FRN_CREARCUENTA_REPETIR_PASSWORD": {
-	  "TEXTO": "Repetir Password"
-	},
 	"FRM_CREARPERSONAJE_CREAR": {
 	  "TEXTO": "Crear Personaje"
 	},
@@ -1630,5 +1612,8 @@
 	},
 	"FRM_PRES_LBL_SUBTITLE": {
 	  "TEXTO": "El poder del habla, para bien o para mal"
+  },
+	"MOD_SCREENCAPTURE": {
+	  "TEXTO": "Screenshot Capturada! Carpeta donde esta la imagen: "
 	}
 }

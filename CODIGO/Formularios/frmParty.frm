@@ -189,10 +189,23 @@ Private Sub Form_Load()
 104     lstMembers.Clear
         
 106     If EsPartyLeader Then
-108         Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaPartyLider.jpg")
+            ' TODO: Traducir los textos de las imagenes via labels en visual basic, para que en el futuro si se quiere se pueda traducir a mas idiomas
+            ' No ando con mas ganas/tiempo para hacer eso asi que se traducen las imagenes asi tenemos el juego en ingles.
+            ' Tambien usar los controles uAObuttons para los botones, usar de ejemplo frmCambiaMotd.frm
+            If Language = "spanish" Then
+            Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaPartyLider_spanish.jpg")
+            Else
+            Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaPartyLider_english.jpg")
+            End If
+
 110         Me.Height = LEADER_FORM_HEIGHT
         Else
-112         Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaPartyMiembro.jpg")
+            If Language = "spanish" Then
+            Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaPartyMiembro_spanish.jpg")
+            Else
+            Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaPartyMiembro_english.jpg")
+            End If
+
 114         Me.Height = NORMAL_FORM_HEIGHT
         End If
     
