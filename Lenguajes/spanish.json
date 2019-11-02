@@ -1607,6 +1607,12 @@
 	"FRM_PEACE_PROP_IMGRECHAZAR": {
 	  "TEXTO": "Rechazar"
 	},
+	"FRM_PRES_LBL_TITLE": {
+	  "TEXTO": "Episodio 2"
+	},
+	"FRM_PRES_LBL_SUBTITLE": {
+	  "TEXTO": "El poder del habla, para bien o para mal"
+  },
 	"MOD_SCREENCAPTURE": {
 	  "TEXTO": "Screenshot Capturada! Carpeta donde esta la imagen: "
 	}

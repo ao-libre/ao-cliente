@@ -788,10 +788,7 @@ Sub Main()
     Call LoadInitialConfig
     
     If GetVar(Game.path(INIT) & "Config.ini", "Parameters", "TestMode") <> 1 Then
-        With frmPres
-            .Picture = LoadPicture(Game.path(Interfaces) & "ImagenPresentacion.jpg")
-            .Show vbModal    'Es modal, asi que se detiene la ejecucionn de Main hasta que se desaparece
-        End With
+        frmPres.Show vbModal    'Es modal, asi que se detiene la ejecucionn de Main hasta que se desaparece
     End If
 
     frmConnect.Visible = True
