@@ -120,9 +120,10 @@ Option Explicit
 Private Sub Command1_Click()
 If frmtip.Check1.Value = vbChecked Then
     ClientSetup.MostrarTips = True
-    Call WriteVar(Game.path(INIT) & "Config.ini", "OTHER", "MostrarTips", 0)
+    Call WriteVar(Game.path(INIT) & "Config.ini", "OTHER", "MostrarTips", True)
 Else
     ClientSetup.MostrarTips = False
+    Call WriteVar(Game.path(INIT) & "Config.ini", "OTHER", "MostrarTips", False)
 End If
 
 Unload Me

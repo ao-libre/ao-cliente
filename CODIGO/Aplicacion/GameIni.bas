@@ -215,7 +215,7 @@ Public Sub GuardarConfiguracion()
         
         ' GUILD
         Call Lector.ChangeValue("GUILD", "NEWS", CBool(.bGuildNews))
-        Call Lector.ChangeValue("GUILD", "MESSAGES", CBool(.bGldMsgConsole))
+        Call Lector.ChangeValue("GUILD", "MESSAGES", CBool(DialogosClanes.Activo))
         Call Lector.ChangeValue("GUILD", "MAX_MESSAGES", CByte(DialogosClanes.CantidadDialogos))
         
         ' FRAGSHOOTER
@@ -225,7 +225,9 @@ Public Sub GuardarConfiguracion()
         Call Lector.ChangeValue("FRAGSHOOTER", "ACTIVE", CBool(.bActive))
         
         ' OTHER
-        Call Lector.ChangeValue("OTHER", "MOSTRAR_TIPS", CBool(.MostrarTips))
+        ' Lo comento por que no tiene por que setearse aqui esto.
+        ' Al menos no al hacer click en el boton Salir del formulario opciones (Recox)
+        ' Call Lector.ChangeValue("OTHER", "MOSTRAR_TIPS", CBool(.MostrarTips))
     End With
     
     Call Lector.DumpFile(Game.path(INIT) & CLIENT_FILE)
