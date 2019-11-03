@@ -587,6 +587,9 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 02/11/2019: Se agrego comando /discord para poder chatear en el mismo. (Recox)
 * 02/11/2019: FrmPres, the text inside is editable through the languages files to change the episode name and number in the updates wihtout edit the image (Recox)
 * 02/11/2019: frmCargando - It was added 9 images for the loading form. (Recox)
+* 03/11/2019: Edited ImagenPresentacion and FRM_PRES_LBL_TITLE for the Chapter 2. (Recox)
+* 03/11/2019: Las opciones no se cambiaban correctamente, lo arregle y mejore. (Recox)
+* 03/11/2019: Translated frmTips y translated all the tips, also improved and clean the code. (Recox)
 
 
 
