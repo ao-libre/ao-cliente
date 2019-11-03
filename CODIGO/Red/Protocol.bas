@@ -1427,7 +1427,6 @@ Private Sub HandleLogged()
     
     'Show tip
     If ClientSetup.MostrarTips = True And PrimeraVez Then
-        Call CargarTip
         frmtip.Visible = True
         PrimeraVez = False
     End If

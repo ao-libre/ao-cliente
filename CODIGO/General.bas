@@ -262,13 +262,6 @@ Sub SetConnected()
 
 End Sub
 
-Sub CargarTip()
-    Dim N As Integer
-    N = RandomNumber(1, UBound(Tips))
-    
-    frmtip.tip.Caption = Tips(N)
-End Sub
-
 Sub MoveTo(ByVal Direccion As E_Heading)
 '***************************************************
 'Author: Alejandro Santos (AlejoLp)

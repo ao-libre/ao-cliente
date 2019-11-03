@@ -992,5 +992,4 @@ Public Const uAOButton_cCheckbox As String = "cCheckbox.bmp" ' Grande
 Public Const uAOButton_cCheckboxSmall As String = "cCheckboxSmall.bmp" ' Chico
 ' * Configuracion de estilo de controles
 
-
-
+Public JsonTips As Object
