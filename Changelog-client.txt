@@ -583,6 +583,10 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 28/10/2019: Se tradujo solo la imagen de fondo del formulario frmMSG. TODO: Traducir Botones. (Recox-Reyarb)
 * 28/10/2019: Se tradujo solo la imagen de fondo del formulario frmGuildUrl. TODO: Traducir Botones. (Recox-Reyarb)
 * 28/10/2019: Se tradujo solo la imagen de fondo del formulario frmOpciones. TODO: Traducir Botones. (Recox-Reyarb)
+* 30/10/2019: Se cambiaron los iconos del mouse tanto para clickear botones como el resto del juego. (Recox)
+* 02/11/2019: Se agrego comando /discord para poder chatear en el mismo. (Recox)
+* 02/11/2019: FrmPres, the text inside is editable through the languages files to change the episode name and number in the updates wihtout edit the image (Recox)
+* 02/11/2019: frmCargando - It was added 9 images for the loading form. (Recox)
 
 
 

@@ -25,7 +25,7 @@ Option Explicit
 '
 '
 ' Copyright.
-' IJL.DLL is a copyright © Intel, which is a registered trade mark of the Intel
+' IJL.DLL is a copyright ï¿½ Intel, which is a registered trade mark of the Intel
 ' Corporation.
 '
 '
@@ -529,6 +529,9 @@ On Error GoTo Err:
     Call ReleaseDC(frmMain.hWnd, hdcc)
     
     hdcc = INVALID_HANDLE
+
+    Dim FileName as String
+    FileName = Format$(Now, "DD-MM-YYYY hh-mm-ss") & ".jpg"
     
     ' Primero chequea si existe la carpeta Screenshots
     dirFile = App.path & "\Screenshots"
@@ -545,13 +548,14 @@ On Error GoTo Err:
         Else 'Si nos mato alguien.
             dirFile = dirFile & "\Muertes"
         End If
+        
         If Not FileExist(dirFile, vbDirectory) Then Call MkDir(dirFile)
         
         'Nuevo formato de las screenshots del FragShooter: "VICTIMA/ASESINO(DD-MM-YYYY hh-mm-ss).jpg"
-        File = dirFile & "\" & FragShooterNickname & "(" & Format$(Now, "DD-MM-YYYY hh-mm-ss") & ").jpg"
+        File = dirFile & "\" & FragShooterNickname & " -" & FileName
     Else
         'Si no es screenshot del FragShooter, entonces se usa el formato "DD-MM-YYYY hh-mm-ss.jpg"
-        File = dirFile & "\" & Format$(Now, "DD-MM-YYYY hh-mm-ss") & ".jpg"
+        File = dirFile & "\" & FileName
     End If
     
     frmScreenshots.Picture1.Refresh
@@ -561,7 +565,7 @@ On Error GoTo Err:
     
     SaveJPG c, File
     
-    AddtoRichTextBox frmMain.RecTxt, "Screen Capturada!", 200, 200, 200, False, False, True
+    AddtoRichTextBox frmMain.RecTxt, JsonLanguage.item("MOD_SCREENCAPTURE").item("TEXTO") & File, 100, 30, 20, False, False, True
 Exit Sub
 
 Err:

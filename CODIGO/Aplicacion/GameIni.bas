@@ -152,7 +152,7 @@ Public Sub LeerConfiguracion()
         ' FRAGSHOOTER
         .bDie = CBool(Lector.GetValue("FRAGSHOOTER", "DIE"))
         .bKill = CBool(Lector.GetValue("FRAGSHOOTER", "KILL"))
-        .byMurderedLevel = CBool(Lector.GetValue("FRAGSHOOTER", "MURDERED_LEVEL"))
+        .byMurderedLevel = CByte(Lector.GetValue("FRAGSHOOTER", "MURDERED_LEVEL"))
         .bActive = CBool(Lector.GetValue("FRAGSHOOTER", "ACTIVE"))
         
         ' OTHER
@@ -194,38 +194,40 @@ Public Sub GuardarConfiguracion()
     
     Set Lector = New clsIniManager
     Call Lector.Initialize(Game.path(INIT) & CLIENT_FILE)
-    
+
     With ClientSetup
         
         ' VIDEO
         Call Lector.ChangeValue("VIDEO", "RENDER_MODE", .Aceleracion)
         Call Lector.ChangeValue("VIDEO", "DINAMIC_MEMORY", .byMemory)
-        Call Lector.ChangeValue("VIDEO", "DISABLE_RESOLUTION_CHANGE", CInt(.bNoRes))
-        Call Lector.ChangeValue("VIDEO", "PROYECTILE_ENGINE", CInt(.ProyectileEngine))
-        Call Lector.ChangeValue("VIDEO", "PARTY_MEMBERS", CInt(.PartyMembers))
-        Call Lector.ChangeValue("VIDEO", "TONALIDAD_PJ", CInt(.TonalidadPJ))
-        Call Lector.ChangeValue("VIDEO", "SOMBRAS", CInt(.UsarSombras))
-        Call Lector.ChangeValue("VIDEO", "PARTICLE_ENGINE", CInt(.ParticleEngine))
-        Call Lector.ChangeValue("VIDEO", "VSYNC", CInt(.vSync))
+        Call Lector.ChangeValue("VIDEO", "DISABLE_RESOLUTION_CHANGE", CBool(.bNoRes))
+        Call Lector.ChangeValue("VIDEO", "PROYECTILE_ENGINE", CBool(.ProyectileEngine))
+        Call Lector.ChangeValue("VIDEO", "PARTY_MEMBERS", CBool(.PartyMembers))
+        Call Lector.ChangeValue("VIDEO", "TONALIDAD_PJ", CBool(.TonalidadPJ))
+        Call Lector.ChangeValue("VIDEO", "SOMBRAS", CBool(.UsarSombras))
+        Call Lector.ChangeValue("VIDEO", "PARTICLE_ENGINE", CBool(.ParticleEngine))
+        Call Lector.ChangeValue("VIDEO", "VSYNC", CBool(.vSync))
         
         ' AUDIO
-        Call Lector.ChangeValue("AUDIO", "MIDI", CInt(.bMusic))
-        Call Lector.ChangeValue("AUDIO", "WAV", CInt(.bSound))
-        Call Lector.ChangeValue("AUDIO", "SOUND_EFFECTS", CInt(.bSoundEffects))
+        Call Lector.ChangeValue("AUDIO", "MIDI", CBool(Audio.MusicActivated))
+        Call Lector.ChangeValue("AUDIO", "WAV", CBool(Audio.SoundActivated))
+        Call Lector.ChangeValue("AUDIO", "SOUND_EFFECTS", CBool(Audio.SoundEffectsActivated))
         
         ' GUILD
-        Call Lector.ChangeValue("GUILD", "NEWS", CInt(.bGuildNews))
-        Call Lector.ChangeValue("GUILD", "MESSAGES", CInt(.bGldMsgConsole))
-        Call Lector.ChangeValue("GUILD", "MAX_MESSAGES", CInt(.bCantMsgs))
+        Call Lector.ChangeValue("GUILD", "NEWS", CBool(.bGuildNews))
+        Call Lector.ChangeValue("GUILD", "MESSAGES", CBool(DialogosClanes.Activo))
+        Call Lector.ChangeValue("GUILD", "MAX_MESSAGES", CByte(DialogosClanes.CantidadDialogos))
         
         ' FRAGSHOOTER
-        Call Lector.ChangeValue("FRAGSHOOTER", "DIE", CInt(.bDie))
-        Call Lector.ChangeValue("FRAGSHOOTER", "KILL", CInt(.bKill))
-        Call Lector.ChangeValue("FRAGSHOOTER", "MURDERED_LEVEL", CInt(.byMurderedLevel))
-        Call Lector.ChangeValue("FRAGSHOOTER", "ACTIVE", CInt(.bActive))
+        Call Lector.ChangeValue("FRAGSHOOTER", "DIE", CBool(.bDie))
+        Call Lector.ChangeValue("FRAGSHOOTER", "KILL", CBool(.bKill))
+        Call Lector.ChangeValue("FRAGSHOOTER", "MURDERED_LEVEL", CByte(.byMurderedLevel))
+        Call Lector.ChangeValue("FRAGSHOOTER", "ACTIVE", CBool(.bActive))
         
         ' OTHER
-        Call Lector.ChangeValue("OTHER", "MOSTRAR_TIPS", CInt(.MostrarTips))
+        ' Lo comento por que no tiene por que setearse aqui esto.
+        ' Al menos no al hacer click en el boton Salir del formulario opciones (Recox)
+        ' Call Lector.ChangeValue("OTHER", "MOSTRAR_TIPS", CBool(.MostrarTips))
     End With
     
     Call Lector.DumpFile(Game.path(INIT) & CLIENT_FILE)

@@ -8,6 +8,8 @@
 *.frx -text
 *.ico -text
 *.png -text
+*.psd -text
+*.ani -text
 *.gif -text
 *.jpg -text
 *.gif -text
