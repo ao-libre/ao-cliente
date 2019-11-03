@@ -120,24 +120,35 @@ Option Explicit
 Private Sub Command1_Click()
    If frmtip.Check1.Value = vbChecked Then
       ClientSetup.MostrarTips = True
-      Call WriteVar(Game.path(INIT) & "Config.ini", "OTHER", "MOSTRAR_TIPS", True)
    Else
       ClientSetup.MostrarTips = False
-      Call WriteVar(Game.path(INIT) & "Config.ini", "OTHER", "MOSTRAR_TIPS", False)
    End If
 
+   Call WriteVar(Game.path(INIT) & "Config.ini", "OTHER", "MOSTRAR_TIPS", CBool(ClientSetup.MostrarTips))
    Unload Me
+
 End Sub
 
 Private Sub Form_Deactivate()
    Me.SetFocus
 End Sub
 
+Private Sub CargarTip()
+    Dim qtyTips As Integer
+    qtyTips = JsonTips.Count
+
+   ' Obtenemos un numbero random desde 1 hasta la cantidad maxima de tips
+    Dim RandomNumberTip As Integer
+    RandomNumberTip = RandomNumber(1, qtyTips)
+
+    frmtip.tip.Caption = JsonTips.item("FRM_TIP_" & RandomNumberTip)
+End Sub
+
 Private Sub Form_Load()
+    Call CargarTip
     
     With Me
         .Command1.Caption = JsonLanguage.Item("TIP").Item("TEXTO").Item(1)
         .Check1.Caption = JsonLanguage.Item("TIP").Item("TEXTO").Item(2)
     End With
-    
 End Sub

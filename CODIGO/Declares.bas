@@ -682,7 +682,6 @@ Public UserExp As Long
 Public UserReputacion As tReputacion
 Public UserEstadisticas As tEstadisticasUsu
 Public UserDescansar As Boolean
-Public PrimeraVez As Boolean
 Public bShowTutorial As Boolean
 Public FPSFLAG As Boolean
 Public pausa As Boolean
@@ -992,5 +991,4 @@ Public Const uAOButton_cCheckbox As String = "cCheckbox.bmp" ' Grande
 Public Const uAOButton_cCheckboxSmall As String = "cCheckboxSmall.bmp" ' Chico
 ' * Configuracion de estilo de controles
 
-
-
+Public JsonTips As Object

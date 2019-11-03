@@ -283,42 +283,26 @@ errhandler:
 
 End Sub
 
-Sub CargarTips()
+Public Sub CargarTips()
+'************************************************************************************.
+' Carga el JSON con los tips del juego en un objeto para su uso a lo largo del proyecto
+'************************************************************************************
 On Error GoTo errhandler:
+    Dim TipFile As String
 
-    Dim N As Integer
-    Dim i As Long
-    Dim NumTips As Integer
-    
-    N = FreeFile
-    Open Game.path(INIT) & "Tips.ayu" For Binary Access Read As #N
-    
-    'cabecera
-    Get #N, , MiCabecera
-    
-    'num de cabezas
-    Get #N, , NumTips
-    
-    'Resize array
-    ReDim Tips(1 To NumTips) As String * 255
-    
-    For i = 1 To NumTips
-        Get #N, , Tips(i)
-    Next i
-    
-    Close #N
-    
-errhandler:
+    TipFile = FileToString(Game.path(INIT) & "tips_" & Language & ".json")
+    Set JsonTips = JSON.parse(TipFile)
+
+    errhandler:
     
     If Err.number <> 0 Then
         
         If Err.number = 53 Then
-            Call MsgBox("El archivo Tips.ayu no existe. Por favor, reinstale el juego.", , "Argentum Online")
+            Call MsgBox("El archivo" & "tips_" & Language & ".json no existe. Por favor, reinstale el juego.", , "Argentum Online Libre")
             Call CloseClient
         End If
         
     End If
-    
 End Sub
 
 Sub CargarArrayLluvia()

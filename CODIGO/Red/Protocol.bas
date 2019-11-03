@@ -1426,10 +1426,8 @@ Private Sub HandleLogged()
     If bShowTutorial Then frmTutorial.Show vbModeless
     
     'Show tip
-    If ClientSetup.MostrarTips = True And PrimeraVez Then
-        Call CargarTip
+    If ClientSetup.MostrarTips = True Then
         frmtip.Visible = True
-        PrimeraVez = False
     End If
 End Sub
 
