@@ -787,7 +787,6 @@ Sub Main()
     frmConnect.Visible = True
     
     'Inicializacion de variables globales
-    PrimeraVez = True
     prgRun = True
     pausa = False
     
