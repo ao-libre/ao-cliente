@@ -528,7 +528,7 @@ Public Sub InitFonts()
         .bold = 1
     End With
 
-    With FontTypes(FontTypeNames.FONTTYPE_CITIZEN)
+    With FontTypes(FontTypeNames.FONTTYPE_CRIMINAL)
         .Red = 224
         .Green = 52
         .Blue = 17
