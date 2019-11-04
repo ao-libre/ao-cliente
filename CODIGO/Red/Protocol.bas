@@ -348,9 +348,10 @@ Public Enum FontTypeNames
     FONTTYPE_CITIZEN
     FONTTYPE_CONSE
     FONTTYPE_DIOS
+    FONTTYPE_CRIMINAL
 End Enum
 
-Public FontTypes(20) As tFont
+Public FontTypes(22) As tFont
 
 Public Sub Connect(ByVal Modo As E_MODO)
     '*********************************************************************
@@ -386,80 +387,93 @@ Public Sub InitFonts()
 '
 '***************************************************
     With FontTypes(FontTypeNames.FONTTYPE_TALK)
-        .Red = 255
+        .Red = 204
         .Green = 255
         .Blue = 255
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_FIGHT)
         .Red = 255
+        .Green = 102
+        .Blue = 102
         .bold = 1
+        .italic = 0
     End With
-    
+
     With FontTypes(FontTypeNames.FONTTYPE_WARNING)
-        .Red = 32
-        .Green = 51
-        .Blue = 223
+        .Red = 255
+        .Green = 255
+        .Blue = 102
         .bold = 1
-        .italic = 1
+        .italic = 0
     End With
-    
+
     With FontTypes(FontTypeNames.FONTTYPE_INFO)
-        .Red = 65
-        .Green = 190
-        .Blue = 156
+        .Red = 255
+        .Green = 204
+        .Blue = 153
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_INFOBOLD)
-        .Red = 65
-        .Green = 190
-        .Blue = 156
+        .Red = 255
+        .Green = 204
+        .Blue = 153
         .bold = 1
     End With
-    
+
     With FontTypes(FontTypeNames.FONTTYPE_EJECUCION)
-        .Red = 130
-        .Green = 130
-        .Blue = 130
+        .Red = 255
+        .Green = 0
+        .Blue = 127
         .bold = 1
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_PARTY)
-        .Red = 255
-        .Green = 180
-        .Blue = 250
+        .Red = 252
+        .Green = 203
+        .Blue = 130
     End With
-    
-    FontTypes(FontTypeNames.FONTTYPE_VENENO).Green = 255
-    
-    With FontTypes(FontTypeNames.FONTTYPE_GUILD)
-        .Red = 255
+
+    With FontTypes(FontTypeNames.FONTTYPE_VENENO)
+        .Red = 128
         .Green = 255
-        .Blue = 255
+        .Blue = 0
         .bold = 1
     End With
-    
-    FontTypes(FontTypeNames.FONTTYPE_SERVER).Green = 185
+
+    With FontTypes(FontTypeNames.FONTTYPE_GUILD)
+        .Red = 205
+        .Green = 101
+        .Blue = 236
+        .bold = 1
+    End With
+
+    With FontTypes(FontTypeNames.FONTTYPE_SERVER)
+        .Red = 250
+        .Green = 150
+        .Blue = 237
+        .bold = 1
+    End With
     
     With FontTypes(FontTypeNames.FONTTYPE_GUILDMSG)
         .Red = 228
         .Green = 199
         .Blue = 27
     End With
-    
+
     With FontTypes(FontTypeNames.FONTTYPE_CONSEJO)
         .Red = 130
         .Green = 130
         .Blue = 255
         .bold = 1
     End With
-    
+
     With FontTypes(FontTypeNames.FONTTYPE_CONSEJOCAOS)
         .Red = 255
         .Green = 60
         .bold = 1
     End With
-    
+
     With FontTypes(FontTypeNames.FONTTYPE_CONSEJOVesA)
         .Green = 200
         .Blue = 255
@@ -473,10 +487,12 @@ Public Sub InitFonts()
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_CENTINELA)
-        .Green = 255
+        .Red = 240
+        .Green = 230
+        .Blue = 140
         .bold = 1
     End With
-    
+
     With FontTypes(FontTypeNames.FONTTYPE_GMMSG)
         .Red = 255
         .Green = 255
@@ -492,7 +508,9 @@ Public Sub InitFonts()
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_CITIZEN)
-        .Blue = 200
+        .Red = 78
+        .Green = 78
+        .Blue = 252
         .bold = 1
     End With
     
@@ -507,6 +525,13 @@ Public Sub InitFonts()
         .Red = 250
         .Green = 250
         .Blue = 150
+        .bold = 1
+    End With
+
+    With FontTypes(FontTypeNames.FONTTYPE_CITIZEN)
+        .Red = 224
+        .Green = 52
+        .Blue = 17
         .bold = 1
     End With
 End Sub
