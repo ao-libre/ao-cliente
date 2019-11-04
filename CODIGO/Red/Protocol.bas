@@ -351,7 +351,7 @@ Public Enum FontTypeNames
     FONTTYPE_CRIMINAL
 End Enum
 
-Public FontTypes(22) As tFont
+Public FontTypes(21) As tFont
 
 Public Sub Connect(ByVal Modo As E_MODO)
     '*********************************************************************
