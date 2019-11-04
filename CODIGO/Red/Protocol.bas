@@ -323,6 +323,7 @@ Private Enum ClientPacketID
     FightSend = 146
     FightAccept = 147
     CloseGuild = 148            '/CERRARCLAN
+    Discord = 149            '/DISCORD
 End Enum
 
 Public Enum FontTypeNames
@@ -1177,7 +1178,7 @@ Public Sub HandleMultiMessage()
             Case eMessages.WorkRequestTarget
                 UsingSkill = incomingData.ReadByte()
             
-                frmMain.MousePointer = 2
+                frmMain.MousePointer = 2 'vbCrosshair
             
                 Select Case UsingSkill
 
@@ -1425,10 +1426,8 @@ Private Sub HandleLogged()
     If bShowTutorial Then frmTutorial.Show vbModeless
     
     'Show tip
-    If ClientSetup.MostrarTips = True And PrimeraVez Then
-        Call CargarTip
+    If ClientSetup.MostrarTips = True Then
         frmtip.Visible = True
-        PrimeraVez = False
     End If
 End Sub
 
@@ -6909,6 +6908,19 @@ Public Sub WriteOnline()
     Call outgoingData.WriteByte(ClientPacketID.Online)
 End Sub
 
+Public Sub WriteDiscord(ByVal Chat as String)
+'***************************************************
+'Author: Lucas Daniel Recoaro (Recox)
+'Last Modification: 05/17/06
+'Writes the "Discord" message to the outgoing data buffer
+'***************************************************
+    With outgoingData
+        Call .WriteByte(ClientPacketID.Discord)
+        
+        Call .WriteASCIIString(chat)
+    End With
+End Sub
+
 ''
 ' Writes the "Quit" message to the outgoing data buffer.
 '
@@ -11159,7 +11171,7 @@ End Sub
 
 Private Sub HandleCreateDamage()
  
-    ' @ Crea daño en pos X é Y.
+    ' @ Crea dano en pos X e Y.
  
     With incomingData
         
@@ -11214,7 +11226,7 @@ End Sub
 
 Public Sub WriteCloseGuild()
 '***************************************************
-'Author: Matías ezequiel (maTih.-)
+'Author: Matias ezequiel (maTih.-)
 '***************************************************
 
     Call outgoingData.WriteByte(ClientPacketID.CloseGuild)

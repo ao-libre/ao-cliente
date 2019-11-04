@@ -682,7 +682,6 @@ Public UserExp As Long
 Public UserReputacion As tReputacion
 Public UserEstadisticas As tEstadisticasUsu
 Public UserDescansar As Boolean
-Public PrimeraVez As Boolean
 Public bShowTutorial As Boolean
 Public FPSFLAG As Boolean
 Public pausa As Boolean
@@ -826,6 +825,16 @@ Public PuertoDelServidor As String
 '
 '********** FUNCIONES API ***********
 '
+
+'******Mouse Cursor*********
+'Esto es para poder usar iconos de mouse .ani
+'https://www.gs-zone.org/temas/cursor-ani.45555/#post-375757
+Public Declare Function SetClassLong Lib "user32" Alias "SetClassLongA" (ByVal hwnd As Long, ByVal nIndex As Long, ByVal dwNewLong As Long) As Long
+ 
+Public Const GLC_HCURSOR = (-12)
+Public hSwapCursor As Long
+Public Declare Function LoadCursorFromFile Lib "user32" Alias "LoadCursorFromFileA" (ByVal lpfilename As String) As Long
+'******End Mouse Cursor****
 
 Public Declare Function GetTickCount Lib "kernel32" () As Long
 
@@ -982,5 +991,4 @@ Public Const uAOButton_cCheckbox As String = "cCheckbox.bmp" ' Grande
 Public Const uAOButton_cCheckboxSmall As String = "cCheckboxSmall.bmp" ' Chico
 ' * Configuracion de estilo de controles
 
-
-
+Public JsonTips As Object
