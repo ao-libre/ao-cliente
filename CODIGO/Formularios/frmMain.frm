@@ -1234,81 +1234,83 @@ Private Sub cmdMoverHechi_Click(Index As Integer)
         End Select
     End If
 End Sub
+
 Public Sub ControlSM(ByVal Index As Byte, ByVal Mostrar As Boolean)
-Dim GrhIndex As Long
-Dim SR As RECT
-Dim DR As RECT
+    Dim GrhIndex As Long
+    Dim SR As RECT
+    Dim DR As RECT
 
-GrhIndex = GRH_INI_SM + Index + SM_CANT * (CInt(Mostrar) + 1)
+    GrhIndex = GRH_INI_SM + Index + SM_CANT * (CInt(Mostrar) + 1)
 
-With GrhData(GrhIndex)
-    SR.Left = .sX
-    SR.Right = SR.Left + .pixelWidth
-    SR.Top = .sY
-    SR.Bottom = SR.Top + .pixelHeight
-    
-    DR.Left = 0
-    DR.Right = .pixelWidth
-    DR.Top = 0
-    DR.Bottom = .pixelHeight
-End With
-
-Call DrawGrhtoHdc(picSM(Index).hdc, GrhIndex, SR, DR)
-picSM(Index).Refresh
-
-Select Case Index
-    Case eSMType.sResucitation
-        If Mostrar Then
-            Call AddtoRichTextBox(frmMain.RecTxt, _
-                                    JsonLanguage.item("MENSAJE_SEGURO_RESU_ON").item("TEXTO"), _
-                                    JsonLanguage.item("MENSAJE_SEGURO_RESU_ON").item("COLOR").item(1), _
-                                    JsonLanguage.item("MENSAJE_SEGURO_RESU_ON").item("COLOR").item(1), _
-                                    JsonLanguage.item("MENSAJE_SEGURO_RESU_ON").item("COLOR").item(1), _
-                                    True, False, True)
-                                    
-            picSM(Index).ToolTipText = JsonLanguage.item("MENSAJE_SEGURO_RESU_ON").item("TEXTO")
-        Else
-            Call AddtoRichTextBox(frmMain.RecTxt, _
-                                    JsonLanguage.item("MENSAJE_SEGURO_RESU_OFF").item("TEXTO"), _
-                                    JsonLanguage.item("MENSAJE_SEGURO_RESU_OFF").item("COLOR").item(1), _
-                                    JsonLanguage.item("MENSAJE_SEGURO_RESU_OFF").item("COLOR").item(2), _
-                                    JsonLanguage.item("MENSAJE_SEGURO_RESU_OFF").item("COLOR").item(3), _
-                                    True, False, True)
-                                    
-            picSM(Index).ToolTipText = JsonLanguage.item("MENSAJE_SEGURO_RESU_ON").item("TEXTO")
-        End If
+    With GrhData(GrhIndex)
+        SR.Left = .sX
+        SR.Right = SR.Left + .pixelWidth
+        SR.Top = .sY
+        SR.Bottom = SR.Top + .pixelHeight
         
-    Case eSMType.sSafemode
-        If Mostrar Then
-            Call AddtoRichTextBox(frmMain.RecTxt, _
-                                    UCase$(JsonLanguage.item("MENSAJE_SEGURO_ACTIVADO").item("TEXTO").item(1)), _
-                                    JsonLanguage.item("MENSAJE_SEGURO_ACTIVADO").item("COLOR").item(1), _
-                                    JsonLanguage.item("MENSAJE_SEGURO_ACTIVADO").item("COLOR").item(2), _
-                                    JsonLanguage.item("MENSAJE_SEGURO_ACTIVADO").item("COLOR").item(3), _
-                                    True, False, True)
-                                    
-            picSM(Index).ToolTipText = JsonLanguage.item("MENSAJE_SEGURO_ACTIVADO").item("TEXTO").item(2)
-        Else
-            Call AddtoRichTextBox(frmMain.RecTxt, _
-                                    UCase$(JsonLanguage.item("MENSAJE_SEGURO_DESACTIVADO").item("TEXTO").item(1)), _
-                                    JsonLanguage.item("MENSAJE_SEGURO_DESACTIVADO").item("COLOR").item(1), _
-                                    JsonLanguage.item("MENSAJE_SEGURO_DESACTIVADO").item("COLOR").item(2), _
-                                    JsonLanguage.item("MENSAJE_SEGURO_DESACTIVADO").item("COLOR").item(3), _
-                                    True, False, True)
-                                    
-            picSM(Index).ToolTipText = JsonLanguage.item("MENSAJE_SEGURO_DESACTIVADO").item("TEXTO").item(2)
-        End If
-        
-    Case eSMType.mWork
-        If Mostrar Then
-            picSM(Index).ToolTipText = JsonLanguage.item("MENSAJE_MACRO_ACTIVADO").item("TEXTO")
-        Else
-            picSM(Index).ToolTipText = JsonLanguage.item("MENSAJE_MACRO_DESACTIVADO").item("TEXTO")
-        End If
-End Select
+        DR.Left = 0
+        DR.Right = .pixelWidth
+        DR.Top = 0
+        DR.Bottom = .pixelHeight
+    End With
 
-SMStatus(Index) = Mostrar
+    Call DrawGrhtoHdc(picSM(Index).hdc, GrhIndex, SR, DR)
+    picSM(Index).Refresh
+
+    Select Case Index
+        Case eSMType.sResucitation
+            If Mostrar Then
+                Call AddtoRichTextBox(frmMain.RecTxt, _
+                                        JsonLanguage.item("MENSAJE_SEGURO_RESU_ON").item("TEXTO"), _
+                                        JsonLanguage.item("MENSAJE_SEGURO_RESU_ON").item("COLOR").item(1), _
+                                        JsonLanguage.item("MENSAJE_SEGURO_RESU_ON").item("COLOR").item(1), _
+                                        JsonLanguage.item("MENSAJE_SEGURO_RESU_ON").item("COLOR").item(1), _
+                                        True, False, True)
+                                        
+                picSM(Index).ToolTipText = JsonLanguage.item("MENSAJE_SEGURO_RESU_ON").item("TEXTO")
+            Else
+                Call AddtoRichTextBox(frmMain.RecTxt, _
+                                        JsonLanguage.item("MENSAJE_SEGURO_RESU_OFF").item("TEXTO"), _
+                                        JsonLanguage.item("MENSAJE_SEGURO_RESU_OFF").item("COLOR").item(1), _
+                                        JsonLanguage.item("MENSAJE_SEGURO_RESU_OFF").item("COLOR").item(2), _
+                                        JsonLanguage.item("MENSAJE_SEGURO_RESU_OFF").item("COLOR").item(3), _
+                                        True, False, True)
+                                        
+                picSM(Index).ToolTipText = JsonLanguage.item("MENSAJE_SEGURO_RESU_ON").item("TEXTO")
+            End If
+            
+        Case eSMType.sSafemode
+            If Mostrar Then
+                Call AddtoRichTextBox(frmMain.RecTxt, _
+                                        UCase$(JsonLanguage.item("MENSAJE_SEGURO_ACTIVADO").item("TEXTO").item(1)), _
+                                        JsonLanguage.item("MENSAJE_SEGURO_ACTIVADO").item("COLOR").item(1), _
+                                        JsonLanguage.item("MENSAJE_SEGURO_ACTIVADO").item("COLOR").item(2), _
+                                        JsonLanguage.item("MENSAJE_SEGURO_ACTIVADO").item("COLOR").item(3), _
+                                        True, False, True)
+                                        
+                picSM(Index).ToolTipText = JsonLanguage.item("MENSAJE_SEGURO_ACTIVADO").item("TEXTO").item(2)
+            Else
+                Call AddtoRichTextBox(frmMain.RecTxt, _
+                                        UCase$(JsonLanguage.item("MENSAJE_SEGURO_DESACTIVADO").item("TEXTO").item(1)), _
+                                        JsonLanguage.item("MENSAJE_SEGURO_DESACTIVADO").item("COLOR").item(1), _
+                                        JsonLanguage.item("MENSAJE_SEGURO_DESACTIVADO").item("COLOR").item(2), _
+                                        JsonLanguage.item("MENSAJE_SEGURO_DESACTIVADO").item("COLOR").item(3), _
+                                        True, False, True)
+                                        
+                picSM(Index).ToolTipText = JsonLanguage.item("MENSAJE_SEGURO_DESACTIVADO").item("TEXTO").item(2)
+            End If
+            
+        Case eSMType.mWork
+            If Mostrar Then
+                picSM(Index).ToolTipText = JsonLanguage.item("MENSAJE_MACRO_ACTIVADO").item("TEXTO")
+            Else
+                picSM(Index).ToolTipText = JsonLanguage.item("MENSAJE_MACRO_DESACTIVADO").item("TEXTO")
+            End If
+    End Select
+
+    SMStatus(Index) = Mostrar
 End Sub
+
 Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
 '***************************************************
 'Autor: Unknown
