@@ -1454,6 +1454,11 @@ Private Sub HandleLogged()
     If ClientSetup.MostrarTips = True Then
         frmtip.Visible = True
     End If
+
+    'Show Keyboard configuration
+    If ClientSetup.MostrarBindKeysSelection = True Then
+        frmKeysConfigurationSelect.Visible = True
+    End If
 End Sub
 
 ''

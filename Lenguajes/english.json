@@ -1615,5 +1615,26 @@
     },
     "MOD_SCREENCAPTURE": {
         "TEXTO": "Screenshot! Image path location: "
+    },
+    "FRM_KEYS_CONFIGURATION_LBL_ALTERNATIVE_TEXT" : {
+        "TEXTO": "Recommended for new players.\nMovement with the WASD keys.\nAttack: Control.\nPick Up Items: Q"
+    },
+    "FRM_KEYS_CONFIGURATION_LBL_ALTERNATIVE_TITLE" : {
+        "TEXTO": "Alternative (WASD)"
+    },
+    "FRM_KEYS_CONFIGURATION_LBL_NORMAL_TEXT" : {
+        "TEXTO": "Recommended for advanced players.\nMovement with the directional arrows.\nAttack: Control.\nPick Up Items: A"
+    },
+    "FRM_KEYS_CONFIGURATION_LBL_NORMAL_TITLE" : {
+        "TEXTO": "Normal (Directional Arrows)"
+    },
+    "FRM_KEYS_CONFIGURATION_LBL_TITLE" : {
+        "TEXTO": "Please select what kind of input method you will like to use in the game. You can change later any of this settings in Options under the game's Menu"
+    },
+    "FRM_KEYS_CONFIGURATION_BTN_NORMAL_KEYS": {
+        "TEXTO": "Normal"
+    },
+    "FRM_KEYS_CONFIGURATION_BTN_ALTERNATIVE_KEYS": {
+        "TEXTO": "Alternative"
     }
 }

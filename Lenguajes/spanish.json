@@ -1613,7 +1613,25 @@
     "FRM_PRES_LBL_SUBTITLE": {
         "TEXTO": "Un extranjero en Ullathorpe."
     },
-    "MOD_SCREENCAPTURE": {
-        "TEXTO": "Screenshot Capturada! Carpeta donde esta la imagen: "
+    "FRM_KEYS_CONFIGURATION_LBL_ALTERNATIVE_TEXT": {
+        "TEXTO": "Recomendado para nuevos jugadores. \n Movimiento con las teclas WASD. \n Ataque: Control. \n Recoger elementos: Q"
+    },
+    "FRM_KEYS_CONFIGURATION_LBL_ALTERNATIVE_TITLE": {
+        "TEXTO": "Alternativa (WASD)"
+    },
+    "FRM_KEYS_CONFIGURATION_LBL_NORMAL_TEXT": {
+        "TEXTO": "Recomendado para jugadores avanzados. \n Movimiento con flechas direccionales. \n Ataque: Control. \n Recoger objetos: A"
+    },
+    "FRM_KEYS_CONFIGURATION_LBL_NORMAL_TITLE": {
+        "TEXTO": "Normal (flechas direccionales)"
+    },
+    "FRM_KEYS_CONFIGURATION_LBL_TITLE": {
+        "TEXTO": "Selecciona el tipo de configuracion de teclado que te gustaria usar en el juego. Puedes cambiar mas adelante cualquiera de estas configuraciones en Opciones en el menu del juego"
+    },
+    "FRM_KEYS_CONFIGURATION_BTN_NORMAL_KEYS": {
+        "TEXTO": "Normal"
+    },
+    "FRM_KEYS_CONFIGURATION_BTN_ALTERNATIVE_KEYS": {
+        "TEXTO": "Alternativa"
     }
 }

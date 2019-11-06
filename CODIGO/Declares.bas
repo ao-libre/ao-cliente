@@ -54,7 +54,6 @@ Public Movement_Speed As Single
 Public DialogosClanes As clsGuildDlg
 Public Dialogos As clsDialogs
 Public Audio As clsAudio
-Public lastKeys As clsArrayList
 Public Inventario As clsGraphicalInventory
 Public InvBanco(1) As clsGraphicalInventory
 

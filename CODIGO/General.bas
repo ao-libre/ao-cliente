@@ -32,7 +32,6 @@ Attribute VB_Name = "Mod_General"
 'Pablo Ignacio Marquez
 
 Option Explicit
-'Public cKeys As Collection
 Public bFogata As Boolean
 
 Public Type tRedditPost
@@ -255,7 +254,6 @@ Sub SetConnected()
     frmMain.lblName.Caption = UserName
     'Load main form
     frmMain.Visible = True
-    lastKeys.Clear
     Call frmMain.ControlSM(eSMType.mWork, False)
     Call frmMain.ControlSM(eSMType.mSpells, False)
     FPSFLAG = True
@@ -317,6 +315,8 @@ Private Sub CheckKeys()
      '*****************************************************************
     'Checks keys and respond
     '*****************************************************************
+    Static LastMovement As Long
+
     'No input allowed while Argentum is not the active window
     If Not Application.IsAppActive() Then Exit Sub
     'No walking when in commerce or banking.
@@ -329,60 +329,49 @@ Private Sub CheckKeys()
     
     'TODO: Deberia informarle por consola?
     If Traveling Then Exit Sub
-    
+
+    'Control movement interval (this enforces the 1 step loss when meditating / resting client-side)
+    If GetTickCount - LastMovement > 56 Then
+        LastMovement = GetTickCount
+    Else
+        Exit Sub
+    End If
+
+    'Don't allow any these keys during movement..
     If UserMoving = 0 Then
         If Not UserEstupido Then
-            If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyUp)) < 0 Then
-                If lastKeys.itemExist(CustomKeys.BindedKey(eKeyType.mKeyUp)) = False Then lastKeys.Add (CustomKeys.BindedKey(eKeyType.mKeyUp)) ' Agrega la tecla al arraylist
-            Else
-                If lastKeys.itemExist(CustomKeys.BindedKey(eKeyType.mKeyUp)) Then lastKeys.Remove (CustomKeys.BindedKey(eKeyType.mKeyUp)) ' Remueve la tecla que teniamos presionada
-            End If
-            
-            If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyDown)) < 0 Then
-                If lastKeys.itemExist(CustomKeys.BindedKey(eKeyType.mKeyDown)) = False Then lastKeys.Add (CustomKeys.BindedKey(eKeyType.mKeyDown)) ' Agrega la tecla al arraylist
-            Else
-                If lastKeys.itemExist(CustomKeys.BindedKey(eKeyType.mKeyDown)) Then lastKeys.Remove (CustomKeys.BindedKey(eKeyType.mKeyDown)) ' Remueve la tecla que teniamos presionada
-            End If
-            
-            If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyLeft)) < 0 Then
-                If lastKeys.itemExist(CustomKeys.BindedKey(eKeyType.mKeyLeft)) = False Then lastKeys.Add (CustomKeys.BindedKey(eKeyType.mKeyLeft)) ' Agrega la tecla al arraylist
-            Else
-                If lastKeys.itemExist(CustomKeys.BindedKey(eKeyType.mKeyLeft)) Then lastKeys.Remove (CustomKeys.BindedKey(eKeyType.mKeyLeft)) ' Remueve la tecla que teniamos presionada
-            End If
-            
-            If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyRight)) < 0 Then
-                If lastKeys.itemExist(CustomKeys.BindedKey(eKeyType.mKeyRight)) = False Then lastKeys.Add (CustomKeys.BindedKey(eKeyType.mKeyRight)) ' Agrega la tecla al arraylist
-            Else
-                If lastKeys.itemExist(CustomKeys.BindedKey(eKeyType.mKeyRight)) Then lastKeys.Remove (CustomKeys.BindedKey(eKeyType.mKeyRight)) ' Remueve la tecla que teniamos presionada
-            End If
             'Move Up
-            If lastKeys.Count() = 38 Then
-                Debug.Print ("[" + CStr(lastKeys.item(1)) + "," + CStr(lastKeys.item(2)) + "," + CStr(lastKeys.item(3)) + "," + CStr(lastKeys.item(4)) + "]")
-                Call Map_MoveTo(NORTH)
+            If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyUp)) < 0 Then
+                If frmMain.TrainingMacro.Enabled Then frmMain.DesactivarMacroHechizos
+                Call MoveTo(NORTH)
                 Call Char_UserPos
                 Exit Sub
             End If
+            
             'Move Right
-            If lastKeys.Count = 39 Then
-                Debug.Print ("[" + CStr(lastKeys.item(1)) + "," + CStr(lastKeys.item(2)) + "," + CStr(lastKeys.item(3)) + "," + CStr(lastKeys.item(4)) + "]")
-                Call Map_MoveTo(EAST)
+            If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyRight)) < 0 Then
+                If frmMain.TrainingMacro.Enabled Then frmMain.DesactivarMacroHechizos
+                Call MoveTo(EAST)
                 Call Char_UserPos
                 Exit Sub
             End If
+        
             'Move down
-            If lastKeys.Count = 40 Then
-                Debug.Print ("[" + CStr(lastKeys.item(1)) + "," + CStr(lastKeys.item(2)) + "," + CStr(lastKeys.item(3)) + "," + CStr(lastKeys.item(4)) + "]")
-                Call Map_MoveTo(SOUTH)
+            If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyDown)) < 0 Then
+                If frmMain.TrainingMacro.Enabled Then frmMain.DesactivarMacroHechizos
+                Call MoveTo(SOUTH)
                 Call Char_UserPos
                 Exit Sub
             End If
+        
             'Move left
-            If lastKeys.Count = 37 Then
-                Debug.Print ("[" + CStr(lastKeys.item(1)) + "," + CStr(lastKeys.item(2)) + "," + CStr(lastKeys.item(3)) + "," + CStr(lastKeys.item(4)) + "]")
-                Call Map_MoveTo(WEST)
+            If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyLeft)) < 0 Then
+                If frmMain.TrainingMacro.Enabled Then frmMain.DesactivarMacroHechizos
+                Call MoveTo(WEST)
                 Call Char_UserPos
                 Exit Sub
             End If
+           
             ' We haven't moved - Update 3D sounds!
             Call Audio.MoveListener(UserPos.X, UserPos.Y)
         Else
@@ -873,7 +862,6 @@ Private Sub LoadInitialConfig()
                             
     Set Dialogos = New clsDialogs
     Set Audio = New clsAudio
-    Set lastKeys = New clsArrayList
     Set Inventario = New clsGraphicalInventory
     Set CustomKeys = New clsCustomKeys
     Set CustomMessages = New clsCustomMessages
@@ -882,7 +870,7 @@ Private Sub LoadInitialConfig()
     Set MainTimer = New clsTimer
     Set clsForos = New clsForum
     Set frmMain.Client = New clsSocket
-    Call lastKeys.Initialize(1, 4)
+
     Call AddtoRichTextBox(frmCargando.status, _
                             "   " & JsonLanguage.item("HECHO").item("TEXTO"), _
                             JsonLanguage.item("HECHO").item("COLOR").item(1), _

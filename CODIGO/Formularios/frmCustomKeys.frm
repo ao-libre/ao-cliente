@@ -690,8 +690,8 @@ Private Sub LoadTextsForm()
 End Sub
 
 Private Sub imgDefaultKeys_Click()
-    Call CustomKeys.LoadDefaults(CustomKeys.CurrentConfig)
-    Call ShowConfig
+   Unload Me
+   frmKeysConfigurationSelect.Visible = True
 End Sub
 
 Private Sub imgGuardar_Click()
