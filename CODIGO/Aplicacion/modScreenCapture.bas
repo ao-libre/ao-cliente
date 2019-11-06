@@ -625,7 +625,7 @@ Public Sub ScreenCapture(Optional ByVal Autofragshooter As Boolean = False)
     End With
     
     Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MOD_SCREENCAPTURE").item("TEXTO") & File, 100, 30, 20, False, False, True)
-    
+
     Exit Sub
 
 Err:
