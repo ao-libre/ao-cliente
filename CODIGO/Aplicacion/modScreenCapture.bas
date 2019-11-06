@@ -569,10 +569,10 @@ Public Sub ScreenCapture(Optional ByVal Autofragshooter As Boolean = False)
     
     hdcc = GetDC(frmMain.hWnd)
 
-    Dim FileName as String
-		FileName = Format$(Now, "DD-MM-YYYY hh-mm-ss") & ".jpg"
+    Dim FileName As String
+        FileName = Format$(Now, "DD-MM-YYYY hh-mm-ss") & ".jpg"
     
-	With frmScreenshots.Picture1
+    With frmScreenshots.Picture1
         
         .AutoRedraw = True
         .Width = frmMain.Width
@@ -595,21 +595,21 @@ Public Sub ScreenCapture(Optional ByVal Autofragshooter As Boolean = False)
 
             If Not FileExist(dirFile, vbDirectory) Then Call MkDir(dirFile)
         
-        'Nuevos directorios del FragShooter:
-        If FragShooterKilledSomeone Then 'Si mato a alguien.
-            dirFile = dirFile & "\Frags"
-        Else 'Si nos mato alguien.
-            dirFile = dirFile & "\Muertes"
+            'Nuevos directorios del FragShooter:
+            If FragShooterKilledSomeone Then 'Si mato a alguien.
+                dirFile = dirFile & "\Frags"
+            Else 'Si nos mato alguien.
+                dirFile = dirFile & "\Muertes"
+            End If
+        
+            If Not FileExist(dirFile, vbDirectory) Then Call MkDir(dirFile)
+        
+            'Nuevo formato de las screenshots del FragShooter: "VICTIMA/ASESINO(DD-MM-YYYY hh-mm-ss).jpg"
+            File = dirFile & "\" & FragShooterNickname & " -" & FileName
+        Else
+            'Si no es screenshot del FragShooter, entonces se usa el formato "DD-MM-YYYY hh-mm-ss.jpg"
+            File = dirFile & "\" & FileName
         End If
-        
-        If Not FileExist(dirFile, vbDirectory) Then Call MkDir(dirFile)
-        
-        'Nuevo formato de las screenshots del FragShooter: "VICTIMA/ASESINO(DD-MM-YYYY hh-mm-ss).jpg"
-        File = dirFile & "\" & FragShooterNickname & " -" & FileName
-    Else
-        'Si no es screenshot del FragShooter, entonces se usa el formato "DD-MM-YYYY hh-mm-ss.jpg"
-        File = dirFile & "\" & FileName
-    End If
     
         Call .Refresh
         .Picture = .Image
@@ -625,7 +625,7 @@ Public Sub ScreenCapture(Optional ByVal Autofragshooter As Boolean = False)
     End With
     
     AddtoRichTextBox frmMain.RecTxt, JsonLanguage.item("MOD_SCREENCAPTURE").item("TEXTO") & File, 100, 30, 20, False, False, True
-Exit Sub
+    Exit Sub
 
 Err:
     Call AddtoRichTextBox(frmMain.RecTxt, Err.number & "-" & Err.Description, 200, 200, 200, False, False, True)
