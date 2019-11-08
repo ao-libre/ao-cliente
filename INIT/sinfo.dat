@@ -8,22 +8,23 @@ PJ=7665
 Mundo=Alkon
 
 [S2]
+Desc=ReyarB Server -est:Alkon
+IP=200.127.209.239
+PJ=7666
+Mundo=Alkon
+
+[S3]
 Desc=Server Europa - Rol - Alkon 0.13.X
 IP=109.230.224.34
 PJ=7666
 Mundo=Alkon
 
-[S3]
+[S4]
 Desc=Arg - Deathmatch - Earost
 IP=18.231.37.189
 PJ=7667
 Mundo=Deathmatch
 
-[S4]
-Desc=ReyarB Server -est:Alkon
-IP=186.139.151.205
-PJ=7666
-Mundo=Alkon
 
 [S5]
 Desc=AoSpain | Modo:BattleServer
@@ -54,6 +55,7 @@ Desc=Servidor Local | Modo:Deathmatch
 IP=localhost
 PJ=7666
 Mundo=Deathmatch
+
 
 
 

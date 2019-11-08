@@ -108,7 +108,8 @@ Sub Map_MoveTo(ByVal Direccion As E_Heading)
       '***************************************************
 
       Dim LegalOk As Boolean
-        Static lastmovement As Long
+      Static lastmovement As Long
+      
       If Cartel Then Cartel = False
     
       Select Case Direccion
@@ -126,14 +127,15 @@ Sub Map_MoveTo(ByVal Direccion As E_Heading)
                   LegalOk = Map_LegalPos(UserPos.X - 1, UserPos.Y)
                         
       End Select
-        If LegalOk And Not UserDescansar And Not UserParalizado Then
-            Call Char_MovebyHead(UserCharIndex, Direccion)
-            Call Char_MoveScreen(Direccion)
-        End If
 
       If LegalOk And Not UserParalizado Then
-            Call WriteWalk(Direccion)
-            Call frmMain.ActualizarMiniMapa   'integrado por ReyarB
+          Call WriteWalk(Direccion)
+          Call frmMain.ActualizarMiniMapa   'integrado por ReyarB
+
+          If Not UserDescansar And Not UserMeditar Then
+            Call Char_MovebyHead(UserCharIndex, Direccion)
+            Call Char_MoveScreen(Direccion)
+          End If
       Else
         If (charlist(UserCharIndex).Heading <> Direccion) And (GetTickCount - lastmovement > 96) Then
               Call WriteChangeHeading(Direccion)
@@ -145,6 +147,7 @@ Sub Map_MoveTo(ByVal Direccion As E_Heading)
     
       If frmMain.macrotrabajo.Enabled Then Call frmMain.DesactivarMacroTrabajo
       If frmMain.trainingMacro.Enabled Then Call frmMain.DesactivarMacroHechizos
+
       ' Update 3D sounds!
       Call Audio.MoveListener(UserPos.X, UserPos.Y)
         

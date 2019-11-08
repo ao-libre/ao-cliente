@@ -46,6 +46,8 @@ Public bLluvia() As Byte ' Array para determinar si
 
 Private lFrameTimer As Long
 
+Private keysMovementPressedQueue As clsArrayList
+
 Public Function RandomNumber(ByVal LowerBound As Long, ByVal UpperBound As Long) As Long
     'Initialize randomizer
     Randomize Timer
@@ -251,6 +253,9 @@ Sub SetConnected()
     Unload frmConnect
     Unload frmPanelAccount
     
+    'Vaciamos la cola de movimiento
+    keysMovementPressedQueue.Clear
+
     frmMain.lblName.Caption = UserName
     'Load main form
     frmMain.Visible = True
@@ -260,48 +265,6 @@ Sub SetConnected()
 
 End Sub
 
-Sub MoveTo(ByVal Direccion As E_Heading)
-'***************************************************
-'Author: Alejandro Santos (AlejoLp)
-'Last Modify Date: 06/28/2008
-'Last Modified By: Lucas Tavolaro Ortiz (Tavo)
-' 06/03/2006: AlejoLp - Elimine las funciones Move[NSWE] y las converti a esta
-' 12/08/2007: Tavo    - Si el usuario esta paralizado no se puede mover.
-' 06/28/2008: NicoNZ - Saque lo que impedia que si el usuario estaba paralizado se ejecute el sub.
-'***************************************************
-    Dim LegalOk As Boolean
-    
-    If Cartel Then Cartel = False
-    
-    Select Case Direccion
-        Case E_Heading.NORTH
-            LegalOk = MoveToLegalPos(UserPos.X, UserPos.Y - 1)
-        Case E_Heading.EAST
-            LegalOk = MoveToLegalPos(UserPos.X + 1, UserPos.Y)
-        Case E_Heading.SOUTH
-            LegalOk = MoveToLegalPos(UserPos.X, UserPos.Y + 1)
-        Case E_Heading.WEST
-            LegalOk = MoveToLegalPos(UserPos.X - 1, UserPos.Y)
-    End Select
-    
-    If LegalOk And Not UserParalizado Then
-        Call WriteWalk(Direccion)
-        If Not UserDescansar And Not UserMeditar Then
-            MoveCharbyHead UserCharIndex, Direccion
-            MoveScreen Direccion
-        End If
-    Else
-        If charlist(UserCharIndex).Heading <> Direccion Then
-            Call WriteChangeHeading(Direccion)
-        End If
-    End If
-    If frmMain.trainingMacro.Enabled Then Call frmMain.DesactivarMacroHechizos
-    If frmMain.macrotrabajo.Enabled Then Call frmMain.DesactivarMacroTrabajo
-    
-    ' Update 3D sounds!
-    Call Audio.MoveListener(UserPos.X, UserPos.Y)
-End Sub
-
 Sub RandomMove()
 '***************************************************
 'Author: Alejandro Santos (AlejoLp)
@@ -309,6 +272,32 @@ Sub RandomMove()
 ' 06/03/2006: AlejoLp - Ahora utiliza la funcion MoveTo
 '***************************************************
     Call Map_MoveTo(RandomNumber(NORTH, WEST))
+End Sub
+
+Private Sub AddMovementToKeysMovementPressedQueue()
+    If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyUp)) < 0 Then
+        If keysMovementPressedQueue.itemExist(CustomKeys.BindedKey(eKeyType.mKeyUp)) = False Then keysMovementPressedQueue.Add (CustomKeys.BindedKey(eKeyType.mKeyUp)) ' Agrega la tecla al arraylist
+    Else
+        If keysMovementPressedQueue.itemExist(CustomKeys.BindedKey(eKeyType.mKeyUp)) Then keysMovementPressedQueue.Remove (CustomKeys.BindedKey(eKeyType.mKeyUp)) ' Remueve la tecla que teniamos presionada
+    End If
+
+    If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyDown)) < 0 Then
+        If keysMovementPressedQueue.itemExist(CustomKeys.BindedKey(eKeyType.mKeyDown)) = False Then keysMovementPressedQueue.Add (CustomKeys.BindedKey(eKeyType.mKeyDown)) ' Agrega la tecla al arraylist
+    Else
+        If keysMovementPressedQueue.itemExist(CustomKeys.BindedKey(eKeyType.mKeyDown)) Then keysMovementPressedQueue.Remove (CustomKeys.BindedKey(eKeyType.mKeyDown)) ' Remueve la tecla que teniamos presionada
+    End If
+
+    If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyLeft)) < 0 Then
+        If keysMovementPressedQueue.itemExist(CustomKeys.BindedKey(eKeyType.mKeyLeft)) = False Then keysMovementPressedQueue.Add (CustomKeys.BindedKey(eKeyType.mKeyLeft)) ' Agrega la tecla al arraylist
+    Else
+        If keysMovementPressedQueue.itemExist(CustomKeys.BindedKey(eKeyType.mKeyLeft)) Then keysMovementPressedQueue.Remove (CustomKeys.BindedKey(eKeyType.mKeyLeft)) ' Remueve la tecla que teniamos presionada
+    End If
+
+    If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyRight)) < 0 Then
+        If keysMovementPressedQueue.itemExist(CustomKeys.BindedKey(eKeyType.mKeyRight)) = False Then keysMovementPressedQueue.Add (CustomKeys.BindedKey(eKeyType.mKeyRight)) ' Agrega la tecla al arraylist
+    Else
+        If keysMovementPressedQueue.itemExist(CustomKeys.BindedKey(eKeyType.mKeyRight)) Then keysMovementPressedQueue.Remove (CustomKeys.BindedKey(eKeyType.mKeyRight)) ' Remueve la tecla que teniamos presionada
+    End If
 End Sub
 
 Private Sub CheckKeys()
@@ -330,44 +319,35 @@ Private Sub CheckKeys()
     'TODO: Deberia informarle por consola?
     If Traveling Then Exit Sub
 
-    'Control movement interval (this enforces the 1 step loss when meditating / resting client-side)
-    If GetTickCount - LastMovement > 56 Then
-        LastMovement = GetTickCount
-    Else
-        Exit Sub
-    End If
-
     'Don't allow any these keys during movement..
     If UserMoving = 0 Then
         If Not UserEstupido Then
+            Call AddMovementToKeysMovementPressedQueue
+
             'Move Up
-            If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyUp)) < 0 Then
-                If frmMain.TrainingMacro.Enabled Then frmMain.DesactivarMacroHechizos
-                Call MoveTo(NORTH)
+            If keysMovementPressedQueue.GetLastItem() = CustomKeys.BindedKey(eKeyType.mKeyUp) Then
+                Call Map_MoveTo(NORTH)
                 Call Char_UserPos
                 Exit Sub
             End If
             
             'Move Right
-            If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyRight)) < 0 Then
-                If frmMain.TrainingMacro.Enabled Then frmMain.DesactivarMacroHechizos
-                Call MoveTo(EAST)
+            If keysMovementPressedQueue.GetLastItem() = CustomKeys.BindedKey(eKeyType.mKeyRight) Then
+                Call Map_MoveTo(EAST)
                 Call Char_UserPos
                 Exit Sub
             End If
         
             'Move down
-            If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyDown)) < 0 Then
-                If frmMain.TrainingMacro.Enabled Then frmMain.DesactivarMacroHechizos
-                Call MoveTo(SOUTH)
+            If keysMovementPressedQueue.GetLastItem() = CustomKeys.BindedKey(eKeyType.mKeyDown) Then
+                Call Map_MoveTo(SOUTH)
                 Call Char_UserPos
                 Exit Sub
             End If
         
             'Move left
-            If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyLeft)) < 0 Then
-                If frmMain.TrainingMacro.Enabled Then frmMain.DesactivarMacroHechizos
-                Call MoveTo(WEST)
+            If keysMovementPressedQueue.GetLastItem() = CustomKeys.BindedKey(eKeyType.mKeyLeft) Then
+                Call Map_MoveTo(WEST)
                 Call Char_UserPos
                 Exit Sub
             End If
@@ -870,6 +850,10 @@ Private Sub LoadInitialConfig()
     Set MainTimer = New clsTimer
     Set clsForos = New clsForum
     Set frmMain.Client = New clsSocket
+
+    'Esto es para el movimiento suave de pjs, para que el pj termine de hacer el movimiento antes de empezar otro
+    Set keysMovementPressedQueue = New clsArrayList
+    Call keysMovementPressedQueue.Initialize(1, 4)
 
     Call AddtoRichTextBox(frmCargando.status, _
                             "   " & JsonLanguage.item("HECHO").item("TEXTO"), _
