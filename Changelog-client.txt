@@ -591,7 +591,8 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 03/11/2019: Las opciones no se cambiaban correctamente, lo arregle y mejore. (Recox)
 * 03/11/2019: Translated frmTips y translated all the tips, also improved and clean the code. (Recox)
 * 03/11/2019: Changed some wav sounds for better ones, extracted from Imperium AO 1.6.4. (Recox)
-
+* 10/11/2019: Configuracion teclas al iniciar el juego (como IAO), se arreglo un bug que no permitia customizar las teclas (Recox)
+* 10/11/2019: Se mejoraron los colores que aparecen en consola, se borro codigo innecesario (Recox)
 
 
 
