@@ -13,6 +13,7 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 '***************************************************
 'Author: FrankoH298
+'Count ahora se llama GetLastItem (Recox)
 ' Funciones:
 '           - Clear() - Limpia la lista
 '           - itemExist(item) - Te indica si el item existe
@@ -20,7 +21,7 @@ Attribute VB_Exposed = False
 '           - Item(index) - Te devuelve el item en la posicion
 '           - Add() - Agrega un item a la lista
 '           - Remove() - Remueve el item de la lista
-'           - Count() - Te muestra el ultimo item de la lista
+'           - GetLastItem() - Te muestra el ultimo item de la lista
 '***************************************************
 
 Option Explicit
@@ -139,7 +140,7 @@ Dim a As Long
     If ArrayList(UBound(ArrayList)) = item Then ArrayList(UBound(ArrayList)) = 0
 End Sub
 
-Public Function Count() As Byte
+Public Function GetLastItem() As Byte
 
 '***************************************************
 'Author: FrankoH298
@@ -150,10 +151,10 @@ Public Function Count() As Byte
 Dim i As Long
     For i = UBound(ArrayList) To LBound(ArrayList) Step -1
         If ArrayList(i) <> 0 Then
-            Count = ArrayList(i)
+            GetLastItem = ArrayList(i)
             Exit Function
         End If
     Next i
-    Count = 0
+    GetLastItem = 0
 End Function
 

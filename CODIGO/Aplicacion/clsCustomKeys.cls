@@ -62,7 +62,11 @@ Private Const ERROR_NO_KEY_FILE As Long = vbObjectError + 16
 
 ''
 'The relative path from the application's location where the key config file is.
-Private Const KEY_CONFIG_FILE As String = "\init\BindKeys.bin"
+Private Const KEY_CONFIG_FILE As String = "BindKeys.bin"
+
+Private Const KEY_CONFIG_FILE_ALTERNATIVE As String = "BindAlternativeKeys.bin"
+
+Private KEY_CONFIG_FILE_IN_USE As String
 
 ''
 'Array of mapped keys
@@ -258,12 +262,13 @@ Public Sub LoadCustomKeys()
 '16/11/2010: Amraphen - Adapte el procedimiento para cargar todas las configuraciones de teclas.
 '18/11/2010: Amraphen - Modifique la forma en que se cargan los bindings y ahora carga los del formato viejo.
 '***************************************************
-Dim i As Long
-Dim J As Long
-Dim FileNum As Integer
+    Dim i As Long
+    Dim J As Long
+    Dim FileNum As Integer
 
      'Si no existe el archivo lo creamos con los bindings default:
-    If Not FileExist(App.path & KEY_CONFIG_FILE, vbArchive) Then
+    If Not FileExist(Game.path(INIT) & KEY_CONFIG_FILE_IN_USE, vbArchive) Then
+
         For i = 0 To NUM_CUSTOM_CONFIGS
             Call LoadDefaults(i)
         Next i
@@ -271,35 +276,20 @@ Dim FileNum As Integer
         ActiveConfig = 1
         
         Call SaveCustomKeys
-    Else 'Existe el archivo, verificamos que formato tiene:
+    Else 'Existe el archivo
         
         FileNum = FreeFile
-    
-        If FileLen(App.path & KEY_CONFIG_FILE) < (NUM_CUSTOM_CONFIGS * NUM_CUSTOM_KEYS * 2) + 1 Then
-            'Formato viejo
-            Open App.path & KEY_CONFIG_FILE For Binary Access Read Lock Read Write As FileNum
-            
-            ActiveConfig = 1
-            
-            For i = 0 To NUM_CUSTOM_CONFIGS
-                Call LoadDefaults(i)
-            Next i
-            
+
+        'Formato nuevo
+        Open Game.path(INIT) & KEY_CONFIG_FILE_IN_USE For Binary Access Read Lock Read Write As FileNum
+        
+        Get FileNum, , ActiveConfig
+        
+        For i = 0 To NUM_CUSTOM_CONFIGS
             For J = 1 To NUM_CUSTOM_KEYS
-                Get FileNum, , mappedKeys(ActiveConfig, J)
+                Get FileNum, , mappedKeys(i, J)
             Next J
-        Else
-            'Formato nuevo
-            Open App.path & KEY_CONFIG_FILE For Binary Access Read Lock Read Write As FileNum
-            
-            Get FileNum, , ActiveConfig
-            
-            For i = 0 To NUM_CUSTOM_CONFIGS
-                For J = 1 To NUM_CUSTOM_KEYS
-                    Get FileNum, , mappedKeys(i, J)
-                Next J
-            Next i
-        End If
+        Next i
         
         Close FileNum
         
@@ -323,7 +313,7 @@ Dim FileNum As Integer
 
     FileNum = FreeFile()
     
-    Open App.path & KEY_CONFIG_FILE For Binary Access Write As FileNum
+    Open Game.path(INIT) & KEY_CONFIG_FILE_IN_USE  For Binary Access Write As FileNum
     
     'Guardo la configuracion activa:
     Put FileNum, , ActiveConfig
@@ -404,8 +394,8 @@ Public Sub LoadDefaults(ByVal KeyConfig As Byte)
     mappedKeys(KeyConfig, eKeyType.mKeyEquipObject) = KeyCodeConstants.vbKeyE
     mappedKeys(KeyConfig, eKeyType.mKeyTamAnimal) = KeyCodeConstants.vbKeyD
     mappedKeys(KeyConfig, eKeyType.mKeySteal) = KeyCodeConstants.vbKeyR
-    mappedKeys(KeyConfig, eKeyType.mKeyToggleSafeMode) = KeyCodeConstants.vbKeyMultiply
-    mappedKeys(KeyConfig, eKeyType.mKeyToggleResuscitationSafe) = KeyCodeConstants.vbKeyEnd
+    mappedKeys(KeyConfig, eKeyType.mKeyToggleSafeMode) = KeyCodeConstants.vbKeyC
+    mappedKeys(KeyConfig, eKeyType.mKeyToggleResuscitationSafe) = KeyCodeConstants.vbKeyV
     mappedKeys(KeyConfig, eKeyType.mKeyHide) = KeyCodeConstants.vbKeyO
     mappedKeys(KeyConfig, eKeyType.mKeyDropObject) = KeyCodeConstants.vbKeyT
     mappedKeys(KeyConfig, eKeyType.mKeyUseObject) = KeyCodeConstants.vbKeyU
@@ -506,11 +496,20 @@ End Property
 Private Sub Class_Initialize()
 '***************************************************
 'Author: Rapsodius
-'Last Modification: 18/11/2010
+'Last Modification: 06/11/2019 (Recox)
 '16/11/2010: Amraphen - Adapte el procedimiento para que trabaje sobre las distintas configuraciones de teclas.
 '18/11/2010: Amraphen - Ahora el manejo de errores se hace desde el sub LoadCustomKeys
+'06/11/2019: Recox - Ahora podemos manejar una configuracion default y una alternativa.
 '***************************************************
+    Dim KeyBindingConfigurationToUse
+    KeyBindingConfigurationToUse = GetVar(Game.path(INIT) & "Config.ini", "OTHER", "BIND_KEYS")
 
+    If KeyBindingConfigurationToUse = "Alternative" Then
+        KEY_CONFIG_FILE_IN_USE = KEY_CONFIG_FILE_ALTERNATIVE
+    Else
+        KEY_CONFIG_FILE_IN_USE = KEY_CONFIG_FILE
+    End If
+    
     Call LoadCustomKeys
 End Sub
 
@@ -526,5 +525,23 @@ Private Sub Class_Terminate()
 On Error Resume Next
 
     Call SaveCustomKeys
+End Sub
+
+''
+'Set the KEY_CONFIG_FILE_IN_USE. With the value desired
+
+Public Sub SetKeyConfigFileInUse(ByVal KeyConfigToUse As String)
+'***************************************************
+'Author: Recox
+'Last Modification: 06/11/19
+'
+'***************************************************
+    If KeyConfigToUse = "Alternative" Then
+        KEY_CONFIG_FILE_IN_USE = KEY_CONFIG_FILE_ALTERNATIVE
+    Else
+        KEY_CONFIG_FILE_IN_USE = KEY_CONFIG_FILE
+    End If
+
+    Call LoadCustomKeys
 End Sub
 

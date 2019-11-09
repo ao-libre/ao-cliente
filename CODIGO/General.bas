@@ -32,7 +32,6 @@ Attribute VB_Name = "Mod_General"
 'Pablo Ignacio Marquez
 
 Option Explicit
-'Public cKeys As Collection
 Public bFogata As Boolean
 
 Public Type tRedditPost
@@ -46,6 +45,8 @@ Public bLluvia() As Byte ' Array para determinar si
 'debemos mostrar la animacion de la lluvia
 
 Private lFrameTimer As Long
+
+Private keysMovementPressedQueue As clsArrayList
 
 Public Function RandomNumber(ByVal LowerBound As Long, ByVal UpperBound As Long) As Long
     'Initialize randomizer
@@ -252,56 +253,16 @@ Sub SetConnected()
     Unload frmConnect
     Unload frmPanelAccount
     
+    'Vaciamos la cola de movimiento
+    keysMovementPressedQueue.Clear
+
     frmMain.lblName.Caption = UserName
     'Load main form
     frmMain.Visible = True
-    lastKeys.Clear
     Call frmMain.ControlSM(eSMType.mWork, False)
     Call frmMain.ControlSM(eSMType.mSpells, False)
     FPSFLAG = True
 
-End Sub
-
-Sub MoveTo(ByVal Direccion As E_Heading)
-'***************************************************
-'Author: Alejandro Santos (AlejoLp)
-'Last Modify Date: 06/28/2008
-'Last Modified By: Lucas Tavolaro Ortiz (Tavo)
-' 06/03/2006: AlejoLp - Elimine las funciones Move[NSWE] y las converti a esta
-' 12/08/2007: Tavo    - Si el usuario esta paralizado no se puede mover.
-' 06/28/2008: NicoNZ - Saque lo que impedia que si el usuario estaba paralizado se ejecute el sub.
-'***************************************************
-    Dim LegalOk As Boolean
-    
-    If Cartel Then Cartel = False
-    
-    Select Case Direccion
-        Case E_Heading.NORTH
-            LegalOk = MoveToLegalPos(UserPos.X, UserPos.Y - 1)
-        Case E_Heading.EAST
-            LegalOk = MoveToLegalPos(UserPos.X + 1, UserPos.Y)
-        Case E_Heading.SOUTH
-            LegalOk = MoveToLegalPos(UserPos.X, UserPos.Y + 1)
-        Case E_Heading.WEST
-            LegalOk = MoveToLegalPos(UserPos.X - 1, UserPos.Y)
-    End Select
-    
-    If LegalOk And Not UserParalizado Then
-        Call WriteWalk(Direccion)
-        If Not UserDescansar And Not UserMeditar Then
-            MoveCharbyHead UserCharIndex, Direccion
-            MoveScreen Direccion
-        End If
-    Else
-        If charlist(UserCharIndex).Heading <> Direccion Then
-            Call WriteChangeHeading(Direccion)
-        End If
-    End If
-    If frmMain.trainingMacro.Enabled Then Call frmMain.DesactivarMacroHechizos
-    If frmMain.macrotrabajo.Enabled Then Call frmMain.DesactivarMacroTrabajo
-    
-    ' Update 3D sounds!
-    Call Audio.MoveListener(UserPos.X, UserPos.Y)
 End Sub
 
 Sub RandomMove()
@@ -313,10 +274,38 @@ Sub RandomMove()
     Call Map_MoveTo(RandomNumber(NORTH, WEST))
 End Sub
 
+Private Sub AddMovementToKeysMovementPressedQueue()
+    If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyUp)) < 0 Then
+        If keysMovementPressedQueue.itemExist(CustomKeys.BindedKey(eKeyType.mKeyUp)) = False Then keysMovementPressedQueue.Add (CustomKeys.BindedKey(eKeyType.mKeyUp)) ' Agrega la tecla al arraylist
+    Else
+        If keysMovementPressedQueue.itemExist(CustomKeys.BindedKey(eKeyType.mKeyUp)) Then keysMovementPressedQueue.Remove (CustomKeys.BindedKey(eKeyType.mKeyUp)) ' Remueve la tecla que teniamos presionada
+    End If
+
+    If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyDown)) < 0 Then
+        If keysMovementPressedQueue.itemExist(CustomKeys.BindedKey(eKeyType.mKeyDown)) = False Then keysMovementPressedQueue.Add (CustomKeys.BindedKey(eKeyType.mKeyDown)) ' Agrega la tecla al arraylist
+    Else
+        If keysMovementPressedQueue.itemExist(CustomKeys.BindedKey(eKeyType.mKeyDown)) Then keysMovementPressedQueue.Remove (CustomKeys.BindedKey(eKeyType.mKeyDown)) ' Remueve la tecla que teniamos presionada
+    End If
+
+    If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyLeft)) < 0 Then
+        If keysMovementPressedQueue.itemExist(CustomKeys.BindedKey(eKeyType.mKeyLeft)) = False Then keysMovementPressedQueue.Add (CustomKeys.BindedKey(eKeyType.mKeyLeft)) ' Agrega la tecla al arraylist
+    Else
+        If keysMovementPressedQueue.itemExist(CustomKeys.BindedKey(eKeyType.mKeyLeft)) Then keysMovementPressedQueue.Remove (CustomKeys.BindedKey(eKeyType.mKeyLeft)) ' Remueve la tecla que teniamos presionada
+    End If
+
+    If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyRight)) < 0 Then
+        If keysMovementPressedQueue.itemExist(CustomKeys.BindedKey(eKeyType.mKeyRight)) = False Then keysMovementPressedQueue.Add (CustomKeys.BindedKey(eKeyType.mKeyRight)) ' Agrega la tecla al arraylist
+    Else
+        If keysMovementPressedQueue.itemExist(CustomKeys.BindedKey(eKeyType.mKeyRight)) Then keysMovementPressedQueue.Remove (CustomKeys.BindedKey(eKeyType.mKeyRight)) ' Remueve la tecla que teniamos presionada
+    End If
+End Sub
+
 Private Sub CheckKeys()
      '*****************************************************************
     'Checks keys and respond
     '*****************************************************************
+    Static LastMovement As Long
+
     'No input allowed while Argentum is not the active window
     If Not Application.IsAppActive() Then Exit Sub
     'No walking when in commerce or banking.
@@ -329,60 +318,40 @@ Private Sub CheckKeys()
     
     'TODO: Deberia informarle por consola?
     If Traveling Then Exit Sub
-    
+
+    'Don't allow any these keys during movement..
     If UserMoving = 0 Then
         If Not UserEstupido Then
-            If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyUp)) < 0 Then
-                If lastKeys.itemExist(CustomKeys.BindedKey(eKeyType.mKeyUp)) = False Then lastKeys.Add (CustomKeys.BindedKey(eKeyType.mKeyUp)) ' Agrega la tecla al arraylist
-            Else
-                If lastKeys.itemExist(CustomKeys.BindedKey(eKeyType.mKeyUp)) Then lastKeys.Remove (CustomKeys.BindedKey(eKeyType.mKeyUp)) ' Remueve la tecla que teniamos presionada
-            End If
-            
-            If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyDown)) < 0 Then
-                If lastKeys.itemExist(CustomKeys.BindedKey(eKeyType.mKeyDown)) = False Then lastKeys.Add (CustomKeys.BindedKey(eKeyType.mKeyDown)) ' Agrega la tecla al arraylist
-            Else
-                If lastKeys.itemExist(CustomKeys.BindedKey(eKeyType.mKeyDown)) Then lastKeys.Remove (CustomKeys.BindedKey(eKeyType.mKeyDown)) ' Remueve la tecla que teniamos presionada
-            End If
-            
-            If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyLeft)) < 0 Then
-                If lastKeys.itemExist(CustomKeys.BindedKey(eKeyType.mKeyLeft)) = False Then lastKeys.Add (CustomKeys.BindedKey(eKeyType.mKeyLeft)) ' Agrega la tecla al arraylist
-            Else
-                If lastKeys.itemExist(CustomKeys.BindedKey(eKeyType.mKeyLeft)) Then lastKeys.Remove (CustomKeys.BindedKey(eKeyType.mKeyLeft)) ' Remueve la tecla que teniamos presionada
-            End If
-            
-            If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyRight)) < 0 Then
-                If lastKeys.itemExist(CustomKeys.BindedKey(eKeyType.mKeyRight)) = False Then lastKeys.Add (CustomKeys.BindedKey(eKeyType.mKeyRight)) ' Agrega la tecla al arraylist
-            Else
-                If lastKeys.itemExist(CustomKeys.BindedKey(eKeyType.mKeyRight)) Then lastKeys.Remove (CustomKeys.BindedKey(eKeyType.mKeyRight)) ' Remueve la tecla que teniamos presionada
-            End If
+            Call AddMovementToKeysMovementPressedQueue
+
             'Move Up
-            If lastKeys.Count() = 38 Then
-                Debug.Print ("[" + CStr(lastKeys.item(1)) + "," + CStr(lastKeys.item(2)) + "," + CStr(lastKeys.item(3)) + "," + CStr(lastKeys.item(4)) + "]")
+            If keysMovementPressedQueue.GetLastItem() = CustomKeys.BindedKey(eKeyType.mKeyUp) Then
                 Call Map_MoveTo(NORTH)
                 Call Char_UserPos
                 Exit Sub
             End If
+            
             'Move Right
-            If lastKeys.Count = 39 Then
-                Debug.Print ("[" + CStr(lastKeys.item(1)) + "," + CStr(lastKeys.item(2)) + "," + CStr(lastKeys.item(3)) + "," + CStr(lastKeys.item(4)) + "]")
+            If keysMovementPressedQueue.GetLastItem() = CustomKeys.BindedKey(eKeyType.mKeyRight) Then
                 Call Map_MoveTo(EAST)
                 Call Char_UserPos
                 Exit Sub
             End If
+        
             'Move down
-            If lastKeys.Count = 40 Then
-                Debug.Print ("[" + CStr(lastKeys.item(1)) + "," + CStr(lastKeys.item(2)) + "," + CStr(lastKeys.item(3)) + "," + CStr(lastKeys.item(4)) + "]")
+            If keysMovementPressedQueue.GetLastItem() = CustomKeys.BindedKey(eKeyType.mKeyDown) Then
                 Call Map_MoveTo(SOUTH)
                 Call Char_UserPos
                 Exit Sub
             End If
+        
             'Move left
-            If lastKeys.Count = 37 Then
-                Debug.Print ("[" + CStr(lastKeys.item(1)) + "," + CStr(lastKeys.item(2)) + "," + CStr(lastKeys.item(3)) + "," + CStr(lastKeys.item(4)) + "]")
+            If keysMovementPressedQueue.GetLastItem() = CustomKeys.BindedKey(eKeyType.mKeyLeft) Then
                 Call Map_MoveTo(WEST)
                 Call Char_UserPos
                 Exit Sub
             End If
+           
             ' We haven't moved - Update 3D sounds!
             Call Audio.MoveListener(UserPos.X, UserPos.Y)
         Else
@@ -873,7 +842,6 @@ Private Sub LoadInitialConfig()
                             
     Set Dialogos = New clsDialogs
     Set Audio = New clsAudio
-    Set lastKeys = New clsArrayList
     Set Inventario = New clsGraphicalInventory
     Set CustomKeys = New clsCustomKeys
     Set CustomMessages = New clsCustomMessages
@@ -882,7 +850,11 @@ Private Sub LoadInitialConfig()
     Set MainTimer = New clsTimer
     Set clsForos = New clsForum
     Set frmMain.Client = New clsSocket
-    Call lastKeys.Initialize(1, 4)
+
+    'Esto es para el movimiento suave de pjs, para que el pj termine de hacer el movimiento antes de empezar otro
+    Set keysMovementPressedQueue = New clsArrayList
+    Call keysMovementPressedQueue.Initialize(1, 4)
+
     Call AddtoRichTextBox(frmCargando.status, _
                             "   " & JsonLanguage.item("HECHO").item("TEXTO"), _
                             JsonLanguage.item("HECHO").item("COLOR").item(1), _
