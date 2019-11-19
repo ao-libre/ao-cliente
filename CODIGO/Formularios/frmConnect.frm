@@ -621,13 +621,13 @@ Private Sub btnConectarse_Click()
     frmMain.hlst.Clear
 
     If Me.chkRecordar.Checked = False Then
-        Call WriteVar(Game.path(INIT) & "Config.ini", "Login", "Remember", 0)
+        Call WriteVar(Game.path(INIT) & "Config.ini", "Login", "Remember", False)
         Call WriteVar(Game.path(INIT) & "Config.ini", "Login", "UserName", vbNullString)
         Call WriteVar(Game.path(INIT) & "Config.ini", "Login", "Password", vbNullString)
     Else
+        Call WriteVar(Game.path(INIT) & "Config.ini", "Login", "Remember", True)
         Call WriteVar(Game.path(INIT) & "Config.ini", "Login", "UserName", AccountName)
         Call WriteVar(Game.path(INIT) & "Config.ini", "Login", "Password", Cripto.AesEncryptString(AccountPassword, AES_PASSWD))
-        Call WriteVar(Game.path(INIT) & "Config.ini", "Login", "Remember", 1)
     End If
 
     If CheckUserData() = True Then
@@ -683,7 +683,7 @@ Private Sub Form_Activate()
     Set Lector = New clsIniManager
     Lector.Initialize (Game.path(INIT) & "Config.ini")
     
-    If Lector.GetValue("LOGIN", "Remember") = 1 Then
+    If CBool(Lector.GetValue("LOGIN", "Remember")) = True Then
         Me.txtNombre = Lector.GetValue("LOGIN", "UserName")
         Me.txtPasswd = Cripto.AesDecryptString(Lector.GetValue("LOGIN", "Password"), AES_PASSWD)
         Me.chkRecordar.Checked = True
