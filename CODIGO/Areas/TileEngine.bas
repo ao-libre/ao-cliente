@@ -1131,7 +1131,7 @@ RenderScreen_Err:
     
 End Sub
 
-Sub Engine_Weather_Update()
+Private Sub Engine_Weather_Update()
     If bRain And CurMapAmbient.Rain = True Then
 
     If bRain And bLluvia(UserMap) = 1 And CurMapAmbient.Rain = True Then
