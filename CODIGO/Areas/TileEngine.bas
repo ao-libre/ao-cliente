@@ -1048,8 +1048,12 @@ Sub RenderScreen(ByVal tilex As Integer, _
         ScreenY = ScreenY + 1
     Next Y
 
-    'Weather Update & Render - Aca se renderiza la lluvia, nieve, etc.
-    Call Engine_Weather_Update
+    If ClientSetup.ParticleEngine Then
+        'Weather Update & Render - Aca se renderiza la lluvia, nieve, etc.
+        Call mDx8_Particulas_vbgore.Engine_Weather_Update
+
+        Call mDx8_Particulas_vbgore.Effect_UpdateAll
+    End If
 
     If ClientSetup.ProyectileEngine Then
                             

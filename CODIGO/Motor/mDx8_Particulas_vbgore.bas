@@ -296,12 +296,11 @@ Dim LoopC As Long
 End Sub
 
 Sub Effect_UpdateAll()
-If ClientSetup.ParticleEngine = False And bRain = False Then Exit Sub
 '*****************************************************************
 'Updates all of the effects and renders them
 'More info: http://www.vbgore.com/CommonCode.Particles.Effect_UpdateAll
 '*****************************************************************
-Dim LoopC As Long
+    Dim LoopC As Long
 
     'Make sure we have effects
     If NumEffects = 0 Then Exit Sub
