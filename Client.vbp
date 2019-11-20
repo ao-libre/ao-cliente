@@ -89,6 +89,7 @@ Module=mDx8_Cuenta; CODIGO\Motor\mDx8_Cuenta.bas
 Module=mDx8_Clima; CODIGO\Motor\mDx8_Clima.bas
 Module=mDx8_Auras; CODIGO\Motor\mDx8_Auras.bas
 Module=mDx8_Ambiente; CODIGO\Motor\mDx8_Ambiente.bas
+Class=Particle; CODIGO\Motor\Particle.cls
 Form=CODIGO\Formularios\frmAmbientEditor.frm
 Module=mPooChar; CODIGO\Areas\mPooChar.bas
 Module=mPooMap; CODIGO\Areas\mPooMap.bas
