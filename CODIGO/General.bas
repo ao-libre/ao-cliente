@@ -930,7 +930,7 @@ Private Sub LoadInitialConfig()
         Call CloseClient
     End If
     
-    Call Engine_DirectX8_Aditional_Init
+    Call mDx8_Engine.Engine_DirectX8_Aditional_Init
 
     Call AddtoRichTextBox(frmCargando.status, _
                             "   " & JsonLanguage.item("HECHO").item("TEXTO"), _

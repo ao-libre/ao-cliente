@@ -1131,24 +1131,6 @@ RenderScreen_Err:
     
 End Sub
 
-Private Sub Engine_Weather_Update()
-    If bRain And CurMapAmbient.Rain = True Then
-
-    If bRain And bLluvia(UserMap) = 1 And CurMapAmbient.Rain = True Then
-        If WeatherEffectIndex <= 0 Then
-            WeatherEffectIndex = Effect_Rain_Begin(9, 100)
-            WeatherEffectIndex = Effect_Rain_Begin(9, 500)
-        ElseIf Effect(WeatherEffectIndex).EffectNum <> EffectNum_Rain Then
-            Effect_Kill WeatherEffectIndex
-            WeatherEffectIndex = Effect_Rain_Begin(9, 100)
-            WeatherEffectIndex = Effect_Rain_Begin(9, 500)
-        ElseIf Not Effect(WeatherEffectIndex).Used Then
-            WeatherEffectIndex = Effect_Rain_Begin(9, 100)
-            WeatherEffectIndex = Effect_Rain_Begin(9, 500)
-        End If
-    End If
-End Sub
-
 Public Function RenderSounds()
 '**************************************************************
 'Author: Juan Martin Sotuyo Dodero

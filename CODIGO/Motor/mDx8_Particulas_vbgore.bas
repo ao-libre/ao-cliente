@@ -1,4 +1,4 @@
-Attribute VB_Name = "mDx8_Particulas"
+Attribute VB_Name = "mDx8_Particulas_vbgore"
 Option Explicit
 
 Public ParticleTexture(1 To 15) As Direct3DTexture8
@@ -76,7 +76,7 @@ Dim i As Byte
     
     For i = 1 To UBound(ParticleTexture())
         If ParticleTexture(i) Is Nothing Then Set ParticleTexture(i) = Nothing
-        Set ParticleTexture(i) = DirectD3D8.CreateTextureFromFileEx(DirectDevice, App.path & "\graficos\p" & i & ".png", D3DX_DEFAULT, D3DX_DEFAULT, D3DX_DEFAULT, 0, D3DFMT_UNKNOWN, D3DPOOL_MANAGED, D3DX_FILTER_POINT, D3DX_FILTER_POINT, &HFF000000, ByVal 0, ByVal 0)
+        Set ParticleTexture(i) = DirectD3D8.CreateTextureFromFileEx(DirectDevice, Game.path(Graficos) & "\p" & i & ".png", D3DX_DEFAULT, D3DX_DEFAULT, D3DX_DEFAULT, 0, D3DFMT_UNKNOWN, D3DPOOL_MANAGED, D3DX_FILTER_POINT, D3DX_FILTER_POINT, &HFF000000, ByVal 0, ByVal 0)
     Next i
 
 End Sub
@@ -1552,79 +1552,6 @@ Dim TargetA As Single
  
 End Sub
 
-Public Function Engine_GetAngle(ByVal CenterX As Integer, ByVal CenterY As Integer, ByVal TargetX As Integer, ByVal TargetY As Integer) As Single
-'************************************************************
-'Gets the angle between two points in a 2d plane
-'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_GetAngle
-'************************************************************
-Dim SideA As Single
-Dim SideC As Single
-
-    On Error GoTo ErrOut
-
-    'Check for horizontal lines (90 or 270 degrees)
-    If CenterY = TargetY Then
-
-        'Check for going right (90 degrees)
-        If CenterX < TargetX Then
-            Engine_GetAngle = 90
-
-            'Check for going left (270 degrees)
-        Else
-            Engine_GetAngle = 270
-        End If
-
-        'Exit the function
-        Exit Function
-
-    End If
-
-    'Check for horizontal lines (360 or 180 degrees)
-    If CenterX = TargetX Then
-
-        'Check for going up (360 degrees)
-        If CenterY > TargetY Then
-            Engine_GetAngle = 360
-
-            'Check for going down (180 degrees)
-        Else
-            Engine_GetAngle = 180
-        End If
-
-        'Exit the function
-        Exit Function
-
-    End If
-
-    'Calculate Side C
-    SideC = Sqr(Abs(TargetX - CenterX) ^ 2 + Abs(TargetY - CenterY) ^ 2)
-
-    'Side B = CenterY
-
-    'Calculate Side A
-    SideA = Sqr(Abs(TargetX - CenterX) ^ 2 + TargetY ^ 2)
-
-    'Calculate the angle
-    Engine_GetAngle = (SideA ^ 2 - CenterY ^ 2 - SideC ^ 2) / (CenterY * SideC * -2)
-    Engine_GetAngle = (Atn(-Engine_GetAngle / Sqr(-Engine_GetAngle * Engine_GetAngle + 1)) + 1.5708) * 57.29583
-
-    'If the angle is >180, subtract from 360
-    If TargetX < CenterX Then Engine_GetAngle = 360 - Engine_GetAngle
-
-    'Exit function
-
-Exit Function
-
-    'Check for error
-ErrOut:
-
-    'Return a 0 saying there was an error
-    Engine_GetAngle = 0
-
-Exit Function
-
-End Function
-
 Function Effect_Rayo_Begin(ByVal X As Single, ByVal Y As Single, ByVal Gfx As Integer, ByVal Particles As Integer, Optional ByVal Progression As Single = 1) As Integer
 '*****************************************************************
 'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Rayo_Begin
@@ -1759,24 +1686,24 @@ Sub Engine_Weather_Update()
         End If
     End If
 
-    If CurMapAmbient.Snow = True Then
-        If WeatherEffectIndex <= 0 Then
-            WeatherEffectIndex = Effect_Snow_Begin(14, 200)
-        ElseIf Effect(WeatherEffectIndex).EffectNum <> EffectNum_Snow Then
-            Effect_Kill WeatherEffectIndex
-            WeatherEffectIndex = Effect_Snow_Begin(14, 200)
-        ElseIf Not Effect(WeatherEffectIndex).Used Then
-            WeatherEffectIndex = Effect_Snow_Begin(14, 200)
-        End If
-    End If
+    ' If CurMapAmbient.Snow = True Then
+    '     If WeatherEffectIndex <= 0 Then
+    '         WeatherEffectIndex = Effect_Snow_Begin(14, 200)
+    '     ElseIf Effect(WeatherEffectIndex).EffectNum <> EffectNum_Snow Then
+    '         Effect_Kill WeatherEffectIndex
+    '         WeatherEffectIndex = Effect_Snow_Begin(14, 200)
+    '     ElseIf Not Effect(WeatherEffectIndex).Used Then
+    '         WeatherEffectIndex = Effect_Snow_Begin(14, 200)
+    '     End If
+    ' End If
             
-    If CurMapAmbient.Fog <> -1 Then
-        Engine_Weather_UpdateFog
-    End If
+    ' If CurMapAmbient.Fog <> -1 Then
+    '     Engine_Weather_UpdateFog
+    ' End If
     
-    If OnRampageImgGrh <> 0 Then
-        DDrawTransGrhIndextoSurface OnRampageImgGrh, 0, 0, 0, Normal_RGBList(), 0, True
-    End If
+    ' If OnRampageImgGrh <> 0 Then
+    '     DDrawTransGrhIndextoSurface OnRampageImgGrh, 0, 0, 0, Normal_RGBList(), 0, True
+    ' End If
     
 End Sub
 
@@ -1979,39 +1906,6 @@ Dim LoopC As Long
     Next LoopC
 
 End Sub
-
-
-Public Sub Engine_CreateEffect(ByVal CharIndex As Integer, ByVal Effect As Byte, ByVal X As Single, ByVal Y As Single, ByVal Loops As Integer)
-
-    If Not ValidNumber(Effect, eNumber_Types.ent_Byte) Then
-            'Call Log_Engine("Error in Engine_CreateEffect, The effect " & Effect & " is not valid.")
-        Exit Sub
-    End If
-        
-    Select Case Effect
-        Case EffectNum_Fire
-        'Case EffectNum_Snow
-        Case EffectNum_Heal
-        Case EffectNum_Bless
-        Case EffectNum_Protection
-        
-        Case EffectNum_Strengthen
-            charlist(CharIndex).ParticleIndex = Effect_Strengthen_Begin(X, Y, 2, 100, 30, CSng(Loops))
-            
-        'Case EffectNum_Rain
-        Case EffectNum_EquationTemplate
-        
-        'Case EffectNum_Waterfall
-        
-        Case EffectNum_Summon
-            charlist(CharIndex).ParticleIndex = Effect_Summon_Begin(X, Y, 1, 500, 0.1)
-            
-        Case EffectNum_Rayo
-            charlist(CharIndex).ParticleIndex = Effect_Rayo_Begin(X, Y, 2, 100, -1)
-    End Select
-
-End Sub
-
 
 Public Function Speed_Particle() As Single
 '***************************************************
