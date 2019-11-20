@@ -1091,20 +1091,6 @@ Function HayAgua(ByVal X As Integer, ByVal Y As Integer) As Boolean
                 
 End Function
 
-Public Sub ShowSendTxt()
-    If Not frmCantidad.Visible Then
-        frmMain.SendTxt.Visible = True
-        frmMain.SendTxt.SetFocus
-    End If
-End Sub
-
-Public Sub ShowSendCMSGTxt()
-    If Not frmCantidad.Visible Then
-        frmMain.SendCMSTXT.Visible = True
-        frmMain.SendCMSTXT.SetFocus
-    End If
-End Sub
-
 ''
 ' Checks the command line parameters, if you are running Ao with /nores command
 '
