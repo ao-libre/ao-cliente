@@ -593,6 +593,7 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 03/11/2019: Changed some wav sounds for better ones, extracted from Imperium AO 1.6.4. (Recox)
 * 10/11/2019: Configuracion teclas al iniciar el juego (como IAO), se arreglo un bug que no permitia customizar las teclas (Recox)
 * 10/11/2019: Se mejoraron los colores que aparecen en consola, se borro codigo innecesario (Recox)
-
+* 10/11/2019: Si un personaje esta meditando y se mueve para caminar, ahora deja de meditar y empieza a caminar, lo mismo con el descanzo, antes te expulsaba del servidor (Recox)
+* 10/11/2019: Ahora se guarda correctamente la configuracion de teclas elegida (Recox)
 
 
