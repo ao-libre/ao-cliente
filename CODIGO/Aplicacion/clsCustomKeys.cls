@@ -543,5 +543,8 @@ Public Sub SetKeyConfigFileInUse(ByVal KeyConfigToUse As String)
     End If
 
     Call LoadCustomKeys
+
+    'We saved in the config file the key config desired.
+    Call WriteVar(Game.path(INIT) & "Config.ini", "OTHER", "BIND_KEYS", KeyConfigToUse)
 End Sub
 
