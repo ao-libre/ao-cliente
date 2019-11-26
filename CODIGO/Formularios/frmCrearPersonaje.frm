@@ -1759,7 +1759,7 @@ End Sub
 
 Private Sub lstProfesion_Click()
 On Error Resume Next
-    If lstProfesion.Text = "Trabajador" Then
+    If lstProfesion.Text = "Trabajador" Or lstProfesion.Text = "Worker" Then
         'Agarramos un numero aleatorio del 0 al 6 por que hay 6 imagenes de trabajador
         ImgProfesionDibujo.Picture = LoadPicture(Game.path(Interfaces) & lstProfesion.Text & (CInt(Rnd * 6)) & ".jpg")
     Else
@@ -2283,23 +2283,24 @@ Private Sub LoadCharInfo()
     ReDim ModRaza(1 To NroRazas)
     ReDim ModClase(1 To NroClases)
 
+    Dim Lector As clsIniManager
     Set Lector = New clsIniManager
-    Lector.Initialize (Game.path(INIT) & "CharInfo" & Language & ".dat")
+    Lector.Initialize (Game.path(INIT) & "CharInfo_" & Language & ".dat")
 
     'Modificadores de Clase
     For i = 1 To NroClases
         With ModClase(i)
             SearchVar = ListaClases(i)
             
-            .Evasion = Lector(GetValue("MODEVASION", SearchVar))
-            .AtaqueArmas = Lector(GetValue("MODATAQUEARMAS", SearchVar))
-            .AtaqueProyectiles = Lector(GetValue("MODATAQUEPROYECTILES", SearchVar))
-            .DanoArmas = Lector(GetValue("MODDANOARMAS", SearchVar))
-            .DanoProyectiles = Lector(GetValue("MODDANOPROYECTILES", SearchVar))
-            .Escudo = Lector(GetValue("MODESCUDO", SearchVar))
-            .Hit = Lector(GetValue("HIT", SearchVar))
-            .Magia = Lector(GetValue("MODMAGIA", SearchVar))
-            .Vida = Lector(GetValue("MODVIDA", SearchVar))
+            .Evasion = CDbl(Lector.GetValue("MODEVASION", SearchVar))
+            .AtaqueArmas = CDbl(Lector.GetValue("MODATAQUEARMAS", SearchVar))
+            .AtaqueProyectiles = CDbl(Lector.GetValue("MODATAQUEPROYECTILES", SearchVar))
+            .DanoArmas = CDbl(Lector.GetValue("MODDANOARMAS", SearchVar))
+            .DanoProyectiles = CDbl(Lector.GetValue("MODDANOPROYECTILES", SearchVar))
+            .Escudo = CDbl(Lector.GetValue("MODESCUDO", SearchVar))
+            .Hit = CDbl(Lector.GetValue("HIT", SearchVar))
+            .Magia = CDbl(Lector.GetValue("MODMAGIA", SearchVar))
+            .Vida = CDbl(Lector.GetValue("MODVIDA", SearchVar))
         End With
     Next i
     
@@ -2308,11 +2309,11 @@ Private Sub LoadCharInfo()
         With ModRaza(i)
             SearchVar = Replace(ListaRazas(i), " ", "")
         
-            .Fuerza = Lector(GetValue("MODRAZA", SearchVar + "Fuerza"))
-            .Agilidad = Lector(GetValue("MODRAZA", SearchVar + "Agilidad"))
-            .Inteligencia = Lector(GetValue("MODRAZA", SearchVar + "Inteligencia"))
-            .Carisma = Lector(GetValue("MODRAZA", SearchVar + "Carisma"))
-            .Constitucion = Lector(GetValue("MODRAZA", SearchVar + "Constitucion"))
+            .Fuerza = CSng(Lector.GetValue("MODRAZA", SearchVar + "Fuerza"))
+            .Agilidad = CSng(Lector.GetValue("MODRAZA", SearchVar + "Agilidad"))
+            .Inteligencia = CSng(Lector.GetValue("MODRAZA", SearchVar + "Inteligencia"))
+            .Carisma = CSng(Lector.GetValue("MODRAZA", SearchVar + "Carisma"))
+            .Constitucion = CSng(Lector.GetValue("MODRAZA", SearchVar + "Constitucion"))
         End With
     Next i
 
