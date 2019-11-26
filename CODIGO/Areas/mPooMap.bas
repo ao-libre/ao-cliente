@@ -128,19 +128,16 @@ Sub Map_MoveTo(ByVal Direccion As E_Heading)
                         
       End Select
 
-      If LegalOk And Not UserParalizado Then
+      If LegalOk And Not UserParalizado And Not UserDescansar And Not UserMeditar Then
           Call WriteWalk(Direccion)
           Call frmMain.ActualizarMiniMapa   'integrado por ReyarB
 
-          If Not UserDescansar And Not UserMeditar Then
-            Call Char_MovebyHead(UserCharIndex, Direccion)
-            Call Char_MoveScreen(Direccion)
-          End If
+          Call Char_MovebyHead(UserCharIndex, Direccion)
+          Call Char_MoveScreen(Direccion)
       Else
-        If (charlist(UserCharIndex).Heading <> Direccion) And (GetTickCount - lastmovement > 96) Then
+        If (charlist(UserCharIndex).Heading <> Direccion) Then
               Call WriteChangeHeading(Direccion)
               Call Char_SetHeading(UserCharIndex, Direccion)
-              lastmovement = GetTickCount
         End If
                 
       End If
@@ -150,6 +147,16 @@ Sub Map_MoveTo(ByVal Direccion As E_Heading)
 
       ' Update 3D sounds!
       Call Audio.MoveListener(UserPos.X, UserPos.Y)
+  
+      ' Esto es un parche por que por alguna razon si el pj esta meditando y nos movemos el juego explota por eso cambie 
+      ' Las validaciones en la linea 131 y agregue esto para arreglarlo (Recox)
+      If UserMeditar Then
+        UserMeditar = Not UserMeditar
+      End If
+
+      If UserDescansar Then
+        UserDescansar = Not UserDescansar
+      End If
         
 End Sub
 
