@@ -1381,17 +1381,12 @@ Private ModClase() As tModClase
 
 Private NroRazas As Integer
 Private NroClases As Integer
-
-Private Cargando As Boolean
-
 Private currentGrh As Long
 Private Dir As E_Heading
 
 Private Sub Form_Load()
     Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaCrearPersonaje.jpg")
-    
-        Cargando = True
-    
+
     Call LoadCharInfo
     Call CargarEspecialidades
     Call LoadTextsForm
@@ -1406,8 +1401,6 @@ Private Sub Form_Load()
     Dir = SOUTH
     
     'Call TirarDados
-    
-    Cargando = False
     
     'UserClase = 0
     UserSexo = 0
@@ -1479,8 +1472,6 @@ Private Sub CargarCombos()
         lstProfesion.AddItem ListaClases(i)
     Next i
 
-    lstProfesion.ListIndex = 1
-    
     lstHogar.Clear
 
     Lower_ciudades = LBound(Ciudades())
