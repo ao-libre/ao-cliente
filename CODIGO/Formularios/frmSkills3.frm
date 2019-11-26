@@ -1622,7 +1622,7 @@ Private Sub ValidarSkills()
             bPuedeMagia = False
             bPuedeMeditar = False
         
-        Case eClass.Pirat
+        Case eClass.Pirate
             bPuedeMagia = False
             bPuedeMeditar = False
             bPuedeEscudo = False

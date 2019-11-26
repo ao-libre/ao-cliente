@@ -1381,17 +1381,12 @@ Private ModClase() As tModClase
 
 Private NroRazas As Integer
 Private NroClases As Integer
-
-Private Cargando As Boolean
-
 Private currentGrh As Long
 Private Dir As E_Heading
 
 Private Sub Form_Load()
     Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaCrearPersonaje.jpg")
-    
-        Cargando = True
-    
+
     Call LoadCharInfo
     Call CargarEspecialidades
     Call LoadTextsForm
@@ -1406,8 +1401,6 @@ Private Sub Form_Load()
     Dir = SOUTH
     
     'Call TirarDados
-    
-    Cargando = False
     
     'UserClase = 0
     UserSexo = 0
@@ -1451,7 +1444,7 @@ Private Sub CargarEspecialidades()
     vEspecialidades(eClass.Assasin) = JsonLanguage.item("HABILIDADES").item("APUNALAR").item("TEXTO")
     vEspecialidades(eClass.Bandit) = JsonLanguage.item("HABILIDADES").item("COMBATE_CUERPO_A_CUERPO").item("TEXTO")
     vEspecialidades(eClass.Druid) = JsonLanguage.item("HABILIDADES").item("DOMAR_ANIMALES").item("TEXTO")
-    vEspecialidades(eClass.Pirat) = JsonLanguage.item("HABILIDADES").item("NAVEGACION").item("TEXTO")
+    vEspecialidades(eClass.Pirate) = JsonLanguage.item("HABILIDADES").item("NAVEGACION").item("TEXTO")
     vEspecialidades(eClass.Worker) = JsonLanguage.item("HABILIDADES").item("MINERIA").item("TEXTO") & ", " & JsonLanguage.item("HABILIDADES").item("PESCA").item("TEXTO") & ", " & JsonLanguage.item("HABILIDADES").item("CARPINTERIA").item("TEXTO") & " " & JsonLanguage.item("LETRA_Y").item("TEXTO") & " " & JsonLanguage.item("HABILIDADES").item("TALAR").item("TEXTO")
 End Sub
 
@@ -1479,8 +1472,6 @@ Private Sub CargarCombos()
         lstProfesion.AddItem ListaClases(i)
     Next i
 
-    lstProfesion.ListIndex = 1
-    
     lstHogar.Clear
 
     Lower_ciudades = LBound(Ciudades())
@@ -1759,7 +1750,7 @@ End Sub
 
 Private Sub lstProfesion_Click()
 On Error Resume Next
-    If lstProfesion.Text = "Trabajador" Then
+    If lstProfesion.Text = "Trabajador" Or lstProfesion.Text = "Worker" Then
         'Agarramos un numero aleatorio del 0 al 6 por que hay 6 imagenes de trabajador
         ImgProfesionDibujo.Picture = LoadPicture(Game.path(Interfaces) & lstProfesion.Text & (CInt(Rnd * 6)) & ".jpg")
     Else
@@ -2282,21 +2273,25 @@ Private Sub LoadCharInfo()
 
     ReDim ModRaza(1 To NroRazas)
     ReDim ModClase(1 To NroClases)
-    
+
+    Dim Lector As clsIniManager
+    Set Lector = New clsIniManager
+    Lector.Initialize (Game.path(INIT) & "CharInfo_" & Language & ".dat")
+
     'Modificadores de Clase
     For i = 1 To NroClases
         With ModClase(i)
             SearchVar = ListaClases(i)
             
-            .Evasion = Val(GetVar(IniPath & "CharInfo.dat", "MODEVASION", SearchVar))
-            .AtaqueArmas = Val(GetVar(IniPath & "CharInfo.dat", "MODATAQUEARMAS", SearchVar))
-            .AtaqueProyectiles = Val(GetVar(IniPath & "CharInfo.dat", "MODATAQUEPROYECTILES", SearchVar))
-            .DanoArmas = Val(GetVar(IniPath & "CharInfo.dat", "MODDANOARMAS", SearchVar))
-            .DanoProyectiles = Val(GetVar(IniPath & "CharInfo.dat", "MODDANOPROYECTILES", SearchVar))
-            .Escudo = Val(GetVar(IniPath & "CharInfo.dat", "MODESCUDO", SearchVar))
-            .Hit = Val(GetVar(IniPath & "CharInfo.dat", "HIT", SearchVar))
-            .Magia = Val(GetVar(IniPath & "CharInfo.dat", "MODMAGIA", SearchVar))
-            .Vida = Val(GetVar(IniPath & "CharInfo.dat", "MODVIDA", SearchVar))
+            .Evasion = CDbl(Lector.GetValue("MODEVASION", SearchVar))
+            .AtaqueArmas = CDbl(Lector.GetValue("MODATAQUEARMAS", SearchVar))
+            .AtaqueProyectiles = CDbl(Lector.GetValue("MODATAQUEPROYECTILES", SearchVar))
+            .DanoArmas = CDbl(Lector.GetValue("MODDANOARMAS", SearchVar))
+            .DanoProyectiles = CDbl(Lector.GetValue("MODDANOPROYECTILES", SearchVar))
+            .Escudo = CDbl(Lector.GetValue("MODESCUDO", SearchVar))
+            .Hit = CDbl(Lector.GetValue("HIT", SearchVar))
+            .Magia = CDbl(Lector.GetValue("MODMAGIA", SearchVar))
+            .Vida = CDbl(Lector.GetValue("MODVIDA", SearchVar))
         End With
     Next i
     
@@ -2305,11 +2300,11 @@ Private Sub LoadCharInfo()
         With ModRaza(i)
             SearchVar = Replace(ListaRazas(i), " ", "")
         
-            .Fuerza = Val(GetVar(IniPath & "CharInfo.dat", "MODRAZA", SearchVar + "Fuerza"))
-            .Agilidad = Val(GetVar(IniPath & "CharInfo.dat", "MODRAZA", SearchVar + "Agilidad"))
-            .Inteligencia = Val(GetVar(IniPath & "CharInfo.dat", "MODRAZA", SearchVar + "Inteligencia"))
-            .Carisma = Val(GetVar(IniPath & "CharInfo.dat", "MODRAZA", SearchVar + "Carisma"))
-            .Constitucion = Val(GetVar(IniPath & "CharInfo.dat", "MODRAZA", SearchVar + "Constitucion"))
+            .Fuerza = CSng(Lector.GetValue("MODRAZA", SearchVar + "Fuerza"))
+            .Agilidad = CSng(Lector.GetValue("MODRAZA", SearchVar + "Agilidad"))
+            .Inteligencia = CSng(Lector.GetValue("MODRAZA", SearchVar + "Inteligencia"))
+            .Carisma = CSng(Lector.GetValue("MODRAZA", SearchVar + "Carisma"))
+            .Constitucion = CSng(Lector.GetValue("MODRAZA", SearchVar + "Constitucion"))
         End With
     Next i
 

@@ -595,5 +595,6 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 10/11/2019: Se mejoraron los colores que aparecen en consola, se borro codigo innecesario (Recox)
 * 10/11/2019: Si un personaje esta meditando y se mueve para caminar, ahora deja de meditar y empieza a caminar, lo mismo con el descanzo, antes te expulsaba del servidor (Recox)
 * 10/11/2019: Ahora se guarda correctamente la configuracion de teclas elegida (Recox)
+* 26/11/2019: Se tradujeron las clases y sus modificadores, ahora funcionan correctamente en el frmCrearPersonaje y en el resto del juego (Recox)
 
 
