@@ -1,5 +1,5 @@
 [INIT]
-Cant=9
+Cant=10
 
 [S1]
 Desc=Rol - Alkon 0.13.X
@@ -52,6 +52,12 @@ Mundo=BattleServer
 
 [S9]
 Desc=Servidor Local | Modo:Deathmatch
+IP=localhost
+PJ=7666
+Mundo=Deathmatch
+
+[S10]
+Desc=Servidor Local | Modo:test
 IP=localhost
 PJ=7666
 Mundo=Deathmatch
