@@ -1490,11 +1490,6 @@ On Error Resume Next
     Exit Sub
 End Sub
 
-Function EaseOutCubic(Time As Double)
-    Time = Time - 1
-    EaseOutCubic = Time * Time * Time + 1
-End Function
-
 Public Sub GetPostsFromReddit()
 On Error Resume Next
     If UBound(Posts) = 0 Then
