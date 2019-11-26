@@ -4,6 +4,13 @@
 ## Wiki Desarrollo Argentum Online
 [Manual para entender el codigo de Argentum Online](http://es.dao.wikia.com/wiki/Wiki_Desarrollo_Argentum_Online).
 
+## Logs publicos de nuestro Server
+AO es un juego open-source y por ello abrimos nuestros logs del server al publico para que puedan ver que errores hay en el servidor y poder ayudar a repararlos 
+
+- http://argentumonline.org/logs-desarrollo.html
+- http://argentumonline.org/logs-gms.html
+- http://argentumonline.org/logs-errores.html
+- http://argentumonline.org/logs-statistics.html
 
 ## F.A.Q:
 
