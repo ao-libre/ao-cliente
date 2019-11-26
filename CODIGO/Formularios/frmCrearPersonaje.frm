@@ -1451,7 +1451,7 @@ Private Sub CargarEspecialidades()
     vEspecialidades(eClass.Assasin) = JsonLanguage.item("HABILIDADES").item("APUNALAR").item("TEXTO")
     vEspecialidades(eClass.Bandit) = JsonLanguage.item("HABILIDADES").item("COMBATE_CUERPO_A_CUERPO").item("TEXTO")
     vEspecialidades(eClass.Druid) = JsonLanguage.item("HABILIDADES").item("DOMAR_ANIMALES").item("TEXTO")
-    vEspecialidades(eClass.Pirat) = JsonLanguage.item("HABILIDADES").item("NAVEGACION").item("TEXTO")
+    vEspecialidades(eClass.Pirate) = JsonLanguage.item("HABILIDADES").item("NAVEGACION").item("TEXTO")
     vEspecialidades(eClass.Worker) = JsonLanguage.item("HABILIDADES").item("MINERIA").item("TEXTO") & ", " & JsonLanguage.item("HABILIDADES").item("PESCA").item("TEXTO") & ", " & JsonLanguage.item("HABILIDADES").item("CARPINTERIA").item("TEXTO") & " " & JsonLanguage.item("LETRA_Y").item("TEXTO") & " " & JsonLanguage.item("HABILIDADES").item("TALAR").item("TEXTO")
 End Sub
 
@@ -2282,21 +2282,24 @@ Private Sub LoadCharInfo()
 
     ReDim ModRaza(1 To NroRazas)
     ReDim ModClase(1 To NroClases)
-    
+
+    Set Lector = New clsIniManager
+    Lector.Initialize (Game.path(INIT) & "CharInfo" & Language & ".dat")
+
     'Modificadores de Clase
     For i = 1 To NroClases
         With ModClase(i)
             SearchVar = ListaClases(i)
             
-            .Evasion = Val(GetVar(IniPath & "CharInfo.dat", "MODEVASION", SearchVar))
-            .AtaqueArmas = Val(GetVar(IniPath & "CharInfo.dat", "MODATAQUEARMAS", SearchVar))
-            .AtaqueProyectiles = Val(GetVar(IniPath & "CharInfo.dat", "MODATAQUEPROYECTILES", SearchVar))
-            .DanoArmas = Val(GetVar(IniPath & "CharInfo.dat", "MODDANOARMAS", SearchVar))
-            .DanoProyectiles = Val(GetVar(IniPath & "CharInfo.dat", "MODDANOPROYECTILES", SearchVar))
-            .Escudo = Val(GetVar(IniPath & "CharInfo.dat", "MODESCUDO", SearchVar))
-            .Hit = Val(GetVar(IniPath & "CharInfo.dat", "HIT", SearchVar))
-            .Magia = Val(GetVar(IniPath & "CharInfo.dat", "MODMAGIA", SearchVar))
-            .Vida = Val(GetVar(IniPath & "CharInfo.dat", "MODVIDA", SearchVar))
+            .Evasion = Lector(GetValue("MODEVASION", SearchVar))
+            .AtaqueArmas = Lector(GetValue("MODATAQUEARMAS", SearchVar))
+            .AtaqueProyectiles = Lector(GetValue("MODATAQUEPROYECTILES", SearchVar))
+            .DanoArmas = Lector(GetValue("MODDANOARMAS", SearchVar))
+            .DanoProyectiles = Lector(GetValue("MODDANOPROYECTILES", SearchVar))
+            .Escudo = Lector(GetValue("MODESCUDO", SearchVar))
+            .Hit = Lector(GetValue("HIT", SearchVar))
+            .Magia = Lector(GetValue("MODMAGIA", SearchVar))
+            .Vida = Lector(GetValue("MODVIDA", SearchVar))
         End With
     Next i
     
@@ -2305,11 +2308,11 @@ Private Sub LoadCharInfo()
         With ModRaza(i)
             SearchVar = Replace(ListaRazas(i), " ", "")
         
-            .Fuerza = Val(GetVar(IniPath & "CharInfo.dat", "MODRAZA", SearchVar + "Fuerza"))
-            .Agilidad = Val(GetVar(IniPath & "CharInfo.dat", "MODRAZA", SearchVar + "Agilidad"))
-            .Inteligencia = Val(GetVar(IniPath & "CharInfo.dat", "MODRAZA", SearchVar + "Inteligencia"))
-            .Carisma = Val(GetVar(IniPath & "CharInfo.dat", "MODRAZA", SearchVar + "Carisma"))
-            .Constitucion = Val(GetVar(IniPath & "CharInfo.dat", "MODRAZA", SearchVar + "Constitucion"))
+            .Fuerza = Lector(GetValue(IniPath & "CharInfo.dat", "MODRAZA", SearchVar + "Fuerza"))
+            .Agilidad = Lector(GetValue(IniPath & "CharInfo.dat", "MODRAZA", SearchVar + "Agilidad"))
+            .Inteligencia = Lector(GetValue(IniPath & "CharInfo.dat", "MODRAZA", SearchVar + "Inteligencia"))
+            .Carisma = Lector(GetValue(IniPath & "CharInfo.dat", "MODRAZA", SearchVar + "Carisma"))
+            .Constitucion = Lector(GetValue(IniPath & "CharInfo.dat", "MODRAZA", SearchVar + "Constitucion"))
         End With
     Next i
 
