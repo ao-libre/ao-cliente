@@ -2308,11 +2308,11 @@ Private Sub LoadCharInfo()
         With ModRaza(i)
             SearchVar = Replace(ListaRazas(i), " ", "")
         
-            .Fuerza = Lector(GetValue(IniPath & "CharInfo.dat", "MODRAZA", SearchVar + "Fuerza"))
-            .Agilidad = Lector(GetValue(IniPath & "CharInfo.dat", "MODRAZA", SearchVar + "Agilidad"))
-            .Inteligencia = Lector(GetValue(IniPath & "CharInfo.dat", "MODRAZA", SearchVar + "Inteligencia"))
-            .Carisma = Lector(GetValue(IniPath & "CharInfo.dat", "MODRAZA", SearchVar + "Carisma"))
-            .Constitucion = Lector(GetValue(IniPath & "CharInfo.dat", "MODRAZA", SearchVar + "Constitucion"))
+            .Fuerza = Lector(GetValue("MODRAZA", SearchVar + "Fuerza"))
+            .Agilidad = Lector(GetValue("MODRAZA", SearchVar + "Agilidad"))
+            .Inteligencia = Lector(GetValue("MODRAZA", SearchVar + "Inteligencia"))
+            .Carisma = Lector(GetValue("MODRAZA", SearchVar + "Carisma"))
+            .Constitucion = Lector(GetValue("MODRAZA", SearchVar + "Constitucion"))
         End With
     Next i
 
