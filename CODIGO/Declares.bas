@@ -249,7 +249,7 @@ Public Enum eClass
     Paladin = 9   'Paladin
     Hunter = 10   'Cazador
     Worker = 11   'Trabajador
-    Pirat = 12    'Pirata
+    Pirate = 12    'Pirata
 End Enum
 
 Public Enum eCiudad

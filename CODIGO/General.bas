@@ -1137,34 +1137,19 @@ Private Sub InicializarNombres()
     ListaRazas(eRaza.Gnomo) = JsonLanguage.item("RAZAS").item("GNOMO")
     ListaRazas(eRaza.Enano) = JsonLanguage.item("RAZAS").item("ENANO")
 
-
-    ' No uso las traducciones ya que muchas cosas estan hardcodeadas en castellano
-    ' ListaClases(eClass.Mage) = JsonLanguage.Item("CLASES").Item("MAGO")
-    ' ListaClases(eClass.Cleric) = JsonLanguage.Item("CLASES").Item("CLERIGO")
-    ' ListaClases(eClass.Warrior) = JsonLanguage.Item("CLASES").Item("GUERRERO")
-    ' ListaClases(eClass.Assasin) = JsonLanguage.Item("CLASES").Item("ASESINO")
-    ' ListaClases(eClass.Thief) = JsonLanguage.Item("CLASES").Item("LADRON")
-    ' ListaClases(eClass.Bard) = JsonLanguage.Item("CLASES").Item("BARDO")
-    ' ListaClases(eClass.Druid) = JsonLanguage.Item("CLASES").Item("DRUIDA")
-    ' ListaClases(eClass.Bandit) = JsonLanguage.Item("CLASES").Item("BANDIDO")
-    ' ListaClases(eClass.Paladin) = JsonLanguage.Item("CLASES").Item("PALADIN")
-    ' ListaClases(eClass.Hunter) = JsonLanguage.Item("CLASES").Item("CAZADOR")
-    ' ListaClases(eClass.Worker) = JsonLanguage.Item("CLASES").Item("TRABAJADOR")
-    ' ListaClases(eClass.Pirat) = JsonLanguage.Item("CLASES").Item("PIRATA")
-
-    ListaClases(eClass.Mage) = "Mago"
-    ListaClases(eClass.Cleric) = "Clerigo"
-    ListaClases(eClass.Warrior) = "Guerrero"
-    ListaClases(eClass.Assasin) = "Asesino"
-    ListaClases(eClass.Thief) = "Ladron"
-    ListaClases(eClass.Bard) = "Bardo"
-    ListaClases(eClass.Druid) = "Druida"
-    ListaClases(eClass.Bandit) = "Bandido"
-    ListaClases(eClass.Paladin) = "Paladin"
-    ListaClases(eClass.Hunter) = "Cazador"
-    ListaClases(eClass.Worker) = "Trabajador"
-    ListaClases(eClass.Pirat) = "Pirata"
-    
+    ListaClases(eClass.Mage) = JsonLanguage.Item("CLASES").Item("MAGO")
+    ListaClases(eClass.Cleric) = JsonLanguage.Item("CLASES").Item("CLERIGO")
+    ListaClases(eClass.Warrior) = JsonLanguage.Item("CLASES").Item("GUERRERO")
+    ListaClases(eClass.Assasin) = JsonLanguage.Item("CLASES").Item("ASESINO")
+    ListaClases(eClass.Thief) = JsonLanguage.Item("CLASES").Item("LADRON")
+    ListaClases(eClass.Bard) = JsonLanguage.Item("CLASES").Item("BARDO")
+    ListaClases(eClass.Druid) = JsonLanguage.Item("CLASES").Item("DRUIDA")
+    ListaClases(eClass.Bandit) = JsonLanguage.Item("CLASES").Item("BANDIDO")
+    ListaClases(eClass.Paladin) = JsonLanguage.Item("CLASES").Item("PALADIN")
+    ListaClases(eClass.Hunter) = JsonLanguage.Item("CLASES").Item("CAZADOR")
+    ListaClases(eClass.Worker) = JsonLanguage.Item("CLASES").Item("TRABAJADOR")
+    ListaClases(eClass.Pirate) = JsonLanguage.Item("CLASES").Item("PIRATA")
+   
     SkillsNames(eSkill.Magia) = JsonLanguage.item("HABILIDADES").item("MAGIA").item("TEXTO")
     SkillsNames(eSkill.Robar) = JsonLanguage.item("HABILIDADES").item("ROBAR").item("TEXTO")
     SkillsNames(eSkill.Tacticas) = JsonLanguage.item("HABILIDADES").item("EVASION_EN_COMBATE").item("TEXTO")
