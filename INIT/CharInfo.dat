@@ -67,7 +67,7 @@ Mago=0.5
 Druida=0.75
 Trabajador=0.7
 
-[MODDAÑOARMAS]
+[MODDANOARMAS]
 Guerrero=1.1
 Cazador=0.9
 Paladin=0.925
@@ -81,7 +81,7 @@ Mago=0.5
 Druida=0.7
 Trabajador=0.8
 
-[MODDAÑOPROYECTILES]
+[MODDANOPROYECTILES]
 Guerrero=0.9
 Cazador=1.1
 Paladin=0.8
