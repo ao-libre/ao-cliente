@@ -5,15 +5,7 @@ Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" _
     (Destination As Any, source As Any, ByVal Length As Long)
     
 Private Type CharVA
-    X As Integer
-    Y As Integer
-    W As Integer
-    H As Integer
-    
-    Tx1 As Single
-    Tx2 As Single
-    Ty1 As Single
-    Ty2 As Single
+    Vertex(0 To 3) As TLVERTEX
 End Type
 
 Private Type POINTAPI
@@ -77,11 +69,8 @@ Public Sub Text_Render_Special(ByVal intX As Integer, ByVal intY As Integer, ByR
 '*****************************************************************
     Dim i As Long
     If LenB(strText) <> 0 Then
-
-        Call Engine_Long_To_RGB_List(temp_rgb(), lngColor)
-
-        Call Engine_Render_Text(SpriteBatch, cfonts(Font), strText, intX, intY, temp_rgb(), bolCentred, , , Font)
-        
+        lngColor = ColorToDX8(lngColor)
+        Call Engine_Render_Text(cfonts(1), strText, intX, intY, lngColor, bolCentred) 
     End If
     
 End Sub ' GSZAO
@@ -96,28 +85,26 @@ Private Function Es_Emoticon(ByVal ascii As Byte) As Boolean ' GSZAO
     End If
 End Function ' GSZAO
 
-Private Sub Engine_Render_Text(ByRef Batch As clsBatch, _
-                                ByRef UseFont As CustomFont, _
-                                ByVal Text As String, _
-                                ByVal X As Long, _
-                                ByVal Y As Long, _
-                                ByRef Color() As Long, _
-                                Optional ByVal Center As Boolean = False, _
-                                Optional ByVal Alpha As Byte = 255, _
-                                Optional ByVal ParseEmoticons As Boolean = False, _
-                                Optional Font As Integer = 1)
+Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, 
+                                ByVal Text As String, 
+                                ByVal X As Long, 
+                                ByVal Y As Long, 
+                                ByVal Color As Long, Optional 
+                                ByVal Center As Boolean = False, Optional 
+                                ByVal Alpha As Byte = 255, Optional 
+                                ByVal ParseEmoticons As Boolean = True)
                                 
 '*****************************************************************
 'Render text with a custom font
 '*****************************************************************
-    Dim TempVA As CharVA
+    Dim TempVA(0 To 3) As TLVERTEX
     Dim tempstr() As String
     Dim Count As Integer
     Dim ascii() As Byte
     Dim i As Long
     Dim J As Long
     Dim yOffset As Single
-    
+
     'Check if we have the device
     If DirectDevice.TestCooperativeLevel <> D3D_OK Then Exit Sub
 
@@ -133,7 +120,10 @@ Private Sub Engine_Render_Text(ByRef Batch As clsBatch, _
         NewText = Text
         Text = vbNullString
 
-        For i = 0 To UBound(tempstr)
+        Dim Upper_tempstr As Long
+        Upper_tempstr = UBound(tempstr)
+
+        For i = 0 To Upper_tempstr
             If tempstr(i) = ":)" Or tempstr(i) = "=)" Then
                 tempstr(i) = Chr$(129)
             ElseIf tempstr(i) = ":@" Or tempstr(i) = "=@" Then
@@ -158,21 +148,25 @@ Private Sub Engine_Render_Text(ByRef Batch As clsBatch, _
     tempstr = Split(Text, vbCrLf)
 
     'Set the texture
-    Call Batch.SetTexture(UseFont.Texture)
-    
+    ' Call Batch.SetTexture(UseFont.Texture)
+    DirectDevice.SetTexture 0, UseFont.Texture 
+
     If Center Then
         X = X - Engine_GetTextWidth(cfonts(Font), Text) * 0.5
     End If
-    
+
     'Loop through each line if there are line breaks (vbCrLf)
-    For i = 0 To UBound(tempstr)
+    For i = 0 To Upper_tempstr
+        ' Dim Len_tempstr As Long
+        ' Len_tempstr = UBound(tempstr)
+
         If Len(tempstr(i)) > 0 Then
             yOffset = i * UseFont.CharHeight
             Count = 0
         
             'Convert the characters to the ascii value
             ascii() = StrConv(tempstr(i), vbFromUnicode)
-        
+            
             'Loop through the characters
             For J = 1 To Len(tempstr(i))
 
@@ -190,8 +184,8 @@ Private Sub Engine_Render_Text(ByRef Batch As clsBatch, _
                     
                 End If
             
-                Call Batch.Draw(TempVA.X, TempVA.Y, TempVA.W, TempVA.H, Color, TempVA.Tx1, TempVA.Ty1, TempVA.Tx2, TempVA.Ty2)
-
+                ' Call Batch.Draw(TempVA.X, TempVA.Y, TempVA.W, TempVA.H, Color, TempVA.Tx1, TempVA.Ty1, TempVA.Tx2, TempVA.Ty2)
+                DirectDevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, TempVA(0), Len(TempVA(0)) 
                 'Shift over the the position to render the next character
                 Count = Count + UseFont.HeaderInfo.CharWidth(ascii(J - 1))
                 
@@ -322,14 +316,37 @@ Sub Engine_Init_FontSettings()
     
             'Set the verticies
             With cfonts(i).HeaderInfo.CharVA(LoopChar)
-                .X = 0
-                .Y = 0
-                .W = cfonts(i).HeaderInfo.CellWidth
-                .H = cfonts(i).HeaderInfo.CellHeight
-                .Tx1 = u
-                .Ty1 = v
-                .Tx2 = u + cfonts(i).ColFactor
-                .Ty2 = v + cfonts(i).RowFactor
+                .Vertex(0).Color = D3DColorARGB(255, 0, 0, 0)   'Black is the most common color
+                .Vertex(0).rhw = 1
+                .Vertex(0).tu = u
+                .Vertex(0).tv = v
+                .Vertex(0).X = 0
+                .Vertex(0).Y = 0
+                .Vertex(0).z = 0
+
+                .Vertex(1).Color = D3DColorARGB(255, 0, 0, 0)
+                .Vertex(1).rhw = 1
+                .Vertex(1).tu = u + cfonts(1).ColFactor
+                .Vertex(1).tv = v
+                .Vertex(1).X = cfonts(1).HeaderInfo.CellWidth
+                .Vertex(1).Y = 0
+                .Vertex(1).z = 0
+
+                .Vertex(2).Color = D3DColorARGB(255, 0, 0, 0)
+                .Vertex(2).rhw = 1
+                .Vertex(2).tu = u
+                .Vertex(2).tv = v + cfonts(1).RowFactor
+                .Vertex(2).X = 0
+                .Vertex(2).Y = cfonts(1).HeaderInfo.CellHeight
+                .Vertex(2).z = 0
+
+                .Vertex(3).Color = D3DColorARGB(255, 0, 0, 0)
+                .Vertex(3).rhw = 1
+                .Vertex(3).tu = u + cfonts(1).ColFactor
+                .Vertex(3).tv = v + cfonts(1).RowFactor
+                .Vertex(3).X = cfonts(1).HeaderInfo.CellWidth
+                .Vertex(3).Y = cfonts(1).HeaderInfo.CellHeight
+                .Vertex(3).z = 0
             End With
             
         Next LoopChar
@@ -340,12 +357,17 @@ Public Sub DrawText(ByVal X As Integer, _
                     ByVal Y As Integer, _
                     ByVal Text As String, _
                     ByVal Color As Long, _
-                    Optional Center As Boolean = False, Optional Font As Integer = 1)
+                    Optional Center As Boolean = False, 
+                    Optional Font As Integer = 1)
 
-    Dim aux(3) As Long
+    Dim aux As D3DCOLORVALUE
 
-    Call Engine_Long_To_RGB_List(aux(), Color)
-    Call Engine_Render_Text(SpriteBatch, cfonts(Font), Text, X, Y, aux(), Center, , , Font)
+    'Obtener_RGB Color, r, g, b
+    Call ARGBtoD3DCOLORVALUE(Color, aux)
+    
+    Color = D3DColorARGB(255, aux.r, aux.g, aux.B) 
+
+    Call Engine_Render_Text(cfonts(1), Text, X, Y, Color, Center, 255, False) 
 
 End Sub
 

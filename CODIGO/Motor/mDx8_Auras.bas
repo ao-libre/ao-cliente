@@ -112,7 +112,7 @@ Public Sub Delete_All_Auras(ByVal CharIndex As Integer)
 '***************************************************
 'Author: Ezequiel Juarez (Standelf)
 'Last Modification: 26/05/10
-'Kill all of aura´s from Char
+'Kill all of auraï¿½s from Char
 '***************************************************
     Delete_Aura CharIndex, 1
     Delete_Aura CharIndex, 2
@@ -160,7 +160,7 @@ On Error GoTo handle
             With charlist(CharIndex).Aura(i)
                 If .Grh <> 0 Then
                     If .Rotation = 1 Then Update_Aura CharIndex, i
-                    Call Draw_GrhIndex(.Grh, X + .OffsetX, Y + .OffsetY, 1, .Color(), .angle, True)
+                    Call DDrawTransGrhIndextoSurfaceIndex(.Grh, X + .OffsetX, Y + .OffsetY, 1, .Color(), .angle, True)
                 End If
             End With
         Next i

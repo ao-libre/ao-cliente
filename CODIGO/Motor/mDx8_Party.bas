@@ -44,7 +44,7 @@ Public Sub Draw_Party_Members()
                 If Len(PartyMembers(i).Name) > 0 Then
                     Count = Count + 1
                     Call Engine_Draw_Box(410, 20 + (Count - 1) * 50 + 5, 120, 40, D3DColorARGB(100, 0, 0, 0))
-                    Call Draw_GrhIndex(HeadData(PartyMembers(i).Head).Head(3).GrhIndex, 410, 20 + (Count - 1) * 50 + 35, 1, Normal_RGBList(), 0, True)
+                    Call DDrawTransGrhIndextoSurfaceIndex(HeadData(PartyMembers(i).Head).Head(3).GrhIndex, 410, 20 + (Count - 1) * 50 + 35, 1, Normal_RGBList(), 0, True)
                     'Fonts_Render_String PartyMembers(i).Name, 440, 20 + (Count - 1) * 50 + 10, D3DColorARGB(150, 255, 255, 255), 2
                     'Fonts_Render_String "Nivel: " & PartyMembers(i).Lvl, 440, 20 + (Count - 1) * 50 + 20, D3DColorARGB(150, 255, 255, 255), 2
                     'Fonts_Render_String "Exp: " & PartyMembers(i).ExpParty, 440, 20 + (Count - 1) * 50 + 30, D3DColorARGB(150, 255, 255, 255), 2

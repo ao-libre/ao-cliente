@@ -431,7 +431,7 @@ Public Sub DrawInventory()
         startdX = ((LoopC - 1) Mod (frmMain.picInv.Width / 32)) * 32
         startdY = ((LoopC - 1) \ (frmMain.picInv.Width / 32)) * 32
 
-        Call Draw_GrhIndex(26095, startdX, startdY, 0, Inv_Color(), 0, False) 'Dibuja el fondo
+        Call DDrawTransGrhIndextoSurfaceIndex(26095, startdX, startdY, 0, Inv_Color(), 0, False) 'Dibuja el fondo
             
         If Inventory(LoopC).GrhIndex Then
 
@@ -439,10 +439,10 @@ Public Sub DrawInventory()
             If LoopC <> DragItem Then
                     
                 If LoopC = SelectedItem Then
-                    Call Draw_GrhIndex(26096, startdX, startdY, 0, Inv_Color(), 0, False) 'Dibuja el fondo cuando lo seleccionamos
+                    Call DDrawTransGrhIndextoSurfaceIndex(26096, startdX, startdY, 0, Inv_Color(), 0, False) 'Dibuja el fondo cuando lo seleccionamos
                 End If
 
-                Call Draw_GrhIndex(Inventory(LoopC).GrhIndex, startdX, startdY, 0, Inv_Color())
+                Call DDrawTransGrhIndextoSurfaceIndex(Inventory(LoopC).GrhIndex, startdX, startdY, 0, Inv_Color())
 
                 'If equipped we render "E"
                 If Inventory(LoopC).Equipped Then
@@ -458,7 +458,7 @@ Public Sub DrawInventory()
     Next LoopC
 
     If DragItem <> 0 And Drag = 1 And isInventory Then
-        Call Draw_GrhIndex(Inventory(DragItem).GrhIndex, MouseX - 16, MouseY - 16, 0, Inv_Color())
+        Call DDrawTransGrhIndextoSurfaceIndex(Inventory(DragItem).GrhIndex, MouseX - 16, MouseY - 16, 0, Inv_Color())
 
     End If
             

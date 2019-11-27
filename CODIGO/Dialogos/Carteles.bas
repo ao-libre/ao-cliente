@@ -54,7 +54,7 @@ Dim X As Integer, Y As Integer
     X = XPosCartel + 20
     Y = YPosCartel + 20
     
-    Call Draw_GrhIndex(textura, XPosCartel, YPosCartel, 0, Normal_RGBList(), 0, False)
+    Call DDrawTransGrhIndextoSurfaceIndex(textura, XPosCartel, YPosCartel, 0, Normal_RGBList(), 0, False)
     Dim J As Integer, desp As Integer, Upper_leyendaFormateada As Long
     
     Upper_leyendaFormateada = UBound(LeyendaFormateada)

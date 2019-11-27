@@ -21,18 +21,13 @@ Public DirectD3D As Direct3D8
 ' use the same object no matter what it is
 Public DirectDevice As Direct3DDevice8
 
-Public SurfaceDB As New clsTextureManager
-Public SpriteBatch As New clsBatch
-
-Private Viewport As D3DVIEWPORT8
-Private Projection As D3DMATRIX
-Private View As D3DMATRIX
+Public SurfaceDB As New clsSurfaceManager 
 
 Public Engine_BaseSpeed As Single
 Public TileBufferSize As Integer
 
-Public ScreenWidth As Long
-Public ScreenHeight As Long
+Public Const ScreenWidth As Long = 536
+Public Const ScreenHeight As Long = 412
 
 Public Const HeadOffsetAltos As Integer = -8
 Public Const HeadOffsetBajos As Integer = 2
@@ -135,10 +130,6 @@ Public Function Engine_DirectX8_Init() As Boolean
     'Carga dinamica de texturas por defecto.
     Set SurfaceDB = New clsTextureManager
     
-    'Sprite batching.
-    Set SpriteBatch = New clsBatch
-    Call SpriteBatch.Initialise(2000)
-    
     EndTime = timeGetTime
 
     If Err Then
@@ -204,7 +195,6 @@ On Error Resume Next
     Set DirectD3D = Nothing
     Set DirectX = Nothing
     Set DirectDevice = Nothing
-    Set SpriteBatch = Nothing
 End Sub
 
 Public Sub Engine_DirectX8_Aditional_Init()
@@ -223,8 +213,8 @@ Public Sub Engine_DirectX8_Aditional_Init()
     Call Engine_Set_BaseSpeed(0.018)
     
     With MainScreenRect
-        .Bottom = ScreenHeight
-        .Right = ScreenWidth
+        .Bottom = frmMain.MainViewPic.ScaleHeight
+        .Right = frmMain.MainViewPic.ScaleWidth
     End With
     
     ' Seteamos algunos colores por adelantado y unica vez.
@@ -244,12 +234,14 @@ End Sub
 
 Public Sub Engine_Draw_Line(X1 As Single, Y1 As Single, X2 As Single, Y2 As Single, Optional Color As Long = -1, Optional Color2 As Long = -1)
 On Error GoTo Error
-    
-    Call Engine_Long_To_RGB_List(temp_rgb(), Color)
-    
-    Call SpriteBatch.SetTexture(Nothing)
-    Call SpriteBatch.Draw(X1, Y1, X2, Y2, temp_rgb())
-    
+    Dim Vertex(1) As TLVERTEX
+
+    Vertex(0) = Geometry_Create_TLVertex(X1, Y1, 0, 1, Color, 0, 0)
+    Vertex(1) = Geometry_Create_TLVertex(X2, Y2, 0, 1, Color2, 0, 0)
+
+    DirectDevice.SetTexture 0, Nothing
+    DirectDevice.DrawPrimitiveUP D3DPT_LINELIST, 1, Vertex(0), Len(Vertex(0))
+
 Exit Sub
 
 Error:
@@ -337,10 +329,24 @@ Public Sub Engine_Draw_Box(ByVal X As Integer, ByVal Y As Integer, ByVal Width A
 'Blisse-AO | Render Box
 '***************************************************
 
-    Call Engine_Long_To_RGB_List(temp_rgb(), Color)
+    Dim b_Rect As RECT
+    Dim b_Color(0 To 3) As Long
+    Dim b_Vertex(0 To 3) As TLVERTEX
 
-    Call SpriteBatch.SetTexture(Nothing)
-    Call SpriteBatch.Draw(X, Y, Width, ByVal Height, temp_rgb())
+    Dim temp_color(3) As Long
+
+    With b_Rect
+        .Bottom = Y + Height
+        .Left = X
+        .Right = X + Width
+        .Top = Y
+    End With
+
+    Geometry_Create_Box b_Vertex(), b_Rect, b_Rect, b_Color(), 0, 0
+
+
+    DirectDevice.SetTexture 0, Nothing
+    DirectDevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, b_Vertex(0), Len(b_Vertex(0))
     
 End Sub
 
@@ -532,9 +538,6 @@ Public Sub Engine_EndScene(ByRef destRect As RECT, Optional ByVal hWndDest As Lo
 'Last Modification: 29/12/10
 'Blisse-AO | DD EndScene & Present
 '***************************************************
-    
-    Call SpriteBatch.Flush
-    
     Call DirectDevice.EndScene
         
     If hWndDest = 0 Then
@@ -543,6 +546,92 @@ Public Sub Engine_EndScene(ByRef destRect As RECT, Optional ByVal hWndDest As Lo
         Call DirectDevice.Present(destRect, ByVal 0, hWndDest, ByVal 0)
     End If
     
+End Sub
+
+Public Sub Geometry_Create_Box(ByRef Verts() As TLVERTEX, ByRef dest As RECT, ByRef src As RECT, ByRef rgb_list() As Long, _
+                                Optional ByRef Textures_Width As Long, Optional ByRef Textures_Height As Long, Optional ByVal Angle As Single)
+'**************************************************************
+'Author: Aaron Perkins
+'Modified by Juan Martin Sotuyo Dodero
+'Last Modify Date: 11/17/2002
+'**************************************************************
+
+    Dim x_center As Single
+    Dim y_center As Single
+    Dim radius As Single
+    Dim x_Cor As Single
+    Dim y_Cor As Single
+    Dim left_point As Single
+    Dim right_point As Single
+    Dim temp As Single
+
+    If Angle > 0 Then
+        x_center = dest.Left + (dest.Right - dest.Left) / 2
+        y_center = dest.Top + (dest.Bottom - dest.Top) / 2
+
+        radius = Sqr((dest.Right - x_center) ^ 2 + (dest.Bottom - y_center) ^ 2)
+
+        temp = (dest.Right - x_center) / radius
+        right_point = Atn(temp / Sqr(-temp * temp + 1))
+        left_point = 3.1459 - right_point
+    End If
+
+    If Angle = 0 Then
+        x_Cor = dest.Left
+        y_Cor = dest.Bottom
+    Else
+        x_Cor = x_center + Cos(-left_point - Angle) * radius
+        y_Cor = y_center - Sin(-left_point - Angle) * radius
+    End If
+
+    If Textures_Width And Textures_Height Then
+        Verts(0) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(0), src.Left / Textures_Width, (src.Bottom + 1) / Textures_Height)
+    Else
+        Verts(0) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(0), 0, 0)
+    End If
+
+    If Angle = 0 Then
+        x_Cor = dest.Left
+        y_Cor = dest.Top
+    Else
+        x_Cor = x_center + Cos(left_point - Angle) * radius
+        y_Cor = y_center - Sin(left_point - Angle) * radius
+    End If
+
+    If Textures_Width And Textures_Height Then
+        Verts(1) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(1), src.Left / Textures_Width, src.Top / Textures_Height)
+    Else
+        Verts(1) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(1), 0, 1)
+    End If
+
+    If Angle = 0 Then
+        x_Cor = dest.Right
+        y_Cor = dest.Bottom
+    Else
+        x_Cor = x_center + Cos(-right_point - Angle) * radius
+        y_Cor = y_center - Sin(-right_point - Angle) * radius
+    End If
+
+    If Textures_Width And Textures_Height Then
+        Verts(2) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(2), (src.Right + 1) / Textures_Width, (src.Bottom + 1) / Textures_Height)
+    Else
+        Verts(2) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(2), 1, 0)
+    End If
+
+    If Angle = 0 Then
+        x_Cor = dest.Right
+        y_Cor = dest.Top
+    Else
+        x_Cor = x_center + Cos(right_point - Angle) * radius
+        y_Cor = y_center - Sin(right_point - Angle) * radius
+    End If
+
+    If Textures_Width And Textures_Height Then
+        Verts(3) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(3), (src.Right + 1) / Textures_Width, src.Top / Textures_Height)
+    Else
+        Verts(3) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(3), 1, 1)
+    End If
+
 End Sub
 
 Public Sub Engine_ZoomIn()
@@ -708,22 +797,22 @@ Public Sub DrawPJ(ByVal Index As Byte)
             Head_OffSet = HeadOffsetBajos
         End If
     
-        Call Draw_Grh(BodyData(cPJ(Index).Body).Walk(3), PixelOffsetX + Init_X, PixelOffsetY + Init_Y, 0, Normal_RGBList(), 0)
+        Call DDrawTransGrhIndextoSurface(BodyData(cPJ(Index).Body).Walk(3), PixelOffsetX + Init_X, PixelOffsetY + Init_Y, 0, Normal_RGBList(), 0)
 
         If cPJ(Index).Head <> 0 Then
-            Call Draw_Grh(HeadData(cPJ(Index).Head).Head(3), PixelOffsetX + Init_X + 4, PixelOffsetY + Init_Y + Head_OffSet, 0, Normal_RGBList(), 0)
+            Call DDrawTransGrhIndextoSurface(HeadData(cPJ(Index).Head).Head(3), PixelOffsetX + Init_X + 4, PixelOffsetY + Init_Y + Head_OffSet, 0, Normal_RGBList(), 0)
         End If
 
         If cPJ(Index).helmet <> 0 Then
-            Call Draw_Grh(CascoAnimData(cPJ(Index).helmet).Head(3), PixelOffsetX + Init_X + 4, PixelOffsetY + Init_Y + Head_OffSet, 0, Normal_RGBList(), 0)
+            Call DDrawTransGrhIndextoSurface(CascoAnimData(cPJ(Index).helmet).Head(3), PixelOffsetX + Init_X + 4, PixelOffsetY + Init_Y + Head_OffSet, 0, Normal_RGBList(), 0)
         End If
 
         If cPJ(Index).weapon <> 0 Then
-            Call Draw_Grh(WeaponAnimData(cPJ(Index).weapon).WeaponWalk(3), PixelOffsetX + Init_X, PixelOffsetY + Init_Y, 0, Normal_RGBList(), 0)
+            Call DDrawTransGrhIndextoSurface(WeaponAnimData(cPJ(Index).weapon).WeaponWalk(3), PixelOffsetX + Init_X, PixelOffsetY + Init_Y, 0, Normal_RGBList(), 0)
         End If
 
         If cPJ(Index).shield <> 0 Then
-            Call Draw_Grh(ShieldAnimData(cPJ(Index).shield).ShieldWalk(3), PixelOffsetX + Init_X, PixelOffsetY + Init_Y, 0, Normal_RGBList(), 0)
+            Call DDrawTransGrhIndextoSurface(ShieldAnimData(cPJ(Index).shield).ShieldWalk(3), PixelOffsetX + Init_X, PixelOffsetY + Init_Y, 0, Normal_RGBList(), 0)
         End If
     End If
 

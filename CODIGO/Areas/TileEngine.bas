@@ -914,13 +914,13 @@ Sub RenderScreen(ByVal tilex As Integer, _
             
             'Layer 1 **********************************
             If MapData(X, Y).Graphic(1).GrhIndex <> 0 Then
-                Call Draw_Grh(MapData(X, Y).Graphic(1), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1)
+                Call DDrawTransGrhIndextoSurface(MapData(X, Y).Graphic(1), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1)
             End If
             '******************************************
 
             'Layer 2 **********************************
             If MapData(X, Y).Graphic(2).GrhIndex <> 0 Then
-                Call Draw_Grh(MapData(X, Y).Graphic(2), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1)
+                Call DDrawTransGrhIndextoSurface(MapData(X, Y).Graphic(2), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1)
             End If
             '******************************************
             
@@ -950,7 +950,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
                 
                     'Object Layer **********************************
                     If .ObjGrh.GrhIndex <> 0 Then
-                        Call Draw_Grh(.ObjGrh, PixelOffsetXTemp, PixelOffsetYTemp, 1, .Engine_Light(), 1)
+                        Call DDrawTransGrhIndextoSurface(.ObjGrh, PixelOffsetXTemp, PixelOffsetYTemp, 1, .Engine_Light(), 1)
                     End If
                     '***********************************************
 
@@ -967,14 +967,14 @@ Sub RenderScreen(ByVal tilex As Integer, _
                             
                             ' Transparencia de Arboles
                             If Abs(UserPos.X - X) < 3 And (Abs(UserPos.Y - Y)) < 8 And (Abs(UserPos.Y) < Y) Then
-                                Call Draw_Grh(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, Color_Arbol(), 1)
+                                Call DDrawTransGrhIndextoSurface(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, Color_Arbol(), 1)
                             Else 'NORMAL
-                                Call Draw_Grh(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, .Engine_Light(), 1)
+                                Call DDrawTransGrhIndextoSurface(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, .Engine_Light(), 1)
                             End If
                             
                         Else 'NORMAL
                         
-                            Call Draw_Grh(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, .Engine_Light(), 1)
+                            Call DDrawTransGrhIndextoSurface(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, .Engine_Light(), 1)
                             
                         End If
                         
@@ -997,7 +997,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
                     End If
 
                     If Not .FxIndex = 0 Then
-                        Call Draw_Grh(.fX, PixelOffsetXTemp + FxData(MapData(X, Y).FxIndex).OffsetX, PixelOffsetYTemp + FxData(.FxIndex).OffsetY, 1, .Engine_Light(), 1, True)
+                        Call DDrawTransGrhIndextoSurface(.fX, PixelOffsetXTemp + FxData(MapData(X, Y).FxIndex).OffsetX, PixelOffsetYTemp + FxData(.FxIndex).OffsetY, 1, .Engine_Light(), 1, True)
                         If .fX.Started = 0 Then .FxIndex = 0
                     End If
                     
@@ -1028,13 +1028,13 @@ Sub RenderScreen(ByVal tilex As Integer, _
             If MapData(X, Y).Graphic(4).GrhIndex Then
             
                 If bTecho Then
-                    Call Draw_Grh(MapData(X, Y).Graphic(4), PixelOffsetXTemp, PixelOffsetYTemp, 1, temp_rgb(), 1)
+                    Call DDrawTransGrhIndextoSurface(MapData(X, Y).Graphic(4), PixelOffsetXTemp, PixelOffsetYTemp, 1, temp_rgb(), 1)
                 Else
                 
                     If ColorTecho = 250 Then
-                        Call Draw_Grh(MapData(X, Y).Graphic(4), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1)
+                        Call DDrawTransGrhIndextoSurface(MapData(X, Y).Graphic(4), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1)
                     Else
-                        Call Draw_Grh(MapData(X, Y).Graphic(4), PixelOffsetXTemp, PixelOffsetYTemp, 1, temp_rgb(), 1)
+                        Call DDrawTransGrhIndextoSurface(MapData(X, Y).Graphic(4), PixelOffsetXTemp, PixelOffsetYTemp, 1, temp_rgb(), 1)
                     End If
                     
                 End If
@@ -1088,9 +1088,9 @@ Sub RenderScreen(ByVal tilex As Integer, _
                             If X >= -32 Then
                                 If X <= (ScreenWidth + 32) Then
                                     If ProjectileList(J).Rotate = 0 Then
-                                        Call Draw_Grh(ProjectileList(J).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, True, 0)
+                                        Call DDrawTransGrhIndextoSurface(ProjectileList(J).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, True, 0)
                                     Else
-                                        Call Draw_Grh(ProjectileList(J).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, True, ProjectileList(J).Rotate)
+                                        Call DDrawTransGrhIndextoSurface(ProjectileList(J).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, True, ProjectileList(J).Rotate)
                                     End If
                                 End If
                             End If
@@ -1536,7 +1536,7 @@ Private Sub CharRender(ByVal CharIndex As Long, _
             
             'Draw Body
             If .Body.Walk(.Heading).GrhIndex Then
-                Call Draw_Grh(.Body.Walk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1)
+                Call DDrawTransGrhIndextoSurface(.Body.Walk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1)
             End If
             
             'Draw name when navigating
@@ -1550,21 +1550,21 @@ Private Sub CharRender(ByVal CharIndex As Long, _
             
             'Draw Head
             If .Head.Head(.Heading).GrhIndex Then
-                Call Draw_Grh(.Head.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y, 1, ColorFinal(), 0)
+                Call DDrawTransGrhIndextoSurface(.Head.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y, 1, ColorFinal(), 0)
                 
                 'Draw Helmet
                 If .Casco.Head(.Heading).GrhIndex Then
-                    Call Draw_Grh(.Casco.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y + OFFSET_HEAD, 1, ColorFinal(), 0)
+                    Call DDrawTransGrhIndextoSurface(.Casco.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y + OFFSET_HEAD, 1, ColorFinal(), 0)
                 End If
                 
                 'Draw Weapon
                 If .Arma.WeaponWalk(.Heading).GrhIndex Then
-                    Call Draw_Grh(.Arma.WeaponWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1)
+                    Call DDrawTransGrhIndextoSurface(.Arma.WeaponWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1)
                 End If
                 
                 'Draw Shield
                 If .Escudo.ShieldWalk(.Heading).GrhIndex Then
-                    Call Draw_Grh(.Escudo.ShieldWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1)
+                    Call DDrawTransGrhIndextoSurface(.Escudo.ShieldWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1)
                 End If
             
                 'Draw name over head
@@ -1596,21 +1596,21 @@ Private Sub CharRender(ByVal CharIndex As Long, _
                 
                     'Draw Body
                     If .Body.Walk(.Heading).GrhIndex Then
-                        Call Draw_Grh(.Body.Walk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1, True)
+                        Call DDrawTransGrhIndextoSurface(.Body.Walk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1, True)
                     End If
                 
                     'Draw Head
                     If .Head.Head(.Heading).GrhIndex Then
-                        Call Draw_Grh(.Head.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y, 1, ColorFinal(), 0, True)
+                        Call DDrawTransGrhIndextoSurface(.Head.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y, 1, ColorFinal(), 0, True)
                         
                         'Draw Helmet
-                        If .Casco.Head(.Heading).GrhIndex Then Call Draw_Grh(.Casco.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y + OFFSET_HEAD, 1, ColorFinal(), 0, True)
+                        If .Casco.Head(.Heading).GrhIndex Then Call DDrawTransGrhIndextoSurface(.Casco.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y + OFFSET_HEAD, 1, ColorFinal(), 0, True)
                     
                         'Draw Weapon
-                        If .Arma.WeaponWalk(.Heading).GrhIndex Then Call Draw_Grh(.Arma.WeaponWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1, True)
+                        If .Arma.WeaponWalk(.Heading).GrhIndex Then Call DDrawTransGrhIndextoSurface(.Arma.WeaponWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1, True)
                     
                         'Draw Shield
-                        If .Escudo.ShieldWalk(.Heading).GrhIndex Then Call Draw_Grh(.Escudo.ShieldWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1, True)
+                        If .Escudo.ShieldWalk(.Heading).GrhIndex Then Call DDrawTransGrhIndextoSurface(.Escudo.ShieldWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1, True)
                 
                         'Draw name over head
                         If LenB(.Nombre) > 0 Then
@@ -1635,7 +1635,7 @@ Private Sub CharRender(ByVal CharIndex As Long, _
         
         'Draw FX
         If .FxIndex <> 0 Then
-            Call Draw_Grh(.fX, PixelOffsetX + FxData(.FxIndex).OffsetX, PixelOffsetY + FxData(.FxIndex).OffsetY, 1, SetARGB_Alpha(MapData(.Pos.X, .Pos.Y).Engine_Light(), 180), 1, True)
+            Call DDrawTransGrhIndextoSurface(.fX, PixelOffsetX + FxData(.FxIndex).OffsetX, PixelOffsetY + FxData(.FxIndex).OffsetY, 1, SetARGB_Alpha(MapData(.Pos.X, .Pos.Y).Engine_Light(), 180), 1, True)
             
             'Check if animation is over
             If .fX.Started = 0 Then .FxIndex = 0
@@ -1702,31 +1702,110 @@ Public Sub SetCharacterFx(ByVal CharIndex As Integer, ByVal fX As Integer, ByVal
     
 End Sub
 
-Public Sub Device_Textured_Render(ByVal X As Single, ByVal Y As Single, _
-                                  ByVal Width As Integer, ByVal Height As Integer, _
-                                  ByVal sX As Integer, ByVal sY As Integer, _
-                                  ByVal tex As Long, _
-                                  ByRef Color() As Long, _
-                                  Optional ByVal Alpha As Boolean = False, _
-                                  Optional ByVal angle As Single = 0)
+Public Sub Device_Textured_Render(ByVal X As Integer, _ 
+                                ByVal Y As Integer, _ 
+                                ByVal Texture As Direct3DTexture8, _ 
+                                ByRef src_rect As RECT, _ 
+                                ByRef Color_List() As Long, _ 
+                                Optional Alpha As Boolean = False, _ 
+                                Optional ByVal Angle As Single = 0, _ 
+                                Optional ByVal Shadow As Boolean = False)
+    If Shadow And ClientSetup.UsarSombras = False Then Exit Sub
 
-        Dim Texture As Direct3DTexture8
-        
-        Dim TextureWidth As Long, TextureHeight As Long
-        Set Texture = SurfaceDB.GetTexture(tex, TextureWidth, TextureHeight)
-        
-        With SpriteBatch
+    Dim dest_rect As RECT
+    Dim temp_verts(3) As TLVERTEX
+    Dim SRDesc As D3DSURFACE_DESC
 
-                Call .SetTexture(Texture)
-                    
-                If TextureWidth <> 0 And TextureHeight <> 0 Then
-                    Call .Draw(X, Y, Width, Height, Color, sX / TextureWidth, sY / TextureHeight, (sX + Width) / TextureWidth, (sY + Height) / TextureHeight, Alpha, angle)
-                Else
-                    Call .Draw(X, Y, TextureWidth, TextureHeight, Color, , , , , Alpha, angle)
-                End If
-                
-        End With
-        
+    With dest_rect
+        .Bottom = Y + (src_rect.Bottom - src_rect.Top)
+        .Left = X
+        .Right = X + (src_rect.Right - src_rect.Left)
+        .Top = Y
+    End With
+
+    Dim texwidth As Long, texheight As Long
+    Texture.GetLevelDesc 0, SRDesc
+
+    texwidth = SRDesc.Width
+    texheight = SRDesc.Height
+
+    If Shadow Then
+        Dim Color_Shadow(3) As Long
+        Engine_Long_To_RGB_List Color_Shadow(), D3DColorARGB(50, 0, 0, 0)
+        Geometry_Create_Box temp_verts(), dest_rect, src_rect, Color_Shadow(), texwidth, texheight, Angle
+    Else
+        Geometry_Create_Box temp_verts(), dest_rect, src_rect, Color_List(), texwidth, texheight, Angle
+    End If
+
+    DirectDevice.SetTexture 0, Texture
+
+    If Shadow Then
+        temp_verts(1).X = temp_verts(1).X + (src_rect.Bottom - src_rect.Top) * 0.5
+        temp_verts(1).Y = temp_verts(1).Y - (src_rect.Right - src_rect.Left) * 0.5
+
+        temp_verts(3).X = temp_verts(3).X + (src_rect.Right - src_rect.Left)
+        temp_verts(3).Y = temp_verts(3).Y - (src_rect.Right - src_rect.Left) * 0.5
+    End If
+
+    If Alpha Then
+        DirectDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_ONE
+        DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_ONE
+    End If
+
+    ' Faster load.
+    DirectDevice.DrawIndexedPrimitiveUP D3DPT_TRIANGLESTRIP, 0, 4, 2, _
+                indexList(0), D3DFMT_INDEX16, _
+                temp_verts(0), Len(temp_verts(0))
+
+    If Alpha Then
+        DirectDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
+        DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
+    End If
+
+End Sub
+
+Public Sub Device_Textured_Render_Scale(ByVal X As Integer, _ 
+                                        ByVal Y As Integer, _ 
+                                        ByVal Texture As Direct3DTexture8, _ 
+                                        ByRef src_rect As RECT, _ ByRef 
+                                        Color_List() As Long, _ 
+                                        Optional Alpha As Boolean = False, _ 
+                                        Optional ByVal Angle As Single = 0, _ 
+                                        Optional ByVal Shadow As Boolean = False)
+    If Shadow And ClientSetup.UsarSombras = False Then Exit Sub
+
+    Dim dest_rect As RECT
+    Dim temp_verts(3) As TLVERTEX
+    Dim SRDesc As D3DSURFACE_DESC
+
+    With dest_rect
+        .Bottom = Y + 2 '(src_rect.bottom - src_rect.Top)
+        .Left = X
+        .Right = X + 2 '(src_rect.Right - src_rect.Left)
+        .Top = Y
+    End With
+
+    Dim texwidth As Long, texheight As Long
+    Texture.GetLevelDesc 0, SRDesc
+
+    texwidth = SRDesc.Width
+    texheight = SRDesc.Height
+
+    Geometry_Create_Box temp_verts(), dest_rect, src_rect, Color_List(), texwidth, texheight, Angle
+
+    DirectDevice.SetTexture 0, Texture
+
+    If Alpha Then
+        DirectDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_ONE
+        DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_ONE
+    End If
+
+    DirectDevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, temp_verts(0), Len(temp_verts(0))
+
+    If Alpha Then
+        DirectDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
+        DirectDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
+    End If
 End Sub
 
 Public Sub RenderItem(ByVal hWndDest As Long, ByVal GrhIndex As Long)
@@ -1741,15 +1820,27 @@ Public Sub RenderItem(ByVal hWndDest As Long, ByVal GrhIndex As Long)
     
     Call Engine_BeginScene
 
-    Call Draw_GrhIndex(GrhIndex, 0, 0, 0, Normal_RGBList(), 0, False)
-        
+    Call DDrawTransGrhIndextoSurface(GrhIndex, 0, 0, 0, Normal_RGBList(), 0, False)   
+
     Call Engine_EndScene(DR, hWndDest)
     
 End Sub
 
-Sub Draw_GrhIndex(ByVal GrhIndex As Integer, ByVal X As Integer, ByVal Y As Integer, ByVal Center As Byte, ByRef Color_List() As Long, Optional ByVal angle As Single = 0, Optional ByVal Alpha As Boolean = False)
-    Dim SourceRect As RECT
+
+Sub DDrawTransGrhtoSurface(ByRef Grh As Grh, 
+                            ByVal X As Integer, 
+                            ByVal Y As Integer, 
+                            ByVal Center As Byte, 
+                            ByRef Color_List() As Long, 
+                            ByVal Animate As Byte, 
+                            ByVal posX As Byte, 
+                            ByVal posY As Byte, 
+                            Optional ByVal Alpha As Boolean = False, 
+                            Optional ByVal Angle As Single = 0, 
+                            Optional ByVal Shadow As Boolean = False)
     
+    Dim SourceRect As RECT
+
     With GrhData(GrhIndex)
         'Center Grh over X,Y pos
         If Center Then
@@ -1762,13 +1853,116 @@ Sub Draw_GrhIndex(ByVal GrhIndex As Integer, ByVal X As Integer, ByVal Y As Inte
             End If
         End If
 
+        SourceRect.Left = .SX
+        SourceRect.Top = .SY
+        SourceRect.Right = SourceRect.Left + .pixelWidth
+        SourceRect.Bottom = SourceRect.Top + .pixelHeight
+
         'Draw
-        Call Device_Textured_Render(X, Y, .pixelWidth, .pixelHeight, .sX, .sY, .FileNum, Color_List())
+        Call Device_Textured_Render(X, Y, SurfaceDB.Surface(.FileNum), SourceRect, Color_List(), Alpha, Angle, False)
     End With
-    
 End Sub
 
-Sub Draw_Grh(ByRef Grh As Grh, ByVal X As Integer, ByVal Y As Integer, ByVal Center As Byte, ByRef Color_List() As Long, ByVal Animate As Byte, Optional ByVal Alpha As Boolean = False, Optional ByVal angle As Single = 0)
+Public Sub DDrawGrhtoSurfaceScale(ByRef Grh As Grh, ByVal X As Integer, ByVal Y As Integer, ByVal Center As Byte, ByVal Animate As Byte, ByVal posX As Byte, ByVal posY As Byte)
+    Dim CurrentGrhIndex As Integer
+    Dim SourceRect As RECT
+
+    If Grh.GrhIndex = 0 Then Exit Sub
+On Error GoTo Error
+
+    If Animate Then
+        If Grh.Started = 1 Then
+            Grh.FrameCounter = Grh.FrameCounter + (timerElapsedTime * GrhData(Grh.GrhIndex).NumFrames / Grh.Speed)
+            If Grh.FrameCounter > GrhData(Grh.GrhIndex).NumFrames Then
+                Grh.FrameCounter = (Grh.FrameCounter Mod GrhData(Grh.GrhIndex).NumFrames) + 1
+
+                If Grh.Loops <> INFINITE_LOOPS Then
+                    If Grh.Loops > 0 Then
+                        Grh.Loops = Grh.Loops - 1
+                    Else
+                        Grh.Started = 0
+                    End If
+                End If
+            End If
+        End If
+    End If
+
+    'Figure out what frame to draw (always 1 if not animated)
+    CurrentGrhIndex = GrhData(Grh.GrhIndex).Frames(Grh.FrameCounter)
+
+    With GrhData(CurrentGrhIndex)
+        'Center Grh over X,Y pos
+        If Center Then
+            If .TileWidth <> 1 Then
+                X = X - Int(.TileWidth * TilePixelWidth / 2) + TilePixelWidth \ 2
+            End If
+
+            If .TileHeight <> 1 Then
+                Y = Y - Int(.TileHeight * TilePixelHeight) + TilePixelHeight
+            End If
+        End If
+
+        SourceRect.Left = .SX
+        SourceRect.Top = .SY
+        SourceRect.Right = SourceRect.Left + .pixelWidth
+        SourceRect.Bottom = SourceRect.Top + .pixelHeight
+
+        'Draw
+        Call Device_Textured_Render_Scale(X, Y, SurfaceDB.Surface(.FileNum), SourceRect, MapData(posX, posY).Engine_Light(), False, 0, False)
+    End With
+Exit Sub
+
+Error:
+    If Err.number = 9 And Grh.FrameCounter < 1 Then
+        Grh.FrameCounter = 1
+        Resume
+    Else
+        'Call Log_Engine("Error in DDrawGrhtoSurface, " & Err.Description & ", (" & Err.number & ")")
+        MsgBox "Error en el Engine Grafico, Por favor contacte a los adminsitradores enviandoles el archivo Errors.Log que se encuentra el la carpeta del cliente.", vbCritical
+        Call CloseClient
+    End If
+End Sub
+
+Sub DDrawTransGrhIndextoSurfaceScale(ByVal GrhIndex As Integer, 
+                                    ByVal X As Integer, 
+                                    ByVal Y As Integer, 
+                                    ByVal Center As Byte, 
+                                    ByRef Color_List() As Long, 
+                                    Optional ByVal Angle As Single = 0, 
+                                    Optional ByVal Alpha As Boolean = False)
+    Dim SourceRect As RECT
+
+
+    With GrhData(GrhIndex)
+        'Center Grh over X,Y pos
+        If Center Then
+            If .TileWidth <> 1 Then
+                X = X - Int(.TileWidth * TilePixelWidth / 2) + TilePixelWidth \ 2
+            End If
+
+            If .TileHeight <> 1 Then
+                Y = Y - Int(.TileHeight * TilePixelHeight) + TilePixelHeight
+            End If
+        End If
+
+        SourceRect.Left = .SX
+        SourceRect.Top = .SY
+        SourceRect.Right = SourceRect.Left + .pixelWidth
+        SourceRect.Bottom = SourceRect.Top + .pixelHeight
+
+        'Draw
+        Call Device_Textured_Render_Scale(X, Y, SurfaceDB.Surface(.FileNum), SourceRect, Color_List(), Alpha, Angle, False)
+    End With
+End Sub
+
+Sub DDrawTransGrhIndextoSurface(ByRef Grh As Grh, 
+                                ByVal X As Integer, 
+                                ByVal Y As Integer, 
+                                ByVal Center As Byte, 
+                                ByRef Color_List() As Long, 
+                                ByVal Animate As Byte, 
+                                Optional ByVal Alpha As Boolean = False, 
+                                Optional ByVal angle As Single = 0)
 '*****************************************************************
 'Draws a GRH transparently to a X and Y position
 '*****************************************************************
@@ -1822,7 +2016,7 @@ Error:
         Grh.FrameCounter = 1
         Resume
     Else
-        'Call Log_Engine("Error in Draw_Grh, " & Err.Description & ", (" & Err.number & ")")
+        'Call Log_Engine("Error in DDrawTransGrhIndextoSurface, " & Err.Description & ", (" & Err.number & ")")
         MsgBox "Error en el Engine Grafico, Por favor contacte a los adminsitradores enviandoles el archivo Errors.Log que se encuentra el la carpeta del cliente.", vbCritical
         Call CloseClient
     End If
