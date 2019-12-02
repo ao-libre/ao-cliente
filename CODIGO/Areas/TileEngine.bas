@@ -1712,8 +1712,10 @@ Public Sub Device_Textured_Render(ByVal X As Single, ByVal Y As Single, _
                 Call .SetTexture(Texture)
                     
                 If TextureWidth <> 0 And TextureHeight <> 0 Then
+                    Call .SetAlpha(Alpha)
                     Call .Draw(X, Y, Width, Height, Color, sX / TextureWidth, sY / TextureHeight, (sX + Width) / TextureWidth, (sY + Height) / TextureHeight, angle)
                 Else
+                    Call .SetAlpha(Alpha)
                     Call .Draw(X, Y, TextureWidth, TextureHeight, Color, , , , , angle)
                 End If
                 
