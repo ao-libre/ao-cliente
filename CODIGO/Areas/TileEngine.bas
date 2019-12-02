@@ -1700,7 +1700,7 @@ Public Sub Device_Textured_Render(ByVal X As Single, ByVal Y As Single, _
                                   ByVal tex As Long, _
                                   ByRef Color() As Long, _
                                   Optional ByVal Alpha As Boolean = False, _
-                                  Optional ByVal angle As Single = 0)
+                                  Optional ByVal Angle As Single = 0)
 
         Dim Texture As Direct3DTexture8
         
@@ -1711,12 +1711,12 @@ Public Sub Device_Textured_Render(ByVal X As Single, ByVal Y As Single, _
 
                 Call .SetTexture(Texture)
                     
+                Call .SetAlpha(Alpha)
+                
                 If TextureWidth <> 0 And TextureHeight <> 0 Then
-                    Call .SetAlpha(Alpha)
-                    Call .Draw(X, Y, Width, Height, Color, sX / TextureWidth, sY / TextureHeight, (sX + Width) / TextureWidth, (sY + Height) / TextureHeight, angle)
+                    Call .Draw(X, Y, Width, Height, Color, sX / TextureWidth, sY / TextureHeight, (sX + Width) / TextureWidth, (sY + Height) / TextureHeight, Angle)
                 Else
-                    Call .SetAlpha(Alpha)
-                    Call .Draw(X, Y, TextureWidth, TextureHeight, Color, , , , , angle)
+                    Call .Draw(X, Y, TextureWidth, TextureHeight, Color, , , , , Angle)
                 End If
                 
         End With
