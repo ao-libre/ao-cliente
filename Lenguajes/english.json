@@ -1277,6 +1277,9 @@
     "FRMBUSCAR_LIMPIARLISTAS": {
         "TEXTO": "Clean list"
     },
+    "FRMBUSCAR_SELECCIONE_ITEM": {
+        "TEXTO": "Select one item from the list before click on the create button"
+    },
     "FRM_CANTIDAD_TIRAR": {
         "TEXTO": "Throw"
     },

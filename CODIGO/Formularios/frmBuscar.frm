@@ -333,19 +333,25 @@ Private Sub ListCrearObj_MouseDown(Button As Integer, _
 End Sub
 
 Private Sub mnuCrearObj_Click()
+   If ListCrearObj.Text = "" Then 
+      MsgBox(JsonLanguage.Item("FRMBUSCAR_SELECCIONE_ITEM").Item("TEXTO"))
+      Exit Sub
+   End If
 
-        If ListCrearObj.Visible And LenB(txtCantidad.Text) <> 0 Then
-            Call WriteCreateItem(ListCrearObj.Text, txtCantidad.Text)
-        End If
-
+   If ListCrearObj.Visible And LenB(txtCantidad.Text) > 0 Then
+      Call WriteCreateItem(ListCrearObj.Text, txtCantidad.Text)
+   End If
 End Sub
 
 Private Sub mnuCrearNPC_Click()
+   If ListCrearNpcs.Text = "" Then 
+      MsgBox(JsonLanguage.Item("FRMBUSCAR_SELECCIONE_ITEM").Item("TEXTO"))
+      Exit Sub
+   End If
 
-        If ListCrearNpcs.Visible Then
-            Call WriteCreateNPC(ListCrearNpcs.Text, CBool(chkRespawn.Value))
-        End If
-
+   If ListCrearNpcs.Visible Then
+      Call WriteCreateNPC(ListCrearNpcs.Text, CBool(chkRespawn.Value))
+   End If
 End Sub
 
 'Parche: Al cerrar el formulario tambien te desconecta hahahaha ^_^'
