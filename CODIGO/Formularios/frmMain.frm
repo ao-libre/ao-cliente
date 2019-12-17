@@ -2193,10 +2193,12 @@ Private Sub CmdHechizos_Click()
 End Sub
 
 Private Sub picInv_DblClick()
-
+    'Esta validacion es para que el juego no rompa si hacemos doble click
+    'En un slot vacio (Recox)
+    If Inventario.SelectedItem = 0 Then Exit Sub
     If MirandoCarpinteria Or MirandoHerreria Then Exit Sub
-    
     If Not MainTimer.Check(TimersIndex.UseItemWithDblClick) Then Exit Sub
+    
     If trainingMacro.Enabled Then Call DesactivarMacroHechizos
     If macrotrabajo.Enabled Then Call DesactivarMacroTrabajo
     
