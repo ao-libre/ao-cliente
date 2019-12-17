@@ -930,7 +930,7 @@ Private Sub LoadInitialConfig()
         Call CloseClient
     End If
     
-    Call Engine_DirectX8_Aditional_Init
+    Call mDx8_Engine.Engine_DirectX8_Aditional_Init
 
     Call AddtoRichTextBox(frmCargando.status, _
                             "   " & JsonLanguage.item("HECHO").item("TEXTO"), _
@@ -1474,11 +1474,6 @@ On Error Resume Next
     
     Exit Sub
 End Sub
-
-Function EaseOutCubic(Time As Double)
-    Time = Time - 1
-    EaseOutCubic = Time * Time * Time + 1
-End Function
 
 Public Sub GetPostsFromReddit()
 On Error Resume Next

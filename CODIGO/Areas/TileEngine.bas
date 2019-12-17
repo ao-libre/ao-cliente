@@ -1048,6 +1048,15 @@ Sub RenderScreen(ByVal tilex As Integer, _
         ScreenY = ScreenY + 1
     Next Y
 
+    If ClientSetup.ParticleEngine Then
+        'Weather Update & Render - Aca se renderiza la lluvia, nieve, etc.
+        If bRain Then
+            'Call mDx8_Particulas.General_Char_Particle_Create(8, UserCharIndex)
+            'Call mDx8_Particulas.General_Particle_Create(8, X, Y)
+            'Call mDx8_Particulas.Particle_render(8, -50, -50)
+        End If
+    End If
+
     If ClientSetup.ProyectileEngine Then
                             
         If LastProjectile > 0 Then
@@ -1134,41 +1143,45 @@ Public Function RenderSounds()
 'Last Modify Date: 3/30/2008
 'Actualiza todos los sonidos del mapa.
 '**************************************************************
-Dim Location As Position
+    Dim Location As Position
 
-        If bRain And bLluvia(UserMap) Then
-                If bTecho Then
-                    If frmMain.IsPlaying <> PlayLoop.plLluviain Then
-                        If RainBufferIndex Then _
-                            Call Audio.StopWave(RainBufferIndex)
-                        RainBufferIndex = Audio.PlayWave("lluviain.wav", 0, 0, LoopStyle.Enabled)
-                        frmMain.IsPlaying = PlayLoop.plLluviain
+    If bRain And bLluvia(UserMap) Then
+            If bTecho Then
+                If frmMain.IsPlaying <> PlayLoop.plLluviain Then
+                    If RainBufferIndex Then
+                        Call Audio.StopWave(RainBufferIndex)
                     End If
-                Else
-                    If frmMain.IsPlaying <> PlayLoop.plLluviaout Then
-                        If RainBufferIndex Then _
-                            Call Audio.StopWave(RainBufferIndex)
-                        RainBufferIndex = Audio.PlayWave("lluviaout.wav", 0, 0, LoopStyle.Enabled)
-                        frmMain.IsPlaying = PlayLoop.plLluviaout
-                    End If
+
+                    RainBufferIndex = Audio.PlayWave("lluviain.wav", 0, 0, LoopStyle.Enabled)
+                    frmMain.IsPlaying = PlayLoop.plLluviain
                 End If
+            Else
+                If frmMain.IsPlaying <> PlayLoop.plLluviaout Then
+                    If RainBufferIndex Then
+                        Call Audio.StopWave(RainBufferIndex)
+                    End If
+
+                    RainBufferIndex = Audio.PlayWave("lluviaout.wav", 0, 0, LoopStyle.Enabled)
+                    frmMain.IsPlaying = PlayLoop.plLluviaout
+                End If
+            End If
+    End If
+
+    If bFogata Then
+        bFogata = Map_CheckBonfire(Location)
+
+        If Not bFogata Then
+            Call Audio.StopWave(FogataBufferIndex)
+            FogataBufferIndex = 0
         End If
 
-        If bFogata Then
-                bFogata = Map_CheckBonfire(Location)
+    Else
+        bFogata = Map_CheckBonfire(Location)
 
-                If Not bFogata Then
-                        Call Audio.StopWave(FogataBufferIndex)
-                        FogataBufferIndex = 0
-                End If
-
-        Else
-                bFogata = Map_CheckBonfire(Location)
-
-                If bFogata And FogataBufferIndex = 0 Then
-                        FogataBufferIndex = Audio.PlayWave("fuego.wav", Location.X, Location.Y, LoopStyle.Enabled)
-                End If
+        If bFogata And FogataBufferIndex = 0 Then
+            FogataBufferIndex = Audio.PlayWave("fuego.wav", Location.X, Location.Y, LoopStyle.Enabled)
         End If
+    End If
 End Function
 
 Function HayUserAbajo(ByVal X As Integer, ByVal Y As Integer, ByVal GrhIndex As Long) As Boolean

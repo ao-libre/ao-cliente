@@ -22,7 +22,7 @@ Private Const DAMAGE_FONT_S As Byte = 12
  
 Private Enum EDType
      edPunal = 1    'Apunalo.
-     edNormal = 2   'Hechizo o golpe común.
+     edNormal = 2   'Hechizo o golpe comï¿½n.
      edCritico = 3  'Golpe Critico
      edFallo = 4    'Fallo el ataque
      edCurar = 5    'Curacion a usuario
@@ -32,7 +32,7 @@ End Enum
 Private DNormalFont    As New StdFont
  
 Type DList
-     DamageVal      As Integer      'Cantidad de daño.
+     DamageVal      As Integer      'Cantidad de daï¿½o.
      ColorRGB       As Long         'Color.
      DamageType     As EDType       'Tipo, se usa para saber si es apu o no.
      DamageFont     As New StdFont  'Efecto del apu.
@@ -163,6 +163,11 @@ Sub Damage_Create(ByVal X As Byte, _
     End With
  
 End Sub
+
+Private Function EaseOutCubic(Time As Double)
+    Time = Time - 1
+    EaseOutCubic = Time * Time * Time + 1
+End Function
  
 Sub Damage_Draw(ByVal X As Byte, _
                 ByVal Y As Byte, _
@@ -194,7 +199,7 @@ Sub Damage_Draw(ByVal X As Byte, _
             Select Case .DamageType
             
                 Case EDType.edCritico
-                    DrawText PixelX, PixelY - .Downloading, "¡-" & .DamageVal & "!", .ColorRGB
+                    DrawText PixelX, PixelY - .Downloading, .DamageVal & "!!", .ColorRGB
                 
                 Case EDType.edCurar
                     DrawText PixelX, PixelY - .Downloading, "+" & .DamageVal, .ColorRGB
