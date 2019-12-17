@@ -602,4 +602,5 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 - v0.13.19
 * 17/12/2019: Se corrigio el numero maximo de items en el inventario para que sea el que usa el server con la alforja puesta (35). (Recox)
 * 17/12/2019: Se arreglo problema en el formulario buscar que hacia que si no seleccionabamos un item antes de tocar el boton crear, el juego crasheaba. (Recox)
+* 17/12/2019: Se arreglo problema en el formulario buscar que hacia que si creabamos mas items que MAX_INVENTORY_OBJS el juego crasheaba. (Recox)
 * 17/12/2019: Se arreglo problema en inventario que nos expulsaba del juego al hacer doble click en un slot vacio. (Recox)
