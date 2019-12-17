@@ -338,6 +338,10 @@ Private Sub mnuCrearObj_Click()
       Exit Sub
    End If
 
+   If LenB(txtCantidad.Text) > 10000 Then 
+      txtCantidad.Text = 10000
+   End If
+
    If ListCrearObj.Visible And LenB(txtCantidad.Text) > 0 Then
       Call WriteCreateItem(ListCrearObj.Text, txtCantidad.Text)
    End If
