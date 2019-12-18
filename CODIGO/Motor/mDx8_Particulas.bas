@@ -139,7 +139,7 @@ Private Type Particle_Group
     move_y2 As Integer
     rgb_list(0 To 3) As Long
     
-    'Added by Juan Martín Sotuyo Dodero
+    'Added by Juan Martin Sotuyo Dodero
     speed As Single
     life_counter As Long
 End Type
@@ -267,7 +267,7 @@ Public Function Char_Particle_Group_Remove(ByVal char_index As Integer, _
                                            ByVal stream_type As Long)
 
     '**************************************************************
-    'Author: Augusto José Rando
+    'Author: Augusto Josï¿½ Rando
     '**************************************************************
     Dim char_part_index As Integer
 
@@ -285,7 +285,7 @@ End Function
 
 Public Function Char_Particle_Group_Remove_All(ByVal char_index As Integer)
 '**************************************************************
-'Author: Augusto José Rando
+'Author: Augusto Jose Rando
 '**************************************************************
     Dim i As Integer
     
@@ -334,7 +334,7 @@ Public Sub Particle_Group_Render(ByVal Particle_Group_Index As Long, ByVal scree
 '*****************************************************************
 'Author: Aaron Perkins
 'Modified by: Ryan Cain (Onezero)
-'Modified by: Juan Martín Sotuyo Dodero
+'Modified by: Juan Martin Sotuyo Dodero
 'Last Modify Date: 5/15/2003
 'Renders a particle stream at a paticular screen point
 '*****************************************************************
@@ -416,7 +416,7 @@ Private Sub Particle_Render(ByRef temp_particle As Particle, ByVal screen_x As I
 '**************************************************************
 'Author: Aaron Perkins
 'Modified by: Ryan Cain (Onezero)
-'Modified by: Juan Martín Sotuyo Dodero
+'Modified by: Juan Martin Sotuyo Dodero
 'Last Modify Date: 5/15/2003
 '**************************************************************
 
@@ -550,8 +550,8 @@ Private Function Particle_Group_Create(ByVal map_x As Integer, ByVal map_y As In
 'Modified by: Ryan Cain (Onezero)
 'Last Modify Date: 5/14/2003
 'Returns the particle_group_index if successful, else 0
-'Modified by Juan Martín Sotuyo Dodero
-'Modified by Augusto José Rando
+'Modified by Juan Martin Sotuyo Dodero
+'Modified by Augusto Josï¿½ Rando
 '**************************************************************
     
     If (map_x <> -1) And (map_y <> -1) Then
@@ -691,7 +691,7 @@ Private Sub Particle_Group_Make(ByVal Particle_Group_Index As Long, ByVal map_x 
 'Modified by: Ryan Cain (Onezero)
 'Last Modify Date: 5/15/2003
 'Makes a new particle effect
-'Modified by Juan Martín Sotuyo Dodero
+'Modified by Juan Martin Sotuyo Dodero
 '*****************************************************************
     'Update array size
     If Particle_Group_Index > particle_group_last Then
@@ -827,7 +827,7 @@ Private Function Char_Particle_Group_Find(ByVal char_index As Integer, _
                                           ByVal stream_type As Long) As Integer
 
     '*****************************************************************
-    'Author: Augusto José Rando
+    'Author: Augusto Josï¿½ Rando
     'Modified: returns slot or -1
     '*****************************************************************
     On Error Resume Next
@@ -851,7 +851,7 @@ End Function
 Private Function Char_Particle_Group_Next_Open(ByVal char_index As Integer) As Integer
 
     '*****************************************************************
-    'Author: Augusto José Rando
+    'Author: Augusto Jose Rando
     '*****************************************************************
     On Error GoTo ErrorHandler:
 
@@ -894,7 +894,7 @@ End Function
 Private Function Char_Check(ByVal char_index As Integer) As Boolean
 
     '**************************************************************
-    'Author: Aaron Perkins - Modified by Juan Martín Sotuyo Dodero
+    'Author: Aaron Perkins - Modified by Juan Martin Sotuyo Dodero
     'Last Modify Date: 1/04/2003
     '
     '**************************************************************
@@ -926,7 +926,7 @@ Private Sub Char_Particle_Group_Make(ByVal Particle_Group_Index As Long, ByVal c
 'Modified by: Ryan Cain (Onezero)
 'Last Modify Date: 5/15/2003
 'Makes a new particle effect
-'Modified by Juan Martín Sotuyo Dodero
+'Modified by Juan Martin Sotuyo Dodero
 '*****************************************************************
     'Update array size
     If Particle_Group_Index > particle_group_last Then
