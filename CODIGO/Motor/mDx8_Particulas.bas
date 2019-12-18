@@ -551,7 +551,7 @@ Private Function Particle_Group_Create(ByVal map_x As Integer, ByVal map_y As In
 'Last Modify Date: 5/14/2003
 'Returns the particle_group_index if successful, else 0
 'Modified by Juan Martin Sotuyo Dodero
-'Modified by Augusto Jos� Rando
+'Modified by Augusto Jose Rando
 '**************************************************************
     
     If (map_x <> -1) And (map_y <> -1) Then
