@@ -155,6 +155,11 @@ Public Const PI As Single = 3.14159265358979
 
 Private RainParticle as Long
 
+Private Enum eWeather
+    Rain
+    Snow
+End Enum
+
 Public Sub CargarParticulas()
     Dim LoopC As Long
     Dim i As Long

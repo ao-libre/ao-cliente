@@ -991,8 +991,3 @@ Public Const uAOButton_cCheckboxSmall As String = "cCheckboxSmall.bmp" ' Chico
 ' * Configuracion de estilo de controles
 
 Public JsonTips As Object
-
-Public Enum eWeather
-    Rain
-    Snow
-End Enum
