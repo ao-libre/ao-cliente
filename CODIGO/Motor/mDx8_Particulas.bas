@@ -1020,8 +1020,23 @@ Public Sub Engine_Weather_Update()
 'Last Modify Date: 19/12/2019
 'Controla los climas, aqui se renderizan la lluvia, nieve, etc.
 '*****************************************************************
-    If RainParticle > 0 Then
-        Call mDx8_Particulas.Particle_Group_Render(RainParticle, 250, -1)
+    'TODO: Hay un bug no muy importante que hace que no se renderice la lluvia
+    'en caso que empiece a llover, tiro el comando /salir y vuelvo a entrar al juego
+    'Sin embargo al cambiar de mapa o al entrar y salir de un techo la particula se vuelve a cargar
+    'Este error NO pasa cuando esta lloviendo y recien abro el juego y entro, en ese caso la lluvia se ve bien (Recox)
+
+    If bRain And bLluvia(UserMap) And Not bTecho Then
+        'Primero verificamos que las particulas de lluvia esten creadas en la coleccion de particulas
+        'Si estan creadas las renderizamos, sino las creamos
+        If RainParticle <= 0 Then
+            'Creamos las particulas de lluvia
+            Call mDx8_Particulas.LoadWeatherParticles(eWeather.Rain)
+        ElseIf RainParticle > 0 Then
+            Call mDx8_Particulas.Particle_Group_Render(RainParticle, 250, -1)
+        End If
+    Else 
+        'Borramos las particulas de lluvia en caso de que pare la lluvia o nos escondamos en un techo
+        Call mDx8_Particulas.RemoveWeatherParticles(eWeather.Rain)
     End If
 
 End Sub

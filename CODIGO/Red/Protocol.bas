@@ -3047,9 +3047,6 @@ Private Sub HandleRainToggle()
         MapData(UserPos.X, UserPos.Y).Trigger = 4)
 
     If bRain And bLluvia(UserMap) Then
-        'Borramos las particulas de lluvia
-        Call mDx8_Particulas.RemoveWeatherParticles(eWeather.Rain)
-            
         'Stop playing the rain sound
         Call Audio.StopWave(RainBufferIndex)
         RainBufferIndex = 0
@@ -3062,9 +3059,6 @@ Private Sub HandleRainToggle()
         
         frmMain.IsPlaying = PlayLoop.plNone
 
-    Else
-        'Creamos las particulas de lluvia
-        Call mDx8_Particulas.LoadWeatherParticles(eWeather.Rain)
     End If
     
     bRain = Not bRain
