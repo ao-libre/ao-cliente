@@ -153,6 +153,8 @@ Public StreamData() As Stream
 
 Public Const PI As Single = 3.14159265358979
 
+Private RainParticle as Long
+
 Public Sub CargarParticulas()
     Dim LoopC As Long
     Dim i As Long
@@ -1010,6 +1012,47 @@ Private Sub Char_Particle_Group_Make(ByVal Particle_Group_Index As Long, ByVal c
     
     'plot particle group on char
     charlist(char_index).Particle_Group(particle_char_index) = Particle_Group_Index
+End Sub
+
+Public Sub Engine_Weather_Update()
+'*****************************************************************
+'Author: Lucas Recoaro (Recox)
+'Last Modify Date: 19/12/2019
+'Controla los climas, aqui se renderizan la lluvia, nieve, etc.
+'*****************************************************************
+    If RainParticle > 0 Then
+        Call mDx8_Particulas.Particle_Group_Render(RainParticle, 250, -1)
+    End If
+
+End Sub
+
+Public Sub LoadWeatherParticles(ByVal Weather As Byte)
+'*****************************************************************
+'Author: Lucas Recoaro (Recox)
+'Last Modify Date: 19/12/2019
+'Crea las particulas de clima.
+'*****************************************************************
+    Select Case Weather
+
+        Case eWeather.Rain
+            RainParticle = mDx8_Particulas.General_Particle_Create(8, -1, -1)
+
+    End Select
+End Sub
+
+Public Sub RemoveWeatherParticles(ByVal Weather As Byte)
+'*****************************************************************
+'Author: Lucas Recoaro (Recox)
+'Last Modify Date: 19/12/2019
+'Remueve las particulas de clima.
+'*****************************************************************
+    Select Case Weather
+
+        Case eWeather.Rain
+            Particle_Group_Remove(RainParticle)
+            RainParticle = 0
+
+    End Select
 End Sub
 
 Public Sub Load_Map_Particles(ByVal Map As Integer)

@@ -991,7 +991,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
                     
                         'Solo las renderizamos si estan cerca del area de vision.
                         If Abs(UserPos.X - X) < Engine_Get_TileBuffer + 3 And (Abs(UserPos.Y - Y)) < Engine_Get_TileBuffer + 3 Then
-                            Call Particle_Group_Render(.Particle_Group_Index, PixelOffsetXTemp + 16, PixelOffsetYTemp + 16)
+                            Call mDx8_Particulas.Particle_Group_Render(.Particle_Group_Index, PixelOffsetXTemp + 16, PixelOffsetYTemp + 16)
                         End If
                         
                     End If
@@ -1049,26 +1049,8 @@ Sub RenderScreen(ByVal tilex As Integer, _
     Next Y
 
     If ClientSetup.ParticleEngine Then
-        Dim rainParticle as Long
-        'Aqui nace el problema cuando creo la particula con coordenadas 50, 50 solo se ve ahi y alrededores la lluvia
-        rainParticle = mDx8_Particulas.General_Particle_Create(8, 50, 50)
-        
-
-        'If rainParticle > 0 Then
-            'Esto funca a medias por que solo se ve la lluvia en determinado lugar del mapa, no en todos lados.
-            'Por otra parte no estoy seguro que tenga que cambiar la funcion esa de Private a Public
-            'Call mDx8_Particulas.General_Particle_Create(8, -50, -50)
-
-            'Esto no funca por que necesita como primer parametro un PARTICLE
-            'Call mDx8_Particulas.Particle_Render(rainParticle, -50, -50)
-
-            'Esto funca a medias por que solo se ve la lluvia en determinado lugar del mapa, no en todos lados.
-            Call mDx8_Particulas.Particle_Group_Render(rainParticle, -50, -50)
-        'End If
-
         'Weather Update & Render - Aca se renderiza la lluvia, nieve, etc.
-        'If bRain Then
-        'End If
+        Call mDx8_Particulas.Engine_Weather_Update()
     End If
 
     If ClientSetup.ProyectileEngine Then
@@ -1250,7 +1232,7 @@ On Error GoTo 0
     Call CargarFxs
     Call LoadGraphics
     Call CargarParticulas
-    
+
     InitTileEngine = True
     
 End Function
@@ -1600,7 +1582,7 @@ Private Sub CharRender(ByVal CharIndex As Long, _
                     For i = 1 To .Particle_Count
                     
                         If .Particle_Group(i) > 0 Then
-                            Call Particle_Group_Render(.Particle_Group(i), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY)
+                            Call mDx8_Particulas.Particle_Group_Render(.Particle_Group(i), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY)
                         End If
                         
                     Next i
