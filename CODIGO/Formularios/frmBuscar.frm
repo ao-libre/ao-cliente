@@ -333,9 +333,15 @@ Private Sub ListCrearObj_MouseDown(Button As Integer, _
 End Sub
 
 Private Sub mnuCrearObj_Click()
+   'Parche para evitar que no se seleccione un item y al querer crearlo explote el juego (Recox)
    If ListCrearObj.Text = "" Then 
       MsgBox(JsonLanguage.Item("FRMBUSCAR_SELECCIONE_ITEM").Item("TEXTO"))
       Exit Sub
+   End If
+
+   'Parche para evitar crear mas items que los permitidos en el inventario y explote el juego (Recox)
+   If LenB(txtCantidad.Text) > MAX_INVENTORY_OBJS Then 
+      txtCantidad.Text = MAX_INVENTORY_OBJS
    End If
 
    If ListCrearObj.Visible And LenB(txtCantidad.Text) > 0 Then
@@ -344,6 +350,7 @@ Private Sub mnuCrearObj_Click()
 End Sub
 
 Private Sub mnuCrearNPC_Click()
+   'Parche para evitar que no se seleccione un item y al querer crearlo explote el juego (Recox)
    If ListCrearNpcs.Text = "" Then 
       MsgBox(JsonLanguage.Item("FRMBUSCAR_SELECCIONE_ITEM").Item("TEXTO"))
       Exit Sub
