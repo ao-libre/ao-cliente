@@ -185,10 +185,10 @@ Public Sub LeerConfiguracion()
   
 fileErr:
 
-    'If Err.number <> 0 Then
-    '    MsgBox ("Ha ocurrido un error al cargar la configuracion del cliente. Error " & Err.number & " : " & Err.Description)
-    '    End 'Usar "End" en vez del Sub CloseClient() ya que todavia no se inicializa nada.
-    'End If
+    If Err.number <> 0 Then
+       MsgBox ("Ha ocurrido un error al cargar la configuracion del cliente. Error " & Err.number & " : " & Err.Description)
+       End 'Usar "End" en vez del Sub CloseClient() ya que todavia no se inicializa nada.
+    End If
 End Sub
 
 Public Sub GuardarConfiguracion()
@@ -236,7 +236,6 @@ Public Sub GuardarConfiguracion()
 fileErr:
 
     If Err.number <> 0 Then
-        MsgBox ("Ha ocurrido un error al cargar la configuracion del cliente. Error " & Err.number & " : " & Err.Description)
-        End 'Usar "End" en vez del Sub CloseClient() ya que todavia no se inicializa nada.
+        MsgBox ("Ha ocurrido un error al guardar la configuracion del cliente. Error " & Err.number & " : " & Err.Description)
     End If
 End Sub

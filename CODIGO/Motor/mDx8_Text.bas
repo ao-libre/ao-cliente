@@ -117,8 +117,6 @@ Private Sub Engine_Render_Text(ByRef Batch As clsBatch, _
     Dim i As Long
     Dim J As Long
     Dim yOffset As Single
-    Dim TempColor As Long
-    Dim ResetColor As Byte
     
     'Check if we have the device
     If DirectDevice.TestCooperativeLevel <> D3D_OK Then Exit Sub

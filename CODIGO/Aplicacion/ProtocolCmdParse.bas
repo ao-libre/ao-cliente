@@ -990,7 +990,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     'elegir el mapa es opcional
                     If CantidadArgumentos = 1 Then
                         If ValidNumber(ArgumentosAll(0), eNumber_Types.ent_Byte) Then
-                            'eviamos un mapa nulo para que tome el del usuario.
+                            'evitamos un mapa nulo para que tome el del usuario.
                             Call WriteForceMIDIToMap(ArgumentosAll(0), 0)
                         Else
                             'No es numerico
@@ -1014,7 +1014,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     'elegir la posicion es opcional
                     If CantidadArgumentos = 1 Then
                         If ValidNumber(ArgumentosAll(0), eNumber_Types.ent_Byte) Then
-                            'eviamos una posicion nula para que tome la del usuario.
+                            'evitamos una posicion nula para que tome la del usuario.
                             Call WriteForceWAVEToMap(ArgumentosAll(0), 0, 0, 0)
                         Else
                             'No es numerico

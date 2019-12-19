@@ -991,7 +991,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
                     
                         'Solo las renderizamos si estan cerca del area de vision.
                         If Abs(UserPos.X - X) < Engine_Get_TileBuffer + 3 And (Abs(UserPos.Y - Y)) < Engine_Get_TileBuffer + 3 Then
-                            Call Particle_Group_Render(.Particle_Group_Index, PixelOffsetXTemp + 16, PixelOffsetYTemp + 16)
+                            Call mDx8_Particulas.Particle_Group_Render(.Particle_Group_Index, PixelOffsetXTemp + 16, PixelOffsetYTemp + 16)
                         End If
                         
                     End If
@@ -1047,6 +1047,11 @@ Sub RenderScreen(ByVal tilex As Integer, _
 
         ScreenY = ScreenY + 1
     Next Y
+
+    If ClientSetup.ParticleEngine Then
+        'Weather Update & Render - Aca se renderiza la lluvia, nieve, etc.
+        Call mDx8_Particulas.Engine_Weather_Update()
+    End If
 
     If ClientSetup.ProyectileEngine Then
                             
@@ -1134,41 +1139,45 @@ Public Function RenderSounds()
 'Last Modify Date: 3/30/2008
 'Actualiza todos los sonidos del mapa.
 '**************************************************************
-Dim Location As Position
+    Dim Location As Position
 
-        If bRain And bLluvia(UserMap) Then
-                If bTecho Then
-                    If frmMain.IsPlaying <> PlayLoop.plLluviain Then
-                        If RainBufferIndex Then _
-                            Call Audio.StopWave(RainBufferIndex)
-                        RainBufferIndex = Audio.PlayWave("lluviain.wav", 0, 0, LoopStyle.Enabled)
-                        frmMain.IsPlaying = PlayLoop.plLluviain
+    If bRain And bLluvia(UserMap) Then
+            If bTecho Then
+                If frmMain.IsPlaying <> PlayLoop.plLluviain Then
+                    If RainBufferIndex Then
+                        Call Audio.StopWave(RainBufferIndex)
                     End If
-                Else
-                    If frmMain.IsPlaying <> PlayLoop.plLluviaout Then
-                        If RainBufferIndex Then _
-                            Call Audio.StopWave(RainBufferIndex)
-                        RainBufferIndex = Audio.PlayWave("lluviaout.wav", 0, 0, LoopStyle.Enabled)
-                        frmMain.IsPlaying = PlayLoop.plLluviaout
-                    End If
+
+                    RainBufferIndex = Audio.PlayWave("lluviain.wav", 0, 0, LoopStyle.Enabled)
+                    frmMain.IsPlaying = PlayLoop.plLluviain
                 End If
+            Else
+                If frmMain.IsPlaying <> PlayLoop.plLluviaout Then
+                    If RainBufferIndex Then
+                        Call Audio.StopWave(RainBufferIndex)
+                    End If
+
+                    RainBufferIndex = Audio.PlayWave("lluviaout.wav", 0, 0, LoopStyle.Enabled)
+                    frmMain.IsPlaying = PlayLoop.plLluviaout
+                End If
+            End If
+    End If
+
+    If bFogata Then
+        bFogata = Map_CheckBonfire(Location)
+
+        If Not bFogata Then
+            Call Audio.StopWave(FogataBufferIndex)
+            FogataBufferIndex = 0
         End If
 
-        If bFogata Then
-                bFogata = Map_CheckBonfire(Location)
+    Else
+        bFogata = Map_CheckBonfire(Location)
 
-                If Not bFogata Then
-                        Call Audio.StopWave(FogataBufferIndex)
-                        FogataBufferIndex = 0
-                End If
-
-        Else
-                bFogata = Map_CheckBonfire(Location)
-
-                If bFogata And FogataBufferIndex = 0 Then
-                        FogataBufferIndex = Audio.PlayWave("fuego.wav", Location.X, Location.Y, LoopStyle.Enabled)
-                End If
+        If bFogata And FogataBufferIndex = 0 Then
+            FogataBufferIndex = Audio.PlayWave("fuego.wav", Location.X, Location.Y, LoopStyle.Enabled)
         End If
+    End If
 End Function
 
 Function HayUserAbajo(ByVal X As Integer, ByVal Y As Integer, ByVal GrhIndex As Long) As Boolean
@@ -1223,7 +1232,7 @@ On Error GoTo 0
     Call CargarFxs
     Call LoadGraphics
     Call CargarParticulas
-    
+
     InitTileEngine = True
     
 End Function
@@ -1573,7 +1582,7 @@ Private Sub CharRender(ByVal CharIndex As Long, _
                     For i = 1 To .Particle_Count
                     
                         If .Particle_Group(i) > 0 Then
-                            Call Particle_Group_Render(.Particle_Group(i), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY)
+                            Call mDx8_Particulas.Particle_Group_Render(.Particle_Group(i), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY)
                         End If
                         
                     Next i
