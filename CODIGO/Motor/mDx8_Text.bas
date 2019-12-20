@@ -256,12 +256,13 @@ Dim Len_text As Long
 End Function
 
 Sub Engine_Init_FontTextures()
-On Error GoTo eDebug:
-'*****************************************************************
-'Init the custom font textures
-'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_Init_FontTextures
-'*****************************************************************
-    Dim i As Long
+    '*****************************************************************
+    'Init the custom font textures
+    'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_Init_FontTextures
+    '*****************************************************************
+    On Error GoTo eDebug:
+    
+    Dim i       As Long
     Dim TexInfo As D3DXIMAGE_INFO_A
 
     'Check if we have the device
@@ -269,19 +270,36 @@ On Error GoTo eDebug:
 
     '*** Default font ***
     For i = 1 To UBound(cfonts)
-    'Set the texture
-    Set cfonts(i).Texture = DirectD3D8.CreateTextureFromFileEx(DirectDevice, Game.path(Graficos) & "font" & i & ".bmp", D3DX_DEFAULT, D3DX_DEFAULT, 0, 0, D3DFMT_UNKNOWN, D3DPOOL_MANAGED, D3DX_FILTER_POINT, D3DX_FILTER_POINT, _
-            &HFF000000, ByVal 0, ByVal 0)
-    'Store the size of the texture
-    cfonts(i).TextureSize.X = TexInfo.Width
-    cfonts(i).TextureSize.Y = TexInfo.Height
+        
+        'Set the texture
+        Set cfonts(i).Texture = DirectD3D8.CreateTextureFromFileEx(DirectDevice, _
+                                                                   Game.path(Fonts) & "font" & i & ".bmp", _
+                                                                   D3DX_DEFAULT, _
+                                                                   D3DX_DEFAULT, _
+                                                                   0, _
+                                                                   0, _
+                                                                   D3DFMT_UNKNOWN, _
+                                                                   D3DPOOL_MANAGED, _
+                                                                   D3DX_FILTER_POINT, _
+                                                                   D3DX_FILTER_POINT, _
+                                                                   &HFF000000, _
+                                                                   ByVal 0, _
+                                                                   ByVal 0)
+        
+        'Store the size of the texture
+        cfonts(i).TextureSize.X = TexInfo.Width
+        cfonts(i).TextureSize.Y = TexInfo.Height
     Next
+    
     Exit Sub
+
 eDebug:
+
     If Err.number = "-2005529767" Then
         MsgBox "Error en la textura de fuente utilizada " & Game.path(Graficos) & "Font.png.", vbCritical
         End
     End If
+    
     End
 
 End Sub
@@ -302,8 +320,9 @@ Sub Engine_Init_FontSettings()
     'Load the header information
     FileNum = FreeFile
     For i = 1 To UBound(cfonts)
-        Open Game.path(Extras) & "Font" & i & ".dat" For Binary As #FileNum
-        Get #FileNum, , cfonts(i).HeaderInfo
+        
+        Open Game.path(Fonts) & "\Font" & i & ".dat" For Binary As #FileNum
+            Get #FileNum, , cfonts(i).HeaderInfo
         Close #FileNum
         
         'Calculate some common values
