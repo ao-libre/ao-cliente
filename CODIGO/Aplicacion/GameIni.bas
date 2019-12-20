@@ -23,6 +23,7 @@ Public Enum ePath
     Mapas
     Lenguajes
     Extras
+    Fonts
 End Enum
 
 Public Type tSetupMods
@@ -91,6 +92,9 @@ Public Function path(ByVal PathType As ePath) As String
             
         Case ePath.Interfaces
             path = App.path & "\Graficos\Interfaces\"
+            
+        Case ePath.Fonts
+            path = App.path & "\Graficos\Fonts\"
             
         Case ePath.Lenguajes
             path = App.path & "\Lenguajes\"
