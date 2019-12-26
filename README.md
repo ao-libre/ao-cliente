@@ -30,7 +30,7 @@ El programa al iniciar comparara la version del programa que se encuentra en `IN
 
 Para mas información sobre este proceso:
 
-[Funcion para comparar versiones](https://github.com/ao-libre/ao-cliente/blob/master/CODIGO/frmCargando.frm#L121)
+[Funcion para comparar versiones](https://github.com/ao-libre/ao-cliente/blob/master/CODIGO/Formularios/frmCargando.frm#L121)
 
 [Codigo fuente ao-autoupdate](https://github.com/ao-libre/ao-autoupdate)
 
