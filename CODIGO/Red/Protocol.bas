@@ -1446,7 +1446,9 @@ Private Sub HandleLogged()
     'Set connected state
     Call SetConnected
     
-    If bShowTutorial Then frmTutorial.Show vbModeless
+    If bShowTutorial Then
+        Call frmTutorial.Show(vbModeless)
+    End If
     
     'Show tip
     If ClientSetup.MostrarTips = True Then
@@ -1455,8 +1457,10 @@ Private Sub HandleLogged()
 
     'Show Keyboard configuration
     If ClientSetup.MostrarBindKeysSelection = True Then
-        frmKeysConfigurationSelect.Visible = True
+        Call frmKeysConfigurationSelect.Show(vbModeless, frmMain)
+        Call frmKeysConfigurationSelect.SetFocus
     End If
+    
 End Sub
 
 ''
