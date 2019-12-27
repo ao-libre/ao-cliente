@@ -3343,8 +3343,9 @@ Private Sub HandleCancelOfferItem()
     End With
     
     ' Si era el unico item de la oferta, no puede confirmarla
-    If Not frmComerciarUsu.HasAnyItem(InvOfferComUsu(0)) And _
-        Not frmComerciarUsu.HasAnyItem(InvOroComUsu(1)) Then Call frmComerciarUsu.HabilitarConfirmar(False)
+    If Not frmComerciarUsu.HasAnyItem(InvOfferComUsu(0)) And Not frmComerciarUsu.HasAnyItem(InvOroComUsu(1)) Then 
+        Call frmComerciarUsu.HabilitarConfirmar(False)
+    End If
     
     With FontTypes(FontTypeNames.FONTTYPE_INFO)
         Call frmComerciarUsu.PrintCommerceMsg(JsonLanguage.item("MENSAJE_NO_COMM_OBJETO").item("TEXTO"), FontTypeNames.FONTTYPE_INFO)
