@@ -353,6 +353,21 @@ End Enum
 
 Public FontTypes(21) As tFont
 
+Public Const NEWBIE_USER_GOLD_COLOR As Long = vbCyan
+Public Const USER_GOLD_COLOR As Long = vbYellow
+
+Private Sub GetGoldColor()
+
+    If UserGLD >= CLng(UserLvl) * 10000 And UserLvl > 12 Then 'Si el nivel es mayor de 12, es decir, no es newbie.
+        'Changes color
+        frmMain.GldLbl.ForeColor = USER_GOLD_COLOR
+    Else
+        'Changes color
+        frmMain.GldLbl.ForeColor = NEWBIE_USER_GOLD_COLOR
+    End If
+
+End Sub
+
 Public Sub Connect(ByVal Modo As E_MODO)
     '*********************************************************************
     'Author: Jopi
@@ -1942,14 +1957,8 @@ Private Sub HandleUpdateGold()
     'Get data and update form
     UserGLD = incomingData.ReadLong()
     
-    If UserGLD >= CLng(UserLvl) * 10000 And UserLvl > 12 Then 'Si el nivel es mayor de 12, es decir, no es newbie.
-        'Changes color
-        frmMain.GldLbl.ForeColor = &HFF& 'Red
-    Else
-        'Changes color
-        frmMain.GldLbl.ForeColor = &HFFFF& 'Yellow
-    End If
-    
+    Call GetGoldColor()
+
     frmMain.GldLbl.Caption = UserGLD
 End Sub
 
@@ -3172,14 +3181,9 @@ Private Sub HandleUpdateUserStats()
     Else
         UserEstado = 0
     End If
+
+    Call GetGoldColor()
     
-    If UserGLD >= CLng(UserLvl) * 10000 Then
-        'Changes color
-        frmMain.GldLbl.ForeColor = &HFF& 'Red
-    Else
-        'Changes color
-        frmMain.GldLbl.ForeColor = &HFFFF& 'Yellow
-    End If
 End Sub
 
 ''
