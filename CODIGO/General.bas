@@ -1280,14 +1280,15 @@ EsperandoLevel = False
 End Sub
 
 Public Function getStrenghtColor() As Long
-Dim m As Long
-m = 255 / MAXATRIBUTOS
-getStrenghtColor = RGB(255 - (m * UserFuerza), (m * UserFuerza), 0)
+    Dim m As Long
+    m = 255 / MAXATRIBUTOS
+    getStrenghtColor = RGB(255 - (m * UserFuerza), (m * UserFuerza), 0)
 End Function
+    
 Public Function getDexterityColor() As Long
-Dim m As Long
-m = 255 / MAXATRIBUTOS
-getDexterityColor = RGB(255, m * UserAgilidad, 0)
+    Dim m As Long
+    m = 255 / MAXATRIBUTOS
+    getDexterityColor = RGB(255, m * UserAgilidad, 0)
 End Function
 
 Public Function getCharIndexByName(ByVal name As String) As Integer

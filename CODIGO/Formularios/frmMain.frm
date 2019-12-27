@@ -517,11 +517,11 @@ Begin VB.Form frmMain
    Begin VB.Label lblDropGold 
       BackStyle       =   0  'Transparent
       Height          =   255
-      Left            =   10560
+      Left            =   10320
       MousePointer    =   99  'Custom
       TabIndex        =   29
       Top             =   6240
-      Width           =   255
+      Width           =   495
    End
    Begin VB.Label lblMinimizar 
       BackStyle       =   0  'Transparent
