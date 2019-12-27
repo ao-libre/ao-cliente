@@ -605,7 +605,7 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 17/12/2019: Se arreglo problema en el formulario buscar que hacia que si no seleccionabamos un item antes de tocar el boton crear, el juego crasheaba. (Recox)
 * 17/12/2019: Se arreglo problema en el formulario buscar que hacia que si creabamos mas items que MAX_INVENTORY_OBJS el juego crasheaba. (Recox)
 * 17/12/2019: Se arreglo problema en inventario que nos expulsaba del juego al hacer doble click en un slot vacio. (Recox)
-* 25/12/2019: Se arreglo la lluvia, ahora se renderiza con particulas ORE. (Recox)
+* 25/12/2019: Se arreglo la lluvia, ahora se renderiza con particulas ORE. (Recox-Dr.Miqueas150)
 
 - v0.13.20
 
