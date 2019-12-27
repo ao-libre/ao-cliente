@@ -353,10 +353,10 @@ End Enum
 
 Public FontTypes(21) As tFont
 
-Public Const NEWBIE_USER_GOLD_COLOR As Long = vbCyan
-Public Const USER_GOLD_COLOR As Long = vbYellow
+Private Const NEWBIE_USER_GOLD_COLOR As Long = vbCyan
+Private Const USER_GOLD_COLOR As Long = vbYellow
 
-Private Sub GetGoldColor()
+Private Sub SetGoldColorInFrmMain()
 
     If UserGLD >= CLng(UserLvl) * 10000 And UserLvl > 12 Then 'Si el nivel es mayor de 12, es decir, no es newbie.
         'Changes color
@@ -1957,7 +1957,7 @@ Private Sub HandleUpdateGold()
     'Get data and update form
     UserGLD = incomingData.ReadLong()
     
-    Call GetGoldColor()
+    Call SetGoldColorInFrmMain()
 
     frmMain.GldLbl.Caption = UserGLD
 End Sub
@@ -3182,7 +3182,7 @@ Private Sub HandleUpdateUserStats()
         UserEstado = 0
     End If
 
-    Call GetGoldColor()
+    Call SetGoldColorInFrmMain()
     
 End Sub
 
@@ -3343,8 +3343,9 @@ Private Sub HandleCancelOfferItem()
     End With
     
     ' Si era el unico item de la oferta, no puede confirmarla
-    If Not frmComerciarUsu.HasAnyItem(InvOfferComUsu(0)) And _
-        Not frmComerciarUsu.HasAnyItem(InvOroComUsu(1)) Then Call frmComerciarUsu.HabilitarConfirmar(False)
+    If Not frmComerciarUsu.HasAnyItem(InvOfferComUsu(0)) And Not frmComerciarUsu.HasAnyItem(InvOroComUsu(1)) Then 
+        Call frmComerciarUsu.HabilitarConfirmar(False)
+    End If
     
     With FontTypes(FontTypeNames.FONTTYPE_INFO)
         Call frmComerciarUsu.PrintCommerceMsg(JsonLanguage.item("MENSAJE_NO_COMM_OBJETO").item("TEXTO"), FontTypeNames.FONTTYPE_INFO)
