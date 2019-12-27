@@ -610,3 +610,4 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 - v0.13.20
 
 * 27/12/2019: El frmKeysConfigurationSelect se mostraba atrás del frmMain. (jopiortiz)
+* 28/12/2019: Se cambio el color del oro en el frmMain para newbies y se refactorizo. (Recox)
