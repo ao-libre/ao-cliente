@@ -638,7 +638,7 @@ End Sub
 
 Public Sub HideExtraControls(ByVal NumItems As Integer, Optional ByVal Upgrading As Boolean = False)
     Dim i As Integer
-    
+
     picLingotes0.Visible = (NumItems >= 1)
     picLingotes1.Visible = (NumItems >= 2)
     picLingotes2.Visible = (NumItems >= 3)
@@ -676,32 +676,25 @@ Public Sub HideExtraControls(ByVal NumItems As Integer, Optional ByVal Upgrading
     Else
         Scroll.Visible = False
     End If
+    
 End Sub
 
 Private Sub RenderItem(ByRef Pic As PictureBox, ByVal GrhIndex As Long)
 On Error Resume Next
 
-    Dim SR As RECT
     Dim DR As RECT
     
-    With GrhData(GrhIndex)
-        SR.Left = .SX
-        SR.Top = .SY
-        SR.Right = SR.Left + .pixelWidth
-        SR.Bottom = SR.Top + .pixelHeight
+    With DR
+        .Right = 32
+        .Bottom = 32
     End With
-    
-    DR.Left = 0
-    DR.Top = 0
-    DR.Right = 32
-    DR.Bottom = 32
-    
-    Call DrawGrhtoHdc(Pic.hdc, GrhIndex, SR, DR)
-    Pic.Refresh
+
+    Call DrawGrhtoHdc(Pic, GrhIndex, DR)
+
 End Sub
 
-
 Public Sub RenderList(ByVal Inicio As Integer, ByVal Armas As Boolean)
+
 On Error Resume Next
 
     Dim i As Long
@@ -718,48 +711,59 @@ On Error Resume Next
     Inicio = Inicio - 1
     
     For i = 1 To MAX_LIST_ITEMS
+    
         If i + Inicio <= NumItems Then
+        
             With ObjHerrero(i + Inicio)
+            
                 ' Agrego el item
                 Call RenderItem(picItem(i), .GrhIndex)
-                picItem(i).ToolTipText = .Name
+                picItem(i).ToolTipText = .name
      
                 Call RenderItem(picUpgradeItem(i), .UpgradeGrhIndex)
                 picUpgradeItem(i).ToolTipText = .UpgradeName
                 
                  ' Inventariode lingotes
-                Call InvLingosHerreria(i).SetItem(1, 0, .LinH, 0, LH_GRH, 0, 0, 0, 0, 0, 0, JsonLanguage.Item("HERRERO").Item("TEXTO").Item(1))
-                Call InvLingosHerreria(i).SetItem(2, 0, .LinP, 0, LP_GRH, 0, 0, 0, 0, 0, 0, JsonLanguage.Item("HERRERO").Item("TEXTO").Item(2))
-                Call InvLingosHerreria(i).SetItem(3, 0, .LinO, 0, LO_GRH, 0, 0, 0, 0, 0, 0, JsonLanguage.Item("HERRERO").Item("TEXTO").Item(3))
+                Call InvLingosHerreria(i).SetItem(1, 0, .LinH, 0, LH_GRH, 0, 0, 0, 0, 0, 0, JsonLanguage.item("HERRERO").item("TEXTO").item(1))
+                Call InvLingosHerreria(i).SetItem(2, 0, .LinP, 0, LP_GRH, 0, 0, 0, 0, 0, 0, JsonLanguage.item("HERRERO").item("TEXTO").item(2))
+                Call InvLingosHerreria(i).SetItem(3, 0, .LinO, 0, LO_GRH, 0, 0, 0, 0, 0, 0, JsonLanguage.item("HERRERO").item("TEXTO").item(3))
             End With
+            
         End If
+        
     Next i
+    
 End Sub
 
 Public Sub RenderUpgradeList(ByVal Inicio As Integer)
-Dim i As Long
-Dim NumItems As Integer
+    Dim i        As Long
+    Dim NumItems As Integer
 
-NumItems = UBound(HerreroMejorar)
-Inicio = Inicio - 1
+    NumItems = UBound(HerreroMejorar)
+    Inicio = Inicio - 1
 
-For i = 1 To MAX_LIST_ITEMS
-    If i + Inicio <= NumItems Then
-        With HerreroMejorar(i + Inicio)
-            ' Agrego el item
-            Call RenderItem(picItem(i), .GrhIndex)
-            picItem(i).ToolTipText = .Name
+    For i = 1 To MAX_LIST_ITEMS
+
+        If i + Inicio <= NumItems Then
+
+            With HerreroMejorar(i + Inicio)
+                ' Agrego el item
+                Call RenderItem(picItem(i), .GrhIndex)
+                picItem(i).ToolTipText = .name
             
-            Call RenderItem(picUpgradeItem(i), .UpgradeGrhIndex)
-            picUpgradeItem(i).ToolTipText = .UpgradeName
+                Call RenderItem(picUpgradeItem(i), .UpgradeGrhIndex)
+                picUpgradeItem(i).ToolTipText = .UpgradeName
             
-             ' Inventariode lingotes
-            Call InvLingosHerreria(i).SetItem(1, 0, .LinH, 0, LH_GRH, 0, 0, 0, 0, 0, 0, JsonLanguage.Item("HERRERO").Item("TEXTO").Item(1))
-            Call InvLingosHerreria(i).SetItem(2, 0, .LinP, 0, LP_GRH, 0, 0, 0, 0, 0, 0, JsonLanguage.Item("HERRERO").Item("TEXTO").Item(2))
-            Call InvLingosHerreria(i).SetItem(3, 0, .LinO, 0, LO_GRH, 0, 0, 0, 0, 0, 0, JsonLanguage.Item("HERRERO").Item("TEXTO").Item(3))
-        End With
-    End If
-Next i
+                ' Inventariode lingotes
+                Call InvLingosHerreria(i).SetItem(1, 0, .LinH, 0, LH_GRH, 0, 0, 0, 0, 0, 0, JsonLanguage.item("HERRERO").item("TEXTO").item(1))
+                Call InvLingosHerreria(i).SetItem(2, 0, .LinP, 0, LP_GRH, 0, 0, 0, 0, 0, 0, JsonLanguage.item("HERRERO").item("TEXTO").item(2))
+                Call InvLingosHerreria(i).SetItem(3, 0, .LinO, 0, LO_GRH, 0, 0, 0, 0, 0, 0, JsonLanguage.item("HERRERO").item("TEXTO").item(3))
+            End With
+            
+        End If
+        
+    Next i
+
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
@@ -902,15 +906,19 @@ Private Sub Scroll_Change()
     Select Case UltimaPestania
         Case ePestania.ieArmas
             Call RenderList(i + 1, True)
+            
         Case ePestania.ieArmaduras
             Call RenderList(i + 1, False)
+            
         Case ePestania.ieMejorar
             Call RenderUpgradeList(i + 1)
+            
     End Select
+    
 End Sub
 
 Private Sub txtCantItems_Change()
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     If Val(txtCantItems.Text) < 0 Then
         txtCantItems.Text = 1
     End If
@@ -921,7 +929,7 @@ On Error GoTo ErrHandler
     
     Exit Sub
     
-ErrHandler:
+errhandler:
     'If we got here the user may have pasted (Shift + Insert) a REALLY large number, causing an overflow, so we set amount back to 1
     txtCantItems.Text = MAX_INVENTORY_OBJS
 End Sub
