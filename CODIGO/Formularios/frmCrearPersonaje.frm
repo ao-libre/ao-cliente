@@ -1459,41 +1459,30 @@ End Sub
 
 Private Sub CargarCombos()
     Dim i As Long
-    Dim Lower_ciudades As Long
-    Dim Lower_listaClases As Long
-    Dim Lower_listaRazas As Long
-    Dim Upper_ciudades As Long
     
     lstProfesion.Clear
     
-    Lower_listaClases = LBound(ListaClases)
-    
-    For i = Lower_listaClases To NroClases
-        lstProfesion.AddItem ListaClases(i)
+    For i = LBound(ListaClases) To NroClases
+        Call lstProfesion.AddItem(ListaClases(i))
     Next i
 
     lstHogar.Clear
-
-    Lower_ciudades = LBound(Ciudades())
-    Upper_ciudades = UBound(Ciudades())
     
-    For i = Lower_ciudades To Upper_ciudades
-        lstHogar.AddItem Ciudades(i)
+    For i = LBound(Ciudades()) To UBound(Ciudades())
+        Call lstHogar.AddItem(Ciudades(i))
     Next i
     
     lstRaza.Clear
     
-    Lower_listaRazas = LBound(ListaRazas())
-    
-    For i = Lower_listaRazas To NroRazas
-        lstRaza.AddItem ListaRazas(i)
+    For i = LBound(ListaRazas()) To NroRazas
+        Call lstRaza.AddItem(ListaRazas(i))
     Next i
 
     ' Puse esto aca asi por que antes los valores se cargaban del FRX que la verdad es un asco por que es una cosa invisible que no se sabe que hay ahi adentro
     ' Idealmente esto se tendria que hacer como el resto de cosas en el en estos combos, pero por ahora esto funciona.
     ' El objetivo aqui es la traduccion (Recox)
-    lstGenero.AddItem JsonLanguage.item("FRM_CREARPJ_HOMBRE").item("TEXTO")
-    lstGenero.AddItem JsonLanguage.item("FRM_CREARPJ_MUJER").item("TEXTO")
+    Call lstGenero.AddItem(JsonLanguage.item("FRM_CREARPJ_HOMBRE").item("TEXTO"))
+    Call lstGenero.AddItem(JsonLanguage.item("FRM_CREARPJ_MUJER").item("TEXTO"))
 End Sub
 
 Function CheckData() As Boolean
@@ -1814,74 +1803,54 @@ On Error Resume Next
     
     Frame = Frame + 1
     If Frame >= GrhData(currentGrh).NumFrames Then Frame = 1
-    Call DrawImageInPicture(picPJ, Me.Picture, 0, 0, , , picPJ.Left, picPJ.Top)
+    'Call DrawImageInPicture(picPJ, Me.Picture, 0, 0, , , picPJ.Left, picPJ.Top)
     
     Grh = GrhData(currentGrh).Frames(Frame)
     
     With GrhData(Grh)
-        SR.Left = .sX
-        SR.Top = .sY
-        SR.Right = SR.Left + .pixelWidth
-        SR.Bottom = SR.Top + .pixelHeight
         
-        DR.Left = (picPJ.Width - .pixelWidth) \ 2 - 2
-        DR.Top = (picPJ.Height - .pixelHeight) \ 2 - 2
-        DR.Right = DR.Left + .pixelWidth
-        DR.Bottom = DR.Top + .pixelHeight
+        DR.Left = 0
+        DR.Top = 0
+        DR.Right = picTemp.Width
+        DR.Bottom = picTemp.Height
         
         picTemp.BackColor = picTemp.BackColor
         
-        Call DrawGrhtoHdc(picTemp.hdc, Grh, SR, DR)
-        Call DrawTransparentGrhtoHdc(picPJ.hdc, picTemp.hdc, DR, DR, vbBlack)
+        Call DrawGrhtoHdc(picTemp, Grh, DR)
+        'Call DrawTransparentGrhtoHdc(picPJ.hdc, picTemp.hdc, DR, DR, vbBlack)
     End With
     
     Grh = HeadData(UserHead).Head(Dir).GrhIndex
     
     With GrhData(Grh)
-        SR.Left = .sX
-        SR.Top = .sY
-        SR.Right = SR.Left + .pixelWidth
-        SR.Bottom = SR.Top + .pixelHeight
-        
-        DR.Left = (picPJ.Width - .pixelWidth) \ 2 - 2
-        DR.Top = DR.Bottom + BodyData(UserBody).HeadOffset.Y - .pixelHeight
-        DR.Right = DR.Left + .pixelWidth
-        DR.Bottom = DR.Top + .pixelHeight
+
+        DR.Left = 0
+        DR.Top = 0
+        DR.Right = picTemp.Width
+        DR.Bottom = picTemp.Height
         
         picTemp.BackColor = picTemp.BackColor
         
-        Call DrawGrhtoHdc(picTemp.hdc, Grh, SR, DR)
-        Call DrawTransparentGrhtoHdc(picPJ.hdc, picTemp.hdc, DR, DR, vbBlack)
+        Call DrawGrhtoHdc(picTemp, Grh, DR)
+        
     End With
+    
 End Sub
 
 Private Sub DrawHead(ByVal Head As Integer, ByVal PicIndex As Integer)
 
-    Dim SR As RECT
     Dim DR As RECT
     Dim Grh As Long
 
-    Call DrawImageInPicture(picHead(PicIndex), Me.Picture, 0, 0, , , picHead(PicIndex).Left, picHead(PicIndex).Top)
-    
     Grh = HeadData(Head).Head(Dir).GrhIndex
-
-    With GrhData(Grh)
-        SR.Left = .sX
-        SR.Top = .sY
-        SR.Right = SR.Left + .pixelWidth
-        SR.Bottom = SR.Top + .pixelHeight
-        
-        DR.Left = (picHead(0).Width - .pixelWidth) \ 2 + 1
-        DR.Top = 5
-        DR.Right = DR.Left + .pixelWidth
-        DR.Bottom = DR.Top + .pixelHeight
-        
-        picTemp.BackColor = picTemp.BackColor
-        
-        Call DrawGrhtoHdc(picTemp.hdc, Grh, SR, DR)
-        Call DrawTransparentGrhtoHdc(picHead(PicIndex).hdc, picTemp.hdc, DR, DR, vbBlack)
-    End With
     
+    With picHead(PicIndex)
+        DR.Right = .Width
+        DR.Bottom = .Height
+    End With
+        
+    Call DrawGrhtoHdc(picHead(PicIndex), Grh, DR)
+
 End Sub
 
 Private Sub txtConfirmPasswd_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
@@ -1899,6 +1868,7 @@ Private Sub DarCuerpoYCabeza()
     Dim LineIndex As Integer
     
     Select Case UserSexo
+    
         Case eGenero.Hombre
             Select Case UserRaza
                 Case eRaza.Humano
@@ -1952,9 +1922,11 @@ Private Sub DarCuerpoYCabeza()
                     UserHead = 0
                     UserBody = 0
             End Select
+            
         Case Else
             UserHead = 0
             UserBody = 0
+            
     End Select
     
     bVisible = UserHead <> 0 And UserBody <> 0
@@ -1975,120 +1947,140 @@ Private Sub DarCuerpoYCabeza()
     If bVisible Then Call UpdateHeadSelection
     
     currentGrh = BodyData(UserBody).Walk(Dir).GrhIndex
-    If currentGrh > 0 Then _
+    If currentGrh > 0 Then
         tAnimacion.Interval = Round(GrhData(currentGrh).speed / GrhData(currentGrh).NumFrames)
+    End If
+    
 End Sub
 
 Private Function CheckCabeza(ByVal Head As Integer) As Integer
 
-Select Case UserSexo
-    Case eGenero.Hombre
-        Select Case UserRaza
-            Case eRaza.Humano
-                If Head > eCabezas.HUMANO_H_ULTIMA_CABEZA Then
-                    CheckCabeza = eCabezas.HUMANO_H_PRIMER_CABEZA + (Head - eCabezas.HUMANO_H_ULTIMA_CABEZA) - 1
-                ElseIf Head < eCabezas.HUMANO_H_PRIMER_CABEZA Then
-                    CheckCabeza = eCabezas.HUMANO_H_ULTIMA_CABEZA - (eCabezas.HUMANO_H_PRIMER_CABEZA - Head) + 1
-                Else
-                    CheckCabeza = Head
-                End If
+    Select Case UserSexo
+
+        Case eGenero.Hombre
+
+            Select Case UserRaza
+
+                Case eRaza.Humano
+
+                    If Head > eCabezas.HUMANO_H_ULTIMA_CABEZA Then
+                        CheckCabeza = eCabezas.HUMANO_H_PRIMER_CABEZA + (Head - eCabezas.HUMANO_H_ULTIMA_CABEZA) - 1
+                    ElseIf Head < eCabezas.HUMANO_H_PRIMER_CABEZA Then
+                        CheckCabeza = eCabezas.HUMANO_H_ULTIMA_CABEZA - (eCabezas.HUMANO_H_PRIMER_CABEZA - Head) + 1
+                    Else
+                        CheckCabeza = Head
+                    End If
                 
-            Case eRaza.Elfo
-                If Head > eCabezas.ELFO_H_ULTIMA_CABEZA Then
-                    CheckCabeza = eCabezas.ELFO_H_PRIMER_CABEZA + (Head - eCabezas.ELFO_H_ULTIMA_CABEZA) - 1
-                ElseIf Head < eCabezas.ELFO_H_PRIMER_CABEZA Then
-                    CheckCabeza = eCabezas.ELFO_H_ULTIMA_CABEZA - (eCabezas.ELFO_H_PRIMER_CABEZA - Head) + 1
-                Else
-                    CheckCabeza = Head
-                End If
+                Case eRaza.Elfo
+
+                    If Head > eCabezas.ELFO_H_ULTIMA_CABEZA Then
+                        CheckCabeza = eCabezas.ELFO_H_PRIMER_CABEZA + (Head - eCabezas.ELFO_H_ULTIMA_CABEZA) - 1
+                    ElseIf Head < eCabezas.ELFO_H_PRIMER_CABEZA Then
+                        CheckCabeza = eCabezas.ELFO_H_ULTIMA_CABEZA - (eCabezas.ELFO_H_PRIMER_CABEZA - Head) + 1
+                    Else
+                        CheckCabeza = Head
+                    End If
                 
-            Case eRaza.ElfoOscuro
-                If Head > eCabezas.DROW_H_ULTIMA_CABEZA Then
-                    CheckCabeza = eCabezas.DROW_H_PRIMER_CABEZA + (Head - eCabezas.DROW_H_ULTIMA_CABEZA) - 1
-                ElseIf Head < eCabezas.DROW_H_PRIMER_CABEZA Then
-                    CheckCabeza = eCabezas.DROW_H_ULTIMA_CABEZA - (eCabezas.DROW_H_PRIMER_CABEZA - Head) + 1
-                Else
-                    CheckCabeza = Head
-                End If
+                Case eRaza.ElfoOscuro
+
+                    If Head > eCabezas.DROW_H_ULTIMA_CABEZA Then
+                        CheckCabeza = eCabezas.DROW_H_PRIMER_CABEZA + (Head - eCabezas.DROW_H_ULTIMA_CABEZA) - 1
+                    ElseIf Head < eCabezas.DROW_H_PRIMER_CABEZA Then
+                        CheckCabeza = eCabezas.DROW_H_ULTIMA_CABEZA - (eCabezas.DROW_H_PRIMER_CABEZA - Head) + 1
+                    Else
+                        CheckCabeza = Head
+                    End If
                 
-            Case eRaza.Enano
-                If Head > eCabezas.ENANO_H_ULTIMA_CABEZA Then
-                    CheckCabeza = eCabezas.ENANO_H_PRIMER_CABEZA + (Head - eCabezas.ENANO_H_ULTIMA_CABEZA) - 1
-                ElseIf Head < eCabezas.ENANO_H_PRIMER_CABEZA Then
-                    CheckCabeza = eCabezas.ENANO_H_ULTIMA_CABEZA - (eCabezas.ENANO_H_PRIMER_CABEZA - Head) + 1
-                Else
-                    CheckCabeza = Head
-                End If
+                Case eRaza.Enano
+
+                    If Head > eCabezas.ENANO_H_ULTIMA_CABEZA Then
+                        CheckCabeza = eCabezas.ENANO_H_PRIMER_CABEZA + (Head - eCabezas.ENANO_H_ULTIMA_CABEZA) - 1
+                    ElseIf Head < eCabezas.ENANO_H_PRIMER_CABEZA Then
+                        CheckCabeza = eCabezas.ENANO_H_ULTIMA_CABEZA - (eCabezas.ENANO_H_PRIMER_CABEZA - Head) + 1
+                    Else
+                        CheckCabeza = Head
+                    End If
                 
-            Case eRaza.Gnomo
-                If Head > eCabezas.GNOMO_H_ULTIMA_CABEZA Then
-                    CheckCabeza = eCabezas.GNOMO_H_PRIMER_CABEZA + (Head - eCabezas.GNOMO_H_ULTIMA_CABEZA) - 1
-                ElseIf Head < eCabezas.GNOMO_H_PRIMER_CABEZA Then
-                    CheckCabeza = eCabezas.GNOMO_H_ULTIMA_CABEZA - (eCabezas.GNOMO_H_PRIMER_CABEZA - Head) + 1
-                Else
-                    CheckCabeza = Head
-                End If
+                Case eRaza.Gnomo
+
+                    If Head > eCabezas.GNOMO_H_ULTIMA_CABEZA Then
+                        CheckCabeza = eCabezas.GNOMO_H_PRIMER_CABEZA + (Head - eCabezas.GNOMO_H_ULTIMA_CABEZA) - 1
+                    ElseIf Head < eCabezas.GNOMO_H_PRIMER_CABEZA Then
+                        CheckCabeza = eCabezas.GNOMO_H_ULTIMA_CABEZA - (eCabezas.GNOMO_H_PRIMER_CABEZA - Head) + 1
+                    Else
+                        CheckCabeza = Head
+                    End If
                 
-            Case Else
-                UserRaza = lstRaza.ListIndex + 1
-                CheckCabeza = CheckCabeza(Head)
-        End Select
+                Case Else
+                    UserRaza = lstRaza.ListIndex + 1
+                    CheckCabeza = CheckCabeza(Head)
+                    
+            End Select
         
-    Case eGenero.Mujer
-        Select Case UserRaza
-            Case eRaza.Humano
-                If Head > eCabezas.HUMANO_M_ULTIMA_CABEZA Then
-                    CheckCabeza = eCabezas.HUMANO_M_PRIMER_CABEZA + (Head - eCabezas.HUMANO_M_ULTIMA_CABEZA) - 1
-                ElseIf Head < eCabezas.HUMANO_M_PRIMER_CABEZA Then
-                    CheckCabeza = eCabezas.HUMANO_M_ULTIMA_CABEZA - (eCabezas.HUMANO_M_PRIMER_CABEZA - Head) + 1
-                Else
-                    CheckCabeza = Head
-                End If
+        Case eGenero.Mujer
+
+            Select Case UserRaza
+
+                Case eRaza.Humano
+
+                    If Head > eCabezas.HUMANO_M_ULTIMA_CABEZA Then
+                        CheckCabeza = eCabezas.HUMANO_M_PRIMER_CABEZA + (Head - eCabezas.HUMANO_M_ULTIMA_CABEZA) - 1
+                    ElseIf Head < eCabezas.HUMANO_M_PRIMER_CABEZA Then
+                        CheckCabeza = eCabezas.HUMANO_M_ULTIMA_CABEZA - (eCabezas.HUMANO_M_PRIMER_CABEZA - Head) + 1
+                    Else
+                        CheckCabeza = Head
+                    End If
                 
-            Case eRaza.Elfo
-                If Head > eCabezas.ELFO_M_ULTIMA_CABEZA Then
-                    CheckCabeza = eCabezas.ELFO_M_PRIMER_CABEZA + (Head - eCabezas.ELFO_M_ULTIMA_CABEZA) - 1
-                ElseIf Head < eCabezas.ELFO_M_PRIMER_CABEZA Then
-                    CheckCabeza = eCabezas.ELFO_M_ULTIMA_CABEZA - (eCabezas.ELFO_M_PRIMER_CABEZA - Head) + 1
-                Else
-                    CheckCabeza = Head
-                End If
+                Case eRaza.Elfo
+
+                    If Head > eCabezas.ELFO_M_ULTIMA_CABEZA Then
+                        CheckCabeza = eCabezas.ELFO_M_PRIMER_CABEZA + (Head - eCabezas.ELFO_M_ULTIMA_CABEZA) - 1
+                    ElseIf Head < eCabezas.ELFO_M_PRIMER_CABEZA Then
+                        CheckCabeza = eCabezas.ELFO_M_ULTIMA_CABEZA - (eCabezas.ELFO_M_PRIMER_CABEZA - Head) + 1
+                    Else
+                        CheckCabeza = Head
+                    End If
                 
-            Case eRaza.ElfoOscuro
-                If Head > eCabezas.DROW_M_ULTIMA_CABEZA Then
-                    CheckCabeza = eCabezas.DROW_M_PRIMER_CABEZA + (Head - eCabezas.DROW_M_ULTIMA_CABEZA) - 1
-                ElseIf Head < eCabezas.DROW_M_PRIMER_CABEZA Then
-                    CheckCabeza = eCabezas.DROW_M_ULTIMA_CABEZA - (eCabezas.DROW_M_PRIMER_CABEZA - Head) + 1
-                Else
-                    CheckCabeza = Head
-                End If
+                Case eRaza.ElfoOscuro
+
+                    If Head > eCabezas.DROW_M_ULTIMA_CABEZA Then
+                        CheckCabeza = eCabezas.DROW_M_PRIMER_CABEZA + (Head - eCabezas.DROW_M_ULTIMA_CABEZA) - 1
+                    ElseIf Head < eCabezas.DROW_M_PRIMER_CABEZA Then
+                        CheckCabeza = eCabezas.DROW_M_ULTIMA_CABEZA - (eCabezas.DROW_M_PRIMER_CABEZA - Head) + 1
+                    Else
+                        CheckCabeza = Head
+                    End If
                 
-            Case eRaza.Enano
-                If Head > eCabezas.ENANO_M_ULTIMA_CABEZA Then
-                    CheckCabeza = eCabezas.ENANO_M_PRIMER_CABEZA + (Head - eCabezas.ENANO_M_ULTIMA_CABEZA) - 1
-                ElseIf Head < eCabezas.ENANO_M_PRIMER_CABEZA Then
-                    CheckCabeza = eCabezas.ENANO_M_ULTIMA_CABEZA - (eCabezas.ENANO_M_PRIMER_CABEZA - Head) + 1
-                Else
-                    CheckCabeza = Head
-                End If
+                Case eRaza.Enano
+
+                    If Head > eCabezas.ENANO_M_ULTIMA_CABEZA Then
+                        CheckCabeza = eCabezas.ENANO_M_PRIMER_CABEZA + (Head - eCabezas.ENANO_M_ULTIMA_CABEZA) - 1
+                    ElseIf Head < eCabezas.ENANO_M_PRIMER_CABEZA Then
+                        CheckCabeza = eCabezas.ENANO_M_ULTIMA_CABEZA - (eCabezas.ENANO_M_PRIMER_CABEZA - Head) + 1
+                    Else
+                        CheckCabeza = Head
+                    End If
                 
-            Case eRaza.Gnomo
-                If Head > eCabezas.GNOMO_M_ULTIMA_CABEZA Then
-                    CheckCabeza = eCabezas.GNOMO_M_PRIMER_CABEZA + (Head - eCabezas.GNOMO_M_ULTIMA_CABEZA) - 1
-                ElseIf Head < eCabezas.GNOMO_M_PRIMER_CABEZA Then
-                    CheckCabeza = eCabezas.GNOMO_M_ULTIMA_CABEZA - (eCabezas.GNOMO_M_PRIMER_CABEZA - Head) + 1
-                Else
-                    CheckCabeza = Head
-                End If
+                Case eRaza.Gnomo
+
+                    If Head > eCabezas.GNOMO_M_ULTIMA_CABEZA Then
+                        CheckCabeza = eCabezas.GNOMO_M_PRIMER_CABEZA + (Head - eCabezas.GNOMO_M_ULTIMA_CABEZA) - 1
+                    ElseIf Head < eCabezas.GNOMO_M_PRIMER_CABEZA Then
+                        CheckCabeza = eCabezas.GNOMO_M_ULTIMA_CABEZA - (eCabezas.GNOMO_M_PRIMER_CABEZA - Head) + 1
+                    Else
+                        CheckCabeza = Head
+                    End If
                 
-            Case Else
-                UserRaza = lstRaza.ListIndex + 1
-                CheckCabeza = CheckCabeza(Head)
-        End Select
-    Case Else
-        UserSexo = lstGenero.ListIndex + 1
-        CheckCabeza = CheckCabeza(Head)
-End Select
+                Case Else
+                    UserRaza = lstRaza.ListIndex + 1
+                    CheckCabeza = CheckCabeza(Head)
+            End Select
+
+        Case Else
+            UserSexo = lstGenero.ListIndex + 1
+            CheckCabeza = CheckCabeza(Head)
+    End Select
+    
 End Function
 
 Private Function CheckDir(ByRef Dir As E_Heading) As E_Heading
@@ -2099,9 +2091,10 @@ Private Function CheckDir(ByRef Dir As E_Heading) As E_Heading
     CheckDir = Dir
     
     currentGrh = BodyData(UserBody).Walk(Dir).GrhIndex
-    If currentGrh > 0 Then _
+    If currentGrh > 0 Then
         tAnimacion.Interval = Round(GrhData(currentGrh).speed / GrhData(currentGrh).NumFrames)
-
+    End If
+    
 End Function
 
 Private Sub LoadHelp()
@@ -2202,6 +2195,7 @@ Private Sub UpdateStars()
                 ModClase(UserClase).DanoProyectiles * ModClase(UserClase).Hit + 0.119 * ModClase(UserClase).AtaqueProyectiles * _
                 Val(lblAtributoFinal(eAtributos.Agilidad).Caption)
     Call SetStars(imgArcoStar, NumStars * 2)
+    
 End Sub
 
 Private Sub SetStars(ByRef ImgContainer As Object, ByVal NumStars As Integer)
@@ -2276,10 +2270,11 @@ Private Sub LoadCharInfo()
 
     Dim Lector As clsIniManager
     Set Lector = New clsIniManager
-    Lector.Initialize (Game.path(INIT) & "CharInfo_" & Language & ".dat")
+    Call Lector.Initialize(Game.path(INIT) & "CharInfo_" & Language & ".dat")
 
     'Modificadores de Clase
     For i = 1 To NroClases
+    
         With ModClase(i)
             SearchVar = ListaClases(i)
             
@@ -2293,12 +2288,14 @@ Private Sub LoadCharInfo()
             .Magia = CDbl(Lector.GetValue("MODMAGIA", SearchVar))
             .Vida = CDbl(Lector.GetValue("MODVIDA", SearchVar))
         End With
+        
     Next i
     
     'Modificadores de Raza
     For i = 1 To NroRazas
+    
         With ModRaza(i)
-            SearchVar = Replace(ListaRazas(i), " ", "")
+            SearchVar = Replace(ListaRazas(i), " ", vbNullString)
         
             .Fuerza = CSng(Lector.GetValue("MODRAZA", SearchVar + "Fuerza"))
             .Agilidad = CSng(Lector.GetValue("MODRAZA", SearchVar + "Agilidad"))
@@ -2306,6 +2303,7 @@ Private Sub LoadCharInfo()
             .Carisma = CSng(Lector.GetValue("MODRAZA", SearchVar + "Carisma"))
             .Constitucion = CSng(Lector.GetValue("MODRAZA", SearchVar + "Constitucion"))
         End With
+        
     Next i
 
 End Sub
