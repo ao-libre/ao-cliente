@@ -259,8 +259,12 @@ Sub SetConnected()
     frmMain.lblName.Caption = UserName
     'Load main form
     frmMain.Visible = True
+    
     Call frmMain.ControlSM(eSMType.mWork, False)
     Call frmMain.ControlSM(eSMType.mSpells, False)
+    Call frmMain.ControlSM(eSMType.sResucitation, False)
+    Call frmMain.ControlSM(eSMType.sSafemode, False)
+    
     FPSFLAG = True
 
 End Sub
