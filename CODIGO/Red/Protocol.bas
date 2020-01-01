@@ -64,8 +64,6 @@ Private Enum ServerPacketID
     UserCommerceEnd         ' FINCOMUSUOK
     UserOfferConfirm
     CommerceChat
-    ShowBlacksmithForm      ' SFH
-    ShowCarpenterForm       ' SFC
     UpdateSta               ' ASS
     UpdateMana              ' ASM
     UpdateHP                ' ASH
@@ -104,7 +102,7 @@ Private Enum ServerPacketID
     Atributes               ' ATR
     BlacksmithWeapons       ' LAH
     BlacksmithArmors        ' LAR
-    CarpenterObjects        ' OBR
+    InitCarpenting          ' OBR
     RestOK                  ' DOK
     ErrorMsg                ' ERR
     Blind                   ' CEGU
@@ -162,7 +160,7 @@ Private Enum ServerPacketID
     MultiMessage
     StopWorking
     CancelOfferItem
-    DecirPalabrasMagicas
+    PalabrasMagicas
     PlayAttackAnim
     FXtoMap
     AccountLogged
@@ -606,13 +604,7 @@ On Error Resume Next
             
         Case ServerPacketID.UserOfferConfirm
             Call HandleUserOfferConfirm
-        
-        Case ServerPacketID.ShowBlacksmithForm      ' SFH
-            Call HandleShowBlacksmithForm
-        
-        Case ServerPacketID.ShowCarpenterForm       ' SFC
-            Call HandleShowCarpenterForm
-        
+
         Case ServerPacketID.UpdateSta               ' ASS
             Call HandleUpdateSta
         
@@ -727,8 +719,8 @@ On Error Resume Next
         Case ServerPacketID.BlacksmithArmors        ' LAR
             Call HandleBlacksmithArmors
         
-        Case ServerPacketID.CarpenterObjects        ' OBR
-            Call HandleCarpenterObjects
+        Case ServerPacketID.InitCarpenting          ' OBR
+            Call HandleInitCarpenting
         
         Case ServerPacketID.RestOK                  ' DOK
             Call HandleRestOK
@@ -838,8 +830,8 @@ On Error Resume Next
         Case ServerPacketID.GuildMemberInfo
             Call HandleGuildMemberInfo
             
-        Case ServerPacketID.DecirPalabrasMagicas
-            Call HandleDecirPalabrasMagicas
+        Case ServerPacketID.PalabrasMagicas
+            Call HandlePalabrasMagicas
             
         Case ServerPacketID.PlayAttackAnim
             Call HandleAttackAnim
@@ -1783,46 +1775,6 @@ Private Sub HandleUserOfferConfirm()
         .PrintCommerceMsg TradingUserName & JsonLanguage.item("MENSAJE_COMM_OFERTA_ACEPTA").item("TEXTO"), FontTypeNames.FONTTYPE_CONSE
     End With
     
-End Sub
-
-''
-' Handles the ShowBlacksmithForm message.
-
-Private Sub HandleShowBlacksmithForm()
-'***************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'
-'***************************************************
-    'Remove packet ID
-    Call incomingData.ReadByte
-    
-    If frmMain.macrotrabajo.Enabled And (MacroBltIndex > 0) Then
-        Call WriteCraftBlacksmith(MacroBltIndex)
-    Else
-        frmHerrero.Show , frmMain
-        MirandoHerreria = True
-    End If
-End Sub
-
-''
-' Handles the ShowCarpenterForm message.
-
-Private Sub HandleShowCarpenterForm()
-'***************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'
-'***************************************************
-    'Remove packet ID
-    Call incomingData.ReadByte
-    
-    If frmMain.macrotrabajo.Enabled And (MacroBltIndex > 0) Then
-        Call WriteCraftCarpenter(MacroBltIndex)
-    Else
-        frmCarp.Show , frmMain
-        MirandoCarpinteria = True
-    End If
 End Sub
 
 ''
@@ -3524,6 +3476,7 @@ Private Sub HandleBlacksmithWeapons()
     End If
     
 On Error GoTo errhandler
+    
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -3552,6 +3505,18 @@ On Error GoTo errhandler
             .Upgrade = Buffer.ReadInteger()
         End With
     Next i
+    
+    'If we got here then packet is complete, copy data back to original queue
+    'En otras palabras, a partir de ahora podes usar "Exit Sub" sin romper nada.
+    Call incomingData.CopyBuffer(Buffer)
+    
+    If frmMain.macrotrabajo.Enabled And (MacroBltIndex > 0) Then
+        Call WriteCraftBlacksmith(MacroBltIndex)
+        Exit Sub
+    Else
+        Call frmHerrero.Show(vbModeless, frmMain)
+        MirandoHerreria = True
+    End If
     
     For i = 1 To MAX_LIST_ITEMS
         Set InvLingosHerreria(i) = New clsGraphicalInventory
@@ -3592,10 +3557,7 @@ On Error GoTo errhandler
             End If
         End With
     Next i
-    
-    'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
-    
+  
 errhandler:
     Dim Error As Long
     Error = Err.number
@@ -3651,6 +3613,17 @@ On Error GoTo errhandler
         End With
     Next i
     
+    'If we got here then packet is complete, copy data back to original queue
+    'En otras palabras, a partir de ahora podes usar "Exit Sub" sin romper nada.
+    Call incomingData.CopyBuffer(Buffer)
+    
+    If frmMain.macrotrabajo.Enabled And (MacroBltIndex > 0) Then
+        Call WriteCraftBlacksmith(MacroBltIndex)
+    Else
+        Call frmHerrero.Show(vbModeless, frmMain)
+        MirandoHerreria = True
+    End If
+    
     J = UBound(HerreroMejorar)
     
     For i = 1 To Count
@@ -3677,10 +3650,7 @@ On Error GoTo errhandler
             End If
         End With
     Next i
-    
-    'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
-    
+
 errhandler:
     Dim Error As Long
     Error = Err.number
@@ -3694,13 +3664,13 @@ On Error GoTo 0
 End Sub
 
 ''
-' Handles the CarpenterObjects message.
+' Handles the InitCarpenting message.
 
-Private Sub HandleCarpenterObjects()
+Private Sub HandleInitCarpenting()
 '***************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'
+'Author: Jopi
+'Last Modification: 01/01/20
+'Este solia ser HandleCarpenterObjects(), pero fue modificado para fusionar los paquetes CarptenterObjects y ShowCarpenterForm.
 '***************************************************
     If incomingData.Length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
@@ -3708,6 +3678,7 @@ Private Sub HandleCarpenterObjects()
     End If
     
 On Error GoTo errhandler
+    
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -3735,6 +3706,18 @@ On Error GoTo errhandler
             .Upgrade = Buffer.ReadInteger()
         End With
     Next i
+    
+    'If we got here then packet is complete, copy data back to original queue
+    'En otras palabras, a partir de ahora podes usar "Exit Sub" sin romper nada.
+    Call incomingData.CopyBuffer(Buffer)
+    
+    If frmMain.macrotrabajo.Enabled And (MacroBltIndex > 0) Then
+        Call WriteCraftCarpenter(MacroBltIndex)
+        Exit Sub
+    Else
+        Call frmCarp.Show(vbModeless, frmMain)
+        MirandoCarpinteria = True
+    End If
     
     For i = 1 To MAX_LIST_ITEMS
         Set InvMaderasCarpinteria(i) = New clsGraphicalInventory
@@ -3774,9 +3757,6 @@ On Error GoTo errhandler
             End If
         End With
     Next i
-    
-    'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
     
 errhandler:
     Dim Error As Long
@@ -10758,12 +10738,12 @@ Public Sub WriteMoveItem(ByVal originalSlot As Integer, ByVal newSlot As Integer
     End With
 End Sub
 
-Private Sub HandleDecirPalabrasMagicas()
+Private Sub HandlePalabrasMagicas()
+    
     If incomingData.Length < 2 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
-    
     
     'Remove packet ID
     Call incomingData.ReadByte
