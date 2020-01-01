@@ -134,13 +134,13 @@ Public Sub RefreshAllChars()
 'Goes through the charlist and replots all the characters on the map
 'Used to make sure everyone is visible
 '*****************************************************************
-    Dim loopc As Long
+    Dim LoopC As Long
     
-    For loopc = 1 To LastChar
-        If charlist(loopc).active = 1 Then
-            MapData(charlist(loopc).Pos.X, charlist(loopc).Pos.Y).CharIndex = loopc
+    For LoopC = 1 To LastChar
+        If charlist(LoopC).active = 1 Then
+            MapData(charlist(LoopC).Pos.X, charlist(LoopC).Pos.Y).CharIndex = LoopC
         End If
-    Next loopc
+    Next LoopC
 End Sub
 
 Function AsciiValidos(ByVal cad As String) As Boolean
@@ -166,7 +166,7 @@ Function CheckUserData() As Boolean
     
     'Validamos los datos del user
     
-    Dim loopc As Long
+    Dim LoopC As Long
     Dim CharAscii As Integer
     Dim Len_accountName As Long, Len_accountPassword As Long
 
@@ -177,13 +177,13 @@ Function CheckUserData() As Boolean
     
     Len_accountPassword = Len(AccountPassword)
     
-    For loopc = 1 To Len_accountPassword
-        CharAscii = Asc(mid$(AccountPassword, loopc, 1))
+    For LoopC = 1 To Len_accountPassword
+        CharAscii = Asc(mid$(AccountPassword, LoopC, 1))
         If Not LegalCharacter(CharAscii) Then
             MsgBox Replace$(JsonLanguage.item("VALIDACION_BAD_PASSWORD").item("TEXTO").item(2), "VAR_CHAR_INVALIDO", Chr$(CharAscii))
             Exit Function
         End If
-    Next loopc
+    Next LoopC
 
     If Len(AccountName) > 30 Then
         MsgBox JsonLanguage.item("VALIDACION_BAD_EMAIL").item("TEXTO").item(2)
@@ -192,13 +192,13 @@ Function CheckUserData() As Boolean
         
     Len_accountName = Len(AccountName)
     
-    For loopc = 1 To Len_accountName
-        CharAscii = Asc(mid$(AccountName, loopc, 1))
+    For LoopC = 1 To Len_accountName
+        CharAscii = Asc(mid$(AccountName, LoopC, 1))
         If Not LegalCharacter(CharAscii) Then
             MsgBox Replace$(JsonLanguage.item("VALIDACION_BAD_PASSWORD").item("TEXTO").item(4), "VAR_CHAR_INVALIDO", Chr$(CharAscii))
             Exit Function
         End If
-    Next loopc
+    Next LoopC
     
     CheckUserData = True
 End Function
@@ -308,7 +308,7 @@ Private Sub CheckKeys()
      '*****************************************************************
     'Checks keys and respond
     '*****************************************************************
-    Static LastMovement As Long
+    Static lastmovement As Long
 
     'No input allowed while Argentum is not the active window
     If Not Application.IsAppActive() Then Exit Sub
@@ -826,9 +826,9 @@ Private Sub LoadInitialConfig()
     Dim CursorAniDir As String
     Dim Cursor As Long
     CursorAniDir = Game.path(Graficos) & "MouseIcons\General.ani"
-    hSwapCursor = SetClassLong(frmMain.hwnd, GLC_HCURSOR, LoadCursorFromFile(CursorAniDir))
-    hSwapCursor = SetClassLong(frmMain.MainViewPic.hwnd, GLC_HCURSOR, LoadCursorFromFile(CursorAniDir))
-    hSwapCursor = SetClassLong(frmMain.hlst.hwnd, GLC_HCURSOR, LoadCursorFromFile(CursorAniDir))
+    hSwapCursor = SetClassLong(frmMain.hWnd, GLC_HCURSOR, LoadCursorFromFile(CursorAniDir))
+    hSwapCursor = SetClassLong(frmMain.MainViewPic.hWnd, GLC_HCURSOR, LoadCursorFromFile(CursorAniDir))
+    hSwapCursor = SetClassLong(frmMain.hlst.hWnd, GLC_HCURSOR, LoadCursorFromFile(CursorAniDir))
    
     frmCargando.Show
     frmCargando.Refresh
@@ -977,7 +977,8 @@ Private Sub LoadInitialConfig()
                             
     '###################
     ' PETICIONES API
-    Call GetPostsFromReddit
+    Call GetPostsFromReddit '>>>>
+    'Que lento que es ese sub XD
 
     Unload frmCargando
     
@@ -1141,18 +1142,18 @@ Private Sub InicializarNombres()
     ListaRazas(eRaza.Gnomo) = JsonLanguage.item("RAZAS").item("GNOMO")
     ListaRazas(eRaza.Enano) = JsonLanguage.item("RAZAS").item("ENANO")
 
-    ListaClases(eClass.Mage) = JsonLanguage.Item("CLASES").Item("MAGO")
-    ListaClases(eClass.Cleric) = JsonLanguage.Item("CLASES").Item("CLERIGO")
-    ListaClases(eClass.Warrior) = JsonLanguage.Item("CLASES").Item("GUERRERO")
-    ListaClases(eClass.Assasin) = JsonLanguage.Item("CLASES").Item("ASESINO")
-    ListaClases(eClass.Thief) = JsonLanguage.Item("CLASES").Item("LADRON")
-    ListaClases(eClass.Bard) = JsonLanguage.Item("CLASES").Item("BARDO")
-    ListaClases(eClass.Druid) = JsonLanguage.Item("CLASES").Item("DRUIDA")
-    ListaClases(eClass.Bandit) = JsonLanguage.Item("CLASES").Item("BANDIDO")
-    ListaClases(eClass.Paladin) = JsonLanguage.Item("CLASES").Item("PALADIN")
-    ListaClases(eClass.Hunter) = JsonLanguage.Item("CLASES").Item("CAZADOR")
-    ListaClases(eClass.Worker) = JsonLanguage.Item("CLASES").Item("TRABAJADOR")
-    ListaClases(eClass.Pirate) = JsonLanguage.Item("CLASES").Item("PIRATA")
+    ListaClases(eClass.Mage) = JsonLanguage.item("CLASES").item("MAGO")
+    ListaClases(eClass.Cleric) = JsonLanguage.item("CLASES").item("CLERIGO")
+    ListaClases(eClass.Warrior) = JsonLanguage.item("CLASES").item("GUERRERO")
+    ListaClases(eClass.Assasin) = JsonLanguage.item("CLASES").item("ASESINO")
+    ListaClases(eClass.Thief) = JsonLanguage.item("CLASES").item("LADRON")
+    ListaClases(eClass.Bard) = JsonLanguage.item("CLASES").item("BARDO")
+    ListaClases(eClass.Druid) = JsonLanguage.item("CLASES").item("DRUIDA")
+    ListaClases(eClass.Bandit) = JsonLanguage.item("CLASES").item("BANDIDO")
+    ListaClases(eClass.Paladin) = JsonLanguage.item("CLASES").item("PALADIN")
+    ListaClases(eClass.Hunter) = JsonLanguage.item("CLASES").item("CAZADOR")
+    ListaClases(eClass.Worker) = JsonLanguage.item("CLASES").item("TRABAJADOR")
+    ListaClases(eClass.Pirate) = JsonLanguage.item("CLASES").item("PIRATA")
    
     SkillsNames(eSkill.Magia) = JsonLanguage.item("HABILIDADES").item("MAGIA").item("TEXTO")
     SkillsNames(eSkill.Robar) = JsonLanguage.item("HABILIDADES").item("ROBAR").item("TEXTO")
