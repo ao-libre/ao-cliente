@@ -1353,7 +1353,7 @@ Private Enum eHelp
     ieGenero
 End Enum
 
-Private vHelp(25) As String
+Private vHelp(25)         As String
 Private vEspecialidades() As String
 
 Private Type tModRaza
@@ -1376,13 +1376,13 @@ Private Type tModClase
     Hit As Double
 End Type
 
-Private ModRaza() As tModRaza
+Private ModRaza()  As tModRaza
 Private ModClase() As tModClase
 
-Private NroRazas As Integer
-Private NroClases As Integer
+Private NroRazas   As Integer
+Private NroClases  As Integer
 Private currentGrh As Long
-Private Dir As E_Heading
+Private Dir        As E_Heading
 
 Private Sub Form_Load()
     Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaCrearPersonaje.jpg")
@@ -1399,10 +1399,7 @@ Private Sub Form_Load()
     
     Call DrawImageInPicture(picPJ, Me.Picture, 0, 0, , , picPJ.Left, picPJ.Top)
     Dir = SOUTH
-    
-    'Call TirarDados
-    
-    'UserClase = 0
+
     UserSexo = 0
     UserRaza = 0
     UserHogar = 0
@@ -1520,7 +1517,9 @@ Function CheckData() As Boolean
 
     'Toqueteado x Salvito
     Dim i As Integer
+
     For i = 1 To NUMATRIBUTOS
+
         If Val(lblAtributos(i).Caption) = 0 Then
             MsgBox JsonLanguage.item("VALIDACION_ATRIBUTOS").item("TEXTO")
             Exit Function
@@ -1542,9 +1541,12 @@ Private Sub TirarDados()
 End Sub
 
 Private Sub DirPJ_Click(Index As Integer)
+
     Select Case Index
+
         Case 0
             Dir = CheckDir(Dir + 1)
+
         Case 1
             Dir = CheckDir(Dir - 1)
     End Select
@@ -1557,9 +1559,12 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y A
 End Sub
 
 Private Sub HeadPJ_Click(Index As Integer)
+
     Select Case Index
+
         Case 0
             UserHead = CheckCabeza(UserHead + 1)
+
         Case 1
             UserHead = CheckCabeza(UserHead - 1)
     End Select
@@ -1627,24 +1632,33 @@ Private Sub ImgCrear_Click()
         Me.imgCrear.Enabled = True
     End If
     
-        bShowTutorial = True
+    bShowTutorial = True
 
-    End Sub
+End Sub
 
 Private Sub imgDados_Click()
     Call Audio.PlayWave(SND_DICE)
     Call TirarDados
 End Sub
 
-Private Sub imgEspecialidad_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgEspecialidad_MouseMove(Button As Integer, _
+                                      Shift As Integer, _
+                                      X As Single, _
+                                      Y As Single)
     lblHelp.Caption = vHelp(eHelp.ieEspecialidad)
 End Sub
 
-Private Sub imgNombre_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgNombre_MouseMove(Button As Integer, _
+                                Shift As Integer, _
+                                X As Single, _
+                                Y As Single)
     lblHelp.Caption = vHelp(eHelp.ieNombre)
 End Sub
 
-Private Sub imgAtributos_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgAtributos_MouseMove(Button As Integer, _
+                                   Shift As Integer, _
+                                   X As Single, _
+                                   Y As Single)
     lblHelp.Caption = vHelp(eHelp.ieAtributos)
 End Sub
 
@@ -1660,67 +1674,115 @@ Private Sub imgF_MouseMove(Button As Integer, Shift As Integer, X As Single, Y A
     lblHelp.Caption = vHelp(eHelp.ieF)
 End Sub
 
-Private Sub imgFuerza_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgFuerza_MouseMove(Button As Integer, _
+                                Shift As Integer, _
+                                X As Single, _
+                                Y As Single)
     lblHelp.Caption = vHelp(eHelp.ieFuerza)
 End Sub
 
-Private Sub imgAgilidad_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgAgilidad_MouseMove(Button As Integer, _
+                                  Shift As Integer, _
+                                  X As Single, _
+                                  Y As Single)
     lblHelp.Caption = vHelp(eHelp.ieAgilidad)
 End Sub
 
-Private Sub imgInteligencia_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgInteligencia_MouseMove(Button As Integer, _
+                                      Shift As Integer, _
+                                      X As Single, _
+                                      Y As Single)
     lblHelp.Caption = vHelp(eHelp.ieInteligencia)
 End Sub
 
-Private Sub imgCarisma_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgCarisma_MouseMove(Button As Integer, _
+                                 Shift As Integer, _
+                                 X As Single, _
+                                 Y As Single)
     lblHelp.Caption = vHelp(eHelp.ieCarisma)
 End Sub
 
-Private Sub imgConstitucion_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgConstitucion_MouseMove(Button As Integer, _
+                                      Shift As Integer, _
+                                      X As Single, _
+                                      Y As Single)
     lblHelp.Caption = vHelp(eHelp.ieConstitucion)
 End Sub
 
-Private Sub imgArcos_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgArcos_MouseMove(Button As Integer, _
+                               Shift As Integer, _
+                               X As Single, _
+                               Y As Single)
     lblHelp.Caption = vHelp(eHelp.ieArcos)
 End Sub
 
-Private Sub imgArmas_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgArmas_MouseMove(Button As Integer, _
+                               Shift As Integer, _
+                               X As Single, _
+                               Y As Single)
     lblHelp.Caption = vHelp(eHelp.ieArmas)
 End Sub
 
-Private Sub imgEscudos_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgEscudos_MouseMove(Button As Integer, _
+                                 Shift As Integer, _
+                                 X As Single, _
+                                 Y As Single)
     lblHelp.Caption = vHelp(eHelp.ieEscudos)
 End Sub
 
-Private Sub imgEvasion_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgEvasion_MouseMove(Button As Integer, _
+                                 Shift As Integer, _
+                                 X As Single, _
+                                 Y As Single)
     lblHelp.Caption = vHelp(eHelp.ieEvasion)
 End Sub
 
-Private Sub imgMagia_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgMagia_MouseMove(Button As Integer, _
+                               Shift As Integer, _
+                               X As Single, _
+                               Y As Single)
     lblHelp.Caption = vHelp(eHelp.ieMagia)
 End Sub
 
-Private Sub imgVida_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgVida_MouseMove(Button As Integer, _
+                              Shift As Integer, _
+                              X As Single, _
+                              Y As Single)
     lblHelp.Caption = vHelp(eHelp.ieVida)
 End Sub
 
-Private Sub imgDados_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgDados_MouseMove(Button As Integer, _
+                               Shift As Integer, _
+                               X As Single, _
+                               Y As Single)
     lblHelp.Caption = vHelp(eHelp.ieTirarDados)
 End Sub
 
-Private Sub imgPuebloOrigen_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgPuebloOrigen_MouseMove(Button As Integer, _
+                                      Shift As Integer, _
+                                      X As Single, _
+                                      Y As Single)
     lblHelp.Caption = vHelp(eHelp.iePuebloOrigen)
 End Sub
 
-Private Sub imgRaza_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgRaza_MouseMove(Button As Integer, _
+                              Shift As Integer, _
+                              X As Single, _
+                              Y As Single)
     lblHelp.Caption = vHelp(eHelp.ieRaza)
 End Sub
 
-Private Sub imgClase_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgClase_MouseMove(Button As Integer, _
+                               Shift As Integer, _
+                               X As Single, _
+                               Y As Single)
     lblHelp.Caption = vHelp(eHelp.ieClase)
 End Sub
 
-Private Sub imgGenero_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgGenero_MouseMove(Button As Integer, _
+                                Shift As Integer, _
+                                X As Single, _
+                                Y As Single)
     lblHelp.Caption = vHelp(eHelp.ieGenero)
 End Sub
 
@@ -1738,7 +1800,8 @@ Private Sub lstGenero_Click()
 End Sub
 
 Private Sub lstProfesion_Click()
-On Error Resume Next
+    On Error Resume Next
+
     If lstProfesion.Text = "Trabajador" Or lstProfesion.Text = "Worker" Then
         'Agarramos un numero aleatorio del 0 al 6 por que hay 6 imagenes de trabajador
         ImgProfesionDibujo.Picture = LoadPicture(Game.path(Interfaces) & lstProfesion.Text & (CInt(Rnd * 6)) & ".jpg")
@@ -1764,25 +1827,27 @@ Private Sub lstRaza_Click()
 End Sub
 
 Private Sub picHead_Click(Index As Integer)
+
     ' No se mueve si clickea al medio
     If Index = 2 Then Exit Sub
     
-    Dim Counter As Integer, Count_index As Long
-    Dim Head As Integer
+    Dim Counter As Integer
+    Dim Head    As Integer
     
     Head = UserHead
     
     If Index > 2 Then
 
-        Count_index = Index - 2
-        For Counter = Count_index To 1 Step -1
+        For Counter = Index - 2 To 1 Step -1
             Head = CheckCabeza(Head + 1)
         Next Counter
+
     Else
-        Count_index = 2 - Index
-        For Counter = Count_index To 1 Step -1
+
+        For Counter = 2 - Index To 1 Step -1
             Head = CheckCabeza(Head - 1)
         Next Counter
+
     End If
     
     UserHead = Head
@@ -1792,54 +1857,36 @@ Private Sub picHead_Click(Index As Integer)
 End Sub
 
 Private Sub tAnimacion_Timer()
-On Error Resume Next
-    Dim SR As RECT
-    Dim DR As RECT
-    Dim Grh As Long
+    On Error Resume Next
+    
+    Dim DR       As RECT
+    Dim Grh      As Long
     Static Frame As Byte
     
     If currentGrh = 0 Then Exit Sub
     UserHead = CheckCabeza(UserHead)
     
     Frame = Frame + 1
-    If Frame >= GrhData(currentGrh).NumFrames Then Frame = 1
-    'Call DrawImageInPicture(picPJ, Me.Picture, 0, 0, , , picPJ.Left, picPJ.Top)
-    
-    Grh = GrhData(currentGrh).Frames(Frame)
-    
-    With GrhData(Grh)
-        
-        DR.Left = 0
-        DR.Top = 0
-        DR.Right = picTemp.Width
-        DR.Bottom = picTemp.Height
-        
-        picTemp.BackColor = picTemp.BackColor
-        
-        Call DrawGrhtoHdc(picTemp, Grh, DR)
-        'Call DrawTransparentGrhtoHdc(picPJ.hdc, picTemp.hdc, DR, DR, vbBlack)
-    End With
-    
-    Grh = HeadData(UserHead).Head(Dir).GrhIndex
-    
-    With GrhData(Grh)
 
-        DR.Left = 0
-        DR.Top = 0
-        DR.Right = picTemp.Width
-        DR.Bottom = picTemp.Height
-        
-        picTemp.BackColor = picTemp.BackColor
-        
-        Call DrawGrhtoHdc(picTemp, Grh, DR)
-        
+    If Frame >= GrhData(currentGrh).NumFrames Then Frame = 1
+    
+    With DR
+        .Right = picTemp.Width
+        .Bottom = picTemp.Height
     End With
     
+    Call Engine_BeginScene
+    
+        Call Draw_GrhIndex(GrhData(currentGrh).Frames(Frame), (picTemp.Width / 2 - 12), (picTemp.Height / 2 - 24), 0, Normal_RGBList())
+        Call Draw_GrhIndex(HeadData(UserHead).Head(Dir).GrhIndex, (picTemp.Width / 2 - 9), 0, 0, Normal_RGBList())
+    
+    Call Engine_EndScene(DR, picTemp.hWnd)
+       
 End Sub
 
 Private Sub DrawHead(ByVal Head As Integer, ByVal PicIndex As Integer)
 
-    Dim DR As RECT
+    Dim DR  As RECT
     Dim Grh As Long
 
     Grh = HeadData(Head).Head(Dir).GrhIndex
@@ -1853,7 +1900,10 @@ Private Sub DrawHead(ByVal Head As Integer, ByVal PicIndex As Integer)
 
 End Sub
 
-Private Sub txtConfirmPasswd_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub txtConfirmPasswd_MouseMove(Button As Integer, _
+                                       Shift As Integer, _
+                                       X As Single, _
+                                       Y As Single)
     lblHelp.Caption = vHelp(eHelp.ieConfirmPasswd)
 End Sub
 
@@ -1863,14 +1913,16 @@ End Sub
 
 Private Sub DarCuerpoYCabeza()
 
-    Dim bVisible As Boolean
-    Dim PicIndex As Integer
+    Dim bVisible  As Boolean
+    Dim PicIndex  As Integer
     Dim LineIndex As Integer
     
     Select Case UserSexo
     
         Case eGenero.Hombre
+
             Select Case UserRaza
+
                 Case eRaza.Humano
                     UserHead = eCabezas.HUMANO_H_PRIMER_CABEZA
                     UserBody = eCabezas.HUMANO_H_CUERPO_DESNUDO
@@ -1897,7 +1949,9 @@ Private Sub DarCuerpoYCabeza()
             End Select
             
         Case eGenero.Mujer
+
             Select Case UserRaza
+
                 Case eRaza.Humano
                     UserHead = eCabezas.HUMANO_M_PRIMER_CABEZA
                     UserBody = eCabezas.HUMANO_M_CUERPO_DESNUDO
@@ -1931,11 +1985,18 @@ Private Sub DarCuerpoYCabeza()
     
     bVisible = UserHead <> 0 And UserBody <> 0
     
+    'PictureBox - Cabeza
     HeadPJ(0).Visible = bVisible
     HeadPJ(1).Visible = bVisible
+    
+    'PictureBox - Direccion Cabeza
     DirPJ(0).Visible = bVisible
     DirPJ(1).Visible = bVisible
     
+    'PictureBox - Cuerpo
+    picPJ.Visible = bVisible
+    picTemp.Visible = bVisible
+
     For PicIndex = 0 To 4
         picHead(PicIndex).Visible = bVisible
     Next PicIndex
@@ -1947,6 +2008,7 @@ Private Sub DarCuerpoYCabeza()
     If bVisible Then Call UpdateHeadSelection
     
     currentGrh = BodyData(UserBody).Walk(Dir).GrhIndex
+
     If currentGrh > 0 Then
         tAnimacion.Interval = Round(GrhData(currentGrh).speed / GrhData(currentGrh).NumFrames)
     End If
@@ -2091,6 +2153,7 @@ Private Function CheckDir(ByRef Dir As E_Heading) As E_Heading
     CheckDir = Dir
     
     currentGrh = BodyData(UserBody).Walk(Dir).GrhIndex
+
     If currentGrh > 0 Then
         tAnimacion.Interval = Round(GrhData(currentGrh).speed / GrhData(currentGrh).NumFrames)
     End If
@@ -2125,11 +2188,17 @@ Private Sub ClearLabel()
     lblHelp = vbNullString
 End Sub
 
-Private Sub txtNombre_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub txtNombre_MouseMove(Button As Integer, _
+                                Shift As Integer, _
+                                X As Single, _
+                                Y As Single)
     lblHelp.Caption = vHelp(eHelp.ieNombre)
 End Sub
 
-Private Sub txtPasswd_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub txtPasswd_MouseMove(Button As Integer, _
+                                Shift As Integer, _
+                                X As Single, _
+                                Y As Single)
     lblHelp.Caption = vHelp(eHelp.iePasswd)
 End Sub
 
@@ -2140,8 +2209,7 @@ End Sub
 
 Private Sub UpdateRazaMod()
     Dim SelRaza As Integer
-    Dim i As Integer
-    
+    Dim i       As Integer
     
     If lstRaza.ListIndex > -1 Then
     
@@ -2185,24 +2253,20 @@ Private Sub UpdateStars()
     Call SetStars(imgEscudosStar, NumStars * 2)
     
     ' Estrellas de armas
-    NumStars = (0.509 + 0.01185 * Val(lblAtributoFinal(eAtributos.Fuerza).Caption)) * ModClase(UserClase).Hit * _
-                ModClase(UserClase).DanoArmas + 0.119 * ModClase(UserClase).AtaqueArmas * _
-                Val(lblAtributoFinal(eAtributos.Agilidad).Caption)
+    NumStars = (0.509 + 0.01185 * Val(lblAtributoFinal(eAtributos.Fuerza).Caption)) * ModClase(UserClase).Hit * ModClase(UserClase).DanoArmas + 0.119 * ModClase(UserClase).AtaqueArmas * Val(lblAtributoFinal(eAtributos.Agilidad).Caption)
     Call SetStars(imgArmasStar, NumStars * 2)
     
     ' Estrellas de arcos
-    NumStars = (0.4915 + 0.01265 * Val(lblAtributoFinal(eAtributos.Fuerza).Caption)) * _
-                ModClase(UserClase).DanoProyectiles * ModClase(UserClase).Hit + 0.119 * ModClase(UserClase).AtaqueProyectiles * _
-                Val(lblAtributoFinal(eAtributos.Agilidad).Caption)
+    NumStars = (0.4915 + 0.01265 * Val(lblAtributoFinal(eAtributos.Fuerza).Caption)) * ModClase(UserClase).DanoProyectiles * ModClase(UserClase).Hit + 0.119 * ModClase(UserClase).AtaqueProyectiles * Val(lblAtributoFinal(eAtributos.Agilidad).Caption)
     Call SetStars(imgArcoStar, NumStars * 2)
     
 End Sub
 
 Private Sub SetStars(ByRef ImgContainer As Object, ByVal NumStars As Integer)
-    Dim FullStars As Integer
+    Dim FullStars   As Integer
     Dim HasHalfStar As Boolean
-    Dim Index As Integer
-    Dim Counter As Integer
+    Dim Index       As Integer
+    Dim Counter     As Integer
 
     If NumStars > 0 Then
         
@@ -2212,15 +2276,19 @@ Private Sub SetStars(ByRef ImgContainer As Object, ByVal NumStars As Integer)
         
         ' Tienen brillo extra si estan todas
         If FullStars = 5 Then
+
             For Index = 1 To FullStars
                 ImgContainer(Index).Picture = picGlowStar
             Next Index
+
         Else
+
             ' Numero impar? Entonces hay que poner "media estrella"
             If (NumStars Mod 2) > 0 Then HasHalfStar = True
             
             ' Muestro las estrellas enteras
             If FullStars > 0 Then
+
                 For Index = 1 To FullStars
                     ImgContainer(Index).Picture = picFullStar
                 Next Index
@@ -2238,29 +2306,28 @@ Private Sub SetStars(ByRef ImgContainer As Object, ByVal NumStars As Integer)
             ' Si estan completos los espacios, no borro nada
             If Counter <> 5 Then
                 
-                'pre-calculo el index para mejorar el rendimiento
-                Dim Count_index As Long
-                    Count_index = Counter + 1
-                
                 ' Limpio las que queden vacias
-                For Index = Count_index To 5
+                For Index = Counter + 1 To 5
                     Set ImgContainer(Index).Picture = Nothing
                 Next Index
+
             End If
             
         End If
     Else
+
         ' Limpio todo
         For Index = 1 To 5
             Set ImgContainer(Index).Picture = Nothing
         Next Index
+
     End If
 
 End Sub
 
 Private Sub LoadCharInfo()
     Dim SearchVar As String
-    Dim i As Integer
+    Dim i         As Integer
     
     NroRazas = UBound(ListaRazas())
     NroClases = UBound(ListaClases())

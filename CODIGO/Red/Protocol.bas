@@ -3476,6 +3476,7 @@ Private Sub HandleBlacksmithWeapons()
     End If
     
 On Error GoTo errhandler
+    
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -3506,12 +3507,14 @@ On Error GoTo errhandler
     Next i
     
     'If we got here then packet is complete, copy data back to original queue
+    'En otras palabras, a partir de ahora podes usar "Exit Sub" sin romper nada.
     Call incomingData.CopyBuffer(Buffer)
     
     If frmMain.macrotrabajo.Enabled And (MacroBltIndex > 0) Then
         Call WriteCraftBlacksmith(MacroBltIndex)
+        Exit Sub
     Else
-        frmHerrero.Show , frmMain
+        Call frmHerrero.Show(vbModeless, frmMain)
         MirandoHerreria = True
     End If
     
@@ -3611,12 +3614,14 @@ On Error GoTo errhandler
     Next i
     
     'If we got here then packet is complete, copy data back to original queue
+    'En otras palabras, a partir de ahora podes usar "Exit Sub" sin romper nada.
     Call incomingData.CopyBuffer(Buffer)
     
     If frmMain.macrotrabajo.Enabled And (MacroBltIndex > 0) Then
         Call WriteCraftBlacksmith(MacroBltIndex)
+		Exit Sub
     Else
-        frmHerrero.Show , frmMain
+        Call frmHerrero.Show(vbModeless, frmMain)
         MirandoHerreria = True
     End If
     
@@ -3664,9 +3669,9 @@ End Sub
 
 Private Sub HandleInitCarpenting()
 '***************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'
+'Author: Jopi
+'Last Modification: 01/01/20
+'Este solia ser HandleCarpenterObjects(), pero fue modificado para fusionar los paquetes CarptenterObjects y ShowCarpenterForm.
 '***************************************************
     If incomingData.Length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
@@ -3674,6 +3679,7 @@ Private Sub HandleInitCarpenting()
     End If
     
 On Error GoTo errhandler
+    
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -3703,12 +3709,14 @@ On Error GoTo errhandler
     Next i
     
     'If we got here then packet is complete, copy data back to original queue
+    'En otras palabras, a partir de ahora podes usar "Exit Sub" sin romper nada.
     Call incomingData.CopyBuffer(Buffer)
     
     If frmMain.macrotrabajo.Enabled And (MacroBltIndex > 0) Then
         Call WriteCraftCarpenter(MacroBltIndex)
+        Exit Sub
     Else
-        frmCarp.Show , frmMain
+        Call frmCarp.Show(vbModeless, frmMain)
         MirandoCarpinteria = True
     End If
     
@@ -10732,11 +10740,11 @@ Public Sub WriteMoveItem(ByVal originalSlot As Integer, ByVal newSlot As Integer
 End Sub
 
 Private Sub HandlePalabrasMagicas()
+
     If incomingData.Length < 2 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
-    
     
     'Remove packet ID
     Call incomingData.ReadByte

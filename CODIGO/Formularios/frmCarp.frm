@@ -680,7 +680,7 @@ End Sub
 Private Sub RenderItem(ByRef Pic As PictureBox, ByVal GrhIndex As Long)
     
     On Error Resume Next
-
+    
     Dim DR As RECT
     
     With DR
@@ -689,7 +689,7 @@ Private Sub RenderItem(ByRef Pic As PictureBox, ByVal GrhIndex As Long)
     End With
     
     Call DrawGrhtoHdc(Pic, GrhIndex, DR)
-
+     
 End Sub
 
 Public Sub RenderList(ByVal Inicio As Integer)
@@ -706,15 +706,19 @@ Public Sub RenderList(ByVal Inicio As Integer)
         If i + Inicio <= NumItems Then
 
             With ObjCarpintero(i + Inicio)
+            
                 ' Agrego el item
                 Call RenderItem(picItem(i), .GrhIndex)
                 picItem(i).ToolTipText = .name
-            
+
                 ' Inventario de lenos
                 Call InvMaderasCarpinteria(i).SetItem(1, 0, .Madera, 0, MADERA_GRH, 0, 0, 0, 0, 0, 0, "Lena")
                 Call InvMaderasCarpinteria(i).SetItem(2, 0, .MaderaElfica, 0, MADERA_ELFICA_GRH, 0, 0, 0, 0, 0, 0, "Lena elfica")
+                
             End With
+            
         End If
+        
     Next i
     
 End Sub
@@ -742,7 +746,9 @@ Public Sub RenderUpgradeList(ByVal Inicio As Integer)
                 Call InvMaderasCarpinteria(i).SetItem(1, 0, .Madera, 0, MADERA_GRH, 0, 0, 0, 0, 0, 0, "Lena")
                 Call InvMaderasCarpinteria(i).SetItem(2, 0, .MaderaElfica, 0, MADERA_ELFICA_GRH, 0, 0, 0, 0, 0, 0, "Lena elfica")
             End With
+            
         End If
+        
     Next i
 
 End Sub
