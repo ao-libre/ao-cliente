@@ -1,5 +1,5 @@
 VERSION 5.00
-Begin VB.Form frmCarp 
+Begin VB.Form frmCarpinteria 
    BackColor       =   &H8000000B&
    BorderStyle     =   0  'None
    Caption         =   "Carpintero"
@@ -444,7 +444,7 @@ Begin VB.Form frmCarp
       Width           =   1710
    End
 End
-Attribute VB_Name = "frmCarp"
+Attribute VB_Name = "frmCarpinteria"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
