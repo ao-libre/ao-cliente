@@ -160,7 +160,7 @@ Private Enum ServerPacketID
     MultiMessage
     StopWorking
     CancelOfferItem
-    DecirPalabrasMagicas
+    PalabrasMagicas
     PlayAttackAnim
     FXtoMap
     AccountLogged
@@ -830,8 +830,8 @@ On Error Resume Next
         Case ServerPacketID.GuildMemberInfo
             Call HandleGuildMemberInfo
             
-        Case ServerPacketID.DecirPalabrasMagicas
-            Call HandleDecirPalabrasMagicas
+        Case ServerPacketID.PalabrasMagicas
+            Call HandlePalabrasMagicas
             
         Case ServerPacketID.PlayAttackAnim
             Call HandleAttackAnim
@@ -10731,7 +10731,7 @@ Public Sub WriteMoveItem(ByVal originalSlot As Integer, ByVal newSlot As Integer
     End With
 End Sub
 
-Private Sub HandleDecirPalabrasMagicas()
+Private Sub HandlePalabrasMagicas()
     If incomingData.Length < 2 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
