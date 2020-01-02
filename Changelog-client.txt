@@ -611,3 +611,6 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 
 * 27/12/2019: El frmKeysConfigurationSelect se mostraba atrás del frmMain. (jopiortiz)
 * 28/12/2019: Se cambio el color del oro en el frmMain para newbies y se refactorizo. (Recox)
+* 02/01/2020: Eliminados los paquetes `ShowBlacksmithForm` y `ShowCarpenterForm`.
+              Meto su comportamiento en los paquetes donde se solicitan los datos al servidor de los elementos construibles para su respectiva profesion.
+* 02/01/2020: Arreglado paquete mal declarado `PalabrasMagicas`. Acá estaba como `DecirPalabrasMagicas`.
