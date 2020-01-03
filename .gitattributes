@@ -1,6 +1,9 @@
 # Auto-CRLF setting.
 * text eol=crlf
 /INIT/sinfo.dat eol=lf
+/GRAFICOS/Fonts/font1.dat eol=lf
+/GRAFICOS/Fonts/font2.dat eol=lf
+/GRAFICOS/Fonts/font3.dat eol=lf
 
 # Declare file types.
 # The - is a negation symbol, so  -text it means"not" text
