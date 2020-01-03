@@ -350,20 +350,17 @@ Public Sub DeInit_LightEngine()
 End Sub
 
 Public Function LightRenderAll() As Boolean
-On Error GoTo handle
+    On Error GoTo handle
+
+    If Not ArrayInitialized(Not Light_List) Then Exit Function
+    
     Dim i As Long
-    Dim Upper_lightList As Long
-    
-    If UBound(Light_List) < 1 Then Exit Function
-    
-    Upper_lightList = UBound(Light_List)
-    
-    For i = 1 To Upper_lightList
-        LightRender i
+
+    For i = 1 To UBound(Light_List)
+        Call LightRender(i)
     Next i
     
-LightRenderAll = True
-
+    LightRenderAll = True
 
 handle:
     LightRenderAll = False
@@ -373,16 +370,13 @@ End Function
 Public Function LightRemoveAll() As Boolean
 
     On Error GoTo handle
+    
+    If Not ArrayInitialized(Not Light_List) Then Exit Function
+    
+    Dim i As Long
 
-    Dim i               As Long
-    Dim Upper_lightList As Long
-    
-    If UBound(Light_List) < 1 Then Exit Function
-    
-    Upper_lightList = UBound(Light_List)
-    
-    For i = 1 To Upper_lightList
-        Delete_Light_To_Index i
+    For i = 1 To UBound(Light_List)
+        Call Delete_Light_To_Index(i)
     Next i
     
     LightRemoveAll = True
