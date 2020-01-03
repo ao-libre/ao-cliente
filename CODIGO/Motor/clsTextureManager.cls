@@ -164,16 +164,19 @@ Private Function CrearGrafico(ByVal Archivo As Integer, _
                 
             #Else
                 
+                Dim Graphic As String
+                    Graphic = Game.path(Graficos) & .FileName
+                
                 If FileExist(Graphic & ".bmp", vbNormal) Then
-                    Set .Texture = DirectD3D.CreateTextureFromFileEx(DirectDevice, Graphic & ".BMP", D3DX_DEFAULT, D3DX_DEFAULT, 0, 0, D3DFMT_A8R8G8B8, _
+                    Set .Texture = DirectD3D.CreateTextureFromFileEx(DirectDevice, Graphic & ".bmp", D3DX_DEFAULT, D3DX_DEFAULT, 0, 0, D3DFMT_A8R8G8B8, _
                                                                      D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, &HFF000000, texture_info, ByVal 0)
                 
                 ElseIf FileExist(Graphic & ".png", vbNormal) Then
-                    Set .Texture = DirectD3D.CreateTextureFromFileEx(DirectDevice, Graphic & ".PNG", D3DX_DEFAULT, D3DX_DEFAULT, 0, 0, D3DFMT_A8R8G8B8, _
+                    Set .Texture = DirectD3D.CreateTextureFromFileEx(DirectDevice, Graphic & ".png", D3DX_DEFAULT, D3DX_DEFAULT, 0, 0, D3DFMT_A8R8G8B8, _
                                                                      D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, &HFF000000, texture_info, ByVal 0)
                 
                 Else
-                    MsgBox "No se ha podido cargar el grafico con indice: " & fileIndex
+                    Call MsgBox("No se ha podido cargar el grafico con indice: " & Graphic)
                     Call CloseClient
                 
                 End If

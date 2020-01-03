@@ -1621,7 +1621,7 @@ Private Sub HandleCommerceInit()
                 Call InvComNpc.SetItem(i, .ObjIndex, _
                 .Amount, 0, .GrhIndex, _
                 .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, _
-                .Valor, .Name)
+                .Valor, .name)
             End With
         End If
     Next i
@@ -1909,7 +1909,7 @@ Private Sub HandleUpdateGold()
     'Get data and update form
     UserGLD = incomingData.ReadLong()
     
-    Call SetGoldColorInFrmMain()
+    Call SetGoldColorInFrmMain
 
     frmMain.GldLbl.Caption = UserGLD
 End Sub
@@ -3134,7 +3134,7 @@ Private Sub HandleUpdateUserStats()
         UserEstado = 0
     End If
 
-    Call SetGoldColorInFrmMain()
+    Call SetGoldColorInFrmMain
     
 End Sub
 
@@ -3295,7 +3295,7 @@ Private Sub HandleCancelOfferItem()
     End With
     
     ' Si era el unico item de la oferta, no puede confirmarla
-    If Not frmComerciarUsu.HasAnyItem(InvOfferComUsu(0)) And Not frmComerciarUsu.HasAnyItem(InvOroComUsu(1)) Then 
+    If Not frmComerciarUsu.HasAnyItem(InvOfferComUsu(0)) And Not frmComerciarUsu.HasAnyItem(InvOroComUsu(1)) Then
         Call frmComerciarUsu.HabilitarConfirmar(False)
     End If
     
@@ -3476,6 +3476,7 @@ Private Sub HandleBlacksmithWeapons()
     End If
     
 On Error GoTo errhandler
+    
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -3506,12 +3507,14 @@ On Error GoTo errhandler
     Next i
     
     'If we got here then packet is complete, copy data back to original queue
+    'En otras palabras, a partir de ahora podes usar "Exit Sub" sin romper nada.
     Call incomingData.CopyBuffer(Buffer)
     
     If frmMain.macrotrabajo.Enabled And (MacroBltIndex > 0) Then
         Call WriteCraftBlacksmith(MacroBltIndex)
+        Exit Sub
     Else
-        frmHerrero.Show , frmMain
+        Call frmHerrero.Show(vbModeless, frmMain)
         MirandoHerreria = True
     End If
     
@@ -3611,12 +3614,14 @@ On Error GoTo errhandler
     Next i
     
     'If we got here then packet is complete, copy data back to original queue
+    'En otras palabras, a partir de ahora podes usar "Exit Sub" sin romper nada.
     Call incomingData.CopyBuffer(Buffer)
     
     If frmMain.macrotrabajo.Enabled And (MacroBltIndex > 0) Then
         Call WriteCraftBlacksmith(MacroBltIndex)
+                Exit Sub
     Else
-        frmHerrero.Show , frmMain
+        Call frmHerrero.Show(vbModeless, frmMain)
         MirandoHerreria = True
     End If
     
@@ -3664,9 +3669,9 @@ End Sub
 
 Private Sub HandleInitCarpenting()
 '***************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'
+'Author: Jopi
+'Last Modification: 01/01/20
+'Este solia ser HandleCarpenterObjects(), pero fue modificado para fusionar los paquetes CarptenterObjects y ShowCarpenterForm.
 '***************************************************
     If incomingData.Length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
@@ -3674,6 +3679,7 @@ Private Sub HandleInitCarpenting()
     End If
     
 On Error GoTo errhandler
+    
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -3703,12 +3709,14 @@ On Error GoTo errhandler
     Next i
     
     'If we got here then packet is complete, copy data back to original queue
+    'En otras palabras, a partir de ahora podes usar "Exit Sub" sin romper nada.
     Call incomingData.CopyBuffer(Buffer)
     
     If frmMain.macrotrabajo.Enabled And (MacroBltIndex > 0) Then
         Call WriteCraftCarpenter(MacroBltIndex)
+        Exit Sub
     Else
-        frmCarp.Show , frmMain
+        Call frmCarpinteria.Show(vbModeless, frmMain)
         MirandoCarpinteria = True
     End If
     
@@ -3716,7 +3724,7 @@ On Error GoTo errhandler
         Set InvMaderasCarpinteria(i) = New clsGraphicalInventory
     Next i
     
-    With frmCarp
+    With frmCarpinteria
         ' Inicializo los inventarios
         Call InvMaderasCarpinteria(1).Initialize(DirectD3D8, .picMaderas0, 2, , , , , , False)
         Call InvMaderasCarpinteria(2).Initialize(DirectD3D8, .picMaderas1, 2, , , , , , False)
@@ -10732,11 +10740,11 @@ Public Sub WriteMoveItem(ByVal originalSlot As Integer, ByVal newSlot As Integer
 End Sub
 
 Private Sub HandlePalabrasMagicas()
+
     If incomingData.Length < 2 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
-    
     
     'Remove packet ID
     Call incomingData.ReadByte

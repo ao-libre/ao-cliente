@@ -29,7 +29,6 @@ Form=CODIGO\Formularios\frmEntrenador.frm
 Form=CODIGO\Formularios\frmSpawnList.frm
 Module=Game; CODIGO\Aplicacion\GameIni.bas
 Form=codigo\Formularios\frmHerrero.frm
-Form=codigo\Formularios\frmCarp.frm
 Form=CODIGO\Formularios\frmGuildFoundation.frm
 Form=CODIGO\Formularios\frmGuildDetails.frm
 Form=CODIGO\Formularios\frmGuildAdm.frm
@@ -119,6 +118,7 @@ Module=Carga; CODIGO\IO\modCarga.bas
 Class=clsBatch; CODIGO\Motor\clsBatch.cls
 Class=clsArrayList; CODIGO\clsArrayList.cls
 Form=CODIGO\Formularios\frmKeysConfigurationSelect.frm
+Form=CODIGO\Formularios\frmCarpinteria.frm
 IconForm="frmMain"
 Startup="Sub Main"
 HelpFile=""
@@ -139,7 +139,7 @@ VersionCompanyName="Argentum Online Libre"
 VersionLegalCopyright="Argentum idea Pablo Ignacio Marquez - Copyright 2003  -  Code pieces are copyright of their respective authors."
 VersionLegalTrademarks="http://www.ArgentumOnline.org"
 VersionProductName="Argentum Online Libre"
-CondComp="Compression = 1 : ConMenuseConextuales = 0"
+CondComp="Compression = 0 : ConMenuseConextuales = 0"
 CompilationType=0
 OptimizationType=0
 FavorPentiumPro(tm)=0

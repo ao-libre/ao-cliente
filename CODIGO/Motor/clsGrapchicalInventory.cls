@@ -48,6 +48,7 @@ Private ValueFormated As Boolean
 
 Private ImgContainer As Boolean
 Private InventoryTickCount As Long
+
 ' Variables drag drop
 Private TempItem As Integer
 Private TempSlot As Integer
@@ -411,16 +412,16 @@ Public Sub DrawInventory()
     Dim LoopC             As Long
     Dim X                 As Integer
     Dim Y                 As Integer
-    Dim destRect          As RECT
+    Dim DestRect          As RECT
     Dim Inv_Color(3)      As Long
     Dim Sel_Color(3)      As Long
     
-    With destRect
+    With DestRect
         .Bottom = InventoryWindow.Height
         .Right = InventoryWindow.Width
     End With
     
-    Call Engine_Long_To_RGB_List(Inv_Color(), -1)
+    'Color al seleccionar un item.
     Call Engine_Long_To_RGB_List(Sel_Color(), D3DColorARGB(100, 255, 128, 0))
     
     'Clear the inventory window
@@ -428,10 +429,10 @@ Public Sub DrawInventory()
 
     For LoopC = InventoryOffset * (InventoryWindow.ScaleWidth \ ownTilePixelWidth) + 1 To UBound(Inventory)
             
-        startdX = ((LoopC - 1) Mod (frmMain.picInv.Width / 32)) * 32
-        startdY = ((LoopC - 1) \ (frmMain.picInv.Width / 32)) * 32
+        startdX = ((LoopC - 1) Mod (frmMain.PicInv.Width / 32)) * 32
+        startdY = ((LoopC - 1) \ (frmMain.PicInv.Width / 32)) * 32
 
-        Call Draw_GrhIndex(26095, startdX, startdY, 0, Inv_Color(), 0, False) 'Dibuja el fondo
+        Call Draw_GrhIndex(26095, startdX, startdY, 0, Normal_RGBList(), 0, False) 'Dibuja el fondo
             
         If Inventory(LoopC).GrhIndex Then
 
@@ -439,10 +440,10 @@ Public Sub DrawInventory()
             If LoopC <> DragItem Then
                     
                 If LoopC = SelectedItem Then
-                    Call Draw_GrhIndex(26096, startdX, startdY, 0, Inv_Color(), 0, False) 'Dibuja el fondo cuando lo seleccionamos
+                    Call Draw_GrhIndex(26096, startdX, startdY, 0, Normal_RGBList(), 0, False) 'Dibuja el fondo cuando lo seleccionamos
                 End If
 
-                Call Draw_GrhIndex(Inventory(LoopC).GrhIndex, startdX, startdY, 0, Inv_Color())
+                Call Draw_GrhIndex(Inventory(LoopC).GrhIndex, startdX, startdY, 0, Normal_RGBList())
 
                 'If equipped we render "E"
                 If Inventory(LoopC).Equipped Then
@@ -458,11 +459,10 @@ Public Sub DrawInventory()
     Next LoopC
 
     If DragItem <> 0 And Drag = 1 And isInventory Then
-        Call Draw_GrhIndex(Inventory(DragItem).GrhIndex, MouseX - 16, MouseY - 16, 0, Inv_Color())
-
+        Call Draw_GrhIndex(Inventory(DragItem).GrhIndex, MouseX - 16, MouseY - 16, 0, Normal_RGBList())
     End If
             
-    Call Engine_EndScene(destRect, InventoryWindow.hWnd)
+    Call Engine_EndScene(DestRect, InventoryWindow.hWnd)
 
 End Sub
 

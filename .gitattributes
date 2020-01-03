@@ -1,6 +1,9 @@
 # Auto-CRLF setting.
 * text eol=crlf
 /INIT/sinfo.dat eol=lf
+/GRAFICOS/Fonts/font1.dat eol=lf
+/GRAFICOS/Fonts/font2.dat eol=lf
+/GRAFICOS/Fonts/font3.dat eol=lf
 
 # Declare file types.
 # The - is a negation symbol, so  -text it means"not" text
@@ -27,9 +30,9 @@
 *.OCX -text
 *.map -text
 *.exe -text
-/EXTRAS/font1.dat -text
-/EXTRAS/font2.dat -text
-/EXTRAS/font3.dat -text
+/GRAFICOS/Fonts/font1.dat -text
+/GRAFICOS/Fonts/font2.dat -text
+/GRAFICOS/Fonts/font3.dat -text
 
 # Declare encoding of all files for code.
 *.bas encoding=ansi

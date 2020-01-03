@@ -1338,11 +1338,11 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
         End If
     
         '//Carpintero
-        If frmCarp.Visible Then
-            If frmCarp.picMaderas0.Visible Or frmCarp.imgMejorar0.Visible Then InvMaderasCarpinteria(1).DrawInv (1)
-            If frmCarp.picMaderas1.Visible Or frmCarp.imgMejorar1.Visible Then InvMaderasCarpinteria(2).DrawInv (1)
-            If frmCarp.picMaderas2.Visible Or frmCarp.imgMejorar2.Visible Then InvMaderasCarpinteria(3).DrawInv (1)
-            If frmCarp.picMaderas3.Visible Or frmCarp.imgMejorar3.Visible Then InvMaderasCarpinteria(4).DrawInv (1)
+        If frmCarpinteria.Visible Then
+            If frmCarpinteria.picMaderas0.Visible Or frmCarpinteria.imgMejorar0.Visible Then InvMaderasCarpinteria(1).DrawInv (1)
+            If frmCarpinteria.picMaderas1.Visible Or frmCarpinteria.imgMejorar1.Visible Then InvMaderasCarpinteria(2).DrawInv (1)
+            If frmCarpinteria.picMaderas2.Visible Or frmCarpinteria.imgMejorar2.Visible Then InvMaderasCarpinteria(3).DrawInv (1)
+            If frmCarpinteria.picMaderas3.Visible Or frmCarpinteria.imgMejorar3.Visible Then InvMaderasCarpinteria(4).DrawInv (1)
         End If
     
         '//Inventario
