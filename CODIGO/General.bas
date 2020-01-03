@@ -324,6 +324,10 @@ Private Sub CheckKeys()
     'TODO: Deberia informarle por consola?
     If Traveling Then Exit Sub
 
+    'Si esta chateando, no mover el pj, tanto para chat de clanes y normal
+    If frmMain.SendTxt.Visible Then Exit Sub
+    If frmMain.SendCMSTXT.Visible Then Exit Sub
+
     'Don't allow any these keys during movement..
     If UserMoving = 0 Then
         If Not UserEstupido Then
