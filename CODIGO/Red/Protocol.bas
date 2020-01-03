@@ -1621,7 +1621,7 @@ Private Sub HandleCommerceInit()
                 Call InvComNpc.SetItem(i, .ObjIndex, _
                 .Amount, 0, .GrhIndex, _
                 .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, _
-                .Valor, .Name)
+                .Valor, .name)
             End With
         End If
     Next i
@@ -1909,7 +1909,7 @@ Private Sub HandleUpdateGold()
     'Get data and update form
     UserGLD = incomingData.ReadLong()
     
-    Call SetGoldColorInFrmMain()
+    Call SetGoldColorInFrmMain
 
     frmMain.GldLbl.Caption = UserGLD
 End Sub
@@ -3134,7 +3134,7 @@ Private Sub HandleUpdateUserStats()
         UserEstado = 0
     End If
 
-    Call SetGoldColorInFrmMain()
+    Call SetGoldColorInFrmMain
     
 End Sub
 
@@ -3295,7 +3295,7 @@ Private Sub HandleCancelOfferItem()
     End With
     
     ' Si era el unico item de la oferta, no puede confirmarla
-    If Not frmComerciarUsu.HasAnyItem(InvOfferComUsu(0)) And Not frmComerciarUsu.HasAnyItem(InvOroComUsu(1)) Then 
+    If Not frmComerciarUsu.HasAnyItem(InvOfferComUsu(0)) And Not frmComerciarUsu.HasAnyItem(InvOroComUsu(1)) Then
         Call frmComerciarUsu.HabilitarConfirmar(False)
     End If
     
@@ -3619,7 +3619,7 @@ On Error GoTo errhandler
     
     If frmMain.macrotrabajo.Enabled And (MacroBltIndex > 0) Then
         Call WriteCraftBlacksmith(MacroBltIndex)
-		Exit Sub
+                Exit Sub
     Else
         Call frmHerrero.Show(vbModeless, frmMain)
         MirandoHerreria = True
@@ -3716,7 +3716,7 @@ On Error GoTo errhandler
         Call WriteCraftCarpenter(MacroBltIndex)
         Exit Sub
     Else
-        Call frmCarp.Show(vbModeless, frmMain)
+        Call frmCarpinteria.Show(vbModeless, frmMain)
         MirandoCarpinteria = True
     End If
     
@@ -3724,7 +3724,7 @@ On Error GoTo errhandler
         Set InvMaderasCarpinteria(i) = New clsGraphicalInventory
     Next i
     
-    With frmCarp
+    With frmCarpinteria
         ' Inicializo los inventarios
         Call InvMaderasCarpinteria(1).Initialize(DirectD3D8, .picMaderas0, 2, , , , , , False)
         Call InvMaderasCarpinteria(2).Initialize(DirectD3D8, .picMaderas1, 2, , , , , , False)
