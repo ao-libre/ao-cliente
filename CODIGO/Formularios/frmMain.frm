@@ -1614,9 +1614,51 @@ Private Sub lblCerrar_Click()
     frmCerrar.Show vbModal, Me
 End Sub
 
+
+Private Sub lblEnergia_Click()
+    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_ENERGIA_LABEL").item("TEXTO"), _
+                                          JsonLanguage.item("MENSAJE_ENERGIA_LABEL").item("COLOR").item(1), _
+                                          JsonLanguage.item("MENSAJE_ENERGIA_LABEL").item("COLOR").item(2), _
+                                          JsonLanguage.item("MENSAJE_ENERGIA_LABEL").item("COLOR").item(3), _
+                          False, False, True)
+End Sub
+
+Private Sub lblHambre_Click()
+    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_HAMBRE_LABEL").item("TEXTO"), _
+                                          JsonLanguage.item("MENSAJE_HAMBRE_LABEL").item("COLOR").item(1), _
+                                          JsonLanguage.item("MENSAJE_HAMBRE_LABEL").item("COLOR").item(2), _
+                                          JsonLanguage.item("MENSAJE_HAMBRE_LABEL").item("COLOR").item(3), _
+                          False, False, True)
+End Sub
+
+Private Sub lblMana_Click()
+    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_MANA_LABEL").item("TEXTO"), _
+                                          JsonLanguage.item("MENSAJE_MANA_LABEL").item("COLOR").item(1), _
+                                          JsonLanguage.item("MENSAJE_MANA_LABEL").item("COLOR").item(2), _
+                                          JsonLanguage.item("MENSAJE_MANA_LABEL").item("COLOR").item(3), _
+                          False, False, True)
+End Sub
+
+Private Sub lblSed_Click()
+    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_SED_LABEL").item("TEXTO"), _
+                                          JsonLanguage.item("MENSAJE_SED_LABEL").item("COLOR").item(1), _
+                                          JsonLanguage.item("MENSAJE_SED_LABEL").item("COLOR").item(2), _
+                                          JsonLanguage.item("MENSAJE_SED_LABEL").item("COLOR").item(3), _
+                          False, False, True)
+End Sub
+
+Private Sub lblVida_Click()
+    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_VIDA_LABEL").item("TEXTO"), _
+                                          JsonLanguage.item("MENSAJE_VIDA_LABEL").item("COLOR").item(1), _
+                                          JsonLanguage.item("MENSAJE_VIDA_LABEL").item("COLOR").item(2), _
+                                          JsonLanguage.item("MENSAJE_VIDA_LABEL").item("COLOR").item(3), _
+                          False, False, True)
+End Sub
+
 Private Sub lblMinimizar_Click()
     Me.WindowState = 1
 End Sub
+
 
 Private Sub macrotrabajo_Timer()
 

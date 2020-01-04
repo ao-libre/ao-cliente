@@ -1639,5 +1639,45 @@
     },
     "FRM_KEYS_CONFIGURATION_BTN_ALTERNATIVE_KEYS": {
         "TEXTO": "Alternativa"
+    },
+    "MENSAJE_ENERGIA_LABEL": {
+        "TEXTO": "Un texto para jkljasdjlksad",
+        "COLOR": [
+            255,
+            0,
+            0
+        ]
+    },
+    "MENSAJE_HAMBRE_LABEL": {
+        "TEXTO": "Un texto para jkljasdjlksad",
+        "COLOR": [
+            255,
+            0,
+            0
+        ]
+    },
+    "MENSAJE_MANA_LABEL": {
+        "TEXTO": "Un texto para jkljasdjlksad",
+        "COLOR": [
+            255,
+            0,
+            0
+        ]
+    },
+    "MENSAJE_SED_LABEL": {
+        "TEXTO": "Un texto para jkljasdjlksad",
+        "COLOR": [
+            255,
+            0,
+            0
+        ]
+    },
+    "MENSAJE_VIDA_LABEL": {
+        "TEXTO": "Un texto para jkljasdjlksad",
+        "COLOR": [
+            255,
+            0,
+            0
+        ]
     }
 }
