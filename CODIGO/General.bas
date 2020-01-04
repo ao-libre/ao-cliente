@@ -1486,82 +1486,121 @@ On Error Resume Next
     Exit Sub
 End Sub
 
-Public Sub GetPostsFromReddit()
-On Error Resume Next
-    If UBound(Posts) = 0 Then
-        Set Inet = New clsInet
-        
-        Dim ResponseReddit As String
-        Dim JsonObject As Object
-        Dim Endpoint As String
-        
-        Endpoint = GetVar(Game.path(INIT) & "Config.ini", "Parameters", "SubRedditEndpoint")
+' USO: If ArrayInitialized(Not ArrayName) Then ...
+Public Function ArrayInitialized(ByVal TheArray As Long) As Boolean
+'***************************************************
+'Author: Jopi
+'Last Modify Date: 03/01/2020
+'Chequea que se haya inicializado el Array.
+'***************************************************
     
-        ResponseReddit = Inet.OpenRequest(Endpoint, "GET")
-        ResponseReddit = Inet.Execute
-        ResponseReddit = Inet.GetResponseAsString
+    ArrayInitialized = Not (TheArray = -1&)
+
+End Function
+
+Public Sub GetPostsFromReddit()
+    
+    On Error GoTo ErrorHandler
+    
+    With frmConnect.lstRedditPosts
         
+        'Si Posts() NO esta inicializado...
+        If Not ArrayInitialized(Not Posts) Then
+    
+            Set Inet = New clsInet
         
-        Set JsonObject = JSON.parse(ResponseReddit)
+            Dim ResponseReddit As String
+            Dim JsonObject     As Object
+            Dim Endpoint       As String
         
-        Dim qtyPostsOnReddit As Integer: qtyPostsOnReddit = JsonObject.item("data").item("children").Count
+            Endpoint = GetVar(Game.path(INIT) & "Config.ini", "Parameters", "SubRedditEndpoint")
+    
+            ResponseReddit = Inet.OpenRequest(Endpoint, "GET")
+            ResponseReddit = Inet.Execute
+            ResponseReddit = Inet.GetResponseAsString
         
-        ReDim Preserve Posts(qtyPostsOnReddit)
+            Set JsonObject = JSON.parse(ResponseReddit)
         
-        'Clear lstRedditPosts before populate it again to prevent repeated values.
-        frmConnect.lstRedditPosts.Clear
-        'Long funciona mas rapido en los loops que Integer
-        Dim i As Long
-        i = 1
-        Do While i <= qtyPostsOnReddit
-            Posts(i).Title = JsonObject.item("data").item("children").item(i).item("data").item("title")
-            Posts(i).URL = JsonObject.item("data").item("children").item(i).item("data").item("url")
+            Dim qtyPostsOnReddit As Integer: qtyPostsOnReddit = JsonObject.item("data").item("children").Count
+        
+            ReDim Preserve Posts(qtyPostsOnReddit)
+        
+            'Clear lstRedditPosts before populate it again to prevent repeated values.
+            Call .Clear
+        
+            'Long funciona mas rapido en los loops que Integer
+            Dim i As Long: i = 1
+
+            Do While i <= qtyPostsOnReddit
+
+                With Posts(i)
+                    .Title = JsonObject.item("data").item("children").item(i).item("data").item("title")
+                    .URL = JsonObject.item("data").item("children").item(i).item("data").item("url")
+                End With
             
-            frmConnect.lstRedditPosts.AddItem JsonObject.item("data").item("children").item(i).item("data").item("title")
+                Call .AddItem(JsonObject.item("data").item("children").item(i).item("data").item("title"))
             
-            i = i + 1
-        Loop
+                i = i + 1
+            Loop
         
-        Set Inet = Nothing
-    Else
-        Dim ia As Long
-        For ia = 1 To UBound(Posts)
-            frmConnect.lstRedditPosts.AddItem Posts(ia).Title
-        Next ia
+            Set Inet = Nothing
+        
+        Else 'Si lo esta, agregamos los valores existentes.
+    
+            Dim ia As Long
+            For ia = 1 To UBound(Posts)
+                Call .AddItem(Posts(ia).Title)
+            Next ia
+
+        End If
+    
+    End With
+
+ErrorHandler:
+
+    If Err.number Then
+        Call LogError(Err.number, Err.Description, "Mod_General.GetPostsFromReddit")
     End If
     
 End Sub
 
 Function ImgRequest(ByVal sFile As String) As String
-'***************************************************
-'Author: RecoX
-'Last Modify Date: 17/10/2019
-'Funcion para cargar imagenes de forma segura, ya que si no existe el programa no explota, extraido de gs-ao
-'***************************************************
+    '***************************************************
+    'Author: RecoX
+    'Last Modify Date: 17/10/2019
+    'Funcion para cargar imagenes de forma segura, ya que si no existe el programa no explota, extraido de gs-ao
+    '***************************************************
     Dim RespondMsgBox As Byte
+
     If LenB(Dir(sFile, vbArchive)) = 0 Then
         RespondMsgBox = MsgBox("ERROR: Imagen no encontrada..." & vbCrLf & sFile, vbCritical + vbRetryCancel)
+
         If RespondMsgBox = vbRetry Then
             sFile = ImgRequest(sFile)
         Else
             Call MsgBox("ADVERTENCIA: El juego seguira funcionando sin alguna imagen!", vbInformation + vbOKOnly)
             sFile = Game.path(Interfaces) & "blank.bmp"
         End If
+        
     End If
+    
     ImgRequest = sFile
+    
 End Function
 
 Public Sub LoadAOCustomControlsPictures(ByRef tForm As Form)
-'***************************************************
-'Author: RecoX
-'Last Modify Date: 17/10/2019
-'Cargamos las imagenes de los uAOControls en los formularios.
-'***************************************************
+    '***************************************************
+    'Author: RecoX
+    'Last Modify Date: 17/10/2019
+    'Cargamos las imagenes de los uAOControls en los formularios.
+    '***************************************************
     Dim DirButtons As String
-    DirButtons = Game.path(Graficos) & "\Botones\"
+        DirButtons = Game.path(Graficos) & "\Botones\"
 
     Dim cControl As Control
+
     For Each cControl In tForm.Controls
+
         If TypeOf cControl Is uAOButton Then
             cControl.PictureEsquina = LoadPicture(ImgRequest(DirButtons & uAOButton_bEsquina))
             cControl.PictureFondo = LoadPicture(ImgRequest(DirButtons & uAOButton_bFondo))
@@ -1570,5 +1609,7 @@ Public Sub LoadAOCustomControlsPictures(ByRef tForm As Form)
         ElseIf TypeOf cControl Is uAOCheckbox Then
             cControl.Picture = LoadPicture(ImgRequest(DirButtons & uAOButton_cCheckboxSmall))
         End If
+        
     Next
+    
 End Sub

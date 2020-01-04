@@ -9,7 +9,7 @@ Private FileManager As clsIniManager
 '
 
 Public Sub LoadGrhData()
-On Error GoTo errorHandler:
+On Error GoTo ErrorHandler:
 
     Dim Grh As Long
     Dim Frame As Long
@@ -32,55 +32,56 @@ On Error GoTo errorHandler:
             
             With GrhData(Grh)
             
-               ' GrhData(Grh).active = True
+                '.active = True
                 Get handle, , .NumFrames
-                If .NumFrames <= 0 Then Resume Next
+                If .NumFrames <= 0 Then GoTo ErrorHandler
                 
-                ReDim .Frames(1 To GrhData(Grh).NumFrames)
+                ReDim .Frames(1 To .NumFrames)
                 
                 If .NumFrames > 1 Then
+                
                     For Frame = 1 To .NumFrames
                         Get handle, , .Frames(Frame)
-                        If .Frames(Frame) <= 0 Or .Frames(Frame) > grhCount Then
-                            Resume Next
-                        End If
+                        If .Frames(Frame) <= 0 Or .Frames(Frame) > grhCount Then GoTo ErrorHandler
                     Next Frame
                     
-                    Get handle, , .Speed
-                    
-                    If .Speed <= 0 Then Resume Next
+                    Get handle, , .speed
+                    If .speed <= 0 Then GoTo ErrorHandler
                     
                     .pixelHeight = GrhData(.Frames(1)).pixelHeight
-                    If .pixelHeight <= 0 Then Resume Next
+                    If .pixelHeight <= 0 Then GoTo ErrorHandler
                     
                     .pixelWidth = GrhData(.Frames(1)).pixelWidth
-                    If .pixelWidth <= 0 Then Resume Next
+                    If .pixelWidth <= 0 Then GoTo ErrorHandler
                     
                     .TileWidth = GrhData(.Frames(1)).TileWidth
-                    If .TileWidth <= 0 Then Resume Next
+                    If .TileWidth <= 0 Then GoTo ErrorHandler
                     
                     .TileHeight = GrhData(.Frames(1)).TileHeight
-                    If .TileHeight <= 0 Then Resume Next
+                    If .TileHeight <= 0 Then GoTo ErrorHandler
+                    
                 Else
+                    
                     Get handle, , .FileNum
-                    If .FileNum <= 0 Then Resume Next
+                    If .FileNum <= 0 Then GoTo ErrorHandler
                     
                     Get handle, , GrhData(Grh).sX
-                    If .sX < 0 Then Resume Next
+                    If .sX < 0 Then GoTo ErrorHandler
                     
                     Get handle, , .sY
-                    If .sY < 0 Then Resume Next
+                    If .sY < 0 Then GoTo ErrorHandler
                     
                     Get handle, , .pixelWidth
-                    If .pixelWidth <= 0 Then Resume Next
+                    If .pixelWidth <= 0 Then GoTo ErrorHandler
                     
                     Get handle, , .pixelHeight
-                    If .pixelHeight <= 0 Then Resume Next
+                    If .pixelHeight <= 0 Then GoTo ErrorHandler
                     
                     .TileWidth = .pixelWidth / TilePixelHeight
                     .TileHeight = .pixelHeight / TilePixelWidth
                     
                     .Frames(1) = Grh
+                    
                 End If
                 
             End With
@@ -91,7 +92,7 @@ On Error GoTo errorHandler:
     
 Exit Sub
 
-errorHandler:
+ErrorHandler:
     
     If Err.number <> 0 Then
         
@@ -293,7 +294,7 @@ On Error GoTo errhandler:
     TipFile = FileToString(Game.path(INIT) & "tips_" & Language & ".json")
     Set JsonTips = JSON.parse(TipFile)
 
-    errhandler:
+errhandler:
     
     If Err.number <> 0 Then
         
