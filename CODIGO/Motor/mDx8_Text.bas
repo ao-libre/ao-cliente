@@ -359,7 +359,8 @@ Public Sub DrawText(ByVal X As Integer, _
                     ByVal Y As Integer, _
                     ByVal Text As String, _
                     ByVal Color As Long, _
-                    Optional Center As Boolean = False, Optional Font As Integer = 1)
+                    Optional Center As Boolean = False, _
+                    Optional Font As Integer = 1)
 
     Dim aux(3) As Long
 

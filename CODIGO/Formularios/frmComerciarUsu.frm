@@ -770,19 +770,19 @@ Private Sub txtAgregar_Change()
 End Sub
 
 Private Sub txtAgregar_KeyDown(KeyCode As Integer, Shift As Integer)
-If Not ((KeyCode >= 48 And KeyCode <= 57) Or KeyCode = vbKeyBack Or _
-        KeyCode = vbKeyDelete Or (KeyCode >= 37 And KeyCode <= 40)) Then
-    KeyCode = 0
-End If
+    If Not ((KeyCode >= 48 And KeyCode <= 57) Or KeyCode = vbKeyBack Or _
+            KeyCode = vbKeyDelete Or (KeyCode >= 37 And KeyCode <= 40)) Then
+        KeyCode = 0
+    End If
 
 End Sub
 
 Private Sub txtAgregar_KeyPress(KeyAscii As Integer)
-If Not ((KeyAscii >= 48 And KeyAscii <= 57) Or KeyAscii = vbKeyBack Or _
-        KeyAscii = vbKeyDelete Or (KeyAscii >= 37 And KeyAscii <= 40)) Then
-    'txtCant = KeyCode
-    KeyAscii = 0
-End If
+    If Not ((KeyAscii >= 48 And KeyAscii <= 57) Or KeyAscii = vbKeyBack Or _
+            KeyAscii = vbKeyDelete Or (KeyAscii >= 37 And KeyAscii <= 40)) Then
+        'txtCant = KeyCode
+        KeyAscii = 0
+    End If
 
 End Sub
 

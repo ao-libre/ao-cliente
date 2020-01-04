@@ -419,3 +419,12 @@ Public Property Let Font(ByRef nValue As StdFont)
     Set usedFont = nValue
 End Property
 
+Public Function NeedRender() As Boolean ' GSZAO
+'**************************************************************
+'Author: ^[GS]^
+'Last Modification: 11/08/2012 - ^[GS]^
+'**************************************************************
+
+    NeedRender = (dialogCount <> 0)
+
+End Function

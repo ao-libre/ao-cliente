@@ -775,8 +775,9 @@ Sub Main()
     Set DialogosClanes = New clsGuildDlg
     DialogosClanes.Activo = ClientSetup.bGldMsgConsole
     DialogosClanes.CantidadDialogos = ClientSetup.bCantMsgs
-    Dialogos.Font = frmMain.Font
     DialogosClanes.Font = frmMain.Font
+ 
+    Dialogos.Font = frmMain.Font
     
     lFrameTimer = GetTickCount
     

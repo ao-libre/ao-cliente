@@ -131,19 +131,19 @@ Sub Damage_Draw(ByVal X As Byte, _
             Select Case .DamageType
             
                 Case EDType.edCritico
-                    DrawText PixelX, PixelY - .Downloading, .DamageVal & "!!", .ColorRGB
+                    Call DrawText(PixelX, PixelY - .Downloading, .DamageVal & "!!", .ColorRGB)
                 
                 Case EDType.edCurar
-                    DrawText PixelX, PixelY - .Downloading, "+" & .DamageVal, .ColorRGB
+                    Call DrawText(PixelX, PixelY - .Downloading, "+" & .DamageVal, .ColorRGB)
                 
                 Case EDType.edTrabajo
-                    DrawText PixelX, PixelY - .Downloading, "+" & .DamageVal, .ColorRGB
+                    Call DrawText(PixelX, PixelY - .Downloading, "+" & .DamageVal, .ColorRGB)
                     
                 Case EDType.edFallo
-                    DrawText PixelX, PixelY - .Downloading, "Fallo", .ColorRGB
+                    Call DrawText(PixelX, PixelY - .Downloading, "Fallo", .ColorRGB)
                     
                 Case Else 'EDType.edNormal
-                    DrawText PixelX, PixelY - .Downloading, "-" & .DamageVal, .ColorRGB
+                    Call DrawText(PixelX, PixelY - .Downloading, "-" & .DamageVal, .ColorRGB)
                     
             End Select
             
