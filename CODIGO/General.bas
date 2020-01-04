@@ -523,6 +523,9 @@ Sub SwitchMap(ByVal Map As Integer)
     renderText = nameMap
     renderFont = 2
     colorRender = 240
+
+    'Aqui ponemos el nombre del mapa en el label del frmMain
+    frmMain.lblMapName.Caption = nameMap
     
 End Sub
 
