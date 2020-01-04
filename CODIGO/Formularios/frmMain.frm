@@ -2382,12 +2382,17 @@ Private Sub SendTxt_KeyPress(KeyAscii As Integer)
 End Sub
 
 Private Sub SendCMSTXT_KeyUp(KeyCode As Integer, Shift As Integer)
-
+'**************************************************************
+'Author: Unknown
+'Last Modify Date: 04/01/2020
+'12/28/2007: Recox - Arregle el chat de clanes, ahora funciona correctamente y se puede mandar el mensaje con la misma tecla que se abre la consola.
+'**************************************************************
+ 
     'Send text
-    If KeyCode = vbKeyReturn Then
+    If KeyCode = vbKeyReturn Or KeyCode = CustomKeys.BindedKey(eKeyType.mKeyTalkWithGuild) Then
 
         'Say
-        If LenB(stxtbuffercmsg) = 0 Then
+        If LenB(stxtbuffercmsg) <> 0 Then
             Call ParseUserCommand("/CMSG " & stxtbuffercmsg)
         End If
 
@@ -2412,7 +2417,8 @@ End Sub
 Private Sub SendCMSTXT_Change()
 
     If Len(SendCMSTXT.Text) > 160 Then
-        stxtbuffercmsg = JsonLanguage.item("MENSAJE_SOY_CHEATER").item("TEXTO")
+        'stxtbuffercmsg = JsonLanguage.item("MENSAJE_SOY_CHEATER").item("TEXTO")
+        stxtbuffercmsg = vbNullString ' GSZAO
     Else
         'Make sure only valid chars are inserted (with Shift + Insert they can paste illegal chars)
         Dim i         As Long
