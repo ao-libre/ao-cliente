@@ -93,6 +93,8 @@ Public Sub Draw()
 
             'Por alguna razon en el 4to parametro de DrawText tengo que poner -1 sino 
             'No se renderiza, antes lo habia hecho andar con vbMagenta pero ahora no se por que no anda mas
+            'TODO: Usar propiedad Font en ves del 1 hardcodeado en el ultimo parametro de DrawText
+            
             If Left$(p_Dialogos(i).Texto, 1) = Chr$(3) Then
                 Call DrawText(X, Y + (i * 10), mid$(p_Dialogos(i).Texto, 2), -1 , False, 1)
                 
@@ -153,18 +155,18 @@ Private Sub RealPushBackText(ByVal s As String)
     Dim i As Long
     Dim Vacio As Boolean
 
-    If p_CANTIDADDIALOGOS > 0 Then
-        i = p_CANTIDADDIALOGOS
+    If CantidadDialogos > 0 Then
+        i = CantidadDialogos
         Vacio = True
         While i > 0 And Vacio
             Vacio = p_Dialogos(i).Texto = vbNullString
             If Vacio Then i = i - 1
         Wend
 
-        If i = p_CANTIDADDIALOGOS Then
+        If i = CantidadDialogos Then
             'hay q scrollear, estamos llenos
             i = 1
-            While i < p_CANTIDADDIALOGOS
+            While i < CantidadDialogos
                 p_Dialogos(i) = p_Dialogos(i + 1)
                 i = i + 1
             Wend
