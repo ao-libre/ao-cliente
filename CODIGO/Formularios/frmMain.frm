@@ -145,9 +145,10 @@ Begin VB.Form frmMain
       Width           =   2400
    End
    Begin VB.TextBox SendTxt 
-      BackColor       =   &H00000000&
+      Appearance      =   0  'Flat
+      BackColor       =   &H00202020&
       BeginProperty Font 
-         Name            =   "MS Sans Serif"
+         Name            =   "Tahoma"
          Size            =   8.25
          Charset         =   0
          Weight          =   400
@@ -155,9 +156,9 @@ Begin VB.Form frmMain
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H000000FF&
+      ForeColor       =   &H00E0E0E0&
       Height          =   315
-      Left            =   120
+      Left            =   240
       MaxLength       =   160
       MultiLine       =   -1  'True
       TabIndex        =   2
@@ -165,7 +166,7 @@ Begin VB.Form frmMain
       ToolTipText     =   "Chat"
       Top             =   1839
       Visible         =   0   'False
-      Width           =   8190
+      Width           =   7935
    End
    Begin VB.Timer macrotrabajo 
       Enabled         =   0   'False
@@ -173,7 +174,8 @@ Begin VB.Form frmMain
       Top             =   2520
    End
    Begin VB.TextBox SendCMSTXT 
-      BackColor       =   &H00000000&
+      Appearance      =   0  'Flat
+      BackColor       =   &H00202020&
       BeginProperty Font 
          Name            =   "MS Sans Serif"
          Size            =   8.25
@@ -183,9 +185,9 @@ Begin VB.Form frmMain
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H000000FF&
+      ForeColor       =   &H00E0E0E0&
       Height          =   315
-      Left            =   120
+      Left            =   240
       MaxLength       =   160
       MultiLine       =   -1  'True
       TabIndex        =   1
@@ -193,7 +195,7 @@ Begin VB.Form frmMain
       ToolTipText     =   "Chat"
       Top             =   8520
       Visible         =   0   'False
-      Width           =   8250
+      Width           =   7935
    End
    Begin VB.Timer Second 
       Enabled         =   0   'False
@@ -218,7 +220,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2619
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
