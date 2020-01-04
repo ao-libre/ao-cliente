@@ -2393,7 +2393,7 @@ Private Sub SendCMSTXT_KeyUp(KeyCode As Integer, Shift As Integer)
 
         'Say
         If LenB(stxtbuffercmsg) <> 0 Then
-            Call ParseUserCommand("/CMSG " & stxtbuffercmsg)
+            Call WriteGuildMessage(stxtbuffercmsg)
         End If
 
         stxtbuffercmsg = vbNullString
