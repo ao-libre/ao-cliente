@@ -45,7 +45,7 @@ Public Sub RemoveDialogs()
 '***************************************************
     Dim i As Long
     
-    For i = 1 To p_CANTIDADDIALOGOS
+    For i = 1 To CantidadDialogos
         p_Dialogos(i).Texto = vbNullString
     Next i
 End Sub
@@ -73,43 +73,49 @@ Public Property Get Activo() As Boolean
 End Property
 
 Private Sub Class_Initialize()
-    p_CANTIDADDIALOGOS = 5
-    ReDim p_Dialogos(1 To p_CANTIDADDIALOGOS) As t_GuildDlg
-    p_Activo = True
+    CantidadDialogos = 5
+    ReDim p_Dialogos(1 To CantidadDialogos) As t_GuildDlg
+    Activo = True
 End Sub
 
 Public Sub Draw()
-Dim i As Byte
-Dim Y As Long
+    Dim i As Long
+    Dim X As Long
+    Dim Y As Long
 
-If Not p_Activo Then Exit Sub
+    If Not Activo Then Exit Sub
 
-Y = 250
-'500 600 700 800 900
-    For i = 1 To p_CANTIDADDIALOGOS
+    X = 10
+    Y = 270
+    '500 600 700 800 900
+    For i = 1 To CantidadDialogos
         If Trim$(p_Dialogos(i).Texto) <> vbNullString Then
+
+            'Por alguna razon en el 4to parametro de DrawText tengo que poner -1 sino 
+            'No se renderiza, antes lo habia hecho andar con vbMagenta pero ahora no se por que no anda mas
+            'TODO: Usar propiedad Font en ves del 1 hardcodeado en el ultimo parametro de DrawText
+            
             If Left$(p_Dialogos(i).Texto, 1) = Chr$(3) Then
-                'Call Mod_TileEngine.RenderText(260, Y + (i * 10), Mid$(p_Dialogos(i).Texto, 2), vbGreen, usedFont)
-                'DrawText1 TexthDC, 260, Y + (i * 10), Mid$(p_Dialogos(i).Texto, 2), vbGreen
+                Call DrawText(X, Y + (i * 10), mid$(p_Dialogos(i).Texto, 2), -1 , False, 1)
                 
             Else
-                'Call Mod_TileEngine.RenderText(260, Y + (i * 10), p_Dialogos(i).Texto, vbYellow, usedFont)
-                'DrawText1 TexthDC, 260, Y + (i * 10), p_Dialogos(i).Texto, vbYellow
+                Call DrawText(X, Y + (i * 10), p_Dialogos(i).Texto, -1 , False, 1)
+            
             End If
         End If
     Next i
 End Sub
 
 Public Sub PassTimer()
-Dim i As Byte
+    Dim i As Long
 
-For i = 1 To p_CANTIDADDIALOGOS
-    If p_Dialogos(i).Segundos > 0 Then
-        p_Dialogos(i).Segundos = p_Dialogos(i).Segundos - 1
-    Else
-        p_Dialogos(i).Texto = vbNullString
-    End If
-Next i
+    For i = 1 To CantidadDialogos
+        If p_Dialogos(i).Segundos > 0 Then
+            p_Dialogos(i).Segundos = p_Dialogos(i).Segundos - 1
+        Else
+            p_Dialogos(i).Texto = vbNullString
+        End If
+    Next i
     
 End Sub
 
@@ -146,30 +152,31 @@ Public Sub PushBackText(ByVal s As String)
 End Sub
 
 Private Sub RealPushBackText(ByVal s As String)
-Dim i As Byte
-Dim Vacio As Boolean
+    Dim i As Long
+    Dim Vacio As Boolean
 
-If p_CANTIDADDIALOGOS > 0 Then
-    i = p_CANTIDADDIALOGOS
-    Vacio = True
-    While i > 0 And Vacio
-        Vacio = p_Dialogos(i).Texto = vbNullString
-        If Vacio Then i = i - 1
-    Wend
-    If i = p_CANTIDADDIALOGOS Then
-        'hay q scrollear, estamos llenos
-        i = 1
-        While i < p_CANTIDADDIALOGOS
-            p_Dialogos(i) = p_Dialogos(i + 1)
-            i = i + 1
+    If CantidadDialogos > 0 Then
+        i = CantidadDialogos
+        Vacio = True
+        While i > 0 And Vacio
+            Vacio = p_Dialogos(i).Texto = vbNullString
+            If Vacio Then i = i - 1
         Wend
-        p_Dialogos(i).Texto = s
-        p_Dialogos(i).Segundos = p_SEGUNDOS
-    Else
-        p_Dialogos(i + 1).Texto = s
-        p_Dialogos(i + 1).Segundos = p_SEGUNDOS
+
+        If i = CantidadDialogos Then
+            'hay q scrollear, estamos llenos
+            i = 1
+            While i < CantidadDialogos
+                p_Dialogos(i) = p_Dialogos(i + 1)
+                i = i + 1
+            Wend
+            p_Dialogos(i).Texto = s
+            p_Dialogos(i).Segundos = p_SEGUNDOS
+        Else
+            p_Dialogos(i + 1).Texto = s
+            p_Dialogos(i + 1).Segundos = p_SEGUNDOS
+        End If
     End If
-End If
 
 End Sub
 

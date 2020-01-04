@@ -48,8 +48,9 @@ End If
 End Function
 
 Sub DibujarCartel()
-Dim X As Integer, Y As Integer
     If Not Cartel Then Exit Sub
+
+    Dim X As Integer, Y As Integer
     
     X = XPosCartel + 20
     Y = YPosCartel + 20
@@ -61,7 +62,7 @@ Dim X As Integer, Y As Integer
     
     For J = 0 To Upper_leyendaFormateada
         'Fonts_Render_String LeyendaFormateada(j), X, Y + desp, -1, Settings.Engine_Font
-        DrawText X, Y + desp, LeyendaFormateada(J), -1
+        Call DrawText(X, Y + desp, LeyendaFormateada(J), -1)
         desp = desp + (frmMain.Font.Size) + 5
     Next
 End Sub

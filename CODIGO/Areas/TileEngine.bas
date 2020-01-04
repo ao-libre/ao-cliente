@@ -1292,11 +1292,10 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
             Call RenderScreen(UserPos.X - AddtoUserPos.X, UserPos.Y - AddtoUserPos.Y, OffsetCounterX, OffsetCounterY)
 
         End If
-        
-        Call Dialogos.Render
-        Call DibujarCartel
 
-        If ClientSetup.bGuildNews Then Call DialogosClanes.Draw
+        If Dialogos.NeedRender Then Call Dialogos.Render ' GSZAO
+        Call DibujarCartel
+        If DialogosClanes.Activo Then Call DialogosClanes.Draw ' GSZAO
 
         ' Calculamos los FPS y los mostramos
         Call Engine_Update_FPS
