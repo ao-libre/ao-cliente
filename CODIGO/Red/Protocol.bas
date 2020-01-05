@@ -1587,8 +1587,8 @@ End Sub
 Private Sub HandleCommerceInit()
 '***************************************************
 'Author: Juan Martin Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'
+'Last Modification: 05/01/20
+'Los comerciantes te saludan con un sonido (Recox)
 '***************************************************
     Dim i As Long
     
@@ -1629,6 +1629,9 @@ Private Sub HandleCommerceInit()
     'Set state and show form
     Comerciando = True
     frmComerciar.Show , frmMain
+
+    'Reproducimos el saludo del comerciante (Recox)
+    Call Audio.PlayWave("comerciante" & RandomNumber(1, 9) & ".wav")
 End Sub
 
 ''
