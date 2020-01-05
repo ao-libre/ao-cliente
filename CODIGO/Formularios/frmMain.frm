@@ -222,7 +222,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2619
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -853,7 +852,7 @@ Begin VB.Form frmMain
       BackColor       =   &H00C0C000&
       BackStyle       =   0  'Transparent
       Caption         =   "9999/9999"
-      ForeColor       =   &H00FFFFFF&
+      ForeColor       =   &H80000018&
       Height          =   180
       Left            =   8760
       TabIndex        =   11
@@ -865,7 +864,7 @@ Begin VB.Form frmMain
       BackColor       =   &H0000C0C0&
       BackStyle       =   0  'Transparent
       Caption         =   "999/999"
-      ForeColor       =   &H00FFFFFF&
+      ForeColor       =   &H80000018&
       Height          =   180
       Left            =   8760
       TabIndex        =   10
@@ -877,7 +876,7 @@ Begin VB.Form frmMain
       BackColor       =   &H000000FF&
       BackStyle       =   0  'Transparent
       Caption         =   "999/999"
-      ForeColor       =   &H00FFFFFF&
+      ForeColor       =   &H80000018&
       Height          =   180
       Left            =   8760
       TabIndex        =   12
@@ -889,11 +888,11 @@ Begin VB.Form frmMain
       BackColor       =   &H00004000&
       BackStyle       =   0  'Transparent
       Caption         =   "999/999"
-      ForeColor       =   &H00FFFFFF&
+      ForeColor       =   &H80000018&
       Height          =   180
       Left            =   8760
       TabIndex        =   13
-      Top             =   7800
+      Top             =   7785
       Width           =   1095
    End
    Begin VB.Label lblSed 
@@ -901,11 +900,11 @@ Begin VB.Form frmMain
       BackColor       =   &H00400000&
       BackStyle       =   0  'Transparent
       Caption         =   "999/999"
-      ForeColor       =   &H00FFFFFF&
+      ForeColor       =   &H80000018&
       Height          =   180
       Left            =   8760
       TabIndex        =   14
-      Top             =   8130
+      Top             =   8115
       Width           =   1095
    End
    Begin VB.Shape shpEnergia 
