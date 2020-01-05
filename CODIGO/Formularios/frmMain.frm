@@ -12,7 +12,7 @@ Begin VB.Form frmMain
    DrawStyle       =   6  'Inside Solid
    FillColor       =   &H00008080&
    BeginProperty Font 
-      Name            =   "Arial"
+      Name            =   "Tahoma"
       Size            =   8.25
       Charset         =   0
       Weight          =   700
@@ -20,6 +20,7 @@ Begin VB.Form frmMain
       Italic          =   0   'False
       Strikethrough   =   0   'False
    EndProperty
+   FontTransparent =   0   'False
    ForeColor       =   &H00004080&
    Icon            =   "frmMain.frx":0000
    KeyPreview      =   -1  'True
@@ -44,15 +45,16 @@ Begin VB.Form frmMain
       _ExtentY        =   450
       Min             =   1
       Value           =   55
+      Animate         =   0   'False
       UseBackground   =   0   'False
       ForeColor       =   -2147483624
-      BackColor       =   8421376
+      BackColor       =   4210816
       BorderColor     =   0
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Arial"
+         Name            =   "Tahoma"
          Size            =   8.25
          Charset         =   0
-         Weight          =   400
+         Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
@@ -63,15 +65,6 @@ Begin VB.Form frmMain
       AutoRedraw      =   -1  'True
       BackColor       =   &H80000005&
       BorderStyle     =   0  'None
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       ForeColor       =   &H80000008&
       Height          =   450
       Index           =   3
@@ -86,15 +79,6 @@ Begin VB.Form frmMain
    Begin VB.PictureBox MiniMapa 
       AutoRedraw      =   -1  'True
       BackColor       =   &H80000007&
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       Height          =   1500
       Left            =   6825
       ScaleHeight     =   96
@@ -120,15 +104,6 @@ Begin VB.Form frmMain
       AutoRedraw      =   -1  'True
       BackColor       =   &H80000005&
       BorderStyle     =   0  'None
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       ForeColor       =   &H80000008&
       Height          =   450
       Index           =   2
@@ -145,15 +120,6 @@ Begin VB.Form frmMain
       AutoRedraw      =   -1  'True
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       ForeColor       =   &H80000008&
       Height          =   450
       Index           =   1
@@ -170,15 +136,6 @@ Begin VB.Form frmMain
       AutoRedraw      =   -1  'True
       BackColor       =   &H80000005&
       BorderStyle     =   0  'None
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       ForeColor       =   &H80000008&
       Height          =   450
       Index           =   0
@@ -312,15 +269,6 @@ Begin VB.Form frmMain
    End
    Begin VB.ListBox hlst 
       BackColor       =   &H00000000&
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   2595
       Left            =   8835
@@ -333,15 +281,6 @@ Begin VB.Form frmMain
    Begin VB.PictureBox MainViewPic 
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       Height          =   6240
       Left            =   180
       MousePointer    =   99  'Custom
@@ -607,15 +546,6 @@ Begin VB.Form frmMain
       Alignment       =   1  'Right Justify
       BackStyle       =   0  'Transparent
       Caption         =   "Nombre del mapa"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       ForeColor       =   &H80000014&
       Height          =   255
       Left            =   6000
@@ -632,15 +562,6 @@ Begin VB.Form frmMain
    End
    Begin VB.Label lblDropGold 
       BackStyle       =   0  'Transparent
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       Height          =   255
       Left            =   10320
       MousePointer    =   99  'Custom
@@ -650,15 +571,6 @@ Begin VB.Form frmMain
    End
    Begin VB.Label lblMinimizar 
       BackStyle       =   0  'Transparent
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       Height          =   255
       Left            =   11280
       MousePointer    =   99  'Custom
@@ -668,15 +580,6 @@ Begin VB.Form frmMain
    End
    Begin VB.Label lblCerrar 
       BackStyle       =   0  'Transparent
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       Height          =   255
       Left            =   11550
       MousePointer    =   99  'Custom
@@ -687,15 +590,6 @@ Begin VB.Form frmMain
    Begin VB.Label lblFPS 
       BackStyle       =   0  'Transparent
       Caption         =   "101"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       ForeColor       =   &H80000018&
       Height          =   180
       Left            =   6480
@@ -774,7 +668,7 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   240
-      Left            =   9825
+      Left            =   9720
       TabIndex        =   20
       Top             =   1245
       Width           =   600
@@ -782,15 +676,6 @@ Begin VB.Form frmMain
    Begin VB.Label Label6 
       BackStyle       =   0  'Transparent
       Caption         =   "Nivel"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       ForeColor       =   &H80000018&
       Height          =   225
       Left            =   9120
@@ -802,18 +687,9 @@ Begin VB.Form frmMain
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
       Caption         =   "33.33%"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00FFFF00&
+      ForeColor       =   &H000080FF&
       Height          =   195
-      Left            =   10635
+      Left            =   10440
       TabIndex        =   18
       Top             =   1200
       Width           =   660
@@ -822,15 +698,6 @@ Begin VB.Form frmMain
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
       Caption         =   "1"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       ForeColor       =   &H0080FFFF&
       Height          =   195
       Left            =   10920
@@ -842,15 +709,6 @@ Begin VB.Form frmMain
       Alignment       =   2  'Center
       BackStyle       =   0  'Transparent
       Caption         =   "00"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       ForeColor       =   &H0000FFFF&
       Height          =   210
       Left            =   9720
@@ -862,15 +720,6 @@ Begin VB.Form frmMain
       Alignment       =   2  'Center
       BackStyle       =   0  'Transparent
       Caption         =   "00"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       ForeColor       =   &H0000FFFF&
       Height          =   210
       Left            =   9120
@@ -997,15 +846,6 @@ Begin VB.Form frmMain
       BackColor       =   &H00C0C000&
       BackStyle       =   0  'Transparent
       Caption         =   "9999/9999"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       ForeColor       =   &H80000018&
       Height          =   180
       Left            =   8760
@@ -1018,15 +858,6 @@ Begin VB.Form frmMain
       BackColor       =   &H0000C0C0&
       BackStyle       =   0  'Transparent
       Caption         =   "999/999"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       ForeColor       =   &H80000018&
       Height          =   180
       Left            =   8760
@@ -1039,15 +870,6 @@ Begin VB.Form frmMain
       BackColor       =   &H000000FF&
       BackStyle       =   0  'Transparent
       Caption         =   "999/999"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       ForeColor       =   &H80000018&
       Height          =   180
       Left            =   8760
@@ -1060,15 +882,6 @@ Begin VB.Form frmMain
       BackColor       =   &H00004000&
       BackStyle       =   0  'Transparent
       Caption         =   "999/999"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       ForeColor       =   &H80000018&
       Height          =   180
       Left            =   8760
@@ -1081,15 +894,6 @@ Begin VB.Form frmMain
       BackColor       =   &H00400000&
       BackStyle       =   0  'Transparent
       Caption         =   "999/999"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       ForeColor       =   &H80000018&
       Height          =   180
       Left            =   8760
