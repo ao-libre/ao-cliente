@@ -39,19 +39,19 @@ PJ=7666
 Mundo=Alkon
 
 [S7]
-Desc=Servidor Local | Mapa:Alkon 0.13.X
+Desc=Servidor Local | Modo:Alkon 0.13.X
 IP=localhost
 PJ=7666
 Mundo=Alkon
 
 [S8]
-Desc=Servidor Local | Mapa:BattleServer
+Desc=Servidor Local | Modo:BattleServer
 IP=localhost
 PJ=7666
 Mundo=BattleServer
 
 [S9]
-Desc=Servidor Local | Mapa:Deathmatch
+Desc=Servidor Local | Modo:Deathmatch
 IP=localhost
 PJ=7666
 Mundo=Deathmatch
