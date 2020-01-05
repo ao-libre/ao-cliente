@@ -1681,8 +1681,8 @@ Private Sub HandleBankInit()
     
     frmBancoObj.Show , frmMain
 
-    'Reproducimos el saludo del comerciante (Recox)
-    Call Audio.PlayWave("comerciante" & RandomNumber(1, 9) & ".wav")
+    'Reproducimos el saludo del banquero (Recox)
+    Call Audio.PlayWave("banquero" & RandomNumber(1, 7) & ".wav")
 End Sub
 
 ''
