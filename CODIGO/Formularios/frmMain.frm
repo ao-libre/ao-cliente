@@ -222,6 +222,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2619
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -626,20 +627,20 @@ Begin VB.Form frmMain
       BackStyle       =   0  'Transparent
       Caption         =   "255"
       BeginProperty Font 
-         Name            =   "Arial"
-         Size            =   8.25
-         Charset         =   0
+         Name            =   "Terminal"
+         Size            =   12
+         Charset         =   255
          Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H00FFFFFF&
-      Height          =   225
+      Height          =   240
       Left            =   9825
       TabIndex        =   21
-      Top             =   1200
-      Width           =   270
+      Top             =   1245
+      Width           =   600
    End
    Begin VB.Label Label6 
       BackStyle       =   0  'Transparent
@@ -675,7 +676,7 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H00FFFF00&
       Height          =   225
-      Left            =   10320
+      Left            =   10680
       TabIndex        =   19
       Top             =   1200
       Width           =   555
@@ -697,7 +698,7 @@ Begin VB.Form frmMain
       Height          =   210
       Left            =   9240
       TabIndex        =   18
-      Top             =   1560
+      Top             =   1515
       Width           =   1950
    End
    Begin VB.Label GldLbl 
@@ -708,7 +709,7 @@ Begin VB.Form frmMain
       Height          =   195
       Left            =   10920
       TabIndex        =   15
-      Top             =   6270
+      Top             =   6240
       Width           =   105
    End
    Begin VB.Label lblStrg 
@@ -1534,6 +1535,14 @@ Private Sub Form_Unload(Cancel As Integer)
     DisableURLDetect
 End Sub
 
+Private Sub GldLbl_Click()
+    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_GOLD_LABEL").item("TEXTO"), _
+                                          JsonLanguage.item("MENSAJE_GOLD_LABEL").item("COLOR").item(1), _
+                                          JsonLanguage.item("MENSAJE_GOLD_LABEL").item("COLOR").item(2), _
+                                          JsonLanguage.item("MENSAJE_GOLD_LABEL").item("COLOR").item(3), _
+                          False, False, True)
+End Sub
+
 Private Sub imgAsignarSkill_Click()
     Dim i As Integer
     
@@ -1609,11 +1618,27 @@ Private Sub lblScroll_Click(Index As Integer)
     Inventario.ScrollInventory (Index = 0)
 End Sub
 
+Private Sub lblArmor_Click()
+    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_ARMOR_LABEL").item("TEXTO"), _
+                                          JsonLanguage.item("MENSAJE_ARMOR_LABEL").item("COLOR").item(1), _
+                                          JsonLanguage.item("MENSAJE_ARMOR_LABEL").item("COLOR").item(2), _
+                                          JsonLanguage.item("MENSAJE_ARMOR_LABEL").item("COLOR").item(3), _
+                          False, False, True)
+End Sub
+
 Private Sub lblCerrar_Click()
     Call Audio.PlayWave(SND_CLICK)
     frmCerrar.Show vbModal, Me
 End Sub
 
+
+Private Sub lblDext_Click()
+    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_DEXT_LABEL").item("TEXTO"), _
+                                          JsonLanguage.item("MENSAJE_DEXT_LABEL").item("COLOR").item(1), _
+                                          JsonLanguage.item("MENSAJE_DEXT_LABEL").item("COLOR").item(2), _
+                                          JsonLanguage.item("MENSAJE_DEXT_LABEL").item("COLOR").item(3), _
+                          False, False, True)
+End Sub
 
 Private Sub lblEnergia_Click()
     Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_ENERGIA_LABEL").item("TEXTO"), _
@@ -1628,6 +1653,14 @@ Private Sub lblHambre_Click()
                                           JsonLanguage.item("MENSAJE_HAMBRE_LABEL").item("COLOR").item(1), _
                                           JsonLanguage.item("MENSAJE_HAMBRE_LABEL").item("COLOR").item(2), _
                                           JsonLanguage.item("MENSAJE_HAMBRE_LABEL").item("COLOR").item(3), _
+                          False, False, True)
+End Sub
+
+Private Sub lblHelm_Click()
+    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_HELM_LABEL").item("TEXTO"), _
+                                          JsonLanguage.item("MENSAJE_HELM_LABEL").item("COLOR").item(1), _
+                                          JsonLanguage.item("MENSAJE_HELM_LABEL").item("COLOR").item(2), _
+                                          JsonLanguage.item("MENSAJE_HELM_LABEL").item("COLOR").item(3), _
                           False, False, True)
 End Sub
 
@@ -1647,6 +1680,22 @@ Private Sub lblSed_Click()
                           False, False, True)
 End Sub
 
+Private Sub lblShielder_Click()
+    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_SHIELDER_LABEL").item("TEXTO"), _
+                                          JsonLanguage.item("MENSAJE_SHIELDER_LABEL").item("COLOR").item(1), _
+                                          JsonLanguage.item("MENSAJE_SHIELDER_LABEL").item("COLOR").item(2), _
+                                          JsonLanguage.item("MENSAJE_SHIELDER_LABEL").item("COLOR").item(3), _
+                          False, False, True)
+End Sub
+
+Private Sub lblStrg_Click()
+    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_STRG_LABEL").item("TEXTO"), _
+                                          JsonLanguage.item("MENSAJE_STRG_LABEL").item("COLOR").item(1), _
+                                          JsonLanguage.item("MENSAJE_STRG_LABEL").item("COLOR").item(2), _
+                                          JsonLanguage.item("MENSAJE_STRG_LABEL").item("COLOR").item(3), _
+                          False, False, True)
+End Sub
+
 Private Sub lblVida_Click()
     Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_VIDA_LABEL").item("TEXTO"), _
                                           JsonLanguage.item("MENSAJE_VIDA_LABEL").item("COLOR").item(1), _
@@ -1659,6 +1708,14 @@ Private Sub lblMinimizar_Click()
     Me.WindowState = 1
 End Sub
 
+
+Private Sub lblWeapon_Click()
+    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_WEAPON_LABEL").item("TEXTO"), _
+                                          JsonLanguage.item("MENSAJE_WEAPON_LABEL").item("COLOR").item(1), _
+                                          JsonLanguage.item("MENSAJE_WEAPON_LABEL").item("COLOR").item(2), _
+                                          JsonLanguage.item("MENSAJE_WEAPON_LABEL").item("COLOR").item(3), _
+                          False, False, True)
+End Sub
 
 Private Sub macrotrabajo_Timer()
 

@@ -535,11 +535,11 @@
         ]
     },
     "MENSAJE_INFO_COORDENADAS": {
-        "TEXTO": "These coordinates are your location on the map. Uses the letter L to correct it if this does not match with the server due to the Lag.",
+        "TEXTO": "HELP: These coordinates are your location on the map. Uses the letter L to correct it if this does not match with the server due to the Lag.",
         "COLOR": [
-            100,
-            140,
-            210
+            252,
+            178,
+            237
         ]
     },
     "MENSAJE_SOY_CHEATER": {
@@ -1641,43 +1641,99 @@
         "TEXTO": "Alternative"
     },
     "MENSAJE_ENERGIA_LABEL": {
-        "TEXTO": "Un texto para jkljasdjlksad",
+        "TEXTO": "HELP: Energy indicator, you need energy to attack a user or npc, it is also necessary to work. If you do not have a dress equipped, you will lose energy faster.",
         "COLOR": [
             255,
-            0,
-            0
+            178,
+            237
         ]
     },
     "MENSAJE_HAMBRE_LABEL": {
-        "TEXTO": "Un texto para jkljasdjlksad",
+        "TEXTO": "HELP: Hunger Indicator, to fill this bar you must consume food of any kind.",
         "COLOR": [
             255,
-            0,
-            0
+            178,
+            237
         ]
     },
     "MENSAJE_MANA_LABEL": {
-        "TEXTO": "Un texto para jkljasdjlksad",
+        "TEXTO": "HELP: Mana points, needed to use spells. You can retrieve them using blue potions, with the command /MEDITAR or with a Priest.",
         "COLOR": [
             255,
-            0,
-            0
+            178,
+            237
         ]
     },
     "MENSAJE_SED_LABEL": {
-        "TEXTO": "Un texto para jkljasdjlksad",
+        "TEXTO": "HELP: Thirst Indicator, indicate the level of thirst that your character, to be able to fill it you must have a drink such as water, wine, beer, etc.",
         "COLOR": [
             255,
-            0,
-            0
+            178,
+            237
         ]
     },
     "MENSAJE_VIDA_LABEL": {
-        "TEXTO": "Un texto para jkljasdjlksad",
+        "TEXTO": "HELP: Life points: Indicates how many life points the character has, when you reach 0 you die and all your objects will fall to the floor. To fill this bar you must take Red Potions or attend a Priest. There are spells that can be used magic classes that heal wounds. ",
         "COLOR": [
             255,
-            0,
-            0
+            178,
+            237
+        ]
+    },
+    "MENSAJE_WEAPON_LABEL" : {
+        "TEXTO": "HELP: Indicates the maximum and minimum power of the weapon. For example a weapon with 8/12 power means that you can hurt between 8 and 12 of life",
+        "COLOR": [
+            255,
+            178,
+            237
+        ]
+    },
+    "MENSAJE_HELM_LABEL" : {
+        "TEXTO": "HELP: Indicates the maximum and minimum resistance of the helmet / hat. For example a hat with 10/15 resistance means that it can block in every stroke between 10 and 15 of life",
+        "COLOR": [
+            255,
+            178,
+            237
+        ]
+    },
+    "MENSAJE_SHIELDER_LABEL" : {
+        "TEXTO": "HELP: Indicates the maximum and minimum resistance of the shield. For example a shield with resistance 5/20 means that it can block in each blow between 5 and 20 of life",
+        "COLOR": [
+            255,
+            178,
+            237
+        ]
+    },
+    "MENSAJE_ARMOR_LABEL" : {
+        "TEXTO": "HELP: Indicates the maximum and minimum resistance of the clothing. For example, armor with resistance 2/8 means that it can block in each blow between 2 and 8 of life",
+        "COLOR": [
+            255,
+            178,
+            237
+        ]
+    },
+    "MENSAJE_STRG_LABEL" : {
+        "TEXTO": "HELP: Indicator of the strength level of your character that your character has. You can raise them by spells or Green Potions.",
+        "COLOR": [
+            255,
+            178,
+            237
+        ]
+    },
+    "MENSAJE_DEXT_LABEL" : {
+        "TEXTO": "HELP: Indicator of the level of Agility of your character that your character has. You can upload them using spells or Yellow Potions.",
+        "COLOR": [
+            255,
+            178,
+            237
+        ]
+    },
+    "MENSAJE_GOLD_LABEL" : {
+        "TEXTO": "HELP: Amount of gold available in your wallet, you can store what you do not need in the bank. If you are not a newbie and you die in an unsafe area, the gold will fall just like your items. You can carry 10,000 gold per level character, so if your character is level 25 you can carry 250,000 gold (25 x 10,000) in your wallet and you would NOT drop anything when you die but instead if you had 251,200 for example, you would only drop the leftover (1200 gold)",
+        "COLOR": [
+            255,
+            178,
+            237
         ]
     }
 }
