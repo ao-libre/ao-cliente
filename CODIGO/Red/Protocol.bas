@@ -1651,7 +1651,7 @@ Private Sub HandleBankInit()
     
     BankGold = incomingData.ReadLong
     Call InvBanco(0).Initialize(DirectD3D8, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
-    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.PicInv, Inventario.MaxObjs)
+    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.picInv, Inventario.MaxObjs)
     
     For i = 1 To Inventario.MaxObjs
         With Inventario
@@ -1956,8 +1956,10 @@ Private Sub HandleUpdateExp()
     
     'Get data and update form
     UserExp = incomingData.ReadLong()
-    frmMain.lblExp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
     frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
+
+    frmMain.uAOProgressExperienceLevel.max = UserPasarNivel
+    frmMain.uAOProgressExperienceLevel.Value = UserExp
 End Sub
 
 ''
@@ -3083,12 +3085,16 @@ Private Sub HandleUpdateUserStats()
     UserPasarNivel = incomingData.ReadLong()
     UserExp = incomingData.ReadLong()
     
-    frmMain.lblExp.Caption = "Exp: " & UserExp & "/" & UserPasarNivel
-    
     If UserPasarNivel > 0 Then
         frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
+        frmMain.uAOProgressExperienceLevel.max = UserPasarNivel
+        frmMain.uAOProgressExperienceLevel.Value = UserExp
     Else
         frmMain.lblPorcLvl.Caption = "[N/A]"
+
+        'Si no tiene mas niveles que subir ponemos la barra al maximo.
+        frmMain.uAOProgressExperienceLevel.max = 100
+        frmMain.uAOProgressExperienceLevel.Value = 100
     End If
     
     frmMain.GldLbl.Caption = UserGLD
