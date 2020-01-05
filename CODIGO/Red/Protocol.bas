@@ -1680,6 +1680,9 @@ Private Sub HandleBankInit()
     frmBancoObj.lblUserGld.Caption = BankGold
     
     frmBancoObj.Show , frmMain
+
+    'Reproducimos el saludo del comerciante (Recox)
+    Call Audio.PlayWave("comerciante" & RandomNumber(1, 9) & ".wav")
 End Sub
 
 ''
