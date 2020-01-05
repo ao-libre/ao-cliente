@@ -80,14 +80,23 @@ Begin VB.Form frmMain
       AutoRedraw      =   -1  'True
       BackColor       =   &H80000007&
       Height          =   1500
-      Left            =   6825
+      Left            =   6840
       ScaleHeight     =   96
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   96
       TabIndex        =   39
       TabStop         =   0   'False
-      Top             =   300
+      Top             =   240
       Width           =   1500
+      Begin VB.Shape UserAreaMinimap 
+         BackColor       =   &H80000004&
+         BorderColor     =   &H80000002&
+         FillColor       =   &H000080FF&
+         Height          =   225
+         Left            =   600
+         Top             =   360
+         Width           =   300
+      End
       Begin VB.Shape UserM 
          BackColor       =   &H0000FFFF&
          BackStyle       =   1  'Opaque
@@ -1088,7 +1097,7 @@ Private Sub LoadTextsForm()
     CmdLanzar.Caption = JsonLanguage.item("LBL_LANZAR").item("TEXTO")
     CmdInventario.Caption = JsonLanguage.item("LBL_INVENTARIO").item("TEXTO")
     CmdHechizos.Caption = JsonLanguage.item("LBL_HECHIZOS").item("TEXTO")
-    cmdInfo.Caption = JsonLanguage.item("LBL_INFO").item("TEXTO")
+    cmdINFO.Caption = JsonLanguage.item("LBL_INFO").item("TEXTO")
     imgMapa.Caption = JsonLanguage.item("LBL_MAPA").item("TEXTO")
     imgGrupo.Caption = JsonLanguage.item("LBL_GRUPO").item("TEXTO")
     imgOpciones.Caption = JsonLanguage.item("LBL_OPCIONES").item("TEXTO")
@@ -1901,8 +1910,8 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
         SendTxt.Visible = False
         
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
         Else
             hlst.SetFocus
         End If
@@ -2261,11 +2270,11 @@ Private Sub cmdInventario_Click()
     InvEqu.Picture = LoadPicture(Game.path(Skins) & SkinSeleccionado & "\Centroinventario.jpg")
 
     ' Activo controles de inventario
-    picInv.Visible = True
+    PicInv.Visible = True
 
     ' Desactivo controles de hechizo
     hlst.Visible = False
-    cmdInfo.Visible = False
+    cmdINFO.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = False
@@ -2281,14 +2290,14 @@ Private Sub CmdHechizos_Click()
     
     ' Activo controles de hechizos
     hlst.Visible = True
-    cmdInfo.Visible = True
+    cmdINFO.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True
     cmdMoverHechi(1).Visible = True
     
     ' Desactivo controles de inventario
-    picInv.Visible = False
+    PicInv.Visible = False
 
 End Sub
 
@@ -2342,8 +2351,8 @@ Private Sub RecTxt_Change()
         SendCMSTXT.SetFocus
     ElseIf (Not Comerciando) And (Not MirandoAsignarSkills) And (Not frmMSG.Visible) And (Not MirandoForo) And (Not frmEstadisticas.Visible) And (Not frmCantidad.Visible) And (Not MirandoParty) Then
          
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
         ElseIf hlst.Visible Then
             hlst.SetFocus
         End If
@@ -2352,8 +2361,8 @@ End Sub
 
 Private Sub RecTxt_KeyDown(KeyCode As Integer, Shift As Integer)
 
-    If picInv.Visible Then
-        picInv.SetFocus
+    If PicInv.Visible Then
+        PicInv.SetFocus
     Else
         hlst.SetFocus
     End If
@@ -2417,8 +2426,8 @@ Private Sub SendCMSTXT_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
         Me.SendCMSTXT.Visible = False
         
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
         Else
             hlst.SetFocus
         End If
@@ -2729,11 +2738,14 @@ End Sub
 Public Sub ActualizarMiniMapa()
     '***************************************************
     'Author: Martin Gomez (Samke)
-    'Last Modify Date: 07/12/2011
+    'Last Modify Date: 05/01/2020
     'Integrado por Reyarb
+    'Se agrego campo de vision del render (Recox)
     '***************************************************
     Me.UserM.Left = UserPos.X
     Me.UserM.Top = UserPos.Y
+    Me.UserAreaMinimap.Left = UserPos.X - 9
+    Me.UserAreaMinimap.Top = UserPos.Y - 8
     Me.MiniMapa.Refresh
 End Sub
 
