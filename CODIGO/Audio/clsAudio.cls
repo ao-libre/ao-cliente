@@ -32,6 +32,11 @@ Public Enum LoopStyle
     Enabled = 2
 End Enum
 
+Public Enum MusicTypes As String
+    Mp3
+    Midi
+End Enum
+
 Dim inited As Boolean
 Dim DirectSound As DirectSound8
 Dim DSBuffers(1 To NumSoundBuffers) As SoundBuffer
@@ -43,7 +48,9 @@ Dim Loader As DirectMusicLoader8
 Dim SegState As DirectMusicSegmentState8
 Dim Music As Boolean
 Dim MusicPath As String
+Dim MusicMp3Path As String
 Dim CurrentMusicFile As String
+Dim CurrentMusicFileType As String
 Dim mActivated As Boolean
 Dim sActivated As Boolean
 Dim lastPosX As Integer
@@ -97,14 +104,20 @@ End Sub
 '   @param    hWnd        Handle to the window to be used by DirectMusic when playing midi files.
 '   @param    sound_path  Directory in wich to search for sound files.
 '   @param    music_path  Directory in wich to search for music files.
+'   @param    music_mp3_path  Directory in wich to search for music mp3 files.
 '
 '   @return   True if no errors occured, false otherwise.
 
-Public Function Initialize(ByRef dX As DirectX8, ByVal hWnd As Long, ByVal sound_path As String, ByVal music_path As String) As Boolean
+Public Function Initialize(ByRef dX As DirectX8,_
+                           ByVal hWnd As Long,_
+                           ByVal sound_path As String,_ 
+                           ByVal music_path As String,_
+                           ByVal music_mp3_path As String) As Boolean
 '***************************************************
 'Author: Juan Martin Sotuyo Dodero (Maraxus)
-'Last Modification: 16/03/04
+'Last Modification: 06/01/20
 'Creates all DS and DM objects
+'Se agrego soporte para la carpeta de mp3s
 '***************************************************
 On Error GoTo errhandler
     
@@ -130,6 +143,7 @@ On Error GoTo errhandler
     
     'Set music path
     MusicPath = music_path
+    MusicMp3Path = music_mp3_path
     
     mActivated = True
     sActivated = True
@@ -146,7 +160,7 @@ On Error GoTo errhandler
 Exit Function
 
 errhandler:
-    'Call Log_Engine("Error in Sound Engine Initializate, " & Err.Description & "(" & Err.number & ")")
+    Call LogError(Err.number, Err.Description, "clsAudio.Initialize")
 End Function
 
 ''
@@ -179,7 +193,7 @@ On Error GoTo errhandler
 Exit Function
 
 errhandler:
-    'Call Log_Engine("Error in Sound Engine. Function InitializedirectMusic, " & Err.Description & "(" & Err.number & ")")
+    Call LogError(Err.number, Err.Description, "clsAudio.InitializedirectMusic")
 End Function
 
 ''
@@ -239,7 +253,7 @@ On Error GoTo errhandler
 Exit Function
 
 errhandler:
-    'Call Log_Engine("Error in Sound Engine. Function PlayWave, " & Err.Description & "(" & Err.number & ")")
+    Call LogError(Err.number, Err.Description, "clsAudio.PlayWave")
 End Function
 
 Private Sub ResetSoundValues()
@@ -454,7 +468,7 @@ On Error GoTo errhandler
 Exit Function
 
 errhandler:
-    'Call Log_Engine("Error in Sound Engine. Function LoadWave, " & Err.Description & "(" & Err.number & ")")
+    Call LogError(Err.number, Err.Description, "clsAudio.LoadWave")
 End Function
 
 ''
@@ -564,14 +578,17 @@ Public Function PlayMIDI(Optional ByVal File As String = vbNullString, Optional 
 'Loads a midi and start to play it
 '***************************************************
 On Error GoTo errhandler
-    If LenB(File) > 0 Then _
-        CurrentMusicFile = File
+    If LenB(File) > 0 Then CurrentMusicFile = File
+    CurrentMusicFileType = MusicTypes.Midi
     
     If Not MusicActivated Then Exit Function
     
     If Not Music Then Exit Function
     
     If PlayingMusic Then StopMidi
+
+    'In case we are listening MP3 we first stop it.
+    Call StopMp3()
     
     If LenB(File) > 0 Then
         If Not LoadMidi(File) Then Exit Function
@@ -589,7 +606,7 @@ On Error GoTo errhandler
 Exit Function
 
 errhandler:
-    'Call Log_Engine("Error in Sound Engine. Function PlayMIDI, " & Err.Description & "(" & Err.number & ")")
+    Call LogError(Err.number, Err.Description, "clsAudio.PlayMIDI")
 End Function
 
 ''
@@ -625,7 +642,7 @@ On Error GoTo errhandler
 Exit Function
 
 errhandler:
-    'Call Log_Engine("Error in Sound Engine. Function LoadMidi, " & Err.Description & "(" & Err.number & ")")
+    Call LogError(Err.number, Err.Description, "clsAudio.LoadMidi")
 End Function
 
 ''
@@ -644,7 +661,7 @@ On Error GoTo errhandler
 Exit Sub
 
 errhandler:
-    'Call Log_Engine("Error in Sound Engine. Function StopMidi, " & Err.Description & "(" & Err.number & ")")
+    Call LogError(Err.number, Err.Description, "clsAudio.StopMidi")
 End Sub
 
 ''
@@ -777,9 +794,23 @@ Public Property Let MusicActivated(ByVal nValue As Boolean)
     mActivated = nValue
     
     If nValue Then
-        Call PlayMIDI(CurrentMusicFile)
+
+        Select Case CurrentMusicFileType
+            Case MusicTypes.Midi
+                Call PlayMIDI(CurrentMusicFile)
+            Case MusicTypes.Mp3
+                Call PlayMp3(CurrentMusicFile)
+        End Select
+
     Else
-        Call StopMidi
+
+        Select Case CurrentMusicFileType
+            Case MusicTypes.Midi
+                Call StopMidi
+            Case MusicTypes.Mp3
+                Call StopMp3
+        End Select
+
     End If
 End Property
 
@@ -850,6 +881,162 @@ Public Property Get SoundEffectsActivated() As Boolean
     SoundEffectsActivated = sEffectsActivated
 End Property
 
+''
+' Plays a new MP3 file.
+'
+' @param    FilePath    The path to the file to be loaded. If the path is null then play the loaded MP3.
+'
+' @return   True    If file was properly loaded and started playing, False otherwise.
+
+Public Function PlayMp3(Optional ByVal File As String = vbNullString) As Boolean
+'**************************************
+'* Created by: Fredrik Alexandersson  *
+'* Modify Date: 20/5/2003             *
+'**************************************
+    On Error GoTo ErrorHandl
+    If LenB(File) > 0 Then CurrentMusicFile = File
+    CurrentMusicFileType = MusicTypes.Mp3
+    
+    If Not MusicActivated Then Exit Function
+    
+    If Not Music Then Exit Function
+    
+    'In case we are listening to a MIDI we first stop it.
+    Call MidiStop()
+
+    If LenB(File) > 0 Then
+        If Not LoadMp3(File) Then Exit Function
+    Else
+        If IMC Is Nothing Then Exit Function
+    End If
+
+    Call IMC.Run
+    
+    PlayMp3 = True
+    Exit Function
+
+ErrorHandl:
+    PlayMp3 = False
+    Call LogError(Err.number, Err.Description, "clsAudio.PlayMp3")
+End Function
 
 
+''
+' Loads a new MP3 file.
+'
+' @param    FilePath    The path to the file to be loaded.
+' @return   True    If file was properly loaded and started playing, False otherwise.
 
+Public Function LoadMp3(ByVal FilePath As String, Optional ByVal Volume As Long = 0, Optional ByVal Balance As Long = 0) As Boolean '**** Loads a MP3 *****
+'**************************************
+'* Created by: Fredrik Alexandersson  *
+'* Modify Date: 20/5/2003             *
+'**************************************
+    On Error GoTo ErrorHandl
+    
+    If Not FileExist(MusicMp3Path & FilePath, vbArchive) Then Exit Function
+    
+    If Not MP3Empty() = True Then GoTo ErrorHandl
+    
+    Set IMC = New FilgraphManager
+    Call IMC.RenderFile(MusicMp3Path & FilePath)
+    
+    Set IBA = IMC
+    
+    'If SoundVolume > 0 Then SoundVolume = 0
+    If Volume < -4000 Then Volume = -4000
+    
+    IBA.Volume = Volume
+    
+    If Balance > 5000 Then Balance = 5000
+    If Balance < -5000 Then Balance = -5000
+    
+    IBA.Balance = Balance
+    
+    Set IME = IMC
+    
+    Set IMPos = IMC
+    If ObjPtr(IMPos) Then IMPos.Rate = 1#
+    IMPos.CurrentPosition = 0
+    
+    LoadMp3 = True
+    Exit Function
+
+ErrorHandl:
+    LoadMp3 = False
+    Call LogError(Err.number, Err.Description, "clsAudio.LoadMp3")
+End Function
+
+''
+' Stop a the current MP3 file.
+'
+' @return   True    If file was properly stop, False otherwise.
+
+Public Function StopMp3() As Boolean
+    On Error GoTo Error_Handl
+    
+    If Audio.PlayMp3 = False Then Exit Function
+    
+    IMC.Stop
+    IMPos.CurrentPosition = 0
+    
+    StopMp3 = True
+    Exit Function
+
+Error_Handl:
+    StopMp3 = False
+    Call LogError(Err.number, Err.Description, "clsAudio.StopMp3")
+End Function
+
+''
+' Destroy the MP3 objects.
+'
+' @return   True If the objects were destroy.
+
+Public Function MP3Empty() As Boolean
+'**************************************
+'* Created by: Fredrik Alexandersson  *
+'* Modify Date: 20/5/2003             *
+'**************************************
+    On Error GoTo ErrorHandl
+    
+    If ObjPtr(IMC) > 0 Then
+        Call StopMp3
+    End If
+    
+    Set IBA = Nothing
+    Set IME = Nothing
+    Set IMPos = Nothing
+    Set IMC = Nothing
+    
+    MP3Empty = True
+    Exit Function
+
+ErrorHandl:
+    MP3Empty = False
+    Call LogError(Err.number, Err.Description, "clsAudio.MP3Empty")
+    End
+End Function
+
+''
+'   Plays a new MIDI file.
+'
+'   @param    FileName    File name to be played
+'   @param    FileType   File Type : mp3 or mid.
+'
+Public Sub PlayBackgroundMusic(ByVal FileName As String, ByVal FileType As Byte)
+'***************************************************
+'Author: Recox
+'Last Modification: 06/01/20
+'Reproduce un mp3 o midi segun lo que elijamos.
+'***************************************************
+
+    Select Case FileType
+        Case MusicTypes.Midi
+            Call PlayMIDI(FileName & ".mid")
+        Case MusicTypes.Mp3
+            Call PlayMp3(FileName & ".mp3")
+    End Select
+
+
+End Sub

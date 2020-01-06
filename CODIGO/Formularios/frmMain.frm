@@ -2564,7 +2564,8 @@ Private Sub Client_Connect()
             Call Login
         
         Case E_MODO.CrearCuenta
-            Call Audio.PlayMIDI("7.mid")
+            Call Audio.PlayBackgroundMusic("2", MusicTypes.Midi)
+
             frmCrearCuenta.Show
 
         Case E_MODO.Dados

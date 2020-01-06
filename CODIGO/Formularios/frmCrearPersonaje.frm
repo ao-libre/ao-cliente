@@ -1787,8 +1787,7 @@ Private Sub imgGenero_MouseMove(Button As Integer, _
 End Sub
 
 Private Sub imgVolver_Click()
-    Call Audio.PlayMIDI("2.mid")
-    
+    Call Audio.PlayBackgroundMusic("2", MusicTypes.Midi)
     bShowTutorial = False
     
     Unload Me
