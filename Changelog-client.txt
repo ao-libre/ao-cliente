@@ -616,8 +616,26 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 02/01/2020: Arreglado paquete mal declarado `PalabrasMagicas`. Acá estaba como `DecirPalabrasMagicas`.
 
 - v0.13.21
+
 * 03/01/2020: Se agrego validacion para que cuando estoy chateando con la configuracion de teclas de ASDW no camine mientras tipea. (Recox)
 * 04/01/2020: Arregle el chat de clanes, ahora funciona correctamente y se puede mandar el mensaje con la misma tecla que se abre la consola. (Recox)
 * 04/01/2020: El mensaje MOTD y el chat de clanes ahora se puede ver en el render y en la consola configurable desde opciones. (Recox)
 * 04/01/2020: Mejoras y optimizaciones en la carga y renderizado de gráficos. (jopiortiz)
 * 04/01/2020: El frmKeysConfigurationSelect no se mostraba correctamente. (jopiortiz)
+* 05/01/2020: Changed gold color for the frmMain and refactor how we calculate it (Recox)
+* 05/01/2020: Agregado codigo base para poder hacer uso tanto de mp3s como midis (Recox)
+* 05/01/2020: El chat de npcs tambien se muestra en consola de forma prolija (Recox)
+* 05/01/2020: Se agregaron sonidos propios al banquero (Recox)
+* 05/01/2020: Se agregaron sonidos propios al comerciante (Recox)
+* 05/01/2020: Agregados textos de ayuda en frmMain (Recox)
+* 05/01/2020: Cambio de estilo en frmMain (Recox)
+* 05/01/2020: Se cambio un poco el estilo de la consola para escribir en el chat normal y de clanes (Recox)
+* 05/01/2020: Arreglados algunos errores ocultos/ignorados. (Recox)
+* 05/01/2020: Arreglado paquete mal declarado. (Recox)
+* 05/01/2020: Mejoras y optimizaciones en la carga y renderizado de gráficos. (Recox)
+* 07/01/2020: Agregado codigo base para poder hacer uso tanto de mp3s como midis (Recox)
+* 07/01/2020: Agregados mp3s  de fans que encontre por internet con musica original (Recox)
+* 07/01/2020: El chat de npcs tambien se muestra en consola de forma prolija (Recox)
+
+
+
