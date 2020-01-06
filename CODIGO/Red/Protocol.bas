@@ -2101,7 +2101,7 @@ Private Sub HandlePosUpdate()
     Call Char_UserPos
 End Sub
 
-Private Sub WriteChatOverHeadInConsole(ByVal CharIndex As String, ByVal ChatText As String, ByVal Red As Byte, ByVal Green As Byte, ByVal Blue As Byte)
+Private Sub WriteChatOverHeadInConsole(ByVal CharIndex As Integer, ByVal ChatText As String, ByVal Red As Byte, ByVal Green As Byte, ByVal Blue As Byte)
     Dim NameRed As Byte
     Dim NameGreen As Byte
     Dim NameBlue As Byte
