@@ -2101,12 +2101,13 @@ Private Sub HandlePosUpdate()
     Call Char_UserPos
 End Sub
 
-Private Sub WriteChatOverHeadInConsole(ByVal ChatText as String, ByVal Red As Byte, ByVal Green As Byte, ByVal Blue As Byte)
+Private Sub WriteChatOverHeadInConsole(ByVal CharIndex As String, ByVal ChatText As String, ByVal Red As Byte, ByVal Green As Byte, ByVal Blue As Byte)
     Dim NameRed As Byte
     Dim NameGreen As Byte
     Dim NameBlue As Byte
     
     With charlist(CharIndex)
+    
         If .priv = 0 Then
             If .Atacable Then
                 NameRed = ColoresPJ(48).Red
@@ -2129,12 +2130,14 @@ Private Sub WriteChatOverHeadInConsole(ByVal ChatText as String, ByVal Red As By
             NameBlue = ColoresPJ(.priv).Blue
         End If
 
-        Dim Name As String
+        
         Dim Pos As Integer
-        Pos = InStr(charlist(CharIndex).Nombre, "<")
-        If Pos = 0 Then Pos = Len(charlist(CharIndex).Nombre) + 2
-    
-        Name = Left$(charlist(CharIndex).Nombre, Pos - 2)
+            Pos = InStr(.Nombre, "<")
+            
+        If Pos = 0 Then Pos = LenB(.Nombre) + 2
+        
+        Dim name As String
+            name = Left$(.Nombre, Pos - 2)
        
         'Si el npc tiene nombre lo escribimos en la consola
         
@@ -2143,7 +2146,9 @@ Private Sub WriteChatOverHeadInConsole(ByVal ChatText as String, ByVal Red As By
         End If
         
         Call AddtoRichTextBox(frmMain.RecTxt, ChatText, Red, Green, Blue, False, False)
+        
     End With
+    
 End Sub
 
 ''
@@ -2186,7 +2191,7 @@ On Error GoTo errhandler
         Call Dialogos.CreateDialog(Trim$(Chat), CharIndex, RGB(Red, Green, Blue))
 
         'Aqui escribimos el texto que aparece sobre la cabeza en la consola.
-        Call WriteChatOverHeadInConsole(Chat, Red, Green, Blue)
+        Call WriteChatOverHeadInConsole(CharIndex, chat, Red, Green, Blue)
     End If
     
     'If we got here then packet is complete, copy data back to original queue
