@@ -20,6 +20,7 @@ Public Enum ePath
     Skins
     Sounds
     Musica
+    MusicaMp3
     Mapas
     Lenguajes
     Extras

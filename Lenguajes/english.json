@@ -611,6 +611,9 @@
     "MENSAJE_COMANDO_INCORRECTO": {
         "TEXTO": "Incorrect command."
     },
+    "MENSAJE_MP3_INCORRECTO": {
+        "TEXTO": "MP3 wrong. Use"
+    },
     "MENSAJE_MIDI_INCORRECTO": {
         "TEXTO": "Midi wrong. Use"
     },

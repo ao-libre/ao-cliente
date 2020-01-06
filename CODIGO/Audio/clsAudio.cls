@@ -32,7 +32,7 @@ Public Enum LoopStyle
     Enabled = 2
 End Enum
 
-Public Enum MusicTypes As String
+Public Enum MusicTypes
     Mp3
     Midi
 End Enum
@@ -57,6 +57,11 @@ Dim lastPosX As Integer
 Dim lastPosY As Integer
 Dim sEffectsActivated As Boolean
 
+'**** Used By MP3 Playing. *****
+Dim IMC   As IMediaControl
+Dim IBA   As IBasicAudio
+Dim IME   As IMediaEvent
+Dim IMPos As IMediaPosition
 
 ''
 'Destructor. Releases all created objects assuring no memory-leaks.
@@ -108,16 +113,16 @@ End Sub
 '
 '   @return   True if no errors occured, false otherwise.
 
-Public Function Initialize(ByRef dX As DirectX8,_
-                           ByVal hWnd As Long,_
-                           ByVal sound_path As String,_ 
-                           ByVal music_path As String,_
+Public Function Initialize(ByRef dX As DirectX8, _
+                           ByVal hWnd As Long, _
+                           ByVal sound_path As String, _ 
+                           ByVal music_path As String, _
                            ByVal music_mp3_path As String) As Boolean
 '***************************************************
 'Author: Juan Martin Sotuyo Dodero (Maraxus)
 'Last Modification: 06/01/20
 'Creates all DS and DM objects
-'Se agrego soporte para la carpeta de mp3s
+'Se agrego soporte para la carpeta de mp3 (Recox)
 '***************************************************
 On Error GoTo errhandler
     
@@ -902,7 +907,7 @@ Public Function PlayMp3(Optional ByVal File As String = vbNullString) As Boolean
     If Not Music Then Exit Function
     
     'In case we are listening to a MIDI we first stop it.
-    Call MidiStop()
+    Call StopMidi()
 
     If LenB(File) > 0 Then
         If Not LoadMp3(File) Then Exit Function
@@ -1021,10 +1026,11 @@ End Function
 ''
 '   Plays a new MIDI file.
 '
-'   @param    FileName    File name to be played
-'   @param    FileType   File Type : mp3 or mid.
+'   @param              FileName    File name to be played
+'   @param              FileType   File Type : mp3 or mid.
+'   @param Optional     Loops   Loops for midi.
 '
-Public Sub PlayBackgroundMusic(ByVal FileName As String, ByVal FileType As Byte)
+Public Sub PlayBackgroundMusic(ByVal FileName As String, ByVal FileType As Byte, Optional ByVal Loops As Long = -1)
 '***************************************************
 'Author: Recox
 'Last Modification: 06/01/20
@@ -1033,9 +1039,11 @@ Public Sub PlayBackgroundMusic(ByVal FileName As String, ByVal FileType As Byte)
 
     Select Case FileType
         Case MusicTypes.Midi
-            Call PlayMIDI(FileName & ".mid")
+            Call PlayMIDI(FileName & ".mid", Loops)
+
         Case MusicTypes.Mp3
             Call PlayMp3(FileName & ".mp3")
+
     End Select
 
 

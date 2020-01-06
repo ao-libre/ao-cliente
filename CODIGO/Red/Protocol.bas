@@ -88,6 +88,7 @@ Private Enum ServerPacketID
     ObjectCreate            ' HO
     ObjectDelete            ' BO
     BlockPosition           ' BQ
+    PlayMP3                 
     PlayMIDI                ' TM
     PlayWave                ' TW
     guildList               ' GL
@@ -676,6 +677,9 @@ On Error Resume Next
         
         Case ServerPacketID.BlockPosition           ' BQ
             Call HandleBlockPosition
+
+        Case ServerPacketID.PlayMP3
+            Call HandlePlayMP3
         
         Case ServerPacketID.PlayMIDI                ' TM
             Call HandlePlayMIDI
@@ -2898,13 +2902,39 @@ Private Sub HandleBlockPosition()
 End Sub
 
 ''
+' Handles the PlayMP3 message.
+
+Private Sub HandlePlayMP3()
+'***************************************************
+'Author: Lucas Recoaro (Recox)
+'Last Modification: 06/01/20
+'Utilizamos PlayBackgroundMusic para el uso de MP3, simplifique la funcion (Recox)
+'***************************************************
+    If incomingData.Length < 5 Then
+        Err.Raise incomingData.NotEnoughDataErrCode
+        Exit Sub
+    End If
+    
+    Dim currentMp3 As Integer
+    Dim Loops As Integer
+    
+    'Remove packet ID
+    Call incomingData.ReadByte
+    
+    currentMp3 = incomingData.ReadInteger()
+    Loops = incomingData.ReadInteger()
+    
+    Call Audio.PlayBackgroundMusic(CStr(currentMp3), MusicTypes.Mp3)
+End Sub
+
+''
 ' Handles the PlayMIDI message.
 
 Private Sub HandlePlayMIDI()
 '***************************************************
 'Author: Juan Martin Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'
+'Last Modification: 06/01/20
+'Utilizamos PlayBackgroundMusic para el uso de  MIDI, simplifique la funcion (Recox)
 '***************************************************
     If incomingData.Length < 5 Then
         Err.Raise incomingData.NotEnoughDataErrCode
@@ -2920,14 +2950,7 @@ Private Sub HandlePlayMIDI()
     currentMidi = incomingData.ReadInteger()
     Loops = incomingData.ReadInteger()
     
-    If currentMidi Then
-        If currentMidi > MP3_INITIAL_INDEX Then
-            'Call Audio.MusicMP3Play(App.path & "\MP3\" & currentMidi & ".mp3")
-        Else
-            Call Audio.PlayMIDI(CStr(currentMidi) & ".mid", Loops)
-        End If
-    End If
-    
+    Call Audio.PlayBackgroundMusic(CStr(currentMidi), MusicTypes.Midi, Loops)
 End Sub
 
 ''
@@ -8856,6 +8879,29 @@ Public Sub WriteSetCharDescription(ByVal Desc As String)
 End Sub
 
 ''
+' Writes the "ForceMP3ToMap" message to the outgoing data buffer.
+'
+' @param    Mp3Id The ID of the midi file to play.
+' @param    map The map in which to play the given midi.
+' @remarks  The data is not actually sent until the buffer is properly flushed.
+
+Public Sub WriteForceMP3ToMap(ByVal Mp3Id As Byte, ByVal Map As Integer)
+'***************************************************
+'Author: Juan Martin Sotuyo Dodero (Maraxus)
+'Last Modification: 05/17/06
+'Writes the "ForceMIDIToMap" message to the outgoing data buffer
+'***************************************************
+    With outgoingData
+        Call .WriteByte(ClientPacketID.GMCommands)
+        Call .WriteByte(eGMCommands.ForceMP3ToMap)
+        
+        Call .WriteByte(Mp3Id)
+        
+        Call .WriteInteger(Map)
+    End With
+End Sub
+
+''
 ' Writes the "ForceMIDIToMap" message to the outgoing data buffer.
 '
 ' @param    midiID The ID of the midi file to play.
@@ -9381,6 +9427,26 @@ Public Sub WriteRoyalArmyKick(ByVal UserName As String)
         Call .WriteByte(eGMCommands.RoyalArmyKick)
         
         Call .WriteASCIIString(UserName)
+    End With
+End Sub
+
+''
+' Writes the "ForceMP3All" message to the outgoing data buffer.
+'
+' @param    Mp3Id The id of the midi file to play.
+' @remarks  The data is not actually sent until the buffer is properly flushed.
+
+Public Sub WriteForceMP3All(ByVal Mp3Id As Byte)
+'***************************************************
+'Author: Lucas Recoaro (Recox)
+'Last Modification: 05/17/06
+'Writes the "ForceMP3All" message to the outgoing data buffer
+'***************************************************
+    With outgoingData
+        Call .WriteByte(ClientPacketID.GMCommands)
+        Call .WriteByte(eGMCommands.ForceMP3All)
+        
+        Call .WriteByte(Mp3Id)
     End With
 End Sub
 

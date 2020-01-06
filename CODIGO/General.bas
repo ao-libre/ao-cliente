@@ -884,13 +884,15 @@ Private Sub LoadInitialConfig()
                             True, False, True, rtfCenter)
                             
     'Inicializamos el sonido
-    Call Audio.Initialize(DirectX, frmMain.hWnd, Game.path(Sounds), Game.path(Musica))
+    Call Audio.Initialize(DirectX, frmMain.hWnd, Game.path(Sounds), Game.path(Musica), Game.path(MusicaMp3))
 
     'Enable / Disable audio
     Audio.MusicActivated = ClientSetup.bMusic
     Audio.SoundActivated = ClientSetup.bSound
     Audio.SoundEffectsActivated = ClientSetup.bSoundEffects
-    Call Audio.PlayMIDI("6.mid")
+
+    'Iniciamos cancion principal del juego turururuuuuuu
+    Call Audio.PlayBackgroundMusic("6", MusicTypes.Mp3)
     
     Call AddtoRichTextBox(frmCargando.status, _
                             "   " & JsonLanguage.item("HECHO").item("TEXTO"), _
@@ -1435,8 +1437,8 @@ Public Sub ResetAllInfo()
     ' Clear inventory slots
     Inventario.ClearAllSlots
 
-    ' Connection screen midi
-    Call Audio.PlayMIDI("2.mid")
+    ' Connection screen mp3
+    Call Audio.PlayBackgroundMusic("2", MusicTypes.Mp3)
 
 End Sub
 
