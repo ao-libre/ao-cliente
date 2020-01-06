@@ -1085,7 +1085,7 @@ Private Sub Form_Load()
     'y poder borrar los frx de este archivo
         
     ' Detect links in console
-    EnableURLDetect RecTxt.hWnd, Me.hWnd
+    Call EnableURLDetect(RecTxt.hWnd, Me.hWnd)
     
     ' Make the console transparent
     Call SetWindowLong(RecTxt.hWnd, -20, &H20&)

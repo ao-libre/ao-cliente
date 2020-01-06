@@ -2107,45 +2107,45 @@ Private Sub WriteChatOverHeadInConsole(ByVal CharIndex As Integer, ByVal ChatTex
     Dim NameBlue As Byte
     
     With charlist(CharIndex)
-    
+        'Todo: Hacer que los colores se usen de Colores.dat
+        'Haciendo uso de ColoresPj ya que el mismo en algun momento lo hace para DX
         If .priv = 0 Then
             If .Atacable Then
-                NameRed = ColoresPJ(48).Red
-                NameGreen = ColoresPJ(48).Green
-                NameBlue = ColoresPJ(48).Blue
+                NameRed = 236
+                NameGreen = 89
+                NameBlue = 57
             Else
                 If .Criminal Then
-                    NameRed = ColoresPJ(50).Red
-                    NameGreen = ColoresPJ(50).Green
-                    NameBlue = ColoresPJ(50).Blue
+                    NameRed = 247
+                    NameGreen = 44
+                    NameBlue = 0
                 Else
-                    NameRed = ColoresPJ(49).Red
-                    NameGreen = ColoresPJ(49).Green
-                    NameBlue = ColoresPJ(49).Blue
+                    NameRed = 218
+                    NameGreen = 131
+                    NameBlue = 225
                 End If
             End If
          Else
-            NameRed = ColoresPJ(.priv).Red
-            NameGreen = ColoresPJ(.priv).Green
-            NameBlue = ColoresPJ(.priv).Blue
+            NameRed = 222
+            NameGreen = 221
+            NameBlue = 211
         End If
 
-        
         Dim Pos As Integer
-            Pos = InStr(.Nombre, "<")
+        Pos = InStr(.Nombre, "<")
             
         If Pos = 0 Then Pos = LenB(.Nombre) + 2
         
         Dim name As String
-            name = Left$(.Nombre, Pos - 2)
+        name = Left$(.Nombre, Pos - 2)
        
         'Si el npc tiene nombre lo escribimos en la consola
         
         If LenB(.Nombre) <> 0 Then
-            Call AddtoRichTextBox(frmMain.RecTxt, Name & "> ", NameRed, NameGreen, NameBlue, True, False, True)
+            Call AddtoRichTextBox(frmMain.RecTxt, Name & "> ", NameRed, NameGreen, NameBlue, True, False, True, rtfLeft)
         End If
-        
-        Call AddtoRichTextBox(frmMain.RecTxt, ChatText, Red, Green, Blue, False, False)
+
+        Call AddtoRichTextBox(frmMain.RecTxt, ChatText , Red, Green, Blue, True, False, False, rtfLeft)
         
     End With
     
