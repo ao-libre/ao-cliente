@@ -984,6 +984,31 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 
             Case "/SETDESC"
                 Call WriteSetCharDescription(ArgumentosRaw)
+
+            Case "/FORCEMP3MAP"
+                If notNullArguments Then
+                    'elegir el mapa es opcional
+                    If CantidadArgumentos = 1 Then
+                        If ValidNumber(ArgumentosAll(0), eNumber_Types.ent_Byte) Then
+                            'evitamos un mapa nulo para que tome el del usuario.
+                            Call WriteForceMP3ToMap(ArgumentosAll(0), 0)
+                        Else
+                            'No es numerico
+                            Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_VALOR_INCORRECTO").Item("TEXTO") & " /forcemp3map MP3 MAPA")
+                        End If
+                    Else
+                        If ValidNumber(ArgumentosAll(0), eNumber_Types.ent_Byte) And ValidNumber(ArgumentosAll(1), eNumber_Types.ent_Integer) Then
+                            Call WriteForceMP3ToMap(ArgumentosAll(0), ArgumentosAll(1))
+                        Else
+                            'No es numerico
+                            Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_VALOR_INCORRECTO").Item("TEXTO") & " /forcemp3map MP3 MAPA")
+                        End If
+                    End If
+                Else
+                    'Avisar que falta el parametro
+                    Call ShowConsoleMsg("Utilice /forcemp3map MP3 MAPA")
+                End If
+                
             
             Case "/FORCEMIDIMAP"
                 If notNullArguments Then
@@ -1216,6 +1241,19 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 Else
                     'Avisar que falta el parametro
                     Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /noreal NICKNAME.")
+                End If
+
+            Case "/FORCEMP3"
+                If notNullArguments Then
+                    If ValidNumber(ArgumentosAll(0), eNumber_Types.ent_Byte) Then
+                        Call WriteForceMP3All(ArgumentosAll(0))
+                    Else
+                        'No es numerico
+                        Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_MP3_INCORRECTO").Item("TEXTO") & " /forcemp3 MP3.")
+                    End If
+                Else
+                    'Avisar que falta el parametro
+                    Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_FALTAN_PARAMETROS").Item("TEXTO") & " /forcemp3 MP3.")
                 End If
     
             Case "/FORCEMIDI"

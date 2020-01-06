@@ -366,153 +366,155 @@ Public Enum eNickColor
 End Enum
 
 Public Enum eGMCommands
-    GMMessage = 1                   '/GMSG
-    showName = 2                    '/SHOWNAME
-    OnlineRoyalArmy = 3             '/ONLINEREAL
-    OnlineChaosLegion = 4           '/ONLINECAOS
-    GoNearby = 5                    '/IRCERCA
-    Comment = 6                     '/REM
-    serverTime = 7                  '/HORA
-    Where = 8                       '/DONDE
-    CreaturesInMap = 9              '/NENE
-    WarpMeToTarget = 10             '/TELEPLOC
-    WarpChar = 11                   '/TELEP
-    Silence = 12                    '/SILENCIAR
-    SOSShowList = 13                '/SHOW SOS
-    SOSRemove = 14                  'SOSDONE
-    GoToChar = 15                   '/IRA
-    invisible = 16                  '/INVISIBLE
-    GMPanel = 17                    '/PANELGM
-    RequestUserList = 18            'LISTUSU
-    Working = 19                    '/TRABAJANDO
-    Hiding = 20                     '/OCULTANDO
-    Jail = 21                       '/CARCEL
-    KillNPC = 22                    '/RMATA
-    WarnUser = 23                   '/ADVERTENCIA
-    EditChar = 24                   '/MOD
-    RequestCharInfo = 25            '/INFO
-    RequestCharStats = 26           '/STAT
-    RequestCharGold = 27            '/BAL
-    RequestCharInventory = 28       '/INV
-    RequestCharBank = 29            '/BOV
-    RequestCharSkills = 30          '/SKILLS
-    ReviveChar = 31                 '/REVIVIR
-    OnlineGM = 32                   '/ONLINEGM
-    OnlineMap = 33                  '/ONLINEMAP
-    Forgive = 34                    '/PERDON
-    Kick = 35                       '/ECHAR
-    Execute = 36                    '/EJECUTAR
-    banChar = 37                    '/BAN
-    UnbanChar = 38                  '/UNBAN
-    NPCFollow = 39                  '/SEGUIR
-    SummonChar = 40                 '/SUM
-    SpawnListRequest = 41           '/CC
-    SpawnCreature = 42              'SPA
-    ResetNPCInventory = 43          '/RESETINV
-    ServerMessage = 44              '/RMSG
-    nickToIP = 45                   '/NICK2IP
-    IPToNick = 46                   '/IP2NICK
-    GuildOnlineMembers = 47         '/ONCLAN
-    TeleportCreate = 48             '/CT
-    TeleportDestroy = 49            '/DT
-    RainToggle = 50                 '/LLUVIA
-    SetCharDescription = 51         '/SETDESC
-    ForceMIDIToMap = 52             '/FORCEMIDIMAP
-    ForceWAVEToMap = 53             '/FORCEWAVMAP
-    RoyalArmyMessage = 54           '/REALMSG
-    ChaosLegionMessage = 55         '/CAOSMSG
-    CitizenMessage = 56             '/CIUMSG
-    CriminalMessage = 57            '/CRIMSG
-    TalkAsNPC = 58                  '/TALKAS
-    DestroyAllItemsInArea = 59      '/MASSDEST
-    AcceptRoyalCouncilMember = 60   '/ACEPTCONSE
-    AcceptChaosCouncilMember = 61   '/ACEPTCONSECAOS
-    ItemsInTheFloor = 62            '/PISO
-    MakeDumb = 63                   '/ESTUPIDO
-    MakeDumbNoMore = 64             '/NOESTUPIDO
-    dumpIPTables = 65               '/DUMPSECURITY
-    CouncilKick = 66                '/KICKCONSE
-    SetTrigger = 67                 '/TRIGGER
-    AskTrigger = 68                 '/TRIGGER with no args
-    BannedIPList = 69               '/BANIPLIST
-    BannedIPReload = 70             '/BANIPRELOAD
-    GuildMemberList = 71            '/MIEMBROSCLAN
-    GuildBan = 72                   '/BANCLAN
-    BanIP = 73                      '/BANIP
-    UnbanIP = 74                    '/UNBANIP
-    CreateItem = 75                 '/CI
-    DestroyItems = 76               '/DEST
-    ChaosLegionKick = 77            '/NOCAOS
-    RoyalArmyKick = 78              '/NOREAL
-    ForceMIDIAll = 79               '/FORCEMIDI
-    ForceWAVEAll = 80               '/FORCEWAV
-    RemovePunishment = 81           '/BORRARPENA
-    TileBlockedToggle = 82          '/BLOQ
-    KillNPCNoRespawn = 83           '/MATA
-    KillAllNearbyNPCs = 84          '/MASSKILL
-    LastIP = 85                     '/LASTIP
-    ChangeMOTD = 86                 '/MOTDCAMBIA
-    SetMOTD = 87                    'ZMOTD
-    SystemMessage = 88              '/SMSG
-    CreateNPC = 89                  '/ACC y /RACC
-    ImperialArmour = 90             '/AI1 - 4
-    ChaosArmour = 91                '/AC1 - 4
-    NavigateToggle = 92             '/NAVE
-    ServerOpenToUsersToggle = 93    '/HABILITAR
-    TurnOffServer = 94              '/APAGAR
-    TurnCriminal = 95               '/CONDEN
-    ResetFactions = 96              '/RAJAR
-    RemoveCharFromGuild = 97        '/RAJARCLAN
-    RequestCharMail = 98            '/LASTEMAIL
-    AlterPassword = 99             '/APASS
-    AlterMail = 100                 '/AEMAIL
-    AlterName = 101                  '/ANAME
-    DoBackUp = 102                  '/DOBACKUP
-    ShowGuildMessages = 103         '/SHOWCMSG
-    SaveMap = 104                   '/GUARDAMAPA
-    ChangeMapInfoPK = 105           '/MODMAPINFO PK
-    ChangeMapInfoBackup = 106       '/MODMAPINFO BACKUP
-    ChangeMapInfoRestricted = 107   '/MODMAPINFO RESTRINGIR
-    ChangeMapInfoNoMagic = 108      '/MODMAPINFO MAGIASINEFECTO
-    ChangeMapInfoNoInvi = 109       '/MODMAPINFO INVISINEFECTO
-    ChangeMapInfoNoResu = 110       '/MODMAPINFO RESUSINEFECTO
-    ChangeMapInfoLand = 111         '/MODMAPINFO TERRENO
-    ChangeMapInfoZone = 112         '/MODMAPINFO ZONA
-    ChangeMapInfoStealNpc = 113     '/MODMAPINFO ROBONPCm
-    ChangeMapInfoNoOcultar = 114    '/MODMAPINFO OCULTARSINEFECTO
-    ChangeMapInfoNoInvocar = 115    '/MODMAPINFO INVOCARSINEFECTO
-    SaveChars = 116                 '/GRABAR
-    CleanSOS = 117                  '/BORRAR SOS
-    ShowServerForm = 118            '/SHOW INT
-    night = 119                     '/NOCHE
-    KickAllChars = 120              '/ECHARTODOSPJS
-    ReloadNPCs = 121                '/RELOADNPCS
-    ReloadServerIni = 122           '/RELOADSINI
-    ReloadSpells = 123              '/RELOADHECHIZOS
-    ReloadObjects = 124             '/RELOADOBJ
-    Restart = 125                   '/REINICIAR
-    ResetAutoUpdate = 126           '/AUTOUPDATE
-    ChatColor = 127                 '/CHATCOLOR
-    Ignored = 128                   '/IGNORADO
-    CheckSlot = 129                 '/SLOT
-    SetIniVar = 130                 '/SETINIVAR LLAVE CLAVE VALOR
-    CreatePretorianClan = 131       '/CREARPRETORIANOS
-    RemovePretorianClan = 132       '/ELIMINARPRETORIANOS
-    EnableDenounces = 133           '/DENUNCIAS
-    ShowDenouncesList = 134         '/SHOW DENUNCIAS
-    MapMessage = 135                '/MAPMSG
-    SetDialog = 136                 '/SETDIALOG
-    Impersonate = 137               '/IMPERSONAR
-    Imitate = 138                   '/MIMETIZAR
-    RecordAdd = 139
-    RecordRemove = 140
-    RecordAddObs = 141
-    RecordListRequest = 142
-    RecordDetailsRequest = 143
-    ExitDestroy = 144
-    ToggleCentinelActivated = 145   '/CENTINELAACTIVADO
-    SearchNpc = 146                 '/BUSCAR
-    SearchObj = 147                 '/BUSCAR
+    GMMessage = 1           '/GMSG
+    showName                '/SHOWNAME
+    OnlineRoyalArmy         '/ONLINEREAL
+    OnlineChaosLegion       '/ONLINECAOS
+    GoNearby                '/IRCERCA
+    comment                 '/REM
+    serverTime              '/HORA
+    Where                   '/DONDE
+    CreaturesInMap          '/NENE
+    WarpMeToTarget          '/TELEPLOC
+    WarpChar                '/TELEP
+    Silence                 '/SILENCIAR
+    SOSShowList             '/SHOW SOS
+    SOSRemove               'SOSDONE
+    GoToChar                '/IRA
+    invisible               '/INVISIBLE
+    GMPanel                 '/PANELGM
+    RequestUserList         'LISTUSU
+    Working                 '/TRABAJANDO
+    Hiding                  '/OCULTANDO
+    Jail                    '/CARCEL
+    KillNPC                 '/RMATA
+    WarnUser                '/ADVERTENCIA
+    EditChar                '/MOD
+    RequestCharInfo         '/INFO
+    RequestCharStats        '/STAT
+    RequestCharGold         '/BAL
+    RequestCharInventory    '/INV
+    RequestCharBank         '/BOV
+    RequestCharSkills       '/SKILLS
+    ReviveChar              '/REVIVIR
+    OnlineGM                '/ONLINEGM
+    OnlineMap               '/ONLINEMAP
+    Forgive                 '/PERDON
+    Kick                    '/ECHAR
+    Execute                 '/EJECUTAR
+    BanChar                 '/BAN
+    UnbanChar               '/UNBAN
+    NPCFollow               '/SEGUIR
+    SummonChar              '/SUM
+    SpawnListRequest        '/CC
+    SpawnCreature           'SPA
+    ResetNPCInventory       '/RESETINV
+    ServerMessage           '/RMSG
+    NickToIP                '/NICK2IP
+    IPToNick                '/IP2NICK
+    GuildOnlineMembers      '/ONCLAN
+    TeleportCreate          '/CT
+    TeleportDestroy         '/DT
+    RainToggle              '/LLUVIA
+    SetCharDescription      '/SETDESC
+    ForceMP3ToMap          '/FORCEMP3MAP
+    ForceMIDIToMap          '/FORCEMIDIMAP
+    ForceWAVEToMap          '/FORCEWAVMAP
+    RoyalArmyMessage        '/REALMSG
+    ChaosLegionMessage      '/CAOSMSG
+    CitizenMessage          '/CIUMSG
+    CriminalMessage         '/CRIMSG
+    TalkAsNPC               '/TALKAS
+    DestroyAllItemsInArea   '/MASSDEST
+    AcceptRoyalCouncilMember '/ACEPTCONSE
+    AcceptChaosCouncilMember '/ACEPTCONSECAOS
+    ItemsInTheFloor         '/PISO
+    MakeDumb                '/ESTUPIDO
+    MakeDumbNoMore          '/NOESTUPIDO
+    DumpIPTables            '/DUMPSECURITY
+    CouncilKick             '/KICKCONSE
+    SetTrigger              '/TRIGGER
+    AskTrigger              '/TRIGGER with no args
+    BannedIPList            '/BANIPLIST
+    BannedIPReload          '/BANIPRELOAD
+    GuildMemberList         '/MIEMBROSCLAN
+    GuildBan                '/BANCLAN
+    BanIP                   '/BANIP
+    UnbanIP                 '/UNBANIP
+    CreateItem              '/CI
+    DestroyItems            '/DEST
+    ChaosLegionKick         '/NOCAOS
+    RoyalArmyKick           '/NOREAL
+    ForceMP3All             '/FORCEMP3
+    ForceMIDIAll            '/FORCEMIDI
+    ForceWAVEAll            '/FORCEWAV
+    RemovePunishment        '/BORRARPENA
+    TileBlockedToggle       '/BLOQ
+    KillNPCNoRespawn        '/MATA
+    KillAllNearbyNPCs       '/MASSKILL
+    LastIP                  '/LASTIP
+    ChangeMOTD              '/MOTDCAMBIA
+    SetMOTD                 'ZMOTD
+    SystemMessage           '/SMSG
+    CreateNPC               '/ACC y /RACC
+    ImperialArmour          '/AI1 - 4
+    ChaosArmour             '/AC1 - 4
+    NavigateToggle          '/NAVE
+    ServerOpenToUsersToggle '/HABILITAR
+    TurnOffServer           '/APAGAR
+    TurnCriminal            '/CONDEN
+    ResetFactions           '/RAJAR
+    RemoveCharFromGuild     '/RAJARCLAN
+    RequestCharMail         '/LASTEMAIL
+    AlterPassword           '/APASS
+    AlterMail               '/AEMAIL
+    AlterName               '/ANAME
+    DoBackUp                '/DOBACKUP
+    ShowGuildMessages       '/SHOWCMSG
+    SaveMap                 '/GUARDAMAPA
+    ChangeMapInfoPK         '/MODMAPINFO PK
+    ChangeMapInfoBackup     '/MODMAPINFO BACKUP
+    ChangeMapInfoRestricted '/MODMAPINFO RESTRINGIR
+    ChangeMapInfoNoMagic    '/MODMAPINFO MAGIASINEFECTO
+    ChangeMapInfoNoInvi     '/MODMAPINFO INVISINEFECTO
+    ChangeMapInfoNoResu     '/MODMAPINFO RESUSINEFECTO
+    ChangeMapInfoLand       '/MODMAPINFO TERRENO
+    ChangeMapInfoZone       '/MODMAPINFO ZONA
+    ChangeMapInfoStealNpc   '/MODMAPINFO ROBONPC
+    ChangeMapInfoNoOcultar  '/MODMAPINFO OCULTARSINEFECTO
+    ChangeMapInfoNoInvocar  '/MODMAPINFO INVOCARSINEFECTO
+    SaveChars               '/GRABAR
+    CleanSOS                '/BORRAR SOS
+    ShowServerForm          '/SHOW INT
+    night                   '/NOCHE
+    KickAllChars            '/ECHARTODOSPJS
+    ReloadNPCs              '/RELOADNPCS
+    ReloadServerIni         '/RELOADSINI
+    ReloadSpells            '/RELOADHECHIZOS
+    ReloadObjects           '/RELOADOBJ
+    Restart                 '/REINICIAR
+    ResetAutoUpdate         '/AUTOUPDATE
+    ChatColor               '/CHATCOLOR
+    Ignored                 '/IGNORADO
+    CheckSlot               '/SLOT
+    SetIniVar               '/SETINIVAR LLAVE CLAVE VALOR
+    CreatePretorianClan     '/CREARPRETORIANOS
+    RemovePretorianClan     '/ELIMINARPRETORIANOS
+    EnableDenounces         '/DENUNCIAS
+    ShowDenouncesList       '/SHOW DENUNCIAS
+    MapMessage              '/MAPMSG
+    SetDialog               '/SETDIALOG
+    Impersonate             '/IMPERSONAR
+    Imitate                 '/MIMETIZAR
+    RecordAdd
+    RecordRemove
+    RecordAddObs
+    RecordListRequest
+    RecordDetailsRequest
+    ExitDestroy             '/DE
+    ToggleCentinelActivated '/CENTINELAACTIVADO
+    SearchNpc               '/BUSCAR
+    SearchObj               '/BUSCAR
 End Enum
 
 '
@@ -957,8 +959,6 @@ Public Enum eMoveType
     Inventory = 1
     Bank
 End Enum
-
-Public Const MP3_INITIAL_INDEX As Integer = 1000
 
 '/////OPTIMIZACION DE STRINGS////////
 Public NumHechizos As Byte

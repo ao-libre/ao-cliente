@@ -2564,15 +2564,15 @@ Private Sub Client_Connect()
             Call Login
         
         Case E_MODO.CrearCuenta
-            Call Audio.PlayMIDI("7.mid")
+            Call Audio.PlayBackgroundMusic("7", MusicTypes.Mp3)
             frmCrearCuenta.Show
 
         Case E_MODO.Dados
-            Call Audio.PlayMIDI("7.mid")
+            Call Audio.PlayBackgroundMusic("7", MusicTypes.Mp3)
             frmCrearPersonaje.Show
             
         Case E_MODO.CambiarContrasena
-            Call Audio.PlayMIDI("7.mid")
+            Call Audio.PlayBackgroundMusic("7", MusicTypes.Mp3)
             frmRecuperarCuenta.Show
         
     End Select

@@ -20,6 +20,7 @@ Public Enum ePath
     Skins
     Sounds
     Musica
+    MusicaMp3
     Mapas
     Lenguajes
     Extras
@@ -112,6 +113,9 @@ Public Function path(ByVal PathType As ePath) As String
             
         Case ePath.Musica
             path = App.path & "\AUDIO\MIDI\"
+
+        Case ePath.MusicaMp3
+            path = App.path & "\AUDIO\MP3\"
             
         Case ePath.Sounds
             path = App.path & "\AUDIO\WAV\"
