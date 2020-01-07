@@ -1287,7 +1287,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
         
         '****** Update screen ******
         If UserCiego Then
-            DirectDevice.Clear 0, ByVal 0, D3DCLEAR_TARGET, 0, 1#, 0
+            Call DirectDevice.Clear(0, ByVal 0, D3DCLEAR_TARGET, 0, 1#, 0)
         Else
             Call RenderScreen(UserPos.X - AddtoUserPos.X, UserPos.Y - AddtoUserPos.Y, OffsetCounterX, OffsetCounterY)
 
@@ -1306,52 +1306,8 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
         
         Call Engine_EndScene(MainScreenRect, 0)
         
-        '//Banco
-        If frmBancoObj.Visible Then
-            If frmBancoObj.PicBancoInv.Visible Then Call InvBanco(0).DrawInv
-            If frmBancoObj.PicInv.Visible Then Call InvBanco(1).DrawInv
-        End If
-    
-        '//Comercio
-        If frmComerciar.Visible Then
-            If frmComerciar.picInvNpc.Visible Then Call InvComNpc.DrawInv
-            If frmComerciar.picInvUser.Visible Then Call InvComUsu.DrawInv
-        End If
-    
-        '//Comercio entre usuarios
-        If frmComerciarUsu.Visible Then
-            If frmComerciarUsu.picInvComercio.Visible Then InvComUsu.DrawInv (1)
-            If frmComerciarUsu.picInvOfertaProp.Visible Then InvOfferComUsu(0).DrawInv (1)
-            If frmComerciarUsu.picInvOfertaOtro Then InvOfferComUsu(1).DrawInv (1)
-            If frmComerciarUsu.picInvOroProp.Visible Then InvOroComUsu(0).DrawInv (1)
-            If frmComerciarUsu.picInvOroOfertaProp.Visible Then InvOroComUsu(1).DrawInv (1)
-            If frmComerciarUsu.picInvOroOfertaOtro.Visible Then InvOroComUsu(2).DrawInv (1)
-        End If
-    
-        '//Herrero
-        If frmHerrero.Visible Then
-            If frmHerrero.picLingotes0.Visible Or frmHerrero.picMejorar0.Visible Then InvLingosHerreria(1).DrawInv (1)
-            If frmHerrero.picLingotes1.Visible Or frmHerrero.picMejorar1.Visible Then InvLingosHerreria(2).DrawInv (1)
-            If frmHerrero.picLingotes2.Visible Or frmHerrero.picMejorar2.Visible Then InvLingosHerreria(3).DrawInv (1)
-            If frmHerrero.picLingotes3.Visible Or frmHerrero.picMejorar3.Visible Then InvLingosHerreria(4).DrawInv (1)
-        End If
-    
-        '//Carpintero
-        If frmCarpinteria.Visible Then
-            If frmCarpinteria.picMaderas0.Visible Or frmCarpinteria.imgMejorar0.Visible Then InvMaderasCarpinteria(1).DrawInv (1)
-            If frmCarpinteria.picMaderas1.Visible Or frmCarpinteria.imgMejorar1.Visible Then InvMaderasCarpinteria(2).DrawInv (1)
-            If frmCarpinteria.picMaderas2.Visible Or frmCarpinteria.imgMejorar2.Visible Then InvMaderasCarpinteria(3).DrawInv (1)
-            If frmCarpinteria.picMaderas3.Visible Or frmCarpinteria.imgMejorar3.Visible Then InvMaderasCarpinteria(4).DrawInv (1)
-        End If
-    
-        '//Inventario
-        If frmMain.Visible Then
-            If frmMain.PicInv.Visible Then
-                Call Inventario.DrawInv
-            End If
-        End If
+        Call Inventario.DrawDragAndDrop
         
-
     End If
   
 End Sub
@@ -1368,7 +1324,7 @@ Private Function GetElapsedTime() As Single
 
     'Get the timer frequency
     If timer_freq = 0 Then
-        QueryPerformanceFrequency timer_freq
+        Call QueryPerformanceFrequency(timer_freq)
     End If
     
     'Get current time
@@ -1379,6 +1335,7 @@ Private Function GetElapsedTime() As Single
     
     'Get next end time
     Call QueryPerformanceCounter(end_time)
+    
 End Function
 
 Private Sub CharRender(ByVal CharIndex As Long, _
