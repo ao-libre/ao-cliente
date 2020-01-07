@@ -320,8 +320,9 @@ Public Sub ToggleShowValue(ByVal bShow As Boolean)
     ShowValue = bShow
     
     Dim slot As Integer
+    
     ' Update Inventory
-        Call DrawInventory
+    Call DrawInventory
 End Sub
 
 Public Sub ClearAllSlots()
@@ -415,6 +416,8 @@ Public Sub DrawInventory()
     Dim DestRect          As RECT
     Dim Inv_Color(3)      As Long
     Dim Sel_Color(3)      As Long
+    
+    DoEvents
     
     With DestRect
         .Bottom = InventoryWindow.Height
@@ -555,13 +558,24 @@ Private Sub InventoryWindow_MouseDown(Button As Integer, Shift As Integer, X As 
 
 End Sub
 
-Public Sub DrawInv(Optional ByVal r As Boolean = False)
+Public Sub DrawInv()
 
-    If (GetTickCount - InventoryTickCount > 300) Or ((DragItem <> 0 And Drag = 1) And (GetTickCount - InventoryTickCount > 40)) Then
-        Call DrawInventory
-        InventoryTickCount = GetTickCount
+    Call DrawInventory
+    DoEvents
+    
+    Call DrawInventory
+    DoEvents
+    
+End Sub
+
+Public Sub DrawDragAndDrop()
+    
+    If ((DragItem <> 0 And Drag = 1) And (timeGetTime - InventoryTickCount > 40)) Then
+
+        Call Inventario.DrawInventory
+        
     End If
-
+    
 End Sub
 
 Public Sub Initialize(ByRef DirectD3D As D3DX8, ByRef InvPic As PictureBox, ByVal MaxObjs As Byte, Optional ByVal FontSize As Integer = 7, Optional ByVal TileWidth As Integer = 32, Optional ByVal TileHeight As Integer = 32, Optional ByVal startX As Integer = 0, Optional ByVal startY As Integer = 0, Optional ByVal bImgContainer As Boolean = True, Optional ByVal bShowText As Boolean = True, Optional thisInventory As Boolean = False)
