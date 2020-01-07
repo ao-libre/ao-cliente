@@ -636,6 +636,7 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 07/01/2020: Agregado codigo base para poder hacer uso tanto de mp3s como midis (Recox)
 * 07/01/2020: Agregados mp3s  de fans que encontre por internet con musica original (Recox)
 * 07/01/2020: El chat de npcs tambien se muestra en consola de forma prolija (Recox)
-
+* 07/01/2020: Arreglado - Si pasas de hechizos a inventario a veces se queda negro un momento.
+              También pasa si hacés clic en inventario varias veces. (WyroX)
 
 
