@@ -2800,3 +2800,29 @@ Private Sub trainingMacro_Timer()
     Call WriteWorkLeftClick(TX, TY, UsingSkill)
     UsingSkill = 0
 End Sub
+
+Public Sub UpdateProgressExperienceLevelBar(ByVal UserExp As Long)
+    If UsrLvl = STAT_MAXELV Then
+        frmMain.lblPorcLvl.Caption = "[N/A]"
+
+        'Si no tiene mas niveles que subir ponemos la barra al maximo.
+        frmMain.uAOProgressExperienceLevel.max = 100
+        frmMain.uAOProgressExperienceLevel.Value = 100
+    Else
+        frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
+        frmMain.uAOProgressExperienceLevel.max = UserPasarNivel
+        frmMain.uAOProgressExperienceLevel.Value = UserExp
+    End If
+End Sub
+
+Private Sub SetGoldColor()
+
+    If UserGLD >= CLng(UserLvl) * 10000 And UserLvl > 12 Then 'Si el nivel es mayor de 12, es decir, no es newbie.
+        'Changes color
+        frmMain.GldLbl.ForeColor = USER_GOLD_COLOR
+    Else
+        'Changes color
+        frmMain.GldLbl.ForeColor = NEWBIE_USER_GOLD_COLOR
+    End If
+
+End Sub
