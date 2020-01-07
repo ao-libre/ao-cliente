@@ -171,6 +171,7 @@ Private Enum ServerPacketID
     CreateDamage
     UserInEvent
     renderMsg
+    DeletedChar
 End Enum
 
 Private Enum ClientPacketID
@@ -323,6 +324,7 @@ Private Enum ClientPacketID
     FightAccept = 147
     CloseGuild = 148            '/CERRARCLAN
     Discord = 149            '/DISCORD
+    DeleteChar = 150
 End Enum
 
 Public Enum FontTypeNames
@@ -912,6 +914,10 @@ On Error Resume Next
             
         Case ServerPacketID.renderMsg
             Call HandleRenderMsg
+
+        Case ServerPacketID.DeletedChar             ' BORRA USUARIO
+            Call HandleDeletedChar
+
         Case Else
             'ERROR : Abort!
             Exit Sub
@@ -1437,7 +1443,23 @@ Public Sub HandleMultiMessage()
 End Sub
 
 ''
-' Handles the Logged message.
+' Handles the DeletedChar message.
+
+Private Sub HandleDeletedChar()
+'***************************************************
+'Author: Lucas Recoaro (Recox)
+'Last Modification: 05/17/06
+'
+'***************************************************
+    'Remove packet ID
+    Call incomingData.ReadByte
+
+    MsgBox("El personaje se ha borrado correctamente. Por favor vuelve a iniciar sesion para ver el cambio")
+
+    'Close connection
+    Call CloseConnectionAndResetAllInfo
+End Sub
+
 
 Private Sub HandleLogged()
 '***************************************************
@@ -1538,6 +1560,11 @@ Private Sub HandleDisconnect()
     'Remove packet ID
     Call incomingData.ReadByte
     
+    'Close connection
+    Call CloseConnectionAndResetAllInfo
+End Sub
+
+Private Sub CloseConnectionAndResetAllInfo()
     'Close connection
     If frmMain.Client.State <> sckClosed Then frmMain.Client.CloseSck
 
@@ -5636,6 +5663,25 @@ Public Sub WriteLoginExistingAccount()
         Call .WriteByte(App.Revision)
     End With
 End Sub
+
+''
+' Writes the "DeleteChar" message to the outgoing data buffer.
+'
+' @remarks  The data is not actually sent until the buffer is properly flushed.
+
+Public Sub WriteDeleteChar()
+'***************************************************
+'Author: Lucas Recoaro (Recox)
+'Last Modification: 07/01/2020
+'Writes the "DeleteChar" message to the outgoing data buffer
+'***************************************************
+    With outgoingData
+        Call .WriteByte(ClientPacketID.DeleteChar)
+        
+        Call .WriteASCIIString(UserName)
+    End With
+End Sub
+
 ''
 ' Writes the "LoginExistingChar" message to the outgoing data buffer.
 '
@@ -5660,6 +5706,7 @@ Public Sub WriteLoginExistingChar()
         Call .WriteByte(App.Revision)
     End With
 End Sub
+
 Public Sub WriteLoginNewAccount()
 '***************************************************
 'Author: Juan Andres Dalmasso (CHOTS)

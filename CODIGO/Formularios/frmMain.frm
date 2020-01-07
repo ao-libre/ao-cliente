@@ -2280,6 +2280,9 @@ Private Sub cmdInventario_Click()
     cmdMoverHechi(0).Visible = False
     cmdMoverHechi(1).Visible = False
     
+    DoEvents
+    Call Inventario.DrawInventory
+    
 End Sub
 
 Private Sub CmdHechizos_Click()

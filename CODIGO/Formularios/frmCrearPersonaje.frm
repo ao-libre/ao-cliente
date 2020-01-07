@@ -131,8 +131,8 @@ Begin VB.Form frmCrearPersonaje
       BackColor       =   &H80000012&
       BorderStyle     =   0  'None
       BeginProperty Font 
-         Name            =   "MS Sans Serif"
-         Size            =   16.5
+         Name            =   "Tahoma"
+         Size            =   17.25
          Charset         =   0
          Weight          =   700
          Underline       =   0   'False
