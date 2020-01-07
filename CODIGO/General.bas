@@ -242,9 +242,10 @@ Function LegalCharacter(ByVal KeyAscii As Integer) As Boolean
 End Function
 
 Sub SetConnected()
-'*****************************************************************
-'Sets the client to "Connect" mode
-'*****************************************************************
+    '*****************************************************************
+    'Sets the client to "Connect" mode
+    '*****************************************************************
+    
     'Set Connected
     Connected = True
 
@@ -255,16 +256,20 @@ Sub SetConnected()
     
     'Vaciamos la cola de movimiento
     keysMovementPressedQueue.Clear
-
-    frmMain.lblName.Caption = UserName
     
-    'Load main form
-    frmMain.Visible = True
+    With frmMain
     
-    Call frmMain.ControlSM(eSMType.sResucitation, False)
-    Call frmMain.ControlSM(eSMType.mWork, False)
-    Call frmMain.ControlSM(eSMType.mSpells, False)
-    Call frmMain.ControlSM(eSMType.sSafemode, False)
+        .lblName.Caption = UserName
+    
+        'Load main form
+        .Visible = True
+    
+        Call .ControlSM(eSMType.sResucitation, True)
+        Call .ControlSM(eSMType.sSafemode, True)
+        Call .ControlSM(eSMType.mWork, False)
+        Call .ControlSM(eSMType.mSpells, False)
+    
+    End With
     
     FPSFLAG = True
 
