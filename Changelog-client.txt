@@ -639,4 +639,5 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 07/01/2020: Se agregaron sonidos para cuando el sacerdote revive y cura (Recox)
 * 07/01/2020: Arreglado - Si pasas de hechizos a inventario a veces se queda negro un momento.
               También pasa si hacés clic en inventario varias veces. (WyroX)
+* 07/01/2020: Se agrego boton en frmPanelAccount para poder borrar personajes (Recox)
 
