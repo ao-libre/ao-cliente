@@ -13,10 +13,37 @@ Begin VB.Form frmPanelAccount
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmPanelAccount.frx":0000
    ScaleHeight     =   770.878
    ScaleMode       =   0  'User
    ScaleWidth      =   808.081
    StartUpPosition =   2  'CenterScreen
+   Begin AOLibre.uAOButton uAOBorrarPersonaje 
+      Height          =   615
+      Left            =   840
+      TabIndex        =   27
+      Top             =   6360
+      Width           =   1695
+      _ExtentX        =   2990
+      _ExtentY        =   1085
+      TX              =   "Borrar Personaje"
+      ENAB            =   -1  'True
+      FCOL            =   255
+      OCOL            =   16777215
+      PICE            =   "frmPanelAccount.frx":678C1
+      PICF            =   "frmPanelAccount.frx":678DD
+      PICH            =   "frmPanelAccount.frx":678F9
+      PICV            =   "frmPanelAccount.frx":67915
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
    Begin VB.PictureBox picChar 
       Appearance      =   0  'Flat
       BackColor       =   &H00000000&
@@ -157,6 +184,84 @@ Begin VB.Form frmPanelAccount
       Top             =   1695
       Width           =   1140
    End
+   Begin AOLibre.uAOButton uAOConectar 
+      Height          =   615
+      Left            =   9120
+      TabIndex        =   28
+      Top             =   7920
+      Width           =   1695
+      _ExtentX        =   2990
+      _ExtentY        =   1085
+      TX              =   "Conectar"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmPanelAccount.frx":67931
+      PICF            =   "frmPanelAccount.frx":6794D
+      PICH            =   "frmPanelAccount.frx":67969
+      PICV            =   "frmPanelAccount.frx":67985
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton uAOCrearPersonaje 
+      Height          =   615
+      Left            =   5040
+      TabIndex        =   29
+      Top             =   7920
+      Width           =   1695
+      _ExtentX        =   2990
+      _ExtentY        =   1085
+      TX              =   "Crear Personaje"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmPanelAccount.frx":679A1
+      PICF            =   "frmPanelAccount.frx":679BD
+      PICH            =   "frmPanelAccount.frx":679D9
+      PICV            =   "frmPanelAccount.frx":679F5
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton uAOSalir 
+      Height          =   615
+      Left            =   960
+      TabIndex        =   30
+      Top             =   7920
+      Width           =   1695
+      _ExtentX        =   2990
+      _ExtentY        =   1085
+      TX              =   "Salir"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmPanelAccount.frx":67A11
+      PICF            =   "frmPanelAccount.frx":67A2D
+      PICH            =   "frmPanelAccount.frx":67A49
+      PICV            =   "frmPanelAccount.frx":67A65
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
    Begin VB.Label lblAccData 
       Alignment       =   2  'Center
       BackColor       =   &H00000000&
@@ -178,24 +283,6 @@ Begin VB.Form frmPanelAccount
       TabIndex        =   11
       Top             =   3094
       Width           =   1245
-   End
-   Begin VB.Image imgConectar 
-      Height          =   375
-      Left            =   9120
-      Top             =   8040
-      Width           =   1335
-   End
-   Begin VB.Image imgCrearPersonaje 
-      Height          =   375
-      Left            =   5280
-      Top             =   8040
-      Width           =   1335
-   End
-   Begin VB.Image imgSalir 
-      Height          =   375
-      Left            =   1200
-      Top             =   8040
-      Width           =   1335
    End
    Begin VB.Label lblCharData 
       AutoSize        =   -1  'True
@@ -540,7 +627,10 @@ Private Sub Form_Load()
 
     Unload frmConnect
 
-    Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaCuenta.jpg")
+   ' Call LoadTextsForm
+    Call LoadAOCustomControlsPictures(Me)
+
+    Me.Picture = LoadPicture(Game.path(Interfaces) & "frmPanelAccount.jpg")
 
     Dim i As Long
 
@@ -558,28 +648,41 @@ Private Sub Form_Load()
 
 End Sub
 
-Private Sub Image5_Click()
-
-    If LenB(lblAccData(Seleccionado + 1).Caption) <> 0 Then
-        UserName = lblAccData(Seleccionado + 1).Caption
-        Call WriteLoginExistingChar
-    End If
-
-End Sub
-
 Private Sub lblName_Click(Index As Integer)
     Seleccionado = Index
 End Sub
 
-Private Sub imgConectar_Click()
+Private Sub uAOBorrarPersonaje_Click()
+    If LenB(lblAccData(Seleccionado).Caption) = 0 Then
+        MsgBox JsonLanguage.item("ERROR_PERSONAJE_NO_SELECCIONADO").item("TEXTO")
+        Exit Sub
+    End If
+
+   If MsgBox("Estas seguro que quieres borrar el personaje de tu cuenta? Esta accion no puede revertise", vbYesNo, "BORRAR PERSONAJE") = vbYes Then
+    
+      If Not frmMain.Client.State = sckConnected Then
+         MsgBox JsonLanguage.item("ERROR_CONN_LOST").item("TEXTO")
+         AccountName = vbNullString
+         AccountHash = vbNullString
+         NumberOfCharacters = 0
+         Unload Me
+      Else
+         UserName = lblAccData(Seleccionado).Caption
+         Call WriteDeleteChar
+      End If
+
+   End If
+End Sub
+
+Private Sub uAOConectar_Click()
 
     If LenB(lblAccData(Seleccionado).Caption) = 0 Then
-        MsgBox JsonLanguage.Item("ERROR_PERSONAJE_NO_SELECCIONADO").Item("TEXTO")
+        MsgBox JsonLanguage.item("ERROR_PERSONAJE_NO_SELECCIONADO").item("TEXTO")
         Exit Sub
     End If
 
     If Not frmMain.Client.State = sckConnected Then
-        MsgBox JsonLanguage.Item("ERROR_CONN_LOST").Item("TEXTO")
+        MsgBox JsonLanguage.item("ERROR_CONN_LOST").item("TEXTO")
         AccountName = vbNullString
         AccountHash = vbNullString
         NumberOfCharacters = 0
@@ -591,10 +694,10 @@ Private Sub imgConectar_Click()
 
 End Sub
 
-Private Sub imgCrearPersonaje_Click()
+Private Sub uAOCrearPersonaje_Click()
 
     If NumberOfCharacters > 9 Then
-        MsgBox JsonLanguage.Item("ERROR_DEMASIADOS_PJS").Item("TEXTO")
+        MsgBox JsonLanguage.item("ERROR_DEMASIADOS_PJS").item("TEXTO")
         Exit Sub
     End If
     
@@ -609,7 +712,7 @@ Private Sub imgCrearPersonaje_Click()
 
 End Sub
 
-Private Sub imgSalir_Click()
+Private Sub uAOSalir_Click()
     frmMain.Client.CloseSck
     Unload Me
     frmConnect.Show
@@ -624,12 +727,12 @@ Private Sub picChar_Click(Index As Integer)
     With cPJ(Seleccionado)
 
         If LenB(.Nombre) <> 0 Then
-            lblCharData(0) = JsonLanguage.Item("NOMBRE").Item("TEXTO") & ": " & .Nombre
-            lblCharData(1) = JsonLanguage.Item("CLASE").Item("TEXTO") & ": " & ListaClases(.Class)
-            lblCharData(2) = JsonLanguage.Item("RAZA").Item("TEXTO") & ": " & ListaRazas(.Race)
-            lblCharData(3) = JsonLanguage.Item("NIVEL").Item("TEXTO") & ": " & .Level
-            lblCharData(4) = JsonLanguage.Item("ORO").Item("TEXTO") & ": " & .Gold
-            lblCharData(5) = JsonLanguage.Item("MAPA").Item("TEXTO") & ": " & .Map
+            lblCharData(0) = JsonLanguage.item("NOMBRE").item("TEXTO") & ": " & .Nombre
+            lblCharData(1) = JsonLanguage.item("CLASE").item("TEXTO") & ": " & ListaClases(.Class)
+            lblCharData(2) = JsonLanguage.item("RAZA").item("TEXTO") & ": " & ListaRazas(.Race)
+            lblCharData(3) = JsonLanguage.item("NIVEL").item("TEXTO") & ": " & .Level
+            lblCharData(4) = JsonLanguage.item("ORO").item("TEXTO") & ": " & .Gold
+            lblCharData(5) = JsonLanguage.item("MAPA").item("TEXTO") & ": " & .Map
         Else
             lblCharData(0) = vbNullString
             lblCharData(1) = vbNullString
@@ -655,4 +758,3 @@ Private Sub picChar_DblClick(Index As Integer)
     End If
 
 End Sub
-
