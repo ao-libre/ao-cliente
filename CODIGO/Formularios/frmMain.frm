@@ -1057,6 +1057,12 @@ Public Sub dragInventory_dragDone(ByVal originalSlot As Integer, ByVal newSlot A
     Call Protocol.WriteMoveItem(originalSlot, newSlot, eMoveType.Inventory)
 End Sub
 
+Private Sub Form_Activate()
+    
+    Call Inventario.DrawInv
+    
+End Sub
+
 Private Sub Form_Load()
     SkinSeleccionado = GetVar(Game.path(INIT) & "Config.ini", "Parameters", "SkinSelected")
     
@@ -2341,6 +2347,9 @@ End Sub
 
 Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
     Call Audio.PlayWave(SND_CLICK)
+    
+    Call Inventario.DrawInventory
+    
 End Sub
 
 Private Sub RecTxt_Change()
@@ -2350,16 +2359,26 @@ Private Sub RecTxt_Change()
     
     If SendTxt.Visible Then
         SendTxt.SetFocus
+    
     ElseIf Me.SendCMSTXT.Visible Then
         SendCMSTXT.SetFocus
-    ElseIf (Not Comerciando) And (Not MirandoAsignarSkills) And (Not frmMSG.Visible) And (Not MirandoForo) And (Not frmEstadisticas.Visible) And (Not frmCantidad.Visible) And (Not MirandoParty) Then
+    
+    ElseIf (Not Comerciando) And _
+           (Not MirandoAsignarSkills) And _
+           (Not frmMSG.Visible) And _
+           (Not MirandoForo) And _
+           (Not frmEstadisticas.Visible) And _
+           (Not frmCantidad.Visible) _
+           And (Not MirandoParty) Then
          
         If PicInv.Visible Then
             PicInv.SetFocus
         ElseIf hlst.Visible Then
             hlst.SetFocus
         End If
+        
     End If
+    
 End Sub
 
 Private Sub RecTxt_KeyDown(KeyCode As Integer, Shift As Integer)
@@ -2380,7 +2399,9 @@ Private Sub SendTxt_Change()
     '**************************************************************
     If Len(SendTxt.Text) > 160 Then
         stxtbuffer = JsonLanguage.item("MENSAJE_SOY_CHEATER").item("TEXTO")
+    
     Else
+        
         'Make sure only valid chars are inserted (with Shift + Insert they can paste illegal chars)
         Dim i         As Long
         Dim tempstr   As String
@@ -2401,7 +2422,9 @@ Private Sub SendTxt_Change()
         End If
         
         stxtbuffer = SendTxt.Text
+        
     End If
+    
 End Sub
 
 Private Sub SendTxt_KeyPress(KeyAscii As Integer)
@@ -2434,7 +2457,9 @@ Private Sub SendCMSTXT_KeyUp(KeyCode As Integer, Shift As Integer)
         Else
             hlst.SetFocus
         End If
+        
     End If
+    
 End Sub
 
 Private Sub SendCMSTXT_KeyPress(KeyAscii As Integer)
