@@ -318,6 +318,22 @@ Private Sub Form_Load()
     Call LoadAOCustomControlsPictures(Me)
 End Sub
 
+Private Sub Form_Activate()
+On Error Resume Next
+
+    Call InvComUsu.DrawInv
+    Call InvComNpc.DrawInv
+    
+End Sub
+
+Private Sub Form_GotFocus()
+On Error Resume Next
+
+    Call InvComUsu.DrawInv
+    Call InvComNpc.DrawInv
+    
+End Sub
+
 Private Sub LoadButtons()
     Dim GrhPath As String
     GrhPath = Game.path(Interfaces)
@@ -372,7 +388,10 @@ Private Function CalculateBuyPrice(ByRef objValue As Single, ByVal objAmount As 
 'Last modify by: Franco Zeoli (Noich)
 '*************************************************
     On Error GoTo Error
-    'We get a Single value from the server, when vb uses it, by approaching, it can diff with the server value, so we do (Value * 100000) and get the entire part, to discard the unwanted floating values.
+    
+    'We get a Single value from the server, when vb uses it, by approaching, _
+     it can diff with the server value, so we do (Value * 100000) and get the entire part, _
+     to discard the unwanted floating values.
     CalculateBuyPrice = Fix(CCur(objValue * 1000000) / 1000000 * objAmount)
     
     Exit Function
@@ -381,6 +400,7 @@ Error:
 End Function
 
 Private Sub imgComprar_Click()
+    
     ' Debe tener seleccionado un item para comprarlo.
     If InvComNpc.SelectedItem = 0 Then Exit Sub
     
@@ -389,12 +409,18 @@ Private Sub imgComprar_Click()
     Call Audio.PlayWave(SND_CLICK)
     
     LasActionBuy = True
+    
     If UserGLD >= CalculateSellPrice(NPCInventory(InvComNpc.SelectedItem).Valor, Val(cantidad.Text)) Then
         Call WriteCommerceBuy(InvComNpc.SelectedItem, Val(cantidad.Text))
     Else
         Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_SIN_ORO_SUFICIENTE").Item("TEXTO"), 2, 51, 223, 1, 1)
         Exit Sub
     End If
+    
+    DoEvents
+    
+    Call InvComUsu.DrawInv
+    Call InvComNpc.DrawInv
     
 End Sub
 
@@ -413,6 +439,12 @@ Private Sub imgVender_Click()
     LasActionBuy = False
 
     Call WriteCommerceSell(InvComUsu.SelectedItem, Val(cantidad.Text))
+    
+    DoEvents
+    
+    Call InvComUsu.DrawInv
+    Call InvComNpc.DrawInv
+    
 End Sub
 
 Private Sub picInvNpc_Click()
