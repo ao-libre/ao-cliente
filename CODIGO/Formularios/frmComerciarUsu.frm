@@ -670,6 +670,42 @@ Private Sub Form_LostFocus()
     Me.SetFocus
 End Sub
 
+Private Sub Form_Activate()
+On Error Resume Next
+
+    InvComUsu.DrawInv
+    InvOfferComUsu(0).DrawInv
+    InvOfferComUsu(1).DrawInv
+    InvOroComUsu(0).DrawInv
+    InvOroComUsu(1).DrawInv
+    InvOroComUsu(2).DrawInv
+    
+End Sub
+
+Private Sub Form_GotFocus()
+On Error Resume Next
+
+    InvComUsu.DrawInv
+    InvOfferComUsu(0).DrawInv
+    InvOfferComUsu(1).DrawInv
+    InvOroComUsu(0).DrawInv
+    InvOroComUsu(1).DrawInv
+    InvOroComUsu(2).DrawInv
+    
+End Sub
+
+Private Sub Form_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+On Error Resume Next
+
+    InvComUsu.DrawInv
+    InvOfferComUsu(0).DrawInv
+    InvOfferComUsu(1).DrawInv
+    InvOroComUsu(0).DrawInv
+    InvOroComUsu(1).DrawInv
+    InvOroComUsu(2).DrawInv
+    
+End Sub
+
 Private Sub SubtxtAgregar_Change()
     If Val(txtAgregar.Text) < 1 Then txtAgregar.Text = "1"
 
