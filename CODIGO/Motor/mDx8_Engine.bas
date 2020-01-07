@@ -1,8 +1,6 @@
 Attribute VB_Name = "mDx8_Engine"
 Option Explicit
 
-Public Declare Function timeGetTime Lib "winmm.dll" () As Long
-
 ' No matter what you do with DirectX8, you will need to start with
 ' the DirectX8 object. You will need to create a new instance of
 ' the object, using the New keyword, rather than just getting a
