@@ -890,6 +890,8 @@ Private Sub LoadInitialConfig()
     Audio.MusicActivated = ClientSetup.bMusic
     Audio.SoundActivated = ClientSetup.bSound
     Audio.SoundEffectsActivated = ClientSetup.bSoundEffects
+    Audio.MusicVolume = ClientSetup.MusicVolume
+    Audio.SoundVolume = ClientSetup.SoundVolume
 
     'Iniciamos cancion principal del juego turururuuuuuu
     Call Audio.PlayBackgroundMusic("6", MusicTypes.Mp3)
@@ -1222,6 +1224,11 @@ Public Sub CloseClient()
     
     EngineRun = False
     
+    'WyroX:
+    'Guardamos antes de cerrar porque algunas configuraciones
+    'no se guardan desde el menu opciones (Por ej: M=Musica)
+    Call Game.GuardarConfiguracion
+
     'Cerramos Sockets/Winsocks/WindowsAPI
     frmMain.Client.CloseSck
     
