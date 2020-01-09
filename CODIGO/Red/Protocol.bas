@@ -354,9 +354,6 @@ End Enum
 
 Public FontTypes(21) As tFont
 
-Private Const NEWBIE_USER_GOLD_COLOR As Long = vbCyan
-Private Const USER_GOLD_COLOR As Long = vbYellow
-
 Public Sub Connect(ByVal Modo As E_MODO)
     '*********************************************************************
     'Author: Jopi
@@ -10984,6 +10981,9 @@ Private Sub HandleAccountLogged()
     AccountHash = Buffer.ReadASCIIString
     NumberOfCharacters = Buffer.ReadByte
 
+    ' Aca sobreescribimos el valor del nivel maximo ya que puede variar por servidor
+    STAT_MAXELV = Buffer.ReadByte
+
     frmPanelAccount.Show
 
     If NumberOfCharacters > 0 Then
@@ -11015,9 +11015,6 @@ Private Sub HandleAccountLogged()
 
                 .GameMaster = Buffer.ReadBoolean
             End With
-
-            ' Aca sobreescribimos el valor del nivel maximo ya que puede variar por servidor
-            STAT_MAXELV = Buffer.ReadByte
             
             Call mDx8_Engine.DrawPJ(LoopC)
             

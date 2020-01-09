@@ -993,4 +993,4 @@ Public Const uAOButton_cCheckboxSmall As String = "cCheckboxSmall.bmp" ' Chico
 Public JsonTips As Object
 
 'Nivel Maximo
-Public STAT_MAXELV As Byte = 55
+Public STAT_MAXELV As Byte
