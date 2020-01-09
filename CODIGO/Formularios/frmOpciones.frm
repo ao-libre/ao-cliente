@@ -613,24 +613,16 @@ Private Sub LoadUserConfig()
     ' Load music config
     bMusicActivated = Audio.MusicActivated
     Slider1(0).Enabled = bMusicActivated
+    Slider1(0).Value = Audio.MusicVolume
     
-    If bMusicActivated Then
-        imgChkMusica.Picture = picCheckBox
-        
-        Slider1(0).Value = Audio.MusicVolume
-    End If
-    
+    If bMusicActivated Then imgChkMusica.Picture = picCheckBox
     
     ' Load Sound config
     bSoundActivated = Audio.SoundActivated
     Slider1(1).Enabled = bSoundActivated
+    Slider1(1).Value = Audio.SoundVolume
     
-    If bSoundActivated Then
-        imgChkSonidos.Picture = picCheckBox
-        
-        Slider1(1).Value = Audio.SoundVolume
-    End If
-    
+    If bSoundActivated Then imgChkSonidos.Picture = picCheckBox
     
     ' Load Sound Effects config
     bSoundEffectsActivated = Audio.SoundEffectsActivated
