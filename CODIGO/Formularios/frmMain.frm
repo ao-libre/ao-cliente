@@ -197,13 +197,13 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H00E0E0E0&
       Height          =   360
-      Left            =   240
+      Left            =   165
       MaxLength       =   160
       MultiLine       =   -1  'True
       TabIndex        =   2
       TabStop         =   0   'False
       ToolTipText     =   "Chat"
-      Top             =   1815
+      Top             =   2250
       Visible         =   0   'False
       Width           =   11415
    End
@@ -259,6 +259,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2619
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -573,10 +574,10 @@ Begin VB.Form frmMain
       Caption         =   "Nombre del mapa"
       ForeColor       =   &H80000014&
       Height          =   255
-      Left            =   6000
+      Left            =   9000
       TabIndex        =   39
       Top             =   1875
-      Width           =   2295
+      Width           =   2535
    End
    Begin VB.Image imgAsignarSkill 
       Height          =   450
