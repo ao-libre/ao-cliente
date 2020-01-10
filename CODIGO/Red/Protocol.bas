@@ -354,21 +354,6 @@ End Enum
 
 Public FontTypes(21) As tFont
 
-Private Const NEWBIE_USER_GOLD_COLOR As Long = vbCyan
-Private Const USER_GOLD_COLOR As Long = vbYellow
-
-Private Sub SetGoldColorInFrmMain()
-
-    If UserGLD >= CLng(UserLvl) * 10000 And UserLvl > 12 Then 'Si el nivel es mayor de 12, es decir, no es newbie.
-        'Changes color
-        frmMain.GldLbl.ForeColor = USER_GOLD_COLOR
-    Else
-        'Changes color
-        frmMain.GldLbl.ForeColor = NEWBIE_USER_GOLD_COLOR
-    End If
-
-End Sub
-
 Public Sub Connect(ByVal Modo As E_MODO)
     '*********************************************************************
     'Author: Jopi
@@ -1946,7 +1931,7 @@ Private Sub HandleUpdateGold()
     'Get data and update form
     UserGLD = incomingData.ReadLong()
     
-    Call SetGoldColorInFrmMain
+    Call frmMain.SetGoldColor
 
     frmMain.GldLbl.Caption = UserGLD
 End Sub
@@ -1993,10 +1978,8 @@ Private Sub HandleUpdateExp()
     
     'Get data and update form
     UserExp = incomingData.ReadLong()
-    frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
 
-    frmMain.uAOProgressExperienceLevel.max = UserPasarNivel
-    frmMain.uAOProgressExperienceLevel.Value = UserExp
+    frmMain.UpdateProgressExperienceLevelBar(UserExp)
 End Sub
 
 ''
@@ -3195,17 +3178,7 @@ Private Sub HandleUpdateUserStats()
     UserPasarNivel = incomingData.ReadLong()
     UserExp = incomingData.ReadLong()
     
-    If UserPasarNivel > 0 Then
-        frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
-        frmMain.uAOProgressExperienceLevel.max = UserPasarNivel
-        frmMain.uAOProgressExperienceLevel.Value = UserExp
-    Else
-        frmMain.lblPorcLvl.Caption = "[N/A]"
-
-        'Si no tiene mas niveles que subir ponemos la barra al maximo.
-        frmMain.uAOProgressExperienceLevel.max = 100
-        frmMain.uAOProgressExperienceLevel.Value = 100
-    End If
+    frmMain.UpdateProgressExperienceLevelBar(UserExp)
     
     frmMain.GldLbl.Caption = UserGLD
     frmMain.lblLvl.Caption = UserLvl
@@ -3250,8 +3223,7 @@ Private Sub HandleUpdateUserStats()
         UserEstado = 0
     End If
 
-    Call SetGoldColorInFrmMain
-    
+    Call frmMain.SetGoldColor
 End Sub
 
 ''
@@ -11008,6 +10980,9 @@ Private Sub HandleAccountLogged()
     AccountName = Buffer.ReadASCIIString
     AccountHash = Buffer.ReadASCIIString
     NumberOfCharacters = Buffer.ReadByte
+
+    ' Aca sobreescribimos el valor del nivel maximo ya que puede variar por servidor
+    STAT_MAXELV = Buffer.ReadByte
 
     frmPanelAccount.Show
 
