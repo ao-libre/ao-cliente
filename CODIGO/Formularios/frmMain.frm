@@ -319,10 +319,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":39D2A
-      PICF            =   "frmMain.frx":3A754
-      PICH            =   "frmMain.frx":3B416
-      PICV            =   "frmMain.frx":3C3A8
+      PICE            =   "frmMain.frx":39D2B
+      PICF            =   "frmMain.frx":3A755
+      PICH            =   "frmMain.frx":3B417
+      PICV            =   "frmMain.frx":3C3A9
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -346,10 +346,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":3D2AA
-      PICF            =   "frmMain.frx":3DCD4
-      PICH            =   "frmMain.frx":3E996
-      PICV            =   "frmMain.frx":3F928
+      PICE            =   "frmMain.frx":3D2AB
+      PICF            =   "frmMain.frx":3DCD5
+      PICH            =   "frmMain.frx":3E997
+      PICV            =   "frmMain.frx":3F929
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -373,10 +373,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":4082A
-      PICF            =   "frmMain.frx":41254
-      PICH            =   "frmMain.frx":41F16
-      PICV            =   "frmMain.frx":42EA8
+      PICE            =   "frmMain.frx":4082B
+      PICF            =   "frmMain.frx":41255
+      PICH            =   "frmMain.frx":41F17
+      PICV            =   "frmMain.frx":42EA9
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -400,10 +400,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":43DAA
-      PICF            =   "frmMain.frx":447D4
-      PICH            =   "frmMain.frx":45496
-      PICV            =   "frmMain.frx":46428
+      PICE            =   "frmMain.frx":43DAB
+      PICF            =   "frmMain.frx":447D5
+      PICH            =   "frmMain.frx":45497
+      PICV            =   "frmMain.frx":46429
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -427,10 +427,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":4732A
-      PICF            =   "frmMain.frx":47D54
-      PICH            =   "frmMain.frx":48A16
-      PICV            =   "frmMain.frx":499A8
+      PICE            =   "frmMain.frx":4732B
+      PICF            =   "frmMain.frx":47D55
+      PICH            =   "frmMain.frx":48A17
+      PICV            =   "frmMain.frx":499A9
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -454,10 +454,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":4A8AA
-      PICF            =   "frmMain.frx":4B2D4
-      PICH            =   "frmMain.frx":4BF96
-      PICV            =   "frmMain.frx":4CF28
+      PICE            =   "frmMain.frx":4A8AB
+      PICF            =   "frmMain.frx":4B2D5
+      PICH            =   "frmMain.frx":4BF97
+      PICV            =   "frmMain.frx":4CF29
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -481,10 +481,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":4DE2A
-      PICF            =   "frmMain.frx":4E854
-      PICH            =   "frmMain.frx":4F516
-      PICV            =   "frmMain.frx":504A8
+      PICE            =   "frmMain.frx":4DE2B
+      PICF            =   "frmMain.frx":4E855
+      PICH            =   "frmMain.frx":4F517
+      PICV            =   "frmMain.frx":504A9
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -509,10 +509,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":513AA
-      PICF            =   "frmMain.frx":51DD4
-      PICH            =   "frmMain.frx":52A96
-      PICV            =   "frmMain.frx":53A28
+      PICE            =   "frmMain.frx":513AB
+      PICF            =   "frmMain.frx":51DD5
+      PICH            =   "frmMain.frx":52A97
+      PICV            =   "frmMain.frx":53A29
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   15.75
@@ -537,10 +537,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":5492A
-      PICF            =   "frmMain.frx":55354
-      PICH            =   "frmMain.frx":56016
-      PICV            =   "frmMain.frx":56FA8
+      PICE            =   "frmMain.frx":5492B
+      PICF            =   "frmMain.frx":55355
+      PICH            =   "frmMain.frx":56017
+      PICV            =   "frmMain.frx":56FA9
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   15.75
@@ -610,9 +610,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   0
       Left            =   11430
-      MouseIcon       =   "frmMain.frx":57EAA
+      MouseIcon       =   "frmMain.frx":57EAB
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":57FFC
+      Picture         =   "frmMain.frx":57FFD
       Top             =   3480
       Visible         =   0   'False
       Width           =   225
@@ -621,9 +621,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   1
       Left            =   11430
-      MouseIcon       =   "frmMain.frx":58340
+      MouseIcon       =   "frmMain.frx":58341
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":58492
+      Picture         =   "frmMain.frx":58493
       Top             =   3225
       Visible         =   0   'False
       Width           =   225
@@ -1053,6 +1053,11 @@ Private Declare Function SetWindowLong _
                                         ByVal nIndex As Long, _
                                         ByVal dwNewLong As Long) As Long
 
+Private Declare Sub keybd_event Lib "user32" (ByVal bVk As Byte, _
+                                              ByVal bScan As Byte, _
+                                              ByVal dwFlags As Long, _
+                                              ByVal dwExtraInfo As Long)
+
 Public Sub dragInventory_dragDone(ByVal originalSlot As Integer, ByVal newSlot As Integer)
     Call Protocol.WriteMoveItem(originalSlot, newSlot, eMoveType.Inventory)
 End Sub
@@ -1429,7 +1434,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
         
         Case CustomKeys.BindedKey(eKeyType.mKeyTakeScreenShot)
             Call ScreenCapture
-                
+
         Case CustomKeys.BindedKey(eKeyType.mKeyShowOptions)
             Call frmOpciones.Show(vbModeless, frmMain)
         
@@ -2799,4 +2804,58 @@ Private Sub trainingMacro_Timer()
     
     Call WriteWorkLeftClick(TX, TY, UsingSkill)
     UsingSkill = 0
+End Sub
+
+Public Sub ScreenCapture(Optional ByVal Autofragshooter As Boolean = False)
+    
+    Dim dirFile As String
+    Dim File As String
+    Dim FileName As String
+    
+    dirFile = Game.path(ScreenShots)
+    FileName = Format$(Now, "DD-MM-YYYY hh-mm-ss") & ".bmp"
+    
+    ' Primero chequea si existe la carpeta Screenshots
+    If Not FileExist(dirFile, vbDirectory) Then Call MkDir(dirFile)
+    
+    ' Si es una imagen de Autofragshooter, se fija si existe la carpeta.
+    If Autofragshooter Then
+            
+        dirFile = dirFile & "\FragShooter"
+
+        If Not FileExist(dirFile, vbDirectory) Then Call MkDir(dirFile)
+        
+        'Nuevos directorios del FragShooter:
+        If FragShooterKilledSomeone Then 'Si mato a alguien.
+            dirFile = dirFile & "\Frags"
+        Else 'Si nos mato alguien.
+            dirFile = dirFile & "\Muertes"
+        End If
+        
+        If Not FileExist(dirFile, vbDirectory) Then Call MkDir(dirFile)
+        
+        'Nuevo formato de las screenshots del FragShooter: "VICTIMA/ASESINO(DD-MM-YYYY hh-mm-ss).jpg"
+        File = dirFile & "\" & FragShooterNickname & " -" & FileName
+    Else
+        'Si no es screenshot del FragShooter, entonces se usa el formato "DD-MM-YYYY hh-mm-ss.jpg"
+        File = dirFile & "\" & FileName
+    End If
+    
+    ' Creamos y guardamos la imagen.
+    
+    Call frmMain.SetFocus
+    
+    Call Clipboard.Clear
+    
+    Call keybd_event(&H2C, 1, 0, 0)
+    
+    DoEvents
+
+    If Clipboard.GetFormat(vbCFBitmap) Then
+        Call SavePicture(Clipboard.GetData(vbCFBitmap), File)
+        Call AddtoRichTextBox(frmMain.RecTxt, "Screenshot guardada en la carpeta 'Screenshots'", 255, 150, 50, False, False, True)
+    Else
+        Call MsgBox(" Error ", vbCritical)
+    End If
+    
 End Sub
