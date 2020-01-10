@@ -1,5 +1,5 @@
 [INIT]
-NumArmas=101
+NumArmas=111
 
 [Arma1]
 Dir1=4719 'norte
@@ -126,7 +126,7 @@ Dir1=19825
 Dir4=19826
 Dir2=19827
 
-'CaÃ±a de Pescar
+'Caña de Pescar
 [Arma20]
 Dir3=19746
 Dir1=19747
@@ -147,7 +147,7 @@ Dir1=19799
 Dir4=19800
 Dir2=19801
 
-'Hacha de LeÃ±ador
+'Hacha de Leñador
 [Arma23]
 Dir3=19850
 Dir1=19851
@@ -217,7 +217,7 @@ Dir1=20230
 Dir4=20231
 Dir2=20232
 
-'Antorcha OlÃ­mpica
+'Antorcha Olímpica
 [Arma33]
 Dir3=20483
 Dir1=20484
@@ -245,7 +245,7 @@ Dir1=20533
 Dir4=20534
 Dir2=20535
 
-'Hacha de leÃ±a Ã©fica
+'Hacha de leña éfica
 [Arma37]
 Dir3=21945
 Dir1=21946
@@ -322,7 +322,7 @@ Dir1=22471
 Dir4=22472
 Dir2=22473
 
-'Daga comÃºn(Petizos)
+'Daga común(Petizos)
 [Arma48]
 Dir3=22537
 Dir1=22538
@@ -413,14 +413,14 @@ Dir1=23232
 Dir4=23233
 Dir2=23234
 
-'BastÃ³n nudoso (E/G)
+'Bastón nudoso (E/G)
 [Arma61]
 Dir3=23257
 Dir1=23258
 Dir4=23259
 Dir2=23260
 
-'BÃ¡culo engarzado (E/G)
+'Báculo engarzado (E/G)
 [Arma62]
 Dir3=23283
 Dir1=23284
@@ -469,7 +469,7 @@ Dir1=23440
 Dir4=23441
 Dir2=23442
 
-'Antorchar olÃ­mpica (E/G)
+'Antorchar olímpica (E/G)
 [Arma69]
 Dir3=23465
 Dir1=23466
@@ -518,7 +518,7 @@ Dir1=23622
 Dir4=23623
 Dir2=23624
 
-'CaÃ±a de pescar (E/G)
+'Caña de pescar (E/G)
 [Arma76]
 Dir3=23647
 Dir1=23648
@@ -670,3 +670,57 @@ Dir1=19711 'norte
 Dir2=19713
 Dir3=19710
 Dir4=19712 'sur
+
+[Arma103]
+Dir1=29015 'norte
+Dir2=29016
+Dir3=29017
+Dir4=29018 'sur
+
+[Arma104]
+Dir1=29042 'norte
+Dir2=29043
+Dir3=29044
+Dir4=29045 'sur
+
+[Arma105]	
+Dir3=29095
+Dir1=29096
+Dir4=29097
+Dir2=29098
+
+[Arma106]
+Dir1=29246
+Dir2=29248
+Dir3=29245
+Dir4=29247
+
+[Arma107]
+Dir1=29273
+Dir2=29275
+Dir3=29272
+Dir4=29274
+
+[Arma108]
+Dir1=29337
+Dir2=29339
+Dir3=29336
+Dir4=29338
+
+[Arma109]
+Dir1=29459
+Dir2=29461
+Dir3=29458
+Dir4=29460
+
+[Arma110]
+Dir1=29549
+Dir2=29551
+Dir3=29548
+Dir4=29550
+
+[Arma111]
+Dir1=29576
+Dir2=29578
+Dir3=29575
+Dir4=29577
