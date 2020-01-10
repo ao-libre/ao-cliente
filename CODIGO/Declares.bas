@@ -991,3 +991,6 @@ Public Const uAOButton_cCheckboxSmall As String = "cCheckboxSmall.bmp" ' Chico
 ' * Configuracion de estilo de controles
 
 Public JsonTips As Object
+
+'Nivel Maximo
+Public STAT_MAXELV As Byte
