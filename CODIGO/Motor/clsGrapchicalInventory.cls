@@ -609,17 +609,14 @@ Private Sub InventoryWindow_MouseUp(Button As Integer, Shift As Integer, X As Si
     
     'Store previously selected item
     Dim prevSelItem As Long
-    
-    'Exit if it got outside the control's area
-    If X < 0 Or Y < 0 Or X > InventoryWindow.Width Or Y > InventoryWindow.Height Then Exit Sub
-    
+
     prevSelItem = InvSelectedItem
 
     'Get the currently clickced item
-    InvSelectedItem = ClickItem(CInt(X), CInt(Y))
-    
+    InvSelectedItem = ClickItem(MouseX, MouseY)
+
     If Drag Then
-    
+
         If Not DragItem = TempSlot And Not (TempSlot < 1 Or DragItem < 1) Then
             Call Protocol.WriteMoveItem(DragItem, TempSlot, eMoveType.Inventory)
             InvSelectedItem = TempSlot
