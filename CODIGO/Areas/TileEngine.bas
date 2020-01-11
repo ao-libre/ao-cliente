@@ -1298,11 +1298,9 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
         If DialogosClanes.Activo Then Call DialogosClanes.Draw ' GSZAO
 
         '*********Tiempo restante para que termine el invi o el paralizar*********
-        'If UserInvisible Then Fonts_Render_String CartelInvisibilidad & " segundos restantes de Invisibilidad", 1, 13, vbCyan
-        'If UserParalizado Then Fonts_Render_String UserParalizadoSegundosRestantes & " segundos restantes de Paralisis", 1, 25, vbGreen
         Dim ColorText As Long
         If UserParalizado Then 
-            ColorText = D3DColorARGB(180, 193, 73, 193)
+            ColorText = D3DColorARGB(180, 230, 230, 250)
             Call DrawText(1, 25, UserParalizadoSegundosRestantes & " segundos restantes de Paralisis", ColorText)
         End If
 
@@ -1310,7 +1308,6 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
             ColorText = D3DColorARGB(180, 236, 136, 66)
             Call DrawText(1, 13, UserInvisibleSegundosRestantes & " segundos restantes de Invisibilidad", ColorText)
         End If
-        
         '*************************************************************************
         
 

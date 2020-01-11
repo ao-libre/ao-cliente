@@ -4263,7 +4263,7 @@ Private Sub HandleSetInvisible()
 
     UserInvisible = Not UserInvisible
 
-    If UserParalizado Then
+    If UserInvisible Then
         frmMain.timerTiempoRestanteInvisibleMensaje.Enabled = True
         UserInvisibleSegundosRestantes = IntervaloInvisible 'Cantidad en segundos
     Else
@@ -11005,8 +11005,8 @@ Private Sub HandleAccountLogged()
 
     'Obtenemos valor de algunos intervalos necesarios para mostrar informacion en el render
     'TODO: obtener del server
-    IntervaloParalizado = 500 / 40
-    IntervaloInvisible = 500 / 40
+    IntervaloParalizado = 23 ' Segundos
+    IntervaloInvisible = 23 ' Segundos
 
     frmPanelAccount.Show
 
