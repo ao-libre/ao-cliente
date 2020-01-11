@@ -195,7 +195,7 @@ Begin VB.Form frmMain
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00E0E0E0&
+      ForeColor       =   &H00808080&
       Height          =   315
       Left            =   240
       MaxLength       =   160
@@ -225,7 +225,7 @@ Begin VB.Form frmMain
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H80000018&
+      ForeColor       =   &H00808080&
       Height          =   315
       Left            =   240
       MaxLength       =   160
@@ -1043,6 +1043,9 @@ Attribute Client.VB_VarHelpID = -1
 
 Private ChangeHechi        As Boolean, ChangeHechiNum As Integer
 
+Private FirstTimeChat      As Boolean
+Private FirstTimeClanChat  As Boolean
+
 'Usado para controlar que no se dispare el binding de la tecla CTRL cuando se usa CTRL+Tecla.
 Dim CtrlMaskOn             As Boolean
 Dim SkinSeleccionado       As String
@@ -1094,6 +1097,9 @@ Private Sub Form_Load()
     Call SetWindowLong(RecTxt.hWnd, -20, &H20&)
     
     CtrlMaskOn = False
+    
+    FirstTimeChat = True
+    FirstTimeClanChat = True
 End Sub
 
 Private Sub LoadTextsForm()
@@ -1850,7 +1856,24 @@ Private Sub RecTxt_MouseMove(Button As Integer, _
     StartCheckingLinks
 End Sub
 
+Private Sub SendCMSTXT_KeyDown(KeyCode As Integer, Shift As Integer)
+    ' Para borrar el mensaje del chat de clanes
+    If FirstTimeClanChat Then
+        SendCMSTXT.Text = vbNullString
+        FirstTimeClanChat = False
+        ' Color original
+        SendCMSTXT.ForeColor = &H80000018
+    End If
+End Sub
+
 Private Sub SendTxt_KeyDown(KeyCode As Integer, Shift As Integer)
+    ' Para borrar el mensaje de fondo
+    If FirstTimeChat Then
+        SendTxt.Text = vbNullString
+        FirstTimeChat = False
+        ' Cambiamos el color de texto al original
+        SendTxt.ForeColor = &HE0E0E0
+    End If
     
     ' Control + Shift
     If Shift = 3 Then
