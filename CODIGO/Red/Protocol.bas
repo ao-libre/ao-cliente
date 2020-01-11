@@ -11406,4 +11406,21 @@ Public Sub WriteCloseGuild()
 
 End Sub
 
+''
+' Writes the "LimpiarMundo" message to the outgoing data buffer.
+'
+' @remarks  The data is not actually sent until the buffer is properly flushed.
 
+Public Sub WriteLimpiarMundo()
+'***************************************************
+'Author: Jopi
+'Last Modification: 11/01/2020
+'Writes the "LimpiarMundo" message to the outgoing data buffer
+'***************************************************
+    
+    With outgoingData
+        Call .WriteByte(ClientPacketID.GMCommands)
+        Call .WriteByte(eGMCommands.LimpiarMundo)
+    End With
+    
+End Sub

@@ -524,6 +524,9 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             Case "/BUSCAR"
                 frmBuscar.Show vbModeless, frmMain
             
+            Case "/LIMPIARMUNDO"
+                Call WriteLimpiarMundo
+            
             Case "/GMSG"
                 If notNullArguments Then
                     Call WriteGMMessage(ArgumentosRaw)
