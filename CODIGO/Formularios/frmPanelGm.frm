@@ -1619,6 +1619,11 @@ Private Sub cmdLASTIP_Click()
         Call WriteLastIP(Nick)
 End Sub
 
+Private Sub cmdLIMPIAR_Click()
+    '/LIMPIARMUNDO
+    Call WriteLimpiarMundo
+End Sub
+
 Private Sub cmdLLUVIA_Click()
     '/LLUVIA
     Call WriteRainToggle

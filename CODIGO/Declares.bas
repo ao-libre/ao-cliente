@@ -515,6 +515,7 @@ Public Enum eGMCommands
     ToggleCentinelActivated '/CENTINELAACTIVADO
     SearchNpc               '/BUSCAR
     SearchObj               '/BUSCAR
+    LimpiarMundo            '/LIMPIARMUNDO
 End Enum
 
 '
