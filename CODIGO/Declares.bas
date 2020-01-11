@@ -687,6 +687,7 @@ Public bShowTutorial As Boolean
 Public FPSFLAG As Boolean
 Public pausa As Boolean
 Public UserParalizado As Boolean
+Public UserInvisible As Boolean
 Public UserNavegando As Boolean
 Public UserEvento As Boolean
 Public UserHogar As eCiudad
@@ -994,3 +995,8 @@ Public JsonTips As Object
 
 'Nivel Maximo
 Public STAT_MAXELV As Byte
+Public IntervaloParalizado As Integer
+Public IntervaloInvisible As Integer
+
+Public UserParalizadoSegundosRestantes As Integer
+Public UserInvisibleSegundosRestantes As Integer

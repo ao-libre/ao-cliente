@@ -4261,6 +4261,15 @@ Private Sub HandleSetInvisible()
     CharIndex = incomingData.ReadInteger()
     Call Char_SetInvisible(CharIndex, incomingData.ReadBoolean())
 
+    UserInvisible = Not UserInvisible
+
+    If UserParalizado Then
+        frmMain.timerTiempoRestanteInvisibleMensaje.Enabled = True
+        UserInvisibleSegundosRestantes = IntervaloInvisible 'Cantidad en segundos
+    Else
+        frmMain.timerTiempoRestanteInvisibleMensaje.Enabled = False
+        UserInvisibleSegundosRestantes = 0
+    End If
 End Sub
 
 ''
@@ -4934,6 +4943,15 @@ Private Sub HandleParalizeOK()
     Call incomingData.ReadByte
     
     UserParalizado = Not UserParalizado
+
+    If UserParalizado Then
+        frmMain.timerTiempoRestanteParalisisMensaje.Enabled = True
+        UserParalizadoSegundosRestantes = IntervaloParalizado 'Cantidad en segundos
+    Else
+        frmMain.timerTiempoRestanteParalisisMensaje.Enabled = False
+        UserParalizadoSegundosRestantes = 0
+    End If
+
 End Sub
 
 ''
@@ -10981,8 +10999,14 @@ Private Sub HandleAccountLogged()
     AccountHash = Buffer.ReadASCIIString
     NumberOfCharacters = Buffer.ReadByte
 
+    'TODO: Mover todo estos datos que obtenemos del servidor a la funciona que se creara cuando querramos ver una lista mas completa de servers
     ' Aca sobreescribimos el valor del nivel maximo ya que puede variar por servidor
     STAT_MAXELV = Buffer.ReadByte
+
+    'Obtenemos valor de algunos intervalos necesarios para mostrar informacion en el render
+    'TODO: obtener del server
+    IntervaloParalizado = 500 / 40
+    IntervaloInvisible = 500 / 40
 
     frmPanelAccount.Show
 
