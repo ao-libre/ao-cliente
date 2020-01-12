@@ -754,6 +754,12 @@ Function MoveToLegalPos(ByVal X As Integer, ByVal Y As Integer) As Boolean
     If UserNavegando <> HayAgua(X, Y) Then
         Exit Function
     End If
+
+    'TODO: Hacer function HayTecho!!!!
+    'Esta el usuario Equitando bajo un techo?
+    If UserEquitando And bTecho = True Then
+        Exit Function
+    End If
     
     MoveToLegalPos = True
 End Function

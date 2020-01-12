@@ -2627,58 +2627,7 @@ Private Sub Client_CloseSck()
     
     Debug.Print "Cerrando la conexion via API de Windows..."
 
-    Dim i As Long
-        
-    Second.Enabled = False
-    Connected = False
-    
-    If Client.State <> sckClosed Then Client.CloseSck
-
-    frmConnect.MousePointer = vbNormal
-    
-    Do While i < Forms.Count - 1
-        i = i + 1
-        
-        If Forms(i).name <> Me.name And Forms(i).name <> frmConnect.name And Forms(i).name <> frmCrearPersonaje.name Then
-            Unload Forms(i)
-        End If
-    Loop
-    
-    On Local Error GoTo 0
-    
-    If Not frmCrearPersonaje.Visible Then
-        frmConnect.Visible = True
-    End If
-    
-    frmMain.Visible = False
- 
-    pausa = False
-    UserMeditar = False
- 
-    frmMain.Visible = False
-
-    pausa = False
-    UserMeditar = False
-
-    UserClase = 0
-    UserSexo = 0
-    UserRaza = 0
-    UserHogar = 0
-    UserEmail = vbNullString
-    
-    For i = 1 To NUMSKILLS
-        UserSkills(i) = 0
-    Next i
-
-    For i = 1 To NUMATRIBUTOS
-        UserAtributos(i) = 0
-    Next i
-
-    SkillPoints = 0
-    Alocados = 0
-
-    Dialogos.RemoveAllDialogs
-    
+    Call ResetAllInfo
 End Sub
 
 Private Sub Client_Error(ByVal number As Integer, _
