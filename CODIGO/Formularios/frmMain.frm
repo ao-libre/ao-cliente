@@ -261,7 +261,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2619
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -557,10 +556,10 @@ Begin VB.Form frmMain
       Caption         =   "Nombre del mapa"
       ForeColor       =   &H80000014&
       Height          =   255
-      Left            =   6000
+      Left            =   2880
       TabIndex        =   41
       Top             =   1875
-      Width           =   2295
+      Width           =   5415
    End
    Begin VB.Image imgAsignarSkill 
       Height          =   450
