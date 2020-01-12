@@ -1738,5 +1738,8 @@
             178,
             237
         ]
+    },
+    "MENSAJE_MONTURA_SALIR" : {
+        "TEXTO": "No puedes caminar aqui con tu montura, bajate para poder entrar a un lugar con techo."
     }
 }
