@@ -91,15 +91,14 @@ Public Sub Draw()
     For i = 1 To CantidadDialogos
         If Trim$(p_Dialogos(i).Texto) <> vbNullString Then
 
-            'Por alguna razon en el 4to parametro de DrawText tengo que poner -1 sino 
-            'No se renderiza, antes lo habia hecho andar con vbMagenta pero ahora no se por que no anda mas
-            'TODO: Usar propiedad Font en ves del 1 hardcodeado en el ultimo parametro de DrawText
-            
+            Dim ColorText As Long  
+            ColorText = D3DColorARGB(180, 255, 228, 157)
+
             If Left$(p_Dialogos(i).Texto, 1) = Chr$(3) Then
-                Call DrawText(X, Y + (i * 10), mid$(p_Dialogos(i).Texto, 2), -1 , False, 1)
+                Call DrawText(X, Y + (i * 10), mid$(p_Dialogos(i).Texto, 2), ColorText , False, 1)
                 
             Else
-                Call DrawText(X, Y + (i * 10), p_Dialogos(i).Texto, -1 , False, 1)
+                Call DrawText(X, Y + (i * 10), p_Dialogos(i).Texto, ColorText , False, 1)
             
             End If
         End If
