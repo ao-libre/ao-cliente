@@ -172,6 +172,7 @@ Private Enum ServerPacketID
     UserInEvent
     renderMsg
     DeletedChar
+    EquitandoToggle
 End Enum
 
 Private Enum ClientPacketID
@@ -903,6 +904,9 @@ On Error Resume Next
         Case ServerPacketID.DeletedChar             ' BORRA USUARIO
             Call HandleDeletedChar
 
+        Case ServerPacketID.EquitandoToggle         'Para las monturas
+            Call HandleEquitandoToggle
+
         Case Else
             'ERROR : Abort!
             Exit Sub
@@ -1553,7 +1557,7 @@ Private Sub CloseConnectionAndResetAllInfo()
     'Close connection
     If frmMain.Client.State <> sckClosed Then frmMain.Client.CloseSck
 
-    ResetAllInfo
+    Call ResetAllInfo
 End Sub
 
 ''
@@ -1903,6 +1907,10 @@ Private Sub HandleUpdateHP()
     If UserMinHP = 0 Then
         UserEstado = 1
         If frmMain.macrotrabajo Then Call frmMain.DesactivarMacroTrabajo
+    
+        UserEquitando = 0
+        'Reseteo el Speed
+        Call SetSpeedUsuario
     Else
         UserEstado = 0
     End If
@@ -11447,4 +11455,17 @@ Public Sub WriteLimpiarMundo()
         Call .WriteByte(eGMCommands.LimpiarMundo)
     End With
     
+' Handles the EquitandoToggle message.
+Private Sub HandleEquitandoToggle()
+'***************************************************
+'Author: Lorwik
+'Last Modification: 23/08/11
+'
+'***************************************************
+    'Remove packet ID
+    Call incomingData.ReadByte
+    
+    UserEquitando = Not UserEquitando
+    
+    Call SetSpeedUsuario
 End Sub

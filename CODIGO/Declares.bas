@@ -320,13 +320,14 @@ Public Enum eObjType
     otWeapon = 2
     otArmadura = 3
     otArboles = 4
-    otGuita = 5
+    otOro = 5
     otPuertas = 6
     otContenedores = 7
     otCarteles = 8
     otLlaves = 9
     otForos = 10
     otPociones = 11
+    otLibros = 12 'Hacer algo con esto, no en uso
     otBebidas = 13
     otLena = 14
     otFogata = 15
@@ -334,18 +335,25 @@ Public Enum eObjType
     otCasco = 17
     otAnillo = 18
     otTeleport = 19
+    otMuebles = 20
+    otJoyas = 21 'Hacer algo con esto, no en uso
     otYacimiento = 22
     otMinerales = 23
     otPergaminos = 24
+    otMonturas = 25
     otInstrumentos = 26
     otYunque = 27
     otFragua = 28
+    otGemas = 29 'No en uso, hacer algo con las gemas :)
+    otFlores = 30 'No en uso, hacer algo con las flores :)
     otBarcos = 31
     otFlechas = 32
     otBotellaVacia = 33
     otBotellaLlena = 34
+    otManuales = 35
     otArbolElfico = 36
     otMochilas = 37
+    otYacimientoPez = 38
     otCualquiera = 1000
 End Enum
 
@@ -690,6 +698,7 @@ Public pausa As Boolean
 Public UserParalizado As Boolean
 Public UserInvisible As Boolean
 Public UserNavegando As Boolean
+Public UserEquitando As Boolean
 Public UserEvento As Boolean
 Public UserHogar As eCiudad
 

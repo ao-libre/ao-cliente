@@ -1430,7 +1430,10 @@ Public Sub ResetAllInfo()
     UserEmail = vbNullString
     SkillPoints = 0
     Alocados = 0
-    
+    UserEquitando = 0
+
+    Call SetSpeedUsuario
+
     ' Reset skills
     For i = 1 To NUMSKILLS
         UserSkills(i) = 0
@@ -1624,4 +1627,12 @@ Public Sub LoadAOCustomControlsPictures(ByRef tForm As Form)
         
     Next
     
+End Sub
+
+Public Sub SetSpeedUsuario()
+    If UserEquitando Then
+        Call Engine_Set_BaseSpeed(0.024)
+    Else
+        Call Engine_Set_BaseSpeed(0.018)
+    End If
 End Sub
