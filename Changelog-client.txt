@@ -653,4 +653,5 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 14/01/2020: Se recibe nivel maximo del servidor para setearlo en el frmMain (Recox)
 * 14/01/2020: Se arreglo barra de experiencia para que cuando seamos lvl max este siempre completa (Recox)
 * 14/01/2020: Se actualizaron los mapas de algunas ciudades y dungeons para hacer uso de las monturas (Recox)
-
+* 15/01/2020: Si la musica es la misma, la dejamos que siga y no hacemos nada al cambiar de mapa (Recox)
+* 15/01/2020: Se agrego NPC que vende monturas en varias ciudades y los dragones que las dropean en sus dungeon (Recox)
