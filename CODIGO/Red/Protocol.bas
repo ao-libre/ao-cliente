@@ -88,7 +88,7 @@ Private Enum ServerPacketID
     ObjectCreate            ' HO
     ObjectDelete            ' BO
     BlockPosition           ' BQ
-    PlayMP3                 
+    PlayMp3
     PlayMIDI                ' TM
     PlayWave                ' TW
     guildList               ' GL
@@ -666,7 +666,7 @@ On Error Resume Next
         Case ServerPacketID.BlockPosition           ' BQ
             Call HandleBlockPosition
 
-        Case ServerPacketID.PlayMP3
+        Case ServerPacketID.PlayMp3
             Call HandlePlayMP3
         
         Case ServerPacketID.PlayMIDI                ' TM
@@ -1443,7 +1443,7 @@ Private Sub HandleDeletedChar()
     'Remove packet ID
     Call incomingData.ReadByte
 
-    MsgBox("El personaje se ha borrado correctamente. Por favor vuelve a iniciar sesion para ver el cambio")
+    MsgBox ("El personaje se ha borrado correctamente. Por favor vuelve a iniciar sesion para ver el cambio")
 
     'Close connection
     Call CloseConnectionAndResetAllInfo
@@ -1674,7 +1674,7 @@ Private Sub HandleBankInit()
     
     BankGold = incomingData.ReadLong
     Call InvBanco(0).Initialize(DirectD3D8, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
-    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.picInv, Inventario.MaxObjs)
+    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.PicInv, Inventario.MaxObjs)
     
     For i = 1 To Inventario.MaxObjs
         With Inventario
@@ -1987,7 +1987,7 @@ Private Sub HandleUpdateExp()
     'Get data and update form
     UserExp = incomingData.ReadLong()
 
-    frmMain.UpdateProgressExperienceLevelBar(UserExp)
+    frmMain.UpdateProgressExperienceLevelBar (UserExp)
 End Sub
 
 ''
@@ -2164,10 +2164,10 @@ Private Sub WriteChatOverHeadInConsole(ByVal CharIndex As Integer, ByVal ChatTex
         'Si el npc tiene nombre lo escribimos en la consola
         
         If LenB(.Nombre) <> 0 Then
-            Call AddtoRichTextBox(frmMain.RecTxt, Name & "> ", NameRed, NameGreen, NameBlue, True, False, True, rtfLeft)
+            Call AddtoRichTextBox(frmMain.RecTxt, name & "> ", NameRed, NameGreen, NameBlue, True, False, True, rtfLeft)
         End If
 
-        Call AddtoRichTextBox(frmMain.RecTxt, ChatText , Red, Green, Blue, True, False, False, rtfLeft)
+        Call AddtoRichTextBox(frmMain.RecTxt, ChatText, Red, Green, Blue, True, False, False, rtfLeft)
         
     End With
     
@@ -2195,13 +2195,13 @@ On Error GoTo errhandler
     'Remove packet ID
     Call Buffer.ReadByte
     
-    Dim Chat As String
+    Dim chat As String
     Dim CharIndex As Integer
     Dim Red As Byte
     Dim Green As Byte
     Dim Blue As Byte
     
-    Chat = Buffer.ReadASCIIString()
+    chat = Buffer.ReadASCIIString()
     CharIndex = Buffer.ReadInteger()
     
     Red = Buffer.ReadByte()
@@ -2209,8 +2209,8 @@ On Error GoTo errhandler
     Blue = Buffer.ReadByte()
     
     'Only add the chat if the character exists (a CharacterRemove may have been sent to the PC / NPC area before the buffer was flushed)
-    If Char_Check(CharIndex) Then 
-        Call Dialogos.CreateDialog(Trim$(Chat), CharIndex, RGB(Red, Green, Blue))
+    If Char_Check(CharIndex) Then
+        Call Dialogos.CreateDialog(Trim$(chat), CharIndex, RGB(Red, Green, Blue))
 
         'Aqui escribimos el texto que aparece sobre la cabeza en la consola.
         Call WriteChatOverHeadInConsole(CharIndex, chat, Red, Green, Blue)
@@ -3186,7 +3186,7 @@ Private Sub HandleUpdateUserStats()
     UserPasarNivel = incomingData.ReadLong()
     UserExp = incomingData.ReadLong()
     
-    frmMain.UpdateProgressExperienceLevelBar(UserExp)
+    frmMain.UpdateProgressExperienceLevelBar (UserExp)
     
     frmMain.GldLbl.Caption = UserGLD
     frmMain.lblLvl.Caption = UserLvl
@@ -8016,7 +8016,7 @@ Public Sub WriteComment(ByVal Message As String)
 '***************************************************
     With outgoingData
         Call .WriteByte(ClientPacketID.GMCommands)
-        Call .WriteByte(eGMCommands.Comment)
+        Call .WriteByte(eGMCommands.comment)
         
         Call .WriteASCIIString(Message)
     End With
@@ -8610,7 +8610,7 @@ Public Sub WriteBanChar(ByVal UserName As String, ByVal Reason As String)
 '***************************************************
     With outgoingData
         Call .WriteByte(ClientPacketID.GMCommands)
-        Call .WriteByte(eGMCommands.banChar)
+        Call .WriteByte(eGMCommands.BanChar)
         
         Call .WriteASCIIString(UserName)
         
@@ -8776,7 +8776,7 @@ Public Sub WriteNickToIP(ByVal UserName As String)
 '***************************************************
     With outgoingData
         Call .WriteByte(ClientPacketID.GMCommands)
-        Call .WriteByte(eGMCommands.nickToIP)
+        Call .WriteByte(eGMCommands.NickToIP)
         
         Call .WriteASCIIString(UserName)
     End With
@@ -9219,7 +9219,7 @@ Public Sub WriteDumpIPTables()
 'Writes the "DumpIPTables" message to the outgoing data buffer
 '***************************************************
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
-    Call outgoingData.WriteByte(eGMCommands.dumpIPTables)
+    Call outgoingData.WriteByte(eGMCommands.DumpIPTables)
 End Sub
 
 ''
@@ -11454,6 +11454,7 @@ Public Sub WriteLimpiarMundo()
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.LimpiarMundo)
     End With
+End Sub
     
 ' Handles the EquitandoToggle message.
 Private Sub HandleEquitandoToggle()
