@@ -380,6 +380,18 @@ Public Sub DeInit_LightEngine()
     
 End Sub
 
+Private ' USO: If ArrayInitialized(Not ArrayName) Then ...
+Public Function ArrayInitialized(ByVal TheArray As Long) As Boolean
+'***************************************************
+'Author: Jopi
+'Last Modify Date: 03/01/2020
+'Chequea que se haya inicializado el Array.
+'***************************************************
+    
+    ArrayInitialized = Not (TheArray = -1&)
+
+End Function
+
 Public Function LightRenderAll() As Boolean
     On Error GoTo handle
 

@@ -1034,7 +1034,7 @@ ErrorHandl:
 End Function
 
 ''
-'   Plays a new MIDI file.
+'   Plays a new MIDI or MP3 file.
 '
 '   @param              FileName    File name to be played
 '   @param              FileType   File Type : mp3 or mid.

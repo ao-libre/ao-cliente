@@ -2,7 +2,7 @@ VERSION 5.00
 Begin VB.Form frmConnect 
    BackColor       =   &H00E0E0E0&
    BorderStyle     =   0  'None
-   Caption         =   "Argentum Online"
+   Caption         =   "Argentum Online Libre"
    ClientHeight    =   9000
    ClientLeft      =   0
    ClientTop       =   0
@@ -916,4 +916,141 @@ End Sub
 
 Private Sub btnCrearCuenta_Click()
     Call Protocol.Connect(E_MODO.CrearCuenta)
+End Sub
+
+
+Public Sub CargarServidores()
+'********************************
+'Author: Unknown
+'Last Modification: 21/12/2019
+'Last Modified by: Recox
+'Added Instruction "CloseClient" before End so the mutex is cleared (Rapsodius)
+'Added IP Api to get the country of the IP. (Recox)
+'Get ping from server (Recox)
+'********************************
+On Error GoTo errorH
+    Dim File As String
+    Dim i As Integer
+    Dim CountryCode As String
+    Dim IpApiEnabled As Boolean
+    Dim DoPingsEnabled As Boolean
+    Dim QuantityServers As Integer
+    
+    File = Game.path(INIT) & "sinfo.dat"
+    QuantityServers = Val(GetVar(File, "INIT", "Cant"))
+    IpApiEnabled = GetVar(Game.path(INIT) & "Config.ini", "Parameters", "IpApiEnabled")
+    DoPingsEnabled = GetVar(Game.path(INIT) & "Config.ini", "Parameters", "DoPingsEnabled")
+    
+    frmConnect.lstServers.Clear
+    
+    ReDim ServersLst(1 To QuantityServers) As tServerInfo
+    For i = 1 To QuantityServers
+        Dim CurrentIp As String
+        CurrentIp = Trim$(GetVar(File, "S" & i, "Ip"))
+        
+        If IpApiEnabled Then
+
+           'If is not numeric do a url transformation
+            If CheckIfIpIsNumeric(CurrentIp) = False Then
+                CurrentIp = GetIPFromHostName(CurrentIp)
+            End If
+
+            CountryCode = GetCountryCode(CurrentIp)
+            ServersLst(i).Desc = CountryCode & " - " & GetVar(File, "S" & i, "Desc")
+   
+            ServersLst(i).Country = CountryCode
+        Else
+            ServersLst(i).Desc = GetVar(File, "S" & i, "Desc")
+        End If
+        
+        ServersLst(i).Ip = GetVar(File, "S" & i, "Ip")
+        ServersLst(i).Puerto = CInt(GetVar(File, "S" & i, "PJ"))
+
+
+        ServersLst(i).Mundo = GetVar(File, "S" & i, "MUNDO")
+        ServersLst(i).Ping = PingAddress(CurrentIp, "SomeRandomText")
+
+        'We should delete this validations and append text to the desc when we start working in something more suitable
+        'in the UI to show the Pings, Country, Desc, etc.
+        'All this functions are in the file CODIGO/modPing.bas
+        If DoPingsEnabled Then
+            ServersLst(i).Desc = PingAddress(CurrentIp, "SomeRandomText") & " " & ServersLst(i).Desc
+
+            Call PingServer(ServersLst(i).Ip, ServersLst(i).Puerto)
+        End If
+
+        frmConnect.lstServers.AddItem (ServersLst(i).Desc)
+    Next i
+    
+    If CurServer = 0 Then CurServer = 1
+
+Exit Sub
+
+errorH:
+    Call MsgBox("Error cargando los servidores, actualicelos de la web. http://www.ArgentumOnline.org", vbCritical + vbOKOnly, "Argentum Online Libre")
+    
+    'Call CloseClient
+End Sub
+
+Public Sub PingServer(ServerIp As String, ServerPort as String)
+    IPTxt = ServerIp
+    PortTxt = ServerPort
+
+    Call Protocol.Connect(E_MODO.ObtenerDatosServer)
+End Sub
+
+Private Function CheckIfIpIsNumeric(CurrentIp As String) As String
+    If IsNumeric(mid$(CurrentIp, 1, 1)) Then
+        CheckIfIpIsNumeric = True
+    Else
+        CheckIfIpIsNumeric = False
+    End If
+End Function
+
+Private Function GetCountryCode(CurrentIp As String) As String
+    Dim CountryCode As String
+    CountryCode = GetCountryFromIp(CurrentIp)
+
+    If LenB(CountryCode) > 0 Then
+        GetCountryCode = CountryCode
+    Else
+        GetCountryCode = "??"
+    End If
+
+End Function
+
+Public Function CurServerIp() As String
+    CurServerIp = frmConnect.IPTxt
+End Function
+
+Public Function CurServerPort() As Integer
+    CurServerPort = Val(frmConnect.PortTxt)
+End Function
+
+Private Sub DownloadServersFile(myURL As String)
+'**********************************************************
+'Downloads the sinfo.dat file from a given url
+'Last change: 01/11/2018
+'Implemented by Cucsifae
+'Check content of strData to avoid clean the file sinfo.ini if there is no response from Github by Recox
+'**********************************************************
+On Error Resume Next
+    Dim strData As String
+    Dim f As Integer
+    
+    Set Inet = New clsInet
+    
+    strData = Inet.OpenRequest(myURL, "GET")
+    strData = Inet.Execute
+    strData = Inet.GetResponseAsString
+    
+    f = FreeFile
+    
+    If LenB(strData) <> 0 Then
+        Open Game.path(INIT) & "sinfo.dat" For Output As #f
+            Print #f, strData
+        Close #f
+    End If
+    
+    Exit Sub
 End Sub
