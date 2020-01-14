@@ -641,7 +641,7 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
               También pasa si hacés clic en inventario varias veces. (WyroX)
 * 07/01/2020: Se agrego boton en frmPanelAccount para poder borrar personajes (Recox)
 
-- v0.13.21
+- v0.13.22
 
 * 14/01/2020: Se agrego codigo relacionado con monturas, funcional (Recox)
 * 14/01/2020: Se agrando el label del nombre de mapa en el frmMain por que cuando tenia un nombre grande se veia mal (Recox)
