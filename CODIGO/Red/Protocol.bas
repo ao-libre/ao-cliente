@@ -173,6 +173,7 @@ Private Enum ServerPacketID
     renderMsg
     DeletedChar
     EquitandoToggle
+    EnviarDatosServer
 End Enum
 
 Private Enum ClientPacketID
@@ -326,6 +327,7 @@ Private Enum ClientPacketID
     CloseGuild = 148            '/CERRARCLAN
     Discord = 149            '/DISCORD
     DeleteChar = 150
+    ObtenerDatosServer = 151
 End Enum
 
 Public Enum FontTypeNames
@@ -373,7 +375,7 @@ Public Sub Connect(ByVal Modo As E_MODO)
     EstadoLogin = Modo
 
     'Usamos la API de Windows
-    frmMain.Client.Connect CurServerIp, CurServerPort
+    Call frmMain.Client.Connect(CurServerIp, CurServerPort)
     
     'Vuelvo a activar el boton.
     frmConnect.btnConectarse.Enabled = True
@@ -11403,6 +11405,7 @@ Public Sub WriteCambiarContrasena()
     End With
 
 End Sub
+
 Private Sub HandleUserInEvent()
     Call incomingData.ReadByte
     
@@ -11470,3 +11473,49 @@ Private Sub HandleEquitandoToggle()
     
     Call SetSpeedUsuario
 End Sub
+
+' Handles the EnviarDatosMessage message.
+Private Sub HandleEnviarDatosServer()
+'***************************************************
+'Author: Recox
+'Last Modification: 15/01/20
+'Obtiene datos del server para imprimir en la lista.
+'***************************************************
+    'Remove packet ID
+    Call incomingData.ReadByte
+
+    Dim MundoServidor As String
+    Dim NombreServidor As String
+    Dim DescripcionServidor As String
+    Dim IpPublicaServidor As String
+    Dim Puerto As String
+
+    MundoServidor = Buffer.ReadASCIIString()
+    NombreServidor = Buffer.ReadASCIIString()
+    DescripcionServidor = Buffer.ReadASCIIString()
+    IpPublicaServidor = Buffer.ReadASCIIString()
+    Puerto = Buffer.ReadInteger()
+    
+    For i = 1 To QuantityServers
+
+        frmConnect.lstServers.RemoveItem (ServersLst(i).Desc)
+
+        If ServersLst(i).Ip = IpPublicaServidor Then
+
+                ServersLst(i).Desc = IpPublicaServidor & ":" & _ 
+                                     Puerto & " || " & _
+                                     "PING: " & (GetTickCount - pingTime) & " || " & _ 
+                                     MundoServidor & " - " & _
+                                     DescripcionServidor & " - " 
+
+                pingTime = 0
+        
+                frmConnect.lstServers.AddItem (ServersLst(i).Desc)
+
+                Exit Sub
+        End If
+
+    Next i
+
+End Sub
+

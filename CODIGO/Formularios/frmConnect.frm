@@ -574,6 +574,8 @@ Private Lector As clsIniManager
 
 Private Const AES_PASSWD As String = "tumamaentanga"
 
+Public QuantityServers As Integer
+
 Private Function RefreshServerList() As String
 '***************************************************
 'Author: Recox
@@ -895,11 +897,14 @@ Private Sub lstRedditPosts_Click()
 End Sub
 
 Private Sub lstServers_Click()
-    IPTxt.Text = ServersLst(lstServers.ListIndex + 1).Ip
-    PortTxt.Text = ServersLst(lstServers.ListIndex + 1).Puerto
+    Dim ServerIndexInLstServer As Integer
+    ServerIndexInLstServer = lstServers.ListIndex + 1
+    
+    IPTxt.Text = ServersLst(ServerIndexInLstServer).Ip
+    PortTxt.Text = ServersLst(ServerIndexInLstServer).Puerto
     
     'Variable Global declarada en Declares.bas
-    MundoSeleccionado = ServersLst(lstServers.ListIndex + 1).Mundo
+    MundoSeleccionado = ServersLst(ServerIndexInLstServer).Mundo
     
     'En caso que no haya un mundo seleccionado en la propiedad Mundo
     'Seleccionamos Alkon como mundo default
@@ -907,7 +912,9 @@ Private Sub lstServers_Click()
         MundoSeleccionado = "Alkon"
     End If
 
-    CurServer = lstServers.ListIndex + 1
+    Call ObtenerDatosServer
+
+    CurServer = ServerIndexInLstServer
 End Sub
 
 Private Sub txtPasswd_KeyPress(KeyAscii As Integer)
@@ -933,13 +940,10 @@ On Error GoTo errorH
     Dim i As Integer
     Dim CountryCode As String
     Dim IpApiEnabled As Boolean
-    Dim DoPingsEnabled As Boolean
-    Dim QuantityServers As Integer
     
     File = Game.path(INIT) & "sinfo.dat"
     QuantityServers = Val(GetVar(File, "INIT", "Cant"))
     IpApiEnabled = GetVar(Game.path(INIT) & "Config.ini", "Parameters", "IpApiEnabled")
-    DoPingsEnabled = GetVar(Game.path(INIT) & "Config.ini", "Parameters", "DoPingsEnabled")
     
     frmConnect.lstServers.Clear
     
@@ -947,7 +951,11 @@ On Error GoTo errorH
     For i = 1 To QuantityServers
         Dim CurrentIp As String
         CurrentIp = Trim$(GetVar(File, "S" & i, "Ip"))
-        
+
+        ServersLst(i).Ip = CurrentIp
+        ServersLst(i).Puerto = CInt(GetVar(File, "S" & i, "PJ"))
+        ServersLst(i).Mundo = GetVar(File, "S" & i, "MUNDO")
+
         If IpApiEnabled Then
 
            'If is not numeric do a url transformation
@@ -962,23 +970,8 @@ On Error GoTo errorH
         Else
             ServersLst(i).Desc = GetVar(File, "S" & i, "Desc")
         End If
-        
-        ServersLst(i).Ip = GetVar(File, "S" & i, "Ip")
-        ServersLst(i).Puerto = CInt(GetVar(File, "S" & i, "PJ"))
 
-
-        ServersLst(i).Mundo = GetVar(File, "S" & i, "MUNDO")
-        ServersLst(i).Ping = PingAddress(CurrentIp, "SomeRandomText")
-
-        'We should delete this validations and append text to the desc when we start working in something more suitable
-        'in the UI to show the Pings, Country, Desc, etc.
-        'All this functions are in the file CODIGO/modPing.bas
-        If DoPingsEnabled Then
-            ServersLst(i).Desc = PingAddress(CurrentIp, "SomeRandomText") & " " & ServersLst(i).Desc
-
-            Call PingServer(ServersLst(i).Ip, ServersLst(i).Puerto)
-        End If
-
+        'Call PingServer(ServersLst(i).Ip, ServersLst(i).Puerto)
         frmConnect.lstServers.AddItem (ServersLst(i).Desc)
     Next i
     
@@ -988,15 +981,12 @@ Exit Sub
 
 errorH:
     Call MsgBox("Error cargando los servidores, actualicelos de la web. http://www.ArgentumOnline.org", vbCritical + vbOKOnly, "Argentum Online Libre")
-    
-    'Call CloseClient
 End Sub
 
-Public Sub PingServer(ServerIp As String, ServerPort as String)
-    IPTxt = ServerIp
-    PortTxt = ServerPort
-
+Private Sub ObtenerDatosServer()
     Call Protocol.Connect(E_MODO.ObtenerDatosServer)
+    
+    pingTime = GetTickCount
 End Sub
 
 Private Function CheckIfIpIsNumeric(CurrentIp As String) As String
@@ -1017,14 +1007,6 @@ Private Function GetCountryCode(CurrentIp As String) As String
         GetCountryCode = "??"
     End If
 
-End Function
-
-Public Function CurServerIp() As String
-    CurServerIp = frmConnect.IPTxt
-End Function
-
-Public Function CurServerPort() As Integer
-    CurServerPort = Val(frmConnect.PortTxt)
 End Function
 
 Private Sub DownloadServersFile(myURL As String)

@@ -380,7 +380,6 @@ Public Sub DeInit_LightEngine()
     
 End Sub
 
-Private ' USO: If ArrayInitialized(Not ArrayName) Then ...
 Public Function ArrayInitialized(ByVal TheArray As Long) As Boolean
 '***************************************************
 'Author: Jopi

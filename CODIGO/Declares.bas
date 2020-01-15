@@ -759,6 +759,7 @@ Public Enum E_MODO
     Dados = 3
     CrearCuenta = 4
     CambiarContrasena = 5
+    ObtenerDatosServer = 6
 End Enum
 
 Public EstadoLogin As E_MODO

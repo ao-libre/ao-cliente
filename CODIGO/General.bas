@@ -1497,3 +1497,11 @@ Public Sub SetSpeedUsuario()
         Call Engine_Set_BaseSpeed(0.018)
     End If
 End Sub
+
+Public Function CurServerIp() As String
+    CurServerIp = frmConnect.IPTxt
+End Function
+
+Public Function CurServerPort() As Integer
+    CurServerPort = Val(frmConnect.PortTxt)
+End Function
