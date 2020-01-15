@@ -1049,10 +1049,20 @@ Public Sub PlayBackgroundMusic(ByVal FileName As String, ByVal FileType As Byte,
 
     Select Case FileType
         Case MusicTypes.Midi
-            Call PlayMIDI(FileName & ".mid", Loops)
+            FileName = FileName & ".mid"
+
+            'Si la musica es la misma, la dejamos que siga y no hacemos nada (Recox)
+            If FileName = CurrentMusicFile Then Exit Sub
+
+            Call PlayMIDI(FileName, Loops)
 
         Case MusicTypes.Mp3
-            Call PlayMp3(FileName & ".mp3")
+            FileName = FileName & ".mp3"
+
+            'Si la musica es la misma, la dejamos que siga y no hacemos nada (Recox)
+            If FileName = CurrentMusicFile Then Exit Sub
+            
+            Call PlayMp3(FileName)
 
     End Select
 

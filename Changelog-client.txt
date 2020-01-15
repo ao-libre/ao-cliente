@@ -641,3 +641,17 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
               También pasa si hacés clic en inventario varias veces. (WyroX)
 * 07/01/2020: Se agrego boton en frmPanelAccount para poder borrar personajes (Recox)
 
+- v0.13.22
+
+* 14/01/2020: Se agrego codigo relacionado con monturas, funcional (Recox)
+* 14/01/2020: Se agrando el label del nombre de mapa en el frmMain por que cuando tenia un nombre grande se veia mal (Recox)
+* 14/01/2020: Implemento /LIMPIARMUNDO (jopiortiz)
+* 14/01/2020: Ahora mostramos en pantalla tiempo restante para paralisis e invisible (Recox)
+* 14/01/2020: Ahora el texto de ayuda de las cajas de chat se van al escribir (Wyr0X)
+* 14/01/2020: fixed #326: drag fuera del inventario desaparece el item (#444) (Wyr0X-jopiortiz)
+* 14/01/2020: bugfixes relacionados con el audio (Wyr0X-jopiortiz)
+* 14/01/2020: Se recibe nivel maximo del servidor para setearlo en el frmMain (Recox)
+* 14/01/2020: Se arreglo barra de experiencia para que cuando seamos lvl max este siempre completa (Recox)
+* 14/01/2020: Se actualizaron los mapas de algunas ciudades y dungeons para hacer uso de las monturas (Recox)
+* 15/01/2020: Si la musica es la misma, la dejamos que siga y no hacemos nada al cambiar de mapa (Recox)
+* 15/01/2020: Se agrego NPC que vende monturas en varias ciudades y los dragones que las dropean en sus dungeon (Recox)
