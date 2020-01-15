@@ -1,5 +1,5 @@
 [INIT]
-Cant=9
+Cant=5
 
 [S1]
 Desc=Rol - Alkon 0.13.X
@@ -14,43 +14,18 @@ PJ=7666
 Mundo=Alkon
 
 [S3]
-Desc=Server Europa - Rol - Alkon 0.13.X
-IP=109.230.224.34
-PJ=7666
-Mundo=Alkon
-
-[S4]
-Desc=Arg - Deathmatch - Earost
-IP=18.231.37.189
-PJ=7667
-Mundo=Deathmatch
-
-
-[S5]
-Desc=AoSpain | Modo:BattleServer
-IP=aospainbattle.hopto.org
-PJ=7666
-Mundo=BattleServer
-
-[S6]
-Desc=LUKIH - Testing
-IP=190.14.33.245
-PJ=7666
-Mundo=Alkon
-
-[S7]
 Desc=Servidor Local | Modo:Alkon 0.13.X
 IP=localhost
 PJ=7666
 Mundo=Alkon
 
-[S8]
+[S4]
 Desc=Servidor Local | Modo:BattleServer
 IP=localhost
 PJ=7666
 Mundo=BattleServer
 
-[S9]
+[S5]
 Desc=Servidor Local | Modo:Deathmatch
 IP=localhost
 PJ=7666
