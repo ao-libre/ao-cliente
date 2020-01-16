@@ -220,8 +220,8 @@ Begin VB.Form frmConnect
       EndProperty
    End
    Begin VB.Timer tEfectos 
-      Left            =   1680
-      Top             =   1080
+      Left            =   120
+      Top             =   480
    End
    Begin VB.ListBox lstServers 
       Appearance      =   0  'Flat
@@ -236,20 +236,20 @@ Begin VB.Form frmConnect
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H0000FF00&
-      Height          =   4905
+      Height          =   3540
       ItemData        =   "frmConnect.frx":1768C
-      Left            =   8685
+      Left            =   480
       List            =   "frmConnect.frx":1768E
       TabIndex        =   3
-      Top             =   1680
-      Width           =   2775
+      Top             =   3960
+      Width           =   10935
    End
    Begin AOLibre.uAOButton btnActualizarLista 
       Height          =   495
-      Left            =   9120
+      Left            =   9600
       TabIndex        =   7
       TabStop         =   0   'False
-      Top             =   6840
+      Top             =   7680
       Width           =   1935
       _ExtentX        =   3413
       _ExtentY        =   873
@@ -273,10 +273,10 @@ Begin VB.Form frmConnect
    End
    Begin AOLibre.uAOButton btnTeclas 
       Height          =   375
-      Left            =   6120
+      Left            =   8520
       TabIndex        =   17
       TabStop         =   0   'False
-      Top             =   3960
+      Top             =   2400
       Width           =   1335
       _ExtentX        =   2355
       _ExtentY        =   661
@@ -300,10 +300,10 @@ Begin VB.Form frmConnect
    End
    Begin AOLibre.uAOButton btnConectarse 
       Height          =   375
-      Left            =   4800
+      Left            =   7080
       TabIndex        =   15
       TabStop         =   0   'False
-      Top             =   3960
+      Top             =   2400
       Width           =   1335
       _ExtentX        =   2355
       _ExtentY        =   661
@@ -327,10 +327,10 @@ Begin VB.Form frmConnect
    End
    Begin AOLibre.uAOCheckbox chkRecordar 
       Height          =   345
-      Left            =   5280
+      Left            =   7440
       TabIndex        =   16
       TabStop         =   0   'False
-      Top             =   4680
+      Top             =   720
       Width           =   345
       _ExtentX        =   609
       _ExtentY        =   609
@@ -353,10 +353,10 @@ Begin VB.Form frmConnect
       ForeColor       =   &H00FFFFFF&
       Height          =   225
       IMEMode         =   3  'DISABLE
-      Left            =   4920
+      Left            =   7080
       PasswordChar    =   "*"
       TabIndex        =   1
-      Top             =   3720
+      Top             =   2040
       Width           =   2460
    End
    Begin VB.TextBox txtNombre 
@@ -373,9 +373,9 @@ Begin VB.Form frmConnect
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   225
-      Left            =   4905
+      Left            =   6960
       TabIndex        =   0
-      Top             =   3210
+      Top             =   1680
       Width           =   2460
    End
    Begin VB.TextBox IPTxt 
@@ -394,10 +394,10 @@ Begin VB.Form frmConnect
       EndProperty
       ForeColor       =   &H0000FF00&
       Height          =   195
-      Left            =   5760
+      Left            =   8040
       TabIndex        =   6
       Text            =   "localhost"
-      Top             =   2760
+      Top             =   1320
       Width           =   1575
    End
    Begin VB.TextBox PortTxt 
@@ -416,18 +416,18 @@ Begin VB.Form frmConnect
       EndProperty
       ForeColor       =   &H0000FF00&
       Height          =   195
-      Left            =   4890
+      Left            =   7080
       TabIndex        =   5
       Text            =   "7666"
-      Top             =   2760
+      Top             =   1320
       Width           =   825
    End
    Begin AOLibre.uAOButton btnVerForo 
       Height          =   495
-      Left            =   480
+      Left            =   7080
       TabIndex        =   18
       TabStop         =   0   'False
-      Top             =   6075
+      Top             =   3000
       Width           =   2775
       _ExtentX        =   4895
       _ExtentY        =   873
@@ -462,11 +462,11 @@ Begin VB.Form frmConnect
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H80000018&
-      Height          =   4320
-      Left            =   480
+      Height          =   3150
+      Left            =   600
       TabIndex        =   2
-      Top             =   1680
-      Width           =   2775
+      Top             =   480
+      Width           =   5895
    End
    Begin VB.Image imgServArgentina 
       Height          =   795
@@ -509,9 +509,9 @@ Begin VB.Form frmConnect
          Strikethrough   =   0   'False
       EndProperty
       Height          =   375
-      Left            =   5760
+      Left            =   8400
       TabIndex        =   19
-      Top             =   4800
+      Top             =   720
       Width           =   2055
    End
 End
@@ -573,8 +573,6 @@ Private Fuerza As Double
 Private Lector As clsIniManager
 
 Private Const AES_PASSWD As String = "tumamaentanga"
-
-Public QuantityServers As Integer
 
 Private Function RefreshServerList() As String
 '***************************************************
@@ -721,7 +719,7 @@ Private Sub Form_Load()
     
     Call LoadTextsForm
     Call LoadButtonsAnimations
-        '    Call LoadAOCustomControlsPictures(Me) 
+        '    Call LoadAOCustomControlsPictures(Me)
     'Todo: Poner la carga de botones como en el frmCambiaMotd.frm para mantener coherencia con el resto de la aplicacion
     'y poder borrar los frx de este archivo
 
@@ -912,7 +910,9 @@ Private Sub lstServers_Click()
         MundoSeleccionado = "Alkon"
     End If
 
-    Call ObtenerDatosServer
+    Call Protocol.Connect(E_MODO.ObtenerDatosServer)
+    
+    pingTime = GetTickCount
 
     CurServer = ServerIndexInLstServer
 End Sub
@@ -937,9 +937,6 @@ Public Sub CargarServidores()
 '********************************
 On Error GoTo errorH
     Dim File As String
-    Dim i As Integer
-    Dim CountryCode As String
-    Dim IpApiEnabled As Boolean
     
     File = Game.path(INIT) & "sinfo.dat"
     QuantityServers = Val(GetVar(File, "INIT", "Cant"))
@@ -948,6 +945,8 @@ On Error GoTo errorH
     frmConnect.lstServers.Clear
     
     ReDim ServersLst(1 To QuantityServers) As tServerInfo
+
+    Dim i As Long
     For i = 1 To QuantityServers
         Dim CurrentIp As String
         CurrentIp = Trim$(GetVar(File, "S" & i, "Ip"))
@@ -955,23 +954,9 @@ On Error GoTo errorH
         ServersLst(i).Ip = CurrentIp
         ServersLst(i).Puerto = CInt(GetVar(File, "S" & i, "PJ"))
         ServersLst(i).Mundo = GetVar(File, "S" & i, "MUNDO")
+        ServersLst(i).Desc = GetVar(File, "S" & i, "Desc")
 
-        If IpApiEnabled Then
-
-           'If is not numeric do a url transformation
-            If CheckIfIpIsNumeric(CurrentIp) = False Then
-                CurrentIp = GetIPFromHostName(CurrentIp)
-            End If
-
-            CountryCode = GetCountryCode(CurrentIp)
-            ServersLst(i).Desc = CountryCode & " - " & GetVar(File, "S" & i, "Desc")
-   
-            ServersLst(i).Country = CountryCode
-        Else
-            ServersLst(i).Desc = GetVar(File, "S" & i, "Desc")
-        End If
-
-        'Call PingServer(ServersLst(i).Ip, ServersLst(i).Puerto)
+        ' Call PingServer(ServersLst(i).Ip, ServersLst(i).Puerto)
         frmConnect.lstServers.AddItem (ServersLst(i).Desc)
     Next i
     
@@ -982,32 +967,6 @@ Exit Sub
 errorH:
     Call MsgBox("Error cargando los servidores, actualicelos de la web. http://www.ArgentumOnline.org", vbCritical + vbOKOnly, "Argentum Online Libre")
 End Sub
-
-Private Sub ObtenerDatosServer()
-    Call Protocol.Connect(E_MODO.ObtenerDatosServer)
-    
-    pingTime = GetTickCount
-End Sub
-
-Private Function CheckIfIpIsNumeric(CurrentIp As String) As String
-    If IsNumeric(mid$(CurrentIp, 1, 1)) Then
-        CheckIfIpIsNumeric = True
-    Else
-        CheckIfIpIsNumeric = False
-    End If
-End Function
-
-Private Function GetCountryCode(CurrentIp As String) As String
-    Dim CountryCode As String
-    CountryCode = GetCountryFromIp(CurrentIp)
-
-    If LenB(CountryCode) > 0 Then
-        GetCountryCode = CountryCode
-    Else
-        GetCountryCode = "??"
-    End If
-
-End Function
 
 Private Sub DownloadServersFile(myURL As String)
 '**********************************************************

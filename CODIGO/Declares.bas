@@ -164,8 +164,6 @@ Public Type tServerInfo
     Ip As String
     Puerto As Integer
     Desc As String
-    Ping As String
-    Country As String
     Mundo As String
 End Type
 
@@ -1011,3 +1009,6 @@ Public IntervaloInvisible As Integer
 
 Public UserParalizadoSegundosRestantes As Integer
 Public UserInvisibleSegundosRestantes As Integer
+
+Public QuantityServers As Integer
+Public IpApiEnabled As Boolean

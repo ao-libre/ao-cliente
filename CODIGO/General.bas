@@ -1505,3 +1505,23 @@ End Function
 Public Function CurServerPort() As Integer
     CurServerPort = Val(frmConnect.PortTxt)
 End Function
+
+Public Function CheckIfIpIsNumeric(CurrentIp As String) As String
+    If IsNumeric(mid$(CurrentIp, 1, 1)) Then
+        CheckIfIpIsNumeric = True
+    Else
+        CheckIfIpIsNumeric = False
+    End If
+End Function
+
+Public Function GetCountryCode(CurrentIp As String) As String
+    Dim CountryCode As String
+    CountryCode = GetCountryFromIp(CurrentIp)
+
+    If LenB(CountryCode) > 0 Then
+        GetCountryCode = CountryCode
+    Else
+        GetCountryCode = "??"
+    End If
+
+End Function

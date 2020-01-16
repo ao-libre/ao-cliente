@@ -909,6 +909,9 @@ On Error Resume Next
         Case ServerPacketID.EquitandoToggle         'Para las monturas
             Call HandleEquitandoToggle
 
+        Case ServerPacketID.EnviarDatosServer       'Para obtener info del server en la lista de servers
+            Call HandleEnviarDatosServer
+
         Case Else
             'ERROR : Abort!
             Exit Sub
@@ -11338,7 +11341,7 @@ On Error GoTo errhandler
     'Mostramos el formulario
     frmQuests.Show vbModeless, frmMain
     
-    'Pedimos la informaci�n de la primer quest (si la hay)
+    'Pedimos la informacion de la primer quest (si la hay)
     If tmpByte Then Call Protocol.WriteQuestDetailsRequest(1)
     
     'Copiamos de vuelta el buffer
@@ -11474,6 +11477,16 @@ Private Sub HandleEquitandoToggle()
     Call SetSpeedUsuario
 End Sub
 
+
+Public Sub WriteObtenerDatosServer()
+    
+    With outgoingData
+        'Mando el ID del paquete
+        Call .WriteByte(ClientPacketID.ObtenerDatosServer)
+    End With
+
+End Sub
+
 ' Handles the EnviarDatosMessage message.
 Private Sub HandleEnviarDatosServer()
 '***************************************************
@@ -11481,41 +11494,78 @@ Private Sub HandleEnviarDatosServer()
 'Last Modification: 15/01/20
 'Obtiene datos del server para imprimir en la lista.
 '***************************************************
-    'Remove packet ID
-    Call incomingData.ReadByte
-
+    ' If incomingData.Length < 4 Then
+    '     Err.Raise incomingData.NotEnoughDataErrCode
+    '     Exit Sub
+    ' End If
+    
+On Error GoTo errhandler
     Dim MundoServidor As String
     Dim NombreServidor As String
     Dim DescripcionServidor As String
     Dim IpPublicaServidor As String
-    Dim Puerto As String
+    Dim PuertoServidor As Integer
 
-    MundoServidor = Buffer.ReadASCIIString()
-    NombreServidor = Buffer.ReadASCIIString()
-    DescripcionServidor = Buffer.ReadASCIIString()
-    IpPublicaServidor = Buffer.ReadASCIIString()
-    Puerto = Buffer.ReadInteger()
+    'Remove packet ID
+    Call incomingData.ReadByte
     
+    'Get data and update form
+    MundoServidor = incomingData.ReadASCIIString()
+    NombreServidor = incomingData.ReadASCIIString()
+    DescripcionServidor = incomingData.ReadASCIIString()
+    IpPublicaServidor = incomingData.ReadASCIIString()
+    PuertoServidor = incomingData.ReadInteger()
+    
+    Dim i As Long
     For i = 1 To QuantityServers
 
-        frmConnect.lstServers.RemoveItem (ServersLst(i).Desc)
-
-        If ServersLst(i).Ip = IpPublicaServidor Then
-
-                ServersLst(i).Desc = IpPublicaServidor & ":" & _ 
-                                     Puerto & " || " & _
-                                     "PING: " & (GetTickCount - pingTime) & " || " & _ 
-                                     MundoServidor & " - " & _
-                                     DescripcionServidor & " - " 
-
-                pingTime = 0
+        Dim bIsServerSelected As Boolean 
+        Dim bIsPortUsedByServer As Boolean 
+      
+        bIsServerSelected = ServersLst(i).Ip = IpPublicaServidor Or ServersLst(i).Ip = "localhost" Or ServersLst(i).Ip = "127.0.0.1"
+        bIsPortUsedByServer = ServersLst(i).Puerto = PuertoServidor
         
-                frmConnect.lstServers.AddItem (ServersLst(i).Desc)
+        If bIsServerSelected And bIsPortUsedByServer Then
+                Dim MsPingResult As Long
+                MsPingResult = (GetTickCount - pingTime)
+                pingTime = 0
+
+                Dim CountryCode As String
+                If IpApiEnabled Then
+                    'If is not numeric do a url transformation
+                    If CheckIfIpIsNumeric(IpPublicaServidor) = False Then
+                        IpPublicaServidor = GetIPFromHostName(IpPublicaServidor)
+                    End If
+
+                    CountryCode = GetCountryCode(IpPublicaServidor) & " - "
+                End If
+
+        
+                Dim Descripcion As String
+                Descripcion =   CountryCode & _
+                                NombreServidor & " >> " & _
+                                ServersLst(i).Ip & ":" & _
+                                ServersLst(i).Puerto & _
+                                " || PING: " & MsPingResult & " || " & _
+                                MundoServidor & " - " & _
+                                DescripcionServidor & " - "
+
+                frmConnect.lstServers.List(i) = Descripcion
 
                 Exit Sub
         End If
 
     Next i
+
+errhandler:
+
+    Dim Error As Long
+
+    Error = Err.number
+
+    On Error GoTo 0
+
+    If Error <> 0 Then Err.Raise Error
 
 End Sub
 
