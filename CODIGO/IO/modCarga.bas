@@ -19,7 +19,7 @@ On Error GoTo ErrorHandler:
     
     'Open files
     handle = FreeFile()
-    Open IniPath & "Graficos.ind" For Binary Access Read As handle
+    Open Game.path(INIT) & MundoSeleccionado & "\" & "Graficos.ind" For Binary Access Read As handle
     
         Get handle, , fileVersion
         
@@ -114,7 +114,7 @@ On Error GoTo errhandler:
     Dim Miscabezas() As tIndiceCabeza
     
     N = FreeFile()
-    Open Game.path(INIT) & "Cabezas.ind" For Binary Access Read As #N
+    Open Game.path(INIT) & MundoSeleccionado & "\" & "Cabezas.ind" For Binary Access Read As #N
     
     'cabecera
     Get #N, , MiCabecera
@@ -162,7 +162,7 @@ On Error GoTo errhandler:
     Dim Miscabezas() As tIndiceCabeza
     
     N = FreeFile()
-    Open Game.path(INIT) & "Cascos.ind" For Binary Access Read As #N
+    Open Game.path(INIT) & MundoSeleccionado & "\" & "Cascos.ind" For Binary Access Read As #N
     
     'cabecera
     Get #N, , MiCabecera
@@ -209,7 +209,7 @@ On Error GoTo errhandler:
     Dim MisCuerpos() As tIndiceCuerpo
     
     N = FreeFile()
-    Open Game.path(INIT) & "Personajes.ind" For Binary Access Read As #N
+    Open Game.path(INIT) & MundoSeleccionado & "\" & "Personajes.ind" For Binary Access Read As #N
     
     'cabecera
     Get #N, , MiCabecera
@@ -256,7 +256,7 @@ On Error GoTo errhandler:
     Dim i As Long
     
     Set FileManager = New clsIniManager
-    Call FileManager.Initialize(Game.path(INIT) & "Fxs.ini")
+    Call FileManager.Initialize(Game.path(INIT) & MundoSeleccionado & "\" & "Fxs.ini")
     
     'Resize array
     ReDim FxData(0 To FileManager.GetValue("INIT", "NumFxs")) As tIndiceFx
@@ -314,7 +314,7 @@ On Error GoTo errhandler:
     Dim Nu As Integer
     
     N = FreeFile()
-    Open Game.path(INIT) & "fk.ind" For Binary Access Read As #N
+    Open Game.path(INIT) & MundoSeleccionado & "\" & "fk.ind" For Binary Access Read As #N
     
     'cabecera
     Get #N, , MiCabecera
@@ -350,7 +350,7 @@ On Error GoTo errhandler:
     Dim LoopC As Long
 
     Set FileManager = New clsIniManager
-    Call FileManager.Initialize(Game.path(INIT) & "armas.dat")
+    Call FileManager.Initialize(Game.path(INIT) & MundoSeleccionado & "\" & "armas.dat")
     
     NumWeaponAnims = Val(FileManager.GetValue("INIT", "NumArmas"))
     ReDim WeaponAnimData(1 To NumWeaponAnims) As WeaponAnimData
@@ -382,7 +382,7 @@ Public Sub CargarColores()
 On Error GoTo errhandler:
 
     Set FileManager = New clsIniManager
-    Call FileManager.Initialize(Game.path(INIT) & "colores.dat")
+    Call FileManager.Initialize(Game.path(INIT) & MundoSeleccionado & "\" & "colores.dat")
     
     Dim i As Long
     
@@ -425,7 +425,7 @@ On Error GoTo errhandler:
     Dim NumEscudosAnims As Integer
     
     Set FileManager = New clsIniManager
-    Call FileManager.Initialize(Game.path(INIT) & "escudos.dat")
+    Call FileManager.Initialize(Game.path(INIT) & MundoSeleccionado & "\" & "escudos.dat")
     
     NumEscudosAnims = Val(FileManager.GetValue("INIT", "NumEscudos"))
     
@@ -464,7 +464,7 @@ On Error GoTo errorH
     Dim J As Long
     
     Set FileManager = New clsIniManager
-    Call FileManager.Initialize(Game.path(INIT) & "Hechizos.dat")
+    Call FileManager.Initialize(Game.path(INIT) & MundoSeleccionado & "\" & "Hechizos.dat")
 
     NumHechizos = Val(FileManager.GetValue("INIT", "NumHechizos"))
  

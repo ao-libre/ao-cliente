@@ -2083,8 +2083,9 @@ Private Sub HandleChangeMap()
     
     UserMap = incomingData.ReadInteger()
     nameMap = incomingData.ReadASCIIString
-'TODO: Once on-the-fly editor is implemented check for map version before loading....
-'For now we just drop it
+    
+    'TODO: Once on-the-fly editor is implemented check for map version before loading....
+    'For now we just drop it
     Call incomingData.ReadInteger
     
     If FileExist(Game.path(Mapas) & "Mapa" & UserMap & ".map", vbNormal) Then
@@ -11549,8 +11550,9 @@ On Error GoTo errhandler
                                 " || PING: " & MsPingResult & " || " & _
                                 MundoServidor & " - " & _
                                 DescripcionServidor & " - "
-
-                frmConnect.lstServers.List(i) = Descripcion
+                                
+                'i - 1 por que los componentes listbox empiezan con indice 0
+                frmConnect.lstServers.List(i - 1) = Descripcion
 
                 Exit Sub
         End If

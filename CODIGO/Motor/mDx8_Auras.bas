@@ -38,6 +38,7 @@ Public Sub Load_Auras()
 'Last Modification: 26/05/10
 'Load Auras
 '***************************************************
+    'TODO: HACER QUE CARGUE DESDE LA CARPETA MUNDOSELECCIONADO, SI NO EXISTE USAR LA DEFAULT
     Dim i As Integer, AurasTotales As Integer, Leer As New clsIniManager
     Leer.Initialize Game.path(INIT) & "auras.ini"
 
@@ -112,7 +113,7 @@ Public Sub Delete_All_Auras(ByVal CharIndex As Integer)
 '***************************************************
 'Author: Ezequiel Juarez (Standelf)
 'Last Modification: 26/05/10
-'Kill all of aura´s from Char
+'Kill all of auraï¿½s from Char
 '***************************************************
     Delete_Aura CharIndex, 1
     Delete_Aura CharIndex, 2

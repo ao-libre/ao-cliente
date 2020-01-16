@@ -42,7 +42,7 @@ Private mMaxMemoryBytes              As Long
 Private Sub Class_Terminate()
 
     '**************************************************************
-    'Author: Juan Martín Sotuyo Dodero
+    'Author: Juan Martï¿½n Sotuyo Dodero
     'Last Modify Date: 5/04/2005
     '
     '**************************************************************
@@ -70,7 +70,7 @@ End Sub
 Public Property Get Surface(ByVal fileIndex As Long) As Direct3DTexture8
 
     '**************************************************************
-    'Author: Juan Martín Sotuyo Dodero
+    'Author: Juan Martï¿½n Sotuyo Dodero
     'Last Modify Date: 3/06/2006
     'Used to return a texture
     '**************************************************************
@@ -113,7 +113,7 @@ End Function
  
 Public Sub Initialize(ByRef DD As D3DX8, Optional ByVal maxMemoryUsageInMb As Long = DEFAULT_MEMORY_TO_USE)
     '**************************************************************
-    'Author: Juan Martín Sotuyo Dodero
+    'Author: Juan Martï¿½n Sotuyo Dodero
     'Last Modify Date: 5/04/2005
     '
     '**************************************************************
@@ -152,10 +152,14 @@ Private Function CrearGrafico(ByVal Archivo As Integer, _
             'Nombre
             .FileName = Archivo
 
+            Dim CarpetaGraficosMundoSeleccionado As String
+            CarpetaGraficosMundoSeleccionado = Game.path(Graficos) & "Mundos\" & MundoSeleccionado & "\"
+            ' CarpetaGraficosMundoSeleccionado = Game.path(Graficos) & "Mundos\Alkon\"
+
             #If Compression = 1 Then
             
                 'Obtenemos el .bmp del archivo en Graphics.AO
-                Call modCompression.Get_Image(Game.path(Graficos), CStr(Archivo), Buffer())
+                Call modCompression.Get_Image(CarpetaGraficosMundoSeleccionado, CStr(Archivo), Buffer())
                 
                 'Seteamos la textura.
                 Set .Texture = DirectD3D.CreateTextureFromFileInMemoryEx(DirectDevice, Buffer(0), UBound(Buffer()) + 1, D3DX_DEFAULT, D3DX_DEFAULT, 0, 0, D3DFMT_A8R8G8B8, _
@@ -165,7 +169,7 @@ Private Function CrearGrafico(ByVal Archivo As Integer, _
             #Else
                 
                 Dim Graphic As String
-                    Graphic = Game.path(Graficos) & .FileName
+                Graphic = CarpetaGraficosMundoSeleccionado & .FileName
                 
                 If FileExist(Graphic & ".bmp", vbNormal) Then
                     Set .Texture = DirectD3D.CreateTextureFromFileEx(DirectDevice, Graphic & ".bmp", D3DX_DEFAULT, D3DX_DEFAULT, 0, 0, D3DFMT_A8R8G8B8, _
@@ -205,6 +209,6 @@ Private Function CrearGrafico(ByVal Archivo As Integer, _
     Exit Function
     
 errhandler:
-    Debug.Print "ERROR AL CARGAR EL GRAFICO> " & Archivo & ".bmp"
+    Debug.Print "ERROR AL CARGAR EL GRAFICO> " & Archivo & ".bmp o .png"
 
 End Function

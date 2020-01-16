@@ -618,8 +618,6 @@ Sub Main()
 
     Call modCompression.GenerateContra(vbNullString, 0) ' 0 = Graficos.AO
     
-    Call CargarHechizos
-
     ' Map Sounds
     Set Sonidos = New clsSoundMapas
     Call Sonidos.LoadSoundMapInfo
@@ -816,33 +814,23 @@ Private Sub LoadInitialConfig()
                             True, False, False, rtfLeft)
     
 
-    '##############
-    ' MOTOR GRAFICO
-    Call AddtoRichTextBox(frmCargando.status, _
-                            JsonLanguage.item("INICIA_MOTOR_GRAFICO").item("TEXTO"), _
-                            JsonLanguage.item("INICIA_MOTOR_GRAFICO").item("COLOR").item(1), _
-                            JsonLanguage.item("INICIA_MOTOR_GRAFICO").item("COLOR").item(2), _
-                            JsonLanguage.item("INICIA_MOTOR_GRAFICO").item("COLOR").item(3), _
-                            True, False, True, rtfCenter)
+    ' '##############
+    ' ' MOTOR GRAFICO
+    ' Call AddtoRichTextBox(frmCargando.status, _
+    '                         JsonLanguage.item("INICIA_MOTOR_GRAFICO").item("TEXTO"), _
+    '                         JsonLanguage.item("INICIA_MOTOR_GRAFICO").item("COLOR").item(1), _
+    '                         JsonLanguage.item("INICIA_MOTOR_GRAFICO").item("COLOR").item(2), _
+    '                         JsonLanguage.item("INICIA_MOTOR_GRAFICO").item("COLOR").item(3), _
+    '                         True, False, True, rtfCenter)
     
-    '     Iniciamos el Engine de DirectX 8
-    If Not Engine_DirectX8_Init Then
-        Call CloseClient
-    End If
-          
-    '     Tile Engine
-    If Not InitTileEngine(frmMain.hWnd, 32, 32, 8, 8) Then
-        Call CloseClient
-    End If
-    
-    Call mDx8_Engine.Engine_DirectX8_Aditional_Init
 
-    Call AddtoRichTextBox(frmCargando.status, _
-                            "   " & JsonLanguage.item("HECHO").item("TEXTO"), _
-                            JsonLanguage.item("HECHO").item("COLOR").item(1), _
-                            JsonLanguage.item("HECHO").item("COLOR").item(2), _
-                            JsonLanguage.item("HECHO").item("COLOR").item(3), _
-                            True, False, False, rtfLeft)
+
+    ' Call AddtoRichTextBox(frmCargando.status, _
+    '                         "   " & JsonLanguage.item("HECHO").item("TEXTO"), _
+    '                         JsonLanguage.item("HECHO").item("COLOR").item(1), _
+    '                         JsonLanguage.item("HECHO").item("COLOR").item(2), _
+    '                         JsonLanguage.item("HECHO").item("COLOR").item(3), _
+    '                         True, False, False, rtfLeft)
     
     '###################
     ' ANIMACIONES EXTRAS
@@ -852,13 +840,9 @@ Private Sub LoadInitialConfig()
                             JsonLanguage.item("INICIA_FXS").item("COLOR").item(2), _
                             JsonLanguage.item("INICIA_FXS").item("COLOR").item(3), _
                             True, False, True, rtfCenter)
-                            
+
     Call CargarTips
-    Call CargarArrayLluvia
-    Call CargarAnimArmas
-    Call CargarAnimEscudos
-    Call CargarColores
-    
+                        
     Call AddtoRichTextBox(frmCargando.status, _
                             "   " & JsonLanguage.item("HECHO").item("TEXTO"), _
                             JsonLanguage.item("HECHO").item("COLOR").item(1), _
@@ -866,8 +850,6 @@ Private Sub LoadInitialConfig()
                             JsonLanguage.item("HECHO").item("COLOR").item(3), _
                             True, False, False, rtfLeft)
     
-    'Inicializamos el inventario grafico
-    Call Inventario.Initialize(DirectD3D8, frmMain.PicInv, MAX_INVENTORY_SLOTS, , , , , , , , True)
     'Set cKeys = New Collection
     Call AddtoRichTextBox(frmCargando.status, _
                             JsonLanguage.item("BIENVENIDO").item("TEXTO"), _
@@ -1252,7 +1234,7 @@ Public Function ForumAlignment(ByVal yForumType As Byte) As Byte
     
 End Function
 
-Public Sub ResetAllInfo()
+Public Sub ResetAllInfo(Optional ByVal ResetInventory As Boolean = True)
 
     ' Disable timers
     frmMain.Second.Enabled = False
@@ -1334,7 +1316,8 @@ Public Sub ResetAllInfo()
     Next i
     
     ' Clear inventory slots
-    Inventario.ClearAllSlots
+    ' Reset inventory es un parche para que podamos usar la carga dinamica de recursos por servidor sin que explote el juego (Recox)
+    If ResetInventory Then Inventario.ClearAllSlots
 
     ' Connection screen mp3
     Call Audio.PlayBackgroundMusic("2", MusicTypes.Mp3)

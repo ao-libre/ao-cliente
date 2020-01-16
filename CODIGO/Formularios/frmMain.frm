@@ -2600,9 +2600,11 @@ Private Sub Client_Connect()
     Select Case EstadoLogin
 
         Case E_MODO.CrearNuevoPj
+            Call InitGraphicEngine
             Call Login
 
         Case E_MODO.Normal
+            Call InitGraphicEngine
             Call Login
         
         Case E_MODO.CrearCuenta
@@ -2625,6 +2627,29 @@ Private Sub Client_Connect()
  
 End Sub
 
+Private Sub InitGraphicEngine
+    '     Iniciamos el Engine de DirectX 8
+    If Not Engine_DirectX8_Init Then
+        Call CloseClient
+    End If
+          
+    '     Tile Engine
+    If Not InitTileEngine(frmMain.hWnd, 32, 32, 8, 8) Then
+        Call CloseClient
+    End If
+    
+    Call mDx8_Engine.Engine_DirectX8_Aditional_Init
+
+    'Inicializamos el inventario grafico
+    Call Inventario.Initialize(DirectD3D8, frmMain.PicInv, MAX_INVENTORY_SLOTS, , , , , , , , True)
+
+    Call CargarHechizos
+    Call CargarArrayLluvia
+    Call CargarAnimArmas
+    Call CargarAnimEscudos
+    Call CargarColores
+End Sub
+
 Private Sub Client_DataArrival(ByVal bytesTotal As Long)
     Dim RD     As String
     Dim data() As Byte
@@ -2644,7 +2669,7 @@ Private Sub Client_CloseSck()
     
     Debug.Print "Cerrando la conexion via API de Windows..."
 
-    Call ResetAllInfo
+    Call ResetAllInfo(False)
 End Sub
 
 Private Sub Client_Error(ByVal number As Integer, _
