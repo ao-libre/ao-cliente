@@ -1,5 +1,5 @@
 [INIT]
-Cant=3
+Cant=4
 
 [S1]
 Desc=Rol - Alkon 0.13.X
@@ -20,7 +20,7 @@ PJ=7666
 Mundo=Alkon
 
 [S4]
-Desc=Servidor Local | Modo:Alkon 0.13.X
+Desc=Servidor Local | Modo:Hispano
 IP=localhost
 PJ=7665
 Mundo=Hispano
