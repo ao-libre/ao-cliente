@@ -121,7 +121,7 @@ Public Sub Save_Ambient(ByVal Map As Integer)
     'Author: Standelf
     'Last Modification: 15/10/10
     '***************************************************
-    Debug.Print CurMapAmbient.UseDayAmbient
+    Debug.Print "CurMapAmbient.UseDayAmbient: " & CurMapAmbient.UseDayAmbient
     
     Dim File As Integer: File = FreeFile
 

@@ -154,7 +154,7 @@ Private Function CrearGrafico(ByVal Archivo As Integer, _
 
             Dim CarpetaGraficosMundoSeleccionado As String
             CarpetaGraficosMundoSeleccionado = Game.path(Graficos) & "Mundos\" & MundoSeleccionado & "\"
-            ' CarpetaGraficosMundoSeleccionado = Game.path(Graficos) & "Mundos\Alkon\"
+
             Debug.Print "MundoSeleccionado = " & MundoSeleccionado
 
             #If Compression = 1 Then

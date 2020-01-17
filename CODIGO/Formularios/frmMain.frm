@@ -2599,14 +2599,10 @@ Private Sub Client_Connect()
     
     Select Case EstadoLogin
 
-        Case E_MODO.CrearNuevoPj
+        Case E_MODO.CrearNuevoPj, E_MODO.Normal
             Call InitGraphicEngine
             Call Login
 
-        Case E_MODO.Normal
-            Call InitGraphicEngine
-            Call Login
-        
         Case E_MODO.CrearCuenta
             Call Audio.PlayBackgroundMusic("7", MusicTypes.Mp3)
             frmCrearCuenta.Show
