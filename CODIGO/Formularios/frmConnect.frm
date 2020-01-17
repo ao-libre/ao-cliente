@@ -904,11 +904,11 @@ Private Sub lstServers_Click()
     'Variable Global declarada en Declares.bas
     MundoSeleccionado = ServersLst(ServerIndexInLstServer).Mundo
     
-    'En caso que no haya un mundo seleccionado en la propiedad Mundo
-    'Seleccionamos Alkon como mundo default
-    If LenB(MundoSeleccionado) = 0 Then
-        MundoSeleccionado = "Alkon"
-    End If
+    ' 'En caso que no haya un mundo seleccionado en la propiedad Mundo
+    ' 'Seleccionamos Alkon como mundo default
+    ' If LenB(MundoSeleccionado) = 0 Then
+    '     MundoSeleccionado = "Alkon"
+    ' End If
 
     Call Protocol.Connect(E_MODO.ObtenerDatosServer)
     
