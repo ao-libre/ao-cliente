@@ -1035,8 +1035,13 @@ Public Function InitTileEngine(ByVal setDisplayFormhWnd As Long, ByVal setTilePi
 
 On Error GoTo 0
     
-     Call LoadGrhIni
-    'Call LoadGrhInd
+    'Cargamos indice de graficos.
+    #If Compression = 1 Then
+        Call LoadGrhInd
+    #Else
+        Call LoadGrhIni
+    End If
+    
     Call CargarCuerpos
     Call CargarCabezas
     Call CargarCascos
