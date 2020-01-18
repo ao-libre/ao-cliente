@@ -3024,14 +3024,14 @@ On Error GoTo errhandler
     
     With frmGuildAdm
         'Clear guild's list
-        .guildslist.Clear
+        .GuildsList.Clear
         
         GuildNames = Split(Buffer.ReadASCIIString(), SEPARATOR)
         
         Dim i As Long
         For i = 0 To UBound(GuildNames())
             If LenB(GuildNames(i)) <> 0 Then
-                Call .guildslist.AddItem(GuildNames(i))
+                Call .GuildsList.AddItem(GuildNames(i))
             End If
         Next i
         
@@ -4270,13 +4270,12 @@ Private Sub HandleSetInvisible()
     Call Char_SetInvisible(CharIndex, incomingData.ReadBoolean())
 
     UserInvisible = Not UserInvisible
-
-    If UserInvisible Then
+    timeRemaining = incomingData.ReadInteger()
+    UserInvisibleSegundosRestantes = IIf(timeRemaining <> 0, incomingData.ReadInteger() * 0.04, 0) 'Cantidad en segundos
+    If UserInvisible And UserInvisibleSegundosRestantes Then
         frmMain.timerTiempoRestanteInvisibleMensaje.Enabled = True
-        UserInvisibleSegundosRestantes = IntervaloInvisible 'Cantidad en segundos
     Else
         frmMain.timerTiempoRestanteInvisibleMensaje.Enabled = False
-        UserInvisibleSegundosRestantes = 0
     End If
 End Sub
 
@@ -4784,11 +4783,11 @@ On Error GoTo errhandler
         GuildNames = Split(Buffer.ReadASCIIString(), SEPARATOR)
         
         'Empty the list
-        Call .guildslist.Clear
+        Call .GuildsList.Clear
         
         For i = 0 To UBound(GuildNames())
             If LenB(GuildNames(i)) <> 0 Then
-                Call .guildslist.AddItem(GuildNames(i))
+                Call .GuildsList.AddItem(GuildNames(i))
             End If
         Next i
         
@@ -11014,7 +11013,6 @@ Private Sub HandleAccountLogged()
     'Obtenemos valor de algunos intervalos necesarios para mostrar informacion en el render
     'TODO: obtener del server
     IntervaloParalizado = 23 ' Segundos
-    IntervaloInvisible = 23 ' Segundos
 
     frmPanelAccount.Show
 
