@@ -17,6 +17,11 @@ Private Const NumSoundBuffers As Byte = 30
 Private Const MAX_DISTANCE_TO_SOURCE As Integer = 150
 Private Const DELTA_FQ As Integer = 75
 
+Private Const MIN_MUSIC_VOLUME As Integer = -1500
+Private Const INCREASE_MUSIC_VOLUME As Integer = 20
+Private Const MIN_SOUND_VOLUME As Integer = -2000
+Private Const INCREASE_SOUND_VOLUME As Integer = 20
+
 Private Type SoundBuffer
     FileName As String
     looping As Boolean
@@ -50,7 +55,7 @@ Dim Music As Boolean
 Dim MusicPath As String
 Dim MusicMp3Path As String
 Dim CurrentMusicFile As String
-Dim CurrentMusicFileType As String
+Dim CurrentMusicFileType As MusicTypes
 Dim mActivated As Boolean
 Dim sActivated As Boolean
 Dim lastPosX As Integer
@@ -157,7 +162,7 @@ On Error GoTo errhandler
     
     'Set tempo to 0 and volume of music
     MusicTempo = 0
-    Call Performance.SetMasterVolume(200)
+    Call Performance.SetMasterVolume(0)
     
     inited = True
     
@@ -540,10 +545,10 @@ Public Property Let SoundVolume(ByVal Volume As Byte)
 '***************************************************
     Dim i As Long
     
-    If Volume > 100 Then Exit Property
+    If Volume < 0 Or Volume > 100 Then Exit Property
     
     'Take percentage to actual value
-    SndVolume = Volume * (DSBVOLUME_MAX - DSBVOLUME_MIN) / 100 + DSBVOLUME_MIN
+    SndVolume = Volume * INCREASE_SOUND_VOLUME + MIN_SOUND_VOLUME
     
     For i = 1 To NumSoundBuffers
         If Not DSBuffers(i).Buffer Is Nothing Then
@@ -565,7 +570,7 @@ Public Property Get SoundVolume() As Byte
 'Last Modification: 16/03/04
 'Sets the music's volume as a percentage
 '***************************************************
-    SoundVolume = CByte((SndVolume - DSBVOLUME_MIN) * 100 / (DSBVOLUME_MAX - DSBVOLUME_MIN))
+    SoundVolume = CByte((SndVolume - MIN_SOUND_VOLUME) / INCREASE_SOUND_VOLUME)
 End Property
 
 ''
@@ -590,10 +595,10 @@ On Error GoTo errhandler
     
     If Not Music Then Exit Function
     
-    If PlayingMusic Then StopMidi
+    Call StopMidi
 
     'In case we are listening MP3 we first stop it.
-    Call StopMp3()
+    Call StopMp3
     
     If LenB(File) > 0 Then
         If Not LoadMidi(File) Then Exit Function
@@ -703,7 +708,11 @@ Public Property Let MusicVolume(ByVal Volume As Long)
     If Volume < 0 Or Volume > 100 Then Exit Property
     
     '   Volume ranges from -10000 to 10000
-    Call Performance.SetMasterVolume(Volume * 200 - 10000)
+    Call Performance.SetMasterVolume(Volume * INCREASE_MUSIC_VOLUME + MIN_MUSIC_VOLUME)
+
+    If Not IBA Is Nothing Then
+        IBA.Volume = Volume * INCREASE_SOUND_VOLUME + MIN_SOUND_VOLUME
+    End If
 End Property
 
 ''
@@ -735,7 +744,7 @@ Public Property Get MusicVolume() As Long
 '***************************************************
     If Not Music Then Exit Property
     
-    MusicVolume = (Performance.GetMasterVolume() + 10000) / 200
+    MusicVolume = (Performance.GetMasterVolume() - MIN_MUSIC_VOLUME) / INCREASE_MUSIC_VOLUME
 End Property
 
 ''
@@ -802,9 +811,9 @@ Public Property Let MusicActivated(ByVal nValue As Boolean)
 
         Select Case CurrentMusicFileType
             Case MusicTypes.Midi
-                Call PlayMIDI(CurrentMusicFile)
+                mActivated = PlayMIDI(CurrentMusicFile)
             Case MusicTypes.Mp3
-                Call PlayMp3(CurrentMusicFile)
+                mActivated = PlayMp3(CurrentMusicFile)
         End Select
 
     Else
@@ -906,11 +915,12 @@ Public Function PlayMp3(Optional ByVal File As String = vbNullString) As Boolean
     
     If Not Music Then Exit Function
     
+    Call StopMp3
     'In case we are listening to a MIDI we first stop it.
-    Call StopMidi()
+    Call StopMidi
 
     If LenB(File) > 0 Then
-        If Not LoadMp3(File) Then Exit Function
+        If Not LoadMp3(File, MusicVolume * INCREASE_SOUND_VOLUME + MIN_SOUND_VOLUME) Then Exit Function
     Else
         If IMC Is Nothing Then Exit Function
     End If
@@ -980,7 +990,7 @@ End Function
 Public Function StopMp3() As Boolean
     On Error GoTo Error_Handl
     
-    If Audio.PlayMp3 = False Then Exit Function
+    If IMC Is Nothing Then Exit Function
     
     IMC.Stop
     IMPos.CurrentPosition = 0
@@ -1039,10 +1049,20 @@ Public Sub PlayBackgroundMusic(ByVal FileName As String, ByVal FileType As Byte,
 
     Select Case FileType
         Case MusicTypes.Midi
-            Call PlayMIDI(FileName & ".mid", Loops)
+            FileName = FileName & ".mid"
+
+            'Si la musica es la misma, la dejamos que siga y no hacemos nada (Recox)
+            If FileName = CurrentMusicFile Then Exit Sub
+
+            Call PlayMIDI(FileName, Loops)
 
         Case MusicTypes.Mp3
-            Call PlayMp3(FileName & ".mp3")
+            FileName = FileName & ".mp3"
+
+            'Si la musica es la misma, la dejamos que siga y no hacemos nada (Recox)
+            If FileName = CurrentMusicFile Then Exit Sub
+            
+            Call PlayMp3(FileName)
 
     End Select
 

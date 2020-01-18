@@ -45,6 +45,8 @@ Public Type tSetupMods
     bMusic    As Boolean
     bSound    As Boolean
     bSoundEffects As Boolean
+    MusicVolume As Byte
+    SoundVolume As Byte
     
     ' GUILDS
     bGuildNews  As Boolean
@@ -136,7 +138,6 @@ Public Sub LeerConfiguracion()
     Call Lector.Initialize(Game.path(INIT) & CLIENT_FILE)
     
     With ClientSetup
-        
         ' VIDEO
         .Aceleracion = Lector.GetValue("VIDEO", "RENDER_MODE")
         .byMemory = Lector.GetValue("VIDEO", "DINAMIC_MEMORY")
@@ -149,9 +150,11 @@ Public Sub LeerConfiguracion()
         .vSync = CBool(Lector.GetValue("VIDEO", "VSYNC"))
         
         ' AUDIO
-        .bMusic = CBool(Lector.GetValue("AUDIO", "MIDI"))
-        .bSound = CBool(Lector.GetValue("AUDIO", "WAV"))
+        .bMusic = CBool(Lector.GetValue("AUDIO", "MUSIC"))
+        .bSound = CBool(Lector.GetValue("AUDIO", "SOUND"))
         .bSoundEffects = CBool(Lector.GetValue("AUDIO", "SOUND_EFFECTS"))
+        .MusicVolume = CByte(Lector.GetValue("AUDIO", "MUSIC_VOLUME"))
+        .SoundVolume = CByte(Lector.GetValue("AUDIO", "SOUND_VOLUME"))
         
         ' GUILD
         .bGuildNews = CBool(Lector.GetValue("GUILD", "NEWS"))
@@ -180,6 +183,8 @@ Public Sub LeerConfiguracion()
         Debug.Print "bMusic: " & .bMusic
         Debug.Print "bSound: " & .bSound
         Debug.Print "bSoundEffects: " & .bSoundEffects
+        Debug.Print "MusicVolume: " & .MusicVolume
+        Debug.Print "SoundVolume: " & .SoundVolume
         Debug.Print "bGuildNews: " & .bGuildNews
         Debug.Print "bGldMsgConsole: " & .bGldMsgConsole
         Debug.Print "bCantMsgs: " & .bCantMsgs
@@ -210,29 +215,31 @@ Public Sub GuardarConfiguracion()
         ' VIDEO
         Call Lector.ChangeValue("VIDEO", "RENDER_MODE", .Aceleracion)
         Call Lector.ChangeValue("VIDEO", "DINAMIC_MEMORY", .byMemory)
-        Call Lector.ChangeValue("VIDEO", "DISABLE_RESOLUTION_CHANGE", CBool(.bNoRes))
-        Call Lector.ChangeValue("VIDEO", "PROYECTILE_ENGINE", CBool(.ProyectileEngine))
-        Call Lector.ChangeValue("VIDEO", "PARTY_MEMBERS", CBool(.PartyMembers))
-        Call Lector.ChangeValue("VIDEO", "TONALIDAD_PJ", CBool(.TonalidadPJ))
-        Call Lector.ChangeValue("VIDEO", "SOMBRAS", CBool(.UsarSombras))
-        Call Lector.ChangeValue("VIDEO", "PARTICLE_ENGINE", CBool(.ParticleEngine))
-        Call Lector.ChangeValue("VIDEO", "VSYNC", CBool(.vSync))
+        Call Lector.ChangeValue("VIDEO", "DISABLE_RESOLUTION_CHANGE", IIf(.bNoRes, "True", "False"))
+        Call Lector.ChangeValue("VIDEO", "PROYECTILE_ENGINE", IIf(.ProyectileEngine, "True", "False"))
+        Call Lector.ChangeValue("VIDEO", "PARTY_MEMBERS", IIf(.PartyMembers, "True", "False"))
+        Call Lector.ChangeValue("VIDEO", "TONALIDAD_PJ", IIf(.TonalidadPJ, "True", "False"))
+        Call Lector.ChangeValue("VIDEO", "SOMBRAS", IIf(.UsarSombras, "True", "False"))
+        Call Lector.ChangeValue("VIDEO", "PARTICLE_ENGINE", IIf(.ParticleEngine, "True", "False"))
+        Call Lector.ChangeValue("VIDEO", "VSYNC", IIf(.vSync, "True", "False"))
         
         ' AUDIO
-        Call Lector.ChangeValue("AUDIO", "MIDI", CBool(Audio.MusicActivated))
-        Call Lector.ChangeValue("AUDIO", "WAV", CBool(Audio.SoundActivated))
-        Call Lector.ChangeValue("AUDIO", "SOUND_EFFECTS", CBool(Audio.SoundEffectsActivated))
+        Call Lector.ChangeValue("AUDIO", "MUSIC", IIf(Audio.MusicActivated, "True", "False"))
+        Call Lector.ChangeValue("AUDIO", "SOUND", IIf(Audio.SoundActivated, "True", "False"))
+        Call Lector.ChangeValue("AUDIO", "SOUND_EFFECTS", IIf(Audio.SoundEffectsActivated, "True", "False"))
+        Call Lector.ChangeValue("AUDIO", "MUSIC_VOLUME", Audio.MusicVolume)
+        Call Lector.ChangeValue("AUDIO", "SOUND_VOLUME", Audio.SoundVolume)
         
         ' GUILD
-        Call Lector.ChangeValue("GUILD", "NEWS", CBool(.bGuildNews))
-        Call Lector.ChangeValue("GUILD", "MESSAGES", CBool(DialogosClanes.Activo))
+        Call Lector.ChangeValue("GUILD", "NEWS", IIf(.bGuildNews, "True", "False"))
+        Call Lector.ChangeValue("GUILD", "MESSAGES", IIf(DialogosClanes.Activo, "True", "False"))
         Call Lector.ChangeValue("GUILD", "MAX_MESSAGES", CByte(DialogosClanes.CantidadDialogos))
         
         ' FRAGSHOOTER
-        Call Lector.ChangeValue("FRAGSHOOTER", "DIE", CBool(.bDie))
-        Call Lector.ChangeValue("FRAGSHOOTER", "KILL", CBool(.bKill))
+        Call Lector.ChangeValue("FRAGSHOOTER", "DIE", IIf(.bDie, "True", "False"))
+        Call Lector.ChangeValue("FRAGSHOOTER", "KILL", IIf(.bKill, "True", "False"))
         Call Lector.ChangeValue("FRAGSHOOTER", "MURDERED_LEVEL", CByte(.byMurderedLevel))
-        Call Lector.ChangeValue("FRAGSHOOTER", "ACTIVE", CBool(.bActive))
+        Call Lector.ChangeValue("FRAGSHOOTER", "ACTIVE", IIf(.bActive, "True", "False"))
         
         ' OTHER
         ' Lo comento por que no tiene por que setearse aqui esto.

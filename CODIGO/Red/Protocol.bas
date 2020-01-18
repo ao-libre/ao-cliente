@@ -88,7 +88,7 @@ Private Enum ServerPacketID
     ObjectCreate            ' HO
     ObjectDelete            ' BO
     BlockPosition           ' BQ
-    PlayMP3                 
+    PlayMp3
     PlayMIDI                ' TM
     PlayWave                ' TW
     guildList               ' GL
@@ -171,6 +171,8 @@ Private Enum ServerPacketID
     CreateDamage
     UserInEvent
     renderMsg
+    DeletedChar
+    EquitandoToggle
 End Enum
 
 Private Enum ClientPacketID
@@ -323,6 +325,7 @@ Private Enum ClientPacketID
     FightAccept = 147
     CloseGuild = 148            '/CERRARCLAN
     Discord = 149            '/DISCORD
+    DeleteChar = 150
 End Enum
 
 Public Enum FontTypeNames
@@ -351,21 +354,6 @@ Public Enum FontTypeNames
 End Enum
 
 Public FontTypes(21) As tFont
-
-Private Const NEWBIE_USER_GOLD_COLOR As Long = vbCyan
-Private Const USER_GOLD_COLOR As Long = vbYellow
-
-Private Sub SetGoldColorInFrmMain()
-
-    If UserGLD >= CLng(UserLvl) * 10000 And UserLvl > 12 Then 'Si el nivel es mayor de 12, es decir, no es newbie.
-        'Changes color
-        frmMain.GldLbl.ForeColor = USER_GOLD_COLOR
-    Else
-        'Changes color
-        frmMain.GldLbl.ForeColor = NEWBIE_USER_GOLD_COLOR
-    End If
-
-End Sub
 
 Public Sub Connect(ByVal Modo As E_MODO)
     '*********************************************************************
@@ -678,7 +666,7 @@ On Error Resume Next
         Case ServerPacketID.BlockPosition           ' BQ
             Call HandleBlockPosition
 
-        Case ServerPacketID.PlayMP3
+        Case ServerPacketID.PlayMp3
             Call HandlePlayMP3
         
         Case ServerPacketID.PlayMIDI                ' TM
@@ -912,6 +900,13 @@ On Error Resume Next
             
         Case ServerPacketID.renderMsg
             Call HandleRenderMsg
+
+        Case ServerPacketID.DeletedChar             ' BORRA USUARIO
+            Call HandleDeletedChar
+
+        Case ServerPacketID.EquitandoToggle         'Para las monturas
+            Call HandleEquitandoToggle
+
         Case Else
             'ERROR : Abort!
             Exit Sub
@@ -1437,7 +1432,23 @@ Public Sub HandleMultiMessage()
 End Sub
 
 ''
-' Handles the Logged message.
+' Handles the DeletedChar message.
+
+Private Sub HandleDeletedChar()
+'***************************************************
+'Author: Lucas Recoaro (Recox)
+'Last Modification: 05/17/06
+'
+'***************************************************
+    'Remove packet ID
+    Call incomingData.ReadByte
+
+    MsgBox ("El personaje se ha borrado correctamente. Por favor vuelve a iniciar sesion para ver el cambio")
+
+    'Close connection
+    Call CloseConnectionAndResetAllInfo
+End Sub
+
 
 Private Sub HandleLogged()
 '***************************************************
@@ -1539,9 +1550,14 @@ Private Sub HandleDisconnect()
     Call incomingData.ReadByte
     
     'Close connection
+    Call CloseConnectionAndResetAllInfo
+End Sub
+
+Private Sub CloseConnectionAndResetAllInfo()
+    'Close connection
     If frmMain.Client.State <> sckClosed Then frmMain.Client.CloseSck
 
-    ResetAllInfo
+    Call ResetAllInfo
 End Sub
 
 ''
@@ -1658,7 +1674,7 @@ Private Sub HandleBankInit()
     
     BankGold = incomingData.ReadLong
     Call InvBanco(0).Initialize(DirectD3D8, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
-    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.picInv, Inventario.MaxObjs)
+    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.PicInv, Inventario.MaxObjs)
     
     For i = 1 To Inventario.MaxObjs
         With Inventario
@@ -1891,6 +1907,10 @@ Private Sub HandleUpdateHP()
     If UserMinHP = 0 Then
         UserEstado = 1
         If frmMain.macrotrabajo Then Call frmMain.DesactivarMacroTrabajo
+    
+        UserEquitando = 0
+        'Reseteo el Speed
+        Call SetSpeedUsuario
     Else
         UserEstado = 0
     End If
@@ -1919,7 +1939,7 @@ Private Sub HandleUpdateGold()
     'Get data and update form
     UserGLD = incomingData.ReadLong()
     
-    Call SetGoldColorInFrmMain
+    Call frmMain.SetGoldColor
 
     frmMain.GldLbl.Caption = UserGLD
 End Sub
@@ -1966,10 +1986,8 @@ Private Sub HandleUpdateExp()
     
     'Get data and update form
     UserExp = incomingData.ReadLong()
-    frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
 
-    frmMain.uAOProgressExperienceLevel.max = UserPasarNivel
-    frmMain.uAOProgressExperienceLevel.Value = UserExp
+    frmMain.UpdateProgressExperienceLevelBar (UserExp)
 End Sub
 
 ''
@@ -2146,10 +2164,10 @@ Private Sub WriteChatOverHeadInConsole(ByVal CharIndex As Integer, ByVal ChatTex
         'Si el npc tiene nombre lo escribimos en la consola
         
         If LenB(.Nombre) <> 0 Then
-            Call AddtoRichTextBox(frmMain.RecTxt, Name & "> ", NameRed, NameGreen, NameBlue, True, False, True, rtfLeft)
+            Call AddtoRichTextBox(frmMain.RecTxt, name & "> ", NameRed, NameGreen, NameBlue, True, False, True, rtfLeft)
         End If
 
-        Call AddtoRichTextBox(frmMain.RecTxt, ChatText , Red, Green, Blue, True, False, False, rtfLeft)
+        Call AddtoRichTextBox(frmMain.RecTxt, ChatText, Red, Green, Blue, True, False, False, rtfLeft)
         
     End With
     
@@ -2177,13 +2195,13 @@ On Error GoTo errhandler
     'Remove packet ID
     Call Buffer.ReadByte
     
-    Dim Chat As String
+    Dim chat As String
     Dim CharIndex As Integer
     Dim Red As Byte
     Dim Green As Byte
     Dim Blue As Byte
     
-    Chat = Buffer.ReadASCIIString()
+    chat = Buffer.ReadASCIIString()
     CharIndex = Buffer.ReadInteger()
     
     Red = Buffer.ReadByte()
@@ -2191,8 +2209,8 @@ On Error GoTo errhandler
     Blue = Buffer.ReadByte()
     
     'Only add the chat if the character exists (a CharacterRemove may have been sent to the PC / NPC area before the buffer was flushed)
-    If Char_Check(CharIndex) Then 
-        Call Dialogos.CreateDialog(Trim$(Chat), CharIndex, RGB(Red, Green, Blue))
+    If Char_Check(CharIndex) Then
+        Call Dialogos.CreateDialog(Trim$(chat), CharIndex, RGB(Red, Green, Blue))
 
         'Aqui escribimos el texto que aparece sobre la cabeza en la consola.
         Call WriteChatOverHeadInConsole(CharIndex, chat, Red, Green, Blue)
@@ -3168,17 +3186,7 @@ Private Sub HandleUpdateUserStats()
     UserPasarNivel = incomingData.ReadLong()
     UserExp = incomingData.ReadLong()
     
-    If UserPasarNivel > 0 Then
-        frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
-        frmMain.uAOProgressExperienceLevel.max = UserPasarNivel
-        frmMain.uAOProgressExperienceLevel.Value = UserExp
-    Else
-        frmMain.lblPorcLvl.Caption = "[N/A]"
-
-        'Si no tiene mas niveles que subir ponemos la barra al maximo.
-        frmMain.uAOProgressExperienceLevel.max = 100
-        frmMain.uAOProgressExperienceLevel.Value = 100
-    End If
+    frmMain.UpdateProgressExperienceLevelBar (UserExp)
     
     frmMain.GldLbl.Caption = UserGLD
     frmMain.lblLvl.Caption = UserLvl
@@ -3223,8 +3231,7 @@ Private Sub HandleUpdateUserStats()
         UserEstado = 0
     End If
 
-    Call SetGoldColorInFrmMain
-    
+    Call frmMain.SetGoldColor
 End Sub
 
 ''
@@ -4262,6 +4269,15 @@ Private Sub HandleSetInvisible()
     CharIndex = incomingData.ReadInteger()
     Call Char_SetInvisible(CharIndex, incomingData.ReadBoolean())
 
+    UserInvisible = Not UserInvisible
+
+    If UserInvisible Then
+        frmMain.timerTiempoRestanteInvisibleMensaje.Enabled = True
+        UserInvisibleSegundosRestantes = IntervaloInvisible 'Cantidad en segundos
+    Else
+        frmMain.timerTiempoRestanteInvisibleMensaje.Enabled = False
+        UserInvisibleSegundosRestantes = 0
+    End If
 End Sub
 
 ''
@@ -4935,6 +4951,15 @@ Private Sub HandleParalizeOK()
     Call incomingData.ReadByte
     
     UserParalizado = Not UserParalizado
+
+    If UserParalizado Then
+        frmMain.timerTiempoRestanteParalisisMensaje.Enabled = True
+        UserParalizadoSegundosRestantes = IntervaloParalizado 'Cantidad en segundos
+    Else
+        frmMain.timerTiempoRestanteParalisisMensaje.Enabled = False
+        UserParalizadoSegundosRestantes = 0
+    End If
+
 End Sub
 
 ''
@@ -5636,6 +5661,25 @@ Public Sub WriteLoginExistingAccount()
         Call .WriteByte(App.Revision)
     End With
 End Sub
+
+''
+' Writes the "DeleteChar" message to the outgoing data buffer.
+'
+' @remarks  The data is not actually sent until the buffer is properly flushed.
+
+Public Sub WriteDeleteChar()
+'***************************************************
+'Author: Lucas Recoaro (Recox)
+'Last Modification: 07/01/2020
+'Writes the "DeleteChar" message to the outgoing data buffer
+'***************************************************
+    With outgoingData
+        Call .WriteByte(ClientPacketID.DeleteChar)
+        
+        Call .WriteASCIIString(UserName)
+    End With
+End Sub
+
 ''
 ' Writes the "LoginExistingChar" message to the outgoing data buffer.
 '
@@ -5660,6 +5704,7 @@ Public Sub WriteLoginExistingChar()
         Call .WriteByte(App.Revision)
     End With
 End Sub
+
 Public Sub WriteLoginNewAccount()
 '***************************************************
 'Author: Juan Andres Dalmasso (CHOTS)
@@ -7971,7 +8016,7 @@ Public Sub WriteComment(ByVal Message As String)
 '***************************************************
     With outgoingData
         Call .WriteByte(ClientPacketID.GMCommands)
-        Call .WriteByte(eGMCommands.Comment)
+        Call .WriteByte(eGMCommands.comment)
         
         Call .WriteASCIIString(Message)
     End With
@@ -8565,7 +8610,7 @@ Public Sub WriteBanChar(ByVal UserName As String, ByVal Reason As String)
 '***************************************************
     With outgoingData
         Call .WriteByte(ClientPacketID.GMCommands)
-        Call .WriteByte(eGMCommands.banChar)
+        Call .WriteByte(eGMCommands.BanChar)
         
         Call .WriteASCIIString(UserName)
         
@@ -8731,7 +8776,7 @@ Public Sub WriteNickToIP(ByVal UserName As String)
 '***************************************************
     With outgoingData
         Call .WriteByte(ClientPacketID.GMCommands)
-        Call .WriteByte(eGMCommands.nickToIP)
+        Call .WriteByte(eGMCommands.NickToIP)
         
         Call .WriteASCIIString(UserName)
     End With
@@ -9174,7 +9219,7 @@ Public Sub WriteDumpIPTables()
 'Writes the "DumpIPTables" message to the outgoing data buffer
 '***************************************************
     Call outgoingData.WriteByte(ClientPacketID.GMCommands)
-    Call outgoingData.WriteByte(eGMCommands.dumpIPTables)
+    Call outgoingData.WriteByte(eGMCommands.DumpIPTables)
 End Sub
 
 ''
@@ -10962,6 +11007,15 @@ Private Sub HandleAccountLogged()
     AccountHash = Buffer.ReadASCIIString
     NumberOfCharacters = Buffer.ReadByte
 
+    'TODO: Mover todo estos datos que obtenemos del servidor a la funciona que se creara cuando querramos ver una lista mas completa de servers
+    ' Aca sobreescribimos el valor del nivel maximo ya que puede variar por servidor
+    STAT_MAXELV = Buffer.ReadByte
+
+    'Obtenemos valor de algunos intervalos necesarios para mostrar informacion en el render
+    'TODO: obtener del server
+    IntervaloParalizado = 23 ' Segundos
+    IntervaloInvisible = 23 ' Segundos
+
     frmPanelAccount.Show
 
     If NumberOfCharacters > 0 Then
@@ -11384,4 +11438,35 @@ Public Sub WriteCloseGuild()
 
 End Sub
 
+''
+' Writes the "LimpiarMundo" message to the outgoing data buffer.
+'
+' @remarks  The data is not actually sent until the buffer is properly flushed.
 
+Public Sub WriteLimpiarMundo()
+'***************************************************
+'Author: Jopi
+'Last Modification: 11/01/2020
+'Writes the "LimpiarMundo" message to the outgoing data buffer
+'***************************************************
+    
+    With outgoingData
+        Call .WriteByte(ClientPacketID.GMCommands)
+        Call .WriteByte(eGMCommands.LimpiarMundo)
+    End With
+End Sub
+    
+' Handles the EquitandoToggle message.
+Private Sub HandleEquitandoToggle()
+'***************************************************
+'Author: Lorwik
+'Last Modification: 23/08/11
+'
+'***************************************************
+    'Remove packet ID
+    Call incomingData.ReadByte
+    
+    UserEquitando = Not UserEquitando
+    
+    Call SetSpeedUsuario
+End Sub

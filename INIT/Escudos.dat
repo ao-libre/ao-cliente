@@ -1,7 +1,7 @@
 'Oso: NO USEN EL ESCUDO 2 (Es "No Animar" ^^)
 
 [INIT]
-NumEscudos=24
+NumEscudos=26
 
 [ESC1]
 Dir1=4727 'norte
@@ -140,3 +140,14 @@ Dir1=28385
 Dir2=28387
 Dir3=28384
 Dir4=28386
+[ESC25]
+Nombre=Escudo de neo
+Dir3=29122
+Dir1=29123
+Dir4=29124
+Dir2=29125
+[ESC26]
+Dir1=29310
+Dir2=29312
+Dir3=29309
+Dir4=29311

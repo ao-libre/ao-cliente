@@ -28,12 +28,24 @@ Begin VB.Form frmMain
    MaxButton       =   0   'False
    MinButton       =   0   'False
    PaletteMode     =   1  'UseZOrder
-   Picture         =   "frmMain.frx":030A
+   Picture         =   "frmMain.frx":1856A
    ScaleHeight     =   599
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   800
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
+   Begin VB.Timer timerTiempoRestanteInvisibleMensaje 
+      Enabled         =   0   'False
+      Interval        =   1000
+      Left            =   960
+      Top             =   2880
+   End
+   Begin VB.Timer timerTiempoRestanteParalisisMensaje 
+      Enabled         =   0   'False
+      Interval        =   1000
+      Left            =   360
+      Top             =   2880
+   End
    Begin AOLibre.uAOProgress uAOProgressExperienceLevel 
       Height          =   255
       Left            =   9120
@@ -79,14 +91,15 @@ Begin VB.Form frmMain
    Begin VB.PictureBox MiniMapa 
       AutoRedraw      =   -1  'True
       BackColor       =   &H80000007&
+      BorderStyle     =   0  'None
       Height          =   1500
       Left            =   6840
-      ScaleHeight     =   96
+      ScaleHeight     =   100
       ScaleMode       =   3  'Pixel
-      ScaleWidth      =   96
+      ScaleWidth      =   100
       TabIndex        =   39
       TabStop         =   0   'False
-      Top             =   240
+      Top             =   300
       Width           =   1500
       Begin VB.Shape UserAreaMinimap 
          BackColor       =   &H80000004&
@@ -195,14 +208,14 @@ Begin VB.Form frmMain
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00E0E0E0&
+      ForeColor       =   &H00808080&
       Height          =   315
       Left            =   240
       MaxLength       =   160
       MultiLine       =   -1  'True
       TabIndex        =   2
       TabStop         =   0   'False
-      Text            =   "frmMain.frx":39C47
+      Text            =   "frmMain.frx":51EA7
       ToolTipText     =   "Chat"
       Top             =   2325
       Visible         =   0   'False
@@ -225,14 +238,14 @@ Begin VB.Form frmMain
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H80000018&
+      ForeColor       =   &H00808080&
       Height          =   315
       Left            =   240
       MaxLength       =   160
       MultiLine       =   -1  'True
       TabIndex        =   1
       TabStop         =   0   'False
-      Text            =   "frmMain.frx":39C77
+      Text            =   "frmMain.frx":51ED7
       ToolTipText     =   "Chat"
       Top             =   7950
       Visible         =   0   'False
@@ -265,7 +278,7 @@ Begin VB.Form frmMain
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
-      TextRTF         =   $"frmMain.frx":39CAD
+      TextRTF         =   $"frmMain.frx":51F0D
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Tahoma"
          Size            =   8.25
@@ -319,10 +332,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":39D2A
-      PICF            =   "frmMain.frx":3A754
-      PICH            =   "frmMain.frx":3B416
-      PICV            =   "frmMain.frx":3C3A8
+      PICE            =   "frmMain.frx":51F8A
+      PICF            =   "frmMain.frx":529B4
+      PICH            =   "frmMain.frx":53676
+      PICV            =   "frmMain.frx":54608
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -346,10 +359,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":3D2AA
-      PICF            =   "frmMain.frx":3DCD4
-      PICH            =   "frmMain.frx":3E996
-      PICV            =   "frmMain.frx":3F928
+      PICE            =   "frmMain.frx":5550A
+      PICF            =   "frmMain.frx":55F34
+      PICH            =   "frmMain.frx":56BF6
+      PICV            =   "frmMain.frx":57B88
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -373,10 +386,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":4082A
-      PICF            =   "frmMain.frx":41254
-      PICH            =   "frmMain.frx":41F16
-      PICV            =   "frmMain.frx":42EA8
+      PICE            =   "frmMain.frx":58A8A
+      PICF            =   "frmMain.frx":594B4
+      PICH            =   "frmMain.frx":5A176
+      PICV            =   "frmMain.frx":5B108
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -400,10 +413,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":43DAA
-      PICF            =   "frmMain.frx":447D4
-      PICH            =   "frmMain.frx":45496
-      PICV            =   "frmMain.frx":46428
+      PICE            =   "frmMain.frx":5C00A
+      PICF            =   "frmMain.frx":5CA34
+      PICH            =   "frmMain.frx":5D6F6
+      PICV            =   "frmMain.frx":5E688
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -427,10 +440,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":4732A
-      PICF            =   "frmMain.frx":47D54
-      PICH            =   "frmMain.frx":48A16
-      PICV            =   "frmMain.frx":499A8
+      PICE            =   "frmMain.frx":5F58A
+      PICF            =   "frmMain.frx":5FFB4
+      PICH            =   "frmMain.frx":60C76
+      PICV            =   "frmMain.frx":61C08
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -454,10 +467,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":4A8AA
-      PICF            =   "frmMain.frx":4B2D4
-      PICH            =   "frmMain.frx":4BF96
-      PICV            =   "frmMain.frx":4CF28
+      PICE            =   "frmMain.frx":62B0A
+      PICF            =   "frmMain.frx":63534
+      PICH            =   "frmMain.frx":641F6
+      PICV            =   "frmMain.frx":65188
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -481,10 +494,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":4DE2A
-      PICF            =   "frmMain.frx":4E854
-      PICH            =   "frmMain.frx":4F516
-      PICV            =   "frmMain.frx":504A8
+      PICE            =   "frmMain.frx":6608A
+      PICF            =   "frmMain.frx":66AB4
+      PICH            =   "frmMain.frx":67776
+      PICV            =   "frmMain.frx":68708
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -509,10 +522,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":513AA
-      PICF            =   "frmMain.frx":51DD4
-      PICH            =   "frmMain.frx":52A96
-      PICV            =   "frmMain.frx":53A28
+      PICE            =   "frmMain.frx":6960A
+      PICF            =   "frmMain.frx":6A034
+      PICH            =   "frmMain.frx":6ACF6
+      PICV            =   "frmMain.frx":6BC88
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   15.75
@@ -537,10 +550,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":5492A
-      PICF            =   "frmMain.frx":55354
-      PICH            =   "frmMain.frx":56016
-      PICV            =   "frmMain.frx":56FA8
+      PICE            =   "frmMain.frx":6CB8A
+      PICF            =   "frmMain.frx":6D5B4
+      PICH            =   "frmMain.frx":6E276
+      PICV            =   "frmMain.frx":6F208
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   15.75
@@ -557,10 +570,10 @@ Begin VB.Form frmMain
       Caption         =   "Nombre del mapa"
       ForeColor       =   &H80000014&
       Height          =   255
-      Left            =   6000
+      Left            =   2880
       TabIndex        =   41
       Top             =   1875
-      Width           =   2295
+      Width           =   5415
    End
    Begin VB.Image imgAsignarSkill 
       Height          =   450
@@ -610,9 +623,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   0
       Left            =   11430
-      MouseIcon       =   "frmMain.frx":57EAA
+      MouseIcon       =   "frmMain.frx":7010A
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":57FFC
+      Picture         =   "frmMain.frx":7025C
       Top             =   3480
       Visible         =   0   'False
       Width           =   225
@@ -621,9 +634,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   1
       Left            =   11430
-      MouseIcon       =   "frmMain.frx":58340
+      MouseIcon       =   "frmMain.frx":705A0
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":58492
+      Picture         =   "frmMain.frx":706F2
       Top             =   3225
       Visible         =   0   'False
       Width           =   225
@@ -1043,9 +1056,15 @@ Attribute Client.VB_VarHelpID = -1
 
 Private ChangeHechi        As Boolean, ChangeHechiNum As Integer
 
+Private FirstTimeChat      As Boolean
+Private FirstTimeClanChat  As Boolean
+
 'Usado para controlar que no se dispare el binding de la tecla CTRL cuando se usa CTRL+Tecla.
 Dim CtrlMaskOn             As Boolean
 Dim SkinSeleccionado       As String
+
+Private Const NEWBIE_USER_GOLD_COLOR As Long = vbCyan
+Private Const USER_GOLD_COLOR As Long = vbYellow
 
 Private Declare Function SetWindowLong _
                 Lib "user32" _
@@ -1097,6 +1116,9 @@ Private Sub Form_Load()
     Call SetWindowLong(RecTxt.hWnd, -20, &H20&)
     
     CtrlMaskOn = False
+    
+    FirstTimeChat = True
+    FirstTimeClanChat = True
 End Sub
 
 Private Sub LoadTextsForm()
@@ -1853,7 +1875,24 @@ Private Sub RecTxt_MouseMove(Button As Integer, _
     StartCheckingLinks
 End Sub
 
+Private Sub SendCMSTXT_KeyDown(KeyCode As Integer, Shift As Integer)
+    ' Para borrar el mensaje del chat de clanes
+    If FirstTimeClanChat Then
+        SendCMSTXT.Text = vbNullString
+        FirstTimeClanChat = False
+        ' Color original
+        SendCMSTXT.ForeColor = &H80000018
+    End If
+End Sub
+
 Private Sub SendTxt_KeyDown(KeyCode As Integer, Shift As Integer)
+    ' Para borrar el mensaje de fondo
+    If FirstTimeChat Then
+        SendTxt.Text = vbNullString
+        FirstTimeChat = False
+        ' Cambiamos el color de texto al original
+        SendTxt.ForeColor = &HE0E0E0
+    End If
     
     ' Control + Shift
     If Shift = 3 Then
@@ -2626,58 +2665,7 @@ Private Sub Client_CloseSck()
     
     Debug.Print "Cerrando la conexion via API de Windows..."
 
-    Dim i As Long
-        
-    Second.Enabled = False
-    Connected = False
-    
-    If Client.State <> sckClosed Then Client.CloseSck
-
-    frmConnect.MousePointer = vbNormal
-    
-    Do While i < Forms.Count - 1
-        i = i + 1
-        
-        If Forms(i).name <> Me.name And Forms(i).name <> frmConnect.name And Forms(i).name <> frmCrearPersonaje.name Then
-            Unload Forms(i)
-        End If
-    Loop
-    
-    On Local Error GoTo 0
-    
-    If Not frmCrearPersonaje.Visible Then
-        frmConnect.Visible = True
-    End If
-    
-    frmMain.Visible = False
- 
-    pausa = False
-    UserMeditar = False
- 
-    frmMain.Visible = False
-
-    pausa = False
-    UserMeditar = False
-
-    UserClase = 0
-    UserSexo = 0
-    UserRaza = 0
-    UserHogar = 0
-    UserEmail = vbNullString
-    
-    For i = 1 To NUMSKILLS
-        UserSkills(i) = 0
-    Next i
-
-    For i = 1 To NUMATRIBUTOS
-        UserAtributos(i) = 0
-    Next i
-
-    SkillPoints = 0
-    Alocados = 0
-
-    Dialogos.RemoveAllDialogs
-    
+    Call ResetAllInfo
 End Sub
 
 Private Sub Client_Error(ByVal number As Integer, _
@@ -2796,6 +2784,18 @@ Public Sub DesactivarMacroHechizos()
     Call ControlSM(eSMType.mSpells, False)
 End Sub
 
+Private Sub timerTiempoRestanteInvisibleMensaje_Timer()
+    If UserInvisible Then
+        UserInvisibleSegundosRestantes = UserInvisibleSegundosRestantes - 1
+    End If
+End Sub
+
+Private Sub timerTiempoRestanteParalisisMensaje_Timer()
+    If UserParalizado Then
+        UserParalizadoSegundosRestantes = UserParalizadoSegundosRestantes - 1
+    End If
+End Sub
+
 Private Sub trainingMacro_Timer()
 
     If Not hlst.Visible Then
@@ -2824,4 +2824,30 @@ Private Sub trainingMacro_Timer()
     
     Call WriteWorkLeftClick(TX, TY, UsingSkill)
     UsingSkill = 0
+End Sub
+
+Public Sub UpdateProgressExperienceLevelBar(ByVal UserExp As Long)
+    If UserLvl = STAT_MAXELV Then
+        frmMain.lblPorcLvl.Caption = "[N/A]"
+
+        'Si no tiene mas niveles que subir ponemos la barra al maximo.
+        frmMain.uAOProgressExperienceLevel.max = 100
+        frmMain.uAOProgressExperienceLevel.Value = 100
+    Else
+        frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
+        frmMain.uAOProgressExperienceLevel.max = UserPasarNivel
+        frmMain.uAOProgressExperienceLevel.Value = UserExp
+    End If
+End Sub
+
+Public Sub SetGoldColor()
+
+    If UserGLD >= CLng(UserLvl) * 10000 And UserLvl > 12 Then 'Si el nivel es mayor de 12, es decir, no es newbie.
+        'Changes color
+        frmMain.GldLbl.ForeColor = USER_GOLD_COLOR
+    Else
+        'Changes color
+        frmMain.GldLbl.ForeColor = NEWBIE_USER_GOLD_COLOR
+    End If
+
 End Sub
