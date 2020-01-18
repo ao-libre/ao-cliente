@@ -4265,18 +4265,18 @@ Private Sub HandleSetInvisible()
     Call incomingData.ReadByte
     
     Dim CharIndex As Integer
+    Dim timeRemaining As Integer
     
     CharIndex = incomingData.ReadInteger()
-    Call Char_SetInvisible(CharIndex, incomingData.ReadBoolean())
-
-    UserInvisible = Not UserInvisible
-
-    If UserInvisible Then
+    UserInvisible = incomingData.ReadBoolean()
+    Call Char_SetInvisible(CharIndex, UserInvisible)
+    
+    timeRemaining = incomingData.ReadInteger()
+    UserInvisibleSegundosRestantes = IIf(timeRemaining <> 0, timeRemaining * 0.04, 0) 'Cantidad en segundos
+    If UserInvisible And UserInvisibleSegundosRestantes <> 0 Then
         frmMain.timerTiempoRestanteInvisibleMensaje.Enabled = True
-        UserInvisibleSegundosRestantes = IntervaloInvisible 'Cantidad en segundos
     Else
         frmMain.timerTiempoRestanteInvisibleMensaje.Enabled = False
-        UserInvisibleSegundosRestantes = 0
     End If
 End Sub
 
@@ -4949,15 +4949,14 @@ Private Sub HandleParalizeOK()
 '***************************************************
     'Remove packet ID
     Call incomingData.ReadByte
-    
+    Dim timeRemaining As Integer
     UserParalizado = Not UserParalizado
-
-    If UserParalizado Then
+    timeRemaining = incomingData.ReadInteger()
+    UserParalizadoSegundosRestantes = IIf(timeRemaining <> 0, (timeRemaining * 0.04), 0) 'Cantidad en segundos
+    If UserParalizado And timeRemaining <> 0 Then
         frmMain.timerTiempoRestanteParalisisMensaje.Enabled = True
-        UserParalizadoSegundosRestantes = IntervaloParalizado 'Cantidad en segundos
     Else
         frmMain.timerTiempoRestanteParalisisMensaje.Enabled = False
-        UserParalizadoSegundosRestantes = 0
     End If
 
 End Sub
@@ -11010,11 +11009,6 @@ Private Sub HandleAccountLogged()
     'TODO: Mover todo estos datos que obtenemos del servidor a la funciona que se creara cuando querramos ver una lista mas completa de servers
     ' Aca sobreescribimos el valor del nivel maximo ya que puede variar por servidor
     STAT_MAXELV = Buffer.ReadByte
-
-    'Obtenemos valor de algunos intervalos necesarios para mostrar informacion en el render
-    'TODO: obtener del server
-    IntervaloParalizado = 23 ' Segundos
-    IntervaloInvisible = 23 ' Segundos
 
     frmPanelAccount.Show
 
