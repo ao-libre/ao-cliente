@@ -11076,25 +11076,16 @@ Private Sub HandleSearchList()
  
         Dim num   As Integer
         Dim Datos As String
-        Dim Obj   As Boolean
+        Dim obj   As Boolean
         
         'Remove packet ID
         Call incomingData.ReadByte
    
         num = incomingData.ReadInteger()
-        Obj = incomingData.ReadBoolean()
- 
-        If Not num = 0 Then
-                If Obj = True Then
-                        frmBuscar.ListCrearObj.AddItem num
-                Else
-                        frmBuscar.ListCrearNpcs.AddItem num
-                End If
-        End If
- 
+        obj = incomingData.ReadBoolean()
         Datos = incomingData.ReadASCIIString()
  
-        frmBuscar.List1.AddItem Datos
+        Call frmBuscar.AddItem(num, obj, Datos)
  
 End Sub
 

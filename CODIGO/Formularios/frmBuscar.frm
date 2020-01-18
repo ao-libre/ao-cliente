@@ -2,44 +2,18 @@ VERSION 5.00
 Begin VB.Form frmBuscar 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Buscador de Objetos y NPC's"
-   ClientHeight    =   6855
+   ClientHeight    =   6105
    ClientLeft      =   45
    ClientTop       =   435
-   ClientWidth     =   7575
+   ClientWidth     =   5175
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   6855
-   ScaleWidth      =   7575
+   ScaleHeight     =   6105
+   ScaleWidth      =   5175
    StartUpPosition =   1  'CenterOwner
-   Begin VB.CheckBox chkRespawn 
-      Caption         =   "Respawn"
-      BeginProperty Font 
-         Name            =   "Arial"
-         Size            =   9
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   255
-      Left            =   6000
-      TabIndex        =   14
-      Top             =   2040
-      Width           =   1095
-   End
-   Begin VB.TextBox txtCantidad 
-      Alignment       =   2  'Center
-      Height          =   375
-      Left            =   6840
-      TabIndex        =   12
-      Text            =   "1"
-      Top             =   1080
-      Width           =   495
-   End
-   Begin VB.CommandButton Limpiarlistas 
-      Caption         =   "Limpiar Listas"
+   Begin VB.CommandButton Limpiarlista 
+      Caption         =   "Limpiar lista"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   9.75
@@ -51,38 +25,20 @@ Begin VB.Form frmBuscar
       EndProperty
       Height          =   375
       Left            =   120
-      TabIndex        =   11
-      Top             =   6360
-      Width           =   7335
+      TabIndex        =   4
+      Top             =   5640
+      Width           =   4935
    End
-   Begin VB.ListBox ListCrearNpcs 
-      Height          =   3375
-      ItemData        =   "frmBuscar.frx":0000
-      Left            =   960
-      List            =   "frmBuscar.frx":0002
-      TabIndex        =   8
-      Top             =   2640
-      Width           =   735
-   End
-   Begin VB.ListBox ListCrearObj 
-      Height          =   3375
-      ItemData        =   "frmBuscar.frx":0004
-      Left            =   120
-      List            =   "frmBuscar.frx":0006
-      TabIndex        =   6
-      Top             =   2640
-      Width           =   735
-   End
-   Begin VB.ListBox List1 
+   Begin VB.ListBox Resultados 
       Height          =   3765
-      ItemData        =   "frmBuscar.frx":0008
-      Left            =   1800
-      List            =   "frmBuscar.frx":000A
-      TabIndex        =   5
-      Top             =   2400
-      Width           =   5655
+      ItemData        =   "frmBuscar.frx":0000
+      Left            =   120
+      List            =   "frmBuscar.frx":0002
+      TabIndex        =   3
+      Top             =   1800
+      Width           =   4935
    End
-   Begin VB.CommandButton Command2 
+   Begin VB.CommandButton BuscarNPCs 
       Caption         =   "Buscar NPCs"
       BeginProperty Font 
          Name            =   "Tahoma"
@@ -94,13 +50,13 @@ Begin VB.Form frmBuscar
          Strikethrough   =   0   'False
       EndProperty
       Height          =   375
-      Left            =   2400
-      TabIndex        =   3
-      Top             =   1920
-      Width           =   2775
+      Left            =   2640
+      TabIndex        =   2
+      Top             =   1080
+      Width           =   2415
    End
-   Begin VB.CommandButton Command1 
-      Caption         =   "Buscar Objetos."
+   Begin VB.CommandButton BuscarObjetos 
+      Caption         =   "Buscar Objetos"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   8.25
@@ -111,100 +67,41 @@ Begin VB.Form frmBuscar
          Strikethrough   =   0   'False
       EndProperty
       Height          =   375
-      Left            =   2400
-      MaskColor       =   &H8000000F&
-      TabIndex        =   2
-      Top             =   1080
-      Width           =   2775
-   End
-   Begin VB.TextBox NPCs 
-      BackColor       =   &H00FFFFFF&
-      Height          =   285
       Left            =   120
+      MaskColor       =   &H8000000F&
       TabIndex        =   1
-      Top             =   1560
-      Width           =   7335
+      Top             =   1080
+      Width           =   2415
    End
-   Begin VB.TextBox Objetos 
+   Begin VB.TextBox Busqueda 
       BackColor       =   &H00FFFFFF&
+      ForeColor       =   &H00808080&
       Height          =   285
       Left            =   120
       TabIndex        =   0
+      Text            =   "Ingresa parte del nombre del objeto o NPC a buscar"
       Top             =   720
-      Width           =   7335
+      Width           =   4935
    End
-   Begin VB.Label Label2 
-      AutoSize        =   -1  'True
+   Begin VB.Label Info 
+      Alignment       =   2  'Center
       BackStyle       =   0  'Transparent
-      Caption         =   "Cantidad:"
+      Caption         =   "<Clic derecho sobre el item para crear>"
       BeginProperty Font 
-         Name            =   "Arial"
-         Size            =   9
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
          Charset         =   0
          Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   225
-      Left            =   6000
-      TabIndex        =   13
-      Top             =   1155
-      Width           =   795
-   End
-   Begin VB.Label CrearObjetos 
-      Alignment       =   2  'Center
-      Caption         =   "Objetos"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       Height          =   255
       Left            =   120
-      TabIndex        =   10
-      Top             =   2280
-      Width           =   735
-   End
-   Begin VB.Label CrearNPCs 
-      Alignment       =   2  'Center
-      Caption         =   "NPC's"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   255
-      Left            =   960
-      TabIndex        =   9
-      Top             =   2280
-      Width           =   735
-   End
-   Begin VB.Label Crear 
-      Alignment       =   2  'Center
-      Caption         =   "Crear"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   11.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   255
-      Left            =   600
-      TabIndex        =   7
-      Top             =   1920
-      Width           =   615
+      TabIndex        =   6
+      Top             =   1560
+      Visible         =   0   'False
+      Width           =   4935
    End
    Begin VB.Label lblTitle 
       Alignment       =   2  'Center
@@ -220,8 +117,8 @@ Begin VB.Form frmBuscar
       EndProperty
       ForeColor       =   &H00000000&
       Height          =   495
-      Left            =   2520
-      TabIndex        =   4
+      Left            =   1320
+      TabIndex        =   5
       Top             =   120
       Width           =   2535
    End
@@ -229,14 +126,32 @@ Begin VB.Form frmBuscar
       Caption         =   "Crear Objeto"
       Visible         =   0   'False
       Begin VB.Menu mnuCrearObj 
-         Caption         =   "Crear Objeto?"
+         Caption         =   "Crear 1"
+         Index           =   0
+      End
+      Begin VB.Menu mnuCrearObj 
+         Caption         =   "Crear 10"
+         Index           =   1
+      End
+      Begin VB.Menu mnuCrearObj 
+         Caption         =   "Crear 100"
+         Index           =   2
+      End
+      Begin VB.Menu mnuCrearObj 
+         Caption         =   "Crear N"
+         Index           =   3
       End
    End
    Begin VB.Menu mnuCrearN 
       Caption         =   "Crear NPC"
       Visible         =   0   'False
       Begin VB.Menu mnuCrearNPC 
-         Caption         =   "Crear NPC?"
+         Caption         =   "Crear NPC"
+         Index           =   0
+      End
+      Begin VB.Menu mnuCrearNPC 
+         Caption         =   "Crear con Respawn"
+         Index           =   1
       End
    End
 End
@@ -247,118 +162,148 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
+Private MensajeBusqueda As Boolean
+Private BusquedaObjetos As Boolean
+
+Public Sub AddItem(ByVal num As Integer, ByVal obj As Boolean, data As String)
+    Resultados.AddItem data
+    Resultados.ItemData(Resultados.ListCount - 1) = num
+    
+    If Not Info.Visible Or obj <> BusquedaObjetos Then
+        If obj Then
+            Info.Caption = JsonLanguage.item("FRMBUSCAR_INFO_OBJ").item("TEXTO")
+        Else
+            Info.Caption = JsonLanguage.item("FRMBUSCAR_INFO_NPC").item("TEXTO")
+        End If
+        Info.Visible = True
+    End If
+    
+    BusquedaObjetos = obj
+End Sub
+
 Private Sub Form_Load()
    Call LoadTextsForm
+   
+   Info.Visible = False
+   MensajeBusqueda = True
 End Sub
 
 Private Sub LoadTextsForm()
-   lblTitle.Caption = JsonLanguage.Item("FRMBUSCAR_TITLE").Item("TEXTO")
-   Crear.Caption = JsonLanguage.Item("FRMBUSCAR_CREAR").Item("TEXTO")
-   CrearNPCs.Caption = JsonLanguage.Item("FRMBUSCAR_CREARNPCS").Item("TEXTO")
-   CrearObjetos.Caption = JsonLanguage.Item("FRMBUSCAR_CREAROBJETOS").Item("TEXTO")
-   Label2.Caption = JsonLanguage.Item("FRMBUSCAR_CANTIDAD").Item("TEXTO")
-   chkRespawn.Caption = JsonLanguage.Item("FRMBUSCAR_RESPAWN").Item("TEXTO")
-   Command1.Caption = JsonLanguage.Item("FRMBUSCAR_BUSCAROBJETO").Item("TEXTO")
-   Command2.Caption = JsonLanguage.Item("FRMBUSCAR_BUSCARNPCS").Item("TEXTO")
-   Limpiarlistas.Caption = JsonLanguage.Item("FRMBUSCAR_LIMPIARLISTAS").Item("TEXTO")
+    lblTitle.Caption = JsonLanguage.item("FRMBUSCAR_TITLE").item("TEXTO")
+    BuscarObjetos.Caption = JsonLanguage.item("FRMBUSCAR_BUSCAROBJETO").item("TEXTO")
+    BuscarNPCs.Caption = JsonLanguage.item("FRMBUSCAR_BUSCARNPCS").item("TEXTO")
+    Limpiarlista.Caption = JsonLanguage.item("FRMBUSCAR_LIMPIARLISTAS").item("TEXTO")
+    Busqueda.Text = JsonLanguage.item("FRMBUSCAR_BUSQUEDA_TOOLTIP").item("TEXTO")
 End Sub
 
-Private Sub Command1_Click()
-       
-        ' traduccion de 'objeto'
-        Dim tObjeto As String
-            tObjeto = JsonLanguage.Item("OBJETO").Item("TEXTO")
-        
-        ' Seamos un poco mas especificos y evitemos un overflow ^-^
-        If Len(Objetos.Text) < 4 Then
-            MsgBox Replace$(JsonLanguage.Item("ERROR_BUSCAR_MUY_CORTO").Item("TEXTO"), "VAR_TARGET", tObjeto), vbApplicationModal
-            Exit Sub
-        End If
-        
-        'Limpiamos las listas antes.
-        Call Limpiarlistas_Click
-        
-        If Len(Objetos.Text) <> 0 Then
-            Call WriteSearchObj(Objetos.Text)
-        End If
-
+Private Sub BuscarObjetos_Click()
+    ' traduccion de 'objeto'
+    Dim tObjeto As String
+    tObjeto = JsonLanguage.item("OBJETO").item("TEXTO")
+    
+    ' Seamos un poco mas especificos y evitemos un overflow ^-^
+    If Len(Busqueda.Text) < 4 Then
+        MsgBox Replace$(JsonLanguage.item("ERROR_BUSCAR_MUY_CORTO").item("TEXTO"), "VAR_TARGET", tObjeto), vbApplicationModal
+        Exit Sub
+    End If
+    
+    'Limpiamos la lista antes.
+    Resultados.Clear
+    
+    If Not MensajeBusqueda And Len(Busqueda.Text) <> 0 Then
+        Call WriteSearchObj(Busqueda.Text)
+    End If
 End Sub
 
-Private Sub Command2_Click()
-        
-        ' Seamos un poco mas especificos y evitemos un overflow ^-^
-        If Len(NPCs.Text) < 4 Then
-            MsgBox Replace$(JsonLanguage.Item("ERROR_BUSCAR_MUY_CORTO").Item("TEXTO"), "VAR_TARGET", "NPC"), vbApplicationModal
-            Exit Sub
-        End If
-        
-        'Limpiamos las listas antes.
-        Call Limpiarlistas_Click
-        
-        If Len(NPCs.Text) <> 0 Then
-            Call WriteSearchNpc(NPCs.Text)
-        End If
+Private Sub BuscarNPCs_Click()
+    ' Seamos un poco mas especificos y evitemos un overflow ^-^
+    If Len(Busqueda.Text) < 4 Then
+        MsgBox Replace$(JsonLanguage.item("ERROR_BUSCAR_MUY_CORTO").item("TEXTO"), "VAR_TARGET", "NPC"), vbApplicationModal
+        Exit Sub
+    End If
+    
+    'Limpiamos la lista antes.
+    Resultados.Clear
+    
+    If Not MensajeBusqueda And Len(Busqueda.Text) <> 0 Then
+        Call WriteSearchNpc(Busqueda.Text)
+    End If
 
 End Sub
 
-Private Sub Limpiarlistas_Click()
-
-        ListCrearNpcs.Clear
-        
-        List1.Clear
-        
-        ListCrearObj.Clear
+Private Sub Busqueda_KeyDown(KeyCode As Integer, Shift As Integer)
+    If MensajeBusqueda Then
+        Busqueda = vbNullString
+        Busqueda.ForeColor = vbBlack
+        MensajeBusqueda = False
+    End If
 End Sub
 
-Private Sub ListCrearNpcs_MouseDown(Button As Integer, _
-                                    Shift As Integer, _
-                                    X As Single, _
-                                    Y As Single)
+Private Sub Limpiarlista_Click()
+    Resultados.Clear
+End Sub
 
-        If Button = vbRightButton Then
+Private Sub Resultados_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    If Button = vbRightButton And Resultados.ListIndex >= 0 Then
+        If BusquedaObjetos Then
+            PopupMenu mnuCrearO
+        Else
             PopupMenu mnuCrearN
         End If
-
+    End If
 End Sub
 
-Private Sub ListCrearObj_MouseDown(Button As Integer, _
-                                   Shift As Integer, _
-                                   X As Single, _
-                                   Y As Single)
+Private Sub mnuCrearObj_Click(Index As Integer)
+    Dim Numero As Integer
+    Dim cantidad As Integer
+    
+    Select Case Index
+        Case 0
+            cantidad = 1
+        Case 1
+            cantidad = 10
+        Case 2
+            cantidad = 100
+        Case 3
+            cantidad = Val(InputBox(JsonLanguage.item("FRMBUSCAR_INGRESE_CANTIDAD").item("TEXTO"), JsonLanguage.item("FRMBUSCAR_CANTIDAD").item("TEXTO"), vbApplicationModal))
+            
+            If cantidad <= 0 Then
+                Exit Sub
+            ElseIf cantidad > MAX_INVENTORY_OBJS Then
+                cantidad = MAX_INVENTORY_OBJS
+            End If
+    End Select
 
-        If Button = vbRightButton Then
-            PopupMenu mnuCrearO
-        End If
-
+    'Parche para evitar que no se seleccione un item y al querer crearlo explote el juego (Recox)
+    If Resultados.ListIndex < 0 Then
+        MsgBox (JsonLanguage.item("FRMBUSCAR_SELECCIONE_ITEM").item("TEXTO"))
+        Exit Sub
+    End If
+    
+    Numero = Resultados.ItemData(Resultados.ListIndex)
+    
+    If Numero > 0 Then
+        Call WriteCreateItem(Resultados.ItemData(Resultados.ListIndex), cantidad)
+    End If
 End Sub
 
-Private Sub mnuCrearObj_Click()
-   'Parche para evitar que no se seleccione un item y al querer crearlo explote el juego (Recox)
-   If ListCrearObj.Text = "" Then 
-      MsgBox(JsonLanguage.Item("FRMBUSCAR_SELECCIONE_ITEM").Item("TEXTO"))
-      Exit Sub
-   End If
-
-   'Parche para evitar crear mas items que los permitidos en el inventario y explote el juego (Recox)
-   If LenB(txtCantidad.Text) > MAX_INVENTORY_OBJS Then 
-      txtCantidad.Text = MAX_INVENTORY_OBJS
-   End If
-
-   If ListCrearObj.Visible And LenB(txtCantidad.Text) > 0 Then
-      Call WriteCreateItem(ListCrearObj.Text, txtCantidad.Text)
-   End If
-End Sub
-
-Private Sub mnuCrearNPC_Click()
-   'Parche para evitar que no se seleccione un item y al querer crearlo explote el juego (Recox)
-   If ListCrearNpcs.Text = "" Then 
-      MsgBox(JsonLanguage.Item("FRMBUSCAR_SELECCIONE_ITEM").Item("TEXTO"))
-      Exit Sub
-   End If
-
-   If ListCrearNpcs.Visible Then
-      Call WriteCreateNPC(ListCrearNpcs.Text, CBool(chkRespawn.Value))
-   End If
+Private Sub mnuCrearNPC_Click(Index As Integer)
+    Dim Numero As Integer
+    Dim Respawn As Boolean
+    
+    If Index = 1 Then Respawn = True
+    
+    'Parche para evitar que no se seleccione un item y al querer crearlo explote el juego (Recox)
+    If Resultados.ListIndex < 0 Then
+        MsgBox (JsonLanguage.item("FRMBUSCAR_SELECCIONE_ITEM").item("TEXTO"))
+        Exit Sub
+    End If
+    
+    Numero = Resultados.ItemData(Resultados.ListIndex)
+    
+    If Numero > 0 Then
+        Call WriteCreateNPC(Numero, Respawn)
+    End If
 End Sub
 
 'Parche: Al cerrar el formulario tambien te desconecta hahahaha ^_^'

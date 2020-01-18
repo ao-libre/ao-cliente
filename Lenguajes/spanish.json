@@ -1256,32 +1256,32 @@
     "FRMBUSCAR_TITLE": {
         "TEXTO": "Buscador"
     },
-    "FRMBUSCAR_CREAR": {
-        "TEXTO": "Crear"
-    },
-    "FRMBUSCAR_CREARNPCS": {
-        "TEXTO": "Npcs"
-    },
-    "FRMBUSCAR_CREAROBJETOS": {
-        "TEXTO": "Objetos"
-    },
     "FRMBUSCAR_CANTIDAD": {
         "TEXTO": "Cantidad"
     },
-    "FRMBUSCAR_RESPAWN": {
-        "TEXTO": "Respawn"
+    "FRMBUSCAR_INGRESE_CANTIDAD": {
+        "TEXTO": "Ingrese la cantidad de objetos"
     },
     "FRMBUSCAR_BUSCAROBJETO": {
-        "TEXTO": "Buscar Objeto"
+        "TEXTO": "Buscar Objetos"
     },
     "FRMBUSCAR_BUSCARNPCS": {
-        "TEXTO": "Buscar Npcs"
+        "TEXTO": "Buscar NPCs"
+    },
+    "FRMBUSCAR_INFO_OBJ": {
+        "TEXTO": "<Clic derecho sobre el objeto para crear>"
+    },
+    "FRMBUSCAR_INFO_NPC": {
+        "TEXTO": "<Clic derecho sobre el NPC para invocar>"
     },
     "FRMBUSCAR_LIMPIARLISTAS": {
-        "TEXTO": "Limpiar Listas"
+        "TEXTO": "Limpiar lista"
     },
     "FRMBUSCAR_SELECCIONE_ITEM": {
-        "TEXTO": "Seleccione un item de la lista antes de hacer click en el boton crear item."
+        "TEXTO": "Primero seleccione un item de la lista."
+    },
+    "FRMBUSCAR_BUSQUEDA_TOOLTIP": {
+        "TEXTO": "Ingresa parte del nombre del objeto o NPC a buscar"
     },
     "FRM_CANTIDAD_TIRAR": {
         "TEXTO": "Tirar"
