@@ -507,18 +507,11 @@ Private Sub InventoryWindow_MouseMove(Button As Integer, Shift As Integer, X As 
         End Select
 
     End If
-        
-    If Button = vbRightButton And isInventory Then ' And DragItem <> 0 Then
-        Drag = 1
-    Else
-        Drag = 0
-
-    End If
     
     MouseX = CInt(X)
     MouseY = CInt(Y)
     
-    Call DrawInventory
+    'Call DrawInventory
     
 End Sub
 
