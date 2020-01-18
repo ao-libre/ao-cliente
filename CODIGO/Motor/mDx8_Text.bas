@@ -117,13 +117,19 @@ Private Sub Engine_Render_Text(ByRef Batch As clsBatch, _
     Dim i As Long
     Dim J As Long
     Dim yOffset As Single
-    
+    Dim Escala As Single: Escala = 1
     'Check if we have the device
     If DirectDevice.TestCooperativeLevel <> D3D_OK Then Exit Sub
 
     'Check for valid text to render
     If LenB(Text) = 0 Then Exit Sub
-    
+    If Font = 2 Then
+        If (Engine_GetTextWidth(cfonts(Font), Text)) > frmMain.MainViewPic.ScaleWidth Then ' Si el tamaño del texto es mayor al ancho
+                                                                                           ' de la ventana,te lo va a escalar para que entre
+            Escala = frmMain.MainViewPic.ScaleWidth / (Engine_GetTextWidth(cfonts(Font), Text))
+        
+        End If
+    End If
      'WyroX: Agregado para evitar dibujar emojis en los nombres de los personajes
     If ParseEmoticons Then
         'Analizar mensaje, palabra por palabra... GSZAO
@@ -161,7 +167,7 @@ Private Sub Engine_Render_Text(ByRef Batch As clsBatch, _
     Call Batch.SetTexture(UseFont.Texture)
     
     If Center Then
-        X = X - Engine_GetTextWidth(cfonts(Font), Text) * 0.5
+        X = X - (Engine_GetTextWidth(cfonts(Font), Text) * Escala) * 0.5
     End If
     
     'Loop through each line if there are line breaks (vbCrLf)
@@ -190,10 +196,10 @@ Private Sub Engine_Render_Text(ByRef Batch As clsBatch, _
                     
                 End If
             
-                Call Batch.Draw(TempVA.X, TempVA.Y, TempVA.W, TempVA.H, Color, TempVA.Tx1, TempVA.Ty1, TempVA.Tx2, TempVA.Ty2)
+                Call Batch.Draw(TempVA.X, TempVA.Y, TempVA.W * Escala, TempVA.H * Escala, Color, TempVA.Tx1, TempVA.Ty1, TempVA.Tx2, TempVA.Ty2)
 
                 'Shift over the the position to render the next character
-                Count = Count + UseFont.HeaderInfo.CharWidth(ascii(J - 1))
+                Count = Count + (UseFont.HeaderInfo.CharWidth(ascii(J - 1)) * Escala)
                 
             Next J
             
@@ -205,27 +211,27 @@ End Sub
 Public Function ARGBtoD3DCOLORVALUE(ByVal ARGB As Long, ByRef Color As D3DCOLORVALUE)
 Dim dest(3) As Byte
 CopyMemory dest(0), ARGB, 4
-Color.A = dest(3)
+Color.a = dest(3)
 Color.r = dest(2)
 Color.g = dest(1)
-Color.B = dest(0)
+Color.b = dest(0)
 End Function
 
-Public Function ARGB(ByVal r As Long, ByVal g As Long, ByVal B As Long, ByVal A As Long) As Long
+Public Function ARGB(ByVal r As Long, ByVal g As Long, ByVal b As Long, ByVal a As Long) As Long
         
     Dim c As Long
         
-    If A > 127 Then
-        A = A - 128
-        c = A * 2 ^ 24 Or &H80000000
+    If a > 127 Then
+        a = a - 128
+        c = a * 2 ^ 24 Or &H80000000
         c = c Or r * 2 ^ 16
         c = c Or g * 2 ^ 8
-        c = c Or B
+        c = c Or b
     Else
-        c = A * 2 ^ 24
+        c = a * 2 ^ 24
         c = c Or r * 2 ^ 16
         c = c Or g * 2 ^ 8
-        c = c Or B
+        c = c Or b
     End If
     
     ARGB = c
