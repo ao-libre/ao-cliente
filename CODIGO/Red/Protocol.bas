@@ -1674,7 +1674,7 @@ Private Sub HandleBankInit()
     
     BankGold = incomingData.ReadLong
     Call InvBanco(0).Initialize(DirectD3D8, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
-    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.PicInv, Inventario.MaxObjs)
+    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.picInv, Inventario.MaxObjs)
     
     For i = 1 To Inventario.MaxObjs
         With Inventario
@@ -3024,14 +3024,14 @@ On Error GoTo errhandler
     
     With frmGuildAdm
         'Clear guild's list
-        .GuildsList.Clear
+        .guildslist.Clear
         
         GuildNames = Split(Buffer.ReadASCIIString(), SEPARATOR)
         
         Dim i As Long
         For i = 0 To UBound(GuildNames())
             If LenB(GuildNames(i)) <> 0 Then
-                Call .GuildsList.AddItem(GuildNames(i))
+                Call .guildslist.AddItem(GuildNames(i))
             End If
         Next i
         
@@ -4265,14 +4265,15 @@ Private Sub HandleSetInvisible()
     Call incomingData.ReadByte
     
     Dim CharIndex As Integer
+    Dim timeRemaining As Integer
     
     CharIndex = incomingData.ReadInteger()
-    Call Char_SetInvisible(CharIndex, incomingData.ReadBoolean())
-
-    UserInvisible = Not UserInvisible
+    UserInvisible = incomingData.ReadBoolean()
+    Call Char_SetInvisible(CharIndex, UserInvisible)
+    
     timeRemaining = incomingData.ReadInteger()
-    UserInvisibleSegundosRestantes = IIf(timeRemaining <> 0, incomingData.ReadInteger() * 0.04, 0) 'Cantidad en segundos
-    If UserInvisible And UserInvisibleSegundosRestantes Then
+    UserInvisibleSegundosRestantes = IIf(timeRemaining <> 0, timeRemaining * 0.04, 0) 'Cantidad en segundos
+    If UserInvisible And UserInvisibleSegundosRestantes <> 0 Then
         frmMain.timerTiempoRestanteInvisibleMensaje.Enabled = True
     Else
         frmMain.timerTiempoRestanteInvisibleMensaje.Enabled = False
@@ -4783,11 +4784,11 @@ On Error GoTo errhandler
         GuildNames = Split(Buffer.ReadASCIIString(), SEPARATOR)
         
         'Empty the list
-        Call .GuildsList.Clear
+        Call .guildslist.Clear
         
         For i = 0 To UBound(GuildNames())
             If LenB(GuildNames(i)) <> 0 Then
-                Call .GuildsList.AddItem(GuildNames(i))
+                Call .guildslist.AddItem(GuildNames(i))
             End If
         Next i
         
