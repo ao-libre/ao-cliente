@@ -108,7 +108,7 @@ Begin VB.Form frmMain
          Height          =   225
          Left            =   600
          Top             =   360
-         Width           =   300
+         Width           =   285
       End
       Begin VB.Shape UserM 
          BackColor       =   &H0000FFFF&
@@ -1071,6 +1071,15 @@ Private Declare Function SetWindowLong _
                 Alias "SetWindowLongA" (ByVal hWnd As Long, _
                                         ByVal nIndex As Long, _
                                         ByVal dwNewLong As Long) As Long
+
+''
+' CopyMemory is the fastest way to copy memory blocks, so we abuse of it
+'
+' @param destination Where the data will be copied.
+' @param source The data to be copied.
+' @param length Number of bytes to be copied.
+
+Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" (ByRef Destination As Any, ByRef source As Any, ByVal Length As Long)
 
 Public Sub dragInventory_dragDone(ByVal originalSlot As Integer, ByVal newSlot As Integer)
     Call Protocol.WriteMoveItem(originalSlot, newSlot, eMoveType.Inventory)
@@ -2624,15 +2633,31 @@ End Sub
 Private Sub Client_DataArrival(ByVal bytesTotal As Long)
     Dim RD     As String
     Dim data() As Byte
+    Dim Length As Long
     
     Client.GetData RD, vbByte, bytesTotal
     data = StrConv(RD, vbFromUnicode)
     
-    'Set data in the buffer
-    Call incomingData.WriteBlock(data)
+    'WyroX: Copiamos hasta llenar la capacidad de la cola.
+    'Si nos pasamos, entonces procesamos los paquetes para vaciarla
+    'y luego volvemos a copiar lo que quede.
+    Do
+        Length = incomingData.Capacity - incomingData.Length
+        Length = IIf(bytesTotal < Length, bytesTotal, Length)
     
-    'Send buffer to Handle data
-    Call HandleIncomingData
+        'Set data in the buffer
+        Call incomingData.WriteBlock(data, Length)
+
+        'Send buffer to Handle data
+        Call HandleIncomingData
+        
+        bytesTotal = bytesTotal - Length
+        
+        If bytesTotal > 0 Then
+            Call CopyMemory(data(0), data(Length), bytesTotal)
+        End If
+        
+    Loop While bytesTotal > 0
     
 End Sub
 
@@ -2732,10 +2757,11 @@ Public Sub ActualizarMiniMapa()
     'Last Modify Date: 05/01/2020
     'Integrado por Reyarb
     'Se agrego campo de vision del render (Recox)
+    'Ajustadas las coordenadas para centrarlo (WyroX)
     '***************************************************
-    Me.UserM.Left = UserPos.X
-    Me.UserM.Top = UserPos.Y
-    Me.UserAreaMinimap.Left = UserPos.X - 9
+    Me.UserM.Left = UserPos.X - 2
+    Me.UserM.Top = UserPos.Y - 2
+    Me.UserAreaMinimap.Left = UserPos.X - 10
     Me.UserAreaMinimap.Top = UserPos.Y - 8
     Me.MiniMapa.Refresh
 End Sub

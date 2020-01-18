@@ -377,8 +377,6 @@ Private Sub CheckKeys()
             Call Char_UserPos
         End If
 
-        Call frmMain.ActualizarMiniMapa   'integrado por ReyarB
-        
     End If
 End Sub
 
@@ -1227,7 +1225,12 @@ Public Sub CloseClient()
     'WyroX:
     'Guardamos antes de cerrar porque algunas configuraciones
     'no se guardan desde el menu opciones (Por ej: M=Musica)
-    Call Game.GuardarConfiguracion
+    'Fix: intentaba guardar cuando el juego cerraba por un error,
+    'antes de cargar los recursos. Me aprovecho de prgRun
+    'para saber si ya fueron cargados
+    If prgRun Then
+        Call Game.GuardarConfiguracion
+    End If
 
     'Cerramos Sockets/Winsocks/WindowsAPI
     frmMain.Client.CloseSck

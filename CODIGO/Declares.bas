@@ -331,8 +331,8 @@ Public Enum eObjType
     otBebidas = 13
     otLena = 14
     otFogata = 15
-    otEscudo = 16
-    otCasco = 17
+    otescudo = 16
+    otcasco = 17
     otAnillo = 18
     otTeleport = 19
     otMuebles = 20
@@ -574,7 +574,7 @@ End Enum
 'Inventario
 Type Inventory
     ObjIndex As Integer
-    Name As String
+    name As String
     GrhIndex As Integer
     '[Alejo]: tipo de datos ahora es Long
     Amount As Long
@@ -590,7 +590,7 @@ End Type
 
 Type NpCinV
     ObjIndex As Integer
-    Name As String
+    name As String
     GrhIndex As Integer
     Amount As Integer
     Valor As Single
@@ -629,7 +629,7 @@ Type tEstadisticasUsu
 End Type
 
 Type tItemsConstruibles
-    Name As String
+    name As String
     ObjIndex As Integer
     GrhIndex As Integer
     LinH As Integer
@@ -841,11 +841,11 @@ Public PuertoDelServidor As String
 '******Mouse Cursor*********
 'Esto es para poder usar iconos de mouse .ani
 'https://www.gs-zone.org/temas/cursor-ani.45555/#post-375757
-Public Declare Function SetClassLong Lib "user32" Alias "SetClassLongA" (ByVal hwnd As Long, ByVal nIndex As Long, ByVal dwNewLong As Long) As Long
+Public Declare Function SetClassLong Lib "user32" Alias "SetClassLongA" (ByVal hWnd As Long, ByVal nIndex As Long, ByVal dwNewLong As Long) As Long
  
 Public Const GLC_HCURSOR = (-12)
 Public hSwapCursor As Long
-Public Declare Function LoadCursorFromFile Lib "user32" Alias "LoadCursorFromFileA" (ByVal lpfilename As String) As Long
+Public Declare Function LoadCursorFromFile Lib "user32" Alias "LoadCursorFromFileA" (ByVal lpFileName As String) As Long
 '******End Mouse Cursor****
 
 Public Declare Function GetTickCount Lib "kernel32" () As Long
@@ -1005,8 +1005,6 @@ Public JsonTips As Object
 
 'Nivel Maximo
 Public STAT_MAXELV As Byte
-Public IntervaloParalizado As Integer
-Public IntervaloInvisible As Integer
 
 Public UserParalizadoSegundosRestantes As Integer
 Public UserInvisibleSegundosRestantes As Integer
