@@ -11067,19 +11067,42 @@ errhandler:
 End Sub
 
 Private Sub HandleSearchList()
- 
-        Dim num   As Integer
-        Dim Datos As String
-        Dim obj   As Boolean
+
+On Error GoTo errhandler
+    
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue
+    Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
+    
+    Dim num   As Integer
+    Dim Datos As String
+    Dim Obj   As Boolean
+    
+    'Remove packet ID
+    Call Buffer.ReadByte
+    
+    num = Buffer.ReadInteger()
+    Obj = Buffer.ReadBoolean()
+    Datos = Buffer.ReadASCIIString()
+    
+    Call frmBuscar.AddItem(num, Obj, Datos)
+    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
         
-        'Remove packet ID
-        Call incomingData.ReadByte
-   
-        num = incomingData.ReadInteger()
-        obj = incomingData.ReadBoolean()
-        Datos = incomingData.ReadASCIIString()
- 
-        Call frmBuscar.AddItem(num, obj, Datos)
+errhandler:
+
+    Dim Error As Long
+
+    Error = Err.number
+
+    On Error GoTo 0
+
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
+
+    If Error <> 0 Then Err.Raise Error
  
 End Sub
 
