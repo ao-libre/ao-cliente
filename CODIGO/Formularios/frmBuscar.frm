@@ -261,7 +261,7 @@ Private Sub Resultados_MouseDown(Button As Integer, Shift As Integer, X As Singl
         PosY = CLng(Y / Screen.TwipsPerPixelY)
         
         ' Mensaje directo al hWnd usando WinAPI
-        Index = SendMessage(Resultados.hWnd, LB_ITEMFROMPOINT, 0, ByVal ((PosX * 65536) + PosY))
+        Index = SendMessage(Resultados.hWnd, LB_ITEMFROMPOINT, 0, ByVal ((PosY * 65536) + PosX))
 
         ' Si seleccionamos un item valido
         If Index < Resultados.ListCount Then
