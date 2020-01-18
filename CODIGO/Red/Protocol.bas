@@ -11391,7 +11391,7 @@ Private Sub HandleCreateDamage()
         ' Leemos el ID del paquete.
         .ReadByte
      
-        Call mDx8_Dibujado.Damage_Create(.ReadByte(), .ReadByte(), 0, .ReadInteger(), .ReadByte())
+        Call mDx8_Dibujado.Damage_Create(.ReadByte(), .ReadByte(), 0, .ReadLong(), .ReadByte())
      
     End With
  
