@@ -1072,6 +1072,15 @@ Private Declare Function SetWindowLong _
                                         ByVal nIndex As Long, _
                                         ByVal dwNewLong As Long) As Long
 
+''
+' CopyMemory is the fastest way to copy memory blocks, so we abuse of it
+'
+' @param destination Where the data will be copied.
+' @param source The data to be copied.
+' @param length Number of bytes to be copied.
+
+Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" (ByRef Destination As Any, ByRef source As Any, ByVal Length As Long)
+
 Public Sub dragInventory_dragDone(ByVal originalSlot As Integer, ByVal newSlot As Integer)
     Call Protocol.WriteMoveItem(originalSlot, newSlot, eMoveType.Inventory)
 End Sub
