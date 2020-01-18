@@ -1005,7 +1005,6 @@ Public JsonTips As Object
 
 'Nivel Maximo
 Public STAT_MAXELV As Byte
-Public IntervaloParalizado As Integer
 
 Public UserParalizadoSegundosRestantes As Integer
 Public UserInvisibleSegundosRestantes As Integer

@@ -1674,7 +1674,7 @@ Private Sub HandleBankInit()
     
     BankGold = incomingData.ReadLong
     Call InvBanco(0).Initialize(DirectD3D8, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
-    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.picInv, Inventario.MaxObjs)
+    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.PicInv, Inventario.MaxObjs)
     
     For i = 1 To Inventario.MaxObjs
         With Inventario
@@ -4949,15 +4949,14 @@ Private Sub HandleParalizeOK()
 '***************************************************
     'Remove packet ID
     Call incomingData.ReadByte
-    
+    Dim timeRemaining As Integer
     UserParalizado = Not UserParalizado
-
-    If UserParalizado Then
+    timeRemaining = incomingData.ReadInteger()
+    UserParalizadoSegundosRestantes = IIf(timeRemaining <> 0, (timeRemaining * 0.04), 0) 'Cantidad en segundos
+    If UserParalizado And timeRemaining <> 0 Then
         frmMain.timerTiempoRestanteParalisisMensaje.Enabled = True
-        UserParalizadoSegundosRestantes = IntervaloParalizado 'Cantidad en segundos
     Else
         frmMain.timerTiempoRestanteParalisisMensaje.Enabled = False
-        UserParalizadoSegundosRestantes = 0
     End If
 
 End Sub
@@ -11010,10 +11009,6 @@ Private Sub HandleAccountLogged()
     'TODO: Mover todo estos datos que obtenemos del servidor a la funciona que se creara cuando querramos ver una lista mas completa de servers
     ' Aca sobreescribimos el valor del nivel maximo ya que puede variar por servidor
     STAT_MAXELV = Buffer.ReadByte
-
-    'Obtenemos valor de algunos intervalos necesarios para mostrar informacion en el render
-    'TODO: obtener del server
-    IntervaloParalizado = 23 ' Segundos
 
     frmPanelAccount.Show
 

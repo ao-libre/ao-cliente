@@ -1114,7 +1114,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
 
         '*********Tiempo restante para que termine el invi o el paralizar*********
         Dim ColorText As Long
-        If UserParalizado Then
+        If UserParalizado And UserParalizadoSegundosRestantes <> 0 Then
             ColorText = D3DColorARGB(180, 230, 230, 250)
             Call DrawText(1, 25, UserParalizadoSegundosRestantes & " segundos restantes de Paralisis", ColorText)
         End If
@@ -1138,7 +1138,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
         '//Banco
         If frmBancoObj.Visible Then
             If frmBancoObj.PicBancoInv.Visible Then Call InvBanco(0).DrawInv
-            If frmBancoObj.picInv.Visible Then Call InvBanco(1).DrawInv
+            If frmBancoObj.PicInv.Visible Then Call InvBanco(1).DrawInv
         End If
     
         '//Comercio
@@ -1175,7 +1175,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
     
         '//Inventario
         If frmMain.Visible Then
-            If frmMain.picInv.Visible Then
+            If frmMain.PicInv.Visible Then
                 Call Inventario.DrawInv
             End If
         End If
