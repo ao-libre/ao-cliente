@@ -11042,7 +11042,7 @@ Private Sub HandleAccountLogged()
                 .GameMaster = Buffer.ReadBoolean
             End With
             
-            Call mDx8_Engine.DrawPJ(LoopC)
+            Call mDx8_Dibujado.DrawPJ(LoopC)
             
         Next LoopC
         
@@ -11391,7 +11391,7 @@ Private Sub HandleCreateDamage()
         ' Leemos el ID del paquete.
         .ReadByte
      
-        Call mDx8_Dibujado.Damage_Create(.ReadByte(), .ReadByte(), 0, .ReadInteger(), .ReadByte())
+        Call mDx8_Dibujado.Damage_Create(.ReadByte(), .ReadByte(), 0, .ReadLong(), .ReadByte())
      
     End With
  

@@ -108,7 +108,7 @@ Begin VB.Form frmMain
          Height          =   225
          Left            =   600
          Top             =   360
-         Width           =   300
+         Width           =   285
       End
       Begin VB.Shape UserM 
          BackColor       =   &H0000FFFF&
@@ -2821,10 +2821,11 @@ Public Sub ActualizarMiniMapa()
     'Last Modify Date: 05/01/2020
     'Integrado por Reyarb
     'Se agrego campo de vision del render (Recox)
+    'Ajustadas las coordenadas para centrarlo (WyroX)
     '***************************************************
-    Me.UserM.Left = UserPos.X
-    Me.UserM.Top = UserPos.Y
-    Me.UserAreaMinimap.Left = UserPos.X - 9
+    Me.UserM.Left = UserPos.X - 2
+    Me.UserM.Top = UserPos.Y - 2
+    Me.UserAreaMinimap.Left = UserPos.X - 10
     Me.UserAreaMinimap.Top = UserPos.Y - 8
     Me.MiniMapa.Refresh
 End Sub

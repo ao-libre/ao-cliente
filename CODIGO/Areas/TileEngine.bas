@@ -307,6 +307,8 @@ Public mapInfo As mapInfo ' Info acerca del mapa en uso
 Public Normal_RGBList(3) As Long
 Public Color_Shadow(3) As Long
 Public Color_Arbol(3) As Long
+Public ColorTextoParalisis As Long
+Public ColorTextoInvisibilidad As Long
 
 '   Control de Lluvia
 Public bRain As Boolean
@@ -678,10 +680,10 @@ Sub RenderScreen(ByVal tilex As Integer, _
     screenminX = tilex - HalfWindowTileWidth
     screenmaxX = tilex + HalfWindowTileWidth
     
-    minY = screenminY - Engine_Get_TileBuffer
-    maxY = screenmaxY + Engine_Get_TileBuffer
-    minX = screenminX - Engine_Get_TileBuffer
-    maxX = screenmaxX + Engine_Get_TileBuffer
+    minY = screenminY - TileBufferSize
+    maxY = screenmaxY + TileBufferSize
+    minX = screenminX - TileBufferSize
+    maxX = screenmaxX + TileBufferSize
     
     'Make sure mins and maxs are allways in map bounds
     If minY < XMinMapSize Then
@@ -749,11 +751,11 @@ Sub RenderScreen(ByVal tilex As Integer, _
    
     
     '<----- Layer Obj, Char, 3 ----->
-    ScreenY = minYOffset - Engine_Get_TileBuffer
+    ScreenY = minYOffset - TileBufferSize
 
     For Y = minY To maxY
         
-        ScreenX = minXOffset - Engine_Get_TileBuffer
+        ScreenX = minXOffset - TileBufferSize
 
         For X = minX To maxX
             If Map_InBounds(X, Y) Then
@@ -805,7 +807,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
                     If .Particle_Group_Index Then
                     
                         'Solo las renderizamos si estan cerca del area de vision.
-                        If Abs(UserPos.X - X) < Engine_Get_TileBuffer + 3 And (Abs(UserPos.Y - Y)) < Engine_Get_TileBuffer + 3 Then
+                        If Abs(UserPos.X - X) < TileBufferSize + 3 And (Abs(UserPos.Y - Y)) < TileBufferSize + 3 Then
                             Call mDx8_Particulas.Particle_Group_Render(.Particle_Group_Index, PixelOffsetXTemp + 16, PixelOffsetYTemp + 16)
                         End If
                         
@@ -828,11 +830,11 @@ Sub RenderScreen(ByVal tilex As Integer, _
     Next Y
     
     '<----- Layer 4 ----->
-    ScreenY = minYOffset - Engine_Get_TileBuffer
+    ScreenY = minYOffset - TileBufferSize
 
     For Y = minY To maxY
 
-        ScreenX = minXOffset - Engine_Get_TileBuffer
+        ScreenX = minXOffset - TileBufferSize
 
         For X = minX To maxX
             
@@ -1113,15 +1115,12 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
         If DialogosClanes.Activo Then Call DialogosClanes.Draw ' GSZAO
 
         '*********Tiempo restante para que termine el invi o el paralizar*********
-        Dim ColorText As Long
         If UserParalizado And UserParalizadoSegundosRestantes <> 0 Then
-            ColorText = D3DColorARGB(180, 230, 230, 250)
-            Call DrawText(1, 25, UserParalizadoSegundosRestantes & " segundos restantes de Paralisis", ColorText)
+            Call DrawText(1, 25, UserParalizadoSegundosRestantes & " segundos restantes de Paralisis", ColorTextoParalisis)
         End If
 
         If UserInvisible And UserInvisibleSegundosRestantes <> 0 Then
-            ColorText = D3DColorARGB(180, 236, 136, 66)
-            Call DrawText(1, 13, UserInvisibleSegundosRestantes & " segundos restantes de Invisibilidad", ColorText)
+            Call DrawText(1, 13, UserInvisibleSegundosRestantes & " segundos restantes de Invisibilidad", ColorTextoInvisibilidad)
         End If
         '*************************************************************************
         
@@ -1131,7 +1130,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
 
         'Get timing info
         timerElapsedTime = GetElapsedTime()
-        timerTicksPerFrame = timerElapsedTime * Engine_Get_BaseSpeed
+        timerTicksPerFrame = timerElapsedTime * Engine_BaseSpeed
         
         Call Engine_EndScene(MainScreenRect, 0)
         
