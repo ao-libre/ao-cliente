@@ -120,6 +120,7 @@ Class=clsBatch; CODIGO\Motor\clsBatch.cls
 Class=clsArrayList; CODIGO\clsArrayList.cls
 Form=CODIGO\Formularios\frmKeysConfigurationSelect.frm
 Form=CODIGO\Formularios\frmCarpinteria.frm
+Module=mDx8_Utilidades; CODIGO\Motor\mDx8_Utilidades.bas
 IconForm="frmMain"
 Startup="Sub Main"
 HelpFile=""

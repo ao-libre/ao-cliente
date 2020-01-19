@@ -1633,9 +1633,11 @@ Public Sub LoadAOCustomControlsPictures(ByRef tForm As Form)
 End Sub
 
 Public Sub SetSpeedUsuario()
+
     If UserEquitando Then
-        Call Engine_Set_BaseSpeed(0.024)
+        Engine_BaseSpeed = 0.024
     Else
-        Call Engine_Set_BaseSpeed(0.018)
+        Engine_BaseSpeed = 0.018
     End If
+    
 End Sub

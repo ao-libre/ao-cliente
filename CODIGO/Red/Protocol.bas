@@ -11042,7 +11042,7 @@ Private Sub HandleAccountLogged()
                 .GameMaster = Buffer.ReadBoolean
             End With
             
-            Call mDx8_Engine.DrawPJ(LoopC)
+            Call mDx8_Dibujado.DrawPJ(LoopC)
             
         Next LoopC
         

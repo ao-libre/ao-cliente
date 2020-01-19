@@ -46,6 +46,80 @@ Sub DrawGrhtoHdc(ByRef Pic As PictureBox, _
         
 End Sub
 
+Public Sub DrawPJ(ByVal Index As Byte)
+
+    If LenB(cPJ(Index).Nombre) = 0 Then Exit Sub
+    
+    DoEvents
+    
+    Dim cColor As Long
+    
+    If cPJ(Index).GameMaster Then
+        cColor = 2004510
+    Else
+        cColor = IIf(cPJ(Index).Criminal, 255, 16744448)
+    End If
+    
+    With frmPanelAccount.lblAccData(Index)
+        .Caption = cPJ(Index).Nombre
+        .ForeColor = cColor
+    End With
+    
+    Dim Init_X       As Integer
+    Dim Init_Y       As Integer
+    Dim Head_OffSet  As Integer
+    Dim PixelOffsetX As Integer
+    Dim PixelOffsetY As Integer
+    Dim RE           As RECT
+    
+    With RE
+        .Left = 0
+        .Top = 0
+        .Bottom = 80
+        .Right = 76
+    End With
+
+    Init_X = 25
+    Init_Y = 20
+    
+    Call Engine_BeginScene
+    
+    With cPJ(Index)
+    
+        If .Body <> 0 Then
+        
+            If .Race <> eRaza.Gnomo Or .Race <> eRaza.Enano Then
+                Head_OffSet = HeadOffsetAltos
+            Else
+                Head_OffSet = HeadOffsetBajos
+            End If
+    
+            Call Draw_Grh(BodyData(.Body).Walk(3), PixelOffsetX + Init_X, PixelOffsetY + Init_Y, 0, Normal_RGBList(), 0)
+
+            If .Head <> 0 Then
+                Call Draw_Grh(HeadData(.Head).Head(3), PixelOffsetX + Init_X + 4, PixelOffsetY + Init_Y + Head_OffSet, 0, Normal_RGBList(), 0)
+            End If
+
+            If .helmet <> 0 Then
+                Call Draw_Grh(CascoAnimData(.helmet).Head(3), PixelOffsetX + Init_X + 4, PixelOffsetY + Init_Y + Head_OffSet, 0, Normal_RGBList(), 0)
+            End If
+
+            If .weapon <> 0 Then
+                Call Draw_Grh(WeaponAnimData(.weapon).WeaponWalk(3), PixelOffsetX + Init_X, PixelOffsetY + Init_Y, 0, Normal_RGBList(), 0)
+            End If
+
+            If .shield <> 0 Then
+                Call Draw_Grh(ShieldAnimData(.shield).ShieldWalk(3), PixelOffsetX + Init_X, PixelOffsetY + Init_Y, 0, Normal_RGBList(), 0)
+            End If
+            
+        End If
+    
+    End With
+    
+    Call Engine_EndScene(RE, frmPanelAccount.picChar(Index - 1).hWnd)
+    
+End Sub
+
 Sub Damage_Initialize()
 
     ' Inicializamos el dano en render
