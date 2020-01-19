@@ -1256,32 +1256,32 @@
     "FRMBUSCAR_TITLE": {
         "TEXTO": "Searcher"
     },
-    "FRMBUSCAR_CREAR": {
-        "TEXTO": "Create"
-    },
-    "FRMBUSCAR_CREARNPCS": {
-        "TEXTO": "Npcs"
-    },
-    "FRMBUSCAR_CREAROBJETOS": {
-        "TEXTO": "Objects"
-    },
     "FRMBUSCAR_CANTIDAD": {
         "TEXTO": "Quantity"
     },
-    "FRMBUSCAR_RESPAWN": {
-        "TEXTO": "Respawn"
+    "FRMBUSCAR_INGRESE_CANTIDAD": {
+        "TEXTO": "Enter the number of objects"
     },
     "FRMBUSCAR_BUSCAROBJETO": {
-        "TEXTO": "Search Object"
+        "TEXTO": "Search Objects"
     },
     "FRMBUSCAR_BUSCARNPCS": {
-        "TEXTO": "Search Npcs"
+        "TEXTO": "Search NPCs"
+    },
+    "FRMBUSCAR_INFO_OBJ": {
+        "TEXTO": "<Right click on an object to create it>"
+    },
+    "FRMBUSCAR_INFO_NPC": {
+        "TEXTO": "<Right click on an NPC to spawn it>"
     },
     "FRMBUSCAR_LIMPIARLISTAS": {
-        "TEXTO": "Clean list"
+        "TEXTO": "Clear list"
     },
     "FRMBUSCAR_SELECCIONE_ITEM": {
-        "TEXTO": "Select one item from the list before click on the create button"
+        "TEXTO": "First select an element of the list."
+    },
+    "FRMBUSCAR_BUSQUEDA_TOOLTIP": {
+        "TEXTO": "Enter part of the name of the object or NPC you're looking for"
     },
     "FRM_CANTIDAD_TIRAR": {
         "TEXTO": "Throw"

@@ -4265,18 +4265,18 @@ Private Sub HandleSetInvisible()
     Call incomingData.ReadByte
     
     Dim CharIndex As Integer
+    Dim timeRemaining As Integer
     
     CharIndex = incomingData.ReadInteger()
-    Call Char_SetInvisible(CharIndex, incomingData.ReadBoolean())
-
-    UserInvisible = Not UserInvisible
-
-    If UserInvisible Then
+    UserInvisible = incomingData.ReadBoolean()
+    Call Char_SetInvisible(CharIndex, UserInvisible)
+    
+    timeRemaining = incomingData.ReadInteger()
+    UserInvisibleSegundosRestantes = IIf(timeRemaining <> 0, timeRemaining * 0.04, 0) 'Cantidad en segundos
+    If UserInvisible And UserInvisibleSegundosRestantes <> 0 Then
         frmMain.timerTiempoRestanteInvisibleMensaje.Enabled = True
-        UserInvisibleSegundosRestantes = IntervaloInvisible 'Cantidad en segundos
     Else
         frmMain.timerTiempoRestanteInvisibleMensaje.Enabled = False
-        UserInvisibleSegundosRestantes = 0
     End If
 End Sub
 
@@ -4949,15 +4949,14 @@ Private Sub HandleParalizeOK()
 '***************************************************
     'Remove packet ID
     Call incomingData.ReadByte
-    
+    Dim timeRemaining As Integer
     UserParalizado = Not UserParalizado
-
-    If UserParalizado Then
+    timeRemaining = incomingData.ReadInteger()
+    UserParalizadoSegundosRestantes = IIf(timeRemaining <> 0, (timeRemaining * 0.04), 0) 'Cantidad en segundos
+    If UserParalizado And timeRemaining <> 0 Then
         frmMain.timerTiempoRestanteParalisisMensaje.Enabled = True
-        UserParalizadoSegundosRestantes = IntervaloParalizado 'Cantidad en segundos
     Else
         frmMain.timerTiempoRestanteParalisisMensaje.Enabled = False
-        UserParalizadoSegundosRestantes = 0
     End If
 
 End Sub
@@ -11011,11 +11010,6 @@ Private Sub HandleAccountLogged()
     ' Aca sobreescribimos el valor del nivel maximo ya que puede variar por servidor
     STAT_MAXELV = Buffer.ReadByte
 
-    'Obtenemos valor de algunos intervalos necesarios para mostrar informacion en el render
-    'TODO: obtener del server
-    IntervaloParalizado = 23 ' Segundos
-    IntervaloInvisible = 23 ' Segundos
-
     frmPanelAccount.Show
 
     If NumberOfCharacters > 0 Then
@@ -11073,28 +11067,42 @@ errhandler:
 End Sub
 
 Private Sub HandleSearchList()
- 
-        Dim num   As Integer
-        Dim Datos As String
-        Dim Obj   As Boolean
+
+On Error GoTo errhandler
+    
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue
+    Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
+    
+    Dim num   As Integer
+    Dim Datos As String
+    Dim Obj   As Boolean
+    
+    'Remove packet ID
+    Call Buffer.ReadByte
+    
+    num = Buffer.ReadInteger()
+    Obj = Buffer.ReadBoolean()
+    Datos = Buffer.ReadASCIIString()
+    
+    Call frmBuscar.AddItem(num, Obj, Datos)
+    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
         
-        'Remove packet ID
-        Call incomingData.ReadByte
-   
-        num = incomingData.ReadInteger()
-        Obj = incomingData.ReadBoolean()
- 
-        If Not num = 0 Then
-                If Obj = True Then
-                        frmBuscar.ListCrearObj.AddItem num
-                Else
-                        frmBuscar.ListCrearNpcs.AddItem num
-                End If
-        End If
- 
-        Datos = incomingData.ReadASCIIString()
- 
-        frmBuscar.List1.AddItem Datos
+errhandler:
+
+    Dim Error As Long
+
+    Error = Err.number
+
+    On Error GoTo 0
+
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
+
+    If Error <> 0 Then Err.Raise Error
  
 End Sub
 
