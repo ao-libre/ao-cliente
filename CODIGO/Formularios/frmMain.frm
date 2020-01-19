@@ -1087,7 +1087,7 @@ End Sub
 
 Private Sub Form_Activate()
     
-    Call Inventario.DrawInv
+    Call Inventario.DrawInventory
     
     Call ControlSM(eSMType.mWork, SMStatus(eSMType.mWork), False)
     Call ControlSM(eSMType.sResucitation, SMStatus(eSMType.sResucitation), False)
@@ -1097,9 +1097,7 @@ Private Sub Form_Activate()
 End Sub
 
 Private Sub Form_Click()
-    
-    Call Inventario.DrawInv
-    
+
     Call ControlSM(eSMType.mWork, SMStatus(eSMType.mWork), False)
     Call ControlSM(eSMType.sResucitation, SMStatus(eSMType.sResucitation), False)
     Call ControlSM(eSMType.mSpells, SMStatus(eSMType.mSpells), False)
@@ -2371,7 +2369,7 @@ Private Sub cmdInventario_Click()
     cmdMoverHechi(0).Visible = False
     cmdMoverHechi(1).Visible = False
 
-    Call Inventario.DrawInv
+    Call Inventario.DrawInventory
     
 End Sub
 
@@ -2435,7 +2433,7 @@ End Sub
 Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
     Call Audio.PlayWave(SND_CLICK)
     
-    Call Inventario.DrawInv
+    Call Inventario.DrawInventory
     
 End Sub
 

@@ -58,6 +58,8 @@ Private MouseY As Integer
 Private DragItem As Byte
 Private Drag As Byte
 
+Private DrawBuffer As cDIBSection ' Para guardar temporalmente una "foto" del inventario (WyroX)
+
 Private isInventory As Boolean ' Para separar al inventario del main, de los otros
 
 Private Inventory() As Inventory    'User's inventory
@@ -83,6 +85,9 @@ Private Sub Class_Terminate()
 'Last Modify Date: 27/07/04
 '
 '***************************************************
+
+Set DrawBuffer = Nothing
+
 End Sub
 
 Public Sub ScrollInventory(ByVal Up As Boolean)
@@ -364,8 +369,7 @@ Public Sub SetItem(ByVal slot As Byte, ByVal eOBJIndex As Integer, ByVal eAmount
     End With
     
     'If InventoryWindow.Visible = False Then InventoryWindow.Visible = True
-    
-    'Render inventory slot (we don't need to render the whole inventory)
+
     Call DrawInventory
 End Sub
 
@@ -399,18 +403,17 @@ Private Function ClickItem(ByVal X As Long, ByVal Y As Long) As Long
 
     End If
 
-    Call DrawInventory
+    ' Lo quito porque me parece muy redundante, casi todas las funciones que usan ClickItem ya dibujan el inventario
+    'Call DrawInventory
 
 End Function
 
-Private Sub DrawInventory()
+Public Sub DrawInventory()
 
     '***************************************************
     'Author: Juan Martin Sotuyo Dodero (Maraxus)
     'Last Modify Date: 18/01/2020
     'Renders the inventory to the given PictureBox.
-    '***************************************************
-    'ADVERTENCIA: SOLO USAR DENTRO DE ESTA CLASE!
     '***************************************************
     Dim LoopC             As Long
     Dim X                 As Integer
@@ -465,9 +468,29 @@ Private Sub DrawInventory()
 
     If DragItem <> 0 And Drag = 1 And isInventory Then
         Call Draw_GrhIndex(Inventory(DragItem).GrhIndex, MouseX - 16, MouseY - 16, 0, Normal_RGBList())
+        
+        ' Si estamos arrastrando un item, dibujamos normal
+        InventoryWindow.AutoRedraw = False
+        Call Engine_EndScene(DestRect, InventoryWindow.hWnd)
+        
+    Else
+        ' WyroX:
+        ' Brujeria necesaria para que no quede negro el inventario.
+        ' En realidad: con el AutoRedraw desactivado, copiamos una "foto" del inventario a un buffer en memoria.
+        ' Activamos el AutoDraw, lo copiamos de vuelta al inventario y lo dejamos como imagen estatica.
+
+        InventoryWindow.AutoRedraw = False
+
+        Call Engine_EndScene(DestRect, InventoryWindow.hWnd)
+
+        Call DrawBuffer.LoadPictureBlt(InventoryWindow.hdc)
+
+        InventoryWindow.AutoRedraw = True
+
+        Call DrawBuffer.PaintPicture(InventoryWindow.hdc, 0, 0, InventoryWindow.Width, InventoryWindow.Height, 0, 0, vbSrcCopy)
+
+        InventoryWindow.Picture = InventoryWindow.Image
     End If
-            
-    Call Engine_EndScene(DestRect, InventoryWindow.hWnd)
 
 End Sub
 
@@ -551,20 +574,6 @@ Private Sub InventoryWindow_MouseDown(Button As Integer, Shift As Integer, X As 
 
 End Sub
 
-Public Sub DrawInv()
-    
-    '*********************************************************************
-    ' ADVERTENCIA: Prohibido usar DrawInventory() fuera de esta clase.
-    '*********************************************************************
-    
-    Call DrawInventory
-    DoEvents
-    
-    Call DrawInventory
-    DoEvents
-    
-End Sub
-
 Public Sub DrawDragAndDrop()
     
     If ((DragItem <> 0 And Drag = 1) And (timeGetTime - InventoryTickCount > 40)) Then
@@ -591,6 +600,10 @@ Public Sub Initialize(ByRef DirectD3D As D3DX8, ByRef InvPic As PictureBox, ByVa
     
     'Set apropiate scale (pixel)
     InventoryWindow.ScaleMode = 3
+    
+    ' Inicializar buffer
+    Set DrawBuffer = New cDIBSection
+    Call DrawBuffer.Create(InvPic.Width, InvPic.Height)
     
     ReDim Inventory(1 To MaxObjs) As Inventory
     

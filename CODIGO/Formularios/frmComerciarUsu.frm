@@ -673,36 +673,36 @@ End Sub
 Private Sub Form_Activate()
 On Error Resume Next
 
-    InvComUsu.DrawInv
-    InvOfferComUsu(0).DrawInv
-    InvOfferComUsu(1).DrawInv
-    InvOroComUsu(0).DrawInv
-    InvOroComUsu(1).DrawInv
-    InvOroComUsu(2).DrawInv
+    InvComUsu.DrawInventory
+    InvOfferComUsu(0).DrawInventory
+    InvOfferComUsu(1).DrawInventory
+    InvOroComUsu(0).DrawInventory
+    InvOroComUsu(1).DrawInventory
+    InvOroComUsu(2).DrawInventory
     
 End Sub
 
 Private Sub Form_GotFocus()
 On Error Resume Next
 
-    InvComUsu.DrawInv
-    InvOfferComUsu(0).DrawInv
-    InvOfferComUsu(1).DrawInv
-    InvOroComUsu(0).DrawInv
-    InvOroComUsu(1).DrawInv
-    InvOroComUsu(2).DrawInv
+    InvComUsu.DrawInventory
+    InvOfferComUsu(0).DrawInventory
+    InvOfferComUsu(1).DrawInventory
+    InvOroComUsu(0).DrawInventory
+    InvOroComUsu(1).DrawInventory
+    InvOroComUsu(2).DrawInventory
     
 End Sub
 
 Private Sub Form_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
 On Error Resume Next
 
-    InvComUsu.DrawInv
-    InvOfferComUsu(0).DrawInv
-    InvOfferComUsu(1).DrawInv
-    InvOroComUsu(0).DrawInv
-    InvOroComUsu(1).DrawInv
-    InvOroComUsu(2).DrawInv
+    InvComUsu.DrawInventory
+    InvOfferComUsu(0).DrawInventory
+    InvOfferComUsu(1).DrawInventory
+    InvOroComUsu(0).DrawInventory
+    InvOroComUsu(1).DrawInventory
+    InvOroComUsu(2).DrawInventory
     
 End Sub
 

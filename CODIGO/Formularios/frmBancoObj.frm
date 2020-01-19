@@ -470,24 +470,24 @@ End Sub
 Private Sub Form_Activate()
 On Error Resume Next
 
-    InvBanco(0).DrawInv
-    InvBanco(1).DrawInv
+    InvBanco(0).DrawInventory
+    InvBanco(1).DrawInventory
     
 End Sub
 
 Private Sub Form_GotFocus()
 On Error Resume Next
 
-    InvBanco(0).DrawInv
-    InvBanco(1).DrawInv
+    InvBanco(0).DrawInventory
+    InvBanco(1).DrawInventory
     
 End Sub
 
 Private Sub Form_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
 On Error Resume Next
 
-    InvBanco(0).DrawInv
-    InvBanco(1).DrawInv
+    InvBanco(0).DrawInventory
+    InvBanco(1).DrawInventory
     
 End Sub
 

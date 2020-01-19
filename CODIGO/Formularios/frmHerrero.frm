@@ -606,30 +606,30 @@ End Sub
 Private Sub Form_Activate()
 On Error Resume Next
 
-    InvLingosHerreria(1).DrawInv
-    InvLingosHerreria(2).DrawInv
-    InvLingosHerreria(3).DrawInv
-    InvLingosHerreria(4).DrawInv
+    InvLingosHerreria(1).DrawInventory
+    InvLingosHerreria(2).DrawInventory
+    InvLingosHerreria(3).DrawInventory
+    InvLingosHerreria(4).DrawInventory
     
 End Sub
 
 Private Sub Form_GotFocus()
 On Error Resume Next
 
-    InvLingosHerreria(1).DrawInv
-    InvLingosHerreria(2).DrawInv
-    InvLingosHerreria(3).DrawInv
-    InvLingosHerreria(4).DrawInv
+    InvLingosHerreria(1).DrawInventory
+    InvLingosHerreria(2).DrawInventory
+    InvLingosHerreria(3).DrawInventory
+    InvLingosHerreria(4).DrawInventory
     
 End Sub
 
 Private Sub Form_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
 On Error Resume Next
 
-    InvLingosHerreria(1).DrawInv
-    InvLingosHerreria(2).DrawInv
-    InvLingosHerreria(3).DrawInv
-    InvLingosHerreria(4).DrawInv
+    InvLingosHerreria(1).DrawInventory
+    InvLingosHerreria(2).DrawInventory
+    InvLingosHerreria(3).DrawInventory
+    InvLingosHerreria(4).DrawInventory
     
 End Sub
 
