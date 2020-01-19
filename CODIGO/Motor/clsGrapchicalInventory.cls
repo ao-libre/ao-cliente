@@ -403,12 +403,14 @@ Private Function ClickItem(ByVal X As Long, ByVal Y As Long) As Long
 
 End Function
 
-Public Sub DrawInventory()
+Private Sub DrawInventory()
 
     '***************************************************
     'Author: Juan Martin Sotuyo Dodero (Maraxus)
-    'Last Modify Date: 27/07/04
-    'Renders the inventory to the given PictureBox
+    'Last Modify Date: 18/01/2020
+    'Renders the inventory to the given PictureBox.
+    '***************************************************
+    'ADVERTENCIA: SOLO USAR DENTRO DE ESTA CLASE!
     '***************************************************
     Dim LoopC             As Long
     Dim X                 As Integer
@@ -511,8 +513,6 @@ Private Sub InventoryWindow_MouseMove(Button As Integer, Shift As Integer, X As 
     MouseX = CInt(X)
     MouseY = CInt(Y)
     
-    'Call DrawInventory
-    
 End Sub
 
 Private Sub InventoryWindow_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
@@ -552,7 +552,11 @@ Private Sub InventoryWindow_MouseDown(Button As Integer, Shift As Integer, X As 
 End Sub
 
 Public Sub DrawInv()
-
+    
+    '*********************************************************************
+    ' ADVERTENCIA: Prohibido usar DrawInventory() fuera de esta clase.
+    '*********************************************************************
+    
     Call DrawInventory
     DoEvents
     

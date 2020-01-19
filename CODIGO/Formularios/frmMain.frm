@@ -1090,6 +1090,12 @@ Private Sub Form_Activate()
     
 End Sub
 
+Private Sub Form_Click()
+    
+    Call Inventario.DrawInv
+
+End Sub
+
 Private Sub Form_Load()
     SkinSeleccionado = GetVar(Game.path(INIT) & "Config.ini", "Parameters", "SkinSelected")
     
@@ -2332,9 +2338,8 @@ Private Sub cmdInventario_Click()
     
     cmdMoverHechi(0).Visible = False
     cmdMoverHechi(1).Visible = False
-    
-    DoEvents
-    Call Inventario.DrawInventory
+
+    Call Inventario.DrawInv
     
 End Sub
 
@@ -2384,7 +2389,10 @@ Private Sub picInv_DblClick()
         
         Case eObjType.otAnillo
             Call EquiparItem
-        
+            
+        Case eObjType.otMochilas
+            Call EquiparItem
+            
         Case Else
             Call UsarItem
             
