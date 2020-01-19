@@ -263,12 +263,7 @@ Sub SetConnected()
     
         'Load main form
         .Visible = True
-    
-        Call .ControlSM(eSMType.sResucitation, True)
-        Call .ControlSM(eSMType.sSafemode, True)
-        Call .ControlSM(eSMType.mWork, False)
-        Call .ControlSM(eSMType.mSpells, False)
-    
+
     End With
     
     FPSFLAG = True
