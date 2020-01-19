@@ -320,8 +320,9 @@ Public Sub ToggleShowValue(ByVal bShow As Boolean)
     ShowValue = bShow
     
     Dim slot As Integer
+    
     ' Update Inventory
-        Call DrawInventory
+    Call DrawInventory
 End Sub
 
 Public Sub ClearAllSlots()
@@ -402,12 +403,14 @@ Private Function ClickItem(ByVal X As Long, ByVal Y As Long) As Long
 
 End Function
 
-Public Sub DrawInventory()
+Private Sub DrawInventory()
 
     '***************************************************
     'Author: Juan Martin Sotuyo Dodero (Maraxus)
-    'Last Modify Date: 27/07/04
-    'Renders the inventory to the given PictureBox
+    'Last Modify Date: 18/01/2020
+    'Renders the inventory to the given PictureBox.
+    '***************************************************
+    'ADVERTENCIA: SOLO USAR DENTRO DE ESTA CLASE!
     '***************************************************
     Dim LoopC             As Long
     Dim X                 As Integer
@@ -415,6 +418,8 @@ Public Sub DrawInventory()
     Dim DestRect          As RECT
     Dim Inv_Color(3)      As Long
     Dim Sel_Color(3)      As Long
+    
+    DoEvents
     
     With DestRect
         .Bottom = InventoryWindow.Height
@@ -504,18 +509,9 @@ Private Sub InventoryWindow_MouseMove(Button As Integer, Shift As Integer, X As 
         End Select
 
     End If
-        
-    If Button = vbRightButton And isInventory Then ' And DragItem <> 0 Then
-        Drag = 1
-    Else
-        Drag = 0
-
-    End If
     
     MouseX = CInt(X)
     MouseY = CInt(Y)
-    
-    Call DrawInventory
     
 End Sub
 
@@ -555,13 +551,28 @@ Private Sub InventoryWindow_MouseDown(Button As Integer, Shift As Integer, X As 
 
 End Sub
 
-Public Sub DrawInv(Optional ByVal r As Boolean = False)
+Public Sub DrawInv()
+    
+    '*********************************************************************
+    ' ADVERTENCIA: Prohibido usar DrawInventory() fuera de esta clase.
+    '*********************************************************************
+    
+    Call DrawInventory
+    DoEvents
+    
+    Call DrawInventory
+    DoEvents
+    
+End Sub
 
-    If (GetTickCount - InventoryTickCount > 300) Or ((DragItem <> 0 And Drag = 1) And (GetTickCount - InventoryTickCount > 40)) Then
+Public Sub DrawDragAndDrop()
+    
+    If ((DragItem <> 0 And Drag = 1) And (timeGetTime - InventoryTickCount > 40)) Then
+
         Call DrawInventory
-        InventoryTickCount = GetTickCount
+        
     End If
-
+    
 End Sub
 
 Public Sub Initialize(ByRef DirectD3D As D3DX8, ByRef InvPic As PictureBox, ByVal MaxObjs As Byte, Optional ByVal FontSize As Integer = 7, Optional ByVal TileWidth As Integer = 32, Optional ByVal TileHeight As Integer = 32, Optional ByVal startX As Integer = 0, Optional ByVal startY As Integer = 0, Optional ByVal bImgContainer As Boolean = True, Optional ByVal bShowText As Boolean = True, Optional thisInventory As Boolean = False)
