@@ -140,7 +140,7 @@ Begin VB.Form frmMain
    Begin VB.PictureBox picSM 
       Appearance      =   0  'Flat
       AutoRedraw      =   -1  'True
-      BackColor       =   &H00000000&
+      BackColor       =   &H00FFFFFF&
       BorderStyle     =   0  'None
       ForeColor       =   &H80000008&
       Height          =   450
@@ -1063,6 +1063,9 @@ Private FirstTimeClanChat  As Boolean
 Dim CtrlMaskOn             As Boolean
 Dim SkinSeleccionado       As String
 
+'Para evitar que desaparezcan los picSM
+Private DrawBuffer         As cDIBSection
+
 Private Const NEWBIE_USER_GOLD_COLOR As Long = vbCyan
 Private Const USER_GOLD_COLOR As Long = vbYellow
 
@@ -1142,6 +1145,9 @@ Private Sub Form_Load()
     
     FirstTimeChat = True
     FirstTimeClanChat = True
+    
+    Set DrawBuffer = New cDIBSection
+    Call DrawBuffer.Create(picSM(0).Width, picSM(1).Height)
 End Sub
 
 Private Sub LoadTextsForm()
@@ -1242,8 +1248,18 @@ Public Sub ControlSM(ByVal Index As Byte, _
         DR.Bottom = .pixelHeight
         
     End With
+    
+    picSM(Index).AutoRedraw = False
 
     Call DrawGrhtoHdc(picSM(Index), GrhIndex, DR)
+    
+    Call DrawBuffer.LoadPictureBlt(picSM(Index).hdc)
+
+    picSM(Index).AutoRedraw = True
+
+    Call DrawBuffer.PaintPicture(picSM(Index).hdc, 0, 0, picSM(Index).Width, picSM(Index).Height, 0, 0, vbSrcCopy)
+
+    picSM(Index).Picture = picSM(Index).Image
     
     Select Case Index
             
@@ -1607,6 +1623,8 @@ End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
     DisableURLDetect
+    
+    Set DrawBuffer = Nothing
 End Sub
 
 Private Sub GldLbl_Click()
