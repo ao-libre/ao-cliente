@@ -11011,16 +11011,7 @@ Private Sub HandleAccountLogged()
     AccountName = Buffer.ReadASCIIString
     AccountHash = Buffer.ReadASCIIString
     NumberOfCharacters = Buffer.ReadByte
-
-    'TODO: Mover todo estos datos que obtenemos del servidor a la funciona que se creara cuando querramos ver una lista mas completa de servers
-    ' Aca sobreescribimos el valor del nivel maximo ya que puede variar por servidor
-    STAT_MAXELV = Buffer.ReadByte
-
-    'Obtenemos valor de algunos intervalos necesarios para mostrar informacion en el render
-    'TODO: obtener del server
-    IntervaloParalizado = 23 ' Segundos
-    IntervaloInvisible = 23 ' Segundos
-
+    
     frmPanelAccount.Show
 
     If NumberOfCharacters > 0 Then
@@ -11505,6 +11496,12 @@ On Error GoTo errhandler
     Dim DescripcionServidor As String
     Dim IpPublicaServidor As String
     Dim PuertoServidor As Integer
+    Dim NivelMaximoServidor As Integer
+    Dim MaxUsersSimultaneosServidor As Integer
+    Dim CantidadUsuariosOnline As Integer
+    Dim ExpMultiplierServidor As Integer
+    Dim OroMultiplierServidor As Integer
+    Dim OficioMultiplierServidor As Integer
 
     'Remove packet ID
     Call incomingData.ReadByte
@@ -11515,6 +11512,12 @@ On Error GoTo errhandler
     DescripcionServidor = incomingData.ReadASCIIString()
     IpPublicaServidor = incomingData.ReadASCIIString()
     PuertoServidor = incomingData.ReadInteger()
+    NivelMaximoServidor = incomingData.ReadInteger()
+    MaxUsersSimultaneosServidor = incomingData.ReadInteger()
+    CantidadUsuariosOnline = incomingData.ReadInteger()
+    ExpMultiplierServidor = incomingData.ReadInteger()
+    OroMultiplierServidor = incomingData.ReadInteger()
+    OficioMultiplierServidor = incomingData.ReadInteger()
     
     Dim i As Long
     For i = 1 To QuantityServers
@@ -11539,18 +11542,25 @@ On Error GoTo errhandler
 
                     CountryCode = GetCountryCode(IpPublicaServidor) & " - "
                 End If
-
         
                 Dim Descripcion As String
-                Descripcion =   CountryCode & _
-                                NombreServidor & " >> " & _
+                Descripcion = CountryCode & _
+                                CantidadUsuariosOnline & " / " & MaxUsersSimultaneosServidor & _
+                                " || PING: " & MsPingResult & " ||" & _
+                                " << " & NombreServidor & " >> " & _
+                                "Mundo: " & MundoServidor & " - " & _
+                                DescripcionServidor & " - " & _
                                 ServersLst(i).Ip & ":" & _
-                                ServersLst(i).Puerto & _
-                                " || PING: " & MsPingResult & " || " & _
-                                MundoServidor & " - " & _
-                                DescripcionServidor & " - "
+                                ServersLst(i).Puerto
 
-                frmConnect.lstServers.List(i) = Descripcion
+                ' i - 1 por que los componentes listbox empiezan con indice 0
+                frmConnect.lstServers.List(i - 1) = Descripcion
+
+                    
+                'Obtenemos valor de algunos intervalos necesarios para mostrar informacion en el render
+                'TODO: obtener del server no lo hago aun por que no se como traducir los valore del server.ini a segundos capaz no se puede
+                IntervaloParalizado = 23 ' Segundos
+                IntervaloInvisible = 23 ' Segundos
 
                 Exit Sub
         End If
