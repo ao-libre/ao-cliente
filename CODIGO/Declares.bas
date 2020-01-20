@@ -848,6 +848,7 @@ Public Declare Function LoadCursorFromFile Lib "user32" Alias "LoadCursorFromFil
 '******End Mouse Cursor****
 
 Public Declare Function GetTickCount Lib "kernel32" () As Long
+Public Declare Function timeGetTime Lib "winmm.dll" () As Long
 
 'para escribir y leer variables
 Public Declare Function writeprivateprofilestring Lib "kernel32" Alias "WritePrivateProfileStringA" (ByVal lpApplicationname As String, ByVal lpKeyname As Any, ByVal lpString As String, ByVal lpFileName As String) As Long
