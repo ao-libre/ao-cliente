@@ -31,9 +31,6 @@ Public Engine_BaseSpeed As Single
 Public ScreenWidth As Long
 Public ScreenHeight As Long
 
-Public Const HeadOffsetAltos As Integer = -8
-Public Const HeadOffsetBajos As Integer = 2
-
 Public MainScreenRect As RECT
 
 Public Type TLVERTEX
@@ -191,6 +188,9 @@ On Error Resume Next
     
     '   Clean Texture
     Call DirectDevice.SetTexture(0, Nothing)
+    
+    '   Borrar DBI Surface usada para pjs de la cuenta
+    CleanDrawBufferForPJ
 
     '   Erase Data
     Erase MapData()
@@ -239,6 +239,9 @@ Public Sub Engine_DirectX8_Aditional_Init()
     Call mDx8_Auras.Load_Auras
     Call mDx8_Clima.Init_MeteoEngine
     Call mDx8_Dibujado.Damage_Initialize
+    
+    ' Inicializa DIB surface para dibujar los pjs de la cuenta
+    Call PrepareDrawBufferForPJ
     
 End Sub
 
