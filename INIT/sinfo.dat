@@ -14,7 +14,7 @@ PJ=7666
 Mundo=Alkon
 
 [S3]
-Desc=Servidor Local | Alkon 0.13.X
+Desc=Servidor Local | Alkon
 IP=localhost
 PJ=7666
 Mundo=Alkon

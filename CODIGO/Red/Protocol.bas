@@ -11510,62 +11510,44 @@ On Error GoTo errhandler
     MundoServidor = incomingData.ReadASCIIString()
     NombreServidor = incomingData.ReadASCIIString()
     DescripcionServidor = incomingData.ReadASCIIString()
-    IpPublicaServidor = incomingData.ReadASCIIString()
-    PuertoServidor = incomingData.ReadInteger()
     NivelMaximoServidor = incomingData.ReadInteger()
     MaxUsersSimultaneosServidor = incomingData.ReadInteger()
     CantidadUsuariosOnline = incomingData.ReadInteger()
     ExpMultiplierServidor = incomingData.ReadInteger()
     OroMultiplierServidor = incomingData.ReadInteger()
     OficioMultiplierServidor = incomingData.ReadInteger()
-    
-    Dim i As Long
-    For i = 1 To QuantityServers
 
-        Dim bIsServerSelected As Boolean 
-        Dim bIsPortUsedByServer As Boolean 
-      
-        bIsServerSelected = ServersLst(i).Ip = IpPublicaServidor Or ServersLst(i).Ip = "localhost" Or ServersLst(i).Ip = "127.0.0.1"
-        bIsPortUsedByServer = ServersLst(i).Puerto = PuertoServidor
-        
-        If bIsServerSelected And bIsPortUsedByServer Then
-                Dim MsPingResult As Long
-                MsPingResult = (GetTickCount - pingTime)
-                pingTime = 0
+    Dim MsPingResult As Long
+    MsPingResult = (GetTickCount - pingTime)
+    pingTime = 0
 
-                Dim CountryCode As String
-                If IpApiEnabled Then
-                    'If is not numeric do a url transformation
-                    If CheckIfIpIsNumeric(IpPublicaServidor) = False Then
-                        IpPublicaServidor = GetIPFromHostName(IpPublicaServidor)
-                    End If
-
-                    CountryCode = GetCountryCode(IpPublicaServidor) & " - "
-                End If
-        
-                Dim Descripcion As String
-                Descripcion = CountryCode & _
-                                CantidadUsuariosOnline & " / " & MaxUsersSimultaneosServidor & _
-                                " || PING: " & MsPingResult & " ||" & _
-                                " << " & NombreServidor & " >> " & _
-                                "Mundo: " & MundoServidor & " - " & _
-                                DescripcionServidor & " - " & _
-                                ServersLst(i).Ip & ":" & _
-                                ServersLst(i).Puerto
-
-                ' i - 1 por que los componentes listbox empiezan con indice 0
-                frmConnect.lstServers.List(i - 1) = Descripcion
-
-                    
-                'Obtenemos valor de algunos intervalos necesarios para mostrar informacion en el render
-                'TODO: obtener del server no lo hago aun por que no se como traducir los valore del server.ini a segundos capaz no se puede
-                IntervaloParalizado = 23 ' Segundos
-                IntervaloInvisible = 23 ' Segundos
-
-                Exit Sub
+    Dim CountryCode As String
+    If IpApiEnabled Then
+        'If is not numeric do a url transformation
+        If CheckIfIpIsNumeric(IpPublicaServidor) = False Then
+            IpPublicaServidor = GetIPFromHostName(IpPublicaServidor)
         End If
 
-    Next i
+        CountryCode = GetCountryCode(IpPublicaServidor) & " - "
+    End If
+
+    Dim Descripcion As String
+    Descripcion =   CountryCode & _
+                    NombreServidor & VbNewline & _
+                    DescripcionServidor & VbNewLine & _
+                    "Mundo: " & MundoServidor & VbNewLine & _
+                    "Online: " & CantidadUsuariosOnline & " / " & MaxUsersSimultaneosServidor & VbNewline & _
+                    "Ping: " & MsPingResult & VbNewline & _
+                    "Nivel Maximo Permitido : " & NivelMaximoServidor
+
+
+    frmConnect.lblDescripcionServidor = Descripcion
+
+    'Obtenemos valor de algunos intervalos necesarios para mostrar informacion en el render
+    'TODO: obtener del server no lo hago aun por que no se como traducir los valore del server.ini a segundos capaz no se puede
+    IntervaloParalizado = 23 ' Segundos
+    IntervaloInvisible = 23 ' Segundos
+    STAT_MAXELV = NivelMaximoServidor
 
 errhandler:
 

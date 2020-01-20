@@ -220,8 +220,8 @@ Begin VB.Form frmConnect
       EndProperty
    End
    Begin VB.Timer tEfectos 
-      Left            =   120
-      Top             =   480
+      Left            =   1680
+      Top             =   1080
    End
    Begin VB.ListBox lstServers 
       Appearance      =   0  'Flat
@@ -230,26 +230,26 @@ Begin VB.Form frmConnect
          Name            =   "Tahoma"
          Size            =   8.25
          Charset         =   0
-         Weight          =   700
+         Weight          =   400
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H0000FF00&
-      Height          =   3540
+      Height          =   4905
       ItemData        =   "frmConnect.frx":1768C
-      Left            =   480
+      Left            =   8685
       List            =   "frmConnect.frx":1768E
       TabIndex        =   3
-      Top             =   3960
-      Width           =   10935
+      Top             =   1680
+      Width           =   2775
    End
    Begin AOLibre.uAOButton btnActualizarLista 
       Height          =   495
-      Left            =   9600
+      Left            =   9120
       TabIndex        =   7
       TabStop         =   0   'False
-      Top             =   7680
+      Top             =   6840
       Width           =   1935
       _ExtentX        =   3413
       _ExtentY        =   873
@@ -273,10 +273,10 @@ Begin VB.Form frmConnect
    End
    Begin AOLibre.uAOButton btnTeclas 
       Height          =   375
-      Left            =   8520
+      Left            =   6120
       TabIndex        =   17
       TabStop         =   0   'False
-      Top             =   2400
+      Top             =   3960
       Width           =   1335
       _ExtentX        =   2355
       _ExtentY        =   661
@@ -300,10 +300,10 @@ Begin VB.Form frmConnect
    End
    Begin AOLibre.uAOButton btnConectarse 
       Height          =   375
-      Left            =   7080
+      Left            =   4800
       TabIndex        =   15
       TabStop         =   0   'False
-      Top             =   2400
+      Top             =   3960
       Width           =   1335
       _ExtentX        =   2355
       _ExtentY        =   661
@@ -327,10 +327,10 @@ Begin VB.Form frmConnect
    End
    Begin AOLibre.uAOCheckbox chkRecordar 
       Height          =   345
-      Left            =   7440
+      Left            =   5280
       TabIndex        =   16
       TabStop         =   0   'False
-      Top             =   720
+      Top             =   4680
       Width           =   345
       _ExtentX        =   609
       _ExtentY        =   609
@@ -353,10 +353,10 @@ Begin VB.Form frmConnect
       ForeColor       =   &H00FFFFFF&
       Height          =   225
       IMEMode         =   3  'DISABLE
-      Left            =   7080
+      Left            =   4920
       PasswordChar    =   "*"
       TabIndex        =   1
-      Top             =   2040
+      Top             =   3720
       Width           =   2460
    End
    Begin VB.TextBox txtNombre 
@@ -373,9 +373,9 @@ Begin VB.Form frmConnect
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   225
-      Left            =   6960
+      Left            =   4905
       TabIndex        =   0
-      Top             =   1680
+      Top             =   3210
       Width           =   2460
    End
    Begin VB.TextBox IPTxt 
@@ -394,10 +394,10 @@ Begin VB.Form frmConnect
       EndProperty
       ForeColor       =   &H0000FF00&
       Height          =   195
-      Left            =   8040
+      Left            =   5760
       TabIndex        =   6
       Text            =   "localhost"
-      Top             =   1320
+      Top             =   2760
       Width           =   1575
    End
    Begin VB.TextBox PortTxt 
@@ -416,18 +416,18 @@ Begin VB.Form frmConnect
       EndProperty
       ForeColor       =   &H0000FF00&
       Height          =   195
-      Left            =   7080
+      Left            =   4890
       TabIndex        =   5
       Text            =   "7666"
-      Top             =   1320
+      Top             =   2760
       Width           =   825
    End
    Begin AOLibre.uAOButton btnVerForo 
       Height          =   495
-      Left            =   7080
+      Left            =   480
       TabIndex        =   18
       TabStop         =   0   'False
-      Top             =   3000
+      Top             =   6075
       Width           =   2775
       _ExtentX        =   4895
       _ExtentY        =   873
@@ -462,11 +462,30 @@ Begin VB.Form frmConnect
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H80000018&
-      Height          =   3150
-      Left            =   600
+      Height          =   4320
+      Left            =   480
       TabIndex        =   2
-      Top             =   480
-      Width           =   5895
+      Top             =   1680
+      Width           =   2775
+   End
+   Begin VB.Label lblDescripcionServidor 
+      BackColor       =   &H80000013&
+      Caption         =   "Descripcion Server ......."
+      BeginProperty Font 
+         Name            =   "Calibri"
+         Size            =   11.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H000080FF&
+      Height          =   1815
+      Left            =   3960
+      TabIndex        =   20
+      Top             =   5520
+      Width           =   4335
    End
    Begin VB.Image imgServArgentina 
       Height          =   795
@@ -509,9 +528,9 @@ Begin VB.Form frmConnect
          Strikethrough   =   0   'False
       EndProperty
       Height          =   375
-      Left            =   8400
+      Left            =   5760
       TabIndex        =   19
-      Top             =   720
+      Top             =   4800
       Width           =   2055
    End
 End
@@ -688,6 +707,10 @@ Private Sub Form_Activate()
         Me.txtPasswd = Cripto.AesDecryptString(Lector.GetValue("LOGIN", "Password"), AES_PASSWD)
         Me.chkRecordar.Checked = True
     End If
+
+   'Hacemos click en el primer server para poder obtener su info y setear mundoseleccionado
+    Call lstServers_Click
+
 End Sub
 
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
@@ -711,7 +734,7 @@ Private Sub Form_Load()
         IPTxt = ServersLst(1).Ip
         PortTxt = ServersLst(1).Puerto
     End If
-
+   
     version.Caption = GetVersionOfTheGame()
 
     'Solo hay 2 imagenes de cargando, cambiar 2 por el numero maximo si se quiere cambiar
@@ -719,7 +742,7 @@ Private Sub Form_Load()
     
     Call LoadTextsForm
     Call LoadButtonsAnimations
-        '    Call LoadAOCustomControlsPictures(Me) 
+        '    Call LoadAOCustomControlsPictures(Me)
     'Todo: Poner la carga de botones como en el frmCambiaMotd.frm para mantener coherencia con el resto de la aplicacion
     'y poder borrar los frx de este archivo
 
@@ -895,6 +918,11 @@ Private Sub lstRedditPosts_Click()
 End Sub
 
 Private Sub lstServers_Click()
+   'Parchesin para poder clickear el primer server apenas entro al juego automaticamente, sino hago esto el ListIndex es -1
+    If lstServers.ListIndex < 0 Then lstServers.ListIndex = 0
+
+    frmConnect.lblDescripcionServidor = JsonLanguage.item("FRMCONNECT_LBL_DESCRIPCION_SERVER").item("TEXTO")
+
     Dim ServerIndexInLstServer As Integer
     ServerIndexInLstServer = lstServers.ListIndex + 1
     
@@ -904,12 +932,6 @@ Private Sub lstServers_Click()
     'Variable Global declarada en Declares.bas
     MundoSeleccionado = ServersLst(ServerIndexInLstServer).Mundo
     
-    'En caso que no haya un mundo seleccionado en la propiedad Mundo
-    'Seleccionamos Alkon como mundo default
-    If LenB(MundoSeleccionado) = 0 Then
-        MundoSeleccionado = "Alkon"
-    End If
-
     Call Protocol.Connect(E_MODO.ObtenerDatosServer)
     
     pingTime = GetTickCount
