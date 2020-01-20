@@ -506,6 +506,36 @@ Public LastButtonPressed        As clsGraphicalButton
 
 Private UsarMacro               As Boolean
 
+Private Sub Form_Activate()
+On Error Resume Next
+
+    InvMaderasCarpinteria(1).DrawInv
+    InvMaderasCarpinteria(2).DrawInv
+    InvMaderasCarpinteria(3).DrawInv
+    InvMaderasCarpinteria(4).DrawInv
+    
+End Sub
+
+Private Sub Form_GotFocus()
+On Error Resume Next
+
+    InvMaderasCarpinteria(1).DrawInv
+    InvMaderasCarpinteria(2).DrawInv
+    InvMaderasCarpinteria(3).DrawInv
+    InvMaderasCarpinteria(4).DrawInv
+    
+End Sub
+
+Private Sub Form_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+On Error Resume Next
+
+    InvMaderasCarpinteria(1).DrawInv
+    InvMaderasCarpinteria(2).DrawInv
+    InvMaderasCarpinteria(3).DrawInv
+    InvMaderasCarpinteria(4).DrawInv
+    
+End Sub
+
 Private Sub Form_Load()
     
     ' Handles Form movement (drag and drop).

@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
 Begin VB.Form frmMain 
    BorderStyle     =   0  'None
    ClientHeight    =   8985
@@ -108,7 +108,7 @@ Begin VB.Form frmMain
          Height          =   225
          Left            =   600
          Top             =   360
-         Width           =   300
+         Width           =   285
       End
       Begin VB.Shape UserM 
          BackColor       =   &H0000FFFF&
@@ -178,7 +178,7 @@ Begin VB.Form frmMain
       CausesValidation=   0   'False
       ClipControls    =   0   'False
       BeginProperty Font 
-         Name            =   "MS Sans Serif"
+         Name            =   "Arial"
          Size            =   8.25
          Charset         =   0
          Weight          =   700
@@ -332,10 +332,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":51F8A
-      PICF            =   "frmMain.frx":529B4
-      PICH            =   "frmMain.frx":53676
-      PICV            =   "frmMain.frx":54608
+      PICE            =   "frmMain.frx":51F8B
+      PICF            =   "frmMain.frx":529B5
+      PICH            =   "frmMain.frx":53677
+      PICV            =   "frmMain.frx":54609
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -359,10 +359,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":5550A
-      PICF            =   "frmMain.frx":55F34
-      PICH            =   "frmMain.frx":56BF6
-      PICV            =   "frmMain.frx":57B88
+      PICE            =   "frmMain.frx":5550B
+      PICF            =   "frmMain.frx":55F35
+      PICH            =   "frmMain.frx":56BF7
+      PICV            =   "frmMain.frx":57B89
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -386,10 +386,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":58A8A
-      PICF            =   "frmMain.frx":594B4
-      PICH            =   "frmMain.frx":5A176
-      PICV            =   "frmMain.frx":5B108
+      PICE            =   "frmMain.frx":58A8B
+      PICF            =   "frmMain.frx":594B5
+      PICH            =   "frmMain.frx":5A177
+      PICV            =   "frmMain.frx":5B109
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -413,10 +413,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":5C00A
-      PICF            =   "frmMain.frx":5CA34
-      PICH            =   "frmMain.frx":5D6F6
-      PICV            =   "frmMain.frx":5E688
+      PICE            =   "frmMain.frx":5C00B
+      PICF            =   "frmMain.frx":5CA35
+      PICH            =   "frmMain.frx":5D6F7
+      PICV            =   "frmMain.frx":5E689
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -440,10 +440,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":5F58A
-      PICF            =   "frmMain.frx":5FFB4
-      PICH            =   "frmMain.frx":60C76
-      PICV            =   "frmMain.frx":61C08
+      PICE            =   "frmMain.frx":5F58B
+      PICF            =   "frmMain.frx":5FFB5
+      PICH            =   "frmMain.frx":60C77
+      PICV            =   "frmMain.frx":61C09
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -467,10 +467,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":62B0A
-      PICF            =   "frmMain.frx":63534
-      PICH            =   "frmMain.frx":641F6
-      PICV            =   "frmMain.frx":65188
+      PICE            =   "frmMain.frx":62B0B
+      PICF            =   "frmMain.frx":63535
+      PICH            =   "frmMain.frx":641F7
+      PICV            =   "frmMain.frx":65189
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -494,10 +494,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":6608A
-      PICF            =   "frmMain.frx":66AB4
-      PICH            =   "frmMain.frx":67776
-      PICV            =   "frmMain.frx":68708
+      PICE            =   "frmMain.frx":6608B
+      PICF            =   "frmMain.frx":66AB5
+      PICH            =   "frmMain.frx":67777
+      PICV            =   "frmMain.frx":68709
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -522,10 +522,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":6960A
-      PICF            =   "frmMain.frx":6A034
-      PICH            =   "frmMain.frx":6ACF6
-      PICV            =   "frmMain.frx":6BC88
+      PICE            =   "frmMain.frx":6960B
+      PICF            =   "frmMain.frx":6A035
+      PICH            =   "frmMain.frx":6ACF7
+      PICV            =   "frmMain.frx":6BC89
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   15.75
@@ -550,10 +550,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":6CB8A
-      PICF            =   "frmMain.frx":6D5B4
-      PICH            =   "frmMain.frx":6E276
-      PICV            =   "frmMain.frx":6F208
+      PICE            =   "frmMain.frx":6CB8B
+      PICF            =   "frmMain.frx":6D5B5
+      PICH            =   "frmMain.frx":6E277
+      PICV            =   "frmMain.frx":6F209
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   15.75
@@ -623,9 +623,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   0
       Left            =   11430
-      MouseIcon       =   "frmMain.frx":7010A
+      MouseIcon       =   "frmMain.frx":7010B
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":7025C
+      Picture         =   "frmMain.frx":7025D
       Top             =   3480
       Visible         =   0   'False
       Width           =   225
@@ -634,9 +634,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   1
       Left            =   11430
-      MouseIcon       =   "frmMain.frx":705A0
+      MouseIcon       =   "frmMain.frx":705A1
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":706F2
+      Picture         =   "frmMain.frx":706F3
       Top             =   3225
       Visible         =   0   'False
       Width           =   225
@@ -660,7 +660,7 @@ Begin VB.Form frmMain
       BackStyle       =   0  'Transparent
       Caption         =   "Nombre del pj"
       BeginProperty Font 
-         Name            =   "MS Sans Serif"
+         Name            =   "Arial"
          Size            =   8.25
          Charset         =   0
          Weight          =   700
@@ -1072,8 +1072,39 @@ Private Declare Function SetWindowLong _
                                         ByVal nIndex As Long, _
                                         ByVal dwNewLong As Long) As Long
 
+''
+' CopyMemory is the fastest way to copy memory blocks, so we abuse of it
+'
+' @param destination Where the data will be copied.
+' @param source The data to be copied.
+' @param length Number of bytes to be copied.
+
+Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" (ByRef Destination As Any, ByRef source As Any, ByVal Length As Long)
+
 Public Sub dragInventory_dragDone(ByVal originalSlot As Integer, ByVal newSlot As Integer)
     Call Protocol.WriteMoveItem(originalSlot, newSlot, eMoveType.Inventory)
+End Sub
+
+Private Sub Form_Activate()
+    
+    Call Inventario.DrawInv
+    
+    Call ControlSM(eSMType.mWork, SMStatus(eSMType.mWork), False)
+    Call ControlSM(eSMType.sResucitation, SMStatus(eSMType.sResucitation), False)
+    Call ControlSM(eSMType.mSpells, SMStatus(eSMType.mSpells), False)
+    Call ControlSM(eSMType.sSafemode, SMStatus(eSMType.sSafemode), False)
+  
+End Sub
+
+Private Sub Form_Click()
+    
+    Call Inventario.DrawInv
+    
+    Call ControlSM(eSMType.mWork, SMStatus(eSMType.mWork), False)
+    Call ControlSM(eSMType.sResucitation, SMStatus(eSMType.sResucitation), False)
+    Call ControlSM(eSMType.mSpells, SMStatus(eSMType.mSpells), False)
+    Call ControlSM(eSMType.sSafemode, SMStatus(eSMType.sSafemode), False)
+    
 End Sub
 
 Private Sub Form_Load()
@@ -1196,12 +1227,14 @@ Private Sub cmdMoverHechi_Click(Index As Integer)
     End If
 End Sub
 
-Public Sub ControlSM(ByVal Index As Byte, ByVal Mostrar As Boolean)
+Public Sub ControlSM(ByVal Index As Byte, _
+                     ByVal Estado As Boolean, _
+                     Optional ByVal MostrarMensaje As Boolean = True)
     
     Dim GrhIndex As Long
     Dim DR       As RECT
 
-    GrhIndex = GRH_INI_SM + Index + SM_CANT * (CInt(Mostrar) + 1)
+    GrhIndex = GRH_INI_SM + Index + SM_CANT * (CInt(Estado) + 1)
 
     With GrhData(GrhIndex)
     
@@ -1213,60 +1246,79 @@ Public Sub ControlSM(ByVal Index As Byte, ByVal Mostrar As Boolean)
     End With
 
     Call DrawGrhtoHdc(picSM(Index), GrhIndex, DR)
-
+    
     Select Case Index
-        
+            
         Case eSMType.sResucitation
-            
-            If Mostrar Then
-                Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_SEGURO_RESU_ON").item("TEXTO"), _
-                                                      JsonLanguage.item("MENSAJE_SEGURO_RESU_ON").item("COLOR").item(1), _
-                                                      JsonLanguage.item("MENSAJE_SEGURO_RESU_ON").item("COLOR").item(2), _
-                                                      JsonLanguage.item("MENSAJE_SEGURO_RESU_ON").item("COLOR").item(3), _
-                                     True, False, True)
-                                        
+                
+            If Estado Then
+                
+                If MostrarMensaje Then
+                    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_SEGURO_RESU_ON").item("TEXTO"), _
+                                                          JsonLanguage.item("MENSAJE_SEGURO_RESU_ON").item("COLOR").item(1), _
+                                                          JsonLanguage.item("MENSAJE_SEGURO_RESU_ON").item("COLOR").item(2), _
+                                                          JsonLanguage.item("MENSAJE_SEGURO_RESU_ON").item("COLOR").item(3), _
+                                                          True, False, True)
+                End If
+                    
                 picSM(Index).ToolTipText = JsonLanguage.item("MENSAJE_SEGURO_RESU_ON").item("TEXTO")
+                    
             Else
-                Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_SEGURO_RESU_OFF").item("TEXTO"), _
-                                                      JsonLanguage.item("MENSAJE_SEGURO_RESU_OFF").item("COLOR").item(1), _
-                                                      JsonLanguage.item("MENSAJE_SEGURO_RESU_OFF").item("COLOR").item(2), _
-                                                      JsonLanguage.item("MENSAJE_SEGURO_RESU_OFF").item("COLOR").item(3), _
-                                     True, False, True)
-                                        
+
+                If MostrarMensaje Then
+                    
+                    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_SEGURO_RESU_OFF").item("TEXTO"), _
+                                                          JsonLanguage.item("MENSAJE_SEGURO_RESU_OFF").item("COLOR").item(1), _
+                                                          JsonLanguage.item("MENSAJE_SEGURO_RESU_OFF").item("COLOR").item(2), _
+                                                          JsonLanguage.item("MENSAJE_SEGURO_RESU_OFF").item("COLOR").item(3), _
+                                                          True, False, True)
+                    
+                End If
+                    
                 picSM(Index).ToolTipText = JsonLanguage.item("MENSAJE_SEGURO_RESU_ON").item("TEXTO")
+                    
             End If
-            
+                
         Case eSMType.sSafemode
-            
-            If Mostrar Then
-                Call AddtoRichTextBox(frmMain.RecTxt, UCase$(JsonLanguage.item("MENSAJE_SEGURO_ACTIVADO").item("TEXTO").item(1)), _
-                                                      JsonLanguage.item("MENSAJE_SEGURO_ACTIVADO").item("COLOR").item(1), _
-                                                      JsonLanguage.item("MENSAJE_SEGURO_ACTIVADO").item("COLOR").item(2), _
-                                                      JsonLanguage.item("MENSAJE_SEGURO_ACTIVADO").item("COLOR").item(3), _
-                                      True, False, True)
-                                        
+                
+            If Estado Then
+                    
+                If MostrarMensaje Then
+                    Call AddtoRichTextBox(frmMain.RecTxt, UCase$(JsonLanguage.item("MENSAJE_SEGURO_ACTIVADO").item("TEXTO").item(1)), _
+                                                                 JsonLanguage.item("MENSAJE_SEGURO_ACTIVADO").item("COLOR").item(1), _
+                                                                 JsonLanguage.item("MENSAJE_SEGURO_ACTIVADO").item("COLOR").item(2), _
+                                                                 JsonLanguage.item("MENSAJE_SEGURO_ACTIVADO").item("COLOR").item(3), _
+                                                                 True, False, True)
+                End If
+                    
                 picSM(Index).ToolTipText = JsonLanguage.item("MENSAJE_SEGURO_ACTIVADO").item("TEXTO").item(2)
+                    
             Else
-                Call AddtoRichTextBox(frmMain.RecTxt, UCase$(JsonLanguage.item("MENSAJE_SEGURO_DESACTIVADO").item("TEXTO").item(1)), _
-                                                      JsonLanguage.item("MENSAJE_SEGURO_DESACTIVADO").item("COLOR").item(1), _
-                                                      JsonLanguage.item("MENSAJE_SEGURO_DESACTIVADO").item("COLOR").item(2), _
-                                                      JsonLanguage.item("MENSAJE_SEGURO_DESACTIVADO").item("COLOR").item(3), _
-                                      True, False, True)
-                                        
+
+                If MostrarMensaje Then
+                    Call AddtoRichTextBox(frmMain.RecTxt, UCase$(JsonLanguage.item("MENSAJE_SEGURO_DESACTIVADO").item("TEXTO").item(1)), _
+                                                                 JsonLanguage.item("MENSAJE_SEGURO_DESACTIVADO").item("COLOR").item(1), _
+                                                                 JsonLanguage.item("MENSAJE_SEGURO_DESACTIVADO").item("COLOR").item(2), _
+                                                                 JsonLanguage.item("MENSAJE_SEGURO_DESACTIVADO").item("COLOR").item(3), _
+                                                                 True, False, True)
+                End If
+                    
                 picSM(Index).ToolTipText = JsonLanguage.item("MENSAJE_SEGURO_DESACTIVADO").item("TEXTO").item(2)
+                
             End If
-            
+                
         Case eSMType.mWork
-            
-            If Mostrar Then
+                
+            If Estado Then
                 picSM(Index).ToolTipText = JsonLanguage.item("MENSAJE_MACRO_ACTIVADO").item("TEXTO")
             Else
                 picSM(Index).ToolTipText = JsonLanguage.item("MENSAJE_MACRO_DESACTIVADO").item("TEXTO")
             End If
-            
+                
     End Select
-
-    SMStatus(Index) = Mostrar
+    
+    SMStatus(Index) = Estado
+    
 End Sub
 
 Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
@@ -2318,9 +2370,8 @@ Private Sub cmdInventario_Click()
     
     cmdMoverHechi(0).Visible = False
     cmdMoverHechi(1).Visible = False
-    
-    DoEvents
-    Call Inventario.DrawInventory
+
+    Call Inventario.DrawInv
     
 End Sub
 
@@ -2370,7 +2421,10 @@ Private Sub picInv_DblClick()
         
         Case eObjType.otAnillo
             Call EquiparItem
-        
+            
+        Case eObjType.otMochilas
+            Call EquiparItem
+            
         Case Else
             Call UsarItem
             
@@ -2380,6 +2434,9 @@ End Sub
 
 Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
     Call Audio.PlayWave(SND_CLICK)
+    
+    Call Inventario.DrawInv
+    
 End Sub
 
 Private Sub RecTxt_Change()
@@ -2389,16 +2446,26 @@ Private Sub RecTxt_Change()
     
     If SendTxt.Visible Then
         SendTxt.SetFocus
+    
     ElseIf Me.SendCMSTXT.Visible Then
         SendCMSTXT.SetFocus
-    ElseIf (Not Comerciando) And (Not MirandoAsignarSkills) And (Not frmMSG.Visible) And (Not MirandoForo) And (Not frmEstadisticas.Visible) And (Not frmCantidad.Visible) And (Not MirandoParty) Then
+    
+    ElseIf (Not Comerciando) And _
+           (Not MirandoAsignarSkills) And _
+           (Not frmMSG.Visible) And _
+           (Not MirandoForo) And _
+           (Not frmEstadisticas.Visible) And _
+           (Not frmCantidad.Visible) _
+           And (Not MirandoParty) Then
          
         If PicInv.Visible Then
             PicInv.SetFocus
         ElseIf hlst.Visible Then
             hlst.SetFocus
         End If
+        
     End If
+    
 End Sub
 
 Private Sub RecTxt_KeyDown(KeyCode As Integer, Shift As Integer)
@@ -2419,7 +2486,9 @@ Private Sub SendTxt_Change()
     '**************************************************************
     If Len(SendTxt.Text) > 160 Then
         stxtbuffer = JsonLanguage.item("MENSAJE_SOY_CHEATER").item("TEXTO")
+    
     Else
+        
         'Make sure only valid chars are inserted (with Shift + Insert they can paste illegal chars)
         Dim i         As Long
         Dim tempstr   As String
@@ -2440,7 +2509,9 @@ Private Sub SendTxt_Change()
         End If
         
         stxtbuffer = SendTxt.Text
+        
     End If
+    
 End Sub
 
 Private Sub SendTxt_KeyPress(KeyAscii As Integer)
@@ -2473,7 +2544,9 @@ Private Sub SendCMSTXT_KeyUp(KeyCode As Integer, Shift As Integer)
         Else
             hlst.SetFocus
         End If
+        
     End If
+    
 End Sub
 
 Private Sub SendCMSTXT_KeyPress(KeyAscii As Integer)
@@ -2625,15 +2698,31 @@ End Sub
 Private Sub Client_DataArrival(ByVal bytesTotal As Long)
     Dim RD     As String
     Dim data() As Byte
+    Dim Length As Long
     
     Client.GetData RD, vbByte, bytesTotal
     data = StrConv(RD, vbFromUnicode)
     
-    'Set data in the buffer
-    Call incomingData.WriteBlock(data)
+    'WyroX: Copiamos hasta llenar la capacidad de la cola.
+    'Si nos pasamos, entonces procesamos los paquetes para vaciarla
+    'y luego volvemos a copiar lo que quede.
+    Do
+        Length = incomingData.Capacity - incomingData.Length
+        Length = IIf(bytesTotal < Length, bytesTotal, Length)
     
-    'Send buffer to Handle data
-    Call HandleIncomingData
+        'Set data in the buffer
+        Call incomingData.WriteBlock(data, Length)
+
+        'Send buffer to Handle data
+        Call HandleIncomingData
+        
+        bytesTotal = bytesTotal - Length
+        
+        If bytesTotal > 0 Then
+            Call CopyMemory(data(0), data(Length), bytesTotal)
+        End If
+        
+    Loop While bytesTotal > 0
     
 End Sub
 
@@ -2733,10 +2822,11 @@ Public Sub ActualizarMiniMapa()
     'Last Modify Date: 05/01/2020
     'Integrado por Reyarb
     'Se agrego campo de vision del render (Recox)
+    'Ajustadas las coordenadas para centrarlo (WyroX)
     '***************************************************
-    Me.UserM.Left = UserPos.X
-    Me.UserM.Top = UserPos.Y
-    Me.UserAreaMinimap.Left = UserPos.X - 9
+    Me.UserM.Left = UserPos.X - 2
+    Me.UserM.Top = UserPos.Y - 2
+    Me.UserAreaMinimap.Left = UserPos.X - 10
     Me.UserAreaMinimap.Top = UserPos.Y - 8
     Me.MiniMapa.Refresh
 End Sub

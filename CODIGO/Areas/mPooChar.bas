@@ -179,6 +179,8 @@ Public Sub Char_UserPos()
                 bTecho = Char_Techo '// Pos : Techo :P
                
                 frmMain.Coord.Caption = "Map:" & UserMap & " X:" & X & " Y:" & Y
+                
+                Call frmMain.ActualizarMiniMapa
  
                 Exit Sub
  

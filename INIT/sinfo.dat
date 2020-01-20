@@ -14,16 +14,16 @@ PJ=7666
 Mundo=Alkon
 
 [S3]
-Desc=Servidor Local | Alkon
+Desc=Servidor Local | Modo:Alkon 0.13.X
 IP=localhost
 PJ=7666
 Mundo=Alkon
 
 [S4]
-Desc=Servidor Local | BattleServer
+Desc=Servidor Local | Modo:Hispano
 IP=localhost
-PJ=7666
-Mundo=BattleServer
+PJ=7665
+Mundo=Hispano
 
 
 

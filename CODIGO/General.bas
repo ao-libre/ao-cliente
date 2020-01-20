@@ -242,9 +242,10 @@ Function LegalCharacter(ByVal KeyAscii As Integer) As Boolean
 End Function
 
 Sub SetConnected()
-'*****************************************************************
-'Sets the client to "Connect" mode
-'*****************************************************************
+    '*****************************************************************
+    'Sets the client to "Connect" mode
+    '*****************************************************************
+    
     'Set Connected
     Connected = True
 
@@ -255,16 +256,15 @@ Sub SetConnected()
     
     'Vaciamos la cola de movimiento
     keysMovementPressedQueue.Clear
+    
+    With frmMain
+    
+        .lblName.Caption = UserName
+    
+        'Load main form
+        .Visible = True
 
-    frmMain.lblName.Caption = UserName
-    
-    'Load main form
-    frmMain.Visible = True
-    
-    Call frmMain.ControlSM(eSMType.sResucitation, False)
-    Call frmMain.ControlSM(eSMType.mWork, False)
-    Call frmMain.ControlSM(eSMType.mSpells, False)
-    Call frmMain.ControlSM(eSMType.sSafemode, False)
+    End With
     
     FPSFLAG = True
 
@@ -377,8 +377,6 @@ Private Sub CheckKeys()
             Call Char_UserPos
         End If
 
-        Call frmMain.ActualizarMiniMapa   'integrado por ReyarB
-        
     End If
 End Sub
 
@@ -1116,7 +1114,12 @@ Public Sub CloseClient()
     'WyroX:
     'Guardamos antes de cerrar porque algunas configuraciones
     'no se guardan desde el menu opciones (Por ej: M=Musica)
-    Call Game.GuardarConfiguracion
+    'Fix: intentaba guardar cuando el juego cerraba por un error,
+    'antes de cargar los recursos. Me aprovecho de prgRun
+    'para saber si ya fueron cargados
+    If prgRun Then
+        Call Game.GuardarConfiguracion
+    End If
 
     'Cerramos Sockets/Winsocks/WindowsAPI
     frmMain.Client.CloseSck
@@ -1491,10 +1494,11 @@ Public Sub LoadAOCustomControlsPictures(ByRef tForm As Form)
 End Sub
 
 Public Sub SetSpeedUsuario()
+
     If UserEquitando Then
-        Call Engine_Set_BaseSpeed(0.024)
+        Engine_BaseSpeed = 0.024
     Else
-        Call Engine_Set_BaseSpeed(0.018)
+        Engine_BaseSpeed = 0.018
     End If
 End Sub
 

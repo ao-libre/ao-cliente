@@ -603,6 +603,36 @@ Private Sub ConstruirItem(ByVal Index As Integer)
 
 End Sub
 
+Private Sub Form_Activate()
+On Error Resume Next
+
+    InvLingosHerreria(1).DrawInv
+    InvLingosHerreria(2).DrawInv
+    InvLingosHerreria(3).DrawInv
+    InvLingosHerreria(4).DrawInv
+    
+End Sub
+
+Private Sub Form_GotFocus()
+On Error Resume Next
+
+    InvLingosHerreria(1).DrawInv
+    InvLingosHerreria(2).DrawInv
+    InvLingosHerreria(3).DrawInv
+    InvLingosHerreria(4).DrawInv
+    
+End Sub
+
+Private Sub Form_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+On Error Resume Next
+
+    InvLingosHerreria(1).DrawInv
+    InvLingosHerreria(2).DrawInv
+    InvLingosHerreria(3).DrawInv
+    InvLingosHerreria(4).DrawInv
+    
+End Sub
+
 Private Sub Form_Load()
     Dim MaxConstItem As Integer
     Dim i As Integer

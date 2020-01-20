@@ -307,6 +307,8 @@ Public mapInfo As mapInfo ' Info acerca del mapa en uso
 Public Normal_RGBList(3) As Long
 Public Color_Shadow(3) As Long
 Public Color_Arbol(3) As Long
+Public ColorTextoParalisis As Long
+Public ColorTextoInvisibilidad As Long
 
 '   Control de Lluvia
 Public bRain As Boolean
@@ -340,12 +342,12 @@ Private Declare Function QueryPerformanceCounter Lib "kernel32" (lpPerformanceCo
 Public Declare Function SetPixel Lib "gdi32" (ByVal hdc As Long, ByVal X As Long, ByVal Y As Long, ByVal crColor As Long) As Long
 Public Declare Function GetPixel Lib "gdi32" (ByVal hdc As Long, ByVal X As Long, ByVal Y As Long) As Long
 
-Sub ConvertCPtoTP(ByVal viewPortX As Integer, ByVal viewPortY As Integer, ByRef tX As Byte, ByRef tY As Byte)
+Sub ConvertCPtoTP(ByVal viewPortX As Integer, ByVal viewPortY As Integer, ByRef TX As Byte, ByRef TY As Byte)
 '******************************************
 'Converts where the mouse is in the main window to a tile position. MUST be called eveytime the mouse moves.
 '******************************************
-    tX = UserPos.X + viewPortX \ TilePixelWidth - WindowTileWidth \ 2
-    tY = UserPos.Y + viewPortY \ TilePixelHeight - WindowTileHeight \ 2
+    TX = UserPos.X + viewPortX \ TilePixelWidth - WindowTileWidth \ 2
+    TY = UserPos.Y + viewPortY \ TilePixelHeight - WindowTileHeight \ 2
 End Sub
 
 Sub MakeChar(ByVal CharIndex As Integer, ByVal Body As Integer, ByVal Head As Integer, ByVal Heading As Byte, ByVal X As Integer, ByVal Y As Integer, ByVal Arma As Integer, ByVal Escudo As Integer, ByVal Casco As Integer)
@@ -561,16 +563,16 @@ Function NextOpenChar() As Integer
 '*****************************************************************
 'Finds next open char slot in CharList
 '*****************************************************************
-    Dim loopc As Long
+    Dim LoopC As Long
     Dim Dale As Boolean
     
-    loopc = 1
-    Do While charlist(loopc).active And Dale
-        loopc = loopc + 1
-        Dale = (loopc <= UBound(charlist))
+    LoopC = 1
+    Do While charlist(LoopC).active And Dale
+        LoopC = LoopC + 1
+        Dale = (LoopC <= UBound(charlist))
     Loop
     
-    NextOpenChar = loopc
+    NextOpenChar = LoopC
 End Function
 
 Function InMapBounds(ByVal X As Integer, ByVal Y As Integer) As Boolean
@@ -602,7 +604,7 @@ Function GetBitmapDimensions(ByVal BmpFile As String, ByRef bmWidth As Long, ByR
     bmHeight = BINFOHeader.biHeight
 End Function
 
-Public Sub DrawTransparentGrhtoHdc(ByVal dsthdc As Long, ByVal srchdc As Long, ByRef SourceRect As RECT, ByRef destRect As RECT, ByVal TransparentColor As Long)
+Public Sub DrawTransparentGrhtoHdc(ByVal dsthdc As Long, ByVal srchdc As Long, ByRef SourceRect As RECT, ByRef DestRect As RECT, ByVal TransparentColor As Long)
 '**************************************************************
 'Author: Torres Patricio (Pato)
 'Last Modify Date: 27/07/2012 - ^[GS]^
@@ -616,7 +618,7 @@ Public Sub DrawTransparentGrhtoHdc(ByVal dsthdc As Long, ByVal srchdc As Long, B
             Color = GetPixel(srchdc, X, Y)
             
             If Color <> TransparentColor Then
-                Call SetPixel(dsthdc, destRect.Left + (X - SourceRect.Left), destRect.Top + (Y - SourceRect.Top), Color)
+                Call SetPixel(dsthdc, DestRect.Left + (X - SourceRect.Left), DestRect.Top + (Y - SourceRect.Top), Color)
             End If
         Next Y
     Next X
@@ -678,10 +680,10 @@ Sub RenderScreen(ByVal tilex As Integer, _
     screenminX = tilex - HalfWindowTileWidth
     screenmaxX = tilex + HalfWindowTileWidth
     
-    minY = screenminY - Engine_Get_TileBuffer
-    maxY = screenmaxY + Engine_Get_TileBuffer
-    minX = screenminX - Engine_Get_TileBuffer
-    maxX = screenmaxX + Engine_Get_TileBuffer
+    minY = screenminY - TileBufferSize
+    maxY = screenmaxY + TileBufferSize
+    minX = screenminX - TileBufferSize
+    maxX = screenmaxX + TileBufferSize
     
     'Make sure mins and maxs are allways in map bounds
     If minY < XMinMapSize Then
@@ -749,11 +751,11 @@ Sub RenderScreen(ByVal tilex As Integer, _
    
     
     '<----- Layer Obj, Char, 3 ----->
-    ScreenY = minYOffset - Engine_Get_TileBuffer
+    ScreenY = minYOffset - TileBufferSize
 
     For Y = minY To maxY
         
-        ScreenX = minXOffset - Engine_Get_TileBuffer
+        ScreenX = minXOffset - TileBufferSize
 
         For X = minX To maxX
             If Map_InBounds(X, Y) Then
@@ -805,7 +807,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
                     If .Particle_Group_Index Then
                     
                         'Solo las renderizamos si estan cerca del area de vision.
-                        If Abs(UserPos.X - X) < Engine_Get_TileBuffer + 3 And (Abs(UserPos.Y - Y)) < Engine_Get_TileBuffer + 3 Then
+                        If Abs(UserPos.X - X) < TileBufferSize + 3 And (Abs(UserPos.Y - Y)) < TileBufferSize + 3 Then
                             Call mDx8_Particulas.Particle_Group_Render(.Particle_Group_Index, PixelOffsetXTemp + 16, PixelOffsetYTemp + 16)
                         End If
                         
@@ -828,11 +830,11 @@ Sub RenderScreen(ByVal tilex As Integer, _
     Next Y
     
     '<----- Layer 4 ----->
-    ScreenY = minYOffset - Engine_Get_TileBuffer
+    ScreenY = minYOffset - TileBufferSize
 
     For Y = minY To maxY
 
-        ScreenX = minXOffset - Engine_Get_TileBuffer
+        ScreenX = minXOffset - TileBufferSize
 
         For X = minX To maxX
             
@@ -865,7 +867,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
 
     If ClientSetup.ParticleEngine Then
         'Weather Update & Render - Aca se renderiza la lluvia, nieve, etc.
-        Call mDx8_Particulas.Engine_Weather_Update()
+        Call mDx8_Particulas.Engine_Weather_Update
     End If
 
     If ClientSetup.ProyectileEngine Then
@@ -879,7 +881,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
                     Dim angle As Single
                     
                     'Update the position
-                    angle = DegreeToRadian * Engine_GetAngle(ProjectileList(J).X, ProjectileList(J).Y, ProjectileList(J).tX, ProjectileList(J).tY)
+                    angle = DegreeToRadian * Engine_GetAngle(ProjectileList(J).X, ProjectileList(J).Y, ProjectileList(J).TX, ProjectileList(J).TY)
                     ProjectileList(J).X = ProjectileList(J).X + (Sin(angle) * ElapsedTime * 0.63)
                     ProjectileList(J).Y = ProjectileList(J).Y - (Cos(angle) * ElapsedTime * 0.63)
                     
@@ -917,8 +919,8 @@ Sub RenderScreen(ByVal tilex As Integer, _
             For J = 1 To LastProjectile
 
                 If ProjectileList(J).Grh.GrhIndex Then
-                    If Abs(ProjectileList(J).X - ProjectileList(J).tX) < 20 Then
-                        If Abs(ProjectileList(J).Y - ProjectileList(J).tY) < 20 Then
+                    If Abs(ProjectileList(J).X - ProjectileList(J).TX) < 20 Then
+                        If Abs(ProjectileList(J).Y - ProjectileList(J).TY) < 20 Then
                             Call Engine_Projectile_Erase(J)
                         End If
                     End If
@@ -1102,7 +1104,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
         
         '****** Update screen ******
         If UserCiego Then
-            DirectDevice.Clear 0, ByVal 0, D3DCLEAR_TARGET, 0, 1#, 0
+            Call DirectDevice.Clear(0, ByVal 0, D3DCLEAR_TARGET, 0, 1#, 0)
         Else
             Call RenderScreen(UserPos.X - AddtoUserPos.X, UserPos.Y - AddtoUserPos.Y, OffsetCounterX, OffsetCounterY)
 
@@ -1113,15 +1115,12 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
         If DialogosClanes.Activo Then Call DialogosClanes.Draw ' GSZAO
 
         '*********Tiempo restante para que termine el invi o el paralizar*********
-        Dim ColorText As Long
-        If UserParalizado Then 
-            ColorText = D3DColorARGB(180, 230, 230, 250)
-            Call DrawText(1, 25, UserParalizadoSegundosRestantes & " segundos restantes de Paralisis", ColorText)
+        If UserParalizado And UserParalizadoSegundosRestantes <> 0 Then
+            Call DrawText(1, 25, UserParalizadoSegundosRestantes & " segundos restantes de Paralisis", ColorTextoParalisis)
         End If
 
-        If UserInvisible Then 
-            ColorText = D3DColorARGB(180, 236, 136, 66)
-            Call DrawText(1, 13, UserInvisibleSegundosRestantes & " segundos restantes de Invisibilidad", ColorText)
+        If UserInvisible And UserInvisibleSegundosRestantes <> 0 Then
+            Call DrawText(1, 13, UserInvisibleSegundosRestantes & " segundos restantes de Invisibilidad", ColorTextoInvisibilidad)
         End If
         '*************************************************************************
         
@@ -1131,56 +1130,12 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
 
         'Get timing info
         timerElapsedTime = GetElapsedTime()
-        timerTicksPerFrame = timerElapsedTime * Engine_Get_BaseSpeed
+        timerTicksPerFrame = timerElapsedTime * Engine_BaseSpeed
         
         Call Engine_EndScene(MainScreenRect, 0)
         
-        '//Banco
-        If frmBancoObj.Visible Then
-            If frmBancoObj.PicBancoInv.Visible Then Call InvBanco(0).DrawInv
-            If frmBancoObj.PicInv.Visible Then Call InvBanco(1).DrawInv
-        End If
-    
-        '//Comercio
-        If frmComerciar.Visible Then
-            If frmComerciar.picInvNpc.Visible Then Call InvComNpc.DrawInv
-            If frmComerciar.picInvUser.Visible Then Call InvComUsu.DrawInv
-        End If
-    
-        '//Comercio entre usuarios
-        If frmComerciarUsu.Visible Then
-            If frmComerciarUsu.picInvComercio.Visible Then InvComUsu.DrawInv (1)
-            If frmComerciarUsu.picInvOfertaProp.Visible Then InvOfferComUsu(0).DrawInv (1)
-            If frmComerciarUsu.picInvOfertaOtro Then InvOfferComUsu(1).DrawInv (1)
-            If frmComerciarUsu.picInvOroProp.Visible Then InvOroComUsu(0).DrawInv (1)
-            If frmComerciarUsu.picInvOroOfertaProp.Visible Then InvOroComUsu(1).DrawInv (1)
-            If frmComerciarUsu.picInvOroOfertaOtro.Visible Then InvOroComUsu(2).DrawInv (1)
-        End If
-    
-        '//Herrero
-        If frmHerrero.Visible Then
-            If frmHerrero.picLingotes0.Visible Or frmHerrero.picMejorar0.Visible Then InvLingosHerreria(1).DrawInv (1)
-            If frmHerrero.picLingotes1.Visible Or frmHerrero.picMejorar1.Visible Then InvLingosHerreria(2).DrawInv (1)
-            If frmHerrero.picLingotes2.Visible Or frmHerrero.picMejorar2.Visible Then InvLingosHerreria(3).DrawInv (1)
-            If frmHerrero.picLingotes3.Visible Or frmHerrero.picMejorar3.Visible Then InvLingosHerreria(4).DrawInv (1)
-        End If
-    
-        '//Carpintero
-        If frmCarpinteria.Visible Then
-            If frmCarpinteria.picMaderas0.Visible Or frmCarpinteria.imgMejorar0.Visible Then InvMaderasCarpinteria(1).DrawInv (1)
-            If frmCarpinteria.picMaderas1.Visible Or frmCarpinteria.imgMejorar1.Visible Then InvMaderasCarpinteria(2).DrawInv (1)
-            If frmCarpinteria.picMaderas2.Visible Or frmCarpinteria.imgMejorar2.Visible Then InvMaderasCarpinteria(3).DrawInv (1)
-            If frmCarpinteria.picMaderas3.Visible Or frmCarpinteria.imgMejorar3.Visible Then InvMaderasCarpinteria(4).DrawInv (1)
-        End If
-    
-        '//Inventario
-        If frmMain.Visible Then
-            If frmMain.PicInv.Visible Then
-                Call Inventario.DrawInv
-            End If
-        End If
+        Call Inventario.DrawDragAndDrop
         
-
     End If
   
 End Sub
@@ -1197,7 +1152,7 @@ Private Function GetElapsedTime() As Single
 
     'Get the timer frequency
     If timer_freq = 0 Then
-        QueryPerformanceFrequency timer_freq
+        Call QueryPerformanceFrequency(timer_freq)
     End If
     
     'Get current time
@@ -1208,6 +1163,7 @@ Private Function GetElapsedTime() As Single
     
     'Get next end time
     Call QueryPerformanceCounter(end_time)
+    
 End Function
 
 Private Sub CharRender(ByVal CharIndex As Long, _
@@ -1537,7 +1493,7 @@ Public Sub Device_Textured_Render(ByVal X As Single, ByVal Y As Single, _
                                   ByVal tex As Long, _
                                   ByRef Color() As Long, _
                                   Optional ByVal Alpha As Boolean = False, _
-                                  Optional ByVal Angle As Single = 0)
+                                  Optional ByVal angle As Single = 0)
 
         Dim Texture As Direct3DTexture8
         
@@ -1551,9 +1507,9 @@ Public Sub Device_Textured_Render(ByVal X As Single, ByVal Y As Single, _
                 Call .SetAlpha(Alpha)
                 
                 If TextureWidth <> 0 And TextureHeight <> 0 Then
-                    Call .Draw(X, Y, Width, Height, Color, sX / TextureWidth, sY / TextureHeight, (sX + Width) / TextureWidth, (sY + Height) / TextureHeight, Angle)
+                    Call .Draw(X, Y, Width, Height, Color, sX / TextureWidth, sY / TextureHeight, (sX + Width) / TextureWidth, (sY + Height) / TextureHeight, angle)
                 Else
-                    Call .Draw(X, Y, TextureWidth, TextureHeight, Color, , , , , Angle)
+                    Call .Draw(X, Y, TextureWidth, TextureHeight, Color, , , , , angle)
                 End If
                 
         End With

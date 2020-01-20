@@ -656,3 +656,13 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 15/01/2020: Si la musica es la misma, la dejamos que siga y no hacemos nada al cambiar de mapa (Recox)
 * 15/01/2020: Se agrego NPC que vende monturas en varias ciudades y los dragones que las dropean en sus dungeon http://wiki.argentumonline.org/indexd895.html?seccion=navegacion#ver (Recox)
 * 16/01/2020: Agregados nuevos npcs titanes en mapas [184-266-285] (Neo)
+
+- v0.13.23
+
+* 19/01/2020: Se saco el renderizado de los inventarios del MainLoop. (jopiortiz-FrankoH)
+* 19/01/2020: Fix letras de los nombres parpadeaban. (FrankoH)
+* 19/01/2020: Escala para que el texto de pasar de mapa no salga de la ventana. (FrankoH)
+* 19/01/2020: Se arreglo el tiempo restante de invisibilidad y paralisis, ahora se envia el tiempo restante desde el servidor. (FrankoH)
+* 19/01/2020: Se saco del MainLoop los metodos ARGB del tiempo restante de invisibilidad y paralisis. (WyroX)
+* 19/01/2020: Mejorado el formulario del comando /BUSCAR. (WyroX)
+* 19/01/2020: Espada Mata-Dragones arreglada, no se quemaba la MD al pegarle al dragon. (WyroX)
