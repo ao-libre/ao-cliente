@@ -2689,7 +2689,6 @@ Private Sub Client_Connect()
 
         Case E_MODO.ObtenerDatosServer
             Call WriteObtenerDatosServer
-            Call Audio.PlayBackgroundMusic("15", MusicTypes.Mp3)
 
     End Select
  
