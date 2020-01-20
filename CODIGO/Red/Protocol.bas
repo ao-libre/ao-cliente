@@ -3120,10 +3120,11 @@ Private Sub HandleRainToggle()
     If Not InMapBounds(UserPos.X, UserPos.Y) Then Exit Sub
     
     bTecho = (MapData(UserPos.X, UserPos.Y).Trigger = BAJOTECHO Or _
-        MapData(UserPos.X, UserPos.Y).Trigger = CASA Or _
-        MapData(UserPos.X, UserPos.Y).Trigger = ZONASEGURA)
+              MapData(UserPos.X, UserPos.Y).Trigger = CASA Or _
+              MapData(UserPos.X, UserPos.Y).Trigger = ZONASEGURA)
 
     If bRain And bLluvia(UserMap) Then
+        
         'Stop playing the rain sound
         Call Audio.StopWave(RainBufferIndex)
         RainBufferIndex = 0
@@ -3139,6 +3140,7 @@ Private Sub HandleRainToggle()
     End If
     
     bRain = Not bRain
+    
 End Sub
 
 ''
