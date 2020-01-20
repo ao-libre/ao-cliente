@@ -139,7 +139,7 @@ Public Function Char_Techo() As Boolean
       
                 If (Map_InBounds(.Pos.X, .Pos.Y)) Then '// Posicion valida
                        
-                        If (MapData(.Pos.X, .Pos.Y).Trigger = eTrigger.BAJOTECHO Or MapData(.Pos.X, .Pos.Y).Trigger = eTrigger.CASA) Then
+                        If MapData(.Pos.X, .Pos.Y).Trigger And (eTrigger.BAJOTECHO Or eTrigger.CASA) Then
                                 Char_Techo = True
                         End If
                                
