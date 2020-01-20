@@ -3315,7 +3315,7 @@ On Error GoTo errhandler
     End If
     
     Call Inventario.SetItem(slot, ObjIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, name)
-    Call Inventario.DrawInv
+    Call Inventario.DrawInventory
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
@@ -3342,7 +3342,7 @@ Private Sub HandleAddSlots()
     Call incomingData.ReadByte
     
     MaxInventorySlots = incomingData.ReadByte
-    Call Inventario.DrawInv
+    Call Inventario.DrawInventory
 End Sub
 
 ' Handles the StopWorking message.

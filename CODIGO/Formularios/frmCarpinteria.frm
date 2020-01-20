@@ -509,30 +509,30 @@ Private UsarMacro               As Boolean
 Private Sub Form_Activate()
 On Error Resume Next
 
-    InvMaderasCarpinteria(1).DrawInv
-    InvMaderasCarpinteria(2).DrawInv
-    InvMaderasCarpinteria(3).DrawInv
-    InvMaderasCarpinteria(4).DrawInv
+    InvMaderasCarpinteria(1).DrawInventory
+    InvMaderasCarpinteria(2).DrawInventory
+    InvMaderasCarpinteria(3).DrawInventory
+    InvMaderasCarpinteria(4).DrawInventory
     
 End Sub
 
 Private Sub Form_GotFocus()
 On Error Resume Next
 
-    InvMaderasCarpinteria(1).DrawInv
-    InvMaderasCarpinteria(2).DrawInv
-    InvMaderasCarpinteria(3).DrawInv
-    InvMaderasCarpinteria(4).DrawInv
+    InvMaderasCarpinteria(1).DrawInventory
+    InvMaderasCarpinteria(2).DrawInventory
+    InvMaderasCarpinteria(3).DrawInventory
+    InvMaderasCarpinteria(4).DrawInventory
     
 End Sub
 
 Private Sub Form_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
 On Error Resume Next
 
-    InvMaderasCarpinteria(1).DrawInv
-    InvMaderasCarpinteria(2).DrawInv
-    InvMaderasCarpinteria(3).DrawInv
-    InvMaderasCarpinteria(4).DrawInv
+    InvMaderasCarpinteria(1).DrawInventory
+    InvMaderasCarpinteria(2).DrawInventory
+    InvMaderasCarpinteria(3).DrawInventory
+    InvMaderasCarpinteria(4).DrawInventory
     
 End Sub
 

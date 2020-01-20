@@ -140,7 +140,7 @@ Begin VB.Form frmMain
    Begin VB.PictureBox picSM 
       Appearance      =   0  'Flat
       AutoRedraw      =   -1  'True
-      BackColor       =   &H00000000&
+      BackColor       =   &H00FFFFFF&
       BorderStyle     =   0  'None
       ForeColor       =   &H80000008&
       Height          =   450
@@ -1063,6 +1063,9 @@ Private FirstTimeClanChat  As Boolean
 Dim CtrlMaskOn             As Boolean
 Dim SkinSeleccionado       As String
 
+'Para evitar que desaparezcan los picSM
+Private DrawBuffer         As cDIBSection
+
 Private Const NEWBIE_USER_GOLD_COLOR As Long = vbCyan
 Private Const USER_GOLD_COLOR As Long = vbYellow
 
@@ -1087,7 +1090,7 @@ End Sub
 
 Private Sub Form_Activate()
     
-    Call Inventario.DrawInv
+    Call Inventario.DrawInventory
     
     Call ControlSM(eSMType.mWork, SMStatus(eSMType.mWork), False)
     Call ControlSM(eSMType.sResucitation, SMStatus(eSMType.sResucitation), False)
@@ -1097,9 +1100,7 @@ Private Sub Form_Activate()
 End Sub
 
 Private Sub Form_Click()
-    
-    Call Inventario.DrawInv
-    
+
     Call ControlSM(eSMType.mWork, SMStatus(eSMType.mWork), False)
     Call ControlSM(eSMType.sResucitation, SMStatus(eSMType.sResucitation), False)
     Call ControlSM(eSMType.mSpells, SMStatus(eSMType.mSpells), False)
@@ -1144,6 +1145,9 @@ Private Sub Form_Load()
     
     FirstTimeChat = True
     FirstTimeClanChat = True
+    
+    Set DrawBuffer = New cDIBSection
+    Call DrawBuffer.Create(picSM(0).Width, picSM(1).Height)
 End Sub
 
 Private Sub LoadTextsForm()
@@ -1244,8 +1248,18 @@ Public Sub ControlSM(ByVal Index As Byte, _
         DR.Bottom = .pixelHeight
         
     End With
+    
+    picSM(Index).AutoRedraw = False
 
     Call DrawGrhtoHdc(picSM(Index), GrhIndex, DR)
+    
+    Call DrawBuffer.LoadPictureBlt(picSM(Index).hdc)
+
+    picSM(Index).AutoRedraw = True
+
+    Call DrawBuffer.PaintPicture(picSM(Index).hdc, 0, 0, picSM(Index).Width, picSM(Index).Height, 0, 0, vbSrcCopy)
+
+    picSM(Index).Picture = picSM(Index).Image
     
     Select Case Index
             
@@ -1609,6 +1623,8 @@ End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
     DisableURLDetect
+    
+    Set DrawBuffer = Nothing
 End Sub
 
 Private Sub GldLbl_Click()
@@ -2371,7 +2387,7 @@ Private Sub cmdInventario_Click()
     cmdMoverHechi(0).Visible = False
     cmdMoverHechi(1).Visible = False
 
-    Call Inventario.DrawInv
+    Call Inventario.DrawInventory
     
 End Sub
 
@@ -2435,7 +2451,7 @@ End Sub
 Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
     Call Audio.PlayWave(SND_CLICK)
     
-    Call Inventario.DrawInv
+    Call Inventario.DrawInventory
     
 End Sub
 
