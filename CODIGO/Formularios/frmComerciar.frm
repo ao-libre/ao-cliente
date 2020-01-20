@@ -321,16 +321,16 @@ End Sub
 Private Sub Form_Activate()
 On Error Resume Next
 
-    Call InvComUsu.DrawInv
-    Call InvComNpc.DrawInv
+    Call InvComUsu.DrawInventory
+    Call InvComNpc.DrawInventory
     
 End Sub
 
 Private Sub Form_GotFocus()
 On Error Resume Next
 
-    Call InvComUsu.DrawInv
-    Call InvComNpc.DrawInv
+    Call InvComUsu.DrawInventory
+    Call InvComNpc.DrawInventory
     
 End Sub
 
@@ -419,8 +419,8 @@ Private Sub imgComprar_Click()
     
     DoEvents
     
-    Call InvComUsu.DrawInv
-    Call InvComNpc.DrawInv
+    Call InvComUsu.DrawInventory
+    Call InvComNpc.DrawInventory
     
 End Sub
 
@@ -442,8 +442,8 @@ Private Sub imgVender_Click()
     
     DoEvents
     
-    Call InvComUsu.DrawInv
-    Call InvComNpc.DrawInv
+    Call InvComUsu.DrawInventory
+    Call InvComNpc.DrawInventory
     
 End Sub
 
