@@ -2688,12 +2688,9 @@ Private Sub Client_Connect()
     
     Select Case EstadoLogin
 
-        Case E_MODO.CrearNuevoPj
+        Case E_MODO.CrearNuevoPj, E_MODO.Normal
             Call Login
 
-        Case E_MODO.Normal
-            Call Login
-        
         Case E_MODO.CrearCuenta
             Call Audio.PlayBackgroundMusic("7", MusicTypes.Mp3)
             frmCrearCuenta.Show
@@ -2705,7 +2702,10 @@ Private Sub Client_Connect()
         Case E_MODO.CambiarContrasena
             Call Audio.PlayBackgroundMusic("7", MusicTypes.Mp3)
             frmRecuperarCuenta.Show
-        
+
+        Case E_MODO.ObtenerDatosServer
+            Call WriteObtenerDatosServer
+
     End Select
  
 End Sub

@@ -103,14 +103,6 @@ Public Function path(ByVal PathType As ePath) As String
             path = App.path & "\Lenguajes\"
             
         Case ePath.Mapas
-            'En caso que no haya un mundo seleccionado en la propiedad Mundo
-            'Seleccionamos Alkon como mundo default
-            'Esto hay que eliminarlo de aqui ya que no tiene por que estar aqui, esto es un parche rapido para evitar posibles errores
-            'Cuando hay problemas de conexion
-            If LenB(MundoSeleccionado) = 0 Then
-                MundoSeleccionado = "Alkon"
-            End If
-            
             path = App.path & "\Mapas\" & "\" & MundoSeleccionado & "\"
             
         Case ePath.Musica

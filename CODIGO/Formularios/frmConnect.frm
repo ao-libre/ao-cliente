@@ -2,7 +2,7 @@ VERSION 5.00
 Begin VB.Form frmConnect 
    BackColor       =   &H00E0E0E0&
    BorderStyle     =   0  'None
-   Caption         =   "Argentum Online"
+   Caption         =   "Argentum Online Libre"
    ClientHeight    =   9000
    ClientLeft      =   0
    ClientTop       =   0
@@ -230,7 +230,7 @@ Begin VB.Form frmConnect
          Name            =   "Tahoma"
          Size            =   8.25
          Charset         =   0
-         Weight          =   700
+         Weight          =   400
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
@@ -468,6 +468,25 @@ Begin VB.Form frmConnect
       Top             =   1680
       Width           =   2775
    End
+   Begin VB.Label lblDescripcionServidor 
+      BackColor       =   &H80000013&
+      Caption         =   "Descripcion Server ......."
+      BeginProperty Font 
+         Name            =   "Calibri"
+         Size            =   11.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H000080FF&
+      Height          =   1815
+      Left            =   3960
+      TabIndex        =   20
+      Top             =   5520
+      Width           =   4335
+   End
    Begin VB.Image imgServArgentina 
       Height          =   795
       Left            =   360
@@ -688,6 +707,10 @@ Private Sub Form_Activate()
         Me.txtPasswd = Cripto.AesDecryptString(Lector.GetValue("LOGIN", "Password"), AES_PASSWD)
         Me.chkRecordar.Checked = True
     End If
+
+   'Hacemos click en el primer server para poder obtener su info y setear mundoseleccionado
+    Call lstServers_Click
+
 End Sub
 
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
@@ -711,7 +734,7 @@ Private Sub Form_Load()
         IPTxt = ServersLst(1).Ip
         PortTxt = ServersLst(1).Puerto
     End If
-
+   
     version.Caption = GetVersionOfTheGame()
 
     'Solo hay 2 imagenes de cargando, cambiar 2 por el numero maximo si se quiere cambiar
@@ -719,7 +742,7 @@ Private Sub Form_Load()
     
     Call LoadTextsForm
     Call LoadButtonsAnimations
-        '    Call LoadAOCustomControlsPictures(Me) 
+        '    Call LoadAOCustomControlsPictures(Me)
     'Todo: Poner la carga de botones como en el frmCambiaMotd.frm para mantener coherencia con el resto de la aplicacion
     'y poder borrar los frx de este archivo
 
@@ -895,19 +918,25 @@ Private Sub lstRedditPosts_Click()
 End Sub
 
 Private Sub lstServers_Click()
-    IPTxt.Text = ServersLst(lstServers.ListIndex + 1).Ip
-    PortTxt.Text = ServersLst(lstServers.ListIndex + 1).Puerto
+   'Parchesin para poder clickear el primer server apenas entro al juego automaticamente, sino hago esto el ListIndex es -1
+    If lstServers.ListIndex < 0 Then lstServers.ListIndex = 0
+
+    frmConnect.lblDescripcionServidor = JsonLanguage.item("FRMCONNECT_LBL_DESCRIPCION_SERVER").item("TEXTO")
+
+    Dim ServerIndexInLstServer As Integer
+    ServerIndexInLstServer = lstServers.ListIndex + 1
+    
+    IPTxt.Text = ServersLst(ServerIndexInLstServer).Ip
+    PortTxt.Text = ServersLst(ServerIndexInLstServer).Puerto
     
     'Variable Global declarada en Declares.bas
-    MundoSeleccionado = ServersLst(lstServers.ListIndex + 1).Mundo
+    MundoSeleccionado = ServersLst(ServerIndexInLstServer).Mundo
     
-    'En caso que no haya un mundo seleccionado en la propiedad Mundo
-    'Seleccionamos Alkon como mundo default
-    If LenB(MundoSeleccionado) = 0 Then
-        MundoSeleccionado = "Alkon"
-    End If
+    Call Protocol.Connect(E_MODO.ObtenerDatosServer)
+    
+    pingTime = GetTickCount
 
-    CurServer = lstServers.ListIndex + 1
+    CurServer = ServerIndexInLstServer
 End Sub
 
 Private Sub txtPasswd_KeyPress(KeyAscii As Integer)
@@ -916,4 +945,75 @@ End Sub
 
 Private Sub btnCrearCuenta_Click()
     Call Protocol.Connect(E_MODO.CrearCuenta)
+End Sub
+
+
+Public Sub CargarServidores()
+'********************************
+'Author: Unknown
+'Last Modification: 21/12/2019
+'Last Modified by: Recox
+'Added Instruction "CloseClient" before End so the mutex is cleared (Rapsodius)
+'Added IP Api to get the country of the IP. (Recox)
+'Get ping from server (Recox)
+'********************************
+On Error GoTo errorH
+    Dim File As String
+    
+    File = Game.path(INIT) & "sinfo.dat"
+    QuantityServers = Val(GetVar(File, "INIT", "Cant"))
+    IpApiEnabled = GetVar(Game.path(INIT) & "Config.ini", "Parameters", "IpApiEnabled")
+    
+    frmConnect.lstServers.Clear
+    
+    ReDim ServersLst(1 To QuantityServers) As tServerInfo
+
+    Dim i As Long
+    For i = 1 To QuantityServers
+        Dim CurrentIp As String
+        CurrentIp = Trim$(GetVar(File, "S" & i, "Ip"))
+
+        ServersLst(i).Ip = CurrentIp
+        ServersLst(i).Puerto = CInt(GetVar(File, "S" & i, "PJ"))
+        ServersLst(i).Mundo = GetVar(File, "S" & i, "MUNDO")
+        ServersLst(i).Desc = GetVar(File, "S" & i, "Desc")
+
+        ' Call PingServer(ServersLst(i).Ip, ServersLst(i).Puerto)
+        frmConnect.lstServers.AddItem (ServersLst(i).Desc)
+    Next i
+    
+    If CurServer = 0 Then CurServer = 1
+
+Exit Sub
+
+errorH:
+    Call MsgBox("Error cargando los servidores, actualicelos de la web. http://www.ArgentumOnline.org", vbCritical + vbOKOnly, "Argentum Online Libre")
+End Sub
+
+Private Sub DownloadServersFile(myURL As String)
+'**********************************************************
+'Downloads the sinfo.dat file from a given url
+'Last change: 01/11/2018
+'Implemented by Cucsifae
+'Check content of strData to avoid clean the file sinfo.ini if there is no response from Github by Recox
+'**********************************************************
+On Error Resume Next
+    Dim strData As String
+    Dim f As Integer
+    
+    Set Inet = New clsInet
+    
+    strData = Inet.OpenRequest(myURL, "GET")
+    strData = Inet.Execute
+    strData = Inet.GetResponseAsString
+    
+    f = FreeFile
+    
+    If LenB(strData) <> 0 Then
+        Open Game.path(INIT) & "sinfo.dat" For Output As #f
+            Print #f, strData
+        Close #f
+    End If
+    
+    Exit Sub
 End Sub

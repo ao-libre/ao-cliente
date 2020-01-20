@@ -62,7 +62,7 @@ Public Sub SetLanguageApplication()
     ' Si no se especifica el idioma en el archivo de configuracion, se le pregunta si quiere usar castellano
     ' y escribimos el archivo de configuracion con el idioma seleccionado
     If LenB(Language) = 0 Then
-        If MsgBox("Iniciar con idioma Castellano? // Start with Spanish, if you want the game in English press No", vbYesNo, "Argentum Online") = vbYes Then
+        If MsgBox("Iniciar con idioma Castellano? // Start with Spanish, if you want the game in English press No", vbYesNo, "Argentum Online Libre") = vbYes Then
             Language = "spanish"
         Else
             Language = "english"
