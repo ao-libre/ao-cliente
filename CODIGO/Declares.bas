@@ -111,6 +111,8 @@ Public MacroBltIndex As Integer
 
 Public Const NUMATRIBUTES As Byte = 5
 
+Public Const iCuerpoMuerto As Integer = 8
+
 Public Enum eCabezas
     CASPER_HEAD = 500
     FRAGATA_FANTASMAL = 87
