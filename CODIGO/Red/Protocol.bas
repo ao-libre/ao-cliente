@@ -57,7 +57,7 @@ Private Enum ServerPacketID
     NavigateToggle = 4         ' NAVEG
     Disconnect = 5              ' FINOK
     CommerceEnd = 6            ' FINCOMOK
-    BankEnd  = 7               ' FINBANOK
+    BankEnd = 7                ' FINBANOK
     CommerceInit = 8            ' INITCOM
     BankInit = 9                ' INITBANCO
     UserCommerceInit = 10        ' INITCOMUSU
@@ -134,45 +134,43 @@ Private Enum ServerPacketID
     ShowGuildFundationForm = 81 ' SHOWFUN
     ParalizeOK = 82             ' PARADOK
     ShowUserRequest = 83        ' PETICIO
-    TradeOK = 84                ' TRANSOK
-    BankOK = 85                 ' BANCOOK
-    ChangeUserTradeSlot = 86    ' COMUSUINV
-    SendNight = 87              ' NOC
-    Pong = 88
-    UpdateTagAndStatus = 89
+    ChangeUserTradeSlot = 84    ' COMUSUINV
+    SendNight = 85              ' NOC
+    Pong = 86
+    UpdateTagAndStatus = 87
     
     'GM messages
-    SpawnList = 90               ' SPL
-    ShowSOSForm = 91            ' MSOS
-    ShowMOTDEditionForm = 92     ' ZMOTD
-    ShowGMPanelForm = 93        ' ABPANEL
-    UserNameList = 94           ' LISTUSU
-    ShowDenounces = 95
-    RecordList = 96
-    RecordDetails = 97
+    SpawnList = 88               ' SPL
+    ShowSOSForm = 89            ' MSOS
+    ShowMOTDEditionForm = 90     ' ZMOTD
+    ShowGMPanelForm = 91        ' ABPANEL
+    UserNameList = 92           ' LISTUSU
+    ShowDenounces = 93
+    RecordList = 94
+    RecordDetails = 95
     
-    ShowGuildAlign = 98
-    ShowPartyForm = 99
-    UpdateStrenghtAndDexterity = 100
-    UpdateStrenght = 101
-    UpdateDexterity = 102
-    AddSlots = 103
-    MultiMessage = 104
-    StopWorking = 105
-    CancelOfferItem = 106
-    PalabrasMagicas = 107
-    PlayAttackAnim = 108
-    FXtoMap = 109
-    AccountLogged = 110
-    SearchList = 111
-    QuestDetails = 112
-    QuestListSend = 113
-    CreateDamage = 114
-    UserInEvent = 115
-    renderMsg = 116
-    DeletedChar = 117
-    EquitandoToggle = 118
-    EnviarDatosServer = 119
+    ShowGuildAlign = 96
+    ShowPartyForm = 97
+    UpdateStrenghtAndDexterity = 98
+    UpdateStrenght = 99
+    UpdateDexterity = 100
+    AddSlots = 101
+    MultiMessage = 102
+    StopWorking = 103
+    CancelOfferItem = 104
+    PalabrasMagicas = 105
+    PlayAttackAnim = 106
+    FXtoMap = 107
+    AccountLogged = 108
+    SearchList = 109
+    QuestDetails = 110
+    QuestListSend = 111
+    CreateDamage = 112
+    UserInEvent = 113
+    renderMsg = 114
+    DeletedChar = 115
+    EquitandoToggle = 116
+    EnviarDatosServer = 117
 End Enum
 
 Private Enum ClientPacketID
@@ -1645,7 +1643,7 @@ Private Sub HandleCommerceInit()
                 Call InvComNpc.SetItem(i, .ObjIndex, _
                 .Amount, 0, .GrhIndex, _
                 .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, _
-                .Valor, .name)
+                .Valor, .Name)
             End With
         End If
     Next i
@@ -1694,7 +1692,7 @@ Private Sub HandleBankInit()
             Call InvBanco(0).SetItem(i, .ObjIndex, _
                 .Amount, .Equipped, .GrhIndex, _
                 .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, _
-                .Valor, .name)
+                .Valor, .Name)
         End With
     Next i
     
@@ -2162,13 +2160,13 @@ Private Sub WriteChatOverHeadInConsole(ByVal CharIndex As Integer, ByVal ChatTex
             
         If Pos = 0 Then Pos = LenB(.Nombre) + 2
         
-        Dim name As String
-        name = Left$(.Nombre, Pos - 2)
+        Dim Name As String
+        Name = Left$(.Nombre, Pos - 2)
        
         'Si el npc tiene nombre lo escribimos en la consola
         
         If LenB(.Nombre) <> 0 Then
-            Call AddtoRichTextBox(frmMain.RecTxt, name & "> ", NameRed, NameGreen, NameBlue, True, False, True, rtfLeft)
+            Call AddtoRichTextBox(frmMain.RecTxt, Name & "> ", NameRed, NameGreen, NameBlue, True, False, True, rtfLeft)
         End If
 
         Call AddtoRichTextBox(frmMain.RecTxt, ChatText, Red, Green, Blue, True, False, False, rtfLeft)
@@ -3264,7 +3262,7 @@ On Error GoTo errhandler
     
     Dim slot As Byte
     Dim ObjIndex As Integer
-    Dim name As String
+    Dim Name As String
     Dim Amount As Integer
     Dim Equipped As Boolean
     Dim GrhIndex As Integer
@@ -3277,7 +3275,7 @@ On Error GoTo errhandler
     
     slot = Buffer.ReadByte()
     ObjIndex = Buffer.ReadInteger()
-    name = Buffer.ReadASCIIString()
+    Name = Buffer.ReadASCIIString()
     Amount = Buffer.ReadInteger()
     Equipped = Buffer.ReadBoolean()
     GrhIndex = Buffer.ReadInteger()
@@ -3320,7 +3318,7 @@ On Error GoTo errhandler
         End Select
     End If
     
-    Call Inventario.SetItem(slot, ObjIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, name)
+    Call Inventario.SetItem(slot, ObjIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, Name)
 
     If frmComerciar.Visible Then
         ' Agrego o quito un item en su totalidad
@@ -3463,7 +3461,7 @@ On Error GoTo errhandler
     
     With UserBancoInventory(slot)
         .ObjIndex = Buffer.ReadInteger()
-        .name = Buffer.ReadASCIIString()
+        .Name = Buffer.ReadASCIIString()
         .Amount = Buffer.ReadInteger()
         .GrhIndex = Buffer.ReadInteger()
         .OBJType = Buffer.ReadByte()
@@ -3476,7 +3474,7 @@ On Error GoTo errhandler
         If Comerciando Then
             Call InvBanco(0).SetItem(slot, .ObjIndex, .Amount, _
                 .Equipped, .GrhIndex, .OBJType, .MaxHit, _
-                .MinHit, .MaxDef, .MinDef, .Valor, .name)
+                .MinHit, .MaxDef, .MinDef, .Valor, .Name)
         End If
     End With
     
@@ -3618,7 +3616,7 @@ On Error GoTo errhandler
     
     Dim Count As Integer
     Dim i As Long
-    Dim J As Long
+    Dim j As Long
     Dim k As Long
     
     Count = Buffer.ReadInteger()
@@ -3628,7 +3626,7 @@ On Error GoTo errhandler
     
     For i = 1 To Count
         With ArmasHerrero(i)
-            .name = Buffer.ReadASCIIString()    'Get the object's name
+            .Name = Buffer.ReadASCIIString()    'Get the object's name
             .GrhIndex = Buffer.ReadInteger()
             .LinH = Buffer.ReadInteger()        'The iron needed
             .LinP = Buffer.ReadInteger()        'The silver needed
@@ -3670,18 +3668,18 @@ On Error GoTo errhandler
             If .Upgrade Then
                 For k = 1 To Count
                     If .Upgrade = ArmasHerrero(k).ObjIndex Then
-                        J = J + 1
+                        j = j + 1
                 
-                        ReDim Preserve HerreroMejorar(J) As tItemsConstruibles
+                        ReDim Preserve HerreroMejorar(j) As tItemsConstruibles
                         
-                        HerreroMejorar(J).name = .name
-                        HerreroMejorar(J).GrhIndex = .GrhIndex
-                        HerreroMejorar(J).ObjIndex = .ObjIndex
-                        HerreroMejorar(J).UpgradeName = ArmasHerrero(k).name
-                        HerreroMejorar(J).UpgradeGrhIndex = ArmasHerrero(k).GrhIndex
-                        HerreroMejorar(J).LinH = ArmasHerrero(k).LinH - .LinH * 0.85
-                        HerreroMejorar(J).LinP = ArmasHerrero(k).LinP - .LinP * 0.85
-                        HerreroMejorar(J).LinO = ArmasHerrero(k).LinO - .LinO * 0.85
+                        HerreroMejorar(j).Name = .Name
+                        HerreroMejorar(j).GrhIndex = .GrhIndex
+                        HerreroMejorar(j).ObjIndex = .ObjIndex
+                        HerreroMejorar(j).UpgradeName = ArmasHerrero(k).Name
+                        HerreroMejorar(j).UpgradeGrhIndex = ArmasHerrero(k).GrhIndex
+                        HerreroMejorar(j).LinH = ArmasHerrero(k).LinH - .LinH * 0.85
+                        HerreroMejorar(j).LinP = ArmasHerrero(k).LinP - .LinP * 0.85
+                        HerreroMejorar(j).LinO = ArmasHerrero(k).LinO - .LinO * 0.85
                         
                         Exit For
                     End If
@@ -3726,7 +3724,7 @@ On Error GoTo errhandler
     
     Dim Count As Integer
     Dim i As Long
-    Dim J As Long
+    Dim j As Long
     Dim k As Long
     
     Count = Buffer.ReadInteger()
@@ -3735,7 +3733,7 @@ On Error GoTo errhandler
     
     For i = 1 To Count
         With ArmadurasHerrero(i)
-            .name = Buffer.ReadASCIIString()    'Get the object's name
+            .Name = Buffer.ReadASCIIString()    'Get the object's name
             .GrhIndex = Buffer.ReadInteger()
             .LinH = Buffer.ReadInteger()        'The iron needed
             .LinP = Buffer.ReadInteger()        'The silver needed
@@ -3757,25 +3755,25 @@ On Error GoTo errhandler
         MirandoHerreria = True
     End If
     
-    J = UBound(HerreroMejorar)
+    j = UBound(HerreroMejorar)
     
     For i = 1 To Count
         With ArmadurasHerrero(i)
             If .Upgrade Then
                 For k = 1 To Count
                     If .Upgrade = ArmadurasHerrero(k).ObjIndex Then
-                        J = J + 1
+                        j = j + 1
                 
-                        ReDim Preserve HerreroMejorar(J) As tItemsConstruibles
+                        ReDim Preserve HerreroMejorar(j) As tItemsConstruibles
                         
-                        HerreroMejorar(J).name = .name
-                        HerreroMejorar(J).GrhIndex = .GrhIndex
-                        HerreroMejorar(J).ObjIndex = .ObjIndex
-                        HerreroMejorar(J).UpgradeName = ArmadurasHerrero(k).name
-                        HerreroMejorar(J).UpgradeGrhIndex = ArmadurasHerrero(k).GrhIndex
-                        HerreroMejorar(J).LinH = ArmadurasHerrero(k).LinH - .LinH * 0.85
-                        HerreroMejorar(J).LinP = ArmadurasHerrero(k).LinP - .LinP * 0.85
-                        HerreroMejorar(J).LinO = ArmadurasHerrero(k).LinO - .LinO * 0.85
+                        HerreroMejorar(j).Name = .Name
+                        HerreroMejorar(j).GrhIndex = .GrhIndex
+                        HerreroMejorar(j).ObjIndex = .ObjIndex
+                        HerreroMejorar(j).UpgradeName = ArmadurasHerrero(k).Name
+                        HerreroMejorar(j).UpgradeGrhIndex = ArmadurasHerrero(k).GrhIndex
+                        HerreroMejorar(j).LinH = ArmadurasHerrero(k).LinH - .LinH * 0.85
+                        HerreroMejorar(j).LinP = ArmadurasHerrero(k).LinP - .LinP * 0.85
+                        HerreroMejorar(j).LinO = ArmadurasHerrero(k).LinO - .LinO * 0.85
                         
                         Exit For
                     End If
@@ -3821,7 +3819,7 @@ On Error GoTo errhandler
     
     Dim Count As Integer
     Dim i As Long
-    Dim J As Long
+    Dim j As Long
     Dim k As Long
     
     Count = Buffer.ReadInteger()
@@ -3831,7 +3829,7 @@ On Error GoTo errhandler
     
     For i = 1 To Count
         With ObjCarpintero(i)
-            .name = Buffer.ReadASCIIString()        'Get the object's name
+            .Name = Buffer.ReadASCIIString()        'Get the object's name
             .GrhIndex = Buffer.ReadInteger()
             .Madera = Buffer.ReadInteger()          'The wood needed
             .MaderaElfica = Buffer.ReadInteger()    'The elfic wood needed
@@ -3872,17 +3870,17 @@ On Error GoTo errhandler
             If .Upgrade Then
                 For k = 1 To Count
                     If .Upgrade = ObjCarpintero(k).ObjIndex Then
-                        J = J + 1
+                        j = j + 1
                 
-                        ReDim Preserve CarpinteroMejorar(J) As tItemsConstruibles
+                        ReDim Preserve CarpinteroMejorar(j) As tItemsConstruibles
                         
-                        CarpinteroMejorar(J).name = .name
-                        CarpinteroMejorar(J).GrhIndex = .GrhIndex
-                        CarpinteroMejorar(J).ObjIndex = .ObjIndex
-                        CarpinteroMejorar(J).UpgradeName = ObjCarpintero(k).name
-                        CarpinteroMejorar(J).UpgradeGrhIndex = ObjCarpintero(k).GrhIndex
-                        CarpinteroMejorar(J).Madera = ObjCarpintero(k).Madera - .Madera * 0.85
-                        CarpinteroMejorar(J).MaderaElfica = ObjCarpintero(k).MaderaElfica - .MaderaElfica * 0.85
+                        CarpinteroMejorar(j).Name = .Name
+                        CarpinteroMejorar(j).GrhIndex = .GrhIndex
+                        CarpinteroMejorar(j).ObjIndex = .ObjIndex
+                        CarpinteroMejorar(j).UpgradeName = ObjCarpintero(k).Name
+                        CarpinteroMejorar(j).UpgradeGrhIndex = ObjCarpintero(k).GrhIndex
+                        CarpinteroMejorar(j).Madera = ObjCarpintero(k).Madera - .Madera * 0.85
+                        CarpinteroMejorar(j).MaderaElfica = ObjCarpintero(k).MaderaElfica - .MaderaElfica * 0.85
                         
                         Exit For
                     End If
@@ -4059,7 +4057,7 @@ On Error GoTo errhandler
     slot = Buffer.ReadByte()
     
     With NPCInventory(slot)
-        .name = Buffer.ReadASCIIString()
+        .Name = Buffer.ReadASCIIString()
         .Amount = Buffer.ReadInteger()
         .Valor = Buffer.ReadSingle()
         .GrhIndex = Buffer.ReadInteger()
@@ -4078,7 +4076,7 @@ On Error GoTo errhandler
                 Call InvComNpc.SetItem(slot, .ObjIndex, _
                 .Amount, 0, .GrhIndex, _
                 .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, _
-                .Valor, .name)
+                .Valor, .Name)
             End With
         ' Compraron o vendieron cierta cantidad (no su totalidad)
         ElseIf NPCInventory(slot).Amount <> InvComNpc.Amount(slot) Then
@@ -6284,7 +6282,7 @@ End Sub
 ' @param    codex   Array of all rules of the guild.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCreateNewGuild(ByVal Desc As String, ByVal name As String, ByVal Site As String, ByRef Codex() As String)
+Public Sub WriteCreateNewGuild(ByVal Desc As String, ByVal Name As String, ByVal Site As String, ByRef Codex() As String)
 '***************************************************
 'Author: Juan Martin Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6298,7 +6296,7 @@ Public Sub WriteCreateNewGuild(ByVal Desc As String, ByVal name As String, ByVal
         Call .WriteByte(ClientPacketID.CreateNewGuild)
         
         Call .WriteASCIIString(Desc)
-        Call .WriteASCIIString(name)
+        Call .WriteASCIIString(Name)
         Call .WriteASCIIString(Site)
         
         Lower_codex = LBound(Codex())
@@ -11503,12 +11501,12 @@ On Error GoTo errhandler
     End If
 
     Dim Descripcion As String
-    Descripcion =   CountryCode & _
-                    NombreServidor & VbNewline & _
-                    DescripcionServidor & VbNewLine & _
-                    "Mundo: " & MundoServidor & VbNewLine & _
-                    "Online: " & CantidadUsuariosOnline & " / " & MaxUsersSimultaneosServidor & VbNewline & _
-                    "Ping: " & MsPingResult & VbNewline & _
+    Descripcion = CountryCode & _
+                    NombreServidor & vbNewLine & _
+                    DescripcionServidor & vbNewLine & _
+                    "Mundo: " & MundoServidor & vbNewLine & _
+                    "Online: " & CantidadUsuariosOnline & " / " & MaxUsersSimultaneosServidor & vbNewLine & _
+                    "Ping: " & MsPingResult & vbNewLine & _
                     "Nivel Maximo Permitido : " & NivelMaximoServidor
 
 
