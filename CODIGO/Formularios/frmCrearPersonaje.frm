@@ -1874,11 +1874,17 @@ Private Sub tAnimacion_Timer()
         .Bottom = picTemp.Height
     End With
     
+    Dim CenterX As Integer
+    Dim CenterY As Integer
+    
+    CenterX = picTemp.Width \ 2 - 16
+    CenterY = picTemp.Height \ 2 - 6
+    
     Call Engine_BeginScene
-    
-        Call Draw_GrhIndex(GrhData(currentGrh).Frames(Frame), (picTemp.Width / 2 - 12), (picTemp.Height / 2 - 24), 0, Normal_RGBList())
-        Call Draw_GrhIndex(HeadData(UserHead).Head(Dir).GrhIndex, (picTemp.Width / 2 - 9), 0, 0, Normal_RGBList())
-    
+
+        Call Draw_GrhIndex(GrhData(currentGrh).Frames(Frame), CenterX, CenterY, 1, Normal_RGBList(), 0)
+        Call Draw_GrhIndex(HeadData(UserHead).Head(Dir).GrhIndex, CenterX, CenterY + BodyData(UserBody).HeadOffset.Y, 1, Normal_RGBList(), 0)
+
     Call Engine_EndScene(DR, picTemp.hWnd)
        
 End Sub
