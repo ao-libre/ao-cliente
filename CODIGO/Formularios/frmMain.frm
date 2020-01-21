@@ -2712,32 +2712,16 @@ End Sub
 Private Sub Client_DataArrival(ByVal bytesTotal As Long)
     Dim RD     As String
     Dim data() As Byte
-    Dim Length As Long
     
     Client.GetData RD, vbByte, bytesTotal
     data = StrConv(RD, vbFromUnicode)
-    
-    'WyroX: Copiamos hasta llenar la capacidad de la cola.
-    'Si nos pasamos, entonces procesamos los paquetes para vaciarla
-    'y luego volvemos a copiar lo que quede.
-    Do
-        Length = incomingData.Capacity - incomingData.Length
-        Length = IIf(bytesTotal < Length, bytesTotal, Length)
-    
-        'Set data in the buffer
-        Call incomingData.WriteBlock(data, Length)
 
-        'Send buffer to Handle data
-        Call HandleIncomingData
-        
-        bytesTotal = bytesTotal - Length
-        
-        If bytesTotal > 0 Then
-            Call CopyMemory(data(0), data(Length), bytesTotal)
-        End If
-        
-    Loop While bytesTotal > 0
-    
+    'Set data in the buffer
+    Call incomingData.WriteBlock(data, bytesTotal)
+
+    'Send buffer to Handle data
+    Call HandleIncomingData
+
 End Sub
 
 Private Sub Client_CloseSck()
