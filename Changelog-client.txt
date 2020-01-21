@@ -670,3 +670,9 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 20/01/2020: Nuevo trigger CASA que ignora la limpieza del mundo al dropear items. (Wyr0X)
 * 20/01/2020: Se muestra informacion mas detallada del servidor en el frmConnect. (Recox)
 * 20/01/2020: Se arreglaron los picSM, los cuadros del frmPanelAccount y el inventario que no se dibujanan cuando se superpone el formulario con otro. (Wyrox)
+
+- v0.13.24
+
+* 21/01/2020: Fix - Dibujado de las cabezas de los enanos y gnomos en el frmCrearPersonaje. (Wyr0X)
+* 21/01/2020: Fix - Dibujado de los caspers y cascos en el frmPanelAccount. (Wyr0X)
+* 21/01/2020: Fix - Al spamear el boton comprar te sacaba del servidor. (Wyr0X)
