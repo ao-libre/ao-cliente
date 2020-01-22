@@ -124,7 +124,7 @@ Private Sub Command1_Click()
       ClientSetup.MostrarTips = False
    End If
 
-   Call WriteVar(Game.path(INIT) & "Config.ini", "OTHER", "MOSTRAR_TIPS", CBool(ClientSetup.MostrarTips))
+   Call WriteVar(Game.path(INIT) & "Config.ini", "OTHER", "MOSTRAR_TIPS", CStr(ClientSetup.MostrarTips))
    Unload Me
 
 End Sub
