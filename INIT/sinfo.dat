@@ -4,7 +4,7 @@ Cant=4
 [S1]
 Desc=Rol - Alkon 0.13.X
 IP=18.231.37.189
-PJ=7665
+PJ=7666
 Mundo=Alkon
 
 [S2]
@@ -20,10 +20,10 @@ PJ=7666
 Mundo=Alkon
 
 [S4]
-Desc=Servidor Local | Modo:Hispano
+Desc=Servidor Local | Modo:BattleServer
 IP=localhost
-PJ=7665
-Mundo=Hispano
+PJ=7666
+Mundo=BattleServer
 
 
 
