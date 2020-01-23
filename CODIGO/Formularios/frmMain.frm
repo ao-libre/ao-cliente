@@ -22,7 +22,6 @@ Begin VB.Form frmMain
    EndProperty
    FontTransparent =   0   'False
    ForeColor       =   &H00004080&
-   Icon            =   "frmMain.frx":0000
    KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
