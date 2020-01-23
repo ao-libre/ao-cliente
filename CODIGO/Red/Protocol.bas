@@ -68,7 +68,7 @@ Private Enum ServerPacketID
     UpdateMana = 15             ' ASM
     UpdateHP = 16                ' ASH
     UpdateGold = 17              ' ASG
-    UpdateBankGold = 17 
+    UpdateBankGold = 18 
     UpdateExp = 19               ' ASE
     ChangeMap = 20               ' CM
     PosUpdate = 21              ' PU
