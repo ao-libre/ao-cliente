@@ -1741,5 +1741,8 @@
     },
     "MENSAJE_MONTURA_SALIR" : {
         "TEXTO": "You cannot walk here with your mount, get off to enter a place with a roof."
+    },
+    "FRMCONNECT_LBL_DESCRIPCION_SERVER" : {
+        "TEXTO": "Obtaining data from the server please wait ... if I do not get it in a few seconds and throw error means that the server is offline ..."
     }
 }

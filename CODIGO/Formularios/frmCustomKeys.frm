@@ -701,7 +701,7 @@ Private Sub imgGuardar_Click()
     
     For i = 1 To CustomKeys.KeyCount
         If LenB(Text1(i).Text) = 0 Then
-            Call MsgBox(JsonLanguage.Item("CUSTOMKEYS_TECLA_INVALIDA").Item("TEXTO"), vbCritical Or vbOKOnly Or vbApplicationModal Or vbDefaultButton1, "Argentum Online")
+            Call MsgBox(JsonLanguage.Item("CUSTOMKEYS_TECLA_INVALIDA").Item("TEXTO"), vbCritical Or vbOKOnly Or vbApplicationModal Or vbDefaultButton1, "Argentum Online Libre")
             Exit Sub
         End If
     Next i

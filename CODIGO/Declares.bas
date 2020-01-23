@@ -164,8 +164,6 @@ Public Type tServerInfo
     Ip As String
     Puerto As Integer
     Desc As String
-    Ping As String
-    Country As String
     Mundo As String
 End Type
 
@@ -759,6 +757,7 @@ Public Enum E_MODO
     Dados = 3
     CrearCuenta = 4
     CambiarContrasena = 5
+    ObtenerDatosServer = 6
 End Enum
 
 Public EstadoLogin As E_MODO
@@ -1010,3 +1009,6 @@ Public IntervaloInvisible As Integer
 
 Public UserParalizadoSegundosRestantes As Integer
 Public UserInvisibleSegundosRestantes As Integer
+
+Public QuantityServers As Integer
+Public IpApiEnabled As Boolean

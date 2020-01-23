@@ -102,7 +102,10 @@ Public Function path(ByVal PathType As ePath) As String
         Case ePath.Lenguajes
             path = App.path & "\Lenguajes\"
             
-        Case ePath.Mapas
+        Case ePath.Mapas       
+            'ESTO HAY QUE BORRARLO CUANDO SE PUEDA
+            'AGREGAR SERVERS QUE NO ESTEN EN LA LISTA
+            'Y EL MISMO PUEDA SETEAR MUNDO SINO BUGGEA :)   
             'En caso que no haya un mundo seleccionado en la propiedad Mundo
             'Seleccionamos Alkon como mundo default
             'Esto hay que eliminarlo de aqui ya que no tiene por que estar aqui, esto es un parche rapido para evitar posibles errores
@@ -110,7 +113,7 @@ Public Function path(ByVal PathType As ePath) As String
             If LenB(MundoSeleccionado) = 0 Then
                 MundoSeleccionado = "Alkon"
             End If
-            
+
             path = App.path & "\Mapas\" & "\" & MundoSeleccionado & "\"
             
         Case ePath.Musica
