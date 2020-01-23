@@ -417,8 +417,6 @@ Private Sub imgComprar_Click()
         Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_SIN_ORO_SUFICIENTE").item("TEXTO"), 2, 51, 223, 1, 1)
         Exit Sub
     End If
-    
-    DoEvents
 
     Call InvComUsu.DrawInventory
     Call InvComNpc.DrawInventory
@@ -440,8 +438,6 @@ Private Sub imgVender_Click()
     LasActionBuy = False
 
     Call WriteCommerceSell(InvComUsu.SelectedItem, Val(cantidad.Text))
-    
-    DoEvents
 
     Call InvComUsu.DrawInventory
     Call InvComNpc.DrawInventory
