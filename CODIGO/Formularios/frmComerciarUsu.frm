@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "richtx32.ocx"
 Begin VB.Form frmComerciarUsu 
    BorderStyle     =   0  'None
    ClientHeight    =   8850
@@ -184,9 +184,11 @@ Begin VB.Form frmComerciarUsu
       _ExtentY        =   2858
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
+      TextRTF         =   $"frmComerciarUsu.frx":0000
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Tahoma"
          Size            =   8.25
@@ -209,6 +211,10 @@ Begin VB.Form frmComerciarUsu
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
+      PICE            =   "frmComerciarUsu.frx":007E
+      PICF            =   "frmComerciarUsu.frx":009A
+      PICH            =   "frmComerciarUsu.frx":00B6
+      PICV            =   "frmComerciarUsu.frx":00D2
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   8.25
@@ -231,6 +237,10 @@ Begin VB.Form frmComerciarUsu
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
+      PICE            =   "frmComerciarUsu.frx":00EE
+      PICF            =   "frmComerciarUsu.frx":010A
+      PICH            =   "frmComerciarUsu.frx":0126
+      PICV            =   "frmComerciarUsu.frx":0142
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   8.25
@@ -253,6 +263,10 @@ Begin VB.Form frmComerciarUsu
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
+      PICE            =   "frmComerciarUsu.frx":015E
+      PICF            =   "frmComerciarUsu.frx":017A
+      PICH            =   "frmComerciarUsu.frx":0196
+      PICV            =   "frmComerciarUsu.frx":01B2
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   8.25
@@ -275,6 +289,10 @@ Begin VB.Form frmComerciarUsu
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
+      PICE            =   "frmComerciarUsu.frx":01CE
+      PICF            =   "frmComerciarUsu.frx":01EA
+      PICH            =   "frmComerciarUsu.frx":0206
+      PICV            =   "frmComerciarUsu.frx":0222
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   8.25
@@ -457,7 +475,7 @@ Private Sub imgAgregar_Click()
    
     ' No tiene seleccionado ningun item
     If InvComUsu.SelectedItem = 0 Then
-        Call PrintCommerceMsg(JsonLanguage.Item("MENSAJE_NO_SELECCIONASTE_NADA").Item("TEXTO"), FontTypeNames.FONTTYPE_FIGHT)
+        Call PrintCommerceMsg(JsonLanguage.item("MENSAJE_NO_SELECCIONASTE_NADA").item("TEXTO"), FontTypeNames.FONTTYPE_FIGHT)
         Exit Sub
     End If
     
@@ -471,12 +489,12 @@ Private Sub imgAgregar_Click()
     Dim InvSlot As Byte
     
     Dim MENSAJE_COMM_AGREGA As String
-        MENSAJE_COMM_AGREGA = JsonLanguage.Item("MENSAJE_COMM_AGREGA").Item("TEXTO")
+        MENSAJE_COMM_AGREGA = JsonLanguage.item("MENSAJE_COMM_AGREGA").item("TEXTO")
     
     With InvComUsu
         If .SelectedItem = FLAGORO Then
             If Val(txtAgregar.Text) > InvOroComUsu(0).Amount(1) Then
-                Call PrintCommerceMsg(JsonLanguage.Item("MENSAJE_SIN_CANTIDAD_SUFICIENTE").Item("TEXTO"), FontTypeNames.FONTTYPE_FIGHT)
+                Call PrintCommerceMsg(JsonLanguage.item("MENSAJE_SIN_CANTIDAD_SUFICIENTE").item("TEXTO"), FontTypeNames.FONTTYPE_FIGHT)
                 Exit Sub
             End If
             
@@ -499,7 +517,7 @@ Private Sub imgAgregar_Click()
             
         ElseIf .SelectedItem > 0 Then
              If Val(txtAgregar.Text) > .Amount(.SelectedItem) Then
-                Call PrintCommerceMsg(JsonLanguage.Item("MENSAJE_SIN_CANTIDAD_SUFICIENTE").Item("TEXTO"), FontTypeNames.FONTTYPE_FIGHT)
+                Call PrintCommerceMsg(JsonLanguage.item("MENSAJE_SIN_CANTIDAD_SUFICIENTE").item("TEXTO"), FontTypeNames.FONTTYPE_FIGHT)
                 Exit Sub
             End If
              
@@ -550,7 +568,7 @@ Private Sub imgConfirmar_Click()
     imgQuitar.Visible = False
     txtAgregar.Enabled = False
     
-    Call PrintCommerceMsg(JsonLanguage.Item("MENSAJE_COMM_OFERTA_COMFIRMADA").Item("TEXTO"), FontTypeNames.FONTTYPE_CONSE)
+    Call PrintCommerceMsg(JsonLanguage.item("MENSAJE_COMM_OFERTA_COMFIRMADA").item("TEXTO"), FontTypeNames.FONTTYPE_CONSE)
     Call WriteUserCommerceConfirm
 End Sub
 
@@ -558,11 +576,11 @@ Private Sub imgQuitar_Click()
     Dim Amount As Long
     
     Dim MENSAJE_COMM_SACA As String
-    MENSAJE_COMM_SACA = JsonLanguage.Item("MENSAJE_COMM_SACA").Item("TEXTO")
+    MENSAJE_COMM_SACA = JsonLanguage.item("MENSAJE_COMM_SACA").item("TEXTO")
 
     ' No tiene seleccionado ningun item
     If InvOfferComUsu(0).SelectedItem = 0 Then
-        Call PrintCommerceMsg(JsonLanguage.Item("MENSAJE_NO_SELECCIONASTE_NADA").Item("TEXTO"), FontTypeNames.FONTTYPE_FIGHT)
+        Call PrintCommerceMsg(JsonLanguage.item("MENSAJE_NO_SELECCIONASTE_NADA").item("TEXTO"), FontTypeNames.FONTTYPE_FIGHT)
         Exit Sub
     End If
     
@@ -646,24 +664,60 @@ Private Sub Form_Load()
     Call LoadTextsForm
     Call LoadAOCustomControlsPictures(Me)
     
-    Call PrintCommerceMsg("> " & JsonLanguage.Item("MENSAJE_COMM_INFO").Item("TEXTO").Item(1), FontTypeNames.FONTTYPE_GUILDMSG)
-    Call PrintCommerceMsg("> " & JsonLanguage.Item("MENSAJE_COMM_INFO").Item("TEXTO").Item(2), FontTypeNames.FONTTYPE_GUILDMSG)
-    Call PrintCommerceMsg("> " & JsonLanguage.Item("MENSAJE_COMM_INFO").Item("TEXTO").Item(3), FontTypeNames.FONTTYPE_GUILDMSG)
-    Call PrintCommerceMsg("> " & JsonLanguage.Item("MENSAJE_COMM_INFO").Item("TEXTO").Item(4), FontTypeNames.FONTTYPE_GUILDMSG)
+    Call PrintCommerceMsg("> " & JsonLanguage.item("MENSAJE_COMM_INFO").item("TEXTO").item(1), FontTypeNames.FONTTYPE_GUILDMSG)
+    Call PrintCommerceMsg("> " & JsonLanguage.item("MENSAJE_COMM_INFO").item("TEXTO").item(2), FontTypeNames.FONTTYPE_GUILDMSG)
+    Call PrintCommerceMsg("> " & JsonLanguage.item("MENSAJE_COMM_INFO").item("TEXTO").item(3), FontTypeNames.FONTTYPE_GUILDMSG)
+    Call PrintCommerceMsg("> " & JsonLanguage.item("MENSAJE_COMM_INFO").item("TEXTO").item(4), FontTypeNames.FONTTYPE_GUILDMSG)
     
 End Sub
 
+Private Sub Form_Activate()
+On Error Resume Next
+
+    InvComUsu.DrawInventory
+    InvOfferComUsu(0).DrawInventory
+    InvOfferComUsu(1).DrawInventory
+    InvOroComUsu(0).DrawInventory
+    InvOroComUsu(1).DrawInventory
+    InvOroComUsu(2).DrawInventory
+
+End Sub
+
+Private Sub Form_GotFocus()
+On Error Resume Next
+
+    InvComUsu.DrawInventory
+    InvOfferComUsu(0).DrawInventory
+    InvOfferComUsu(1).DrawInventory
+    InvOroComUsu(0).DrawInventory
+    InvOroComUsu(1).DrawInventory
+    InvOroComUsu(2).DrawInventory
+
+End Sub
+
+Private Sub Form_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+On Error Resume Next
+
+    InvComUsu.DrawInventory
+    InvOfferComUsu(0).DrawInventory
+    InvOfferComUsu(1).DrawInventory
+    InvOroComUsu(0).DrawInventory
+    InvOroComUsu(1).DrawInventory
+    InvOroComUsu(2).DrawInventory
+
+End Sub
+
 Private Sub LoadTextsForm()
-    lblInventario.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_LBLINVENTARIO").item("TEXTO")
-    lblTuOferta.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_LBLTUOFERTA").item("TEXTO")
-    lblAgregar.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_AGREGAR").item("TEXTO")
-    lblQuitar.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_QUITAR").item("TEXTO")
-    lblChat.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_CHAT").item("TEXTO")
-    lblSuOferta.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_LBLSUOFERTA").item("TEXTO")
-    imgRechazar.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_RECHAZAR").item("TEXTO")
-    imgAceptar.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_ACEPTAR").item("TEXTO")
-    imgConfirmar.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_CONFIRMAR").item("TEXTO")
-    imgCancelar.Caption = JsonLanguage.Item("FRM_COMERCIARUSU_CANCELAR").item("TEXTO")
+    lblInventario.Caption = JsonLanguage.item("FRM_COMERCIARUSU_LBLINVENTARIO").item("TEXTO")
+    lblTuOferta.Caption = JsonLanguage.item("FRM_COMERCIARUSU_LBLTUOFERTA").item("TEXTO")
+    lblAgregar.Caption = JsonLanguage.item("FRM_COMERCIARUSU_AGREGAR").item("TEXTO")
+    lblQuitar.Caption = JsonLanguage.item("FRM_COMERCIARUSU_QUITAR").item("TEXTO")
+    lblChat.Caption = JsonLanguage.item("FRM_COMERCIARUSU_CHAT").item("TEXTO")
+    lblSuOferta.Caption = JsonLanguage.item("FRM_COMERCIARUSU_LBLSUOFERTA").item("TEXTO")
+    imgRechazar.Caption = JsonLanguage.item("FRM_COMERCIARUSU_RECHAZAR").item("TEXTO")
+    imgAceptar.Caption = JsonLanguage.item("FRM_COMERCIARUSU_ACEPTAR").item("TEXTO")
+    imgConfirmar.Caption = JsonLanguage.item("FRM_COMERCIARUSU_CONFIRMAR").item("TEXTO")
+    imgCancelar.Caption = JsonLanguage.item("FRM_COMERCIARUSU_CANCELAR").item("TEXTO")
 End Sub
 
 Private Sub Form_LostFocus()
@@ -703,7 +757,7 @@ Private Sub SendTxt_Change()
 'Last Modify Date: 03/10/2009
 '**************************************************************
     If Len(SendTxt.Text) > 160 Then
-        sCommerceChat = JsonLanguage.Item("MENSAJE_SOY_CHEATER")
+        sCommerceChat = JsonLanguage.item("MENSAJE_SOY_CHEATER")
     Else
         'Make sure only valid chars are inserted (with Shift + Insert they can paste illegal chars)
         Dim i As Long

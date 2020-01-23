@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "richtx32.ocx"
 Begin VB.Form frmMain 
    BorderStyle     =   0  'None
    ClientHeight    =   8985
@@ -139,7 +139,7 @@ Begin VB.Form frmMain
    Begin VB.PictureBox picSM 
       Appearance      =   0  'Flat
       AutoRedraw      =   -1  'True
-      BackColor       =   &H00000000&
+      BackColor       =   &H80000005&
       BorderStyle     =   0  'None
       ForeColor       =   &H80000008&
       Height          =   450
@@ -331,10 +331,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":51F8A
-      PICF            =   "frmMain.frx":529B4
-      PICH            =   "frmMain.frx":53676
-      PICV            =   "frmMain.frx":54608
+      PICE            =   "frmMain.frx":51F8B
+      PICF            =   "frmMain.frx":529B5
+      PICH            =   "frmMain.frx":53677
+      PICV            =   "frmMain.frx":54609
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -358,10 +358,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":5550A
-      PICF            =   "frmMain.frx":55F34
-      PICH            =   "frmMain.frx":56BF6
-      PICV            =   "frmMain.frx":57B88
+      PICE            =   "frmMain.frx":5550B
+      PICF            =   "frmMain.frx":55F35
+      PICH            =   "frmMain.frx":56BF7
+      PICV            =   "frmMain.frx":57B89
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -385,10 +385,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":58A8A
-      PICF            =   "frmMain.frx":594B4
-      PICH            =   "frmMain.frx":5A176
-      PICV            =   "frmMain.frx":5B108
+      PICE            =   "frmMain.frx":58A8B
+      PICF            =   "frmMain.frx":594B5
+      PICH            =   "frmMain.frx":5A177
+      PICV            =   "frmMain.frx":5B109
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -412,10 +412,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":5C00A
-      PICF            =   "frmMain.frx":5CA34
-      PICH            =   "frmMain.frx":5D6F6
-      PICV            =   "frmMain.frx":5E688
+      PICE            =   "frmMain.frx":5C00B
+      PICF            =   "frmMain.frx":5CA35
+      PICH            =   "frmMain.frx":5D6F7
+      PICV            =   "frmMain.frx":5E689
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -439,10 +439,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":5F58A
-      PICF            =   "frmMain.frx":5FFB4
-      PICH            =   "frmMain.frx":60C76
-      PICV            =   "frmMain.frx":61C08
+      PICE            =   "frmMain.frx":5F58B
+      PICF            =   "frmMain.frx":5FFB5
+      PICH            =   "frmMain.frx":60C77
+      PICV            =   "frmMain.frx":61C09
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -466,10 +466,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":62B0A
-      PICF            =   "frmMain.frx":63534
-      PICH            =   "frmMain.frx":641F6
-      PICV            =   "frmMain.frx":65188
+      PICE            =   "frmMain.frx":62B0B
+      PICF            =   "frmMain.frx":63535
+      PICH            =   "frmMain.frx":641F7
+      PICV            =   "frmMain.frx":65189
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -493,10 +493,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":6608A
-      PICF            =   "frmMain.frx":66AB4
-      PICH            =   "frmMain.frx":67776
-      PICV            =   "frmMain.frx":68708
+      PICE            =   "frmMain.frx":6608B
+      PICF            =   "frmMain.frx":66AB5
+      PICH            =   "frmMain.frx":67777
+      PICV            =   "frmMain.frx":68709
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -521,10 +521,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":6960A
-      PICF            =   "frmMain.frx":6A034
-      PICH            =   "frmMain.frx":6ACF6
-      PICV            =   "frmMain.frx":6BC88
+      PICE            =   "frmMain.frx":6960B
+      PICF            =   "frmMain.frx":6A035
+      PICH            =   "frmMain.frx":6ACF7
+      PICV            =   "frmMain.frx":6BC89
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   15.75
@@ -549,10 +549,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":6CB8A
-      PICF            =   "frmMain.frx":6D5B4
-      PICH            =   "frmMain.frx":6E276
-      PICV            =   "frmMain.frx":6F208
+      PICE            =   "frmMain.frx":6CB8B
+      PICF            =   "frmMain.frx":6D5B5
+      PICH            =   "frmMain.frx":6E277
+      PICV            =   "frmMain.frx":6F209
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   15.75
@@ -622,9 +622,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   0
       Left            =   11430
-      MouseIcon       =   "frmMain.frx":7010A
+      MouseIcon       =   "frmMain.frx":7010B
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":7025C
+      Picture         =   "frmMain.frx":7025D
       Top             =   3480
       Visible         =   0   'False
       Width           =   225
@@ -633,9 +633,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   1
       Left            =   11430
-      MouseIcon       =   "frmMain.frx":705A0
+      MouseIcon       =   "frmMain.frx":705A1
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":706F2
+      Picture         =   "frmMain.frx":706F3
       Top             =   3225
       Visible         =   0   'False
       Width           =   225
@@ -1062,6 +1062,9 @@ Private FirstTimeClanChat  As Boolean
 Dim CtrlMaskOn             As Boolean
 Dim SkinSeleccionado       As String
 
+'Para evitar que desaparezcan los picSM
+Private DrawBuffer         As cDIBSection
+
 Private Const NEWBIE_USER_GOLD_COLOR As Long = vbCyan
 Private Const USER_GOLD_COLOR As Long = vbYellow
 
@@ -1073,6 +1076,12 @@ Private Declare Function SetWindowLong _
 
 Public Sub dragInventory_dragDone(ByVal originalSlot As Integer, ByVal newSlot As Integer)
     Call Protocol.WriteMoveItem(originalSlot, newSlot, eMoveType.Inventory)
+End Sub
+
+Private Sub Form_Activate()
+
+    Call Inventario.DrawInventory
+
 End Sub
 
 Private Sub Form_Load()
@@ -1112,13 +1121,17 @@ Private Sub Form_Load()
     
     FirstTimeChat = True
     FirstTimeClanChat = True
+    
+    Set DrawBuffer = New cDIBSection
+    Call DrawBuffer.Create(picSM(0).Width, picSM(1).Height)
+    
 End Sub
 
 Private Sub LoadTextsForm()
     CmdLanzar.Caption = JsonLanguage.item("LBL_LANZAR").item("TEXTO")
     CmdInventario.Caption = JsonLanguage.item("LBL_INVENTARIO").item("TEXTO")
     CmdHechizos.Caption = JsonLanguage.item("LBL_HECHIZOS").item("TEXTO")
-    cmdINFO.Caption = JsonLanguage.item("LBL_INFO").item("TEXTO")
+    cmdInfo.Caption = JsonLanguage.item("LBL_INFO").item("TEXTO")
     imgMapa.Caption = JsonLanguage.item("LBL_MAPA").item("TEXTO")
     imgGrupo.Caption = JsonLanguage.item("LBL_GRUPO").item("TEXTO")
     imgOpciones.Caption = JsonLanguage.item("LBL_OPCIONES").item("TEXTO")
@@ -1210,9 +1223,19 @@ Public Sub ControlSM(ByVal Index As Byte, ByVal Mostrar As Boolean)
         DR.Bottom = .pixelHeight
         
     End With
-
+    
+    picSM(Index).AutoRedraw = False
+    
     Call DrawGrhtoHdc(picSM(Index), GrhIndex, DR)
+    
+    Call DrawBuffer.LoadPictureBlt(picSM(Index).hdc)
 
+    picSM(Index).AutoRedraw = True
+
+    Call DrawBuffer.PaintPicture(picSM(Index).hdc, 0, 0, picSM(Index).Width, picSM(Index).Height, 0, 0, vbSrcCopy)
+
+    picSM(Index).Picture = picSM(Index).Image
+    
     Select Case Index
         
         Case eSMType.sResucitation
@@ -1555,7 +1578,10 @@ Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
-    DisableURLDetect
+
+    Call DisableURLDetect
+    Set DrawBuffer = Nothing
+    
 End Sub
 
 Private Sub GldLbl_Click()
@@ -2312,7 +2338,7 @@ Private Sub cmdInventario_Click()
 
     ' Desactivo controles de hechizo
     hlst.Visible = False
-    cmdINFO.Visible = False
+    cmdInfo.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = False
@@ -2331,7 +2357,7 @@ Private Sub CmdHechizos_Click()
     
     ' Activo controles de hechizos
     hlst.Visible = True
-    cmdINFO.Visible = True
+    cmdInfo.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True
@@ -2382,22 +2408,34 @@ Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, X As Single, Y A
 End Sub
 
 Private Sub RecTxt_Change()
+
     On Error Resume Next  'el .SetFocus causaba errores al salir y volver a entrar
 
     If Not Application.IsAppActive() Then Exit Sub
     
     If SendTxt.Visible Then
         SendTxt.SetFocus
+    
     ElseIf Me.SendCMSTXT.Visible Then
         SendCMSTXT.SetFocus
-    ElseIf (Not Comerciando) And (Not MirandoAsignarSkills) And (Not frmMSG.Visible) And (Not MirandoForo) And (Not frmEstadisticas.Visible) And (Not frmCantidad.Visible) And (Not MirandoParty) Then
-         
+    
+    ElseIf (Not Comerciando) And _
+           (Not MirandoAsignarSkills) And _
+           (Not frmMSG.Visible) And _
+           (Not MirandoForo) And _
+           (Not frmEstadisticas.Visible) And _
+           (Not frmCantidad.Visible) And _
+           (Not MirandoParty) Then
+
         If PicInv.Visible Then
             PicInv.SetFocus
         ElseIf hlst.Visible Then
             hlst.SetFocus
+
         End If
+
     End If
+
 End Sub
 
 Private Sub RecTxt_KeyDown(KeyCode As Integer, Shift As Integer)

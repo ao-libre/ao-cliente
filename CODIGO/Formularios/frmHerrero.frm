@@ -636,6 +636,36 @@ Private Sub Form_Load()
     UltimaPestania = 0
 End Sub
 
+Private Sub Form_Activate()
+On Error Resume Next
+
+    InvLingosHerreria(1).DrawInventory
+    InvLingosHerreria(2).DrawInventory
+    InvLingosHerreria(3).DrawInventory
+    InvLingosHerreria(4).DrawInventory
+
+End Sub
+
+Private Sub Form_GotFocus()
+On Error Resume Next
+
+    InvLingosHerreria(1).DrawInventory
+    InvLingosHerreria(2).DrawInventory
+    InvLingosHerreria(3).DrawInventory
+    InvLingosHerreria(4).DrawInventory
+
+End Sub
+
+Private Sub Form_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+On Error Resume Next
+
+    InvLingosHerreria(1).DrawInventory
+    InvLingosHerreria(2).DrawInventory
+    InvLingosHerreria(3).DrawInventory
+    InvLingosHerreria(4).DrawInventory
+
+End Sub
+
 Public Sub HideExtraControls(ByVal NumItems As Integer, Optional ByVal Upgrading As Boolean = False)
     Dim i As Integer
 

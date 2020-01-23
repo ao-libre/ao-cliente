@@ -89,7 +89,6 @@ Begin VB.Form frmComerciar
       Width           =   2400
    End
    Begin AOLibre.uAOButton imgComprar 
-      BackStyle       =   0  'Transparent
       Height          =   495
       Left            =   480
       TabIndex        =   7
@@ -101,6 +100,10 @@ Begin VB.Form frmComerciar
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
+      PICE            =   "frmComerciar.frx":0000
+      PICF            =   "frmComerciar.frx":001C
+      PICH            =   "frmComerciar.frx":0038
+      PICV            =   "frmComerciar.frx":0054
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   14.25
@@ -112,7 +115,6 @@ Begin VB.Form frmComerciar
       EndProperty
    End
    Begin AOLibre.uAOButton imgVender 
-      BackStyle       =   0  'Transparent
       Height          =   495
       Left            =   3840
       TabIndex        =   8
@@ -124,6 +126,10 @@ Begin VB.Form frmComerciar
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
+      PICE            =   "frmComerciar.frx":0070
+      PICF            =   "frmComerciar.frx":008C
+      PICH            =   "frmComerciar.frx":00A8
+      PICV            =   "frmComerciar.frx":00C4
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   14.25
@@ -318,6 +324,22 @@ Private Sub Form_Load()
     Call LoadAOCustomControlsPictures(Me)
 End Sub
 
+Private Sub Form_Activate()
+On Error Resume Next
+
+    Call InvComUsu.DrawInventory
+    Call InvComNpc.DrawInventory
+
+End Sub
+
+Private Sub Form_GotFocus()
+On Error Resume Next
+
+    Call InvComUsu.DrawInventory
+    Call InvComNpc.DrawInventory
+
+End Sub
+
 Private Sub LoadButtons()
     Dim GrhPath As String
     GrhPath = Game.path(Interfaces)
@@ -334,8 +356,8 @@ Private Sub LoadButtons()
 End Sub
 
 Private Sub LoadTextsForm()
-    imgComprar.Caption = JsonLanguage.Item("FRMCOMERCIAR_COMPRAR").Item("TEXTO")
-    imgVender.Caption = JsonLanguage.Item("FRMCOMERCIAR_VENDER").Item("TEXTO")
+    imgComprar.Caption = JsonLanguage.item("FRMCOMERCIAR_COMPRAR").item("TEXTO")
+    imgVender.Caption = JsonLanguage.item("FRMCOMERCIAR_VENDER").item("TEXTO")
 End Sub
 
 ''
@@ -392,9 +414,12 @@ Private Sub imgComprar_Click()
     If UserGLD >= CalculateSellPrice(NPCInventory(InvComNpc.SelectedItem).Valor, Val(cantidad.Text)) Then
         Call WriteCommerceBuy(InvComNpc.SelectedItem, Val(cantidad.Text))
     Else
-        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.Item("MENSAJE_SIN_ORO_SUFICIENTE").Item("TEXTO"), 2, 51, 223, 1, 1)
+        Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_SIN_ORO_SUFICIENTE").item("TEXTO"), 2, 51, 223, 1, 1)
         Exit Sub
     End If
+
+    Call InvComUsu.DrawInventory
+    Call InvComNpc.DrawInventory
     
 End Sub
 
@@ -413,6 +438,10 @@ Private Sub imgVender_Click()
     LasActionBuy = False
 
     Call WriteCommerceSell(InvComUsu.SelectedItem, Val(cantidad.Text))
+
+    Call InvComUsu.DrawInventory
+    Call InvComNpc.DrawInventory
+    
 End Sub
 
 Private Sub picInvNpc_Click()
@@ -424,20 +453,20 @@ Private Sub picInvNpc_Click()
     ClickNpcInv = True
     InvComUsu.DeselectItem
     
-    Label1(0).Caption = NPCInventory(ItemSlot).Name
+    Label1(0).Caption = NPCInventory(ItemSlot).name
     Label1(1).Caption = "$: " & CalculateSellPrice(NPCInventory(ItemSlot).Valor, Val(cantidad.Text)) 'No mostramos numeros reales
     
     If NPCInventory(ItemSlot).Amount <> 0 Then
     
         Select Case NPCInventory(ItemSlot).OBJType
             Case eObjType.otWeapon
-                Label1(2).Caption = "Max " & JsonLanguage.Item("GOLPE").Item("TEXTO") & ":" & NPCInventory(ItemSlot).MaxHit
-                Label1(3).Caption = "Min " & JsonLanguage.Item("GOLPE").Item("TEXTO") & ":" & NPCInventory(ItemSlot).MinHit
+                Label1(2).Caption = "Max " & JsonLanguage.item("GOLPE").item("TEXTO") & ":" & NPCInventory(ItemSlot).MaxHit
+                Label1(3).Caption = "Min " & JsonLanguage.item("GOLPE").item("TEXTO") & ":" & NPCInventory(ItemSlot).MinHit
                 Label1(2).Visible = True
                 Label1(3).Visible = True
             Case eObjType.otArmadura, eObjType.otcasco, eObjType.otescudo
-                Label1(2).Caption = "Max " & JsonLanguage.Item("DEFENSA").Item("TEXTO") & ":" & NPCInventory(ItemSlot).MaxDef
-                Label1(3).Caption = "Min " & JsonLanguage.Item("DEFENSA").Item("TEXTO") & ":" & NPCInventory(ItemSlot).MinDef
+                Label1(2).Caption = "Max " & JsonLanguage.item("DEFENSA").item("TEXTO") & ":" & NPCInventory(ItemSlot).MaxDef
+                Label1(3).Caption = "Min " & JsonLanguage.item("DEFENSA").item("TEXTO") & ":" & NPCInventory(ItemSlot).MinDef
                 Label1(2).Visible = True
                 Label1(3).Visible = True
             Case Else
@@ -467,13 +496,13 @@ Private Sub picInvUser_Click()
     
         Select Case Inventario.OBJType(ItemSlot)
             Case eObjType.otWeapon, eObjType.otFlechas
-                Label1(2).Caption = "Max " & JsonLanguage.Item("GOLPE").Item("TEXTO") & ":" & Inventario.MaxHit(ItemSlot)
-                Label1(3).Caption = "Min " & JsonLanguage.Item("GOLPE").Item("TEXTO") & ":" & Inventario.MinHit(ItemSlot)
+                Label1(2).Caption = "Max " & JsonLanguage.item("GOLPE").item("TEXTO") & ":" & Inventario.MaxHit(ItemSlot)
+                Label1(3).Caption = "Min " & JsonLanguage.item("GOLPE").item("TEXTO") & ":" & Inventario.MinHit(ItemSlot)
                 Label1(2).Visible = True
                 Label1(3).Visible = True
             Case eObjType.otArmadura, eObjType.otcasco, eObjType.otescudo
-                Label1(2).Caption = "Max " & JsonLanguage.Item("DEFENSA").Item("TEXTO") & ":" & Inventario.MaxDef(ItemSlot)
-                Label1(3).Caption = "Min " & JsonLanguage.Item("DEFENSA").Item("TEXTO") & ":" & Inventario.MinDef(ItemSlot)
+                Label1(2).Caption = "Max " & JsonLanguage.item("DEFENSA").item("TEXTO") & ":" & Inventario.MaxDef(ItemSlot)
+                Label1(3).Caption = "Min " & JsonLanguage.item("DEFENSA").item("TEXTO") & ":" & Inventario.MinDef(ItemSlot)
                 Label1(2).Visible = True
                 Label1(3).Visible = True
             Case Else

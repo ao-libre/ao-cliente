@@ -58,6 +58,8 @@ Private MouseY As Integer
 Private DragItem As Byte
 Private Drag As Byte
 
+Private DrawBuffer As cDIBSection ' Para guardar temporalmente una "foto" del inventario (WyroX)
+
 Private isInventory As Boolean ' Para separar al inventario del main, de los otros
 
 Private Inventory() As Inventory    'User's inventory
@@ -75,6 +77,9 @@ Private Sub Class_Initialize()
 'Last Modify Date: 27/07/04
 '
 '***************************************************
+
+    Set DrawBuffer = Nothing
+
 End Sub
 
 Private Sub Class_Terminate()
@@ -393,12 +398,9 @@ Private Function ClickItem(ByVal X As Long, ByVal Y As Long) As Long
             ClickItem = TempItem
         Else
             ClickItem = 0
-
         End If
 
     End If
-
-    Call DrawInventory
 
 End Function
 
@@ -406,16 +408,16 @@ Public Sub DrawInventory()
 
     '***************************************************
     'Author: Juan Martin Sotuyo Dodero (Maraxus)
-    'Last Modify Date: 27/07/04
-    'Renders the inventory to the given PictureBox
+    'Last Modify Date: 18/01/2020
+    'Renders the inventory to the given PictureBox.
     '***************************************************
-    Dim LoopC             As Long
-    Dim X                 As Integer
-    Dim Y                 As Integer
-    Dim DestRect          As RECT
-    Dim Inv_Color(3)      As Long
-    Dim Sel_Color(3)      As Long
-    
+    Dim LoopC        As Long
+    Dim X            As Integer
+    Dim Y            As Integer
+    Dim DestRect     As RECT
+    Dim Inv_Color(3) As Long
+    Dim Sel_Color(3) As Long
+
     With DestRect
         .Bottom = InventoryWindow.Height
         .Right = InventoryWindow.Width
@@ -441,6 +443,7 @@ Public Sub DrawInventory()
                     
                 If LoopC = SelectedItem Then
                     Call Draw_GrhIndex(26096, startdX, startdY, 0, Normal_RGBList(), 0, False) 'Dibuja el fondo cuando lo seleccionamos
+
                 End If
 
                 Call Draw_GrhIndex(Inventory(LoopC).GrhIndex, startdX, startdY, 0, Normal_RGBList())
@@ -448,6 +451,7 @@ Public Sub DrawInventory()
                 'If equipped we render "E"
                 If Inventory(LoopC).Equipped Then
                     Call DrawText(startdX + 20, startdY + 20, "E", -1)
+
                 End If
                     
                 Call DrawText(startdX, startdY, Inventory(LoopC).Amount, -1)
@@ -460,9 +464,40 @@ Public Sub DrawInventory()
 
     If DragItem <> 0 And Drag = 1 And isInventory Then
         Call Draw_GrhIndex(Inventory(DragItem).GrhIndex, MouseX - 16, MouseY - 16, 0, Normal_RGBList())
+        
+        ' Si estamos arrastrando un item, dibujamos normal
+        InventoryWindow.AutoRedraw = False
+        Call Engine_EndScene(DestRect, InventoryWindow.hWnd)
+        
+    Else
+        ' WyroX:
+        ' Brujeria necesaria para que no quede negro el inventario.
+        ' En realidad: con el AutoRedraw desactivado, copiamos una "foto" del inventario a un buffer en memoria.
+        ' Activamos el AutoDraw, lo copiamos de vuelta al inventario y lo dejamos como imagen estatica.
+
+        InventoryWindow.AutoRedraw = False
+
+        Call Engine_EndScene(DestRect, InventoryWindow.hWnd)
+
+        Call DrawBuffer.LoadPictureBlt(InventoryWindow.hdc)
+
+        InventoryWindow.AutoRedraw = True
+
+        Call DrawBuffer.PaintPicture(InventoryWindow.hdc, 0, 0, InventoryWindow.Width, InventoryWindow.Height, 0, 0, vbSrcCopy)
+
+        InventoryWindow.Picture = InventoryWindow.Image
+
     End If
-            
-    Call Engine_EndScene(DestRect, InventoryWindow.hWnd)
+
+End Sub
+
+Public Sub DrawDragAndDrop()
+
+    If ((DragItem <> 0 And Drag = 1) And (timeGetTime - InventoryTickCount > 40)) Then
+
+        Call Inventario.DrawInventory
+
+    End If
 
 End Sub
 
@@ -504,19 +539,10 @@ Private Sub InventoryWindow_MouseMove(Button As Integer, Shift As Integer, X As 
         End Select
 
     End If
-        
-    If Button = vbRightButton And isInventory Then ' And DragItem <> 0 Then
-        Drag = 1
-    Else
-        Drag = 0
 
-    End If
-    
     MouseX = CInt(X)
     MouseY = CInt(Y)
-    
-    Call DrawInventory
-    
+
 End Sub
 
 Private Sub InventoryWindow_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
@@ -555,15 +581,6 @@ Private Sub InventoryWindow_MouseDown(Button As Integer, Shift As Integer, X As 
 
 End Sub
 
-Public Sub DrawInv(Optional ByVal r As Boolean = False)
-
-    If (GetTickCount - InventoryTickCount > 300) Or ((DragItem <> 0 And Drag = 1) And (GetTickCount - InventoryTickCount > 40)) Then
-        Call DrawInventory
-        InventoryTickCount = GetTickCount
-    End If
-
-End Sub
-
 Public Sub Initialize(ByRef DirectD3D As D3DX8, ByRef InvPic As PictureBox, ByVal MaxObjs As Byte, Optional ByVal FontSize As Integer = 7, Optional ByVal TileWidth As Integer = 32, Optional ByVal TileHeight As Integer = 32, Optional ByVal startX As Integer = 0, Optional ByVal startY As Integer = 0, Optional ByVal bImgContainer As Boolean = True, Optional ByVal bShowText As Boolean = True, Optional thisInventory As Boolean = False)
     '***************************************************
     'Author: Juan Martin Sotuyo Dodero (Maraxus)
@@ -580,6 +597,10 @@ Public Sub Initialize(ByRef DirectD3D As D3DX8, ByRef InvPic As PictureBox, ByVa
     
     'Set apropiate scale (pixel)
     InventoryWindow.ScaleMode = 3
+    
+    ' Inicializar buffer
+    Set DrawBuffer = New cDIBSection
+    Call DrawBuffer.Create(InvPic.Width, InvPic.Height)
     
     ReDim Inventory(1 To MaxObjs) As Inventory
     

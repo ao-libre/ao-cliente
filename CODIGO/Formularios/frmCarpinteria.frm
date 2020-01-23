@@ -520,6 +520,36 @@ Private Sub Form_Load()
     
 End Sub
 
+Private Sub Form_Activate()
+On Error Resume Next
+
+    InvMaderasCarpinteria(1).DrawInventory
+    InvMaderasCarpinteria(2).DrawInventory
+    InvMaderasCarpinteria(3).DrawInventory
+    InvMaderasCarpinteria(4).DrawInventory
+
+End Sub
+
+Private Sub Form_GotFocus()
+On Error Resume Next
+
+    InvMaderasCarpinteria(1).DrawInventory
+    InvMaderasCarpinteria(2).DrawInventory
+    InvMaderasCarpinteria(3).DrawInventory
+    InvMaderasCarpinteria(4).DrawInventory
+
+End Sub
+
+Private Sub Form_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+On Error Resume Next
+
+    InvMaderasCarpinteria(1).DrawInventory
+    InvMaderasCarpinteria(2).DrawInventory
+    InvMaderasCarpinteria(3).DrawInventory
+    InvMaderasCarpinteria(4).DrawInventory
+
+End Sub
+
 Private Sub LoadButtons()
     Dim GrhPath As String
     Dim Index   As Long
