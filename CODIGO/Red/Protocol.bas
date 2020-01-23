@@ -11038,6 +11038,10 @@ Private Sub HandleAccountLogged()
                 
                 If .Dead Then
                     .Head = eCabezas.CASPER_HEAD
+                    .Body = iCuerpoMuerto
+                    .weapon = 0
+                    .helmet = 0
+                    .shield = 0
                 End If
 
                 .GameMaster = Buffer.ReadBoolean
