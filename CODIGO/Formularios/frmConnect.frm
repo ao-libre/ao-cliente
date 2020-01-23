@@ -680,7 +680,7 @@ Private Sub Form_Activate()
         Call GetPostsFromReddit
     End If
 
-    If CBool(Lector.GetValue("LOGIN", "Remember")) = True Then
+    If CBool(GetVar(Game.path(INIT) & "Config.ini", "LOGIN", "Remember")) = True Then
         Me.txtNombre = GetVar(Game.path(INIT) & "Config.ini", "LOGIN", "UserName")
         Me.txtPasswd = Cripto.AesDecryptString(GetVar(Game.path(INIT) & "Config.ini", "LOGIN", "Password"), AES_PASSWD)
         Me.chkRecordar.Checked = True
