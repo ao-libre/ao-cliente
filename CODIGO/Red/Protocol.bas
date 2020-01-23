@@ -2777,7 +2777,7 @@ Private Sub HandleCharacterChange()
 '25/08/2009: ZaMa - Changed a variable used incorrectly.
 '21/09/2010: C4b3z0n - Added code for FragShooter. If its waiting for the death of certain UserIndex, and it dies, then the capture of the screen will occur.
 '***************************************************
-    If incomingData.Length < 18 Then
+    If incomingData.Length < 17 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
