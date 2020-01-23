@@ -1539,7 +1539,7 @@ Sub Draw_GrhIndex(ByVal GrhIndex As Integer, ByVal X As Integer, ByVal Y As Inte
         'Center Grh over X,Y pos
         If Center Then
             If .TileWidth <> 1 Then
-                X = X - Int(.TileWidth * TilePixelWidth / 2) + TilePixelWidth \ 2
+                X = X - (.pixelWidth - TilePixelWidth) \ 2
             End If
             
             If .TileHeight <> 1 Then
@@ -1588,7 +1588,7 @@ On Error GoTo Error
         'Center Grh over X,Y pos
         If Center Then
             If .TileWidth <> 1 Then
-                X = X - Int(.TileWidth * TilePixelWidth / 2) + TilePixelWidth \ 2
+                X = X - (.pixelWidth - TilePixelWidth) \ 2
             End If
             
             If .TileHeight <> 1 Then
