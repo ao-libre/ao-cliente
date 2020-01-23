@@ -474,13 +474,13 @@ On Error GoTo errorH
             .Desc = FileManager.GetValue("HECHIZO" & J, "Desc")
             .PalabrasMagicas = FileManager.GetValue("HECHIZO" & J, "PalabrasMagicas")
             .Nombre = FileManager.GetValue("HECHIZO" & J, "Nombre")
-            .SkillRequerido = FileManager.GetValue("HECHIZO" & J, "MinSkill")
+            .SkillRequerido = Val(FileManager.GetValue("HECHIZO" & J, "MinSkill"))
          
             If J <> 38 And J <> 39 Then
-                .EnergiaRequerida = FileManager.GetValue("HECHIZO" & J, "StaRequerido")
+                .EnergiaRequerida = Val(FileManager.GetValue("HECHIZO" & J, "StaRequerido"))
                  
                 .HechiceroMsg = FileManager.GetValue("HECHIZO" & J, "HechizeroMsg")
-                .ManaRequerida = FileManager.GetValue("HECHIZO" & J, "ManaRequerido")
+                .ManaRequerida = Val(FileManager.GetValue("HECHIZO" & J, "ManaRequerido"))
              
                 .PropioMsg = FileManager.GetValue("HECHIZO" & J, "PropioMsg")
                 .TargetMsg = FileManager.GetValue("HECHIZO" & J, "TargetMsg")
@@ -495,12 +495,15 @@ Exit Sub
 errorH:
 
     If Err.number <> 0 Then
-        
+
         If Err.number = 53 Then
-            Call MsgBox("El archivo Hechizos.dat no existe. Por favor, reinstale el juego.", , "Argentum Online")
-            Call CloseClient
+            Call MsgBox("El archivo Hechizos.dat no existe. Por favor, reinstale el juego.", , "Argentum Online Libre")
+        Else
+            Call MsgBox("Error cargando el archivo Hechizos.dat (Hechizo " & J & "). Por favor, avise a los administradores enviandoles el archivo Errores.log que se encuentra en la carpeta del cliente.", , "Argentum Online Libre")
+            Call LogError(Err.number, Err.Description, "CargarHechizos")
         End If
-        
+        Call CloseClient
+
     End If
-    
+
 End Sub
