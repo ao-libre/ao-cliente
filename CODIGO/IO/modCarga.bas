@@ -474,13 +474,13 @@ On Error GoTo errorH
             .Desc = FileManager.GetValue("HECHIZO" & J, "Desc")
             .PalabrasMagicas = FileManager.GetValue("HECHIZO" & J, "PalabrasMagicas")
             .Nombre = FileManager.GetValue("HECHIZO" & J, "Nombre")
-            .SkillRequerido = CByte(Val(FileManager.GetValue("HECHIZO" & J, "MinSkill")))
+            .SkillRequerido = Val(FileManager.GetValue("HECHIZO" & J, "MinSkill"))
          
             If J <> 38 And J <> 39 Then
-                .EnergiaRequerida = CInt(Val(FileManager.GetValue("HECHIZO" & J, "StaRequerido")))
+                .EnergiaRequerida = Val(FileManager.GetValue("HECHIZO" & J, "StaRequerido"))
                  
                 .HechiceroMsg = FileManager.GetValue("HECHIZO" & J, "HechizeroMsg")
-                .ManaRequerida = CInt(Val(FileManager.GetValue("HECHIZO" & J, "ManaRequerido")))
+                .ManaRequerida = Val(FileManager.GetValue("HECHIZO" & J, "ManaRequerido"))
              
                 .PropioMsg = FileManager.GetValue("HECHIZO" & J, "PropioMsg")
                 .TargetMsg = FileManager.GetValue("HECHIZO" & J, "TargetMsg")
