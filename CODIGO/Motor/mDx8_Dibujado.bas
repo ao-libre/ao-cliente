@@ -27,6 +27,8 @@ Type DList
      Activated      As Boolean      'Si esta activado..
 End Type
 
+Private DrawBuffer As cDIBSection
+
 Sub DrawGrhtoHdc(ByRef Pic As PictureBox, _
                  ByVal GrhIndex As Integer, _
                  ByRef DestRect As RECT)
@@ -44,6 +46,87 @@ Sub DrawGrhtoHdc(ByRef Pic As PictureBox, _
         
     Call Engine_EndScene(DestRect, Pic.hWnd)
         
+End Sub
+
+Public Sub PrepareDrawBufferForPJ()
+    Set DrawBuffer = New cDIBSection
+    Call DrawBuffer.Create(frmPanelAccount.picChar(0).Width, frmPanelAccount.picChar(0).Height)
+End Sub
+
+Public Sub CleanDrawBufferForPJ()
+    Set DrawBuffer = Nothing
+End Sub
+
+Public Sub DrawPJ(ByVal Index As Byte)
+
+    If LenB(cPJ(Index).Nombre) = 0 Then Exit Sub
+    DoEvents
+    
+    Dim cColor       As Long
+    Dim Head_OffSet  As Integer
+    Dim PixelOffsetX As Integer
+    Dim PixelOffsetY As Integer
+    Dim RE           As RECT
+    
+    If cPJ(Index).GameMaster Then
+        cColor = 2004510
+    Else
+        cColor = IIf(cPJ(Index).Criminal, 255, 16744448)
+    End If
+    
+    With frmPanelAccount.lblAccData(Index)
+        .Caption = cPJ(Index).Nombre
+        .ForeColor = cColor
+    End With
+    
+    With frmPanelAccount.picChar(Index - 1)
+        RE.Left = 0
+        RE.Top = 0
+        RE.Bottom = .Height
+        RE.Right = .Width
+    End With
+
+    PixelOffsetX = RE.Right \ 2 - 16
+    PixelOffsetY = RE.Bottom \ 2
+    
+    Call Engine_BeginScene
+    
+    With cPJ(Index)
+    
+        If .Body <> 0 Then
+
+            Call Draw_Grh(BodyData(.Body).Walk(3), PixelOffsetX, PixelOffsetY, 1, Normal_RGBList(), 0)
+
+            If .Head <> 0 Then
+                Call Draw_Grh(HeadData(.Head).Head(3), PixelOffsetX + BodyData(.Body).HeadOffset.X, PixelOffsetY + BodyData(.Body).HeadOffset.Y, 1, Normal_RGBList(), 0)
+            End If
+
+            If .helmet <> 0 Then
+                Call Draw_Grh(CascoAnimData(.helmet).Head(3), PixelOffsetX + BodyData(.Body).HeadOffset.X, PixelOffsetY + BodyData(.Body).HeadOffset.Y, 1, Normal_RGBList(), 0)
+            End If
+
+            If .weapon <> 0 Then
+                Call Draw_Grh(WeaponAnimData(.weapon).WeaponWalk(3), PixelOffsetX, PixelOffsetY, 1, Normal_RGBList(), 0)
+            End If
+
+            If .shield <> 0 Then
+                Call Draw_Grh(ShieldAnimData(.shield).ShieldWalk(3), PixelOffsetX, PixelOffsetY, 1, Normal_RGBList(), 0)
+            End If
+        
+        End If
+    
+    End With
+
+    Call Engine_EndScene(RE, frmPanelAccount.picChar(Index - 1).hWnd)
+
+    Call DrawBuffer.LoadPictureBlt(frmPanelAccount.picChar(Index - 1).hdc)
+
+    frmPanelAccount.picChar(Index - 1).AutoRedraw = True
+
+    Call DrawBuffer.PaintPicture(frmPanelAccount.picChar(Index - 1).hdc, 0, 0, RE.Right, RE.Bottom, 0, 0, vbSrcCopy)
+
+    frmPanelAccount.picChar(Index - 1).Picture = frmPanelAccount.picChar(Index - 1).Image
+    
 End Sub
 
 Sub Damage_Initialize()

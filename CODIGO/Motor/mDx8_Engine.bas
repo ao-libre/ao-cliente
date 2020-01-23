@@ -34,9 +34,6 @@ Public TileBufferSize As Integer
 Public ScreenWidth As Long
 Public ScreenHeight As Long
 
-Public Const HeadOffsetAltos As Integer = -8
-Public Const HeadOffsetBajos As Integer = 2
-
 Public MainScreenRect As RECT
 
 Public Type TLVERTEX
@@ -195,7 +192,10 @@ On Error Resume Next
     
     '   Clean Texture
     Call DirectDevice.SetTexture(0, Nothing)
-
+    
+    '   Borrar DBI Surface usada para pjs de la cuenta
+    Call CleanDrawBufferForPJ
+    
     '   Erase Data
     Erase MapData()
     Erase charlist()
@@ -239,15 +239,18 @@ Public Sub Engine_DirectX8_Aditional_Init()
     Call mDx8_Clima.Init_MeteoEngine
     Call mDx8_Dibujado.Damage_Initialize
     
+    ' Inicializa DIB surface para dibujar los pjs de la cuenta
+    Call PrepareDrawBufferForPJ
+    
 End Sub
 
-Public Sub Engine_Draw_Line(X1 As Single, Y1 As Single, X2 As Single, Y2 As Single, Optional Color As Long = -1, Optional Color2 As Long = -1)
+Public Sub Engine_Draw_Line(x1 As Single, y1 As Single, x2 As Single, y2 As Single, Optional Color As Long = -1, Optional Color2 As Long = -1)
 On Error GoTo Error
     
     Call Engine_Long_To_RGB_List(temp_rgb(), Color)
     
     Call SpriteBatch.SetTexture(Nothing)
-    Call SpriteBatch.Draw(X1, Y1, X2, Y2, temp_rgb())
+    Call SpriteBatch.Draw(x1, y1, x2, y2, temp_rgb())
     
 Exit Sub
 
@@ -255,13 +258,13 @@ Error:
     'Call Log_Engine("Error in Engine_Draw_Line, " & Err.Description & " (" & Err.number & ")")
 End Sub
 
-Public Sub Engine_Draw_Point(X1 As Single, Y1 As Single, Optional Color As Long = -1)
+Public Sub Engine_Draw_Point(x1 As Single, y1 As Single, Optional Color As Long = -1)
 On Error GoTo Error
     
     Call Engine_Long_To_RGB_List(temp_rgb(), Color)
     
     Call SpriteBatch.SetTexture(Nothing)
-    Call SpriteBatch.Draw(X1, Y1, 0, 1, temp_rgb(), 0, 0)
+    Call SpriteBatch.Draw(x1, y1, 0, 1, temp_rgb(), 0, 0)
     
 Exit Sub
 
@@ -349,7 +352,7 @@ Public Sub Engine_D3DColor_To_RGB_List(rgb_list() As Long, Color As D3DCOLORVALU
 'Last Modification: 14/05/10
 'Blisse-AO | Set a D3DColorValue to a RGB List
 '***************************************************
-    rgb_list(0) = D3DColorARGB(Color.A, Color.r, Color.g, Color.B)
+    rgb_list(0) = D3DColorARGB(Color.a, Color.r, Color.g, Color.b)
     rgb_list(1) = rgb_list(0)
     rgb_list(2) = rgb_list(0)
     rgb_list(3) = rgb_list(0)
@@ -385,7 +388,7 @@ Public Function SetARGB_Alpha(rgb_list() As Long, Alpha As Byte) As Long()
     If Alpha < 0 Then Alpha = 0
     
     'seteamos el alpha
-    TempColor.A = Alpha
+    TempColor.a = Alpha
     
     'generamos el nuevo RGB_List
     Call Engine_D3DColor_To_RGB_List(tempARGB(), TempColor)
@@ -462,48 +465,48 @@ Dim IX As Single
     
 End Function
 
-Public Function Engine_Collision_LineRect(ByVal sX As Long, ByVal sY As Long, ByVal SW As Long, ByVal SH As Long, ByVal X1 As Long, ByVal Y1 As Long, ByVal X2 As Long, ByVal Y2 As Long) As Byte
+Public Function Engine_Collision_LineRect(ByVal sX As Long, ByVal sY As Long, ByVal SW As Long, ByVal SH As Long, ByVal x1 As Long, ByVal y1 As Long, ByVal x2 As Long, ByVal y2 As Long) As Byte
 '*****************************************************************
 'Check if a line intersects with a rectangle (returns 1 if true)
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_Collision_LineRect
 '*****************************************************************
 
     'Top line
-    If Engine_Collision_Line(sX, sY, sX + SW, sY, X1, Y1, X2, Y2) Then
+    If Engine_Collision_Line(sX, sY, sX + SW, sY, x1, y1, x2, y2) Then
         Engine_Collision_LineRect = 1
         Exit Function
     End If
     
     'Right line
-    If Engine_Collision_Line(sX + SW, sY, sX + SW, sY + SH, X1, Y1, X2, Y2) Then
+    If Engine_Collision_Line(sX + SW, sY, sX + SW, sY + SH, x1, y1, x2, y2) Then
         Engine_Collision_LineRect = 1
         Exit Function
     End If
 
     'Bottom line
-    If Engine_Collision_Line(sX, sY + SH, sX + SW, sY + SH, X1, Y1, X2, Y2) Then
+    If Engine_Collision_Line(sX, sY + SH, sX + SW, sY + SH, x1, y1, x2, y2) Then
         Engine_Collision_LineRect = 1
         Exit Function
     End If
 
     'Left line
-    If Engine_Collision_Line(sX, sY, sX, sY + SW, X1, Y1, X2, Y2) Then
+    If Engine_Collision_Line(sX, sY, sX, sY + SW, x1, y1, x2, y2) Then
         Engine_Collision_LineRect = 1
         Exit Function
     End If
 
 End Function
 
-Function Engine_Collision_Rect(ByVal X1 As Integer, ByVal Y1 As Integer, ByVal Width1 As Integer, ByVal Height1 As Integer, ByVal X2 As Integer, ByVal Y2 As Integer, ByVal Width2 As Integer, ByVal Height2 As Integer) As Boolean
+Function Engine_Collision_Rect(ByVal x1 As Integer, ByVal y1 As Integer, ByVal Width1 As Integer, ByVal Height1 As Integer, ByVal x2 As Integer, ByVal y2 As Integer, ByVal Width2 As Integer, ByVal Height2 As Integer) As Boolean
 '*****************************************************************
 'Check for collision between two rectangles
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_Collision_Rect
 '*****************************************************************
 
-    If X1 + Width1 >= X2 Then
-        If X1 <= X2 + Width2 Then
-            If Y1 + Height1 >= Y2 Then
-                If Y1 <= Y2 + Height2 Then
+    If x1 + Width1 >= x2 Then
+        If x1 <= x2 + Width2 Then
+            If y1 + Height1 >= y2 Then
+                If y1 <= y2 + Height2 Then
                     Engine_Collision_Rect = True
                 End If
             End If
@@ -525,7 +528,7 @@ Public Sub Engine_BeginScene(Optional ByVal Color As Long = 0)
     
 End Sub
 
-Public Sub Engine_EndScene(ByRef destRect As RECT, Optional ByVal hWndDest As Long = 0)
+Public Sub Engine_EndScene(ByRef DestRect As RECT, Optional ByVal hWndDest As Long = 0)
 '***************************************************
 'Author: Ezequiel Juarez (Standelf)
 'Last Modification: 29/12/10
@@ -537,9 +540,9 @@ Public Sub Engine_EndScene(ByRef destRect As RECT, Optional ByVal hWndDest As Lo
     Call DirectDevice.EndScene
         
     If hWndDest = 0 Then
-        Call DirectDevice.Present(destRect, ByVal 0&, ByVal 0&, ByVal 0&)
+        Call DirectDevice.Present(DestRect, ByVal 0&, ByVal 0&, ByVal 0&)
     Else
-        Call DirectDevice.Present(destRect, ByVal 0, hWndDest, ByVal 0)
+        Call DirectDevice.Present(DestRect, ByVal 0, hWndDest, ByVal 0)
     End If
     
 End Sub
@@ -639,13 +642,13 @@ Public Function Engine_Get_TileBuffer() As Single
     
 End Function
 
-Function Engine_Distance(ByVal X1 As Integer, ByVal Y1 As Integer, ByVal X2 As Integer, ByVal Y2 As Integer) As Long
+Function Engine_Distance(ByVal x1 As Integer, ByVal y1 As Integer, ByVal x2 As Integer, ByVal y2 As Integer) As Long
 '***************************************************
 'Author: Standelf
 'Last Modification: -
 '***************************************************
 
-    Engine_Distance = Abs(X1 - X2) + Abs(Y1 - Y2)
+    Engine_Distance = Abs(x1 - x2) + Abs(y1 - y2)
     
 End Function
 
@@ -665,69 +668,6 @@ Public Sub Engine_Update_FPS()
 
     End If
 
-End Sub
-
-Public Sub DrawPJ(ByVal Index As Byte)
-
-    If LenB(cPJ(Index).Nombre) = 0 Then Exit Sub
-    DoEvents
-    
-    Dim cColor As Long
-    
-    If cPJ(Index).GameMaster Then
-        cColor = 2004510
-    Else
-        cColor = IIf(cPJ(Index).Criminal, 255, 16744448)
-    End If
-
-    frmPanelAccount.lblAccData(Index).Caption = cPJ(Index).Nombre
-    frmPanelAccount.lblAccData(Index).ForeColor = cColor
-    
-    Dim Init_X As Integer
-    Dim Init_Y As Integer
-    Dim Head_OffSet As Integer
-    Dim PixelOffsetX As Integer
-    Dim PixelOffsetY As Integer
-    Dim RE As RECT
-
-    RE.Left = 0
-    RE.Top = 0
-    RE.Bottom = 80
-    RE.Right = 76
-
-    Init_X = 25
-    Init_Y = 20
-    
-    Call Engine_BeginScene
-
-    If cPJ(Index).Body <> 0 Then
-        If cPJ(Index).Race <> eRaza.Gnomo Or cPJ(Index).Race <> eRaza.Enano Then
-            Head_OffSet = HeadOffsetAltos
-        Else
-            Head_OffSet = HeadOffsetBajos
-        End If
-    
-        Call Draw_Grh(BodyData(cPJ(Index).Body).Walk(3), PixelOffsetX + Init_X, PixelOffsetY + Init_Y, 0, Normal_RGBList(), 0)
-
-        If cPJ(Index).Head <> 0 Then
-            Call Draw_Grh(HeadData(cPJ(Index).Head).Head(3), PixelOffsetX + Init_X + 4, PixelOffsetY + Init_Y + Head_OffSet, 0, Normal_RGBList(), 0)
-        End If
-
-        If cPJ(Index).helmet <> 0 Then
-            Call Draw_Grh(CascoAnimData(cPJ(Index).helmet).Head(3), PixelOffsetX + Init_X + 4, PixelOffsetY + Init_Y + Head_OffSet, 0, Normal_RGBList(), 0)
-        End If
-
-        If cPJ(Index).weapon <> 0 Then
-            Call Draw_Grh(WeaponAnimData(cPJ(Index).weapon).WeaponWalk(3), PixelOffsetX + Init_X, PixelOffsetY + Init_Y, 0, Normal_RGBList(), 0)
-        End If
-
-        If cPJ(Index).shield <> 0 Then
-            Call Draw_Grh(ShieldAnimData(cPJ(Index).shield).ShieldWalk(3), PixelOffsetX + Init_X, PixelOffsetY + Init_Y, 0, Normal_RGBList(), 0)
-        End If
-    End If
-
-    Call Engine_EndScene(RE, frmPanelAccount.picChar(Index - 1).hWnd)
-    
 End Sub
 
 Public Function Engine_GetAngle(ByVal CenterX As Integer, ByVal CenterY As Integer, ByVal TargetX As Integer, ByVal TargetY As Integer) As Single

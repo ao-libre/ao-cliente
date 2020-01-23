@@ -2879,14 +2879,14 @@ Private Sub HandleObjectDelete()
     
     Dim X   As Byte
     Dim Y   As Byte
-    Dim Obj As Integer
+    Dim obj As Integer
 
     X = incomingData.ReadByte()
     Y = incomingData.ReadByte()
         
-    Obj = Map_PosExitsObject(X, Y)
+    obj = Map_PosExitsObject(X, Y)
         
-    If (Obj > 0) Then
+    If (obj > 0) Then
         Call Map_DestroyObject(X, Y)
     End If
 End Sub
@@ -11043,7 +11043,7 @@ Private Sub HandleAccountLogged()
                 .GameMaster = Buffer.ReadBoolean
             End With
             
-            Call mDx8_Engine.DrawPJ(LoopC)
+            Call mDx8_Dibujado.DrawPJ(LoopC)
             
         Next LoopC
         
