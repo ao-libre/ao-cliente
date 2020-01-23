@@ -621,11 +621,11 @@ Private Sub btnConectarse_Click()
     frmMain.hlst.Clear
 
     If Me.chkRecordar.Checked = False Then
-        Call WriteVar(Game.path(INIT) & "Config.ini", "Login", "Remember", False)
+        Call WriteVar(Game.path(INIT) & "Config.ini", "Login", "Remember", "False")
         Call WriteVar(Game.path(INIT) & "Config.ini", "Login", "UserName", vbNullString)
         Call WriteVar(Game.path(INIT) & "Config.ini", "Login", "Password", vbNullString)
     Else
-        Call WriteVar(Game.path(INIT) & "Config.ini", "Login", "Remember", True)
+        Call WriteVar(Game.path(INIT) & "Config.ini", "Login", "Remember", "True")
         Call WriteVar(Game.path(INIT) & "Config.ini", "Login", "UserName", AccountName)
         Call WriteVar(Game.path(INIT) & "Config.ini", "Login", "Password", Cripto.AesEncryptString(AccountPassword, AES_PASSWD))
     End If
@@ -679,13 +679,10 @@ Private Sub Form_Activate()
     If Me.lstRedditPosts.ListCount = 0 Then
         Call GetPostsFromReddit
     End If
-    
-    Set Lector = New clsIniManager
-    Lector.Initialize (Game.path(INIT) & "Config.ini")
-    
+
     If CBool(Lector.GetValue("LOGIN", "Remember")) = True Then
-        Me.txtNombre = Lector.GetValue("LOGIN", "UserName")
-        Me.txtPasswd = Cripto.AesDecryptString(Lector.GetValue("LOGIN", "Password"), AES_PASSWD)
+        Me.txtNombre = GetVar(Game.path(INIT) & "Config.ini", "LOGIN", "UserName")
+        Me.txtPasswd = Cripto.AesDecryptString(GetVar(Game.path(INIT) & "Config.ini", "LOGIN", "Password"), AES_PASSWD)
         Me.chkRecordar.Checked = True
     End If
 End Sub
