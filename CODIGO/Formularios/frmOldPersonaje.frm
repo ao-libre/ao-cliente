@@ -191,7 +191,7 @@ End Sub
 
 Private Sub Image1_Click(Index As Integer)
 
-Call Audio.PlayWave(SND_CLICK)
+    Call Audio.PlayWave(SND_CLICK)
     Select Case Index
         Case 0
         

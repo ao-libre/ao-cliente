@@ -1034,7 +1034,7 @@ ErrorHandl:
 End Function
 
 ''
-'   Plays a new MIDI file.
+'   Plays a new MIDI or MP3 file.
 '
 '   @param              FileName    File name to be played
 '   @param              FileType   File Type : mp3 or mid.
@@ -1046,6 +1046,9 @@ Public Sub PlayBackgroundMusic(ByVal FileName As String, ByVal FileType As Byte,
 'Last Modification: 06/01/20
 'Reproduce un mp3 o midi segun lo que elijamos.
 '***************************************************
+    'A el himno del AO no lo saque nadie, este es un parche para que en el frmConectar no salga la musica cuando
+    'Clickeo un server en la lista (Recox)
+    If CurrentMusicFile = "6.mp3" And FileName = "2" Then Exit Sub    
 
     Select Case FileType
         Case MusicTypes.Midi

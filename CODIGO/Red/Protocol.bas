@@ -172,6 +172,7 @@ Private Enum ServerPacketID
     RenderMsg = 116
     DeletedChar = 117
     EquitandoToggle = 118
+    EnviarDatosServer = 119
 End Enum
 
 Private Enum ClientPacketID
@@ -325,6 +326,7 @@ Private Enum ClientPacketID
     CloseGuild = 148            '/CERRARCLAN
     Discord = 149            '/DISCORD
     DeleteChar = 150
+    ObtenerDatosServer = 151
 End Enum
 
 Public Enum FontTypeNames
@@ -372,8 +374,8 @@ Public Sub Connect(ByVal Modo As E_MODO)
     EstadoLogin = Modo
 
     'Usamos la API de Windows
-    frmMain.Client.Connect CurServerIp, CurServerPort
-    
+    Call frmMain.Client.Connect(CurServerIp, CurServerPort)  
+
     'Vuelvo a activar el boton.
     frmConnect.btnConectarse.Enabled = True
 End Sub
@@ -905,6 +907,9 @@ On Error Resume Next
 
         Case ServerPacketID.EquitandoToggle         'Para las monturas
             Call HandleEquitandoToggle
+
+        Case ServerPacketID.EnviarDatosServer       'Para obtener info del server en la lista de servers
+            Call HandleEnviarDatosServer
 
         Case Else
             'ERROR : Abort!
@@ -11006,15 +11011,6 @@ Private Sub HandleAccountLogged()
     AccountHash = Buffer.ReadASCIIString
     NumberOfCharacters = Buffer.ReadByte
 
-    'TODO: Mover todo estos datos que obtenemos del servidor a la funciona que se creara cuando querramos ver una lista mas completa de servers
-    ' Aca sobreescribimos el valor del nivel maximo ya que puede variar por servidor
-    STAT_MAXELV = Buffer.ReadByte
-
-    'Obtenemos valor de algunos intervalos necesarios para mostrar informacion en el render
-    'TODO: obtener del server
-    IntervaloParalizado = 23 ' Segundos
-    IntervaloInvisible = 23 ' Segundos
-
     frmPanelAccount.Show
 
     If NumberOfCharacters > 0 Then
@@ -11459,4 +11455,96 @@ Private Sub HandleEquitandoToggle()
     UserEquitando = Not UserEquitando
     
     Call SetSpeedUsuario
+End Sub
+
+Public Sub WriteObtenerDatosServer()
+
+    With outgoingData
+        'Mando el ID del paquete
+        Call .WriteByte(ClientPacketID.ObtenerDatosServer)
+    End With
+
+End Sub
+
+' Handles the EnviarDatosMessage message.
+Private Sub HandleEnviarDatosServer()
+'***************************************************
+'Author: Recox
+'Last Modification: 15/01/20
+'Obtiene datos del server para imprimir en la lista.
+'***************************************************
+    ' If incomingData.Length < 4 Then
+    '     Err.Raise incomingData.NotEnoughDataErrCode
+    '     Exit Sub
+    ' End If
+
+On Error GoTo errhandler
+    Dim MundoServidor As String
+    Dim NombreServidor As String
+    Dim DescripcionServidor As String
+    Dim IpPublicaServidor As String
+    Dim PuertoServidor As Integer
+    Dim NivelMaximoServidor As Integer
+    Dim MaxUsersSimultaneosServidor As Integer
+    Dim CantidadUsuariosOnline As Integer
+    Dim ExpMultiplierServidor As Integer
+    Dim OroMultiplierServidor As Integer
+    Dim OficioMultiplierServidor As Integer
+
+    'Remove packet ID
+    Call incomingData.ReadByte
+
+    'Get data and update form
+    MundoServidor = incomingData.ReadASCIIString()
+    NombreServidor = incomingData.ReadASCIIString()
+    DescripcionServidor = incomingData.ReadASCIIString()
+    NivelMaximoServidor = incomingData.ReadInteger()
+    MaxUsersSimultaneosServidor = incomingData.ReadInteger()
+    CantidadUsuariosOnline = incomingData.ReadInteger()
+    ExpMultiplierServidor = incomingData.ReadInteger()
+    OroMultiplierServidor = incomingData.ReadInteger()
+    OficioMultiplierServidor = incomingData.ReadInteger()
+
+    Dim MsPingResult As Long
+    MsPingResult = (GetTickCount - pingTime)
+    pingTime = 0
+
+    Dim CountryCode As String
+    If IpApiEnabled Then
+        'If is not numeric do a url transformation
+        If CheckIfIpIsNumeric(IpPublicaServidor) = False Then
+            IpPublicaServidor = GetIPFromHostName(IpPublicaServidor)
+        End If
+
+        CountryCode = GetCountryCode(IpPublicaServidor) & " - "
+    End If
+
+    Dim Descripcion As String
+    Descripcion =   CountryCode & _
+                    NombreServidor & VbNewline & _
+                    DescripcionServidor & VbNewLine & _
+                    "Mundo: " & MundoServidor & VbNewLine & _
+                    "Online: " & CantidadUsuariosOnline & " / " & MaxUsersSimultaneosServidor & VbNewline & _
+                    "Ping: " & MsPingResult & VbNewline & _
+                    "Nivel Maximo Permitido : " & NivelMaximoServidor
+
+
+    frmConnect.lblDescripcionServidor = Descripcion
+
+    'Obtenemos valor de algunos intervalos necesarios para mostrar informacion en el render
+    'TODO: obtener del server no lo hago aun por que no se como traducir los valore del server.ini a segundos capaz no se puede
+    IntervaloParalizado = 23 ' Segundos
+    IntervaloInvisible = 23 ' Segundos
+    STAT_MAXELV = NivelMaximoServidor
+
+errhandler:
+
+    Dim Error As Long
+
+    Error = Err.number
+
+    On Error GoTo 0
+
+    If Error <> 0 Then Err.Raise Error
+
 End Sub
