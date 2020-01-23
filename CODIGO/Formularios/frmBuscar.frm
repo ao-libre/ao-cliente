@@ -162,6 +162,9 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
+Private Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal hWnd As Long, ByVal wMsg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
+Private Const LB_ITEMFROMPOINT = &H1A9
+
 Private MensajeBusqueda As Boolean
 Private BusquedaObjetos As Boolean
 
@@ -188,6 +191,10 @@ Private Sub Form_Load()
    MensajeBusqueda = True
 End Sub
 
+Private Sub Form_Activate()
+    Me.SetFocus
+End Sub
+
 Private Sub LoadTextsForm()
     lblTitle.Caption = JsonLanguage.item("FRMBUSCAR_TITLE").item("TEXTO")
     BuscarObjetos.Caption = JsonLanguage.item("FRMBUSCAR_BUSCAROBJETO").item("TEXTO")
@@ -202,7 +209,7 @@ Private Sub BuscarObjetos_Click()
     tObjeto = JsonLanguage.item("OBJETO").item("TEXTO")
     
     ' Seamos un poco mas especificos y evitemos un overflow ^-^
-    If Len(Busqueda.Text) < 4 Then
+    If Len(Busqueda.Text) < 2 Then
         MsgBox Replace$(JsonLanguage.item("ERROR_BUSCAR_MUY_CORTO").item("TEXTO"), "VAR_TARGET", tObjeto), vbApplicationModal
         Exit Sub
     End If
@@ -217,7 +224,7 @@ End Sub
 
 Private Sub BuscarNPCs_Click()
     ' Seamos un poco mas especificos y evitemos un overflow ^-^
-    If Len(Busqueda.Text) < 4 Then
+    If Len(Busqueda.Text) < 2 Then
         MsgBox Replace$(JsonLanguage.item("ERROR_BUSCAR_MUY_CORTO").item("TEXTO"), "VAR_TARGET", "NPC"), vbApplicationModal
         Exit Sub
     End If
@@ -243,6 +250,26 @@ Private Sub Limpiarlista_Click()
     Resultados.Clear
 End Sub
 
+Private Sub Resultados_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    Dim Index As Long
+    Dim PosX As Long, PosY As Long
+
+    ' Detectamos el clic derecho para simular la seleccion
+    If Button = vbRightButton Then
+        ' Convertir a pixeles
+        PosX = CLng(X / Screen.TwipsPerPixelX)
+        PosY = CLng(Y / Screen.TwipsPerPixelY)
+
+        ' Mensaje directo al hWnd usando WinAPI
+        Index = SendMessage(Resultados.hWnd, LB_ITEMFROMPOINT, 0, ByVal ((PosY * 65536) + PosX))
+
+        ' Si seleccionamos un item valido
+        If Index < Resultados.ListCount Then
+            Resultados.ListIndex = Index
+        End If
+    End If
+End Sub
+
 Private Sub Resultados_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If Button = vbRightButton And Resultados.ListIndex >= 0 Then
         If BusquedaObjetos Then
@@ -254,6 +281,8 @@ Private Sub Resultados_MouseUp(Button As Integer, Shift As Integer, X As Single,
 End Sub
 
 Private Sub mnuCrearObj_Click(Index As Integer)
+On Error GoTo errhandler
+
     Dim Numero As Integer
     Dim cantidad As Integer
     
@@ -285,6 +314,12 @@ Private Sub mnuCrearObj_Click(Index As Integer)
     If Numero > 0 Then
         Call WriteCreateItem(Resultados.ItemData(Resultados.ListIndex), cantidad)
     End If
+
+    Exit Sub
+
+errhandler:
+    cantidad = MAX_INVENTORY_OBJS
+    Resume Next
 End Sub
 
 Private Sub mnuCrearNPC_Click(Index As Integer)
