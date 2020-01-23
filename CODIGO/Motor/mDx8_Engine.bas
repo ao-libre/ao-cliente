@@ -679,52 +679,62 @@ Public Sub DrawPJ(ByVal Index As Byte)
     Else
         cColor = IIf(cPJ(Index).Criminal, 255, 16744448)
     End If
-
-    frmPanelAccount.lblAccData(Index).Caption = cPJ(Index).Nombre
-    frmPanelAccount.lblAccData(Index).ForeColor = cColor
     
-    Dim Init_X As Integer
-    Dim Init_Y As Integer
-    Dim Head_OffSet As Integer
+    With frmPanelAccount.lblAccData(Index)
+        .Caption = cPJ(Index).Nombre
+        .ForeColor = cColor
+    End With
+    
+    Dim Init_X       As Integer
+    Dim Init_Y       As Integer
+    Dim Head_OffSet  As Integer
     Dim PixelOffsetX As Integer
     Dim PixelOffsetY As Integer
-    Dim RE As RECT
-
-    RE.Left = 0
-    RE.Top = 0
-    RE.Bottom = 80
-    RE.Right = 76
-
+    Dim RE           As RECT
+    
+    With RE
+        .Left = 0
+        .Top = 0
+        .Bottom = 80
+        .Right = 76
+    End With
+    
     Init_X = 25
     Init_Y = 20
     
     Call Engine_BeginScene
+    
+    With cPJ(Index)
+    
+        If .Body <> 0 Then
+        
+            If .Race <> eRaza.Gnomo Or .Race <> eRaza.Enano Then
+                Head_OffSet = HeadOffsetAltos
+            Else
+                Head_OffSet = HeadOffsetBajos
+            End If
+    
+            Call Draw_Grh(BodyData(.Body).Walk(3), PixelOffsetX + Init_X, PixelOffsetY + Init_Y, 0, Normal_RGBList(), 0)
 
-    If cPJ(Index).Body <> 0 Then
-        If cPJ(Index).Race <> eRaza.Gnomo Or cPJ(Index).Race <> eRaza.Enano Then
-            Head_OffSet = HeadOffsetAltos
-        Else
-            Head_OffSet = HeadOffsetBajos
+            If .Head <> 0 Then
+                Call Draw_Grh(HeadData(.Head).Head(3), PixelOffsetX + Init_X + 4, PixelOffsetY + Init_Y + Head_OffSet, 0, Normal_RGBList(), 0)
+            End If
+
+            If .helmet <> 0 Then
+                Call Draw_Grh(CascoAnimData(.helmet).Head(3), PixelOffsetX + BodyData(.Body).HeadOffset.X, PixelOffsetY + BodyData(.Body).HeadOffset.Y + OFFSET_HEAD, 1, Normal_RGBList(), 0)
+            End If
+
+            If .weapon <> 0 Then
+                Call Draw_Grh(WeaponAnimData(.weapon).WeaponWalk(3), PixelOffsetX + Init_X, PixelOffsetY + Init_Y, 0, Normal_RGBList(), 0)
+            End If
+
+            If .shield <> 0 Then
+                Call Draw_Grh(ShieldAnimData(.shield).ShieldWalk(3), PixelOffsetX + Init_X, PixelOffsetY + Init_Y, 0, Normal_RGBList(), 0)
+            End If
+
         End If
     
-        Call Draw_Grh(BodyData(cPJ(Index).Body).Walk(3), PixelOffsetX + Init_X, PixelOffsetY + Init_Y, 0, Normal_RGBList(), 0)
-
-        If cPJ(Index).Head <> 0 Then
-            Call Draw_Grh(HeadData(cPJ(Index).Head).Head(3), PixelOffsetX + Init_X + 4, PixelOffsetY + Init_Y + Head_OffSet, 0, Normal_RGBList(), 0)
-        End If
-
-        If cPJ(Index).helmet <> 0 Then
-            Call Draw_Grh(CascoAnimData(cPJ(Index).helmet).Head(3), PixelOffsetX + Init_X + 4, PixelOffsetY + Init_Y + Head_OffSet, 0, Normal_RGBList(), 0)
-        End If
-
-        If cPJ(Index).weapon <> 0 Then
-            Call Draw_Grh(WeaponAnimData(cPJ(Index).weapon).WeaponWalk(3), PixelOffsetX + Init_X, PixelOffsetY + Init_Y, 0, Normal_RGBList(), 0)
-        End If
-
-        If cPJ(Index).shield <> 0 Then
-            Call Draw_Grh(ShieldAnimData(cPJ(Index).shield).ShieldWalk(3), PixelOffsetX + Init_X, PixelOffsetY + Init_Y, 0, Normal_RGBList(), 0)
-        End If
-    End If
+    End With
 
     Call Engine_EndScene(RE, frmPanelAccount.picChar(Index - 1).hWnd)
     
