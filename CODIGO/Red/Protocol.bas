@@ -51,128 +51,127 @@ Private Type tFont
 End Type
 
 Private Enum ServerPacketID
-    logged                  ' LOGGED
-    RemoveDialogs           ' QTDL
-    RemoveCharDialog        ' QDL
-    NavigateToggle          ' NAVEG
-    Disconnect              ' FINOK
-    CommerceEnd             ' FINCOMOK
-    BankEnd                 ' FINBANOK
-    CommerceInit            ' INITCOM
-    BankInit                ' INITBANCO
-    UserCommerceInit        ' INITCOMUSU
-    UserCommerceEnd         ' FINCOMUSUOK
-    UserOfferConfirm
-    CommerceChat
-    UpdateSta               ' ASS
-    UpdateMana              ' ASM
-    UpdateHP                ' ASH
-    UpdateGold              ' ASG
-    UpdateBankGold
-    UpdateExp               ' ASE
-    ChangeMap               ' CM
-    PosUpdate               ' PU
-    ChatOverHead            ' ||
-    ConsoleMsg              ' || - Beware!! its the same as above, but it was properly splitted
-    GuildChat               ' |+
-    ShowMessageBox          ' !!
-    UserIndexInServer       ' IU
-    UserCharIndexInServer   ' IP
-    CharacterCreate         ' CC
-    CharacterRemove         ' BP
-    CharacterChangeNick
-    CharacterMove           ' MP, +, * and _ '
-    ForceCharMove
-    CharacterChange         ' CP
-    HeadingChange
-    ObjectCreate            ' HO
-    ObjectDelete            ' BO
-    BlockPosition           ' BQ
-    PlayMp3
-    PlayMIDI                ' TM
-    PlayWave                ' TW
-    guildList               ' GL
-    AreaChanged             ' CA
-    PauseToggle             ' BKW
-    RainToggle              ' LLU
-    CreateFX                ' CFX
-    UpdateUserStats         ' EST
-    ChangeInventorySlot     ' CSI
-    ChangeBankSlot          ' SBO
-    ChangeSpellSlot         ' SHS
-    Atributes               ' ATR
-    BlacksmithWeapons       ' LAH
-    BlacksmithArmors        ' LAR
-    InitCarpenting          ' OBR
-    RestOK                  ' DOK
-    ErrorMsg                ' ERR
-    Blind                   ' CEGU
-    Dumb                    ' DUMB
-    ShowSignal              ' MCAR
-    ChangeNPCInventorySlot  ' NPCI
-    UpdateHungerAndThirst   ' EHYS
-    Fame                    ' FAMA
-    MiniStats               ' MEST
-    LevelUp                 ' SUNI
-    AddForumMsg             ' FMSG
-    ShowForumForm           ' MFOR
-    SetInvisible            ' NOVER
-    DiceRoll                ' DADOS
-    MeditateToggle          ' MEDOK
-    BlindNoMore             ' NSEGUE
-    DumbNoMore              ' NESTUP
-    SendSkills              ' SKILLS
-    TrainerCreatureList     ' LSTCRI
-    guildNews               ' GUILDNE
-    OfferDetails            ' PEACEDE & ALLIEDE
-    AlianceProposalsList    ' ALLIEPR
-    PeaceProposalsList      ' PEACEPR
-    CharacterInfo           ' CHRINFO
-    GuildLeaderInfo         ' LEADERI
-    GuildMemberInfo
-    GuildDetails            ' CLANDET
-    ShowGuildFundationForm  ' SHOWFUN
-    ParalizeOK              ' PARADOK
-    ShowUserRequest         ' PETICIO
-    TradeOK                 ' TRANSOK
-    BankOK                  ' BANCOOK
-    ChangeUserTradeSlot     ' COMUSUINV
-    SendNight               ' NOC
-    Pong
-    UpdateTagAndStatus
+    Logged = 1                  ' LOGGED
+    RemoveDialogs = 2           ' QTDL
+    RemoveCharDialog = 3        ' QDL
+    NavigateToggle = 4          ' NAVEG
+    Disconnect = 5              ' FINOK
+    CommerceEnd = 6             ' FINCOMOK
+    BankEnd = 7                 ' FINBANOK
+    CommerceInit = 8            ' INITCOM
+    BankInit = 9                ' INITBANCO
+    UserCommerceInit = 10        ' INITCOMUSU
+    UserCommerceEnd = 11         ' FINCOMUSUOK
+    UserOfferConfirm = 12
+    CommerceChat = 13
+    UpdateSta = 14               ' ASS
+    UpdateMana = 15             ' ASM
+    UpdateHP = 16                ' ASH
+    UpdateGold = 17              ' ASG
+    UpdateBankGold = 17 
+    UpdateExp = 19               ' ASE
+    ChangeMap = 20               ' CM
+    PosUpdate = 21              ' PU
+    ChatOverHead = 22            ' ||
+    ConsoleMsg = 23              ' || - Beware!! its the same as above, but it was properly splitted
+    GuildChat = 24               ' |+
+    ShowMessageBox = 25          ' !!
+    UserIndexInServer = 26       ' IU
+    UserCharIndexInServer = 27   ' IP
+    CharacterCreate = 28         ' CC
+    CharacterRemove = 29         ' BP
+    CharacterChangeNick = 30
+    CharacterMove = 31           ' MP, +, * and _ '
+    ForceCharMove = 32
+    CharacterChange = 33         ' CP
+    HeadingChange = 34
+    ObjectCreate = 35            ' HO
+    ObjectDelete = 36            ' BO
+    BlockPosition = 37           ' BQ
+    PlayMp3 = 38                 
+    PlayMidi = 39                ' TM
+    PlayWave = 40                ' TW
+    guildList = 41               ' GL
+    AreaChanged = 42             ' CA
+    PauseToggle = 43             ' BKW
+    RainToggle = 44              ' LLU
+    CreateFX = 45                ' CFX
+    UpdateUserStats = 46         ' EST
+    ChangeInventorySlot = 47     ' CSI
+    ChangeBankSlot = 48          ' SBO
+    ChangeSpellSlot = 49         ' SHS
+    Atributes = 50               ' ATR
+    BlacksmithWeapons = 51       ' LAH
+    BlacksmithArmors = 52        ' LAR
+    InitCarpenting = 53          ' OBR
+    RestOK = 54                  ' DOK
+    errorMsg = 55                ' ERR
+    Blind = 56                   ' CEGU
+    Dumb = 57                    ' DUMB
+    ShowSignal = 58              ' MCAR
+    ChangeNPCInventorySlot = 59  ' NPCI
+    UpdateHungerAndThirst = 60   ' EHYS
+    Fame = 61                    ' FAMA
+    MiniStats = 62               ' MEST
+    LevelUp = 63                 ' SUNI
+    AddForumMsg = 64             ' FMSG
+    ShowForumForm = 65           ' MFOR
+    SetInvisible = 66            ' NOVER
+    DiceRoll = 67                ' DADOS
+    MeditateToggle = 68          ' MEDOK
+    BlindNoMore = 69             ' NSEGUE
+    DumbNoMore = 70              ' NESTUP
+    SendSkills = 71              ' SKILLS
+    TrainerCreatureList = 72     ' LSTCRI
+    guildNews = 73               ' GUILDNE
+    OfferDetails = 74            ' PEACEDE & ALLIEDE
+    AlianceProposalsList = 75    ' ALLIEPR
+    PeaceProposalsList = 76      ' PEACEPR
+    CharacterInfo = 77           ' CHRINFO
+    GuildLeaderInfo = 78         ' LEADERI
+    GuildMemberInfo = 79
+    GuildDetails = 80            ' CLANDET
+    ShowGuildFundationForm = 81  ' SHOWFUN
+    ParalizeOK = 82              ' PARADOK
+    ShowUserRequest = 83         ' PETICIO
+    TradeOK = 84                 ' TRANSOK
+    BankOK = 85                  ' BANCOOK
+    ChangeUserTradeSlot = 86     ' COMUSUINV
+    SendNight = 87               ' NOC
+    Pong = 88
+    UpdateTagAndStatus = 89
     
+    'GM =  messages
+    SpawnList = 90               ' SPL
+    ShowSOSForm = 91             ' MSOS
+    ShowMOTDEditionForm = 92     ' ZMOTD
+    ShowGMPanelForm = 93         ' ABPANEL
+    UserNameList = 94            ' LISTUSU
+    ShowDenounces = 95
+    RecordList = 96
+    RecordDetails = 97
     
-    'GM messages
-    SpawnList               ' SPL
-    ShowSOSForm             ' MSOS
-    ShowMOTDEditionForm     ' ZMOTD
-    ShowGMPanelForm         ' ABPANEL
-    UserNameList            ' LISTUSU
-    ShowDenounces
-    RecordList
-    RecordDetails
-    
-    ShowGuildAlign
-    ShowPartyForm
-    UpdateStrenghtAndDexterity
-    UpdateStrenght
-    UpdateDexterity
-    AddSlots
-    MultiMessage
-    StopWorking
-    CancelOfferItem
-    PalabrasMagicas
-    PlayAttackAnim
-    FXtoMap
-    AccountLogged
-    SearchList
-    QuestDetails
-    QuestListSend
-    CreateDamage
-    UserInEvent
-    renderMsg
-    DeletedChar
-    EquitandoToggle
+    ShowGuildAlign = 98
+    ShowPartyForm = 99
+    UpdateStrenghtAndDexterity = 100
+    UpdateStrenght = 101
+    UpdateDexterity = 102
+    AddSlots = 103
+    MultiMessage = 104
+    StopWorking = 105
+    CancelOfferItem = 106
+    PalabrasMagicas = 107
+    PlayAttackAnim = 108
+    FXtoMap = 109
+    AccountLogged = 110 'CHOTS | Accounts
+    SearchList = 111
+    QuestDetails = 112
+    QuestListSend = 113
+    CreateDamage = 114            ' CDMG
+    UserInEvent = 115
+    RenderMsg = 116
+    DeletedChar = 117
+    EquitandoToggle = 118
 End Enum
 
 Private Enum ClientPacketID
