@@ -1857,33 +1857,33 @@ End Sub
 
 Private Sub tAnimacion_Timer()
     On Error Resume Next
-    
+
     Dim DR       As RECT
     Dim Grh      As Long
     Static Frame As Byte
-    
+
     If currentGrh = 0 Then Exit Sub
     UserHead = CheckCabeza(UserHead)
-    
+
     Frame = Frame + 1
 
     If Frame >= GrhData(currentGrh).NumFrames Then Frame = 1
-    
+
     With DR
-        .Right = picTemp.Width
-        .Bottom = picTemp.Height
+        .Right = picTemp.Width - 2
+        .Bottom = picTemp.Height - 2
     End With
-    
-    Dim CenterX As Integer: CenterX = picTemp.Width \ 2 - 16
-    Dim CenterY As Integer: CenterY = picTemp.Height \ 2 - 6
-    
+
+    Dim CenterX As Integer: CenterX = (picTemp.Width - 2) \ 2 - 16
+    Dim CenterY As Integer: CenterY = (picTemp.Height - 2) \ 2 - 6
+
     Call Engine_BeginScene
-    
-        Call Draw_GrhIndex(GrhData(currentGrh).Frames(Frame), CenterX, CenterY, 1, Normal_RGBList(), 0)
-        Call Draw_GrhIndex(HeadData(UserHead).Head(Dir).GrhIndex, CenterX, CenterY + BodyData(UserBody).HeadOffset.Y, 1, Normal_RGBList(), 0)
-    
+
+        Call Draw_GrhIndex(GrhData(currentGrh).Frames(Frame), CenterX, CenterY, 1, Normal_RGBList())
+        Call Draw_GrhIndex(HeadData(UserHead).Head(Dir).GrhIndex, CenterX, CenterY + BodyData(UserBody).HeadOffset.Y, 1, Normal_RGBList())
+
     Call Engine_EndScene(DR, picTemp.hWnd)
-       
+
 End Sub
 
 Private Sub DrawHead(ByVal Head As Integer, ByVal PicIndex As Integer)
