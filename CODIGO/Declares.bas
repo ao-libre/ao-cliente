@@ -574,11 +574,9 @@ End Enum
 'Inventario
 Type Inventory
     ObjIndex As Integer
-    Name As String
-    GrhIndex As Integer
-    '[Alejo]: tipo de datos ahora es Long
+    name As String
+    GrhIndex As Long
     Amount As Long
-    '[/Alejo]
     Equipped As Byte
     Valor As Single
     OBJType As Integer
@@ -590,8 +588,8 @@ End Type
 
 Type NpCinV
     ObjIndex As Integer
-    Name As String
-    GrhIndex As Integer
+    name As String
+    GrhIndex As Long
     Amount As Integer
     Valor As Single
     OBJType As Integer
@@ -631,7 +629,7 @@ End Type
 Type tItemsConstruibles
     Name As String
     ObjIndex As Integer
-    GrhIndex As Integer
+    GrhIndex As Long
     LinH As Integer
     LinP As Integer
     LinO As Integer
@@ -639,7 +637,7 @@ Type tItemsConstruibles
     MaderaElfica As Integer
     Upgrade As Integer
     UpgradeName As String
-    UpgradeGrhIndex As Integer
+    UpgradeGrhIndex As Long
 End Type
 
 Public Nombres As Boolean
@@ -866,17 +864,17 @@ Public Declare Function ShellExecute Lib "shell32.dll" Alias "ShellExecuteA" (By
 
 'Lista de cabezas
 Public Type tIndiceCabeza
-    Head(1 To 4) As Integer
+    Head(1 To 4) As Long
 End Type
 
 Public Type tIndiceCuerpo
-    Body(1 To 4) As Integer
+    Body(1 To 4) As Long
     HeadOffsetX As Integer
     HeadOffsetY As Integer
 End Type
 
 Public Type tIndiceFx
-    Animacion As Integer
+    Animacion As Long
     OffsetX As Integer
     OffsetY As Integer
 End Type

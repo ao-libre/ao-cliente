@@ -30,7 +30,7 @@ End Type
 Private DrawBuffer As cDIBSection
 
 Sub DrawGrhtoHdc(ByRef Pic As PictureBox, _
-                 ByVal GrhIndex As Integer, _
+                 ByVal GrhIndex As Long, _
                  ByRef DestRect As RECT)
 
     '*****************************************************************

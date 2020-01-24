@@ -21,7 +21,7 @@ Public Sub Map_RemoveOldUser()
       End With
 
 End Sub
-Public Sub Map_CreateObject(ByVal X As Byte, ByVal Y As Byte, ByVal GrhIndex As Integer)
+Public Sub Map_CreateObject(ByVal X As Byte, ByVal Y As Byte, ByVal GrhIndex As Long)
 
       'Dim objgrh As Integer
         
