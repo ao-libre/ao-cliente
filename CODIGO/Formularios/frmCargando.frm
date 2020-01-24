@@ -103,8 +103,8 @@ Private Sub Form_Load()
     Me.Analizar
     Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaCargando.jpg")
 
-    'Solo hay 9 imagenes de cargando, cambiar 9 por el numero maximo si se quiere cambiar
-    LOGO.Picture = LoadPicture(Game.path(Interfaces) & "ImagenCargando" & RandomNumber(1, 9) & ".jpg")
+    'Solo hay 9 imagenes de cargando, cambiar 14 por el numero maximo si se quiere cambiar
+    LOGO.Picture = LoadPicture(Game.path(Interfaces) & "ImagenCargando" & RandomNumber(1, 14) & ".jpg")
 End Sub
 
 Private Sub LOGO_KeyPress(KeyAscii As Integer)
