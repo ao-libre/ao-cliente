@@ -839,6 +839,12 @@ On Error Resume Next
         Case ServerPacketID.SearchList              '/BUSCAR
             Call HandleSearchList
 
+        Case ServerPacketID.QuestDetails
+            Call HandleQuestDetails
+
+        Case ServerPacketID.QuestListSend
+            Call HandleQuestListSend
+
         '*******************
         'GM messages
         '*******************
