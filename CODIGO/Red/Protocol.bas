@@ -134,45 +134,43 @@ Private Enum ServerPacketID
     ShowGuildFundationForm = 81  ' SHOWFUN
     ParalizeOK = 82              ' PARADOK
     ShowUserRequest = 83         ' PETICIO
-    TradeOK = 84                 ' TRANSOK
-    BankOK = 85                  ' BANCOOK
-    ChangeUserTradeSlot = 86     ' COMUSUINV
-    SendNight = 87               ' NOC
-    Pong = 88
-    UpdateTagAndStatus = 89
+    ChangeUserTradeSlot = 84     ' COMUSUINV
+    SendNight = 85               ' NOC
+    Pong = 86
+    UpdateTagAndStatus = 87
     
     'GM =  messages
-    SpawnList = 90               ' SPL
-    ShowSOSForm = 91             ' MSOS
-    ShowMOTDEditionForm = 92     ' ZMOTD
-    ShowGMPanelForm = 93         ' ABPANEL
-    UserNameList = 94            ' LISTUSU
-    ShowDenounces = 95
-    RecordList = 96
-    RecordDetails = 97
+    SpawnList = 88               ' SPL
+    ShowSOSForm = 89             ' MSOS
+    ShowMOTDEditionForm = 90     ' ZMOTD
+    ShowGMPanelForm = 91         ' ABPANEL
+    UserNameList = 92            ' LISTUSU
+    ShowDenounces = 93
+    RecordList = 94
+    RecordDetails = 95
     
-    ShowGuildAlign = 98
-    ShowPartyForm = 99
-    UpdateStrenghtAndDexterity = 100
-    UpdateStrenght = 101
-    UpdateDexterity = 102
-    AddSlots = 103
-    MultiMessage = 104
-    StopWorking = 105
-    CancelOfferItem = 106
-    PalabrasMagicas = 107
-    PlayAttackAnim = 108
-    FXtoMap = 109
-    AccountLogged = 110 'CHOTS | Accounts
-    SearchList = 111
-    QuestDetails = 112
-    QuestListSend = 113
-    CreateDamage = 114            ' CDMG
-    UserInEvent = 115
-    RenderMsg = 116
-    DeletedChar = 117
-    EquitandoToggle = 118
-    EnviarDatosServer = 119
+    ShowGuildAlign = 96
+    ShowPartyForm = 97
+    UpdateStrenghtAndDexterity = 98
+    UpdateStrenght = 99
+    UpdateDexterity = 100
+    AddSlots = 101
+    MultiMessage = 102
+    StopWorking = 103
+    CancelOfferItem = 104
+    PalabrasMagicas = 105
+    PlayAttackAnim = 106
+    FXtoMap = 107
+    AccountLogged = 108 'CHOTS | Accounts
+    SearchList = 109
+    QuestDetails = 110
+    QuestListSend = 111
+    CreateDamage = 112           ' CDMG
+    UserInEvent = 113
+    RenderMsg = 114
+    DeletedChar = 115
+    EquitandoToggle = 116
+    EnviarDatosServer = 117
 End Enum
 
 Private Enum ClientPacketID
@@ -801,13 +799,7 @@ On Error Resume Next
         
         Case ServerPacketID.ShowUserRequest         ' PETICIO
             Call HandleShowUserRequest
-        
-        Case ServerPacketID.TradeOK                 ' TRANSOK
-            Call HandleTradeOK
-        
-        Case ServerPacketID.BankOK                  ' BANCOOK
-            Call HandleBankOK
-        
+
         Case ServerPacketID.ChangeUserTradeSlot     ' COMUSUINV
             Call HandleChangeUserTradeSlot
             
@@ -3247,7 +3239,7 @@ Private Sub HandleChangeInventorySlot()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 22 Then
+    If incomingData.Length < 24 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -3283,7 +3275,7 @@ On Error GoTo errhandler
     MaxHit = Buffer.ReadInteger()
     MinHit = Buffer.ReadInteger()
     MaxDef = Buffer.ReadInteger()
-    MinDef = Buffer.ReadInteger
+    MinDef = Buffer.ReadInteger()
     Value = Buffer.ReadSingle()
     
     If Equipped Then
@@ -3319,7 +3311,16 @@ On Error GoTo errhandler
     End If
     
     Call Inventario.SetItem(slot, ObjIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, name)
-    Call Inventario.DrawInventory
+
+    If frmComerciar.Visible Then
+        Call InvComUsu.SetItem(slot, ObjIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, name)
+    End If
+
+    If frmBancoObj.Visible Then        
+        Call InvBanco(1).SetItem(slot, ObjIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, name)
+        frmBancoObj.NoPuedeMover = False
+    End If
+
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
@@ -3413,7 +3414,7 @@ Private Sub HandleChangeBankSlot()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 21 Then
+    If incomingData.Length < 23 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -3424,9 +3425,9 @@ On Error GoTo errhandler
     Call Buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call Buffer.ReadByte()
     
-     Dim slot As Byte
+    Dim slot As Byte
     slot = Buffer.ReadByte()
     
     With UserBancoInventory(slot)
@@ -3438,13 +3439,11 @@ On Error GoTo errhandler
         .MaxHit = Buffer.ReadInteger()
         .MinHit = Buffer.ReadInteger()
         .MaxDef = Buffer.ReadInteger()
-        .MinDef = Buffer.ReadInteger
+        .MinDef = Buffer.ReadInteger()
         .Valor = Buffer.ReadLong()
         
-        If Comerciando Then
-            Call InvBanco(0).SetItem(slot, .ObjIndex, .Amount, _
-                .Equipped, .GrhIndex, .OBJType, .MaxHit, _
-                .MinHit, .MaxDef, .MinDef, .Valor, .name)
+        If frmBancoObj.Visible Then
+            Call InvBanco(0).SetItem(slot, .ObjIndex, .Amount, 0, .GrhIndex, .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .name)
         End If
     End With
     
@@ -4010,7 +4009,7 @@ Private Sub HandleChangeNPCInventorySlot()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 21 Then
+    If incomingData.Length < 23 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -4021,7 +4020,7 @@ On Error GoTo errhandler
     Call Buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call Buffer.ReadByte()
     
     Dim slot As Byte
     slot = Buffer.ReadByte()
@@ -4036,7 +4035,11 @@ On Error GoTo errhandler
         .MaxHit = Buffer.ReadInteger()
         .MinHit = Buffer.ReadInteger()
         .MaxDef = Buffer.ReadInteger()
-        .MinDef = Buffer.ReadInteger
+        .MinDef = Buffer.ReadInteger()
+    
+        If frmComerciar.Visible Then
+            Call InvComNpc.SetItem(slot, .ObjIndex, .Amount, 0, .GrhIndex, .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .name)
+        End If
     End With
         
     'If we got here then packet is complete, copy data back to original queue
@@ -5004,94 +5007,6 @@ On Error GoTo 0
 
     If Error <> 0 Then _
         Err.Raise Error
-End Sub
-
-''
-' Handles the TradeOK message.
-
-Private Sub HandleTradeOK()
-'***************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'
-'***************************************************
-    'Remove packet ID
-    Call incomingData.ReadByte
-    
-    If frmComerciar.Visible Then
-        Dim i As Long
-        
-        'Update user inventory
-        For i = 1 To MAX_INVENTORY_SLOTS
-            ' Agrego o quito un item en su totalidad
-            If Inventario.ObjIndex(i) <> InvComUsu.ObjIndex(i) Then
-                With Inventario
-                    Call InvComUsu.SetItem(i, .ObjIndex(i), _
-                    .Amount(i), .Equipped(i), .GrhIndex(i), _
-                    .OBJType(i), .MaxHit(i), .MinHit(i), .MaxDef(i), .MinDef(i), _
-                    .Valor(i), .ItemName(i))
-                End With
-            ' Vendio o compro cierta cantidad de un item que ya tenia
-            ElseIf Inventario.Amount(i) <> InvComUsu.Amount(i) Then
-                Call InvComUsu.ChangeSlotItemAmount(i, Inventario.Amount(i))
-            End If
-        Next i
-        
-        ' Fill Npc inventory
-        For i = 1 To 20
-            ' Compraron la totalidad de un item, o vendieron un item que el npc no tenia
-            If NPCInventory(i).ObjIndex <> InvComNpc.ObjIndex(i) Then
-                With NPCInventory(i)
-                    Call InvComNpc.SetItem(i, .ObjIndex, _
-                    .Amount, 0, .GrhIndex, _
-                    .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, _
-                    .Valor, .name)
-                End With
-            ' Compraron o vendieron cierta cantidad (no su totalidad)
-            ElseIf NPCInventory(i).Amount <> InvComNpc.Amount(i) Then
-                Call InvComNpc.ChangeSlotItemAmount(i, NPCInventory(i).Amount)
-            End If
-        Next i
-    
-    End If
-End Sub
-
-''
-' Handles the BankOK message.
-
-Private Sub HandleBankOK()
-'***************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'
-'***************************************************
-    'Remove packet ID
-    Call incomingData.ReadByte
-    
-    Dim i As Long
-    
-    If frmBancoObj.Visible Then
-        
-        For i = 1 To Inventario.MaxObjs
-            With Inventario
-                Call InvBanco(1).SetItem(i, .ObjIndex(i), .Amount(i), _
-                    .Equipped(i), .GrhIndex(i), .OBJType(i), .MaxHit(i), _
-                    .MinHit(i), .MaxDef(i), .MinDef(i), .Valor(i), .ItemName(i))
-            End With
-        Next i
-        
-        'Alter order according to if we bought or sold so the labels and grh remain the same
-        If frmBancoObj.LasActionBuy Then
-            'frmBancoObj.List1(1).ListIndex = frmBancoObj.LastIndex2
-            'frmBancoObj.List1(0).ListIndex = frmBancoObj.LastIndex1
-        Else
-            'frmBancoObj.List1(0).ListIndex = frmBancoObj.LastIndex1
-            'frmBancoObj.List1(1).ListIndex = frmBancoObj.LastIndex2
-        End If
-        
-        frmBancoObj.NoPuedeMover = False
-    End If
-       
 End Sub
 
 ''
