@@ -951,17 +951,17 @@ Public Const SM_CANT As Byte = 4
 Public SMStatus(SM_CANT) As Boolean
 
 'Hardcoded grhs and items
-Public Const GRH_INI_SM As Integer = 4978
+Public Const GRH_INI_SM As Long = 4978
 
-Public Const ORO_INDEX As Integer = 12
-Public Const ORO_GRH As Integer = 511
+Public Const ORO_INDEX As Long = 12
+Public Const ORO_GRH As Long = 511
 
-Public Const LH_GRH As Integer = 724
-Public Const LP_GRH As Integer = 725
-Public Const LO_GRH As Integer = 723
+Public Const LH_GRH As Long = 724
+Public Const LP_GRH As Long = 725
+Public Const LO_GRH As Long = 723
 
-Public Const MADERA_GRH As Integer = 550
-Public Const MADERA_ELFICA_GRH As Integer = 1999
+Public Const MADERA_GRH As Long = 550
+Public Const MADERA_ELFICA_GRH As Long = 1999
 
 Public picMouseIcon As Picture
 

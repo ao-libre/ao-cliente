@@ -229,7 +229,7 @@ Public Property Get MinDef(ByVal slot As Byte) As Integer
     MinDef = Inventory(slot).MinDef
 End Property
 
-Public Property Get GrhIndex(ByVal slot As Byte) As Integer
+Public Property Get GrhIndex(ByVal slot As Byte) As Long
 '***************************************************
 'Author: Juan Martin Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04

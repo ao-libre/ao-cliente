@@ -8,7 +8,7 @@ Attribute VB_Name = "mPooMap"
 
 Option Explicit
 
-Private Const GrhFogata As Integer = 1521
+Private Const GrhFogata As Long = 1521
 
 Public Sub Map_RemoveOldUser()
 

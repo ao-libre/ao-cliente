@@ -57,7 +57,7 @@ Public Const XMinMapSize As Byte = 1
 Public Const YMaxMapSize As Byte = 100
 Public Const YMinMapSize As Byte = 1
 
-Private Const GrhFogata As Integer = 1521
+Private Const GrhFogata As Long = 1521
 
 ''
 'Sets a Grh animation to loop indefinitely.
