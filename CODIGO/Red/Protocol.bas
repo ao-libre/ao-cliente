@@ -831,6 +831,12 @@ On Error Resume Next
         Case ServerPacketID.SearchList              '/BUSCAR
             Call HandleSearchList
 
+        Case ServerPacketID.QuestDetails
+            Call HandleQuestDetails
+
+        Case ServerPacketID.QuestListSend
+            Call HandleQuestListSend
+
         '*******************
         'GM messages
         '*******************
@@ -3104,9 +3110,9 @@ Private Sub HandleRainToggle()
     
     If Not InMapBounds(UserPos.X, UserPos.Y) Then Exit Sub
     
-    bTecho = (MapData(UserPos.X, UserPos.Y).Trigger = 1 Or _
-        MapData(UserPos.X, UserPos.Y).Trigger = 2 Or _
-        MapData(UserPos.X, UserPos.Y).Trigger = 4)
+    bTecho = (MapData(UserPos.X, UserPos.Y).Trigger = eTrigger.BAJOTECHO Or _
+        MapData(UserPos.X, UserPos.Y).Trigger = eTrigger.CASA Or _
+        MapData(UserPos.X, UserPos.Y).Trigger = eTrigger.ZONASEGURA)
 
     If bRain And bLluvia(UserMap) Then
         'Stop playing the rain sound
