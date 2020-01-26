@@ -8,9 +8,9 @@ Const MAXLONG = 30
 Public Cartel As Boolean
 Public Leyenda As String
 Public LeyendaFormateada() As String
-Public textura As Integer
+Public textura As Long
 
-Sub InitCartel(Ley As String, Grh As Integer)
+Sub InitCartel(Ley As String, Grh As Long)
 If Not Cartel Then
     Leyenda = Ley
     textura = Grh

@@ -574,11 +574,9 @@ End Enum
 'Inventario
 Type Inventory
     ObjIndex As Integer
-    Name As String
-    GrhIndex As Integer
-    '[Alejo]: tipo de datos ahora es Long
+    name As String
+    GrhIndex As Long
     Amount As Long
-    '[/Alejo]
     Equipped As Byte
     Valor As Single
     OBJType As Integer
@@ -590,8 +588,8 @@ End Type
 
 Type NpCinV
     ObjIndex As Integer
-    Name As String
-    GrhIndex As Integer
+    name As String
+    GrhIndex As Long
     Amount As Integer
     Valor As Single
     OBJType As Integer
@@ -631,7 +629,7 @@ End Type
 Type tItemsConstruibles
     Name As String
     ObjIndex As Integer
-    GrhIndex As Integer
+    GrhIndex As Long
     LinH As Integer
     LinP As Integer
     LinO As Integer
@@ -639,7 +637,7 @@ Type tItemsConstruibles
     MaderaElfica As Integer
     Upgrade As Integer
     UpgradeName As String
-    UpgradeGrhIndex As Integer
+    UpgradeGrhIndex As Long
 End Type
 
 Public Nombres As Boolean
@@ -866,17 +864,17 @@ Public Declare Function ShellExecute Lib "shell32.dll" Alias "ShellExecuteA" (By
 
 'Lista de cabezas
 Public Type tIndiceCabeza
-    Head(1 To 4) As Integer
+    Head(1 To 4) As Long
 End Type
 
 Public Type tIndiceCuerpo
-    Body(1 To 4) As Integer
+    Body(1 To 4) As Long
     HeadOffsetX As Integer
     HeadOffsetY As Integer
 End Type
 
 Public Type tIndiceFx
-    Animacion As Integer
+    Animacion As Long
     OffsetX As Integer
     OffsetY As Integer
 End Type
@@ -953,17 +951,17 @@ Public Const SM_CANT As Byte = 4
 Public SMStatus(SM_CANT) As Boolean
 
 'Hardcoded grhs and items
-Public Const GRH_INI_SM As Integer = 4978
+Public Const GRH_INI_SM As Long = 4978
 
-Public Const ORO_INDEX As Integer = 12
-Public Const ORO_GRH As Integer = 511
+Public Const ORO_INDEX As Long = 12
+Public Const ORO_GRH As Long = 511
 
-Public Const LH_GRH As Integer = 724
-Public Const LP_GRH As Integer = 725
-Public Const LO_GRH As Integer = 723
+Public Const LH_GRH As Long = 724
+Public Const LP_GRH As Long = 725
+Public Const LO_GRH As Long = 723
 
-Public Const MADERA_GRH As Integer = 550
-Public Const MADERA_ELFICA_GRH As Integer = 1999
+Public Const MADERA_GRH As Long = 550
+Public Const MADERA_ELFICA_GRH As Long = 1999
 
 Public picMouseIcon As Picture
 

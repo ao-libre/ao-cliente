@@ -2830,6 +2830,7 @@ Private Sub HandleHeadingChange()
 
     Call Char_RefreshAll
 End Sub
+
 ''
 ' Handles the ObjectCreate message.
 
@@ -2839,7 +2840,7 @@ Private Sub HandleObjectCreate()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 5 Then
+    If incomingData.Length < 7 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -2849,11 +2850,11 @@ Private Sub HandleObjectCreate()
     
     Dim X        As Byte
     Dim Y        As Byte
-    Dim GrhIndex As Integer
+    Dim GrhIndex As Long
     
     X = incomingData.ReadByte()
     Y = incomingData.ReadByte()
-    GrhIndex = incomingData.ReadInteger()
+    GrhIndex = incomingData.ReadLong()
         
     Call Map_CreateObject(X, Y, GrhIndex)
 End Sub
@@ -3263,7 +3264,7 @@ On Error GoTo errhandler
     Dim name As String
     Dim Amount As Integer
     Dim Equipped As Boolean
-    Dim GrhIndex As Integer
+    Dim GrhIndex As Long
     Dim OBJType As Byte
     Dim MaxHit As Integer
     Dim MinHit As Integer
@@ -3276,7 +3277,7 @@ On Error GoTo errhandler
     name = Buffer.ReadASCIIString()
     Amount = Buffer.ReadInteger()
     Equipped = Buffer.ReadBoolean()
-    GrhIndex = Buffer.ReadInteger()
+    GrhIndex = Buffer.ReadLong()
     OBJType = Buffer.ReadByte()
     MaxHit = Buffer.ReadInteger()
     MinHit = Buffer.ReadInteger()
@@ -3318,15 +3319,8 @@ On Error GoTo errhandler
     
     Call Inventario.SetItem(slot, ObjIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, name)
 
-    If frmComerciar.Visible Then
-        Call InvComUsu.SetItem(slot, ObjIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, name)
-    End If
-
-    If frmBancoObj.Visible Then        
-        Call InvBanco(1).SetItem(slot, ObjIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, name)
-        frmBancoObj.NoPuedeMover = False
-    End If
-
+    Call Inventario.DrawInventory
+    
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
@@ -3440,7 +3434,7 @@ On Error GoTo errhandler
         .ObjIndex = Buffer.ReadInteger()
         .name = Buffer.ReadASCIIString()
         .Amount = Buffer.ReadInteger()
-        .GrhIndex = Buffer.ReadInteger()
+        .GrhIndex = Buffer.ReadLong()
         .OBJType = Buffer.ReadByte()
         .MaxHit = Buffer.ReadInteger()
         .MinHit = Buffer.ReadInteger()
@@ -3575,7 +3569,7 @@ Private Sub HandleBlacksmithWeapons()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 3 Then
+    If incomingData.Length < 5 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -3602,7 +3596,7 @@ On Error GoTo errhandler
     For i = 1 To Count
         With ArmasHerrero(i)
             .name = Buffer.ReadASCIIString()    'Get the object's name
-            .GrhIndex = Buffer.ReadInteger()
+            .GrhIndex = Buffer.ReadLong()
             .LinH = Buffer.ReadInteger()        'The iron needed
             .LinP = Buffer.ReadInteger()        'The silver needed
             .LinO = Buffer.ReadInteger()        'The gold needed
@@ -3684,7 +3678,7 @@ Private Sub HandleBlacksmithArmors()
 'Last Modification: 05/17/06
 '
 '***************************************************
-    If incomingData.Length < 3 Then
+    If incomingData.Length < 5 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -3709,7 +3703,7 @@ On Error GoTo errhandler
     For i = 1 To Count
         With ArmadurasHerrero(i)
             .name = Buffer.ReadASCIIString()    'Get the object's name
-            .GrhIndex = Buffer.ReadInteger()
+            .GrhIndex = Buffer.ReadLong()
             .LinH = Buffer.ReadInteger()        'The iron needed
             .LinP = Buffer.ReadInteger()        'The silver needed
             .LinO = Buffer.ReadInteger()        'The gold needed
@@ -3778,7 +3772,7 @@ Private Sub HandleInitCarpenting()
 'Last Modification: 01/01/20
 'Este solia ser HandleCarpenterObjects(), pero fue modificado para fusionar los paquetes CarptenterObjects y ShowCarpenterForm.
 '***************************************************
-    If incomingData.Length < 3 Then
+    If incomingData.Length < 5 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -3805,7 +3799,7 @@ On Error GoTo errhandler
     For i = 1 To Count
         With ObjCarpintero(i)
             .name = Buffer.ReadASCIIString()        'Get the object's name
-            .GrhIndex = Buffer.ReadInteger()
+            .GrhIndex = Buffer.ReadLong()
             .Madera = Buffer.ReadInteger()          'The wood needed
             .MaderaElfica = Buffer.ReadInteger()    'The elfic wood needed
             .ObjIndex = Buffer.ReadInteger()
@@ -4035,7 +4029,7 @@ On Error GoTo errhandler
         .name = Buffer.ReadASCIIString()
         .Amount = Buffer.ReadInteger()
         .Valor = Buffer.ReadSingle()
-        .GrhIndex = Buffer.ReadInteger()
+        .GrhIndex = Buffer.ReadLong()
         .ObjIndex = Buffer.ReadInteger()
         .OBJType = Buffer.ReadByte()
         .MaxHit = Buffer.ReadInteger()

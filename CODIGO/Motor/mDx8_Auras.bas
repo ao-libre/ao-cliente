@@ -8,7 +8,7 @@ Attribute VB_Name = "mDx8_Auras"
 Option Explicit
 
 Public Type Aura
-    Grh As Integer '   GrhIndex
+    Grh As Long '   GrhIndex
     
     Rotation As Byte '   Rotate or Not
     angle As Single '   Angle

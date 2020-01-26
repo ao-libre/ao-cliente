@@ -436,31 +436,32 @@ Sub SwitchMap(ByVal Map As Integer)
             ByFlags = fileBuff.getByte()
 
             With MapData(X, Y)
-            
+                
+                'Layer 1
                 .Blocked = (ByFlags And 1)
-                .Graphic(1).GrhIndex = fileBuff.getInteger()
-                InitGrh .Graphic(1), .Graphic(1).GrhIndex
+                .Graphic(1).GrhIndex = fileBuff.getLong()
+                Call InitGrh(.Graphic(1), .Graphic(1).GrhIndex)
            
                 'Layer 2 used?
                 If ByFlags And 2 Then
-                    .Graphic(2).GrhIndex = fileBuff.getInteger()
-                    InitGrh .Graphic(2), .Graphic(2).GrhIndex
+                    .Graphic(2).GrhIndex = fileBuff.getLong()
+                    Call InitGrh(.Graphic(2), .Graphic(2).GrhIndex)
                 Else
                     .Graphic(2).GrhIndex = 0
                 End If
                
                 'Layer 3 used?
                 If ByFlags And 4 Then
-                    .Graphic(3).GrhIndex = fileBuff.getInteger()
-                    InitGrh .Graphic(3), .Graphic(3).GrhIndex
+                    .Graphic(3).GrhIndex = fileBuff.getLong()
+                    Call InitGrh(.Graphic(3), .Graphic(3).GrhIndex)
                 Else
                     .Graphic(3).GrhIndex = 0
                 End If
                
                 'Layer 4 used?
                 If ByFlags And 8 Then
-                    .Graphic(4).GrhIndex = fileBuff.getInteger()
-                    InitGrh .Graphic(4), .Graphic(4).GrhIndex
+                    .Graphic(4).GrhIndex = fileBuff.getLong()
+                    Call InitGrh(.Graphic(4), .Graphic(4).GrhIndex)
                 Else
                     .Graphic(4).GrhIndex = 0
                 End If
