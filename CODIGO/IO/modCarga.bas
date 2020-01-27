@@ -264,13 +264,15 @@ On Error GoTo errhandler:
     For i = 1 To UBound(FxData())
         
         With FxData(i)
-            .Animacion = FileManager.GetValue("FX" & CStr(i), "Animacion")
-            .OffsetX = FileManager.GetValue("FX" & CStr(i), "OffsetX")
-            .OffsetY = FileManager.GetValue("FX" & CStr(i), "OffsetY")
+            .Animacion = Val(FileManager.GetValue("FX" & CStr(i), "Animacion"))
+            .OffsetX = Val(FileManager.GetValue("FX" & CStr(i), "OffsetX"))
+            .OffsetY = Val(FileManager.GetValue("FX" & CStr(i), "OffsetY"))
         End With
     
     Next
-        
+    
+    Set FileManager = Nothing
+    
 errhandler:
     
     If Err.number <> 0 Then
@@ -289,9 +291,10 @@ Public Sub CargarTips()
 ' Carga el JSON con los tips del juego en un objeto para su uso a lo largo del proyecto
 '************************************************************************************
 On Error GoTo errhandler:
+    
     Dim TipFile As String
-
-    TipFile = FileToString(Game.path(INIT) & "tips_" & Language & ".json")
+        TipFile = FileToString(Game.path(INIT) & "tips_" & Language & ".json")
+    
     Set JsonTips = JSON.parse(TipFile)
 
 errhandler:
@@ -469,7 +472,9 @@ On Error GoTo errorH
     NumHechizos = Val(FileManager.GetValue("INIT", "NumHechizos"))
  
     ReDim Hechizos(1 To NumHechizos) As tHechizos
+    
     For J = 1 To NumHechizos
+        
         With Hechizos(J)
             .Desc = FileManager.GetValue("HECHIZO" & J, "Desc")
             .PalabrasMagicas = FileManager.GetValue("HECHIZO" & J, "PalabrasMagicas")
@@ -477,6 +482,7 @@ On Error GoTo errorH
             .SkillRequerido = Val(FileManager.GetValue("HECHIZO" & J, "MinSkill"))
          
             If J <> 38 And J <> 39 Then
+                
                 .EnergiaRequerida = Val(FileManager.GetValue("HECHIZO" & J, "StaRequerido"))
                  
                 .HechiceroMsg = FileManager.GetValue("HECHIZO" & J, "HechizeroMsg")
@@ -484,8 +490,11 @@ On Error GoTo errorH
              
                 .PropioMsg = FileManager.GetValue("HECHIZO" & J, "PropioMsg")
                 .TargetMsg = FileManager.GetValue("HECHIZO" & J, "TargetMsg")
+                
             End If
+            
         End With
+        
     Next J
     
     Set FileManager = Nothing
@@ -495,13 +504,18 @@ Exit Sub
 errorH:
 
     If Err.number <> 0 Then
-
-        If Err.number = 53 Then
-            Call MsgBox("El archivo Hechizos.dat no existe. Por favor, reinstale el juego.", , "Argentum Online Libre")
-        Else
-            Call MsgBox("Error cargando el archivo Hechizos.dat (Hechizo " & J & "). Por favor, avise a los administradores enviandoles el archivo Errores.log que se encuentra en la carpeta del cliente.", , "Argentum Online Libre")
-            Call LogError(Err.number, Err.Description, "CargarHechizos")
-        End If
+        
+        Select Case Err.number
+            
+            Case 9
+                Call MsgBox("Error cargando el archivo Hechizos.dat (Hechizo " & J & "). Por favor, avise a los administradores enviandoles el archivo Errores.log que se encuentra en la carpeta del cliente.", , "Argentum Online Libre")
+                Call LogError(Err.number, Err.Description, "CargarHechizos")
+            
+            Case 53
+                Call MsgBox("El archivo Hechizos.dat no existe. Por favor, reinstale el juego.", , "Argentum Online Libre")
+        
+        End Select
+        
         Call CloseClient
 
     End If
