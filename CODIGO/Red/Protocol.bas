@@ -3880,7 +3880,7 @@ Public Sub HandleInitCraftman()
     'Last Modification: 27/01/2020
     '***************************************************
 
-    If incomingData.Length < 3 Then
+    If incomingData.Length < 7 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -3893,12 +3893,14 @@ On Error GoTo errhandler
 
     'Remove packet ID
     Call Buffer.ReadByte
-    
+
     Dim CountObjs As Integer
     Dim CountCrafteo As Integer
     Dim i As Long
     Dim J As Long
     Dim k As Long
+
+    frmArtesano.ArtesaniaCosto = Buffer.ReadLong()
 
     CountObjs = Buffer.ReadInteger()
 

@@ -147,6 +147,26 @@ Begin VB.Form frmArtesano
       Visible         =   0   'False
       Width           =   480
    End
+   Begin VB.Label Costo 
+      Alignment       =   2  'Center
+      BackStyle       =   0  'Transparent
+      Caption         =   "999.999.999"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   12
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H0000C0C0&
+      Height          =   255
+      Left            =   4725
+      TabIndex        =   9
+      Top             =   1125
+      Width           =   1545
+   End
    Begin VB.Image imgConstruir0 
       Height          =   420
       Left            =   4200
@@ -262,6 +282,7 @@ Private cBotonCerrar            As clsGraphicalButton
 Private cBotonConstruir(0 To 4) As clsGraphicalButton
 
 Public LastButtonPressed        As clsGraphicalButton
+Public ArtesaniaCosto           As Long
 
 Private Sub Form_Load()
     
@@ -315,6 +336,8 @@ Private Sub LoadButtons()
     Call cBotonConstruir(1).Initialize(imgConstruir1, GrhPath & "BotonConstruirArtesano.jpg", GrhPath & "BotonConstruirRolloverArtesano.jpg", GrhPath & "BotonConstruirClickArtesano.jpg", Me)
     Call cBotonConstruir(2).Initialize(imgConstruir2, GrhPath & "BotonConstruirArtesano.jpg", GrhPath & "BotonConstruirRolloverArtesano.jpg", GrhPath & "BotonConstruirClickArtesano.jpg", Me)
     Call cBotonConstruir(3).Initialize(imgConstruir3, GrhPath & "BotonConstruirArtesano.jpg", GrhPath & "BotonConstruirRolloverArtesano.jpg", GrhPath & "BotonConstruirClickArtesano.jpg", Me)
+
+    Costo.Caption = Format$(ArtesaniaCosto, "##,##")
 
 End Sub
 
