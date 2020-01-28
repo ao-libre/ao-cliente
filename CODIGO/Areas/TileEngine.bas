@@ -1111,11 +1111,11 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
         If DialogosClanes.Activo Then Call DialogosClanes.Draw ' GSZAO
 
         '*********Tiempo restante para que termine el invi o el paralizar*********
-        If UserParalizado Then
+        If UserParalizado And UserParalizadoSegundosRestantes <> 0 Then
             Call DrawText(1, 25, UserParalizadoSegundosRestantes & " segundos restantes de Paralisis", Color_Paralisis)
         End If
 
-        If UserInvisible Then
+        If UserInvisible And UserInvisibleSegundosRestantes <> 0 Then
             Call DrawText(1, 13, UserInvisibleSegundosRestantes & " segundos restantes de Invisibilidad", Color_Invisibilidad)
         End If
         '*************************************************************************
