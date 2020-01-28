@@ -274,7 +274,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2619
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1126,7 +1125,7 @@ Private Sub LoadTextsForm()
     CmdLanzar.Caption = JsonLanguage.item("LBL_LANZAR").item("TEXTO")
     CmdInventario.Caption = JsonLanguage.item("LBL_INVENTARIO").item("TEXTO")
     CmdHechizos.Caption = JsonLanguage.item("LBL_HECHIZOS").item("TEXTO")
-    cmdInfo.Caption = JsonLanguage.item("LBL_INFO").item("TEXTO")
+    cmdINFO.Caption = JsonLanguage.item("LBL_INFO").item("TEXTO")
     imgMapa.Caption = JsonLanguage.item("LBL_MAPA").item("TEXTO")
     imgGrupo.Caption = JsonLanguage.item("LBL_GRUPO").item("TEXTO")
     imgOpciones.Caption = JsonLanguage.item("LBL_OPCIONES").item("TEXTO")
@@ -1565,7 +1564,6 @@ End Sub
 Private Sub Form_Unload(Cancel As Integer)
 
     Call DisableURLDetect
-    Set DrawBuffer = Nothing
     
 End Sub
 
@@ -2323,7 +2321,7 @@ Private Sub cmdInventario_Click()
 
     ' Desactivo controles de hechizo
     hlst.Visible = False
-    cmdInfo.Visible = False
+    cmdINFO.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = False
@@ -2342,7 +2340,7 @@ Private Sub CmdHechizos_Click()
     
     ' Activo controles de hechizos
     hlst.Visible = True
-    cmdInfo.Visible = True
+    cmdINFO.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True
