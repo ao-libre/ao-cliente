@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
 Begin VB.Form frmMain 
    BorderStyle     =   0  'None
    ClientHeight    =   8985
@@ -274,6 +274,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2619
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1062,9 +1063,6 @@ Private FirstTimeClanChat  As Boolean
 Dim CtrlMaskOn             As Boolean
 Dim SkinSeleccionado       As String
 
-'Para evitar que desaparezcan los picSM
-Private DrawBuffer         As cDIBSection
-
 Private Const NEWBIE_USER_GOLD_COLOR As Long = vbCyan
 Private Const USER_GOLD_COLOR As Long = vbYellow
 
@@ -1122,16 +1120,13 @@ Private Sub Form_Load()
     FirstTimeChat = True
     FirstTimeClanChat = True
     
-    Set DrawBuffer = New cDIBSection
-    Call DrawBuffer.Create(picSM(0).Width, picSM(1).Height)
-    
 End Sub
 
 Private Sub LoadTextsForm()
     CmdLanzar.Caption = JsonLanguage.item("LBL_LANZAR").item("TEXTO")
     CmdInventario.Caption = JsonLanguage.item("LBL_INVENTARIO").item("TEXTO")
     CmdHechizos.Caption = JsonLanguage.item("LBL_HECHIZOS").item("TEXTO")
-    cmdINFO.Caption = JsonLanguage.item("LBL_INFO").item("TEXTO")
+    cmdInfo.Caption = JsonLanguage.item("LBL_INFO").item("TEXTO")
     imgMapa.Caption = JsonLanguage.item("LBL_MAPA").item("TEXTO")
     imgGrupo.Caption = JsonLanguage.item("LBL_GRUPO").item("TEXTO")
     imgOpciones.Caption = JsonLanguage.item("LBL_OPCIONES").item("TEXTO")
@@ -1223,18 +1218,8 @@ Public Sub ControlSM(ByVal Index As Byte, ByVal Mostrar As Boolean)
         DR.Bottom = .pixelHeight
         
     End With
-    
-    picSM(Index).AutoRedraw = False
-    
+
     Call DrawGrhtoHdc(picSM(Index), GrhIndex, DR)
-    
-    Call DrawBuffer.LoadPictureBlt(picSM(Index).hdc)
-
-    picSM(Index).AutoRedraw = True
-
-    Call DrawBuffer.PaintPicture(picSM(Index).hdc, 0, 0, picSM(Index).Width, picSM(Index).Height, 0, 0, vbSrcCopy)
-
-    picSM(Index).Picture = picSM(Index).Image
     
     Select Case Index
         
@@ -2338,7 +2323,7 @@ Private Sub cmdInventario_Click()
 
     ' Desactivo controles de hechizo
     hlst.Visible = False
-    cmdINFO.Visible = False
+    cmdInfo.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = False
@@ -2357,7 +2342,7 @@ Private Sub CmdHechizos_Click()
     
     ' Activo controles de hechizos
     hlst.Visible = True
-    cmdINFO.Visible = True
+    cmdInfo.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True
@@ -2843,11 +2828,11 @@ Public Sub UpdateProgressExperienceLevelBar(ByVal UserExp As Long)
         frmMain.lblPorcLvl.Caption = "[N/A]"
 
         'Si no tiene mas niveles que subir ponemos la barra al maximo.
-        frmMain.uAOProgressExperienceLevel.max = 100
+        frmMain.uAOProgressExperienceLevel.Max = 100
         frmMain.uAOProgressExperienceLevel.Value = 100
     Else
         frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
-        frmMain.uAOProgressExperienceLevel.max = UserPasarNivel
+        frmMain.uAOProgressExperienceLevel.Max = UserPasarNivel
         frmMain.uAOProgressExperienceLevel.Value = UserExp
     End If
 End Sub

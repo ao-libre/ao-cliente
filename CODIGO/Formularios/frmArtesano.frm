@@ -287,26 +287,6 @@ On Error Resume Next
 
 End Sub
 
-Private Sub Form_GotFocus()
-On Error Resume Next
-
-    InvObjArtesano(1).DrawInventory
-    InvObjArtesano(2).DrawInventory
-    InvObjArtesano(3).DrawInventory
-    InvObjArtesano(4).DrawInventory
-
-End Sub
-
-Private Sub Form_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
-On Error Resume Next
-
-    InvObjArtesano(1).DrawInventory
-    InvObjArtesano(2).DrawInventory
-    InvObjArtesano(3).DrawInventory
-    InvObjArtesano(4).DrawInventory
-
-End Sub
-
 Private Sub LoadButtons()
     Dim GrhPath As String
     Dim Index   As Long
