@@ -51,7 +51,7 @@ Private Type tFont
 End Type
 
 Private Enum ServerPacketID
-    Logged = 1                  ' LOGGED
+    logged = 1                  ' LOGGED
     RemoveDialogs = 2           ' QTDL
     RemoveCharDialog = 3        ' QDL
     NavigateToggle = 4          ' NAVEG
@@ -68,7 +68,7 @@ Private Enum ServerPacketID
     UpdateMana = 15             ' ASM
     UpdateHP = 16                ' ASH
     UpdateGold = 17              ' ASG
-    UpdateBankGold = 18 
+    UpdateBankGold = 18
     UpdateExp = 19               ' ASE
     ChangeMap = 20               ' CM
     PosUpdate = 21              ' PU
@@ -88,8 +88,8 @@ Private Enum ServerPacketID
     ObjectCreate = 35            ' HO
     ObjectDelete = 36            ' BO
     BlockPosition = 37           ' BQ
-    PlayMp3 = 38                 
-    PlayMidi = 39                ' TM
+    PlayMp3 = 38
+    PlayMIDI = 39                ' TM
     PlayWave = 40                ' TW
     guildList = 41               ' GL
     AreaChanged = 42             ' CA
@@ -105,7 +105,7 @@ Private Enum ServerPacketID
     BlacksmithArmors = 52        ' LAR
     InitCarpenting = 53          ' OBR
     RestOK = 54                  ' DOK
-    errorMsg = 55                ' ERR
+    ErrorMsg = 55                ' ERR
     Blind = 56                   ' CEGU
     Dumb = 57                    ' DUMB
     ShowSignal = 58              ' MCAR
@@ -167,10 +167,11 @@ Private Enum ServerPacketID
     QuestListSend = 111
     CreateDamage = 112           ' CDMG
     UserInEvent = 113
-    RenderMsg = 114
+    renderMsg = 114
     DeletedChar = 115
     EquitandoToggle = 116
     EnviarDatosServer = 117
+    InitCraftman = 118
 End Enum
 
 Private Enum ClientPacketID
@@ -325,6 +326,7 @@ Private Enum ClientPacketID
     Discord = 149            '/DISCORD
     DeleteChar = 150
     ObtenerDatosServer = 151
+    CraftsmanCreate = 152
 End Enum
 
 Public Enum FontTypeNames
@@ -372,7 +374,7 @@ Public Sub Connect(ByVal Modo As E_MODO)
     EstadoLogin = Modo
 
     'Usamos la API de Windows
-    Call frmMain.Client.Connect(CurServerIp, CurServerPort)  
+    Call frmMain.Client.Connect(CurServerIp, CurServerPort)
 
     'Vuelvo a activar el boton.
     frmConnect.btnConectarse.Enabled = True
@@ -712,6 +714,9 @@ On Error Resume Next
         
         Case ServerPacketID.InitCarpenting          ' OBR
             Call HandleInitCarpenting
+            
+        Case ServerPacketID.InitCraftman
+            Call HandleInitCraftman
         
         Case ServerPacketID.RestOK                  ' DOK
             Call HandleRestOK
@@ -1643,13 +1648,12 @@ Private Sub HandleCommerceInit()
                 Call InvComNpc.SetItem(i, .ObjIndex, _
                 .Amount, 0, .GrhIndex, _
                 .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, _
-                .Valor, .name)
+                .Valor, .Name)
             End With
         End If
     Next i
     
     'Set state and show form
-    Comerciando = True
     frmComerciar.Show , frmMain
 
     'Reproducimos el saludo del comerciante (Recox)
@@ -1692,7 +1696,7 @@ Private Sub HandleBankInit()
             Call InvBanco(0).SetItem(i, .ObjIndex, _
                 .Amount, .Equipped, .GrhIndex, _
                 .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, _
-                .Valor, .name)
+                .Valor, .Name)
         End With
     Next i
     
@@ -2160,13 +2164,13 @@ Private Sub WriteChatOverHeadInConsole(ByVal CharIndex As Integer, ByVal ChatTex
             
         If Pos = 0 Then Pos = LenB(.Nombre) + 2
         
-        Dim name As String
-        name = Left$(.Nombre, Pos - 2)
+        Dim Name As String
+        Name = Left$(.Nombre, Pos - 2)
        
         'Si el npc tiene nombre lo escribimos en la consola
         
         If LenB(.Nombre) <> 0 Then
-            Call AddtoRichTextBox(frmMain.RecTxt, name & "> ", NameRed, NameGreen, NameBlue, True, False, True, rtfLeft)
+            Call AddtoRichTextBox(frmMain.RecTxt, Name & "> ", NameRed, NameGreen, NameBlue, True, False, True, rtfLeft)
         End If
 
         Call AddtoRichTextBox(frmMain.RecTxt, ChatText, Red, Green, Blue, True, False, False, rtfLeft)
@@ -3261,7 +3265,7 @@ On Error GoTo errhandler
     
     Dim slot As Byte
     Dim ObjIndex As Integer
-    Dim name As String
+    Dim Name As String
     Dim Amount As Integer
     Dim Equipped As Boolean
     Dim GrhIndex As Long
@@ -3274,7 +3278,7 @@ On Error GoTo errhandler
     
     slot = Buffer.ReadByte()
     ObjIndex = Buffer.ReadInteger()
-    name = Buffer.ReadASCIIString()
+    Name = Buffer.ReadASCIIString()
     Amount = Buffer.ReadInteger()
     Equipped = Buffer.ReadBoolean()
     GrhIndex = Buffer.ReadLong()
@@ -3317,7 +3321,7 @@ On Error GoTo errhandler
         End Select
     End If
     
-    Call Inventario.SetItem(slot, ObjIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, name)
+    Call Inventario.SetItem(slot, ObjIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, Name)
 
     Call Inventario.DrawInventory
     
@@ -3425,14 +3429,14 @@ On Error GoTo errhandler
     Call Buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte()
+    Call Buffer.ReadByte
     
     Dim slot As Byte
     slot = Buffer.ReadByte()
     
     With UserBancoInventory(slot)
         .ObjIndex = Buffer.ReadInteger()
-        .name = Buffer.ReadASCIIString()
+        .Name = Buffer.ReadASCIIString()
         .Amount = Buffer.ReadInteger()
         .GrhIndex = Buffer.ReadLong()
         .OBJType = Buffer.ReadByte()
@@ -3443,7 +3447,7 @@ On Error GoTo errhandler
         .Valor = Buffer.ReadLong()
         
         If frmBancoObj.Visible Then
-            Call InvBanco(0).SetItem(slot, .ObjIndex, .Amount, 0, .GrhIndex, .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .name)
+            Call InvBanco(0).SetItem(slot, .ObjIndex, .Amount, 0, .GrhIndex, .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .Name)
         End If
     End With
     
@@ -3595,7 +3599,7 @@ On Error GoTo errhandler
     
     For i = 1 To Count
         With ArmasHerrero(i)
-            .name = Buffer.ReadASCIIString()    'Get the object's name
+            .Name = Buffer.ReadASCIIString()    'Get the object's name
             .GrhIndex = Buffer.ReadLong()
             .LinH = Buffer.ReadInteger()        'The iron needed
             .LinP = Buffer.ReadInteger()        'The silver needed
@@ -3641,10 +3645,10 @@ On Error GoTo errhandler
                 
                         ReDim Preserve HerreroMejorar(J) As tItemsConstruibles
                         
-                        HerreroMejorar(J).name = .name
+                        HerreroMejorar(J).Name = .Name
                         HerreroMejorar(J).GrhIndex = .GrhIndex
                         HerreroMejorar(J).ObjIndex = .ObjIndex
-                        HerreroMejorar(J).UpgradeName = ArmasHerrero(k).name
+                        HerreroMejorar(J).UpgradeName = ArmasHerrero(k).Name
                         HerreroMejorar(J).UpgradeGrhIndex = ArmasHerrero(k).GrhIndex
                         HerreroMejorar(J).LinH = ArmasHerrero(k).LinH - .LinH * 0.85
                         HerreroMejorar(J).LinP = ArmasHerrero(k).LinP - .LinP * 0.85
@@ -3702,7 +3706,7 @@ On Error GoTo errhandler
     
     For i = 1 To Count
         With ArmadurasHerrero(i)
-            .name = Buffer.ReadASCIIString()    'Get the object's name
+            .Name = Buffer.ReadASCIIString()    'Get the object's name
             .GrhIndex = Buffer.ReadLong()
             .LinH = Buffer.ReadInteger()        'The iron needed
             .LinP = Buffer.ReadInteger()        'The silver needed
@@ -3735,10 +3739,10 @@ On Error GoTo errhandler
                 
                         ReDim Preserve HerreroMejorar(J) As tItemsConstruibles
                         
-                        HerreroMejorar(J).name = .name
+                        HerreroMejorar(J).Name = .Name
                         HerreroMejorar(J).GrhIndex = .GrhIndex
                         HerreroMejorar(J).ObjIndex = .ObjIndex
-                        HerreroMejorar(J).UpgradeName = ArmadurasHerrero(k).name
+                        HerreroMejorar(J).UpgradeName = ArmadurasHerrero(k).Name
                         HerreroMejorar(J).UpgradeGrhIndex = ArmadurasHerrero(k).GrhIndex
                         HerreroMejorar(J).LinH = ArmadurasHerrero(k).LinH - .LinH * 0.85
                         HerreroMejorar(J).LinP = ArmadurasHerrero(k).LinP - .LinP * 0.85
@@ -3798,7 +3802,7 @@ On Error GoTo errhandler
     
     For i = 1 To Count
         With ObjCarpintero(i)
-            .name = Buffer.ReadASCIIString()        'Get the object's name
+            .Name = Buffer.ReadASCIIString()        'Get the object's name
             .GrhIndex = Buffer.ReadLong()
             .Madera = Buffer.ReadInteger()          'The wood needed
             .MaderaElfica = Buffer.ReadInteger()    'The elfic wood needed
@@ -3843,10 +3847,10 @@ On Error GoTo errhandler
                 
                         ReDim Preserve CarpinteroMejorar(J) As tItemsConstruibles
                         
-                        CarpinteroMejorar(J).name = .name
+                        CarpinteroMejorar(J).Name = .Name
                         CarpinteroMejorar(J).GrhIndex = .GrhIndex
                         CarpinteroMejorar(J).ObjIndex = .ObjIndex
-                        CarpinteroMejorar(J).UpgradeName = ObjCarpintero(k).name
+                        CarpinteroMejorar(J).UpgradeName = ObjCarpintero(k).Name
                         CarpinteroMejorar(J).UpgradeGrhIndex = ObjCarpintero(k).GrhIndex
                         CarpinteroMejorar(J).Madera = ObjCarpintero(k).Madera - .Madera * 0.85
                         CarpinteroMejorar(J).MaderaElfica = ObjCarpintero(k).MaderaElfica - .MaderaElfica * 0.85
@@ -3863,6 +3867,86 @@ errhandler:
     Error = Err.number
 On Error GoTo 0
     
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
+
+    If Error <> 0 Then _
+        Err.Raise Error
+End Sub
+
+Public Sub HandleInitCraftman()
+    '***************************************************
+    'Author: WyroX
+    'Last Modification: 27/01/2020
+    '***************************************************
+
+    If incomingData.Length < 3 Then
+        Err.Raise incomingData.NotEnoughDataErrCode
+        Exit Sub
+    End If
+
+On Error GoTo errhandler
+
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
+
+    'Remove packet ID
+    Call Buffer.ReadByte
+    
+    Dim CountObjs As Integer
+    Dim CountCrafteo As Integer
+    Dim i As Long
+    Dim J As Long
+    Dim k As Long
+
+    CountObjs = Buffer.ReadInteger()
+
+    ReDim ObjArtesano(CountObjs) As tItemArtesano
+
+    For i = 1 To CountObjs
+        With ObjArtesano(i)
+            .Name = Buffer.ReadASCIIString()
+            .GrhIndex = Buffer.ReadLong()
+            .ObjIndex = Buffer.ReadInteger()
+            
+            CountCrafteo = Buffer.ReadByte()
+            ReDim .ItemsCrafteo(CountCrafteo) As tItemCrafteo
+            
+            For J = 1 To CountCrafteo
+                .ItemsCrafteo(J).Name = Buffer.ReadASCIIString()
+                .ItemsCrafteo(J).GrhIndex = Buffer.ReadLong()
+                .ItemsCrafteo(J).ObjIndex = Buffer.ReadInteger()
+                .ItemsCrafteo(J).Amount = Buffer.ReadInteger()
+            Next J
+        End With
+    Next i
+
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
+
+    Call frmArtesano.Show(vbModeless, frmMain)
+
+    For i = 1 To MAX_LIST_ITEMS
+        Set InvObjArtesano(i) = New clsGraphicalInventory
+    Next i
+
+    With frmArtesano
+        ' Inicializo los inventarios
+        Call InvObjArtesano(1).Initialize(DirectD3D8, .picObj0, MAX_ITEMS_CRAFTEO, , , , , , False)
+        Call InvObjArtesano(2).Initialize(DirectD3D8, .picObj1, MAX_ITEMS_CRAFTEO, , , , , , False)
+        Call InvObjArtesano(3).Initialize(DirectD3D8, .picObj2, MAX_ITEMS_CRAFTEO, , , , , , False)
+        Call InvObjArtesano(4).Initialize(DirectD3D8, .picObj3, MAX_ITEMS_CRAFTEO, , , , , , False)
+
+        Call .HideExtraControls(CountObjs)
+        Call .RenderList(1)
+    End With
+
+errhandler:
+    Dim Error As Long
+    Error = Err.number
+On Error GoTo 0
+
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
@@ -4020,13 +4104,13 @@ On Error GoTo errhandler
     Call Buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte()
+    Call Buffer.ReadByte
     
     Dim slot As Byte
     slot = Buffer.ReadByte()
     
     With NPCInventory(slot)
-        .name = Buffer.ReadASCIIString()
+        .Name = Buffer.ReadASCIIString()
         .Amount = Buffer.ReadInteger()
         .Valor = Buffer.ReadSingle()
         .GrhIndex = Buffer.ReadLong()
@@ -4038,7 +4122,7 @@ On Error GoTo errhandler
         .MinDef = Buffer.ReadInteger()
     
         If frmComerciar.Visible Then
-            Call InvComNpc.SetItem(slot, .ObjIndex, .Amount, 0, .GrhIndex, .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .name)
+            Call InvComNpc.SetItem(slot, .ObjIndex, .Amount, 0, .GrhIndex, .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .Name)
         End If
     End With
         
@@ -6194,6 +6278,25 @@ Public Sub WriteCraftCarpenter(ByVal item As Integer)
 End Sub
 
 ''
+' Writes the "CraftsmanCreate" message to the outgoing data buffer.
+'
+' @param    item Index of the item to craft in the list sent by the server.
+' @remarks  The data is not actually sent until the buffer is properly flushed.
+
+Public Sub WriteCraftsmanCreate(ByVal item As Integer)
+'***************************************************
+'Author: WyroX
+'Last Modification: 27/01/2020
+'Writes the "CraftsmanCreate" message to the outgoing data buffer
+'***************************************************
+    With outgoingData
+        Call .WriteByte(ClientPacketID.CraftsmanCreate)
+        
+        Call .WriteInteger(item)
+    End With
+End Sub
+
+''
 ' Writes the "ShowGuildNews" message to the outgoing data buffer.
 '
 
@@ -6241,7 +6344,7 @@ End Sub
 ' @param    codex   Array of all rules of the guild.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCreateNewGuild(ByVal Desc As String, ByVal name As String, ByVal Site As String, ByRef Codex() As String)
+Public Sub WriteCreateNewGuild(ByVal Desc As String, ByVal Name As String, ByVal Site As String, ByRef Codex() As String)
 '***************************************************
 'Author: Juan Martin Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6255,7 +6358,7 @@ Public Sub WriteCreateNewGuild(ByVal Desc As String, ByVal name As String, ByVal
         Call .WriteByte(ClientPacketID.CreateNewGuild)
         
         Call .WriteASCIIString(Desc)
-        Call .WriteASCIIString(name)
+        Call .WriteASCIIString(Name)
         Call .WriteASCIIString(Site)
         
         Lower_codex = LBound(Codex())
@@ -11461,12 +11564,12 @@ On Error GoTo errhandler
     End If
 
     Dim Descripcion As String
-    Descripcion =   CountryCode & _
-                    NombreServidor & VbNewline & _
-                    DescripcionServidor & VbNewLine & _
-                    "Mundo: " & MundoServidor & VbNewLine & _
-                    "Online: " & CantidadUsuariosOnline & " / " & MaxUsersSimultaneosServidor & VbNewline & _
-                    "Ping: " & MsPingResult & VbNewline & _
+    Descripcion = CountryCode & _
+                    NombreServidor & vbNewLine & _
+                    DescripcionServidor & vbNewLine & _
+                    "Mundo: " & MundoServidor & vbNewLine & _
+                    "Online: " & CantidadUsuariosOnline & " / " & MaxUsersSimultaneosServidor & vbNewLine & _
+                    "Ping: " & MsPingResult & vbNewLine & _
                     "Nivel Maximo Permitido : " & NivelMaximoServidor
 
 
