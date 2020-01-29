@@ -2,7 +2,7 @@ Attribute VB_Name = "mDx8_Dibujado"
 Option Explicit
 
 ' Dano en Render
-Private Const DAMAGE_TIME As Integer = 500
+Private Const DAMAGE_TIME As Integer = 1000
 Private Const DAMAGE_OFFSET As Integer = 20
 Private Const DAMAGE_FONT_S As Byte = 12
  

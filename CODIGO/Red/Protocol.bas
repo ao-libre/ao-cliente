@@ -4358,18 +4358,18 @@ Private Sub HandleSetInvisible()
     Call incomingData.ReadByte
     
     Dim CharIndex As Integer
+    Dim timeRemaining As Integer
     
     CharIndex = incomingData.ReadInteger()
-    Call Char_SetInvisible(CharIndex, incomingData.ReadBoolean())
+    UserInvisible = incomingData.ReadBoolean()
+    Call Char_SetInvisible(CharIndex, UserInvisible)
 
-    UserInvisible = Not UserInvisible
-
-    If UserInvisible Then
+    timeRemaining = incomingData.ReadInteger()
+    UserInvisibleSegundosRestantes = IIf(timeRemaining <> 0, timeRemaining * 0.04, 0) 'Cantidad en segundos
+    If UserInvisible And UserInvisibleSegundosRestantes <> 0 Then
         frmMain.timerTiempoRestanteInvisibleMensaje.Enabled = True
-        UserInvisibleSegundosRestantes = IntervaloInvisible 'Cantidad en segundos
     Else
         frmMain.timerTiempoRestanteInvisibleMensaje.Enabled = False
-        UserInvisibleSegundosRestantes = 0
     End If
 End Sub
 
@@ -5042,15 +5042,17 @@ Private Sub HandleParalizeOK()
 '***************************************************
     'Remove packet ID
     Call incomingData.ReadByte
-    
+
+    Dim timeRemaining As Integer
     UserParalizado = Not UserParalizado
 
-    If UserParalizado Then
+    timeRemaining = incomingData.ReadInteger()
+    UserParalizadoSegundosRestantes = IIf(timeRemaining <> 0, (timeRemaining * 0.04), 0) 'Cantidad en segundos
+
+    If UserParalizado And timeRemaining <> 0 Then
         frmMain.timerTiempoRestanteParalisisMensaje.Enabled = True
-        UserParalizadoSegundosRestantes = IntervaloParalizado 'Cantidad en segundos
     Else
         frmMain.timerTiempoRestanteParalisisMensaje.Enabled = False
-        UserParalizadoSegundosRestantes = 0
     End If
 
 End Sub
@@ -11415,7 +11417,7 @@ Private Sub HandleCreateDamage()
         ' Leemos el ID del paquete.
         .ReadByte
      
-        Call mDx8_Dibujado.Damage_Create(.ReadByte(), .ReadByte(), 0, .ReadInteger(), .ReadByte())
+        Call mDx8_Dibujado.Damage_Create(.ReadByte(), .ReadByte(), 0, .ReadLong(), .ReadByte())
      
     End With
  
@@ -11577,10 +11579,6 @@ On Error GoTo errhandler
 
     frmConnect.lblDescripcionServidor = Descripcion
 
-    'Obtenemos valor de algunos intervalos necesarios para mostrar informacion en el render
-    'TODO: obtener del server no lo hago aun por que no se como traducir los valore del server.ini a segundos capaz no se puede
-    IntervaloParalizado = 23 ' Segundos
-    IntervaloInvisible = 23 ' Segundos
     STAT_MAXELV = NivelMaximoServidor
 
 errhandler:

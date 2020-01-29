@@ -161,7 +161,7 @@ Private Sub Engine_Render_Text(ByRef Batch As clsBatch, _
     Call Batch.SetTexture(UseFont.Texture)
     
     If Center Then
-        X = X - Engine_GetTextWidth(cfonts(Font), Text) * 0.5
+        X = X - CInt(Engine_GetTextWidth(cfonts(Font), Text) * 0.5)
     End If
     
     'Loop through each line if there are line breaks (vbCrLf)

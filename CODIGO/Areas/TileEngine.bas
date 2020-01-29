@@ -307,6 +307,8 @@ Public mapInfo As mapInfo ' Info acerca del mapa en uso
 Public Normal_RGBList(3) As Long
 Public Color_Shadow(3) As Long
 Public Color_Arbol(3) As Long
+Public Color_Paralisis As Long
+Public Color_Invisibilidad As Long
 
 '   Control de Lluvia
 Public bRain As Boolean
@@ -1109,15 +1111,12 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
         If DialogosClanes.Activo Then Call DialogosClanes.Draw ' GSZAO
 
         '*********Tiempo restante para que termine el invi o el paralizar*********
-        Dim ColorText As Long
-        If UserParalizado Then
-            ColorText = D3DColorARGB(180, 230, 230, 250)
-            Call DrawText(1, 25, UserParalizadoSegundosRestantes & " segundos restantes de Paralisis", ColorText)
+        If UserParalizado And UserParalizadoSegundosRestantes <> 0 Then
+            Call DrawText(1, 25, UserParalizadoSegundosRestantes & " segundos restantes de Paralisis", Color_Paralisis)
         End If
 
-        If UserInvisible Then
-            ColorText = D3DColorARGB(180, 236, 136, 66)
-            Call DrawText(1, 13, UserInvisibleSegundosRestantes & " segundos restantes de Invisibilidad", ColorText)
+        If UserInvisible And UserInvisibleSegundosRestantes <> 0 Then
+            Call DrawText(1, 13, UserInvisibleSegundosRestantes & " segundos restantes de Invisibilidad", Color_Invisibilidad)
         End If
         '*************************************************************************
 

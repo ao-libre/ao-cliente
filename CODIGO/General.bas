@@ -377,8 +377,6 @@ Private Sub CheckKeys()
             Call Char_UserPos
         End If
 
-        Call frmMain.ActualizarMiniMapa   'integrado por ReyarB
-        
     End If
 End Sub
 
