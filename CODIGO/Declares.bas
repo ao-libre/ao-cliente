@@ -68,7 +68,10 @@ Public InvComNpc As clsGraphicalInventory  ' Inventario con los items que ofrece
 Public Const MAX_LIST_ITEMS As Byte = 4
 Public InvLingosHerreria(1 To MAX_LIST_ITEMS) As clsGraphicalInventory
 Public InvMaderasCarpinteria(1 To MAX_LIST_ITEMS) As clsGraphicalInventory
-                
+Public InvObjArtesano(1 To MAX_LIST_ITEMS) As clsGraphicalInventory
+
+Public Const MAX_ITEMS_CRAFTEO As Byte = 4
+
 Public CustomKeys As clsCustomKeys
 Public CustomMessages As clsCustomMessages
 
@@ -201,6 +204,7 @@ Public ArmadurasHerrero() As tItemsConstruibles
 Public ObjCarpintero() As tItemsConstruibles
 Public CarpinteroMejorar() As tItemsConstruibles
 Public HerreroMejorar() As tItemsConstruibles
+Public ObjArtesano() As tItemArtesano
 
 Public UsaMacro As Boolean
 Public CnTd As Byte
@@ -331,8 +335,8 @@ Public Enum eObjType
     otBebidas = 13
     otLena = 14
     otFogata = 15
-    otEscudo = 16
-    otCasco = 17
+    otescudo = 16
+    otcasco = 17
     otAnillo = 18
     otTeleport = 19
     otMuebles = 20
@@ -574,7 +578,7 @@ End Enum
 'Inventario
 Type Inventory
     ObjIndex As Integer
-    name As String
+    Name As String
     GrhIndex As Long
     Amount As Long
     Equipped As Byte
@@ -588,7 +592,7 @@ End Type
 
 Type NpCinV
     ObjIndex As Integer
-    name As String
+    Name As String
     GrhIndex As Long
     Amount As Integer
     Valor As Single
@@ -638,6 +642,21 @@ Type tItemsConstruibles
     Upgrade As Integer
     UpgradeName As String
     UpgradeGrhIndex As Long
+End Type
+
+Type tItemCrafteo
+    Name As String
+    ObjIndex As Integer
+    GrhIndex As Long
+    Amount As Integer
+End Type
+
+Type tItemArtesano
+    Name As String
+    ObjIndex As Integer
+    GrhIndex As Long
+    
+    ItemsCrafteo() As tItemCrafteo
 End Type
 
 Public Nombres As Boolean
@@ -743,7 +762,7 @@ Public ListaClases(1 To NUMCLASES) As String
 
 Public SkillPoints As Integer
 Public Alocados As Integer
-Public Flags() As Integer
+Public flags() As Integer
 
 Public UsingSkill As Integer
 
@@ -840,11 +859,11 @@ Public PuertoDelServidor As String
 '******Mouse Cursor*********
 'Esto es para poder usar iconos de mouse .ani
 'https://www.gs-zone.org/temas/cursor-ani.45555/#post-375757
-Public Declare Function SetClassLong Lib "user32" Alias "SetClassLongA" (ByVal hwnd As Long, ByVal nIndex As Long, ByVal dwNewLong As Long) As Long
+Public Declare Function SetClassLong Lib "user32" Alias "SetClassLongA" (ByVal hWnd As Long, ByVal nIndex As Long, ByVal dwNewLong As Long) As Long
  
 Public Const GLC_HCURSOR = (-12)
 Public hSwapCursor As Long
-Public Declare Function LoadCursorFromFile Lib "user32" Alias "LoadCursorFromFileA" (ByVal lpfilename As String) As Long
+Public Declare Function LoadCursorFromFile Lib "user32" Alias "LoadCursorFromFileA" (ByVal lpFileName As String) As Long
 '******End Mouse Cursor****
 
 Public Declare Function GetTickCount Lib "kernel32" () As Long

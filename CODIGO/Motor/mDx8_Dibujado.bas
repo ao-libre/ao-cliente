@@ -38,6 +38,8 @@ Sub DrawGrhtoHdc(ByRef Pic As PictureBox, _
     '*****************************************************************
          
     DoEvents
+    
+    Pic.AutoRedraw = False
         
     'Clear the inventory window
     Call Engine_BeginScene
@@ -45,15 +47,24 @@ Sub DrawGrhtoHdc(ByRef Pic As PictureBox, _
     Call Draw_GrhIndex(GrhIndex, 0, 0, 0, Normal_RGBList())
         
     Call Engine_EndScene(DestRect, Pic.hWnd)
+    
+    Call DrawBuffer.LoadPictureBlt(Pic.hdc)
+
+    Pic.AutoRedraw = True
+
+    Call DrawBuffer.PaintPicture(Pic.hdc, 0, 0, Pic.Width, Pic.Height, 0, 0, vbSrcCopy)
+
+    Pic.Picture = Pic.Image
         
 End Sub
 
-Public Sub PrepareDrawBufferForPJ()
+Public Sub PrepareDrawBuffer()
     Set DrawBuffer = New cDIBSection
-    Call DrawBuffer.Create(frmPanelAccount.picChar(0).Width, frmPanelAccount.picChar(0).Height)
+    'El tamanio del buffer es arbitrario = 1024 x 1024
+    Call DrawBuffer.Create(1024, 1024)
 End Sub
 
-Public Sub CleanDrawBufferForPJ()
+Public Sub CleanDrawBuffer()
     Set DrawBuffer = Nothing
 End Sub
 
@@ -136,7 +147,7 @@ Sub Damage_Initialize()
         .Size = 20
         .italic = False
         .bold = False
-        .name = "Tahoma"
+        .Name = "Tahoma"
     End With
 
 End Sub
@@ -164,7 +175,7 @@ Sub Damage_Create(ByVal X As Byte, _
 
                 With .DamageFont
                     .Size = Val(DAMAGE_FONT_S)
-                    .name = "Tahoma"
+                    .Name = "Tahoma"
                     .bold = False
                     Exit Sub
 
