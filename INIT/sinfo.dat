@@ -26,9 +26,9 @@ PJ=7666
 Mundo=BattleServer
 
 [S5]
-Desc=Servidor Español | Modo:Alkon
-IP=213.194.180.26
+Desc=TEST GSAO
+IP=localhost
 PJ=7666
-Mundo=Alkon
+Mundo=GSAO
 
 
