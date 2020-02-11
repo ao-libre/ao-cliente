@@ -152,11 +152,16 @@ Private Function CrearGrafico(ByVal Archivo As Integer, _
             'Nombre
             .FileName = Archivo
 
+            Dim CarpetaGraficosMundoSeleccionado As String
+            CarpetaGraficosMundoSeleccionado = Game.path(Graficos) & "Mundos\" & MundoSeleccionado & "\"
+
+            Debug.Print "MundoSeleccionado = " & MundoSeleccionado
+
             #If Compression = 1 Then
             
                 'Obtenemos el .bmp del archivo en Graphics.AO
-                Call modCompression.Get_Image(Game.path(Graficos), CStr(Archivo), Buffer())
-                
+                Call modCompression.Get_Image(CarpetaGraficosMundoSeleccionado, CStr(Archivo), Buffer())
+
                 'Seteamos la textura.
                 Set .Texture = DirectD3D.CreateTextureFromFileInMemoryEx(DirectDevice, Buffer(0), UBound(Buffer()) + 1, D3DX_DEFAULT, D3DX_DEFAULT, 0, 0, D3DFMT_A8R8G8B8, _
                                                                          D3DPOOL_MANAGED, D3DX_FILTER_POINT, D3DX_FILTER_NONE, &HFF000000, texture_info, ByVal 0)
@@ -165,8 +170,8 @@ Private Function CrearGrafico(ByVal Archivo As Integer, _
             #Else
                 
                 Dim Graphic As String
-                    Graphic = Game.path(Graficos) & .FileName
-                
+                Graphic = CarpetaGraficosMundoSeleccionado & .FileName
+
                 If FileExist(Graphic & ".bmp", vbNormal) Then
                     Set .Texture = DirectD3D.CreateTextureFromFileEx(DirectDevice, Graphic & ".bmp", D3DX_DEFAULT, D3DX_DEFAULT, 0, 0, D3DFMT_A8R8G8B8, _
                                                                      D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, &HFF000000, texture_info, ByVal 0)

@@ -168,6 +168,7 @@ Public Sub CargarParticulas()
     Dim ColorSet As Long
     Dim Leer As New clsIniManager
 
+    'TODO: PONER DESDE CARPETA DE MUNDOSELECCIONADO, SI NO EXISTE USAR LA DEFAULT
     Call Leer.Initialize(path(INIT) & "Particulas.ini")
 
     TotalStreams = Val(Leer.GetValue("INIT", "Total"))
