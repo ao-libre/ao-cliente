@@ -812,35 +812,6 @@ Private Sub LoadInitialConfig()
                             JsonLanguage.item("HECHO").item("COLOR").item(3), _
                             True, False, False, rtfLeft)
     
-
-    ' '##############
-    ' ' MOTOR GRAFICO
-    ' Call AddtoRichTextBox(frmCargando.status, _
-    '                         JsonLanguage.item("INICIA_MOTOR_GRAFICO").item("TEXTO"), _
-    '                         JsonLanguage.item("INICIA_MOTOR_GRAFICO").item("COLOR").item(1), _
-    '                         JsonLanguage.item("INICIA_MOTOR_GRAFICO").item("COLOR").item(2), _
-    '                         JsonLanguage.item("INICIA_MOTOR_GRAFICO").item("COLOR").item(3), _
-    '                         True, False, True, rtfCenter)
-    
-    ' ' '     Iniciamos el Engine de DirectX 8
-    ' ' If Not Engine_DirectX8_Init Then
-    ' '     Call CloseClient
-    ' ' End If
-          
-    ' ' '     Tile Engine
-    ' ' If Not InitTileEngine(frmMain.hWnd, 32, 32, 8, 8) Then
-    ' '     Call CloseClient
-    ' ' End If
-    
-    ' ' Call mDx8_Engine.Engine_DirectX8_Aditional_Init
-
-    ' Call AddtoRichTextBox(frmCargando.status, _
-    '                         "   " & JsonLanguage.item("HECHO").item("TEXTO"), _
-    '                         JsonLanguage.item("HECHO").item("COLOR").item(1), _
-    '                         JsonLanguage.item("HECHO").item("COLOR").item(2), _
-    '                         JsonLanguage.item("HECHO").item("COLOR").item(3), _
-    '                         True, False, False, rtfLeft)
-    
     '###################
     ' ANIMACIONES EXTRAS
     Call AddtoRichTextBox(frmCargando.status, _
@@ -851,11 +822,7 @@ Private Sub LoadInitialConfig()
                             True, False, True, rtfCenter)
                             
     Call CargarTips
-    ' Call CargarArrayLluvia
-    ' Call CargarAnimArmas
-    ' Call CargarAnimEscudos
-    ' Call CargarColores
-    
+
     Call AddtoRichTextBox(frmCargando.status, _
                             "   " & JsonLanguage.item("HECHO").item("TEXTO"), _
                             JsonLanguage.item("HECHO").item("COLOR").item(1), _
@@ -863,9 +830,7 @@ Private Sub LoadInitialConfig()
                             JsonLanguage.item("HECHO").item("COLOR").item(3), _
                             True, False, False, rtfLeft)
     
-    ' 'Inicializamos el inventario grafico
-    ' Call Inventario.Initialize(DirectD3D8, frmMain.PicInv, MAX_INVENTORY_SLOTS, , , , , , , , True)
-    
+
     'Set cKeys = New Collection
     Call AddtoRichTextBox(frmCargando.status, _
                             JsonLanguage.item("BIENVENIDO").item("TEXTO"), _
