@@ -1,0 +1,153 @@
+'Oso: NO USEN EL ESCUDO 2 (Es "No Animar" ^^)
+
+[INIT]
+NumEscudos=26
+
+[ESC1]
+Dir1=4727 'norte
+Dir2=4729
+Dir3=4726
+Dir4=4728 'sur
+
+[ESC3]
+Dir3=902 'norte
+Dir1=903
+Dir4=904
+Dir2=905 'sur
+
+[ESC4]
+Dir3=928 'norte
+Dir1=929
+Dir4=930
+Dir2=931 'sur
+
+[ESC5]
+Dir3=13278 'norte
+Dir1=13279
+Dir4=13280
+Dir2=13281 'sur
+
+[ESC6]
+Dir3=4856 'norte
+Dir1=4857
+Dir4=4858
+Dir2=4859 'sur
+
+[ESC7]
+Dir3=22986
+Dir1=22987
+Dir4=22988
+Dir2=22989
+
+[ESC8]
+Dir3=23012
+Dir1=23013
+Dir4=23014
+Dir2=23015
+
+[ESC9]
+Dir3=23038
+Dir1=23039
+Dir4=23040
+Dir2=23041
+
+[ESC10]
+Dir3=23064
+Dir1=23065
+Dir4=23066
+Dir2=23067
+[ESC11]
+Nombre=Escudo asesino
+Dir1=28047
+Dir2=28049
+Dir3=28046
+Dir4=28048
+[ESC12]
+Nombre=Escudo asesino
+Dir1=28073
+Dir2=28075
+Dir3=28072
+Dir4=28074
+[ESC13]
+Nombre=Escudo Bardo
+Dir1=28099
+Dir2=28101
+Dir3=28098
+Dir4=28100
+[ESC14]
+Nombre=Escudo Bardo
+Dir1=28125
+Dir2=28127
+Dir3=28124
+Dir4=28126
+[ESC15]
+Nombre=Escudo Cazador
+Dir1=28151
+Dir2=28153
+Dir3=28150
+Dir4=28152
+[ESC16]
+Nombre=Escudo Cazador
+Dir1=28177
+Dir2=28179
+Dir3=28176
+Dir4=28178
+[ESC17]
+Nombre=Escudo Clerigo
+Dir1=28203
+Dir2=28205
+Dir3=28202
+Dir4=28204
+[ESC18]
+Nombre=Escudo Clerigo
+Dir1=28229
+Dir2=28231
+Dir3=28228
+Dir4=28230
+[ESC19]
+Nombre=Escudo Druida
+Dir1=28255
+Dir2=28257
+Dir3=28254
+Dir4=28256
+[ESC20]
+Nombre=Escudo Druida
+Dir1=28281
+Dir2=28283
+Dir3=28280
+Dir4=28282
+[ESC21]
+Nombre=Escudo Guerrero
+Dir1=28307
+Dir2=28309
+Dir3=28306
+Dir4=28308
+[ESC22]
+Nombre=Escudo Guerrero
+Dir1=28333
+Dir2=28335
+Dir3=28332
+Dir4=28334
+[ESC23]
+Nombre=Escudo Paladin
+Dir1=28359
+Dir2=28361
+Dir3=28358
+Dir4=28360
+[ESC24]
+Nombre=Escudo Paladin
+Dir1=28385
+Dir2=28387
+Dir3=28384
+Dir4=28386
+[ESC25]
+Nombre=Escudo de neo
+Dir3=29122
+Dir1=29123
+Dir4=29124
+Dir2=29125
+[ESC26]
+Dir1=29310
+Dir2=29312
+Dir3=29309
+Dir4=29311
