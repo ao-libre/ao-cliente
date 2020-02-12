@@ -26,9 +26,9 @@ PJ=7666
 Mundo=BattleServer
 
 [S5]
-Desc=TEST GSAO
+Desc=TEST Winter
 IP=localhost
 PJ=7666
-Mundo=GSAO
+Mundo=Winter
 
 
