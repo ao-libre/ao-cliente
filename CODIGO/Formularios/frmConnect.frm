@@ -85,7 +85,7 @@ Begin VB.Form frmConnect
          Strikethrough   =   0   'False
       EndProperty
    End
-   Begin AOLibre.uAOButton btnCodigoFuente 
+   Begin AOLibre.uAOButton btnCreditos 
       Height          =   375
       Left            =   6840
       TabIndex        =   12
@@ -618,19 +618,8 @@ Private Sub btnActualizarLista_Click()
     MsgBox "Se actualizo con exito la lista de servers"
 End Sub
 
-Private Sub btnCodigoFuente_Click()
-'***********************************
-'IMPORTANTE!
-'
-'No debe eliminarse la posibilidad de bajar el codigo de sus servidor de esta forma.
-'Caso contrario estarian violando la licencia Affero GPL y con ella derechos de autor,
-'incurriendo de esta forma en un delito punible por ley.
-'
-'Argentum Online es libre, es de todos. Mantengamoslo asi. Si tanto te gusta el juego y queres los
-'cambios que hacemos nosotros, comparti los tuyos. Es un cambio justo. Si no estas de acuerdo,
-'no uses nuestro codigo, pues nadie te obliga o bien utiliza una version anterior a la 0.12.0.
-'***********************************
-    Call ShellExecute(0, "Open", "https://github.com/ao-libre", "", App.path, SW_SHOWNORMAL)
+Private Sub btnCreditos_Click()
+    frmCreditos.Show vbModal
 End Sub
 
 Private Sub btnConectarse_Click()
@@ -748,7 +737,7 @@ End Sub
 
 Private Sub LoadTextsForm()
     btnActualizarLista.Caption = JsonLanguage.item("BTN_ACTUALIZAR_LISTA").item("TEXTO")
-    btnCodigoFuente.Caption = JsonLanguage.item("BTN_CODIGO_FUENTE").item("TEXTO")
+    btnCreditos.Caption = JsonLanguage.item("BTN_CREDITOS").item("TEXTO")
     btnConectarse.Caption = JsonLanguage.item("BTN_CONECTARSE").item("TEXTO")
     btnCrearCuenta.Caption = JsonLanguage.item("BTN_CREAR_CUENTA").item("TEXTO")
     btnCrearServer.Caption = JsonLanguage.item("BTN_CREAR_SERVER").item("TEXTO")
@@ -757,7 +746,7 @@ Private Sub LoadTextsForm()
     btnReglamento.Caption = JsonLanguage.item("BTN_REGLAMENTO").item("TEXTO")
     lblRecordarme.Caption = JsonLanguage.item("LBL_RECORDARME").item("TEXTO")
     btnVerForo.Caption = JsonLanguage.item("LBL_FORO").item("TEXTO")
-    btnSalir.Caption = JsonLanguage.item("LBL_SALIR").item("TEXTO")
+    btnSalir.Caption = JsonLanguage.item("BTN_SALIR").item("TEXTO")
     btnTeclas.Caption = JsonLanguage.item("LBL_TECLAS").item("TEXTO")
 End Sub
 
@@ -775,7 +764,7 @@ Private Sub LoadButtonsAnimations()
     'AnimControl(2).Velocidad = 0
     'AnimControl(2).Top = 350
     
-    btnCodigoFuente.Top = 10
+    btnCreditos.Top = 10
     AnimControl(3).Activo = True
     AnimControl(3).Velocidad = 0
     AnimControl(3).Top = 560
@@ -834,7 +823,7 @@ Private Sub tEfectos_Timer()
 
                 Case 2: oTop = btnActualizarLista.Top
 
-                Case 3: oTop = btnCodigoFuente.Top
+                Case 3: oTop = btnCreditos.Top
 
                 Case 4: oTop = btnCrearCuenta.Top
 
@@ -871,7 +860,7 @@ Private Sub tEfectos_Timer()
 
                 Case 2: btnConectarse.Top = oTop
 
-                Case 3: btnCodigoFuente.Top = oTop
+                Case 3: btnCreditos.Top = oTop
 
                 Case 4: btnCrearCuenta.Top = oTop
 
@@ -898,7 +887,7 @@ Private Sub tEfectos_Timer()
         ' GSZAO - Animacion...
         btnConectarse.Top = AnimControl(1).Top
         btnActualizarLista.Top = AnimControl(2).Top
-        btnCodigoFuente.Top = AnimControl(3).Top
+        btnCreditos.Top = AnimControl(3).Top
         btnCrearCuenta.Top = AnimControl(4).Top
         btnCrearServer.Top = AnimControl(5).Top
         btnManual.Top = AnimControl(6).Top

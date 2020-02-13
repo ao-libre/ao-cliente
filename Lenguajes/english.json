@@ -1178,6 +1178,9 @@
     "BTN_CODIGO_FUENTE": {
         "TEXTO": "Source Code"
     },
+    "BTN_CREDITOS": {
+        "TEXTO": "Credits"
+    },
     "BTN_CONECTARSE": {
         "TEXTO": "Connect"
     },
@@ -1202,7 +1205,7 @@
     "LBL_FORO": {
         "TEXTO": "See Forum"
     },
-    "LBL_SALIR": {
+    "BTN_SALIR": {
         "TEXTO": "Exit"
     },
     "LBL_TECLAS": {
