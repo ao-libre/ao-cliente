@@ -13,6 +13,7 @@ Programacion:
 * Wolftein
 * Lorwik
 * MateoMiccino
+* Lherkiev
 
 Colaboracion Grafica:
 * ReyarB
@@ -98,7 +99,7 @@ Programacion General:
 Gulfas Morgolock
 
 Programacion Adicional:
-Matias "MatuX" Pequeño
+Matias "MatuX" Pequeno
 Barrin
 Otto Perez
 Alejandro Santos
@@ -124,7 +125,7 @@ Tinker
 
 Creacion de Escenarios:
 Gulfas Morgolock
-Matias "Matux" Pequeño
+Matias "Matux" Pequeno
 
 Musica y Sonidos:
 Jorge "Sonic" Leni
