@@ -4,6 +4,9 @@
 ## Wiki Desarrollo Argentum Online
 [Manual para entender el codigo de Argentum Online](http://es.dao.wikia.com/wiki/Wiki_Desarrollo_Argentum_Online).
 
+## Diagrama Arquitectura Aplicaciones AO-LIBRE
+https://www.reddit.com/r/argentumonlineoficial/comments/f402p9/argentum_online_libre_diagrama_arquitectura/
+
 ## Logs publicos de nuestro Server
 AO es un juego open-source y por ello abrimos nuestros logs del server al publico para que puedan ver que errores hay en el servidor y poder ayudar a repararlos 
 
