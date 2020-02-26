@@ -1,5 +1,5 @@
 [INIT]
-Cant=5
+Cant=4
 
 [S1]
 Desc=Rol - Alkon 0.13.X
@@ -24,11 +24,4 @@ Desc=Servidor Local | Modo:BattleServer
 IP=localhost
 PJ=7666
 Mundo=BattleServer
-
-[S5]
-Desc=TEST Winter
-IP=localhost
-PJ=7666
-Mundo=Winter
-
 
