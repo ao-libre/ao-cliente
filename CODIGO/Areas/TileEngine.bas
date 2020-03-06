@@ -1296,7 +1296,7 @@ Private Sub CharRender(ByVal CharIndex As Long, _
 
         Else
 
-            If esGM(Val(CharIndex)) Then
+            If EsGM(Val(CharIndex)) Then
                 Call Engine_Long_To_RGB_List(ColorFinal(), D3DColorARGB(150, 200, 200, 0))
             Else
 
@@ -1319,9 +1319,13 @@ Private Sub CharRender(ByVal CharIndex As Long, _
             End If
                 
             'Reflejo Body
-            If HayAgua(charlist(UserCharIndex).Pos.X, charlist(UserCharIndex).Pos.Y + 1) = True Then
-                If charlist(CharIndex).priv = 0 Then
-                    Call Draw_Grh(.Body.Walk(GetOppositeHeading(.Heading)), PixelOffsetX, PixelOffsetY + 34, 1, ColorFinal(), 1, True, 360)
+            If HayAgua(charlist(CharIndex).Pos.X, charlist(CharIndex).Pos.Y + 1) = True Then
+                If Not EsNPC(Val(CharIndex)) Then
+                    If UserNavegando = False Then
+                        Call Draw_Grh(.Body.Walk(GetInverseHeading(.Heading)), PixelOffsetX, PixelOffsetY + 44, 1, ColorFinal(), 1, True, 360)
+                    Else
+                        Call Draw_Grh(.Body.Walk(GetInverseHeading(.Heading)), PixelOffsetX, PixelOffsetY + 80, 1, ColorFinal(), 1, True, 360)
+                    End If
                 End If
             End If
                 
@@ -1339,9 +1343,9 @@ Private Sub CharRender(ByVal CharIndex As Long, _
                 Call Draw_Grh(.Head.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y, 1, ColorFinal(), 0)
                 
                 'Reflejo Head
-                If HayAgua(charlist(UserCharIndex).Pos.X, charlist(UserCharIndex).Pos.Y + 1) = True Then
-                    If charlist(CharIndex).priv = 0 Then
-                        Call Draw_Grh(.Head.Head(GetOppositeHeading(.Heading)), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y + 44, 1, ColorFinal(), 0, True, 360)
+                If HayAgua(charlist(CharIndex).Pos.X, charlist(CharIndex).Pos.Y + 1) = True Then
+                    If Not EsNPC(Val(CharIndex)) Then
+                       Call Draw_Grh(.Head.Head(GetInverseHeading(.Heading)), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y + 54, 1, ColorFinal(), 0, True, 360)
                     End If
                 End If
             
@@ -1350,16 +1354,37 @@ Private Sub CharRender(ByVal CharIndex As Long, _
                     Call Draw_Grh(.Casco.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y + OFFSET_HEAD, 1, ColorFinal(), 0)
                 End If
                 
+                'Reflejo Helmet
+                If HayAgua(charlist(UserCharIndex).Pos.X, charlist(UserCharIndex).Pos.Y + 1) = True Then
+                    If Not EsNPC(Val(CharIndex)) Then
+                        Call Draw_Grh(.Casco.Head(GetInverseHeading(.Heading)), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y + 56, 1, ColorFinal(), 0, True, 360)
+                    End If
+                End If
+                
                 'Draw Weapon
                 If .Arma.WeaponWalk(.Heading).GrhIndex Then
                     Call Draw_Grh(.Arma.WeaponWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1)
+                End If
+                                         
+                'Reflejo Weapon
+                If HayAgua(charlist(UserCharIndex).Pos.X, charlist(UserCharIndex).Pos.Y + 1) = True Then
+                    If Not EsNPC(Val(CharIndex)) Then
+                        Call Draw_Grh(.Arma.WeaponWalk(GetInverseHeading(.Heading)), PixelOffsetX, PixelOffsetY + 47, 1, ColorFinal(), 1, True, 360)
+                    End If
                 End If
                 
                 'Draw Shield
                 If .Escudo.ShieldWalk(.Heading).GrhIndex Then
                     Call Draw_Grh(.Escudo.ShieldWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1)
                 End If
-            
+                
+                'Reflejo Shield
+                If HayAgua(charlist(UserCharIndex).Pos.X, charlist(UserCharIndex).Pos.Y + 1) = True Then
+                    If Not EsNPC(Val(CharIndex)) Then
+                        Call Draw_Grh(.Escudo.ShieldWalk(.Heading), PixelOffsetX, PixelOffsetY + 44, 1, ColorFinal(), 1, True, 360)
+                    End If
+                End If
+                
                 'Draw name over head
                 If LenB(.Nombre) > 0 Then
                     If Nombres Then
@@ -1438,7 +1463,7 @@ Private Sub CharRender(ByVal CharIndex As Long, _
     
 End Sub
 
-Private Function GetOppositeHeading(ByVal Heading As E_Heading) As E_Heading
+Private Function GetInverseHeading(ByVal Heading As E_Heading) As E_Heading
 '**************************************************************************************
 'Devuelve la heading correcta para renderizar el grafico del char reflejado en el agua.
 '**************************************************************************************
@@ -1446,13 +1471,13 @@ Private Function GetOppositeHeading(ByVal Heading As E_Heading) As E_Heading
     Select Case Heading
     
         Case E_Heading.EAST
-            GetOppositeHeading = E_Heading.WEST
+            GetInverseHeading = E_Heading.WEST
             
         Case E_Heading.WEST
-            GetOppositeHeading = E_Heading.EAST
+            GetInverseHeading = E_Heading.EAST
             
         Case Else
-            GetOppositeHeading = Heading
+            GetInverseHeading = Heading
         
     End Select
     
