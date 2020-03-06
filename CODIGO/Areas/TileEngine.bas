@@ -1450,12 +1450,9 @@ Private Function GetOppositeHeading(ByVal Heading As E_Heading) As E_Heading
             
         Case E_Heading.WEST
             GetOppositeHeading = E_Heading.EAST
-        
-        Case E_Heading.NORTH
-            GetOppositeHeading = E_Heading.SOUTH
             
-         Case E_Heading.SOUTH
-            GetOppositeHeading = E_Heading.NORTH
+        Case Else
+            GetOppositeHeading = Heading
         
     End Select
     
