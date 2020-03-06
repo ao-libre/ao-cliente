@@ -1309,7 +1309,7 @@ Private Sub CharRender(ByVal CharIndex As Long, _
             End If
 
         End If
-        
+                
         If Not .invisible Then
             Movement_Speed = 0.5
             
@@ -1317,7 +1317,14 @@ Private Sub CharRender(ByVal CharIndex As Long, _
             If .Body.Walk(.Heading).GrhIndex Then
                 Call Draw_Grh(.Body.Walk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1)
             End If
-            
+                
+            'Reflejo Body
+            If HayAgua(charlist(UserCharIndex).Pos.X, charlist(UserCharIndex).Pos.Y + 1) = True Then
+                If charlist(CharIndex).priv = 0 Then
+                    Call Draw_Grh(.Body.Walk(GetOppositeHeading(.Heading)), PixelOffsetX, PixelOffsetY + 34, 1, ColorFinal(), 1, True, 360)
+                End If
+            End If
+                
             'Draw name when navigating
             If Len(.Nombre) > 0 Then
                 If Nombres Then
@@ -1331,6 +1338,13 @@ Private Sub CharRender(ByVal CharIndex As Long, _
             If .Head.Head(.Heading).GrhIndex Then
                 Call Draw_Grh(.Head.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y, 1, ColorFinal(), 0)
                 
+                'Reflejo Head
+                If HayAgua(charlist(UserCharIndex).Pos.X, charlist(UserCharIndex).Pos.Y + 1) = True Then
+                    If charlist(CharIndex).priv = 0 Then
+                        Call Draw_Grh(.Head.Head(GetOppositeHeading(.Heading)), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y + 44, 1, ColorFinal(), 0, True, 360)
+                    End If
+                End If
+            
                 'Draw Helmet
                 If .Casco.Head(.Heading).GrhIndex Then
                     Call Draw_Grh(.Casco.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y + OFFSET_HEAD, 1, ColorFinal(), 0)
@@ -1396,7 +1410,6 @@ Private Sub CharRender(ByVal CharIndex As Long, _
                             If Nombres Then
                                 Call RenderName(CharIndex, PixelOffsetX, PixelOffsetY, True)
                             End If
-
                         End If
 
                     End If
@@ -1424,6 +1437,29 @@ Private Sub CharRender(ByVal CharIndex As Long, _
     End With
     
 End Sub
+
+Private Function GetOppositeHeading(ByVal Heading As E_Heading) As E_Heading
+'**************************************************************************************
+'Devuelve la heading correcta para renderizar el grafico del char reflejado en el agua.
+'**************************************************************************************
+
+    Select Case Heading
+    
+        Case E_Heading.EAST
+            GetOppositeHeading = E_Heading.WEST
+            
+        Case E_Heading.WEST
+            GetOppositeHeading = E_Heading.EAST
+        
+        Case E_Heading.NORTH
+            GetOppositeHeading = E_Heading.SOUTH
+            
+         Case E_Heading.SOUTH
+            GetOppositeHeading = E_Heading.NORTH
+        
+    End Select
+    
+End Function
 
 Private Sub RenderName(ByVal CharIndex As Long, ByVal X As Integer, ByVal Y As Integer, Optional ByVal Invi As Boolean = False)
     Dim Pos As Integer
