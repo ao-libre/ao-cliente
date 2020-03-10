@@ -1358,7 +1358,7 @@ Private Sub CharRender(ByVal CharIndex As Long, _
                     
                     Dim GetInverseHeading As Byte
                     
-                    'Se anula el viejo reflejo usando Alpha para remplazarlo por transparencia
+                    'Se anula el viejo reflejo usando Alpha para remplazarlo por transparencia (50%)
                     Call Engine_Long_To_RGB_List(ColorFinal(), D3DColorARGB(100, 128, 128, 128))
 
                     Select Case .Heading
@@ -1371,7 +1371,35 @@ Private Sub CharRender(ByVal CharIndex As Long, _
                             GetInverseHeading = .Heading
     
                     End Select
-
+                    
+                    '************ Renderizamos animaciones en los reflejos ************
+                    If .Moving Then
+                       .Body.Walk(GetInverseHeading).Started = 1
+                       .Arma.WeaponWalk(GetInverseHeading).Started = 1
+                       .Escudo.ShieldWalk(GetInverseHeading).Started = 1
+                       
+                    Else
+                       .Body.Walk(GetInverseHeading).Started = 0
+                       .Escudo.ShieldWalk(GetInverseHeading).Started = 0
+                       
+                    End If
+                    
+                    'Animacion del reflejo del arma.
+                    If .attacking = False And .Moving = False Then
+                        .Arma.WeaponWalk(GetInverseHeading).Started = 0
+                        .Arma.WeaponWalk(GetInverseHeading).FrameCounter = 0
+                    End If
+            
+                    If .attacking And .Arma.WeaponWalk(GetInverseHeading).Started = 0 Then
+                       .Arma.WeaponWalk(GetInverseHeading).Started = 1
+                       .Arma.WeaponWalk(GetInverseHeading).FrameCounter = 1
+                       
+                    ElseIf .Arma.WeaponWalk(GetInverseHeading).FrameCounter > 4 And .attacking Then
+                       .attacking = False
+    
+                    End If
+                    '************ Renderizamos animaciones en los reflejos ************
+                    
                     If Not EsNPC(Val(CharIndex)) Then
 
                         If UserNavegando Then
