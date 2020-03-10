@@ -1295,17 +1295,16 @@ Public Sub ResetAllInfo(Optional ByVal UnloadForms As Boolean = True)
     Connected = False
     
     If UnloadForms Then
-    
         'Unload all forms except frmMain, frmConnect and frmCrearPersonaje
         Dim frm As Form
         For Each frm In Forms
-            If frm.name <> frmMain.name And frm.name <> frmConnect.name And _
-                frm.name <> frmCrearPersonaje.name Then
+            If frm.name <> frmMain.name And _
+               frm.name <> frmConnect.name And _
+               frm.name <> frmCrearPersonaje.name Then
                 
                 Call Unload(frm)
             End If
         Next
-        
     End If
     
     On Local Error GoTo 0
