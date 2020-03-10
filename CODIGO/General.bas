@@ -1287,28 +1287,33 @@ Public Function ForumAlignment(ByVal yForumType As Byte) As Byte
     
 End Function
 
-Public Sub ResetAllInfo()
+Public Sub ResetAllInfo(Optional ByVal UnloadForms As Boolean = True)
 
     ' Disable timers
     frmMain.Second.Enabled = False
     frmMain.macrotrabajo.Enabled = False
     Connected = False
     
-    'Unload all forms except frmMain, frmConnect and frmCrearPersonaje
-    Dim frm As Form
-    For Each frm In Forms
-        If frm.name <> frmMain.name And frm.name <> frmConnect.name And _
-            frm.name <> frmCrearPersonaje.name Then
-            
-            Unload frm
-        End If
-    Next
+    If UnloadForms Then
+        'Unload all forms except frmMain, frmConnect and frmCrearPersonaje
+        Dim frm As Form
+        For Each frm In Forms
+            If frm.name <> frmMain.name And _
+               frm.name <> frmConnect.name And _
+               frm.name <> frmCrearPersonaje.name Then
+                
+                Call Unload(frm)
+            End If
+        Next
+    End If
     
     On Local Error GoTo 0
     
-    ' Return to connection screen
-    If Not frmCrearPersonaje.Visible Then frmConnect.Visible = True
-    frmMain.Visible = False
+    If UnloadForms Then
+        ' Return to connection screen
+        If Not frmCrearPersonaje.Visible Then frmConnect.Visible = True
+        frmMain.Visible = False
+    End If
     
     'Stop audio
     Call Audio.StopWave
@@ -1386,6 +1391,7 @@ Dim i As Long
         End If
     Next i
 End Function
+
 Public Function DevolverIndexHechizo(ByVal Nombre As String) As Byte
 Dim i As Long
  
