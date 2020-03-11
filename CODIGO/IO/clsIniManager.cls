@@ -374,17 +374,11 @@ Public Function GetValue(ByVal Main As String, ByVal key As String) As Variant
         If J >= 0 Then Result = fileData(i).values(J).Value
 
     End If
-
+    
     'Smart-cast search result to its appropiate data type.
     If Result = "True" Or Result = "False" Then
         GetValue = CBool(Result)
     
-    ElseIf Result = "0" Then
-        GetValue = False
-    
-    ElseIf Result = "1" Then
-        GetValue = True
-        
     ElseIf IsNumeric(Result) Then
         GetValue = Val(Result)
         
