@@ -684,8 +684,9 @@ Private Sub uAOBorrarPersonaje_Click()
          NumberOfCharacters = 0
          Unload Me
       Else
-         UserName = lblAccData(Seleccionado).Caption
+         UserName = cPJ(Seleccionado).Nombre
          Call WriteDeleteChar
+         
       End If
 
    End If

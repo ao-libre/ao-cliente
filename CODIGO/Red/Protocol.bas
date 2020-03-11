@@ -5695,6 +5695,7 @@ Public Sub WriteDeleteChar()
         Call .WriteByte(ClientPacketID.DeleteChar)
         
         Call .WriteASCIIString(UserName)
+        Call .WriteASCIIString(AccountHash)
     End With
 End Sub
 
