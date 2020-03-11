@@ -351,7 +351,7 @@ End Sub
 ' @param    key The key of the value we are looking for.
 ' @returns  The value asociated with the given key under the requeted main section of the INI file or a null string if it's not found.
 
-Public Function GetValue(ByVal Main As String, ByVal key As String) As String
+Public Function GetValue(ByVal Main As String, ByVal key As String) As Variant
 
     '**************************************************************
     'Author: Juan Martin Sotuyo Dodero
