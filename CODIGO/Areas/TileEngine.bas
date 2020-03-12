@@ -1345,14 +1345,7 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
             If .Escudo.ShieldWalk(.Heading).GrhIndex Then
                 Call Draw_Grh(.Escudo.ShieldWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1)
             End If
-                
-            'Draw name over head
-            If LenB(.Nombre) > 0 Then
-                If Nombres Then
-                    Call RenderName(CharIndex, PixelOffsetX, PixelOffsetY)
-                End If
-            End If
-                
+
             If ClientSetup.UsarSombras Then
 
                 Call RenderSombras(CharIndex, PixelOffsetX, PixelOffsetY)
@@ -1365,6 +1358,13 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
 
                 Call RenderCharParticles(CharIndex, PixelOffsetX, PixelOffsetY)
 
+            End If
+            
+            'Draw name over head
+            If LenB(.Nombre) > 0 Then
+                If Nombres Then
+                    Call RenderName(CharIndex, PixelOffsetX, PixelOffsetY)
+                End If
             End If
             
         Else 'Usuario Invisible - Lo renderizamos con cierta transparencia activando Alpha.
