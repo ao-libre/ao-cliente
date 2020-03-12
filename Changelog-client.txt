@@ -696,3 +696,4 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 -v0.13.28
 * 09/03/2020: Reflejo del char en el agua. (abusiv0-jopiortiz)
 * 10/03/2020: Cambiar entre personajes de la misma cuenta sin tener que reloguear. (abusiv0-Wyr0X-jopiortiz)
+* 11/03/2020: Sombras en los personajes. Activables/desactivables desde Config.ini (abusiv0)
