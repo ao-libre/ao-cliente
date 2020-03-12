@@ -1355,6 +1355,7 @@ Private Sub CharRender(ByVal CharIndex As Long, _
                 End If
                 
                 If ClientSetup.UsarSombras Then
+
                     Call RenderSombras(CharIndex, PixelOffsetX, PixelOffsetY)
 
                     Call RenderReflejos(CharIndex, PixelOffsetX, PixelOffsetY)
@@ -1383,6 +1384,42 @@ Private Sub CharRender(ByVal CharIndex As Long, _
             'Check if animation is over
             If .fX.Started = 0 Then .FxIndex = 0
             
+        End If
+        
+    End With
+    
+End Sub
+
+Private Sub RenderSombras(ByVal CharIndex As Integer, ByVal PixelOffsetX As Integer, ByVal PixelOffsetY As Integer)
+'****************************************************
+' Renderizamos las sombras sobre el char
+'****************************************************
+   
+    With charlist(CharIndex)
+    
+        'Draw Body
+        If .Body.Walk(.Heading).GrhIndex Then
+            Call Draw_Grh(.Body.Walk(.Heading), PixelOffsetX + 10, PixelOffsetY + 1, 1, Color_Shadow(), 1, False, 210)
+        End If
+     
+        'Draw Head
+        If .Head.Head(.Heading).GrhIndex Then
+            Call Draw_Grh(.Head.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X + 12, PixelOffsetY + .Body.HeadOffset.Y + 1, 1, Color_Shadow(), 0, False, 210)
+        End If
+
+        'Draw Helmet
+        If .Casco.Head(.Heading).GrhIndex Then
+            Call Draw_Grh(.Casco.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X + 22, PixelOffsetY + .Body.HeadOffset.Y - 31, 1, Color_Shadow(), 0, False, 210)
+        End If
+                
+        'Draw Weapon
+        If .Arma.WeaponWalk(.Heading).GrhIndex Then
+            Call Draw_Grh(.Arma.WeaponWalk(.Heading), PixelOffsetX + 10, PixelOffsetY + 1, 1, Color_Shadow(), 1, False, 210)
+        End If
+                
+        'Draw Shield
+        If .Escudo.ShieldWalk(.Heading).GrhIndex Then
+            Call Draw_Grh(.Escudo.ShieldWalk(.Heading), PixelOffsetX + 10, PixelOffsetY + 1, 1, Color_Shadow(), 1, False, 210)
         End If
         
     End With
