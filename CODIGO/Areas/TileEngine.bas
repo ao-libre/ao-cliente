@@ -1533,7 +1533,7 @@ Private Sub RenderReflejos(ByVal CharIndex As Integer, ByVal PixelOffsetX As Int
                     
             If Not EsNPC(Val(CharIndex)) Then
 
-                'Se anuló el uso de UserNavegando ya que los reflejos de todos los personajes variaban dependiendo de si el usuario navegaba o no.
+                'Se anulo el uso de UserNavegando ya que los reflejos de todos los personajes variaban dependiendo de si el usuario navegaba o no.
                 If ((.iHead = 0) Or (.iBody = eCabezas.FRAGATA_FANTASMAL)) Then
 
                     'Reflejo Body Navegando
