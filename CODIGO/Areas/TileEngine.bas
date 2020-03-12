@@ -1327,13 +1327,14 @@ Private Sub CharRender(ByVal CharIndex As Long, _
                 End If
             End If
             
-            'Draw Head
-            If .Head.Head(.Heading).GrhIndex Then
-                Call Draw_Grh(.Head.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y, 1, ColorFinal(), 0)
-
+               'Draw Head
+                If .Head.Head(.Heading).GrhIndex Then
+                    Call Draw_Grh(.Head.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y, 1, ColorFinal(), 0)
+                End If
+                
                 'Draw Helmet
                 If .Casco.Head(.Heading).GrhIndex Then
-                    Call Draw_Grh(.Casco.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y + OFFSET_HEAD, 1, ColorFinal(), 0)
+                    Call Draw_Grh(.Casco.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X + 1, PixelOffsetY + .Body.HeadOffset.Y + OFFSET_HEAD, 1, ColorFinal(), 0)
                 End If
                 
                 'Draw Weapon
@@ -1353,56 +1354,22 @@ Private Sub CharRender(ByVal CharIndex As Long, _
                     End If
                 End If
                 
-                Call RenderReflejos(CharIndex, PixelOffsetX, PixelOffsetY)
-                
-                Call RenderCharParticles(CharIndex, PixelOffsetX, PixelOffsetY)
-            
-            Else 'Usuario invisible
-        
-                If CharIndex = UserCharIndex Or _
-                    mid$(charlist(CharIndex).Nombre, getTagPosition(.Nombre)) = mid$(charlist(UserCharIndex).Nombre, getTagPosition(charlist(UserCharIndex).Nombre)) And _
-                    Len(mid$(charlist(CharIndex).Nombre, getTagPosition(.Nombre))) > 0 Then
-                
-                    Movement_Speed = 0.5
-                
-                    'Draw Body
-                    If .Body.Walk(.Heading).GrhIndex Then
-                        Call Draw_Grh(.Body.Walk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1, True)
-                    End If
-                
-                    'Draw Head
-                    If .Head.Head(.Heading).GrhIndex Then
-                        Call Draw_Grh(.Head.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y, 1, ColorFinal(), 0, True)
-                        
-                        'Draw Helmet
-                        If .Casco.Head(.Heading).GrhIndex Then
-                            Call Draw_Grh(.Casco.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y + OFFSET_HEAD, 1, ColorFinal(), 0, True)
-                        End If
-                        
-                        'Draw Weapon
-                        If .Arma.WeaponWalk(.Heading).GrhIndex Then
-                            Call Draw_Grh(.Arma.WeaponWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1, True)
-                        End If
-                        
-                        'Draw Shield
-                        If .Escudo.ShieldWalk(.Heading).GrhIndex Then
-                            Call Draw_Grh(.Escudo.ShieldWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1, True)
-                        End If
-                        
-                        'Draw name over head
-                        If LenB(.Nombre) > 0 Then
-                            If Nombres Then
-                                Call RenderName(CharIndex, PixelOffsetX, PixelOffsetY, True)
-                            End If
-                        End If
+                If ClientSetup.UsarSombras Then
+                    Call RenderSombras(CharIndex, PixelOffsetX, PixelOffsetY)
 
-                    End If
+                    Call RenderReflejos(CharIndex, PixelOffsetX, PixelOffsetY)
+
+                End If
+
+                If ClientSetup.ParticleEngine Then
+
+                    Call RenderCharParticles(CharIndex, PixelOffsetX, PixelOffsetY)
 
                 End If
             
+            Else
+            
             End If
-
-        End If
         
         'Update dialogs
         Call Dialogos.UpdateDialogPos(PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y + OFFSET_HEAD, CharIndex) '34 son los pixeles del grh de la cabeza que quedan superpuestos al cuerpo
