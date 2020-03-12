@@ -1160,9 +1160,7 @@ Private Function GetElapsedTime() As Single
     Call QueryPerformanceCounter(end_time)
 End Function
 
-Private Sub CharRender(ByVal CharIndex As Long, _
-                       ByVal PixelOffsetX As Integer, _
-                       ByVal PixelOffsetY As Integer)
+Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, ByVal PixelOffsetY As Integer)
 
     '***************************************************
     'Author: Juan Martin Sotuyo Dodero (Maraxus)
@@ -1170,6 +1168,7 @@ Private Sub CharRender(ByVal CharIndex As Long, _
     'Draw char's to screen without offcentering them
     '16/09/2010: ZaMa - Ya no se dibujan los bodies cuando estan invisibles.
     '***************************************************
+    
     Dim moved As Boolean
     
     With charlist(CharIndex)
@@ -1330,92 +1329,75 @@ Private Sub CharRender(ByVal CharIndex As Long, _
             'Draw Head
             If .Head.Head(.Heading).GrhIndex Then
                 Call Draw_Grh(.Head.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y, 1, ColorFinal(), 0)
-
-                'Draw Helmet
-                If .Casco.Head(.Heading).GrhIndex Then
-                    Call Draw_Grh(.Casco.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y + OFFSET_HEAD, 1, ColorFinal(), 0)
-                End If
+            End If
                 
-                'Draw Weapon
-                If .Arma.WeaponWalk(.Heading).GrhIndex Then
-                    Call Draw_Grh(.Arma.WeaponWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1)
-                End If
+            'Draw Helmet
+            If .Casco.Head(.Heading).GrhIndex Then
+                Call Draw_Grh(.Casco.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X + 1, PixelOffsetY + .Body.HeadOffset.Y + OFFSET_HEAD, 1, ColorFinal(), 0)
+            End If
                 
-                'Draw Shield
-                If .Escudo.ShieldWalk(.Heading).GrhIndex Then
-                    Call Draw_Grh(.Escudo.ShieldWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1)
-                End If
+            'Draw Weapon
+            If .Arma.WeaponWalk(.Heading).GrhIndex Then
+                Call Draw_Grh(.Arma.WeaponWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1)
+            End If
                 
-                'Draw name over head
-                If LenB(.Nombre) > 0 Then
-                    If Nombres Then
-                        Call RenderName(CharIndex, PixelOffsetX, PixelOffsetY)
-                    End If
-                End If
-                
-                If ClientSetup.UsarSombras Then
-                    
-                    Call RenderSombras(CharIndex, PixelOffsetX, PixelOffsetY)
-                    
-                    Call RenderReflejos(CharIndex, PixelOffsetX, PixelOffsetY)
-                
-                End If
-                
-                If ClientSetup.ParticleEngine Then
-                
-                    Call RenderCharParticles(CharIndex, PixelOffsetX, PixelOffsetY)
-                
-                End If
-                
-            Else 'Usuario invisible
-        
-                If CharIndex = UserCharIndex Or _
-                    mid$(charlist(CharIndex).Nombre, getTagPosition(.Nombre)) = mid$(charlist(UserCharIndex).Nombre, getTagPosition(charlist(UserCharIndex).Nombre)) And _
-                    Len(mid$(charlist(CharIndex).Nombre, getTagPosition(.Nombre))) > 0 Then
-                
-                    Movement_Speed = 0.5
-                
-                    'Draw Body
-                    If .Body.Walk(.Heading).GrhIndex Then
-                        Call Draw_Grh(.Body.Walk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1, True)
-                    End If
-                
-                    'Draw Head
-                    If .Head.Head(.Heading).GrhIndex Then
-                        Call Draw_Grh(.Head.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y, 1, ColorFinal(), 0, True)
-                        
-                        'Draw Helmet
-                        If .Casco.Head(.Heading).GrhIndex Then
-                            Call Draw_Grh(.Casco.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y + OFFSET_HEAD, 1, ColorFinal(), 0, True)
-                        End If
-                        
-                        'Draw Weapon
-                        If .Arma.WeaponWalk(.Heading).GrhIndex Then
-                            Call Draw_Grh(.Arma.WeaponWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1, True)
-                        End If
-                        
-                        'Draw Shield
-                        If .Escudo.ShieldWalk(.Heading).GrhIndex Then
-                            Call Draw_Grh(.Escudo.ShieldWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1, True)
-                        End If
-                        
-                        'Draw name over head
-                        If LenB(.Nombre) > 0 Then
-                            If Nombres Then
-                                Call RenderName(CharIndex, PixelOffsetX, PixelOffsetY, True)
-                            End If
-                        End If
-
-                    End If
-
-                End If
-            
+            'Draw Shield
+            If .Escudo.ShieldWalk(.Heading).GrhIndex Then
+                Call Draw_Grh(.Escudo.ShieldWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1)
             End If
 
+            If ClientSetup.UsarSombras Then
+
+                Call RenderSombras(CharIndex, PixelOffsetX, PixelOffsetY)
+
+                Call RenderReflejos(CharIndex, PixelOffsetX, PixelOffsetY)
+
+            End If
+
+            If ClientSetup.ParticleEngine Then
+
+                Call RenderCharParticles(CharIndex, PixelOffsetX, PixelOffsetY)
+
+            End If
+            
+            'Draw name over head
+            If LenB(.Nombre) > 0 Then
+                If Nombres Then
+                    Call RenderName(CharIndex, PixelOffsetX, PixelOffsetY)
+                End If
+            End If
+            
+        Else 'Usuario Invisible - Lo renderizamos con cierta transparencia activando Alpha.
+            
+            'Draw Transparent Body
+            If .Body.Walk(.Heading).GrhIndex Then
+                Call Draw_Grh(.Body.Walk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1, True)
+            End If
+
+            'Draw Transparent Head
+            If .Head.Head(.Heading).GrhIndex Then
+                Call Draw_Grh(.Head.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y, 1, ColorFinal(), 0, True)
+            End If
+                
+            'Draw Transparent Helmet
+            If .Casco.Head(.Heading).GrhIndex Then
+                Call Draw_Grh(.Casco.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X + 1, PixelOffsetY + .Body.HeadOffset.Y + OFFSET_HEAD, 1, ColorFinal(), 0, True)
+            End If
+                
+            'Draw Transparent Weapon
+            If .Arma.WeaponWalk(.Heading).GrhIndex Then
+                Call Draw_Grh(.Arma.WeaponWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1, True)
+            End If
+                
+            'Draw Transparent Shield
+            If .Escudo.ShieldWalk(.Heading).GrhIndex Then
+                Call Draw_Grh(.Escudo.ShieldWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1, True)
+            End If
+            
         End If
         
-        'Update dialogs
-        Call Dialogos.UpdateDialogPos(PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y + OFFSET_HEAD, CharIndex) '34 son los pixeles del grh de la cabeza que quedan superpuestos al cuerpo
+        'Update dialogs - 34 son los pixeles del grh de la cabeza que quedan superpuestos al cuerpo.
+        Call Dialogos.UpdateDialogPos(PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y + OFFSET_HEAD, CharIndex)
         
         Movement_Speed = 1
         
@@ -1551,7 +1533,8 @@ Private Sub RenderReflejos(ByVal CharIndex As Integer, ByVal PixelOffsetX As Int
                     
             If Not EsNPC(Val(CharIndex)) Then
 
-                If UserNavegando Then
+                'Se anulo el uso de UserNavegando ya que los reflejos de todos los personajes variaban dependiendo de si el usuario navegaba o no.
+                If ((.iHead = 0) Or (.iBody = eCabezas.FRAGATA_FANTASMAL)) Then
 
                     'Reflejo Body Navegando
                     Call Draw_Grh(.Body.Walk(GetInverseHeading), PixelOffsetX, PixelOffsetY + 80, 1, ColorFinal(), 1, False, 360)
