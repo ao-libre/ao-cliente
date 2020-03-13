@@ -1765,5 +1765,14 @@
     },
     "FRMPANELACCOUNT_BTN_CONECTAR" : {
         "TEXTO": "Enter"
+    },
+	"FRM_LISTAAMIGOS_TITLE" : {
+    "TEXTO": "Here you can see your friends list, as well as add or remove users from the list."
+    },
+	"FRM_LISTAAMIGOS_AGREGAR" : {
+    "TEXTO": "Add Friend"
+    },
+	"FRM_LISTAAMIGOS_BORRAR" : {
+    "TEXTO": "Del Friend"
     }
 }
