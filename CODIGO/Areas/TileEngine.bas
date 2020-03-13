@@ -1310,6 +1310,15 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
         End If
                 
         If Not .invisible Then
+       
+            If ClientSetup.UsarSombras Then
+
+                Call RenderSombras(CharIndex, PixelOffsetX, PixelOffsetY)
+
+                Call RenderReflejos(CharIndex, PixelOffsetX, PixelOffsetY)
+
+            End If
+
             Movement_Speed = 0.5
             
             'Draw Body
@@ -1344,14 +1353,6 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
             'Draw Shield
             If .Escudo.ShieldWalk(.Heading).GrhIndex Then
                 Call Draw_Grh(.Escudo.ShieldWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1)
-            End If
-
-            If ClientSetup.UsarSombras Then
-
-                Call RenderSombras(CharIndex, PixelOffsetX, PixelOffsetY)
-
-                Call RenderReflejos(CharIndex, PixelOffsetX, PixelOffsetY)
-
             End If
 
             If ClientSetup.ParticleEngine Then
