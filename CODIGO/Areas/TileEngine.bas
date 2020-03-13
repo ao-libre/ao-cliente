@@ -1420,30 +1420,40 @@ Private Sub RenderSombras(ByVal CharIndex As Integer, ByVal PixelOffsetX As Inte
 '****************************************************
    
     With charlist(CharIndex)
-    
-        'Draw Body
-        If .Body.Walk(.Heading).GrhIndex Then
-            Call Draw_Grh(.Body.Walk(.Heading), PixelOffsetX + 10, PixelOffsetY + 1, 1, Color_Shadow(), 1, False, 210)
+        
+        'Si está montado chau sombra
+        If (charlist(CharIndex).iHead > 0) And (charlist(CharIndex).iBody = 617 Or charlist(CharIndex).iBody = 612 Or charlist(CharIndex).iBody = 614 Or charlist(CharIndex).iBody = 616) Then
+        Exit Sub
         End If
-     
-        'Draw Head
+        
+        'Si está navegando chau sombra
+        If ((.iHead = 0) And (HayAgua(.Pos.X, .Pos.Y + 1) Or HayAgua(.Pos.X + 1, .Pos.Y) Or HayAgua(.Pos.X, .Pos.Y - 1) Or HayAgua(.Pos.X - 1, .Pos.Y))) Then
+        Exit Sub
+        End If
+        
+        'Shadow Body
+        If .Body.Walk(.Heading).GrhIndex Then
+            Call Draw_Grh(.Body.Walk(.Heading), PixelOffsetX + 10, PixelOffsetY + 1, 1, Color_Shadow(), 0, False, 210)
+        End If
+        
+        'Shadow Head
         If .Head.Head(.Heading).GrhIndex Then
             Call Draw_Grh(.Head.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X + 12, PixelOffsetY + .Body.HeadOffset.Y + 1, 1, Color_Shadow(), 0, False, 210)
         End If
 
-        'Draw Helmet
+        'Shadow Helmet
         If .Casco.Head(.Heading).GrhIndex Then
             Call Draw_Grh(.Casco.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X + 22, PixelOffsetY + .Body.HeadOffset.Y - 31, 1, Color_Shadow(), 0, False, 210)
         End If
                 
-        'Draw Weapon
+        'Shadow Weapon
         If .Arma.WeaponWalk(.Heading).GrhIndex Then
-            Call Draw_Grh(.Arma.WeaponWalk(.Heading), PixelOffsetX + 10, PixelOffsetY + 1, 1, Color_Shadow(), 1, False, 210)
+            Call Draw_Grh(.Arma.WeaponWalk(.Heading), PixelOffsetX + 10, PixelOffsetY + 1, 1, Color_Shadow(), 0, False, 210)
         End If
                 
-        'Draw Shield
+        'Shadow Shield
         If .Escudo.ShieldWalk(.Heading).GrhIndex Then
-            Call Draw_Grh(.Escudo.ShieldWalk(.Heading), PixelOffsetX + 10, PixelOffsetY + 1, 1, Color_Shadow(), 1, False, 210)
+            Call Draw_Grh(.Escudo.ShieldWalk(.Heading), PixelOffsetX + 10, PixelOffsetY + 1, 1, Color_Shadow(), 0, False, 210)
         End If
         
     End With
