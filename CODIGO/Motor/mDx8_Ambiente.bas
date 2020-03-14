@@ -132,21 +132,24 @@ Public Sub Save_Ambient(ByVal Map As Integer)
 End Sub
 
 Public Sub DiaNoche()
-'*****************************************************************
-'Author: Pablo D. (DISCORD: Abusivo#1215)
-'*****************************************************************
-Static lastmovement As Long
+
+    '*****************************************************************
+    'Author: Pablo D. (DISCORD: Abusivo#1215)
+    '*****************************************************************
+    Static lastmovement As Long
     
     'Se ejecuta cada 30min
     If GetTickCount - lastmovement > 30000 Then
     
-            lastmovement = GetTickCount
+        lastmovement = GetTickCount
 
-            Dim Hora As Integer: Hora = Hour(Now)
+        Dim Hora As Integer: Hora = Hour(Now)
 
-            CurMapAmbient.UseDayAmbient = False
+        With CurMapAmbient
+        
+            .UseDayAmbient = False
             
-            With CurMapAmbient.OwnAmbientLight
+            With .OwnAmbientLight
                 
                 Select Case Hora
                     
@@ -186,9 +189,11 @@ Static lastmovement As Long
                 End Select
                 
             End With
+        
+        End With
 
-            'setear luz
-            Call Apply_OwnAmbient
+        'setear luz
+        Call Apply_OwnAmbient
        
     End If
     
