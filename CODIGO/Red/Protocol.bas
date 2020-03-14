@@ -11614,79 +11614,101 @@ ErrHandler:
 End Sub
 
 Public Sub WriteAddAmigo(ByVal UserName As String, ByVal Index As Byte)
-'***************************************************
-'Author: Abusivo#1215 (DISCORD)
-'***************************************************
-  With outgoingData
-  Call .WriteByte(ClientPacketID.AddAmigos)
-  Call .WriteASCIIString(UserName)
-  Call .WriteByte(Index)
-  End With
+
+    '***************************************************
+    'Author: Abusivo#1215 (DISCORD)
+    '***************************************************
+    With outgoingData
+        Call .WriteByte(ClientPacketID.AddAmigos)
+        Call .WriteASCIIString(UserName)
+        Call .WriteByte(Index)
+    End With
 End Sub
 Public Sub WriteDelAmigo(ByVal Index As Byte)
-'***************************************************
-'Author: Abusivo#1215 (DISCORD)
-'***************************************************
-  With outgoingData
-  Call .WriteByte(ClientPacketID.DelAmigos)
-  Call .WriteByte(Index)
-  End With
+
+    '***************************************************
+    'Author: Abusivo#1215 (DISCORD)
+    '***************************************************
+    
+    With outgoingData
+        Call .WriteByte(ClientPacketID.DelAmigos)
+        Call .WriteByte(Index)
+    End With
+    
 End Sub
+
 Public Sub WriteOnAmigo()
-'***************************************************
-'Author: Abusivo#1215 (DISCORD)
-'***************************************************
-  With outgoingData
-  Call .WriteByte(ClientPacketID.OnAmigos)
-  End With
+
+    '***************************************************
+    'Author: Abusivo#1215 (DISCORD)
+    '***************************************************
+    
+    With outgoingData
+        Call .WriteByte(ClientPacketID.OnAmigos)
+    End With
+    
 End Sub
+
 Public Sub WriteMsgAmigo(ByVal msg As String)
-'***************************************************
-'Author: Abusivo#1215 (DISCORD)
-'***************************************************
-  With outgoingData
-  Call .WriteByte(ClientPacketID.MsgAmigos)
-  Call .WriteASCIIString(msg)
-  End With
+
+    '***************************************************
+    'Author: Abusivo#1215 (DISCORD)
+    '***************************************************
+    
+    With outgoingData
+        Call .WriteByte(ClientPacketID.MsgAmigos)
+        Call .WriteASCIIString(msg)
+    End With
+    
 End Sub
+
 Private Sub HnadleEnviarListDeAmigos()
-'***************************************************
-'Author: Abusivo#1215 (DISCORD)
-'***************************************************
-  If incomingData.Length < 6 Then
-  Err.Raise incomingData.NotEnoughDataErrCode
-  Exit Sub
-  End If
 
-  On Error GoTo ErrHandler
-  'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-  Dim Buffer As New clsByteQueue
-  Call Buffer.CopyBuffer(incomingData)
+    '***************************************************
+    'Author: Abusivo#1215 (DISCORD)
+    '***************************************************
+    If incomingData.Length < 6 Then
+        Err.Raise incomingData.NotEnoughDataErrCode
+        Exit Sub
+    End If
 
-  'Remove packet ID
-  Call Buffer.ReadByte
+    On Error GoTo errhandler
+    
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
 
-  Dim slot As Byte
-  Dim i As Integer
+    'Remove packet ID
+    Call Buffer.ReadByte
 
-  slot = Buffer.ReadByte()
+    Dim slot As Byte
+    Dim i    As Integer
 
-  If slot <= frmListaAmigos.ListAmigos.ListCount Then
-  frmListaAmigos.ListAmigos.List(slot - 1) = Buffer.ReadASCIIString()
-  Else
-  Call frmListaAmigos.ListAmigos.AddItem(Buffer.ReadASCIIString())
-  End If
-  'If we got here then packet is complete, copy data back to original queue
-  Call incomingData.CopyBuffer(Buffer)
+    slot = Buffer.ReadByte()
+    
+    With frmAmigos.ListAmigos
+    
+        If slot <= .ListCount Then
+            .List(slot - 1) = Buffer.ReadASCIIString()
+        Else
+            Call .AddItem(Buffer.ReadASCIIString())
+        End If
+    
+    End With
 
-ErrHandler:
-  Dim error As Long
-  error = Err.number
-  On Error GoTo 0
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
 
-  'Destroy auxiliar buffer
-  Set Buffer = Nothing
+errhandler:
 
-  If error <> 0 Then _
-  Err.Raise error
+    Dim Error As Long
+        Error = Err.number
+        
+    On Error GoTo 0
+
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
+
+    If Error <> 0 Then Call Err.Raise(Error)
+    
 End Sub

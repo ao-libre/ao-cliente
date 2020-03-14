@@ -1104,7 +1104,7 @@ Public Sub dragInventory_dragDone(ByVal originalSlot As Integer, ByVal newSlot A
 End Sub
 
 Private Sub Amigos_Click()
-    Call frmListaAmigos.Show(vbModeless, frmMain)
+    Call frmAmigos.Show(vbModeless, frmMain)
 End Sub
 
 Private Sub Form_Activate()

@@ -1,5 +1,5 @@
 VERSION 5.00
-Begin VB.Form frmListaAmigos 
+Begin VB.Form frmAmigos 
    BorderStyle     =   0  'None
    Caption         =   "Lista de Amigos"
    ClientHeight    =   5205
@@ -122,7 +122,7 @@ Begin VB.Form frmListaAmigos
       Width           =   4335
    End
 End
-Attribute VB_Name = "frmListaAmigos"
+Attribute VB_Name = "frmAmigos"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
