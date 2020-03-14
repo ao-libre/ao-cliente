@@ -128,7 +128,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteAddAmigo(ArgumentosRaw, 2)
                 Else
                     'Avisar que falta el parametro
-                    Call ShowConsoleMsg("Faltan parámetros. Utilice /FADD NICKNAME.")
+                    Call ShowConsoleMsg("Faltan parametros. Utilice /FADD NICKNAME.")
                 End If
  
             Case "/FMSG"
@@ -136,7 +136,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteMsgAmigo(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
-                    Call ShowConsoleMsg("Faltan parámetros. Utilice /FMSG MENSAJE.")
+                    Call ShowConsoleMsg("Faltan parametros. Utilice /FMSG MENSAJE.")
                 End If
 
             Case "/FON"
