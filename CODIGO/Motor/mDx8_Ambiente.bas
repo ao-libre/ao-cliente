@@ -156,10 +156,10 @@ Static lastmovement As Long
                         .b = 181.6
                         
                     Case Is >= 6
-                        .a = 100 + (H * 12.9)
-                        .r = 100 + (H * 12.9)
-                        .g = 100 + (H * 12.9)
-                        .b = 100 + (H * 12.9)
+                        .a = 100 + (Hora * 12.9)
+                        .r = 100 + (Hora * 12.9)
+                        .g = 100 + (Hora * 12.9)
+                        .b = 100 + (Hora * 12.9)
                         
                         Call ShowConsoleMsg("Ha comenzado a amanercer.")
                     
@@ -172,10 +172,10 @@ Static lastmovement As Long
                         Call ShowConsoleMsg("Es medio dia.")
                         
                     Case Is >= 18
-                        .a = 255 - (H * 3.4)
-                        .r = 255 - (H * 3.4)
-                        .g = 255 - (H * 3.4)
-                        .b = 255 - (H * 3.4)
+                        .a = 255 - (Hora * 3.4)
+                        .r = 255 - (Hora * 3.4)
+                        .g = 255 - (Hora * 3.4)
+                        .b = 255 - (Hora * 3.4)
                         
                         Call ShowConsoleMsg("Ha comenzado a anochecer.")
                         
@@ -183,7 +183,7 @@ Static lastmovement As Long
                 
             End With
                 
-            'Mensajes - andan como el culo, spamea el mensaje 1 minuto seguido cada 10 segundos, habría que hacer otro timer.
+            'Mensajes - andan como el culo, spamea el mensaje 1 minuto seguido cada 10 segundos, habria que hacer otro timer.
             If H = 0 Then
                 Call ShowConsoleMsg("Es media noche.")
             End If
