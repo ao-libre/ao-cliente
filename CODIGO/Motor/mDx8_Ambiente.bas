@@ -148,7 +148,10 @@ Static lastmovement As Long
             With CurMapAmbient.OwnAmbientLight
                 
                 Select Case Hora
-                
+                    
+                    Case 0
+                        Call ShowConsoleMsg("Es media noche.")
+                        
                     Case Is >= 1
                         .a = 181.6
                         .r = 181.6
@@ -182,11 +185,6 @@ Static lastmovement As Long
                 End Select
                 
             End With
-                
-            'Mensajes - andan como el culo, spamea el mensaje 1 minuto seguido cada 10 segundos, habria que hacer otro timer.
-            If Hora = 0 Then
-                Call ShowConsoleMsg("Es media noche.")
-            End If
 
             'setear luz
             Call Apply_OwnAmbient
