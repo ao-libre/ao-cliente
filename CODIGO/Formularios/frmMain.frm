@@ -274,7 +274,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2619
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -300,17 +299,17 @@ Begin VB.Form frmMain
       Width           =   2565
    End
    Begin VB.PictureBox MainViewPic 
-      BackColor       =   &H00000000&
+      BackColor       =   &H00FFFFFF&
       BorderStyle     =   0  'None
-      Height          =   8880
-      Left            =   120
+      Height          =   7860
+      Left            =   480
       MousePointer    =   99  'Custom
-      ScaleHeight     =   592
+      ScaleHeight     =   524
       ScaleMode       =   3  'Pixel
-      ScaleWidth      =   768
+      ScaleWidth      =   692
       TabIndex        =   30
-      Top             =   2160
-      Width           =   11520
+      Top             =   2760
+      Width           =   10380
       Begin VB.Timer trainingMacro 
          Enabled         =   0   'False
          Interval        =   3200
