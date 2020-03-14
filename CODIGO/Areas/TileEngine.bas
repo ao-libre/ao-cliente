@@ -1812,16 +1812,73 @@ Public Sub DesvanecimientoTechos()
     
 End Sub
 
+Public Sub DiaNoche()
+'*****************************************************************
+'Author: Pablo D. (DISCORD: Abusivo#1215)
+'*****************************************************************
+Static lastMovement As Long
+
+
+    ' GetTickCount mide de 16ms en 16ms. TimeGetTime es mas preciso
+    If GetTickCount - lastMovement > 1000 Then ' 1000ms
+    ' ACA VA LO QUE QUIERAS HACER, Y LO VA A HACER CADA 1s
+    
+            Dim H, m As Integer
+            H = Hour(Now)
+            m = Minute(Now)
+            
+            CurMapAmbient.UseDayAmbient = False
+            'Hora = Hour(Now)
+            If H >= 6 And H <= 11 Then
+            CurMapAmbient.OwnAmbientLight.a = 100 + (H * 12.9)
+            CurMapAmbient.OwnAmbientLight.r = 100 + (H * 12.9)
+            CurMapAmbient.OwnAmbientLight.g = 100 + (H * 12.9)
+            CurMapAmbient.OwnAmbientLight.b = 100 + (H * 12.9)
+            ElseIf H >= 12 And H <= 17 Then
+            CurMapAmbient.OwnAmbientLight.a = 255
+            CurMapAmbient.OwnAmbientLight.r = 255
+            CurMapAmbient.OwnAmbientLight.g = 255
+            CurMapAmbient.OwnAmbientLight.b = 255
+            ElseIf H >= 18 And H <= 24 Then
+            CurMapAmbient.OwnAmbientLight.a = 255 - (H * 3)
+            CurMapAmbient.OwnAmbientLight.r = 255 - (H * 3)
+            CurMapAmbient.OwnAmbientLight.g = 255 - (H * 3)
+            CurMapAmbient.OwnAmbientLight.b = 255 - (H * 3)
+            ElseIf H >= 1 And H <= 5 Then
+            CurMapAmbient.OwnAmbientLight.a = 169
+            CurMapAmbient.OwnAmbientLight.r = 169
+            CurMapAmbient.OwnAmbientLight.g = 169
+            CurMapAmbient.OwnAmbientLight.b = 169
+            End If
+            
+            'Mensajes - andan como el culo, spamea el mensaje 1 minuto seguido cada 10 segundos, habría que hacer otro timer.
+            If H = 6 And m = 1 Then
+                Call ShowConsoleMsg("Ha comenzado a amanercer.")
+            ElseIf H = 12 And m = 1 Then
+                Call ShowConsoleMsg("Es medio día.")
+            ElseIf H = 18 And m = 1 Then
+                Call ShowConsoleMsg("Ha comenzado a anochecer.")
+            ElseIf H = 0 And m = 1 Then
+                Call ShowConsoleMsg("Es media noche.")
+            End If
+            
+            'setear luz
+            Call Apply_OwnAmbient
+        
+        lastMovement = GetTickCount
+    End If
+End Sub
+
 Public Sub DesvanecimientoMsg()
 '*****************************************************************
 'Author: FrankoH
 'Last Modify Date: 04/09/2019
 'DESVANECIMIENTO DE LOS TEXTOS DEL RENDER
 '*****************************************************************
-    Static lastmovement As Long
+    Static lastMovement As Long
     
-    If GetTickCount - lastmovement > 1 Then
-        lastmovement = GetTickCount
+    If GetTickCount - lastMovement > 1 Then
+        lastMovement = GetTickCount
     Else
         Exit Sub
     End If
