@@ -124,23 +124,23 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 Call WriteOnline
                 
             Case "/FADD"
-            If notNullArguments Then
-                Call WriteAddAmigo(ArgumentosRaw, 2)
-            Else
-                'Avisar que falta el parametro
-                Call ShowConsoleMsg("Faltan parámetros. Utilice /FADD NICKNAME.")
-            End If
+                If notNullArguments Then
+                    Call WriteAddAmigo(ArgumentosRaw, 2)
+                Else
+                    'Avisar que falta el parametro
+                    Call ShowConsoleMsg("Faltan parámetros. Utilice /FADD NICKNAME.")
+                End If
  
             Case "/FMSG"
-            If notNullArguments Then
-                Call WriteMsgAmigo(ArgumentosRaw)
-            Else
-                'Avisar que falta el parametro
-                Call ShowConsoleMsg("Faltan parámetros. Utilice /FMSG MENSAJE.")
-            End If
+                If notNullArguments Then
+                    Call WriteMsgAmigo(ArgumentosRaw)
+                Else
+                    'Avisar que falta el parametro
+                    Call ShowConsoleMsg("Faltan parámetros. Utilice /FMSG MENSAJE.")
+                End If
 
             Case "/FON"
-            Call WriteOnAmigo
+                Call WriteOnAmigo
   
             Case "/DISCORD"
                 'Ojo, no usar notNullArguments porque se usa el string vacio para borrar cartel.
