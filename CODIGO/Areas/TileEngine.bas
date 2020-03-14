@@ -263,11 +263,6 @@ Private WindowTileHeight As Integer
 Public HalfWindowTileWidth As Integer
 Public HalfWindowTileHeight As Integer
 
-'Cuantos tiles el engine mete en el BUFFER cuando
-'dibuja el mapa. Ojo un tamano muy grande puede
-'volver el engine muy lento
-Public TileBufferSize As Integer
-
 'Tamano de los tiles en pixels
 Public TilePixelHeight As Integer
 Public TilePixelWidth As Integer

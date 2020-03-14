@@ -29,6 +29,10 @@ Private Projection As D3DMATRIX
 Private View As D3DMATRIX
 
 Public Engine_BaseSpeed As Single
+
+'Cuantos tiles el engine mete en el BUFFER cuando
+'dibuja el mapa. Ojo un tamano muy grande puede
+'volver el engine muy lento
 Public TileBufferSize As Integer
 
 Public ScreenWidth As Long
