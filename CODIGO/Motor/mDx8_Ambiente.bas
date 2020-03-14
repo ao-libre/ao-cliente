@@ -184,7 +184,7 @@ Static lastmovement As Long
             End With
                 
             'Mensajes - andan como el culo, spamea el mensaje 1 minuto seguido cada 10 segundos, habria que hacer otro timer.
-            If H = 0 Then
+            If Hora = 0 Then
                 Call ShowConsoleMsg("Es media noche.")
             End If
 
