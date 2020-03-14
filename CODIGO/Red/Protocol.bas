@@ -11538,7 +11538,7 @@ End Sub
 Private Sub HandleEnviarDatosServer()
 '***************************************************
 'Author: Recox
-'Last Modification: 15/01/20
+'Last Modification: 14/03/20
 'Obtiene datos del server para imprimir en la lista.
 '***************************************************
     ' If incomingData.Length < 4 Then
@@ -11546,7 +11546,8 @@ Private Sub HandleEnviarDatosServer()
     '     Exit Sub
     ' End If
 
-On Error GoTo ErrHandler
+On Error GoTo errhandler
+    
     Dim MundoServidor As String
     Dim NombreServidor As String
     Dim DescripcionServidor As String
@@ -11558,27 +11559,37 @@ On Error GoTo ErrHandler
     Dim ExpMultiplierServidor As Integer
     Dim OroMultiplierServidor As Integer
     Dim OficioMultiplierServidor As Integer
-
+    
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
+    
     'Remove packet ID
-    Call incomingData.ReadByte
+    Call Buffer.ReadByte
 
     'Get data and update form
-    MundoServidor = incomingData.ReadASCIIString()
-    NombreServidor = incomingData.ReadASCIIString()
-    DescripcionServidor = incomingData.ReadASCIIString()
-    NivelMaximoServidor = incomingData.ReadInteger()
-    MaxUsersSimultaneosServidor = incomingData.ReadInteger()
-    CantidadUsuariosOnline = incomingData.ReadInteger()
-    ExpMultiplierServidor = incomingData.ReadInteger()
-    OroMultiplierServidor = incomingData.ReadInteger()
-    OficioMultiplierServidor = incomingData.ReadInteger()
-
+    MundoServidor = Buffer.ReadASCIIString()
+    NombreServidor = Buffer.ReadASCIIString()
+    DescripcionServidor = Buffer.ReadASCIIString()
+    NivelMaximoServidor = Buffer.ReadInteger()
+    MaxUsersSimultaneosServidor = Buffer.ReadInteger()
+    CantidadUsuariosOnline = Buffer.ReadInteger()
+    ExpMultiplierServidor = Buffer.ReadInteger()
+    OroMultiplierServidor = Buffer.ReadInteger()
+    OficioMultiplierServidor = Buffer.ReadInteger()
+    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
+    
     Dim MsPingResult As Long
-    MsPingResult = (GetTickCount - pingTime)
+        MsPingResult = (GetTickCount - pingTime)
+        
     pingTime = 0
 
     Dim CountryCode As String
+    
     If IpApiEnabled Then
+        
         'If is not numeric do a url transformation
         If CheckIfIpIsNumeric(IpPublicaServidor) = False Then
             IpPublicaServidor = GetIPFromHostName(IpPublicaServidor)
@@ -11601,15 +11612,14 @@ On Error GoTo ErrHandler
 
     STAT_MAXELV = NivelMaximoServidor
 
-ErrHandler:
+errhandler:
 
-    Dim error As Long
-
-    error = Err.number
+    Dim Error As Long
+        Error = Err.number
 
     On Error GoTo 0
 
-    If error <> 0 Then Err.Raise error
+    If Error <> 0 Then Call Err.Raise(Error)
 
 End Sub
 
