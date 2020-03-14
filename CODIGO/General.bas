@@ -525,6 +525,9 @@ Sub SwitchMap(ByVal Map As Integer)
     'Aqui ponemos el nombre del mapa en el label del frmMain
     frmMain.lblMapName.Caption = nameMap
     
+    'Se llama al sistema Dia-Noche
+    Call DiaNoche
+                                                                                                
 End Sub
 
 Function ReadField(ByVal Pos As Integer, ByRef Text As String, ByVal SepASCII As Byte) As String
