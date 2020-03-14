@@ -219,8 +219,9 @@ Public Sub Engine_DirectX8_Aditional_Init()
     ColorTecho = 250
     colorRender = 240
 
-    Call Engine_Set_TileBuffer(9)
-    Call Engine_Set_BaseSpeed(0.018)
+    TileBufferSize = Areas.TamanoAreas
+    
+    Engine_BaseSpeed = 0.018
     
     With MainScreenRect
         .Bottom = ScreenHeight
@@ -319,7 +320,7 @@ Public Function Engine_TPtoSPX(ByVal X As Byte) As Long
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_TPtoSPX
 '************************************************************
 
-    Engine_TPtoSPX = Engine_PixelPosX(X - ((UserPos.X - HalfWindowTileWidth) - Engine_Get_TileBuffer)) + OffsetCounterX - 272 + ((10 - TileBufferSize) * 32)
+    Engine_TPtoSPX = Engine_PixelPosX(X - ((UserPos.X - HalfWindowTileWidth) - TileBufferSize)) + OffsetCounterX - 272 + ((10 - TileBufferSize) * 32)
     
 End Function
 
@@ -330,7 +331,7 @@ Public Function Engine_TPtoSPY(ByVal Y As Byte) As Long
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_TPtoSPY
 '************************************************************
 
-    Engine_TPtoSPY = Engine_PixelPosY(Y - ((UserPos.Y - HalfWindowTileHeight) - Engine_Get_TileBuffer)) + OffsetCounterY - 272 + ((10 - TileBufferSize) * 32)
+    Engine_TPtoSPY = Engine_PixelPosY(Y - ((UserPos.Y - HalfWindowTileHeight) - TileBufferSize)) + OffsetCounterY - 272 + ((10 - TileBufferSize) * 32)
     
 End Function
 
@@ -354,7 +355,7 @@ Public Sub Engine_D3DColor_To_RGB_List(rgb_list() As Long, Color As D3DCOLORVALU
 'Last Modification: 14/05/10
 'Blisse-AO | Set a D3DColorValue to a RGB List
 '***************************************************
-    rgb_list(0) = D3DColorARGB(Color.A, Color.r, Color.g, Color.B)
+    rgb_list(0) = D3DColorARGB(Color.a, Color.r, Color.g, Color.b)
     rgb_list(1) = rgb_list(0)
     rgb_list(2) = rgb_list(0)
     rgb_list(3) = rgb_list(0)
@@ -390,7 +391,7 @@ Public Function SetARGB_Alpha(rgb_list() As Long, Alpha As Byte) As Long()
     If Alpha < 0 Then Alpha = 0
     
     'seteamos el alpha
-    TempColor.A = Alpha
+    TempColor.a = Alpha
     
     'generamos el nuevo RGB_List
     Call Engine_D3DColor_To_RGB_List(tempARGB(), TempColor)
@@ -601,46 +602,6 @@ Public Function ZoomOffset(ByVal Offset As Byte) As Single
 '**************************************************************
 
     ZoomOffset = IIf((Offset = 1), (ScreenHeight - MainScreenRect.Bottom) / 2, (ScreenWidth - MainScreenRect.Right) / 2)
-    
-End Function
-
-Public Sub Engine_Set_BaseSpeed(ByVal BaseSpeed As Single)
-'**************************************************************
-'Author: Standelf
-'Last Modify Date: 29/12/2010
-'**************************************************************
-
-    Engine_BaseSpeed = BaseSpeed
-    
-End Sub
-
-Public Function Engine_Get_BaseSpeed() As Single
-'**************************************************************
-'Author: Standelf
-'Last Modify Date: 29/12/2010
-'**************************************************************
-
-    Engine_Get_BaseSpeed = Engine_BaseSpeed
-    
-End Function
-
-Public Sub Engine_Set_TileBuffer(ByVal setTileBufferSize As Single)
-'**************************************************************
-'Author: Standelf
-'Last Modify Date: 30/12/2010
-'**************************************************************
-
-    TileBufferSize = setTileBufferSize
-    
-End Sub
-
-Public Function Engine_Get_TileBuffer() As Single
-'**************************************************************
-'Author: Standelf
-'Last Modify Date: 30/12/2010
-'**************************************************************
-
-    Engine_Get_TileBuffer = TileBufferSize
     
 End Function
 

@@ -39,7 +39,7 @@ Public MaxLimiteX As Integer
 Public MinLimiteY As Integer
 Public MaxLimiteY As Integer
 
-Private Const TamanoAreas As Byte = 11
+Public Const TamanoAreas As Byte = 11
 
 Public Sub CambioDeArea(ByVal X As Byte, ByVal Y As Byte)
     
