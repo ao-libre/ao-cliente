@@ -11,7 +11,7 @@ Type A_Light
     range As Byte
     r As Integer
     g As Integer
-    B As Integer
+    b As Integer
 End Type
 
 Type MapAmbientBlock
@@ -31,20 +31,27 @@ End Type
 Public CurMapAmbient As MapAmbient
     
 Public Sub Apply_OwnAmbient()
-        If CurMapAmbient.UseDayAmbient = False Then
-            Estado_Actual = CurMapAmbient.OwnAmbientLight
-        Else
-            Call Actualizar_Estado(Estado_Actual_Date)
-        End If
+
+    If CurMapAmbient.UseDayAmbient = False Then
+        Estado_Actual = CurMapAmbient.OwnAmbientLight
+    Else
+        Call Actualizar_Estado(Estado_Actual_Date)
+    End If
     
-        Dim Xx As Integer, Yy As Integer
-            For Xx = XMinMapSize To XMaxMapSize
-                For Yy = YMinMapSize To YMaxMapSize
-                    If CurMapAmbient.UseDayAmbient = False Then Call Engine_D3DColor_To_RGB_List(MapData(Xx, Yy).Engine_Light(), CurMapAmbient.OwnAmbientLight)
-                Next Yy
-            Next Xx
+    Dim Xx As Integer, Yy As Integer
+
+    For Xx = XMinMapSize To XMaxMapSize
+        For Yy = YMinMapSize To YMaxMapSize
             
-        Call LightRenderAll
+            If CurMapAmbient.UseDayAmbient = False Then
+                Call Engine_D3DColor_To_RGB_List(MapData(Xx, Yy).Engine_Light(), CurMapAmbient.OwnAmbientLight)
+            End If
+            
+        Next Yy
+    Next Xx
+            
+    Call LightRenderAll
+
 End Sub
 
 Public Sub Init_Ambient(ByVal Map As Integer)
@@ -55,10 +62,10 @@ Public Sub Init_Ambient(ByVal Map As Integer)
     With CurMapAmbient
         .Fog = -1
         .UseDayAmbient = True
-        .OwnAmbientLight.A = 255
+        .OwnAmbientLight.a = 255
         .OwnAmbientLight.r = 0
         .OwnAmbientLight.g = 0
-        .OwnAmbientLight.B = 0
+        .OwnAmbientLight.b = 0
         
         .Rain = True
         .Snow = False
@@ -86,7 +93,7 @@ Public Sub Init_Ambient(ByVal Map As Integer)
                     If .UseDayAmbient = False Then Call Engine_D3DColor_To_RGB_List(MapData(Xx, Yy).Engine_Light(), .OwnAmbientLight)
                     
                     If .MapBlocks(Xx, Yy).Light.range <> 0 Then
-                        Create_Light_To_Map Xx, Yy, .MapBlocks(Xx, Yy).Light.range, .MapBlocks(Xx, Yy).Light.r, .MapBlocks(Xx, Yy).Light.g, .MapBlocks(Xx, Yy).Light.B
+                        Create_Light_To_Map Xx, Yy, .MapBlocks(Xx, Yy).Light.range, .MapBlocks(Xx, Yy).Light.r, .MapBlocks(Xx, Yy).Light.g, .MapBlocks(Xx, Yy).Light.b
                     End If
                 Next Yy
             Next Xx
@@ -99,7 +106,7 @@ Public Sub Init_Ambient(ByVal Map As Integer)
                 frmAmbientEditor.Option1(1).Value = True
                 frmAmbientEditor.Text1(0).Text = .OwnAmbientLight.r
                 frmAmbientEditor.Text1(1).Text = .OwnAmbientLight.g
-                frmAmbientEditor.Text1(2).Text = .OwnAmbientLight.B
+                frmAmbientEditor.Text1(2).Text = .OwnAmbientLight.b
             End If
                                         
             If .Fog <> -1 Then
@@ -141,7 +148,7 @@ Public Sub DiaNoche()
     'Se ejecuta cada 30min
     If GetTickCount - lastmovement > 30000 Then
     
-        lastmovement = GetTickCount
+        lastmovement = GetTickCount + 30000
 
         Dim Hora As Integer: Hora = Hour(Now)
 
