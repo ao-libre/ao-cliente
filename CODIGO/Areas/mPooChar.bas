@@ -627,7 +627,7 @@ Sub Char_MovebyPos(ByVal CharIndex As Integer, ByVal nX As Integer, ByVal nY As 
     If Not EstaPCarea(CharIndex) Then Call Dialogos.RemoveDialog(CharIndex)
     
     If (nY < MinLimiteY) Or (nY > MaxLimiteY) Or (nX < MinLimiteX) Or (nX > MaxLimiteX) Then
-        Call EraseChar(CharIndex)
+        Call Char_Erase(CharIndex)
     End If
     
 End Sub
