@@ -356,6 +356,8 @@ End Enum
 
 Public FontTypes(21) As tFont
 
+Public ReConnect As Boolean
+
 Public Sub Connect(ByVal Modo As E_MODO)
     '*********************************************************************
     'Author: Jopi
@@ -1555,9 +1557,18 @@ Private Sub HandleDisconnect()
     
     'Remove packet ID
     Call incomingData.ReadByte
+
+    If ReConnect And CheckUserData() = True Then
+        ReConnect = False
+        Call ResetAllInfo(False)
+        Call Protocol.Connect(E_MODO.Normal)
     
-    'Close connection
-    Call CloseConnectionAndResetAllInfo
+    Else
+        'Close connection and go to frmConnect
+        Call CloseConnectionAndResetAllInfo
+        
+    End If
+    
 End Sub
 
 Private Sub CloseConnectionAndResetAllInfo()
@@ -5684,6 +5695,7 @@ Public Sub WriteDeleteChar()
         Call .WriteByte(ClientPacketID.DeleteChar)
         
         Call .WriteASCIIString(UserName)
+        Call .WriteASCIIString(AccountHash)
     End With
 End Sub
 

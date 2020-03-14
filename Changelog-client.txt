@@ -687,3 +687,13 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 01/02/2020: Se agrego modulo de "Artesano", basicamente es un nuevo tipo de NPC el cual puede hacer Crafteo de items (Wyr0X)
 * 01/02/2020: Se mejoro color de la ventana conectar para que se lea el texto de informacion del server (Recox) 
 * 01/02/2020: Se arreglaron/incluyeron todos los cambios de mapas que hay en la version v0.13.26 del server (Recox-ReyarB)
+
+-v0.13.27
+* 16/02/2020: Se agregaron los mp3s faltantes para el mundo Alkon, ahora todos los mapas usan su mp3 correspondiente original (Recox)
+* 16/02/2020: Se agrego boton de creditos en el frmConnect, el mismo abre un modal con todas las personas que han colaborado en el juego en toda la historia del juego en las diferentes areas (Recox)
+* 16/02/2020: Se tradujo el formulario frmPanelAccount completamente (Recox)
+
+-v0.13.28
+* 09/03/2020: Reflejo del char en el agua. (abusiv0-jopiortiz)
+* 10/03/2020: Cambiar entre personajes de la misma cuenta sin tener que reloguear. (abusiv0-Wyr0X-jopiortiz)
+* 11/03/2020: Sombras en los personajes. Activables/desactivables desde Config.ini (abusiv0)

@@ -1147,7 +1147,7 @@
     },
     "CERRAR": {
         "TEXTOS": [
-            "Regresar a la pantalla de inicio",
+            "Cambiar personaje",
             "Salir del Juego",
             "Salir [ESC]"
         ]
@@ -1178,6 +1178,9 @@
     "BTN_CODIGO_FUENTE": {
         "TEXTO": "Codigo Fuente"
     },
+    "BTN_CREDITOS": {
+        "TEXTO": "Creditos"
+    },
     "BTN_CONECTARSE": {
         "TEXTO": "Conectarse"
     },
@@ -1202,7 +1205,7 @@
     "LBL_FORO": {
         "TEXTO": "Ver Foro"
     },
-    "LBL_SALIR": {
+    "BTN_SALIR": {
         "TEXTO": "Salir"
     },
     "LBL_TECLAS": {
@@ -1744,5 +1747,23 @@
     },
     "FRMCONNECT_LBL_DESCRIPCION_SERVER" : {
         "TEXTO": "Obteniendo datos del server por favor espere... si no los obtengo en pocos segundos y tira error significa que el servidor esta offline..."
+    },
+    "FRMPANELACCOUNT_CONFIRMAR_BORRAR_PJ" : {
+        "TEXTO": "Estas seguro que quieres borrar el personaje de tu cuenta? Esta accion no puede revertise"
+    },
+    "FRMPANELACCOUNT_CONFIRMAR_BORRAR_PJ_TITULO" : {
+        "TEXTO": "ALERTA - BORRAR PERSONAJE"
+    },
+    "FRMPANELACCOUNT_BTN_BORRAR_PERSONAJE" : {
+        "TEXTO": "Borrar Personaje"
+    },
+    "FRMPANELACCOUNT_BTN_SALIR" : {
+        "TEXTO": "Salir"
+    },
+    "FRMPANELACCOUNT_BTN_CREAR_PERSONAJE" : {
+        "TEXTO": "Crear Personaje"
+    },
+    "FRMPANELACCOUNT_BTN_CONECTAR" : {
+        "TEXTO": "Entrar"
     }
 }

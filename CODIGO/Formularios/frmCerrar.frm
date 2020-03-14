@@ -117,16 +117,25 @@ Private Sub cRegresar_Click()
     Set clsFormulario = Nothing
     
     If UserParalizado Then 'Inmo
+
         With FontTypes(FontTypeNames.FONTTYPE_WARNING)
-            Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_NO_SALIR").Item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+            Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_NO_SALIR").item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
         End With
+        
         Exit Sub
+        
     End If
+    
+    ' Desactivamos los macros.
     If frmMain.trainingMacro.Enabled Then Call frmMain.DesactivarMacroHechizos
     If frmMain.macrotrabajo.Enabled Then Call frmMain.DesactivarMacroTrabajo
     
+    ' Nos desconectamos y lo mando al Panel de la Cuenta
+    Protocol.ReConnect = True
     Call WriteQuit
-    Unload Me
+    
+    Call Unload(Me)
+    
 End Sub
 
 Private Sub cSalir_Click()
@@ -135,21 +144,20 @@ Private Sub cSalir_Click()
     Call CloseClient
 End Sub
 
-
 Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
     If KeyCode = vbKeyEscape Then
         Set clsFormulario = Nothing
-        Unload Me
+        Call Unload(Me)
     End If
 End Sub
 
 Private Sub Form_Load()
     ' Handles Form movement (drag and drop).
     Set clsFormulario = New clsFormMovementManager
-    clsFormulario.Initialize Me
+    Call clsFormulario.Initialize(Me)
     
     Me.Picture = LoadPicture(Game.path(Interfaces) & "frmCerrar.jpg")
-        '    Call LoadAOCustomControlsPictures(Me) 
+    'Call LoadAOCustomControlsPictures(Me)
     'Todo: Poner la carga de botones como en el frmCambiaMotd.frm para mantener coherencia con el resto de la aplicacion
     'y poder borrar los frx de este archivo
 

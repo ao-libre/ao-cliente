@@ -1115,53 +1115,80 @@ Public Sub CloseClient()
     
 End Sub
 
+Public Function EsGM(ByVal CharIndex As Integer) As Boolean
 
-Public Function esGM(CharIndex As Integer) As Boolean
-esGM = False
-If charlist(CharIndex).priv >= 1 And charlist(CharIndex).priv <= 5 Or charlist(CharIndex).priv = 25 Then _
-    esGM = True
+    If charlist(CharIndex).priv >= 1 And charlist(CharIndex).priv <= 5 Or charlist(CharIndex).priv = 25 Then
+        EsGM = True
+    End If
+    
+    EsGM = False
+
+End Function
+
+Public Function EsNPC(ByVal CharIndex As Integer) As Boolean
+
+    If charlist(CharIndex).iHead = 0 Then
+        EsNPC = True
+    End If
+    
+    EsNPC = False
 
 End Function
 
 Public Function getTagPosition(ByVal Nick As String) As Integer
-Dim buf As Integer
-buf = InStr(Nick, "<")
-If buf > 0 Then
-    getTagPosition = buf
-    Exit Function
-End If
-buf = InStr(Nick, "[")
-If buf > 0 Then
-    getTagPosition = buf
-    Exit Function
-End If
-getTagPosition = Len(Nick) + 2
+    
+    Dim buf As Integer
+        buf = InStr(Nick, "<")
+
+    If buf > 0 Then
+        getTagPosition = buf
+        Exit Function
+    End If
+    
+    buf = InStr(Nick, "[")
+
+    If buf > 0 Then
+        getTagPosition = buf
+        Exit Function
+    End If
+    
+    getTagPosition = Len(Nick) + 2
+    
 End Function
 
 Public Sub checkText(ByVal Text As String)
-Dim Nivel As Integer
-If Right$(Text, Len(JsonLanguage.item("MENSAJE_FRAGSHOOTER_TE_HA_MATADO").item("TEXTO"))) = JsonLanguage.item("MENSAJE_FRAGSHOOTER_TE_HA_MATADO").item("TEXTO") Then
-    Call ScreenCapture(True)
-    Exit Sub
-End If
-If Left$(Text, Len(JsonLanguage.item("MENSAJE_FRAGSHOOTER_HAS_MATADO").item("TEXTO"))) = JsonLanguage.item("MENSAJE_FRAGSHOOTER_HAS_MATADO").item("TEXTO") Then
-    EsperandoLevel = True
-    Exit Sub
-End If
-If EsperandoLevel Then
-    If Right$(Text, Len(JsonLanguage.item("MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA").item("TEXTO"))) = JsonLanguage.item("MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA").item("TEXTO") Then
-        If CInt(mid$(Text, Len(JsonLanguage.item("MENSAJE_FRAGSHOOTER_HAS_GANADO").item("TEXTO")), (Len(Text) - (Len(JsonLanguage.item("MENSAJE_FRAGSHOOTER_HAS_GANADO").item("TEXTO")))))) / 2 > ClientSetup.byMurderedLevel Then
-            Call ScreenCapture(True)
+    
+    Dim Nivel As Integer
+
+    If Right$(Text, Len(JsonLanguage.item("MENSAJE_FRAGSHOOTER_TE_HA_MATADO").item("TEXTO"))) = JsonLanguage.item("MENSAJE_FRAGSHOOTER_TE_HA_MATADO").item("TEXTO") Then
+        Call ScreenCapture(True)
+        Exit Sub
+    End If
+
+    If Left$(Text, Len(JsonLanguage.item("MENSAJE_FRAGSHOOTER_HAS_MATADO").item("TEXTO"))) = JsonLanguage.item("MENSAJE_FRAGSHOOTER_HAS_MATADO").item("TEXTO") Then
+        EsperandoLevel = True
+        Exit Sub
+    End If
+
+    If EsperandoLevel Then
+        If Right$(Text, Len(JsonLanguage.item("MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA").item("TEXTO"))) = JsonLanguage.item("MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA").item("TEXTO") Then
+            If CInt(mid$(Text, Len(JsonLanguage.item("MENSAJE_FRAGSHOOTER_HAS_GANADO").item("TEXTO")), (Len(Text) - (Len(JsonLanguage.item("MENSAJE_FRAGSHOOTER_HAS_GANADO").item("TEXTO")))))) / 2 > ClientSetup.byMurderedLevel Then
+                Call ScreenCapture(True)
+            End If
         End If
     End If
-End If
-EsperandoLevel = False
+    
+    EsperandoLevel = False
+    
 End Sub
 
 Public Function getStrenghtColor() As Long
+    
     Dim m As Long
-    m = 255 / MAXATRIBUTOS
+        m = 255 / MAXATRIBUTOS
+        
     getStrenghtColor = RGB(255 - (m * UserFuerza), (m * UserFuerza), 0)
+    
 End Function
     
 Public Function getDexterityColor() As Long
@@ -1171,13 +1198,17 @@ Public Function getDexterityColor() As Long
 End Function
 
 Public Function getCharIndexByName(ByVal name As String) As Integer
-Dim i As Long
-For i = 1 To LastChar
-    If charlist(i).Nombre = name Then
-        getCharIndexByName = i
-        Exit Function
-    End If
-Next i
+    
+    Dim i As Long
+
+    For i = 1 To LastChar
+
+        If charlist(i).Nombre = name Then
+            getCharIndexByName = i
+            Exit Function
+        End If
+    Next i
+
 End Function
 
 Public Function EsAnuncio(ByVal ForumType As Byte) As Boolean
@@ -1220,28 +1251,33 @@ Public Function ForumAlignment(ByVal yForumType As Byte) As Byte
     
 End Function
 
-Public Sub ResetAllInfo(Optional ByVal ResetInventory As Boolean = True)
+Public Sub ResetAllInfo(Optional ByVal UnloadForms As Boolean = True)
 
     ' Disable timers
     frmMain.Second.Enabled = False
     frmMain.macrotrabajo.Enabled = False
     Connected = False
     
-    'Unload all forms except frmMain, frmConnect and frmCrearPersonaje
-    Dim frm As Form
-    For Each frm In Forms
-        If frm.name <> frmMain.name And frm.name <> frmConnect.name And _
-            frm.name <> frmCrearPersonaje.name Then
-            
-            Unload frm
-        End If
-    Next
+    If UnloadForms Then
+        'Unload all forms except frmMain, frmConnect and frmCrearPersonaje
+        Dim frm As Form
+        For Each frm In Forms
+            If frm.name <> frmMain.name And _
+               frm.name <> frmConnect.name And _
+               frm.name <> frmCrearPersonaje.name Then
+                
+                Call Unload(frm)
+            End If
+        Next
+    End If
     
     On Local Error GoTo 0
     
-    ' Return to connection screen
-    If Not frmCrearPersonaje.Visible Then frmConnect.Visible = True
-    frmMain.Visible = False
+    If UnloadForms Then
+        ' Return to connection screen
+        If Not frmCrearPersonaje.Visible Then frmConnect.Visible = True
+        frmMain.Visible = False
+    End If
     
     'Stop audio
     Call Audio.StopWave
@@ -1303,7 +1339,7 @@ Public Sub ResetAllInfo(Optional ByVal ResetInventory As Boolean = True)
     
     ' Clear inventory slots
     ' Reset inventory es un parche para que podamos usar la carga dinamica de recursos por servidor sin que explote el juego (Recox)
-    If ResetInventory Then Inventario.ClearAllSlots
+    Call Inventario.ClearAllSlots
 
     ' Connection screen mp3
     Call Audio.PlayBackgroundMusic("2", MusicTypes.Mp3)
@@ -1320,6 +1356,7 @@ Dim i As Long
         End If
     Next i
 End Function
+
 Public Function DevolverIndexHechizo(ByVal Nombre As String) As Byte
 Dim i As Long
  

@@ -1,0 +1,760 @@
+*******************************
+***  Argentum Online Libre  ***
+*******************************
+
+Programacion:
+* Recox
+* Jopiortiz
+* Chots
+* Cucsifae
+* FrankoH298
+* Wyr0X
+* Shak
+* Wolftein
+* Lorwik
+* MateoMiccino
+* Lherkiev
+
+Colaboracion Grafica:
+* ReyarB
+* Aizanoth (Interfaz)
+* guidota (Logo)
+
+Indexacion:
+* Neo
+* ReyarB
+
+Mapas:
+* ReyarB
+
+Testeo:
+* BelerianD
+* Neoranger
+* Neo
+* Plusin
+
+Traduccion al ingles:
+* ReyarB
+* Jopiortiz
+* Recox
+
+Musica (Remasterizaciones de algunos MP3):
+* Noninpretio
+* NicoDeBonis
+* reduz
+* TheAinurMusic
+* PeachGod
+* Alejandro Pastor VGM (The Great War [Argentum Online C])
+
+Webmaster:
+* Recox
+
+Migracion del CVS a GIT con todo el historial:
+* Recox
+
+Mantenimiento de los repositorios:
+* Recox
+* Jopiortiz
+
+Agradecimientos a toda la comunidad de GS-Zone por apoyarnos!
+
+A Pablo Marquez por crear Argentum Online 
+y liberarlo a la comunidad bajo la licencia AGPL.
+
+Sin duda una pieza fundamental 
+para el software libre latinoamericano
+
+Muchas Gracias!
+
+ACTUALIZADO: 13/02/2020
+
+=====================================================
+*****************************************************
+*****************************************************
+=====================================================
+
+ ~ Staff Original ~ 
+
+Lider del Proyecto:
+Gulfas Morgolock
+
+Game Designer:
+Gulfas Morgolock
+
+Idea Original:
+Gulfas Morgolock
+Dark Megrim
+
+Guion:
+Guido Giunti
+
+Coordinacion y Direccion General:
+Gulfas Morgolock
+Horacio "HARACIN" Garofalo
+
+Programacion ORE:
+Aaron Perkins - Baronsoft
+
+Programacion General:
+Gulfas Morgolock
+
+Programacion Adicional:
+Matias "MatuX" Pequeno
+Barrin
+Otto Perez
+Alejandro Santos
+Gonzalo "CDT" Larralde
+Kevin Birmingham
+
+Administracion y Seguridad:
+Andres "LoBoNeGrO" Cicero
+Valentim
+
+Artistas Graficos:
+Dark Megrim
+Cuniolo Sebastian
+Leandro "]]Cesio[[" Inocencio
+Dario Rossi "NIZAR"
+Alvaro Multiva
+Juanjo Sanchez
+Dani (D.P.Dob.)
+Ivanovich Jorge
+Matias Tomas "Mauser" Pezzano
+Guillermo Ortiz
+Tinker
+
+Creacion de Escenarios:
+Gulfas Morgolock
+Matias "Matux" Pequeno
+
+Musica y Sonidos:
+Jorge "Sonic" Leni
+Ricardo Amil
+
+Webmaster:
+Alejandro "Animal" Cordara
+
+Colaboracion Adicional:
+Acced3
+Andres Chilkowski
+Birdman
+Blue Wizard
+Damian Trimboli
+Diego Montenegro
+El palomo
+Gaston Ares Masters
+Logan
+Otaegui Justo
+Raul Julian Andrade
+Reduz
+Roberto Garcia Loyo
+Remy Le Beau
+RRC2Soft
+Sapo
+Torr
+
+Colaboracion Grafica:
+Fernando "THANATOS" M. Caviglia
+Diego Arana
+Javier "AvatarJCR" Coll Rodriguez
+Roberto Julio Alamo Rolls Roice El Barbaro
+Carlos Garcia Martin
+Alejandro "Animal" Cordara
+Otto "[OTTO]" Schaffner
+
+Agradecimientos Especiales:
+Andres Chilkowski
+David Puig Rojas
+Javier Otaegui
+Murray
+
+=====================================================
+*****************************************************
+*****************************************************
+=====================================================
+
+ ~ Staff Historico ~ 
+
+Director del Proyecto:
+LoboNegro
+Morass
+Otto Wallace
+Zama
+
+Directores/Co-Directores de Desarrollo:
+Bones
+eL Cai
+El Panda
+Enanita Powa
+Manikke
+Marito
+Matematico
+Namek
+Nimrod
+Patrick
+Rayden
+
+Ambientacion:
+Jefes:
+Azhal
+Bones
+Acadus
+Koke
+Manikke
+
+Graficacion:
+Jefes:
+Camilo
+Naurgalen
+Diesel
+
+Miembros:
+Aereal
+Ariel
+Aure
+Celestial
+Blacko
+Dereth
+Dino
+Falco
+Simirk
+Laz
+Lherius
+Luzy
+LightSource
+Mateando
+Nibelungo
+Onalem
+Piggy
+Ragnarok
+Sir Condor
+Sheik
+Toto
+Vans
+Viro Q
+Yiyo
+Zeta
+
+Mapas:
+Tula
+DogMan
+El Rodra
+Laz
+Lherius
+Marito
+Marto
+Myto
+Santy
+Xogo
+
+Indexacion:
+Gast
+Mica
+Noitatum
+Pato
+Rama
+Rhaj
+Zarzu
+
+Sonidos:
+El guardian
+Enter Sandman
+Manu
+Micaiah
+Percich
+Rising Force
+
+Dateo:
+DarkBlood
+Eathers
+Noitatum
+Patrick
+Wake
+
+Balance:
+Jefes:
+Peto
+Sunny
+Zama
+
+Miembros:
+Ar
+Camilo
+Diesel
+El Panda
+Escu
+Fundro
+Guro
+Joaco
+Malkav
+Manti
+Mer
+Mishkin
+Moy
+Patrick
+Sir Kay
+Valrhon
+Wolf
+Yiyo
+
+Game Design
+Jefes:
+Arkaris
+Bones
+Mora
+Nagu
+Pol'Thalas
+Rayden
+Sunny
+
+Miembros:
+Arwen
+Aure
+Camilo
+Celestial
+Chueko
+Chuekon
+Dalo
+Dunga
+El Greco
+El Panda
+Fundro
+Guro
+Izhldar
+JB
+Joaco
+Keleborn
+Leviathan
+Lichoto
+Malkav
+Manikke
+Manti
+Maraxus
+Marto
+MeeF
+Mike
+Mishkin
+Nimrod
+Patenke
+Patrick
+Peto
+Rising Force
+Starvin
+Soul Edge
+Tanis
+Valrhon
+Xogo
+
+Programacion:
+Jefes:
+Nightw
+El Oso
+Maraxus
+
+Miembros:
+AlejoLP
+Budi
+Rapsodius
+D'Artagnan
+Dunga
+^[GS]^
+Integer
+Luke
+Marco
+Matux
+Mithrandir
+NicoNZ
+Nigo
+Nightw
+Noich
+Pato
+Salvito
+Tavo
+Liquid
+
+Rol
+Jefes:
+Eteainen
+Legi
+Nimrod
+Pol Thalas
+Starvin
+
+Miembros:
+Arkaris
+Chenko
+Dalo
+Demex
+Dry Fekner
+Garga
+Kobeh
+Micaiah
+Mora
+Morgoth
+Naurgalen
+Piggy
+Rensoku
+Suricatamike
+Skywalker
+Tanis
+Gorgoras
+KeleborN
+Asturion
+Laternal
+Lele
+
+Hard Development
+Arkaris
+Pol'Thalas
+Patenke
+El panda
+Nimrod
+Maraxus
+
+Rolmasters
+Jefes:
+Chenko
+Cupio
+Deron Vorak
+Elvio Gannet (Mega)
+InJu
+Keleborn
+Lele
+Minwu
+Naurgalen
+Pol Thalas
+
+Miembros:
+Ahtrad
+Berbe
+Demex
+Destino
+Edrahil
+Elphias Doge
+Eteainen
+Finwe
+Gorgoras
+Hank Scorpio
+Kobeh
+Laternal
+Legi
+Legl
+Luchitaz
+Mexica
+Micaiah
+Mondi
+Naurgalen
+Novotroitsk
+Obdulia
+Ramza
+Rensoku
+Siul
+Sherezade
+Slunthien
+Suricatamike
+Skywalker
+Tobler
+Wiipoo
+Willen
+Xperman
+
+Game Masters
+
+DSGMS:
+Almendra (Miha)
+Ambar (Walki)
+Brunilde (Nekkodan)
+Calixto (Zeldas)
+Chuser (Chatillon)
+Dilmilard
+Dreamer
+Guevara
+Haracin
+Haramys
+Harpax (Marto)
+Limon
+Lobo Negro
+Lock Cole
+Malkav
+Cronos (Otto Wallace)
+Ramza
+Rensoku
+Segma
+Valkira (Rising Force)
+Vorthan (Patrick)
+
+Coordinadores de GMs:
+Alatariel
+Annuminas
+Benicio
+Dereth
+Grande Cuvee
+Jem
+Khalim
+Leontino
+Nebeth
+Reiben
+
+Game Masters:
+Accurso
+Agus
+Ainion
+Aleksandra
+Aneshie
+Anhedonia
+Animal
+Arwen
+Astrea
+Ataraxia
+Athon
+Bolkow
+Camille
+Carinyc Ferny
+Cayo Mario
+Ceferino
+Celebrian Mithrandir
+Chamakh
+Chast
+Chuky
+Decoy
+Dorotea
+Dragon Kain
+Epaminondas
+Geonosis
+Ger
+Hammerfall
+Haracin
+Heavy Duty
+Iayirove
+Ivan
+Jabbuk
+Jennifer
+Junikua
+Kandiman
+Kimmy
+Lainadan
+Lenin
+Lonewolf
+Lystra
+Macario
+Marchao
+Maya
+Naevinir
+Neith
+Nerhian
+Nippur
+Noodle
+Nuker
+Otto
+Panthoff
+Pentha
+Performance
+Pototi
+Ramses
+Ranma
+Resistencia
+Rezador
+Saphirah
+Showbiz
+Sleyvas
+Sonic
+Sony
+Sun Dark
+Taaran
+Valentine
+Vegan
+Veronica
+Veronica III
+Warren Sanchez
+Wilkilen
+Yiyo
+Yzma
+Zaurak
+Zaveth
+Zeldas
+Zeldar
+Zeus
+
+Consejeros:
+Aegir
+Aguillo
+Alfadir
+Ar Kiev
+Ashaman
+Astel Klear
+Balzhur
+Barbol
+Bernice
+Bleak
+Bones
+Bonyo
+Cahetel
+Charlotte
+Ciclops
+Dama Luthien
+Damocles
+Diabolica
+Dorobo
+David Hume
+Eldassil
+Euren
+Exorcista
+Freeman
+Geonosis
+Gilean
+Goifur
+Golden Angel
+Golumk
+Grom HellsCream
+Hevia
+Jahkhun
+Khadgar
+Khalack
+Kirth
+Krugga
+Le Corbusier
+Matthew
+Melthor
+Mj Met
+Nahuren
+Narvinye
+Nhabira
+Nilzigaran
+Panama
+Pepe
+Qerrigan
+Quirite
+Razeth
+Rhaziel
+Ricarlos
+Seifer
+Seshomaru
+Shamay
+Shatur
+Sir Wiliam Smith
+Skywalker
+Slane
+St Evil
+Tallulah
+Thaum
+Thor
+Thoronwen
+Triapok
+Van Leeuwen
+Vandor
+Vanhyla
+Vhannia
+Vigia
+Vitongo
+Wake
+Xochiquetzal
+Zdenka
+Zodiaco
+
+Radio Ao
+
+Direccion:
+Calito
+Rensoku
+El Negro
+Bartios
+
+Miembros:
+Mica
+Arkchangel
+Matias [El angel baby]
+Ehixo
+Tales
+Niconz
+Solina
+Skywalker
+Taz
+Destino
+Maruletta
+Ashe
+Lucas
+El debry
+Bucchi
+Serbice
+Mustis
+Krogan
+Iago
+Parkinson
+Pyroman
+Alessandro
+Shang Tsung
+Human symbold
+Deby
+Moroko
+Peston
+Guidin
+Pulso
+Gary
+Smitten
+Winco
+Antics
+Pineas
+Ammy
+Guillen
+Asen
+Lonjito
+Aleminem
+Lematine
+Ruffini
+Lucchi
+Leontino
+Alejo
+Saitoh
+Kazen
+Chapa
+lelexd
+Luke
+Kza tronix
+England
+Qazk
+Kraken
+
+Prensa:
+Debi (jefe)
+Gonza (jefe)
+Tomsi (jefe)
+Nightw(jefe)
+Wake (jefe)
+Zaveth (jefe)
+_Ro_
+Aereal
+Arhadel
+Blacko
+Bungo
+Burni
+Chas Vm
+Eathers
+El Presi
+GaMMa
+Irilen
+Laternal (Editor)
+Lucho
+Mauro
+Rosiel
+Salito
+Sather
+Project
+
+Testeo:
+Marco (jefe)
+Atalok
+Chebo
+Cid
+El angel (baby)
+Frann
+Khalim
+Tutte
+Wilem Jr
+
+Webmaster:
+Darkblood
+Justi
+Serbice
+Wake
+Nightw (Hosting)
+Rayden (Hosting)

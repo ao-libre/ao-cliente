@@ -637,7 +637,7 @@ Private Sub Form_Load()
 
     Unload frmConnect
 
-   ' Call LoadTextsForm
+    Call LoadTextsForm
     Call LoadAOCustomControlsPictures(Me)
 
     Me.Picture = LoadPicture(Game.path(Interfaces) & "frmPanelAccount.jpg")
@@ -658,6 +658,13 @@ Private Sub Form_Load()
 
 End Sub
 
+Private Sub LoadTextsForm()
+   Me.uAOBorrarPersonaje.Caption = JsonLanguage.item("FRMPANELACCOUNT_BTN_BORRAR_PERSONAJE").item("TEXTO")
+   Me.uAOConectar.Caption = JsonLanguage.item("FRMPANELACCOUNT_BTN_CONECTAR").item("TEXTO")
+   Me.uAOCrearPersonaje.Caption = JsonLanguage.item("FRMPANELACCOUNT_BTN_CREAR_PERSONAJE").item("TEXTO")
+   Me.uAOSalir.Caption = JsonLanguage.item("FRMPANELACCOUNT_BTN_SALIR").item("TEXTO")
+End Sub
+
 Private Sub lblName_Click(Index As Integer)
     Seleccionado = Index
 End Sub
@@ -668,7 +675,7 @@ Private Sub uAOBorrarPersonaje_Click()
         Exit Sub
     End If
 
-   If MsgBox("Estas seguro que quieres borrar el personaje de tu cuenta? Esta accion no puede revertise", vbYesNo, "BORRAR PERSONAJE") = vbYes Then
+   If MsgBox(JsonLanguage.item("FRMPANELACCOUNT_CONFIRMAR_BORRAR_PJ").item("TEXTO"), vbYesNo, JsonLanguage.item("FRMPANELACCOUNT_CONFIRMAR_BORRAR_PJ_TITULO").item("TEXTO")) = vbYes Then
     
       If Not frmMain.Client.State = sckConnected Then
          MsgBox JsonLanguage.item("ERROR_CONN_LOST").item("TEXTO")
@@ -677,8 +684,9 @@ Private Sub uAOBorrarPersonaje_Click()
          NumberOfCharacters = 0
          Unload Me
       Else
-         UserName = lblAccData(Seleccionado).Caption
+         UserName = cPJ(Seleccionado).Nombre
          Call WriteDeleteChar
+         
       End If
 
    End If

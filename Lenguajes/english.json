@@ -1147,7 +1147,7 @@
     },
     "CERRAR": {
         "TEXTOS": [
-            "Return to the home screen",
+            "Change player",
             "Exit the Game",
             "Exit [ESC]"
         ]
@@ -1178,6 +1178,9 @@
     "BTN_CODIGO_FUENTE": {
         "TEXTO": "Source Code"
     },
+    "BTN_CREDITOS": {
+        "TEXTO": "Credits"
+    },
     "BTN_CONECTARSE": {
         "TEXTO": "Connect"
     },
@@ -1202,7 +1205,7 @@
     "LBL_FORO": {
         "TEXTO": "See Forum"
     },
-    "LBL_SALIR": {
+    "BTN_SALIR": {
         "TEXTO": "Exit"
     },
     "LBL_TECLAS": {
@@ -1744,5 +1747,23 @@
     },
     "FRMCONNECT_LBL_DESCRIPCION_SERVER" : {
         "TEXTO": "Obtaining data from the server please wait ... if I do not get it in a few seconds and throw error means that the server is offline ..."
+    },
+    "FRMPANELACCOUNT_CONFIRMAR_BORRAR_PJ": {
+        "TEXTO": "Are you sure you want to delete the character from your account? This action cannot be reversed"
+    },
+    "FRMPANELACCOUNT_CONFIRMAR_BORRAR_PJ_TITULO": {
+        "TEXTO": "ALERT - DELETE CHARACTER"
+    },
+    "FRMPANELACCOUNT_BTN_BORRAR_PERSONAJE": {
+        "TEXTO": "Delete Character"
+    },
+    "FRMPANELACCOUNT_BTN_SALIR": {
+        "TEXTO": "Exit"
+    },
+    "FRMPANELACCOUNT_BTN_CREAR_PERSONAJE": {
+        "TEXTO": "Create Character"
+    },
+    "FRMPANELACCOUNT_BTN_CONECTAR" : {
+        "TEXTO": "Enter"
     }
 }
