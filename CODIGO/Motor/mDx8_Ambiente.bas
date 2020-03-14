@@ -136,8 +136,9 @@ Public Sub DiaNoche()
 'Author: Pablo D. (DISCORD: Abusivo#1215)
 '*****************************************************************
 Static lastmovement As Long
-
-    If GetTickCount - lastmovement > 1 Then
+    
+    'Se ejecuta cada 30min
+    If GetTickCount - lastmovement > 30000 Then
     
             lastmovement = GetTickCount
 
