@@ -131,8 +131,6 @@ Public Sub Save_Ambient(ByVal Map As Integer)
 
 End Sub
 
-
-
 Public Sub DiaNoche()
 '*****************************************************************
 'Author: Pablo D. (DISCORD: Abusivo#1215)
@@ -143,51 +141,50 @@ Static lastmovement As Long
     
             lastmovement = GetTickCount
 
-            Dim H, m As Integer
-            H = Hour(Now)
-            m = Minute(Now)
+            Dim Hora As Integer: Hora = Hour(Now)
 
             CurMapAmbient.UseDayAmbient = False
             
             With CurMapAmbient.OwnAmbientLight
-            
-                If H >= 6 And H <= 11 Then
-                    .a = 100 + (H * 12.9)
-                    .r = 100 + (H * 12.9)
-                    .g = 100 + (H * 12.9)
-                    .B = 100 + (H * 12.9)
+                
+                Select Case Hora
+                
+                    Case Is >= 1
+                        .a = 181.6
+                        .r = 181.6
+                        .g = 181.6
+                        .b = 181.6
+                        
+                    Case Is >= 6
+                        .a = 100 + (H * 12.9)
+                        .r = 100 + (H * 12.9)
+                        .g = 100 + (H * 12.9)
+                        .b = 100 + (H * 12.9)
+                        
+                        Call ShowConsoleMsg("Ha comenzado a amanercer.")
                     
-                ElseIf H >= 12 And H <= 17 Then
-                    .a = 255
-                    .r = 255
-                    .g = 255
-                    .B = 255
-                    
-                ElseIf H >= 18 And H <= 24 Then
-                    .a = 255 - (H * 3.4)
-                    .r = 255 - (H * 3.4)
-                    .g = 255 - (H * 3.4)
-                    .B = 255 - (H * 3.4)
-                    
-                ElseIf H >= 1 And H <= 5 Then
-                    .a = 181.6
-                    .r = 181.6
-                    .g = 181.6
-                    .B = 181.6
-                    
-                End If
+                    Case Is >= 12
+                        .a = 255
+                        .r = 255
+                        .g = 255
+                        .b = 255
+                        
+                        Call ShowConsoleMsg("Es medio dia.")
+                        
+                    Case Is >= 18
+                        .a = 255 - (H * 3.4)
+                        .r = 255 - (H * 3.4)
+                        .g = 255 - (H * 3.4)
+                        .b = 255 - (H * 3.4)
+                        
+                        Call ShowConsoleMsg("Ha comenzado a anochecer.")
+                        
+                End Select
                 
             End With
                 
-
             'Mensajes - andan como el culo, spamea el mensaje 1 minuto seguido cada 10 segundos, habría que hacer otro timer.
-            If H = 6 And m = 1 Then
-                Call ShowConsoleMsg("Ha comenzado a amanercer.")
-            ElseIf H = 12 And m = 1 Then
-                Call ShowConsoleMsg("Es medio día.")
-            ElseIf H = 18 And m = 1 Then
-                Call ShowConsoleMsg("Ha comenzado a anochecer.")
-            ElseIf H = 0 And m = 1 Then
+            If H = 0 Then
                 Call ShowConsoleMsg("Es media noche.")
             End If
 
