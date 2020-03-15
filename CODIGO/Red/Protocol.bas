@@ -922,7 +922,7 @@ On Error Resume Next
             Call HandleEnviarDatosServer
             
         Case ServerPacketID.EnviarListDeAmigos
-            Call HnadleEnviarListDeAmigos
+            Call HandleEnviarListDeAmigos
 
         Case Else
             'ERROR : Abort!
@@ -11672,7 +11672,7 @@ Public Sub WriteMsgAmigo(ByVal msg As String)
     
 End Sub
 
-Private Sub HnadleEnviarListDeAmigos()
+Private Sub HandleEnviarListDeAmigos()
 
     '***************************************************
     'Author: Abusivo#1215 (DISCORD)
