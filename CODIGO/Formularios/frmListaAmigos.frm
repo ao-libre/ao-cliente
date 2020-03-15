@@ -157,7 +157,7 @@ Private Sub AgregarAmigo_Click()
 
     If LenB(Trim$(SendName)) Then
         
-        If MsgBox("¿Seguro desea agregar a " & SendName & "?", vbYesNo, "Agregar Amigo") = vbYes Then
+        If MsgBox("Seguro desea agregar a " & SendName & "?", vbYesNo, "Agregar Amigo") = vbYes Then
            Call WriteAddAmigo(SendName, 1)
         End If
         
@@ -175,7 +175,7 @@ Private Sub BorrarAmigo_Click()
 
     If LenB(ListAmigos.List(ListAmigos.ListIndex)) = 0 Then Exit Sub
     
-    If MsgBox("¿Seguro desea borrar a " & ListAmigos.List(ListAmigos.ListIndex) & "?", vbYesNo, "Borrar Amigo") = vbYes Then
+    If MsgBox("Seguro desea borrar a " & ListAmigos.List(ListAmigos.ListIndex) & "?", vbYesNo, "Borrar Amigo") = vbYes Then
         Call WriteDelAmigo(ListAmigos.ListIndex + 1)
     End If
     
