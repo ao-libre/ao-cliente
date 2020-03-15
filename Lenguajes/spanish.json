@@ -1774,5 +1774,14 @@
     },
 	"FRM_LISTAAMIGOS_BORRAR" : {
     "TEXTO": "Borrar Amigo"
+    },
+	"FRM_LISTAAMIGOS_PARAMETRO" : {
+    "TEXTO": "Faltan parametros."
+    },
+	"FRM_LISTAAMIGOS_FADD" : {
+    "TEXTO": "Utilice /FADD NICKNAME."
+    },
+	"FRM_LISTAAMIGOS_FMSG" : {
+    "TEXTO": "Utilice /FMSG MENSAJE."
     }
 }
