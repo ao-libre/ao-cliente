@@ -1774,5 +1774,14 @@
     },
 	"FRM_LISTAAMIGOS_BORRAR" : {
     "TEXTO": "Del Friend"
+    },
+	"FRM_LISTAAMIGOS_PARAMETRO" : {
+    "TEXTO": "Missing parameters."
+    },
+	"FRM_LISTAAMIGOS_FADD" : {
+    "TEXTO": "Use /FADD NICKNAME."
+    },
+	"FRM_LISTAAMIGOS_FMSG" : {
+    "TEXTO": "Use /FMSG MENSAJE."
     }
 }
