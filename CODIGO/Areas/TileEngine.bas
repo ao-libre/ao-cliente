@@ -798,7 +798,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
                     If .Particle_Group_Index Then
                     
                         'Solo las renderizamos si estan cerca del area de vision.
-                        If Abs(UserPos.X - X) < TileBufferSize + 3 And (Abs(UserPos.Y - Y)) < TileBufferSize + 3 Then
+                        If EstaDentroDelArea(X, Y) Then
                             Call mDx8_Particulas.Particle_Group_Render(.Particle_Group_Index, PixelOffsetXTemp + 16, PixelOffsetYTemp + 16)
                         End If
                         
