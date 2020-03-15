@@ -223,7 +223,9 @@ Public Sub Engine_DirectX8_Aditional_Init()
     ColorTecho = 250
     colorRender = 240
 
-    TileBufferSize = Areas.TamanoAreas
+    TileBufferSize = Areas.TilesBuffer
+    
+    Call CalcularAreas(HalfWindowTileWidth, HalfWindowTileHeight)
     
     Engine_BaseSpeed = 0.018
     
@@ -359,7 +361,7 @@ Public Sub Engine_D3DColor_To_RGB_List(rgb_list() As Long, Color As D3DCOLORVALU
 'Last Modification: 14/05/10
 'Blisse-AO | Set a D3DColorValue to a RGB List
 '***************************************************
-    rgb_list(0) = D3DColorARGB(Color.a, Color.r, Color.g, Color.b)
+    rgb_list(0) = D3DColorARGB(Color.A, Color.r, Color.g, Color.B)
     rgb_list(1) = rgb_list(0)
     rgb_list(2) = rgb_list(0)
     rgb_list(3) = rgb_list(0)
@@ -395,7 +397,7 @@ Public Function SetARGB_Alpha(rgb_list() As Long, Alpha As Byte) As Long()
     If Alpha < 0 Then Alpha = 0
     
     'seteamos el alpha
-    TempColor.a = Alpha
+    TempColor.A = Alpha
     
     'generamos el nuevo RGB_List
     Call Engine_D3DColor_To_RGB_List(tempARGB(), TempColor)

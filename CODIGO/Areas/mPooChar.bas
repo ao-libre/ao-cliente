@@ -14,7 +14,7 @@ Public Sub Char_Erase(ByVal CharIndex As Integer)
     '*****************************************************************
  
     With charlist(CharIndex)
-        
+
         If (CharIndex = 0) Then Exit Sub
         If (CharIndex > LastChar) Then Exit Sub
                 
@@ -533,33 +533,6 @@ Public Sub Char_Make(ByVal CharIndex As Integer, _
        
 End Sub
 
-Public Sub Char_RefreshAll()
-    '*****************************************************************
-    'Goes through the charlist and replots all the characters on the map
-    'Used to make sure everyone is visible
-    '*****************************************************************
- 
-    Dim LoopC As Long
-   
-    For LoopC = 1 To LastChar
- 
-        If (Char_Check(LoopC)) Then  '// Char valido
-
-            With charlist(LoopC)
-
-                If (Map_InBounds(.Pos.X, .Pos.Y)) Then
-                    MapData(.Pos.X, .Pos.Y).CharIndex = LoopC  '// Ahora si refrescamos sin error alguno :3
-
-                End If
-
-            End With
-
-        End If
-
-    Next LoopC
- 
-End Sub
-
 Sub Char_MovebyPos(ByVal CharIndex As Integer, ByVal nX As Integer, ByVal nY As Integer)
 
     Dim X        As Integer
@@ -626,7 +599,7 @@ Sub Char_MovebyPos(ByVal CharIndex As Integer, ByVal nX As Integer, ByVal nY As 
 
     If Not EstaPCarea(CharIndex) Then Call Dialogos.RemoveDialog(CharIndex)
     
-    If (nY < MinLimiteY) Or (nY > MaxLimiteY) Or (nX < MinLimiteX) Or (nX > MaxLimiteX) Then
+    If Not EstaDentroDelArea(nX, nY) Then
         Call Char_Erase(CharIndex)
     End If
     
@@ -748,16 +721,12 @@ Sub Char_MovebyHead(ByVal CharIndex As Integer, ByVal nHeading As E_Heading)
     
     If (UserEstado = 0) Then
         Call DoPasosFx(CharIndex)
-
     End If
-      
-    'areas viejos
-    If (nY < MinLimiteY) Or (nY > MaxLimiteY) Or (nX < MinLimiteX) Or (nX > MaxLimiteX) Then
-        
-        If CharIndex <> UserCharIndex Then
+
+    If CharIndex <> UserCharIndex Then
+        If Not EstaDentroDelArea(nX, nY) Then
             Call Char_Erase(CharIndex)
         End If
-
     End If
 
 End Sub

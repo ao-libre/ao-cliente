@@ -472,10 +472,9 @@ Sub MoveCharbyHead(ByVal CharIndex As Integer, ByVal nHeading As E_Heading)
     End With
     
     If UserEstado = 0 Then Call DoPasosFx(CharIndex)
-    
-    'areas viejos
-    If (nY < MinLimiteY) Or (nY > MaxLimiteY) Or (nX < MinLimiteX) Or (nX > MaxLimiteX) Then
-        If CharIndex <> UserCharIndex Then
+
+    If CharIndex <> UserCharIndex Then
+        If Not EstaDentroDelArea(nX, nY) Then
             Call Char_Erase(CharIndex)
         End If
     End If
@@ -673,7 +672,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
     screenmaxX = tilex + HalfWindowTileWidth
     
     minY = screenminY - TileBufferSize
-    maxY = screenmaxY + TileBufferSize
+    maxY = screenmaxY + TileBufferSize * 2 ' WyroX: Parche para que no desaparezcan techos y arboles
     minX = screenminX - TileBufferSize
     maxX = screenmaxX + TileBufferSize
     

@@ -554,7 +554,7 @@ On Error Resume Next
 
     Dim Packet As Long: Packet = CLng(incomingData.PeekByte())
     
-    Debug.Print Packet
+    'Debug.Print Packet
     
     Select Case Packet
             
@@ -1659,7 +1659,7 @@ Private Sub HandleCommerceInit()
                 Call InvComNpc.SetItem(i, .ObjIndex, _
                 .Amount, 0, .GrhIndex, _
                 .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, _
-                .Valor, .Name)
+                .Valor, .name)
             End With
         End If
     Next i
@@ -1707,7 +1707,7 @@ Private Sub HandleBankInit()
             Call InvBanco(0).SetItem(i, .ObjIndex, _
                 .Amount, .Equipped, .GrhIndex, _
                 .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, _
-                .Valor, .Name)
+                .Valor, .name)
         End With
     Next i
     
@@ -2175,13 +2175,13 @@ Private Sub WriteChatOverHeadInConsole(ByVal CharIndex As Integer, ByVal ChatTex
             
         If Pos = 0 Then Pos = LenB(.Nombre) + 2
         
-        Dim Name As String
-        Name = Left$(.Nombre, Pos - 2)
+        Dim name As String
+        name = Left$(.Nombre, Pos - 2)
        
         'Si el npc tiene nombre lo escribimos en la consola
         
         If LenB(.Nombre) <> 0 Then
-            Call AddtoRichTextBox(frmMain.RecTxt, Name & "> ", NameRed, NameGreen, NameBlue, True, False, True, rtfLeft)
+            Call AddtoRichTextBox(frmMain.RecTxt, name & "> ", NameRed, NameGreen, NameBlue, True, False, True, rtfLeft)
         End If
 
         Call AddtoRichTextBox(frmMain.RecTxt, ChatText, Red, Green, Blue, True, False, False, rtfLeft)
@@ -2609,14 +2609,13 @@ On Error GoTo errhandler
     weapon = Buffer.ReadInteger()
     shield = Buffer.ReadInteger()
     helmet = Buffer.ReadInteger()
-    
-    
+
     With charlist(CharIndex)
         Call Char_SetFx(CharIndex, Buffer.ReadInteger(), Buffer.ReadInteger())
-        
+
         .Nombre = Buffer.ReadASCIIString()
         NickColor = Buffer.ReadByte()
-        
+
         If (NickColor And eNickColor.ieCriminal) <> 0 Then
             .Criminal = 1
         Else
@@ -2650,8 +2649,6 @@ On Error GoTo errhandler
     End With
     
     Call Char_Make(CharIndex, Body, Head, Heading, X, Y, weapon, shield, helmet)
-    
-    Call Char_RefreshAll
     
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
@@ -2710,7 +2707,6 @@ Private Sub HandleCharacterRemove()
     CharIndex = incomingData.ReadInteger()
     
     Call Char_Erase(CharIndex)
-    Call RefreshAllChars
 End Sub
 
 ''
@@ -2737,7 +2733,7 @@ Private Sub HandleCharacterMove()
     CharIndex = incomingData.ReadInteger()
     X = incomingData.ReadByte()
     Y = incomingData.ReadByte()
-    
+
     With charlist(CharIndex)
         If .FxIndex >= 40 And .FxIndex <= 49 Then   'If it's meditating, we remove the FX
             .FxIndex = 0
@@ -2752,8 +2748,6 @@ Private Sub HandleCharacterMove()
     End With
     
     Call Char_MovebyPos(CharIndex, X, Y)
-    
-    Call Char_RefreshAll
 End Sub
 
 ''
@@ -2773,11 +2767,8 @@ Private Sub HandleForceCharMove()
     
     Direccion = incomingData.ReadByte()
 
-
     Call Char_MovebyHead(UserCharIndex, Direccion)
     Call Char_MoveScreen(Direccion)
-    
-    Call Char_RefreshAll
 End Sub
 
 ''
@@ -2819,8 +2810,6 @@ Private Sub HandleCharacterChange()
         
     '// Char Fx
     Call Char_SetFx(CharIndex, incomingData.ReadInteger(), incomingData.ReadInteger())
-        
-    Call Char_RefreshAll
 End Sub
 Private Sub HandleHeadingChange()
 '***************************************************
@@ -2842,8 +2831,6 @@ Private Sub HandleHeadingChange()
     CharIndex = incomingData.ReadInteger()
 
     Call Char_SetHeading(CharIndex, incomingData.ReadByte())
-
-    Call Char_RefreshAll
 End Sub
 
 ''
@@ -3276,7 +3263,7 @@ On Error GoTo errhandler
     
     Dim slot As Byte
     Dim ObjIndex As Integer
-    Dim Name As String
+    Dim name As String
     Dim Amount As Integer
     Dim Equipped As Boolean
     Dim GrhIndex As Long
@@ -3289,7 +3276,7 @@ On Error GoTo errhandler
     
     slot = Buffer.ReadByte()
     ObjIndex = Buffer.ReadInteger()
-    Name = Buffer.ReadASCIIString()
+    name = Buffer.ReadASCIIString()
     Amount = Buffer.ReadInteger()
     Equipped = Buffer.ReadBoolean()
     GrhIndex = Buffer.ReadLong()
@@ -3332,7 +3319,7 @@ On Error GoTo errhandler
         End Select
     End If
     
-    Call Inventario.SetItem(slot, ObjIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, Name)
+    Call Inventario.SetItem(slot, ObjIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, name)
 
     Call Inventario.DrawInventory
     
@@ -3447,7 +3434,7 @@ On Error GoTo errhandler
     
     With UserBancoInventory(slot)
         .ObjIndex = Buffer.ReadInteger()
-        .Name = Buffer.ReadASCIIString()
+        .name = Buffer.ReadASCIIString()
         .Amount = Buffer.ReadInteger()
         .GrhIndex = Buffer.ReadLong()
         .OBJType = Buffer.ReadByte()
@@ -3458,7 +3445,7 @@ On Error GoTo errhandler
         .Valor = Buffer.ReadLong()
         
         If frmBancoObj.Visible Then
-            Call InvBanco(0).SetItem(slot, .ObjIndex, .Amount, 0, .GrhIndex, .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .Name)
+            Call InvBanco(0).SetItem(slot, .ObjIndex, .Amount, 0, .GrhIndex, .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .name)
         End If
     End With
     
@@ -3610,7 +3597,7 @@ On Error GoTo errhandler
     
     For i = 1 To Count
         With ArmasHerrero(i)
-            .Name = Buffer.ReadASCIIString()    'Get the object's name
+            .name = Buffer.ReadASCIIString()    'Get the object's name
             .GrhIndex = Buffer.ReadLong()
             .LinH = Buffer.ReadInteger()        'The iron needed
             .LinP = Buffer.ReadInteger()        'The silver needed
@@ -3656,10 +3643,10 @@ On Error GoTo errhandler
                 
                         ReDim Preserve HerreroMejorar(J) As tItemsConstruibles
                         
-                        HerreroMejorar(J).Name = .Name
+                        HerreroMejorar(J).name = .name
                         HerreroMejorar(J).GrhIndex = .GrhIndex
                         HerreroMejorar(J).ObjIndex = .ObjIndex
-                        HerreroMejorar(J).UpgradeName = ArmasHerrero(k).Name
+                        HerreroMejorar(J).UpgradeName = ArmasHerrero(k).name
                         HerreroMejorar(J).UpgradeGrhIndex = ArmasHerrero(k).GrhIndex
                         HerreroMejorar(J).LinH = ArmasHerrero(k).LinH - .LinH * 0.85
                         HerreroMejorar(J).LinP = ArmasHerrero(k).LinP - .LinP * 0.85
@@ -3717,7 +3704,7 @@ On Error GoTo errhandler
     
     For i = 1 To Count
         With ArmadurasHerrero(i)
-            .Name = Buffer.ReadASCIIString()    'Get the object's name
+            .name = Buffer.ReadASCIIString()    'Get the object's name
             .GrhIndex = Buffer.ReadLong()
             .LinH = Buffer.ReadInteger()        'The iron needed
             .LinP = Buffer.ReadInteger()        'The silver needed
@@ -3750,10 +3737,10 @@ On Error GoTo errhandler
                 
                         ReDim Preserve HerreroMejorar(J) As tItemsConstruibles
                         
-                        HerreroMejorar(J).Name = .Name
+                        HerreroMejorar(J).name = .name
                         HerreroMejorar(J).GrhIndex = .GrhIndex
                         HerreroMejorar(J).ObjIndex = .ObjIndex
-                        HerreroMejorar(J).UpgradeName = ArmadurasHerrero(k).Name
+                        HerreroMejorar(J).UpgradeName = ArmadurasHerrero(k).name
                         HerreroMejorar(J).UpgradeGrhIndex = ArmadurasHerrero(k).GrhIndex
                         HerreroMejorar(J).LinH = ArmadurasHerrero(k).LinH - .LinH * 0.85
                         HerreroMejorar(J).LinP = ArmadurasHerrero(k).LinP - .LinP * 0.85
@@ -3813,7 +3800,7 @@ On Error GoTo errhandler
     
     For i = 1 To Count
         With ObjCarpintero(i)
-            .Name = Buffer.ReadASCIIString()        'Get the object's name
+            .name = Buffer.ReadASCIIString()        'Get the object's name
             .GrhIndex = Buffer.ReadLong()
             .Madera = Buffer.ReadInteger()          'The wood needed
             .MaderaElfica = Buffer.ReadInteger()    'The elfic wood needed
@@ -3858,10 +3845,10 @@ On Error GoTo errhandler
                 
                         ReDim Preserve CarpinteroMejorar(J) As tItemsConstruibles
                         
-                        CarpinteroMejorar(J).Name = .Name
+                        CarpinteroMejorar(J).name = .name
                         CarpinteroMejorar(J).GrhIndex = .GrhIndex
                         CarpinteroMejorar(J).ObjIndex = .ObjIndex
-                        CarpinteroMejorar(J).UpgradeName = ObjCarpintero(k).Name
+                        CarpinteroMejorar(J).UpgradeName = ObjCarpintero(k).name
                         CarpinteroMejorar(J).UpgradeGrhIndex = ObjCarpintero(k).GrhIndex
                         CarpinteroMejorar(J).Madera = ObjCarpintero(k).Madera - .Madera * 0.85
                         CarpinteroMejorar(J).MaderaElfica = ObjCarpintero(k).MaderaElfica - .MaderaElfica * 0.85
@@ -3919,7 +3906,7 @@ On Error GoTo errhandler
 
     For i = 1 To CountObjs
         With ObjArtesano(i)
-            .Name = Buffer.ReadASCIIString()
+            .name = Buffer.ReadASCIIString()
             .GrhIndex = Buffer.ReadLong()
             .ObjIndex = Buffer.ReadInteger()
             
@@ -3927,7 +3914,7 @@ On Error GoTo errhandler
             ReDim .ItemsCrafteo(CountCrafteo) As tItemCrafteo
             
             For J = 1 To CountCrafteo
-                .ItemsCrafteo(J).Name = Buffer.ReadASCIIString()
+                .ItemsCrafteo(J).name = Buffer.ReadASCIIString()
                 .ItemsCrafteo(J).GrhIndex = Buffer.ReadLong()
                 .ItemsCrafteo(J).ObjIndex = Buffer.ReadInteger()
                 .ItemsCrafteo(J).Amount = Buffer.ReadInteger()
@@ -4123,7 +4110,7 @@ On Error GoTo errhandler
     slot = Buffer.ReadByte()
     
     With NPCInventory(slot)
-        .Name = Buffer.ReadASCIIString()
+        .name = Buffer.ReadASCIIString()
         .Amount = Buffer.ReadInteger()
         .Valor = Buffer.ReadSingle()
         .GrhIndex = Buffer.ReadLong()
@@ -4135,7 +4122,7 @@ On Error GoTo errhandler
         .MinDef = Buffer.ReadInteger()
     
         If frmComerciar.Visible Then
-            Call InvComNpc.SetItem(slot, .ObjIndex, .Amount, 0, .GrhIndex, .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .Name)
+            Call InvComNpc.SetItem(slot, .ObjIndex, .Amount, 0, .GrhIndex, .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .name)
         End If
     End With
         
@@ -6360,7 +6347,7 @@ End Sub
 ' @param    codex   Array of all rules of the guild.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCreateNewGuild(ByVal Desc As String, ByVal Name As String, ByVal Site As String, ByRef Codex() As String)
+Public Sub WriteCreateNewGuild(ByVal Desc As String, ByVal name As String, ByVal Site As String, ByRef Codex() As String)
 '***************************************************
 'Author: Juan Martin Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -6374,7 +6361,7 @@ Public Sub WriteCreateNewGuild(ByVal Desc As String, ByVal Name As String, ByVal
         Call .WriteByte(ClientPacketID.CreateNewGuild)
         
         Call .WriteASCIIString(Desc)
-        Call .WriteASCIIString(Name)
+        Call .WriteASCIIString(name)
         Call .WriteASCIIString(Site)
         
         Lower_codex = LBound(Codex())

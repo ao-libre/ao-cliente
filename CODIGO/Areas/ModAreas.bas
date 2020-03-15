@@ -31,52 +31,65 @@ Attribute VB_Name = "Areas"
 'Codigo Postal 1900
 'Pablo Ignacio Marquez
 
+' WyroX: Pequenia modificacion para que el tamanio de las areas se calcule automaticamente
+' en base al tamanio del render y de un valor arbitrario para el buffer (tiles extra)
+
 Option Explicit
 
-'LAS GUARDAMOS PARA PROCESAR LOS MPs y sabes si borrar personajes
-Public MinLimiteX As Integer
-Public MaxLimiteX As Integer
-Public MinLimiteY As Integer
-Public MaxLimiteY As Integer
+' Cantidad de tiles buffer
+' (para que graficos grandes se vean desde fuera de la pantalla)
+' (debe coincidir con el mismo valor en el server - areas)
+Public Const TilesBuffer As Byte = 5
 
-Public Const TamanoAreas As Byte = 11
+' Tamanio de las areas
+Private AreasX As Byte
+Private AreasY As Byte
 
+' Area actual
+Private CurAreaX As Integer
+Private CurAreaY As Integer
+
+Public Sub CalcularAreas(HalfWindowTileWidth As Integer, HalfWindowTileHeight As Integer)
+    AreasX = HalfWindowTileWidth + TileBufferSize
+    AreasY = HalfWindowTileHeight + TileBufferSize
+End Sub
+
+' Elimina todo fuera del area del usuario
 Public Sub CambioDeArea(ByVal X As Byte, ByVal Y As Byte)
-    
-    Dim loopX As Long, loopY As Long, CharIndex As Integer, ObjIndex As Integer
-    
-    MinLimiteX = (X \ TamanoAreas - 1) * TamanoAreas
-    MaxLimiteX = MinLimiteX + ((TamanoAreas * 3) - 1)
-    
-    MinLimiteY = (Y \ TamanoAreas - 1) * TamanoAreas
-    MaxLimiteY = MinLimiteY + ((TamanoAreas * 3) - 1)
-    
+
+    CurAreaX = X \ AreasX
+    CurAreaY = Y \ AreasY
+
+    Dim loopX As Integer, loopY As Integer, CharIndex As Integer
+
+    ' Recorremos el mapa entero (TODO: Se puede optimizar si el server nos enviara la direccion del area que nos movimos)
     For loopX = 1 To 100
         For loopY = 1 To 100
-            
-            If (loopY < MinLimiteY) Or (loopY > MaxLimiteY) Or (loopX < MinLimiteX) Or (loopX > MaxLimiteX) Then
-                
-                'Erase NPCs
+
+            ' Si el tile esta fuera del area
+            If Not EstaDentroDelArea(loopX, loopY) Then
+
+                ' Borrar char
                 CharIndex = Char_MapPosExits(loopX, loopY)
- 
                 If (CharIndex > 0) Then
                     If (CharIndex <> UserCharIndex) Then
                         Call Char_Erase(CharIndex)
                     End If
                 End If
-               
-                'Erase OBJs
-                ObjIndex = Map_PosExitsObject(loopX, loopY)
-                                
-                If (ObjIndex > 0) Then
+
+                ' Borrar objeto
+                If (Map_PosExitsObject(loopX, loopY) > 0) Then
                     Call Map_DestroyObject(loopX, loopY)
                 End If
-                
+
             End If
-            
+
         Next loopY
     Next loopX
-    
-    Call RefreshAllChars
-    
+
 End Sub
+
+' Calcula si la posicion se encuentra dentro del area del usuario
+Public Function EstaDentroDelArea(ByVal X As Integer, ByVal Y As Integer) As Boolean
+    EstaDentroDelArea = (Abs(CurAreaX - X \ AreasX) <= 1) And (Abs(CurAreaY - Y \ AreasY) <= 1)
+End Function
