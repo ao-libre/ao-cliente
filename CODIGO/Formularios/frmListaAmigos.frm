@@ -127,10 +127,12 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+
 Private Sub Form_Load()
+    
     ' Handles Form movement (drag and drop).
     Set clsFormulario = New clsFormMovementManager
-    clsFormulario.Initialize Me
+    Call clsFormulario.Initialize(Me)
     
     Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaListaAmigos.jpg")
     
@@ -139,6 +141,7 @@ Private Sub Form_Load()
 
     Set picNegrita = LoadPicture(Game.path(Interfaces) & "OpcionPrendidaN.jpg")
     Set picCursiva = LoadPicture(Game.path(Interfaces) & "OpcionPrendidaC.jpg")
+
 End Sub
 
 Private Sub LoadTextsForm()
@@ -148,25 +151,34 @@ Private Sub LoadTextsForm()
 End Sub
 
 Private Sub AgregarAmigo_Click()
-  Dim SendName As String
-  SendName = InputBox("Escriba el nombre del usuario a agregar.", "Agregar Amigo")
-  If LenB(Trim$(SendName)) Then
-  If MsgBox("¿Seguro desea agregar a " & SendName & "?", vbYesNo, "Agregar Amigo") = vbYes Then _
-  Call WriteAddAmigo(SendName, 1)
-Else
-  With FontTypes(FontTypeNames.FONTTYPE_FIGHT)
-  Call ShowConsoleMsg("Nombre Invalido", .Red, .Green, .Blue, .bold, .italic)
-  End With
-End If
+
+    Dim SendName As String
+        SendName = InputBox("Escriba el nombre del usuario a agregar.", "Agregar Amigo")
+
+    If LenB(Trim$(SendName)) Then
+        
+        If MsgBox("¿Seguro desea agregar a " & SendName & "?", vbYesNo, "Agregar Amigo") = vbYes Then
+           Call WriteAddAmigo(SendName, 1)
+        End If
+        
+    Else
+
+        With FontTypes(FontTypeNames.FONTTYPE_FIGHT)
+            Call ShowConsoleMsg("Nombre Invalido", .Red, .Green, .Blue, .bold, .italic)
+        End With
+
+    End If
+
 End Sub
+
 Private Sub BorrarAmigo_Click()
 
-  If ListAmigos.List(ListAmigos.ListIndex) = "------" Then Exit Sub
-
-
-  If MsgBox("¿Seguro desea borrar a " & ListAmigos.List(ListAmigos.ListIndex) & "?", vbYesNo, "Borrar Amigo") = vbYes Then _
-  Call WriteDelAmigo(ListAmigos.ListIndex + 1)
-
+    If LenB(ListAmigos.List(ListAmigos.ListIndex)) = 0 Then Exit Sub
+    
+    If MsgBox("¿Seguro desea borrar a " & ListAmigos.List(ListAmigos.ListIndex) & "?", vbYesNo, "Borrar Amigo") = vbYes Then
+        Call WriteDelAmigo(ListAmigos.ListIndex + 1)
+    End If
+    
 End Sub
 
 
