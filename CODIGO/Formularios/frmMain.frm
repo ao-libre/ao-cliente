@@ -274,6 +274,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2619
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -302,14 +303,14 @@ Begin VB.Form frmMain
       BackColor       =   &H00FFFFFF&
       BorderStyle     =   0  'None
       Height          =   9120
-      Left            =   120
+      Left            =   360
       MousePointer    =   99  'Custom
       ScaleHeight     =   608
       ScaleMode       =   3  'Pixel
-      ScaleWidth      =   768
+      ScaleWidth      =   736
       TabIndex        =   30
-      Top             =   1920
-      Width           =   11520
+      Top             =   2040
+      Width           =   11040
       Begin VB.Timer trainingMacro 
          Enabled         =   0   'False
          Interval        =   3200
