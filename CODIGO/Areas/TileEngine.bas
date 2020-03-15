@@ -538,14 +538,14 @@ Sub DoPasosFx(ByVal CharIndex As Integer)
 End Sub
 
 Private Function HayFogata(ByRef Location As Position) As Boolean
-    Dim J As Long
+    Dim j As Long
     Dim k As Long
     
-    For J = UserPos.X - 8 To UserPos.X + 8
+    For j = UserPos.X - 8 To UserPos.X + 8
         For k = UserPos.Y - 6 To UserPos.Y + 6
-            If InMapBounds(J, k) Then
-                If MapData(J, k).ObjGrh.GrhIndex = GrhFogata Then
-                    Location.X = J
+            If InMapBounds(j, k) Then
+                If MapData(j, k).ObjGrh.GrhIndex = GrhFogata Then
+                    Location.X = j
                     Location.Y = k
                     
                     HayFogata = True
@@ -553,7 +553,7 @@ Private Function HayFogata(ByRef Location As Position) As Boolean
                 End If
             End If
         Next k
-    Next J
+    Next j
 End Function
 
 Function NextOpenChar() As Integer
@@ -870,39 +870,39 @@ Sub RenderScreen(ByVal tilex As Integer, _
     If ClientSetup.ProyectileEngine Then
                             
         If LastProjectile > 0 Then
-            Dim J As Long ' Long siempre en los bucles es mucho mas rapido
+            Dim j As Long ' Long siempre en los bucles es mucho mas rapido
                                 
-            For J = 1 To LastProjectile
+            For j = 1 To LastProjectile
 
-                If ProjectileList(J).Grh.GrhIndex Then
+                If ProjectileList(j).Grh.GrhIndex Then
                     Dim angle As Single
                     
                     'Update the position
-                    angle = DegreeToRadian * Engine_GetAngle(ProjectileList(J).X, ProjectileList(J).Y, ProjectileList(J).TX, ProjectileList(J).TY)
-                    ProjectileList(J).X = ProjectileList(J).X + (Sin(angle) * ElapsedTime * 0.63)
-                    ProjectileList(J).Y = ProjectileList(J).Y - (Cos(angle) * ElapsedTime * 0.63)
+                    angle = DegreeToRadian * Engine_GetAngle(ProjectileList(j).X, ProjectileList(j).Y, ProjectileList(j).TX, ProjectileList(j).TY)
+                    ProjectileList(j).X = ProjectileList(j).X + (Sin(angle) * ElapsedTime * 0.63)
+                    ProjectileList(j).Y = ProjectileList(j).Y - (Cos(angle) * ElapsedTime * 0.63)
                     
                     'Update the rotation
-                    If ProjectileList(J).RotateSpeed > 0 Then
-                        ProjectileList(J).Rotate = ProjectileList(J).Rotate + (ProjectileList(J).RotateSpeed * ElapsedTime * 0.01)
+                    If ProjectileList(j).RotateSpeed > 0 Then
+                        ProjectileList(j).Rotate = ProjectileList(j).Rotate + (ProjectileList(j).RotateSpeed * ElapsedTime * 0.01)
 
-                        Do While ProjectileList(J).Rotate > 360
-                            ProjectileList(J).Rotate = ProjectileList(J).Rotate - 360
+                        Do While ProjectileList(j).Rotate > 360
+                            ProjectileList(j).Rotate = ProjectileList(j).Rotate - 360
                         Loop
                     End If
     
                     'Draw if within range
-                    X = ((-minX - 1) * 32) + ProjectileList(J).X + PixelOffsetX + ((10 - TileBufferSize) * 32) - 288 + ProjectileList(J).OffsetX
-                    Y = ((-minY - 1) * 32) + ProjectileList(J).Y + PixelOffsetY + ((10 - TileBufferSize) * 32) - 288 + ProjectileList(J).OffsetY
+                    X = ((-minX - 1) * 32) + ProjectileList(j).X + PixelOffsetX + ((10 - TileBufferSize) * 32) - 288 + ProjectileList(j).OffsetX
+                    Y = ((-minY - 1) * 32) + ProjectileList(j).Y + PixelOffsetY + ((10 - TileBufferSize) * 32) - 288 + ProjectileList(j).OffsetY
 
                     If Y >= -32 Then
                         If Y <= (ScreenHeight + 32) Then
                             If X >= -32 Then
                                 If X <= (ScreenWidth + 32) Then
-                                    If ProjectileList(J).Rotate = 0 Then
-                                        Call Draw_Grh(ProjectileList(J).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, True, 0)
+                                    If ProjectileList(j).Rotate = 0 Then
+                                        Call Draw_Grh(ProjectileList(j).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, True, 0)
                                     Else
-                                        Call Draw_Grh(ProjectileList(J).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, True, ProjectileList(J).Rotate)
+                                        Call Draw_Grh(ProjectileList(j).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, True, ProjectileList(j).Rotate)
                                     End If
                                 End If
                             End If
@@ -910,19 +910,19 @@ Sub RenderScreen(ByVal tilex As Integer, _
                     End If
                     
                 End If
-            Next J
+            Next j
             
             'Check if it is close enough to the target to remove
-            For J = 1 To LastProjectile
+            For j = 1 To LastProjectile
 
-                If ProjectileList(J).Grh.GrhIndex Then
-                    If Abs(ProjectileList(J).X - ProjectileList(J).TX) < 20 Then
-                        If Abs(ProjectileList(J).Y - ProjectileList(J).TY) < 20 Then
-                            Call Engine_Projectile_Erase(J)
+                If ProjectileList(j).Grh.GrhIndex Then
+                    If Abs(ProjectileList(j).X - ProjectileList(j).TX) < 20 Then
+                        If Abs(ProjectileList(j).Y - ProjectileList(j).TY) < 20 Then
+                            Call Engine_Projectile_Erase(j)
                         End If
                     End If
                 End If
-            Next J
+            Next j
             
         End If
     End If
@@ -1310,6 +1310,15 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
         End If
                 
         If Not .invisible Then
+        
+            If ClientSetup.UsarSombras Then
+
+                Call RenderSombras(CharIndex, PixelOffsetX, PixelOffsetY)
+
+                Call RenderReflejos(CharIndex, PixelOffsetX, PixelOffsetY)
+
+            End If
+            
             Movement_Speed = 0.5
             
             'Draw Body
@@ -1344,14 +1353,6 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
             'Draw Shield
             If .Escudo.ShieldWalk(.Heading).GrhIndex Then
                 Call Draw_Grh(.Escudo.ShieldWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1)
-            End If
-
-            If ClientSetup.UsarSombras Then
-
-                Call RenderSombras(CharIndex, PixelOffsetX, PixelOffsetY)
-
-                Call RenderReflejos(CharIndex, PixelOffsetX, PixelOffsetY)
-
             End If
 
             If ClientSetup.ParticleEngine Then
@@ -1420,30 +1421,37 @@ Private Sub RenderSombras(ByVal CharIndex As Integer, ByVal PixelOffsetX As Inte
 '****************************************************
    
     With charlist(CharIndex)
-    
-        'Draw Body
-        If .Body.Walk(.Heading).GrhIndex Then
-            Call Draw_Grh(.Body.Walk(.Heading), PixelOffsetX + 10, PixelOffsetY + 1, 1, Color_Shadow(), 1, False, 210)
-        End If
-     
-        'Draw Head
-        If .Head.Head(.Heading).GrhIndex Then
-            Call Draw_Grh(.Head.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X + 12, PixelOffsetY + .Body.HeadOffset.Y + 1, 1, Color_Shadow(), 0, False, 210)
-        End If
-
-        'Draw Helmet
-        If .Casco.Head(.Heading).GrhIndex Then
-            Call Draw_Grh(.Casco.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X + 22, PixelOffsetY + .Body.HeadOffset.Y - 31, 1, Color_Shadow(), 0, False, 210)
+        
+        'Shadow Body & Shadow Head
+        
+        If (.iHead > 0) And (.iBody = 617 Or .iBody = 612 Or .iBody = 614 Or .iBody = 616) Then
+        
+            'Si está montando se dibuja de esta manera
+            Call Draw_Grh(.Body.Walk(.Heading), PixelOffsetX + 8, PixelOffsetY - 14, 1, Color_Shadow(), 0, False, 187, 1, 1.2) ' Shadow Body
+            Call Draw_Grh(.Head.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X + 12, PixelOffsetY + .Body.HeadOffset.Y - 13, 1, Color_Shadow(), 0, False, 187, 1, 1.2) ' Shadow Head
+            Call Draw_Grh(.Casco.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X + 15, PixelOffsetY + .Body.HeadOffset.Y - 49, 1, Color_Shadow(), 0, False, 195, 1, 1.2) ' Shadow Helmet
+        
+        'Si está navegando se dibuja de esta manera
+        ElseIf ((.iHead = 0) And (HayAgua(.Pos.X, .Pos.Y + 1) Or HayAgua(.Pos.X + 1, .Pos.Y) Or HayAgua(.Pos.X, .Pos.Y - 1) Or HayAgua(.Pos.X - 1, .Pos.Y))) Then
+            Call Draw_Grh(.Body.Walk(.Heading), PixelOffsetX + 5, PixelOffsetY - 26, 1, Color_Shadow(), 0, False, 186, 1, 1.33) ' Shadow Body
+        
+        Else
+        
+            'Si NO está montando ni navegando se dibuja de esta manera
+            Call Draw_Grh(.Body.Walk(.Heading), PixelOffsetX + 8, PixelOffsetY - 11, 1, Color_Shadow(), 0, False, 195, 1, 1.2) ' Shadow Body
+            Call Draw_Grh(.Head.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X + 12, PixelOffsetY + .Body.HeadOffset.Y - 10, 1, Color_Shadow(), 0, False, 195, 1, 1.2) ' Shadow Head
+            Call Draw_Grh(.Casco.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X + 18, PixelOffsetY + .Body.HeadOffset.Y - 45, 1, Color_Shadow(), 0, False, 195, 1, 1.2) ' Shadow Helmet
+        
         End If
                 
-        'Draw Weapon
+        'Shadow Weapon
         If .Arma.WeaponWalk(.Heading).GrhIndex Then
-            Call Draw_Grh(.Arma.WeaponWalk(.Heading), PixelOffsetX + 10, PixelOffsetY + 1, 1, Color_Shadow(), 1, False, 210)
+            Call Draw_Grh(.Arma.WeaponWalk(.Heading), PixelOffsetX + 9, PixelOffsetY - 12, 1, Color_Shadow(), 0, False, 195, 1, 1.2)
         End If
                 
-        'Draw Shield
+        'Shadow Shield
         If .Escudo.ShieldWalk(.Heading).GrhIndex Then
-            Call Draw_Grh(.Escudo.ShieldWalk(.Heading), PixelOffsetX + 10, PixelOffsetY + 1, 1, Color_Shadow(), 1, False, 210)
+            Call Draw_Grh(.Escudo.ShieldWalk(.Heading), PixelOffsetX + 9, PixelOffsetY - 12, 1, Color_Shadow(), 0, False, 195, 1, 1.2)
         End If
         
     End With
@@ -1481,7 +1489,9 @@ Private Sub RenderReflejos(ByVal CharIndex As Integer, ByVal PixelOffsetX As Int
 '****************************************************
     
     With charlist(CharIndex)
-
+    
+        Movement_Speed = 0.5
+        
         If HayAgua(.Pos.X, .Pos.Y + 1) Then
                     
             Dim GetInverseHeading As Byte
@@ -1508,7 +1518,6 @@ Private Sub RenderReflejos(ByVal CharIndex As Integer, ByVal PixelOffsetX As Int
                 .Body.Walk(GetInverseHeading).Started = 1
                 .Arma.WeaponWalk(GetInverseHeading).Started = 1
                 .Escudo.ShieldWalk(GetInverseHeading).Started = 1
-                       
             Else
                 .Body.Walk(GetInverseHeading).Started = 0
                 .Escudo.ShieldWalk(GetInverseHeading).Started = 0
@@ -1539,31 +1548,30 @@ Private Sub RenderReflejos(ByVal CharIndex As Integer, ByVal PixelOffsetX As Int
                     'Reflejo Body Navegando
                     Call Draw_Grh(.Body.Walk(GetInverseHeading), PixelOffsetX, PixelOffsetY + 80, 1, ColorFinal(), 1, False, 360)
                             
+                ElseIf .iBody = 604 Or .iBody = 617 Or .iBody = 612 Or .iBody = 614 Or .iBody = 616 Then 'Define Body Montado
+                    
+                    'Si además de estar montado está mirando para arriba o abajo
+                    If .Heading = E_Heading.SOUTH Or .Heading = E_Heading.NORTH Then
+                        Call Draw_Grh(.Body.Walk(GetInverseHeading), PixelOffsetX, PixelOffsetY + 80, 1, ColorFinal(), 1, False, 360)
+                        Call Draw_Grh(.Head.Head(GetInverseHeading), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + 76, 1, ColorFinal(), 0, False, 360)
+                        Call Draw_Grh(.Casco.Head(GetInverseHeading), PixelOffsetX + .Body.HeadOffset.X - 1, PixelOffsetY + .Body.HeadOffset.Y + 116, 1, ColorFinal(), 0, False, 360)
+                    
+                    Else 'Si está mirando para izquierda o derecha entonces:
+                        Call Draw_Grh(.Body.Walk(GetInverseHeading), PixelOffsetX, PixelOffsetY + 70, 1, ColorFinal(), 1, False, 360)
+                        Call Draw_Grh(.Head.Head(GetInverseHeading), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + 76, 1, ColorFinal(), 0, False, 360)
+                        Call Draw_Grh(.Casco.Head(GetInverseHeading), PixelOffsetX + .Body.HeadOffset.X - 1, PixelOffsetY + .Body.HeadOffset.Y + 116, 1, ColorFinal(), 0, False, 360)
+                    
+                    End If
+                
                 Else
                             
-                    'Reflejo Body
+                    'Reflejo completo si no está ni montado ni navegando
                     Call Draw_Grh(.Body.Walk(GetInverseHeading), PixelOffsetX, PixelOffsetY + 44, 1, ColorFinal(), 1, False, 360)
-
-                End If
-                        
-                'Reflejo Head
-                If .Head.Head(GetInverseHeading).GrhIndex Then
                     Call Draw_Grh(.Head.Head(GetInverseHeading), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + 51, 1, ColorFinal(), 1, False, 360)
-                End If
-                        
-                'Reflejo Helmet
-                If .Casco.Head(GetInverseHeading).GrhIndex Then
                     Call Draw_Grh(.Casco.Head(GetInverseHeading), PixelOffsetX + .Body.HeadOffset.X - 1, PixelOffsetY + .Body.HeadOffset.Y + 55, 1, ColorFinal(), 1, False, 360)
-                End If
-                        
-                'Reflejo Shield
-                If .Arma.WeaponWalk(GetInverseHeading).GrhIndex Then
-                    Call Draw_Grh(.Escudo.ShieldWalk(.Heading), PixelOffsetX, PixelOffsetY + 44, 1, ColorFinal(), 1, False, 360)
-                End If
-                        
-                'Reflejo Weapon
-                If .Arma.WeaponWalk(GetInverseHeading).GrhIndex Then
                     Call Draw_Grh(.Arma.WeaponWalk(GetInverseHeading), PixelOffsetX, PixelOffsetY + 44, 1, ColorFinal(), 1, False, 360)
+                    Call Draw_Grh(.Escudo.ShieldWalk(.Heading), PixelOffsetX, PixelOffsetY + 44, 1, ColorFinal(), 0, False, 360)
+                
                 End If
                         
             End If
@@ -1640,7 +1648,9 @@ Public Sub Device_Textured_Render(ByVal X As Single, ByVal Y As Single, _
                                   ByVal tex As Long, _
                                   ByRef Color() As Long, _
                                   Optional ByVal Alpha As Boolean = False, _
-                                  Optional ByVal angle As Single = 0)
+                                  Optional ByVal angle As Single = 0, _
+                                  Optional ByVal ScaleX As Single = 1!, _
+                                  Optional ByVal ScaleY As Single = 1!)
 
         Dim Texture As Direct3DTexture8
         
@@ -1654,9 +1664,9 @@ Public Sub Device_Textured_Render(ByVal X As Single, ByVal Y As Single, _
                 Call .SetAlpha(Alpha)
                 
                 If TextureWidth <> 0 And TextureHeight <> 0 Then
-                    Call .Draw(X, Y, Width, Height, Color, sX / TextureWidth, sY / TextureHeight, (sX + Width) / TextureWidth, (sY + Height) / TextureHeight, angle)
+                    Call .Draw(X, Y, Width * ScaleX, Height * ScaleY, Color, sX / TextureWidth, sY / TextureHeight, (sX + Width) / TextureWidth, (sY + Height) / TextureHeight, angle)
                 Else
-                    Call .Draw(X, Y, TextureWidth, TextureHeight, Color, , , , , angle)
+                    Call .Draw(X, Y, TextureWidth * ScaleX, TextureHeight * ScaleY, Color, , , , , angle)
                 End If
                 
         End With
@@ -1702,7 +1712,7 @@ Sub Draw_GrhIndex(ByVal GrhIndex As Long, ByVal X As Integer, ByVal Y As Integer
     
 End Sub
 
-Sub Draw_Grh(ByRef Grh As Grh, ByVal X As Integer, ByVal Y As Integer, ByVal Center As Byte, ByRef Color_List() As Long, ByVal Animate As Byte, Optional ByVal Alpha As Boolean = False, Optional ByVal angle As Single = 0)
+Sub Draw_Grh(ByRef Grh As Grh, ByVal X As Integer, ByVal Y As Integer, ByVal Center As Byte, ByRef Color_List() As Long, ByVal Animate As Byte, Optional ByVal Alpha As Boolean = False, Optional ByVal angle As Single = 0, Optional ByVal ScaleX As Single = 1!, Optional ByVal ScaleY As Single = 1!)
 '*****************************************************************
 'Draws a GRH transparently to a X and Y position
 '*****************************************************************
@@ -1737,7 +1747,7 @@ On Error GoTo Error
         'Center Grh over X,Y pos
         If Center Then
             If .TileWidth <> 1 Then
-                X = X - (.pixelWidth - TilePixelWidth) \ 2
+                X = X - (.pixelWidth * ScaleX - TilePixelWidth) \ 2
             End If
             
             If .TileHeight <> 1 Then
@@ -1745,7 +1755,7 @@ On Error GoTo Error
             End If
         End If
 
-        Call Device_Textured_Render(X, Y, .pixelWidth, .pixelHeight, .sX, .sY, .FileNum, Color_List(), Alpha, angle)
+        Call Device_Textured_Render(X, Y, .pixelWidth, .pixelHeight, .sX, .sY, .FileNum, Color_List(), Alpha, angle, ScaleX, ScaleY)
         
     End With
     
