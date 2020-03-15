@@ -128,7 +128,8 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteAddAmigo(ArgumentosRaw, 2)
                 Else
                     'Avisar que falta el parametro
-                    Call ShowConsoleMsg("Faltan parametros. Utilice /FADD NICKNAME.")
+                    Call ShowConsoleMsg(JsonLanguage.item("FRM_LISTAAMIGOS_PARAMETRO").item("TEXTO") & " " & JsonLanguage.item("FRM_LISTAAMIGOS_FADD").item("TEXTO"))
+
                 End If
  
             Case "/FMSG"
@@ -136,7 +137,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Call WriteMsgAmigo(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
-                    Call ShowConsoleMsg("Faltan parametros. Utilice /FMSG MENSAJE.")
+                    Call ShowConsoleMsg(JsonLanguage.item("FRM_LISTAAMIGOS_PARAMETRO").item("TEXTO") & " " & JsonLanguage.item("FRM_LISTAAMIGOS_FMSG").item("TEXTO"))
                 End If
 
             Case "/FON"
