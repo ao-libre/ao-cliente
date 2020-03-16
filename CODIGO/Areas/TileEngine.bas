@@ -263,6 +263,11 @@ Private WindowTileHeight As Integer
 Public HalfWindowTileWidth As Integer
 Public HalfWindowTileHeight As Integer
 
+'Cuantos tiles el engine mete en el BUFFER cuando
+'dibuja el mapa. Ojo un tamano muy grande puede
+'volver el engine muy lento
+Public TileBufferSize As Integer
+
 'Tamano de los tiles en pixels
 Public TilePixelHeight As Integer
 Public TilePixelWidth As Integer
@@ -472,9 +477,10 @@ Sub MoveCharbyHead(ByVal CharIndex As Integer, ByVal nHeading As E_Heading)
     End With
     
     If UserEstado = 0 Then Call DoPasosFx(CharIndex)
-
-    If CharIndex <> UserCharIndex Then
-        If Not EstaDentroDelArea(nX, nY) Then
+    
+    'areas viejos
+    If (nY < MinLimiteY) Or (nY > MaxLimiteY) Or (nX < MinLimiteX) Or (nX > MaxLimiteX) Then
+        If CharIndex <> UserCharIndex Then
             Call Char_Erase(CharIndex)
         End If
     End If
@@ -671,10 +677,10 @@ Sub RenderScreen(ByVal tilex As Integer, _
     screenminX = tilex - HalfWindowTileWidth
     screenmaxX = tilex + HalfWindowTileWidth
     
-    minY = screenminY - TileBufferSize
-    maxY = screenmaxY + TileBufferSize * 2 ' WyroX: Parche para que no desaparezcan techos y arboles
-    minX = screenminX - TileBufferSize
-    maxX = screenmaxX + TileBufferSize
+    minY = screenminY - Engine_Get_TileBuffer
+    maxY = screenmaxY + Engine_Get_TileBuffer
+    minX = screenminX - Engine_Get_TileBuffer
+    maxX = screenmaxX + Engine_Get_TileBuffer
     
     'Make sure mins and maxs are allways in map bounds
     If minY < XMinMapSize Then
@@ -742,11 +748,11 @@ Sub RenderScreen(ByVal tilex As Integer, _
    
     
     '<----- Layer Obj, Char, 3 ----->
-    ScreenY = minYOffset - TileBufferSize
+    ScreenY = minYOffset - Engine_Get_TileBuffer
 
     For Y = minY To maxY
         
-        ScreenX = minXOffset - TileBufferSize
+        ScreenX = minXOffset - Engine_Get_TileBuffer
 
         For X = minX To maxX
             If Map_InBounds(X, Y) Then
@@ -798,7 +804,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
                     If .Particle_Group_Index Then
                     
                         'Solo las renderizamos si estan cerca del area de vision.
-                        If EstaDentroDelArea(X, Y) Then
+                        If Abs(UserPos.X - X) < Engine_Get_TileBuffer + 3 And (Abs(UserPos.Y - Y)) < Engine_Get_TileBuffer + 3 Then
                             Call mDx8_Particulas.Particle_Group_Render(.Particle_Group_Index, PixelOffsetXTemp + 16, PixelOffsetYTemp + 16)
                         End If
                         
@@ -821,11 +827,11 @@ Sub RenderScreen(ByVal tilex As Integer, _
     Next Y
     
     '<----- Layer 4 ----->
-    ScreenY = minYOffset - TileBufferSize
+    ScreenY = minYOffset - Engine_Get_TileBuffer
 
     For Y = minY To maxY
 
-        ScreenX = minXOffset - TileBufferSize
+        ScreenX = minXOffset - Engine_Get_TileBuffer
 
         For X = minX To maxX
             
@@ -1119,7 +1125,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
 
         'Get timing info
         timerElapsedTime = GetElapsedTime()
-        timerTicksPerFrame = timerElapsedTime * Engine_BaseSpeed
+        timerTicksPerFrame = timerElapsedTime * Engine_Get_BaseSpeed
         
         Call Engine_EndScene(MainScreenRect, 0)
     
