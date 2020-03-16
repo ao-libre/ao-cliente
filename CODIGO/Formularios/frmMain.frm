@@ -209,15 +209,15 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H00808080&
-      Height          =   315
-      Left            =   240
+      Height          =   360
+      Left            =   165
       MaxLength       =   160
       MultiLine       =   -1  'True
       TabIndex        =   2
       TabStop         =   0   'False
       Text            =   "frmMain.frx":4631C
       ToolTipText     =   "Chat"
-      Top             =   2250
+      Top             =   2175
       Visible         =   0   'False
       Width           =   11415
    End
@@ -239,8 +239,8 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H00808080&
-      Height          =   315
-      Left            =   120
+      Height          =   360
+      Left            =   165
       MaxLength       =   160
       MultiLine       =   -1  'True
       TabIndex        =   1
@@ -274,6 +274,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2619
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -301,20 +302,20 @@ Begin VB.Form frmMain
    Begin VB.PictureBox MainViewPic 
       BackColor       =   &H00FFFFFF&
       BorderStyle     =   0  'None
-      Height          =   7860
-      Left            =   480
+      Height          =   9120
+      Left            =   360
       MousePointer    =   99  'Custom
-      ScaleHeight     =   524
+      ScaleHeight     =   608
       ScaleMode       =   3  'Pixel
-      ScaleWidth      =   692
+      ScaleWidth      =   736
       TabIndex        =   30
-      Top             =   2760
-      Width           =   10380
+      Top             =   2040
+      Width           =   11040
       Begin VB.Timer trainingMacro 
          Enabled         =   0   'False
          Interval        =   3200
-         Left            =   10680
-         Top             =   600
+         Left            =   10200
+         Top             =   1080
       End
    End
    Begin AOLibre.uAOButton imgMapa 
