@@ -127,22 +127,6 @@ Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, _
     End With
 End Sub
 
-'TODO : Never was sure this is really necessary....
-'TODO : 08/03/2006 - (AlejoLp) Esto hay que volarlo...
-Public Sub RefreshAllChars()
-'*****************************************************************
-'Goes through the charlist and replots all the characters on the map
-'Used to make sure everyone is visible
-'*****************************************************************
-    Dim LoopC As Long
-    
-    For LoopC = 1 To LastChar
-        If charlist(LoopC).active = 1 Then
-            MapData(charlist(LoopC).Pos.X, charlist(LoopC).Pos.Y).CharIndex = LoopC
-        End If
-    Next LoopC
-End Sub
-
 Function AsciiValidos(ByVal cad As String) As Boolean
     Dim car As Byte
     Dim i As Long
@@ -1537,9 +1521,9 @@ End Sub
 
 Public Sub SetSpeedUsuario()
     If UserEquitando Then
-        Call Engine_Set_BaseSpeed(0.024)
+        Engine_BaseSpeed = 0.024
     Else
-        Call Engine_Set_BaseSpeed(0.018)
+        Engine_BaseSpeed = 0.018
     End If
 End Sub
 

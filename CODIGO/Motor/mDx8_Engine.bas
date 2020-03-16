@@ -29,6 +29,10 @@ Private Projection As D3DMATRIX
 Private View As D3DMATRIX
 
 Public Engine_BaseSpeed As Single
+
+'Cuantos tiles el engine mete en el BUFFER cuando
+'dibuja el mapa. Ojo un tamano muy grande puede
+'volver el engine muy lento
 Public TileBufferSize As Integer
 
 Public ScreenWidth As Long
@@ -219,8 +223,11 @@ Public Sub Engine_DirectX8_Aditional_Init()
     ColorTecho = 250
     colorRender = 240
 
-    Call Engine_Set_TileBuffer(9)
-    Call Engine_Set_BaseSpeed(0.018)
+    TileBufferSize = Areas.TilesBuffer
+    
+    Call CalcularAreas(HalfWindowTileWidth, HalfWindowTileHeight)
+    
+    Engine_BaseSpeed = 0.018
     
     With MainScreenRect
         .Bottom = ScreenHeight
@@ -319,7 +326,7 @@ Public Function Engine_TPtoSPX(ByVal X As Byte) As Long
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_TPtoSPX
 '************************************************************
 
-    Engine_TPtoSPX = Engine_PixelPosX(X - ((UserPos.X - HalfWindowTileWidth) - Engine_Get_TileBuffer)) + OffsetCounterX - 272 + ((10 - TileBufferSize) * 32)
+    Engine_TPtoSPX = Engine_PixelPosX(X - ((UserPos.X - HalfWindowTileWidth) - TileBufferSize)) + OffsetCounterX - 272 + ((10 - TileBufferSize) * 32)
     
 End Function
 
@@ -330,7 +337,7 @@ Public Function Engine_TPtoSPY(ByVal Y As Byte) As Long
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_TPtoSPY
 '************************************************************
 
-    Engine_TPtoSPY = Engine_PixelPosY(Y - ((UserPos.Y - HalfWindowTileHeight) - Engine_Get_TileBuffer)) + OffsetCounterY - 272 + ((10 - TileBufferSize) * 32)
+    Engine_TPtoSPY = Engine_PixelPosY(Y - ((UserPos.Y - HalfWindowTileHeight) - TileBufferSize)) + OffsetCounterY - 272 + ((10 - TileBufferSize) * 32)
     
 End Function
 
@@ -601,46 +608,6 @@ Public Function ZoomOffset(ByVal Offset As Byte) As Single
 '**************************************************************
 
     ZoomOffset = IIf((Offset = 1), (ScreenHeight - MainScreenRect.Bottom) / 2, (ScreenWidth - MainScreenRect.Right) / 2)
-    
-End Function
-
-Public Sub Engine_Set_BaseSpeed(ByVal BaseSpeed As Single)
-'**************************************************************
-'Author: Standelf
-'Last Modify Date: 29/12/2010
-'**************************************************************
-
-    Engine_BaseSpeed = BaseSpeed
-    
-End Sub
-
-Public Function Engine_Get_BaseSpeed() As Single
-'**************************************************************
-'Author: Standelf
-'Last Modify Date: 29/12/2010
-'**************************************************************
-
-    Engine_Get_BaseSpeed = Engine_BaseSpeed
-    
-End Function
-
-Public Sub Engine_Set_TileBuffer(ByVal setTileBufferSize As Single)
-'**************************************************************
-'Author: Standelf
-'Last Modify Date: 30/12/2010
-'**************************************************************
-
-    TileBufferSize = setTileBufferSize
-    
-End Sub
-
-Public Function Engine_Get_TileBuffer() As Single
-'**************************************************************
-'Author: Standelf
-'Last Modify Date: 30/12/2010
-'**************************************************************
-
-    Engine_Get_TileBuffer = TileBufferSize
     
 End Function
 
