@@ -75,7 +75,7 @@ Begin VB.Form frmMain
    Begin VB.PictureBox picSM 
       Appearance      =   0  'Flat
       AutoRedraw      =   -1  'True
-      BackColor       =   &H80000005&
+      BackColor       =   &H80000001&
       BorderStyle     =   0  'None
       ForeColor       =   &H80000008&
       Height          =   450
@@ -124,7 +124,7 @@ Begin VB.Form frmMain
    Begin VB.PictureBox picSM 
       Appearance      =   0  'Flat
       AutoRedraw      =   -1  'True
-      BackColor       =   &H80000005&
+      BackColor       =   &H80000001&
       BorderStyle     =   0  'None
       ForeColor       =   &H80000008&
       Height          =   450
@@ -140,7 +140,7 @@ Begin VB.Form frmMain
    Begin VB.PictureBox picSM 
       Appearance      =   0  'Flat
       AutoRedraw      =   -1  'True
-      BackColor       =   &H80000005&
+      BackColor       =   &H80000001&
       BorderStyle     =   0  'None
       ForeColor       =   &H80000008&
       Height          =   450
@@ -156,7 +156,7 @@ Begin VB.Form frmMain
    Begin VB.PictureBox picSM 
       Appearance      =   0  'Flat
       AutoRedraw      =   -1  'True
-      BackColor       =   &H80000005&
+      BackColor       =   &H80000001&
       BorderStyle     =   0  'None
       ForeColor       =   &H80000008&
       Height          =   450
@@ -274,7 +274,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2937
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -301,7 +300,7 @@ Begin VB.Form frmMain
       Width           =   2685
    End
    Begin VB.PictureBox MainViewPic 
-      BackColor       =   &H00FFFFFF&
+      BackColor       =   &H00000000&
       BorderStyle     =   0  'None
       Height          =   9120
       Left            =   180
@@ -577,10 +576,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":5FB0A
-      PICF            =   "frmMain.frx":60534
-      PICH            =   "frmMain.frx":611F6
-      PICV            =   "frmMain.frx":62188
+      PICE            =   "frmMain.frx":68E09
+      PICF            =   "frmMain.frx":68E25
+      PICH            =   "frmMain.frx":68E41
+      PICV            =   "frmMain.frx":68E5D
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   15.75
@@ -591,7 +590,7 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
    End
-   Begin AOLibre.uAOButton Retos
+   Begin AOLibre.uAOButton Retos 
       Height          =   255
       Left            =   13440
       TabIndex        =   44
@@ -604,10 +603,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":6C389
-      PICF            =   "frmMain.frx":6CDB3
-      PICH            =   "frmMain.frx":6DA75
-      PICV            =   "frmMain.frx":6EA07
+      PICE            =   "frmMain.frx":68E79
+      PICF            =   "frmMain.frx":698A3
+      PICH            =   "frmMain.frx":6A565
+      PICV            =   "frmMain.frx":6B4F7
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -698,9 +697,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   0
       Left            =   14790
-      MouseIcon       =   "frmMain.frx":6F909
+      MouseIcon       =   "frmMain.frx":6C3F9
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":6FA5B
+      Picture         =   "frmMain.frx":6C54B
       Top             =   3120
       Width           =   225
    End
@@ -708,9 +707,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   1
       Left            =   14790
-      MouseIcon       =   "frmMain.frx":6FD9F
+      MouseIcon       =   "frmMain.frx":6C88F
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":6FEF1
+      Picture         =   "frmMain.frx":6C9E1
       Top             =   2865
       Width           =   225
    End
