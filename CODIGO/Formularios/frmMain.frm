@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "richtx32.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "Richtx32.ocx"
 Begin VB.Form frmMain 
    Appearance      =   0  'Flat
    BackColor       =   &H80000005&
@@ -564,26 +564,26 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
    End
-   Begin AOLibre.uAOButton uAOButton1 
-      Height          =   255
-      Left            =   13440
+   Begin AOLibre.uAOButton Amigos 
+      Height          =   495
+      Left            =   10320
       TabIndex        =   43
       TabStop         =   0   'False
-      Top             =   8520
-      Width           =   1455
-      _ExtentX        =   2566
-      _ExtentY        =   450
+      Top             =   5640
+      Width           =   1215
+      _ExtentX        =   2143
+      _ExtentY        =   873
       TX              =   "Amigos"
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":68E09
-      PICF            =   "frmMain.frx":69833
-      PICH            =   "frmMain.frx":6A4F5
-      PICV            =   "frmMain.frx":6B487
+      PICE            =   "frmMain.frx":5FB0A
+      PICF            =   "frmMain.frx":60534
+      PICH            =   "frmMain.frx":611F6
+      PICV            =   "frmMain.frx":62188
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
-         Size            =   12
+         Size            =   15.75
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False
@@ -591,7 +591,7 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
    End
-   Begin AOLibre.uAOButton Retos 
+   Begin AOLibre.uAOButton Retos
       Height          =   255
       Left            =   13440
       TabIndex        =   44
@@ -1136,6 +1136,10 @@ Private Declare Function SetWindowLong _
 
 Public Sub dragInventory_dragDone(ByVal originalSlot As Integer, ByVal newSlot As Integer)
     Call Protocol.WriteMoveItem(originalSlot, newSlot, eMoveType.Inventory)
+End Sub
+
+Private Sub Amigos_Click()
+    Call frmAmigos.Show(vbModeless, frmMain)
 End Sub
 
 Private Sub Form_Activate()

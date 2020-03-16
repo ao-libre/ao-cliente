@@ -1765,5 +1765,23 @@
     },
     "FRMPANELACCOUNT_BTN_CONECTAR" : {
         "TEXTO": "Enter"
+    },
+	"FRM_LISTAAMIGOS_TITLE" : {
+    "TEXTO": "Here you can see your friends list, as well as add or remove users from the list."
+    },
+	"FRM_LISTAAMIGOS_AGREGAR" : {
+    "TEXTO": "Add Friend"
+    },
+	"FRM_LISTAAMIGOS_BORRAR" : {
+    "TEXTO": "Del Friend"
+    },
+	"FRM_LISTAAMIGOS_PARAMETRO" : {
+    "TEXTO": "Missing parameters."
+    },
+	"FRM_LISTAAMIGOS_FADD" : {
+    "TEXTO": "Use /FADD NICKNAME."
+    },
+	"FRM_LISTAAMIGOS_FMSG" : {
+    "TEXTO": "Use /FMSG MENSAJE."
     }
 }

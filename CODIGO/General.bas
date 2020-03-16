@@ -362,6 +362,10 @@ Private Sub CheckKeys()
         End If
 
     End If
+    
+    ' Activamos el sistema DiaNoche
+    Call DiaNoche
+    
 End Sub
 
 Sub SwitchMap(ByVal Map As Integer)
