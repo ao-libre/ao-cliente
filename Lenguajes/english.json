@@ -1785,27 +1785,27 @@
     "TEXTO": "Use /FMSG MENSAJE."
     },
     "FRM_RETOS_DESC" : {
-    "TEXTO": "Selecciona el tipo de reto que quieres jugar."
+    "TEXTO": "Select the type of challenge you want to play."
     },
     "FRM_RETOS_LBLOP" : {
-    "TEXTO": "Oponente 1"
+    "TEXTO": "Opponent 1"
     },
     "FRM_RETOS_LBLOP2" : {
-    "TEXTO": "Oponente 2"
+    "TEXTO": "Opponent 2"
     },
     "FRM_RETOS_LBLOP3" : {
-    "TEXTO": "Oponente 3"
+    "TEXTO": "Opponent 3"
     },
     "FRM_RETOS_COMPA" : {
-    "TEXTO": "Aliado 1"
+    "TEXTO": "Partner 1"
     },
     "FRM_RETOS_COMPA2" : {
-    "TEXTO": "Aliado 2"
+    "TEXTO": "Partner 2"
     },
     "FRM_RETOS_START" : {
-    "TEXTO": "Comenzar"
+    "TEXTO": "Start"
     },
     "FRM_RETOS_EXIT" : {
-     "TEXTO": "Salir"
+     "TEXTO": "Exit"
     }
 }
