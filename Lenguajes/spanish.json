@@ -1783,5 +1783,29 @@
     },
 	"FRM_LISTAAMIGOS_FMSG" : {
     "TEXTO": "Utilice /FMSG MENSAJE."
+    },
+    "FRM_RETOS_DESC" : {
+    "TEXTO": "Selecciona el tipo de reto que quieres jugar."
+    },
+    "FRM_RETOS_LBLOP" : {
+    "TEXTO": "Oponente 1"
+    },
+    "FRM_RETOS_LBLOP2" : {
+    "TEXTO": "Oponente 2"
+    },
+    "FRM_RETOS_LBLOP3" : {
+    "TEXTO": "Oponente 3"
+    },
+    "FRM_RETOS_COMPA" : {
+    "TEXTO": "Aliado 1"
+    },
+    "FRM_RETOS_COMPA2" : {
+    "TEXTO": "Aliado 2"
+    },
+    "FRM_RETOS_START" : {
+    "TEXTO": "Comenzar"
+    },
+    "FRM_RETOS_EXIT" : {
+     "TEXTO": "Salir"
     }
 }

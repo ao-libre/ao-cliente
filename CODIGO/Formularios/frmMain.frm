@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.ocx"
 Begin VB.Form frmMain 
    Appearance      =   0  'Flat
    BackColor       =   &H80000005&
@@ -210,7 +210,7 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H00808080&
       Height          =   360
-      Left            =   120
+      Left            =   360
       MaxLength       =   160
       MultiLine       =   -1  'True
       TabIndex        =   2
@@ -219,7 +219,7 @@ Begin VB.Form frmMain
       ToolTipText     =   "Chat"
       Top             =   2400
       Visible         =   0   'False
-      Width           =   11175
+      Width           =   10695
    End
    Begin VB.Timer macrotrabajo 
       Enabled         =   0   'False
@@ -240,7 +240,7 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H00808080&
       Height          =   360
-      Left            =   120
+      Left            =   360
       MaxLength       =   160
       MultiLine       =   -1  'True
       TabIndex        =   1
@@ -249,7 +249,7 @@ Begin VB.Form frmMain
       ToolTipText     =   "Chat"
       Top             =   10800
       Visible         =   0   'False
-      Width           =   11175
+      Width           =   10695
    End
    Begin VB.Timer Second 
       Enabled         =   0   'False
@@ -274,6 +274,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2937
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
