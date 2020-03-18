@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "richtx32.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
 Begin VB.Form frmMain 
    Appearance      =   0  'Flat
    BackColor       =   &H80000005&
@@ -187,9 +187,9 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H80000008&
-      Height          =   2760
+      Height          =   2865
       Left            =   12165
-      ScaleHeight     =   184
+      ScaleHeight     =   191
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   160
       TabIndex        =   16
@@ -700,7 +700,7 @@ Begin VB.Form frmMain
       MouseIcon       =   "frmMain.frx":6B32E
       MousePointer    =   99  'Custom
       Picture         =   "frmMain.frx":6B480
-      Top             =   3120
+      Top             =   3960
       Width           =   225
    End
    Begin VB.Image cmdMoverHechi 
@@ -710,7 +710,7 @@ Begin VB.Form frmMain
       MouseIcon       =   "frmMain.frx":6B7C4
       MousePointer    =   99  'Custom
       Picture         =   "frmMain.frx":6B916
-      Top             =   2865
+      Top             =   3705
       Width           =   225
    End
    Begin VB.Image xz 
@@ -915,7 +915,7 @@ Begin VB.Form frmMain
       Index           =   1000
       Left            =   14760
       MousePointer    =   99  'Custom
-      Top             =   2865
+      Top             =   3720
       Width           =   225
    End
    Begin VB.Image InvEqu 
@@ -933,7 +933,7 @@ Begin VB.Form frmMain
       Height          =   180
       Left            =   13560
       TabIndex        =   11
-      Top             =   7755
+      Top             =   7740
       Width           =   1335
    End
    Begin VB.Label lblEnergia 
@@ -946,7 +946,7 @@ Begin VB.Form frmMain
       Height          =   180
       Left            =   12000
       TabIndex        =   10
-      Top             =   7545
+      Top             =   7560
       Width           =   1215
    End
    Begin VB.Label lblVida 
@@ -1187,7 +1187,7 @@ Private Sub LoadTextsForm()
     CmdLanzar.Caption = JsonLanguage.item("LBL_LANZAR").item("TEXTO")
     CmdInventario.Caption = JsonLanguage.item("LBL_INVENTARIO").item("TEXTO")
     CmdHechizos.Caption = JsonLanguage.item("LBL_HECHIZOS").item("TEXTO")
-    cmdInfo.Caption = JsonLanguage.item("LBL_INFO").item("TEXTO")
+    cmdINFO.Caption = JsonLanguage.item("LBL_INFO").item("TEXTO")
     imgMapa.Caption = JsonLanguage.item("LBL_MAPA").item("TEXTO")
     imgGrupo.Caption = JsonLanguage.item("LBL_GRUPO").item("TEXTO")
     imgOpciones.Caption = JsonLanguage.item("LBL_OPCIONES").item("TEXTO")
@@ -2018,8 +2018,8 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
         SendTxt.Visible = False
         
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
         Else
             hlst.SetFocus
         End If
@@ -2379,11 +2379,11 @@ Private Sub cmdInventario_Click()
     'InvEqu.Picture = LoadPicture(Game.path(Skins) & SkinSeleccionado & "\Centroinventario.jpg")
 
     ' Activo controles de inventario
-    picInv.Visible = True
+    PicInv.Visible = True
 
     ' Desactivo controles de hechizo
     hlst.Visible = False
-    cmdInfo.Visible = False
+    cmdINFO.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = False
@@ -2402,14 +2402,14 @@ Private Sub CmdHechizos_Click()
     
     ' Activo controles de hechizos
     hlst.Visible = True
-    cmdInfo.Visible = True
+    cmdINFO.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True
     cmdMoverHechi(1).Visible = True
     
     ' Desactivo controles de inventario
-    picInv.Visible = False
+    PicInv.Visible = False
 
 End Sub
 
@@ -2472,8 +2472,8 @@ Private Sub RecTxt_Change()
            (Not frmCantidad.Visible) And _
            (Not MirandoParty) Then
 
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
                         
         ElseIf hlst.Visible Then
             hlst.SetFocus
@@ -2486,8 +2486,8 @@ End Sub
 
 Private Sub RecTxt_KeyDown(KeyCode As Integer, Shift As Integer)
 
-    If picInv.Visible Then
-        picInv.SetFocus
+    If PicInv.Visible Then
+        PicInv.SetFocus
     Else
         hlst.SetFocus
     End If
@@ -2552,8 +2552,8 @@ Private Sub SendCMSTXT_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
         Me.SendCMSTXT.Visible = False
         
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
         Else
             hlst.SetFocus
         End If
