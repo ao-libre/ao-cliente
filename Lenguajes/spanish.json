@@ -1807,5 +1807,23 @@
     },
     "FRM_RETOS_EXIT" : {
      "TEXTO": "Salir"
-    }
+    },
+    "FRM_QUEST_ACCEPT" : {
+     "TEXTO": "Aceptar"
+    },
+    "FRM_QUEST_EXIT" : {
+     "TEXTO": "Rechazar"
+    },
+    "FRM_QUEST_DESC" : {
+     "TEXTO": "Informacion de la mision:"
+    },
+    "FRM_QUESTINFO_ABAND" : {
+     "TEXTO": "Abandonar Mision"
+    },
+    "FRM_QUESTINFO_EXIT" : {
+     "TEXTO": "Salir"
+    },
+    "FRM_QUESTINFO_DESC" : {
+     "TEXTO": "Informacion de misiones:"
+    }	
 }

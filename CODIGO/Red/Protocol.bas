@@ -11071,6 +11071,8 @@ Private Sub HandleAccountLogged()
                     .weapon = 0
                     .helmet = 0
                     .shield = 0
+                ElseIf (.Body = 397 Or .Body = 395 Or .Body = 399) Then
+                    .Head = 0
                 End If
 
                 .GameMaster = Buffer.ReadBoolean
