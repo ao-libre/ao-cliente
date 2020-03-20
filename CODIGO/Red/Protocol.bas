@@ -2103,8 +2103,9 @@ Private Sub HandleChangeMap()
     
     UserMap = incomingData.ReadInteger()
     nameMap = incomingData.ReadASCIIString
-'TODO: Once on-the-fly editor is implemented check for map version before loading....
-'For now we just drop it
+    
+    'TODO: Once on-the-fly editor is implemented check for map version before loading....
+    'For now we just drop it
     Call incomingData.ReadInteger
     
     If FileExist(Game.path(Mapas) & "Mapa" & UserMap & ".map", vbNormal) Then
