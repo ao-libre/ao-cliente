@@ -380,7 +380,9 @@ Private Sub CheckKeys()
     End If
     
     ' Activamos el sistema DiaNoche
-    Call DiaNoche
+    ' Lo comento hasta que el DiaNoche sea estable por que se hace de noche en dungeons
+    ' Y el dia entero dura unos 4/5 minutos, hay que arreglarlo.
+    'Call DiaNoche
     
 End Sub
 
