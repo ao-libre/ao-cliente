@@ -106,10 +106,10 @@ Begin VB.Form frmMain
          BackColor       =   &H80000004&
          BorderColor     =   &H80000002&
          FillColor       =   &H000080FF&
-         Height          =   225
-         Left            =   600
-         Top             =   600
-         Width           =   300
+         Height          =   300
+         Left            =   457
+         Top             =   570
+         Width           =   408
       End
       Begin VB.Shape UserM 
          BackColor       =   &H0000FFFF&
@@ -117,9 +117,9 @@ Begin VB.Form frmMain
          BorderColor     =   &H0000FFFF&
          FillColor       =   &H0000FFFF&
          Height          =   45
-         Left            =   705
+         Left            =   652
          Top             =   705
-         Width           =   45
+         Width           =   49
       End
    End
    Begin VB.PictureBox picSM 
@@ -644,10 +644,10 @@ Begin VB.Form frmMain
       Caption         =   "Nombre del mapa"
       ForeColor       =   &H80000014&
       Height          =   255
-      Left            =   8640
+      Left            =   7800
       TabIndex        =   39
       Top             =   2040
-      Width           =   2535
+      Width           =   3375
    End
    Begin VB.Image imgAsignarSkill 
       Height          =   405
@@ -2797,31 +2797,35 @@ Private Sub hlst_DblClick()
 
 End Sub
 
-'Incorporado por ReyarB
+    'Incorporado por ReyarB
+    'Last Modify Date: 21/03/2020 (ReyarB)
+    'Ajustadas las coordenadas (ReyarB)
+    '***************************************************
 Private Sub Minimapa_MouseDown(Button As Integer, _
                                Shift As Integer, _
                                X As Single, _
                                Y As Single)
 
     If Button = vbRightButton Then
-        Call WriteWarpChar("YO", UserMap, CByte(X), CByte(Y))
+        Call WriteWarpChar("YO", UserMap, CByte(X + 4), CByte(Y + 2))
         Call ActualizarMiniMapa
     End If
 End Sub
-'fin Incorporado ReyarB
+    'fin Incorporado ReyarB
 
 Public Sub ActualizarMiniMapa()
     '***************************************************
     'Author: Martin Gomez (Samke)
-    'Last Modify Date: 05/01/2020
+    'Last Modify Date: 21/03/2020 (ReyarB)
     'Integrado por Reyarb
     'Se agrego campo de vision del render (Recox)
     'Ajustadas las coordenadas para centrarlo (WyroX)
+    'Ajuste de coordenadas y tamaño del visor (ReyarB)
     '***************************************************
-    Me.UserM.Left = UserPos.X - 2
-    Me.UserM.Top = UserPos.Y - 2
-    Me.UserAreaMinimap.Left = UserPos.X - 10
-    Me.UserAreaMinimap.Top = UserPos.Y - 8
+    Me.UserM.Left = UserPos.X - 5
+    Me.UserM.Top = UserPos.Y - 3
+    Me.UserAreaMinimap.Left = UserPos.X - 16
+    Me.UserAreaMinimap.Top = UserPos.Y - 10
     Me.MiniMapa.Refresh
 End Sub
 
