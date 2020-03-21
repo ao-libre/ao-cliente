@@ -3343,7 +3343,14 @@ On Error GoTo ErrHandler
     
     Call Inventario.SetItem(slot, ObjIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, name)
 
-    Call Inventario.DrawInventory
+    If frmComerciar.Visible Then
+        Call InvComUsu.SetItem(slot, ObjIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, name)
+    End If
+
+    If frmBancoObj.Visible Then        
+        Call InvBanco(1).SetItem(slot, ObjIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, name)
+        frmBancoObj.NoPuedeMover = False
+    End If
     
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
