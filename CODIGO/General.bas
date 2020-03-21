@@ -499,6 +499,9 @@ Sub SwitchMap(ByVal Map As Integer)
     'Erase particle effects
     'ReDim Effect(1 To NumEffects)
     Call Particle_Group_Remove_All
+
+    'Borramos las particulas de lluvia
+    Call mDx8_Particulas.RemoveWeatherParticles(eWeather.Rain)
     
     'Limpiamos el buffer
     Set fileBuff = Nothing
