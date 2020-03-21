@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "richtx32.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
 Begin VB.Form frmMain 
    Appearance      =   0  'Flat
    BackColor       =   &H80000005&
@@ -317,7 +317,7 @@ Begin VB.Form frmMain
          Enabled         =   0   'False
          Interval        =   3200
          Left            =   10200
-         Top             =   1080
+         Top             =   600
       End
    End
    Begin AOLibre.uAOButton imgMapa 
@@ -645,10 +645,10 @@ Begin VB.Form frmMain
       Caption         =   "Nombre del mapa"
       ForeColor       =   &H80000014&
       Height          =   255
-      Left            =   7440
+      Left            =   7800
       TabIndex        =   39
       Top             =   2040
-      Width           =   3735
+      Width           =   3375
    End
    Begin VB.Image imgAsignarSkill 
       Height          =   405
