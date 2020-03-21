@@ -1,13 +1,11 @@
 # This is a comment.
 # Each line is a file pattern followed by one or more owners.
 # More info: https://help.github.com/en/github/creating-cloning-and-archiving-repositories/about-code-owners
-
+# https://tech.people-doc.com/using-github-codeowners-file.html
 
 # These owners will be the default owners for everything in
 # the repo. Unless a later match takes precedence,
 # @global-owner1 and @global-owner2 will be requested for
 # review when someone opens a pull request.
 
-* @recox @abusiv0 @alejolp @brunodeangelis @cucsijuan @FrankoH298 
-* @guidota @jopiortiz @jsotuyod @juandpr @neoranger @lorwik @nicocavi @neoranger
-* @patotorres @nicocavi @ReyarB @Wyr0X 
+* @recox @abusiv0 @alejolp @brunodeangelis @cucsijuan @FrankoH298 @guidota @jopiortiz @jsotuyod @juandpr @neoranger @lorwik @nicocavi @neoranger @patotorres @nicocavi @ReyarB @Wyr0X 
