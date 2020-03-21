@@ -1367,6 +1367,11 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
                     Call RenderName(CharIndex, PixelOffsetX, PixelOffsetY)
                 End If
             End If
+
+            'Si el personaje esta chateando mostramos ... en pantalla
+            If .IsChateando Then
+                Call RenderIfCharIsInChatMode(CharIndex, PixelOffsetX, PixelOffsetY)
+            End If
             
         Else 'Usuario Invisible - Lo renderizamos con cierta transparencia activando Alpha.
             
@@ -1456,6 +1461,21 @@ Private Sub RenderSombras(ByVal CharIndex As Integer, ByVal PixelOffsetX As Inte
         
     End With
     
+End Sub
+
+Private Sub RenderIfCharIsInChatMode(ByVal CharIndex As Long, _
+                       ByVal X As Integer, _
+                       ByVal Y As Integer, _
+                       Optional ByVal Invi As Boolean = False)
+    Dim Color As Long
+
+    Color = D3DColorARGB(255, 220, 220, 255)
+   
+    With charlist(CharIndex)
+        'TODO: Cambiar por una imagen mas copada...
+        Call DrawText(X - 10, Y - 25, "[...]", Color, True)
+            
+    End With
 End Sub
 
 Private Sub RenderCharParticles(ByVal CharIndex As Integer, ByVal PixelOffsetX As Integer, ByVal PixelOffsetY As Integer)
