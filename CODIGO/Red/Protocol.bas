@@ -173,6 +173,7 @@ Private Enum ServerPacketID
     EnviarDatosServer = 117
     InitCraftman = 118
     EnviarListDeAmigos = 119
+    PlayIsInChatMode = 120
 End Enum
 
 Private Enum ClientPacketID
@@ -924,6 +925,9 @@ On Error Resume Next
             
         Case ServerPacketID.EnviarListDeAmigos
             Call HandleEnviarListDeAmigos
+
+        Case ServerPacketID.PlayIsInChatMode
+            Call HandleIsInChatModeAnim
 
         Case Else
             'ERROR : Abort!
@@ -5905,6 +5909,7 @@ Public Sub WriteAttack()
 'Writes the "Attack" message to the outgoing data buffer
 '***************************************************
     Call outgoingData.WriteByte(ClientPacketID.Attack)
+
     'Iniciamos la animacion de ataque
     charlist(UserCharIndex).attacking = True
 End Sub
@@ -11735,5 +11740,23 @@ Public Sub WriteSendIfCharIsInChatMode()
 '***************************************************
     With outgoingData
         Call .WriteByte(ClientPacketID.SendIfCharIsInChatMode)
+
+        charlist(UserCharIndex).IsInChatMode = True
     End With
+End Sub
+
+Private Sub HandleIsInChatModeAnim()
+    If incomingData.Length < 3 Then
+        Err.Raise incomingData.NotEnoughDataErrCode
+        Exit Sub
+    End If
+    
+    Dim CharIndex As Integer
+    
+    'Remove packet ID
+    Call incomingData.ReadByte
+    CharIndex = incomingData.ReadInteger
+
+    'Set the animation trigger on true
+    charlist(CharIndex).IsInChatMode = True 'should be done in separated sub?
 End Sub

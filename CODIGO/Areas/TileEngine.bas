@@ -195,6 +195,8 @@ Public Type Char
     ParticleIndex As Integer
     Particle_Count As Long
     Particle_Group() As Long
+
+    IsInChatMode As Boolean
 End Type
 
 'Info de un objeto
