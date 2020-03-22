@@ -332,6 +332,7 @@ Private Enum ClientPacketID
     DelAmigos = 154
     OnAmigos = 155
     MsgAmigos = 156
+    SendIfCharIsInChatMode = 157
 End Enum
 
 Public Enum FontTypeNames
@@ -11724,4 +11725,15 @@ errhandler:
 
     If Error <> 0 Then Call Err.Raise(Error)
     
+End Sub
+
+Public Sub WriteSendIfCharIsInChatMode()
+'***************************************************
+'Author: Lucas Daniel Recoaro (Recox)
+'Last Modification: 05/17/06
+'Writes the "SendIfCharIsInChatMode" message to the outgoing data buffer
+'***************************************************
+    With outgoingData
+        Call .WriteByte(ClientPacketID.SendIfCharIsInChatMode)
+    End With
 End Sub

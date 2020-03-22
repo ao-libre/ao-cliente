@@ -1369,7 +1369,7 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
             End If
 
             'Si el personaje esta chateando mostramos ... en pantalla
-            If .IsChateando Then
+            If .IsInChatMode Then
                 Call RenderIfCharIsInChatMode(CharIndex, PixelOffsetX, PixelOffsetY)
             End If
             

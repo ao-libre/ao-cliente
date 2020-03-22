@@ -1982,7 +1982,10 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
 
     'Send text
     If KeyCode = vbKeyReturn Then
-        If LenB(stxtbuffer) <> 0 Then Call ParseUserCommand(stxtbuffer)
+        If LenB(stxtbuffer) <> 0 Then 
+            Call ParseUserCommand(stxtbuffer)
+            Call WriteSendIfCharIsInChatMode()
+        End If
         
         stxtbuffer = vbNullString
         SendTxt.Text = vbNullString
