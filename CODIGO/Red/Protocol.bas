@@ -11758,5 +11758,5 @@ Private Sub HandleIsInChatModeAnim()
     CharIndex = incomingData.ReadInteger
 
     'Set the animation trigger on true
-    charlist(CharIndex).IsInChatMode = True 'should be done in separated sub?
+    charlist(CharIndex).IsInChatMode = !charlist(CharIndex).IsInChatMode 'should be done in separated sub?
 End Sub
