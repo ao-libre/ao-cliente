@@ -1570,6 +1570,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
             If (Not Comerciando) And (Not MirandoAsignarSkills) And (Not frmMSG.Visible) And (Not MirandoForo) And (Not frmEstadisticas.Visible) And (Not frmCantidad.Visible) Then
                 SendTxt.Visible = True
                 SendTxt.SetFocus
+                Call WriteSendIfCharIsInChatMode()
             End If
             
     End Select
@@ -1982,10 +1983,7 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
 
     'Send text
     If KeyCode = vbKeyReturn Then
-        If LenB(stxtbuffer) <> 0 Then 
-            Call ParseUserCommand(stxtbuffer)
-            Call WriteSendIfCharIsInChatMode()
-        End If
+        If LenB(stxtbuffer) <> 0 Then Call ParseUserCommand(stxtbuffer)
         
         stxtbuffer = vbNullString
         SendTxt.Text = vbNullString
