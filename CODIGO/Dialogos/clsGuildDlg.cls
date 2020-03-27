@@ -97,8 +97,8 @@ Public Sub Draw()
             If Left$(p_Dialogos(i).Texto, 1) = Chr$(3) Then
                 Call DrawText(X, Y + (i * 10), mid$(p_Dialogos(i).Texto, 2), ColorText , False, 1)
                 
-            Else
-                Call DrawText(X, Y + (i * 10), p_Dialogos(i).Texto, ColorText , False, 1)
+            Else 'Draw del MOTD
+                Call DrawText(X, Y + 260 + (i * 10), p_Dialogos(i).Texto, ColorText , False, 1)
             
             End If
         End If
