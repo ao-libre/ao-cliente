@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.ocx"
 Begin VB.Form frmMain 
    Appearance      =   0  'Flat
    BackColor       =   &H80000005&
@@ -275,7 +275,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2937
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -645,10 +644,10 @@ Begin VB.Form frmMain
       Caption         =   "Nombre del mapa"
       ForeColor       =   &H80000014&
       Height          =   255
-      Left            =   7800
+      Left            =   4920
       TabIndex        =   39
       Top             =   2040
-      Width           =   3375
+      Width           =   6255
    End
    Begin VB.Image imgAsignarSkill 
       Height          =   405
