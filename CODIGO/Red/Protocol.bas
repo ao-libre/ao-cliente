@@ -559,7 +559,7 @@ On Error Resume Next
 
     Dim Packet As Long: Packet = CLng(incomingData.PeekByte())
     
-    Debug.Print Packet
+    'Debug.Print Packet
     
     Select Case Packet
             
@@ -1853,12 +1853,12 @@ Private Sub HandleUpdateSta()
     
     Dim bWidth As Byte
     
-    bWidth = (((UserMinSTA / 100) / (UserMaxSTA / 100)) * 75)
+    bWidth = (((UserMinSTA / 100) / (UserMaxSTA / 100)) * 83)
     
-    frmMain.shpEnergia.Width = 75 - bWidth
-    frmMain.shpEnergia.Left = 584 + (75 - frmMain.shpEnergia.Width)
+    frmMain.shpEnergia.Width = 83 - bWidth
+    frmMain.shpEnergia.Left = 797 + (83 - frmMain.shpEnergia.Width)
     
-    frmMain.shpEnergia.Visible = (bWidth <> 75)
+    frmMain.shpEnergia.Visible = (bWidth <> 83)
     
 End Sub
 
@@ -1888,12 +1888,12 @@ Private Sub HandleUpdateMana()
     Dim bWidth As Byte
     
     If UserMaxMAN > 0 Then _
-        bWidth = (((UserMinMAN / 100) / (UserMaxMAN / 100)) * 75)
+        bWidth = (((UserMinMAN / 100) / (UserMaxMAN / 100)) * 90)
         
-    frmMain.shpMana.Width = 75 - bWidth
-    frmMain.shpMana.Left = 584 + (75 - frmMain.shpMana.Width)
+    frmMain.shpMana.Width = 90 - bWidth
+    frmMain.shpMana.Left = 902 + (90 - frmMain.shpMana.Width)
     
-    frmMain.shpMana.Visible = (bWidth <> 75)
+    frmMain.shpMana.Visible = (bWidth <> 90)
 End Sub
 
 ''
@@ -1921,12 +1921,12 @@ Private Sub HandleUpdateHP()
     
     Dim bWidth As Byte
     
-    bWidth = (((UserMinHP / 100) / (UserMaxHP / 100)) * 75)
+    bWidth = (((UserMinHP / 100) / (UserMaxHP / 100)) * 90)
     
-    frmMain.shpVida.Width = 75 - bWidth
-    frmMain.shpVida.Left = 584 + (75 - frmMain.shpVida.Width)
+    frmMain.shpVida.Width = 90 - bWidth
+    frmMain.shpVida.Left = 902 + (90 - frmMain.shpVida.Width)
     
-    frmMain.shpVida.Visible = (bWidth <> 75)
+    frmMain.shpVida.Visible = (bWidth <> 90)
     
     'Is the user alive??
     If UserMinHP = 0 Then
@@ -2618,14 +2618,13 @@ On Error GoTo ErrHandler
     weapon = Buffer.ReadInteger()
     shield = Buffer.ReadInteger()
     helmet = Buffer.ReadInteger()
-    
-    
+
     With charlist(CharIndex)
         Call Char_SetFx(CharIndex, Buffer.ReadInteger(), Buffer.ReadInteger())
-        
+
         .Nombre = Buffer.ReadASCIIString()
         NickColor = Buffer.ReadByte()
-        
+
         If (NickColor And eNickColor.ieCriminal) <> 0 Then
             .Criminal = 1
         Else
@@ -2659,8 +2658,6 @@ On Error GoTo ErrHandler
     End With
     
     Call Char_Make(CharIndex, Body, Head, Heading, X, Y, weapon, shield, helmet)
-    
-    Call Char_RefreshAll
     
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
@@ -2719,7 +2716,6 @@ Private Sub HandleCharacterRemove()
     CharIndex = incomingData.ReadInteger()
     
     Call Char_Erase(CharIndex)
-    Call RefreshAllChars
 End Sub
 
 ''
@@ -2746,7 +2742,7 @@ Private Sub HandleCharacterMove()
     CharIndex = incomingData.ReadInteger()
     X = incomingData.ReadByte()
     Y = incomingData.ReadByte()
-    
+
     With charlist(CharIndex)
         If .FxIndex >= 40 And .FxIndex <= 49 Then   'If it's meditating, we remove the FX
             .FxIndex = 0
@@ -2761,8 +2757,6 @@ Private Sub HandleCharacterMove()
     End With
     
     Call Char_MovebyPos(CharIndex, X, Y)
-    
-    Call Char_RefreshAll
 End Sub
 
 ''
@@ -2782,11 +2776,8 @@ Private Sub HandleForceCharMove()
     
     Direccion = incomingData.ReadByte()
 
-
     Call Char_MovebyHead(UserCharIndex, Direccion)
     Call Char_MoveScreen(Direccion)
-    
-    Call Char_RefreshAll
 End Sub
 
 ''
@@ -2828,8 +2819,6 @@ Private Sub HandleCharacterChange()
         
     '// Char Fx
     Call Char_SetFx(CharIndex, incomingData.ReadInteger(), incomingData.ReadInteger())
-        
-    Call Char_RefreshAll
 End Sub
 Private Sub HandleHeadingChange()
 '***************************************************
@@ -2851,8 +2840,6 @@ Private Sub HandleHeadingChange()
     CharIndex = incomingData.ReadInteger()
 
     Call Char_SetHeading(CharIndex, incomingData.ReadByte())
-
-    Call Char_RefreshAll
 End Sub
 
 ''
@@ -3227,28 +3214,28 @@ Private Sub HandleUpdateUserStats()
     
     '***************************
     If UserMaxMAN > 0 Then _
-        bWidth = (((UserMinMAN / 100) / (UserMaxMAN / 100)) * 75)
+        bWidth = (((UserMinMAN / 100) / (UserMaxMAN / 100)) * 90)
         
-    frmMain.shpMana.Width = 75 - bWidth
-    frmMain.shpMana.Left = 584 + (75 - frmMain.shpMana.Width)
+    frmMain.shpMana.Width = 90 - bWidth
+    frmMain.shpMana.Left = 902 + (90 - frmMain.shpMana.Width)
     
-    frmMain.shpMana.Visible = (bWidth <> 75)
+    frmMain.shpMana.Visible = (bWidth <> 90)
     '***************************
     
-    bWidth = (((UserMinHP / 100) / (UserMaxHP / 100)) * 75)
+    bWidth = (((UserMinHP / 100) / (UserMaxHP / 100)) * 90)
     
-    frmMain.shpVida.Width = 75 - bWidth
-    frmMain.shpVida.Left = 584 + (75 - frmMain.shpVida.Width)
+    frmMain.shpVida.Width = 90 - bWidth
+    frmMain.shpVida.Left = 902 + (90 - frmMain.shpVida.Width)
     
-    frmMain.shpVida.Visible = (bWidth <> 75)
+    frmMain.shpVida.Visible = (bWidth <> 90)
     '***************************
     
-    bWidth = (((UserMinSTA / 100) / (UserMaxSTA / 100)) * 75)
+    bWidth = (((UserMinSTA / 100) / (UserMaxSTA / 100)) * 83)
     
-    frmMain.shpEnergia.Width = 75 - bWidth
-    frmMain.shpEnergia.Left = 584 + (75 - frmMain.shpEnergia.Width)
+    frmMain.shpEnergia.Width = 83 - bWidth
+    frmMain.shpEnergia.Left = 797 + (83 - frmMain.shpEnergia.Width)
     
-    frmMain.shpEnergia.Visible = (bWidth <> 75)
+    frmMain.shpEnergia.Visible = (bWidth <> 83)
     '***************************
     
     If UserMinHP = 0 Then
@@ -3343,7 +3330,14 @@ On Error GoTo ErrHandler
     
     Call Inventario.SetItem(slot, ObjIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, name)
 
-    Call Inventario.DrawInventory
+    If frmComerciar.Visible Then
+        Call InvComUsu.SetItem(slot, ObjIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, name)
+    End If
+
+    If frmBancoObj.Visible Then        
+        Call InvBanco(1).SetItem(slot, ObjIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, name)
+        frmBancoObj.NoPuedeMover = False
+    End If
     
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
@@ -4189,20 +4183,20 @@ Private Sub HandleUpdateHungerAndThirst()
 
     Dim bWidth As Byte
     
-    bWidth = (((UserMinHAM / 100) / (UserMaxHAM / 100)) * 75)
+    bWidth = (((UserMinHAM / 100) / (UserMaxHAM / 100)) * 83)
     
-    frmMain.shpHambre.Width = 75 - bWidth
-    frmMain.shpHambre.Left = 584 + (75 - frmMain.shpHambre.Width)
+    frmMain.shpHambre.Width = 83 - bWidth
+    frmMain.shpHambre.Left = 797 + (83 - frmMain.shpHambre.Width)
     
-    frmMain.shpHambre.Visible = (bWidth <> 75)
+    frmMain.shpHambre.Visible = (bWidth <> 83)
     '*********************************
     
-    bWidth = (((UserMinAGU / 100) / (UserMaxAGU / 100)) * 75)
+    bWidth = (((UserMinAGU / 100) / (UserMaxAGU / 100)) * 83)
     
-    frmMain.shpSed.Width = 75 - bWidth
-    frmMain.shpSed.Left = 584 + (75 - frmMain.shpSed.Width)
+    frmMain.shpSed.Width = 83 - bWidth
+    frmMain.shpSed.Left = 797 + (83 - frmMain.shpSed.Width)
     
-    frmMain.shpSed.Visible = (bWidth <> 75)
+    frmMain.shpSed.Visible = (bWidth <> 83)
     
 End Sub
 
