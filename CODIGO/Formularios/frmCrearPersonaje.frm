@@ -2019,6 +2019,8 @@ End Sub
 
 Private Function CheckCabeza(ByVal Head As Integer) As Integer
 
+On Error GoTo ErrHandler
+
     Select Case UserSexo
 
         Case eGenero.Hombre
@@ -2137,13 +2139,23 @@ Private Function CheckCabeza(ByVal Head As Integer) As Integer
                 
                 Case Else
                     UserRaza = lstRaza.ListIndex + 1
-                    CheckCabeza = CheckCabeza(Head)
+                    CheckCabeza = Head
+                    
             End Select
 
         Case Else
             UserSexo = lstGenero.ListIndex + 1
-            CheckCabeza = CheckCabeza(Head)
+            CheckCabeza = Head
+            
     End Select
+    
+ErrHandler:
+
+    If Err.number Then
+        Call LogError(Err.number, Err.Description, "frmCrearPersonaje.CheckCabeza")
+    End If
+    
+    Exit Sub
     
 End Function
 
