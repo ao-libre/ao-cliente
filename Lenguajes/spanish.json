@@ -659,9 +659,6 @@
     "ERROR_DIRECTDEVICE_INIT": {
         "TEXTO": "No se puede inicializar DirectDevice. Por favor, verifique si tiene sus librerias y sus controladores actualizados."
     },
-    "ERROR_DESCARGA_SERVIDORES": {
-        "TEXTO": "Error al descargar la lista de servidores"
-    },
     "ERROR_DESCARGA_SERVIDORES_INET": {
         "TEXTO": "Error al descargar la lista de servidores: Error de Inet"
     },
