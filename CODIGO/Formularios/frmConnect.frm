@@ -978,6 +978,7 @@ Private Sub DownloadServersFile(myURL As String)
 'Implemented by Cucsifae
 'Check content of strData to avoid clean the file sinfo.ini if there is no response from Github by Recox
 '**********************************************************
+ On Error GoTo Error   
     Dim strData As String
     Dim f As Integer
 
