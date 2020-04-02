@@ -532,14 +532,14 @@ Sub DoPasosFx(ByVal CharIndex As Integer)
 End Sub
 
 Private Function HayFogata(ByRef Location As Position) As Boolean
-    Dim j As Long
+    Dim J As Long
     Dim k As Long
     
-    For j = UserPos.X - 8 To UserPos.X + 8
+    For J = UserPos.X - 8 To UserPos.X + 8
         For k = UserPos.Y - 6 To UserPos.Y + 6
-            If InMapBounds(j, k) Then
-                If MapData(j, k).ObjGrh.GrhIndex = GrhFogata Then
-                    Location.X = j
+            If InMapBounds(J, k) Then
+                If MapData(J, k).ObjGrh.GrhIndex = GrhFogata Then
+                    Location.X = J
                     Location.Y = k
                     
                     HayFogata = True
@@ -547,7 +547,7 @@ Private Function HayFogata(ByRef Location As Position) As Boolean
                 End If
             End If
         Next k
-    Next j
+    Next J
 End Function
 
 Function NextOpenChar() As Integer
@@ -864,39 +864,39 @@ Sub RenderScreen(ByVal tilex As Integer, _
     If ClientSetup.ProyectileEngine Then
                             
         If LastProjectile > 0 Then
-            Dim j As Long ' Long siempre en los bucles es mucho mas rapido
+            Dim J As Long ' Long siempre en los bucles es mucho mas rapido
                                 
-            For j = 1 To LastProjectile
+            For J = 1 To LastProjectile
 
-                If ProjectileList(j).Grh.GrhIndex Then
+                If ProjectileList(J).Grh.GrhIndex Then
                     Dim angle As Single
                     
                     'Update the position
-                    angle = DegreeToRadian * Engine_GetAngle(ProjectileList(j).X, ProjectileList(j).Y, ProjectileList(j).TX, ProjectileList(j).TY)
-                    ProjectileList(j).X = ProjectileList(j).X + (Sin(angle) * ElapsedTime * 0.63)
-                    ProjectileList(j).Y = ProjectileList(j).Y - (Cos(angle) * ElapsedTime * 0.63)
+                    angle = DegreeToRadian * Engine_GetAngle(ProjectileList(J).X, ProjectileList(J).Y, ProjectileList(J).TX, ProjectileList(J).TY)
+                    ProjectileList(J).X = ProjectileList(J).X + (Sin(angle) * ElapsedTime * 0.63)
+                    ProjectileList(J).Y = ProjectileList(J).Y - (Cos(angle) * ElapsedTime * 0.63)
                     
                     'Update the rotation
-                    If ProjectileList(j).RotateSpeed > 0 Then
-                        ProjectileList(j).Rotate = ProjectileList(j).Rotate + (ProjectileList(j).RotateSpeed * ElapsedTime * 0.01)
+                    If ProjectileList(J).RotateSpeed > 0 Then
+                        ProjectileList(J).Rotate = ProjectileList(J).Rotate + (ProjectileList(J).RotateSpeed * ElapsedTime * 0.01)
 
-                        Do While ProjectileList(j).Rotate > 360
-                            ProjectileList(j).Rotate = ProjectileList(j).Rotate - 360
+                        Do While ProjectileList(J).Rotate > 360
+                            ProjectileList(J).Rotate = ProjectileList(J).Rotate - 360
                         Loop
                     End If
     
                     'Draw if within range
-                    X = ((-minX - 1) * 32) + ProjectileList(j).X + PixelOffsetX + ((10 - TileBufferSize) * 32) - 288 + ProjectileList(j).OffsetX
-                    Y = ((-minY - 1) * 32) + ProjectileList(j).Y + PixelOffsetY + ((10 - TileBufferSize) * 32) - 288 + ProjectileList(j).OffsetY
+                    X = ((-minX - 1) * 32) + ProjectileList(J).X + PixelOffsetX + ((10 - TileBufferSize) * 32) - 288 + ProjectileList(J).OffsetX
+                    Y = ((-minY - 1) * 32) + ProjectileList(J).Y + PixelOffsetY + ((10 - TileBufferSize) * 32) - 288 + ProjectileList(J).OffsetY
 
                     If Y >= -32 Then
                         If Y <= (ScreenHeight + 32) Then
                             If X >= -32 Then
                                 If X <= (ScreenWidth + 32) Then
-                                    If ProjectileList(j).Rotate = 0 Then
-                                        Call Draw_Grh(ProjectileList(j).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, True, 0)
+                                    If ProjectileList(J).Rotate = 0 Then
+                                        Call Draw_Grh(ProjectileList(J).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, True, 0)
                                     Else
-                                        Call Draw_Grh(ProjectileList(j).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, True, ProjectileList(j).Rotate)
+                                        Call Draw_Grh(ProjectileList(J).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, True, ProjectileList(J).Rotate)
                                     End If
                                 End If
                             End If
@@ -904,19 +904,19 @@ Sub RenderScreen(ByVal tilex As Integer, _
                     End If
                     
                 End If
-            Next j
+            Next J
             
             'Check if it is close enough to the target to remove
-            For j = 1 To LastProjectile
+            For J = 1 To LastProjectile
 
-                If ProjectileList(j).Grh.GrhIndex Then
-                    If Abs(ProjectileList(j).X - ProjectileList(j).TX) < 20 Then
-                        If Abs(ProjectileList(j).Y - ProjectileList(j).TY) < 20 Then
-                            Call Engine_Projectile_Erase(j)
+                If ProjectileList(J).Grh.GrhIndex Then
+                    If Abs(ProjectileList(J).X - ProjectileList(J).TX) < 20 Then
+                        If Abs(ProjectileList(J).Y - ProjectileList(J).TY) < 20 Then
+                            Call Engine_Projectile_Erase(J)
                         End If
                     End If
                 End If
-            Next j
+            Next J
             
         End If
     End If
@@ -1105,11 +1105,11 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
         If DialogosClanes.Activo Then Call DialogosClanes.Draw ' GSZAO
 
         '*********Tiempo restante para que termine el invi o el paralizar*********
-        If UserParalizado And UserParalizadoSegundosRestantes <> 0 Then
+        If UserParalizado And UserParalizadoSegundosRestantes > 0 Then
             Call DrawText(1, 25, UserParalizadoSegundosRestantes & " segundos restantes de Paralisis", Color_Paralisis)
         End If
 
-        If UserInvisible And UserInvisibleSegundosRestantes <> 0 Then
+        If UserInvisible And UserInvisibleSegundosRestantes > 0 Then
             Call DrawText(1, 13, UserInvisibleSegundosRestantes & " segundos restantes de Invisibilidad", Color_Invisibilidad)
         End If
         '*************************************************************************
