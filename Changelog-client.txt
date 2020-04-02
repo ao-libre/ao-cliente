@@ -712,3 +712,7 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 30/03/2020: Implementado sistema de amigos. (abusiv0)
 * 30/03/2020: Se modificaron/mejoraron detalles en muchisimos mapas. (ReyarB)
 * 30/03/2020: clsIniManager respeta mayuscula/minuscula. (jopiortiz)
+
+-v0.13.29
+* 02/04/2020: Subida de texto mas suave, sin depender de los fps. (FrankoH298)
+* 02/04/2020: Arreglado reconectar al logear, y setAlpha() en drawText. (FrankoH298)
