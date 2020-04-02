@@ -974,9 +974,10 @@ End Sub
 Private Sub DownloadServersFile(myURL As String)
 '**********************************************************
 'Downloads the sinfo.dat file from a given url
-'Last change: 01/11/2018
+'Last change: 03/04/2020
 'Implemented by Cucsifae
 'Check content of strData to avoid clean the file sinfo.ini if there is no response from Github by Recox
+'If the response from github is error code 500 we don't do anything with the sinfo.dat file Recox
 '**********************************************************
  On Error GoTo Error   
     Dim strData As String
