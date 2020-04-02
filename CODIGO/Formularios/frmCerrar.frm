@@ -131,7 +131,6 @@ Private Sub cRegresar_Click()
     If frmMain.macrotrabajo.Enabled Then Call frmMain.DesactivarMacroTrabajo
     
     ' Nos desconectamos y lo mando al Panel de la Cuenta
-    Protocol.ReConnect = True
     Call WriteQuit
     
     Call Unload(Me)
@@ -165,8 +164,8 @@ Private Sub Form_Load()
 End Sub
 
 Private Sub LoadFormTexts()
-    cRegresar.Caption = JsonLanguage.Item("CERRAR").Item("TEXTOS").Item(1)
-    cSalir.Caption = JsonLanguage.Item("CERRAR").Item("TEXTOS").Item(2)
-    cCancelQuit.Caption = JsonLanguage.Item("CERRAR").Item("TEXTOS").Item(3)
+    cRegresar.Caption = JsonLanguage.item("CERRAR").item("TEXTOS").item(1)
+    cSalir.Caption = JsonLanguage.item("CERRAR").item("TEXTOS").item(2)
+    cCancelQuit.Caption = JsonLanguage.item("CERRAR").item("TEXTOS").item(3)
 End Sub
 

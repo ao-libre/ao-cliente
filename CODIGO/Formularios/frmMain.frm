@@ -179,7 +179,7 @@ Begin VB.Form frmMain
       CausesValidation=   0   'False
       ClipControls    =   0   'False
       BeginProperty Font 
-         Name            =   "MS Sans Serif"
+         Name            =   "Arial"
          Size            =   8.25
          Charset         =   0
          Weight          =   700
@@ -275,6 +275,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2937
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -735,7 +736,7 @@ Begin VB.Form frmMain
       BackStyle       =   0  'Transparent
       Caption         =   "Nombre del pj"
       BeginProperty Font 
-         Name            =   "MS Sans Serif"
+         Name            =   "Arial"
          Size            =   8.25
          Charset         =   0
          Weight          =   700
@@ -2851,14 +2852,18 @@ Public Sub DesactivarMacroHechizos()
 End Sub
 
 Private Sub timerTiempoRestanteInvisibleMensaje_Timer()
-    If UserInvisible Then
+    If UserInvisible And UserInvisibleSegundosRestantes > 0 Then
         UserInvisibleSegundosRestantes = UserInvisibleSegundosRestantes - 1
+    Else
+        timerTiempoRestanteInvisibleMensaje.Enabled = False
     End If
 End Sub
 
 Private Sub timerTiempoRestanteParalisisMensaje_Timer()
-    If UserParalizado Then
+    If UserParalizado And UserParalizadoSegundosRestantes > 0 Then
         UserParalizadoSegundosRestantes = UserParalizadoSegundosRestantes - 1
+    Else
+        timerTiempoRestanteParalisisMensaje.Enabled = False
     End If
 End Sub
 

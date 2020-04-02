@@ -189,7 +189,7 @@ Private Sub Engine_Render_Text(ByRef Batch As clsBatch, _
                     End If
                     
                 End If
-            
+                Call Batch.SetAlpha(False)
                 Call Batch.Draw(TempVA.X, TempVA.Y, TempVA.W, TempVA.H, Color, TempVA.Tx1, TempVA.Ty1, TempVA.Tx2, TempVA.Ty2)
 
                 'Shift over the the position to render the next character
@@ -205,27 +205,27 @@ End Sub
 Public Function ARGBtoD3DCOLORVALUE(ByVal ARGB As Long, ByRef Color As D3DCOLORVALUE)
 Dim dest(3) As Byte
 CopyMemory dest(0), ARGB, 4
-Color.A = dest(3)
+Color.a = dest(3)
 Color.r = dest(2)
 Color.g = dest(1)
-Color.B = dest(0)
+Color.b = dest(0)
 End Function
 
-Public Function ARGB(ByVal r As Long, ByVal g As Long, ByVal B As Long, ByVal A As Long) As Long
+Public Function ARGB(ByVal r As Long, ByVal g As Long, ByVal b As Long, ByVal a As Long) As Long
         
     Dim c As Long
         
-    If A > 127 Then
-        A = A - 128
-        c = A * 2 ^ 24 Or &H80000000
+    If a > 127 Then
+        a = a - 128
+        c = a * 2 ^ 24 Or &H80000000
         c = c Or r * 2 ^ 16
         c = c Or g * 2 ^ 8
-        c = c Or B
+        c = c Or b
     Else
-        c = A * 2 ^ 24
+        c = a * 2 ^ 24
         c = c Or r * 2 ^ 16
         c = c Or g * 2 ^ 8
-        c = c Or B
+        c = c Or b
     End If
     
     ARGB = c
