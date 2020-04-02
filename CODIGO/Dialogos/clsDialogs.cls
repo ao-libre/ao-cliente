@@ -81,9 +81,10 @@ Private Type dialog
     startTime   As Long
     lifeTime    As Long
     CharIndex   As Integer
-    color       As Long
+    Color       As Long
     renderable  As Boolean
     Sube        As Integer
+    startTickCount As Long
 End Type
 
 ''
@@ -121,20 +122,20 @@ Private Function BinarySearch(ByVal CharIndex As Integer) As Integer
 'Returns the index of the dialog in the list, or the negation
 'of the position were it should be if not found (for binary insertion)
 '**************************************************************
-    Dim Min As Long
-    Dim Max As Long
+    Dim min As Long
+    Dim max As Long
     Dim mid As Long
     
-    Min = 0
-    Max = dialogCount - 1
+    min = 0
+    max = dialogCount - 1
     
-    Do While Min <= Max
-        mid = (Min + Max) \ 2
+    Do While min <= max
+        mid = (min + max) \ 2
         
         If dialogs(mid).CharIndex < CharIndex Then
-            Min = mid + 1
+            min = mid + 1
         ElseIf dialogs(mid).CharIndex > CharIndex Then
-            Max = mid - 1
+            max = mid - 1
         Else
             'We found it
             BinarySearch = mid
@@ -144,7 +145,7 @@ Private Function BinarySearch(ByVal CharIndex As Integer) As Integer
     
     'Not found, return the negation of the position where it should be
     '(all higher values are to the right of the list and lower values are to the left)
-    BinarySearch = Not Min
+    BinarySearch = Not min
 End Function
 
 ''
@@ -158,7 +159,7 @@ End Function
 ' @remarks  If there are no more free slots, and the char didn't have a previous dialog,
 '           the chat is ignored.
 
-Public Sub CreateDialog(ByRef chat As String, ByVal CharIndex As Integer, ByVal color As Long)
+Public Sub CreateDialog(ByRef chat As String, ByVal CharIndex As Integer, ByVal Color As Long)
 '**************************************************************
 'Author: Juan Martin Sotuyo Dodero
 'Last Modification: 08/29/07 by Rapsodius
@@ -188,12 +189,13 @@ Public Sub CreateDialog(ByRef chat As String, ByVal CharIndex As Integer, ByVal 
     
     With dialogs(slot)
         .CharIndex = CharIndex
-        .color = ColorToDX8(color)
+        .Color = ColorToDX8(Color)
         .renderable = False
         .startTime = GetTickCount()
         .textLine = FormatChat(chat)
         .lifeTime = MS_ADD_EXTRA + (MS_PER_CHAR * Len(chat))
-        .Sube = 10
+        .Sube = 12
+        .startTickCount = timeGetTime + 12
     End With
 End Sub
 
@@ -214,7 +216,7 @@ Private Function FormatChat(ByRef chat As String) As String()
 '**************************************************************
     Dim word As String
     Dim curPos As Long
-    Dim length As Long
+    Dim Length As Long
     Dim acumLength As Long
     Dim lineLength As Long
     Dim wordLength As Long
@@ -224,13 +226,13 @@ Private Function FormatChat(ByRef chat As String) As String()
     'Initialize variables
     curLine = 0
     curPos = 1
-    length = Len(chat)
+    Length = Len(chat)
     acumLength = 0
     lineLength = -1
     ReDim chatLines(FieldCount(chat, 32)) As String
     
     'Start formating
-    Do While acumLength < length
+    Do While acumLength < Length
         word = ReadField(curPos, chat, 32)
         
         wordLength = Len(word)
@@ -264,8 +266,8 @@ Private Function FormatChat(ByRef chat As String) As String()
     Loop
     
     ' If it's only one line, center text
-    If curLine = 0 And length < MAX_LENGTH Then
-        chatLines(curLine) = String$((MAX_LENGTH - length) \ 2 + 1, " ") & chatLines(curLine)
+    If curLine = 0 And Length < MAX_LENGTH Then
+        chatLines(curLine) = String$((MAX_LENGTH - Length) \ 2 + 1, " ") & chatLines(curLine)
     End If
     
     'Resize array to fit
@@ -310,8 +312,8 @@ Public Sub Render()
 'Changed the way it gets rid of older dialogs.
 '**************************************************************
     Dim i As Long
-    Dim j As Long
-    Dim offset As Integer
+    Dim J As Long
+    Dim Offset As Integer
     Dim removedDialogs As Long
     Dim Count_dialog As Long
     
@@ -329,19 +331,20 @@ Public Sub Render()
                 Dim Upper_textLine As Long
                     Upper_textLine = UBound(.textLine())
                 
-                offset = -(usedFont.Size + 2) * Upper_textLine
+                Offset = -(usedFont.Size + 2) * Upper_textLine
                 
                 'Letras suben desde la cabeza.
-                If .lifeTime >= 292 Then
-                    .Sube = .Sube - 1
+                    If timeGetTime > .startTickCount Then
+                        .Sube = .Sube - 1
+                        .startTickCount = timeGetTime + 12
+                    End If
                     If .Sube > 0 Then .Y = .Y + .Sube
-                End If
                 
                 'Render it
-                For j = 0 To Upper_textLine
-                    Call DrawText(.X, .Y + offset, .textLine(j), .color)
-                    offset = offset + usedFont.Size + 5
-                Next j
+                For J = 0 To Upper_textLine
+                    Call DrawText(.X, .Y + Offset, .textLine(J), .Color)
+                    Offset = Offset + usedFont.Size + 5
+                Next J
                 
                 'Won't render it unless it's updated in next frmae
                 .renderable = False
