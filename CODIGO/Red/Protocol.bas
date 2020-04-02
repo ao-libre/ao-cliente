@@ -1565,8 +1565,6 @@ Private Sub HandleDisconnect()
     Call incomingData.ReadByte
         'Closeand go to frmPanelAccount
         Call CloseConnectionAndResetAllInfo
-        
-    End If
     
 End Sub
 
