@@ -50,19 +50,19 @@ Sub DibujarCartel()
 
     Dim X As Integer, Y As Integer
     X = (frmMain.MainViewPic.Width - GrhData(textura).pixelWidth) / 2
-    Y = (frmMain.MainViewPic.Height - GrhData(textura).pixelHeight) / 2
+    Y = frmMain.MainViewPic.Height / 2
 
-    Call Draw_GrhIndex(textura, X, Y, 0, Normal_RGBList(), 0, False)
+    Call Draw_GrhIndex(textura, X, Y - GrhData(textura).pixelHeight / 2, 0, Normal_RGBList(), 0, False)
     Dim J As Integer, desp As Integer, Upper_leyendaFormateada As Long
     
     Upper_leyendaFormateada = UBound(LeyendaFormateada)
     
     X = X + 30
-    Y = Y + 30
+    Y = Y - (frmMain.Font.Size + 5) * (Upper_leyendaFormateada + 1) / 2
     
     For J = 0 To Upper_leyendaFormateada
         Call DrawText(X, Y + desp, LeyendaFormateada(J), -1)
-        desp = desp + (frmMain.Font.Size) + 5
+        desp = desp + frmMain.Font.Size + 5
     Next
 End Sub
 
