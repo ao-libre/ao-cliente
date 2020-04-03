@@ -2174,14 +2174,12 @@ Private Sub WriteChatOverHeadInConsole(ByVal CharIndex As Integer, ByVal ChatTex
         name = Left$(.Nombre, Pos - 2)
        
         'Si el npc tiene nombre lo escribimos en la consola
-        ChatText = LTrim$(ChatText)
-        ChatText = RTrim$(ChatText)
-        If LenB(.Nombre) <> 0 Then
+        ChatText = Trim$(ChatText)
+        If LenB(.Nombre) <> 0 And LenB(ChatText) > 0 Then
             Call AddtoRichTextBox(frmMain.RecTxt, name & "> ", NameRed, NameGreen, NameBlue, True, False, True, rtfLeft)
+            Call AddtoRichTextBox(frmMain.RecTxt, ChatText, Red, Green, Blue, True, False, False, rtfLeft)
         End If
 
-        Call AddtoRichTextBox(frmMain.RecTxt, ChatText, Red, Green, Blue, True, False, False, rtfLeft)
-        
     End With
     
 End Sub
@@ -3025,14 +3023,14 @@ On Error GoTo errhandler
     
     With frmGuildAdm
         'Clear guild's list
-        .GuildsList.Clear
+        .guildslist.Clear
         
         GuildNames = Split(Buffer.ReadASCIIString(), SEPARATOR)
         
         Dim i As Long
         For i = 0 To UBound(GuildNames())
             If LenB(GuildNames(i)) <> 0 Then
-                Call .GuildsList.AddItem(GuildNames(i))
+                Call .guildslist.AddItem(GuildNames(i))
             End If
         Next i
         
@@ -4879,11 +4877,11 @@ On Error GoTo errhandler
         GuildNames = Split(Buffer.ReadASCIIString(), SEPARATOR)
         
         'Empty the list
-        Call .GuildsList.Clear
+        Call .guildslist.Clear
         
         For i = 0 To UBound(GuildNames())
             If LenB(GuildNames(i)) <> 0 Then
-                Call .GuildsList.AddItem(GuildNames(i))
+                Call .guildslist.AddItem(GuildNames(i))
             End If
         Next i
         
