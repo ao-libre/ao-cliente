@@ -1,9 +1,7 @@
 Attribute VB_Name = "Carteles"
 Option Explicit
 
-Const XPosCartel = 100
-Const YPosCartel = 100
-Const MAXLONG = 30
+Const MAXLONG = 35
 
 Public Cartel As Boolean
 Public Leyenda As String
@@ -51,17 +49,18 @@ Sub DibujarCartel()
     If Not Cartel Then Exit Sub
 
     Dim X As Integer, Y As Integer
-    
-    X = XPosCartel + 20
-    Y = YPosCartel + 20
-    
-    Call Draw_GrhIndex(textura, XPosCartel, YPosCartel, 0, Normal_RGBList(), 0, False)
+    X = (frmMain.MainViewPic.Width - GrhData(textura).pixelWidth) / 2
+    Y = (frmMain.MainViewPic.Height - GrhData(textura).pixelHeight) / 2
+
+    Call Draw_GrhIndex(textura, X, Y, 0, Normal_RGBList(), 0, False)
     Dim J As Integer, desp As Integer, Upper_leyendaFormateada As Long
     
     Upper_leyendaFormateada = UBound(LeyendaFormateada)
     
+    X = X + 30
+    Y = Y + 30
+    
     For J = 0 To Upper_leyendaFormateada
-        'Fonts_Render_String LeyendaFormateada(j), X, Y + desp, -1, Settings.Engine_Font
         Call DrawText(X, Y + desp, LeyendaFormateada(J), -1)
         desp = desp + (frmMain.Font.Size) + 5
     Next
