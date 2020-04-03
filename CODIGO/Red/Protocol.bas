@@ -2174,13 +2174,12 @@ Private Sub WriteChatOverHeadInConsole(ByVal CharIndex As Integer, ByVal ChatTex
         name = Left$(.Nombre, Pos - 2)
        
         'Si el npc tiene nombre lo escribimos en la consola
-        
-        If LenB(.Nombre) <> 0 Then
+        ChatText = Trim$(ChatText)
+        If LenB(.Nombre) <> 0 And LenB(ChatText) > 0 Then
             Call AddtoRichTextBox(frmMain.RecTxt, name & "> ", NameRed, NameGreen, NameBlue, True, False, True, rtfLeft)
+            Call AddtoRichTextBox(frmMain.RecTxt, ChatText, Red, Green, Blue, True, False, False, rtfLeft)
         End If
 
-        Call AddtoRichTextBox(frmMain.RecTxt, ChatText, Red, Green, Blue, True, False, False, rtfLeft)
-        
     End With
     
 End Sub

@@ -119,8 +119,8 @@ End Sub
 '   @return   True if no errors occured, false otherwise.
 
 Public Function Initialize(ByRef dX As DirectX8, _
-                           ByVal hWnd As Long, _
-                           ByVal sound_path As String, _ 
+                           ByVal hwnd As Long, _
+                           ByVal sound_path As String, _
                            ByVal music_path As String, _
                            ByVal music_mp3_path As String) As Boolean
 '***************************************************
@@ -140,7 +140,7 @@ On Error GoTo errhandler
     'Initialize DirectSound
     Set DirectSound = dX.DirectSoundCreate("")
     
-    Call DirectSound.SetCooperativeLevel(hWnd, DSSCL_PRIORITY)
+    Call DirectSound.SetCooperativeLevel(hwnd, DSSCL_PRIORITY)
     
     'Set sound path
     SoundPath = sound_path
@@ -149,7 +149,7 @@ On Error GoTo errhandler
     SndVolume = 0
     
     'Initialize DirectMusic
-    Music = InitializedirectMusic(dX, hWnd)
+    Music = InitializedirectMusic(dX, hwnd)
     
     'Set music path
     MusicPath = music_path
@@ -181,7 +181,7 @@ End Function
 '
 '   @return   True if no errors occured, false otherwise.
 
-Private Function InitializedirectMusic(ByRef dX As DirectX8, ByVal hWnd As Long) As Boolean
+Private Function InitializedirectMusic(ByRef dX As DirectX8, ByVal hwnd As Long) As Boolean
 '***************************************************
 'Author: Juan Martin Sotuyo Dodero (Maraxus)
 'Last Modification: 16/03/04
@@ -192,7 +192,7 @@ On Error GoTo errhandler
     Set Loader = DirectX.DirectMusicLoaderCreate()
     
     Set Performance = dX.DirectMusicPerformanceCreate()
-    Call Performance.InitAudio(hWnd, DMUS_AUDIOF_ALL, mus_Params, Nothing, DMUS_APATH_DYNAMIC_STEREO, 128)
+    Call Performance.InitAudio(hwnd, DMUS_AUDIOF_ALL, mus_Params, Nothing, DMUS_APATH_DYNAMIC_STEREO, 128)
     Call Performance.SetMasterAutoDownload(True)        'Enable auto download of instruments
     
     'Set to port default, 1 channel group is enough for MIDIs
@@ -216,7 +216,7 @@ End Function
 '
 '   @return   The buffer index in which the sound is playing, or 0 in case of error.
 
-Public Function PlayWave(ByVal FileName As String, Optional ByVal srcX As Byte = 0, Optional ByVal srcY As Byte = 0, Optional ByVal LoopSound As LoopStyle = LoopStyle.Default, Optional ByVal Char As Boolean = False) As Long
+Public Function PlayWave(ByVal FileName As String, Optional ByVal srcX As Byte = 0, Optional ByVal srcY As Byte = 0, Optional ByVal LoopSound As LoopStyle = LoopStyle.Default) As Long
 '***************************************************
 'Author: Juan Martin Sotuyo Dodero (Maraxus)
 'Last Modification: 28/07/08
@@ -253,11 +253,7 @@ On Error GoTo errhandler
     
     If sEffectsActivated Then
         If srcX <> 0 And srcY <> 0 Then
-            If Char Then
-                Call Update3DSound(bufferIndex, 0, 0, True)
-            Else
-                Call Update3DSound(bufferIndex, 0, 0)
-            End If
+            Call Update3DSound(bufferIndex, 0, 0)
         End If
     End If
 Exit Function
@@ -285,7 +281,7 @@ Private Sub ResetSoundValues()
     Next i
 End Sub
 
-Private Sub Update3DSound(ByVal bufferIndex As Long, ByVal deltaX As Integer, ByVal deltaY As Integer, Optional ByVal Char As Boolean = False)
+Private Sub Update3DSound(ByVal bufferIndex As Long, ByVal deltaX As Integer, ByVal deltaY As Integer)
 '***************************************************
 'Author: Juan Martin Sotuyo Dodero (Maraxus)
 'Last Modification: 05/09/09
@@ -333,11 +329,7 @@ Private Sub Update3DSound(ByVal bufferIndex As Long, ByVal deltaX As Integer, By
         If linearDistanceNew = 0 Then linearDistanceNew = 1
         
         'Set panning according to relative position of the source to the listener
-        If Char Then
-            Call .Buffer.SetPan(DSBPAN_CENTER)
-        Else
-            Call .Buffer.SetPan((distanceXNew / linearDistanceNew) * DSBPAN_RIGHT)
-        End If
+        Call .Buffer.SetPan((distanceXNew / linearDistanceNew) * 2000)
     End With
 End Sub
 
@@ -369,7 +361,7 @@ Public Sub MoveListener(ByVal X As Integer, ByVal Y As Integer)
         If Not DSBuffers(i).Buffer Is Nothing Then
             If DSBuffers(i).Buffer.GetStatus And DSBSTATUS_PLAYING Then
                 If DSBuffers(i).X <> 0 And DSBuffers(i).Y <> 0 Then
-                    Call Update3DSound(i, deltaX, deltaY, True)
+                    Call Update3DSound(i, deltaX, deltaY)
                 End If
             End If
         End If
@@ -1048,7 +1040,7 @@ Public Sub PlayBackgroundMusic(ByVal FileName As String, ByVal FileType As Byte,
 '***************************************************
     'A el himno del AO no lo saque nadie, este es un parche para que en el frmConectar no salga la musica cuando
     'Clickeo un server en la lista (Recox)
-    If CurrentMusicFile = "6.mp3" And FileName = "2" Then Exit Sub    
+    If CurrentMusicFile = "6.mp3" And FileName = "2" Then Exit Sub
 
     Select Case FileType
         Case MusicTypes.Midi

@@ -275,7 +275,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2937
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -660,10 +659,10 @@ Begin VB.Form frmMain
    Begin VB.Label lblDropGold 
       BackStyle       =   0  'Transparent
       Height          =   255
-      Left            =   13920
+      Left            =   13800
       MousePointer    =   99  'Custom
       TabIndex        =   27
-      Top             =   8640
+      Top             =   6960
       Width           =   255
    End
    Begin VB.Label lblMinimizar 
@@ -945,7 +944,6 @@ Begin VB.Form frmMain
       BackColor       =   &H0000C0C0&
       BackStyle       =   0  'Transparent
       Caption         =   "999/999"
-      DragMode        =   1  'Automatic
       ForeColor       =   &H80000018&
       Height          =   180
       Left            =   12000
@@ -1096,8 +1094,8 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Public TX                  As Byte
-Public TY                  As Byte
+Public tX                  As Byte
+Public tY                  As Byte
 Public MouseX              As Long
 Public MouseY              As Long
 Public MouseBoton          As Long
@@ -1830,7 +1828,7 @@ Private Sub macrotrabajo_Timer()
     'End If
     
     If UsingSkill = eSkill.Pesca Or UsingSkill = eSkill.Talar Or UsingSkill = eSkill.Mineria Or UsingSkill = FundirMetal Or (UsingSkill = eSkill.Herreria And Not MirandoHerreria) Then
-        Call WriteWorkLeftClick(TX, TY, UsingSkill)
+        Call WriteWorkLeftClick(tX, tY, UsingSkill)
         UsingSkill = 0
     End If
     
@@ -1859,12 +1857,12 @@ Private Sub mnuEquipar_Click()
 End Sub
 
 Private Sub mnuNPCComerciar_Click()
-    Call WriteLeftClick(TX, TY)
+    Call WriteLeftClick(tX, tY)
     Call WriteCommerceStart
 End Sub
 
 Private Sub mnuNpcDesc_Click()
-    Call WriteLeftClick(TX, TY)
+    Call WriteLeftClick(tX, tY)
 End Sub
 
 Private Sub mnuTirar_Click()
@@ -2180,7 +2178,7 @@ Private Sub MainViewPic_DblClick()
     '12/28/2007: ByVal - Chequea que la ventana de comercio y boveda no este abierta al hacer doble clic a un comerciante, sobrecarga la lista de items.
     '**************************************************************
     If Not MirandoForo And Not Comerciando Then 'frmComerciar.Visible And Not frmBancoObj.Visible Then
-        Call WriteDoubleClick(TX, TY)
+        Call WriteDoubleClick(tX, tY)
     End If
 End Sub
 
@@ -2197,7 +2195,7 @@ Private Sub MainViewPic_Click()
     Dim VAR_LANZANDO        As String
     
     If Not Comerciando Then
-        Call ConvertCPtoTP(MouseX, MouseY, TX, TY)
+        Call ConvertCPtoTP(MouseX, MouseY, tX, tY)
         
         If Not InGameArea() Then Exit Sub
         
@@ -2217,7 +2215,7 @@ Private Sub MainViewPic_Click()
 
                 '[/ybarra]
                 If UsingSkill = 0 Then
-                    Call WriteLeftClick(TX, TY)
+                    Call WriteLeftClick(tX, tY)
                 Else
 
                     If trainingMacro.Enabled Then Call DesactivarMacroHechizos
@@ -2300,7 +2298,7 @@ Private Sub MainViewPic_Click()
                     If frmMain.MousePointer <> 2 Then Exit Sub 'Parcheo porque a veces tira el hechizo sin tener el cursor (NicoNZ)
                     
                     frmMain.MousePointer = vbDefault
-                    Call WriteWorkLeftClick(TX, TY, UsingSkill)
+                    Call WriteWorkLeftClick(tX, tY, UsingSkill)
                     UsingSkill = 0
                 End If
             Else
@@ -2311,7 +2309,7 @@ Private Sub MainViewPic_Click()
 
             If Not CustomKeys.KeyAssigned(KeyCodeConstants.vbKeyShift) Then
                 If MouseBoton = vbLeftButton Then
-                    Call WriteWarpChar("YO", UserMap, TX, TY)
+                    Call WriteWarpChar("YO", UserMap, tX, tY)
                 End If
             End If
         End If
@@ -2326,7 +2324,7 @@ Private Sub Form_DblClick()
     '12/28/2007: ByVal - Chequea que la ventana de comercio y boveda no este abierta al hacer doble clic a un comerciante, sobrecarga la lista de items.
     '**************************************************************
     If Not MirandoForo And Not Comerciando Then 'frmComerciar.Visible And Not frmBancoObj.Visible Then
-        Call WriteDoubleClick(TX, TY)
+        Call WriteDoubleClick(tX, tY)
     End If
 End Sub
 
@@ -2601,10 +2599,10 @@ End Sub
 Private Sub AbrirMenuViewPort()
     #If (ConMenuseConextuales = 1) Then
 
-        If TX >= MinXBorder And TY >= MinYBorder And TY <= MaxYBorder And TX <= MaxXBorder Then
+        If tX >= MinXBorder And tY >= MinYBorder And tY <= MaxYBorder And tX <= MaxXBorder Then
 
-            If MapData(TX, TY).CharIndex > 0 Then
-                If charlist(MapData(TX, TY).CharIndex).invisible = False Then
+            If MapData(tX, tY).CharIndex > 0 Then
+                If charlist(MapData(tX, tY).CharIndex).invisible = False Then
         
                     Dim m As frmMenuseFashion
                     Set m = New frmMenuseFashion
@@ -2614,8 +2612,8 @@ Private Sub AbrirMenuViewPort()
                     m.SetMenuId 1
                     m.ListaInit 2, False
             
-                    If LenB(charlist(MapData(TX, TY).CharIndex).Nombre) <> 0 Then
-                        m.ListaSetItem 0, charlist(MapData(TX, TY).CharIndex).Nombre, True
+                    If LenB(charlist(MapData(tX, tY).CharIndex).Nombre) <> 0 Then
+                        m.ListaSetItem 0, charlist(MapData(tX, tY).CharIndex).Nombre, True
                     Else
                         m.ListaSetItem 0, "<NPC>", True
                     End If
@@ -2661,10 +2659,10 @@ Public Sub CallbackMenuFashion(ByVal MenuId As Long, ByVal Sel As Long)
             Select Case Sel
 
                 Case 0 'Nombre
-                    Call WriteLeftClick(TX, TY)
+                    Call WriteLeftClick(tX, tY)
         
                 Case 1 'Comerciar
-                    Call WriteLeftClick(TX, TY)
+                    Call WriteLeftClick(tX, tY)
                     Call WriteCommerceStart
             End Select
     End Select
@@ -2887,13 +2885,13 @@ Private Sub trainingMacro_Timer()
         Call WriteWork(eSkill.Magia)
     End If
     
-    Call ConvertCPtoTP(MouseX, MouseY, TX, TY)
+    Call ConvertCPtoTP(MouseX, MouseY, tX, tY)
     
     If UsingSkill = Magia And Not MainTimer.Check(TimersIndex.CastSpell) Then Exit Sub
     
     If UsingSkill = Proyectiles And Not MainTimer.Check(TimersIndex.Attack) Then Exit Sub
     
-    Call WriteWorkLeftClick(TX, TY, UsingSkill)
+    Call WriteWorkLeftClick(tX, tY, UsingSkill)
     UsingSkill = 0
 End Sub
 
