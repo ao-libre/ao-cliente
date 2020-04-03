@@ -1,5 +1,5 @@
 [INIT]
-Cant=5
+Cant=6
 
 [S1]
 Desc=Rol - Alkon 0.13.X
@@ -29,5 +29,11 @@ Mundo=BattleServer
 Desc=Servidor ZN | Modo:Alkon 0.13.X
 IP=152.168.107.28
 PJ=7666
+Mundo=Alkon
+
+[S6]
+Desc=Pruebas 1024 - TEST
+IP=18.231.37.189
+PJ=7667
 Mundo=Alkon
 
