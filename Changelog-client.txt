@@ -716,3 +716,4 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 -v0.13.29
 * 02/04/2020: Subida de texto mas suave, sin depender de los fps. (FrankoH298)
 * 02/04/2020: Arreglado reconectar al logear, y setAlpha() en drawText. (FrankoH298)
+* 03/04/2020: Si no se puede descargar la lista de servers de github por que tira error 500, no hacemos nada con sinfo.dat. (Recox)

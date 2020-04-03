@@ -659,9 +659,6 @@
     "ERROR_DIRECTDEVICE_INIT": {
         "TEXTO": "Unable to initialize DirectDevice. Please, check if you have your libraries and your drivers up-to-date."
     },
-    "ERROR_DESCARGA_SERVIDORES": {
-        "TEXTO": "Failed to download the server list"
-    },
     "ERROR_DESCARGA_SERVIDORES_INET": {
         "TEXTO": "Failed to download the server list: Error Inet"
     },

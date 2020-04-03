@@ -943,7 +943,7 @@ Public Sub CargarServidores()
 'Added IP Api to get the country of the IP. (Recox)
 'Get ping from server (Recox)
 '********************************
-On Error GoTo errorH
+On Error Resume Next
     Dim File As String
 
     File = Game.path(INIT) & "sinfo.dat"
@@ -969,21 +969,17 @@ On Error GoTo errorH
     Next i
 
     If CurServer = 0 Then CurServer = 1
-
-Exit Sub
-
-errorH:
-    Call MsgBox("Error cargando los servidores, actualicelos de la web. http://www.ArgentumOnline.org", vbCritical + vbOKOnly, "Argentum Online Libre")
 End Sub
 
 Private Sub DownloadServersFile(myURL As String)
 '**********************************************************
 'Downloads the sinfo.dat file from a given url
-'Last change: 01/11/2018
+'Last change: 03/04/2020
 'Implemented by Cucsifae
 'Check content of strData to avoid clean the file sinfo.ini if there is no response from Github by Recox
+'If the response from github is error code 500 we don't do anything with the sinfo.dat file Recox
 '**********************************************************
-On Error Resume Next
+ On Error GoTo Error   
     Dim strData As String
     Dim f As Integer
 
@@ -995,11 +991,18 @@ On Error Resume Next
 
     f = FreeFile
 
-    If LenB(strData) <> 0 Then
+    Dim is500Error As Boolean 
+    is500Error = InStr(1, strData, "500: Internal Server Error")
+    
+    If LenB(strData) <> 0 And Not is500Error Then
         Open Game.path(INIT) & "sinfo.dat" For Output As #f
             Print #f, strData
         Close #f
     End If
 
+    Exit Sub
+
+Error:
+    Call MsgBox(JsonLanguage.item("ERROR_DESCARGA_SERVIDORES_INET").item("TEXTO") & " " & Err.Description, vbCritical + vbOKOnly, "Argentum Online Libre " & Err.number)
     Exit Sub
 End Sub
