@@ -30,9 +30,8 @@ Begin VB.Form frmMain
    PaletteMode     =   1  'UseZOrder
    Picture         =   "frmMain.frx":7F6A
    ScaleHeight     =   768
-   ScaleMode       =   0  'User
-   ScaleWidth      =   1022.001
-   ShowInTaskbar   =   0   'False
+   ScaleMode       =   3  'Pixel
+   ScaleWidth      =   1023
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
    Begin VB.Timer timerTiempoRestanteInvisibleMensaje 
@@ -94,22 +93,22 @@ Begin VB.Form frmMain
       BackColor       =   &H80000007&
       BorderStyle     =   0  'None
       Height          =   1500
-      Left            =   9684
+      Left            =   9675
       ScaleHeight     =   100
-      ScaleMode       =   0  'User
-      ScaleWidth      =   87.4
+      ScaleMode       =   3  'Pixel
+      ScaleWidth      =   100
       TabIndex        =   37
       TabStop         =   0   'False
       Top             =   420
-      Width           =   1425
+      Width           =   1500
       Begin VB.Shape UserAreaMinimap 
          BackColor       =   &H80000004&
          BorderColor     =   &H80000002&
          FillColor       =   &H000080FF&
-         Height          =   300
-         Left            =   457
-         Top             =   570
-         Width           =   408
+         Height          =   315
+         Left            =   555
+         Top             =   585
+         Width           =   375
       End
       Begin VB.Shape UserM 
          BackColor       =   &H0000FFFF&
@@ -117,9 +116,9 @@ Begin VB.Form frmMain
          BorderColor     =   &H0000FFFF&
          FillColor       =   &H0000FFFF&
          Height          =   45
-         Left            =   652
-         Top             =   705
-         Width           =   49
+         Left            =   720
+         Top             =   720
+         Width           =   45
       End
    End
    Begin VB.PictureBox picSM 
@@ -275,6 +274,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2937
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1094,8 +1094,8 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Public tX                  As Byte
-Public tY                  As Byte
+Public TX                  As Byte
+Public TY                  As Byte
 Public MouseX              As Long
 Public MouseY              As Long
 Public MouseBoton          As Long
@@ -1132,7 +1132,7 @@ Private Const USER_GOLD_COLOR As Long = vbYellow
 
 Private Declare Function SetWindowLong _
                 Lib "user32" _
-                Alias "SetWindowLongA" (ByVal hWnd As Long, _
+                Alias "SetWindowLongA" (ByVal hwnd As Long, _
                                         ByVal nIndex As Long, _
                                         ByVal dwNewLong As Long) As Long
 
@@ -1173,10 +1173,10 @@ Private Sub Form_Load()
     'y poder borrar los frx de este archivo
         
     ' Detect links in console
-    Call EnableURLDetect(RecTxt.hWnd, Me.hWnd)
+    Call EnableURLDetect(RecTxt.hwnd, Me.hwnd)
     
     ' Make the console transparent
-    Call SetWindowLong(RecTxt.hWnd, -20, &H20&)
+    Call SetWindowLong(RecTxt.hwnd, -20, &H20&)
     
     CtrlMaskOn = False
     
@@ -1828,7 +1828,7 @@ Private Sub macrotrabajo_Timer()
     'End If
     
     If UsingSkill = eSkill.Pesca Or UsingSkill = eSkill.Talar Or UsingSkill = eSkill.Mineria Or UsingSkill = FundirMetal Or (UsingSkill = eSkill.Herreria And Not MirandoHerreria) Then
-        Call WriteWorkLeftClick(tX, tY, UsingSkill)
+        Call WriteWorkLeftClick(TX, TY, UsingSkill)
         UsingSkill = 0
     End If
     
@@ -1857,12 +1857,12 @@ Private Sub mnuEquipar_Click()
 End Sub
 
 Private Sub mnuNPCComerciar_Click()
-    Call WriteLeftClick(tX, tY)
+    Call WriteLeftClick(TX, TY)
     Call WriteCommerceStart
 End Sub
 
 Private Sub mnuNpcDesc_Click()
-    Call WriteLeftClick(tX, tY)
+    Call WriteLeftClick(TX, TY)
 End Sub
 
 Private Sub mnuTirar_Click()
@@ -1961,7 +1961,7 @@ Private Sub SendTxt_KeyDown(KeyCode As Integer, Shift As Integer)
     
     ' Control + Shift
     If Shift = 3 Then
-        On Error GoTo errhandler
+        On Error GoTo ErrHandler
         
         ' Only allow numeric keys
         If KeyCode >= vbKey0 And KeyCode <= vbKey9 Then
@@ -1997,7 +1997,7 @@ Private Sub SendTxt_KeyDown(KeyCode As Integer, Shift As Integer)
     
     Exit Sub
     
-errhandler:
+ErrHandler:
 
     'Did detected an invalid message??
     If Err.number = CustomMessages.InvalidMessageErrCode Then
@@ -2178,7 +2178,7 @@ Private Sub MainViewPic_DblClick()
     '12/28/2007: ByVal - Chequea que la ventana de comercio y boveda no este abierta al hacer doble clic a un comerciante, sobrecarga la lista de items.
     '**************************************************************
     If Not MirandoForo And Not Comerciando Then 'frmComerciar.Visible And Not frmBancoObj.Visible Then
-        Call WriteDoubleClick(tX, tY)
+        Call WriteDoubleClick(TX, TY)
     End If
 End Sub
 
@@ -2195,7 +2195,7 @@ Private Sub MainViewPic_Click()
     Dim VAR_LANZANDO        As String
     
     If Not Comerciando Then
-        Call ConvertCPtoTP(MouseX, MouseY, tX, tY)
+        Call ConvertCPtoTP(MouseX, MouseY, TX, TY)
         
         If Not InGameArea() Then Exit Sub
         
@@ -2215,7 +2215,7 @@ Private Sub MainViewPic_Click()
 
                 '[/ybarra]
                 If UsingSkill = 0 Then
-                    Call WriteLeftClick(tX, tY)
+                    Call WriteLeftClick(TX, TY)
                 Else
 
                     If trainingMacro.Enabled Then Call DesactivarMacroHechizos
@@ -2298,7 +2298,7 @@ Private Sub MainViewPic_Click()
                     If frmMain.MousePointer <> 2 Then Exit Sub 'Parcheo porque a veces tira el hechizo sin tener el cursor (NicoNZ)
                     
                     frmMain.MousePointer = vbDefault
-                    Call WriteWorkLeftClick(tX, tY, UsingSkill)
+                    Call WriteWorkLeftClick(TX, TY, UsingSkill)
                     UsingSkill = 0
                 End If
             Else
@@ -2309,7 +2309,7 @@ Private Sub MainViewPic_Click()
 
             If Not CustomKeys.KeyAssigned(KeyCodeConstants.vbKeyShift) Then
                 If MouseBoton = vbLeftButton Then
-                    Call WriteWarpChar("YO", UserMap, tX, tY)
+                    Call WriteWarpChar("YO", UserMap, TX, TY)
                 End If
             End If
         End If
@@ -2324,7 +2324,7 @@ Private Sub Form_DblClick()
     '12/28/2007: ByVal - Chequea que la ventana de comercio y boveda no este abierta al hacer doble clic a un comerciante, sobrecarga la lista de items.
     '**************************************************************
     If Not MirandoForo And Not Comerciando Then 'frmComerciar.Visible And Not frmBancoObj.Visible Then
-        Call WriteDoubleClick(tX, tY)
+        Call WriteDoubleClick(TX, TY)
     End If
 End Sub
 
@@ -2599,10 +2599,10 @@ End Sub
 Private Sub AbrirMenuViewPort()
     #If (ConMenuseConextuales = 1) Then
 
-        If tX >= MinXBorder And tY >= MinYBorder And tY <= MaxYBorder And tX <= MaxXBorder Then
+        If TX >= MinXBorder And TY >= MinYBorder And TY <= MaxYBorder And TX <= MaxXBorder Then
 
-            If MapData(tX, tY).CharIndex > 0 Then
-                If charlist(MapData(tX, tY).CharIndex).invisible = False Then
+            If MapData(TX, TY).CharIndex > 0 Then
+                If charlist(MapData(TX, TY).CharIndex).invisible = False Then
         
                     Dim m As frmMenuseFashion
                     Set m = New frmMenuseFashion
@@ -2612,8 +2612,8 @@ Private Sub AbrirMenuViewPort()
                     m.SetMenuId 1
                     m.ListaInit 2, False
             
-                    If LenB(charlist(MapData(tX, tY).CharIndex).Nombre) <> 0 Then
-                        m.ListaSetItem 0, charlist(MapData(tX, tY).CharIndex).Nombre, True
+                    If LenB(charlist(MapData(TX, TY).CharIndex).Nombre) <> 0 Then
+                        m.ListaSetItem 0, charlist(MapData(TX, TY).CharIndex).Nombre, True
                     Else
                         m.ListaSetItem 0, "<NPC>", True
                     End If
@@ -2659,10 +2659,10 @@ Public Sub CallbackMenuFashion(ByVal MenuId As Long, ByVal Sel As Long)
             Select Case Sel
 
                 Case 0 'Nombre
-                    Call WriteLeftClick(tX, tY)
+                    Call WriteLeftClick(TX, TY)
         
                 Case 1 'Comerciar
-                    Call WriteLeftClick(tX, tY)
+                    Call WriteLeftClick(TX, TY)
                     Call WriteCommerceStart
             End Select
     End Select
@@ -2808,7 +2808,7 @@ Private Sub Minimapa_MouseDown(Button As Integer, _
                                Y As Single)
 
     If Button = vbRightButton Then
-        Call WriteWarpChar("YO", UserMap, CByte(X + 4), CByte(Y + 2))
+        Call WriteWarpChar("YO", UserMap, CByte(X - 1), CByte(Y - 1))
         Call ActualizarMiniMapa
     End If
 End Sub
@@ -2823,10 +2823,10 @@ Public Sub ActualizarMiniMapa()
     'Ajustadas las coordenadas para centrarlo (WyroX)
     'Ajuste de coordenadas y tamaño del visor (ReyarB)
     '***************************************************
-    Me.UserM.Left = UserPos.X - 5
-    Me.UserM.Top = UserPos.Y - 3
-    Me.UserAreaMinimap.Left = UserPos.X - 16
-    Me.UserAreaMinimap.Top = UserPos.Y - 10
+    Me.UserM.Left = UserPos.X - 2
+    Me.UserM.Top = UserPos.Y - 2
+    Me.UserAreaMinimap.Left = UserPos.X - 13
+    Me.UserAreaMinimap.Top = UserPos.Y - 11
     Me.MiniMapa.Refresh
 End Sub
 
@@ -2885,13 +2885,13 @@ Private Sub trainingMacro_Timer()
         Call WriteWork(eSkill.Magia)
     End If
     
-    Call ConvertCPtoTP(MouseX, MouseY, tX, tY)
+    Call ConvertCPtoTP(MouseX, MouseY, TX, TY)
     
     If UsingSkill = Magia And Not MainTimer.Check(TimersIndex.CastSpell) Then Exit Sub
     
     If UsingSkill = Proyectiles And Not MainTimer.Check(TimersIndex.Attack) Then Exit Sub
     
-    Call WriteWorkLeftClick(tX, tY, UsingSkill)
+    Call WriteWorkLeftClick(TX, TY, UsingSkill)
     UsingSkill = 0
 End Sub
 
@@ -2900,11 +2900,11 @@ Public Sub UpdateProgressExperienceLevelBar(ByVal UserExp As Long)
         frmMain.lblPorcLvl.Caption = "[N/A]"
 
         'Si no tiene mas niveles que subir ponemos la barra al maximo.
-        frmMain.uAOProgressExperienceLevel.max = 100
+        frmMain.uAOProgressExperienceLevel.Max = 100
         frmMain.uAOProgressExperienceLevel.Value = 100
     Else
         frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
-        frmMain.uAOProgressExperienceLevel.max = UserPasarNivel
+        frmMain.uAOProgressExperienceLevel.Max = UserPasarNivel
         frmMain.uAOProgressExperienceLevel.Value = UserExp
     End If
 End Sub
