@@ -8151,6 +8151,7 @@ Public Sub WriteWarpChar(ByVal UserName As String, ByVal Map As Integer, ByVal X
         Call .WriteByte(X)
         Call .WriteByte(Y)
     End With
+    
 End Sub
 
 ''
