@@ -8135,6 +8135,11 @@ Public Sub WriteWarpChar(ByVal UserName As String, ByVal Map As Integer, ByVal X
 'Last Modification: 05/17/06
 'Writes the "WarpChar" message to the outgoing data buffer
 '***************************************************
+    
+    'Para que te vas a tepear al mismo lugar? Te pinta spamear el FX del summon?
+    'No mandemos paquetes al pedo.
+    If X = UserPos.X And Y = UserPos.Y Then Exit Sub
+    
     With outgoingData
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.WarpChar)
