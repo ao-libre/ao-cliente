@@ -689,10 +689,9 @@ Sub Main()
         If timeGetTime >= lastFlush Then
             ' If there is anything to be sent, we send it
             Call FlushBuffer
-            DoEvents
             lastFlush = timeGetTime + 10
         End If
-        
+        DoEvents
     Loop
     
     Call CloseClient
@@ -862,7 +861,7 @@ Private Sub LoadInitialConfig()
                             True, False, False, rtfLeft)
     
     'Inicializamos el inventario grafico
-    Call Inventario.Initialize(DirectD3D8, frmMain.picInv, MAX_INVENTORY_SLOTS, , , , , , , , True)
+    Call Inventario.Initialize(DirectD3D8, frmMain.PicInv, MAX_INVENTORY_SLOTS, , , , , , , , True)
     'Set cKeys = New Collection
     Call AddtoRichTextBox(frmCargando.status, _
                             JsonLanguage.item("BIENVENIDO").item("TEXTO"), _
