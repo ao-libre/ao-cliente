@@ -1286,6 +1286,7 @@ Public Sub ResetAllInfo(Optional ByVal UnloadForms As Boolean = True)
     frmMain.Second.Enabled = False
     frmMain.macrotrabajo.Enabled = False
     Connected = False
+    Call frmMain.hlst.Clear
     
     If UnloadForms Then
         'Unload all forms except frmMain, frmConnect and frmCrearPersonaje

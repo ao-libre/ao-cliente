@@ -304,6 +304,7 @@ Public Color_Shadow(3) As Long
 Public Color_Arbol(3) As Long
 Public Color_Paralisis As Long
 Public Color_Invisibilidad As Long
+Public Color_Montura As Long
 
 '   Control de Lluvia
 Public bRain As Boolean
@@ -1111,6 +1112,10 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
 
         If UserInvisible And UserInvisibleSegundosRestantes > 0 Then
             Call DrawText(1, 13, UserInvisibleSegundosRestantes & " segundos restantes de Invisibilidad", Color_Invisibilidad)
+        End If
+        
+        If Not UserEquitando And UserEquitandoSegundosRestantes > 0 Then
+            Call DrawText(1, 37, UserEquitandoSegundosRestantes & " segundos restantes para volver a montarte", Color_Montura)
         End If
         '*************************************************************************
 

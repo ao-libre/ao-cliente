@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
 Begin VB.Form frmMain 
    Appearance      =   0  'Flat
    BackColor       =   &H80000005&
@@ -34,16 +34,10 @@ Begin VB.Form frmMain
    ScaleWidth      =   1023
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
-   Begin VB.Timer timerTiempoRestanteInvisibleMensaje 
+   Begin VB.Timer timerPasarSegundo 
       Enabled         =   0   'False
       Interval        =   1000
       Left            =   960
-      Top             =   2880
-   End
-   Begin VB.Timer timerTiempoRestanteParalisisMensaje 
-      Enabled         =   0   'False
-      Interval        =   1000
-      Left            =   360
       Top             =   2880
    End
    Begin AOLibre.uAOProgress uAOProgressExperienceLevel 
@@ -274,7 +268,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2937
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1132,7 +1125,7 @@ Private Const USER_GOLD_COLOR As Long = vbYellow
 
 Private Declare Function SetWindowLong _
                 Lib "user32" _
-                Alias "SetWindowLongA" (ByVal hwnd As Long, _
+                Alias "SetWindowLongA" (ByVal hWnd As Long, _
                                         ByVal nIndex As Long, _
                                         ByVal dwNewLong As Long) As Long
 
@@ -1173,10 +1166,10 @@ Private Sub Form_Load()
     'y poder borrar los frx de este archivo
         
     ' Detect links in console
-    Call EnableURLDetect(RecTxt.hwnd, Me.hwnd)
+    Call EnableURLDetect(RecTxt.hWnd, Me.hWnd)
     
     ' Make the console transparent
-    Call SetWindowLong(RecTxt.hwnd, -20, &H20&)
+    Call SetWindowLong(RecTxt.hWnd, -20, &H20&)
     
     CtrlMaskOn = False
     
@@ -1189,7 +1182,7 @@ Private Sub LoadTextsForm()
     CmdLanzar.Caption = JsonLanguage.item("LBL_LANZAR").item("TEXTO")
     CmdInventario.Caption = JsonLanguage.item("LBL_INVENTARIO").item("TEXTO")
     CmdHechizos.Caption = JsonLanguage.item("LBL_HECHIZOS").item("TEXTO")
-    cmdINFO.Caption = JsonLanguage.item("LBL_INFO").item("TEXTO")
+    cmdInfo.Caption = JsonLanguage.item("LBL_INFO").item("TEXTO")
     imgMapa.Caption = JsonLanguage.item("LBL_MAPA").item("TEXTO")
     imgGrupo.Caption = JsonLanguage.item("LBL_GRUPO").item("TEXTO")
     imgOpciones.Caption = JsonLanguage.item("LBL_OPCIONES").item("TEXTO")
@@ -1961,7 +1954,7 @@ Private Sub SendTxt_KeyDown(KeyCode As Integer, Shift As Integer)
     
     ' Control + Shift
     If Shift = 3 Then
-        On Error GoTo ErrHandler
+        On Error GoTo errhandler
         
         ' Only allow numeric keys
         If KeyCode >= vbKey0 And KeyCode <= vbKey9 Then
@@ -1997,7 +1990,7 @@ Private Sub SendTxt_KeyDown(KeyCode As Integer, Shift As Integer)
     
     Exit Sub
     
-ErrHandler:
+errhandler:
 
     'Did detected an invalid message??
     If Err.number = CustomMessages.InvalidMessageErrCode Then
@@ -2385,7 +2378,7 @@ Private Sub cmdInventario_Click()
 
     ' Desactivo controles de hechizo
     hlst.Visible = False
-    cmdINFO.Visible = False
+    cmdInfo.Visible = False
     CmdLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = False
@@ -2404,7 +2397,7 @@ Private Sub CmdHechizos_Click()
     
     ' Activo controles de hechizos
     hlst.Visible = True
-    cmdINFO.Visible = True
+    cmdInfo.Visible = True
     CmdLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True
@@ -2849,20 +2842,17 @@ Public Sub DesactivarMacroHechizos()
     Call ControlSM(eSMType.mSpells, False)
 End Sub
 
-Private Sub timerTiempoRestanteInvisibleMensaje_Timer()
+Private Sub timerPasarSegundo_Timer()
     If UserInvisible And UserInvisibleSegundosRestantes > 0 Then
         UserInvisibleSegundosRestantes = UserInvisibleSegundosRestantes - 1
-    Else
-        timerTiempoRestanteInvisibleMensaje.Enabled = False
     End If
-End Sub
-
-Private Sub timerTiempoRestanteParalisisMensaje_Timer()
     If UserParalizado And UserParalizadoSegundosRestantes > 0 Then
         UserParalizadoSegundosRestantes = UserParalizadoSegundosRestantes - 1
-    Else
-        timerTiempoRestanteParalisisMensaje.Enabled = False
     End If
+    If Not UserEquitando And UserEquitandoSegundosRestantes > 0 Then
+        UserEquitandoSegundosRestantes = UserEquitandoSegundosRestantes - 1
+    End If
+    If UserInvisibleSegundosRestantes <= 0 And UserParalizadoSegundosRestantes <= 0 And UserEquitandoSegundosRestantes <= 0 Then timerPasarSegundo.Enabled = False
 End Sub
 
 Private Sub trainingMacro_Timer()
@@ -2900,11 +2890,11 @@ Public Sub UpdateProgressExperienceLevelBar(ByVal UserExp As Long)
         frmMain.lblPorcLvl.Caption = "[N/A]"
 
         'Si no tiene mas niveles que subir ponemos la barra al maximo.
-        frmMain.uAOProgressExperienceLevel.Max = 100
+        frmMain.uAOProgressExperienceLevel.max = 100
         frmMain.uAOProgressExperienceLevel.Value = 100
     Else
         frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
-        frmMain.uAOProgressExperienceLevel.Max = UserPasarNivel
+        frmMain.uAOProgressExperienceLevel.max = UserPasarNivel
         frmMain.uAOProgressExperienceLevel.Value = UserExp
     End If
 End Sub
