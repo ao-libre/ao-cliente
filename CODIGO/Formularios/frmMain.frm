@@ -2814,7 +2814,7 @@ Public Sub ActualizarMiniMapa()
     'Integrado por Reyarb
     'Se agrego campo de vision del render (Recox)
     'Ajustadas las coordenadas para centrarlo (WyroX)
-    'Ajuste de coordenadas y tamaño del visor (ReyarB)
+    'Ajuste de coordenadas y tamaÃ±o del visor (ReyarB)
     '***************************************************
     Me.UserM.Left = UserPos.X - 2
     Me.UserM.Top = UserPos.Y - 2
@@ -2843,15 +2843,19 @@ Public Sub DesactivarMacroHechizos()
 End Sub
 
 Private Sub timerPasarSegundo_Timer()
+
     If UserInvisible And UserInvisibleSegundosRestantes > 0 Then
         UserInvisibleSegundosRestantes = UserInvisibleSegundosRestantes - 1
     End If
+
     If UserParalizado And UserParalizadoSegundosRestantes > 0 Then
         UserParalizadoSegundosRestantes = UserParalizadoSegundosRestantes - 1
     End If
+
     If Not UserEquitando And UserEquitandoSegundosRestantes > 0 Then
         UserEquitandoSegundosRestantes = UserEquitandoSegundosRestantes - 1
     End If
+
     If UserInvisibleSegundosRestantes <= 0 And UserParalizadoSegundosRestantes <= 0 And UserEquitandoSegundosRestantes <= 0 Then timerPasarSegundo.Enabled = False
 End Sub
 
