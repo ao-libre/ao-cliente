@@ -602,6 +602,7 @@ On Error Resume Next
 End Function
 
 Sub Main()
+    Static lastFlush As Long
     ' Detecta el idioma del sistema (TRUE) y carga las traducciones
     Call SetLanguageApplication
     
@@ -685,11 +686,12 @@ Sub Main()
             lFrameTimer = GetTickCount
         End If
         
-        ' If there is anything to be sent, we send it
-        Call FlushBuffer
-        
+        If timeGetTime >= lastFlush Then
+            ' If there is anything to be sent, we send it
+            Call FlushBuffer
+            lastFlush = timeGetTime + 10
+        End If
         DoEvents
-        
     Loop
     
     Call CloseClient
