@@ -1286,7 +1286,7 @@ Public Sub ResetAllInfo(Optional ByVal UnloadForms As Boolean = True)
     frmMain.Second.Enabled = False
     frmMain.macrotrabajo.Enabled = False
     Connected = False
-    Call frmMain.hlst.Clear
+    Call frmMain.hlst.Clear ' Ponemos esto aca para limpiar la lista de hechizos al desconectarse.
     
     If UnloadForms Then
         'Unload all forms except frmMain, frmConnect and frmCrearPersonaje
