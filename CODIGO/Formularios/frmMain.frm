@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "Richtx32.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
 Begin VB.Form frmMain 
    Appearance      =   0  'Flat
    BackColor       =   &H80000005&
@@ -34,16 +34,10 @@ Begin VB.Form frmMain
    ScaleWidth      =   1023
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
-   Begin VB.Timer timerTiempoRestanteInvisibleMensaje 
+   Begin VB.Timer timerPasarSegundo 
       Enabled         =   0   'False
       Interval        =   1000
       Left            =   960
-      Top             =   2880
-   End
-   Begin VB.Timer timerTiempoRestanteParalisisMensaje 
-      Enabled         =   0   'False
-      Interval        =   1000
-      Left            =   360
       Top             =   2880
    End
    Begin AOLibre.uAOProgress uAOProgressExperienceLevel 
@@ -2818,7 +2812,7 @@ Public Sub ActualizarMiniMapa()
     'Integrado por Reyarb
     'Se agrego campo de vision del render (Recox)
     'Ajustadas las coordenadas para centrarlo (WyroX)
-    'Ajuste de coordenadas y tamaño del visor (ReyarB)
+    'Ajuste de coordenadas y tamaÃ±o del visor (ReyarB)
     '***************************************************
     Me.UserM.Left = UserPos.X - 2
     Me.UserM.Top = UserPos.Y - 2
@@ -2846,20 +2840,21 @@ Public Sub DesactivarMacroHechizos()
     Call ControlSM(eSMType.mSpells, False)
 End Sub
 
-Private Sub timerTiempoRestanteInvisibleMensaje_Timer()
+Private Sub timerPasarSegundo_Timer()
+
     If UserInvisible And UserInvisibleSegundosRestantes > 0 Then
         UserInvisibleSegundosRestantes = UserInvisibleSegundosRestantes - 1
-    Else
-        timerTiempoRestanteInvisibleMensaje.Enabled = False
     End If
-End Sub
 
-Private Sub timerTiempoRestanteParalisisMensaje_Timer()
     If UserParalizado And UserParalizadoSegundosRestantes > 0 Then
         UserParalizadoSegundosRestantes = UserParalizadoSegundosRestantes - 1
-    Else
-        timerTiempoRestanteParalisisMensaje.Enabled = False
     End If
+
+    If Not UserEquitando And UserEquitandoSegundosRestantes > 0 Then
+        UserEquitandoSegundosRestantes = UserEquitandoSegundosRestantes - 1
+    End If
+
+    If UserInvisibleSegundosRestantes <= 0 And UserParalizadoSegundosRestantes <= 0 And UserEquitandoSegundosRestantes <= 0 Then timerPasarSegundo.Enabled = False
 End Sub
 
 Private Sub trainingMacro_Timer()

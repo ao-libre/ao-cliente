@@ -148,7 +148,7 @@ Sub Map_MoveTo(ByVal Direccion As E_Heading)
       ' Update 3D sounds!
       Call Audio.MoveListener(UserPos.X, UserPos.Y)
   
-      ' Esto es un parche por que por alguna razon si el pj esta meditando y nos movemos el juego explota por eso cambie 
+      ' Esto es un parche por que por alguna razon si el pj esta meditando y nos movemos el juego explota por eso cambie
       ' Las validaciones en la linea 131 y agregue esto para arreglarlo (Recox)
       If UserMeditar Then
         UserMeditar = Not UserMeditar
@@ -163,11 +163,12 @@ End Sub
 Function Map_LegalPos(ByVal X As Integer, ByVal Y As Integer) As Boolean
       '*****************************************************************
       'Author: ZaMa
-      'Last Modify Date: 12/01/2020
+      'Last Modification: 06/04/2020
       'Checks to see if a tile position is legal, including if there is a casper in the tile
       '10/05/2009: ZaMa - Now you can't change position with a casper which is in the shore.
       '01/08/2009: ZaMa - Now invisible admins can't change position with caspers.
       '12/01/2020: Recox - Now we manage monturas.
+      '06/04/2020: FrankoH298 - Si estamos montados, no nos deja ingresar a las casas.
       '*****************************************************************
 
       Dim CharIndex As Integer
@@ -230,7 +231,7 @@ Function Map_LegalPos(ByVal X As Integer, ByVal Y As Integer) As Boolean
                 
                         ' Los admins no pueden intercambiar pos con caspers cuando estan invisibles
 
-                        If (esGM(UserCharIndex)) Then
+                        If (EsGM(UserCharIndex)) Then
 
                               If (charlist(UserCharIndex).invisible) Then
                                              
@@ -250,11 +251,9 @@ Function Map_LegalPos(ByVal X As Integer, ByVal Y As Integer) As Boolean
             Exit Function
 
       End If
-
-      'TODO: Hacer function HayTecho!!!!
+      
       'Esta el usuario Equitando bajo un techo?
-      If UserEquitando And bTecho = True Then
-            Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_MONTURA_SALIR").Item("TEXTO"))
+      If UserEquitando And MapData(X, Y).Trigger = eTrigger.BAJOTECHO Or MapData(X, Y).Trigger = eTrigger.CASA Then
             Exit Function
       End If
       
@@ -291,7 +290,6 @@ Public Function Map_CheckBonfire(ByRef Location As Position) As Boolean
                         If MapData(J, k).ObjGrh.GrhIndex = GrhFogata Then
                               Location.X = J
                               Location.Y = k
-                    
                               Map_CheckBonfire = True
 
                               Exit Function

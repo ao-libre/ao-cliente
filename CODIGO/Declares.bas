@@ -578,7 +578,7 @@ End Enum
 'Inventario
 Type Inventory
     ObjIndex As Integer
-    Name As String
+    name As String
     GrhIndex As Long
     Amount As Long
     Equipped As Byte
@@ -592,7 +592,7 @@ End Type
 
 Type NpCinV
     ObjIndex As Integer
-    Name As String
+    name As String
     GrhIndex As Long
     Amount As Integer
     Valor As Single
@@ -631,7 +631,7 @@ Type tEstadisticasUsu
 End Type
 
 Type tItemsConstruibles
-    Name As String
+    name As String
     ObjIndex As Integer
     GrhIndex As Long
     LinH As Integer
@@ -645,14 +645,14 @@ Type tItemsConstruibles
 End Type
 
 Type tItemCrafteo
-    Name As String
+    name As String
     ObjIndex As Integer
     GrhIndex As Long
     Amount As Integer
 End Type
 
 Type tItemArtesano
-    Name As String
+    name As String
     ObjIndex As Integer
     GrhIndex As Long
     
@@ -1028,6 +1028,7 @@ Public IntervaloInvisible As Integer
 
 Public UserParalizadoSegundosRestantes As Integer
 Public UserInvisibleSegundosRestantes As Integer
+Public UserEquitandoSegundosRestantes As Long
 
 Public QuantityServers As Integer
 Public IpApiEnabled As Boolean

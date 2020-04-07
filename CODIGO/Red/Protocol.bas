@@ -4367,11 +4367,7 @@ Private Sub HandleSetInvisible()
     timeRemaining = incomingData.ReadInteger()
     
     UserInvisibleSegundosRestantes = IIf(timeRemaining > 0, timeRemaining * 0.04, 0) 'Cantidad en segundos
-    If UserInvisible And UserInvisibleSegundosRestantes > 0 Then
-        frmMain.timerTiempoRestanteInvisibleMensaje.Enabled = True
-    Else
-        frmMain.timerTiempoRestanteInvisibleMensaje.Enabled = False
-    End If
+    If UserInvisible And UserInvisibleSegundosRestantes > 0 Then frmMain.timerPasarSegundo.Enabled = True
 End Sub
 
 ''
@@ -4420,7 +4416,6 @@ Private Sub HandleMeditateToggle()
 '***************************************************
     'Remove packet ID
     Call incomingData.ReadByte
-    
     UserMeditar = Not UserMeditar
 End Sub
 
@@ -5050,11 +5045,7 @@ Private Sub HandleParalizeOK()
     timeRemaining = incomingData.ReadInteger()
     UserParalizadoSegundosRestantes = IIf(timeRemaining > 0, (timeRemaining * 0.04), 0) 'Cantidad en segundos
 
-    If UserParalizado And timeRemaining > 0 Then
-        frmMain.timerTiempoRestanteParalisisMensaje.Enabled = True
-    Else
-        frmMain.timerTiempoRestanteParalisisMensaje.Enabled = False
-    End If
+    If UserParalizado And timeRemaining > 0 Then frmMain.timerPasarSegundo.Enabled = True
 
 End Sub
 
@@ -11500,14 +11491,16 @@ End Sub
 Private Sub HandleEquitandoToggle()
 '***************************************************
 'Author: Lorwik
-'Last Modification: 23/08/11
-'
+'Last Modification: 06/04/2020
+'06/04/2020: FrankoH298 - Recibimos el contador para volver a equiparnos la montura.
 '***************************************************
     'Remove packet ID
     Call incomingData.ReadByte
     
+    UserEquitandoSegundosRestantes = incomingData.ReadLong()
     UserEquitando = Not UserEquitando
     
+    If Not UserEquitando And UserEquitandoSegundosRestantes > 0 Then frmMain.timerPasarSegundo.Enabled = True
     Call SetSpeedUsuario
 End Sub
 
