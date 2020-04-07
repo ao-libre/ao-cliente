@@ -5501,7 +5501,7 @@ Private Sub HandlePong()
     
     Dim MENSAJE_PING As String
         MENSAJE_PING = JsonLanguage.item("MENSAJE_PING").item("TEXTO")
-        MENSAJE_PING = Replace$(MENSAJE_PING, "VAR_PING", (GetTickCount - pingTime))
+        MENSAJE_PING = Replace$(MENSAJE_PING, "VAR_PING", (timeGetTime - pingTime))
         
     Call AddtoRichTextBox(frmMain.RecTxt, _
                             MENSAJE_PING, _
@@ -10518,11 +10518,7 @@ Public Sub WritePing()
     
     Call outgoingData.WriteByte(ClientPacketID.Ping)
     
-    ' Avoid computing errors due to frame rate
-    Call FlushBuffer
-    DoEvents
-    
-    pingTime = GetTickCount
+    pingTime = timeGetTime
 End Sub
 
 ''

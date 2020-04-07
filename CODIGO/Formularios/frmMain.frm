@@ -1637,7 +1637,6 @@ Private Sub imgAsignarSkill_Click()
     
     LlegaronSkills = False
     Call WriteRequestSkills
-    Call FlushBuffer
     
     Do While Not LlegaronSkills
         DoEvents 'esperamos a que lleguen y mantenemos la interfaz viva
@@ -1669,7 +1668,6 @@ Private Sub imgEstadisticas_Click()
     Call WriteRequestSkills
     Call WriteRequestMiniStats
     Call WriteRequestFame
-    Call FlushBuffer
 
     Do While Not LlegaronSkills Or Not LlegaronAtrib Or Not LlegoFama
         DoEvents 'esperamos a que lleguen y mantenemos la interfaz viva
@@ -2013,8 +2011,8 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
         SendTxt.Visible = False
         
-        If PicInv.Visible Then
-            PicInv.SetFocus
+        If picInv.Visible Then
+            picInv.SetFocus
         Else
             hlst.SetFocus
         End If
@@ -2374,7 +2372,7 @@ Private Sub cmdInventario_Click()
     'InvEqu.Picture = LoadPicture(Game.path(Skins) & SkinSeleccionado & "\Centroinventario.jpg")
 
     ' Activo controles de inventario
-    PicInv.Visible = True
+    picInv.Visible = True
 
     ' Desactivo controles de hechizo
     hlst.Visible = False
@@ -2404,7 +2402,7 @@ Private Sub CmdHechizos_Click()
     cmdMoverHechi(1).Visible = True
     
     ' Desactivo controles de inventario
-    PicInv.Visible = False
+    picInv.Visible = False
 
 End Sub
 
@@ -2467,8 +2465,8 @@ Private Sub RecTxt_Change()
            (Not frmCantidad.Visible) And _
            (Not MirandoParty) Then
 
-        If PicInv.Visible Then
-            PicInv.SetFocus
+        If picInv.Visible Then
+            picInv.SetFocus
                         
         ElseIf hlst.Visible Then
             hlst.SetFocus
@@ -2481,8 +2479,8 @@ End Sub
 
 Private Sub RecTxt_KeyDown(KeyCode As Integer, Shift As Integer)
 
-    If PicInv.Visible Then
-        PicInv.SetFocus
+    If picInv.Visible Then
+        picInv.SetFocus
     Else
         hlst.SetFocus
     End If
@@ -2547,8 +2545,8 @@ Private Sub SendCMSTXT_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
         Me.SendCMSTXT.Visible = False
         
-        If PicInv.Visible Then
-            PicInv.SetFocus
+        If picInv.Visible Then
+            picInv.SetFocus
         Else
             hlst.SetFocus
         End If

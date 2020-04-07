@@ -397,6 +397,9 @@ Sub SwitchMap(ByVal Map As Integer)
     'EDIT: cambio el rango de valores en x y para solucionar otro bug con respecto al cambio de mapas
     Call Char_CleanAll
     
+    'Erase particle effects
+    Call Particle_Group_Remove_All
+    
     dLen = FileLen(Game.path(Mapas) & "Mapa" & Map & ".map")
     ReDim dData(dLen - 1)
     
@@ -460,7 +463,13 @@ Sub SwitchMap(ByVal Map As Integer)
                 Else
                     .Trigger = 0
                 End If
-           
+                
+                If ByFlags And 32 Then
+                    Call General_Particle_Create(CLng(fileBuff.getInteger()), X, Y)
+                Else
+                    .Particle_Group_Index = 0
+                End If
+                
                 'Erase NPCs
                 If .CharIndex > 0 Then
                     .CharIndex = 0
@@ -479,10 +488,6 @@ Sub SwitchMap(ByVal Map As Integer)
     Next Y
     
     Call LightRemoveAll
-    
-    'Erase particle effects
-    'ReDim Effect(1 To NumEffects)
-    Call Particle_Group_Remove_All
 
     'Borramos las particulas de lluvia
     Call mDx8_Particulas.RemoveWeatherParticles(eWeather.Rain)
@@ -602,6 +607,7 @@ On Error Resume Next
 End Function
 
 Sub Main()
+    Static lastFlush As Long
     ' Detecta el idioma del sistema (TRUE) y carga las traducciones
     Call SetLanguageApplication
     
@@ -685,11 +691,12 @@ Sub Main()
             lFrameTimer = GetTickCount
         End If
         
-        ' If there is anything to be sent, we send it
-        Call FlushBuffer
-        
+        If timeGetTime >= lastFlush Then
+            ' If there is anything to be sent, we send it
+            Call FlushBuffer
+            lastFlush = timeGetTime + 10
+        End If
         DoEvents
-        
     Loop
     
     Call CloseClient
