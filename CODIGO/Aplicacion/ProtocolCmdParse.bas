@@ -1693,17 +1693,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             
             Case "/HOGAR"
                 Call WriteHome
-            
-            Case "/SURVIVAL"
-                WriteHungerGamesJoin
-                
-            Case "/HUNGER"
-                If CantidadArgumentos = 3 And notNullArguments Then
-                    Call WriteHungerGamesCreate(ArgumentosAll(0), ArgumentosAll(1), IIf(ArgumentosAll(2) = 1, True, False))
-                Else
-                    Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_FORMATO_INCORRECTO").item("TEXTO") & " /HUNGER CUPOS ORO [0, 1]")
-                End If
-                
+
             Case "/SETDIALOG"
                 If notNullArguments Then
                     Call WriteSetDialog(ArgumentosRaw)
@@ -1720,6 +1710,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             
             Case Else
                 Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_COMANDO_INCORRECTO").item("TEXTO"))
+        
         End Select
         
     ElseIf Left$(Comando, 1) = "\" Then
