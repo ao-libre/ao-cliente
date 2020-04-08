@@ -161,11 +161,11 @@ Private Enum ServerPacketID
     PalabrasMagicas = 105
     PlayAttackAnim = 106
     FXtoMap = 107
-    AccountLogged = 108 'CHOTS | Accounts
+    AccountLogged = 108         'CHOTS | Accounts
     SearchList = 109
     QuestDetails = 110
     QuestListSend = 111
-    CreateDamage = 112           ' CDMG
+    CreateDamage = 112          ' CDMG
     UserInEvent = 113
     renderMsg = 114
     DeletedChar = 115
@@ -176,162 +176,159 @@ Private Enum ServerPacketID
 End Enum
 
 Private Enum ClientPacketID
-    LoginExistingChar = 1     'OLOGIN
-    ThrowDices = 2            'TIRDAD
-    LoginNewChar = 3          'NLOGIN
-    Talk = 4                  ';
-    Yell = 5                  '-
-    Whisper = 6                 '\
-    Walk = 7                     'M
-    RequestPositionUpdate = 8    'RPU
-    Attack = 9                  'AT
-    PickUp = 10                   'AG
-    SafeToggle = 11              '/SEG & SEG  (SEG's behaviour has to be coded in the client)
+    LoginExistingChar = 1           'OLOGIN
+    ThrowDices = 2                  'TIRDAD
+    LoginNewChar = 3                'NLOGIN
+    Talk = 4                        ';
+    Yell = 5                        '-
+    Whisper = 6                     '\
+    Walk = 7                        'M
+    RequestPositionUpdate = 8       'RPU
+    Attack = 9                      'AT
+    PickUp = 10                     'AG
+    SafeToggle = 11                 '/SEG & SEG  (SEG's behaviour has to be coded in the client)
     ResuscitationSafeToggle = 12
-    RequestGuildLeaderInfo = 13   'GLINFO
-    RequestAtributes = 14         'ATR
-    RequestFame = 15              'FAMA
-    RequestSkills = 16            'ESKI
-    RequestMiniStats = 17         'FEST
-    CommerceEnd = 18             'FINCOM
-    UserCommerceEnd = 19         'FINCOMUSU
+    RequestGuildLeaderInfo = 13     'GLINFO
+    RequestAtributes = 14           'ATR
+    RequestFame = 15                'FAMA
+    RequestSkills = 16              'ESKI
+    RequestMiniStats = 17           'FEST
+    CommerceEnd = 18                'FINCOM
+    UserCommerceEnd = 19            'FINCOMUSU
     UserCommerceConfirm = 20
     CommerceChat = 21
-    BankEnd = 22                'FINBAN
-    UserCommerceOk = 23           'COMUSUOK
-    UserCommerceReject = 24       'COMUSUNO
-    Drop = 25                   'TI
-    CastSpell = 26                'LH
-    LeftClick = 27               'LC
-    DoubleClick = 28             'RC
-    Work = 29                     'UK
-    UseSpellMacro = 30           'UMH
-    UseItem = 31              'USA
-    CraftBlacksmith = 32          'CNS
-    CraftCarpenter = 33           'CNC
-    WorkLeftClick = 34           'WLC
-    CreateNewGuild = 35           'CIG
+    BankEnd = 22                    'FINBAN
+    UserCommerceOk = 23             'COMUSUOK
+    UserCommerceReject = 24         'COMUSUNO
+    Drop = 25                       'TI
+    CastSpell = 26                  'LH
+    LeftClick = 27                  'LC
+    DoubleClick = 28                'RC
+    Work = 29                       'UK
+    UseSpellMacro = 30              'UMH
+    UseItem = 31                    'USA
+    CraftBlacksmith = 32            'CNS
+    CraftCarpenter = 33             'CNC
+    WorkLeftClick = 34              'WLC
+    CreateNewGuild = 35             'CIG
     sadasdA = 36
-    EquipItem = 37               'EQUI
-    ChangeHeading = 38           'CHEA
-    ModifySkills = 39             'SKSE
-    Train = 40                   'ENTR
-    CommerceBuy = 41              'COMP
-    BankExtractItem = 42          'RETI
-    CommerceSell = 43            'VEND
-    BankDeposit = 44              'DEPO
-    ForumPost = 45                'DEMSG
-    MoveSpell = 46               'DESPHE
+    EquipItem = 37                  'EQUI
+    ChangeHeading = 38              'CHEA
+    ModifySkills = 39               'SKSE
+    Train = 40                      'ENTR
+    CommerceBuy = 41                'COMP
+    BankExtractItem = 42            'RETI
+    CommerceSell = 43               'VEND
+    BankDeposit = 44                'DEPO
+    ForumPost = 45                  'DEMSG
+    MoveSpell = 46                  'DESPHE
     MoveBank = 47
-    ClanCodexUpdate = 48         'DESCOD
-    UserCommerceOffer = 49        'OFRECER
-    GuildAcceptPeace = 50         'ACEPPEAT
-    GuildRejectAlliance = 51      'RECPALIA
-    GuildRejectPeace = 52        'RECPPEAT
-    GuildAcceptAlliance = 53      'ACEPALIA
-    GuildOfferPeace = 54          'PEACEOFF
-    GuildOfferAlliance = 55       'ALLIEOFF
-    GuildAllianceDetails = 56     'ALLIEDET
-    GuildPeaceDetails = 57        'PEACEDET
-    GuildRequestJoinerInfo = 58   'ENVCOMEN
-    GuildAlliancePropList = 59    'ENVALPRO
-    GuildPeacePropList = 60       'ENVPROPP
-    GuildDeclareWar = 61          'DECGUERR
-    GuildNewWebsite = 62          'NEWWEBSI
-    GuildAcceptNewMember = 63     'ACEPTARI
-    GuildRejectNewMember = 64     'RECHAZAR
-    GuildKickMember = 65         'ECHARCLA
-    GuildUpdateNews = 66          'ACTGNEWS
-    GuildMemberInfo = 67          '1HRINFO<
-    GuildOpenElections = 68       'ABREELEC
-    GuildRequestMembership = 69   'SOLICITUD
-    GuildRequestDetails = 70      'CLANDETAILS
-    Online = 71                  '/ONLINE
-    Quit = 72                     '/SALIR
-    GuildLeave = 73               '/SALIRCLAN
-    RequestAccountState = 74      '/BALANCE
-    PetStand = 75                 '/QUIETO
-    PetFollow = 76                '/ACOMPANAR
-    ReleasePet = 77              '/LIBERAR
-    TrainList = 78                '/ENTRENAR
-    Rest = 79                     '/DESCANSAR
-    Meditate = 80                '/MEDITAR
-    Resucitate = 81               '/RESUCITAR
-    Heal = 82                     '/CURAR
-    Help = 83                    '/AYUDA
-    RequestStats = 84             '/EST
-    CommerceStart = 85           '/COMERCIAR
-    BankStart = 86               '/BOVEDA
-    Enlist = 87                   '/ENLISTAR
-    Information = 88            '/INFORMACION
-    Reward = 89                   '/RECOMPENSA
-    RequestMOTD = 90              '/MOTD
-    UpTime = 91                   '/UPTIME
-    PartyLeave = 92               '/SALIRPARTY
-    PartyCreate = 93              '/CREARPARTY
-    PartyJoin = 94                '/PARTY
-    Inquiry = 95                  '/ENCUESTA ( with no params )
-    GuildMessage = 96             '/CMSG
-    PartyMessage = 97             '/PMSG
-    GuildOnline = 98              '/ONLINECLAN
-    PartyOnline = 99             '/ONLINEPARTY
-    CouncilMessage = 100           '/BMSG
-    RoleMasterRequest = 101     '/ROL
-    GMRequest = 102              '/GM
-    bugReport = 103              '/_BUG
-    ChangeDescription = 104      '/DESC
-    GuildVote = 105              '/VOTO
-    Punishments = 106           '/PENAS
-    ChangePassword = 107         '/CONTRASENA
-    Gamble = 108                '/APOSTAR
-    InquiryVote = 109            '/ENCUESTA ( with parameters )
-    LeaveFaction = 110          '/RETIRAR ( with no arguments )
-    BankExtractGold = 111        '/RETIRAR ( with arguments )
-    BankDepositGold = 112        '/DEPOSITAR
-    Denounce = 113               '/DENUNCIAR
-    GuildFundate = 114          '/FUNDARCLAN
+    ClanCodexUpdate = 48            'DESCOD
+    UserCommerceOffer = 49          'OFRECER
+    GuildAcceptPeace = 50           'ACEPPEAT
+    GuildRejectAlliance = 51        'RECPALIA
+    GuildRejectPeace = 52           'RECPPEAT
+    GuildAcceptAlliance = 53        'ACEPALIA
+    GuildOfferPeace = 54            'PEACEOFF
+    GuildOfferAlliance = 55         'ALLIEOFF
+    GuildAllianceDetails = 56       'ALLIEDET
+    GuildPeaceDetails = 57          'PEACEDET
+    GuildRequestJoinerInfo = 58     'ENVCOMEN
+    GuildAlliancePropList = 59      'ENVALPRO
+    GuildPeacePropList = 60         'ENVPROPP
+    GuildDeclareWar = 61            'DECGUERR
+    GuildNewWebsite = 62            'NEWWEBSI
+    GuildAcceptNewMember = 63       'ACEPTARI
+    GuildRejectNewMember = 64       'RECHAZAR
+    GuildKickMember = 65            'ECHARCLA
+    GuildUpdateNews = 66            'ACTGNEWS
+    GuildMemberInfo = 67            '1HRINFO<
+    GuildOpenElections = 68         'ABREELEC
+    GuildRequestMembership = 69     'SOLICITUD
+    GuildRequestDetails = 70        'CLANDETAILS
+    Online = 71                     '/ONLINE
+    Quit = 72                       '/SALIR
+    GuildLeave = 73                 '/SALIRCLAN
+    RequestAccountState = 74        '/BALANCE
+    PetStand = 75                   '/QUIETO
+    PetFollow = 76                  '/ACOMPANAR
+    ReleasePet = 77                 '/LIBERAR
+    TrainList = 78                  '/ENTRENAR
+    Rest = 79                       '/DESCANSAR
+    Meditate = 80                   '/MEDITAR
+    Resucitate = 81                 '/RESUCITAR
+    Heal = 82                       '/CURAR
+    Help = 83                       '/AYUDA
+    RequestStats = 84               '/EST
+    CommerceStart = 85              '/COMERCIAR
+    BankStart = 86                  '/BOVEDA
+    Enlist = 87                     '/ENLISTAR
+    Information = 88                '/INFORMACION
+    Reward = 89                     '/RECOMPENSA
+    RequestMOTD = 90                '/MOTD
+    UpTime = 91                     '/UPTIME
+    PartyLeave = 92                 '/SALIRPARTY
+    PartyCreate = 93                '/CREARPARTY
+    PartyJoin = 94                  '/PARTY
+    Inquiry = 95                    '/ENCUESTA ( with no params )
+    GuildMessage = 96               '/CMSG
+    PartyMessage = 97               '/PMSG
+    GuildOnline = 98                '/ONLINECLAN
+    PartyOnline = 99                '/ONLINEPARTY
+    CouncilMessage = 100            '/BMSG
+    RoleMasterRequest = 101         '/ROL
+    GMRequest = 102                 '/GM
+    bugReport = 103                 '/_BUG
+    ChangeDescription = 104         '/DESC
+    GuildVote = 105                 '/VOTO
+    Punishments = 106               '/PENAS
+    ChangePassword = 107            '/CONTRASENA
+    Gamble = 108                    '/APOSTAR
+    InquiryVote = 109               '/ENCUESTA ( with parameters )
+    LeaveFaction = 110              '/RETIRAR ( with no arguments )
+    BankExtractGold = 111           '/RETIRAR ( with arguments )
+    BankDepositGold = 112           '/DEPOSITAR
+    Denounce = 113                  '/DENUNCIAR
+    GuildFundate = 114              '/FUNDARCLAN
     GuildFundation = 115
-    PartyKick = 116              '/ECHARPARTY
-    PartySetLeader = 117         '/PARTYLIDER
-    PartyAcceptMember = 118      '/ACCEPTPARTY
-    Ping = 119                  '/PING
+    PartyKick = 116                 '/ECHARPARTY
+    PartySetLeader = 117            '/PARTYLIDER
+    PartyAcceptMember = 118         '/ACCEPTPARTY
+    Ping = 119                      '/PING
     RequestPartyForm = 120
     ItemUpgrade = 121
     GMCommands = 122
     InitCrafting = 123
     Home = 124
     ShowGuildNews = 125
-    ShareNpc = 126               '/COMPARTIR
+    ShareNpc = 126                  '/COMPARTIR
     StopSharingNpc = 127
     Consultation = 128
     moveItem = 129
     LoginExistingAccount = 130
     LoginNewAccount = 131
-    CentinelReport = 132         '/CENTINELA
+    CentinelReport = 132            '/CENTINELA
     Ecvc = 133
     Acvc = 134
     IrCvc = 135
-    DragAndDropHechizos = 136    'HECHIZOS
-    HungerGamesCreate = 137
-    HungerGamesJoin = 138
-    HungerGamesDelete = 139
-    Quest = 140                  '/QUEST
-    QuestAccept = 141
-    QuestListRequest = 142
-    QuestDetailsRequest = 143
-    QuestAbandon = 144
-    CambiarContrasena = 145
-    FightSend = 146
-    FightAccept = 147
-    CloseGuild = 148            '/CERRARCLAN
-    Discord = 149            '/DISCORD
-    DeleteChar = 150
-    ObtenerDatosServer = 151
-    CraftsmanCreate = 152
-    AddAmigos = 153
-    DelAmigos = 154
-    OnAmigos = 155
-    MsgAmigos = 156
+    DragAndDropHechizos = 136       'HECHIZOS
+    Quest = 137                     '/QUEST
+    QuestAccept = 138
+    QuestListRequest = 139
+    QuestDetailsRequest = 140
+    QuestAbandon = 141
+    CambiarContrasena = 142
+    FightSend = 143
+    FightAccept = 144
+    CloseGuild = 145                '/CERRARCLAN
+    Discord = 146                   '/DISCORD
+    DeleteChar = 147
+    ObtenerDatosServer = 148
+    CraftsmanCreate = 149
+    AddAmigos = 150
+    DelAmigos = 151
+    OnAmigos = 152
+    MsgAmigos = 153
 End Enum
 
 Public Enum FontTypeNames
@@ -1685,7 +1682,7 @@ Private Sub HandleBankInit()
     
     BankGold = incomingData.ReadLong
     Call InvBanco(0).Initialize(DirectD3D8, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
-    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.picInv, Inventario.MaxObjs)
+    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.PicInv, Inventario.MaxObjs)
     
     For i = 1 To Inventario.MaxObjs
         With Inventario
@@ -11188,30 +11185,6 @@ Public Sub WriteDragAndDropHechizos(ByVal Ant As Integer, ByVal Nov As Integer)
 
     End With
 
-End Sub
-
-Public Sub WriteHungerGamesCreate(ByVal Cupos As Byte, _
-                                  ByVal Gold As Long, _
-                                  ByVal Drop As Boolean)
-
-    With outgoingData
-        .WriteByte (ClientPacketID.HungerGamesCreate)
-        .WriteByte (Cupos)
-        .WriteLong (Gold)
-        .WriteBoolean (Drop)
-    End With
-End Sub
-
-Public Sub WriteHungerGamesDelete()
-
-    Call outgoingData.WriteByte(ClientPacketID.HungerGamesDelete)
-
-End Sub
-
-Public Sub WriteHungerGamesJoin()
-
-    Call outgoingData.WriteByte(ClientPacketID.HungerGamesJoin)
-    
 End Sub
 
 Public Sub WriteQuest()
