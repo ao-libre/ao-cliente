@@ -1637,7 +1637,8 @@ Private Sub imgAsignarSkill_Click()
     
     LlegaronSkills = False
     Call WriteRequestSkills
-    
+    Call FlushBuffer
+
     Do While Not LlegaronSkills
         DoEvents 'esperamos a que lleguen y mantenemos la interfaz viva
     Loop
@@ -1668,6 +1669,7 @@ Private Sub imgEstadisticas_Click()
     Call WriteRequestSkills
     Call WriteRequestMiniStats
     Call WriteRequestFame
+    Call FlushBuffer 
 
     Do While Not LlegaronSkills Or Not LlegaronAtrib Or Not LlegoFama
         DoEvents 'esperamos a que lleguen y mantenemos la interfaz viva
