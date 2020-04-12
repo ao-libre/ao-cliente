@@ -176,6 +176,7 @@ Public Type Char
     Atacable As Byte
     
     Nombre As String
+    Clan As String
     
     scrollDirectionX As Integer
     scrollDirectionY As Integer
@@ -1367,7 +1368,7 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
                 End If
             End If
             
-        Else 'Usuario Invisible - Lo renderizamos con cierta transparencia activando Alpha.
+        ElseIf CharIndex = UserCharIndex Or (.Clan <> vbNullString And .Clan = charlist(UserCharIndex).Clan) Then
             
             'Draw Transparent Body
             If .Body.Walk(.Heading).GrhIndex Then
