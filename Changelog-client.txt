@@ -734,5 +734,5 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 12/04/2020:  Agregado tiempo restante para montarse y arreglado error en la lista de hechizos. (FrankoH298)
 * 12/04/2020: Ahora se cargan las particulas desde el mapa. (FrankoH298)
 * 12/04/2020: Saco el evento Hunger Games alv. (#584). (jopiortiz)
- 
+* 12/04/2020: Agregado FlushBuffer en boton de skills y estadisticas (Wyr0X - Recox)
  ---
