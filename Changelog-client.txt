@@ -726,3 +726,13 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 04/04/2020: fixed lblEnergia and buttonDropGold. (FrankoH298)
 * 04/04/2020: No te podes teletransportar a tu posición actual. Chequeo desde el cliente asi no mando el paquete, (jopiortiz)
 
+-v0.13.30
+* 12/04/2020: Removido FlushBuffer y metido en un timer. (FrankoH298)
+* 12/04/2020: No te tepearás en el mismo lugar!. (jopiortiz)
+* 12/04/2020: DoEvents fuera del timer. (FrankoH298)
+* 12/04/2020: Fix: Al estar en montura no te deja ingresar a las casas . (FrankoH298)
+* 12/04/2020:  Agregado tiempo restante para montarse y arreglado error en la lista de hechizos. (FrankoH298)
+* 12/04/2020: Ahora se cargan las particulas desde el mapa. (FrankoH298)
+* 12/04/2020: Saco el evento Hunger Games alv. (#584). (jopiortiz)
+ 
+ ---
