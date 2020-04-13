@@ -1811,6 +1811,9 @@
     "FRM_RETOS_EXIT" : {
      "TEXTO": "Exit"
     },
+    "FRM_RETOS_LBL_ORO" : {
+     "TEXTO": "Gold Coins"
+    },
     "FRM_QUEST_ACCEPT" : {
      "TEXTO": "Accept"
     },

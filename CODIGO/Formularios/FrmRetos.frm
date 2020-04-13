@@ -235,7 +235,7 @@ Begin VB.Form FrmRetos
    Begin VB.Label lblCompa2 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
-      Caption         =   "Compañero 2"
+      Caption         =   "Aliado 2"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   9.75
@@ -277,7 +277,7 @@ Begin VB.Form FrmRetos
    Begin VB.Label lblCompa 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
-      Caption         =   "Compañero 1"
+      Caption         =   "Aliado 1"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   9.75
@@ -406,6 +406,8 @@ Private Sub LoadTextsForm()
     Me.lblCompa2.Caption = JsonLanguage.item("FRM_RETOS_COMPA2").item("TEXTO")
     Me.Comenzar.Caption = JsonLanguage.item("FRM_RETOS_START").item("TEXTO")
     Me.Salir.Caption = JsonLanguage.item("FRM_RETOS_EXIT").item("TEXTO")
+    Me.lblOro.Caption = JsonLanguage.item("FRM_RETOS_LBL_ORO").item("TEXTO")
+    
 End Sub
 
 Private Sub Comenzar_Click()
@@ -431,12 +433,12 @@ Private Function CheckDataReto(ByVal Selected As Byte, _
     Dim a As Long
     
     If Val(txtGld.Text) < 0 Then
-        ErrorMsg = "La apuesta mínima es por 0 monedas de oro"
+        ErrorMsg = "La apuesta minima es por 0 monedas de oro"
         Exit Function
     End If
     
     If Len(txtOponente(0).Text) <= 0 Then
-        ErrorMsg = "Debes seleccionar al oponente n°1"
+        ErrorMsg = "Debes seleccionar al oponente nro 1"
         Exit Function
     End If
     
@@ -445,34 +447,34 @@ Private Function CheckDataReto(ByVal Selected As Byte, _
     Select Case Selected
         Case 2
             If Len(txtOponente(1).Text) <= 0 Then
-                ErrorMsg = "Debes seleccionar al oponente n°2"
+                ErrorMsg = "Debes seleccionar al oponente nro 2"
                 Exit Function
             End If
             
             If Len(txtCompa(0).Text) <= 0 Then
-                ErrorMsg = "Debes seleccionar a tu compañero"
+                ErrorMsg = "Debes seleccionar a tu aliado"
                 Exit Function
             End If
             
             ListUser = txtOponente(0).Text & "-" & txtOponente(1).Text & "-" & txtCompa(0).Text
         Case 3
             If Len(txtOponente(1).Text) <= 0 Then
-                ErrorMsg = "Debes seleccionar al oponente n°2"
+                ErrorMsg = "Debes seleccionar al oponente nro 2"
                 Exit Function
             End If
             
             If Len(txtOponente(2).Text) <= 0 Then
-                ErrorMsg = "Debes seleccionar al oponente n°3"
+                ErrorMsg = "Debes seleccionar al oponente nro 3"
                 Exit Function
             End If
             
             If Len(txtCompa(0).Text) <= 0 Then
-                ErrorMsg = "Debes seleccionar a tu compañero n°2"
+                ErrorMsg = "Debes seleccionar a tu aliado nro 2"
                 Exit Function
             End If
             
             If Len(txtCompa(1).Text) <= 0 Then
-                ErrorMsg = "Debes seleccionar a tu compañero n°3"
+                ErrorMsg = "Debes seleccionar a tu aliado nro 3"
                 Exit Function
             End If
             

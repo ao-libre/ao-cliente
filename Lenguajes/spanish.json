@@ -1811,6 +1811,9 @@
     "FRM_RETOS_EXIT" : {
      "TEXTO": "Salir"
     },
+    "FRM_RETOS_LBL_ORO" : {
+     "TEXTO": "Monedas de oro"
+    },
     "FRM_QUEST_ACCEPT" : {
      "TEXTO": "Aceptar"
     },

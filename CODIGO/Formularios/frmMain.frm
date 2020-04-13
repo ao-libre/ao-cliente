@@ -557,7 +557,7 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
    End
-   Begin AOLibre.uAOButton Retos 
+   Begin AOLibre.uAOButton btnRetos 
       Height          =   255
       Left            =   13440
       TabIndex        =   43
@@ -584,7 +584,7 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
    End
-   Begin AOLibre.uAOButton Amigos 
+   Begin AOLibre.uAOButton btnAmigos 
       Height          =   255
       Left            =   13440
       TabIndex        =   44
@@ -1133,7 +1133,7 @@ Public Sub dragInventory_dragDone(ByVal originalSlot As Integer, ByVal newSlot A
     Call Protocol.WriteMoveItem(originalSlot, newSlot, eMoveType.Inventory)
 End Sub
 
-Private Sub Amigos_Click()
+Private Sub btnAmigos_Click()
     Call frmAmigos.Show(vbModeless, frmMain)
 End Sub
 
@@ -2917,6 +2917,6 @@ Public Sub SetGoldColor()
 
 End Sub
 
-Private Sub Retos_Click()
+Private Sub btnRetos_Click()
     Call FrmRetos.Show(vbModeless, frmMain)
 End Sub
