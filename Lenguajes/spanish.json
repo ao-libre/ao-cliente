@@ -410,7 +410,7 @@
         ]
     },
     "MENSAJE_HOGAR_CANCEL": {
-        "TEXTO": "No puedes viajar estando en la carcel.",
+        "TEXTO": "El viaje a tu hogar ha sido cancelado.",
         "COLOR": [
             255,
             0,
@@ -1229,6 +1229,12 @@
     "LBL_CLANES": {
         "TEXTO": "Clanes"
     },
+    "LBL_AMIGOS": {
+        "TEXTO": "Amigos"
+    },
+    "LBL_RETOS": {
+        "TEXTO": "Retos"
+    },
     "LBL_OPCIONES": {
         "TEXTO": "Opciones"
     },
@@ -1683,7 +1689,7 @@
             237
         ]
     },
-    "MENSAJE_WEAPON_LABEL" : {
+    "MENSAJE_WEAPON_LABEL": {
         "TEXTO": "AYUDA: Indica el poder maximo y minimo de el arma. Por ejemplo un arma con poder 8/12 significa que podes hacer herir entre 8 y 12 de vida",
         "COLOR": [
             255,
@@ -1691,7 +1697,7 @@
             237
         ]
     },
-    "MENSAJE_HELM_LABEL" : {
+    "MENSAJE_HELM_LABEL": {
         "TEXTO": "AYUDA: Indica la resistencia maxima y minima del casco/gorro. Por ejemplo un sombrero con resistencia 10/15 significa que puede bloquear en cada golpe entre 10 y 15 de vida",
         "COLOR": [
             255,
@@ -1699,7 +1705,7 @@
             237
         ]
     },
-    "MENSAJE_SHIELDER_LABEL" : {
+    "MENSAJE_SHIELDER_LABEL": {
         "TEXTO": "AYUDA: Indica la resistencia maxima y minima del escudo. Por ejemplo un escudo con resistencia 5/20 significa que puede bloquear en cada golpe entre 5 y 20 de vida",
         "COLOR": [
             255,
@@ -1707,7 +1713,7 @@
             237
         ]
     },
-    "MENSAJE_ARMOR_LABEL" : {
+    "MENSAJE_ARMOR_LABEL": {
         "TEXTO": "AYUDA: Indica la resistencia maxima y minima de la vestimenta. Por ejemplo una armadura con resistencia 2/8 significa que puede bloquear en cada golpe entre 2 y 8 de vida",
         "COLOR": [
             255,
@@ -1715,7 +1721,7 @@
             237
         ]
     },
-    "MENSAJE_STRG_LABEL" : {
+    "MENSAJE_STRG_LABEL": {
         "TEXTO": "AYUDA: Indicador del nivel de Fuerza de tu personaje que tiene tu personaje. Podes subirlos mediante hechizos o Pociones Verdes.",
         "COLOR": [
             255,
@@ -1723,7 +1729,7 @@
             237
         ]
     },
-    "MENSAJE_DEXT_LABEL" : {
+    "MENSAJE_DEXT_LABEL": {
         "TEXTO": "AYUDA: Indicador del nivel de Agilidad de tu personaje que tiene tu personaje. Podes subirlos mediante hechizos o Pociones Amarillas.",
         "COLOR": [
             255,
@@ -1731,7 +1737,7 @@
             237
         ]
     },
-    "MENSAJE_GOLD_LABEL" : {
+    "MENSAJE_GOLD_LABEL": {
         "TEXTO": "AYUDA: Cantidad de oro disponible en tu billetera, podes guardar lo que no necesites en el banco. Si no eres newbie y mueres en zona no segura, el oro se caera al igual que tus items. Podes llevar 10.000 de oro por nivel del personaje, asi que si tu personaje es nivel 25 podrá llevar 250.000 de oro (25 x 10.000) en billetera y NO se le caería nada al morir pero en cambio si tendría 251.200 por ej. sólo se le caería el sobrante (1200 de oro).",
         "COLOR": [
             255,
@@ -1739,88 +1745,94 @@
             237
         ]
     },
-    "MENSAJE_MONTURA_SALIR" : {
+    "MENSAJE_MONTURA_SALIR": {
         "TEXTO": "No puedes caminar aqui con tu montura, bajate para poder entrar a un lugar con techo."
     },
-    "FRMCONNECT_LBL_DESCRIPCION_SERVER" : {
+    "FRMCONNECT_LBL_DESCRIPCION_SERVER": {
         "TEXTO": "Obteniendo datos del server por favor espere... si no los obtengo en pocos segundos y tira error significa que el servidor esta offline..."
     },
-    "FRMPANELACCOUNT_CONFIRMAR_BORRAR_PJ" : {
+    "FRMPANELACCOUNT_CONFIRMAR_BORRAR_PJ": {
         "TEXTO": "Estas seguro que quieres borrar el personaje de tu cuenta? Esta accion no puede revertise"
     },
-    "FRMPANELACCOUNT_CONFIRMAR_BORRAR_PJ_TITULO" : {
+    "FRMPANELACCOUNT_CONFIRMAR_BORRAR_PJ_TITULO": {
         "TEXTO": "ALERTA - BORRAR PERSONAJE"
     },
-    "FRMPANELACCOUNT_BTN_BORRAR_PERSONAJE" : {
+    "FRMPANELACCOUNT_BTN_BORRAR_PERSONAJE": {
         "TEXTO": "Borrar Personaje"
     },
-    "FRMPANELACCOUNT_BTN_SALIR" : {
+    "FRMPANELACCOUNT_BTN_SALIR": {
         "TEXTO": "Salir"
     },
-    "FRMPANELACCOUNT_BTN_CREAR_PERSONAJE" : {
+    "FRMPANELACCOUNT_BTN_CREAR_PERSONAJE": {
         "TEXTO": "Crear Personaje"
     },
-    "FRMPANELACCOUNT_BTN_CONECTAR" : {
+    "FRMPANELACCOUNT_BTN_CONECTAR": {
         "TEXTO": "Entrar"
     },
-	"FRM_LISTAAMIGOS_TITLE" : {
-    "TEXTO": "Aqui puedes ver tu lista de amigos, asi como agregar o eliminar usuarios de la lista."
+    "FRM_LISTAAMIGOS_TITLE": {
+        "TEXTO": "Aqui puedes ver tu lista de amigos, asi como agregar o eliminar usuarios de la lista."
     },
-	"FRM_LISTAAMIGOS_AGREGAR" : {
-    "TEXTO": "Agregar Amigo"
+    "FRM_LISTAAMIGOS_AGREGAR": {
+        "TEXTO": "Agregar Amigo"
     },
-	"FRM_LISTAAMIGOS_BORRAR" : {
-    "TEXTO": "Borrar Amigo"
+    "FRM_LISTAAMIGOS_BORRAR": {
+        "TEXTO": "Borrar Amigo"
     },
-	"FRM_LISTAAMIGOS_PARAMETRO" : {
-    "TEXTO": "Faltan parametros."
+    "FRM_LISTAAMIGOS_SALIR": {
+        "TEXTO": "Cerrar"
     },
-	"FRM_LISTAAMIGOS_FADD" : {
-    "TEXTO": "Utilice /FADD NICKNAME."
+    "FRM_LISTAAMIGOS_PARAMETRO": {
+        "TEXTO": "Faltan parametros."
     },
-	"FRM_LISTAAMIGOS_FMSG" : {
-    "TEXTO": "Utilice /FMSG MENSAJE."
+    "FRM_LISTAAMIGOS_FADD": {
+        "TEXTO": "Utilice /FADD NICKNAME."
     },
-    "FRM_RETOS_DESC" : {
-    "TEXTO": "Selecciona el tipo de reto que quieres jugar."
+    "FRM_LISTAAMIGOS_FMSG": {
+        "TEXTO": "Utilice /FMSG MENSAJE."
     },
-    "FRM_RETOS_LBLOP" : {
-    "TEXTO": "Oponente 1"
+    "FRM_RETOS_DESC": {
+        "TEXTO": "Selecciona el tipo de reto que quieres jugar."
     },
-    "FRM_RETOS_LBLOP2" : {
-    "TEXTO": "Oponente 2"
+    "FRM_RETOS_LBLOP": {
+        "TEXTO": "Oponente 1"
     },
-    "FRM_RETOS_LBLOP3" : {
-    "TEXTO": "Oponente 3"
+    "FRM_RETOS_LBLOP2": {
+        "TEXTO": "Oponente 2"
     },
-    "FRM_RETOS_COMPA" : {
-    "TEXTO": "Aliado 1"
+    "FRM_RETOS_LBLOP3": {
+        "TEXTO": "Oponente 3"
     },
-    "FRM_RETOS_COMPA2" : {
-    "TEXTO": "Aliado 2"
+    "FRM_RETOS_COMPA": {
+        "TEXTO": "Aliado 1"
     },
-    "FRM_RETOS_START" : {
-    "TEXTO": "Comenzar"
+    "FRM_RETOS_COMPA2": {
+        "TEXTO": "Aliado 2"
     },
-    "FRM_RETOS_EXIT" : {
-     "TEXTO": "Salir"
+    "FRM_RETOS_START": {
+        "TEXTO": "Comenzar"
     },
-    "FRM_QUEST_ACCEPT" : {
-     "TEXTO": "Aceptar"
+    "FRM_RETOS_EXIT": {
+        "TEXTO": "Salir"
     },
-    "FRM_QUEST_EXIT" : {
-     "TEXTO": "Rechazar"
+    "FRM_RETOS_LBL_ORO": {
+        "TEXTO": "Monedas de oro"
     },
-    "FRM_QUEST_DESC" : {
-     "TEXTO": "Informacion de la mision:"
+    "FRM_QUEST_ACCEPT": {
+        "TEXTO": "Aceptar"
     },
-    "FRM_QUESTINFO_ABAND" : {
-     "TEXTO": "Abandonar Mision"
+    "FRM_QUEST_EXIT": {
+        "TEXTO": "Rechazar"
     },
-    "FRM_QUESTINFO_EXIT" : {
-     "TEXTO": "Salir"
+    "FRM_QUEST_DESC": {
+        "TEXTO": "Informacion de la mision:"
     },
-    "FRM_QUESTINFO_DESC" : {
-     "TEXTO": "Informacion de misiones:"
-    }	
+    "FRM_QUESTINFO_ABAND": {
+        "TEXTO": "Abandonar Mision"
+    },
+    "FRM_QUESTINFO_EXIT": {
+        "TEXTO": "Salir"
+    },
+    "FRM_QUESTINFO_DESC": {
+        "TEXTO": "Informacion de misiones:"
+    }
 }

@@ -1267,7 +1267,7 @@ Public Sub HandleMultiMessage()
                 
                     Case Proyectiles
                         Call AddtoRichTextBox(frmMain.RecTxt, _
-                            JsonLanguage.item("MENSAJE_TRABAJO_TALAR").item("TEXTO"), _
+                            JsonLanguage.item("MENSAJE_TRABAJO_PROYECTILES").item("TEXTO"), _
                             JsonLanguage.item("MENSAJE_TRABAJO_PROYECTILES").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_TRABAJO_PROYECTILES").item("COLOR").item(2), _
                             JsonLanguage.item("MENSAJE_TRABAJO_PROYECTILES").item("COLOR").item(3))

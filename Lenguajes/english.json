@@ -410,7 +410,7 @@
         ]
     },
     "MENSAJE_HOGAR_CANCEL": {
-        "TEXTO": "You cannot travel while being in prison.",
+        "TEXTO": "The travel to your home was cancelled.",
         "COLOR": [
             255,
             0,
@@ -1229,6 +1229,12 @@
     "LBL_CLANES": {
         "TEXTO": "Guilds"
     },
+    "LBL_AMIGOS": {
+        "TEXTO": "Friends"
+    },
+    "LBL_RETOS": {
+        "TEXTO": "Challenges"
+    },
     "LBL_OPCIONES": {
         "TEXTO": "Options"
     },
@@ -1622,19 +1628,19 @@
     "MOD_SCREENCAPTURE": {
         "TEXTO": "Screenshot! Image path location: "
     },
-    "FRM_KEYS_CONFIGURATION_LBL_ALTERNATIVE_TEXT" : {
+    "FRM_KEYS_CONFIGURATION_LBL_ALTERNATIVE_TEXT": {
         "TEXTO": "Recommended for new players.\nMovement with the WASD keys.\nAttack: Control.\nPick Up Items: Q"
     },
-    "FRM_KEYS_CONFIGURATION_LBL_ALTERNATIVE_TITLE" : {
+    "FRM_KEYS_CONFIGURATION_LBL_ALTERNATIVE_TITLE": {
         "TEXTO": "Alternative (WASD)"
     },
-    "FRM_KEYS_CONFIGURATION_LBL_NORMAL_TEXT" : {
+    "FRM_KEYS_CONFIGURATION_LBL_NORMAL_TEXT": {
         "TEXTO": "Recommended for advanced players.\nMovement with the directional arrows.\nAttack: Control.\nPick Up Items: A"
     },
-    "FRM_KEYS_CONFIGURATION_LBL_NORMAL_TITLE" : {
+    "FRM_KEYS_CONFIGURATION_LBL_NORMAL_TITLE": {
         "TEXTO": "Normal (Directional Arrows)"
     },
-    "FRM_KEYS_CONFIGURATION_LBL_TITLE" : {
+    "FRM_KEYS_CONFIGURATION_LBL_TITLE": {
         "TEXTO": "Please select what kind of input method you will like to use in the game. You can change later any of this settings in Options under the game's Menu"
     },
     "FRM_KEYS_CONFIGURATION_BTN_NORMAL_KEYS": {
@@ -1683,7 +1689,7 @@
             237
         ]
     },
-    "MENSAJE_WEAPON_LABEL" : {
+    "MENSAJE_WEAPON_LABEL": {
         "TEXTO": "HELP: Indicates the maximum and minimum power of the weapon. For example a weapon with 8/12 power means that you can hurt between 8 and 12 of life",
         "COLOR": [
             255,
@@ -1691,7 +1697,7 @@
             237
         ]
     },
-    "MENSAJE_HELM_LABEL" : {
+    "MENSAJE_HELM_LABEL": {
         "TEXTO": "HELP: Indicates the maximum and minimum resistance of the helmet / hat. For example a hat with 10/15 resistance means that it can block in every stroke between 10 and 15 of life",
         "COLOR": [
             255,
@@ -1699,7 +1705,7 @@
             237
         ]
     },
-    "MENSAJE_SHIELDER_LABEL" : {
+    "MENSAJE_SHIELDER_LABEL": {
         "TEXTO": "HELP: Indicates the maximum and minimum resistance of the shield. For example a shield with resistance 5/20 means that it can block in each blow between 5 and 20 of life",
         "COLOR": [
             255,
@@ -1707,7 +1713,7 @@
             237
         ]
     },
-    "MENSAJE_ARMOR_LABEL" : {
+    "MENSAJE_ARMOR_LABEL": {
         "TEXTO": "HELP: Indicates the maximum and minimum resistance of the clothing. For example, armor with resistance 2/8 means that it can block in each blow between 2 and 8 of life",
         "COLOR": [
             255,
@@ -1715,7 +1721,7 @@
             237
         ]
     },
-    "MENSAJE_STRG_LABEL" : {
+    "MENSAJE_STRG_LABEL": {
         "TEXTO": "HELP: Indicator of the strength level of your character that your character has. You can raise them by spells or Green Potions.",
         "COLOR": [
             255,
@@ -1723,7 +1729,7 @@
             237
         ]
     },
-    "MENSAJE_DEXT_LABEL" : {
+    "MENSAJE_DEXT_LABEL": {
         "TEXTO": "HELP: Indicator of the level of Agility of your character that your character has. You can upload them using spells or Yellow Potions.",
         "COLOR": [
             255,
@@ -1731,7 +1737,7 @@
             237
         ]
     },
-    "MENSAJE_GOLD_LABEL" : {
+    "MENSAJE_GOLD_LABEL": {
         "TEXTO": "HELP: Amount of gold available in your wallet, you can store what you do not need in the bank. If you are not a newbie and you die in an unsafe area, the gold will fall just like your items. You can carry 10,000 gold per level character, so if your character is level 25 you can carry 250,000 gold (25 x 10,000) in your wallet and you would NOT drop anything when you die but instead if you had 251,200 for example, you would only drop the leftover (1200 gold)",
         "COLOR": [
             255,
@@ -1739,10 +1745,10 @@
             237
         ]
     },
-    "MENSAJE_MONTURA_SALIR" : {
+    "MENSAJE_MONTURA_SALIR": {
         "TEXTO": "You cannot walk here with your mount, get off to enter a place with a roof."
     },
-    "FRMCONNECT_LBL_DESCRIPCION_SERVER" : {
+    "FRMCONNECT_LBL_DESCRIPCION_SERVER": {
         "TEXTO": "Obtaining data from the server please wait ... if I do not get it in a few seconds and throw error means that the server is offline ..."
     },
     "FRMPANELACCOUNT_CONFIRMAR_BORRAR_PJ": {
@@ -1760,67 +1766,73 @@
     "FRMPANELACCOUNT_BTN_CREAR_PERSONAJE": {
         "TEXTO": "Create Character"
     },
-    "FRMPANELACCOUNT_BTN_CONECTAR" : {
+    "FRMPANELACCOUNT_BTN_CONECTAR": {
         "TEXTO": "Enter"
     },
-	"FRM_LISTAAMIGOS_TITLE" : {
-    "TEXTO": "Here you can see your friends list, as well as add or remove users from the list."
+    "FRM_LISTAAMIGOS_TITLE": {
+        "TEXTO": "Here you can see your friends list, as well as add or remove users from the list."
     },
-	"FRM_LISTAAMIGOS_AGREGAR" : {
-    "TEXTO": "Add Friend"
+    "FRM_LISTAAMIGOS_AGREGAR": {
+        "TEXTO": "Add Friend"
     },
-	"FRM_LISTAAMIGOS_BORRAR" : {
-    "TEXTO": "Del Friend"
+    "FRM_LISTAAMIGOS_BORRAR": {
+        "TEXTO": "Del Friend"
     },
-	"FRM_LISTAAMIGOS_PARAMETRO" : {
-    "TEXTO": "Missing parameters."
+    "FRM_LISTAAMIGOS_SALIR": {
+        "TEXTO": "Close"
     },
-	"FRM_LISTAAMIGOS_FADD" : {
-    "TEXTO": "Use /FADD NICKNAME."
+    "FRM_LISTAAMIGOS_PARAMETRO": {
+        "TEXTO": "Missing parameters."
     },
-	"FRM_LISTAAMIGOS_FMSG" : {
-    "TEXTO": "Use /FMSG MENSAJE."
+    "FRM_LISTAAMIGOS_FADD": {
+        "TEXTO": "Use /FADD NICKNAME."
     },
-    "FRM_RETOS_DESC" : {
-    "TEXTO": "Select the type of challenge you want to play."
+    "FRM_LISTAAMIGOS_FMSG": {
+        "TEXTO": "Use /FMSG MENSAJE."
     },
-    "FRM_RETOS_LBLOP" : {
-    "TEXTO": "Opponent 1"
+    "FRM_RETOS_DESC": {
+        "TEXTO": "Select the type of challenge you want to play."
     },
-    "FRM_RETOS_LBLOP2" : {
-    "TEXTO": "Opponent 2"
+    "FRM_RETOS_LBLOP": {
+        "TEXTO": "Opponent 1"
     },
-    "FRM_RETOS_LBLOP3" : {
-    "TEXTO": "Opponent 3"
+    "FRM_RETOS_LBLOP2": {
+        "TEXTO": "Opponent 2"
     },
-    "FRM_RETOS_COMPA" : {
-    "TEXTO": "Partner 1"
+    "FRM_RETOS_LBLOP3": {
+        "TEXTO": "Opponent 3"
     },
-    "FRM_RETOS_COMPA2" : {
-    "TEXTO": "Partner 2"
+    "FRM_RETOS_COMPA": {
+        "TEXTO": "Partner 1"
     },
-    "FRM_RETOS_START" : {
-    "TEXTO": "Start"
+    "FRM_RETOS_COMPA2": {
+        "TEXTO": "Partner 2"
     },
-    "FRM_RETOS_EXIT" : {
-     "TEXTO": "Exit"
+    "FRM_RETOS_START": {
+        "TEXTO": "Start"
     },
-    "FRM_QUEST_ACCEPT" : {
-     "TEXTO": "Accept"
+    "FRM_RETOS_EXIT": {
+        "TEXTO": "Exit"
     },
-    "FRM_QUEST_EXIT" : {
-     "TEXTO": "Decline"
+    "FRM_RETOS_LBL_ORO": {
+        "TEXTO": "Gold Coins"
     },
-    "FRM_QUEST_DESC" : {
-     "TEXTO": "Mission Information:"
+    "FRM_QUEST_ACCEPT": {
+        "TEXTO": "Accept"
     },
-    "FRM_QUESTINFO_ABAND" : {
-     "TEXTO": "Abandon Mission"
+    "FRM_QUEST_EXIT": {
+        "TEXTO": "Decline"
     },
-    "FRM_QUESTINFO_EXIT" : {
-     "TEXTO": "Exit"
+    "FRM_QUEST_DESC": {
+        "TEXTO": "Mission Information:"
     },
-    "FRM_QUESTINFO_DESC" : {
-     "TEXTO": "About missions:"
+    "FRM_QUESTINFO_ABAND": {
+        "TEXTO": "Abandon Mission"
+    },
+    "FRM_QUESTINFO_EXIT": {
+        "TEXTO": "Exit"
+    },
+    "FRM_QUESTINFO_DESC": {
+        "TEXTO": "About missions:"
     }
 }

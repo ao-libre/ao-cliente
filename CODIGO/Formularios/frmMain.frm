@@ -312,7 +312,7 @@ Begin VB.Form frmMain
          Top             =   600
       End
    End
-   Begin AOLibre.uAOButton imgMapa 
+   Begin AOLibre.uAOButton btnMapa 
       Height          =   255
       Left            =   11880
       TabIndex        =   28
@@ -339,7 +339,7 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
    End
-   Begin AOLibre.uAOButton imgGrupo 
+   Begin AOLibre.uAOButton btnGrupo 
       Height          =   255
       Left            =   11880
       TabIndex        =   31
@@ -366,7 +366,7 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
    End
-   Begin AOLibre.uAOButton imgOpciones 
+   Begin AOLibre.uAOButton btnOpciones 
       Height          =   255
       Left            =   13440
       TabIndex        =   32
@@ -393,7 +393,7 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
    End
-   Begin AOLibre.uAOButton imgEstadisticas 
+   Begin AOLibre.uAOButton btnEstadisticas 
       Height          =   255
       Left            =   11880
       TabIndex        =   33
@@ -420,7 +420,7 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
    End
-   Begin AOLibre.uAOButton imgClanes 
+   Begin AOLibre.uAOButton btnClanes 
       Height          =   255
       Left            =   11880
       TabIndex        =   34
@@ -447,7 +447,7 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
    End
-   Begin AOLibre.uAOButton CmdInventario 
+   Begin AOLibre.uAOButton btnInventario 
       Height          =   495
       Left            =   11880
       TabIndex        =   35
@@ -474,7 +474,7 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
    End
-   Begin AOLibre.uAOButton CmdHechizos 
+   Begin AOLibre.uAOButton btnHechizos 
       Height          =   495
       Left            =   13440
       TabIndex        =   36
@@ -501,7 +501,7 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
    End
-   Begin AOLibre.uAOButton CmdLanzar 
+   Begin AOLibre.uAOButton btnLanzar 
       Height          =   495
       Left            =   11880
       TabIndex        =   22
@@ -529,7 +529,7 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
    End
-   Begin AOLibre.uAOButton cmdInfo 
+   Begin AOLibre.uAOButton btnInfo 
       Height          =   495
       Left            =   13680
       TabIndex        =   38
@@ -557,7 +557,7 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
    End
-   Begin AOLibre.uAOButton Retos 
+   Begin AOLibre.uAOButton btnRetos 
       Height          =   255
       Left            =   13440
       TabIndex        =   43
@@ -584,7 +584,7 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
    End
-   Begin AOLibre.uAOButton Amigos 
+   Begin AOLibre.uAOButton btnAmigos 
       Height          =   255
       Left            =   13440
       TabIndex        =   44
@@ -1133,7 +1133,7 @@ Public Sub dragInventory_dragDone(ByVal originalSlot As Integer, ByVal newSlot A
     Call Protocol.WriteMoveItem(originalSlot, newSlot, eMoveType.Inventory)
 End Sub
 
-Private Sub Amigos_Click()
+Private Sub btnAmigos_Click()
     Call frmAmigos.Show(vbModeless, frmMain)
 End Sub
 
@@ -1179,15 +1179,17 @@ Private Sub Form_Load()
 End Sub
 
 Private Sub LoadTextsForm()
-    CmdLanzar.Caption = JsonLanguage.item("LBL_LANZAR").item("TEXTO")
-    CmdInventario.Caption = JsonLanguage.item("LBL_INVENTARIO").item("TEXTO")
-    CmdHechizos.Caption = JsonLanguage.item("LBL_HECHIZOS").item("TEXTO")
-    cmdInfo.Caption = JsonLanguage.item("LBL_INFO").item("TEXTO")
-    imgMapa.Caption = JsonLanguage.item("LBL_MAPA").item("TEXTO")
-    imgGrupo.Caption = JsonLanguage.item("LBL_GRUPO").item("TEXTO")
-    imgOpciones.Caption = JsonLanguage.item("LBL_OPCIONES").item("TEXTO")
-    imgEstadisticas.Caption = JsonLanguage.item("LBL_ESTADISTICAS").item("TEXTO")
-    imgClanes.Caption = JsonLanguage.item("LBL_CLANES").item("TEXTO")
+    btnLanzar.Caption = JsonLanguage.item("LBL_LANZAR").item("TEXTO")
+    btnInventario.Caption = JsonLanguage.item("LBL_INVENTARIO").item("TEXTO")
+    btnHechizos.Caption = JsonLanguage.item("LBL_HECHIZOS").item("TEXTO")
+    btnInfo.Caption = JsonLanguage.item("LBL_INFO").item("TEXTO")
+    btnMapa.Caption = JsonLanguage.item("LBL_MAPA").item("TEXTO")
+    btnGrupo.Caption = JsonLanguage.item("LBL_GRUPO").item("TEXTO")
+    btnOpciones.Caption = JsonLanguage.item("LBL_OPCIONES").item("TEXTO")
+    btnEstadisticas.Caption = JsonLanguage.item("LBL_ESTADISTICAS").item("TEXTO")
+    btnClanes.Caption = JsonLanguage.item("LBL_CLANES").item("TEXTO")
+    btnAmigos.Caption = JsonLanguage.item("LBL_AMIGOS").item("TEXTO")
+    btnRetos.Caption = JsonLanguage.item("LBL_RETOS").item("TEXTO")
 End Sub
 
 Private Sub LoadButtons()
@@ -1654,13 +1656,13 @@ Private Sub imgAsignarSkill_Click()
 
 End Sub
 
-Private Sub imgClanes_Click()
+Private Sub btnClanes_Click()
     
     If frmGuildLeader.Visible Then Unload frmGuildLeader
     Call WriteRequestGuildLeaderInfo
 End Sub
 
-Private Sub imgEstadisticas_Click()
+Private Sub btnEstadisticas_Click()
 
     LlegaronAtrib = False
     LlegaronSkills = False
@@ -1681,17 +1683,17 @@ Private Sub imgEstadisticas_Click()
     LlegoFama = False
 End Sub
 
-Private Sub imgGrupo_Click()
+Private Sub btnGrupo_Click()
     
     Call WriteRequestPartyForm
 End Sub
 
-Private Sub imgMapa_Click()
+Private Sub btnMapa_Click()
     
     Call frmMapa.Show(vbModeless, frmMain)
 End Sub
 
-Private Sub imgOpciones_Click()
+Private Sub btnOpciones_Click()
     Call frmOpciones.Show(vbModeless, frmMain)
 End Sub
 
@@ -2097,7 +2099,7 @@ Private Sub EquiparItem()
     End If
 End Sub
 
-Private Sub cmdLanzar_Click()
+Private Sub btnLanzar_Click()
     
     If hlst.List(hlst.ListIndex) <> JsonLanguage.item("NADA").item("TEXTO") And MainTimer.Check(TimersIndex.Work, False) Then
         If UserEstado = 1 Then
@@ -2113,7 +2115,7 @@ Private Sub cmdLanzar_Click()
     End If
 End Sub
 
-Private Sub CmdLanzar_MouseMove(Button As Integer, _
+Private Sub btnLanzar_MouseMove(Button As Integer, _
                                 Shift As Integer, _
                                 X As Single, _
                                 Y As Single)
@@ -2121,7 +2123,7 @@ Private Sub CmdLanzar_MouseMove(Button As Integer, _
     CnTd = 0
 End Sub
 
-Private Sub cmdINFO_Click()
+Private Sub btnInfo_Click()
     
     If hlst.ListIndex <> -1 Then
         Dim Index As Integer
@@ -2368,7 +2370,7 @@ Private Sub lblDropGold_Click()
     
 End Sub
 
-Private Sub cmdInventario_Click()
+Private Sub btnInventario_Click()
     Call Audio.PlayWave(SND_CLICK)
 
     'InvEqu.Picture = LoadPicture(Game.path(Skins) & SkinSeleccionado & "\Centroinventario.jpg")
@@ -2378,8 +2380,8 @@ Private Sub cmdInventario_Click()
 
     ' Desactivo controles de hechizo
     hlst.Visible = False
-    cmdInfo.Visible = False
-    CmdLanzar.Visible = False
+    btnInfo.Visible = False
+    btnLanzar.Visible = False
     
     cmdMoverHechi(0).Visible = False
     cmdMoverHechi(1).Visible = False
@@ -2389,7 +2391,7 @@ Private Sub cmdInventario_Click()
     
 End Sub
 
-Private Sub CmdHechizos_Click()
+Private Sub btnHechizos_Click()
     
     Call Audio.PlayWave(SND_CLICK)
 
@@ -2397,8 +2399,8 @@ Private Sub CmdHechizos_Click()
     
     ' Activo controles de hechizos
     hlst.Visible = True
-    cmdInfo.Visible = True
-    CmdLanzar.Visible = True
+    btnInfo.Visible = True
+    btnLanzar.Visible = True
     
     cmdMoverHechi(0).Visible = True
     cmdMoverHechi(1).Visible = True
@@ -2915,6 +2917,6 @@ Public Sub SetGoldColor()
 
 End Sub
 
-Private Sub Retos_Click()
+Private Sub btnRetos_Click()
     Call FrmRetos.Show(vbModeless, frmMain)
 End Sub

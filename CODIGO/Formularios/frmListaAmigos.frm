@@ -76,7 +76,7 @@ Begin VB.Form frmAmigos
          Strikethrough   =   0   'False
       EndProperty
    End
-   Begin AOLibre.uAOButton Salir 
+   Begin AOLibre.uAOButton btnSalir 
       Height          =   375
       Left            =   3480
       TabIndex        =   4
@@ -104,7 +104,7 @@ Begin VB.Form frmAmigos
    End
    Begin VB.Label lblTitle 
       BackStyle       =   0  'Transparent
-      Caption         =   "Aquí puedes ver tu lista de amigos, así como agregar o eliminar usuarios de la lista."
+      Caption         =   "Aquï¿½ puedes ver tu lista de amigos, asï¿½ como agregar o eliminar usuarios de la lista."
       BeginProperty Font 
          Name            =   "Lucida Sans Unicode"
          Size            =   8.25
@@ -148,6 +148,7 @@ Private Sub LoadTextsForm()
     Me.lblTitle.Caption = JsonLanguage.item("FRM_LISTAAMIGOS_TITLE").item("TEXTO")
     Me.AgregarAmigo.Caption = JsonLanguage.item("FRM_LISTAAMIGOS_AGREGAR").item("TEXTO")
     Me.BorrarAmigo.Caption = JsonLanguage.item("FRM_LISTAAMIGOS_BORRAR").item("TEXTO")
+    Me.btnSalir.Caption = JsonLanguage.item("FRM_LISTAAMIGOS_SALIR").item("TEXTO")
 End Sub
 
 Private Sub AgregarAmigo_Click()
@@ -182,6 +183,6 @@ Private Sub BorrarAmigo_Click()
 End Sub
 
 
-Private Sub Salir_Click()
+Private Sub btnSalir_Click()
     Unload Me
 End Sub
