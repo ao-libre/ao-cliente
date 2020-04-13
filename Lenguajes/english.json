@@ -1779,7 +1779,7 @@
         "TEXTO": "Del Friend"
     },
     "FRM_LISTAAMIGOS_SALIR": {
-        "TEXTO": "Cerrar"
+        "TEXTO": "Close"
     },
     "FRM_LISTAAMIGOS_PARAMETRO": {
         "TEXTO": "Missing parameters."
