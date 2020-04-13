@@ -410,7 +410,7 @@
         ]
     },
     "MENSAJE_HOGAR_CANCEL": {
-        "TEXTO": "You cannot travel while being in prison.",
+        "TEXTO": "The travel to your home was cancelled.",
         "COLOR": [
             255,
             0,

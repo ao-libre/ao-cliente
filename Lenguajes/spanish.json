@@ -410,7 +410,7 @@
         ]
     },
     "MENSAJE_HOGAR_CANCEL": {
-        "TEXTO": "No puedes viajar estando en la carcel.",
+        "TEXTO": "El viaje a tu hogar ha sido cancelado.",
         "COLOR": [
             255,
             0,
