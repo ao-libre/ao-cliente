@@ -79,6 +79,7 @@ Private Sub Char_ResetInfo(ByVal CharIndex As Integer)
         .Moving = 0
         .muerto = False
         .Nombre = vbNullString
+        .Clan = vbNullString
         .pie = False
         .Pos.X = 0
         .Pos.Y = 0
