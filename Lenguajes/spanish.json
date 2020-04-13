@@ -1229,6 +1229,12 @@
     "LBL_CLANES": {
         "TEXTO": "Clanes"
     },
+    "LBL_AMIGOS": {
+        "TEXTO": "Amigos"
+    },
+    "LBL_RETOS": {
+        "TEXTO": "Retos"
+    },
     "LBL_OPCIONES": {
         "TEXTO": "Opciones"
     },
