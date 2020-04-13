@@ -736,7 +736,7 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 12/04/2020: Saco el evento Hunger Games alv. (#584). (jopiortiz)
 * 12/04/2020: Agregado FlushBuffer en boton de skills y estadisticas (Wyr0X - Recox)
 
--v0.13.30
+-v0.13.31
 * 13/04/2020: Arreglo de traducciones en frmMain. frmRetos. frmListaAmigos, /hogar cancelado y Protocol.bas (Recox)
 * 13/04/2020: Ahora solo me puedo ver invi a mi mismo y a los de mi clan. (Wyr0X)
 
