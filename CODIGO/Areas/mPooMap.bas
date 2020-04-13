@@ -254,7 +254,7 @@ Function Map_LegalPos(ByVal X As Integer, ByVal Y As Integer) As Boolean
       
       'Esta el usuario Equitando bajo un techo?
       If UserEquitando And MapData(X, Y).Trigger = eTrigger.BAJOTECHO Or MapData(X, Y).Trigger = eTrigger.CASA Then
-            Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_MONTURA_SALIR").Item("TEXTO"))
+            Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_MONTURA_SALIR").item("TEXTO"))
             Exit Function
       End If
       
@@ -309,7 +309,7 @@ Function Map_CheckWater(ByVal X As Integer, ByVal Y As Integer) As Boolean
 
             With MapData(X, Y)
 
-                  If ((.Graphic(1).GrhIndex >= 1505 And .Graphic(1).GrhIndex <= 1520) Or (.Graphic(1).GrhIndex >= 5665 And .Graphic(1).GrhIndex <= 5680) Or (.Graphic(1).GrhIndex >= 13547 And .Graphic(1).GrhIndex <= 13562)) And .Graphic(2).GrhIndex = 0 Then
+                  If ((.Graphic(1).GrhIndex >= 1505 And .Graphic(1).GrhIndex <= 1520) Or (.Graphic(1).GrhIndex >= 5837 And .Graphic(1).GrhIndex <= 5852) Or (.Graphic(1).GrhIndex >= 5665 And .Graphic(1).GrhIndex <= 5680) Or (.Graphic(1).GrhIndex >= 13547 And .Graphic(1).GrhIndex <= 13562)) And .Graphic(2).GrhIndex = 0 Then
                         Map_CheckWater = True
                   Else
                         Map_CheckWater = False
