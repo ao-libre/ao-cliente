@@ -356,6 +356,7 @@ Public Sub Char_SetName(ByVal CharIndex As Integer, ByVal name As String)
         With charlist(CharIndex)
                
             .Nombre = name
+            .Clan = mid$(.Nombre, getTagPosition(.Nombre))
  
             Exit Sub
  

@@ -1395,6 +1395,12 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
                 Call Draw_Grh(.Escudo.ShieldWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1, True)
             End If
             
+            If LenB(.Nombre) > 0 Then
+                If Nombres Then
+                    Call RenderName(CharIndex, PixelOffsetX, PixelOffsetY, True)
+                End If
+            End If
+            
         End If
         
         'Update dialogs - 34 son los pixeles del grh de la cabeza que quedan superpuestos al cuerpo.
