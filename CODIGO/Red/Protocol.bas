@@ -1571,6 +1571,7 @@ Private Sub CloseConnectionAndResetAllInfo()
     Call ResetAllInfo(False)
     
     If CheckUserData() Then
+        frmMain.Visible = False
         Call Protocol.Connect(E_MODO.Normal)
     End If
     
