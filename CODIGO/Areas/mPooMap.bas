@@ -134,10 +134,14 @@ Sub Map_MoveTo(ByVal Direccion As E_Heading)
 
           Call Char_MovebyHead(UserCharIndex, Direccion)
           Call Char_MoveScreen(Direccion)
+      
       Else
+      
         If (charlist(UserCharIndex).Heading <> Direccion) Then
-              Call WriteChangeHeading(Direccion)
-              Call Char_SetHeading(UserCharIndex, Direccion)
+            If MainTimer.Check(TimersIndex.ChangeHeading) Then
+                Call WriteChangeHeading(Direccion)
+                Call Char_SetHeading(UserCharIndex, Direccion)
+            End If
         End If
                 
       End If

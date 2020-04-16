@@ -901,6 +901,7 @@ Private Sub LoadTimerIntervals()
         Call .SetInterval(TimersIndex.CastSpell, INT_CAST_SPELL)
         Call .SetInterval(TimersIndex.Arrows, eIntervalos.INT_ARROWS)
         Call .SetInterval(TimersIndex.CastAttack, eIntervalos.INT_CAST_ATTACK)
+        Call .SetInterval(TimersIndex.ChangeHeading, eIntervalos.INT_CHANGE_HEADING)
         
         With frmMain.macrotrabajo
             .Interval = eIntervalos.INT_MACRO_TRABAJO
@@ -916,6 +917,7 @@ Private Sub LoadTimerIntervals()
         Call .Start(TimersIndex.CastSpell)
         Call .Start(TimersIndex.Arrows)
         Call .Start(TimersIndex.CastAttack)
+        Call .Start(TimersIndex.ChangeHeading)
     
     End With
 

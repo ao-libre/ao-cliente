@@ -108,6 +108,7 @@ Public Enum eIntervalos
     INT_USEITEMU = 450
     INT_USEITEMDCK = 125
     INT_SENTRPU = 2000
+    INT_CHANGE_HEADING = 300
 End Enum
 
 Public MacroBltIndex As Integer
