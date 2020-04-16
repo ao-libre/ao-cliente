@@ -1560,13 +1560,20 @@ Private Sub HandleDisconnect()
     
     'Remove packet ID
     Call incomingData.ReadByte
-        'Closeand go to frmPanelAccount
-        Call CloseConnectionAndResetAllInfo
+        
+    'Close and go to frmPanelAccount
+    Call CloseConnectionAndResetAllInfo
     
 End Sub
 
 Private Sub CloseConnectionAndResetAllInfo()
-    Call ResetAllInfo
+    
+    Call ResetAllInfo(False)
+    
+    If CheckUserData() Then
+        Call Protocol.Connect(E_MODO.Normal)
+    End If
+    
 End Sub
 
 ''
