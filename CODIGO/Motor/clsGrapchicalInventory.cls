@@ -434,7 +434,13 @@ Public Sub DrawInventory()
         startdX = ((LoopC - 1) Mod (frmMain.PicInv.Width / 32)) * 32
         startdY = ((LoopC - 1) \ (frmMain.PicInv.Width / 32)) * 32
 
-        Call Draw_GrhIndex(26095, startdX, startdY, 0, Normal_RGBList(), 0, False) 'Dibuja el fondo
+        If (LoopC > 20) And (LoopC <= 25) Then
+            Call Draw_GrhIndex(GRH_SLOT_INVENTARIO_VIOLETA, startdX, startdY, 0, Normal_RGBList(), 0, False) 'Dibuja el fondo
+        ElseIf (LoopC > 25) And (LoopC <= 35) Then
+            Call Draw_GrhIndex(GRH_SLOT_INVENTARIO_DORADO, startdX, startdY, 0, Normal_RGBList(), 0, False) 'Dibuja el fondo
+        Else
+            Call Draw_GrhIndex(GRH_SLOT_INVENTARIO_NEGRO, startdX, startdY, 0, Normal_RGBList(), 0, False) 'Dibuja el fondo
+        End If
             
         If Inventory(LoopC).GrhIndex Then
 
@@ -442,7 +448,7 @@ Public Sub DrawInventory()
             If LoopC <> DragItem Then
                     
                 If LoopC = SelectedItem Then
-                    Call Draw_GrhIndex(26096, startdX, startdY, 0, Normal_RGBList(), 0, False) 'Dibuja el fondo cuando lo seleccionamos
+                    Call Draw_GrhIndex(GRH_SLOT_INVENTARIO_ROJO, startdX, startdY, 0, Normal_RGBList(), 0, False) 'Dibuja el fondo cuando lo seleccionamos
 
                 End If
 

@@ -361,12 +361,12 @@ Public Enum eObjType
     otCualquiera = 1000
 End Enum
 
-Public Enum eMochilas
-    Mediana = 1
-    GRANDE = 2
-End Enum
-
 Public MaxInventorySlots As Byte
+
+Public Const GRH_SLOT_INVENTARIO_NEGRO As Integer = 26095
+Public Const GRH_SLOT_INVENTARIO_ROJO As Integer = 26096
+Public Const GRH_SLOT_INVENTARIO_VIOLETA As Integer = 30689
+Public Const GRH_SLOT_INVENTARIO_DORADO As Integer = 30690
 
 Public Const FundirMetal As Integer = 88
 
