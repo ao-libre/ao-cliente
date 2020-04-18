@@ -434,13 +434,21 @@ Public Sub DrawInventory()
         startdX = ((LoopC - 1) Mod (frmMain.PicInv.Width / 32)) * 32
         startdY = ((LoopC - 1) \ (frmMain.PicInv.Width / 32)) * 32
 
-        If (LoopC > MAX_NORMAL_INVENTORY_SLOTS) And (LoopC <= MAX_MOCHILA_CHICA_INVENTORY_SLOTS) Then
-            Call Draw_GrhIndex(GRH_SLOT_INVENTARIO_VIOLETA, startdX, startdY, 0, Normal_RGBList(), 0, False) 'Dibuja el fondo
-        ElseIf (LoopC > MAX_MOCHILA_CHICA_INVENTORY_SLOTS) And (LoopC <= MAX_INVENTORY_SLOTS) Then
-            Call Draw_GrhIndex(GRH_SLOT_INVENTARIO_DORADO, startdX, startdY, 0, Normal_RGBList(), 0, False) 'Dibuja el fondo
+
+        'Si se renderiza el inventario del pj hace la validacion para renderizar de un color correcto los slots especiales de mochila y alforja
+        'Sino renderiza todo negro (Recox)
+        If isInventory Then
+            If (LoopC > MAX_NORMAL_INVENTORY_SLOTS) And (LoopC <= MAX_MOCHILA_CHICA_INVENTORY_SLOTS) Then
+                Call Draw_GrhIndex(GRH_SLOT_INVENTARIO_VIOLETA, startdX, startdY, 0, Normal_RGBList(), 0, False) 'Dibuja el fondo
+            ElseIf (LoopC > MAX_MOCHILA_CHICA_INVENTORY_SLOTS) And (LoopC <= MAX_INVENTORY_SLOTS) Then
+                Call Draw_GrhIndex(GRH_SLOT_INVENTARIO_DORADO, startdX, startdY, 0, Normal_RGBList(), 0, False) 'Dibuja el fondo
+            Else
+                Call Draw_GrhIndex(GRH_SLOT_INVENTARIO_NEGRO, startdX, startdY, 0, Normal_RGBList(), 0, False) 'Dibuja el fondo
+            End If
         Else
             Call Draw_GrhIndex(GRH_SLOT_INVENTARIO_NEGRO, startdX, startdY, 0, Normal_RGBList(), 0, False) 'Dibuja el fondo
         End If
+
             
         If Inventory(LoopC).GrhIndex Then
 
