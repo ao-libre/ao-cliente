@@ -374,8 +374,8 @@ Public MaxInventorySlots As Byte
 
 Public Const GRH_SLOT_INVENTARIO_NEGRO As Integer = 26095
 Public Const GRH_SLOT_INVENTARIO_ROJO As Integer = 26096
-Public Const GRH_SLOT_INVENTARIO_VIOLETA As Integer = 30689
-Public Const GRH_SLOT_INVENTARIO_DORADO As Integer = 30690
+Public Const GRH_SLOT_INVENTARIO_VIOLETA As Integer = 6834
+Public Const GRH_SLOT_INVENTARIO_DORADO As Integer = 6840
 
 Public Const FundirMetal As Integer = 88
 
