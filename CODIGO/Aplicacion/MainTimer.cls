@@ -47,7 +47,7 @@ Option Explicit
 ' How many timers we are going to use-
 '
 ' @see See MainTimer.CreateAll
-    Private Const CANTIDADTIMERS As Byte = 8
+    Private Const CANTIDADTIMERS As Byte = 9
 
 ''
 ' A Timer data structure.
@@ -86,6 +86,7 @@ Public Enum TimersIndex
     CastSpell = 6
     Arrows = 7
     CastAttack = 8
+    ChangeHeading = 9
 End Enum
 
 
