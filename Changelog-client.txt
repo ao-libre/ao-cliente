@@ -741,3 +741,9 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 13/04/2020: Ahora solo me puedo ver invi a mi mismo y a los de mi clan. (Wyr0X)
 * 13/04/2020: Al usar /SALIR te manda a el panel de cuenta. (BelerianD - jopiortiz)
 * 13/04/2020: Prevenimos flood de paquetes al cambiio el heading agregando un intervalo. En especial cuando te tiran paralisis, maldicion o estupidez. (BelerianD)
+
+-v0.13.32
+* 20/04/2020: Se modificaron render de inventario en comercio y banco para mostrar colores de la mochila y alforja, se aprolijo un poco el codigo. (Recox)
+* 20/04/2020: Ahora se renderizan 7 filas de slots con su correspondiente color para mochila o alforja en el inventario principal. (Recox)
+* 20/04/2020: Se suben nuevos mapas de nieve, nuevos graficos y modificaciones en Mapas. (ReyarB)
+
