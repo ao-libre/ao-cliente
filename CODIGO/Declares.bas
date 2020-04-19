@@ -227,8 +227,17 @@ Public Enum E_Heading
 End Enum
 
 'Objetos
+' Cantidad de "slots" en el inventario sin mochila
+Public Const MAX_NORMAL_INVENTORY_SLOTS As Byte = 25
+
+' Cantidad de "slots" en el inventario con mochila chica
+Public Const MAX_MOCHILA_CHICA_INVENTORY_SLOTS As Byte = 30
+
+' Cantidad de "slots" en el inventario con alforja
+Public Const MAX_INVENTORY_SLOTS        As Byte = 35
+
+
 Public Const MAX_INVENTORY_OBJS As Integer = 10000
-Public Const MAX_INVENTORY_SLOTS As Byte = 35
 Public Const MAX_NPC_INVENTORY_SLOTS As Byte = 50
 Public Const MAXHECHI As Byte = 35
 
@@ -362,12 +371,12 @@ Public Enum eObjType
     otCualquiera = 1000
 End Enum
 
-Public Enum eMochilas
-    Mediana = 1
-    GRANDE = 2
-End Enum
-
 Public MaxInventorySlots As Byte
+
+Public Const GRH_SLOT_INVENTARIO_NEGRO As Integer = 26095
+Public Const GRH_SLOT_INVENTARIO_ROJO As Integer = 26096
+Public Const GRH_SLOT_INVENTARIO_VIOLETA As Integer = 6834
+Public Const GRH_SLOT_INVENTARIO_DORADO As Integer = 6840
 
 Public Const FundirMetal As Integer = 88
 

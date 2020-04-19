@@ -1636,7 +1636,7 @@ Private Sub HandleCommerceInit()
     Set InvComNpc = New clsGraphicalInventory
     
     ' Initialize commerce inventories
-    Call InvComUsu.Initialize(DirectD3D8, frmComerciar.picInvUser, Inventario.MaxObjs)
+    Call InvComUsu.Initialize(DirectD3D8, frmComerciar.picInvUser, MAX_INVENTORY_SLOTS, , , , , , , , True)
     Call InvComNpc.Initialize(DirectD3D8, frmComerciar.picInvNpc, MAX_NPC_INVENTORY_SLOTS)
 
     'Fill user inventory
@@ -1652,7 +1652,7 @@ Private Sub HandleCommerceInit()
     Next i
     
     ' Fill Npc inventory
-    For i = 1 To 50
+    For i = 1 To MAX_NPC_INVENTORY_SLOTS
         If NPCInventory(i).ObjIndex <> 0 Then
             With NPCInventory(i)
                 Call InvComNpc.SetItem(i, .ObjIndex, _
@@ -1690,9 +1690,9 @@ Private Sub HandleBankInit()
     
     BankGold = incomingData.ReadLong
     Call InvBanco(0).Initialize(DirectD3D8, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
-    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.picInv, Inventario.MaxObjs)
+    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.picInv, MAX_INVENTORY_SLOTS, , , , , , , , True)
     
-    For i = 1 To Inventario.MaxObjs
+    For i = 1 To MAX_INVENTORY_SLOTS
         With Inventario
             Call InvBanco(1).SetItem(i, .ObjIndex(i), _
                 .Amount(i), .Equipped(i), .GrhIndex(i), _
@@ -1745,7 +1745,7 @@ Private Sub HandleUserCommerceInit()
     Set InvOroComUsu(2) = New clsGraphicalInventory
     
     ' Initialize commerce inventories
-    Call InvComUsu.Initialize(DirectD3D8, frmComerciarUsu.picInvComercio, Inventario.MaxObjs)
+    Call InvComUsu.Initialize(DirectD3D8, frmComerciarUsu.picInvComercio, MAX_INVENTORY_SLOTS)
     Call InvOfferComUsu(0).Initialize(DirectD3D8, frmComerciarUsu.picInvOfertaProp, INV_OFFER_SLOTS)
     Call InvOfferComUsu(1).Initialize(DirectD3D8, frmComerciarUsu.picInvOfertaOtro, INV_OFFER_SLOTS)
     Call InvOroComUsu(0).Initialize(DirectD3D8, frmComerciarUsu.picInvOroProp, INV_GOLD_SLOTS, , TilePixelWidth * 2, TilePixelHeight, TilePixelWidth / 2)

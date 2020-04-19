@@ -181,7 +181,7 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H80000008&
-      Height          =   2865
+      Height          =   3370
       Left            =   12165
       ScaleHeight     =   191
       ScaleMode       =   3  'Pixel
