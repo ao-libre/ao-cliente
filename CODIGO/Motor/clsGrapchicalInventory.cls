@@ -143,9 +143,9 @@ Public Sub SelectGold()
     InvSelectedItem = FLAGORO
     
     'Redraw old item to deselect it
-    If prevSelectedItem <> FLAGORO Then
+    'If prevSelectedItem <> FLAGORO Then
         'Call DrawInventorySlot(prevSelectedItem)
-    End If
+    'End If
     
     Call DrawInventory
 End Sub
