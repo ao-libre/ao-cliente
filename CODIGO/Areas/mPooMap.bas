@@ -79,7 +79,7 @@ End Function
 Public Sub Map_SetBlocked(ByVal X As Byte, ByVal Y As Byte, ByVal block As Byte)
 
       If (Map_InBounds(X, Y)) Then
-            MapData(X, .Y).Blocked = block
+            MapData(X, Y).Blocked = block
       End If
 
 End Sub
@@ -279,7 +279,7 @@ Public Function Map_CheckBonfire(ByRef Location As Position) As Boolean
             For k = UserPos.Y - 6 To UserPos.Y + 6
 
                   If Map_InBounds(J, k) Then
-                        If MapData(Objetos(J).X, Objetos(k).Y).ObjGrh.GrhIndex = GrhFogata Then
+                        If MapData(X, Y).ObjGrh.GrhIndex = GrhFogata Then
                               Location.X = J
                               Location.Y = k
                               Map_CheckBonfire = True
