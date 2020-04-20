@@ -1,6 +1,105 @@
 Attribute VB_Name = "Carga"
 Option Explicit
 
+'********************************
+'Load Map with .CSM format
+'********************************
+Private Type tMapHeader
+    NumeroBloqueados As Long
+    NumeroLayers(2 To 4) As Long
+    NumeroTriggers As Long
+    NumeroLuces As Long
+    NumeroParticulas As Long
+    NumeroNPCs As Long
+    NumeroOBJs As Long
+    NumeroTE As Long
+End Type
+
+Private Type tDatosBloqueados
+    X As Integer
+    Y As Integer
+End Type
+
+Private Type tDatosGrh
+    X As Integer
+    Y As Integer
+    GrhIndex As Long
+End Type
+
+Private Type tDatosTrigger
+    X As Integer
+    Y As Integer
+    Trigger As Integer
+End Type
+
+Private Type tDatosLuces
+    X As Integer
+    Y As Integer
+    light_value(3) As Long
+    base_light(0 To 3) As Boolean 'Indica si el tile tiene luz propia.
+End Type
+
+Private Type tDatosParticulas
+    X As Integer
+    Y As Integer
+    Particula As Long
+End Type
+
+Private Type tDatosNPC
+    X As Integer
+    Y As Integer
+    NPCIndex As Integer
+End Type
+
+Private Type tDatosObjs
+    X As Integer
+    Y As Integer
+    objindex As Integer
+    ObjAmmount As Integer
+End Type
+
+Private Type tDatosTE
+    X As Integer
+    Y As Integer
+    DestM As Integer
+    DestX As Integer
+    DestY As Integer
+End Type
+
+Private Type tMapSize
+
+    XMax As Integer
+    XMin As Integer
+    YMax As Integer
+    YMin As Integer
+
+End Type
+
+Private Type tMapDat
+    map_name As String
+    battle_mode As Boolean
+    backup_mode As Boolean
+    restrict_mode As String
+    midi_number As String
+    mp3_number As String
+    zone As String
+    terrain As String
+    ambient As String
+    lvlMinimo As String
+    SePuedeDomar As Boolean
+    ResuSinEfecto As Boolean
+    MagiaSinEfecto As Boolean
+    InviSinEfecto As Boolean
+    NoEncriptarMP As Boolean
+    version As Long
+End Type
+
+Private MapSize As tMapSize
+Private MapDat As tMapDat
+'********************************
+'END - Load Map with .CSM format
+'********************************
+
 Private FileManager As clsIniManager
 
 ''
@@ -683,6 +782,189 @@ errorH:
         
         Call CloseClient
 
+    End If
+
+End Sub
+
+Sub CargarMapa(ByVal Map As Integer)
+
+    On Error GoTo ErrorHandler
+
+    Dim fh           As Integer
+    Dim File         As Integer
+    
+    Dim MH           As tMapHeader
+    Dim Blqs()       As tDatosBloqueados
+
+    Dim L1()         As Long
+    Dim L2()         As tDatosGrh
+    Dim L3()         As tDatosGrh
+    Dim L4()         As tDatosGrh
+
+    Dim Triggers()   As tDatosTrigger
+    Dim Luces()      As tDatosLuces
+    Dim Particulas() As tDatosParticulas
+    Dim Objetos()    As tDatosObjs
+    Dim NPCs()       As tDatosNPC
+    Dim TEs()        As tDatosTE
+
+    Dim i            As Long
+    Dim J            As Long
+
+    DoEvents
+
+    fh = FreeFile
+    Open Game.path(Mapas) & CStr(Map) & ".csm" For Binary Access Read As fh
+    Get #fh, , MH
+    Get #fh, , MapSize
+    
+    '¿Queremos cargar un mapa de IAO 1.4?
+    Get #fh, , MapDat
+    
+    With MapSize
+        ReDim MapData(.XMin To .XMax, .YMin To .YMax)
+        ReDim L1(.XMin To .XMax, .YMin To .YMax)
+    End With
+    
+    Get #fh, , L1
+    
+    With MH
+
+        If .NumeroBloqueados > 0 Then
+            ReDim Blqs(1 To .NumeroBloqueados)
+            Get #fh, , Blqs
+
+            For i = 1 To .NumeroBloqueados
+                MapData(Blqs(i).X, Blqs(i).Y).Blocked = 1
+            Next i
+
+        End If
+        
+        If .NumeroLayers(2) > 0 Then
+            ReDim L2(1 To .NumeroLayers(2))
+            Get #fh, , L2
+
+            For i = 1 To .NumeroLayers(2)
+                Call InitGrh(MapData(L2(i).X, L2(i).Y).Graphic(2), L2(i).GrhIndex)
+            Next i
+
+        End If
+        
+        If .NumeroLayers(3) > 0 Then
+            ReDim L3(1 To .NumeroLayers(3))
+            Get #fh, , L3
+
+            For i = 1 To .NumeroLayers(3)
+                Call InitGrh(MapData(L3(i).X, L3(i).Y).Graphic(3), L3(i).GrhIndex)
+            Next i
+
+        End If
+        
+        If .NumeroLayers(4) > 0 Then
+            ReDim L4(1 To .NumeroLayers(4))
+            Get #fh, , L4
+
+            For i = 1 To .NumeroLayers(4)
+                Call InitGrh(MapData(L4(i).X, L4(i).Y).Graphic(4), L4(i).GrhIndex)
+            Next i
+
+        End If
+        
+        If .NumeroTriggers > 0 Then
+            ReDim Triggers(1 To .NumeroTriggers)
+            Get #fh, , Triggers
+
+            For i = 1 To .NumeroTriggers
+                
+                With Triggers(i)
+                    MapData(.X, .Y).Trigger = .Trigger
+                End With
+                
+            Next i
+
+        End If
+        
+        If .NumeroParticulas > 0 Then
+            ReDim Particulas(1 To .NumeroParticulas)
+            Get #fh, , Particulas
+            
+            For i = 1 To .NumeroParticulas
+
+                With Particulas(i)
+                    MapData(.X, .Y).Particle_Group_Index = General_Particle_Create(.Particula, .X, .Y)
+                End With
+
+            Next i
+
+        End If
+            
+        If .NumeroLuces > 0 Then
+            ReDim Luces(1 To .NumeroLuces)
+            Get #fh, , Luces
+            
+            'Aca metes la carga de las luces...
+        End If
+            
+        If .NumeroOBJs > 0 Then
+            ReDim Objetos(1 To .NumeroOBJs)
+            Get #fh, , Objetos
+            
+            For i = 1 To .NumeroOBJs
+                'Erase OBJs
+                MapData(Objetos(i).X, Objetos(i).Y).ObjGrh.GrhIndex = 0
+            Next i
+            
+        End If
+            
+        If .NumeroNPCs > 0 Then
+            ReDim NPCs(1 To .NumeroNPCs)
+            Get #fh, , NPCs
+            
+            For i = 1 To .NumeroNPCs
+                MapData(NPCs(i).X, NPCs(i).Y).NPCIndex = NPCs(i).NPCIndex
+            Next
+                
+        End If
+
+        If .NumeroTE > 0 Then
+            ReDim TEs(1 To .NumeroTE)
+            Get #fh, , TEs
+
+            For i = 1 To .NumeroTE
+                
+                With TEs(i)
+                
+                    MapData(.X, .Y).TileExit.Map = .DestM
+                    MapData(.X, .Y).TileExit.X = .DestX
+                    MapData(.X, .Y).TileExit.Y = .DestY
+                
+                End With
+                
+            Next i
+
+        End If
+        
+    End With
+
+    Close fh
+
+    For J = MapSize.YMin To MapSize.YMax
+        For i = MapSize.XMin To MapSize.XMax
+
+            If L1(i, J) > 0 Then
+                Call InitGrh(MapData(i, J).Graphic(1), L1(i, J))
+            End If
+
+        Next i
+    Next J
+
+ErrorHandler:
+    
+    If fh <> 0 Then Close fh
+    
+    If Err.number <> 0 Then
+        'Call LogError(Err.number, Err.Description, "modCarga.CargarMapa")
+        Call MsgBox("err: " & Err.number, "desc: " & Err.Description)
     End If
 
 End Sub

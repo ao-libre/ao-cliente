@@ -175,7 +175,7 @@ Public Type Char
     Criminal As Byte
     Atacable As Byte
     
-    Nombre As String
+    nombre As String
     Clan As String
     
     scrollDirectionX As Integer
@@ -1277,7 +1277,7 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
         
             If Abs(MouseTileX - .Pos.X) < 1 And (Abs(MouseTileY - .Pos.Y)) < 1 And CharIndex <> UserCharIndex And ClientSetup.TonalidadPJ Then
                 
-                If Len(.Nombre) > 0 Then
+                If Len(.nombre) > 0 Then
                     
                     If .Criminal Then
                         Call Engine_Long_To_RGB_List(ColorFinal(), D3DColorXRGB(204, 100, 100))
@@ -1338,7 +1338,7 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
             End If
                 
             'Draw name when navigating
-            If Len(.Nombre) > 0 Then
+            If Len(.nombre) > 0 Then
                 If Nombres Then
                     If .iHead = 0 And .iBody > 0 Then
                         Call RenderName(CharIndex, PixelOffsetX, PixelOffsetY)
@@ -1373,7 +1373,7 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
             End If
             
             'Draw name over head
-            If LenB(.Nombre) > 0 Then
+            If LenB(.nombre) > 0 Then
                 If Nombres Then
                     Call RenderName(CharIndex, PixelOffsetX, PixelOffsetY)
                 End If
@@ -1406,7 +1406,7 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
                 Call Draw_Grh(.Escudo.ShieldWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, ColorFinal(), 1, True)
             End If
             
-            If LenB(.Nombre) > 0 Then
+            If LenB(.nombre) > 0 Then
                 If Nombres Then
                     Call RenderName(CharIndex, PixelOffsetX, PixelOffsetY, True)
                 End If
@@ -1608,7 +1608,7 @@ Private Sub RenderName(ByVal CharIndex As Long, _
     Dim Color As Long
    
     With charlist(CharIndex)
-        Pos = getTagPosition(.Nombre)
+        Pos = getTagPosition(.nombre)
     
         If .priv = 0 Then
             If .muerto Then
@@ -1630,11 +1630,11 @@ Private Sub RenderName(ByVal CharIndex As Long, _
         End If
 
         'Nick
-        line = Left$(.Nombre, Pos - 2)
+        line = Left$(.nombre, Pos - 2)
         Call DrawText(X + 16, Y + 30, line, Color, True)
             
         'Clan
-        line = mid$(.Nombre, Pos)
+        line = mid$(.nombre, Pos)
         Call DrawText(X + 16, Y + 45, line, Color, True)
 
     End With

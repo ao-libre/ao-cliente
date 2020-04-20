@@ -153,7 +153,7 @@ Public StreamData() As Stream
 
 Public Const PI As Single = 3.14159265358979
 
-Private RainParticle as Long
+Private RainParticle As Long
 
 Public Enum eWeather
     Rain
@@ -1039,7 +1039,7 @@ Public Sub Engine_Weather_Update()
         ElseIf RainParticle > 0 Then
             Call mDx8_Particulas.Particle_Group_Render(RainParticle, 250, -1)
         End If
-    Else 
+    Else
         'Borramos las particulas de lluvia en caso de que pare la lluvia o nos escondamos en un techo
         Call mDx8_Particulas.RemoveWeatherParticles(eWeather.Rain)
     End If
@@ -1069,25 +1069,8 @@ Public Sub RemoveWeatherParticles(ByVal Weather As Byte)
     Select Case Weather
 
         Case eWeather.Rain
-            Particle_Group_Remove(RainParticle)
+            Particle_Group_Remove (RainParticle)
             RainParticle = 0
 
     End Select
-End Sub
-
-Public Sub Load_Map_Particles(ByVal Map As Integer)
-'*****************************************************************
-'Author: Jopi
-'Para los que no tienen un World Editor con sistema de particulas
-'Crea las particulas al entrar en un mapa.
-'*****************************************************************
-    
-    ' Crea las particulas especificas para el mapa actual.
-    Select Case Map
-    
-        Case 1
-            Call General_Particle_Create(1, 45, 45)
-            
-    End Select
-    
 End Sub
