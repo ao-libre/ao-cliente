@@ -1040,7 +1040,7 @@ On Error GoTo 0
         Call LoadGrhInd
     #Else
         Call LoadGrhIni
-    End If
+    #End If
     
     Call CargarCuerpos
     Call CargarCabezas
