@@ -143,7 +143,7 @@ VersionCompanyName="Argentum Online Libre"
 VersionLegalCopyright="Argentum idea Pablo Ignacio Marquez - Copyright 2003  -  Code pieces are copyright of their respective authors."
 VersionLegalTrademarks="http://www.ArgentumOnline.org"
 VersionProductName="Argentum Online Libre"
-CondComp="Compression = 0 : ConMenuseConextuales = 0"
+CondComp="Compression = 1 : ConMenuseConextuales = 0"
 CompilationType=0
 OptimizationType=0
 FavorPentiumPro(tm)=0
