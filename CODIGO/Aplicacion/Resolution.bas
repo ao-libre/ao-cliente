@@ -102,6 +102,7 @@ Public Sub SetResolution(ByRef newWidth As Integer, ByRef newHeight As Integer)
     ' 03/29/2008: Maraxus - Retrieves current settings storing display depth and frequency for proper restoration.
     ' 22/04/2019: Jopi - Arreglado "cambio" de resolucion al elegir "NO".
     ' 22/04/2019: Jopi - Nuevos parametros newWidth y newHeight para especificar la resolucion a cambiar, evitando el hardcodeo.
+    ' 21/04/2020: Recox - Arreglo el problema de que si solo tengo Width o Heigth en 1024 o 768 no me deja cambiar la resolucion a pantalla completa .
     '**********************************************************************************************************************
     
     ' Obtenemos los parametros actuales de la resolucion
@@ -114,7 +115,7 @@ Public Sub SetResolution(ByRef newWidth As Integer, ByRef newHeight As Integer)
     oldResHeight = Screen.Height \ Screen.TwipsPerPixelY
     
     ' Chequeo si la resolucion a cambiar es la misma que la original.
-    If oldResWidth <> newWidth And oldResHeight <> newHeight Then
+    If oldResWidth <> newWidth Or oldResHeight <> newHeight Then
 
         ' Si no es igual, pregunto si quiere cambiarla.
         If MsgBox(JsonLanguage.Item("PANTALLA_COMPLETA").Item("TEXTO"), vbYesNo, "Argentum Online Libre") = vbYes Then
