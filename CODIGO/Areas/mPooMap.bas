@@ -279,7 +279,7 @@ Public Function Map_CheckBonfire(ByRef Location As Position) As Boolean
             For k = UserPos.Y - 6 To UserPos.Y + 6
 
                   If Map_InBounds(J, k) Then
-                        If MapData(X, Y).ObjGrh.GrhIndex = GrhFogata Then
+                        If MapData(J, k).ObjGrh.GrhIndex = GrhFogata Then
                               Location.X = J
                               Location.Y = k
                               Map_CheckBonfire = True

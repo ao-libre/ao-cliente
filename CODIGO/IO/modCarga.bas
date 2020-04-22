@@ -814,7 +814,7 @@ Sub CargarMapa(ByVal Map As Integer)
     DoEvents
 
     fh = FreeFile
-    Open Game.path(Mapas) & CStr(Map) & ".csm" For Binary Access Read As fh
+    Open Game.path(Mapas) & "Mapa" & CStr(Map) & ".csm" For Binary Access Read As fh
     Get #fh, , MH
     Get #fh, , MapSize
     
