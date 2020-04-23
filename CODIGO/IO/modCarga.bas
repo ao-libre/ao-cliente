@@ -11,7 +11,7 @@ Public Sub LoadGraphicsIndex()
 
     On Error GoTo ErrorHandler:
     
-    Dim FileHandle As Integer
+    Dim FileHandle As Integer: FileHandle = FreeFile()
     
     #If IndicesBinarios = 1 Then
 
@@ -23,7 +23,7 @@ Public Sub LoadGraphicsIndex()
     
         'Open files
         handle = FreeFile()
-        Open IniPath & "Graficos.ind" For Binary Access Read As FileHandle
+        Open Game.path(INIT) & "Graficos.ind" For Binary Access Read As FileHandle
         
         'Obtenemos la version del .ind
         Get FileHandle, , fileVersion
@@ -111,7 +111,6 @@ Public Sub LoadGraphicsIndex()
     
         ' Abrimos el archivo. No uso FileManager porque obliga a cargar todo el archivo en memoria
         ' y es demasiado grande. En cambio leo linea por linea y procesamos de a una.
-        FileHandle = FreeFile()
         Open Game.path(INIT) & "Graficos.ini" For Input As FileHandle
 
         ' Leemos el total de Grhs
@@ -253,14 +252,22 @@ ErrorHandler:
     
     If Err.number <> 0 Then
         
+        Dim Extension As String
+        
+        #If IndicesBinarios = 1 Then
+            Extension = ".ind"
+        #Else
+            Extension = ".ini"
+        #End If
+        
         If Err.number = 53 Then
-            Call MsgBox("El archivo Graficos.ini no existe. Por favor, reinstale el juego.", , "Argentum Online")
+            Call MsgBox("El archivo Graficos" & Extension & " no existe. Por favor, reinstale el juego.", , "Argentum Online")
         
         ElseIf Grh > 0 Then
-            Call MsgBox("Hay un error en Graficos.ini con el Grh" & Grh & ".", , "Argentum Online")
+            Call MsgBox("Hay un error en Graficos" & Extension & " con el Grh" & Grh & ".", , "Argentum Online")
         
         Else
-            Call MsgBox("Hay un error en Graficos.ini. Por favor, reinstale el juego.", , "Argentum Online")
+            Call MsgBox("Hay un error [" & Err.number & " - " & Err.Description & "] en Graficos" & Extension & ". Por favor, reinstale el juego.", , "Argentum Online")
         End If
         
         Call CloseClient
