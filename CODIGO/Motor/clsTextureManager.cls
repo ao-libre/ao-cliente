@@ -81,9 +81,7 @@ Public Function GetTexture(ByVal FileName As Integer, _
                            ByRef TextureWidth As Long, _
                            ByRef TextureHeight As Long) As Direct3DTexture8
 
-    If FileName = 0 Then
-        Debug.Print "0 GRH ATTEMPT TO BE LOADED"
-        Exit Function
+    If FileName = 0 Then Exit Function
 
     End If
  

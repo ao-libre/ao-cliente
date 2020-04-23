@@ -427,7 +427,6 @@ On Error GoTo ErrorHandler:
             
                 GrhIndex = Val(FileManager.GetValue("HEAD" & i, "HEAD" & j))
 
-                If GrhIndex > 0 Then
                 If GrhIndex > 0 And GrhIndex < UBound(GrhData) Then
                     Call InitGrh(CascoAnimData(i).Head(J), GrhIndex, 0)
                 End If
