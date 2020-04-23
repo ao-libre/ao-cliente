@@ -505,29 +505,6 @@ errhandler:
 
 End Sub
 
-Public Sub CargarTips()
-'************************************************************************************.
-' Carga el JSON con los tips del juego en un objeto para su uso a lo largo del proyecto
-'************************************************************************************
-On Error GoTo errhandler:
-    
-    Dim TipFile As String
-        TipFile = FileToString(Game.path(INIT) & "tips_" & Language & ".json")
-    
-    Set JsonTips = JSON.parse(TipFile)
-
-errhandler:
-    
-    If Err.number <> 0 Then
-        
-        If Err.number = 53 Then
-            Call MsgBox("El archivo" & "tips_" & Language & ".json no existe. Por favor, reinstale el juego.", , "Argentum Online Libre")
-            Call CloseClient
-        End If
-        
-    End If
-End Sub
-
 Sub CargarArrayLluvia()
 On Error GoTo errhandler:
 
@@ -615,22 +592,38 @@ On Error GoTo errhandler:
     Call FileManager.Initialize(Game.path(INIT) & "colores.dat")
     
     Dim i As Long
+    Dim R As Long, G As Long, B As Long
     
     For i = 0 To 47 '48, 49 y 50 reservados para atacables, ciudadano y criminal
-        ColoresPJ(i) = D3DColorXRGB(FileManager.GetValue(CStr(i), "R"), FileManager.GetValue(CStr(i), "G"), FileManager.GetValue(CStr(i), "B"))
+        R = Val(FileManager.GetValue(CStr(i), "R"))
+        G = Val(FileManager.GetValue(CStr(i), "G"))
+        B = Val(FileManager.GetValue(CStr(i), "B"))
+        ColoresPJ(i) = D3DColorXRGB(R, G, B)
     Next i
     
-    '   Crimi
-    ColoresPJ(50) = D3DColorXRGB(FileManager.GetValue("CR", "R"), FileManager.GetValue("CR", "G"), FileManager.GetValue("CR", "B"))
-
-    '   Ciuda
-    ColoresPJ(49) = D3DColorXRGB(FileManager.GetValue("CI", "R"), FileManager.GetValue("CI", "G"), FileManager.GetValue("CI", "B"))
-    
     '   Atacable TODO: hay que implementar un color para los atacables y hacer que funcione.
-    'ColoresPJ(48) = D3DColorXRGB(FileManager.GetValue("AT", "R"), FileManager.GetValue("AT", "G"), FileManager.GetValue("AT", "B"))
+    'R = Val(FileManager.GetValue("AT", "R"))
+    'G = Val(FileManager.GetValue("AT", "G"))
+    'B = Val(FileManager.GetValue("AT", "B"))
+    'ColoresPJ(48) = D3DColorXRGB(R, G, B)
+    
+    '   Ciuda
+    R = Val(FileManager.GetValue("CI", "R"))
+    G = Val(FileManager.GetValue("CI", "G"))
+    B = Val(FileManager.GetValue("CI", "B"))
+    ColoresPJ(49) = D3DColorXRGB(R, G, B)
+    
+    '   Crimi
+    R = Val(FileManager.GetValue("CR", "R"))
+    G = Val(FileManager.GetValue("CR", "G"))
+    B = Val(FileManager.GetValue("CR", "B"))
+    ColoresPJ(50) = D3DColorXRGB(R, G, B)
     
     For i = 51 To 56 'Colores reservados para la renderizacion de dano
-        ColoresDano(i) = D3DColorXRGB(FileManager.GetValue(CStr(i), "R"), FileManager.GetValue(CStr(i), "G"), FileManager.GetValue(CStr(i), "B"))
+        R = Val(FileManager.GetValue(CStr(i), "R"))
+        G = Val(FileManager.GetValue(CStr(i), "G"))
+        B = Val(FileManager.GetValue(CStr(i), "B"))
+        ColoresDano(i) = D3DColorXRGB(R, G, B)
     Next i
     
     Set FileManager = Nothing
@@ -684,6 +677,34 @@ errhandler:
             Call MsgBox("El archivo escudos.dat no existe. Por favor, reinstale el juego.", , "Argentum Online Libre")
             Call CloseClient
 
+        End If
+        
+    End If
+    
+End Sub
+
+'************************************************************************************.
+' De aca en adelante solo se cargan archivos en texto plano.
+'************************************************************************************
+
+Public Sub CargarTips()
+'************************************************************************************.
+' Carga el JSON con los tips del juego en un objeto para su uso a lo largo del proyecto
+'************************************************************************************
+On Error GoTo errhandler:
+    
+    Dim TipFile As String
+        TipFile = FileToString(Game.path(INIT) & "tips_" & Language & ".json")
+    
+    Set JsonTips = JSON.parse(TipFile)
+
+errhandler:
+    
+    If Err.number <> 0 Then
+        
+        If Err.number = 53 Then
+            Call MsgBox("El archivo" & "tips_" & Language & ".json no existe. Por favor, reinstale el juego.", , "Argentum Online Libre")
+            Call CloseClient
         End If
         
     End If
