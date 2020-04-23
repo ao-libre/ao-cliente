@@ -1,7 +1,10 @@
 Attribute VB_Name = "Carga"
 Option Explicit
 
+Private GrhIndex As Long
+
 Private FileManager As clsIniManager
+Private Extension As String
 
 ''
 ' Cargar indices de graficos.
@@ -252,9 +255,7 @@ ErrorHandler:
     Close FileHandle
     
     If Err.number <> 0 Then
-        
-        Dim Extension As String
-        
+
         #If IndicesBinarios = 1 Then
             Extension = ".ind"
         #Else
@@ -269,6 +270,7 @@ ErrorHandler:
         
         Else
             Call MsgBox("Hay un error [" & Err.number & " - " & Err.Description & "] en Graficos" & Extension & ". Por favor, reinstale el juego.", , "Argentum Online")
+        
         End If
         
         Call CloseClient
@@ -318,10 +320,9 @@ Public Sub CargarCabezas()
         Close #N
             
     #Else
-        
-        Dim FileManager As clsIniManager
+
         Set FileManager = New clsIniManager
-        Call FileManager.Initialize(Game.path(INIT) & "Cabezas.ind")
+        Call FileManager.Initialize(Game.path(INIT) & "Cabezas.ini")
             
         'Obtenemos la cantidad de indices de las cabezas.
         NumHeads = Val(FileManager.GetValue("INIT", "NumHeads"))
@@ -330,11 +331,15 @@ Public Sub CargarCabezas()
         ReDim HeadData(0 To NumHeads) As HeadData
             
         For i = 1 To NumHeads
-            
             For j = 1 To 4
-                Call InitGrh(HeadData(i).Head(j), Val(FileManager.GetValue("HEAD" & i, "HEAD" & j)), 0)
-            Next
             
+                GrhIndex = Val(FileManager.GetValue("HEAD" & i, "HEAD" & j))
+
+                If GrhIndex > 0 Then
+                    Call InitGrh(HeadData(i).Head(j), GrhIndex, 0)
+                End If
+                
+            Next j
         Next i
             
         Set FileManager = Nothing
@@ -343,15 +348,27 @@ Public Sub CargarCabezas()
     
 errhandler:
     
-    If Err.number <> 0 Then
+    #If IndicesBinarios = 1 Then
+        Extension = ".ind"
+    #Else
+        Extension = ".ini"
+    #End If
         
-        If Err.number = 53 Then
-            Call MsgBox("El archivo Cabezas.ind no existe. Por favor, reinstale el juego.", , "Argentum Online Libre")
-            Call CloseClient
-        End If
-        
-    End If
+    Select Case Err.number
     
+        Case 0
+            Exit Sub
+            
+        Case 53
+            Call MsgBox("El archivo Cabezas" & Extension & " no existe. Por favor, reinstale el juego.", , "Argentum Online Libre")
+            Call CloseClient
+            
+        Case Else
+            Call MsgBox("Hay un error [" & Err.number & " - " & Err.Description & "] en Cabezas" & Extension & ". Por favor, reinstale el juego.", , "Argentum Online")
+            Call CloseClient
+            
+    End Select
+
 End Sub
 
 Sub CargarCascos()
@@ -550,22 +567,29 @@ errhandler:
 End Sub
 
 Sub CargarAnimArmas()
-On Error GoTo errhandler:
 
-    Dim LoopC As Long
+    On Error GoTo errhandler:
 
+    Dim i     As Long
+    Dim j     As Long
+    
     Set FileManager = New clsIniManager
     Call FileManager.Initialize(Game.path(INIT) & "armas.dat")
     
     NumWeaponAnims = Val(FileManager.GetValue("INIT", "NumArmas"))
     ReDim WeaponAnimData(1 To NumWeaponAnims) As WeaponAnimData
     
-    For LoopC = 1 To NumWeaponAnims
-        Call InitGrh(WeaponAnimData(LoopC).WeaponWalk(1), Val(FileManager.GetValue("ARMA" & LoopC, "Dir1")), 0)
-        Call InitGrh(WeaponAnimData(LoopC).WeaponWalk(2), Val(FileManager.GetValue("ARMA" & LoopC, "Dir2")), 0)
-        Call InitGrh(WeaponAnimData(LoopC).WeaponWalk(3), Val(FileManager.GetValue("ARMA" & LoopC, "Dir3")), 0)
-        Call InitGrh(WeaponAnimData(LoopC).WeaponWalk(4), Val(FileManager.GetValue("ARMA" & LoopC, "Dir4")), 0)
-    Next LoopC
+    For i = 1 To NumWeaponAnims
+        For j = 1 To 4
+            
+            GrhIndex = Val(FileManager.GetValue("ARMA" & i, "Dir" & j))
+
+            If GrhIndex > 0 Then
+                Call InitGrh(WeaponAnimData(i).WeaponWalk(j), GrhIndex, 0)
+            End If
+                
+        Next j
+    Next i
     
     Set FileManager = Nothing
     
@@ -576,6 +600,7 @@ errhandler:
         If Err.number = 53 Then
             Call MsgBox("El archivo armas.dat no existe. Por favor, reinstale el juego.", , "Argentum Online Libre")
             Call CloseClient
+
         End If
         
     End If
@@ -624,24 +649,30 @@ errhandler:
 End Sub
 
 Sub CargarAnimEscudos()
-On Error GoTo errhandler:
 
-    Dim LoopC As Long
-    Dim NumEscudosAnims As Integer
+    On Error GoTo errhandler:
+
+    Dim i           As Long
+    Dim j           As Long
+    Dim NumEscudosAnims As Long
     
     Set FileManager = New clsIniManager
     Call FileManager.Initialize(Game.path(INIT) & "escudos.dat")
     
     NumEscudosAnims = Val(FileManager.GetValue("INIT", "NumEscudos"))
-    
     ReDim ShieldAnimData(1 To NumEscudosAnims) As ShieldAnimData
     
-    For LoopC = 1 To NumEscudosAnims
-        Call InitGrh(ShieldAnimData(LoopC).ShieldWalk(1), Val(FileManager.GetValue("ESC" & LoopC, "Dir1")), 0)
-        Call InitGrh(ShieldAnimData(LoopC).ShieldWalk(2), Val(FileManager.GetValue("ESC" & LoopC, "Dir2")), 0)
-        Call InitGrh(ShieldAnimData(LoopC).ShieldWalk(3), Val(FileManager.GetValue("ESC" & LoopC, "Dir3")), 0)
-        Call InitGrh(ShieldAnimData(LoopC).ShieldWalk(4), Val(FileManager.GetValue("ESC" & LoopC, "Dir4")), 0)
-    Next LoopC
+    For i = 1 To NumEscudosAnims
+        For j = 1 To 4
+            
+            GrhIndex = Val(FileManager.GetValue("ESC" & i, "Dir" & j))
+
+            If GrhIndex > 0 Then
+                Call InitGrh(ShieldAnimData(i).ShieldWalk(j), GrhIndex, 0)
+            End If
+                
+        Next j
+    Next i
     
     Set FileManager = Nothing
     
@@ -652,6 +683,7 @@ errhandler:
         If Err.number = 53 Then
             Call MsgBox("El archivo escudos.dat no existe. Por favor, reinstale el juego.", , "Argentum Online Libre")
             Call CloseClient
+
         End If
         
     End If
