@@ -4,149 +4,251 @@ Option Explicit
 Private FileManager As clsIniManager
 
 ''
-' Loads grh data using the Graficos.INI
+' Cargar indices de graficos.
 '
 
-Public Sub LoadGrhIni()
-    On Error GoTo hErr
+Public Sub LoadGraphicsIndex()
 
-    Dim FileHandle     As Integer
-    Dim Grh            As Long
-    Dim Frame          As Long
-    Dim SeparadorClave As String
-    Dim SeparadorGrh   As String
-    Dim CurrentLine    As String
-    Dim Fields()       As String
+    On Error GoTo ErrorHandler:
     
-    ' Guardo el separador en una variable asi no lo busco en cada bucle.
-    SeparadorClave = "="
-    SeparadorGrh = "-"
+    Dim FileHandle As Integer
     
-    ' Abrimos el archivo. No uso FileManager porque obliga a cargar todo el archivo en memoria
-    ' y es demasiado grande. En cambio leo linea por linea y procesamos de a una.
-    FileHandle = FreeFile()
-    Open Game.path(INIT) & "Graficos.ini" For Input As FileHandle
+    #If IndicesBinarios = 1 Then
 
-    ' Leemos el total de Grhs
-    Do While Not EOF(FileHandle)
-        ' Leemos la linea actual
-        Line Input #FileHandle, CurrentLine
+        Dim Grh         As Long
+        Dim Frame       As Long
+        Dim grhCount    As Long
+        Dim handle      As Integer
+        Dim fileVersion As Long
+    
+        'Open files
+        handle = FreeFile()
+        Open IniPath & "Graficos.ind" For Binary Access Read As FileHandle
+        
+        'Obtenemos la version del .ind
+        Get FileHandle, , fileVersion
+        
+        'Obtenemos la cantidad de indices.
+        Get FileHandle, , grhCount
+        ReDim GrhData(0 To grhCount) As GrhData
+        
+        While Not EOF(FileHandle)
 
-        Fields = Split(CurrentLine, SeparadorClave)
+            Get FileHandle, , Grh
             
-        ' Buscamos la clave "NumGrh"
-        If Fields(0) = "NumGrh" Then
-            ' Asignamos el tamano al array de Grhs
-            ReDim GrhData(1 To Val(Fields(1))) As GrhData
-                
-            Exit Do
-        End If
-    Loop
-        
-    ' Chequeamos si pudimos leer la cantidad de Grhs
-    If UBound(GrhData) <= 0 Then GoTo hErr
-        
-    ' Buscamos la posicion del primer Grh
-    Do While Not EOF(FileHandle)
-        ' Leemos la linea actual
-        Line Input #FileHandle, CurrentLine
-            
-        ' Buscamos el nodo "[Graphics]"
-        If UCase$(CurrentLine) = "[GRAPHICS]" Then
-            ' Ya lo tenemos, salimos
-            Exit Do
-        End If
-    Loop
-        
-    ' Recorremos todos los Grhs
-    Do While Not EOF(FileHandle)
-        ' Leemos la linea actual
-        Line Input #FileHandle, CurrentLine
-            
-        ' Ignoramos lineas vacias
-        If CurrentLine <> vbNullString Then
-            
-            ' Divimos por el "="
-            Fields = Split(CurrentLine, SeparadorClave)
-                
-            ' Leemos el numero de Grh (el numero a la derecha de la palabra "Grh")
-            Grh = Right(Fields(0), Len(Fields(0)) - 3)
-            
-            ' Leemos los campos de datos del Grh
-            Fields = Split(Fields(1), SeparadorGrh)
-                
             With GrhData(Grh)
-                    
-                ' Primer lugar: cantidad de frames.
-                .NumFrames = Val(Fields(0))
-    
+            
+                '.active = True
+                Get FileHandle, , .NumFrames
+                If .NumFrames <= 0 Then GoTo ErrorHandler
+                
                 ReDim .Frames(1 To .NumFrames)
-                    
-                ' Tiene mas de un frame entonces es una animacion
+                
                 If .NumFrames > 1 Then
-                    
-                    ' Segundo lugar: Leemos los numeros de grh de la animacion
+                
                     For Frame = 1 To .NumFrames
-                        .Frames(Frame) = Val(Fields(Frame))
-                        If .Frames(Frame) <= LBound(GrhData) Or .Frames(Frame) > UBound(GrhData) Then GoTo hErr
-                    Next
-                        
-                    ' Tercer lugar: leemos la velocidad de la animacion
-                    .speed = Val(Fields(Frame))
-                    If .speed <= 0 Then GoTo hErr
-                        
-                    ' Por ultimo, copiamos las dimensiones del primer frame
-                    .pixelHeight = GrhData(.Frames(1)).pixelHeight
-                    If .pixelHeight <= 0 Then GoTo hErr
-                        
-                    .pixelWidth = GrhData(.Frames(1)).pixelWidth
-                    If .pixelWidth <= 0 Then GoTo hErr
-                        
-                    .TileWidth = GrhData(.Frames(1)).TileWidth
-                    If .TileWidth <= 0 Then GoTo hErr
-                        
-                    .TileHeight = GrhData(.Frames(1)).TileHeight
-                    If .TileHeight <= 0 Then GoTo hErr
-        
-                ElseIf .NumFrames = 1 Then
+                        Get FileHandle, , .Frames(Frame)
+                        If .Frames(Frame) <= 0 Or .Frames(Frame) > grhCount Then GoTo ErrorHandler
+                    Next Frame
                     
-                    ' Si es un solo frame lo asignamos a si mismo
-                    .Frames(1) = Grh
-                        
-                    ' Segundo lugar: NumeroDelGrafico.bmp, pero sin el ".bmp"
-                    .FileNum = Val(Fields(1))
-                    If .FileNum <= 0 Then GoTo hErr
-                            
-                    ' Tercer Lugar: La coordenada X del grafico
-                    .sX = Val(Fields(2))
-                    If .sX < 0 Then GoTo hErr
-                            
-                    ' Cuarto Lugar: La coordenada Y del grafico
-                    .sY = Val(Fields(3))
-                    If .sY < 0 Then GoTo hErr
-                            
-                    ' Quinto lugar: El ancho del grafico
-                    .pixelWidth = Val(Fields(4))
-                    If .pixelWidth <= 0 Then GoTo hErr
-                            
-                    ' Sexto lugar: La altura del grafico
-                    .pixelHeight = Val(Fields(5))
-                    If .pixelHeight <= 0 Then GoTo hErr
-                        
-                    ' Calculamos el ancho y alto en tiles
+                    Get FileHandle, , .speed
+                    If .speed <= 0 Then GoTo ErrorHandler
+                    
+                    .pixelHeight = GrhData(.Frames(1)).pixelHeight
+                    If .pixelHeight <= 0 Then GoTo ErrorHandler
+                    
+                    .pixelWidth = GrhData(.Frames(1)).pixelWidth
+                    If .pixelWidth <= 0 Then GoTo ErrorHandler
+                    
+                    .TileWidth = GrhData(.Frames(1)).TileWidth
+                    If .TileWidth <= 0 Then GoTo ErrorHandler
+                    
+                    .TileHeight = GrhData(.Frames(1)).TileHeight
+                    If .TileHeight <= 0 Then GoTo ErrorHandler
+                    
+                Else
+                    
+                    Get FileHandle, , .FileNum
+                    If .FileNum <= 0 Then GoTo ErrorHandler
+                    
+                    Get FileHandle, , GrhData(Grh).sX
+                    If .sX < 0 Then GoTo ErrorHandler
+                    
+                    Get FileHandle, , .sY
+                    If .sY < 0 Then GoTo ErrorHandler
+                    
+                    Get FileHandle, , .pixelWidth
+                    If .pixelWidth <= 0 Then GoTo ErrorHandler
+                    
+                    Get FileHandle, , .pixelHeight
+                    If .pixelHeight <= 0 Then GoTo ErrorHandler
+                    
                     .TileWidth = .pixelWidth / TilePixelHeight
                     .TileHeight = .pixelHeight / TilePixelWidth
-                        
-                Else
-                    ' 0 frames o negativo? Error
-                    GoTo hErr
+                    
+                    .Frames(1) = Grh
+                    
                 End If
-        
+                
             End With
-        End If
-    Loop
+            
+        Wend
     
-hErr:
+        Close FileHandle
+    
+    #Else
+
+        Dim Grh            As Long
+        Dim Frame          As Long
+        Dim SeparadorClave As String
+        Dim SeparadorGrh   As String
+        Dim CurrentLine    As String
+        Dim Fields()       As String
+    
+        ' Guardo el separador en una variable asi no lo busco en cada bucle.
+        SeparadorClave = "="
+        SeparadorGrh = "-"
+    
+        ' Abrimos el archivo. No uso FileManager porque obliga a cargar todo el archivo en memoria
+        ' y es demasiado grande. En cambio leo linea por linea y procesamos de a una.
+        FileHandle = FreeFile()
+        Open Game.path(INIT) & "Graficos.ini" For Input As FileHandle
+
+        ' Leemos el total de Grhs
+        Do While Not EOF(FileHandle)
+            
+            ' Leemos la linea actual
+            Line Input #FileHandle, CurrentLine
+            
+            Fields = Split(CurrentLine, SeparadorClave)
+            
+            ' Buscamos la clave "NumGrh"
+            If Fields(0) = "NumGrh" Then
+                
+                ' Asignamos el tamano al array de Grhs
+                ReDim GrhData(1 To Val(Fields(1))) As GrhData
+                
+                Exit Do
+
+            End If
+
+        Loop
+        
+        ' Chequeamos si pudimos leer la cantidad de Grhs
+        If UBound(GrhData) <= 0 Then GoTo ErrorHandler
+        
+        ' Buscamos la posicion del primer Grh
+        Do While Not EOF(FileHandle)
+            
+            ' Leemos la linea actual
+            Line Input #FileHandle, CurrentLine
+            
+            ' Buscamos el nodo "[Graphics]"
+            If UCase$(CurrentLine) = "[GRAPHICS]" Then
+                
+                ' Ya lo tenemos, salimos
+                Exit Do
+                
+            End If
+
+        Loop
+        
+        ' Recorremos todos los Grhs
+        Do While Not EOF(FileHandle)
+            
+            ' Leemos la linea actual
+            Line Input #FileHandle, CurrentLine
+            
+            ' Ignoramos lineas vacias
+            If LenB(CurrentLine) <> 0 Then
+            
+                ' Divimos por el "="
+                Fields = Split(CurrentLine, SeparadorClave)
+                
+                ' Leemos el numero de Grh (el numero a la derecha de la palabra "Grh")
+                Grh = Right(Fields(0), Len(Fields(0)) - 3)
+            
+                ' Leemos los campos de datos del Grh
+                Fields = Split(Fields(1), SeparadorGrh)
+                
+                With GrhData(Grh)
+                    
+                    ' Primer lugar: cantidad de frames.
+                    .NumFrames = Val(Fields(0))
+                    ReDim .Frames(1 To .NumFrames)
+                    
+                    ' Tiene mas de un frame entonces es una animacion
+                    If .NumFrames > 1 Then
+                    
+                        ' Segundo lugar: Leemos los numeros de grh de la animacion
+                        For Frame = 1 To .NumFrames
+                            .Frames(Frame) = Val(Fields(Frame))
+                            If .Frames(Frame) <= LBound(GrhData) Or .Frames(Frame) > UBound(GrhData) Then GoTo ErrorHandler
+                        Next
+                        
+                        ' Tercer lugar: leemos la velocidad de la animacion
+                        .speed = Val(Fields(Frame))
+                        If .speed <= 0 Then GoTo ErrorHandler
+                        
+                        ' Por ultimo, copiamos las dimensiones del primer frame
+                        .pixelHeight = GrhData(.Frames(1)).pixelHeight
+                        If .pixelHeight <= 0 Then GoTo ErrorHandler
+                        
+                        .pixelWidth = GrhData(.Frames(1)).pixelWidth
+                        If .pixelWidth <= 0 Then GoTo ErrorHandler
+                        
+                        .TileWidth = GrhData(.Frames(1)).TileWidth
+                        If .TileWidth <= 0 Then GoTo ErrorHandler
+                        
+                        .TileHeight = GrhData(.Frames(1)).TileHeight
+                        If .TileHeight <= 0 Then GoTo ErrorHandler
+        
+                    ElseIf .NumFrames = 1 Then
+                    
+                        ' Si es un solo frame lo asignamos a si mismo
+                        .Frames(1) = Grh
+                        
+                        ' Segundo lugar: NumeroDelGrafico.bmp, pero sin el ".bmp"
+                        .FileNum = Val(Fields(1))
+
+                        If .FileNum <= 0 Then GoTo ErrorHandler
+                            
+                        ' Tercer Lugar: La coordenada X del grafico
+                        .sX = Val(Fields(2))
+                        If .sX < 0 Then GoTo ErrorHandler
+                            
+                        ' Cuarto Lugar: La coordenada Y del grafico
+                        .sY = Val(Fields(3))
+                        If .sY < 0 Then GoTo ErrorHandler
+                            
+                        ' Quinto lugar: El ancho del grafico
+                        .pixelWidth = Val(Fields(4))
+                        If .pixelWidth <= 0 Then GoTo ErrorHandler
+                            
+                        ' Sexto lugar: La altura del grafico
+                        .pixelHeight = Val(Fields(5))
+                        If .pixelHeight <= 0 Then GoTo ErrorHandler
+                        
+                        ' Calculamos el ancho y alto en tiles
+                        .TileWidth = .pixelWidth / TilePixelHeight
+                        .TileHeight = .pixelHeight / TilePixelWidth
+                        
+                    Else
+                        ' 0 frames o negativo? Error
+                        GoTo ErrorHandler
+
+                    End If
+        
+                End With
+
+            End If
+
+        Loop
+    #End If
+    Exit Sub
+
+ErrorHandler:
+    
     Close FileHandle
     
     If Err.number <> 0 Then
@@ -166,107 +268,6 @@ hErr:
     End If
     
     Exit Sub
-
-End Sub
-
-''
-' Loads grh data using the new file format.
-'
-
-Public Sub LoadGrhInd()
-On Error GoTo ErrorHandler:
-
-    Dim Grh As Long
-    Dim Frame As Long
-    Dim grhCount As Long
-    Dim handle As Integer
-    Dim fileVersion As Long
-    
-    'Open files
-    handle = FreeFile()
-    Open IniPath & "Graficos.ind" For Binary Access Read As handle
-    
-        Get handle, , fileVersion
-        
-        Get handle, , grhCount
-        
-        ReDim GrhData(0 To grhCount) As GrhData
-        
-        While Not EOF(handle)
-            Get handle, , Grh
-            
-            With GrhData(Grh)
-            
-                '.active = True
-                Get handle, , .NumFrames
-                If .NumFrames <= 0 Then GoTo ErrorHandler
-                
-                ReDim .Frames(1 To .NumFrames)
-                
-                If .NumFrames > 1 Then
-                
-                    For Frame = 1 To .NumFrames
-                        Get handle, , .Frames(Frame)
-                        If .Frames(Frame) <= 0 Or .Frames(Frame) > grhCount Then GoTo ErrorHandler
-                    Next Frame
-                    
-                    Get handle, , .speed
-                    If .speed <= 0 Then GoTo ErrorHandler
-                    
-                    .pixelHeight = GrhData(.Frames(1)).pixelHeight
-                    If .pixelHeight <= 0 Then GoTo ErrorHandler
-                    
-                    .pixelWidth = GrhData(.Frames(1)).pixelWidth
-                    If .pixelWidth <= 0 Then GoTo ErrorHandler
-                    
-                    .TileWidth = GrhData(.Frames(1)).TileWidth
-                    If .TileWidth <= 0 Then GoTo ErrorHandler
-                    
-                    .TileHeight = GrhData(.Frames(1)).TileHeight
-                    If .TileHeight <= 0 Then GoTo ErrorHandler
-                    
-                Else
-                    
-                    Get handle, , .FileNum
-                    If .FileNum <= 0 Then GoTo ErrorHandler
-                    
-                    Get handle, , GrhData(Grh).sX
-                    If .sX < 0 Then GoTo ErrorHandler
-                    
-                    Get handle, , .sY
-                    If .sY < 0 Then GoTo ErrorHandler
-                    
-                    Get handle, , .pixelWidth
-                    If .pixelWidth <= 0 Then GoTo ErrorHandler
-                    
-                    Get handle, , .pixelHeight
-                    If .pixelHeight <= 0 Then GoTo ErrorHandler
-                    
-                    .TileWidth = .pixelWidth / TilePixelHeight
-                    .TileHeight = .pixelHeight / TilePixelWidth
-                    
-                    .Frames(1) = Grh
-                    
-                End If
-                
-            End With
-            
-        Wend
-    
-    Close handle
-    
-Exit Sub
-
-ErrorHandler:
-    
-    If Err.number <> 0 Then
-        
-        If Err.number = 53 Then
-            Call MsgBox("El archivo Graficos.ind no existe. Por favor, reinstale el juego.", , "Argentum Online Libre")
-            Call CloseClient
-        End If
-        
-    End If
     
 End Sub
 
