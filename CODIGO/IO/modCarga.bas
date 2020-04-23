@@ -519,7 +519,6 @@ On Error GoTo ErrorHandler:
             
                 GrhIndex = Val(FileManager.GetValue("BODY" & i, "Walk" & j))
                 
-                If GrhIndex > 0 Then
                 If GrhIndex > 0 And GrhIndex < UBound(GrhData) Then
                     Call InitGrh(BodyData(i).Walk(J), GrhIndex, 0)
                 End If
@@ -674,7 +673,6 @@ Sub CargarAnimArmas()
             
             GrhIndex = Val(FileManager.GetValue("ARMA" & i, "Dir" & j))
 
-            If GrhIndex > 0 Then
             If GrhIndex > 0 And GrhIndex < UBound(GrhData) Then
                 Call InitGrh(WeaponAnimData(i).WeaponWalk(J), GrhIndex, 0)
             End If
@@ -774,7 +772,6 @@ Sub CargarAnimEscudos()
             
             GrhIndex = Val(FileManager.GetValue("ESC" & i, "Dir" & j))
 
-            If GrhIndex > 0 Then
             If GrhIndex > 0 And GrhIndex < UBound(GrhData) Then
                 Call InitGrh(ShieldAnimData(i).ShieldWalk(J), GrhIndex, 0)
             End If
@@ -791,7 +788,6 @@ errhandler:
         If Err.number = 53 Then
             Call MsgBox("El archivo escudos.dat no existe. Por favor, reinstale el juego.", , "Argentum Online Libre")
             Call CloseClient
-
         End If
         
     End If
