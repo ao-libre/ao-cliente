@@ -340,8 +340,8 @@ Public Sub CargarCabezas()
             
                 GrhIndex = Val(FileManager.GetValue("HEAD" & i, "HEAD" & j))
 
-                If GrhIndex > 0 Then
-                    Call InitGrh(HeadData(i).Head(j), GrhIndex, 0)
+                If GrhIndex > 0 And GrhIndex < UBound(GrhData) Then
+                    Call InitGrh(HeadData(i).Head(J), GrhIndex, 0)
                 End If
                 
             Next j
@@ -428,7 +428,8 @@ On Error GoTo ErrorHandler:
                 GrhIndex = Val(FileManager.GetValue("HEAD" & i, "HEAD" & j))
 
                 If GrhIndex > 0 Then
-                    Call InitGrh(CascoAnimData(i).Head(j), GrhIndex, 0)
+                If GrhIndex > 0 And GrhIndex < UBound(GrhData) Then
+                    Call InitGrh(CascoAnimData(i).Head(J), GrhIndex, 0)
                 End If
                 
             Next j
@@ -519,7 +520,8 @@ On Error GoTo ErrorHandler:
                 GrhIndex = Val(FileManager.GetValue("BODY" & i, "Walk" & j))
                 
                 If GrhIndex > 0 Then
-                    Call InitGrh(BodyData(i).Walk(j), GrhIndex, 0)
+                If GrhIndex > 0 And GrhIndex < UBound(GrhData) Then
+                    Call InitGrh(BodyData(i).Walk(J), GrhIndex, 0)
                 End If
                 
             Next j
@@ -673,7 +675,8 @@ Sub CargarAnimArmas()
             GrhIndex = Val(FileManager.GetValue("ARMA" & i, "Dir" & j))
 
             If GrhIndex > 0 Then
-                Call InitGrh(WeaponAnimData(i).WeaponWalk(j), GrhIndex, 0)
+            If GrhIndex > 0 And GrhIndex < UBound(GrhData) Then
+                Call InitGrh(WeaponAnimData(i).WeaponWalk(J), GrhIndex, 0)
             End If
                 
         Next j
@@ -772,7 +775,8 @@ Sub CargarAnimEscudos()
             GrhIndex = Val(FileManager.GetValue("ESC" & i, "Dir" & j))
 
             If GrhIndex > 0 Then
-                Call InitGrh(ShieldAnimData(i).ShieldWalk(j), GrhIndex, 0)
+            If GrhIndex > 0 And GrhIndex < UBound(GrhData) Then
+                Call InitGrh(ShieldAnimData(i).ShieldWalk(J), GrhIndex, 0)
             End If
                 
         Next j
