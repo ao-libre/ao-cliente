@@ -272,38 +272,68 @@ ErrorHandler:
 End Sub
 
 Public Sub CargarCabezas()
-On Error GoTo errhandler:
 
-    Dim N As Integer
-    Dim i As Long
-    Dim Numheads As Integer
-    Dim Miscabezas() As tIndiceCabeza
-    
-    N = FreeFile()
-    Open Game.path(INIT) & "Cabezas.ind" For Binary Access Read As #N
-    
-    'cabecera
-    Get #N, , MiCabecera
-    
-    'num de cabezas
-    Get #N, , Numheads
-    
-    'Resize array
-    ReDim HeadData(0 To Numheads) As HeadData
-    ReDim Miscabezas(0 To Numheads) As tIndiceCabeza
-    
-    For i = 1 To Numheads
-        Get #N, , Miscabezas(i)
-        
-        If Miscabezas(i).Head(1) Then
             Call InitGrh(HeadData(i).Head(1), Miscabezas(i).Head(1), 0)
-            Call InitGrh(HeadData(i).Head(2), Miscabezas(i).Head(2), 0)
-            Call InitGrh(HeadData(i).Head(3), Miscabezas(i).Head(3), 0)
-            Call InitGrh(HeadData(i).Head(4), Miscabezas(i).Head(4), 0)
         End If
-    Next i
+    On Error GoTo errhandler:
+
+    Dim i          As Long
+    Dim j          As Long
+    Dim NumHeads   As Integer
+    Dim MisCabezas As tIndiceCabeza
     
-    Close #N
+    #If IndicesBinarios = 1 Then
+
+        Dim FileManager As clsIniManager
+        Set FileManager = New clsIniManager
+        Call FileManager.Initialize(Game.path(INIT) & "Cabezas.ind")
+            
+        'Obtenemos la cantidad de indices de las cabezas.
+        NumHeads = Val(FileManager.GetValue("INIT", "NumHeads"))
+            
+        'Resize array
+        ReDim HeadData(0 To NumHeads) As HeadData
+            
+        For i = 1 To NumHeads
+            
+            For j = 1 To 4
+                Call InitGrh(HeadData(i).Head(j), Val(FileManager.GetValue("HEAD" & i, "HEAD" & j)), 0)
+            Next
+            
+        Next i
+            
+        Set FileManager = Nothing
+            
+    #Else
+            
+        Dim N As Integer: N = FreeFile()
+        Open Game.path(INIT) & "Cabezas.ind" For Binary Access Read As #N
+            
+        'cabecera
+        Get #N, , MiCabecera
+            
+        'num de cabezas
+        Get #N, , NumHeads
+            
+        'Resize array
+        ReDim HeadData(0 To NumHeads) As HeadData
+            
+        For i = 1 To NumHeads
+            Get #N, , MisCabezas
+                
+            If MisCabezas.Head(1) Then
+                
+                For j = 1 To 4
+                    Call InitGrh(HeadData(i).Head(j), MisCabezas.Head(j), 0)
+                Next
+                
+            End If
+
+        Next i
+            
+        Close #N
+            
+    #End If
     
 errhandler:
     
@@ -325,7 +355,7 @@ On Error GoTo errhandler:
     Dim i As Long
     Dim NumCascos As Integer
 
-    Dim Miscabezas() As tIndiceCabeza
+    Dim MisCabezas() As tIndiceCabeza
     
     N = FreeFile()
     Open Game.path(INIT) & "Cascos.ind" For Binary Access Read As #N
@@ -338,16 +368,16 @@ On Error GoTo errhandler:
     
     'Resize array
     ReDim CascoAnimData(0 To NumCascos) As HeadData
-    ReDim Miscabezas(0 To NumCascos) As tIndiceCabeza
+    ReDim MisCabezas(0 To NumCascos) As tIndiceCabeza
     
     For i = 1 To NumCascos
-        Get #N, , Miscabezas(i)
+        Get #N, , MisCabezas(i)
         
-        If Miscabezas(i).Head(1) Then
-            Call InitGrh(CascoAnimData(i).Head(1), Miscabezas(i).Head(1), 0)
-            Call InitGrh(CascoAnimData(i).Head(2), Miscabezas(i).Head(2), 0)
-            Call InitGrh(CascoAnimData(i).Head(3), Miscabezas(i).Head(3), 0)
-            Call InitGrh(CascoAnimData(i).Head(4), Miscabezas(i).Head(4), 0)
+        If MisCabezas(i).Head(1) Then
+            Call InitGrh(CascoAnimData(i).Head(1), MisCabezas(i).Head(1), 0)
+            Call InitGrh(CascoAnimData(i).Head(2), MisCabezas(i).Head(2), 0)
+            Call InitGrh(CascoAnimData(i).Head(3), MisCabezas(i).Head(3), 0)
+            Call InitGrh(CascoAnimData(i).Head(4), MisCabezas(i).Head(4), 0)
         End If
     Next i
     
