@@ -1,6 +1,10 @@
 Attribute VB_Name = "Carga"
 Option Explicit
 
+#If False Then
+    Dim I, J, R, G, B As Variant
+#End If
+
 Private GrhIndex As Long
 
 Private FileManager As clsIniManager
@@ -286,8 +290,8 @@ Public Sub CargarCabezas()
 
     On Error GoTo ErrorHandler:
 
-    Dim i          As Long
-    Dim j          As Long
+    Dim I          As Long
+    Dim J          As Long
     Dim NumHeads   As Integer
     Dim MisCabezas As tIndiceCabeza
     
@@ -305,18 +309,18 @@ Public Sub CargarCabezas()
         'Resize array
         ReDim HeadData(0 To NumHeads) As HeadData
             
-        For i = 1 To NumHeads
+        For I = 1 To NumHeads
             Get FileHandle, , MisCabezas
                 
             If MisCabezas.Head(1) Then
                 
-                For j = 1 To 4
-                    Call InitGrh(HeadData(i).Head(j), MisCabezas.Head(j), 0)
+                For J = 1 To 4
+                    Call InitGrh(HeadData(I).Head(J), MisCabezas.Head(J), 0)
                 Next
                 
             End If
 
-        Next i
+        Next I
             
         Close FileHandle
             
@@ -331,17 +335,17 @@ Public Sub CargarCabezas()
         'Resize array
         ReDim HeadData(0 To NumHeads) As HeadData
             
-        For i = 1 To NumHeads
-            For j = 1 To 4
+        For I = 1 To NumHeads
+            For J = 1 To 4
             
-                GrhIndex = Val(FileManager.GetValue("HEAD" & i, "HEAD" & j))
+                GrhIndex = Val(FileManager.GetValue("HEAD" & I, "HEAD" & J))
 
                 If GrhIndex > 0 Then
-                    Call InitGrh(HeadData(i).Head(j), GrhIndex, 0)
+                    Call InitGrh(HeadData(I).Head(J), GrhIndex, 0)
                 End If
                 
-            Next j
-        Next i
+            Next J
+        Next I
             
         Set FileManager = Nothing
             
@@ -376,7 +380,7 @@ Sub CargarCascos()
 On Error GoTo ErrorHandler:
 
     Dim N As Integer
-    Dim i As Long
+    Dim I As Long
     Dim NumCascos As Integer
     Dim MisCabezas() As tIndiceCabeza
     
@@ -393,36 +397,48 @@ On Error GoTo ErrorHandler:
     ReDim CascoAnimData(0 To NumCascos) As HeadData
     ReDim MisCabezas(0 To NumCascos) As tIndiceCabeza
     
-    For i = 1 To NumCascos
-        Get FileHandle, , MisCabezas(i)
+    For I = 1 To NumCascos
+        Get FileHandle, , MisCabezas(I)
         
-        If MisCabezas(i).Head(1) Then
-            Call InitGrh(CascoAnimData(i).Head(1), MisCabezas(i).Head(1), 0)
-            Call InitGrh(CascoAnimData(i).Head(2), MisCabezas(i).Head(2), 0)
-            Call InitGrh(CascoAnimData(i).Head(3), MisCabezas(i).Head(3), 0)
-            Call InitGrh(CascoAnimData(i).Head(4), MisCabezas(i).Head(4), 0)
+        If MisCabezas(I).Head(1) Then
+            Call InitGrh(CascoAnimData(I).Head(1), MisCabezas(I).Head(1), 0)
+            Call InitGrh(CascoAnimData(I).Head(2), MisCabezas(I).Head(2), 0)
+            Call InitGrh(CascoAnimData(I).Head(3), MisCabezas(I).Head(3), 0)
+            Call InitGrh(CascoAnimData(I).Head(4), MisCabezas(I).Head(4), 0)
         End If
-    Next i
+    Next I
     
     Close FileHandle
     
 ErrorHandler:
     
-    If Err.number <> 0 Then
+    #If IndicesBinarios = 1 Then
+        Extension = ".ind"
+    #Else
+        Extension = ".ini"
+    #End If
         
-        If Err.number = 53 Then
-            Call MsgBox("El archivo Cascos.ind no existe. Por favor, reinstale el juego.", , "Argentum Online Libre")
+    Select Case Err.number
+    
+        Case 0
+            Exit Sub
+            
+        Case 53
+            Call MsgBox("El archivo Cabezas" & Extension & " no existe. Por favor, reinstale el juego.", , "Argentum Online Libre")
             Call CloseClient
-        End If
-        
-    End If
+            
+        Case Else
+            Call MsgBox("Hay un error [" & Err.number & " - " & Err.Description & "] en Cabezas" & Extension & ". Por favor, reinstale el juego.", , "Argentum Online")
+            Call CloseClient
+            
+    End Select
     
 End Sub
 
 Sub CargarCuerpos()
 On Error GoTo errhandler:
 
-    Dim i As Long
+    Dim I As Long
     Dim NumCuerpos As Integer
     Dim MisCuerpos() As tIndiceCuerpo
     
@@ -439,19 +455,19 @@ On Error GoTo errhandler:
     ReDim BodyData(0 To NumCuerpos) As BodyData
     ReDim MisCuerpos(0 To NumCuerpos) As tIndiceCuerpo
     
-    For i = 1 To NumCuerpos
-        Get FileHandle, , MisCuerpos(i)
+    For I = 1 To NumCuerpos
+        Get FileHandle, , MisCuerpos(I)
         
-        If MisCuerpos(i).Body(1) Then
-            Call InitGrh(BodyData(i).Walk(1), MisCuerpos(i).Body(1), 0)
-            Call InitGrh(BodyData(i).Walk(2), MisCuerpos(i).Body(2), 0)
-            Call InitGrh(BodyData(i).Walk(3), MisCuerpos(i).Body(3), 0)
-            Call InitGrh(BodyData(i).Walk(4), MisCuerpos(i).Body(4), 0)
+        If MisCuerpos(I).Body(1) Then
+            Call InitGrh(BodyData(I).Walk(1), MisCuerpos(I).Body(1), 0)
+            Call InitGrh(BodyData(I).Walk(2), MisCuerpos(I).Body(2), 0)
+            Call InitGrh(BodyData(I).Walk(3), MisCuerpos(I).Body(3), 0)
+            Call InitGrh(BodyData(I).Walk(4), MisCuerpos(I).Body(4), 0)
             
-            BodyData(i).HeadOffset.X = MisCuerpos(i).HeadOffsetX
-            BodyData(i).HeadOffset.Y = MisCuerpos(i).HeadOffsetY
+            BodyData(I).HeadOffset.X = MisCuerpos(I).HeadOffsetX
+            BodyData(I).HeadOffset.Y = MisCuerpos(I).HeadOffsetY
         End If
-    Next i
+    Next I
     
     Close FileHandle
     
@@ -471,7 +487,7 @@ End Sub
 Sub CargarFxs()
 On Error GoTo errhandler:
 
-    Dim i As Long
+    Dim I As Long
     
     Set FileManager = New clsIniManager
     Call FileManager.Initialize(Game.path(INIT) & "Fxs.ini")
@@ -479,12 +495,12 @@ On Error GoTo errhandler:
     'Resize array
     ReDim FxData(0 To FileManager.GetValue("INIT", "NumFxs")) As tIndiceFx
     
-    For i = 1 To UBound(FxData())
+    For I = 1 To UBound(FxData())
         
-        With FxData(i)
-            .Animacion = Val(FileManager.GetValue("FX" & CStr(i), "Animacion"))
-            .OffsetX = Val(FileManager.GetValue("FX" & CStr(i), "OffsetX"))
-            .OffsetY = Val(FileManager.GetValue("FX" & CStr(i), "OffsetY"))
+        With FxData(I)
+            .Animacion = Val(FileManager.GetValue("FX" & CStr(I), "Animacion"))
+            .OffsetX = Val(FileManager.GetValue("FX" & CStr(I), "OffsetX"))
+            .OffsetY = Val(FileManager.GetValue("FX" & CStr(I), "OffsetY"))
         End With
     
     Next
@@ -507,7 +523,7 @@ End Sub
 Sub CargarArrayLluvia()
 On Error GoTo errhandler:
 
-    Dim i As Long
+    Dim I As Long
     Dim Nu As Integer
     
     FileHandle = FreeFile()
@@ -522,9 +538,9 @@ On Error GoTo errhandler:
     'Resize array
     ReDim bLluvia(1 To Nu) As Byte
     
-    For i = 1 To Nu
-        Get FileHandle, , bLluvia(i)
-    Next i
+    For I = 1 To Nu
+        Get FileHandle, , bLluvia(I)
+    Next I
     
     Close FileHandle
     
@@ -545,8 +561,8 @@ Sub CargarAnimArmas()
 
     On Error GoTo errhandler:
 
-    Dim i     As Long
-    Dim j     As Long
+    Dim I     As Long
+    Dim J     As Long
     
     Set FileManager = New clsIniManager
     Call FileManager.Initialize(Game.path(INIT) & "armas.dat")
@@ -554,17 +570,17 @@ Sub CargarAnimArmas()
     NumWeaponAnims = Val(FileManager.GetValue("INIT", "NumArmas"))
     ReDim WeaponAnimData(1 To NumWeaponAnims) As WeaponAnimData
     
-    For i = 1 To NumWeaponAnims
-        For j = 1 To 4
+    For I = 1 To NumWeaponAnims
+        For J = 1 To 4
             
-            GrhIndex = Val(FileManager.GetValue("ARMA" & i, "Dir" & j))
+            GrhIndex = Val(FileManager.GetValue("ARMA" & I, "Dir" & J))
 
             If GrhIndex > 0 Then
-                Call InitGrh(WeaponAnimData(i).WeaponWalk(j), GrhIndex, 0)
+                Call InitGrh(WeaponAnimData(I).WeaponWalk(J), GrhIndex, 0)
             End If
                 
-        Next j
-    Next i
+        Next J
+    Next I
     
     Set FileManager = Nothing
     
@@ -589,15 +605,15 @@ On Error GoTo errhandler:
     Set FileManager = New clsIniManager
     Call FileManager.Initialize(Game.path(INIT) & "colores.dat")
     
-    Dim i As Long
+    Dim I As Long
     Dim R As Long, G As Long, B As Long
     
-    For i = 0 To 47 '48, 49 y 50 reservados para atacables, ciudadano y criminal
-        R = Val(FileManager.GetValue(CStr(i), "R"))
-        G = Val(FileManager.GetValue(CStr(i), "G"))
-        B = Val(FileManager.GetValue(CStr(i), "B"))
-        ColoresPJ(i) = D3DColorXRGB(R, G, B)
-    Next i
+    For I = 0 To 47 '48, 49 y 50 reservados para atacables, ciudadano y criminal
+        R = Val(FileManager.GetValue(CStr(I), "R"))
+        G = Val(FileManager.GetValue(CStr(I), "G"))
+        B = Val(FileManager.GetValue(CStr(I), "B"))
+        ColoresPJ(I) = D3DColorXRGB(R, G, B)
+    Next I
     
     '   Atacable TODO: hay que implementar un color para los atacables y hacer que funcione.
     'R = Val(FileManager.GetValue("AT", "R"))
@@ -617,12 +633,12 @@ On Error GoTo errhandler:
     B = Val(FileManager.GetValue("CR", "B"))
     ColoresPJ(50) = D3DColorXRGB(R, G, B)
     
-    For i = 51 To 56 'Colores reservados para la renderizacion de dano
-        R = Val(FileManager.GetValue(CStr(i), "R"))
-        G = Val(FileManager.GetValue(CStr(i), "G"))
-        B = Val(FileManager.GetValue(CStr(i), "B"))
-        ColoresDano(i) = D3DColorXRGB(R, G, B)
-    Next i
+    For I = 51 To 56 'Colores reservados para la renderizacion de dano
+        R = Val(FileManager.GetValue(CStr(I), "R"))
+        G = Val(FileManager.GetValue(CStr(I), "G"))
+        B = Val(FileManager.GetValue(CStr(I), "B"))
+        ColoresDano(I) = D3DColorXRGB(R, G, B)
+    Next I
     
     Set FileManager = Nothing
     
@@ -643,8 +659,8 @@ Sub CargarAnimEscudos()
 
     On Error GoTo errhandler:
 
-    Dim i           As Long
-    Dim j           As Long
+    Dim I           As Long
+    Dim J           As Long
     Dim NumEscudosAnims As Long
     
     Set FileManager = New clsIniManager
@@ -653,17 +669,17 @@ Sub CargarAnimEscudos()
     NumEscudosAnims = Val(FileManager.GetValue("INIT", "NumEscudos"))
     ReDim ShieldAnimData(1 To NumEscudosAnims) As ShieldAnimData
     
-    For i = 1 To NumEscudosAnims
-        For j = 1 To 4
+    For I = 1 To NumEscudosAnims
+        For J = 1 To 4
             
-            GrhIndex = Val(FileManager.GetValue("ESC" & i, "Dir" & j))
+            GrhIndex = Val(FileManager.GetValue("ESC" & I, "Dir" & J))
 
             If GrhIndex > 0 Then
-                Call InitGrh(ShieldAnimData(i).ShieldWalk(j), GrhIndex, 0)
+                Call InitGrh(ShieldAnimData(I).ShieldWalk(J), GrhIndex, 0)
             End If
                 
-        Next j
-    Next i
+        Next J
+    Next I
     
     Set FileManager = Nothing
     
