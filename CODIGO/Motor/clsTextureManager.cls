@@ -83,8 +83,6 @@ Public Function GetTexture(ByVal FileName As Integer, _
 
     If FileName = 0 Then Exit Function
 
-    End If
- 
     Dim i As Long
 
     ' Search the index on the list
