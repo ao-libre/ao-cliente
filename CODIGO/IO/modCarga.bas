@@ -6,7 +6,6 @@ Private FileManager As clsIniManager
 ''
 ' Cargar indices de graficos.
 '
-
 Public Sub LoadGraphicsIndex()
 
     On Error GoTo ErrorHandler:
@@ -93,9 +92,7 @@ Public Sub LoadGraphicsIndex()
             End With
             
         Wend
-    
-        Close FileHandle
-    
+
     #Else
 
         Dim Grh            As Long
@@ -243,9 +240,13 @@ Public Sub LoadGraphicsIndex()
             End If
 
         Loop
+        
     #End If
+    
+    Close FileHandle
+    
     Exit Sub
-
+    
 ErrorHandler:
     
     Close FileHandle
