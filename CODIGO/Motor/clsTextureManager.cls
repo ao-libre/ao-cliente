@@ -152,6 +152,7 @@ Private Function CrearGrafico(ByVal Archivo As Integer, _
             'Nombre
             .FileName = Archivo
 
+            'TODO: No usar variable de compilacion y acceder a esto desde el config.ini
             #If Compression = 1 Then
             
                 'Obtenemos el .bmp del archivo en Graphics.AO

@@ -2592,6 +2592,7 @@ Private Sub SendCMSTXT_Change()
 End Sub
 
 Private Sub AbrirMenuViewPort()
+    'TODO: No usar variable de compilacion y acceder a esto desde el config.ini
     #If (ConMenuseConextuales = 1) Then
 
         If TX >= MinXBorder And TY >= MinYBorder And TY <= MaxYBorder And TX <= MaxXBorder Then
