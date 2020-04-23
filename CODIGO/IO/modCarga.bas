@@ -4,6 +4,7 @@ Option Explicit
 Private GrhIndex As Long
 
 Private FileManager As clsIniManager
+Private FileHandle As Integer
 Private Extension As String
 
 ''
@@ -13,7 +14,8 @@ Public Sub LoadGraphicsIndex()
 
     On Error GoTo ErrorHandler:
     
-    Dim FileHandle As Integer: FileHandle = FreeFile()
+    'Abrimos un canal para leer el archivo.
+    FileHandle = FreeFile()
     
     #If IndicesBinarios = 1 Then
 
@@ -24,7 +26,6 @@ Public Sub LoadGraphicsIndex()
         Dim fileVersion As Long
     
         'Open files
-        handle = FreeFile()
         Open Game.path(INIT) & "Graficos.ind" For Binary Access Read As FileHandle
         
         'Obtenemos la version del .ind
@@ -283,7 +284,7 @@ End Sub
 
 Public Sub CargarCabezas()
 
-    On Error GoTo errhandler:
+    On Error GoTo ErrorHandler:
 
     Dim i          As Long
     Dim j          As Long
@@ -291,21 +292,21 @@ Public Sub CargarCabezas()
     Dim MisCabezas As tIndiceCabeza
     
     #If IndicesBinarios = 1 Then
-
-        Dim N As Integer: N = FreeFile()
-        Open Game.path(INIT) & "Cabezas.ind" For Binary Access Read As #N
+        
+        FileHandle = FreeFile()
+        Open Game.path(INIT) & "Cabezas.ind" For Binary Access Read As FileHandle
             
         'cabecera
-        Get #N, , MiCabecera
+        Get FileHandle, , MiCabecera
             
         'num de cabezas
-        Get #N, , NumHeads
+        Get FileHandle, , NumHeads
             
         'Resize array
         ReDim HeadData(0 To NumHeads) As HeadData
             
         For i = 1 To NumHeads
-            Get #N, , MisCabezas
+            Get FileHandle, , MisCabezas
                 
             If MisCabezas.Head(1) Then
                 
@@ -317,7 +318,7 @@ Public Sub CargarCabezas()
 
         Next i
             
-        Close #N
+        Close FileHandle
             
     #Else
 
@@ -346,7 +347,7 @@ Public Sub CargarCabezas()
             
     #End If
     
-errhandler:
+ErrorHandler:
     
     #If IndicesBinarios = 1 Then
         Extension = ".ind"
@@ -372,29 +373,28 @@ errhandler:
 End Sub
 
 Sub CargarCascos()
-On Error GoTo errhandler:
+On Error GoTo ErrorHandler:
 
     Dim N As Integer
     Dim i As Long
     Dim NumCascos As Integer
-
     Dim MisCabezas() As tIndiceCabeza
     
-    N = FreeFile()
-    Open Game.path(INIT) & "Cascos.ind" For Binary Access Read As #N
+    FileHandle = FreeFile()
+    Open Game.path(INIT) & "Cascos.ind" For Binary Access Read As FileHandle
     
     'cabecera
-    Get #N, , MiCabecera
+    Get FileHandle, , MiCabecera
     
     'num de cabezas
-    Get #N, , NumCascos
+    Get FileHandle, , NumCascos
     
     'Resize array
     ReDim CascoAnimData(0 To NumCascos) As HeadData
     ReDim MisCabezas(0 To NumCascos) As tIndiceCabeza
     
     For i = 1 To NumCascos
-        Get #N, , MisCabezas(i)
+        Get FileHandle, , MisCabezas(i)
         
         If MisCabezas(i).Head(1) Then
             Call InitGrh(CascoAnimData(i).Head(1), MisCabezas(i).Head(1), 0)
@@ -404,9 +404,9 @@ On Error GoTo errhandler:
         End If
     Next i
     
-    Close #N
+    Close FileHandle
     
-errhandler:
+ErrorHandler:
     
     If Err.number <> 0 Then
         
@@ -422,26 +422,25 @@ End Sub
 Sub CargarCuerpos()
 On Error GoTo errhandler:
 
-    Dim N As Integer
     Dim i As Long
     Dim NumCuerpos As Integer
     Dim MisCuerpos() As tIndiceCuerpo
     
-    N = FreeFile()
-    Open Game.path(INIT) & "Personajes.ind" For Binary Access Read As #N
+    FileHandle = FreeFile()
+    Open Game.path(INIT) & "Personajes.ind" For Binary Access Read As FileHandle
     
     'cabecera
-    Get #N, , MiCabecera
+    Get FileHandle, , MiCabecera
     
     'num de cabezas
-    Get #N, , NumCuerpos
+    Get FileHandle, , NumCuerpos
     
     'Resize array
     ReDim BodyData(0 To NumCuerpos) As BodyData
     ReDim MisCuerpos(0 To NumCuerpos) As tIndiceCuerpo
     
     For i = 1 To NumCuerpos
-        Get #N, , MisCuerpos(i)
+        Get FileHandle, , MisCuerpos(i)
         
         If MisCuerpos(i).Body(1) Then
             Call InitGrh(BodyData(i).Walk(1), MisCuerpos(i).Body(1), 0)
@@ -454,7 +453,7 @@ On Error GoTo errhandler:
         End If
     Next i
     
-    Close #N
+    Close FileHandle
     
 errhandler:
     
@@ -508,27 +507,26 @@ End Sub
 Sub CargarArrayLluvia()
 On Error GoTo errhandler:
 
-    Dim N As Integer
     Dim i As Long
     Dim Nu As Integer
     
-    N = FreeFile()
-    Open Game.path(INIT) & "fk.ind" For Binary Access Read As #N
+    FileHandle = FreeFile()
+    Open Game.path(INIT) & "fk.ind" For Binary Access Read As FileHandle
     
     'cabecera
-    Get #N, , MiCabecera
+    Get FileHandle, , MiCabecera
     
     'num de cabezas
-    Get #N, , Nu
+    Get FileHandle, , Nu
     
     'Resize array
     ReDim bLluvia(1 To Nu) As Byte
     
     For i = 1 To Nu
-        Get #N, , bLluvia(i)
+        Get FileHandle, , bLluvia(i)
     Next i
     
-    Close #N
+    Close FileHandle
     
 errhandler:
     
