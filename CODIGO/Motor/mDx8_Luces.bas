@@ -212,28 +212,33 @@ Private Sub LightRender(ByVal light_index As Integer)
     End With
     
     'Arrange corners
+    
     'NE
     If InMapBounds(min_x, min_y) Then
         MapData(min_x, min_y).Engine_Light(2) = Color(2)
     End If
+    
     'NW
     If InMapBounds(max_x, min_y) Then
-        MapData(max_x, min_y).Engine_Light(0) = Color(0)
+        MapData(max_x, min_y).Engine_Light(1) = Color(1)
     End If
+    
     'SW
     If InMapBounds(max_x, max_y) Then
-        MapData(max_x, max_y).Engine_Light(1) = Color(1)
+        MapData(max_x, max_y).Engine_Light(0) = Color(0)
     End If
+    
     'SE
     If InMapBounds(min_x, max_y) Then
         MapData(min_x, max_y).Engine_Light(3) = Color(3)
     End If
     
     'Arrange borders
+    
     'Upper border
     For X = min_x + 1 To max_x - 1
         If InMapBounds(X, min_y) Then
-            MapData(X, min_y).Engine_Light(0) = Color(0)
+            MapData(X, min_y).Engine_Light(1) = Color(1)
             MapData(X, min_y).Engine_Light(2) = Color(2)
         End If
     Next X
@@ -241,7 +246,7 @@ Private Sub LightRender(ByVal light_index As Integer)
     'Lower border
     For X = min_x + 1 To max_x - 1
         If InMapBounds(X, max_y) Then
-            MapData(X, max_y).Engine_Light(1) = Color(1)
+            MapData(X, max_y).Engine_Light(0) = Color(0)
             MapData(X, max_y).Engine_Light(3) = Color(3)
         End If
     Next X
@@ -396,6 +401,7 @@ Public Function LightRenderAll() As Boolean
 handle:
     LightRenderAll = False
     Exit Function
+    
 End Function
 
 Public Function LightRemoveAll() As Boolean
