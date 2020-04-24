@@ -1,4 +1,5 @@
 # Client Files.
+/INIT/sinfo.dat
 Errores.log
 Screenshots/*
 Codigo/*.log
