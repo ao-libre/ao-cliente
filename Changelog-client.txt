@@ -746,4 +746,7 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 20/04/2020: Se modificaron render de inventario en comercio y banco para mostrar colores de la mochila y alforja, se aprolijo un poco el codigo. (Recox)
 * 20/04/2020: Ahora se renderizan 7 filas de slots con su correspondiente color para mochila o alforja en el inventario principal. (Recox)
 * 20/04/2020: Se suben nuevos mapas de nieve, nuevos graficos y modificaciones en Mapas. (ReyarB)
+* 26/04/2020: Se arreglo seteo de valor en tooltip inicial y bug en modal para elegir preferencia de teclado (Recox)
+* 26/04/2020: Ahora con configuracion de teclas normal (flechas) me puedo mover mientras chateo para hacer uso de cartel (Recox)
+* 26/04/2020: se agrego mensaje en consola cuando me muevo si estoy con comando /hogar (Recox)
 
