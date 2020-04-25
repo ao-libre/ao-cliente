@@ -41,9 +41,6 @@ End Type
 
 Public Posts() As tRedditPost
 
-Public bLluvia() As Byte ' Array para determinar si
-'debemos mostrar la animacion de la lluvia
-
 Private lFrameTimer As Long
 
 Private keysMovementPressedQueue As clsArrayList

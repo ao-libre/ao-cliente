@@ -94,8 +94,8 @@ Private Type tMapDat
     version As Long
 End Type
 
-Private MapSize As tMapSize
-Private MapDat As tMapDat
+Public MapSize As tMapSize
+Public MapDat As tMapDat
 '********************************
 'END - Load Map with .CSM format
 '********************************
@@ -571,44 +571,6 @@ errhandler:
         End If
         
     End If
-End Sub
-
-Sub CargarArrayLluvia()
-On Error GoTo errhandler:
-
-    Dim N As Integer
-    Dim i As Long
-    Dim Nu As Integer
-    
-    N = FreeFile()
-    Open Game.path(INIT) & "fk.ind" For Binary Access Read As #N
-    
-    'cabecera
-    Get #N, , MiCabecera
-    
-    'num de cabezas
-    Get #N, , Nu
-    
-    'Resize array
-    ReDim bLluvia(1 To Nu) As Byte
-    
-    For i = 1 To Nu
-        Get #N, , bLluvia(i)
-    Next i
-    
-    Close #N
-    
-errhandler:
-    
-    If Err.number <> 0 Then
-        
-        If Err.number = 53 Then
-            Call MsgBox("El archivo fk.ind no existe. Por favor, reinstale el juego.", , "Argentum Online Libre")
-            Call CloseClient
-        End If
-        
-    End If
-    
 End Sub
 
 Sub CargarAnimArmas()

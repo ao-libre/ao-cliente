@@ -951,7 +951,7 @@ Public Function RenderSounds()
 '**************************************************************
     Dim Location As Position
 
-    If bRain And bLluvia(UserMap) Then
+    If bRain And MapDat.zone <> "DUNGEON" Then
             If bTecho Then
                 If frmMain.IsPlaying <> PlayLoop.plLluviain Then
                     If RainBufferIndex Then
