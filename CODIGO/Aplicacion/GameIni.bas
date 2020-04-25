@@ -62,6 +62,7 @@ Public Type tSetupMods
     ' OTHER
     MostrarTips As Byte
     MostrarBindKeysSelection As Byte
+    KeyboardBindKeysConfig As String
 End Type
 
 Public ClientSetup As tSetupMods
@@ -173,7 +174,8 @@ Public Sub LeerConfiguracion()
         ' OTHER
         .MostrarTips = CBool(Lector.GetValue("OTHER", "MOSTRAR_TIPS"))
         .MostrarBindKeysSelection = CBool(Lector.GetValue("OTHER", "MOSTRAR_BIND_KEYS_SELECTION"))
-        
+        .KeyboardBindKeysConfig = Lector.GetValue("OTHER", "BIND_KEYS")
+
         Debug.Print "Modo de Renderizado: " & IIf(.Aceleracion = 1, "Mixto (Hardware + Software)", "Hardware")
         Debug.Print "byMemory: " & .byMemory
         Debug.Print "bNoRes: " & .bNoRes
@@ -195,6 +197,8 @@ Public Sub LeerConfiguracion()
         Debug.Print "bKill: " & .byMurderedLevel
         Debug.Print "bActive: " & .bActive
         Debug.Print "MostrarTips: " & .MostrarTips
+        Debug.Print "MostrarBindKeysSelection: " & .MostrarBindKeysSelection
+        Debug.Print "KeyboardBindKeysConfig: " & .KeyboardBindKeysConfig
         Debug.Print vbNullString
         
     End With
