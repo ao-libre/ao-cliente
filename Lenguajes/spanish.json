@@ -1836,6 +1836,6 @@
         "TEXTO": "Informacion de misiones:"
     },
     "MENSAJE_USUARIO_VIAJANDO_HOGAR": {
-        "TEXTO": "You cannot move meanwhile you are traveling to your town..."
+        "TEXTO": "No puedes moverte mientras estas viajando a tu ciudad..."
     }
 }
