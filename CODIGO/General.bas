@@ -306,7 +306,6 @@ Private Sub CheckKeys()
     'If game is paused, abort movement.
     If pausa Then Exit Sub
     
-    'TODO: Deberia informarle por consola?
     If Traveling Then 
         Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USUARIO_VIAJANDO_HOGAR").item("TEXTO"), 110, 220, 000)
         Exit Sub
