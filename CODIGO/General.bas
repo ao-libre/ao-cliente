@@ -302,15 +302,24 @@ Private Sub CheckKeys()
     
     'No walking while writting in the forum.
     If MirandoForo Then Exit Sub
+
     'If game is paused, abort movement.
     If pausa Then Exit Sub
     
-    'TODO: Deberia informarle por consola?
-    If Traveling Then Exit Sub
+    If Traveling Then 
+        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USUARIO_VIAJANDO_HOGAR").item("TEXTO"), 110, 220, 000)
+        Exit Sub
+    End If
+    
 
-    'Si esta chateando, no mover el pj, tanto para chat de clanes y normal
-    If frmMain.SendTxt.Visible Then Exit Sub
-    If frmMain.SendCMSTXT.Visible Then Exit Sub
+    'Hacemos esta validacion para los usuarios que usan teclado normal puedan
+    'Sacar cartel de hechizos mientras juegan, si usan config customizada con wasd no se puede mover ya que entorpece 
+    If ClientSetup.KeyboardBindKeysConfig  <> "Normal" Then
+        'Si esta chateando, no mover el pj, tanto para chat de clanes y normal
+        If frmMain.SendTxt.Visible Then Exit Sub
+        If frmMain.SendCMSTXT.Visible Then Exit Sub
+
+    End If
 
     'Don't allow any these keys during movement..
     If UserMoving = 0 Then
