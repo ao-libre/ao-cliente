@@ -130,21 +130,50 @@ Private Sub LightRender(ByVal light_index As Integer)
         For Xa = min_x To max_x
 
             If InMapBounds(Xa, Ya) Then
+                
                 XCoord = Xa * 32
                 YCoord = Ya * 32
-                MapData(Xa, Ya).Engine_Light(1) = LightCalculate(Light_List(light_index).range, Light_List(light_index).map_x * 32, Light_List(light_index).map_y * 32, XCoord, YCoord, MapData(Xa, Ya).Engine_Light(1), LightColor, AmbientColor)
+                MapData(Xa, Ya).Engine_Light(0) = LightCalculate(Light_List(light_index).range, _
+                                                                 Light_List(light_index).map_x * 32, _
+                                                                 Light_List(light_index).map_y * 32, _
+                                                                 XCoord, _
+                                                                 YCoord, _
+                                                                 MapData(Xa, Ya).Engine_Light(0), _
+                                                                 LightColor, _
+                                                                 AmbientColor)
  
-                XCoord = Xa * 32 + 32
-                YCoord = Ya * 32
-                MapData(Xa, Ya).Engine_Light(3) = LightCalculate(Light_List(light_index).range, Light_List(light_index).map_x * 32, Light_List(light_index).map_y * 32, XCoord, YCoord, MapData(Xa, Ya).Engine_Light(3), LightColor, AmbientColor)
-                       
                 XCoord = Xa * 32
                 YCoord = Ya * 32 + 32
-                MapData(Xa, Ya).Engine_Light(0) = LightCalculate(Light_List(light_index).range, Light_List(light_index).map_x * 32, Light_List(light_index).map_y * 32, XCoord, YCoord, MapData(Xa, Ya).Engine_Light(0), LightColor, AmbientColor)
+                MapData(Xa, Ya).Engine_Light(1) = LightCalculate(Light_List(light_index).range, _
+                                                                 Light_List(light_index).map_x * 32, _
+                                                                 Light_List(light_index).map_y * 32, _
+                                                                 XCoord, _
+                                                                 YCoord, _
+                                                                 MapData(Xa, Ya).Engine_Light(1), _
+                                                                 LightColor, _
+                                                                 AmbientColor)
+                       
+                XCoord = Xa * 32 + 32
+                YCoord = Ya * 32 + 32
+                MapData(Xa, Ya).Engine_Light(2) = LightCalculate(Light_List(light_index).range, _
+                                                                 Light_List(light_index).map_x * 32, _
+                                                                 Light_List(light_index).map_y * 32, _
+                                                                 XCoord, _
+                                                                 YCoord, _
+                                                                 MapData(Xa, Ya).Engine_Light(2), _
+                                                                 LightColor, _
+                                                                 AmbientColor)
    
                 XCoord = Xa * 32 + 32
-                YCoord = Ya * 32 + 32
-                MapData(Xa, Ya).Engine_Light(2) = LightCalculate(Light_List(light_index).range, Light_List(light_index).map_x * 32, Light_List(light_index).map_y * 32, XCoord, YCoord, MapData(Xa, Ya).Engine_Light(2), LightColor, AmbientColor)
+                YCoord = Ya * 32
+                MapData(Xa, Ya).Engine_Light(3) = LightCalculate(Light_List(light_index).range, _
+                                                                 Light_List(light_index).map_x * 32, _
+                                                                 Light_List(light_index).map_y * 32, _
+                                                                 XCoord, _
+                                                                 YCoord, _
+                                                                 MapData(Xa, Ya).Engine_Light(3), _
+                                                                 LightColor, _
+                                                                 AmbientColor)
                
             End If
         Next Xa
