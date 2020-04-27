@@ -752,5 +752,5 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 27/04/2020: Se arreglan mapas. (ReyarB)
 
 -v0.13.33
-* 20/04/2020: Arreglo icono de mouse roto. (Recox)
-* 20/04/2020: Se arreglan mapas faltantes. (ReyarB)
+* 28/04/2020: Arreglo icono de mouse roto. (Recox)
+* 28/04/2020: Se arreglan mapas faltantes. (ReyarB)
