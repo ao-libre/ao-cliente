@@ -749,4 +749,4 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 26/04/2020: Se arreglo seteo de valor en tooltip inicial y bug en modal para elegir preferencia de teclado (Recox)
 * 26/04/2020: Ahora con configuracion de teclas normal (flechas) me puedo mover mientras chateo para hacer uso de cartel (Recox)
 * 26/04/2020: se agrego mensaje en consola cuando me muevo si estoy con comando /hogar (Recox)
-
+* 27/04/2020: Se arreglan mapas. (ReyarB)
