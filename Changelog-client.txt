@@ -750,3 +750,7 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 26/04/2020: Ahora con configuracion de teclas normal (flechas) me puedo mover mientras chateo para hacer uso de cartel (Recox)
 * 26/04/2020: se agrego mensaje en consola cuando me muevo si estoy con comando /hogar (Recox)
 * 27/04/2020: Se arreglan mapas. (ReyarB)
+
+-v0.13.32
+* 20/04/2020: Arreglo icono de mouse roto.. (Recox)
+* 20/04/2020: Se arreglan mapas faltantes. (ReyarB)
