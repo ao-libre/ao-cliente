@@ -28,6 +28,7 @@
 *.OCX binary
 *.map binary
 *.exe binary
+*.ani binary
 *.inf binary
 /GRAFICOS/Fonts/font1.dat binary
 /GRAFICOS/Fonts/font2.dat binary
