@@ -693,6 +693,7 @@ Sub Main()
             
             Call CheckKeys
         End If
+        
         'FPS Counter - mostramos las FPS
         If GetTickCount - lFrameTimer >= 1000 Then
             If FPSFLAG Then frmMain.lblFPS.Caption = Mod_TileEngine.FPS
@@ -705,6 +706,7 @@ Sub Main()
             Call FlushBuffer
             lastFlush = timeGetTime + 10
         End If
+        
         DoEvents
     Loop
     
