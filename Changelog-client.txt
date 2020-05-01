@@ -751,7 +751,7 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 26/04/2020: se agrego mensaje en consola cuando me muevo si estoy con comando /hogar (Recox)
 * 27/04/2020: Se arreglan mapas. (ReyarB)
 
--v0.13.33
+-v0.13.35
 * 28/04/2020: Arreglo icono de mouse roto. (Recox)
 * 28/04/2020: Se arreglan mapas faltantes. (ReyarB)
 * 27/04/2020: Limitar FPS a 101 activable/desactivable desde Config.ini. (BelerianD - Chots)
