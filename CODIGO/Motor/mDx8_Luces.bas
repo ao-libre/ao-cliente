@@ -130,21 +130,50 @@ Private Sub LightRender(ByVal light_index As Integer)
         For Xa = min_x To max_x
 
             If InMapBounds(Xa, Ya) Then
+                
                 XCoord = Xa * 32
                 YCoord = Ya * 32
-                MapData(Xa, Ya).Engine_Light(1) = LightCalculate(Light_List(light_index).range, Light_List(light_index).map_x * 32, Light_List(light_index).map_y * 32, XCoord, YCoord, MapData(Xa, Ya).Engine_Light(1), LightColor, AmbientColor)
+                MapData(Xa, Ya).Engine_Light(0) = LightCalculate(Light_List(light_index).range, _
+                                                                 Light_List(light_index).map_x * 32, _
+                                                                 Light_List(light_index).map_y * 32, _
+                                                                 XCoord, _
+                                                                 YCoord, _
+                                                                 MapData(Xa, Ya).Engine_Light(0), _
+                                                                 LightColor, _
+                                                                 AmbientColor)
  
-                XCoord = Xa * 32 + 32
-                YCoord = Ya * 32
-                MapData(Xa, Ya).Engine_Light(3) = LightCalculate(Light_List(light_index).range, Light_List(light_index).map_x * 32, Light_List(light_index).map_y * 32, XCoord, YCoord, MapData(Xa, Ya).Engine_Light(3), LightColor, AmbientColor)
-                       
                 XCoord = Xa * 32
                 YCoord = Ya * 32 + 32
-                MapData(Xa, Ya).Engine_Light(0) = LightCalculate(Light_List(light_index).range, Light_List(light_index).map_x * 32, Light_List(light_index).map_y * 32, XCoord, YCoord, MapData(Xa, Ya).Engine_Light(0), LightColor, AmbientColor)
+                MapData(Xa, Ya).Engine_Light(1) = LightCalculate(Light_List(light_index).range, _
+                                                                 Light_List(light_index).map_x * 32, _
+                                                                 Light_List(light_index).map_y * 32, _
+                                                                 XCoord, _
+                                                                 YCoord, _
+                                                                 MapData(Xa, Ya).Engine_Light(1), _
+                                                                 LightColor, _
+                                                                 AmbientColor)
+                       
+                XCoord = Xa * 32 + 32
+                YCoord = Ya * 32 + 32
+                MapData(Xa, Ya).Engine_Light(2) = LightCalculate(Light_List(light_index).range, _
+                                                                 Light_List(light_index).map_x * 32, _
+                                                                 Light_List(light_index).map_y * 32, _
+                                                                 XCoord, _
+                                                                 YCoord, _
+                                                                 MapData(Xa, Ya).Engine_Light(2), _
+                                                                 LightColor, _
+                                                                 AmbientColor)
    
                 XCoord = Xa * 32 + 32
-                YCoord = Ya * 32 + 32
-                MapData(Xa, Ya).Engine_Light(2) = LightCalculate(Light_List(light_index).range, Light_List(light_index).map_x * 32, Light_List(light_index).map_y * 32, XCoord, YCoord, MapData(Xa, Ya).Engine_Light(2), LightColor, AmbientColor)
+                YCoord = Ya * 32
+                MapData(Xa, Ya).Engine_Light(3) = LightCalculate(Light_List(light_index).range, _
+                                                                 Light_List(light_index).map_x * 32, _
+                                                                 Light_List(light_index).map_y * 32, _
+                                                                 XCoord, _
+                                                                 YCoord, _
+                                                                 MapData(Xa, Ya).Engine_Light(3), _
+                                                                 LightColor, _
+                                                                 AmbientColor)
                
             End If
         Next Xa
@@ -212,28 +241,33 @@ Private Sub LightRender(ByVal light_index As Integer)
     End With
     
     'Arrange corners
+    
     'NE
     If InMapBounds(min_x, min_y) Then
         MapData(min_x, min_y).Engine_Light(2) = Color(2)
     End If
+    
     'NW
     If InMapBounds(max_x, min_y) Then
-        MapData(max_x, min_y).Engine_Light(0) = Color(0)
+        MapData(max_x, min_y).Engine_Light(1) = Color(1)
     End If
+    
     'SW
     If InMapBounds(max_x, max_y) Then
-        MapData(max_x, max_y).Engine_Light(1) = Color(1)
+        MapData(max_x, max_y).Engine_Light(0) = Color(0)
     End If
+    
     'SE
     If InMapBounds(min_x, max_y) Then
         MapData(min_x, max_y).Engine_Light(3) = Color(3)
     End If
     
     'Arrange borders
+    
     'Upper border
     For X = min_x + 1 To max_x - 1
         If InMapBounds(X, min_y) Then
-            MapData(X, min_y).Engine_Light(0) = Color(0)
+            MapData(X, min_y).Engine_Light(1) = Color(1)
             MapData(X, min_y).Engine_Light(2) = Color(2)
         End If
     Next X
@@ -241,7 +275,7 @@ Private Sub LightRender(ByVal light_index As Integer)
     'Lower border
     For X = min_x + 1 To max_x - 1
         If InMapBounds(X, max_y) Then
-            MapData(X, max_y).Engine_Light(1) = Color(1)
+            MapData(X, max_y).Engine_Light(0) = Color(0)
             MapData(X, max_y).Engine_Light(3) = Color(3)
         End If
     Next X
@@ -396,6 +430,7 @@ Public Function LightRenderAll() As Boolean
 handle:
     LightRenderAll = False
     Exit Function
+    
 End Function
 
 Public Function LightRemoveAll() As Boolean

@@ -84,7 +84,7 @@ Public Function Engine_DirectX8_Init() As Boolean
         ' D3DSWAPEFFECT_DISCARD:
         '   Means that every time the render is presented, the backbuffer
         '   image is destroyed, so everything must be rendered again.
-        .SwapEffect = IIf((ClientSetup.vSync) = True, D3DSWAPEFFECT_COPY_VSYNC, D3DSWAPEFFECT_DISCARD)
+        .SwapEffect = D3DSWAPEFFECT_DISCARD
         
         .BackBufferFormat = DispMode.Format
         .BackBufferWidth = ScreenWidth
@@ -623,16 +623,23 @@ Function Engine_Distance(ByVal x1 As Integer, ByVal y1 As Integer, ByVal x2 As I
 End Function
 
 Public Sub Engine_Update_FPS()
-    '***************************************************
+    '***************************************
     'Author: Standelf
     'Last Modification: 09/09/2019
-    'Calculate FPS
-    '***************************************************
+    'Calculate $ Limitate (if active) FPS.
+    '***************************************
 
-    If FPSLastCheck + 1000 < GetTickCount Then
+     If ClientSetup.LimiteFPS Then
+        While (GetTickCount - FPSLastCheck) \ 10 < FramesPerSecCounter
+            Call Sleep(5)
+        Wend
+    End If
+
+    If FPSLastCheck + 1000 < timeGetTime Then
         FPS = FramesPerSecCounter
         FramesPerSecCounter = 1
-        FPSLastCheck = GetTickCount
+        FPSLastCheck = timeGetTime
+    
     Else
         FramesPerSecCounter = FramesPerSecCounter + 1
 

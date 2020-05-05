@@ -1834,5 +1834,8 @@
     },
     "FRM_QUESTINFO_DESC": {
         "TEXTO": "About missions:"
+    },
+    "MENSAJE_USUARIO_VIAJANDO_HOGAR": {
+        "TEXTO": "You cannot move meanwhile you are traveling to your town..."
     }
 }

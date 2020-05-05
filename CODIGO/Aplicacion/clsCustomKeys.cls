@@ -66,7 +66,7 @@ Private Const KEY_CONFIG_FILE As String = "BindKeys.bin"
 
 Private Const KEY_CONFIG_FILE_ALTERNATIVE As String = "BindAlternativeKeys.bin"
 
-Private KEY_CONFIG_FILE_IN_USE As String
+Private KeyboardConfigurationInUse As String
 
 ''
 'Array of mapped keys
@@ -267,7 +267,7 @@ Public Sub LoadCustomKeys()
     Dim FileNum As Integer
 
      'Si no existe el archivo lo creamos con los bindings default:
-    If Not FileExist(Game.path(INIT) & KEY_CONFIG_FILE_IN_USE, vbArchive) Then
+    If Not FileExist(Game.path(INIT) & KeyboardConfigurationInUse, vbArchive) Then
 
         For i = 0 To NUM_CUSTOM_CONFIGS
             Call LoadDefaults(i)
@@ -281,7 +281,7 @@ Public Sub LoadCustomKeys()
         FileNum = FreeFile
 
         'Formato nuevo
-        Open Game.path(INIT) & KEY_CONFIG_FILE_IN_USE For Binary Access Read Lock Read Write As FileNum
+        Open Game.path(INIT) & KeyboardConfigurationInUse For Binary Access Read Lock Read Write As FileNum
         
         Get FileNum, , ActiveConfig
         
@@ -313,7 +313,7 @@ Dim FileNum As Integer
 
     FileNum = FreeFile()
     
-    Open Game.path(INIT) & KEY_CONFIG_FILE_IN_USE  For Binary Access Write As FileNum
+    Open Game.path(INIT) & KeyboardConfigurationInUse  For Binary Access Write As FileNum
     
     'Guardo la configuracion activa:
     Put FileNum, , ActiveConfig
@@ -501,13 +501,11 @@ Private Sub Class_Initialize()
 '18/11/2010: Amraphen - Ahora el manejo de errores se hace desde el sub LoadCustomKeys
 '06/11/2019: Recox - Ahora podemos manejar una configuracion default y una alternativa.
 '***************************************************
-    Dim KeyBindingConfigurationToUse
-    KeyBindingConfigurationToUse = GetVar(Game.path(INIT) & "Config.ini", "OTHER", "BIND_KEYS")
 
-    If KeyBindingConfigurationToUse = "Alternative" Then
-        KEY_CONFIG_FILE_IN_USE = KEY_CONFIG_FILE_ALTERNATIVE
+    If ClientSetup.KeyboardBindKeysConfig  = "Alternative" Then
+        KeyboardConfigurationInUse = KEY_CONFIG_FILE_ALTERNATIVE
     Else
-        KEY_CONFIG_FILE_IN_USE = KEY_CONFIG_FILE
+        KeyboardConfigurationInUse = KEY_CONFIG_FILE
     End If
     
     Call LoadCustomKeys
@@ -528,7 +526,7 @@ On Error Resume Next
 End Sub
 
 ''
-'Set the KEY_CONFIG_FILE_IN_USE. With the value desired
+'Set the KeyboardConfigurationInUse. With the value desired
 
 Public Sub SetKeyConfigFileInUse(ByVal KeyConfigToUse As String)
 '***************************************************
@@ -537,13 +535,14 @@ Public Sub SetKeyConfigFileInUse(ByVal KeyConfigToUse As String)
 '
 '***************************************************
     If KeyConfigToUse = "Alternative" Then
-        KEY_CONFIG_FILE_IN_USE = KEY_CONFIG_FILE_ALTERNATIVE
+        KeyboardConfigurationInUse = KEY_CONFIG_FILE_ALTERNATIVE
     Else
-        KEY_CONFIG_FILE_IN_USE = KEY_CONFIG_FILE
+        KeyboardConfigurationInUse = KEY_CONFIG_FILE
     End If
 
     Call LoadCustomKeys
 
+    ClientSetup.KeyboardBindKeysConfig = KeyConfigToUse
     'We saved in the config file the key config desired.
     Call WriteVar(Game.path(INIT) & "Config.ini", "OTHER", "BIND_KEYS", KeyConfigToUse)
 End Sub

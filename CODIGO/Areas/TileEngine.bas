@@ -1147,7 +1147,7 @@ Private Function GetElapsedTime() As Single
 
     'Get the timer frequency
     If timer_freq = 0 Then
-        QueryPerformanceFrequency timer_freq
+        Call QueryPerformanceFrequency(timer_freq)
     End If
     
     'Get current time

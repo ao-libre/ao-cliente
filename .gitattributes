@@ -7,32 +7,32 @@
 
 # Declare file types.
 # The - is a negation symbol, so  -text it means"not" text
-*.msv -text
-*.frx -text
-*.ico -text
-*.png -text
-*.psd -text
-*.ani -text
-*.gif -text
-*.jpg -text
-*.gif -text
-*.bmp -text
-*.mcl -text
-*.dll -text
-*.ind -text
-*.con -text
-*.bin -text
-*.mid -text
-*.mp3 -text
-*.wav -text
-*.ao -text
-*.ocx -text
-*.OCX -text
-*.map -text
-*.exe -text
-/GRAFICOS/Fonts/font1.dat -text
-/GRAFICOS/Fonts/font2.dat -text
-/GRAFICOS/Fonts/font3.dat -text
+*.msv binary
+*.frx binary
+*.ico binary
+*.png binary
+*.gif binary
+*.jpg binary
+*.gif binary
+*.bmp binary
+*.mcl binary
+*.dll binary
+*.ind binary
+*.con binary
+*.bin binary
+*.mid binary
+*.mp3 binary
+*.wav binary
+*.ao binary
+*.ocx binary
+*.OCX binary
+*.map binary
+*.exe binary
+*.ani binary
+*.inf binary
+/GRAFICOS/Fonts/font1.dat binary
+/GRAFICOS/Fonts/font2.dat binary
+/GRAFICOS/Fonts/font3.dat binary
 
 # Declare encoding of all files for code.
 *.bas encoding=ansi

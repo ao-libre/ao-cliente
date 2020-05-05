@@ -222,6 +222,7 @@ Private Sub btnNormalKeys_Click()
 End Sub
 
 Private Sub SetFalseMostrarBindKeysSelection()
+   ClientSetup.MostrarBindKeysSelection = False
    Call WriteVar(Game.path(INIT) & "Config.ini", "OTHER", "MOSTRAR_BIND_KEYS_SELECTION", "False")
 End Sub
 
