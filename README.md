@@ -1,4 +1,12 @@
 # Cliente Argentum Online Libre
+Importante, no bajar el codigo con el boton Download as a ZIP de github por que lo descarga mal, muchos archivos por el encoding quedan corruptos.
+
+Tenes que bajar el codigo con un cliente de git, con el cliente original de la linea de comandos seria:
+```
+git clone https://www.github.com/ao-libre/ao-cliente
+```
+
+
 ![AO Logo](https://ao-libre.github.io/ao-website/assets/images/logo.png)
 
 ## Wiki Desarrollo Argentum Online
