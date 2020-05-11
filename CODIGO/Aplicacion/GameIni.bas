@@ -149,7 +149,7 @@ Public Sub LeerConfiguracion()
         .PartyMembers = CBool(Lector.GetValue("VIDEO", "PartyMembers"))
         .TonalidadPJ = CBool(Lector.GetValue("VIDEO", "TonalidadPJ"))
         .UsarSombras = CBool(Lector.GetValue("VIDEO", "Sombras"))
-        .ParticleEngine = CBool(Lector.GetValue("VIDEO", "LimitarFPS"))
+        .ParticleEngine = CBool(Lector.GetValue("VIDEO", "ParticleEngine"))
         .LimiteFPS = CBool(Lector.GetValue("VIDEO", "LimitarFPS"))
         
         ' AUDIO
