@@ -629,11 +629,11 @@ Public Sub Engine_Update_FPS()
     'Calculate $ Limitate (if active) FPS.
     '***************************************
 
-     If ClientSetup.LimiteFPS Then
-        While (GetTickCount - FPSLastCheck) \ 10 < FramesPerSecCounter
-            Call Sleep(5)
-        Wend
-    End If
+    'If ClientSetup.LimiteFPS Then
+    '    While (GetTickCount - FPSLastCheck) \ 10 < FramesPerSecCounter
+    '        Call Sleep(5)
+    '    Wend
+    'End If
 
     If FPSLastCheck + 1000 < timeGetTime Then
         FPS = FramesPerSecCounter
