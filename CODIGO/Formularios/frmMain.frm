@@ -2802,11 +2802,14 @@ Private Sub Minimapa_MouseDown(Button As Integer, _
                                Shift As Integer, _
                                X As Single, _
                                Y As Single)
-
-    If Button = vbRightButton Then
-        Call WriteWarpChar("YO", UserMap, CByte(X - 1), CByte(Y - 1))
-        Call ActualizarMiniMapa
-    End If
+   If X > 87 Then X = 86
+   If X < 14 Then X = 15
+   If Y > 90 Then Y = 89
+   If Y < 11 Then Y = 12
+   If Button = vbRightButton Then
+      Call WriteWarpChar("YO", UserMap, CByte(X - 1), CByte(Y - 1))
+      Call ActualizarMiniMapa
+   End If
 End Sub
     'fin Incorporado ReyarB
 
