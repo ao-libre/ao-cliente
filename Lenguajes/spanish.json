@@ -1837,5 +1837,8 @@
     },
     "MENSAJE_USUARIO_VIAJANDO_HOGAR": {
         "TEXTO": "No puedes moverte mientras estas viajando a tu ciudad..."
+    },
+    "FRM_MAPA_TEXTO" : {
+        "TEXTO": "Mapa de Argentum Online, Presione Arriba y Abajo para cambiar entre mapa global / laberintos. Presione cualquier otra tecla para salir."
     }
 }
