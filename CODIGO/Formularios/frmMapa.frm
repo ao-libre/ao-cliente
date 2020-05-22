@@ -192,5 +192,5 @@ Private Sub imgToogleMap_Click(Index As Integer)
 End Sub
 
 Private Sub LoadTextsForm()
-    lblTexto.Caption = JsonLanguage.item("LBL_RETOS").item("TEXTO")
+    lblTexto.Caption = JsonLanguage.item("FRM_MAPA_TEXTO").item("TEXTO")
 End Sub
