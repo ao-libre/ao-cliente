@@ -1837,5 +1837,8 @@
     },
     "MENSAJE_USUARIO_VIAJANDO_HOGAR": {
         "TEXTO": "You cannot move meanwhile you are traveling to your town..."
+    },
+    "FRM_MAPA_TEXTO" : {
+        "TEXTO": "Argentum Online Map, Press Up and Down to switch between global map / mazes. Press any other key to exit."
     }
 }
