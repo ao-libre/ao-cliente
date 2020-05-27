@@ -162,6 +162,8 @@ On Error GoTo Error
     ' Handles Form movement (drag and drop).
     Set clsFormulario = New clsFormMovementManager
     clsFormulario.Initialize Me
+
+    Call LoadTextsForm
         
     'Cargamos las imagenes de los mapas
     Set picMaps(eMaps.ieGeneral) = LoadPicture(Game.path(Interfaces) & "mapa1.jpg")
@@ -187,4 +189,8 @@ End Sub
 
 Private Sub imgToogleMap_Click(Index As Integer)
     ToggleImgMaps
+End Sub
+
+Private Sub LoadTextsForm()
+    lblTexto.Caption = JsonLanguage.item("FRM_MAPA_TEXTO").item("TEXTO")
 End Sub
