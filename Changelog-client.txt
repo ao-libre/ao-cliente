@@ -756,5 +756,8 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 28/04/2020: Se arreglan mapas faltantes. (ReyarB)
 * 27/04/2020: Limitar FPS a 101 activable/desactivable desde Config.ini. (BelerianD - Chots)
 
--v0.13.35
+-v0.13.36 
 * 21/05/2020: Revertido - Limitar FPS a 101 activable/desactivable desde Config.ini. (BelerianD - Chots)
+
+-v0.13.37
+* 21/05/2020: Cambios en muchos Dats y Mapas (ReyarB - Fakkerz)
