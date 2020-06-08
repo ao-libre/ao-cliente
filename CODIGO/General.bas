@@ -651,7 +651,8 @@ Sub Main()
     ChDir App.path
 
     'Set resolution BEFORE the loading form is displayed, therefore it will be centered.
-    Call Resolution.SetResolution(1024, 768)
+    '08/06/2020: WalterSit0 - Cambiada la resolucion a 800x600.
+    Call Resolution.SetResolution(800, 600)
 
     ' Load constants, classes, flags, graphics..
     Call LoadInitialConfig
