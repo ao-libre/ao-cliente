@@ -763,3 +763,6 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 27/05/2020: Cambios en muchos Dats y Mapas (ReyarB - Fakkerz)
 * 27/05/2020: Se tradujo el frmMapa al ingles (Recox)
 * 27/05/2020: Se reemplazan minimapas por los que no tienen puntito rojo de bloqueo (ReyarB - Recox)
+
+-v0.13.38
+* 09/06/2020: Cambios en muchos Dats y Mapas (ReyarB - Fakkerz)
