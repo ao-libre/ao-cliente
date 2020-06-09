@@ -1,3 +1,26 @@
+# AO-LIBRE 800X600
+
+Este fork simplemente trae de nuevo el viejo frm para jugar a 800x600
+
+TODO:
+-Poner los botones de desafios y amigos
+
+# IMPORTANTE
+
+Para que este fork funcione tenes que ir al server y cambiar las constantes del mod Areas para adaptarse a la nueva resolucion del render
+Cambiar:
+
+Public Const XWindow            As Byte = 23
+
+Public Const YWindow            As Byte = 19
+
+
+Por:
+
+Public Const XWindow            As Byte = 17
+
+Public Const YWindow            As Byte = 13
+
 # Cliente Argentum Online Libre
 Importante, no bajar el codigo con el boton Download as a ZIP de github por que lo descarga mal, muchos archivos por el encoding quedan corruptos.
 
