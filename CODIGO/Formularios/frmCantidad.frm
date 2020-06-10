@@ -82,13 +82,14 @@ Begin VB.Form frmCantidad
       EndProperty
    End
    Begin VB.Label lblTitle 
+      Alignment       =   2  'Center
       BackStyle       =   0  'Transparent
       Caption         =   "Escriba la cantidad"
       Height          =   255
-      Left            =   720
+      Left            =   0
       TabIndex        =   3
       Top             =   120
-      Width           =   1935
+      Width           =   3135
       ForeColor       =   &H00FFFFFF&
        BeginProperty Font 
          Name            =   "Lucida Sans Unicode"
