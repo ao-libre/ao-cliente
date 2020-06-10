@@ -1120,6 +1120,10 @@ Private FirstTimeClanChat  As Boolean
 Dim CtrlMaskOn             As Boolean
 Dim SkinSeleccionado       As String
 
+'Para cuando se necesite enviar un mensaje a la consola dentro de un bucle al que no debas parar
+Public MsgTimeadoOn        As Boolean
+Public MsgTimeado          As String
+
 Private Const NEWBIE_USER_GOLD_COLOR As Long = vbCyan
 Private Const USER_GOLD_COLOR As Long = vbYellow
 
@@ -2026,6 +2030,12 @@ End Sub
 Private Sub Second_Timer()
 
     If Not DialogosClanes Is Nothing Then DialogosClanes.PassTimer
+
+    If MsgTimeadoOn Then
+        Call ShowConsoleMsg(MsgTimeado)
+        MsgTimeadoOn = False
+    End If
+
 End Sub
 
 '[END]'
