@@ -5099,55 +5099,64 @@ End Sub
 ' Handles the ChangeUserTradeSlot message.
 
 Private Sub HandleChangeUserTradeSlot()
-'***************************************************
-'Author: Juan Martin Sotuyo Dodero (Maraxus)
-'Last Modification: 05/17/06
-'
-'***************************************************
-    If incomingData.Length < 22 Then
-        Err.Raise incomingData.NotEnoughDataErrCode
+
+    '******************************************************************************************
+    'Author: Juan Martin Sotuyo Dodero (Maraxus)
+    'Last Modification: 17/06/2020
+    '17/06/2020 BelerianD - Se agrego un parametro que faltaba, causando runtime al comerciar.
+    '******************************************************************************************
+    If incomingData.Length < 24 Then
+        Call Err.Raise(incomingData.NotEnoughDataErrCode)
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+    On Error GoTo errhandler
+    
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Dim Buffer As clsByteQueue
+    Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
-    Dim OfferSlot As Byte
-    
-    'Remove packet ID
-    Call Buffer.ReadByte
-    
-    OfferSlot = Buffer.ReadByte
-    
     With Buffer
-        If OfferSlot = GOLD_OFFER_SLOT Then
-            Call InvOroComUsu(2).SetItem(1, .ReadInteger(), .ReadLong(), 0, _
-                                            .ReadInteger(), .ReadByte(), .ReadInteger(), _
-                                            .ReadInteger(), .ReadInteger(), .ReadInteger(), .ReadLong(), .ReadASCIIString())
-        Else
-            Call InvOfferComUsu(1).SetItem(OfferSlot, .ReadInteger(), .ReadLong(), 0, _
-                                            .ReadInteger(), .ReadByte(), .ReadInteger(), _
-                                            .ReadInteger(), .ReadInteger(), .ReadInteger(), .ReadLong(), .ReadASCIIString())
-        End If
-    End With
     
-    Call frmComerciarUsu.PrintCommerceMsg(TradingUserName & JsonLanguage.item("MENSAJE_COMM_OFERTA_CAMBIA").item("TEXTO"), FontTypeNames.FONTTYPE_VENENO)
+        'Remove packet ID
+        Call Buffer.ReadByte
+
+        Dim OfferSlot As Byte: OfferSlot = .ReadByte()
+        Dim OBJIndex  As Integer: OBJIndex = .ReadInteger()
+        Dim Amount    As Long: Amount = .ReadLong()
+        Dim GrhIndex  As Long: GrhIndex = .ReadLong()
+        Dim OBJType   As Byte: OBJType = .ReadByte()
+        Dim MaxHit    As Integer: MaxHit = .ReadInteger()
+        Dim MinHit    As Integer: MinHit = .ReadInteger()
+        Dim MaxDef    As Integer: MaxDef = .ReadInteger()
+        Dim MinDef    As Integer: MinDef = .ReadInteger()
+        Dim SalePrice As Long: SalePrice = .ReadLong()
+        Dim Name      As String: Name = .ReadASCIIString()
+   
+    End With
     
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
+
+    If OfferSlot = GOLD_OFFER_SLOT Then
+        Call InvOroComUsu(2).SetItem(1, OBJIndex, Amount, 0, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, SalePrice, Name)
+    Else
+        Call InvOfferComUsu(1).SetItem(OfferSlot, OBJIndex, Amount, 0, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, SalePrice, Name)
+    End If
     
-ErrHandler:
+    Call frmComerciarUsu.PrintCommerceMsg(TradingUserName & JsonLanguage.item("MENSAJE_COMM_OFERTA_CAMBIA").item("TEXTO"), FontTypeNames.FONTTYPE_VENENO)
+    
+errhandler:
     Dim Error As Long
-    Error = Err.number
-On Error GoTo 0
+    
+    On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set Buffer = Nothing
 
-    If Error <> 0 Then _
-        Err.Raise Error
+    If Error <> 0 Then Call Err.Raise(Error)
+        Call Err.Raise(Error)
 End Sub
 
 ''
