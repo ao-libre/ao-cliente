@@ -766,3 +766,6 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 
 -v0.13.38
 * 09/06/2020: Cambios en muchos Dats y Mapas (ReyarB - Fakkerz)
+
+-v0.13.39
+17/06/2020: Arreglado runtime al comerciar con usuarios (faltaba un parametro). (BelerianD)
