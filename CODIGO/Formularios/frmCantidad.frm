@@ -89,7 +89,7 @@ Begin VB.Form frmCantidad
       Left            =   0
       TabIndex        =   3
       Top             =   120
-      Width           =   3135
+      Width           =   3199
       ForeColor       =   &H00FFFFFF&
        BeginProperty Font 
          Name            =   "Lucida Sans Unicode"
