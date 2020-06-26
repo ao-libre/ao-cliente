@@ -30,12 +30,12 @@ NumLines=3
 Title=Opciones
 Line1=Cuando te sientas perdido, no desesperes. A tu derecha, haciendo un simple clic en el boton Opciones o presionando la tecla F5, podras llegar hasta el Manual del Juego para saciar todas tus dudas, o simplemente dar un vistazo al Mapa del mundo, para saber donde estas parado.
 Line2=Ademas de ello, podras configurar las teclas a la hora de jugar, como tambien asi cambiar tu contrase?a o acceder a este mismo Tutorial.
-Line3=Y, si estas aburrido, con ganas de escuchar algo de música mientras te diviertes, no dudes en sintonizar Radio Ao! Disfrutaras de música y diversion a todo volumen!
+Line3=Y, si estas aburrido, con ganas de escuchar algo de musica mientras te diviertes, no dudes en sintonizar Radio Ao! Disfrutaras de musica y diversion a todo volumen!
 
 [PAG4]
 NumLines=2
 Title=Seguro
-Line1=Ten cuidado al sacar el seguro! Este mismo te impedira convertirte en Criminal. Si tu intencion es venderle el alma al Demonio, solo tendras que intentar robar o atacar a algún Ciudadano o Ejercito Real. 
+Line1=Ten cuidado al sacar el seguro! Este mismo te impedira convertirte en Criminal. Si tu intencion es venderle el alma al Demonio, solo tendras que intentar robar o atacar a algun Ciudadano o Ejercito Real. 
 Line2=Recuerda que de esta manera, tu entrenamiento tendra que ser mas exhaustivo, ya que las adversidades se te presentaran en todo momento.
 
 [PAG5]
@@ -66,7 +66,7 @@ Line2=Podras conseguir el oro necesario ya sea matando criaturas que te premien 
 [PAG8]
 NumLines=1
 Title=Items e Inventario
-Line1=Los items te seran de mucha ayuda, pero ten cuidado, si mueres los perderas, a excepcion de los items newbies. Puedes guardarlos en el Banquero de la Ciudad o venderlo a algún comerciante interesado en el.
+Line1=Los items te seran de mucha ayuda, pero ten cuidado, si mueres los perderas, a excepcion de los items newbies. Puedes guardarlos en el Banquero de la Ciudad o venderlo a algun comerciante interesado en el.
 
 [PAG9]
 NumLines=1
