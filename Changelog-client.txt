@@ -768,4 +768,9 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 09/06/2020: Cambios en muchos Dats y Mapas (ReyarB - Fakkerz)
 
 -v0.13.39
-17/06/2020: Arreglado runtime al comerciar con usuarios. (BelerianD)
+* 17/06/2020: Arreglado runtime al comerciar con usuarios. (BelerianD)
+* 27/06/2020: Se sacaron acentos del archivo Tutorial_spanish.dat por que se corrompieron. (Recox)
+* 27/06/2020: Se agrando el ancho del label para que pueda entrar el texto Escriba la cantidad en el formulario de tirar oro (Recox)
+* 27/06/2020: Cambios en Mapas (ReyarB)
+* 27/06/2020: Fix a los excesivos mensajes en consola cuando intentas entrar a interiores equitando (waltersit0)
+* 27/06/2020: Utilidades en el panel gm para mapas y otras (ReyarB)
