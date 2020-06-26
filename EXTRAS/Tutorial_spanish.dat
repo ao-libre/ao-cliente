@@ -4,86 +4,83 @@ NumPags=11
 [PAG1]
 NumLines=4
 Title=Bienvenida 
-Line1=Ten viajero. Acepta este ropaje, estas bebidas y manzanas. Ha llegado la hora de emprender un largo viaje, en donde un nuevo mundo te estï¿½ esperando. En ï¿½l, podrï¿½s hacerte de amigos o bien de enemigos... Sea cual fuera tu elecciï¿½n, vivirï¿½s una nueva aventura en las fantï¿½sticas Tierras de este Mundo llamado...
+Line1=Ten viajero. Acepta este ropaje, estas bebidas y manzanas. Ha llegado la hora de emprender un largo viaje, en donde un nuevo mundo te esta esperando. En el, podras hacerte de amigos o bien de enemigos... Sea cual fuera tu eleccion, viviras una nueva aventura en las fantasticas Tierras de este Mundo llamado...
 Line2=Argentum Online
-Line3=En las pï¿½ginas siguientes podrï¿½s acceder a algunos consejos bï¿½sicos que te ayudarï¿½n en tu estadï¿½a en estas Tierras. 
-Line4=Podrï¿½s volver a acceder a este Tutorial desde el Botï¿½n de Opciones ubicado abajo a la derecha de la pantalla. 
+Line3=En las paginas siguientes podras acceder a algunos consejos basicos que te ayudaran en tu estadia en estas Tierras. 
+Line4=Podras volver a acceder a este Tutorial desde el Boton de Opciones ubicado abajo a la derecha de la pantalla. 
 
 [PAG2]
 Title=Skills
 NumLines=12
-Line1=Cada clase se destaca en la utilizaciï¿½n de ciertas habilidades o skills, los mismos varï¿½an de 0, al comenzar, hasta 100 cuando se alcanza la maestrï¿½a.
-Line2=Por cada nivel, se puede mejorar entre 2 y 3 puntos cada skill, con tan sï¿½lo utilizarlo. 
-Line3=Sin embargo, no todos pueden aumentarse de esa manera, tal es el caso de liderazgo o navegaciï¿½n, como tambiï¿½n hay otros que necesitan tener algunos puntos asignados antes de poder subirse naturalmente, como lo son magia, apuï¿½alar (excepto para asesinos), carpinterï¿½a y herrerï¿½a.
-Line4=Con cada nuevo nivel alcanzado, se te recompensarï¿½ con 5 SkillsPoints, los cuales podrï¿½s asignar presionando en la estrella ubicada en la esquina superior derecha de la pantalla.
-Line5=Es muy importante saber que deberï¿½s realizar una asignaciï¿½n inicial de 10 skills en cualquier habilidad, para que se te permita subir naturalmente las demï¿½s.
+Line1=Cada clase se destaca en la utilizacion de ciertas habilidades o skills, los mismos varian de 0, al comenzar, hasta 100 cuando se alcanza la maestria.
+Line2=Por cada nivel, se puede mejorar entre 2 y 3 puntos cada skill, con tan solo utilizarlo. 
+Line3=Sin embargo, no todos pueden aumentarse de esa manera, tal es el caso de liderazgo o navegacion, como tambien hay otros que necesitan tener algunos puntos asignados antes de poder subirse naturalmente, como lo son magia, apu?alar (excepto para asesinos), carpinteria y herreria.
+Line4=Con cada nuevo nivel alcanzado, se te recompensara con 5 SkillsPoints, los cuales podras asignar presionando en la estrella ubicada en la esquina superior derecha de la pantalla.
+Line5=Es muy importante saber que deberas realizar una asignacion inicial de 10 skills en cualquier habilidad, para que se te permita subir naturalmente las demas.
 Line6=Ten en cuenta, que los Skills son muy importantes a la hora de moldear tu Personaje, ya que definen tu destreza y habilidad a la hora del enfrentamiento.
 Line7=
-Line8=Si no comprendes muy bien el sistema, es recomendable que antes de empezar, visites el Manual del Juego y revises las variadas guï¿½as de asignaciï¿½n, aunque cada usuario diseï¿½a su propia estrategia de cï¿½mo asignar para obtener la maestrï¿½a en los skills mï¿½s relevantes para su clase, en la menor cantidad de niveles posibles.
+Line8=Si no comprendes muy bien el sistema, es recomendable que antes de empezar, visites el Manual del Juego y revises las variadas guias de asignacion, aunque cada usuario dise?a su propia estrategia de como asignar para obtener la maestria en los skills mas relevantes para su clase, en la menor cantidad de niveles posibles.
 Line9=
-Line10=ï¿½Piensa con cuidado antes de asignar!
+Line10=Piensa con cuidado antes de asignar!
 Line11=
-Line12=ï¿½Mucha Suerte Aventurero! 
-Line13=
-Line14=Link del Manual:
-Line15=http://wiki.argentumonline.org/
+Line12=Mucha Suerte Aventurero! 
 
 [PAG3]
 NumLines=3
 Title=Opciones
-Line1=Cuando te sientas perdido, no desesperes. A tu derecha, haciendo un simple clic en el botï¿½n Opciones o presionando la tecla F5, podrï¿½s llegar hasta el Manual del Juego para saciar todas tus dudas, o simplemente dar un vistazo al Mapa del mundo, para saber dï¿½nde estï¿½s parado.
-Line2=Ademï¿½s de ello, podrï¿½s configurar las teclas a la hora de jugar, como tambiï¿½n asï¿½ cambiar tu contraseï¿½a o acceder a este mismo Tutorial.
-Line3=Y, si estï¿½s aburrido, con ganas de escuchar algo de mï¿½sica mientras te diviertes, ï¿½no dudes en sintonizar Radio Ao! ï¿½Disfrutarï¿½s de mï¿½sica y diversiï¿½n a todo volumen!
+Line1=Cuando te sientas perdido, no desesperes. A tu derecha, haciendo un simple clic en el boton Opciones o presionando la tecla F5, podras llegar hasta el Manual del Juego para saciar todas tus dudas, o simplemente dar un vistazo al Mapa del mundo, para saber donde estas parado.
+Line2=Ademas de ello, podras configurar las teclas a la hora de jugar, como tambien asi cambiar tu contrase?a o acceder a este mismo Tutorial.
+Line3=Y, si estas aburrido, con ganas de escuchar algo de música mientras te diviertes, no dudes en sintonizar Radio Ao! Disfrutaras de música y diversion a todo volumen!
 
 [PAG4]
 NumLines=2
 Title=Seguro
-Line1=ï¿½Ten cuidado al sacar el seguro! Este mismo te impedirï¿½ convertirte en Criminal. Si tu intenciï¿½n es venderle el alma al Demonio, sï¿½lo tendrï¿½s que intentar robar o atacar a algï¿½n Ciudadano o Ejï¿½rcito Real. 
-Line2=Recuerda que de esta manera, tu entrenamiento tendrï¿½ que ser mï¿½s exhaustivo, ya que las adversidades se te presentarï¿½n en todo momento.
+Line1=Ten cuidado al sacar el seguro! Este mismo te impedira convertirte en Criminal. Si tu intencion es venderle el alma al Demonio, solo tendras que intentar robar o atacar a algún Ciudadano o Ejercito Real. 
+Line2=Recuerda que de esta manera, tu entrenamiento tendra que ser mas exhaustivo, ya que las adversidades se te presentaran en todo momento.
 
 [PAG5]
 NumLines=1
-Title=Muerte y Resurrecciï¿½n
-Line1=En caso de que caigas en Batalla, o una criatura te haya herido letalmente, deberï¿½s dirigirte a la Ciudad mï¿½s cercana, para encontrar al Sacerdote del pueblo, quiï¿½n te darï¿½ instrucciones de cï¿½mo curarte y/o volverte a la vida.
+Title=Muerte y Resurreccion
+Line1=En caso de que caigas en Batalla, o una criatura te haya herido letalmente, deberas dirigirte a la Ciudad mas cercana, para encontrar al Sacerdote del pueblo, quien te dara instrucciones de como curarte y/o volverte a la vida.
 
 [PAG6]
 NumLines=10
 Title=Sistema de Combate
 Line1=Existen 3 formas de atacar: utilizando la magia, el combate cuerpo a cuerpo o con proyectiles.
 Line2=
-Line3=Los hechizos los podrï¿½s encontrar junto a la pestaï¿½a del inventario, ubicada a la derecha de la pantalla. Podrï¿½s acomodarlos a tu gusto, utilizando las flechitas de la pestaï¿½a.
-Line4=Para utilizarlos, es tan sencillo como seleccionar el deseado, presionar en lanzar y finalmente lanzarlo sobre la vï¿½ctima.
-Line5=ï¿½Cï¿½mo conseguirlos? Deberï¿½s, o conseguirlo mediante el Comerciante de Hechicerï¿½a, ubicados en cada una de las Ciudades, o bien, si el azar estï¿½ de tu lado, al acabar con una temible criatura podrï¿½a brindï¿½rtelo como recompensa por tu esfuerzo.
-Line6=Para mï¿½s informaciï¿½n sobre el efecto y requerimiento de cada hechizo, sï¿½lo selecciï¿½nalo y presiona el botï¿½n "info".
+Line3=Los hechizos los podras encontrar junto a la pesta?a del inventario, ubicada a la derecha de la pantalla. Podras acomodarlos a tu gusto, utilizando las flechitas de la pesta?a.
+Line4=Para utilizarlos, es tan sencillo como seleccionar el deseado, presionar en lanzar y finalmente lanzarlo sobre la victima.
+Line5=Como conseguirlos? Deberas, o conseguirlo mediante el Comerciante de Hechiceria, ubicados en cada una de las Ciudades, o bien, si el azar esta de tu lado, al acabar con una temible criatura podria brindartelo como recompensa por tu esfuerzo.
+Line6=Para mas informacion sobre el efecto y requerimiento de cada hechizo, solo seleccionalo y presiona el boton "info".
 Line7=
-Line8=Para atacar cuerpo a cuerpo, simplemente se debe presionar la tecla "Ctrl" cuando te encuentres a un lado de la victima. El daï¿½o dependerï¿½ del arma equipada, aunque no es necesario tener una, ya que es posible atacar con los puï¿½os (especialidad de algunas clases).
+Line8=Para atacar cuerpo a cuerpo, simplemente se debe presionar la tecla "Ctrl" cuando te encuentres a un lado de la victima. El da?o dependera del arma equipada, aunque no es necesario tener una, ya que es posible atacar con los pu?os (especialidad de algunas clases).
 Line9=
 Line10=Finalmente, para atacar con proyectiles se debe conseguir un arco y flechas o cuchillas (solo en el caso del pirata). Tras haberlos equipado presionando la "E", solo resta presionar "U" sobre el arco o cuchillas y seleccionar el objetivo a atacar.
 
 [PAG7]
 NumLines=2
 Title=Oro y Almacenamiento
-Line1=Sï¿½lo podrï¿½s cargar el valor de tu nivel, multiplicado por 10.000 monedas. En caso de que lleves una mayor cantidad, y mueras, el sobrante de ese dinero se esparcirï¿½ junto a tus ï¿½tems, siempre y cuando no seas newbie. Para que esto no pase, puedes depositarlas en el Banquero de la Ciudad.
-Line2=Podrï¿½s conseguir el oro necesario ya sea matando criaturas que te premien por tu esfuerzo, o bien vendiendo aquellos objetos que no necesites, tanto a usuarios como a comerciantes.
+Line1=Solo podras cargar el valor de tu nivel, multiplicado por 10.000 monedas. En caso de que lleves una mayor cantidad, y mueras, el sobrante de ese dinero se esparcira junto a tus items, siempre y cuando no seas newbie. Para que esto no pase, puedes depositarlas en el Banquero de la Ciudad.
+Line2=Podras conseguir el oro necesario ya sea matando criaturas que te premien por tu esfuerzo, o bien vendiendo aquellos objetos que no necesites, tanto a usuarios como a comerciantes.
 
 [PAG8]
 NumLines=1
-Title=ï¿½tems e Inventario
-Line1=Los ï¿½tems te serï¿½n de mucha ayuda, pero ten cuidado, si mueres los perderï¿½s, a excepciï¿½n de los ï¿½tems newbies. Puedes guardarlos en el Banquero de la Ciudad o venderlo a algï¿½n comerciante interesado en ï¿½l.
+Title=Ítems e Inventario
+Line1=Los items te seran de mucha ayuda, pero ten cuidado, si mueres los perderas, a excepcion de los items newbies. Puedes guardarlos en el Banquero de la Ciudad o venderlo a algún comerciante interesado en el.
 
 [PAG9]
 NumLines=1
 Title=Trabajo y Macros
-Line1=Recuerda tener los suficientes vï¿½veres como para no perder tiempo, ya que sin energï¿½a se hace imposible realizar la tarea en cuestiï¿½n. Eso sï¿½, estate atento, un Centinela puede aparecer en cualquier momento, y requerirte que escribas un comando en tu pantalla, para asegurarse que el trabajo estï¿½ siendo supervisado por ti.
+Line1=Recuerda tener los suficientes viveres como para no perder tiempo, ya que sin energia se hace imposible realizar la tarea en cuestion. Eso si, estate atento, un Centinela puede aparecer en cualquier momento, y requerirte que escribas un comando en tu pantalla, para asegurarse que el trabajo este siendo supervisado por ti.
 
 [PAG10]
 NumLines=3
 Title=Entrenamiento y Pertenencia de Npcs
-Line1=Al golpear a una criatura te harï¿½s poseedor de la misma. Recuerda que en caso de que alguien mï¿½s le haga daï¿½o a la misma, podrï¿½s atacarlo sin convertirte en Criminal siempre y cuando notes que su nick se ha vuelto violeta. 
-Line2=Al atacarlo, permitirï¿½s que ï¿½l pueda defenderse tambiï¿½n, y si te vence, tampoco se convertirï¿½ en Criminal... 
-Line3=Ten cuidado tambiï¿½n con abusarte de pegarle a criaturas de otros Ciudadanos, a la larga podrï¿½s convertirte en Criminal.
+Line1=Al golpear a una criatura te haras poseedor de la misma. Recuerda que en caso de que alguien mas le haga da?o a la misma, podras atacarlo sin convertirte en Criminal siempre y cuando notes que su nick se ha vuelto violeta. 
+Line2=Al atacarlo, permitiras que el pueda defenderse tambien, y si te vence, tampoco se convertira en Criminal... 
+Line3=Ten cuidado tambien con abusarte de pegarle a criaturas de otros Ciudadanos, a la larga podras convertirte en Criminal.
 
 [PAG11]
 NumLines=1
 Title=Zonas Inseguras
-Line1= Ten cuidado al salir de las Ciudades. Fuera de ellas, cualquier Personaje podrï¿½ atacarte y quedarse con todas tus pertenencias. 
+Line1= Ten cuidado al salir de las Ciudades. Fuera de ellas, cualquier Personaje podra atacarte y quedarse con todas tus pertenencias. 
