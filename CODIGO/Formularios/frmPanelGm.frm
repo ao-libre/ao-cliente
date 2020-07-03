@@ -13,6 +13,7 @@ Begin VB.Form frmPanelGm
    MinButton       =   0   'False
    ScaleHeight     =   8760
    ScaleWidth      =   4335
+   StartUpPosition =   1  'CenterOwner
    Begin VB.CommandButton cmdCerrar 
       Caption         =   "Cerrar"
       CausesValidation=   0   'False
