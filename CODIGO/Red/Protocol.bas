@@ -926,9 +926,10 @@ On Error Resume Next
     
     'Done with this packet, move on to next one
     If incomingData.Length > 0 And Err.number <> incomingData.NotEnoughDataErrCode Then
-        Err.Clear
+        Call Err.Clear
         Call HandleIncomingData
     End If
+    
 End Sub
 
 Public Sub HandleMultiMessage()
@@ -940,6 +941,7 @@ Public Sub HandleMultiMessage()
     ' 09/21/2010: C4b3z0n - Now the fragshooter operates taking the screen after the change of killed charindex to ghost only if target charindex is visible to the client, else it will take screenshot like before.
     ' 11/16/2010: Amraphen - Recoded how the FragShooter works.
     ' 04/12/2019: jopiortiz - Carga de mensajes desde JSON.
+    ' 04/07/2020: jopiortiz - Mensajes relacionados al sistema de combate al RecTxt_Combate.
     '***************************************************
     Dim BodyPart As Byte
 
@@ -955,7 +957,7 @@ Public Sub HandleMultiMessage()
         Select Case .ReadByte
 
             Case eMessages.NPCSwing
-                Call AddtoRichTextBox(frmMain.RecTxt, _
+                Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
                         JsonLanguage.item("MENSAJE_CRIATURA_FALLA_GOLPE").item("TEXTO"), _
                         JsonLanguage.item("MENSAJE_CRIATURA_FALLA_GOLPE").item("COLOR").item(1), _
                         JsonLanguage.item("MENSAJE_CRIATURA_FALLA_GOLPE").item("COLOR").item(2), _
@@ -963,7 +965,7 @@ Public Sub HandleMultiMessage()
                         True, False, True)
         
             Case eMessages.NPCKillUser
-                Call AddtoRichTextBox(frmMain.RecTxt, _
+                Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
                     JsonLanguage.item("MENSAJE_CRIATURA_MATADO").item("TEXTO"), _
                     JsonLanguage.item("MENSAJE_CRIATURA_MATADO").item("COLOR").item(1), _
                     JsonLanguage.item("MENSAJE_CRIATURA_MATADO").item("COLOR").item(2), _
@@ -971,7 +973,7 @@ Public Sub HandleMultiMessage()
                     True, False, True)
         
             Case eMessages.BlockedWithShieldUser
-                Call AddtoRichTextBox(frmMain.RecTxt, _
+                Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
                     JsonLanguage.item("MENSAJE_RECHAZO_ATAQUE_ESCUDO").item("TEXTO"), _
                     JsonLanguage.item("MENSAJE_RECHAZO_ATAQUE_ESCUDO").item("COLOR").item(1), _
                     JsonLanguage.item("MENSAJE_RECHAZO_ATAQUE_ESCUDO").item("COLOR").item(2), _
@@ -979,7 +981,7 @@ Public Sub HandleMultiMessage()
                     True, False, True)
         
             Case eMessages.BlockedWithShieldOther
-                Call AddtoRichTextBox(frmMain.RecTxt, _
+                Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
                     JsonLanguage.item("MENSAJE_USUARIO_RECHAZO_ATAQUE_ESCUDO").item("TEXTO"), _
                     JsonLanguage.item("MENSAJE_USUARIO_RECHAZO_ATAQUE_ESCUDO").item("COLOR").item(1), _
                     JsonLanguage.item("MENSAJE_USUARIO_RECHAZO_ATAQUE_ESCUDO").item("COLOR").item(2), _
@@ -987,7 +989,7 @@ Public Sub HandleMultiMessage()
                     True, False, True)
         
             Case eMessages.UserSwing
-                Call AddtoRichTextBox(frmMain.RecTxt, _
+                Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
                     JsonLanguage.item("MENSAJE_FALLADO_GOLPE").item("TEXTO"), _
                     JsonLanguage.item("MENSAJE_FALLADO_GOLPE").item("COLOR").item(1), _
                     JsonLanguage.item("MENSAJE_FALLADO_GOLPE").item("COLOR").item(2), _
@@ -1008,26 +1010,26 @@ Public Sub HandleMultiMessage()
         
             Case eMessages.NobilityLost
                 Call AddtoRichTextBox(frmMain.RecTxt, _
-                    JsonLanguage.item("MENSAJE_PIERDE_NOBLEZA").item("TEXTO"), _
-                    JsonLanguage.item("MENSAJE_PIERDE_NOBLEZA").item("COLOR").item(1), _
-                    JsonLanguage.item("MENSAJE_PIERDE_NOBLEZA").item("COLOR").item(2), _
-                    JsonLanguage.item("MENSAJE_PIERDE_NOBLEZA").item("COLOR").item(3), _
-                    False, False, True)
+                                        JsonLanguage.item("MENSAJE_PIERDE_NOBLEZA").item("TEXTO"), _
+                                        JsonLanguage.item("MENSAJE_PIERDE_NOBLEZA").item("COLOR").item(1), _
+                                        JsonLanguage.item("MENSAJE_PIERDE_NOBLEZA").item("COLOR").item(2), _
+                                        JsonLanguage.item("MENSAJE_PIERDE_NOBLEZA").item("COLOR").item(3), _
+                                        False, False, True)
         
             Case eMessages.CantUseWhileMeditating
                 Call AddtoRichTextBox(frmMain.RecTxt, _
-                    JsonLanguage.item("MENSAJE_USAR_MEDITANDO").item("TEXTO"), _
-                    JsonLanguage.item("MENSAJE_USAR_MEDITANDO").item("COLOR").item(1), _
-                    JsonLanguage.item("MENSAJE_USAR_MEDITANDO").item("COLOR").item(2), _
-                    JsonLanguage.item("MENSAJE_USAR_MEDITANDO").item("COLOR").item(3), _
-                    False, False, True)
+                                        JsonLanguage.item("MENSAJE_USAR_MEDITANDO").item("TEXTO"), _
+                                        JsonLanguage.item("MENSAJE_USAR_MEDITANDO").item("COLOR").item(1), _
+                                        JsonLanguage.item("MENSAJE_USAR_MEDITANDO").item("COLOR").item(2), _
+                                        JsonLanguage.item("MENSAJE_USAR_MEDITANDO").item("COLOR").item(3), _
+                                        False, False, True)
         
             Case eMessages.NPCHitUser
 
                 Select Case incomingData.ReadByte()
 
                     Case ePartesCuerpo.bCabeza
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
                             JsonLanguage.item("MENSAJE_GOLPE_CABEZA").item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", _
                             JsonLanguage.item("MENSAJE_GOLPE_CABEZA").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_GOLPE_CABEZA").item("COLOR").item(2), _
@@ -1035,7 +1037,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bBrazoIzquierdo
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
                             JsonLanguage.item("MENSAJE_GOLPE_BRAZO_IZQ").item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", _
                             JsonLanguage.item("MENSAJE_GOLPE_BRAZO_IZQ").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_GOLPE_BRAZO_IZQ").item("COLOR").item(2), _
@@ -1043,7 +1045,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bBrazoDerecho
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
                             JsonLanguage.item("MENSAJE_GOLPE_BRAZO_DER").item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", _
                             JsonLanguage.item("MENSAJE_GOLPE_BRAZO_DER").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_GOLPE_BRAZO_DER").item("COLOR").item(2), _
@@ -1051,7 +1053,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bPiernaIzquierda
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
                             JsonLanguage.item("MENSAJE_GOLPE_PIERNA_IZQ").item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", _
                             JsonLanguage.item("MENSAJE_GOLPE_PIERNA_IZQ").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_GOLPE_PIERNA_IZQ").item("COLOR").item(2), _
@@ -1059,7 +1061,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bPiernaDerecha
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
                             JsonLanguage.item("MENSAJE_GOLPE_PIERNA_DER").item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", _
                             JsonLanguage.item("MENSAJE_GOLPE_PIERNA_DER").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_GOLPE_PIERNA_DER").item("COLOR").item(2), _
@@ -1067,7 +1069,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bTorso
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
                             JsonLanguage.item("MENSAJE_GOLPE_TORSO").item("TEXTO") & CStr(incomingData.ReadInteger() & "!!"), _
                             JsonLanguage.item("MENSAJE_GOLPE_TORSO").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_GOLPE_TORSO").item("COLOR").item(2), _
@@ -1081,20 +1083,20 @@ Public Sub HandleMultiMessage()
                     MsgHitNpc = JsonLanguage.item("MENSAJE_DAMAGE_NPC").item("TEXTO")
                     MsgHitNpc = Replace$(MsgHitNpc, "VAR_DANO", CStr(incomingData.ReadLong()))
                     
-                Call AddtoRichTextBox(frmMain.RecTxt, _
-                    MsgHitNpc, _
-                    JsonLanguage.item("MENSAJE_DAMAGE_NPC").item("COLOR").item(1), _
-                    JsonLanguage.item("MENSAJE_DAMAGE_NPC").item("COLOR").item(2), _
-                    JsonLanguage.item("MENSAJE_DAMAGE_NPC").item("COLOR").item(3), _
-                    True, False, True)
+                Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                                        MsgHitNpc, _
+                                        JsonLanguage.item("MENSAJE_DAMAGE_NPC").item("COLOR").item(1), _
+                                        JsonLanguage.item("MENSAJE_DAMAGE_NPC").item("COLOR").item(2), _
+                                        JsonLanguage.item("MENSAJE_DAMAGE_NPC").item("COLOR").item(3), _
+                                        True, False, True)
         
             Case eMessages.UserAttackedSwing
-                Call AddtoRichTextBox(frmMain.RecTxt, _
-                    charlist(incomingData.ReadInteger()).Nombre & JsonLanguage.item("MENSAJE_ATAQUE_FALLO").item("TEXTO"), _
-                    JsonLanguage.item("MENSAJE_ATAQUE_FALLO").item("COLOR").item(1), _
-                    JsonLanguage.item("MENSAJE_ATAQUE_FALLO").item("COLOR").item(2), _
-                    JsonLanguage.item("MENSAJE_ATAQUE_FALLO").item("COLOR").item(3), _
-                    True, False, True)
+                Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                                        charlist(incomingData.ReadInteger()).Nombre & JsonLanguage.item("MENSAJE_ATAQUE_FALLO").item("TEXTO"), _
+                                        JsonLanguage.item("MENSAJE_ATAQUE_FALLO").item("COLOR").item(1), _
+                                        JsonLanguage.item("MENSAJE_ATAQUE_FALLO").item("COLOR").item(2), _
+                                        JsonLanguage.item("MENSAJE_ATAQUE_FALLO").item("COLOR").item(3), _
+                                        True, False, True)
         
             Case eMessages.UserHittedByUser
 
@@ -1107,7 +1109,7 @@ Public Sub HandleMultiMessage()
                 Select Case BodyPart
 
                     Case ePartesCuerpo.bCabeza
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
                             AttackerName & JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_CABEZA").item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_CABEZA").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_CABEZA").item("COLOR").item(2), _
@@ -1115,7 +1117,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bBrazoIzquierdo
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
                         AttackerName & JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ").item("TEXTO") & Dano & MENSAJE_2, _
                         JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ").item("COLOR").item(1), _
                         JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ").item("COLOR").item(2), _
@@ -1123,7 +1125,7 @@ Public Sub HandleMultiMessage()
                         True, False, True)
                 
                     Case ePartesCuerpo.bBrazoDerecho
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
                             AttackerName & JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_BRAZO_DER").item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_BRAZO_DER").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_BRAZO_DER").item("COLOR").item(2), _
@@ -1131,7 +1133,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bPiernaIzquierda
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
                             AttackerName & JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ").item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ").item("COLOR").item(2), _
@@ -1139,7 +1141,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bPiernaDerecha
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
                             AttackerName & JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_PIERNA_DER").item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_PIERNA_DER").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_PIERNA_DER").item("COLOR").item(2), _
@@ -1147,7 +1149,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bTorso
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
                             AttackerName & JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_TORSO").item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_TORSO").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_TORSO").item("COLOR").item(2), _
@@ -1167,7 +1169,7 @@ Public Sub HandleMultiMessage()
                 Select Case BodyPart
 
                     Case ePartesCuerpo.bCabeza
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_1").item("TEXTO") & VictimName & JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_CABEZA").item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_CABEZA").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_CABEZA").item("COLOR").item(2), _
@@ -1175,7 +1177,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bBrazoIzquierdo
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_1").item("TEXTO") & VictimName & JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_BRAZO_IZQ").item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_BRAZO_IZQ").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_BRAZO_IZQ").item("COLOR").item(2), _
@@ -1183,7 +1185,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bBrazoDerecho
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_1").item("TEXTO") & VictimName & JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_BRAZO_DER").item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_BRAZO_DER").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_BRAZO_DER").item("COLOR").item(2), _
@@ -1191,7 +1193,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bPiernaIzquierda
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_1").item("TEXTO") & VictimName & JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_PIERNA_IZQ").item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_PIERNA_IZQ").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_PIERNA_IZQ").item("COLOR").item(2), _
@@ -1199,7 +1201,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bPiernaDerecha
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_1").item("TEXTO") & VictimName & JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_PIERNA_DER").item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_PIERNA_DER").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_PIERNA_DER").item("COLOR").item(2), _
@@ -1207,7 +1209,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bTorso
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_1").item("TEXTO") & VictimName & JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_TORSO").item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_TORSO").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_TORSO").item("COLOR").item(2), _
@@ -1217,6 +1219,7 @@ Public Sub HandleMultiMessage()
                 End Select
         
             Case eMessages.WorkRequestTarget
+                
                 UsingSkill = incomingData.ReadByte()
             
                 frmMain.MousePointer = 2 'vbCrosshair
@@ -1224,49 +1227,49 @@ Public Sub HandleMultiMessage()
                 Select Case UsingSkill
 
                     Case Magia
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
                             JsonLanguage.item("MENSAJE_TRABAJO_MAGIA").item("TEXTO"), _
                             JsonLanguage.item("MENSAJE_TRABAJO_MAGIA").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_TRABAJO_MAGIA").item("COLOR").item(2), _
                             JsonLanguage.item("MENSAJE_TRABAJO_MAGIA").item("COLOR").item(3))
                 
                     Case Pesca
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
                             JsonLanguage.item("MENSAJE_TRABAJO_PESCA").item("TEXTO"), _
                             JsonLanguage.item("MENSAJE_TRABAJO_PESCA").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_TRABAJO_PESCA").item("COLOR").item(2), _
                             JsonLanguage.item("MENSAJE_TRABAJO_PESCA").item("COLOR").item(3))
                 
                     Case Robar
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
                             JsonLanguage.item("MENSAJE_TRABAJO_ROBAR").item("TEXTO"), _
                             JsonLanguage.item("MENSAJE_TRABAJO_ROBAR").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_TRABAJO_ROBAR").item("COLOR").item(2), _
                             JsonLanguage.item("MENSAJE_TRABAJO_ROBAR").item("COLOR").item(3))
                 
                     Case Talar
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
                             JsonLanguage.item("MENSAJE_TRABAJO_TALAR").item("TEXTO"), _
                             JsonLanguage.item("MENSAJE_TRABAJO_TALAR").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_TRABAJO_TALAR").item("COLOR").item(2), _
                             JsonLanguage.item("MENSAJE_TRABAJO_TALAR").item("COLOR").item(3))
                 
                     Case Mineria
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
                             JsonLanguage.item("MENSAJE_TRABAJO_MINERIA").item("TEXTO"), _
                             JsonLanguage.item("MENSAJE_TRABAJO_MINERIA").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_TRABAJO_MINERIA").item("COLOR").item(2), _
                             JsonLanguage.item("MENSAJE_TRABAJO_MINERIA").item("COLOR").item(3))
                 
                     Case FundirMetal
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
                             JsonLanguage.item("MENSAJE_TRABAJO_FUNDIRMETAL").item("TEXTO"), _
                             JsonLanguage.item("MENSAJE_TRABAJO_FUNDIRMETAL").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_TRABAJO_FUNDIRMETAL").item("COLOR").item(2), _
                             JsonLanguage.item("MENSAJE_TRABAJO_FUNDIRMETAL").item("COLOR").item(3))
                 
                     Case Proyectiles
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
                             JsonLanguage.item("MENSAJE_TRABAJO_PROYECTILES").item("TEXTO"), _
                             JsonLanguage.item("MENSAJE_TRABAJO_PROYECTILES").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_TRABAJO_PROYECTILES").item("COLOR").item(2), _
@@ -1277,15 +1280,13 @@ Public Sub HandleMultiMessage()
             Case eMessages.HaveKilledUser
 
                 Dim KilledUser As Integer
-
                 Dim Exp        As Long
-                
                 Dim MensajeExp As String
             
                 KilledUser = .ReadInteger
                 Exp = .ReadLong
             
-                Call ShowConsoleMsg( _
+                Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
                     JsonLanguage.item("MENSAJE_HAS_MATADO_A").item("TEXTO") & charlist(KilledUser).Nombre & MENSAJE_22, _
                     JsonLanguage.item("MENSAJE_HAS_MATADO_A").item("COLOR").item(1), _
                     JsonLanguage.item("MENSAJE_HAS_MATADO_A").item("COLOR").item(2), _
@@ -1296,7 +1297,8 @@ Public Sub HandleMultiMessage()
                 MensajeExp = JsonLanguage.item("MENSAJE_HAS_GANADO_EXP").item("TEXTO") 'String original
                 MensajeExp = Replace$(MensajeExp, "VAR_EXP_GANADA", Exp) 'Parte a reemplazar
                 
-                Call ShowConsoleMsg(MensajeExp, _
+                Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                                    MensajeExp, _
                                     JsonLanguage.item("MENSAJE_HAS_GANADO_EXP").item("COLOR").item(1), _
                                     JsonLanguage.item("MENSAJE_HAS_GANADO_EXP").item("COLOR").item(2), _
                                     JsonLanguage.item("MENSAJE_HAS_GANADO_EXP").item("COLOR").item(3), _
@@ -1304,12 +1306,11 @@ Public Sub HandleMultiMessage()
             
                 'Sacamos un screenshot si esta activado el FragShooter:
                 If ClientSetup.bKill And ClientSetup.bActive Then
+                    
                     If Exp \ 2 > ClientSetup.byMurderedLevel Then
                         FragShooterNickname = charlist(KilledUser).Nombre
                         FragShooterKilledSomeone = True
-                    
                         FragShooterCapturePending = True
-
                     End If
 
                 End If
@@ -1317,10 +1318,10 @@ Public Sub HandleMultiMessage()
             Case eMessages.UserKill
 
                 Dim KillerUser As Integer
+                    KillerUser = .ReadInteger
             
-                KillerUser = .ReadInteger
-            
-                Call ShowConsoleMsg(charlist(KillerUser).Nombre & JsonLanguage.item("MENSAJE_TE_HA_MATADO").item("TEXTO"), _
+                Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                                    charlist(KillerUser).Nombre & JsonLanguage.item("MENSAJE_TE_HA_MATADO").item("TEXTO"), _
                                     JsonLanguage.item("MENSAJE_TE_HA_MATADO").item("COLOR").item(1), _
                                     JsonLanguage.item("MENSAJE_TE_HA_MATADO").item("COLOR").item(2), _
                                     JsonLanguage.item("MENSAJE_TE_HA_MATADO").item("COLOR").item(3), _
@@ -1349,13 +1350,9 @@ Public Sub HandleMultiMessage()
             Case eMessages.GoHome
 
                 Dim Distance As Byte
-
                 Dim Hogar    As String
-
                 Dim tiempo   As Integer
-
                 Dim msg      As String
-                
                 Dim msgGoHome As String
             
                 Distance = .ReadByte
@@ -1408,7 +1405,8 @@ Public Sub HandleMultiMessage()
                                     JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(3))
         
             Case eMessages.NpcInmune
-                Call ShowConsoleMsg(JsonLanguage.item("NPC_INMUNE").item("TEXTO"), _
+                Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                                    JsonLanguage.item("NPC_INMUNE").item("TEXTO"), _
                                     JsonLanguage.item("NPC_INMUNE").item("COLOR").item(1), _
                                     JsonLanguage.item("NPC_INMUNE").item("COLOR").item(2), _
                                     JsonLanguage.item("NPC_INMUNE").item("COLOR").item(3))

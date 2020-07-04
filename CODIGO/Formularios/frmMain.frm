@@ -27,13 +27,56 @@ Begin VB.Form frmMain
    Icon            =   "frmMain.frx":0000
    KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
+   MaxButton       =   0   'False
+   MinButton       =   0   'False
    PaletteMode     =   1  'UseZOrder
    Picture         =   "frmMain.frx":7F6A
    ScaleHeight     =   768
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   1023
+   ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
+   Begin AOLibre.uAOButton btnConsola 
+      Height          =   255
+      Left            =   7920
+      TabIndex        =   46
+      Top             =   2040
+      Width           =   1215
+      _ExtentX        =   2143
+      _ExtentY        =   450
+      TX              =   "Consola"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmMain.frx":4E535
+      PICF            =   "frmMain.frx":4E551
+      PICH            =   "frmMain.frx":4E56D
+      PICV            =   "frmMain.frx":4E589
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin RichTextLib.RichTextBox RecTxt_Combate 
+      Height          =   1695
+      Left            =   150
+      TabIndex        =   45
+      Top             =   300
+      Visible         =   0   'False
+      Width           =   9420
+      _ExtentX        =   16616
+      _ExtentY        =   2990
+      _Version        =   393217
+      BackColor       =   -2147483647
+      BorderStyle     =   0
+      TextRTF         =   $"frmMain.frx":4E5A5
+   End
    Begin VB.Timer timerPasarSegundo 
       Enabled         =   0   'False
       Interval        =   1000
@@ -183,7 +226,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   3370
       Left            =   12165
-      ScaleHeight     =   191
+      ScaleHeight     =   225
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   160
       TabIndex        =   16
@@ -209,7 +252,7 @@ Begin VB.Form frmMain
       MultiLine       =   -1  'True
       TabIndex        =   2
       TabStop         =   0   'False
-      Text            =   "frmMain.frx":4E535
+      Text            =   "frmMain.frx":4E623
       ToolTipText     =   "Chat"
       Top             =   2400
       Visible         =   0   'False
@@ -239,7 +282,7 @@ Begin VB.Form frmMain
       MultiLine       =   -1  'True
       TabIndex        =   1
       TabStop         =   0   'False
-      Text            =   "frmMain.frx":4E565
+      Text            =   "frmMain.frx":4E653
       ToolTipText     =   "Chat"
       Top             =   10800
       Visible         =   0   'False
@@ -268,10 +311,11 @@ Begin VB.Form frmMain
       _ExtentY        =   2937
       _Version        =   393217
       BackColor       =   0
+      BorderStyle     =   0
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
-      TextRTF         =   $"frmMain.frx":4E59B
+      TextRTF         =   $"frmMain.frx":4E689
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Tahoma"
          Size            =   8.25
@@ -325,10 +369,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":4E618
-      PICF            =   "frmMain.frx":4F042
-      PICH            =   "frmMain.frx":4FD04
-      PICV            =   "frmMain.frx":50C96
+      PICE            =   "frmMain.frx":4E707
+      PICF            =   "frmMain.frx":4F131
+      PICH            =   "frmMain.frx":4FDF3
+      PICV            =   "frmMain.frx":50D85
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -352,10 +396,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":51B98
-      PICF            =   "frmMain.frx":525C2
-      PICH            =   "frmMain.frx":53284
-      PICV            =   "frmMain.frx":54216
+      PICE            =   "frmMain.frx":51C87
+      PICF            =   "frmMain.frx":526B1
+      PICH            =   "frmMain.frx":53373
+      PICV            =   "frmMain.frx":54305
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -379,10 +423,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":55118
-      PICF            =   "frmMain.frx":55B42
-      PICH            =   "frmMain.frx":56804
-      PICV            =   "frmMain.frx":57796
+      PICE            =   "frmMain.frx":55207
+      PICF            =   "frmMain.frx":55C31
+      PICH            =   "frmMain.frx":568F3
+      PICV            =   "frmMain.frx":57885
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -406,10 +450,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":58698
-      PICF            =   "frmMain.frx":590C2
-      PICH            =   "frmMain.frx":59D84
-      PICV            =   "frmMain.frx":5AD16
+      PICE            =   "frmMain.frx":58787
+      PICF            =   "frmMain.frx":591B1
+      PICH            =   "frmMain.frx":59E73
+      PICV            =   "frmMain.frx":5AE05
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -433,10 +477,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":5BC18
-      PICF            =   "frmMain.frx":5C642
-      PICH            =   "frmMain.frx":5D304
-      PICV            =   "frmMain.frx":5E296
+      PICE            =   "frmMain.frx":5BD07
+      PICF            =   "frmMain.frx":5C731
+      PICH            =   "frmMain.frx":5D3F3
+      PICV            =   "frmMain.frx":5E385
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -460,10 +504,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":5F198
-      PICF            =   "frmMain.frx":5FBC2
-      PICH            =   "frmMain.frx":60884
-      PICV            =   "frmMain.frx":61816
+      PICE            =   "frmMain.frx":5F287
+      PICF            =   "frmMain.frx":5FCB1
+      PICH            =   "frmMain.frx":60973
+      PICV            =   "frmMain.frx":61905
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -487,10 +531,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":62718
-      PICF            =   "frmMain.frx":63142
-      PICH            =   "frmMain.frx":63E04
-      PICV            =   "frmMain.frx":64D96
+      PICE            =   "frmMain.frx":62807
+      PICF            =   "frmMain.frx":63231
+      PICH            =   "frmMain.frx":63EF3
+      PICV            =   "frmMain.frx":64E85
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -515,10 +559,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":65C98
-      PICF            =   "frmMain.frx":666C2
-      PICH            =   "frmMain.frx":67384
-      PICV            =   "frmMain.frx":68316
+      PICE            =   "frmMain.frx":65D87
+      PICF            =   "frmMain.frx":667B1
+      PICH            =   "frmMain.frx":67473
+      PICV            =   "frmMain.frx":68405
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   15.75
@@ -543,10 +587,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":69218
-      PICF            =   "frmMain.frx":69C42
-      PICH            =   "frmMain.frx":6A904
-      PICV            =   "frmMain.frx":6B896
+      PICE            =   "frmMain.frx":69307
+      PICF            =   "frmMain.frx":69D31
+      PICH            =   "frmMain.frx":6A9F3
+      PICV            =   "frmMain.frx":6B985
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   15.75
@@ -570,10 +614,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":6C798
-      PICF            =   "frmMain.frx":6D1C2
-      PICH            =   "frmMain.frx":6DE84
-      PICV            =   "frmMain.frx":6EE16
+      PICE            =   "frmMain.frx":6C887
+      PICF            =   "frmMain.frx":6D2B1
+      PICH            =   "frmMain.frx":6DF73
+      PICV            =   "frmMain.frx":6EF05
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -597,10 +641,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":6FD18
-      PICF            =   "frmMain.frx":70742
-      PICH            =   "frmMain.frx":71404
-      PICV            =   "frmMain.frx":72396
+      PICE            =   "frmMain.frx":6FE07
+      PICF            =   "frmMain.frx":70831
+      PICH            =   "frmMain.frx":714F3
+      PICV            =   "frmMain.frx":72485
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -691,9 +735,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   0
       Left            =   14790
-      MouseIcon       =   "frmMain.frx":73298
+      MouseIcon       =   "frmMain.frx":73387
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":733EA
+      Picture         =   "frmMain.frx":734D9
       Top             =   3960
       Visible         =   0   'False
       Width           =   225
@@ -702,9 +746,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   1
       Left            =   14790
-      MouseIcon       =   "frmMain.frx":7372E
+      MouseIcon       =   "frmMain.frx":7381D
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":73880
+      Picture         =   "frmMain.frx":7396F
       Top             =   3705
       Visible         =   0   'False
       Width           =   225
@@ -1039,6 +1083,16 @@ Begin VB.Form frmMain
          Visible         =   0   'False
       End
    End
+   Begin VB.Menu mnuConsola 
+      Caption         =   "Consola"
+      Visible         =   0   'False
+      Begin VB.Menu optHabla 
+         Caption         =   "Habla"
+      End
+      Begin VB.Menu optCombate 
+         Caption         =   "Combate"
+      End
+   End
 End
 Attribute VB_Name = "frmMain"
 Attribute VB_GlobalNameSpace = False
@@ -1141,6 +1195,15 @@ Private Sub btnAmigos_Click()
     Call frmAmigos.Show(vbModeless, frmMain)
 End Sub
 
+Private Sub btnConsola_Click()
+    
+    Call PopupMenu(mnuConsola, vbPopupMenuLeftButton)
+    
+    'Me.RecTxt.Visible = Not RecTxt.Visible
+    'Me.RecTxt_Combate.Visible = Not RecTxt_Combate.Visible
+    
+End Sub
+
 Private Sub Form_Activate()
 
     Call Inventario.DrawInventory
@@ -1172,8 +1235,9 @@ Private Sub Form_Load()
     ' Detect links in console
     Call EnableURLDetect(RecTxt.hWnd, Me.hWnd)
     
-    ' Make the console transparent
+    ' Hacer las consolas transparentes
     Call SetWindowLong(RecTxt.hWnd, -20, &H20&)
+    Call SetWindowLong(RecTxt_Combate.hWnd, -20, &H20&)
     
     CtrlMaskOn = False
     
@@ -1675,7 +1739,7 @@ Private Sub btnEstadisticas_Click()
     Call WriteRequestSkills
     Call WriteRequestMiniStats
     Call WriteRequestFame
-    Call FlushBuffer 
+    Call FlushBuffer
 
     Do While Not LlegaronSkills Or Not LlegaronAtrib Or Not LlegoFama
         DoEvents 'esperamos a que lleguen y mantenemos la interfaz viva
@@ -1886,6 +1950,20 @@ Private Sub Coord_Click()
                                           JsonLanguage.item("MENSAJE_INFO_COORDENADAS").item("COLOR").item(2), _
                                           JsonLanguage.item("MENSAJE_INFO_COORDENADAS").item("COLOR").item(3), _
                           False, False, True)
+End Sub
+
+Private Sub optCombate_Click()
+    
+    RecTxt_Combate.Visible = True
+    RecTxt.Visible = False
+    
+End Sub
+
+Private Sub optHabla_Click()
+    
+    RecTxt_Combate.Visible = False
+    RecTxt.Visible = True
+    
 End Sub
 
 Private Sub picSM_DblClick(Index As Integer)
