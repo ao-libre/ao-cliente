@@ -2383,8 +2383,6 @@ End Sub
 Private Sub btnInventario_Click()
     Call Audio.PlayWave(SND_CLICK)
 
-    'InvEqu.Picture = LoadPicture(Game.path(Skins) & SkinSeleccionado & "\Centroinventario.jpg")
-
     ' Activo controles de inventario
     picInv.Visible = True
 
@@ -2405,8 +2403,6 @@ Private Sub btnHechizos_Click()
     
     Call Audio.PlayWave(SND_CLICK)
 
-    'InvEqu.Picture = LoadPicture(Game.path(Skins) & SkinSeleccionado & "\Centrohechizos.jpg")
-    
     ' Activo controles de hechizos
     hlst.Visible = True
     btnInfo.Visible = True
