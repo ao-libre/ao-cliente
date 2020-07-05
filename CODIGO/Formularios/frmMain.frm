@@ -611,6 +611,33 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
    End
+   Begin AOLibre.uAOButton btnQuests 
+      Height          =   255
+      Left            =   13440
+      TabIndex        =   45
+      TabStop         =   0   'False
+      Top             =   9600
+      Width           =   1455
+      _ExtentX        =   2566
+      _ExtentY        =   450
+      TX              =   "Quests"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmMain.frx":73298
+      PICF            =   "frmMain.frx":73CC2
+      PICH            =   "frmMain.frx":74984
+      PICV            =   "frmMain.frx":75916
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   12
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
    Begin VB.Label lblPorcLvl 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
@@ -691,9 +718,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   0
       Left            =   14790
-      MouseIcon       =   "frmMain.frx":73298
+      MouseIcon       =   "frmMain.frx":76818
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":733EA
+      Picture         =   "frmMain.frx":7696A
       Top             =   3960
       Visible         =   0   'False
       Width           =   225
@@ -702,9 +729,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   1
       Left            =   14790
-      MouseIcon       =   "frmMain.frx":7372E
+      MouseIcon       =   "frmMain.frx":76CAE
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":73880
+      Picture         =   "frmMain.frx":76E00
       Top             =   3705
       Visible         =   0   'False
       Width           =   225
@@ -1141,10 +1168,12 @@ Private Sub btnAmigos_Click()
     Call frmAmigos.Show(vbModeless, frmMain)
 End Sub
 
+Private Sub btnQuests_Click()
+    Call ParseUserCommand("/INFOQUEST")
+End Sub
+
 Private Sub Form_Activate()
-
     Call Inventario.DrawInventory
-
 End Sub
 
 Private Sub Form_Load()
@@ -1194,6 +1223,7 @@ Private Sub LoadTextsForm()
     btnClanes.Caption = JsonLanguage.item("LBL_CLANES").item("TEXTO")
     btnAmigos.Caption = JsonLanguage.item("LBL_AMIGOS").item("TEXTO")
     btnRetos.Caption = JsonLanguage.item("LBL_RETOS").item("TEXTO")
+    btnQuests.Caption = JsonLanguage.item("LBL_QUESTS").item("TEXTO")
 End Sub
 
 Private Sub LoadButtons()
@@ -1675,7 +1705,7 @@ Private Sub btnEstadisticas_Click()
     Call WriteRequestSkills
     Call WriteRequestMiniStats
     Call WriteRequestFame
-    Call FlushBuffer 
+    Call FlushBuffer
 
     Do While Not LlegaronSkills Or Not LlegaronAtrib Or Not LlegoFama
         DoEvents 'esperamos a que lleguen y mantenemos la interfaz viva
