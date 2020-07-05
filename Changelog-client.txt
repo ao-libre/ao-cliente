@@ -781,4 +781,4 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 04/07/2020: Eliminadas imagenes no usadas en el skin de Alkon 0.13 (Recox)
 
 -v0.13.40
-* 17/06/2020: Se arregla el skin predeterminado, ahora se usa el correcto. (jopiortiz)
+* 05/07/2020: Se arregla el skin predeterminado, ahora se usa el correcto. (jopiortiz)
