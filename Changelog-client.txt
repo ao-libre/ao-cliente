@@ -782,3 +782,14 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 
 -v0.13.40
 * 05/07/2020: Se arregla el skin predeterminado, ahora se usa el correcto. (jopiortiz)
+
+-v0.13.41
+* 07/07/2020: Ahora las flechas se equipan con doble click y los arcos se pueden usar haciendo doble click. (Recox)
+* 07/07/2020: Agrego boton de quests en frmMain para ver lista de questa facilmente. (Recox)
+* 07/07/2020: Vuelve la funcion de skins para la nueva resolucion (Recox)
+* 07/07/2020: El boton de RadioAO ahora dirige al canal de youtube de Pablo Marquez (Recox)
+* 07/07/2020: Se agrego skin psicodelico (Recox)
+* 07/07/2020: edificio de experimentos ReyarB y Oficina (ReyarB)
+* 07/07/2020: Mapas de entrenamiento los transformo en islas saco esa comunicación en forma de rotonda (ReyarB)
+* 07/07/2020: saco bloqueo y banquero mapa 34 y 1 (ReyarB)
+* 07/07/2020: Ahora dice que version tenemos y cual es la ultima version disponible cuando aparece el msgBox que dice que nuestra version no es la actual (Recox)
