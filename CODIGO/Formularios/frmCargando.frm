@@ -98,6 +98,8 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Public NoInternetConnection As Boolean
+Private VersionNumberMaster As String
+Private VersionNumberLocal As String
 
 Private Sub Form_Load()
     Me.Analizar
@@ -128,7 +130,7 @@ On Error Resume Next
     End If
            
     If Not isLastVersion = True Then
-        If MsgBox("Tu version no es la actual, Deseas ejecutar el actualizador?.", vbYesNo) = vbYes Then
+        If MsgBox("Tu version no es la actual, Deseas ejecutar el actualizador?. - Tu version: " & VersionNumberLocal & " Ultima version: " & VersionNumberMaster & " -- Your version is not up to date, open the launcher to update? ", vbYesNo) = vbYes Then
             binaryFileToOpen = GetVar(Game.path(INIT) & "Config.ini", "Launcher", "fileToOpen")
             Call ShellExecute(Me.hWnd, "open", App.path & binaryFileToOpen, "", "", 1)
             End
@@ -139,7 +141,7 @@ End Function
 Private Function CheckIfRunningLastVersion() As Boolean
 On Error Resume Next
 
-    Dim responseGithub As String, versionNumberMaster As String, versionNumberLocal As String
+    Dim responseGithub As String
     Dim JsonObject     As Object
     
     Set Inet = New clsInet
@@ -150,10 +152,10 @@ On Error Resume Next
     
     Set JsonObject = JSON.parse(responseGithub)
     
-    versionNumberMaster = JsonObject.Item("tag_name")
-    versionNumberLocal = GetVar(Game.path(INIT) & "Config.ini", "Cliente", "VersionTagRelease")
+    VersionNumberMaster = JsonObject.Item("tag_name")
+    VersionNumberLocal = GetVar(Game.path(INIT) & "Config.ini", "Cliente", "VersionTagRelease")
 
-    If versionNumberMaster = versionNumberLocal Then
+    If VersionNumberMaster = VersionNumberLocal Then
         CheckIfRunningLastVersion = True
     Else
         CheckIfRunningLastVersion = False
