@@ -1150,6 +1150,8 @@ End Sub
 Private Sub Form_Load()
     SkinSeleccionado = GetVar(Game.path(INIT) & "Config.ini", "Parameters", "SkinSelected")
     
+    Me.Picture = LoadPicture(Game.path(Skins) & SkinSeleccionado & "\VentanaPrincipal.jpg")
+
     If Not ResolucionCambiada Then
         ' Handles Form movement (drag and drop).
         Set clsFormulario = New clsFormMovementManager

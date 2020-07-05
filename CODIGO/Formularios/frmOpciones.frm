@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmOpciones 
    BackColor       =   &H8000000A&
    BorderStyle     =   0  'None
@@ -46,7 +46,7 @@ Begin VB.Form frmOpciones
       TabIndex        =   4
       Text            =   "Seleccione skin"
       Top             =   480
-      Visible         =   0   'False
+      Visible         =   1   'True
       Width           =   1575
    End
    Begin VB.TextBox txtCantMensajes 
@@ -307,15 +307,15 @@ Private Sub cmdLenguajesComboBox_Click()
     MsgBox ("Debe reiniciar el juego aplicar el cambio de idioma. Idioma Seleccionado: " & cmdLenguajesComboBox.Text)
 End Sub
 
-'Private Sub cmdSkinsComboBox_Click()
-'***************************************************
-'Author: Recox
-'Last Modification: 01/04/2019
-'08/11/2019: Recox - Seteamos el skin
-'***************************************************
-'    Call WriteVar(Game.path(INIT) & "Config.ini", "Parameters", "SkinSelected", cmdSkinsComboBox.Text)
-'    MsgBox ("Debe reiniciar el juego aplicar el cambio de skin. Skin Seleccionado: " & cmdSkinsComboBox.Text)
-'End Sub
+Private Sub cmdSkinsComboBox_Click()
+' ***************************************************
+' Author: Recox
+' Last Modification: 01/04/2019
+' 08/11/2019: Recox - Seteamos el skin
+' ***************************************************
+   Call WriteVar(Game.path(INIT) & "Config.ini", "Parameters", "SkinSelected", cmdSkinsComboBox.Text)
+   MsgBox ("Debe reiniciar el juego aplicar el cambio de skin. Skin Seleccionado: " & cmdSkinsComboBox.Text)
+End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastButtonPressed.ToggleToNormal
@@ -353,6 +353,12 @@ Private Sub imgChkRequiredLvl_Click()
     Else
         Set imgChkRequiredLvl.Picture = Nothing
     End If
+End Sub
+
+Private Sub imgRadio_Click()
+    If Not loading Then _
+        Call Audio.PlayWave(SND_CLICK)
+    Call ShellExecute(0, "Open", "https://www.youtube.com/channel/UC9D7kuoZEdBp9nPZI37vHVA", "", App.path, SW_SHOWNORMAL)
 End Sub
 
 Private Sub txtCantMensajes_Change()
