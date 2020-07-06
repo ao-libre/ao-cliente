@@ -723,7 +723,7 @@ Private Sub uAOCrearPersonaje_Click()
 
     For LoopC = 1 To 10
         If LenB(lblAccData(LoopC).Caption) = 0 Then
-            frmCrearPersonaje.Show , frmPanelAccount
+            frmCrearPersonaje.Show
             Exit Sub
         End If
     Next LoopC
