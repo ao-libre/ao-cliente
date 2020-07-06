@@ -122,7 +122,9 @@ Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, _
         .SelText = Text
 
         ' Esto arregla el bug de las letras superponiendose la consola del frmMain
-        If Not RichTextBox = frmMain.RecTxt Then RichTextBox.Refresh
+        If Not (RichTextBox = frmMain.RecTxt Or RichTextBox = frmMain.RecTxt_Combate) Then
+            RichTextBox.Refresh
+        End If
 
     End With
 End Sub
