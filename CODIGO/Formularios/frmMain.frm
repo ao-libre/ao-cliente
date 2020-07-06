@@ -1230,7 +1230,7 @@ Private Sub btnConsola_Click()
 End Sub
 
 Private Sub btnQuests_Click()
-    Call ParseUserCommand("/INFOQUEST")
+    Call WriteQuestListRequest
 End Sub
 
 Private Sub Form_Activate()
