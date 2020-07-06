@@ -2577,9 +2577,11 @@ Private Sub HandleCharacterCreate()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
+    
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Dim Buffer As clsByteQueue
+    Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
@@ -2594,8 +2596,11 @@ On Error GoTo ErrHandler
     Dim weapon As Integer
     Dim shield As Integer
     Dim helmet As Integer
-    Dim privs As Integer
+    Dim fX As Integer
+    Dim FXLoops As Integer
+    Dim name As String
     Dim NickColor As Byte
+    Dim Privileges As Integer
     
     CharIndex = Buffer.ReadInteger()
     Body = Buffer.ReadInteger()
@@ -2606,13 +2611,22 @@ On Error GoTo ErrHandler
     weapon = Buffer.ReadInteger()
     shield = Buffer.ReadInteger()
     helmet = Buffer.ReadInteger()
-
+    fX = Buffer.ReadInteger()
+    FXLoops = Buffer.ReadInteger()
+    name = Buffer.ReadASCIIString()
+    NickColor = Buffer.ReadByte()
+    Privileges = Buffer.ReadByte()
+    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
+    
     With charlist(CharIndex)
-        Call Char_SetFx(CharIndex, Buffer.ReadInteger(), Buffer.ReadInteger())
+        
+        Call Char_SetFx(CharIndex, fX, FXLoops)
 
-        .Nombre = Buffer.ReadASCIIString()
+        .Nombre = name
+
         .Clan = mid$(.Nombre, getTagPosition(.Nombre))
-        NickColor = Buffer.ReadByte()
 
         If (NickColor And eNickColor.ieCriminal) <> 0 Then
             .Criminal = 1
@@ -2621,39 +2635,40 @@ On Error GoTo ErrHandler
         End If
         
         .Atacable = (NickColor And eNickColor.ieAtacable) <> 0
-        
-        privs = Buffer.ReadByte()
-        
-        If privs <> 0 Then
+
+        If Privileges <> 0 Then
+            
             'If the player belongs to a council AND is an admin, only whos as an admin
-            If (privs And PlayerType.ChaosCouncil) <> 0 And (privs And PlayerType.User) = 0 Then
-                privs = privs Xor PlayerType.ChaosCouncil
+            If (Privileges And PlayerType.ChaosCouncil) <> 0 And (Privileges And PlayerType.User) = 0 Then
+                Privileges = Privileges Xor PlayerType.ChaosCouncil
             End If
             
-            If (privs And PlayerType.RoyalCouncil) <> 0 And (privs And PlayerType.User) = 0 Then
-                privs = privs Xor PlayerType.RoyalCouncil
+            If (Privileges And PlayerType.RoyalCouncil) <> 0 And (Privileges And PlayerType.User) = 0 Then
+                Privileges = Privileges Xor PlayerType.RoyalCouncil
             End If
             
             'If the player is a RM, ignore other flags
-            If privs And PlayerType.RoleMaster Then
-                privs = PlayerType.RoleMaster
+            If Privileges And PlayerType.RoleMaster Then
+                Privileges = PlayerType.RoleMaster
             End If
             
             'Log2 of the bit flags sent by the server gives our numbers ^^
-            .priv = Log(privs) / Log(2)
+            .priv = Log(Privileges) / Log(2)
+        
         Else
             .priv = 0
+            
         End If
+        
     End With
     
     Call Char_Make(CharIndex, Body, Head, Heading, X, Y, weapon, shield, helmet)
-    
-    'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
-    
-ErrHandler:
+
+errhandler:
+
     Dim Error As Long
-    Error = Err.number
+        Error = Err.number
+        
 On Error GoTo 0
     
     'Destroy auxiliar buffer
