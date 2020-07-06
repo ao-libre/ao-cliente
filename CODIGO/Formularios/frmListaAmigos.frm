@@ -127,6 +127,21 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Public Sub ActualizarLista()
+' @@ Cuicui
+    Dim i As Long
+    
+    ListAmigos.Clear
+    
+    For i = 1 To MAX_AMIGOS
+        If LenB(amigos(i)) > 0 Then
+            Call ListAmigos.AddItem(amigos(i))
+        Else
+            Exit For
+        End If
+    Next i
+    
+End Sub
 
 Private Sub Form_Load()
     
