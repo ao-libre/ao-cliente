@@ -1,5 +1,5 @@
 [INIT]
-Cant=7
+Cant=4
 
 [S1]
 Desc=Rol - Alkon 0.13.X
@@ -12,31 +12,14 @@ Desc= Agite - Alkon 0.13.X - Europa
 IP=109.230.236.97
 PJ=7666
 Mundo=Alkon
-[S3]
-Desc=BLAZ AO - Exp x15
-IP=45.235.98.164
-PJ=7669
-Mundo=Alkon
 
-[S4]
+[S3]
 Desc=ReyarB Server -est:Alkon
 IP=181.229.152.153
 PJ=7666
 Mundo=Alkon
 
-[S5]
-Desc=Servidor USA-Buffalo | Modo:Alkon 0.13.X
-IP=192.210.186.186
-PJ=7666
-Mundo=Alkon
-
-[S6]
-Desc=Patan-AO Mod Alkon facil
-IP=185.144.159.49
-PJ=7676
-Mundo=Alkon
-
-[S7]
+[S4]
 Desc=Servidor Local | Modo:Alkon 0.13.X
 IP=localhost
 PJ=7666

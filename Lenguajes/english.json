@@ -1235,6 +1235,9 @@
     "LBL_RETOS": {
         "TEXTO": "Challenges"
     },
+    "LBL_QUESTS": {
+        "TEXTO": "Quests"
+    },
     "LBL_OPCIONES": {
         "TEXTO": "Options"
     },

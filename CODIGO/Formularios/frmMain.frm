@@ -657,6 +657,33 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
    End
+   Begin AOLibre.uAOButton btnQuests 
+      Height          =   255
+      Left            =   13440
+      TabIndex        =   45
+      TabStop         =   0   'False
+      Top             =   9600
+      Width           =   1455
+      _ExtentX        =   2566
+      _ExtentY        =   450
+      TX              =   "Quests"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmMain.frx":73298
+      PICF            =   "frmMain.frx":73CC2
+      PICH            =   "frmMain.frx":74984
+      PICV            =   "frmMain.frx":75916
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Calibri"
+         Size            =   12
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
    Begin VB.Label lblPorcLvl 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
@@ -1202,15 +1229,19 @@ Private Sub btnConsola_Click()
     
 End Sub
 
+Private Sub btnQuests_Click()
+    Call ParseUserCommand("/INFOQUEST")
+End Sub
+
 Private Sub Form_Activate()
-
     Call Inventario.DrawInventory
-
 End Sub
 
 Private Sub Form_Load()
     SkinSeleccionado = GetVar(Game.path(INIT) & "Config.ini", "Parameters", "SkinSelected")
     
+    Me.Picture = LoadPicture(Game.path(Skins) & SkinSeleccionado & "\VentanaPrincipal.jpg")
+
     If Not ResolucionCambiada Then
         ' Handles Form movement (drag and drop).
         Set clsFormulario = New clsFormMovementManager
@@ -1256,6 +1287,7 @@ Private Sub LoadTextsForm()
     btnClanes.Caption = JsonLanguage.item("LBL_CLANES").item("TEXTO")
     btnAmigos.Caption = JsonLanguage.item("LBL_AMIGOS").item("TEXTO")
     btnRetos.Caption = JsonLanguage.item("LBL_RETOS").item("TEXTO")
+    btnQuests.Caption = JsonLanguage.item("LBL_QUESTS").item("TEXTO")
 End Sub
 
 Private Sub LoadButtons()
@@ -2509,19 +2541,18 @@ Private Sub picInv_DblClick()
     
     Select Case Inventario.OBJType(Inventario.SelectedItem)
         
-        Case eObjType.otcasco
+        Case eObjType.otcasco, eObjType.otAnillo, eObjType.otArmadura, eObjType.otescudo, eObjType.otFlechas
             Call EquiparItem
     
-        Case eObjType.otArmadura
-            Call EquiparItem
-
-        Case eObjType.otescudo
-            Call EquiparItem
-        
         Case eObjType.otWeapon
-            Call EquiparItem
-        
-        Case eObjType.otAnillo
+            'Para los arcos hacemos esta validacion, asi se pueden usar con doble click en ves de andar equipando o desequipando (Recox)
+            If InStr(Inventario.ItemName(Inventario.SelectedItem), "Arco") > 0 Then 
+                If Inventario.Equipped(Inventario.SelectedItem) Then
+                    Call UsarItem
+                    Exit Sub
+                End If
+            End If
+
             Call EquiparItem
         
         Case Else
