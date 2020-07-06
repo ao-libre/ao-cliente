@@ -11663,19 +11663,19 @@ Private Sub HandleEnviarListDeAmigos()
     Call Buffer.ReadByte
 
     Dim slot As Byte
-    Dim i    As Integer
-
+    Dim nombreamigo As String
+    
     slot = Buffer.ReadByte()
     
-    With frmAmigos.ListAmigos
+    nombreamigo = Buffer.ReadASCIIString()
     
-        If slot <= .ListCount Then
-            .List(slot - 1) = Buffer.ReadASCIIString()
-        Else
-            Call .AddItem(Buffer.ReadASCIIString())
-        End If
+    amigos(slot) = nombreamigo
     
-    End With
+    Call frmAmigos.ActualizarLista
+    
+    If frmAmigos.Visible Then
+        frmAmigos.SetFocus
+    End If
 
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)

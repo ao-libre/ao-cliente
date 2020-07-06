@@ -32,6 +32,9 @@ Attribute VB_Name = "Mod_Declaraciones"
 
 Option Explicit
 
+Public Const MAX_AMIGOS As Byte = 50
+Public amigos(1 To MAX_AMIGOS) As String
+
 Public Inet As clsInet
 
 'Recuperar Cuenta mediante la API
