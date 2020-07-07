@@ -1339,9 +1339,9 @@ Public Sub HandleMultiMessage()
             Case eMessages.NPCKill
                 Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
                                         JsonLanguage.item("NPC_KILL").item("TEXTO"), _
-                                        JsonLanguage.item("MENSAJE_TE_HA_MATADO").item("COLOR").item(1), _
-                                        JsonLanguage.item("MENSAJE_TE_HA_MATADO").item("COLOR").item(2), _
-                                        JsonLanguage.item("MENSAJE_TE_HA_MATADO").item("COLOR").item(3), _
+                                        JsonLanguage.item("NPC_KILL").item("COLOR").item(1), _
+                                        JsonLanguage.item("NPC_KILL").item("COLOR").item(2), _
+                                        JsonLanguage.item("NPC_KILL").item("COLOR").item(3), _
                                         True, False)
             
             Case eMessages.EarnExp
