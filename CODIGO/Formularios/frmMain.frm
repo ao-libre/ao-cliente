@@ -80,7 +80,6 @@ Begin VB.Form frmMain
       TextRTF         =   $"frmMain.frx":4E5A5
    End
    Begin VB.Timer timerPasarSegundo 
-      Enabled         =   0   'False
       Interval        =   1000
       Left            =   960
       Top             =   2880
@@ -351,6 +350,10 @@ Begin VB.Form frmMain
       TabIndex        =   30
       Top             =   2325
       Width           =   11040
+      Begin VB.Timer tmrCounters 
+         Left            =   5760
+         Top             =   840
+      End
       Begin VB.Timer trainingMacro 
          Enabled         =   0   'False
          Interval        =   3200
@@ -1745,7 +1748,7 @@ Private Sub imgAsignarSkill_Click()
     LlegaronSkills = False
     
     For i = 1 To NUMSKILLS
-        frmSkills3.Text1(i).Caption = UserSkills(i)
+        frmSkills3.text1(i).Caption = UserSkills(i)
     Next i
     
     Alocados = SkillPoints
@@ -2546,7 +2549,7 @@ Private Sub picInv_DblClick()
     
         Case eObjType.otWeapon
             'Para los arcos hacemos esta validacion, asi se pueden usar con doble click en ves de andar equipando o desequipando (Recox)
-            If InStr(Inventario.ItemName(Inventario.SelectedItem), "Arco") > 0 Then 
+            If InStr(Inventario.ItemName(Inventario.SelectedItem), "Arco") > 0 Then
                 If Inventario.Equipped(Inventario.SelectedItem) Then
                     Call UsarItem
                     Exit Sub
@@ -2969,20 +2972,27 @@ Public Sub DesactivarMacroHechizos()
 End Sub
 
 Private Sub timerPasarSegundo_Timer()
-
-    If UserInvisible And UserInvisibleSegundosRestantes > 0 Then
-        UserInvisibleSegundosRestantes = UserInvisibleSegundosRestantes - 1
+    
+    If UserEstado = 0 Then
+    
+        If UserInvisible And TiempoInvi > 0 Then
+            TiempoInvi = TiempoInvi - 1
+        End If
+        
+        If TiempoDopas > 0 Then
+            TiempoDopas = TiempoDopas - 1
+        End If
+    
+        If UserParalizado And UserParalizadoSegundosRestantes > 0 Then
+            UserParalizadoSegundosRestantes = UserParalizadoSegundosRestantes - 1
+        End If
+    
+        If Not UserEquitando And UserEquitandoSegundosRestantes > 0 Then
+            UserEquitandoSegundosRestantes = UserEquitandoSegundosRestantes - 1
+        End If
+        
     End If
-
-    If UserParalizado And UserParalizadoSegundosRestantes > 0 Then
-        UserParalizadoSegundosRestantes = UserParalizadoSegundosRestantes - 1
-    End If
-
-    If Not UserEquitando And UserEquitandoSegundosRestantes > 0 Then
-        UserEquitandoSegundosRestantes = UserEquitandoSegundosRestantes - 1
-    End If
-
-    If UserInvisibleSegundosRestantes <= 0 And UserParalizadoSegundosRestantes <= 0 And UserEquitandoSegundosRestantes <= 0 Then timerPasarSegundo.Enabled = False
+    
 End Sub
 
 Private Sub trainingMacro_Timer()

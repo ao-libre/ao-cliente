@@ -1483,6 +1483,8 @@ Private Sub HandleLogged()
     
     ' Variable initialization
     UserClase = incomingData.ReadByte
+    IntervaloInvi = incomingData.ReadLong
+    
     EngineRun = True
     Nombres = True
     bRain = False
@@ -2025,7 +2027,7 @@ Private Sub HandleUpdateStrenghtAndDexterity()
 'Last Modification: 11/26/09
 '***************************************************
     'Check packet is complete
-    If incomingData.Length < 3 Then
+    If incomingData.Length < 5 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -2040,6 +2042,8 @@ Private Sub HandleUpdateStrenghtAndDexterity()
     frmMain.lblDext.Caption = UserAgilidad
     frmMain.lblStrg.ForeColor = getStrenghtColor()
     frmMain.lblDext.ForeColor = getDexterityColor()
+    IntervaloDopas = incomingData.ReadLong
+    TiempoDopas = (IntervaloDopas * 0.05) - 1
 End Sub
 
 ' Handles the UpdateStrenghtAndDexterity message.
@@ -2050,7 +2054,7 @@ Private Sub HandleUpdateStrenght()
 'Last Modification: 11/26/09
 '***************************************************
     'Check packet is complete
-    If incomingData.Length < 2 Then
+    If incomingData.Length < 4 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -2062,6 +2066,8 @@ Private Sub HandleUpdateStrenght()
     UserFuerza = incomingData.ReadByte
     frmMain.lblStrg.Caption = UserFuerza
     frmMain.lblStrg.ForeColor = getStrenghtColor()
+    IntervaloDopas = incomingData.ReadLong
+    TiempoDopas = (IntervaloDopas * 0.05) - 1
 End Sub
 
 ' Handles the UpdateStrenghtAndDexterity message.
@@ -2072,7 +2078,7 @@ Private Sub HandleUpdateDexterity()
 'Last Modification: 11/26/09
 '***************************************************
     'Check packet is complete
-    If incomingData.Length < 2 Then
+    If incomingData.Length < 4 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
@@ -2084,6 +2090,8 @@ Private Sub HandleUpdateDexterity()
     UserAgilidad = incomingData.ReadByte
     frmMain.lblDext.Caption = UserAgilidad
     frmMain.lblDext.ForeColor = getDexterityColor()
+    IntervaloDopas = incomingData.ReadLong
+    TiempoDopas = (IntervaloDopas * 0.05) - 1
 End Sub
 
 ''
@@ -4394,11 +4402,16 @@ Private Sub HandleSetInvisible()
     CharIndex = incomingData.ReadInteger()
     UserInvisible = incomingData.ReadBoolean()
     Call Char_SetInvisible(CharIndex, UserInvisible)
-
-    timeRemaining = incomingData.ReadInteger()
     
-    UserInvisibleSegundosRestantes = IIf(timeRemaining > 0, timeRemaining * 0.04, 0) 'Cantidad en segundos
-    If UserInvisible And UserInvisibleSegundosRestantes > 0 Then frmMain.timerPasarSegundo.Enabled = True
+    If CharIndex = UserCharIndex Then
+        If UserInvisible And TiempoInvi <= 0 Then
+            TiempoInvi = (IntervaloInvi * 0.05) - 1 ' Qu�???
+        Else
+            TiempoInvi = 0
+        End If
+    
+    End If
+    
 End Sub
 
 ''
