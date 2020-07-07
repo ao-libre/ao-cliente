@@ -1115,15 +1115,19 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
 
         '*********Tiempo restante para que termine el invi o el paralizar*********
         If UserParalizado And UserParalizadoSegundosRestantes > 0 Then
-            Call DrawText(1, 25, UserParalizadoSegundosRestantes & " segundos restantes de Paralisis", Color_Paralisis)
+            Call DrawText(4, 10, UserParalizadoSegundosRestantes & " segundos restantes de Paralisis", Color_Paralisis)
         End If
 
-        If UserInvisible And UserInvisibleSegundosRestantes > 0 Then
-            Call DrawText(1, 13, UserInvisibleSegundosRestantes & " segundos restantes de Invisibilidad", Color_Invisibilidad)
+        If UserInvisible And TiempoInvi > 0 Then
+            Call DrawText(4, 25, TiempoInvi & " segundos restantes de Invisibilidad", Color_Invisibilidad)
+        End If
+        
+        If TiempoDopas > 0 Then
+            Call DrawText(4, 40, "Tus atributos perderan efecto en " & TiempoDopas & " segundos", Color_Invisibilidad)
         End If
         
         If Not UserEquitando And UserEquitandoSegundosRestantes > 0 Then
-            Call DrawText(1, 37, UserEquitandoSegundosRestantes & " segundos restantes para volver a montarte", Color_Montura)
+            Call DrawText(4, 55, UserEquitandoSegundosRestantes & " segundos restantes para volver a montarte", Color_Montura)
         End If
         '*************************************************************************
 

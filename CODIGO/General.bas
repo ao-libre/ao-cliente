@@ -295,6 +295,10 @@ Private Sub CheckKeys()
     '*****************************************************************
     Static lastmovement As Long
 
+    Static lastmsg As Long
+    Dim bCantMove As Boolean
+    Dim intentemoverme As Boolean
+    
     'No input allowed while Argentum is not the active window
     If Not Application.IsAppActive() Then Exit Sub
     'No walking when in commerce or banking.
@@ -306,15 +310,11 @@ Private Sub CheckKeys()
     'If game is paused, abort movement.
     If pausa Then Exit Sub
     
-    If Traveling Then 
-        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USUARIO_VIAJANDO_HOGAR").item("TEXTO"), 110, 220, 000)
-        Exit Sub
-    End If
+    If Traveling Then bCantMove = True
     
-
     'Hacemos esta validacion para los usuarios que usan teclado normal puedan
-    'Sacar cartel de hechizos mientras juegan, si usan config customizada con wasd no se puede mover ya que entorpece 
-    If ClientSetup.KeyboardBindKeysConfig  <> "Normal" Then
+    'Sacar cartel de hechizos mientras juegan, si usan config customizada con wasd no se puede mover ya que entorpece
+    If ClientSetup.KeyboardBindKeysConfig <> "Normal" Then
         'Si esta chateando, no mover el pj, tanto para chat de clanes y normal
         If frmMain.SendTxt.Visible Then Exit Sub
         If frmMain.SendCMSTXT.Visible Then Exit Sub
@@ -328,6 +328,11 @@ Private Sub CheckKeys()
 
             'Move Up
             If keysMovementPressedQueue.GetLastItem() = CustomKeys.BindedKey(eKeyType.mKeyUp) Then
+                If bCantMove Then
+                    intentemoverme = True
+                    GoTo CantMove
+                End If
+                
                 Call Map_MoveTo(NORTH)
                 Call Char_UserPos
                 Exit Sub
@@ -335,6 +340,11 @@ Private Sub CheckKeys()
             
             'Move Right
             If keysMovementPressedQueue.GetLastItem() = CustomKeys.BindedKey(eKeyType.mKeyRight) Then
+                If bCantMove Then
+                    intentemoverme = True
+                    GoTo CantMove
+                End If
+                
                 Call Map_MoveTo(EAST)
                 Call Char_UserPos
                 Exit Sub
@@ -342,6 +352,11 @@ Private Sub CheckKeys()
         
             'Move down
             If keysMovementPressedQueue.GetLastItem() = CustomKeys.BindedKey(eKeyType.mKeyDown) Then
+                If bCantMove Then
+                    intentemoverme = True
+                    GoTo CantMove
+                End If
+                
                 Call Map_MoveTo(SOUTH)
                 Call Char_UserPos
                 Exit Sub
@@ -349,6 +364,11 @@ Private Sub CheckKeys()
         
             'Move left
             If keysMovementPressedQueue.GetLastItem() = CustomKeys.BindedKey(eKeyType.mKeyLeft) Then
+                If bCantMove Then
+                    intentemoverme = True
+                    GoTo CantMove
+                End If
+                
                 Call Map_MoveTo(WEST)
                 Call Char_UserPos
                 Exit Sub
@@ -357,6 +377,11 @@ Private Sub CheckKeys()
             ' We haven't moved - Update 3D sounds!
             Call Audio.MoveListener(UserPos.X, UserPos.Y)
         Else
+            If bCantMove Then
+                intentemoverme = True
+                GoTo CantMove
+            End If
+                
             Dim kp As Boolean
             kp = (GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyUp)) < 0) Or GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyRight)) < 0 Or GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyDown)) < 0 Or GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyLeft)) < 0
             
@@ -377,6 +402,13 @@ Private Sub CheckKeys()
     ' Y el dia entero dura unos 4/5 minutos, hay que arreglarlo.
     'Call DiaNoche
     
+CantMove:
+    If bCantMove And intentemoverme Then
+        If (Abs(GetTickCount - lastmsg)) > 1000 Then
+            Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USUARIO_VIAJANDO_HOGAR").item("TEXTO"), 110, 220, 0)
+            lastmsg = Abs(GetTickCount)
+        End If
+    End If
 End Sub
 
 Sub SwitchMap(ByVal Map As Integer)
