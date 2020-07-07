@@ -571,6 +571,7 @@ Public Enum eMessages
     WorkRequestTarget
     HaveKilledUser
     UserKill
+    NPCKill
     EarnExp
     GoHome
     CancelGoHome

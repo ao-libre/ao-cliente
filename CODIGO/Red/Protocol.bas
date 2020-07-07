@@ -1335,17 +1335,29 @@ Public Sub HandleMultiMessage()
                     FragShooterCapturePending = True
 
                 End If
-                
+            
+            Case eMessages.NPCKill
+                Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                                        JsonLanguage.item("NPC_KILL").item("TEXTO"), _
+                                        JsonLanguage.item("MENSAJE_TE_HA_MATADO").item("COLOR").item(1), _
+                                        JsonLanguage.item("MENSAJE_TE_HA_MATADO").item("COLOR").item(2), _
+                                        JsonLanguage.item("MENSAJE_TE_HA_MATADO").item("COLOR").item(3), _
+                                        True, False)
+            
             Case eMessages.EarnExp
-                'Dim MENSAJE_HAS_GANADO_EXP As String
-                '    MENSAJE_HAS_GANADO_EXP = JsonLanguage.Item("MENSAJE_HAS_GANADO_EXP").Item("TEXTO")
-                '    MENSAJE_HAS_GANADO_EXP = Replace$(MENSAJE_HAS_GANADO_EXP, "VAR_EXP_GANADA", .ReadLong)
-                    
-                'Call ShowConsoleMsg(MENSAJE_HAS_GANADO_EXP, _
-                '                    JsonLanguage.Item("MENSAJE_HAS_GANADO_EXP").Item("COLOR").Item(1), _
-                '                    JsonLanguage.Item("MENSAJE_HAS_GANADO_EXP").Item("COLOR").Item(2), _
-                '                    JsonLanguage.Item("MENSAJE_HAS_GANADO_EXP").Item("COLOR").Item(3), _
-                '                    True, False)
+                
+                Dim ExpObtenida As Long: ExpObtenida = .ReadLong()
+            
+                Dim MENSAJE_HAS_GANADO_EXP As String
+                    MENSAJE_HAS_GANADO_EXP = JsonLanguage.item("MENSAJE_HAS_GANADO_EXP").item("TEXTO")
+                    MENSAJE_HAS_GANADO_EXP = Replace$(MENSAJE_HAS_GANADO_EXP, "VAR_EXP_GANADA", ExpObtenida)
+                                    
+                Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                                        MENSAJE_HAS_GANADO_EXP, _
+                                        JsonLanguage.item("MENSAJE_HAS_GANADO_EXP").item("COLOR").item(1), _
+                                        JsonLanguage.item("MENSAJE_HAS_GANADO_EXP").item("COLOR").item(2), _
+                                        JsonLanguage.item("MENSAJE_HAS_GANADO_EXP").item("COLOR").item(3), _
+                                        True, False)
         
             Case eMessages.GoHome
 
