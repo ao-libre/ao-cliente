@@ -580,6 +580,8 @@ On Error GoTo DeviceHandler:
     
     End If
     
+    Exit Sub
+    
 DeviceHandler:
 
     If DirectDevice.TestCooperativeLevel = D3DERR_DEVICENOTRESET Then

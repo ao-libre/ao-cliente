@@ -199,13 +199,16 @@ Public Sub LeerConfiguracion()
         Debug.Print vbNullString
         
     End With
-  
+    
+    Exit Sub
+    
 fileErr:
 
     If Err.number <> 0 Then
       MsgBox ("Ha ocurrido un error al cargar la configuracion del cliente. Error " & Err.number & " : " & Err.Description)
       End 'Usar "End" en vez del Sub CloseClient() ya que todavia no se inicializa nada.
     End If
+    
 End Sub
 
 Public Sub GuardarConfiguracion()
@@ -251,6 +254,8 @@ Public Sub GuardarConfiguracion()
     End With
     
     Call Lector.DumpFile(Game.path(INIT) & CLIENT_FILE)
+    
+    Exit Sub
     
 fileErr:
 
