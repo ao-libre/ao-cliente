@@ -21,6 +21,14 @@ Public DirectD3D As Direct3D8
 ' use the same object no matter what it is
 Public DirectDevice As Direct3DDevice8
 
+' The D3DDISPLAYMODE type structure that holds
+' the information about your current display adapter.
+Public DispMode  As D3DDISPLAYMODE
+    
+' The D3DPRESENT_PARAMETERS type holds a description of the way
+' in which DirectX will display it's rendering.
+Public D3DWindow As D3DPRESENT_PARAMETERS
+
 Public SurfaceDB As New clsTextureManager
 Public SpriteBatch As New clsBatch
 
@@ -54,76 +62,25 @@ End Type
 Private EndTime As Long
 
 Public Function Engine_DirectX8_Init() As Boolean
-    
-    'Establecemos cual va a ser el tamano del render.
-    ScreenWidth = frmMain.MainViewPic.ScaleWidth
-    ScreenHeight = frmMain.MainViewPic.ScaleHeight
-    
-    ' The D3DDISPLAYMODE type structure that holds
-    ' the information about your current display adapter.
-    Dim DispMode  As D3DDISPLAYMODE
-    
-    ' The D3DPRESENT_PARAMETERS type holds a description of the way
-    ' in which DirectX will display it's rendering.
-    Dim D3DWindow As D3DPRESENT_PARAMETERS
-    
+
     ' Initialize all DirectX objects.
     Set DirectX = New DirectX8
     Set DirectD3D = DirectX.Direct3DCreate
     Set DirectD3D8 = New D3DX8
-
-    ' Retrieve the information about your current display adapter.
-    Call DirectD3D.GetAdapterDisplayMode(D3DADAPTER_DEFAULT, DispMode)
     
-    ' Fill the D3DPRESENT_PARAMETERS type, describing how DirectX should
-    ' display it's renders.
-    With D3DWindow
-        .Windowed = True
-        
-        ' The swap effect determines how the graphics get from the backbuffer to the screen.
-        ' D3DSWAPEFFECT_DISCARD:
-        '   Means that every time the render is presented, the backbuffer
-        '   image is destroyed, so everything must be rendered again.
-        .SwapEffect = D3DSWAPEFFECT_DISCARD
-        
-        .BackBufferFormat = DispMode.Format
-        .BackBufferWidth = ScreenWidth
-        .BackBufferHeight = ScreenHeight
-        .hDeviceWindow = frmMain.MainViewPic.hWnd
-    End With
-    
-    ' Create the rendering device.
-    ' Here we request a Hardware or Mixed rasterization.
-    ' If your computer does not have this, the request may fail, so use
-    ' D3DDEVTYPE_REF instead of D3DDEVTYPE_HAL if this happens. A real
-    ' program would be able to detect an error and automatically switch device.
-    ' We also request software vertex processing, which means the CPU has to
-    ' transform and light our geometry.
-    Select Case ClientSetup.Aceleracion
-
-        Case 0 '   Hardware
-            Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, _
-                                                      D3DDEVTYPE_HAL, _
-                                                      D3DWindow.hDeviceWindow, _
-                                                      D3DCREATE_HARDWARE_VERTEXPROCESSING, _
-                                                      D3DWindow)
-
-        Case 1 '   Mixed
-            Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, _
-                                                      D3DDEVTYPE_HAL, _
-                                                      D3DWindow.hDeviceWindow, _
-                                                      D3DCREATE_MIXED_VERTEXPROCESSING, _
-                                                      D3DWindow)
-
-        Case Else 'Si no hay opcion entramos en Hardware para asegurarnos que funcione el cliente.
-            Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, _
-                                                      D3DDEVTYPE_HAL, _
-                                                      D3DWindow.hDeviceWindow, _
-                                                      D3DCREATE_HARDWARE_VERTEXPROCESSING, _
-                                                      D3DWindow)
+    'Create the D3D Device
+    If Not Engine_Init_DirectDevice(D3DCREATE_MIXED_VERTEXPROCESSING) Then
+        If Not Engine_Init_DirectDevice(D3DCREATE_HARDWARE_VERTEXPROCESSING) Then
+            If Not Engine_Init_DirectDevice(D3DCREATE_SOFTWARE_VERTEXPROCESSING) Then
             
-    End Select
-    
+                Call MsgBox(JsonLanguage.item("ERROR_DIRECTX_INIT").item("TEXTO"))
+                
+                End
+                
+            End If
+        End If
+    End If
+
     'Seteamos la matriz de proyeccion.
     Call D3DXMatrixOrthoOffCenterLH(Projection, 0, ScreenWidth, ScreenHeight, 0, -1#, 1#)
     Call D3DXMatrixIdentity(View)
@@ -147,14 +104,63 @@ Public Function Engine_DirectX8_Init() As Boolean
         Engine_DirectX8_Init = False
         Exit Function
     End If
+
+    Engine_DirectX8_Init = True
     
-    If DirectDevice Is Nothing Then
-        MsgBox JsonLanguage.item("ERROR_DIRECTDEVICE_INIT").item("TEXTO")
-        Engine_DirectX8_Init = False
-        Exit Function
+End Function
+
+Private Function Engine_Init_DirectDevice(D3DCREATEFLAGS As CONST_D3DCREATEFLAGS) As Boolean
+On Error GoTo ErrorDevice:
+
+    'Establecemos cual va a ser el tamano del render.
+    ScreenWidth = frmMain.MainViewPic.ScaleWidth
+    ScreenHeight = frmMain.MainViewPic.ScaleHeight
+
+    ' Retrieve the information about your current display adapter.
+    Call DirectD3D.GetAdapterDisplayMode(D3DADAPTER_DEFAULT, DispMode)
+    
+    ' Fill the D3DPRESENT_PARAMETERS type, describing how DirectX should
+    ' display it's renders.
+    With D3DWindow
+        .Windowed = True
+        
+        ' The swap effect determines how the graphics get from the backbuffer to the screen.
+        ' D3DSWAPEFFECT_DISCARD:
+        '   Means that every time the render is presented, the backbuffer
+        '   image is destroyed, so everything must be rendered again.
+        .SwapEffect = D3DSWAPEFFECT_DISCARD
+        
+        .BackBufferFormat = DispMode.Format
+        .BackBufferWidth = ScreenWidth
+        .BackBufferHeight = ScreenHeight
+        .hDeviceWindow = frmMain.MainViewPic.hWnd
+
+    End With
+    
+    If Not DirectDevice Is Nothing Then
+        Set DirectDevice = Nothing
     End If
     
-    Engine_DirectX8_Init = True
+    ' Create the rendering device.
+    ' Here we request a Hardware or Mixed rasterization.
+    ' If your computer does not have this, the request may fail, so use
+    ' D3DDEVTYPE_REF instead of D3DDEVTYPE_HAL if this happens. A real
+    ' program would be able to detect an error and automatically switch device.
+    ' We also request software vertex processing, which means the CPU has to
+    Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, D3DWindow.hDeviceWindow, D3DCREATEFLAGS, D3DWindow)
+    
+    'Everything was successful
+    Engine_Init_DirectDevice = True
+    
+    Exit Function
+    
+ErrorDevice:
+    
+    'Destroy the D3DDevice so it can be remade
+    Set DirectDevice = Nothing
+
+    'Return a failure
+    Engine_Init_DirectDevice = False
     
 End Function
 
