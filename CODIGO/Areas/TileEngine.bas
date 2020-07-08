@@ -200,7 +200,7 @@ End Type
 
 'Info de un objeto
 Public Type obj
-    ObjIndex As Integer
+    OBJIndex As Integer
     Amount As Integer
 End Type
 
@@ -1000,13 +1000,16 @@ Function HayUserAbajo(ByVal X As Integer, ByVal Y As Integer, ByVal GrhIndex As 
     End If
 End Function
 
-Public Function InitTileEngine(ByVal setDisplayFormhWnd As Long, ByVal setTilePixelHeight As Integer, ByVal setTilePixelWidth As Integer, ByVal pixelsToScrollPerFrameX As Integer, pixelsToScrollPerFrameY As Integer) As Boolean
+Public Sub InitTileEngine(ByVal setDisplayFormhWnd As Long, ByVal setTilePixelHeight As Integer, ByVal setTilePixelWidth As Integer, ByVal pixelsToScrollPerFrameX As Integer, pixelsToScrollPerFrameY As Integer)
 '***************************************************
 'Author: Aaron Perkins
 'Last Modification: 08/14/07
 'Last modified by: Juan Martin Sotuyo Dodero (Maraxus)
 'Configures the engine to start running.
 '***************************************************
+    
+    On Error GoTo ErrorHandler:
+    
     TilePixelWidth = setTilePixelWidth
     TilePixelHeight = setTilePixelHeight
     WindowTileHeight = Round(frmMain.MainViewPic.Height / 32, 0)
@@ -1032,8 +1035,6 @@ Public Function InitTileEngine(ByVal setDisplayFormhWnd As Long, ByVal setTilePi
     'Set scroll pixels per frame
     ScrollPixelsPerFrameX = pixelsToScrollPerFrameX
     ScrollPixelsPerFrameY = pixelsToScrollPerFrameY
-
-On Error GoTo 0
     
     'Cargamos indice de graficos.
     'TODO: No usar variable de compilacion y acceder a esto desde el config.ini
@@ -1049,10 +1050,16 @@ On Error GoTo 0
     Call CargarFxs
     Call LoadGraphics
     Call CargarParticulas
-
-    InitTileEngine = True
     
-End Function
+    Exit Sub
+    
+ErrorHandler:
+
+    Call LogError(Err.number, Err.Description, "Mod_TileEngine.InitTileEngine")
+    
+    Call CloseClient
+    
+End Sub
 
 Public Sub LoadGraphics()
     Call SurfaceDB.Initialize(DirectD3D8, ClientSetup.byMemory)

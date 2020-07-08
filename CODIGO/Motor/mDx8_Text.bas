@@ -296,7 +296,7 @@ Sub Engine_Init_FontTextures()
 eDebug:
 
     If Err.number = "-2005529767" Then
-        MsgBox "Error en la textura de fuente utilizada " & Game.path(Graficos) & "Font.png.", vbCritical
+        Call MsgBox("Error en la textura de fuente utilizada " & Game.path(Graficos) & "Font.png", vbCritical)
         End
     End If
     
