@@ -1062,7 +1062,9 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
                   ByVal DisplayFormLeft As Integer, _
                   ByVal MouseViewX As Integer, _
                   ByVal MouseViewY As Integer)
-
+    
+    On Error GoTo ErrorHandler:
+    
     If EngineRun Then
         Call Engine_BeginScene
         
@@ -1141,6 +1143,16 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
         Call Engine_EndScene(MainScreenRect, 0)
     
         Call Inventario.DrawDragAndDrop
+    
+    End If
+    
+ErrorHandler:
+
+    If DirectDevice.TestCooperativeLevel = D3DERR_DEVICENOTRESET Then
+        
+        Call mDx8_Engine.Engine_DirectX8_Init
+        
+        Call LoadGraphics
     
     End If
   

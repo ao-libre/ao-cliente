@@ -868,16 +868,12 @@ Private Sub LoadInitialConfig()
                             True, False, True, rtfCenter)
     
     '     Iniciamos el Engine de DirectX 8
-    If Not Engine_DirectX8_Init Then
-        Call CloseClient
-    End If
+    Call mDx8_Engine.Engine_DirectX8_Init
           
     '     Tile Engine
     If Not InitTileEngine(frmMain.hWnd, 32, 32, 8, 8) Then
         Call CloseClient
     End If
-    
-    Call mDx8_Engine.Engine_DirectX8_Aditional_Init
 
     Call AddtoRichTextBox(frmCargando.status, _
                             "   " & JsonLanguage.item("HECHO").item("TEXTO"), _

@@ -61,14 +61,16 @@ End Type
 
 Private EndTime As Long
 
-Public Function Engine_DirectX8_Init() As Boolean
+Public Sub Engine_DirectX8_Init()
+
+    On Error GoTo EngineError:
 
     ' Initialize all DirectX objects.
     Set DirectX = New DirectX8
     Set DirectD3D = DirectX.Direct3DCreate
     Set DirectD3D8 = New D3DX8
     
-    'Create the D3D Device
+    'Detectamos el modo de renderizado mas compatible con tu PC.
     If Not Engine_Init_DirectDevice(D3DCREATE_MIXED_VERTEXPROCESSING) Then
         If Not Engine_Init_DirectDevice(D3DCREATE_HARDWARE_VERTEXPROCESSING) Then
             If Not Engine_Init_DirectDevice(D3DCREATE_SOFTWARE_VERTEXPROCESSING) Then
@@ -97,17 +99,19 @@ Public Function Engine_DirectX8_Init() As Boolean
     Set SpriteBatch = New clsBatch
     Call SpriteBatch.Initialise(2000)
     
+    Call Engine_DirectX8_Aditional_Init
+    
     EndTime = timeGetTime
-
-    If Err Then
-        MsgBox JsonLanguage.item("ERROR_DIRECTX_INIT").item("TEXTO")
-        Engine_DirectX8_Init = False
-        Exit Function
-    End If
 
     Engine_DirectX8_Init = True
     
-End Function
+    Exit Sub
+    
+EngineError:
+
+    Call CloseClient
+    
+End Sub
 
 Private Function Engine_Init_DirectDevice(D3DCREATEFLAGS As CONST_D3DCREATEFLAGS) As Boolean
 On Error GoTo ErrorDevice:
@@ -225,9 +229,6 @@ Public Sub Engine_DirectX8_Aditional_Init()
 
     FPS = 101
     FramesPerSecCounter = 101
-    
-    ColorTecho = 250
-    colorRender = 240
 
     TileBufferSize = Areas.TilesBuffer
     
@@ -240,23 +241,31 @@ Public Sub Engine_DirectX8_Aditional_Init()
         .Right = ScreenWidth
     End With
     
-    ' Seteamos algunos colores por adelantado y unica vez.
-    Call Engine_Long_To_RGB_List(Normal_RGBList(), -1)
-    Call Engine_Long_To_RGB_List(Color_Shadow(), D3DColorARGB(50, 0, 0, 0))
-    Call Engine_Long_To_RGB_List(Color_Arbol(), D3DColorARGB(100, 100, 100, 100))
-    Color_Paralisis = D3DColorARGB(180, 230, 230, 250)
-    Color_Invisibilidad = D3DColorARGB(180, 236, 136, 66)
-    Color_Montura = D3DColorARGB(180, 15, 230, 40)
-    
-    ' Inicializamos otros sistemas.
     Call mDx8_Text.Engine_Init_FontTextures
-    Call mDx8_Text.Engine_Init_FontSettings
-    Call mDx8_Auras.Load_Auras
-    Call mDx8_Clima.Init_MeteoEngine
-    Call mDx8_Dibujado.Damage_Initialize
     
-    ' Inicializa DIB surface, un buffer usado para dejar imagenes estaticas en PictureBox
-    Call PrepareDrawBuffer
+    If Not prgRun Then
+    
+        ColorTecho = 250
+        colorRender = 240
+        
+        ' Seteamos algunos colores por adelantado y unica vez.
+        Call Engine_Long_To_RGB_List(Normal_RGBList(), -1)
+        Call Engine_Long_To_RGB_List(Color_Shadow(), D3DColorARGB(50, 0, 0, 0))
+        Call Engine_Long_To_RGB_List(Color_Arbol(), D3DColorARGB(100, 100, 100, 100))
+        Color_Paralisis = D3DColorARGB(180, 230, 230, 250)
+        Color_Invisibilidad = D3DColorARGB(180, 236, 136, 66)
+        Color_Montura = D3DColorARGB(180, 15, 230, 40)
+        
+        ' Inicializamos otros sistemas.
+        Call mDx8_Text.Engine_Init_FontSettings
+        Call mDx8_Auras.Load_Auras
+        Call mDx8_Clima.Init_MeteoEngine
+        Call mDx8_Dibujado.Damage_Initialize
+        
+        ' Inicializa DIB surface, un buffer usado para dejar imagenes estaticas en PictureBox
+        Call PrepareDrawBuffer
+        
+    End If
     
 End Sub
 
