@@ -32,6 +32,11 @@ Attribute VB_Name = "Mod_Declaraciones"
 
 Option Explicit
 
+Public IntervaloDopas As Long
+Public IntervaloInvi As Long
+Public TiempoInvi As Long
+Public TiempoDopas As Long
+
 Public Const MAX_AMIGOS As Byte = 50
 Public amigos(1 To MAX_AMIGOS) As String
 
@@ -1037,10 +1042,8 @@ Public JsonTips As Object
 'Nivel Maximo
 Public STAT_MAXELV As Byte
 Public IntervaloParalizado As Integer
-Public IntervaloInvisible As Integer
 
 Public UserParalizadoSegundosRestantes As Integer
-Public UserInvisibleSegundosRestantes As Integer
 Public UserEquitandoSegundosRestantes As Long
 
 Public QuantityServers As Integer
