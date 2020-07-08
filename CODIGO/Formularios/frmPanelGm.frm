@@ -4,8 +4,8 @@ Begin VB.Form frmPanelGm
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Panel GM"
    ClientHeight    =   8760
-   ClientLeft      =   18300
-   ClientTop       =   4590
+   ClientLeft      =   18210
+   ClientTop       =   3585
    ClientWidth     =   4335
    ClipControls    =   0   'False
    LinkTopic       =   "Form1"
@@ -13,7 +13,6 @@ Begin VB.Form frmPanelGm
    MinButton       =   0   'False
    ScaleHeight     =   8760
    ScaleWidth      =   4335
-   StartUpPosition =   1  'CenterOwner
    Begin VB.CommandButton cmdCerrar 
       Caption         =   "Cerrar"
       CausesValidation=   0   'False
