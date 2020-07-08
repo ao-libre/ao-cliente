@@ -550,15 +550,28 @@ Public Sub Engine_EndScene(ByRef DestRect As RECT, Optional ByVal hWndDest As Lo
 'Last Modification: 29/12/10
 'Blisse-AO | DD EndScene & Present
 '***************************************************
-    
+On Error GoTo DeviceHandler:
+
     Call SpriteBatch.Flush
     
     Call DirectDevice.EndScene
         
     If hWndDest = 0 Then
         Call DirectDevice.Present(DestRect, ByVal 0&, ByVal 0&, ByVal 0&)
+    
     Else
         Call DirectDevice.Present(DestRect, ByVal 0, hWndDest, ByVal 0)
+    
+    End If
+    
+DeviceHandler:
+
+    If DirectDevice.TestCooperativeLevel = D3DERR_DEVICENOTRESET Then
+
+        Call mDx8_Engine.Engine_DirectX8_Init
+
+        Call LoadGraphics
+
     End If
     
 End Sub
