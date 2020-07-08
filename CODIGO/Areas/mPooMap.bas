@@ -245,14 +245,19 @@ Function Map_LegalPos(ByVal X As Integer, ByVal Y As Integer) As Boolean
       
       'Esta el usuario Equitando bajo un techo?
       If UserEquitando And MapData(X, Y).Trigger = eTrigger.BAJOTECHO Or MapData(X, Y).Trigger = eTrigger.CASA Then
-            Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_MONTURA_SALIR").item("TEXTO"))
+            
+            If Not frmMain.MsgTimeadoOn Then
+                frmMain.MsgTimeadoOn = True
+                frmMain.MsgTimeado = JsonLanguage.item("MENSAJE_MONTURA_SALIR").item("TEXTO")
+            End If
+            
             Exit Function
       End If
       
       If UserEvento Then Exit Function
       
-    
       Map_LegalPos = True
+      
 End Function
 
 Function Map_InBounds(ByVal X As Integer, ByVal Y As Integer) As Boolean

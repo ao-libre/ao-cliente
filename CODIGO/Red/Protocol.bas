@@ -5208,8 +5208,10 @@ Private Sub HandleChangeUserTradeSlot()
     Call frmComerciarUsu.PrintCommerceMsg(TradingUserName & JsonLanguage.item("MENSAJE_COMM_OFERTA_CAMBIA").item("TEXTO"), FontTypeNames.FONTTYPE_VENENO)
     
 errhandler:
+
     Dim Error As Long
-    
+        Error = Err.number
+        
     On Error GoTo 0
     
     'Destroy auxiliar buffer
