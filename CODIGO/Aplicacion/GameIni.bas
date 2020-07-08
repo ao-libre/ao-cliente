@@ -30,7 +30,6 @@ End Enum
 Public Type tSetupMods
 
     ' VIDEO
-    Aceleracion As Byte
     byMemory    As Integer
     ProyectileEngine As Boolean
     PartyMembers As Boolean
@@ -141,8 +140,8 @@ Public Sub LeerConfiguracion()
     Call Lector.Initialize(Game.path(INIT) & CLIENT_FILE)
     
     With ClientSetup
+    
         ' VIDEO
-        .Aceleracion = Lector.GetValue("VIDEO", "RenderMode")
         .byMemory = Lector.GetValue("VIDEO", "DynamicMemory")
         .bNoRes = CBool(Lector.GetValue("VIDEO", "DisableResolutionChange"))
         .ProyectileEngine = CBool(Lector.GetValue("VIDEO", "ProjectileEngine"))
@@ -175,7 +174,6 @@ Public Sub LeerConfiguracion()
         .MostrarBindKeysSelection = CBool(Lector.GetValue("OTHER", "MOSTRAR_BIND_KEYS_SELECTION"))
         .KeyboardBindKeysConfig = Lector.GetValue("OTHER", "BIND_KEYS")
 
-        Debug.Print "Modo de Renderizado: " & IIf(.Aceleracion = 1, "Mixto (Hardware + Software)", "Hardware")
         Debug.Print "byMemory: " & .byMemory
         Debug.Print "bNoRes: " & .bNoRes
         Debug.Print "ProyectileEngine: " & .ProyectileEngine
@@ -219,7 +217,6 @@ Public Sub GuardarConfiguracion()
     With ClientSetup
         
         ' VIDEO
-        Call Lector.ChangeValue("VIDEO", "RenderMode", .Aceleracion)
         Call Lector.ChangeValue("VIDEO", "DynamicMemory", .byMemory)
         Call Lector.ChangeValue("VIDEO", "DisableResolutionChange", IIf(.bNoRes, "True", "False"))
         Call Lector.ChangeValue("VIDEO", "ProjectileEngine", IIf(.ProyectileEngine, "True", "False"))
@@ -254,9 +251,11 @@ Public Sub GuardarConfiguracion()
     End With
     
     Call Lector.DumpFile(Game.path(INIT) & CLIENT_FILE)
+    
 fileErr:
 
     If Err.number <> 0 Then
-        MsgBox ("Ha ocurrido un error al guardar la configuracion del cliente. Error " & Err.number & " : " & Err.Description)
+        Call MsgBox("Ha ocurrido un error al guardar la configuracion del cliente. Error " & Err.number & " : " & Err.Description)
     End If
+    
 End Sub
