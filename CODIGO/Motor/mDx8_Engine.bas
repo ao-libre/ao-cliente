@@ -149,6 +149,22 @@ On Error GoTo ErrorDevice:
     ' We also request software vertex processing, which means the CPU has to
     Set DirectDevice = DirectD3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, D3DWindow.hDeviceWindow, D3DCREATEFLAGS, D3DWindow)
     
+    'Lo pongo xq es bueno saberlo...
+    Select Case D3DCREATEFLAGS
+    
+        Case D3DCREATE_MIXED_VERTEXPROCESSING
+            Debug.Print "Modo de Renderizado: MIXED"
+        
+        Case D3DCREATE_HARDWARE_VERTEXPROCESSING
+            Debug.Print "Modo de Renderizado: HARDWARE"
+            
+        Case D3DCREATE_SOFTWARE_VERTEXPROCESSING
+            Debug.Print "Modo de Renderizado: SOFTWARE"
+            
+    End Select
+    
+    
+    
     'Everything was successful
     Engine_Init_DirectDevice = True
     
