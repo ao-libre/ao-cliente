@@ -14,19 +14,13 @@ PJ=7666
 Mundo=Alkon
 
 [S3]
-Desc=ReyarB Server -est:Alkon
-IP=181.229.152.153
+Desc=Ao - LaPlataVive | Exp y Oro x100
+IP=win.laplatavive.net
 PJ=7666
 Mundo=Alkon
 
 [S4]
 Desc=Servidor Local | Modo:Alkon 0.13.X
 IP=localhost
-PJ=7666
-Mundo=Alkon
-
-[S5]
-Desc=Ao - LaPlataVive | Exp y Oro x100
-IP=win.laplatavive.net
 PJ=7666
 Mundo=Alkon
