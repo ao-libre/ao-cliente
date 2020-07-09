@@ -483,10 +483,12 @@ Public Sub DrawInventory()
     Next LoopC
 
     If DragItem <> 0 And Drag = 1 And isInventory Then
+    
         Call Draw_GrhIndex(Inventory(DragItem).GrhIndex, MouseX - 16, MouseY - 16, 0, Normal_RGBList())
         
         ' Si estamos arrastrando un item, dibujamos normal
         InventoryWindow.AutoRedraw = False
+        
         Call Engine_EndScene(DestRect, InventoryWindow.hWnd)
         
     Else
@@ -503,7 +505,7 @@ Public Sub DrawInventory()
 
         InventoryWindow.AutoRedraw = True
 
-        Call DrawBuffer.PaintPicture(InventoryWindow.hdc, 0, 0, InventoryWindow.Width, InventoryWindow.Height, 0, 0, vbSrcCopy)
+        Call DrawBuffer.PaintPicture(InventoryWindow.hdc, 0, 0, InventoryWindow.ScaleWidth, InventoryWindow.ScaleHeight, 0, 0, vbSrcCopy)
 
         InventoryWindow.Picture = InventoryWindow.Image
 
