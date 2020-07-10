@@ -74,7 +74,7 @@ Public Sub Engine_DirectX8_Init()
         If Not Engine_Init_DirectDevice(D3DCREATE_HARDWARE_VERTEXPROCESSING) Then
             If Not Engine_Init_DirectDevice(D3DCREATE_SOFTWARE_VERTEXPROCESSING) Then
             
-                Call MsgBox(JsonLanguage.Item("ERROR_DIRECTX_INIT").Item("TEXTO"))
+                Call MsgBox(JsonLanguage.item("ERROR_DIRECTX_INIT").item("TEXTO"))
                 
                 End
                 
@@ -102,10 +102,11 @@ Public Sub Engine_DirectX8_Init()
     Call Engine_DirectX8_Aditional_Init
     
     EndTime = timeGetTime
-
+    
+    Exit Sub
 EngineHandler:
     
-    Call LogError(Err.Number, Err.Description, "mDx8_Engine.Engine_DirectX8")
+    Call LogError(Err.number, Err.Description, "mDx8_Engine.Engine_DirectX8")
     
     Call CloseClient
 End Sub
@@ -251,103 +252,9 @@ Public Sub Engine_DirectX8_Aditional_Init()
         .Bottom = ScreenHeight
         .Right = ScreenWidth
     End With
-    
-<<<<<<< HEAD
-    Call mDx8_Text.Engine_Init_FontTextures
-    
-    If Not prgRun Then
-    
-        ColorTecho = 250
-        colorRender = 240
-        
-        ' Seteamos algunos colores por adelantado y unica vez.
-        Call Engine_Long_To_RGB_List(Normal_RGBList(), -1)
-        Call Engine_Long_To_RGB_List(Color_Shadow(), D3DColorARGB(50, 0, 0, 0))
-        Call Engine_Long_To_RGB_List(Color_Arbol(), D3DColorARGB(100, 100, 100, 100))
-        Color_Paralisis = D3DColorARGB(180, 230, 230, 250)
-        Color_Invisibilidad = D3DColorARGB(180, 236, 136, 66)
-        Color_Montura = D3DColorARGB(180, 15, 230, 40)
-        
-        ' Inicializamos otros sistemas.
-        Call mDx8_Text.Engine_Init_FontSettings
-        Call mDx8_Auras.Load_Auras
-        Call mDx8_Clima.Init_MeteoEngine
-        Call mDx8_Dibujado.Damage_Initialize
-        
-        ' Inicializa DIB surface, un buffer usado para dejar imagenes estaticas en PictureBox
-        Call PrepareDrawBuffer
-        
-    End If
-    
-End Sub
 
-Public Sub Engine_Draw_Line(x1 As Single, y1 As Single, x2 As Single, y2 As Single, Optional Color As Long = -1, Optional Color2 As Long = -1)
-On Error GoTo Error
-    
-    Call Engine_Long_To_RGB_List(temp_rgb(), Color)
-    
-    Call SpriteBatch.SetTexture(Nothing)
-    Call SpriteBatch.Draw(x1, y1, x2, y2, temp_rgb())
-    
-Exit Sub
-
-Error:
-    'Call Log_Engine("Error in Engine_Draw_Line, " & Err.Description & " (" & Err.number & ")")
-End Sub
-
-Public Sub Engine_Draw_Point(x1 As Single, y1 As Single, Optional Color As Long = -1)
-On Error GoTo Error
-    
-    Call Engine_Long_To_RGB_List(temp_rgb(), Color)
-    
-    Call SpriteBatch.SetTexture(Nothing)
-    Call SpriteBatch.Draw(x1, y1, 0, 1, temp_rgb(), 0, 0)
-    
-Exit Sub
-
-Error:
-    'Call Log_Engine("Error in Engine_Draw_Point, " & Err.Description & " (" & Err.number & ")")
-End Sub
-
-Public Function Engine_ElapsedTime() As Long
-'**************************************************************
-'Gets the time that past since the last call
-'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_ElapsedTime
-'**************************************************************
-Dim Start_Time As Long
-
-    'Get current time
-    Start_Time = timeGetTime
-
-    'Calculate elapsed time
-    Engine_ElapsedTime = Start_Time - EndTime
-
-    'Get next end time
-    EndTime = Start_Time
-
-End Function
-
-Public Function Engine_PixelPosX(ByVal X As Integer) As Integer
-'*****************************************************************
-'Converts a tile position to a screen position
-'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_PixelPosX
-'*****************************************************************
-
-    Engine_PixelPosX = (X - 1) * 32
-    
-End Function
-
-Public Function Engine_PixelPosY(ByVal Y As Integer) As Integer
-'*****************************************************************
-'Converts a tile position to a screen position
-'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_PixelPosY
-'*****************************************************************
-
-    Engine_PixelPosY = (Y - 1) * 32
-=======
     'Inicializamos y cargamos los graficos de las Fonts.
     Call mDx8_Text.Engine_Init_FontTextures
->>>>>>> eecda9323b4a6073e81a33cc84fcda7f973c0fc5
     
     If Not prgRun Then
     
