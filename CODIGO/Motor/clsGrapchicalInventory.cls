@@ -419,8 +419,8 @@ Public Sub DrawInventory()
     Dim Sel_Color(3) As Long
 
     With DestRect
-        .Bottom = InventoryWindow.Height
-        .Right = InventoryWindow.Width
+        .Bottom = InventoryWindow.ScaleHeight
+        .Right = InventoryWindow.ScaleWidth
     End With
     
     'Color al seleccionar un item.
@@ -438,15 +438,21 @@ Public Sub DrawInventory()
         'Si se renderiza el inventario del pj hace la validacion para renderizar de un color correcto los slots especiales de mochila y alforja
         'Sino renderiza todo negro (Recox)
         If isInventory Then
+            
             If (LoopC > MAX_NORMAL_INVENTORY_SLOTS) And (LoopC <= MAX_MOCHILA_CHICA_INVENTORY_SLOTS) Then
                 Call Draw_GrhIndex(GRH_SLOT_INVENTARIO_VIOLETA, startdX, startdY, 0, Normal_RGBList(), 0, False) 'Dibuja el fondo
+            
             ElseIf (LoopC > MAX_MOCHILA_CHICA_INVENTORY_SLOTS) And (LoopC <= MAX_INVENTORY_SLOTS) Then
                 Call Draw_GrhIndex(GRH_SLOT_INVENTARIO_DORADO, startdX, startdY, 0, Normal_RGBList(), 0, False) 'Dibuja el fondo
+            
             Else
                 Call Draw_GrhIndex(GRH_SLOT_INVENTARIO_NEGRO, startdX, startdY, 0, Normal_RGBList(), 0, False) 'Dibuja el fondo
+            
             End If
+            
         Else
             Call Draw_GrhIndex(GRH_SLOT_INVENTARIO_NEGRO, startdX, startdY, 0, Normal_RGBList(), 0, False) 'Dibuja el fondo
+        
         End If
 
             
@@ -477,10 +483,12 @@ Public Sub DrawInventory()
     Next LoopC
 
     If DragItem <> 0 And Drag = 1 And isInventory Then
+    
         Call Draw_GrhIndex(Inventory(DragItem).GrhIndex, MouseX - 16, MouseY - 16, 0, Normal_RGBList())
         
         ' Si estamos arrastrando un item, dibujamos normal
         InventoryWindow.AutoRedraw = False
+        
         Call Engine_EndScene(DestRect, InventoryWindow.hWnd)
         
     Else
@@ -497,7 +505,7 @@ Public Sub DrawInventory()
 
         InventoryWindow.AutoRedraw = True
 
-        Call DrawBuffer.PaintPicture(InventoryWindow.hdc, 0, 0, InventoryWindow.Width, InventoryWindow.Height, 0, 0, vbSrcCopy)
+        Call DrawBuffer.PaintPicture(InventoryWindow.hdc, 0, 0, InventoryWindow.ScaleWidth, InventoryWindow.ScaleHeight, 0, 0, vbSrcCopy)
 
         InventoryWindow.Picture = InventoryWindow.Image
 
