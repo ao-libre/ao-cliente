@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.ocx"
 Begin VB.Form frmMain 
    Appearance      =   0  'Flat
    BackColor       =   &H80000005&
@@ -657,7 +657,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2937
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -684,7 +683,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2937
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1262,7 +1260,7 @@ Public Sub dragInventory_dragDone(ByVal originalSlot As Integer, ByVal newSlot A
 End Sub
 
 Private Sub btnReportarBug_Click()
-    MsgBox(JsonLanguage.item("BTN_REPORTAR_BUG_MESSAGE").item("TEXTO"))
+    MsgBox (JsonLanguage.item("BTN_REPORTAR_BUG_MESSAGE").item("TEXTO"))
     Call ShellExecute(0, "Open", "https://github.com/ao-libre/ao-cliente/issues", "", App.path, SW_SHOWNORMAL)
 End Sub
 
@@ -1793,7 +1791,7 @@ Private Sub imgAsignarSkill_Click()
     LlegaronSkills = False
     
     For i = 1 To NUMSKILLS
-        frmSkills3.text1(i).Caption = UserSkills(i)
+        frmSkills3.Text1(i).Caption = UserSkills(i)
     Next i
     
     Alocados = SkillPoints
@@ -2171,8 +2169,8 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
         SendTxt.Visible = False
         
-        If PicInv.Visible Then
-            PicInv.SetFocus
+        If picInv.Visible Then
+            picInv.SetFocus
         Else
             hlst.SetFocus
         End If
@@ -2880,6 +2878,8 @@ Private Sub Client_Connect()
     'Clean input and output buffers
     Call incomingData.ReadASCIIStringFixed(incomingData.Length)
     Call outgoingData.ReadASCIIStringFixed(outgoingData.Length)
+    
+    Security.Redundance = 13 'DEFAULT
     
     Second.Enabled = True
     

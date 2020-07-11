@@ -596,7 +596,7 @@ End Enum
 
 'Inventario
 Type Inventory
-    ObjIndex As Integer
+    OBJIndex As Integer
     name As String
     GrhIndex As Long
     Amount As Long
@@ -610,7 +610,7 @@ Type Inventory
 End Type
 
 Type NpCinV
-    ObjIndex As Integer
+    OBJIndex As Integer
     name As String
     GrhIndex As Long
     Amount As Integer
@@ -651,7 +651,7 @@ End Type
 
 Type tItemsConstruibles
     name As String
-    ObjIndex As Integer
+    OBJIndex As Integer
     GrhIndex As Long
     LinH As Integer
     LinP As Integer
@@ -665,14 +665,14 @@ End Type
 
 Type tItemCrafteo
     name As String
-    ObjIndex As Integer
+    OBJIndex As Integer
     GrhIndex As Long
     Amount As Integer
 End Type
 
 Type tItemArtesano
     name As String
-    ObjIndex As Integer
+    OBJIndex As Integer
     GrhIndex As Long
     
     ItemsCrafteo() As tItemCrafteo
@@ -1049,3 +1049,7 @@ Public UserEquitandoSegundosRestantes As Long
 
 Public QuantityServers As Integer
 Public IpApiEnabled As Boolean
+
+#If AntiExternos Then
+Public Security As New clsSecurity
+#End If
