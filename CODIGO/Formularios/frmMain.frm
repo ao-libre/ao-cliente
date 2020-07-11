@@ -1269,9 +1269,7 @@ Private Sub Form_Load()
     End With
 
     Call LoadTextsForm
-    'Call LoadAOCustomControlsPictures(Me)
-    'Todo: Poner la carga de botones como en el frmCambiaMotd.frm para mantener coherencia con el resto de la aplicacion
-    'y poder borrar los frx de este archivo
+    Call LoadAOCustomControlsPictures(Me)
         
     ' Detect links in console
     Call EnableURLDetect(RecTxt.hWnd, Me.hWnd)
