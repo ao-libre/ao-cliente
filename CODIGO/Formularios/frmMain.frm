@@ -1548,6 +1548,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
         Case CustomKeys.BindedKey(eKeyType.mKeyTalkWithGuild)
 
             If SendTxt.Visible Then Exit Sub
+            If frmBuscar.Visible Then Exit Sub
             
             If (Not Comerciando) And (Not MirandoAsignarSkills) And (Not frmMSG.Visible) And (Not MirandoForo) And (Not frmEstadisticas.Visible) And (Not frmCantidad.Visible) Then
                 SendCMSTXT.Visible = True
@@ -1633,6 +1634,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
         Case CustomKeys.BindedKey(eKeyType.mKeyTalk)
 
             If SendCMSTXT.Visible Then Exit Sub
+            If frmBuscar.Visible Then Exit Sub
             
             If (Not Comerciando) And (Not MirandoAsignarSkills) And (Not frmMSG.Visible) And (Not MirandoForo) And (Not frmEstadisticas.Visible) And (Not frmCantidad.Visible) Then
                 SendTxt.Visible = True
@@ -2495,7 +2497,8 @@ Private Sub RecTxt_Change()
     On Error Resume Next  'el .SetFocus causaba errores al salir y volver a entrar
 
     If Not Application.IsAppActive() Then Exit Sub
-    
+    If (Not frmBuscar.Visible) Then Exit Sub
+            
     If SendTxt.Visible Then
         SendTxt.SetFocus
     
@@ -2503,6 +2506,7 @@ Private Sub RecTxt_Change()
         SendCMSTXT.SetFocus
     
     ElseIf (Not Comerciando) And _
+           (Not frmBuscar.Visible) And _
            (Not MirandoAsignarSkills) And _
            (Not frmMSG.Visible) And _
            (Not MirandoForo) And _

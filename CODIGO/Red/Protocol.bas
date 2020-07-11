@@ -8158,7 +8158,7 @@ Public Sub WriteWarpChar(ByVal UserName As String, ByVal Map As Integer, ByVal X
     
     'Para que te vas a tepear al mismo lugar? Te pinta spamear el FX del summon?
     'No mandemos paquetes al pedo.
-    If X = UserPos.X And Y = UserPos.Y Then Exit Sub
+    If X = UserPos.X And Y = UserPos.Y And Map = UserMap Then Exit Sub
     
     With outgoingData
         Call .WriteByte(ClientPacketID.GMCommands)
