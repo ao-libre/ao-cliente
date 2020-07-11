@@ -361,6 +361,14 @@
             0
         ]
     },
+	"NPC_KILL": {
+        "TEXTO": "Has matado a la criatura!",
+        "COLOR": [
+            255,
+            0,
+            0
+        ]
+    },
     "MENSAJE_FRAGSHOOTER_HAS_GANADO": {
         "TEXTO": "Has ganado ",
         "COLOR": [
