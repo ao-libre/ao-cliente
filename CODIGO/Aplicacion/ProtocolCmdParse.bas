@@ -1707,6 +1707,14 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 
             Case "/MIMETIZAR"
                 Call WriteImitate
+
+            Case "/VERPROCESOS"
+                If notNullArguments Then
+                    Call writeLookProcess(ArgumentosRaw)
+                Else
+                    'Avisar que falta el parametro
+                    Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_FALTAN_PARAMETROS").item("TEXTO") & " /VERPROCESOS NICKNAME.")
+                End If
             
             Case Else
                 Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_COMANDO_INCORRECTO").item("TEXTO"))
