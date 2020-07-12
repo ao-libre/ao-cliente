@@ -1,8 +1,7 @@
 VERSION 5.00
 Begin VB.Form frmPres 
-   AutoRedraw      =   -1  'True
    BorderStyle     =   0  'None
-   Caption         =   "Form1"
+   Caption         =   "Argentum Online Libre"
    ClientHeight    =   9030
    ClientLeft      =   0
    ClientTop       =   0
@@ -15,7 +14,6 @@ Begin VB.Form frmPres
    Picture         =   "frmPres.frx":0000
    ScaleHeight     =   9030
    ScaleWidth      =   12045
-   ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
    Begin VB.Timer Timer1 
       Interval        =   3400
