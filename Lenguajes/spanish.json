@@ -361,6 +361,14 @@
             0
         ]
     },
+	"NPC_KILL": {
+        "TEXTO": "Has matado a la criatura!",
+        "COLOR": [
+            255,
+            0,
+            0
+        ]
+    },
     "MENSAJE_FRAGSHOOTER_HAS_GANADO": {
         "TEXTO": "Has ganado ",
         "COLOR": [
@@ -1237,6 +1245,15 @@
     },
     "LBL_QUESTS": {
         "TEXTO": "Quests"
+    },
+    "LBL_REPORTAR_BUG": {
+        "TEXTO": "Reportar Bug"
+    },
+    "BTN_REPORTAR_BUG_MESSAGE": {
+        "TEXTO": "Si reportas un bug que no este en la lista de reportados, te vamos a obsequiar 5000 oro. Es muy simple tan solo una captura de pantalla explicando lo que sucede."
+    },
+    "LBL_MODO_CONSOLA": {
+        "TEXTO": "Consola"
     },
     "LBL_OPCIONES": {
         "TEXTO": "Opciones"

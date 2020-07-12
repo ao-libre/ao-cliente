@@ -149,7 +149,7 @@ Begin VB.Form frmPanelGm
          Width           =   1815
       End
       Begin VB.CommandButton cmdSETDESC 
-         Caption         =   "DESCRIPCI覰"
+         Caption         =   "DESCRIPCI脫N"
          CausesValidation=   0   'False
          Height          =   315
          Left            =   2040
@@ -158,7 +158,7 @@ Begin VB.Form frmPanelGm
          Width           =   1815
       End
       Begin VB.CommandButton cmdNAVE 
-         Caption         =   "NAVEGACI覰"
+         Caption         =   "NAVEGACI脫N"
          CausesValidation=   0   'False
          Height          =   315
          Left            =   120
@@ -265,7 +265,7 @@ Begin VB.Form frmPanelGm
          Width           =   3675
       End
       Begin VB.CommandButton cmdIRCERCA 
-         Caption         =   "Ir al User"
+Caption         =   "Ir Cerca"
          CausesValidation=   0   'False
          Height          =   315
          Left            =   0
@@ -383,7 +383,7 @@ Begin VB.Form frmPanelGm
          Width           =   1095
       End
       Begin VB.CommandButton cmdSKILLS 
-         Caption         =   "Slill"
+         Caption         =   "Skills"
          CausesValidation=   0   'False
          Height          =   315
          Left            =   2400
@@ -626,7 +626,7 @@ Begin VB.Form frmPanelGm
       Top             =   360
       Width           =   3975
       Begin VB.CommandButton Command6 
-         Caption         =   "Mapa sin Invocaci髇"
+         Caption         =   "Mapa sin Invocaci贸n"
          CausesValidation=   0   'False
          Height          =   315
          Left            =   2040
@@ -635,7 +635,7 @@ Begin VB.Form frmPanelGm
          Width           =   1695
       End
       Begin VB.CommandButton Command5 
-         Caption         =   "Cambiar Trigger磗"
+         Caption         =   "Cambiar Trigger麓s"
          Height          =   315
          Left            =   2040
          TabIndex        =   127
@@ -706,7 +706,7 @@ Begin VB.Form frmPanelGm
          Width           =   1695
       End
       Begin VB.CommandButton cmdInvocaSI 
-         Caption         =   "Mapa con Invocaci髇"
+         Caption         =   "Mapa con Invocaci贸n"
          CausesValidation=   0   'False
          Height          =   315
          Left            =   120
@@ -1668,7 +1668,7 @@ Private Sub cmdDEST_Click()
 End Sub
 
 Private Sub cmddestBloq_Click()
-    If MsgBox("Seguro desea el bloqueo en su ubicaci髇 ? ", vbYesNo, "Atencion!") = vbYes Then _
+    If MsgBox("Seguro desea el bloqueo en su ubicaci贸n ? ", vbYesNo, "Atencion!") = vbYes Then _
         Call WriteTileBlockedToggle
         frmMain.Show
 End Sub
@@ -1775,13 +1775,13 @@ Private Sub cmdINVISIBLE_Click()
 End Sub
 
 Private Sub cmdInvocaNO_Click()
-    '/Sin Invocaci髇 Agregado Por ReyarB 21/05/2020
+    '/Sin Invocaci贸n Agregado Por ReyarB 21/05/2020
         If MsgBox("Seguro desea hacer que el Mapa NO puedan Invocar hasta un reset.?", vbYesNo, "Atencion!") = vbYes Then _
             Call ParseUserCommand("/MODMAPINFO INVOCARSINEFECTO 0") 'We use the Parser to control the command format
 End Sub
 
 Private Sub cmdInvocaSI_Click()
-    '/Con Invocaci髇 Agregado Por ReyarB 21/05/2020
+    '/Con Invocaci贸n Agregado Por ReyarB 21/05/2020
         If MsgBox("Seguro desea hacer que el Mapa puedan Invocar hasta un reset.?", vbYesNo, "Atencion!") = vbYes Then _
             Call ParseUserCommand("/MODMAPINFO INVOCARSINEFECTO 1") 'We use the Parser to control the command format
     frmMain.Show
@@ -2320,7 +2320,7 @@ End Sub
 Private Sub Command5_Click()
     Dim tStr As String
     
-    tStr = InputBox("Indique el numero del Trigger磗 a cambiar.", "Crear NPC con Respawn")
+    tStr = InputBox("Indique el numero del Trigger麓s a cambiar.", "Crear NPC con Respawn")
     If LenB(tStr) <> 0 Then _
         If MsgBox("Seguro desea cambiar a " & tStr & " el trigger donde esta parado?", vbYesNo, "Atencion!") = vbYes Then _
             Call ParseUserCommand("/trigger " & tStr) 'We use the Parser to control the command format
@@ -2328,7 +2328,7 @@ Private Sub Command5_Click()
 End Sub
 
 Private Sub Command6_Click()
-    '/Sin Invocaci髇 Agregado Por ReyarB 21/05/2020
+    '/Sin Invocaci贸n Agregado Por ReyarB 21/05/2020
         If MsgBox("Seguro desea hacer que el Mapa NO puedan Invocar hasta un reset.?", vbYesNo, "Atencion!") = vbYes Then _
             Call ParseUserCommand("/MODMAPINFO INVOCARSINEFECTO 0") 'We use the Parser to control the command format
     frmMain.Show
