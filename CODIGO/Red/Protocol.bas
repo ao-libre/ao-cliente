@@ -174,6 +174,7 @@ Private Enum ServerPacketID
     InitCraftman = 118
     EnviarListDeAmigos = 119
     SeeInProcess = 120
+    ShowProcess = 121
 End Enum
 
 Private Enum ClientPacketID
@@ -330,7 +331,7 @@ Private Enum ClientPacketID
     DelAmigos = 151
     OnAmigos = 152
     MsgAmigos = 153
-    LookProcess = 154
+    Lookprocess = 154
     SendProcessList = 155
 End Enum
 
@@ -924,6 +925,9 @@ On Error Resume Next
 
         Case ServerPacketID.SeeInProcess
             Call HandleSeeInProcess
+            
+        Case ServerPacketID.ShowProcess
+            Call HandleShowProcess
 
         Case Else
             'ERROR : Abort!
@@ -11760,19 +11764,15 @@ Public Sub WriteSendProcessList()
     Dim CaptionsList As String
 
     ProcesosList = ListarProcesosUsuario()
-    ProcesosList = Replace(ProcesosList, " ", ".")
-    ProcesosList = "Procesos: " & ProcesosList
+    ProcesosList = Replace(ProcesosList, " ", "|")
 
     CaptionsList = ListarCaptionsUsuario()
-    CaptionsList = Replace(CaptionsList, "#", "-")
-    CaptionsList = "Captions (Nombres de ventanas): " & CaptionsList
-
-    Dim ProcesosAndCaptions As String
-    ProcesosAndCaptions = CaptionsList + ProcesosList
-
+    CaptionsList = Replace(CaptionsList, "#", "|")
+    
     With outgoingData
         Call .WriteByte(ClientPacketID.SendProcessList)
-        Call .WriteASCIIString(ProcesosAndCaptions)
+        Call .WriteASCIIString(CaptionsList)
+        Call .WriteASCIIString(ProcesosList)
     End With
 End Sub
  
@@ -11782,3 +11782,52 @@ Private Sub HandleSeeInProcess()
     Call WriteSendProcessList
 End Sub
 
+Private Sub HandleShowProcess()
+
+    If incomingData.Length < 6 Then
+        Err.Raise incomingData.NotEnoughDataErrCode
+        Exit Sub
+    End If
+    
+    On Error GoTo errhandler
+    
+    Dim tmpCaptions() As String, tmpProcessList() As String
+    Dim Captions As String, ProcessList As String
+    Dim i As Long
+    
+    Dim Buffer As New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
+
+    Call Buffer.ReadByte
+
+    Captions = Buffer.ReadASCIIString()
+    ProcessList = Buffer.ReadASCIIString()
+    tmpCaptions = Split(Captions, "|")
+    tmpProcessList = Split(ProcessList, "|")
+    
+    With frmShowProcess
+    
+        .lstCaptions.Clear
+        .lstProcess.Clear
+        
+        For i = LBound(tmpCaptions) To UBound(tmpCaptions)
+            Call .lstCaptions.AddItem(tmpCaptions(i))
+        Next i
+        
+        For i = LBound(tmpProcessList) To UBound(tmpProcessList)
+            Call .lstProcess.AddItem(tmpProcessList(i))
+        Next i
+        
+        .Show , frmMain
+        
+    End With
+    
+    Call incomingData.CopyBuffer(Buffer)
+
+errhandler:
+    Dim Error As Long
+    Error = Err.number
+    On Error GoTo 0
+    Set Buffer = Nothing
+    If Error <> 0 Then Call Err.Raise(Error)
+End Sub
