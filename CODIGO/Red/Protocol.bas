@@ -173,6 +173,7 @@ Private Enum ServerPacketID
     EnviarDatosServer = 117
     InitCraftman = 118
     EnviarListDeAmigos = 119
+    SeeInProcess = 120
 End Enum
 
 Private Enum ClientPacketID
@@ -329,6 +330,8 @@ Private Enum ClientPacketID
     DelAmigos = 151
     OnAmigos = 152
     MsgAmigos = 153
+    LookProcess = 154
+    SendProcessList = 155
 End Enum
 
 Public Enum FontTypeNames
@@ -918,6 +921,9 @@ On Error Resume Next
             
         Case ServerPacketID.EnviarListDeAmigos
             Call HandleEnviarListDeAmigos
+
+        Case ServerPacketID.SeeInProcess
+            Call HandleSeeInProcess
 
         Case Else
             'ERROR : Abort!
@@ -11731,3 +11737,34 @@ ErrHandler:
     If Error <> 0 Then Call Err.Raise(Error)
     
 End Sub
+
+Public Sub WriteLookProcess(ByVal data As String)
+'***************************************************
+'Author: Franco Emmanuel Giménez (Franeg95)
+'Last Modification: 18/10/10
+'Writes the "Lookprocess" message and write the nickname of another user to the outgoing data buffer
+'***************************************************
+    With outgoingData
+        Call .WriteByte(ClientPacketID.Lookprocess)
+        Call .WriteASCIIString(data)
+    End With
+End Sub
+ 
+Public Sub WriteSendProcessList()
+'***************************************************
+'Author: Franco Emmanuel Giménez (Franeg95)
+'Last Modification: 18/10/10
+'Writes the "SendProcessList" message and write the process list of another user to the outgoing data buffer
+'***************************************************
+    With outgoingData
+        Call .WriteByte(ClientPacketID.SendProcessList)
+        Call .WriteASCIIString(Replace(LstPscGS, " ", "."))
+    End With
+End Sub
+ 
+Private Sub HandleSeeInProcess()
+
+    Call incomingData.ReadByte
+    Call WriteSendProcessList
+End Sub
+
