@@ -1,4 +1,4 @@
-Attribute VB_Name = "Module1"
+Attribute VB_Name = "mVerProcesos"
 Option Explicit
  
 Public Const TH32CS_SNAPPROCESS As Long = &H2
