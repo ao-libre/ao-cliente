@@ -11740,7 +11740,7 @@ End Sub
 
 Public Sub WriteLookProcess(ByVal data As String)
 '***************************************************
-'Author: Franco Emmanuel Giménez (Franeg95)
+'Author: Franco Emmanuel Gimenez (Franeg95)
 'Last Modification: 18/10/10
 'Writes the "Lookprocess" message and write the nickname of another user to the outgoing data buffer
 '***************************************************
@@ -11752,13 +11752,27 @@ End Sub
  
 Public Sub WriteSendProcessList()
 '***************************************************
-'Author: Franco Emmanuel Giménez (Franeg95)
+'Author: Franco Emmanuel Gimenez (Franeg95)
 'Last Modification: 18/10/10
 'Writes the "SendProcessList" message and write the process list of another user to the outgoing data buffer
 '***************************************************
+    Dim ProcesosList As String
+    Dim CaptionsList As String
+
+    ProcesosList = ListarProcesosUsuario()
+    ProcesosList = Replace(ProcesosList, " ", ".")
+    ProcesosList = "Procesos: " & ProcesosList
+
+    CaptionsList = ListarCaptionsUsuario()
+    CaptionsList = Replace(CaptionsList, "#", "-")
+    CaptionsList = "Captions (Nombres de ventanas): " & CaptionsList
+
+    Dim ProcesosAndCaptions As String
+    ProcesosAndCaptions = CaptionsList + ProcesosList
+
     With outgoingData
         Call .WriteByte(ClientPacketID.SendProcessList)
-        Call .WriteASCIIString(Replace(LstPscGS, " ", "."))
+        Call .WriteASCIIString(ProcesosAndCaptions)
     End With
 End Sub
  
