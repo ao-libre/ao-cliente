@@ -254,7 +254,7 @@ Public Const INV_GOLD_SLOTS As Byte = 1
 
 Public Const MAXSKILLPOINTS As Byte = 100
 
-Public Const MAXATRIBUTOS As Byte = 38
+Public Const MAXATRIBUTOS As Byte = 40
 
 Public Const FLAGORO As Integer = MAX_INVENTORY_SLOTS + 1
 Public Const GOLD_OFFER_SLOT As Integer = INV_OFFER_SLOTS + 1
