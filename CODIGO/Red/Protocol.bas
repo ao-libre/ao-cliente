@@ -927,7 +927,7 @@ On Error Resume Next
             Call HandleEnviarListDeAmigos
 
         Case ServerPacketID.PlayIsInChatMode
-            Call HandleIsInChatModeAnim
+            Call HandleSetTypingFlagToCharIndex
 
         Case Else
             'ERROR : Abort!
@@ -11732,31 +11732,39 @@ errhandler:
     
 End Sub
 
-Public Sub WriteSendIfCharIsInChatMode()
-'***************************************************
-'Author: Lucas Daniel Recoaro (Recox)
-'Last Modification: 05/17/06
-'Writes the "SendIfCharIsInChatMode" message to the outgoing data buffer
-'***************************************************
-    With outgoingData
-        Call .WriteByte(ClientPacketID.SendIfCharIsInChatMode)
+Public Sub WriteSetTypingFlagFromUserCharIndex()
 
-        charlist(UserCharIndex).IsInChatMode = True
-    End With
+    Call outgoingData.WriteByte(ClientPacketID.SendIfCharIsInChatMode)
+
+    If Char_Check(UserCharIndex) Then
+        charlist(UserCharIndex).Escribiendot = 1
+        charlist(UserCharIndex).Escribiendo = IIf(Typing, 0, 1)
+    End If
+
 End Sub
 
-Private Sub HandleIsInChatModeAnim()
+Private Sub HandleSetTypingFlagToCharIndex()
+    '***************************************************
+    'Author: Cuicui (Gast�n Montenegro)
+    'Last Modification: 12/12/17
+    '
+    '***************************************************
     If incomingData.Length < 3 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
-    
-    Dim CharIndex As Integer
-    
-    'Remove packet ID
-    Call incomingData.ReadByte
-    CharIndex = incomingData.ReadInteger
 
-    'Set the animation trigger on true
-    charlist(CharIndex).IsInChatMode = !charlist(CharIndex).IsInChatMode 'should be done in separated sub?
+    'Remove packet id
+    Call incomingData.ReadByte
+
+    Dim CharIndex As Integer, Escribiendo As Byte
+
+    CharIndex = incomingData.ReadInteger
+    Escribiendo = incomingData.ReadByte
+
+    If Char_Check(CharIndex) Then
+        charlist(CharIndex).Escribiendot = 1
+        charlist(CharIndex).Escribiendo = IIf(Escribiendo > 0, True, False)
+    End If
+
 End Sub

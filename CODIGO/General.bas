@@ -267,6 +267,9 @@ Sub SetConnected()
     Call frmMain.ControlSM(eSMType.sSafemode, False)
     
     FPSFLAG = True
+    
+    frmMain.SendTxt.Visible = False
+    Typing = False
 
 End Sub
 

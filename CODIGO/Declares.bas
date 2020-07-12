@@ -32,6 +32,9 @@ Attribute VB_Name = "Mod_Declaraciones"
 
 Option Explicit
 
+Public Typing As Boolean
+Public lastTickEscribiendo As Long
+
 Public Inet As clsInet
 
 'Recuperar Cuenta mediante la API

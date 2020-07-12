@@ -155,6 +155,10 @@ End Type
 
 'Apariencia del personaje
 Public Type Char
+    
+    Escribiendot As Byte
+    Escribiendo As Boolean
+    
     Movement As Boolean
     active As Byte
     Heading As E_Heading
@@ -195,8 +199,6 @@ Public Type Char
     ParticleIndex As Integer
     Particle_Count As Long
     Particle_Group() As Long
-
-    IsInChatMode As Boolean
 End Type
 
 'Info de un objeto
@@ -1422,6 +1424,31 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
     
 End Sub
 
+Private Function Puntitos(ByVal CharIndex As Integer) As String
+
+    ' necesario salvo que quieras que se vuelva loco
+    Dim tActual As Long
+    tActual = GetTickCount
+    
+    If Abs(tActual - lastTickEscribiendo) > 10 Then
+        lastTickEscribiendo = tActual
+        charlist(CharIndex).Escribiendot = charlist(CharIndex).Escribiendot + 1
+    End If
+    
+    Select Case charlist(CharIndex).Escribiendot
+        Case 1 To 20
+            Puntitos = "."
+        Case 20 To 40
+            Puntitos = ".."
+        Case 40 To 60
+            Puntitos = "..."
+        Case Else
+            charlist(CharIndex).Escribiendot = 1
+    End Select
+
+End Function
+
+
 Private Sub RenderSombras(ByVal CharIndex As Integer, ByVal PixelOffsetX As Integer, ByVal PixelOffsetY As Integer)
 '****************************************************
 ' Renderizamos las sombras sobre el char
@@ -1475,7 +1502,7 @@ Private Sub RenderIfCharIsInChatMode(ByVal CharIndex As Long, _
    
     With charlist(CharIndex)
         'TODO: Cambiar por una imagen mas copada...
-        Call DrawText(X - 10, Y - 25, "[...]", Color, True)
+        Call DrawText(X + 25, Y - 33, Puntitos(CharIndex), Color, True)
             
     End With
 End Sub
