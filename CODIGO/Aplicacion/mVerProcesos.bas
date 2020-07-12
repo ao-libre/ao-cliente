@@ -87,24 +87,29 @@ On Error Resume Next
     'Este bucle va a recorrer todas las ventanas.
     'cuando GetWindow devielva un 0, es por que no hay mas
     Do While handle <> 0
+    
         'Tenemos que comprobar que la ventana es una de tipo visible
         If IsWindowVisible(handle) Then
+
             'Obtenemos el número de caracteres de la ventana
             lenT = GetWindowTextLength(handle)
+
             'si es el número anterior es mayor a 0
             If lenT > 0 Then
                 'Creamos un buffer. Este buffer tendrá el tamaño con la variable LenT
                 titulo = String$(lenT, 0)
+                
                 'Ahora recuperamos el texto de la ventana en el buffer que le enviamos
                 'y tambien debemos pasarle el Hwnd de dicha ventana
                 ret = GetWindowText(handle, titulo, lenT + 1)
                 titulo$ = Left$(titulo, ret)
-                'La agregamos al ListBox
+
+                'La agregamos string
                 ListarCaptionsUsuario = titulo & "#" & ListarCaptionsUsuario
                 CANTv = CANTv + 1
             End If
         End If
-        
+
         'Buscamos con GetWindow la próxima ventana usando la constante GW_HWNDNEXT
         handle = GetWindow(handle, GW_HWNDNEXT)
        Loop
