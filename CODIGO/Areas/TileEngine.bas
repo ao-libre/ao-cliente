@@ -875,8 +875,8 @@ Sub RenderScreen(ByVal tilex As Integer, _
                     
                     'Update the position
                     angle = DegreeToRadian * Engine_GetAngle(ProjectileList(J).X, ProjectileList(J).Y, ProjectileList(J).TX, ProjectileList(J).TY)
-                    ProjectileList(J).X = ProjectileList(J).X + (Sin(angle) * ElapsedTime * 0.63)
-                    ProjectileList(J).Y = ProjectileList(J).Y - (Cos(angle) * ElapsedTime * 0.63)
+                    ProjectileList(J).X = ProjectileList(J).X + (Sin(angle) * ElapsedTime * 0.8)
+                    ProjectileList(J).Y = ProjectileList(J).Y - (Cos(angle) * ElapsedTime * 0.8)
                     
                     'Update the rotation
                     If ProjectileList(J).RotateSpeed > 0 Then
@@ -896,9 +896,9 @@ Sub RenderScreen(ByVal tilex As Integer, _
                             If X >= -32 Then
                                 If X <= (ScreenWidth + 32) Then
                                     If ProjectileList(J).Rotate = 0 Then
-                                        Call Draw_Grh(ProjectileList(J).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, True, 0)
+                                        Call Draw_Grh(ProjectileList(J).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, True, ProjectileList(J).Rotate + 128)
                                     Else
-                                        Call Draw_Grh(ProjectileList(J).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, True, ProjectileList(J).Rotate)
+                                        Call Draw_Grh(ProjectileList(J).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, True, ProjectileList(J).Rotate + 128)
                                     End If
                                 End If
                             End If

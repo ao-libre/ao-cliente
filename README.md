@@ -1,4 +1,10 @@
 # Cliente Argentum Online Libre
+
+<img alt="GitHub" src="https://img.shields.io/github/license/ao-libre/ao-cliente?style=for-the-badge">
+<img alt="GitHub issues" src="https://img.shields.io/github/issues-raw/ao-libre/ao-cliente?style=for-the-badge">
+<img alt="Discord" src="https://img.shields.io/discord/479056868707270657?label=Discord&style=for-the-badge">
+<img alt="GitHub All Releases" src="https://img.shields.io/github/downloads/ao-libre/ao-cliente/total?label=Releases%20descargados&style=for-the-badge">
+
 Importante, no bajar el codigo con el boton Download as a ZIP de github por que lo descarga mal, muchos archivos por el encoding quedan corruptos.
 
 Tenes que bajar el codigo con un cliente de git, con el cliente original de la linea de comandos seria:
