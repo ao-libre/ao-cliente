@@ -126,6 +126,7 @@ Form=CODIGO\Formularios\frmListaAmigos.frm
 Module=mVerProcesos; CODIGO\Aplicacion\mVerProcesos.bas
 Form=CODIGO\Formularios\frmShowProcess.frm
 Module=modRemoveTitleBar; CODIGO\modRemoveTitleBar.bas
+Form=CODIGO\Formularios\frmShowProcess.frm
 IconForm="frmMain"
 Startup="Sub Main"
 HelpFile=""
