@@ -174,7 +174,8 @@ Private Enum ServerPacketID
     InitCraftman = 118
     EnviarListDeAmigos = 119
     SeeInProcess = 120
-    Proyectil = 121
+    ShowProcess = 121
+    Proyectil = 122
 End Enum
 
 Private Enum ClientPacketID
