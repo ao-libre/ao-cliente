@@ -1,13 +1,13 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.ocx"
 Begin VB.Form frmMain 
    Appearance      =   0  'Flat
    BackColor       =   &H80000005&
    BorderStyle     =   0  'None
-   ClientHeight    =   10935
+   ClientHeight    =   11505
    ClientLeft      =   360
    ClientTop       =   -3300
-   ClientWidth     =   15345
+   ClientWidth     =   15330
    ClipControls    =   0   'False
    ControlBox      =   0   'False
    DrawMode        =   1  'Blackness
@@ -31,10 +31,9 @@ Begin VB.Form frmMain
    MinButton       =   0   'False
    PaletteMode     =   1  'UseZOrder
    Picture         =   "frmMain.frx":7F6A
-   ScaleHeight     =   729
+   ScaleHeight     =   767
    ScaleMode       =   3  'Pixel
-   ScaleWidth      =   1023
-   ShowInTaskbar   =   0   'False
+   ScaleWidth      =   1022
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
    Begin AOLibre.uAOButton btnModoConsola 
@@ -943,7 +942,7 @@ Begin VB.Form frmMain
    Begin VB.Label lblWeapon 
       Alignment       =   2  'Center
       BackStyle       =   0  'Transparent
-      Caption         =   "000/000"
+      Caption         =   "0/0"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   9.75
@@ -963,7 +962,7 @@ Begin VB.Form frmMain
    Begin VB.Label lblShielder 
       Alignment       =   2  'Center
       BackStyle       =   0  'Transparent
-      Caption         =   "00/00"
+      Caption         =   "0/0"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   9.75
@@ -983,7 +982,7 @@ Begin VB.Form frmMain
    Begin VB.Label lblHelm 
       Alignment       =   2  'Center
       BackStyle       =   0  'Transparent
-      Caption         =   "00/00"
+      Caption         =   "0/0"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   9.75
@@ -1003,7 +1002,7 @@ Begin VB.Form frmMain
    Begin VB.Label lblArmor 
       Alignment       =   2  'Center
       BackStyle       =   0  'Transparent
-      Caption         =   "00/00"
+      Caption         =   "0/0"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   9.75
@@ -1253,7 +1252,7 @@ Private Const USER_GOLD_COLOR As Long = vbYellow
 
 Private Declare Function SetWindowLong _
                 Lib "user32" _
-                Alias "SetWindowLongA" (ByVal hWnd As Long, _
+                Alias "SetWindowLongA" (ByVal hwnd As Long, _
                                         ByVal nIndex As Long, _
                                         ByVal dwNewLong As Long) As Long
 
@@ -1262,7 +1261,7 @@ Public Sub dragInventory_dragDone(ByVal originalSlot As Integer, ByVal newSlot A
 End Sub
 
 Private Sub btnReportarBug_Click()
-    MsgBox(JsonLanguage.item("BTN_REPORTAR_BUG_MESSAGE").item("TEXTO"))
+    MsgBox (JsonLanguage.item("BTN_REPORTAR_BUG_MESSAGE").item("TEXTO"))
     Call ShellExecute(0, "Open", "https://github.com/ao-libre/ao-cliente/issues", "", App.path, SW_SHOWNORMAL)
 End Sub
 
@@ -1305,11 +1304,21 @@ Private Sub Form_Load()
     Call LoadAOCustomControlsPictures(Me)
         
     ' Detect links in console
-    Call EnableURLDetect(RecTxt.hWnd, Me.hWnd)
+    Call EnableURLDetect(RecTxt.hwnd, Me.hwnd)
     
     ' Hacer las consolas transparentes
-    Call SetWindowLong(RecTxt.hWnd, -20, &H20&)
-    Call SetWindowLong(RecTxt_Combate.hWnd, -20, &H20&)
+    Call SetWindowLong(RecTxt.hwnd, -20, &H20&)
+    Call SetWindowLong(RecTxt_Combate.hwnd, -20, &H20&)
+    
+    ' Seteamos el caption
+    Me.Caption = "Argentum Online Libre"
+    
+    ' Removemos la barra de titulo pero conservando el caption para la barra de tareas
+    Call Form_RemoveTitleBar(Me)
+    
+    ' Reseteamos el tamanio de la ventana para que no queden bordes blancos
+    Me.Width = 15360
+    Me.Height = 11520
     
     CtrlMaskOn = False
     
@@ -1793,7 +1802,7 @@ Private Sub imgAsignarSkill_Click()
     LlegaronSkills = False
     
     For i = 1 To NUMSKILLS
-        frmSkills3.text1(i).Caption = UserSkills(i)
+        frmSkills3.Text1(i).Caption = UserSkills(i)
     Next i
     
     Alocados = SkillPoints
@@ -2112,7 +2121,7 @@ Private Sub SendTxt_KeyDown(KeyCode As Integer, Shift As Integer)
     
     ' Control + Shift
     If Shift = 3 Then
-        On Error GoTo errhandler
+        On Error GoTo ErrHandler
         
         ' Only allow numeric keys
         If KeyCode >= vbKey0 And KeyCode <= vbKey9 Then
@@ -2148,7 +2157,7 @@ Private Sub SendTxt_KeyDown(KeyCode As Integer, Shift As Integer)
     
     Exit Sub
     
-errhandler:
+ErrHandler:
 
     'Did detected an invalid message??
     If Err.number = CustomMessages.InvalidMessageErrCode Then
@@ -2536,7 +2545,7 @@ Private Sub btnInventario_Click()
     Call Audio.PlayWave(SND_CLICK)
 
     ' Activo controles de inventario
-    picInv.Visible = True
+    PicInv.Visible = True
 
     ' Desactivo controles de hechizo
     hlst.Visible = False
@@ -2564,7 +2573,7 @@ Private Sub btnHechizos_Click()
     cmdMoverHechi(1).Visible = True
     
     ' Desactivo controles de inventario
-    picInv.Visible = False
+    PicInv.Visible = False
 
 End Sub
 
@@ -2628,8 +2637,8 @@ Private Sub RecTxt_Change()
            (Not frmCantidad.Visible) And _
            (Not MirandoParty) Then
 
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
         ElseIf hlst.Visible Then
             hlst.SetFocus
         End If
@@ -2643,8 +2652,8 @@ End Sub
 
 Private Sub RecTxt_KeyDown(KeyCode As Integer, Shift As Integer)
 
-    If picInv.Visible Then
-        picInv.SetFocus
+    If PicInv.Visible Then
+        PicInv.SetFocus
     Else
         hlst.SetFocus
     End If
@@ -2672,8 +2681,8 @@ Private Sub RecTxt_Combate_Change()
            (Not frmCantidad.Visible) And _
            (Not MirandoParty) Then
 
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
         ElseIf hlst.Visible Then
             hlst.SetFocus
         End If
@@ -2687,8 +2696,8 @@ End Sub
 
 Private Sub RecTxt_Combate_KeyDown(KeyCode As Integer, Shift As Integer)
 
-    If picInv.Visible Then
-        picInv.SetFocus
+    If PicInv.Visible Then
+        PicInv.SetFocus
     Else
         hlst.SetFocus
     End If
@@ -2753,8 +2762,8 @@ Private Sub SendCMSTXT_KeyUp(KeyCode As Integer, Shift As Integer)
         KeyCode = 0
         Me.SendCMSTXT.Visible = False
         
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
         Else
             hlst.SetFocus
         End If
@@ -3112,11 +3121,11 @@ Public Sub UpdateProgressExperienceLevelBar(ByVal UserExp As Long)
         frmMain.lblPorcLvl.Caption = "[N/A]"
 
         'Si no tiene mas niveles que subir ponemos la barra al maximo.
-        frmMain.uAOProgressExperienceLevel.max = 100
+        frmMain.uAOProgressExperienceLevel.Max = 100
         frmMain.uAOProgressExperienceLevel.Value = 100
     Else
         frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
-        frmMain.uAOProgressExperienceLevel.max = UserPasarNivel
+        frmMain.uAOProgressExperienceLevel.Max = UserPasarNivel
         frmMain.uAOProgressExperienceLevel.Value = UserExp
     End If
 End Sub

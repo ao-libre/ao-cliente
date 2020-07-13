@@ -806,3 +806,8 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 12/07/2020: Se agrega boton para que la gente pueda reportar bugs en github facilmente (Recox)
 * 12/07/2020: Mensajes relacionados al combate (los q estan declarados en el cliente) se ven en una consola aparte. (jopiortiz)
 
+-v0.13.44
+* 12/07/2020: Problema al dopar con potas. MAXATRIBUTOS del cliente no coincidia con el del server. en consecuencia las funciones que controlaban el color del texto de la dopa daban error porque recibian valores mayores al esperado (waltersit0)
+* 12/07/2020: Muestra el juego en barra de tareas con nombre (Wyr0X)
+* 12/07/2020: Modifiqué la imágen de la ventana principal para corresponder con las medidas exactas (faltaba un pixel horizontal) (Wyr0X)
+* 12/07/2020: Me tomé el atrevimiento de cambiar los valores iniciales de los indicadores armadura/escudo/arma a "0/0" (Wyr0X)
