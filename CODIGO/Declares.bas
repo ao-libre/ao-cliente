@@ -607,6 +607,7 @@ Type Inventory
     MinDef As Integer 'Budi
     MaxHit As Integer
     MinHit As Integer
+    Incompatible As Boolean
 End Type
 
 Type NpCinV
@@ -620,6 +621,7 @@ Type NpCinV
     MinDef As Integer
     MaxHit As Integer
     MinHit As Integer
+    Incompatible As Boolean
     C1 As String
     C2 As String
     C3 As String
