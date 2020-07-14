@@ -549,7 +549,7 @@ Private Sub imgAgregar_Click()
                     Call InvOfferComUsu(0).SetItem(OfferSlot, .ObjIndex(InvSlot), _
                                                     Amount, 0, .GrhIndex(InvSlot), .OBJType(InvSlot), _
                                                     .MaxHit(InvSlot), .MinHit(InvSlot), .MaxDef(InvSlot), .MinDef(InvSlot), _
-                                                    .Valor(InvSlot), .ItemName(InvSlot))
+                                                    .Valor(InvSlot), .ItemName(InvSlot), .Incompatible(InvSlot))
                 End If
             End If
         End If

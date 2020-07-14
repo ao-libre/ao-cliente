@@ -296,6 +296,15 @@ Public Property Get Equipped(ByVal slot As Byte) As Boolean
     Equipped = Inventory(slot).Equipped
 End Property
 
+Public Property Get Incompatible(ByVal slot As Byte) As Boolean
+'***************************************************
+'Author: Juan Martin Sotuyo Dodero (Maraxus)
+'Last Modify Date: 27/07/04
+'Retrieves True if the item at the given pos is eqiupped
+'***************************************************
+    Incompatible = Inventory(slot).Incompatible
+End Property
+
 Public Property Get MaxObjs() As Byte
 '***************************************************
 'Author: Torres Patricio (Pato)
@@ -345,7 +354,7 @@ End Sub
 
 Public Sub SetItem(ByVal slot As Byte, ByVal eOBJIndex As Integer, ByVal eAmount As Long, ByVal eEquipped As Byte, _
                         ByVal eGrhIndex As Long, ByVal eObjType As Integer, ByVal eMaxHit As Integer, ByVal eMinHit As Integer, _
-                        ByVal MaxDef As Integer, ByVal MinDef As Integer, ByVal eValor As Single, ByVal eName As String)
+                        ByVal MaxDef As Integer, ByVal MinDef As Integer, ByVal eValor As Single, ByVal eName As String, Optional ByVal eIncompatible As Boolean = False)
 '***************************************************
 'Author: Juan Martin Sotuyo Dodero (Maraxus)
 'Last Modify Date: 12/04/06
@@ -365,6 +374,7 @@ Public Sub SetItem(ByVal slot As Byte, ByVal eOBJIndex As Integer, ByVal eAmount
         .ObjIndex = eOBJIndex
         .OBJType = eObjType
         .Valor = eValor
+        .Incompatible = eIncompatible
     End With
     
     'If InventoryWindow.Visible = False Then InventoryWindow.Visible = True
@@ -471,6 +481,14 @@ Public Sub DrawInventory()
                 'If equipped we render "E"
                 If Inventory(LoopC).Equipped Then
                     Call DrawText(startdX + 20, startdY + 20, "E", -1)
+
+                End If
+
+                'Si el usuario no puede usar este item por su raza, sexo o clase, dibujamos una "X"
+                If Inventory(LoopC).Incompatible Then
+                    Dim ColorText As Long
+                    ColorText = D3DColorARGB(255, 200, 30, 30)
+                    Call DrawText(startdX + 20, startdY + 20, "X", ColorText)
 
                 End If
                     

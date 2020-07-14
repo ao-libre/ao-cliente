@@ -1672,7 +1672,7 @@ Private Sub HandleCommerceInit()
                 Call InvComUsu.SetItem(i, .OBJIndex(i), _
                 .Amount(i), .Equipped(i), .GrhIndex(i), _
                 .OBJType(i), .MaxHit(i), .MinHit(i), .MaxDef(i), .MinDef(i), _
-                .Valor(i), .ItemName(i))
+                .Valor(i), .ItemName(i), .Incompatible(i))
             End With
         End If
     Next i
@@ -1684,7 +1684,7 @@ Private Sub HandleCommerceInit()
                 Call InvComNpc.SetItem(i, .OBJIndex, _
                 .Amount, 0, .GrhIndex, _
                 .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, _
-                .Valor, .name)
+                .Valor, .name, .Incompatible)
             End With
         End If
     Next i
@@ -1723,7 +1723,7 @@ Private Sub HandleBankInit()
             Call InvBanco(1).SetItem(i, .OBJIndex(i), _
                 .Amount(i), .Equipped(i), .GrhIndex(i), _
                 .OBJType(i), .MaxHit(i), .MinHit(i), .MaxDef(i), .MinDef(i), _
-                .Valor(i), .ItemName(i))
+                .Valor(i), .ItemName(i), .Incompatible(i))
         End With
     Next i
     
@@ -1732,7 +1732,7 @@ Private Sub HandleBankInit()
             Call InvBanco(0).SetItem(i, .OBJIndex, _
                 .Amount, .Equipped, .GrhIndex, _
                 .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, _
-                .Valor, .name)
+                .Valor, .name, .Incompatible)
         End With
     Next i
     
@@ -1785,7 +1785,7 @@ Private Sub HandleUserCommerceInit()
                 Call InvComUsu.SetItem(i, .OBJIndex(i), _
                 .Amount(i), .Equipped(i), .GrhIndex(i), _
                 .OBJType(i), .MaxHit(i), .MinHit(i), .MaxDef(i), .MinDef(i), _
-                .Valor(i), .ItemName(i))
+                .Valor(i), .ItemName(i), .Incompatible(i))
             End With
         End If
     Next i
@@ -3321,6 +3321,7 @@ On Error GoTo errhandler
     Dim MaxDef As Integer
     Dim MinDef As Integer
     Dim Value As Single
+    Dim Incompatible As Boolean
     
     slot = Buffer.ReadByte()
     OBJIndex = Buffer.ReadInteger()
@@ -3334,6 +3335,7 @@ On Error GoTo errhandler
     MaxDef = Buffer.ReadInteger()
     MinDef = Buffer.ReadInteger()
     Value = Buffer.ReadSingle()
+    Incompatible = Buffer.ReadBoolean()
     
     If Equipped Then
         Select Case OBJType
@@ -3367,14 +3369,14 @@ On Error GoTo errhandler
         End Select
     End If
     
-    Call Inventario.SetItem(slot, OBJIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, name)
+    Call Inventario.SetItem(slot, OBJIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, name, Incompatible)
 
     If frmComerciar.Visible Then
-        Call InvComUsu.SetItem(slot, OBJIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, name)
+        Call InvComUsu.SetItem(slot, OBJIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, name, Incompatible)
     End If
 
     If frmBancoObj.Visible Then
-        Call InvBanco(1).SetItem(slot, OBJIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, name)
+        Call InvBanco(1).SetItem(slot, OBJIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, name, Incompatible)
         frmBancoObj.NoPuedeMover = False
     End If
     
@@ -3498,9 +3500,10 @@ On Error GoTo errhandler
         .MaxDef = Buffer.ReadInteger()
         .MinDef = Buffer.ReadInteger()
         .Valor = Buffer.ReadLong()
+        .Incompatible = Buffer.ReadBoolean()
         
         If frmBancoObj.Visible Then
-            Call InvBanco(0).SetItem(slot, .OBJIndex, .Amount, 0, .GrhIndex, .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .name)
+            Call InvBanco(0).SetItem(slot, .OBJIndex, .Amount, 0, .GrhIndex, .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .name, .Incompatible)
         End If
     End With
     
@@ -4175,9 +4178,10 @@ On Error GoTo errhandler
         .MinHit = Buffer.ReadInteger()
         .MaxDef = Buffer.ReadInteger()
         .MinDef = Buffer.ReadInteger()
+        .Incompatible = Buffer.ReadBoolean()
     
         If frmComerciar.Visible Then
-            Call InvComNpc.SetItem(slot, .OBJIndex, .Amount, 0, .GrhIndex, .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .name)
+            Call InvComNpc.SetItem(slot, .OBJIndex, .Amount, 0, .GrhIndex, .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .name, .Incompatible)
         End If
     End With
         
@@ -5185,6 +5189,7 @@ Private Sub HandleChangeUserTradeSlot()
         Dim MinDef    As Integer: MinDef = .ReadInteger()
         Dim SalePrice As Long: SalePrice = .ReadLong()
         Dim name      As String: name = .ReadASCIIString()
+        Dim Incompatible As Boolean: Incompatible = .ReadBoolean()
    
     End With
     
@@ -5192,9 +5197,9 @@ Private Sub HandleChangeUserTradeSlot()
     Call incomingData.CopyBuffer(Buffer)
 
     If OfferSlot = GOLD_OFFER_SLOT Then
-        Call InvOroComUsu(2).SetItem(1, OBJIndex, Amount, 0, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, SalePrice, name)
+        Call InvOroComUsu(2).SetItem(1, OBJIndex, Amount, 0, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, SalePrice, name, Incompatible)
     Else
-        Call InvOfferComUsu(1).SetItem(OfferSlot, OBJIndex, Amount, 0, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, SalePrice, name)
+        Call InvOfferComUsu(1).SetItem(OfferSlot, OBJIndex, Amount, 0, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, SalePrice, name, Incompatible)
     End If
     
     Call frmComerciarUsu.PrintCommerceMsg(TradingUserName & JsonLanguage.item("MENSAJE_COMM_OFERTA_CAMBIA").item("TEXTO"), FontTypeNames.FONTTYPE_VENENO)
