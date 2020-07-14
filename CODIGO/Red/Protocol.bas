@@ -5189,7 +5189,7 @@ Private Sub HandleChangeUserTradeSlot()
         Dim MinDef    As Integer: MinDef = .ReadInteger()
         Dim SalePrice As Long: SalePrice = .ReadLong()
         Dim name      As String: name = .ReadASCIIString()
-        Dim Incompatible As Boolean: Incompatible = ReadBoolean()
+        Dim Incompatible As Boolean: Incompatible = .ReadBoolean()
    
     End With
     
