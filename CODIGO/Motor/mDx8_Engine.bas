@@ -1,6 +1,6 @@
 Attribute VB_Name = "mDx8_Engine"
 #If False Then
-    Dim hWnd, X, Y As Variant
+    Dim hwnd, X, Y As Variant
 #End If
 
 Option Explicit
@@ -74,19 +74,24 @@ Public Sub Engine_DirectX8_Init()
     Set DirectD3D8 = New D3DX8
     
     If ClientSetup.OverrideVertexProcess > 0 Then
+        
         Select Case ClientSetup.OverrideVertexProcess
+            
             Case 1:
                If Not Engine_Init_DirectDevice(D3DCREATE_HARDWARE_VERTEXPROCESSING) Then _
                Call MsgBox(JsonLanguage.item("ERROR_DIRECTX_INIT").item("TEXTO"))
+            
             
             Case 2:
                If Not Engine_Init_DirectDevice(D3DCREATE_MIXED_VERTEXPROCESSING) Then _
                Call MsgBox(JsonLanguage.item("ERROR_DIRECTX_INIT").item("TEXTO"))
 
+            
             Case 3:
                If Not Engine_Init_DirectDevice(D3DCREATE_SOFTWARE_VERTEXPROCESSING) Then _
                Call MsgBox(JsonLanguage.item("ERROR_DIRECTX_INIT").item("TEXTO"))
         End Select
+        
     Else
         'Detectamos el modo de renderizado mas compatible con tu PC.
         If Not Engine_Init_DirectDevice(D3DCREATE_HARDWARE_VERTEXPROCESSING) Then
@@ -155,7 +160,7 @@ On Error GoTo ErrorDevice:
         .BackBufferFormat = DispMode.Format
         .BackBufferWidth = ScreenWidth
         .BackBufferHeight = ScreenHeight
-        .hDeviceWindow = frmMain.MainViewPic.hWnd
+        .hDeviceWindow = frmMain.MainViewPic.hwnd
 
     End With
     
@@ -262,10 +267,6 @@ Public Sub Engine_DirectX8_Aditional_Init()
     FPS = 101
     FramesPerSecCounter = 101
 
-    TileBufferSize = Areas.TilesBuffer
-    
-    Call CalcularAreas(HalfWindowTileWidth, HalfWindowTileHeight)
-    
     Engine_BaseSpeed = 0.018
     
     With MainScreenRect

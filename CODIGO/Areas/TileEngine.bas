@@ -1010,12 +1010,15 @@ Public Sub InitTileEngine(ByVal setDisplayFormhWnd As Long, ByVal setTilePixelHe
     
     On Error GoTo ErrorHandler:
     
+    TileBufferSize = Areas.TilesBuffer
     TilePixelWidth = setTilePixelWidth
     TilePixelHeight = setTilePixelHeight
+    
     WindowTileHeight = Round(frmMain.MainViewPic.Height / 32, 0)
     WindowTileWidth = Round(frmMain.MainViewPic.Width / 32, 0)
     
     IniPath = Game.path(INIT)
+    
     HalfWindowTileHeight = WindowTileHeight \ 2
     HalfWindowTileWidth = WindowTileWidth \ 2
 
@@ -1024,7 +1027,6 @@ Public Sub InitTileEngine(ByVal setDisplayFormhWnd As Long, ByVal setTilePixelHe
     MinYBorder = YMinMapSize + (WindowTileHeight \ 2)
     MaxYBorder = YMaxMapSize - (WindowTileHeight \ 2)
     
-
     'Resize mapdata array
     ReDim MapData(XMinMapSize To XMaxMapSize, YMinMapSize To YMaxMapSize) As MapBlock
     
@@ -1035,6 +1037,8 @@ Public Sub InitTileEngine(ByVal setDisplayFormhWnd As Long, ByVal setTilePixelHe
     'Set scroll pixels per frame
     ScrollPixelsPerFrameX = pixelsToScrollPerFrameX
     ScrollPixelsPerFrameY = pixelsToScrollPerFrameY
+
+    Call CalcularAreas(HalfWindowTileWidth, HalfWindowTileHeight)
     
     'Cargamos indice de graficos.
     'TODO: No usar variable de compilacion y acceder a esto desde el config.ini
