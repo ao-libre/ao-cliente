@@ -30,14 +30,15 @@ End Enum
 Public Type tSetupMods
 
     ' VIDEO
-    byMemory    As Integer
+    byMemory        As Integer
     ProyectileEngine As Boolean
-    PartyMembers As Boolean
-    TonalidadPJ As Boolean
-    UsarSombras As Boolean
-    ParticleEngine As Boolean
-    LimiteFPS As Boolean
-    bNoRes      As Boolean
+    PartyMembers    As Boolean
+    TonalidadPJ     As Boolean
+    UsarSombras     As Boolean
+    ParticleEngine  As Boolean
+    LimiteFPS       As Boolean
+    bNoRes          As Boolean
+    OverrideVertexProcess As Byte
     
     ' AUDIO
     bMusic    As Boolean
@@ -150,6 +151,7 @@ Public Sub LeerConfiguracion()
         .UsarSombras = CBool(Lector.GetValue("VIDEO", "Sombras"))
         .ParticleEngine = CBool(Lector.GetValue("VIDEO", "ParticleEngine"))
         .LimiteFPS = CBool(Lector.GetValue("VIDEO", "LimitarFPS"))
+        .OverrideVertexProcess = CByte(Lector.GetValue("VIDEO", "VertexProcessingOverride"))
         
         ' AUDIO
         .bMusic = CBool(Lector.GetValue("AUDIO", "Music"))
