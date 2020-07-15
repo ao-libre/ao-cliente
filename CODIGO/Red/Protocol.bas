@@ -1494,9 +1494,12 @@ Private Sub HandleLogged()
 '***************************************************
     'Remove packet ID
     Call incomingData.ReadByte
-    
+    #If AntiExternos Then
+        Security.Redundance = incomingData.ReadByte()
+    #End If
     ' Variable initialization
     UserClase = incomingData.ReadByte
+    'Security.Redundance = incomingData.ReadByte()
     IntervaloInvi = incomingData.ReadLong
     
     EngineRun = True
@@ -10720,7 +10723,15 @@ Private Sub SendData(ByRef sdData As String)
     
     'No enviamos nada si no estamos conectados
     If Not frmMain.Client.State = sckConnected Then Exit Sub
-    
+    #If AntiExternos Then
+
+        Dim data() As Byte
+
+        data = StrConv(sdData, vbFromUnicode)
+        Security.NAC_E_Byte data, Security.Redundance
+        sdData = StrConv(data, vbUnicode)
+        'sdData = Security.NAC_E_String(sdData, Security.Redundance)
+    #End If
     'Send data!
     Call frmMain.Client.SendData(sdData)
 End Sub
