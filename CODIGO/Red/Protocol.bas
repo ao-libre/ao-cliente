@@ -1494,12 +1494,13 @@ Private Sub HandleLogged()
 '***************************************************
     'Remove packet ID
     Call incomingData.ReadByte
+    
     #If AntiExternos Then
         Security.Redundance = incomingData.ReadByte()
     #End If
+
     ' Variable initialization
     UserClase = incomingData.ReadByte
-    'Security.Redundance = incomingData.ReadByte()
     IntervaloInvi = incomingData.ReadLong
     
     EngineRun = True

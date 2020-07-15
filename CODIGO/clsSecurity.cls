@@ -14,7 +14,7 @@ Attribute VB_Exposed = False
 Option Explicit
 #If AntiExternos Then
  
-    Public Redundance As Byte
+Public Redundance As Byte
  
 Public Sub NAC_E_Byte(ByRef ByteArray() As Byte, ByVal code As Byte)
 
