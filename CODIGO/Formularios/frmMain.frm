@@ -1215,10 +1215,6 @@ Private Sub btnAmigos_Click()
     Call frmAmigos.Show(vbModeless, frmMain)
 End Sub
 
-Private Sub btnModoConsola_Click()
-    Call PopupMenu(mnu_ShowConsole, vbPopupMenuLeftButton)
-End Sub
-
 Private Sub btnQuests_Click()
     Call WriteQuestListRequest
 End Sub
