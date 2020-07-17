@@ -1273,6 +1273,7 @@ Private Sub Form_Load()
 End Sub
 
 Private Sub LoadTextsForm()
+    
     btnLanzar.Caption = JsonLanguage.item("LBL_LANZAR").item("TEXTO")
     btnInventario.Caption = JsonLanguage.item("LBL_INVENTARIO").item("TEXTO")
     btnHechizos.Caption = JsonLanguage.item("LBL_HECHIZOS").item("TEXTO")
@@ -1286,7 +1287,6 @@ Private Sub LoadTextsForm()
     btnRetos.Caption = JsonLanguage.item("LBL_RETOS").item("TEXTO")
     btnQuests.Caption = JsonLanguage.item("LBL_QUESTS").item("TEXTO")
     btnReportarBug.Caption = JsonLanguage.item("LBL_REPORTAR_BUG").item("TEXTO")
-    btnModoConsola.Caption = JsonLanguage.item("LBL_MODO_CONSOLA").item("TEXTO")
     
 End Sub
 
