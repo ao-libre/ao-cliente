@@ -813,3 +813,8 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 12/07/2020: Me tomé el atrevimiento de cambiar los valores iniciales de los indicadores armadura/escudo/arma a "0/0" (Wyr0X)
 * 13/07/2020: Los items que no te puedas equipar aparecen con una X roja" (waltersit0)
 * 13/07/2020: Arreglo linea que no deja compilar el proyecto al .exe (RecoX)
+
+-v0.13.45
+* 16/07/2020: Revierto seleccion automatica de config wasd, ahora pregunta de nuevo que configuracion quiero (RecoX)
+* 16/07/2020: Se agrega boton ver procesos en panel gm (ReyarB)
+* 16/07/2020: Encriptación Xor para codificar y decodificar bytearrays de forma redundante. https://www.gs-zone.org/temas/anti-clientes-externos-definitivo.16121/ (Gexur)
