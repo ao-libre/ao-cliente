@@ -577,7 +577,7 @@ Private Sub PicBancoInv_Click()
 
         If Shifteando Then
             LasActionBuy = True
-            Call WriteBankExtractItem(InvBanco(0).SelectedItem, 10000)
+            Call WriteBankExtractItem(InvBanco(0).SelectedItem, MAX_INVENTORY_OBJS)
             Exit Sub
         End If
 
@@ -623,7 +623,7 @@ Private Sub PicInv_Click()
 
         If Shifteando Then
             LasActionBuy = False
-            Call WriteBankDeposit(InvBanco(1).SelectedItem, 10000)
+            Call WriteBankDeposit(InvBanco(1).SelectedItem, MAX_INVENTORY_OBJS)
             Exit Sub
         End If
         
