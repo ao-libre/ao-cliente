@@ -1252,9 +1252,6 @@
     "BTN_REPORTAR_BUG_MESSAGE": {
         "TEXTO": "If you report a bug that is not on the reported list, we will give you 5000 gold. It is very simple just a screenshot explaining what happens."
     },
-    "LBL_MODO_CONSOLA": {
-        "TEXTO": "Console"
-    },
     "LBL_OPCIONES": {
         "TEXTO": "Options"
     },
