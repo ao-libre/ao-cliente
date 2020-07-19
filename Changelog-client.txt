@@ -818,3 +818,7 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 16/07/2020: Revierto seleccion automatica de config wasd, ahora pregunta de nuevo que configuracion quiero (RecoX)
 * 16/07/2020: Se agrega boton ver procesos en panel gm (ReyarB)
 * 16/07/2020: Encriptación Xor para codificar y decodificar bytearrays de forma redundante. https://www.gs-zone.org/temas/anti-clientes-externos-definitivo.16121/ (Gexur)
+
+-v0.13.46
+* 19/07/2020: Saco la consola de combate, vuelve la unificada. (jopiortiz)
+* 19/07/2020: Se sacan botones saltarines en frmConnect. (Neoranger)
