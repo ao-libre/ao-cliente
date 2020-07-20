@@ -919,7 +919,9 @@ Sub CargarMapa(ByVal Map As Integer)
 
         Next i
     Next J
-
+    
+    Exit Sub
+    
 ErrorHandler:
     
     If fh <> 0 Then Close fh
