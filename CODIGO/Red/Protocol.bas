@@ -2134,7 +2134,7 @@ Private Sub HandleChangeMap()
     'For now we just drop it
     Call incomingData.ReadInteger
     
-    If FileExist(Game.path(Mapas) & "Mapa" & UserMap & ".map", vbNormal) Then
+    If FileExist(Game.path(Mapas) & "Mapa" & UserMap & ".csm", vbNormal) Then
         
         Call SwitchMap(UserMap)
         
