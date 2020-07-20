@@ -200,7 +200,7 @@ End Type
 
 'Info de un objeto
 Public Type obj
-    ObjIndex As Integer
+    OBJIndex As Integer
     Amount As Integer
 End Type
 
@@ -875,8 +875,8 @@ Sub RenderScreen(ByVal tilex As Integer, _
                     
                     'Update the position
                     angle = DegreeToRadian * Engine_GetAngle(ProjectileList(J).X, ProjectileList(J).Y, ProjectileList(J).TX, ProjectileList(J).TY)
-                    ProjectileList(J).X = ProjectileList(J).X + (Sin(angle) * ElapsedTime * 0.63)
-                    ProjectileList(J).Y = ProjectileList(J).Y - (Cos(angle) * ElapsedTime * 0.63)
+                    ProjectileList(J).X = ProjectileList(J).X + (Sin(angle) * ElapsedTime * 0.8)
+                    ProjectileList(J).Y = ProjectileList(J).Y - (Cos(angle) * ElapsedTime * 0.8)
                     
                     'Update the rotation
                     If ProjectileList(J).RotateSpeed > 0 Then
@@ -896,9 +896,9 @@ Sub RenderScreen(ByVal tilex As Integer, _
                             If X >= -32 Then
                                 If X <= (ScreenWidth + 32) Then
                                     If ProjectileList(J).Rotate = 0 Then
-                                        Call Draw_Grh(ProjectileList(J).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, True, 0)
+                                        Call Draw_Grh(ProjectileList(J).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, True, ProjectileList(J).Rotate + 128)
                                     Else
-                                        Call Draw_Grh(ProjectileList(J).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, True, ProjectileList(J).Rotate)
+                                        Call Draw_Grh(ProjectileList(J).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, True, ProjectileList(J).Rotate + 128)
                                     End If
                                 End If
                             End If
@@ -1000,19 +1000,25 @@ Function HayUserAbajo(ByVal X As Integer, ByVal Y As Integer, ByVal GrhIndex As 
     End If
 End Function
 
-Public Function InitTileEngine(ByVal setDisplayFormhWnd As Long, ByVal setTilePixelHeight As Integer, ByVal setTilePixelWidth As Integer, ByVal pixelsToScrollPerFrameX As Integer, pixelsToScrollPerFrameY As Integer) As Boolean
+Public Sub InitTileEngine(ByVal setDisplayFormhWnd As Long, ByVal setTilePixelHeight As Integer, ByVal setTilePixelWidth As Integer, ByVal pixelsToScrollPerFrameX As Integer, pixelsToScrollPerFrameY As Integer)
 '***************************************************
 'Author: Aaron Perkins
 'Last Modification: 08/14/07
 'Last modified by: Juan Martin Sotuyo Dodero (Maraxus)
 'Configures the engine to start running.
 '***************************************************
+    
+    On Error GoTo ErrorHandler:
+    
+    TileBufferSize = Areas.TilesBuffer
     TilePixelWidth = setTilePixelWidth
     TilePixelHeight = setTilePixelHeight
+    
     WindowTileHeight = Round(frmMain.MainViewPic.Height / 32, 0)
     WindowTileWidth = Round(frmMain.MainViewPic.Width / 32, 0)
     
     IniPath = Game.path(INIT)
+    
     HalfWindowTileHeight = WindowTileHeight \ 2
     HalfWindowTileWidth = WindowTileWidth \ 2
 
@@ -1021,7 +1027,6 @@ Public Function InitTileEngine(ByVal setDisplayFormhWnd As Long, ByVal setTilePi
     MinYBorder = YMinMapSize + (WindowTileHeight \ 2)
     MaxYBorder = YMaxMapSize - (WindowTileHeight \ 2)
     
-
     'Resize mapdata array
     ReDim MapData(XMinMapSize To XMaxMapSize, YMinMapSize To YMaxMapSize) As MapBlock
     
@@ -1033,7 +1038,7 @@ Public Function InitTileEngine(ByVal setDisplayFormhWnd As Long, ByVal setTilePi
     ScrollPixelsPerFrameX = pixelsToScrollPerFrameX
     ScrollPixelsPerFrameY = pixelsToScrollPerFrameY
 
-On Error GoTo 0
+    Call CalcularAreas(HalfWindowTileWidth, HalfWindowTileHeight)
     
     'Cargamos indice de graficos.
     'TODO: No usar variable de compilacion y acceder a esto desde el config.ini
@@ -1049,10 +1054,16 @@ On Error GoTo 0
     Call CargarFxs
     Call LoadGraphics
     Call CargarParticulas
-
-    InitTileEngine = True
     
-End Function
+    Exit Sub
+    
+ErrorHandler:
+
+    Call LogError(Err.number, Err.Description, "Mod_TileEngine.InitTileEngine")
+    
+    Call CloseClient
+    
+End Sub
 
 Public Sub LoadGraphics()
     Call SurfaceDB.Initialize(DirectD3D8, ClientSetup.byMemory)
@@ -1062,7 +1073,9 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
                   ByVal DisplayFormLeft As Integer, _
                   ByVal MouseViewX As Integer, _
                   ByVal MouseViewY As Integer)
-
+    
+    On Error GoTo ErrorHandler:
+    
     If EngineRun Then
         Call Engine_BeginScene
         
@@ -1141,6 +1154,16 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
         Call Engine_EndScene(MainScreenRect, 0)
     
         Call Inventario.DrawDragAndDrop
+    
+    End If
+    
+ErrorHandler:
+
+    If DirectDevice.TestCooperativeLevel = D3DERR_DEVICENOTRESET Then
+        
+        Call mDx8_Engine.Engine_DirectX8_Init
+        
+        Call LoadGraphics
     
     End If
   

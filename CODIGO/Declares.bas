@@ -254,7 +254,7 @@ Public Const INV_GOLD_SLOTS As Byte = 1
 
 Public Const MAXSKILLPOINTS As Byte = 100
 
-Public Const MAXATRIBUTOS As Byte = 38
+Public Const MAXATRIBUTOS As Byte = 40
 
 Public Const FLAGORO As Integer = MAX_INVENTORY_SLOTS + 1
 Public Const GOLD_OFFER_SLOT As Integer = INV_OFFER_SLOTS + 1
@@ -596,7 +596,7 @@ End Enum
 
 'Inventario
 Type Inventory
-    ObjIndex As Integer
+    OBJIndex As Integer
     name As String
     GrhIndex As Long
     Amount As Long
@@ -607,10 +607,11 @@ Type Inventory
     MinDef As Integer 'Budi
     MaxHit As Integer
     MinHit As Integer
+    Incompatible As Boolean
 End Type
 
 Type NpCinV
-    ObjIndex As Integer
+    OBJIndex As Integer
     name As String
     GrhIndex As Long
     Amount As Integer
@@ -620,6 +621,7 @@ Type NpCinV
     MinDef As Integer
     MaxHit As Integer
     MinHit As Integer
+    Incompatible As Boolean
     C1 As String
     C2 As String
     C3 As String
@@ -651,7 +653,7 @@ End Type
 
 Type tItemsConstruibles
     name As String
-    ObjIndex As Integer
+    OBJIndex As Integer
     GrhIndex As Long
     LinH As Integer
     LinP As Integer
@@ -665,14 +667,14 @@ End Type
 
 Type tItemCrafteo
     name As String
-    ObjIndex As Integer
+    OBJIndex As Integer
     GrhIndex As Long
     Amount As Integer
 End Type
 
 Type tItemArtesano
     name As String
-    ObjIndex As Integer
+    OBJIndex As Integer
     GrhIndex As Long
     
     ItemsCrafteo() As tItemCrafteo
@@ -878,7 +880,7 @@ Public PuertoDelServidor As String
 '******Mouse Cursor*********
 'Esto es para poder usar iconos de mouse .ani
 'https://www.gs-zone.org/temas/cursor-ani.45555/#post-375757
-Public Declare Function SetClassLong Lib "user32" Alias "SetClassLongA" (ByVal hWnd As Long, ByVal nIndex As Long, ByVal dwNewLong As Long) As Long
+Public Declare Function SetClassLong Lib "user32" Alias "SetClassLongA" (ByVal hwnd As Long, ByVal nIndex As Long, ByVal dwNewLong As Long) As Long
  
 Public Const GLC_HCURSOR = (-12)
 Public hSwapCursor As Long
@@ -898,7 +900,7 @@ Public Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
 
 'Para ejecutar el browser y programas externos
 Public Const SW_SHOWNORMAL As Long = 1
-Public Declare Function ShellExecute Lib "shell32.dll" Alias "ShellExecuteA" (ByVal hWnd As Long, ByVal lpOperation As String, ByVal lpFile As String, ByVal lpParameters As String, ByVal lpDirectory As String, ByVal nShowCmd As Long) As Long
+Public Declare Function ShellExecute Lib "shell32.dll" Alias "ShellExecuteA" (ByVal hwnd As Long, ByVal lpOperation As String, ByVal lpFile As String, ByVal lpParameters As String, ByVal lpDirectory As String, ByVal nShowCmd As Long) As Long
 
 'Lista de cabezas
 Public Type tIndiceCabeza
@@ -1049,3 +1051,7 @@ Public UserEquitandoSegundosRestantes As Long
 
 Public QuantityServers As Integer
 Public IpApiEnabled As Boolean
+
+#If AntiExternos Then
+Public Security As New clsSecurity
+#End If

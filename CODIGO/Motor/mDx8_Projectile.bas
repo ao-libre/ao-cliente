@@ -7,8 +7,8 @@ Public LastProjectile As Integer    'Last projectile index used
 Public Type Projectile
     X As Single
     Y As Single
-    tX As Single
-    tY As Single
+    TX As Single
+    TY As Single
     RotateSpeed As Byte
     Rotate As Single
     Grh As Grh
@@ -46,12 +46,13 @@ Dim ProjectileIndex As Integer
     
     'Figure out the initial rotation value
     ProjectileList(ProjectileIndex).Rotate = Engine_GetAngle(charlist(AttackerIndex).Pos.X, charlist(AttackerIndex).Pos.Y, charlist(TargetIndex).Pos.X, charlist(TargetIndex).Pos.Y)
-        ProjectileList(ProjectileIndex).OffsetX = 0
-        ProjectileList(ProjectileIndex).OffsetY = 0
+    If ProjectileList(ProjectileIndex).Rotate > 224 Then ProjectileList(ProjectileIndex).Rotate = ProjectileList(ProjectileIndex).Rotate - 350
+    ProjectileList(ProjectileIndex).OffsetX = 0
+    ProjectileList(ProjectileIndex).OffsetY = 0
         
     'Fill in the values
-    ProjectileList(ProjectileIndex).tX = (charlist(TargetIndex).Pos.X + IIf(Fallo = True, RandomNumber(-2, 2), 0)) * 32
-    ProjectileList(ProjectileIndex).tY = (charlist(TargetIndex).Pos.Y + IIf(Fallo = True, RandomNumber(-2, 0), 0)) * 32
+    ProjectileList(ProjectileIndex).TX = (charlist(TargetIndex).Pos.X + IIf(Fallo = True, RandomNumber(-2, 2), 0)) * 32
+    ProjectileList(ProjectileIndex).TY = (charlist(TargetIndex).Pos.Y + IIf(Fallo = True, RandomNumber(-2, 0), 0)) * 32
     ProjectileList(ProjectileIndex).RotateSpeed = Rotation
 
     If charlist(AttackerIndex).Pos.X <= 17 Then
@@ -114,8 +115,8 @@ Public Sub Engine_Projectile_Erase(ByVal ProjectileIndex As Integer)
     ProjectileList(ProjectileIndex).Grh.GrhIndex = 0
     ProjectileList(ProjectileIndex).X = 0
     ProjectileList(ProjectileIndex).Y = 0
-    ProjectileList(ProjectileIndex).tX = 0
-    ProjectileList(ProjectileIndex).tY = 0
+    ProjectileList(ProjectileIndex).TX = 0
+    ProjectileList(ProjectileIndex).TY = 0
     ProjectileList(ProjectileIndex).Rotate = 0
     ProjectileList(ProjectileIndex).RotateSpeed = 0
  
