@@ -30,6 +30,7 @@
 *.exe binary
 *.ani binary
 *.inf binary
+*.csm binary
 /GRAFICOS/Fonts/font1.dat binary
 /GRAFICOS/Fonts/font2.dat binary
 /GRAFICOS/Fonts/font3.dat binary

@@ -2134,19 +2134,25 @@ Private Sub HandleChangeMap()
     'For now we just drop it
     Call incomingData.ReadInteger
     
-    If FileExist(Game.path(Mapas) & "Mapa" & UserMap & ".map", vbNormal) Then
+    If FileExist(Game.path(Mapas) & "Mapa" & UserMap & ".csm", vbNormal) Then
+        
         Call SwitchMap(UserMap)
-        If bRain And bLluvia(UserMap) = 0 Then
+        
+        If bRain And MapDat.zone <> "DUNGEON" Then
                 Call Audio.StopWave(RainBufferIndex)
                 RainBufferIndex = 0
                 frmMain.IsPlaying = PlayLoop.plNone
         End If
+        
     Else
+        
         'no encontramos el mapa en el hd
-        MsgBox JsonLanguage.item("ERROR_MAPAS").item("TEXTO")
+        Call MsgBox(JsonLanguage.item("ERROR_MAPAS").item("TEXTO"))
         
         Call CloseClient
+        
     End If
+    
 End Sub
 
 ''
@@ -3168,7 +3174,8 @@ Private Sub HandleRainToggle()
         MapData(UserPos.X, UserPos.Y).Trigger = eTrigger.CASA Or _
         MapData(UserPos.X, UserPos.Y).Trigger = eTrigger.ZONASEGURA)
 
-    If bRain And bLluvia(UserMap) Then
+    If bRain And MapDat.zone <> "DUNGEON" Then
+        
         'Stop playing the rain sound
         Call Audio.StopWave(RainBufferIndex)
         RainBufferIndex = 0
@@ -5208,8 +5215,10 @@ Private Sub HandleChangeUserTradeSlot()
     Call frmComerciarUsu.PrintCommerceMsg(TradingUserName & JsonLanguage.item("MENSAJE_COMM_OFERTA_CAMBIA").item("TEXTO"), FontTypeNames.FONTTYPE_VENENO)
     
 errhandler:
+
     Dim Error As Long
-    
+        Error = Err.number
+        
     On Error GoTo 0
     
     'Destroy auxiliar buffer

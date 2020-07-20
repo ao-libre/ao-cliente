@@ -21,27 +21,13 @@ Public Sub Map_RemoveOldUser()
       End With
 
 End Sub
+
 Public Sub Map_CreateObject(ByVal X As Byte, ByVal Y As Byte, ByVal GrhIndex As Long)
 
-      'Dim objgrh As Integer
-        
-      If Not GrhCheck(GrhIndex) Then
-            Exit Sub
-
-      End If
+      If Not GrhCheck(GrhIndex) Then Exit Sub
                         
       If (Map_InBounds(X, Y)) Then
-
-            With MapData(X, Y)
-
-                  'If (Map_PosExitsObject(x, y) > 0) Then
-                  '      Call Map_DestroyObject(x, y)
-                  'End If
-
-                  '.objgrh.GrhIndex = GrhIndex
-                  Call InitGrh(.ObjGrh, GrhIndex)
-            End With
-
+            Call InitGrh(MapData(X, Y).ObjGrh, GrhIndex)
       End If
 
 End Sub
@@ -51,10 +37,11 @@ Public Sub Map_DestroyObject(ByVal X As Byte, ByVal Y As Byte)
       If (Map_InBounds(X, Y)) Then
 
             With MapData(X, Y)
-                  '.objgrh.GrhIndex = 0
-                  .OBJInfo.ObjIndex = 0
-                  .OBJInfo.Amount = 0
-                  Call GrhUninitialize(.ObjGrh)
+                
+                .OBJInfo.objindex = 0
+                .OBJInfo.Amount = 0
+                  
+                Call GrhUninitialize(.ObjGrh)
         
             End With
 
@@ -260,18 +247,17 @@ Function Map_LegalPos(ByVal X As Integer, ByVal Y As Integer) As Boolean
       If UserEquitando And MapData(X, Y).Trigger = eTrigger.BAJOTECHO Or MapData(X, Y).Trigger = eTrigger.CASA Then
             
             If Not frmMain.MsgTimeadoOn Then
-                
                 frmMain.MsgTimeadoOn = True
                 frmMain.MsgTimeado = JsonLanguage.item("MENSAJE_MONTURA_SALIR").item("TEXTO")
             End If
-
+            
             Exit Function
       End If
       
       If UserEvento Then Exit Function
       
-    
       Map_LegalPos = True
+      
 End Function
 
 Function Map_InBounds(ByVal X As Integer, ByVal Y As Integer) As Boolean
