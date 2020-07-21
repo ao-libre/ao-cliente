@@ -822,3 +822,10 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 -v0.13.46
 * 19/07/2020: Saco la consola de combate, vuelve la unificada. (jopiortiz)
 * 19/07/2020: Se sacan botones saltarines en frmConnect. (Neoranger)
+
+-v0.13.47
+* 21/07/2020: Cambios de Mapa (ReyarB)
+* 21/07/2020: Fix: No se detiene el timer del frmCrearPJ. (jopiortiz)
+* 21/07/2020: Depositar/Retirar items rapido de la boveda con Shift+Click (waltersit0)
+* 21/07/2020: Ahora se detecta automáticamente si se renderiza en modo MIXED, HARDWARE o SOFTWARE (jopiortiz)
+* 21/07/2020: Restauramos el DirectDevice si se pierde. (Al abrir un programa como administrador mientras jugabas, se crasheaba el motor gráfico) [Gracias @FrankoH298 !.] (jopiortiz)
