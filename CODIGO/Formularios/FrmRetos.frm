@@ -381,7 +381,7 @@ End Sub
 
 Private Sub Form_Load()
 
-    RetoModo = 2
+    RetoModo = 1
     
     ' Handles Form movement (drag and drop).
     Set clsFormulario = New clsFormMovementManager
