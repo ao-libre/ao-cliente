@@ -1252,6 +1252,15 @@
     "BTN_REPORTAR_BUG_MESSAGE": {
         "TEXTO": "If you report a bug that is not on the reported list, we will give you 5000 gold. It is very simple just a screenshot explaining what happens."
     },
+    "BTN_RECORD_VIDEO": {
+        "TEXTO": "[REC]"
+    },
+    "BTN_RECORD_VIDEO_MESSAGE": {
+        "TEXTO": "If you are going to record someone who is abusing the game with a hack or cheat, record it and upload it to YouTube or the social network you want with the hashtag # ao-libre # ao-libre-cheater and shared with us the link in Discord to be able to help the community."
+    },
+    "BTN_RECORD_VIDEO_MESSAGE_FINISH": {
+        "TEXTO": "The video was saved in the folder Videos. Upload it with the hashtag #ao-libre"
+    },
     "LBL_OPCIONES": {
         "TEXTO": "Options"
     },

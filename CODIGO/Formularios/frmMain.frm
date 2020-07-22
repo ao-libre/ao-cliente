@@ -629,7 +629,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2937
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -660,6 +659,32 @@ Begin VB.Form frmMain
       PICF            =   "frmMain.frx":76835
       PICH            =   "frmMain.frx":76851
       PICV            =   "frmMain.frx":7686D
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin AOLibre.uAOButton btnGrabarVideo 
+      Height          =   255
+      Left            =   1560
+      TabIndex        =   47
+      Top             =   1995
+      Width           =   1365
+      _ExtentX        =   2408
+      _ExtentY        =   450
+      TX              =   "Grabar Video"
+      ENAB            =   -1  'True
+      FCOL            =   7314354
+      OCOL            =   16777215
+      PICE            =   "frmMain.frx":76889
+      PICF            =   "frmMain.frx":768A5
+      PICH            =   "frmMain.frx":768C1
+      PICV            =   "frmMain.frx":768DD
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Tahoma"
          Size            =   8.25
@@ -750,9 +775,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   0
       Left            =   14790
-      MouseIcon       =   "frmMain.frx":76889
+      MouseIcon       =   "frmMain.frx":768F9
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":769DB
+      Picture         =   "frmMain.frx":76A4B
       Top             =   3960
       Visible         =   0   'False
       Width           =   225
@@ -761,9 +786,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   1
       Left            =   14790
-      MouseIcon       =   "frmMain.frx":76D1F
+      MouseIcon       =   "frmMain.frx":76D8F
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":76E71
+      Picture         =   "frmMain.frx":76EE1
       Top             =   3705
       Visible         =   0   'False
       Width           =   225
@@ -1187,6 +1212,10 @@ Private ChangeHechi        As Boolean, ChangeHechiNum As Integer
 Private FirstTimeChat      As Boolean
 Private FirstTimeClanChat  As Boolean
 
+Private IsRecordingVideo  As Boolean
+
+Private FfmpegTaskId As String
+
 'Usado para controlar que no se dispare el binding de la tecla CTRL cuando se usa CTRL+Tecla.
 Dim CtrlMaskOn             As Boolean
 Dim SkinSeleccionado       As String
@@ -1208,8 +1237,42 @@ Public Sub dragInventory_dragDone(ByVal originalSlot As Integer, ByVal newSlot A
     Call Protocol.WriteMoveItem(originalSlot, newSlot, eMoveType.Inventory)
 End Sub
 
+Private Sub btnGrabarVideo_Click()
+    Dim sFfmpegExeFilePath As String
+    sFfmpegExeFilePath = App.path & "\ffmpeg.exe"
+
+    Dim fso As FileSystemObject
+    Set fso = New FileSystemObject
+
+    'Comprobamos si existe ffmpeg, sino existe lo bajamos       
+    If Not fso.FileExists(sFfmpegExeFilePath) Then
+        btnGrabarVideo.Enabled = False
+        Call CopyURLToFile("https://github.com/ao-libre/ao-website/releases/download/v1.0/ffmpeg.exe", sFfmpegExeFilePath)
+        Exit Sub
+    End If
+
+    If Not IsRecordingVideo Then
+        IsRecordingVideo = True
+
+        Dim FileName As String
+        FileName = Format$(Now, "DD-MM-YYYY-hh.mm.ss") & "_ao-libre.mkv"
+
+        IsRecordingVideo = True
+
+        Call MsgBox(JsonLanguage.item("BTN_RECORD_VIDEO_MESSAGE").item("TEXTO"))
+
+        FfmpegTaskId = Shell(sFfmpegExeFilePath & " -f gdigrab -framerate 30 -i title=""Argentum Online Libre"" " & Game.path(Videos) & FileName)
+    Else
+        'Matamos ffmpeg por lo cual se guarda el video :)
+        Shell ("taskkill /PID " & FfmpegTaskId)
+        IsRecordingVideo = False
+        Call MsgBox(JsonLanguage.item("BTN_RECORD_VIDEO_MESSAGE_FINISH").item("TEXTO"))
+    End If
+
+End Sub
+
 Private Sub btnReportarBug_Click()
-    MsgBox (JsonLanguage.item("BTN_REPORTAR_BUG_MESSAGE").item("TEXTO"))
+    Call MsgBox(JsonLanguage.item("BTN_REPORTAR_BUG_MESSAGE").item("TEXTO"))
     Call ShellExecute(0, "Open", "https://github.com/ao-libre/ao-cliente/issues", "", App.path, SW_SHOWNORMAL)
 End Sub
 
@@ -1225,20 +1288,20 @@ Private Sub Form_Activate()
     Call Inventario.DrawInventory
 End Sub
 
-Private Sub BarritaMover_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub BarritaMover_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If Not ResolucionCambiada Then
-        BoldX = x
-        BoldY = y
+        BoldX = X
+        BoldY = Y
         BisMoving = True
     End If
 End Sub
-Private Sub BarritaMover_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub BarritaMover_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If BisMoving Then
-        Me.Top = Me.Top - (BoldY - y)
-        Me.Left = Me.Left - (BoldX - x)
+        Me.Top = Me.Top - (BoldY - Y)
+        Me.Left = Me.Left - (BoldX - X)
     End If
 End Sub
-Private Sub BarritaMover_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub BarritaMover_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
     BisMoving = False
 End Sub
 
@@ -1284,6 +1347,7 @@ Private Sub Form_Load()
     
     FirstTimeChat = True
     FirstTimeClanChat = True
+    IsRecordingVideo = False
     
 End Sub
 
@@ -1302,6 +1366,7 @@ Private Sub LoadTextsForm()
     btnRetos.Caption = JsonLanguage.item("LBL_RETOS").item("TEXTO")
     btnQuests.Caption = JsonLanguage.item("LBL_QUESTS").item("TEXTO")
     btnReportarBug.Caption = JsonLanguage.item("LBL_REPORTAR_BUG").item("TEXTO")
+    btnGrabarVideo.Caption = JsonLanguage.item("BTN_RECORD_VIDEO").item("TEXTO")
     
 End Sub
 
@@ -1717,14 +1782,14 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
     End Select
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     MouseBoton = Button
     MouseShift = Shift
 End Sub
 
-Private Sub Form_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
-    clicX = x
-    clicY = y
+Private Sub Form_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    clicX = X
+    clicY = Y
 End Sub
 
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
@@ -1814,8 +1879,8 @@ End Sub
 
 Private Sub InvEqu_MouseMove(Button As Integer, _
                              Shift As Integer, _
-                             x As Single, _
-                             y As Single)
+                             X As Single, _
+                             Y As Single)
     LastButtonPressed.ToggleToNormal
 End Sub
 
@@ -2045,8 +2110,8 @@ End Sub
 
 Private Sub RecTxt_MouseMove(Button As Integer, _
                              Shift As Integer, _
-                             x As Single, _
-                             y As Single)
+                             X As Single, _
+                             Y As Single)
     StartCheckingLinks
 End Sub
 
@@ -2238,8 +2303,8 @@ End Sub
 
 Private Sub btnLanzar_MouseMove(Button As Integer, _
                                 Shift As Integer, _
-                                x As Single, _
-                                y As Single)
+                                X As Single, _
+                                Y As Single)
     UsaMacro = False
     CnTd = 0
 End Sub
@@ -2264,26 +2329,26 @@ End Sub
 
 Private Sub MainViewPic_MouseDown(Button As Integer, _
                                   Shift As Integer, _
-                                  x As Single, _
-                                  y As Single)
+                                  X As Single, _
+                                  Y As Single)
     MouseBoton = Button
     MouseShift = Shift
 End Sub
 
 Private Sub MainViewPic_MouseMove(Button As Integer, _
                                   Shift As Integer, _
-                                  x As Single, _
-                                  y As Single)
-    MouseX = x
-    MouseY = y
+                                  X As Single, _
+                                  Y As Single)
+    MouseX = X
+    MouseY = Y
 End Sub
 
 Private Sub MainViewPic_MouseUp(Button As Integer, _
                                 Shift As Integer, _
-                                x As Single, _
-                                y As Single)
-    clicX = x
-    clicY = y
+                                X As Single, _
+                                Y As Single)
+    clicX = X
+    clicY = Y
 End Sub
 
 Private Sub MainViewPic_DblClick()
@@ -2444,9 +2509,9 @@ Private Sub Form_DblClick()
     End If
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
-    MouseX = x - MainViewPic.Left
-    MouseY = y - MainViewPic.Top
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    MouseX = X - MainViewPic.Left
+    MouseY = Y - MainViewPic.Top
     
     'Trim to fit screen
     If MouseX < 0 Then
@@ -2561,7 +2626,7 @@ Private Sub picInv_DblClick()
     
 End Sub
 
-Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
     Call Audio.PlayWave(SND_CLICK)
 End Sub
 
@@ -2602,8 +2667,8 @@ End Sub
 
 Private Sub RecTxt_KeyDown(KeyCode As Integer, Shift As Integer)
 
-    If picInv.Visible Then
-        picInv.SetFocus
+    If PicInv.Visible Then
+        PicInv.SetFocus
     Else
         hlst.SetFocus
     End If
@@ -2922,15 +2987,15 @@ End Sub
 '***************************************************
 Private Sub Minimapa_MouseDown(Button As Integer, _
                                Shift As Integer, _
-                               x As Single, _
-                               y As Single)
-   If x > 87 Then x = 86
-   If x < 14 Then x = 15
-   If y > 90 Then y = 89
-   If y < 11 Then y = 12
+                               X As Single, _
+                               Y As Single)
+   If X > 87 Then X = 86
+   If X < 14 Then X = 15
+   If Y > 90 Then Y = 89
+   If Y < 11 Then Y = 12
 
    If Button = vbRightButton Then
-      Call WriteWarpChar("YO", UserMap, CByte(x - 1), CByte(y - 1))
+      Call WriteWarpChar("YO", UserMap, CByte(X - 1), CByte(Y - 1))
       Call ActualizarMiniMapa
    End If
 End Sub
@@ -2944,10 +3009,10 @@ Public Sub ActualizarMiniMapa()
     'Ajustadas las coordenadas para centrarlo (WyroX)
     'Ajuste de coordenadas y tamaño del visor (ReyarB)
     '***************************************************
-    Me.UserM.Left = UserPos.x - 2
-    Me.UserM.Top = UserPos.y - 2
-    Me.UserAreaMinimap.Left = UserPos.x - 13
-    Me.UserAreaMinimap.Top = UserPos.y - 11
+    Me.UserM.Left = UserPos.X - 2
+    Me.UserM.Top = UserPos.Y - 2
+    Me.UserAreaMinimap.Left = UserPos.X - 13
+    Me.UserAreaMinimap.Top = UserPos.Y - 11
     Me.MiniMapa.Refresh
 End Sub
 
