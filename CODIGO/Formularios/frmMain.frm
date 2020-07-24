@@ -1247,7 +1247,7 @@ Private Sub Form_Load()
     
     Me.Picture = LoadPicture(Game.path(Skins) & SkinSeleccionado & "\VentanaPrincipal.jpg")
 
-    If ResolucionCambiada Then
+    If Not ResolucionCambiada Then
         ' Handles Form movement (drag and drop).
         Set clsFormulario = New clsFormMovementManager
         Call clsFormulario.Initialize(Me, 120)
@@ -1255,11 +1255,7 @@ Private Sub Form_Load()
         
     Call LoadButtons
     
-    With Me
-        'Lo hardcodeo porque de lo contrario se ve un borde blanco.
-        .Height = 11550
-        .Label6 = JsonLanguage.item("NIVEL").item("TEXTO") & ": "
-    End With
+    Label6.Caption = JsonLanguage.item("NIVEL").item("TEXTO") & ": "
 
     Call LoadTextsForm
     Call LoadAOCustomControlsPictures(Me)
