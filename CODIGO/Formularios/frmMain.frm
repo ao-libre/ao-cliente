@@ -1,5 +1,6 @@
 VERSION 5.00
 Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.ocx"
 Begin VB.Form frmMain 
    Appearance      =   0  'Flat
    BackColor       =   &H80000005&
@@ -36,6 +37,33 @@ Begin VB.Form frmMain
    ScaleWidth      =   1022
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
+   Begin AOLibre.uAOProgress uAOProgressDownloadFfmpeg 
+      Height          =   255
+      Left            =   2160
+      TabIndex        =   48
+      ToolTipText     =   "Descarga ffmpeg"
+      Top             =   2040
+      Width           =   2895
+      _ExtentX        =   5106
+      _ExtentY        =   450
+      Min             =   1
+      Value           =   1
+      Animate         =   0   'False
+      UseBackground   =   0   'False
+      BackgroundColor =   65280
+      ForeColor       =   12632319
+      BackColor       =   16512
+      BorderColor     =   0
+      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Arial"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
    Begin VB.Timer timerPasarSegundo 
       Interval        =   1000
       Left            =   960
@@ -280,6 +308,13 @@ Begin VB.Form frmMain
       TabIndex        =   30
       Top             =   2325
       Width           =   11040
+      Begin InetCtlsObjects.Inet InetDownloadFfmpeg 
+         Left            =   120
+         Top             =   1560
+         _ExtentX        =   1005
+         _ExtentY        =   1005
+         _Version        =   393216
+      End
       Begin VB.Timer tmrCounters 
          Left            =   5760
          Top             =   840
@@ -629,6 +664,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2937
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1212,9 +1248,15 @@ Private ChangeHechi        As Boolean, ChangeHechiNum As Integer
 Private FirstTimeChat      As Boolean
 Private FirstTimeClanChat  As Boolean
 
-Private IsRecordingVideo  As Boolean
+Private bIsRecordingVideo  As Boolean
 
-Private FfmpegTaskId As String
+Private iFfmpegTaskId As String
+
+'Peso del archivo ffmpeg
+Dim lSizeInBytes As Long
+
+'Para la descarga de ffmpeg
+Dim Directory As String, bDone As Boolean, dError As Boolean
 
 'Usado para controlar que no se dispare el binding de la tecla CTRL cuando se usa CTRL+Tecla.
 Dim CtrlMaskOn             As Boolean
@@ -1237,6 +1279,83 @@ Public Sub dragInventory_dragDone(ByVal originalSlot As Integer, ByVal newSlot A
     Call Protocol.WriteMoveItem(originalSlot, newSlot, eMoveType.Inventory)
 End Sub
 
+Private Sub DownloadFfmpeg()
+    If MsgBox(JsonLanguage.item("BTN_RECORD_VIDEO_DESCARGAR_APLICACION").item("TEXTO"), vbYesNo) = vbYes Then
+        Dim sFfmpegExeFilePath As String
+        sFfmpegExeFilePath = App.path & "\ffmpeg.exe"
+
+        btnGrabarVideo.Enabled = False
+        btnGrabarVideo.Visible = False
+        uAOProgressDownloadFfmpeg.Visible = True
+
+        lSizeInBytes = 53521905
+        uAOProgressDownloadFfmpeg.max = lSizeInBytes
+
+        InetDownloadFfmpeg.AccessType = icUseDefault
+        InetDownloadFfmpeg.URL = "https://github.com/ao-libre/ao-website/releases/download/v1.0/ffmpeg.exe"
+        Directory = sFfmpegExeFilePath
+        bDone = False
+        dError = False
+            
+        InetDownloadFfmpeg.Execute , "GET"
+        
+        Do While bDone = False
+            DoEvents
+        Loop
+        
+        uAOProgressDownloadFfmpeg.Visible = False
+        btnGrabarVideo.Visible = True
+        btnGrabarVideo.Enabled = True
+
+        If dError Then
+            Call MsgBox(JsonLanguage.item("FFMPEG_ERROR_DESCARGA_INSTRUCCIONES").item("TEXTO"))
+            Exit Sub
+        End If
+
+        Exit Sub
+    End If
+End Sub
+
+Private Sub InetDownloadFfmpeg_StateChanged(ByVal State As Integer)
+    Dim Percentage As Long
+    Select Case State
+        Case icError
+            Call MsgBox(JsonLanguage.item("FFMPEG_ERROR_DESCARGA_INSTRUCCIONES").item("TEXTO"))
+            bDone = True
+            dError = True
+            uAOProgressDownloadFfmpeg.Visible = False
+            btnGrabarVideo.Visible = True
+            btnGrabarVideo.Enabled = True
+        Case icResponseCompleted
+            Dim vtData As Variant
+            Dim tempArray() As Byte
+            
+            Dim G_Num As Integer
+            G_Num = FreeFile
+            Open Directory For Binary Access Write As #G_Num
+                vtData = InetDownloadFfmpeg.GetChunk(1024, icByteArray)
+                DoEvents
+                
+                Do While Not Len(vtData) = 0
+                    tempArray = vtData
+                    Put #G_Num, , tempArray
+                    
+                    vtData = InetDownloadFfmpeg.GetChunk(1024, icByteArray)
+
+                    uAOProgressDownloadFfmpeg.min = uAOProgressDownloadFfmpeg.min + Len(vtData) * 2
+                    'Percentage = (uAOProgressDownloadFfmpeg.Value / uAOProgressDownloadFfmpeg.max) * 100
+                    'uAOProgressDownloadFfmpeg.Text = "[" & Percentage & "% de " & lSizeInBytes & " MBs.]"
+                    
+                    DoEvents
+                Loop
+            Close #G_Num
+            
+            Call MsgBox(JsonLanguage.item("FFMPEG_DESCARGA_FINALIZADA").item("TEXTO"))
+
+            bDone = True
+    End Select
+End Sub
+
 Private Sub btnGrabarVideo_Click()
     Dim sFfmpegExeFilePath As String
     sFfmpegExeFilePath = App.path & "\ffmpeg.exe"
@@ -1244,29 +1363,33 @@ Private Sub btnGrabarVideo_Click()
     Dim fso As FileSystemObject
     Set fso = New FileSystemObject
 
-    'Comprobamos si existe ffmpeg, sino existe lo bajamos       
+    'Comprobamos si existe ffmpeg, sino existe lo bajamos
     If Not fso.FileExists(sFfmpegExeFilePath) Then
-        btnGrabarVideo.Enabled = False
-        Call CopyURLToFile("https://github.com/ao-libre/ao-website/releases/download/v1.0/ffmpeg.exe", sFfmpegExeFilePath)
+        Call DownloadFfmpeg
         Exit Sub
     End If
 
-    If Not IsRecordingVideo Then
-        IsRecordingVideo = True
+    If Not bIsRecordingVideo Then
+        bIsRecordingVideo = True
+        btnGrabarVideo.Caption = JsonLanguage.item("BTN_RECORD_VIDEO_FINALIZAR").item("TEXTO")
+
 
         Dim FileName As String
         FileName = Format$(Now, "DD-MM-YYYY-hh.mm.ss") & "_ao-libre.mkv"
 
-        IsRecordingVideo = True
-
         Call MsgBox(JsonLanguage.item("BTN_RECORD_VIDEO_MESSAGE").item("TEXTO"))
 
-        FfmpegTaskId = Shell(sFfmpegExeFilePath & " -f gdigrab -framerate 30 -i title=""Argentum Online Libre"" " & Game.path(Videos) & FileName)
+        Dim sFfmpegCommand As String
+        sFfmpegCommand = sFfmpegExeFilePath & " -f gdigrab -framerate 30 -i title=""Argentum Online Libre"" " & Game.path(Videos) & FileName
+
+        iFfmpegTaskId = Shell(sFfmpegCommand)
     Else
         'Matamos ffmpeg por lo cual se guarda el video :)
-        Shell ("taskkill /PID " & FfmpegTaskId)
-        IsRecordingVideo = False
+        Shell ("taskkill /PID " & iFfmpegTaskId)
+        bIsRecordingVideo = False
+        btnGrabarVideo.Caption = JsonLanguage.item("BTN_RECORD_VIDEO").item("TEXTO")
         Call MsgBox(JsonLanguage.item("BTN_RECORD_VIDEO_MESSAGE_FINISH").item("TEXTO"))
+        Shell("explorer " & Game.path(Videos))
     End If
 
 End Sub
@@ -1347,7 +1470,8 @@ Private Sub Form_Load()
     
     FirstTimeChat = True
     FirstTimeClanChat = True
-    IsRecordingVideo = False
+    bIsRecordingVideo = False
+    uAOProgressDownloadFfmpeg.Visible = False
     
 End Sub
 
