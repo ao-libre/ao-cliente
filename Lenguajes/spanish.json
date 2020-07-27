@@ -1252,6 +1252,21 @@
     "BTN_REPORTAR_BUG_MESSAGE": {
         "TEXTO": "Si reportas un bug que no este en la lista de reportados, te vamos a obsequiar 5000 oro. Es muy simple tan solo una captura de pantalla explicando lo que sucede."
     },
+    "BTN_RECORD_VIDEO_DESCARGAR_APLICACION": {
+        "TEXTO": "Se descargara la aplicacion FFMPEG para poder hacer uso del mismo para grabar. Desea continuar? Por favor tenga en cuenta que el juego estara inactivo mientras la descarga del mismo este se este realizando"
+    },
+    "BTN_RECORD_VIDEO": {
+        "TEXTO": "Grabar Video"
+    },
+    "BTN_RECORD_VIDEO_FINALIZAR": {
+        "TEXTO": "Fin Video"
+    },
+    "BTN_RECORD_VIDEO_MESSAGE": {
+        "TEXTO": "Si vas a grabar a alguien que este haciendo abuso del juego con algun hack o cheat grabalo y subilo a youtube o a la red social que quieras con el hashtag #ao-libre #ao-libre-cheater y comparti con nosotros el link en Discord para poder ayudar a la comunidad."
+    },
+    "BTN_RECORD_VIDEO_MESSAGE_FINISH": {
+        "TEXTO": "Se guardo video correctamente en la carpeta Videos. Recorda subirlo con el hashtag #ao-libre."
+    },
     "LBL_OPCIONES": {
         "TEXTO": "Opciones"
     },

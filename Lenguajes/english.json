@@ -1252,6 +1252,27 @@
     "BTN_REPORTAR_BUG_MESSAGE": {
         "TEXTO": "If you report a bug that is not on the reported list, we will give you 5000 gold. It is very simple just a screenshot explaining what happens."
     },
+    "BTN_RECORD_VIDEO_DESCARGAR_APLICACION": {
+        "TEXTO": "Do you wish to download FFMPEG to record the game? Please be aware that the game will not respond to you until the download is finished"
+    },
+    "FFMPEG_ERROR_DESCARGA_INSTRUCCIONES": {
+        "TEXTO": "The application FFMPEG was not able to download succesfully. Although you can download it manually from https://ffmpeg.org/ and put the file ffmpeg.exe inside the folder C:/Program Files (x86)/Argentum Online Libre/Launcher/Cliente, after that you can start recording videos straight away from the game"
+    },
+    "FFMPEG_DESCARGA_FINALIZADA": {
+        "TEXTO": "ffmpeg was downloaded succesfully, now you can start recording videos inside the game."
+    },
+    "BTN_RECORD_VIDEO": {
+        "TEXTO": "[REC]"
+    },
+    "BTN_RECORD_VIDEO_FINALIZAR": {
+        "TEXTO": "End Rec"
+    },
+    "BTN_RECORD_VIDEO_MESSAGE": {
+        "TEXTO": "If you are going to record someone who is abusing the game with a hack or cheat, record it and upload it to YouTube or the social network you want with the hashtag # ao-libre # ao-libre-cheater and shared with us the link in Discord to be able to help the community."
+    },
+    "BTN_RECORD_VIDEO_MESSAGE_FINISH": {
+        "TEXTO": "The video was saved in the folder Videos. Upload it with the hashtag #ao-libre"
+    },
     "LBL_OPCIONES": {
         "TEXTO": "Options"
     },
