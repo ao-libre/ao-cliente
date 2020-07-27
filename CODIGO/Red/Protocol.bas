@@ -2060,7 +2060,7 @@ Private Sub HandleUpdateStrenghtAndDexterity()
     frmMain.lblStrg.ForeColor = getStrenghtColor()
     frmMain.lblDext.ForeColor = getDexterityColor()
     IntervaloDopas = incomingData.ReadLong
-    TiempoDopas = (IntervaloDopas * 0.05) - 1
+    TiempoDopas = IntervaloDopas * 0.04
 End Sub
 
 ' Handles the UpdateStrenghtAndDexterity message.
@@ -2084,7 +2084,7 @@ Private Sub HandleUpdateStrenght()
     frmMain.lblStrg.Caption = UserFuerza
     frmMain.lblStrg.ForeColor = getStrenghtColor()
     IntervaloDopas = incomingData.ReadLong
-    TiempoDopas = (IntervaloDopas * 0.05) - 1
+    TiempoDopas = IntervaloDopas * 0.04
 End Sub
 
 ' Handles the UpdateStrenghtAndDexterity message.
@@ -2108,7 +2108,7 @@ Private Sub HandleUpdateDexterity()
     frmMain.lblDext.Caption = UserAgilidad
     frmMain.lblDext.ForeColor = getDexterityColor()
     IntervaloDopas = incomingData.ReadLong
-    TiempoDopas = (IntervaloDopas * 0.05) - 1
+    TiempoDopas = IntervaloDopas * 0.04
 End Sub
 
 ''
