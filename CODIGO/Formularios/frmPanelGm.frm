@@ -2052,7 +2052,7 @@ End Sub
 Private Sub cmdPK0_Click()
     '/PK Seguro Agregado Por ReyarB 21/05/2020
         If MsgBox("Seguro desea hacer el Mapa Seguro?", vbYesNo, "Atencion!") = vbYes Then _
-            Call ParseUserCommand("/MODMAPINFO PK 0") 'We use the Parser to control the command format
+            Call ParseUserCommand("/MODMAPINFO PK 1") 'We use the Parser to control the command format
 frmMain.Show
 End Sub
 
@@ -2287,7 +2287,7 @@ End Sub
 Private Sub cndPK1_Click()
     '/PK Inseguro
         If MsgBox("Seguro desea hacer el Mapa Inseguro?", vbYesNo, "Atencion!") = vbYes Then _
-            Call ParseUserCommand("/MODMAPINFO PK 1") 'We use the Parser to control the command format
+            Call ParseUserCommand("/MODMAPINFO PK 0") 'We use the Parser to control the command format
 frmMain.Show
 End Sub
 
