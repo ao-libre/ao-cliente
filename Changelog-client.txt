@@ -829,3 +829,11 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 21/07/2020: Depositar/Retirar items rapido de la boveda con Shift+Click (waltersit0)
 * 21/07/2020: Ahora se detecta automáticamente si se renderiza en modo MIXED, HARDWARE o SOFTWARE (jopiortiz)
 * 21/07/2020: Restauramos el DirectDevice si se pierde. (Al abrir un programa como administrador mientras jugabas, se crasheaba el motor gráfico) [Gracias @FrankoH298 !.] (jopiortiz)
+
+-v0.13.48
+* 27/07/2020: Fix #791: escribir mientras estás con /buscar (Wyr0x)
+* 27/07/2020: Fix #788: timers de las dopas (Wyr0x)
+* 27/07/2020: Fix #790: mover la ventana (Wyr0x)
+* 27/07/2020: Se creo sistema de grabacion utilizando ffmpeg, se creo descargara automatica para el mismo. TODO: mientras descarga el juego se pausea, hay que hacer que corra en segundo plano la descarga
+ (Recox)
+
