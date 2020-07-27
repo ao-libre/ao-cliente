@@ -301,7 +301,7 @@ Begin VB.Form frmPanelGm
          Width           =   1095
       End
       Begin VB.CommandButton cmdESTUPIDO 
-         Caption         =   "Estudides al User"
+         Caption         =   "Estupidez al user"
          CausesValidation=   0   'False
          Height          =   315
          Left            =   0
