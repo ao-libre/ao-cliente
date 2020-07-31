@@ -301,7 +301,7 @@ Begin VB.Form frmPanelGm
          Width           =   1095
       End
       Begin VB.CommandButton cmdESTUPIDO 
-         Caption         =   "Estudides al User"
+         Caption         =   "Estupidez al user"
          CausesValidation=   0   'False
          Height          =   315
          Left            =   0
@@ -481,7 +481,7 @@ Begin VB.Form frmPanelGm
       Top             =   360
       Width           =   3975
       Begin VB.CommandButton cmdSHOWNAME 
-         Caption         =   "SHOWNAME"
+         Caption         =   "ShowName"
          CausesValidation=   0   'False
          Height          =   315
          Left            =   2040
@@ -490,7 +490,7 @@ Begin VB.Form frmPanelGm
          Width           =   1815
       End
       Begin VB.CommandButton cmdREM 
-         Caption         =   "DEJAR COMENTARIO"
+         Caption         =   "Dejae comentario"
          CausesValidation=   0   'False
          Height          =   315
          Left            =   120
@@ -499,7 +499,7 @@ Begin VB.Form frmPanelGm
          Width           =   3735
       End
       Begin VB.CommandButton cmdINVISIBLE 
-         Caption         =   "INVISIBLE"
+         Caption         =   "Invisible"
          CausesValidation=   0   'False
          Height          =   315
          Left            =   120
@@ -508,7 +508,7 @@ Begin VB.Form frmPanelGm
          Width           =   1815
       End
       Begin VB.CommandButton cmdSETDESC 
-         Caption         =   "DESCRIPCIÓN"
+         Caption         =   "Descripcion"
          CausesValidation=   0   'False
          Height          =   315
          Left            =   2040
@@ -517,7 +517,7 @@ Begin VB.Form frmPanelGm
          Width           =   1815
       End
       Begin VB.CommandButton cmdNAVE 
-         Caption         =   "NAVEGACIÓN"
+         Caption         =   "Navegacion"
          CausesValidation=   0   'False
          Height          =   315
          Left            =   120
@@ -526,7 +526,7 @@ Begin VB.Form frmPanelGm
          Width           =   1815
       End
       Begin VB.CommandButton cmdCHATCOLOR 
-         Caption         =   "CHATCOLOR"
+         Caption         =   "ChatColor"
          CausesValidation=   0   'False
          Height          =   315
          Left            =   120
@@ -535,7 +535,7 @@ Begin VB.Form frmPanelGm
          Width           =   1815
       End
       Begin VB.CommandButton cmdIGNORADO 
-         Caption         =   "IGNORADO"
+         Caption         =   "Ignorado"
          CausesValidation=   0   'False
          Height          =   315
          Left            =   2040
@@ -562,7 +562,7 @@ Begin VB.Form frmPanelGm
          Width           =   1575
       End
       Begin VB.CommandButton cmdBANCLAN 
-         Caption         =   "/BANNEA AL CLAN"
+         Caption         =   "/Bannea al Clan"
          CausesValidation=   0   'False
          Height          =   315
          Left            =   240
@@ -580,7 +580,7 @@ Begin VB.Form frmPanelGm
          Width           =   1815
       End
       Begin VB.CommandButton cmdBANIPRELOAD 
-         Caption         =   "/BANIPRELOAD"
+         Caption         =   "/BanIPreload"
          CausesValidation=   0   'False
          Height          =   315
          Left            =   1440
@@ -589,7 +589,7 @@ Begin VB.Form frmPanelGm
          Width           =   2295
       End
       Begin VB.CommandButton cmdBANIPLIST 
-         Caption         =   "/BANIPLIST"
+         Caption         =   "/BabIPlist"
          CausesValidation=   0   'False
          Height          =   315
          Left            =   240
@@ -598,7 +598,7 @@ Begin VB.Form frmPanelGm
          Width           =   1095
       End
       Begin VB.CommandButton cmdIP2NICK 
-         Caption         =   "BAN X IP"
+         Caption         =   "Ban X IP"
          CausesValidation=   0   'False
          Height          =   315
          Left            =   240
@@ -607,7 +607,7 @@ Begin VB.Form frmPanelGm
          Width           =   1095
       End
       Begin VB.CommandButton cmdBANIP 
-         Caption         =   "BAN IP"
+         Caption         =   "Ban IP"
          CausesValidation=   0   'False
          Height          =   315
          Left            =   1440
@@ -616,7 +616,7 @@ Begin VB.Form frmPanelGm
          Width           =   975
       End
       Begin VB.CommandButton cmdUNBANIP 
-         Caption         =   "Sacar BAN IP"
+         Caption         =   "Sacar Ban IP"
          CausesValidation=   0   'False
          Height          =   315
          Left            =   2520
@@ -643,7 +643,7 @@ Begin VB.Form frmPanelGm
          Width           =   1695
       End
       Begin VB.CommandButton Command5 
-         Caption         =   "Cambiar Trigger´s"
+         Caption         =   "Cambiar Triggers"
          Height          =   315
          Left            =   2040
          TabIndex        =   127
@@ -899,7 +899,7 @@ Begin VB.Form frmPanelGm
       Top             =   360
       Width           =   3975
       Begin VB.CommandButton cmdRefresh 
-         Caption         =   "ACTUALIZAR"
+         Caption         =   "Actualizar"
          Height          =   495
          Left            =   2160
          TabIndex        =   109
