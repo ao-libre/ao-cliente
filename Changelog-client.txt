@@ -839,7 +839,9 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 27/07/2020: Fix #790: mover la ventana (Wyr0x)
 * 27/07/2020: Fix Errores ortograficos (Wyr0x)
 * 27/07/2020: Se agrega costa nuevas (ReyarB)
-* 27/07/2020: Cambios en Mapas (ReyarB)
-* 27/07/2020: Mejoras en MiniMapas (ReyarB)
+* 31/07/2020: Cambios en Mapas (ReyarB)
+* 31/07/2020: Mejoras en MiniMapas (ReyarB)
+* 31/07/2020: Mejoras en MiniMapas (ReyarB)
+* 31/07/2020: Se comenta la funcion hlst_DblClick que maneja el mover hechizo con doble click por que a la gente le molesta (Recox)
  
 
