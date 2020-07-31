@@ -836,4 +836,10 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 27/07/2020: Fix #790: mover la ventana (Wyr0x)
 * 27/07/2020: Se creo sistema de grabacion utilizando ffmpeg, se creo descargara automatica para el mismo. TODO: mientras descarga el juego se pausea, hay que hacer que corra en segundo plano la descarga
  (Recox)
+* 27/07/2020: Fix #790: mover la ventana (Wyr0x)
+* 27/07/2020: Fix Errores ortograficos (Wyr0x)
+* 27/07/2020: Se agrega costa nuevas (ReyarB)
+* 27/07/2020: Cambios en Mapas (ReyarB)
+* 27/07/2020: Mejoras en MiniMapas (ReyarB)
+ 
 
