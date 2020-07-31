@@ -3092,9 +3092,10 @@ Private Sub hlst_Click()
 End Sub
 
 Private Sub hlst_DblClick()
-    ChangeHechi = True
-    ChangeHechiNum = hlst.ListIndex
-    hlst.BackColor = vbRed
+    'Comento el mover hechizos con doble click por que a la gente no le gusta (Recox)
+    'ChangeHechi = True
+    'ChangeHechiNum = hlst.ListIndex
+    'hlst.BackColor = vbRed
 
 End Sub
 
