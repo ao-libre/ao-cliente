@@ -290,7 +290,7 @@ Function Damage_ModifyColour(ByVal DamageType As Byte) As Long
  
 End Function
  
-Function Damage_NewSize(ByVal ElapsedTime As Byte) As Byte
+Function Damage_NewSize(ByVal ElapsedTime As Long) As Byte
  
     ' @ Se usa para el "efecto" del apu.
 
