@@ -25,6 +25,7 @@ Public Enum ePath
     Lenguajes
     Extras
     Fonts
+    Videos
 End Enum
 
 Public Type tSetupMods
@@ -127,6 +128,9 @@ Public Function path(ByVal PathType As ePath) As String
             
         Case ePath.Extras
             path = App.path & "\Extras\"
+
+        Case ePath.Videos
+            path = App.path & "\Videos\"
     
     End Select
 
