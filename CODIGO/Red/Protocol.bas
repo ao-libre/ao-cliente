@@ -11900,7 +11900,7 @@ Private Sub HandleSetTypingFlagToCharIndex()
     'Last Modification: 12/12/17
     '
     '***************************************************
-    If incomingData.Length < 3 Then
+    If incomingData.Length < 4 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
     End If
