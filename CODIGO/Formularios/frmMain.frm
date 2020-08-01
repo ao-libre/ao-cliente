@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.ocx"
 Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.ocx"
 Begin VB.Form frmMain 
    Appearance      =   0  'Flat
@@ -664,7 +664,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2937
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1389,7 +1388,7 @@ Private Sub btnGrabarVideo_Click()
         bIsRecordingVideo = False
         btnGrabarVideo.Caption = JsonLanguage.item("BTN_RECORD_VIDEO").item("TEXTO")
         Call MsgBox(JsonLanguage.item("BTN_RECORD_VIDEO_MESSAGE_FINISH").item("TEXTO"))
-        Shell("explorer " & Game.path(Videos))
+        Shell ("explorer " & Game.path(Videos))
     End If
 
 End Sub
@@ -1806,9 +1805,16 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
         Case CustomKeys.BindedKey(eKeyType.mKeyTalkWithGuild)
 
             If SendTxt.Visible Then Exit Sub
+            If charlist(UserCharIndex).Clan = vbNullString Then Exit Sub
             
             If (Not Comerciando) And (Not MirandoAsignarSkills) And (Not frmMSG.Visible) And (Not MirandoForo) And (Not frmEstadisticas.Visible) And (Not frmCantidad.Visible) Then
                 SendCMSTXT.Visible = True
+                
+                If Not Typing Then
+                    Call WriteSetTypingFlagFromUserCharIndex
+                    Typing = True
+                End If
+                
                 SendCMSTXT.SetFocus
             End If
         
@@ -1895,6 +1901,10 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
             If (Not Comerciando) And (Not MirandoAsignarSkills) And (Not frmMSG.Visible) And (Not MirandoForo) And (Not frmEstadisticas.Visible) And (Not frmCantidad.Visible) Then
                 SendTxt.Visible = True
                 SendTxt.SetFocus
+                If Not Typing Then
+                    Call WriteSetTypingFlagFromUserCharIndex
+                    Typing = True
+                End If
             End If
             
     End Select
@@ -2306,6 +2316,11 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
 
     'Send text
     If KeyCode = vbKeyReturn Then
+        If Typing Then
+            Call WriteSetTypingFlagFromUserCharIndex
+            Typing = False
+        End If
+        
         If LenB(stxtbuffer) <> 0 Then Call ParseUserCommand(stxtbuffer)
         
         stxtbuffer = vbNullString
