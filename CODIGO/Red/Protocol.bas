@@ -176,6 +176,7 @@ Private Enum ServerPacketID
     SeeInProcess = 120
     ShowProcess = 121
     Proyectil = 122
+    PlayIsInChatMode = 123
 End Enum
 
 Private Enum ClientPacketID
@@ -334,6 +335,7 @@ Private Enum ClientPacketID
     MsgAmigos = 153
     Lookprocess = 154
     SendProcessList = 155
+    SendIfCharIsInChatMode = 156
 End Enum
 
 Public Enum FontTypeNames
@@ -562,6 +564,9 @@ On Error Resume Next
     'Debug.Print Packet
     
     Select Case Packet
+            
+        Case ServerPacketID.PlayIsInChatMode
+            Call HandleSetTypingFlagToCharIndex
             
         Case ServerPacketID.logged                  ' LOGGED
             Call HandleLogged
@@ -11876,4 +11881,41 @@ Private Sub HandleProyectil()
     GrhIndex = incomingData.ReadInteger()
     
     Engine_Projectile_Create CharSending, CharRecieved, GrhIndex, 0
+End Sub
+
+Public Sub WriteSetTypingFlagFromUserCharIndex()
+
+    Call outgoingData.WriteByte(ClientPacketID.SendIfCharIsInChatMode)
+
+    If Char_Check(UserCharIndex) Then
+        charlist(UserCharIndex).Escribiendot = 1
+        charlist(UserCharIndex).Escribiendo = IIf(Typing, 0, 1)
+    End If
+
+End Sub
+
+Private Sub HandleSetTypingFlagToCharIndex()
+    '***************************************************
+    'Author: Cuicui (Gast?n Montenegro)
+    'Last Modification: 12/12/17
+    '
+    '***************************************************
+    If incomingData.Length < 4 Then
+        Err.Raise incomingData.NotEnoughDataErrCode
+        Exit Sub
+    End If
+
+    'Remove packet id
+    Call incomingData.ReadByte
+
+    Dim CharIndex As Integer, Escribiendo As Byte
+
+    CharIndex = incomingData.ReadInteger
+    Escribiendo = incomingData.ReadByte
+
+    If Char_Check(CharIndex) Then
+        charlist(CharIndex).Escribiendot = 1
+        charlist(CharIndex).Escribiendo = IIf(Escribiendo > 0, True, False)
+    End If
+
 End Sub
