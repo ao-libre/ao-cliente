@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
 Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.ocx"
 Begin VB.Form frmMain 
    Appearance      =   0  'Flat
@@ -1810,7 +1810,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
             If SendTxt.Visible Then Exit Sub
             If charlist(UserCharIndex).Clan = vbNullString Then Exit Sub
             
-            If SendCMSTXT.Visible And SendCMSTXTHasFocus Then
+            If SendCMSTXT.Visible And Not SendCMSTXTHasFocus Then
                 Call SendCMSTXT_SendText
                 Exit Sub
             End If
@@ -2343,12 +2343,6 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
     If KeyCode = vbKeyReturn Then
 
         Call SendTxt_SendText
-
-        If Typing Then
-            Call WriteSetTypingFlagFromUserCharIndex
-            Typing = False
-        End If
-
         KeyCode = 0
     End If
 End Sub
@@ -2367,6 +2361,12 @@ Public Sub SendTxt_SendText()
         stxtbuffer = vbNullString
         SendTxt.Text = vbNullString
         Me.SendTxt.Visible = False
+        
+        If Typing Then
+            Call WriteSetTypingFlagFromUserCharIndex
+            Typing = False
+        End If
+        
 End Sub
 
 Private Sub Second_Timer()
@@ -2909,6 +2909,11 @@ Public Sub SendCMSTXT_SendText()
         stxtbuffercmsg = vbNullString
         SendCMSTXT.Text = vbNullString
         Me.SendCMSTXT.Visible = False
+        
+        If Typing Then
+            Call WriteSetTypingFlagFromUserCharIndex
+            Typing = False
+        End If
         
         If PicInv.Visible Then
             PicInv.SetFocus
