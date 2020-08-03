@@ -31,6 +31,11 @@ IP=localhost
 PJ=7666
 Mundo=Alkon
 
+[S6]
+Desc= RexonAo 0.13 Rol y Agite
+IP=186.158.92.59
+PJ=7666
+Mundo=Alkon
 
 
 
