@@ -20,21 +20,19 @@ PJ=7666
 Mundo=Alkon
 
 [S4]
+Desc= RexonAo 0.13 Rol y Agite
+IP=186.158.92.59
+PJ=7666
+Mundo=Alkon
+
+[S5]
 Desc=Test BattleServer [Master Branch]
 IP=18.230.151.33
 PJ=7667
 Mundo=Alkon
 
-[S5]
+[S6]
 Desc=Servidor Local | Modo:Alkon 0.13.X
 IP=localhost
 PJ=7666
 Mundo=Alkon
-
-[S6]
-Desc=RexonAo | Modo:Alkon 0.13.X
-IP=186.158.92.59
-PJ=7666
-Mundo=Alkon
-
-
