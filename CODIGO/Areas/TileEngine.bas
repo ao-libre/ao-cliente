@@ -155,6 +155,8 @@ End Type
 
 'Apariencia del personaje
 Public Type Char
+    Escribiendot As Byte
+    Escribiendo As Boolean
     Movement As Boolean
     active As Byte
     Heading As E_Heading
@@ -1366,6 +1368,11 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
                     If .iHead = 0 And .iBody > 0 Then
                         Call RenderName(CharIndex, PixelOffsetX, PixelOffsetY)
                     End If
+                    'Si el personaje esta chateando mostramos ... en pantalla
+                    If .Escribiendo Then
+                        Call RenderIfCharIsInChatMode(CharIndex, PixelOffsetX, PixelOffsetY)
+                    End If
+                    
                 End If
             End If
             
@@ -1399,6 +1406,10 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
             If LenB(.Nombre) > 0 Then
                 If Nombres Then
                     Call RenderName(CharIndex, PixelOffsetX, PixelOffsetY)
+                    'Si el personaje esta chateando mostramos ... en pantalla
+                    If .Escribiendo Then
+                        Call RenderIfCharIsInChatMode(CharIndex, PixelOffsetX, PixelOffsetY)
+                    End If
                 End If
             End If
             
@@ -1432,6 +1443,10 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
             If LenB(.Nombre) > 0 Then
                 If Nombres Then
                     Call RenderName(CharIndex, PixelOffsetX, PixelOffsetY, True)
+                    'Si el personaje esta chateando mostramos ... en pantalla
+                    If .Escribiendo Then
+                        Call RenderIfCharIsInChatMode(CharIndex, PixelOffsetX, PixelOffsetY)
+                    End If
                 End If
             End If
             
@@ -1453,6 +1468,45 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
         
     End With
     
+End Sub
+
+Private Function Puntitos(ByVal CharIndex As Integer) As String
+
+    ' necesario salvo que quieras que se vuelva loco
+    Dim tActual As Long
+    tActual = GetTickCount
+
+    If Abs(tActual - lastTickEscribiendo) > 10 Then
+        lastTickEscribiendo = tActual
+        charlist(CharIndex).Escribiendot = charlist(CharIndex).Escribiendot + 1
+    End If
+
+    Select Case charlist(CharIndex).Escribiendot
+        Case 1 To 20
+            Puntitos = "."
+        Case 20 To 40
+            Puntitos = ".."
+        Case 40 To 60
+            Puntitos = "..."
+        Case Else
+            charlist(CharIndex).Escribiendot = 1
+    End Select
+
+End Function
+
+Private Sub RenderIfCharIsInChatMode(ByVal CharIndex As Long, _
+                       ByVal X As Integer, _
+                       ByVal Y As Integer, _
+                       Optional ByVal Invi As Boolean = False)
+    Dim Color As Long
+
+    Color = D3DColorARGB(255, 220, 220, 255)
+
+    With charlist(CharIndex)
+        'TODO: Cambiar por una imagen mas copada...
+        Call DrawText(X + 25, Y - 33, Puntitos(CharIndex), Color, True)
+
+    End With
 End Sub
 
 Private Sub RenderSombras(ByVal CharIndex As Integer, ByVal PixelOffsetX As Integer, ByVal PixelOffsetY As Integer)

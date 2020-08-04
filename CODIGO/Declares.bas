@@ -40,6 +40,9 @@ Public TiempoDopas As Long
 Public Const MAX_AMIGOS As Byte = 50
 Public amigos(1 To MAX_AMIGOS) As String
 
+Public Typing As Boolean
+Public lastTickEscribiendo As Long
+
 Public Inet As clsInet
 
 'Recuperar Cuenta mediante la API
