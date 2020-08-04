@@ -11886,7 +11886,9 @@ End Sub
 Public Sub WriteSetTypingFlagFromUserCharIndex()
 
     Call outgoingData.WriteByte(ClientPacketID.SendIfCharIsInChatMode)
-
+    
+    If charlist(UserCharIndex).invisible Then Exit Sub
+    
     If Char_Check(UserCharIndex) Then
         charlist(UserCharIndex).Escribiendot = 1
         charlist(UserCharIndex).Escribiendo = IIf(Typing, 0, 1)

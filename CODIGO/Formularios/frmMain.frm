@@ -1817,12 +1817,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
             
             If (Not Comerciando) And (Not MirandoAsignarSkills) And (Not frmMSG.Visible) And (Not MirandoForo) And (Not frmEstadisticas.Visible) And (Not frmCantidad.Visible) Then
                 SendCMSTXT.Visible = True
-                
-                If Not Typing Then
-                    Call WriteSetTypingFlagFromUserCharIndex
-                    Typing = True
-                End If
-                
+                                
                 SendCMSTXT.SetFocus
             End If
         
@@ -2909,12 +2904,7 @@ Public Sub SendCMSTXT_SendText()
         stxtbuffercmsg = vbNullString
         SendCMSTXT.Text = vbNullString
         Me.SendCMSTXT.Visible = False
-        
-        If Typing Then
-            Call WriteSetTypingFlagFromUserCharIndex
-            Typing = False
-        End If
-        
+               
         If PicInv.Visible Then
             PicInv.SetFocus
         Else
