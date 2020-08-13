@@ -1250,7 +1250,7 @@
         "TEXTO": "Reportar Bug"
     },
     "BTN_REPORTAR_BUG_MESSAGE": {
-        "TEXTO": "Si reportas un bug que no este en la lista de reportados, te vamos a obsequiar 5000 oro. Es muy simple tan solo una captura de pantalla explicando lo que sucede."
+        "TEXTO": "Si reportas un bug que no este en la lista de reportados, te vamos a obsequiar algo. Es muy simple tan solo una captura de pantalla explicando lo que sucede."
     },
     "BTN_RECORD_VIDEO_DESCARGAR_APLICACION": {
         "TEXTO": "Se descargara la aplicacion FFMPEG para poder hacer uso del mismo para grabar. Desea continuar? Por favor tenga en cuenta que el juego estara inactivo mientras la descarga del mismo este se este realizando"
