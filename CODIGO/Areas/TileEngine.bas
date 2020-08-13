@@ -928,12 +928,20 @@ Sub RenderScreen(ByVal tilex As Integer, _
     If colorRender <> 240 Then
         Call DrawText(frmMain.MainViewPic.Width / 2, 50, renderText, render_msg(0), True, 2)
     End If
-    
+
     '   Set Offsets
     LastOffsetX = ParticleOffsetX
     LastOffsetY = ParticleOffsetY
     
     If ClientSetup.PartyMembers Then Call Draw_Party_Members
+
+    If Not ClientSetup.LimiteFPS Then
+        'Si esta opcion esta desactivada, renderizamos el inventario todo el tiempo, este patch es por que a algunas personas que tienen
+        'Windows 7 o Linux y el inventario se les ve negro. Ver el tema de la copia de imagen que hizo Wyr0X para que no renderize todo el tiempo, por ahi va el tema si se quiere arreglar 
+        'Esto y hacer que no se renderize constante.
+        'https://www.youtube.com/watch?v=TMcOnhDnYBQ&feature=youtu.be Mas info
+        Call Inventario.DrawInventory
+    End If
 
     Call RenderCount
 
