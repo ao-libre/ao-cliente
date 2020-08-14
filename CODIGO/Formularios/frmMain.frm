@@ -1252,7 +1252,7 @@ Private FirstTimeClanChat  As Boolean
 
 Private bIsRecordingVideo  As Boolean
 
-Private iFfmpegTaskId As String
+Private sFfmpegTaskId As String
 
 'Peso del archivo ffmpeg
 Dim lSizeInBytes As Long
@@ -1384,10 +1384,10 @@ Private Sub btnGrabarVideo_Click()
         Dim sFfmpegCommand As String
         sFfmpegCommand = sFfmpegExeFilePath & " -f gdigrab -framerate 30 -i title=""Argentum Online Libre"" " & Game.path(Videos) & FileName
 
-        iFfmpegTaskId = Shell(sFfmpegCommand)
+        sFfmpegTaskId = Shell(sFfmpegCommand)
     Else
         'Matamos ffmpeg por lo cual se guarda el video :)
-        Shell ("taskkill /PID " & iFfmpegTaskId)
+        Shell ("taskkill /PID " & sFfmpegTaskId)
         bIsRecordingVideo = False
         btnGrabarVideo.Caption = JsonLanguage.item("BTN_RECORD_VIDEO").item("TEXTO")
         Call MsgBox(JsonLanguage.item("BTN_RECORD_VIDEO_MESSAGE_FINISH").item("TEXTO"))

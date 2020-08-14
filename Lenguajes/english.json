@@ -1878,5 +1878,13 @@
     },
     "FRM_MAPA_TEXTO" : {
         "TEXTO": "Argentum Online Map, Press Up and Down to switch between global map / mazes. Press any other key to exit."
+    },
+    "MENSAJE_ERRORES_LOG_CARPETA": {
+        "TEXTO": "Errors were logged in the Errores.log file, please send this file to the developers to help fix these problems.",
+        "COLOR": [
+            252,
+            257,
+            220
+        ]
     }
 }
