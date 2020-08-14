@@ -840,7 +840,16 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 27/07/2020: Se agrega costa nuevas (ReyarB)
 * 31/07/2020: Cambios en Mapas (ReyarB)
 * 31/07/2020: Mejoras en MiniMapas (ReyarB)
-* 31/07/2020: Mejoras en MiniMapas (ReyarB)
 * 31/07/2020: Se comenta la funcion hlst_DblClick que maneja el mover hechizo con doble click por que a la gente le molesta (Recox)
  
-
+-v0.13.49
+* 14/08/2020: Cambios en Mapas (ReyarB - Ronin)
+* 14/08/2020: Se agrega efecto escribiendo ... (CuiCui)
+* 14/08/2020: Fix desbordamiento en Damage_NewSize (Wyr0x)
+* 14/08/2020: Added a check in keyUp in the main form (Wyr0x)
+* 14/08/2020: Actualizo Wav de Poteo Click 1 click 2 y Navegacion (Lorelei)
+* 14/08/2020: Fix particula FX47 para usarla con el comando /hogar (Blair)
+* 14/08/2020: Fix: Se veían la mitad de los frames en las animaciones. (jopiortiz - guidota)
+* 14/08/2020: Ahora los logs se guardan en la carpeta AO-Libre en el root del hd por que no deja grabar cosas en la carpeta del juego por el UAC. Al escribirse un log se abre el notepad con el mismo.s (Recox)
+* 14/08/2020: Ahora los videos se guardan en la carpeta AO-Libre en el root del hd por que no deja grabar cosas en la carpeta del juego por el UAC. (Recox)
+* 14/08/2020: Borro imagen de interface que no se usa (Recox)
