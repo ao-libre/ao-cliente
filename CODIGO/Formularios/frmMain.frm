@@ -2846,20 +2846,6 @@ Private Sub SendTxt_Change()
             End If
         Next i
 
-        'Si esta activada la opcion de sacar cartel, nos movemos con chat abierto, sino si no nos movemos.
-        'Esto es mas que nada por la configuracion de teclas alternativa con WASD 
-        'Y yo como gm uso WASD y se me mueve el pj para todos lados cuando tipeo (RecoX)
-        'TODO: Obtener los valores de WASD desde el archivo de configuracion de keyConfig
-        If ClientSetup.bSacarCartelPermitiendoMoverseConChatAbierto Then 
-            if  tempstr <> "w" And _
-                tempstr <> "a" And _
-                tempstr <> "s" And _
-                tempstr <> "d" Then 
-
-                Exit Sub
-            End If
-        End If
-
         If tempstr <> SendTxt.Text Then
             'We only set it if it's different, otherwise the event will be raised
             'constantly and the client will crush
@@ -2918,12 +2904,10 @@ Public Sub SendCMSTXT_SendText()
 End Sub
 
 Private Sub SendCMSTXT_KeyPress(KeyAscii As Integer)
-
     If Not (KeyAscii = vbKeyBack) And Not (KeyAscii >= vbKeySpace And KeyAscii <= 250) Then KeyAscii = 0
 End Sub
 
 Private Sub SendCMSTXT_Change()
-
 
     If Len(SendCMSTXT.Text) > 160 Then
         'stxtbuffercmsg = JsonLanguage.item("MENSAJE_SOY_CHEATER").item("TEXTO")
@@ -2942,20 +2926,6 @@ Private Sub SendCMSTXT_Change()
             End If
         Next i
 
-        'Si esta activada la opcion de sacar cartel, nos movemos con chat abierto, sino si no nos movemos.
-        'Esto es mas que nada por la configuracion de teclas alternativa con WASD 
-        'Y yo como gm uso WASD y se me mueve el pj para todos lados cuando tipeo (RecoX)
-        'TODO: Obtener los valores de WASD desde el archivo de configuracion de keyConfig
-        If ClientSetup.bSacarCartelPermitiendoMoverseConChatAbierto Then 
-            if  tempstr <> "w" And _
-                tempstr <> "a" And _
-                tempstr <> "s" And _
-                tempstr <> "d" Then 
-
-                Exit Sub
-            End If
-        End If
-        
         If tempstr <> SendCMSTXT.Text Then
             'We only set it if it's different, otherwise the event will be raised
             'constantly and the client will crush

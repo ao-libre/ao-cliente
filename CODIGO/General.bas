@@ -319,7 +319,7 @@ Private Sub CheckKeys()
 
     'Si esta activada la opcion de sacar cartel, no nos movemos con chat abierto, sino si nos movemos.
     'Esto es mas que nada por la configuracion de teclas alternativa con WASD (RecoX)
-    If Not ClientSetup.bSacarCartelPermitiendoMoverseConChatAbierto Then
+    If EsGm(UserCharIndex) Then
 
         'Si esta chateando, no mover el pj, tanto para chat de clanes y normal
         If frmMain.SendTxt.Visible Then Exit Sub
@@ -1209,6 +1209,7 @@ Public Function EsGM(ByVal CharIndex As Integer) As Boolean
 
     If charlist(CharIndex).priv >= 1 And charlist(CharIndex).priv <= 5 Or charlist(CharIndex).priv = 25 Then
         EsGM = True
+        Exit Function
     End If
     
     EsGM = False
@@ -1219,6 +1220,7 @@ Public Function EsNPC(ByVal CharIndex As Integer) As Boolean
 
     If charlist(CharIndex).iHead = 0 Then
         EsNPC = True
+        Exit Function
     End If
     
     EsNPC = False

@@ -63,7 +63,6 @@ Public Type tSetupMods
     MostrarTips As Byte
     MostrarBindKeysSelection As Byte
     KeyboardBindKeysConfig As String
-    bSacarCartelPermitiendoMoverseConChatAbierto As Boolean
 End Type
 
 Public ClientSetup As tSetupMods
@@ -189,7 +188,6 @@ Public Sub LeerConfiguracion()
         .MostrarTips = CBool(Lector.GetValue("OTHER", "MOSTRAR_TIPS"))
         .MostrarBindKeysSelection = CBool(Lector.GetValue("OTHER", "MOSTRAR_BIND_KEYS_SELECTION"))
         .KeyboardBindKeysConfig = Lector.GetValue("OTHER", "BIND_KEYS")
-        .bSacarCartelPermitiendoMoverseConChatAbierto = Lector.GetValue("OTHER", "SACAR_CARTEL_PERMITIENDO_MOVERSE_CON_CHAT_ABIERTO")
 
         Debug.Print "byMemory: " & .byMemory
         Debug.Print "bNoRes: " & .bNoRes
