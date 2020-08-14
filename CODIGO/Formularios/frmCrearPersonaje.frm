@@ -1554,8 +1554,16 @@ Private Sub DirPJ_Click(Index As Integer)
     Call UpdateHeadSelection
 End Sub
 
+Private Sub Form_LostFocus()
+    tAnimacion.Enabled = False
+End Sub
+
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     ClearLabel
+End Sub
+
+Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
+    tAnimacion.Enabled = False
 End Sub
 
 Private Sub HeadPJ_Click(Index As Integer)
@@ -1856,13 +1864,16 @@ Private Sub picHead_Click(Index As Integer)
 End Sub
 
 Private Sub tAnimacion_Timer()
+    
+    If currentGrh = 0 Then Exit Sub
+    If UserHead = 0 Then Exit Sub
+    
     On Error Resume Next
 
     Dim DR       As RECT
     Dim Grh      As Long
     Static Frame As Byte
 
-    If currentGrh = 0 Then Exit Sub
     UserHead = CheckCabeza(UserHead)
 
     Frame = Frame + 1

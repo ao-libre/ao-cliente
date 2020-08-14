@@ -728,7 +728,7 @@ Private Sub Form_Load()
     Me.Picture = LoadPicture(Game.path(Interfaces) & "VentanaConectar" & RandomNumber(1, 2) & ".jpg")
     
     Call LoadTextsForm
-    Call LoadButtonsAnimations
+'Call LoadButtonsAnimations 'Call comentado por NeoRanger
         '    Call LoadAOCustomControlsPictures(Me)
     'Todo: Poner la carga de botones como en el frmCambiaMotd.frm para mantener coherencia con el resto de la aplicacion
     'y poder borrar los frx de este archivo
@@ -750,155 +750,158 @@ Private Sub LoadTextsForm()
     btnTeclas.Caption = JsonLanguage.item("LBL_TECLAS").item("TEXTO")
 End Sub
 
-Private Sub LoadButtonsAnimations()
-    ' GSZAO - Animacion...
+' Comento las animanciones de los botones en el form de conexión porque no le veo
+' mucho sentido (NeoRanger)
+
+' Private Sub LoadButtonsAnimations()
+'     ' GSZAO - Animacion...
     
-    'TODO: Agregar los movimientos faltantes, me aburri (Recox)
-    'btnConectarse.Top = 10
-    'AnimControl(1).Activo = True
-    'AnimControl(1).Velocidad = 0
-   ' AnimControl(1).Top = 200
+'     'TODO: Agregar los movimientos faltantes, me aburri (Recox)
+'     'btnConectarse.Top = 10
+'     'AnimControl(1).Activo = True
+'     'AnimControl(1).Velocidad = 0
+'    ' AnimControl(1).Top = 200
     
-    'btnActualizarLista.Top = 10
-    'AnimControl(2).Activo = True
-    'AnimControl(2).Velocidad = 0
-    'AnimControl(2).Top = 350
+'     'btnActualizarLista.Top = 10
+'     'AnimControl(2).Activo = True
+'     'AnimControl(2).Velocidad = 0
+'     'AnimControl(2).Top = 350
     
-    btnCreditos.Top = 10
-    AnimControl(3).Activo = True
-    AnimControl(3).Velocidad = 0
-    AnimControl(3).Top = 560
+'     btnCreditos.Top = 10
+'     AnimControl(3).Activo = True
+'     AnimControl(3).Velocidad = 0
+'     AnimControl(3).Top = 560
     
-    btnCrearCuenta.Top = 10
-    AnimControl(4).Activo = True
-    AnimControl(4).Velocidad = 0
-    AnimControl(4).Top = 560
+'     btnCrearCuenta.Top = 10
+'     AnimControl(4).Activo = True
+'     AnimControl(4).Velocidad = 0
+'     AnimControl(4).Top = 560
     
-    btnCrearServer.Top = 10
-    AnimControl(5).Activo = True
-    AnimControl(5).Velocidad = 0
-    AnimControl(5).Top = 560
+'     btnCrearServer.Top = 10
+'     AnimControl(5).Activo = True
+'     AnimControl(5).Velocidad = 0
+'     AnimControl(5).Top = 560
     
-    btnManual.Top = 10
-    AnimControl(6).Activo = True
-    AnimControl(6).Velocidad = 0
-    AnimControl(6).Top = 560
+'     btnManual.Top = 10
+'     AnimControl(6).Activo = True
+'     AnimControl(6).Velocidad = 0
+'     AnimControl(6).Top = 560
     
-    btnRecuperar.Top = 10
-    AnimControl(7).Activo = True
-    AnimControl(7).Velocidad = 0
-    AnimControl(7).Top = 560
+'     btnRecuperar.Top = 10
+'     AnimControl(7).Activo = True
+'     AnimControl(7).Velocidad = 0
+'     AnimControl(7).Top = 560
     
-    btnReglamento.Top = 10
-    AnimControl(8).Activo = True
-    AnimControl(8).Velocidad = 0
-    AnimControl(8).Top = 560
+'     btnReglamento.Top = 10
+'     AnimControl(8).Activo = True
+'     AnimControl(8).Velocidad = 0
+'     AnimControl(8).Top = 560
     
-    btnSalir.Top = 10
-    AnimControl(9).Activo = True
-    AnimControl(9).Velocidad = 0
-    AnimControl(9).Top = 560
+'     btnSalir.Top = 10
+'     AnimControl(9).Activo = True
+'     AnimControl(9).Velocidad = 0
+'     AnimControl(9).Top = 560
     
-    'btnTeclas.Top = 10
-    AnimControl(10).Activo = True
-    'AnimControl(10).Velocidad = 0
-    'AnimControl(10).Top = 560
+'     'btnTeclas.Top = 10
+'     AnimControl(10).Activo = True
+'     'AnimControl(10).Velocidad = 0
+'     'AnimControl(10).Top = 560
     
-    Fuerza = 1.7 ' Gravedad... 1.7
-    tEfectos.Interval = 10
-    tEfectos.Enabled = True
-End Sub
+'     Fuerza = 1.7 ' Gravedad... 1.7
+'     tEfectos.Interval = 10
+'     tEfectos.Enabled = True
+' End Sub
 
-Private Sub tEfectos_Timer()
-    Dim oTop As Integer
-    Dim i    As Integer
+' Private Sub tEfectos_Timer()
+'     Dim oTop As Integer
+'     Dim i    As Integer
 
-    For i = 1 To 9
+'     For i = 1 To 9
 
-        If AnimControl(i).Activo = True Then
+'         If AnimControl(i).Activo = True Then
 
-            Select Case i
+'             Select Case i
 
-                Case 1: oTop = btnConectarse.Top
+'                 Case 1: oTop = btnConectarse.Top
 
-                Case 2: oTop = btnActualizarLista.Top
+'                 Case 2: oTop = btnActualizarLista.Top
 
-                Case 3: oTop = btnCreditos.Top
+'                 Case 3: oTop = btnCreditos.Top
 
-                Case 4: oTop = btnCrearCuenta.Top
+'                 Case 4: oTop = btnCrearCuenta.Top
 
-                Case 5: oTop = btnCrearServer.Top
+'                 Case 5: oTop = btnCrearServer.Top
 
-                Case 6: oTop = btnManual.Top
+'                 Case 6: oTop = btnManual.Top
 
-                Case 7: oTop = btnRecuperar.Top
+'                 Case 7: oTop = btnRecuperar.Top
 
-                Case 8: oTop = btnReglamento.Top
+'                 Case 8: oTop = btnReglamento.Top
 
-                Case 9: oTop = btnSalir.Top
+'                 Case 9: oTop = btnSalir.Top
 
-                Case 10: oTop = btnTeclas.Top
+'                 Case 10: oTop = btnTeclas.Top
 
-                Case 11: oTop = btnVerForo.Top
-            End Select
+'                 Case 11: oTop = btnVerForo.Top
+'             End Select
 
-            If oTop > AnimControl(i).Top Then
-                oTop = AnimControl(i).Top
-                AnimControl(i).Velocidad = AnimControl(i).Velocidad * -0.6
-            End If
+'             If oTop > AnimControl(i).Top Then
+'                 oTop = AnimControl(i).Top
+'                 AnimControl(i).Velocidad = AnimControl(i).Velocidad * -0.6
+'             End If
 
-            If AnimControl(i).Velocidad >= -0.6 And AnimControl(i).Velocidad <= -0.5 Then
-                AnimControl(i).Activo = False
-            Else
-                AnimControl(i).Velocidad = AnimControl(i).Velocidad + Fuerza
-                oTop = oTop + AnimControl(i).Velocidad
-            End If
+'             If AnimControl(i).Velocidad >= -0.6 And AnimControl(i).Velocidad <= -0.5 Then
+'                 AnimControl(i).Activo = False
+'             Else
+'                 AnimControl(i).Velocidad = AnimControl(i).Velocidad + Fuerza
+'                 oTop = oTop + AnimControl(i).Velocidad
+'             End If
 
-            Select Case i
+'             Select Case i
 
-                Case 1: btnActualizarLista.Top = oTop
+'                 Case 1: btnActualizarLista.Top = oTop
 
-                Case 2: btnConectarse.Top = oTop
+'                 Case 2: btnConectarse.Top = oTop
 
-                Case 3: btnCreditos.Top = oTop
+'                 Case 3: btnCreditos.Top = oTop
 
-                Case 4: btnCrearCuenta.Top = oTop
+'                 Case 4: btnCrearCuenta.Top = oTop
 
-                Case 5: btnCrearServer.Top = oTop
+'                 Case 5: btnCrearServer.Top = oTop
 
-                Case 6: btnManual.Top = oTop
+'                 Case 6: btnManual.Top = oTop
 
-                Case 7: btnRecuperar.Top = oTop
+'                 Case 7: btnRecuperar.Top = oTop
 
-                Case 8: btnReglamento.Top = oTop
+'                 Case 8: btnReglamento.Top = oTop
 
-                Case 9: btnSalir.Top = oTop
+'                 Case 9: btnSalir.Top = oTop
 
-                Case 10: btnTeclas.Top = oTop
+'                 Case 10: btnTeclas.Top = oTop
 
-                Case 11: btnVerForo.Top = oTop
-            End Select
-        End If
-    Next
+'                 Case 11: btnVerForo.Top = oTop
+'             End Select
+'         End If
+'     Next
 
-    If AnimControl(1).Activo = False And AnimControl(2).Activo = False And AnimControl(3).Activo = False And AnimControl(4).Activo = False And AnimControl(5).Activo = False And AnimControl(6).Activo = False And AnimControl(7).Activo = False And AnimControl(8).Activo = False And AnimControl(9).Activo = False And AnimControl(10).Activo = False And AnimControl(11).Activo = False Then
-        tEfectos.Enabled = False
+'     If AnimControl(1).Activo = False And AnimControl(2).Activo = False And AnimControl(3).Activo = False And AnimControl(4).Activo = False And AnimControl(5).Activo = False And AnimControl(6).Activo = False And AnimControl(7).Activo = False And AnimControl(8).Activo = False And AnimControl(9).Activo = False And AnimControl(10).Activo = False And AnimControl(11).Activo = False Then
+'         tEfectos.Enabled = False
         
-        ' GSZAO - Animacion...
-        btnConectarse.Top = AnimControl(1).Top
-        btnActualizarLista.Top = AnimControl(2).Top
-        btnCreditos.Top = AnimControl(3).Top
-        btnCrearCuenta.Top = AnimControl(4).Top
-        btnCrearServer.Top = AnimControl(5).Top
-        btnManual.Top = AnimControl(6).Top
-        btnRecuperar.Top = AnimControl(7).Top
-        btnReglamento.Top = AnimControl(8).Top
-        btnSalir.Top = AnimControl(9).Top
-        btnTeclas.Top = AnimControl(10).Top
-        btnVerForo.Top = AnimControl(11).Top
-    End If
+'         ' GSZAO - Animacion...
+'         btnConectarse.Top = AnimControl(1).Top
+'         btnActualizarLista.Top = AnimControl(2).Top
+'         btnCreditos.Top = AnimControl(3).Top
+'         btnCrearCuenta.Top = AnimControl(4).Top
+'         btnCrearServer.Top = AnimControl(5).Top
+'         btnManual.Top = AnimControl(6).Top
+'         btnRecuperar.Top = AnimControl(7).Top
+'         btnReglamento.Top = AnimControl(8).Top
+'         btnSalir.Top = AnimControl(9).Top
+'         btnTeclas.Top = AnimControl(10).Top
+'         btnVerForo.Top = AnimControl(11).Top
+'     End If
     
-End Sub
+' End Sub
 
 Private Sub lstRedditPosts_Click()
     Call ShellExecute(0, "Open", Posts(lstRedditPosts.ListIndex + 1).URL, "", App.path, SW_SHOWNORMAL)

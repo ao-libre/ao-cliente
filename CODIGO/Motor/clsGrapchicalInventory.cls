@@ -296,6 +296,15 @@ Public Property Get Equipped(ByVal slot As Byte) As Boolean
     Equipped = Inventory(slot).Equipped
 End Property
 
+Public Property Get Incompatible(ByVal slot As Byte) As Boolean
+'***************************************************
+'Author: Juan Martin Sotuyo Dodero (Maraxus)
+'Last Modify Date: 27/07/04
+'Retrieves True if the item at the given pos is eqiupped
+'***************************************************
+    Incompatible = Inventory(slot).Incompatible
+End Property
+
 Public Property Get MaxObjs() As Byte
 '***************************************************
 'Author: Torres Patricio (Pato)
@@ -345,7 +354,7 @@ End Sub
 
 Public Sub SetItem(ByVal slot As Byte, ByVal eOBJIndex As Integer, ByVal eAmount As Long, ByVal eEquipped As Byte, _
                         ByVal eGrhIndex As Long, ByVal eObjType As Integer, ByVal eMaxHit As Integer, ByVal eMinHit As Integer, _
-                        ByVal MaxDef As Integer, ByVal MinDef As Integer, ByVal eValor As Single, ByVal eName As String)
+                        ByVal MaxDef As Integer, ByVal MinDef As Integer, ByVal eValor As Single, ByVal eName As String, Optional ByVal eIncompatible As Boolean = False)
 '***************************************************
 'Author: Juan Martin Sotuyo Dodero (Maraxus)
 'Last Modify Date: 12/04/06
@@ -365,6 +374,7 @@ Public Sub SetItem(ByVal slot As Byte, ByVal eOBJIndex As Integer, ByVal eAmount
         .ObjIndex = eOBJIndex
         .OBJType = eObjType
         .Valor = eValor
+        .Incompatible = eIncompatible
     End With
     
     'If InventoryWindow.Visible = False Then InventoryWindow.Visible = True
@@ -419,8 +429,8 @@ Public Sub DrawInventory()
     Dim Sel_Color(3) As Long
 
     With DestRect
-        .Bottom = InventoryWindow.Height
-        .Right = InventoryWindow.Width
+        .Bottom = InventoryWindow.ScaleHeight
+        .Right = InventoryWindow.ScaleWidth
     End With
     
     'Color al seleccionar un item.
@@ -438,15 +448,21 @@ Public Sub DrawInventory()
         'Si se renderiza el inventario del pj hace la validacion para renderizar de un color correcto los slots especiales de mochila y alforja
         'Sino renderiza todo negro (Recox)
         If isInventory Then
+            
             If (LoopC > MAX_NORMAL_INVENTORY_SLOTS) And (LoopC <= MAX_MOCHILA_CHICA_INVENTORY_SLOTS) Then
                 Call Draw_GrhIndex(GRH_SLOT_INVENTARIO_VIOLETA, startdX, startdY, 0, Normal_RGBList(), 0, False) 'Dibuja el fondo
+            
             ElseIf (LoopC > MAX_MOCHILA_CHICA_INVENTORY_SLOTS) And (LoopC <= MAX_INVENTORY_SLOTS) Then
                 Call Draw_GrhIndex(GRH_SLOT_INVENTARIO_DORADO, startdX, startdY, 0, Normal_RGBList(), 0, False) 'Dibuja el fondo
+            
             Else
                 Call Draw_GrhIndex(GRH_SLOT_INVENTARIO_NEGRO, startdX, startdY, 0, Normal_RGBList(), 0, False) 'Dibuja el fondo
+            
             End If
+            
         Else
             Call Draw_GrhIndex(GRH_SLOT_INVENTARIO_NEGRO, startdX, startdY, 0, Normal_RGBList(), 0, False) 'Dibuja el fondo
+        
         End If
 
             
@@ -467,6 +483,14 @@ Public Sub DrawInventory()
                     Call DrawText(startdX + 20, startdY + 20, "E", -1)
 
                 End If
+
+                'Si el usuario no puede usar este item por su raza, sexo o clase, dibujamos una "X"
+                If Inventory(LoopC).Incompatible Then
+                    Dim ColorText As Long
+                    ColorText = D3DColorARGB(255, 200, 30, 30)
+                    Call DrawText(startdX + 20, startdY + 20, "X", ColorText)
+
+                End If
                     
                 Call DrawText(startdX, startdY, Inventory(LoopC).Amount, -1)
 
@@ -477,10 +501,12 @@ Public Sub DrawInventory()
     Next LoopC
 
     If DragItem <> 0 And Drag = 1 And isInventory Then
+    
         Call Draw_GrhIndex(Inventory(DragItem).GrhIndex, MouseX - 16, MouseY - 16, 0, Normal_RGBList())
         
         ' Si estamos arrastrando un item, dibujamos normal
         InventoryWindow.AutoRedraw = False
+        
         Call Engine_EndScene(DestRect, InventoryWindow.hWnd)
         
     Else
@@ -497,7 +523,7 @@ Public Sub DrawInventory()
 
         InventoryWindow.AutoRedraw = True
 
-        Call DrawBuffer.PaintPicture(InventoryWindow.hdc, 0, 0, InventoryWindow.Width, InventoryWindow.Height, 0, 0, vbSrcCopy)
+        Call DrawBuffer.PaintPicture(InventoryWindow.hdc, 0, 0, InventoryWindow.ScaleWidth, InventoryWindow.ScaleHeight, 0, 0, vbSrcCopy)
 
         InventoryWindow.Picture = InventoryWindow.Image
 

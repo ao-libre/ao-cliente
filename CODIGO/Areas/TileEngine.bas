@@ -155,6 +155,8 @@ End Type
 
 'Apariencia del personaje
 Public Type Char
+    Escribiendot As Byte
+    Escribiendo As Boolean
     Movement As Boolean
     active As Byte
     Heading As E_Heading
@@ -200,7 +202,7 @@ End Type
 
 'Info de un objeto
 Public Type obj
-    ObjIndex As Integer
+    OBJIndex As Integer
     Amount As Integer
 End Type
 
@@ -766,6 +768,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
 
                     'Char layer********************************
                     If .CharIndex <> 0 Then
+                    
                         Call CharRender(.CharIndex, PixelOffsetXTemp, PixelOffsetYTemp)
                     End If
                     '*************************************************
@@ -875,8 +878,8 @@ Sub RenderScreen(ByVal tilex As Integer, _
                     
                     'Update the position
                     angle = DegreeToRadian * Engine_GetAngle(ProjectileList(J).X, ProjectileList(J).Y, ProjectileList(J).TX, ProjectileList(J).TY)
-                    ProjectileList(J).X = ProjectileList(J).X + (Sin(angle) * ElapsedTime * 0.63)
-                    ProjectileList(J).Y = ProjectileList(J).Y - (Cos(angle) * ElapsedTime * 0.63)
+                    ProjectileList(J).X = ProjectileList(J).X + (Sin(angle) * ElapsedTime * 0.8)
+                    ProjectileList(J).Y = ProjectileList(J).Y - (Cos(angle) * ElapsedTime * 0.8)
                     
                     'Update the rotation
                     If ProjectileList(J).RotateSpeed > 0 Then
@@ -896,9 +899,9 @@ Sub RenderScreen(ByVal tilex As Integer, _
                             If X >= -32 Then
                                 If X <= (ScreenWidth + 32) Then
                                     If ProjectileList(J).Rotate = 0 Then
-                                        Call Draw_Grh(ProjectileList(J).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, True, 0)
+                                        Call Draw_Grh(ProjectileList(J).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, True, ProjectileList(J).Rotate + 128)
                                     Else
-                                        Call Draw_Grh(ProjectileList(J).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, True, ProjectileList(J).Rotate)
+                                        Call Draw_Grh(ProjectileList(J).Grh, X, Y, 0, MapData(50, 50).Engine_Light(), 0, True, ProjectileList(J).Rotate + 128)
                                     End If
                                 End If
                             End If
@@ -1000,19 +1003,25 @@ Function HayUserAbajo(ByVal X As Integer, ByVal Y As Integer, ByVal GrhIndex As 
     End If
 End Function
 
-Public Function InitTileEngine(ByVal setDisplayFormhWnd As Long, ByVal setTilePixelHeight As Integer, ByVal setTilePixelWidth As Integer, ByVal pixelsToScrollPerFrameX As Integer, pixelsToScrollPerFrameY As Integer) As Boolean
+Public Sub InitTileEngine(ByVal setDisplayFormhWnd As Long, ByVal setTilePixelHeight As Integer, ByVal setTilePixelWidth As Integer, ByVal pixelsToScrollPerFrameX As Integer, pixelsToScrollPerFrameY As Integer)
 '***************************************************
 'Author: Aaron Perkins
 'Last Modification: 08/14/07
 'Last modified by: Juan Martin Sotuyo Dodero (Maraxus)
 'Configures the engine to start running.
 '***************************************************
+    
+    On Error GoTo ErrorHandler:
+    
+    TileBufferSize = Areas.TilesBuffer
     TilePixelWidth = setTilePixelWidth
     TilePixelHeight = setTilePixelHeight
+    
     WindowTileHeight = Round(frmMain.MainViewPic.Height / 32, 0)
     WindowTileWidth = Round(frmMain.MainViewPic.Width / 32, 0)
     
     IniPath = Game.path(INIT)
+    
     HalfWindowTileHeight = WindowTileHeight \ 2
     HalfWindowTileWidth = WindowTileWidth \ 2
 
@@ -1021,7 +1030,6 @@ Public Function InitTileEngine(ByVal setDisplayFormhWnd As Long, ByVal setTilePi
     MinYBorder = YMinMapSize + (WindowTileHeight \ 2)
     MaxYBorder = YMaxMapSize - (WindowTileHeight \ 2)
     
-
     'Resize mapdata array
     ReDim MapData(XMinMapSize To XMaxMapSize, YMinMapSize To YMaxMapSize) As MapBlock
     
@@ -1033,7 +1041,7 @@ Public Function InitTileEngine(ByVal setDisplayFormhWnd As Long, ByVal setTilePi
     ScrollPixelsPerFrameX = pixelsToScrollPerFrameX
     ScrollPixelsPerFrameY = pixelsToScrollPerFrameY
 
-On Error GoTo 0
+    Call CalcularAreas(HalfWindowTileWidth, HalfWindowTileHeight)
     
     'Cargamos indice de graficos.
     'TODO: No usar variable de compilacion y acceder a esto desde el config.ini
@@ -1049,10 +1057,16 @@ On Error GoTo 0
     Call CargarFxs
     Call LoadGraphics
     Call CargarParticulas
-
-    InitTileEngine = True
     
-End Function
+    Exit Sub
+    
+ErrorHandler:
+
+    Call LogError(Err.number, Err.Description, "Mod_TileEngine.InitTileEngine")
+    
+    Call CloseClient
+    
+End Sub
 
 Public Sub LoadGraphics()
     Call SurfaceDB.Initialize(DirectD3D8, ClientSetup.byMemory)
@@ -1062,7 +1076,9 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
                   ByVal DisplayFormLeft As Integer, _
                   ByVal MouseViewX As Integer, _
                   ByVal MouseViewY As Integer)
-
+    
+    On Error GoTo ErrorHandler:
+    
     If EngineRun Then
         Call Engine_BeginScene
         
@@ -1115,15 +1131,19 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
 
         '*********Tiempo restante para que termine el invi o el paralizar*********
         If UserParalizado And UserParalizadoSegundosRestantes > 0 Then
-            Call DrawText(1, 25, UserParalizadoSegundosRestantes & " segundos restantes de Paralisis", Color_Paralisis)
+            Call DrawText(4, 10, UserParalizadoSegundosRestantes & " segundos restantes de Paralisis", Color_Paralisis)
         End If
 
-        If UserInvisible And UserInvisibleSegundosRestantes > 0 Then
-            Call DrawText(1, 13, UserInvisibleSegundosRestantes & " segundos restantes de Invisibilidad", Color_Invisibilidad)
+        If UserInvisible And TiempoInvi > 0 Then
+            Call DrawText(4, 25, TiempoInvi & " segundos restantes de Invisibilidad", Color_Invisibilidad)
+        End If
+        
+        If TiempoDopas > 0 Then
+            Call DrawText(4, 40, "Tus atributos perderan efecto en " & TiempoDopas & " segundos", Color_Invisibilidad)
         End If
         
         If Not UserEquitando And UserEquitandoSegundosRestantes > 0 Then
-            Call DrawText(1, 37, UserEquitandoSegundosRestantes & " segundos restantes para volver a montarte", Color_Montura)
+            Call DrawText(4, 55, UserEquitandoSegundosRestantes & " segundos restantes para volver a montarte", Color_Montura)
         End If
         '*************************************************************************
 
@@ -1137,6 +1157,16 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
         Call Engine_EndScene(MainScreenRect, 0)
     
         Call Inventario.DrawDragAndDrop
+    
+    End If
+    
+ErrorHandler:
+
+    If DirectDevice.TestCooperativeLevel = D3DERR_DEVICENOTRESET Then
+        
+        Call mDx8_Engine.Engine_DirectX8_Init
+        
+        Call LoadGraphics
     
     End If
   
@@ -1179,7 +1209,7 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
     Dim moved As Boolean
     
     With charlist(CharIndex)
-
+        
         If .Moving Then
 
             'If needed, move left and right
@@ -1247,15 +1277,12 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
             If Not .Heading <> 0 Then .Heading = EAST
             
             .Body.Walk(.Heading).Started = 0
-            .Body.Walk(.Heading).FrameCounter = 1
             
             '//Movimiento del arma y el escudo
             If Not .Movement And Not .attacking Then
                 .Arma.WeaponWalk(.Heading).Started = 0
-                .Arma.WeaponWalk(.Heading).FrameCounter = 1
                 
                 .Escudo.ShieldWalk(.Heading).Started = 0
-                .Escudo.ShieldWalk(.Heading).FrameCounter = 1
 
             End If
             
@@ -1339,6 +1366,11 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
                     If .iHead = 0 And .iBody > 0 Then
                         Call RenderName(CharIndex, PixelOffsetX, PixelOffsetY)
                     End If
+                    'Si el personaje esta chateando mostramos ... en pantalla
+                    If .Escribiendo Then
+                        Call RenderIfCharIsInChatMode(CharIndex, PixelOffsetX, PixelOffsetY)
+                    End If
+                    
                 End If
             End If
             
@@ -1372,6 +1404,10 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
             If LenB(.Nombre) > 0 Then
                 If Nombres Then
                     Call RenderName(CharIndex, PixelOffsetX, PixelOffsetY)
+                    'Si el personaje esta chateando mostramos ... en pantalla
+                    If .Escribiendo Then
+                        Call RenderIfCharIsInChatMode(CharIndex, PixelOffsetX, PixelOffsetY)
+                    End If
                 End If
             End If
             
@@ -1405,6 +1441,10 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
             If LenB(.Nombre) > 0 Then
                 If Nombres Then
                     Call RenderName(CharIndex, PixelOffsetX, PixelOffsetY, True)
+                    'Si el personaje esta chateando mostramos ... en pantalla
+                    If .Escribiendo Then
+                        Call RenderIfCharIsInChatMode(CharIndex, PixelOffsetX, PixelOffsetY)
+                    End If
                 End If
             End If
             
@@ -1426,6 +1466,45 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
         
     End With
     
+End Sub
+
+Private Function Puntitos(ByVal CharIndex As Integer) As String
+
+    ' necesario salvo que quieras que se vuelva loco
+    Dim tActual As Long
+    tActual = GetTickCount
+
+    If Abs(tActual - lastTickEscribiendo) > 10 Then
+        lastTickEscribiendo = tActual
+        charlist(CharIndex).Escribiendot = charlist(CharIndex).Escribiendot + 1
+    End If
+
+    Select Case charlist(CharIndex).Escribiendot
+        Case 1 To 20
+            Puntitos = "."
+        Case 20 To 40
+            Puntitos = ".."
+        Case 40 To 60
+            Puntitos = "..."
+        Case Else
+            charlist(CharIndex).Escribiendot = 1
+    End Select
+
+End Function
+
+Private Sub RenderIfCharIsInChatMode(ByVal CharIndex As Long, _
+                       ByVal X As Integer, _
+                       ByVal Y As Integer, _
+                       Optional ByVal Invi As Boolean = False)
+    Dim Color As Long
+
+    Color = D3DColorARGB(255, 220, 220, 255)
+
+    With charlist(CharIndex)
+        'TODO: Cambiar por una imagen mas copada...
+        Call DrawText(X + 25, Y - 33, Puntitos(CharIndex), Color, True)
+
+    End With
 End Sub
 
 Private Sub RenderSombras(ByVal CharIndex As Integer, ByVal PixelOffsetX As Integer, ByVal PixelOffsetY As Integer)
@@ -1540,7 +1619,6 @@ Private Sub RenderReflejos(ByVal CharIndex As Integer, ByVal PixelOffsetX As Int
             'Animacion del reflejo del arma.
             If .attacking = False And .Moving = False Then
                 .Arma.WeaponWalk(GetInverseHeading).Started = 0
-                .Arma.WeaponWalk(GetInverseHeading).FrameCounter = 0
             End If
             
             If .attacking And .Arma.WeaponWalk(GetInverseHeading).Started = 0 Then
@@ -1730,15 +1808,16 @@ Sub Draw_Grh(ByRef Grh As Grh, ByVal X As Integer, ByVal Y As Integer, ByVal Cen
 'Draws a GRH transparently to a X and Y position
 '*****************************************************************
     Dim CurrentGrhIndex As Long
+    Dim FrameDuration As Single
     
     If Grh.GrhIndex = 0 Then Exit Sub
     
 On Error GoTo Error
-    
     If Animate Then
         If Grh.Started = 1 Then
-            Grh.FrameCounter = Grh.FrameCounter + (timerElapsedTime * GrhData(Grh.GrhIndex).NumFrames / Grh.speed) * Movement_Speed
-            
+            FrameDuration = Grh.speed / GrhData(Grh.GrhIndex).NumFrames
+            Grh.FrameCounter = Grh.FrameCounter + (timerElapsedTime / FrameDuration) * Movement_Speed
+    
             If Grh.FrameCounter > GrhData(Grh.GrhIndex).NumFrames Then
                 Grh.FrameCounter = (Grh.FrameCounter Mod GrhData(Grh.GrhIndex).NumFrames) + 1
                 
@@ -1749,6 +1828,13 @@ On Error GoTo Error
                         Grh.Started = 0
                     End If
                 End If
+            End If
+        ElseIf Grh.FrameCounter > 1 Then
+            FrameDuration = Grh.speed / GrhData(Grh.GrhIndex).NumFrames
+            Grh.FrameCounter = Grh.FrameCounter + (timerElapsedTime / FrameDuration) * Movement_Speed
+    
+            If Grh.FrameCounter > GrhData(Grh.GrhIndex).NumFrames Then
+                Grh.FrameCounter = 1
             End If
         End If
     End If
